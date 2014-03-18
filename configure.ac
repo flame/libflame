@@ -21,12 +21,12 @@ dnl ----------------------------------------------------------------------------
 dnl Initialize autoconf. The arguments here are autoconf macros defined to
 dnl their appropriate values elsewhere in the build directory.
 dnl AC_INIT([libflame],
-dnl         [r]m4_esyscmd_s([cat revision]),
+dnl         [r]m4_esyscmd_s([cat version]),
 dnl         [flame@cs.utexas.edu],
 dnl         [libflame],
 dnl         [http://www.cs.utexas.edu/users/flame/])
 AC_INIT([libflame],
-        [r`cat revision`],
+        [r`cat version`],
         [flame@cs.utexas.edu],
         [libflame],
         [http://www.cs.utexas.edu/users/flame/])
@@ -60,7 +60,7 @@ dnl Register commands to create directories for configure byproducts and
 dnl object files.
 AC_CONFIG_COMMANDS_PRE(
 [
-	dnl Update the revision file if we have a working copy.
+	dnl Update the version file if we have a working copy.
 	echo "configure: updating/checking revision file."
 	build/update-version-file.sh
 

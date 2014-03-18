@@ -77,7 +77,7 @@ endif
 
 # Construct the architecture-version string, which will be used to name the
 # libraries upon installation.
-VERSION                        := r$(shell cat revision)
+VERSION                        := r$(shell cat version)
 ARCH_VERS                      := $(ARCH)-$(VERSION)
 
 # --- Library names ---

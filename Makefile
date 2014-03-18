@@ -77,7 +77,7 @@ endif
 
 # Construct the architecture-version string, which will be used to name the
 # libraries upon installation.
-VERSION                        := r$(shell cat revision)
+VERSION                        := $(shell cat version)
 ARCH_VERS                      := $(ARCH)-$(VERSION)
 
 # --- Library names ---
@@ -277,7 +277,7 @@ ifeq ($(FLA_ENABLE_LAPACK2FLAME),yes)
 MK_ALL_FLAMEC_OBJS        := $(MK_MAP_LAPACK2FLAMEC_OBJS) \
                              $(MK_MAP_LAPACK2FLAMEC_F2C_OBJS) \
                              $(MK_MAP_LAPACK2FLAMEC_F2C_FLAMEC_OBJS) \
-			     $(MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_OBJS) \
+                             $(MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_OBJS) \
                              $(MK_ALL_FLAMEC_OBJS)
 endif
 
