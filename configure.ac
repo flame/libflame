@@ -36,9 +36,9 @@ dnl functionality provided by various versions of autoconf.
 AC_PREREQ(2.15)
 
 dnl Copyright notice for autoconf-generated configure script.
-AC_COPYRIGHT([[Copyright 2011 The University of Texas
+AC_COPYRIGHT([[Copyright 2014 The University of Texas
 This configure script may be copied, distributed and modified under the terms
-of the LGPL. See LICENSE for more details.]])
+of the 3-clause BSD license. See LICENSE for more details.]])
 
 dnl Specify some file in the source directory to ensure so that the configure
 dnl script can verify that the directory in which the file resides actually 
@@ -62,7 +62,7 @@ AC_CONFIG_COMMANDS_PRE(
 [
 	dnl Update the revision file if we have a working copy.
 	echo "configure: updating/checking revision file."
-	build/update-check-rev-file.sh -v
+	build/update-version-file.sh
 
 	dnl Create the config/$host directory.
 	echo "configure: creating config/$host"
