@@ -1,0 +1,246 @@
+%\pagestyle{plain}  % switches on printing of running heads
+\pagestyle{headings}
+
+
+%\title{
+%{\Huge \tt libflame} \\
+%The Complete Reference
+%}
+%
+%\author{
+%Field G. Van Zee
+%}
+%
+%\date{
+%Department of Computer Sciences\\
+%The University of Texas at Austin\\
+%Austin, TX 78712\\
+%%{\tt \{field\}@cs.utexas.edu} \\ [0.25in]
+%{\tt field@cs.utexas.edu} \\ [0.25in]
+%Manuscript in Preparation \\ [0.25in]
+%\today
+%}
+%
+%\pagestyle{empty}
+%
+%\maketitle
+%
+%\cleardoublepage
+%
+%
+%~
+%\vspace{1.5in}
+%\\
+%\noindent
+%{
+%\bf
+%\Huge
+%\mbox{~} 
+%\hfill {\tt libflame} \\[0.3in]
+%\LARGE
+%\mbox{~} \hfill The \\[0.25in] % should be 0.2in, but for some reason doesn't display right in PDF.
+%\LARGE
+%\mbox{~} \hfill Complete \\[0.2in]
+%\LARGE
+%\mbox{~} \hfill Reference%
+%}
+%
+%\newpage
+%
+%\cleardoublepage
+
+~
+\vspace{1.5in}
+\\
+\noindent
+{
+\bf
+\Huge
+\mbox{~} \hfill {\tt libflame} \\[0.3in]
+\LARGE
+\mbox{~} \hfill The \\[0.255in] % should be 0.2in, but for some reason doesn't display right in PDF. 
+\LARGE
+\mbox{~} \hfill Complete \\[0.20in]
+\LARGE
+\mbox{~} \hfill Reference \\[0.235in]
+\LARGE
+\mbox{~} \hfill ( r\input{../../revision}) \\[0.60in]
+\noindent
+\LARGE
+\mbox{~} \hfill Field G. Van Zee \\[0.1in]
+\LARGE
+\mbox{~} \hfill \rm The University of Texas at Austin%
+}
+
+\pagestyle{empty}
+
+\newpage
+
+~
+\vspace{3.4in}
+
+\noindent
+Copyright \copyright\ 2011 by Field G. Van Zee.
+\vspace{0.2in}
+
+\noindent
+10 9 8 7 6 5 4 3 2 1
+
+\vspace{0.2in}
+
+\noindent
+All rights reserved.  No part of this book may be reproduced, stored, or 
+transmitted in any manner without the written permission of the publisher.
+For information, contact either of the authors.
+
+\vspace{0.2in}
+
+\noindent
+No warranties, express or implied, are made by the publisher, authors, and
+their employers that the programs contained in this volume are free of error.
+They should not be relied on as the sole basis to solve a problem whose
+incorrect solution could result in injury to person or property.
+If the programs are employed in such a manner, it is at the user's own 
+risk and the publisher, authors, and their employers disclaim all liability 
+for such misuse.
+
+\vspace{0.2in}
+
+\noindent
+Trademarked names may be used in this book without the inclusion
+of a trademark symbol.  These names are used in an editorial context only;
+no infringement of trademark is intended.
+
+\vspace{0.2in}
+
+{\bf Library of Congress Cataloging-in-Publication Data} not yet available
+
+% \vspace{0.2in}
+
+% \noindent
+% \begin{tabular}{l}
+% van de Geijn, Robert A.  \\
+% ~~~~The Science of Programming Matrix Computations / Robert A. van de Geijn \\
+% and Enrique S. Quintana-Ort\'{\i}.  \\
+% ~~~~~~~~     p. cm.  \\
+% ~~~~ISBN ?????????????? (pbk.)  \\
+% ~~~~1. Algebra, Linear.  2. Programming.   I. Title. \\
+% ~~~~QA ?????  2007 \\
+% ~~~~????                  ????????
+% \end{tabular}
+% \vspace{0.2in}
+% 
+% \noindent
+
+Draft, November 2008
+
+This ``Draft Edition'' allows this material to be used 
+while we sort out through what mechanism we will publish the book.
+
+\cleardoublepage
+
+\frontmatter
+
+\setcounter{page}{1}
+
+%%\thispagestyle{empty}
+%\newenvironment{dedication}
+%{\cleardoublepage \thispagestyle{empty} \vspace*{\stretch{1}} \begin{center} \em}
+%{\end{center} \vspace*{\stretch{3}} \clearpage}
+%\begin{dedication}
+%To Michael,
+%
+%Roses are forever...
+%\[ \]
+%To Charles,
+%
+%Lost but not forgotten...
+%\end{dedication}
+
+
+\setcounter{tocdepth}{3}
+\setcounter{secnumdepth}{3}
+\tableofcontents
+
+
+\cleardoublepage
+\chapter*{List of Contributors}\index{List of Contributors}
+
+A large number of people have contributed, and continue to contribute,
+to the FLAME project.  For a complete list, please visit
+\vspace{0.1in}
+\begin{center}
+\tt http://www.cs.utexas.edu/users/flame/
+\end{center}
+\vspace{0.1in}
+\noindent
+Below we list the people who have contributed directly to the knowledge and
+understanding that is summarized in this text.  
+
+~
+\vspace{0.5in}
+~
+
+\noindent
+Paolo Bientinesi\\
+{\em The University of Texas at Austin}\\
+
+\noindent
+Ernie Chan\\
+{\em The University of Texas at Austin}\\
+
+\noindent
+John A. Gunnels\\
+{\em IBM T.J. Watson Research Center}\\
+
+\noindent
+Kazushige Goto\\
+{\em The University of Texas at Austin}\\
+
+\noindent
+Tze Meng Low\\
+{\em The University of Texas at Austin}\\
+
+\noindent
+Margaret E. Myers\\
+{\em The University of Texas at Austin}\\
+
+\noindent
+Enrique S. Quintana-Ort\'{\i} \\
+{\em Universidad Jaume~I} \\
+
+\noindent
+Gregorio Quintana-Ort\'{\i} \\
+{\em Universidad Jaume~I} \\
+
+\noindent
+Robert A. van de Geijn\\
+{\em The University of Texas at Austin}\\
+
+
+%\begin{contributors}
+%\contributor{Paolo Bientinesi}{The University of Texas at Austin}
+%\contributor{Ernie Chan}{The University of Texas at Austin}
+%\contributor{Robert A. van de Geijn}{The University of Texas at Austin}
+%\end{contributors}
+
+
+
+%\begin{thepreface}%\index{Preface}
+%\plapack\footnote{This logo is modeled after \LaTeXe.} 
+%(pronounced PLAY-pack-2-e) stands for 
+%\underline{P}arallel \underline{L}inear \underline{A}lgebra \underline{Pack}age.
+%
+%\end{thepreface}
+
+\mainmatter
+
+\pagestyle{fancy}
+\fancyhf{}
+\renewcommand\chaptermark[1]{\markboth{\thechapter. #1}{}}
+\renewcommand\sectionmark[1]{\markright{\thesection. #1}{}}
+\renewcommand\headrulewidth{0.2pt}
+\fancyhead[LO]{{\bf \sffamily \rightmark}}
+\fancyhead[RO]{{\bf \sffamily \thepage}}
+\fancyhead[LE]{{\bf \sffamily \thepage}}
+\fancyhead[RE]{{\bf \sffamily \leftmark}}

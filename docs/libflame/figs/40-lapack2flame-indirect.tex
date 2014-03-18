@@ -1,0 +1,174 @@
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|p{3.2in}|p{0.72in}|p{0.65in}|l|}
+\hline
+{\bf Operation}
+&
+{\bf datatypes supported}
+&
+{\bf LAPACK interface}
+&
+{\bf Depends on...} \\ \hline
+% --------------------------------------
+Linear SPD system solve via Cholesky fact.
+&
+{\tt d}
+&
+{\tt ?posv()}
+&
+\potrf \\ \hline
+% --------------------------------------
+Linear SPD system solve via Cholesky fact. (expert)
+&
+{\tt d}
+&
+{\tt ?posvx()}
+&
+\potrf \\ \hline
+% --------------------------------------
+Linear system solve via LU factorization
+&
+{\tt d}
+&
+{\tt ?gesv()}
+&
+\getrf \\ \hline
+% --------------------------------------
+Linear system solve via LU factorization (expert)
+&
+{\tt d}
+&
+{\tt ?gesvx()}
+&
+\getrf \\ \hline
+% --------------------------------------
+Linear least squares solve (via simple SVD)
+&
+{\tt d}
+&
+{\tt ?gelss()}
+&
+\geqrf \gelqf \\ \hline
+% --------------------------------------
+Linear least squares solve (via divide-and-conquer SVD)
+&
+{\tt d}
+&
+{\tt ?gelsd()}
+&
+\geqrf \gelqf \\ \hline
+% --------------------------------------
+Linear equality-constrained least squares solve (via GRQ factorization)
+&
+{\tt d}
+&
+{\tt ?gglse()}
+&
+? \\ \hline
+% --------------------------------------
+Linear least squares solve (via complete orthogonal factorization)
+&
+{\tt d}
+&
+{\tt ?gelsy()}
+&
+? \\ \hline
+% --------------------------------------
+General Gauss-Markov linear model solve
+&
+{\tt d}
+&
+{\tt ?ggglm()}
+&
+? \\ \hline
+% --------------------------------------
+General SD eigenproblem
+&
+{\tt d}
+&
+{\tt ?sygv()}
+&
+\potrf \\ \hline
+% --------------------------------------
+General SD eigenproblem (expert)
+&
+{\tt d}
+&
+{\tt ?sygvx()}
+&
+\potrf \\ \hline
+% --------------------------------------
+General SD eigenproblem, divide-and-conquer
+&
+{\tt d}
+&
+{\tt ?sygvd()}
+&
+\potrf \\ \hline
+% --------------------------------------
+SVD, simple algorithm
+&
+{\tt d}
+&
+{\tt ?gesvd()}
+&
+\geqrf \gelqf \\ \hline
+% --------------------------------------
+SVD, divide-and-conquer algorithm
+&
+{\tt d}
+&
+{\tt ?gesdd()}
+&
+\geqrf \gelqf \\ \hline
+% --------------------------------------
+QR factorization with column pivoting
+&
+{\tt d}
+&
+{\tt ?geqp3()}
+&
+\geqrf \\ \hline
+% --------------------------------------
+QR factorization for two matrices
+&
+{\tt d}
+&
+{\tt ?ggqrf()}
+&
+\geqrf \\ \hline %\gerqf
+% --------------------------------------
+RQ factorization for two matrices
+&
+{\tt d}
+&
+{\tt ?ggrqf()}
+&
+\geqrf \\ \hline %\gerqf
+% --------------------------------------
+SPD inversion from pre-computed Cholesky factor
+&
+{\tt d}
+&
+{\tt ?potri()}
+&
+\trtri \lauum \\ \hline
+% --------------------------------------
+General matrix inversion from pre-computed LU factors
+&
+{\tt d}
+&
+{\tt ?getri()}
+&
+\trtri \\ \hline
+% --------------------------------------
+% --------------------------------------
+\end{tabular}
+\end{center}
+\caption{
+A list of LAPACK interfaces supported indirectly within \lapacktflamens.
+In other words, these routines depend on functionality that has been
+implemented natively within \libflamens.
+}
+\label{fig:lapack2flame-indirect}
+\end{table}

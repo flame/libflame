@@ -1,0 +1,123 @@
+
+ README 
+ describing the gen-make-frag.sh configuration directory
+ 
+ Field G. Van Zee
+ 7 August 2004
+
+
+Introduction
+------------
+
+This file describes the contents and purpose of the files found in the
+build/config directory:
+
+ o ignore_list
+ o leaf_list
+ o lib_list
+ 
+Each of these files modifies the behavior of the script 'gen-make-frag.sh' in
+the 'build' directory (one directory up from here). I'll briefly describe
+the role and format of each file.
+
+
+ignore_list
+-----------
+
+The ignore_list file lists the directories that the gen-make-frag.sh script
+will ignore as it recurses through the directory hierarchy creating makefile
+fragments. Its format is:
+
+dirname0
+dirname1
+dirname2
+...
+
+Simply put, it is a list of strings delimited by newlines. No other spaces
+or tabs are allowed, thus, ignored directory names may not contain whitespace.
+For example:
+
+old
+test
+other
+
+tells the gen-make-frag.sh script to ignore and not descend into directories
+named 'old', 'test', or 'other'. That is, this prevents the script from 
+generating makefile fragments for any subdirectory of an ignored directory.
+
+
+leaf_list
+---------
+
+The leaf_list file contains a list of directories that are considered 'leaf'
+nodes in the repository. That is, they contain source code. A leaf's 'type'
+characterizes the implementation of the operation contained within. Its
+format is:
+
+0:leaftype0:suffixlist0
+1:leaftype1:suffixlist1
+2:leaftype2:suffixlist2
+...
+
+where the suffixlist0 label represents a comma-delimited list of suffixes that
+indicate what kind of source code to look for in leaftype0. For example, an
+entry such as:
+
+0:flamec:c,f
+
+means that the gen-make-frag.sh script will treat directories named 'flamec' as
+leaves in the repository tree, and will notice any .c and .f files present
+in such leaves and add them to the local makefile fragment for inclusion back
+into the top-level Makefile.
+
+
+lib_list
+--------
+
+The lib_list file serves a purpose similar to that of the leaf_list file.
+But instead of identifying leaves in the tree, the lib_list characterizes
+the class of functionality that will be separated into libraries. Its format 
+is:
+
+0:libtype0
+1:libtype1
+2:libtype3
+...
+
+For example, the current lib_list contains:
+
+0:base
+1:blas
+2:lapack
+
+It is no coincidence that these name the three directories found at the root
+level of the FLAME repository's 'src' directory. Naming these library 'types'
+is important because it further partitions the source files included in the
+various 'leaf' types. In example, one would wish to separate the 'flamec'
+source code that is bound for the 'base' library from the 'flamec' source code
+that will is bound for the 'lapack' library.
+
+
+More on ignore_list, leaf_list, and lib_list
+--------------------------------------------
+
+The leaf_list and lib_list files work together to help the gen-make-frag.sh 
+script deterministically append source code to the appropriate makefile 
+variables. For example, if source code is found in base/flamec/obj, it is 
+appended to the MK_BASE_FLAMEC_SRC makefile variable. If source code is found
+in lapack/decomp/QR/lapack2flame, then these source files are appended to 
+MK_LAPACK_LAPACK2FLAME_SRC. Every time gen-make-frag.sh enters or leaves a 
+directory, it checks the name of the directory agains the lib and leaf lists
+to see if it should modify the current makefile fragment source variable name.
+(which acts as a 'stack' structure in some ways). In this way, source code is
+always appended to the right variable that is then accessible from the 
+top-level Makefile.
+
+Notice, however, that a directory's exclusion from the leaf and/or lib lists
+will NOT prevent gen-make-frag.sh from descending into it to create a makefile
+fragment. Rather, the script will simply ignore any source code present in
+the directory and continue recursing. In contrast, including a file in the
+ignore_list will cause gen-make-frag.sh to entirely skip over the directory and
+forgo recursing into any directory by that name.
+
+

@@ -1,0 +1,305 @@
+To: opensource@cs.utexas.edu
+From: field@cs.utexas.edu
+Subject: Co-op Open Source Software Competition submission
+
+---------------------------------------------------------------------
+
+Category:
+
+Faculty/Staff
+
+---------------------------------------------------------------------
+
+Team members:
+
+Ernie Chan
+Graduate Research Assistant (student, PhD program)
+Department of Computer Sciences
+echan@cs.utexas.edu
+(Enrolled in PhD program since Fall 2005.)
+
+Robert A. van de Geijn
+Professor
+Department of Computer Sciences
+rvdg@cs.utexas.edu
+(Original founder and Principle Investigator of FLAME project.)
+
+Field G. Van Zee
+Research Engineering/Scientist Associate II
+Department of Computer Sciences
+field@cs.utexas.edu
+(Employed under current title since June 2006 and previously as GRA since 2004.)
+
+---------------------------------------------------------------------
+
+Name of submitted software:
+
+libflame
+
+---------------------------------------------------------------------
+
+Brief overview:
+
+The objective of the FLAME project is to transform the development of
+dense linear algebra libraries from an art reserved for experts to a
+science that can be understood by novice and expert alike. Rather than
+being only a library, the project encompasses a new notation for
+expressing algorithms, a methodology for systematic derivation of
+algorithms, Application Program Interfaces (APIs) for representing the
+algorithms in code, and tools for mechanical derivation, implementation
+and analysis of algorithms. Interfaces to high-performance sequential
+and multithreaded implementations are also provided.
+
+---------------------------------------------------------------------
+
+Justification:
+
+Real-world instances of linear algebra are ubiquitous, with non-trivial 
+applications found in countless disciplines, including (but certainly not 
+limited to) most of the classic natural sciences such as chemistry and 
+physics, virtually every flavor of engineering, acoustics and signal 
+processing, applied statistics, and even social sciences and economics. 
+Our reliance on computers to help us perform linear algebra computations
+is undeniable.
+But our productivity hinges upon our ability to effectively implement these
+operations in software.
+
+Linear algebra software has been available under various free and 
+public domain licenses since the 1970's.
+The University of Tennessee at Knoxville led the effort to standardize
+interfaces to linear algebra software routines, resulting in so-called
+"reference" implementations to the Basic Linear Algebra Subprograms (BLAS),
+the Linear Algebra Package (LAPACK), and the Scalable Linear Algebra
+Package (ScaLAPACK), with each serving as a building block to the next.
+Over time, these packages became widely accepted both inside and outside
+the scientific computing community.
+However, in the decades since their inception, the face of computing has
+changed considerably.
+Fortran-77 is no longer the dominant language for programming scientific
+applications (let alone applications that employ linear algebra).
+Vector computers have been replaced by architectures with multiple levels
+of cache.
+CPU speeds have increased much faster than memory, making it more difficult
+to amortize the cost of memory transactions over subsequent computation.
+And recently, chips with multiple processing cores have become the norm
+due to the growing infeasibility of speeding up a single microprocessor.
+This paradigm shift has significant programmability implications, as it
+will force developers to parallelize their code if they wish to realize
+performance gains with newer processors.
+
+In recent years, the FLAME research group has identified several critical 
+shortcomings in the products of the BLAS, LAPACK, and ScaLAPACK projects, 
+which we have documented extensively in our various publications.
+The FLAME project addresses these shortcomings by providing a modern
+alternative library package, libflame, released as free software under the
+Lesser General Public License (LGPL).
+What follows is an enumeration of the features of libflame, with
+comparisons to the traditional BLAS/LAPACK libraries when appropriate.
+
+* A solution based on fundamental computer science
+The FLAME project advocates a new approach to developing linear algebra
+libraries. 
+Algorithms are obtained systematically according to rigorous principles
+of formal derivation. 
+These methods are based on fundamental theorems of computer science to
+guarantee that the resulting algorithm is also correct. 
+In addition, the FLAME methodology uses a new, more stylized notation 
+for expressing loop-based linear algebra algorithms. 
+This notation closely resembles how algorithms are naturally illustrated 
+with pictures. 
+(See Figures 1 and 2(left) at http://www.cs.utexas.edu/users/flame/co-op/) 
+
+* Object-based abstractions and API
+The BLAS, LAPACK, and ScaLAPACK projects place backward compatibility 
+as a high priority, which hinders progress towards adopting modern
+software engineering principles such as object abstraction. 
+libflame is built around opaque structures that hide implementation details
+of matrices, such as leading dimensions, and exports object-based
+programming interfaces to operate upon these structures. 
+Likewise, FLAME algorithms are expressed (and coded) in terms of smaller
+operations on sub-partitions of the matrix operands.
+This abstraction facilitates programming without array or loop indices, 
+which allows the user to avoid painful index-related programming errors 
+altogether. 
+Figure 2 at http://www.cs.utexas.edu/users/flame/co-op/ compares the
+coding styles of libflame and LAPACK, highlighting the inherent elegance
+of FLAME code and its striking resemblance to the corresponding FLAME
+algorithm shown in Figure 1. 
+This similarity is quite intentional, as it preserves the clarity of the
+original algorithm as it would be illustrated on a white-board or in a
+publication.
+
+* Educational value
+Aside from the potential to introduce students to formal algorithm 
+derivation, FLAME serves as an excellent vehicle for teaching linear 
+algebra algorithms in a classroom setting. 
+The clean abstractions afforded by the API also make FLAME ideally suited 
+for instruction of high-performance linear algebra courses at the 
+undergraduate and graduate level. 
+Dr. Robert van de Geijn routinely uses FLAME in his linear algebra and
+numerical analysis courses. 
+Some colleagues of the FLAME project are even beginning to use the 
+notation to teach classes elsewhere around the country, including 
+Timothy Mattson of Intel Corporation. 
+Historically, the BLAS/LAPACK style of coding has been used in these
+settings. 
+However, coding in this manner tends to obscure the algorithms;
+students often get bogged down debugging the frustrating errors that 
+often result from indexing directly into arrays that represent the 
+matrices. (See Figure 2 cited above.)
+
+* A complete dense linear algebra framework
+Like LAPACK, libflame provides ready-made implementations of common linear 
+algebra operations. 
+The implementations found in libflame mirror many of those found in the 
+BLAS and LAPACK packages. 
+However, unlike LAPACK, libflame provides a framework for building 
+complete custom linear algebra codes.
+We believe such an environment is more useful as it allows the user to
+quickly prototype a linear algebra solution to fit the needs of his
+application.  
+
+* High performance
+In our publications and performance graphs, we do our best to dispel the
+myth that user- and programmer-friendly linear algebra codes cannot yield
+high performance.
+Our FLAME implementations of operations such as Cholesky
+factorization and Triangular Inversion often outperform the corresponding
+implementations available in the LAPACK library. 
+Figure 3 (http://www.cs.utexas.edu/users/flame/co-op/) shows an example
+of the performance increase possible by using libflame compared to LAPACK. 
+Many instances of the libflame performance advantage result from the 
+fact that LAPACK provides only one variant (algorithm) of every operation, 
+while libflame provides all known variants. 
+This allows the user and/or library developer to choose which algorithmic
+variant is most appropriate for a given situation.
+libflame relies only on the presence of a core set of highly optimized
+unblocked routines to perform the small sub-problems found in FLAME
+algorithm codes. 
+
+* Dependency-aware multithreaded parallelism
+Until recently, the authors of the BLAS and LAPACK advocated getting 
+shared-memory parallelism from LAPACK routines by simply linking to 
+multithreaded BLAS. 
+This low-level solution requires no changes to LAPACK code but also
+suffers from sharp limitations in terms of efficiency and scalability
+for small- and medium-sized matrix problems.
+The fundamental bottleneck to introducing parallelism directly within 
+many algorithms is the web of data dependencies that inevitably exists
+between sub-problems. 
+The libflame project has developed a runtime system, SuperMatrix, to
+detect and analyze dependencies found within FLAME algorithms-by-blocks
+(algorithms whose sub-problems operate only on block operands). 
+Once dependencies are known, the system schedules sub-operations to 
+independent threads of execution.
+This system is completely abstracted from the algorithm that is being
+parallelized and requires virtually no change to the algorithm code,
+but at the same time exposes abundant high-level parallelism.
+The most recent version of LAPACK does not offer any similar mechanism.
+
+* Support for hierarchical storage-by-blocks
+Storing matrices by blocks, a concept advocated years ago by Fred 
+Gustavson of IBM, often yields performance gains through improved spatial 
+locality. 
+Instead of representing matrices as a single linear array of data with a 
+prescribed leading dimension as legacy libraries require (for column- or
+row-major order), the storage scheme is encoded into the matrix object. 
+Here, internal elements refer recursively to child objects that represent 
+sub-matrices. 
+Currently, libflame provides a subset of the conventional API that supports 
+hierarchical matrices, allowing users to create and manage such matrix 
+objects as well as convert between storage-by-blocks and conventional 
+"flat" storage schemes. 
+
+* Advanced build system
+From its early revisions, libflame distributions have been bundled with a
+robust build system, featuring automatic makefile creation and a
+configuration script conforming to GNU standards (allowing the user to run
+the "./configure; make; make install" sequence common to many open source
+software projects). 
+Without any user input, the configure script searches for and chooses
+compilers based on a pre-defined preference order for each architecture. 
+The user may request specific compilers via the configure interface, or 
+enable other non-default features of libflame such as custom memory 
+alignment, multithreading (via POSIX threads or OpenMP), compiler options 
+(debugging symbols, warnings, optimizations), and memory leak detection. 
+The reference BLAS and LAPACK libraries provide no configuration
+support and require the user to manually modify a makefile with
+appropriate references to compilers and compiler options depending on the
+host architecture.
+
+---------------------------------------------------------------------
+
+Files included with this email:
+
+ - README.txt
+
+ - INSTALL.txt
+
+ - FLAME_API.pdf
+
+The source code may be found at the following URL as a gzipped tarball:
+
+ - http://www.cs.utexas.edu/users/flame/co-op/libflame.tar.gz
+
+README.txt provides brief overview of the software while INSTALL.txt explains
+how to configure, build, and install the library as well as run an example
+program.
+
+---------------------------------------------------------------------
+
+Additional documentation:
+
+The attached PDF file FLAME_API.pdf provides a thorough discussion of
+the FLAME Application Program Interfaces. This document was published
+in ACM Transactions on Mathematical Software in March 2005. While the
+material is somewhat dated, the Appendix should give the reader a
+somewhat broader taste of the functions found in libflame. 
+
+We are in the process of writing a book to fully document all of the
+programming interfaces available in libflame. Unfortunately, this book
+is in its early stages and would not be of use to the judges of this
+competition. However, we do have a URL to automatically-generated
+doxygen documentation: 
+
+http://www.cs.utexas.edu/users/flame/libflame/html/
+
+This website provides a browsable list of all the files and functions
+found in libflame along with a directory map of the source tree.  
+
+In terms of keystrokes, the FLAME code in Figure 2(left) cited earlier
+may not appear to be easier to code than the equivalent Fortran-77
+implementation, even if the FLAME code looks more pleasing. Remarkably,
+most FLAME code is never written by hand. We employ a web tool called
+Spark, which generates code skeletons for FLAME algorithms given a few
+simple inputs. This web interface helps developers quickly prototype
+FLAME algorithms. Spark can be accessed by visiting:
+
+http://www.cs.utexas.edu/users/flame/Spark/
+
+Note that Spark was designed as a tool to aid FLAME developers rather than
+a portal for summoning fully-functional linear algebra implementations.
+Still, many users may be unaccustomed to programming without indices. We
+have been developing a Wiki page to explain many fundamental linear algebra
+concepts using FLAME notation. The website serves as an online tutorial,
+designed to acquaint novices with the advantages of coding using libflame:
+
+http://www.linearalgebrawiki.org/
+
+The FLAME project encompasses research involving many aspects of numerical
+linear algebra. libflame started as a repository for the working prototypes
+that resulted from these research projects and, over time, matured into a
+complete set of linear algebra implementations. Our group frequently
+publishes its findings at conferences and in scientific journals. Copies of
+all of these publications may be found at: 
+
+http://www.cs.utexas.edu/users/flame/Publications/index.html
+
+In closing, we thank you for your consideration in the Co-op Open Source
+Software Competition!
+
+The core FLAME developers,
+Ernie Chan
+Robert A. van de Geijn
+Field G. Van Zee
+

@@ -1,0 +1,38 @@
+#
+# test directory makefile
+#
+
+FNAME        := supermatrix
+
+SRC_PATH     := ..
+OBJ_PATH     := .
+
+LIB_PATH     := $(HOME)/flame/lib
+INC_PATH     := $(HOME)/flame/include
+
+FLAME        := $(LIB_PATH)/libflame.a
+BLAS         := -Wl,-rpath,$(TACC_MKL_LIB) -I$(TACC_MKL_INC) -L$(TACC_MKL_LIB) -Wl,--start-group -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -Wl,--end-group
+#BLAS         := $(LIB_PATH)/libgoto2.a
+
+CC           := icc
+LINKER       := $(CC)
+CFLAGS       := -I$(SRC_PATH) -I$(INC_PATH) -O3
+LDFLAGS      := -lm -lpthread -openmp -L/opt/apps/intel/11.1/fc/lib/intel64 -L/usr/lib/gcc/x86_64-redhat-linux/4.1.2 -L/usr/lib/gcc/x86_64-redhat-linux/4.1.2/../../../../lib64 -L/lib/../lib64 -L/usr/lib/../lib64 -lifport -lifcore -limf -lsvml -lm -lipgo -lirc -lirc_s -ldl
+
+TEST_BIN     := $(FNAME).x
+TEST_OBJS    := $(patsubst $(SRC_PATH)/%.c, $(OBJ_PATH)/%.o, $(wildcard $(SRC_PATH)/*.c))
+
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+compile: $(TEST_OBJS)
+	$(LINKER) $(TEST_OBJS) $(LDFLAGS) $(FLAME) $(BLAS) -o $(TEST_BIN)
+
+run:
+	./$(TEST_BIN) < input
+
+clean:
+	rm -f *.o *~ core *.x
+
+remove:
+	rm ./results/*.m

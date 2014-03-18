@@ -1,0 +1,262 @@
+
+\documentclass{article}
+
+\usepackage{ifthen}\input{flatex}        % include all the FLaTeX commands
+\markboth{Field G. Van Zee}{}
+
+\begin{document}
+
+\resetsteps      % Reset all the commands to create a blank worksheet  
+
+% Define the operation to be computed
+
+\renewcommand{\operation}{ C := A^T B + C }
+
+% Step 1a: Precondition 
+
+\renewcommand{\precondition}{
+  C = \hat{C}
+}
+
+% Step 1b: Postcondition 
+
+\renewcommand{\postcondition}{ 
+  C
+  =
+  A^T B + \hat{C}
+}
+
+% Step 2: Invariant 
+% Note: Right-hand side of equalities must be updated appropriately
+
+\renewcommand{\invariant}{
+  C = A_{T}^T B_{T} + \hat{C}
+}
+
+% Step 3: Loop-guard 
+
+\renewcommand{\guard}{
+  m( A_T ) < m( A )
+}
+
+% Step 4: Initialize 
+
+\renewcommand{\partitionings}{
+  $
+  A \rightarrow
+  \FlaTwoByOne{A_{T}}
+              {A_{B}}
+  $
+,
+  $
+  B \rightarrow
+  \FlaTwoByOne{B_{T}}
+              {B_{B}}
+  $
+}
+
+\renewcommand{\partitionsizes}{
+$ A_{T} $ has $ 0 $ rows,
+$ B_{T} $ has $ 0 $ rows
+}
+
+% Step 5a: Repartition the operands 
+
+\renewcommand{\blocksize}{b}
+
+\renewcommand{\repartitionings}{
+$
+  \FlaTwoByOne{ A_T }
+              { A_B }
+\rightarrow
+  \FlaThreeByOneB{A_0}
+                 {A_1}
+                 {A_2}
+$
+,
+$
+  \FlaTwoByOne{ B_T }
+              { B_B }
+\rightarrow
+  \FlaThreeByOneB{B_0}
+                 {B_1}
+                 {B_2}
+$
+}
+
+\renewcommand{\repartitionsizes}{
+$ A_1 $ has $ b $ rows,
+$ B_1 $ has $ b $ rows}
+
+% Step 5b: Move the double lines 
+
+\renewcommand{\moveboundaries}{
+$
+  \FlaTwoByOne{ A_T }
+              { A_B }
+\leftarrow
+  \FlaThreeByOneT{A_0}
+                 {A_1}
+                 {A_2}
+$
+,
+$
+  \FlaTwoByOne{ B_T }
+              { B_B }
+\leftarrow
+  \FlaThreeByOneT{B_0}
+                 {B_1}
+                 {B_2}
+$
+}
+
+% Step 6: State after repartitioning
+% Note: The below needs editing!!!
+
+\renewcommand{\beforeupdate}{
+  C = A_{0}^T B_{0} + \hat{C}
+}
+
+% Step 7: State after moving of double lines
+% Note: The below needs editing!!!
+
+\renewcommand{\afterupdate}{
+  C = A_{0}^T B_{0} + A_{1}^T B_{1} + \hat{C}
+}
+
+% Step 8: Insert the updates required to change the 
+%         state from that given in Step 6 to that given in Step 7
+% Note: The below needs editing!!!
+
+\renewcommand{\update}{
+$
+  \begin{array}{l}
+    C := A_{1}^T B_{1} + \hat{C} \\
+  \end{array}
+$
+}
+
+\begin{figure}[tbp]
+
+\begin{center}     % center the algorithm on the page 
+\footnotesize      % make the font smaller so things fit on a page 
+ 
+\worksheet         % this command generates the worksheet using the 
+                   % commands that were defined between the \resetsteps 
+                   % and the worksheet command 
+\end{center} 
+ 
+% The following command creates a caption for the figure. 
+ 
+\caption{ Worksheet for deriving the blocked algorithm for 
+$\operation$ (Variant 5).} 
+ 
+ 
+% The following command creates a label so that the figure can 
+% be referenced by its number by inserting  
+%  \ref{FLA_Gemm_tn:ws_blk_var5} in the \LaTeX source 
+ 
+\label{FLA_Gemm_tn:ws_blk_var5} 
+ 
+\end{figure} 
+
+% Redefine some of the commands so that references to original
+% contents are removed.
+
+
+% Step 4: Redefine Initialize 
+
+\renewcommand{\partitionings}{
+  $
+  A \rightarrow
+  \FlaTwoByOne{A_{T}}
+              {A_{B}}
+  $
+,
+  $
+  B \rightarrow
+  \FlaTwoByOne{B_{T}}
+              {B_{B}}
+  $
+}
+
+\renewcommand{\partitionsizes}{
+$ A_{T} $ has $ 0 $ rows,
+$ B_{T} $ has $ 0 $ rows
+}
+
+% Step 5a: Repartition the operands 
+
+\renewcommand{\blocksize}{b}
+
+\renewcommand{\repartitionings}{
+$
+  \FlaTwoByOne{ A_T }
+              { A_B }
+\rightarrow
+  \FlaThreeByOneB{A_0}
+                 {A_1}
+                 {A_2}
+$
+,
+$
+  \FlaTwoByOne{ B_T }
+              { B_B }
+\rightarrow
+  \FlaThreeByOneB{B_0}
+                 {B_1}
+                 {B_2}
+$
+}
+
+\renewcommand{\repartitionsizes}{
+$ A_1 $ has $ b $ rows,
+$ B_1 $ has $ b $ rows}
+
+% Step 5b: Move the double lines 
+
+\renewcommand{\moveboundaries}{
+$
+  \FlaTwoByOne{ A_T }
+              { A_B }
+\leftarrow
+  \FlaThreeByOneT{A_0}
+                 {A_1}
+                 {A_2}
+$
+,
+$
+  \FlaTwoByOne{ B_T }
+              { B_B }
+\leftarrow
+  \FlaThreeByOneT{B_0}
+                 {B_1}
+                 {B_2}
+$
+}
+
+\begin{figure}[tbp]
+
+\begin{center}     % center the algorithm on the page 
+ 
+\FlaAlgorithm     % this command generates the algorithm 
+\end{center} 
+ 
+% The following command creates a caption for the figure. 
+ 
+\caption{Blocked algorithm for 
+$\operation$ (Variant 5).} 
+ 
+ 
+% The following command creates a label so that the figure can 
+% be referenced by its number by inserting  
+%  \ref{FLA_Gemm_tn:alg_blk_var5} in the \LaTeX source 
+ 
+\label{FLA_Gemm_tn:alg_blk_var5} 
+ 
+\end{figure} 
+
+\end{document}
+
+
+

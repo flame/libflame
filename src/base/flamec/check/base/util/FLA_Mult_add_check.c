@@ -1,0 +1,31 @@
+
+#include "FLAME.h"
+
+FLA_Error FLA_Mult_add_check( FLA_Obj alpha, FLA_Obj beta, FLA_Obj gamma )
+{
+  FLA_Error e_val;
+
+  e_val = FLA_Check_floating_object( alpha );
+  FLA_Check_error_code( e_val );
+
+  e_val = FLA_Check_floating_object( beta );
+  FLA_Check_error_code( e_val );
+
+  e_val = FLA_Check_floating_object( gamma );
+  FLA_Check_error_code( e_val );
+
+  e_val = FLA_Check_if_scalar( alpha );
+  FLA_Check_error_code( e_val );
+
+  e_val = FLA_Check_if_scalar( beta );
+  FLA_Check_error_code( e_val );
+
+  e_val = FLA_Check_if_scalar( gamma );
+  FLA_Check_error_code( e_val );
+
+  e_val = FLA_Check_nonconstant_object( gamma );
+  FLA_Check_error_code( e_val );
+
+  return FLA_SUCCESS;
+}
+

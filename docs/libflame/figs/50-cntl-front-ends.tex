@@ -1,0 +1,79 @@
+\begin{figure}[t]
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+% --------------------------------------
+{\sc chol} front-end for conventional storage & {\sc chol} front-end for hierarchical storage \\ \hline
+% --------------------------------------
+\begin{minipage}[t]{3in}
+{\tiny
+\begin{verbatim}
+#include "FLAME.h"
+
+extern fla_chol_t* fla_chol_cntl;
+extern fla_chol_t* fla_chol_cntl2;
+
+FLA_Error FLA_Chol( FLA_Uplo uplo, FLA_Obj A )
+{
+  FLA_Error r_val;
+
+  // Check parameters.
+  if ( FLA_Check_error_level() >= FLA_MIN_ERROR_CHECKING )
+    FLA_Chol_check( uplo, A );
+
+  // Invoke FLA_Chol_internal() with the a control tree for sequential
+  // execution with conventional storage.
+  r_val = FLA_Chol_internal( uplo, A, fla_chol_cntl2 );
+
+  return r_val;
+}
+\end{verbatim}
+}
+\end{minipage}
+&
+\begin{minipage}[t]{3in}
+{\tt \tiny
+\begin{verbatim}
+#include "FLAME.h"
+
+#ifdef FLA_ENABLE_SUPERMATRIX
+extern fla_chol_t* flash_sm_chol_cntl;
+#endif
+extern fla_chol_t* flash_chol_cntl;
+
+FLA_Error FLASH_Chol( FLA_Uplo uplo, FLA_Obj A )
+{
+  FLA_Error r_val;
+
+  // Check parameters.
+  if ( FLA_Check_error_level() >= FLA_MIN_ERROR_CHECKING )
+    FLA_Chol_check( uplo, A );
+
+  // Begin a parallel region.
+  FLASH_Queue_begin();
+
+  // Enqueue tasks via a SuperMatrix-aware control tree.
+  r_val = FLA_Chol_internal( uplo, A, flash_sm_chol_cntl );
+
+  // End the parallel region.
+  FLASH_Queue_end();
+
+  return r_val;
+}
+\end{verbatim}
+}
+\end{minipage}
+\\
+% --------------------------------------
+ & \\ \hline
+% --------------------------------------
+\end{tabular}
+\end{center}
+\caption{
+Front-end routines for Cholesky factorization with conventional storage (left)
+and hierarchical storage (right).
+Notice that {\tt FLASH\_Chol()} is capable of invoking both sequential and
+parallel (SuperMatrix) execution types.
+}
+\label{fig:cntl-front-ends}
+\end{figure}

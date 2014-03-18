@@ -1,0 +1,259 @@
+
+#include "blis1.h"
+
+void bl1_sher2( uplo1_t uplo, conj1_t conj, int m, float* alpha, float* x, int incx, float* y, int incy, float* a, int a_rs, int a_cs )
+{
+	bl1_ssyr2( uplo,
+	           m,
+	           alpha,
+	           x, incx,
+	           y, incy,
+	           a, a_rs, a_cs );
+}
+
+void bl1_dher2( uplo1_t uplo, conj1_t conj, int m, double* alpha, double* x, int incx, double* y, int incy, double* a, int a_rs, int a_cs )
+{
+	bl1_dsyr2( uplo,
+	           m,
+	           alpha,
+	           x, incx,
+	           y, incy,
+	           a, a_rs, a_cs );
+}
+
+void bl1_cher2( uplo1_t uplo, conj1_t conj, int m, scomplex* alpha, scomplex* x, int incx, scomplex* y, int incy, scomplex* a, int a_rs, int a_cs )
+{
+	int       m_save    = m;
+	scomplex* a_save    = a;
+	int       a_rs_save = a_rs;
+	int       a_cs_save = a_cs;
+	scomplex* x_conj;
+	scomplex* y_conj;
+	int       incx_conj;
+	int       incy_conj;
+	int       lda, inca;
+
+	// Return early if possible.
+	if ( bl1_zero_dim1( m ) ) return;
+
+	// If necessary, allocate, initialize, and use a temporary contiguous
+	// copy of the matrix rather than the original matrix.
+	bl1_ccreate_contigmr( uplo,
+	                      m,
+	                      m,
+	                      a_save, a_rs_save, a_cs_save,
+	                      &a,     &a_rs,     &a_cs );
+
+	// Initialize with values assuming column-major storage.
+	lda  = a_cs;
+	inca = a_rs;
+
+	// If A is a row-major matrix, then we can use the underlying column-major
+	// BLAS implementation by fiddling with the parameters.
+	if ( bl1_is_row_storage( a_rs, a_cs ) )
+	{
+		bl1_swap_ints( lda, inca );
+		bl1_toggle_uplo( uplo );
+		bl1_toggle_conj( conj );
+	}
+
+	// Initialize with values assuming no conjugation of ( x * y' ) or
+	// ( y * x' ).
+	x_conj    = x;
+	incx_conj = incx;
+	y_conj    = y;
+	incy_conj = incy;
+
+	// We want to handle the case where ( x * y' ) and ( y * x' ) are
+	// conjugated, but without explicitly conjugating the matrices. To do
+	// so, we leverage the fact that computing the products conj( x * y' )
+	// and conj( y * x' ) is equivalent to computing ( conj(x) * conj(y)' )
+	// and ( conj(y) * conj(x)' ), respectively.
+	if ( bl1_is_conj( conj ) )
+	{
+		x_conj    = bl1_callocv( m );
+		incx_conj = 1;
+
+		y_conj    = bl1_callocv( m );
+		incy_conj = 1;
+
+		bl1_ccopyv( BLIS1_CONJUGATE,
+                    m,
+                    x,      incx,
+                    x_conj, incx_conj );
+
+		bl1_ccopyv( BLIS1_CONJUGATE,
+                    m,
+                    y,      incy,
+                    y_conj, incy_conj );
+	}
+
+	bl1_cher2_blas( uplo,
+	                m,
+	                alpha,
+	                x_conj, incx_conj,
+	                y_conj, incy_conj,
+	                a,      lda );
+
+	// Free the temporary conjugated x and y vectors.
+	if ( bl1_is_conj( conj ) )
+	{
+		bl1_cfree( x_conj );
+		bl1_cfree( y_conj );
+	}
+
+	// Free the temporary contiguous matrix.
+	bl1_cfree_saved_contigm( m_save,
+	                         m_save,
+	                         a_save, a_rs_save, a_cs_save,
+	                         &a,     &a_rs,     &a_cs );
+}
+
+void bl1_zher2( uplo1_t uplo, conj1_t conj, int m, dcomplex* alpha, dcomplex* x, int incx, dcomplex* y, int incy, dcomplex* a, int a_rs, int a_cs )
+{
+	int       m_save    = m;
+	dcomplex* a_save    = a;
+	int       a_rs_save = a_rs;
+	int       a_cs_save = a_cs;
+	dcomplex* x_conj;
+	dcomplex* y_conj;
+	int       incx_conj;
+	int       incy_conj;
+	int       lda, inca;
+
+	// Return early if possible.
+	if ( bl1_zero_dim1( m ) ) return;
+
+	// If necessary, allocate, initialize, and use a temporary contiguous
+	// copy of the matrix rather than the original matrix.
+	bl1_zcreate_contigmr( uplo,
+	                      m,
+	                      m,
+	                      a_save, a_rs_save, a_cs_save,
+	                      &a,     &a_rs,     &a_cs );
+
+	// Initialize with values assuming column-major storage.
+	lda  = a_cs;
+	inca = a_rs;
+
+	// If A is a row-major matrix, then we can use the underlying column-major
+	// BLAS implementation by fiddling with the parameters.
+	if ( bl1_is_row_storage( a_rs, a_cs ) )
+	{
+		bl1_swap_ints( lda, inca );
+		bl1_toggle_uplo( uplo );
+		bl1_toggle_conj( conj );
+	}
+
+	// Initialize with values assuming no conjugation of ( x * y' ) or
+	// ( y * x' ).
+	x_conj    = x;
+	incx_conj = incx;
+	y_conj    = y;
+	incy_conj = incy;
+
+	// We want to handle the case where ( x * y' ) and ( y * x' ) are
+	// conjugated, but without explicitly conjugating the matrices. To do
+	// so, we leverage the fact that computing the products conj( x * y' )
+	// and conj( y * x' ) is equivalent to computing ( conj(x) * conj(y)' )
+	// and ( conj(y) * conj(x)' ), respectively.
+	if ( bl1_is_conj( conj ) )
+	{
+		x_conj    = bl1_zallocv( m );
+		incx_conj = 1;
+
+		y_conj    = bl1_zallocv( m );
+		incy_conj = 1;
+
+		bl1_zcopyv( BLIS1_CONJUGATE,
+                    m,
+                    x,      incx,
+                    x_conj, incx_conj );
+
+		bl1_zcopyv( BLIS1_CONJUGATE,
+                    m,
+                    y,      incy,
+                    y_conj, incy_conj );
+	}
+
+	bl1_zher2_blas( uplo,
+	                m,
+	                alpha,
+	                x_conj, incx_conj,
+	                y_conj, incy_conj,
+	                a,      lda );
+
+	// Free the temporary conjugated x and y vectors.
+	if ( bl1_is_conj( conj ) )
+	{
+		bl1_zfree( x_conj );
+		bl1_zfree( y_conj );
+	}
+
+	// Free the temporary contiguous matrix.
+	bl1_zfree_saved_contigm( m_save,
+	                         m_save,
+	                         a_save, a_rs_save, a_cs_save,
+	                         &a,     &a_rs,     &a_cs );
+}
+
+// --- Classic routine wrappers ---
+
+void bl1_cher2_blas( uplo1_t uplo, int m, scomplex* alpha, scomplex* x, int incx, scomplex* y, int incy, scomplex* a, int lda )
+{
+#ifdef BLIS1_ENABLE_CBLAS_INTERFACES
+	enum CBLAS_ORDER cblas_order = CblasColMajor;
+	enum CBLAS_UPLO  cblas_uplo;
+
+	bl1_param_map_to_netlib_uplo( uplo, &cblas_uplo );
+
+	cblas_cher2( cblas_order,
+	             cblas_uplo,
+	             m,
+	             alpha,
+	             x, incx,
+	             y, incy,
+	             a, lda );
+#else
+	char blas_uplo;
+
+	bl1_param_map_to_netlib_uplo( uplo, &blas_uplo );
+
+	F77_cher2( &blas_uplo,
+	           &m,
+	           alpha,
+	           x, &incx,
+	           y, &incy,
+	           a, &lda );
+#endif
+}
+
+void bl1_zher2_blas( uplo1_t uplo, int m, dcomplex* alpha, dcomplex* x, int incx, dcomplex* y, int incy, dcomplex* a, int lda )
+{
+#ifdef BLIS1_ENABLE_CBLAS_INTERFACES
+	enum CBLAS_ORDER cblas_order = CblasColMajor;
+	enum CBLAS_UPLO  cblas_uplo;
+
+	bl1_param_map_to_netlib_uplo( uplo, &cblas_uplo );
+
+	cblas_zher2( cblas_order,
+	             cblas_uplo,
+	             m,
+	             alpha,
+	             x, incx,
+	             y, incy,
+	             a, lda );
+#else
+	char blas_uplo;
+
+	bl1_param_map_to_netlib_uplo( uplo, &blas_uplo );
+
+	F77_zher2( &blas_uplo,
+	           &m,
+	           alpha,
+	           x, &incx,
+	           y, &incy,
+	           a, &lda );
+#endif
+}
+

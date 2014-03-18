@@ -1,0 +1,300 @@
+
+\documentclass{article}
+
+\usepackage{ifthen}\input{flatex}        % include all the FLaTeX commands
+\markboth{Field G. Van Zee}{}
+
+\begin{document}
+
+\resetsteps      % Reset all the commands to create a blank worksheet  
+
+% Define the operation to be computed
+
+\renewcommand{\operation}{ C := A A^T + C }
+
+% Step 1a: Precondition 
+
+\renewcommand{\precondition}{
+  C = \hat{C}
+}
+
+% Step 1b: Postcondition 
+
+\renewcommand{\postcondition}{ 
+  C
+  =
+  A A^T + \hat{C}
+}
+
+% Step 2: Invariant 
+% Note: Right-hand side of equalities must be updated appropriately
+
+\renewcommand{\invariant}{
+  \FlaTwoByTwo{C_{TL}}{C_{TR}}
+              {C_{BL}}{C_{BR}} =
+  \FlaTwoByTwo{ \hat{C}_{TL} }{             \hat{C}_{TR} }
+              { \hat{C}_{BL} }{ A_B A_B^T + \hat{C}_{BR} }
+}
+
+% Step 3: Loop-guard 
+
+\renewcommand{\guard}{
+  m( A_B ) < m( A )
+}
+
+% Step 4: Initialize 
+
+\renewcommand{\partitionings}{
+  $
+  A \rightarrow
+  \FlaTwoByOne{A_{T}}
+              {A_{B}}
+  $
+,
+  $
+  C \rightarrow
+  \FlaTwoByTwo{C_{TL}}{C_{TR}}
+              {C_{BL}}{C_{BR}}
+  $
+,
+\\ 
+  $
+  \hat{C} \rightarrow
+  \FlaTwoByTwo{\hat{C}_{TL}}{\hat{C}_{TR}}
+              {\hat{C}_{BL}}{\hat{C}_{BR}}
+  $
+}
+
+\renewcommand{\partitionsizes}{
+$ A_{B} $ has $ 0 $ rows,
+$ C_{BR} $ is $ 0 \times 0 $,
+$ \hat{C}_{BR} $ is $ 0 \times 0 $
+}
+
+% Step 5a: Repartition the operands 
+
+\renewcommand{\repartitionings}{
+$
+  \FlaTwoByOne{ A_T }
+              { A_B }
+\rightarrow
+  \FlaThreeByOneT{A_0}
+                 {a_1^T}
+                 {A_2}
+$
+,
+$
+  \FlaTwoByTwo{C_{TL}}{C_{TR}}
+              {C_{BL}}{C_{BR}}
+  \rightarrow
+  \FlaThreeByThreeTL{C_{00}}{c_{01}}{C_{02}}
+                    {c_{10}^T}{\gamma_{11}}{c_{12}^T}
+                    {C_{20}}{c_{21}}{C_{22}}
+$,
+\\ 
+$
+  \FlaTwoByTwo{\hat{C}_{TL}}{\hat{C}_{TR}}
+              {\hat{C}_{BL}}{\hat{C}_{BR}}
+  \rightarrow
+  \FlaThreeByThreeTL{\hat{C}_{00}}{\hat{c}_{01}}{\hat{C}_{02}}
+                    {\hat{c}_{10}^T}{\hat{\gamma}_{11}}{\hat{c}_{12}^T}
+                    {\hat{C}_{20}}{\hat{c}_{21}}{\hat{C}_{22}}
+$}
+
+\renewcommand{\repartitionsizes}{
+$ a_1 $ has $ 1 $ row,
+  $ \gamma_{11} $ is $ 1 \times 1 $
+,
+  $ \hat{\gamma}_{11} $ is $ 1 \times 1 $
+}
+
+% Step 5b: Move the double lines 
+
+\renewcommand{\moveboundaries}{
+$
+  \FlaTwoByOne{ A_T }
+              { A_B }
+\leftarrow
+  \FlaThreeByOneB{A_0}
+                 {a_1^T}
+                 {A_2}
+$
+,
+$
+  \FlaTwoByTwo{C_{TL}}{C_{TR}}
+              {C_{BL}}{C_{BR}}
+  \leftarrow
+  \FlaThreeByThreeBR{C_{00}}{c_{01}}{C_{02}}
+                    {c_{10}^T}{\gamma_{11}}{c_{12}^T}
+                    {C_{20}}{c_{21}}{C_{22}}
+$,
+\\ 
+$
+  \FlaTwoByTwo{\hat{C}_{TL}}{\hat{C}_{TR}}
+              {\hat{C}_{BL}}{\hat{C}_{BR}}
+  \leftarrow
+  \FlaThreeByThreeBR{\hat{C}_{00}}{\hat{c}_{01}}{\hat{C}_{02}}
+                    {\hat{c}_{10}^T}{\hat{\gamma}_{11}}{\hat{c}_{12}^T}
+                    {\hat{C}_{20}}{\hat{c}_{21}}{\hat{C}_{22}}
+$}
+
+% Step 6: State after repartitioning
+% Note: The below needs editing!!!
+
+\renewcommand{\beforeupdate}{
+  \FlaThreeByThreeTL{C_{00}}{c_{01}}{C_{02}}
+                    {c_{10}^T}{\gamma_{11}}{c_{12}^T}
+                    {C_{20}}{c_{21}}{C_{22}}
+=
+  \FlaThreeByThreeBR{ \hat{C}_{00}   }{ \hat{c}_{01}      }{             \hat{C}_{02}   }
+                    { \hat{c}_{10}^T }{ \hat{\gamma}_{11} }{             \hat{c}_{12}^T }
+                    { \hat{C}_{20}   }{ \hat{c}_{21}      }{ A_2 A_2^T + \hat{C}_{22}   }
+}
+
+% Step 7: State after moving of double lines
+% Note: The below needs editing!!!
+
+\renewcommand{\afterupdate}{
+  \FlaThreeByThreeBR{C_{00}}{c_{01}}{C_{02}}
+                    {c_{10}^T}{\gamma_{11}}{c_{12}^T}
+                    {C_{20}}{c_{21}}{C_{22}}
+=
+  \FlaThreeByThreeBR{ \hat{C}_{00}   }{             \hat{c}_{01}      }{             \hat{C}_{02}   }
+                    { \hat{c}_{10}^T }{ a_1^T a_1 + \hat{\gamma}_{11} }{             \hat{c}_{12}^T }
+                    { \hat{C}_{20}   }{ A_2 a_1   + \hat{c}_{21}      }{ A_2 A_2^T + \hat{C}_{22}   }
+}
+
+% Step 8: Insert the updates required to change the 
+%         state from that given in Step 6 to that given in Step 7
+% Note: The below needs editing!!!
+
+\renewcommand{\update}{
+$
+  \begin{array}{l}
+    c_{21}        := c_{21}        + A_2 a_1    \\
+    \gamma_{11}^T := \gamma_{11}^T + a_1^T a_1  \\
+  \end{array}
+$
+}
+
+\begin{figure}[tbp]
+
+\begin{center}     % center the algorithm on the page 
+\footnotesize      % make the font smaller so things fit on a page 
+ 
+\worksheet         % this command generates the worksheet using the 
+                   % commands that were defined between the \resetsteps 
+                   % and the worksheet command 
+\end{center} 
+ 
+% The following command creates a caption for the figure. 
+ 
+\caption{ Worksheet for deriving the unblocked algorithm for 
+$\operation$ (Variant 3).} 
+ 
+ 
+% The following command creates a label so that the figure can 
+% be referenced by its number by inserting  
+%  \ref{FLA_Syrk_ln:ws_unb_var3} in the \LaTeX source 
+ 
+\label{FLA_Syrk_ln:ws_unb_var3} 
+ 
+\end{figure} 
+
+% Redefine some of the commands so that references to original
+% contents are removed.
+
+
+% Step 4: Redefine Initialize 
+
+\renewcommand{\partitionings}{
+  $
+  A \rightarrow
+  \FlaTwoByOne{A_{T}}
+              {A_{B}}
+  $
+,
+  $
+  C \rightarrow
+  \FlaTwoByTwo{C_{TL}}{C_{TR}}
+              {C_{BL}}{C_{BR}}
+  $
+}
+
+\renewcommand{\partitionsizes}{
+$ A_{B} $ has $ 0 $ rows,
+$ C_{BR} $ is $ 0 \times 0 $
+}
+
+% Step 5a: Repartition the operands 
+
+\renewcommand{\repartitionings}{
+$
+  \FlaTwoByOne{ A_T }
+              { A_B }
+\rightarrow
+  \FlaThreeByOneT{A_0}
+                 {a_1^T}
+                 {A_2}
+$
+,
+$
+  \FlaTwoByTwo{C_{TL}}{C_{TR}}
+              {C_{BL}}{C_{BR}}
+  \rightarrow
+  \FlaThreeByThreeTL{C_{00}}{c_{01}}{C_{02}}
+                    {c_{10}^T}{\gamma_{11}}{c_{12}^T}
+                    {C_{20}}{c_{21}}{C_{22}}
+$}
+
+\renewcommand{\repartitionsizes}{
+$ a_1 $ has $ 1 $ row,
+  $ \gamma_{11} $ is $ 1 \times 1 $
+}
+
+% Step 5b: Move the double lines 
+
+\renewcommand{\moveboundaries}{
+$
+  \FlaTwoByOne{ A_T }
+              { A_B }
+\leftarrow
+  \FlaThreeByOneB{A_0}
+                 {a_1^T}
+                 {A_2}
+$
+,
+$
+  \FlaTwoByTwo{C_{TL}}{C_{TR}}
+              {C_{BL}}{C_{BR}}
+  \leftarrow
+  \FlaThreeByThreeBR{C_{00}}{c_{01}}{C_{02}}
+                    {c_{10}^T}{\gamma_{11}}{c_{12}^T}
+                    {C_{20}}{c_{21}}{C_{22}}
+$}
+
+\begin{figure}[tbp]
+
+\begin{center}     % center the algorithm on the page 
+ 
+\FlaAlgorithm     % this command generates the algorithm 
+\end{center} 
+ 
+% The following command creates a caption for the figure. 
+ 
+\caption{Unblocked algorithm for 
+$\operation$ (Variant 3).} 
+ 
+ 
+% The following command creates a label so that the figure can 
+% be referenced by its number by inserting  
+%  \ref{FLA_Syrk_ln:alg_unb_var3} in the \LaTeX source 
+ 
+\label{FLA_Syrk_ln:alg_unb_var3} 
+ 
+\end{figure} 
+
+\end{document}
+
+
+

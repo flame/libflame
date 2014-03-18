@@ -1,0 +1,155 @@
+
+#
+# config.mk
+# @configure_input@
+#
+# Field G. Van Zee
+#
+# Variable definitions needed by the top-level Makefile.
+# 
+
+
+# Only include this block of code once
+ifndef CONFIG_MK_INCLUDED
+CONFIG_MK_INCLUDED := yes
+
+
+
+#
+# --- Build definitions -------------------------------------------------------
+#
+
+# This variable will identify the machine architecture (ie: x86_64, ia64, etc.)
+# It will be used to construct a string that is appended to the libflame
+# library name.
+ARCH                           := @fla_host_cpu@
+
+# The install prefix tell us where to install the libraries and header file
+# directory. Notice that we support the use of DESTDIR so that advanced users
+# may install to a temporary location.
+INSTALL_PREFIX                 := $(DESTDIR)@prefix@
+
+# Variables corresponding to other configure-time options.
+FLA_ENABLE_VERBOSE_MAKE_OUTPUT := @fla_enable_verbose_make_output@
+FLA_ENABLE_STATIC_BUILD        := @fla_enable_static_build@
+FLA_ENABLE_DYNAMIC_BUILD       := @fla_enable_dynamic_build@
+FLA_ENABLE_MAX_ARG_LIST_HACK   := @fla_enable_max_arg_list_hack@
+FLA_ENABLE_BUILTIN_BLAS        := @fla_enable_builtin_blas@
+FLA_ENABLE_LAPACK2FLAME        := @fla_enable_lapack2flame@
+FLA_MULTITHREADING_MODEL       := @fla_multithreading_model@
+
+
+
+
+#
+# --- Utility program definitions ---------------------------------------------
+#
+
+SH         := /bin/sh
+MV         := mv
+CP         := cp
+CAT        := cat
+MKDIR      := mkdir -p
+RM         := rm
+RM_F       := rm -f
+RM_RF      := rm -rf
+SYMLINK    := ln -sf
+FIND       := @FIND@
+TOUCH      := touch
+XARGS      := xargs
+CTAGS      := ctags
+ETAGS      := etags
+RANLIB     := @RANLIB@
+INSTALL    := @INSTALL@
+MAIL       := mail
+EMPTY_FILE := /dev/null
+
+
+
+
+#
+# --- Development tools definitions -------------------------------------------
+#
+
+# --- Determine the C compiler and related flags ---
+CC           := @CC@
+CPPROCFLAGS  := @DEFS@ @fla_blis_flags@
+CMISCFLAGS   := @fla_c_lang_flags@ @fla_c_openmp_flags@ @fla_c_prof_flags@
+CDBGFLAGS    := @fla_c_debug_flags@
+CWARNFLAGS   := @fla_c_warning_flags@
+COPTFLAGS    := @fla_c_opt_flags@
+CVECFLAGS    := @fla_c_sse_flags@
+
+# Add position-independent code flag if building a dynamic library.
+ifeq ($(FLA_ENABLE_DYNAMIC_BUILD),yes)
+CMISCFLAGS   += -fPIC
+endif
+
+# Add explicit C99 support.
+#CMISCFLAGS   += -std=c99
+
+# Aggregate all of the flags into two groups: one for optimizable code, and
+# one for code that should not be optimized.
+CFLAGS       := $(CDBGFLAGS) $(COPTFLAGS) $(CVECFLAGS) $(CWARNFLAGS) $(CMISCFLAGS) $(CPPROCFLAGS)
+CFLAGS_NOOPT := $(CDBGFLAGS) $(CWARNFLAGS) $(CMISCFLAGS) $(CPPROCFLAGS)
+
+# If the user requested that he supplement configure's CFLAGS with this own,
+# add them in.
+# *** Notice that we ALSO modify the 'no optimization' set of flags.
+#     THIS IS DANGEROUS. THE USER MUST TAKE CARE NOT TO ADD "EXTRA FLAGS"
+#     THAT WOULD DISRUPT THE NUMERICAL PROPERTIES OF SLAMCH/DLAMCH. ***
+ifeq (@fla_with_extra_cflags@,yes)
+CFLAGS       += @fla_extra_cflags@
+CFLAGS_NOOPT += @fla_extra_cflags@
+endif
+
+# If the user provided his own CFLAGS, allow them to override our own.
+# *** Notice that we ALSO modify the 'no optimization' set of flags.
+#     THIS IS DANGEROUS. THE USER MUST TAKE CARE NOT TO ADD "EXTRA FLAGS"
+#     THAT WOULD DISRUPT THE NUMERICAL PROPERTIES OF SLAMCH/DLAMCH. ***
+ifneq (@fla_userdef_cflags@,)
+CFLAGS       := @CFLAGS@
+CFLAGS_NOOPT := @CFLAGS@
+endif
+
+
+# --- Determine the C preprocessor ---
+CPP          := cpp
+CPPFLAGS     := @DEFS@
+
+
+# --- Determine the archiver and related flags ---
+AR               := @AR@
+ARFLAGS          := cru
+AR_ARG_LIST_FILE := ar_arg_list
+AR_OBJ_LIST_FILE := ar_obj_list
+
+
+# --- Determine the linker and related flags ---
+LINKER       := $(CC)
+ifeq (@fla_multithreading_model@, pthreads)
+LDFLAGS      := @fla_c_prof_flags@ @LDFLAGS@ @FLIBS@ -lpthread
+else
+ifeq (@fla_multithreading_model@, openmp)
+LDFLAGS      := @fla_c_prof_flags@ @LDFLAGS@ @FLIBS@ @fla_c_openmp_flags@
+else
+LDFLAGS      := @fla_c_prof_flags@ @LDFLAGS@ @FLIBS@
+endif
+endif
+
+
+
+
+#
+# --- send-thanks target definitions ------------------------------------------
+#
+
+THANKS_MSG_SUBJECT := "Thanks!"
+THANKS_MSG_BODY    := "Happy user."
+THANKS_MSG_EMAIL   := flame_thanks@cs.utexas.edu
+
+
+
+
+# end of ifndef CONFIG_MK_INCLUDED conditional block
+endif

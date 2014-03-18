@@ -1,0 +1,315 @@
+\begin{figure*}[p]
+\begin{center}
+\begin{tabular}{ | p{0.5in} I c | c |} \hline
+{\footnotesize Operation}
+& Before & After \\ \whline
+& & \\
+{\footnotesize Broadcast} &
+{\footnotesize
+$
+\begin{array}{ c | c | c | c }
+\mbox{Node 0 } &
+\mbox{Node 1 } &
+\mbox{Node 2 } &
+\mbox{Node 3 } \\ \hline
+x & 
+& 
+& 
+\end{array}
+$
+}
+&
+{\footnotesize
+$
+\begin{array}{ c | c | c | c }
+\mbox{Node 0 } &
+\mbox{Node 1 } &
+\mbox{Node 2 } &
+\mbox{Node 3 } \\ \hline
+x & x & x & x 
+\end{array}
+$
+}
+\\ 
+& & \\ \hline
+& & \\
+{\footnotesize Reduce(-to-one)}
+&
+{\footnotesize
+$
+\begin{array}{ c | c | c | c }
+\mbox{Node 0 } &
+\mbox{Node 1 } &
+\mbox{Node 2 } &
+\mbox{Node 3 } \\ \hline
+x^{(0)} & 
+x^{(1)} & 
+x^{(2)} & 
+x^{(3)}
+\end{array}
+$
+}
+&
+{\footnotesize
+$
+\begin{array}{ c | c | c | c }
+\mbox{Node 0 } &
+\mbox{Node 1 } &
+\mbox{Node 2 } &
+\mbox{Node 3 } \\ \hline
+\sum_j x^{(j)} & & & \\
+\end{array}
+$
+}
+\\ 
+& & \\ \whline
+& & \\
+{\footnotesize Scatter} &
+{\footnotesize
+$
+\begin{array}{ c | c | c | c }
+\mbox{Node 0 } &
+\mbox{Node 1 } &
+\mbox{Node 2 } &
+\mbox{Node 3 } \\ \hline
+x_0 & 
+& 
+& 
+\\
+x_1 & 
+& 
+& 
+\\
+x_2 & 
+& 
+& 
+\\
+x_3 & 
+& 
+& 
+\end{array}
+$
+}
+&
+{\footnotesize
+$
+\begin{array}{ c | c | c | c }
+\mbox{Node 0 } &
+\mbox{Node 1 } &
+\mbox{Node 2 } &
+\mbox{Node 3 } \\ \hline
+x_0 & 
+& 
+& 
+\\
+& 
+x_1 & 
+& 
+\\
+& 
+& 
+x_2 & 
+\\
+& 
+& 
+& 
+x_3
+\end{array}
+$
+}
+\\ 
+& & \\ \hline
+& & \\
+{\footnotesize Gather} &
+{\footnotesize
+$
+\begin{array}{ c | c | c | c }
+\mbox{Node 0 } &
+\mbox{Node 1 } &
+\mbox{Node 2 } &
+\mbox{Node 3 } \\ \hline
+x_0 & 
+& 
+& 
+\\
+& 
+x_1 & 
+& 
+\\
+& 
+& 
+x_2 & 
+\\
+& 
+& 
+& 
+x_3
+\end{array}
+$
+}
+&
+{\footnotesize
+$
+\begin{array}{ c | c | c | c }
+\mbox{Node 0 } &
+\mbox{Node 1 } &
+\mbox{Node 2 } &
+\mbox{Node 3 } \\ \hline
+
+x_0 & 
+& 
+& 
+\\
+x_1 & 
+& 
+& 
+\\
+x_2 & 
+& 
+& 
+\\
+x_3 & 
+& 
+& 
+\end{array}
+$
+}
+\\ 
+& & \\ \whline
+& & \\
+{\footnotesize Allgather} &
+{\footnotesize
+$
+\begin{array}{ c | c | c | c }
+\mbox{Node 0 } &
+\mbox{Node 1 } &
+\mbox{Node 2 } &
+\mbox{Node 3 } \\ \hline
+x_0 & 
+& 
+& 
+ \\
+& 
+x_1 & 
+& 
+\\
+& 
+& 
+x_2 & 
+\\
+& 
+& 
+& 
+x_3 
+\end{array}
+$
+}
+&
+{\footnotesize
+$
+\begin{array}{ c | c | c | c }
+\mbox{Node 0 } &
+\mbox{Node 1 } &
+\mbox{Node 2 } &
+\mbox{Node 3 } \\ \hline
+x_0 & 
+x_0 & 
+x_0 & 
+x_0 \\
+x_1 & 
+x_1 & 
+x_1 & 
+x_1 \\
+x_2 & 
+x_2 & 
+x_2 & 
+x_2 \\
+x_3 & 
+x_3 & 
+x_3 & 
+x_3 
+\end{array}
+$
+}
+\\ 
+& & \\ \hline
+& & \\
+{\footnotesize Reduce-scatter} &
+{\footnotesize
+$
+\begin{array}{ c | c | c | c }
+\mbox{Node 0 } &
+\mbox{Node 1 } &
+\mbox{Node 2 } &
+\mbox{Node 3 } \\ \hline
+x_0^{(0)} & 
+x_0^{(1)} & 
+x_0^{(2)} & 
+x_0^{(3)} \\
+x_1^{(0)} & 
+x_1^{(1)} & 
+x_1^{(2)} & 
+x_1^{(3)} \\
+x_2^{(0)} & 
+x_2^{(1)} & 
+x_2^{(2)} & 
+x_2^{(3)} \\
+x_3^{(0)} & 
+x_3^{(1)} & 
+x_3^{(2)} & 
+x_3^{(3)} 
+\end{array}
+$
+}
+&
+{\footnotesize
+$
+\begin{array}{ c | c | c | c }
+\mbox{Node 0 } &
+\mbox{Node 1 } &
+\mbox{Node 2 } &
+\mbox{Node 3 } \\ \hline
+\sum_j x_0^{(j)} & & & \\
+& \sum_j x_1^{(j)} & &  \\
+& & \sum_j x_2^{(j)} & \\
+& & & \sum_j x_3^{(j)}  \\
+\end{array}
+$
+}
+\\ 
+& & \\ \whline
+& & \\
+{\footnotesize Allreduce} &
+{\footnotesize
+$
+\begin{array}{ c | c | c | c }
+\mbox{Node 0 } &
+\mbox{Node 1 } &
+\mbox{Node 2 } &
+\mbox{Node 3 } \\ \hline
+x^{(0)} & 
+x^{(1)} & 
+x^{(2)} & 
+x^{(3)} 
+\end{array}
+$
+}
+&
+{\footnotesize
+$
+\begin{array}{ c | c | c | c }
+\mbox{Node 0 } &
+\mbox{Node 1 } &
+\mbox{Node 2 } &
+\mbox{Node 3 } \\ \hline
+\sum_j x^{(j)}&\sum_j x^{(j)}&\sum_j x^{(j)}&\sum_j x^{(j)} 
+\end{array}
+$
+}
+\\ 
+& & \\ \hline
+\end{tabular}
+\end{center}
+\caption{Collective communications considered in this paper.}
+\label{fig:operations}
+\end{figure*}

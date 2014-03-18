@@ -1,0 +1,71 @@
+\begin{table}
+\begin{center}
+\begin{tabular}{lp{4.2in}}
+{\bf Target} & {\bf Function} \\
+% --------------------------------------
+{\tt all}
+&
+Invoke the \libs target. \\
+% --------------------------------------
+{\tt check}
+&
+Verify that \configure has been run. \\
+% --------------------------------------
+{\tt libs}
+&
+Invoke the {\tt check} target and then build the libflame and
+liblapack2flame library archives. \\
+% --------------------------------------
+{\tt install}
+&
+Invoke the \libs target and then copy the library archives and header
+files to their respective {\tt lib} and {\tt include} subdirectories
+of the install prefix directory, which is {\tt \$HOME/flame} by
+default.
+Also create symbolic links (with {\tt ln -s}) to the library files
+and {\tt include} subdirectory so that the symbolic links do not
+contain the architecture or version strings. \\
+% --------------------------------------
+{\tt install-without-symlinks}
+&
+Similar to \install except that no symbolic links are installed. \\
+% --------------------------------------
+{\tt clean}
+&
+Remove all object files and previously-built library archives from the
+{\tt obj} and {\tt lib} directories for the current build system only.
+(Recall that the curerent build system is written to
+{\tt config.sys\_type}.)
+Build products built for other systems will not be touched. \\
+% --------------------------------------
+{\tt cleanmk}
+&
+Remove all makefile fragments from the source tree. \\
+% --------------------------------------
+{\tt distclean}
+&
+Invoke \cleanns, \cleanmk, and then remove all other intermediate build files
+and directories that are created either by \configure or one of the autotools
+such as \autoconfns. \\
+% --------------------------------------
+{\tt send-thanks}
+&
+Use {\tt mail} to send the libflame developers a short thank-you message. \\
+% --------------------------------------
+\end{tabular}
+\end{center}
+\caption{A list of ``phony'' \make targets defined in the libflame
+\makefilens.
+%Note that this list is not exhaustive.
+%The libflame \makefile defines other phony \make targets that are used
+%internally to aid in the execution of those in this list, and still others
+%that perform functions that are primarily only of interest to libflame
+%developers.
+Note that not all targets guarantee that action will take place.
+Most targets will not fire if \make determines that the target is already
+up-to-date.
+For example, invoking the \clean target will not remove any object files if
+they do not exist.
+}
+\label{fig:make-targets}
+\end{table}

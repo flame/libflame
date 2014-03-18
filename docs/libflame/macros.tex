@@ -1,0 +1,1712 @@
+% Build environment/tools and related items
+\newcommand{\bs}{\backslash}
+\newcommand{\libflame}{\mbox{{\tt libflame}} }
+\newcommand{\libflamens}{\mbox{{\tt libflame}}}
+\newcommand{\lapacktflame}{\mbox{{\tt lapack2flame}} }
+\newcommand{\lapacktflamens}{\mbox{{\tt lapack2flame}}}
+\newcommand{\PATH}{\mbox{{\tt PATH}} }
+\newcommand{\PATHns}{\mbox{{\tt PATH}}}
+\newcommand{\autoconf}{\mbox{{\tt autoconf}} }
+\newcommand{\autoconfns}{\mbox{{\tt autoconf}}}
+\newcommand{\configure}{\mbox{{\tt configure}} }
+\newcommand{\configurens}{\mbox{{\tt configure}}}
+\newcommand{\configurehelp}{\mbox{{\tt ./configure --help}} }
+\newcommand{\configurehelpns}{\mbox{{\tt ./configure --help}}}
+\newcommand{\configguess}{\mbox{{\tt config.guess}} }
+\newcommand{\configguessns}{\mbox{{\tt config.guess}}}
+\newcommand{\runconfigure}{\mbox{{\tt run-configure.sh}} }
+\newcommand{\runconfigurens}{\mbox{{\tt run-configure.sh}}}
+\newcommand{\postconfigure}{\mbox{{\tt post-configure.sh}} }
+\newcommand{\postconfigurens}{\mbox{{\tt post-configure.sh}}}
+\newcommand{\windows}{\mbox{{\tt windows}} }
+\newcommand{\windowsns}{\mbox{{\tt windows}}}
+\newcommand{\configurecmd}{\mbox{{\tt configure.cmd}} }
+\newcommand{\configurecmdns}{\mbox{{\tt configure.cmd}}}
+\newcommand{\gendll}{\mbox{{\tt gendll.cmd}} }
+\newcommand{\gendllns}{\mbox{{\tt gendll.cmd}}}
+\newcommand{\fragmentmk}{\mbox{{\tt .fragment.mk}} }
+\newcommand{\fragmentmkns}{\mbox{{\tt .fragment.mk}}}
+\newcommand{\changelog}{\mbox{{\tt CHANGELOG}} }
+\newcommand{\changelogns}{\mbox{{\tt CHANGELOG}}}
+\newcommand{\bash}{\mbox{{\tt bash}} }
+\newcommand{\bashns}{\mbox{{\tt bash}}}
+\newcommand{\ar}{\mbox{{\tt ar}} }
+\newcommand{\arns}{\mbox{{\tt ar}}}
+\newcommand{\ranlib}{\mbox{{\tt ranlib}} }
+\newcommand{\ranlibns}{\mbox{{\tt ranlib}}}
+\newcommand{\find}{\mbox{{\tt find}} }
+\newcommand{\findns}{\mbox{{\tt find}}}
+\newcommand{\xargs}{\mbox{{\tt xargs}} }
+\newcommand{\xargsns}{\mbox{{\tt xargs}}}
+\newcommand{\make}{\mbox{{\tt make}} }
+\newcommand{\makens}{\mbox{{\tt make}}}
+\newcommand{\gmake}{\mbox{{\tt gmake}} }
+\newcommand{\gmakens}{\mbox{{\tt gmake}}}
+\newcommand{\nmake}{\mbox{{\tt nmake}} }
+\newcommand{\nmakens}{\mbox{{\tt nmake}}}
+\newcommand{\makefile}{\mbox{{\tt Makefile}} }
+\newcommand{\makefilens}{\mbox{{\tt Makefile}}}
+\newcommand{\all}{\mbox{{\tt all}} }
+\newcommand{\allns}{\mbox{{\tt all}}}
+\newcommand{\checkm}{\mbox{{\tt checkm}} }
+\newcommand{\checkmns}{\mbox{{\tt checkm}}}
+\newcommand{\libs}{\mbox{{\tt libs}} }
+\newcommand{\libsns}{\mbox{{\tt libs}}}
+\newcommand{\install}{\mbox{{\tt install}} }
+\newcommand{\installns}{\mbox{{\tt install}}}
+\newcommand{\installwithoutsymlinks}{\mbox{{\tt install-without-symlinks}} }
+\newcommand{\installwithoutsymlinksns}{\mbox{{\tt install-without-symlinks}}}
+\newcommand{\clean}{\mbox{{\tt clean}} }
+\newcommand{\cleanns}{\mbox{{\tt clean}}}
+\newcommand{\cleanmk}{\mbox{{\tt cleanmk}} }
+\newcommand{\cleanmkns}{\mbox{{\tt cleanmk}}}
+\newcommand{\distclean}{\mbox{{\tt distclean}} }
+\newcommand{\distcleanns}{\mbox{{\tt distclean}}}
+\newcommand{\lib}{\mbox{{\tt lib}} }
+\newcommand{\libns}{\mbox{{\tt lib}}}
+\newcommand{\dll}{\mbox{{\tt dll}} }
+\newcommand{\dllns}{\mbox{{\tt dll}}}
+\newcommand{\config}{\mbox{{\tt config}} }
+\newcommand{\configns}{\mbox{{\tt config}}}
+\newcommand{\src}{\mbox{{\tt src}} }
+\newcommand{\srcns}{\mbox{{\tt src}}}
+\newcommand{\includex}{\mbox{{\tt include}} }
+\newcommand{\includens}{\mbox{{\tt include}}}
+\newcommand{\installlib}{\mbox{{\tt install-lib}} }
+\newcommand{\installlibns}{\mbox{{\tt install-lib}}}
+\newcommand{\installdll}{\mbox{{\tt install-dll}} }
+\newcommand{\installdllns}{\mbox{{\tt install-dll}}}
+\newcommand{\installheaders}{\mbox{{\tt install-headers}} }
+\newcommand{\installheadersns}{\mbox{{\tt install-headers}}}
+\newcommand{\cleanconfig}{\mbox{{\tt clean-config}} }
+\newcommand{\cleanconfigns}{\mbox{{\tt clean-config}}}
+\newcommand{\cleanbuild}{\mbox{{\tt clean-build}} }
+\newcommand{\cleanbuildns}{\mbox{{\tt clean-build}}}
+\newcommand{\cleanlog}{\mbox{{\tt clean-log}} }
+\newcommand{\cleanlogns}{\mbox{{\tt clean-log}}}
+\newcommand{\linkargs}{\mbox{{\tt linkargs.txt}} }
+\newcommand{\linkargsns}{\mbox{{\tt linkargs.txt}}}
+
+% Compilers and related items
+\newcommand{\cc}{\mbox{{\tt cc}} }
+\newcommand{\ccns}{\mbox{{\tt cc}}}
+\newcommand{\gcc}{\mbox{{\tt gcc}} }
+\newcommand{\gccns}{\mbox{{\tt gcc}}}
+\newcommand{\icc}{\mbox{{\tt icc}} }
+\newcommand{\iccns}{\mbox{{\tt icc}}}
+\newcommand{\gfortran}{\mbox{{\tt gfortran}} }
+\newcommand{\gfortranns}{\mbox{{\tt gfortran}}}
+\newcommand{\gss}{\mbox{{\tt g77}} }
+\newcommand{\gssns}{\mbox{{\tt g77}}}
+\newcommand{\fss}{\mbox{{\tt f77}} }
+\newcommand{\fssns}{\mbox{{\tt f77}}}
+\newcommand{\fnf}{\mbox{{\tt f95}} }
+\newcommand{\fnfns}{\mbox{{\tt f95}}}
+\newcommand{\ifort}{\mbox{{\tt ifort}} }
+\newcommand{\ifortns}{\mbox{{\tt ifort}}}
+\newcommand{\pathcc}{\mbox{{\tt pathcc}} }
+\newcommand{\pathccns}{\mbox{{\tt pathcc}}}
+\newcommand{\pathfnf}{\mbox{{\tt pathf95}} }
+\newcommand{\pathfnfns}{\mbox{{\tt pathf95}}}
+\newcommand{\xlc}{\mbox{{\tt xlc}} }
+\newcommand{\xlcns}{\mbox{{\tt xlc}}}
+\newcommand{\xlf}{\mbox{{\tt xlf}} }
+\newcommand{\xlfns}{\mbox{{\tt xlf}}}
+
+% Misc. FLAME
+\newcommand{\flameemail}{\mbox{{\tt flame@cs.utexas.edu}} }
+\newcommand{\flameemailns}{\mbox{{\tt flame@cs.utexas.edu}}}
+
+
+% Common parameters
+\newcommand{\A}{\mbox{{\tt A}} }
+\newcommand{\Ans}{\mbox{{\tt A}}}
+\newcommand{\B}{\mbox{{\tt B}} }
+\newcommand{\Bns}{\mbox{{\tt B}}}
+\newcommand{\C}{\mbox{{\tt B}} }
+\newcommand{\Cns}{\mbox{{\tt B}}}
+\newcommand{\falpha}{\mbox{{\tt alpha}} }
+\newcommand{\falphans}{\mbox{{\tt alpha}}}
+\newcommand{\fbeta}{\mbox{{\tt beta}} }
+\newcommand{\fbetans}{\mbox{{\tt beta}}}
+\newcommand{\obj}{\mbox{{\tt obj}} }
+\newcommand{\objns}{\mbox{{\tt obj}}}
+\newcommand{\datatype}{\mbox{{\tt datatype}} }
+\newcommand{\datatypens}{\mbox{{\tt datatype}}}
+\newcommand{\elemtype}{\mbox{{\tt elemtype}} }
+\newcommand{\elemtypens}{\mbox{{\tt elemtype}}}
+\newcommand{\buffer}{\mbox{{\tt buffer}} }
+\newcommand{\bufferns}{\mbox{{\tt buffer}}}
+\newcommand{\fm}{\mbox{{\tt m}} }
+\newcommand{\fmns}{\mbox{{\tt m}}}
+\newcommand{\fk}{\mbox{{\tt k}} }
+\newcommand{\fkns}{\mbox{{\tt k}}}
+\newcommand{\fn}{\mbox{{\tt n}} }
+\newcommand{\fnns}{\mbox{{\tt n}}}
+\newcommand{\rs}{\mbox{{\tt rs}} }
+\newcommand{\rsns}{\mbox{{\tt rs}}}
+\newcommand{\cs}{\mbox{{\tt cs}} }
+\newcommand{\csns}{\mbox{{\tt cs}}}
+\newcommand{\uplo}{\mbox{{\tt uplo}} }
+\newcommand{\uplons}{\mbox{{\tt uplo}}}
+\newcommand{\side}{\mbox{{\tt side}} }
+\newcommand{\sidens}{\mbox{{\tt side}}}
+\newcommand{\trans}{\mbox{{\tt trans}} }
+\newcommand{\transns}{\mbox{{\tt trans}}}
+\newcommand{\transa}{\mbox{{\tt transa}} }
+\newcommand{\transans}{\mbox{{\tt transa}}}
+\newcommand{\transb}{\mbox{{\tt transb}} }
+\newcommand{\transbns}{\mbox{{\tt transb}}}
+\newcommand{\transab}{\mbox{{\tt transab}} }
+\newcommand{\transabns}{\mbox{{\tt transab}}}
+\newcommand{\diag}{\mbox{{\tt diag}} }
+\newcommand{\diagns}{\mbox{{\tt diag}}}
+\newcommand{\quadrant}{\mbox{{\tt quadrant}} }
+\newcommand{\quadrantns}{\mbox{{\tt quadrant}}}
+\newcommand{\conj}{\mbox{{\tt conj}} }
+\newcommand{\conjns}{\mbox{{\tt conj}}}
+\newcommand{\conjalpha}{\mbox{{\tt conjalpha}} }
+\newcommand{\conjalphans}{\mbox{{\tt conjalpha}}}
+\newcommand{\conja}{\mbox{{\tt conja}} }
+\newcommand{\conjans}{\mbox{{\tt conja}}}
+\newcommand{\conjx}{\mbox{{\tt conjx}} }
+\newcommand{\conjxns}{\mbox{{\tt conjx}}}
+\newcommand{\conjy}{\mbox{{\tt conjy}} }
+\newcommand{\conjyns}{\mbox{{\tt conjy}}}
+\newcommand{\conjxy}{\mbox{{\tt conjxy}} }
+\newcommand{\conjxyns}{\mbox{{\tt conjxy}}}
+\newcommand{\norm}{\mbox{{\tt norm}} }
+\newcommand{\normns}{\mbox{{\tt norm}}}
+\newcommand{\normo}{\mbox{{\tt norm1}} }
+\newcommand{\normons}{\mbox{{\tt norm1}}}
+\newcommand{\norminf}{\mbox{{\tt norminf}} }
+\newcommand{\norminfns}{\mbox{{\tt norminf}}}
+\newcommand{\amax}{\mbox{{\tt amax}} }
+\newcommand{\amaxns}{\mbox{{\tt amax}}}
+\newcommand{\frho}{\mbox{{\tt rho}} }
+\newcommand{\frhons}{\mbox{{\tt rho}}}
+\newcommand{\direct}{\mbox{{\tt direct}} }
+\newcommand{\directns}{\mbox{{\tt direct}}}
+\newcommand{\storev}{\mbox{{\tt storev}} }
+\newcommand{\storevns}{\mbox{{\tt storev}}}
+\newcommand{\isgn}{\mbox{{\tt isgn}} }
+\newcommand{\isgnns}{\mbox{{\tt isgn}}}
+\newcommand{\scale}{\mbox{{\tt scale}} }
+\newcommand{\scalens}{\mbox{{\tt scale}}}
+\newcommand{\jobz}{\mbox{{\tt jobz}} }
+\newcommand{\jobzns}{\mbox{{\tt jobz}}}
+\newcommand{\jobu}{\mbox{{\tt jobu}} }
+\newcommand{\jobuns}{\mbox{{\tt jobu}}}
+\newcommand{\jobv}{\mbox{{\tt jobv}} }
+\newcommand{\jobvns}{\mbox{{\tt jobv}}}
+\newcommand{\mb}{\mbox{{\tt mb}} }
+\newcommand{\mbns}{\mbox{{\tt mb}}}
+\newcommand{\nb}{\mbox{{\tt nb}} }
+\newcommand{\nbns}{\mbox{{\tt nb}}}
+\newcommand{\nbalg}{\mbox{{\tt nb\_alg}} }
+\newcommand{\nbalgns}{\mbox{{\tt nb\_alg}}}
+\newcommand{\AT}{\mbox{{\tt AT}} }
+\newcommand{\ATns}{\mbox{{\tt AT}}}
+\newcommand{\AB}{\mbox{{\tt AB}} }
+\newcommand{\ABns}{\mbox{{\tt AB}}}
+\newcommand{\AL}{\mbox{{\tt AL}} }
+\newcommand{\ALns}{\mbox{{\tt AL}}}
+\newcommand{\AR}{\mbox{{\tt AR}} }
+\newcommand{\ARns}{\mbox{{\tt AR}}}
+\newcommand{\ATL}{\mbox{{\tt ATL}} }
+\newcommand{\ATR}{\mbox{{\tt ATR}} }
+\newcommand{\ABL}{\mbox{{\tt ABL}} }
+\newcommand{\ABR}{\mbox{{\tt ABR}} }
+\newcommand{\ATLns}{\mbox{{\tt ATL}}}
+\newcommand{\ATRns}{\mbox{{\tt ATR}}}
+\newcommand{\ABLns}{\mbox{{\tt ABL}}}
+\newcommand{\ABRns}{\mbox{{\tt ABR}}}
+\newcommand{\cntl}{\mbox{{\tt cntl}} }
+\newcommand{\cntlns}{\mbox{{\tt cntl}}}
+\newcommand{\bp}{\mbox{{\tt bp}} }
+\newcommand{\bpns}{\mbox{{\tt bp}}}
+\newcommand{\dimtag}{\mbox{{\tt dim\_tag}} }
+\newcommand{\dimtagns}{\mbox{{\tt dim\_tag}}}
+\newcommand{\size}{\mbox{{\tt size}} }
+\newcommand{\sizens}{\mbox{{\tt size}}}
+\newcommand{\val}{\mbox{{\tt val}} }
+\newcommand{\valns}{\mbox{{\tt val}}}
+\newcommand{\ptr}{\mbox{{\tt ptr}} }
+\newcommand{\ptrns}{\mbox{{\tt ptr}}}
+\newcommand{\lockptr}{\mbox{{\tt lock\_ptr}} }
+\newcommand{\lockptrns}{\mbox{{\tt lock\_ptr}}}
+\newcommand{\ilo}{\mbox{{\tt ilo}} }
+\newcommand{\ilons}{\mbox{{\tt ilo}}}
+\newcommand{\ihi}{\mbox{{\tt ihi}} }
+\newcommand{\ihins}{\mbox{{\tt ihi}}}
+\newcommand{\ptype}{\mbox{{\tt ptype}} }
+\newcommand{\ptypens}{\mbox{{\tt ptype}}}
+\newcommand{\fd}{\mbox{{\tt fd}} }
+\newcommand{\fdns}{\mbox{{\tt fd}}}
+\newcommand{\ipiv}{\mbox{{\tt ipiv}} }
+\newcommand{\ipivns}{\mbox{{\tt ipiv}}}
+\newcommand{\rval}{\mbox{{\tt r\_val}} }
+\newcommand{\rvalns}{\mbox{{\tt r\_val}}}
+\newcommand{\nthreads}{\mbox{{\tt n\_threads}} }
+\newcommand{\nthreadsns}{\mbox{{\tt n\_threads}}}
+\newcommand{\blocksizes}{\mbox{{\tt blocksizes}} }
+\newcommand{\blocksizesns}{\mbox{{\tt blocksizes}}}
+\newcommand{\bmn}{\mbox{{\tt b\_mn}} }
+\newcommand{\bmnns}{\mbox{{\tt b\_mn}}}
+\newcommand{\bmni}{\mbox{{\tt b\_mn[i]}} }
+\newcommand{\bmnins}{\mbox{{\tt b\_mn[i]}}}
+\newcommand{\bm}{\mbox{{\tt b\_m}} }
+\newcommand{\bmns}{\mbox{{\tt b\_m}}}
+\newcommand{\bmi}{\mbox{{\tt b\_m[i]}} }
+\newcommand{\bmins}{\mbox{{\tt b\_m[i]}}}
+\newcommand{\bn}{\mbox{{\tt b\_n}} }
+\newcommand{\bnns}{\mbox{{\tt b\_n}}}
+\newcommand{\bni}{\mbox{{\tt b\_n[i]}} }
+\newcommand{\bnins}{\mbox{{\tt b\_n[i]}}}
+\newcommand{\bflash}{\mbox{{\tt b\_flash}} }
+\newcommand{\bflashns}{\mbox{{\tt b\_flash}}}
+\newcommand{\balg}{\mbox{{\tt b\_alg}} }
+\newcommand{\balgns}{\mbox{{\tt b\_alg}}}
+\newcommand{\depth}{\mbox{{\tt depth}} }
+\newcommand{\depthns}{\mbox{{\tt depth}}}
+\newcommand{\objcur}{\mbox{{\tt obj\_cur}} }
+\newcommand{\objcurns}{\mbox{{\tt obj\_cur}}}
+\newcommand{\objnew}{\mbox{{\tt obj\_new}} }
+\newcommand{\objnewns}{\mbox{{\tt obj\_new}}}
+\newcommand{\Hcur}{\mbox{{\tt H\_cur}} }
+\newcommand{\Hcurns}{\mbox{{\tt H\_cur}}}
+\newcommand{\Hnew}{\mbox{{\tt H\_new}} }
+\newcommand{\Hnewns}{\mbox{{\tt H\_new}}}
+\newcommand{\by}{\times}
+\newcommand{\hsp}{\hspace{0.1in}}
+\newcommand{\fnull}{\mbox{{\tt NULL}} }
+\newcommand{\fnullns}{\mbox{{\tt NULL}}}
+\newcommand{\inv}{\mbox{{\tt inv}} }
+\newcommand{\nblocks}{\mbox{{\tt n\_blocks}} }
+
+\newcommand{\matrixtype}{\mbox{{\tt matrix\_type}} }
+\newcommand{\matrixtypens}{\mbox{{\tt matrix\_type}}}
+\newcommand{\variant}{\mbox{{\tt variant}} }
+\newcommand{\variantns}{\mbox{{\tt variant}}}
+\newcommand{\blocksize}{\mbox{{\tt blocksize}} }
+\newcommand{\blocksizens}{\mbox{{\tt blocksize}}}
+\newcommand{\subgemm}{\mbox{{\tt sub\_gemm}} }
+\newcommand{\subgemmns}{\mbox{{\tt sub\_gemm}}}
+\newcommand{\subgemmo}{\mbox{{\tt sub\_gemm1}} }
+\newcommand{\subgemmons}{\mbox{{\tt sub\_gemm1}}}
+\newcommand{\subgemmtw}{\mbox{{\tt sub\_gemm2}} }
+\newcommand{\subgemmtwns}{\mbox{{\tt sub\_gemm2}}}
+\newcommand{\subhemm}{\mbox{{\tt sub\_hemm}} }
+\newcommand{\subhemmns}{\mbox{{\tt sub\_hemm}}}
+\newcommand{\subherk}{\mbox{{\tt sub\_herk}} }
+\newcommand{\subherkns}{\mbox{{\tt sub\_herk}}}
+\newcommand{\subhertk}{\mbox{{\tt sub\_her2k}} }
+\newcommand{\subhertkns}{\mbox{{\tt sub\_her2k}}}
+\newcommand{\subsymm}{\mbox{{\tt sub\_symm}} }
+\newcommand{\subsymmns}{\mbox{{\tt sub\_symm}}}
+\newcommand{\subsyrk}{\mbox{{\tt sub\_syrk}} }
+\newcommand{\subsyrkns}{\mbox{{\tt sub\_syrk}}}
+\newcommand{\subsyrtk}{\mbox{{\tt sub\_syr2k}} }
+\newcommand{\subsyrtkns}{\mbox{{\tt sub\_syr2k}}}
+\newcommand{\subtrmm}{\mbox{{\tt sub\_trmm}} }
+\newcommand{\subtrmmns}{\mbox{{\tt sub\_trmm}}}
+\newcommand{\subtrsm}{\mbox{{\tt sub\_trsm}} }
+\newcommand{\subtrsmns}{\mbox{{\tt sub\_trsm}}}
+\newcommand{\subchol}{\mbox{{\tt sub\_chol}} }
+\newcommand{\subcholns}{\mbox{{\tt sub\_chol}}}
+\newcommand{\subsylv}{\mbox{{\tt sub\_sylv}} }
+\newcommand{\subsylvns}{\mbox{{\tt sub\_sylv}}}
+\newcommand{\sublyap}{\mbox{{\tt sub\_lyap}} }
+\newcommand{\sublyapns}{\mbox{{\tt sub\_lyap}}}
+\newcommand{\subswap}{\mbox{{\tt sub\_swap}} }
+\newcommand{\subswapns}{\mbox{{\tt sub\_swap}}}
+\newcommand{\subtrans}{\mbox{{\tt sub\_trans}} }
+\newcommand{\subtransns}{\mbox{{\tt sub\_trans}}}
+
+% Scalar constants
+\newcommand{\flaone}{\mbox{{\tt FLA\_ONE}} }
+\newcommand{\flaonens}{\mbox{{\tt FLA\_ONE}}}
+\newcommand{\flazero}{\mbox{{\tt FLA\_ZERO}} }
+\newcommand{\flazerons}{\mbox{{\tt FLA\_ZERO}}}
+\newcommand{\flaminusone}{\mbox{{\tt FLA\_MINUS\_ONE}} }
+\newcommand{\flaminusonens}{\mbox{{\tt FLA\_MINUS\_ONE}}}
+\newcommand{\flatwo}{\mbox{{\tt FLA\_TWO}} }
+\newcommand{\flatwons}{\mbox{{\tt FLA\_TWO}}}
+
+% C datatype names
+\newcommand{\cint}{\mbox{{\tt int}} }
+\newcommand{\cuint}{\mbox{{\tt unsigned int}} }
+\newcommand{\cfloat}{\mbox{{\tt float}} }
+\newcommand{\cdouble}{\mbox{{\tt double}} }
+\newcommand{\cdoublens}{\mbox{{\tt double}}}
+\newcommand{\cdoublep}{\mbox{{\tt double*}} }
+\newcommand{\cdoublepns}{\mbox{{\tt double*}}}
+\newcommand{\sizet}{\mbox{{\tt size\_t}} }
+\newcommand{\sizetns}{\mbox{{\tt size\_t}} }
+\newcommand{\void}{\mbox{{\tt void}} }
+\newcommand{\voidns}{\mbox{{\tt void}}}
+\newcommand{\voidp}{\mbox{{\tt void*}} }
+\newcommand{\voidpns}{\mbox{{\tt void*}}}
+\newcommand{\cintp}{\mbox{{\tt int*}} }
+\newcommand{\cintpns}{\mbox{{\tt int*}}}
+\newcommand{\filep}{\mbox{{\tt FILE*}} }
+\newcommand{\filepns}{\mbox{{\tt FILE*}}}
+
+% datatype names
+\newcommand{\scomplex}{\mbox{{\tt scomplex}} }
+\newcommand{\scomplexns}{\mbox{{\tt scomplex}}}
+\newcommand{\dcomplex}{\mbox{{\tt dcomplex}} }
+\newcommand{\dcomplexns}{\mbox{{\tt dcomplex}}}
+\newcommand{\flabool}{\mbox{{\tt FLA\_Bool}} }
+\newcommand{\flaboolns}{\mbox{{\tt FLA\_Bool}}}
+\newcommand{\flaerror}{\mbox{{\tt FLA\_Error}} }
+\newcommand{\flaerrorns}{\mbox{{\tt FLA\_Error}}}
+\newcommand{\flaquadrant}{\mbox{{\tt FLA\_Quadrant}} }
+\newcommand{\flaquadrantns}{\mbox{{\tt FLA\_Quadrant}}}
+\newcommand{\fladatatype}{\mbox{{\tt FLA\_Datatype}} }
+\newcommand{\fladatatypens}{\mbox{{\tt FLA\_Datatype}}}
+\newcommand{\flaelemtype}{\mbox{{\tt FLA\_Elemtype}} }
+\newcommand{\flaelemtypens}{\mbox{{\tt FLA\_Elemtype}}}
+\newcommand{\flamatrixtype}{\mbox{{\tt FLA\_Matrix\_type}} }
+\newcommand{\flamatrixtypens}{\mbox{{\tt FLA\_Matrix\_type}}}
+\newcommand{\flaside}{\mbox{{\tt FLA\_Side}} }
+\newcommand{\flasidens}{\mbox{{\tt FLA\_Side}}}
+\newcommand{\flauplo}{\mbox{{\tt FLA\_Uplo}} }
+\newcommand{\flauplons}{\mbox{{\tt FLA\_Uplo}}}
+\newcommand{\flatrans}{\mbox{{\tt FLA\_Trans}} }
+\newcommand{\flatransns}{\mbox{{\tt FLA\_Trans}}}
+\newcommand{\flaconj}{\mbox{{\tt FLA\_Conj}} }
+\newcommand{\flaconjns}{\mbox{{\tt FLA\_Conj}}}
+\newcommand{\fladiag}{\mbox{{\tt FLA\_Diag}} }
+\newcommand{\fladiagns}{\mbox{{\tt FLA\_Diag}}}
+\newcommand{\fladimension}{\mbox{{\tt FLA\_Dimension}} }
+\newcommand{\fladimensionns}{\mbox{{\tt FLA\_Dimension}}}
+\newcommand{\flapivottype}{\mbox{{\tt FLA\_Pivot\_type}} }
+\newcommand{\flapivottypens}{\mbox{{\tt FLA\_Pivot\_type}}}
+\newcommand{\fladirect}{\mbox{{\tt FLA\_Direct}} }
+\newcommand{\fladirectns}{\mbox{{\tt FLA\_Direct}}}
+\newcommand{\flastore}{\mbox{{\tt FLA\_Store}} }
+\newcommand{\flastorens}{\mbox{{\tt FLA\_Store}}}
+\newcommand{\flainv}{\mbox{{\tt FLA\_Inv}} }
+\newcommand{\flainvns}{\mbox{{\tt FLA\_Inv}}}
+\newcommand{\flaevdtype}{\mbox{{\tt FLA\_Evd\_type}} }
+\newcommand{\flaevdtypens}{\mbox{{\tt FLA\_Evd\_type}}}
+\newcommand{\flasvdtype}{\mbox{{\tt FLA\_Svd\_type}} }
+\newcommand{\flasvdtypens}{\mbox{{\tt FLA\_Svd\_type}}}
+\newcommand{\flashdataaff}{\mbox{{\tt FLASH\_Data\_aff}} }
+\newcommand{\flashdataaffns}{\mbox{{\tt FLASH\_Data\_aff}}}
+\newcommand{\flashverbose}{\mbox{{\tt FLASH\_Verbose}} }
+\newcommand{\flashverbosens}{\mbox{{\tt FLASH\_Verbose}}}
+\newcommand{\dimt}{\mbox{{\tt dim\_t}} }
+\newcommand{\dimtns}{\mbox{{\tt dim\_t}}}
+\newcommand{\dimtp}{\mbox{{\tt dim\_t*}} }
+\newcommand{\dimtpns}{\mbox{{\tt dim\_t*}}}
+\newcommand{\flalock}{\mbox{{\tt FLA\_Lock}} }
+\newcommand{\flalockns}{\mbox{{\tt FLA\_Lock}}}
+\newcommand{\flalockp}{\mbox{{\tt FLA\_Lock*}} }
+\newcommand{\flalockpns}{\mbox{{\tt FLA\_Lock*}}}
+\newcommand{\uint}{\mbox{{\tt unsigned int}} }
+\newcommand{\uintns}{\mbox{{\tt unsigned int}}}
+
+% Control tree datatypes
+\newcommand{\flablocksizet}{\mbox{{\tt fla\_blocksize\_t}} }
+\newcommand{\flablocksizetns}{\mbox{{\tt fla\_blocksize\_t}}}
+\newcommand{\flagemmt}{\mbox{{\tt fla\_gemm\_t}} }
+\newcommand{\flagemmtns}{\mbox{{\tt fla\_gemm\_t}}}
+\newcommand{\flahemmt}{\mbox{{\tt fla\_hemm\_t}} }
+\newcommand{\flahemmtns}{\mbox{{\tt fla\_hemm\_t}}}
+\newcommand{\flaherkt}{\mbox{{\tt fla\_herk\_t}} }
+\newcommand{\flaherktns}{\mbox{{\tt fla\_herk\_t}}}
+\newcommand{\flahertkt}{\mbox{{\tt fla\_her2k\_t}} }
+\newcommand{\flahertktns}{\mbox{{\tt fla\_her2k\_t}}}
+\newcommand{\flasymmt}{\mbox{{\tt fla\_symm\_t}} }
+\newcommand{\flasymmtns}{\mbox{{\tt fla\_symm\_t}}}
+\newcommand{\flasyrkt}{\mbox{{\tt fla\_syrk\_t}} }
+\newcommand{\flasyrktns}{\mbox{{\tt fla\_syrk\_t}}}
+\newcommand{\flasyrtkt}{\mbox{{\tt fla\_syr2k\_t}} }
+\newcommand{\flasyrtktns}{\mbox{{\tt fla\_syr2k\_t}}}
+\newcommand{\flatrmmt}{\mbox{{\tt fla\_trmm\_t}} }
+\newcommand{\flatrmmtns}{\mbox{{\tt fla\_trmm\_t}}}
+\newcommand{\flatrsmt}{\mbox{{\tt fla\_trsm\_t}} }
+\newcommand{\flatrsmtns}{\mbox{{\tt fla\_trsm\_t}}}
+\newcommand{\flacholt}{\mbox{{\tt fla\_chol\_t}} }
+\newcommand{\flacholtns}{\mbox{{\tt fla\_chol\_t}}}
+\newcommand{\flattmmt}{\mbox{{\tt fla\_ttmm\_t}} }
+\newcommand{\flattmmtns}{\mbox{{\tt fla\_ttmm\_t}}}
+\newcommand{\flalut}{\mbox{{\tt fla\_lu\_t}} }
+\newcommand{\flalutns}{\mbox{{\tt fla\_lu\_t}}}
+\newcommand{\flaqrutt}{\mbox{{\tt fla\_qrut\_t}} }
+\newcommand{\flaqruttns}{\mbox{{\tt fla\_qrut\_t}}}
+\newcommand{\flalqutt}{\mbox{{\tt fla\_lqut\_t}} }
+\newcommand{\flalquttns}{\mbox{{\tt fla\_lqut\_t}}}
+%\newcommand{\flahesst}{\mbox{{\tt fla\_hess\_t}} }
+%\newcommand{\flahesstns}{\mbox{{\tt fla\_hess\_t}}}
+\newcommand{\flatrinvt}{\mbox{{\tt fla\_trinv\_t}} }
+\newcommand{\flatrinvtns}{\mbox{{\tt fla\_trinv\_t}}}
+\newcommand{\flasylvt}{\mbox{{\tt fla\_sylv\_t}} }
+\newcommand{\flasylvtns}{\mbox{{\tt fla\_sylv\_t}}}
+\newcommand{\flalyapt}{\mbox{{\tt fla\_lyap\_t}} }
+\newcommand{\flalyaptns}{\mbox{{\tt fla\_lyap\_t}}}
+\newcommand{\flaspdinvt}{\mbox{{\tt fla\_spdinv\_t}} }
+\newcommand{\flaspdinvtns}{\mbox{{\tt fla\_spdinv\_t}}}
+\newcommand{\flaswapts}{\mbox{{\tt fla\_swap\_t}} }
+\newcommand{\flaswaptsns}{\mbox{{\tt fla\_swap\_t}}}
+\newcommand{\flatransposet}{\mbox{{\tt fla\_tpose\_t}} }
+\newcommand{\flatransposetns}{\mbox{{\tt fla\_tpose\_t}}}
+
+% FLA_Obj
+\newcommand{\flaobj}{\mbox{{\tt FLA\_Obj}} }
+\newcommand{\flaobjp}{\mbox{{\tt FLA\_Obj*}} }
+\newcommand{\flaobjns}{\mbox{{\tt FLA\_Obj}}}
+
+% FLA_Bool
+\newcommand{\true}{\mbox{{\tt TRUE}} }
+\newcommand{\truens}{\mbox{{\tt TRUE}}}
+\newcommand{\false}{\mbox{{\tt FALSE}} }
+\newcommand{\falsens}{\mbox{{\tt FALSE}}}
+
+% FLA_Error (non-specific)
+\newcommand{\flasuccess}{\mbox{{\tt FLA\_SUCCESS}} }
+\newcommand{\flasuccessns}{\mbox{{\tt FLA\_SUCCESS}}}
+\newcommand{\flafailure}{\mbox{{\tt FLA\_FAILURE}} }
+\newcommand{\flafailurens}{\mbox{{\tt FLA\_FAILURE}}}
+
+% FLA_Quadrant
+\newcommand{\flatl}{\mbox{{\tt FLA\_TL}} }
+\newcommand{\flatlns}{\mbox{{\tt FLA\_TL}}}
+\newcommand{\flatr}{\mbox{{\tt FLA\_TR}} }
+\newcommand{\flatrns}{\mbox{{\tt FLA\_TR}}}
+\newcommand{\flabl}{\mbox{{\tt FLA\_BL}} }
+\newcommand{\flablns}{\mbox{{\tt FLA\_BL}}}
+\newcommand{\flabr}{\mbox{{\tt FLA\_BR}} }
+\newcommand{\flabrns}{\mbox{{\tt FLA\_BR}}}
+
+% FLA_Datatype
+\newcommand{\flafloat}{\mbox{{\tt FLA\_FLOAT}} }
+\newcommand{\flafloatns}{\mbox{{\tt FLA\_FLOAT}}}
+\newcommand{\fladouble}{\mbox{{\tt FLA\_DOUBLE}} }
+\newcommand{\fladoublens}{\mbox{{\tt FLA\_DOUBLE}}}
+\newcommand{\flacomplex}{\mbox{{\tt FLA\_COMPLEX}} }
+\newcommand{\flacomplexns}{\mbox{{\tt FLA\_COMPLEX}}}
+\newcommand{\fladoublecomplex}{\mbox{{\tt FLA\_DOUBLE\_COMPLEX}} }
+\newcommand{\fladoublecomplexns}{\mbox{{\tt FLA\_DOUBLE\_COMPLEX}}}
+\newcommand{\flaint}{\mbox{{\tt FLA\_INT}} }
+\newcommand{\flaintns}{\mbox{{\tt FLA\_INT}}}
+\newcommand{\flaconstant}{\mbox{{\tt FLA\_CONSTANT}} }
+\newcommand{\flaconstantns}{\mbox{{\tt FLA\_CONSTANT}}}
+
+% FLA_Elemtype
+\newcommand{\flamatrix}{\mbox{{\tt FLA\_MATRIX}} }
+\newcommand{\flamatrixns}{\mbox{{\tt FLA\_MATRIX}}}
+\newcommand{\flascalar}{\mbox{{\tt FLA\_SCALAR}} }
+\newcommand{\flascalarns}{\mbox{{\tt FLA\_SCALAR}}}
+
+% FLA_Matrix_type
+\newcommand{\flaflat}{\mbox{{\tt FLA\_FLAT}} }
+\newcommand{\flaflatns}{\mbox{{\tt FLA\_FLAT}}}
+\newcommand{\flahier}{\mbox{{\tt FLA\_HIER}} }
+\newcommand{\flahierns}{\mbox{{\tt FLA\_HIER}}}
+
+% FLA_Side
+\newcommand{\flatop}{\mbox{{\tt FLA\_TOP}} }
+\newcommand{\flatopns}{\mbox{{\tt FLA\_TOP}}}
+\newcommand{\flabottom}{\mbox{{\tt FLA\_BOTTOM}} }
+\newcommand{\flabottomns}{\mbox{{\tt FLA\_BOTTOM}}}
+\newcommand{\flaleft}{\mbox{{\tt FLA\_LEFT}} }
+\newcommand{\flaleftns}{\mbox{{\tt FLA\_LEFT}}}
+\newcommand{\flaright}{\mbox{{\tt FLA\_RIGHT}} }
+\newcommand{\flarightns}{\mbox{{\tt FLA\_RIGHT}}}
+
+% FLA_Uplo
+\newcommand{\flalowertriangular}{\mbox{{\tt FLA\_LOWER\_TRIANGULAR}} }
+\newcommand{\flalowertriangularns}{\mbox{{\tt FLA\_LOWER\_TRIANGULAR}}}
+\newcommand{\flauppertriangular}{\mbox{{\tt FLA\_UPPER\_TRIANGULAR}} }
+\newcommand{\flauppertriangularns}{\mbox{{\tt FLA\_UPPER\_TRIANGULAR}}}
+
+% FLA_Trans
+\newcommand{\flanotranspose}{\mbox{{\tt FLA\_NO\_TRANSPOSE}} }
+\newcommand{\flanotransposens}{\mbox{{\tt FLA\_NO\_TRANSPOSE}}}
+\newcommand{\flatranspose}{\mbox{{\tt FLA\_TRANSPOSE}} }
+\newcommand{\flatransposens}{\mbox{{\tt FLA\_TRANSPOSE}}}
+\newcommand{\flaconjtranspose}{\mbox{{\tt FLA\_CONJ\_TRANSPOSE}} }
+\newcommand{\flaconjtransposens}{\mbox{{\tt FLA\_CONJ\_TRANSPOSE}}}
+\newcommand{\flaconjnotranspose}{\mbox{{\tt FLA\_CONJ\_NO\_TRANSPOSE}} }
+\newcommand{\flaconjnotransposens}{\mbox{{\tt FLA\_CONJ\_NO\_TRANSPOSE}}}
+
+% FLA_Conj
+\newcommand{\flanoconjugate}{\mbox{{\tt FLA\_NO\_CONJUGATE}} }
+\newcommand{\flanoconjugatens}{\mbox{{\tt FLA\_NO\_CONJUGATE}}}
+\newcommand{\flaconjugate}{\mbox{{\tt FLA\_CONJUGATE}} }
+\newcommand{\flaconjugatens}{\mbox{{\tt FLA\_CONJUGATE}}}
+
+% FLA_Diag
+\newcommand{\flaunitdiag}{\mbox{{\tt FLA\_UNIT\_DIAG}} }
+\newcommand{\flaunitdiagns}{\mbox{{\tt FLA\_UNIT\_DIAG}}}
+\newcommand{\flanonunitdiag}{\mbox{{\tt FLA\_NONUNIT\_DIAG}} }
+\newcommand{\flanonunitdiagns}{\mbox{{\tt FLA\_NONUNIT\_DIAG}}}
+\newcommand{\flazerodiag}{\mbox{{\tt FLA\_ZERO\_DIAG}} }
+\newcommand{\flazerodiagns}{\mbox{{\tt FLA\_ZERO\_DIAG}}}
+
+% FLA_Dimension
+\newcommand{\fladimensionmin}{\mbox{{\tt FLA\_DIMENSION\_MIN}} }
+\newcommand{\fladimensionminns}{\mbox{{\tt FLA\_DIMENSION\_MIN}}}
+\newcommand{\fladimensionm}{\mbox{{\tt FLA\_DIMENSION\_M}} }
+\newcommand{\fladimensionmns}{\mbox{{\tt FLA\_DIMENSION\_M}}}
+\newcommand{\fladimensionk}{\mbox{{\tt FLA\_DIMENSION\_K}} }
+\newcommand{\fladimensionkns}{\mbox{{\tt FLA\_DIMENSION\_K}}}
+\newcommand{\fladimensionn}{\mbox{{\tt FLA\_DIMENSION\_N}} }
+\newcommand{\fladimensionnns}{\mbox{{\tt FLA\_DIMENSION\_N}}}
+
+% FLA_Pivot_type
+\newcommand{\flanativepivots}{\mbox{{\tt FLA\_NATIVE\_PIVOTS}} }
+\newcommand{\flanativepivotsns}{\mbox{{\tt FLA\_NATIVE\_PIVOTS}}}
+\newcommand{\flalapackpivots}{\mbox{{\tt FLA\_LAPACK\_PIVOTS}} }
+\newcommand{\flalapackpivotsns}{\mbox{{\tt FLA\_LAPACK\_PIVOTS}}}
+
+% FLA_Direct
+\newcommand{\flaforward}{\mbox{{\tt FLA\_FORWARD}} }
+\newcommand{\flaforwardns}{\mbox{{\tt FLA\_FORWARD}}}
+\newcommand{\flabackward}{\mbox{{\tt FLA\_BACKWARD}} }
+\newcommand{\flabackwardns}{\mbox{{\tt FLA\_BACKWARD}}}
+
+% FLA_Store
+\newcommand{\flacolumnwise}{\mbox{{\tt FLA\_COLUMNWISE}} }
+\newcommand{\flacolumnwisens}{\mbox{{\tt FLA\_COLUMNWISE}}}
+\newcommand{\flarowwise}{\mbox{{\tt FLA\_ROWWISE}} }
+\newcommand{\flarowwisens}{\mbox{{\tt FLA\_ROWWISE}}}
+
+% FLA_Inv
+\newcommand{\flanoinverse}{\mbox{{\tt FLA\_NO\_INVERSE}} }
+\newcommand{\flanoinversens}{\mbox{{\tt FLA\_NO\_INVERSE}}}
+\newcommand{\flainverse}{\mbox{{\tt FLA\_INVERSE}} }
+\newcommand{\flainversens}{\mbox{{\tt FLA\_INVERSE}}}
+
+% FLA_Evd_type
+\newcommand{\flaevdwithoutvectors}{\mbox{{\tt FLA\_EVD\_WITHOUT\_VECTORS}} }
+\newcommand{\flaevdwithoutvectorsns}{\mbox{{\tt FLA\_EVD\_WITHOUT\_VECTORS}}}
+\newcommand{\flaevdwithvectors}{\mbox{{\tt FLA\_EVD\_WITH\_VECTORS}} }
+\newcommand{\flaevdwithvectorsns}{\mbox{{\tt FLA\_EVD\_WITH\_VECTORS}}}
+
+% FLA_Svd_type
+\newcommand{\flasvdvectorsallns}{\mbox{{\tt FLA\_SVD\_VECTORS\_ALL}}}
+\newcommand{\flasvdvectorsmincopyns}{\mbox{{\tt FLA\_SVD\_VECTORS\_MIN\_COPY}}}
+\newcommand{\flasvdvectorsminoverwritens}{\mbox{{\tt FLA\_SVD\_VECTORS\_MIN\_OVERWRITE}}}
+\newcommand{\flasvdvectorsnonens}{\mbox{{\tt FLA\_SVD\_VECTORS\_NONE}}}
+
+% FLA_Exec
+\newcommand{\flaexecuteonly}{\mbox{{\tt FLA\_EXECUTE\_ONLY}} }
+\newcommand{\flaexecuteonlyns}{\mbox{{\tt FLA\_EXECUTE\_ONLY}}}
+\newcommand{\flaexecutedref}{\mbox{{\tt FLA\_EXECUTE\_DREF}} }
+\newcommand{\flaexecutedrefns}{\mbox{{\tt FLA\_EXECUTE\_DREF}}}
+\newcommand{\flaenqueuedref}{\mbox{{\tt FLA\_ENQUEUE\_DREF}} }
+\newcommand{\flaenqueuedrefns}{\mbox{{\tt FLA\_ENQUEUE\_DREF}}}
+
+% FLASH_Verbose
+\newcommand{\flashqueueverbosenone}{\mbox{{\tt FLASH\_QUEUE\_VERBOSE\_NONE}} }
+\newcommand{\flashqueueverbosenonens}{\mbox{{\tt FLASH\_QUEUE\_VERBOSE\_NONE}}}
+\newcommand{\flashqueueverbosereadable}{\mbox{{\tt FLASH\_QUEUE\_VERBOSE\_READABLE}} }
+\newcommand{\flashqueueverbosereadablens}{\mbox{{\tt FLASH\_QUEUE\_VERBOSE\_READABLE}}}
+\newcommand{\flashqueueverbosegraphviz}{\mbox{{\tt FLASH\_QUEUE\_VERBOSE\_GRAPHVIZ}} }
+\newcommand{\flashqueueverbosegraphvizns}{\mbox{{\tt FLASH\_QUEUE\_VERBOSE\_GRAPHVIZ}}}
+
+% FLASH_Data_aff
+\newcommand{\flashqueueaffinitynone}{\mbox{{\tt FLASH\_QUEUE\_AFFINITY\_NONE}} }
+\newcommand{\flashqueueaffinitynonens}{\mbox{{\tt FLASH\_QUEUE\_AFFINITY\_NONE}}}
+\newcommand{\flashqueueaffinitytdblockcyclic}{\mbox{{\tt FLASH\_QUEUE\_AFFINITY\_2D\_BLOCK\_CYCLIC}} }
+\newcommand{\flashqueueaffinitytdblockcyclicns}{\mbox{{\tt FLASH\_QUEUE\_AFFINITY\_2D\_BLOCK\_CYCLIC}}}
+\newcommand{\flashqueueaffinityodrowblockcyclic}{\mbox{{\tt FLASH\_QUEUE\_AFFINITY\_1D\_ROW\_BLOCK\_CYCLIC}} }
+\newcommand{\flashqueueaffinityodrowblockcyclicns}{\mbox{{\tt FLASH\_QUEUE\_AFFINITY\_1D\_ROW\_BLOCK\_CYCLIC}}}
+\newcommand{\flashqueueaffinityodcolumnblockcyclic}{\mbox{{\tt FLASH\_QUEUE\_AFFINITY\_1D\_COLUMN\_BLOCK\_CYCLIC}} }
+\newcommand{\flashqueueaffinityodcolumnblockcyclicns}{\mbox{{\tt FLASH\_QUEUE\_AFFINITY\_1D\_COLUMN\_BLOCK\_CYCLIC}}}
+\newcommand{\flashqueueaffinityroundrobin}{\mbox{{\tt FLASH\_QUEUE\_AFFINITY\_ROUND\_ROBIN}} }
+\newcommand{\flashqueueaffinityroundrobinns}{\mbox{{\tt FLASH\_QUEUE\_AFFINITY\_ROUND\_ROBIN}}}
+
+
+% Error checking level
+\newcommand{\flafullerrorchecking}{\mbox{{\tt FLA\_FULL\_ERROR\_CHECKING}} }
+\newcommand{\flafullerrorcheckingns}{\mbox{{\tt FLA\_FULL\_ERROR\_CHECKING}}}
+\newcommand{\flaminerrorchecking}{\mbox{{\tt FLA\_MIN\_ERROR\_CHECKING}} }
+\newcommand{\flaminerrorcheckingns}{\mbox{{\tt FLA\_MIN\_ERROR\_CHECKING}}}
+\newcommand{\flanoerrorchecking}{\mbox{{\tt FLA\_NO\_ERROR\_CHECKING}} }
+\newcommand{\flanoerrorcheckingns}{\mbox{{\tt FLA\_NO\_ERROR\_CHECKING}}}
+
+% variant
+\newcommand{\flasubproblem}{\mbox{{\tt FLA\_SUBPROBLEM}} }
+\newcommand{\flasubproblemns}{\mbox{{\tt FLA\_SUBPROBLEM}}}
+\newcommand{\flablockedvariantone}{\mbox{{\tt FLA\_BLOCKED\_VARIANT1}} }
+\newcommand{\flablockedvariantonens}{\mbox{{\tt FLA\_BLOCKED\_VARIANT1}}}
+\newcommand{\flablockedvarianttwo}{\mbox{{\tt FLA\_BLOCKED\_VARIANT2}} }
+\newcommand{\flablockedvarianttwons}{\mbox{{\tt FLA\_BLOCKED\_VARIANT2}}}
+\newcommand{\flablockedvariantthree}{\mbox{{\tt FLA\_BLOCKED\_VARIANT3}} }
+\newcommand{\flablockedvariantthreens}{\mbox{{\tt FLA\_BLOCKED\_VARIANT3}}}
+\newcommand{\flablockedvariantfour}{\mbox{{\tt FLA\_BLOCKED\_VARIANT4}} }
+\newcommand{\flablockedvariantfourns}{\mbox{{\tt FLA\_BLOCKED\_VARIANT4}}}
+\newcommand{\flablockedvariantfive}{\mbox{{\tt FLA\_BLOCKED\_VARIANT5}} }
+\newcommand{\flablockedvariantfivens}{\mbox{{\tt FLA\_BLOCKED\_VARIANT5}}}
+\newcommand{\flablockedvariantsix}{\mbox{{\tt FLA\_BLOCKED\_VARIANT6}} }
+\newcommand{\flablockedvariantsixns}{\mbox{{\tt FLA\_BLOCKED\_VARIANT6}}}
+\newcommand{\flablockedvariantnine}{\mbox{{\tt FLA\_BLOCKED\_VARIANT9}} }
+\newcommand{\flablockedvariantninens}{\mbox{{\tt FLA\_BLOCKED\_VARIANT9}}}
+\newcommand{\flablockedvariantten}{\mbox{{\tt FLA\_BLOCKED\_VARIANT10}} }
+\newcommand{\flablockedvarianttenns}{\mbox{{\tt FLA\_BLOCKED\_VARIANT10}}}
+\newcommand{\flablockedvarianteightteen}{\mbox{{\tt FLA\_BLOCKED\_VARIANT18}} }
+\newcommand{\flablockedvarianteightteenns}{\mbox{{\tt FLA\_BLOCKED\_VARIANT18}}}
+\newcommand{\flablockedvarianttwenty}{\mbox{{\tt FLA\_BLOCKED\_VARIANT20}} }
+\newcommand{\flablockedvarianttwentyns}{\mbox{{\tt FLA\_BLOCKED\_VARIANT20}}}
+
+% FLA_Error codes (specific)
+\newcommand{\flainvalidside}{\mbox{{\tt FLA\_INVALID\_SIDE}} }
+\newcommand{\flainvaliduplo}{\mbox{{\tt FLA\_INVALID\_UPLO}} }
+\newcommand{\flainvalidtrans}{\mbox{{\tt FLA\_INVALID\_TRANS}} }
+\newcommand{\flainvaliddiag}{\mbox{{\tt FLA\_INVALID\_DIAG}} }
+\newcommand{\flainvalidconj}{\mbox{{\tt FLA\_INVALID\_CONJ}} }
+\newcommand{\flainvaliddirect}{\mbox{{\tt FLA\_INVALID\_DIRECT}} }
+\newcommand{\flainvalidstorev}{\mbox{{\tt FLA\_INVALID\_STOREV}} }
+\newcommand{\flainvaliddatatype}{\mbox{{\tt FLA\_INVALID\_DATATYPE}} }
+\newcommand{\flainvalidfloatingdatatype}{\mbox{{\tt FLA\_INVALID\_FLOATING\_DATATYPE}} }
+\newcommand{\flainvalidintegerdatatype}{\mbox{{\tt FLA\_INVALID\_INTEGER\_DATATYPE}} }
+\newcommand{\flainvalidrealdatatype}{\mbox{{\tt FLA\_INVALID\_REAL\_DATATYPE}} }
+\newcommand{\flainvalidcomplexdatatype}{\mbox{{\tt FLA\_INVALID\_COMPLEX\_DATATYPE}} }
+\newcommand{\flaobjectnotfloatingpoint}{\mbox{{\tt FLA\_OBJECT\_NOT\_FLOATING\_POINT}} }
+\newcommand{\flaobjectnotinteger}{\mbox{{\tt FLA\_OBJECT\_NOT\_INTEGER}} }
+\newcommand{\flaobjectnotreal}{\mbox{{\tt FLA\_OBJECT\_NOT\_REAL}} }
+\newcommand{\flaobjectnotcomplex}{\mbox{{\tt FLA\_OBJECT\_NOT\_COMPLEX}} }
+\newcommand{\flainconsistentobjectprecision}{\mbox{{\tt FLA\_INCONSISTENT\_OBJECT\_PRECISION}} }
+\newcommand{\flainconsistentdatatypes}{\mbox{{\tt FLA\_INCONSISTENT\_DATATYPES}} }
+\newcommand{\flaobjectnotsquare}{\mbox{{\tt FLA\_OBJECT\_NOT\_SQUARE}} }
+\newcommand{\flaobjectnotscalar}{\mbox{{\tt FLA\_OBJECT\_NOT\_SCALAR}} }
+\newcommand{\flaobjectnotvector}{\mbox{{\tt FLA\_OBJECT\_NOT\_VECTOR}} }
+\newcommand{\flanonconformaldimensions}{\mbox{{\tt FLA\_NONCONFORMAL\_DIMENSIONS}} }
+\newcommand{\flaunequalvectorlengths}{\mbox{{\tt FLA\_UNEQUAL\_VECTOR\_LENGTHS}} }
+\newcommand{\flainvalidtransgivendatatype}{\mbox{{\tt FLA\_INVALID\_TRANS\_GIVEN\_DATATYPE}} }
+%\newcommand{\flainvalidhessenbergindices}{\mbox{{\tt FLA\_INVALID\_HESSENBERG\_INDICES}} }
+\newcommand{\flainvalidvectorlength}{\mbox{{\tt FLA\_INVALID\_VECTOR\_LENGTH}} }
+\newcommand{\flanullpointer}{\mbox{{\tt FLA\_NULL\_POINTER}} }
+\newcommand{\flaspecifiedobjdimmismatch}{\mbox{{\tt FLA\_SPECIFIED\_OBJ\_DIM\_MISMATCH}} }
+\newcommand{\flainvalidpivottype}{\mbox{{\tt FLA\_INVALID\_PIVOT\_TYPE}} }
+\newcommand{\flablockhousehdimmismatch}{\mbox{{\tt FLA\_BLOCK\_HOUSEH\_DIM\_MISMATCH}} }
+\newcommand{\flamallocreturnednullpointer}{\mbox{{\tt FLA\_MALLOC\_RETURNED\_NULL\_POINTER}} }
+\newcommand{\flaobjectbasebuffermismatch}{\mbox{{\tt FLA\_OBJECT\_BASE\_BUFFER\_MISMATCH}} }
+\newcommand{\flaadjacentobjectdimmismatch}{\mbox{{\tt FLA\_ADJACENT\_OBJECT\_DIM\_MISMATCH}} }
+\newcommand{\flaobjectsnotverticallyadj}{\mbox{{\tt FLA\_OBJECTS\_NOT\_VERTICALLY\_ADJ}} }
+\newcommand{\flaobjectsnotverticallyaligned}{\mbox{{\tt FLA\_OBJECTS\_NOT\_VERTICALLY\_ALIGNED}} }
+\newcommand{\flaobjectsnothorizontallyadj}{\mbox{{\tt FLA\_OBJECTS\_NOT\_HORIZONTALLY\_ADJ}} }
+\newcommand{\flaobjectsnothorizontallyaligned}{\mbox{{\tt FLA\_OBJECTS\_NOT\_HORIZONTALLY\_ALIGNED}} }
+\newcommand{\flainvalidblocksizevalue}{\mbox{{\tt FLA\_INVALID\_BLOCKSIZE\_VALUE}} }
+\newcommand{\flainvalidblocksizeobj}{\mbox{{\tt FLA\_INVALID\_BLOCKSIZE\_OBJ}} }
+\newcommand{\flaopenreturnederror}{\mbox{{\tt FLA\_OPEN\_RETURNED\_ERROR}} }
+\newcommand{\flalseekreturnederror}{\mbox{{\tt FLA\_LSEEK\_RETURNED\_ERROR}} }
+\newcommand{\flaclosereturnederror}{\mbox{{\tt FLA\_CLOSE\_RETURNED\_ERROR}} }
+\newcommand{\flaunlinkreturnederror}{\mbox{{\tt FLA\_UNLINK\_RETURNED\_ERROR}} }
+\newcommand{\flareadreturnederror}{\mbox{{\tt FLA\_READ\_RETURNED\_ERROR}} }
+\newcommand{\flawritereturnederror}{\mbox{{\tt FLA\_WRITE\_RETURNED\_ERROR}} }
+\newcommand{\flainvalidquadrant}{\mbox{{\tt FLA\_INVALID\_QUADRANT}} }
+\newcommand{\flavectorlengthbelowmin}{\mbox{{\tt FLA\_VECTOR\_LENGTH\_BELOW\_MIN}} }
+\newcommand{\flapthreadcreatereturnederror}{\mbox{{\tt FLA\_PTHREAD\_CREATE\_RETURNED\_ERROR}} }
+\newcommand{\flapthreadjoinreturnederror}{\mbox{{\tt FLA\_PTHREAD\_JOIN\_RETURNED\_ERROR}} }
+\newcommand{\flacholfailedmatrixnotspd}{\mbox{{\tt FLA\_CHOL\_FAILED\_MATRIX\_NOT\_SPD}} }
+\newcommand{\flainvalidelemtype}{\mbox{{\tt FLA\_INVALID\_ELEMTYPE}} }
+\newcommand{\flaposixmemalignfailed}{\mbox{{\tt FLA\_POSIX\_MEMALIGN\_FAILED}} }
+\newcommand{\flainvalidsubmatrixdims}{\mbox{{\tt FLA\_INVALID\_SUBMATRIX\_DIMS}} }
+\newcommand{\flainvalidsubmatrixoffset}{\mbox{{\tt FLA\_INVALID\_SUBMATRIX\_OFFSET}} }
+\newcommand{\flaobjectnotscalarelemtype}{\mbox{{\tt FLA\_OBJECT\_NOT\_SCALAR\_ELEMTYPE}} }
+\newcommand{\flaobjectnotmatrixelemtype}{\mbox{{\tt FLA\_OBJECT\_NOT\_MATRIX\_ELEMTYPE}} }
+\newcommand{\flaencounterednonpositiventhreads}{\mbox{{\tt FLA\_ENCOUNTERED\_NON\_POSITIVE\_NTHREADS}} }
+\newcommand{\flainvalidconjgivendatatype}{\mbox{{\tt FLA\_INVALID\_CONJ\_GIVEN\_DATATYPE}} }
+\newcommand{\flainvalidcomplextrans}{\mbox{{\tt FLA\_INVALID\_COMPLEX\_TRANS}} }
+\newcommand{\flainvalidrealtrans}{\mbox{{\tt FLA\_INVALID\_REAL\_TRANS}} }
+\newcommand{\flainvalidblastrans}{\mbox{{\tt FLA\_INVALID\_BLAS\_TRANS}} }
+\newcommand{\flainvalidnonconstantdatatype}{\mbox{{\tt FLA\_INVALID\_NONCONSTANT\_DATATYPE}} }
+\newcommand{\flaobjectnotnonconstant}{\mbox{{\tt FLA\_OBJECT\_NOT\_NONCONSTANT}} }
+\newcommand{\flainvalidmgivenldim}{\mbox{{\tt FLA\_INVALID\_M\_GIVEN\_LDIM}} }
+\newcommand{\flaobjectdatatypesnotequal}{\mbox{{\tt FLA\_OBJECT\_DATATYPES\_NOT\_EQUAL}} }
+\newcommand{\fladividebyzero}{\mbox{{\tt FLA\_DIVIDE\_BY\_ZERO}} }
+
+% FLAME/C basics
+% Intialization and finalization
+\newcommand{\flainit}{\mbox{{\tt FLA\_Init()}} }
+\newcommand{\flainitns}{\mbox{{\tt FLA\_Init()}}}
+\newcommand{\flafinalize}{\mbox{{\tt FLA\_Finalize()}} }
+\newcommand{\flafinalizens}{\mbox{{\tt FLA\_Finalize()}}}
+\newcommand{\flainitializedns}{\mbox{{\tt FLA\_Initialized()}}}
+% Object creation and destruction
+\newcommand{\flaobjcreate}{\mbox{{\tt FLA\_Obj\_create()}} }
+\newcommand{\flaobjcreatens}{\mbox{{\tt FLA\_Obj\_create()}}}
+\newcommand{\flaobjcreateconfto}{\mbox{{\tt FLA\_Obj\_create\_conf\_to()}} }
+\newcommand{\flaobjcreateconftons}{\mbox{{\tt FLA\_Obj\_create\_conf\_to()}}}
+\newcommand{\flaobjcreatecopyof}{\mbox{{\tt FLA\_Obj\_create\_copy\_of()}} }
+\newcommand{\flaobjcreatecopyofns}{\mbox{{\tt FLA\_Obj\_create\_copy\_of()}}}
+\newcommand{\flaobjfree}{\mbox{{\tt FLA\_Obj\_free()}} }
+\newcommand{\flaobjfreens}{\mbox{{\tt FLA\_Obj\_free()}}}
+% General query functions
+\newcommand{\flaobjdatatype}{\mbox{{\tt FLA\_Obj\_datatype()}} }
+\newcommand{\flaobjdatatypens}{\mbox{{\tt FLA\_Obj\_datatype()}}}
+\newcommand{\flaobjdatatypeprojtorealns}{\mbox{{\tt FLA\_Obj\_datatype\_proj\_to\_real()}}}
+\newcommand{\flaobjdatatypeprojtocomplexns}{\mbox{{\tt FLA\_Obj\_datatype\_proj\_to\_complex()}}}
+\newcommand{\flaobjlength}{\mbox{{\tt FLA\_Obj\_length()}} }
+\newcommand{\flaobjlengthns}{\mbox{{\tt FLA\_Obj\_length()}}}
+\newcommand{\flaobjwidth}{\mbox{{\tt FLA\_Obj\_width()}} }
+\newcommand{\flaobjwidthns}{\mbox{{\tt FLA\_Obj\_width()}}}
+\newcommand{\flaobjmindimns}{\mbox{{\tt FLA\_Obj\_min\_dim()}}}
+\newcommand{\flaobjmaxdimns}{\mbox{{\tt FLA\_Obj\_max\_dim()}}}
+\newcommand{\flaobjvectordimns}{\mbox{{\tt FLA\_Obj\_vector\_dim()}}}
+\newcommand{\flaobjvectorincns}{\mbox{{\tt FLA\_Obj\_vector\_inc()}}}
+\newcommand{\flaobjelemtypens}{\mbox{{\tt FLA\_Obj\_elemtype()}}}
+\newcommand{\flaobjdatatypesizens}{\mbox{{\tt FLA\_Obj\_datatype\_size()}}}
+\newcommand{\flaobjelemsizens}{\mbox{{\tt FLA\_Obj\_elem\_size()}}}
+\newcommand{\flaobjrowoffset}{\mbox{{\tt FLA\_Obj\_row\_offset()}} }
+\newcommand{\flaobjrowoffsetns}{\mbox{{\tt FLA\_Obj\_row\_offset()}}}
+\newcommand{\flaobjcoloffset}{\mbox{{\tt FLA\_Obj\_col\_offset()}} }
+\newcommand{\flaobjcoloffsetns}{\mbox{{\tt FLA\_Obj\_col\_offset()}}}
+\newcommand{\flaobjbaselength}{\mbox{{\tt FLA\_Obj\_base\_length()}} }
+\newcommand{\flaobjbaselengthns}{\mbox{{\tt FLA\_Obj\_base\_length()}}}
+\newcommand{\flaobjbasewidth}{\mbox{{\tt FLA\_Obj\_base\_width()}} }
+\newcommand{\flaobjbasewidthns}{\mbox{{\tt FLA\_Obj\_base\_width()}}}
+\newcommand{\flaobjshow}{\mbox{{\tt FLA\_Obj\_show()}} }
+\newcommand{\flaobjshowns}{\mbox{{\tt FLA\_Obj\_show()}}}
+\newcommand{\flaobjfshow}{\mbox{{\tt FLA\_Obj\_fshow()}} }
+\newcommand{\flaobjfshowns}{\mbox{{\tt FLA\_Obj\_fshow()}}}
+% Interfacing with conventional matrix arrays
+\newcommand{\flaobjcreatewithoutbuffer}{\mbox{{\tt FLA\_Obj\_create\_without\_buffer()}} }
+\newcommand{\flaobjcreatewithoutbufferns}{\mbox{{\tt FLA\_Obj\_create\_without\_buffer()}}}
+\newcommand{\flaobjcreatebuffer}{\mbox{{\tt FLA\_Obj\_create\_buffer()}} }
+\newcommand{\flaobjcreatebufferns}{\mbox{{\tt FLA\_Obj\_create\_buffer()}}}
+\newcommand{\flaobjfreewithoutbuffer}{\mbox{{\tt FLA\_Obj\_free\_without\_buffer()}} }
+\newcommand{\flaobjfreewithoutbufferns}{\mbox{{\tt FLA\_Obj\_free\_without\_buffer()}}}
+\newcommand{\flaobjfreebuffer}{\mbox{{\tt FLA\_Obj\_free\_buffer()}} }
+\newcommand{\flaobjfreebufferns}{\mbox{{\tt FLA\_Obj\_free\_buffer()}}}
+\newcommand{\flaobjattachbuffer}{\mbox{{\tt FLA\_Obj\_attach\_buffer()}} }
+\newcommand{\flaobjattachbufferns}{\mbox{{\tt FLA\_Obj\_attach\_buffer()}}}
+\newcommand{\flaobjbufferatview}{\mbox{{\tt FLA\_Obj\_buffer\_at\_view()}} }
+\newcommand{\flaobjbufferatviewns}{\mbox{{\tt FLA\_Obj\_buffer\_at\_view()}}}
+\newcommand{\flaobjrowstridens}{\mbox{{\tt FLA\_Obj\_row\_stride()}}}
+\newcommand{\flaobjcolstridens}{\mbox{{\tt FLA\_Obj\_col\_stride()}}}
+\newcommand{\flaobjbasebuffer}{\mbox{{\tt FLA\_Obj\_base\_buffer()}} }
+\newcommand{\flaobjbasebufferns}{\mbox{{\tt FLA\_Obj\_base\_buffer()}}}
+\newcommand{\flacopybuffertoobject}{\mbox{{\tt FLA\_Copy\_buffer\_to\_object()}} }
+\newcommand{\flacopybuffertoobjectns}{\mbox{{\tt FLA\_Copy\_buffer\_to\_object()}}}
+\newcommand{\flacopyobjecttobufferns}{\mbox{{\tt FLA\_Copy\_object\_to\_buffer()}}}
+\newcommand{\flaaxpybuffertoobjectns}{\mbox{{\tt FLA\_Axpy\_buffer\_to\_object()}}}
+\newcommand{\flaaxpyobjecttobufferns}{\mbox{{\tt FLA\_Axpy\_object\_to\_buffer()}}}
+% Managing views
+% Vertical partitioning
+\newcommand{\flaparttwobyone}{\mbox{{\tt FLA\_Part\_2x1()}} }
+\newcommand{\flaparttwobyonens}{\mbox{{\tt FLA\_Part\_2x1()}}}
+\newcommand{\flareparttwobyonetothreebyonens}{\mbox{{\tt FLA\_Part\_2x1\_to\_3x1()}}}
+\newcommand{\flacontwiththreebyonetotwobyonens}{\mbox{{\tt FLA\_Cont\_with\_3x1\_to\_2x1()}}}
+% Horizontal partitioning
+\newcommand{\flapartonebytwo}{\mbox{{\tt FLA\_Part\_1x2()}} }
+\newcommand{\flapartonebytwons}{\mbox{{\tt FLA\_Part\_1x2()}}}
+\newcommand{\flarepartonebytwotoonebythreens}{\mbox{{\tt FLA\_Part\_1x2\_to\_1x3()}}}
+\newcommand{\flacontwithonebythreetoonebytwons}{\mbox{{\tt FLA\_Cont\_with\_1x3\_to\_1x2()}}}
+% Bidirectional partitioning
+\newcommand{\flaparttwobytwo}{\mbox{{\tt FLA\_Part\_2x2()}} }
+\newcommand{\flaparttwobytwons}{\mbox{{\tt FLA\_Part\_2x2()}}}
+\newcommand{\flareparttwobytwotothreebythreens}{\mbox{{\tt FLA\_Part\_2x2\_to\_3x3()}}}
+\newcommand{\flacontwiththreebythreetotwobytwons}{\mbox{{\tt FLA\_Cont\_with\_3x3\_to\_2x2()}}}
+% Merging views
+\newcommand{\flamergetwobyonens}{\mbox{{\tt FLA\_Merge\_2x1()}}}
+\newcommand{\flamergeonebytwons}{\mbox{{\tt FLA\_Merge\_1x2()}}}
+\newcommand{\flamergetwobytwons}{\mbox{{\tt FLA\_Merge\_2x2()}}}
+% FLASH
+% Object creating and destruction
+\newcommand{\flashobjcreate}{\mbox{{\tt FLASH\_Obj\_create()}} }
+\newcommand{\flashobjcreatens}{\mbox{{\tt FLASH\_Obj\_create()}}}
+\newcommand{\flashobjcreateext}{\mbox{{\tt FLASH\_Obj\_create\_ext()}} }
+\newcommand{\flashobjcreateextns}{\mbox{{\tt FLASH\_Obj\_create\_ext()}}}
+\newcommand{\flashobjcreateconftons}{\mbox{{\tt FLASH\_Obj\_create\_conf\_to()}}}
+\newcommand{\flashobjcreatecopyofns}{\mbox{{\tt FLASH\_Obj\_create\_copy\_of()}}}
+\newcommand{\flashobjfree}{\mbox{{\tt FLASH\_Obj\_free()}} }
+\newcommand{\flashobjfreens}{\mbox{{\tt FLASH\_Obj\_free()}}}
+% Interfacing with flat matrix objects
+\newcommand{\flashobjcreatehierconftoflatns}{\mbox{{\tt FLASH\_Obj\_create\_hier\_conf\_to\_flat()}}}
+\newcommand{\flashobjcreatehierconftoflatextns}{\mbox{{\tt FLASH\_Obj\_create\_hier\_conf\_to\_flat\_ext()}}}
+\newcommand{\flashobjcreatehiercopyofflat}{\mbox{{\tt FLASH\_Obj\_create\_hier\_copy\_of\_flat()}} }
+\newcommand{\flashobjcreatehiercopyofflatns}{\mbox{{\tt FLASH\_Obj\_create\_hier\_copy\_of\_flat()}}}
+\newcommand{\flashobjcreatehiercopyofflatext}{\mbox{{\tt FLASH\_Obj\_create\_hier\_copy\_of\_flat\_ext()}} }
+\newcommand{\flashobjcreatehiercopyofflatextns}{\mbox{{\tt FLASH\_Obj\_create\_hier\_copy\_of\_flat\_ext()}}}
+\newcommand{\flashobjcreateflatconftohierns}{\mbox{{\tt FLASH\_Obj\_create\_flat\_conf\_to\_hier()}}}
+\newcommand{\flashobjcreateflatcopyofhierns}{\mbox{{\tt FLASH\_Obj\_create\_flat\_copy\_of\_hier()}}}
+\newcommand{\flashcopybuffertohier}{\mbox{{\tt FLASH\_Copy\_buffer\_to\_hier()}} }
+\newcommand{\flashcopybuffertohierns}{\mbox{{\tt FLASH\_Copy\_buffer\_to\_hier()}}}
+\newcommand{\flashcopyhiertobufferns}{\mbox{{\tt FLASH\_Copy\_hier\_to\_buffer()}}}
+\newcommand{\flashcopyflattohier}{\mbox{{\tt FLASH\_Copy\_flat\_to\_hier()}} }
+\newcommand{\flashcopyflattohierns}{\mbox{{\tt FLASH\_Copy\_flat\_to\_hier()}}}
+\newcommand{\flashcopyhiertoflatns}{\mbox{{\tt FLASH\_Copy\_hier\_to\_flat()}}}
+\newcommand{\flashobjhierarchifyns}{\mbox{{\tt FLASH\_Obj\_hierarchify()}}}
+\newcommand{\flashobjflattenns}{\mbox{{\tt FLASH\_Obj\_flatten()}}}
+% Interfacing with conventional matrix arrays
+\newcommand{\flashobjcreatewithoutbufferns}{\mbox{{\tt FLASH\_Obj\_create\_without\_buffer()}}}
+\newcommand{\flashobjcreatewithoutbufferextns}{\mbox{{\tt FLASH\_Obj\_create\_without\_buffer\_ext()}}}
+\newcommand{\flashobjfreewithoutbuffer}{\mbox{{\tt FLASH\_Obj\_free\_without\_buffer()}} }
+\newcommand{\flashobjfreewithoutbufferns}{\mbox{{\tt FLASH\_Obj\_free\_without\_buffer()}}}
+\newcommand{\flashobjattachbufferns}{\mbox{{\tt FLASH\_Obj\_attach\_buffer()}}}
+% Object query functions
+\newcommand{\flashobjdatatype}{\mbox{{\tt FLASH\_Obj\_datatype()}} }
+\newcommand{\flashobjdatatypens}{\mbox{{\tt FLASH\_Obj\_datatype()}}}
+\newcommand{\flashobjscalarlength}{\mbox{{\tt FLASH\_Obj\_scalar\_length()}} }
+\newcommand{\flashobjscalarlengthns}{\mbox{{\tt FLASH\_Obj\_scalar\_length()}}}
+\newcommand{\flashobjscalarwidth}{\mbox{{\tt FLASH\_Obj\_scalar\_width()}} }
+\newcommand{\flashobjscalarwidthns}{\mbox{{\tt FLASH\_Obj\_scalar\_width()}}}
+\newcommand{\flashobjdepth}{\mbox{{\tt FLASH\_Obj\_depth()}} }
+\newcommand{\flashobjdepthns}{\mbox{{\tt FLASH\_Obj\_depth()}}}
+\newcommand{\flashobjblocksizesns}{\mbox{{\tt FLASH\_Obj\_blocksizes()}}}
+\newcommand{\flashobjscalarmindim}{\mbox{{\tt FLASH\_Obj\_scalar\_min\_dim()}} }
+\newcommand{\flashobjscalarmindimns}{\mbox{{\tt FLASH\_Obj\_scalar\_min\_dim()}}}
+\newcommand{\flashobjscalarmaxdim}{\mbox{{\tt FLASH\_Obj\_scalar\_max\_dim()}} }
+\newcommand{\flashobjscalarmaxdimns}{\mbox{{\tt FLASH\_Obj\_scalar\_max\_dim()}}}
+\newcommand{\flashobjscalarrowoffset}{\mbox{{\tt FLASH\_Obj\_scalar\_row\_offset()}} }
+\newcommand{\flashobjscalarrowoffsetns}{\mbox{{\tt FLASH\_Obj\_scalar\_row\_offset()}}}
+\newcommand{\flashobjscalarcoloffset}{\mbox{{\tt FLASH\_Obj\_scalar\_col\_offset()}} }
+\newcommand{\flashobjscalarcoloffsetns}{\mbox{{\tt FLASH\_Obj\_scalar\_col\_offset()}}}
+\newcommand{\flashobjbasescalarlength}{\mbox{{\tt FLASH\_Obj\_base\_scalar\_length()}} }
+\newcommand{\flashobjbasescalarlengthns}{\mbox{{\tt FLASH\_Obj\_base\_scalar\_length()}}}
+\newcommand{\flashobjbasescalarwidth}{\mbox{{\tt FLASH\_Obj\_base\_scalar\_width()}} }
+\newcommand{\flashobjbasescalarwidthns}{\mbox{{\tt FLASH\_Obj\_base\_scalar\_width()}}}
+% Miscellaneous utility functions
+\newcommand{\flashobjshow}{\mbox{{\tt FLASH\_Obj\_show()}} }
+\newcommand{\flashobjshowns}{\mbox{{\tt FLASH\_Obj\_show()}}}
+% SuperMatrix
+\newcommand{\flashqueueenable}{\mbox{{\tt FLASH\_Queue\_enable()}} }
+\newcommand{\flashqueueenablens}{\mbox{{\tt FLASH\_Queue\_enable()}}}
+\newcommand{\flashqueuedisablens}{\mbox{{\tt FLASH\_Queue\_disable()}}}
+\newcommand{\flashqueuegetenabledns}{\mbox{{\tt FLASH\_Queue\_get\_enabled()}}}
+\newcommand{\flashqueuebegin}{\mbox{{\tt FLASH\_Queue\_begin()}} }
+\newcommand{\flashqueuebeginns}{\mbox{{\tt FLASH\_Queue\_begin()}}}
+\newcommand{\flashqueueend}{\mbox{{\tt FLASH\_Queue\_end()}} }
+\newcommand{\flashqueueendns}{\mbox{{\tt FLASH\_Queue\_end()}}}
+\newcommand{\flashqueuesetnumthreadsns}{\mbox{{\tt FLASH\_Queue\_set\_num\_threads()}}}
+\newcommand{\flashqueuegetnumthreadsns}{\mbox{{\tt FLASH\_Queue\_get\_num\_threads()}}}
+\newcommand{\flashqueuesetverboseoutputns}{\mbox{{\tt FLASH\_Queue\_set\_verbose\_output()}}}
+\newcommand{\flashqueuegetverboseoutputns}{\mbox{{\tt FLASH\_Queue\_get\_verbose\_output()}}}
+\newcommand{\flashqueuesetsortingns}{\mbox{{\tt FLASH\_Queue\_set\_sorting()}}}
+\newcommand{\flashqueuegetsortingns}{\mbox{{\tt FLASH\_Queue\_get\_sorting()}}}
+\newcommand{\flashqueuesetdataaffinityns}{\mbox{{\tt FLASH\_Queue\_set\_data\_affinity()}}}
+\newcommand{\flashqueuegetdataaffinityns}{\mbox{{\tt FLASH\_Queue\_get\_data\_affinity()}}}
+\newcommand{\flashqueueenablegpu}{\mbox{{\tt FLASH\_Queue\_enable\_gpu()}} }
+\newcommand{\flashqueueenablegpuns}{\mbox{{\tt FLASH\_Queue\_enable\_gpu()}}}
+\newcommand{\flashqueuedisablegpu}{\mbox{{\tt FLASH\_Queue\_disable\_gpu()}} }
+\newcommand{\flashqueuedisablegpuns}{\mbox{{\tt FLASH\_Queue\_disable\_gpu()}}}
+\newcommand{\flashqueuegetenabledgpu}{\mbox{{\tt FLASH\_Queue\_get\_enabled\_gpu()}} }
+\newcommand{\flashqueuegetenabledgpuns}{\mbox{{\tt FLASH\_Queue\_get\_enabled\_gpu()}}}
+\newcommand{\flashqueuesetgpunumblocks}{\mbox{{\tt FLASH\_Queue\_set\_gpu\_num\_blocks()}} }
+\newcommand{\flashqueuesetgpunumblocksns}{\mbox{{\tt FLASH\_Queue\_set\_gpu\_num\_blocks()}} }
+\newcommand{\flashqueuegetgpunumblocks}{\mbox{{\tt FLASH\_Queue\_get\_gpu\_num\_blocks()}} }
+\newcommand{\flashqueuegetgpunumblocksns}{\mbox{{\tt FLASH\_Queue\_get\_gpu\_num\_blocks()}} }
+% Utility functions
+% Advanced query functions
+\newcommand{\flaobjisintns}{\mbox{{\tt FLA\_Obj\_is\_int()}}}
+\newcommand{\flaobjisfloatingpointns}{\mbox{{\tt FLA\_Obj\_is\_floating\_point()}}}
+\newcommand{\flaobjisconstantns}{\mbox{{\tt FLA\_Obj\_is\_constan()}}}
+\newcommand{\flaobjisrealns}{\mbox{{\tt FLA\_Obj\_is\_real()}}}
+\newcommand{\flaobjiscomplexns}{\mbox{{\tt FLA\_Obj\_is\_complex()}}}
+\newcommand{\flaobjissingleprecisionns}{\mbox{{\tt FLA\_Obj\_is\_single\_precision()}}}
+\newcommand{\flaobjisdoubleprecisionns}{\mbox{{\tt FLA\_Obj\_is\_double\_precision()}}}
+\newcommand{\flaobjisscalarns}{\mbox{{\tt FLA\_Obj\_is\_scalar()}}}
+\newcommand{\flaobjisvectorns}{\mbox{{\tt FLA\_Obj\_is\_vector()}}}
+\newcommand{\flaobjhaszerodimns}{\mbox{{\tt FLA\_Obj\_has\_zero\_dim()}}}
+\newcommand{\flaobjisconformaltons}{\mbox{{\tt FLA\_Obj\_is\_conformal\_to()}}}
+\newcommand{\flaobjisns}{\mbox{{\tt FLA\_Obj\_is()}}}
+\newcommand{\flaobjequalsns}{\mbox{{\tt FLA\_Obj\_equals()}}}
+\newcommand{\flaobjbufferisnullns}{\mbox{{\tt FLA\_Obj\_buffer\_is\_null()}}}
+\newcommand{\flasubmatrixat}{\mbox{{\tt FLA\_Submatrix\_at()}} }
+\newcommand{\flasubmatrixatns}{\mbox{{\tt FLA\_Submatrix\_at()}}}
+% Assignment/Update functions
+\newcommand{\flasetrns}{\mbox{{\tt FLA\_Setr()}}}
+\newcommand{\flasettoidentityns}{\mbox{{\tt FLA\_Set\_to\_identity()}}}
+\newcommand{\flaobjextractrealscalarns}{\mbox{{\tt FLA\_Obj\_extract\_real\_scalar()}}}
+\newcommand{\flaobjextractcomplexscalarns}{\mbox{{\tt FLA\_Obj\_extract\_complex\_scalar()}}}
+\newcommand{\flaobjextractrealpartns}{\mbox{{\tt FLA\_Obj\_extract\_real\_part()}}}
+\newcommand{\flaobjextractimagpartns}{\mbox{{\tt FLA\_Obj\_extract\_imag\_part()}}}
+\newcommand{\flaobjsetrealpartns}{\mbox{{\tt FLA\_Obj\_set\_real\_part()}}}
+\newcommand{\flaobjsetimagpartns}{\mbox{{\tt FLA\_Obj\_set\_imag\_part()}}}
+\newcommand{\flasetns}{\mbox{{\tt FLA\_Set()}}}
+\newcommand{\flasetdiagns}{\mbox{{\tt FLA\_Set\_diag()}}}
+\newcommand{\flaaddtodiagns}{\mbox{{\tt FLA\_Add\_to\_diag()}}}
+\newcommand{\flascalediagns}{\mbox{{\tt FLA\_Scale\_diag()}}}
+\newcommand{\flashiftdiagns}{\mbox{{\tt FLA\_Shift\_diag()}}}
+% Math-related functions
+\newcommand{\flaabsolutevaluens}{\mbox{{\tt FLA\_Absolute\_value()}}}
+\newcommand{\flaabsolutesquarens}{\mbox{{\tt FLA\_Absolute\_square()}}}
+\newcommand{\flaconjugatefns}{\mbox{{\tt FLA\_Conjugate()}}}
+\newcommand{\flaconjugaterns}{\mbox{{\tt FLA\_Conjugate\_r()}}}
+\newcommand{\flatransposefns}{\mbox{{\tt FLA\_Transpose()}}}
+\newcommand{\flainvertns}{\mbox{{\tt FLA\_Invert()}}}
+\newcommand{\flamaxabsvaluens}{\mbox{{\tt FLA\_Max\_abs\_value()}}}
+\newcommand{\flamaxelemwisediffns}{\mbox{{\tt FLA\_Max\_elemwise\_diff()}}}
+\newcommand{\flamultaddns}{\mbox{{\tt FLA\_Mult\_add()}}}
+\newcommand{\flanegatens}{\mbox{{\tt FLA\_Negate()}}}
+\newcommand{\flanormons}{\mbox{{\tt FLA\_Norm1()}}}
+\newcommand{\flanorminfns}{\mbox{{\tt FLA\_Norm\_inf()}}}
+\newcommand{\flanormfrobns}{\mbox{{\tt FLA\_Norm\_frob()}}}
+\newcommand{\flascalelemwisens}{\mbox{{\tt FLA\_Scal\_elemwise()}}}
+\newcommand{\flasqrtns}{\mbox{{\tt FLA\_Sqrt()}}}
+\newcommand{\flarandommatrix}{\mbox{{\tt FLA\_Random\_matrix()}} }
+\newcommand{\flarandommatrixns}{\mbox{{\tt FLA\_Random\_matrix()}}}
+\newcommand{\flarandomhermmatrix}{\mbox{{\tt FLA\_Random\_herm\_matrix()}} }
+\newcommand{\flarandomhermmatrixns}{\mbox{{\tt FLA\_Random\_herm\_matrix()}}}
+\newcommand{\flarandomsymmmatrix}{\mbox{{\tt FLA\_Random\_symm\_matrix()}} }
+\newcommand{\flarandomsymmmatrixns}{\mbox{{\tt FLA\_Random\_symm\_matrix()}}}
+\newcommand{\flarandomspdmatrix}{\mbox{{\tt FLA\_Random\_spd\_matrix()}} }
+\newcommand{\flarandomspdmatrixns}{\mbox{{\tt FLA\_Random\_spd\_matrix()}}}
+\newcommand{\flarandomtrimatrix}{\mbox{{\tt FLA\_Random\_tri\_matrix()}} }
+\newcommand{\flarandomtrimatrixns}{\mbox{{\tt FLA\_Random\_tri\_matrix()}}}
+\newcommand{\flarandomunitarymatrix}{\mbox{{\tt FLA\_Random\_unitary\_matrix()}} }
+\newcommand{\flarandomunitarymatrixns}{\mbox{{\tt FLA\_Random\_unitary\_matrix()}}}
+\newcommand{\flasymmetrizens}{\mbox{{\tt FLA\_Symmetrize()}}}
+\newcommand{\flahermitianize}{\mbox{{\tt FLA\_Hermitianize()}} }
+\newcommand{\flahermitianizens}{\mbox{{\tt FLA\_Hermitianize()}}}
+\newcommand{\flatriangularizens}{\mbox{{\tt FLA\_Triangularize()}}}
+% Miscellaneous
+\newcommand{\flacheckerrorlevel}{\mbox{{\tt FLA\_Check\_error\_level()}} }
+\newcommand{\flacheckerrorlevelns}{\mbox{{\tt FLA\_Check\_error\_level()}}}
+\newcommand{\flacheckerrorlevelset}{\mbox{{\tt FLA\_Check\_error\_level\_set()}} }
+\newcommand{\flacheckerrorlevelsetns}{\mbox{{\tt FLA\_Check\_error\_level\_set()}}}
+\newcommand{\flamemoryleakcounterset}{\mbox{{\tt FLA\_Memory\_leak\_counter\_set()}} }
+\newcommand{\flamemoryleakcountersetns}{\mbox{{\tt FLA\_Memory\_leak\_counter\_set()}}}
+\newcommand{\flaprintmessage}{\mbox{{\tt FLA\_Print\_message()}} }
+\newcommand{\flaprintmessagens}{\mbox{{\tt FLA\_Print\_message()}}}
+\newcommand{\flaabortns}{\mbox{{\tt FLA\_Abort()}}}
+\newcommand{\flaclock}{\mbox{{\tt FLA\_Clock()}} }
+\newcommand{\flaclockns}{\mbox{{\tt FLA\_Clock()}}}
+% Other
+\newcommand{\flamalloc}{\mbox{{\tt FLA\_malloc()}} }
+\newcommand{\flamallocns}{\mbox{{\tt FLA\_malloc()}}}
+\newcommand{\flafree}{\mbox{{\tt FLA\_free()}} }
+\newcommand{\flafreens}{\mbox{{\tt FLA\_free()}}}
+% Managing views
+% Vertical partitioning
+\newcommand{\flashpartcreatetwobyone}{\mbox{{\tt FLASH\_Part\_create\_2x1()}} }
+\newcommand{\flashpartcreatetwobyonens}{\mbox{{\tt FLASH\_Part\_create\_2x1()}}}
+\newcommand{\flashpartfreetwobyone}{\mbox{{\tt FLASH\_Part\_free\_2x1()}} }
+\newcommand{\flashpartfreetwobyonens}{\mbox{{\tt FLASH\_Part\_free\_2x1()}}}
+% Horizontal partitioning
+\newcommand{\flashpartcreateonebytwo}{\mbox{{\tt FLASH\_Part\_create\_1x2()}} }
+\newcommand{\flashpartcreateonebytwons}{\mbox{{\tt FLASH\_Part\_create\_1x2()}}}
+\newcommand{\flashpartfreeonebytwo}{\mbox{{\tt FLASH\_Part\_free\_1x2()}} }
+\newcommand{\flashpartfreeonebytwons}{\mbox{{\tt FLASH\_Part\_free\_1x2()}}}
+% Bidirectional partitioning
+\newcommand{\flashpartcreatetwobytwo}{\mbox{{\tt FLASH\_Part\_create\_2x2()}} }
+\newcommand{\flashpartcreatetwobytwons}{\mbox{{\tt FLASH\_Part\_create\_2x2()}}}
+\newcommand{\flashpartfreetwobytwo}{\mbox{{\tt FLASH\_Part\_free\_2x2()}} }
+\newcommand{\flashpartfreetwobytwons}{\mbox{{\tt FLASH\_Part\_free\_2x2()}}}
+
+
+
+
+% Level-1 BLAS external wrapper function names
+\newcommand{\flaamaxext}{\mbox{{\tt FLA\_Amax\_external()}} }
+\newcommand{\flaamaxextns}{\mbox{{\tt FLA\_Amax\_external()}}}
+\newcommand{\flaasumext}{\mbox{{\tt FLA\_Asum\_external()}} }
+\newcommand{\flaasumextns}{\mbox{{\tt FLA\_Asum\_external()}}}
+\newcommand{\flaaxpyext}{\mbox{{\tt FLA\_Axpy\_external()}} }
+\newcommand{\flaaxpyextns}{\mbox{{\tt FLA\_Axpy\_external()}}}
+\newcommand{\flaaxpytext}{\mbox{{\tt FLA\_Axpyt\_external()}} }
+\newcommand{\flaaxpytextns}{\mbox{{\tt FLA\_Axpyt\_external()}}}
+\newcommand{\flaaxpyrtext}{\mbox{{\tt FLA\_Axpyrt\_external()}} }
+\newcommand{\flaaxpyrtextns}{\mbox{{\tt FLA\_Axpyrt\_external()}}}
+\newcommand{\flaaxpysext}{\mbox{{\tt FLA\_Axpys\_external()}} }
+\newcommand{\flaaxpysextns}{\mbox{{\tt FLA\_Axpys\_external()}}}
+\newcommand{\flacopyext}{\mbox{{\tt FLA\_Copy\_external()}} }
+\newcommand{\flacopyextns}{\mbox{{\tt FLA\_Copy\_external()}}}
+\newcommand{\flacopyrext}{\mbox{{\tt FLA\_Copyr\_external()}} }
+\newcommand{\flacopyrextns}{\mbox{{\tt FLA\_Copyr\_external()}}}
+\newcommand{\flacopyrtext}{\mbox{{\tt FLA\_Copyrt\_external()}} }
+\newcommand{\flacopyrtextns}{\mbox{{\tt FLA\_Copyrt\_external()}}}
+\newcommand{\flacopytext}{\mbox{{\tt FLA\_Copyt\_external()}} }
+\newcommand{\flacopytextns}{\mbox{{\tt FLA\_Copyt\_external()}}}
+\newcommand{\fladotext}{\mbox{{\tt FLA\_Dot\_external()}} }
+\newcommand{\fladotextns}{\mbox{{\tt FLA\_Dot\_external()}}}
+\newcommand{\fladotcext}{\mbox{{\tt FLA\_Dotc\_external()}} }
+\newcommand{\fladotcextns}{\mbox{{\tt FLA\_Dotc\_external()}}}
+\newcommand{\fladotsext}{\mbox{{\tt FLA\_Dots\_external()}} }
+\newcommand{\fladotsextns}{\mbox{{\tt FLA\_Dots\_external()}}}
+\newcommand{\fladotcsext}{\mbox{{\tt FLA\_Dotcs\_external()}} }
+\newcommand{\fladotcsextns}{\mbox{{\tt FLA\_Dotcs\_external()}}}
+\newcommand{\fladottsext}{\mbox{{\tt FLA\_Dot2s\_external()}} }
+\newcommand{\fladottsextns}{\mbox{{\tt FLA\_Dot2s\_external()}}}
+\newcommand{\fladottcsext}{\mbox{{\tt FLA\_Dot2cs\_external()}} }
+\newcommand{\fladottcsextns}{\mbox{{\tt FLA\_Dot2cs\_external()}}}
+\newcommand{\flainvscalext}{\mbox{{\tt FLA\_Inv\_scal\_external()}} }
+\newcommand{\flainvscalextns}{\mbox{{\tt FLA\_Inv\_scal\_external()}}}
+\newcommand{\flainvscalcext}{\mbox{{\tt FLA\_Inv\_scalc\_external()}} }
+\newcommand{\flainvscalcextns}{\mbox{{\tt FLA\_Inv\_scalc\_external()}}}
+\newcommand{\flanrmtext}{\mbox{{\tt FLA\_Nrm2\_external()}} }
+\newcommand{\flanrmtextns}{\mbox{{\tt FLA\_Nrm2\_external()}}}
+\newcommand{\flascalext}{\mbox{{\tt FLA\_Scal\_external()}} }
+\newcommand{\flascalextns}{\mbox{{\tt FLA\_Scal\_external()}}}
+\newcommand{\flascalcext}{\mbox{{\tt FLA\_Scalc\_external()}} }
+\newcommand{\flascalcextns}{\mbox{{\tt FLA\_Scalc\_external()}}}
+\newcommand{\flascalrext}{\mbox{{\tt FLA\_Scalr\_external()}} }
+\newcommand{\flascalrextns}{\mbox{{\tt FLA\_Scalr\_external()}}}
+\newcommand{\flaswapext}{\mbox{{\tt FLA\_Swap\_external()}} }
+\newcommand{\flaswapextns}{\mbox{{\tt FLA\_Swap\_external()}}}
+\newcommand{\flaswaptext}{\mbox{{\tt FLA\_Swapt\_external()}} }
+\newcommand{\flaswaptextns}{\mbox{{\tt FLA\_Swapt\_external()}}}
+
+% Level-2 BLAS external wrapper function names
+\newcommand{\flagemvext}{\mbox{{\tt FLA\_Gemv\_external()}} }
+\newcommand{\flagemvextns}{\mbox{{\tt FLA\_Gemv\_external()}}}
+\newcommand{\flagemvcext}{\mbox{{\tt FLA\_Gemvc\_external()}} }
+\newcommand{\flagemvcextns}{\mbox{{\tt FLA\_Gemvc\_external()}}}
+\newcommand{\flagerext}{\mbox{{\tt FLA\_Ger\_external()}} }
+\newcommand{\flagerextns}{\mbox{{\tt FLA\_Ger\_external()}}}
+\newcommand{\flagercext}{\mbox{{\tt FLA\_Gerc\_external()}} }
+\newcommand{\flagercextns}{\mbox{{\tt FLA\_Gerc\_external()}}}
+\newcommand{\flahemvext}{\mbox{{\tt FLA\_Hemv\_external()}} }
+\newcommand{\flahemvextns}{\mbox{{\tt FLA\_Hemv\_external()}}}
+\newcommand{\flahemvcext}{\mbox{{\tt FLA\_Hemvc\_external()}} }
+\newcommand{\flahemvcextns}{\mbox{{\tt FLA\_Hemvc\_external()}}}
+\newcommand{\flaherext}{\mbox{{\tt FLA\_Her\_external()}} }
+\newcommand{\flaherextns}{\mbox{{\tt FLA\_Her\_external()}}}
+\newcommand{\flahercext}{\mbox{{\tt FLA\_Herc\_external()}} }
+\newcommand{\flahercextns}{\mbox{{\tt FLA\_Herc\_external()}}}
+\newcommand{\flahertext}{\mbox{{\tt FLA\_Her2\_external()}} }
+\newcommand{\flahertextns}{\mbox{{\tt FLA\_Her2\_external()}}}
+\newcommand{\flahertcext}{\mbox{{\tt FLA\_Her2c\_external()}} }
+\newcommand{\flahertcextns}{\mbox{{\tt FLA\_Her2c\_external()}}}
+\newcommand{\flasymvext}{\mbox{{\tt FLA\_Symv\_external()}} }
+\newcommand{\flasymvextns}{\mbox{{\tt FLA\_Symv\_external()}}}
+\newcommand{\flasyrext}{\mbox{{\tt FLA\_Syr\_external()}} }
+\newcommand{\flasyrextns}{\mbox{{\tt FLA\_Syr\_external()}}}
+\newcommand{\flasyrtext}{\mbox{{\tt FLA\_Syr2\_external()}} }
+\newcommand{\flasyrtextns}{\mbox{{\tt FLA\_Syr2\_external()}}}
+\newcommand{\flatrmvext}{\mbox{{\tt FLA\_Trmv\_external()}} }
+\newcommand{\flatrmvextns}{\mbox{{\tt FLA\_Trmv\_external()}}}
+\newcommand{\flatrmvsxext}{\mbox{{\tt FLA\_Trmvsx\_external()}} }
+\newcommand{\flatrmvsxextns}{\mbox{{\tt FLA\_Trmvsx\_external()}}}
+\newcommand{\flatrsvext}{\mbox{{\tt FLA\_Trsv\_external()}} }
+\newcommand{\flatrsvextns}{\mbox{{\tt FLA\_Trsv\_external()}}}
+\newcommand{\flatrsvsxext}{\mbox{{\tt FLA\_Trsvsx\_external()}} }
+\newcommand{\flatrsvsxextns}{\mbox{{\tt FLA\_Trsvsx\_external()}}}
+
+% Level-3 BLAS external wrapper function names
+\newcommand{\flagemmext}{\mbox{{\tt FLA\_Gemm\_external()}} }
+\newcommand{\flagemmextns}{\mbox{{\tt FLA\_Gemm\_external()}}}
+\newcommand{\flahemmext}{\mbox{{\tt FLA\_Hemm\_external()}} }
+\newcommand{\flahemmextns}{\mbox{{\tt FLA\_Hemm\_external()}}}
+\newcommand{\flaherkext}{\mbox{{\tt FLA\_Herk\_external()}} }
+\newcommand{\flaherkextns}{\mbox{{\tt FLA\_Herk\_external()}}}
+\newcommand{\flahertkext}{\mbox{{\tt FLA\_Her2k\_external()}} }
+\newcommand{\flahertkextns}{\mbox{{\tt FLA\_Her2k\_external()}}}
+\newcommand{\flasymmext}{\mbox{{\tt FLA\_Symm\_external()}} }
+\newcommand{\flasymmextns}{\mbox{{\tt FLA\_Symm\_external()}}}
+\newcommand{\flasyrkext}{\mbox{{\tt FLA\_Syrk\_external()}} }
+\newcommand{\flasyrkextns}{\mbox{{\tt FLA\_Syrk\_external()}}}
+\newcommand{\flasyrtkext}{\mbox{{\tt FLA\_Syr2k\_external()}} }
+\newcommand{\flasyrtkextns}{\mbox{{\tt FLA\_Syr2k\_external()}}}
+\newcommand{\flatrmmext}{\mbox{{\tt FLA\_Trmm\_external()}} }
+\newcommand{\flatrmmextns}{\mbox{{\tt FLA\_Trmm\_external()}}}
+\newcommand{\flatrmmsxext}{\mbox{{\tt FLA\_Trmmsx\_external()}} }
+\newcommand{\flatrmmsxextns}{\mbox{{\tt FLA\_Trmmsx\_external()}}}
+\newcommand{\flatrsmext}{\mbox{{\tt FLA\_Trsm\_external()}} }
+\newcommand{\flatrsmextns}{\mbox{{\tt FLA\_Trsm\_external()}}}
+\newcommand{\flatrsmsxext}{\mbox{{\tt FLA\_Trsmsx\_external()}} }
+\newcommand{\flatrsmsxextns}{\mbox{{\tt FLA\_Trsmsx\_external()}}}
+
+% LAPACK external wrapper function names
+\newcommand{\flacholblkext}{\mbox{{\tt FLA\_Chol\_blk\_external()}} }
+\newcommand{\flacholblkextns}{\mbox{{\tt FLA\_Chol\_blk\_external()}}}
+\newcommand{\flacholunbext}{\mbox{{\tt FLA\_Chol\_unb\_external()}} }
+\newcommand{\flacholunbextns}{\mbox{{\tt FLA\_Chol\_unb\_external()}}}
+\newcommand{\flatrinvblkext}{\mbox{{\tt FLA\_Trinv\_blk\_external()}} }
+\newcommand{\flatrinvblkextns}{\mbox{{\tt FLA\_Trinv\_blk\_external()}}}
+\newcommand{\flatrinvunbext}{\mbox{{\tt FLA\_Trinv\_unb\_external()}} }
+\newcommand{\flatrinvunbextns}{\mbox{{\tt FLA\_Trinv\_unb\_external()}}}
+\newcommand{\flattmmblkext}{\mbox{{\tt FLA\_Ttmm\_blk\_external()}} }
+\newcommand{\flattmmblkextns}{\mbox{{\tt FLA\_Ttmm\_blk\_external()}}}
+\newcommand{\flattmmunbext}{\mbox{{\tt FLA\_Ttmm\_unb\_external()}} }
+\newcommand{\flattmmunbextns}{\mbox{{\tt FLA\_Ttmm\_unb\_external()}}}
+\newcommand{\flaspdinvblkext}{\mbox{{\tt FLA\_SPDinv\_blk\_external()}} }
+\newcommand{\flaspdinvblkextns}{\mbox{{\tt FLA\_SPDinv\_blk\_external()}}}
+\newcommand{\flahessblkext}{\mbox{{\tt FLA\_Hess\_blk\_external()}} }
+\newcommand{\flahessblkextns}{\mbox{{\tt FLA\_Hess\_blk\_external()}}}
+\newcommand{\flahessunbext}{\mbox{{\tt FLA\_Hess\_unb\_external()}} }
+\newcommand{\flahessunbextns}{\mbox{{\tt FLA\_Hess\_unb\_external()}}}
+\newcommand{\flatridiagblkext}{\mbox{{\tt FLA\_Tridiag\_blk\_external()}} }
+\newcommand{\flatridiagblkextns}{\mbox{{\tt FLA\_Tridiag\_blk\_external()}}}
+\newcommand{\flatridiagunbext}{\mbox{{\tt FLA\_Tridiag\_unb\_external()}} }
+\newcommand{\flatridiagunbextns}{\mbox{{\tt FLA\_Tridiag\_unb\_external()}}}
+\newcommand{\flabidiagblkext}{\mbox{{\tt FLA\_Bidiag\_blk\_external()}} }
+\newcommand{\flabidiagblkextns}{\mbox{{\tt FLA\_Bidiag\_blk\_external()}}}
+\newcommand{\flabidiagunbext}{\mbox{{\tt FLA\_Bidiag\_unb\_external()}} }
+\newcommand{\flabidiagunbextns}{\mbox{{\tt FLA\_Bidiag\_unb\_external()}}}
+\newcommand{\flalupivblkext}{\mbox{{\tt FLA\_LU\_piv\_blk\_external()}} }
+\newcommand{\flalupivblkextns}{\mbox{{\tt FLA\_LU\_piv\_blk\_external()}}}
+\newcommand{\flalupivunbext}{\mbox{{\tt FLA\_LU\_piv\_unb\_external()}} }
+\newcommand{\flalupivunbextns}{\mbox{{\tt FLA\_LU\_piv\_unb\_external()}}}
+\newcommand{\flaqrblkext}{\mbox{{\tt FLA\_QR\_blk\_external()}} }
+\newcommand{\flaqrblkextns}{\mbox{{\tt FLA\_QR\_blk\_external()}}}
+\newcommand{\flaqrunbext}{\mbox{{\tt FLA\_QR\_unb\_external()}} }
+\newcommand{\flaqrunbextns}{\mbox{{\tt FLA\_QR\_unb\_external()}}}
+\newcommand{\flalqblkext}{\mbox{{\tt FLA\_LQ\_blk\_external()}} }
+\newcommand{\flalqblkextns}{\mbox{{\tt FLA\_LQ\_blk\_external()}}}
+\newcommand{\flalqunbext}{\mbox{{\tt FLA\_LQ\_unb\_external()}} }
+\newcommand{\flalqunbextns}{\mbox{{\tt FLA\_LQ\_unb\_external()}}}
+\newcommand{\flaapplyqblkext}{\mbox{{\tt FLA\_Apply\_Q\_blk\_external()}} }
+\newcommand{\flaapplyqblkextns}{\mbox{{\tt FLA\_Apply\_Q\_blk\_external()}}}
+\newcommand{\flaapplyqunbext}{\mbox{{\tt FLA\_Apply\_Q\_unb\_external()}} }
+\newcommand{\flaapplyqunbextns}{\mbox{{\tt FLA\_Apply\_Q\_unb\_external()}}}
+\newcommand{\flasylvblkext}{\mbox{{\tt FLA\_Sylv\_blk\_external()}} }
+\newcommand{\flasylvblkextns}{\mbox{{\tt FLA\_Sylv\_blk\_external()}}}
+\newcommand{\flasylvunbext}{\mbox{{\tt FLA\_Sylv\_unb\_external()}} }
+\newcommand{\flasylvunbextns}{\mbox{{\tt FLA\_Sylv\_unb\_external()}}}
+\newcommand{\flaeiggestblkext}{\mbox{{\tt FLA\_Eig\_gest\_blk\_external()}} }
+\newcommand{\flaeiggestblkextns}{\mbox{{\tt FLA\_Eig\_gest\_blk\_external()}}}
+\newcommand{\flaeiggestunbext}{\mbox{{\tt FLA\_Eig\_gest\_unb\_external()}} }
+\newcommand{\flaeiggestunbextns}{\mbox{{\tt FLA\_Eig\_gest\_unb\_external()}}}
+\newcommand{\flahevdext}{\mbox{{\tt FLA\_Hevd\_external()}} }
+\newcommand{\flahevdextns}{\mbox{{\tt FLA\_Hevd\_external()}}}
+\newcommand{\flasvdext}{\mbox{{\tt FLA\_Svd\_external()}} }
+\newcommand{\flasvdextns}{\mbox{{\tt FLA\_Svd\_external()}}}
+
+
+% LAPACK utility functions
+\newcommand{\flaaccumtutunbext}{\mbox{{\tt FLA\_Accum\_T\_UT\_unb\_external()}} }
+\newcommand{\flaaccumtutunbextns}{\mbox{{\tt FLA\_Accum\_T\_UT\_unb\_external()}}}
+\newcommand{\flaapplypivotsunbext}{\mbox{{\tt FLA\_Apply\_pivots\_unb\_external()}} }
+\newcommand{\flaapplypivotsunbextns}{\mbox{{\tt FLA\_Apply\_pivots\_unb\_external()}}}
+
+
+% Level-1 BLAS front-end function names
+\newcommand{\flaamax}{\mbox{{\tt FLA\_Amax()}} }
+\newcommand{\flaamaxns}{\mbox{{\tt FLA\_Amax()}}}
+\newcommand{\flaasum}{\mbox{{\tt FLA\_Asum()}} }
+\newcommand{\flaasumns}{\mbox{{\tt FLA\_Asum()}}}
+\newcommand{\flaaxpy}{\mbox{{\tt FLA\_Axpy()}} }
+\newcommand{\flaaxpyns}{\mbox{{\tt FLA\_Axpy()}}}
+\newcommand{\flaaxpyt}{\mbox{{\tt FLA\_Axpyt()}} }
+\newcommand{\flaaxpytns}{\mbox{{\tt FLA\_Axpyt()}}}
+\newcommand{\flaaxpyrt}{\mbox{{\tt FLA\_Axpyrt()}} }
+\newcommand{\flaaxpyrtns}{\mbox{{\tt FLA\_Axpyrt()}}}
+\newcommand{\flaaxpys}{\mbox{{\tt FLA\_Axpys()}} }
+\newcommand{\flaaxpysns}{\mbox{{\tt FLA\_Axpys()}}}
+\newcommand{\flacopy}{\mbox{{\tt FLA\_Copy()}} }
+\newcommand{\flacopyns}{\mbox{{\tt FLA\_Copy()}}}
+\newcommand{\flacopyr}{\mbox{{\tt FLA\_Copyr()}} }
+\newcommand{\flacopyrns}{\mbox{{\tt FLA\_Copyr()}}}
+\newcommand{\flacopyrt}{\mbox{{\tt FLA\_Copyrt()}} }
+\newcommand{\flacopyrtns}{\mbox{{\tt FLA\_Copyrt()}}}
+\newcommand{\flacopyt}{\mbox{{\tt FLA\_Copyt()}} }
+\newcommand{\flacopytns}{\mbox{{\tt FLA\_Copyt()}}}
+\newcommand{\fladot}{\mbox{{\tt FLA\_Dot()}} }
+\newcommand{\fladotns}{\mbox{{\tt FLA\_Dot()}}}
+\newcommand{\fladotc}{\mbox{{\tt FLA\_Dotc()}} }
+\newcommand{\fladotcns}{\mbox{{\tt FLA\_Dotc()}}}
+\newcommand{\fladots}{\mbox{{\tt FLA\_Dots()}} }
+\newcommand{\fladotsns}{\mbox{{\tt FLA\_Dots()}}}
+\newcommand{\fladotcs}{\mbox{{\tt FLA\_Dotcs()}} }
+\newcommand{\fladotcsns}{\mbox{{\tt FLA\_Dotcs()}}}
+\newcommand{\fladotts}{\mbox{{\tt FLA\_Dot2s()}} }
+\newcommand{\fladottsns}{\mbox{{\tt FLA\_Dot2s()}}}
+\newcommand{\fladottcs}{\mbox{{\tt FLA\_Dot2cs()}} }
+\newcommand{\fladottcsns}{\mbox{{\tt FLA\_Dot2cs()}}}
+\newcommand{\flainvscal}{\mbox{{\tt FLA\_Inv\_scal()}} }
+\newcommand{\flainvscalns}{\mbox{{\tt FLA\_Inv\_scal()}}}
+\newcommand{\flainvscalc}{\mbox{{\tt FLA\_Inv\_scalc()}} }
+\newcommand{\flainvscalcns}{\mbox{{\tt FLA\_Inv\_scalc()}}}
+\newcommand{\flanrmt}{\mbox{{\tt FLA\_Nrm2()}} }
+\newcommand{\flanrmtns}{\mbox{{\tt FLA\_Nrm2()}}}
+\newcommand{\flascal}{\mbox{{\tt FLA\_Scal()}} }
+\newcommand{\flascalns}{\mbox{{\tt FLA\_Scal()}}}
+\newcommand{\flascalc}{\mbox{{\tt FLA\_Scalc()}} }
+\newcommand{\flascalcns}{\mbox{{\tt FLA\_Scalc()}}}
+\newcommand{\flascalr}{\mbox{{\tt FLA\_Scalr()}} }
+\newcommand{\flascalrns}{\mbox{{\tt FLA\_Scalr()}}}
+\newcommand{\flaswap}{\mbox{{\tt FLA\_Swap()}} }
+\newcommand{\flaswapns}{\mbox{{\tt FLA\_Swap()}}}
+\newcommand{\flaswapt}{\mbox{{\tt FLA\_Swapt()}} }
+\newcommand{\flaswaptns}{\mbox{{\tt FLA\_Swapt()}}}
+
+% Level-2 BLAS front-end function names
+\newcommand{\flagemv}{\mbox{{\tt FLA\_Gemv()}} }
+\newcommand{\flagemvns}{\mbox{{\tt FLA\_Gemv()}}}
+\newcommand{\flagemvc}{\mbox{{\tt FLA\_Gemvc()}} }
+\newcommand{\flagemvcns}{\mbox{{\tt FLA\_Gemvc()}}}
+\newcommand{\flager}{\mbox{{\tt FLA\_Ger()}} }
+\newcommand{\flagerns}{\mbox{{\tt FLA\_Ger()}}}
+\newcommand{\flagerc}{\mbox{{\tt FLA\_Gerc()}} }
+\newcommand{\flagercns}{\mbox{{\tt FLA\_Gerc()}}}
+\newcommand{\flahemv}{\mbox{{\tt FLA\_Hemv()}} }
+\newcommand{\flahemvns}{\mbox{{\tt FLA\_Hemv()}}}
+\newcommand{\flahemvc}{\mbox{{\tt FLA\_Hemvc()}} }
+\newcommand{\flahemvcns}{\mbox{{\tt FLA\_Hemvc()}}}
+\newcommand{\flaher}{\mbox{{\tt FLA\_Her()}} }
+\newcommand{\flaherns}{\mbox{{\tt FLA\_Her()}}}
+\newcommand{\flaherc}{\mbox{{\tt FLA\_Herc()}} }
+\newcommand{\flahercns}{\mbox{{\tt FLA\_Herc()}}}
+\newcommand{\flahert}{\mbox{{\tt FLA\_Her2()}} }
+\newcommand{\flahertns}{\mbox{{\tt FLA\_Her2()}}}
+\newcommand{\flahertc}{\mbox{{\tt FLA\_Her2c()}} }
+\newcommand{\flahertcns}{\mbox{{\tt FLA\_Her2c()}}}
+\newcommand{\flasymv}{\mbox{{\tt FLA\_Symv()}} }
+\newcommand{\flasymvns}{\mbox{{\tt FLA\_Symv()}}}
+\newcommand{\flasyr}{\mbox{{\tt FLA\_Syr()}} }
+\newcommand{\flasyrns}{\mbox{{\tt FLA\_Syr()}}}
+\newcommand{\flasyrt}{\mbox{{\tt FLA\_Syr2()}} }
+\newcommand{\flasyrtns}{\mbox{{\tt FLA\_Syr2()}}}
+\newcommand{\flatrmv}{\mbox{{\tt FLA\_Trmv()}} }
+\newcommand{\flatrmvns}{\mbox{{\tt FLA\_Trmv()}}}
+\newcommand{\flatrmvsx}{\mbox{{\tt FLA\_Trmvsx()}} }
+\newcommand{\flatrmvsxns}{\mbox{{\tt FLA\_Trmvsx()}}}
+\newcommand{\flatrsv}{\mbox{{\tt FLA\_Trsv()}} }
+\newcommand{\flatrsvns}{\mbox{{\tt FLA\_Trsv()}}}
+\newcommand{\flatrsvsx}{\mbox{{\tt FLA\_Trsvsx()}} }
+\newcommand{\flatrsvsxns}{\mbox{{\tt FLA\_Trsvsx()}}}
+
+% Level-3 BLAS front-end function names
+\newcommand{\flagemm}{\mbox{{\tt FLA\_Gemm()}} }
+\newcommand{\flagemmns}{\mbox{{\tt FLA\_Gemm()}}}
+\newcommand{\flahemm}{\mbox{{\tt FLA\_Hemm()}} }
+\newcommand{\flahemmns}{\mbox{{\tt FLA\_Hemm()}}}
+\newcommand{\flaherk}{\mbox{{\tt FLA\_Herk()}} }
+\newcommand{\flaherkns}{\mbox{{\tt FLA\_Herk()}}}
+\newcommand{\flahertk}{\mbox{{\tt FLA\_Her2k()}} }
+\newcommand{\flahertkns}{\mbox{{\tt FLA\_Her2k()}}}
+\newcommand{\flasymm}{\mbox{{\tt FLA\_Symm()}} }
+\newcommand{\flasymmns}{\mbox{{\tt FLA\_Symm()}}}
+\newcommand{\flasyrk}{\mbox{{\tt FLA\_Syrk()}} }
+\newcommand{\flasyrkns}{\mbox{{\tt FLA\_Syrk()}}}
+\newcommand{\flasyrtk}{\mbox{{\tt FLA\_Syr2k()}} }
+\newcommand{\flasyrtkns}{\mbox{{\tt FLA\_Syr2k()}}}
+\newcommand{\flatrmm}{\mbox{{\tt FLA\_Trmm()}} }
+\newcommand{\flatrmmns}{\mbox{{\tt FLA\_Trmm()}}}
+\newcommand{\flatrmmsx}{\mbox{{\tt FLA\_Trmmsx()}} }
+\newcommand{\flatrmmsxns}{\mbox{{\tt FLA\_Trmmsx()}}}
+\newcommand{\flatrsm}{\mbox{{\tt FLA\_Trsm()}} }
+\newcommand{\flatrsmns}{\mbox{{\tt FLA\_Trsm()}}}
+\newcommand{\flatrsmsx}{\mbox{{\tt FLA\_Trsmsx()}} }
+\newcommand{\flatrsmsxns}{\mbox{{\tt FLA\_Trsmsx()}}}
+
+% LAPACK front-end function names
+\newcommand{\flachol}{\mbox{{\tt FLA\_Chol()}} }
+\newcommand{\flacholns}{\mbox{{\tt FLA\_Chol()}}}
+\newcommand{\flacholsolve}{\mbox{{\tt FLA\_Chol\_solve()}} }
+\newcommand{\flacholsolvens}{\mbox{{\tt FLA\_Chol\_solve()}}}
+\newcommand{\flatrinv}{\mbox{{\tt FLA\_Trinv()}} }
+\newcommand{\flatrinvns}{\mbox{{\tt FLA\_Trinv()}}}
+\newcommand{\flattmm}{\mbox{{\tt FLA\_Ttmm()}} }
+\newcommand{\flattmmns}{\mbox{{\tt FLA\_Ttmm()}}}
+\newcommand{\flaspdinv}{\mbox{{\tt FLA\_SPDinv()}} }
+\newcommand{\flaspdinvns}{\mbox{{\tt FLA\_SPDinv()}}}
+%\newcommand{\flahess}{\mbox{{\tt FLA\_Hess()}} }
+%\newcommand{\flahessns}{\mbox{{\tt FLA\_Hess()}}}
+\newcommand{\flalunopiv}{\mbox{{\tt FLA\_LU\_nopiv()}} }
+\newcommand{\flalunopivns}{\mbox{{\tt FLA\_LU\_nopiv()}}}
+\newcommand{\flalupiv}{\mbox{{\tt FLA\_LU\_piv()}} }
+\newcommand{\flalupivns}{\mbox{{\tt FLA\_LU\_piv()}}}
+\newcommand{\flalupivsolve}{\mbox{{\tt FLA\_LU\_piv\_solve()}} }
+\newcommand{\flalupivsolvens}{\mbox{{\tt FLA\_LU\_piv\_solve()}}}
+\newcommand{\flaqrut}{\mbox{{\tt FLA\_QR\_UT()}} }
+\newcommand{\flaqrutns}{\mbox{{\tt FLA\_QR\_UT()}}}
+\newcommand{\flaqrutsolve}{\mbox{{\tt FLA\_QR\_UT\_solve()}} }
+\newcommand{\flaqrutsolvens}{\mbox{{\tt FLA\_QR\_UT\_solve()}}}
+\newcommand{\flalqut}{\mbox{{\tt FLA\_LQ\_UT()}} }
+\newcommand{\flalqutns}{\mbox{{\tt FLA\_LQ\_UT()}}}
+\newcommand{\flalqutsolve}{\mbox{{\tt FLA\_LQ\_UT\_solve()}} }
+\newcommand{\flalqutsolvens}{\mbox{{\tt FLA\_LQ\_UT\_solve()}}}
+\newcommand{\flauddateut}{\mbox{{\tt FLA\_UDdate\_UT()}} }
+\newcommand{\flauddateutns}{\mbox{{\tt FLA\_UDdate\_UT()}}}
+\newcommand{\flauddateutupdaterhs}{\mbox{{\tt FLA\_UDdate\_UT\_update\_rhs()}} }
+\newcommand{\flauddateutupdaterhsns}{\mbox{{\tt FLA\_UDdate\_UT\_update\_rhs()}}}
+\newcommand{\flauddateutsolve}{\mbox{{\tt FLA\_UDdate\_UT\_solve()}} }
+\newcommand{\flauddateutsolvens}{\mbox{{\tt FLA\_UDdate\_UT\_solve()}}}
+\newcommand{\flaapplyhtut}{\mbox{{\tt FLA\_Apply\_H2\_UT()}} }
+\newcommand{\flaapplyhtutns}{\mbox{{\tt FLA\_Apply\_H2\_UT()}}}
+\newcommand{\flaapplyhudut}{\mbox{{\tt FLA\_Apply\_HUD\_UT()}} }
+\newcommand{\flaapplyhudutns}{\mbox{{\tt FLA\_Apply\_HUD\_UT()}}}
+\newcommand{\flaapplyqut}{\mbox{{\tt FLA\_Apply\_Q\_UT()}} }
+\newcommand{\flaapplyqutns}{\mbox{{\tt FLA\_Apply\_Q\_UT()}}}
+\newcommand{\flaapplyqudut}{\mbox{{\tt FLA\_Apply\_QUD\_UT()}} }
+\newcommand{\flaapplyqudutns}{\mbox{{\tt FLA\_Apply\_QUD\_UT()}}}
+\newcommand{\flahessut}{\mbox{{\tt FLA\_Hess\_UT()}} }
+\newcommand{\flahessutns}{\mbox{{\tt FLA\_Hess\_UT()}}}
+\newcommand{\flatridiagut}{\mbox{{\tt FLA\_Tridiag\_UT()}} }
+\newcommand{\flatridiagutns}{\mbox{{\tt FLA\_Tridiag\_UT()}}}
+\newcommand{\flabidiagut}{\mbox{{\tt FLA\_Bidiag\_UT()}} }
+\newcommand{\flabidiagutns}{\mbox{{\tt FLA\_Bidiag\_UT()}}}
+\newcommand{\flaeiggest}{\mbox{{\tt FLA\_Eig\_gest()}} }
+\newcommand{\flaeiggestns}{\mbox{{\tt FLA\_Eig\_gest()}}}
+\newcommand{\flasylv}{\mbox{{\tt FLA\_Sylv()}} }
+\newcommand{\flasylvns}{\mbox{{\tt FLA\_Sylv()}}}
+\newcommand{\flalyap}{\mbox{{\tt FLA\_Lyap()}} }
+\newcommand{\flalyapns}{\mbox{{\tt FLA\_Lyap()}}}
+\newcommand{\flahevd}{\mbox{{\tt FLA\_Hevd()}} }
+\newcommand{\flahevdns}{\mbox{{\tt FLA\_Hevd()}}}
+\newcommand{\flasvd}{\mbox{{\tt FLA\_Svd()}} }
+\newcommand{\flasvdns}{\mbox{{\tt FLA\_Svd()}}}
+
+% LAPACK-related utility function names
+\newcommand{\flaapplydiagmatrix}{\mbox{{\tt FLA\_Apply\_diag\_matrix()}} }
+\newcommand{\flaapplydiagmatrixns}{\mbox{{\tt FLA\_Apply\_diag\_matrix()}}}
+\newcommand{\flaapplypivots}{\mbox{{\tt FLA\_Apply\_pivots()}} }
+\newcommand{\flaapplypivotsns}{\mbox{{\tt FLA\_Apply\_pivots()}}}
+\newcommand{\flashiftpivotsto}{\mbox{{\tt FLA\_Shift\_pivots\_to()}} }
+\newcommand{\flashiftpivotstons}{\mbox{{\tt FLA\_Shift\_pivots\_to()}}}
+\newcommand{\flaformpermmatrix}{\mbox{{\tt FLA\_Form\_perm\_matrix()}} }
+\newcommand{\flaformpermmatrixns}{\mbox{{\tt FLA\_Form\_perm\_matrix()}}}
+\newcommand{\flahousehtut}{\mbox{{\tt FLA\_Househ2\_UT()}} }
+\newcommand{\flahousehtutns}{\mbox{{\tt FLA\_Househ2\_UT()}}}
+\newcommand{\flahousehtsut}{\mbox{{\tt FLA\_Househ2s\_UT()}} }
+\newcommand{\flahousehtsutns}{\mbox{{\tt FLA\_Househ2s\_UT()}}}
+\newcommand{\flahousehtudut}{\mbox{{\tt FLA\_Househ3UD\_UT()}} }
+\newcommand{\flahousehtudutns}{\mbox{{\tt FLA\_Househ3UD\_UT()}}}
+\newcommand{\flaaccumtut}{\mbox{{\tt FLA\_Accum\_T\_UT()}} }
+\newcommand{\flaaccumtutns}{\mbox{{\tt FLA\_Accum\_T\_UT()}}}
+\newcommand{\flaqrutcreatet}{\mbox{{\tt FLA\_QR\_UT\_create\_T()}} }
+\newcommand{\flaqrutcreatetns}{\mbox{{\tt FLA\_QR\_UT\_create\_T()}}}
+\newcommand{\flaqrutrecovertau}{\mbox{{\tt FLA\_QR\_UT\_recover\_tau()}} }
+\newcommand{\flaqrutrecovertauns}{\mbox{{\tt FLA\_QR\_UT\_recover\_tau()}}}
+\newcommand{\flaqrutformq}{\mbox{{\tt FLA\_QR\_UT\_form\_Q()}} }
+\newcommand{\flaqrutformqns}{\mbox{{\tt FLA\_QR\_UT\_form\_Q()}}}
+\newcommand{\flalqutcreatet}{\mbox{{\tt FLA\_LQ\_UT\_create\_T()}} }
+\newcommand{\flalqutcreatetns}{\mbox{{\tt FLA\_LQ\_UT\_create\_T()}}}
+\newcommand{\flalqutrecovertau}{\mbox{{\tt FLA\_LQ\_UT\_recover\_tau()}} }
+\newcommand{\flalqutrecovertauns}{\mbox{{\tt FLA\_LQ\_UT\_recover\_tau()}}}
+\newcommand{\flalqutformq}{\mbox{{\tt FLA\_LQ\_UT\_form\_Q()}} }
+\newcommand{\flalqutformqns}{\mbox{{\tt FLA\_LQ\_UT\_form\_Q()}}}
+\newcommand{\flahessutcreatet}{\mbox{{\tt FLA\_Hess\_UT\_create\_T()}} }
+\newcommand{\flahessutcreatetns}{\mbox{{\tt FLA\_Hess\_UT\_create\_T()}}}
+\newcommand{\flahessutrecovertau}{\mbox{{\tt FLA\_Hess\_UT\_recover\_tau()}} }
+\newcommand{\flahessutrecovertauns}{\mbox{{\tt FLA\_Hess\_UT\_recover\_tau()}}}
+\newcommand{\flatridiagutcreatet}{\mbox{{\tt FLA\_Tridiag\_UT\_create\_T()}} }
+\newcommand{\flatridiagutcreatetns}{\mbox{{\tt FLA\_Tridiag\_UT\_create\_T()}}}
+\newcommand{\flatridiagutrecovertau}{\mbox{{\tt FLA\_Tridiag\_UT\_recover\_tau()}} }
+\newcommand{\flatridiagutrecovertauns}{\mbox{{\tt FLA\_Tridiag\_UT\_recover\_tau()}}}
+\newcommand{\flatridiagutrealify}{\mbox{{\tt FLA\_Tridiag\_UT\_realify()}} }
+\newcommand{\flatridiagutrealifyns}{\mbox{{\tt FLA\_Tridiag\_UT\_realify()}}}
+\newcommand{\flabidiagutcreatet}{\mbox{{\tt FLA\_Bidiag\_UT\_create\_T()}} }
+\newcommand{\flabidiagutcreatetns}{\mbox{{\tt FLA\_Bidiag\_UT\_create\_T()}}}
+\newcommand{\flabidiagutrecovertau}{\mbox{{\tt FLA\_Bidiag\_UT\_recover\_tau()}} }
+\newcommand{\flabidiagutrecovertauns}{\mbox{{\tt FLA\_Bidiag\_UT\_recover\_tau()}}}
+\newcommand{\flabidiagutrealify}{\mbox{{\tt FLA\_Bidiag\_UT\_realify()}} }
+\newcommand{\flabidiagutrealifyns}{\mbox{{\tt FLA\_Bidiag\_UT\_realify()}}}
+\newcommand{\flauddateutcreatet}{\mbox{{\tt FLA\_UDdate\_UT\_create\_T()}} }
+\newcommand{\flauddateutcreatetns}{\mbox{{\tt FLA\_UDdate\_UT\_create\_T()}}}
+\newcommand{\flaapplyqutcreateworkspace}{\mbox{{\tt FLA\_Apply\_Q\_UT\_create\_workspace()}} }
+\newcommand{\flaapplyqutcreateworkspacens}{\mbox{{\tt FLA\_Apply\_Q\_UT\_create\_workspace()}}}
+\newcommand{\flaapplyqudutcreateworkspace}{\mbox{{\tt FLA\_Apply\_QUD\_UT\_create\_workspace()}} }
+\newcommand{\flaapplyqudutcreateworkspacens}{\mbox{{\tt FLA\_Apply\_QUD\_UT\_create\_workspace()}}}
+
+% Level-1 BLAS FLASH front-end function names
+\newcommand{\flashaxpy}{\mbox{{\tt FLASH\_Axpy()}} }
+\newcommand{\flashaxpyns}{\mbox{{\tt FLASH\_Axpy()}}}
+\newcommand{\flashaxpyt}{\mbox{{\tt FLASH\_Axpyt()}} }
+\newcommand{\flashaxpytns}{\mbox{{\tt FLASH\_Axpyt()}}}
+\newcommand{\flashcopy}{\mbox{{\tt FLASH\_Copy()}} }
+\newcommand{\flashcopyns}{\mbox{{\tt FLASH\_Copy()}}}
+\newcommand{\flashcopyt}{\mbox{{\tt FLASH\_Copyt()}} }
+\newcommand{\flashcopytns}{\mbox{{\tt FLASH\_Copyt()}}}
+
+% Level-2 BLAS FLASH front-end function names
+\newcommand{\flashgemv}{\mbox{{\tt FLASH\_Gemv()}} }
+\newcommand{\flashgemvns}{\mbox{{\tt FLASH\_Gemv()}}}
+\newcommand{\flashtrsv}{\mbox{{\tt FLASH\_Trsv()}} }
+\newcommand{\flashtrsvns}{\mbox{{\tt FLASH\_Trsv()}}}
+
+% Level-3 BLAS FLASH front-end function names
+\newcommand{\flashgemm}{\mbox{{\tt FLASH\_Gemm()}} }
+\newcommand{\flashgemmns}{\mbox{{\tt FLASH\_Gemm()}}}
+\newcommand{\flashhemm}{\mbox{{\tt FLASH\_Hemm()}} }
+\newcommand{\flashhemmns}{\mbox{{\tt FLASH\_Hemm()}}}
+\newcommand{\flashherk}{\mbox{{\tt FLASH\_Herk()}} }
+\newcommand{\flashherkns}{\mbox{{\tt FLASH\_Herk()}}}
+\newcommand{\flashhertk}{\mbox{{\tt FLASH\_Her2k()}} }
+\newcommand{\flashhertkns}{\mbox{{\tt FLASH\_Her2k()}}}
+\newcommand{\flashsymm}{\mbox{{\tt FLASH\_Symm()}} }
+\newcommand{\flashsymmns}{\mbox{{\tt FLASH\_Symm()}}}
+\newcommand{\flashsyrk}{\mbox{{\tt FLASH\_Syrk()}} }
+\newcommand{\flashsyrkns}{\mbox{{\tt FLASH\_Syrk()}}}
+\newcommand{\flashsyrtk}{\mbox{{\tt FLASH\_Syr2k()}} }
+\newcommand{\flashsyrtkns}{\mbox{{\tt FLASH\_Syr2k()}}}
+\newcommand{\flashtrmm}{\mbox{{\tt FLASH\_Trmm()}} }
+\newcommand{\flashtrmmns}{\mbox{{\tt FLASH\_Trmm()}}}
+\newcommand{\flashtrsm}{\mbox{{\tt FLASH\_Trsm()}} }
+\newcommand{\flashtrsmns}{\mbox{{\tt FLASH\_Trsm()}}}
+
+% LAPACK FLASH front-end function names
+\newcommand{\flashchol}{\mbox{{\tt FLASH\_Chol()}} }
+\newcommand{\flashcholns}{\mbox{{\tt FLASH\_Chol()}}}
+\newcommand{\flashcholsolve}{\mbox{{\tt FLASH\_Chol\_solve()}} }
+\newcommand{\flashcholsolvens}{\mbox{{\tt FLASH\_Chol\_solve()}}}
+\newcommand{\flashtrinv}{\mbox{{\tt FLASH\_Trinv()}} }
+\newcommand{\flashtrinvns}{\mbox{{\tt FLASH\_Trinv()}}}
+\newcommand{\flashttmm}{\mbox{{\tt FLASH\_Ttmm()}} }
+\newcommand{\flashttmmns}{\mbox{{\tt FLASH\_Ttmm()}}}
+\newcommand{\flashspdinv}{\mbox{{\tt FLASH\_SPDinv()}} }
+\newcommand{\flashspdinvns}{\mbox{{\tt FLASH\_SPDinv()}}}
+\newcommand{\flashlunopiv}{\mbox{{\tt FLASH\_LU\_nopiv()}} }
+\newcommand{\flashlunopivns}{\mbox{{\tt FLASH\_LU\_nopiv()}}}
+\newcommand{\flashlupiv}{\mbox{{\tt FLASH\_LU\_piv()}} }
+\newcommand{\flashlupivns}{\mbox{{\tt FLASH\_LU\_piv()}}}
+\newcommand{\flashlupivsolve}{\mbox{{\tt FLASH\_LU\_piv\_solve()}} }
+\newcommand{\flashlupivsolvens}{\mbox{{\tt FLASH\_LU\_piv\_solve()}}}
+\newcommand{\flashluincpiv}{\mbox{{\tt FLASH\_LU\_incpiv()}} }
+\newcommand{\flashluincpivns}{\mbox{{\tt FLASH\_LU\_incpiv()}}}
+\newcommand{\flashluincpivsolve}{\mbox{{\tt FLASH\_LU\_incpiv\_solve()}} }
+\newcommand{\flashluincpivsolvens}{\mbox{{\tt FLASH\_LU\_incpiv\_solve()}}}
+\newcommand{\flashqrut}{\mbox{{\tt FLASH\_QR\_UT()}} }
+\newcommand{\flashqrutns}{\mbox{{\tt FLASH\_QR\_UT()}}}
+\newcommand{\flashqrutsolve}{\mbox{{\tt FLASH\_QR\_UT\_solve()}} }
+\newcommand{\flashqrutsolvens}{\mbox{{\tt FLASH\_QR\_UT\_solve()}}}
+\newcommand{\flashlqut}{\mbox{{\tt FLASH\_LQ\_UT()}} }
+\newcommand{\flashlqutns}{\mbox{{\tt FLASH\_LQ\_UT()}}}
+\newcommand{\flashlqutsolve}{\mbox{{\tt FLASH\_LQ\_UT\_solve()}} }
+\newcommand{\flashlqutsolvens}{\mbox{{\tt FLASH\_LQ\_UT\_solve()}}}
+\newcommand{\flashqrutinc}{\mbox{{\tt FLASH\_QR\_UT\_inc()}} }
+\newcommand{\flashqrutincns}{\mbox{{\tt FLASH\_QR\_UT\_inc()}}}
+\newcommand{\flashqrutincsolve}{\mbox{{\tt FLASH\_QR\_UT\_inc\_solve()}} }
+\newcommand{\flashqrutincsolvens}{\mbox{{\tt FLASH\_QR\_UT\_inc\_solve()}}}
+\newcommand{\flashcaqrutinc}{\mbox{{\tt FLASH\_CAQR\_UT\_inc()}} }
+\newcommand{\flashcaqrutincns}{\mbox{{\tt FLASH\_CAQR\_UT\_inc()}}}
+\newcommand{\flashcaqrutincsolve}{\mbox{{\tt FLASH\_CAQR\_UT\_inc\_solve()}} }
+\newcommand{\flashcaqrutincsolvens}{\mbox{{\tt FLASH\_CAQR\_UT\_inc\_solve()}}}
+\newcommand{\flashuddateutinc}{\mbox{{\tt FLASH\_UDdate\_UT\_inc()}} }
+\newcommand{\flashuddateutincns}{\mbox{{\tt FLASH\_UDdate\_UT\_inc()}}}
+\newcommand{\flashuddateutincupdaterhs}{\mbox{{\tt FLASH\_UDdate\_UT\_inc\_update\_rhs()}} }
+\newcommand{\flashuddateutincupdaterhsns}{\mbox{{\tt FLASH\_UDdate\_UT\_inc\_update\_rhs()}}}
+\newcommand{\flashuddateutincsolve}{\mbox{{\tt FLASH\_UDdate\_UT\_inc\_solve()}} }
+\newcommand{\flashuddateutincsolvens}{\mbox{{\tt FLASH\_UDdate\_UT\_inc\_solve()}}}
+\newcommand{\flashfsincpiv}{\mbox{{\tt FLASH\_FS\_incpiv()}} }
+\newcommand{\flashfsincpivns}{\mbox{{\tt FLASH\_FS\_incpiv()}}}
+\newcommand{\flashapplyqut}{\mbox{{\tt FLASH\_Apply\_Q\_UT()}} }
+\newcommand{\flashapplyqutns}{\mbox{{\tt FLASH\_Apply\_Q\_UT()}}}
+\newcommand{\flashapplyqutinc}{\mbox{{\tt FLASH\_Apply\_Q\_UT\_inc()}} }
+\newcommand{\flashapplyqutincns}{\mbox{{\tt FLASH\_Apply\_Q\_UT\_inc()}}}
+\newcommand{\flashapplyqudutinc}{\mbox{{\tt FLASH\_Apply\_QUD\_UT\_inc()}} }
+\newcommand{\flashapplyqudutincns}{\mbox{{\tt FLASH\_Apply\_QUD\_UT\_inc()}}}
+\newcommand{\flashsylv}{\mbox{{\tt FLASH\_Sylv()}} }
+\newcommand{\flashsylvns}{\mbox{{\tt FLASH\_Sylv()}}}
+\newcommand{\flashlyap}{\mbox{{\tt FLASH\_Lyap()}} }
+\newcommand{\flashlyapns}{\mbox{{\tt FLASH\_Lyap()}}}
+\newcommand{\flasheiggest}{\mbox{{\tt FLASH\_Eig\_gest()}} }
+\newcommand{\flasheiggestns}{\mbox{{\tt FLASH\_Eig\_gest()}}}
+
+% FLASH utility functions
+\newcommand{\flashshiftdiagns}{\mbox{{\tt FLASH\_Shift\_diag()}}}
+\newcommand{\flashmaxelemwisediffns}{\mbox{{\tt FLASH\_Max\_elemwise\_diff()}}}
+\newcommand{\flashnormons}{\mbox{{\tt FLASH\_Norm1()}}}
+\newcommand{\flashrandommatrixns}{\mbox{{\tt FLASH\_Random\_matrix()}}}
+\newcommand{\flashrandomspdmatrixns}{\mbox{{\tt FLASH\_Random\_spd\_matrix()}}}
+\newcommand{\flashluincpivcreatehiermatrices}{\mbox{{\tt FLASH\_LU\_incpiv\_create\_hier\_matrices()}} }
+\newcommand{\flashluincpivcreatehiermatricesns}{\mbox{{\tt FLASH\_LU\_incpiv\_create\_hier\_matrices()}}}
+\newcommand{\flashqrutcreatehiermatrices}{\mbox{{\tt FLASH\_QR\_UT\_create\_hier\_matrices()}} }
+\newcommand{\flashqrutcreatehiermatricesns}{\mbox{{\tt FLASH\_QR\_UT\_create\_hier\_matrices()}}}
+\newcommand{\flashlqutcreatehiermatrices}{\mbox{{\tt FLASH\_LQ\_UT\_create\_hier\_matrices()}} }
+\newcommand{\flashlqutcreatehiermatricesns}{\mbox{{\tt FLASH\_LQ\_UT\_create\_hier\_matrices()}}}
+\newcommand{\flashqrutinccreatehiermatrices}{\mbox{{\tt FLASH\_QR\_UT\_inc\_create\_hier\_matrices()}} }
+\newcommand{\flashqrutinccreatehiermatricesns}{\mbox{{\tt FLASH\_QR\_UT\_inc\_create\_hier\_matrices()}}}
+\newcommand{\flashcaqrutinccreatehiermatrices}{\mbox{{\tt FLASH\_CAQR\_UT\_inc\_create\_hier\_matrices()}} }
+\newcommand{\flashcaqrutinccreatehiermatricesns}{\mbox{{\tt FLASH\_CAQR\_UT\_inc\_create\_hier\_matrices()}}}
+\newcommand{\flashuddateutinccreatehiermatrices}{\mbox{{\tt FLASH\_UDdate\_UT\_inc\_create\_hier\_matrices()}} }
+\newcommand{\flashuddateutinccreatehiermatricesns}{\mbox{{\tt FLASH\_UDdate\_UT\_inc\_create\_hier\_matrices()}}}
+\newcommand{\flashapplyqutcreateworkspace}{\mbox{{\tt FLASH\_Apply\_Q\_UT\_create\_workspace()}} }
+\newcommand{\flashapplyqutcreateworkspacens}{\mbox{{\tt FLASH\_Apply\_Q\_UT\_create\_workspace()}}}
+\newcommand{\flashapplyqutinccreateworkspace}{\mbox{{\tt FLASH\_Apply\_Q\_UT\_inc\_create\_workspace()}} }
+\newcommand{\flashapplyqutinccreateworkspacens}{\mbox{{\tt FLASH\_Apply\_Q\_UT\_inc\_create\_workspace()}}}
+\newcommand{\flashapplyqudutinccreateworkspace}{\mbox{{\tt FLASH\_Apply\_QUD\_UT\_inc\_create\_workspace()}} }
+\newcommand{\flashapplyqudutinccreateworkspacens}{\mbox{{\tt FLASH\_Apply\_QUD\_UT\_inc\_create\_workspace()}}}
+
+% Developer API
+% object creation
+\newcommand{\flaobjcreateext}{\mbox{{\tt FLA\_Obj\_create\_ext()}} }
+\newcommand{\flaobjcreateextns}{\mbox{{\tt FLA\_Obj\_create\_ext()}}}
+
+
+% ------------------------------------------------------------------------------
+
+% Level-1 BLAS routine names
+\newcommand{\asum}{\mbox{{\tt *asum()}} }
+\newcommand{\asumns}{\mbox{{\tt *asum()}}}
+\newcommand{\axpy}{\mbox{{\tt ?axpy()}} }
+\newcommand{\axpyns}{\mbox{{\tt ?axpy()}}}
+\newcommand{\copyx}{\mbox{{\tt ?copy()}} }
+\newcommand{\copyxns}{\mbox{{\tt ?copy()}}}
+\newcommand{\dotx}{\mbox{{\tt ?dot()}} }
+\newcommand{\dotxns}{\mbox{{\tt ?dot()}}}
+\newcommand{\dotu}{\mbox{{\tt ?dotu()}} }
+\newcommand{\dotuns}{\mbox{{\tt ?dotu()}}}
+\newcommand{\dotc}{\mbox{{\tt ?dotc()}} }
+\newcommand{\dotcns}{\mbox{{\tt ?dotc()}}}
+\newcommand{\iamax}{\mbox{{\tt i?amax()}} }
+\newcommand{\iamaxns}{\mbox{{\tt i?amax()}}}
+\newcommand{\nrmt}{\mbox{{\tt *nrm2()}} }
+\newcommand{\nrmtns}{\mbox{{\tt *nrm2()}}}
+\newcommand{\scal}{\mbox{{\tt *scal()}} }
+\newcommand{\scalns}{\mbox{{\tt *scal()}}}
+\newcommand{\swap}{\mbox{{\tt ?swap()}} }
+\newcommand{\swapns}{\mbox{{\tt ?swap()}}}
+
+% Level-2 BLAS routine names
+\newcommand{\gemv}{\mbox{{\tt ?gemv()}} }
+\newcommand{\gemvns}{\mbox{{\tt ?gemv()}}}
+\newcommand{\ger}{\mbox{{\tt ?ger()}} }
+\newcommand{\gerns}{\mbox{{\tt ?ger()}}}
+\newcommand{\geru}{\mbox{{\tt ?geru()}} }
+\newcommand{\geruns}{\mbox{{\tt ?geru()}}}
+\newcommand{\gerc}{\mbox{{\tt ?gerc()}} }
+\newcommand{\gercns}{\mbox{{\tt ?gerc()}}}
+\newcommand{\hemv}{\mbox{{\tt ?hemv()}} }
+\newcommand{\hemvns}{\mbox{{\tt ?hemv()}}}
+\newcommand{\her}{\mbox{{\tt ?her()}} }
+\newcommand{\herns}{\mbox{{\tt ?her()}}}
+\newcommand{\hert}{\mbox{{\tt ?her2()}} }
+\newcommand{\hertns}{\mbox{{\tt ?her2()}}}
+\newcommand{\symv}{\mbox{{\tt ?symv()}} }
+\newcommand{\symvns}{\mbox{{\tt ?symv()}}}
+\newcommand{\syr}{\mbox{{\tt ?syr()}} }
+\newcommand{\syrns}{\mbox{{\tt ?syr()}}}
+\newcommand{\syrt}{\mbox{{\tt ?syr2()}} }
+\newcommand{\syrtns}{\mbox{{\tt ?syr2()}}}
+\newcommand{\trmv}{\mbox{{\tt ?trmv()}} }
+\newcommand{\trmvns}{\mbox{{\tt ?trmv()}}}
+\newcommand{\trsv}{\mbox{{\tt ?trsv()}} }
+\newcommand{\trsvns}{\mbox{{\tt ?trsv()}}}
+
+% Level-3 BLAS routine names
+\newcommand{\gemm}{\mbox{{\tt ?gemm()}} }
+\newcommand{\gemmns}{\mbox{{\tt ?gemm()}}}
+\newcommand{\hemm}{\mbox{{\tt ?hemm()}} }
+\newcommand{\hemmns}{\mbox{{\tt ?hemm()}}}
+\newcommand{\herk}{\mbox{{\tt ?herk()}} }
+\newcommand{\herkns}{\mbox{{\tt ?herk()}}}
+\newcommand{\hertk}{\mbox{{\tt ?her2k()}} }
+\newcommand{\hertkns}{\mbox{{\tt ?her2k()}}}
+\newcommand{\symm}{\mbox{{\tt ?symm()}} }
+\newcommand{\symmns}{\mbox{{\tt ?symm()}}}
+\newcommand{\syrk}{\mbox{{\tt ?syrk()}} }
+\newcommand{\syrkns}{\mbox{{\tt ?syrk()}}}
+\newcommand{\syrtk}{\mbox{{\tt ?syr2k()}} }
+\newcommand{\syrtkns}{\mbox{{\tt ?syr2k()}}}
+\newcommand{\trmm}{\mbox{{\tt ?trmm()}} }
+\newcommand{\trmmns}{\mbox{{\tt ?trmm()}}}
+\newcommand{\trsm}{\mbox{{\tt ?trsm()}} }
+\newcommand{\trsmns}{\mbox{{\tt ?trsm()}}}
+
+% LAPACK routine names
+% -- Cholesky --
+\newcommand{\potrf}{\mbox{{\tt ?potrf()}} }
+\newcommand{\potrfns}{\mbox{{\tt ?potrf()}}}
+\newcommand{\potft}{\mbox{{\tt ?potf2()}} }
+\newcommand{\potftns}{\mbox{{\tt ?potf2()}}}
+% -- LQ factorization --
+\newcommand{\gelqf}{\mbox{{\tt ?gelqf()}} }
+\newcommand{\gelqfns}{\mbox{{\tt ?gelqf()}}}
+\newcommand{\gelqt}{\mbox{{\tt ?gelq2()}} }
+\newcommand{\gelqtns}{\mbox{{\tt ?gelq2()}}}
+% -- LQ factorization with UT transform --
+\newcommand{\gelqfut}{\mbox{{\tt ?gelqfut()}} }
+\newcommand{\gelqfutns}{\mbox{{\tt ?gelqfut()}}}
+\newcommand{\gelqtut}{\mbox{{\tt ?gelq2ut()}} }
+\newcommand{\gelqtutns}{\mbox{{\tt ?gelq2ut()}}}
+% -- LU factorization without pivoting --
+\newcommand{\getnf}{\mbox{{\tt ?getnf()}} }
+\newcommand{\getnfns}{\mbox{{\tt ?getnf()}}}
+\newcommand{\getnt}{\mbox{{\tt ?getn2()}} }
+\newcommand{\getntns}{\mbox{{\tt ?getn2()}}}
+% -- LU factorization with partial pivoting --
+\newcommand{\getrf}{\mbox{{\tt ?getrf()}} }
+\newcommand{\getrfns}{\mbox{{\tt ?getrf()}}}
+\newcommand{\getft}{\mbox{{\tt ?getf2()}} }
+\newcommand{\getftns}{\mbox{{\tt ?getf2()}}}
+% -- QR factorization --
+\newcommand{\geqrf}{\mbox{{\tt ?geqrf()}} }
+\newcommand{\geqrfns}{\mbox{{\tt ?geqrf()}}}
+\newcommand{\geqrt}{\mbox{{\tt ?geqr2()}} }
+\newcommand{\geqrtns}{\mbox{{\tt ?geqr2()}}}
+% -- QR factorization with UT transform --
+\newcommand{\geqrfut}{\mbox{{\tt ?geqrfut()}} }
+\newcommand{\geqrfutns}{\mbox{{\tt ?geqrfut()}}}
+\newcommand{\geqrtut}{\mbox{{\tt ?geqr2ut()}} }
+\newcommand{\geqrtutns}{\mbox{{\tt ?geqr2ut()}}}
+% -- Reduction to upper Hessenberg form --
+\newcommand{\gehrd}{\mbox{{\tt ?gehrd()}} }
+\newcommand{\gehrdns}{\mbox{{\tt ?gehrd()}}}
+\newcommand{\gehdt}{\mbox{{\tt ?gehd2()}} }
+\newcommand{\gehdtns}{\mbox{{\tt ?gehd2()}}}
+% -- Reduction to tridiagonal form --
+\newcommand{\sytrd}{\mbox{{\tt ?sytrd()}} }
+\newcommand{\sytrdns}{\mbox{{\tt ?sytrd()}}}
+\newcommand{\sytdt}{\mbox{{\tt ?sytd2()}} }
+\newcommand{\sytdtns}{\mbox{{\tt ?sytd2()}}}
+\newcommand{\hetrd}{\mbox{{\tt ?hetrd()}} }
+\newcommand{\hetrdns}{\mbox{{\tt ?hetrd()}}}
+\newcommand{\hetdt}{\mbox{{\tt ?hetd2()}} }
+\newcommand{\hetdtns}{\mbox{{\tt ?hetd2()}}}
+% -- Reduction to bidiagonal form --
+\newcommand{\gebrd}{\mbox{{\tt ?gebrd()}} }
+\newcommand{\gebrdns}{\mbox{{\tt ?gebrd()}}}
+\newcommand{\gebdt}{\mbox{{\tt ?gebd2()}} }
+\newcommand{\gebdtns}{\mbox{{\tt ?gebd2()}}}
+% -- Triangular Sylvester equation solver --
+\newcommand{\trsyl}{\mbox{{\tt ?trsyl()}} }
+\newcommand{\trsylns}{\mbox{{\tt ?trsyl()}}}
+% -- Triangular matrix inversion --
+\newcommand{\trtri}{\mbox{{\tt ?trtri()}} }
+\newcommand{\trtrins}{\mbox{{\tt ?trtri()}}}
+\newcommand{\trtit}{\mbox{{\tt ?trti2()}} }
+\newcommand{\trtitns}{\mbox{{\tt ?trti2()}}}
+% -- Triangular transpose matrix multiply --
+\newcommand{\lauum}{\mbox{{\tt ?lauum()}} }
+\newcommand{\lauumns}{\mbox{{\tt ?lauum()}}}
+\newcommand{\lauut}{\mbox{{\tt ?lauu2()}} }
+\newcommand{\lauutns}{\mbox{{\tt ?lauu2()}}}
+% -- Reduce SD/HD eigenproblem to standard form --
+\newcommand{\sygst}{\mbox{{\tt ?sygst()}} }
+\newcommand{\sygstns}{\mbox{{\tt ?sygst()}}}
+\newcommand{\hegst}{\mbox{{\tt ?hegst()}} }
+\newcommand{\hegstns}{\mbox{{\tt ?hegst()}}}
+\newcommand{\sygstw}{\mbox{{\tt ?sygs2()}} }
+\newcommand{\sygstwns}{\mbox{{\tt ?sygs2()}}}
+\newcommand{\hegstw}{\mbox{{\tt ?hegs2()}} }
+\newcommand{\hegstwns}{\mbox{{\tt ?hegs2()}}}
+% -- SPD/HPD matrix inversion --
+\newcommand{\potri}{\mbox{{\tt ?potri()}} }
+\newcommand{\potrins}{\mbox{{\tt ?potri()}}}
+% -- Form block Householder transformation --
+\newcommand{\larft}{\mbox{{\tt ?larft()}} }
+\newcommand{\larftns}{\mbox{{\tt ?larft()}}}
+% -- Form block Householder transformation with UT transform --
+\newcommand{\larftut}{\mbox{{\tt ?larftut()}} }
+\newcommand{\larftutns}{\mbox{{\tt ?larftut()}}}
+% -- Form Q from QR factorization --
+\newcommand{\orgqr}{\mbox{{\tt ?orgqr()}} }
+\newcommand{\orgqrns}{\mbox{{\tt ?orgqr()}}}
+\newcommand{\orgtr}{\mbox{{\tt ?org2r()}} }
+\newcommand{\orgtrns}{\mbox{{\tt ?org2r()}}}
+\newcommand{\ungqr}{\mbox{{\tt ?ungqr()}} }
+\newcommand{\ungqrns}{\mbox{{\tt ?ungqr()}}}
+\newcommand{\ungtr}{\mbox{{\tt ?ung2r()}} }
+\newcommand{\ungtrns}{\mbox{{\tt ?ung2r()}}}
+% -- Apply Q (from QR factorization) --
+\newcommand{\ormqr}{\mbox{{\tt ?ormqr()}} }
+\newcommand{\ormqrns}{\mbox{{\tt ?ormqr()}}}
+\newcommand{\ormtr}{\mbox{{\tt ?orm2r()}} }
+\newcommand{\ormtrns}{\mbox{{\tt ?orm2r()}}}
+\newcommand{\unmqr}{\mbox{{\tt ?unmqr()}} }
+\newcommand{\unmqrns}{\mbox{{\tt ?unmqr()}}}
+\newcommand{\unmtr}{\mbox{{\tt ?unm2r()}} }
+\newcommand{\unmtrns}{\mbox{{\tt ?unm2r()}}}
+% -- Apply Q (from LQ factorization) --
+\newcommand{\ormlq}{\mbox{{\tt ?ormlq()}} }
+\newcommand{\ormlqns}{\mbox{{\tt ?ormlq()}}}
+\newcommand{\ormlt}{\mbox{{\tt ?orml2()}} }
+\newcommand{\ormltns}{\mbox{{\tt ?orml2()}}}
+\newcommand{\unmlq}{\mbox{{\tt ?unmlq()}} }
+\newcommand{\unmlqns}{\mbox{{\tt ?unmlq()}}}
+\newcommand{\unmlt}{\mbox{{\tt ?unml2()}} }
+\newcommand{\unmltns}{\mbox{{\tt ?unml2()}}}
+% -- Linear system solve (via QR or LQ factorization) --
+\newcommand{\gels}{\mbox{{\tt ?gels()}} }
+\newcommand{\gelsns}{\mbox{{\tt ?gels()}}}
+% -- Row swapping --
+\newcommand{\laswp}{\mbox{{\tt ?laswp()}} }
+\newcommand{\laswpns}{\mbox{{\tt ?laswp()}}}
+% -- EVD (simple) --
+\newcommand{\syev}{\mbox{{\tt ?syev()}} }
+\newcommand{\syevns}{\mbox{{\tt ?syev()}}}
+\newcommand{\heev}{\mbox{{\tt ?heev()}} }
+\newcommand{\heevns}{\mbox{{\tt ?heev()}}}
+% -- SVD (simple) --
+\newcommand{\gesvd}{\mbox{{\tt ?gesvd()}} }
+\newcommand{\gesvdns}{\mbox{{\tt ?gesvd()}}}

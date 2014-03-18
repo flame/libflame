@@ -1,0 +1,1220 @@
+\chapter{Setup for GNU/Linux and UNIX}
+\label{chapter:setup-linux}
+
+
+
+This chapter discusses how to obtain, configure, compile, and install
+\libflamens in GNU/Linux and UNIX-like environments.
+
+
+
+\section{Before obtaining \libflame}
+
+We encourage new users to read this section before proceeding to download
+the \libflame source code.
+
+\subsection{System software requirements}
+
+\index{\libflame!for GNU/Linux and UNIX!software requirements}
+
+Before you attempt to build \libflamens, be sure you have the following
+software tools:
+\begin{itemize}
+\item
+{\bf GNU/Linux or UNIX.}
+\libflame should compile under a wide variety of GNU/Linux
+distributions\footnote{\libflame has been known to compile successfully under
+cygwin.
+However, cygwin is not an environment in which we routinely test our software.
+If this is your preferred environment, we welcome you to give it a try,
+even if we will not be able to provide support.}
+and also on any of the mainstream flavors of UNIX, provided that a somewhat
+sane development environment is present.
+\item
+{\bf GNU tools.}
+We strongly recommend the availability of a GNU development
+environment.
+If a full GNU environment is not present, then at the very least we
+absolutely require that reasonably recent versions of GNU \make
+(3.79 or later) and GNU \bash (2.0 or later) are installed and
+specified in the user's \PATH shell environment variable.\footnote{On
+some UNIX systems, such as AIX and Solaris, GNU \make may be named
+\gmake while the older UNIX/BSD implementation retains the name \makens.
+In these environments, the user must be sure to invoke \gmakens, as the
+\libflame build system utilizes functionality that is present only in GNU
+\makens.}
+\item
+{\bf A C compiler.}
+Most of \libflame is written in C, and therefore building \libflame on for
+GNU/Linux or UNIX requires a C (or C++) compiler.\footnote{
+The \libflame configuration script will probe for and query a Fortran compiler
+in order to detect the name mangling conventions necessary for
+C and Fortran functions to call each other.
+If your build fails because a Fortran compiler was not present at
+configure-time, please contact the \libflame developers.}
+The GNU {\tt gcc}, Intel {\tt icc}, IBM {\tt xlc}, and Pathscale {\tt pathcc}
+compilers are explicitly supported.
+A generic compiler named {\tt cc} should work too.
+Later subsections in this chapter describe how the user may specify a preferred
+C compiler.
+\item
+{\bf A working BLAS library.}
+%BLAS routines, such as {\tt dgemm()} and {\tt dsyrk()}, are invoked to perform
+%subproblems within virtually all blocked and unblocked algorithms, and also
+%algorithms-by-blocks.
+Users must link against an implementation of the BLAS in order
+to use \libflamens.
+%Why does \libflame need an external BLAS library? \libflame developers have
+%adopted a philosophy of separation, whereby certain low-level operations
+%are written and optimized by external developers.
+Currently, \libflame functions make extensive use of BLAS routines such as
+{\tt dgemm()} and {\tt dsyrk()} to perform subproblems that inherently
+occur within almost all linear algebra algorithms.
+\libflame also provides access to BLAS routines by way of wrappers that map
+object-based APIs to the traditional Fortran-77 routine interface.
+Any library that adheres to the BLAS interface should work fine.
+However, we strongly encourage the use of Kazushige Goto's GotoBLAS
+\cite{Goto,Goto:2008:AHP,taccsoftware2008}.
+GotoBLAS provides excellent performance on a wide variety of mainstream
+architectures.
+Other BLAS libraries, such as ESSL (IBM), MKL (Intel), ACML (AMD),
+and netlib's BLAS, have also been successfully tested with \libflamens.
+Of course, performance will vary depending on which library is used. 
+\end{itemize}
+The following items are not required in order to build \libflamens, but may
+still be useful to certain users, depending on how the library is
+configured.
+%The following items are optional, depending on how you would like to configure
+%and use \libflamens:
+\begin{itemize}
+\item
+{\bf A working LAPACK library.}
+Most of the computationally-intensive operations implemented in \libflame
+are expressed as blocked algorithms or algorithms-by-blocks, both of which
+cast some of their computation in terms of smaller subproblems.
+\libflame provides optimized, low-overhead unblocked functions to perform
+these small matrix computations.
+However, for performance reasons, some users might want these computations
+to be performed instead by an external implementation of LAPACK.
+See Section \ref{sec:configure-options} for more information on making use of
+this optional feature.
+\item
+{\bf An OpenMP-aware C compiler.}
+\libflame supports parallelism for several operations via the SuperMatrix
+runtime scheduling system.
+SuperMatrix requires either a C compiler that supports OpenMP (1.0 or later),
+or a build environment that supports POSIX threads.
+As of this writing, the GNU C compiler does not support OpenMP.
+Therefore, the user must either ensure that \libflame is configured to use a
+commercial OpenMP-aware compiler, or configure \libflame so that SuperMatrix
+uses POSIX threads.\footnote{Whether there is an advantage in using OpenMP
+over POSIX threads will depend on the specific OpenMP and POSIX
+implementations.
+However, preliminary evidence suggests that configuring SuperMatrix to derive
+its parallelism from OpenMP results in slightly higher and slightly more
+consistent performance.}
+\end{itemize}
+
+\subsection{System hardware support}
+
+\index{\libflame!for GNU/Linux and UNIX!hardware support}
+
+Over time, \libflame has been tested on a wide swath of modern architectures,
+including but not limited to:
+\begin{itemize}
+\item x86 (Pentium, Athlon, Celeron, Duron, older Xeon series)
+\item x86\_64 (Opteron, Athlon64, recent Xeon, Core2 series)
+\item ia64 (Itanium series)
+\item PowerPC/POWER series
+\end{itemize}
+Support by an architecture is primarily determined by the presence of an
+appropriate compiler.
+At configure-time, the \configure script will attempt to find an appropriate
+compiler for a given architecure according to a predetermined search order
+for that architecture.
+For example, The first C compiler searched for on an Itanium2 system is Intel's
+\iccns.
+If \icc is not found, then the search continues for GNU \gcc.
+If neither \icc nor \gcc is present, then the script checks for a generic
+compiler named \ccns.
+Table \ref{fig:search-order} summarizes the search order of C
+compilers for some of the more common architectures supported by \libflamens.
+Here, the architecture is identified by the canonical build system type, which
+is a string of three dash-separated substrings, identifying the CPU type,
+vendor, and operating system of the system which is performing the build.
+The build system type is determined by the helper shell script
+{\tt config.guess} and output by \configure at configure-time.
+
+It is also possible for the user to specify the C compiler
+explicitly at configure-time.
+For more information on this and related topics, refer to Section
+\ref{sec:configure-options}.
+
+\input{figs/23-search-order}
+
+
+
+\subsection{License}
+
+\input{20-setup-common/license}
+
+
+
+\subsection{Source code}
+
+\index{\libflame!for GNU/Linux and UNIX!source code}
+
+\input{20-setup-common/source-code}
+
+
+
+\subsection{Tracking source code revisions}
+
+\input{20-setup-common/revisions}
+
+
+
+\subsection{If you have problems}
+
+\input{20-setup-common/problems}
+
+
+
+\section{Obtaining \libflame}
+
+\index{\libflame!obtaining}
+
+The source code for \libflame may be obtained through the FLAME project
+website:
+
+\begin{Verbatim}[frame=none,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\normalsize]
+http://www.cs.utexas.edu/users/flame/libflame/
+\end{Verbatim}
+
+\noindent
+This webpage also contains important information related to configuring,
+compiling, installing, and linking against \libflamens.
+Most of the information provided there is repeated and expanded upon in
+this chapter.
+
+
+
+\section{Preparation}
+
+Download the {\tt .tar.gz} package from the website, and then un-tar and
+un-gzip the source code.
+Here, we assume that we've downloaded revision r4784 from the nightly
+snapshots directory.
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+> tar xzf libflame-r4784.tar.gz
+> ls
+libflame-r4784  libflame-r4784.tar.gz
+\end{Verbatim}
+
+\noindent
+Change into the {\tt libflame-r4784} directory:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+> cd libflame-r4784
+\end{Verbatim}
+
+\noindent
+The top-level directory of the source tree should look something like this:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+> ls
+AUTHORS       Doxyfile  Makefile   build         docs      run-conf  tmp
+CHANGELOG     INSTALL   README     configure     examples  src       windows
+CONTRIBUTORS  LICENSE   bootstrap  configure.ac  play      test
+\end{Verbatim}
+
+\noindent
+Table \ref{fig:top-level-files} describes each file present here.
+In addition, the figure lists files that are created and overwritten
+only upon running \configurens.
+
+\input{figs/23-top-level-files}
+
+
+\section{Configuration}
+
+\index{\libflame!for GNU/Linux and UNIX!configuration}
+
+The first step in building \libflame is to configure the build system by
+running the \configure script.
+\libflame may be configured many different ways depending on which options
+are passed into \configurens.
+These options and their syntax are always available by running \configure
+with the {\tt --help} option:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+> ./configure --help
+\end{Verbatim}
+
+\noindent
+Be aware that \configurehelp lists several options that are ignored by
+\libflamens.\footnote{This is due to boilerplate content that \autoconf 
+inserts into the \configure script regardless of whether it is desired.}
+The options that are supported are listed explicitly and described in
+the next subsection.
+
+\subsection{\configure options}
+\label{sec:configure-options}
+
+\index{\libflame!for GNU/Linux and UNIX!\configure options}
+
+The command line options supported by the \configure script
+may be broken down into standard options, which most \configure scripts
+respond to, and \libflamens-specific options, which refer to functionality
+unique to \libflamens.
+
+The standard command line options are: \\
+
+\noindent
+{\tt --prefix={\em prefixdir}} \\
+\configpar{
+The {\em prefixdir} directory specifies the install prefix directory (ie:
+the root directory at which all \libflame build products will be installed).
+If the directory does not exist, it is created.
+%At install-time, libraries will be placed into {\em prefixdir/lib} and
+%header files will be placed into {\em prefixdir/include}.
+This value defaults to {\tt \$HOME/flame}.
+}
+%\newpage
+\noindent
+{\tt --help, -h} \\
+\configpar{
+Display a summary of all valid options to \configurens. 
+(Note that this will display more options than \libflame actually uses.
+Only those options described in this section are used internally by the build
+system.)
+}
+\noindent
+{\tt --help=short} \\
+\configpar{
+Display a summary of only those options that are specific to \libflamens. 
+}
+\noindent
+{\tt --version, -V} \\
+\configpar{
+Display \libflame and autoconf version information. 
+}
+\noindent
+{\tt --silent, --quiet, -q} \\
+\configpar{
+Silent mode. Do not print ``checking...'' messages during configuration.
+}
+
+All command line options specific to \libflame fall into two categories:
+those which describe a particular {\em feature} to enable or disable,
+and those which instruct \configure to set up the build for use with a
+particular {\em tool}.
+
+Command line options which denote features take the form
+{\tt --disable-{\em FEATURE}} or
+{\tt --enable-{\em FEATURE}}, where {\em FEATURE} is a short string that
+describes the feature being enabled or disabled.
+Enabling some options requires that an argument be specified.
+In these cases, the syntax takes the form of
+{\tt --enable-{\em FEATURE}={\em ARG}}, where {\em ARG} is an argument
+specific to the feature being enabled.
+
+Command line options which request the usage of certain tools are
+similar to feature options, except that tool options always take an
+argument.
+These options take the form
+{\tt --with-{\em TOOL}={\em TOOLNAME}}, where {\em TOOL} and {\em NAME}
+are short strings that identify the class of tool and the actual tool name,
+respectively.
+
+The supported command line feature options are: \\
+
+\noindent
+{\tt --enable-verbose-make-output} \\
+\configpar{
+Enable verbose output as \make compiles source files and archives them into
+the library file.
+By default, \configure instructs \make to supress the actual commands sent
+to the compilers (and to \arns) and instead print out more concise progress
+messages.
+This option is useful to developers and advanced users who suspect that \make
+may not be invoking the compilers correctly.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-static-build} \\
+\configpar{
+Create \libflame as a static library archive.
+%Note that the user may also build a dynamically-linked shared library
+%along-side a static archive by also using {\tt --enable-dynamic-build}.
+{\em Enabled by default.}
+}
+\noindent
+{\tt --enable-dynamic-build} \\
+\configpar{
+Create \libflame as a dynamically-linked shared library.
+Linking an executable to a shared library has the advantage that
+only one copy of the library code will ever be loaded into memory.
+%Note that the user may also build a static library archive along-side
+%a shared library by also using {\tt --enable-static-build}.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-max-arg-list-hack} \\
+\configpar{
+Enable a workaround for environments where the amount of memory allocated to
+storing command line argument lists is too small for \ar to archive all of
+the library's object files with one command.
+This usually is not an issue, but on some systems the user may get an
+``Argument list too long'' error message.
+In those situations, the user should enable this option.
+Note: \make may not be run in parallel to build \libflame when this option
+is enabled!
+Doing so will result in undefined behavior from \arns.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-autodetect-f77-ldflags} \\
+\configpar{
+Enable automatic detection of any linker flags that may be needed to link
+against Fortran code.
+These flags are useful to know about when, for example, linking libflame
+to a BLAS library that was compiled with the system's Fortran compiler.
+You may need to disable this option, along with autodetection of Fortran
+name-mangling, if the environment's Fortran compiler is
+missing or broken.
+{\em Enabled by default.}
+}
+\noindent
+{\tt --enable-autodetect-f77-name-mangling} \\
+\configpar{
+Enable automatic detection of the name-mangling necessary to
+invoke Fortran routines from C, and C-compiled routines from Fortran.
+Disabling this option causes a pre-defined default to be used, which may not
+work in some environments.
+You may need to disable this option, along with autodetection of Fortran
+linker flags, if the environment's Fortran compiler is missing or broken.
+{\em Enabled by default.}
+}
+\noindent
+{\tt --enable-non-critical-code} \\
+\configpar{
+Enable code that provides non-critical functionality.
+This code has been identified as unnecessary when total library size is of
+concern.
+{\em Enabled by default.}
+}
+\noindent
+{\tt --enable-builtin-blas} \\
+\configpar{
+Enable code that provides a built-in implementation of the BLAS.
+Note that some routines may not be optimized yet.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-lapack2flame} \\
+\configpar{
+Compile and build into \libflame a compatibility layer that maps LAPACK
+invocations to their corresponding FLAME/C implementations.
+Note that erroneous input parameters are reported according to \libflame
+conventions, NOT LAPACK conventions.
+That is, if \libflame error checking is disabled, no error checking is
+performed, and if erroneous input parameters are detected, the library
+aborts.
+Also, if this option is enabled, then {\tt external-lapack-for-subproblems}
+MUST be disabled.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-external-lapack-for-subproblems} \\
+\configpar{
+Enable code that causes most of the computationally-intensive functions within
+\libflame to compute their smallest subproblems by invoking a corresponding
+(usually unblocked) LAPACK routine.
+Note that if this option is enabled, \lapacktflame MUST be disabled.
+Also, if this option is enabled, then {\tt external-lapack-interfaces}
+MUST also be enabled.
+Enabling this option is useful when a \libflame user wishes to leverage an
+optimized external implementation of LAPACK to speed up the
+subproblems that arise within \libflamens's blocked algorithms and
+algorithms-by-blocks.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-external-lapack-interfaces} \\
+\configpar{
+Enable code that allows the user to interface with an external LAPACK
+implementation via object-based FLAME-like functions.
+Note that if this option is enabled, an LAPACK library will be required at
+link-time.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-blas3-front-end-cntl-trees} \\
+\configpar{
+Enable code that uses control trees\footnotemark ~to select a reasonable
+variant and blocksize when level-3 BLAS front-ends are invoked.
+When disabled, the front-ends invoke their corresponding external
+implementations.
+Note that control trees are always used for LAPACK-level operations.
+{\em Enabled by default.}
+}
+\footnotetext{
+Control trees are internal constructs designed to reduce code redundancy
+within \libflamens.
+They allow developers to specify parameters such as blocksize, algorithmic
+variant, and parallel execution without changing the code that defines the
+algorithm in question.
+%As such, the control trees are mostly of interest only to \libflame
+%developers.
+They are described in detail in Chapter \ref{chapter:dev-apis}.
+}
+\noindent
+{\tt --enable-multithreading={\em model}} \\
+\configpar{
+Enable multithreading support.
+Valid values for {\em model} are {\tt pthreads} and {\tt openmp}.
+Multithreading must be enabled to access the shared memory parallelized
+implementations provided by SuperMatrix.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-supermatrix} \\
+\configpar{
+Enable SuperMatrix, a dependency-aware task scheduling and parallel
+execution system.
+Note that multithreading support must also be enabled, via
+{\tt --enable-multithreading}, in order to activate parallelized
+implementations.
+If SuperMatrix is enabled but multithreading is not, then SuperMatrix-aware
+routines will operate sequentially in a verbose ``simulation'' mode.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-gpu} \\
+\configpar{
+Enable code that takes advantage of graphical processing units (GPUs) when
+performing certain computations.
+If enabled, SuperMatrix must also be enabled via {\tt --enable-supermatrix}.
+Note that this option is experimental.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-vector-intrinsics={\em type}} \\
+\configpar{
+Enable highly-optimized code that relies upon vector intrinsics
+to specify certain operations at a very low level.
+Valid values for {\em type} are {\tt sse} and {\tt none}.
+Specifying {\tt none} is the same as disabling the option.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-memory-alignment={\em N}} \\
+\configpar{
+Enable code that aligns dynamically allocated memory regions at {\em N}-byte
+boundaries.
+Specifically, this option configures \libflame to use {\tt posix\_memalign()}
+instead of {\tt malloc()} for all internal memory allocation.
+Note: {\em N} must be a power of two and multiple of {\tt sizeof(void*)},
+which is usually 4 on 32-bit architectures and 8 on 64-bit architectures.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-ldim-alignment} \\
+\configpar{
+If memory alignment is requested, enable code that will increase, if
+necessary, the leading dimension of \libflame objects so that each matrix
+row or column begins at an aligned address.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-optimizations} \\
+\configpar{
+Employ traditional compiler optimizations when compiling C source code.
+{\em Enabled by default.}
+}
+\noindent
+{\tt --enable-warnings} \\
+\configpar{
+Use the appropriate flag(s) to request warnings when compiling C source code.
+{\em Enabled by default.}
+}
+\noindent
+{\tt --enable-debug} \\
+\configpar{
+Use the appropriate debug flag (usually {\tt -g}) when compiling C source code.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-profiling} \\
+\configpar{
+Use the appropriate profiling flag (usually {\tt -pg}) when compiling C
+source code.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-internal-error-checking={\em level}} \\
+\configpar{
+Enable various internal runtime checks of function parameters and object
+properties to prevent functions from executing with unexpected values.
+Note that this option determines the default level, which may be changed at
+runtime (via \flacheckerrorlevelsetns).
+Valid values for {\em level} are {\tt full}, {\tt minimal}, and {\tt none}.
+{\em Enabled by default to {\tt full}.}
+}
+\noindent
+{\tt --enable-memory-leak-counter} \\
+\configpar{
+Enable code that keeps track of the balance between calls to
+\flamalloc and \flafreens.
+If enabled, the counter value is output to standard error upon calling
+\flafinalizens.
+Note that this option determines the default status, which may be changed at
+runtime (via \flamemoryleakcountersetns).
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-blis-use-of-fla-malloc} \\
+\configpar{
+Enable code that defines {\tt bli\_malloc()} in terms of {\tt FLA\_malloc()}.
+One benefit of this is that BLIS memory allocations can be tracked, along
+with other libflame memory allocations, if the memory leak counter is
+enabled.
+A second benefit is that BLIS memory allocations can be aligned to
+boundaries if libflame memory alignment is enabled.
+Note this option may only be set at configure-time.
+{\em Enabled by default.}
+}
+\noindent
+{\tt --enable-goto-interfaces} \\
+\configpar{
+Enable code that interfaces with internal/low-level functionality within
+GotoBLAS, such as those symbols that may be queried for architecture-dependent
+blocksize values.
+When this option is disabled, reasonable static values are used instead.
+Note that in order to use \libflame with a BLAS library other than GotoBLAS,
+the user must disable this option.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-cblas-interfaces} \\
+\configpar{
+Enable code that interfaces \libflamens's external wrapper routines to the BLAS
+via the CBLAS rather than the traditional Fortran-77 API.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-default-m-blocksize={\em mb}} \\
+{\tt --enable-default-k-blocksize={\em kb}} \\
+{\tt --enable-default-n-blocksize={\em nb}} \\
+\configpar{
+Enable user-defined blocksizes in the $ m $, $ k $, and $ n $ dimensions.
+These options may be used to define the blocksizes that will be returned
+from blocksize query functions when GotoBLAS interfaces are disabled.
+Note that these options have no effect when GotoBLAS interfaces are enabled.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-portable-timer} \\
+\configpar{
+Define the {\tt FLA\_Clock()} timer function using {\tt clock\_gettime()}.
+If that function is not available, then {\tt getttimeofday()} is used.
+If neither function is available, {\tt FLA\_Clock()} is will return a
+static value.
+{\em By default, a portable timer is used (if it exists).}
+}
+
+A few command line feature options are supported by \configure but refer to
+features that are experimental and/or not yet completely implemented.
+Unless you are know what you are doing, you should avoid using these
+options: \\
+
+\noindent
+{\tt --enable-windows-build} \\
+\configpar{
+Enable code that is needed for a Windows-friendly build of \libflamens.
+This entails disabling all code specific to Linux/UNIX.
+(Note: this option is actually never used in practice because the Windows
+build of libflame does not use \configure to begin with.)
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-scc} \\
+\configpar{
+Enable code that takes advantage of the SCC multicore
+architecture.
+When using this option, enabling SuperMatrix is recommended, though not
+strictly required.
+Note that this option is experimental.
+{\em Disabled by default.}
+}
+\noindent
+{\tt --enable-tidsp} \\
+\configpar{
+Enable code required for libflame to run under Texas Instruments' DSP.
+Note that this option is experimental.
+{\em Disabled by default.}
+}
+
+
+The supported command line tool options are: \\
+
+\noindent
+{\tt --with-cc={\em cc}} \\
+\configpar{
+Search for and use a C compiler named {\em cc}.
+If {\em cc} is not found, then use the first compiler found from the
+default search list for the detected build architecture.
+}
+\noindent
+{\tt --with-extra-cflags={\em flags}} \\
+\configpar{
+When compiling C code, use the flags in {\em flags} in addition to the flags
+that configure would normally use.
+This is useful when the user wants some extra flags passed to the compiler
+but does not want to manually set the {\tt CFLAGS} environment variable and
+thus override all of the default compiler flags.
+Note: Be sure to use quotations if the {\em flags} string contains spaces.
+}
+\noindent
+{\tt --with-ar={\em ar}} \\
+\configpar{
+Search for and use a library archiver named {\em ar}.
+If {\em ar} is not found, then use the first library archiver found
+from the default search list for the detected build architecture.
+Note: the library archiver search list usually consists only of {\tt ar}.
+}
+\noindent
+{\tt --with-ranlib={\em ranlib}} \\
+\configpar{
+Search for and use a library archive indexer named {\em ranlib}.
+If {\em ranlib} is not found, then use the first library archiver found
+from the default search list for the detected build architecture.
+Note: the library archiver search list usually consists only of {\tt ranlib}.
+}
+
+In addition to specifying tools via command line options, the user may
+alternately make the same requests via environment variables.
+Environment variables, if they are set, {\em always} override their
+corresponding command line options.
+\configure also supports a few related environment variables which do
+not have an anologous command line option.
+
+\input{figs/23-tool-env-vars}
+
+Table \ref{fig:tool-env-vars} lists the supported
+environment variables and their corresponding tool options, if one
+exists.
+
+\subsection{Running \configure}
+\label{sec:running-configure}
+
+\index{\libflame!for GNU/Linux and UNIX!running \configurens}
+
+The simplest way to run \configure is to invoke it explicitly on the
+command line, followed by any of the various options described in the
+previous subsection.
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+> ./configure --enable-supermatrix --enable-multithreading=pthreads --disable-internal-error-checking
+\end{Verbatim}
+
+\noindent
+Alternatively, the user may invoke \configure indirectly through a convenient
+wrapper script, \runconfigurens.
+This script contains an invocation of \configure along with nearly all of
+the default \configure options.
+To specify non-default options, the user can simply edit the script and
+then invoke it from the top-level directory, just as he would for
+\configurens.
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+> ./run-conf/run-configure.sh
+\end{Verbatim}
+
+\noindent
+The benefit of using \runconfigure is twofold.
+First, the user has a clear and concise way of reviewing the options passed
+into \configurens.
+This information is automatically output to {\tt config.log}; however, in
+order to recover this information the user must sift through many lines of
+logging output, which tends to be more cumbersome.
+Second, the user can easily re-configure \libflame with slightly different
+options by simply editing \runconfigure and then re-running the script.
+
+
+The primary purpose of running \configure is to provide \make with some of
+the information it needs in order to begin compiling \libflamens.
+As \configure searches for and checks various parts of the build environment,
+it echoes its progress to standard output.
+The following is an example of a snippet of such output:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+> ./run-conf/run-configure.sh 
+checking build system type... i686-pc-linux-gnu
+checking host system type... i686-pc-linux-gnu
+checking for GNU make... make
+checking for GNU bash... bash
+checking whether user requested a specific C compiler... no
+configure: CC environment variable is set to gcc, which will override --with-cc option and default search
+list for C compiler.
+checking for C compiler default output file name... a.out
+checking whether the C compiler works... yes
+checking whether we are cross compiling... no
+checking for suffix of executables... 
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+\end{Verbatim}
+
+\configure has another purpose, though: to create makefile fragments for each
+directory in the source tree.
+The user can see this second half of the \configure process with output
+that looks something like:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+gen-make-frag.sh: creating makefile fragment in src/base/flamec
+gen-make-frag.sh: creating makefile fragment in src/base/flamec/check
+gen-make-frag.sh: creating makefile fragment in src/base/flamec/check/base
+gen-make-frag.sh: creating makefile fragment in src/base/flamec/check/base/main
+gen-make-frag.sh: creating makefile fragment in src/base/flamec/check/base/util
+gen-make-frag.sh: creating makefile fragment in src/base/flamec/check/blas
+gen-make-frag.sh: creating makefile fragment in src/base/flamec/check/blas/1
+gen-make-frag.sh: creating makefile fragment in src/base/flamec/check/blas/2
+gen-make-frag.sh: creating makefile fragment in src/base/flamec/check/blas/3
+gen-make-frag.sh: creating makefile fragment in src/base/flamec/check/lapack
+gen-make-frag.sh: creating makefile fragment in src/base/flamec/check/lapack/util
+\end{Verbatim}
+
+\noindent
+These makefile fragments are included recursively by the top-level \makefile
+and give \make access to the source files which reside throughout the source
+tree.\footnote{
+The idea behind generating recursively-includable makefile fragments at
+configure-time is that these fragments will often change when files and
+directories are added, moved, or deleted by \libflame developers, and thus
+it is much more convenient for them to be generated automatically than to be
+stored and maintained within the source code repository.}
+The makefile fragments are all named \fragmentmkns, and thus they are hidden
+from normal directory viewing.
+
+Once \configure has completed, it invokes a secondary script, \postconfigurens,
+to print out a summary of the configuration process.
+Please review this summary and confirm that \libflame has been configured as
+intended.
+
+There is one section of the configuration summary that you should pay special
+attention to.
+If autodetection of Fortran name-mangling was enabled, at the end of the summary
+there will be output that looks like:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+Autodetect Fortran linker flags................. : yes
+   Fortran linker flags......................... :  -L/lusr/opt/gcc-4.2.2/lib/gcc/i686-pc-linux-gnu/4.2.2
+-L/lusr/opt/gcc-4.2.2/lib/gcc/i686-pc-linux-gnu/4.2.2/../../.. -lgfortranbegin -lgfortran -lm
+Autodetect Fortran name-mangling................ : yes
+   Unmangled name............................... : foobar
+   Mangled name................................. : foobar\_
+
+Compile with extra C compiler flags............. : no
+
+libflame install directory prefix............... : /u/field/flame
+
+Compile with extra C compiler flags............. : no
+
+libflame install directory prefix............... : /u/field/flame
+
+Configuration complete!
+
+NOTE: Autodetection of Fortran linker flags was enabled. The configure
+script thinks that the flags listed above are necessary to successfully
+link a program to Fortran object code. If your program uses any Fortran
+libraries, you will probably need to link with these flags.
+\end{Verbatim}
+
+The purpose of this note is to inform the user of Fortran linker flags\footnote{
+The flags shown were detected when \libflame was configured to use Intel
+compilers in an {\tt i686-unknown-linux-gnu} build environment that
+happens to provide both Intel and GNU compilers.
+Oftentimes, \postconfigure will display link flags that appear to accomodate
+linking with two different compiler packages.
+In our experience, we've found that these extraneous flags do not interfere
+with the compiler at link-time.
+}
+that may be needed in order
+to successfully link \libflame and your application against Fortran code,
+potentially including the BLAS or LAPACK libraries.
+Sometimes, these flags are not necessary, but it is safer to always use them.
+%The actual flags detected will vary depending on
+%the build environment and the compiler chosen by \configurens.
+Please see Section \ref{sec:linking} for further instructions on using these
+flags at link-time.
+In the meantime, there is no need to copy and save these flags to a separate
+file.
+You may view the flags detected by the previous run of \configure at
+any time by opening the \postconfigure script in your favorite file editor
+or viewer.
+The \postconfigure script resides in the subdirectory of {\tt config} that
+is identified by the build system string detected by \configurens.
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+> ls -l config/i686-unknown-linux-gnu/post-configure.sh 
+-rwxr--r-- 1 field dept 5861 Nov 14 13:35 config/i686-pc-linux-gnu/post-configure.sh
+\end{Verbatim}
+%> grep LDFLAGS config/x86_64-unknown-linux-gnu/post-configure.sh
+%echo "LDFLAGS =  -L/opt/intel/fc/em64t/10.0.026/lib -L/usr/lib/gcc/x86_64-pc-linux-gnu/3.4.6/
+%-L/usr/lib/gcc/x86_64-pc-linux-gnu/3.4.6/../../../../lib64 -lifport -lifcore -limf -lsvml -lm
+%-lipgo -lirc -lirc_s -ldl"
+
+
+
+%The INSTALL file contains generic instructions for configuring, compiling, and
+%installing the library.
+%These instructions are not specific to \libflamens.
+%If you are in a hurry and wish to configure, compile, and install \libflame with
+%default options, execute the following compound command:
+%\begin{verbatim}
+%> ./configure ; make ; make install
+%\end{verbatim}
+
+
+\section{Compiling}
+
+\index{\libflame!for GNU/Linux and UNIX!compiling}
+
+After \configure has run, the user may proceed to building the library.
+The simplest way to do this is to just run \makens:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+> make
+\end{Verbatim}
+
+\noindent
+This is actually shorthand for \make \allns.
+That is, it tells \make to invoke the \all target, which in turn invokes
+the \libs target.
+Invoking the \libs target compiles and archives the library.
+Table \ref{fig:make-targets} lists the most useful \make targets defined
+in the \libflame \makefilens.
+
+As \make performs individual compiles individual source files into object
+files, it will output progress information.
+By default, this appears as:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+Compiling src/base/flamec/main/FLA_Blocksize.c
+Compiling src/base/flamec/main/FLA_Check.c
+Compiling src/base/flamec/main/FLA_Error.c
+Compiling src/base/flamec/main/FLA_File.c
+Compiling src/base/flamec/main/FLA_Init.c
+Compiling src/base/flamec/main/FLA_Lock.c
+Compiling src/base/flamec/main/FLA_Memory.c
+Compiling src/base/flamec/main/FLA_Misc.c
+Compiling src/base/flamec/main/FLA_Obj.c
+\end{Verbatim}
+
+If \libflame was configured with {\tt --enable-verbose-make-output}, then
+the output will show the actual compiler commands being executed.
+
+\subsection{Parallel \make}
+
+\libflame has been known to take a while to build, especially on systems
+with slow processors and/or slow compilers.
+If you are performing the build on an SMP or multicore system, then you
+may parallelize the compilation by using the {\tt -j {\em n}} option to
+\makens.
+This option tells \make to perform up to {\em n} tasks in parallel.
+In the following example, we request that \make avail itself to four-way
+parallelism.
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+> make -j4
+\end{Verbatim}
+
+\noindent
+The {\em n} argument should be set to a reasonable value, such as
+the number of cores or processors on the system.
+Be aware that this may not necessarily speed up the build process if the
+build system has an I/O bottleneck, such as a slow network-mounted
+filesystem.
+
+\input{figs/23-make-targets}
+
+
+
+\section{Installation}
+
+\index{\libflame!for GNU/Linux and UNIX!installing}
+
+After \make has successfully completed, the \libflame library files
+reside in a subdirectory of the {\tt lib} directory.
+The exact subdirectory name depends on the build system type.
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+> ls -l lib/i686-unknown-linux-gnu/
+total 33872
+-rw-r--r-- 1 field dept 22548036 Nov 14 13:45 libflame.a
+-rwxr-xr-x 1 field dept 12060827 Nov 14 13:45 libflame.so
+\end{Verbatim}
+
+\noindent
+In this example, \libflame was built for an i686 system with a
+build system type of {\tt i686-unknown-linux-gnu}, and so the
+library files reside in the directory
+{\tt lib/i686-unknown-linux-gnu}.
+
+At this point, you need to use the \install target to move the library
+and header files to a more permanent location.
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+> make install
+Installing libflame-i686-r4784.a into /u/field/flame/lib/
+Installing libflame-i686-r4784.so into /u/field/flame/lib/
+Installing C header files into /u/field/flame/include-i686-r4784
+Installing symlink libflame.a into /u/field/flame/lib/
+Installing symlink libflame.so into /u/field/flame/lib/
+Installing symlink include into /u/field/flame/
+\end{Verbatim}
+
+\noindent
+Here, we can see the library and header files were moved into the default
+subdirectories of the user's home directory.
+Notice that the libraries and include directory are renamed to reflect
+the build architecture and the revision number.
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+> ls -l $HOME/flame/
+total 8
+lrwxrwxrwx  1 field dept     18 Nov 14 13:46 include -> include-i686-r4784
+drwxr-xr-x  2 field dept  20480 Nov 14 13:46 include-i686-r4784
+drwxr-xr-x  5 field dept   4096 Nov 14 13:46 lib
+> ls -l $HOME/flame/lib/
+total 62024
+lrwxrwxrwx 1 field dept       21 Nov 14 13:46 libflame.a -> libflame-i686-r4784.a
+lrwxrwxrwx 1 field dept       22 Nov 14 13:46 libflame.so -> libflame-i686-r4784.so
+-rw-r--r-- 1 field dept 22548036 Nov 14 13:46 libflame-i686-r4784.a
+-rw-r--r-- 1 field dept 12060827 Nov 14 13:46 libflame-i686-r4784.so
+\end{Verbatim}
+
+\noindent
+Also notice that the \install target automatically creates abbreviated symbolic
+links to the actual library files so that you may simply refer to
+{\tt libflame.a} or {\tt libflame.so} when linking your application.
+A similarly shortened symbolic link is created for the include directory
+as well.
+If you do not wish to create and install these symbolic links along with
+\libflamens, you may instead invoke \installwithoutsymlinksns.
+
+Now that \libflame has been installed, you are ready to use it!
+%If you only plan on building \libflame for one architecture, then you may
+%use the \installsymlinks target to install symbolic links to the library
+%archive and the include directory.
+
+%However, if you plan on building and installing multiple instances of
+%\libflame and you wish to install them to the same directory, we offer
+%the \installsymlinkswitharch target.
+%Executing this target creates symbolic links similar to those of 
+%\installsymlinksns, except that only the revision string is omitted.
+%Keeping the architecture string provides enough differentiation to allow
+%multiple installations of \libflame to coexist in the same install
+%directory.
+
+
+%\noindent
+%sdlkfj lskd flskdj flsjd flksjdf slfj klsdf l
+%
+% BlueViolet
+% RoyalPurple
+% Violet
+% Fuchsia
+% 
+%\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize,rulecolor=\color{Black}]
+%\textcolor{Fuchsia}{> make install-symlinks-with-arch}
+%\textcolor{Fuchsia}{Installing symlink libflame-x86_64.a into /home/field/flame/lib/}
+%\textcolor{Fuchsia}{Installing symlink include-x86_64 into /home/field/flame/}
+%\end{Verbatim}
+
+%\noindent
+%After executing the \install target,
+%we are left with an install directory that looks like:
+%
+%\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+%> ls -l $HOME/flame
+%total 8
+%lrwxrwxrwx 1 field flame   19 Aug 29 17:08 include-x86_64 -> include-x86_64-r4784
+%drwxr-xr-x 2 field flame 4096 Aug 29 17:07 include-x86_64-r4784
+%drwxr-xr-x 2 field flame 4096 Aug 29 17:39 lib
+%> ls -l $HOME/flame/lib
+%total 17680
+%-rw-r--r-- 1 field flame 17226100 Aug 29 17:07 libflame-x86_64-r4784.a
+%lrwxrwxrwx 1 field flame       22 Aug 29 17:08 libflame-x86_64.a -> libflame-x86_64-r4784.a
+%\end{Verbatim}
+%
+%\noindent
+%Of course, you could execute both the \installsymlinks and
+%\installsymlinkswitharch targets and get both kinds of symbolic links.
+
+
+
+
+\section{Linking against \libflame}
+\label{sec:linking}
+
+\index{\libflame!for GNU/Linux and UNIX!linking against}
+
+Since you are building \libflamens, you probably wish to use it in your
+application.
+This section will show you how to link \libflame with your existing application.
+
+Let's assume that you've installed \libflame to the default location in
+{\tt \$HOME/flame}.
+Let's also assume that you invoked the \install target (and not the
+\installwithoutsymlinks target), giving
+you shorthand symbolic links to both \libflame and the directory containing
+header files.
+
+In general, you should make the following changes to your application build
+process:
+\begin{itemize}
+\item
+{\bf Add the \libflame header directory to the include path of your compiler}.
+Usually, this is done by with the {\tt -I} compiler option.
+For example, if you configured \libflame to use {\tt \$HOME/flame} as the
+install prefix, then you would add {\tt -I\$HOME/flame/include} to the command
+line when invoking the compiler.
+Strictly speaking, this is only necessary when compiling source code files
+that use \libflame symbols or APIs, but it is generally safe to use when compiling
+all of your application's source code.
+\item
+{\bf Add \libflame to the link command that links your application.}
+If you only wish to use the native \libflame API, then you only need to add
+{\tt libflame.a} to your link command.
+However, note that {\tt libflame.a} {\em must} appear in front of the
+LAPACK and BLAS libraries.
+This is because the linker only searches for symbols in the ``current''
+archive and those that appear further down in the link command.
+Placing \libflame after LAPACK or the BLAS will result in undefined symbol
+errors at link-time.
+\item
+{\bf Use the recommended linker flags detected by \configurens.}
+This topic was previously alluded to toward the end of Section
+\ref{sec:running-configure}.
+It is often the case that you must add various linker flags to the link
+command in order to properly link your application with \libflamens.
+This is usually the result of the compilers embedding certain low-level
+functions into the object code.
+These functions may only be resolved at link-time if the library in which
+they are defined is also provided to the linker.
+The list of linker flags that you will need is displayed when \configure
+finished and exits.
+After \configure is run, you may also find these linker flags in the
+\postconfigure script, as described near the end of
+Section \ref{sec:running-configure}.
+\end{itemize}
+
+Now let's give a concrete example of these changes.
+Suppose you've been building your application with a \makefile that looks
+something like:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\#\{\},fontsize=\footnotesize]
+SRC_PATH   := .
+OBJ_PATH   := .
+INC_PATH   := .
+
+LIB_HOME   := $(HOME)
+BLAS_LIB   := $(LIB_HOME)/lib/libblas.a
+LAPACK_LIB := $(LIB_HOME)/lib/liblapack.a
+
+CC         := icc
+LINKER     := $(CC)
+CFLAGS     := -g -O2 -Wall -I$(INC_PATH)
+LDFLAGS    := -lm 
+
+MYAPP_OBJS := main.o file.o util.o proc.o
+MYAPP_BIN  := my_app
+
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
+    $(CC) $(CFLAGS) -c $< -o $@
+
+$(MYAPP): $(MYAPP_OBJS)
+    $(LINKER) $(MYAPP_OBJS) $(LDFLAGS) $(LAPACK_LIB) $(BLAS_LIB) -o $(MYAPP_BIN)
+
+clean:
+    rm -f $(MYAPP_OBJS) $(MYAPP_BIN)
+\end{Verbatim}
+
+\noindent
+To link against \libflame, you should change your \makefile as follows:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\#\{\},fontsize=\footnotesize]
+SRC_PATH   := .
+OBJ_PATH   := .
+INC_PATH   := .
+
+LIB_HOME   := $(HOME)
+BLAS_LIB   := $(LIB_HOME)/lib/libblas.a
+LAPACK_LIB := $(LIB_HOME)/lib/liblapack.a
+
+#textcolor{red}{FLAME_HOME := $(HOME)}
+#textcolor{red}{FLAME_INC  := $(FLAME_HOME)/flame/include}
+#textcolor{red}{FLAME_LIB  := $(FLAME_HOME)/flame/lib/libflame.a}
+
+CC         := icc
+LINKER     := $(CC)
+CFLAGS     := -g -O2 -Wall -I$(INC_PATH) #textcolor{red}{-I$(FLAME_INC)}
+LDFLAGS    := #textcolor{red}{-L/opt/intel/fc/em64t/10.0.026/lib}
+#textcolor{red}{LDFLAGS    += -L/usr/lib/gcc/x86_64-pc-linux-gnu/3.4.6/}
+#textcolor{red}{LDFLAGS    += -L/usr/lib/gcc/x86_64-pc-linux-gnu/3.4.6/../../../../lib64}
+#textcolor{red}{LDFLAGS    += -lifport -lifcore -limf -lsvml -lm -lipgo -lirc -lirc_s -ldl}
+
+MYAPP_OBJS := main.o file.o util.o proc.o
+MYAPP_BIN  := my_app
+
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
+    $(CC) $(CFLAGS) -c $< -o $@
+
+$(MYAPP): $(MYAPP_OBJS)
+    $(LINKER) $(MYAPP_OBJS) $(LDFLAGS) #textcolor{red}{$(FLAME_LIB)} $(LAPACK_LIB) $(BLAS_LIB) -o $(MYAPP_BIN)
+
+clean:
+    rm -f $(MYAPP_OBJS) $(MYAPP_BIN)
+\end{Verbatim}
+
+\noindent
+The changes appear in red.
+
+First, we define the locations of \libflame and the \libflame header directory.
+
+Second, we include the location of the \libflame headers to the compilers'
+command line options so that the C compiler will be able to perform type
+checking against \libflame declarations and prototypes.
+
+Third, we add the linker flags to the {\tt LDFLAGS} variable so that the
+linker can find any auxiliary system libraries that might be needed in
+order to link your application with the object code present in \libflamens.
+
+Finally, we add the \libflame library to the link command, making sure to
+insert it before the LAPACK and BLAS libraries.
+
+
+
+\subsection{Linking with the {\tt lapack2flame} compatibility layer}
+
+\index{\libflame!for GNU/Linux and UNIX!linking with \lapacktflame}
+
+The previous section demonstrated how to modify a hypothetical makefile
+to link a pre-existing application to \libflamens.
+However, some users have applications which use LAPACK interfaces and
+wish to use \libflame without chaning their application code.
+This may be accomplished by configuring \libflame to include the
+\lapacktflame compatibility layer.
+When this option is provided at configure-time, \libflame is built
+to include interfaces that map conventional LAPACK routine invocations to
+native FLAME/C function calls.
+
+For more information about the routines supported by \lapacktflame, refer
+to Section \ref{sec:lapack2flame}.
+
+
+

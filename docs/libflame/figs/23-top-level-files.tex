@@ -1,0 +1,202 @@
+\begin{table}
+\begin{center}
+\begin{tabular}{llp{4.2in}}
+{\bf File} & {\bf Type} & {\bf Description} \\
+% --------------------------------------
+{\tt AUTHORS}
+&
+peristent
+&
+Credits for authorship of various sub-components of \libflame. \\
+% --------------------------------------
+{\tt CHANGELOG}
+&
+peristent
+&
+A list of major changes in each major milestone release version. \\
+% --------------------------------------
+{\tt CONTRIBUTORS}
+&
+peristent
+&
+Credits for co-authors of working notes, conference papers, and journal
+articles that have influenced the development of \libflamens. \\
+% --------------------------------------
+{\tt Doxyfile}
+&
+peristent
+&
+The configuration file for running {\tt doxygen}, which we use to
+automatically generate a map of the source tree. \\
+% --------------------------------------
+{\tt INSTALL}
+&
+peristent
+&
+Generic instructions for configuring, compiling, and installing the software
+package, courtesy of the Free Software Foundation. \\
+% --------------------------------------
+{\tt LICENSE}
+&
+peristent
+&
+The file specifying the license under which the software is made available.
+As of this writing, \libflame is available as free software under version
+2.1 of the GNU Lesser General Public License (LGPL). \\
+% --------------------------------------
+{\tt Makefile}
+&
+peristent
+&
+The top-level makefile for compiling \libflamens.
+This makefile uses the GNU {\tt include} directive to recursively include
+the makefile fragments that are generated at configure-time.
+Therefore, it is inoperable until \configure has been run. \\
+% --------------------------------------
+{\tt README}
+&
+peristent
+&
+A short set of release notes directing the user to the \libflame web page
+and the \libflame reference manual for more detailed information concerning
+installation and usage. \\
+% --------------------------------------
+{\tt bootstrap}
+&
+peristent
+&
+A shell script used by developers to regenerate the \configure script. \\
+% --------------------------------------
+{\tt build}
+&
+peristent
+&
+This directory contains auxiliary build system files and shell scripts.
+These files are probably only of interest to developers of \libflamens, and
+so most users may safely ignore this directory. \\
+% --------------------------------------
+{\tt config}
+&
+build
+&
+A directory containing intermediate architecture-specific build files. \\
+% --------------------------------------
+{\tt config.log}
+&
+build
+&
+Logs information as it is gathered and processed by \configurens. \\
+% --------------------------------------
+{\tt config.status}
+&
+build
+&
+A helper script invoked by \configurens. \\
+% --------------------------------------
+{\tt config.sys\_type}
+&
+build
+&
+This file is used to communicate the canonical build system type between
+\configure and {\tt config.status} helper script. \\
+%The reasons this file is needed relate to variable scoping quirks and
+%are beyond the scope of this description. \\
+% --------------------------------------
+{\tt configure}
+&
+peristent
+&
+The script used to configure \libflame for compiling and installation.
+\configure accepts many options, which may be queried by running
+\configurehelpns. \\
+% --------------------------------------
+{\tt configure.ac}
+&
+peristent
+&
+An input file to {\tt autoconf} that specifies how to build the \configure
+script based on a sequence of {\tt m4} macros.
+This file is only of interest to \libflame developers. \\
+% --------------------------------------
+{\tt docs}
+&
+peristent
+&
+A directory containing documentation related to \libflamens.
+The LaTeX source to the \libflame reference manual resides here. \\
+% --------------------------------------
+{\tt examples}
+&
+peristent
+&
+A directory containing a few examples of \libflame algorithm
+implementations and \libflame usage. \\
+% --------------------------------------
+{\tt lib}
+&
+build
+&
+A directory containing the libraries created after compilation. \\
+% --------------------------------------
+{\tt obj}
+&
+build
+&
+A directory containing the object files created during compilation. \\
+% --------------------------------------
+{\tt revision}
+&
+build/persistent
+&
+A file containing the subversion revision number of the source code. \\
+% --------------------------------------
+{\tt run-conf}
+&
+peristent
+&
+A directory containing a wrapper script to \configure that the user
+may use to help them specify multiple options.
+The script is strictly a convenience; some users will opt to instead
+invoke \configure directly. \\
+% --------------------------------------
+{\tt src}
+&
+peristent
+&
+The root directory of all source code that goes into building \libflamens. \\
+% --------------------------------------
+{\tt test}
+&
+peristent
+&
+A monolithic test driver to test your \libflame installation. \\
+%For now, this directory is empty. \\
+%In the future, \libflame will feature its own native test drivers that
+%will also allow easy performance testing. \\
+% --------------------------------------
+%{\tt tmp}
+%&
+%peristent
+%&
+%A directory containing miscellaneous developer odds-and-ends. \\
+% --------------------------------------
+{\tt windows}
+&
+peristent
+&
+The directory containing the Windows build system.
+See Chapter \ref{chapter:setup-windows} for detailed instructions on how to
+configure, compile, install, and link against a Windows build of
+\libflamens. \\
+% --------------------------------------
+\end{tabular}
+\end{center}
+\caption{A list of the files and directories the user can expect to find in the
+top-level \libflame directory along with descriptions.
+Files marked ``peristent'' should always exist while files marked
+``build'' are build products created by the build system.
+This latter group of files may be safely removed by invoking the \make
+target \distcleanns.
+}
+\label{fig:top-level-files}
+\end{table}

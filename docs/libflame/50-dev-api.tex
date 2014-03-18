@@ -1,0 +1,4053 @@
+\chapter{Developer Application Programming Interfaces}
+\label{chapter:dev-apis}
+
+This chapter describes APIs of interest to developers of \libflamens,
+including advanced users seeking to extend existing functionality to suit
+their own application.
+
+
+
+
+
+
+\section{Locks}
+
+\index{developer APIs!locks}
+
+There are a few instances, most notably within the \libflame implementation
+of SuperMatrix, where locks are needed to ensure that certain data structures
+are updated synchronously by multiple threads.
+\libflame abstracts the implementation of the locking mechanism from the user
+by exporting a general interface that operates upon an internally defined
+\flalock structure.
+This structure contains all of the information needed to identify the actual
+lock, however it may be defined by the implementation.
+\libflame will define its implementation in terms of whichever multithreading
+interface is enabled.
+See Section \ref{sec:configure-options} for more information on how to specify
+the type of multithreading at configure-time.
+
+Note that this API provides only basic locking functionality.
+The functions do {\em not} return any status value, and thus the caller
+cannot check whether the function succeeded or not.
+This was done to simplify the implementation, and also because our primary
+application, SuperMatrix, did not require the ability to recover from the
+kinds of errors that might occur beyond the control of the user, such as
+system errors.
+
+
+\subsection{API}
+
+% --- FLA_Lock_init() ----------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Lock_init( FLA_Lock* lock_ptr );
+\end{verbatim}
+\purpose{
+Initialize the lock structure pointed to by \flalockns.
+Upon successful return, the state of the lock becomes initialized and
+unlocked.
+}
+\notes{
+Attempting to initialize a lock that has already been initialized (and
+not yet released) may result in undefined behavior.
+}
+\begin{checks}
+\checkitem
+\lockptr may not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\begin{params}
+\parameter{\flalockp}{lock\_ptr}{A pointer to an \flalock structure.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Lock_acquire() -------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Lock_acquire( FLA_Lock* lock_ptr );
+\end{verbatim}
+\purpose{
+Attempt to acquire the lock pointed to by \lockptrns.
+If the lock is unavailable (if its state is already locked), the call
+blocks and returns only upon successful acquisition of the lock.
+}
+\begin{checks}
+\checkitem
+\lockptr may not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\begin{params}
+\parameter{\flalockp}{lock\_ptr}{A pointer to an \flalock structure.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Lock_release() -------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Lock_release( FLA_Lock* lock_ptr )
+\end{verbatim}
+\purpose{
+Release the lock associated with the structure pointed to by \flalockns.
+}
+\notes{
+Attempting to release a lock that is uninitialized or that has not yet
+been acquired may result in undefined behavior.
+}
+\begin{checks}
+\checkitem
+\lockptr may not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\begin{params}
+\parameter{\flalockp}{lock\_ptr}{A pointer to an \flalock structure.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Lock_destroy() -------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Lock_destroy( FLA_Lock* lock_ptr );
+\end{verbatim}
+\purpose{
+Destroy the the lock structure pointed to by \flalockns.
+This causes all system resources associated with the lock that had been
+previously allocated by {\tt FLA\_Lock\_init()} to be freed.
+Upon returning, the state of the lock becomes uninitialized.
+}
+\notes{
+Attempting to destroy a lock that is currently in the locked state
+may result in undefined behavior.
+}
+\begin{checks}
+\checkitem
+\lockptr may not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\begin{params}
+\parameter{\flalockp}{lock\_ptr}{A pointer to an \flalock structure.}
+\end{params}
+\end{flaspec}
+
+
+
+
+
+
+\section{Memory management}
+
+\index{developer APIs!memory allocation}
+
+% --- FLA_malloc() -------------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void* FLA_malloc( size_t size );
+\end{verbatim}
+\purpose{
+Request a pointer to \size bytes of heap-allocated memory from the system.
+Note that a value of zero for \size will guarantee that \fnull is returned.
+}
+\notes{
+The programmer is encouraged to use {\tt FLA\_malloc()} instead of calling
+{\tt malloc()} directly.
+Using {\tt FLA\_malloc()} and {\tt FLA\_free()} allows \libflame to output
+via standard error the balance of allocations and releases when
+{\tt FLA\_Finalize()} is called, which provides a basic memory leak
+detection.
+}
+\implnotes{
+If \libflame was configured with {\tt --enable-memory-alignment={\em N}},
+then memory will be allocated using {\tt posix\_memalign()} using {\em N}
+as the alignment factor.
+Otherwise, {\tt malloc()} is used, which typically only guarantees
+memory alignment at 8-byte boundaries.
+}
+\caveats{
+If by chance {\tt malloc()} (or {\tt posix\_memalign()}) fails to allocate
+the requested number of bytes, the library raises an abort signal
+and the program is ended.
+This may seem like overkill, and it probably is.
+But it ensures that this situation does not go unreported.
+Besides, in the unlikely event that {\tt malloc()} does return a \fnull
+pointer, it is most likely because the memory heap is exhausted, which
+would prevent most programs from running correctly (or at all).
+}
+\rvalue{
+A \voidp pointer to a heap-allocated region of memory \size bytes long.
+}
+\begin{params}
+\parameter{\sizet}{size}{The number of bytes to allocate.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_realloc() ------------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void* FLA_realloc( void* old_ptr, size_t size );
+\end{verbatim}
+\purpose{
+Request a reallocation of previously-allocated memory such that the new
+region is \size bytes in length and contains the original contents of the
+reigion pointed to by {\tt old\_ptr}.
+}
+\implnotes{
+This function does not guarantee adherence to the library-wide memory
+alignment factor set during configuration via the
+{\tt --enable-memory-alignment={\em N}} option, if it was given.
+We fundamentally cannot implement our own version of {\tt realloc()}
+in user-space because we cannot know how much memory was allocated
+at {\tt old\_ptr}.
+This information is needed if the original contents are to be copied
+over to the new memory region.
+Thus, {\tt FLA\_realloc()} is implemented with {\tt realloc()}, which
+guarantees only 8-byte memory alignment on most systems.
+}
+\rvalue{
+A \voidp pointer to a heap-allocated region of memory \size bytes long.
+}
+\begin{params}
+\parameter{\voidp}{old\_ptr}{A pointer to the region of memory the user wishes to reallocate to \size bytes.}
+\parameter{\sizet}{size}{The number of bytes to allocate for the new region.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_free() ---------------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_free( void* ptr );
+\end{verbatim}
+\purpose{
+Release a heap-allocated region of memory back to the system.
+Note that passing a value of \fnull for \ptr will cause {\tt FLA\_free()}
+to return immediately without performing any action.
+}
+\notes{
+The programmer is encouraged to use {\tt FLA\_free()} instead of calling
+{\tt free()} directly.
+Using {\tt FLA\_malloc()} and {\tt FLA\_free()} allows \libflame to output
+via standard error the balance of allocations and releases when
+{\tt FLA\_Finalize()} is called, which provides a basic memory leak
+detection.
+}
+\begin{params}
+\parameter{\voidp}{ptr}{A pointer to a region of memory previously allocated by {\tt FLA\_malloc()} (or {\tt FLA\_realloc()}).}
+\end{params}
+\end{flaspec}
+
+
+
+
+
+
+\section{Object creation}
+
+\index{developer APIs!object creation}
+
+% --- FLA_Obj_create_ext() -----------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Obj_create_ext( FLA_Datatype datatype, FLA_Elemtype elemtype, dim_t m,
+                              dim_t n, FLA_Obj* obj );
+\end{verbatim}
+\purpose{
+Create a new object using an extended FLASH-aware interface.
+Upon returning, \obj points to a valid heap-allocated $ m \by n $ object.
+}
+\notes{
+The total size of the underlying allocated array depends on the value of
+\elemtypens.
+If the elements are requested to be \flascalarns, then the size of each
+element is determined by the value of \datatypens.
+If the elements are of type \flamatrixns, then each element is allocated
+to store an \flaobjns.
+}
+\rvalue{
+\flasuccess
+}
+\begin{params}
+\parameter{\fladatatype}{datatype}{A constant corresponding to the numerical datatype requested.} 
+\parameter{\flaelemtype}{elemtype}{A constant corresponding to the object element type requested.} 
+\parameter{\dimt}{m}{The number of rows to be created in new object.}
+\parameter{\dimt}{n}{The number of columns to be created in the new object.}
+\parminout{\flaobjp}{obj}{A pointer to an uninitialized \flaobjns.}
+                         {A pointer to a new \flaobj parameterized by {\tt m}, {\tt n},
+                          \elemtypens, and \datatypens.}
+\end{params}
+\end{flaspec}
+
+
+
+
+
+
+\section{SuperMatrix}
+\label{sec:sm-dev}
+
+\index{developer APIs!SuperMatrix}
+
+% --- FLASH_Queue_init() -------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLASH_Queue_init( void );
+\end{verbatim}
+\purpose{
+Initialize SuperMatrix.
+This function is normally called from within {\tt FLA\_Init()}.
+}
+\end{flaspec}
+
+% --- FLASH_Queue_finalize() ---------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLASH_Queue_finalize( void );
+\end{verbatim}
+\purpose{
+Finalize SuperMatrix.
+This function is normally called from within {\tt FLA\_Finalize()}.
+}
+\end{flaspec}
+
+% --- FLASH_Queue_get_thread_id() ----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+unsigned int FLASH_Queue_get_thread_id( void );
+\end{verbatim}
+\purpose{
+Query the ID number of the calling thread.
+The thread ID ranges from zero to $ t - 1 $ where $ t $ is the total number of
+SuperMatrix threads, equal to the unsigned integer returned by
+{\tt FLASH\_Queue\_get\_num\_threads()}.
+}
+\devnotes{
+This function is not yet implemented.
+}
+\rvalue{
+An unsigned integer representing the thread ID number of the calling thread.
+}
+\end{flaspec}
+
+% --- FLASH_Queue_get_num_write_blocks() ---------------------------------------
+%
+%\begin{flaspec}
+%\begin{verbatim}
+%unsigned int FLASH_Queue_get_num_write_blocks( void );
+%\end{verbatim}
+%\purpose{
+%Query the number of unique blocks (associated with the current set of enqueued
+%tasks) that are scheduled to be overwritten during the computation.
+%}
+%\devnotes{
+%This function is not used by the implementation.
+%}
+%\rvalue{
+%An unsigned integer representing the number of blocks to be overwritten.
+%}
+%\end{flaspec}
+
+
+
+
+
+
+
+
+
+
+
+\section{Control trees}
+\label{sec:cntl-trees}
+
+
+\subsection{Motivation}
+
+\index{control trees!motivation}
+
+While \libflame was in its early stages of development, we encountered a basic
+and recurring problem:
+coding blocked FLAME/C algorithms forced us to statically specify the
+implementation used when invoking algorithmic subproblems.
+Sometimes we chose to hard-code a function call an unblocked implementation
+that was itself coded with the FLAME/C API.
+Other times we chose to invoke external BLAS and/or unblocked LAPACK
+implementations via FLAME wrappers.
+And still other situations, such as those encountered when using FLASH and
+algorithms-by-blocks, call for us to invoke yet another blocked
+routine, creating more than one level of ``recursion'' in the overall
+algorithm.
+
+The problem becomes more unavoidable.
+Consider that not all situations call for using the same set of algorithmic
+variants.
+Perhaps for small standalone instances of {\sc syrk}, variant 5 works
+well, but when the {\sc syrk} operation is a subproblem within a larger
+Cholesky factorization, then variant 2 is more appropriate.
+How can we handle both of these cases while statically coding the
+choice of implementation for blocked algorithm subproblems?
+The most straightforward and naive solution would be to duplicate the
+code as many times as there are different situations.
+It is not difficult to see that this would quickly become a nightmare for
+the maintainers of the library.
+
+So, in summary, we wish to code our algorithms in such a manner that a
+subproblem operation is specified {\em without} binding it to a
+particular implementation, and in such a manner that we may only
+maintain {\em one} copy of each blocked algorithm.
+
+
+
+\subsection{The solution in \libflame}
+
+\index{control trees!description}
+
+The aforementioned problem is addressed in \libflame using a technique we
+call {\em control trees}.
+The general idea is simple: encode control information {\em a priori}
+into a tree structure that is passed into algorithmic subproblems and
+decoded by internal functions that remain hidden from the user-level API.
+This approach has five separate but related aspects, all of which require
+us to extend the original FLAME/C API in some way:
+
+\begin{itemize}
+\item
+{\bf Define control tree node structures and API.}
+Our solution is built upon a tree structure where internal nodes
+encapsulate information used by blocked algorithms and leaf nodes
+specify external implementations.
+Specifically, all individual control tree node structures are defined
+with blocksize and variant fields, which allow us to specify which
+algorithmic variant to execute and what blocksize to use within that
+algorithm.
+Each structure will also have an matrix type field which will allow
+us to handle both flat and arbitrary depth hierarchical matrices.
+We define a control tree structure for each operation that we wish
+to support (\flasyrkt for {\sc syrk}, \flacholt for {\sc chol}, etc.)
+These structures contain the standard three fields and also some number
+of fields which may contain pointers to child nodes.
+The number and types of these fields depend on the operation for which
+the control tree is being defined, but in general, the set of fields
+present will be enough to handle all algorithmic variants provided by
+\libflamens.
+Lastly, we must define an API that allows the programmer to easily
+create individual control tree structures and build trees up from child
+nodes.
+\item
+{\bf Control trees created at library startup.}
+Control trees are created dynamically via the structure creation
+interface and stored on the heap.
+The default set used internally by \libflame is instantiated at the time
+that the library is initialized, with one class of trees being configured
+for flat matrices, and another for hierarchical matrices.
+Within each class, several different trees may be created for a given
+operation, depending on the desired execution characteristics.
+A different tree may created for problem sizes deemed to be ``small''
+and those considered to be ``large'', which would vary as a function
+of the blocksize and cache size.
+Alternatively, if the tree is structured properly, the same tree
+may be used for all problem sizes and shapes with only a very small
+additional cost in overhead incurred from the extra levels of blocked
+algorithms.
+Pointers to the root nodes of the trees are stored in global variable
+space.
+The default set of control trees is destroyed at library shutdown, in
+{\tt FLA\_Finalize()}.
+\item
+{\bf Control tree is selected within operation front-ends.}
+The default set of control trees are used within operation ``front-end''
+routines.
+These routines are defined as user-level computational routines for Level-3
+BLAS and LAPACK-level operations that are designed for ``global'' problems,
+not subproblems.
+In other words, front-ends are for end users only and are not called
+internally by \libflame developers.
+Examples of front-end routines are: \flasyrkns, \flatrsmns, \flacholns, and
+\flaspdinvns.
+The root node pointers are accessed via {\tt extern} declarations within the
+files that define the front-end routines.
+There, the appropriate tree is selected, if more than one exists, and the
+root node pointer is passed down into the operation's internal ``back-end''.
+\item
+{\bf Internal back-ends handle parameters and decode trees.}
+Internal back-end functions must be defined in order to parse and decode
+the control tree for a particular operation.
+The implementation handles cases where (1) computation should execute
+immediately, such as for flat matrices or for the leaf matrices of
+hierarchical matricies when SuperMatrix is disabled, (2) more recursion
+is necessary, in order to handle arbitrary depth hierarchical matrices,
+and (3) the library should enqueue tasks for parallel execution via
+SuperMatrix.
+The back-end also parses the parameters defined by the operation, such
+as \sidens, \uplons, and \trans arguments, and then the appropriate
+variant or external implementation is called depending on the \variant
+field of the control tree node.
+In the context of flat matrices, a \variant field equal to \flasubproblem
+refers to a node that induces execution of an external implementation.
+For hierarchical matricies, the \flasubproblem variant refers to nodes that
+may or may not cause further recursion, and reuse of the control tree, to
+reach the leaf levels of the hieararchy.
+Otherwise, if a blocked algorithmic variant is called, the control tree is
+passed on.
+\item
+{\bf Algorithmic subproblems invoke internal back-ends.}
+The modified blocked algorithms feature a \cntl control tree pointer
+argument instead of the integer \nbalg argument.
+Recall that the pointer will refer to a control tree structure which
+contains all the information necessary to specify the execution of the
+blocked algorithmic variant, including the blocksize.
+The statement which computes the blocksize is replaced by one which
+uses a new routine, {\tt FLA\_Determine\_blocksize()}.
+The subproblems are replaced with corresponding calls to the internal
+back-end routine for the operation in question.
+C preprocessor macros are used to access the fields within the \cntl
+argument, specifically to extract the blocksize argument and the 
+pointers to the child nodes of the current control tree node.
+The child nodes are passed in as the last argument to the internal
+back-ends, and recursion continues.
+\end{itemize}
+
+
+
+\subsection{Structure fields}
+
+There are three fields common to every control tree, regardless of its type.
+
+\input{figs/50-cntl-tree-structs}
+
+\begin{itemize}
+\item
+{\tt matrix\_type}.
+The \matrixtype field denotes the type of matrices, flat or
+hierarchical, that the control tree is to assume.
+A matrix type of \flahier allows hierarchical matrices, where the
+matrices may be of arbitrary depth.
+A matrix type of \flaflat implies that the matrix operands will be flat
+matrix objects.
+Though \libflame objects contain the \elemtype field in each node in the
+matrix hierarchy, the \matrixtype field is needed because the control trees
+for flat and hierarchical matricies differ.
+Control trees for flat matrices explicitly prescribe the execution for every
+level of algorithmic recursion.
+However, control trees for hierarchical matrices must allow recursion to
+an arbitrary depth.
+Thus, we leave it to the internal back-end to detect when the leaves of the
+hierarchy are reached and stop recursion accordingly.
+Note that the \matrixtype field of every node in the control tree must be
+identical.
+\item
+{\tt variant}.
+The \variant field specifies which algorithmic variant should execute.
+Valid values are \flasubproblem and \flablockedvariantone
+through \flablockedvarianttwentyns.
+Note that the semantic meaning of \flasubproblem differs depending on whether
+the tree is configured for flat or hierarchical matrices.
+For control trees of matrix type \flaflat, \flasubproblem refers to a node
+that invokes the operation's external implementation.
+For trees of matrix type \flahier, \flasubproblem refers to a node that
+causes the back-end to either recurse further if the bottom of the hierarchy
+has not yet been reached, or execute (or enqueue) the subproblem otherwise.
+Native unblocked FLAME algorithm implementations are not yet supported.
+\item
+{\tt blocksize}.
+The \blocksize field specifies a structure which contains four blocksize
+values.
+This allows the user to specify different blocksizes depending on the
+numerical datatype being used.
+blocksize structures should be created with {\tt FLA\_Blocksize\_create()}.
+\end{itemize}
+
+Control tree nodes also contain fields which are unique to the operation
+type.
+Specifically, a control tree type is made unique by the number and type
+of sub-tree fields it contains.
+Each control tree structure has at least one pointer to another control
+tree node.
+These child nodes contain the relevant information for executing the
+the operation's algorithmic subproblems.
+For example, the \flasyrkt type allows for two child nodes, one for a
+{\sc syrk} subproblem and one for a {\sc gemm} subproblem.
+Figure \ref{fig:cntl-tree-structs} lists the code defining the
+structure for the \flasyrkt type along a sample of structures
+for other operations supported in \libflamens.
+
+There are two circumstances under which you may leave a subproblem
+field uninitialized.
+\begin{itemize}
+\item
+{\bf The algorithmic variant does not need the full set of subproblems.}
+Some algorithmic variants only use a subset of the subproblem fields made
+available in the control tree structure.
+For example, variants 5 and 6 of the {\sc syrk} algorithm only invoke
+smaller {\sc syrk} subproblems, and thus do not need to perform any
+{\sc gemm} subproblems.
+In this case, the \subgemm field is not referenced by the runtime system
+and thus it may safely be initialized to \fnullns.
+\item
+{\bf The control tree node's variant field is \flasubproblemns.}
+The nodes at the ``leaves'' of the tree should contain a \variant field
+with a special value: \flasubproblemns.
+Every flat matrix control tree contains at least one leaf node that
+indicates that blocked algorithm recursion should stop, and an
+external implementation should be invoked for that node.
+Likewise, every hierarchical matrix control tree contains at least one
+``recurse'' node where further recursion in the algorithm-by-blocks is
+performed if the matrix hierarchy requires it.
+In both cases, {\em none} of the subproblem fields are referenced, and thus
+they may all be safely initialized to \fnullns.
+\end{itemize}
+
+When a control tree contains more than one subproblem field for a given
+operation type, the order of the subproblems matters.
+Consider the {\sc symm} operation and its corresponding control tree
+structure.
+All ten variants of {\sc symm} contain one {\sc symm} subproblem, and
+blocked variants 1 through 8 contain two {\sc gemm} subproblems.
+So control tree nodes for blocked variants 1 through 8
+must also initialize both {\sc gemm} fields.
+But which {\sc gemm} field corresponds to which {\sc gemm} subproblem
+instance in the {\sc symm} algorithm?
+In situations like this, the mapping is simple: the \subgemmo field
+corresponds the {\sc gemm} subproblem that occurs first in {\sc symm}
+algorithm, while the \subgemmtw field corresponds to the {\sc gemm}
+subproblem that occurs second.
+This rule for disambiguating subproblems of identical operation types
+must be observed for all cases where the algorithm contains more than
+one subproblem of a particular operation.
+
+
+\subsection{Control tree API}
+
+\index{developer APIs!control trees}
+
+First, we present the interface for creating and manipulating blocksize
+structures, which are a necessary component of control tree nodes.
+
+\subsubsection{Blocksize structures}
+
+% --- FLA_Blocksize_create() ---------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_blocksize_t* FLA_Blocksize_create( dim_t b_s,
+                                       dim_t b_d,
+                                       dim_t b_c,
+                                       dim_t b_z );
+\end{verbatim}
+\purpose{
+Create a structure containing a set of four blocksizes, one for each of the
+numerical datatypes supported by \libflamens, and initialize the structure
+fields according to the function arguments.
+}
+\ifacenotes{
+Though the interface allows the programmer to set blocksize values for all
+four datatypes, it is permissible to assign meaningful values to only the
+fields that correspond to the datatypes that will be used by the application.
+}
+\notes{
+Blocksize structures are allocated on the heap and should be released
+with {\tt FLA\_Blocksize\_free()} when they are no longer needed.
+}
+\begin{checks}
+\checkitem
+None of the blocksize arguments may be zero.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flablocksizet structure.
+}
+\begin{params}
+\parameter{\dimt}{b\_s}{The blocksize to use for single precision real data.}
+\parameter{\dimt}{b\_d}{The blocksize to use for double precision real data.}
+\parameter{\dimt}{b\_c}{The blocksize to use for single precision complex data.}
+\parameter{\dimt}{b\_z}{The blocksize to use for double precision complex data.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Blocksize_set() ------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Blocksize_set( fla_blocksize_t* bp,
+                        dim_t            b_s,
+                        dim_t            b_d,
+                        dim_t            b_c,
+                        dim_t            b_z );
+\end{verbatim}
+\purpose{
+Set the individual fields in an existing blocksize structure.
+}
+\ifacenotes{
+Providing a value of zero for one of the blocksize arguments causes the
+function to leave the existing value unchanged for that particular
+blocksize field.
+}
+\begin{checks}
+\checkitem
+\bp may not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\begin{params}
+\parameter{\flablocksizet}{bp}{A pointer to an existing blocksize structure.}
+\parameter{\dimt}{b\_s}{The blocksize to use for single precision real data.}
+\parameter{\dimt}{b\_d}{The blocksize to use for double precision real data.}
+\parameter{\dimt}{b\_c}{The blocksize to use for single precision complex data.}
+\parameter{\dimt}{b\_z}{The blocksize to use for double precision complex data.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Blocksize_scale() ----------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Blocksize_scale( fla_blocksize_t* bp,
+                          double           factor );
+\end{verbatim}
+\purpose{
+Scale the individual fields of an existing blocksize structure.
+}
+\implnotes{
+The scaling occurs as follows: the blocksize fields are typecast to
+\cdoublens, then multiplied by the scaling {\tt factor}, and finally
+typecast back to \cint before being stored to the blocksize structure.
+}
+\begin{checks}
+\checkitem
+\bp may not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\begin{params}
+\parameter{\flablocksizet}{bp}{A pointer to an existing blocksize structure.}
+\parameter{\cdouble}{factor}{The scaling factor to apply to the blocksize values.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Blocksize_create_copy() ----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_blocksize_t* FLA_Blocksize_create_copy( fla_blocksize_t* bp );
+\end{verbatim}
+\purpose{
+Create a copy of an existing blocksize structure.
+}
+\begin{checks}
+\checkitem
+\bp may not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flablocksizet structure.
+}
+\begin{params}
+\parameter{\flablocksizet}{bp}{A pointer to an existing blocksize structure.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Blocksize_free() -----------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Blocksize_free( fla_blocksize_t* bp );
+\end{verbatim}
+\purpose{
+Release the memory allocated to a blocksize structure.
+}
+\notes{
+{\tt FLA\_Blocksize\_free()} should only be used with pointers to blocksize
+structures that were allocated with {\tt FLA\_Blocksize\_create()} or
+{\tt FLA\_Blocksize\_create\_copy()}.
+}
+\begin{checks}
+\checkitem
+\bp may not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\begin{params}
+\parameter{\flablocksizet}{bp}{A pointer to an existing blocksize structure.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Blocksize_extract() --------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+dim_t FLA_Blocksize_extract( FLA_Datatype     datatype,
+                             fla_blocksize_t* bp );
+\end{verbatim}
+\purpose{
+Extract the value associated with a specific numerical datatype from a
+blocksize structure.
+}
+\begin{checks}
+\checkitem
+The value of \datatype must refer to a floating-point datatype.
+\itemvsp
+\checkitem
+\bp may not be \fnullns.
+\end{checks}
+\rvalue{
+An unsigned integer value of type \dimtns.
+}
+\begin{params}
+\parameter{\fladatatype}{datatype}{A constant corresponding to the numerical datatype requested.} 
+\parameter{\flablocksizet}{bp}{A pointer to an existing blocksize structure.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Query_blocksizes() ---------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_blocksize_t* FLA_Query_blocksizes( FLA_Dimension dim_tag );
+\end{verbatim}
+\purpose{
+Query the library for a reasonable set of blocksizes.
+The user must specify how the blocksizes are chosen by specifying a
+dimension {\em tag}.
+Valid tag values are \fladimensionmns, \fladimensionkns,
+\fladimensionnns, and \fladimensionminns.
+If \libflame was configured with {\tt --enable-goto-interfaces},
+the first three values correspond to architecture-specific blocksizes
+associated with the $ m $, $ k $, and $ n $ dimensions of the inner-most
+matrix-matrix multiplication kernel in GotoBLAS.
+Otherwise, these three constants are associated with default values that
+may not be optimal.
+The last tag, \fladimensionminns, will cause {\tt FLA\_Query\_blocksizes()}
+to return the smallest of the $ m $, $ k $, and $ n $ blocksizes.
+If unsure, use \fladimensionminns.
+}
+\notes{
+This function dynamically allocates memory for the structure in which
+the blocksizes are returned.
+It is the user's responsibility to deallocate this structure with
+{\tt FLA\_Blocksize\_free()} when it is no longer needed.
+}
+\rvalue{
+A pointer to a heap-allocated \flablocksizet structure.
+}
+\begin{params}
+\parameter{\fladimension}{dim\_tag}{A constant specifying how to choose the blocksize.} 
+\end{params}
+\end{flaspec}
+
+% --- FLA_Query_blocksize() ----------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+dim_t FLA_Query_blocksize( FLA_Datatype  datatype,
+                           FLA_Dimension dim_tag );
+\end{verbatim}
+\purpose{
+Query the library for a reasonable blocksize for a specific datatype.
+The behavior of this function is similar to that of
+{\tt FLA\_Query\_blocksizes()},
+except that only a single \dimt scalar (for the datatype in question)
+is returned intead of a pointer to an entire \flablocksizet structure.
+}
+\notes{
+The values returned by this function are the same as those attainable
+by calling {\tt FLA\_Query\_blocksizes()} and then using
+{\tt FLA\_Blocksize\_extract()} to extract the blocksize for \datatypens.
+}
+\begin{checks}
+\checkitem
+The value of \datatype must refer to a floating-point datatype.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+An unsigned integer value of type \dimtns.
+}
+\begin{params}
+\parameter{\fladatatype}{datatype}{A constant corresponding to the numerical datatype requested.} 
+\parameter{\fladimension}{dim\_tag}{A constant specifying how to choose the blocksize.} 
+\end{params}
+\end{flaspec}
+
+% --- FLA_Determine_blocksize() ------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+dim_t FLA_Determine_blocksize( FLA_Obj          A_unproc,
+                               FLA_Quadrant     to_dir,
+                               fla_blocksize_t* bp );
+\end{verbatim}
+\purpose{
+Determine the blocksize given the contents of a blocksize structure and
+the current state of the matrix partitioning.
+If the blocksize is larger than the dimension of {\tt A\_unproc},
+the dimension of {\tt A\_unproc} is returned instead.
+In this case, the dimension in question, be it the length or width, is
+determined by the value of {\tt to\_dir}.
+Specifically, if {\tt to\_dir} denotes vertical movement, the length of
+{\tt A\_unproc} is used, and for lateral movement, the width is used.
+If {\tt to\_dir} denotes diagonal movement, then the minimum dimension
+(as would be returned by {\tt FLA\_Obj\_min\_dim()}) is used.
+}
+\begin{checks}
+\checkitem
+\bp may not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+An unsigned integer value of type \dimtns.
+}
+\begin{params}
+\parameter{\flaobj}{A\_unproc}{An \flaobj view into the unprocessed portion of a matrix being tracked by a blocked algorithm.}
+\parameter{\flaquadrant}{to\_dir}{The direction in which the algorithm is moving through the parent matrix of {\tt A\_unproc}.}
+\parameter{\flablocksizet}{bp}{A pointer to an existing blocksize structure.}
+\end{params}
+\end{flaspec}
+
+
+
+
+The remainder of this subsection describes the functions that create and
+initialize control tree nodes for each of the supported linear algebra
+operations.
+These functions share the same first three arguments, which correspond
+to the fields described in the previous subsection.
+Note that you should always invoke these interfaces for the leaves of
+the trees first, and then use the pointers returned from those routines
+in the initialization of higher internal nodes.
+Simply put, you cannot create a non-leaf node until you have created
+and initialized its children nodes.
+
+
+
+\subsubsection{Level-3 BLAS operations}
+
+% --- FLA_Cntl_gemm_obj_create() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_gemm_t* FLA_Cntl_gemm_obj_create( FLA_Matrix_type  matrix_type,
+                                      int              variant,
+                                      fla_blocksize_t* blocksize,
+                                      fla_gemm_t*      sub_gemm );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for a general
+matrix-matrix multiplication ({\sc gemm}) operation and initialize its
+fields according to the function arguments.
+}
+\notes{
+If \variant is \flasubproblemns, none of the pointer arguments
+are used and thus they may be safely set to \fnullns.
+%The \blocksize and \subgemm arguments may be \fnull if \variant is
+%\flasubproblemns.
+}
+\begin{checks}
+\checkitem
+If \variant is not \flasubproblemns, then it must be one of
+\flablockedvariantone through \flablockedvariantsixns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flagemmt structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+\parameter{\flahemmt}{sub\_gemm}{A pointer to the node to be used for the {\sc gemm} subproblem.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Cntl_hemm_obj_create() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_hemm_t* FLA_Cntl_hemm_obj_create( FLA_Matrix_type  matrix_type,
+                                      int              variant,
+                                      fla_blocksize_t* blocksize,
+                                      fla_hemm_t*      sub_hemm,
+                                      fla_gemm_t*      sub_gemm1,
+                                      fla_gemm_t*      sub_gemm2 );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for a Hermitian
+matrix-matrix multiplication ({\sc hemm}) operation and initialize its
+fields according to the function arguments.
+}
+\notes{
+If \variant is \flasubproblemns, none of the pointer arguments
+are used and thus they may be safely set to \fnullns.
+Even if \variant specifies a blocked variant, some algorithms contain
+fewer subproblems and thus do not use every subproblem field
+argument.
+In such cases, these arguments may be safely set to \fnullns.
+Please refer to the blocked algorithmic variant implementations
+to determine which subproblem fields are unused. 
+%If \variant is \flablockedvariantnine or \flablockedvarianttenns, the
+%\subgemmo and \subgemmtw arguments may be \fnullns.
+%If \variant is \flasubproblemns, the \blocksizens, \subhemmns,
+%\subgemmons, and \subgemmtw arguments may be \fnullns.
+}
+\begin{checks}
+\checkitem
+If \variant is not \flasubproblemns, then it must be one of
+\flablockedvariantone through \flablockedvarianttenns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flahemmt structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+\parameter{\flahemmt}{sub\_hemm}{A pointer to the node to be used for the {\sc hemm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm1}{A pointer to the node to be used for the first {\sc gemm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm2}{A pointer to the node to be used for the second {\sc gemm} subproblem.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Cntl_herk_obj_create() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_herk_t* FLA_Cntl_herk_obj_create( FLA_Matrix_type  matrix_type,
+                                      int              variant,
+                                      fla_blocksize_t* blocksize,
+                                      fla_herk_t*      sub_herk,
+                                      fla_gemm_t*      sub_gemm );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for a Hermitian
+rank-k update ({\sc herk}) operation and initialize its
+fields according to the function arguments.
+}
+\notes{
+If \variant is \flasubproblemns, none of the pointer arguments
+are used and thus they may be safely set to \fnullns.
+Even if \variant specifies a blocked variant, some algorithms contain
+fewer subproblems and thus do not use every subproblem field
+argument.
+In such cases, these arguments may be safely set to \fnullns.
+Please refer to the blocked algorithmic variant implementations
+to determine which subproblem fields are unused. 
+%If \variant is \flablockedvariantfive or \flablockedvariantsixns, the
+%\subgemm argument may be \fnullns.
+%If \variant is \flasubproblemns, the \blocksizens, \subherkns,
+%and \subgemm arguments may be \fnullns.
+}
+\begin{checks}
+\checkitem
+If \variant is not \flasubproblemns, then it must be one of
+\flablockedvariantone through \flablockedvariantsixns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flaherkt structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+\parameter{\flaherkt}{sub\_herk}{A pointer to the node to be used for the {\sc herk} subproblem.}
+\parameter{\flagemmt}{sub\_gemm}{A pointer to the node to be used for the {\sc gemm} subproblem.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Cntl_her2k_obj_create() ----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_her2k_t* FLA_Cntl_her2k_obj_create( FLA_Matrix_type  matrix_type,
+                                        int              variant,
+                                        fla_blocksize_t* blocksize,
+                                        fla_her2k_t*     sub_her2k,
+                                        fla_gemm_t*      sub_gemm1,
+                                        fla_gemm_t*      sub_gemm2 );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for a Hermitian
+rank-2k update ({\sc her2k}) operation and initialize its
+fields according to the function arguments.
+}
+\notes{
+If \variant is \flasubproblemns, none of the pointer arguments
+are used and thus they may be safely set to \fnullns.
+Even if \variant specifies a blocked variant, some algorithms contain
+fewer subproblems and thus do not use every subproblem field
+argument.
+In such cases, these arguments may be safely set to \fnullns.
+Please refer to the blocked algorithmic variant implementations
+to determine which subproblem fields are unused. 
+%If \variant is \flablockedvariantnine or \flablockedvarianttenns, the
+%\subgemmo and \subgemmtw arguments may be \fnullns.
+%If \variant is \flasubproblemns, the \blocksizens, \subhertkns,
+%\subgemmons, and \subgemmtw arguments may be \fnullns.
+}
+\begin{checks}
+\checkitem
+If \variant is not \flasubproblemns, then it must be one of
+\flablockedvariantone through \flablockedvarianttenns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flahertkt structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+\parameter{\flahertkt}{sub\_her2k}{A pointer to the node to be used for the {\sc her2k} subproblem.}
+\parameter{\flagemmt}{sub\_gemm1}{A pointer to the node to be used for the first {\sc gemm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm2}{A pointer to the node to be used for the second {\sc gemm} subproblem.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Cntl_symm_obj_create() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_symm_t* FLA_Cntl_symm_obj_create( FLA_Matrix_type  matrix_type,
+                                      int              variant,
+                                      fla_blocksize_t* blocksize,
+                                      fla_symm_t*      sub_symm,
+                                      fla_gemm_t*      sub_gemm1,
+                                      fla_gemm_t*      sub_gemm2 );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for a symmetric
+matrix-matrix multiplication ({\sc symm}) operation and initialize its
+fields according to the function arguments.
+}
+\notes{
+If \variant is \flasubproblemns, none of the pointer arguments
+are used and thus they may be safely set to \fnullns.
+Even if \variant specifies a blocked variant, some algorithms contain
+fewer subproblems and thus do not use every subproblem field
+argument.
+In such cases, these arguments may be safely set to \fnullns.
+Please refer to the blocked algorithmic variant implementations
+to determine which subproblem fields are unused. 
+%If \variant is \flablockedvariantnine or \flablockedvarianttenns, the
+%\subgemmo and \subgemmtw arguments may be \fnullns.
+%If \variant is \flasubproblemns, the \blocksizens, \subsymmns,
+%\subgemmons, and \subgemmtw arguments may be \fnullns.
+}
+\begin{checks}
+\checkitem
+If \variant is not \flasubproblemns, then it must be one of
+\flablockedvariantone through \flablockedvarianttenns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flasymmt structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+\parameter{\flasymmt}{sub\_symm}{A pointer to the node to be used for the {\sc symm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm1}{A pointer to the node to be used for the first {\sc gemm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm2}{A pointer to the node to be used for the second {\sc gemm} subproblem.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Cntl_syrk_obj_create() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_syrk_t* FLA_Cntl_syrk_obj_create( FLA_Matrix_type  matrix_type,
+                                      int              variant,
+                                      fla_blocksize_t* blocksize,
+                                      fla_syrk_t*      sub_syrk,
+                                      fla_gemm_t*      sub_gemm );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for a symmetric
+rank-k update ({\sc syrk}) operation and initialize its
+fields according to the function arguments.
+}
+\notes{
+If \variant is \flasubproblemns, none of the pointer arguments
+are used and thus they may be safely set to \fnullns.
+Even if \variant specifies a blocked variant, some algorithms contain
+fewer subproblems and thus do not use every subproblem field
+argument.
+In such cases, these arguments may be safely set to \fnullns.
+Please refer to the blocked algorithmic variant implementations
+to determine which subproblem fields are unused. 
+%If \variant is \flablockedvariantfive or \flablockedvariantsixns, the
+%\subgemm argument may be \fnullns.
+%If \variant is \flasubproblemns, the \blocksizens, \subherkns,
+%and \subgemm arguments may be \fnullns.
+}
+\begin{checks}
+\checkitem
+If \variant is not \flasubproblemns, then it must be one of
+\flablockedvariantone through \flablockedvariantsixns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flasyrkt structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+\parameter{\flasyrkt}{sub\_syrk}{A pointer to the node to be used for the {\sc syrk} subproblem.}
+\parameter{\flagemmt}{sub\_gemm}{A pointer to the node to be used for the {\sc gemm} subproblem.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Cntl_syr2k_obj_create() ----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_syr2k_t* FLA_Cntl_syr2k_obj_create( FLA_Matrix_type  matrix_type,
+                                        int              variant,
+                                        fla_blocksize_t* blocksize,
+                                        fla_syr2k_t*     sub_syr2k,
+                                        fla_gemm_t*      sub_gemm1,
+                                        fla_gemm_t*      sub_gemm2 );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for a symmetric
+rank-2k update ({\sc syr2k}) operation and initialize its
+fields according to the function arguments.
+}
+\notes{
+If \variant is \flasubproblemns, none of the pointer arguments
+are used and thus they may be safely set to \fnullns.
+Even if \variant specifies a blocked variant, some algorithms contain
+fewer subproblems and thus do not use every subproblem field
+argument.
+In such cases, these arguments may be safely set to \fnullns.
+Please refer to the blocked algorithmic variant implementations
+to determine which subproblem fields are unused. 
+%If \variant is \flablockedvariantnine or \flablockedvarianttenns, the
+%\subgemmo and \subgemmtw arguments may be \fnullns.
+%If \variant is \flasubproblemns, the \blocksizens, \subsyrtkns,
+%\subgemmons, and \subgemmtw arguments may be \fnullns.
+}
+\begin{checks}
+\checkitem
+If \variant is not \flasubproblemns, then it must be one of
+\flablockedvariantone through \flablockedvarianttenns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flasyrtkt structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+\parameter{\flasyrtkt}{sub\_syr2k}{A pointer to the node to be used for the {\sc syr2k} subproblem.}
+\parameter{\flagemmt}{sub\_gemm1}{A pointer to the node to be used for the first {\sc gemm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm2}{A pointer to the node to be used for the second {\sc gemm} subproblem.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Cntl_trmm_obj_create() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_trmm_t* FLA_Cntl_trmm_obj_create( FLA_Matrix_type  matrix_type,
+                                      int              variant,
+                                      fla_blocksize_t* blocksize,
+                                      fla_trmm_t*      sub_trmm,
+                                      fla_gemm_t*      sub_gemm );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for a triangular
+matrix-matrix multiplication ({\sc trmm}) operation and initialize its
+fields according to the function arguments.
+}
+\notes{
+If \variant is \flasubproblemns, none of the pointer arguments
+are used and thus they may be safely set to \fnullns.
+Even if \variant specifies a blocked variant, some algorithms contain
+fewer subproblems and thus do not use every subproblem field
+argument.
+In such cases, these arguments may be safely set to \fnullns.
+Please refer to the blocked algorithmic variant implementations
+to determine which subproblem fields are unused. 
+%If \variant is \flablockedvariantthree or \flablockedvariantfourns, the
+%\subgemm argument may be \fnullns.
+%If \variant is \flasubproblemns, the \blocksizens, \subtrmmns,
+%and \subgemm arguments may be \fnullns.
+}
+\begin{checks}
+\checkitem
+If \variant is not \flasubproblemns, then it must be one of
+\flablockedvariantone through \flablockedvariantfourns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flatrmmt structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+\parameter{\flatrmmt}{sub\_trmm}{A pointer to the node to be used for the {\sc trmm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm}{A pointer to the node to be used for the {\sc gemm} subproblem.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Cntl_trsm_obj_create() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_trsm_t* FLA_Cntl_trsm_obj_create( FLA_Matrix_type  matrix_type,
+                                      int              variant,
+                                      fla_blocksize_t* blocksize,
+                                      fla_trsm_t*      sub_trsm,
+                                      fla_gemm_t*      sub_gemm );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for a triangular
+solve with multiple right-hand sides ({\sc trsm}) operation and initialize its
+fields according to the function arguments.
+}
+\notes{
+If \variant is \flasubproblemns, none of the pointer arguments
+are used and thus they may be safely set to \fnullns.
+Even if \variant specifies a blocked variant, some algorithms contain
+fewer subproblems and thus do not use every subproblem field
+argument.
+In such cases, these arguments may be safely set to \fnullns.
+Please refer to the blocked algorithmic variant implementations
+to determine which subproblem fields are unused. 
+%If \variant is \flablockedvariantthree or \flablockedvariantfourns, the
+%\subgemm argument may be \fnullns.
+%If \variant is \flasubproblemns, the \blocksizens, \subtrsmns,
+%and \subgemm arguments may be \fnullns.
+}
+\begin{checks}
+\checkitem
+If \variant is not \flasubproblemns, then it must be one of
+\flablockedvariantone through \flablockedvariantfourns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flatrsmt structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+\parameter{\flatrsmt}{sub\_trsm}{A pointer to the node to be used for the {\sc trsm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm}{A pointer to the node to be used for the {\sc gemm} subproblem.}
+\end{params}
+\end{flaspec}
+
+
+
+\subsubsection{LAPACK-level operations}
+
+
+% --- FLA_Cntl_chol_obj_create() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_chol_t* FLA_Cntl_chol_obj_create( FLA_Matrix_type  matrix_type,
+                                      int              variant,
+                                      fla_blocksize_t* blocksize,
+                                      fla_chol_t*      sub_chol,
+                                      fla_syrk_t*      sub_syrk,
+                                      fla_herk_t*      sub_herk,
+                                      fla_trsm_t*      sub_trsm,
+                                      fla_gemm_t*      sub_gemm );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for a Cholesky
+factorization ({\sc chol}) operation and initialize its
+fields according to the function arguments.
+}
+\notes{
+If \variant is \flasubproblemns, none of the pointer arguments
+are used and thus they may be safely set to \fnullns.
+Even if \variant specifies a blocked variant, some algorithms contain
+fewer subproblems and thus do not use every subproblem field
+argument.
+In such cases, these arguments may be safely set to \fnullns.
+Please refer to the blocked algorithmic variant implementations
+to determine which subproblem fields are unused. 
+}
+\begin{checks}
+\checkitem
+If \variant is not \flasubproblemns, then it must be one of
+\flablockedvariantone through \flablockedvariantthreens.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flacholt structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+\parameter{\flacholt}{sub\_chol}{A pointer to the node to be used for the {\sc chol} subproblem.}
+\parameter{\flasyrkt}{sub\_syrk}{A pointer to the node to be used for the {\sc sryk} subproblem.}
+\parameter{\flasyrkt}{sub\_herk}{A pointer to the node to be used for the {\sc herk} subproblem.}
+\parameter{\flatrsmt}{sub\_trsm}{A pointer to the node to be used for the {\sc trsm} subproblem.}
+\parameter{\flatrsmt}{sub\_gemm}{A pointer to the node to be used for the {\sc gemm} subproblem.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Cntl_lu_obj_create() -------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_lu_t* FLA_Cntl_lu_obj_create( FLA_Matrix_type  matrix_type,
+                                  int              variant,
+                                  fla_blocksize_t* blocksize,
+                                  fla_lu_t*        sub_lu,
+                                  fla_gemm_t*      sub_gemm1,
+                                  fla_gemm_t*      sub_gemm2,
+                                  fla_gemm_t*      sub_gemm3,
+                                  fla_trsm_t*      sub_trsm1,
+                                  fla_trsm_t*      sub_trsm2 );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for an LU
+factorization ({\sc lu}) operation and initialize its
+fields according to the function arguments.
+}
+\notes{
+If \variant is \flasubproblemns, none of the pointer arguments
+are used and thus they may be safely set to \fnullns.
+Even if \variant specifies a blocked variant, some algorithms contain
+fewer subproblems and thus do not use every subproblem field
+argument.
+In such cases, these arguments may be safely set to \fnullns.
+Please refer to the blocked algorithmic variant implementations
+to determine which subproblem fields are unused. 
+}
+\begin{checks}
+\checkitem
+If \variant is not \flasubproblemns, then it must be one of
+\flablockedvariantone through \flablockedvariantthreens.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flalut structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+\parameter{\flacholt}{sub\_chol}{A pointer to the node to be used for the {\sc chol} subproblem.}
+\parameter{\flasyrkt}{sub\_syrk}{A pointer to the node to be used for the {\sc sryk} subproblem.}
+\parameter{\flasyrkt}{sub\_herk}{A pointer to the node to be used for the {\sc herk} subproblem.}
+\parameter{\flatrsmt}{sub\_trsm}{A pointer to the node to be used for the {\sc trsm} subproblem.}
+\parameter{\flatrsmt}{sub\_gemm}{A pointer to the node to be used for the {\sc gemm} subproblem.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Cntl_qrut_obj_create() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_qrut_t* FLA_Cntl_qrut_obj_create( FLA_Matrix_type  matrix_type,
+                                      int              variant,
+                                      fla_blocksize_t* blocksize,
+                                      fla_qrut_t*      sub_qrut,
+                                      fla_trmm_t*      sub_trmm1,
+                                      fla_trmm_t*      sub_trmm2,
+                                      fla_gemm_t*      sub_gemm1,
+                                      fla_gemm_t*      sub_gemm2,
+                                      fla_trsm_t*      sub_trsm,
+                                      fla_axpy_t*      sub_axpy,
+                                      fla_copy_t*      sub_copy );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for a QR
+factorization via the UT transform ({\sc qrut}) operation and initialize its
+fields according to the function arguments.
+}
+\notes{
+If \variant is \flasubproblemns, none of the pointer arguments
+are used and thus they may be safely set to \fnullns.
+Even if \variant specifies a blocked variant, some algorithms contain
+fewer subproblems and thus do not use every subproblem field
+argument.
+In such cases, these arguments may be safely set to \fnullns.
+Please refer to the blocked algorithmic variant implementations
+to determine which subproblem fields are unused. 
+}
+\begin{checks}
+\checkitem
+If \variant is not \flasubproblemns, then it must be
+\flablockedvariantonens.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flaqrutt structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+\parameter{\flaqrutt}{sub\_qrut}{A pointer to the node to be used for the {\sc qrut} subproblem.}
+\parameter{\flatrmmt}{sub\_trmm1}{A pointer to the node to be used for the first {\sc trmm} subproblem.}
+\parameter{\flatrmmt}{sub\_trmm2}{A pointer to the node to be used for the second {\sc trmm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm1}{A pointer to the node to be used for the first {\sc gemm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm2}{A pointer to the node to be used for the second {\sc gemm} subproblem.}
+\parameter{\flagemmt}{sub\_trsm}{A pointer to the node to be used for the {\sc trsm} subproblem.}
+\parameter{\flagemmt}{sub\_axpy}{A pointer to the node to be used for the {\sc axpy} subproblem.}
+\parameter{\flagemmt}{sub\_copy}{A pointer to the node to be used for the {\sc copy} subproblem.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Cntl_lq_obj_create() -------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_lqut_t* FLA_Cntl_lqut_obj_create( FLA_Matrix_type  matrix_type,
+                                      int              variant,
+                                      fla_blocksize_t* blocksize,
+                                      fla_lqut_t*      sub_lqut,
+                                      fla_trmm_t*      sub_trmm1,
+                                      fla_trmm_t*      sub_trmm2,
+                                      fla_gemm_t*      sub_gemm1,
+                                      fla_gemm_t*      sub_gemm2,
+                                      fla_trsm_t*      sub_trsm,
+                                      fla_axpy_t*      sub_axpy,
+                                      fla_copy_t*      sub_copy );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for a LQ
+factorization via the UT transform ({\sc lqut}) operation and initialize its
+fields according to the function arguments.
+}
+\notes{
+If \variant is \flasubproblemns, none of the pointer arguments
+are used and thus they may be safely set to \fnullns.
+Even if \variant specifies a blocked variant, some algorithms contain
+fewer subproblems and thus do not use every subproblem field
+argument.
+In such cases, these arguments may be safely set to \fnullns.
+Please refer to the blocked algorithmic variant implementations
+to determine which subproblem fields are unused. 
+}
+\begin{checks}
+\checkitem
+If \variant is not \flasubproblemns, then it must be
+\flablockedvariantonens.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flalqutt structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+\parameter{\flalqt}{sub\_lqut}{A pointer to the node to be used for the {\sc lqut} subproblem.}
+\parameter{\flatrmmt}{sub\_trmm1}{A pointer to the node to be used for the first {\sc trmm} subproblem.}
+\parameter{\flatrmmt}{sub\_trmm2}{A pointer to the node to be used for the second {\sc trmm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm1}{A pointer to the node to be used for the first {\sc gemm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm2}{A pointer to the node to be used for the second {\sc gemm} subproblem.}
+\parameter{\flagemmt}{sub\_trsm}{A pointer to the node to be used for the {\sc trsm} subproblem.}
+\parameter{\flagemmt}{sub\_axpy}{A pointer to the node to be used for the {\sc axpy} subproblem.}
+\parameter{\flagemmt}{sub\_copy}{A pointer to the node to be used for the {\sc copy} subproblem.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Cntl_trinv_obj_create() ----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_trinv_t* FLA_Cntl_trinv_obj_create( FLA_Matrix_type  matrix_type,
+                                        int              variant,
+                                        fla_blocksize_t* blocksize,
+                                        fla_trinv_t*     sub_trinv,
+                                        fla_trmm_t*      sub_trmm,
+                                        fla_trsm_t*      sub_trsm1,
+                                        fla_trsm_t*      sub_trsm2,
+                                        fla_gemm_t*      sub_gemm );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for a triangular
+matrix inversion ({\sc trinv}) operation and initialize its
+fields according to the function arguments.
+}
+\notes{
+If \variant is \flasubproblemns, none of the pointer arguments
+are used and thus they may be safely set to \fnullns.
+Even if \variant specifies a blocked variant, some algorithms contain
+fewer subproblems and thus do not use every subproblem field
+argument.
+In such cases, these arguments may be safely set to \fnullns.
+Please refer to the blocked algorithmic variant implementations
+to determine which subproblem fields are unused. 
+}
+\begin{checks}
+\checkitem
+If \variant is not \flasubproblemns, then it must be one of
+\flablockedvariantone through \flablockedvariantfourns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flatrinvt structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+\parameter{\flacholt}{sub\_trinv}{A pointer to the node to be used for the {\sc trinv} subproblem.}
+\parameter{\flasyrkt}{sub\_trmm}{A pointer to the node to be used for the {\sc trmm} subproblem.}
+\parameter{\flasyrkt}{sub\_trsm1}{A pointer to the node to be used for the first {\sc trsm} subproblem.}
+\parameter{\flatrsmt}{sub\_trsm2}{A pointer to the node to be used for the second {\sc trsm} subproblem.}
+\parameter{\flatrsmt}{sub\_gemm}{A pointer to the node to be used for the {\sc gemm} subproblem.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Cntl_spdinv_obj_create() ---------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_spdinv_t* FLA_Cntl_spdinv_obj_create( FLA_Matrix_type  matrix_type,
+                                          int              variant,
+                                          fla_blocksize_t* blocksize,
+                                          fla_chol_t*      sub_chol,
+                                          fla_trinv_t*     sub_trinv,
+                                          fla_ttmm_t*      sub_ttmm );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for a symmetric
+(or Hermitian) positive definite matrix inversion ({\sc spdinv}) operation
+and initialize its fields according to the function arguments.
+}
+\notes{
+Since {\sc spdinv} is implemented as the sequence of its three constituent
+suboperations, {\sc chol}, {\sc trinv}, and {\sc ttmm} without any matrix
+partitioning at the {\sc spdinv} level, the \variant field is not used.
+Also, the {\sc spdinv} front-end interprets the \blocksize field as the
+cutoff at which to switch from external routines to internal \libflame
+variants.
+}
+%\begin{checks}
+%\checkitem
+%If \variant is not \flasubproblemns, then it must be one of
+%%\itemvsp
+%%\checkitem
+%% 
+%\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flaspdinvt structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{Not referenced.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created. Note that the front-end interprets these values as the cutoffs at which to switch from external implementations to internal \libflame variants.}
+\parameter{\flacholt}{sub\_chol}{A pointer to the node to be used for the {\sc chol} suboperation.}
+\parameter{\flatrinvt}{sub\_trinv}{A pointer to the node to be used for the {\sc trinv} suboperation.}
+\parameter{\flattmmt}{sub\_ttmm}{A pointer to the node to be used for the {\sc ttmm} suboperation.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Cntl_hess_obj_create() -----------------------------------------------
+%
+%\begin{flaspec}
+%\begin{verbatim}
+%fla_hess_t* FLA_Cntl_hess_obj_create( FLA_Matrix_type  matrix_type,
+%                                      int              variant,
+%                                      fla_blocksize_t* blocksize,
+%                                      fla_hess_t*      sub_hess,
+%                                      fla_trmm_t*      sub_trmm1,
+%                                      fla_trmm_t*      sub_trmm2,
+%                                      fla_trmm_t*      sub_trmm3,
+%                                      fla_trmm_t*      sub_trmm4,
+%                                      fla_gemm_t*      sub_gemm1,
+%                                      fla_gemm_t*      sub_gemm2,
+%                                      fla_gemm_t*      sub_gemm3 );
+%\end{verbatim}
+%\purpose{
+%Create a structure representing a node in a control tree for a reduction
+%to upper Hessenberg form ({\sc hess}) operation and initialize its
+%fields according to the function arguments.
+%}
+%\notes{
+%If \variant is \flasubproblemns, none of the pointer arguments
+%are used and thus they may be safely set to \fnullns.
+%Even if \variant specifies a blocked variant, some algorithms contain
+%fewer subproblems and thus do not use every subproblem field
+%argument.
+%In such cases, these arguments may be safely set to \fnullns.
+%Please refer to the blocked algorithmic variant implementations
+%to determine which subproblem fields are unused. 
+%}
+%\devnotes{
+%The algorithmic variant implementations for reduction to upper
+%Hessenberg form do not exist.
+%If this operation is needed, use the external wrapper routine
+%{\tt FLA\_Hess\_blk\_external()}.
+%}
+%\begin{checks}
+%\checkitem
+%If \variant must be \flasubproblem since no blocked variants
+%for the operation exist yet.
+%%\itemvsp
+%%\checkitem
+%% 
+%\end{checks}
+%\rvalue{
+%A pointer to a heap-allocated \flahesst structure.
+%}
+%\begin{params}
+%\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+%\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+%\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+%\parameter{\flacholt}{sub\_hess}{A pointer to the node to be used for the {\sc hess} subproblem.}
+%\parameter{\flasyrkt}{sub\_trmm1}{A pointer to the node to be used for the first {\sc trmm} subproblem.}
+%\parameter{\flasyrkt}{sub\_trmm2}{A pointer to the node to be used for the second {\sc trmm} subproblem.}
+%\parameter{\flasyrkt}{sub\_trmm3}{A pointer to the node to be used for the third {\sc trmm} subproblem.}
+%\parameter{\flasyrkt}{sub\_trmm4}{A pointer to the node to be used for the fourth {\sc trmm} subproblem.}
+%\parameter{\flatrsmt}{sub\_gemm1}{A pointer to the node to be used for the first {\sc gemm} subproblem.}
+%\parameter{\flatrsmt}{sub\_gemm2}{A pointer to the node to be used for the second {\sc gemm} subproblem.}
+%\parameter{\flatrsmt}{sub\_gemm3}{A pointer to the node to be used for the third {\sc gemm} subproblem.}
+%\end{params}
+%\end{flaspec}
+
+% --- FLA_Cntl_ttmm_obj_create() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_ttmm_t* FLA_Cntl_ttmm_obj_create( FLA_Matrix_type  matrix_type,
+                                      int              variant,
+                                      fla_blocksize_t* blocksize,
+                                      fla_ttmm_t*      sub_ttmm,
+                                      fla_syrk_t*      sub_syrk,
+                                      fla_herk_t*      sub_herk,
+                                      fla_trmm_t*      sub_trmm,
+                                      fla_gemm_t*      sub_gemm );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for a
+triangular-transpose
+matrix multiply ({\sc ttmm}) operation and initialize its
+fields according to the function arguments.
+}
+\notes{
+If \variant is \flasubproblemns, none of the pointer arguments
+are used and thus they may be safely set to \fnullns.
+Even if \variant specifies a blocked variant, some algorithms contain
+fewer subproblems and thus do not use every subproblem field
+argument.
+In such cases, these arguments may be safely set to \fnullns.
+Please refer to the blocked algorithmic variant implementations
+to determine which subproblem fields are unused. 
+}
+\begin{checks}
+\checkitem
+If \variant is not \flasubproblemns, then it must be one of
+\flablockedvariantone through \flablockedvariantthreens.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flattmmt structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+\parameter{\flattmmt}{sub\_ttmm}{A pointer to the node to be used for the {\sc ttmm} subproblem.}
+\parameter{\flasyrkt}{sub\_syrk}{A pointer to the node to be used for the {\sc sryk} subproblem.}
+\parameter{\flasyrkt}{sub\_herk}{A pointer to the node to be used for the {\sc herk} subproblem.}
+\parameter{\flatrsmt}{sub\_trmm}{A pointer to the node to be used for the {\sc trmm} subproblem.}
+\parameter{\flatrsmt}{sub\_gemm}{A pointer to the node to be used for the {\sc gemm} subproblem.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Cntl_sylv_obj_create() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_sylv_t* FLA_Cntl_sylv_obj_create( FLA_Matrix_type  matrix_type,
+                                      int              variant,
+                                      fla_blocksize_t* blocksize,
+                                      fla_sylv_t*      sub_sylv1,
+                                      fla_sylv_t*      sub_sylv2,
+                                      fla_sylv_t*      sub_sylv3,
+                                      fla_gemm_t*      sub_gemm1,
+                                      fla_gemm_t*      sub_gemm2,
+                                      fla_gemm_t*      sub_gemm3,
+                                      fla_gemm_t*      sub_gemm4,
+                                      fla_gemm_t*      sub_gemm5,
+                                      fla_gemm_t*      sub_gemm6,
+                                      fla_gemm_t*      sub_gemm7,
+                                      fla_gemm_t*      sub_gemm8 );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for a triangular
+Sylvester equation solve ({\sc sylv}) operation and initialize its
+fields according to the function arguments.
+}
+\notes{
+If \variant is \flasubproblemns, none of the pointer arguments
+are used and thus they may be safely set to \fnullns.
+Even if \variant specifies a blocked variant, some algorithms contain
+fewer subproblems and thus do not use every subproblem field
+argument.
+In such cases, these arguments may be safely set to \fnullns.
+Please refer to the blocked algorithmic variant implementations
+to determine which subproblem fields are unused. 
+}
+\begin{checks}
+\checkitem
+If \variant is not \flasubproblemns, then it must be one of
+\flablockedvariantone through \flablockedvarianteightteenns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flasylvt structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+\parameter{\flasylvt}{sub\_sylv1}{A pointer to the node to be used for the first {\sc sylv} subproblem.}
+\parameter{\flasylvt}{sub\_sylv2}{A pointer to the node to be used for the second {\sc sylv} subproblem.}
+\parameter{\flasylvt}{sub\_sylv3}{A pointer to the node to be used for the third {\sc sylv} subproblem.}
+\parameter{\flagemmt}{sub\_gemm1}{A pointer to the node to be used for the first {\sc gemm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm2}{A pointer to the node to be used for the second {\sc gemm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm3}{A pointer to the node to be used for the third {\sc gemm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm4}{A pointer to the node to be used for the fourth {\sc gemm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm5}{A pointer to the node to be used for the fifth {\sc gemm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm6}{A pointer to the node to be used for the sixth {\sc gemm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm7}{A pointer to the node to be used for the seventh {\sc gemm} subproblem.}
+\parameter{\flagemmt}{sub\_gemm8}{A pointer to the node to be used for the eighth {\sc gemm} subproblem.}
+\end{params}
+\end{flaspec}
+
+
+
+
+\subsubsection{Miscellaneous operations}
+
+% --- FLA_Cntl_swap_obj_create() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_swap_t* FLA_Cntl_swap_obj_create( FLA_Matrix_type  matrix_type,
+                                      int              variant,
+                                      fla_blocksize_t* blocksize,
+                                      fla_swap_t*      sub_swap );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for a matrix swap
+({\sc swap}) operation and initialize its fields according to the function
+arguments.
+}
+\notes{
+If \variant is \flasubproblemns, none of the pointer arguments
+are used and thus they may be safely set to \fnullns.
+}
+\begin{checks}
+\checkitem
+If \variant is not \flasubproblemns, then it must be either
+\flablockedvariantone or \flablockedvarianttwons.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flaswapts structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+\parameter{\flaswapt}{sub\_swap}{A pointer to the node to be used for the {\sc swap} subproblem.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Cntl_transpose_obj_create() ------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+fla_transpose_t* FLA_Cntl_transpose_obj_create( FLA_Matrix_type  matrix_type,
+                                                int              variant,
+                                                fla_blocksize_t* blocksize,
+                                                fla_trans1_t*     sub_trans,
+                                                fla_swap_t*      sub_swap );
+\end{verbatim}
+\purpose{
+Create a structure representing a node in a control tree for a matrix
+transposition ({\sc transpose}) operation and initialize its
+fields according to the function arguments.
+}
+\notes{
+If \variant is \flasubproblemns, none of the pointer arguments
+are used and thus they may be safely set to \fnullns.
+}
+\begin{checks}
+\checkitem
+If \variant is not \flasubproblemns, then it must be either
+\flablockedvariantone or \flablockedvarianttwons.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\rvalue{
+A pointer to a heap-allocated \flatransposet structure.
+}
+\begin{params}
+\parameter{\matrixtype}{matrix\_type}{The type of matrix (flat or hierarchical) to support in the control tree in which the node will be used.}
+\parameter{\int}{variant}{A constant value indicating the choice of variant for executing the computation associated with the control tree node being created.}
+\parameter{\flablocksizet}{blocksize}{A pointer to a blocksize structure to be used for the node being created.}
+\parameter{\flatransposet}{sub\_trans}{A pointer to the node to be used for the {\sc transpose} subproblem.}
+\parameter{\flaswapt}{sub\_swap}{A pointer to the node to be used for the {\sc swap} subproblem.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Cntl_obj_free() ------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Cntl_obj_free( void* cntl );
+\end{verbatim}
+\purpose{
+Release the memory allocated for a structure representing a node in a control
+tree.
+}
+\notes{
+{\tt FLA\_Cntl\_obj\_free()} should only be used with pointers to control tree
+structures that were allocated with the {\tt FLA\_Cntl\_*\_create()} routines.
+}
+\begin{params}
+\parameter{\voidp}{cntl}{A pointer to the node to be freed.}
+\end{params}
+\end{flaspec}
+
+
+
+
+\subsection{Default control trees}
+
+The default control trees are created when \libflame is initialized via
+{\tt FLA\_Init()}.
+The subroutines in which the actual creation and initialization takes
+place are named according to the operation name and execution type.
+For example, control trees for a Cholesky factorization that is to be
+executed sequentially with conventinal storage are initialized
+in the subroutine {\tt FLA\_Chol\_cntl\_init()}.
+Likewise, control trees for a triangular matrix inversion that is to be
+executed sequentiall with hierarchial storage are initialized
+in {\tt FLASH\_Trinv\_cntl\_init()}.
+Figure \ref{fig:cntl-init} shows examples of these routines for
+the Cholesky factorizatoin with hierarchical storage, which gives the
+reader an idea of how control trees should be initialized.
+
+\input{figs/50-cntl-init}
+
+
+
+
+\subsection{Operation front-ends}
+
+Once the library has been initialized, the default set of control trees
+are ready to use.
+Figure \ref{fig:cntl-front-ends} shows examples of some front-end
+routines found in \libflamens.
+This illustrates how control trees are used at the highest level.
+
+\input{figs/50-cntl-front-ends}
+
+
+
+
+\subsection{Internal back-ends}
+
+\index{developer APIs!internal back-ends}
+
+The \libflame front-ends and algorithmic variant implementations both
+directly invoke internal back-end functions.
+It is here that the control tree is decoded and used to determine
+how execution will proceed with respect to variant and execution
+type.
+Figure \ref{fig:cntl-internal-back-ends} shows the internal routines
+for Cholesky factorization.
+
+\input{figs/50-cntl-internal-back-ends}
+
+Interfaces for the supported operation back-ends follow.
+
+
+
+\subsubsection{Level-3 BLAS operations}
+
+% --- FLA_Gemm_internal() ------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Gemm_internal( FLA_Trans transa, FLA_Trans transb, FLA_Obj alpha,
+                        FLA_Obj A, FLA_Obj B, FLA_Obj beta, FLA_Obj C, 
+                        fla_gemm_t* cntl );
+\end{verbatim}
+\purpose{
+Perform a {\sc gemm} operation on $ A $, $ B $, and $ C $ according to the
+parameters specified by control tree node \cntlns.
+}
+\begin{checks}
+\checkitem
+\cntl must not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\moreinfo{
+This function's interface is similar to that of \flagemmns.
+Please see the description for \flagemm for further details.
+}
+\end{flaspec}
+
+% --- FLA_Hemm_internal() ------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Hemm_internal( FLA_Side side, FLA_Uplo uplo, FLA_Obj alpha,
+                        FLA_Obj A, FLA_Obj B, FLA_Obj beta, FLA_Obj C, 
+                        fla_hemm_t* cntl );
+\end{verbatim}
+\purpose{
+Perform a {\sc hemm} operation on $ A $, $ B $, and $ C $ according to the
+parameters specified by control tree node \cntlns.
+}
+\begin{checks}
+\checkitem
+\cntl must not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\moreinfo{
+This function's interface is similar to that of \flahemmns.
+Please see the description for \flahemm for further details.
+}
+\end{flaspec}
+
+% --- FLA_Herk_internal() ------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Herk_internal( FLA_Uplo uplo, FLA_Trans trans, FLA_Obj alpha,
+                        FLA_Obj A, FLA_Obj beta, FLA_Obj C, 
+                        fla_herk_t* cntl );
+\end{verbatim}
+\purpose{
+Perform a {\sc herk} operation on $ A $ and $ C $ according to the
+parameters specified by control tree node \cntlns.
+}
+\begin{checks}
+\checkitem
+\cntl must not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\moreinfo{
+This function's interface is similar to that of \flaherkns.
+Please see the description for \flaherk for further details.
+}
+\end{flaspec}
+
+% --- FLA_Her2k_internal() -----------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Her2k_internal( FLA_Uplo uplo, FLA_Trans trans, FLA_Obj alpha,
+                         FLA_Obj A, FLA_Obj B, FLA_Obj beta, FLA_Obj C, 
+                         fla_her2k_t* cntl );
+\end{verbatim}
+\purpose{
+Perform a {\sc her2k} operation on $ A $, $ B $, and $ C $ according to the
+parameters specified by control tree node \cntlns.
+}
+\begin{checks}
+\checkitem
+\cntl must not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\moreinfo{
+This function's interface is similar to that of \flahertkns.
+Please see the description for \flahertk for further details.
+}
+\end{flaspec}
+
+% --- FLA_Symm_internal() ------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Symm_internal( FLA_Side side, FLA_Uplo uplo, FLA_Obj alpha,
+                        FLA_Obj A, FLA_Obj B, FLA_Obj beta, FLA_Obj C, 
+                        fla_symm_t* cntl );
+\end{verbatim}
+\purpose{
+Perform a {\sc symm} operation on $ A $, $ B $, and $ C $ according to the
+parameters specified by control tree node \cntlns.
+}
+\begin{checks}
+\checkitem
+\cntl must not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\moreinfo{
+This function's interface is similar to that of \flasymmns.
+Please see the description for \flasymm for further details.
+}
+\end{flaspec}
+
+% --- FLA_Syrk_internal() ------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Syrk_internal( FLA_Uplo uplo, FLA_Trans trans, FLA_Obj alpha,
+                        FLA_Obj A, FLA_Obj beta, FLA_Obj C, 
+                        fla_syrk_t* cntl );
+\end{verbatim}
+\purpose{
+Perform a {\sc syrk} operation on $ A $ and $ C $ according to the
+parameters specified by control tree node \cntlns.
+}
+\begin{checks}
+\checkitem
+\cntl must not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\moreinfo{
+This function's interface is similar to that of \flasyrkns.
+Please see the description for \flasyrk for further details.
+}
+\end{flaspec}
+
+% --- FLA_Syr2k_internal() -----------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Syr2k_internal( FLA_Uplo uplo, FLA_Trans trans, FLA_Obj alpha,
+                         FLA_Obj A, FLA_Obj B, FLA_Obj beta, FLA_Obj C, 
+                         fla_syr2k_t* cntl );
+\end{verbatim}
+\purpose{
+Perform a {\sc syr2k} operation on $ A $, $ B $, and $ C $ according to the
+parameters specified by control tree node \cntlns.
+}
+\begin{checks}
+\checkitem
+\cntl must not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\moreinfo{
+This function's interface is similar to that of \flasyrtkns.
+Please see the description for \flasyrtk for further details.
+}
+\end{flaspec}
+
+% --- FLA_Trmm_internal() ------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Trmm_internal( FLA_Side side, FLA_Uplo uplo, FLA_Trans trans,
+                        FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B,  
+                        fla_trmm_t* cntl );
+\end{verbatim}
+\purpose{
+Perform a {\sc trmm} operation on $ A $ and $ B $ according to the
+parameters specified by control tree node \cntlns.
+}
+\begin{checks}
+\checkitem
+\cntl must not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\moreinfo{
+This function's interface is similar to that of \flatrmmns.
+Please see the description for \flatrmm for further details.
+}
+\end{flaspec}
+
+% --- FLA_Trsm_internal() ------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Trsm_internal( FLA_Side side, FLA_Uplo uplo, FLA_Trans trans, FLA_Diag diag,
+                        FLA_Obj alpha, FLA_Obj A, FLA_Obj B,  
+                        fla_trsm_t* cntl );
+\end{verbatim}
+\purpose{
+Perform a {\sc trsm} operation on $ A $ and $ B $ according to the
+parameters specified by control tree node \cntlns.
+}
+\begin{checks}
+\checkitem
+\cntl must not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\moreinfo{
+This function's interface is similar to that of \flatrsmns.
+Please see the description for \flatrsm for further details.
+}
+\end{flaspec}
+
+
+
+
+
+
+
+
+
+
+\subsubsection{LAPACK operations}
+
+% --- FLA_Chol_internal() ------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Chol_internal( FLA_Uplo uplo, FLA_Obj A, fla_chol_t* cntl );
+\end{verbatim}
+\purpose{
+Perform a {\sc chol} operation on $ A $ according to the
+parameters specified by control tree node \cntlns.
+}
+\begin{checks}
+\checkitem
+\cntl must not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\moreinfo{
+This function's interface is similar to that of \flacholns.
+Please see the description for \flachol for further details.
+}
+\end{flaspec}
+
+% --- FLA_Trinv_internal() -----------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Trinv_internal( FLA_Uplo uplo, FLA_Diag diag, FLA_Obj A,
+                              fla_trinv_t* cntl );
+\end{verbatim}
+\purpose{
+Perform a {\sc trinv} operation on $ A $ according to the
+parameters specified by control tree node \cntlns.
+}
+\begin{checks}
+\checkitem
+\cntl must not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\moreinfo{
+This function's interface is similar to that of \flatrinvns.
+Please see the description for \flatrinv for further details.
+}
+\end{flaspec}
+
+% --- FLA_Ttmm_internal() ------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Ttmm_internal( FLA_Uplo uplo, FLA_Obj A, fla_ttmm_t* cntl );
+\end{verbatim}
+\purpose{
+Perform a {\sc ttmm} operation on $ A $ according to the
+parameters specified by control tree node \cntlns.
+}
+\begin{checks}
+\checkitem
+\cntl must not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\moreinfo{
+This function's interface is similar to that of \flattmmns.
+Please see the description for \flattmm for further details.
+}
+\end{flaspec}
+
+% --- FLA_SPDinv_internal() ----------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_SPDinv_internal( FLA_Uplo uplo, FLA_Obj A, fla_spdinv_t* cntl );
+\end{verbatim}
+\purpose{
+Perform a {\sc spdinv} operation on $ A $ according to the
+parameters specified by control tree node \cntlns.
+}
+\begin{checks}
+\checkitem
+\cntl must not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\moreinfo{
+This function's interface is similar to that of \flaspdinvns.
+Please see the description for \flaspdinv for further details.
+}
+\end{flaspec}
+
+% --- FLA_Hess_internal() ------------------------------------------------------
+%
+%\begin{flaspec}
+%\begin{verbatim}
+%void FLA_Hess_internal( FLA_Obj A, FLA_Obj t, int ilo, int ihi,
+%                        fla_hess_t* cntl );
+%\end{verbatim}
+%\purpose{
+%Perform a {\sc hess} operation on $ A $ according to the
+%parameters specified by control tree node \cntlns.
+%}
+%\begin{checks}
+%\checkitem
+%\cntl must not be \fnullns.
+%%\itemvsp
+%%\checkitem
+%% 
+%\end{checks}
+%\moreinfo{
+%This function's interface is similar to that of \flahessns.
+%Please see the description for \flahess for further details.
+%}
+%\end{flaspec}
+
+% --- FLA_LU_nopiv_internal() --------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_LU_nopiv_internal( FLA_Obj A, fla_lu_t* cntl );
+\end{verbatim}
+\purpose{
+Perform a {\sc lunopiv} operation on $ A $ according to the
+parameters specified by control tree node \cntlns.
+}
+\begin{checks}
+\checkitem
+\cntl must not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\moreinfo{
+This function's interface is similar to that of \flalunopivns.
+Please see the description for \flalunopiv for further details.
+}
+\end{flaspec}
+
+% --- FLA_LU_piv_internal() ----------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_LU_piv_internal( FLA_Obj A, FLA_Obj p, fla_lu_t* cntl );
+\end{verbatim}
+\purpose{
+Perform a {\sc lupiv} operation on $ A $ according to the
+parameters specified by control tree node \cntlns.
+}
+\begin{checks}
+\checkitem
+\cntl must not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\moreinfo{
+This function's interface is similar to that of \flalunopivns.
+Please see the description for \flalunopiv for further details.
+}
+\end{flaspec}
+
+% --- FLA_QR_UT_internal() -----------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_QR_UT_internal( FLA_Obj A, FLA_Obj T, fla_qrut_t* cntl );
+\end{verbatim}
+\purpose{
+Perform a {\sc qrut} operation on $ A $ according to the
+parameters specified by control tree node \cntlns.
+}
+\begin{checks}
+\checkitem
+\cntl must not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\moreinfo{
+This function's interface is similar to that of \flaqrutns.
+Please see the description for \flaqrut for further details.
+}
+\end{flaspec}
+
+% --- FLA_LQ_UT_internal() -----------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_LQ_UT_internal( FLA_Obj A, FLA_Obj T, fla_lq_t* cntl );
+\end{verbatim}
+\purpose{
+Perform a {\sc lqut} operation on $ A $ according to the
+parameters specified by control tree node \cntlns.
+}
+\begin{checks}
+\checkitem
+\cntl must not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\moreinfo{
+This function's interface is similar to that of \flalqutns.
+Please see the description for \flalqut for further details.
+}
+\end{flaspec}
+
+% --- FLA_Sylv_internal() ------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Sylv_internal( FLA_Trans transa, FLA_Trans transb, FLA_Obj isgn,
+                        FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj scale,
+                        fla_sylv_t* cntl );
+\end{verbatim}
+\purpose{
+Perform a {\sc sylv} operation on $ A $, $ B $, and $ C $ according to the
+parameters specified by control tree node \cntlns.
+}
+\begin{checks}
+\checkitem
+\cntl must not be \fnullns.
+%\itemvsp
+%\checkitem
+% 
+\end{checks}
+\moreinfo{
+This function's interface is similar to that of \flasylvns.
+Please see the description for \flasylv for further details.
+}
+\end{flaspec}
+
+
+
+
+
+
+
+
+
+
+
+
+
+\subsection{Algorithmic variants}
+
+The algorithmic variants in \libflame are coded differently than earlier
+incarnations of FLAME/C. 
+Figure \ref{fig:noncntl-cntl-chol-code} illustrates these differences
+for the blocked FLAME/C implementation of algorithmic variant 3 of
+Cholesky factorization.
+The top-left code example shows what the code might look like when
+the programmer used unblocked FLAME variants to perform subproblems.
+The top-right code is similar, except that it uses blocked variants.
+Note that this code uses the same algorithmic blocksize for it subproblems
+as it does for matrix partitioning within the Cholesky algorithm.
+The bottom-left code again shows how the FLAME group used to present
+its codes during lectures and presentations, where the routines
+{\tt FLA\_Chol()}, {\tt FLA\_Trsm()}, and {\tt FLA\_Syrk()} were
+wrappers to external implementations of those operations.\footnote{
+Notice that this class of function names is now reserved for the user-level
+front-end interfaces documented in Sections \ref{sec:blas3-front-ends} and
+\ref{sec:lapack-front-ends}, and the corresponding external routines are now
+explicitly named as {\tt FLA\_Chol\_unb\_external()},
+{\tt FLA\_Trsm\_external()}, and {\tt FLA\_Syrk\_external()}.
+}
+Finally, the bottom-right code shows how algorithms are now coded within
+\libflamens, using control trees.
+The most notable difference between this code and the others is
+that the subproblems invoke internal back-end routines for the
+operation in question rather than statically specifying an unblocked,
+blocked, or external implementation.
+%All of the details of the implementation for a particular subproblem
+%are specified within its corresponding control tree node.
+
+%A partial but representative list of algorithmic variants is given in Section
+%\ref{sec:algorithmic-variants}.
+
+\input{figs/50-noncntl-cntl-chol-code}
+
+
+
+
+
+\section{Parameter and error checking}
+
+\index{developer APIs!parameter and error checking}
+
+
+
+
+
+\subsection{Linear algebra parameters}
+
+% --- FLA_Check_valid_side() ---------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_valid_side( FLA_Side side );
+\end{verbatim}
+\purpose{
+Confirm that \side is one of the following values defined for the
+\flaside type:
+\flaleftns, \flarightns, \flatopns, \flabottomns.
+}
+\rvalue{
+\flasuccess if \side is valid;
+\flainvalidside otherwise.
+}
+%\begin{params}
+%\parameter{\flaside}{side}{A constant value to check against.}
+%\end{params}
+\end{flaspec}
+
+% --- FLA_Check_valid_uplo() ---------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_valid_uplo( FLA_Uplo uplo );
+\end{verbatim}
+\purpose{
+Confirm that \uplo is one of the following values defined for the
+\flauplo type:
+\flalowertriangularns, \flauppertriangularns.
+}
+\rvalue{
+\flasuccess if \uplo is valid;
+\flainvaliduplo otherwise.
+}
+%\begin{params}
+%\parameter{\flauplo}{uplo}{A constant value to check against.}
+%\end{params}
+\end{flaspec}
+
+% --- FLA_Check_valid_trans() --------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_valid_trans( FLA_Trans trans );
+\end{verbatim}
+\purpose{
+Confirm that \trans is one of the following values defined for the
+\flatrans type:
+\flanotranspose, \flatransposens, \flaconjtransposens, \flaconjnotransposens.
+}
+\rvalue{
+\flasuccess if \trans is valid;
+\flainvalidtrans otherwise.
+}
+%\begin{params}
+%\parameter{\flatrans}{trans}{A constant value to check against.}
+%\end{params}
+\end{flaspec}
+
+% --- FLA_Check_valid_real_trans() ---------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_valid_real_trans( FLA_Trans trans );
+\end{verbatim}
+\purpose{
+Confirm that \trans is either \flanotranspose or \flatransposens.
+}
+\notes{
+This check is typically used with \trans arguments that are expected to be
+applied to real matrices.
+}
+\rvalue{
+\flasuccess if the \trans argument is either \flanotranspose or
+\flatransposens.
+\flainvalidrealtrans otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_valid_complex_trans() ------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_valid_complex_trans( FLA_Trans trans );
+\end{verbatim}
+\purpose{
+Confirm that \trans is either \flanotranspose or \flaconjtransposens.
+}
+\notes{
+This check is typically used with \trans arguments that are expected to be
+applied to Hermitian matrices.
+}
+\rvalue{
+\flasuccess if the \trans argument is either \flanotranspose or
+\flaconjtransposens.
+\flainvalidcomplextrans otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_valid_blas_trans() ---------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_valid_blas_trans( FLA_Trans trans );
+\end{verbatim}
+\purpose{
+Confirm that \trans is either \flanotransposens, \flatransposens, or
+\flaconjtransposens.
+}
+\notes{
+This check is typically used with \trans arguments that are expected to be
+applied to general matrices.
+Valid values correspond to those supported by the BLAS interface, and
+thus \flaconjnotranspose is not allowed.
+}
+\rvalue{
+\flasuccess if the \trans argument is either \flanotransposens,
+\flatransposens, or \flaconjtransposens.
+\flainvalidblastrans otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_valid_diag() ---------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_valid_diag( FLA_Diag diag );
+\end{verbatim}
+\purpose{
+Confirm that \diag is one of the following values defined for the
+\fladiag type:
+\flanonunitdiagns, \flaunitdiagns, \flazerodiagns.
+}
+\rvalue{
+\flasuccess if \diag is valid;
+\flainvaliddiag otherwise.
+}
+%\begin{params}
+%\parameter{\fladiag}{diag}{A constant value to check against.}
+%\end{params}
+\end{flaspec}
+
+% --- FLA_Check_valid_conj() ---------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_valid_conj( FLA_Conj conj );
+\end{verbatim}
+\purpose{
+Confirm that \conj is one of the following values defined for the
+\flaconj type:
+\flanoconjugatens, \flaconjugatens.
+}
+\rvalue{
+\flasuccess if \conj is valid;
+\flainvalidconj otherwise.
+}
+%\begin{params}
+%\parameter{\flaconj}{conj}{A constant value to check against.}
+%\end{params}
+\end{flaspec}
+
+% --- FLA_Check_valid_direct() -------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_valid_direct( FLA_Direct direct );
+\end{verbatim}
+\purpose{
+Confirm that \direct is one of the following values defined for the
+\fladirect type:
+\flaforwardns, \flabackwardns.
+}
+\rvalue{
+\flasuccess if \direct is valid;
+\flainvaliddirect otherwise.
+}
+%\begin{params}
+%\parameter{\fladirect}{direct}{A constant value to check against.}
+%\end{params}
+\end{flaspec}
+
+% --- FLA_Check_valid_storev() -------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_valid_storev( FLA_Store storev );
+\end{verbatim}
+\purpose{
+Confirm that \storev is one of the following values defined for the
+\flastore type:
+\flacolumnwisens, \flarowwisens.
+}
+\rvalue{
+\flasuccess if \storev is valid;
+\flainvalidstorev otherwise.
+}
+%\begin{params}
+%\parameter{\flastore}{storev}{A constant value to check against.}
+%\end{params}
+\end{flaspec}
+
+% --- FLA_Check_valid_quadrant() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_valid_quadrant( FLA_Quadrant quadrant );
+\end{verbatim}
+\purpose{
+Confirm that \quadrant is one of the following values defined for the
+\flaquadrant type:
+\flatlns, \flatrns, \flablns, \flabrns.
+}
+\rvalue{
+\flasuccess if \quadrant is valid;
+\flainvalidquadrant otherwise.
+}
+\end{flaspec}
+
+
+
+
+\subsection{Datatypes}
+
+% --- FLA_Check_valid_datatype() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_valid_datatype( FLA_Datatype datatype );
+\end{verbatim}
+\purpose{
+Confirm that \datatype is one of the following values defined for the
+\fladatatype type:
+\flafloatns, \fladoublens, \flacomplexns, \fladoublecomplexns,
+\flaintns, \flaconstantns.
+}
+\rvalue{
+\flasuccess if \datatype is valid;
+\flainvaliddatatype otherwise.
+}
+%\begin{params}
+%\parameter{\fladatatype}{datatype}{A constant value to check against.}
+%\end{params}
+\end{flaspec}
+
+% --- FLA_Check_valid_object_datatype() ----------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_valid_object_datatype( FLA_Obj A );
+\end{verbatim}
+\purpose{
+Confirm that the datatype of $ A $ is one of the following values
+defined for the \fladatatype type:
+\flaintns, \flafloatns, \fladoublens, \flacomplexns, \fladoublecomplexns,
+\flaconstantns.
+}
+\rvalue{
+\flasuccess if the datatype of $ A $ is valid;
+\flainvaliddatatype otherwise.
+}
+%\begin{params}
+%\parameter{\flaobj}{A}{An \flaobj to check.}
+%\end{params}
+\end{flaspec}
+
+% --- FLA_Check_floating_datatype() --------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_floating_datatype( FLA_Datatype datatype );
+\end{verbatim}
+\purpose{
+Confirm that \datatype refers to one of the following floating point
+type values defined for \fladatatypens:
+\flafloatns, \fladoublens, \flacomplexns, \fladoublecomplexns,
+\flaconstantns.
+}
+\notes{
+Though it is a distinct type, \flaconstant is polymorphic and thus may
+be considered floating point for the purposes of this function.
+}
+\rvalue{
+\flasuccess if \datatype is floating point;
+\flainvalidfloatingdatatype otherwise.
+}
+%\begin{params}
+%\parameter{\fladatatype}{datatype}{A constant value to check against.}
+%\end{params}
+\end{flaspec}
+
+% --- FLA_Check_int_datatype() -------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_int_datatype( FLA_Datatype datatype );
+\end{verbatim}
+\purpose{
+Confirm that \datatype refers to one of the following integer
+type values defined for \fladatatypens:
+\flaintns, \flaconstantns.
+}
+\notes{
+Though it is a distinct type, \flaconstant is polymorphic and thus may
+be considered integer for the purposes of this function.
+}
+\rvalue{
+\flasuccess if \datatype is integer;
+\flainvalidintegerdatatype otherwise.
+}
+%\begin{params}
+%\parameter{\fladatatype}{datatype}{A constant value to check against.}
+%\end{params}
+\end{flaspec}
+
+% --- FLA_Check_real_datatype() ------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_real_datatype( FLA_Datatype datatype );
+\end{verbatim}
+\purpose{
+Confirm that \datatype refers to one of the following real numerical
+type values defined for \fladatatypens:
+\flafloatns, \fladoublens, \flaconstantns.
+}
+\notes{
+Though it is a distinct type, \flaconstant is polymorphic and thus may
+be considered real for the purposes of this function.
+}
+\rvalue{
+\flasuccess if \datatype is real;
+\flainvalidrealdatatype otherwise.
+}
+%\begin{params}
+%\parameter{\fladatatype}{datatype}{A constant value to check against.}
+%\end{params}
+\end{flaspec}
+
+% --- FLA_Check_complex_datatype() ---------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_complex_datatype( FLA_Datatype datatype );
+\end{verbatim}
+\purpose{
+Confirm that \datatype refers to one of the following complex numerical
+type values defined for \fladatatypens:
+\flacomplexns, \fladoublecomplexns, \flaconstantns.
+}
+\notes{
+Though it is a distinct type, \flaconstant is polymorphic and thus may
+be considered complex for the purposes of this function.
+}
+\rvalue{
+\flasuccess if \datatype is complex;
+\flainvalidcomplexdatatype otherwise.
+}
+%\begin{params}
+%\parameter{\fladatatype}{datatype}{A constant value to check against.}
+%\end{params}
+\end{flaspec}
+
+% --- FLA_Check_nonconstant_datatype() -----------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_nonconstant_datatype( FLA_Datatype datatype );
+\end{verbatim}
+\purpose{
+Confirm that \datatype is one of the following non-constant values
+defined for the \fladatatype type:
+\flafloatns, \fladoublens, \flacomplexns, \fladoublecomplexns,
+\flaintns.
+}
+\notes{
+This function is similar to {\tt FLA\_Check\_valid\_datatype()},
+except that it does not allow \flaconstantns.
+}
+\rvalue{
+\flasuccess if \datatype specifies a non-constant datatype;
+\flainvalidnonconstantdatatype otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_floating_object() ----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_floating_object( FLA_Obj A );
+\end{verbatim}
+\purpose{
+Confirm that the datatype of $ A $ is one of the following floating point
+type values defined for \fladatatypens:
+\flafloatns, \fladoublens, \flacomplexns, \fladoublecomplexns,
+\flaconstantns.
+}
+\notes{
+Though it is a distinct type, \flaconstant is polymorphic and thus may
+be considered floating point for the purposes of this function.
+}
+\rvalue{
+\flasuccess if the datatype of $ A $ is floating point;
+\flaobjectnotfloatingpoint otherwise.
+}
+%\begin{params}
+%\parameter{\flaobj}{A}{An \flaobj to check.}
+%\end{params}
+\end{flaspec}
+
+% --- FLA_Check_int_object() ---------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_int_object( FLA_Obj A );
+\end{verbatim}
+\purpose{
+Confirm that the datatype of $ A $ is one of the following integer
+type values defined for \fladatatypens:
+\flaintns, \flaconstantns.
+}
+\notes{
+Though it is a distinct type, \flaconstant is polymorphic and thus may
+be considered integer for the purposes of this function.
+}
+\rvalue{
+\flasuccess if the datatype of $ A $ is integer;
+\flaobjectnotinteger otherwise.
+}
+%\begin{params}
+%\parameter{\flaobj}{A}{An \flaobj to check.}
+%\end{params}
+\end{flaspec}
+
+% --- FLA_Check_real_object() --------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_real_object( FLA_Obj A );
+\end{verbatim}
+\purpose{
+Confirm that the datatype of $ A $ is one of the following real numerical
+type values defined for \fladatatypens:
+\flafloatns, \fladoublens, \flaconstantns.
+}
+\notes{
+Though it is a distinct type, \flaconstant is polymorphic and thus may
+be considered real for the purposes of this function.
+}
+\rvalue{
+\flasuccess if the datatype of $ A $ is real;
+\flaobjectnotreal otherwise.
+}
+%\begin{params}
+%\parameter{\flaobj}{A}{An \flaobj to check.}
+%\end{params}
+\end{flaspec}
+
+% --- FLA_Check_complex_object() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_complex_object( FLA_Obj A );
+\end{verbatim}
+\purpose{
+Confirm that the datatype of $ A $ is one of the following complex numerical
+type values defined for \fladatatypens:
+\flacomplexns, \fladoublecomplexns, \flaconstantns.
+}
+\notes{
+Though it is a distinct type, \flaconstant is polymorphic and thus may
+be considered complex for the purposes of this function.
+}
+\rvalue{
+\flasuccess if the datatype of $ A $ is complex;
+\flaobjectnotcomplex otherwise.
+}
+%\begin{params}
+%\parameter{\flaobj}{A}{An \flaobj to check.}
+%\end{params}
+\end{flaspec}
+
+% --- FLA_Check_nonconstant_object() -------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_nonconstant_object( FLA_Obj A );
+\end{verbatim}
+\purpose{
+Confirm that the datatype of $ A $ is one of the following non-constant values
+defined for the \fladatatype type:
+\flaintns, \flafloatns, \fladoublens, \flacomplexns, \fladoublecomplexns.
+}
+\rvalue{
+\flasuccess if the datatype of $ A $ is a non-constant datatype;
+\flaobjectnotnonconstant otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_identical_object_datatype() ------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_identical_object_datatype( FLA_Obj A, FLA_Obj B );
+\end{verbatim}
+\purpose{
+Confirm that $ A $ and $ B $ have identical datatypes.
+}
+\notes{
+This function enforces literal equality between the datatype fields of
+$ A $ and $ B $.
+}
+\rvalue{
+\flasuccess if $ A $ and $ B $ have identical datatypes;
+\flaobjectdatatypesnotequal otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_consistent_object_datatype() -----------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_consistent_object_datatype( FLA_Obj A, FLA_Obj B );
+\end{verbatim}
+\purpose{
+Confirm that the datatype of $ A $ is consistent with the datatype of $ B $.
+}
+\notes{
+This function is similar to {\tt FLA\_Check\_identical\_object\_datatype()},
+except that it considers objects of datatype \flaconstant to be consistent
+with all other datatypes.
+}
+\rvalue{
+\flasuccess if the datatype of $ A $ is equal to the datatype of $ B $;
+\flainconsistentdatatypes otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_consistent_datatype() ------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_consistent_datatype( FLA_Datatype datatype, FLA_Obj A );
+\end{verbatim}
+\purpose{
+Confirm that \datatype is consistent with the datatype of $ A $.
+}
+\notes{
+This function is similar to {\tt FLA\_Check\_consistent\_object\_datatype()}
+except that it takes one datatype value and one object as its arguments
+instead of two objects.
+}
+\rvalue{
+\flasuccess if \datatype is equal to the datatype of $ A $;
+\flainconsistentdatatypes otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_identical_object_precision() -----------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_identical_object_precision( FLA_Obj A, FLA_Obj B );
+\end{verbatim}
+\purpose{
+Confirm that the numerical precision of the datatype of $ A $ matches the
+numerical precision of the datatype of $ B $.
+}
+\notes{
+The function first verifies that both $ A $ and $ B $ are floating point
+objects.
+If one or both objects are not floating point, \flaobjectnotfloatingpoint
+is returned.
+}
+\rvalue{
+\flasuccess if the datatype precision of $ A $ is equal to the datatype
+precision of $ B $;
+\flainconsistentobjectprecision otherwise.
+}
+%\begin{params}
+%\parameter{\flaobj}{A}{An \flaobj to check.}
+%\parameter{\flaobj}{B}{An \flaobj to check.}
+%\end{params}
+\end{flaspec}
+
+% --- FLA_Check_conj_and_datatype() --------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_conj_and_datatype( FLA_Conj conj, FLA_Obj A );
+\end{verbatim}
+\purpose{
+Confirm, if $ A $ is real, that \conj is not \flaconjugatens.
+}
+\rvalue{
+\flasuccess if the \conj argument is not in conflict with the complexness of $ A $;
+\flainvalidconjgivendatatype otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_conj1_trans_and_datatype() --------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_conj1_trans_and_datatype( FLA_Trans trans, FLA_Obj A );
+\end{verbatim}
+\purpose{
+Confirm, if $ A $ is real, that \trans is neither \flaconjtranspose
+nor \flaconjnotransposens.
+}
+\rvalue{
+\flasuccess if the \trans argument is not in conflict with the complexness of $ A $;
+\flainvalidtransgivendatatype otherwise.
+}
+\end{flaspec}
+
+
+
+
+\subsection{Element types}
+
+% --- FLA_Check_valid_elemtype() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_valid_elemtype( FLA_Elemtype elemtype );
+\end{verbatim}
+\purpose{
+Confirm that \elemtype is one of the following values defined for the
+\flaelemtype type:
+\flascalarns, \flamatrixns.
+}
+\rvalue{
+\flasuccess if \elemtype is valid;
+\flainvalidelemtype otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_object_scalar_elemtype() ---------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_object_scalar_elemtype( FLA_Obj A );
+\end{verbatim}
+\purpose{
+Confirm that the element type of $ A $ is \flascalarns.
+}
+\rvalue{
+\flasuccess if the element type of $ A $ is \flascalarns;
+\flaobjectnotscalarelemtype otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_object_matrix_elemtype() ---------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_object_matrix_elemtype( FLA_Obj A );
+\end{verbatim}
+\purpose{
+Confirm that the element type of $ A $ is \flamatrixns.
+}
+\rvalue{
+\flasuccess if the element type of $ A $ is \flamatrixns;
+\flaobjectnotmatrixelemtype otherwise.
+}
+\end{flaspec}
+
+
+
+
+\subsection{Object dimensions}
+
+% --- FLA_Check_square() -------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_square( FLA_Obj A );
+\end{verbatim}
+\purpose{
+Confirm that $ A $ is square.
+}
+\rvalue{
+\flasuccess if $ A $ is square;
+\flaobjectnotsquare otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_if_scalar() ----------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_if_scalar( FLA_Obj A );
+\end{verbatim}
+\purpose{
+Confirm that $ A $ is a scalar (ie: that $ A $ is $ 1 \by 1 $).
+}
+\rvalue{
+\flasuccess if $ A $ is a scalar;
+\flaobjectnotscalar otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_if_vector() ----------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_if_vector( FLA_Obj A );
+\end{verbatim}
+\purpose{
+Confirm that $ A $ is a vector (ie: that $ A $ is $ n \by 1 $ or $ 1 \by n $
+for $ n \ge 0 $).
+}
+\rvalue{
+\flasuccess if $ A $ is a vector;
+\flaobjectnotvector otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_conformal_dims() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_conformal_dims( FLA_Trans trans, FLA_Obj A, FLA_Obj B );
+\end{verbatim}
+\purpose{
+Confirm that $ A $ and $ B $ have conformal dimensions.
+If \trans is \flatranspose or \flaconjtransposens, then the function
+confirms that $ A $ and $ B^T $ have conformal dimensions.
+}
+\rvalue{
+\flasuccess if $ A $ and $ B $ have conformal dimensions;
+\flanonconformaldimensions otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_matrix_matrix_dims() -------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_matrix_matrix_dims( FLA_Trans transa, FLA_Trans transb, 
+                                        FLA_Obj A, FLA_Obj B, FLA_Obj C );
+\end{verbatim}
+\purpose{
+Confirm that $ A $, $ B $, and $ C $ have conformal dimensions suitable
+for a matrix-matrix operation of the form $ C := C + AB $ where
+$ C $ is $ m \by n $ and $ A $ and $ B $ are $ m \by k $ and $ k \by n $,
+respectively, after optionally transpositions, per \transa and \transbns.
+}
+\rvalue{
+\flasuccess if $ A $, $ B $, and $ C $ have conformal dimensions;
+\flanonconformaldimensions otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_matrix_vector_dims() -------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_matrix_vector_dims( FLA_Trans trans, FLA_Obj A, FLA_Obj x, FLA_Obj y );
+\end{verbatim}
+\purpose{
+Confirm that $ A $, $ x $, and $ y $ have conformal dimensions suitable
+for a matrix-vector operation of the form $ y := y + Ax $ where
+$ A $ is optionally transposed, per \transns.
+}
+\rvalue{
+\flasuccess if $ A $, $ x $, and $ y $ have conformal dimensions;
+\flanonconformaldimensions otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_equal_vector_lengths() -----------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_equal_vector_lengths( FLA_Obj x, FLA_Obj y );
+\end{verbatim}
+\purpose{
+Confirm that $ x $ and $ y $, which are assumed to be vectors, have equal
+lengths.
+}
+\notes{
+This function works as expected if one or both arguments are row vectors.
+That is, ``length'' for the purposes of this function refers to the length
+of the vector, not the number of rows in the object.
+}
+\rvalue{
+\flasuccess if $ x $ and $ y $ have equal lengths;
+\flaunequalvectorlengths otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_vector_length() ------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_vector_length( FLA_Obj x, dim_t expected_length );
+\end{verbatim}
+\purpose{
+Confirm that $ x $, which is assumed to be a column vector, is of length
+{\tt expected\_length}.
+}
+\notes{
+This function checks only the number of rows of $ x $.
+Therefore, this function will not work as expected with row vectors.
+}
+\rvalue{
+\flasuccess if the number of rows in $ x $ is {\tt expected\_length};
+\flainvalidvectorlength otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_vector_length_min() --------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_vector_length_min( FLA_Obj x, dim_t min_length );
+\end{verbatim}
+\purpose{
+Confirm that $ x $, which is assumed to be a column vector, is at least
+{\tt min\_length} in length.
+}
+\notes{
+This function checks only the number of rows of $ x $.
+Therefore, this function will not work as expected with row vectors.
+}
+\rvalue{
+\flasuccess if the number of rows in $ x $ is at least {\tt min\_length};
+\flavectorlengthbelowmin otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_object_dims() --------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_object_dims( FLA_Trans trans, dim_t m, dim_t n, FLA_Obj A );
+\end{verbatim}
+\purpose{
+Confirm that matrix $ A $ is $ m \by n $.
+If \trans is \flatranspose or \flaconjtransposens, then the function
+will instead confirm that $ A $ is $ n \by m $.
+}
+\rvalue{
+\flasuccess if the dimensions of $ A $ are identical to those specified;
+\flaspecifiedobjdimmismatch otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_submatrix_dims_and_offset() ------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_submatrix_dims_and_offset( int m, int n, int i, int j, FLA_Obj A );
+\end{verbatim}
+\purpose{
+Confirm that the $ m \by n $ submatrix that has its top-left element located
+at row-column offset $ (i,j) $ (indexed from zero) does not exceed the bounds
+of matrix $ A $.
+In other words, the following constraints are enforced:
+\begin{itemize}
+\item $ i \le m(A) $
+\itemvsp
+\item $ j \le n(A) $
+\itemvsp
+\item $ i + m \le m(A) $
+\itemvsp
+\item $ j + n \le n(A) $
+\end{itemize}
+where $ m( A ) $ and $ n( A ) $ denote the number or rows and number of
+columns in $ A $, respectively.
+}
+\notes{
+Strictly speaking, only the last two constraints are needed.
+However, we first check against the first two constraints to allow us to
+distinguish between situations where the offsets are invalid (in which case
+the value of the matrix dimensions are moot), and situations where the
+offsets are valid, but the submatrix dimensions places the submatrix beyond
+the bounds of $ A $.
+}
+\rvalue{
+\flasuccess if the specified submatrix is within the bounds of $ A $;
+otherwise, \flainvalidsubmatrixdims if one of the first two contraints
+is violated, and \flainvalidsubmatrixoffset if the first two constraints
+are met but one of the last two constraints is violated.
+}
+\end{flaspec}
+
+% --- FLA_Check_adjacent_objects_2x2() -----------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_adjacent_objects_2x2( FLA_Obj ATL, FLA_Obj ATR,
+                                          FLA_Obj ABL, FLA_Obj ABR );
+\end{verbatim}
+\purpose{
+Confirm that views $ A_{TL} $, $ A_{TR} $, $ A_{BL} $, and $ A_{BR} $ are
+vertically and horizontally aligned and adjacent, and that views that are
+vertically or horizontally adjacent have dimensions appropriately
+matched for them to form quadrants of a single larger view of the
+base object.
+}
+\rvalue{
+\flasuccess if the four object views are aligned and adjacent, and have
+matching dimensions;
+otherwise, one of the following, depending on the mismatch:
+\begin{itemize}
+\item \flaobjectsnotverticallyadj
+\itemvsp
+\item \flaobjectsnotverticallyaligned
+\itemvsp
+\item \flaobjectsnothorizontallyadj
+\itemvsp
+\item \flaobjectsnothorizontallyaligned
+\itemvsp
+\item \flaadjacentobjectdimmismatch
+\end{itemize}
+}
+\end{flaspec}
+
+% --- FLA_Check_adjacent_objects_2x1() -----------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_adjacent_objects_2x1( FLA_Obj AT,
+                                          FLA_Obj AB );
+\end{verbatim}
+\purpose{
+Confirm that views $ A_T $ and $ A_B $ are vertically
+and aligned and adjacent, and that the views
+have column dimensions appropriately
+matched for them to form a vertical panel a single larger view of the
+base object.
+}
+\rvalue{
+\flasuccess if the two object views are vertically aligned and adjacent,
+and have matching column dimensions;
+otherwise, one of the following, depending on the mismatch:
+\begin{itemize}
+\item \flaobjectsnotverticallyadj
+\itemvsp
+\item \flaobjectsnotverticallyaligned
+\itemvsp
+\item \flaadjacentobjectdimmismatch
+\end{itemize}
+}
+\end{flaspec}
+
+% --- FLA_Check_adjacent_objects_1x2() -----------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_adjacent_objects_1x2( FLA_Obj AL, FLA_Obj AR );
+\end{verbatim}
+\purpose{
+Confirm that views $ A_L $ and $ A_R $ are horizontally
+and aligned and adjacent, and that the views
+have row dimensions appropriately
+matched for them to form a horizontal panel a single larger view of the
+base object.
+}
+\rvalue{
+\flasuccess if the two object views are horizontally aligned and adjacent,
+and have matching row dimensions;
+otherwise, one of the following, depending on the mismatch:
+\begin{itemize}
+\item \flaobjectsnothorizontallyadj
+\itemvsp
+\item \flaobjectsnothorizontallyaligned
+\itemvsp
+\item \flaadjacentobjectdimmismatch
+\end{itemize}
+}
+\end{flaspec}
+
+
+
+
+\subsection{UNIX file I/O}
+
+% --- FLA_Check_file_descriptor() ----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_file_descriptor( int fd );
+\end{verbatim}
+\purpose{
+Confirm that \fdns, which is assumped to have been returned from
+the UNIX/Linux {\tt open()} function, is a valid file descriptor.
+}
+\notes{
+The UNIX/Linux {\tt open()} function returns $ -1 $ when it fails to
+successfully open a file.
+}
+\rvalue{
+\flasuccess if \fd is valid;
+\flaopenreturnederror otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_close_result() -------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_close_result( int r_val );
+\end{verbatim}
+\purpose{
+Confirm that \rvalns, which is assumed to have been returned
+from {\tt close()}, does not indicate that an error has occurred.
+}
+\notes{
+The UNIX/Linux {\tt close()} function returns $ -1 $ when it fails to
+successfully close a file.
+}
+\rvalue{
+\flasuccess if \rval indicates no error;
+\flaclosereturnederror otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_lseek_result() -------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_lseek_result( off_t requested_offset, int r_val );
+\end{verbatim}
+\purpose{
+Confirm that \rvalns, which is assumed to have been returned
+from {\tt lseek()}, does not indicate that an error has occurred.
+It is further assumed that {\tt requested\_offset} was the byte offset
+passed to {\tt lseek()} when {\tt lseek()} returned \rvalns.
+}
+\notes{
+The UNIX/Linux {\tt lseek()} function returns the resulting byte offset
+relative to the beginning of the file.
+If {\tt lseek()} is unsuccessful, it returns $ -1 $.
+}
+\rvalue{
+\flasuccess if \rval indicates no error;
+\flalseekreturnederror otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_read_result() --------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_read_result( size_t requested_size, ssize_t r_val );
+\end{verbatim}
+\purpose{
+Confirm that \rvalns, which is assumed to have been returned
+from {\tt read()}, does not indicate that an error has occurred.
+}
+\notes{
+Under normal circumstances, the UNIX/Linux {\tt read()} function
+returns the number of bytes successfully read into the destination
+buffer, where zero indicates no bytes were read due to attempting to
+read at end of file.
+It is not considered an error for this return value to be less than
+the requested number of bytes.
+If an actual error occurs, {\tt read()} returns $ -1 $.
+Currently {\tt FLA\_Check\_read\_result()} only returns an error
+code if {\tt read()} returns $ -1 $.
+Thus, the {\tt requested\_size} argument is not referenced, but may be
+used in the future to provide warnings.
+}
+\rvalue{
+\flasuccess if \rval indicates no error;
+\flareadreturnederror otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_write_result() -------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_write_result( size_t requested_size, ssize_t r_val );
+\end{verbatim}
+\purpose{
+Confirm that \rvalns, which is assumed to have been returned
+from {\tt write()}, does not indicate that an error has occurred.
+}
+\notes{
+Under normal circumstances, the UNIX/Linux {\tt write()} function
+returns the number of bytes successfully written from the source
+buffer, where zero indicates no bytes were written.
+It is not considered an error for this return value to be less than
+the requested number of bytes.
+If an actual error occurs, {\tt write()} returns $ -1 $.
+Currently {\tt FLA\_Check\_write\_result()} only returns an error
+code if {\tt write()} returns $ -1 $.
+Thus, the {\tt requested\_size} argument is not referenced, but may be
+used in the future to provide warnings.
+}
+\rvalue{
+\flasuccess if \rval indicates no error;
+\flawritereturnederror otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_unlink_result() ------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_unlink_result( int r_val );
+\end{verbatim}
+\purpose{
+Confirm that \rvalns, which is assumed to have been returned
+from {\tt unlink()}, does not indicate that an error has occurred.
+}
+\notes{
+The UNIX/Linux {\tt unlink()} function returns $ -1 $ when it fails to
+successfully delete a file from the filesystem.
+}
+\rvalue{
+\flasuccess if \rval indicates no error;
+\flaunlinkreturnederror otherwise.
+}
+\end{flaspec}
+
+
+
+
+\subsection{Operation-specific errors}
+
+% --- FLA_Check_chol_failure() -------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_chol_failure( FLA_Error r_val );
+\end{verbatim}
+\purpose{
+Confirm that \rvalns, which is assumped to have been
+returned from the an LAPACK-compatible Cholesky factorization routine,
+does not indicate that the input matrix was found to be non-symmetric
+positive definite (or non-Hermitian positive definite).
+}
+\notes{
+For the purposes of this function, ``LAPACK-compatible'' means the
+Cholesky factorization routine returns the row/column offset (indexing
+from one) of the diagonal entry that was found to be negative.
+}
+\rvalue{
+\flasuccess if \rval is valid;
+\flacholfailedmatrixnotspd otherwise.
+}
+\end{flaspec}
+
+% --- FLA_FLA_Check_block_householder_transform() ------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_block_householder_transform( FLA_Store storev,
+                                                 FLA_Obj A, FLA_Obj S );
+\end{verbatim}
+\purpose{
+Confirm that matrix the dimensions of $ A $ are compatible with the dimensions
+of a block Householder matrix $ S $.
+Specifically, if \storev is \flacolumnwisens, then the number of columns of
+$ A $ must match the order of $ S $.
+Otherwise, if \storev is \flarowwisens, then the number of rows of $ A $
+must match the order of $ S $.
+}
+\rvalue{
+\flasuccess if the dimensions of $ A $ and $ S $ are compatible;
+\flablockhousehdimmismatch otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_hess_indices() -------------------------------------------------
+%
+%\begin{flaspec}
+%\begin{verbatim}
+%FLA_Error FLA_Check_hess_indices( FLA_Obj A, int ilo, int ihi );
+%\end{verbatim}
+%\purpose{
+%Confirm that the indices \ilo and \ihi are reasonable values for a
+%reduction to upper Hessenberg operation.
+%}
+%\notes{
+%Any of the following conditions will cause the function to return
+%an \flainvalidhessenbergindices error value:
+%\begin{itemize}
+%\item $ n( A ) = 0 $ and $ \ilo \neq 1 $ and $ \ihi \neq 1 $
+%\itemvsp
+%\item $ \ilo < 1 $ or $ n( A ) < \ilo $
+%\itemvsp
+%\item $ \ihi < 1 $ or $ n( A ) < \ihi $
+%\itemvsp
+%\item $ \ihi < \ilo $
+%\end{itemize}
+%where $ n( A ) $ denotes the number of columns in matrix $ A $.
+%}
+%\rvalue{
+%\flasuccess if \ilo and \ihi are valid indices for a reduction to upper Hessenberg operation;
+%\flainvalidhessenbergindices otherwise.
+%}
+%\end{flaspec}
+
+% --- FLA_Check_sylv_matrix_dims() ---------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_sylv_matrix_dims( FLA_Obj A, FLA_Obj B, FLA_Obj C );
+\end{verbatim}
+\purpose{
+Confirm that $ A $, $ B $, and $ C $ have conformal dimensions suitable
+for a triangular Sylvester equation solve of the form $ AX + XB = C $ where
+$ A $ and $ B $ are $ m \by m $ and $ n \by n $, respectively, and $ X $ and
+$ C $ are $ m \by n $.
+}
+\rvalue{
+\flasuccess if $ A $, $ B $, and $ C $ have conformal dimensions;
+\flanonconformaldimensions otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_valid_isgn_value() ---------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_valid_isgn_value( FLA_Obj isgn );
+\end{verbatim}
+\purpose{
+Confirm that \isgn is either \flaone or \flaminusonens.
+}
+\notes{
+This function currently compares \isgn against \flaone and \flaminusone
+with the function {\tt FLA\_Obj\_is()}, which creates a stronger constraint
+than just comparing the {\em values} contained within the objects.
+}
+\rvalue{
+\flasuccess if \isgn is valid;
+\flainvalidside otherwise.
+}
+\end{flaspec}
+
+
+
+
+\subsection{Other system errors}
+
+% --- FLA_Check_pthread_create_result() ----------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_pthread_create_result( int r_val );
+\end{verbatim}
+\purpose{
+Confirm that \rvalns, which is assumped to have been
+returned from the POSIX {\tt pthread\_create()} function, does not indicate
+that an error has occurred.
+}
+\rvalue{
+\flasuccess if \rval indicates no error;
+\flapthreadcreatereturnederror otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_pthread_join_result() ------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_pthread_join_result( int r_val );
+\end{verbatim}
+\purpose{
+Confirm that \rvalns, which is assumped to have been
+returned from the POSIX {\tt pthread\_join()} function, does not indicate
+that an error has occurred.
+}
+\rvalue{
+\flasuccess if \rval indicates no error;
+\flapthreadjoinreturnederror otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_malloc_pointer() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_malloc_pointer( void* ptr );
+\end{verbatim}
+\purpose{
+Confirm that \ptrns, which is assumped to have been returned by a memory
+allocation function such as {\tt malloc()}, is not a \fnull pointer.
+}
+\notes{
+This routine is similar in behavior to {\tt FLA\_Check\_null\_pointer()}.
+This only difference is that this function is used specifically to check
+the validity of pointers returned by {\tt malloc()}, and thus is set up
+to return a {\tt malloc()}-specific error message.
+}
+\rvalue{
+\flasuccess if \ptr is not \fnullns;
+\flamallocreturnednullpointer otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_posix_memalign_failure() ---------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_posix_memalign_failure( int r_val );
+\end{verbatim}
+\purpose{
+Confirm that \rvalns, which is assumped to have been returned by
+the POSIX {\tt posix\_memalign()} function, does not indicate that an error
+has occurred.
+}
+\notes{
+Unlike {\tt malloc()}, {\tt posix\_memalign()} returns an integer
+value to indicate success (zero) or failure (a non-zero value), and the
+pointer to the requested memory region is obtained from the function by
+providing the pointer's address as an argument, which allows
+{\tt posix\_memalign()} to set the pointer value directly.
+}
+\rvalue{
+\flasuccess if \rval is valid;
+\flaposixmemalignfailed otherwise.
+}
+\end{flaspec}
+
+
+
+
+\subsection{Misc. errors}
+
+% --- FLA_Check_valid_pivot_type() ---------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_valid_pivot_type( FLA_Pivot_type ptype );
+\end{verbatim}
+\purpose{
+Confirm that \ptype is one of the following values defined for the
+\flapivottype type:
+\flanativepivotsns, \flalapackpivotsns.
+}
+\rvalue{
+\flasuccess if \ptype is valid;
+\flainvalidconj otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_pivot_vector_length() ------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_pivot_vector_length( FLA_Obj ipiv );
+\end{verbatim}
+\purpose{
+Confirm that the number of rows in \ipiv is less than or equal to
+the current length of the interal pivoting work buffer.
+If the length of \ipiv exceeds the current length of the work buffer,
+then the work buffer is reallocated to the length of \ipivns.
+The length of this internal buffer begins as
+{\tt FLA\_MAX\_LU\_PIVOT\_LENGTH}.
+If a reallocation takes place, the function confirms that the
+reallocated pointer is not \fnullns.
+}
+\rvalue{
+\flasuccess if no reallocation was needed, or if a reallocation took place
+and the returned pointer is valid;
+\flanullpointer otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_divide_by_zero() -----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_divide_by_zero( FLA_Obj alpha );
+\end{verbatim}
+\purpose{
+Confirm that $ \alpha $, which is assumed to be a potential denominator
+in a future floating point division operation, is non-zero.
+}
+\rvalue{
+\flasuccess if $ \alpha $ is non-zero;
+\fladividebyzero otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_blocksize_value() ----------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_blocksize_value( dim_t b );
+\end{verbatim}
+\purpose{
+Confirm that $ b $ is a valid blocksize.
+}
+\notes{
+Since \dimt is a type of unsigned integer, the only invalid value that $ b $
+might take on is zero.
+Thus, this function simply confirms that $ b $ is non-zero.
+}
+\rvalue{
+\flasuccess if $ b $ is valid (non-zero);
+\flainvalidblocksizevalue otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_blocksize_object() ---------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_blocksize_object( FLA_Datatype datatype, fla_blocksize_t* bp );
+\end{verbatim}
+\purpose{
+Confirm that the blocksize field associated with \datatype that resides
+within the structure pointed to by \bp is valid.
+}
+\notes{
+Similar to {\tt FLA\_Check\_blocksize\_value()}, this function only confirms
+that the blocksize value is non-zero.
+}
+\rvalue{
+\flasuccess if the blocksize field associated with \datatype is valid
+(non-zero);
+\flainvalidblocksizevalue otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_null_pointer() -------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_null_pointer( void* ptr );
+\end{verbatim}
+\purpose{
+Confirm that \ptr is not a \fnull pointer.
+}
+\rvalue{
+\flasuccess if \ptr is not \fnullns;
+\flanullpointer otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_base_buffer_mismatch() -----------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_base_buffer_mismatch( FLA_Obj A, FLA_Obj B );
+\end{verbatim}
+\purpose{
+Confirm that views $ A $ and $ B $ refer to the same underlying
+object.
+}
+\notes{
+This check is performed by comparing the addresses of the views' base
+objects.
+}
+\rvalue{
+\flasuccess if $ A $ and $ B $ refer to the same underlying object;
+\flaobjectbasebuffermismatch otherwise.
+}
+\end{flaspec}
+
+% --- FLA_Check_num_threads() --------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLA_Check_num_threads( unsigned int n_threads );
+\end{verbatim}
+\purpose{
+Confirm that \nthreads is at least one.
+}
+\notes{
+Since \nthreads is declared as an {\tt unsigned int}, the only
+invalid value that \nthreads may take on is zero.
+}
+\rvalue{
+\flasuccess if \nthreads is at least one;
+\flaencounterednonpositiventhreads otherwise.
+}
+\end{flaspec}
+
+

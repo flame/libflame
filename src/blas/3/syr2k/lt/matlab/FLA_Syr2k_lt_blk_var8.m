@@ -1,0 +1,56 @@
+
+function [ C_out ] = FLA_Syr2k_lt_blk_var8( A, B, C, nb_alg )
+
+  [ AL, AR ] = FLA_Part_1x2( A, ...
+                               0, 'FLA_RIGHT' );
+
+  [ BL, BR ] = FLA_Part_1x2( B, ...
+                               0, 'FLA_RIGHT' );
+
+  [ CTL, CTR, ...
+    CBL, CBR ] = FLA_Part_2x2( C, ...
+                               0, 0, 'FLA_BR' );
+
+  while ( size( AR, 2 ) < size( A, 2 ) )
+
+    b = min( size( AL, 2 ), nb_alg );
+
+    [ A0, A1, A2 ]= FLA_Repart_1x2_to_1x3( AL, AR, ...
+                                         b, 'FLA_LEFT' );
+
+    [ B0, B1, B2 ]= FLA_Repart_1x2_to_1x3( BL, BR, ...
+                                         b, 'FLA_LEFT' );
+
+    [ C00, C01, C02, ...
+      C10, C11, C12, ...
+      C20, C21, C22 ] = FLA_Repart_2x2_to_3x3( CTL, CTR, ...
+                                               CBL, CBR, ...
+                                               b, b, 'FLA_TL' );
+
+    %------------------------------------------------------------%
+
+    C10 = C10 + A1' * B0;
+    C10 = C10 + B1' * A0;
+    C11 = C11 + A1' * B1 + B1' * A1;
+
+    %------------------------------------------------------------%
+
+    [ AL, AR ] = FLA_Cont_with_1x3_to_1x2( A0, A1, A2, ...
+                                           'FLA_RIGHT' );
+
+    [ BL, BR ] = FLA_Cont_with_1x3_to_1x2( B0, B1, B2, ...
+                                           'FLA_RIGHT' );
+
+    [ CTL, CTR, ...
+      CBL, CBR ] = FLA_Cont_with_3x3_to_2x2( C00, C01, C02, ...
+                                             C10, C11, C12, ...
+                                             C20, C21, C22, ...
+                                             'FLA_BR' );
+
+  end
+
+  C_out = [ CTL, CTR
+            CBL, CBR ];
+
+return
+

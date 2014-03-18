@@ -1,0 +1,124 @@
+\begin{figure}[t]
+\begin{center}
+\begin{tabular}{|c|c|c|}
+\hline
+% --------------------------------------
+{\sc gemm} & {\sc symm} & {\sc syrk} \\ \hline
+% --------------------------------------
+\begin{minipage}[t]{1.5in}
+{\tiny
+\begin{verbatim}
+struct FLA_Gemm_s
+{
+    FLA_Exec           exec_type;
+    int                variant;
+    fla_blocksize_t*   blocksize;
+    struct FLA_Gemm_s* sub_gemm;
+};
+typedef struct FLA_Gemm_s fla_gemm_t;
+\end{verbatim}
+}
+\end{minipage}
+&
+\begin{minipage}[t]{1.5in}
+{\tiny
+\begin{verbatim}
+struct FLA_Symm_s
+{
+    FLA_Exec           exec_type;
+    int                variant;
+    fla_blocksize_t*   blocksize;
+    struct FLA_Symm_s* sub_symm;
+    struct FLA_Gemm_s* sub_gemm1;
+    struct FLA_Gemm_s* sub_gemm2;
+};
+typedef struct FLA_Symm_s fla_symm_t;
+\end{verbatim}
+}
+\end{minipage}
+&
+\begin{minipage}[t]{1.5in}
+{\tt \tiny
+\begin{verbatim}
+struct FLA_Syrk_s
+{
+    FLA_Exec           exec_type;
+    int                variant;
+    fla_blocksize_t*   blocksize;
+    struct FLA_Syrk_s* sub_syrk;
+    struct FLA_Gemm_s* sub_gemm;
+};
+typedef struct FLA_Syrk_s fla_syrk_t;
+\end{verbatim}
+}
+\end{minipage}
+\\
+% --------------------------------------
+ & & \\ \hline
+% --------------------------------------
+{\sc trsm} & {\sc chol} & {\sc trinv} \\ \hline
+% --------------------------------------
+\begin{minipage}[t]{1.5in}
+{\tiny
+\begin{verbatim}
+struct FLA_Trsm_s
+{
+    FLA_Exec           exec_type;
+    int                variant;
+    fla_blocksize_t*   blocksize;
+    struct FLA_Trsm_s* sub_trsm;
+    struct FLA_Gemm_s* sub_gemm;
+};
+typedef struct FLA_Trsm_s fla_trsm_t;
+\end{verbatim}
+}
+\end{minipage}
+&
+\begin{minipage}[t]{1.5in}
+{\tiny
+\begin{verbatim}
+struct FLA_Chol_s
+{
+    FLA_Exec           exec_type;
+    int                variant;
+    fla_blocksize_t*   blocksize;
+    struct FLA_Chol_s* sub_chol;
+    struct FLA_Syrk_s* sub_syrk;
+    struct FLA_Herk_s* sub_herk;
+    struct FLA_Trsm_s* sub_trsm;
+    struct FLA_Gemm_s* sub_gemm;
+};
+typedef struct FLA_Chol_s fla_chol_t;
+\end{verbatim}
+}
+\end{minipage}
+&
+\begin{minipage}[t]{1.5in}
+{\tt \tiny
+\begin{verbatim}
+struct FLA_Trinv_s
+{
+    FLA_Exec            exec_type;
+    int                 variant;
+    fla_blocksize_t*    blocksize;
+    struct FLA_Trinv_s* sub_trinv;
+    struct FLA_Gemm_s*  sub_gemm;
+    struct FLA_Trmm_s*  sub_trmm;
+    struct FLA_Trsm_s*  sub_trsm1;
+    struct FLA_Trsm_s*  sub_trsm2;
+};
+typedef struct FLA_Trinv_s fla_trinv_t;
+\end{verbatim}
+}
+\end{minipage}
+\\
+% --------------------------------------
+ & & \\ \hline
+% --------------------------------------
+\end{tabular}
+\end{center}
+\caption{
+Control tree structure definitions for various operations.
+}
+\label{fig:cntl-tree-structs}
+\end{figure}

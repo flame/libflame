@@ -1,0 +1,54 @@
+\begin{table}[th]
+\begin{center}
+\begin{tabular}{|l|l|p{3.7in}|}
+\hline
+{\bf Link type} & {\bf Component files} & {\bf Purpose} \\ \hline
+% --------------------------------------
+%statically-linked
+static
+&
+{\tt libflame-x64-r3692.lib}
+&
+The static library containing the \libflame object files.
+Link to this file when statically linking your application to \libflamens.
+\\ \hline
+% --------------------------------------
+%dynamically-linked
+dynamic
+&
+{\tt libflame-x64-r3692.dll}
+&
+The dynamic library containing the \libflame object code.
+This file is loaded into memory by the operating system at run-time
+the first time a dependent program or library references \libflame
+symbols.
+\\ \cline{2-3}
+&
+{\tt libflame-x64-r3692.lib}
+&
+The import library.
+This file contains information such as the dynamic library filename and which
+symbols are available within the dynamic library.
+The import library is used by the linker at link-time to resolve all function
+calls referenced by the application being built.
+If you plan to use a dynamic library build of \libflamens, reference this file
+when linking your application.
+\\ \cline{2-3}
+&
+{\tt libflame-x64-r3692.exp}
+&
+The export file.
+This file is necessary only when building other dynamic libraries that
+depend on a dynamic library build of \libflamens.
+\\ \hline
+% --------------------------------------
+\end{tabular}
+\end{center}
+\caption{
+The files generated when building revision r3692 of \libflame as either a static
+or dynamic library.
+The filenames reflect using ``x64'' as the architecture string when running
+\configurecmdns.
+}
+\label{fig:library-files}
+\end{table}

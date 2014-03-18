@@ -1,0 +1,54 @@
+\chapter{Collective Communication}
+\label{chapter:coll}
+
+
+\input{operations}
+
+When the nodes of a distributed-memory architecture collaborate
+to solve a given problem, inherently computation previously
+performed on a single node is now distributed among the nodes,
+and communication is performed when data is shared, or contributions from
+different nodes must be consolidated.
+Communication operations that simultaneously involve a group of nodes
+are called {\em collective communication} operations.
+In our discussions, we will assume that the group includes all nodes.
+\plapack makes heavy use of collective communication,
+so its efficient implementation is crucial to attaining 
+scalable and high performance.
+
+The most typically encountered collective communications, discussed
+in this section, fall into two categories:
+\begin{itemize}
+\item
+{\bf Data redistribution operations:}
+broadcast, scatter, gather, and allgather.
+These operations move data between processors.
+\item
+{\bf Data consolidation operations:}
+reduce(-to-one), reduce-scatter, and allreduce.
+These operations consolidate contributions from different processors
+by applying a reduction operation.
+We will only consider reduction operations that are both commutative
+and associative.
+\end{itemize}
+The operations discussed are illustrated in Fig.~\ref{fig:operations}.
+In that figure, $ x $ indicates a vector of data of length $ n $.
+For some operations, $ x $ is subdivided into subvectors
+$ x_i $, $ i = 0, \cdots, p-1 $, where $ p $ equals the number of nodes.
+A superscript is used to indicate a vector that must be reduced
+with other vectors from other nodes.  $ \sum_{j} x^{(j)} $ indicates the
+result of that reduction.
+The summation sign is used because summation is the
+most commonly encountered reduction operation.
+
+We present these collective communications as pairs of
+{\em dual} operation.  We will show later that an implementation
+of one of the dual operations can be transformed into that of the other dual
+operation by reversing the communication (and adding to or deleting
+reduction operations from the implementation).  These dual pairs are indicated
+by the groupings in Fig.~\ref{fig:operations} (separated by the thick lines):
+{broadcast and reduce(-to-one)},
+{scatter and gather}, and
+{allgather and reduce-scatter}.
+{Allreduce} is the only operation that does not have a dual
+(or it can be viewed as its own dual).

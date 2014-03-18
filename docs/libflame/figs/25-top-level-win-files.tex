@@ -1,0 +1,137 @@
+\begin{table}[htp]
+\begin{center}
+\begin{tabular}{llp{4.0in}}
+{\bf File} & {\bf Type} & {\bf Description} \\
+% --------------------------------------
+{\tt Makefile}
+&
+persistent
+&
+The top-level makefile for compiling \libflame under Microsoft Windows.
+This makefile is written for Microsoft's Program Maintenance Utility,
+\nmakens.
+It may only be run after \configurecmd is run. \\
+% --------------------------------------
+{\tt build}
+&
+persistent
+&
+This directory contains auxiliary build system files and scripts.
+These files are probably only of interest to developers of \libflamens, and
+so most users may safely ignore this directory. \\
+% --------------------------------------
+{\tt config}
+&
+build
+&
+A directory containing intermediate build files whose contents depend on
+how \libflame was configured. \\
+% --------------------------------------
+{\tt configure.cmd}
+&
+persistent
+&
+The script used to prepare the Windows build environment for compiling
+\libflamens.
+\configurecmd has multiple required arguments, which are explained when
+\configurecmd is run with no arguments (or the wrong number of arguments). \\
+% --------------------------------------
+{\tt dll}
+&
+build
+&
+A directory containing the dynamic library files created after compilation. \\
+% --------------------------------------
+{\tt gendll.cmd}
+&
+persistent
+&
+The script used to generate a dynamically-linked library and associated
+files from a list of object files.
+It is meant to be invoked by \nmake and so normal users should never need to
+invoke it manually. \\
+% --------------------------------------
+{\tt include}
+&
+build
+&
+A temporary directory containing copies of the source header files gathered
+from the top-level source directory tree. \\
+% --------------------------------------
+{\tt lib}
+&
+build
+&
+A directory containing the static library file created after compilation. \\
+% --------------------------------------
+{\tt nmake-cc.log}
+&
+build
+&
+A file capturing the standard output of the C compiler. \\
+% --------------------------------------
+{\tt nmake-fc.log}
+&
+build
+&
+A file capturing the standard output of the Fortran compiler. \\
+% --------------------------------------
+{\tt nmake-copy.log}
+&
+build
+&
+A file capturing the standard output of the {\tt copy} command line utility. \\
+% --------------------------------------
+{\tt linkargs.txt}
+&
+persistent
+&
+A list of compiler arguments used by \gendll when building a
+dynamically-linked library (DLL).
+This list includes link options, libraries, and library paths.
+For more details on what this file should contain and in what ways
+it should be customized by the user, refer to
+Section \ref{sec:running-configure-win}. \\
+% --------------------------------------
+{\tt linkargs64.txt}
+&
+persistent
+&
+Similar to {\tt linkargs.txt}, but for use when generating 64-bit
+object code.
+To use this file to generate a 64-bit DLL, simply rename this
+file to {\tt linkargs.txt} before invoking the \dll target.
+The user may also use the file contents as a reference when
+determining the compiler arguments needed to link an application
+against a static 64-bit build of \libflamens. \\
+% --------------------------------------
+{\tt obj}
+&
+build
+&
+A directory containing the object files created during compilation. \\
+% --------------------------------------
+{\tt revision}
+&
+build/persistent
+&
+A file containing the subversion revision number of the source code. \\
+% --------------------------------------
+{\tt src}
+&
+build
+&
+A temporary directory containing copies of the source code files gathered from
+the top-level source directory tree.
+% --------------------------------------
+\end{tabular}
+\end{center}
+\caption{A list of the files and directories the user can expect to find in the
+\windows build directory along with descriptions.
+Files marked ``persistent'' should always exist while files marked
+``build'' are build products created by the build system.
+This latter group of files may be safely removed by invoking the \nmake
+target \distcleanns.
+}
+\label{fig:top-level-win-files}
+\end{table}

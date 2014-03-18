@@ -1,0 +1,464 @@
+
+#include "FLAME.h"
+
+FLA_Error FLA_Tevd_v_opt_var5( dim_t n_iter_max, FLA_Obj d, FLA_Obj e, FLA_Obj G, FLA_Obj U, dim_t b_alg )
+{
+	FLA_Datatype datatype;
+	int          m_A, m_U, n_G;
+	int          n_G_extra;
+	int          inc_d;
+	int          inc_e;
+	int          rs_G, cs_G;
+	int          rs_U, cs_U;
+
+	datatype = FLA_Obj_datatype( U );
+
+	m_A       = FLA_Obj_vector_dim( d );
+	m_U       = FLA_Obj_length( U );
+	n_G       = FLA_Obj_width( G ) - n_iter_max;
+	n_G_extra = n_iter_max;
+
+	inc_d     = FLA_Obj_vector_inc( d );
+	inc_e     = FLA_Obj_vector_inc( e );
+	
+	rs_G      = FLA_Obj_row_stride( G );
+	cs_G      = FLA_Obj_col_stride( G );
+
+	rs_U      = FLA_Obj_row_stride( U );
+	cs_U      = FLA_Obj_col_stride( U );
+
+/*
+FLA_Obj de, deL, deR, deLT, deLB;
+FLA_Obj_create( FLA_DOUBLE, m_A, 2, 0, 0, &de );
+FLA_Part_1x2( de,  &deL, &deR,   1, FLA_LEFT );
+FLA_Part_2x1( deL, &deLT,
+                   &deLB,   1, FLA_BOTTOM );
+FLA_Copy( d, deR );
+FLA_Copy( e, deLT );
+FLA_Set( FLA_ZERO, deLB );
+//FLA_Obj_show( "de", de, "%21.17e", "" );
+*/
+
+	switch ( datatype )
+	{
+		case FLA_FLOAT:
+		{
+			float*    buff_d = FLA_FLOAT_PTR( d );
+			float*    buff_e = FLA_FLOAT_PTR( e );
+			scomplex* buff_G = FLA_COMPLEX_PTR( G );
+			float*    buff_U = FLA_FLOAT_PTR( U );
+
+			FLA_Tevd_v_ops_var5( m_A,
+			                     m_U,
+			                     n_G,
+			                     n_G_extra,
+			                     buff_d, inc_d,
+			                     buff_e, inc_e,
+			                     buff_G, rs_G, cs_G,
+			                     buff_U, rs_U, cs_U,
+			                     b_alg );
+
+			break;
+		}
+
+		case FLA_DOUBLE:
+		{
+			double*   buff_d = FLA_DOUBLE_PTR( d );
+			double*   buff_e = FLA_DOUBLE_PTR( e );
+			dcomplex* buff_G = FLA_DOUBLE_COMPLEX_PTR( G );
+			double*   buff_U = FLA_DOUBLE_PTR( U );
+
+			FLA_Tevd_v_opd_var5( m_A,
+			                     m_U,
+			                     n_G,
+			                     n_G_extra,
+			                     buff_d, inc_d,
+			                     buff_e, inc_e,
+			                     buff_G, rs_G, cs_G,
+			                     buff_U, rs_U, cs_U,
+			                     b_alg );
+
+			break;
+		}
+
+		case FLA_COMPLEX:
+		{
+			float*    buff_d = FLA_FLOAT_PTR( d );
+			float*    buff_e = FLA_FLOAT_PTR( e );
+			scomplex* buff_G = FLA_COMPLEX_PTR( G );
+			scomplex* buff_U = FLA_COMPLEX_PTR( U );
+
+			FLA_Tevd_v_opc_var5( m_A,
+			                     m_U,
+			                     n_G,
+			                     n_G_extra,
+			                     buff_d, inc_d,
+			                     buff_e, inc_e,
+			                     buff_G, rs_G, cs_G,
+			                     buff_U, rs_U, cs_U,
+			                     b_alg );
+
+			break;
+		}
+
+		case FLA_DOUBLE_COMPLEX:
+		{
+			double*   buff_d = FLA_DOUBLE_PTR( d );
+			double*   buff_e = FLA_DOUBLE_PTR( e );
+			dcomplex* buff_G = FLA_DOUBLE_COMPLEX_PTR( G );
+			dcomplex* buff_U = FLA_DOUBLE_COMPLEX_PTR( U );
+
+			FLA_Tevd_v_opz_var5( m_A,
+			                     m_U,
+			                     n_G,
+			                     n_G_extra,
+			                     buff_d, inc_d,
+			                     buff_e, inc_e,
+			                     buff_G, rs_G, cs_G,
+			                     buff_U, rs_U, cs_U,
+			                     b_alg );
+
+			break;
+		}
+	}
+/*
+FLA_Copy( d, deR );
+FLA_Copy( e, deLT );
+FLA_Set( FLA_ZERO, deLB );
+FLA_Sort( FLA_FORWARD, deR );
+FLA_Obj_show( "de after", de, "%21.17e", "" );
+double eps   = FLA_Mach_params_opd( FLA_MACH_EPS );
+printf( "epsilon = %21.17e\n", eps );
+FLA_Obj_free( &de );
+*/
+	return FLA_SUCCESS;
+}
+
+
+
+FLA_Error FLA_Tevd_v_ops_var5( int       m_A,
+                               int       m_U,
+                               int       n_G,
+                               int       n_G_extra,
+                               float*    buff_d, int inc_d, 
+                               float*    buff_e, int inc_e,
+                               scomplex* buff_G, int rs_G, int cs_G,
+                               float*    buff_U, int rs_U, int cs_U,
+                               int       b_alg )
+{
+	return FLA_SUCCESS;
+}
+
+
+
+FLA_Error FLA_Tevd_v_opd_var5( int       m_A,
+                               int       m_U,
+                               int       n_G,
+                               int       n_G_extra,
+                               double*   buff_d, int inc_d, 
+                               double*   buff_e, int inc_e,
+                               dcomplex* buff_G, int rs_G, int cs_G,
+                               double*   buff_U, int rs_U, int cs_U,
+                               int       b_alg )
+{
+	return FLA_SUCCESS;
+}
+
+FLA_Error FLA_Tevd_v_opc_var5( int       m_A,
+                               int       m_U,
+                               int       n_G,
+                               int       n_G_extra,
+                               float*    buff_d, int inc_d, 
+                               float*    buff_e, int inc_e,
+                               scomplex* buff_G, int rs_G, int cs_G,
+                               scomplex* buff_U, int rs_U, int cs_U,
+                               int       b_alg )
+{
+	return FLA_SUCCESS;
+}
+
+//#define PRINTF
+
+FLA_Error FLA_Tevd_v_opz_var5( int       m_A,
+                               int       m_U,
+                               int       n_G,
+                               int       n_G_extra,
+                               double*   buff_d, int inc_d, 
+                               double*   buff_e, int inc_e,
+                               dcomplex* buff_G, int rs_G, int cs_G,
+                               dcomplex* buff_U, int rs_U, int cs_U,
+                               int       b_alg )
+{
+	dcomplex  one        = bl1_z1();
+	double    rone       = bl1_d1();
+	double    rzero      = bl1_d0();
+	int       n_iter_max = n_G_extra;
+
+	double    eps;
+	double    eps2;
+	double    safmin;
+	double    ssfmin;
+	double    safmax;
+	double    ssfmax;
+	double    norm;
+
+	dcomplex* G;
+	double*   d1;
+	double*   e1;
+	int       done;
+	int       m_G_sweep_max;
+	int       ij_begin;
+	int       ijTL, ijBR;
+	int       m_A11;
+	int       n_iter_perf;
+	int       n_U_apply;
+	int       total_deflations;
+	int       n_deflations;
+	int       n_iter_prev;
+
+	// Initialize some numerical constants.
+	eps    = FLA_Mach_params_opd( FLA_MACH_EPS );
+	eps2   = FLA_Mach_params_opd( FLA_MACH_EPS2 );
+	safmin = FLA_Mach_params_opd( FLA_MACH_SFMIN );
+	safmax = rone / safmin;
+	ssfmax = sqrt( safmax ) / 3.0;
+	ssfmin = sqrt( safmin ) / eps2;
+
+	// Initialize our completion flag.
+	done = FALSE;
+
+	// Initialize a counter that holds the maximum number of rows of G
+	// that we would need to initialize for the next sweep.
+	m_G_sweep_max = m_A - 1;
+
+	// Initialize a counter for the total number of iterations performed.
+	n_iter_prev = 0;
+
+	// Iterate until the matrix has completely deflated.
+	for ( total_deflations = 0; done != TRUE; )
+	{
+
+		// Initialize G to contain only identity rotations.
+		bl1_zsetm( m_G_sweep_max,
+		           n_G + n_iter_max,
+		           &one,
+		           buff_G, rs_G, cs_G );
+
+		// Perform a recursive tridiagonal decomposition on each submatrix
+		// that falls between zeroes (or endpoints) along the subdiagonal.
+		// During the first time through, ijTL will be 0 and ijBR will be
+		// m_A - 1.
+		for ( ij_begin = 0; ij_begin < m_A; )
+		{
+
+#ifdef PRINTF
+if ( ij_begin == 0 )
+printf( "FLA_Tevd_v_opz_var5: beginning new sweep (ij_begin = %d)\n", ij_begin );
+#endif
+
+			// Search for the first non-zero subdiagonal element.
+			for ( ijTL = ij_begin; ijTL < m_A - 1; ++ijTL )
+			{
+				double* d1 = buff_d + (ijTL  )*inc_d;
+				double* d2 = buff_d + (ijTL+1)*inc_d;
+				double* e1 = buff_e + (ijTL  )*inc_e;
+				double  tst = fabs( *e1 );
+
+				if ( tst != rzero )
+				if ( tst <= sqrt( fabs( *d1 ) ) * sqrt( fabs( *d2 ) ) * eps )
+				//if ( tst*tst <= fabs( *d1 ) * fabs( *d2 ) * eps2 )
+				{
+#ifdef PRINTF
+printf( "FLA_Tevd_v_opz_var5: nudging nonzero e[%d] to zero.\n", ijTL );
+printf( "                     d1    = %22.19e\n", *d1 );
+printf( "                     e1 d2 = %22.19e %22.19e\n", *e1, *d2 );
+#endif
+					*e1 = rzero;
+				}
+
+				if ( buff_e[ (ijTL)*inc_e ] != rzero )
+				{
+#ifdef PRINTF
+printf( "FLA_Tevd_v_opz_var5: found nonzero e[%d] = %24.22f\n", ijTL, buff_e[ (ijTL)*inc_e ] );
+printf( "                                  (e[%d] = %22.19e)\n", ijTL, buff_e[ (ijTL)*inc_e ] );
+#endif
+					break;
+				}
+			}
+
+			// If we didn't find any non-zeros, then we are done with this
+			// sweep of subproblems.
+			if ( ijTL == m_A - 1 )
+			{
+#ifdef PRINTF
+printf( "FLA_Tevd_v_opz_var5: done with current sweep.\n" );
+#endif
+
+				// If we started our search from the first element of the
+				// subdiagonal and didn't find any zeroes, then we must be
+				// done.
+				if ( ij_begin == 0 )
+				{
+#ifdef PRINTF
+printf( "FLA_Tevd_v_opz_var5: subdiagonal is completely zero.\n" );
+printf( "FLA_Tevd_v_opz_var5: all done!\n" );
+#endif
+					done = TRUE;
+				}
+
+				break;
+			}
+
+			// Search for the first zero subdiagonal element after ijTL.
+			// Once we find this element (ijBR) of the subdiagonal, this
+			// corresponds to the adjacent element of d, d[ijBR], that is
+			// non-zero.
+			for ( ijBR = ijTL; ijBR < m_A - 1; ++ijBR )
+			{
+				double* d1 = buff_d + (ijBR  )*inc_d;
+				double* d2 = buff_d + (ijBR+1)*inc_d;
+				double* e1 = buff_e + (ijBR  )*inc_e;
+				double  tst = fabs( *e1 );
+
+				if ( tst != rzero )
+				if ( tst <= sqrt( fabs( *d1 ) ) * sqrt( fabs( *d2 ) ) * eps )
+				//if ( tst*tst <= fabs( *d1 ) * fabs( *d2 ) * eps2 )
+				{
+#ifdef PRINTF
+printf( "FLA_Tevd_v_opz_var5: nudging nonzero e[%d] to zero.\n", ijBR );
+printf( "                     d1    = %22.19e\n", *d1 );
+printf( "                     e1 d2 = %22.19e %22.19e\n", *e1, *d2 );
+#endif
+					*e1 = rzero;
+				}
+
+				if ( buff_e[ (ijBR)*inc_e ] == rzero )
+				{
+#ifdef PRINTF
+printf( "FLA_Tevd_v_opz_var5: found zero e[%d] = %24.22f\n", ijBR, buff_e[ (ijBR)*inc_e ] );
+#endif
+					break;
+				}
+			}
+
+			// At this point, ijTL and ijBR refer to the indices of the first
+			// and last diagonal elements, respectively, of the current
+			// tridiagonal submatrix.
+
+			// Determine the dimension of the submatrix that was just
+			// partitioned.
+			m_A11 = ijBR - ijTL + 1;
+
+#ifdef PRINTF
+printf( "FLA_Tevd_v_opz_var5: ij_begin = %d\n", ij_begin );
+printf( "FLA_Tevd_v_opz_var5: ijTL     = %d\n", ijTL );
+printf( "FLA_Tevd_v_opz_var5: ijBR     = %d\n", ijBR );
+printf( "FLA_Tevd_v_opz_var5: m_A11    = %d\n", m_A11 );
+#endif
+
+			// Adjust ij_begin, which gets us ready for the next subproblem, if
+			// there is one.
+			ij_begin = ijBR + 1;
+
+			// Index to the submatrices upon which we will operate.
+			d1 = buff_d + ijTL * inc_d;
+			e1 = buff_e + ijTL * inc_e;
+			G  = buff_G + ijTL * rs_G;
+
+			// Compute the 1-norm (which equals the infinity norm since the
+			// matrix is tridiagonal and symmetric) and perform appropriate
+			// scaling if necessary.
+/*
+			FLA_Norm1_tridiag( m_A11,
+			                   d1, inc_d,
+			                   e1, inc_e,
+			                   &norm );
+*/	
+
+			// Search for a batch of eigenvalues, recursing on deflated
+			// subproblems whenever possible. A new eigenvalue search is
+			// performed as long as
+			//   (a) there is still matrix left to operate on, and
+			//   (b) the number of iterations performed in this batch is
+			//       less than n_G.
+			// If/when either of the two above conditions fails to hold,
+			// the function returns.
+			n_deflations = FLA_Tevd_v_opd_var3r( m_A11,
+			                                     n_G,
+			                                     n_iter_max,
+			                                     ijTL,
+			                                     d1, inc_d,
+			                                     e1, inc_e,
+			                                     G,  rs_G, cs_G,
+			                                     &n_iter_perf );
+
+			// Record the number of deflations that occurred.
+			total_deflations += n_deflations;
+
+#ifdef PRINTF
+printf( "FLA_Tevd_v_opz_var5: deflations occurred       = %d\n", n_deflations );
+printf( "FLA_Tevd_v_opz_var5: total deflations occurred = %d\n", total_deflations );
+printf( "FLA_Tevd_v_opz_var5: num iterations            = %d\n", n_iter_perf );
+#endif
+
+
+#ifdef PRINTF
+printf( "FLA_Tevd_v_opz_var5: applying %d sets of Givens rotations\n", n_iter_perf );
+printf( "FLA_Tevd_v_opz_var5: column range: %d to %d (%d columns)\n", ijTL, ijBR, m_A11 );
+#endif
+			// Store the most recent value of ijBR in m_G_sweep_max.
+			// When the sweep is done, this value will contain the minimum
+			// number of rows of G we can apply and safely include all
+			// non-identity rotations that were computed during the
+			// eigenvalue searches.
+			m_G_sweep_max = ijBR;
+
+			// Recall that the number of columns of U to which we apply
+			// rotations is one more than the number of rotations.
+			n_U_apply = m_G_sweep_max + 1;
+
+			// Apply the Givens rotations that were computed as part of
+			// the previous batch of iterations.
+			FLA_Apply_G_rf_blz_var5( n_iter_perf,
+			                         m_U,
+			                         n_U_apply,
+			                         buff_G, rs_G, cs_G,
+			                         buff_U, rs_U, cs_U,
+			                         b_alg );
+
+			// Increment the total number of iterations previously performed.
+			n_iter_prev += n_iter_perf;
+
+#ifdef PRINTF
+printf( "FLA_Tevd_v_opz_var5: total number of iterations performed: %d\n", n_iter_prev );
+#endif
+
+			if ( n_iter_prev >= m_A * n_iter_max )
+			{
+#ifdef PRINTF
+printf( "FLA_Tevd_v_opz_var5: reached maximum total number of iterations: %d\n", n_iter_prev );
+#endif
+				FLA_Abort();
+			}
+/*
+if ( n_iter_prev >= 223 )
+{
+int j;
+int m = n_U_apply - 1;
+
+for ( j = 0; j < m; ++j )
+{
+printf( "g[%3d] = %30.23e, %30.23e \n", j, buff_G[j*rs_G].real, buff_G[j*rs_G].imag );
+//if ( j % n == 0 ) printf( "\n" );
+}
+printf( "n_G_apply = %d\n", m );
+
+return FLA_SUCCESS;
+}
+*/
+		}
+	}
+
+	return FLA_SUCCESS;
+}
+

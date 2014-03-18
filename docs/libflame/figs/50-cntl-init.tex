@@ -1,0 +1,223 @@
+\begin{figure}[tbp]
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+% --------------------------------------
+{\sc gemm} with hierarchical storage  & {\sc syrk} with hierarchical storage \\ \hline
+% --------------------------------------
+\begin{minipage}[t]{3in}
+{\tiny
+\begin{verbatim}
+#include "FLAME.h"
+
+fla_gemm_t*      flash_gemm_cntl_blas;
+fla_gemm_t*      flash_gemm_cntl_mm_op;
+fla_gemm_t*      flash_gemm_cntl_mp_pb;
+fla_gemm_t*      flash_gemm_cntl_pm_bp;
+fla_gemm_t*      flash_gemm_cntl_op_bp;
+fla_gemm_t*      flash_gemm_cntl_pb_bb;
+fla_gemm_t*      flash_gemm_cntl_bp_bb;
+fla_blocksize_t* flash_gemm_bsize;
+
+void FLASH_Gemm_cntl_init()
+{
+    // Set gemm blocksize based on hierarchical storage.
+    flash_gemm_bsize      = FLA_Blocksize_create( 1, 1, 1, 1 );
+
+    // Create a control tree node that executes a gemm subproblem.
+    flash_gemm_cntl_blas  = FLA_Cntl_gemm_obj_create( FLA_EXECUTE_DREF,
+                                                      FLA_UNBLOCKED_EXTERN,
+                                                      NULL,
+                                                      NULL );
+
+    // Create control trees for situations where one dimension is large.
+    flash_gemm_cntl_pb_bb = FLA_Cntl_gemm_obj_create( FLA_EXECUTE_ONLY,
+                                                      FLA_BLOCKED_VARIANT1,
+                                                      flash_gemm_bsize,
+                                                      flash_gemm_cntl_blas );
+    flash_gemm_cntl_bp_bb = FLA_Cntl_gemm_obj_create( FLA_EXECUTE_ONLY,
+                                                      FLA_BLOCKED_VARIANT3,
+                                                      flash_gemm_bsize,
+                                                      flash_gemm_cntl_blas );
+
+    // Create control trees for situations where two dimensions are large.
+    flash_gemm_cntl_op_bp = FLA_Cntl_gemm_obj_create( FLA_EXECUTE_ONLY,
+                                                      FLA_BLOCKED_VARIANT1,
+                                                      flash_gemm_bsize,
+                                                      flash_gemm_cntl_bp_bb );
+    flash_gemm_cntl_mp_pb = FLA_Cntl_gemm_obj_create( FLA_EXECUTE_ONLY,
+                                                      FLA_BLOCKED_VARIANT5,
+                                                      flash_gemm_bsize,
+                                                      flash_gemm_cntl_pb_bb );
+    flash_gemm_cntl_pm_bp = FLA_Cntl_gemm_obj_create( FLA_EXECUTE_ONLY,
+                                                      FLA_BLOCKED_VARIANT5,
+                                                      flash_gemm_bsize,
+                                                      flash_gemm_cntl_bp_bb );
+
+    // Create control trees for situations where all dimensions are large.
+    flash_gemm_cntl_mm_op = FLA_Cntl_gemm_obj_create( FLA_EXECUTE_ONLY,
+                                                      FLA_BLOCKED_VARIANT5,
+                                                      flash_gemm_bsize,
+                                                      flash_gemm_cntl_op_bp );
+}
+\end{verbatim}
+}
+\end{minipage}
+&
+\begin{minipage}[t]{3in}
+{\tt \tiny
+\begin{verbatim}
+#include "FLAME.h"
+
+extern fla_gemm_t* flash_gemm_cntl_pb_bb;
+
+fla_syrk_t*        flash_syrk_cntl_blas;
+fla_syrk_t*        flash_syrk_cntl_ip;
+fla_syrk_t*        flash_syrk_cntl_op;
+fla_syrk_t*        flash_syrk_cntl_sq;
+fla_blocksize_t*   flash_syrk_bsize;
+
+void FLASH_Syrk_cntl_init()
+{
+    // Set syrk blocksize based on hierarchical storage.
+    flash_syrk_bsize      = FLA_Blocksize_create( 1, 1, 1, 1 );
+
+    // Create a control tree that assumes A is a b x b block.
+    flash_syrk_cntl_blas  = FLA_Cntl_syrk_obj_create( FLA_EXECUTE_DREF,
+                                                      FLA_UNBLOCKED_EXTERN,
+                                                      NULL,
+                                                      NULL,
+                                                      NULL );
+
+    // Create a control tree that assumes A * A' forms an inner panel product.
+    flash_syrk_cntl_ip    = FLA_Cntl_syrk_obj_create( FLA_EXECUTE_ONLY,
+                                                      FLA_BLOCKED_VARIANT5,
+                                                      flash_syrk_bsize,
+                                                      flash_syrk_cntl_blas,
+                                                      NULL );
+
+    // Create a control tree that assumes A * A' forms an outer panel product.
+    flash_syrk_cntl_op    = FLA_Cntl_syrk_obj_create( FLA_EXECUTE_ONLY,
+                                                      FLA_BLOCKED_VARIANT2,
+                                                      flash_syrk_bsize,
+                                                      flash_syrk_cntl_blas,
+                                                      flash_gemm_cntl_pb_bb );
+
+    // Create a control tree that assumes A is large.
+    flash_syrk_cntl_sq    = FLA_Cntl_syrk_obj_create( FLA_EXECUTE_ONLY,
+                                                      FLA_BLOCKED_VARIANT5,
+                                                      flash_syrk_bsize,
+                                                      flash_syrk_cntl_op,
+                                                      NULL );
+}
+\end{verbatim}
+}
+\end{minipage}
+\\
+% --------------------------------------
+ & \\ \hline
+% --------------------------------------
+{\sc trsm} with hierarchical storage & {\sc chol} with hierarchical storage \\ \hline
+% --------------------------------------
+\begin{minipage}[t]{3in}
+{\tiny
+\begin{verbatim}
+#include "FLAME.h"
+
+extern fla_gemm_t* flash_gemm_cntl_op_bp;
+
+fla_trsm_t*        flash_trsm_cntl_blas;
+fla_trsm_t*        flash_trsm_cntl_bp;
+fla_trsm_t*        flash_trsm_cntl_mp;
+fla_trsm_t*        flash_trsm_cntl_mm;
+fla_blocksize_t*   flash_trsm_bsize;
+
+void FLASH_Trsm_cntl_init()
+{
+    // Set trsm blocksize based on hierarchical storage.
+    flash_trsm_bsize      = FLA_Blocksize_create( 1, 1, 1, 1 );
+
+    // Create a control tree that assumes A and B are b x b blocks.
+    flash_trsm_cntl_blas  = FLA_Cntl_trsm_obj_create( FLA_EXECUTE_DREF,
+                                                      FLA_UNBLOCKED_EXTERN,
+                                                      NULL,
+                                                      NULL,
+                                                      NULL );
+
+    // Create a control tree that assumes A is a block and B is a panel.
+    flash_trsm_cntl_bp    = FLA_Cntl_trsm_obj_create( FLA_EXECUTE_ONLY,
+                                                      FLA_BLOCKED_VARIANT3,
+                                                      flash_trsm_bsize,
+                                                      flash_trsm_cntl_blas,
+                                                      NULL );
+
+    // Create a control tree that assumes A is large and B is a panel.
+    flash_trsm_cntl_mp    = FLA_Cntl_trsm_obj_create( FLA_EXECUTE_ONLY,
+                                                      FLA_BLOCKED_VARIANT2,
+                                                      flash_trsm_bsize,
+                                                      flash_trsm_cntl_blas,
+                                                      flash_gemm_cntl_op_bp );
+
+    // Create a control tree that assumes A and B are both large.
+    flash_trsm_cntl_mm    = FLA_Cntl_trsm_obj_create( FLA_EXECUTE_ONLY,
+                                                      FLA_BLOCKED_VARIANT3,
+                                                      flash_trsm_bsize,
+                                                      flash_trsm_cntl_mp,
+                                                      NULL );
+}
+\end{verbatim}
+}
+\end{minipage}
+&
+\begin{minipage}[t]{3in}
+{\tt \tiny
+\begin{verbatim}
+#include "FLAME.h"
+
+extern fla_herk_t* flash_herk_cntl_op;
+extern fla_syrk_t* flash_syrk_cntl_op;
+extern fla_trsm_t* flash_trsm_cntl_bp;
+
+fla_chol_t*        flash_chol_cntl_lapack;
+fla_chol_t*        flash_chol_cntl;
+fla_blocksize_t*   flash_chol_bsize;
+
+void FLASH_Chol_cntl_init()
+{
+    // Set blocksize based on hierarchical storage.
+    flash_chol_bsize       = FLA_Blocksize_create( 1, 1, 1, 1 );
+
+    // Create a control tree that assumes A is a b x b block.
+    flash_chol_cntl_lapack = FLA_Cntl_chol_obj_create( FLA_EXECUTE_DREF,
+                                                       FLA_UNBLOCKED_EXTERN,
+                                                       NULL,
+                                                       NULL,
+                                                       NULL,
+                                                       NULL,
+                                                       NULL,
+                                                       NULL );
+
+    // Create a control tree that assumes A is large.
+    flash_chol_cntl        = FLA_Cntl_chol_obj_create( FLA_EXECUTE_ONLY,
+                                                       FLA_BLOCKED_VARIANT3,
+                                                       flash_chol_bsize,
+                                                       flash_chol_cntl_lapack,
+                                                       flash_syrk_cntl_op,
+                                                       flash_herk_cntl_op,
+                                                       flash_trsm_cntl_bp,
+                                                       NULL );
+}
+\end{verbatim}
+}
+\end{minipage}
+\\
+% --------------------------------------
+ & \\ \hline
+% --------------------------------------
+\end{tabular}
+\end{center}
+\caption{
+Control tree initialization subroutines for various operations.
+}
+\label{fig:cntl-init}
+\end{figure}

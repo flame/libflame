@@ -1,0 +1,76 @@
+\begin{table}
+\begin{center}
+\begin{tabular}{lp{5.0in}}
+{\bf Target} & {\bf Function} \\
+% --------------------------------------
+{\tt all}
+&
+Invoke the \lib target. \\
+% --------------------------------------
+{\tt lib}
+&
+Build \libflame as a static library. \\
+% --------------------------------------
+{\tt dll}
+&
+Build \libflame as a dynamically-linked library. \\
+% --------------------------------------
+{\tt install}
+&
+Invoke the \installlib and \installheaders targets. \\
+% --------------------------------------
+{\tt install-lib}
+&
+Invoke the \lib target and then copy the library file to the \lib
+subdirectory of the \libflame install path specified in the \makefilens. \\
+% --------------------------------------
+{\tt install-dll}
+&
+Invoke the \dll target and then copy the library files to the \dll
+subdirectory of the \libflame install path specified in the \makefilens. \\
+% --------------------------------------
+{\tt install-headers}
+&
+Copy the \libflame header files to the install path specified in
+\makefilens. \\
+% --------------------------------------
+{\tt help}
+&
+Output help and usage information. \\
+%% --------------------------------------
+{\tt clean}
+&
+Invoke \cleanlog and \cleanbuild targets. \\
+% --------------------------------------
+{\tt clean-log}
+&
+Remove any log files present. \\
+% --------------------------------------
+{\tt clean-config}
+&
+Remove all products of \configurecmdns.
+Namely, remove the \configns, \includens, and \src directories.
+Note that invoking the {\tt clean-config} target will require the user to run
+\configurecmd again before being able to run any other \nmake target. \\
+% --------------------------------------
+{\tt clean-build}
+&
+Remove all products of the compilation portion of the build process.
+Namely, remove the \objns, \libns, and \dll directories. \\
+% --------------------------------------
+{\tt distclean}
+&
+Invoke \cleanlogns, \cleanconfigns, and \cleanbuild targets. \\
+% --------------------------------------
+\end{tabular}
+\end{center}
+\caption{A list of useful \nmake targets defined in the
+\makefile for building \libflame for Windows.
+Note that not all targets guarantee that action will take place.
+Most targets will not fire if \nmake determines that the target is already
+up-to-date.
+For example, invoking the \cleanbuild target will not remove any object files
+if they do not exist.
+}
+\label{fig:nmake-targets}
+\end{table}

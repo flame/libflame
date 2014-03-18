@@ -1,0 +1,156 @@
+\begin{figure}[tbp]
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+% --------------------------------------
+libflame & LAPACK \\ \hline
+% --------------------------------------
+% & \\
+% --------------------------------------
+\begin{minipage}[t]{3in}
+{\tiny
+\begin{verbatim}
+FLA_Error FLA_Chol_l_blk_var2( FLA_Obj A, dim_t nb_alg )
+{
+  FLA_Obj ATL,   ATR,      A00, A01, A02,
+          ABL,   ABR,      A10, A11, A12,
+                           A20, A21, A22;
+  dim_t b;
+  int value;
+
+  FLA_Part_2x2( A,    &ATL, &ATR,
+                      &ABL, &ABR,     0, 0, FLA_TL );
+
+  while ( FLA_Obj_length( ATL ) < FLA_Obj_length( A ) )
+  {
+    b = min( FLA_Obj_length( ABR ), nb_alg );
+
+    FLA_Repart_2x2_to_3x3( ATL, /**/ ATR,       &A00, /**/ &A01, &A02,
+                        /* ************* */   /* ******************** */
+                                                &A10, /**/ &A11, &A12,
+                           ABL, /**/ ABR,       &A20, /**/ &A21, &A22,
+                           b, b, FLA_BR );
+
+    /* ---------------------------------------------------------------- */
+
+    FLA_Syrk( FLA_LOWER_TRIANGULAR, FLA_NO_TRANSPOSE, 
+              FLA_MINUS_ONE, A10, FLA_ONE, A11 );
+
+    FLA_Gemm( FLA_NO_TRANSPOSE, FLA_TRANSPOSE, 
+              FLA_MINUS_ONE, A20, A10, FLA_ONE, A21 );
+
+    value = FLA_Chol_unb_external( FLA_LOWER_TRIANGULAR, A11 );
+
+    if ( value != FLA_SUCCESS )
+      return ( FLA_Obj_length( A00 ) + value );
+
+    FLA_Trsm( FLA_RIGHT, FLA_LOWER_TRIANGULAR, 
+              FLA_TRANSPOSE, FLA_NONUNIT_DIAG, 
+              FLA_ONE, A11, A21 );
+
+    /* ---------------------------------------------------------------- */
+
+    FLA_Cont_with_3x3_to_2x2( &ATL, /**/ &ATR,       A00, A01, /**/ A02,
+                                                     A10, A11, /**/ A12,
+                            /* ************** */  /* ****************** */
+                              &ABL, /**/ &ABR,       A20, A21, /**/ A22,
+                              FLA_TL );
+  }
+
+  return value;
+}
+\end{verbatim}
+}
+\end{minipage}
+&
+\begin{minipage}[t]{3in}
+{\tt \tiny
+\begin{verbatim}
+      SUBROUTINE DPOTRF( UPLO, N, A, LDA, INFO )
+
+      CHARACTER          UPLO
+      INTEGER            INFO, LDA, N
+      DOUBLE PRECISION   A( LDA, * )
+
+      DOUBLE PRECISION   ONE
+      PARAMETER          ( ONE = 1.0D+0 )
+      LOGICAL            UPPER
+      INTEGER            J, JB, NB
+      LOGICAL            LSAME
+      INTEGER            ILAENV
+      EXTERNAL           LSAME, ILAENV
+      EXTERNAL           DGEMM, DPOTF2, DSYRK, DTRSM, XERBLA
+      INTRINSIC          MAX, MIN
+
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+      IF( .NOT.UPPER .AND. .NOT.LSAME( UPLO, 'L' ) ) THEN
+         INFO = -1
+      ELSE IF( N.LT.0 ) THEN
+         INFO = -2
+      ELSE IF( LDA.LT.MAX( 1, N ) ) THEN
+         INFO = -4
+      END IF
+      IF( INFO.NE.0 ) THEN
+         CALL XERBLA( 'DPOTRF', -INFO )
+         RETURN
+      END IF
+
+      INFO = 0
+      UPPER = LSAME( UPLO, 'U' )
+
+      IF( N.EQ.0 )
+     $   RETURN
+
+      NB = ILAENV( 1, 'DPOTRF', UPLO, N, -1, -1, -1 )
+      IF( NB.LE.1 .OR. NB.GE.N ) THEN
+         CALL DPOTF2( UPLO, N, A, LDA, INFO )
+      ELSE
+         IF( UPPER ) THEN    
+*********** Upper triangular case omited for purposes of fair comparison.
+         ELSE
+            DO 20 J = 1, N, NB
+               JB = MIN( NB, N-J+1 )
+               CALL DSYRK( 'Lower', 'No transpose', JB, J-1, -ONE,
+     $                     A( J, 1 ), LDA, ONE, A( J, J ), LDA )
+               CALL DPOTF2( 'Lower', JB, A( J, J ), LDA, INFO )
+               IF( INFO.NE.0 )
+     $            GO TO 30
+               IF( J+JB.LE.N ) THEN
+                  CALL DGEMM( 'No transpose', 'Transpose', N-J-JB+1, JB,
+     $                        J-1, -ONE, A( J+JB, 1 ), LDA, A( J, 1 ),
+     $                        LDA, ONE, A( J+JB, J ), LDA )
+                  CALL DTRSM( 'Right', 'Lower', 'Transpose', 'Non-unit',
+     $                        N-J-JB+1, JB, ONE, A( J, J ), LDA,
+     $                        A( J+JB, J ), LDA )
+               END IF
+   20       CONTINUE
+         END IF
+      END IF
+      GO TO 40
+   30 CONTINUE
+      INFO = INFO + J - 1
+   40 CONTINUE
+      RETURN
+      END
+\end{verbatim}
+}
+\end{minipage}
+\\
+% --------------------------------------
+ & \\ \hline
+% --------------------------------------
+\end{tabular}
+\end{center}
+\caption{
+%The algorithm shown in Figure \ref{fig:chol-alg} implemented with
+%FLAME/C code (left), representing the
+%style of coding found in libflame, and Fortran-77 code (right)
+%obtained from LAPACK. 
+The algorithm shown in Figure \ref{fig:chol-alg} implemented with
+FLAME/C code (left) and Fortran-77 code (right).
+The FLAME/C code represents the style of coding found in libflame
+while the Fortran-77 code was obtained from LAPACK.
+}
+\label{fig:flame-lapack-code}
+\end{figure}

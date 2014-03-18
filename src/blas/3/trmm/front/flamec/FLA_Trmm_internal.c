@@ -1,0 +1,100 @@
+
+#include "FLAME.h"
+
+extern fla_trmm_t* flash_trmm_cntl_blas;
+extern fla_trmm_t* flash_trmm_cntl_mm;
+
+FLA_Error FLA_Trmm_internal( FLA_Side side, FLA_Uplo uplo, FLA_Trans transa, FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, fla_trmm_t* cntl )
+{
+	FLA_Error r_val = FLA_SUCCESS;
+
+	if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING )
+		FLA_Trmm_internal_check( side, uplo, transa, diag, alpha, A, B, cntl );
+
+	if      ( FLA_Cntl_matrix_type( cntl ) == FLA_HIER &&
+	          FLA_Obj_elemtype( A ) == FLA_MATRIX &&
+	          FLA_Cntl_variant( cntl ) == FLA_SUBPROBLEM )
+	{
+		// Recurse
+		r_val = FLA_Trmm_internal( side,
+		                           uplo,
+		                           transa,
+		                           diag,
+		                           alpha,
+		                           *FLASH_OBJ_PTR_AT( A ),
+		                           *FLASH_OBJ_PTR_AT( B ),
+		                           flash_trmm_cntl_mm );
+	}
+	else if ( FLA_Cntl_matrix_type( cntl ) == FLA_HIER &&
+	          FLA_Obj_elemtype( A ) == FLA_SCALAR &&
+	          FLASH_Queue_get_enabled( ) )
+	{
+		// Enqueue
+		ENQUEUE_FLASH_Trmm( side, uplo, transa, diag, alpha, A, B, cntl );
+	}
+	else
+	{
+		if ( FLA_Cntl_matrix_type( cntl ) == FLA_HIER &&
+		     FLA_Obj_elemtype( A ) == FLA_SCALAR &&
+		     !FLASH_Queue_get_enabled( ) )
+		{
+			// Execute leaf
+			cntl = flash_trmm_cntl_blas;
+		}
+
+		// Parameter combinations
+		if      ( side == FLA_LEFT )
+		{
+			if      ( uplo == FLA_LOWER_TRIANGULAR )
+			{
+				if      ( transa == FLA_NO_TRANSPOSE )
+					r_val = FLA_Trmm_lln( diag, alpha, A, B, cntl );
+				else if ( transa == FLA_TRANSPOSE )
+					r_val = FLA_Trmm_llt( diag, alpha, A, B, cntl );
+				else if ( transa == FLA_CONJ_NO_TRANSPOSE )
+					r_val = FLA_Trmm_llc( diag, alpha, A, B, cntl );
+				else if ( transa == FLA_CONJ_TRANSPOSE )
+					r_val = FLA_Trmm_llh( diag, alpha, A, B, cntl );
+			}
+			else if ( uplo == FLA_UPPER_TRIANGULAR )
+			{
+				if      ( transa == FLA_NO_TRANSPOSE )
+					r_val = FLA_Trmm_lun( diag, alpha, A, B, cntl );
+				else if ( transa == FLA_TRANSPOSE )
+					r_val = FLA_Trmm_lut( diag, alpha, A, B, cntl );
+				else if ( transa == FLA_CONJ_NO_TRANSPOSE )
+					r_val = FLA_Trmm_luc( diag, alpha, A, B, cntl );
+				else if ( transa == FLA_CONJ_TRANSPOSE )
+					r_val = FLA_Trmm_luh( diag, alpha, A, B, cntl );
+			}
+		}
+		else if ( side == FLA_RIGHT )
+		{
+			if      ( uplo == FLA_LOWER_TRIANGULAR )
+			{
+				if      ( transa == FLA_NO_TRANSPOSE )
+					r_val = FLA_Trmm_rln( diag, alpha, A, B, cntl );
+				else if ( transa == FLA_TRANSPOSE )
+					r_val = FLA_Trmm_rlt( diag, alpha, A, B, cntl );
+				else if ( transa == FLA_CONJ_NO_TRANSPOSE )
+					r_val = FLA_Trmm_rlc( diag, alpha, A, B, cntl );
+				else if ( transa == FLA_CONJ_TRANSPOSE )
+					r_val = FLA_Trmm_rlh( diag, alpha, A, B, cntl );
+			}
+			else if ( uplo == FLA_UPPER_TRIANGULAR )
+			{
+				if      ( transa == FLA_NO_TRANSPOSE )
+					r_val = FLA_Trmm_run( diag, alpha, A, B, cntl );
+				else if ( transa == FLA_TRANSPOSE )
+					r_val = FLA_Trmm_rut( diag, alpha, A, B, cntl );
+				else if ( transa == FLA_CONJ_NO_TRANSPOSE )
+					r_val = FLA_Trmm_ruc( diag, alpha, A, B, cntl );
+				else if ( transa == FLA_CONJ_TRANSPOSE )
+					r_val = FLA_Trmm_ruh( diag, alpha, A, B, cntl );
+			}
+		}
+	}
+
+	return r_val;
+}
+

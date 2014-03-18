@@ -1,0 +1,158 @@
+
+\newenvironment{flaspec}{
+\vspace{0.20in}
+\noindent
+%\begin{center}
+%\begin{boxedminipage}{\textwidth}
+\begin{minipage}{\textwidth}
+}{
+\end{minipage}
+%\end{boxedminipage}
+%\end{center}
+\vspace{0.15in}
+}
+
+% ------------------------------------------------------------------------------
+
+\newcommand{\textpurpose}{{\bf Purpose}}
+\newcommand{\purpose}[1]{
+\noindent
+\parbox[t]{0.9in}{{\bf Purpose:}}
+\parbox[t]{5.3in}{#1} \\[0.08in]
+}
+
+\newcommand{\textnotes}{{\bf Notes}}
+\newcommand{\notes}[1]{
+\noindent
+\parbox[t]{0.9in}{{\bf Notes:}}
+\parbox[t]{5.3in}{#1} \\[0.08in]
+}
+
+\newcommand{\textifacenotes}{{\bf Int. Notes}}
+\newcommand{\ifacenotes}[1]{
+\noindent
+\parbox[t]{0.9in}{{\bf Int. Notes:}}
+\parbox[t]{5.3in}{#1} \\[0.08in]
+}
+
+\newcommand{\textimplnotes}{{\bf Imp. Notes}}
+\newcommand{\implnotes}[1]{
+\noindent
+\parbox[t]{0.9in}{{\bf Imp. Notes:}}
+\parbox[t]{5.3in}{#1} \\[0.08in]
+}
+
+\newcommand{\textdevnotes}{{\bf Dev. Notes}}
+\newcommand{\devnotes}[1]{
+\noindent
+\parbox[t]{0.9in}{{\bf Dev. notes:}}
+\parbox[t]{5.3in}{#1} \\[0.08in]
+}
+
+\newcommand{\textmoreinfo}{{\bf More Info}}
+\newcommand{\moreinfo}[1]{
+\noindent
+\parbox[t]{0.9in}{{\bf More Info:}}
+\parbox[t]{5.3in}{#1} \\[0.08in]
+}
+
+\newcommand{\textrvalue}{{\bf Returns}}
+\newcommand{\rvalue}[1]{
+\noindent
+\parbox[t]{0.9in}{{\bf Returns:}}
+\parbox[t]{5.3in}{#1} \\[0.08in]
+}
+
+\newcommand{\textcaveats}{{\bf Caveats}}
+\newcommand{\caveats}[1]{
+\noindent
+\parbox[t]{0.9in}{{\bf Caveats:}}
+\parbox[t]{5.3in}{#1} \\[0.08in]
+}
+
+\newcommand{\flataware}[1]{
+\noindent
+\parbox{0.9in}{{\bf Supports flat objects?}}
+\parbox{5.3in}{#1} \\[0.08in]
+}
+
+% ------------------------------------------------------------------------------
+
+\newcommand{\textchecks}{{\bf Constraints}}
+\newenvironment{checks}{
+\noindent
+\parbox[t]{0.9in}{{\bf Constraints:}} \\
+\parbox[t]{0.7in}{\hsp}
+\begin{minipage}{5.5in}
+\begin{itemize}
+}{
+\end{itemize}
+\end{minipage} \\[3mm]
+}
+
+\newcommand{\checkitem}[1]{\item #1}
+
+\newcommand{\itemvsp}[0]{\\[-6.5mm]}
+
+% ------------------------------------------------------------------------------
+
+\newcommand{\textparams}{{\bf Arguments}}
+\newenvironment{params}{
+\noindent
+\begin{minipage}{\textwidth}
+\parbox[t]{0.9in}{{\bf Arguments:}}\\
+}{
+\end{minipage}
+}
+
+\newcommand{\parameter}[3]{
+\begin{minipage}{6.25in}
+\vspace{0.030in}
+\parbox[t]{0.9in}{\hspace{0.1in}} 
+\parbox[t]{0.8in}{{\tt #2}} 
+\parbox[t]{0.2in}{--} 
+\parbox[t]{4.2in}{#3} 
+\end{minipage}
+}
+ 
+\newcommand{\parminout}[4]{
+\begin{minipage}{6.25in}
+\vspace{0.030in}
+\parbox[t]{0.9in}{\hspace{0.1in}}
+\parbox[t]{0.8in}{\tt #2} \\
+\parbox[t]{0.9in}{\hspace{0.1in}}
+\parbox[t]{0.8in}{\hspace{0.1in} (on entry)}
+\parbox[t]{0.2in}{--} 
+\parbox[t]{4.2in}{#3} \\
+\parbox[t]{0.9in}{\hspace{0.1in}}
+\parbox[t]{0.8in}{\hspace{0.1in} (on exit)}
+\parbox[t]{0.2in}{--} 
+\parbox[t]{4.2in}{#4} 
+\end{minipage}
+}
+ 
+% ------------------------------------------------------------------------------
+
+\newcommand{\configpar}[1]{
+\parbox[t]{0.8in}{\hspace{0.1in}}
+%\parbox[t]{5.0in}{#1} \\
+\begin{minipage}[t]{5.0in}
+#1 \\
+\end{minipage} \\
+}
+
+\newcommand{\configpart}[2]{
+\noindent
+{\tt #1} \\
+%\parbox[t]{0.8in}{\hspace{0.1in}}
+\parbox{0.8in}{\hspace{0.1in}}
+%\begin{minipage}[t]{5.0in}
+\begin{minipage}{5.0in}
+#2 \\
+\end{minipage} \\
+}
+
+% ------------------------------------------------------------------------------
+
+\newcommand{\optrans}[1]{op_{trans}(#1)}
+

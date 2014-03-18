@@ -1,0 +1,44 @@
+
+#include "FLAME.h"
+
+FLA_Error FLA_Apply_Q_UT_lnfc_blk_var2( FLA_Obj A, FLA_Obj T, FLA_Obj W, FLA_Obj B, fla_apqut_t* cntl )
+{
+  FLA_Obj BL,    BR,       B0,  B1,  B2;
+
+  FLA_Obj WL,    WR,       W0,  W1,  W2;
+
+  dim_t b;
+
+  FLA_Part_1x2( B,    &BL,  &BR,      0, FLA_LEFT );
+
+  FLA_Part_1x2( W,    &WL,  &WR,      0, FLA_LEFT );
+
+  while ( FLA_Obj_width( BL ) < FLA_Obj_width( B ) ){
+
+    b = FLA_Determine_blocksize( BR, FLA_RIGHT, FLA_Cntl_blocksize( cntl ) );
+
+    FLA_Repart_1x2_to_1x3( BL,  /**/ BR,        &B0, /**/ &B1, &B2,
+                           b, FLA_RIGHT );
+
+    FLA_Repart_1x2_to_1x3( WL,  /**/ WR,        &W0, /**/ &W1, &W2,
+                           b, FLA_RIGHT );
+
+    /*------------------------------------------------------------*/
+
+    // B1 = Q * B1;
+    FLA_Apply_Q_UT_internal( FLA_LEFT, FLA_NO_TRANSPOSE, FLA_FORWARD, FLA_COLUMNWISE,
+                             A, T, W1, B1,
+                             FLA_Cntl_sub_apqut( cntl ) );
+
+    /*------------------------------------------------------------*/
+
+    FLA_Cont_with_1x3_to_1x2( &BL,  /**/ &BR,        B0, B1, /**/ B2,
+                              FLA_LEFT );
+
+    FLA_Cont_with_1x3_to_1x2( &WL,  /**/ &WR,        W0, W1, /**/ W2,
+                              FLA_LEFT );
+  }
+
+  return FLA_SUCCESS;
+}
+

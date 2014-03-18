@@ -1,0 +1,40 @@
+#
+# test directory makefile
+#
+
+FNAME        := supermatrix
+
+SRC_PATH     := ..
+OBJ_PATH     := .
+
+HOME         := /home/rvdg
+
+LIB_PATH     := $(HOME)/flame/lib
+INC_PATH     := $(HOME)/flame/include
+
+FLAME        := $(LIB_PATH)/libflame.a
+#BLAS         := $(LIB_PATH)/libgoto.a
+BLAS         := -L/opt/intel/mkl/8.1/lib/64/ -lmkl -lmkl_lapack -lguide
+
+CC           := icc
+LINKER       := $(CC)
+CFLAGS       := -I$(SRC_PATH) -I$(INC_PATH) -O3
+LDFLAGS      := -lm -lpthread -openmp -L/opt/intel/fc/9.0/lib -L/usr/lib -lifport -lifcore -limf -lirc -lunwind -lirc_s -ldl
+
+TEST_BIN     := $(FNAME).x
+TEST_OBJS    := $(patsubst $(SRC_PATH)/%.c, $(OBJ_PATH)/%.o, $(wildcard $(SRC_PATH)/*.c))
+
+$(OBJ_PATH)/%.o: $(SRC_PATH)/%.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+compile: $(TEST_OBJS)
+	$(LINKER) $(TEST_OBJS) $(LDFLAGS) $(FLAME) $(BLAS) -o $(TEST_BIN)
+
+run:
+	dplace -x2 -e -c0-15 ./$(TEST_BIN) < input
+
+clean:
+	rm -f *.o *~ core *.x
+
+remove:
+	rm ./results/*.m

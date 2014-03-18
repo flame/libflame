@@ -1,0 +1,108 @@
+
+\begin{figure}[p!]
+\begin{center}
+\begin{tabular}{| c I c | l | p{2.8in} |}  \hline
+Parameter & Datatype & 
+\multicolumn{1}{|l|}
+Permitted values & Meaning \\ \whline
+{\tt datatype} & {\tt FLA\_Datatype} & 
+\begin{tabular}[t]{@{}l}
+{\tt FLA\_INT} \\
+{\tt FLA\_FLOAT} \\
+{\tt FLA\_DOUBLE} \\
+{\tt FLA\_COMPLEX} \\
+{\tt FLA\_DOUBLE\_COMPLEX} \\
+\end{tabular}
+&
+Elements of object are to be of indicated numerical datatype.
+\\ \whline
+{\tt side} & {\tt FLA\_Side} & 
+\begin{tabular}[t]{@{}l}
+{\tt FLA\_LEFT} \\
+{\tt FLA\_RIGHT} 
+\end{tabular}
+&
+Indicates whether the matrix with special structure
+appears on the left or on the right.
+\\ \whline
+{\tt uplo} & {\tt FLA\_Uplo} & 
+\begin{tabular}[t]{@{}l}
+{\tt FLA\_LOWER\_TRIANGULAR} \\
+{\tt FLA\_UPPER\_TRIANGULAR} 
+\end{tabular}
+&
+Indicates whether lower or upper triangular
+part of array stores the matrix.
+\\ \whline
+{\tt trans\phantom{A}} 
+& 
+{\tt FLA\_Trans} 
+&
+{\tt FLA\_NO\_TRANSPOSE} &
+Do not transpose: $ op_{\tt trans}( X ) = X $.
+\\ \cline{3-4}
+{\tt transA} 
+& 
+&
+{\tt FLA\_TRANSPOSE} &
+Transpose: $ op_{\tt trans}( X ) = X^T $.
+\\ \cline{3-4}
+{\tt transB} 
+& 
+&
+{\tt FLA\_CONJ\_TRANSPOSE} &
+Conjugate transpose: $ op_{\tt trans}( X ) \!=\! X^H \!=\! \bar{X}^T $.
+\\ \cline{3-4}
+&
+&
+{\tt FLA\_CONJ\_NO\_TRANSPOSE} &
+Conjugate no transpose: $ op_{\tt trans}( X ) = \bar{X} $.
+\\ \whline
+{\tt diag} 
+& 
+{\tt FLA\_Diag}
+&
+{\tt FLA\_NONUNIT\_DIAG}
+&
+Use values stored on the diagonal.
+\\ \cline{3-4}
+& 
+&
+{\tt FLA\_UNIT\_DIAG}
+&
+Compute as if diagonal elements equal one.
+\\ \cline{3-4}
+& 
+&
+{\tt FLA\_UNIT\_DIAG}
+&
+Compute as if diagonal elements equal zero.
+\\ \whline
+{\tt conj} & 
+{\tt FLA\_Conj} &
+\begin{tabular}[t]{@{}l}
+{\tt FLA\_NO\_CONJUGATE} \\
+{\tt FLA\_CONJUGATE}
+\end{tabular}
+&
+Indicates whether to conjugate.
+\\ \whline
+{\tt quadrant} & 
+{\tt FLA\_Quadrant} &
+\begin{tabular}[t]{@{}l}
+{\tt FLA\_TL} \\
+{\tt FLA\_TR} \\
+{\tt FLA\_BL} \\
+{\tt FLA\_BR}
+\end{tabular}
+&
+Indicates from which quadrant the center submatrix is partitioned.
+\\ \hline
+\end{tabular}
+\end{center}
+\caption{
+\index{FLAMEC@{\sc FLAME/C}!parameters!table}%
+Table of parameters and permitted values.}
+\label{fig:parameters}
+\end{figure}
+

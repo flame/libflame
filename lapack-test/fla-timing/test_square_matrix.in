@@ -1,0 +1,8 @@
+# Square matrices (Cholesky, Triangular inversion) timing, # of vals = 18 
+18                                                                            # # of values of M
+8 16 32 64 128 256 512 768 1024 1280 1536 1792 2048 2304 2560 3072 4096 5120  # Values of M
+1                                                                             # # of values of N
+0                                                                             # Values of N
+1                                                                             # # of values of K
+0                                                                             # Values of K
+

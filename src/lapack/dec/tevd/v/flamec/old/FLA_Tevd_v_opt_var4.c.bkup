@@ -1,0 +1,255 @@
+
+#include "FLAME.h"
+
+FLA_Error FLA_Tevd_v_opt_var4( FLA_Obj d, FLA_Obj e, FLA_Obj C, FLA_Obj S, FLA_Obj G, FLA_Obj U )
+{
+	FLA_Datatype datatype;
+	int          m_A, m_U, n_CS;
+	int          inc_d;
+	int          inc_e;
+	int          rs_C, cs_C;
+	int          rs_S, cs_S;
+	int          rs_G, cs_G;
+	int          rs_U, cs_U;
+
+	datatype = FLA_Obj_datatype( U );
+
+	m_A      = FLA_Obj_vector_dim( d );
+	m_U      = FLA_Obj_length( U );
+	n_CS     = FLA_Obj_width( C );
+
+	inc_d    = FLA_Obj_vector_inc( d );
+	inc_e    = FLA_Obj_vector_inc( e );
+	
+	rs_C     = FLA_Obj_row_stride( C );
+	cs_C     = FLA_Obj_col_stride( C );
+
+	rs_S     = FLA_Obj_row_stride( S );
+	cs_S     = FLA_Obj_col_stride( S );
+
+	rs_G     = FLA_Obj_row_stride( G );
+	cs_G     = FLA_Obj_col_stride( G );
+
+	rs_U     = FLA_Obj_row_stride( U );
+	cs_U     = FLA_Obj_col_stride( U );
+
+
+	switch ( datatype )
+	{
+		case FLA_FLOAT:
+		{
+			float*    buff_d = FLA_FLOAT_PTR( d );
+			float*    buff_e = FLA_FLOAT_PTR( e );
+			float*    buff_C = FLA_FLOAT_PTR( C );
+			float*    buff_S = FLA_FLOAT_PTR( S );
+			float*    buff_G = FLA_FLOAT_PTR( G );
+			float*    buff_U = FLA_FLOAT_PTR( U );
+
+			FLA_Tevd_v_ops_var4( m_A,
+			                     m_U,
+			                     n_CS,
+			                     buff_d, inc_d,
+			                     buff_e, inc_e,
+			                     buff_C, rs_C, cs_C,
+			                     buff_S, rs_S, cs_S,
+			                     buff_G, rs_G, cs_G,
+			                     buff_U, rs_U, cs_U );
+
+			break;
+		}
+
+		case FLA_DOUBLE:
+		{
+			double*   buff_d = FLA_DOUBLE_PTR( d );
+			double*   buff_e = FLA_DOUBLE_PTR( e );
+			double*   buff_C = FLA_DOUBLE_PTR( C );
+			double*   buff_S = FLA_DOUBLE_PTR( S );
+			double*   buff_G = FLA_DOUBLE_PTR( G );
+			double*   buff_U = FLA_DOUBLE_PTR( U );
+
+			FLA_Tevd_v_opd_var4( m_A,
+			                     m_U,
+			                     n_CS,
+			                     buff_d, inc_d,
+			                     buff_e, inc_e,
+			                     buff_C, rs_C, cs_C,
+			                     buff_S, rs_S, cs_S,
+			                     buff_G, rs_G, cs_G,
+			                     buff_U, rs_U, cs_U );
+
+			break;
+		}
+
+		case FLA_COMPLEX:
+		{
+			float*    buff_d = FLA_FLOAT_PTR( d );
+			float*    buff_e = FLA_FLOAT_PTR( e );
+			float*    buff_C = FLA_FLOAT_PTR( C );
+			float*    buff_S = FLA_FLOAT_PTR( S );
+			float*    buff_G = FLA_FLOAT_PTR( G );
+			scomplex* buff_U = FLA_COMPLEX_PTR( U );
+
+			FLA_Tevd_v_opc_var4( m_A,
+			                     m_U,
+			                     n_CS,
+			                     buff_d, inc_d,
+			                     buff_e, inc_e,
+			                     buff_C, rs_C, cs_C,
+			                     buff_S, rs_S, cs_S,
+			                     buff_G, rs_G, cs_G,
+			                     buff_U, rs_U, cs_U );
+
+			break;
+		}
+
+		case FLA_DOUBLE_COMPLEX:
+		{
+			double*   buff_d = FLA_DOUBLE_PTR( d );
+			double*   buff_e = FLA_DOUBLE_PTR( e );
+			double*   buff_C = FLA_DOUBLE_PTR( C );
+			double*   buff_S = FLA_DOUBLE_PTR( S );
+			double*   buff_G = FLA_DOUBLE_PTR( G );
+			dcomplex* buff_U = FLA_DOUBLE_COMPLEX_PTR( U );
+
+			FLA_Tevd_v_opz_var4( m_A,
+			                     m_U,
+			                     n_CS,
+			                     buff_d, inc_d,
+			                     buff_e, inc_e,
+			                     buff_C, rs_C, cs_C,
+			                     buff_S, rs_S, cs_S,
+			                     buff_G, rs_G, cs_G,
+			                     buff_U, rs_U, cs_U );
+
+			break;
+		}
+	}
+
+	return FLA_SUCCESS;
+}
+
+
+
+FLA_Error FLA_Tevd_v_ops_var4( int       m_A,
+                               int       m_U,
+                               int       n_CS,
+                               float*    buff_d, int inc_d, 
+                               float*    buff_e, int inc_e,
+                               float*    buff_C, int rs_C, int cs_C,
+                               float*    buff_S, int rs_S, int cs_S,
+                               float*    buff_G, int rs_G, int cs_G,
+                               float*    buff_U, int rs_U, int cs_U )
+{
+	return FLA_SUCCESS;
+}
+
+
+
+FLA_Error FLA_Tevd_v_opd_var4( int       m_A,
+                               int       m_U,
+                               int       n_CS,
+                               double*   buff_d, int inc_d, 
+                               double*   buff_e, int inc_e,
+                               double*   buff_C, int rs_C, int cs_C,
+                               double*   buff_S, int rs_S, int cs_S,
+                               double*   buff_G, int rs_G, int cs_G,
+                               double*   buff_U, int rs_U, int cs_U )
+{
+	return FLA_SUCCESS;
+}
+
+FLA_Error FLA_Tevd_v_opc_var4( int       m_A,
+                               int       m_U,
+                               int       n_CS,
+                               float*    buff_d, int inc_d, 
+                               float*    buff_e, int inc_e,
+                               float*    buff_C, int rs_C, int cs_C,
+                               float*    buff_S, int rs_S, int cs_S,
+                               float*    buff_G, int rs_G, int cs_G,
+                               scomplex* buff_U, int rs_U, int cs_U )
+{
+	return FLA_SUCCESS;
+}
+
+//#define PRINTF
+
+FLA_Error FLA_Tevd_v_opz_var4( int       m_A,
+                               int       m_U,
+                               int       n_CS,
+                               double*   buff_d, int inc_d, 
+                               double*   buff_e, int inc_e,
+                               double*   buff_C, int rs_C, int cs_C,
+                               double*   buff_S, int rs_S, int cs_S,
+                               double*   buff_G, int rs_G, int cs_G,
+                               dcomplex* buff_U, int rs_U, int cs_U )
+{
+	double* buff_Ur;
+	double* buff_Uc;
+	int     rs_Ur, cs_Ur;
+	int     rs_Uc, cs_Uc;
+	double  one  = bl1_d1();
+	double  zero = bl1_d0();
+
+	// Find the eigenvalues of the tridiagonal matrix and accumulate the
+	// Givens rotations in G.
+	FLA_Tevd_v_opd_var4r( m_A,
+	                      m_U,
+	                      n_CS,
+	                      0,
+	                      0,
+	                      buff_d, inc_d,
+	                      buff_e, inc_e,
+	                      buff_C, rs_C, cs_C,
+	                      buff_S, rs_S, cs_S,
+	                      buff_G, rs_G, cs_G );
+
+	// Allocate temporary matrices for real and imaginary parts of U.
+	buff_Ur = bl1_dallocm( m_U, m_U );
+	rs_Ur   = 1;
+	cs_Ur   = m_U;
+	buff_Uc = bl1_dallocm( m_U, m_U );
+	rs_Uc   = 1;
+	cs_Uc   = m_U;
+
+	// Copy the real and imaginary parts of U into separate contiguous
+	// matrices.
+	bl1_dcopymt( BLIS1_NO_TRANSPOSE,
+	             m_U,
+	             m_U,
+	             ((double*)(buff_U))+0, rs_U*2, cs_U*2,
+	             buff_Ur,               rs_Ur,  cs_Ur );
+	bl1_dcopymt( BLIS1_NO_TRANSPOSE,
+	             m_U,
+	             m_U,
+	             ((double*)(buff_U))+1, rs_U*2, cs_U*2,
+	             buff_Uc,               rs_Uc,  cs_Uc );
+
+	// Apply G to U by computing with the real and imaginary parts separately.
+	bl1_dgemm( BLIS1_NO_TRANSPOSE,
+	           BLIS1_NO_TRANSPOSE, 
+	           m_U,
+	           m_U, 
+	           m_U, 
+	           &one,
+	           buff_Ur, rs_Ur, cs_Ur,
+	           buff_G,  rs_G,  cs_G,
+	           &zero,
+	           ((double*)(buff_U))+0, rs_U*2, cs_U*2 );
+	bl1_dgemm( BLIS1_NO_TRANSPOSE,
+	           BLIS1_NO_TRANSPOSE, 
+	           m_U,
+	           m_U, 
+	           m_U, 
+	           &one,
+	           buff_Uc, rs_Uc, cs_Uc,
+	           buff_G,  rs_G,  cs_G,
+	           &zero,
+	           ((double*)(buff_U))+1, rs_U*2, cs_U*2 );
+
+	// Free temporary matrices.
+	bl1_dfree( buff_Ur );
+	bl1_dfree( buff_Uc );
+
+	return FLA_SUCCESS;
+}
+

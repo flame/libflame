@@ -1,0 +1,505 @@
+\chapter{Using \libflame}
+\label{chapter:using}
+
+This chapter contains code examples that illustrate how to use \libflame in
+your application.
+
+\section{FLAME/C examples}
+\label{sec:flamec-examples}
+
+Let us begin by illustrating a small program that uses LAPACK.
+Figure \ref{fig:fla-chol-orig} contains a C language program that acquires a
+matrix buffer and its dimension properties, performs a Cholesky factorization
+on the matrix, and then frees the memory associated with the matrix buffer.
+
+\begin{figure}[h]
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+int main( void )
+{
+    double* buffer;
+    int     m, rs, cs;
+    int     info;
+    char    uplo = 'L';
+
+    // Get the matrix buffer address, size, and row and column strides.
+    get_matrix_info( &buffer, &m, &rs, &cs );
+
+    // Compute the Cholesky factorization of the matrix, reading from and
+    // updating the lower triangle.
+    dpotrf_( &uplo, &m, buffer, &cs, &info );
+  
+    // Free the matrix buffer.
+    free_matrix( buffer );
+
+    return 0;
+}
+\end{Verbatim}
+\caption{
+A simple program that calls {\tt dpotrf()} from LAPACK.
+}
+\label{fig:fla-chol-orig}
+\end{figure}
+
+\noindent
+The program is trivial in that it does not do anything with the factored
+matrix before exiting.
+Furthermore, the corresponding code found in most real-world programs would
+most likely exist within a loop of some sort.
+However, we are keeping things simple here to better illustrate the usage
+of \libflame functions.
+
+Now suppose we wish to modify the previous program to use the FLAME/C API
+within \libflame.
+There are two general methods.
+\begin{itemize}
+\item
+Create a \libflame object without a buffer and then attach the conventional
+row- or column-major matrix buffer to the bufferless \libflame object.
+This method almost always requires the fewest number of code changes in the
+application.
+\item
+Modify the application such that the matrix is created natively along with
+the \libflame object.
+This will require the user to interface the application to the matrix data
+within the object using various query routines.
+This method often involves more work because many applications are written
+to access matrix buffers directly without any abstractions.
+There are two different strategies for implementing this method, and
+depending on the nature of the application, one strategy may be more
+appropriate than the other:
+\begin{itemize}
+\item
+The matrix may be created and fully initialized, and then copied into a
+\libflame object.
+\item
+The matrix may be created and initialized piecemeal, perhaps one block at
+a time.
+\end{itemize}
+Regardless of whether the matrix is initialized in full or one submatrix at
+a time, the user may use \flacopybuffertoobject to copy the data from a
+conventional column-major matrix arrays to \libflame objects.
+\end{itemize}
+
+
+\begin{figure}[t]
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+\textcolor{red}{#include "FLAME.h"}
+
+int main( void )
+\{
+    double* buffer;
+    int     m, rs, cs;
+    \textcolor{red}{FLA_Obj A;}
+
+    // Initialize libflame.
+    \textcolor{red}{FLA_Init();}
+
+    // Get the matrix buffer address, size, and row and column strides.
+    get_matrix_info( &buffer, &m, &rs, &cs );
+
+    // Create an m x m double-precision libflame object without a buffer,
+    // and then attach the matrix buffer to the object.
+    \textcolor{red}{FLA_Obj_create_without_buffer( FLA_DOUBLE, m, m, &A );}
+    \textcolor{red}{FLA_Obj_attach_buffer( buffer, rs, cs, &A );}
+
+    // Compute the Cholesky factorization, storing to the lower triangle.
+    \textcolor{red}{FLA_Chol( FLA_LOWER_TRIANGULAR, A );}
+
+    // Free the object without freeing the matrix buffer.
+    \textcolor{red}{FLA_Obj_free_without_buffer( &A );}
+
+    // Free the matrix buffer.
+    free_matrix( buffer );
+
+    // Finalize libflame.
+    \textcolor{red}{FLA_Finalize();}
+
+    return 0;
+\}
+\end{Verbatim}
+\caption{
+The program from Figure \ref{fig:fla-chol-orig} modified to use \libflame
+objects.
+This example code illustrates the minimal amount of work to use FLAME/C APIs
+in a program that was originally designed to use the BLAS or LAPACK.
+}
+\label{fig:fla-chol-attach}
+\end{figure}
+
+The program in Figure \ref{fig:fla-chol-attach} uses the first method to
+integrate \libflamens.
+Note that changes from the original example are tracked in red.
+We start by inserting a {\tt \#include} directive for the \libflame header
+file, {\tt FLAME.h}.
+Before calling any other \libflame functions, we must first invoke \flainitns.
+Next, we replace the invocation to {\tt dpotrf()} with four lines of
+\libflame code.
+First, an $ m \by m $ object {\tt A} of datatype \fladouble is created without
+a buffer.
+Then the matrix buffer \buffer is attached to the \libflame object, assuming
+row and column strides \rs and \csns.
+The Cholesky factorization is invoked on {\tt A} with \flacholns.
+And finally, the matrix object is released with \flaobjfreewithoutbufferns.
+The library is finalized with a call to \flafinalizens.
+
+
+\begin{figure}[t]
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+\textcolor{red}{#include "FLAME.h"}
+
+int main( void )
+\{
+    double* buffer;
+    int     m, rs, cs;
+    \textcolor{red}{FLA_Obj A;}
+
+    // Initialize libflame.
+    \textcolor{red}{FLA_Init();}
+
+    // Get the matrix buffer address, size, and row and column strides.
+    get_matrix_info( &buffer, &m, &rs, &cs );
+
+    // Create an m x m double-precision libflame object.
+    \textcolor{red}{FLA_Obj_create( FLA_DOUBLE, m, m, rs, cs, &A );}
+
+    // Copy the contents of the conventional matrix into a libflame object.
+    \textcolor{red}{FLA_Copy_buffer_to_object( FLA_NO_TRANSPOSE, m, m, buffer, rs, cs, 0, 0, A );}
+
+    // Compute the Cholesky factorization, storing to the lower triangle.
+    \textcolor{red}{FLA_Chol( FLA_LOWER_TRIANGULAR, A );}
+
+    // Free the object.
+    \textcolor{red}{FLA_Obj_free( &A );}
+
+    // Free the matrix buffer.
+    free_matrix( buffer );
+
+    // Finalize libflame.
+    \textcolor{red}{FLA_Finalize();}
+
+    return 0;
+\}
+\end{Verbatim}
+\caption{
+The program from Figure \ref{fig:fla-chol-orig} modified to use 
+\libflame objects natively.
+This code does not attach the conventional matrix buffer to a bufferless
+object and instead copies the matrix contents into the object using
+\flacopybuffertoobjectns.
+Note that the matrix is copied all at once, and thus here we assume that
+original matrix is fully initialized in {\tt initialize\_matrix()}
+}
+\label{fig:fla-chol-native1}
+\end{figure}
+
+The second method requires somewhat more extensive modifications to the original
+program.
+In Figure \ref{fig:fla-chol-native1}, we revise and extend the previous
+example.
+This program initializes the matrix as before, but then creates a \libflame
+object natively (with an internal buffer), and then copies the contents of
+the conventional matrix into the \libflame object all at once.
+
+
+\begin{figure}[t]
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+\textcolor{red}{#include "FLAME.h"}
+
+int main( void )
+\{
+    double* buffer;
+    int     m, rs, cs\textcolor{red}{, b};
+    \textcolor{red}{int     i, j;}
+    \textcolor{red}{FLA_Obj A;}
+
+    // Initialize libflame.
+    \textcolor{red}{FLA_Init();}
+
+    // Get the matrix buffer address, size, row and column strides, and block size.
+    get_matrix_info( &buffer, &m, &rs, &cs\textcolor{red}{, &b });
+
+    // Create an m x m double-precision libflame object.
+    \textcolor{red}{FLA_Obj_create( FLA_DOUBLE, m, m, rs, cs, &A );}
+
+    // Acquire the conventional matrix one block at a time and copy these
+    // blocks into the appropriate location within the libflame object.
+    \textcolor{red}{for( j = 0; j < m; j += b )}
+    \textcolor{red}{\{}
+        \textcolor{red}{for( i = 0; i < m; i += b )}
+        \textcolor{red}{\{}
+            \textcolor{red}{double* ij_ptr;}
+            \textcolor{red}{int     b_m, b_n;}
+
+            // Compute the block dimensions, in case they are blocks along the lower and/or
+            // right edges of the overall matrix.
+            \textcolor{red}{b_m = ( m - i < b ? m - i : b );}
+            \textcolor{red}{b_n = ( m - j < b ? m - j : b );}
+
+            // Get a pointer to the b_m x b_n block that starts at element (i,j).
+            \textcolor{red}{ij_ptr = FLA_Submatrix_at( FLA_DOUBLE, buffer, i, j, rs, cs );}
+
+            // Copy the current block into the correct location within the libflame object.
+            \textcolor{red}{FLA_Copy_buffer_to_object( FLA_NO_TRANSPOSE, b_m, b_n, ij_ptr, rs, cs, i, j, A );}
+        \textcolor{red}{\}}
+    \textcolor{red}{\}}
+
+    // Compute the Cholesky factorization, storing to the lower triangle.
+    \textcolor{red}{FLA_Chol( FLA_LOWER_TRIANGULAR, A );}
+
+    // Free the object.
+    \textcolor{red}{FLA_Obj_free( &A );}
+
+    // Finalize libflame.
+    \textcolor{red}{FLA_Finalize();}
+
+    return 0;
+\}
+\end{Verbatim}
+\caption{
+The program from Figure \ref{fig:fla-chol-orig} modified to use FLAME/C
+in a way that initializes a \libflame object incrementally, one block at a
+time.
+}
+\label{fig:fla-chol-native2}
+\end{figure}
+
+Finally, Figure \ref{fig:fla-chol-native2} shows what a program might look
+like if it were to use a native \libflame object but only copy over the data
+one block at a time.
+Here, we place \flacopybuffertoobject in a loop that copies a single
+submatrix per iteration.
+We use \flasubmatrixat to compute the starting address of the submatrix
+whose top-left element is the $ (i,j) $ element within the overall matrix
+stored in \bufferns.
+
+Note that \flacopybuffertoobject may also be used to copy over one
+row or column at a time.
+Copying single rows or columns are just special cases of copying rectangular
+blocks.
+
+
+
+
+\section{FLASH examples}
+\label{sec:flash-examples}
+
+Now let us discuss how we might convert the \libflame programs in
+Section \ref{sec:flamec-examples} to use the FLASH API.
+Please see Section \ref{sec:flash} for a full discussion of FLASH, including
+the motivation behind hierarchical objects and a summary of related
+terminology.
+
+%When using hierarchial objects, the user must consider how many levels
+%to build into the object hierarchies.
+
+In the previous section, we reviewed a code (Figure \ref{fig:fla-chol-attach})
+that uses \libflame functions with an existing matrix buffer.
+Figure \ref{fig:flash-chol-attach} shows what this code would look like
+if we wished to use hierarchical objects.
+
+\begin{figure}[h]
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+#include "FLAME.h"
+
+int main( void )
+\{
+    double* buffer;
+    int     m, rs, cs\textcolor{red}{, b};
+    FLA_Obj A;
+
+    // Initialize libflame.
+    FLA_Init();
+
+    // Get the matrix buffer address, size, row and column strides, and blocksize.
+    get_matrix_info( &buffer, &m, &rs, &cs\textcolor{red}{, &b} );
+
+    // Create an m x m double-precision hierarchical object without a buffer,
+    // of depth 1 and blocksize b, and then attach the matrix buffer to the object.
+    FLA\textcolor{red}{SH}_Obj_create_without_buffer( FLA_DOUBLE, m, m, \textcolor{red}{1, &b,} &A );
+    FLA\textcolor{red}{SH}_Obj_attach_buffer( buffer, rs, cs, &A );
+
+    // Compute the Cholesky factorization, storing to the lower triangle.
+    FLA\textcolor{red}{SH}_Chol( FLA_LOWER_TRIANGULAR, A );
+
+    // Free the object without freeing the matrix buffer.
+    FLA\textcolor{red}{SH}_Obj_free_without_buffer( &A );
+
+    // Free the matrix buffer.
+    free_matrix( buffer );
+
+    // Finalize libflame.
+    FLA_Finalize();
+
+    return 0;
+\}
+\end{Verbatim}
+\caption{
+The program from Figure \ref{fig:fla-chol-attach} modified to use the 
+FLASH API.
+}
+\label{fig:flash-chol-attach}
+\end{figure}
+
+\noindent
+Note that the changes from the corresponding FLAME/C code are highlighted in
+red.
+The application-specific code changes are limited to inputting a blocksize
+value to use in the creation of the hierarchical object {\tt A}.
+All of the \libflame function names are the same as in Figure
+\ref{fig:fla-chol-attach} except that the prefix has changed from
+{\tt FLA\_} to {\tt FLASH\_}.
+Additionally, all of the function type signatures are the same, except
+for the invocation to \flashobjcreatewithoutbufferns.
+This function takes two additional arguments: a depth, and an array of
+blocksizes.\footnote{Since the depth is 1 in this example, we choose to
+simply pass the address of the integer {\tt b} rather than create a separate
+single-element array.}
+The depth and the blocksize array together determine the details of the
+object hierarchy.
+Also note that since a conventional matrix buffer is being attached, the
+hierarchical object {\tt A} will refer to submatrices that are not contiguous
+in memory.
+
+
+\begin{figure}[t]
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+#include "FLAME.h"
+
+int main( void )
+\{
+    double* buffer;
+    int     m, rs, cs\textcolor{red}{, b};
+    FLA_Obj A;
+
+    // Initialize libflame.
+    FLA_Init();
+
+    // Get the matrix buffer address, size, row and column strides, and blocksize.
+    get_matrix_info( &m, &rs, &cs\textcolor{red}{, &b} );
+
+    // Create an m x m double-precision libflame object.
+    FLA\textcolor{red}{SH}_Obj_create( FLA_DOUBLE, m, m, \textcolor{red}{1, &b,} &A );
+
+    // Copy the contents of the conventional matrix into a libflame object.
+    FLA\textcolor{red}{SH}_Copy_buffer_to_hier( m, m, buffer, rs, cs, 0, 0, A );
+
+    // Compute the Cholesky factorization, storing to the lower triangle.
+    FLA\textcolor{red}{SH}_Chol( FLA_LOWER_TRIANGULAR, A );
+
+    // Free the object.
+    FLA\textcolor{red}{SH}_Obj_free( &A );
+
+    // Free the matrix buffer.
+    free_matrix( buffer );
+
+    // Finalize libflame.
+    FLA_Finalize();
+
+    return 0;
+\}
+\end{Verbatim}
+\caption{
+The program from Figure \ref{fig:fla-chol-native1} modified to use the
+FLASH API.
+}
+\label{fig:flash-chol-native1}
+\end{figure}
+
+In similar fashion, we have modified the code in Figure \ref{fig:fla-chol-native1}
+to use hierarchical objects, as shown in Figure \ref{fig:flash-chol-native1}.
+The changes in this code are similar to those discussed for the previous example.
+Note that while \flacopybuffertoobject accepts a transposition argument,
+\flashcopyflattohier does not, and thus we had to remove this
+argument from the invocation of the latter function.
+
+\begin{figure}[t]
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
+#include "FLAME.h"
+
+int main( void )
+\{
+    double* buffer;
+    int     m, rs, cs, b;
+    int     i, j;
+    FLA_Obj A;
+
+    // Initialize libflame.
+    FLA_Init();
+
+    // Get the matrix buffer address, size, row and column strides, and blocksize.
+    get_matrix_info( &buffer, &m, &rs, &cs, &b );
+
+    // Create an m x m double-precision libflame object.
+    FLA\textcolor{red}{SH}_Obj_create( FLA_DOUBLE, m, m, \textcolor{red}{1, &b,} &A );
+
+    // Acquire the conventional matrix one block at a time and copy these
+    // blocks into the appropriate location within the libflame object.
+    for( j = 0; j < m; j += b )
+    \{
+        for( i = 0; i < m; i += b )
+        \{
+            double* ij_ptr;
+            int     b_m, b_n;
+
+            // Compute the block dimensions, in case they are blocks along the lower and/or
+            // right edges of the overall matrix.
+            b_m = ( m - i < b ? m - i : b );
+            b_n = ( m - j < b ? m - j : b );
+
+            // Get a pointer to the b_m x b_n block that starts at element (i,j).
+            ij_ptr = FLA_Submatrix_at( FLA_DOUBLE, buffer, i, j, rs, cs );
+
+            // Copy the current block into the correct location within the libflame object.
+            FLA\textcolor{red}{SH}_Copy_buffer_to_hier( b_m, b_n, ij_ptr, rs, cs, i, j, A );
+        \}
+    \}
+
+    // Compute the Cholesky factorization, storing to the lower triangle.
+    FLA\textcolor{red}{SH}_Chol( FLA_LOWER_TRIANGULAR, A );
+
+    // Free the object.
+    FLA\textcolor{red}{SH}_Obj_free( &A );
+
+    // Finalize libflame.
+    FLA_Finalize();
+
+    return 0;
+\}
+\end{Verbatim}
+\caption{
+The program from Figure \ref{fig:fla-chol-native2} modified to use
+the FLASH API.
+}
+\label{fig:flash-chol-native2}
+\end{figure}
+
+In Figure \ref{fig:flash-chol-native2}, we show the code from Figure
+\ref{fig:fla-chol-native2} modified to use hierarchical objects.
+Once again, most of the differences are limited to changing the
+function prefixes.
+The one other change deserves additional attention, though, which
+is the use of the blocksize {\tt b} in the object creation.
+In the previous code, the blocksize was used only to determine the
+sizes of the submatrices that were individually acquired and copied
+into the {\tt A}.
+This code still uses the blocksize in this manner.
+However, it also uses the same value to establish the size of the
+submatrix blocks in the hierarchical object.
+It should be emphasized that \flashcopyflattohier allows
+the user to copy submatrices into the object that are different in size
+than the sizes of the underlying leaf-level blocks.
+That is, the function is capable of handling copies that span multiple
+block boundaries.
+
+The key insight we hope to have impressed on our readers from these
+simple examples is that the FLASH API (1) provides an easy interface for
+creating and manipulating hierarchical objects, and (2) is strikingly
+similar to the original FLAME/C API wherever possible.
+
+
+
+\section{SuperMatrix examples}
+\label{sec:sm-examples}
+
+
+

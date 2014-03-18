@@ -1,0 +1,26 @@
+spd_output_goto 
+spd_output_mkl
+spd_seq_output_goto
+spd_seq_output_mkl
+plot( chol_lapack_goto( :,1 ), chol_lapack_goto( :,2 ), 's:', ...
+      chol_var3_seq_goto( :,1 ), chol_var3_seq_goto( :,2 ), '+:', ...
+      chol_var3_goto( :,1 ), chol_var3_goto( :,2 ), '-' );
+legend( 'LAPACK 3.0 (linked to multithreaded GotoBLAS 1.15)', ...
+        'libflame 1.5 (linked to multithreaded GotoBLAS 1.15)', ...
+        'libflame 1.5 with SuperMatrix (linked to sequential GotoBLAS 1.15)', 2 );
+title( 'Cholesky factorization (lower triangular) performance' );
+xlabel( 'matrix size' );
+ylabel( 'GFLOPS' );
+axis( [ 0 10000 0 96 ] );
+print -depsc2 'chol_l_itanium2.eps';
+%figure
+%plot( chol_lapack_mkl( :,1 ), chol_lapack_mkl( :,2 ), 's:', ...
+%      chol_var3_seq_mkl( :,1 ), chol_var3_seq_mkl( :,2 ), '+:', ...
+%      chol_var3_mkl( :,1 ), chol_var3_mkl( :,2 ), '-' );
+%legend( 'LAPACK 3.0 + multithreaded MKL 8.1', ...
+%        'FLAME + multithreaded MKL 8.1', ...
+%	'SuperMatrix + serial MKL 8.1', 2 );
+%title( 'Cholesky (lower) performance: multithreaded BLAS v. SuperMatrix' );
+%xlabel( 'problem size' );
+%ylabel( 'GFLOPS' );
+%axis( [ 0 10000 0 96 ] );

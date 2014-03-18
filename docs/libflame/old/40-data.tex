@@ -1,0 +1,141 @@
+\chapter{Data Duplication and Consolidation}
+\label{chapter:data}
+
+The primary vehicles for communication in the \plapack infrastructure are the
+copy and reduce operations.  The approach is to describe the distribution for 
+the input and output using linear algebra objects and then to copy or to reduce
+from one to the other.
+
+
+\section{Copy}
+
+Copying the contents (the data, not the description) from one
+linear algebra object to another is accomplished by a call to
+\begin{FlaSpec}
+\begin{verbatim}
+PLA_Copy( PLA_Obj A, PLA_Obj B )
+\end{verbatim}
+\purpose{
+Copy contents {\em (not description)} between linear algebra objects.
+}
+\parameter{\tt A}{object to be copied}
+\parameter{B}{object into which to copy}
+\end{FlaSpec}
+
+Quite frequently, the object may need to be transposed, so
+the following call accommodates this situation with
+\begin{FlaSpec}
+\begin{verbatim}
+PLA_Copy_x( PLA_Trans trans, PLA_Obj A, PLA_Obj B )
+\end{verbatim}
+\purpose{
+Copy contents between linear algebra objects. 
+This version allows for the transposition
+of the given object to be copied to the other object.
+}
+\parameter{\tt trans}{option for transpose of object}
+\parameter{\tt A}{object to be copied}
+\parameter{B}{object into which to copy}
+\end{FlaSpec}
+Legal input and output object types include any of those given 
+in previous chapters, except for outputting to constants.  
+The data type, global length, and width must match in the input 
+and output objects.
+
+We will explain the exact operation performed by first describing
+what operations must be performed to copy a multivector to and from 
+a projected multivector.  Copying to and from matrices becomes 
+somewhat complex but can be easily understood if blocks of rows 
+and columns of matrices are viewed as projected multivectors.
+Finally, we explain how to view copying to and from multiscalars.
+
+
+\subsection{Copying involving multivectors}
+
+
+
+\subsection{Copying involving matrices}
+
+
+
+\subsection{Copying involving multiscalars}
+
+
+
+\section{Reduce}
+
+In many of our algorithms, we do not
+necessarily maintain consistency of data in duplicated
+objects: duplicated projected multivectors or duplicated
+multiscalars.  The reason is that often we will use
+the different copies of the duplicated object to accumulate
+{\em contributions} to a global result.
+Reducing these contribution to a single result is accomplished
+by a call to
+\begin{FlaSpec}
+\begin{verbatim}
+PLA_Reduce( PLA_Obj A, PLA_Obj B )
+\end{verbatim}
+\purpose{
+Reduce contents using summation in the duplicated object 
+given by {\tt A} and overwrite B with the result.
+}
+\parameter{\tt A}{object to be reduced}
+\parameter{B}{object into which to reduce result}
+\end{FlaSpec}
+It is assumed that for the reduce, the input object is a
+duplicated object.
+Naturally, the global dimensions of input and output must conform.
+The reduction consisting of summations is an {\em element-wise} operation.
+
+A specialized version of reduce is given with
+\begin{FlaSpec}
+\begin{verbatim}
+PLA_Reduce_x( PLA_Op op, PLA_Trans trans, PLA_Obj alpha,
+              PLA_Obj A, PLA_Obj B )
+\end{verbatim}
+\purpose{ Reduce contents using a reduction operation in the
+            duplicated object {\tt A} and overwrite B
+            with the result.  This version scales the
+            target object by alpha before the reduce.}
+\parameter{\tt op}{reduction operation}
+\parameter{\tt trans}{option for transpose of object}
+\parameter{\tt alpha}{scaling factor for target object}
+\parameter{\tt A}{object to be reduced}
+\parameter{B}{object into which to reduce result}
+\end{FlaSpec}
+The {\tt alpha} parameter indicates that a multiple target object is to be
+reduced to the result of reducing the different instances of the input object
+together.  Legal inputs for {\tt alpha} are constants and multiscalars with
+the same datatype and are of size $1 \times 1$.
+The parameter {\tt op} is the reduction operation performed by 
+the {\tt PLA\_Reduce\_x} routine, which is usually summation, includes
+these operations:  
+\begin{center}
+{\tt PLA\_SUM}, {\tt PLA\_PROD}, {\tt PLA\_MAX}, and {\tt PLA\_MIN}.
+\end{center}
+
+
+
+%\section{Pipelining Computation and Communication}
+
+%Not yet implemented.
+
+
+
+\section{A Building Block Approach to Implementing Copy and Reduce}
+
+
+\subsection{Implementation of copy}
+
+%\subsubsection{Multivector to multivector}
+%\subsubsection{Multivector to unduplicated projected multivector}
+%\subsubsection{Unduplicated projected multivector to multivector}
+%\subsubsection{Multivector to duplicated projected multivector}
+%\subsubsection{Unduplicated to duplicated projected multivector}
+%\subsubsection{Other cases involving multivectors}
+%\subsubsection{Other cases involving matrices}
+%\subsubsection{Other cases involving multiscalars}
+
+
+\subsection{Implementation of reduce}

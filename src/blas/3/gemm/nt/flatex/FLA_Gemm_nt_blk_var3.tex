@@ -1,0 +1,269 @@
+
+\documentclass{article}
+
+\usepackage{ifthen}\input{flatex}        % include all the FLaTeX commands
+\markboth{Field G. Van Zee}{}
+
+\begin{document}
+
+\resetsteps      % Reset all the commands to create a blank worksheet  
+
+% Define the operation to be computed
+
+\renewcommand{\operation}{ C := A B^T + C }
+
+% Step 1a: Precondition 
+
+\renewcommand{\precondition}{
+  C = \hat{C}
+}
+
+% Step 1b: Postcondition 
+
+\renewcommand{\postcondition}{ 
+  C
+  =
+  A B^T + \hat{C}
+}
+
+% Step 2: Invariant 
+% Note: Right-hand side of equalities must be updated appropriately
+
+\renewcommand{\invariant}{
+  \FlaOneByTwo{C_L}{C_R}  = 
+  \FlaOneByTwo{ A B_T^T + \hat{C}_L }{ \hat{C}_R } 
+}
+
+% Step 3: Loop-guard 
+
+\renewcommand{\guard}{
+  m( B_T ) < m( B )
+}
+
+% Step 4: Initialize 
+
+\renewcommand{\partitionings}{
+  $
+  B \rightarrow
+  \FlaTwoByOne{B_{T}}
+              {B_{B}}
+  $
+,
+  $
+  C \rightarrow
+  \FlaOneByTwo{C_L}{C_R}
+  $
+,
+\\ 
+  $
+  \hat{C} \rightarrow
+  \FlaOneByTwo{\hat{C}_L}{\hat{C}_R}
+  $
+}
+
+\renewcommand{\partitionsizes}{
+$ B_{T} $ has $ 0 $ rows,
+$ C_L $ has $ 0 $ columns,
+$ \hat{C}_L $ has $ 0 $ columns
+}
+
+% Step 5a: Repartition the operands 
+
+\renewcommand{\blocksize}{b}
+
+\renewcommand{\repartitionings}{
+$
+  \FlaTwoByOne{ B_T }
+              { B_B }
+\rightarrow
+  \FlaThreeByOneB{B_0}
+                 {B_1}
+                 {B_2}
+$
+,
+$
+  \FlaOneByTwo{C_L}{C_R}
+\rightarrow  \FlaOneByThreeR{C_0}{C_1}{C_2}
+$
+,
+\\ 
+$
+  \FlaOneByTwo{\hat{C}_L}{\hat{C}_R}
+\rightarrow  \FlaOneByThreeR{\hat{C}_0}{\hat{C}_1}{\hat{C}_2}
+$
+}
+
+\renewcommand{\repartitionsizes}{
+$ B_1 $ has $ b $ rows,
+$ C_1 $ has $b$ columns,
+$ \hat{C}_1 $ has $b$ columns}
+
+% Step 5b: Move the double lines 
+
+\renewcommand{\moveboundaries}{
+$
+  \FlaTwoByOne{ B_T }
+              { B_B }
+\leftarrow
+  \FlaThreeByOneT{B_0}
+                 {B_1}
+                 {B_2}
+$
+,
+$
+  \FlaOneByTwo{C_L}{C_R}
+\leftarrow  \FlaOneByThreeL{C_0}{C_1}{C_2}
+$
+,
+\\ 
+$
+  \FlaOneByTwo{\hat{C}_L}{\hat{C}_R}
+\leftarrow  \FlaOneByThreeL{\hat{C}_0}{\hat{C}_1}{\hat{C}_2}
+$
+}
+
+% Step 6: State after repartitioning
+% Note: The below needs editing!!!
+
+\renewcommand{\beforeupdate}{
+  \FlaOneByThreeR{C_0}{C_1}{C_2}
+=
+  \FlaOneByThreeR{A B_0^T + \hat{C}_0}{\hat{C}_1}{\hat{C}_2}
+}
+
+% Step 7: State after moving of double lines
+% Note: The below needs editing!!!
+
+\renewcommand{\afterupdate}{
+  \FlaOneByThreeL{C_0}{C_1}{C_2}
+=
+  \FlaOneByThreeL{A B_0^T + \hat{C}_0}{A B_1^T + \hat{C}_1}{\hat{C}_2}
+}
+
+% Step 8: Insert the updates required to change the 
+%         state from that given in Step 6 to that given in Step 7
+% Note: The below needs editing!!!
+
+\renewcommand{\update}{
+$
+  \begin{array}{l}
+    C_{1} := A B_{1}^T + \hat{C}_1 \\ 
+  \end{array}
+$
+}
+
+\begin{figure}[tbp]
+
+\begin{center}     % center the algorithm on the page 
+\footnotesize      % make the font smaller so things fit on a page 
+ 
+\worksheet         % this command generates the worksheet using the 
+                   % commands that were defined between the \resetsteps 
+                   % and the worksheet command 
+\end{center} 
+ 
+% The following command creates a caption for the figure. 
+ 
+\caption{ Worksheet for deriving the blocked algorithm for 
+$\operation$ (Variant 1).} 
+ 
+ 
+% The following command creates a label so that the figure can 
+% be referenced by its number by inserting  
+%  \ref{FLA_Gemm_nt:ws_blk_var1} in the \LaTeX source 
+ 
+\label{FLA_Gemm_nt:ws_blk_var1} 
+ 
+\end{figure} 
+
+% Redefine some of the commands so that references to original
+% contents are removed.
+
+
+% Step 4: Redefine Initialize 
+
+\renewcommand{\partitionings}{
+  $
+  B \rightarrow
+  \FlaTwoByOne{B_{T}}
+              {B_{B}}
+  $
+,
+  $
+  C \rightarrow
+  \FlaOneByTwo{C_L}{C_R}
+  $
+}
+
+\renewcommand{\partitionsizes}{
+$ B_{T} $ has $ 0 $ rows,
+$ C_L $ has $ 0 $ columns
+}
+
+% Step 5a: Repartition the operands 
+
+\renewcommand{\blocksize}{b}
+
+\renewcommand{\repartitionings}{
+$
+  \FlaTwoByOne{ B_T }
+              { B_B }
+\rightarrow
+  \FlaThreeByOneB{B_0}
+                 {B_1}
+                 {B_2}
+$
+,
+$
+  \FlaOneByTwo{C_L}{C_R}
+\rightarrow  \FlaOneByThreeR{C_0}{C_1}{C_2}
+$
+}
+
+\renewcommand{\repartitionsizes}{
+$ B_1 $ has $ b $ rows,
+$ C_1 $ has $b$ columns}
+
+% Step 5b: Move the double lines 
+
+\renewcommand{\moveboundaries}{
+$
+  \FlaTwoByOne{ B_T }
+              { B_B }
+\leftarrow
+  \FlaThreeByOneT{B_0}
+                 {B_1}
+                 {B_2}
+$
+,
+$
+  \FlaOneByTwo{C_L}{C_R}
+\leftarrow  \FlaOneByThreeL{C_0}{C_1}{C_2}
+$
+}
+
+\begin{figure}[tbp]
+
+\begin{center}     % center the algorithm on the page 
+ 
+\FlaAlgorithm     % this command generates the algorithm 
+\end{center} 
+ 
+% The following command creates a caption for the figure. 
+ 
+\caption{Blocked algorithm for 
+$\operation$ (Variant 1).} 
+ 
+ 
+% The following command creates a label so that the figure can 
+% be referenced by its number by inserting  
+%  \ref{FLA_Gemm_nt:alg_blk_var1} in the \LaTeX source 
+ 
+\label{FLA_Gemm_nt:alg_blk_var1} 
+ 
+\end{figure} 
+
+\end{document}
+
+
+

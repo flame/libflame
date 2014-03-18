@@ -1,0 +1,224 @@
+
+#include "FLAME.h"
+
+
+static FLA_Bool FLA_initialized = FALSE;
+
+FLA_Obj FLA_THREE;
+FLA_Obj FLA_TWO;
+FLA_Obj FLA_ONE;
+FLA_Obj FLA_ONE_HALF;
+FLA_Obj FLA_ZERO;
+FLA_Obj FLA_MINUS_ONE_HALF;
+FLA_Obj FLA_MINUS_ONE;
+FLA_Obj FLA_MINUS_TWO;
+FLA_Obj FLA_MINUS_THREE;
+
+FLA_Obj FLA_EPSILON;
+FLA_Obj FLA_SAFE_MIN;
+FLA_Obj FLA_SAFE_MIN_SQUARE; 
+FLA_Obj FLA_SAFE_INV_MIN;
+FLA_Obj FLA_SAFE_INV_MIN_SQUARE;
+FLA_Obj FLA_UNDERFLOW_THRES;
+FLA_Obj FLA_OVERFLOW_THRES;
+FLA_Obj FLA_UNDERFLOW_SQUARE_THRES;
+FLA_Obj FLA_OVERFLOW_SQUARE_THRES;
+
+const float    fzero = 0.0f;
+const double   dzero = 0.0;
+const scomplex czero = { .real = 0.0f, .imag = 0.0f }; 
+const dcomplex zzero = { .real = 0.0 , .imag = 0.0  }; 
+
+/* *************************************************************************
+
+   FLA_Init()
+
+ *************************************************************************** */
+
+void FLA_Init()
+{
+  if ( FLA_initialized == TRUE ) return;
+  
+  FLA_initialized = TRUE;
+
+  FLA_Error_messages_init();
+
+  FLA_Memory_leak_counter_init();
+
+  FLA_Init_constants();
+
+  FLA_Cntl_init();
+
+#if FLA_VECTOR_INTRINSIC_TYPE == FLA_SSE_INTRINSICS
+  _MM_SET_FLUSH_ZERO_MODE( _MM_FLUSH_ZERO_ON );
+#endif
+
+#ifdef FLA_ENABLE_SUPERMATRIX
+  FLASH_Queue_init();
+#endif
+}
+
+/* *************************************************************************
+
+  FLA_Finalize()
+
+ *************************************************************************** */
+
+void FLA_Finalize()
+{
+  if ( FLA_initialized == FALSE ) return;
+
+  FLA_initialized = FALSE;
+
+  FLA_Finalize_constants();
+
+  FLA_Cntl_finalize();
+
+#ifdef FLA_ENABLE_SUPERMATRIX
+  FLASH_Queue_finalize();
+#endif
+
+  FLA_Memory_leak_counter_finalize();
+}
+
+/* *************************************************************************
+
+  FLA_Init_safe()
+
+ *************************************************************************** */
+
+void FLA_Init_safe( FLA_Error* init_result )
+{
+  if ( FLA_Initialized() )
+  {
+    *init_result = FLA_FAILURE;
+  }
+  else
+  {
+    FLA_Init();
+    *init_result = FLA_SUCCESS;
+  }
+}
+
+/* *************************************************************************
+
+  FLA_Finalize_safe()
+
+ *************************************************************************** */
+
+void FLA_Finalize_safe( FLA_Error init_result )
+{
+  if ( init_result == FLA_SUCCESS )
+    FLA_Finalize();
+}
+
+/* *************************************************************************
+
+   FLA_Initialized()
+
+ *************************************************************************** */
+
+FLA_Bool FLA_Initialized( void )
+{
+  return FLA_initialized;
+}
+
+/* *************************************************************************
+
+   FLA_Init_constants()
+
+ *************************************************************************** */
+
+void FLA_Init_constants()
+{
+  FLA_Obj_create_constant(  3.0, &FLA_THREE );
+  FLA_Obj_create_constant(  2.0, &FLA_TWO );
+  FLA_Obj_create_constant(  1.0, &FLA_ONE );
+  FLA_Obj_create_constant(  0.5, &FLA_ONE_HALF );
+  FLA_Obj_create_constant(  0.0, &FLA_ZERO );
+  FLA_Obj_create_constant( -0.5, &FLA_MINUS_ONE_HALF );
+  FLA_Obj_create_constant( -1.0, &FLA_MINUS_ONE );
+  FLA_Obj_create_constant( -2.0, &FLA_MINUS_TWO );
+  FLA_Obj_create_constant( -3.0, &FLA_MINUS_THREE );
+
+
+  { 
+    float  
+      eps_f, 
+      sfmin_f = FLT_MIN, sfmin_f2,
+      small_f = ( 1.0F / FLT_MAX ), 
+      under_f = FLT_MIN, 
+      over_f  = FLT_MAX;
+
+    double 
+      eps_d, 
+      sfmin_d = DBL_MIN, sfmin_d2,
+      small_d = ( 1.0  / DBL_MAX ), 
+      under_d = DBL_MIN,
+      over_d  = DBL_MAX;
+
+    if ( FLT_ROUNDS == 1 )
+    {
+      eps_f = FLT_EPSILON*0.5F;
+      eps_d = DBL_EPSILON*0.5;
+    }
+    else 
+    {
+      eps_f = FLT_EPSILON;
+      eps_d = DBL_EPSILON;
+    }
+
+    if ( small_f >= sfmin_f ) sfmin_f = small_f * ( 1.0F + eps_f );
+    if ( small_d >= sfmin_d ) sfmin_d = small_d * ( 1.0  + eps_d );
+
+    sfmin_f  = sfmin_f/eps_f;
+    sfmin_d  = sfmin_d/eps_d;
+
+    sfmin_f2 = sqrt( sfmin_f );
+    sfmin_d2 = sqrt( sfmin_d );
+
+    FLA_Obj_create_constant_ext( eps_f,           eps_d,           &FLA_EPSILON );
+
+    FLA_Obj_create_constant_ext( sfmin_f,         sfmin_d,         &FLA_SAFE_MIN );
+    FLA_Obj_create_constant_ext( 1.0F/sfmin_f,    1.0/sfmin_d,     &FLA_SAFE_INV_MIN );
+
+    FLA_Obj_create_constant_ext( sfmin_f2,        sfmin_d2,        &FLA_SAFE_MIN_SQUARE );
+    FLA_Obj_create_constant_ext( 1.0F/sfmin_f2,   1.0/sfmin_d2,    &FLA_SAFE_INV_MIN_SQUARE );
+    
+    FLA_Obj_create_constant_ext( under_f,         under_d,         &FLA_UNDERFLOW_THRES );
+    FLA_Obj_create_constant_ext( over_f,          over_d,          &FLA_OVERFLOW_THRES );
+
+    FLA_Obj_create_constant_ext( sqrt( under_f ), sqrt( under_d ), &FLA_UNDERFLOW_SQUARE_THRES );
+    FLA_Obj_create_constant_ext( sqrt( over_f ),  sqrt( over_d ),  &FLA_OVERFLOW_SQUARE_THRES );
+  } 
+}
+
+/* *************************************************************************
+
+   FLA_Finalize_constants()
+
+ *************************************************************************** */
+
+void FLA_Finalize_constants()
+{
+  FLA_Obj_free( &FLA_THREE );
+  FLA_Obj_free( &FLA_TWO );
+  FLA_Obj_free( &FLA_ONE );
+  FLA_Obj_free( &FLA_ONE_HALF );
+  FLA_Obj_free( &FLA_ZERO );
+  FLA_Obj_free( &FLA_MINUS_ONE_HALF );
+  FLA_Obj_free( &FLA_MINUS_ONE );
+  FLA_Obj_free( &FLA_MINUS_TWO );
+  FLA_Obj_free( &FLA_MINUS_THREE );
+
+  FLA_Obj_free( &FLA_EPSILON );
+  FLA_Obj_free( &FLA_SAFE_MIN );
+  FLA_Obj_free( &FLA_SAFE_MIN_SQUARE );
+  FLA_Obj_free( &FLA_SAFE_INV_MIN );
+  FLA_Obj_free( &FLA_SAFE_INV_MIN_SQUARE );
+  FLA_Obj_free( &FLA_UNDERFLOW_THRES );
+  FLA_Obj_free( &FLA_OVERFLOW_THRES );  
+  FLA_Obj_free( &FLA_UNDERFLOW_SQUARE_THRES );
+  FLA_Obj_free( &FLA_OVERFLOW_SQUARE_THRES );
+}
+

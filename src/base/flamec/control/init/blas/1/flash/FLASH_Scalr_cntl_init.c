@@ -1,0 +1,39 @@
+
+#include "FLAME.h"
+
+extern fla_scal_t* flash_scal_cntl_tb;
+
+fla_scalr_t*       flash_scalr_cntl_blas;
+fla_scalr_t*       flash_scalr_cntl;
+fla_blocksize_t*   flash_scalr_bsize;
+
+void FLASH_Scalr_cntl_init()
+{
+	// Set blocksize for hierarchical storage.
+	flash_scalr_bsize     = FLA_Blocksize_create( 1, 1, 1, 1 );
+
+	// Create a control tree that assumes A is small.
+	flash_scalr_cntl_blas = FLA_Cntl_scalr_obj_create( FLA_HIER,
+	                                                   FLA_SUBPROBLEM,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL );
+
+	// Create a control tree that computes column panels, top-left to
+	// bottom-right.
+	flash_scalr_cntl      = FLA_Cntl_scalr_obj_create( FLA_HIER,
+	                                                   FLA_BLOCKED_VARIANT3,
+	                                                   flash_scalr_bsize,
+	                                                   flash_scalr_cntl_blas,
+	                                                   flash_scal_cntl_tb );
+}
+
+void FLASH_Scalr_cntl_finalize()
+{
+	FLA_Cntl_obj_free( flash_scalr_cntl_blas );
+
+	FLA_Cntl_obj_free( flash_scalr_cntl );
+
+	FLA_Blocksize_free( flash_scalr_bsize );
+}
+

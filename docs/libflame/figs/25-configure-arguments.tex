@@ -1,0 +1,46 @@
+\begin{table}
+\begin{center}
+\begin{tabular}{|l|l|p{3.5in}|}
+\hline
+{\bf Argument} & {\bf Accepted Values} & {\bf Consequence} \\ \hline
+% --------------------------------------
+{\em architecture string}
+&
+{\em any string}
+&
+This string is inserted into the filename of the final library.
+It has no effect on how \libflame is built.
+\\ \hline
+% --------------------------------------
+%\multirow{2}{*}{
+%{\em build type}
+%}
+{\em build type}
+&
+{\tt debug}
+&
+Enables debugging symbols and disables all compiler optimizations. \\ \cline{2-3}
+&
+{\tt release}
+&
+Disables debugging symbols and enables maximum compiler optimizations. \\ \hline
+% --------------------------------------
+{\em C compiler string}
+&
+{\tt icl}
+&
+Compile C source code with the Intel C/C++ compiler, {\tt icl}.
+Also, if a DLL is built, use {\tt icl} to perform the linking. \\ \cline{2-3}
+&
+{\tt cl}
+&
+Compile C source code with the Microsoft C/C++ compiler, {\tt cl}.
+Also, if a DLL is built, use {\tt cl} to perform the linking. \\ \hline
+% --------------------------------------
+\end{tabular}
+\end{center}
+\caption{
+The arguments expected by \configurecmdns.
+}
+\label{fig:configure-arguments}
+\end{table}

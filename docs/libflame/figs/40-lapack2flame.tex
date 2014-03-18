@@ -1,0 +1,108 @@
+\begin{table}[h]
+\begin{center}
+\begin{tabular}{|p{2.5in}|p{0.72in}|p{0.7in}|p{1.65in}|}
+\hline
+{\bf Operation}
+&
+{\bf datatypes supported}
+&
+{\bf LAPACK interface}
+&
+{\bf Maps to...} \\ \hline
+% --------------------------------------
+Cholesky factorization
+&
+{\tt sdcz}
+&
+\potrf
+&
+{\tt FLA\_Chol()} \\ \hline
+% --------------------------------------
+LU factorization with partial row pivoting
+&
+{\tt sdcz}
+&
+\getrf
+&
+{\tt FLA\_LU\_piv()} \\ \hline
+% --------------------------------------
+QR factorization
+&
+{\tt sdcz}
+&
+\geqrf
+&
+{\tt FLA\_QR()} \\ \hline
+% --------------------------------------
+LQ factorization
+&
+{\tt sdcz}
+&
+\gelqf
+&
+{\tt FLA\_LQ()} \\ \hline
+% --------------------------------------
+Apply $ Q $ or $ Q^H $ from a QR factorization
+&
+{\tt sdcz}
+&
+\ormqr \unmqr
+&
+{\tt FLA\_Apply\_Q\_UT()} \\ \hline
+% --------------------------------------
+Apply $ Q $ or $ Q^H $ from an LQ factorization
+&
+{\tt sdcz}
+&
+\ormlq \unmlq
+&
+{\tt FLA\_Apply\_Q\_UT()} \\ \hline
+% --------------------------------------
+Triangular matrix inversion
+&
+{\tt sdcz}
+&
+\trtri
+&
+{\tt FLA\_Trinv()} \\ \hline
+% --------------------------------------
+SPD/HPD matrix inversion
+&
+{\tt sdcz}
+&
+\potri
+&
+{\tt FLA\_Trinv(); FLA\_Ttmm()} \\ \hline
+% --------------------------------------
+Triangular-transpose matrix multiply
+&
+{\tt sdcz}
+&
+\lauum
+&
+{\tt FLA\_Ttmm()} \\ \hline
+% --------------------------------------
+Triangular Sylvester equation solve
+&
+{\tt sdcz}
+&
+\trsyl
+&
+{\tt FLA\_Sylv()} \\ \hline
+% --------------------------------------
+%Linear system solve via QR or LQ factorization
+%&
+%{\tt d}
+%&
+%\gels
+%&
+%N/A \\ \hline
+%% --------------------------------------
+\end{tabular}
+\end{center}
+\caption{
+A list of LAPACK interfaces supported directly by the \lapacktflame
+compatibility layer.
+}
+\label{fig:lapack2flame}
+\end{table}

@@ -1,0 +1,36 @@
+libflame
+Known Issues
+
+---
+
+The following is a list of known issues with libflame.
+
+ o It is not yet possible to create a matrix with arbitrary row and column
+   (ie: where both strides are non-unit). But we plan to add this functionality
+   soon.
+
+ o Due to limitations in the current level-3 interfaces, all blocked variants
+   implementing Hermitian rank-2k update (her2k) suffer from the inability to
+   compute the correct result when the alpha scalar parameter is complex and
+   has a non-zero imaginary component. (Note: this is difficult to fix.)
+
+ o The algorithm-by-blocks for incremental up-and-downdating via the UT
+   transform requires that the number of rows in C and D be equal. We will most
+   likely fix this as soon as someone complains.
+
+ o A parallel region cannot be used around the _solve() routine for either
+   FLASH_QR_UT_inc() or FLASH_CAQR_UT_inc(). This is due to the fact that
+   these routines use FLASH repartitioning. Enclosing this functionality
+   in a parallel region means that FLASH views are allocated and then freed
+   before threads are dispatched.
+
+Please direct any questions or feedback (including bug reports) to the FLAME
+project:
+
+  flame@cs.utexas.edu
+
+
+Field G. Van Zee
+Department of Computer Sciences
+The University of Texas at Austin
+

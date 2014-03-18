@@ -1,0 +1,256 @@
+5.0 | r4648 | 20101028
+----------------------
+ o Implemented new operations:
+   - Reduction of a Hermitian-definite generalized eigenproblem to
+     standardized form. Sequential and hierarchical interfaces are available
+     via FLA_Eig_gest() and FLASH_Eig_gest(), respectively.
+   - Reduction to upper Hessenberg form, via FLA_Hess_UT().
+   - Reduction to tridiagonal form, via FLA_Tridiag_UT(). (lower triangular
+     storage only)
+   - Reduction to bidiagonal form, via FLA_Bidiag_UT(). (upper bidiagonal
+     case only, ie: m >= n)
+ o Changed UT Householder transform functions so that alpha is no longer
+   constrained to be in the real domain, allowing tau to be complex. This
+   allows the transform to retain the property of being a reflector in the
+   complex domain.
+
+ o Various improvements to SuperMatrix runtime system, including support for
+   GPU execution if GPUs are available and the operation consists of sub-tasks
+   that are supported via CUBLAS.
+ o Various improvements to control tree implementation, including better
+   error checking to prevent the user from trying to run with control trees
+   that execute non-existent variants.
+ o Fixed some bugs with beta scaling in gemm, hemm, symm, trmm, and trsm when
+   beta is non-unit.
+ o Various improvments to the BLIS.
+   - Implemented the following new operations:
+     - bli_trmvsx (trmv to different vector)
+     - bli_trsvsx (trsv to different vector)
+     - bli_fnorm (Frobenius norm)
+     - bli_setv (set vector to scalar)
+     - bli_setm (set matrix to scalar)
+     - bli_setmr (set triangular matrix to scalar)
+     - bli_setdiag (set diagonal to scalar)
+   - Implemented missing row-major support for syr2k and her2k.
+   - Added various wrapper routines to map calls to Hermitian operations to
+     symmetric equivalents for real datatypes.
+   - Rewrote BLIS macros to look and act more like functions.
+   - Changed semantics of axpymt, axpysmt, copymt, swapmt to match BLAS/LAPACK.
+   - Fixed a subtle scaling bug in herk and her2k.
+   - Various bugfixes.
+ o Many minor interface and implementation improvements.
+ o Many other bug fixes and cleanups.
+
+ o Added configure-time switches to allow the building of static and/or dynamic
+   libraries. (GNU/Linux only)
+ o Added the ability to disable Fortran-77-based underscoring and LDFLAGS
+   queries at configure-time, which allows one to build libflame in an
+   environment that has absolutely no Fortran compiler.
+ o Added a configure-time option to enable SuperMatrix visualization, which
+   outputs DAG information which may be fed into graphviz.
+ o Added the ability for the user to specify a supplementary set of compiler
+   FLAGS. These flags get added to those that are automatically determined by
+   configure.
+
+4.0 | r3815 | 20100213
+----------------------
+ o Implemented blocked algorithm and algorithm-by-blocks for new
+   up-and-downdating operation, which updates the Cholesky/QR factor used in
+   solving a linear least-squares system.
+ o Implemented algorithm-by-blocks for LU with partial pivoting.
+ o Added advanced scheduling options to SuperMatrix runtime system.
+ o Implemented new BLAS-like interfaces (BLIS) layer.
+ o Implemented row-major support in BLIS layer for all operations except her2k
+   and syr2k.
+ o Added optimized unblocked routines written in C for the following operations
+   using the new BLIS layer to avoid LAPACK/Fortran dependence.
+   - lu_nopiv
+   - lu_piv
+   - qrut
+   - qr2ut
+   - lqut
+   - uddateut
+   - chol (l;u)
+   - ttmm (l;u)
+   - trinv (ln;lu;un;uu)
+   - sylv (nn;nh;hn;hh)
+   - aphudut (lh)
+   - aph2ut (lh;rn;rh)
+   - accumtut (fc;fr)
+ o Implemented row-major support in all LAPACK-level operations, leveraging
+   the new row-major support in the BLIS.
+ o Removed all dependencies on LAPACK.
+ o Removed all dependnecies on Fortran.
+ o Added _solve() routines for the following operations:
+   - chol
+   - lu_piv
+   - lu_incpiv
+   - qrut
+   - lqut
+   - qrutinc
+ o Renamed the following operations:
+   - QR_UT_UD      -> QR2_UT
+   - Apply_Q_UT_UD -> Apply_Q2_UT
+   - Apply_H_UT    -> Apply_H2_UT
+ o Modified hemv, hemvc, her, herc, her2, her2c, hemm, herk, her2k wrappers so
+   that their real symmetric brethren are invoked if the arguments are real.
+ o Reimplemented blocked QR and LQ algorithmic variants in terms of Apply_Q_UT
+   operation, resulting in greatly simplified implementations.
+ o Added algorithmic variants for:
+   - axpyt
+   - copyt
+   - gemv
+   - trsv
+ o Created new global scalar constants:
+   - FLA_ONE_HALF
+   - FLA_MINUS_ONE_HALF
+   - FLA_MINUS_TWO
+ o Added routines to recover tau vector from T matrix stored by QR_UT and LQ_UT
+   functions. This allows interoperability with LAPACK's QR/LQ interfaces and
+   is used in the new lapack2flame layer.
+ o Rewrote lapack2flame files in C and adjusted build system to bundle
+   the object files with libflame rather than put them in a separate library.
+ o Changed many signed ints that did not need to be signed to unsigned ints,
+   mostly in the form of a new type, dim_t.
+ o Added safeguards and error checking into partition/repartition routines.
+ o Adjusted safeguards and error checking for several other routines.
+ o Defined and implemented three error checking levels (full, minimal, and none)
+   where the runtime default can be set via a new configure option.
+ o Allow the user to enable/disable the memory leak counter at runtime.
+ o Provide options for disabling/enabling:
+   - lapack2flame compatibility layer
+   - use of external LAPACK implementations via external wrappers
+   - use of external LAPACK implementations for subproblems within blocked
+     algorithms and algorithms-by-blocks
+   via new configure options, as well as checks that prevent undefined and
+   unsupported combinations of these options.
+ o Added revision number to libflame book cover.
+ o Many miscellaneous bug fixes.
+
+3.0 | r2991 | 20090501
+----------------------
+ o Added LaTeX source for libflame reference guide.
+ o Added a build system for use with Microsoft Windows operating systems.
+ o Improved SuperMatrix abstractions and performance.
+ o Changed control trees and internal back-ends to support arbitrary
+   depth hierarchical matrices for many operations.
+ o Changed build system to use revision number instead of version number
+   when naming build products.
+ o Implemented much more robust parameter checking for most routines.
+ o Added support for new BLAS-like operations:
+   - axpys
+   - axpyt
+   - copyr
+   - copyt
+   - dotc
+   - dots
+   - dotcs
+   - dot2s
+   - dot2cs
+   - inv_scalc
+   - scalc
+   - scalr
+   - swapt
+   - gemvc
+   - gerc
+   - hemvc
+   - herc
+   - her2c
+   - trmvsx
+   - trsvsx
+   - trmmsx
+   - trsmsx
+ o Added front-end wrappers for all external wrappers to level-1 and
+   level-2 BLAS routines.
+ o Added complex datatype support to qrut and lqut operations.
+ o Added algorithm-by-blocks implementations for LAPACK-level operations:
+   - luincpiv: LU factorization with incremental pivoting.
+   - qrutinc: incremental QR factorization via the UT transform.
+   - apqutinc: Apply Q^T (or Q^H) obtained via qrutinc to a rhs matrix.
+ o Added helper routines to aid the user in creating the block Householder
+   transform matrix T for qrut, lqut, and qrutinc.
+ o Changed many function names and interfaces to be more clear.
+ o Added many new query/utility functions.
+ o Re-implemented many utility functions.
+ o Removed isolated instances where libflame relied on C99 behavior to allow
+   compatibility with C89 compilers.
+ o Many miscellaneous bug fixes.
+ o Removed reduction to upper Hessenberg form implementation (due to IP
+   concerns).
+ o Removed implementations for classic QR and LQ factorizations based on
+   LAPACK-style Householder transforms.
+ o Removed plapack2e code.
+ o Removed experimental (and non-functional) Cell support.
+
+2.0 | r1754 | 20080401
+----------------------
+ o Integrated FLASH and SuperMatrix with FLAME/C variants via control trees.
+ o Improved SuperMatrix abstractions and performance.
+ o Added POSIX threads support in SuperMatrix.
+ o New and expanded interfaces for FLASH along with improved, easier-to-read
+   implementations.
+ o Added new and/or extended support for the following operations:
+   - lu_nopiv: LU factorization without pivoting
+   - chol: Cholesky factorization
+   - ttmm: triangular transpose matrix multiply
+   - trinv: triangular matrix inversion
+   - spdinv: symmetric/Hermitian positive definite matrix inversion
+   - sylv: triangular Sylvester equation solver
+ o Implemented remaining unblocked FLAME/C variants for level-3 BLAS
+   operations.
+ o Added blocked in-place transpose implementation.
+ o New error- and parameter-checking implementations.
+ o Modified and improved various utility scripts.
+ o Fixed a prominent 32-bit integer bug, allowing the code to malloc()
+   regions of memory greater than 2GB, or, double-precision matrices larger
+   than 16384-by-16384.
+ o Many other bugfixes and cleanups.
+ o Added the option of disabling non-critical FLAME code.
+ o Added the option of compiling and including into libflame various netlib
+   implementations of the files that are need for external wrappers to
+   LAPACK-level operations. This is mostly useful because many FLAME
+   implementations invoke wrappers to unblocked codes for the smaller
+   subproblems. This applies for most LAPACK-level operations, such as
+   Cholesky, LU, LQ, QR, triangular inversion, and the triangular Sylvester
+   equation solver.
+ o Added the option of disabling control trees in level-3 BLAS front-end.
+ o Added the option of aligning memory to arbitrary base-2 boundaries via
+   posix_memalign().
+ o Added the option of aligning each column of a matrix to base-2 boundaries.
+ o Added the option of interfacing to CBLAS in the external wrappers.
+ o Removed lots of outdated and unused build system cruft.
+ o Renamed "parameter checking" option to "internal error checking".
+ o Updated configure to use gfortran over g77, if present.
+ o Combined libflame-base.a, libflame-blas.a, and libflame-lapack.a into a
+   single library archive, libflame.a. (liblapack2flame.a is still a separate
+   library due to the potential for linker symbol conflicts.)
+ o Produce build products in completely separate directories, allowing
+   builds for multiple architectures to be maintained simultaneously with the
+   same source tree.
+ o Updated config.guess and config.sub scripts (previously circa 2004).
+
+1.0 | r1307 | 20070401
+----------------------
+ o Additions, improvements, and cleanups to QR, LQ, QR_UT, LQ_UT, Triangular
+   Inversion, and Hessenberg Reduction implementations.
+ o More complex support throughout libflame, including within utility routines.
+ o Improved error checking for some operations.
+ o Improved leaf-level test drivers, providing easier datatype switching.
+ o New test drivers for front-end interfaces in src/blas/3 and src/lapack.
+ o Support for interfacing into internal libgoto blocksize symbols.
+ o Added non-double datatype lapack2flamec wrappers for Cholesky.
+ o Added non-double datatype lapack2flamec wrappers for LU with pivoting.
+ o Added single precision lapack2flamec wrappers for QR and LQ.
+ o Added full datatype support for ?trtri() lapack2flame wrappers.
+ o Added several netlib LAPACK files that depend on operations for which we have
+   lapack2flamec wrappers.
+ o Experimental SuperMatrix code is now included.
+ o Further PLAPACK2e code development.
+ o Improved misc. utility scripts, build tools, and configure script.
+ o Added a basic doxygen config file capable of mapping out the source tree and 
+   providing output conveniently in HTML format.
+ o Many bugfixes and cleanups.
+
+0.9 | r897 | 20060901
+----------------------
+ o Initial release.

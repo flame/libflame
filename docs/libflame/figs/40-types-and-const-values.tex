@@ -1,0 +1,213 @@
+\begin{table}[tbp]
+
+\index{types!constant-valued}
+\index{constant!types|see{types}}
+\index{constant!values|see{types}}
+
+\begin{center}
+\begin{tabular}{| c | c | l | l |}  \hline
+Type & Typical parameter name & Permitted values & Of interest to... \\ \hline
+% ------------------------------------------------------------------------------
+\flabool
+&
+{\em return value}
+&
+\begin{tabular}{l}
+\true \\
+\false
+\end{tabular}
+&
+all users
+\\ \hline
+% ------------------------------------------------------------------------------
+\fladatatype
+&
+\datatype
+&
+\begin{tabular}{l}
+\flaint \\
+\flafloat \\
+\fladouble \\
+\flacomplex \\
+\fladoublecomplex \\
+\flaconstant
+\end{tabular}
+&
+all users
+\\ \hline
+% ------------------------------------------------------------------------------
+\flaelemtype
+&
+\elemtype
+&
+\begin{tabular}{l}
+\flascalar \\
+\flamatrix
+\end{tabular}
+&
+advanced users and developers
+\\ \hline
+% ------------------------------------------------------------------------------
+\flamatrixtype
+&
+\matrixtype
+&
+\begin{tabular}{l}
+\flaflat \\
+\flahier
+\end{tabular}
+&
+advanced users and developers
+\\ \hline
+% ------------------------------------------------------------------------------
+\flaside
+&
+\side
+&
+\begin{tabular}{l}
+\flaleft \\
+\flaright
+\end{tabular}
+&
+all users
+\\ \hline
+% ------------------------------------------------------------------------------
+\flauplo
+&
+\uplo
+&
+\begin{tabular}{l}
+\flalowertriangular \\
+\flauppertriangular
+\end{tabular}
+&
+all users
+\\ \hline
+% ------------------------------------------------------------------------------
+\flatrans
+&
+\trans
+&
+\begin{tabular}{l}
+\flanotranspose \\
+\flatranspose \\
+\flaconjnotranspose \\
+\flaconjtranspose
+\end{tabular}
+&
+all users
+\\ \hline
+% ------------------------------------------------------------------------------
+\flaconj
+&
+\conj
+&
+\begin{tabular}{l}
+\flanoconjugate \\
+\flaconjugate
+\end{tabular}
+&
+all users
+\\ \hline
+% ------------------------------------------------------------------------------
+\fladiag
+&
+\diag
+&
+\begin{tabular}{l}
+\flanonunitdiag \\
+\flaunitdiag \\
+\flazerodiag
+\end{tabular}
+&
+all users
+\\ \hline
+% ------------------------------------------------------------------------------
+\flaquadrant
+&
+\quadrant
+&
+\begin{tabular}{l}
+\flatl \\
+\flatr \\
+\flabl \\
+\flabr
+\end{tabular}
+&
+all users
+\\ \hline
+% ------------------------------------------------------------------------------
+\fladirect
+&
+\direct
+&
+\begin{tabular}{l}
+\flaforward \\
+\flabackward
+\end{tabular}
+&
+all users
+\\ \hline
+% ------------------------------------------------------------------------------
+\flastore
+&
+\storev
+&
+\begin{tabular}{l}
+\flarowwise \\
+\flacolumnwise
+\end{tabular}
+&
+all users
+\\ \hline
+% ------------------------------------------------------------------------------
+\flapivottype
+&
+\ptype
+&
+\begin{tabular}{l}
+\flanativepivots \\
+\flalapackpivots
+\end{tabular}
+&
+all users
+\\ \hline
+% ------------------------------------------------------------------------------
+\flaerror
+&
+{\em return value}
+&
+\begin{tabular}{l}
+\flasuccess \\
+\flafailure \\
+{\tt ...}
+\end{tabular}
+&
+all users
+\\ \hline
+% ------------------------------------------------------------------------------
+\flainv
+&
+\inv
+&
+\begin{tabular}{l}
+\flanoinverse \\
+\flainverse
+\end{tabular}
+&
+all users
+\\ \hline
+% ------------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+% ------------------------------------------------------------------------------
+\end{tabular}
+\end{center}
+\caption{Table of \libflame types and permitted values.}
+\label{fig:types-and-const-values}
+\end{table}
+

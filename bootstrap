@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -x
+aclocal -I build/ac-macros
+autoheader #src/base/flamec/include
+autoconf
+

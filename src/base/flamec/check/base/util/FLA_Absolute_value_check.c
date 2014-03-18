@@ -1,0 +1,19 @@
+
+#include "FLAME.h"
+
+FLA_Error FLA_Absolute_value_check( FLA_Obj alpha )
+{
+  FLA_Error e_val;
+
+  e_val = FLA_Check_floating_object( alpha );
+  FLA_Check_error_code( e_val );
+
+  e_val = FLA_Check_nonconstant_object( alpha );
+  FLA_Check_error_code( e_val );
+
+  e_val = FLA_Check_if_scalar( alpha );
+  FLA_Check_error_code( e_val );
+
+  return FLA_SUCCESS;
+}
+

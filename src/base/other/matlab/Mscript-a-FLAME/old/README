@@ -1,0 +1,208 @@
+
+Introduction
+============
+
+A set of interface functions that allow FLAME computational routines written in C
+to be called from Matlab is described here.  Matlab provides an external interface
+API to call routines coded in the C language, which is used as the basis for the
+FLAME interface functions.  This involves writing a C file, named FLA_foo.c, for
+each FLAME routine, FLA_foo(...), that needs to be interfaced.  An example is shown
+below to elucidate the structure of this C file. The FLAME function for which the
+interface is written in this example is FLA_Axpyt_external(...).
+
+
+An example
+==========
+
+#include "mex.h"
+#include "FLA_Matlab2C.h"
+
+extern double FLA_Clock();
+
+#define NRHS 4
+#define NINT 1
+
+#define NOBJ (NRHS-NINT)
+
+
+void mexFunction(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
+  int attr[NINT];
+  FLA_Obj obj[NOBJ];
+  double *dtime;
+
+  FLA_Init();
+
+  /* Check if the number of arguments supplied is correct */
+  FLA_M2C_CheckNumArgs(NRHS, nrhs);
+
+  /* Convert Matlab arguments into the appropriate FLAME C arguments */
+  FLA_M2C_ConvertArgs(NRHS, prhs, NINT, attr, obj);
+
+  /* If an extra argument is supplied, collect timing informaion in it. */
+  if (nrhs == NRHS+1)
+    dtime = FLA_M2C_ConvertDoublePtr(prhs[NRHS]);
+
+  /* Now call the C FLAME function, timing it if the extra argument is given. */
+
+  if (nrhs == NRHS+1)
+    *dtime = FLA_Clock();
+
+  FLA_Axpyt_external(attr[0], obj[0], obj[1], obj[2]);
+
+  if (nrhs == NRHS+1)
+    *dtime = FLA_Clock() - *dtime;
+
+  FLA_Finalize();
+
+}
+
+
+Matlab Interface Requirement
+============================
+
+These interface files are called MEX files in Matlab lingo.  Matlab requires the
+inclusion of the header mex.h, and the definition of the function mexFunction(...).
+The function mexFunction(...) is called when the interfaced C function (FLA_Axpy_t,
+in this example) is invoked from Matlab.  The arguments provided to the function
+when invoked from Matlab are passed to mexFunction.
+
+nlhs: number of LHS arguments.
+plhs: pointer to an array of LHS arguments, which are Matlab arrays (mxArray).
+nrhs: number of RHS arguments.
+prhs: pointer to an array of RHS arguments, which are Matlab arrays (mxArray).
+
+The task of the interface writer is to write the body of mexFunction such that it
+does the following things.
+1. Make sure that the function is invoked with the correct number of arguments.
+2. Allocate memory for the output arguments.
+3. If an argument is used for both input and output, and it is desired that the
+   input be preserved, then make a copy of it.
+4. Convert the arguments from Matlab format (mxArray) to the format expected by
+   the C function.
+5. Call the C function.
+
+
+Matlab To C FLAME Functions
+===========================
+
+To make this task easier for the specific case of interfacing FLAME computational
+routines, the following functions are used in the above example.
+
+void FLA_M2C_CheckNumArgs(int rrhs, int srhs);
+
+rrhs: required number of RHS arguments.
+srhs: supplied number of RHS arguments.
+
+Checks if the correct number of arguments are being passed.  The supplied number of
+arguments must be either rrhs or rrhs+1.  In the latter case, the last argument is
+used to collect and return timing information of the function call.  If the conditions
+are not met, the program is aborted with an error message.  It performs task (1)
+in the above list.
+
+Tasks (2) and (3) in the above list are ignored because we don't make use of output
+or LHS arguments, and FLAME functions return results by overwriting one or more
+RHS arguments.
+
+
+void FLA_M2C_ConvertArgs(int nrhs, const mxArray *prhs[], int nint, 
+                         int attr[], FLA_Obj obj[]);
+
+nrhs, prhs: same meaning as in the definition of mexFunction.
+nint: number of FLAME attribute arguments in the C function being interfaced.
+attr: pointer to an int array containing the converted FLAME attributes on return.
+obj: pointer to a FLA_Obj array containing the converted numeric data on return.
+
+This function converts the FLAME attributes and returns them in the attr[] array and
+converts the numeric data and returns them in the obj[] array.  The types of arguments
+are checked for validity before performing the conversions.  It performs task (4) 
+listed above. This function is applicable only if the FLAME C 
+function follows the conventions listed below.
+  1. The arguments to the C FLAME routine are either type int, representing FLAME 
+     attributes, or type FLA_Obj, representing FLAME objects used in computation.
+  2. The int arguments, if any, precede all the FLA_Obj arguments in the function 
+     interface. 
+  3. Return type of the function is void.
+
+
+double *FLA_M2C_ConvertDoublePtr(const mxArray *mobj);
+
+mobj: a scalar double mxArray.
+
+The FLAME function, when invoked from Matlab can be supplied an additional argument at
+the end, which if present is used to return timing information about the function.
+This function returns a double pointer to this argument (also task (4)).
+
+
+Calling the C Function
+======================
+
+Once arguments have been converted to the format required by the C function, it
+can be called as shown in the example by passing in the attribute values and the
+FLAME objects (task (5)).
+
+FLA_foo(attr[0], ..., attr[NINT-1], obj[0], ..., obj[NOBJ-1]);
+
+
+Template for FLAME MEX file
+===========================
+
+The following preprocessor symbols are defined.
+NRHS:  Number of RHS arguments expected.
+NINT:  Number of integer (attribute) arguments expected.
+
+For constructing a new MEX file that interfaces a new FLAME C function to Matlab,
+assuming that the function obeys the conventions listed above, use the example code
+as a template and change the values of NRHS and NINT to the appropriate values
+and call the new FLAME C function, say FLA_foo, instead of FLA_Axpy_t as follows.
+FLA_foo(attr[0], ..., attr[NINT-1], obj[0], ..., obj[NOBJ-1]);
+
+
+Automatic Generation of FLAME MEX files
+=======================================
+
+The template for the FLAME MEX file has been coded into a perl script, interface.pl,
+that can generate the MEX file for a function, given its name, nrhs and nint.
+The directions for use of interface.pl can be found at the top of the file.
+
+
+Compiling the MEX file
+======================
+
+The MEX file is compiled into a dynamically linked subroutine and outputs to a file
+with the .mexglx extension, say FLA_foo.mexglx.  When FLA_foo is invoked from a Matlab
+program, the Matlab interpreter loads and executes FLA_foo.mexglx.  The MEX C file is
+compiled using the mex utility included with the Matlab software.  See the Makefile
+in this directory for the full command line and other libraries that need to be linked
+in for compiling a FLAME MEX file.  To use the Makefile, edit it to specify the paths
+for FLAME, ATLAS and Matlab.  Also list the MEX files that need to be compiled in the
+variable MEXFILES.
+
+
+Other Matlab To C Functions
+===========================
+
+If the above conventions for the use of FLA_M2C_ConvertArgs are not obeyed, then
+the following two functions can be used that convert each Matlab array argument 
+into the appropriate data type to be passed to the C function.
+
+int FLA_M2C_ConvertAttribute(const mxArray *mobj);
+
+mobj: pointer to an mxArray of characters (in other words, a Matlab string) that
+      specifies a FLAME attribute such as FLA_TRANSPOSE or FLA_UNIT_DIAG.
+
+In the C API for FLAME, attributes are represented by symbols that are mapped by
+the preprocessor to integers.  This function returns the integer corresponding to 
+the attribute specified by mobj.
+
+
+
+FLA_Obj FLA_M2C_ConvertMxArray(const mxArray *mobj);
+
+mobj: pointer to an mxArray that contains numeric data, which could be a scalar,
+      vector or matrix.
+
+In the C API for FLAME, numeric data is represented by the FLA_Obj data type.
+This function converts the data from the mxArray type to the FLA_Obj type and
+returns the latter.
+
+

@@ -1,0 +1,29 @@
+
+#include "FLAME.h"
+
+extern fla_caqr2ut_t*  flash_caqr2ut_cntl;
+extern fla_apcaq2ut_t* flash_apcaq2ut_cntl;
+
+fla_caqrutinc_t*     flash_caqrutinc_cntl;
+fla_blocksize_t*     flash_caqrutinc_var1_bsize;
+
+void FLASH_CAQR_UT_inc_cntl_init()
+{
+	// Set blocksizes for hierarchical storage.
+	flash_caqrutinc_var1_bsize = FLA_Blocksize_create( 1, 1, 1, 1 );
+
+	// Create a control tree to invoke variant 1.
+	flash_caqrutinc_cntl = FLA_Cntl_caqrutinc_obj_create( FLA_HIER,
+	                                                      FLA_BLOCKED_VARIANT1, 
+	                                                      flash_caqrutinc_var1_bsize,
+	                                                      flash_caqr2ut_cntl,
+	                                                      flash_apcaq2ut_cntl );
+}
+
+void FLASH_CAQR_UT_inc_cntl_finalize()
+{
+	FLA_Cntl_obj_free( flash_caqrutinc_cntl );
+
+	FLA_Blocksize_free( flash_caqrutinc_var1_bsize );
+}
+

@@ -1,0 +1,38 @@
+\chapter{Linear Algebra Operations}
+\label{chapter:blas}
+
+
+We provide the parallel implementations of the BLAS
+(Basic Linear Algebra Subprograms).  The BLAS routines
+are categorized into vector-vector, matrix-vector, and
+matrix-matrix operations called 
+level-1, level-2, and level-3 BLAS.
+
+
+\section{Vector-Vector Operations}
+
+
+
+
+
+\section{Matrix-Vector Operations}
+
+
+
+
+
+\section{Matrix-Matrix Operations}
+
+
+
+
+
+\section{Local BLAS Routines}
+
+We provide localized implementations of the BLAS routines.
+These routines can only be called if the data for each object 
+all reside within one processor (or duplicated).  
+Their interfaces are the same as the general BLAS routines, 
+except that the invocation has the form {\tt PLA\_Local\_} 
+followed by the name of the BLAS routine in lowercase
+(i.e., {\tt PLA\_Local\_gemm}).

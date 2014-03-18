@@ -1,0 +1,1 @@
+ps2pdf13 -dPDFSETTINGS=/prepress fig.eps fig_embedded.pdf

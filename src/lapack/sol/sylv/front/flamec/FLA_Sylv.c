@@ -1,0 +1,19 @@
+
+#include "FLAME.h"
+
+extern fla_sylv_t* fla_sylv_cntl;
+
+FLA_Error FLA_Sylv( FLA_Trans transa, FLA_Trans transb, FLA_Obj isgn, FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj scale )
+{
+  FLA_Error r_val;
+
+  // Check parameters.
+  if ( FLA_Check_error_level() >= FLA_MIN_ERROR_CHECKING )
+    FLA_Sylv_check( transa, transb, isgn, A, B, C, scale );
+
+  // Invoke FLA_Sylv_internal() with the appropriate control tree.
+  r_val = FLA_Sylv_internal( transa, transb, isgn, A, B, C, scale, fla_sylv_cntl );
+
+  return r_val;
+}
+

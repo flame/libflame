@@ -1,0 +1,16 @@
+# Test list 
+# GEMM      test_gemm.in            test_gemm.out
+GEMM      test_gemm_small.in      test_gemm.out
+CHOL      test_square_matrix.in   test_chol.out
+TRINV     test_square_matrix.in   test_trinv.out
+LUPIV     test_general_matrix.in  test_lupiv.out
+QR        test_general_matrix.in  test_qr.out
+LQ        test_general_matrix.in  test_lq.out
+APPQ      test_general_matrix.in  test_appq.out
+SVD       test_general_matrix.in  test_svd.out
+# SYLV      test_square_matrix.in   test_sylv.out
+# HESS
+# TRIDIAG
+# EIGGEST
+# HEVD
+

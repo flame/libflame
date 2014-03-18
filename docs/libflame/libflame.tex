@@ -1,0 +1,113 @@
+\documentclass[final]{book}
+%\documentclass[opener-c,final]{newsiambook}
+%\documentclass{newsiambook}
+
+\usepackage[margin=1in]{geometry}
+%\usepackage{layout}
+
+\usepackage{draftcopy}
+
+\usepackage{makeidx}
+\usepackage{amsmath}
+%\usepackage{epsfig}
+\usepackage{graphicx}
+\usepackage{index}
+\usepackage{multicol}
+\usepackage{multirow}
+\usepackage{rotating}
+\usepackage{subeqn}
+%\usepackage{crop}
+\usepackage{url}
+\usepackage{longtable}
+\usepackage{rotating}
+\usepackage{keyval}
+
+% Our packages
+\usepackage{amssymb}
+% \usepackage{graphicx} % already in SIAM
+%\usepackage{program}
+\usepackage{ifthen}
+\usepackage[usenames]{color}
+\usepackage{boxedminipage}
+% \usepackage[Lenny]{fncychap} % Not necessary with SIAM style
+% \usepackage{fancyhdr} % Not necessary with SIAM style
+\usepackage{fancyvrb}
+% \usepackage{mparhack}
+% \usepackage{chappg} % Not necessary with SIAM style
+\usepackage[dotinlabels]{titletoc}
+\usepackage{colortbl}
+\usepackage{array}
+\usepackage{soul}
+\usepackage{graphics}
+\usepackage{moreverb}
+\usepackage{fancyhdr}
+
+\usepackage{latexsym}
+\usepackage{hyperref}
+
+
+%\input{defs}
+\input{macros}
+\input{flamisc}
+\input{flatex}
+
+
+\makeindex
+
+
+%\newtheorem{theorem}{Theorem}
+%\newtheorem{note}{Note}
+%%\renewcommand{\index}[2]{}
+%%
+%%
+%%\newcolumntype{I}{!{\vrule width 1.5pt}}
+%%\newlength\savedwidth
+%%\newcommand\whline{\noalign{\global\savedwidth\arrayrulewidth
+%%    \global\arrayrulewidth 1.5pt}
+%%  \hline
+%%  \noalign{\global\arrayrulewidth\savedwidth}}
+
+\begin{document}
+
+%\layout
+%\setlength{\voffset}{1.5cm}
+%\setlength{\topmargin}{0pt}
+%\setlength{\textheight}{21cm}
+%\setlength{\headsep}{0pt}
+%\setlength{\hoffset}{0pt}
+%\setlength{\oddsidemargin}{26pt}
+%\setlength{\textwidth}{358pt}
+%\setlength{\textwidth}{410pt}
+
+
+
+
+%\frontmatter
+
+\input{03-frontmatter}
+
+%\mainmatter
+
+\input{10-intro}
+
+\input{23-setup-linux}
+
+\input{25-setup-windows}
+
+\input{30-using-libflame}
+
+\input{40-user-api}
+
+%\input{50-dev-api}
+
+\input{90-bib}
+
+\input{93-index}
+
+\appendix % All subsequent chapters are treated as Appendices
+
+\input{94-appendix-pubs}
+
+\input{96-appendix-license}
+
+\end{document}

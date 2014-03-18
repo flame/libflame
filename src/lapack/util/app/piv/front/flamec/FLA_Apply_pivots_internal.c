@@ -1,0 +1,50 @@
+
+#include "FLAME.h"
+
+FLA_Error FLA_Apply_pivots_internal( FLA_Side side, FLA_Trans trans, FLA_Obj p, FLA_Obj A, fla_appiv_t* cntl )
+{
+   FLA_Error r_val = FLA_SUCCESS;
+
+   if ( FLA_Cntl_matrix_type( cntl ) == FLA_HIER &&
+        FLA_Cntl_variant( cntl ) == FLA_SUBPROBLEM )
+   {
+      if ( FLASH_Queue_get_enabled( ) )
+      {
+         // Enqueue
+         ENQUEUE_FLASH_Apply_pivots_macro( side, trans, *FLASH_OBJ_PTR_AT( p ), A, cntl );
+      }
+      else
+      {
+         // Execute leaf
+         r_val = FLA_Apply_pivots_macro_task( side, trans, *FLASH_OBJ_PTR_AT( p ), A, cntl );
+      }
+   }
+   else
+   {
+      // Parameter combinations
+      if ( trans == FLA_NO_TRANSPOSE )
+      {
+         if      ( side == FLA_LEFT )
+         {
+            r_val = FLA_Apply_pivots_ln( p, A, cntl );
+         }
+         else if ( side == FLA_RIGHT )
+         {
+            r_val = FLA_Apply_pivots_rn( p, A, cntl );
+         }
+      }
+      else if ( trans == FLA_TRANSPOSE )
+      {
+         if      ( side == FLA_LEFT )
+         {
+            r_val = FLA_Apply_pivots_lt( p, A, cntl );
+         }
+         else if ( side == FLA_RIGHT )
+         {
+            r_val = FLA_Apply_pivots_rt( p, A, cntl );
+         }
+      }
+   }   
+
+   return r_val;
+}

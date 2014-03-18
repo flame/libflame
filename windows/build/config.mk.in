@@ -1,0 +1,19 @@
+
+#
+# --- Configuration variable definitions ---------------------------------------
+#
+# Environment-related variables:
+#   REVISION            - The code's revision number.
+#   PWD                 - The path to current working directory.
+#   ARCH_STR            - A string to identify the requested build architecture.
+#   BUILD_STR           - A string to identify the requested build type.
+#   CCOMPILER_STR       - A string to identify the requested C compiler.
+#
+# Target-related variables:
+#   FLAMEC_OBJS         - List of paths to flamec object files.
+#   LAPACK2FLAMEC_OBJS  - List of paths to lapack2flamec object files.
+#
+# Note: these variables are not present in the .in template file. Instead, they
+# are appended to the contents of the .in file by a build script and output to
+# a separate file (by the same name, without the .in extension).
+#

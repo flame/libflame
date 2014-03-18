@@ -1,0 +1,858 @@
+\chapter{Setup for Microsoft Windows}
+\label{chapter:setup-windows}
+
+
+
+This chapter discusses how to obtain, configure, compile, and install
+\libflame under Microsoft Windows.
+
+
+
+\section{Before obtaining \libflame}
+
+We encourage new users to read this section before proceeding to download
+the \libflame source code.
+
+\subsection{System software requirements}
+
+\index{\libflame!for Microsoft Windows!software requirements}
+
+Before you attempt to build \libflamens, be sure you have the following
+software tools:
+\begin{itemize}
+\item
+{\bf Microsoft Windows XP or later.}
+At this time we have tested \libflame under Windows XP and Windows 7.
+We have not yet been able to test the software under Windows Vista, though we
+suspect it would compile, link, and run just fine.
+\item
+{\bf A C/C++ compiler.}
+Most of \libflame is written in C, and therefore building \libflame on Windows
+requires a C (or C++) compiler.
+The build system may be configured to use either the Intel C/C++ compiler or
+the Microsoft C/C++ compiler.
+However, another compiler can be substituted by tweaking the definitions file
+included into the main makefile.
+\item
+{\bf nmake.}
+\libflame for Windows requires the Microsoft Program Maintenance Utility,
+\nmakens.
+\nmake is a command line tool similar to GNU \make that allows developers to
+use makefiles to specify how programs and libraries should be built.
+This utility is included with the Microsoft Visual Studio development
+environment.
+\item
+{\bf Python.}
+Certain helper scripts within the Windows build system are written in Python,
+and therefore the user must have Python installed in the build environment
+in order to run the build \libflamens.
+We recommend a recent version, though version 2.6 or later should work fine.
+\item
+{\bf A working BLAS library.}
+Users must link against an implementation of the BLAS in order
+to use \libflamens.
+Currently, \libflame functions make extensive use of BLAS routines such as
+{\tt dgemm()} and {\tt dsyrk()} to perform subproblems that inherently
+occur within almost all linear algebra algorithms.
+When configured accordingly,
+\libflame also provides direct access to BLAS routines by way of wrappers
+that map object-based APIs to traditional Fortran-77 routine interfaces.
+Any library that adheres to the BLAS interface should work fine.
+On Windows, \libflame developers often use Intel's MKL, which performs well
+and is included with the Intel C/C++ compiler suite.
+%However, we strongly encourage the use of Kazushige Goto's GotoBLAS
+%\cite{Goto,Goto:2008:AHP,taccsoftware2008}.
+%GotoBLAS provides excellent performance on a wide variety of mainstream
+%architectures.
+%Other BLAS libraries, such as ESSL (IBM), MKL (Intel), ACML (AMD),
+%and netlib's BLAS, have also been successfully tested with \libflamens.
+%Of course, performance will vary depending on which library is used. 
+\end{itemize}
+The following items are not required in order to build \libflamens, but may
+still be useful to certain users, depending on how the library is
+configured.
+\begin{itemize}
+\item
+{\bf A working LAPACK library.}
+Most of the computationally-intensive operations implemented in \libflame
+are expressed as blocked algorithms or algorithms-by-blocks, both of which
+cast some of their computation in terms of smaller subproblems.
+\libflame provides optimized, low-overhead unblocked functions to perform
+these small matrix computations.
+However, for performance reasons, some users might want these computations
+to be performed instead by an external implementation of LAPACK.
+See Section \ref{sec:configure-options} for more information on making use of
+this optional feature.
+\item
+{\bf An OpenMP-aware C compiler.}
+\libflame supports parallelism for several operations via the SuperMatrix
+runtime scheduling system.
+SuperMatrix requires either a C compiler that supports OpenMP (1.0 or later),
+or a build environment that supports POSIX threads.
+POSIX threads support is not shipped with Microsoft Windows.
+However, as of this writing, both the Microsoft and Intel C/C++ compilers
+support OpenMP.
+Therefore, the user must either ensure that \libflame is configured to use 
+an OpenMP-aware compiler.
+\end{itemize}
+
+\subsection{System hardware support}
+
+\index{\libflame!for Microsoft Windows!hardware support}
+
+Since \libflame for Windows is still relatively new, we have not had the time
+or opportunity to test it on many hardware architectures.
+We suspect it should compile and run fine on any of the modern Intel
+architectures, including traditional 32-bit x86 architectures as well as
+newer 64-bit em64t systems.
+Other architectures, such as ia64 systems, may work, but they are untested
+as of this writing.
+
+\subsection{License}
+
+\input{20-setup-common/license}
+
+
+
+\subsection{Source code}
+
+\index{\libflame!for Microsoft Windows!source code}
+
+\input{20-setup-common/source-code}
+
+
+
+\subsection{Tracking source code revisions}
+
+\input{20-setup-common/revisions}
+
+
+
+\subsection{If you have problems}
+
+\input{20-setup-common/problems}
+
+
+
+\section{Obtaining \libflame}
+
+\index{\libflame!obtaining}
+
+The source code for \libflame may be obtained through the FLAME project
+website:
+
+\begin{Verbatim}[frame=none,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\normalsize]
+http://www.cs.utexas.edu/users/flame/libflame/
+\end{Verbatim}
+
+\noindent
+This webpage also contains information related to configuring,
+compiling, installing, and linking against \libflame under GNU/Linux
+and UNIX environments.
+Most of the information provided there is repeated and expanded upon in
+Chapter \ref{chapter:setup-linux}.
+
+
+
+\section{Preparation}
+
+Download the {\tt .zip} package from the website and then unzip the
+the source code.
+Here, we assume that we've downloaded revision 3692 (r3692) from the
+nightly snapshots directory and unzipped the package to a directory by
+the same name, minus the {\tt .zip} extension.
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+C:\field\temp>dir
+ Volume in drive C has no label.
+ Volume Serial Number is B4E3-D9FC
+
+ Directory of C:\field\temp
+
+12/01/2009  01:03 PM    <DIR>          .
+12/01/2009  01:03 PM    <DIR>          ..
+12/01/2009  01:04 PM    <DIR>          libflame-r3692
+12/01/2009  01:02 PM         5,324,397 libflame-r3692.zip
+               1 File(s)      5,324,397 bytes
+               3 Dir(s)  85,294,235,648 bytes free
+\end{Verbatim}
+
+\noindent
+Change into the {\tt libflame-r3692} directory:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+C:\field\temp>cd libflame-r3692
+\end{Verbatim}
+
+\noindent
+The top-level directory of the source tree should look something like this:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+C:\field\temp\libflame-r3692>dir
+ Volume in drive C has no label.
+ Volume Serial Number is B4E3-D9FC
+
+ Directory of C:\field\temp\libflame-r3692
+
+12/01/2009  01:04 PM    <DIR>          .
+12/01/2009  01:04 PM    <DIR>          ..
+12/01/2009  01:03 PM               893 AUTHORS
+12/01/2009  01:03 PM                91 bootstrap
+12/01/2009  01:03 PM    <DIR>          build
+12/01/2009  01:03 PM             5,836 CHANGELOG
+12/01/2009  01:03 PM           293,036 configure
+12/01/2009  01:03 PM            13,853 configure.ac
+12/01/2009  01:03 PM             2,329 CONTRIBUTORS
+12/01/2009  01:03 PM    <DIR>          docs
+12/01/2009  01:03 PM            50,468 Doxyfile
+12/01/2009  01:03 PM    <DIR>          examples
+12/01/2009  01:03 PM             9,478 INSTALL
+12/01/2009  01:03 PM            26,420 LICENSE
+12/01/2009  01:03 PM            12,983 Makefile
+12/01/2009  01:03 PM             1,216 README
+12/01/2009  01:03 PM                 5 revision
+12/01/2009  01:03 PM    <DIR>          run-conf
+12/01/2009  01:04 PM    <DIR>          src
+12/01/2009  01:04 PM    <DIR>          test
+12/01/2009  01:04 PM    <DIR>          tmp
+12/01/2009  01:04 PM    <DIR>          windows
+              12 File(s)        416,608 bytes
+              10 Dir(s)  85,294,235,648 bytes free
+\end{Verbatim}
+
+\noindent
+This is the top-level directory for the default GNU/Linux and UNIX
+builds.\footnote{Table \ref{fig:top-level-files} describes the files present
+in the top-level GNU/Linux and UNIX build directory.}
+However, since we are building \libflame for Windows, we should focus on the
+{\tt windows} subdirectory.
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+C:\field\temp\libflame-r3692>cd windows
+
+C:\field\temp\libflame-r3692\windows>dir
+ Volume in drive C has no label.
+ Volume Serial Number is B4E3-D9FC
+
+ Directory of C:\field\temp\libflame-r3692\windows
+
+12/01/2009  01:04 PM    <DIR>          .
+12/01/2009  01:04 PM    <DIR>          ..
+12/01/2009  01:04 PM    <DIR>          build
+12/01/2009  01:04 PM             2,667 configure.cmd
+12/01/2009  01:04 PM             4,057 gendll.cmd
+12/01/2009  01:04 PM               434 linkargs.txt
+12/01/2009  01:04 PM               452 linkargs64.txt
+12/01/2009  01:04 PM            11,847 Makefile
+12/01/2009  01:04 PM                 5 revision
+               6 File(s)         19,462 bytes
+               3 Dir(s)  85,294,235,648 bytes free
+\end{Verbatim}
+
+\noindent
+Table \ref{fig:top-level-win-files} describes each file present here.
+In addition, the figure lists files that are created and overwritten
+only upon running \configurecmdns.
+
+
+
+\section{Configuration}
+\label{sec:configuration-win}
+
+\index{\libflame!for Microsoft Windows!configuration}
+
+The first step in building \libflame for Windows is to set the configuration
+options.
+
+The next three sections describe how to build \libflame as a static
+library.
+Please see Section \ref{sec:dll} for supplemental instructions on building a
+dynamically-linked library.
+
+The bulk of the configuration options are specified in the file
+{\tt build$\bs$FLA\_config.h}.\footnote{Unlike in the GNU/Linux build system,
+the user must set these options manually. We apologize for the inconvenience.}
+The options correspond to C preprocessor macros.
+If a macro is commented out, the feature is disabled, otherwise it is enabled.
+Each macro is also preceeded with a comment containing a brief description of
+its corresponding feature.
+Full documentation for each feature macro in {\tt build$\bs$FLA\_config.h}
+may be found in Section \ref{sec:configure-options}.
+
+\input{figs/25-top-level-win-files}
+
+There is a single configuration option that must be set in the
+{\tt build$\bs$defs.mk}:
+\begin{itemize}
+\item {\bf Verboseness.}
+\libflame for Windows may be compiled in verbose mode, in which actual commands
+are echoed to the command line instead of the more consise output that the user
+sees by default.
+In order to compile in verbose mode, the variable {\tt VERBOSE} must be defined.
+Thus, you may enable verbose mode by uncommenting the following line:
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+# VERBOSE = 1
+\end{Verbatim}
+This feature is disabled by default.
+\end{itemize}
+
+\input{figs/25-configure-arguments}
+
+\subsection{IronPython}
+
+Users of IronPython will need to manually change \configurecmd in order for the
+script to run correctly.
+If you are relying on IronPython as your Python implementation, edit the
+\configurecmd file and change the following lines:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+set GEN_CHECK_REV_FILE=.\build\gen-check-rev-file.py
+set GATHER_SRC=.\build\gather-src-for-windows.py
+set GEN_CONFIG_FILE=.\build\gen-config-file.py
+\end{Verbatim}
+
+\noindent
+to:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+set GEN_CHECK_REV_FILE=ipy .\build\gen-check-rev-file.py
+set GATHER_SRC=ipy .\build\gather-src-for-windows.py
+set GEN_CONFIG_FILE=ipy .\build\gen-config-file.py
+\end{Verbatim}
+
+\noindent
+Also, be sure that the {\tt PATH} environment variable is set to contain the
+path to your IronPython installation.
+
+
+\subsection{Running \configurecmd}
+\label{sec:running-configure-win}
+
+\index{\libflame!for Microsoft Windows!running \configurecmdns}
+
+Once all configuration options are set, the user may run the \configurecmd
+script.
+The \configurecmd script takes three mandatory arguments, which are described
+in Table \ref{fig:configure-arguments}.
+Usage information can also be found by running \configurecmd with no
+arguments.
+%The first is a string identifying the architecture.
+%This string is inserted into the name of the final build products and thus
+%should be set to something meaningful to the user, especially if several
+%different architecture variants of \libflame are to be built.
+%The second is a string identifying the type of build, and must be one of
+%``debug'' or ``release''.
+%Using ``debug'' will cause debugging flags to be passed into the compiler
+%while choosing ``release'' will cause \libflame to be built without debugging
+%symbols.
+
+The output from running \configurecmd should look something like:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+C:\field\temp\libflame-r3692\windows>.\configure.cmd x64 debug icl
+.\configure.cmd: Checking/updating revision file.
+gen-check-rev-file.py: Found export. Checking for revision file...
+gen-check-rev-file.py: Revision file found containing revision string "3692". Export is valid snapshot!
+.\configure.cmd: Gathering source files into local flat directories.
+.\configure.cmd: Creating configure definitions file.
+.\configure.cmd: Configuration and setup complete. You may now run nmake.
+\end{Verbatim}
+
+Here, we invoked the \configurecmd script with the ``x64'' architecture
+string, requested that debugging be enabled (and optimizations be disabled),
+and specified {\tt icl} as the C compiler to use for compilation.
+The architecture string will be inserted into the library filename to help
+the user distinguish between any other subsequent builds.
+
+The \configurecmd script first checks whether the revision file needs
+updating.\footnote{If the user is working with a checked-out working copy from
+the  \libflame subversion repository, the script will update the file with the
+latest revision based on the revision specified within the
+{\tt .svn$\bs$entries} file in the top-level \windows directory.}
+Then, a helper script gathers the source code from the primary source tree and
+places copies within a ``flat'' directory structure inside of a new {\tt src}
+subdirectory.
+Header files are copied into a new {\tt include} subdirectory.
+Finally, a {\tt config.mk} makefile fragment is generated with various important
+definitions which will be included by the main \nmake makefile.
+
+Before proceeding to run \nmakens, the user must execute any compiler
+environment scripts that may be necessary in order to run the compiler from
+the command line.
+For example, the Intel C/C++ compiler typically includes a script named which
+allows the user to invoke the {\tt icl} compiler command from the Windows
+shell prompt.
+Note that this step, wherein the user executes any applicable environment
+scripts, must be performed sometime before executing \nmakens.
+
+\input{figs/25-nmake-targets}
+
+
+\section{Compiling}
+
+\index{\libflame!for Microsoft Windows!compiling}
+
+After running \configurecmd and ensuring the compilers are operational from
+the command line, you may run \nmake.
+Running \nmake with no target specified causes the \all target to be
+invoked implicitly.
+Presently, the \all target causes only the static library to be built.
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+C:\field\temp\libflame-r3692\windows>nmake
+\end{Verbatim}
+
+%Alternatively, the user may invoke the \lib and/or \dll targets individually.
+%Invoking the \lib target compiles the source code into object files and then
+%archives them into a static library.
+%Invoking the \dll target compiles the source code and creates a dynamically-linked
+%library without first creating the static library.\footnote{Dynamic library
+%builds of \libflame are currently considered experimental and not guaranteed
+%to link properly.}
+\noindent
+Table \ref{fig:nmake-targets} lists the most useful \nmake targets defined
+in the \makefile that resides in the \windows directory.
+
+As \nmake compiles individual source files into object files, it will output
+progress information.
+By default (ie: with verbose output disabled), this appears as:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+C:\field\temp\libflame-r3692\windows>nmake
+
+Microsoft (R) Program Maintenance Utility Version 9.00.30729.01
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+nmake: Creating .\obj\flamec\x64\debug directory
+nmake: Compiling .\src\flamec\bl1_amax.c
+nmake: Compiling .\src\flamec\bl1_asum.c
+nmake: Compiling .\src\flamec\bl1_axpy.c
+nmake: Compiling .\src\flamec\bl1_axpymt.c
+nmake: Compiling .\src\flamec\bl1_axpysmt.c
+nmake: Compiling .\src\flamec\bl1_axpysv.c
+nmake: Compiling .\src\flamec\bl1_axpyv.c
+nmake: Compiling .\src\flamec\bl1_check.c
+nmake: Compiling .\src\flamec\bl1_conjm.c
+nmake: Compiling .\src\flamec\bl1_conjmr.c
+nmake: Compiling .\src\flamec\bl1_conjv.c
+\end{Verbatim}
+
+\noindent
+When compilation is complete, the library will be archived.
+The output will appear as:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+nmake: Creating .\lib\x64\debug directory
+nmake: Creating static library .\lib\x64\debug\libflame-x64-r3692.lib
+\end{Verbatim}
+
+\noindent
+As you can see, the ``x64'' architecture string (provided at configure-time)
+and ``r3692'' revision string were inserted into the final library name.
+\libflame is still under heavy development and undergoes frequent changes, and
+so the revision string is helpful for obvious reasons.
+Recall that the architecture string is completely arbitrary and has no effect
+on how the library gets built.
+However, it should be set to something reasonable to help you remember which
+environment was used to compile \libflamens.
+
+
+\section{Installation}
+
+\index{\libflame!for Microsoft Windows!installing}
+
+Upon creation, the static library file resides in a subdirectory of the \lib
+directory, depending on the architecture and build type strings given to
+\configurecmdns.
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+C:\field\temp\libflame-r3692\windows>dir lib\x64\debug
+ Volume in drive C has no label.
+ Volume Serial Number is B4E3-D9FC
+
+ Directory of C:\field\temp\libflame-r3692\windows\lib\x64\debug
+
+12/01/2009  01:19 PM    <DIR>          .
+12/01/2009  01:19 PM    <DIR>          ..
+12/01/2009  01:19 PM        45,800,190 libflame-x64-r3692.lib
+               1 File(s)     45,800,190 bytes
+               2 Dir(s)  85,181,444,096 bytes free
+\end{Verbatim}
+
+Once library has been built, it may be copied out manually for use by the
+application developer.
+Alternatively, the user may specify an installation directory in the
+{\tt build$\bs$defs.mk} file by setting the following variable:\footnote{
+Of course, if the user is going to invoke an \install target, he should first
+verify that he has permission to access and write to the directory specified
+in {\tt build$\bs$defs.mk}.
+Otherwise, the file copy will fail.
+}
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+INSTALL_PREFIX = c:\field\lib
+\end{Verbatim}
+
+\noindent
+After this variable is set, the \nmake install target may be invoked.
+This results in the static library being built, if it was not already, and
+then copied to its destination directory, specified by the
+{\tt INSTALL\_PREFIX} \nmake variable.
+The \install target also copies the \libflame header files.
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+C:\field\temp\libflame-r3692\windows>nmake install
+
+Microsoft (R) Program Maintenance Utility Version 9.00.30729.01
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+nmake: Installing .\lib\x64\debug\libflame-x64-r3692.lib to c:\field\lib\libflame\lib
+nmake: Installing libflame header files to c:\field\lib\libflame\include-x64-r3692
+\end{Verbatim}
+
+At this point, the static library and header files are ready to use.
+
+
+
+\section{Dynamic library generation}
+\label{sec:dll}
+
+The Windows build system is equipped to optionally generate a
+dynamically-linked library (DLL).
+At the time of this writing, \libflame developers consider the DLL generation
+to be experimental and likely to not work.
+Still, we provide instructions in this section for intrepid users,
+or experts who wish to tinker and/or provide us with feedback.
+
+After running \configurecmdns, edit the contents of the \linkargs file.
+This file should be modified to include (1) any linker options the user
+may need or want, (2) a list of system libraries necessary for
+successful linking, (3) a list of library paths to add to the list
+used when the aforementioned libraries are being searched for by the linker,
+and (4) a path to the BLAS (and LAPACK if the user enabled external
+LAPACK interfaces at configure-time).
+The file format is simple; each line is a line passed to the compiler when
+it is invoked as a linker.
+Simply modify the existing lines, and/or add additional lines if you have
+more options, libraries, and/or library paths.
+The following is an example of the contents of \linkargsns.
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+/nologo
+/LD /MT
+/LIBPATH:"C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib"
+/LIBPATH:"C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\lib"
+/nodefaultlib:libcmt /nodefaultlib:libc /nodefaultlib:libmmt
+msvcrt.lib
+/LIBPATH:"C:\Program Files (x86)\Intel\Compiler\11.1\048\lib\ia32"
+/LIBPATH:"C:\Program Files (x86)\Intel\Compiler\11.1\048\mkl\ia32\lib"
+mkl_intel_c.lib
+mkl_sequential.lib
+mkl_core.lib
+\end{Verbatim}
+
+\noindent
+The \libflame distribution also includes a file named {\tt linkargs64.txt}
+which contains the equivalent paths and flags necessary for 64-bit linking:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+/nologo
+/LD /MT 
+/LIBPATH:"C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib\x64"
+/LIBPATH:"C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\lib\amd64"
+/nodefaultlib:libcmt /nodefaultlib:libc /nodefaultlib:libmmt
+msvcrt.lib
+/LIBPATH:"C:\Program Files (x86)\Intel\Compiler\11.1\048\lib\intel64"
+/LIBPATH:"C:\Program Files (x86)\Intel\Compiler\11.1\048\mkl\em64t\lib"
+mkl_intel_lp64.lib
+mkl_sequential.lib
+mkl_core.lib
+\end{Verbatim}
+
+\input{figs/25-library-files}
+
+\noindent
+Simply replace the contents of {\tt linkargs.txt} with the contents of
+{\tt linkargs64.txt} if you wish to generate a 64-bit library.
+The file may need some tweaking, depending on your development environment.
+
+%\noindent
+%Note the format used when listing library paths.
+%Each path must be preceeded by {\tt /link /LIBPATH:} and the path must be
+%enclosed in quotes if it contains spaces.
+%These paths are typically necessary so that system libraries may be located
+%by the compiler at link-time.
+%If, when attempting to build a dynamically-linked copy of \libflamens, you
+%encounter errors that indicate the compiler could not find certain libraries,
+%try locating the libraries manually and then add those directory paths to
+%the \linkargs file.
+
+Note that in the above examples we link against MKL.
+The dynamic build of \libflame requires a BLAS implementation at the time
+the DLL is generated.
+This is necessary so the linker can resolve all BLAS symbol references within
+\libflame at the time the library is built.
+To specify a different BLAS library, simply replace the {\tt /LIBPATH} entries
+and {\tt .lib} filenames accordingly.
+
+After building the static library, the user may re-use the object files
+to generate the DLL.
+Simply invoke the \dll target:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+C:\field\temp\libflame-r3692\windows>nmake dll
+
+Microsoft (R) Program Maintenance Utility Version 9.00.30729.01
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+nmake: Creating dynamic library .\dll\x64\debug\libflame-x64-r3692.dll
+   Creating library libflame-x64-r3692.lib and object libflame-x64-r3692.exp
+\end{Verbatim}
+
+The purpose of each file produced for static and dynamic builds of \libflame
+is described in Table \ref{fig:library-files}.
+The filenames in this table correspond to those that would result from building
+revision r3692 with the architecture string ``x64''.
+
+Once generated, the dynamic library files reside in a directory named \dllns:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+C:\field\temp\libflame-r3692\windows>dir dll\x64\debug
+ Volume in drive C has no label.
+ Volume Serial Number is B4E3-D9FC
+
+ Directory of C:\field\temp\libflame-r3692\windows\dll\x64\debug
+
+12/01/2009  01:33 PM    <DIR>          .
+12/01/2009  01:33 PM    <DIR>          ..
+12/01/2009  01:33 PM        19,907,584 libflame-x64-r3692.dll
+12/01/2009  01:33 PM               618 libflame-x64-r3692.dll.manifest
+12/01/2009  01:33 PM           330,905 libflame-x64-r3692.exp
+12/01/2009  01:33 PM           573,048 libflame-x64-r3692.lib
+               4 File(s)     20,812,155 bytes
+               2 Dir(s)  85,156,536,320 bytes free
+\end{Verbatim}
+
+\noindent
+%Here, the installation directories of {\tt c:$\bs$field$\bs$lib$\bs$libflame$\bs$lib}
+%and {\tt c:$\bs$field$\bs$lib$\bs$libflame$\bs$dll} were specified in
+%{\tt build$\bs$defs.mk} as the static and dynamic library install paths,
+%respectively.
+The user may then invoke the \installdll target to install the DLL files
+to the directory specified by {\tt INSTALL\_PREFIX} in
+{\tt build$\bs$defs.mk}:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
+C:\field\libflame-wc\windows>nmake install-dll
+
+Microsoft (R) Program Maintenance Utility Version 9.00.30729.01
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+nmake: Installing .\dll\x64\debug\libflame-x64-r3692.dll to c:\field\lib\libflame\dll
+nmake: Installing .\dll\x64\debug\libflame-x64-r3692.lib to c:\field\lib\libflame\dll
+nmake: Installing .\dll\x64\debug\libflame-x64-r3692.exp to c:\field\lib\libflame\dll
+\end{Verbatim}
+
+If you haven't already run the \install target for a static library install,
+you'll need to manually invoke the \installheaders target so that the
+\libflame header files are copied to the install directory.
+
+
+
+
+\section{Linking against \libflame}
+\label{sec:linking-win}
+
+\index{\libflame!for Microsoft Windows!linking against}
+
+This section will show you how to link a Windows build of \libflame with
+your existing application.
+Let's assume that you've installed \libflame to
+{\tt c:$\bs$field$\bs$lib$\bs$libflame}.
+Let's also assume that you are building your application from the command
+line.\footnote{
+We acknowledge that most users will probably be using an integrated
+development environment (IDE) to develop their programs.
+However, just as \libflame only supports building from the command line,
+we will only demonstrate how to link against the library using \nmake and
+leave it up to the motivated user to learn how to link against \libflame
+from within whatever IDE he wishes.}
+
+In general, you should make the following changes to your application build
+process:
+\begin{itemize}
+\item
+{\bf Add the \libflame header directory to the include path of your compiler}.
+Usually, this is done by with the {\tt /I} compiler option.
+For example, if you configured \libflame r3692 with the ``x64'' build label,
+and specified that \configurecmd use
+{\tt c:$\bs$field$\bs$lib$\bs$libflame} as the
+install prefix, then you would add
+{\tt /Ic:$\bs$field$\bs$lib$\bs$libflame$\bs$include-x86-r3021} to the command
+line when invoking the compiler.
+Strictly speaking, this is only necessary when compiling source code files
+that use \libflame symbols or APIs, but it is generally safe to use when compiling
+all of your application's source code.
+\item
+{\bf Add \libflame to the link command that links your application.}
+To link against \libflamens, you need to add
+{\tt libflame-x64-r3692.lib} to your link command.
+\end{itemize}
+
+Now let's give a concrete example of these changes.
+Suppose you've been building your application with an \nmake \makefile that
+looks something like:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\#\{\},fontsize=\footnotesize]
+SRC_PATH     = .
+OBJ_PATH     = .
+INC_PATH     = .
+
+LIB_HOME     = c:\field\lib
+BLAS_LIB     = $(LIB_HOME)\libblas.lib
+LAPACK_LIB   = $(LIB_HOME)\liblapack.lib
+
+CC           = cl.exe
+LINKER       = link.exe
+CFLAGS       = /nologo /O2 /I$(INC_PATH)
+LDFLAGS      = /nologo \
+               /LIBPATH:"C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib\x64" \
+               /LIBPATH:"C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\lib\amd64" \
+               /nodefaultlib:libcmt /nodefaultlib:libc /nodefaultlib:libmmt \
+               msvcrt.lib
+
+MYAPP_OBJS   = main.obj file.obj util.obj proc.obj
+MYAPP_BIN    = my_app.exe
+
+{$(SRC_PATH)}.c{$(OBJ_PATH)}.obj:
+    $(CC) $(CFLAGS) /c $< /Fo$@
+
+$(MYAPP): $(MYAPP_OBJS)
+	$(LINKER) $(MYAPP_OBJS) /Fe$(MYAPP_BIN) $(LDFLAGS) $(LAPACK_LIB) $(BLAS_LIB)
+
+clean:
+    del /F /Q $(MYAPP_OBJS) $(MYAPP_BIN)
+    del /F /Q *.manifest
+\end{Verbatim}
+
+\noindent
+To link against \libflame, you should change your \makefile as follows:
+
+\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\#\{\},fontsize=\footnotesize]
+SRC_PATH     = .
+OBJ_PATH     = .
+INC_PATH     = .
+
+LIB_HOME     = c:\field\lib
+BLAS_LIB     = $(LIB_HOME)\libblas.lib
+LAPACK_LIB   = $(LIB_HOME)\liblapack.lib
+
+#textcolor{red}{FLAME_HOME   = c:\field\lib\libflame}
+#textcolor{red}{FLAME_INC    = $(FLAME_HOME)\include-x64-r3692}
+#textcolor{red}{FLAME_LIB    = $(FLAME_HOME)\lib\libflame-x64-r3692.lib}
+
+CC           = cl.exe
+LINKER       = link.exe
+CFLAGS       = /nologo /O2 /I$(INC_PATH) #textcolor{red}{/I$(FLAME_INC)}
+LDFLAGS      = /nologo \
+               /LIBPATH:"C:\Program Files\Microsoft SDKs\Windows\v6.0A\Lib\x64" \
+               /LIBPATH:"C:\Program Files (x86)\Microsoft Visual Studio 9.0\VC\lib\amd64" \
+               /nodefaultlib:libcmt /nodefaultlib:libc /nodefaultlib:libmmt \
+               msvcrt.lib
+
+MYAPP_OBJS   = main.obj file.obj util.obj proc.obj
+MYAPP_BIN    = my_app.exe
+
+{$(SRC_PATH)}.c{$(OBJ_PATH)}.obj:
+    $(CC) $(CFLAGS) /c $< /Fo$@
+
+$(MYAPP): $(MYAPP_OBJS)
+	$(LINKER) $(MYAPP_OBJS) /Fe$(MYAPP_BIN) $(LDFLAGS) #textcolor{red}{$(FLAME_LIB)} $(LAPACK_LIB) $(BLAS_LIB)
+
+clean:
+    del /F /Q $(MYAPP_BIN) $(MYAPP_OBJS)
+    del /F /Q *.manifest
+\end{Verbatim}
+
+\noindent
+The changes appear in red.
+
+First, we define the locations of \libflame and the \libflame header directory.
+
+Second, we include the location of the \libflame headers to the compilers'
+command line options so that the C compiler will be able to perform type
+checking against \libflame declarations and prototypes.
+
+Finally, we add the \libflame library to the link command, making sure to
+insert it before the LAPACK and BLAS libraries.
+
+Note that we are linking against a static build of \libflamens.
+In principle, the user may also link to a dynamically-linked copy of
+\libflamens.
+However, as mentioned previously, the DLL instantiation of \libflame is
+considered experimental and likely to not link properly.
+%which had its internal symbols resolved against external libraries, such
+%as system libraries and the BLAS, when the library was built.
+%Thus, we only continue to link against the BLAS and LAPACK libraries under the
+%assumption that the application still makes use of these libraries directly.
+
+%If you want to link your application
+%to a static build of \libflamens, take a look at the default contents of
+%{\tt linkargs.txt} to get an idea of what link options might be needed to
+%successfully link your executable.
+%Note that this applies only if you wish to link your application from
+%the command line, as IDEs tend to supply the user with most of these link
+%options automatically.
+
+
+
+
+%Since you are building \libflame, you probably wish to use it in your
+%application.
+%This section will show you how to link \libflame with your existing application.
+%
+%Let's assume that you've installed \libflame to the default location in
+%{\tt \$HOME/flame}.
+%Let's also assume that you invoked the \installsymlinks target, giving
+%you shorthand symbolic links to both \libflame and the directory containing
+%header files.
+%
+%In general, you should make the following changes to your application build
+%process:
+%\begin{itemize}
+%\item
+%{\bf Add the \libflame header directory to the include path of your compiler}.
+%Usually, this is done by with the {\tt -I} compiler option.
+%For example, if you configured \libflame to use {\tt \$HOME/flame} as the
+%install prefix, then you would add {\tt -I\$HOME/flame/include} to the command
+%line when invoking the compiler.
+%Strictly speaking, this is only necessary when compiling source code files
+%that use \libflame symbols or APIs, but it is generally safe to use when compiling
+%all of your application's source code.
+%\item
+%{\bf Add \libflame to the link command that links your application.}
+%If you only wish to use the native \libflame API, then you only need to add
+%{\tt libflame.a} to your link command.
+%However, note that {\tt libflame.a} {\em must} appear in front of the
+%LAPACK and BLAS libraries.
+%This is because the linker only searches for symbols in the ``current''
+%archive and those that appear further down in the link command.
+%Placing \libflame after LAPACK or the BLAS will result in undefined symbol
+%errors at link-time.
+%\item
+%{\bf Use the recommended linker flags detected by \configurens.}
+%This topic was previously alluded to toward the end of Section
+%\ref{sec:running-configure}.
+%It is often the case that you must add various linker flags to the link
+%command in order to properly link your application with \libflamens.
+%This is usually the result of the compilers embedding certain low-level
+%functions into the object code.
+%These functions may only be resolved at link-time if the library in which
+%they are defined is also provided to the linker.
+%The list of linker flags that you will need is displayed when \configure
+%finished and exits.
+%After \configure is run, you may also find these linker flags in the
+%\postconfigure script, as described near the end of
+%Section \ref{sec:running-configure}.
+%\end{itemize}
+
+

@@ -1,0 +1,104 @@
+
+#include "FLAME.h"
+
+FLA_Error FLA_Eig_gest_iu_blk_var1( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_gest_t* cntl );
+FLA_Error FLA_Eig_gest_iu_blk_var2( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_gest_t* cntl );
+FLA_Error FLA_Eig_gest_iu_blk_var3( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_gest_t* cntl );
+FLA_Error FLA_Eig_gest_iu_blk_var4( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_gest_t* cntl );
+FLA_Error FLA_Eig_gest_iu_blk_var5( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_gest_t* cntl );
+
+FLA_Error FLA_Eig_gest_iu_unb_var1( FLA_Obj A, FLA_Obj Y, FLA_Obj B );
+FLA_Error FLA_Eig_gest_iu_unb_var2( FLA_Obj A, FLA_Obj Y, FLA_Obj B );
+FLA_Error FLA_Eig_gest_iu_unb_var3( FLA_Obj A, FLA_Obj Y, FLA_Obj B );
+FLA_Error FLA_Eig_gest_iu_unb_var4( FLA_Obj A, FLA_Obj Y, FLA_Obj B );
+FLA_Error FLA_Eig_gest_iu_unb_var5( FLA_Obj A, FLA_Obj Y, FLA_Obj B );
+
+FLA_Error FLA_Eig_gest_iu_opt_var1( FLA_Obj A, FLA_Obj Y, FLA_Obj B );
+FLA_Error FLA_Eig_gest_iu_ops_var1( int m_AB,
+                                    float*    buff_A, int rs_A, int cs_A, 
+                                    float*    buff_y, int inc_y, 
+                                    float*    buff_B, int rs_B, int cs_B );
+FLA_Error FLA_Eig_gest_iu_opd_var1( int m_AB,
+                                    double*   buff_A, int rs_A, int cs_A, 
+                                    double*   buff_y, int inc_y, 
+                                    double*   buff_B, int rs_B, int cs_B );
+FLA_Error FLA_Eig_gest_iu_opc_var1( int m_AB,
+                                    scomplex* buff_A, int rs_A, int cs_A, 
+                                    scomplex* buff_y, int inc_y, 
+                                    scomplex* buff_B, int rs_B, int cs_B );
+FLA_Error FLA_Eig_gest_iu_opz_var1( int m_AB,
+                                    dcomplex* buff_A, int rs_A, int cs_A, 
+                                    dcomplex* buff_y, int inc_y, 
+                                    dcomplex* buff_B, int rs_B, int cs_B );
+
+FLA_Error FLA_Eig_gest_iu_opt_var2( FLA_Obj A, FLA_Obj Y, FLA_Obj B );
+FLA_Error FLA_Eig_gest_iu_ops_var2( int m_AB,
+                                    float*    buff_A, int rs_A, int cs_A, 
+                                    float*    buff_y, int inc_y, 
+                                    float*    buff_B, int rs_B, int cs_B );
+FLA_Error FLA_Eig_gest_iu_opd_var2( int m_AB,
+                                    double*   buff_A, int rs_A, int cs_A, 
+                                    double*   buff_y, int inc_y, 
+                                    double*   buff_B, int rs_B, int cs_B );
+FLA_Error FLA_Eig_gest_iu_opc_var2( int m_AB,
+                                    scomplex* buff_A, int rs_A, int cs_A, 
+                                    scomplex* buff_y, int inc_y, 
+                                    scomplex* buff_B, int rs_B, int cs_B );
+FLA_Error FLA_Eig_gest_iu_opz_var2( int m_AB,
+                                    dcomplex* buff_A, int rs_A, int cs_A, 
+                                    dcomplex* buff_y, int inc_y, 
+                                    dcomplex* buff_B, int rs_B, int cs_B );
+
+FLA_Error FLA_Eig_gest_iu_opt_var3( FLA_Obj A, FLA_Obj Y, FLA_Obj B );
+FLA_Error FLA_Eig_gest_iu_ops_var3( int m_AB,
+                                    float*    buff_A, int rs_A, int cs_A, 
+                                    float*    buff_Y, int rs_Y, int cs_Y,
+                                    float*    buff_B, int rs_B, int cs_B );
+FLA_Error FLA_Eig_gest_iu_opd_var3( int m_AB,
+                                    double*   buff_A, int rs_A, int cs_A, 
+                                    double*   buff_Y, int rs_Y, int cs_Y,
+                                    double*   buff_B, int rs_B, int cs_B );
+FLA_Error FLA_Eig_gest_iu_opc_var3( int m_AB,
+                                    scomplex* buff_A, int rs_A, int cs_A, 
+                                    scomplex* buff_Y, int rs_Y, int cs_Y,
+                                    scomplex* buff_B, int rs_B, int cs_B );
+FLA_Error FLA_Eig_gest_iu_opz_var3( int m_AB,
+                                    dcomplex* buff_A, int rs_A, int cs_A, 
+                                    dcomplex* buff_Y, int rs_Y, int cs_Y,
+                                    dcomplex* buff_B, int rs_B, int cs_B );
+
+FLA_Error FLA_Eig_gest_iu_opt_var4( FLA_Obj A, FLA_Obj Y, FLA_Obj B );
+FLA_Error FLA_Eig_gest_iu_ops_var4( int m_AB,
+                                    float*    buff_A, int rs_A, int cs_A, 
+                                    float*    buff_y, int inc_y, 
+                                    float*    buff_B, int rs_B, int cs_B );
+FLA_Error FLA_Eig_gest_iu_opd_var4( int m_AB,
+                                    double*   buff_A, int rs_A, int cs_A, 
+                                    double*   buff_y, int inc_y, 
+                                    double*   buff_B, int rs_B, int cs_B );
+FLA_Error FLA_Eig_gest_iu_opc_var4( int m_AB,
+                                    scomplex* buff_A, int rs_A, int cs_A, 
+                                    scomplex* buff_y, int inc_y, 
+                                    scomplex* buff_B, int rs_B, int cs_B );
+FLA_Error FLA_Eig_gest_iu_opz_var4( int m_AB,
+                                    dcomplex* buff_A, int rs_A, int cs_A, 
+                                    dcomplex* buff_y, int inc_y, 
+                                    dcomplex* buff_B, int rs_B, int cs_B );
+
+FLA_Error FLA_Eig_gest_iu_opt_var5( FLA_Obj A, FLA_Obj Y, FLA_Obj B );
+FLA_Error FLA_Eig_gest_iu_ops_var5( int m_AB,
+                                    float*    buff_A, int rs_A, int cs_A, 
+                                    float*    buff_y, int inc_y, 
+                                    float*    buff_B, int rs_B, int cs_B );
+FLA_Error FLA_Eig_gest_iu_opd_var5( int m_AB,
+                                    double*   buff_A, int rs_A, int cs_A, 
+                                    double*   buff_y, int inc_y, 
+                                    double*   buff_B, int rs_B, int cs_B );
+FLA_Error FLA_Eig_gest_iu_opc_var5( int m_AB,
+                                    scomplex* buff_A, int rs_A, int cs_A, 
+                                    scomplex* buff_y, int inc_y, 
+                                    scomplex* buff_B, int rs_B, int cs_B );
+FLA_Error FLA_Eig_gest_iu_opz_var5( int m_AB,
+                                    dcomplex* buff_A, int rs_A, int cs_A, 
+                                    dcomplex* buff_y, int inc_y, 
+                                    dcomplex* buff_B, int rs_B, int cs_B );

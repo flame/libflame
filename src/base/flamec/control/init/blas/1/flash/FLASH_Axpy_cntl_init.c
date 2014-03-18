@@ -1,0 +1,43 @@
+
+#include "FLAME.h"
+
+fla_axpy_t*        flash_axpy_cntl_blas;
+fla_axpy_t*        flash_axpy_cntl_tb;
+fla_axpy_t*        flash_axpy_cntl;
+fla_blocksize_t*   flash_axpy_bsize;
+
+void FLASH_Axpy_cntl_init()
+{
+	// Set blocksize for hierarchical storage.
+	flash_axpy_bsize     = FLA_Blocksize_create( 1, 1, 1, 1 );
+
+	// Create a control tree that assumes A and B are small.
+	flash_axpy_cntl_blas = FLA_Cntl_axpy_obj_create( FLA_HIER,
+	                                                 FLA_SUBPROBLEM,
+	                                                 NULL,
+	                                                 NULL );
+
+	// Create a control tree that marches through A and B vertically.
+	flash_axpy_cntl_tb   = FLA_Cntl_axpy_obj_create( FLA_HIER,
+	                                                 FLA_BLOCKED_VARIANT1,
+	                                                 flash_axpy_bsize,
+	                                                 flash_axpy_cntl_blas );
+
+	// Create a control tree that marches through A and B horizontally, then
+	// vertically.
+	flash_axpy_cntl      = FLA_Cntl_axpy_obj_create( FLA_HIER,
+	                                                 FLA_BLOCKED_VARIANT3,
+	                                                 flash_axpy_bsize,
+	                                                 flash_axpy_cntl_tb );
+}
+
+void FLASH_Axpy_cntl_finalize()
+{
+	FLA_Cntl_obj_free( flash_axpy_cntl_blas );
+
+	FLA_Cntl_obj_free( flash_axpy_cntl_tb );
+	FLA_Cntl_obj_free( flash_axpy_cntl );
+
+	FLA_Blocksize_free( flash_axpy_bsize );
+}
+

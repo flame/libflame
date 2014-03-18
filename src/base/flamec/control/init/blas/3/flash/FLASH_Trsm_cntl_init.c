@@ -1,0 +1,61 @@
+
+#include "FLAME.h"
+
+extern fla_scal_t* flash_scal_cntl;
+extern fla_gemm_t* flash_gemm_cntl_op_bp;
+
+fla_trsm_t*        flash_trsm_cntl_blas;
+fla_trsm_t*        flash_trsm_cntl_bp;
+fla_trsm_t*        flash_trsm_cntl_mp;
+fla_trsm_t*        flash_trsm_cntl_mm;
+fla_blocksize_t*   flash_trsm_bsize;
+
+void FLASH_Trsm_cntl_init()
+{
+	// Set trsm blocksize for hierarchical storage.
+	flash_trsm_bsize      = FLA_Blocksize_create( 1, 1, 1, 1 );
+
+	// Create a control tree that assumes A and B are b x b blocks.
+	flash_trsm_cntl_blas  = FLA_Cntl_trsm_obj_create( FLA_HIER,
+	                                                  FLA_SUBPROBLEM,
+	                                                  NULL,
+	                                                  NULL,
+	                                                  NULL,
+	                                                  NULL );
+
+	// Create a control tree that assumes A is a block and B is a panel.
+	flash_trsm_cntl_bp    = FLA_Cntl_trsm_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT3,
+	                                                  flash_trsm_bsize,
+	                                                  flash_scal_cntl,
+	                                                  flash_trsm_cntl_blas,
+	                                                  NULL );
+
+	// Create a control tree that assumes A is large and B is a panel.
+	flash_trsm_cntl_mp    = FLA_Cntl_trsm_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT2,
+	                                                  flash_trsm_bsize,
+	                                                  flash_scal_cntl,
+	                                                  flash_trsm_cntl_blas,
+	                                                  flash_gemm_cntl_op_bp );
+
+	// Create a control tree that assumes A and B are both large.
+	flash_trsm_cntl_mm    = FLA_Cntl_trsm_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT3,
+	                                                  flash_trsm_bsize,
+	                                                  flash_scal_cntl,
+	                                                  flash_trsm_cntl_mp,
+	                                                  NULL );
+}
+
+void FLASH_Trsm_cntl_finalize()
+{
+	FLA_Cntl_obj_free( flash_trsm_cntl_blas );
+
+	FLA_Cntl_obj_free( flash_trsm_cntl_bp );
+	FLA_Cntl_obj_free( flash_trsm_cntl_mp );
+	FLA_Cntl_obj_free( flash_trsm_cntl_mm );
+
+	FLA_Blocksize_free( flash_trsm_bsize );
+}
+

@@ -1,0 +1,167 @@
+
+#echo "################################################################################"
+echo ""
+echo "libflame configuration summary"
+
+echo ""
+echo "revision........................................ : @PACKAGE_VERSION@"
+
+echo ""
+echo "build system type............................... : @build@"
+echo "host system type................................ : @host@"
+
+echo ""
+echo "Enable verbose make output...................... : @fla_enable_verbose_make_output@"
+
+echo ""
+echo "Enable maximum argument list hack............... : @fla_enable_max_arg_list_hack@"
+
+echo ""
+echo "C compiler...................................... : @CC@"
+echo "Library archiver................................ : @AR@"
+echo "Library archive indexer......................... : @RANLIB@"
+
+echo ""
+echo "Enable Windows build (experimental)............. : @fla_enable_windows_build@"
+
+echo ""
+echo "Create static library........................... : @fla_enable_static_build@"
+echo "Create shared (dynamically-linked) library...... : @fla_enable_dynamic_build@"
+
+echo ""
+echo "Enable non-critical code........................ : @fla_enable_non_critical_code@"
+
+echo ""
+echo "Enable built-in BLAS implementation............. : @fla_enable_builtin_blas@"
+
+echo ""
+echo "Enable lapack2flame............................. : @fla_enable_lapack2flame@"
+echo "Enable external LAPACK for subproblems.......... : @fla_enable_external_lapack_for_subproblems@"
+echo "Enable external LAPACK interfaces............... : @fla_enable_external_lapack_interfaces@"
+
+echo ""
+echo "Enable multithreading support................... : @fla_enable_multithreading@"
+if   [ "@fla_multithreading_model@" = "openmp" ] ; then
+echo "   Threading implementation..................... : OpenMP"
+echo "      OpenMP C compiler/linker flags............ : @fla_c_openmp_flags@"
+elif [ "@fla_multithreading_model@" = "pthreads" ] ; then
+echo "   Threading implementation..................... : POSIX threads"
+fi
+
+echo ""
+echo "Enable SuperMatrix support...................... : @fla_enable_supermatrix@"
+
+echo ""
+echo "Enable GPU support.............................. : @fla_enable_gpu@"
+
+echo ""
+echo "Enable SCC support.............................. : @fla_enable_scc@"
+
+echo ""
+echo "Enable support for Texas Instruments' DSP....... : @fla_enable_tidsp@"
+
+echo ""
+echo "Enable vector intrinsics........................ : @fla_enable_vector_intrinsics@"
+if   [ "@fla_vector_intrinsic_type@" = "sse" ] ; then
+echo "   Vector intrinsic type........................ : SSE"
+echo "      SSE C compiler flags...................... : @fla_c_sse_flags@"
+fi
+
+echo ""
+echo "Enable memory alignment......................... : @fla_enable_memory_alignment@"
+if [ "@fla_enable_memory_alignment@" = "yes" ] ; then
+echo "   User-requested memory alignment boundary..... : @fla_memory_alignment_boundary@"
+echo "   Enable leading dimension alignment........... : @fla_enable_ldim_alignment@"
+fi
+
+echo ""
+echo "C compiler language flags....................... : @fla_c_lang_flags@"
+
+echo ""
+echo "Enable compiler optimizations................... : @fla_enable_compiler_optimizations@"
+echo "   C compiler optimization flags................ : @fla_c_opt_flags@"
+
+echo "Enable compiler warnings........................ : @fla_enable_compiler_warnings@"
+echo "   C compiler warning flags..................... : @fla_c_warning_flags@"
+
+echo "Enable compiler debugging symbols............... : @fla_enable_compiler_debug@"
+echo "   C compiler debug flags....................... : @fla_c_debug_flags@"
+
+echo "Enable compiler profiling symbols............... : @fla_enable_compiler_profiling@"
+echo "   C compiler profiling flags................... : @fla_c_prof_flags@"
+
+echo ""
+echo "Enable internal error checking.................. : @fla_enable_internal_error_checking@"
+if   [ "@fla_enable_internal_error_checking@" = "yes" ] ; then
+echo "   Internal error checking level................ : @fla_internal_error_checking_level@"
+fi
+
+echo ""
+echo "Enable memory leak counter...................... : @fla_enable_memory_leak_counter@"
+
+echo ""
+echo "Enable level-3 BLAS front-end control trees..... : @fla_enable_blas3_front_end_cntl_trees@"
+
+echo ""
+echo "Enable BLIS use of FLA_malloc()................. : @fla_enable_blis_use_of_fla_malloc@"
+
+echo ""
+echo "Enable interfaces to internal libgoto symbols... : @fla_enable_goto_interfaces@"
+
+echo ""
+echo "Enable interfaces to CBLAS...................... : @fla_enable_cblas_interfaces@"
+
+echo ""
+echo "Enable user-defined default m blocksize......... : @fla_enable_default_m_blocksize@"
+if [ "@fla_enable_default_m_blocksize@" = "yes" ] ; then
+echo "   User-requested default m blocksize........... : @fla_default_m_blocksize@"
+fi
+echo "Enable user-defined default k blocksize......... : @fla_enable_default_k_blocksize@"
+if [ "@fla_enable_default_k_blocksize@" = "yes" ] ; then
+echo "   User-requested default k blocksize........... : @fla_default_k_blocksize@"
+fi
+echo "Enable user-defined default n blocksize......... : @fla_enable_default_n_blocksize@"
+if [ "@fla_enable_default_n_blocksize@" = "yes" ] ; then
+echo "   User-requested default n blocksize........... : @fla_default_n_blocksize@"
+fi
+
+echo ""
+echo "Enable portable timer........................... : @fla_enable_portable_timer@"
+if [ "@fla_enable_portable_timer@" = "yes" ] ; then
+echo "   Portable timer function...................... : @fla_portable_timer_function@"
+fi
+
+echo ""
+echo "Autodetect Fortran linker flags................. : @fla_enable_autodetect_f77_ldflags@"
+if [ "@fla_enable_autodetect_f77_ldflags@" = "yes" ] ; then
+echo "   Fortran linker flags......................... : @FLIBS@"
+fi
+echo "Autodetect Fortran name-mangling................ : @fla_enable_autodetect_f77_name_mangling@"
+if [ "@fla_enable_autodetect_f77_name_mangling@" = "yes" ] ; then
+echo "   Unmangled name............................... : @fla_f77_foobar_unmangled@"
+echo "   Mangled name................................. : @fla_f77_foobar_mangled@"
+fi
+
+echo ""
+echo "Compile with extra C compiler flags............. : @fla_with_extra_cflags@"
+if [ "@fla_with_extra_cflags@" = "yes" ] ; then
+echo "   User-requested extra C compiler flags........ : @fla_extra_cflags@"
+fi
+
+echo ""
+echo "libflame install directory prefix............... : @prefix@"
+echo ""
+echo "Configuration complete!"
+echo ""
+if [ "@fla_enable_autodetect_f77_ldflags@" = "yes" ] ; then
+echo "NOTE: Autodetection of Fortran linker flags was enabled. The configure"
+echo "script thinks that the flags listed above are necessary to successfully"
+echo "link a program to Fortran object code. If your program uses any Fortran"
+echo "libraries, you will probably need to link with these flags."
+echo ""
+fi
+echo "You may now run 'make' to build all libflame libraries and then 'make install'"
+echo "to install the libraries." 
+echo ""
+#echo "################################################################################"
+

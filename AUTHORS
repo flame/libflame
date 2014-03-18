@@ -1,0 +1,48 @@
+libflame Developers
+-------------------
+
+Several developers have made contributions to libflame. The following
+sub-projects are supported by the individuals credited:
+
+Build system
+  Field G. Van Zee           (CS, UT-Austin)
+
+Base library
+  Ernie Chan                 (CS, UT-Austin)
+  Robert van de Geijn        (CS, UT-Austin)
+  Field G. Van Zee
+
+Level-3 BLAS implementations
+  Robert van de Geijn
+  Field G. Van Zee
+
+LAPACK-level implementations
+  Ernie Chan
+  Kyungjoo Kim
+  Robert van de Geijn
+  Field G. Van Zee
+
+LAPACK2FLAME interface and implementation
+  Kyungjoo Kim
+
+BLIS interface and implementation
+  Field G. Van Zee
+
+SuperMatrix (out-of-order parallel matrix scheduling with multiple GPU support)
+  Ernie Chan
+  Francisco Igual            (UJI, Spain)
+  Field G. Van Zee
+
+FLASH (Formal Linear Algebra Scalable Hypermatrix API)
+  Tze Meng Low               (CS, UT-Austin)
+  Field G. Van Zee
+
+Microsoft Windows port and build system
+  Field G. Van Zee
+
+libflame manual and API reference
+  Field G. Van Zee
+
+FLAME@lab (FLAME M-script API)
+  Robert van de Geijn
+

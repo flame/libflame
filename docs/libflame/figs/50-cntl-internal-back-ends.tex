@@ -1,0 +1,107 @@
+\begin{figure}[t]
+\begin{center}
+\begin{tabular}{|c|c|}
+\hline
+% --------------------------------------
+{\sc chol} internal back-end function  & {\sc chol} back-end subroutine for lower triangular case \\ \hline
+% --------------------------------------
+\begin{minipage}[t]{3in}
+{\tiny
+\begin{verbatim}
+#include "FLAME.h"
+
+FLA_Error FLA_Chol_internal( FLA_Uplo uplo, FLA_Obj A, fla_chol_t* cntl )
+{
+    FLA_Error r_val = FLA_SUCCESS;
+    
+#ifdef FLA_ENABLE_INTERNAL_ERROR_CHECKING
+    FLA_Chol_internal_check( uplo, A, cntl );
+#endif
+
+    if      ( FLA_Cntl_matrix_type( cntl ) == FLA_HIER &&
+              FLA_Obj_elemtype( A ) == FLA_MATRIX &&
+              FLA_Cntl_variant( cntl ) == FLA_SUBPROBLEM )
+    {
+        // Recurse
+        r_val = FLA_Chol_internal( uplo,
+                                   *FLASH_OBJ_PTR_AT( A ),
+                                   flash_chol_cntl );
+    }
+    else if ( FLA_Cntl_matrix_type( cntl ) == FLA_HIER &&
+              FLA_Obj_elemtype( A ) == FLA_SCALAR &&
+              FLASH_Queue_get_enabled( ) )
+    {
+        // Enqueue
+        ENQUEUE_FLASH_Chol( uplo, A, cntl );
+    }
+    else
+    {
+        if ( FLA_Cntl_matrix_type( cntl ) == FLA_HIER &&
+             FLA_Obj_elemtype( A ) == FLA_SCALAR &&
+             !FLASH_Queue_get_enabled( ) )
+        {
+            // Execute leaf
+            cntl = flash_chol_cntl_lapack;
+        }
+        // Parameter combinations
+        if      ( uplo == FLA_LOWER_TRIANGULAR )
+        {
+            r_val = FLA_Chol_l( A, cntl );
+        }
+        else if ( uplo == FLA_UPPER_TRIANGULAR )
+        {
+            r_val = FLA_Chol_u( A, cntl );
+        }
+    }
+
+    return r_val;
+}
+\end{verbatim}
+}
+\end{minipage}
+&
+\begin{minipage}[t]{3in}
+{\tt \tiny
+\begin{verbatim}
+#include "FLAME.h"
+
+FLA_Error FLA_Chol_l( FLA_Obj A, fla_chol_t* cntl )
+{
+    FLA_Error r_val = FLA_SUCCESS;
+
+    if      ( FLA_Cntl_variant( cntl ) == FLA_SUBPROBLEM )
+    {
+        r_val = FLA_Chol_unb_external( FLA_LOWER_TRIANGULAR, A, cntl );
+    }
+#ifdef FLA_ENABLE_NON_CRITICAL_CODE
+    else if ( FLA_Cntl_variant( cntl ) == FLA_BLOCKED_VARIANT1 )
+    {
+        r_val = FLA_Chol_l_blk_var1( A, cntl );
+    }
+    else if ( FLA_Cntl_variant( cntl ) == FLA_BLOCKED_VARIANT2 )
+    {
+        r_val = FLA_Chol_l_blk_var2( A, cntl );
+    }
+#endif
+    else if ( FLA_Cntl_variant( cntl ) == FLA_BLOCKED_VARIANT3 )
+    {
+        r_val = FLA_Chol_l_blk_var3( A, cntl );
+    }
+
+    return r_val;
+}
+\end{verbatim}
+}
+\end{minipage}
+\\
+% --------------------------------------
+ & \\ \hline
+% --------------------------------------
+\end{tabular}
+\end{center}
+\caption{
+Internal back-end function for Cholesky factorization (left) and helper
+subroutine to handle the lower triangular case (right).
+}
+\label{fig:cntl-internal-back-ends}
+\end{figure}

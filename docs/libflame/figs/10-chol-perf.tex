@@ -1,0 +1,23 @@
+\begin{figure}[tbp]
+\begin{center}
+%\begin{tabular}{c}
+
+%\epsfig{figure=pics/chol_l_itanium2.eps, width=4.00in}
+%\includegraphics[width=6.5in]{pics/chol_l_itanium2-embedded.pdf}
+%\includegraphics[width=6.5in]{pics/chol_l_dunnington.pdf}
+\includegraphics[width=6.5in]{pics/chol_l_dunnington-embedded.pdf}
+
+%\end{tabular}
+\end{center}
+\caption{
+Performance of Cholesky factorization implementations measured on a
+24 core Intel ``Dunnington'' system.
+Theoretical peak system performance is 255 GFLOPS.
+libflame uses variant 3 while LAPACK uses variant 2.
+For non-SuperMatrix experiments, MKL was invoked in multithreaded
+mode.
+For SuperMatrix experiments, MKL parallelism was disabled.
+Blocksizes were tuned individually for each problem size tested.
+}
+\label{fig:chol-perf}
+\end{figure}

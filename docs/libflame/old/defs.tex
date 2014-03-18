@@ -1,0 +1,30 @@
+\newenvironment{codeexample}
+{
+\begin{quote}
+}
+{
+\end{quote}
+}
+
+\newcommand{\equals}{=}
+
+\newcommand{\longggarrow}{
+\setlength{\unitlength}{0.5in}
+\begin{picture}(5,1)
+\put(5,0){\vector(-1,0){5}}
+\end{picture}
+}
+
+% ExampleBox draws a box around an example in the FLAME
+% document
+%
+
+\newcommand{\ExampleBox}[1]{
+\begin{flushright}
+\fbox{
+\begin{minipage}{4.7in}
+#1
+\end{minipage}
+}
+\end{flushright}
+}

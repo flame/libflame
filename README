@@ -1,0 +1,43 @@
+libflame
+Release Notes
+
+---
+
+Thank you for deciding to try out the libflame linear algebra library.
+Please let us know what you think of our methodology and implementations
+by sending us an email at flame@cs.utexas.edu!
+
+Please read the LICENSE file for information on copying and distributing
+this software.
+
+For detailed instructions on how to configure, build, install, and link
+against libflame, please visit the official libflame webpage:
+
+  http://www.cs.utexas.edu/users/flame/libflame/
+
+We also encourage you to refer to the libflame reference manual. This
+manual contains all the information you need to get started with
+libflame, including installation directions, usage examples, and a
+complete API reference. If you have LaTeX installed on your system, you
+may simply change into the 'docs/libflame' subdirectory of the top-level
+directory of the libflame source tree and build the document from its
+source. If you do not have LaTeX installed, then you may find the
+document through the libflame web page at the URL listed above.
+
+The Elemental software package is also included in this distribution of
+libflame. Elemental is a C++ framework for distributed-memory dense linear
+algebra that strives to be fast, portable, and programmable. It can be
+thought of as a generalization of PLAPACK to element-by-element
+distributions that also makes use of recent algorithmic advances from the
+FLAME project. Elemental usually outperforms both PLAPACK and ScaLAPACK,
+however, it heavily relies on MPI collectives so a good MPI implementation
+is crucial. For further information, please visit the project homepage at:
+
+  http://code.google.com/p/elemental
+
+Thanks again,
+
+Field G. Van Zee
+Department of Computer Sciences
+The University of Texas at Austin
+

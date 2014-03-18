@@ -1,0 +1,43 @@
+
+#include "FLAME.h"
+
+FLA_Error FLA_Gemm_check( FLA_Trans transa, FLA_Trans transb, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, FLA_Obj beta, FLA_Obj C )
+{
+  FLA_Error e_val;
+
+  e_val = FLA_Check_valid_trans( transa );
+  FLA_Check_error_code( e_val );
+
+  e_val = FLA_Check_valid_trans( transb );
+  FLA_Check_error_code( e_val );
+
+  e_val = FLA_Check_floating_object( A );
+  FLA_Check_error_code( e_val );
+
+  e_val = FLA_Check_nonconstant_object( A );
+  FLA_Check_error_code( e_val );
+
+  e_val = FLA_Check_identical_object_datatype( A, B );
+  FLA_Check_error_code( e_val );
+
+  e_val = FLA_Check_identical_object_datatype( A, C );
+  FLA_Check_error_code( e_val );
+
+  e_val = FLA_Check_consistent_object_datatype( A, alpha );
+  FLA_Check_error_code( e_val );
+
+  e_val = FLA_Check_consistent_object_datatype( A, beta );
+  FLA_Check_error_code( e_val );
+
+  e_val = FLA_Check_if_scalar( alpha );
+  FLA_Check_error_code( e_val );
+
+  e_val = FLA_Check_if_scalar( beta );
+  FLA_Check_error_code( e_val );
+
+  e_val = FLA_Check_matrix_matrix_dims( transa, transb, A, B, C );
+  FLA_Check_error_code( e_val );
+
+  return FLA_SUCCESS;
+}
+

@@ -1,0 +1,94 @@
+\chapter{Physically Based Matrix Distribution}
+\label{chapter:pbmd}
+
+
+{\bf This chapter will be updated.}
+We discuss how \plapack locally stores the data associated with the 
+different linear algebra objects.
+Let us consider a column vector $ x $ distributed to $p$ nodes in a 
+$ r \times c $ mesh.  
+For simplicity, we will assume that the column vector is
+aligned to the first entry of the template column vector, which is
+partitioned using a distribution blocking size $ n_b $ and that
+the template column vector is induced in row-major order.
+Thus
+\[ x = \left( \begin{array}{c}
+x_0 \\ \hline
+x_1 \\ \hline
+\vdots \\ \hline
+x_{N-1}
+\end{array}
+\right)
+\]
+where $ x_i $ is of length $ n_b $ (except perhaps the last sub-vector).
+Node $ (i,j) $ will own the sub-vectors
+\[
+\left( \begin{array}{c}
+x_{i * r + j} \\ \hline
+x_{i * r + j + p} \\ \hline
+x_{i * r + j + 2p} \\ \hline
+\vdots
+\end{array}
+\right)
+\]
+This vector is locally stored in memory so that the order of
+the elements is preserved (i.e., elements of $ x_{i * r+j+kp} $
+will precede those of $ x_{i* r+j+(k+1)p} $).
+The stride in memory between elements will be internally determined and
+can be inquired by one of the subsequently described calls.
+
+Next, let us consider a matrix $ A $ distributed to the same mesh.
+For simplicity, we assume that $ A $ is aligned with the top-left
+element of the template matrix induced by row and column template vectors
+both induced in column-major order.
+Then,
+\[
+A = \left( \begin{array}{c | c | c | c }
+A_{0,0} & A_{0,1} & \cdots & A_{0,N-1} \\ \hline
+A_{1,0} & A_{1,1} & \cdots & A_{1,N-1} \\ \hline
+\vdots & \vdots &        & \vdots \\ \hline
+A_{M-1,0} & A_{M-1,1} & \cdots & A_{M-1,N-1}
+\end{array}
+\right)
+\]
+and the following sub-matrix is assigned to node $ (i,j) $:
+\[
+\tilde{A}_{ij} = \left( \begin{array}{c | c | c || c | c | c || c }
+A_{i,j * r} & \cdots & A_{i,(j+1)*r-1} &
+A_{i,j * r+p} & \cdots & A_{i,(j+1)*r-1+p} & \cdots
+\\ \hline \hline
+A_{i+r,j * r} & \cdots & A_{i+r,(j+1)*r-1} &
+A_{i+r,j * r+p} & \cdots & A_{i+r,(j+1)*r-1+p} & \cdots
+\\ \hline \hline
+A_{i+2r,j * r} & \cdots & A_{i+2r,(j+1)*r-1} &
+A_{i+2r,j * r+p} & \cdots & A_{i+2r,(j+1)*r-1+p} & \cdots
+\\ \hline \hline
+\vdots &  & \vdots & \vdots &  & \vdots &
+\end{array} \right)
+\]
+It is this matrix $ \tilde{A}_{ij} $ that is stored in a local
+two-dimensional array, using FORTRAN style column-major
+order storage, with a leading dimension determined internally.
+
+Finally, let us discuss the storage of a projected
+multivector.  Notice that if the column vector $ x $ discussed above
+is spread within a column of nodes, or gathered
+to the $ i $th node in each column,
+the following sub-vectors will be collected on
+node $ (i,j) $:
+\[
+\tilde{x}_{ij} = \left( \begin{array}{c}
+x_{j * r} \\ \hline
+\vdots \\ \hline
+x_{(j+1)*r-1} \\ \hline \hline
+x_{j * r+p} \\ \hline
+\vdots \\ \hline
+x_{(j+1)*r-1+p} \\ \hline \hline
+\vdots
+\end{array} \right)
+\]
+Notice that the sub-vectors from within a column of nodes
+are interleaved so that the indices of sub-vectors are
+strictly increasing (the order in the global vector is maintained).
+It is this column vector that is then stored in a local linear array,
+with a stride determined internally.

@@ -1,0 +1,96 @@
+\setlength{\unitlength}{0.00083300in}%
+%
+\begingroup\makeatletter\ifx\SetFigFont\undefined
+% extract first six characters in \fmtname
+\def\x#1#2#3#4#5#6#7\relax{\def\x{#1#2#3#4#5#6}}%
+\expandafter\x\fmtname xxxxxx\relax \def\y{splain}%
+\ifx\x\y   % LaTeX or SliTeX?
+\gdef\SetFigFont#1#2#3{%
+  \ifnum #1<17\tiny\else \ifnum #1<20\small\else
+  \ifnum #1<24\normalsize\else \ifnum #1<29\large\else
+  \ifnum #1<34\Large\else \ifnum #1<41\LARGE\else
+     \huge\fi\fi\fi\fi\fi\fi
+  \csname #3\endcsname}%
+\else
+\gdef\SetFigFont#1#2#3{\begingroup
+  \count@#1\relax \ifnum 25<\count@\count@25\fi
+  \def\x{\endgroup\@setsize\SetFigFont{#2pt}}%
+  \expandafter\x
+    \csname \romannumeral\the\count@ pt\expandafter\endcsname
+    \csname @\romannumeral\the\count@ pt\endcsname
+  \csname #3\endcsname}%
+\fi
+\fi\endgroup
+\begin{picture}(8724,10149)(289,-9373)
+\thicklines
+\put(901,239){\line( 1, 0){7500}}
+\put(1501,239){\line( 0,-1){8700}}
+\put(2101,239){\line( 0,-1){8700}}
+\put(2701,239){\line( 0,-1){8700}}
+\put(3301,239){\line( 0,-1){8700}}
+\put(3901,239){\line( 0,-1){8700}}
+\put(4501,239){\line( 0,-1){8700}}
+\put(5101,239){\line( 0,-1){8700}}
+\put(5701,239){\line( 0,-1){8700}}
+\put(6301,239){\line( 0,-1){8700}}
+\put(6901,239){\line( 0,-1){8700}}
+\put(7501,239){\line( 0,-1){8700}}
+\put(901,-361){\line( 1, 0){7050}}
+\put(901,-961){\line( 1, 0){7050}}
+\put(901,-1561){\line( 1, 0){7050}}
+\put(901,-2161){\line( 1, 0){7050}}
+\put(901,-2761){\line( 1, 0){7050}}
+\put(901,-3961){\line( 1, 0){7050}}
+\put(901,-4561){\line( 1, 0){7050}}
+\put(901,-5161){\line( 1, 0){7050}}
+\put(901,-5761){\line( 1, 0){7050}}
+\put(901,-6361){\line( 1, 0){7050}}
+\put(901,-6961){\line( 1, 0){7050}}
+\put(901,-7561){\line( 1, 0){7050}}
+\put(901,-8161){\line( 1, 0){7050}}
+\put(901,-3361){\line( 1, 0){7050}}
+\put(2926,-6811){\framebox(4425,4200){}}
+\put(3676,-1936){\vector(-1,-1){712.500}}
+\special{ps: gsave 1 1 1 setrgbcolor}\put(3676,-2012){\framebox(750,450){}}
+\special{ps: gsave 0 0 0 setrgbcolor}\multiput(2926,-2611)(0.00000,8.00508){394}{\line( 0, 1){  4.003}}
+\special{ps: grestore}\special{ps: gsave 0 0 0 setrgbcolor}\multiput(7351,-2611)(0.00000,8.00508){394}{\line( 0, 1){  4.003}}
+\special{ps: grestore}\special{ps: gsave 0 0 0 setrgbcolor}\multiput(2926,-2611)(-8.00344,0.00000){291}{\line(-1, 0){  4.002}}
+\special{ps: grestore}\put(901,239){\line( 0,-1){9000}}
+\special{ps: gsave 0 0 0 setrgbcolor}\multiput(2926,-6811)(-8.00344,0.00000){291}{\line(-1, 0){  4.002}}
+\special{ps: grestore}\put(4351,539){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}\special{ps: gsave 0 0 0 setrgbcolor}global\_width\special{ps: grestore}}}}
+\special{ps: gsave 0 0 0 setrgbcolor}\put(2926,389){\vector(-1, 0){  0}}
+\put(2926,389){\vector( 1, 0){4425}}
+\special{ps: grestore}\special{ps: gsave 0 0 0 setrgbcolor}\put(751,-2611){\vector( 0, 1){  0}}
+\put(751,-2611){\vector( 0,-1){4200}}
+\special{ps: grestore}\put(301,-9361){\framebox(8700,10125){}}
+\put(8176,-361){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}...}}}
+\put(8176,-961){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}...}}}
+\put(8176,-1561){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}...}}}
+\put(8176,-2161){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}...}}}
+\put(8176,-2761){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}...}}}
+\put(8176,-3361){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}...}}}
+\put(8176,-3961){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}...}}}
+\put(8176,-4561){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}...}}}
+\put(8176,-5161){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}...}}}
+\put(8176,-5761){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}...}}}
+\put(8176,-6361){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}...}}}
+\put(8176,-6961){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}...}}}
+\put(8176,-7561){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}...}}}
+\put(8176,-8161){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}...}}}
+\put(1501,-8686){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}:}}}
+\put(1501,-8686){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}:}}}
+\put(2701,-8686){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}:}}}
+\put(3301,-8686){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}:}}}
+\put(4501,-8686){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}:}}}
+\put(5101,-8686){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}:}}}
+\put(5701,-8686){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}:}}}
+\put(6301,-8686){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}:}}}
+\put(6901,-8686){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}:}}}
+\put(7501,-8686){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}:}}}
+\put(3901,-8686){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}:}}}
+\put(2101,-8686){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}:}}}
+\put(1501,-8686){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}:}}}
+\put(3751,-1861){\makebox(0,0)[lb]{\smash{\SetFigFont{17}{20.4}{rm}( i, j )}}}
+\put(601,-5461){\makebox(0,0)[lb]{\smash{\special{ps:gsave currentpoint currentpoint translate
+-90.0 rotate neg exch neg exch translate}\SetFigFont{17}{20.4}{rm}\special{ps: gsave 0 0 0 setrgbcolor}global\_length\special{ps: grestore}\special{ps:currentpoint grestore moveto}}}}
+\end{picture}

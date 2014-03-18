@@ -1,0 +1,68 @@
+\begin{table}
+\begin{center}
+\begin{tabular}{llp{3.3in}}
+{\bf Variable} & {\bf Command line option} & {\bf Description} \\
+% --------------------------------------
+{\tt CC}
+&
+{\tt --with-cc={\em cc}}
+&
+Use {\em CC} as the C compiler. \\
+% --------------------------------------
+{\tt CFLAGS}
+&
+{\em none}
+&
+The command line flags to use with the C compiler.
+Note: Do not set this variable unless you know what you are doing!
+It overrides C compiler flags that are set by \configure to correspond
+to libflame feature options. \\
+% --------------------------------------
+{\tt EXTRA\_CFLAGS}
+&
+{\tt --with-extra-cflags={\em flags}}
+&
+Use {\em flags} in addition to the C compiler flags that are set
+internally by \configurens.
+Most users that need extra flags passed in to the C compiler will
+want to set {\tt EXTRA\_CFLAGS} instead of {\tt CFLAGS}. \\
+% --------------------------------------
+{\tt AR}
+&
+{\tt --with-ar={\em ar}}
+&
+Use {\em AR} to create and fill static library archives. \\
+% --------------------------------------
+{\tt RANLIB}
+&
+{\tt --with-ranlib={\em ranlib}}
+&
+Use {\em RANLIB} to generate the index to the static library archive.
+Note: In modern environments, the functionality of \ranlib has been
+superceded by \arns; GNU \ranlib is equivalent to running {\tt ar -s}.  \\
+% --------------------------------------
+{\tt FIND}
+&
+{\em none}
+&
+The {\tt find} utility is needed by the \clean targets defined in the \makefilens. \\
+% --------------------------------------
+{\tt XARGS}
+&
+{\em none}
+&
+\xargsns, like \find, is needed by the \clean targets defined in the \makefilens. \\
+% --------------------------------------
+% --------------------------------------
+\end{tabular}
+\end{center}
+\caption{
+A list of the environment variables supported by \configurens.
+Those environment variables which have corresponding command line options
+are listed with entries in the middle column.
+Note: Environment variables {\em always} override their corresponding
+command line option, if one exists, and provided that it is passed in at
+configure-time.
+}
+\label{fig:tool-env-vars}
+\end{table}

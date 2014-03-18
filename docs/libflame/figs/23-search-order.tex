@@ -1,0 +1,54 @@
+\begin{table}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+{\bf Build system type} & {\bf C compiler search order} \\ \hline
+% --------------------------------------
+%\multirow{3}{*}{
+%\begin{tabular}[t]{@{}l}
+%{\tt i386-*-*} \\
+%{\tt i586-*-*} \\
+%{\tt i686-*-*}
+%\end{tabular}
+%}
+{\tt i386-*-*  i586-*-*  i686-*-*}
+&
+\gcc  \icc  \cc \\ \hline
+%& & \\ \hline
+% --------------------------------------
+{\tt x86\_64-*-*}
+&
+\gcc  \icc  \pathcc  \cc \\ \hline
+% --------------------------------------
+{\tt ia64-*-*}
+&
+\icc  \gcc  \cc \\ \hline
+% --------------------------------------
+{\tt powerpc*-ibm-aix*}
+&
+\xlc \\ \hline
+% --------------------------------------
+{\tt powerpc64-*-linux-gnu}
+&
+\gcc  \xlc \\ \hline
+% --------------------------------------
+All others
+&
+\gcc  \cc \\ \hline
+% --------------------------------------
+\end{tabular}
+\end{center}
+\caption{
+The list of compilers that are searched for as a function of build system
+type, which consists three strings, separated by dashes, identifying
+the build system CPU type, vendor, and operating system, where '{\tt *}' will
+match any substring.
+The actual build system string is determined by the helper shell script
+{\tt config.guess} and output by \configure at configure-time.
+Note that the search for the appropriate system type is performed from
+top to bottom.
+Once a matching string is found, the search for each compiler/tool is
+performed from left to right.
+}
+\label{fig:search-order}
+\end{table}

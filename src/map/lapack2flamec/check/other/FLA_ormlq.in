@@ -1,0 +1,52 @@
+
+#define LAPACK_ormlq_op_blocked(prefix)                                 \
+  int  _nb, _nw, _nq, _lquery = (*lwork == -1);                         \
+  int _i1 = 1, _i2 = -1;                                                \
+  if ( lsame_(side, "L") ) { _nq = *m; _nw = *n; }                      \
+  else                     { _nq = *n; _nw = *m; }                      \
+  *info = 0;                                                            \
+  if      (! lsame_(side,  "L") && ! lsame_(side,  "R"))   *info = -1;  \
+  else if (! lsame_(trans, "N") && ! lsame_(trans, PREFIX2LAPACK_TRANS(prefix)))   *info = -2; \
+  else if (*m < 0)                                         *info = -3;  \
+  else if (*n < 0)                                         *info = -4;  \
+  else if (*k < 0 || *k > _nq)                             *info = -5;  \
+  else if (*ldim_A < max(1,*k))                            *info = -7;  \
+  else if (*ldim_B < max(1,*m))                            *info = -10; \
+  else if (*lwork < max(1,_nw) && ! _lquery)               *info = -12;
+
+#define LAPACK_ormlq_op_unblocked(prefix)                               \
+  int  _nb, _nw=1, _nq, _lquery = 0;                                    \
+  int _i1 = 1, _i2 = -1;                                                \
+                                                                        \
+  if ( lsame_(side, "L") )  _nq = *m;                                   \
+  else                      _nq = *n;                                   \
+  *info = 0;                                                            \
+  if      (! lsame_(side,  "L") && ! lsame_(side,  "R"))   *info = -1;  \
+  else if (! lsame_(trans, "N") && ! lsame_(trans, PREFIX2LAPACK_TRANS(prefix)))   *info = -2; \
+  else if (*m < 0)                                         *info = -3;  \
+  else if (*n < 0)                                         *info = -4;  \
+  else if (*k < 0 || *k > _nq)                             *info = -5;  \
+  else if (*ldim_A < max(1,_nq))                           *info = -7;  \
+  else if (*ldim_B < max(1,*m))                            *info = -10;
+
+#define LAPACK_ormlq_op_quickreturn(prefix)             \
+  if (*m == 0 || *n == 0 || *k == 0) {                  \
+    PREFIX2FLAME_SET_REAL(prefix, &buff_w[0], 1.0);     \
+    return 0;                                           \
+  }
+
+#define LAPACK_ormlq_op_check(prefix,srname,var)                        \
+  LAPACK_ormlq_op_ ## var(prefix)                                       \
+  LAPACK_common_op_check(prefix, srname)                                \
+                                                                        \
+  if (*info != 0) {                                                     \
+    e_val = -(*info);                                                   \
+    xerbla_(#srname, &e_val);                                           \
+    return 0;                                                           \
+  } else if (_lquery) {                                                 \
+    _nb = min(64, ilaenv_(&_i1, #srname, " ", m, n, k, &_i2));          \
+    PREFIX2FLAME_SET_REAL(prefix, &buff_w[0], (max(1,_nw) * _nb));      \
+    return 0;                                                           \
+  }                                                                     \
+  LAPACK_ormlq_op_quickreturn(prefix)
+

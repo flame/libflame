@@ -1,0 +1,80 @@
+
+#include "FLAME.h"
+
+
+#ifdef FLA_ENABLE_MULTITHREADING
+
+
+#if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
+#ifdef FLA_ENABLE_TIDSP
+#include <ti/omp/omp.h>
+#else
+#include <omp.h>
+#endif
+#elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
+#include <pthread.h>
+#endif
+
+
+void FLA_Lock_init( FLA_Lock* fla_lock_ptr )
+/*----------------------------------------------------------------------------
+
+   FLA_Lock_init
+
+----------------------------------------------------------------------------*/
+{
+#if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
+  omp_init_lock( &(fla_lock_ptr->lock) );
+#elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
+  pthread_mutex_init( &(fla_lock_ptr->lock), NULL );
+#endif
+}
+
+
+void FLA_Lock_acquire( FLA_Lock* fla_lock_ptr )
+/*----------------------------------------------------------------------------
+
+   FLA_Lock_acquire
+
+----------------------------------------------------------------------------*/
+{
+#if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
+  omp_set_lock( &(fla_lock_ptr->lock) );
+#elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
+  pthread_mutex_lock( &(fla_lock_ptr->lock) );
+#endif
+}
+
+
+void FLA_Lock_release( FLA_Lock* fla_lock_ptr )
+/*----------------------------------------------------------------------------
+
+   FLA_Lock_release
+
+----------------------------------------------------------------------------*/
+{
+#if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
+  omp_unset_lock( &(fla_lock_ptr->lock) );
+#elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
+  pthread_mutex_unlock( &(fla_lock_ptr->lock) );
+#endif
+}
+
+
+void FLA_Lock_destroy( FLA_Lock* fla_lock_ptr )
+/*----------------------------------------------------------------------------
+
+   FLA_Lock_destroy
+
+----------------------------------------------------------------------------*/
+{
+#if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
+  omp_destroy_lock( &(fla_lock_ptr->lock) );
+#elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
+  pthread_mutex_destroy( &(fla_lock_ptr->lock) );
+#endif
+}
+
+
+#endif // FLA_ENABLE_MULTITHREADING
+

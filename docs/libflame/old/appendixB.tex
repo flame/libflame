@@ -1,0 +1,150 @@
+\section{Subset of Supported Operations}
+
+\setlongtables
+\begin{longtable}{| p{4.8in} |}
+%\hline
+\endhead
+%\hline
+\endfoot
+%
+%
+\hline
+\begin{minipage}{4.8in}
+\footnotesize
+\begin{verbatim}
+PLA_Negate( PLA_Obj A )
+\end{verbatim}
+\end{minipage}
+\purpose{$ A \becomes - A $.} 
+\parameter{\tt A}{descriptor of data to be updated}
+\\ \hline \hline
+\begin{minipage}{4.8in}
+\footnotesize
+\begin{verbatim}
+PLA_Obj_set_diagonal( PLA_Obj sigma, PLA_Obj A )
+\end{verbatim}
+\end{minipage}
+\purpose{
+Set the diagonal of $ A $ to $ \sigma I $.
+All other values in $ A $ are unaffected.
+} 
+\parameter{\tt sigma, A}{descriptor for $ \sigma $ and $ A $}
+\\ \hline \hline
+\begin{minipage}{4.8in}
+\footnotesize
+\begin{verbatim}
+PLA_Shift_diagonal( PLA_Obj sigma, PLA_Obj A )
+\end{verbatim}
+\end{minipage}
+\purpose{
+$ A \becomes A + \sigma I $.
+} 
+\parameter{\tt sigma, A}{descriptor for $ \sigma $ and $ A $}
+\\ \hline \hline
+\begin{minipage}{4.8in}
+\footnotesize
+\begin{verbatim}
+PLA_Symmetrize( PLA_Uplo uplo, PLA_Conj conj, PLA_Obj A )
+\end{verbatim}
+\end{minipage}
+\purpose{
+$ A \becomes \mbox{symm}(A) $ or 
+$ A \becomes \mbox{herm}(A) $,
+where {\tt uplo} indicates whether
+$ A $ is originally stored only in the upper or
+lower triangular part of {\tt A}.
+} 
+\parameter{\tt uplo}{
+indicates where $ A$ is stored.
+} 
+\parameter{\tt conj}{
+indicates whether to create a symmetric or hermitian matrix.
+} 
+\parameter{\tt A}{
+descriptor for matrix $ A $.
+}
+\\ \hline \hline
+\begin{minipage}{4.8in}
+\footnotesize
+\begin{verbatim}
+PLA_Triangularize( PLA_Uplo uplo, PLA_Diag diag, PLA_Obj A )
+\end{verbatim}
+\end{minipage}
+\purpose{
+$ A \becomes \mbox{lower}(A) $ or 
+$ A \becomes \mbox{upper}(A) $.
+}
+\parameter{\tt uplo}{
+indicates whether whether $ A$ should be upper of
+lower triangular.
+}
+\parameter{\tt diag}{
+indicates whether set diagonal to zero or one.
+}
+\parameter{\tt A}{
+descriptor for matrix $ A $.
+}
+% \\ \hline \hline
+% \begin{minipage}{4.8in}
+% \footnotesize
+% \begin{verbatim}
+% PLA_LU( PLA_Obj A, PLA_Obj ipiv )
+% \end{verbatim}
+% \end{minipage}
+% \purpose{Compute the
+% LU factorization with partial pivoting of
+% matrix $ A $, overwriting $ A $ with factors
+% $ L $ and $ U $.  The pivot matrix $ P $ is
+% stored as a vector of indices, in {\tt ipiv}.
+% } 
+% \parameter{\tt A}{descriptor for $ A $} 
+% \parameter{\tt ipiv}{descriptor for vector in which $ P $ is
+% stored} 
+\\ \hline \hline
+\begin{minipage}{4.8in}
+\footnotesize
+\begin{verbatim}
+PLA_Nrm1( PLA_Obj A, PLA_Obj alpha )
+\end{verbatim}
+\end{minipage}
+\purpose{$ \alpha \becomes \| A \|_1 $.
+} 
+\parameter{\tt A, alpha}{descriptor for $ A $ and $ \alpha $}
+\\ \hline \hline
+\begin{minipage}{4.8in}
+\footnotesize
+\begin{verbatim}
+PLA_Nrm_inf( PLA_Obj A, PLA_Obj alpha )
+\end{verbatim}
+\end{minipage}
+\purpose{
+$ \alpha \becomes \| A \|_\infty $.
+} 
+\parameter{\tt A, alpha}{descriptor for $ A $ and $ \alpha $}
+\\ \hline \hline
+\begin{minipage}{4.8in}
+\footnotesize
+\begin{verbatim}
+PLA_Scal_x( PLA_Uplo uplo, PLA_Obj alpha, PLA_Obj A )
+\end{verbatim}
+\end{minipage}
+\purpose{
+$ A \becomes \alpha A $
+where {\tt uplo} indicates whether $ A $ is stored in the upper
+or lower triangular part of {\tt A}.
+} 
+\parameter{\tt alpha, A}{descriptor for $ \alpha $ and $ A $}
+\\ \hline \hline
+\begin{minipage}{4.8in}
+\footnotesize
+\begin{verbatim}
+PLA_Swap_x( PLA_Trans trans, PLA_Obj A, PLA_Obj B ) 
+\end{verbatim}
+\end{minipage}
+\purpose{
+$ A, B \becomes \op_{trans}(A), \op_{trans}(B) $.
+} 
+\parameter{\tt trans}{indicates whether to transpose and/or conjugate the data} 
+\parameter{\tt A, B}{descriptors for $ A $ and $ B $}
+\\ \hline
+\end{longtable}

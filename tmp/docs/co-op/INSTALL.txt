@@ -1,0 +1,468 @@
+INSTALL.txt
+University Co-op Open Source Software Competition
+
+
+System and software requirements
+--------------------------------
+
+Before attempting to build libflame, be sure you have the following software
+tools:
+
+ - Linux/UNIX. At this time we only support Linux and Linux-like operating
+   systems. (We have not been able to test our software on Windows under the
+   cygwin environment.)
+
+ - GNU tools. At this time we strongly recommend the availability of a GNU
+   development environment. If a full GNU environment is not present, then at
+   the very least we absolutely require that reasonably recent versions of GNU
+   make and GNU bash are installed and specified in the user's PATH shell
+   environment variable. (Note: On some non-Linux systems, such as AIX and
+   Solaris, GNU make may be named "gmake" while the older UNIX/BSD
+   implementation retains the name "make".)
+
+ - A working BLAS library. We strongly encourage the use of Kazushige Goto's
+   GotoBLAS with the libflame. GotoBLAS provides very good performance on a
+   wide variety of mainstream architectures. However, other BLAS libraries
+   such as ESSL (IBM), MKL (Intel), ACML (AMD), and netlib's reference BLAS
+   should work just fine as well. Of course, performance will vary depending
+   on which library is used. (Note: if you use a BLAS library other than
+   GotoBLAS, you MUST configure libflame with --disable-goto-interfaces.)
+
+
+Building and installing GotoBLAS
+--------------------------------
+
+Since a BLAS library is such an important prerequisite to using libflame, we
+will provide instructions here on how to configure, build, and install
+GotoBLAS, which is maintained by Kazushige Goto, a Research Associate at the
+Texas Advanced Computing Center.
+
+1. Visit the following URL to find a known working version of GotoBLAS. (We
+   have chosen to direct you to this link rather than the latest official
+   version on the TACC website in case the latest version is broken in some
+   way.)
+
+   http://www.cs.utexas.edu/users/flame/co-op/GotoBLAS-1.22.tar.gz
+
+2. Un-tar and un-gzip the tarball:
+
+   > tar xzf GotoBLAS-1.22.tar.gz
+   > cd GotoBLAS
+
+   Open the file named Makefile.rule. If you are running on a 64-bit system,
+   uncomment the following line:
+
+   # BINARY64  = 1
+
+   Otherwise, if you are running on a 32-bit system, then leave the above line
+   commented out, as-is. If you're unsure what kind of system you're running
+   on, try executing
+
+   > uname -m
+
+   If uname returns "ia64" or "x86_64", you are on a 64-bit system. If it
+   returns "i686", you have a 32-bit system. If uname returns something else
+   or you are unsure, don't worry; you can leave the line as-is for now. If
+   you end up making the wrong choice, you'll get a very specific type of
+   error message later on when linking the example program. At that point,
+   you can come back and rebuild GotoBLAS with "BINARY64 = 1" uncommented.
+
+3. Build GotoBLAS by running "make":
+
+   > make
+
+   If you get an error similar to the following:
+
+   g77 has been officially deprecated by the gcc team.  It has been replaced
+   by gfortran.  However, because gfortran is not entirely backwards compatible
+   with g77, we have kept g77 available as </path/to/g77>.
+
+   It means that you need to explicitly instruct GotoBLAS to use gfortran
+   instead of g77. GotoBLAS is set up to use g77 by default, even though
+   gfortran has replaced g77 in most environments. Simply edit Makefile.rule
+   and uncomment the following line:
+
+   # F_COMPILER = GFORTRAN
+
+   And then run "make clean" followed by "make".
+
+   When the build is complete, the current directory should contain a library
+   archive (.a) file and a symbolic link to it:
+
+   > ls -l *.a
+   lrwxrwxrwx 1 field flame      23 Jan 20 13:21 libgoto.a -> libgoto_opteron-r1.22.a
+   -rw-r--r-- 1 field flame 6849202 Jan 20 13:25 libgoto_opteron-r1.22.a
+
+   Make a note to yourself of the full path to libgoto.a as we will need it
+   later.
+
+
+Building and installing libflame
+--------------------------------
+
+The following steps describe how to configure, build, and install libflame.
+
+1. Visit the following URL to download the libflame tarball for the Co-op OSS
+   competition:
+
+   http://www.cs.utexas.edu/users/flame/co-op/libflame.tar.gz
+
+   (This tarball contains revision 1704 of libflame. This is one of many
+    interim development revisions that occur between official releases.
+    Our next version, 2.0, is planned for release in April. In the meantime,
+    we have attached the 1.5 version label to the build products of all
+    pre-2.0 revisions, including this one.)
+
+2. Un-tar and un-gzip the tarball and change into the libflame directory:
+
+   > tar xzf libflame.tar.gz
+   > cd libflame
+
+3. Before compiling libflame, we'll need to configure the library. We
+   typically use a wrapper to the configure script because it lets the user
+   clearly see what's being enabled and what's being disabled. The default
+   installation path is $(HOME)/flame. If you need to change this path, you
+   should do so now by editing the run-configure.sh wrapper script before
+   running it. (Regardless of which install directory is chosen, it will be
+   created automatically if it does not exist.) For the purposes of these
+   instructions, we'll assume henceforth that the default install path is
+   being used.
+
+   > ./run-conf/run-configure.sh
+
+   At the end of the configuration process, the status of each option is
+   reported in a configuration summary. Now start the compilation process by
+   running "make".
+
+   > make
+
+   This will take several minutes. Once finished, install the libraries and
+   header files into the destination install directory with
+
+   > make install
+
+   We also recommend that you install symbolic links to abbreviate the names
+   of the libflame libraries. We do this because it's easier to refer to a
+   file named "libflame-base.a" than "libflame-base_x86_64-v1.5.a".
+
+   > make install-symlinks
+
+   At this point, $(HOME)/flame should contain two directories and a symbolic
+   link that look something like:
+
+   > ls -l $HOME/flame
+   lrwxrwxrwx  1 field flame   19 Jan  5 10:48 include -> include_x86_64-v1.5
+   drwxr-xr-x  2 field flame 4096 Jan 17 10:05 include_x86_64-v1.5
+   drwxr-xr-x  5 field flame 4096 Jan 17 10:05 lib
+
+   The "include" sub-directory should contain many .h header files. The "lib"
+   sub-directory should contain the libflame libraries and their corresponding
+   symbolic links:
+
+   > ls -l $(HOME)/flame/lib
+   lrwxrwxrwx  1 field flame       27 Jan 17 09:51 libflame-base.a -> libflame-base_x86_64-v1.5.a
+   -rw-r--r--  1 field flame  4341742 Jan 17 09:50 libflame-base_x86_64-v1.5.a
+   lrwxrwxrwx  1 field flame       27 Jan 17 09:51 libflame-blas.a -> libflame-blas_x86_64-v1.5.a
+   -rw-r--r--  1 field flame 10011858 Jan 17 09:50 libflame-blas_x86_64-v1.5.a
+   lrwxrwxrwx  1 field flame       29 Jan 17 09:51 libflame-lapack.a -> libflame-lapack_x86_64-v1.5.a
+   -rw-r--r--  1 field flame  2780764 Jan 17 10:05 libflame-lapack_x86_64-v1.5.a
+   lrwxrwxrwx  1 field flame       29 Jan 17 09:51 liblapack2flame.a -> liblapack2flame_x86_64-v1.5.a
+   -rw-r--r--  1 field flame  1017940 Jan 17 09:50 liblapack2flame_x86_64-v1.5.a
+
+   At this point, libflame installation is complete.
+
+
+Running an example program using libflame
+-----------------------------------------
+
+Now we'll point you to one of the test driver programs that is included with
+the libflame distribution. The test driver is one for a linear algebra
+operation called Cholesky factorization. Its input is a symmetric
+positive-definite (SPD) matrix A and an extra parameter "uplo" to specify
+whether the upper or lower triangle the matrix is stored. The lower triangular
+case of this operation overwrites the lower triangle of A with a matrix L
+such that:
+
+  A = L * L'
+
+where * denotes the matrix product and L' denotes the transpose of L.
+
+1. Change into the Cholesky front-end test driver directory.
+
+   > cd src/lapack/dec/chol/front/flamec/test/fla/
+
+   This directory contains a test driver set up to perform a sequential
+   (non-parallel) Cholesky factorization with libflame. That is, we will have
+   parallelism enabled neither at the higher levels of the Cholesky
+   algorithm in libflame nor within the lower levels inside the BLAS library
+   (in this case, GotoBLAS).
+
+2. Modify the local makefile according to the locations of the libflame
+   libraries and GotoBLAS. The variable assignments of interest should read:
+
+   INST_PATH    := $(HOME)/flame
+   LIB_PATH     := $(INST_PATH)/lib
+   INC_PATH     := $(INST_PATH)/include
+   FLAME_BASE   := $(LIB_PATH)/libflame-base.a
+   FLAME_BLAS   := $(LIB_PATH)/libflame-blas.a
+   FLAME_LAPACK := $(LIB_PATH)/libflame-lapack.a
+   BLAS_LIB     := $(LIB_PATH)/libgoto.a
+
+   If you used a different install path than the default, you should change
+   the value of INST_PATH to reflect this. Regardless of this, though, you
+   will need to update the value of BLAS_LIB to reflect the location of the
+   GotoBLAS library you built earlier.
+
+3. Though it is sometimes not necessary, the LDFLAGS variable in the makefile
+   should be set to the link flags shown during the libflame configuration
+   summary. These link flags may be found in the post-configure.sh file, which
+   may be found relative to the libflame directory at
+   
+   config/<host_string>/post-configure.sh
+
+   where <host_string> is a string identifying your particular host
+   architecture. Note: the LDFLAGS string is usually quite long. Also, it may
+   be the case that the local test driver program may not link properly if it
+   is not set correctly.
+
+4. Set the compilers in the local makefile to be the same as the ones used to
+   build libflame. If you don't remember which ones were used, refer to the
+   post-configure.sh script. Typically GNU compilers (gcc and gfortran) are
+   used on most architectures if they are present. (One exception: if libflame
+   is configured on an Itanium system, the Intel compilers icc and ifort are
+   given preference over GNU, assuming they are present.)
+
+5. Build the test driver.
+
+   > make
+
+   If you get error messages that look similar to the following:
+
+   ld: i386 architecture of input file `/home/field/flame/lib/goto/GotoBLAS-122/libgoto_opteron-r1.22.a(saxpy.o)' is incompatible with i386:x86-64 output
+
+   then you probably built a 32-bit GotoBLAS library when you needed a 64-bit
+   version. Go back to your GotoBLAS directory, modify the Makefile.rule file,
+   uncomment the "BINARY64 = 1" line, and rebuild the library. Then come back
+   to the test driver directory and try once again to build the test driver
+   program. If the above error was your only type of error, then the program
+   should link cleanly now.
+
+6. Run the test driver with default input parameters.
+
+   > ./test_Chol.x < input
+
+   Within the output you should see pairs of lines similar to the
+   following:
+
+   data_chol_l( 1, 1:5 ) = [ 100   2.545 0.00e+00  2.545 2.99e-14  ]; 
+   data_chol_u( 1, 1:5 ) = [ 100   2.525 0.00e+00  2.506 5.69e-13  ];
+
+   This output is in matlab format. That is, it can be fed into matlab in
+   order to display a graph of the performance. The first row shows
+   results for the lower triangular case and the second row shows results
+   for the upper triangular case. The numbers of interest are in between
+   the '[' ']' brackets. The first column is the matrix size. The second
+   column is the performance of the reference implementation. The fourth
+   column is the performance of the libflame implementation. The fifth
+   column is the maximum element-wise difference between the libflame
+   result matrix and the result given by the reference implementation (in
+   this case, netlib LAPACK). The third column may be ignored. Here,
+   performance is given in gigaflops (billions of floating-point operations
+   per second, or GFLOPS) and so higher numbers are better. Also, as long
+   as the differences between the libflame and reference results are very
+   small (less than 1.0e-08), the result should be numerically accurate
+   enough for most purposes.
+
+7. You may also run the test driver interactively. Just enter values for
+   each of the input parameters as they are prompted.
+
+   > ./test_Chol.x
+   % number of repeats: 3
+
+   The number of repeats determines how many times the experiment is run.
+   Here we're asking for three repeats, meaning the test driver will report
+   the best results of three consecutive trials.
+
+   % enter problem size first, last, inc: 100 1000 50
+
+   Here the program prompts for the first problem size, the maximum problem
+   size, and the increment. For the values shown above, the first experiment
+   would use matrices 100-by-100 in size, and then 150-by-150, and so on, up to
+   1000-by-1000.
+
+   % enter m (-1 means bind to problem size): -1
+
+   Enter -1 here regardless of the previous input.
+
+8. If you are using a system with more than one CPU or processing core, you
+   can get a performance boost by using SuperMatrix. If you are not sure how
+   many cores are in your system, you can grep cpuinof, which resides in the
+   proc filesystem:
+
+   > grep processor /proc/cpuinfo 
+   processor       : 0
+   processor       : 1
+
+   The number of lines of output indicates how many processing cores are
+   available on the system. The output above shows that the system contains a
+   total of two cores.
+
+   The run-configure.sh script that you ran earlier is set up to enable
+   SuperMatrix by default (using POSIX threads for parallelism). Change to
+   the following directory:
+
+   > cd src/lapack/dec/chol/front/flamec/test/flash_sm/
+
+   or, from the previous test directory:
+
+   > cd ../flash_sm/
+
+   Edit the makefile just as you did before in steps 2 through 4. Now edit
+   the file named "input". Its original contents should look like this
+   (minus the annotations on the right):
+
+   3
+   100                <--- hierarchical matrix blocksize
+   100 500 100
+   -1
+   2                  <--- number of threads
+
+   These values are the same as with the sequential, except that the second
+   and fifth lines are new. The second line specifies a blocksize. SuperMatrix
+   uses hierarchical storage-by-blocks, and so the test driver must know what
+   blocksize to use when creating the matrices. The fifth line specifies how
+   many threads to use in the computation. Running with two threads allows
+   the computation to finish at most twice as quickly. Modify the number of
+   threads to be an integer between 1 and the total number of processing
+   cores on your system. Then you may run the test driver, redirecting the
+   input file as before:
+
+   > ./test_Chol.x < input
+
+   The output should indicate that performance is rising beyond what was
+   possible when libflame was being run sequentially:
+
+   data_chol_l( 5, 1:5 ) = [ 500   3.339 0.00e+00  5.478 7.66e-13  ]; 
+   data_chol_u( 5, 1:5 ) = [ 500   3.542 0.00e+00  6.305 2.26e-12  ]; 
+
+   This is output from an experiment on a quad-core 2.4GHz opteron system
+   using the above input values. The theoretical peak performance for one
+   core on this machine is 4.8 GFLOPS. Here, we can see that both lower and
+   upper triangular cases of the Cholesky factorization provided by libflame
+   are exceeding that peak because the computation is being divided among
+   two threads. Performance usually goes up for larger problem sizes. Here's
+   what we see on the same system for problem sizes of 1000-by-1000:
+
+   data_chol_l( 10, 1:5 ) = [ 1000   3.465 0.00e+00  6.366 4.65e-11  ]; 
+   data_chol_u( 10, 1:5 ) = [ 1000   3.593 0.00e+00  6.755 5.74e-12  ]; 
+
+   Here, libflame with two threads is close to twice as fast as the sequential
+   reference implementation.
+
+9. Now let's look at some code. If you did step 8 above, change directories
+   back to the sequential test directory:
+
+   > cd ../fla/
+ 
+   Look at the contents of the file test_Chol.c. This file contains the
+   main() program for our test driver and will give you a good idea of how
+   easy it is to program with libflame API.
+
+   First we must initialize the FLAME environment. This is shown on line
+   79:
+
+   FLA_Init();
+
+   On line 125, we create a matrix A:
+
+   FLA_Obj_create( datatype, m, m, &A );
+
+   Invoking this function creates an m-by-m matrix with a numerical data type
+   "datatype" and associates this matrix with the object named A. The datatype
+   variable takes on one of four values: FLA_FLOAT, FLA_DOUBLE, FLA_COMPLEX,
+   FLA_DOUBLE_COMPLEX. These denote single and double precision real and
+   single and double precision complex data, respectively. Here, datatype
+   has been assigned the constant value FLA_DOUBLE.
+
+   The next line creates a separate matrix A_ref to hold the results of the
+   reference experiments:
+
+   FLA_Obj_create( datatype, m, m, &A_ref );
+
+   We separate the experiment results in this way so that we can compare the
+   numerical values of the matrices to ensure we're getting the right answer.
+
+   On line 129, we initialize A to be a random SPD matrix, storing only the
+   lower triangular portion:
+
+   FLA_Random_spd_matrix( FLA_LOWER_TRIANGULAR, A );
+
+   Depending on which case is being tested, we might store the random SPD
+   matrix in the upper triangle instead:
+
+   FLA_Random_spd_matrix( FLA_UPPER_TRIANGULAR, A );
+
+   On line 133, we copy the value of matrix A into matrix A_ref.
+
+   FLA_Copy( A, A_ref );
+
+   If we were done (which we aren't, since we haven't computed the Cholesky
+   factorization yet!), we could release memory associated with the objects
+   as is done on lines 155 and 156 and then shutdown the FLAME environment as
+   shown on line 189:
+
+   FLA_Obj_free( &A );
+   FLA_Obj_free( &A_ref );
+   ...
+   FLA_Finalize();
+
+   Now close test_Chol.c and open time_Chol.c. This is where the computation
+   is invoked. Skip down to line 83:
+
+   FLA_Chol( FLA_LOWER_TRIANGULAR, A );
+
+   This function takes as input matrix A, which is assumed to be SPD and
+   stored in the lower triangle, and overwrites the lower triangle with its
+   Cholesky factorization. Similarly, the invocation for the upper triangular
+   case is on line 98:
+
+   FLA_Chol( FLA_UPPER_TRIANGULAR, A );
+
+   The rest of the code in the file is "overhead" associated with the fact
+   that this is a test driver designed to repeat experiments over and over
+   for varying matrix sizes, with potentially more than one trial for each
+   matrix size.
+
+   You're probably thinking, "That's it?" Well, yes and no. The libflame
+   programming interfaces offer many more functions to the programmer, but
+   these give you a taste of the most basic and frequently-used of those
+   functions. We think our object-based API for creating and manipulating
+   matrices is clear, simple, and user-friendly, making it much more
+   enjoyable to use than the interfaces provided by LAPACK. And for those
+   developers who just want libflame performance without having to rewrite
+   their applications to use the native object-based interfaces, we provide
+   a companion library, liblapack2flame, that maps LAPACK routine calls to
+   the corresponding implementations within libflame.
+
+   For a more representative list of libflame functions, please see
+   the attached PDF file FLAME_API.pdf. We also have a URL to
+   automatically-generated doxygen documentation:
+
+   http://www.cs.utexas.edu/users/flame/libflame/html/
+
+   Feel free to explore this website to get a feel for the breadth and
+   scope of the functionality provided by libflame.
+
+   We hope we've impressed upon you both the importance and utility of
+   linear algebra routines in scientific and high-performance applications.
+   Given its role as a fundamental building block in computing, we would
+   like to think that our FLAME project has made linear algebra more
+   accessible and much less painful for both experts and non-experts in
+   numerical programming, and the computing community at large. And best
+   of all, our software allows users to be more productive while offering
+   very competitive performance, which in nearly all cases approximates or
+   exceeds that of the reference codes available in the BLAS and LAPACK.
+
+   Once again, the FLAME team thanks you for your consideration in the Co-op
+   Open Source Software Competition!
+

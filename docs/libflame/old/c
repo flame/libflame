@@ -1,0 +1,3 @@
+latex plapack2e
+latex plapack2e
+dvips plapack2e -o

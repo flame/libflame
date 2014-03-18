@@ -1,0 +1,196 @@
+
+lapack2flame
+============
+
+
+This directory includes lapack2flame layer which provides backward compatibility 
+to FORTRAN LAPACK interface. The entire LAPACK source files are converted to C 
+files using code translator F2C. However, libf2c is not required when libflame 
+is linked. 
+
+
+Directory structure
+-------------------
+
+lapack2flame
+  - check               :: includes LAPACK arguments check routines.
+  - f2c
+    - c
+      + *.c             :: f2c'ed LAPACK source files.
+      + *.sh            :: shell scripts to convert LAPACK sources to C files.
+    - flamec 
+      - front           :: includes functions that are isolated from libflame.
+                           uses LAPACK native functions only.
+      - gelq            :: LAPACK gelqf related functions.  
+      - geqr            :: LAPACK geqrf related functions.
+      - hetd            :: LAPACK hetrd related functions.
+    - install
+      - static          :: LAPACK machine related functions, translated by using C99 standards. 
+                           these files are likely to be never changed even if LAPACK evolves.
+      - util            :: necessary f2c sources files; some of them are modified from original ones.
+    - netlib
+      - 3.5.0.tar       :: tar ball includes source files from LAPACK 3.5.0.
+      - support.list    :: a list of files that will not be f2c'ed. 
+                           FLA_*.c will replace those files.
+  + FLA_*.c             :: LAPACK interfaces that redirect functionality to libflame.
+
+
+How to use
+----------
+
+configuration:
+
+   Modify the default run-conf/run-configure.sh with the following changes
+
+./configure \
+            --enable-max-arg-list-hack \
+            --enable-lapack2flame \
+            --disable-vector-intrinsics=sse \
+            --disable-ldim-alignment \
+
+   As libflame does not have control over user-provided memory allocation, 
+   we cannot impose ldim-alignment and vector-intrinsics (this requires ldim-alignment).
+   To get this problem around, users should align their memory allocation to libflame
+   configuration.
+
+in FORTRAN:
+   
+   libflame is required to do FLA_INIT and FLA_FINALIZE. If the code does not initialize libflame,
+   redirected LAPACK functions will do initialization and finalization whenever they are called.
+   SuperMatrix feature will be later updated in the same LAPACK interface.
+
+   CALL FLA_INIT
+   ....
+   CALL XPOTRF( UPLO, N, AFAC, LDA, INFO )
+   ....
+   CALL FLA_FINALIZE
+
+in C:
+
+   Users are recommended to use native libflame interfaces. If libflame does not support the 
+   required functionality, request libflame team to establish relavent external wrapper so 
+   that users can still use libflame matrix abstraction in their codes.
+
+
+LAPACK test suite
+-----------------
+
+   LAPACK test suite verifies various aspects of all dense linear algebra algorithms. However, 
+   as high algorithms are considerably complicated, the test suite is not fully independent of
+   specific implementations (meaning that some verifications require the same implementation).
+   For instance, householder transformation in libflame is different from one in LAPACK. LAPACK 
+   householder transformation is precisely not a reflector (HH != I but still unitary H^TH =I). 
+   LAPACK householder algorithm leads diagonals positive real. On the other hand, libflame uses 
+   householder reflector. For this reason, householder related complex datatype algorithms are 
+   not redirected to libflame. 
+
+   In order to account for this difference, testing routine does not check positivity of diagonal 
+   elements. FYI, test suite is slightly modified to inter-operate between C and FORTRAN.
+
+   $ cd lapack-test
+   $ cp make.inc.example make.inc
+     ... define BLAS library
+     ... move or make a symbolic link to libflame library here
+   $ cd 3.5.0
+   $ make
+
+
+   Some results when it is linked to different BLAS on scientific ubuntu (nozomi @ ICES):
+
+   ATLAS                         0 failure
+   refBLAS (from LAPACK)         1 failure in DSG
+   
+   Message from the test:
+ Matrix order=    3, type=10, seed= 458,2510,3431, 397, result  33 is 4.504D+15
+ DSG:    1 out of 10288 tests failed to pass the threshold
+
+   BLIS                          0 failure
+
+
+
+F2C scripts
+-----------------
+
+   If users want to have netlib version LAPACK (without FORTRAN compilers), entire LAPCK 
+   can be converted to C files.
+   
+   $ cd src/map/lapack2flamec/f2c/netlib
+   $ emacs support.list                    :: delete the list of all functions
+   $ cd src/map/lapack2flamec/f2c/c
+   $ ./regen-files.sh                      :: this will convert all LAPACK FORTRAN files to C files.
+   $ cd src/map/lapack2flamec
+   $ ./not_yet_lapac2flame.sh              :: disable lapack2flame layer.
+
+FLAPACK interface structure
+---------------------------
+
+   libflame follows an objects-based programming approach. Provided matrix abstraction,
+   s/d/c/z LAPACK functions can be universaly implemented in a single code. For instance,
+   QR is implemented :
+
+LAPACK_geqrf(?)
+{
+    {
+        // Argument check will return 
+        //  - LAPACK_FAILURE      :: input argument is wrong.
+        //  - LAPACK_QUERY_RETURN :: return workspace size.
+        //  - LAPACK_QUICK_RETURN :: return immediately.
+        //  - LAPACK_SUCCESS      :: proceed next.
+        LAPACK_RETURN_CHECK( ?geqrf_check( m, n,
+                                           buff_A, ldim_A,
+                                           buff_t,
+                                           buff_w, lwork,
+                                           info ) )
+    }
+    {
+        // Redirect LAPACK functions to libflame.
+        LAPACK_geqrf_body(?)
+    }
+}
+
+LAPACK_geqrf_body(prefix) 
+                               
+  FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        
+  FLA_Obj      A, t, T;                                         
+  int          min_m_n  = min( *m, *n );                        
+  FLA_Error    init_result;                                     
+
+  // If libflame is not initialized, it will be initialized.
+  FLA_Init_safe( &init_result );                                
+
+  // Create an object and attach the buffer.
+  FLA_Obj_create_without_buffer( datatype, *m, *n, &A );        
+  FLA_Obj_attach_buffer( buff_A, 1, *ldim_A, &A );              
+                                                                
+  FLA_Obj_create_without_buffer( datatype, min_m_n, 1, &t );    
+  FLA_Obj_attach_buffer( buff_t, 1, min_m_n, &t );              
+                                                                
+  // If necessary, initialize the matrix with zero
+  FLA_Set( FLA_ZERO, t );                                       
+
+  // lapack2flame does not use user provided workspace from LAPACK interface.
+  // Whenever workspace is needed, it will be temporarily allocated.
+  FLA_QR_UT_create_T( A, &T );                                  
+
+  // libflame implementation is invoked. For this QR, libflame always uses blocked algorithms.
+  FLA_QR_UT( A, T );                                            
+
+  // The implementation of Householder transformation in libflame is different from one in LAPACK.
+  // To make them inter-operate, modify the tau vector.
+  FLA_QR_UT_recover_tau( T, t );                                
+  PREFIX2FLAME_INVERT_TAU(prefix,t);                            
+
+  // Free the matrix objects used in this routine.
+  FLA_Obj_free_without_buffer( &A );                            
+  FLA_Obj_free_without_buffer( &t );                            
+
+  // Free temporary workspace.
+  FLA_Obj_free( &T );                                           
+                              
+  // If libflame is not initialized, this will do nothing.
+  FLA_Finalize_safe( init_result );                             
+
+  // Assign relavent an info value that is compatible to LAPACK error message.
+  *info = 0;                                                    
+                                                                
+  return 0;

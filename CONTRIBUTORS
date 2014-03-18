@@ -1,0 +1,87 @@
+libflame Contributors
+---------------------
+
+The ongoing Formal Linear Algebra Methods Environment project is a
+collaboration by a large number of people. libflame is the most visible
+product of this group, and while not everyone has contributed code
+directly, many people's ideas have gone into improving libflame,
+especially those which have been published in the FLAME project's
+library of working notes, conference papers, and journal articles:
+
+  http://www.cs.utexas.edu/users/flame/publications/
+
+Specifically, the following collaborators have made indirect yet
+valuable contributions to the libflame library:
+
+  Sergio Barrachina
+  Paolo Bientinesi
+  Doug Burger
+  Maribel Castillo
+  Ernie Chan
+  Andrew Chapman
+  Inderjit S. Dhillon
+  Jeff Diamond
+  H. Carter Edwards
+  Diego Fabregat-Traver
+  Kazushige Goto
+  John A. Gunnels
+  Brian Gunter
+  Fred G. Gustavson
+  Marcel Heimlich
+  Greg M. Henry
+  Francisco D. Igual
+  Thierry Joffrain
+  Daniel S. Katz
+  Stephen W. Keckler
+  Lee Killough
+  Kyungjoo Kim
+  Sergey Kolos
+  Tze Meng Low
+  Rafael Mayo
+  Kent Milfeld
+  Jonathan Monette  
+  Margaret E. Myers
+  Bryan Marker
+  Jack Poulson
+  Avi Purkayastha
+  Enrique Quintana-Orti
+  Gregorio Quintana-Orti
+  Alfredo Remon
+  Tyler Rhodes
+  Behnam Robatmili
+  Robert A. van de Geijn
+  Field G. Van Zee
+  Richard Veras
+
+  
+Various other people have provided various levels of advice and moral
+support. For a complete list, please visit:
+
+  http://www.cs.utexas.edu/users/flame/team/
+
+
+A few organizations also deserve thanks for their technical assistance:
+
+  The staff at the Texas Advanced Computing Center for granting access to their
+  compute resources and technical support.
+
+  Universidad Jaume I, for granting access to a 16 CPU Itanium2 SMP system used
+  at various stages in our research. 
+
+  National Instruments, for their interest and support of our research goals,
+  including their generous financial support. 
+
+  NEC Systems of America, for granting access to two 16 CPU Itanium2 SMP systems
+  used extensively in testing and benchmarking.
+
+
+And finally, we acknowledge these individuals for inspiring various aspects of
+the libflame build system:
+
+ Emile van Bergen, whose stack-implementing makefile snippets formed the basis 
+ for the include mechanism of the repository's makefile infrastructure.
+ (http://www.xs4all.nl/~evbergen/nonrecursive-make.html)
+ 
+ Greg Thomsen of ARL:UT, for demonstrating by example some nifty features of 
+ GNU make.
+
