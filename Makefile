@@ -35,6 +35,7 @@ CONFIG_DIR      := ./config
 SRC_DIR         := ./src
 OBJ_DIR         := ./obj
 LIB_DIR         := ./lib
+INCLUDE_LOCAL   := ./include_local
 
 # The host string will uniquely identify the current host (as much
 # as is reasonable) for purposes of separating the configure products and
@@ -526,6 +527,7 @@ cleanmost: check-config
 	- $(FIND) $(BASE_LIB_DIR) -name "*.so" | $(XARGS) $(RM_F) 
 	- $(RM_F) $(AR_OBJ_LIST_FILE)
 	- $(RM_F) $(AR_ARG_LIST_FILE)
+	- $(RM_F) $(INCLUDE_LOCAL)/*.h
 
 distclean: check-config cleanmost cleanmk
 	- $(RM_RF) $(CONFIG_DIR)

@@ -36,7 +36,7 @@ dnl functionality provided by various versions of autoconf.
 AC_PREREQ(2.15)
 
 dnl Copyright notice for autoconf-generated configure script.
-AC_COPYRIGHT([[Copyright 2014 The University of Texas
+AC_COPYRIGHT([[Copyright 2014 The University of Texas at Austin
 This configure script may be copied, distributed and modified under the terms
 of the 3-clause BSD license. See LICENSE for more details.]])
 

@@ -25,7 +25,7 @@ LAPACK-level implementations
 LAPACK2FLAME interface and implementation
   Kyungjoo Kim
 
-BLIS interface and implementation
+BLIS1 interface and implementation
   Field G. Van Zee
 
 SuperMatrix (out-of-order parallel matrix scheduling with multiple GPU support)

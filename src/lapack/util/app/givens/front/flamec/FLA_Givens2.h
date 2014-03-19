@@ -1,3 +1,12 @@
+/*
+
+    Copyright (C) 2014, The University of Texas at Austin
+
+    This file is part of libflame and is available under the 3-Clause
+    BSD license, which can be found in the LICENSE file at the top-level
+    directory, or at http://opensource.org/licenses/BSD-3-Clause
+
+*/
 
 FLA_Error FLA_Givens2( FLA_Obj chi_1, FLA_Obj chi_2, FLA_Obj gamma, FLA_Obj sigma, FLA_Obj chi_1_new );
 FLA_Error FLA_Givens2_ops( float*  chi_1,

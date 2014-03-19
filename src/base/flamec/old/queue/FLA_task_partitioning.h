@@ -1,3 +1,12 @@
+/*
+
+    Copyright (C) 2014, The University of Texas at Austin
+
+    This file is part of libflame and is available under the 3-Clause
+    BSD license, which can be found in the LICENSE file at the top-level
+    directory, or at http://opensource.org/licenses/BSD-3-Clause
+
+*/
 
 void FLA_Task_partitioning_init( void );
 void FLA_Task_partitioning_set( int n_threads, int tag0_val, int tag1_val, int tag2_val, int tag3_val, int tag4_val );

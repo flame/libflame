@@ -1,3 +1,12 @@
+%
+%
+%   Copyright (C) 2014, The University of Texas at Austin
+%
+%   This file is part of libflame and is available under the 3-Clause
+%   BSD license, which can be found in the LICENSE file at the top-level
+%   directory, or at http://opensource.org/licenses/BSD-3-Clause
+%
+%
 
 function [ C_out ] = FLA_Symm_ru_blk_var8( A, B, C, nb_alg )
 

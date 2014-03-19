@@ -1,3 +1,12 @@
+/*
+
+    Copyright (C) 2014, The University of Texas at Austin
+
+    This file is part of libflame and is available under the 3-Clause
+    BSD license, which can be found in the LICENSE file at the top-level
+    directory, or at http://opensource.org/licenses/BSD-3-Clause
+
+*/
 int cbbcsd_check(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, int *m, int *p, int *q, float *theta, float *phi, scomplex *u1, int *ldu1, scomplex *u2, int *ldu2, scomplex *v1t, int *ldv1t, scomplex *v2t, int *ldv2t, float * b11d, float *b11e, float *b12d, float *b12e, float *b21d, float *b21e, float *b22d, float *b22e, float *rwork, int *lrwork, int *info);
 int cbdsqr_check(char *uplo, int *n, int *ncvt, int * nru, int *ncc, float *d__, float *e, scomplex *vt, int *ldvt, scomplex *u, int *ldu, scomplex *c__, int *ldc, float *rwork, int *info);
 int cgbbrd_check(char *vect, int *m, int *n, int *ncc, int *kl, int *ku, scomplex *ab, int *ldab, float *d__, float *e, scomplex *q, int *ldq, scomplex *pt, int *ldpt, scomplex *c__, int *ldc, scomplex *work, float *rwork, int *info);

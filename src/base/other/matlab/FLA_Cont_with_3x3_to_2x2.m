@@ -1,3 +1,12 @@
+%
+%
+%   Copyright (C) 2014, The University of Texas at Austin
+%
+%   This file is part of libflame and is available under the 3-Clause
+%   BSD license, which can be found in the LICENSE file at the top-level
+%   directory, or at http://opensource.org/licenses/BSD-3-Clause
+%
+%
   function [ ATL, ATR,...
              ABL, ABR ] = FLA_Cont_with_3x3_to_2x2( A00, A01, A02,...
                                                     A10, A11, A12,...
