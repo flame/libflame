@@ -405,7 +405,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             lorbdb = (integer) work[1];
             if (*p >= *m - *p)
             {
-                dorgqr_fla(p, p, q, &u1[u1_offset], ldu1, &c__0, &work[1], &c_n1, &childinfo);
+                dorgqr_fla(p, p, q, &u1[u1_offset], ldu1, (doublereal*)&c__0, &work[1], &c_n1, &childinfo);
                 lorgqrmin = max(1,*p);
                 lorgqropt = (integer) work[1];
             }
@@ -413,7 +413,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             {
                 i__1 = *m - *p;
                 i__2 = *m - *p;
-                dorgqr_fla(&i__1, &i__2, q, &u2[u2_offset], ldu2, &c__0, &work[1] , &c_n1, &childinfo);
+                dorgqr_fla(&i__1, &i__2, q, &u2[u2_offset], ldu2, (doublereal*)&c__0, &work[1] , &c_n1, &childinfo);
                 /* Computing MAX */
                 i__1 = 1;
                 i__2 = *m - *p; // , expr subst
@@ -432,7 +432,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             i__8 = 0;
             i__9 = *q - 1; // , expr subst
             i__7 = max(i__8,i__9);
-            dorglq_fla(&i__1, &i__4, &i__7, &v1t[v1t_offset], ldv1t, &c__0, & work[1], &c_n1, &childinfo);
+            dorglq_fla(&i__1, &i__4, &i__7, &v1t[v1t_offset], ldv1t, (doublereal*)&c__0, & work[1], &c_n1, &childinfo);
             /* Computing MAX */
             i__1 = 1;
             i__2 = *q - 1; // , expr subst
@@ -450,7 +450,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
                 i__1 = *p - 1;
                 i__2 = *p - 1;
                 i__3 = *p - 1;
-                dorgqr_fla(&i__1, &i__2, &i__3, &u1[(u1_dim1 << 1) + 2], ldu1, & c__0, &work[1], &c_n1, &childinfo);
+                dorgqr_fla(&i__1, &i__2, &i__3, &u1[(u1_dim1 << 1) + 2], ldu1, (doublereal*)&c__0, &work[1], &c_n1, &childinfo);
                 /* Computing MAX */
                 i__1 = 1;
                 i__2 = *p - 1; // , expr subst
@@ -461,14 +461,14 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             {
                 i__1 = *m - *p;
                 i__2 = *m - *p;
-                dorgqr_fla(&i__1, &i__2, q, &u2[u2_offset], ldu2, &c__0, &work[1] , &c_n1, &childinfo);
+                dorgqr_fla(&i__1, &i__2, q, &u2[u2_offset], ldu2, (doublereal*)&c__0, &work[1] , &c_n1, &childinfo);
                 /* Computing MAX */
                 i__1 = 1;
                 i__2 = *m - *p; // , expr subst
                 lorgqrmin = max(i__1,i__2);
                 lorgqropt = (integer) work[1];
             }
-            dorglq_fla(q, q, &r__, &v1t[v1t_offset], ldv1t, &c__0, &work[1], & c_n1, &childinfo);
+            dorglq_fla(q, q, &r__, &v1t[v1t_offset], ldv1t, (doublereal*)&c__0, &work[1], & c_n1, &childinfo);
             lorglqmin = max(1,*q);
             lorglqopt = (integer) work[1];
             dbbcsd_(jobv1t, "N", jobu1, jobu2, "T", m, q, p, &theta[1], &c__0, &v1t[v1t_offset], ldv1t, &c__0, &c__1, &u1[u1_offset], ldu1, &u2[u2_offset], ldu2, &c__0, &c__0, &c__0, &c__0, & c__0, &c__0, &c__0, &c__0, &work[1], &c_n1, &childinfo);
@@ -480,7 +480,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             lorbdb = (integer) work[1];
             if (*p >= *m - *p - 1)
             {
-                dorgqr_fla(p, p, q, &u1[u1_offset], ldu1, &c__0, &work[1], &c_n1, &childinfo);
+                dorgqr_fla(p, p, q, &u1[u1_offset], ldu1, (doublereal*)&c__0, &work[1], &c_n1, &childinfo);
                 lorgqrmin = max(1,*p);
                 lorgqropt = (integer) work[1];
             }
@@ -489,14 +489,14 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
                 i__1 = *m - *p - 1;
                 i__2 = *m - *p - 1;
                 i__3 = *m - *p - 1;
-                dorgqr_fla(&i__1, &i__2, &i__3, &u2[(u2_dim1 << 1) + 2], ldu2, & c__0, &work[1], &c_n1, &childinfo);
+                dorgqr_fla(&i__1, &i__2, &i__3, &u2[(u2_dim1 << 1) + 2], ldu2, (doublereal*)&c__0, &work[1], &c_n1, &childinfo);
                 /* Computing MAX */
                 i__1 = 1;
                 i__2 = *m - *p - 1; // , expr subst
                 lorgqrmin = max(i__1,i__2);
                 lorgqropt = (integer) work[1];
             }
-            dorglq_fla(q, q, &r__, &v1t[v1t_offset], ldv1t, &c__0, &work[1], & c_n1, &childinfo);
+            dorglq_fla(q, q, &r__, &v1t[v1t_offset], ldv1t, (doublereal*)&c__0, &work[1], & c_n1, &childinfo);
             lorglqmin = max(1,*q);
             lorglqopt = (integer) work[1];
             i__1 = *m - *q;
@@ -511,7 +511,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             if (*p >= *m - *p)
             {
                 i__1 = *m - *q;
-                dorgqr_fla(p, p, &i__1, &u1[u1_offset], ldu1, &c__0, &work[1], & c_n1, &childinfo);
+                dorgqr_fla(p, p, &i__1, &u1[u1_offset], ldu1, (doublereal*)&c__0, &work[1], & c_n1, &childinfo);
                 lorgqrmin = max(1,*p);
                 lorgqropt = (integer) work[1];
             }
@@ -520,14 +520,14 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
                 i__1 = *m - *p;
                 i__2 = *m - *p;
                 i__3 = *m - *q;
-                dorgqr_fla(&i__1, &i__2, &i__3, &u2[u2_offset], ldu2, &c__0, & work[1], &c_n1, &childinfo);
+                dorgqr_fla(&i__1, &i__2, &i__3, &u2[u2_offset], ldu2, (doublereal*)&c__0, & work[1], &c_n1, &childinfo);
                 /* Computing MAX */
                 i__1 = 1;
                 i__2 = *m - *p; // , expr subst
                 lorgqrmin = max(i__1,i__2);
                 lorgqropt = (integer) work[1];
             }
-            dorglq_fla(q, q, q, &v1t[v1t_offset], ldv1t, &c__0, &work[1], &c_n1, &childinfo);
+            dorglq_fla(q, q, q, &v1t[v1t_offset], ldv1t, (doublereal*)&c__0, &work[1], &c_n1, &childinfo);
             lorglqmin = max(1,*q);
             lorglqopt = (integer) work[1];
             i__1 = *m - *p;
