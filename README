@@ -13,9 +13,9 @@ implementation. The source code for libflame is hosted on github:
   https://github.com/flame/libflame
 
 For detailed instructions on how to configure, build, install, and link
-against libflame, please visit the UTCS libflame webpage:
+against libflame, please visit the UTCS libflame webpage at:
 
-  http://www.cs.utexas.edu/users/flame/libflame/
+  http://www.cs.utexas.edu/~flame/web/
 
 We also encourage you to refer to the libflame reference manual. This
 manual contains all the information you need to get started with
