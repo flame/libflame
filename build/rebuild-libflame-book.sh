@@ -57,7 +57,7 @@ main()
 	cd ${toplevel_dirpath}
 	
 	# Run 'git pull' to make sure we have the latest source.
-	git pull
+	git pull 2> /dev/null
 
 	# Update the version file in case it is out-of-date.
 	./build/update-version-file.sh
