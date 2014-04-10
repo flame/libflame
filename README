@@ -23,8 +23,9 @@ libflame, including installation directions, usage examples, and a
 complete API reference. If you have LaTeX installed on your system, you
 may simply change into the 'docs/libflame' subdirectory of the top-level
 directory of the libflame source tree and build the document from its
-source. If you do not have LaTeX installed, then you may find the
-document through the libflame web page at the URL listed above.
+source. You may also find a nightly build of the document here:
+
+  http://www.cs.utexas.edu/~flame/web/libflame.pdf
 
 You can keep in touch with developers and other users of the project by
 joining the following mailing list:
