@@ -56,14 +56,11 @@ main()
 	# Change to the top-level directory.
 	cd ${toplevel_dirpath}
 	
-	# Run 'svn update' on docs directory to make sure we have the latest
-	# source.
-	svn update docs
-	svn update -N
+	# Run 'git pull' to make sure we have the latest source.
+	git pull 2> /dev/null
 
-	# Update the revision file in case it is out-of-date.
-	#./build/svn-info-revision.sh Makefile > revision
-	./build/update-check-rev-file.sh
+	# Update the version file in case it is out-of-date.
+	./build/update-version-file.sh
 
 	# Change into libflame directory.
 	cd ${libflame_dirpath}
