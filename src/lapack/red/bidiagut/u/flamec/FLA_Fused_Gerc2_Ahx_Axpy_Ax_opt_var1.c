@@ -213,47 +213,47 @@ FLA_Error FLA_Fused_Gerc2_Ahx_Axpy_Ax_ops_var1( int m_A,
     // bl1_smult3( alpha, nu1, &temp2 );
     temp2 = *alpha * *nu1;
 
-    // bl1_saxpyv( BLIS1_NO_CONJUGATE,
-    //             m_A,
-    //             &temp1,
-    //             u,  inc_u,
-    //             a1, rs_A );
-    F77_saxpy( &m_A,
-               &temp1,
-               u,  &inc_u,
-               a1, &rs_A );
+    bl1_saxpyv( BLIS1_NO_CONJUGATE,
+                m_A,
+                &temp1,
+                u,  inc_u,
+                a1, rs_A );
+    //F77_saxpy( &m_A,
+    //           &temp1,
+    //           u,  &inc_u,
+    //           a1, &rs_A );
 
-    // bl1_saxpyv( BLIS1_NO_CONJUGATE,
-    //             m_A,
-    //             &temp2,
-    //             z,  inc_z,
-    //             a1, rs_A );
-    F77_saxpy( &m_A,
-               &temp2,
-               z,  &inc_z,
-               a1, &rs_A );
+    bl1_saxpyv( BLIS1_NO_CONJUGATE,
+                m_A,
+                &temp2,
+                z,  inc_z,
+                a1, rs_A );
+    //F77_saxpy( &m_A,
+    //           &temp2,
+    //           z,  &inc_z,
+    //           a1, &rs_A );
 
-    // bl1_sdot( BLIS1_CONJUGATE,
-    //           m_A,
-    //           a1, rs_A,
-    //           u,  inc_u,
-    //           psi1 );
-    *psi1 = F77_sdot( &m_A,
-                      a1, &rs_A,
-                      up, &inc_up );
+    bl1_sdot( BLIS1_CONJUGATE,
+              m_A,
+              a1, rs_A,
+              up,  inc_up,
+              psi1 );
+    //*psi1 = F77_sdot( &m_A,
+    //                  a1, &rs_A,
+    //                  up, &inc_up );
 
     // bl1_smult4( &minus_inv_tau, psi1, alpha1, alpha1 );
     *alpha1 = *alpha1 + minus_inv_tau * *psi1;
 
-    // bl1_saxpyv( BLIS1_NO_CONJUGATE,
-    //             m_A,
-    //             alpha1,
-    //             a1, rs_A,
-    //             w,  inc_w );
-    F77_saxpy( &m_A,
-               alpha1,
-               a1, &rs_A,
-               w,  &inc_w );
+    bl1_saxpyv( BLIS1_NO_CONJUGATE,
+                m_A,
+                alpha1,
+                a1, rs_A,
+                w,  inc_w );
+    //F77_saxpy( &m_A,
+    //           alpha1,
+    //           a1, &rs_A,
+    //           w,  &inc_w );
 
     /*------------------------------------------------------------*/
 
@@ -470,25 +470,25 @@ FLA_Error FLA_Fused_Gerc2_Ahx_Axpy_Ax_opc_var1( int m_A,
     bl1_ccopyconj( nu1, &conj_nu1 );
     bl1_cmult3( alpha, &conj_nu1, &temp2 );
 
-    // bl1_caxpyv( BLIS1_NO_CONJUGATE,
-    //             m_A,
-    //             &temp1,
-    //             u,  inc_u,
-    //             a1, rs_A );
-    F77_caxpy( &m_A,
-               &temp1,
-               u,  &inc_u,
-               a1, &rs_A );
+    bl1_caxpyv( BLIS1_NO_CONJUGATE,
+                m_A,
+                &temp1,
+                u,  inc_u,
+                a1, rs_A );
+    //F77_caxpy( &m_A,
+    //           &temp1,
+    //           u,  &inc_u,
+    //           a1, &rs_A );
 
-    // bl1_caxpyv( BLIS1_NO_CONJUGATE,
-    //             m_A,
-    //             &temp2,
-    //             z,  inc_z,
-    //             a1, rs_A );
-    F77_caxpy( &m_A,
-               &temp2,
-               z,  &inc_z,
-               a1, &rs_A );
+    bl1_caxpyv( BLIS1_NO_CONJUGATE,
+                m_A,
+                &temp2,
+                z,  inc_z,
+                a1, rs_A );
+    //F77_caxpy( &m_A,
+    //           &temp2,
+    //           z,  &inc_z,
+    //           a1, &rs_A );
 
     bl1_cdot( BLIS1_CONJUGATE,
               m_A,
@@ -501,15 +501,15 @@ FLA_Error FLA_Fused_Gerc2_Ahx_Axpy_Ax_opc_var1( int m_A,
 
     bl1_ccopyconj( alpha1, &conj_alpha1 );
 
-    // bl1_caxpyv( BLIS1_NO_CONJUGATE,
-    //             m_A,
-    //             conj_alpha1,
-    //             a1, rs_A,
-    //             w,  inc_w );
-    F77_caxpy( &m_A,
-               &conj_alpha1,
-               a1, &rs_A,
-               w,  &inc_w );
+    bl1_caxpyv( BLIS1_NO_CONJUGATE,
+                m_A,
+                &conj_alpha1,
+                a1, rs_A,
+                w,  inc_w );
+    //F77_caxpy( &m_A,
+    //           &conj_alpha1,
+    //           a1, &rs_A,
+    //           w,  &inc_w );
 
     /*------------------------------------------------------------*/
 

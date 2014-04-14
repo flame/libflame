@@ -243,23 +243,23 @@ FLA_Error FLA_Fused_UYx_ZVx_ops_var1( int m_U,
 
     /*------------------------------------------------------------*/
 
-    // bl1_sdot( BLIS1_NO_CONJUGATE,
-    //           n_V,
-    //           y1, rs_Y,
-    //           a,  inc_a,
-    //           &alpha );
-    alpha = F77_sdot( &n_V,
-                      y1, &rs_Y,
-                      a,  &inc_a );
+    bl1_sdot( BLIS1_NO_CONJUGATE,
+              n_V,
+              y1, rs_Y,
+              a,  inc_a,
+              &alpha );
+    //alpha = F77_sdot( &n_V,
+    //                  y1, &rs_Y,
+    //                  a,  &inc_a );
 
-    // bl1_sdot( BLIS1_NO_CONJUGATE,
-    //           n_V,
-    //           v1, cs_V,
-    //           a,  inc_a,
-    //           &beta );
-    beta = F77_sdot( &n_V,
-                     v1, &cs_V,
-                     a,  &inc_a );
+    bl1_sdot( BLIS1_NO_CONJUGATE,
+              n_V,
+              v1, cs_V,
+              a,  inc_a,
+              &beta );
+    //beta = F77_sdot( &n_V,
+    //                 v1, &cs_V,
+    //                 a,  &inc_a );
 
     *tau1 = beta;
 
@@ -279,45 +279,45 @@ FLA_Error FLA_Fused_UYx_ZVx_ops_var1( int m_U,
     gamma *= *delta;
     kappa *= *delta;
 
-    // bl1_saxpyv( BLIS1_NO_CONJUGATE,
-    //             m_U,
-    //             &alpha,
-    //             u1, rs_U,
-    //             w,  inc_w );
-    F77_saxpy( &m_U,
-               &alpha,
-               u1, &rs_U,
-               w,  &inc_w );
+    bl1_saxpyv( BLIS1_NO_CONJUGATE,
+                m_U,
+                &alpha,
+                u1, rs_U,
+                w,  inc_w );
+    //F77_saxpy( &m_U,
+    //           &alpha,
+    //           u1, &rs_U,
+    //           w,  &inc_w );
 
-    // bl1_saxpyv( BLIS1_NO_CONJUGATE,
-    //             m_Z,
-    //             &beta,
-    //             z1, rs_U,
-    //             w,  inc_w );
-    F77_saxpy( &m_Z,
-               &beta,
-               z1, &rs_Z,
-               w,  &inc_w );
+    bl1_saxpyv( BLIS1_NO_CONJUGATE,
+                m_Z,
+                &beta,
+                z1, rs_Z,
+                w,  inc_w );
+    //F77_saxpy( &m_Z,
+    //           &beta,
+    //           z1, &rs_Z,
+    //           w,  &inc_w );
 
-    // bl1_saxpyv( BLIS1_NO_CONJUGATE,
-    //             m_U,
-    //             &gamma,
-    //             u1, rs_U,
-    //             al, inc_al );
-    F77_saxpy( &m_U,
-               &gamma,
-               u1, &rs_U,
-               al, &inc_al );
+    bl1_saxpyv( BLIS1_NO_CONJUGATE,
+                m_U,
+                &gamma,
+                u1, rs_U,
+                al, inc_al );
+    //F77_saxpy( &m_U,
+    //           &gamma,
+    //           u1, &rs_U,
+    //           al, &inc_al );
 
-    // bl1_saxpyv( BLIS1_NO_CONJUGATE,
-    //             m_Z,
-    //             &kappa,
-    //             u1, rs_U,
-    //             z,  inc_z );
-    F77_saxpy( &m_Z,
-               &kappa,
-               z1, &rs_Z,
-               al, &inc_al );
+    bl1_saxpyv( BLIS1_NO_CONJUGATE,
+                m_Z,
+                &kappa,
+                z1, rs_Z,
+                al,  inc_al );
+    //F77_saxpy( &m_Z,
+    //           &kappa,
+    //           z1, &rs_Z,
+    //           al, &inc_al );
 
     /*------------------------------------------------------------*/
 
@@ -490,45 +490,45 @@ FLA_Error FLA_Fused_UYx_ZVx_opc_var1( int m_U,
     bl1_cscals( delta, &gamma );
     bl1_cscals( delta, &kappa );
 
-    // bl1_caxpyv( BLIS1_NO_CONJUGATE,
-    //             m_U,
-    //             &alpha,
-    //             u1, rs_U,
-    //             w,  inc_w );
-    F77_caxpy( &m_U,
-               &alpha,
-               u1, &rs_U,
-               w,  &inc_w );
+    bl1_caxpyv( BLIS1_NO_CONJUGATE,
+                m_U,
+                &alpha,
+                u1, rs_U,
+                w,  inc_w );
+    //F77_caxpy( &m_U,
+    //           &alpha,
+    //           u1, &rs_U,
+    //           w,  &inc_w );
 
-    // bl1_caxpyv( BLIS1_NO_CONJUGATE,
-    //             m_Z,
-    //             &beta,
-    //             z1, rs_U,
-    //             w,  inc_w );
-    F77_caxpy( &m_Z,
-               &beta,
-               z1, &rs_Z,
-               w,  &inc_w );
+    bl1_caxpyv( BLIS1_NO_CONJUGATE,
+                m_Z,
+                &beta,
+                z1, rs_Z,
+                w,  inc_w );
+    //F77_caxpy( &m_Z,
+    //           &beta,
+    //           z1, &rs_Z,
+    //           w,  &inc_w );
 
-    // bl1_caxpyv( BLIS1_NO_CONJUGATE,
-    //             m_U,
-    //             &gamma,
-    //             u1, rs_U,
-    //             al, inc_al );
-    F77_caxpy( &m_U,
-               &gamma,
-               u1, &rs_U,
-               al, &inc_al );
+    bl1_caxpyv( BLIS1_NO_CONJUGATE,
+                m_U,
+                &gamma,
+                u1, rs_U,
+                al, inc_al );
+    //F77_caxpy( &m_U,
+    //           &gamma,
+    //           u1, &rs_U,
+    //           al, &inc_al );
 
-    // bl1_caxpyv( BLIS1_NO_CONJUGATE,
-    //             m_Z,
-    //             &kappa,
-    //             u1, rs_U,
-    //             z,  inc_z );
-    F77_caxpy( &m_Z,
-               &kappa,
-               z1, &rs_Z,
-               al, &inc_al );
+    bl1_caxpyv( BLIS1_NO_CONJUGATE,
+                m_Z,
+                &kappa,
+                z1, rs_Z,
+                al,  inc_al);
+    //F77_caxpy( &m_Z,
+    //           &kappa,
+    //           z1, &rs_Z,
+    //           al, &inc_al );
 
     /*------------------------------------------------------------*/
 
