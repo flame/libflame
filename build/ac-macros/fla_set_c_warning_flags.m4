@@ -29,7 +29,7 @@ AC_DEFUN([FLA_SET_C_WARNING_FLAGS],
 				fla_c_warning_flags='-w all'
 			;;
 			dnl IBM xlc.
-			xlc)
+			*xlc*)
 				fla_c_warning_flags='-qcpluscmt'
 			;;
 			dnl ambiguous cc.

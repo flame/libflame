@@ -29,7 +29,7 @@ AC_DEFUN([FLA_SET_C_DEBUG_FLAGS],
 				fla_c_debug_flags='-g -C debug'
 			;;
 			dnl IBM xlc.
-			xlc)
+			*xlc*)
 				fla_c_debug_flags='-g'
 			;;
 			dnl ambiguous cc.

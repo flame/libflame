@@ -23,7 +23,7 @@ AC_DEFUN([FLA_SET_C_PREPROC_FLAGS],
 		sxcc)
 		;;
 		dnl IBM xlc.
-		xlc)
+		*xlc*)
 		;;
 		dnl ambiguous cc.
 		cc)

@@ -29,7 +29,7 @@ AC_DEFUN([FLA_SET_C_PROF_FLAGS],
 				fla_c_prof_flags='-p'
 			;;
 			dnl IBM xlc.
-			xlc)
+			*xlc*)
 				fla_c_prof_flags='-pg'
 			;;
 			dnl ambiguous cc.

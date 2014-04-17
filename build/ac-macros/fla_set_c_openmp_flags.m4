@@ -28,7 +28,7 @@ AC_DEFUN([FLA_SET_C_OPENMP_FLAGS],
 			fla_c_openmp_flags='-P openmp'
 		;;
 		dnl IBM xlc
-		xlc)
+		*xlc*)
 			fla_c_openmp_flags='-qsmp=omp'
 		;;
 		dnl for all other C compilers.
@@ -45,7 +45,7 @@ AC_DEFUN([FLA_SET_C_OPENMP_FLAGS],
 		
 		dnl Tell the user we can't continue unless we know what flags
 		dnl to pass to the C compiler to enable OpenMP.
-		AC_MSG_ERROR([configure doesn't know what flag to give $CC in order to enable OpenMP support. Please submit a bug report to the FLAME developers at FLA_BUG_REPORT_ADDRESS.])
+		AC_MSG_ERROR([configure doesn't know what flag to give $CC in order to enable OpenMP support. Please submit a bug report to the FLAME developers.])
 	fi
 
 	dnl Output the C OpenMP flags variable.

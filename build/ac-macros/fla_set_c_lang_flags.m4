@@ -27,8 +27,8 @@ AC_DEFUN([FLA_SET_C_LANG_FLAGS],
 			fla_c_lang_flags=''
 		;;
 		dnl IBM xlc.
-		xlc)
-			fla_c_lang_flags='-std=c99'
+		*xlc*)
+			fla_c_lang_flags='-qlanglvl=stdc99 -qstrict -qlargepage -qthreaded'
 		;;
 		dnl ambiguous cc.
 		cc)

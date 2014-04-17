@@ -28,7 +28,7 @@ AC_DEFUN([FLA_SET_C_SSE_FLAGS],
 			fla_c_sse_flags='notvalid'
 		;;
 		dnl IBM xlc
-		xlc)
+		*xlc*)
 			fla_c_sse_flags='notvalid'
 		;;
 		dnl for all other C compilers.
@@ -53,7 +53,7 @@ AC_DEFUN([FLA_SET_C_SSE_FLAGS],
 		
 		dnl Tell the user we can't continue unless we know what flags
 		dnl to pass to the C compiler to enable SSE support.
-		AC_MSG_ERROR([configure doesn't know what flag to give $CC in order to enable SSE. Please submit a bug report to the FLAME developers at FLA_BUG_REPORT_ADDRESS.])
+		AC_MSG_ERROR([configure doesn't know what flag to give $CC in order to enable SSE. Please submit a bug report to the FLAME developers.])
 	fi
 
 	dnl Output the C SSE flags variable.

@@ -29,8 +29,8 @@ AC_DEFUN([FLA_SET_C_OPT_FLAGS],
 				fla_c_opt_flags='-C vopt -O nooverlap -pvctl,noassume,vwork=stack'
 			;;
 			dnl IBM xlc.
-			xlc)
-				fla_c_opt_flags='-O5'
+			*xlc*)
+				fla_c_opt_flags='-O3'
 			;;
 			dnl ambiguous cc.
 			cc)
