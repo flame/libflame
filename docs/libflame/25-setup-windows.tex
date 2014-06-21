@@ -134,23 +134,23 @@ as of this writing.
 
 
 
-\section{Obtaining \libflame}
-
-\index{\libflame!obtaining}
-
-The source code for \libflame may be obtained through the FLAME project
-website:
-
-\begin{Verbatim}[frame=none,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\normalsize]
-http://www.cs.utexas.edu/users/flame/libflame/
-\end{Verbatim}
-
-\noindent
-This webpage also contains information related to configuring,
-compiling, installing, and linking against \libflame under GNU/Linux
-and UNIX environments.
-Most of the information provided there is repeated and expanded upon in
-Chapter \ref{chapter:setup-linux}.
+%\section{Obtaining \libflame}
+%
+%\index{\libflame!obtaining}
+%
+%The source code for \libflame may be obtained the same through the FLAME project
+%website:
+%
+%\begin{Verbatim}[frame=none,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\normalsize]
+%http://www.cs.utexas.edu/users/flame/libflame/
+%\end{Verbatim}
+%
+%\noindent
+%This webpage also contains information related to configuring,
+%compiling, installing, and linking against \libflame under GNU/Linux
+%and UNIX environments.
+%Most of the information provided there is repeated and expanded upon in
+%Chapter \ref{chapter:setup-linux}.
 
 
 
@@ -158,9 +158,6 @@ Chapter \ref{chapter:setup-linux}.
 
 Download the {\tt .zip} package from the website and then unzip the
 the source code.
-Here, we assume that we've downloaded revision 3692 (r3692) from the
-nightly snapshots directory and unzipped the package to a directory by
-the same name, minus the {\tt .zip} extension.
 
 \begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
 C:\field\temp>dir
@@ -171,28 +168,28 @@ C:\field\temp>dir
 
 12/01/2009  01:03 PM    <DIR>          .
 12/01/2009  01:03 PM    <DIR>          ..
-12/01/2009  01:04 PM    <DIR>          libflame-r3692
-12/01/2009  01:02 PM         5,324,397 libflame-r3692.zip
+12/01/2009  01:04 PM    <DIR>          libflame-5.1.0
+12/01/2009  01:02 PM         5,324,397 libflame-5.1.0.zip
                1 File(s)      5,324,397 bytes
                3 Dir(s)  85,294,235,648 bytes free
 \end{Verbatim}
 
 \noindent
-Change into the {\tt libflame-r3692} directory:
+Change into the {\tt libflame-5.1.0} directory:
 
 \begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
-C:\field\temp>cd libflame-r3692
+C:\field\temp>cd libflame-5.1.0
 \end{Verbatim}
 
 \noindent
 The top-level directory of the source tree should look something like this:
 
 \begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
-C:\field\temp\libflame-r3692>dir
+C:\field\temp\libflame-5.1.0>dir
  Volume in drive C has no label.
  Volume Serial Number is B4E3-D9FC
 
- Directory of C:\field\temp\libflame-r3692
+ Directory of C:\field\temp\libflame-5.1.0
 
 12/01/2009  01:04 PM    <DIR>          .
 12/01/2009  01:04 PM    <DIR>          ..
@@ -228,13 +225,13 @@ However, since we are building \libflame for Windows, we should focus on the
 {\tt windows} subdirectory.
 
 \begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
-C:\field\temp\libflame-r3692>cd windows
+C:\field\temp\libflame-5.1.0>cd windows
 
-C:\field\temp\libflame-r3692\windows>dir
+C:\field\temp\libflame-5.1.0\windows>dir
  Volume in drive C has no label.
  Volume Serial Number is B4E3-D9FC
 
- Directory of C:\field\temp\libflame-r3692\windows
+ Directory of C:\field\temp\libflame-5.1.0\windows
 
 12/01/2009  01:04 PM    <DIR>          .
 12/01/2009  01:04 PM    <DIR>          ..
@@ -349,10 +346,10 @@ arguments.
 The output from running \configurecmd should look something like:
 
 \begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
-C:\field\temp\libflame-r3692\windows>.\configure.cmd x64 debug icl
+C:\field\temp\libflame-5.1.0\windows>.\configure.cmd x64 debug icl
 .\configure.cmd: Checking/updating revision file.
 gen-check-rev-file.py: Found export. Checking for revision file...
-gen-check-rev-file.py: Revision file found containing revision string "3692". Export is valid snapshot!
+gen-check-rev-file.py: Revision file found containing revision string 5.1.0". Export is valid snapshot!
 .\configure.cmd: Gathering source files into local flat directories.
 .\configure.cmd: Creating configure definitions file.
 .\configure.cmd: Configuration and setup complete. You may now run nmake.
@@ -399,7 +396,7 @@ invoked implicitly.
 Presently, the \all target causes only the static library to be built.
 
 \begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
-C:\field\temp\libflame-r3692\windows>nmake
+C:\field\temp\libflame-5.1.0\windows>nmake
 \end{Verbatim}
 
 %Alternatively, the user may invoke the \lib and/or \dll targets individually.
@@ -418,7 +415,7 @@ progress information.
 By default (ie: with verbose output disabled), this appears as:
 
 \begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
-C:\field\temp\libflame-r3692\windows>nmake
+C:\field\temp\libflame-5.1.0\windows>nmake
 
 Microsoft (R) Program Maintenance Utility Version 9.00.30729.01
 Copyright (C) Microsoft Corporation.  All rights reserved.
@@ -443,12 +440,12 @@ The output will appear as:
 
 \begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
 nmake: Creating .\lib\x64\debug directory
-nmake: Creating static library .\lib\x64\debug\libflame-x64-r3692.lib
+nmake: Creating static library .\lib\x64\debug\libflame-x64-5.1.0.lib
 \end{Verbatim}
 
 \noindent
 As you can see, the ``x64'' architecture string (provided at configure-time)
-and ``r3692'' revision string were inserted into the final library name.
+and ``5.1.0'' revision string were inserted into the final library name.
 \libflame is still under heavy development and undergoes frequent changes, and
 so the revision string is helpful for obvious reasons.
 Recall that the architecture string is completely arbitrary and has no effect
@@ -466,15 +463,15 @@ directory, depending on the architecture and build type strings given to
 \configurecmdns.
 
 \begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
-C:\field\temp\libflame-r3692\windows>dir lib\x64\debug
+C:\field\temp\libflame-5.1.0\windows>dir lib\x64\debug
  Volume in drive C has no label.
  Volume Serial Number is B4E3-D9FC
 
- Directory of C:\field\temp\libflame-r3692\windows\lib\x64\debug
+ Directory of C:\field\temp\libflame-5.1.0\windows\lib\x64\debug
 
 12/01/2009  01:19 PM    <DIR>          .
 12/01/2009  01:19 PM    <DIR>          ..
-12/01/2009  01:19 PM        45,800,190 libflame-x64-r3692.lib
+12/01/2009  01:19 PM        45,800,190 libflame-x64-5.1.0.lib
                1 File(s)     45,800,190 bytes
                2 Dir(s)  85,181,444,096 bytes free
 \end{Verbatim}
@@ -500,13 +497,13 @@ then copied to its destination directory, specified by the
 The \install target also copies the \libflame header files.
 
 \begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
-C:\field\temp\libflame-r3692\windows>nmake install
+C:\field\temp\libflame-5.1.0\windows>nmake install
 
 Microsoft (R) Program Maintenance Utility Version 9.00.30729.01
 Copyright (C) Microsoft Corporation.  All rights reserved.
 
-nmake: Installing .\lib\x64\debug\libflame-x64-r3692.lib to c:\field\lib\libflame\lib
-nmake: Installing libflame header files to c:\field\lib\libflame\include-x64-r3692
+nmake: Installing .\lib\x64\debug\libflame-x64-5.1.0.lib to c:\field\lib\libflame\lib
+nmake: Installing libflame header files to c:\field\lib\libflame\include-x64-5.1.0
 \end{Verbatim}
 
 At this point, the static library and header files are ready to use.
@@ -599,35 +596,35 @@ to generate the DLL.
 Simply invoke the \dll target:
 
 \begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
-C:\field\temp\libflame-r3692\windows>nmake dll
+C:\field\temp\libflame-5.1.0\windows>nmake dll
 
 Microsoft (R) Program Maintenance Utility Version 9.00.30729.01
 Copyright (C) Microsoft Corporation.  All rights reserved.
 
-nmake: Creating dynamic library .\dll\x64\debug\libflame-x64-r3692.dll
-   Creating library libflame-x64-r3692.lib and object libflame-x64-r3692.exp
+nmake: Creating dynamic library .\dll\x64\debug\libflame-x64-5.1.0.dll
+   Creating library libflame-x64-5.1.0.lib and object libflame-x64-5.1.0.exp
 \end{Verbatim}
 
 The purpose of each file produced for static and dynamic builds of \libflame
 is described in Table \ref{fig:library-files}.
 The filenames in this table correspond to those that would result from building
-revision r3692 with the architecture string ``x64''.
+revision 5.1.0 with the architecture string ``x64''.
 
 Once generated, the dynamic library files reside in a directory named \dllns:
 
 \begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,fontsize=\footnotesize]
-C:\field\temp\libflame-r3692\windows>dir dll\x64\debug
+C:\field\temp\libflame-5.1.0\windows>dir dll\x64\debug
  Volume in drive C has no label.
  Volume Serial Number is B4E3-D9FC
 
- Directory of C:\field\temp\libflame-r3692\windows\dll\x64\debug
+ Directory of C:\field\temp\libflame-5.1.0\windows\dll\x64\debug
 
 12/01/2009  01:33 PM    <DIR>          .
 12/01/2009  01:33 PM    <DIR>          ..
-12/01/2009  01:33 PM        19,907,584 libflame-x64-r3692.dll
-12/01/2009  01:33 PM               618 libflame-x64-r3692.dll.manifest
-12/01/2009  01:33 PM           330,905 libflame-x64-r3692.exp
-12/01/2009  01:33 PM           573,048 libflame-x64-r3692.lib
+12/01/2009  01:33 PM        19,907,584 libflame-x64-5.1.0.dll
+12/01/2009  01:33 PM               618 libflame-x64-5.1.0.dll.manifest
+12/01/2009  01:33 PM           330,905 libflame-x64-5.1.0.exp
+12/01/2009  01:33 PM           573,048 libflame-x64-5.1.0.lib
                4 File(s)     20,812,155 bytes
                2 Dir(s)  85,156,536,320 bytes free
 \end{Verbatim}
@@ -647,9 +644,9 @@ C:\field\libflame-wc\windows>nmake install-dll
 Microsoft (R) Program Maintenance Utility Version 9.00.30729.01
 Copyright (C) Microsoft Corporation.  All rights reserved.
 
-nmake: Installing .\dll\x64\debug\libflame-x64-r3692.dll to c:\field\lib\libflame\dll
-nmake: Installing .\dll\x64\debug\libflame-x64-r3692.lib to c:\field\lib\libflame\dll
-nmake: Installing .\dll\x64\debug\libflame-x64-r3692.exp to c:\field\lib\libflame\dll
+nmake: Installing .\dll\x64\debug\libflame-x64-5.1.0.dll to c:\field\lib\libflame\dll
+nmake: Installing .\dll\x64\debug\libflame-x64-5.1.0.lib to c:\field\lib\libflame\dll
+nmake: Installing .\dll\x64\debug\libflame-x64-5.1.0.exp to c:\field\lib\libflame\dll
 \end{Verbatim}
 
 If you haven't already run the \install target for a static library install,
@@ -683,7 +680,7 @@ process:
 \item
 {\bf Add the \libflame header directory to the include path of your compiler}.
 Usually, this is done by with the {\tt /I} compiler option.
-For example, if you configured \libflame r3692 with the ``x64'' build label,
+For example, if you configured \libflame 5.1.0 with the ``x64'' build label,
 and specified that \configurecmd use
 {\tt c:$\bs$field$\bs$lib$\bs$libflame} as the
 install prefix, then you would add
@@ -695,7 +692,7 @@ all of your application's source code.
 \item
 {\bf Add \libflame to the link command that links your application.}
 To link against \libflamens, you need to add
-{\tt libflame-x64-r3692.lib} to your link command.
+{\tt libflame-x64-5.1.0.lib} to your link command.
 \end{itemize}
 
 Now let's give a concrete example of these changes.
@@ -747,8 +744,8 @@ BLAS_LIB     = $(LIB_HOME)\libblas.lib
 LAPACK_LIB   = $(LIB_HOME)\liblapack.lib
 
 #textcolor{red}{FLAME_HOME   = c:\field\lib\libflame}
-#textcolor{red}{FLAME_INC    = $(FLAME_HOME)\include-x64-r3692}
-#textcolor{red}{FLAME_LIB    = $(FLAME_HOME)\lib\libflame-x64-r3692.lib}
+#textcolor{red}{FLAME_INC    = $(FLAME_HOME)\include-x64-5.1.0}
+#textcolor{red}{FLAME_LIB    = $(FLAME_HOME)\lib\libflame-x64-5.1.0.lib}
 
 CC           = cl.exe
 LINKER       = link.exe

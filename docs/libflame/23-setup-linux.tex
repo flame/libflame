@@ -162,6 +162,7 @@ For more information on this and related topics, refer to Section
 
 \subsection{Source code}
 
+\index{\libflame!obtaining}
 \index{\libflame!for GNU/Linux and UNIX!source code}
 
 \input{20-setup-common/source-code}
@@ -180,43 +181,40 @@ For more information on this and related topics, refer to Section
 
 
 
-\section{Obtaining \libflame}
-
-\index{\libflame!obtaining}
-
-The source code for \libflame may be obtained through the FLAME project
-website:
-
-\begin{Verbatim}[frame=none,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\normalsize]
-http://www.cs.utexas.edu/users/flame/libflame/
-\end{Verbatim}
-
-\noindent
-This webpage also contains important information related to configuring,
-compiling, installing, and linking against \libflamens.
-Most of the information provided there is repeated and expanded upon in
-this chapter.
+%\section{Obtaining \libflame}
+%
+%\index{\libflame!obtaining}
+%
+%Aside from the github repository page, the source code for \libflame may
+%also be obtained through the FLAME project website:
+%
+%\begin{Verbatim}[frame=none,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\normalsize]
+%http://www.cs.utexas.edu/~flame/web/
+%\end{Verbatim}
+%
+%\noindent
+%This webpage also contains important information related to configuring,
+%compiling, installing, and linking against \libflamens.
+%Most of the information provided there is repeated and expanded upon in
+%this chapter.
 
 
 
 \section{Preparation}
 
-Download the {\tt .tar.gz} package from the website, and then un-tar and
-un-gzip the source code.
-Here, we assume that we've downloaded revision r4784 from the nightly
-snapshots directory.
+Download a {\tt git} clone of \libflame from the {\tt github} website.
 
 \begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
-> tar xzf libflame-r4784.tar.gz
+> git clone https://github.com/flame/libflame.git
 > ls
-libflame-r4784  libflame-r4784.tar.gz
+libflame
 \end{Verbatim}
 
 \noindent
-Change into the {\tt libflame-r4784} directory:
+Change into the {\tt libflame} directory:
 
 \begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
-> cd libflame-r4784
+> cd libflame
 \end{Verbatim}
 
 \noindent
@@ -969,9 +967,9 @@ and header files to a more permanent location.
 
 \begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
 > make install
-Installing libflame-i686-r4784.a into /u/field/flame/lib/
-Installing libflame-i686-r4784.so into /u/field/flame/lib/
-Installing C header files into /u/field/flame/include-i686-r4784
+Installing libflame-i686-5.1.0-15.a into /u/field/flame/lib/
+Installing libflame-i686-5.1.0-15.so into /u/field/flame/lib/
+Installing C header files into /u/field/flame/include-i686-5.1.0-15
 Installing symlink libflame.a into /u/field/flame/lib/
 Installing symlink libflame.so into /u/field/flame/lib/
 Installing symlink include into /u/field/flame/
@@ -986,15 +984,15 @@ the build architecture and the revision number.
 \begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
 > ls -l $HOME/flame/
 total 8
-lrwxrwxrwx  1 field dept     18 Nov 14 13:46 include -> include-i686-r4784
-drwxr-xr-x  2 field dept  20480 Nov 14 13:46 include-i686-r4784
+lrwxrwxrwx  1 field dept     18 Nov 14 13:46 include -> include-i686-5.1.0-15
+drwxr-xr-x  2 field dept  20480 Nov 14 13:46 include-i686-5.1.0-15
 drwxr-xr-x  5 field dept   4096 Nov 14 13:46 lib
 > ls -l $HOME/flame/lib/
 total 62024
-lrwxrwxrwx 1 field dept       21 Nov 14 13:46 libflame.a -> libflame-i686-r4784.a
-lrwxrwxrwx 1 field dept       22 Nov 14 13:46 libflame.so -> libflame-i686-r4784.so
--rw-r--r-- 1 field dept 22548036 Nov 14 13:46 libflame-i686-r4784.a
--rw-r--r-- 1 field dept 12060827 Nov 14 13:46 libflame-i686-r4784.so
+lrwxrwxrwx 1 field dept       21 Nov 14 13:46 libflame.a -> libflame-i686-5.1.0-15.a
+lrwxrwxrwx 1 field dept       22 Nov 14 13:46 libflame.so -> libflame-i686-5.1.0-15.so
+-rw-r--r-- 1 field dept 22548036 Nov 14 13:46 libflame-i686-5.1.0-15.a
+-rw-r--r-- 1 field dept 12060827 Nov 14 13:46 libflame-i686-5.1.0-15.so
 \end{Verbatim}
 
 \noindent
@@ -1042,13 +1040,13 @@ Now that \libflame has been installed, you are ready to use it!
 %\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
 %> ls -l $HOME/flame
 %total 8
-%lrwxrwxrwx 1 field flame   19 Aug 29 17:08 include-x86_64 -> include-x86_64-r4784
-%drwxr-xr-x 2 field flame 4096 Aug 29 17:07 include-x86_64-r4784
+%lrwxrwxrwx 1 field flame   19 Aug 29 17:08 include-x86_64 -> include-x86_64-5.1.0-15
+%drwxr-xr-x 2 field flame 4096 Aug 29 17:07 include-x86_64-5.1.0-15
 %drwxr-xr-x 2 field flame 4096 Aug 29 17:39 lib
 %> ls -l $HOME/flame/lib
 %total 17680
-%-rw-r--r-- 1 field flame 17226100 Aug 29 17:07 libflame-x86_64-r4784.a
-%lrwxrwxrwx 1 field flame       22 Aug 29 17:08 libflame-x86_64.a -> libflame-x86_64-r4784.a
+%-rw-r--r-- 1 field flame 17226100 Aug 29 17:07 libflame-x86_64-5.1.0-15.a
+%lrwxrwxrwx 1 field flame       22 Aug 29 17:08 libflame-x86_64.a -> libflame-x86_64-5.1.0-15.a
 %\end{Verbatim}
 %
 %\noindent
