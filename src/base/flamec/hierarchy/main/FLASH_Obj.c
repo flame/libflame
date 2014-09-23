@@ -853,7 +853,7 @@ FLA_Error FLASH_Obj_attach_buffer_hierarchy( FLA_Obj F, FLA_Obj* H )
 			FLA_Repart_1x2_to_1x3( HL,  /**/ HR,        &H0, /**/ &H1, &H2,
 			                       1, FLA_RIGHT );
 
-			b_n = FLASH_Obj_base_scalar_width( H1 );
+			b_n = FLASH_Obj_scalar_width( H1 );
 
 			FLA_Repart_1x2_to_1x3( FL,  /**/ FR,        &F0, /**/ &F1, &F2,
 			                       b_n, FLA_RIGHT );
@@ -874,7 +874,7 @@ FLA_Error FLASH_Obj_attach_buffer_hierarchy( FLA_Obj F, FLA_Obj* H )
 				                                          &H11,
 				                       H1B,               &H21,        1, FLA_BOTTOM );
 
-				b_m = FLASH_Obj_base_scalar_length( H11 );
+				b_m = FLASH_Obj_scalar_length( H11 );
 
 				FLA_Repart_2x1_to_3x1( F1T,               &F01,
 				                    /* ** */            /* ** */
