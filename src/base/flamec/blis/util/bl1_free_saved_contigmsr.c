@@ -21,11 +21,12 @@ void bl1_sfree_saved_contigmsr( side1_t side, uplo1_t uplo, int m, int n, float*
 	if ( bl1_is_gen_storage( a_rs_save, a_cs_save ) )
 	{
 		// Copy the contents of the temporary matrix back to the original.
-		bl1_scopymt( uplo,
-		             dim_a,
-		             dim_a,
-		             *a,     *a_rs,     *a_cs,
-		             a_save, a_rs_save, a_cs_save );
+		bl1_scopymrt( uplo,
+		              BLIS1_NO_TRANSPOSE,
+		              dim_a,
+		              dim_a,
+		              *a,     *a_rs,     *a_cs,
+		              a_save, a_rs_save, a_cs_save );
 
 		// Free the temporary contiguous storage for the matrix.
 		bl1_sfree( *a );
@@ -50,11 +51,12 @@ void bl1_dfree_saved_contigmsr( side1_t side, uplo1_t uplo, int m, int n, double
 	if ( bl1_is_gen_storage( a_rs_save, a_cs_save ) )
 	{
 		// Copy the contents of the temporary matrix back to the original.
-		bl1_dcopymt( uplo,
-		             dim_a,
-		             dim_a,
-		             *a,     *a_rs,     *a_cs,
-		             a_save, a_rs_save, a_cs_save );
+		bl1_dcopymrt( uplo,
+		              BLIS1_NO_TRANSPOSE,
+		              dim_a,
+		              dim_a,
+		              *a,     *a_rs,     *a_cs,
+		              a_save, a_rs_save, a_cs_save );
 
 		// Free the temporary contiguous storage for the matrix.
 		bl1_dfree( *a );
@@ -79,11 +81,12 @@ void bl1_cfree_saved_contigmsr( side1_t side, uplo1_t uplo, int m, int n, scompl
 	if ( bl1_is_gen_storage( a_rs_save, a_cs_save ) )
 	{
 		// Copy the contents of the temporary matrix back to the original.
-		bl1_ccopymt( uplo,
-		             dim_a,
-		             dim_a,
-		             *a,     *a_rs,     *a_cs,
-		             a_save, a_rs_save, a_cs_save );
+		bl1_ccopymrt( uplo,
+		              BLIS1_NO_TRANSPOSE,
+		              dim_a,
+		              dim_a,
+		              *a,     *a_rs,     *a_cs,
+		              a_save, a_rs_save, a_cs_save );
 
 		// Free the temporary contiguous storage for the matrix.
 		bl1_cfree( *a );
@@ -108,11 +111,12 @@ void bl1_zfree_saved_contigmsr( side1_t side, uplo1_t uplo, int m, int n, dcompl
 	if ( bl1_is_gen_storage( a_rs_save, a_cs_save ) )
 	{
 		// Copy the contents of the temporary matrix back to the original.
-		bl1_zcopymr( uplo,
-		             dim_a,
-		             dim_a,
-		             *a,     *a_rs,     *a_cs,
-		             a_save, a_rs_save, a_cs_save );
+		bl1_zcopymrt( uplo,
+		              BLIS1_NO_TRANSPOSE,
+		              dim_a,
+		              dim_a,
+		              *a,     *a_rs,     *a_cs,
+		              a_save, a_rs_save, a_cs_save );
 
 		// Free the temporary contiguous storage for the matrix.
 		bl1_zfree( *a );

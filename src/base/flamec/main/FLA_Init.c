@@ -35,8 +35,8 @@ FLA_Obj FLA_OVERFLOW_SQUARE_THRES;
 
 const float    fzero = 0.0f;
 const double   dzero = 0.0;
-const scomplex czero = { .real = 0.0f, .imag = 0.0f }; 
-const dcomplex zzero = { .real = 0.0 , .imag = 0.0  }; 
+const scomplex czero = { 0.0f, 0.0f };
+const dcomplex zzero = { 0.0 , 0.0  };
 
 /* *************************************************************************
 

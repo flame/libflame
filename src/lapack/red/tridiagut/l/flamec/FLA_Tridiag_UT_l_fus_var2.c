@@ -756,7 +756,7 @@ FLA_Error FLA_Tridiag_UT_l_step_ofc_var2( int m_A,
     {
       // FLA_Her2( FLA_LOWER_TRIANGULAR, FLA_MINUS_ONE, u21, z21, A22 );
       bl1_cher2( BLIS1_LOWER_TRIANGULAR,
-                 BLIS1_NO_TRANSPOSE,
+                 BLIS1_NO_CONJUGATE,
                  m_ahead,
                  buff_m1,
                  u21, inc_u,
@@ -986,7 +986,7 @@ FLA_Error FLA_Tridiag_UT_l_step_ofz_var2( int m_A,
     {
       // FLA_Her2( FLA_LOWER_TRIANGULAR, FLA_MINUS_ONE, u21, z21, A22 );
       bl1_zher2( BLIS1_LOWER_TRIANGULAR,
-                 BLIS1_NO_TRANSPOSE,
+                 BLIS1_NO_CONJUGATE,
                  m_ahead,
                  buff_m1,
                  u21, inc_u,

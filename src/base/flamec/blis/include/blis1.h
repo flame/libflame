@@ -11,6 +11,13 @@
 #ifndef BLIS1_H
 #define BLIS1_H
 
+// Allow C++ users to include this header file in their source code. However,
+// we make the extern "C" conditional on whether we're using a C++ compiler,
+// since regular C compilers don't understand the extern "C" construct.
+#ifdef __cplusplus
+extern "C" {
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
@@ -76,6 +83,11 @@
   #include "blis_prototypes_cblas.h"
 #else
   #include "blis_prototypes_blas.h"
+#endif
+
+// End extern "C" construct block.
+#ifdef __cplusplus
+}
 #endif
 
 #endif
