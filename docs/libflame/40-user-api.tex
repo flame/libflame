@@ -5944,7 +5944,15 @@ This section documents the interfaces to the featured computational routines
 provided by \libflamens.
 We refer to these interfaces as {\em front-ends}, because they form the
 primary set of APIs for use by users at the application-level.
-None of these routines are direct wrappers to external implementations.
+None of these routines are direct wrappers to external implementations.%
+\footnote{
+There are two exceptions to this: \flatrmmsx and \flatrsmsxns.
+These routines {\em are} in fact direct wrappers to external implemenations,
+as \libflame does not contain native implemenations of the \trmmsx and
+\trsmsx operations.
+These routines are also convenient for those who do not wish to call the
+somewhat longer functions named \flatrmmsxext and \flatrsmsxextns.
+}
 All computational front-ends employ FLAME algorithmic variants in some
 capacity, either to produce a blocked algorithm or an algorithm-by-blocks,
 the latter of which uses hierarchical storage and may be executed either
@@ -8426,6 +8434,76 @@ invokes external BLAS to perform the computation on these blocks.
 \end{params}
 \end{flaspec}
 
+% --- FLA_Trmmsx() -------------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Trmmsx( FLA_Side side, FLA_Uplo uplo, FLA_Trans trans,
+                 FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B,  
+                 FLA_Obj beta, FLA_Obj C );
+\end{verbatim}
+\index{FLAME/C functions!\flatrmmsxns}
+\purpose{
+Perform one of the following extended triangular matrix-matrix multiplication
+operations:
+\begin{center}
+\begin{math}
+\begin{array}{cclcccl}
+C & := & \beta C + \alpha A B       & \hsp & C & := & \beta C + \alpha B A \\[0.05in]
+C & := & \beta C + \alpha A^T B     & \hsp & C & := & \beta C + \alpha B A^T \\[0.05in]
+C & := & \beta C + \alpha \bar{A} B & \hsp & C & := & \beta C + \alpha B \bar{A} \\[0.05in]
+C & := & \beta C + \alpha A^H B     & \hsp & C & := & \beta C + \alpha B A^H
+\end{array}
+\end{math}
+\end{center}
+where $ \alpha $ and $ \beta $ are scalars, $ A $ is a triangular matrix, and
+$ B $ and $ C $ are general matrices.
+The \side argument indicates whether the triangular matrix $ A $ is
+multiplied on the left or the right side of $ B $.
+The \uplo argument indicates whether the lower or upper triangle of $ A $
+is referenced by the operation.
+The \trans argument allows the computation to proceed as if $ A $ were
+conjugated and/or transposed.
+The \diag argument indicates whether the diagonal of $ A $ is unit or
+non-unit.
+}
+\begin{checks}
+\checkitem
+The numerical datatypes of $ A $, $ B $, and $ C $ must be identical and
+floating-point, and must not be \flaconstantns.
+\itemvsp
+\checkitem
+If $ \alpha $ and $ \beta $ are not of datatype \flaconstantns, then they must
+match the datatypes of $ A $, $ B $, and $ C $.
+\itemvsp
+\checkitem
+If \side equals \flaleftns, then the number of rows in $ B $ and the order of
+$ A $ must be equal; otherwise, if \side equals \flarightns, then the number
+of columns in $ B $ and the order of $ A $ must be equal.
+\itemvsp
+\checkitem
+The dimensions of $ B $ and $ C $ must be conformal.
+\itemvsp
+\checkitem
+\diag may not be \flazerodiagns.
+\end{checks}
+\implnotes{
+This function uses an external implementation of the level-3 BLAS routine
+\trmm along with the level-1 BLAS routines \copyxns, \scalns, and \axpyns.
+}
+\begin{params}
+\parameter{\flaside}{side}{Indicates whether $ A $ is multipled on the left or right side of $ B $.}
+\parameter{\flauplo}{uplo}{Indicates whether the lower or upper triangle of $ A $ is referenced during the operation.}
+\parameter{\flatrans}{trans}{Indicates whether the operation proceeds as if $ A $ were conjugated and/or transposed.}
+\parameter{\fladiag}{diag}{Indicates whether the diagonal of $ A $ is unit or non-unit.}
+\parameter{\flaobj}{alpha}{An \flaobj representing scalar $ \alpha $.}
+\parameter{\flaobj}{A}{An \flaobj representing matrix $ A $.}
+\parameter{\flaobj}{B}{An \flaobj representing matrix $ B $.}
+\parameter{\flaobj}{beta}{An \flaobj representing scalar $ \beta $.}
+\parameter{\flaobj}{C}{An \flaobj representing matrix $ C $.}
+\end{params}
+\end{flaspec}
+
 % --- FLA_Trsm() ---------------------------------------------------------------
 % --- FLASH_Trsm() -------------------------------------------------------------
 
@@ -8509,6 +8587,87 @@ invokes external BLAS to perform the computation on these blocks.
 \parameter{\flaobj}{alpha}{An \flaobj representing scalar $ \alpha $.}
 \parameter{\flaobj}{A}{An \flaobj representing matrix $ A $.}
 \parameter{\flaobj}{B}{An \flaobj representing matrix $ B $.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_Trsmsx() -------------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_Trsmsx( FLA_Side side, FLA_Uplo uplo, FLA_Trans trans,
+                 FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B,
+                 FLA_Obj beta, FLA_Obj C );
+\end{verbatim}
+\index{FLAME/C functions!\flatrsmsxns}
+\purpose{
+Perform one of the following extended triangular solve with multiple
+right-hand sides ({\sc trsm}) operations:
+\begin{center}
+\begin{math}
+\begin{array}{cclcccl}
+A X       & = & \alpha B & \hsp & X A       & = & \alpha B \\[0.05in]
+A^T X     & = & \alpha B & \hsp & X A^T     & = & \alpha B \\[0.05in]
+\bar{A} X & = & \alpha B & \hsp & X \bar{A} & = & \alpha B \\[0.05in]
+A^H X     & = & \alpha B & \hsp & X A^H     & = & \alpha B 
+\end{array}
+\end{math}
+\end{center}
+and update $ C $ with the contents of the solution matrix $ X $ as follows:
+\begin{center}
+\begin{math}
+\begin{array}{cclcccl}
+C & := & \beta C + \alpha A^{-1} B       & \hsp & C & := & \beta C + \alpha B A^{-1} \\[0.05in]
+C & := & \beta C + \alpha A^{-T} B       & \hsp & C & := & \beta C + \alpha B A^{-T} \\[0.05in]
+C & := & \beta C + \alpha \bar{A}^{-1} B & \hsp & C & := & \beta C + \alpha B \bar{A}^{-1} \\[0.05in]
+C & := & \beta C + \alpha A^{-H} B       & \hsp & C & := & \beta C + \alpha B A^{-H} \\[0.05in]
+\end{array}
+\end{math}
+\end{center}
+where $ \alpha $ and $ \beta $ are scalars, $ A $ is a triangular matrix, and
+$ X $, $ B $, and $ C $ are general matrices.
+The \side argument indicates whether the triangular matrix $ A $ is
+multiplied on the left or the right side of $ X $.
+The \uplo argument indicates whether the lower or upper triangle of $ A $
+is referenced by the operation.
+The \trans argument allows the computation to proceed as if $ A $ were
+conjugated and/or transposed.
+The \diag argument indicates whether the diagonal of $ A $ is unit or
+non-unit.
+}
+\begin{checks}
+\checkitem
+The numerical datatypes of $ A $, $ B $, and $ C $ must be identical and
+floating-point, and must not be \flaconstantns.
+\itemvsp
+\checkitem
+If $ \alpha $ and $ \beta $ are not of datatype \flaconstantns, then they must
+match the datatypes of $ A $, $ B $, and $ C $.
+\itemvsp
+\checkitem
+If \side equals \flaleftns, then the number of rows in $ B $ and the order of
+$ A $ must be equal; otherwise, if \side equals \flarightns, then the number
+of columns in $ B $ and the order of $ A $ must be equal.
+\itemvsp
+\checkitem
+The dimensions of $ B $ and $ C $ must be conformal.
+\itemvsp
+\checkitem
+\diag may not be \flazerodiagns.
+\end{checks}
+\implnotes{
+This function uses an external implementation of the level-3 BLAS routine
+\trsm along with the level-1 BLAS routines \copyxns, \scalns, and \axpyns.
+}
+\begin{params}
+\parameter{\flaside}{side}{Indicates whether $ A $ is multipled on the left or right side of $ X $.}
+\parameter{\flauplo}{uplo}{Indicates whether the lower or upper triangle of $ A $ is referenced during the operation.}
+\parameter{\flatrans}{trans}{Indicates whether the operation proceeds as if $ A $ were conjugated and/or transposed.}
+\parameter{\fladiag}{diag}{Indicates whether the diagonal of $ A $ is unit or non-unit.}
+\parameter{\flaobj}{alpha}{An \flaobj representing scalar $ \alpha $.}
+\parameter{\flaobj}{A}{An \flaobj representing matrix $ A $.}
+\parameter{\flaobj}{B}{An \flaobj representing matrix $ B $.}
+\parameter{\flaobj}{beta}{An \flaobj representing scalar $ \beta $.}
+\parameter{\flaobj}{C}{An \flaobj representing matrix $ C $.}
 \end{params}
 \end{flaspec}
 
