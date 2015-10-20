@@ -371,6 +371,10 @@ endif
 
 # --- Static library archiver rules for libflame ---
 $(MK_ALL_FLAMEC_LIB): $(MK_ALL_FLAMEC_OBJS)
+define EOL
+
+
+endef
 ifeq ($(FLA_ENABLE_VERBOSE_MAKE_OUTPUT),yes)
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 	@$(eval ar_args:=)
