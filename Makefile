@@ -293,6 +293,8 @@ MK_ALL_FLAMEC_OBJS        := $(MK_FLABLAS_F2C_OBJS) \
                              $(MK_ALL_FLAMEC_OBJS)
 endif
 
+### Kyungjoo 2015.10.21
+AR_CHUNK_SIZE=4096
 
 #
 # --- Targets/rules ------------------------------------------------------------
@@ -371,15 +373,12 @@ endif
 
 # --- Static library archiver rules for libflame ---
 $(MK_ALL_FLAMEC_LIB): $(MK_ALL_FLAMEC_OBJS)
-define EOL
 
-
-endef
 ifeq ($(FLA_ENABLE_VERBOSE_MAKE_OUTPUT),yes)
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
-	@$(eval ar_args:=)
-	$(foreach obj,$?,$(eval ar_args+=$(obj))$(if $(word 2048,$(ar_args)),$(AR) $(ARFLAGS) $@ $(ar_args)$(EOL)$(eval ar_args:=)))
-	$(AR) $(ARFLAGS) $@ $(ar_args)
+### Kyungjoo 2015.10.21
+	$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $@
+### Previous hack (works on linux, not on osx)
 #	echo $(ARFLAGS) $@ > $(AR_ARG_LIST_FILE)
 #	$(CAT) $(AR_OBJ_LIST_FILE) >> $(AR_ARG_LIST_FILE)
 #	$(AR) @$(AR_ARG_LIST_FILE)
@@ -393,9 +392,9 @@ endif
 else
 	@echo "Archiving $@"
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
-	@$(eval ar_args:=)
-	@$(foreach obj,$?,$(eval ar_args+=$(obj))$(if $(word 2048,$(ar_args)),@$(AR) $(ARFLAGS) $@ $(ar_args)$(EOL)$(eval ar_args:=)))
-	@$(AR) $(ARFLAGS) $@ $(ar_args)
+### Kyungjoo 2015.10.21
+	@$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $@
+### Previous hack (works on linux, not on osx)
 #	@echo $(ARFLAGS) $@ > $(AR_ARG_LIST_FILE)
 #	@$(CAT) $(AR_OBJ_LIST_FILE) >> $(AR_ARG_LIST_FILE)
 #	@$(AR) @$(AR_ARG_LIST_FILE)
