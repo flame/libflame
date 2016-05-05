@@ -25,9 +25,13 @@ print_usage()
 	echo "   -d "
 	echo "                 Dry run. Go through all the motions, but don't actually"
 	echo "                 apply any of the sed expressions to file names or contents."
+	echo "   -N "
+	echo "                 Do not proceed recursively into subdirectories; consider"
+	echo "                 only the files within the current directory. Default"
+	echo "                 behavior is to act recursively."
 	echo "   -h "
 	echo "                 Consider hidden files and directories. Default behavior is"
-	echo "                 to ignore them while recursing."
+	echo "                 to ignore them."
 	echo "   -n "
 	echo "                 Use svn mv instead of mv when renaming the file."
 	echo "                 Notice that this only applies if the filename changes."
@@ -363,11 +367,12 @@ main()
 	
 	
 	# Process our command line options.
-	while getopts ":c:df:hp:r:s:nv:" opt; do
+	while getopts ":c:df:hp:r:s:nNv:" opt; do
 		case $opt in
 			d  ) dry_run_flag="1" ;;
 			h  ) hidden_files_dirs_flag="1" ;;
 			n  ) use_svn_mv_flag="1" ;;
+			N  ) recursive_flag="0" ;;
 			v  ) verbose_level="$OPTARG" ;;
 			p  ) filename_pattern="$OPTARG" ;;
 			r  ) root_dir="$OPTARG" ;;
@@ -433,7 +438,7 @@ main()
 	
 	# If we were asked to act recursively, then continue processing
 	# src_dir's contents.
-	if [ -n "$recursive_flag" ]; then
+	if [ "$recursive_flag" = "1" ]; then
 		
 		# Get a listing of items in the directory according to the hidden
 		# files/directories flag.

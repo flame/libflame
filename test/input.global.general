@@ -1,5 +1,5 @@
 1              Number of repeats per experiment
-m              Flat matrix storage scheme(s) to test ('c' = col-major; 'r' = row-major; 'g' = general; 'm' = mixed)
+c              Flat matrix storage scheme(s) to test ('c' = col-major; 'r' = row-major; 'g' = general; 'm' = mixed)
 sdcz           Datatype(s) to test
 40             Algorithmic blocksize for blocked algorithms
 10             Algorithmic blocksize for algorithms-by-blocks

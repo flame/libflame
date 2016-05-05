@@ -22,7 +22,8 @@ FLA_Error FLA_Apply_H2_UT_r_opt_var1( FLA_Obj tau, FLA_Obj u2, FLA_Obj a1, FLA_O
   // The house-holder transformation in libFLAME never creates a zero tau value.
   // However, when libFLAME is mixed with LAPACK, zero tau means to apply an 
   // identity matrix that does nothing here.
-  if ( FLA_Obj_has_zero_dim( a1 ) || FLA_Obj_equals( tau, FLA_ZERO) ) return FLA_SUCCESS;
+  if ( FLA_Obj_has_zero_dim( a1 ) ||
+       FLA_Obj_equals( tau, FLA_ZERO ) ) return FLA_SUCCESS;
 
   datatype = FLA_Obj_datatype( A2 );
 
@@ -42,12 +43,11 @@ FLA_Error FLA_Apply_H2_UT_r_opt_var1( FLA_Obj tau, FLA_Obj u2, FLA_Obj a1, FLA_O
       float* a1_p  = ( float* ) FLA_FLOAT_PTR( a1 );
       float* A2_p  = ( float* ) FLA_FLOAT_PTR( A2 );
 
-      if ( *tau_p != 0.0F )
-        FLA_Apply_H2_UT_r_ops_var1( m_a1, n_u2_A2,
-                                    tau_p,
-                                    u2_p, inc_u2,
-                                    a1_p, inc_a1,
-                                    A2_p, rs_A2, cs_A2 );
+      FLA_Apply_H2_UT_r_ops_var1( m_a1, n_u2_A2,
+                                  tau_p,
+                                  u2_p, inc_u2,
+                                  a1_p, inc_a1,
+                                  A2_p, rs_A2, cs_A2 );
       break;
     }
 
@@ -58,12 +58,11 @@ FLA_Error FLA_Apply_H2_UT_r_opt_var1( FLA_Obj tau, FLA_Obj u2, FLA_Obj a1, FLA_O
       double* a1_p  = ( double* ) FLA_DOUBLE_PTR( a1 );
       double* A2_p  = ( double* ) FLA_DOUBLE_PTR( A2 );
 
-      if ( *tau_p != 0.0 ) 
-        FLA_Apply_H2_UT_r_opd_var1( m_a1, n_u2_A2,
-                                    tau_p,
-                                    u2_p, inc_u2,
-                                    a1_p, inc_a1,
-                                    A2_p, rs_A2, cs_A2 );
+      FLA_Apply_H2_UT_r_opd_var1( m_a1, n_u2_A2,
+                                  tau_p,
+                                  u2_p, inc_u2,
+                                  a1_p, inc_a1,
+                                  A2_p, rs_A2, cs_A2 );
       break;
     }
 
@@ -74,12 +73,11 @@ FLA_Error FLA_Apply_H2_UT_r_opt_var1( FLA_Obj tau, FLA_Obj u2, FLA_Obj a1, FLA_O
       scomplex* a1_p  = ( scomplex* ) FLA_COMPLEX_PTR( a1 );
       scomplex* A2_p  = ( scomplex* ) FLA_COMPLEX_PTR( A2 );
 
-      if ( tau_p->real != 0.0F && tau_p->imag != 0.0F )
-        FLA_Apply_H2_UT_r_opc_var1( m_a1, n_u2_A2,
-                                    tau_p,
-                                    u2_p, inc_u2,
-                                    a1_p, inc_a1,
-                                    A2_p, rs_A2, cs_A2 );
+      FLA_Apply_H2_UT_r_opc_var1( m_a1, n_u2_A2,
+                                  tau_p,
+                                  u2_p, inc_u2,
+                                  a1_p, inc_a1,
+                                  A2_p, rs_A2, cs_A2 );
       break;
     }
 
@@ -90,12 +88,11 @@ FLA_Error FLA_Apply_H2_UT_r_opt_var1( FLA_Obj tau, FLA_Obj u2, FLA_Obj a1, FLA_O
       dcomplex* a1_p  = ( dcomplex* ) FLA_DOUBLE_COMPLEX_PTR( a1 );
       dcomplex* A2_p  = ( dcomplex* ) FLA_DOUBLE_COMPLEX_PTR( A2 );
 
-      if ( tau_p->real != 0.0 && tau_p->imag != 0.0 )
-        FLA_Apply_H2_UT_r_opz_var1( m_a1, n_u2_A2,
-                                    tau_p,
-                                    u2_p, inc_u2,
-                                    a1_p, inc_a1,
-                                    A2_p, rs_A2, cs_A2 );
+      FLA_Apply_H2_UT_r_opz_var1( m_a1, n_u2_A2,
+                                  tau_p,
+                                  u2_p, inc_u2,
+                                  a1_p, inc_a1,
+                                  A2_p, rs_A2, cs_A2 );
       break;
     }
   }
@@ -265,7 +262,8 @@ FLA_Error FLA_Apply_H2_UT_r_opc_var1( int m_a1,
   // FLA_Obj w1;
   scomplex* w1;
 
-  if ( m_a1 == 0 || ( tau->real == 0.0F && tau->imag == 0.0F ) ) return FLA_SUCCESS;
+  if ( m_a1 == 0 || ( tau->real == 0.0F &&
+                      tau->imag == 0.0F ) ) return FLA_SUCCESS;
 
   // FLA_Obj_create_conf_to( FLA_NO_TRANSPOSE, a1, &w1 );
   w1 = ( scomplex* ) FLA_malloc( m_a1 * sizeof( *a1 ) );
@@ -338,7 +336,8 @@ FLA_Error FLA_Apply_H2_UT_r_opz_var1( int m_a1,
   // FLA_Obj w1;
   dcomplex* w1;
 
-  if ( m_a1 == 0 || ( tau->real == 0.0 && tau->imag == 0.0 ) ) return FLA_SUCCESS;
+  if ( m_a1 == 0 || ( tau->real == 0.0 &&
+                      tau->imag == 0.0 ) ) return FLA_SUCCESS;
 
   // FLA_Obj_create_conf_to( FLA_NO_TRANSPOSE, a1, &w1 );
   w1 = ( dcomplex* ) FLA_malloc( m_a1 * sizeof( *a1 ) );

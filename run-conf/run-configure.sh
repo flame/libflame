@@ -16,20 +16,20 @@ export EXTRA_CFLAGS="-march=native"
 ./configure --prefix=${FLAME_INSTALL_PREFIX} \
             --disable-verbose-make-output \
             --enable-static-build \
-            --enable-dynamic-build \
+            --disable-dynamic-build \
             --enable-autodetect-f77-ldflags \
             --enable-autodetect-f77-name-mangling \
             --disable-max-arg-list-hack \
             --enable-non-critical-code \
             --disable-builtin-blas \
-            --disable-lapack2flame \
+            --enable-lapack2flame \
             --disable-external-lapack-for-subproblems \
             --enable-external-lapack-interfaces \
             --disable-blas3-front-end-cntl-trees \
             --enable-multithreading=pthreads \
             --enable-supermatrix \
             --disable-gpu \
-            --enable-vector-intrinsics=sse \
+            --disable-vector-intrinsics \
             --enable-memory-alignment=16 \
             --enable-ldim-alignment \
             --enable-optimizations \
