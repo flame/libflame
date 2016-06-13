@@ -272,12 +272,17 @@ perform_sed()
 			# But we only need to output a line if the file was touched.
 			if [ "$file_touched" != "no" ]; then
 				
-				# Add a "dry run" condition to the output if we're doing a dry-run so that the
-				# user knows we didn't really change anything.
+				# Construct a relative filepath by stripping the initial root
+				# directory so that the output does not span as many columns on
+				# the terminal.
+				rel_old_filepath=${old_filepath#${initial_root_dir}/}
+
+				# Add a "dry run" condition to the output if we're doing a dry-run
+				# so that the user knows we didn't really change anything.
 				if [ -z "$dry_run_flag" ]; then
-					echo "$script_name: Changing [${which_matches}] of ${old_filepath}"
+					echo "$script_name: Changing [${which_matches}] of ${rel_old_filepath}"
 				else
-					echo "$script_name: Changing (dry run) [${which_matches}] of ${old_filepath}"
+					echo "$script_name: Changing (dry run) [${which_matches}] of ${rel_old_filepath}"
 				fi
 			fi
 		fi
@@ -350,6 +355,7 @@ main()
 	use_svn_mv_flag=""
 	filename_pattern=""
 	root_dir=""
+	initial_root_dir=""
 	verbose_level=""
 	filename_sed_expr=""
 	contents_sed_expr=""
@@ -429,6 +435,7 @@ main()
 	else
 		root_dir=$PWD
 	fi
+	initial_root_dir=${root_dir}
 	
 
 	# Call our function to perform the sed operations on the files in the

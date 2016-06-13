@@ -136,9 +136,9 @@ void libfla_test_gemm_experiment( test_params_t params,
 	double       time;
 	unsigned int i;
 	unsigned int m;
-	signed int   m_input    = -3;
+	signed int   m_input    = -1;
 	unsigned int k;
-	signed int   k_input    = -2;
+	signed int   k_input    = -1;
 	unsigned int n;
 	signed int   n_input    = -1;
 	FLA_Trans    transa;

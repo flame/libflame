@@ -134,7 +134,7 @@ void libfla_test_symm_experiment( test_params_t params,
 	double       time;
 	unsigned int i;
 	unsigned int m;
-	signed int   m_input    = -2;
+	signed int   m_input    = -1;
 	unsigned int n;
 	signed int   n_input    = -1;
 	FLA_Side     side;
