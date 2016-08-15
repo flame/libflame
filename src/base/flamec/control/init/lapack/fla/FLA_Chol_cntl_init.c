@@ -13,13 +13,13 @@
 extern fla_herk_t* fla_herk_cntl_blas;
 extern fla_trsm_t* fla_trsm_cntl_blas;
 
-fla_chol_t*        fla_chol_cntl;
-fla_chol_t*        fla_chol_cntl2;
+fla_chol_t*        fla_chol_cntl = NULL;
+fla_chol_t*        fla_chol_cntl2 = NULL;
 
-fla_chol_t*        fla_chol_cntl_in;
-fla_chol_t*        fla_chol_cntl_leaf;
-fla_blocksize_t*   fla_chol_var3_bsize;
-fla_blocksize_t*   fla_chol_var3_bsize_in;
+fla_chol_t*        fla_chol_cntl_in = NULL;
+fla_chol_t*        fla_chol_cntl_leaf = NULL;
+fla_blocksize_t*   fla_chol_var3_bsize = NULL;
+fla_blocksize_t*   fla_chol_var3_bsize_in = NULL;
 double             fla_chol_var3_in_to_ou_bsize_ratio = 0.25;
 
 void FLA_Chol_cntl_init()

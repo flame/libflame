@@ -13,12 +13,12 @@
 extern fla_scalr_t* fla_scalr_cntl_blas;
 extern fla_gemm_t*  fla_gemm_cntl_blas;
 
-fla_her2k_t*        fla_her2k_cntl_blas;
-fla_her2k_t*        fla_her2k_cntl_ip;
-fla_her2k_t*        fla_her2k_cntl_op;
-fla_her2k_t*        fla_her2k_cntl_mm;
-fla_blocksize_t*    fla_her2k_var3_bsize;
-fla_blocksize_t*    fla_her2k_var9_bsize;
+fla_her2k_t*        fla_her2k_cntl_blas = NULL;
+fla_her2k_t*        fla_her2k_cntl_ip = NULL;
+fla_her2k_t*        fla_her2k_cntl_op = NULL;
+fla_her2k_t*        fla_her2k_cntl_mm = NULL;
+fla_blocksize_t*    fla_her2k_var3_bsize = NULL;
+fla_blocksize_t*    fla_her2k_var9_bsize = NULL;
 
 void FLA_Her2k_cntl_init()
 {

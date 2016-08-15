@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-fla_axpyt_t* fla_axpyt_cntl_blas;
+fla_axpyt_t* fla_axpyt_cntl_blas = NULL;
 
 void FLA_Axpyt_cntl_init()
 {

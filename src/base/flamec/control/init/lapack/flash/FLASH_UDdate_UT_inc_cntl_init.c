@@ -13,8 +13,8 @@
 extern fla_uddateut_t* flash_uddateut_cntl;
 extern fla_apqudut_t*  flash_apqudut_cntl;
 
-fla_uddateutinc_t*     flash_uddateutinc_cntl;
-fla_blocksize_t*       flash_uddateutinc_var1_bsize;
+fla_uddateutinc_t*     flash_uddateutinc_cntl = NULL;
+fla_blocksize_t*       flash_uddateutinc_var1_bsize = NULL;
 
 void FLASH_UDdate_UT_inc_cntl_init()
 {

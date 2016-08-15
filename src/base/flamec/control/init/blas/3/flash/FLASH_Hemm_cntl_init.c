@@ -15,11 +15,11 @@ extern fla_gemm_t* flash_gemm_cntl_op_bp;
 extern fla_gemm_t* flash_gemm_cntl_mm_pm;
 extern fla_gemm_t* flash_gemm_cntl_mm_mp;
 
-fla_hemm_t*        flash_hemm_cntl_blas;
-fla_hemm_t*        flash_hemm_cntl_bp;
-fla_hemm_t*        flash_hemm_cntl_mp;
-fla_hemm_t*        flash_hemm_cntl_mm;
-fla_blocksize_t*   flash_hemm_bsize;
+fla_hemm_t*        flash_hemm_cntl_blas = NULL;
+fla_hemm_t*        flash_hemm_cntl_bp = NULL;
+fla_hemm_t*        flash_hemm_cntl_mp = NULL;
+fla_hemm_t*        flash_hemm_cntl_mm = NULL;
+fla_blocksize_t*   flash_hemm_bsize = NULL;
 
 void FLASH_Hemm_cntl_init()
 {

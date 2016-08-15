@@ -13,12 +13,12 @@
 extern fla_scal_t* fla_scal_cntl_blas;
 extern fla_gemm_t* fla_gemm_cntl_blas;
 
-fla_trmm_t*        fla_trmm_cntl_blas;
-fla_trmm_t*        fla_trmm_cntl_bp;
-fla_trmm_t*        fla_trmm_cntl_mp;
-fla_trmm_t*        fla_trmm_cntl_mm;
-fla_blocksize_t*   fla_trmm_var1_bsize;
-fla_blocksize_t*   fla_trmm_var3_bsize;
+fla_trmm_t*        fla_trmm_cntl_blas = NULL;
+fla_trmm_t*        fla_trmm_cntl_bp = NULL;
+fla_trmm_t*        fla_trmm_cntl_mp = NULL;
+fla_trmm_t*        fla_trmm_cntl_mm = NULL;
+fla_blocksize_t*   fla_trmm_var1_bsize = NULL;
+fla_blocksize_t*   fla_trmm_var3_bsize = NULL;
 
 void FLA_Trmm_cntl_init()
 {

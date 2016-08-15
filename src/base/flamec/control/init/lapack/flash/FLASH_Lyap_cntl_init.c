@@ -17,9 +17,9 @@ extern fla_her2k_t* flash_her2k_cntl_ip;
 
 extern fla_sylv_t*  flash_sylv_cntl;
 
-fla_lyap_t*         flash_lyap_cntl_leaf;
-fla_lyap_t*         flash_lyap_cntl;
-fla_blocksize_t*    flash_lyap_bsize;
+fla_lyap_t*         flash_lyap_cntl_leaf = NULL;
+fla_lyap_t*         flash_lyap_cntl = NULL;
+fla_blocksize_t*    flash_lyap_bsize = NULL;
 
 void FLASH_Lyap_cntl_init()
 {

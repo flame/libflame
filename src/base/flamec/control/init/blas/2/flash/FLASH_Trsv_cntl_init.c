@@ -12,7 +12,7 @@
 
 extern fla_gemv_t* flash_gemv_cntl_cp_bv;
 
-fla_trsv_t*        flash_trsv_cntl_blas;
+fla_trsv_t*        flash_trsv_cntl_blas = NULL;
 fla_trsv_t*        flash_trsv_cntl;
 fla_blocksize_t*   flash_trsv_bsize;
 

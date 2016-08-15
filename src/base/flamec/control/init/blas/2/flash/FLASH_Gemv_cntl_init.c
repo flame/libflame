@@ -12,7 +12,7 @@
 
 extern fla_scal_t* flash_scal_cntl;
 
-fla_gemv_t*      flash_gemv_cntl_blas;
+fla_gemv_t*      flash_gemv_cntl_blas = NULL;
 fla_gemv_t*      flash_gemv_cntl_fm_rp;
 fla_gemv_t*      flash_gemv_cntl_fm_cp;
 fla_gemv_t*      flash_gemv_cntl_rp_bv;

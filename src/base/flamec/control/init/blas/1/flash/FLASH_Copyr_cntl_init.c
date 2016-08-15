@@ -12,7 +12,7 @@
 
 extern fla_copy_t* flash_copy_cntl_tb;
 
-fla_copyr_t*       flash_copyr_cntl_blas;
+fla_copyr_t*       flash_copyr_cntl_blas = NULL;
 fla_copyr_t*       flash_copyr_cntl;
 fla_blocksize_t*   flash_copyr_bsize;
 

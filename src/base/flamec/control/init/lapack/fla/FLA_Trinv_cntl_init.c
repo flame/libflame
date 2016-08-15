@@ -14,9 +14,9 @@ extern fla_gemm_t* fla_gemm_cntl_blas;
 extern fla_trmm_t* fla_trmm_cntl_blas;
 extern fla_trsm_t* fla_trsm_cntl_blas;
 
-fla_trinv_t*       fla_trinv_cntl_leaf;
-fla_trinv_t*       fla_trinv_cntl;
-fla_blocksize_t*   fla_trinv_var3_bsize;
+fla_trinv_t*       fla_trinv_cntl_leaf = NULL;
+fla_trinv_t*       fla_trinv_cntl = NULL;
+fla_blocksize_t*   fla_trinv_var3_bsize = NULL;
 
 void FLA_Trinv_cntl_init()
 {

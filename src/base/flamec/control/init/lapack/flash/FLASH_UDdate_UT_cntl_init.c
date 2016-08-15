@@ -10,9 +10,9 @@
 
 #include "FLAME.h"
 
-fla_uddateut_t*  flash_uddateut_cntl_leaf;
-fla_uddateut_t*  flash_uddateut_cntl;
-fla_blocksize_t* flash_uddateut_var2_bsize;
+fla_uddateut_t*  flash_uddateut_cntl_leaf = NULL;
+fla_uddateut_t*  flash_uddateut_cntl = NULL;
+fla_blocksize_t* flash_uddateut_var2_bsize = NULL;
 
 void FLASH_UDdate_UT_cntl_init()
 {

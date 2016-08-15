@@ -10,9 +10,9 @@
 
 #include "FLAME.h"
 
-fla_qr2ut_t*     flash_qr2ut_cntl_leaf;
-fla_qr2ut_t*     flash_qr2ut_cntl;
-fla_blocksize_t* flash_qr2ut_var2_bsize;
+fla_qr2ut_t*     flash_qr2ut_cntl_leaf = NULL;
+fla_qr2ut_t*     flash_qr2ut_cntl = NULL;
+fla_blocksize_t* flash_qr2ut_var2_bsize = NULL;
 
 void FLASH_QR2_UT_cntl_init()
 {

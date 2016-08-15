@@ -13,11 +13,11 @@
 extern fla_scalr_t* flash_scalr_cntl;
 extern fla_gemm_t*  flash_gemm_cntl_pb_bb;
 
-fla_syrk_t*         flash_syrk_cntl_blas;
-fla_syrk_t*         flash_syrk_cntl_ip;
-fla_syrk_t*         flash_syrk_cntl_op;
-fla_syrk_t*         flash_syrk_cntl_mm;
-fla_blocksize_t*    flash_syrk_bsize;
+fla_syrk_t*         flash_syrk_cntl_blas = NULL;
+fla_syrk_t*         flash_syrk_cntl_ip = NULL;
+fla_syrk_t*         flash_syrk_cntl_op = NULL;
+fla_syrk_t*         flash_syrk_cntl_mm = NULL;
+fla_blocksize_t*    flash_syrk_bsize = NULL;
 
 void FLASH_Syrk_cntl_init()
 {

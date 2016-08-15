@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-fla_gemv_t* fla_gemv_cntl_blas;
+fla_gemv_t* fla_gemv_cntl_blas = NULL;
 
 void FLA_Gemv_cntl_init()
 {

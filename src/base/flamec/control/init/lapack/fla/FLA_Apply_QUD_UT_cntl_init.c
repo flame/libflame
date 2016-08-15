@@ -15,8 +15,8 @@ extern fla_trsm_t*  fla_trsm_cntl_blas;
 extern fla_copyt_t* fla_copyt_cntl_blas;
 extern fla_axpyt_t* fla_axpyt_cntl_blas;
 
-fla_apqudut_t*      fla_apqudut_cntl_leaf;
-fla_blocksize_t*    fla_apqudut_var1_bsize;
+fla_apqudut_t*      fla_apqudut_cntl_leaf = NULL;
+fla_blocksize_t*    fla_apqudut_var1_bsize = NULL;
 
 void FLA_Apply_QUD_UT_cntl_init()
 {

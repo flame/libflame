@@ -13,12 +13,12 @@
 extern fla_scal_t* fla_scal_cntl_blas;
 extern fla_gemm_t* fla_gemm_cntl_blas;
 
-fla_hemm_t*        fla_hemm_cntl_blas;
-fla_hemm_t*        fla_hemm_cntl_bp;
-fla_hemm_t*        fla_hemm_cntl_mp;
-fla_hemm_t*        fla_hemm_cntl_mm;
-fla_blocksize_t*   fla_hemm_var1_bsize;
-fla_blocksize_t*   fla_hemm_var9_bsize;
+fla_hemm_t*        fla_hemm_cntl_blas = NULL;
+fla_hemm_t*        fla_hemm_cntl_bp = NULL;
+fla_hemm_t*        fla_hemm_cntl_mp = NULL;
+fla_hemm_t*        fla_hemm_cntl_mm = NULL;
+fla_blocksize_t*   fla_hemm_var1_bsize = NULL;
+fla_blocksize_t*   fla_hemm_var9_bsize = NULL;
 
 void FLA_Hemm_cntl_init()
 {

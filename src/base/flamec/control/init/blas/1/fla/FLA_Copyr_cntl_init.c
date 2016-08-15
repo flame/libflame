@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-fla_copyr_t* fla_copyr_cntl_blas;
+fla_copyr_t* fla_copyr_cntl_blas = NULL;
 
 void FLA_Copyr_cntl_init()
 {

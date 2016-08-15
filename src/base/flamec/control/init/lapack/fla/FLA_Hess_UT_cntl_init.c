@@ -10,9 +10,9 @@
 
 #include "FLAME.h"
 
-fla_hessut_t*       fla_hessut_cntl_leaf;
+fla_hessut_t*       fla_hessut_cntl_leaf = NULL;
 
-fla_blocksize_t*    fla_hessut_bsize_leaf;
+fla_blocksize_t*    fla_hessut_bsize_leaf = NULL;
 
 void FLA_Hess_UT_cntl_init()
 {

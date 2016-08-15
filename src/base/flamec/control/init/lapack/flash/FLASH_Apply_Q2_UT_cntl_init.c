@@ -10,11 +10,11 @@
 
 #include "FLAME.h"
 
-fla_apq2ut_t*    flash_apq2ut_cntl_leaf;
-fla_apq2ut_t*    flash_apq2ut_cntl_mid;
-fla_apq2ut_t*    flash_apq2ut_cntl;
-fla_blocksize_t* flash_apq2ut_var2_bsize;
-fla_blocksize_t* flash_apq2ut_var3_bsize;
+fla_apq2ut_t*    flash_apq2ut_cntl_leaf = NULL;
+fla_apq2ut_t*    flash_apq2ut_cntl_mid = NULL;
+fla_apq2ut_t*    flash_apq2ut_cntl = NULL;
+fla_blocksize_t* flash_apq2ut_var2_bsize = NULL;
+fla_blocksize_t* flash_apq2ut_var3_bsize = NULL;
 
 void FLASH_Apply_Q2_UT_cntl_init()
 {

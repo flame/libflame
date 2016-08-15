@@ -13,12 +13,12 @@
 extern fla_scalr_t* fla_scalr_cntl_blas;
 extern fla_gemm_t*  fla_gemm_cntl_blas;
 
-fla_syrk_t*         fla_syrk_cntl_blas;
-fla_syrk_t*         fla_syrk_cntl_ip;
-fla_syrk_t*         fla_syrk_cntl_op;
-fla_syrk_t*         fla_syrk_cntl_mm;
-fla_blocksize_t*    fla_syrk_var2_bsize;
-fla_blocksize_t*    fla_syrk_var5_bsize;
+fla_syrk_t*         fla_syrk_cntl_blas = NULL;
+fla_syrk_t*         fla_syrk_cntl_ip = NULL;
+fla_syrk_t*         fla_syrk_cntl_op = NULL;
+fla_syrk_t*         fla_syrk_cntl_mm = NULL;
+fla_blocksize_t*    fla_syrk_var2_bsize = NULL;
+fla_blocksize_t*    fla_syrk_var5_bsize = NULL;
 
 void FLA_Syrk_cntl_init()
 {

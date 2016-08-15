@@ -16,9 +16,9 @@ extern fla_hemm_t*  fla_hemm_cntl_blas;
 extern fla_her2k_t* fla_her2k_cntl_blas;
 extern fla_sylv_t*  fla_sylv_cntl;
 
-fla_lyap_t*         fla_lyap_cntl_leaf;
-fla_lyap_t*         fla_lyap_cntl;
-fla_blocksize_t*    fla_lyap_bsize;
+fla_lyap_t*         fla_lyap_cntl_leaf = NULL;
+fla_lyap_t*         fla_lyap_cntl = NULL;
+fla_blocksize_t*    fla_lyap_bsize = NULL;
 
 void FLA_Lyap_cntl_init()
 {
