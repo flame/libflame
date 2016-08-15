@@ -13,9 +13,9 @@
 extern fla_gemm_t* flash_gemm_cntl_op_bp;
 extern fla_trsm_t* flash_trsm_cntl_bp;
 
-fla_trinv_t*       flash_trinv_cntl_leaf;
-fla_trinv_t*       flash_trinv_cntl;
-fla_blocksize_t*   flash_trinv_bsize;
+fla_trinv_t*       flash_trinv_cntl_leaf = NULL;
+fla_trinv_t*       flash_trinv_cntl = NULL;
+fla_blocksize_t*   flash_trinv_bsize = NULL;
 
 void FLASH_Trinv_cntl_init()
 {

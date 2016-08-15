@@ -14,9 +14,9 @@ extern fla_gemm_t* fla_gemm_cntl_blas;
 extern fla_herk_t* fla_herk_cntl_blas;
 extern fla_trmm_t* fla_trmm_cntl_blas;
 
-fla_ttmm_t*        fla_ttmm_cntl_leaf;
-fla_ttmm_t*        fla_ttmm_cntl;
-fla_blocksize_t*   fla_ttmm_var1_bsize;
+fla_ttmm_t*        fla_ttmm_cntl_leaf = NULL;
+fla_ttmm_t*        fla_ttmm_cntl = NULL;
+fla_blocksize_t*   fla_ttmm_var1_bsize = NULL;
 
 void FLA_Ttmm_cntl_init()
 {

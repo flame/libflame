@@ -12,10 +12,10 @@
 
 extern fla_gemm_t* fla_gemm_cntl_blas;
 
-fla_sylv_t*        fla_sylv_cntl_leaf;
-fla_sylv_t*        fla_sylv_cntl_mb;
-fla_sylv_t*        fla_sylv_cntl;
-fla_blocksize_t*   fla_sylv_bsize;
+fla_sylv_t*        fla_sylv_cntl_leaf = NULL;
+fla_sylv_t*        fla_sylv_cntl_mb = NULL;
+fla_sylv_t*        fla_sylv_cntl = NULL;
+fla_blocksize_t*   fla_sylv_bsize = NULL;
 
 void FLA_Sylv_cntl_init()
 {

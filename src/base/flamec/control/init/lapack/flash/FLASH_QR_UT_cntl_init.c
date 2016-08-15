@@ -12,10 +12,10 @@
 
 extern fla_apqut_t*  flash_apqut_cntl_blas;
 
-fla_qrut_t*          flash_qrut_cntl_leaf;
-fla_qrut_t*          flash_qrut_cntl;
+fla_qrut_t*          flash_qrut_cntl_leaf = NULL;
+fla_qrut_t*          flash_qrut_cntl = NULL;
 
-fla_blocksize_t*     flash_qrut_var3_bsize;
+fla_blocksize_t*     flash_qrut_var3_bsize = NULL;
 
 void FLASH_QR_UT_cntl_init()
 {

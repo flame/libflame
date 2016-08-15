@@ -15,8 +15,8 @@ extern fla_apqut_t*  flash_apqut_cntl;
 extern fla_qr2ut_t*  flash_qr2ut_cntl;
 extern fla_apq2ut_t* flash_apq2ut_cntl;
 
-fla_qrutinc_t*       flash_qrutinc_cntl;
-fla_blocksize_t*     flash_qrutinc_var1_bsize;
+fla_qrutinc_t*       flash_qrutinc_cntl = NULL;
+fla_blocksize_t*     flash_qrutinc_var1_bsize = NULL;
 
 void FLASH_QR_UT_inc_cntl_init()
 {

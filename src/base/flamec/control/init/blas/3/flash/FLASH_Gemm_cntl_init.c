@@ -12,27 +12,27 @@
 
 extern fla_scal_t* flash_scal_cntl;
 
-fla_gemm_t*      flash_gemm_cntl_blas;
-fla_gemm_t*      flash_gemm_cntl_mm_mp;
-fla_gemm_t*      flash_gemm_cntl_mm_pm;
-fla_gemm_t*      flash_gemm_cntl_mm_op;
-fla_gemm_t*      flash_gemm_cntl_mp_pb;
-fla_gemm_t*      flash_gemm_cntl_mp_ip;
-fla_gemm_t*      flash_gemm_cntl_pm_bp;
-fla_gemm_t*      flash_gemm_cntl_pm_ip;
-fla_gemm_t*      flash_gemm_cntl_op_bp;
-fla_gemm_t*      flash_gemm_cntl_op_pb;
-fla_gemm_t*      flash_gemm_cntl_pb_bb;
-fla_gemm_t*      flash_gemm_cntl_bp_bb;
-fla_gemm_t*      flash_gemm_cntl_ip_bb;
+fla_gemm_t*      flash_gemm_cntl_blas = NULL;
+fla_gemm_t*      flash_gemm_cntl_mm_mp = NULL;
+fla_gemm_t*      flash_gemm_cntl_mm_pm = NULL;
+fla_gemm_t*      flash_gemm_cntl_mm_op = NULL;
+fla_gemm_t*      flash_gemm_cntl_mp_pb = NULL;
+fla_gemm_t*      flash_gemm_cntl_mp_ip = NULL;
+fla_gemm_t*      flash_gemm_cntl_pm_bp = NULL;
+fla_gemm_t*      flash_gemm_cntl_pm_ip = NULL;
+fla_gemm_t*      flash_gemm_cntl_op_bp = NULL;
+fla_gemm_t*      flash_gemm_cntl_op_pb = NULL;
+fla_gemm_t*      flash_gemm_cntl_pb_bb = NULL;
+fla_gemm_t*      flash_gemm_cntl_bp_bb = NULL;
+fla_gemm_t*      flash_gemm_cntl_ip_bb = NULL;
 
-fla_gemm_t*      flash_gemm_cntl_mm;
-fla_gemm_t*      flash_gemm_cntl_mp;
-fla_gemm_t*      flash_gemm_cntl_pm;
-fla_gemm_t*      flash_gemm_cntl_op;
-fla_gemm_t*      flash_gemm_cntl_pb;
-fla_gemm_t*      flash_gemm_cntl_bp;
-fla_gemm_t*      flash_gemm_cntl_ip;
+fla_gemm_t*      flash_gemm_cntl_mm = NULL;
+fla_gemm_t*      flash_gemm_cntl_mp = NULL;
+fla_gemm_t*      flash_gemm_cntl_pm = NULL;
+fla_gemm_t*      flash_gemm_cntl_op = NULL;
+fla_gemm_t*      flash_gemm_cntl_pb = NULL;
+fla_gemm_t*      flash_gemm_cntl_bp = NULL;
+fla_gemm_t*      flash_gemm_cntl_ip = NULL;
 
 fla_blocksize_t* flash_gemm_bsize;
 

@@ -12,8 +12,8 @@
 
 extern fla_apcaq2ut_t* flash_apcaq2ut_cntl;
 
-fla_apcaqutinc_t*      flash_apcaqutinc_cntl;
-fla_blocksize_t*       flash_apcaqutinc_var1_bsize;
+fla_apcaqutinc_t*      flash_apcaqutinc_cntl = NULL;
+fla_blocksize_t*       flash_apcaqutinc_var1_bsize = NULL;
 
 void FLASH_Apply_CAQ_UT_inc_cntl_init()
 {

@@ -10,13 +10,13 @@
 
 #include "FLAME.h"
 
-fla_swap_t*      fla_swap_cntl_panel;
-fla_swap_t*      fla_swap_cntl_blas;
+fla_swap_t*      fla_swap_cntl_panel = NULL;
+fla_swap_t*      fla_swap_cntl_blas = NULL;
 
-fla_tpose_t*     fla_tpose_cntl;
-fla_tpose_t*     fla_tpose_cntl_unb;
-fla_blocksize_t* fla_tpose_bsize;
-fla_blocksize_t* fla_tpose_swap_bsize;
+fla_tpose_t*     fla_tpose_cntl = NULL;
+fla_tpose_t*     fla_tpose_cntl_unb = NULL;
+fla_blocksize_t* fla_tpose_bsize = NULL;
+fla_blocksize_t* fla_tpose_swap_bsize = NULL;
 
 void FLA_Transpose_cntl_init()
 {

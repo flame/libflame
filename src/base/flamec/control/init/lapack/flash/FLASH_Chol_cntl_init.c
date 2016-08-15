@@ -13,9 +13,9 @@
 extern fla_herk_t* flash_herk_cntl_op;
 extern fla_trsm_t* flash_trsm_cntl_bp;
 
-fla_chol_t*        flash_chol_cntl_leaf;
-fla_chol_t*        flash_chol_cntl;
-fla_blocksize_t*   flash_chol_bsize;
+fla_chol_t*        flash_chol_cntl_leaf = NULL;
+fla_chol_t*        flash_chol_cntl = NULL;
+fla_blocksize_t*   flash_chol_bsize = NULL;
 
 void FLASH_Chol_cntl_init()
 {

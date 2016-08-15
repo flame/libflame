@@ -13,11 +13,11 @@
 extern fla_scal_t* flash_scal_cntl;
 extern fla_gemm_t* flash_gemm_cntl_op_bp;
 
-fla_trmm_t*        flash_trmm_cntl_blas;
-fla_trmm_t*        flash_trmm_cntl_bp;
-fla_trmm_t*        flash_trmm_cntl_mp;
-fla_trmm_t*        flash_trmm_cntl_mm;
-fla_blocksize_t*   flash_trmm_bsize;
+fla_trmm_t*        flash_trmm_cntl_blas = NULL;
+fla_trmm_t*        flash_trmm_cntl_bp = NULL;
+fla_trmm_t*        flash_trmm_cntl_mp = NULL;
+fla_trmm_t*        flash_trmm_cntl_mm = NULL;
+fla_blocksize_t*   flash_trmm_bsize = NULL;
 
 void FLASH_Trmm_cntl_init()
 {

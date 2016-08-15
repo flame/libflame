@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-fla_trsv_t* fla_trsv_cntl_blas;
+fla_trsv_t* fla_trsv_cntl_blas = NULL;
 
 void FLA_Trsv_cntl_init()
 {

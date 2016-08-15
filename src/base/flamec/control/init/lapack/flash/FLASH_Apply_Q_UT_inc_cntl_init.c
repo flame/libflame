@@ -13,8 +13,8 @@
 extern fla_apqut_t*  flash_apqut_cntl;
 extern fla_apq2ut_t* flash_apq2ut_cntl;
 
-fla_apqutinc_t*      flash_apqutinc_cntl;
-fla_blocksize_t*     flash_apqutinc_var1_bsize;
+fla_apqutinc_t*      flash_apqutinc_cntl = NULL;
+fla_blocksize_t*     flash_apqutinc_var1_bsize = NULL;
 
 void FLASH_Apply_Q_UT_inc_cntl_init()
 {

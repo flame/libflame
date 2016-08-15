@@ -12,9 +12,9 @@
 
 extern fla_apqudut_t* fla_apqudut_cntl_leaf;
 
-fla_uddateut_t*       fla_uddateut_cntl_unb;
-fla_uddateut_t*       fla_uddateut_cntl_leaf;
-fla_blocksize_t*      fla_uddateut_var1_bsize;
+fla_uddateut_t*       fla_uddateut_cntl_unb = NULL;
+fla_uddateut_t*       fla_uddateut_cntl_leaf = NULL;
+fla_blocksize_t*      fla_uddateut_var1_bsize = NULL;
 
 void FLA_UDdate_UT_cntl_init()
 {

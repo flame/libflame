@@ -16,8 +16,8 @@ extern fla_trsm_t* fla_trsm_cntl_blas;
 extern fla_axpy_t* fla_axpy_cntl_blas;
 extern fla_copy_t* fla_copy_cntl_blas;
 
-fla_apcaq2ut_t*     fla_apcaq2ut_cntl_leaf;
-fla_blocksize_t*    fla_apcaq2ut_var1_bsize;
+fla_apcaq2ut_t*     fla_apcaq2ut_cntl_leaf = NULL;
+fla_blocksize_t*    fla_apcaq2ut_var1_bsize = NULL;
 
 void FLA_Apply_CAQ2_UT_cntl_init()
 {

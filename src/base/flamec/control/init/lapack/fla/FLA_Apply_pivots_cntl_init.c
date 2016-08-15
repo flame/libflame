@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-fla_appiv_t* fla_appiv_cntl_leaf;
+fla_appiv_t* fla_appiv_cntl_leaf = NULL;
 
 void FLA_Apply_pivots_cntl_init()
 {

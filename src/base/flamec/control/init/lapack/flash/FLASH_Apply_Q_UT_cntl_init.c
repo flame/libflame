@@ -18,11 +18,11 @@ extern fla_trsm_t*  flash_trsm_cntl_bp;
 extern fla_copyt_t*  flash_copyt_cntl;
 extern fla_axpyt_t*  flash_axpyt_cntl;
 
-fla_apqut_t*        flash_apqut_cntl_leaf;
-fla_apqut_t*        flash_apqut_cntl;
-fla_apqut_t*        flash_apqut_cntl_blas;
-fla_blocksize_t*    flash_apqut_var1_bsize;
-fla_blocksize_t*    flash_apqut_var2_bsize;
+fla_apqut_t*        flash_apqut_cntl_leaf = NULL;
+fla_apqut_t*        flash_apqut_cntl = NULL;
+fla_apqut_t*        flash_apqut_cntl_blas = NULL;
+fla_blocksize_t*    flash_apqut_var1_bsize = NULL;
+fla_blocksize_t*    flash_apqut_var2_bsize = NULL;
 
 void FLASH_Apply_Q_UT_cntl_init()
 {

@@ -13,11 +13,11 @@
 extern fla_scalr_t* flash_scalr_cntl;
 extern fla_gemm_t*  flash_gemm_cntl_pb_bb;
 
-fla_herk_t*         flash_herk_cntl_blas;
-fla_herk_t*         flash_herk_cntl_ip;
-fla_herk_t*         flash_herk_cntl_op;
-fla_herk_t*         flash_herk_cntl_mm;
-fla_blocksize_t*    flash_herk_bsize;
+fla_herk_t*         flash_herk_cntl_blas = NULL;
+fla_herk_t*         flash_herk_cntl_ip = NULL;
+fla_herk_t*         flash_herk_cntl_op = NULL;
+fla_herk_t*         flash_herk_cntl_mm = NULL;
+fla_blocksize_t*    flash_herk_bsize = NULL;
 
 void FLASH_Herk_cntl_init()
 {

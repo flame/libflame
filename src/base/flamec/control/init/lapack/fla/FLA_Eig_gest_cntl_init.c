@@ -17,11 +17,11 @@ extern fla_her2k_t* fla_her2k_cntl_blas;
 extern fla_trmm_t*  fla_trmm_cntl_blas;
 extern fla_trsm_t*  fla_trsm_cntl_blas;
 
-fla_eig_gest_t*     fla_eig_gest_ix_cntl;
-fla_eig_gest_t*     fla_eig_gest_nx_cntl;
-fla_eig_gest_t*     fla_eig_gest_ix_cntl_leaf;
-fla_eig_gest_t*     fla_eig_gest_nx_cntl_leaf;
-fla_blocksize_t*    fla_eig_gest_var1_bsize;
+fla_eig_gest_t*     fla_eig_gest_ix_cntl = NULL;
+fla_eig_gest_t*     fla_eig_gest_nx_cntl = NULL;
+fla_eig_gest_t*     fla_eig_gest_ix_cntl_leaf = NULL;
+fla_eig_gest_t*     fla_eig_gest_nx_cntl_leaf = NULL;
+fla_blocksize_t*    fla_eig_gest_var1_bsize = NULL;
 
 void FLA_Eig_gest_cntl_init()
 {

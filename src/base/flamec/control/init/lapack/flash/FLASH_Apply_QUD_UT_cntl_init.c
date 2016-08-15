@@ -10,11 +10,11 @@
 
 #include "FLAME.h"
 
-fla_apqudut_t*   flash_apqudut_cntl_leaf;
-fla_apqudut_t*   flash_apqudut_cntl_mid;
-fla_apqudut_t*   flash_apqudut_cntl;
-fla_blocksize_t* flash_apqudut_var2_bsize;
-fla_blocksize_t* flash_apqudut_var3_bsize;
+fla_apqudut_t*   flash_apqudut_cntl_leaf = NULL;
+fla_apqudut_t*   flash_apqudut_cntl_mid = NULL;
+fla_apqudut_t*   flash_apqudut_cntl = NULL;
+fla_blocksize_t* flash_apqudut_var2_bsize = NULL;
+fla_blocksize_t* flash_apqudut_var3_bsize = NULL;
 
 void FLASH_Apply_QUD_UT_cntl_init()
 {

@@ -16,10 +16,10 @@ extern fla_trsm_t*  fla_trsm_cntl_blas;
 extern fla_copyt_t* fla_copyt_cntl_blas;
 extern fla_axpyt_t* fla_axpyt_cntl_blas;
 
-fla_apqut_t*        fla_apqut_cntl_leaf;
-fla_apqut_t*        fla_apqut_cntl;
-fla_blocksize_t*    fla_apqut_var1_bsize;
-fla_blocksize_t*    fla_apqut_var2_bsize;
+fla_apqut_t*        fla_apqut_cntl_leaf = NULL;
+fla_apqut_t*        fla_apqut_cntl = NULL;
+fla_blocksize_t*    fla_apqut_var1_bsize = NULL;
+fla_blocksize_t*    fla_apqut_var2_bsize = NULL;
 
 void FLA_Apply_Q_UT_cntl_init()
 {

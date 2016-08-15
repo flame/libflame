@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-fla_scal_t*        flash_scal_cntl_blas;
+fla_scal_t*        flash_scal_cntl_blas = NULL;
 fla_scal_t*        flash_scal_cntl_tb;
 fla_scal_t*        flash_scal_cntl_lr;
 fla_scal_t*        flash_scal_cntl;

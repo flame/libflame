@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-fla_copy_t*        flash_copy_cntl_blas;
+fla_copy_t*        flash_copy_cntl_blas = NULL;
 fla_copy_t*        flash_copy_cntl_tb;
 fla_copy_t*        flash_copy_cntl;
 fla_blocksize_t*   flash_copy_bsize;

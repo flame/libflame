@@ -12,38 +12,38 @@
 
 extern fla_scal_t* fla_scal_cntl_blas;
 
-fla_gemm_t*      fla_gemm_cntl_blas;
+fla_gemm_t*      fla_gemm_cntl_blas = NULL;
 
-fla_gemm_t*      fla_gemm_cntl_pb_bb;
-fla_gemm_t*      fla_gemm_cntl_bp_bb;
-fla_gemm_t*      fla_gemm_cntl_ip_bb;
+fla_gemm_t*      fla_gemm_cntl_pb_bb = NULL;
+fla_gemm_t*      fla_gemm_cntl_bp_bb = NULL;
+fla_gemm_t*      fla_gemm_cntl_ip_bb = NULL;
 
-fla_gemm_t*      fla_gemm_cntl_mp_ip;
-fla_gemm_t*      fla_gemm_cntl_mp_ip_bb;
-fla_gemm_t*      fla_gemm_cntl_op_bp;
-fla_gemm_t*      fla_gemm_cntl_op_bp_bb;
-fla_gemm_t*      fla_gemm_cntl_pm_ip;
-fla_gemm_t*      fla_gemm_cntl_pm_ip_bb;
-fla_gemm_t*      fla_gemm_cntl_op_pb;
-fla_gemm_t*      fla_gemm_cntl_op_pb_bb;
-fla_gemm_t*      fla_gemm_cntl_mp_pb;
-fla_gemm_t*      fla_gemm_cntl_mp_pb_bb;
-fla_gemm_t*      fla_gemm_cntl_pm_bp;
-fla_gemm_t*      fla_gemm_cntl_pm_bp_bb;
+fla_gemm_t*      fla_gemm_cntl_mp_ip = NULL;
+fla_gemm_t*      fla_gemm_cntl_mp_ip_bb = NULL;
+fla_gemm_t*      fla_gemm_cntl_op_bp = NULL;
+fla_gemm_t*      fla_gemm_cntl_op_bp_bb = NULL;
+fla_gemm_t*      fla_gemm_cntl_pm_ip = NULL;
+fla_gemm_t*      fla_gemm_cntl_pm_ip_bb = NULL;
+fla_gemm_t*      fla_gemm_cntl_op_pb = NULL;
+fla_gemm_t*      fla_gemm_cntl_op_pb_bb = NULL;
+fla_gemm_t*      fla_gemm_cntl_mp_pb = NULL;
+fla_gemm_t*      fla_gemm_cntl_mp_pb_bb = NULL;
+fla_gemm_t*      fla_gemm_cntl_pm_bp = NULL;
+fla_gemm_t*      fla_gemm_cntl_pm_bp_bb = NULL;
 
-fla_gemm_t*      fla_gemm_cntl_mm_pm;
-fla_gemm_t*      fla_gemm_cntl_mm_pm_ip;
-fla_gemm_t*      fla_gemm_cntl_mm_pm_ip_bb;
-fla_gemm_t*      fla_gemm_cntl_mm_mp;
-fla_gemm_t*      fla_gemm_cntl_mm_mp_ip;
-fla_gemm_t*      fla_gemm_cntl_mm_mp_ip_bb;
-fla_gemm_t*      fla_gemm_cntl_mm_op;
-fla_gemm_t*      fla_gemm_cntl_mm_op_bp;
-fla_gemm_t*      fla_gemm_cntl_mm_op_bp_bb;
+fla_gemm_t*      fla_gemm_cntl_mm_pm = NULL;
+fla_gemm_t*      fla_gemm_cntl_mm_pm_ip = NULL;
+fla_gemm_t*      fla_gemm_cntl_mm_pm_ip_bb = NULL;
+fla_gemm_t*      fla_gemm_cntl_mm_mp = NULL;
+fla_gemm_t*      fla_gemm_cntl_mm_mp_ip = NULL;
+fla_gemm_t*      fla_gemm_cntl_mm_mp_ip_bb = NULL;
+fla_gemm_t*      fla_gemm_cntl_mm_op = NULL;
+fla_gemm_t*      fla_gemm_cntl_mm_op_bp = NULL;
+fla_gemm_t*      fla_gemm_cntl_mm_op_bp_bb = NULL;
 
-fla_blocksize_t* fla_gemm_var1_bsize;
-fla_blocksize_t* fla_gemm_var3_bsize;
-fla_blocksize_t* fla_gemm_var5_bsize;
+fla_blocksize_t* fla_gemm_var1_bsize = NULL;
+fla_blocksize_t* fla_gemm_var3_bsize = NULL;
+fla_blocksize_t* fla_gemm_var5_bsize = NULL;
 
 void FLA_Gemm_cntl_init()
 {
