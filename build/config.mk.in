@@ -73,7 +73,7 @@ EMPTY_FILE := /dev/null
 
 # --- Determine the C compiler and related flags ---
 CC           := @CC@
-CPPROCFLAGS  := @DEFS@ @fla_blis_flags@
+CPPROCFLAGS  := -D_POSIX_C_SOURCE=200809L @DEFS@ @fla_blis_flags@
 CMISCFLAGS   := @fla_c_lang_flags@ @fla_c_openmp_flags@ @fla_c_prof_flags@
 CDBGFLAGS    := @fla_c_debug_flags@
 CWARNFLAGS   := @fla_c_warning_flags@
