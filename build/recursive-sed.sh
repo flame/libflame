@@ -77,13 +77,13 @@ perform_sed()
 	# Variables set by getopts.
 	local exist_dir="$1"
 	
+	#echo "exist_dir: $exist_dir"
 
 	# The suffix used to create temporary files
 	local temp_file_suffix="sed_temp"
-	
 
 	# Check that exist_dir actually exists and is a directory
-	if [ ! -d ${exist_dir} ]; then
+	if [ ! -d "${exist_dir}" ]; then
 		echo "${script_name}: ${exist_dir} does not seem to be a valid directory."
 		exit 1
 	fi
@@ -119,20 +119,30 @@ perform_sed()
 
 	# Get the list of source files in the directory given. Supress stderr if
 	# level 0 or 1 verbosity was requested.
-	if [ "$verbose_level" != "2" ]; then
-		old_filepaths=$(ls -d ${exist_dir}/${filename_pattern} 2> /dev/null)
-	else
-		old_filepaths=$(ls -d ${exist_dir}/${filename_pattern})
-	fi
+	#if [ "$verbose_level" != "2" ]; then
+	#	old_filepaths=$(ls -d -b ${exist_dir}/${filename_pattern} 2> /dev/null)
+	#else
+	#	old_filepaths="$(ls -d -b ${exist_dir}/${filename_pattern})"
+	#fi
 	
 	#echo $old_filepaths
 	#echo "$exist_dir/$filename_pattern"
 	
-	# Begin processing each file.
-	for old_filepath in $old_filepaths; do
+	#for old_filepath in $old_filepaths; do
+	#echo "exist_dir:    $exist_dir"
+
+	# Find all files that match the pattern in the current directory.
+	find "${exist_dir}" -maxdepth 1 -name "${filename_pattern}" -print | while read old_filepath
+	do
+		#echo "old_filepath: $old_filepath"
+
+		# Skip the current directory.
+		if [ "${old_filepath}" == "${exist_dir}" ]; then
+			continue
+		fi
 		
 		# Skip any non-regular files.
-		if [ ! -f $old_filepath ]; then
+		if [ ! -f "$old_filepath" ]; then
 			
 			# And say we are doing so if verboseness was requested.
 			if [ "$verbose_level" = "2" ]; then
@@ -143,21 +153,27 @@ perform_sed()
 		
 		# Strip exist_dir from filename.
 		old_filename=${old_filepath##*/}
+
+		# Strip the filename from old_filepath to leave the directory path.
+		old_dirpath=${old_filepath%/*}
 		
 		# Create a new filename from the old one. If a filename sed expression was given,
 		# it will be applied now.
 		if [ "$filename_sed_expr" != "" ]; then
-			new_filename=$(echo "${old_filename}" | sed ${filename_sed_expr})
+			new_filename=$(echo "${old_filename}" | sed "${filename_sed_expr}")
 		else
-			new_filename=${old_filename}
+			new_filename="${old_filename}"
 		fi
+
+		#echo "new_filename: $new_filename"
 			
 		# Create the filepath to the new file location.
-		new_filepath="${exist_dir}/${new_filename}"
+		new_filepath="${old_dirpath}/${new_filename}"
+		#echo "new_filepath: $new_filepath"
 			
 		# Grep for the filename pattern within the filename of the current file.
 		if [ "$filename_sed_expr" != "" ]; then
-			grep_filename=$(echo "${old_filename}" | grep ${filename_sed_match})
+			grep_filename=$(echo "${old_filename}" | grep "${filename_sed_match}")
 		fi
 		
 
@@ -167,7 +183,7 @@ perform_sed()
 			# Save the old file permissions so we can re-apply them to the
 			# new file if its contents change (ie: if it's not just a 'mv',
 			# which inherently preserves file permissions).
-			old_perms=$(stat -c %a ${old_filepath})
+			old_perms=$(stat -c %a "${old_filepath}")
 
 			# If the old and new filepaths are different, then we start off by
 			# renaming the file. (Otherwise, if the old and new filepaths are
@@ -178,23 +194,23 @@ perform_sed()
 	
 				if [ -n "$use_svn_mv_flag" ]; then
 	
-					svn mv ${old_filepath} ${new_filepath}
+					svn mv "${old_filepath}" "${new_filepath}"
 				else
 	
-					mv -f ${old_filepath} ${new_filepath}
+					mv -f "${old_filepath}" "${new_filepath}"
 				fi
 			fi
-		else
+		#else
 
 			# A dry run still needs the act upon the "new" file, so if the
 			# filepaths are different, simply set the new filepath to the
 			# old one. (We won't need the previous value of new_filepath 
 			# anymore.)
-			if [ "${old_filepath}" != "${new_filepath}" ]; then
-				new_filepath=${old_filepath}
-			fi
+			#if [ "${old_filepath}" != "${new_filepath}" ]; then
+			#	new_filepath="${old_filepath}"
+			#fi
 		fi
-		
+
 		# Handle the cases that might change the contents of the file.
 		if [ "$contents_sed_expr" != "" ] ||
 		   [ "$contents_sed_script" != "" ]; then
@@ -226,20 +242,20 @@ perform_sed()
 				
 					# Apply the old file permissions to the new file (before we
 					# potentially overwrite the old file with the new one).
-					chmod ${old_perms} ${new_filepath}.${temp_file_suffix}
+					chmod ${old_perms} "${new_filepath}.${temp_file_suffix}"
 
 					# Apply the file contents changes to the new filepath (which may
 					# or may not be the same as the old filepath).
-					mv -f ${new_filepath}.${temp_file_suffix} ${new_filepath}
+					mv -f "${new_filepath}.${temp_file_suffix}" "${new_filepath}"
 
 				else
 					# Otherwise remove the new temporary file since it is identical
 					# to the original.
-					rm -f ${new_filepath}.${temp_file_suffix}
+					rm -f "${new_filepath}.${temp_file_suffix}"
 				fi
 			else
 				# Simply remove the file since we are only performing a dry run.
-				rm -f ${new_filepath}.${temp_file_suffix}
+				rm -f "${new_filepath}.${temp_file_suffix}"
 			fi
 
 		fi
@@ -303,41 +319,56 @@ recursive_sed()
 	
 	
 	# Extract our argument
-	curr_dir=$1
+	curr_dir="$1"
 	
 
 	# Call our function to perform the sed operations on the files in the
 	# directory given.
-	perform_sed ${curr_dir}
+	perform_sed "${curr_dir}"
 	
 
-	# Get a listing of items in the directory according to the hidden
-	# files/directories flag.
-	if [ -n "$hidden_files_dirs_flag" ]; then
-
-		# Get a listing of the directories in src_dir (including hidden
-		# files and directories).
-		sub_items=$(ls -a $curr_dir)
-
-	else
-
-		# Get a listing of the directories in src_dir.
-		sub_items=$(ls $curr_dir)
-	fi
-	
-	# Descend into the contents of curr_dir to prepend the license info to 
-	# files residing  in subdirectories of the current directory.
-	for item in $sub_items; do
+	# If we were asked to act recursively, then continue processing
+	# curr_dir's contents.
+	if [ "$recursive_flag" = "1" ]; then
 		
-		# If item is a directory, descend into it.
-		if [ -d "$curr_dir/$item" ] &&
-		   [ "$item" != ".." ] &&
-		   [ "$item" != "." ]; then
-			
-			this_dir=$curr_dir/$item
-			recursive_sed $this_dir
+		# Get a listing of items in the directory according to the hidden
+		# files/directories flag.
+		if [ -n "$hidden_files_dirs_flag" ]; then
+
+			# Get a listing of the directories in curr_dir (including hidden
+			# files and directories).
+			sub_items=$(ls -a "$curr_dir")
+
+		else
+
+			# Get a listing of the directories in curr_dir.
+			sub_items=$(ls "$curr_dir")
 		fi
-	done
+
+		#echo "sub_items: $sub_items"
+	
+		# Descend into the contents of curr_dir, calling recursive_sed on
+		# any items that are directories.
+		find "${curr_dir}" -maxdepth 1 -name "*" -print | while read item
+		do
+
+			#echo "conisdering item: $item"
+
+			# Skip the current directory.
+			if [ "${item}" == "${curr_dir}" ]; then
+				continue
+			fi
+
+			# If item is a directory, descend into it.
+			if [ -d "$item" ]; then
+			
+				#echo "item is dir: $item"
+
+				recursive_sed "$item"
+			fi
+		done
+
+	fi
 	
 	
 	# Return peacefully
@@ -438,44 +469,13 @@ main()
 	initial_root_dir=${root_dir}
 	
 
-	# Call our function to perform the sed operations on the files in the
-	# directory given.
-	perform_sed ${root_dir}
+	#echo "root_dir: $root_dir"
 
-	
-	# If we were asked to act recursively, then continue processing
-	# src_dir's contents.
-	if [ "$recursive_flag" = "1" ]; then
-		
-		# Get a listing of items in the directory according to the hidden
-		# files/directories flag.
-		if [ -n "$hidden_files_dirs_flag" ]; then
 
-			# Get a listing of the directories in src_dir (including hidden
-			# files and directories).
-			sub_items=$(ls -a $root_dir)
+	# Begin recursing on the root directory.
+	recursive_sed "$root_dir"
 
-		else
 
-			# Get a listing of the directories in src_dir.
-			sub_items=$(ls $root_dir)
-		fi
-		
-		# Descend into the contents of src_dir to prepend the license info.
-		for item in $sub_items; do
-			
-			# If item is a directory, descend into it.
-			if [ -d "$root_dir/$item" ] &&
-			   [ "$item" != ".." ] &&
-			   [ "$item" != "." ]; then
-				
-				this_dir=$root_dir/$item
-				recursive_sed $this_dir
-			fi
-		done
-	fi
-	
-	
 	# Exit peacefully
 	return 0
 }
