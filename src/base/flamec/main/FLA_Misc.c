@@ -360,7 +360,7 @@ FLA_Error FLA_Obj_fshow( FILE* file, char *s1, FLA_Obj A, char *format, char *s2
         //fprintf( file, format, buffer[ j*cs + i*rs ].real, buffer[ j*cs + i*rs ].imag );
         //fprintf( file, " " );
 		fprintf( file, format, buffer[ j*cs + i*rs ].real );
-		fprintf( file, " + i * " );
+		fprintf( file, " + " );
 		fprintf( file, format, buffer[ j*cs + i*rs ].imag );
 		fprintf( file, "  " );
       }
@@ -381,7 +381,7 @@ FLA_Error FLA_Obj_fshow( FILE* file, char *s1, FLA_Obj A, char *format, char *s2
         //fprintf( file, format, buffer[ j*cs + i*rs ].real, buffer[ j*cs + i*rs ].imag );
         //fprintf( file, " " );
 		fprintf( file, format, buffer[ j*cs + i*rs ].real );
-		fprintf( file, " + i * " );
+		fprintf( file, " + " );
 		fprintf( file, format, buffer[ j*cs + i*rs ].imag );
 		fprintf( file, "  " );
       }
