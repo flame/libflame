@@ -167,8 +167,8 @@ static real c_b11 = 1.f;
 /* > BERR_OUT is REAL array, dimension (NRHS) */
 /* > On exit, BERR_OUT(j) contains the componentwise relative backward */
 /* > error for right-hand-side j from the formula */
-/* > max(i) ( abs(RES(i)) / ( abs(op(A_s))*abs(Y) + abs(B_s) )(i) ) */
-/* > where abs(Z) is the componentwise absolute value of the matrix */
+/* > max(i) ( f2c_abs(RES(i)) / ( f2c_abs(op(A_s))*f2c_abs(Y) + f2c_abs(B_s) )(i) ) */
+/* > where f2c_abs(Z) is the componentwise absolute value of the matrix */
 /* > or vector Z. This is computed by SLA_LIN_BERR. */
 /* > \endverbatim */
 /* > */
@@ -189,9 +189,9 @@ static real c_b11 = 1.f;
 /* > normwise relative error, which is defined as follows: */
 /* > */
 /* > Normwise relative error in the ith solution vector: */
-/* > max_j (abs(XTRUE(j,i) - X(j,i))) */
+/* > max_j (f2c_abs(XTRUE(j,i) - X(j,i))) */
 /* > ------------------------------ */
-/* > max_j abs(X(j,i)) */
+/* > max_j f2c_abs(X(j,i)) */
 /* > */
 /* > The array is indexed by the type of error information as described */
 /* > below. There currently are up to three pieces of information */
@@ -237,9 +237,9 @@ static real c_b11 = 1.f;
 /* > componentwise relative error, which is defined as follows: */
 /* > */
 /* > Componentwise relative error in the ith solution vector: */
-/* > abs(XTRUE(j,i) - X(j,i)) */
+/* > f2c_abs(XTRUE(j,i) - X(j,i)) */
 /* > max_j ---------------------- */
-/* > abs(X(j,i)) */
+/* > f2c_abs(X(j,i)) */
 /* > */
 /* > The array is indexed by the right-hand side i (on which the */
 /* > componentwise relative error depends), and the type of error */
@@ -542,8 +542,8 @@ int sla_porfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *
                     i__ <= i__3;
                     ++i__)
             {
-                yk = (r__1 = y[i__ + j * y_dim1], abs(r__1));
-                dyk = (r__1 = dy[i__], abs(r__1));
+                yk = (r__1 = y[i__ + j * y_dim1], f2c_abs(r__1));
+                dyk = (r__1 = dy[i__], f2c_abs(r__1));
                 if (yk != 0.f)
                 {
                     /* Computing MAX */
@@ -717,8 +717,8 @@ L666: /* Set final_* when cnt hits ithresh. */
             err_bnds_comp__[j + (err_bnds_comp_dim1 << 1)] = final_dz_z__ / ( 1 - dzratmax);
         }
         /* Compute componentwise relative backward error from formula */
-        /* max(i) ( abs(R(i)) / ( abs(op(A_s))*abs(Y) + abs(B_s) )(i) ) */
-        /* where abs(Z) is the componentwise absolute value of the matrix */
+        /* max(i) ( f2c_abs(R(i)) / ( f2c_abs(op(A_s))*f2c_abs(Y) + f2c_abs(B_s) )(i) ) */
+        /* where f2c_abs(Z) is the componentwise absolute value of the matrix */
         /* or vector Z. */
         /* Compute residual RES = B_s - op(A_s) * Y, */
         /* op(A) = A, A**T, or A**H depending on TRANS (and type). */
@@ -729,9 +729,9 @@ L666: /* Set final_* when cnt hits ithresh. */
                 i__ <= i__2;
                 ++i__)
         {
-            ayb[i__] = (r__1 = b[i__ + j * b_dim1], abs(r__1));
+            ayb[i__] = (r__1 = b[i__ + j * b_dim1], f2c_abs(r__1));
         }
-        /* Compute abs(op(A_s))*abs(Y) + abs(B_s). */
+        /* Compute f2c_abs(op(A_s))*f2c_abs(Y) + f2c_abs(B_s). */
         sla_syamv_(&uplo2, n, &c_b11, &a[a_offset], lda, &y[j * y_dim1 + 1], &c__1, &c_b11, &ayb[1], &c__1);
         sla_lin_berr_(n, n, &c__1, &res[1], &ayb[1], &berr_out__[j]);
         /* End of loop for each RHS. */

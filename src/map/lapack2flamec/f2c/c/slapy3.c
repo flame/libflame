@@ -75,9 +75,9 @@ real slapy3_(real *x, real *y, real *z__)
     /* .. Intrinsic Functions .. */
     /* .. */
     /* .. Executable Statements .. */
-    xabs = abs(*x);
-    yabs = abs(*y);
-    zabs = abs(*z__);
+    xabs = f2c_abs(*x);
+    yabs = f2c_abs(*y);
+    zabs = f2c_abs(*z__);
     /* Computing MAX */
     r__1 = max(xabs,yabs);
     w = max(r__1,zabs);

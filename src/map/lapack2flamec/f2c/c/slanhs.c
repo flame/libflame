@@ -38,7 +38,7 @@ static integer c__1 = 1;
 /* > \return SLANHS */
 /* > \verbatim */
 /* > */
-/* > SLANHS = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > SLANHS = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -49,7 +49,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -144,7 +144,7 @@ real slanhs_(char *norm, integer *n, real *a, integer *lda, real *work)
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
+        /* Find max(f2c_abs(A(i,j))). */
         value = 0.f;
         i__1 = *n;
         for (j = 1;
@@ -159,7 +159,7 @@ real slanhs_(char *norm, integer *n, real *a, integer *lda, real *work)
                     i__ <= i__2;
                     ++i__)
             {
-                sum = (r__1 = a[i__ + j * a_dim1], abs(r__1));
+                sum = (r__1 = a[i__ + j * a_dim1], f2c_abs(r__1));
                 if (value < sum || sisnan_(&sum))
                 {
                     value = sum;
@@ -187,7 +187,7 @@ real slanhs_(char *norm, integer *n, real *a, integer *lda, real *work)
                     i__ <= i__2;
                     ++i__)
             {
-                sum += (r__1 = a[i__ + j * a_dim1], abs(r__1));
+                sum += (r__1 = a[i__ + j * a_dim1], f2c_abs(r__1));
                 /* L30: */
             }
             if (value < sum || sisnan_(&sum))
@@ -221,7 +221,7 @@ real slanhs_(char *norm, integer *n, real *a, integer *lda, real *work)
                     i__ <= i__2;
                     ++i__)
             {
-                work[i__] += (r__1 = a[i__ + j * a_dim1], abs(r__1));
+                work[i__] += (r__1 = a[i__ + j * a_dim1], f2c_abs(r__1));
                 /* L60: */
             }
             /* L70: */

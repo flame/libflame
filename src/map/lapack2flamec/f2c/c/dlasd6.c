@@ -403,8 +403,8 @@ int dlasd6_(integer *icompq, integer *nl, integer *nr, integer *sqre, doublereal
     idxp = idxc + n;
     /* Scale. */
     /* Computing MAX */
-    d__1 = abs(*alpha);
-    d__2 = abs(*beta); // , expr subst
+    d__1 = f2c_abs(*alpha);
+    d__2 = f2c_abs(*beta); // , expr subst
     orgnrm = max(d__1,d__2);
     d__[*nl + 1] = 0.;
     i__1 = n;
@@ -412,9 +412,9 @@ int dlasd6_(integer *icompq, integer *nl, integer *nr, integer *sqre, doublereal
             i__ <= i__1;
             ++i__)
     {
-        if ((d__1 = d__[i__], abs(d__1)) > orgnrm)
+        if ((d__1 = d__[i__], f2c_abs(d__1)) > orgnrm)
         {
-            orgnrm = (d__1 = d__[i__], abs(d__1));
+            orgnrm = (d__1 = d__[i__], f2c_abs(d__1));
         }
         /* L10: */
     }

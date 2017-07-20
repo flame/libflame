@@ -331,7 +331,7 @@ int dlasd3_(integer *nl, integer *nr, integer *sqre, integer *k, doublereal *d__
     /* Quick return if possible */
     if (*k == 1)
     {
-        d__[1] = abs(z__[1]);
+        d__[1] = f2c_abs(z__[1]);
         dcopy_(&m, &vt2[vt2_dim1 + 1], ldvt2, &vt[vt_dim1 + 1], ldvt);
         if (z__[1] > 0.)
         {
@@ -418,7 +418,7 @@ int dlasd3_(integer *nl, integer *nr, integer *sqre, integer *k, doublereal *d__
             z__[i__] *= u[i__ + j * u_dim1] * vt[i__ + j * vt_dim1] / (dsigma[ i__] - dsigma[j + 1]) / (dsigma[i__] + dsigma[j + 1]);
             /* L50: */
         }
-        d__2 = sqrt((d__1 = z__[i__], abs(d__1)));
+        d__2 = sqrt((d__1 = z__[i__], f2c_abs(d__1)));
         z__[i__] = d_sign(&d__2, &q[i__ + q_dim1]);
         /* L60: */
     }

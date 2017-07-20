@@ -193,7 +193,7 @@ if positive, then the j-th and */
 /* > (j+1)-th eigenvalues form a complex conjugate pair, then */
 /* > u(j) = VL(:,j)+i*VL(:,j+1) and u(j+1) = VL(:,j)-i*VL(:,j+1). */
 /* > Each eigenvector will be scaled so the largest component have */
-/* > abs(real part) + abs(imag. part) = 1. */
+/* > f2c_abs(real part) + f2c_abs(imag. part) = 1. */
 /* > Not referenced if JOBVL = 'N'. */
 /* > \endverbatim */
 /* > */
@@ -214,7 +214,7 @@ if positive, then the j-th and */
 /* > (j+1)-th eigenvalues form a complex conjugate pair, then */
 /* > v(j) = VR(:,j)+i*VR(:,j+1) and v(j+1) = VR(:,j)-i*VR(:,j+1). */
 /* > Each eigenvector will be scaled so the largest component have */
-/* > abs(real part) + abs(imag. part) = 1. */
+/* > f2c_abs(real part) + f2c_abs(imag. part) = 1. */
 /* > Not referenced if JOBVR = 'N'. */
 /* > \endverbatim */
 /* > */
@@ -892,7 +892,7 @@ L20:
                 {
                     /* Computing MAX */
                     r__2 = temp;
-                    r__3 = (r__1 = vl[jr + jc * vl_dim1], abs( r__1)); // , expr subst
+                    r__3 = (r__1 = vl[jr + jc * vl_dim1], f2c_abs( r__1)); // , expr subst
                     temp = max(r__2,r__3);
                     /* L30: */
                 }
@@ -906,7 +906,7 @@ L20:
                 {
                     /* Computing MAX */
                     r__3 = temp;
-                    r__4 = (r__1 = vl[jr + jc * vl_dim1], abs( r__1)) + (r__2 = vl[jr + (jc + 1) * vl_dim1], abs( r__2)); // , expr subst
+                    r__4 = (r__1 = vl[jr + jc * vl_dim1], f2c_abs( r__1)) + (r__2 = vl[jr + (jc + 1) * vl_dim1], f2c_abs( r__2)); // , expr subst
                     temp = max(r__3,r__4);
                     /* L40: */
                 }
@@ -965,7 +965,7 @@ L70:
                 {
                     /* Computing MAX */
                     r__2 = temp;
-                    r__3 = (r__1 = vr[jr + jc * vr_dim1], abs( r__1)); // , expr subst
+                    r__3 = (r__1 = vr[jr + jc * vr_dim1], f2c_abs( r__1)); // , expr subst
                     temp = max(r__2,r__3);
                     /* L80: */
                 }
@@ -979,7 +979,7 @@ L70:
                 {
                     /* Computing MAX */
                     r__3 = temp;
-                    r__4 = (r__1 = vr[jr + jc * vr_dim1], abs( r__1)) + (r__2 = vr[jr + (jc + 1) * vr_dim1], abs( r__2)); // , expr subst
+                    r__4 = (r__1 = vr[jr + jc * vr_dim1], f2c_abs( r__1)) + (r__2 = vr[jr + (jc + 1) * vr_dim1], f2c_abs( r__2)); // , expr subst
                     temp = max(r__3,r__4);
                     /* L90: */
                 }

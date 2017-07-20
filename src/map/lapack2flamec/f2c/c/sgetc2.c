@@ -170,9 +170,9 @@ int sgetc2_(integer *n, real *a, integer *lda, integer *ipiv, integer *jpiv, int
                     jp <= i__3;
                     ++jp)
             {
-                if ((r__1 = a[ip + jp * a_dim1], abs(r__1)) >= xmax)
+                if ((r__1 = a[ip + jp * a_dim1], f2c_abs(r__1)) >= xmax)
                 {
-                    xmax = (r__1 = a[ip + jp * a_dim1], abs(r__1));
+                    xmax = (r__1 = a[ip + jp * a_dim1], f2c_abs(r__1));
                     ipv = ip;
                     jpv = jp;
                 }
@@ -199,7 +199,7 @@ int sgetc2_(integer *n, real *a, integer *lda, integer *ipiv, integer *jpiv, int
         }
         jpiv[i__] = jpv;
         /* Check for singularity */
-        if ((r__1 = a[i__ + i__ * a_dim1], abs(r__1)) < smin)
+        if ((r__1 = a[i__ + i__ * a_dim1], f2c_abs(r__1)) < smin)
         {
             *info = i__;
             a[i__ + i__ * a_dim1] = smin;
@@ -217,7 +217,7 @@ int sgetc2_(integer *n, real *a, integer *lda, integer *ipiv, integer *jpiv, int
         sger_(&i__2, &i__3, &c_b10, &a[i__ + 1 + i__ * a_dim1], &c__1, &a[i__ + (i__ + 1) * a_dim1], lda, &a[i__ + 1 + (i__ + 1) * a_dim1], lda);
         /* L40: */
     }
-    if ((r__1 = a[*n + *n * a_dim1], abs(r__1)) < smin)
+    if ((r__1 = a[*n + *n * a_dim1], f2c_abs(r__1)) < smin)
     {
         *info = *n;
         a[*n + *n * a_dim1] = smin;

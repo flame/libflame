@@ -220,7 +220,7 @@ doublereal zla_porcond_x_(char *uplo, integer *n, doublecomplex *a, integer * ld
                 z__2.i = a[i__3].r * x[i__4].i + a[i__3].i * x[i__4] .r; // , expr subst
                 z__1.r = z__2.r;
                 z__1.i = z__2.i; // , expr subst
-                tmp += (d__1 = z__1.r, abs(d__1)) + (d__2 = d_imag(&z__1), abs(d__2));
+                tmp += (d__1 = z__1.r, f2c_abs(d__1)) + (d__2 = d_imag(&z__1), f2c_abs(d__2));
             }
             i__2 = *n;
             for (j = i__ + 1;
@@ -233,7 +233,7 @@ doublereal zla_porcond_x_(char *uplo, integer *n, doublecomplex *a, integer * ld
                 z__2.i = a[i__3].r * x[i__4].i + a[i__3].i * x[i__4] .r; // , expr subst
                 z__1.r = z__2.r;
                 z__1.i = z__2.i; // , expr subst
-                tmp += (d__1 = z__1.r, abs(d__1)) + (d__2 = d_imag(&z__1), abs(d__2));
+                tmp += (d__1 = z__1.r, f2c_abs(d__1)) + (d__2 = d_imag(&z__1), f2c_abs(d__2));
             }
             rwork[i__] = tmp;
             anorm = max(anorm,tmp);
@@ -258,7 +258,7 @@ doublereal zla_porcond_x_(char *uplo, integer *n, doublecomplex *a, integer * ld
                 z__2.i = a[i__3].r * x[i__4].i + a[i__3].i * x[i__4] .r; // , expr subst
                 z__1.r = z__2.r;
                 z__1.i = z__2.i; // , expr subst
-                tmp += (d__1 = z__1.r, abs(d__1)) + (d__2 = d_imag(&z__1), abs(d__2));
+                tmp += (d__1 = z__1.r, f2c_abs(d__1)) + (d__2 = d_imag(&z__1), f2c_abs(d__2));
             }
             i__2 = *n;
             for (j = i__ + 1;
@@ -271,7 +271,7 @@ doublereal zla_porcond_x_(char *uplo, integer *n, doublecomplex *a, integer * ld
                 z__2.i = a[i__3].r * x[i__4].i + a[i__3].i * x[i__4] .r; // , expr subst
                 z__1.r = z__2.r;
                 z__1.i = z__2.i; // , expr subst
-                tmp += (d__1 = z__1.r, abs(d__1)) + (d__2 = d_imag(&z__1), abs(d__2));
+                tmp += (d__1 = z__1.r, f2c_abs(d__1)) + (d__2 = d_imag(&z__1), f2c_abs(d__2));
             }
             rwork[i__] = tmp;
             anorm = max(anorm,tmp);

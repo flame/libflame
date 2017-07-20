@@ -561,7 +561,7 @@ explicitly.\002,/)";
 	r__1 = -half;
 	b = fla_slamc3(&third, &r__1);
 	b = fla_slamc3(&b, &sixth);
-	b = abs(b);
+	b = f2c_abs(b);
 	if (b < leps) {
 	    b = leps;
 	}
@@ -632,7 +632,7 @@ L10:
 	    }
 
 	} else if (ngpmin == gpmin && ngnmin == gnmin) {
-	    if ((i__1 = ngpmin - ngnmin, abs(i__1)) == 1) {
+	    if ((i__1 = ngpmin - ngnmin, f2c_abs(i__1)) == 1) {
 		lemin = max(ngpmin,ngnmin);
 /*            ( Twos-complement machines, no gradual underflow; */
 /*              e.g., CYBER 205 ) */
@@ -642,7 +642,7 @@ L10:
 		iwarn = TRUE_;
 	    }
 
-	} else if ((i__1 = ngpmin - ngnmin, abs(i__1)) == 1 && gpmin == gnmin)
+	} else if ((i__1 = ngpmin - ngnmin, f2c_abs(i__1)) == 1 && gpmin == gnmin)
 		 {
 	    if (gpmin - min(ngpmin,ngnmin) == 3) {
 		lemin = max(ngpmin,ngnmin) - 1 + lt;

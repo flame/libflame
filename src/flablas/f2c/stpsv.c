@@ -67,7 +67,7 @@ int stpsv_(char *uplo, char *trans, char *diag, integer *n, real *ap, real *x, i
     /* A are not referenced, but are assumed to be unity. */
     /* Unchanged on exit. */
     /* X - REAL array of dimension at least */
-    /* ( 1 + ( n - 1 )*abs( INCX ) ). */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCX ) ). */
     /* Before entry, the incremented array X must contain the n */
     /* element right-hand side vector b. On exit, X is overwritten */
     /* with the solution vector x. */

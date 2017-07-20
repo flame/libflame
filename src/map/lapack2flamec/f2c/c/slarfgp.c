@@ -64,7 +64,7 @@
 /* > \param[in,out] X */
 /* > \verbatim */
 /* > X is REAL array, dimension */
-/* > (1+(N-2)*abs(INCX)) */
+/* > (1+(N-2)*f2c_abs(INCX)) */
 /* > On entry, the vector x. */
 /* > On exit, it is overwritten with the vector v. */
 /* > \endverbatim */
@@ -171,7 +171,7 @@ int slarfgp_(integer *n, real *alpha, real *x, integer *incx, real *tau)
         beta = r_sign(&r__1, alpha);
         smlnum = slamch_("S") / slamch_("E");
         knt = 0;
-        if (abs(beta) < smlnum)
+        if (f2c_abs(beta) < smlnum)
         {
             /* XNORM, BETA may be inaccurate;
             scale X and recompute them */
@@ -182,7 +182,7 @@ L10:
             sscal_(&i__1, &bignum, &x[1], incx);
             beta *= bignum;
             *alpha *= bignum;
-            if (abs(beta) < smlnum)
+            if (f2c_abs(beta) < smlnum)
             {
                 goto L10;
             }
@@ -205,7 +205,7 @@ L10:
             *tau = *alpha / beta;
             *alpha = -(*alpha);
         }
-        if (abs(*tau) <= smlnum)
+        if (f2c_abs(*tau) <= smlnum)
         {
             /* In the case where the computed TAU ends up being a denormalized number, */
             /* it loses relative accuracy. This is a BIG problem. Solution: flush TAU */

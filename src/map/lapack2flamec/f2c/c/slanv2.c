@@ -110,7 +110,7 @@ static real c_b4 = 1.f;
 /* > Modified by V. Sima, Research Institute for Informatics, Bucharest, */
 /* > Romania, to reduce the risk of cancellation errors, */
 /* > when computing real eigenvalues, and to ensure, if possible, that */
-/* > abs(RT1R) >= abs(RT2R). */
+/* > f2c_abs(RT1R) >= f2c_abs(RT2R). */
 /* > \endverbatim */
 /* > */
 /* ===================================================================== */
@@ -170,15 +170,15 @@ int slanv2_(real *a, real *b, real *c__, real *d__, real * rt1r, real *rt1i, rea
         temp = *a - *d__;
         p = temp * .5f;
         /* Computing MAX */
-        r__1 = abs(*b);
-        r__2 = abs(*c__); // , expr subst
+        r__1 = f2c_abs(*b);
+        r__2 = f2c_abs(*c__); // , expr subst
         bcmax = max(r__1,r__2);
         /* Computing MIN */
-        r__1 = abs(*b);
-        r__2 = abs(*c__); // , expr subst
+        r__1 = f2c_abs(*b);
+        r__2 = f2c_abs(*c__); // , expr subst
         bcmis = min(r__1,r__2) * r_sign(&c_b4, b) * r_sign(&c_b4, c__);
         /* Computing MAX */
-        r__1 = abs(p);
+        r__1 = f2c_abs(p);
         scale = max(r__1,bcmax);
         z__ = p / scale * p + bcmax / scale * bcmis;
         /* If Z is of the order of the machine accuracy, postpone the */
@@ -203,7 +203,7 @@ int slanv2_(real *a, real *b, real *c__, real *d__, real * rt1r, real *rt1i, rea
             /* Make diagonal elements equal. */
             sigma = *b + *c__;
             tau = slapy2_(&sigma, &temp);
-            *cs = sqrt((abs(sigma) / tau + 1.f) * .5f);
+            *cs = sqrt((f2c_abs(sigma) / tau + 1.f) * .5f);
             *sn = -(p / (tau * *cs)) * r_sign(&c_b4, &sigma);
             /* Compute [ AA BB ] = [ A B ] [ CS -SN ] */
             /* [ CC DD ] [ C D ] [ SN CS ] */
@@ -227,11 +227,11 @@ int slanv2_(real *a, real *b, real *c__, real *d__, real * rt1r, real *rt1i, rea
                     if (r_sign(&c_b4, b) == r_sign(&c_b4, c__))
                     {
                         /* Real eigenvalues: reduce to upper triangular form */
-                        sab = sqrt((abs(*b)));
-                        sac = sqrt((abs(*c__)));
+                        sab = sqrt((f2c_abs(*b)));
+                        sac = sqrt((f2c_abs(*c__)));
                         r__1 = sab * sac;
                         p = r_sign(&r__1, c__);
-                        tau = 1.f / sqrt((r__1 = *b + *c__, abs(r__1)));
+                        tau = 1.f / sqrt((r__1 = *b + *c__, f2c_abs(r__1)));
                         *a = temp + p;
                         *d__ = temp - p;
                         *b -= *c__;
@@ -264,7 +264,7 @@ L10: /* Store eigenvalues in (RT1R,RT1I) and (RT2R,RT2I). */
     }
     else
     {
-        *rt1i = sqrt((abs(*b))) * sqrt((abs(*c__)));
+        *rt1i = sqrt((f2c_abs(*b))) * sqrt((f2c_abs(*c__)));
         *rt2i = -(*rt1i);
     }
     return 0;

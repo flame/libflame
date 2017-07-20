@@ -190,7 +190,7 @@ int ztgex2_(logical *wantq, logical *wantz, integer *n, doublecomplex *a, intege
     doublereal d__1;
     doublecomplex z__1, z__2, z__3;
     /* Builtin functions */
-    double sqrt(doublereal), z_abs(doublecomplex *);
+    double sqrt(doublereal), z_f2c_abs(doublecomplex *);
     void d_cnjg(doublecomplex *, doublecomplex *);
     /* Local variables */
     doublecomplex f, g;
@@ -302,8 +302,8 @@ int ztgex2_(logical *wantq, logical *wantz, integer *n, doublecomplex *a, intege
     z__1.i = z__2.i - z__3.i; // , expr subst
     g.r = z__1.r;
     g.i = z__1.i; // , expr subst
-    sa = z_abs(&s[3]);
-    sb = z_abs(&t[3]);
+    sa = z_f2c_abs(&s[3]);
+    sb = z_f2c_abs(&t[3]);
     zlartg_(&g, &f, &cz, &sz, &cdum);
     z__1.r = -sz.r;
     z__1.i = -sz.i; // , expr subst
@@ -324,7 +324,7 @@ int ztgex2_(logical *wantq, logical *wantz, integer *n, doublecomplex *a, intege
     zrot_(&c__2, s, &c__2, &s[1], &c__2, &cq, &sq);
     zrot_(&c__2, t, &c__2, &t[1], &c__2, &cq, &sq);
     /* Weak stability test: |S21| + |T21| <= O(EPS F-norm((S, T))) */
-    ws = z_abs(&s[1]) + z_abs(&t[1]);
+    ws = z_f2c_abs(&s[1]) + z_f2c_abs(&t[1]);
     weak = ws <= thresh;
     if (! weak)
     {

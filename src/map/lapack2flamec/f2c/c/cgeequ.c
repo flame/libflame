@@ -224,7 +224,7 @@ int cgeequ_(integer *m, integer *n, complex *a, integer *lda, real *r__, real *c
             /* Computing MAX */
             i__3 = i__ + j * a_dim1;
             r__3 = r__[i__];
-            r__4 = (r__1 = a[i__3].r, abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]), abs(r__2)); // , expr subst
+            r__4 = (r__1 = a[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]), f2c_abs(r__2)); // , expr subst
             r__[i__] = max(r__3,r__4);
             /* L20: */
         }
@@ -307,7 +307,7 @@ int cgeequ_(integer *m, integer *n, complex *a, integer *lda, real *r__, real *c
             /* Computing MAX */
             i__3 = i__ + j * a_dim1;
             r__3 = c__[j];
-            r__4 = ((r__1 = a[i__3].r, abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]), abs(r__2))) * r__[i__]; // , expr subst
+            r__4 = ((r__1 = a[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]), f2c_abs(r__2))) * r__[i__]; // , expr subst
             c__[j] = max(r__3,r__4);
             /* L80: */
         }

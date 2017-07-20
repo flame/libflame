@@ -331,7 +331,7 @@ int slasd3_(integer *nl, integer *nr, integer *sqre, integer *k, real *d__, real
     /* Quick return if possible */
     if (*k == 1)
     {
-        d__[1] = abs(z__[1]);
+        d__[1] = f2c_abs(z__[1]);
         scopy_(&m, &vt2[vt2_dim1 + 1], ldvt2, &vt[vt_dim1 + 1], ldvt);
         if (z__[1] > 0.f)
         {
@@ -418,7 +418,7 @@ int slasd3_(integer *nl, integer *nr, integer *sqre, integer *k, real *d__, real
             z__[i__] *= u[i__ + j * u_dim1] * vt[i__ + j * vt_dim1] / (dsigma[ i__] - dsigma[j + 1]) / (dsigma[i__] + dsigma[j + 1]);
             /* L50: */
         }
-        r__2 = sqrt((r__1 = z__[i__], abs(r__1)));
+        r__2 = sqrt((r__1 = z__[i__], f2c_abs(r__1)));
         z__[i__] = r_sign(&r__2, &q[i__ + q_dim1]);
         /* L60: */
     }

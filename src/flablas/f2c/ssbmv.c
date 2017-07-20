@@ -84,7 +84,7 @@ int ssbmv_(char *uplo, integer *n, integer *k, real *alpha, real *a, integer *ld
     /* ( k + 1 ). */
     /* Unchanged on exit. */
     /* X - REAL array of DIMENSION at least */
-    /* ( 1 + ( n - 1 )*abs( INCX ) ). */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCX ) ). */
     /* Before entry, the incremented array X must contain the */
     /* vector x. */
     /* Unchanged on exit. */
@@ -96,7 +96,7 @@ int ssbmv_(char *uplo, integer *n, integer *k, real *alpha, real *a, integer *ld
     /* On entry, BETA specifies the scalar beta. */
     /* Unchanged on exit. */
     /* Y - REAL array of DIMENSION at least */
-    /* ( 1 + ( n - 1 )*abs( INCY ) ). */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCY ) ). */
     /* Before entry, the incremented array Y must contain the */
     /* vector y. On exit, Y is overwritten by the updated vector y. */
     /* INCY - INTEGER. */

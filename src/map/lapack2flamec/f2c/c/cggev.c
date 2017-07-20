@@ -144,7 +144,7 @@ static integer c_n1 = -1;
 /* > stored one after another in the columns of VL, in the same */
 /* > order as their eigenvalues. */
 /* > Each eigenvector is scaled so the largest component has */
-/* > abs(real part) + abs(imag. part) = 1. */
+/* > f2c_abs(real part) + f2c_abs(imag. part) = 1. */
 /* > Not referenced if JOBVL = 'N'. */
 /* > \endverbatim */
 /* > */
@@ -162,7 +162,7 @@ static integer c_n1 = -1;
 /* > stored one after another in the columns of VR, in the same */
 /* > order as their eigenvalues. */
 /* > Each eigenvector is scaled so the largest component has */
-/* > abs(real part) + abs(imag. part) = 1. */
+/* > f2c_abs(real part) + f2c_abs(imag. part) = 1. */
 /* > Not referenced if JOBVR = 'N'. */
 /* > \endverbatim */
 /* > */
@@ -594,7 +594,7 @@ int cggev_(char *jobvl, char *jobvr, integer *n, complex *a, integer *lda, compl
                     /* Computing MAX */
                     i__3 = jr + jc * vl_dim1;
                     r__3 = temp;
-                    r__4 = (r__1 = vl[i__3].r, abs(r__1)) + ( r__2 = r_imag(&vl[jr + jc * vl_dim1]), abs(r__2)); // , expr subst
+                    r__4 = (r__1 = vl[i__3].r, f2c_abs(r__1)) + ( r__2 = r_imag(&vl[jr + jc * vl_dim1]), f2c_abs(r__2)); // , expr subst
                     temp = max(r__3,r__4);
                     /* L10: */
                 }
@@ -637,7 +637,7 @@ L30:
                     /* Computing MAX */
                     i__3 = jr + jc * vr_dim1;
                     r__3 = temp;
-                    r__4 = (r__1 = vr[i__3].r, abs(r__1)) + ( r__2 = r_imag(&vr[jr + jc * vr_dim1]), abs(r__2)); // , expr subst
+                    r__4 = (r__1 = vr[i__3].r, f2c_abs(r__1)) + ( r__2 = r_imag(&vr[jr + jc * vr_dim1]), f2c_abs(r__2)); // , expr subst
                     temp = max(r__3,r__4);
                     /* L40: */
                 }

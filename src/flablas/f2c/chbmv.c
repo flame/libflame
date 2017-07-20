@@ -90,7 +90,7 @@ int chbmv_(char *uplo, integer *n, integer *k, complex * alpha, complex *a, inte
     /* ( k + 1 ). */
     /* Unchanged on exit. */
     /* X - COMPLEX array of DIMENSION at least */
-    /* ( 1 + ( n - 1 )*abs( INCX ) ). */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCX ) ). */
     /* Before entry, the incremented array X must contain the */
     /* vector x. */
     /* Unchanged on exit. */
@@ -102,7 +102,7 @@ int chbmv_(char *uplo, integer *n, integer *k, complex * alpha, complex *a, inte
     /* On entry, BETA specifies the scalar beta. */
     /* Unchanged on exit. */
     /* Y - COMPLEX array of DIMENSION at least */
-    /* ( 1 + ( n - 1 )*abs( INCY ) ). */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCY ) ). */
     /* Before entry, the incremented array Y must contain the */
     /* vector y. On exit, Y is overwritten by the updated vector y. */
     /* INCY - INTEGER. */

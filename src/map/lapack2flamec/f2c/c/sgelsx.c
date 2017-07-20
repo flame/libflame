@@ -316,9 +316,9 @@ int sgelsx_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     /* Determine RANK using incremental condition estimation */
     work[ismin] = 1.f;
     work[ismax] = 1.f;
-    smax = (r__1 = a[a_dim1 + 1], abs(r__1));
+    smax = (r__1 = a[a_dim1 + 1], f2c_abs(r__1));
     smin = smax;
-    if ((r__1 = a[a_dim1 + 1], abs(r__1)) == 0.f)
+    if ((r__1 = a[a_dim1 + 1], f2c_abs(r__1)) == 0.f)
     {
         *rank = 0;
         i__1 = max(*m,*n);

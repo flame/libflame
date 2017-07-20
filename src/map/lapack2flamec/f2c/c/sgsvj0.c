@@ -501,10 +501,10 @@ int sgsvj0_(char *jobv, integer *m, integer *n, real *a, integer *lda, real *d__
                                 }
                                 /* Computing MAX */
                                 r__1 = mxaapq;
-                                r__2 = abs(aapq); // , expr subst
+                                r__2 = f2c_abs(aapq); // , expr subst
                                 mxaapq = max(r__1,r__2);
                                 /* TO rotate or NOT to rotate, THAT is the question ... */
-                                if (abs(aapq) > *tol)
+                                if (f2c_abs(aapq) > *tol)
                                 {
                                     /* .. rotate */
                                     /* ROTATED = ROTATED + ONE */
@@ -518,8 +518,8 @@ int sgsvj0_(char *jobv, integer *m, integer *n, real *a, integer *lda, real *d__
                                     {
                                         aqoap = aaqq / aapp;
                                         apoaq = aapp / aaqq;
-                                        theta = (r__1 = aqoap - apoaq, abs( r__1)) * -.5f / aapq;
-                                        if (abs(theta) > bigtheta)
+                                        theta = (r__1 = aqoap - apoaq, f2c_abs( r__1)) * -.5f / aapq;
+                                        if (f2c_abs(theta) > bigtheta)
                                         {
                                             t = .5f / theta;
                                             fastr[2] = t * d__[p] / d__[q];
@@ -539,7 +539,7 @@ int sgsvj0_(char *jobv, integer *m, integer *n, real *a, integer *lda, real *d__
                                             aapp *= sqrt((max(r__1,r__2)));
                                             /* Computing MAX */
                                             r__1 = mxsinj;
-                                            r__2 = abs(t); // , expr subst
+                                            r__2 = f2c_abs(t); // , expr subst
                                             mxsinj = max(r__1,r__2);
                                         }
                                         else
@@ -551,7 +551,7 @@ int sgsvj0_(char *jobv, integer *m, integer *n, real *a, integer *lda, real *d__
                                             sn = t * cs;
                                             /* Computing MAX */
                                             r__1 = mxsinj;
-                                            r__2 = abs(sn); // , expr subst
+                                            r__2 = f2c_abs(sn); // , expr subst
                                             mxsinj = max(r__1,r__2);
                                             /* Computing MAX */
                                             r__1 = 0.f;
@@ -830,10 +830,10 @@ L2103: /* bailed out of q-loop */
                                 }
                                 /* Computing MAX */
                                 r__1 = mxaapq;
-                                r__2 = abs(aapq); // , expr subst
+                                r__2 = f2c_abs(aapq); // , expr subst
                                 mxaapq = max(r__1,r__2);
                                 /* TO rotate or NOT to rotate, THAT is the question ... */
-                                if (abs(aapq) > *tol)
+                                if (f2c_abs(aapq) > *tol)
                                 {
                                     notrot = 0;
                                     /* ROTATED = ROTATED + 1 */
@@ -843,12 +843,12 @@ L2103: /* bailed out of q-loop */
                                     {
                                         aqoap = aaqq / aapp;
                                         apoaq = aapp / aaqq;
-                                        theta = (r__1 = aqoap - apoaq, abs( r__1)) * -.5f / aapq;
+                                        theta = (r__1 = aqoap - apoaq, f2c_abs( r__1)) * -.5f / aapq;
                                         if (aaqq > aapp0)
                                         {
                                             theta = -theta;
                                         }
-                                        if (abs(theta) > bigtheta)
+                                        if (f2c_abs(theta) > bigtheta)
                                         {
                                             t = .5f / theta;
                                             fastr[2] = t * d__[p] / d__[q];
@@ -868,7 +868,7 @@ L2103: /* bailed out of q-loop */
                                             aapp *= sqrt((max(r__1,r__2)));
                                             /* Computing MAX */
                                             r__1 = mxsinj;
-                                            r__2 = abs(t); // , expr subst
+                                            r__2 = f2c_abs(t); // , expr subst
                                             mxsinj = max(r__1,r__2);
                                         }
                                         else
@@ -884,7 +884,7 @@ L2103: /* bailed out of q-loop */
                                             sn = t * cs;
                                             /* Computing MAX */
                                             r__1 = mxsinj;
-                                            r__2 = abs(sn); // , expr subst
+                                            r__2 = f2c_abs(sn); // , expr subst
                                             mxsinj = max(r__1,r__2);
                                             /* Computing MAX */
                                             r__1 = 0.f;
@@ -1110,7 +1110,7 @@ L2011: /* 2011 bailed out of the jbc-loop */
                     p <= i__3;
                     ++p)
             {
-                sva[p] = (r__1 = sva[p], abs(r__1));
+                sva[p] = (r__1 = sva[p], f2c_abs(r__1));
                 /* L2012: */
             }
             /* L2000: */

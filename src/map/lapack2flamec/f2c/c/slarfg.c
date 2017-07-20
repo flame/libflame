@@ -66,7 +66,7 @@
 /* > \param[in,out] X */
 /* > \verbatim */
 /* > X is REAL array, dimension */
-/* > (1+(N-2)*abs(INCX)) */
+/* > (1+(N-2)*f2c_abs(INCX)) */
 /* > On entry, the vector x. */
 /* > On exit, it is overwritten with the vector v. */
 /* > \endverbatim */
@@ -150,7 +150,7 @@ int slarfg_(integer *n, real *alpha, real *x, integer *incx, real *tau)
         beta = -r_sign(&r__1, alpha);
         safmin = slamch_("S") / slamch_("E");
         knt = 0;
-        if (abs(beta) < safmin)
+        if (f2c_abs(beta) < safmin)
         {
             /* XNORM, BETA may be inaccurate;
             scale X and recompute them */
@@ -161,7 +161,7 @@ L10:
             sscal_(&i__1, &rsafmn, &x[1], incx);
             beta *= rsafmn;
             *alpha *= rsafmn;
-            if (abs(beta) < safmin)
+            if (f2c_abs(beta) < safmin)
             {
                 goto L10;
             }

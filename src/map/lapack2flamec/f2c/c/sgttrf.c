@@ -182,7 +182,7 @@ int sgttrf_(integer *n, real *dl, real *d__, real *du, real * du2, integer *ipiv
             i__ <= i__1;
             ++i__)
     {
-        if ((r__1 = d__[i__], abs(r__1)) >= (r__2 = dl[i__], abs(r__2)))
+        if ((r__1 = d__[i__], f2c_abs(r__1)) >= (r__2 = dl[i__], f2c_abs(r__2)))
         {
             /* No row interchange required, eliminate DL(I) */
             if (d__[i__] != 0.f)
@@ -210,7 +210,7 @@ int sgttrf_(integer *n, real *dl, real *d__, real *du, real * du2, integer *ipiv
     if (*n > 1)
     {
         i__ = *n - 1;
-        if ((r__1 = d__[i__], abs(r__1)) >= (r__2 = dl[i__], abs(r__2)))
+        if ((r__1 = d__[i__], f2c_abs(r__1)) >= (r__2 = dl[i__], f2c_abs(r__2)))
         {
             if (d__[i__] != 0.f)
             {

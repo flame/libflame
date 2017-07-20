@@ -52,7 +52,7 @@ static complex c_b5 =
 /* > If the elements of x are all zero and alpha is real, then tau = 0 */
 /* > and H is taken to be the unit matrix. */
 /* > */
-/* > Otherwise 1 <= real(tau) <= 2 and abs(tau-1) <= 1 . */
+/* > Otherwise 1 <= real(tau) <= 2 and f2c_abs(tau-1) <= 1 . */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -72,7 +72,7 @@ static complex c_b5 =
 /* > \param[in,out] X */
 /* > \verbatim */
 /* > X is COMPLEX array, dimension */
-/* > (1+(N-2)*abs(INCX)) */
+/* > (1+(N-2)*f2c_abs(INCX)) */
 /* > On entry, the vector x. */
 /* > On exit, it is overwritten with the vector v. */
 /* > \endverbatim */
@@ -164,7 +164,7 @@ int clarfg_(integer *n, complex *alpha, complex *x, integer * incx, complex *tau
         safmin = slamch_("S") / slamch_("E");
         rsafmn = 1.f / safmin;
         knt = 0;
-        if (abs(beta) < safmin)
+        if (f2c_abs(beta) < safmin)
         {
             /* XNORM, BETA may be inaccurate;
             scale X and recompute them */
@@ -175,7 +175,7 @@ L10:
             beta *= rsafmn;
             alphi *= rsafmn;
             alphr *= rsafmn;
-            if (abs(beta) < safmin)
+            if (f2c_abs(beta) < safmin)
             {
                 goto L10;
             }

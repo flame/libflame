@@ -268,7 +268,7 @@ int claein_(logical *rightv, logical *noinit, integer *n, complex *h__, integer 
             ei.r = h__[i__2].r;
             ei.i = h__[i__2].i; // , expr subst
             i__2 = i__ + i__ * b_dim1;
-            if ((r__1 = b[i__2].r, abs(r__1)) + (r__2 = r_imag(&b[i__ + i__ * b_dim1]), abs(r__2)) < (r__3 = ei.r, abs(r__3)) + (r__4 = r_imag(&ei), abs(r__4)))
+            if ((r__1 = b[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&b[i__ + i__ * b_dim1]), f2c_abs(r__2)) < (r__3 = ei.r, f2c_abs(r__3)) + (r__4 = r_imag(&ei), f2c_abs(r__4)))
             {
                 /* Interchange rows and eliminate. */
                 cladiv_(&q__1, &b[i__ + i__ * b_dim1], &ei);
@@ -355,7 +355,7 @@ int claein_(logical *rightv, logical *noinit, integer *n, complex *h__, integer 
             ej.r = h__[i__1].r;
             ej.i = h__[i__1].i; // , expr subst
             i__1 = j + j * b_dim1;
-            if ((r__1 = b[i__1].r, abs(r__1)) + (r__2 = r_imag(&b[j + j * b_dim1]), abs(r__2)) < (r__3 = ej.r, abs(r__3)) + (r__4 = r_imag(&ej), abs(r__4)))
+            if ((r__1 = b[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&b[j + j * b_dim1]), f2c_abs(r__2)) < (r__3 = ej.r, f2c_abs(r__3)) + (r__4 = r_imag(&ej), f2c_abs(r__4)))
             {
                 /* Interchange columns and eliminate. */
                 cladiv_(&q__1, &b[j + j * b_dim1], &ej);
@@ -475,7 +475,7 @@ int claein_(logical *rightv, logical *noinit, integer *n, complex *h__, integer 
 L120: /* Normalize eigenvector. */
     i__ = icamax_(n, &v[1], &c__1);
     i__1 = i__;
-    r__3 = 1.f / ((r__1 = v[i__1].r, abs(r__1)) + (r__2 = r_imag(&v[i__]), abs(r__2)));
+    r__3 = 1.f / ((r__1 = v[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&v[i__]), f2c_abs(r__2)));
     csscal_(n, &r__3, &v[1], &c__1);
     return 0;
     /* End of CLAEIN */

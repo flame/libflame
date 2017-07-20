@@ -241,7 +241,7 @@ L30: /* If K > N, exit from loop. */
         {
             /* 2 x 2 diagonal block */
             /* Invert the diagonal block. */
-            t = (r__1 = a[k + (k + 1) * a_dim1], abs(r__1));
+            t = (r__1 = a[k + (k + 1) * a_dim1], f2c_abs(r__1));
             ak = a[k + k * a_dim1] / t;
             akp1 = a[k + 1 + (k + 1) * a_dim1] / t;
             akkp1 = a[k + (k + 1) * a_dim1] / t;
@@ -269,7 +269,7 @@ L30: /* If K > N, exit from loop. */
             }
             kstep = 2;
         }
-        kp = (i__1 = ipiv[k], abs(i__1));
+        kp = (i__1 = ipiv[k], f2c_abs(i__1));
         if (kp != k)
         {
             /* Interchange rows and columns K and KP in the leading */
@@ -325,7 +325,7 @@ L50: /* If K < 1, exit from loop. */
         {
             /* 2 x 2 diagonal block */
             /* Invert the diagonal block. */
-            t = (r__1 = a[k + (k - 1) * a_dim1], abs(r__1));
+            t = (r__1 = a[k + (k - 1) * a_dim1], f2c_abs(r__1));
             ak = a[k - 1 + (k - 1) * a_dim1] / t;
             akp1 = a[k + k * a_dim1] / t;
             akkp1 = a[k + (k - 1) * a_dim1] / t;
@@ -353,7 +353,7 @@ L50: /* If K < 1, exit from loop. */
             }
             kstep = 2;
         }
-        kp = (i__1 = ipiv[k], abs(i__1));
+        kp = (i__1 = ipiv[k], f2c_abs(i__1));
         if (kp != k)
         {
             /* Interchange rows and columns K and KP in the trailing */

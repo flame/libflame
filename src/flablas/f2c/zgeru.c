@@ -35,7 +35,7 @@ int zgeru_(integer *m, integer *n, doublecomplex *alpha, doublecomplex *x, integ
     /* On entry, ALPHA specifies the scalar alpha. */
     /* Unchanged on exit. */
     /* X - COMPLEX*16 array of dimension at least */
-    /* ( 1 + ( m - 1 )*abs( INCX ) ). */
+    /* ( 1 + ( m - 1 )*f2c_abs( INCX ) ). */
     /* Before entry, the incremented array X must contain the m */
     /* element vector x. */
     /* Unchanged on exit. */
@@ -44,7 +44,7 @@ int zgeru_(integer *m, integer *n, doublecomplex *alpha, doublecomplex *x, integ
     /* X. INCX must not be zero. */
     /* Unchanged on exit. */
     /* Y - COMPLEX*16 array of dimension at least */
-    /* ( 1 + ( n - 1 )*abs( INCY ) ). */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCY ) ). */
     /* Before entry, the incremented array Y must contain the n */
     /* element vector y. */
     /* Unchanged on exit. */

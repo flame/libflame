@@ -58,7 +58,7 @@ L20:
     dp1 = *dd1 * *dx1;
     dq2 = dp2 * *dy1;
     dq1 = dp1 * *dx1;
-    if (! (abs(dq1) > abs(dq2)))
+    if (! (f2c_abs(dq1) > f2c_abs(dq2)))
     {
         goto L40;
     }
@@ -179,7 +179,7 @@ L150: /* Computing 2nd power */
     goto L140;
 L160:
 L170:
-    if (! (abs(*dd2) <= rgamsq))
+    if (! (f2c_abs(*dd2) <= rgamsq))
     {
         goto L190;
     }
@@ -199,7 +199,7 @@ L180: /* Computing 2nd power */
     goto L170;
 L190:
 L200:
-    if (! (abs(*dd2) >= gamsq))
+    if (! (f2c_abs(*dd2) >= gamsq))
     {
         goto L220;
     }

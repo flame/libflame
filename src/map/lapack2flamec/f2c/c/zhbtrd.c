@@ -178,7 +178,7 @@ int zhbtrd_(char *vect, char *uplo, integer *n, integer *kd, doublecomplex *ab, 
     doublecomplex z__1;
     /* Builtin functions */
     void d_cnjg(doublecomplex *, doublecomplex *);
-    double z_abs(doublecomplex *);
+    double z_f2c_abs(doublecomplex *);
     /* Local variables */
     integer i__, j, k, l;
     doublecomplex t;
@@ -522,7 +522,7 @@ int zhbtrd_(char *vect, char *uplo, integer *n, integer *kd, doublecomplex *ab, 
                 i__3 = *kd + (i__ + 1) * ab_dim1;
                 t.r = ab[i__3].r;
                 t.i = ab[i__3].i; // , expr subst
-                abst = z_abs(&t);
+                abst = z_f2c_abs(&t);
                 i__3 = *kd + (i__ + 1) * ab_dim1;
                 ab[i__3].r = abst;
                 ab[i__3].i = 0.; // , expr subst
@@ -815,7 +815,7 @@ int zhbtrd_(char *vect, char *uplo, integer *n, integer *kd, doublecomplex *ab, 
                 i__2 = i__ * ab_dim1 + 2;
                 t.r = ab[i__2].r;
                 t.i = ab[i__2].i; // , expr subst
-                abst = z_abs(&t);
+                abst = z_f2c_abs(&t);
                 i__2 = i__ * ab_dim1 + 2;
                 ab[i__2].r = abst;
                 ab[i__2].i = 0.; // , expr subst

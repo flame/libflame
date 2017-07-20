@@ -182,7 +182,7 @@ L10:
             m <= i__1;
             ++m)
     {
-        if ((r__3 = e[m], abs(r__3)) <= sqrt((r__1 = d__[m], abs(r__1))) * sqrt((r__2 = d__[m + 1], abs(r__2))) * eps)
+        if ((r__3 = e[m], f2c_abs(r__3)) <= sqrt((r__1 = d__[m], f2c_abs(r__1))) * sqrt((r__2 = d__[m + 1], f2c_abs(r__2))) * eps)
         {
             e[m] = 0.f;
             goto L30;
@@ -235,7 +235,7 @@ L30:
         /* L40: */
     }
     /* Choose between QL and QR iteration */
-    if ((r__1 = d__[lend], abs(r__1)) < (r__2 = d__[l], abs(r__2)))
+    if ((r__1 = d__[lend], f2c_abs(r__1)) < (r__2 = d__[l], f2c_abs(r__2)))
     {
         lend = lsv;
         l = lendsv;
@@ -252,7 +252,7 @@ L50:
                     m <= i__1;
                     ++m)
             {
-                if ((r__2 = e[m], abs(r__2)) <= eps2 * (r__1 = d__[m] * d__[m + 1], abs(r__1)))
+                if ((r__2 = e[m], f2c_abs(r__2)) <= eps2 * (r__1 = d__[m] * d__[m + 1], f2c_abs(r__1)))
                 {
                     goto L70;
                 }
@@ -352,7 +352,7 @@ L100:
                 m >= i__1;
                 --m)
         {
-            if ((r__2 = e[m - 1], abs(r__2)) <= eps2 * (r__1 = d__[m] * d__[m - 1], abs(r__1)))
+            if ((r__2 = e[m - 1], f2c_abs(r__2)) <= eps2 * (r__1 = d__[m] * d__[m - 1], f2c_abs(r__1)))
             {
                 goto L120;
             }

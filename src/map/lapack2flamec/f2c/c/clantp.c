@@ -39,7 +39,7 @@ static integer c__1 = 1;
 /* > \return CLANTP */
 /* > \verbatim */
 /* > */
-/* > CLANTP = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > CLANTP = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -50,7 +50,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -120,7 +120,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
     integer i__1, i__2;
     real ret_val;
     /* Builtin functions */
-    double c_abs(complex *), sqrt(doublereal);
+    double c_f2c_abs(complex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j, k;
     real sum, scale;
@@ -160,7 +160,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
+        /* Find max(f2c_abs(A(i,j))). */
         k = 1;
         if (lsame_(diag, "U"))
         {
@@ -177,7 +177,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = c_abs(&ap[i__]);
+                        sum = c_f2c_abs(&ap[i__]);
                         if (value < sum || sisnan_(&sum))
                         {
                             value = sum;
@@ -200,7 +200,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = c_abs(&ap[i__]);
+                        sum = c_f2c_abs(&ap[i__]);
                         if (value < sum || sisnan_(&sum))
                         {
                             value = sum;
@@ -227,7 +227,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = c_abs(&ap[i__]);
+                        sum = c_f2c_abs(&ap[i__]);
                         if (value < sum || sisnan_(&sum))
                         {
                             value = sum;
@@ -250,7 +250,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = c_abs(&ap[i__]);
+                        sum = c_f2c_abs(&ap[i__]);
                         if (value < sum || sisnan_(&sum))
                         {
                             value = sum;
@@ -284,7 +284,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += c_abs(&ap[i__]);
+                        sum += c_f2c_abs(&ap[i__]);
                         /* L90: */
                     }
                 }
@@ -296,7 +296,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += c_abs(&ap[i__]);
+                        sum += c_f2c_abs(&ap[i__]);
                         /* L100: */
                     }
                 }
@@ -323,7 +323,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += c_abs(&ap[i__]);
+                        sum += c_f2c_abs(&ap[i__]);
                         /* L120: */
                     }
                 }
@@ -335,7 +335,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += c_abs(&ap[i__]);
+                        sum += c_f2c_abs(&ap[i__]);
                         /* L130: */
                     }
                 }
@@ -374,7 +374,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += c_abs(&ap[k]);
+                        work[i__] += c_f2c_abs(&ap[k]);
                         ++k;
                         /* L160: */
                     }
@@ -402,7 +402,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += c_abs(&ap[k]);
+                        work[i__] += c_f2c_abs(&ap[k]);
                         ++k;
                         /* L190: */
                     }
@@ -433,7 +433,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += c_abs(&ap[k]);
+                        work[i__] += c_f2c_abs(&ap[k]);
                         ++k;
                         /* L220: */
                     }
@@ -460,7 +460,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += c_abs(&ap[k]);
+                        work[i__] += c_f2c_abs(&ap[k]);
                         ++k;
                         /* L250: */
                     }

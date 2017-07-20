@@ -702,7 +702,7 @@ int ctgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
                 error = max(error,ssmin);
                 /* L30: */
             }
-            if (abs(error) <= min(*tola,*tolb))
+            if (f2c_abs(error) <= min(*tola,*tolb))
             {
                 goto L50;
             }
@@ -749,7 +749,7 @@ L50: /* If ERROR <= MIN(TOLA,TOLB), then the algorithm has converged. */
                     csscal_(p, &c_b39, &v[i__ * v_dim1 + 1], &c__1);
                 }
             }
-            r__1 = abs(gamma);
+            r__1 = f2c_abs(gamma);
             slartg_(&r__1, &c_b42, &beta[*k + i__], &alpha[*k + i__], &rwk);
             if (alpha[*k + i__] >= beta[*k + i__])
             {

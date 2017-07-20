@@ -299,15 +299,15 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             erretm += psi;
             /* L40: */
         }
-        erretm = abs(erretm);
+        erretm = f2c_abs(erretm);
         /* Evaluate PHI and the derivative DPHI */
         temp = z__[*n] / delta[*n];
         phi = z__[*n] * temp;
         dphi = temp * temp;
-        erretm = (-phi - psi) * 8.f + erretm - phi + rhoinv + abs(tau) * ( dpsi + dphi);
+        erretm = (-phi - psi) * 8.f + erretm - phi + rhoinv + f2c_abs(tau) * ( dpsi + dphi);
         w = rhoinv + phi + psi;
         /* Test for convergence */
-        if (abs(w) <= eps * erretm)
+        if (f2c_abs(w) <= eps * erretm)
         {
             *dlam = d__[*i__] + tau;
             goto L250;
@@ -327,7 +327,7 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
         b = delta[*n - 1] * delta[*n] * w;
         if (c__ < 0.f)
         {
-            c__ = abs(c__);
+            c__ = f2c_abs(c__);
         }
         if (c__ == 0.f)
         {
@@ -337,11 +337,11 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
         }
         else if (a >= 0.f)
         {
-            eta = (a + sqrt((r__1 = a * a - b * 4.f * c__, abs(r__1)))) / ( c__ * 2.f);
+            eta = (a + sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs(r__1)))) / ( c__ * 2.f);
         }
         else
         {
-            eta = b * 2.f / (a - sqrt((r__1 = a * a - b * 4.f * c__, abs(r__1) )));
+            eta = b * 2.f / (a - sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs(r__1) )));
         }
         /* Note, eta should be positive if w is negative, and */
         /* eta should be negative otherwise. However, */
@@ -388,12 +388,12 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             erretm += psi;
             /* L60: */
         }
-        erretm = abs(erretm);
+        erretm = f2c_abs(erretm);
         /* Evaluate PHI and the derivative DPHI */
         temp = z__[*n] / delta[*n];
         phi = z__[*n] * temp;
         dphi = temp * temp;
-        erretm = (-phi - psi) * 8.f + erretm - phi + rhoinv + abs(tau) * ( dpsi + dphi);
+        erretm = (-phi - psi) * 8.f + erretm - phi + rhoinv + f2c_abs(tau) * ( dpsi + dphi);
         w = rhoinv + phi + psi;
         /* Main loop to update the values of the array DELTA */
         iter = niter + 1;
@@ -402,7 +402,7 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
                 ++niter)
         {
             /* Test for convergence */
-            if (abs(w) <= eps * erretm)
+            if (f2c_abs(w) <= eps * erretm)
             {
                 *dlam = d__[*i__] + tau;
                 goto L250;
@@ -421,11 +421,11 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             b = delta[*n - 1] * delta[*n] * w;
             if (a >= 0.f)
             {
-                eta = (a + sqrt((r__1 = a * a - b * 4.f * c__, abs(r__1)))) / (c__ * 2.f);
+                eta = (a + sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs(r__1)))) / (c__ * 2.f);
             }
             else
             {
-                eta = b * 2.f / (a - sqrt((r__1 = a * a - b * 4.f * c__, abs( r__1))));
+                eta = b * 2.f / (a - sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs( r__1))));
             }
             /* Note, eta should be positive if w is negative, and */
             /* eta should be negative otherwise. However, */
@@ -472,12 +472,12 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
                 erretm += psi;
                 /* L80: */
             }
-            erretm = abs(erretm);
+            erretm = f2c_abs(erretm);
             /* Evaluate PHI and the derivative DPHI */
             temp = z__[*n] / delta[*n];
             phi = z__[*n] * temp;
             dphi = temp * temp;
-            erretm = (-phi - psi) * 8.f + erretm - phi + rhoinv + abs(tau) * ( dpsi + dphi);
+            erretm = (-phi - psi) * 8.f + erretm - phi + rhoinv + f2c_abs(tau) * ( dpsi + dphi);
             w = rhoinv + phi + psi;
             /* L90: */
         }
@@ -532,11 +532,11 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             b = z__[*i__] * z__[*i__] * del;
             if (a > 0.f)
             {
-                tau = b * 2.f / (a + sqrt((r__1 = a * a - b * 4.f * c__, abs( r__1))));
+                tau = b * 2.f / (a + sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs( r__1))));
             }
             else
             {
-                tau = (a - sqrt((r__1 = a * a - b * 4.f * c__, abs(r__1)))) / (c__ * 2.f);
+                tau = (a - sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs(r__1)))) / (c__ * 2.f);
             }
             dltlb = 0.f;
             dltub = midpt;
@@ -550,11 +550,11 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             b = z__[ip1] * z__[ip1] * del;
             if (a < 0.f)
             {
-                tau = b * 2.f / (a - sqrt((r__1 = a * a + b * 4.f * c__, abs( r__1))));
+                tau = b * 2.f / (a - sqrt((r__1 = a * a + b * 4.f * c__, f2c_abs( r__1))));
             }
             else
             {
-                tau = -(a + sqrt((r__1 = a * a + b * 4.f * c__, abs(r__1)))) / (c__ * 2.f);
+                tau = -(a + sqrt((r__1 = a * a + b * 4.f * c__, f2c_abs(r__1)))) / (c__ * 2.f);
             }
             dltlb = -midpt;
             dltub = 0.f;
@@ -606,7 +606,7 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             erretm += psi;
             /* L150: */
         }
-        erretm = abs(erretm);
+        erretm = f2c_abs(erretm);
         /* Evaluate PHI and the derivative DPHI */
         dphi = 0.f;
         phi = 0.f;
@@ -647,9 +647,9 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
         dw = dpsi + dphi + temp * temp;
         temp = z__[ii] * temp;
         w += temp;
-        erretm = (phi - psi) * 8.f + erretm + rhoinv * 2.f + abs(temp) * 3.f + abs(tau) * dw;
+        erretm = (phi - psi) * 8.f + erretm + rhoinv * 2.f + f2c_abs(temp) * 3.f + f2c_abs(tau) * dw;
         /* Test for convergence */
-        if (abs(w) <= eps * erretm)
+        if (f2c_abs(w) <= eps * erretm)
         {
             if (orgati)
             {
@@ -704,11 +704,11 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             }
             else if (a <= 0.f)
             {
-                eta = (a - sqrt((r__1 = a * a - b * 4.f * c__, abs(r__1)))) / (c__ * 2.f);
+                eta = (a - sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs(r__1)))) / (c__ * 2.f);
             }
             else
             {
-                eta = b * 2.f / (a + sqrt((r__1 = a * a - b * 4.f * c__, abs( r__1))));
+                eta = b * 2.f / (a + sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs( r__1))));
             }
         }
         else
@@ -783,7 +783,7 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             erretm += psi;
             /* L190: */
         }
-        erretm = abs(erretm);
+        erretm = f2c_abs(erretm);
         /* Evaluate PHI and the derivative DPHI */
         dphi = 0.f;
         phi = 0.f;
@@ -802,18 +802,18 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
         dw = dpsi + dphi + temp * temp;
         temp = z__[ii] * temp;
         w = rhoinv + phi + psi + temp;
-        erretm = (phi - psi) * 8.f + erretm + rhoinv * 2.f + abs(temp) * 3.f + (r__1 = tau + eta, abs(r__1)) * dw;
+        erretm = (phi - psi) * 8.f + erretm + rhoinv * 2.f + f2c_abs(temp) * 3.f + (r__1 = tau + eta, f2c_abs(r__1)) * dw;
         swtch = FALSE_;
         if (orgati)
         {
-            if (-w > abs(prew) / 10.f)
+            if (-w > f2c_abs(prew) / 10.f)
             {
                 swtch = TRUE_;
             }
         }
         else
         {
-            if (w > abs(prew) / 10.f)
+            if (w > f2c_abs(prew) / 10.f)
             {
                 swtch = TRUE_;
             }
@@ -826,7 +826,7 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
                 ++niter)
         {
             /* Test for convergence */
-            if (abs(w) <= eps * erretm)
+            if (f2c_abs(w) <= eps * erretm)
             {
                 if (orgati)
                 {
@@ -903,11 +903,11 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
                 }
                 else if (a <= 0.f)
                 {
-                    eta = (a - sqrt((r__1 = a * a - b * 4.f * c__, abs(r__1))) ) / (c__ * 2.f);
+                    eta = (a - sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs(r__1))) ) / (c__ * 2.f);
                 }
                 else
                 {
-                    eta = b * 2.f / (a + sqrt((r__1 = a * a - b * 4.f * c__, abs(r__1))));
+                    eta = b * 2.f / (a + sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs(r__1))));
                 }
             }
             else
@@ -991,7 +991,7 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
                 erretm += psi;
                 /* L220: */
             }
-            erretm = abs(erretm);
+            erretm = f2c_abs(erretm);
             /* Evaluate PHI and the derivative DPHI */
             dphi = 0.f;
             phi = 0.f;
@@ -1010,8 +1010,8 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             dw = dpsi + dphi + temp * temp;
             temp = z__[ii] * temp;
             w = rhoinv + phi + psi + temp;
-            erretm = (phi - psi) * 8.f + erretm + rhoinv * 2.f + abs(temp) * 3.f + abs(tau) * dw;
-            if (w * prew > 0.f && abs(w) > abs(prew) / 10.f)
+            erretm = (phi - psi) * 8.f + erretm + rhoinv * 2.f + f2c_abs(temp) * 3.f + f2c_abs(tau) * dw;
+            if (w * prew > 0.f && f2c_abs(w) > f2c_abs(prew) / 10.f)
             {
                 swtch = ! swtch;
             }

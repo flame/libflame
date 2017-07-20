@@ -325,7 +325,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                 q__1.i = a[i__2].i + q__2.i; // , expr subst
                 a11.r = q__1.r;
                 a11.i = q__1.i; // , expr subst
-                da11 = (r__1 = a11.r, abs(r__1)) + (r__2 = r_imag(&a11), abs( r__2));
+                da11 = (r__1 = a11.r, f2c_abs(r__1)) + (r__2 = r_imag(&a11), f2c_abs( r__2));
                 if (da11 <= smin)
                 {
                     a11.r = smin;
@@ -333,7 +333,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                     da11 = smin;
                     *info = 1;
                 }
-                db = (r__1 = vec.r, abs(r__1)) + (r__2 = r_imag(&vec), abs( r__2));
+                db = (r__1 = vec.r, f2c_abs(r__1)) + (r__2 = r_imag(&vec), f2c_abs( r__2));
                 if (da11 < 1.f && db > 1.f)
                 {
                     if (db > bignum * da11)
@@ -414,7 +414,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                 q__1.i = q__2.i + q__3.i; // , expr subst
                 a11.r = q__1.r;
                 a11.i = q__1.i; // , expr subst
-                da11 = (r__1 = a11.r, abs(r__1)) + (r__2 = r_imag(&a11), abs( r__2));
+                da11 = (r__1 = a11.r, f2c_abs(r__1)) + (r__2 = r_imag(&a11), f2c_abs( r__2));
                 if (da11 <= smin)
                 {
                     a11.r = smin;
@@ -422,7 +422,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                     da11 = smin;
                     *info = 1;
                 }
-                db = (r__1 = vec.r, abs(r__1)) + (r__2 = r_imag(&vec), abs( r__2));
+                db = (r__1 = vec.r, f2c_abs(r__1)) + (r__2 = r_imag(&vec), f2c_abs( r__2));
                 if (da11 < 1.f && db > 1.f)
                 {
                     if (db > bignum * da11)
@@ -511,7 +511,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                 r_cnjg(&q__1, &q__2);
                 a11.r = q__1.r;
                 a11.i = q__1.i; // , expr subst
-                da11 = (r__1 = a11.r, abs(r__1)) + (r__2 = r_imag(&a11), abs( r__2));
+                da11 = (r__1 = a11.r, f2c_abs(r__1)) + (r__2 = r_imag(&a11), f2c_abs( r__2));
                 if (da11 <= smin)
                 {
                     a11.r = smin;
@@ -519,7 +519,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                     da11 = smin;
                     *info = 1;
                 }
-                db = (r__1 = vec.r, abs(r__1)) + (r__2 = r_imag(&vec), abs( r__2));
+                db = (r__1 = vec.r, f2c_abs(r__1)) + (r__2 = r_imag(&vec), f2c_abs( r__2));
                 if (da11 < 1.f && db > 1.f)
                 {
                     if (db > bignum * da11)
@@ -607,7 +607,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                 q__1.i = a[i__1].i + q__2.i; // , expr subst
                 a11.r = q__1.r;
                 a11.i = q__1.i; // , expr subst
-                da11 = (r__1 = a11.r, abs(r__1)) + (r__2 = r_imag(&a11), abs( r__2));
+                da11 = (r__1 = a11.r, f2c_abs(r__1)) + (r__2 = r_imag(&a11), f2c_abs( r__2));
                 if (da11 <= smin)
                 {
                     a11.r = smin;
@@ -615,7 +615,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                     da11 = smin;
                     *info = 1;
                 }
-                db = (r__1 = vec.r, abs(r__1)) + (r__2 = r_imag(&vec), abs( r__2));
+                db = (r__1 = vec.r, f2c_abs(r__1)) + (r__2 = r_imag(&vec), f2c_abs( r__2));
                 if (da11 < 1.f && db > 1.f)
                 {
                     if (db > bignum * da11)

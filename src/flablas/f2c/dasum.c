@@ -34,7 +34,7 @@ doublereal dasum_(integer *n, doublereal *dx, integer *incx)
             i__2 < 0 ? i__ >= i__1 : i__ <= i__1;
             i__ += i__2)
     {
-        dtemp += (d__1 = dx[i__], abs(d__1));
+        dtemp += (d__1 = dx[i__], f2c_abs(d__1));
         /* L10: */
     }
     ret_val = dtemp;
@@ -52,7 +52,7 @@ L20:
             i__ <= i__2;
             ++i__)
     {
-        dtemp += (d__1 = dx[i__], abs(d__1));
+        dtemp += (d__1 = dx[i__], f2c_abs(d__1));
         /* L30: */
     }
     if (*n < 6)
@@ -66,7 +66,7 @@ L40:
             i__ <= i__2;
             i__ += 6)
     {
-        dtemp = dtemp + (d__1 = dx[i__], abs(d__1)) + (d__2 = dx[i__ + 1], abs(d__2)) + (d__3 = dx[i__ + 2], abs(d__3)) + (d__4 = dx[i__ + 3], abs(d__4)) + (d__5 = dx[i__ + 4], abs(d__5)) + (d__6 = dx[i__ + 5], abs(d__6));
+        dtemp = dtemp + (d__1 = dx[i__], f2c_abs(d__1)) + (d__2 = dx[i__ + 1], f2c_abs(d__2)) + (d__3 = dx[i__ + 2], f2c_abs(d__3)) + (d__4 = dx[i__ + 3], f2c_abs(d__4)) + (d__5 = dx[i__ + 4], f2c_abs(d__5)) + (d__6 = dx[i__ + 5], f2c_abs(d__6));
         /* L50: */
     }
 L60:

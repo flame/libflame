@@ -303,7 +303,7 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
         {
             *rank = 1;
             clascl_("G", &c__0, &c__0, &d__[1], &c_b10, &c__1, nrhs, &b[ b_offset], ldb, info);
-            d__[1] = abs(d__[1]);
+            d__[1] = f2c_abs(d__[1]);
         }
         return 0;
     }
@@ -443,7 +443,7 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
             }
             /* L90: */
         }
-        tol = rcnd * (r__1 = d__[isamax_(n, &d__[1], &c__1)], abs(r__1));
+        tol = rcnd * (r__1 = d__[isamax_(n, &d__[1], &c__1)], f2c_abs(r__1));
         i__1 = *n;
         for (i__ = 1;
                 i__ <= i__1;
@@ -566,7 +566,7 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
             i__ <= i__1;
             ++i__)
     {
-        if ((r__1 = d__[i__], abs(r__1)) < eps)
+        if ((r__1 = d__[i__], f2c_abs(r__1)) < eps)
         {
             d__[i__] = r_sign(&eps, &d__[i__]);
         }
@@ -577,7 +577,7 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
             i__ <= i__1;
             ++i__)
     {
-        if ((r__1 = e[i__], abs(r__1)) < eps || i__ == nm1)
+        if ((r__1 = e[i__], f2c_abs(r__1)) < eps || i__ == nm1)
         {
             ++nsub;
             iwork[nsub] = st;
@@ -589,7 +589,7 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
                 nsize = i__ - st + 1;
                 iwork[sizei + nsub - 1] = nsize;
             }
-            else if ((r__1 = e[i__], abs(r__1)) >= eps)
+            else if ((r__1 = e[i__], f2c_abs(r__1)) >= eps)
             {
                 /* A subproblem with E(NM1) not too small but I = NM1. */
                 nsize = *n - st + 1;
@@ -711,7 +711,7 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
         /* L240: */
     }
     /* Apply the singular values and treat the tiny ones as zero. */
-    tol = rcnd * (r__1 = d__[isamax_(n, &d__[1], &c__1)], abs(r__1));
+    tol = rcnd * (r__1 = d__[isamax_(n, &d__[1], &c__1)], f2c_abs(r__1));
     i__1 = *n;
     for (i__ = 1;
             i__ <= i__1;
@@ -719,7 +719,7 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
     {
         /* Some of the elements in D can be negative because 1-by-1 */
         /* subproblems were not solved explicitly. */
-        if ((r__1 = d__[i__], abs(r__1)) <= tol)
+        if ((r__1 = d__[i__], f2c_abs(r__1)) <= tol)
         {
             claset_("A", &c__1, nrhs, &c_b1, &c_b1, &work[bx + i__ - 1], n);
         }
@@ -728,7 +728,7 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
             ++(*rank);
             clascl_("G", &c__0, &c__0, &d__[i__], &c_b10, &c__1, nrhs, &work[ bx + i__ - 1], n, info);
         }
-        d__[i__] = (r__1 = d__[i__], abs(r__1));
+        d__[i__] = (r__1 = d__[i__], f2c_abs(r__1));
         /* L250: */
     }
     /* Now apply back the right singular vectors. */

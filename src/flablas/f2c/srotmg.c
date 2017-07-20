@@ -58,7 +58,7 @@ L20:
     sp1 = *sd1 * *sx1;
     sq2 = sp2 * *sy1;
     sq1 = sp1 * *sx1;
-    if (! (abs(sq1) > abs(sq2)))
+    if (! (f2c_abs(sq1) > f2c_abs(sq2)))
     {
         goto L40;
     }
@@ -179,7 +179,7 @@ L150: /* Computing 2nd power */
     goto L140;
 L160:
 L170:
-    if (! (abs(*sd2) <= rgamsq))
+    if (! (f2c_abs(*sd2) <= rgamsq))
     {
         goto L190;
     }
@@ -199,7 +199,7 @@ L180: /* Computing 2nd power */
     goto L170;
 L190:
 L200:
-    if (! (abs(*sd2) >= gamsq))
+    if (! (f2c_abs(*sd2) >= gamsq))
     {
         goto L220;
     }

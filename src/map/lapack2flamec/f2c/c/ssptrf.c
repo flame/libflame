@@ -237,14 +237,14 @@ L10:
         kstep = 1;
         /* Determine rows and columns to be interchanged and whether */
         /* a 1-by-1 or 2-by-2 pivot block will be used */
-        absakk = (r__1 = ap[kc + k - 1], abs(r__1));
+        absakk = (r__1 = ap[kc + k - 1], f2c_abs(r__1));
         /* IMAX is the row-index of the largest off-diagonal element in */
         /* column K, and COLMAX is its absolute value */
         if (k > 1)
         {
             i__1 = k - 1;
             imax = isamax_(&i__1, &ap[kc], &c__1);
-            colmax = (r__1 = ap[kc + imax - 1], abs(r__1));
+            colmax = (r__1 = ap[kc + imax - 1], f2c_abs(r__1));
         }
         else
         {
@@ -276,9 +276,9 @@ L10:
                         j <= i__1;
                         ++j)
                 {
-                    if ((r__1 = ap[kx], abs(r__1)) > rowmax)
+                    if ((r__1 = ap[kx], f2c_abs(r__1)) > rowmax)
                     {
-                        rowmax = (r__1 = ap[kx], abs(r__1));
+                        rowmax = (r__1 = ap[kx], f2c_abs(r__1));
                         jmax = j;
                     }
                     kx += j;
@@ -291,7 +291,7 @@ L10:
                     jmax = isamax_(&i__1, &ap[kpc], &c__1);
                     /* Computing MAX */
                     r__2 = rowmax;
-                    r__3 = (r__1 = ap[kpc + jmax - 1], abs( r__1)); // , expr subst
+                    r__3 = (r__1 = ap[kpc + jmax - 1], f2c_abs( r__1)); // , expr subst
                     rowmax = max(r__2,r__3);
                 }
                 if (absakk >= alpha * colmax * (colmax / rowmax))
@@ -299,7 +299,7 @@ L10:
                     /* no interchange, use 1-by-1 pivot block */
                     kp = k;
                 }
-                else if ((r__1 = ap[kpc + imax - 1], abs(r__1)) >= alpha * rowmax)
+                else if ((r__1 = ap[kpc + imax - 1], f2c_abs(r__1)) >= alpha * rowmax)
                 {
                     /* interchange rows and columns K and IMAX, use 1-by-1 */
                     /* pivot block */
@@ -431,14 +431,14 @@ L60:
         kstep = 1;
         /* Determine rows and columns to be interchanged and whether */
         /* a 1-by-1 or 2-by-2 pivot block will be used */
-        absakk = (r__1 = ap[kc], abs(r__1));
+        absakk = (r__1 = ap[kc], f2c_abs(r__1));
         /* IMAX is the row-index of the largest off-diagonal element in */
         /* column K, and COLMAX is its absolute value */
         if (k < *n)
         {
             i__1 = *n - k;
             imax = k + isamax_(&i__1, &ap[kc + 1], &c__1);
-            colmax = (r__1 = ap[kc + imax - k], abs(r__1));
+            colmax = (r__1 = ap[kc + imax - k], f2c_abs(r__1));
         }
         else
         {
@@ -471,9 +471,9 @@ L60:
                         j <= i__1;
                         ++j)
                 {
-                    if ((r__1 = ap[kx], abs(r__1)) > rowmax)
+                    if ((r__1 = ap[kx], f2c_abs(r__1)) > rowmax)
                     {
-                        rowmax = (r__1 = ap[kx], abs(r__1));
+                        rowmax = (r__1 = ap[kx], f2c_abs(r__1));
                         jmax = j;
                     }
                     kx = kx + *n - j;
@@ -486,7 +486,7 @@ L60:
                     jmax = imax + isamax_(&i__1, &ap[kpc + 1], &c__1);
                     /* Computing MAX */
                     r__2 = rowmax;
-                    r__3 = (r__1 = ap[kpc + jmax - imax], abs( r__1)); // , expr subst
+                    r__3 = (r__1 = ap[kpc + jmax - imax], f2c_abs( r__1)); // , expr subst
                     rowmax = max(r__2,r__3);
                 }
                 if (absakk >= alpha * colmax * (colmax / rowmax))
@@ -494,7 +494,7 @@ L60:
                     /* no interchange, use 1-by-1 pivot block */
                     kp = k;
                 }
-                else if ((r__1 = ap[kpc], abs(r__1)) >= alpha * rowmax)
+                else if ((r__1 = ap[kpc], f2c_abs(r__1)) >= alpha * rowmax)
                 {
                     /* interchange rows and columns K and IMAX, use 1-by-1 */
                     /* pivot block */

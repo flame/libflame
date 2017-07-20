@@ -340,8 +340,8 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
         q__1.i = -0.f; // , expr subst
         caxpy_(n, &q__1, &b[j * b_dim1 + 1], &c__1, &work[1], &c__1);
         /* Compute componentwise relative backward error from formula */
-        /* max(i) ( abs(R(i)) / ( abs(op(A))*abs(X) + abs(B) )(i) ) */
-        /* where abs(Z) is the componentwise absolute value of the matrix */
+        /* max(i) ( f2c_abs(R(i)) / ( f2c_abs(op(A))*f2c_abs(X) + f2c_abs(B) )(i) ) */
+        /* where f2c_abs(Z) is the componentwise absolute value of the matrix */
         /* or vector Z. If the i-th component of the denominator is less */
         /* than SAFE2, then SAFE1 is added to the i-th components of the */
         /* numerator and denominator before dividing. */
@@ -351,12 +351,12 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                 ++i__)
         {
             i__3 = i__ + j * b_dim1;
-            rwork[i__] = (r__1 = b[i__3].r, abs(r__1)) + (r__2 = r_imag(&b[ i__ + j * b_dim1]), abs(r__2));
+            rwork[i__] = (r__1 = b[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&b[ i__ + j * b_dim1]), f2c_abs(r__2));
             /* L20: */
         }
         if (notran)
         {
-            /* Compute abs(A)*abs(X) + abs(B). */
+            /* Compute f2c_abs(A)*f2c_abs(X) + f2c_abs(B). */
             if (upper)
             {
                 if (nounit)
@@ -367,7 +367,7 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                             ++k)
                     {
                         i__3 = k + j * x_dim1;
-                        xk = (r__1 = x[i__3].r, abs(r__1)) + (r__2 = r_imag(& x[k + j * x_dim1]), abs(r__2));
+                        xk = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(& x[k + j * x_dim1]), f2c_abs(r__2));
                         /* Computing MAX */
                         i__3 = 1;
                         i__4 = k - *kd; // , expr subst
@@ -377,7 +377,7 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                                 ++i__)
                         {
                             i__3 = *kd + 1 + i__ - k + k * ab_dim1;
-                            rwork[i__] += ((r__1 = ab[i__3].r, abs(r__1)) + ( r__2 = r_imag(&ab[*kd + 1 + i__ - k + k * ab_dim1]), abs(r__2))) * xk;
+                            rwork[i__] += ((r__1 = ab[i__3].r, f2c_abs(r__1)) + ( r__2 = r_imag(&ab[*kd + 1 + i__ - k + k * ab_dim1]), f2c_abs(r__2))) * xk;
                             /* L30: */
                         }
                         /* L40: */
@@ -391,7 +391,7 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                             ++k)
                     {
                         i__5 = k + j * x_dim1;
-                        xk = (r__1 = x[i__5].r, abs(r__1)) + (r__2 = r_imag(& x[k + j * x_dim1]), abs(r__2));
+                        xk = (r__1 = x[i__5].r, f2c_abs(r__1)) + (r__2 = r_imag(& x[k + j * x_dim1]), f2c_abs(r__2));
                         /* Computing MAX */
                         i__5 = 1;
                         i__3 = k - *kd; // , expr subst
@@ -401,7 +401,7 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                                 ++i__)
                         {
                             i__5 = *kd + 1 + i__ - k + k * ab_dim1;
-                            rwork[i__] += ((r__1 = ab[i__5].r, abs(r__1)) + ( r__2 = r_imag(&ab[*kd + 1 + i__ - k + k * ab_dim1]), abs(r__2))) * xk;
+                            rwork[i__] += ((r__1 = ab[i__5].r, f2c_abs(r__1)) + ( r__2 = r_imag(&ab[*kd + 1 + i__ - k + k * ab_dim1]), f2c_abs(r__2))) * xk;
                             /* L50: */
                         }
                         rwork[k] += xk;
@@ -419,7 +419,7 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                             ++k)
                     {
                         i__4 = k + j * x_dim1;
-                        xk = (r__1 = x[i__4].r, abs(r__1)) + (r__2 = r_imag(& x[k + j * x_dim1]), abs(r__2));
+                        xk = (r__1 = x[i__4].r, f2c_abs(r__1)) + (r__2 = r_imag(& x[k + j * x_dim1]), f2c_abs(r__2));
                         /* Computing MIN */
                         i__5 = *n;
                         i__3 = k + *kd; // , expr subst
@@ -429,7 +429,7 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                                 ++i__)
                         {
                             i__5 = i__ + 1 - k + k * ab_dim1;
-                            rwork[i__] += ((r__1 = ab[i__5].r, abs(r__1)) + ( r__2 = r_imag(&ab[i__ + 1 - k + k * ab_dim1]), abs(r__2))) * xk;
+                            rwork[i__] += ((r__1 = ab[i__5].r, f2c_abs(r__1)) + ( r__2 = r_imag(&ab[i__ + 1 - k + k * ab_dim1]), f2c_abs(r__2))) * xk;
                             /* L70: */
                         }
                         /* L80: */
@@ -443,7 +443,7 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                             ++k)
                     {
                         i__4 = k + j * x_dim1;
-                        xk = (r__1 = x[i__4].r, abs(r__1)) + (r__2 = r_imag(& x[k + j * x_dim1]), abs(r__2));
+                        xk = (r__1 = x[i__4].r, f2c_abs(r__1)) + (r__2 = r_imag(& x[k + j * x_dim1]), f2c_abs(r__2));
                         /* Computing MIN */
                         i__5 = *n;
                         i__3 = k + *kd; // , expr subst
@@ -453,7 +453,7 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                                 ++i__)
                         {
                             i__5 = i__ + 1 - k + k * ab_dim1;
-                            rwork[i__] += ((r__1 = ab[i__5].r, abs(r__1)) + ( r__2 = r_imag(&ab[i__ + 1 - k + k * ab_dim1]), abs(r__2))) * xk;
+                            rwork[i__] += ((r__1 = ab[i__5].r, f2c_abs(r__1)) + ( r__2 = r_imag(&ab[i__ + 1 - k + k * ab_dim1]), f2c_abs(r__2))) * xk;
                             /* L90: */
                         }
                         rwork[k] += xk;
@@ -464,7 +464,7 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
         }
         else
         {
-            /* Compute abs(A**H)*abs(X) + abs(B). */
+            /* Compute f2c_abs(A**H)*f2c_abs(X) + f2c_abs(B). */
             if (upper)
             {
                 if (nounit)
@@ -485,7 +485,7 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                         {
                             i__4 = *kd + 1 + i__ - k + k * ab_dim1;
                             i__5 = i__ + j * x_dim1;
-                            s += ((r__1 = ab[i__4].r, abs(r__1)) + (r__2 = r_imag(&ab[*kd + 1 + i__ - k + k * ab_dim1]), abs(r__2))) * ((r__3 = x[i__5] .r, abs(r__3)) + (r__4 = r_imag(&x[i__ + j * x_dim1]), abs(r__4)));
+                            s += ((r__1 = ab[i__4].r, f2c_abs(r__1)) + (r__2 = r_imag(&ab[*kd + 1 + i__ - k + k * ab_dim1]), f2c_abs(r__2))) * ((r__3 = x[i__5] .r, f2c_abs(r__3)) + (r__4 = r_imag(&x[i__ + j * x_dim1]), f2c_abs(r__4)));
                             /* L110: */
                         }
                         rwork[k] += s;
@@ -500,7 +500,7 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                             ++k)
                     {
                         i__3 = k + j * x_dim1;
-                        s = (r__1 = x[i__3].r, abs(r__1)) + (r__2 = r_imag(&x[ k + j * x_dim1]), abs(r__2));
+                        s = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[ k + j * x_dim1]), f2c_abs(r__2));
                         /* Computing MAX */
                         i__3 = 1;
                         i__4 = k - *kd; // , expr subst
@@ -511,7 +511,7 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                         {
                             i__3 = *kd + 1 + i__ - k + k * ab_dim1;
                             i__4 = i__ + j * x_dim1;
-                            s += ((r__1 = ab[i__3].r, abs(r__1)) + (r__2 = r_imag(&ab[*kd + 1 + i__ - k + k * ab_dim1]), abs(r__2))) * ((r__3 = x[i__4] .r, abs(r__3)) + (r__4 = r_imag(&x[i__ + j * x_dim1]), abs(r__4)));
+                            s += ((r__1 = ab[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&ab[*kd + 1 + i__ - k + k * ab_dim1]), f2c_abs(r__2))) * ((r__3 = x[i__4] .r, f2c_abs(r__3)) + (r__4 = r_imag(&x[i__ + j * x_dim1]), f2c_abs(r__4)));
                             /* L130: */
                         }
                         rwork[k] += s;
@@ -539,7 +539,7 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                         {
                             i__3 = i__ + 1 - k + k * ab_dim1;
                             i__4 = i__ + j * x_dim1;
-                            s += ((r__1 = ab[i__3].r, abs(r__1)) + (r__2 = r_imag(&ab[i__ + 1 - k + k * ab_dim1]), abs(r__2))) * ((r__3 = x[i__4].r, abs( r__3)) + (r__4 = r_imag(&x[i__ + j * x_dim1]), abs(r__4)));
+                            s += ((r__1 = ab[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&ab[i__ + 1 - k + k * ab_dim1]), f2c_abs(r__2))) * ((r__3 = x[i__4].r, f2c_abs( r__3)) + (r__4 = r_imag(&x[i__ + j * x_dim1]), f2c_abs(r__4)));
                             /* L150: */
                         }
                         rwork[k] += s;
@@ -554,7 +554,7 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                             ++k)
                     {
                         i__5 = k + j * x_dim1;
-                        s = (r__1 = x[i__5].r, abs(r__1)) + (r__2 = r_imag(&x[ k + j * x_dim1]), abs(r__2));
+                        s = (r__1 = x[i__5].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[ k + j * x_dim1]), f2c_abs(r__2));
                         /* Computing MIN */
                         i__3 = *n;
                         i__4 = k + *kd; // , expr subst
@@ -565,7 +565,7 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                         {
                             i__3 = i__ + 1 - k + k * ab_dim1;
                             i__4 = i__ + j * x_dim1;
-                            s += ((r__1 = ab[i__3].r, abs(r__1)) + (r__2 = r_imag(&ab[i__ + 1 - k + k * ab_dim1]), abs(r__2))) * ((r__3 = x[i__4].r, abs( r__3)) + (r__4 = r_imag(&x[i__ + j * x_dim1]), abs(r__4)));
+                            s += ((r__1 = ab[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&ab[i__ + 1 - k + k * ab_dim1]), f2c_abs(r__2))) * ((r__3 = x[i__4].r, f2c_abs( r__3)) + (r__4 = r_imag(&x[i__ + j * x_dim1]), f2c_abs(r__4)));
                             /* L170: */
                         }
                         rwork[k] += s;
@@ -585,7 +585,7 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                 /* Computing MAX */
                 i__5 = i__;
                 r__3 = s;
-                r__4 = ((r__1 = work[i__5].r, abs(r__1)) + (r__2 = r_imag(&work[i__]), abs(r__2))) / rwork[i__]; // , expr subst
+                r__4 = ((r__1 = work[i__5].r, f2c_abs(r__1)) + (r__2 = r_imag(&work[i__]), f2c_abs(r__2))) / rwork[i__]; // , expr subst
                 s = max(r__3,r__4);
             }
             else
@@ -593,7 +593,7 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                 /* Computing MAX */
                 i__5 = i__;
                 r__3 = s;
-                r__4 = ((r__1 = work[i__5].r, abs(r__1)) + (r__2 = r_imag(&work[i__]), abs(r__2)) + safe1) / (rwork[i__] + safe1); // , expr subst
+                r__4 = ((r__1 = work[i__5].r, f2c_abs(r__1)) + (r__2 = r_imag(&work[i__]), f2c_abs(r__2)) + safe1) / (rwork[i__] + safe1); // , expr subst
                 s = max(r__3,r__4);
             }
             /* L190: */
@@ -601,21 +601,21 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
         berr[j] = s;
         /* Bound error from formula */
         /* norm(X - XTRUE) / norm(X) .le. FERR = */
-        /* norm( abs(inv(op(A)))* */
-        /* ( abs(R) + NZ*EPS*( abs(op(A))*abs(X)+abs(B) ))) / norm(X) */
+        /* norm( f2c_abs(inv(op(A)))* */
+        /* ( f2c_abs(R) + NZ*EPS*( f2c_abs(op(A))*f2c_abs(X)+f2c_abs(B) ))) / norm(X) */
         /* where */
         /* norm(Z) is the magnitude of the largest component of Z */
         /* inv(op(A)) is the inverse of op(A) */
-        /* abs(Z) is the componentwise absolute value of the matrix or */
+        /* f2c_abs(Z) is the componentwise absolute value of the matrix or */
         /* vector Z */
         /* NZ is the maximum number of nonzeros in any row of A, plus 1 */
         /* EPS is machine epsilon */
-        /* The i-th component of abs(R)+NZ*EPS*(abs(op(A))*abs(X)+abs(B)) */
+        /* The i-th component of f2c_abs(R)+NZ*EPS*(f2c_abs(op(A))*f2c_abs(X)+f2c_abs(B)) */
         /* is incremented by SAFE1 if the i-th component of */
-        /* abs(op(A))*abs(X) + abs(B) is less than SAFE2. */
+        /* f2c_abs(op(A))*f2c_abs(X) + f2c_abs(B) is less than SAFE2. */
         /* Use CLACN2 to estimate the infinity-norm of the matrix */
         /* inv(op(A)) * diag(W), */
-        /* where W = abs(R) + NZ*EPS*( abs(op(A))*abs(X)+abs(B) ))) */
+        /* where W = f2c_abs(R) + NZ*EPS*( f2c_abs(op(A))*f2c_abs(X)+f2c_abs(B) ))) */
         i__2 = *n;
         for (i__ = 1;
                 i__ <= i__2;
@@ -624,12 +624,12 @@ int ctbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
             if (rwork[i__] > safe2)
             {
                 i__5 = i__;
-                rwork[i__] = (r__1 = work[i__5].r, abs(r__1)) + (r__2 = r_imag(&work[i__]), abs(r__2)) + nz * eps * rwork[i__] ;
+                rwork[i__] = (r__1 = work[i__5].r, f2c_abs(r__1)) + (r__2 = r_imag(&work[i__]), f2c_abs(r__2)) + nz * eps * rwork[i__] ;
             }
             else
             {
                 i__5 = i__;
-                rwork[i__] = (r__1 = work[i__5].r, abs(r__1)) + (r__2 = r_imag(&work[i__]), abs(r__2)) + nz * eps * rwork[i__] + safe1;
+                rwork[i__] = (r__1 = work[i__5].r, f2c_abs(r__1)) + (r__2 = r_imag(&work[i__]), f2c_abs(r__2)) + nz * eps * rwork[i__] + safe1;
             }
             /* L200: */
         }
@@ -688,7 +688,7 @@ L210:
             /* Computing MAX */
             i__5 = i__ + j * x_dim1;
             r__3 = lstres;
-            r__4 = (r__1 = x[i__5].r, abs(r__1)) + (r__2 = r_imag(&x[i__ + j * x_dim1]), abs(r__2)); // , expr subst
+            r__4 = (r__1 = x[i__5].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[i__ + j * x_dim1]), f2c_abs(r__2)); // , expr subst
             lstres = max(r__3,r__4);
             /* L240: */
         }

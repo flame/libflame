@@ -102,7 +102,7 @@ int main(int argc, char *argv[])
   {
     m = m_input;
 
-    if( m < 0 ) m = p / abs(m_input);
+    if( m < 0 ) m = p / f2c_abs(m_input);
 
 /*
     FLA_Obj_create( datatype, m, m, 0, 0, &A );

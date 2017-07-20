@@ -378,7 +378,7 @@ int dggsvp_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
             i__ <= i__1;
             ++i__)
     {
-        if ((d__1 = b[i__ + i__ * b_dim1], abs(d__1)) > *tolb)
+        if ((d__1 = b[i__ + i__ * b_dim1], f2c_abs(d__1)) > *tolb)
         {
             ++(*l);
         }
@@ -478,7 +478,7 @@ int dggsvp_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
             i__ <= i__1;
             ++i__)
     {
-        if ((d__1 = a[i__ + i__ * a_dim1], abs(d__1)) > *tola)
+        if ((d__1 = a[i__ + i__ * a_dim1], f2c_abs(d__1)) > *tola)
         {
             ++(*k);
         }

@@ -251,7 +251,7 @@ int zgbequ_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
             /* Computing MAX */
             i__2 = kd + i__ - j + j * ab_dim1;
             d__3 = r__[i__];
-            d__4 = (d__1 = ab[i__2].r, abs(d__1)) + (d__2 = d_imag(&ab[kd + i__ - j + j * ab_dim1]), abs(d__2)); // , expr subst
+            d__4 = (d__1 = ab[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&ab[kd + i__ - j + j * ab_dim1]), f2c_abs(d__2)); // , expr subst
             r__[i__] = max(d__3,d__4);
             /* L20: */
         }
@@ -339,7 +339,7 @@ int zgbequ_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
             /* Computing MAX */
             i__3 = kd + i__ - j + j * ab_dim1;
             d__3 = c__[j];
-            d__4 = ((d__1 = ab[i__3].r, abs(d__1)) + (d__2 = d_imag(&ab[kd + i__ - j + j * ab_dim1]), abs(d__2))) * r__[i__]; // , expr subst
+            d__4 = ((d__1 = ab[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&ab[kd + i__ - j + j * ab_dim1]), f2c_abs(d__2))) * r__[i__]; // , expr subst
             c__[j] = max(d__3,d__4);
             /* L80: */
         }

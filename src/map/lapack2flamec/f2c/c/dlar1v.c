@@ -335,7 +335,7 @@ L60:
                 ++i__)
         {
             dplus = d__[i__] + s;
-            if (abs(dplus) < *pivmin)
+            if (f2c_abs(dplus) < *pivmin)
             {
                 dplus = -(*pivmin);
             }
@@ -358,7 +358,7 @@ L60:
                 ++i__)
         {
             dplus = d__[i__] + s;
-            if (abs(dplus) < *pivmin)
+            if (f2c_abs(dplus) < *pivmin)
             {
                 dplus = -(*pivmin);
             }
@@ -404,7 +404,7 @@ L60:
                 --i__)
         {
             dminus = lld[i__] + work[indp + i__];
-            if (abs(dminus) < *pivmin)
+            if (f2c_abs(dminus) < *pivmin)
             {
                 dminus = -(*pivmin);
             }
@@ -437,7 +437,7 @@ L60:
     {
         *negcnt = -1;
     }
-    if (abs(*mingma) == 0.)
+    if (f2c_abs(*mingma) == 0.)
     {
         *mingma = eps * work[inds + r1 - 1];
     }
@@ -452,7 +452,7 @@ L60:
         {
             tmp = eps * work[inds + i__];
         }
-        if (abs(tmp) <= abs(*mingma))
+        if (f2c_abs(tmp) <= f2c_abs(*mingma))
         {
             *mingma = tmp;
             *r__ = i__ + 1;
@@ -473,7 +473,7 @@ L60:
                 --i__)
         {
             z__[i__] = -(work[indlpl + i__] * z__[i__ + 1]);
-            if (((d__1 = z__[i__], abs(d__1)) + (d__2 = z__[i__ + 1], abs( d__2))) * (d__3 = ld[i__], abs(d__3)) < *gaptol)
+            if (((d__1 = z__[i__], f2c_abs(d__1)) + (d__2 = z__[i__ + 1], f2c_abs( d__2))) * (d__3 = ld[i__], f2c_abs(d__3)) < *gaptol)
             {
                 z__[i__] = 0.;
                 isuppz[1] = i__ + 1;
@@ -501,7 +501,7 @@ L220:
             {
                 z__[i__] = -(work[indlpl + i__] * z__[i__ + 1]);
             }
-            if (((d__1 = z__[i__], abs(d__1)) + (d__2 = z__[i__ + 1], abs( d__2))) * (d__3 = ld[i__], abs(d__3)) < *gaptol)
+            if (((d__1 = z__[i__], f2c_abs(d__1)) + (d__2 = z__[i__ + 1], f2c_abs( d__2))) * (d__3 = ld[i__], f2c_abs(d__3)) < *gaptol)
             {
                 z__[i__] = 0.;
                 isuppz[1] = i__ + 1;
@@ -522,7 +522,7 @@ L240:
                 ++i__)
         {
             z__[i__ + 1] = -(work[indumn + i__] * z__[i__]);
-            if (((d__1 = z__[i__], abs(d__1)) + (d__2 = z__[i__ + 1], abs( d__2))) * (d__3 = ld[i__], abs(d__3)) < *gaptol)
+            if (((d__1 = z__[i__], f2c_abs(d__1)) + (d__2 = z__[i__ + 1], f2c_abs( d__2))) * (d__3 = ld[i__], f2c_abs(d__3)) < *gaptol)
             {
                 z__[i__ + 1] = 0.;
                 isuppz[2] = i__;
@@ -550,7 +550,7 @@ L260:
             {
                 z__[i__ + 1] = -(work[indumn + i__] * z__[i__]);
             }
-            if (((d__1 = z__[i__], abs(d__1)) + (d__2 = z__[i__ + 1], abs( d__2))) * (d__3 = ld[i__], abs(d__3)) < *gaptol)
+            if (((d__1 = z__[i__], f2c_abs(d__1)) + (d__2 = z__[i__ + 1], f2c_abs( d__2))) * (d__3 = ld[i__], f2c_abs(d__3)) < *gaptol)
             {
                 z__[i__ + 1] = 0.;
                 isuppz[2] = i__;
@@ -565,7 +565,7 @@ L280:
     /* Compute quantities for convergence test */
     tmp = 1. / *ztz;
     *nrminv = sqrt(tmp);
-    *resid = abs(*mingma) * *nrminv;
+    *resid = f2c_abs(*mingma) * *nrminv;
     *rqcorr = *mingma * tmp;
     return 0;
     /* End of DLAR1V */

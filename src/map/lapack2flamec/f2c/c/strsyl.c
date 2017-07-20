@@ -370,14 +370,14 @@ int strsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, rea
                     vec[0] = c__[k1 + l1 * c_dim1] - (suml + sgn * sumr);
                     scaloc = 1.f;
                     a11 = a[k1 + k1 * a_dim1] + sgn * b[l1 + l1 * b_dim1];
-                    da11 = abs(a11);
+                    da11 = f2c_abs(a11);
                     if (da11 <= smin)
                     {
                         a11 = smin;
                         da11 = smin;
                         *info = 1;
                     }
-                    db = abs(vec[0]);
+                    db = f2c_abs(vec[0]);
                     if (da11 < 1.f && db > 1.f)
                     {
                         if (db > bignum * da11)
@@ -632,14 +632,14 @@ L70:
                     vec[0] = c__[k1 + l1 * c_dim1] - (suml + sgn * sumr);
                     scaloc = 1.f;
                     a11 = a[k1 + k1 * a_dim1] + sgn * b[l1 + l1 * b_dim1];
-                    da11 = abs(a11);
+                    da11 = f2c_abs(a11);
                     if (da11 <= smin)
                     {
                         a11 = smin;
                         da11 = smin;
                         *info = 1;
                     }
-                    db = abs(vec[0]);
+                    db = f2c_abs(vec[0]);
                     if (da11 < 1.f && db > 1.f)
                     {
                         if (db > bignum * da11)
@@ -865,14 +865,14 @@ L130:
                     vec[0] = c__[k1 + l1 * c_dim1] - (suml + sgn * sumr);
                     scaloc = 1.f;
                     a11 = a[k1 + k1 * a_dim1] + sgn * b[l1 + l1 * b_dim1];
-                    da11 = abs(a11);
+                    da11 = f2c_abs(a11);
                     if (da11 <= smin)
                     {
                         a11 = smin;
                         da11 = smin;
                         *info = 1;
                     }
-                    db = abs(vec[0]);
+                    db = f2c_abs(vec[0]);
                     if (da11 < 1.f && db > 1.f)
                     {
                         if (db > bignum * da11)
@@ -1133,14 +1133,14 @@ L190:
                     vec[0] = c__[k1 + l1 * c_dim1] - (suml + sgn * sumr);
                     scaloc = 1.f;
                     a11 = a[k1 + k1 * a_dim1] + sgn * b[l1 + l1 * b_dim1];
-                    da11 = abs(a11);
+                    da11 = f2c_abs(a11);
                     if (da11 <= smin)
                     {
                         a11 = smin;
                         da11 = smin;
                         *info = 1;
                     }
-                    db = abs(vec[0]);
+                    db = f2c_abs(vec[0]);
                     if (da11 < 1.f && db > 1.f)
                     {
                         if (db > bignum * da11)

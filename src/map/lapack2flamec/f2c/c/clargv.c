@@ -195,11 +195,11 @@ int clargv_(integer *n, complex *x, integer *incx, complex * y, integer *incy, r
         /* Use identical algorithm as in CLARTG */
         /* Computing MAX */
         /* Computing MAX */
-        r__7 = (r__1 = f.r, abs(r__1));
-        r__8 = (r__2 = r_imag(&f), abs(r__2)); // , expr subst
+        r__7 = (r__1 = f.r, f2c_abs(r__1));
+        r__8 = (r__2 = r_imag(&f), f2c_abs(r__2)); // , expr subst
         /* Computing MAX */
-        r__9 = (r__3 = g.r, abs(r__3));
-        r__10 = (r__4 = r_imag(&g), abs(r__4)) ; // , expr subst
+        r__9 = (r__3 = g.r, f2c_abs(r__3));
+        r__10 = (r__4 = r_imag(&g), f2c_abs(r__4)) ; // , expr subst
         r__5 = max(r__7,r__8);
         r__6 = max(r__9,r__10); // , expr subst
         scale = max(r__5,r__6);
@@ -301,11 +301,11 @@ L20:
             /* and so CS .lt. sqrt(SAFMIN)/SAFMN2 = sqrt(EPS) */
             /* Therefore, CS = F2S/G2S / sqrt( 1 + (F2S/G2S)**2 ) = F2S/G2S */
             cs = f2s / g2s;
-            /* Make sure abs(FF) = 1 */
+            /* Make sure f2c_abs(FF) = 1 */
             /* Do complex/real division explicitly with 2 real divisions */
             /* Computing MAX */
-            r__3 = (r__1 = f.r, abs(r__1));
-            r__4 = (r__2 = r_imag(&f), abs( r__2)); // , expr subst
+            r__3 = (r__1 = f.r, f2c_abs(r__1));
+            r__4 = (r__2 = r_imag(&f), f2c_abs( r__2)); // , expr subst
             if (max(r__3,r__4) > 1.f)
             {
                 r__1 = f.r;

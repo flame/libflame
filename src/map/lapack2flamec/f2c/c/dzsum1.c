@@ -71,7 +71,7 @@ doublereal dzsum1_(integer *n, doublecomplex *cx, integer *incx)
     integer i__1, i__2;
     doublereal ret_val;
     /* Builtin functions */
-    double z_abs(doublecomplex *);
+    double z_f2c_abs(doublecomplex *);
     /* Local variables */
     integer i__, nincx;
     doublereal stemp;
@@ -111,7 +111,7 @@ doublereal dzsum1_(integer *n, doublecomplex *cx, integer *incx)
             i__ += i__2)
     {
         /* NEXT LINE MODIFIED. */
-        stemp += z_abs(&cx[i__]);
+        stemp += z_f2c_abs(&cx[i__]);
         /* L10: */
     }
     ret_val = stemp;
@@ -124,7 +124,7 @@ L20:
             ++i__)
     {
         /* NEXT LINE MODIFIED. */
-        stemp += z_abs(&cx[i__]);
+        stemp += z_f2c_abs(&cx[i__]);
         /* L30: */
     }
     ret_val = stemp;

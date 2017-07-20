@@ -232,7 +232,7 @@ int dlasd8_(integer *icompq, integer *k, doublereal *d__, doublereal *z__, doubl
     /* Quick return if possible */
     if (*k == 1)
     {
-        d__[1] = abs(z__[1]);
+        d__[1] = f2c_abs(z__[1]);
         difl[1] = d__[1];
         if (*icompq == 1)
         {
@@ -320,7 +320,7 @@ int dlasd8_(integer *icompq, integer *k, doublereal *d__, doublereal *z__, doubl
             i__ <= i__1;
             ++i__)
     {
-        d__2 = sqrt((d__1 = work[iwk3i + i__], abs(d__1)));
+        d__2 = sqrt((d__1 = work[iwk3i + i__], f2c_abs(d__1)));
         z__[i__] = d_sign(&d__2, &z__[i__]);
         /* L50: */
     }

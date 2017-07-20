@@ -181,7 +181,7 @@ L20:
     if (*n == 1)
     {
         v[1] = x[1];
-        *est = abs(v[1]);
+        *est = f2c_abs(v[1]);
         /* ... QUIT */
         goto L150;
     }
@@ -259,7 +259,7 @@ L90: /* TEST FOR CYCLING. */
 L110:
     jlast = j;
     j = idamax_(n, &x[1], &c__1);
-    if (x[jlast] != (d__1 = x[j], abs(d__1)) && iter < 5)
+    if (x[jlast] != (d__1 = x[j], f2c_abs(d__1)) && iter < 5)
     {
         ++iter;
         goto L50;

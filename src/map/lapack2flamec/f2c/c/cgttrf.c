@@ -194,11 +194,11 @@ int cgttrf_(integer *n, complex *dl, complex *d__, complex * du, complex *du2, i
     {
         i__2 = i__;
         i__3 = i__;
-        if ((r__1 = d__[i__2].r, abs(r__1)) + (r__2 = r_imag(&d__[i__]), abs( r__2)) >= (r__3 = dl[i__3].r, abs(r__3)) + (r__4 = r_imag(&dl[ i__]), abs(r__4)))
+        if ((r__1 = d__[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&d__[i__]), f2c_abs( r__2)) >= (r__3 = dl[i__3].r, f2c_abs(r__3)) + (r__4 = r_imag(&dl[ i__]), f2c_abs(r__4)))
         {
             /* No row interchange required, eliminate DL(I) */
             i__2 = i__;
-            if ((r__1 = d__[i__2].r, abs(r__1)) + (r__2 = r_imag(&d__[i__]), abs(r__2)) != 0.f)
+            if ((r__1 = d__[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&d__[i__]), f2c_abs(r__2)) != 0.f)
             {
                 c_div(&q__1, &dl[i__], &d__[i__]);
                 fact.r = q__1.r;
@@ -266,10 +266,10 @@ int cgttrf_(integer *n, complex *dl, complex *d__, complex * du, complex *du2, i
         i__ = *n - 1;
         i__1 = i__;
         i__2 = i__;
-        if ((r__1 = d__[i__1].r, abs(r__1)) + (r__2 = r_imag(&d__[i__]), abs( r__2)) >= (r__3 = dl[i__2].r, abs(r__3)) + (r__4 = r_imag(&dl[ i__]), abs(r__4)))
+        if ((r__1 = d__[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&d__[i__]), f2c_abs( r__2)) >= (r__3 = dl[i__2].r, f2c_abs(r__3)) + (r__4 = r_imag(&dl[ i__]), f2c_abs(r__4)))
         {
             i__1 = i__;
-            if ((r__1 = d__[i__1].r, abs(r__1)) + (r__2 = r_imag(&d__[i__]), abs(r__2)) != 0.f)
+            if ((r__1 = d__[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&d__[i__]), f2c_abs(r__2)) != 0.f)
             {
                 c_div(&q__1, &dl[i__], &d__[i__]);
                 fact.r = q__1.r;
@@ -325,7 +325,7 @@ int cgttrf_(integer *n, complex *dl, complex *d__, complex * du, complex *du2, i
             ++i__)
     {
         i__2 = i__;
-        if ((r__1 = d__[i__2].r, abs(r__1)) + (r__2 = r_imag(&d__[i__]), abs( r__2)) == 0.f)
+        if ((r__1 = d__[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&d__[i__]), f2c_abs( r__2)) == 0.f)
         {
             *info = i__;
             goto L50;

@@ -413,8 +413,8 @@ L10:
 L20:
             if (finish < *n)
             {
-                tiny = eps * sqrt((d__1 = d__[finish], abs(d__1))) * sqrt(( d__2 = d__[finish + 1], abs(d__2)));
-                if ((d__1 = e[finish], abs(d__1)) > tiny)
+                tiny = eps * sqrt((d__1 = d__[finish], f2c_abs(d__1))) * sqrt(( d__2 = d__[finish + 1], f2c_abs(d__2)));
+                if ((d__1 = e[finish], f2c_abs(d__1)) > tiny)
                 {
                     ++finish;
                     goto L20;

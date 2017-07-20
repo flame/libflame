@@ -39,7 +39,7 @@ static integer c__1 = 1;
 /* > \return ZLANSP */
 /* > \verbatim */
 /* > */
-/* > ZLANSP = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > ZLANSP = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -50,7 +50,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -110,7 +110,7 @@ doublereal zlansp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
     integer i__1, i__2;
     doublereal ret_val, d__1;
     /* Builtin functions */
-    double z_abs(doublecomplex *), d_imag(doublecomplex *), sqrt(doublereal);
+    double z_f2c_abs(doublecomplex *), d_imag(doublecomplex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j, k;
     doublereal sum, absa, scale;
@@ -149,7 +149,7 @@ doublereal zlansp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
+        /* Find max(f2c_abs(A(i,j))). */
         value = 0.;
         if (lsame_(uplo, "U"))
         {
@@ -164,7 +164,7 @@ doublereal zlansp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
                         i__ <= i__2;
                         ++i__)
                 {
-                    sum = z_abs(&ap[i__]);
+                    sum = z_f2c_abs(&ap[i__]);
                     if (value < sum || disnan_(&sum))
                     {
                         value = sum;
@@ -188,7 +188,7 @@ doublereal zlansp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
                         i__ <= i__2;
                         ++i__)
                 {
-                    sum = z_abs(&ap[i__]);
+                    sum = z_f2c_abs(&ap[i__]);
                     if (value < sum || disnan_(&sum))
                     {
                         value = sum;
@@ -218,13 +218,13 @@ doublereal zlansp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
                         i__ <= i__2;
                         ++i__)
                 {
-                    absa = z_abs(&ap[k]);
+                    absa = z_f2c_abs(&ap[k]);
                     sum += absa;
                     work[i__] += absa;
                     ++k;
                     /* L50: */
                 }
-                work[j] = sum + z_abs(&ap[k]);
+                work[j] = sum + z_f2c_abs(&ap[k]);
                 ++k;
                 /* L60: */
             }
@@ -256,14 +256,14 @@ doublereal zlansp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
                     j <= i__1;
                     ++j)
             {
-                sum = work[j] + z_abs(&ap[k]);
+                sum = work[j] + z_f2c_abs(&ap[k]);
                 ++k;
                 i__2 = *n;
                 for (i__ = j + 1;
                         i__ <= i__2;
                         ++i__)
                 {
-                    absa = z_abs(&ap[k]);
+                    absa = z_f2c_abs(&ap[k]);
                     sum += absa;
                     work[i__] += absa;
                     ++k;
@@ -320,7 +320,7 @@ doublereal zlansp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
             if (ap[i__2].r != 0.)
             {
                 i__2 = k;
-                absa = (d__1 = ap[i__2].r, abs(d__1));
+                absa = (d__1 = ap[i__2].r, f2c_abs(d__1));
                 if (scale < absa)
                 {
                     /* Computing 2nd power */
@@ -337,7 +337,7 @@ doublereal zlansp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
             }
             if (d_imag(&ap[k]) != 0.)
             {
-                absa = (d__1 = d_imag(&ap[k]), abs(d__1));
+                absa = (d__1 = d_imag(&ap[k]), f2c_abs(d__1));
                 if (scale < absa)
                 {
                     /* Computing 2nd power */

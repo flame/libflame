@@ -67,7 +67,7 @@ int FLA_Task_compute_blocksize( int tag, FLA_Obj A, FLA_Obj A_proc, FLA_Quadrant
 	{
 	    b = FLA_task_determine_relative_blocksize( A_size,
 	                                               A_proc_size,
-	                                               abs(n_part) );
+	                                               f2c_abs(n_part) );
 	}
 	else
 	{

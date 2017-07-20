@@ -113,7 +113,7 @@ int cgetc2_(integer *n, complex *a, integer *lda, integer * ipiv, integer *jpiv,
     real r__1;
     complex q__1;
     /* Builtin functions */
-    double c_abs(complex *);
+    double c_f2c_abs(complex *);
     void c_div(complex *, complex *, complex *);
     /* Local variables */
     integer i__, j, ip, jp;
@@ -176,9 +176,9 @@ int cgetc2_(integer *n, complex *a, integer *lda, integer * ipiv, integer *jpiv,
                     jp <= i__3;
                     ++jp)
             {
-                if (c_abs(&a[ip + jp * a_dim1]) >= xmax)
+                if (c_f2c_abs(&a[ip + jp * a_dim1]) >= xmax)
                 {
-                    xmax = c_abs(&a[ip + jp * a_dim1]);
+                    xmax = c_f2c_abs(&a[ip + jp * a_dim1]);
                     ipv = ip;
                     jpv = jp;
                 }
@@ -205,7 +205,7 @@ int cgetc2_(integer *n, complex *a, integer *lda, integer * ipiv, integer *jpiv,
         }
         jpiv[i__] = jpv;
         /* Check for singularity */
-        if (c_abs(&a[i__ + i__ * a_dim1]) < smin)
+        if (c_f2c_abs(&a[i__ + i__ * a_dim1]) < smin)
         {
             *info = i__;
             i__2 = i__ + i__ * a_dim1;
@@ -230,7 +230,7 @@ int cgetc2_(integer *n, complex *a, integer *lda, integer * ipiv, integer *jpiv,
         cgeru_(&i__2, &i__3, &c_b10, &a[i__ + 1 + i__ * a_dim1], &c__1, &a[ i__ + (i__ + 1) * a_dim1], lda, &a[i__ + 1 + (i__ + 1) * a_dim1], lda);
         /* L40: */
     }
-    if (c_abs(&a[*n + *n * a_dim1]) < smin)
+    if (c_f2c_abs(&a[*n + *n * a_dim1]) < smin)
     {
         *info = *n;
         i__1 = *n + *n * a_dim1;

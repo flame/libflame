@@ -38,7 +38,7 @@ static integer c__1 = 1;
 /* > \return DLANGT */
 /* > \verbatim */
 /* > */
-/* > DLANGT = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > DLANGT = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -49,7 +49,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -139,27 +139,27 @@ doublereal dlangt_(char *norm, integer *n, doublereal *dl, doublereal *d__, doub
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
-        anorm = (d__1 = d__[*n], abs(d__1));
+        /* Find max(f2c_abs(A(i,j))). */
+        anorm = (d__1 = d__[*n], f2c_abs(d__1));
         i__1 = *n - 1;
         for (i__ = 1;
                 i__ <= i__1;
                 ++i__)
         {
-            d__3 = (d__2 = dl[i__], abs(d__2));
-            if (anorm < (d__1 = dl[i__], abs(d__1)) || disnan_(&d__3))
+            d__3 = (d__2 = dl[i__], f2c_abs(d__2));
+            if (anorm < (d__1 = dl[i__], f2c_abs(d__1)) || disnan_(&d__3))
             {
-                anorm = (d__4 = dl[i__], abs(d__4));
+                anorm = (d__4 = dl[i__], f2c_abs(d__4));
             }
-            d__3 = (d__2 = d__[i__], abs(d__2));
-            if (anorm < (d__1 = d__[i__], abs(d__1)) || disnan_(&d__3))
+            d__3 = (d__2 = d__[i__], f2c_abs(d__2));
+            if (anorm < (d__1 = d__[i__], f2c_abs(d__1)) || disnan_(&d__3))
             {
-                anorm = (d__4 = d__[i__], abs(d__4));
+                anorm = (d__4 = d__[i__], f2c_abs(d__4));
             }
-            d__3 = (d__2 = du[i__], abs(d__2));
-            if (anorm < (d__1 = du[i__], abs(d__1)) || disnan_(&d__3))
+            d__3 = (d__2 = du[i__], f2c_abs(d__2));
+            if (anorm < (d__1 = du[i__], f2c_abs(d__1)) || disnan_(&d__3))
             {
-                anorm = (d__4 = du[i__], abs(d__4));
+                anorm = (d__4 = du[i__], f2c_abs(d__4));
             }
             /* L10: */
         }
@@ -169,12 +169,12 @@ doublereal dlangt_(char *norm, integer *n, doublereal *dl, doublereal *d__, doub
         /* Find norm1(A). */
         if (*n == 1)
         {
-            anorm = abs(d__[1]);
+            anorm = f2c_abs(d__[1]);
         }
         else
         {
-            anorm = abs(d__[1]) + abs(dl[1]);
-            temp = (d__1 = d__[*n], abs(d__1)) + (d__2 = du[*n - 1], abs(d__2) );
+            anorm = f2c_abs(d__[1]) + f2c_abs(dl[1]);
+            temp = (d__1 = d__[*n], f2c_abs(d__1)) + (d__2 = du[*n - 1], f2c_abs(d__2) );
             if (anorm < temp || disnan_(&temp))
             {
                 anorm = temp;
@@ -184,7 +184,7 @@ doublereal dlangt_(char *norm, integer *n, doublereal *dl, doublereal *d__, doub
                     i__ <= i__1;
                     ++i__)
             {
-                temp = (d__1 = d__[i__], abs(d__1)) + (d__2 = dl[i__], abs( d__2)) + (d__3 = du[i__ - 1], abs(d__3));
+                temp = (d__1 = d__[i__], f2c_abs(d__1)) + (d__2 = dl[i__], f2c_abs( d__2)) + (d__3 = du[i__ - 1], f2c_abs(d__3));
                 if (anorm < temp || disnan_(&temp))
                 {
                     anorm = temp;
@@ -198,12 +198,12 @@ doublereal dlangt_(char *norm, integer *n, doublereal *dl, doublereal *d__, doub
         /* Find normI(A). */
         if (*n == 1)
         {
-            anorm = abs(d__[1]);
+            anorm = f2c_abs(d__[1]);
         }
         else
         {
-            anorm = abs(d__[1]) + abs(du[1]);
-            temp = (d__1 = d__[*n], abs(d__1)) + (d__2 = dl[*n - 1], abs(d__2) );
+            anorm = f2c_abs(d__[1]) + f2c_abs(du[1]);
+            temp = (d__1 = d__[*n], f2c_abs(d__1)) + (d__2 = dl[*n - 1], f2c_abs(d__2) );
             if (anorm < temp || disnan_(&temp))
             {
                 anorm = temp;
@@ -213,7 +213,7 @@ doublereal dlangt_(char *norm, integer *n, doublereal *dl, doublereal *d__, doub
                     i__ <= i__1;
                     ++i__)
             {
-                temp = (d__1 = d__[i__], abs(d__1)) + (d__2 = du[i__], abs( d__2)) + (d__3 = dl[i__ - 1], abs(d__3));
+                temp = (d__1 = d__[i__], f2c_abs(d__1)) + (d__2 = du[i__], f2c_abs( d__2)) + (d__3 = dl[i__ - 1], f2c_abs(d__3));
                 if (anorm < temp || disnan_(&temp))
                 {
                     anorm = temp;

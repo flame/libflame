@@ -35,7 +35,7 @@ real sasum_(integer *n, real *sx, integer *incx)
             i__2 < 0 ? i__ >= i__1 : i__ <= i__1;
             i__ += i__2)
     {
-        stemp += (r__1 = sx[i__], abs(r__1));
+        stemp += (r__1 = sx[i__], f2c_abs(r__1));
         /* L10: */
     }
     ret_val = stemp;
@@ -53,7 +53,7 @@ L20:
             i__ <= i__2;
             ++i__)
     {
-        stemp += (r__1 = sx[i__], abs(r__1));
+        stemp += (r__1 = sx[i__], f2c_abs(r__1));
         /* L30: */
     }
     if (*n < 6)
@@ -67,7 +67,7 @@ L40:
             i__ <= i__2;
             i__ += 6)
     {
-        stemp = stemp + (r__1 = sx[i__], abs(r__1)) + (r__2 = sx[i__ + 1], abs(r__2)) + (r__3 = sx[i__ + 2], abs(r__3)) + (r__4 = sx[i__ + 3], abs(r__4)) + (r__5 = sx[i__ + 4], abs(r__5)) + (r__6 = sx[i__ + 5], abs(r__6));
+        stemp = stemp + (r__1 = sx[i__], f2c_abs(r__1)) + (r__2 = sx[i__ + 1], f2c_abs(r__2)) + (r__3 = sx[i__ + 2], f2c_abs(r__3)) + (r__4 = sx[i__ + 3], f2c_abs(r__4)) + (r__5 = sx[i__ + 4], f2c_abs(r__5)) + (r__6 = sx[i__ + 5], f2c_abs(r__6));
         /* L50: */
     }
 L60:

@@ -182,7 +182,7 @@ int dgttrf_(integer *n, doublereal *dl, doublereal *d__, doublereal *du, doubler
             i__ <= i__1;
             ++i__)
     {
-        if ((d__1 = d__[i__], abs(d__1)) >= (d__2 = dl[i__], abs(d__2)))
+        if ((d__1 = d__[i__], f2c_abs(d__1)) >= (d__2 = dl[i__], f2c_abs(d__2)))
         {
             /* No row interchange required, eliminate DL(I) */
             if (d__[i__] != 0.)
@@ -210,7 +210,7 @@ int dgttrf_(integer *n, doublereal *dl, doublereal *d__, doublereal *du, doubler
     if (*n > 1)
     {
         i__ = *n - 1;
-        if ((d__1 = d__[i__], abs(d__1)) >= (d__2 = dl[i__], abs(d__2)))
+        if ((d__1 = d__[i__], f2c_abs(d__1)) >= (d__2 = dl[i__], f2c_abs(d__2)))
         {
             if (d__[i__] != 0.)
             {

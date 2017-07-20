@@ -62,7 +62,7 @@ int zhemv_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *a, integ
     /* max( 1, n ). */
     /* Unchanged on exit. */
     /* X - COMPLEX*16 array of dimension at least */
-    /* ( 1 + ( n - 1 )*abs( INCX ) ). */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCX ) ). */
     /* Before entry, the incremented array X must contain the n */
     /* element vector x. */
     /* Unchanged on exit. */
@@ -75,7 +75,7 @@ int zhemv_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *a, integ
     /* supplied as zero then Y need not be set on input. */
     /* Unchanged on exit. */
     /* Y - COMPLEX*16 array of dimension at least */
-    /* ( 1 + ( n - 1 )*abs( INCY ) ). */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCY ) ). */
     /* Before entry, the incremented array Y must contain the n */
     /* element vector y. On exit, Y is overwritten by the updated */
     /* vector y. */

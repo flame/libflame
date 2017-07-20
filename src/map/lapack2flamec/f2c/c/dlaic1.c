@@ -159,9 +159,9 @@ int dlaic1_(integer *job, integer *j, doublereal *x, doublereal *sest, doublerea
     /* Function Body */
     eps = dlamch_("Epsilon");
     alpha = ddot_(j, &x[1], &c__1, &w[1], &c__1);
-    absalp = abs(alpha);
-    absgam = abs(*gamma);
-    absest = abs(*sest);
+    absalp = f2c_abs(alpha);
+    absgam = f2c_abs(*gamma);
+    absest = f2c_abs(*sest);
     if (*job == 1)
     {
         /* Estimating largest singular value */
@@ -278,8 +278,8 @@ int dlaic1_(integer *job, integer *j, doublereal *x, doublereal *sest, doublerea
                 cosine = alpha;
             }
             /* Computing MAX */
-            d__1 = abs(sine);
-            d__2 = abs(cosine); // , expr subst
+            d__1 = f2c_abs(sine);
+            d__2 = f2c_abs(cosine); // , expr subst
             s1 = max(d__1,d__2);
             *s = sine / s1;
             *c__ = cosine / s1;
@@ -341,8 +341,8 @@ int dlaic1_(integer *job, integer *j, doublereal *x, doublereal *sest, doublerea
             zeta1 = alpha / absest;
             zeta2 = *gamma / absest;
             /* Computing MAX */
-            d__3 = zeta1 * zeta1 + 1. + (d__1 = zeta1 * zeta2, abs(d__1));
-            d__4 = (d__2 = zeta1 * zeta2, abs(d__2)) + zeta2 * zeta2; // , expr subst
+            d__3 = zeta1 * zeta1 + 1. + (d__1 = zeta1 * zeta2, f2c_abs(d__1));
+            d__4 = (d__2 = zeta1 * zeta2, f2c_abs(d__2)) + zeta2 * zeta2; // , expr subst
             norma = max(d__3,d__4);
             /* See if root is closer to zero or to ONE */
             test = (zeta1 - zeta2) * 2. * (zeta1 + zeta2) + 1.;
@@ -351,7 +351,7 @@ int dlaic1_(integer *job, integer *j, doublereal *x, doublereal *sest, doublerea
                 /* root is close to zero, compute directly */
                 b = (zeta1 * zeta1 + zeta2 * zeta2 + 1.) * .5;
                 *c__ = zeta2 * zeta2;
-                t = *c__ / (b + sqrt((d__1 = b * b - *c__, abs(d__1))));
+                t = *c__ / (b + sqrt((d__1 = b * b - *c__, f2c_abs(d__1))));
                 sine = zeta1 / (1. - t);
                 cosine = -zeta2 / t;
                 *sestpr = sqrt(t + eps * 4. * eps * norma) * absest;

@@ -365,7 +365,7 @@ int slaebz_(integer *ijob, integer *nitmax, integer *n, integer *mmax, integer *
                     ++jp)
             {
                 tmp1 = d__[1] - ab[ji + jp * ab_dim1];
-                if (abs(tmp1) < *pivmin)
+                if (f2c_abs(tmp1) < *pivmin)
                 {
                     tmp1 = -(*pivmin);
                 }
@@ -380,7 +380,7 @@ int slaebz_(integer *ijob, integer *nitmax, integer *n, integer *mmax, integer *
                         ++j)
                 {
                     tmp1 = d__[j] - e2[j - 1] / tmp1 - ab[ji + jp * ab_dim1];
-                    if (abs(tmp1) < *pivmin)
+                    if (f2c_abs(tmp1) < *pivmin)
                     {
                         tmp1 = -(*pivmin);
                     }
@@ -646,10 +646,10 @@ int slaebz_(integer *ijob, integer *nitmax, integer *n, integer *mmax, integer *
                 ji <= i__2;
                 ++ji)
         {
-            tmp1 = (r__1 = ab[ji + (ab_dim1 << 1)] - ab[ji + ab_dim1], abs( r__1));
+            tmp1 = (r__1 = ab[ji + (ab_dim1 << 1)] - ab[ji + ab_dim1], f2c_abs( r__1));
             /* Computing MAX */
-            r__3 = (r__1 = ab[ji + (ab_dim1 << 1)], abs(r__1));
-            r__4 = (r__2 = ab[ji + ab_dim1], abs(r__2)); // , expr subst
+            r__3 = (r__1 = ab[ji + (ab_dim1 << 1)], f2c_abs(r__1));
+            r__4 = (r__2 = ab[ji + ab_dim1], f2c_abs(r__2)); // , expr subst
             tmp2 = max(r__3,r__4);
             /* Computing MAX */
             r__1 = max(*abstol,*pivmin);

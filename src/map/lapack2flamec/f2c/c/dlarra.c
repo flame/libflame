@@ -160,13 +160,13 @@ int dlarra_(integer *n, doublereal *d__, doublereal *e, doublereal *e2, doublere
     if (*spltol < 0.)
     {
         /* Criterion based on absolute off-diagonal value */
-        tmp1 = abs(*spltol) * *tnrm;
+        tmp1 = f2c_abs(*spltol) * *tnrm;
         i__1 = *n - 1;
         for (i__ = 1;
                 i__ <= i__1;
                 ++i__)
         {
-            eabs = (d__1 = e[i__], abs(d__1));
+            eabs = (d__1 = e[i__], f2c_abs(d__1));
             if (eabs <= tmp1)
             {
                 e[i__] = 0.;
@@ -185,8 +185,8 @@ int dlarra_(integer *n, doublereal *d__, doublereal *e, doublereal *e2, doublere
                 i__ <= i__1;
                 ++i__)
         {
-            eabs = (d__1 = e[i__], abs(d__1));
-            if (eabs <= *spltol * sqrt((d__1 = d__[i__], abs(d__1))) * sqrt(( d__2 = d__[i__ + 1], abs(d__2))))
+            eabs = (d__1 = e[i__], f2c_abs(d__1));
+            if (eabs <= *spltol * sqrt((d__1 = d__[i__], f2c_abs(d__1))) * sqrt(( d__2 = d__[i__ + 1], f2c_abs(d__2))))
             {
                 e[i__] = 0.;
                 e2[i__] = 0.;

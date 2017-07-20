@@ -191,7 +191,7 @@ int zgelsx_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3;
     doublecomplex z__1;
     /* Builtin functions */
-    double z_abs(doublecomplex *);
+    double z_f2c_abs(doublecomplex *);
     void d_cnjg(doublecomplex *, doublecomplex *);
     /* Local variables */
     integer i__, j, k;
@@ -339,9 +339,9 @@ int zgelsx_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     i__1 = ismax;
     work[i__1].r = 1.;
     work[i__1].i = 0.; // , expr subst
-    smax = z_abs(&a[a_dim1 + 1]);
+    smax = z_f2c_abs(&a[a_dim1 + 1]);
     smin = smax;
-    if (z_abs(&a[a_dim1 + 1]) == 0.)
+    if (z_f2c_abs(&a[a_dim1 + 1]) == 0.)
     {
         *rank = 0;
         i__1 = max(*m,*n);

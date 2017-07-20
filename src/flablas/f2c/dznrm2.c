@@ -49,7 +49,7 @@ doublereal dznrm2_(integer *n, doublecomplex *x, integer *incx)
             if (x[i__3].r != 0.)
             {
                 i__3 = ix;
-                temp = (d__1 = x[i__3].r, abs(d__1));
+                temp = (d__1 = x[i__3].r, f2c_abs(d__1));
                 if (scale < temp)
                 {
                     /* Computing 2nd power */
@@ -66,7 +66,7 @@ doublereal dznrm2_(integer *n, doublecomplex *x, integer *incx)
             }
             if (d_imag(&x[ix]) != 0.)
             {
-                temp = (d__1 = d_imag(&x[ix]), abs(d__1));
+                temp = (d__1 = d_imag(&x[ix]), f2c_abs(d__1));
                 if (scale < temp)
                 {
                     /* Computing 2nd power */

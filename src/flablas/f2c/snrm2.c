@@ -34,7 +34,7 @@ real snrm2_(integer *n, real *x, integer *incx)
     }
     else if (*n == 1)
     {
-        norm = abs(x[1]);
+        norm = f2c_abs(x[1]);
     }
     else
     {
@@ -51,7 +51,7 @@ real snrm2_(integer *n, real *x, integer *incx)
         {
             if (x[ix] != 0.f)
             {
-                absxi = (r__1 = x[ix], abs(r__1));
+                absxi = (r__1 = x[ix], f2c_abs(r__1));
                 if (scale < absxi)
                 {
                     /* Computing 2nd power */

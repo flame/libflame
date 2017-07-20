@@ -39,7 +39,7 @@ static integer c__1 = 1;
 /* > \return ZLANHP */
 /* > \verbatim */
 /* > */
-/* > ZLANHP = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > ZLANHP = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -50,7 +50,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -112,7 +112,7 @@ doublereal zlanhp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
     integer i__1, i__2;
     doublereal ret_val, d__1;
     /* Builtin functions */
-    double z_abs(doublecomplex *), sqrt(doublereal);
+    double z_f2c_abs(doublecomplex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j, k;
     doublereal sum, absa, scale;
@@ -151,7 +151,7 @@ doublereal zlanhp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
+        /* Find max(f2c_abs(A(i,j))). */
         value = 0.;
         if (lsame_(uplo, "U"))
         {
@@ -166,7 +166,7 @@ doublereal zlanhp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
                         i__ <= i__2;
                         ++i__)
                 {
-                    sum = z_abs(&ap[i__]);
+                    sum = z_f2c_abs(&ap[i__]);
                     if (value < sum || disnan_(&sum))
                     {
                         value = sum;
@@ -175,7 +175,7 @@ doublereal zlanhp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
                 }
                 k += j;
                 i__2 = k;
-                sum = (d__1 = ap[i__2].r, abs(d__1));
+                sum = (d__1 = ap[i__2].r, f2c_abs(d__1));
                 if (value < sum || disnan_(&sum))
                 {
                     value = sum;
@@ -192,7 +192,7 @@ doublereal zlanhp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
                     ++j)
             {
                 i__2 = k;
-                sum = (d__1 = ap[i__2].r, abs(d__1));
+                sum = (d__1 = ap[i__2].r, f2c_abs(d__1));
                 if (value < sum || disnan_(&sum))
                 {
                     value = sum;
@@ -202,7 +202,7 @@ doublereal zlanhp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
                         i__ <= i__2;
                         ++i__)
                 {
-                    sum = z_abs(&ap[i__]);
+                    sum = z_f2c_abs(&ap[i__]);
                     if (value < sum || disnan_(&sum))
                     {
                         value = sum;
@@ -232,14 +232,14 @@ doublereal zlanhp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
                         i__ <= i__2;
                         ++i__)
                 {
-                    absa = z_abs(&ap[k]);
+                    absa = z_f2c_abs(&ap[k]);
                     sum += absa;
                     work[i__] += absa;
                     ++k;
                     /* L50: */
                 }
                 i__2 = k;
-                work[j] = sum + (d__1 = ap[i__2].r, abs(d__1));
+                work[j] = sum + (d__1 = ap[i__2].r, f2c_abs(d__1));
                 ++k;
                 /* L60: */
             }
@@ -272,14 +272,14 @@ doublereal zlanhp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
                     ++j)
             {
                 i__2 = k;
-                sum = work[j] + (d__1 = ap[i__2].r, abs(d__1));
+                sum = work[j] + (d__1 = ap[i__2].r, f2c_abs(d__1));
                 ++k;
                 i__2 = *n;
                 for (i__ = j + 1;
                         i__ <= i__2;
                         ++i__)
                 {
-                    absa = z_abs(&ap[k]);
+                    absa = z_f2c_abs(&ap[k]);
                     sum += absa;
                     work[i__] += absa;
                     ++k;
@@ -336,7 +336,7 @@ doublereal zlanhp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
             if (ap[i__2].r != 0.)
             {
                 i__2 = k;
-                absa = (d__1 = ap[i__2].r, abs(d__1));
+                absa = (d__1 = ap[i__2].r, f2c_abs(d__1));
                 if (scale < absa)
                 {
                     /* Computing 2nd power */

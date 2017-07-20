@@ -115,9 +115,9 @@ int slas2_(real *f, real *g, real *h__, real *ssmin, real * ssmax)
     /* .. Intrinsic Functions .. */
     /* .. */
     /* .. Executable Statements .. */
-    fa = abs(*f);
-    ga = abs(*g);
-    ha = abs(*h__);
+    fa = f2c_abs(*f);
+    ga = f2c_abs(*g);
+    ha = f2c_abs(*h__);
     fhmn = min(fa,ha);
     fhmx = max(fa,ha);
     if (fhmn == 0.f)

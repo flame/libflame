@@ -143,7 +143,7 @@ int slargv_(integer *n, real *x, integer *incx, real *y, integer *incy, real *c_
             y[iy] = 1.f;
             x[ix] = g;
         }
-        else if (abs(f) > abs(g))
+        else if (f2c_abs(f) > f2c_abs(g))
         {
             t = g / f;
             tt = sqrt(t * t + 1.f);

@@ -75,9 +75,9 @@ doublereal dlapy3_(doublereal *x, doublereal *y, doublereal *z__)
     /* .. Intrinsic Functions .. */
     /* .. */
     /* .. Executable Statements .. */
-    xabs = abs(*x);
-    yabs = abs(*y);
-    zabs = abs(*z__);
+    xabs = f2c_abs(*x);
+    yabs = f2c_abs(*y);
+    zabs = f2c_abs(*z__);
     /* Computing MAX */
     d__1 = max(xabs,yabs);
     w = max(d__1,zabs);

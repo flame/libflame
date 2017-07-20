@@ -270,8 +270,8 @@ L10:
     {
         submat = iwork[i__] + 1;
         smm1 = submat - 1;
-        d__[smm1] -= (r__1 = e[smm1], abs(r__1));
-        d__[submat] -= (r__1 = e[smm1], abs(r__1));
+        d__[smm1] -= (r__1 = e[smm1], f2c_abs(r__1));
+        d__[submat] -= (r__1 = e[smm1], f2c_abs(r__1));
         /* L40: */
     }
     indxq = (*n << 2) + 3;

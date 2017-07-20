@@ -159,9 +159,9 @@ int slaic1_(integer *job, integer *j, real *x, real *sest, real *w, real *gamma,
     /* Function Body */
     eps = slamch_("Epsilon");
     alpha = sdot_(j, &x[1], &c__1, &w[1], &c__1);
-    absalp = abs(alpha);
-    absgam = abs(*gamma);
-    absest = abs(*sest);
+    absalp = f2c_abs(alpha);
+    absgam = f2c_abs(*gamma);
+    absest = f2c_abs(*sest);
     if (*job == 1)
     {
         /* Estimating largest singular value */
@@ -278,8 +278,8 @@ int slaic1_(integer *job, integer *j, real *x, real *sest, real *w, real *gamma,
                 cosine = alpha;
             }
             /* Computing MAX */
-            r__1 = abs(sine);
-            r__2 = abs(cosine); // , expr subst
+            r__1 = f2c_abs(sine);
+            r__2 = f2c_abs(cosine); // , expr subst
             s1 = max(r__1,r__2);
             *s = sine / s1;
             *c__ = cosine / s1;
@@ -341,8 +341,8 @@ int slaic1_(integer *job, integer *j, real *x, real *sest, real *w, real *gamma,
             zeta1 = alpha / absest;
             zeta2 = *gamma / absest;
             /* Computing MAX */
-            r__3 = zeta1 * zeta1 + 1.f + (r__1 = zeta1 * zeta2, abs(r__1));
-            r__4 = (r__2 = zeta1 * zeta2, abs(r__2)) + zeta2 * zeta2; // , expr subst
+            r__3 = zeta1 * zeta1 + 1.f + (r__1 = zeta1 * zeta2, f2c_abs(r__1));
+            r__4 = (r__2 = zeta1 * zeta2, f2c_abs(r__2)) + zeta2 * zeta2; // , expr subst
             norma = max(r__3,r__4);
             /* See if root is closer to zero or to ONE */
             test = (zeta1 - zeta2) * 2.f * (zeta1 + zeta2) + 1.f;
@@ -351,7 +351,7 @@ int slaic1_(integer *job, integer *j, real *x, real *sest, real *w, real *gamma,
                 /* root is close to zero, compute directly */
                 b = (zeta1 * zeta1 + zeta2 * zeta2 + 1.f) * .5f;
                 *c__ = zeta2 * zeta2;
-                t = *c__ / (b + sqrt((r__1 = b * b - *c__, abs(r__1))));
+                t = *c__ / (b + sqrt((r__1 = b * b - *c__, f2c_abs(r__1))));
                 sine = zeta1 / (1.f - t);
                 cosine = -zeta2 / t;
                 *sestpr = sqrt(t + eps * 4.f * eps * norma) * absest;

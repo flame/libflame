@@ -457,7 +457,7 @@ int dlasq2_(integer *n, doublereal *z__, integer *info)
         emax = 0.;
         if (n0 > i0)
         {
-            emin = (d__1 = z__[(n0 << 2) - 5], abs(d__1));
+            emin = (d__1 = z__[(n0 << 2) - 5], f2c_abs(d__1));
         }
         else
         {

@@ -198,11 +198,11 @@ if INFO = i, i */
 /* > TOLMUL controls the convergence criterion of the QR loop. */
 /* > If it is positive, TOLMUL*EPS is the desired relative */
 /* > precision in the computed singular values. */
-/* > If it is negative, abs(TOLMUL*EPS*sigma_max) is the */
+/* > If it is negative, f2c_abs(TOLMUL*EPS*sigma_max) is the */
 /* > desired absolute accuracy in the computed singular */
 /* > values (corresponds to relative accuracy */
-/* > abs(TOLMUL*EPS) in the largest singular value. */
-/* > abs(TOLMUL) should be between 1 and 1/EPS, and preferably */
+/* > f2c_abs(TOLMUL*EPS) in the largest singular value. */
+/* > f2c_abs(TOLMUL) should be between 1 and 1/EPS, and preferably */
 /* > between 10 (for fast convergence) and .1/EPS */
 /* > (for there to be some accuracy in the results). */
 /* > Default is to lose at either one eighth or 2 of the */
@@ -417,7 +417,7 @@ int dbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, 
     {
         /* Computing MAX */
         d__2 = smax;
-        d__3 = (d__1 = d__[i__], abs(d__1)); // , expr subst
+        d__3 = (d__1 = d__[i__], f2c_abs(d__1)); // , expr subst
         smax = max(d__2,d__3);
         /* L20: */
     }
@@ -428,7 +428,7 @@ int dbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, 
     {
         /* Computing MAX */
         d__2 = smax;
-        d__3 = (d__1 = e[i__], abs(d__1)); // , expr subst
+        d__3 = (d__1 = e[i__], f2c_abs(d__1)); // , expr subst
         smax = max(d__2,d__3);
         /* L30: */
     }
@@ -436,7 +436,7 @@ int dbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, 
     if (tol >= 0.)
     {
         /* Relative accuracy desired */
-        sminoa = abs(d__[1]);
+        sminoa = f2c_abs(d__[1]);
         if (sminoa == 0.)
         {
             goto L50;
@@ -447,7 +447,7 @@ int dbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, 
                 i__ <= i__1;
                 ++i__)
         {
-            mu = (d__2 = d__[i__], abs(d__2)) * (mu / (mu + (d__1 = e[i__ - 1] , abs(d__1))));
+            mu = (d__2 = d__[i__], f2c_abs(d__2)) * (mu / (mu + (d__1 = e[i__ - 1] , f2c_abs(d__1))));
             sminoa = min(sminoa,mu);
             if (sminoa == 0.)
             {
@@ -466,7 +466,7 @@ L50:
     {
         /* Absolute accuracy desired */
         /* Computing MAX */
-        d__1 = abs(tol) * smax;
+        d__1 = f2c_abs(tol) * smax;
         d__2 = *n * 6 * *n * unfl; // , expr subst
         thresh = max(d__1,d__2);
     }
@@ -490,11 +490,11 @@ L60: /* Check for convergence or exceeding iteration count */
         goto L200;
     }
     /* Find diagonal block of matrix to work on */
-    if (tol < 0. && (d__1 = d__[m], abs(d__1)) <= thresh)
+    if (tol < 0. && (d__1 = d__[m], f2c_abs(d__1)) <= thresh)
     {
         d__[m] = 0.;
     }
-    smax = (d__1 = d__[m], abs(d__1));
+    smax = (d__1 = d__[m], f2c_abs(d__1));
     smin = smax;
     i__1 = m - 1;
     for (lll = 1;
@@ -502,8 +502,8 @@ L60: /* Check for convergence or exceeding iteration count */
             ++lll)
     {
         ll = m - lll;
-        abss = (d__1 = d__[ll], abs(d__1));
-        abse = (d__1 = e[ll], abs(d__1));
+        abss = (d__1 = d__[ll], f2c_abs(d__1));
+        abse = (d__1 = e[ll], f2c_abs(d__1));
         if (tol < 0. && abss <= thresh)
         {
             d__[ll] = 0.;
@@ -559,7 +559,7 @@ L90:
     /* (from larger end diagonal element towards smaller) */
     if (ll > oldm || m < oldll)
     {
-        if ((d__1 = d__[ll], abs(d__1)) >= (d__2 = d__[m], abs(d__2)))
+        if ((d__1 = d__[ll], f2c_abs(d__1)) >= (d__2 = d__[m], f2c_abs(d__2)))
         {
             /* Chase bulge from top (big end) to bottom (small end) */
             idir = 1;
@@ -575,7 +575,7 @@ L90:
     {
         /* Run convergence test in forward direction */
         /* First apply standard test to bottom of matrix */
-        if ((d__2 = e[m - 1], abs(d__2)) <= abs(tol) * (d__1 = d__[m], abs( d__1)) || tol < 0. && (d__3 = e[m - 1], abs(d__3)) <= thresh)
+        if ((d__2 = e[m - 1], f2c_abs(d__2)) <= f2c_abs(tol) * (d__1 = d__[m], f2c_abs( d__1)) || tol < 0. && (d__3 = e[m - 1], f2c_abs(d__3)) <= thresh)
         {
             e[m - 1] = 0.;
             goto L60;
@@ -584,19 +584,19 @@ L90:
         {
             /* If relative accuracy desired, */
             /* apply convergence criterion forward */
-            mu = (d__1 = d__[ll], abs(d__1));
+            mu = (d__1 = d__[ll], f2c_abs(d__1));
             sminl = mu;
             i__1 = m - 1;
             for (lll = ll;
                     lll <= i__1;
                     ++lll)
             {
-                if ((d__1 = e[lll], abs(d__1)) <= tol * mu)
+                if ((d__1 = e[lll], f2c_abs(d__1)) <= tol * mu)
                 {
                     e[lll] = 0.;
                     goto L60;
                 }
-                mu = (d__2 = d__[lll + 1], abs(d__2)) * (mu / (mu + (d__1 = e[ lll], abs(d__1))));
+                mu = (d__2 = d__[lll + 1], f2c_abs(d__2)) * (mu / (mu + (d__1 = e[ lll], f2c_abs(d__1))));
                 sminl = min(sminl,mu);
                 /* L100: */
             }
@@ -606,7 +606,7 @@ L90:
     {
         /* Run convergence test in backward direction */
         /* First apply standard test to top of matrix */
-        if ((d__2 = e[ll], abs(d__2)) <= abs(tol) * (d__1 = d__[ll], abs(d__1) ) || tol < 0. && (d__3 = e[ll], abs(d__3)) <= thresh)
+        if ((d__2 = e[ll], f2c_abs(d__2)) <= f2c_abs(tol) * (d__1 = d__[ll], f2c_abs(d__1) ) || tol < 0. && (d__3 = e[ll], f2c_abs(d__3)) <= thresh)
         {
             e[ll] = 0.;
             goto L60;
@@ -615,19 +615,19 @@ L90:
         {
             /* If relative accuracy desired, */
             /* apply convergence criterion backward */
-            mu = (d__1 = d__[m], abs(d__1));
+            mu = (d__1 = d__[m], f2c_abs(d__1));
             sminl = mu;
             i__1 = ll;
             for (lll = m - 1;
                     lll >= i__1;
                     --lll)
             {
-                if ((d__1 = e[lll], abs(d__1)) <= tol * mu)
+                if ((d__1 = e[lll], f2c_abs(d__1)) <= tol * mu)
                 {
                     e[lll] = 0.;
                     goto L60;
                 }
-                mu = (d__2 = d__[lll], abs(d__2)) * (mu / (mu + (d__1 = e[lll] , abs(d__1))));
+                mu = (d__2 = d__[lll], f2c_abs(d__2)) * (mu / (mu + (d__1 = e[lll] , f2c_abs(d__1))));
                 sminl = min(sminl,mu);
                 /* L110: */
             }
@@ -650,12 +650,12 @@ L90:
         /* Compute the shift from 2-by-2 block at end of matrix */
         if (idir == 1)
         {
-            sll = (d__1 = d__[ll], abs(d__1));
+            sll = (d__1 = d__[ll], f2c_abs(d__1));
             dlas2_(&d__[m - 1], &e[m - 1], &d__[m], &shift, &r__);
         }
         else
         {
-            sll = (d__1 = d__[m], abs(d__1));
+            sll = (d__1 = d__[m], f2c_abs(d__1));
             dlas2_(&d__[ll], &e[ll], &d__[ll + 1], &shift, &r__);
         }
         /* Test if shift negligible, and if so set to zero */
@@ -720,7 +720,7 @@ L90:
                 dlasr_("L", "V", "F", &i__1, ncc, &work[nm12 + 1], &work[nm13 + 1], &c__[ll + c_dim1], ldc);
             }
             /* Test convergence */
-            if ((d__1 = e[m - 1], abs(d__1)) <= thresh)
+            if ((d__1 = e[m - 1], f2c_abs(d__1)) <= thresh)
             {
                 e[m - 1] = 0.;
             }
@@ -771,7 +771,7 @@ L90:
                 dlasr_("L", "V", "B", &i__1, ncc, &work[1], &work[*n], &c__[ ll + c_dim1], ldc);
             }
             /* Test convergence */
-            if ((d__1 = e[ll], abs(d__1)) <= thresh)
+            if ((d__1 = e[ll], f2c_abs(d__1)) <= thresh)
             {
                 e[ll] = 0.;
             }
@@ -784,7 +784,7 @@ L90:
         {
             /* Chase bulge from top to bottom */
             /* Save cosines and sines for later singular vector updates */
-            f = ((d__1 = d__[ll], abs(d__1)) - shift) * (d_sign(&c_b49, &d__[ ll]) + shift / d__[ll]);
+            f = ((d__1 = d__[ll], f2c_abs(d__1)) - shift) * (d_sign(&c_b49, &d__[ ll]) + shift / d__[ll]);
             g = e[ll];
             i__1 = m - 1;
             for (i__ = ll;
@@ -833,7 +833,7 @@ L90:
                 dlasr_("L", "V", "F", &i__1, ncc, &work[nm12 + 1], &work[nm13 + 1], &c__[ll + c_dim1], ldc);
             }
             /* Test convergence */
-            if ((d__1 = e[m - 1], abs(d__1)) <= thresh)
+            if ((d__1 = e[m - 1], f2c_abs(d__1)) <= thresh)
             {
                 e[m - 1] = 0.;
             }
@@ -842,7 +842,7 @@ L90:
         {
             /* Chase bulge from bottom to top */
             /* Save cosines and sines for later singular vector updates */
-            f = ((d__1 = d__[m], abs(d__1)) - shift) * (d_sign(&c_b49, &d__[m] ) + shift / d__[m]);
+            f = ((d__1 = d__[m], f2c_abs(d__1)) - shift) * (d_sign(&c_b49, &d__[m] ) + shift / d__[m]);
             g = e[m - 1];
             i__1 = ll + 1;
             for (i__ = m;
@@ -875,7 +875,7 @@ L90:
             }
             e[ll] = f;
             /* Test convergence */
-            if ((d__1 = e[ll], abs(d__1)) <= thresh)
+            if ((d__1 = e[ll], f2c_abs(d__1)) <= thresh)
             {
                 e[ll] = 0.;
             }

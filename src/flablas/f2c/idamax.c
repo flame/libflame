@@ -31,19 +31,19 @@ integer idamax_(integer *n, doublereal *dx, integer *incx)
     }
     /* code for increment not equal to 1 */
     ix = 1;
-    dmax__ = abs(dx[1]);
+    dmax__ = f2c_abs(dx[1]);
     ix += *incx;
     i__1 = *n;
     for (i__ = 2;
             i__ <= i__1;
             ++i__)
     {
-        if ((d__1 = dx[ix], abs(d__1)) <= dmax__)
+        if ((d__1 = dx[ix], f2c_abs(d__1)) <= dmax__)
         {
             goto L5;
         }
         ret_val = i__;
-        dmax__ = (d__1 = dx[ix], abs(d__1));
+        dmax__ = (d__1 = dx[ix], f2c_abs(d__1));
 L5:
         ix += *incx;
         /* L10: */
@@ -51,18 +51,18 @@ L5:
     return ret_val;
     /* code for increment equal to 1 */
 L20:
-    dmax__ = abs(dx[1]);
+    dmax__ = f2c_abs(dx[1]);
     i__1 = *n;
     for (i__ = 2;
             i__ <= i__1;
             ++i__)
     {
-        if ((d__1 = dx[i__], abs(d__1)) <= dmax__)
+        if ((d__1 = dx[i__], f2c_abs(d__1)) <= dmax__)
         {
             goto L30;
         }
         ret_val = i__;
-        dmax__ = (d__1 = dx[i__], abs(d__1));
+        dmax__ = (d__1 = dx[i__], f2c_abs(d__1));
 L30:
         ;
     }

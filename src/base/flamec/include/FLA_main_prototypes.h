@@ -347,6 +347,13 @@ void          FLA_Param_map_flame_to_blis_conj( FLA_Conj conj, conj1_t* blis_con
 void          FLA_Param_map_flame_to_blis_uplo( FLA_Uplo uplo, uplo1_t* blis_uplo );
 void          FLA_Param_map_flame_to_blis_side( FLA_Uplo side, side1_t* blis_side );
 void          FLA_Param_map_flame_to_blis_diag( FLA_Diag diag, diag1_t* blis_diag );
+#if 0
+void          FLA_Param_map_flame_to_blis2_trans( FLA_Trans trans, trans_t* blis_trans );
+void          FLA_Param_map_flame_to_blis2_conj( FLA_Conj conj, conj_t* blis_conj );
+void          FLA_Param_map_flame_to_blis2_uplo( FLA_Uplo uplo, uplo_t* blis_uplo );
+void          FLA_Param_map_flame_to_blis2_side( FLA_Uplo side, side_t* blis_side );
+void          FLA_Param_map_flame_to_blis2_diag( FLA_Diag diag, diag_t* blis_diag );
+#endif
 
 void          FLA_Param_map_blis_to_flame_trans( trans1_t trans, FLA_Trans* flame_trans );
 void          FLA_Param_map_blis_to_flame_uplo( uplo1_t uplo, FLA_Uplo* flame_uplo );

@@ -277,10 +277,10 @@ L50:
             back *= 2.f;
             goto L50;
         }
-        width = (r__1 = left - right, abs(r__1)) * .5f;
+        width = (r__1 = left - right, f2c_abs(r__1)) * .5f;
         /* Computing MAX */
-        r__1 = abs(left);
-        r__2 = abs(right); // , expr subst
+        r__1 = f2c_abs(left);
+        r__2 = f2c_abs(right); // , expr subst
         tmp = max(r__1,r__2);
         /* Computing MAX */
         r__1 = *rtol1 * gap;
@@ -343,8 +343,8 @@ L80:
         /* semiwidth of interval */
         width = right - mid;
         /* Computing MAX */
-        r__1 = abs(left);
-        r__2 = abs(right); // , expr subst
+        r__1 = f2c_abs(left);
+        r__2 = f2c_abs(right); // , expr subst
         tmp = max(r__1,r__2);
         /* Computing MAX */
         r__1 = *rtol1 * gap;

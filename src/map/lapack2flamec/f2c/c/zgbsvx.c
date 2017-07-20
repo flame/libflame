@@ -370,7 +370,7 @@ int zgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
     doublereal d__1, d__2;
     doublecomplex z__1;
     /* Builtin functions */
-    double z_abs(doublecomplex *);
+    double z_f2c_abs(doublecomplex *);
     /* Local variables */
     integer i__, j, j1, j2;
     doublereal amax;
@@ -691,7 +691,7 @@ int zgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
                 {
                     /* Computing MAX */
                     d__1 = anorm;
-                    d__2 = z_abs(&ab[i__ + j * ab_dim1]); // , expr subst
+                    d__2 = z_f2c_abs(&ab[i__ + j * ab_dim1]); // , expr subst
                     anorm = max(d__1,d__2);
                     /* L80: */
                 }

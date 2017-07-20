@@ -334,10 +334,10 @@ L30:
         }
         gpind = b1;
         /* Compute reorthogonalization criterion and stopping criterion. */
-        onenrm = (r__1 = d__[b1], abs(r__1)) + (r__2 = e[b1], abs(r__2));
+        onenrm = (r__1 = d__[b1], f2c_abs(r__1)) + (r__2 = e[b1], f2c_abs(r__2));
         /* Computing MAX */
         r__3 = onenrm;
-        r__4 = (r__1 = d__[bn], abs(r__1)) + (r__2 = e[bn - 1], abs(r__2)); // , expr subst
+        r__4 = (r__1 = d__[bn], f2c_abs(r__1)) + (r__2 = e[bn - 1], f2c_abs(r__2)); // , expr subst
         onenrm = max(r__3,r__4);
         i__2 = bn - 1;
         for (i__ = b1 + 1;
@@ -346,7 +346,7 @@ L30:
         {
             /* Computing MAX */
             r__4 = onenrm;
-            r__5 = (r__1 = d__[i__], abs(r__1)) + (r__2 = e[ i__ - 1], abs(r__2)) + (r__3 = e[i__], abs(r__3)); // , expr subst
+            r__5 = (r__1 = d__[i__], f2c_abs(r__1)) + (r__2 = e[ i__ - 1], f2c_abs(r__2)) + (r__3 = e[i__], f2c_abs(r__3)); // , expr subst
             onenrm = max(r__4,r__5);
             /* L50: */
         }
@@ -377,7 +377,7 @@ L60:
             /* small perturbation. */
             if (jblk > 1)
             {
-                eps1 = (r__1 = eps * xj, abs(r__1));
+                eps1 = (r__1 = eps * xj, f2c_abs(r__1));
                 pertol = eps1 * 10.f;
                 sep = xj - xjm;
                 if (sep < pertol)
@@ -408,7 +408,7 @@ L70:
             /* Normalize and scale the righthand side vector Pb. */
             /* Computing MAX */
             r__2 = eps;
-            r__3 = (r__1 = work[indrv4 + blksiz], abs(r__1)); // , expr subst
+            r__3 = (r__1 = work[indrv4 + blksiz], f2c_abs(r__1)); // , expr subst
             scl = blksiz * onenrm * max(r__2,r__3) / sasum_(&blksiz, &work[ indrv1 + 1], &c__1);
             sscal_(&blksiz, &scl, &work[indrv1 + 1], &c__1);
             /* Solve the system LU = Pb. */
@@ -419,7 +419,7 @@ L70:
             {
                 goto L90;
             }
-            if ((r__1 = xj - xjm, abs(r__1)) > ortol)
+            if ((r__1 = xj - xjm, f2c_abs(r__1)) > ortol)
             {
                 gpind = j;
             }
@@ -438,7 +438,7 @@ L70:
             /* Check the infinity norm of the iterate. */
 L90:
             jmax = isamax_(&blksiz, &work[indrv1 + 1], &c__1);
-            nrm = (r__1 = work[indrv1 + jmax], abs(r__1));
+            nrm = (r__1 = work[indrv1 + jmax], f2c_abs(r__1));
             /* Continue for additional iterations after norm reaches */
             /* stopping criterion. */
             if (nrm < stpcrt)
