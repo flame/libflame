@@ -287,7 +287,7 @@ int slaein_(logical *rightv, logical *noinit, integer *n, real *h__, integer *ld
                     ++i__)
             {
                 ei = h__[i__ + 1 + i__ * h_dim1];
-                if ((r__1 = b[i__ + i__ * b_dim1], abs(r__1)) < abs(ei))
+                if ((r__1 = b[i__ + i__ * b_dim1], f2c_abs(r__1)) < f2c_abs(ei))
                 {
                     /* Interchange rows and eliminate. */
                     x = b[i__ + i__ * b_dim1] / ei;
@@ -340,7 +340,7 @@ int slaein_(logical *rightv, logical *noinit, integer *n, real *h__, integer *ld
                     --j)
             {
                 ej = h__[j + (j - 1) * h_dim1];
-                if ((r__1 = b[j + j * b_dim1], abs(r__1)) < abs(ej))
+                if ((r__1 = b[j + j * b_dim1], f2c_abs(r__1)) < f2c_abs(ej))
                 {
                     /* Interchange columns and eliminate. */
                     x = b[j + j * b_dim1] / ej;
@@ -419,7 +419,7 @@ int slaein_(logical *rightv, logical *noinit, integer *n, real *h__, integer *ld
         *info = 1;
 L120: /* Normalize eigenvector. */
         i__ = isamax_(n, &vr[1], &c__1);
-        r__2 = 1.f / (r__1 = vr[i__], abs(r__1));
+        r__2 = 1.f / (r__1 = vr[i__], f2c_abs(r__1));
         sscal_(n, &r__2, &vr[1], &c__1);
     }
     else
@@ -470,7 +470,7 @@ L120: /* Normalize eigenvector. */
             {
                 absbii = slapy2_(&b[i__ + i__ * b_dim1], &b[i__ + 1 + i__ * b_dim1]);
                 ei = h__[i__ + 1 + i__ * h_dim1];
-                if (absbii < abs(ei))
+                if (absbii < f2c_abs(ei))
                 {
                     /* Interchange rows and eliminate. */
                     xr = b[i__ + i__ * b_dim1] / ei;
@@ -552,7 +552,7 @@ L120: /* Normalize eigenvector. */
             {
                 ej = h__[j + (j - 1) * h_dim1];
                 absbjj = slapy2_(&b[j + j * b_dim1], &b[j + 1 + j * b_dim1]);
-                if (absbjj < abs(ej))
+                if (absbjj < f2c_abs(ej))
                 {
                     /* Interchange columns and eliminate */
                     xr = b[j + j * b_dim1] / ej;
@@ -665,12 +665,12 @@ L120: /* Normalize eigenvector. */
                         /* L230: */
                     }
                 }
-                w = (r__1 = b[i__ + i__ * b_dim1], abs(r__1)) + (r__2 = b[i__ + 1 + i__ * b_dim1], abs(r__2));
+                w = (r__1 = b[i__ + i__ * b_dim1], f2c_abs(r__1)) + (r__2 = b[i__ + 1 + i__ * b_dim1], f2c_abs(r__2));
                 if (w > *smlnum)
                 {
                     if (w < 1.f)
                     {
-                        w1 = abs(xr) + abs(xi);
+                        w1 = f2c_abs(xr) + f2c_abs(xi);
                         if (w1 > w * *bignum)
                         {
                             rec = 1.f / w1;
@@ -685,7 +685,7 @@ L120: /* Normalize eigenvector. */
                     /* Divide by diagonal element of B. */
                     sladiv_(&xr, &xi, &b[i__ + i__ * b_dim1], &b[i__ + 1 + i__ * b_dim1], &vr[i__], &vi[i__]);
                     /* Computing MAX */
-                    r__3 = (r__1 = vr[i__], abs(r__1)) + (r__2 = vi[i__], abs( r__2));
+                    r__3 = (r__1 = vr[i__], f2c_abs(r__1)) + (r__2 = vi[i__], f2c_abs( r__2));
                     vmax = max(r__3,vmax);
                     vcrit = *bignum / vmax;
                 }
@@ -741,7 +741,7 @@ L280: /* Normalize eigenvector. */
         {
             /* Computing MAX */
             r__3 = vnorm;
-            r__4 = (r__1 = vr[i__], abs(r__1)) + (r__2 = vi[i__] , abs(r__2)); // , expr subst
+            r__4 = (r__1 = vr[i__], f2c_abs(r__1)) + (r__2 = vi[i__] , f2c_abs(r__2)); // , expr subst
             vnorm = max(r__3,r__4);
             /* L290: */
         }

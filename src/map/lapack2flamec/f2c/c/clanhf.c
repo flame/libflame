@@ -39,7 +39,7 @@ static integer c__1 = 1;
 /* > \return CLANHF */
 /* > \verbatim */
 /* > */
-/* > CLANHF = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > CLANHF = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -50,7 +50,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a matrix norm. */
+/* > squares). Note that max(f2c_abs(A(i,j))) is not a matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -243,7 +243,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
     integer i__1, i__2;
     real ret_val, r__1;
     /* Builtin functions */
-    double c_abs(complex *), sqrt(doublereal);
+    double c_f2c_abs(complex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j, k, l;
     real s;
@@ -283,7 +283,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
     }
     else if (*n == 1)
     {
-        ret_val = c_abs(a);
+        ret_val = c_f2c_abs(a);
         return ret_val;
     }
     /* set noe = 1 if n is odd. if n is even set noe=0 */
@@ -326,7 +326,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
     }
     if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
+        /* Find max(f2c_abs(A(i,j))). */
         k = (*n + 1) / 2;
         value = 0.f;
         if (noe == 1)
@@ -341,7 +341,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                     j = 0;
                     /* -> L(0,0) */
                     i__1 = j + j * lda;
-                    temp = (r__1 = a[i__1].r, abs(r__1));
+                    temp = (r__1 = a[i__1].r, f2c_abs(r__1));
                     if (value < temp || sisnan_(&temp))
                     {
                         value = temp;
@@ -351,7 +351,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                             i__ <= i__1;
                             ++i__)
                     {
-                        temp = c_abs(&a[i__ + j * lda]);
+                        temp = c_f2c_abs(&a[i__ + j * lda]);
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -367,7 +367,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -376,7 +376,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                         i__ = j - 1;
                         /* L(k+j,k+j) */
                         i__2 = i__ + j * lda;
-                        temp = (r__1 = a[i__2].r, abs(r__1));
+                        temp = (r__1 = a[i__2].r, f2c_abs(r__1));
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -384,7 +384,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                         i__ = j;
                         /* -> L(j,j) */
                         i__2 = i__ + j * lda;
-                        temp = (r__1 = a[i__2].r, abs(r__1));
+                        temp = (r__1 = a[i__2].r, f2c_abs(r__1));
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -394,7 +394,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -415,7 +415,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -424,7 +424,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                         i__ = k + j - 1;
                         /* -> U(i,i) */
                         i__2 = i__ + j * lda;
-                        temp = (r__1 = a[i__2].r, abs(r__1));
+                        temp = (r__1 = a[i__2].r, f2c_abs(r__1));
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -433,7 +433,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                         /* =k+j;
                         i -> U(j,j) */
                         i__2 = i__ + j * lda;
-                        temp = (r__1 = a[i__2].r, abs(r__1));
+                        temp = (r__1 = a[i__2].r, f2c_abs(r__1));
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -443,7 +443,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -455,7 +455,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                             i__ <= i__1;
                             ++i__)
                     {
-                        temp = c_abs(&a[i__ + j * lda]);
+                        temp = c_f2c_abs(&a[i__ + j * lda]);
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -464,7 +464,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                     }
                     /* i=n-1 -> U(n-1,n-1) */
                     i__1 = i__ + j * lda;
-                    temp = (r__1 = a[i__1].r, abs(r__1));
+                    temp = (r__1 = a[i__1].r, f2c_abs(r__1));
                     if (value < temp || sisnan_(&temp))
                     {
                         value = temp;
@@ -488,7 +488,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -497,7 +497,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                         i__ = j;
                         /* L(i,i) */
                         i__2 = i__ + j * lda;
-                        temp = (r__1 = a[i__2].r, abs(r__1));
+                        temp = (r__1 = a[i__2].r, f2c_abs(r__1));
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -505,7 +505,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                         i__ = j + 1;
                         /* L(j+k,j+k) */
                         i__2 = i__ + j * lda;
-                        temp = (r__1 = a[i__2].r, abs(r__1));
+                        temp = (r__1 = a[i__2].r, f2c_abs(r__1));
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -515,7 +515,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -528,7 +528,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                             i__ <= i__1;
                             ++i__)
                     {
-                        temp = c_abs(&a[i__ + j * lda]);
+                        temp = c_f2c_abs(&a[i__ + j * lda]);
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -537,7 +537,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                     i__ = k - 1;
                     /* -> L(i,i) is at A(i,j) */
                     i__1 = i__ + j * lda;
-                    temp = (r__1 = a[i__1].r, abs(r__1));
+                    temp = (r__1 = a[i__1].r, f2c_abs(r__1));
                     if (value < temp || sisnan_(&temp))
                     {
                         value = temp;
@@ -552,7 +552,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -573,7 +573,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -583,7 +583,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                     j = k - 1;
                     /* -> U(j,j) is at A(0,j) */
                     i__1 = j * lda;
-                    temp = (r__1 = a[i__1].r, abs(r__1));
+                    temp = (r__1 = a[i__1].r, f2c_abs(r__1));
                     if (value < temp || sisnan_(&temp))
                     {
                         value = temp;
@@ -593,7 +593,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                             i__ <= i__1;
                             ++i__)
                     {
-                        temp = c_abs(&a[i__ + j * lda]);
+                        temp = c_f2c_abs(&a[i__ + j * lda]);
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -609,7 +609,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -618,7 +618,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                         i__ = j - k;
                         /* -> U(i,i) at A(i,j) */
                         i__2 = i__ + j * lda;
-                        temp = (r__1 = a[i__2].r, abs(r__1));
+                        temp = (r__1 = a[i__2].r, f2c_abs(r__1));
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -626,7 +626,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                         i__ = j - k + 1;
                         /* U(j,j) */
                         i__2 = i__ + j * lda;
-                        temp = (r__1 = a[i__2].r, abs(r__1));
+                        temp = (r__1 = a[i__2].r, f2c_abs(r__1));
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -636,7 +636,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -658,13 +658,13 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                     j = 0;
                     /* -> L(k,k) & j=1 -> L(0,0) */
                     i__1 = j + j * lda;
-                    temp = (r__1 = a[i__1].r, abs(r__1));
+                    temp = (r__1 = a[i__1].r, f2c_abs(r__1));
                     if (value < temp || sisnan_(&temp))
                     {
                         value = temp;
                     }
                     i__1 = j + 1 + j * lda;
-                    temp = (r__1 = a[i__1].r, abs(r__1));
+                    temp = (r__1 = a[i__1].r, f2c_abs(r__1));
                     if (value < temp || sisnan_(&temp))
                     {
                         value = temp;
@@ -674,7 +674,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                             i__ <= i__1;
                             ++i__)
                     {
-                        temp = c_abs(&a[i__ + j * lda]);
+                        temp = c_f2c_abs(&a[i__ + j * lda]);
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -690,7 +690,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -699,7 +699,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                         i__ = j;
                         /* L(k+j,k+j) */
                         i__2 = i__ + j * lda;
-                        temp = (r__1 = a[i__2].r, abs(r__1));
+                        temp = (r__1 = a[i__2].r, f2c_abs(r__1));
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -707,7 +707,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                         i__ = j + 1;
                         /* -> L(j,j) */
                         i__2 = i__ + j * lda;
-                        temp = (r__1 = a[i__2].r, abs(r__1));
+                        temp = (r__1 = a[i__2].r, f2c_abs(r__1));
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -717,7 +717,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -738,7 +738,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -747,7 +747,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                         i__ = k + j;
                         /* -> U(i,i) */
                         i__2 = i__ + j * lda;
-                        temp = (r__1 = a[i__2].r, abs(r__1));
+                        temp = (r__1 = a[i__2].r, f2c_abs(r__1));
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -756,7 +756,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                         /* =k+j+1;
                         i -> U(j,j) */
                         i__2 = i__ + j * lda;
-                        temp = (r__1 = a[i__2].r, abs(r__1));
+                        temp = (r__1 = a[i__2].r, f2c_abs(r__1));
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -766,7 +766,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -778,7 +778,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                             i__ <= i__1;
                             ++i__)
                     {
-                        temp = c_abs(&a[i__ + j * lda]);
+                        temp = c_f2c_abs(&a[i__ + j * lda]);
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -787,7 +787,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                     }
                     /* i=n-1 -> U(n-1,n-1) */
                     i__1 = i__ + j * lda;
-                    temp = (r__1 = a[i__1].r, abs(r__1));
+                    temp = (r__1 = a[i__1].r, f2c_abs(r__1));
                     if (value < temp || sisnan_(&temp))
                     {
                         value = temp;
@@ -795,7 +795,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                     i__ = *n;
                     /* -> U(k-1,k-1) */
                     i__1 = i__ + j * lda;
-                    temp = (r__1 = a[i__1].r, abs(r__1));
+                    temp = (r__1 = a[i__1].r, f2c_abs(r__1));
                     if (value < temp || sisnan_(&temp))
                     {
                         value = temp;
@@ -812,7 +812,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                     j = 0;
                     /* -> L(k,k) at A(0,0) */
                     i__1 = j + j * lda;
-                    temp = (r__1 = a[i__1].r, abs(r__1));
+                    temp = (r__1 = a[i__1].r, f2c_abs(r__1));
                     if (value < temp || sisnan_(&temp))
                     {
                         value = temp;
@@ -822,7 +822,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                             i__ <= i__1;
                             ++i__)
                     {
-                        temp = c_abs(&a[i__ + j * lda]);
+                        temp = c_f2c_abs(&a[i__ + j * lda]);
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -838,7 +838,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -847,7 +847,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                         i__ = j - 1;
                         /* L(i,i) */
                         i__2 = i__ + j * lda;
-                        temp = (r__1 = a[i__2].r, abs(r__1));
+                        temp = (r__1 = a[i__2].r, f2c_abs(r__1));
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -855,7 +855,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                         i__ = j;
                         /* L(j+k,j+k) */
                         i__2 = i__ + j * lda;
-                        temp = (r__1 = a[i__2].r, abs(r__1));
+                        temp = (r__1 = a[i__2].r, f2c_abs(r__1));
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -865,7 +865,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -878,7 +878,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                             i__ <= i__1;
                             ++i__)
                     {
-                        temp = c_abs(&a[i__ + j * lda]);
+                        temp = c_f2c_abs(&a[i__ + j * lda]);
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -887,7 +887,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                     i__ = k - 1;
                     /* -> L(i,i) is at A(i,j) */
                     i__1 = i__ + j * lda;
-                    temp = (r__1 = a[i__1].r, abs(r__1));
+                    temp = (r__1 = a[i__1].r, f2c_abs(r__1));
                     if (value < temp || sisnan_(&temp))
                     {
                         value = temp;
@@ -902,7 +902,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -923,7 +923,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -933,7 +933,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                     j = k;
                     /* -> U(j,j) is at A(0,j) */
                     i__1 = j * lda;
-                    temp = (r__1 = a[i__1].r, abs(r__1));
+                    temp = (r__1 = a[i__1].r, f2c_abs(r__1));
                     if (value < temp || sisnan_(&temp))
                     {
                         value = temp;
@@ -943,7 +943,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                             i__ <= i__1;
                             ++i__)
                     {
-                        temp = c_abs(&a[i__ + j * lda]);
+                        temp = c_f2c_abs(&a[i__ + j * lda]);
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -959,7 +959,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -968,7 +968,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                         i__ = j - k - 1;
                         /* -> U(i,i) at A(i,j) */
                         i__2 = i__ + j * lda;
-                        temp = (r__1 = a[i__2].r, abs(r__1));
+                        temp = (r__1 = a[i__2].r, f2c_abs(r__1));
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -976,7 +976,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                         i__ = j - k;
                         /* U(j,j) */
                         i__2 = i__ + j * lda;
-                        temp = (r__1 = a[i__2].r, abs(r__1));
+                        temp = (r__1 = a[i__2].r, f2c_abs(r__1));
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -986,7 +986,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = c_abs(&a[i__ + j * lda]);
+                            temp = c_f2c_abs(&a[i__ + j * lda]);
                             if (value < temp || sisnan_(&temp))
                             {
                                 value = temp;
@@ -999,7 +999,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                             i__ <= i__1;
                             ++i__)
                     {
-                        temp = c_abs(&a[i__ + j * lda]);
+                        temp = c_f2c_abs(&a[i__ + j * lda]);
                         if (value < temp || sisnan_(&temp))
                         {
                             value = temp;
@@ -1008,7 +1008,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                     i__ = k - 1;
                     /* U(k,k) at A(i,j) */
                     i__1 = i__ + j * lda;
-                    temp = (r__1 = a[i__1].r, abs(r__1));
+                    temp = (r__1 = a[i__1].r, f2c_abs(r__1));
                     if (value < temp || sisnan_(&temp))
                     {
                         value = temp;
@@ -1048,13 +1048,13 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* -> A(i,j+k) */
                             s += aa;
                             work[i__] += aa;
                         }
                         i__2 = i__ + j * lda;
-                        aa = (r__1 = a[i__2].r, abs(r__1));
+                        aa = (r__1 = a[i__2].r, f2c_abs(r__1));
                         /* -> A(j+k,j+k) */
                         work[j + k] = s + aa;
                         if (i__ == k + k)
@@ -1063,7 +1063,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                         }
                         ++i__;
                         i__2 = i__ + j * lda;
-                        aa = (r__1 = a[i__2].r, abs(r__1));
+                        aa = (r__1 = a[i__2].r, f2c_abs(r__1));
                         /* -> A(j,j) */
                         work[j] += aa;
                         s = 0.f;
@@ -1073,7 +1073,7 @@ real clanhf_(char *norm, char *transr, char *uplo, integer *n, complex *a, real 
                                 ++l)
                         {
                             ++i__;
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* -> A(l,j) */
                             s += aa;
                             work[l] += aa;
@@ -1116,7 +1116,7 @@ L10:
                                 i__ <= i__1;
                                 ++i__)
                         {
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* -> A(j+k,i+k) */
                             s += aa;
                             work[i__ + k] += aa;
@@ -1124,7 +1124,7 @@ L10:
                         if (j > 0)
                         {
                             i__1 = i__ + j * lda;
-                            aa = (r__1 = a[i__1].r, abs(r__1));
+                            aa = (r__1 = a[i__1].r, f2c_abs(r__1));
                             /* -> A(j+k,j+k) */
                             s += aa;
                             work[i__ + k] += s;
@@ -1132,7 +1132,7 @@ L10:
                             ++i__;
                         }
                         i__1 = i__ + j * lda;
-                        aa = (r__1 = a[i__1].r, abs(r__1));
+                        aa = (r__1 = a[i__1].r, f2c_abs(r__1));
                         /* -> A(j,j) */
                         work[j] = aa;
                         s = 0.f;
@@ -1142,7 +1142,7 @@ L10:
                                 ++l)
                         {
                             ++i__;
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* -> A(l,j) */
                             s += aa;
                             work[l] += aa;
@@ -1187,18 +1187,18 @@ L10:
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* -> A(i,j+k) */
                             s += aa;
                             work[i__] += aa;
                         }
                         i__2 = i__ + j * lda;
-                        aa = (r__1 = a[i__2].r, abs(r__1));
+                        aa = (r__1 = a[i__2].r, f2c_abs(r__1));
                         /* -> A(j+k,j+k) */
                         work[j + k] = s + aa;
                         ++i__;
                         i__2 = i__ + j * lda;
-                        aa = (r__1 = a[i__2].r, abs(r__1));
+                        aa = (r__1 = a[i__2].r, f2c_abs(r__1));
                         /* -> A(j,j) */
                         work[j] += aa;
                         s = 0.f;
@@ -1208,7 +1208,7 @@ L10:
                                 ++l)
                         {
                             ++i__;
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* -> A(l,j) */
                             s += aa;
                             work[l] += aa;
@@ -1248,20 +1248,20 @@ L10:
                                 i__ <= i__1;
                                 ++i__)
                         {
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* -> A(j+k,i+k) */
                             s += aa;
                             work[i__ + k] += aa;
                         }
                         i__1 = i__ + j * lda;
-                        aa = (r__1 = a[i__1].r, abs(r__1));
+                        aa = (r__1 = a[i__1].r, f2c_abs(r__1));
                         /* -> A(j+k,j+k) */
                         s += aa;
                         work[i__ + k] += s;
                         /* i=j */
                         ++i__;
                         i__1 = i__ + j * lda;
-                        aa = (r__1 = a[i__1].r, abs(r__1));
+                        aa = (r__1 = a[i__1].r, f2c_abs(r__1));
                         /* -> A(j,j) */
                         work[j] = aa;
                         s = 0.f;
@@ -1271,7 +1271,7 @@ L10:
                                 ++l)
                         {
                             ++i__;
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* -> A(l,j) */
                             s += aa;
                             work[l] += aa;
@@ -1325,7 +1325,7 @@ L10:
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* A(j,n1+i) */
                             work[i__ + n1] += aa;
                             s += aa;
@@ -1334,14 +1334,14 @@ L10:
                     }
                     /* j=n1=k-1 is special */
                     i__1 = j * lda;
-                    s = (r__1 = a[i__1].r, abs(r__1));
+                    s = (r__1 = a[i__1].r, f2c_abs(r__1));
                     /* A(k-1,k-1) */
                     i__1 = k - 1;
                     for (i__ = 1;
                             i__ <= i__1;
                             ++i__)
                     {
-                        aa = c_abs(&a[i__ + j * lda]);
+                        aa = c_f2c_abs(&a[i__ + j * lda]);
                         /* A(k-1,i+n1) */
                         work[i__ + n1] += aa;
                         s += aa;
@@ -1358,20 +1358,20 @@ L10:
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* A(i,j-k) */
                             work[i__] += aa;
                             s += aa;
                         }
                         /* i=j-k */
                         i__2 = i__ + j * lda;
-                        aa = (r__1 = a[i__2].r, abs(r__1));
+                        aa = (r__1 = a[i__2].r, f2c_abs(r__1));
                         /* A(j-k,j-k) */
                         s += aa;
                         work[j - k] += s;
                         ++i__;
                         i__2 = i__ + j * lda;
-                        s = (r__1 = a[i__2].r, abs(r__1));
+                        s = (r__1 = a[i__2].r, f2c_abs(r__1));
                         /* A(j,j) */
                         i__2 = *n - 1;
                         for (l = j + 1;
@@ -1379,7 +1379,7 @@ L10:
                                 ++l)
                         {
                             ++i__;
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* A(j,l) */
                             work[l] += aa;
                             s += aa;
@@ -1423,13 +1423,13 @@ L10:
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* A(j,i) */
                             work[i__] += aa;
                             s += aa;
                         }
                         i__2 = i__ + j * lda;
-                        aa = (r__1 = a[i__2].r, abs(r__1));
+                        aa = (r__1 = a[i__2].r, f2c_abs(r__1));
                         /* i=j so process of A(j,j) */
                         s += aa;
                         work[j] = s;
@@ -1437,7 +1437,7 @@ L10:
                         ++i__;
                         /* i=j process A(j+k,j+k) */
                         i__2 = i__ + j * lda;
-                        aa = (r__1 = a[i__2].r, abs(r__1));
+                        aa = (r__1 = a[i__2].r, f2c_abs(r__1));
                         s = aa;
                         i__2 = *n - 1;
                         for (l = k + j + 1;
@@ -1445,7 +1445,7 @@ L10:
                                 ++l)
                         {
                             ++i__;
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* A(l,k+j) */
                             s += aa;
                             work[l] += aa;
@@ -1459,14 +1459,14 @@ L10:
                             i__ <= i__1;
                             ++i__)
                     {
-                        aa = c_abs(&a[i__ + j * lda]);
+                        aa = c_f2c_abs(&a[i__ + j * lda]);
                         /* A(k,i) */
                         work[i__] += aa;
                         s += aa;
                     }
                     /* i=k-1 */
                     i__1 = i__ + j * lda;
-                    aa = (r__1 = a[i__1].r, abs(r__1));
+                    aa = (r__1 = a[i__1].r, f2c_abs(r__1));
                     /* A(k-1,k-1) */
                     s += aa;
                     work[i__] = s;
@@ -1483,7 +1483,7 @@ L10:
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* A(j,i) */
                             work[i__] += aa;
                             s += aa;
@@ -1528,7 +1528,7 @@ L10:
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* A(j,i+k) */
                             work[i__ + k] += aa;
                             s += aa;
@@ -1537,7 +1537,7 @@ L10:
                     }
                     /* j=k */
                     i__1 = j * lda;
-                    aa = (r__1 = a[i__1].r, abs(r__1));
+                    aa = (r__1 = a[i__1].r, f2c_abs(r__1));
                     /* A(k,k) */
                     s = aa;
                     i__1 = k - 1;
@@ -1545,7 +1545,7 @@ L10:
                             i__ <= i__1;
                             ++i__)
                     {
-                        aa = c_abs(&a[i__ + j * lda]);
+                        aa = c_f2c_abs(&a[i__ + j * lda]);
                         /* A(k,k+i) */
                         work[i__ + k] += aa;
                         s += aa;
@@ -1562,20 +1562,20 @@ L10:
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* A(i,j-k-1) */
                             work[i__] += aa;
                             s += aa;
                         }
                         /* i=j-1-k */
                         i__2 = i__ + j * lda;
-                        aa = (r__1 = a[i__2].r, abs(r__1));
+                        aa = (r__1 = a[i__2].r, f2c_abs(r__1));
                         /* A(j-k-1,j-k-1) */
                         s += aa;
                         work[j - k - 1] += s;
                         ++i__;
                         i__2 = i__ + j * lda;
-                        aa = (r__1 = a[i__2].r, abs(r__1));
+                        aa = (r__1 = a[i__2].r, f2c_abs(r__1));
                         /* A(j,j) */
                         s = aa;
                         i__2 = *n - 1;
@@ -1584,7 +1584,7 @@ L10:
                                 ++l)
                         {
                             ++i__;
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* A(j,l) */
                             work[l] += aa;
                             s += aa;
@@ -1598,14 +1598,14 @@ L10:
                             i__ <= i__1;
                             ++i__)
                     {
-                        aa = c_abs(&a[i__ + j * lda]);
+                        aa = c_f2c_abs(&a[i__ + j * lda]);
                         /* A(i,k-1) */
                         work[i__] += aa;
                         s += aa;
                     }
                     /* i=k-1 */
                     i__1 = i__ + j * lda;
-                    aa = (r__1 = a[i__1].r, abs(r__1));
+                    aa = (r__1 = a[i__1].r, f2c_abs(r__1));
                     /* A(k-1,k-1) */
                     s += aa;
                     work[i__] += s;
@@ -1633,14 +1633,14 @@ L10:
                         work[i__] = 0.f;
                     }
                     /* j=0 is special :process col A(k:n-1,k) */
-                    s = (r__1 = a[0].r, abs(r__1));
+                    s = (r__1 = a[0].r, f2c_abs(r__1));
                     /* A(k,k) */
                     i__1 = k - 1;
                     for (i__ = 1;
                             i__ <= i__1;
                             ++i__)
                     {
-                        aa = c_abs(&a[i__]);
+                        aa = c_f2c_abs(&a[i__]);
                         /* A(k+i,k) */
                         work[i__ + k] += aa;
                         s += aa;
@@ -1658,13 +1658,13 @@ L10:
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* A(j-1,i) */
                             work[i__] += aa;
                             s += aa;
                         }
                         i__2 = i__ + j * lda;
-                        aa = (r__1 = a[i__2].r, abs(r__1));
+                        aa = (r__1 = a[i__2].r, f2c_abs(r__1));
                         /* i=j-1 so process of A(j-1,j-1) */
                         s += aa;
                         work[j - 1] = s;
@@ -1672,7 +1672,7 @@ L10:
                         ++i__;
                         /* i=j process A(j+k,j+k) */
                         i__2 = i__ + j * lda;
-                        aa = (r__1 = a[i__2].r, abs(r__1));
+                        aa = (r__1 = a[i__2].r, f2c_abs(r__1));
                         s = aa;
                         i__2 = *n - 1;
                         for (l = k + j + 1;
@@ -1680,7 +1680,7 @@ L10:
                                 ++l)
                         {
                             ++i__;
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* A(l,k+j) */
                             s += aa;
                             work[l] += aa;
@@ -1694,14 +1694,14 @@ L10:
                             i__ <= i__1;
                             ++i__)
                     {
-                        aa = c_abs(&a[i__ + j * lda]);
+                        aa = c_f2c_abs(&a[i__ + j * lda]);
                         /* A(k,i) */
                         work[i__] += aa;
                         s += aa;
                     }
                     /* i=k-1 */
                     i__1 = i__ + j * lda;
-                    aa = (r__1 = a[i__1].r, abs(r__1));
+                    aa = (r__1 = a[i__1].r, f2c_abs(r__1));
                     /* A(k-1,k-1) */
                     s += aa;
                     work[i__] = s;
@@ -1718,7 +1718,7 @@ L10:
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = c_abs(&a[i__ + j * lda]);
+                            aa = c_f2c_abs(&a[i__ + j * lda]);
                             /* A(j-1,i) */
                             work[i__] += aa;
                             s += aa;

@@ -234,7 +234,7 @@ int slasd8_(integer *icompq, integer *k, real *d__, real * z__, real *vf, real *
     /* Quick return if possible */
     if (*k == 1)
     {
-        d__[1] = abs(z__[1]);
+        d__[1] = f2c_abs(z__[1]);
         difl[1] = d__[1];
         if (*icompq == 1)
         {
@@ -322,7 +322,7 @@ int slasd8_(integer *icompq, integer *k, real *d__, real * z__, real *vf, real *
             i__ <= i__1;
             ++i__)
     {
-        r__2 = sqrt((r__1 = work[iwk3i + i__], abs(r__1)));
+        r__2 = sqrt((r__1 = work[iwk3i + i__], f2c_abs(r__1)));
         z__[i__] = r_sign(&r__2, &z__[i__]);
         /* L50: */
     }

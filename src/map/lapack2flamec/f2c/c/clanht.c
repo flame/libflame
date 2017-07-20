@@ -39,7 +39,7 @@ static integer c__1 = 1;
 /* > \return CLANHT */
 /* > \verbatim */
 /* > */
-/* > CLANHT = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > CLANHT = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -50,7 +50,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -94,7 +94,7 @@ real clanht_(char *norm, integer *n, real *d__, complex *e)
     integer i__1;
     real ret_val, r__1;
     /* Builtin functions */
-    double c_abs(complex *), sqrt(doublereal);
+    double c_f2c_abs(complex *), sqrt(doublereal);
     /* Local variables */
     integer i__;
     real sum, scale;
@@ -135,19 +135,19 @@ real clanht_(char *norm, integer *n, real *d__, complex *e)
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
-        anorm = (r__1 = d__[*n], abs(r__1));
+        /* Find max(f2c_abs(A(i,j))). */
+        anorm = (r__1 = d__[*n], f2c_abs(r__1));
         i__1 = *n - 1;
         for (i__ = 1;
                 i__ <= i__1;
                 ++i__)
         {
-            sum = (r__1 = d__[i__], abs(r__1));
+            sum = (r__1 = d__[i__], f2c_abs(r__1));
             if (anorm < sum || sisnan_(&sum))
             {
                 anorm = sum;
             }
-            sum = c_abs(&e[i__]);
+            sum = c_f2c_abs(&e[i__]);
             if (anorm < sum || sisnan_(&sum))
             {
                 anorm = sum;
@@ -160,12 +160,12 @@ real clanht_(char *norm, integer *n, real *d__, complex *e)
         /* Find norm1(A). */
         if (*n == 1)
         {
-            anorm = abs(d__[1]);
+            anorm = f2c_abs(d__[1]);
         }
         else
         {
-            anorm = abs(d__[1]) + c_abs(&e[1]);
-            sum = c_abs(&e[*n - 1]) + (r__1 = d__[*n], abs(r__1));
+            anorm = f2c_abs(d__[1]) + c_f2c_abs(&e[1]);
+            sum = c_f2c_abs(&e[*n - 1]) + (r__1 = d__[*n], f2c_abs(r__1));
             if (anorm < sum || sisnan_(&sum))
             {
                 anorm = sum;
@@ -175,7 +175,7 @@ real clanht_(char *norm, integer *n, real *d__, complex *e)
                     i__ <= i__1;
                     ++i__)
             {
-                sum = (r__1 = d__[i__], abs(r__1)) + c_abs(&e[i__]) + c_abs(& e[i__ - 1]);
+                sum = (r__1 = d__[i__], f2c_abs(r__1)) + c_f2c_abs(&e[i__]) + c_f2c_abs(& e[i__ - 1]);
                 if (anorm < sum || sisnan_(&sum))
                 {
                     anorm = sum;

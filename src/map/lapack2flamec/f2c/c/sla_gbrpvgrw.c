@@ -150,7 +150,7 @@ real sla_gbrpvgrw_(integer *n, integer *kl, integer *ku, integer *ncols, real *a
                 ++i__)
         {
             /* Computing MAX */
-            r__2 = (r__1 = ab[kd + i__ - j + j * ab_dim1], abs(r__1));
+            r__2 = (r__1 = ab[kd + i__ - j + j * ab_dim1], f2c_abs(r__1));
             amax = max(r__2,amax);
         }
         /* Computing MAX */
@@ -161,7 +161,7 @@ real sla_gbrpvgrw_(integer *n, integer *kl, integer *ku, integer *ncols, real *a
                 ++i__)
         {
             /* Computing MAX */
-            r__2 = (r__1 = afb[kd + i__ - j + j * afb_dim1], abs(r__1));
+            r__2 = (r__1 = afb[kd + i__ - j + j * afb_dim1], f2c_abs(r__1));
             umax = max(r__2,umax);
         }
         if (umax != 0.f)

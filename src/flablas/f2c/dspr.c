@@ -41,7 +41,7 @@ int dspr_(char *uplo, integer *n, doublereal *alpha, doublereal *x, integer *inc
     /* On entry, ALPHA specifies the scalar alpha. */
     /* Unchanged on exit. */
     /* X - DOUBLE PRECISION array of dimension at least */
-    /* ( 1 + ( n - 1 )*abs( INCX ) ). */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCX ) ). */
     /* Before entry, the incremented array X must contain the n */
     /* element vector x. */
     /* Unchanged on exit. */

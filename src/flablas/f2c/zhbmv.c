@@ -90,7 +90,7 @@ int zhbmv_(char *uplo, integer *n, integer *k, doublecomplex *alpha, doublecompl
     /* ( k + 1 ). */
     /* Unchanged on exit. */
     /* X - COMPLEX*16 array of DIMENSION at least */
-    /* ( 1 + ( n - 1 )*abs( INCX ) ). */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCX ) ). */
     /* Before entry, the incremented array X must contain the */
     /* vector x. */
     /* Unchanged on exit. */
@@ -102,7 +102,7 @@ int zhbmv_(char *uplo, integer *n, integer *k, doublecomplex *alpha, doublecompl
     /* On entry, BETA specifies the scalar beta. */
     /* Unchanged on exit. */
     /* Y - COMPLEX*16 array of DIMENSION at least */
-    /* ( 1 + ( n - 1 )*abs( INCY ) ). */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCY ) ). */
     /* Before entry, the incremented array Y must contain the */
     /* vector y. On exit, Y is overwritten by the updated vector y. */
     /* INCY - INTEGER. */

@@ -280,8 +280,8 @@ int slasd1_(integer *nl, integer *nr, integer *sqre, real * d__, real *alpha, re
     idxp = coltyp + n;
     /* Scale. */
     /* Computing MAX */
-    r__1 = abs(*alpha);
-    r__2 = abs(*beta); // , expr subst
+    r__1 = f2c_abs(*alpha);
+    r__2 = f2c_abs(*beta); // , expr subst
     orgnrm = max(r__1,r__2);
     d__[*nl + 1] = 0.f;
     i__1 = n;
@@ -289,9 +289,9 @@ int slasd1_(integer *nl, integer *nr, integer *sqre, real * d__, real *alpha, re
             i__ <= i__1;
             ++i__)
     {
-        if ((r__1 = d__[i__], abs(r__1)) > orgnrm)
+        if ((r__1 = d__[i__], f2c_abs(r__1)) > orgnrm)
         {
-            orgnrm = (r__1 = d__[i__], abs(r__1));
+            orgnrm = (r__1 = d__[i__], f2c_abs(r__1));
         }
         /* L10: */
     }

@@ -160,7 +160,7 @@ static real c_b29 = 1.f;
 /* > If JOBVL = 'V', the left eigenvectors u(j) are stored */
 /* > in the columns of VL, in the same order as their eigenvalues. */
 /* > Each eigenvector is scaled so that its largest component has */
-/* > abs(real part) + abs(imag. part) = 1, except for eigenvectors */
+/* > f2c_abs(real part) + f2c_abs(imag. part) = 1, except for eigenvectors */
 /* > corresponding to an eigenvalue with alpha = beta = 0, which */
 /* > are set to zero. */
 /* > Not referenced if JOBVL = 'N'. */
@@ -179,7 +179,7 @@ static real c_b29 = 1.f;
 /* > If JOBVR = 'V', the right eigenvectors x(j) are stored */
 /* > in the columns of VR, in the same order as their eigenvalues. */
 /* > Each eigenvector is scaled so that its largest component has */
-/* > abs(real part) + abs(imag. part) = 1, except for eigenvectors */
+/* > f2c_abs(real part) + f2c_abs(imag. part) = 1, except for eigenvectors */
 /* > corresponding to an eigenvalue with alpha = beta = 0, which */
 /* > are set to zero. */
 /* > Not referenced if JOBVR = 'N'. */
@@ -707,7 +707,7 @@ int cgegv_(char *jobvl, char *jobvr, integer *n, complex *a, integer *lda, compl
                     /* Computing MAX */
                     i__3 = jr + jc * vl_dim1;
                     r__3 = temp;
-                    r__4 = (r__1 = vl[i__3].r, abs(r__1)) + ( r__2 = r_imag(&vl[jr + jc * vl_dim1]), abs(r__2)); // , expr subst
+                    r__4 = (r__1 = vl[i__3].r, f2c_abs(r__1)) + ( r__2 = r_imag(&vl[jr + jc * vl_dim1]), f2c_abs(r__2)); // , expr subst
                     temp = max(r__3,r__4);
                     /* L10: */
                 }
@@ -755,7 +755,7 @@ L30:
                     /* Computing MAX */
                     i__3 = jr + jc * vr_dim1;
                     r__3 = temp;
-                    r__4 = (r__1 = vr[i__3].r, abs(r__1)) + ( r__2 = r_imag(&vr[jr + jc * vr_dim1]), abs(r__2)); // , expr subst
+                    r__4 = (r__1 = vr[i__3].r, f2c_abs(r__1)) + ( r__2 = r_imag(&vr[jr + jc * vr_dim1]), f2c_abs(r__2)); // , expr subst
                     temp = max(r__3,r__4);
                     /* L40: */
                 }
@@ -794,10 +794,10 @@ L60:
             ++jc)
     {
         i__2 = jc;
-        absar = (r__1 = alpha[i__2].r, abs(r__1));
-        absai = (r__1 = r_imag(&alpha[jc]), abs(r__1));
+        absar = (r__1 = alpha[i__2].r, f2c_abs(r__1));
+        absai = (r__1 = r_imag(&alpha[jc]), f2c_abs(r__1));
         i__2 = jc;
-        absb = (r__1 = beta[i__2].r, abs(r__1));
+        absb = (r__1 = beta[i__2].r, f2c_abs(r__1));
         i__2 = jc;
         salfar = anrm * alpha[i__2].r;
         salfai = anrm * r_imag(&alpha[jc]);
@@ -810,7 +810,7 @@ L60:
         r__1 = safmin, r__2 = eps * absar;
         r__1 = max(r__1,r__2);
         r__2 = eps * absb; // ; expr subst
-        if (abs(salfai) < safmin && absai >= max(r__1,r__2))
+        if (f2c_abs(salfai) < safmin && absai >= max(r__1,r__2))
         {
             ilimit = TRUE_;
             /* Computing MAX */
@@ -823,7 +823,7 @@ L60:
         r__1 = safmin, r__2 = eps * absai;
         r__1 = max(r__1,r__2);
         r__2 = eps * absb; // ; expr subst
-        if (abs(salfar) < safmin && absar >= max(r__1,r__2))
+        if (f2c_abs(salfar) < safmin && absar >= max(r__1,r__2))
         {
             ilimit = TRUE_;
             /* Computing MAX */
@@ -839,7 +839,7 @@ L60:
         r__1 = safmin, r__2 = eps * absar;
         r__1 = max(r__1,r__2);
         r__2 = eps * absai; // ; expr subst
-        if (abs(sbeta) < safmin && absb >= max(r__1,r__2))
+        if (f2c_abs(sbeta) < safmin && absb >= max(r__1,r__2))
         {
             ilimit = TRUE_;
             /* Computing MAX */
@@ -854,9 +854,9 @@ L60:
         if (ilimit)
         {
             /* Computing MAX */
-            r__1 = abs(salfar), r__2 = abs(salfai);
+            r__1 = f2c_abs(salfar), r__2 = f2c_abs(salfai);
             r__1 = max(r__1,r__2);
-            r__2 = abs(sbeta); // ; expr subst
+            r__2 = f2c_abs(sbeta); // ; expr subst
             temp = scale * safmin * max(r__1,r__2);
             if (temp > 1.f)
             {

@@ -774,7 +774,7 @@ int cstemr_(char *jobz, char *range, integer *n, real *d__, real *e, real *vl, r
         slarre_(range, n, &wl, &wu, &iil, &iiu, &d__[1], &e[1], &work[inde2], &rtol1, &rtol2, &thresh, &nsplit, &iwork[iinspl], m, &w[1], & work[inderr], &work[indgp], &iwork[iindbl], &iwork[iindw], & work[indgrs], &pivmin, &work[indwrk], &iwork[iindwk], &iinfo);
         if (iinfo != 0)
         {
-            *info = abs(iinfo) + 10;
+            *info = f2c_abs(iinfo) + 10;
             return 0;
         }
         /* Note that if RANGE .NE. 'V', SLARRE computes bounds on the desired */
@@ -787,7 +787,7 @@ int cstemr_(char *jobz, char *range, integer *n, real *d__, real *e, real *vl, r
             clarrv_(n, &wl, &wu, &d__[1], &e[1], &pivmin, &iwork[iinspl], m, & c__1, m, &c_b18, &rtol1, &rtol2, &w[1], &work[inderr], & work[indgp], &iwork[iindbl], &iwork[iindw], &work[indgrs], &z__[z_offset], ldz, &isuppz[1], &work[indwrk], &iwork[ iindwk], &iinfo);
             if (iinfo != 0)
             {
-                *info = abs(iinfo) + 20;
+                *info = f2c_abs(iinfo) + 20;
                 return 0;
             }
         }

@@ -429,7 +429,7 @@ int slarre_(char *range, integer *n, real *vl, real *vu, integer *il, integer *i
     {
         werr[i__] = 0.f;
         wgap[i__] = 0.f;
-        eabs = (r__1 = e[i__], abs(r__1));
+        eabs = (r__1 = e[i__], f2c_abs(r__1));
         if (eabs >= emax)
         {
             emax = eabs;
@@ -619,7 +619,7 @@ L21:
             }
             /* Computing MAX */
             r__2 = gl;
-            r__3 = tmp - tmp1 - eps * 100.f * (r__1 = tmp - tmp1, abs(r__1)); // , expr subst
+            r__3 = tmp - tmp1 - eps * 100.f * (r__1 = tmp - tmp1, f2c_abs(r__1)); // , expr subst
             isleft = max(r__2,r__3);
             slarrk_(&in, &in, &gl, &gu, &d__[ibegin], &e2[ibegin], pivmin, & rtl, &tmp, &tmp1, &iinfo);
             if (iinfo != 0)
@@ -629,7 +629,7 @@ L21:
             }
             /* Computing MIN */
             r__2 = gu;
-            r__3 = tmp + tmp1 + eps * 100.f * (r__1 = tmp + tmp1, abs(r__1)); // , expr subst
+            r__3 = tmp + tmp1 + eps * 100.f * (r__1 = tmp + tmp1, f2c_abs(r__1)); // , expr subst
             isrght = min(r__2,r__3);
             /* Improve the estimate of the spectral diameter */
             spdiam = isrght - isleft;
@@ -640,11 +640,11 @@ L21:
             /* Find approximations to the wanted extremal eigenvalues */
             /* Computing MAX */
             r__2 = gl;
-            r__3 = w[wbegin] - werr[wbegin] - eps * 100.f * (r__1 = w[wbegin] - werr[wbegin], abs(r__1)); // , expr subst
+            r__3 = w[wbegin] - werr[wbegin] - eps * 100.f * (r__1 = w[wbegin] - werr[wbegin], f2c_abs(r__1)); // , expr subst
             isleft = max(r__2,r__3);
             /* Computing MIN */
             r__2 = gu;
-            r__3 = w[wend] + werr[wend] + eps * 100.f * (r__1 = w[ wend] + werr[wend], abs(r__1)); // , expr subst
+            r__3 = w[wend] + werr[wend] + eps * 100.f * (r__1 = w[ wend] + werr[wend], f2c_abs(r__1)); // , expr subst
             isrght = min(r__2,r__3);
         }
         /* Decide whether the base representation for the current block */
@@ -748,7 +748,7 @@ L21:
             tau = spdiam * eps * *n + *pivmin * 2.f;
             /* Computing MAX */
             r__1 = tau;
-            r__2 = eps * 2.f * abs(sigma); // , expr subst
+            r__2 = eps * 2.f * f2c_abs(sigma); // , expr subst
             tau = max(r__1,r__2);
         }
         else
@@ -756,7 +756,7 @@ L21:
             if (mb > 1)
             {
                 clwdth = w[wend] + werr[wend] - w[wbegin] - werr[wbegin];
-                avgap = (r__1 = clwdth / (real) (wend - wbegin), abs(r__1));
+                avgap = (r__1 = clwdth / (real) (wend - wbegin), f2c_abs(r__1));
                 if (sgndef == 1.f)
                 {
                     /* Computing MAX */
@@ -792,7 +792,7 @@ L21:
             /* pivots in WORK(2*IN+1:3*IN) */
             dpivot = d__[ibegin] - sigma;
             work[1] = dpivot;
-            dmax__ = abs(work[1]);
+            dmax__ = f2c_abs(work[1]);
             j = ibegin;
             i__2 = in - 1;
             for (i__ = 1;
@@ -806,7 +806,7 @@ L21:
                 work[i__ + 1] = dpivot;
                 /* Computing MAX */
                 r__1 = dmax__;
-                r__2 = abs(dpivot); // , expr subst
+                r__2 = f2c_abs(dpivot); // , expr subst
                 dmax__ = max(r__1,r__2);
                 ++j;
                 /* L70: */
@@ -922,7 +922,7 @@ L83: /* At this point, we have found an initial base representation */
                     ++j)
             {
                 w[j] -= sigma;
-                werr[j] += (r__1 = w[j], abs(r__1)) * eps;
+                werr[j] += (r__1 = w[j], f2c_abs(r__1)) * eps;
                 /* L134: */
             }
             /* call SLARRB to reduce eigenvalue error of the approximations */
@@ -982,12 +982,12 @@ L83: /* At this point, we have found an initial base representation */
                     i__ <= i__2;
                     ++i__)
             {
-                work[(i__ << 1) - 1] = (r__1 = d__[j], abs(r__1));
+                work[(i__ << 1) - 1] = (r__1 = d__[j], f2c_abs(r__1));
                 work[i__ * 2] = e[j] * e[j] * work[(i__ << 1) - 1];
                 ++j;
                 /* L140: */
             }
-            work[(in << 1) - 1] = (r__1 = d__[iend], abs(r__1));
+            work[(in << 1) - 1] = (r__1 = d__[iend], f2c_abs(r__1));
             work[in * 2] = 0.f;
             slasq2_(&in, &work[1], &iinfo);
             if (iinfo != 0)
@@ -1048,7 +1048,7 @@ L83: /* At this point, we have found an initial base representation */
                     ++i__)
             {
                 /* the value of RTOL below should be the tolerance in SLASQ2 */
-                werr[i__] = rtol * (r__1 = w[i__], abs(r__1));
+                werr[i__] = rtol * (r__1 = w[i__], f2c_abs(r__1));
                 /* L165: */
             }
             i__2 = *m - 1;

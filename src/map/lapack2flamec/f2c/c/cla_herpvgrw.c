@@ -193,12 +193,12 @@ real cla_herpvgrw_(char *uplo, integer *n, integer *info, complex *a, integer *l
             {
                 /* Computing MAX */
                 i__3 = i__ + j * a_dim1;
-                r__3 = (r__1 = a[i__3].r, abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]), abs(r__2));
+                r__3 = (r__1 = a[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]), f2c_abs(r__2));
                 r__4 = work[*n + i__]; // , expr subst
                 work[*n + i__] = max(r__3,r__4);
                 /* Computing MAX */
                 i__3 = i__ + j * a_dim1;
-                r__3 = (r__1 = a[i__3].r, abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]), abs(r__2));
+                r__3 = (r__1 = a[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]), f2c_abs(r__2));
                 r__4 = work[*n + j]; // , expr subst
                 work[*n + j] = max(r__3,r__4);
             }
@@ -218,12 +218,12 @@ real cla_herpvgrw_(char *uplo, integer *n, integer *info, complex *a, integer *l
             {
                 /* Computing MAX */
                 i__3 = i__ + j * a_dim1;
-                r__3 = (r__1 = a[i__3].r, abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]), abs(r__2));
+                r__3 = (r__1 = a[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]), f2c_abs(r__2));
                 r__4 = work[*n + i__]; // , expr subst
                 work[*n + i__] = max(r__3,r__4);
                 /* Computing MAX */
                 i__3 = i__ + j * a_dim1;
-                r__3 = (r__1 = a[i__3].r, abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]), abs(r__2));
+                r__3 = (r__1 = a[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]), f2c_abs(r__2));
                 r__4 = work[*n + j]; // , expr subst
                 work[*n + j] = max(r__3,r__4);
             }
@@ -256,7 +256,7 @@ real cla_herpvgrw_(char *uplo, integer *n, integer *info, complex *a, integer *l
                 {
                     /* Computing MAX */
                     i__2 = i__ + k * af_dim1;
-                    r__3 = (r__1 = af[i__2].r, abs(r__1)) + (r__2 = r_imag(& af[i__ + k * af_dim1]), abs(r__2));
+                    r__3 = (r__1 = af[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(& af[i__ + k * af_dim1]), f2c_abs(r__2));
                     r__4 = work[k] ; // , expr subst
                     work[k] = max(r__3,r__4);
                 }
@@ -276,18 +276,18 @@ real cla_herpvgrw_(char *uplo, integer *n, integer *info, complex *a, integer *l
                 {
                     /* Computing MAX */
                     i__2 = i__ + k * af_dim1;
-                    r__3 = (r__1 = af[i__2].r, abs(r__1)) + (r__2 = r_imag(& af[i__ + k * af_dim1]), abs(r__2));
+                    r__3 = (r__1 = af[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(& af[i__ + k * af_dim1]), f2c_abs(r__2));
                     r__4 = work[k] ; // , expr subst
                     work[k] = max(r__3,r__4);
                     /* Computing MAX */
                     i__2 = i__ + (k - 1) * af_dim1;
-                    r__3 = (r__1 = af[i__2].r, abs(r__1)) + (r__2 = r_imag(& af[i__ + (k - 1) * af_dim1]), abs(r__2));
+                    r__3 = (r__1 = af[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(& af[i__ + (k - 1) * af_dim1]), f2c_abs(r__2));
                     r__4 = work[k - 1]; // , expr subst
                     work[k - 1] = max(r__3,r__4);
                 }
                 /* Computing MAX */
                 i__1 = k + k * af_dim1;
-                r__3 = (r__1 = af[i__1].r, abs(r__1)) + (r__2 = r_imag(&af[k + k * af_dim1]), abs(r__2));
+                r__3 = (r__1 = af[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&af[k + k * af_dim1]), f2c_abs(r__2));
                 r__4 = work[k]; // , expr subst
                 work[k] = max(r__3,r__4);
                 k += -2;
@@ -339,7 +339,7 @@ real cla_herpvgrw_(char *uplo, integer *n, integer *info, complex *a, integer *l
                 {
                     /* Computing MAX */
                     i__2 = i__ + k * af_dim1;
-                    r__3 = (r__1 = af[i__2].r, abs(r__1)) + (r__2 = r_imag(& af[i__ + k * af_dim1]), abs(r__2));
+                    r__3 = (r__1 = af[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(& af[i__ + k * af_dim1]), f2c_abs(r__2));
                     r__4 = work[k] ; // , expr subst
                     work[k] = max(r__3,r__4);
                 }
@@ -359,18 +359,18 @@ real cla_herpvgrw_(char *uplo, integer *n, integer *info, complex *a, integer *l
                 {
                     /* Computing MAX */
                     i__2 = i__ + k * af_dim1;
-                    r__3 = (r__1 = af[i__2].r, abs(r__1)) + (r__2 = r_imag(& af[i__ + k * af_dim1]), abs(r__2));
+                    r__3 = (r__1 = af[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(& af[i__ + k * af_dim1]), f2c_abs(r__2));
                     r__4 = work[k] ; // , expr subst
                     work[k] = max(r__3,r__4);
                     /* Computing MAX */
                     i__2 = i__ + (k + 1) * af_dim1;
-                    r__3 = (r__1 = af[i__2].r, abs(r__1)) + (r__2 = r_imag(& af[i__ + (k + 1) * af_dim1]), abs(r__2));
+                    r__3 = (r__1 = af[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(& af[i__ + (k + 1) * af_dim1]), f2c_abs(r__2));
                     r__4 = work[k + 1]; // , expr subst
                     work[k + 1] = max(r__3,r__4);
                 }
                 /* Computing MAX */
                 i__1 = k + k * af_dim1;
-                r__3 = (r__1 = af[i__1].r, abs(r__1)) + (r__2 = r_imag(&af[k + k * af_dim1]), abs(r__2));
+                r__3 = (r__1 = af[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&af[k + k * af_dim1]), f2c_abs(r__2));
                 r__4 = work[k]; // , expr subst
                 work[k] = max(r__3,r__4);
                 k += 2;

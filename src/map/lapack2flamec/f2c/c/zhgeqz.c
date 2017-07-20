@@ -295,7 +295,7 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     doublereal d__1, d__2, d__3, d__4, d__5, d__6;
     doublecomplex z__1, z__2, z__3, z__4, z__5, z__6;
     /* Builtin functions */
-    double z_abs(doublecomplex *);
+    double z_f2c_abs(doublecomplex *);
     void d_cnjg(doublecomplex *, doublecomplex *);
     double d_imag(doublecomplex *);
     void z_div(doublecomplex *, doublecomplex *, doublecomplex *), pow_zi( doublecomplex *, doublecomplex *, integer *), z_sqrt( doublecomplex *, doublecomplex *);
@@ -541,7 +541,7 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
             j <= i__1;
             ++j)
     {
-        absb = z_abs(&t[j + j * t_dim1]);
+        absb = z_f2c_abs(&t[j + j * t_dim1]);
         if (absb > safmin)
         {
             i__2 = j + j * t_dim1;
@@ -643,7 +643,7 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
         else
         {
             i__2 = ilast + (ilast - 1) * h_dim1;
-            if ((d__1 = h__[i__2].r, abs(d__1)) + (d__2 = d_imag(&h__[ilast + (ilast - 1) * h_dim1]), abs(d__2)) <= atol)
+            if ((d__1 = h__[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[ilast + (ilast - 1) * h_dim1]), f2c_abs(d__2)) <= atol)
             {
                 i__2 = ilast + (ilast - 1) * h_dim1;
                 h__[i__2].r = 0.;
@@ -651,7 +651,7 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                 goto L60;
             }
         }
-        if (z_abs(&t[ilast + ilast * t_dim1]) <= btol)
+        if (z_f2c_abs(&t[ilast + ilast * t_dim1]) <= btol)
         {
             i__2 = ilast + ilast * t_dim1;
             t[i__2].r = 0.;
@@ -672,7 +672,7 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
             else
             {
                 i__3 = j + (j - 1) * h_dim1;
-                if ((d__1 = h__[i__3].r, abs(d__1)) + (d__2 = d_imag(&h__[j + (j - 1) * h_dim1]), abs(d__2)) <= atol)
+                if ((d__1 = h__[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[j + (j - 1) * h_dim1]), f2c_abs(d__2)) <= atol)
                 {
                     i__3 = j + (j - 1) * h_dim1;
                     h__[i__3].r = 0.;
@@ -685,7 +685,7 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                 }
             }
             /* Test 2: for T(j,j)=0 */
-            if (z_abs(&t[j + j * t_dim1]) < btol)
+            if (z_f2c_abs(&t[j + j * t_dim1]) < btol)
             {
                 i__3 = j + j * t_dim1;
                 t[i__3].r = 0.;
@@ -697,7 +697,7 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                     i__3 = j + (j - 1) * h_dim1;
                     i__4 = j + 1 + j * h_dim1;
                     i__5 = j + j * h_dim1;
-                    if (((d__1 = h__[i__3].r, abs(d__1)) + (d__2 = d_imag(& h__[j + (j - 1) * h_dim1]), abs(d__2))) * (ascale * ((d__3 = h__[i__4].r, abs(d__3)) + (d__4 = d_imag(&h__[j + 1 + j * h_dim1]), abs(d__4)))) <= ((d__5 = h__[i__5].r, abs(d__5)) + (d__6 = d_imag( &h__[j + j * h_dim1]), abs(d__6))) * (ascale * atol))
+                    if (((d__1 = h__[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(& h__[j + (j - 1) * h_dim1]), f2c_abs(d__2))) * (ascale * ((d__3 = h__[i__4].r, f2c_abs(d__3)) + (d__4 = d_imag(&h__[j + 1 + j * h_dim1]), f2c_abs(d__4)))) <= ((d__5 = h__[i__5].r, f2c_abs(d__5)) + (d__6 = d_imag( &h__[j + j * h_dim1]), f2c_abs(d__6))) * (ascale * atol))
                     {
                         ilazr2 = TRUE_;
                     }
@@ -741,7 +741,7 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                         }
                         ilazr2 = FALSE_;
                         i__4 = jch + 1 + (jch + 1) * t_dim1;
-                        if ((d__1 = t[i__4].r, abs(d__1)) + (d__2 = d_imag(&t[ jch + 1 + (jch + 1) * t_dim1]), abs(d__2)) >= btol)
+                        if ((d__1 = t[i__4].r, f2c_abs(d__1)) + (d__2 = d_imag(&t[ jch + 1 + (jch + 1) * t_dim1]), f2c_abs(d__2)) >= btol)
                         {
                             if (jch + 1 >= ilast)
                             {
@@ -840,7 +840,7 @@ L50:
         }
         /* H(ILAST,ILAST-1)=0 -- Standardize B, set ALPHA and BETA */
 L60:
-        absb = z_abs(&t[ilast + ilast * t_dim1]);
+        absb = z_f2c_abs(&t[ilast + ilast * t_dim1]);
         if (absb > safmin)
         {
             i__2 = ilast + ilast * t_dim1;
@@ -1051,9 +1051,9 @@ L70:
             z__1.i = z__2.i - z__3.i; // , expr subst
             ctemp.r = z__1.r;
             ctemp.i = z__1.i; // , expr subst
-            temp = (d__1 = ctemp.r, abs(d__1)) + (d__2 = d_imag(&ctemp), abs( d__2));
+            temp = (d__1 = ctemp.r, f2c_abs(d__1)) + (d__2 = d_imag(&ctemp), f2c_abs( d__2));
             i__3 = j + 1 + j * h_dim1;
-            temp2 = ascale * ((d__1 = h__[i__3].r, abs(d__1)) + (d__2 = d_imag(&h__[j + 1 + j * h_dim1]), abs(d__2)));
+            temp2 = ascale * ((d__1 = h__[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[j + 1 + j * h_dim1]), f2c_abs(d__2)));
             tempr = max(temp,temp2);
             if (tempr < 1. && tempr != 0.)
             {
@@ -1061,7 +1061,7 @@ L70:
                 temp2 /= tempr;
             }
             i__3 = j + (j - 1) * h_dim1;
-            if (((d__1 = h__[i__3].r, abs(d__1)) + (d__2 = d_imag(&h__[j + (j - 1) * h_dim1]), abs(d__2))) * temp2 <= temp * atol)
+            if (((d__1 = h__[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[j + (j - 1) * h_dim1]), f2c_abs(d__2))) * temp2 <= temp * atol)
             {
                 goto L90;
             }
@@ -1332,7 +1332,7 @@ L190: /* Set Eigenvalues 1:ILO-1 */
             j <= i__1;
             ++j)
     {
-        absb = z_abs(&t[j + j * t_dim1]);
+        absb = z_f2c_abs(&t[j + j * t_dim1]);
         if (absb > safmin)
         {
             i__2 = j + j * t_dim1;

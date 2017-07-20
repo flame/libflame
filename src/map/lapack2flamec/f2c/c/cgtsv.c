@@ -200,7 +200,7 @@ int cgtsv_(integer *n, integer *nrhs, complex *dl, complex * d__, complex *du, c
         {
             i__2 = k;
             i__3 = k;
-            if ((r__1 = d__[i__2].r, abs(r__1)) + (r__2 = r_imag(&d__[k]), abs(r__2)) >= (r__3 = dl[i__3].r, abs(r__3)) + (r__4 = r_imag(&dl[k]), abs(r__4)))
+            if ((r__1 = d__[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&d__[k]), f2c_abs(r__2)) >= (r__3 = dl[i__3].r, f2c_abs(r__3)) + (r__4 = r_imag(&dl[k]), f2c_abs(r__4)))
             {
                 /* No row interchange required */
                 c_div(&q__1, &dl[k], &d__[k]);

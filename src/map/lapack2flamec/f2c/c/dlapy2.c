@@ -70,8 +70,8 @@ doublereal dlapy2_(doublereal *x, doublereal *y)
     /* .. Intrinsic Functions .. */
     /* .. */
     /* .. Executable Statements .. */
-    xabs = abs(*x);
-    yabs = abs(*y);
+    xabs = f2c_abs(*x);
+    yabs = f2c_abs(*y);
     w = max(xabs,yabs);
     z__ = min(xabs,yabs);
     if (z__ == 0.)

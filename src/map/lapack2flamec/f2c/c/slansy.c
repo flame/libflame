@@ -38,7 +38,7 @@ static integer c__1 = 1;
 /* > \return SLANSY */
 /* > \verbatim */
 /* > */
-/* > SLANSY = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > SLANSY = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -49,7 +49,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -157,7 +157,7 @@ real slansy_(char *norm, char *uplo, integer *n, real *a, integer *lda, real * w
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
+        /* Find max(f2c_abs(A(i,j))). */
         value = 0.f;
         if (lsame_(uplo, "U"))
         {
@@ -171,7 +171,7 @@ real slansy_(char *norm, char *uplo, integer *n, real *a, integer *lda, real * w
                         i__ <= i__2;
                         ++i__)
                 {
-                    sum = (r__1 = a[i__ + j * a_dim1], abs(r__1));
+                    sum = (r__1 = a[i__ + j * a_dim1], f2c_abs(r__1));
                     if (value < sum || sisnan_(&sum))
                     {
                         value = sum;
@@ -193,7 +193,7 @@ real slansy_(char *norm, char *uplo, integer *n, real *a, integer *lda, real * w
                         i__ <= i__2;
                         ++i__)
                 {
-                    sum = (r__1 = a[i__ + j * a_dim1], abs(r__1));
+                    sum = (r__1 = a[i__ + j * a_dim1], f2c_abs(r__1));
                     if (value < sum || sisnan_(&sum))
                     {
                         value = sum;
@@ -221,12 +221,12 @@ real slansy_(char *norm, char *uplo, integer *n, real *a, integer *lda, real * w
                         i__ <= i__2;
                         ++i__)
                 {
-                    absa = (r__1 = a[i__ + j * a_dim1], abs(r__1));
+                    absa = (r__1 = a[i__ + j * a_dim1], f2c_abs(r__1));
                     sum += absa;
                     work[i__] += absa;
                     /* L50: */
                 }
-                work[j] = sum + (r__1 = a[j + j * a_dim1], abs(r__1));
+                work[j] = sum + (r__1 = a[j + j * a_dim1], f2c_abs(r__1));
                 /* L60: */
             }
             i__1 = *n;
@@ -257,13 +257,13 @@ real slansy_(char *norm, char *uplo, integer *n, real *a, integer *lda, real * w
                     j <= i__1;
                     ++j)
             {
-                sum = work[j] + (r__1 = a[j + j * a_dim1], abs(r__1));
+                sum = work[j] + (r__1 = a[j + j * a_dim1], f2c_abs(r__1));
                 i__2 = *n;
                 for (i__ = j + 1;
                         i__ <= i__2;
                         ++i__)
                 {
-                    absa = (r__1 = a[i__ + j * a_dim1], abs(r__1));
+                    absa = (r__1 = a[i__ + j * a_dim1], f2c_abs(r__1));
                     sum += absa;
                     work[i__] += absa;
                     /* L90: */

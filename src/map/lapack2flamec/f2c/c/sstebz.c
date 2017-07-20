@@ -447,7 +447,7 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
         tmp1 = r__1 * r__1;
         /* Computing 2nd power */
         r__2 = ulp;
-        if ((r__1 = d__[j] * d__[j - 1], abs(r__1)) * (r__2 * r__2) + safemn > tmp1)
+        if ((r__1 = d__[j] * d__[j - 1], f2c_abs(r__1)) * (r__2 * r__2) + safemn > tmp1)
         {
             isplit[*nsplit] = j - 1;
             ++(*nsplit);
@@ -498,8 +498,8 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
         r__2 = d__[*n] - tmp1; // , expr subst
         gl = min(r__1,r__2);
         /* Computing MAX */
-        r__1 = abs(gl);
-        r__2 = abs(gu); // , expr subst
+        r__1 = f2c_abs(gl);
+        r__2 = f2c_abs(gu); // , expr subst
         tnorm = max(r__1,r__2);
         gl = gl - tnorm * 2.1f * ulp * *n - pivmin * 4.2000000000000002f;
         gu = gu + tnorm * 2.1f * ulp * *n + pivmin * 2.1f;
@@ -554,8 +554,8 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
     {
         /* RANGE='A' or 'V' -- Set ATOLI */
         /* Computing MAX */
-        r__3 = abs(d__[1]) + abs(e[1]);
-        r__4 = (r__1 = d__[*n], abs(r__1)) + ( r__2 = e[*n - 1], abs(r__2)); // , expr subst
+        r__3 = f2c_abs(d__[1]) + f2c_abs(e[1]);
+        r__4 = (r__1 = d__[*n], f2c_abs(r__1)) + ( r__2 = e[*n - 1], f2c_abs(r__2)); // , expr subst
         tnorm = max(r__3,r__4);
         i__1 = *n - 1;
         for (j = 2;
@@ -564,7 +564,7 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
         {
             /* Computing MAX */
             r__4 = tnorm;
-            r__5 = (r__1 = d__[j], abs(r__1)) + (r__2 = e[j - 1] , abs(r__2)) + (r__3 = e[j], abs(r__3)); // , expr subst
+            r__5 = (r__1 = d__[j], f2c_abs(r__1)) + (r__2 = e[j - 1] , f2c_abs(r__2)) + (r__3 = e[j], f2c_abs(r__3)); // , expr subst
             tnorm = max(r__4,r__5);
             /* L30: */
         }
@@ -635,7 +635,7 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
                     j <= i__2;
                     ++j)
             {
-                tmp2 = (r__1 = e[j], abs(r__1));
+                tmp2 = (r__1 = e[j], f2c_abs(r__1));
                 /* Computing MAX */
                 r__1 = gu;
                 r__2 = d__[j] + tmp1 + tmp2; // , expr subst
@@ -656,8 +656,8 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
             r__2 = d__[iend] - tmp1; // , expr subst
             gl = min(r__1,r__2);
             /* Computing MAX */
-            r__1 = abs(gl);
-            r__2 = abs(gu); // , expr subst
+            r__1 = f2c_abs(gl);
+            r__2 = f2c_abs(gu); // , expr subst
             bnorm = max(r__1,r__2);
             gl = gl - bnorm * 2.1f * ulp * in - pivmin * 2.1f;
             gu = gu + bnorm * 2.1f * ulp * in + pivmin * 2.1f;
@@ -665,8 +665,8 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
             if (*abstol <= 0.f)
             {
                 /* Computing MAX */
-                r__1 = abs(gl);
-                r__2 = abs(gu); // , expr subst
+                r__1 = f2c_abs(gl);
+                r__2 = f2c_abs(gu); // , expr subst
                 atoli = ulp * max(r__1,r__2);
             }
             else

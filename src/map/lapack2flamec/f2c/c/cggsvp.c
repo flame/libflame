@@ -400,7 +400,7 @@ int cggsvp_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
             ++i__)
     {
         i__2 = i__ + i__ * b_dim1;
-        if ((r__1 = b[i__2].r, abs(r__1)) + (r__2 = r_imag(&b[i__ + i__ * b_dim1]), abs(r__2)) > *tolb)
+        if ((r__1 = b[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&b[i__ + i__ * b_dim1]), f2c_abs(r__2)) > *tolb)
         {
             ++(*l);
         }
@@ -505,7 +505,7 @@ int cggsvp_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
             ++i__)
     {
         i__2 = i__ + i__ * a_dim1;
-        if ((r__1 = a[i__2].r, abs(r__1)) + (r__2 = r_imag(&a[i__ + i__ * a_dim1]), abs(r__2)) > *tola)
+        if ((r__1 = a[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&a[i__ + i__ * a_dim1]), f2c_abs(r__2)) > *tola)
         {
             ++(*k);
         }

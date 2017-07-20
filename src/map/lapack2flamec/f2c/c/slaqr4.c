@@ -514,7 +514,7 @@ L20:
                 else
                 {
                     kwtop = kbot - nw + 1;
-                    if ((r__1 = h__[kwtop + (kwtop - 1) * h_dim1], abs(r__1)) > (r__2 = h__[kwtop - 1 + (kwtop - 2) * h_dim1], abs(r__2)))
+                    if ((r__1 = h__[kwtop + (kwtop - 1) * h_dim1], f2c_abs(r__1)) > (r__2 = h__[kwtop - 1 + (kwtop - 2) * h_dim1], f2c_abs(r__2)))
                     {
                         ++nw;
                     }
@@ -589,7 +589,7 @@ L20:
                             i__ >= i__2;
                             i__ += -2)
                     {
-                        ss = (r__1 = h__[i__ + (i__ - 1) * h_dim1], abs(r__1)) + (r__2 = h__[i__ - 1 + (i__ - 2) * h_dim1], abs(r__2));
+                        ss = (r__1 = h__[i__ + (i__ - 1) * h_dim1], f2c_abs(r__1)) + (r__2 = h__[i__ - 1 + (i__ - 2) * h_dim1], f2c_abs(r__2));
                         aa = ss * .75f + h__[i__ + i__ * h_dim1];
                         bb = ss;
                         cc = ss * -.4375f;
@@ -653,7 +653,7 @@ L20:
                                     i__ <= i__3;
                                     ++i__)
                             {
-                                if ((r__1 = wr[i__], abs(r__1)) + (r__2 = wi[ i__], abs(r__2)) < (r__3 = wr[i__ + 1] , abs(r__3)) + (r__4 = wi[i__ + 1], abs(r__4)))
+                                if ((r__1 = wr[i__], f2c_abs(r__1)) + (r__2 = wi[ i__], f2c_abs(r__2)) < (r__3 = wr[i__ + 1] , f2c_abs(r__3)) + (r__4 = wi[i__ + 1], f2c_abs(r__4)))
                                 {
                                     sorted = FALSE_;
                                     swap = wr[i__];
@@ -700,7 +700,7 @@ L60:
                 {
                     if (wi[kbot] == 0.f)
                     {
-                        if ((r__1 = wr[kbot] - h__[kbot + kbot * h_dim1], abs( r__1)) < (r__2 = wr[kbot - 1] - h__[kbot + kbot * h_dim1], abs(r__2)))
+                        if ((r__1 = wr[kbot] - h__[kbot + kbot * h_dim1], f2c_abs( r__1)) < (r__2 = wr[kbot - 1] - h__[kbot + kbot * h_dim1], f2c_abs(r__2)))
                         {
                             wr[kbot - 1] = wr[kbot];
                         }

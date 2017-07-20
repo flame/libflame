@@ -480,7 +480,7 @@ L60:
                 q__2.i = w[i__3].i - wk.i; // , expr subst
                 q__1.r = q__2.r;
                 q__1.i = q__2.i; // , expr subst
-                if (select[i__] && (r__1 = q__1.r, abs(r__1)) + (r__2 = r_imag(&q__1), abs(r__2)) < eps3)
+                if (select[i__] && (r__1 = q__1.r, f2c_abs(r__1)) + (r__2 = r_imag(&q__1), f2c_abs(r__2)) < eps3)
                 {
                     q__1.r = wk.r + eps3;
                     q__1.i = wk.i; // , expr subst

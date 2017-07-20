@@ -31,8 +31,8 @@
 /* > */
 /* > SLA_GBAMV performs one of the matrix-vector operations */
 /* > */
-/* > y := alpha*abs(A)*abs(x) + beta*abs(y), */
-/* > or y := alpha*abs(A)**T*abs(x) + beta*abs(y), */
+/* > y := alpha*f2c_abs(A)*f2c_abs(x) + beta*f2c_abs(y), */
+/* > or y := alpha*f2c_abs(A)**T*f2c_abs(x) + beta*f2c_abs(y), */
 /* > */
 /* > where alpha and beta are scalars, x and y are vectors and A is an */
 /* > m by n matrix. */
@@ -54,9 +54,9 @@
 /* > On entry, TRANS specifies the operation to be performed as */
 /* > follows: */
 /* > */
-/* > BLAS_NO_TRANS y := alpha*abs(A)*abs(x) + beta*abs(y) */
-/* > BLAS_TRANS y := alpha*abs(A**T)*abs(x) + beta*abs(y) */
-/* > BLAS_CONJ_TRANS y := alpha*abs(A**T)*abs(x) + beta*abs(y) */
+/* > BLAS_NO_TRANS y := alpha*f2c_abs(A)*f2c_abs(x) + beta*f2c_abs(y) */
+/* > BLAS_TRANS y := alpha*f2c_abs(A**T)*f2c_abs(x) + beta*f2c_abs(y) */
+/* > BLAS_CONJ_TRANS y := alpha*f2c_abs(A**T)*f2c_abs(x) + beta*f2c_abs(y) */
 /* > */
 /* > Unchanged on exit. */
 /* > \endverbatim */
@@ -116,9 +116,9 @@
 /* > \param[in] X */
 /* > \verbatim */
 /* > X is REAL array, dimension */
-/* > ( 1 + ( n - 1 )*abs( INCX ) ) when TRANS = 'N' or 'n' */
+/* > ( 1 + ( n - 1 )*f2c_abs( INCX ) ) when TRANS = 'N' or 'n' */
 /* > and at least */
-/* > ( 1 + ( m - 1 )*abs( INCX ) ) otherwise. */
+/* > ( 1 + ( m - 1 )*f2c_abs( INCX ) ) otherwise. */
 /* > Before entry, the incremented array X must contain the */
 /* > vector x. */
 /* > Unchanged on exit. */
@@ -143,9 +143,9 @@
 /* > \param[in,out] Y */
 /* > \verbatim */
 /* > Y is REAL array, dimension */
-/* > ( 1 + ( m - 1 )*abs( INCY ) ) when TRANS = 'N' or 'n' */
+/* > ( 1 + ( m - 1 )*f2c_abs( INCY ) ) when TRANS = 'N' or 'n' */
 /* > and at least */
-/* > ( 1 + ( n - 1 )*abs( INCY ) ) otherwise. */
+/* > ( 1 + ( n - 1 )*f2c_abs( INCY ) ) otherwise. */
 /* > Before entry with BETA non-zero, the incremented array Y */
 /* > must contain the vector y. On exit, Y is overwritten by the */
 /* > updated vector y. */
@@ -291,7 +291,7 @@ int sla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
     /* number of additions in each row. */
     safe1 = slamch_("Safe minimum");
     safe1 = (*n + 1) * safe1;
-    /* Form y := alpha*abs(A)*abs(x) + beta*abs(y). */
+    /* Form y := alpha*f2c_abs(A)*f2c_abs(x) + beta*f2c_abs(y). */
     /* The O(M*N) SYMB_ZERO tests could be replaced by O(N) queries to */
     /* the inexact flag. Still doesn't help change the iteration order */
     /* to per-column. */
@@ -319,7 +319,7 @@ int sla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                 else
                 {
                     symb_zero__ = FALSE_;
-                    y[iy] = *beta * (r__1 = y[iy], abs(r__1));
+                    y[iy] = *beta * (r__1 = y[iy], f2c_abs(r__1));
                 }
                 if (*alpha != 0.f)
                 {
@@ -332,9 +332,9 @@ int sla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                             j <= i__3;
                             ++j)
                     {
-                        temp = (r__1 = ab[kd + i__ - j + j * ab_dim1], abs( r__1));
+                        temp = (r__1 = ab[kd + i__ - j + j * ab_dim1], f2c_abs( r__1));
                         symb_zero__ = symb_zero__ && (x[j] == 0.f || temp == 0.f);
-                        y[iy] += *alpha * (r__1 = x[j], abs(r__1)) * temp;
+                        y[iy] += *alpha * (r__1 = x[j], f2c_abs(r__1)) * temp;
                     }
                 }
                 if (! symb_zero__)
@@ -363,7 +363,7 @@ int sla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                 else
                 {
                     symb_zero__ = FALSE_;
-                    y[iy] = *beta * (r__1 = y[iy], abs(r__1));
+                    y[iy] = *beta * (r__1 = y[iy], f2c_abs(r__1));
                 }
                 if (*alpha != 0.f)
                 {
@@ -376,9 +376,9 @@ int sla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                             j <= i__2;
                             ++j)
                     {
-                        temp = (r__1 = ab[ke - i__ + j + i__ * ab_dim1], abs( r__1));
+                        temp = (r__1 = ab[ke - i__ + j + i__ * ab_dim1], f2c_abs( r__1));
                         symb_zero__ = symb_zero__ && (x[j] == 0.f || temp == 0.f);
-                        y[iy] += *alpha * (r__1 = x[j], abs(r__1)) * temp;
+                        y[iy] += *alpha * (r__1 = x[j], f2c_abs(r__1)) * temp;
                     }
                 }
                 if (! symb_zero__)
@@ -410,7 +410,7 @@ int sla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                 else
                 {
                     symb_zero__ = FALSE_;
-                    y[iy] = *beta * (r__1 = y[iy], abs(r__1));
+                    y[iy] = *beta * (r__1 = y[iy], f2c_abs(r__1));
                 }
                 if (*alpha != 0.f)
                 {
@@ -424,9 +424,9 @@ int sla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                             j <= i__3;
                             ++j)
                     {
-                        temp = (r__1 = ab[kd + i__ - j + j * ab_dim1], abs( r__1));
+                        temp = (r__1 = ab[kd + i__ - j + j * ab_dim1], f2c_abs( r__1));
                         symb_zero__ = symb_zero__ && (x[jx] == 0.f || temp == 0.f);
-                        y[iy] += *alpha * (r__1 = x[jx], abs(r__1)) * temp;
+                        y[iy] += *alpha * (r__1 = x[jx], f2c_abs(r__1)) * temp;
                         jx += *incx;
                     }
                 }
@@ -456,7 +456,7 @@ int sla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                 else
                 {
                     symb_zero__ = FALSE_;
-                    y[iy] = *beta * (r__1 = y[iy], abs(r__1));
+                    y[iy] = *beta * (r__1 = y[iy], f2c_abs(r__1));
                 }
                 if (*alpha != 0.f)
                 {
@@ -470,9 +470,9 @@ int sla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                             j <= i__2;
                             ++j)
                     {
-                        temp = (r__1 = ab[ke - i__ + j + i__ * ab_dim1], abs( r__1));
+                        temp = (r__1 = ab[ke - i__ + j + i__ * ab_dim1], f2c_abs( r__1));
                         symb_zero__ = symb_zero__ && (x[jx] == 0.f || temp == 0.f);
-                        y[iy] += *alpha * (r__1 = x[jx], abs(r__1)) * temp;
+                        y[iy] += *alpha * (r__1 = x[jx], f2c_abs(r__1)) * temp;
                         jx += *incx;
                     }
                 }

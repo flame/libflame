@@ -176,9 +176,9 @@ int sgesc2_(integer *n, real *a, integer *lda, real *rhs, integer *ipiv, integer
     *scale = 1.f;
     /* Check for scaling */
     i__ = isamax_(n, &rhs[1], &c__1);
-    if (smlnum * 2.f * (r__1 = rhs[i__], abs(r__1)) > (r__2 = a[*n + *n * a_dim1], abs(r__2)))
+    if (smlnum * 2.f * (r__1 = rhs[i__], f2c_abs(r__1)) > (r__2 = a[*n + *n * a_dim1], f2c_abs(r__2)))
     {
-        temp = .5f / (r__1 = rhs[i__], abs(r__1));
+        temp = .5f / (r__1 = rhs[i__], f2c_abs(r__1));
         sscal_(n, &temp, &rhs[1], &c__1);
         *scale *= temp;
     }

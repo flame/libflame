@@ -30,8 +30,8 @@
 /* > */
 /* > CLA_LIN_BERR computes componentwise relative backward error from */
 /* > the formula */
-/* > max(i) ( abs(R(i)) / ( abs(op(A_s))*abs(Y) + abs(B_s) )(i) ) */
-/* > where abs(Z) is the componentwise absolute value of the matrix */
+/* > max(i) ( f2c_abs(R(i)) / ( f2c_abs(op(A_s))*f2c_abs(Y) + f2c_abs(B_s) )(i) ) */
+/* > where f2c_abs(Z) is the componentwise absolute value of the matrix */
 /* > or vector Z. */
 /* > \endverbatim */
 /* Arguments: */
@@ -68,7 +68,7 @@
 /* > \verbatim */
 /* > AYB is REAL array, dimension (N, NRHS) */
 /* > The denominator in the relative backward error formula above, i.e., */
-/* > the matrix abs(op(A_s))*abs(Y) + abs(B_s). The matrices A, Y, and B */
+/* > the matrix f2c_abs(op(A_s))*f2c_abs(Y) + f2c_abs(B_s). The matrices A, Y, and B */
 /* > are from iterative refinement (see cla_gerfsx_extended.f). */
 /* > \endverbatim */
 /* > */
@@ -147,7 +147,7 @@ int cla_lin_berr_(integer *n, integer *nz, integer *nrhs, complex *res, real *ay
             if (ayb[i__ + j * ayb_dim1] != 0.f)
             {
                 i__3 = i__ + j * res_dim1;
-                r__3 = (r__1 = res[i__3].r, abs(r__1)) + (r__2 = r_imag(&res[ i__ + j * res_dim1]), abs(r__2));
+                r__3 = (r__1 = res[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&res[ i__ + j * res_dim1]), f2c_abs(r__2));
                 q__3.r = r__3;
                 q__3.i = 0.f; // , expr subst
                 q__2.r = safe1 + q__3.r;

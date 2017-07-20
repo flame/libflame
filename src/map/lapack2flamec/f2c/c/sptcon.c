@@ -182,8 +182,8 @@ int sptcon_(integer *n, real *d__, real *e, real *anorm, real *rcond, real *work
         /* L10: */
     }
     /* Solve M(A) * x = e, where M(A) = (m(i,j)) is given by */
-    /* m(i,j) = abs(A(i,j)); i = j; */
-    /* m(i,j) = -abs(A(i,j)), i .ne. j, */
+    /* m(i,j) = f2c_abs(A(i,j)); i = j; */
+    /* m(i,j) = -f2c_abs(A(i,j)), i .ne. j, */
     /* and e = [ 1, 1, ..., 1 ]**T. Note M(A) = M(L)*D*M(L)**T. */
     /* Solve M(L) * x = e. */
     work[1] = 1.f;
@@ -192,7 +192,7 @@ int sptcon_(integer *n, real *d__, real *e, real *anorm, real *rcond, real *work
             i__ <= i__1;
             ++i__)
     {
-        work[i__] = work[i__ - 1] * (r__1 = e[i__ - 1], abs(r__1)) + 1.f;
+        work[i__] = work[i__ - 1] * (r__1 = e[i__ - 1], f2c_abs(r__1)) + 1.f;
         /* L20: */
     }
     /* Solve D * M(L)**T * x = b. */
@@ -201,12 +201,12 @@ int sptcon_(integer *n, real *d__, real *e, real *anorm, real *rcond, real *work
             i__ >= 1;
             --i__)
     {
-        work[i__] = work[i__] / d__[i__] + work[i__ + 1] * (r__1 = e[i__], abs(r__1));
+        work[i__] = work[i__] / d__[i__] + work[i__ + 1] * (r__1 = e[i__], f2c_abs(r__1));
         /* L30: */
     }
     /* Compute AINVNM = max(x(i)), 1<=i<=n. */
     ix = isamax_(n, &work[1], &c__1);
-    ainvnm = (r__1 = work[ix], abs(r__1));
+    ainvnm = (r__1 = work[ix], f2c_abs(r__1));
     /* Compute the reciprocal condition number. */
     if (ainvnm != 0.f)
     {

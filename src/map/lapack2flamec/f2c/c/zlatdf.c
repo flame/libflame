@@ -169,7 +169,7 @@ int zlatdf_(integer *ijob, integer *n, doublecomplex *z__, integer *ldz, doublec
     doublecomplex z__1, z__2, z__3;
     /* Builtin functions */
     void z_div(doublecomplex *, doublecomplex *, doublecomplex *);
-    double z_abs(doublecomplex *);
+    double z_f2c_abs(doublecomplex *);
     void z_sqrt(doublecomplex *, doublecomplex *);
     /* Local variables */
     integer i__, j, k;
@@ -365,8 +365,8 @@ int zlatdf_(integer *ijob, integer *n, doublecomplex *z__, integer *ldz, doublec
                 rhs[i__2].i = z__1.i; // , expr subst
                 /* L20: */
             }
-            splus += z_abs(&work[i__ - 1]);
-            sminu += z_abs(&rhs[i__]);
+            splus += z_f2c_abs(&work[i__ - 1]);
+            sminu += z_f2c_abs(&rhs[i__]);
             /* L30: */
         }
         if (splus > sminu)

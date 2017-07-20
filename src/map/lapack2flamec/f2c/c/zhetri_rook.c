@@ -130,7 +130,7 @@ int zhetri_rook_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer
     doublereal d__1;
     doublecomplex z__1, z__2;
     /* Builtin functions */
-    double z_abs(doublecomplex *);
+    double z_f2c_abs(doublecomplex *);
     void d_cnjg(doublecomplex *, doublecomplex *);
     /* Local variables */
     doublereal d__;
@@ -279,7 +279,7 @@ L30: /* If K > N, exit from loop. */
         {
             /* 2 x 2 diagonal block */
             /* Invert the diagonal block. */
-            t = z_abs(&a[k + (k + 1) * a_dim1]);
+            t = z_f2c_abs(&a[k + (k + 1) * a_dim1]);
             i__1 = k + k * a_dim1;
             ak = a[i__1].r / t;
             i__1 = k + 1 + (k + 1) * a_dim1;
@@ -542,7 +542,7 @@ L80: /* If K < 1, exit from loop. */
         {
             /* 2 x 2 diagonal block */
             /* Invert the diagonal block. */
-            t = z_abs(&a[k + (k - 1) * a_dim1]);
+            t = z_f2c_abs(&a[k + (k - 1) * a_dim1]);
             i__1 = k - 1 + (k - 1) * a_dim1;
             ak = a[i__1].r / t;
             i__1 = k + k * a_dim1;

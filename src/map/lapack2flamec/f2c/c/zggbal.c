@@ -176,7 +176,7 @@ int zggbal_(char *job, integer *n, doublecomplex *a, integer *lda, doublecomplex
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
     doublereal d__1, d__2, d__3;
     /* Builtin functions */
-    double d_lg10(doublereal *), d_imag(doublecomplex *), z_abs(doublecomplex *), d_sign(doublereal *, doublereal *), pow_di(doublereal *, integer *);
+    double d_lg10(doublereal *), d_imag(doublecomplex *), z_f2c_abs(doublecomplex *), d_sign(doublereal *, doublereal *), pow_di(doublereal *, integer *);
     /* Local variables */
     integer i__, j, k, l, m;
     doublereal t;
@@ -493,7 +493,7 @@ L190:
                 goto L210;
             }
             i__3 = i__ + j * a_dim1;
-            d__3 = (d__1 = a[i__3].r, abs(d__1)) + (d__2 = d_imag(&a[i__ + j * a_dim1]), abs(d__2));
+            d__3 = (d__1 = a[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&a[i__ + j * a_dim1]), f2c_abs(d__2));
             ta = d_lg10(&d__3) / basl;
 L210:
             i__3 = i__ + j * b_dim1;
@@ -503,7 +503,7 @@ L210:
                 goto L220;
             }
             i__3 = i__ + j * b_dim1;
-            d__3 = (d__1 = b[i__3].r, abs(d__1)) + (d__2 = d_imag(&b[i__ + j * b_dim1]), abs(d__2));
+            d__3 = (d__1 = b[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&b[i__ + j * b_dim1]), f2c_abs(d__2));
             tb = d_lg10(&d__3) / basl;
 L220:
             work[i__ + (*n << 2)] = work[i__ + (*n << 2)] - ta - tb;
@@ -639,15 +639,15 @@ L320:
             ++i__)
     {
         cor = alpha * work[i__ + *n];
-        if (abs(cor) > cmax)
+        if (f2c_abs(cor) > cmax)
         {
-            cmax = abs(cor);
+            cmax = f2c_abs(cor);
         }
         lscale[i__] += cor;
         cor = alpha * work[i__];
-        if (abs(cor) > cmax)
+        if (f2c_abs(cor) > cmax)
         {
-            cmax = abs(cor);
+            cmax = f2c_abs(cor);
         }
         rscale[i__] += cor;
         /* L340: */
@@ -679,12 +679,12 @@ L350:
     {
         i__2 = *n - *ilo + 1;
         irab = izamax_(&i__2, &a[i__ + *ilo * a_dim1], lda);
-        rab = z_abs(&a[i__ + (irab + *ilo - 1) * a_dim1]);
+        rab = z_f2c_abs(&a[i__ + (irab + *ilo - 1) * a_dim1]);
         i__2 = *n - *ilo + 1;
         irab = izamax_(&i__2, &b[i__ + *ilo * b_dim1], ldb);
         /* Computing MAX */
         d__1 = rab;
-        d__2 = z_abs(&b[i__ + (irab + *ilo - 1) * b_dim1]); // , expr subst
+        d__2 = z_f2c_abs(&b[i__ + (irab + *ilo - 1) * b_dim1]); // , expr subst
         rab = max(d__1,d__2);
         d__1 = rab + sfmin;
         lrab = (integer) (d_lg10(&d__1) / basl + 1.);
@@ -696,11 +696,11 @@ L350:
         ir = min(i__2,i__3);
         lscale[i__] = pow_di(&c_b36, &ir);
         icab = izamax_(ihi, &a[i__ * a_dim1 + 1], &c__1);
-        cab = z_abs(&a[icab + i__ * a_dim1]);
+        cab = z_f2c_abs(&a[icab + i__ * a_dim1]);
         icab = izamax_(ihi, &b[i__ * b_dim1 + 1], &c__1);
         /* Computing MAX */
         d__1 = cab;
-        d__2 = z_abs(&b[icab + i__ * b_dim1]); // , expr subst
+        d__2 = z_f2c_abs(&b[icab + i__ * b_dim1]); // , expr subst
         cab = max(d__1,d__2);
         d__1 = cab + sfmin;
         lcab = (integer) (d_lg10(&d__1) / basl + 1.);

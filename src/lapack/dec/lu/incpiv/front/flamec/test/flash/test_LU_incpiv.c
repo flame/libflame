@@ -121,8 +121,8 @@ int main(int argc, char *argv[])
     m = m_input;
     n = n_input;
 
-    if( m < 0 ) m = pp / abs(m_input);
-    if( n < 0 ) n = pp / abs(n_input);
+    if( m < 0 ) m = pp / f2c_abs(m_input);
+    if( n < 0 ) n = pp / f2c_abs(n_input);
 
     min_m_n = min( m, n );
 

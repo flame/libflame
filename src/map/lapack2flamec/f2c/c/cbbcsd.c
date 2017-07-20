@@ -1006,7 +1006,7 @@ int cbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
         r__1 = y1;
         /* Computing 2nd power */
         r__2 = y2;
-        phi[imax - 1] = atan2((abs(x1)), sqrt(r__1 * r__1 + r__2 * r__2));
+        phi[imax - 1] = atan2((f2c_abs(x1)), sqrt(r__1 * r__1 + r__2 * r__2));
         /* Chase bulges from B12(IMAX-1,IMAX) and B22(IMAX-1,IMAX) */
         /* Computing 2nd power */
         r__1 = b12d[imax - 1];
@@ -1125,7 +1125,7 @@ int cbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
         /* Compute THETA(IMAX) */
         x1 = cos(phi[imax - 1]) * b11d[imax] + sin(phi[imax - 1]) * b12e[imax - 1];
         y1 = cos(phi[imax - 1]) * b21d[imax] + sin(phi[imax - 1]) * b22e[imax - 1];
-        theta[imax] = atan2((abs(y1)), (abs(x1)));
+        theta[imax] = atan2((f2c_abs(y1)), (f2c_abs(x1)));
         /* Fix signs on B11(IMAX,IMAX), B12(IMAX,IMAX-1), B21(IMAX,IMAX), */
         /* and B22(IMAX,IMAX-1) */
         if (b11d[imax] + b12e[imax - 1] < 0.f)

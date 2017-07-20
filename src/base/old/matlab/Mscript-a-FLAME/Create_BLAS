@@ -1,0 +1,27 @@
+FLA_Axpy 3 0
+FLA_Copy 2 0 
+FLA_Copy_t 3 1
+FLA_Scal 2 0
+FLA_Inv_scal 2 0
+FLA_Swap 2 0 
+FLA_Iamax 2 0
+FLA_Nrm2 2 0
+FLA_Dot 3 0
+FLA_Dot_s 5 0
+
+FLA_Gemv 6 1
+FLA_Symv 6 1
+FLA_Trmv 5 3
+FLA_Trsv 5 3
+FLA_Ger 4 0
+FLA_Syr 4 1
+FLA_Syr2 5 1
+
+FLA_Gemm 7 2
+FLA_Symm 7 2
+FLA_Syrk 6 2
+FLA_Syr2k 7 2
+FLA_Trmm 7 4
+FLA_Trsm 7 4
+
+

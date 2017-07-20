@@ -132,7 +132,7 @@ int main(int argc, char *argv[])
     else if( matrix_config_flag == 1 )
     {
       m = n_input; 
-      n = abs(m_input);
+      n = f2c_abs(m_input);
     }
     else
     {

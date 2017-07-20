@@ -898,7 +898,7 @@ int sgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
                     p <= i__1;
                     ++p)
             {
-                work[*m + *n + p] = scalem * (r__1 = a[p + isamax_(n, &a[p + a_dim1], lda) * a_dim1], abs(r__1));
+                work[*m + *n + p] = scalem * (r__1 = a[p + isamax_(n, &a[p + a_dim1], lda) * a_dim1], f2c_abs(r__1));
                 /* Computing MAX */
                 r__1 = aatmax;
                 r__2 = work[*m + *n + p]; // , expr subst
@@ -1147,7 +1147,7 @@ int sgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
                 p <= i__1;
                 ++p)
         {
-            if ((r__2 = a[p + p * a_dim1], abs(r__2)) >= temp1 * (r__1 = a[ a_dim1 + 1], abs(r__1)))
+            if ((r__2 = a[p + p * a_dim1], f2c_abs(r__2)) >= temp1 * (r__1 = a[ a_dim1 + 1], f2c_abs(r__1)))
             {
                 ++nr;
             }
@@ -1171,7 +1171,7 @@ L3002:
                 p <= i__1;
                 ++p)
         {
-            if ((r__2 = a[p + p * a_dim1], abs(r__2)) < epsln * (r__1 = a[p - 1 + (p - 1) * a_dim1], abs(r__1)) || (r__3 = a[p + p * a_dim1], abs(r__3)) < small || l2kill && (r__4 = a[p + p * a_dim1], abs(r__4)) < temp1)
+            if ((r__2 = a[p + p * a_dim1], f2c_abs(r__2)) < epsln * (r__1 = a[p - 1 + (p - 1) * a_dim1], f2c_abs(r__1)) || (r__3 = a[p + p * a_dim1], f2c_abs(r__3)) < small || l2kill && (r__4 = a[p + p * a_dim1], f2c_abs(r__4)) < temp1)
             {
                 goto L3402;
             }
@@ -1196,7 +1196,7 @@ L3402:
                 p <= i__1;
                 ++p)
         {
-            if ((r__1 = a[p + p * a_dim1], abs(r__1)) < small || l2kill && ( r__2 = a[p + p * a_dim1], abs(r__2)) < temp1)
+            if ((r__1 = a[p + p * a_dim1], f2c_abs(r__1)) < small || l2kill && ( r__2 = a[p + p * a_dim1], f2c_abs(r__2)) < temp1)
             {
                 goto L3302;
             }
@@ -1215,7 +1215,7 @@ L3302:
                 p <= i__1;
                 ++p)
         {
-            temp1 = (r__1 = a[p + p * a_dim1], abs(r__1)) / sva[iwork[p]];
+            temp1 = (r__1 = a[p + p * a_dim1], f2c_abs(r__1)) / sva[iwork[p]];
             maxprj = min(maxprj,temp1);
             /* L3051: */
         }
@@ -1290,7 +1290,7 @@ L3302:
             sconda = -1.f;
         }
     }
-    l2pert = l2pert && (r__1 = a[a_dim1 + 1] / a[nr + nr * a_dim1], abs(r__1)) > sqrt(big1);
+    l2pert = l2pert && (r__1 = a[a_dim1 + 1] / a[nr + nr * a_dim1], f2c_abs(r__1)) > sqrt(big1);
     /* If there is no violent scaling, artificial perturbation is not needed. */
     /* Phase 3: */
     if (! (rsvec || lsvec))
@@ -1330,13 +1330,13 @@ L3302:
                         q <= i__1;
                         ++q)
                 {
-                    temp1 = xsc * (r__1 = a[q + q * a_dim1], abs(r__1));
+                    temp1 = xsc * (r__1 = a[q + q * a_dim1], f2c_abs(r__1));
                     i__2 = *n;
                     for (p = 1;
                             p <= i__2;
                             ++p)
                     {
-                        if (p > q && (r__1 = a[p + q * a_dim1], abs(r__1)) <= temp1 || p < q)
+                        if (p > q && (r__1 = a[p + q * a_dim1], f2c_abs(r__1)) <= temp1 || p < q)
                         {
                             a[p + q * a_dim1] = r_sign(&temp1, &a[p + q * a_dim1]);
                         }
@@ -1377,13 +1377,13 @@ L3302:
                     q <= i__1;
                     ++q)
             {
-                temp1 = xsc * (r__1 = a[q + q * a_dim1], abs(r__1));
+                temp1 = xsc * (r__1 = a[q + q * a_dim1], f2c_abs(r__1));
                 i__2 = nr;
                 for (p = 1;
                         p <= i__2;
                         ++p)
                 {
-                    if (p > q && (r__1 = a[p + q * a_dim1], abs(r__1)) <= temp1 || p < q)
+                    if (p > q && (r__1 = a[p + q * a_dim1], f2c_abs(r__1)) <= temp1 || p < q)
                     {
                         a[p + q * a_dim1] = r_sign(&temp1, &a[p + q * a_dim1]) ;
                     }
@@ -1595,13 +1595,13 @@ L3302:
                             q <= i__1;
                             ++q)
                     {
-                        temp1 = xsc * (r__1 = v[q + q * v_dim1], abs(r__1));
+                        temp1 = xsc * (r__1 = v[q + q * v_dim1], f2c_abs(r__1));
                         i__2 = *n;
                         for (p = 1;
                                 p <= i__2;
                                 ++p)
                         {
-                            if (p > q && (r__1 = v[p + q * v_dim1], abs(r__1)) <= temp1 || p < q)
+                            if (p > q && (r__1 = v[p + q * v_dim1], f2c_abs(r__1)) <= temp1 || p < q)
                             {
                                 v[p + q * v_dim1] = r_sign(&temp1, &v[p + q * v_dim1]);
                             }
@@ -1666,10 +1666,10 @@ L3302:
                                     ++q)
                             {
                                 /* Computing MIN */
-                                r__3 = (r__1 = v[p + p * v_dim1], abs(r__1));
-                                r__4 = (r__2 = v[q + q * v_dim1], abs( r__2)); // , expr subst
+                                r__3 = (r__1 = v[p + p * v_dim1], f2c_abs(r__1));
+                                r__4 = (r__2 = v[q + q * v_dim1], f2c_abs( r__2)); // , expr subst
                                 temp1 = xsc * min(r__3,r__4);
-                                if ((r__1 = v[q + p * v_dim1], abs(r__1)) <= temp1)
+                                if ((r__1 = v[q + p * v_dim1], f2c_abs(r__1)) <= temp1)
                                 {
                                     v[q + p * v_dim1] = r_sign(&temp1, &v[q + p * v_dim1]);
                                 }
@@ -1730,10 +1730,10 @@ L3302:
                                     ++q)
                             {
                                 /* Computing MIN */
-                                r__3 = (r__1 = v[p + p * v_dim1], abs(r__1));
-                                r__4 = (r__2 = v[q + q * v_dim1], abs( r__2)); // , expr subst
+                                r__3 = (r__1 = v[p + p * v_dim1], f2c_abs(r__1));
+                                r__4 = (r__2 = v[q + q * v_dim1], f2c_abs( r__2)); // , expr subst
                                 temp1 = xsc * min(r__3,r__4);
-                                if ((r__1 = v[q + p * v_dim1], abs(r__1)) <= temp1)
+                                if ((r__1 = v[q + p * v_dim1], f2c_abs(r__1)) <= temp1)
                                 {
                                     v[q + p * v_dim1] = r_sign(&temp1, &v[q + p * v_dim1]);
                                 }
@@ -1757,8 +1757,8 @@ L3302:
                                     ++q)
                             {
                                 /* Computing MIN */
-                                r__3 = (r__1 = v[p + p * v_dim1], abs(r__1));
-                                r__4 = (r__2 = v[q + q * v_dim1], abs( r__2)); // , expr subst
+                                r__3 = (r__1 = v[p + p * v_dim1], f2c_abs(r__1));
+                                r__4 = (r__2 = v[q + q * v_dim1], f2c_abs( r__2)); // , expr subst
                                 temp1 = xsc * min(r__3,r__4);
                                 v[p + q * v_dim1] = -r_sign(&temp1, &v[q + p * v_dim1]);
                                 /* L8971: */
@@ -2195,13 +2195,13 @@ L3302:
                         q <= i__1;
                         ++q)
                 {
-                    temp1 = xsc * (r__1 = v[q + q * v_dim1], abs(r__1));
+                    temp1 = xsc * (r__1 = v[q + q * v_dim1], f2c_abs(r__1));
                     i__2 = *n;
                     for (p = 1;
                             p <= i__2;
                             ++p)
                     {
-                        if (p > q && (r__1 = v[p + q * v_dim1], abs(r__1)) <= temp1 || p < q)
+                        if (p > q && (r__1 = v[p + q * v_dim1], f2c_abs(r__1)) <= temp1 || p < q)
                         {
                             v[p + q * v_dim1] = r_sign(&temp1, &v[p + q * v_dim1]);
                         }
@@ -2246,8 +2246,8 @@ L3302:
                             ++p)
                     {
                         /* Computing MIN */
-                        r__3 = (r__1 = u[p + p * u_dim1], abs(r__1));
-                        r__4 = ( r__2 = u[q + q * u_dim1], abs(r__2)); // , expr subst
+                        r__3 = (r__1 = u[p + p * u_dim1], f2c_abs(r__1));
+                        r__4 = ( r__2 = u[q + q * u_dim1], f2c_abs(r__2)); // , expr subst
                         temp1 = xsc * min(r__3,r__4);
                         u[p + q * u_dim1] = -r_sign(&temp1, &u[q + p * u_dim1] );
                         /* L9971: */

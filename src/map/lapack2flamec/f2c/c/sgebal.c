@@ -358,10 +358,10 @@ L140:
         i__2 = l - k + 1;
         r__ = snrm2_(&i__2, &a[i__ + k * a_dim1], lda);
         ica = isamax_(&l, &a[i__ * a_dim1 + 1], &c__1);
-        ca = (r__1 = a[ica + i__ * a_dim1], abs(r__1));
+        ca = (r__1 = a[ica + i__ * a_dim1], f2c_abs(r__1));
         i__2 = *n - k + 1;
         ira = isamax_(&i__2, &a[i__ + k * a_dim1], lda);
-        ra = (r__1 = a[i__ + (ira + k - 1) * a_dim1], abs(r__1));
+        ra = (r__1 = a[i__ + (ira + k - 1) * a_dim1], f2c_abs(r__1));
         /* Guard against zero C or R due to underflow. */
         if (c__ == 0.f || r__ == 0.f)
         {

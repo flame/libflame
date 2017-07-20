@@ -107,7 +107,7 @@ int clacon_(integer *n, complex *v, complex *x, real *est, integer *kase)
     real r__1, r__2;
     complex q__1;
     /* Builtin functions */
-    double c_abs(complex *), r_imag(complex *);
+    double c_f2c_abs(complex *), r_imag(complex *);
     /* Local variables */
     static integer i__, j, iter;
     static real temp;
@@ -185,7 +185,7 @@ L20:
     {
         v[1].r = x[1].r;
         v[1].i = x[1].i; // , expr subst
-        *est = c_abs(&v[1]);
+        *est = c_f2c_abs(&v[1]);
         /* ... QUIT */
         goto L130;
     }
@@ -195,7 +195,7 @@ L20:
             i__ <= i__1;
             ++i__)
     {
-        absxi = c_abs(&x[i__]);
+        absxi = c_f2c_abs(&x[i__]);
         if (absxi > safmin)
         {
             i__2 = i__;
@@ -257,7 +257,7 @@ L70:
             i__ <= i__1;
             ++i__)
     {
-        absxi = c_abs(&x[i__]);
+        absxi = c_f2c_abs(&x[i__]);
         if (absxi > safmin)
         {
             i__2 = i__;
@@ -285,7 +285,7 @@ L70:
 L90:
     jlast = j;
     j = icmax1_(n, &x[1], &c__1);
-    if (c_abs(&x[jlast]) != c_abs(&x[j]) && iter < 5)
+    if (c_f2c_abs(&x[jlast]) != c_f2c_abs(&x[j]) && iter < 5)
     {
         ++iter;
         goto L50;

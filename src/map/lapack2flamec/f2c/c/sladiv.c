@@ -108,12 +108,12 @@ int sladiv_(real *a, real *b, real *c__, real *d__, real *p, real *q)
     cc = *c__;
     dd = *d__;
     /* Computing MAX */
-    r__1 = abs(*a);
-    r__2 = abs(*b); // , expr subst
+    r__1 = f2c_abs(*a);
+    r__2 = f2c_abs(*b); // , expr subst
     ab = max(r__1,r__2);
     /* Computing MAX */
-    r__1 = abs(*c__);
-    r__2 = abs(*d__); // , expr subst
+    r__1 = f2c_abs(*c__);
+    r__2 = f2c_abs(*d__); // , expr subst
     cd = max(r__1,r__2);
     s = 1.f;
     ov = slamch_("Overflow threshold");
@@ -144,7 +144,7 @@ int sladiv_(real *a, real *b, real *c__, real *d__, real *p, real *q)
         dd *= be;
         s *= be;
     }
-    if (abs(*d__) <= abs(*c__))
+    if (f2c_abs(*d__) <= f2c_abs(*c__))
     {
         sladiv1_(&aa, &bb, &cc, &dd, p, q);
     }

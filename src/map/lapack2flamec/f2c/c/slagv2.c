@@ -197,8 +197,8 @@ int slagv2_(real *a, integer *lda, real *b, integer *ldb, real *alphar, real *al
     ulp = slamch_("P");
     /* Scale A */
     /* Computing MAX */
-    r__5 = (r__1 = a[a_dim1 + 1], abs(r__1)) + (r__2 = a[a_dim1 + 2], abs( r__2));
-    r__6 = (r__3 = a[(a_dim1 << 1) + 1], abs(r__3)) + (r__4 = a[(a_dim1 << 1) + 2], abs(r__4));
+    r__5 = (r__1 = a[a_dim1 + 1], f2c_abs(r__1)) + (r__2 = a[a_dim1 + 2], f2c_abs( r__2));
+    r__6 = (r__3 = a[(a_dim1 << 1) + 1], f2c_abs(r__3)) + (r__4 = a[(a_dim1 << 1) + 2], f2c_abs(r__4));
     r__5 = max(r__5,r__6); // ; expr subst
     anorm = max(r__5,safmin);
     ascale = 1.f / anorm;
@@ -208,8 +208,8 @@ int slagv2_(real *a, integer *lda, real *b, integer *ldb, real *alphar, real *al
     a[(a_dim1 << 1) + 2] = ascale * a[(a_dim1 << 1) + 2];
     /* Scale B */
     /* Computing MAX */
-    r__4 = (r__3 = b[b_dim1 + 1], abs(r__3));
-    r__5 = (r__1 = b[(b_dim1 << 1) + 1], abs(r__1)) + (r__2 = b[(b_dim1 << 1) + 2], abs(r__2));
+    r__4 = (r__3 = b[b_dim1 + 1], f2c_abs(r__3));
+    r__5 = (r__1 = b[(b_dim1 << 1) + 1], f2c_abs(r__1)) + (r__2 = b[(b_dim1 << 1) + 2], f2c_abs(r__2));
     r__4 = max(r__4,r__5); // ; expr subst
     bnorm = max(r__4,safmin);
     bscale = 1.f / bnorm;
@@ -217,7 +217,7 @@ int slagv2_(real *a, integer *lda, real *b, integer *ldb, real *alphar, real *al
     b[(b_dim1 << 1) + 1] = bscale * b[(b_dim1 << 1) + 1];
     b[(b_dim1 << 1) + 2] = bscale * b[(b_dim1 << 1) + 2];
     /* Check if A can be deflated */
-    if ((r__1 = a[a_dim1 + 2], abs(r__1)) <= ulp)
+    if ((r__1 = a[a_dim1 + 2], f2c_abs(r__1)) <= ulp)
     {
         *csl = 1.f;
         *snl = 0.f;
@@ -228,7 +228,7 @@ int slagv2_(real *a, integer *lda, real *b, integer *ldb, real *alphar, real *al
         wi = 0.f;
         /* Check if B is singular */
     }
-    else if ((r__1 = b[b_dim1 + 1], abs(r__1)) <= ulp)
+    else if ((r__1 = b[b_dim1 + 1], f2c_abs(r__1)) <= ulp)
     {
         slartg_(&a[a_dim1 + 1], &a[a_dim1 + 2], csl, snl, &r__);
         *csr = 1.f;
@@ -240,7 +240,7 @@ int slagv2_(real *a, integer *lda, real *b, integer *ldb, real *alphar, real *al
         b[b_dim1 + 2] = 0.f;
         wi = 0.f;
     }
-    else if ((r__1 = b[(b_dim1 << 1) + 2], abs(r__1)) <= ulp)
+    else if ((r__1 = b[(b_dim1 << 1) + 2], f2c_abs(r__1)) <= ulp)
     {
         slartg_(&a[(a_dim1 << 1) + 2], &a[a_dim1 + 2], csr, snr, &t);
         *snr = -(*snr);
@@ -284,14 +284,14 @@ int slagv2_(real *a, integer *lda, real *b, integer *ldb, real *alphar, real *al
             srot_(&c__2, &b[b_dim1 + 1], &c__1, &b[(b_dim1 << 1) + 1], &c__1, csr, snr);
             /* compute inf norms of A and B */
             /* Computing MAX */
-            r__5 = (r__1 = a[a_dim1 + 1], abs(r__1)) + (r__2 = a[(a_dim1 << 1) + 1], abs(r__2));
-            r__6 = (r__3 = a[a_dim1 + 2], abs(r__3) ) + (r__4 = a[(a_dim1 << 1) + 2], abs(r__4)); // , expr subst
+            r__5 = (r__1 = a[a_dim1 + 1], f2c_abs(r__1)) + (r__2 = a[(a_dim1 << 1) + 1], f2c_abs(r__2));
+            r__6 = (r__3 = a[a_dim1 + 2], f2c_abs(r__3) ) + (r__4 = a[(a_dim1 << 1) + 2], f2c_abs(r__4)); // , expr subst
             h1 = max(r__5,r__6);
             /* Computing MAX */
-            r__5 = (r__1 = b[b_dim1 + 1], abs(r__1)) + (r__2 = b[(b_dim1 << 1) + 1], abs(r__2));
-            r__6 = (r__3 = b[b_dim1 + 2], abs(r__3) ) + (r__4 = b[(b_dim1 << 1) + 2], abs(r__4)); // , expr subst
+            r__5 = (r__1 = b[b_dim1 + 1], f2c_abs(r__1)) + (r__2 = b[(b_dim1 << 1) + 1], f2c_abs(r__2));
+            r__6 = (r__3 = b[b_dim1 + 2], f2c_abs(r__3) ) + (r__4 = b[(b_dim1 << 1) + 2], f2c_abs(r__4)); // , expr subst
             h2 = max(r__5,r__6);
-            if (scale1 * h1 >= abs(wr1) * h2)
+            if (scale1 * h1 >= f2c_abs(wr1) * h2)
             {
                 /* find left rotation matrix Q to zero out B(2,1) */
                 slartg_(&b[b_dim1 + 1], &b[b_dim1 + 2], csl, snl, &r__);

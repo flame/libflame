@@ -89,7 +89,7 @@
 /* > \param[in] X */
 /* > \verbatim */
 /* > X is COMPLEX array, dimension at least */
-/* > ( 1 + ( N - 1 )*abs( INCX ) ). */
+/* > ( 1 + ( N - 1 )*f2c_abs( INCX ) ). */
 /* > Before entry, the incremented array X must contain the N- */
 /* > element vector x. */
 /* > Unchanged on exit. */
@@ -114,7 +114,7 @@
 /* > \param[in,out] Y */
 /* > \verbatim */
 /* > Y is COMPLEX array, dimension at least */
-/* > ( 1 + ( N - 1 )*abs( INCY ) ). */
+/* > ( 1 + ( N - 1 )*f2c_abs( INCY ) ). */
 /* > Before entry, the incremented array Y must contain the n */
 /* > element vector y. On exit, Y is overwritten by the updated */
 /* > vector y. */

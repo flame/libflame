@@ -117,7 +117,7 @@
 /* > then IN(k) = 1, otherwise IN(k) = 0. The element IN(n) */
 /* > returns the smallest positive integer j such that */
 /* > */
-/* > abs( u(j,j) ).le. norm( (T - lambda*I)(j) )*TOL, */
+/* > f2c_abs( u(j,j) ).le. norm( (T - lambda*I)(j) )*TOL, */
 /* > */
 /* > where norm( A(j) ) denotes the sum of the absolute values of */
 /* > the jth row of the matrix A. If no such j exists then IN(n) */
@@ -204,17 +204,17 @@ int slagtf_(integer *n, real *a, real *lambda, real *b, real *c__, real *tol, re
     }
     eps = slamch_("Epsilon");
     tl = max(*tol,eps);
-    scale1 = abs(a[1]) + abs(b[1]);
+    scale1 = f2c_abs(a[1]) + f2c_abs(b[1]);
     i__1 = *n - 1;
     for (k = 1;
             k <= i__1;
             ++k)
     {
         a[k + 1] -= *lambda;
-        scale2 = (r__1 = c__[k], abs(r__1)) + (r__2 = a[k + 1], abs(r__2));
+        scale2 = (r__1 = c__[k], f2c_abs(r__1)) + (r__2 = a[k + 1], f2c_abs(r__2));
         if (k < *n - 1)
         {
-            scale2 += (r__1 = b[k + 1], abs(r__1));
+            scale2 += (r__1 = b[k + 1], f2c_abs(r__1));
         }
         if (a[k] == 0.f)
         {
@@ -222,7 +222,7 @@ int slagtf_(integer *n, real *a, real *lambda, real *b, real *c__, real *tol, re
         }
         else
         {
-            piv1 = (r__1 = a[k], abs(r__1)) / scale1;
+            piv1 = (r__1 = a[k], f2c_abs(r__1)) / scale1;
         }
         if (c__[k] == 0.f)
         {
@@ -236,7 +236,7 @@ int slagtf_(integer *n, real *a, real *lambda, real *b, real *c__, real *tol, re
         }
         else
         {
-            piv2 = (r__1 = c__[k], abs(r__1)) / scale2;
+            piv2 = (r__1 = c__[k], f2c_abs(r__1)) / scale2;
             if (piv2 <= piv1)
             {
                 in[k] = 0;
@@ -270,7 +270,7 @@ int slagtf_(integer *n, real *a, real *lambda, real *b, real *c__, real *tol, re
         }
         /* L10: */
     }
-    if ((r__1 = a[*n], abs(r__1)) <= scale1 * tl && in[*n] == 0)
+    if ((r__1 = a[*n], f2c_abs(r__1)) <= scale1 * tl && in[*n] == 0)
     {
         in[*n] = *n;
     }

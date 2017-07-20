@@ -40,7 +40,7 @@ static integer c__1 = 1;
 /* > \return ZLANHB */
 /* > \verbatim */
 /* > */
-/* > ZLANHB = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > ZLANHB = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -51,7 +51,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -126,7 +126,7 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4;
     doublereal ret_val, d__1;
     /* Builtin functions */
-    double z_abs(doublecomplex *), sqrt(doublereal);
+    double z_f2c_abs(doublecomplex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j, l;
     doublereal sum, absa, scale;
@@ -167,7 +167,7 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
+        /* Find max(f2c_abs(A(i,j))). */
         value = 0.;
         if (lsame_(uplo, "U"))
         {
@@ -183,7 +183,7 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
                         i__ <= i__3;
                         ++i__)
                 {
-                    sum = z_abs(&ab[i__ + j * ab_dim1]);
+                    sum = z_f2c_abs(&ab[i__ + j * ab_dim1]);
                     if (value < sum || disnan_(&sum))
                     {
                         value = sum;
@@ -191,7 +191,7 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
                     /* L10: */
                 }
                 i__3 = *k + 1 + j * ab_dim1;
-                sum = (d__1 = ab[i__3].r, abs(d__1));
+                sum = (d__1 = ab[i__3].r, f2c_abs(d__1));
                 if (value < sum || disnan_(&sum))
                 {
                     value = sum;
@@ -207,7 +207,7 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
                     ++j)
             {
                 i__3 = j * ab_dim1 + 1;
-                sum = (d__1 = ab[i__3].r, abs(d__1));
+                sum = (d__1 = ab[i__3].r, f2c_abs(d__1));
                 if (value < sum || disnan_(&sum))
                 {
                     value = sum;
@@ -220,7 +220,7 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
                         i__ <= i__3;
                         ++i__)
                 {
-                    sum = z_abs(&ab[i__ + j * ab_dim1]);
+                    sum = z_f2c_abs(&ab[i__ + j * ab_dim1]);
                     if (value < sum || disnan_(&sum))
                     {
                         value = sum;
@@ -252,13 +252,13 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
                         i__ <= i__4;
                         ++i__)
                 {
-                    absa = z_abs(&ab[l + i__ + j * ab_dim1]);
+                    absa = z_f2c_abs(&ab[l + i__ + j * ab_dim1]);
                     sum += absa;
                     work[i__] += absa;
                     /* L50: */
                 }
                 i__4 = *k + 1 + j * ab_dim1;
-                work[j] = sum + (d__1 = ab[i__4].r, abs(d__1));
+                work[j] = sum + (d__1 = ab[i__4].r, f2c_abs(d__1));
                 /* L60: */
             }
             i__1 = *n;
@@ -290,7 +290,7 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
                     ++j)
             {
                 i__4 = j * ab_dim1 + 1;
-                sum = work[j] + (d__1 = ab[i__4].r, abs(d__1));
+                sum = work[j] + (d__1 = ab[i__4].r, f2c_abs(d__1));
                 l = 1 - j;
                 /* Computing MIN */
                 i__3 = *n;
@@ -300,7 +300,7 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
                         i__ <= i__4;
                         ++i__)
                 {
-                    absa = z_abs(&ab[l + i__ + j * ab_dim1]);
+                    absa = z_f2c_abs(&ab[l + i__ + j * ab_dim1]);
                     sum += absa;
                     work[i__] += absa;
                     /* L90: */
@@ -367,7 +367,7 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
             if (ab[i__4].r != 0.)
             {
                 i__4 = l + j * ab_dim1;
-                absa = (d__1 = ab[i__4].r, abs(d__1));
+                absa = (d__1 = ab[i__4].r, f2c_abs(d__1));
                 if (scale < absa)
                 {
                     /* Computing 2nd power */

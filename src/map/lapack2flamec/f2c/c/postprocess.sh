@@ -20,6 +20,7 @@ main()
         'include \"f2c.h\"'         'include \"FLA_f2c.h\"' \
         'dotc_'                     'dotc_f2c_' \
         'dotu_'                     'dotu_f2c_' \
+        'abs('                      'f2c_abs' \
         '__('                       '_(' \
         )
 

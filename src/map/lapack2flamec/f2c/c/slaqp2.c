@@ -243,7 +243,7 @@ int slaqp2_(integer *m, integer *n, integer *offset, real *a, integer *lda, inte
                 /* NOTE: The following 4 lines follow from the analysis in */
                 /* Lapack Working Note 176. */
                 /* Computing 2nd power */
-                r__2 = (r__1 = a[offpi + j * a_dim1], abs(r__1)) / vn1[j];
+                r__2 = (r__1 = a[offpi + j * a_dim1], f2c_abs(r__1)) / vn1[j];
                 temp = 1.f - r__2 * r__2;
                 temp = max(temp,0.f);
                 /* Computing 2nd power */

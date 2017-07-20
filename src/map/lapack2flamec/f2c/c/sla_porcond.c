@@ -214,14 +214,14 @@ real sla_porcond_(char *uplo, integer *n, real *a, integer *lda, real *af, integ
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = a[j + i__ * a_dim1] * c__[j], abs(r__1));
+                    tmp += (r__1 = a[j + i__ * a_dim1] * c__[j], f2c_abs(r__1));
                 }
                 i__2 = *n;
                 for (j = i__ + 1;
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = a[i__ + j * a_dim1] * c__[j], abs(r__1));
+                    tmp += (r__1 = a[i__ + j * a_dim1] * c__[j], f2c_abs(r__1));
                 }
             }
             else if (*cmode == 0)
@@ -231,14 +231,14 @@ real sla_porcond_(char *uplo, integer *n, real *a, integer *lda, real *af, integ
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = a[j + i__ * a_dim1], abs(r__1));
+                    tmp += (r__1 = a[j + i__ * a_dim1], f2c_abs(r__1));
                 }
                 i__2 = *n;
                 for (j = i__ + 1;
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = a[i__ + j * a_dim1], abs(r__1));
+                    tmp += (r__1 = a[i__ + j * a_dim1], f2c_abs(r__1));
                 }
             }
             else
@@ -248,14 +248,14 @@ real sla_porcond_(char *uplo, integer *n, real *a, integer *lda, real *af, integ
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = a[j + i__ * a_dim1] / c__[j], abs(r__1));
+                    tmp += (r__1 = a[j + i__ * a_dim1] / c__[j], f2c_abs(r__1));
                 }
                 i__2 = *n;
                 for (j = i__ + 1;
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = a[i__ + j * a_dim1] / c__[j], abs(r__1));
+                    tmp += (r__1 = a[i__ + j * a_dim1] / c__[j], f2c_abs(r__1));
                 }
             }
             work[(*n << 1) + i__] = tmp;
@@ -276,14 +276,14 @@ real sla_porcond_(char *uplo, integer *n, real *a, integer *lda, real *af, integ
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = a[i__ + j * a_dim1] * c__[j], abs(r__1));
+                    tmp += (r__1 = a[i__ + j * a_dim1] * c__[j], f2c_abs(r__1));
                 }
                 i__2 = *n;
                 for (j = i__ + 1;
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = a[j + i__ * a_dim1] * c__[j], abs(r__1));
+                    tmp += (r__1 = a[j + i__ * a_dim1] * c__[j], f2c_abs(r__1));
                 }
             }
             else if (*cmode == 0)
@@ -293,14 +293,14 @@ real sla_porcond_(char *uplo, integer *n, real *a, integer *lda, real *af, integ
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = a[i__ + j * a_dim1], abs(r__1));
+                    tmp += (r__1 = a[i__ + j * a_dim1], f2c_abs(r__1));
                 }
                 i__2 = *n;
                 for (j = i__ + 1;
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = a[j + i__ * a_dim1], abs(r__1));
+                    tmp += (r__1 = a[j + i__ * a_dim1], f2c_abs(r__1));
                 }
             }
             else
@@ -310,14 +310,14 @@ real sla_porcond_(char *uplo, integer *n, real *a, integer *lda, real *af, integ
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = a[i__ + j * a_dim1] / c__[j], abs(r__1));
+                    tmp += (r__1 = a[i__ + j * a_dim1] / c__[j], f2c_abs(r__1));
                 }
                 i__2 = *n;
                 for (j = i__ + 1;
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = a[j + i__ * a_dim1] / c__[j], abs(r__1));
+                    tmp += (r__1 = a[j + i__ * a_dim1] / c__[j], f2c_abs(r__1));
                 }
             }
             work[(*n << 1) + i__] = tmp;

@@ -475,7 +475,7 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         alpha = vt[0];
                         slarfg_(&c__3, &alpha, &vt[1], &c__1, vt);
                         refsum = vt[0] * (h__[k + 1 + k * h_dim1] + vt[1] * h__[k + 2 + k * h_dim1]);
-                        if ((r__1 = h__[k + 2 + k * h_dim1] - refsum * vt[1], abs(r__1)) + (r__2 = refsum * vt[2], abs(r__2) ) > ulp * ((r__3 = h__[k + k * h_dim1], abs( r__3)) + (r__4 = h__[k + 1 + (k + 1) * h_dim1] , abs(r__4)) + (r__5 = h__[k + 2 + (k + 2) * h_dim1], abs(r__5))))
+                        if ((r__1 = h__[k + 2 + k * h_dim1] - refsum * vt[1], f2c_abs(r__1)) + (r__2 = refsum * vt[2], f2c_abs(r__2) ) > ulp * ((r__3 = h__[k + k * h_dim1], f2c_abs( r__3)) + (r__4 = h__[k + 1 + (k + 1) * h_dim1] , f2c_abs(r__4)) + (r__5 = h__[k + 2 + (k + 2) * h_dim1], f2c_abs(r__5))))
                         {
                             /* ==== Starting a new bulge here would */
                             /* . create non-negligible fill. Use */
@@ -735,54 +735,54 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                 /* . unnecessary. ==== */
                 if (h__[k + 1 + k * h_dim1] != 0.f)
                 {
-                    tst1 = (r__1 = h__[k + k * h_dim1], abs(r__1)) + (r__2 = h__[k + 1 + (k + 1) * h_dim1], abs(r__2));
+                    tst1 = (r__1 = h__[k + k * h_dim1], f2c_abs(r__1)) + (r__2 = h__[k + 1 + (k + 1) * h_dim1], f2c_abs(r__2));
                     if (tst1 == 0.f)
                     {
                         if (k >= *ktop + 1)
                         {
-                            tst1 += (r__1 = h__[k + (k - 1) * h_dim1], abs( r__1));
+                            tst1 += (r__1 = h__[k + (k - 1) * h_dim1], f2c_abs( r__1));
                         }
                         if (k >= *ktop + 2)
                         {
-                            tst1 += (r__1 = h__[k + (k - 2) * h_dim1], abs( r__1));
+                            tst1 += (r__1 = h__[k + (k - 2) * h_dim1], f2c_abs( r__1));
                         }
                         if (k >= *ktop + 3)
                         {
-                            tst1 += (r__1 = h__[k + (k - 3) * h_dim1], abs( r__1));
+                            tst1 += (r__1 = h__[k + (k - 3) * h_dim1], f2c_abs( r__1));
                         }
                         if (k <= *kbot - 2)
                         {
-                            tst1 += (r__1 = h__[k + 2 + (k + 1) * h_dim1], abs(r__1));
+                            tst1 += (r__1 = h__[k + 2 + (k + 1) * h_dim1], f2c_abs(r__1));
                         }
                         if (k <= *kbot - 3)
                         {
-                            tst1 += (r__1 = h__[k + 3 + (k + 1) * h_dim1], abs(r__1));
+                            tst1 += (r__1 = h__[k + 3 + (k + 1) * h_dim1], f2c_abs(r__1));
                         }
                         if (k <= *kbot - 4)
                         {
-                            tst1 += (r__1 = h__[k + 4 + (k + 1) * h_dim1], abs(r__1));
+                            tst1 += (r__1 = h__[k + 4 + (k + 1) * h_dim1], f2c_abs(r__1));
                         }
                     }
                     /* Computing MAX */
                     r__2 = smlnum;
                     r__3 = ulp * tst1; // , expr subst
-                    if ((r__1 = h__[k + 1 + k * h_dim1], abs(r__1)) <= max( r__2,r__3))
+                    if ((r__1 = h__[k + 1 + k * h_dim1], f2c_abs(r__1)) <= max( r__2,r__3))
                     {
                         /* Computing MAX */
-                        r__3 = (r__1 = h__[k + 1 + k * h_dim1], abs(r__1));
-                        r__4 = (r__2 = h__[k + (k + 1) * h_dim1], abs( r__2)); // , expr subst
+                        r__3 = (r__1 = h__[k + 1 + k * h_dim1], f2c_abs(r__1));
+                        r__4 = (r__2 = h__[k + (k + 1) * h_dim1], f2c_abs( r__2)); // , expr subst
                         h12 = max(r__3,r__4);
                         /* Computing MIN */
-                        r__3 = (r__1 = h__[k + 1 + k * h_dim1], abs(r__1));
-                        r__4 = (r__2 = h__[k + (k + 1) * h_dim1], abs( r__2)); // , expr subst
+                        r__3 = (r__1 = h__[k + 1 + k * h_dim1], f2c_abs(r__1));
+                        r__4 = (r__2 = h__[k + (k + 1) * h_dim1], f2c_abs( r__2)); // , expr subst
                         h21 = min(r__3,r__4);
                         /* Computing MAX */
-                        r__3 = (r__1 = h__[k + 1 + (k + 1) * h_dim1], abs( r__1));
-                        r__4 = (r__2 = h__[k + k * h_dim1] - h__[k + 1 + (k + 1) * h_dim1], abs(r__2)); // , expr subst
+                        r__3 = (r__1 = h__[k + 1 + (k + 1) * h_dim1], f2c_abs( r__1));
+                        r__4 = (r__2 = h__[k + k * h_dim1] - h__[k + 1 + (k + 1) * h_dim1], f2c_abs(r__2)); // , expr subst
                         h11 = max(r__3,r__4);
                         /* Computing MIN */
-                        r__3 = (r__1 = h__[k + 1 + (k + 1) * h_dim1], abs( r__1));
-                        r__4 = (r__2 = h__[k + k * h_dim1] - h__[k + 1 + (k + 1) * h_dim1], abs(r__2)); // , expr subst
+                        r__3 = (r__1 = h__[k + 1 + (k + 1) * h_dim1], f2c_abs( r__1));
+                        r__4 = (r__2 = h__[k + k * h_dim1] - h__[k + 1 + (k + 1) * h_dim1], f2c_abs(r__2)); // , expr subst
                         h22 = min(r__3,r__4);
                         scl = h11 + h12;
                         tst2 = h22 * (h11 / scl);

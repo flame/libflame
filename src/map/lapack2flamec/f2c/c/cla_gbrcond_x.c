@@ -256,7 +256,7 @@ real cla_gbrcond_x_(char *trans, integer *n, integer *kl, integer *ku, complex *
                 q__2.i = ab[i__2].r * x[i__4].i + ab[i__2].i * x[i__4] .r; // , expr subst
                 q__1.r = q__2.r;
                 q__1.i = q__2.i; // , expr subst
-                tmp += (r__1 = q__1.r, abs(r__1)) + (r__2 = r_imag(&q__1), abs(r__2));
+                tmp += (r__1 = q__1.r, f2c_abs(r__1)) + (r__2 = r_imag(&q__1), f2c_abs(r__2));
             }
             rwork[i__] = tmp;
             anorm = max(anorm,tmp);
@@ -285,7 +285,7 @@ real cla_gbrcond_x_(char *trans, integer *n, integer *kl, integer *ku, complex *
                 q__2.i = ab[i__3].r * x[i__4].i + ab[i__3].i * x[i__4] .r; // , expr subst
                 q__1.r = q__2.r;
                 q__1.i = q__2.i; // , expr subst
-                tmp += (r__1 = q__1.r, abs(r__1)) + (r__2 = r_imag(&q__1), abs(r__2));
+                tmp += (r__1 = q__1.r, f2c_abs(r__1)) + (r__2 = r_imag(&q__1), f2c_abs(r__2));
             }
             rwork[i__] = tmp;
             anorm = max(anorm,tmp);

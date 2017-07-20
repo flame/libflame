@@ -134,7 +134,7 @@ real cla_gerpvgrw_(integer *n, integer *ncols, complex *a, integer *lda, complex
         {
             /* Computing MAX */
             i__3 = i__ + j * a_dim1;
-            r__3 = (r__1 = a[i__3].r, abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]), abs(r__2));
+            r__3 = (r__1 = a[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]), f2c_abs(r__2));
             amax = max(r__3,amax);
         }
         i__2 = j;
@@ -144,7 +144,7 @@ real cla_gerpvgrw_(integer *n, integer *ncols, complex *a, integer *lda, complex
         {
             /* Computing MAX */
             i__3 = i__ + j * af_dim1;
-            r__3 = (r__1 = af[i__3].r, abs(r__1)) + (r__2 = r_imag(&af[i__ + j * af_dim1]), abs(r__2));
+            r__3 = (r__1 = af[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&af[i__ + j * af_dim1]), f2c_abs(r__2));
             umax = max(r__3,umax);
         }
         if (umax != 0.f)

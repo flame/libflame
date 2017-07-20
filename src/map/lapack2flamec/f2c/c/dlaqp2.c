@@ -242,7 +242,7 @@ int dlaqp2_(integer *m, integer *n, integer *offset, doublereal *a, integer *lda
                 /* NOTE: The following 4 lines follow from the analysis in */
                 /* Lapack Working Note 176. */
                 /* Computing 2nd power */
-                d__2 = (d__1 = a[offpi + j * a_dim1], abs(d__1)) / vn1[j];
+                d__2 = (d__1 = a[offpi + j * a_dim1], f2c_abs(d__1)) / vn1[j];
                 temp = 1. - d__2 * d__2;
                 temp = max(temp,0.);
                 /* Computing 2nd power */

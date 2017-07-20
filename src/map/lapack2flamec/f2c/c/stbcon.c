@@ -271,7 +271,7 @@ L10:
             if (scale != 1.f)
             {
                 ix = isamax_(n, &work[1], &c__1);
-                xnorm = (r__1 = work[ix], abs(r__1));
+                xnorm = (r__1 = work[ix], f2c_abs(r__1));
                 if (scale < xnorm * smlnum || scale == 0.f)
                 {
                     goto L20;

@@ -153,7 +153,7 @@ doublereal dla_porpvgrw_(char *uplo, integer *ncols, doublereal *a, integer * ld
                     ++i__)
             {
                 /* Computing MAX */
-                d__2 = (d__1 = a[i__ + j * a_dim1], abs(d__1));
+                d__2 = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
                 d__3 = work[* ncols + j]; // , expr subst
                 work[*ncols + j] = max(d__2,d__3);
             }
@@ -172,7 +172,7 @@ doublereal dla_porpvgrw_(char *uplo, integer *ncols, doublereal *a, integer * ld
                     ++i__)
             {
                 /* Computing MAX */
-                d__2 = (d__1 = a[i__ + j * a_dim1], abs(d__1));
+                d__2 = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
                 d__3 = work[* ncols + j]; // , expr subst
                 work[*ncols + j] = max(d__2,d__3);
             }
@@ -193,7 +193,7 @@ doublereal dla_porpvgrw_(char *uplo, integer *ncols, doublereal *a, integer * ld
                     ++i__)
             {
                 /* Computing MAX */
-                d__2 = (d__1 = af[i__ + j * af_dim1], abs(d__1));
+                d__2 = (d__1 = af[i__ + j * af_dim1], f2c_abs(d__1));
                 d__3 = work[ j]; // , expr subst
                 work[j] = max(d__2,d__3);
             }
@@ -212,7 +212,7 @@ doublereal dla_porpvgrw_(char *uplo, integer *ncols, doublereal *a, integer * ld
                     ++i__)
             {
                 /* Computing MAX */
-                d__2 = (d__1 = af[i__ + j * af_dim1], abs(d__1));
+                d__2 = (d__1 = af[i__ + j * af_dim1], f2c_abs(d__1));
                 d__3 = work[ j]; // , expr subst
                 work[j] = max(d__2,d__3);
             }

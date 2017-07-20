@@ -563,12 +563,12 @@ L10:
     /* part (i.e., excluding all elements belonging to the diagonal */
     /* blocks) of A and B to check for possible overflow in the */
     /* triangular solver. */
-    anorm = (r__1 = s[s_dim1 + 1], abs(r__1));
+    anorm = (r__1 = s[s_dim1 + 1], f2c_abs(r__1));
     if (*n > 1)
     {
-        anorm += (r__1 = s[s_dim1 + 2], abs(r__1));
+        anorm += (r__1 = s[s_dim1 + 2], f2c_abs(r__1));
     }
-    bnorm = (r__1 = p[p_dim1 + 1], abs(r__1));
+    bnorm = (r__1 = p[p_dim1 + 1], f2c_abs(r__1));
     work[1] = 0.f;
     work[*n + 1] = 0.f;
     i__1 = *n;
@@ -591,8 +591,8 @@ L10:
                 i__ <= i__2;
                 ++i__)
         {
-            temp += (r__1 = s[i__ + j * s_dim1], abs(r__1));
-            temp2 += (r__1 = p[i__ + j * p_dim1], abs(r__1));
+            temp += (r__1 = s[i__ + j * s_dim1], f2c_abs(r__1));
+            temp2 += (r__1 = p[i__ + j * p_dim1], f2c_abs(r__1));
             /* L30: */
         }
         work[j] = temp;
@@ -604,8 +604,8 @@ L10:
                 i__ <= i__2;
                 ++i__)
         {
-            temp += (r__1 = s[i__ + j * s_dim1], abs(r__1));
-            temp2 += (r__1 = p[i__ + j * p_dim1], abs(r__1));
+            temp += (r__1 = s[i__ + j * s_dim1], f2c_abs(r__1));
+            temp2 += (r__1 = p[i__ + j * p_dim1], f2c_abs(r__1));
             /* L40: */
         }
         anorm = max(anorm,temp);
@@ -663,7 +663,7 @@ L10:
             /* (c) complex eigenvalue. */
             if (! ilcplx)
             {
-                if ((r__1 = s[je + je * s_dim1], abs(r__1)) <= safmin && ( r__2 = p[je + je * p_dim1], abs(r__2)) <= safmin)
+                if ((r__1 = s[je + je * s_dim1], f2c_abs(r__1)) <= safmin && ( r__2 = p[je + je * p_dim1], f2c_abs(r__2)) <= safmin)
                 {
                     /* Singular matrix pencil -- return unit eigenvector */
                     ++ieig;
@@ -696,8 +696,8 @@ L10:
             {
                 /* Real eigenvalue */
                 /* Computing MAX */
-                r__3 = (r__1 = s[je + je * s_dim1], abs(r__1)) * ascale;
-                r__4 = (r__2 = p[je + je * p_dim1], abs(r__2)) * bscale;
+                r__3 = (r__1 = s[je + je * s_dim1], f2c_abs(r__1)) * ascale;
+                r__4 = (r__2 = p[je + je * p_dim1], f2c_abs(r__2)) * bscale;
                 r__3 = max(r__3,r__4); // ; expr subst
                 temp = 1.f / max(r__3,safmin);
                 salfar = temp * s[je + je * s_dim1] * ascale;
@@ -707,26 +707,26 @@ L10:
                 bcoefi = 0.f;
                 /* Scale to avoid underflow */
                 scale = 1.f;
-                lsa = abs(sbeta) >= safmin && abs(acoef) < small;
-                lsb = abs(salfar) >= safmin && abs(bcoefr) < small;
+                lsa = f2c_abs(sbeta) >= safmin && f2c_abs(acoef) < small;
+                lsb = f2c_abs(salfar) >= safmin && f2c_abs(bcoefr) < small;
                 if (lsa)
                 {
-                    scale = small / abs(sbeta) * min(anorm,big);
+                    scale = small / f2c_abs(sbeta) * min(anorm,big);
                 }
                 if (lsb)
                 {
                     /* Computing MAX */
                     r__1 = scale;
-                    r__2 = small / abs(salfar) * min(bnorm,big); // , expr subst
+                    r__2 = small / f2c_abs(salfar) * min(bnorm,big); // , expr subst
                     scale = max(r__1,r__2);
                 }
                 if (lsa || lsb)
                 {
                     /* Computing MIN */
                     /* Computing MAX */
-                    r__3 = 1.f, r__4 = abs(acoef);
+                    r__3 = 1.f, r__4 = f2c_abs(acoef);
                     r__3 = max(r__3,r__4);
-                    r__4 = abs(bcoefr); // ; expr subst
+                    r__4 = f2c_abs(bcoefr); // ; expr subst
                     r__1 = scale;
                     r__2 = 1.f / (safmin * max(r__3,r__4)); // , expr subst
                     scale = min(r__1,r__2);
@@ -747,8 +747,8 @@ L10:
                         bcoefr = scale * bcoefr;
                     }
                 }
-                acoefa = abs(acoef);
-                bcoefa = abs(bcoefr);
+                acoefa = f2c_abs(acoef);
+                bcoefa = f2c_abs(bcoefr);
                 /* First component is 1 */
                 work[(*n << 1) + je] = 1.f;
                 xmax = 1.f;
@@ -765,8 +765,8 @@ L10:
                     return 0;
                 }
                 /* Scale to avoid over/underflow */
-                acoefa = abs(acoef);
-                bcoefa = abs(bcoefr) + abs(bcoefi);
+                acoefa = f2c_abs(acoef);
+                bcoefa = f2c_abs(bcoefr) + f2c_abs(bcoefi);
                 scale = 1.f;
                 if (acoefa * ulp < safmin && acoefa >= safmin)
                 {
@@ -793,16 +793,16 @@ L10:
                 if (scale != 1.f)
                 {
                     acoef = scale * acoef;
-                    acoefa = abs(acoef);
+                    acoefa = f2c_abs(acoef);
                     bcoefr = scale * bcoefr;
                     bcoefi = scale * bcoefi;
-                    bcoefa = abs(bcoefr) + abs(bcoefi);
+                    bcoefa = f2c_abs(bcoefr) + f2c_abs(bcoefi);
                 }
                 /* Compute first two components of eigenvector */
                 temp = acoef * s[je + 1 + je * s_dim1];
                 temp2r = acoef * s[je + je * s_dim1] - bcoefr * p[je + je * p_dim1];
                 temp2i = -bcoefi * p[je + je * p_dim1];
-                if (abs(temp) > abs(temp2r) + abs(temp2i))
+                if (f2c_abs(temp) > f2c_abs(temp2r) + f2c_abs(temp2i))
                 {
                     work[(*n << 1) + je] = 1.f;
                     work[*n * 3 + je] = 0.f;
@@ -818,8 +818,8 @@ L10:
                     work[*n * 3 + je] = bcoefi * p[je + 1 + (je + 1) * p_dim1] / temp;
                 }
                 /* Computing MAX */
-                r__5 = (r__1 = work[(*n << 1) + je], abs(r__1)) + (r__2 = work[*n * 3 + je], abs(r__2));
-                r__6 = (r__3 = work[(* n << 1) + je + 1], abs(r__3)) + (r__4 = work[*n * 3 + je + 1], abs(r__4)); // , expr subst
+                r__5 = (r__1 = work[(*n << 1) + je], f2c_abs(r__1)) + (r__2 = work[*n * 3 + je], f2c_abs(r__2));
+                r__6 = (r__3 = work[(* n << 1) + je + 1], f2c_abs(r__3)) + (r__4 = work[*n * 3 + je + 1], f2c_abs(r__4)); // , expr subst
                 xmax = max(r__5,r__6);
             }
             /* Computing MAX */
@@ -998,7 +998,7 @@ L160:
                 {
                     /* Computing MAX */
                     r__3 = xmax;
-                    r__4 = (r__1 = vl[j + ieig * vl_dim1], abs( r__1)) + (r__2 = vl[j + (ieig + 1) * vl_dim1], abs(r__2)); // , expr subst
+                    r__4 = (r__1 = vl[j + ieig * vl_dim1], f2c_abs( r__1)) + (r__2 = vl[j + (ieig + 1) * vl_dim1], f2c_abs(r__2)); // , expr subst
                     xmax = max(r__3,r__4);
                     /* L180: */
                 }
@@ -1012,7 +1012,7 @@ L160:
                 {
                     /* Computing MAX */
                     r__2 = xmax;
-                    r__3 = (r__1 = vl[j + ieig * vl_dim1], abs( r__1)); // , expr subst
+                    r__3 = (r__1 = vl[j + ieig * vl_dim1], f2c_abs( r__1)); // , expr subst
                     xmax = max(r__2,r__3);
                     /* L190: */
                 }
@@ -1092,7 +1092,7 @@ L220:
             /* (c) complex eigenvalue. */
             if (! ilcplx)
             {
-                if ((r__1 = s[je + je * s_dim1], abs(r__1)) <= safmin && ( r__2 = p[je + je * p_dim1], abs(r__2)) <= safmin)
+                if ((r__1 = s[je + je * s_dim1], f2c_abs(r__1)) <= safmin && ( r__2 = p[je + je * p_dim1], f2c_abs(r__2)) <= safmin)
                 {
                     /* Singular matrix pencil -- unit eigenvector */
                     --ieig;
@@ -1131,8 +1131,8 @@ L220:
             {
                 /* Real eigenvalue */
                 /* Computing MAX */
-                r__3 = (r__1 = s[je + je * s_dim1], abs(r__1)) * ascale;
-                r__4 = (r__2 = p[je + je * p_dim1], abs(r__2)) * bscale;
+                r__3 = (r__1 = s[je + je * s_dim1], f2c_abs(r__1)) * ascale;
+                r__4 = (r__2 = p[je + je * p_dim1], f2c_abs(r__2)) * bscale;
                 r__3 = max(r__3,r__4); // ; expr subst
                 temp = 1.f / max(r__3,safmin);
                 salfar = temp * s[je + je * s_dim1] * ascale;
@@ -1142,26 +1142,26 @@ L220:
                 bcoefi = 0.f;
                 /* Scale to avoid underflow */
                 scale = 1.f;
-                lsa = abs(sbeta) >= safmin && abs(acoef) < small;
-                lsb = abs(salfar) >= safmin && abs(bcoefr) < small;
+                lsa = f2c_abs(sbeta) >= safmin && f2c_abs(acoef) < small;
+                lsb = f2c_abs(salfar) >= safmin && f2c_abs(bcoefr) < small;
                 if (lsa)
                 {
-                    scale = small / abs(sbeta) * min(anorm,big);
+                    scale = small / f2c_abs(sbeta) * min(anorm,big);
                 }
                 if (lsb)
                 {
                     /* Computing MAX */
                     r__1 = scale;
-                    r__2 = small / abs(salfar) * min(bnorm,big); // , expr subst
+                    r__2 = small / f2c_abs(salfar) * min(bnorm,big); // , expr subst
                     scale = max(r__1,r__2);
                 }
                 if (lsa || lsb)
                 {
                     /* Computing MIN */
                     /* Computing MAX */
-                    r__3 = 1.f, r__4 = abs(acoef);
+                    r__3 = 1.f, r__4 = f2c_abs(acoef);
                     r__3 = max(r__3,r__4);
-                    r__4 = abs(bcoefr); // ; expr subst
+                    r__4 = f2c_abs(bcoefr); // ; expr subst
                     r__1 = scale;
                     r__2 = 1.f / (safmin * max(r__3,r__4)); // , expr subst
                     scale = min(r__1,r__2);
@@ -1182,8 +1182,8 @@ L220:
                         bcoefr = scale * bcoefr;
                     }
                 }
-                acoefa = abs(acoef);
-                bcoefa = abs(bcoefr);
+                acoefa = f2c_abs(acoef);
+                bcoefa = f2c_abs(bcoefr);
                 /* First component is 1 */
                 work[(*n << 1) + je] = 1.f;
                 xmax = 1.f;
@@ -1209,8 +1209,8 @@ L220:
                     return 0;
                 }
                 /* Scale to avoid over/underflow */
-                acoefa = abs(acoef);
-                bcoefa = abs(bcoefr) + abs(bcoefi);
+                acoefa = f2c_abs(acoef);
+                bcoefa = f2c_abs(bcoefr) + f2c_abs(bcoefi);
                 scale = 1.f;
                 if (acoefa * ulp < safmin && acoefa >= safmin)
                 {
@@ -1237,17 +1237,17 @@ L220:
                 if (scale != 1.f)
                 {
                     acoef = scale * acoef;
-                    acoefa = abs(acoef);
+                    acoefa = f2c_abs(acoef);
                     bcoefr = scale * bcoefr;
                     bcoefi = scale * bcoefi;
-                    bcoefa = abs(bcoefr) + abs(bcoefi);
+                    bcoefa = f2c_abs(bcoefr) + f2c_abs(bcoefi);
                 }
                 /* Compute first two components of eigenvector */
                 /* and contribution to sums */
                 temp = acoef * s[je + (je - 1) * s_dim1];
                 temp2r = acoef * s[je + je * s_dim1] - bcoefr * p[je + je * p_dim1];
                 temp2i = -bcoefi * p[je + je * p_dim1];
-                if (abs(temp) >= abs(temp2r) + abs(temp2i))
+                if (f2c_abs(temp) >= f2c_abs(temp2r) + f2c_abs(temp2i))
                 {
                     work[(*n << 1) + je] = 1.f;
                     work[*n * 3 + je] = 0.f;
@@ -1263,8 +1263,8 @@ L220:
                     work[*n * 3 + je] = bcoefi * p[je - 1 + (je - 1) * p_dim1] / temp;
                 }
                 /* Computing MAX */
-                r__5 = (r__1 = work[(*n << 1) + je], abs(r__1)) + (r__2 = work[*n * 3 + je], abs(r__2));
-                r__6 = (r__3 = work[(* n << 1) + je - 1], abs(r__3)) + (r__4 = work[*n * 3 + je - 1], abs(r__4)); // , expr subst
+                r__5 = (r__1 = work[(*n << 1) + je], f2c_abs(r__1)) + (r__2 = work[*n * 3 + je], f2c_abs(r__2));
+                r__6 = (r__3 = work[(* n << 1) + je - 1], f2c_abs(r__3)) + (r__4 = work[*n * 3 + je - 1], f2c_abs(r__4)); // , expr subst
                 xmax = max(r__5,r__6);
                 /* Compute contribution from columns JE and JE-1 */
                 /* of A and B to the sums. */
@@ -1518,7 +1518,7 @@ L370:
                 {
                     /* Computing MAX */
                     r__3 = xmax;
-                    r__4 = (r__1 = vr[j + ieig * vr_dim1], abs( r__1)) + (r__2 = vr[j + (ieig + 1) * vr_dim1], abs(r__2)); // , expr subst
+                    r__4 = (r__1 = vr[j + ieig * vr_dim1], f2c_abs( r__1)) + (r__2 = vr[j + (ieig + 1) * vr_dim1], f2c_abs(r__2)); // , expr subst
                     xmax = max(r__3,r__4);
                     /* L460: */
                 }
@@ -1532,7 +1532,7 @@ L370:
                 {
                     /* Computing MAX */
                     r__2 = xmax;
-                    r__3 = (r__1 = vr[j + ieig * vr_dim1], abs( r__1)); // , expr subst
+                    r__3 = (r__1 = vr[j + ieig * vr_dim1], f2c_abs( r__1)); // , expr subst
                     xmax = max(r__2,r__3);
                     /* L470: */
                 }

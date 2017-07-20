@@ -72,7 +72,7 @@
 /* > \param[in] X */
 /* > \verbatim */
 /* > X is COMPLEX array, dimension at least */
-/* > ( 1 + ( N - 1 )*abs( INCX ) ). */
+/* > ( 1 + ( N - 1 )*f2c_abs( INCX ) ). */
 /* > Before entry, the incremented array X must contain the N- */
 /* > element vector x. */
 /* > Unchanged on exit. */

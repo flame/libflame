@@ -232,7 +232,7 @@ v**H denotes the conjugate transpose of v, and norm(u) */
 /* > where sigma-min denotes the smallest singular value. We approximate */
 /* > the smallest singular value by the reciprocal of an estimate of the */
 /* > one-norm of the inverse of T22 - lambda*I. If n = 1, SEP(1) is */
-/* > defined to be abs(T(1,1)). */
+/* > defined to be f2c_abs(T(1,1)). */
 /* > */
 /* > An approximate error bound for a computed right eigenvector VR(i) */
 /* > is given by */
@@ -249,7 +249,7 @@ int ztrsna_(char *job, char *howmny, logical *select, integer *n, doublecomplex 
     doublereal d__1, d__2;
     doublecomplex z__1;
     /* Builtin functions */
-    double z_abs(doublecomplex *), d_imag(doublecomplex *);
+    double z_f2c_abs(doublecomplex *), d_imag(doublecomplex *);
     /* Local variables */
     integer i__, j, k, ks, ix;
     doublereal eps, est;
@@ -410,7 +410,7 @@ int ztrsna_(char *job, char *howmny, logical *select, integer *n, doublecomplex 
         }
         if (wantsp)
         {
-            sep[1] = z_abs(&t[t_dim1 + 1]);
+            sep[1] = z_f2c_abs(&t[t_dim1 + 1]);
         }
         return 0;
     }
@@ -441,7 +441,7 @@ int ztrsna_(char *job, char *howmny, logical *select, integer *n, doublecomplex 
             prod.i = z__1.i; // , expr subst
             rnrm = dznrm2_(n, &vr[ks * vr_dim1 + 1], &c__1);
             lnrm = dznrm2_(n, &vl[ks * vl_dim1 + 1], &c__1);
-            s[ks] = z_abs(&prod) / (rnrm * lnrm);
+            s[ks] = z_f2c_abs(&prod) / (rnrm * lnrm);
         }
         if (wantsp)
         {
@@ -497,7 +497,7 @@ L30:
                     i__2 = *n - 1;
                     ix = izamax_(&i__2, &work[work_offset], &c__1);
                     i__2 = ix + work_dim1;
-                    xnorm = (d__1 = work[i__2].r, abs(d__1)) + (d__2 = d_imag( &work[ix + work_dim1]), abs(d__2));
+                    xnorm = (d__1 = work[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag( &work[ix + work_dim1]), f2c_abs(d__2));
                     if (scale < xnorm * smlnum || scale == 0.)
                     {
                         goto L40;

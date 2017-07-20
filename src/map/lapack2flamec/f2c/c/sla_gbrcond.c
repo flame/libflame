@@ -265,7 +265,7 @@ real sla_gbrcond_(char *trans, integer *n, integer *kl, integer *ku, real * ab, 
                         j <= i__3;
                         ++j)
                 {
-                    tmp += (r__1 = ab[kd + i__ - j + j * ab_dim1] * c__[j], abs(r__1));
+                    tmp += (r__1 = ab[kd + i__ - j + j * ab_dim1] * c__[j], f2c_abs(r__1));
                 }
             }
             else if (*cmode == 0)
@@ -279,7 +279,7 @@ real sla_gbrcond_(char *trans, integer *n, integer *kl, integer *ku, real * ab, 
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = ab[kd + i__ - j + j * ab_dim1], abs(r__1));
+                    tmp += (r__1 = ab[kd + i__ - j + j * ab_dim1], f2c_abs(r__1));
                 }
             }
             else
@@ -293,7 +293,7 @@ real sla_gbrcond_(char *trans, integer *n, integer *kl, integer *ku, real * ab, 
                         j <= i__3;
                         ++j)
                 {
-                    tmp += (r__1 = ab[kd + i__ - j + j * ab_dim1] / c__[j], abs(r__1));
+                    tmp += (r__1 = ab[kd + i__ - j + j * ab_dim1] / c__[j], f2c_abs(r__1));
                 }
             }
             work[(*n << 1) + i__] = tmp;
@@ -318,7 +318,7 @@ real sla_gbrcond_(char *trans, integer *n, integer *kl, integer *ku, real * ab, 
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = ab[ke - i__ + j + i__ * ab_dim1] * c__[j], abs(r__1));
+                    tmp += (r__1 = ab[ke - i__ + j + i__ * ab_dim1] * c__[j], f2c_abs(r__1));
                 }
             }
             else if (*cmode == 0)
@@ -332,7 +332,7 @@ real sla_gbrcond_(char *trans, integer *n, integer *kl, integer *ku, real * ab, 
                         j <= i__3;
                         ++j)
                 {
-                    tmp += (r__1 = ab[ke - i__ + j + i__ * ab_dim1], abs(r__1) );
+                    tmp += (r__1 = ab[ke - i__ + j + i__ * ab_dim1], f2c_abs(r__1) );
                 }
             }
             else
@@ -346,7 +346,7 @@ real sla_gbrcond_(char *trans, integer *n, integer *kl, integer *ku, real * ab, 
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = ab[ke - i__ + j + i__ * ab_dim1] / c__[j], abs(r__1));
+                    tmp += (r__1 = ab[ke - i__ + j + i__ * ab_dim1] / c__[j], f2c_abs(r__1));
                 }
             }
             work[(*n << 1) + i__] = tmp;

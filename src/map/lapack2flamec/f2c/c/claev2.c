@@ -114,7 +114,7 @@ int claev2_(complex *a, complex *b, complex *c__, real *rt1, real *rt2, real *cs
     real r__1, r__2, r__3;
     complex q__1, q__2;
     /* Builtin functions */
-    double c_abs(complex *);
+    double c_f2c_abs(complex *);
     void r_cnjg(complex *, complex *);
     /* Local variables */
     real t;
@@ -137,7 +137,7 @@ int claev2_(complex *a, complex *b, complex *c__, real *rt1, real *rt2, real *cs
     /* .. Intrinsic Functions .. */
     /* .. */
     /* .. Executable Statements .. */
-    if (c_abs(b) == 0.f)
+    if (c_f2c_abs(b) == 0.f)
     {
         w.r = 1.f;
         w.i = 0.f; // , expr subst
@@ -145,14 +145,14 @@ int claev2_(complex *a, complex *b, complex *c__, real *rt1, real *rt2, real *cs
     else
     {
         r_cnjg(&q__2, b);
-        r__1 = c_abs(b);
+        r__1 = c_f2c_abs(b);
         q__1.r = q__2.r / r__1;
         q__1.i = q__2.i / r__1; // , expr subst
         w.r = q__1.r;
         w.i = q__1.i; // , expr subst
     }
     r__1 = a->r;
-    r__2 = c_abs(b);
+    r__2 = c_f2c_abs(b);
     r__3 = c__->r;
     slaev2_(&r__1, &r__2, &r__3, rt1, rt2, cs1, &t);
     q__1.r = t * w.r;

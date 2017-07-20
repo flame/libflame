@@ -158,7 +158,7 @@ int zgebal_(char *job, integer *n, doublecomplex *a, integer *lda, integer *ilo,
     integer a_dim1, a_offset, i__1, i__2, i__3;
     doublereal d__1, d__2;
     /* Builtin functions */
-    double d_imag(doublecomplex *), z_abs(doublecomplex *);
+    double d_imag(doublecomplex *), z_f2c_abs(doublecomplex *);
     /* Local variables */
     doublereal c__, f, g;
     integer i__, j, k, l, m;
@@ -365,10 +365,10 @@ L140:
         i__2 = l - k + 1;
         r__ = dznrm2_(&i__2, &a[i__ + k * a_dim1], lda);
         ica = izamax_(&l, &a[i__ * a_dim1 + 1], &c__1);
-        ca = z_abs(&a[ica + i__ * a_dim1]);
+        ca = z_f2c_abs(&a[ica + i__ * a_dim1]);
         i__2 = *n - k + 1;
         ira = izamax_(&i__2, &a[i__ + k * a_dim1], lda);
-        ra = z_abs(&a[i__ + (ira + k - 1) * a_dim1]);
+        ra = z_f2c_abs(&a[i__ + (ira + k - 1) * a_dim1]);
         /* Guard against zero C or R due to underflow. */
         if (c__ == 0. || r__ == 0.)
         {

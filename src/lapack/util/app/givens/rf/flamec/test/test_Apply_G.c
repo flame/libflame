@@ -113,9 +113,9 @@ int main(int argc, char *argv[])
     k = k_input;
     n = n_input;
 
-    if( m < 0 ) m = p / abs(m_input);
-    if( k < 0 ) k = p / abs(k_input);
-    if( n < 0 ) n = p / abs(n_input);
+    if( m < 0 ) m = p / f2c_abs(m_input);
+    if( k < 0 ) k = p / f2c_abs(k_input);
+    if( n < 0 ) n = p / f2c_abs(n_input);
 
     //datatype = FLA_FLOAT;
     //datatype = FLA_DOUBLE;

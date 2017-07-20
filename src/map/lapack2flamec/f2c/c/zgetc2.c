@@ -113,7 +113,7 @@ int zgetc2_(integer *n, doublecomplex *a, integer *lda, integer *ipiv, integer *
     doublereal d__1;
     doublecomplex z__1;
     /* Builtin functions */
-    double z_abs(doublecomplex *);
+    double z_f2c_abs(doublecomplex *);
     void z_div(doublecomplex *, doublecomplex *, doublecomplex *);
     /* Local variables */
     integer i__, j, ip, jp;
@@ -176,9 +176,9 @@ int zgetc2_(integer *n, doublecomplex *a, integer *lda, integer *ipiv, integer *
                     jp <= i__3;
                     ++jp)
             {
-                if (z_abs(&a[ip + jp * a_dim1]) >= xmax)
+                if (z_f2c_abs(&a[ip + jp * a_dim1]) >= xmax)
                 {
-                    xmax = z_abs(&a[ip + jp * a_dim1]);
+                    xmax = z_f2c_abs(&a[ip + jp * a_dim1]);
                     ipv = ip;
                     jpv = jp;
                 }
@@ -205,7 +205,7 @@ int zgetc2_(integer *n, doublecomplex *a, integer *lda, integer *ipiv, integer *
         }
         jpiv[i__] = jpv;
         /* Check for singularity */
-        if (z_abs(&a[i__ + i__ * a_dim1]) < smin)
+        if (z_f2c_abs(&a[i__ + i__ * a_dim1]) < smin)
         {
             *info = i__;
             i__2 = i__ + i__ * a_dim1;
@@ -230,7 +230,7 @@ int zgetc2_(integer *n, doublecomplex *a, integer *lda, integer *ipiv, integer *
         zgeru_(&i__2, &i__3, &c_b10, &a[i__ + 1 + i__ * a_dim1], &c__1, &a[ i__ + (i__ + 1) * a_dim1], lda, &a[i__ + 1 + (i__ + 1) * a_dim1], lda);
         /* L40: */
     }
-    if (z_abs(&a[*n + *n * a_dim1]) < smin)
+    if (z_f2c_abs(&a[*n + *n * a_dim1]) < smin)
     {
         *info = *n;
         i__1 = *n + *n * a_dim1;

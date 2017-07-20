@@ -184,7 +184,7 @@ int cptrfs_(char *uplo, integer *n, integer *nrhs, real *d__, complex *e, real *
     /* Builtin functions */
     double r_imag(complex *);
     void r_cnjg(complex *, complex *);
-    double c_abs(complex *);
+    double c_f2c_abs(complex *);
     /* Local variables */
     integer i__, j;
     real s;
@@ -303,7 +303,7 @@ int cptrfs_(char *uplo, integer *n, integer *nrhs, real *d__, complex *e, real *
         lstres = 3.f;
 L20: /* Loop until stopping criterion is satisfied. */
         /* Compute residual R = B - A * X. Also compute */
-        /* abs(A)*abs(x) + abs(b) for use in the backward error bound. */
+        /* f2c_abs(A)*f2c_abs(x) + f2c_abs(b) for use in the backward error bound. */
         if (upper)
         {
             if (*n == 1)
@@ -320,7 +320,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 q__1.i = bi.i - dx.i; // , expr subst
                 work[1].r = q__1.r;
                 work[1].i = q__1.i; // , expr subst
-                rwork[1] = (r__1 = bi.r, abs(r__1)) + (r__2 = r_imag(&bi), abs(r__2)) + ((r__3 = dx.r, abs(r__3)) + (r__4 = r_imag(&dx), abs(r__4)));
+                rwork[1] = (r__1 = bi.r, f2c_abs(r__1)) + (r__2 = r_imag(&bi), f2c_abs(r__2)) + ((r__3 = dx.r, f2c_abs(r__3)) + (r__4 = r_imag(&dx), f2c_abs(r__4)));
             }
             else
             {
@@ -344,7 +344,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 work[1].r = q__1.r;
                 work[1].i = q__1.i; // , expr subst
                 i__2 = j * x_dim1 + 2;
-                rwork[1] = (r__1 = bi.r, abs(r__1)) + (r__2 = r_imag(&bi), abs(r__2)) + ((r__3 = dx.r, abs(r__3)) + (r__4 = r_imag(&dx), abs(r__4))) + ((r__5 = e[1].r, abs(r__5)) + (r__6 = r_imag(&e[1]), abs(r__6))) * ((r__7 = x[ i__2].r, abs(r__7)) + (r__8 = r_imag(&x[j * x_dim1 + 2]), abs(r__8)));
+                rwork[1] = (r__1 = bi.r, f2c_abs(r__1)) + (r__2 = r_imag(&bi), f2c_abs(r__2)) + ((r__3 = dx.r, f2c_abs(r__3)) + (r__4 = r_imag(&dx), f2c_abs(r__4))) + ((r__5 = e[1].r, f2c_abs(r__5)) + (r__6 = r_imag(&e[1]), f2c_abs(r__6))) * ((r__7 = x[ i__2].r, f2c_abs(r__7)) + (r__8 = r_imag(&x[j * x_dim1 + 2]), f2c_abs(r__8)));
                 i__2 = *n - 1;
                 for (i__ = 2;
                         i__ <= i__2;
@@ -384,7 +384,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                     i__4 = i__ - 1 + j * x_dim1;
                     i__5 = i__;
                     i__6 = i__ + 1 + j * x_dim1;
-                    rwork[i__] = (r__1 = bi.r, abs(r__1)) + (r__2 = r_imag(& bi), abs(r__2)) + ((r__3 = e[i__3].r, abs(r__3)) + (r__4 = r_imag(&e[i__ - 1]), abs(r__4))) * (( r__5 = x[i__4].r, abs(r__5)) + (r__6 = r_imag(&x[ i__ - 1 + j * x_dim1]), abs(r__6))) + ((r__7 = dx.r, abs(r__7)) + (r__8 = r_imag(&dx), abs(r__8)) ) + ((r__9 = e[i__5].r, abs(r__9)) + (r__10 = r_imag(&e[i__]), abs(r__10))) * ((r__11 = x[i__6] .r, abs(r__11)) + (r__12 = r_imag(&x[i__ + 1 + j * x_dim1]), abs(r__12)));
+                    rwork[i__] = (r__1 = bi.r, f2c_abs(r__1)) + (r__2 = r_imag(& bi), f2c_abs(r__2)) + ((r__3 = e[i__3].r, f2c_abs(r__3)) + (r__4 = r_imag(&e[i__ - 1]), f2c_abs(r__4))) * (( r__5 = x[i__4].r, f2c_abs(r__5)) + (r__6 = r_imag(&x[ i__ - 1 + j * x_dim1]), f2c_abs(r__6))) + ((r__7 = dx.r, f2c_abs(r__7)) + (r__8 = r_imag(&dx), f2c_abs(r__8)) ) + ((r__9 = e[i__5].r, f2c_abs(r__9)) + (r__10 = r_imag(&e[i__]), f2c_abs(r__10))) * ((r__11 = x[i__6] .r, f2c_abs(r__11)) + (r__12 = r_imag(&x[i__ + 1 + j * x_dim1]), f2c_abs(r__12)));
                     /* L30: */
                 }
                 i__2 = *n + j * b_dim1;
@@ -411,7 +411,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 work[i__2].i = q__1.i; // , expr subst
                 i__2 = *n - 1;
                 i__3 = *n - 1 + j * x_dim1;
-                rwork[*n] = (r__1 = bi.r, abs(r__1)) + (r__2 = r_imag(&bi), abs(r__2)) + ((r__3 = e[i__2].r, abs(r__3)) + (r__4 = r_imag(&e[*n - 1]), abs(r__4))) * ((r__5 = x[i__3].r, abs(r__5)) + (r__6 = r_imag(&x[*n - 1 + j * x_dim1]), abs(r__6))) + ((r__7 = dx.r, abs(r__7)) + (r__8 = r_imag(&dx), abs(r__8)));
+                rwork[*n] = (r__1 = bi.r, f2c_abs(r__1)) + (r__2 = r_imag(&bi), f2c_abs(r__2)) + ((r__3 = e[i__2].r, f2c_abs(r__3)) + (r__4 = r_imag(&e[*n - 1]), f2c_abs(r__4))) * ((r__5 = x[i__3].r, f2c_abs(r__5)) + (r__6 = r_imag(&x[*n - 1 + j * x_dim1]), f2c_abs(r__6))) + ((r__7 = dx.r, f2c_abs(r__7)) + (r__8 = r_imag(&dx), f2c_abs(r__8)));
             }
         }
         else
@@ -430,7 +430,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 q__1.i = bi.i - dx.i; // , expr subst
                 work[1].r = q__1.r;
                 work[1].i = q__1.i; // , expr subst
-                rwork[1] = (r__1 = bi.r, abs(r__1)) + (r__2 = r_imag(&bi), abs(r__2)) + ((r__3 = dx.r, abs(r__3)) + (r__4 = r_imag(&dx), abs(r__4)));
+                rwork[1] = (r__1 = bi.r, f2c_abs(r__1)) + (r__2 = r_imag(&bi), f2c_abs(r__2)) + ((r__3 = dx.r, f2c_abs(r__3)) + (r__4 = r_imag(&dx), f2c_abs(r__4)));
             }
             else
             {
@@ -455,7 +455,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 work[1].r = q__1.r;
                 work[1].i = q__1.i; // , expr subst
                 i__2 = j * x_dim1 + 2;
-                rwork[1] = (r__1 = bi.r, abs(r__1)) + (r__2 = r_imag(&bi), abs(r__2)) + ((r__3 = dx.r, abs(r__3)) + (r__4 = r_imag(&dx), abs(r__4))) + ((r__5 = e[1].r, abs(r__5)) + (r__6 = r_imag(&e[1]), abs(r__6))) * ((r__7 = x[ i__2].r, abs(r__7)) + (r__8 = r_imag(&x[j * x_dim1 + 2]), abs(r__8)));
+                rwork[1] = (r__1 = bi.r, f2c_abs(r__1)) + (r__2 = r_imag(&bi), f2c_abs(r__2)) + ((r__3 = dx.r, f2c_abs(r__3)) + (r__4 = r_imag(&dx), f2c_abs(r__4))) + ((r__5 = e[1].r, f2c_abs(r__5)) + (r__6 = r_imag(&e[1]), f2c_abs(r__6))) * ((r__7 = x[ i__2].r, f2c_abs(r__7)) + (r__8 = r_imag(&x[j * x_dim1 + 2]), f2c_abs(r__8)));
                 i__2 = *n - 1;
                 for (i__ = 2;
                         i__ <= i__2;
@@ -495,7 +495,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                     i__4 = i__ - 1 + j * x_dim1;
                     i__5 = i__;
                     i__6 = i__ + 1 + j * x_dim1;
-                    rwork[i__] = (r__1 = bi.r, abs(r__1)) + (r__2 = r_imag(& bi), abs(r__2)) + ((r__3 = e[i__3].r, abs(r__3)) + (r__4 = r_imag(&e[i__ - 1]), abs(r__4))) * (( r__5 = x[i__4].r, abs(r__5)) + (r__6 = r_imag(&x[ i__ - 1 + j * x_dim1]), abs(r__6))) + ((r__7 = dx.r, abs(r__7)) + (r__8 = r_imag(&dx), abs(r__8)) ) + ((r__9 = e[i__5].r, abs(r__9)) + (r__10 = r_imag(&e[i__]), abs(r__10))) * ((r__11 = x[i__6] .r, abs(r__11)) + (r__12 = r_imag(&x[i__ + 1 + j * x_dim1]), abs(r__12)));
+                    rwork[i__] = (r__1 = bi.r, f2c_abs(r__1)) + (r__2 = r_imag(& bi), f2c_abs(r__2)) + ((r__3 = e[i__3].r, f2c_abs(r__3)) + (r__4 = r_imag(&e[i__ - 1]), f2c_abs(r__4))) * (( r__5 = x[i__4].r, f2c_abs(r__5)) + (r__6 = r_imag(&x[ i__ - 1 + j * x_dim1]), f2c_abs(r__6))) + ((r__7 = dx.r, f2c_abs(r__7)) + (r__8 = r_imag(&dx), f2c_abs(r__8)) ) + ((r__9 = e[i__5].r, f2c_abs(r__9)) + (r__10 = r_imag(&e[i__]), f2c_abs(r__10))) * ((r__11 = x[i__6] .r, f2c_abs(r__11)) + (r__12 = r_imag(&x[i__ + 1 + j * x_dim1]), f2c_abs(r__12)));
                     /* L40: */
                 }
                 i__2 = *n + j * b_dim1;
@@ -522,12 +522,12 @@ L20: /* Loop until stopping criterion is satisfied. */
                 work[i__2].i = q__1.i; // , expr subst
                 i__2 = *n - 1;
                 i__3 = *n - 1 + j * x_dim1;
-                rwork[*n] = (r__1 = bi.r, abs(r__1)) + (r__2 = r_imag(&bi), abs(r__2)) + ((r__3 = e[i__2].r, abs(r__3)) + (r__4 = r_imag(&e[*n - 1]), abs(r__4))) * ((r__5 = x[i__3].r, abs(r__5)) + (r__6 = r_imag(&x[*n - 1 + j * x_dim1]), abs(r__6))) + ((r__7 = dx.r, abs(r__7)) + (r__8 = r_imag(&dx), abs(r__8)));
+                rwork[*n] = (r__1 = bi.r, f2c_abs(r__1)) + (r__2 = r_imag(&bi), f2c_abs(r__2)) + ((r__3 = e[i__2].r, f2c_abs(r__3)) + (r__4 = r_imag(&e[*n - 1]), f2c_abs(r__4))) * ((r__5 = x[i__3].r, f2c_abs(r__5)) + (r__6 = r_imag(&x[*n - 1 + j * x_dim1]), f2c_abs(r__6))) + ((r__7 = dx.r, f2c_abs(r__7)) + (r__8 = r_imag(&dx), f2c_abs(r__8)));
             }
         }
         /* Compute componentwise relative backward error from formula */
-        /* max(i) ( abs(R(i)) / ( abs(A)*abs(X) + abs(B) )(i) ) */
-        /* where abs(Z) is the componentwise absolute value of the matrix */
+        /* max(i) ( f2c_abs(R(i)) / ( f2c_abs(A)*f2c_abs(X) + f2c_abs(B) )(i) ) */
+        /* where f2c_abs(Z) is the componentwise absolute value of the matrix */
         /* or vector Z. If the i-th component of the denominator is less */
         /* than SAFE2, then SAFE1 is added to the i-th components of the */
         /* numerator and denominator before dividing. */
@@ -542,7 +542,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 /* Computing MAX */
                 i__3 = i__;
                 r__3 = s;
-                r__4 = ((r__1 = work[i__3].r, abs(r__1)) + (r__2 = r_imag(&work[i__]), abs(r__2))) / rwork[i__]; // , expr subst
+                r__4 = ((r__1 = work[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&work[i__]), f2c_abs(r__2))) / rwork[i__]; // , expr subst
                 s = max(r__3,r__4);
             }
             else
@@ -550,7 +550,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 /* Computing MAX */
                 i__3 = i__;
                 r__3 = s;
-                r__4 = ((r__1 = work[i__3].r, abs(r__1)) + (r__2 = r_imag(&work[i__]), abs(r__2)) + safe1) / (rwork[i__] + safe1); // , expr subst
+                r__4 = ((r__1 = work[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&work[i__]), f2c_abs(r__2)) + safe1) / (rwork[i__] + safe1); // , expr subst
                 s = max(r__3,r__4);
             }
             /* L50: */
@@ -572,18 +572,18 @@ L20: /* Loop until stopping criterion is satisfied. */
         }
         /* Bound error from formula */
         /* norm(X - XTRUE) / norm(X) .le. FERR = */
-        /* norm( abs(inv(A))* */
-        /* ( abs(R) + NZ*EPS*( abs(A)*abs(X)+abs(B) ))) / norm(X) */
+        /* norm( f2c_abs(inv(A))* */
+        /* ( f2c_abs(R) + NZ*EPS*( f2c_abs(A)*f2c_abs(X)+f2c_abs(B) ))) / norm(X) */
         /* where */
         /* norm(Z) is the magnitude of the largest component of Z */
         /* inv(A) is the inverse of A */
-        /* abs(Z) is the componentwise absolute value of the matrix or */
+        /* f2c_abs(Z) is the componentwise absolute value of the matrix or */
         /* vector Z */
         /* NZ is the maximum number of nonzeros in any row of A, plus 1 */
         /* EPS is machine epsilon */
-        /* The i-th component of abs(R)+NZ*EPS*(abs(A)*abs(X)+abs(B)) */
+        /* The i-th component of f2c_abs(R)+NZ*EPS*(f2c_abs(A)*f2c_abs(X)+f2c_abs(B)) */
         /* is incremented by SAFE1 if the i-th component of */
-        /* abs(A)*abs(X) + abs(B) is less than SAFE2. */
+        /* f2c_abs(A)*f2c_abs(X) + f2c_abs(B) is less than SAFE2. */
         i__2 = *n;
         for (i__ = 1;
                 i__ <= i__2;
@@ -592,12 +592,12 @@ L20: /* Loop until stopping criterion is satisfied. */
             if (rwork[i__] > safe2)
             {
                 i__3 = i__;
-                rwork[i__] = (r__1 = work[i__3].r, abs(r__1)) + (r__2 = r_imag(&work[i__]), abs(r__2)) + nz * eps * rwork[i__] ;
+                rwork[i__] = (r__1 = work[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&work[i__]), f2c_abs(r__2)) + nz * eps * rwork[i__] ;
             }
             else
             {
                 i__3 = i__;
-                rwork[i__] = (r__1 = work[i__3].r, abs(r__1)) + (r__2 = r_imag(&work[i__]), abs(r__2)) + nz * eps * rwork[i__] + safe1;
+                rwork[i__] = (r__1 = work[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&work[i__]), f2c_abs(r__2)) + nz * eps * rwork[i__] + safe1;
             }
             /* L60: */
         }
@@ -605,8 +605,8 @@ L20: /* Loop until stopping criterion is satisfied. */
         ferr[j] = rwork[ix];
         /* Estimate the norm of inv(A). */
         /* Solve M(A) * x = e, where M(A) = (m(i,j)) is given by */
-        /* m(i,j) = abs(A(i,j)); i = j; */
-        /* m(i,j) = -abs(A(i,j)), i .ne. j, */
+        /* m(i,j) = f2c_abs(A(i,j)); i = j; */
+        /* m(i,j) = -f2c_abs(A(i,j)), i .ne. j, */
         /* and e = [ 1, 1, ..., 1 ]**T. Note M(A) = M(L)*D*M(L)**H. */
         /* Solve M(L) * x = e. */
         rwork[1] = 1.f;
@@ -615,7 +615,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 i__ <= i__2;
                 ++i__)
         {
-            rwork[i__] = rwork[i__ - 1] * c_abs(&ef[i__ - 1]) + 1.f;
+            rwork[i__] = rwork[i__ - 1] * c_f2c_abs(&ef[i__ - 1]) + 1.f;
             /* L70: */
         }
         /* Solve D * M(L)**H * x = b. */
@@ -624,12 +624,12 @@ L20: /* Loop until stopping criterion is satisfied. */
                 i__ >= 1;
                 --i__)
         {
-            rwork[i__] = rwork[i__] / df[i__] + rwork[i__ + 1] * c_abs(&ef[ i__]);
+            rwork[i__] = rwork[i__] / df[i__] + rwork[i__ + 1] * c_f2c_abs(&ef[ i__]);
             /* L80: */
         }
         /* Compute norm(inv(A)) = max(x(i)), 1<=i<=n. */
         ix = isamax_(n, &rwork[1], &c__1);
-        ferr[j] *= (r__1 = rwork[ix], abs(r__1));
+        ferr[j] *= (r__1 = rwork[ix], f2c_abs(r__1));
         /* Normalize error. */
         lstres = 0.f;
         i__2 = *n;
@@ -639,7 +639,7 @@ L20: /* Loop until stopping criterion is satisfied. */
         {
             /* Computing MAX */
             r__1 = lstres;
-            r__2 = c_abs(&x[i__ + j * x_dim1]); // , expr subst
+            r__2 = c_f2c_abs(&x[i__ + j * x_dim1]); // , expr subst
             lstres = max(r__1,r__2);
             /* L90: */
         }

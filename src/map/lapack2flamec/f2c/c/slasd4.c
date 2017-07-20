@@ -326,7 +326,7 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             erretm += psi;
             /* L40: */
         }
-        erretm = abs(erretm);
+        erretm = f2c_abs(erretm);
         /* Evaluate PHI and the derivative DPHI */
         temp = z__[*n] / (delta[*n] * work[*n]);
         phi = z__[*n] * temp;
@@ -335,7 +335,7 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
         /* $ + ABS( TAU2 )*( DPSI+DPHI ) */
         w = rhoinv + phi + psi;
         /* Test for convergence */
-        if (abs(w) <= eps * erretm)
+        if (f2c_abs(w) <= eps * erretm)
         {
             goto L240;
         }
@@ -348,7 +348,7 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
         b = dtnsq * dtnsq1 * w;
         if (c__ < 0.f)
         {
-            c__ = abs(c__);
+            c__ = f2c_abs(c__);
         }
         if (c__ == 0.f)
         {
@@ -356,11 +356,11 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
         }
         else if (a >= 0.f)
         {
-            eta = (a + sqrt((r__1 = a * a - b * 4.f * c__, abs(r__1)))) / ( c__ * 2.f);
+            eta = (a + sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs(r__1)))) / ( c__ * 2.f);
         }
         else
         {
-            eta = b * 2.f / (a - sqrt((r__1 = a * a - b * 4.f * c__, abs(r__1) )));
+            eta = b * 2.f / (a - sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs(r__1) )));
         }
         /* Note, eta should be positive if w is negative, and */
         /* eta should be negative otherwise. However, */
@@ -403,7 +403,7 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             erretm += psi;
             /* L60: */
         }
-        erretm = abs(erretm);
+        erretm = f2c_abs(erretm);
         /* Evaluate PHI and the derivative DPHI */
         tau2 = work[*n] * delta[*n];
         temp = z__[*n] / tau2;
@@ -419,7 +419,7 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
                 ++niter)
         {
             /* Test for convergence */
-            if (abs(w) <= eps * erretm)
+            if (f2c_abs(w) <= eps * erretm)
             {
                 goto L240;
             }
@@ -431,11 +431,11 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             b = dtnsq1 * dtnsq * w;
             if (a >= 0.f)
             {
-                eta = (a + sqrt((r__1 = a * a - b * 4.f * c__, abs(r__1)))) / (c__ * 2.f);
+                eta = (a + sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs(r__1)))) / (c__ * 2.f);
             }
             else
             {
-                eta = b * 2.f / (a - sqrt((r__1 = a * a - b * 4.f * c__, abs( r__1))));
+                eta = b * 2.f / (a - sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs( r__1))));
             }
             /* Note, eta should be positive if w is negative, and */
             /* eta should be negative otherwise. However, */
@@ -478,7 +478,7 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
                 erretm += psi;
                 /* L80: */
             }
-            erretm = abs(erretm);
+            erretm = f2c_abs(erretm);
             /* Evaluate PHI and the derivative DPHI */
             tau2 = work[*n] * delta[*n];
             temp = z__[*n] / tau2;
@@ -546,18 +546,18 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             b = z__[*i__] * z__[*i__] * delsq;
             if (a > 0.f)
             {
-                tau2 = b * 2.f / (a + sqrt((r__1 = a * a - b * 4.f * c__, abs( r__1))));
+                tau2 = b * 2.f / (a + sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs( r__1))));
             }
             else
             {
-                tau2 = (a - sqrt((r__1 = a * a - b * 4.f * c__, abs(r__1)))) / (c__ * 2.f);
+                tau2 = (a - sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs(r__1)))) / (c__ * 2.f);
             }
             /* TAU2 now is an estimation of SIGMA^2 - D( I )^2. The */
             /* following, however, is the corresponding estimation of */
             /* SIGMA - D( I ). */
             tau = tau2 / (d__[*i__] + sqrt(d__[*i__] * d__[*i__] + tau2));
             temp = sqrt(eps);
-            if (d__[*i__] <= temp * d__[ip1] && (r__1 = z__[*i__], abs(r__1)) <= temp && d__[*i__] > 0.f)
+            if (d__[*i__] <= temp * d__[ip1] && (r__1 = z__[*i__], f2c_abs(r__1)) <= temp && d__[*i__] > 0.f)
             {
                 /* Computing MIN */
                 r__1 = d__[*i__] * 10.f;
@@ -577,16 +577,16 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             b = z__[ip1] * z__[ip1] * delsq;
             if (a < 0.f)
             {
-                tau2 = b * 2.f / (a - sqrt((r__1 = a * a + b * 4.f * c__, abs( r__1))));
+                tau2 = b * 2.f / (a - sqrt((r__1 = a * a + b * 4.f * c__, f2c_abs( r__1))));
             }
             else
             {
-                tau2 = -(a + sqrt((r__1 = a * a + b * 4.f * c__, abs(r__1)))) / (c__ * 2.f);
+                tau2 = -(a + sqrt((r__1 = a * a + b * 4.f * c__, f2c_abs(r__1)))) / (c__ * 2.f);
             }
             /* TAU2 now is an estimation of SIGMA^2 - D( IP1 )^2. The */
             /* following, however, is the corresponding estimation of */
             /* SIGMA - D( IP1 ). */
-            tau = tau2 / (d__[ip1] + sqrt((r__1 = d__[ip1] * d__[ip1] + tau2, abs(r__1))));
+            tau = tau2 / (d__[ip1] + sqrt((r__1 = d__[ip1] * d__[ip1] + tau2, f2c_abs(r__1))));
         }
         *sigma = d__[ii] + tau;
         i__1 = *n;
@@ -615,7 +615,7 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             erretm += psi;
             /* L150: */
         }
-        erretm = abs(erretm);
+        erretm = f2c_abs(erretm);
         /* Evaluate PHI and the derivative DPHI */
         dphi = 0.f;
         phi = 0.f;
@@ -656,10 +656,10 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
         dw = dpsi + dphi + temp * temp;
         temp = z__[ii] * temp;
         w += temp;
-        erretm = (phi - psi) * 8.f + erretm + rhoinv * 2.f + abs(temp) * 3.f;
+        erretm = (phi - psi) * 8.f + erretm + rhoinv * 2.f + f2c_abs(temp) * 3.f;
         /* $ + ABS( TAU2 )*DW */
         /* Test for convergence */
-        if (abs(w) <= eps * erretm)
+        if (f2c_abs(w) <= eps * erretm)
         {
             goto L240;
         }
@@ -708,11 +708,11 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             }
             else if (a <= 0.f)
             {
-                eta = (a - sqrt((r__1 = a * a - b * 4.f * c__, abs(r__1)))) / (c__ * 2.f);
+                eta = (a - sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs(r__1)))) / (c__ * 2.f);
             }
             else
             {
-                eta = b * 2.f / (a + sqrt((r__1 = a * a - b * 4.f * c__, abs( r__1))));
+                eta = b * 2.f / (a + sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs( r__1))));
             }
         }
         else
@@ -795,11 +795,11 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
                 }
                 else if (a <= 0.f)
                 {
-                    eta = (a - sqrt((r__1 = a * a - b * 4.f * c__, abs(r__1))) ) / (c__ * 2.f);
+                    eta = (a - sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs(r__1))) ) / (c__ * 2.f);
                 }
                 else
                 {
-                    eta = b * 2.f / (a + sqrt((r__1 = a * a - b * 4.f * c__, abs(r__1))));
+                    eta = b * 2.f / (a + sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs(r__1))));
                 }
             }
         }
@@ -869,7 +869,7 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             erretm += psi;
             /* L180: */
         }
-        erretm = abs(erretm);
+        erretm = f2c_abs(erretm);
         /* Evaluate PHI and the derivative DPHI */
         dphi = 0.f;
         phi = 0.f;
@@ -889,19 +889,19 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
         dw = dpsi + dphi + temp * temp;
         temp = z__[ii] * temp;
         w = rhoinv + phi + psi + temp;
-        erretm = (phi - psi) * 8.f + erretm + rhoinv * 2.f + abs(temp) * 3.f;
+        erretm = (phi - psi) * 8.f + erretm + rhoinv * 2.f + f2c_abs(temp) * 3.f;
         /* $ + ABS( TAU2 )*DW */
         swtch = FALSE_;
         if (orgati)
         {
-            if (-w > abs(prew) / 10.f)
+            if (-w > f2c_abs(prew) / 10.f)
             {
                 swtch = TRUE_;
             }
         }
         else
         {
-            if (w > abs(prew) / 10.f)
+            if (w > f2c_abs(prew) / 10.f)
             {
                 swtch = TRUE_;
             }
@@ -913,7 +913,7 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
                 ++niter)
         {
             /* Test for convergence */
-            if (abs(w) <= eps * erretm)
+            if (f2c_abs(w) <= eps * erretm)
             {
                 /* $ .OR. (SGUB-SGLB).LE.EIGHT*ABS(SGUB+SGLB) ) THEN */
                 goto L240;
@@ -985,11 +985,11 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
                 }
                 else if (a <= 0.f)
                 {
-                    eta = (a - sqrt((r__1 = a * a - b * 4.f * c__, abs(r__1))) ) / (c__ * 2.f);
+                    eta = (a - sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs(r__1))) ) / (c__ * 2.f);
                 }
                 else
                 {
-                    eta = b * 2.f / (a + sqrt((r__1 = a * a - b * 4.f * c__, abs(r__1))));
+                    eta = b * 2.f / (a + sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs(r__1))));
                 }
             }
             else
@@ -1105,11 +1105,11 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
                     }
                     else if (a <= 0.f)
                     {
-                        eta = (a - sqrt((r__1 = a * a - b * 4.f * c__, abs( r__1)))) / (c__ * 2.f);
+                        eta = (a - sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs( r__1)))) / (c__ * 2.f);
                     }
                     else
                     {
-                        eta = b * 2.f / (a + sqrt((r__1 = a * a - b * 4.f * c__, abs(r__1))));
+                        eta = b * 2.f / (a + sqrt((r__1 = a * a - b * 4.f * c__, f2c_abs(r__1))));
                     }
                 }
             }
@@ -1179,7 +1179,7 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
                 erretm += psi;
                 /* L210: */
             }
-            erretm = abs(erretm);
+            erretm = f2c_abs(erretm);
             /* Evaluate PHI and the derivative DPHI */
             dphi = 0.f;
             phi = 0.f;
@@ -1199,9 +1199,9 @@ int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             dw = dpsi + dphi + temp * temp;
             temp = z__[ii] * temp;
             w = rhoinv + phi + psi + temp;
-            erretm = (phi - psi) * 8.f + erretm + rhoinv * 2.f + abs(temp) * 3.f;
+            erretm = (phi - psi) * 8.f + erretm + rhoinv * 2.f + f2c_abs(temp) * 3.f;
             /* $ + ABS( TAU2 )*DW */
-            if (w * prew > 0.f && abs(w) > abs(prew) / 10.f)
+            if (w * prew > 0.f && f2c_abs(w) > f2c_abs(prew) / 10.f)
             {
                 swtch = ! swtch;
             }

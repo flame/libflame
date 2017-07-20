@@ -317,7 +317,7 @@ L10:
                 {
                     /* NOTE: The following 4 lines follow from the analysis in */
                     /* Lapack Working Note 176. */
-                    temp = (d__1 = a[rk + j * a_dim1], abs(d__1)) / vn1[j];
+                    temp = (d__1 = a[rk + j * a_dim1], f2c_abs(d__1)) / vn1[j];
                     /* Computing MAX */
                     d__1 = 0.;
                     d__2 = (temp + 1.) * (1. - temp); // , expr subst

@@ -38,7 +38,7 @@ static integer c__1 = 1;
 /* > \return CLANGT */
 /* > \verbatim */
 /* > */
-/* > CLANGT = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > CLANGT = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -49,7 +49,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -99,7 +99,7 @@ real clangt_(char *norm, integer *n, complex *dl, complex *d__, complex *du)
     integer i__1;
     real ret_val, r__1;
     /* Builtin functions */
-    double c_abs(complex *), sqrt(doublereal);
+    double c_f2c_abs(complex *), sqrt(doublereal);
     /* Local variables */
     integer i__;
     real sum, temp, scale;
@@ -139,27 +139,27 @@ real clangt_(char *norm, integer *n, complex *dl, complex *d__, complex *du)
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
-        anorm = c_abs(&d__[*n]);
+        /* Find max(f2c_abs(A(i,j))). */
+        anorm = c_f2c_abs(&d__[*n]);
         i__1 = *n - 1;
         for (i__ = 1;
                 i__ <= i__1;
                 ++i__)
         {
-            r__1 = c_abs(&dl[i__]);
-            if (anorm < c_abs(&dl[i__]) || sisnan_(&r__1))
+            r__1 = c_f2c_abs(&dl[i__]);
+            if (anorm < c_f2c_abs(&dl[i__]) || sisnan_(&r__1))
             {
-                anorm = c_abs(&dl[i__]);
+                anorm = c_f2c_abs(&dl[i__]);
             }
-            r__1 = c_abs(&d__[i__]);
-            if (anorm < c_abs(&d__[i__]) || sisnan_(&r__1))
+            r__1 = c_f2c_abs(&d__[i__]);
+            if (anorm < c_f2c_abs(&d__[i__]) || sisnan_(&r__1))
             {
-                anorm = c_abs(&d__[i__]);
+                anorm = c_f2c_abs(&d__[i__]);
             }
-            r__1 = c_abs(&du[i__]);
-            if (anorm < c_abs(&du[i__]) || sisnan_(&r__1))
+            r__1 = c_f2c_abs(&du[i__]);
+            if (anorm < c_f2c_abs(&du[i__]) || sisnan_(&r__1))
             {
-                anorm = c_abs(&du[i__]);
+                anorm = c_f2c_abs(&du[i__]);
             }
             /* L10: */
         }
@@ -169,12 +169,12 @@ real clangt_(char *norm, integer *n, complex *dl, complex *d__, complex *du)
         /* Find norm1(A). */
         if (*n == 1)
         {
-            anorm = c_abs(&d__[1]);
+            anorm = c_f2c_abs(&d__[1]);
         }
         else
         {
-            anorm = c_abs(&d__[1]) + c_abs(&dl[1]);
-            temp = c_abs(&d__[*n]) + c_abs(&du[*n - 1]);
+            anorm = c_f2c_abs(&d__[1]) + c_f2c_abs(&dl[1]);
+            temp = c_f2c_abs(&d__[*n]) + c_f2c_abs(&du[*n - 1]);
             if (anorm < temp || sisnan_(&temp))
             {
                 anorm = temp;
@@ -184,7 +184,7 @@ real clangt_(char *norm, integer *n, complex *dl, complex *d__, complex *du)
                     i__ <= i__1;
                     ++i__)
             {
-                temp = c_abs(&d__[i__]) + c_abs(&dl[i__]) + c_abs(&du[i__ - 1] );
+                temp = c_f2c_abs(&d__[i__]) + c_f2c_abs(&dl[i__]) + c_f2c_abs(&du[i__ - 1] );
                 if (anorm < temp || sisnan_(&temp))
                 {
                     anorm = temp;
@@ -198,12 +198,12 @@ real clangt_(char *norm, integer *n, complex *dl, complex *d__, complex *du)
         /* Find normI(A). */
         if (*n == 1)
         {
-            anorm = c_abs(&d__[1]);
+            anorm = c_f2c_abs(&d__[1]);
         }
         else
         {
-            anorm = c_abs(&d__[1]) + c_abs(&du[1]);
-            temp = c_abs(&d__[*n]) + c_abs(&dl[*n - 1]);
+            anorm = c_f2c_abs(&d__[1]) + c_f2c_abs(&du[1]);
+            temp = c_f2c_abs(&d__[*n]) + c_f2c_abs(&dl[*n - 1]);
             if (anorm < temp || sisnan_(&temp))
             {
                 anorm = temp;
@@ -213,7 +213,7 @@ real clangt_(char *norm, integer *n, complex *dl, complex *d__, complex *du)
                     i__ <= i__1;
                     ++i__)
             {
-                temp = c_abs(&d__[i__]) + c_abs(&du[i__]) + c_abs(&dl[i__ - 1] );
+                temp = c_f2c_abs(&d__[i__]) + c_f2c_abs(&du[i__]) + c_f2c_abs(&dl[i__ - 1] );
                 if (anorm < temp || sisnan_(&temp))
                 {
                     anorm = temp;

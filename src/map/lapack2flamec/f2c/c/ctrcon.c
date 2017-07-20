@@ -265,7 +265,7 @@ L10:
             {
                 ix = icamax_(n, &work[1], &c__1);
                 i__1 = ix;
-                xnorm = (r__1 = work[i__1].r, abs(r__1)) + (r__2 = r_imag(& work[ix]), abs(r__2));
+                xnorm = (r__1 = work[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(& work[ix]), f2c_abs(r__2));
                 if (scale < xnorm * smlnum || scale == 0.f)
                 {
                     goto L20;

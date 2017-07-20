@@ -76,7 +76,7 @@ static doublereal c_b5 = 1.;
 /* > */
 /* > \param[in] V */
 /* > \verbatim */
-/* > V is DOUBLE PRECISION array, dimension (1+(L-1)*abs(INCV)) */
+/* > V is DOUBLE PRECISION array, dimension (1+(L-1)*f2c_abs(INCV)) */
 /* > The vector v in the representation of H as returned by */
 /* > DTZRZF. V is not used if TAU = 0. */
 /* > \endverbatim */

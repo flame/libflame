@@ -272,9 +272,9 @@ L10: /* N1 = 1, N2 = 2: generate elementary reflector H so that: */
         slarfx_("R", &c__3, &c__3, u, &tau, d__, &c__4, &work[1]);
         /* Test whether to reject swap. */
         /* Computing MAX */
-        r__2 = abs(d__[2]), r__3 = abs(d__[6]);
+        r__2 = f2c_abs(d__[2]), r__3 = f2c_abs(d__[6]);
         r__2 = max(r__2,r__3);
-        r__3 = (r__1 = d__[10] - t11, abs(r__1)); // ; expr subst
+        r__3 = (r__1 = d__[10] - t11, f2c_abs(r__1)); // ; expr subst
         if (max(r__2,r__3) > thresh)
         {
             goto L50;
@@ -307,9 +307,9 @@ L20: /* N1 = 2, N2 = 1: generate elementary reflector H so that: */
         slarfx_("R", &c__3, &c__3, u, &tau, d__, &c__4, &work[1]);
         /* Test whether to reject swap. */
         /* Computing MAX */
-        r__2 = abs(d__[1]), r__3 = abs(d__[2]);
+        r__2 = f2c_abs(d__[1]), r__3 = f2c_abs(d__[2]);
         r__2 = max(r__2,r__3);
-        r__3 = (r__1 = d__[0] - t33, abs(r__1)); // ; expr subst
+        r__3 = (r__1 = d__[0] - t33, f2c_abs(r__1)); // ; expr subst
         if (max(r__2,r__3) > thresh)
         {
             goto L50;
@@ -351,9 +351,9 @@ L30: /* N1 = 2, N2 = 2: generate elementary reflectors H(1) and H(2) so */
         slarfx_("R", &c__4, &c__3, u2, &tau2, &d__[4], &c__4, &work[1]);
         /* Test whether to reject swap. */
         /* Computing MAX */
-        r__1 = abs(d__[2]), r__2 = abs(d__[6]), r__1 = max(r__1,r__2), r__2 = abs(d__[3]);
+        r__1 = f2c_abs(d__[2]), r__2 = f2c_abs(d__[6]), r__1 = max(r__1,r__2), r__2 = f2c_abs(d__[3]);
         r__1 = max(r__1,r__2);
-        r__2 = abs(d__[7]); // ; expr subst
+        r__2 = f2c_abs(d__[7]); // ; expr subst
         if (max(r__1,r__2) > thresh)
         {
             goto L50;

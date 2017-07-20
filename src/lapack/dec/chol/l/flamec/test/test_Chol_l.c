@@ -124,7 +124,7 @@ exit(1);
 
     m = m_input;
 
-    if( m < 0 ) m = p / abs(m_input);
+    if( m < 0 ) m = p / f2c_abs(m_input);
 
     //datatype = FLA_FLOAT;
     //datatype = FLA_DOUBLE;

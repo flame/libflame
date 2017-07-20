@@ -38,7 +38,7 @@ static integer c__1 = 1;
 /* > \return SLANST */
 /* > \verbatim */
 /* > */
-/* > SLANST = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > SLANST = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -49,7 +49,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -132,19 +132,19 @@ real slanst_(char *norm, integer *n, real *d__, real *e)
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
-        anorm = (r__1 = d__[*n], abs(r__1));
+        /* Find max(f2c_abs(A(i,j))). */
+        anorm = (r__1 = d__[*n], f2c_abs(r__1));
         i__1 = *n - 1;
         for (i__ = 1;
                 i__ <= i__1;
                 ++i__)
         {
-            sum = (r__1 = d__[i__], abs(r__1));
+            sum = (r__1 = d__[i__], f2c_abs(r__1));
             if (anorm < sum || sisnan_(&sum))
             {
                 anorm = sum;
             }
-            sum = (r__1 = e[i__], abs(r__1));
+            sum = (r__1 = e[i__], f2c_abs(r__1));
             if (anorm < sum || sisnan_(&sum))
             {
                 anorm = sum;
@@ -157,12 +157,12 @@ real slanst_(char *norm, integer *n, real *d__, real *e)
         /* Find norm1(A). */
         if (*n == 1)
         {
-            anorm = abs(d__[1]);
+            anorm = f2c_abs(d__[1]);
         }
         else
         {
-            anorm = abs(d__[1]) + abs(e[1]);
-            sum = (r__1 = e[*n - 1], abs(r__1)) + (r__2 = d__[*n], abs(r__2));
+            anorm = f2c_abs(d__[1]) + f2c_abs(e[1]);
+            sum = (r__1 = e[*n - 1], f2c_abs(r__1)) + (r__2 = d__[*n], f2c_abs(r__2));
             if (anorm < sum || sisnan_(&sum))
             {
                 anorm = sum;
@@ -172,7 +172,7 @@ real slanst_(char *norm, integer *n, real *d__, real *e)
                     i__ <= i__1;
                     ++i__)
             {
-                sum = (r__1 = d__[i__], abs(r__1)) + (r__2 = e[i__], abs(r__2) ) + (r__3 = e[i__ - 1], abs(r__3));
+                sum = (r__1 = d__[i__], f2c_abs(r__1)) + (r__2 = e[i__], f2c_abs(r__2) ) + (r__3 = e[i__ - 1], f2c_abs(r__3));
                 if (anorm < sum || sisnan_(&sum))
                 {
                     anorm = sum;

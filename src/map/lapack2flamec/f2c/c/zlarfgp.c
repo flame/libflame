@@ -70,7 +70,7 @@ static doublecomplex c_b5 =
 /* > \param[in,out] X */
 /* > \verbatim */
 /* > X is COMPLEX*16 array, dimension */
-/* > (1+(N-2)*abs(INCX)) */
+/* > (1+(N-2)*f2c_abs(INCX)) */
 /* > On entry, the vector x. */
 /* > On exit, it is overwritten with the vector v. */
 /* > \endverbatim */
@@ -103,7 +103,7 @@ int zlarfgp_(integer *n, doublecomplex *alpha, doublecomplex *x, integer *incx, 
     doublereal d__1, d__2;
     doublecomplex z__1, z__2;
     /* Builtin functions */
-    double d_imag(doublecomplex *), d_sign(doublereal *, doublereal *), z_abs( doublecomplex *);
+    double d_imag(doublecomplex *), d_sign(doublereal *, doublereal *), z_f2c_abs( doublecomplex *);
     /* Local variables */
     integer j;
     doublecomplex savealpha;
@@ -153,7 +153,7 @@ int zlarfgp_(integer *n, doublecomplex *alpha, doublecomplex *x, integer *incx, 
     alphi = d_imag(alpha);
     if (xnorm == 0.)
     {
-        /* H = [1-alpha/abs(alpha) 0;
+        /* H = [1-alpha/f2c_abs(alpha) 0;
         0 I], sign chosen so ALPHA >= 0. */
         if (alphi == 0.)
         {
@@ -212,7 +212,7 @@ int zlarfgp_(integer *n, doublecomplex *alpha, doublecomplex *x, integer *incx, 
         smlnum = dlamch_("S") / dlamch_("E");
         bignum = 1. / smlnum;
         knt = 0;
-        if (abs(beta) < smlnum)
+        if (f2c_abs(beta) < smlnum)
         {
             /* XNORM, BETA may be inaccurate;
             scale X and recompute them */
@@ -223,7 +223,7 @@ L10:
             beta *= bignum;
             alphi *= bignum;
             alphr *= bignum;
-            if (abs(beta) < smlnum)
+            if (f2c_abs(beta) < smlnum)
             {
                 goto L10;
             }
@@ -266,7 +266,7 @@ L10:
         }
         zladiv_(&z__1, &c_b5, alpha);
         alpha->r = z__1.r, alpha->i = z__1.i;
-        if (z_abs(tau) <= smlnum)
+        if (z_f2c_abs(tau) <= smlnum)
         {
             /* In the case where the computed TAU ends up being a denormalized number, */
             /* it loses relative accuracy. This is a BIG problem. Solution: flush TAU */

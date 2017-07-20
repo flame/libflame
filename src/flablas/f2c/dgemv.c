@@ -52,9 +52,9 @@ int dgemv_(char *trans, integer *m, integer *n, doublereal * alpha, doublereal *
     /* max( 1, m ). */
     /* Unchanged on exit. */
     /* X - DOUBLE PRECISION array of DIMENSION at least */
-    /* ( 1 + ( n - 1 )*abs( INCX ) ) when TRANS = 'N' or 'n' */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCX ) ) when TRANS = 'N' or 'n' */
     /* and at least */
-    /* ( 1 + ( m - 1 )*abs( INCX ) ) otherwise. */
+    /* ( 1 + ( m - 1 )*f2c_abs( INCX ) ) otherwise. */
     /* Before entry, the incremented array X must contain the */
     /* vector x. */
     /* Unchanged on exit. */
@@ -67,9 +67,9 @@ int dgemv_(char *trans, integer *m, integer *n, doublereal * alpha, doublereal *
     /* supplied as zero then Y need not be set on input. */
     /* Unchanged on exit. */
     /* Y - DOUBLE PRECISION array of DIMENSION at least */
-    /* ( 1 + ( m - 1 )*abs( INCY ) ) when TRANS = 'N' or 'n' */
+    /* ( 1 + ( m - 1 )*f2c_abs( INCY ) ) when TRANS = 'N' or 'n' */
     /* and at least */
-    /* ( 1 + ( n - 1 )*abs( INCY ) ) otherwise. */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCY ) ) otherwise. */
     /* Before entry with BETA non-zero, the incremented array Y */
     /* must contain the vector y. On exit, Y is overwritten by the */
     /* updated vector y. */

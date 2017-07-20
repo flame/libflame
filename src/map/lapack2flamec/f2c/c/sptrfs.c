@@ -260,13 +260,13 @@ int sptrfs_(integer *n, integer *nrhs, real *d__, real *e, real *df, real *ef, r
         lstres = 3.f;
 L20: /* Loop until stopping criterion is satisfied. */
         /* Compute residual R = B - A * X. Also compute */
-        /* abs(A)*abs(x) + abs(b) for use in the backward error bound. */
+        /* f2c_abs(A)*f2c_abs(x) + f2c_abs(b) for use in the backward error bound. */
         if (*n == 1)
         {
             bi = b[j * b_dim1 + 1];
             dx = d__[1] * x[j * x_dim1 + 1];
             work[*n + 1] = bi - dx;
-            work[1] = abs(bi) + abs(dx);
+            work[1] = f2c_abs(bi) + f2c_abs(dx);
         }
         else
         {
@@ -274,7 +274,7 @@ L20: /* Loop until stopping criterion is satisfied. */
             dx = d__[1] * x[j * x_dim1 + 1];
             ex = e[1] * x[j * x_dim1 + 2];
             work[*n + 1] = bi - dx - ex;
-            work[1] = abs(bi) + abs(dx) + abs(ex);
+            work[1] = f2c_abs(bi) + f2c_abs(dx) + f2c_abs(ex);
             i__2 = *n - 1;
             for (i__ = 2;
                     i__ <= i__2;
@@ -285,18 +285,18 @@ L20: /* Loop until stopping criterion is satisfied. */
                 dx = d__[i__] * x[i__ + j * x_dim1];
                 ex = e[i__] * x[i__ + 1 + j * x_dim1];
                 work[*n + i__] = bi - cx - dx - ex;
-                work[i__] = abs(bi) + abs(cx) + abs(dx) + abs(ex);
+                work[i__] = f2c_abs(bi) + f2c_abs(cx) + f2c_abs(dx) + f2c_abs(ex);
                 /* L30: */
             }
             bi = b[*n + j * b_dim1];
             cx = e[*n - 1] * x[*n - 1 + j * x_dim1];
             dx = d__[*n] * x[*n + j * x_dim1];
             work[*n + *n] = bi - cx - dx;
-            work[*n] = abs(bi) + abs(cx) + abs(dx);
+            work[*n] = f2c_abs(bi) + f2c_abs(cx) + f2c_abs(dx);
         }
         /* Compute componentwise relative backward error from formula */
-        /* max(i) ( abs(R(i)) / ( abs(A)*abs(X) + abs(B) )(i) ) */
-        /* where abs(Z) is the componentwise absolute value of the matrix */
+        /* max(i) ( f2c_abs(R(i)) / ( f2c_abs(A)*f2c_abs(X) + f2c_abs(B) )(i) ) */
+        /* where f2c_abs(Z) is the componentwise absolute value of the matrix */
         /* or vector Z. If the i-th component of the denominator is less */
         /* than SAFE2, then SAFE1 is added to the i-th components of the */
         /* numerator and denominator before dividing. */
@@ -310,14 +310,14 @@ L20: /* Loop until stopping criterion is satisfied. */
             {
                 /* Computing MAX */
                 r__2 = s;
-                r__3 = (r__1 = work[*n + i__], abs(r__1)) / work[ i__]; // , expr subst
+                r__3 = (r__1 = work[*n + i__], f2c_abs(r__1)) / work[ i__]; // , expr subst
                 s = max(r__2,r__3);
             }
             else
             {
                 /* Computing MAX */
                 r__2 = s;
-                r__3 = ((r__1 = work[*n + i__], abs(r__1)) + safe1) / (work[i__] + safe1); // , expr subst
+                r__3 = ((r__1 = work[*n + i__], f2c_abs(r__1)) + safe1) / (work[i__] + safe1); // , expr subst
                 s = max(r__2,r__3);
             }
             /* L40: */
@@ -339,18 +339,18 @@ L20: /* Loop until stopping criterion is satisfied. */
         }
         /* Bound error from formula */
         /* norm(X - XTRUE) / norm(X) .le. FERR = */
-        /* norm( abs(inv(A))* */
-        /* ( abs(R) + NZ*EPS*( abs(A)*abs(X)+abs(B) ))) / norm(X) */
+        /* norm( f2c_abs(inv(A))* */
+        /* ( f2c_abs(R) + NZ*EPS*( f2c_abs(A)*f2c_abs(X)+f2c_abs(B) ))) / norm(X) */
         /* where */
         /* norm(Z) is the magnitude of the largest component of Z */
         /* inv(A) is the inverse of A */
-        /* abs(Z) is the componentwise absolute value of the matrix or */
+        /* f2c_abs(Z) is the componentwise absolute value of the matrix or */
         /* vector Z */
         /* NZ is the maximum number of nonzeros in any row of A, plus 1 */
         /* EPS is machine epsilon */
-        /* The i-th component of abs(R)+NZ*EPS*(abs(A)*abs(X)+abs(B)) */
+        /* The i-th component of f2c_abs(R)+NZ*EPS*(f2c_abs(A)*f2c_abs(X)+f2c_abs(B)) */
         /* is incremented by SAFE1 if the i-th component of */
-        /* abs(A)*abs(X) + abs(B) is less than SAFE2. */
+        /* f2c_abs(A)*f2c_abs(X) + f2c_abs(B) is less than SAFE2. */
         i__2 = *n;
         for (i__ = 1;
                 i__ <= i__2;
@@ -358,11 +358,11 @@ L20: /* Loop until stopping criterion is satisfied. */
         {
             if (work[i__] > safe2)
             {
-                work[i__] = (r__1 = work[*n + i__], abs(r__1)) + nz * eps * work[i__];
+                work[i__] = (r__1 = work[*n + i__], f2c_abs(r__1)) + nz * eps * work[i__];
             }
             else
             {
-                work[i__] = (r__1 = work[*n + i__], abs(r__1)) + nz * eps * work[i__] + safe1;
+                work[i__] = (r__1 = work[*n + i__], f2c_abs(r__1)) + nz * eps * work[i__] + safe1;
             }
             /* L50: */
         }
@@ -370,8 +370,8 @@ L20: /* Loop until stopping criterion is satisfied. */
         ferr[j] = work[ix];
         /* Estimate the norm of inv(A). */
         /* Solve M(A) * x = e, where M(A) = (m(i,j)) is given by */
-        /* m(i,j) = abs(A(i,j)); i = j; */
-        /* m(i,j) = -abs(A(i,j)), i .ne. j, */
+        /* m(i,j) = f2c_abs(A(i,j)); i = j; */
+        /* m(i,j) = -f2c_abs(A(i,j)), i .ne. j, */
         /* and e = [ 1, 1, ..., 1 ]**T. Note M(A) = M(L)*D*M(L)**T. */
         /* Solve M(L) * x = e. */
         work[1] = 1.f;
@@ -380,7 +380,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 i__ <= i__2;
                 ++i__)
         {
-            work[i__] = work[i__ - 1] * (r__1 = ef[i__ - 1], abs(r__1)) + 1.f;
+            work[i__] = work[i__ - 1] * (r__1 = ef[i__ - 1], f2c_abs(r__1)) + 1.f;
             /* L60: */
         }
         /* Solve D * M(L)**T * x = b. */
@@ -389,12 +389,12 @@ L20: /* Loop until stopping criterion is satisfied. */
                 i__ >= 1;
                 --i__)
         {
-            work[i__] = work[i__] / df[i__] + work[i__ + 1] * (r__1 = ef[i__], abs(r__1));
+            work[i__] = work[i__] / df[i__] + work[i__ + 1] * (r__1 = ef[i__], f2c_abs(r__1));
             /* L70: */
         }
         /* Compute norm(inv(A)) = max(x(i)), 1<=i<=n. */
         ix = isamax_(n, &work[1], &c__1);
-        ferr[j] *= (r__1 = work[ix], abs(r__1));
+        ferr[j] *= (r__1 = work[ix], f2c_abs(r__1));
         /* Normalize error. */
         lstres = 0.f;
         i__2 = *n;
@@ -404,7 +404,7 @@ L20: /* Loop until stopping criterion is satisfied. */
         {
             /* Computing MAX */
             r__2 = lstres;
-            r__3 = (r__1 = x[i__ + j * x_dim1], abs(r__1)); // , expr subst
+            r__3 = (r__1 = x[i__ + j * x_dim1], f2c_abs(r__1)); // , expr subst
             lstres = max(r__2,r__3);
             /* L80: */
         }

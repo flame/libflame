@@ -34,7 +34,7 @@ doublereal dnrm2_(integer *n, doublereal *x, integer *incx)
     }
     else if (*n == 1)
     {
-        norm = abs(x[1]);
+        norm = f2c_abs(x[1]);
     }
     else
     {
@@ -51,7 +51,7 @@ doublereal dnrm2_(integer *n, doublereal *x, integer *incx)
         {
             if (x[ix] != 0.)
             {
-                absxi = (d__1 = x[ix], abs(d__1));
+                absxi = (d__1 = x[ix], f2c_abs(d__1));
                 if (scale < absxi)
                 {
                     /* Computing 2nd power */

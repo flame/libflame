@@ -31,7 +31,7 @@
 /* > */
 /* > DLA_SYAMV performs the matrix-vector operation */
 /* > */
-/* > y := alpha*abs(A)*abs(x) + beta*abs(y), */
+/* > y := alpha*f2c_abs(A)*f2c_abs(x) + beta*f2c_abs(y), */
 /* > */
 /* > where alpha and beta are scalars, x and y are vectors and A is an */
 /* > n by n symmetric matrix. */
@@ -98,7 +98,7 @@
 /* > \param[in] X */
 /* > \verbatim */
 /* > X is DOUBLE PRECISION array, dimension */
-/* > ( 1 + ( n - 1 )*abs( INCX ) ) */
+/* > ( 1 + ( n - 1 )*f2c_abs( INCX ) ) */
 /* > Before entry, the incremented array X must contain the */
 /* > vector x. */
 /* > Unchanged on exit. */
@@ -123,7 +123,7 @@
 /* > \param[in,out] Y */
 /* > \verbatim */
 /* > Y is DOUBLE PRECISION array, dimension */
-/* > ( 1 + ( n - 1 )*abs( INCY ) ) */
+/* > ( 1 + ( n - 1 )*f2c_abs( INCY ) ) */
 /* > Before entry with BETA non-zero, the incremented array Y */
 /* > must contain the vector y. On exit, Y is overwritten by the */
 /* > updated vector y. */
@@ -258,7 +258,7 @@ int dla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublereal *a, inte
     /* number of additions in each row. */
     safe1 = dlamch_("Safe minimum");
     safe1 = (*n + 1) * safe1;
-    /* Form y := alpha*abs(A)*abs(x) + beta*abs(y). */
+    /* Form y := alpha*f2c_abs(A)*f2c_abs(x) + beta*f2c_abs(y). */
     /* The O(N^2) SYMB_ZERO tests could be replaced by O(N) queries to */
     /* the inexact flag. Still doesn't help change the iteration order */
     /* to per-column. */
@@ -284,7 +284,7 @@ int dla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublereal *a, inte
                 else
                 {
                     symb_zero__ = FALSE_;
-                    y[iy] = *beta * (d__1 = y[iy], abs(d__1));
+                    y[iy] = *beta * (d__1 = y[iy], f2c_abs(d__1));
                 }
                 if (*alpha != 0.)
                 {
@@ -293,18 +293,18 @@ int dla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublereal *a, inte
                             j <= i__2;
                             ++j)
                     {
-                        temp = (d__1 = a[j + i__ * a_dim1], abs(d__1));
+                        temp = (d__1 = a[j + i__ * a_dim1], f2c_abs(d__1));
                         symb_zero__ = symb_zero__ && (x[j] == 0. || temp == 0.);
-                        y[iy] += *alpha * (d__1 = x[j], abs(d__1)) * temp;
+                        y[iy] += *alpha * (d__1 = x[j], f2c_abs(d__1)) * temp;
                     }
                     i__2 = *n;
                     for (j = i__ + 1;
                             j <= i__2;
                             ++j)
                     {
-                        temp = (d__1 = a[i__ + j * a_dim1], abs(d__1));
+                        temp = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
                         symb_zero__ = symb_zero__ && (x[j] == 0. || temp == 0.);
-                        y[iy] += *alpha * (d__1 = x[j], abs(d__1)) * temp;
+                        y[iy] += *alpha * (d__1 = x[j], f2c_abs(d__1)) * temp;
                     }
                 }
                 if (! symb_zero__)
@@ -333,7 +333,7 @@ int dla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublereal *a, inte
                 else
                 {
                     symb_zero__ = FALSE_;
-                    y[iy] = *beta * (d__1 = y[iy], abs(d__1));
+                    y[iy] = *beta * (d__1 = y[iy], f2c_abs(d__1));
                 }
                 if (*alpha != 0.)
                 {
@@ -342,18 +342,18 @@ int dla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublereal *a, inte
                             j <= i__2;
                             ++j)
                     {
-                        temp = (d__1 = a[i__ + j * a_dim1], abs(d__1));
+                        temp = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
                         symb_zero__ = symb_zero__ && (x[j] == 0. || temp == 0.);
-                        y[iy] += *alpha * (d__1 = x[j], abs(d__1)) * temp;
+                        y[iy] += *alpha * (d__1 = x[j], f2c_abs(d__1)) * temp;
                     }
                     i__2 = *n;
                     for (j = i__ + 1;
                             j <= i__2;
                             ++j)
                     {
-                        temp = (d__1 = a[j + i__ * a_dim1], abs(d__1));
+                        temp = (d__1 = a[j + i__ * a_dim1], f2c_abs(d__1));
                         symb_zero__ = symb_zero__ && (x[j] == 0. || temp == 0.);
-                        y[iy] += *alpha * (d__1 = x[j], abs(d__1)) * temp;
+                        y[iy] += *alpha * (d__1 = x[j], f2c_abs(d__1)) * temp;
                     }
                 }
                 if (! symb_zero__)
@@ -385,7 +385,7 @@ int dla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublereal *a, inte
                 else
                 {
                     symb_zero__ = FALSE_;
-                    y[iy] = *beta * (d__1 = y[iy], abs(d__1));
+                    y[iy] = *beta * (d__1 = y[iy], f2c_abs(d__1));
                 }
                 jx = kx;
                 if (*alpha != 0.)
@@ -395,9 +395,9 @@ int dla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublereal *a, inte
                             j <= i__2;
                             ++j)
                     {
-                        temp = (d__1 = a[j + i__ * a_dim1], abs(d__1));
+                        temp = (d__1 = a[j + i__ * a_dim1], f2c_abs(d__1));
                         symb_zero__ = symb_zero__ && (x[j] == 0. || temp == 0.);
-                        y[iy] += *alpha * (d__1 = x[jx], abs(d__1)) * temp;
+                        y[iy] += *alpha * (d__1 = x[jx], f2c_abs(d__1)) * temp;
                         jx += *incx;
                     }
                     i__2 = *n;
@@ -405,9 +405,9 @@ int dla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublereal *a, inte
                             j <= i__2;
                             ++j)
                     {
-                        temp = (d__1 = a[i__ + j * a_dim1], abs(d__1));
+                        temp = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
                         symb_zero__ = symb_zero__ && (x[j] == 0. || temp == 0.);
-                        y[iy] += *alpha * (d__1 = x[jx], abs(d__1)) * temp;
+                        y[iy] += *alpha * (d__1 = x[jx], f2c_abs(d__1)) * temp;
                         jx += *incx;
                     }
                 }
@@ -437,7 +437,7 @@ int dla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublereal *a, inte
                 else
                 {
                     symb_zero__ = FALSE_;
-                    y[iy] = *beta * (d__1 = y[iy], abs(d__1));
+                    y[iy] = *beta * (d__1 = y[iy], f2c_abs(d__1));
                 }
                 jx = kx;
                 if (*alpha != 0.)
@@ -447,9 +447,9 @@ int dla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublereal *a, inte
                             j <= i__2;
                             ++j)
                     {
-                        temp = (d__1 = a[i__ + j * a_dim1], abs(d__1));
+                        temp = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
                         symb_zero__ = symb_zero__ && (x[j] == 0. || temp == 0.);
-                        y[iy] += *alpha * (d__1 = x[jx], abs(d__1)) * temp;
+                        y[iy] += *alpha * (d__1 = x[jx], f2c_abs(d__1)) * temp;
                         jx += *incx;
                     }
                     i__2 = *n;
@@ -457,9 +457,9 @@ int dla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublereal *a, inte
                             j <= i__2;
                             ++j)
                     {
-                        temp = (d__1 = a[j + i__ * a_dim1], abs(d__1));
+                        temp = (d__1 = a[j + i__ * a_dim1], f2c_abs(d__1));
                         symb_zero__ = symb_zero__ && (x[j] == 0. || temp == 0.);
-                        y[iy] += *alpha * (d__1 = x[jx], abs(d__1)) * temp;
+                        y[iy] += *alpha * (d__1 = x[jx], f2c_abs(d__1)) * temp;
                         jx += *incx;
                     }
                 }

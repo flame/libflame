@@ -160,7 +160,7 @@ static doublereal c_b29 = 1.;
 /* > If JOBVL = 'V', the left eigenvectors u(j) are stored */
 /* > in the columns of VL, in the same order as their eigenvalues. */
 /* > Each eigenvector is scaled so that its largest component has */
-/* > abs(real part) + abs(imag. part) = 1, except for eigenvectors */
+/* > f2c_abs(real part) + f2c_abs(imag. part) = 1, except for eigenvectors */
 /* > corresponding to an eigenvalue with alpha = beta = 0, which */
 /* > are set to zero. */
 /* > Not referenced if JOBVL = 'N'. */
@@ -179,7 +179,7 @@ static doublereal c_b29 = 1.;
 /* > If JOBVR = 'V', the right eigenvectors x(j) are stored */
 /* > in the columns of VR, in the same order as their eigenvalues. */
 /* > Each eigenvector is scaled so that its largest component has */
-/* > abs(real part) + abs(imag. part) = 1, except for eigenvectors */
+/* > f2c_abs(real part) + f2c_abs(imag. part) = 1, except for eigenvectors */
 /* > corresponding to an eigenvalue with alpha = beta = 0, which */
 /* > are set to zero. */
 /* > Not referenced if JOBVR = 'N'. */
@@ -702,7 +702,7 @@ int zgegv_(char *jobvl, char *jobvr, integer *n, doublecomplex *a, integer *lda,
                     /* Computing MAX */
                     i__3 = jr + jc * vl_dim1;
                     d__3 = temp;
-                    d__4 = (d__1 = vl[i__3].r, abs(d__1)) + ( d__2 = d_imag(&vl[jr + jc * vl_dim1]), abs(d__2)); // , expr subst
+                    d__4 = (d__1 = vl[i__3].r, f2c_abs(d__1)) + ( d__2 = d_imag(&vl[jr + jc * vl_dim1]), f2c_abs(d__2)); // , expr subst
                     temp = max(d__3,d__4);
                     /* L10: */
                 }
@@ -750,7 +750,7 @@ L30:
                     /* Computing MAX */
                     i__3 = jr + jc * vr_dim1;
                     d__3 = temp;
-                    d__4 = (d__1 = vr[i__3].r, abs(d__1)) + ( d__2 = d_imag(&vr[jr + jc * vr_dim1]), abs(d__2)); // , expr subst
+                    d__4 = (d__1 = vr[i__3].r, f2c_abs(d__1)) + ( d__2 = d_imag(&vr[jr + jc * vr_dim1]), f2c_abs(d__2)); // , expr subst
                     temp = max(d__3,d__4);
                     /* L40: */
                 }
@@ -789,10 +789,10 @@ L60:
             ++jc)
     {
         i__2 = jc;
-        absar = (d__1 = alpha[i__2].r, abs(d__1));
-        absai = (d__1 = d_imag(&alpha[jc]), abs(d__1));
+        absar = (d__1 = alpha[i__2].r, f2c_abs(d__1));
+        absai = (d__1 = d_imag(&alpha[jc]), f2c_abs(d__1));
         i__2 = jc;
-        absb = (d__1 = beta[i__2].r, abs(d__1));
+        absb = (d__1 = beta[i__2].r, f2c_abs(d__1));
         i__2 = jc;
         salfar = anrm * alpha[i__2].r;
         salfai = anrm * d_imag(&alpha[jc]);
@@ -805,7 +805,7 @@ L60:
         d__1 = safmin, d__2 = eps * absar;
         d__1 = max(d__1,d__2);
         d__2 = eps * absb; // ; expr subst
-        if (abs(salfai) < safmin && absai >= max(d__1,d__2))
+        if (f2c_abs(salfai) < safmin && absai >= max(d__1,d__2))
         {
             ilimit = TRUE_;
             /* Computing MAX */
@@ -818,7 +818,7 @@ L60:
         d__1 = safmin, d__2 = eps * absai;
         d__1 = max(d__1,d__2);
         d__2 = eps * absb; // ; expr subst
-        if (abs(salfar) < safmin && absar >= max(d__1,d__2))
+        if (f2c_abs(salfar) < safmin && absar >= max(d__1,d__2))
         {
             ilimit = TRUE_;
             /* Computing MAX */
@@ -834,7 +834,7 @@ L60:
         d__1 = safmin, d__2 = eps * absar;
         d__1 = max(d__1,d__2);
         d__2 = eps * absai; // ; expr subst
-        if (abs(sbeta) < safmin && absb >= max(d__1,d__2))
+        if (f2c_abs(sbeta) < safmin && absb >= max(d__1,d__2))
         {
             ilimit = TRUE_;
             /* Computing MAX */
@@ -849,9 +849,9 @@ L60:
         if (ilimit)
         {
             /* Computing MAX */
-            d__1 = abs(salfar), d__2 = abs(salfai);
+            d__1 = f2c_abs(salfar), d__2 = f2c_abs(salfai);
             d__1 = max(d__1,d__2);
-            d__2 = abs(sbeta); // ; expr subst
+            d__2 = f2c_abs(sbeta); // ; expr subst
             temp = scale * safmin * max(d__1,d__2);
             if (temp > 1.)
             {

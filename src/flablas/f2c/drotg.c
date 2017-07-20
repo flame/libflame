@@ -14,11 +14,11 @@ int drotg_(doublereal *da, doublereal *db, doublereal *c__, doublereal *s)
     /* construct givens plane rotation. */
     /* jack dongarra, linpack, 3/11/78. */
     roe = *db;
-    if (abs(*da) > abs(*db))
+    if (f2c_abs(*da) > f2c_abs(*db))
     {
         roe = *da;
     }
-    scale = abs(*da) + abs(*db);
+    scale = f2c_abs(*da) + f2c_abs(*db);
     if (scale != 0.)
     {
         goto L10;
@@ -37,11 +37,11 @@ L10: /* Computing 2nd power */
     *c__ = *da / r__;
     *s = *db / r__;
     z__ = 1.;
-    if (abs(*da) > abs(*db))
+    if (f2c_abs(*da) > f2c_abs(*db))
     {
         z__ = *s;
     }
-    if (abs(*db) >= abs(*da) && *c__ != 0.)
+    if (f2c_abs(*db) >= f2c_abs(*da) && *c__ != 0.)
     {
         z__ = 1. / *c__;
     }

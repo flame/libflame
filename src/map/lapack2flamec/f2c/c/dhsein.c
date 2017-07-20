@@ -512,7 +512,7 @@ L60:
                     i__ >= i__2;
                     --i__)
             {
-                if (select[i__] && (d__1 = wr[i__] - wkr, abs(d__1)) + (d__2 = wi[i__] - wki, abs(d__2)) < eps3)
+                if (select[i__] && (d__1 = wr[i__] - wkr, f2c_abs(d__1)) + (d__2 = wi[i__] - wki, f2c_abs(d__2)) < eps3)
                 {
                     wkr += eps3;
                     goto L60;

@@ -40,7 +40,7 @@ static integer c__1 = 1;
 /* > \return CLANGB */
 /* > \verbatim */
 /* > */
-/* > CLANGB = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > CLANGB = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -51,7 +51,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -118,7 +118,7 @@ real clangb_(char *norm, integer *n, integer *kl, integer *ku, complex *ab, inte
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     real ret_val;
     /* Builtin functions */
-    double c_abs(complex *), sqrt(doublereal);
+    double c_f2c_abs(complex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j, k, l;
     real sum, temp, scale;
@@ -159,7 +159,7 @@ real clangb_(char *norm, integer *n, integer *kl, integer *ku, complex *ab, inte
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
+        /* Find max(f2c_abs(A(i,j))). */
         value = 0.f;
         i__1 = *n;
         for (j = 1;
@@ -176,7 +176,7 @@ real clangb_(char *norm, integer *n, integer *kl, integer *ku, complex *ab, inte
                     i__ <= i__3;
                     ++i__)
             {
-                temp = c_abs(&ab[i__ + j * ab_dim1]);
+                temp = c_f2c_abs(&ab[i__ + j * ab_dim1]);
                 if (value < temp || sisnan_(&temp))
                 {
                     value = temp;
@@ -206,7 +206,7 @@ real clangb_(char *norm, integer *n, integer *kl, integer *ku, complex *ab, inte
                     i__ <= i__2;
                     ++i__)
             {
-                sum += c_abs(&ab[i__ + j * ab_dim1]);
+                sum += c_f2c_abs(&ab[i__ + j * ab_dim1]);
                 /* L30: */
             }
             if (value < sum || sisnan_(&sum))
@@ -244,7 +244,7 @@ real clangb_(char *norm, integer *n, integer *kl, integer *ku, complex *ab, inte
                     i__ <= i__4;
                     ++i__)
             {
-                work[i__] += c_abs(&ab[k + i__ + j * ab_dim1]);
+                work[i__] += c_f2c_abs(&ab[k + i__ + j * ab_dim1]);
                 /* L60: */
             }
             /* L70: */

@@ -203,7 +203,7 @@ int zgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
     doublecomplex z__1, z__2, z__3;
     /* Builtin functions */
     void d_cnjg(doublecomplex *, doublecomplex *);
-    double z_abs(doublecomplex *);
+    double z_f2c_abs(doublecomplex *);
     /* Local variables */
     integer i__, j, l;
     doublecomplex t;
@@ -688,7 +688,7 @@ int zgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
             i__ <= i__1;
             ++i__)
     {
-        abst = z_abs(&t);
+        abst = z_f2c_abs(&t);
         d__[i__] = abst;
         if (abst != 0.)
         {
@@ -740,7 +740,7 @@ int zgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
                     t.r = z__1.r;
                     t.i = z__1.i; // , expr subst
                 }
-                abst = z_abs(&t);
+                abst = z_f2c_abs(&t);
                 e[i__] = abst;
                 if (abst != 0.)
                 {

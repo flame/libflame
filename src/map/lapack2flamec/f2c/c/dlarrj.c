@@ -218,8 +218,8 @@ int dlarrj_(integer *n, doublereal *d__, doublereal *e2, integer *ifirst, intege
         right = w[ii] + werr[ii];
         width = right - mid;
         /* Computing MAX */
-        d__1 = abs(left);
-        d__2 = abs(right); // , expr subst
+        d__1 = f2c_abs(left);
+        d__2 = f2c_abs(right); // , expr subst
         tmp = max(d__1,d__2);
         /* The following test prevents the test of converged intervals */
         if (width < *rtol * tmp)
@@ -330,8 +330,8 @@ L80:
         /* semiwidth of interval */
         width = right - mid;
         /* Computing MAX */
-        d__1 = abs(left);
-        d__2 = abs(right); // , expr subst
+        d__1 = f2c_abs(left);
+        d__2 = f2c_abs(right); // , expr subst
         tmp = max(d__1,d__2);
         if (width < *rtol * tmp || iter == maxitr)
         {

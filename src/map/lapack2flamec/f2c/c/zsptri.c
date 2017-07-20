@@ -339,7 +339,7 @@ L30: /* If K > N, exit from loop. */
             kstep = 2;
             kcnext = kcnext + k + 1;
         }
-        kp = (i__1 = ipiv[k], abs(i__1));
+        kp = (i__1 = ipiv[k], f2c_abs(i__1));
         if (kp != k)
         {
             /* Interchange rows and columns K and KP in the leading */
@@ -519,7 +519,7 @@ L60: /* If K < 1, exit from loop. */
             kstep = 2;
             kcnext -= *n - k + 3;
         }
-        kp = (i__1 = ipiv[k], abs(i__1));
+        kp = (i__1 = ipiv[k], f2c_abs(i__1));
         if (kp != k)
         {
             /* Interchange rows and columns K and KP in the trailing */

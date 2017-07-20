@@ -219,7 +219,7 @@ int zgelsy_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     doublereal d__1, d__2;
     doublecomplex z__1;
     /* Builtin functions */
-    double z_abs(doublecomplex *);
+    double z_f2c_abs(doublecomplex *);
     /* Local variables */
     integer i__, j;
     doublecomplex c1, c2, s1, s2;
@@ -406,9 +406,9 @@ int zgelsy_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     i__1 = ismax;
     work[i__1].r = 1.;
     work[i__1].i = 0.; // , expr subst
-    smax = z_abs(&a[a_dim1 + 1]);
+    smax = z_f2c_abs(&a[a_dim1 + 1]);
     smin = smax;
-    if (z_abs(&a[a_dim1 + 1]) == 0.)
+    if (z_f2c_abs(&a[a_dim1 + 1]) == 0.)
     {
         *rank = 0;
         i__1 = max(*m,*n);

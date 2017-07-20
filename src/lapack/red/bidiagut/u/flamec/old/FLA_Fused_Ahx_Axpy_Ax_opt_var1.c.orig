@@ -1,0 +1,393 @@
+
+#include "FLAME.h"
+
+FLA_Error FLA_Fused_Ahx_Axpy_Ax_opt_var1( FLA_Obj A, FLA_Obj u, FLA_Obj tau, FLA_Obj a, FLA_Obj beta, FLA_Obj y, FLA_Obj w )
+{
+/*
+   Effective computation:
+   y = beta * y + A' * u;
+   a = a - conj(y) / tau;
+   w = A * conj(a);
+*/
+  FLA_Datatype datatype;
+  int          m_A, n_A;
+  int          rs_A, cs_A;
+  int          inc_u, inc_a, inc_y, inc_w;
+
+  datatype = FLA_Obj_datatype( A );
+
+  m_A      = FLA_Obj_length( A );
+  n_A      = FLA_Obj_width( A );
+
+  rs_A     = FLA_Obj_row_stride( A );
+  cs_A     = FLA_Obj_col_stride( A );
+
+  inc_u    = FLA_Obj_vector_inc( u );
+
+  inc_a    = FLA_Obj_vector_inc( a );
+
+  inc_y    = FLA_Obj_vector_inc( y );
+
+  inc_w    = FLA_Obj_vector_inc( w );
+  
+
+  switch ( datatype )
+  {
+    case FLA_FLOAT:
+    {
+      float* buff_A   = FLA_FLOAT_PTR( A );
+      float* buff_u   = FLA_FLOAT_PTR( u );
+      float* buff_a   = FLA_FLOAT_PTR( a );
+      float* buff_y   = FLA_FLOAT_PTR( y );
+      float* buff_w   = FLA_FLOAT_PTR( w );
+      float* buff_tau = FLA_FLOAT_PTR( tau );
+      float* buff_beta = FLA_FLOAT_PTR( beta );
+
+      FLA_Fused_Ahx_Axpy_Ax_ops_var1( m_A,
+                                      n_A,
+                                      buff_tau,
+                                      buff_beta,
+                                      buff_A, rs_A, cs_A,
+                                      buff_u, inc_u,
+                                      buff_a, inc_a,
+                                      buff_y, inc_y,
+                                      buff_w, inc_w );
+
+      break;
+    }
+
+    case FLA_DOUBLE:
+    {
+      double* buff_A   = FLA_DOUBLE_PTR( A );
+      double* buff_u   = FLA_DOUBLE_PTR( u );
+      double* buff_a   = FLA_DOUBLE_PTR( a );
+      double* buff_y   = FLA_DOUBLE_PTR( y );
+      double* buff_w   = FLA_DOUBLE_PTR( w );
+      double* buff_tau = FLA_DOUBLE_PTR( tau );
+      double* buff_beta = FLA_DOUBLE_PTR( beta );
+
+      FLA_Fused_Ahx_Axpy_Ax_opd_var1( m_A,
+                                      n_A,
+                                      buff_tau,
+                                      buff_beta,
+                                      buff_A, rs_A, cs_A,
+                                      buff_u, inc_u,
+                                      buff_a, inc_a,
+                                      buff_y, inc_y,
+                                      buff_w, inc_w );
+
+      break;
+    }
+
+    case FLA_COMPLEX:
+    {
+      scomplex* buff_A   = FLA_COMPLEX_PTR( A );
+      scomplex* buff_u   = FLA_COMPLEX_PTR( u );
+      scomplex* buff_a   = FLA_COMPLEX_PTR( a );
+      scomplex* buff_y   = FLA_COMPLEX_PTR( y );
+      scomplex* buff_w   = FLA_COMPLEX_PTR( w );
+      scomplex* buff_tau = FLA_COMPLEX_PTR( tau );
+      scomplex* buff_beta = FLA_COMPLEX_PTR( beta );
+
+      FLA_Fused_Ahx_Axpy_Ax_opc_var1( m_A,
+                                      n_A,
+                                      buff_tau,
+                                      buff_beta,
+                                      buff_A, rs_A, cs_A,
+                                      buff_u, inc_u,
+                                      buff_a, inc_a,
+                                      buff_y, inc_y,
+                                      buff_w, inc_w );
+
+      break;
+    }
+
+    case FLA_DOUBLE_COMPLEX:
+    {
+      dcomplex* buff_A   = FLA_DOUBLE_COMPLEX_PTR( A );
+      dcomplex* buff_u   = FLA_DOUBLE_COMPLEX_PTR( u );
+      dcomplex* buff_a   = FLA_DOUBLE_COMPLEX_PTR( a );
+      dcomplex* buff_y   = FLA_DOUBLE_COMPLEX_PTR( y );
+      dcomplex* buff_w   = FLA_DOUBLE_COMPLEX_PTR( w );
+      dcomplex* buff_tau = FLA_DOUBLE_COMPLEX_PTR( tau );
+      dcomplex* buff_beta = FLA_DOUBLE_COMPLEX_PTR( beta );
+
+      FLA_Fused_Ahx_Axpy_Ax_opz_var1( m_A,
+                                      n_A,
+                                      buff_tau,
+                                      buff_beta,
+                                      buff_A, rs_A, cs_A,
+                                      buff_u, inc_u,
+                                      buff_a, inc_a,
+                                      buff_y, inc_y,
+                                      buff_w, inc_w );
+
+      break;
+    }
+  }
+
+  return FLA_SUCCESS;
+}
+
+
+
+FLA_Error FLA_Fused_Ahx_Axpy_Ax_ops_var1( int m_A,
+                                          int n_A,
+                                          float* buff_tau, 
+                                          float* buff_beta, 
+                                          float* buff_A, int rs_A, int cs_A, 
+                                          float* buff_u, int inc_u, 
+                                          float* buff_a, int inc_a, 
+                                          float* buff_y, int inc_y, 
+                                          float* buff_w, int inc_w )
+{
+  float*    buff_0  = FLA_FLOAT_PTR( FLA_ZERO );
+  float*    buff_m1 = FLA_FLOAT_PTR( FLA_MINUS_ONE );
+  float     minus_inv_tau;
+  float     rho;
+  int       i;
+
+  bl1_ssetv( m_A,
+             buff_0,
+             buff_w, inc_w );
+
+  minus_inv_tau = *buff_m1 / *buff_tau;
+
+  for ( i = 0; i < n_A; ++i )
+  {
+    float*    a1       = buff_A + (i  )*cs_A + (0  )*rs_A;
+    float*    psi1     = buff_y + (i  )*inc_y;
+    float*    alpha1   = buff_a + (i  )*inc_a;
+    float*    u        = buff_u;
+    float*    w        = buff_w;
+
+    /*------------------------------------------------------------*/
+
+    *psi1 = *buff_beta * *psi1;
+    // bl1_sdot( BLIS1_CONJUGATE,
+    //           m_A,
+    //           a1, rs_A,
+    //           u,  inc_u,
+    //           psi1 );
+    rho = F77_sdot( &m_A,
+                    a1, &rs_A,
+                    u,  &inc_u );
+    *psi1 = *psi1 + rho;
+
+    // bl1_dmult4( &minus_inv_tau, conj_psi1, alpha1, alpha1 );
+    *alpha1 = *alpha1 + minus_inv_tau * *psi1;
+
+    // bl1_saxpyv( BLIS1_NO_CONJUGATE,
+    //             m_A,
+    //             conj_alpha1,
+    //             a1, rs_A,
+    //             w,  inc_w );
+    F77_saxpy( &m_A,
+               alpha1,
+               a1, &rs_A,
+               w,  &inc_w );
+
+    /*------------------------------------------------------------*/
+
+  }
+
+  return FLA_SUCCESS;
+}
+
+
+
+FLA_Error FLA_Fused_Ahx_Axpy_Ax_opd_var1( int m_A,
+                                          int n_A,
+                                          double* buff_tau, 
+                                          double* buff_beta, 
+                                          double* buff_A, int rs_A, int cs_A, 
+                                          double* buff_u, int inc_u, 
+                                          double* buff_a, int inc_a, 
+                                          double* buff_y, int inc_y, 
+                                          double* buff_w, int inc_w )
+{
+  double*   buff_0  = FLA_DOUBLE_PTR( FLA_ZERO );
+  double*   buff_m1 = FLA_DOUBLE_PTR( FLA_MINUS_ONE );
+  double    minus_inv_tau;
+  double    rho;
+  int       i;
+
+  bl1_dsetv( m_A,
+             buff_0,
+             buff_w, inc_w );
+
+  minus_inv_tau = *buff_m1 / *buff_tau;
+
+  for ( i = 0; i < n_A; ++i )
+  {
+    double*   a1       = buff_A + (i  )*cs_A + (0  )*rs_A;
+    double*   psi1     = buff_y + (i  )*inc_y;
+    double*   alpha1   = buff_a + (i  )*inc_a;
+    double*   u        = buff_u;
+    double*   w        = buff_w;
+
+    /*------------------------------------------------------------*/
+
+    *psi1 = *buff_beta * *psi1;
+    // bl1_ddot( BLIS1_CONJUGATE,
+    //           m_A,
+    //           a1, rs_A,
+    //           u,  inc_u,
+    //           psi1 );
+    rho = F77_ddot( &m_A,
+                    a1, &rs_A,
+                    u,  &inc_u );
+    *psi1 = *psi1 + rho;
+
+    // bl1_dmult4( &minus_inv_tau, conj_psi1, alpha1, alpha1 );
+    *alpha1 = *alpha1 + minus_inv_tau * *psi1;
+
+    // bl1_daxpyv( BLIS1_NO_CONJUGATE,
+    //             m_A,
+    //             conj_alpha1,
+    //             a1, rs_A,
+    //             w,  inc_w );
+    F77_daxpy( &m_A,
+               alpha1,
+               a1, &rs_A,
+               w,  &inc_w );
+
+    /*------------------------------------------------------------*/
+
+  }
+
+  return FLA_SUCCESS;
+}
+
+
+
+FLA_Error FLA_Fused_Ahx_Axpy_Ax_opc_var1( int m_A,
+                                          int n_A,
+                                          scomplex* buff_tau, 
+                                          scomplex* buff_beta, 
+                                          scomplex* buff_A, int rs_A, int cs_A, 
+                                          scomplex* buff_u, int inc_u, 
+                                          scomplex* buff_a, int inc_a, 
+                                          scomplex* buff_y, int inc_y, 
+                                          scomplex* buff_w, int inc_w )
+{
+  scomplex* buff_1  = FLA_COMPLEX_PTR( FLA_ONE );
+  scomplex* buff_0  = FLA_COMPLEX_PTR( FLA_ZERO );
+  scomplex* buff_m1 = FLA_COMPLEX_PTR( FLA_MINUS_ONE );
+  scomplex  minus_inv_tau;
+  scomplex  conj_psi1;
+  scomplex  conj_alpha1;
+  int       i;
+
+  bl1_csetv( m_A,
+             buff_0,
+             buff_w, inc_w );
+
+  bl1_cdiv3( buff_m1, buff_tau, &minus_inv_tau );
+
+  for ( i = 0; i < n_A; ++i )
+  {
+    scomplex* a1       = buff_A + (i  )*cs_A + (0  )*rs_A;
+    scomplex* psi1     = buff_y + (i  )*inc_y;
+    scomplex* alpha1   = buff_a + (i  )*inc_a;
+    scomplex* u        = buff_u;
+    scomplex* w        = buff_w;
+
+    /*------------------------------------------------------------*/
+
+    bl1_cdots( BLIS1_CONJUGATE,
+               m_A,
+               buff_1,
+               a1, rs_A,
+               u,  inc_u,
+               buff_beta,
+               psi1 );
+
+    bl1_ccopyconj( psi1, &conj_psi1 );
+    bl1_cmult4( &minus_inv_tau, &conj_psi1, alpha1, alpha1 );
+
+    bl1_ccopyconj( alpha1, &conj_alpha1 );
+
+    // bl1_caxpyv( BLIS1_NO_CONJUGATE,
+    //             m_A,
+    //             conj_alpha1,
+    //             a1, rs_A,
+    //             w,  inc_w );
+    F77_caxpy( &m_A,
+               &conj_alpha1,
+               a1, &rs_A,
+               w,  &inc_w );
+
+    /*------------------------------------------------------------*/
+
+  }
+
+  return FLA_SUCCESS;
+}
+
+
+
+FLA_Error FLA_Fused_Ahx_Axpy_Ax_opz_var1( int m_A,
+                                          int n_A,
+                                          dcomplex* buff_tau, 
+                                          dcomplex* buff_beta, 
+                                          dcomplex* buff_A, int rs_A, int cs_A, 
+                                          dcomplex* buff_u, int inc_u, 
+                                          dcomplex* buff_a, int inc_a, 
+                                          dcomplex* buff_y, int inc_y, 
+                                          dcomplex* buff_w, int inc_w )
+{
+  dcomplex* buff_1  = FLA_DOUBLE_COMPLEX_PTR( FLA_ONE );
+  dcomplex* buff_0  = FLA_DOUBLE_COMPLEX_PTR( FLA_ZERO );
+  dcomplex* buff_m1 = FLA_DOUBLE_COMPLEX_PTR( FLA_MINUS_ONE );
+  dcomplex  minus_inv_tau;
+  dcomplex  conj_psi1;
+  dcomplex  conj_alpha1;
+  int       i;
+
+  bl1_zsetv( m_A,
+             buff_0,
+             buff_w, inc_w );
+
+  bl1_zdiv3( buff_m1, buff_tau, &minus_inv_tau );
+
+  for ( i = 0; i < n_A; ++i )
+  {
+    dcomplex* a1       = buff_A + (i  )*cs_A + (0  )*rs_A;
+    dcomplex* psi1     = buff_y + (i  )*inc_y;
+    dcomplex* alpha1   = buff_a + (i  )*inc_a;
+    dcomplex* u        = buff_u;
+    dcomplex* w        = buff_w;
+
+    /*------------------------------------------------------------*/
+
+    bl1_zdots( BLIS1_CONJUGATE,
+               m_A,
+               buff_1,
+               a1, rs_A,
+               u,  inc_u,
+               buff_beta,
+               psi1 );
+
+    bl1_zcopyconj( psi1, &conj_psi1 );
+    bl1_zmult4( &minus_inv_tau, &conj_psi1, alpha1, alpha1 );
+
+    bl1_zcopyconj( alpha1, &conj_alpha1 );
+
+    // bl1_zaxpyv( BLIS1_NO_CONJUGATE,
+    //             m_A,
+    //             conj_alpha1,
+    //             a1, rs_A,
+    //             w,  inc_w );
+    F77_zaxpy( &m_A,
+               &conj_alpha1,
+               a1, &rs_A,
+               w,  &inc_w );
+
+    /*------------------------------------------------------------*/
+
+  }
+
+  return FLA_SUCCESS;
+}
+

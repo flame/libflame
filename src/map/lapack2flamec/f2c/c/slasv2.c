@@ -31,9 +31,9 @@ static real c_b4 = 1.f;
 /* > triangular matrix */
 /* > [ F G ] */
 /* > [ 0 H ]. */
-/* > On return, abs(SSMAX) is the larger singular value, abs(SSMIN) is the */
+/* > On return, f2c_abs(SSMAX) is the larger singular value, f2c_abs(SSMIN) is the */
 /* > smaller singular value, and (CSL,SNL) and (CSR,SNR) are the left and */
-/* > right singular vectors for abs(SSMAX), giving the decomposition */
+/* > right singular vectors for f2c_abs(SSMAX), giving the decomposition */
 /* > */
 /* > [ CSL SNL ] [ F G ] [ CSR -SNR ] = [ SSMAX 0 ] */
 /* > [-SNL CSL ] [ 0 H ] [ SNR CSR ] [ 0 SSMIN ]. */
@@ -61,13 +61,13 @@ static real c_b4 = 1.f;
 /* > \param[out] SSMIN */
 /* > \verbatim */
 /* > SSMIN is REAL */
-/* > abs(SSMIN) is the smaller singular value. */
+/* > f2c_abs(SSMIN) is the smaller singular value. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] SSMAX */
 /* > \verbatim */
 /* > SSMAX is REAL */
-/* > abs(SSMAX) is the larger singular value. */
+/* > f2c_abs(SSMAX) is the larger singular value. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] SNL */
@@ -79,7 +79,7 @@ static real c_b4 = 1.f;
 /* > \verbatim */
 /* > CSL is REAL */
 /* > The vector (CSL, SNL) is a unit left singular vector for the */
-/* > singular value abs(SSMAX). */
+/* > singular value f2c_abs(SSMAX). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] SNR */
@@ -91,7 +91,7 @@ static real c_b4 = 1.f;
 /* > \verbatim */
 /* > CSR is REAL */
 /* > The vector (CSR, SNR) is a unit right singular vector for the */
-/* > singular value abs(SSMAX). */
+/* > singular value f2c_abs(SSMAX). */
 /* > \endverbatim */
 /* Authors: */
 /* ======== */
@@ -158,9 +158,9 @@ int slasv2_(real *f, real *g, real *h__, real *ssmin, real * ssmax, real *snr, r
     /* .. */
     /* .. Executable Statements .. */
     ft = *f;
-    fa = abs(ft);
+    fa = f2c_abs(ft);
     ht = *h__;
-    ha = abs(*h__);
+    ha = f2c_abs(*h__);
     /* PMAX points to the maximum absolute element of matrix */
     /* PMAX = 1 if F largest in absolute values */
     /* PMAX = 2 if G largest in absolute values */
@@ -179,7 +179,7 @@ int slasv2_(real *f, real *g, real *h__, real *ssmin, real * ssmax, real *snr, r
         /* Now FA .ge. HA */
     }
     gt = *g;
-    ga = abs(gt);
+    ga = f2c_abs(gt);
     if (ga == 0.f)
     {
         /* Diagonal matrix */
@@ -230,7 +230,7 @@ int slasv2_(real *f, real *g, real *h__, real *ssmin, real * ssmax, real *snr, r
             }
             /* Note that 0 .le. L .le. 1 */
             m = gt / ft;
-            /* Note that abs(M) .le. 1/macheps */
+            /* Note that f2c_abs(M) .le. 1/macheps */
             t = 2.f - l;
             /* Note that T .ge. 1 */
             mm = m * m;
@@ -239,7 +239,7 @@ int slasv2_(real *f, real *g, real *h__, real *ssmin, real * ssmax, real *snr, r
             /* Note that 1 .le. S .le. 1 + 1/macheps */
             if (l == 0.f)
             {
-                r__ = abs(m);
+                r__ = f2c_abs(m);
             }
             else
             {
@@ -247,7 +247,7 @@ int slasv2_(real *f, real *g, real *h__, real *ssmin, real * ssmax, real *snr, r
             }
             /* Note that 0 .le. R .le. 1 + 1/macheps */
             a = (s + r__) * .5f;
-            /* Note that 1 .le. A .le. 1 + abs(M) */
+            /* Note that 1 .le. A .le. 1 + f2c_abs(M) */
             *ssmin = ha / a;
             *ssmax = fa * a;
             if (mm == 0.f)
