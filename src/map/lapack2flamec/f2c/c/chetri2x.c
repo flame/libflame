@@ -127,7 +127,7 @@ int chetri2x_(char *uplo, integer *n, complex *a, integer * lda, integer *ipiv, 
     real r__1;
     complex q__1, q__2, q__3;
     /* Builtin functions */
-    double c_abs(complex *);
+    double c_f2c_abs(complex *);
     void c_div(complex *, complex *, complex *), r_cnjg(complex *, complex *);
     /* Local variables */
     extern /* Subroutine */
@@ -273,7 +273,7 @@ int chetri2x_(char *uplo, integer *n, complex *a, integer * lda, integer *ipiv, 
             else
             {
                 /* 2 x 2 diagonal NNB */
-                r__1 = c_abs(&work[k + 1 + work_dim1]);
+                r__1 = c_f2c_abs(&work[k + 1 + work_dim1]);
                 t.r = r__1;
                 t.i = 0.f; // , expr subst
                 i__1 = k + k * a_dim1;
@@ -645,7 +645,7 @@ int chetri2x_(char *uplo, integer *n, complex *a, integer * lda, integer *ipiv, 
             else
             {
                 /* 2 x 2 diagonal NNB */
-                r__1 = c_abs(&work[k - 1 + work_dim1]);
+                r__1 = c_f2c_abs(&work[k - 1 + work_dim1]);
                 t.r = r__1;
                 t.i = 0.f; // , expr subst
                 i__1 = k - 1 + (k - 1) * a_dim1;

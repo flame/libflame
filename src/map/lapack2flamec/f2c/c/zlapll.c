@@ -94,7 +94,7 @@ int zlapll_(integer *n, doublecomplex *x, integer *incx, doublecomplex *y, integ
     doublecomplex z__1, z__2, z__3, z__4;
     /* Builtin functions */
     void d_cnjg(doublecomplex *, doublecomplex *);
-    double z_abs(doublecomplex *);
+    double z_f2c_abs(doublecomplex *);
     /* Local variables */
     doublecomplex c__, a11, a12, a22, tau;
     extern /* Subroutine */
@@ -157,9 +157,9 @@ int zlapll_(integer *n, doublecomplex *x, integer *incx, doublecomplex *y, integ
     a22.r = y[i__1].r;
     a22.i = y[i__1].i; // , expr subst
     /* Compute the SVD of 2-by-2 Upper triangular matrix. */
-    d__1 = z_abs(&a11);
-    d__2 = z_abs(&a12);
-    d__3 = z_abs(&a22);
+    d__1 = z_f2c_abs(&a11);
+    d__2 = z_f2c_abs(&a12);
+    d__3 = z_f2c_abs(&a22);
     dlas2_(&d__1, &d__2, &d__3, ssmin, &ssmax);
     return 0;
     /* End of ZLAPLL */

@@ -95,11 +95,11 @@ int main(int argc, char *argv[])
     n     = n_input;
     n_rhs = n_rhs_input;
 
-    if( mB    < 0 ) mB    = p / abs(mB_input);
-    if( mC    < 0 ) mC    = p / abs(mC_input);
-    if( mD    < 0 ) mD    = p / abs(mD_input);
-    if( n     < 0 ) n     = p / abs(n_input);
-    if( n_rhs < 0 ) n_rhs = p / abs(n_rhs_input);
+    if( mB    < 0 ) mB    = p / f2c_abs(mB_input);
+    if( mC    < 0 ) mC    = p / f2c_abs(mC_input);
+    if( mD    < 0 ) mD    = p / f2c_abs(mD_input);
+    if( n     < 0 ) n     = p / f2c_abs(n_input);
+    if( n_rhs < 0 ) n_rhs = p / f2c_abs(n_rhs_input);
 
     for ( variant = 0; variant < n_variants; variant++ ){
       

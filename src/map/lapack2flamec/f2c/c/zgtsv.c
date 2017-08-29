@@ -200,7 +200,7 @@ int zgtsv_(integer *n, integer *nrhs, doublecomplex *dl, doublecomplex *d__, dou
         {
             i__2 = k;
             i__3 = k;
-            if ((d__1 = d__[i__2].r, abs(d__1)) + (d__2 = d_imag(&d__[k]), abs(d__2)) >= (d__3 = dl[i__3].r, abs(d__3)) + (d__4 = d_imag(&dl[k]), abs(d__4)))
+            if ((d__1 = d__[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&d__[k]), f2c_abs(d__2)) >= (d__3 = dl[i__3].r, f2c_abs(d__3)) + (d__4 = d_imag(&dl[k]), f2c_abs(d__4)))
             {
                 /* No row interchange required */
                 z_div(&z__1, &dl[k], &d__[k]);

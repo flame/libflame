@@ -9,7 +9,7 @@ doublereal dcabs1_(doublecomplex *z__)
 #define t ((doublereal *)equiv_0) 
 #define zz (equiv_0)
     zz->r = z__->r, zz->i = z__->i;
-    ret_val = abs(t[0]) + abs(t[1]);
+    ret_val = f2c_abs(t[0]) + f2c_abs(t[1]);
     return ret_val;
 }
 /* dcabs1_ */

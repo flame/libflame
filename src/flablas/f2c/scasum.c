@@ -37,7 +37,7 @@ real scasum_(integer *n, complex *cx, integer *incx)
             i__ += i__2)
     {
         i__3 = i__;
-        stemp = stemp + (r__1 = cx[i__3].r, abs(r__1)) + (r__2 = r_imag(&cx[ i__]), abs(r__2));
+        stemp = stemp + (r__1 = cx[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&cx[ i__]), f2c_abs(r__2));
         /* L10: */
     }
     ret_val = stemp;
@@ -50,7 +50,7 @@ L20:
             ++i__)
     {
         i__1 = i__;
-        stemp = stemp + (r__1 = cx[i__1].r, abs(r__1)) + (r__2 = r_imag(&cx[ i__]), abs(r__2));
+        stemp = stemp + (r__1 = cx[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&cx[ i__]), f2c_abs(r__2));
         /* L30: */
     }
     ret_val = stemp;

@@ -65,7 +65,7 @@ int dtpmv_(char *uplo, char *trans, char *diag, integer *n, doublereal *ap, doub
     /* A are not referenced, but are assumed to be unity. */
     /* Unchanged on exit. */
     /* X - DOUBLE PRECISION array of dimension at least */
-    /* ( 1 + ( n - 1 )*abs( INCX ) ). */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCX ) ). */
     /* Before entry, the incremented array X must contain the n */
     /* element vector x. On exit, X is overwritten with the */
     /* tranformed vector x. */

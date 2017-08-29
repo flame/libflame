@@ -222,7 +222,7 @@ int clar1v_(integer *n, integer *b1, integer *bn, real * lambda, real *d__, real
     real r__1;
     complex q__1, q__2;
     /* Builtin functions */
-    double c_abs(complex *), sqrt(doublereal);
+    double c_f2c_abs(complex *), sqrt(doublereal);
     /* Local variables */
     integer i__;
     real s;
@@ -336,7 +336,7 @@ L60:
                 ++i__)
         {
             dplus = d__[i__] + s;
-            if (abs(dplus) < *pivmin)
+            if (f2c_abs(dplus) < *pivmin)
             {
                 dplus = -(*pivmin);
             }
@@ -359,7 +359,7 @@ L60:
                 ++i__)
         {
             dplus = d__[i__] + s;
-            if (abs(dplus) < *pivmin)
+            if (f2c_abs(dplus) < *pivmin)
             {
                 dplus = -(*pivmin);
             }
@@ -405,7 +405,7 @@ L60:
                 --i__)
         {
             dminus = lld[i__] + work[indp + i__];
-            if (abs(dminus) < *pivmin)
+            if (f2c_abs(dminus) < *pivmin)
             {
                 dminus = -(*pivmin);
             }
@@ -438,7 +438,7 @@ L60:
     {
         *negcnt = -1;
     }
-    if (abs(*mingma) == 0.f)
+    if (f2c_abs(*mingma) == 0.f)
     {
         *mingma = eps * work[inds + r1 - 1];
     }
@@ -453,7 +453,7 @@ L60:
         {
             tmp = eps * work[inds + i__];
         }
-        if (abs(tmp) <= abs(*mingma))
+        if (f2c_abs(tmp) <= f2c_abs(*mingma))
         {
             *mingma = tmp;
             *r__ = i__ + 1;
@@ -484,7 +484,7 @@ L60:
             q__1.i = -q__2.i; // , expr subst
             z__[i__2].r = q__1.r;
             z__[i__2].i = q__1.i; // , expr subst
-            if ((c_abs(&z__[i__]) + c_abs(&z__[i__ + 1])) * (r__1 = ld[i__], abs(r__1)) < *gaptol)
+            if ((c_f2c_abs(&z__[i__]) + c_f2c_abs(&z__[i__ + 1])) * (r__1 = ld[i__], f2c_abs(r__1)) < *gaptol)
             {
                 i__2 = i__;
                 z__[i__2].r = 0.f;
@@ -533,7 +533,7 @@ L220:
                 z__[i__2].r = q__1.r;
                 z__[i__2].i = q__1.i; // , expr subst
             }
-            if ((c_abs(&z__[i__]) + c_abs(&z__[i__ + 1])) * (r__1 = ld[i__], abs(r__1)) < *gaptol)
+            if ((c_f2c_abs(&z__[i__]) + c_f2c_abs(&z__[i__ + 1])) * (r__1 = ld[i__], f2c_abs(r__1)) < *gaptol)
             {
                 i__2 = i__;
                 z__[i__2].r = 0.f;
@@ -568,7 +568,7 @@ L240:
             q__1.i = -q__2.i; // , expr subst
             z__[i__2].r = q__1.r;
             z__[i__2].i = q__1.i; // , expr subst
-            if ((c_abs(&z__[i__]) + c_abs(&z__[i__ + 1])) * (r__1 = ld[i__], abs(r__1)) < *gaptol)
+            if ((c_f2c_abs(&z__[i__]) + c_f2c_abs(&z__[i__ + 1])) * (r__1 = ld[i__], f2c_abs(r__1)) < *gaptol)
             {
                 i__2 = i__ + 1;
                 z__[i__2].r = 0.f;
@@ -617,7 +617,7 @@ L260:
                 z__[i__2].r = q__1.r;
                 z__[i__2].i = q__1.i; // , expr subst
             }
-            if ((c_abs(&z__[i__]) + c_abs(&z__[i__ + 1])) * (r__1 = ld[i__], abs(r__1)) < *gaptol)
+            if ((c_f2c_abs(&z__[i__]) + c_f2c_abs(&z__[i__ + 1])) * (r__1 = ld[i__], f2c_abs(r__1)) < *gaptol)
             {
                 i__2 = i__ + 1;
                 z__[i__2].r = 0.f;
@@ -638,7 +638,7 @@ L280:
     /* Compute quantities for convergence test */
     tmp = 1.f / *ztz;
     *nrminv = sqrt(tmp);
-    *resid = abs(*mingma) * *nrminv;
+    *resid = f2c_abs(*mingma) * *nrminv;
     *rqcorr = *mingma * tmp;
     return 0;
     /* End of CLAR1V */

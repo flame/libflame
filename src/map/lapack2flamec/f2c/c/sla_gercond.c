@@ -233,7 +233,7 @@ real sla_gercond_(char *trans, integer *n, real *a, integer *lda, real *af, inte
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = a[i__ + j * a_dim1] * c__[j], abs(r__1));
+                    tmp += (r__1 = a[i__ + j * a_dim1] * c__[j], f2c_abs(r__1));
                 }
             }
             else if (*cmode == 0)
@@ -243,7 +243,7 @@ real sla_gercond_(char *trans, integer *n, real *a, integer *lda, real *af, inte
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = a[i__ + j * a_dim1], abs(r__1));
+                    tmp += (r__1 = a[i__ + j * a_dim1], f2c_abs(r__1));
                 }
             }
             else
@@ -253,7 +253,7 @@ real sla_gercond_(char *trans, integer *n, real *a, integer *lda, real *af, inte
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = a[i__ + j * a_dim1] / c__[j], abs(r__1));
+                    tmp += (r__1 = a[i__ + j * a_dim1] / c__[j], f2c_abs(r__1));
                 }
             }
             work[(*n << 1) + i__] = tmp;
@@ -274,7 +274,7 @@ real sla_gercond_(char *trans, integer *n, real *a, integer *lda, real *af, inte
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = a[j + i__ * a_dim1] * c__[j], abs(r__1));
+                    tmp += (r__1 = a[j + i__ * a_dim1] * c__[j], f2c_abs(r__1));
                 }
             }
             else if (*cmode == 0)
@@ -284,7 +284,7 @@ real sla_gercond_(char *trans, integer *n, real *a, integer *lda, real *af, inte
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = a[j + i__ * a_dim1], abs(r__1));
+                    tmp += (r__1 = a[j + i__ * a_dim1], f2c_abs(r__1));
                 }
             }
             else
@@ -294,7 +294,7 @@ real sla_gercond_(char *trans, integer *n, real *a, integer *lda, real *af, inte
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (r__1 = a[j + i__ * a_dim1] / c__[j], abs(r__1));
+                    tmp += (r__1 = a[j + i__ * a_dim1] / c__[j], f2c_abs(r__1));
                 }
             }
             work[(*n << 1) + i__] = tmp;

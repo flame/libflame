@@ -287,8 +287,8 @@ int dlatdf_(integer *ijob, integer *n, doublereal *z__, integer *ldz, doublereal
                 rhs[i__] -= rhs[k] * (z__[i__ + k * z_dim1] * temp);
                 /* L20: */
             }
-            splus += (d__1 = xp[i__ - 1], abs(d__1));
-            sminu += (d__1 = rhs[i__], abs(d__1));
+            splus += (d__1 = xp[i__ - 1], f2c_abs(d__1));
+            sminu += (d__1 = rhs[i__], f2c_abs(d__1));
             /* L30: */
         }
         if (splus > sminu)

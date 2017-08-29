@@ -113,7 +113,7 @@ int cptcon_(integer *n, real *d__, complex *e, real *anorm, real *rcond, real *r
     integer i__1;
     real r__1;
     /* Builtin functions */
-    double c_abs(complex *);
+    double c_f2c_abs(complex *);
     /* Local variables */
     integer i__, ix;
     extern /* Subroutine */
@@ -185,8 +185,8 @@ int cptcon_(integer *n, real *d__, complex *e, real *anorm, real *rcond, real *r
         /* L10: */
     }
     /* Solve M(A) * x = e, where M(A) = (m(i,j)) is given by */
-    /* m(i,j) = abs(A(i,j)); i = j; */
-    /* m(i,j) = -abs(A(i,j)), i .ne. j, */
+    /* m(i,j) = f2c_abs(A(i,j)); i = j; */
+    /* m(i,j) = -f2c_abs(A(i,j)), i .ne. j, */
     /* and e = [ 1, 1, ..., 1 ]**T. Note M(A) = M(L)*D*M(L)**H. */
     /* Solve M(L) * x = e. */
     rwork[1] = 1.f;
@@ -195,7 +195,7 @@ int cptcon_(integer *n, real *d__, complex *e, real *anorm, real *rcond, real *r
             i__ <= i__1;
             ++i__)
     {
-        rwork[i__] = rwork[i__ - 1] * c_abs(&e[i__ - 1]) + 1.f;
+        rwork[i__] = rwork[i__ - 1] * c_f2c_abs(&e[i__ - 1]) + 1.f;
         /* L20: */
     }
     /* Solve D * M(L)**H * x = b. */
@@ -204,12 +204,12 @@ int cptcon_(integer *n, real *d__, complex *e, real *anorm, real *rcond, real *r
             i__ >= 1;
             --i__)
     {
-        rwork[i__] = rwork[i__] / d__[i__] + rwork[i__ + 1] * c_abs(&e[i__]);
+        rwork[i__] = rwork[i__] / d__[i__] + rwork[i__ + 1] * c_f2c_abs(&e[i__]);
         /* L30: */
     }
     /* Compute AINVNM = max(x(i)), 1<=i<=n. */
     ix = isamax_(n, &rwork[1], &c__1);
-    ainvnm = (r__1 = rwork[ix], abs(r__1));
+    ainvnm = (r__1 = rwork[ix], f2c_abs(r__1));
     /* Compute the reciprocal condition number. */
     if (ainvnm != 0.f)
     {

@@ -96,7 +96,7 @@ int clartg_(complex *f, complex *g, real *cs, complex *sn, complex *r__)
     real r__1, r__2, r__3, r__4, r__5, r__6, r__7, r__8, r__9, r__10;
     complex q__1, q__2, q__3;
     /* Builtin functions */
-    double log(doublereal), pow_ri(real *, integer *), r_imag(complex *), c_abs(complex *), sqrt(doublereal);
+    double log(doublereal), pow_ri(real *, integer *), r_imag(complex *), c_f2c_abs(complex *), sqrt(doublereal);
     void r_cnjg(complex *, complex *);
     /* Local variables */
     real d__;
@@ -140,11 +140,11 @@ int clartg_(complex *f, complex *g, real *cs, complex *sn, complex *r__)
     safmx2 = 1.f / safmn2;
     /* Computing MAX */
     /* Computing MAX */
-    r__7 = (r__1 = f->r, abs(r__1));
-    r__8 = (r__2 = r_imag(f), abs(r__2)); // , expr subst
+    r__7 = (r__1 = f->r, f2c_abs(r__1));
+    r__8 = (r__2 = r_imag(f), f2c_abs(r__2)); // , expr subst
     /* Computing MAX */
-    r__9 = (r__3 = g->r, abs(r__3));
-    r__10 = (r__4 = r_imag(g), abs(r__4)); // , expr subst
+    r__9 = (r__3 = g->r, f2c_abs(r__3));
+    r__10 = (r__4 = r_imag(g), f2c_abs(r__4)); // , expr subst
     r__5 = max(r__7,r__8);
     r__6 = max(r__9,r__10); // , expr subst
     scale = max(r__5,r__6);
@@ -173,7 +173,7 @@ L10:
     }
     else if (scale <= safmn2)
     {
-        r__1 = c_abs(g);
+        r__1 = c_f2c_abs(g);
         if (g->r == 0.f && g->i == 0.f || sisnan_(&r__1))
         {
             *cs = 1.f;
@@ -242,11 +242,11 @@ L20:
         /* and so CS .lt. sqrt(SAFMIN)/SAFMN2 = sqrt(EPS) */
         /* Therefore, CS = F2S/G2S / sqrt( 1 + (F2S/G2S)**2 ) = F2S/G2S */
         *cs = f2s / g2s;
-        /* Make sure abs(FF) = 1 */
+        /* Make sure f2c_abs(FF) = 1 */
         /* Do complex/real division explicitly with 2 real divisions */
         /* Computing MAX */
-        r__3 = (r__1 = f->r, abs(r__1));
-        r__4 = (r__2 = r_imag(f), abs(r__2)); // , expr subst
+        r__3 = (r__1 = f->r, f2c_abs(r__1));
+        r__4 = (r__2 = r_imag(f), f2c_abs(r__2)); // , expr subst
         if (max(r__3,r__4) > 1.f)
         {
             r__1 = f->r;

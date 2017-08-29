@@ -259,7 +259,7 @@ real cla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, complex *
                         ++j)
                 {
                     i__2 = kd + i__ - j + j * ab_dim1;
-                    tmp += ((r__1 = ab[i__2].r, abs(r__1)) + (r__2 = r_imag(& ab[kd + i__ - j + j * ab_dim1]), abs(r__2))) / c__[j];
+                    tmp += ((r__1 = ab[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(& ab[kd + i__ - j + j * ab_dim1]), f2c_abs(r__2))) / c__[j];
                 }
             }
             else
@@ -274,7 +274,7 @@ real cla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, complex *
                         ++j)
                 {
                     i__3 = kd + i__ - j + j * ab_dim1;
-                    tmp += (r__1 = ab[i__3].r, abs(r__1)) + (r__2 = r_imag(& ab[kd + i__ - j + j * ab_dim1]), abs(r__2));
+                    tmp += (r__1 = ab[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(& ab[kd + i__ - j + j * ab_dim1]), f2c_abs(r__2));
                 }
             }
             rwork[i__] = tmp;
@@ -301,7 +301,7 @@ real cla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, complex *
                         ++j)
                 {
                     i__2 = ke - i__ + j + i__ * ab_dim1;
-                    tmp += ((r__1 = ab[i__2].r, abs(r__1)) + (r__2 = r_imag(& ab[ke - i__ + j + i__ * ab_dim1]), abs(r__2))) / c__[j];
+                    tmp += ((r__1 = ab[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(& ab[ke - i__ + j + i__ * ab_dim1]), f2c_abs(r__2))) / c__[j];
                 }
             }
             else
@@ -316,7 +316,7 @@ real cla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, complex *
                         ++j)
                 {
                     i__3 = ke - i__ + j + i__ * ab_dim1;
-                    tmp += (r__1 = ab[i__3].r, abs(r__1)) + (r__2 = r_imag(& ab[ke - i__ + j + i__ * ab_dim1]), abs(r__2));
+                    tmp += (r__1 = ab[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(& ab[ke - i__ + j + i__ * ab_dim1]), f2c_abs(r__2));
                 }
             }
             rwork[i__] = tmp;

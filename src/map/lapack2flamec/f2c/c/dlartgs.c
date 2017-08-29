@@ -99,7 +99,7 @@ int dlartgs_(doublereal *x, doublereal *y, doublereal *sigma, doublereal *cs, do
     thresh = dlamch_("E");
     /* Compute the first column of B**T*B - SIGMA^2*I, up to a scale */
     /* factor. */
-    if (*sigma == 0. && abs(*x) < thresh || abs(*x) == *sigma && *y == 0.)
+    if (*sigma == 0. && f2c_abs(*x) < thresh || f2c_abs(*x) == *sigma && *y == 0.)
     {
         z__ = 0.;
         w = 0.;
@@ -117,7 +117,7 @@ int dlartgs_(doublereal *x, doublereal *y, doublereal *sigma, doublereal *cs, do
             w = -(*y);
         }
     }
-    else if (abs(*x) < thresh)
+    else if (f2c_abs(*x) < thresh)
     {
         z__ = -(*sigma) * *sigma;
         w = 0.;
@@ -132,7 +132,7 @@ int dlartgs_(doublereal *x, doublereal *y, doublereal *sigma, doublereal *cs, do
         {
             s = -1.;
         }
-        z__ = s * (abs(*x) - *sigma) * (s + *sigma / *x);
+        z__ = s * (f2c_abs(*x) - *sigma) * (s + *sigma / *x);
         w = s * *y;
     }
     /* Generate the rotation. */

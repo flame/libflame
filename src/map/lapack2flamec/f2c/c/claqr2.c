@@ -427,8 +427,8 @@ int claqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
         /* Computing MAX */
         i__1 = kwtop + kwtop * h_dim1;
         r__5 = smlnum;
-        r__6 = ulp * ((r__1 = h__[i__1].r, abs(r__1)) + (r__2 = r_imag(&h__[kwtop + kwtop * h_dim1]), abs(r__2))); // , expr subst
-        if ((r__3 = s.r, abs(r__3)) + (r__4 = r_imag(&s), abs(r__4)) <= max( r__5,r__6))
+        r__6 = ulp * ((r__1 = h__[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&h__[kwtop + kwtop * h_dim1]), f2c_abs(r__2))); // , expr subst
+        if ((r__3 = s.r, f2c_abs(r__3)) + (r__4 = r_imag(&s), f2c_abs(r__4)) <= max( r__5,r__6))
         {
             *ns = 0;
             *nd = 1;
@@ -465,16 +465,16 @@ int claqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
     {
         /* ==== Small spike tip deflation test ==== */
         i__2 = *ns + *ns * t_dim1;
-        foo = (r__1 = t[i__2].r, abs(r__1)) + (r__2 = r_imag(&t[*ns + *ns * t_dim1]), abs(r__2));
+        foo = (r__1 = t[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&t[*ns + *ns * t_dim1]), f2c_abs(r__2));
         if (foo == 0.f)
         {
-            foo = (r__1 = s.r, abs(r__1)) + (r__2 = r_imag(&s), abs(r__2));
+            foo = (r__1 = s.r, f2c_abs(r__1)) + (r__2 = r_imag(&s), f2c_abs(r__2));
         }
         i__2 = *ns * v_dim1 + 1;
         /* Computing MAX */
         r__5 = smlnum;
         r__6 = ulp * foo; // , expr subst
-        if (((r__1 = s.r, abs(r__1)) + (r__2 = r_imag(&s), abs(r__2))) * (( r__3 = v[i__2].r, abs(r__3)) + (r__4 = r_imag(&v[*ns * v_dim1 + 1]), abs(r__4))) <= max(r__5,r__6))
+        if (((r__1 = s.r, f2c_abs(r__1)) + (r__2 = r_imag(&s), f2c_abs(r__2))) * (( r__3 = v[i__2].r, f2c_abs(r__3)) + (r__4 = r_imag(&v[*ns * v_dim1 + 1]), f2c_abs(r__4))) <= max(r__5,r__6))
         {
             /* ==== One more converged eigenvalue ==== */
             --(*ns);
@@ -512,7 +512,7 @@ int claqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
             {
                 i__3 = j + j * t_dim1;
                 i__4 = ifst + ifst * t_dim1;
-                if ((r__1 = t[i__3].r, abs(r__1)) + (r__2 = r_imag(&t[j + j * t_dim1]), abs(r__2)) > (r__3 = t[i__4].r, abs(r__3)) + (r__4 = r_imag(&t[ifst + ifst * t_dim1]), abs(r__4)) )
+                if ((r__1 = t[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&t[j + j * t_dim1]), f2c_abs(r__2)) > (r__3 = t[i__4].r, f2c_abs(r__3)) + (r__4 = r_imag(&t[ifst + ifst * t_dim1]), f2c_abs(r__4)) )
                 {
                     ifst = j;
                 }

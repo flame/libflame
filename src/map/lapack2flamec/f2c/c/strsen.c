@@ -627,7 +627,7 @@ L40: /* Store the output eigenvalues in WR and WI. */
     {
         if (t[k + 1 + k * t_dim1] != 0.f)
         {
-            wi[k] = sqrt((r__1 = t[k + (k + 1) * t_dim1], abs(r__1))) * sqrt(( r__2 = t[k + 1 + k * t_dim1], abs(r__2)));
+            wi[k] = sqrt((r__1 = t[k + (k + 1) * t_dim1], f2c_abs(r__1))) * sqrt(( r__2 = t[k + 1 + k * t_dim1], f2c_abs(r__2)));
             wi[k + 1] = -wi[k];
         }
         /* L60: */

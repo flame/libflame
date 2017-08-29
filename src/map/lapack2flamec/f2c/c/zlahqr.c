@@ -198,7 +198,7 @@ int zlahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     /* Builtin functions */
     double d_imag(doublecomplex *);
     void d_cnjg(doublecomplex *, doublecomplex *);
-    double z_abs(doublecomplex *);
+    double z_f2c_abs(doublecomplex *);
     void z_sqrt(doublecomplex *, doublecomplex *), pow_zi(doublecomplex *, doublecomplex *, integer *);
     /* Local variables */
     integer i__, j, k, l, m;
@@ -325,19 +325,19 @@ int zlahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
             /* . sudden underflow in ABS(H(I,I-1)) ==== */
             i__2 = i__ + (i__ - 1) * h_dim1;
             i__3 = i__ + (i__ - 1) * h_dim1;
-            d__3 = (d__1 = h__[i__3].r, abs(d__1)) + (d__2 = d_imag(&h__[i__ + (i__ - 1) * h_dim1]), abs(d__2));
+            d__3 = (d__1 = h__[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[i__ + (i__ - 1) * h_dim1]), f2c_abs(d__2));
             z__1.r = h__[i__2].r / d__3;
             z__1.i = h__[i__2].i / d__3; // , expr subst
             sc.r = z__1.r;
             sc.i = z__1.i; // , expr subst
             d_cnjg(&z__2, &sc);
-            d__1 = z_abs(&sc);
+            d__1 = z_f2c_abs(&sc);
             z__1.r = z__2.r / d__1;
             z__1.i = z__2.i / d__1; // , expr subst
             sc.r = z__1.r;
             sc.i = z__1.i; // , expr subst
             i__2 = i__ + (i__ - 1) * h_dim1;
-            d__1 = z_abs(&h__[i__ + (i__ - 1) * h_dim1]);
+            d__1 = z_f2c_abs(&h__[i__ + (i__ - 1) * h_dim1]);
             h__[i__2].r = d__1;
             h__[i__2].i = 0.; // , expr subst
             i__2 = jhi - i__ + 1;
@@ -399,24 +399,24 @@ L30:
                 --k)
         {
             i__2 = k + (k - 1) * h_dim1;
-            if ((d__1 = h__[i__2].r, abs(d__1)) + (d__2 = d_imag(&h__[k + (k - 1) * h_dim1]), abs(d__2)) <= smlnum)
+            if ((d__1 = h__[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[k + (k - 1) * h_dim1]), f2c_abs(d__2)) <= smlnum)
             {
                 goto L50;
             }
             i__2 = k - 1 + (k - 1) * h_dim1;
             i__3 = k + k * h_dim1;
-            tst = (d__1 = h__[i__2].r, abs(d__1)) + (d__2 = d_imag(&h__[k - 1 + (k - 1) * h_dim1]), abs(d__2)) + ((d__3 = h__[i__3].r, abs(d__3)) + (d__4 = d_imag(&h__[k + k * h_dim1]), abs( d__4)));
+            tst = (d__1 = h__[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[k - 1 + (k - 1) * h_dim1]), f2c_abs(d__2)) + ((d__3 = h__[i__3].r, f2c_abs(d__3)) + (d__4 = d_imag(&h__[k + k * h_dim1]), f2c_abs( d__4)));
             if (tst == 0.)
             {
                 if (k - 2 >= *ilo)
                 {
                     i__2 = k - 1 + (k - 2) * h_dim1;
-                    tst += (d__1 = h__[i__2].r, abs(d__1));
+                    tst += (d__1 = h__[i__2].r, f2c_abs(d__1));
                 }
                 if (k + 1 <= *ihi)
                 {
                     i__2 = k + 1 + k * h_dim1;
-                    tst += (d__1 = h__[i__2].r, abs(d__1));
+                    tst += (d__1 = h__[i__2].r, f2c_abs(d__1));
                 }
             }
             /* ==== The following is a conservative small subdiagonal */
@@ -424,19 +424,19 @@ L30:
             /* . 1997). It has better mathematical foundation and */
             /* . improves accuracy in some examples. ==== */
             i__2 = k + (k - 1) * h_dim1;
-            if ((d__1 = h__[i__2].r, abs(d__1)) <= ulp * tst)
+            if ((d__1 = h__[i__2].r, f2c_abs(d__1)) <= ulp * tst)
             {
                 /* Computing MAX */
                 i__2 = k + (k - 1) * h_dim1;
                 i__3 = k - 1 + k * h_dim1;
-                d__5 = (d__1 = h__[i__2].r, abs(d__1)) + (d__2 = d_imag(&h__[ k + (k - 1) * h_dim1]), abs(d__2));
-                d__6 = (d__3 = h__[i__3].r, abs(d__3)) + (d__4 = d_imag(&h__[k - 1 + k * h_dim1]), abs(d__4)); // , expr subst
+                d__5 = (d__1 = h__[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[ k + (k - 1) * h_dim1]), f2c_abs(d__2));
+                d__6 = (d__3 = h__[i__3].r, f2c_abs(d__3)) + (d__4 = d_imag(&h__[k - 1 + k * h_dim1]), f2c_abs(d__4)); // , expr subst
                 ab = max(d__5,d__6);
                 /* Computing MIN */
                 i__2 = k + (k - 1) * h_dim1;
                 i__3 = k - 1 + k * h_dim1;
-                d__5 = (d__1 = h__[i__2].r, abs(d__1)) + (d__2 = d_imag(&h__[ k + (k - 1) * h_dim1]), abs(d__2));
-                d__6 = (d__3 = h__[i__3].r, abs(d__3)) + (d__4 = d_imag(&h__[k - 1 + k * h_dim1]), abs(d__4)); // , expr subst
+                d__5 = (d__1 = h__[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[ k + (k - 1) * h_dim1]), f2c_abs(d__2));
+                d__6 = (d__3 = h__[i__3].r, f2c_abs(d__3)) + (d__4 = d_imag(&h__[k - 1 + k * h_dim1]), f2c_abs(d__4)); // , expr subst
                 ba = min(d__5,d__6);
                 i__2 = k - 1 + (k - 1) * h_dim1;
                 i__3 = k + k * h_dim1;
@@ -446,8 +446,8 @@ L30:
                 z__1.i = z__2.i; // , expr subst
                 /* Computing MAX */
                 i__4 = k + k * h_dim1;
-                d__5 = (d__1 = h__[i__4].r, abs(d__1)) + (d__2 = d_imag(&h__[ k + k * h_dim1]), abs(d__2));
-                d__6 = (d__3 = z__1.r, abs(d__3)) + (d__4 = d_imag(&z__1), abs(d__4)); // , expr subst
+                d__5 = (d__1 = h__[i__4].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[ k + k * h_dim1]), f2c_abs(d__2));
+                d__6 = (d__3 = z__1.r, f2c_abs(d__3)) + (d__4 = d_imag(&z__1), f2c_abs(d__4)); // , expr subst
                 aa = max(d__5,d__6);
                 i__2 = k - 1 + (k - 1) * h_dim1;
                 i__3 = k + k * h_dim1;
@@ -457,8 +457,8 @@ L30:
                 z__1.i = z__2.i; // , expr subst
                 /* Computing MIN */
                 i__4 = k + k * h_dim1;
-                d__5 = (d__1 = h__[i__4].r, abs(d__1)) + (d__2 = d_imag(&h__[ k + k * h_dim1]), abs(d__2));
-                d__6 = (d__3 = z__1.r, abs(d__3)) + (d__4 = d_imag(&z__1), abs(d__4)); // , expr subst
+                d__5 = (d__1 = h__[i__4].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[ k + k * h_dim1]), f2c_abs(d__2));
+                d__6 = (d__3 = z__1.r, f2c_abs(d__3)) + (d__4 = d_imag(&z__1), f2c_abs(d__4)); // , expr subst
                 bb = min(d__5,d__6);
                 s = aa + ab;
                 /* Computing MAX */
@@ -497,7 +497,7 @@ L50:
         {
             /* Exceptional shift. */
             i__1 = l + 1 + l * h_dim1;
-            s = (d__1 = h__[i__1].r, abs(d__1)) * .75;
+            s = (d__1 = h__[i__1].r, f2c_abs(d__1)) * .75;
             i__1 = l + l * h_dim1;
             z__1.r = s + h__[i__1].r;
             z__1.i = h__[i__1].i; // , expr subst
@@ -508,7 +508,7 @@ L50:
         {
             /* Exceptional shift. */
             i__1 = i__ + (i__ - 1) * h_dim1;
-            s = (d__1 = h__[i__1].r, abs(d__1)) * .75;
+            s = (d__1 = h__[i__1].r, f2c_abs(d__1)) * .75;
             i__1 = i__ + i__ * h_dim1;
             z__1.r = s + h__[i__1].r;
             z__1.i = h__[i__1].i; // , expr subst
@@ -527,7 +527,7 @@ L50:
             z__1.i = z__2.r * z__3.i + z__2.i * z__3.r; // , expr subst
             u.r = z__1.r;
             u.i = z__1.i; // , expr subst
-            s = (d__1 = u.r, abs(d__1)) + (d__2 = d_imag(&u), abs(d__2));
+            s = (d__1 = u.r, f2c_abs(d__1)) + (d__2 = d_imag(&u), f2c_abs(d__2));
             if (s != 0.)
             {
                 i__1 = i__ - 1 + (i__ - 1) * h_dim1;
@@ -537,10 +537,10 @@ L50:
                 z__1.i = z__2.i * .5; // , expr subst
                 x.r = z__1.r;
                 x.i = z__1.i; // , expr subst
-                sx = (d__1 = x.r, abs(d__1)) + (d__2 = d_imag(&x), abs(d__2));
+                sx = (d__1 = x.r, f2c_abs(d__1)) + (d__2 = d_imag(&x), f2c_abs(d__2));
                 /* Computing MAX */
                 d__3 = s;
-                d__4 = (d__1 = x.r, abs(d__1)) + (d__2 = d_imag(&x), abs(d__2)); // , expr subst
+                d__4 = (d__1 = x.r, f2c_abs(d__1)) + (d__2 = d_imag(&x), f2c_abs(d__2)); // , expr subst
                 s = max(d__3,d__4);
                 z__5.r = x.r / s;
                 z__5.i = x.i / s; // , expr subst
@@ -601,7 +601,7 @@ L50:
             h11s.i = z__1.i; // , expr subst
             i__2 = m + 1 + m * h_dim1;
             h21 = h__[i__2].r;
-            s = (d__1 = h11s.r, abs(d__1)) + (d__2 = d_imag(&h11s), abs(d__2)) + abs(h21);
+            s = (d__1 = h11s.r, f2c_abs(d__1)) + (d__2 = d_imag(&h11s), f2c_abs(d__2)) + f2c_abs(h21);
             z__1.r = h11s.r / s;
             z__1.i = h11s.i / s; // , expr subst
             h11s.r = z__1.r;
@@ -613,7 +613,7 @@ L50:
             v[1].i = 0.; // , expr subst
             i__2 = m + (m - 1) * h_dim1;
             h10 = h__[i__2].r;
-            if (abs(h10) * abs(h21) <= ulp * (((d__1 = h11s.r, abs(d__1)) + ( d__2 = d_imag(&h11s), abs(d__2))) * ((d__3 = h11.r, abs( d__3)) + (d__4 = d_imag(&h11), abs(d__4)) + ((d__5 = h22.r, abs(d__5)) + (d__6 = d_imag(&h22), abs(d__6))))))
+            if (f2c_abs(h10) * f2c_abs(h21) <= ulp * (((d__1 = h11s.r, f2c_abs(d__1)) + ( d__2 = d_imag(&h11s), f2c_abs(d__2))) * ((d__3 = h11.r, f2c_abs( d__3)) + (d__4 = d_imag(&h11), f2c_abs(d__4)) + ((d__5 = h22.r, f2c_abs(d__5)) + (d__6 = d_imag(&h22), f2c_abs(d__6))))))
             {
                 goto L70;
             }
@@ -631,7 +631,7 @@ L50:
         h11s.i = z__1.i; // , expr subst
         i__1 = l + 1 + l * h_dim1;
         h21 = h__[i__1].r;
-        s = (d__1 = h11s.r, abs(d__1)) + (d__2 = d_imag(&h11s), abs(d__2)) + abs(h21);
+        s = (d__1 = h11s.r, f2c_abs(d__1)) + (d__2 = d_imag(&h11s), f2c_abs(d__2)) + f2c_abs(h21);
         z__1.r = h11s.r / s;
         z__1.i = h11s.i / s; // , expr subst
         h11s.r = z__1.r;
@@ -791,7 +791,7 @@ L70: /* Single-shift QR step */
                 z__1.i = 0. - t1.i; // , expr subst
                 temp.r = z__1.r;
                 temp.i = z__1.i; // , expr subst
-                d__1 = z_abs(&temp);
+                d__1 = z_f2c_abs(&temp);
                 z__1.r = temp.r / d__1;
                 z__1.i = temp.i / d__1; // , expr subst
                 temp.r = z__1.r;
@@ -844,7 +844,7 @@ L70: /* Single-shift QR step */
         temp.i = h__[i__1].i; // , expr subst
         if (d_imag(&temp) != 0.)
         {
-            rtemp = z_abs(&temp);
+            rtemp = z_f2c_abs(&temp);
             i__1 = i__ + (i__ - 1) * h_dim1;
             h__[i__1].r = rtemp;
             h__[i__1].i = 0.; // , expr subst

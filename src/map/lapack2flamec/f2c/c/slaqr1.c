@@ -138,7 +138,7 @@ int slaqr1_(integer *n, real *h__, integer *ldh, real *sr1, real *si1, real *sr2
     /* Function Body */
     if (*n == 2)
     {
-        s = (r__1 = h__[h_dim1 + 1] - *sr2, abs(r__1)) + abs(*si2) + (r__2 = h__[h_dim1 + 2], abs(r__2));
+        s = (r__1 = h__[h_dim1 + 1] - *sr2, f2c_abs(r__1)) + f2c_abs(*si2) + (r__2 = h__[h_dim1 + 2], f2c_abs(r__2));
         if (s == 0.f)
         {
             v[1] = 0.f;
@@ -153,7 +153,7 @@ int slaqr1_(integer *n, real *h__, integer *ldh, real *sr1, real *si1, real *sr2
     }
     else
     {
-        s = (r__1 = h__[h_dim1 + 1] - *sr2, abs(r__1)) + abs(*si2) + (r__2 = h__[h_dim1 + 2], abs(r__2)) + (r__3 = h__[h_dim1 + 3], abs( r__3));
+        s = (r__1 = h__[h_dim1 + 1] - *sr2, f2c_abs(r__1)) + f2c_abs(*si2) + (r__2 = h__[h_dim1 + 2], f2c_abs(r__2)) + (r__3 = h__[h_dim1 + 3], f2c_abs( r__3));
         if (s == 0.f)
         {
             v[1] = 0.f;

@@ -260,7 +260,7 @@ doublereal zla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, dou
                         ++j)
                 {
                     i__2 = kd + i__ - j + j * ab_dim1;
-                    tmp += ((d__1 = ab[i__2].r, abs(d__1)) + (d__2 = d_imag(& ab[kd + i__ - j + j * ab_dim1]), abs(d__2))) / c__[j];
+                    tmp += ((d__1 = ab[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(& ab[kd + i__ - j + j * ab_dim1]), f2c_abs(d__2))) / c__[j];
                 }
             }
             else
@@ -275,7 +275,7 @@ doublereal zla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, dou
                         ++j)
                 {
                     i__3 = kd + i__ - j + j * ab_dim1;
-                    tmp += (d__1 = ab[i__3].r, abs(d__1)) + (d__2 = d_imag(& ab[kd + i__ - j + j * ab_dim1]), abs(d__2));
+                    tmp += (d__1 = ab[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(& ab[kd + i__ - j + j * ab_dim1]), f2c_abs(d__2));
                 }
             }
             rwork[i__] = tmp;
@@ -302,7 +302,7 @@ doublereal zla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, dou
                         ++j)
                 {
                     i__2 = ke - i__ + j + i__ * ab_dim1;
-                    tmp += ((d__1 = ab[i__2].r, abs(d__1)) + (d__2 = d_imag(& ab[ke - i__ + j + i__ * ab_dim1]), abs(d__2))) / c__[j];
+                    tmp += ((d__1 = ab[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(& ab[ke - i__ + j + i__ * ab_dim1]), f2c_abs(d__2))) / c__[j];
                 }
             }
             else
@@ -317,7 +317,7 @@ doublereal zla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, dou
                         ++j)
                 {
                     i__3 = ke - i__ + j + i__ * ab_dim1;
-                    tmp += (d__1 = ab[i__3].r, abs(d__1)) + (d__2 = d_imag(& ab[ke - i__ + j + i__ * ab_dim1]), abs(d__2));
+                    tmp += (d__1 = ab[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(& ab[ke - i__ + j + i__ * ab_dim1]), f2c_abs(d__2));
                 }
             }
             rwork[i__] = tmp;

@@ -35,7 +35,7 @@
 /* > where x( i ) = X( 1 + ( i - 1 )*INCX ). The value of sumsq is */
 /* > assumed to be non-negative and scl returns the value */
 /* > */
-/* > scl = max( scale, abs( x( i ) ) ). */
+/* > scl = max( scale, f2c_abs( x( i ) ) ). */
 /* > */
 /* > scale and sumsq must be supplied in SCALE and SUMSQ and */
 /* > scl and smsq are overwritten on SCALE and SUMSQ respectively. */
@@ -127,7 +127,7 @@ int slassq_(integer *n, real *x, integer *incx, real *scale, real *sumsq)
                 i__2 < 0 ? ix >= i__1 : ix <= i__1;
                 ix += i__2)
         {
-            absxi = (r__1 = x[ix], abs(r__1));
+            absxi = (r__1 = x[ix], f2c_abs(r__1));
             if (absxi > 0.f || sisnan_(&absxi))
             {
                 if (*scale < absxi)

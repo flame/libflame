@@ -112,7 +112,7 @@ int zhptri_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, doublecomp
     doublereal d__1;
     doublecomplex z__1, z__2;
     /* Builtin functions */
-    double z_abs(doublecomplex *);
+    double z_f2c_abs(doublecomplex *);
     void d_cnjg(doublecomplex *, doublecomplex *);
     /* Local variables */
     doublereal d__;
@@ -260,7 +260,7 @@ L30: /* If K > N, exit from loop. */
         {
             /* 2 x 2 diagonal block */
             /* Invert the diagonal block. */
-            t = z_abs(&ap[kcnext + k - 1]);
+            t = z_f2c_abs(&ap[kcnext + k - 1]);
             i__1 = kc + k - 1;
             ak = ap[i__1].r / t;
             i__1 = kcnext + k;
@@ -331,7 +331,7 @@ L30: /* If K > N, exit from loop. */
             kstep = 2;
             kcnext = kcnext + k + 1;
         }
-        kp = (i__1 = ipiv[k], abs(i__1));
+        kp = (i__1 = ipiv[k], f2c_abs(i__1));
         if (kp != k)
         {
             /* Interchange rows and columns K and KP in the leading */
@@ -440,7 +440,7 @@ L60: /* If K < 1, exit from loop. */
         {
             /* 2 x 2 diagonal block */
             /* Invert the diagonal block. */
-            t = z_abs(&ap[kcnext + 1]);
+            t = z_f2c_abs(&ap[kcnext + 1]);
             i__1 = kcnext;
             ak = ap[i__1].r / t;
             i__1 = kc;
@@ -511,7 +511,7 @@ L60: /* If K < 1, exit from loop. */
             kstep = 2;
             kcnext -= *n - k + 3;
         }
-        kp = (i__1 = ipiv[k], abs(i__1));
+        kp = (i__1 = ipiv[k], f2c_abs(i__1));
         if (kp != k)
         {
             /* Interchange rows and columns K and KP in the trailing */

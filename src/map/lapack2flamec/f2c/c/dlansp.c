@@ -38,7 +38,7 @@ static integer c__1 = 1;
 /* > \return DLANSP */
 /* > \verbatim */
 /* > */
-/* > DLANSP = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > DLANSP = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -49,7 +49,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -148,7 +148,7 @@ doublereal dlansp_(char *norm, char *uplo, integer *n, doublereal *ap, doublerea
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
+        /* Find max(f2c_abs(A(i,j))). */
         value = 0.;
         if (lsame_(uplo, "U"))
         {
@@ -163,7 +163,7 @@ doublereal dlansp_(char *norm, char *uplo, integer *n, doublereal *ap, doublerea
                         i__ <= i__2;
                         ++i__)
                 {
-                    sum = (d__1 = ap[i__], abs(d__1));
+                    sum = (d__1 = ap[i__], f2c_abs(d__1));
                     if (value < sum || disnan_(&sum))
                     {
                         value = sum;
@@ -187,7 +187,7 @@ doublereal dlansp_(char *norm, char *uplo, integer *n, doublereal *ap, doublerea
                         i__ <= i__2;
                         ++i__)
                 {
-                    sum = (d__1 = ap[i__], abs(d__1));
+                    sum = (d__1 = ap[i__], f2c_abs(d__1));
                     if (value < sum || disnan_(&sum))
                     {
                         value = sum;
@@ -217,13 +217,13 @@ doublereal dlansp_(char *norm, char *uplo, integer *n, doublereal *ap, doublerea
                         i__ <= i__2;
                         ++i__)
                 {
-                    absa = (d__1 = ap[k], abs(d__1));
+                    absa = (d__1 = ap[k], f2c_abs(d__1));
                     sum += absa;
                     work[i__] += absa;
                     ++k;
                     /* L50: */
                 }
-                work[j] = sum + (d__1 = ap[k], abs(d__1));
+                work[j] = sum + (d__1 = ap[k], f2c_abs(d__1));
                 ++k;
                 /* L60: */
             }
@@ -255,14 +255,14 @@ doublereal dlansp_(char *norm, char *uplo, integer *n, doublereal *ap, doublerea
                     j <= i__1;
                     ++j)
             {
-                sum = work[j] + (d__1 = ap[k], abs(d__1));
+                sum = work[j] + (d__1 = ap[k], f2c_abs(d__1));
                 ++k;
                 i__2 = *n;
                 for (i__ = j + 1;
                         i__ <= i__2;
                         ++i__)
                 {
-                    absa = (d__1 = ap[k], abs(d__1));
+                    absa = (d__1 = ap[k], f2c_abs(d__1));
                     sum += absa;
                     work[i__] += absa;
                     ++k;
@@ -317,7 +317,7 @@ doublereal dlansp_(char *norm, char *uplo, integer *n, doublereal *ap, doublerea
         {
             if (ap[k] != 0.)
             {
-                absa = (d__1 = ap[k], abs(d__1));
+                absa = (d__1 = ap[k], f2c_abs(d__1));
                 if (scale < absa)
                 {
                     /* Computing 2nd power */

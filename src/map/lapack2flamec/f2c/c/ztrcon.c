@@ -267,7 +267,7 @@ L10:
             {
                 ix = izamax_(n, &work[1], &c__1);
                 i__1 = ix;
-                xnorm = (d__1 = work[i__1].r, abs(d__1)) + (d__2 = d_imag(& work[ix]), abs(d__2));
+                xnorm = (d__1 = work[i__1].r, f2c_abs(d__1)) + (d__2 = d_imag(& work[ix]), f2c_abs(d__2));
                 if (scale < xnorm * smlnum || scale == 0.)
                 {
                     goto L20;

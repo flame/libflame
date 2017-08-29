@@ -33,7 +33,7 @@ integer icamax_(integer *n, complex *cx, integer *incx)
     }
     /* code for increment not equal to 1 */
     ix = 1;
-    smax = (r__1 = cx[1].r, abs(r__1)) + (r__2 = r_imag(&cx[1]), abs(r__2));
+    smax = (r__1 = cx[1].r, f2c_abs(r__1)) + (r__2 = r_imag(&cx[1]), f2c_abs(r__2));
     ix += *incx;
     i__1 = *n;
     for (i__ = 2;
@@ -41,13 +41,13 @@ integer icamax_(integer *n, complex *cx, integer *incx)
             ++i__)
     {
         i__2 = ix;
-        if ((r__1 = cx[i__2].r, abs(r__1)) + (r__2 = r_imag(&cx[ix]), abs( r__2)) <= smax)
+        if ((r__1 = cx[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&cx[ix]), f2c_abs( r__2)) <= smax)
         {
             goto L5;
         }
         ret_val = i__;
         i__2 = ix;
-        smax = (r__1 = cx[i__2].r, abs(r__1)) + (r__2 = r_imag(&cx[ix]), abs( r__2));
+        smax = (r__1 = cx[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&cx[ix]), f2c_abs( r__2));
 L5:
         ix += *incx;
         /* L10: */
@@ -55,20 +55,20 @@ L5:
     return ret_val;
     /* code for increment equal to 1 */
 L20:
-    smax = (r__1 = cx[1].r, abs(r__1)) + (r__2 = r_imag(&cx[1]), abs(r__2));
+    smax = (r__1 = cx[1].r, f2c_abs(r__1)) + (r__2 = r_imag(&cx[1]), f2c_abs(r__2));
     i__1 = *n;
     for (i__ = 2;
             i__ <= i__1;
             ++i__)
     {
         i__2 = i__;
-        if ((r__1 = cx[i__2].r, abs(r__1)) + (r__2 = r_imag(&cx[i__]), abs( r__2)) <= smax)
+        if ((r__1 = cx[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&cx[i__]), f2c_abs( r__2)) <= smax)
         {
             goto L30;
         }
         ret_val = i__;
         i__2 = i__;
-        smax = (r__1 = cx[i__2].r, abs(r__1)) + (r__2 = r_imag(&cx[i__]), abs( r__2));
+        smax = (r__1 = cx[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&cx[i__]), f2c_abs( r__2));
 L30:
         ;
     }

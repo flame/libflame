@@ -39,7 +39,7 @@
 /* > */
 /* > SLAMCH( 'E' ) * ( ANORM / SEP( I ) ) */
 /* > */
-/* > where ANORM = 2-norm(A) = max( abs( D(j) ) ). SEP(I) is not allowed */
+/* > where ANORM = 2-norm(A) = max( f2c_abs( D(j) ) ). SEP(I) is not allowed */
 /* > to be smaller than SLAMCH( 'E' )*ANORM in order to limit the size of */
 /* > the error bound. */
 /* > */
@@ -226,14 +226,14 @@ int sdisna_(char *job, integer *m, integer *n, real *d__, real *sep, integer *in
     }
     else
     {
-        oldgap = (r__1 = d__[2] - d__[1], abs(r__1));
+        oldgap = (r__1 = d__[2] - d__[1], f2c_abs(r__1));
         sep[1] = oldgap;
         i__1 = k - 1;
         for (i__ = 2;
                 i__ <= i__1;
                 ++i__)
         {
-            newgap = (r__1 = d__[i__ + 1] - d__[i__], abs(r__1));
+            newgap = (r__1 = d__[i__ + 1] - d__[i__], f2c_abs(r__1));
             sep[i__] = min(oldgap,newgap);
             oldgap = newgap;
             /* L20: */
@@ -262,8 +262,8 @@ int sdisna_(char *job, integer *m, integer *n, real *d__, real *sep, integer *in
     eps = slamch_("E");
     safmin = slamch_("S");
     /* Computing MAX */
-    r__2 = abs(d__[1]);
-    r__3 = (r__1 = d__[k], abs(r__1)); // , expr subst
+    r__2 = f2c_abs(d__[1]);
+    r__3 = (r__1 = d__[k], f2c_abs(r__1)); // , expr subst
     anorm = max(r__2,r__3);
     if (anorm == 0.f)
     {

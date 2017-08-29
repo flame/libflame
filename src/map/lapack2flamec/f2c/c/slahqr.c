@@ -326,43 +326,43 @@ L20:
                 k >= i__1;
                 --k)
         {
-            if ((r__1 = h__[k + (k - 1) * h_dim1], abs(r__1)) <= smlnum)
+            if ((r__1 = h__[k + (k - 1) * h_dim1], f2c_abs(r__1)) <= smlnum)
             {
                 goto L40;
             }
-            tst = (r__1 = h__[k - 1 + (k - 1) * h_dim1], abs(r__1)) + (r__2 = h__[k + k * h_dim1], abs(r__2));
+            tst = (r__1 = h__[k - 1 + (k - 1) * h_dim1], f2c_abs(r__1)) + (r__2 = h__[k + k * h_dim1], f2c_abs(r__2));
             if (tst == 0.f)
             {
                 if (k - 2 >= *ilo)
                 {
-                    tst += (r__1 = h__[k - 1 + (k - 2) * h_dim1], abs(r__1));
+                    tst += (r__1 = h__[k - 1 + (k - 2) * h_dim1], f2c_abs(r__1));
                 }
                 if (k + 1 <= *ihi)
                 {
-                    tst += (r__1 = h__[k + 1 + k * h_dim1], abs(r__1));
+                    tst += (r__1 = h__[k + 1 + k * h_dim1], f2c_abs(r__1));
                 }
             }
             /* ==== The following is a conservative small subdiagonal */
             /* . deflation criterion due to Ahues & Tisseur (LAWN 122, */
             /* . 1997). It has better mathematical foundation and */
             /* . improves accuracy in some cases. ==== */
-            if ((r__1 = h__[k + (k - 1) * h_dim1], abs(r__1)) <= ulp * tst)
+            if ((r__1 = h__[k + (k - 1) * h_dim1], f2c_abs(r__1)) <= ulp * tst)
             {
                 /* Computing MAX */
-                r__3 = (r__1 = h__[k + (k - 1) * h_dim1], abs(r__1));
-                r__4 = ( r__2 = h__[k - 1 + k * h_dim1], abs(r__2)); // , expr subst
+                r__3 = (r__1 = h__[k + (k - 1) * h_dim1], f2c_abs(r__1));
+                r__4 = ( r__2 = h__[k - 1 + k * h_dim1], f2c_abs(r__2)); // , expr subst
                 ab = max(r__3,r__4);
                 /* Computing MIN */
-                r__3 = (r__1 = h__[k + (k - 1) * h_dim1], abs(r__1));
-                r__4 = ( r__2 = h__[k - 1 + k * h_dim1], abs(r__2)); // , expr subst
+                r__3 = (r__1 = h__[k + (k - 1) * h_dim1], f2c_abs(r__1));
+                r__4 = ( r__2 = h__[k - 1 + k * h_dim1], f2c_abs(r__2)); // , expr subst
                 ba = min(r__3,r__4);
                 /* Computing MAX */
-                r__3 = (r__1 = h__[k + k * h_dim1], abs(r__1));
-                r__4 = (r__2 = h__[k - 1 + (k - 1) * h_dim1] - h__[k + k * h_dim1], abs(r__2)); // , expr subst
+                r__3 = (r__1 = h__[k + k * h_dim1], f2c_abs(r__1));
+                r__4 = (r__2 = h__[k - 1 + (k - 1) * h_dim1] - h__[k + k * h_dim1], f2c_abs(r__2)); // , expr subst
                 aa = max(r__3,r__4);
                 /* Computing MIN */
-                r__3 = (r__1 = h__[k + k * h_dim1], abs(r__1));
-                r__4 = (r__2 = h__[k - 1 + (k - 1) * h_dim1] - h__[k + k * h_dim1], abs(r__2)); // , expr subst
+                r__3 = (r__1 = h__[k + k * h_dim1], f2c_abs(r__1));
+                r__4 = (r__2 = h__[k - 1 + (k - 1) * h_dim1] - h__[k + k * h_dim1], f2c_abs(r__2)); // , expr subst
                 bb = min(r__3,r__4);
                 s = aa + ab;
                 /* Computing MAX */
@@ -398,7 +398,7 @@ L40:
         if (its == 10)
         {
             /* Exceptional shift. */
-            s = (r__1 = h__[l + 1 + l * h_dim1], abs(r__1)) + (r__2 = h__[l + 2 + (l + 1) * h_dim1], abs(r__2));
+            s = (r__1 = h__[l + 1 + l * h_dim1], f2c_abs(r__1)) + (r__2 = h__[l + 2 + (l + 1) * h_dim1], f2c_abs(r__2));
             h11 = s * .75f + h__[l + l * h_dim1];
             h12 = s * -.4375f;
             h21 = s;
@@ -407,7 +407,7 @@ L40:
         else if (its == 20)
         {
             /* Exceptional shift. */
-            s = (r__1 = h__[i__ + (i__ - 1) * h_dim1], abs(r__1)) + (r__2 = h__[i__ - 1 + (i__ - 2) * h_dim1], abs(r__2));
+            s = (r__1 = h__[i__ + (i__ - 1) * h_dim1], f2c_abs(r__1)) + (r__2 = h__[i__ - 1 + (i__ - 2) * h_dim1], f2c_abs(r__2));
             h11 = s * .75f + h__[i__ + i__ * h_dim1];
             h12 = s * -.4375f;
             h21 = s;
@@ -422,7 +422,7 @@ L40:
             h12 = h__[i__ - 1 + i__ * h_dim1];
             h22 = h__[i__ + i__ * h_dim1];
         }
-        s = abs(h11) + abs(h12) + abs(h21) + abs(h22);
+        s = f2c_abs(h11) + f2c_abs(h12) + f2c_abs(h21) + f2c_abs(h22);
         if (s == 0.f)
         {
             rt1r = 0.f;
@@ -438,7 +438,7 @@ L40:
             h22 /= s;
             tr = (h11 + h22) / 2.f;
             det = (h11 - tr) * (h22 - tr) - h12 * h21;
-            rtdisc = sqrt((abs(det)));
+            rtdisc = sqrt((f2c_abs(det)));
             if (det >= 0.f)
             {
                 /* ==== complex conjugate shifts ==== */
@@ -452,7 +452,7 @@ L40:
                 /* ==== real shifts (use only one of them) ==== */
                 rt1r = tr + rtdisc;
                 rt2r = tr - rtdisc;
-                if ((r__1 = rt1r - h22, abs(r__1)) <= (r__2 = rt2r - h22, abs( r__2)))
+                if ((r__1 = rt1r - h22, f2c_abs(r__1)) <= (r__2 = rt2r - h22, f2c_abs( r__2)))
                 {
                     rt1r *= s;
                     rt2r = rt1r;
@@ -477,12 +477,12 @@ L40:
             /* negligible. (The following uses scaling to avoid */
             /* overflows and most underflows.) */
             h21s = h__[m + 1 + m * h_dim1];
-            s = (r__1 = h__[m + m * h_dim1] - rt2r, abs(r__1)) + abs(rt2i) + abs(h21s);
+            s = (r__1 = h__[m + m * h_dim1] - rt2r, f2c_abs(r__1)) + f2c_abs(rt2i) + f2c_abs(h21s);
             h21s = h__[m + 1 + m * h_dim1] / s;
             v[0] = h21s * h__[m + (m + 1) * h_dim1] + (h__[m + m * h_dim1] - rt1r) * ((h__[m + m * h_dim1] - rt2r) / s) - rt1i * (rt2i / s);
             v[1] = h21s * (h__[m + m * h_dim1] + h__[m + 1 + (m + 1) * h_dim1] - rt1r - rt2r);
             v[2] = h21s * h__[m + 2 + (m + 1) * h_dim1];
-            s = abs(v[0]) + abs(v[1]) + abs(v[2]);
+            s = f2c_abs(v[0]) + f2c_abs(v[1]) + f2c_abs(v[2]);
             v[0] /= s;
             v[1] /= s;
             v[2] /= s;
@@ -490,7 +490,7 @@ L40:
             {
                 goto L60;
             }
-            if ((r__1 = h__[m + (m - 1) * h_dim1], abs(r__1)) * (abs(v[1]) + abs(v[2])) <= ulp * abs(v[0]) * ((r__2 = h__[m - 1 + (m - 1) * h_dim1], abs(r__2)) + (r__3 = h__[m + m * h_dim1], abs(r__3)) + (r__4 = h__[m + 1 + (m + 1) * h_dim1], abs( r__4))))
+            if ((r__1 = h__[m + (m - 1) * h_dim1], f2c_abs(r__1)) * (f2c_abs(v[1]) + f2c_abs(v[2])) <= ulp * f2c_abs(v[0]) * ((r__2 = h__[m - 1 + (m - 1) * h_dim1], f2c_abs(r__2)) + (r__3 = h__[m + m * h_dim1], f2c_abs(r__3)) + (r__4 = h__[m + 1 + (m + 1) * h_dim1], f2c_abs( r__4))))
             {
                 goto L60;
             }

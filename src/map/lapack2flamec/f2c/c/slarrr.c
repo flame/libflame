@@ -137,7 +137,7 @@ int slarrr_(integer *n, real *d__, real *e, integer *info)
     /* instead of the current OFFDIG + OFFDIG2 < 1 */
     yesrel = TRUE_;
     offdig = 0.f;
-    tmp = sqrt((abs(d__[1])));
+    tmp = sqrt((f2c_abs(d__[1])));
     if (tmp < rmin)
     {
         yesrel = FALSE_;
@@ -151,7 +151,7 @@ int slarrr_(integer *n, real *d__, real *e, integer *info)
             i__ <= i__1;
             ++i__)
     {
-        tmp2 = sqrt((r__1 = d__[i__], abs(r__1)));
+        tmp2 = sqrt((r__1 = d__[i__], f2c_abs(r__1)));
         if (tmp2 < rmin)
         {
             yesrel = FALSE_;
@@ -160,7 +160,7 @@ int slarrr_(integer *n, real *d__, real *e, integer *info)
         {
             goto L11;
         }
-        offdig2 = (r__1 = e[i__ - 1], abs(r__1)) / (tmp * tmp2);
+        offdig2 = (r__1 = e[i__ - 1], f2c_abs(r__1)) / (tmp * tmp2);
         if (offdig + offdig2 >= .999f)
         {
             yesrel = FALSE_;

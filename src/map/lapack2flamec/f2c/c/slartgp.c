@@ -133,21 +133,21 @@ int slartgp_(real *f, real *g, real *cs, real *sn, real *r__)
     {
         *cs = r_sign(&c_b6, f);
         *sn = 0.f;
-        *r__ = abs(*f);
+        *r__ = f2c_abs(*f);
     }
     else if (*f == 0.f)
     {
         *cs = 0.f;
         *sn = r_sign(&c_b6, g);
-        *r__ = abs(*g);
+        *r__ = f2c_abs(*g);
     }
     else
     {
         f1 = *f;
         g1 = *g;
         /* Computing MAX */
-        r__1 = abs(f1);
-        r__2 = abs(g1); // , expr subst
+        r__1 = f2c_abs(f1);
+        r__2 = f2c_abs(g1); // , expr subst
         scale = max(r__1,r__2);
         if (scale >= safmx2)
         {
@@ -157,8 +157,8 @@ L10:
             f1 *= safmn2;
             g1 *= safmn2;
             /* Computing MAX */
-            r__1 = abs(f1);
-            r__2 = abs(g1); // , expr subst
+            r__1 = f2c_abs(f1);
+            r__2 = f2c_abs(g1); // , expr subst
             scale = max(r__1,r__2);
             if (scale >= safmx2)
             {
@@ -188,8 +188,8 @@ L30:
             f1 *= safmx2;
             g1 *= safmx2;
             /* Computing MAX */
-            r__1 = abs(f1);
-            r__2 = abs(g1); // , expr subst
+            r__1 = f2c_abs(f1);
+            r__2 = f2c_abs(g1); // , expr subst
             scale = max(r__1,r__2);
             if (scale <= safmn2)
             {

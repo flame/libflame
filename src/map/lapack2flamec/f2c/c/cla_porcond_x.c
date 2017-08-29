@@ -219,7 +219,7 @@ real cla_porcond_x_(char *uplo, integer *n, complex *a, integer *lda, complex *a
                 q__2.i = a[i__3].r * x[i__4].i + a[i__3].i * x[i__4] .r; // , expr subst
                 q__1.r = q__2.r;
                 q__1.i = q__2.i; // , expr subst
-                tmp += (r__1 = q__1.r, abs(r__1)) + (r__2 = r_imag(&q__1), abs(r__2));
+                tmp += (r__1 = q__1.r, f2c_abs(r__1)) + (r__2 = r_imag(&q__1), f2c_abs(r__2));
             }
             i__2 = *n;
             for (j = i__ + 1;
@@ -232,7 +232,7 @@ real cla_porcond_x_(char *uplo, integer *n, complex *a, integer *lda, complex *a
                 q__2.i = a[i__3].r * x[i__4].i + a[i__3].i * x[i__4] .r; // , expr subst
                 q__1.r = q__2.r;
                 q__1.i = q__2.i; // , expr subst
-                tmp += (r__1 = q__1.r, abs(r__1)) + (r__2 = r_imag(&q__1), abs(r__2));
+                tmp += (r__1 = q__1.r, f2c_abs(r__1)) + (r__2 = r_imag(&q__1), f2c_abs(r__2));
             }
             rwork[i__] = tmp;
             anorm = max(anorm,tmp);
@@ -257,7 +257,7 @@ real cla_porcond_x_(char *uplo, integer *n, complex *a, integer *lda, complex *a
                 q__2.i = a[i__3].r * x[i__4].i + a[i__3].i * x[i__4] .r; // , expr subst
                 q__1.r = q__2.r;
                 q__1.i = q__2.i; // , expr subst
-                tmp += (r__1 = q__1.r, abs(r__1)) + (r__2 = r_imag(&q__1), abs(r__2));
+                tmp += (r__1 = q__1.r, f2c_abs(r__1)) + (r__2 = r_imag(&q__1), f2c_abs(r__2));
             }
             i__2 = *n;
             for (j = i__ + 1;
@@ -270,7 +270,7 @@ real cla_porcond_x_(char *uplo, integer *n, complex *a, integer *lda, complex *a
                 q__2.i = a[i__3].r * x[i__4].i + a[i__3].i * x[i__4] .r; // , expr subst
                 q__1.r = q__2.r;
                 q__1.i = q__2.i; // , expr subst
-                tmp += (r__1 = q__1.r, abs(r__1)) + (r__2 = r_imag(&q__1), abs(r__2));
+                tmp += (r__1 = q__1.r, f2c_abs(r__1)) + (r__2 = r_imag(&q__1), f2c_abs(r__2));
             }
             rwork[i__] = tmp;
             anorm = max(anorm,tmp);

@@ -56,7 +56,7 @@ int ssymv_(char *uplo, integer *n, real *alpha, real *a, integer *lda, real *x, 
     /* max( 1, n ). */
     /* Unchanged on exit. */
     /* X - REAL array of dimension at least */
-    /* ( 1 + ( n - 1 )*abs( INCX ) ). */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCX ) ). */
     /* Before entry, the incremented array X must contain the n */
     /* element vector x. */
     /* Unchanged on exit. */
@@ -69,7 +69,7 @@ int ssymv_(char *uplo, integer *n, real *alpha, real *a, integer *lda, real *x, 
     /* supplied as zero then Y need not be set on input. */
     /* Unchanged on exit. */
     /* Y - REAL array of dimension at least */
-    /* ( 1 + ( n - 1 )*abs( INCY ) ). */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCY ) ). */
     /* Before entry, the incremented array Y must contain the n */
     /* element vector y. On exit, Y is overwritten by the updated */
     /* vector y. */

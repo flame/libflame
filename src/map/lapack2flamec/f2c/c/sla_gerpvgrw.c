@@ -126,7 +126,7 @@ real sla_gerpvgrw_(integer *n, integer *ncols, real *a, integer *lda, real * af,
                 ++i__)
         {
             /* Computing MAX */
-            r__2 = (r__1 = a[i__ + j * a_dim1], abs(r__1));
+            r__2 = (r__1 = a[i__ + j * a_dim1], f2c_abs(r__1));
             amax = max(r__2,amax);
         }
         i__2 = j;
@@ -135,7 +135,7 @@ real sla_gerpvgrw_(integer *n, integer *ncols, real *a, integer *lda, real * af,
                 ++i__)
         {
             /* Computing MAX */
-            r__2 = (r__1 = af[i__ + j * af_dim1], abs(r__1));
+            r__2 = (r__1 = af[i__ + j * af_dim1], f2c_abs(r__1));
             umax = max(r__2,umax);
         }
         if (umax != 0.f)

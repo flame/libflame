@@ -39,7 +39,7 @@ static integer c__1 = 1;
 /* > \return CLANSY */
 /* > \verbatim */
 /* > */
-/* > CLANSY = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > CLANSY = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -50,7 +50,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -117,7 +117,7 @@ real clansy_(char *norm, char *uplo, integer *n, complex *a, integer *lda, real 
     integer a_dim1, a_offset, i__1, i__2;
     real ret_val;
     /* Builtin functions */
-    double c_abs(complex *), sqrt(doublereal);
+    double c_f2c_abs(complex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j;
     real sum, absa, scale;
@@ -158,7 +158,7 @@ real clansy_(char *norm, char *uplo, integer *n, complex *a, integer *lda, real 
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
+        /* Find max(f2c_abs(A(i,j))). */
         value = 0.f;
         if (lsame_(uplo, "U"))
         {
@@ -172,7 +172,7 @@ real clansy_(char *norm, char *uplo, integer *n, complex *a, integer *lda, real 
                         i__ <= i__2;
                         ++i__)
                 {
-                    sum = c_abs(&a[i__ + j * a_dim1]);
+                    sum = c_f2c_abs(&a[i__ + j * a_dim1]);
                     if (value < sum || sisnan_(&sum))
                     {
                         value = sum;
@@ -194,7 +194,7 @@ real clansy_(char *norm, char *uplo, integer *n, complex *a, integer *lda, real 
                         i__ <= i__2;
                         ++i__)
                 {
-                    sum = c_abs(&a[i__ + j * a_dim1]);
+                    sum = c_f2c_abs(&a[i__ + j * a_dim1]);
                     if (value < sum || sisnan_(&sum))
                     {
                         value = sum;
@@ -222,12 +222,12 @@ real clansy_(char *norm, char *uplo, integer *n, complex *a, integer *lda, real 
                         i__ <= i__2;
                         ++i__)
                 {
-                    absa = c_abs(&a[i__ + j * a_dim1]);
+                    absa = c_f2c_abs(&a[i__ + j * a_dim1]);
                     sum += absa;
                     work[i__] += absa;
                     /* L50: */
                 }
-                work[j] = sum + c_abs(&a[j + j * a_dim1]);
+                work[j] = sum + c_f2c_abs(&a[j + j * a_dim1]);
                 /* L60: */
             }
             i__1 = *n;
@@ -258,13 +258,13 @@ real clansy_(char *norm, char *uplo, integer *n, complex *a, integer *lda, real 
                     j <= i__1;
                     ++j)
             {
-                sum = work[j] + c_abs(&a[j + j * a_dim1]);
+                sum = work[j] + c_f2c_abs(&a[j + j * a_dim1]);
                 i__2 = *n;
                 for (i__ = j + 1;
                         i__ <= i__2;
                         ++i__)
                 {
-                    absa = c_abs(&a[i__ + j * a_dim1]);
+                    absa = c_f2c_abs(&a[i__ + j * a_dim1]);
                     sum += absa;
                     work[i__] += absa;
                     /* L90: */

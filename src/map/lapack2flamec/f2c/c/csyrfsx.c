@@ -215,9 +215,9 @@ otherwise, S is an output argument. If FACT = 'F' and EQUED */
 /* > normwise relative error, which is defined as follows: */
 /* > */
 /* > Normwise relative error in the ith solution vector: */
-/* > max_j (abs(XTRUE(j,i) - X(j,i))) */
+/* > max_j (f2c_abs(XTRUE(j,i) - X(j,i))) */
 /* > ------------------------------ */
-/* > max_j abs(X(j,i)) */
+/* > max_j f2c_abs(X(j,i)) */
 /* > */
 /* > The array is indexed by the type of error information as described */
 /* > below. There currently are up to three pieces of information */
@@ -261,9 +261,9 @@ otherwise, S is an output argument. If FACT = 'F' and EQUED */
 /* > componentwise relative error, which is defined as follows: */
 /* > */
 /* > Componentwise relative error in the ith solution vector: */
-/* > abs(XTRUE(j,i) - X(j,i)) */
+/* > f2c_abs(XTRUE(j,i) - X(j,i)) */
 /* > max_j ---------------------- */
-/* > abs(X(j,i)) */
+/* > f2c_abs(X(j,i)) */
 /* > */
 /* > The array is indexed by the right-hand side i (on which the */
 /* > componentwise relative error depends), and the type of error */

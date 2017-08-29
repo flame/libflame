@@ -331,7 +331,7 @@ int claed8_(integer *k, integer *n, integer *qsiz, complex * q, integer *ldq, re
         /* L10: */
     }
     sscal_(n, &t, &z__[1], &c__1);
-    *rho = (r__1 = *rho * 2.f, abs(r__1));
+    *rho = (r__1 = *rho * 2.f, f2c_abs(r__1));
     /* Sort the eigenvalues into increasing order */
     i__1 = *n;
     for (i__ = *cutpnt + 1;
@@ -366,11 +366,11 @@ int claed8_(integer *k, integer *n, integer *qsiz, complex * q, integer *ldq, re
     imax = isamax_(n, &z__[1], &c__1);
     jmax = isamax_(n, &d__[1], &c__1);
     eps = slamch_("Epsilon");
-    tol = eps * 8.f * (r__1 = d__[jmax], abs(r__1));
+    tol = eps * 8.f * (r__1 = d__[jmax], f2c_abs(r__1));
     /* If the rank-1 modifier is small enough, no more needs to be done */
     /* -- except to reorganize Q so that its columns correspond with the */
     /* elements in D. */
-    if (*rho * (r__1 = z__[imax], abs(r__1)) <= tol)
+    if (*rho * (r__1 = z__[imax], f2c_abs(r__1)) <= tol)
     {
         *k = 0;
         i__1 = *n;
@@ -397,7 +397,7 @@ int claed8_(integer *k, integer *n, integer *qsiz, complex * q, integer *ldq, re
             j <= i__1;
             ++j)
     {
-        if (*rho * (r__1 = z__[j], abs(r__1)) <= tol)
+        if (*rho * (r__1 = z__[j], f2c_abs(r__1)) <= tol)
         {
             /* Deflate due to small z component. */
             --k2;
@@ -420,7 +420,7 @@ L70:
     {
         goto L90;
     }
-    if (*rho * (r__1 = z__[j], abs(r__1)) <= tol)
+    if (*rho * (r__1 = z__[j], f2c_abs(r__1)) <= tol)
     {
         /* Deflate due to small z component. */
         --k2;
@@ -437,7 +437,7 @@ L70:
         t = d__[j] - d__[jlam];
         c__ /= tau;
         s = -s / tau;
-        if ((r__1 = t * c__ * s, abs(r__1)) <= tol)
+        if ((r__1 = t * c__ * s, f2c_abs(r__1)) <= tol)
         {
             /* Deflation is possible. */
             z__[j] = tau;

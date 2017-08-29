@@ -49,7 +49,7 @@ real scnrm2_(integer *n, complex *x, integer *incx)
             if (x[i__3].r != 0.f)
             {
                 i__3 = ix;
-                temp = (r__1 = x[i__3].r, abs(r__1));
+                temp = (r__1 = x[i__3].r, f2c_abs(r__1));
                 if (scale < temp)
                 {
                     /* Computing 2nd power */
@@ -66,7 +66,7 @@ real scnrm2_(integer *n, complex *x, integer *incx)
             }
             if (r_imag(&x[ix]) != 0.f)
             {
-                temp = (r__1 = r_imag(&x[ix]), abs(r__1));
+                temp = (r__1 = r_imag(&x[ix]), f2c_abs(r__1));
                 if (scale < temp)
                 {
                     /* Computing 2nd power */

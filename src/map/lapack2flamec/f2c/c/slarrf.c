@@ -252,7 +252,7 @@ int slarrf_(integer *n, real *d__, real *l, real *ld, integer *clstrt, integer *
     /* representations despite large element growth or signal INFO=1 */
     nofail = TRUE_;
     /* Compute the average gap length of the cluster */
-    clwdth = (r__1 = w[*clend] - w[*clstrt], abs(r__1)) + werr[*clend] + werr[ *clstrt];
+    clwdth = (r__1 = w[*clend] - w[*clstrt], f2c_abs(r__1)) + werr[*clend] + werr[ *clstrt];
     avgap = clwdth / (real) (*clend - *clstrt);
     mingap = min(*clgapl,*clgapr);
     /* Initial values for shifts to both ends of cluster */
@@ -265,8 +265,8 @@ int slarrf_(integer *n, real *d__, real *l, real *ld, integer *clstrt, integer *
     r__2 = w[*clend]; // , expr subst
     rsigma = max(r__1,r__2) + werr[*clend];
     /* Use a small fudge to make sure that we really shift to the outside */
-    lsigma -= abs(lsigma) * 2.f * eps;
-    rsigma += abs(rsigma) * 2.f * eps;
+    lsigma -= f2c_abs(lsigma) * 2.f * eps;
+    rsigma += f2c_abs(rsigma) * 2.f * eps;
     /* Compute upper bounds for how much to back off the initial shifts */
     ldmax = mingap * .25f + *pivmin * 2.f;
     rdmax = mingap * .25f + *pivmin * 2.f;
@@ -298,14 +298,14 @@ L5:
     /* Left end */
     s = -lsigma;
     dplus[1] = d__[1] + s;
-    if (abs(dplus[1]) < *pivmin)
+    if (f2c_abs(dplus[1]) < *pivmin)
     {
         dplus[1] = -(*pivmin);
         /* Need to set SAWNAN1 because refined RRR test should not be used */
         /* in this case */
         sawnan1 = TRUE_;
     }
-    max1 = abs(dplus[1]);
+    max1 = f2c_abs(dplus[1]);
     i__1 = *n - 1;
     for (i__ = 1;
             i__ <= i__1;
@@ -314,7 +314,7 @@ L5:
         lplus[i__] = ld[i__] / dplus[i__];
         s = s * lplus[i__] * l[i__] - lsigma;
         dplus[i__ + 1] = d__[i__ + 1] + s;
-        if ((r__1 = dplus[i__ + 1], abs(r__1)) < *pivmin)
+        if ((r__1 = dplus[i__ + 1], f2c_abs(r__1)) < *pivmin)
         {
             dplus[i__ + 1] = -(*pivmin);
             /* Need to set SAWNAN1 because refined RRR test should not be used */
@@ -323,7 +323,7 @@ L5:
         }
         /* Computing MAX */
         r__2 = max1;
-        r__3 = (r__1 = dplus[i__ + 1], abs(r__1)); // , expr subst
+        r__3 = (r__1 = dplus[i__ + 1], f2c_abs(r__1)); // , expr subst
         max1 = max(r__2,r__3);
         /* L6: */
     }
@@ -337,14 +337,14 @@ L5:
     /* Right end */
     s = -rsigma;
     work[1] = d__[1] + s;
-    if (abs(work[1]) < *pivmin)
+    if (f2c_abs(work[1]) < *pivmin)
     {
         work[1] = -(*pivmin);
         /* Need to set SAWNAN2 because refined RRR test should not be used */
         /* in this case */
         sawnan2 = TRUE_;
     }
-    max2 = abs(work[1]);
+    max2 = f2c_abs(work[1]);
     i__1 = *n - 1;
     for (i__ = 1;
             i__ <= i__1;
@@ -353,7 +353,7 @@ L5:
         work[*n + i__] = ld[i__] / work[i__];
         s = s * work[*n + i__] * l[i__] - rsigma;
         work[i__ + 1] = d__[i__ + 1] + s;
-        if ((r__1 = work[i__ + 1], abs(r__1)) < *pivmin)
+        if ((r__1 = work[i__ + 1], f2c_abs(r__1)) < *pivmin)
         {
             work[i__ + 1] = -(*pivmin);
             /* Need to set SAWNAN2 because refined RRR test should not be used */
@@ -362,7 +362,7 @@ L5:
         }
         /* Computing MAX */
         r__2 = max2;
-        r__3 = (r__1 = work[i__ + 1], abs(r__1)); // , expr subst
+        r__3 = (r__1 = work[i__ + 1], f2c_abs(r__1)); // , expr subst
         max2 = max(r__2,r__3);
         /* L7: */
     }
@@ -422,7 +422,7 @@ L5:
     {
         if (indx == 1)
         {
-            tmp = (r__1 = dplus[*n], abs(r__1));
+            tmp = (r__1 = dplus[*n], f2c_abs(r__1));
             znm2 = 1.f;
             prod = 1.f;
             oldp = 1.f;
@@ -436,7 +436,7 @@ L5:
                 }
                 else
                 {
-                    prod *= (r__1 = work[*n + i__], abs(r__1));
+                    prod *= (r__1 = work[*n + i__], f2c_abs(r__1));
                 }
                 oldp = prod;
                 /* Computing 2nd power */
@@ -444,7 +444,7 @@ L5:
                 znm2 += r__1 * r__1;
                 /* Computing MAX */
                 r__2 = tmp;
-                r__3 = (r__1 = dplus[i__] * prod, abs(r__1)); // , expr subst
+                r__3 = (r__1 = dplus[i__] * prod, f2c_abs(r__1)); // , expr subst
                 tmp = max(r__2,r__3);
                 /* L15: */
             }
@@ -458,7 +458,7 @@ L5:
         }
         else if (indx == 2)
         {
-            tmp = (r__1 = work[*n], abs(r__1));
+            tmp = (r__1 = work[*n], f2c_abs(r__1));
             znm2 = 1.f;
             prod = 1.f;
             oldp = 1.f;
@@ -472,7 +472,7 @@ L5:
                 }
                 else
                 {
-                    prod *= (r__1 = lplus[i__], abs(r__1));
+                    prod *= (r__1 = lplus[i__], f2c_abs(r__1));
                 }
                 oldp = prod;
                 /* Computing 2nd power */
@@ -480,7 +480,7 @@ L5:
                 znm2 += r__1 * r__1;
                 /* Computing MAX */
                 r__2 = tmp;
-                r__3 = (r__1 = work[i__] * prod, abs(r__1)); // , expr subst
+                r__3 = (r__1 = work[i__] * prod, f2c_abs(r__1)); // , expr subst
                 tmp = max(r__2,r__3);
                 /* L16: */
             }

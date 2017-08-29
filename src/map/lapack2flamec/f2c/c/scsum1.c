@@ -71,7 +71,7 @@ real scsum1_(integer *n, complex *cx, integer *incx)
     integer i__1, i__2;
     real ret_val;
     /* Builtin functions */
-    double c_abs(complex *);
+    double c_f2c_abs(complex *);
     /* Local variables */
     integer i__, nincx;
     real stemp;
@@ -111,7 +111,7 @@ real scsum1_(integer *n, complex *cx, integer *incx)
             i__ += i__2)
     {
         /* NEXT LINE MODIFIED. */
-        stemp += c_abs(&cx[i__]);
+        stemp += c_f2c_abs(&cx[i__]);
         /* L10: */
     }
     ret_val = stemp;
@@ -124,7 +124,7 @@ L20:
             ++i__)
     {
         /* NEXT LINE MODIFIED. */
-        stemp += c_abs(&cx[i__]);
+        stemp += c_f2c_abs(&cx[i__]);
         /* L30: */
     }
     ret_val = stemp;

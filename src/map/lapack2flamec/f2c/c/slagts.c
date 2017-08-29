@@ -118,7 +118,7 @@
 /* > perturbation to be made to very small diagonal elements of U. */
 /* > TOL should normally be chosen as about eps*norm(U), where eps */
 /* > is the relative machine precision, but if TOL is supplied as */
-/* > non-positive, then it is reset to eps*max( abs( u(i,j) ) ). */
+/* > non-positive, then it is reset to eps*max( f2c_abs( u(i,j) ) ). */
 /* > If JOB .gt. 0 then TOL is not referenced. */
 /* > */
 /* > On exit, TOL is changed as described above, only if TOL is */
@@ -190,7 +190,7 @@ int slagts_(integer *job, integer *n, real *a, real *b, real *c__, real *d__, in
     --a;
     /* Function Body */
     *info = 0;
-    if (abs(*job) > 2 || *job == 0)
+    if (f2c_abs(*job) > 2 || *job == 0)
     {
         *info = -1;
     }
@@ -215,13 +215,13 @@ int slagts_(integer *job, integer *n, real *a, real *b, real *c__, real *d__, in
     {
         if (*tol <= 0.f)
         {
-            *tol = abs(a[1]);
+            *tol = f2c_abs(a[1]);
             if (*n > 1)
             {
                 /* Computing MAX */
-                r__1 = *tol, r__2 = abs(a[2]);
+                r__1 = *tol, r__2 = f2c_abs(a[2]);
                 r__1 = max(r__1,r__2);
-                r__2 = abs(b[1]); // ; expr subst
+                r__2 = f2c_abs(b[1]); // ; expr subst
                 *tol = max(r__1,r__2);
             }
             i__1 = *n;
@@ -230,9 +230,9 @@ int slagts_(integer *job, integer *n, real *a, real *b, real *c__, real *d__, in
                     ++k)
             {
                 /* Computing MAX */
-                r__4 = *tol, r__5 = (r__1 = a[k], abs(r__1)), r__4 = max(r__4, r__5), r__5 = (r__2 = b[k - 1], abs(r__2));
+                r__4 = *tol, r__5 = (r__1 = a[k], f2c_abs(r__1)), r__4 = max(r__4, r__5), r__5 = (r__2 = b[k - 1], f2c_abs(r__2));
                 r__4 = max(r__4,r__5);
-                r__5 = (r__3 = d__[k - 2], abs(r__3)); // ; expr subst
+                r__5 = (r__3 = d__[k - 2], f2c_abs(r__3)); // ; expr subst
                 *tol = max(r__4,r__5);
                 /* L10: */
             }
@@ -243,7 +243,7 @@ int slagts_(integer *job, integer *n, real *a, real *b, real *c__, real *d__, in
             }
         }
     }
-    if (abs(*job) == 1)
+    if (f2c_abs(*job) == 1)
     {
         i__1 = *n;
         for (k = 2;
@@ -281,12 +281,12 @@ int slagts_(integer *job, integer *n, real *a, real *b, real *c__, real *d__, in
                     temp = y[k];
                 }
                 ak = a[k];
-                absak = abs(ak);
+                absak = f2c_abs(ak);
                 if (absak < 1.f)
                 {
                     if (absak < sfmin)
                     {
-                        if (absak == 0.f || abs(temp) * sfmin > absak)
+                        if (absak == 0.f || f2c_abs(temp) * sfmin > absak)
                         {
                             *info = k;
                             return 0;
@@ -297,7 +297,7 @@ int slagts_(integer *job, integer *n, real *a, real *b, real *c__, real *d__, in
                             ak *= bignum;
                         }
                     }
-                    else if (abs(temp) > absak * bignum)
+                    else if (f2c_abs(temp) > absak * bignum)
                     {
                         *info = k;
                         return 0;
@@ -328,12 +328,12 @@ int slagts_(integer *job, integer *n, real *a, real *b, real *c__, real *d__, in
                 ak = a[k];
                 pert = r_sign(tol, &ak);
 L40:
-                absak = abs(ak);
+                absak = f2c_abs(ak);
                 if (absak < 1.f)
                 {
                     if (absak < sfmin)
                     {
-                        if (absak == 0.f || abs(temp) * sfmin > absak)
+                        if (absak == 0.f || f2c_abs(temp) * sfmin > absak)
                         {
                             ak += pert;
                             pert *= 2;
@@ -345,7 +345,7 @@ L40:
                             ak *= bignum;
                         }
                     }
-                    else if (abs(temp) > absak * bignum)
+                    else if (f2c_abs(temp) > absak * bignum)
                     {
                         ak += pert;
                         pert *= 2;
@@ -380,12 +380,12 @@ L40:
                     temp = y[k];
                 }
                 ak = a[k];
-                absak = abs(ak);
+                absak = f2c_abs(ak);
                 if (absak < 1.f)
                 {
                     if (absak < sfmin)
                     {
-                        if (absak == 0.f || abs(temp) * sfmin > absak)
+                        if (absak == 0.f || f2c_abs(temp) * sfmin > absak)
                         {
                             *info = k;
                             return 0;
@@ -396,7 +396,7 @@ L40:
                             ak *= bignum;
                         }
                     }
-                    else if (abs(temp) > absak * bignum)
+                    else if (f2c_abs(temp) > absak * bignum)
                     {
                         *info = k;
                         return 0;
@@ -428,12 +428,12 @@ L40:
                 ak = a[k];
                 pert = r_sign(tol, &ak);
 L70:
-                absak = abs(ak);
+                absak = f2c_abs(ak);
                 if (absak < 1.f)
                 {
                     if (absak < sfmin)
                     {
-                        if (absak == 0.f || abs(temp) * sfmin > absak)
+                        if (absak == 0.f || f2c_abs(temp) * sfmin > absak)
                         {
                             ak += pert;
                             pert *= 2;
@@ -445,7 +445,7 @@ L70:
                             ak *= bignum;
                         }
                     }
-                    else if (abs(temp) > absak * bignum)
+                    else if (f2c_abs(temp) > absak * bignum)
                     {
                         ak += pert;
                         pert *= 2;

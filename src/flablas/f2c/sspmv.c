@@ -54,7 +54,7 @@ int sspmv_(char *uplo, integer *n, real *alpha, real *ap, real *x, integer *incx
     /* and a( 3, 1 ) respectively, and so on. */
     /* Unchanged on exit. */
     /* X - REAL array of dimension at least */
-    /* ( 1 + ( n - 1 )*abs( INCX ) ). */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCX ) ). */
     /* Before entry, the incremented array X must contain the n */
     /* element vector x. */
     /* Unchanged on exit. */
@@ -67,7 +67,7 @@ int sspmv_(char *uplo, integer *n, real *alpha, real *ap, real *x, integer *incx
     /* supplied as zero then Y need not be set on input. */
     /* Unchanged on exit. */
     /* Y - REAL array of dimension at least */
-    /* ( 1 + ( n - 1 )*abs( INCY ) ). */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCY ) ). */
     /* Before entry, the incremented array Y must contain the n */
     /* element vector y. On exit, Y is overwritten by the updated */
     /* vector y. */

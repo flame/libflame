@@ -40,7 +40,7 @@
 /* > \param[in,out] X */
 /* > \verbatim */
 /* > X is COMPLEX array, dimension */
-/* > (1+(N-1)*abs(INCX)) */
+/* > (1+(N-1)*f2c_abs(INCX)) */
 /* > On entry, the vector of length N to be conjugated. */
 /* > On exit, X is overwritten with conjg(X). */
 /* > \endverbatim */

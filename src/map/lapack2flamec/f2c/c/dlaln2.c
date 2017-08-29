@@ -294,7 +294,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
             /* Real 1x1 system. */
             /* C = ca A - w D */
             csr = *ca * a[a_dim1 + 1] - *wr * *d1;
-            cnorm = abs(csr);
+            cnorm = f2c_abs(csr);
             /* If | C | < SMINI, use C = SMINI */
             if (cnorm < smini)
             {
@@ -303,7 +303,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
                 *info = 1;
             }
             /* Check scaling for X = B / C */
-            bnorm = (d__1 = b[b_dim1 + 1], abs(d__1));
+            bnorm = (d__1 = b[b_dim1 + 1], f2c_abs(d__1));
             if (cnorm < 1. && bnorm > 1.)
             {
                 if (bnorm > bignum * cnorm)
@@ -313,7 +313,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
             }
             /* Compute X */
             x[x_dim1 + 1] = b[b_dim1 + 1] * *scale / csr;
-            *xnorm = (d__1 = x[x_dim1 + 1], abs(d__1));
+            *xnorm = (d__1 = x[x_dim1 + 1], f2c_abs(d__1));
         }
         else
         {
@@ -321,7 +321,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
             /* C = ca A - w D */
             csr = *ca * a[a_dim1 + 1] - *wr * *d1;
             csi = -(*wi) * *d1;
-            cnorm = abs(csr) + abs(csi);
+            cnorm = f2c_abs(csr) + f2c_abs(csi);
             /* If | C | < SMINI, use C = SMINI */
             if (cnorm < smini)
             {
@@ -331,7 +331,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
                 *info = 1;
             }
             /* Check scaling for X = B / C */
-            bnorm = (d__1 = b[b_dim1 + 1], abs(d__1)) + (d__2 = b[(b_dim1 << 1) + 1], abs(d__2));
+            bnorm = (d__1 = b[b_dim1 + 1], f2c_abs(d__1)) + (d__2 = b[(b_dim1 << 1) + 1], f2c_abs(d__2));
             if (cnorm < 1. && bnorm > 1.)
             {
                 if (bnorm > bignum * cnorm)
@@ -343,7 +343,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
             d__1 = *scale * b[b_dim1 + 1];
             d__2 = *scale * b[(b_dim1 << 1) + 1];
             dladiv_(&d__1, &d__2, &csr, &csi, &x[x_dim1 + 1], &x[(x_dim1 << 1) + 1]);
-            *xnorm = (d__1 = x[x_dim1 + 1], abs(d__1)) + (d__2 = x[(x_dim1 << 1) + 1], abs(d__2));
+            *xnorm = (d__1 = x[x_dim1 + 1], f2c_abs(d__1)) + (d__2 = x[(x_dim1 << 1) + 1], f2c_abs(d__2));
         }
     }
     else
@@ -372,9 +372,9 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
                     j <= 4;
                     ++j)
             {
-                if ((d__1 = crv[j - 1], abs(d__1)) > cmax)
+                if ((d__1 = crv[j - 1], f2c_abs(d__1)) > cmax)
                 {
-                    cmax = (d__1 = crv[j - 1], abs(d__1));
+                    cmax = (d__1 = crv[j - 1], f2c_abs(d__1));
                     icmax = j;
                 }
                 /* L10: */
@@ -383,8 +383,8 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
             if (cmax < smini)
             {
                 /* Computing MAX */
-                d__3 = (d__1 = b[b_dim1 + 1], abs(d__1));
-                d__4 = (d__2 = b[ b_dim1 + 2], abs(d__2)); // , expr subst
+                d__3 = (d__1 = b[b_dim1 + 1], f2c_abs(d__1));
+                d__4 = (d__2 = b[ b_dim1 + 2], f2c_abs(d__2)); // , expr subst
                 bnorm = max(d__3,d__4);
                 if (smini < 1. && bnorm > 1.)
                 {
@@ -409,7 +409,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
             lr21 = ur11r * cr21;
             ur22 = cr22 - ur12 * lr21;
             /* If smaller pivot < SMINI, use SMINI */
-            if (abs(ur22) < smini)
+            if (f2c_abs(ur22) < smini)
             {
                 ur22 = smini;
                 *info = 1;
@@ -426,12 +426,12 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
             }
             br2 -= lr21 * br1;
             /* Computing MAX */
-            d__2 = (d__1 = br1 * (ur22 * ur11r), abs(d__1));
-            d__3 = abs(br2); // , expr subst
+            d__2 = (d__1 = br1 * (ur22 * ur11r), f2c_abs(d__1));
+            d__3 = f2c_abs(br2); // , expr subst
             bbnd = max(d__2,d__3);
-            if (bbnd > 1. && abs(ur22) < 1.)
+            if (bbnd > 1. && f2c_abs(ur22) < 1.)
             {
-                if (bbnd >= bignum * abs(ur22))
+                if (bbnd >= bignum * f2c_abs(ur22))
                 {
                     *scale = 1. / bbnd;
                 }
@@ -449,8 +449,8 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
                 x[x_dim1 + 2] = xr2;
             }
             /* Computing MAX */
-            d__1 = abs(xr1);
-            d__2 = abs(xr2); // , expr subst
+            d__1 = f2c_abs(xr1);
+            d__2 = f2c_abs(xr2); // , expr subst
             *xnorm = max(d__1,d__2);
             /* Further scaling if norm(A) norm(X) > overflow */
             if (*xnorm > 1. && cmax > 1.)
@@ -479,9 +479,9 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
                     j <= 4;
                     ++j)
             {
-                if ((d__1 = crv[j - 1], abs(d__1)) + (d__2 = civ[j - 1], abs( d__2)) > cmax)
+                if ((d__1 = crv[j - 1], f2c_abs(d__1)) + (d__2 = civ[j - 1], f2c_abs( d__2)) > cmax)
                 {
-                    cmax = (d__1 = crv[j - 1], abs(d__1)) + (d__2 = civ[j - 1] , abs(d__2));
+                    cmax = (d__1 = crv[j - 1], f2c_abs(d__1)) + (d__2 = civ[j - 1] , f2c_abs(d__2));
                     icmax = j;
                 }
                 /* L20: */
@@ -490,8 +490,8 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
             if (cmax < smini)
             {
                 /* Computing MAX */
-                d__5 = (d__1 = b[b_dim1 + 1], abs(d__1)) + (d__2 = b[(b_dim1 << 1) + 1], abs(d__2));
-                d__6 = (d__3 = b[b_dim1 + 2], abs(d__3)) + (d__4 = b[(b_dim1 << 1) + 2], abs(d__4)); // , expr subst
+                d__5 = (d__1 = b[b_dim1 + 1], f2c_abs(d__1)) + (d__2 = b[(b_dim1 << 1) + 1], f2c_abs(d__2));
+                d__6 = (d__3 = b[b_dim1 + 2], f2c_abs(d__3)) + (d__4 = b[(b_dim1 << 1) + 2], f2c_abs(d__4)); // , expr subst
                 bnorm = max(d__5,d__6);
                 if (smini < 1. && bnorm > 1.)
                 {
@@ -521,7 +521,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
             if (icmax == 1 || icmax == 4)
             {
                 /* Code when off-diagonals of pivoted C are real */
-                if (abs(ur11) > abs(ui11))
+                if (f2c_abs(ur11) > f2c_abs(ui11))
                 {
                     temp = ui11 / ur11;
                     /* Computing 2nd power */
@@ -556,7 +556,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
                 ur22 = cr22 - ur12 * lr21 + ui12 * li21;
                 ui22 = -ur12 * li21 - ui12 * lr21;
             }
-            u22abs = abs(ur22) + abs(ui22);
+            u22abs = f2c_abs(ur22) + f2c_abs(ui22);
             /* If smaller pivot < SMINI, use SMINI */
             if (u22abs < smini)
             {
@@ -581,8 +581,8 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
             br2 = br2 - lr21 * br1 + li21 * bi1;
             bi2 = bi2 - li21 * br1 - lr21 * bi1;
             /* Computing MAX */
-            d__1 = (abs(br1) + abs(bi1)) * (u22abs * (abs(ur11r) + abs(ui11r)) );
-            d__2 = abs(br2) + abs(bi2); // , expr subst
+            d__1 = (f2c_abs(br1) + f2c_abs(bi1)) * (u22abs * (f2c_abs(ur11r) + f2c_abs(ui11r)) );
+            d__2 = f2c_abs(br2) + f2c_abs(bi2); // , expr subst
             bbnd = max(d__1,d__2);
             if (bbnd > 1. && u22abs < 1.)
             {
@@ -613,8 +613,8 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
                 x[(x_dim1 << 1) + 2] = xi2;
             }
             /* Computing MAX */
-            d__1 = abs(xr1) + abs(xi1);
-            d__2 = abs(xr2) + abs(xi2); // , expr subst
+            d__1 = f2c_abs(xr1) + f2c_abs(xi1);
+            d__2 = f2c_abs(xr2) + f2c_abs(xi2); // , expr subst
             *xnorm = max(d__1,d__2);
             /* Further scaling if norm(A) norm(X) > overflow */
             if (*xnorm > 1. && cmax > 1.)

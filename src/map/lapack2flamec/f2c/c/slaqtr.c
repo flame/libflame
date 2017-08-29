@@ -235,7 +235,7 @@ int slaqtr_(logical *ltran, logical *lreal, integer *n, real *t, integer *ldt, r
     if (! (*lreal))
     {
         /* Computing MAX */
-        r__1 = xnorm, r__2 = abs(*w);
+        r__1 = xnorm, r__2 = f2c_abs(*w);
         r__1 = max(r__1,r__2);
         r__2 = slange_( "M", n, &c__1, &b[1], n, d__); // ; expr subst
         xnorm = max(r__1,r__2);
@@ -263,7 +263,7 @@ int slaqtr_(logical *ltran, logical *lreal, integer *n, real *t, integer *ldt, r
                 i__ <= i__1;
                 ++i__)
         {
-            work[i__] += (r__1 = b[i__], abs(r__1));
+            work[i__] += (r__1 = b[i__], f2c_abs(r__1));
             /* L20: */
         }
     }
@@ -274,7 +274,7 @@ int slaqtr_(logical *ltran, logical *lreal, integer *n, real *t, integer *ldt, r
         n1 = n2;
     }
     k = isamax_(&n1, &x[1], &c__1);
-    xmax = (r__1 = x[k], abs(r__1));
+    xmax = (r__1 = x[k], f2c_abs(r__1));
     *scale = 1.f;
     if (xmax > bignum)
     {
@@ -312,8 +312,8 @@ int slaqtr_(logical *ltran, logical *lreal, integer *n, real *t, integer *ldt, r
                     /* Meet 1 by 1 diagonal block */
                     /* Scale to avoid overflow when computing */
                     /* x(j) = b(j)/T(j,j) */
-                    xj = (r__1 = x[j1], abs(r__1));
-                    tjj = (r__1 = t[j1 + j1 * t_dim1], abs(r__1));
+                    xj = (r__1 = x[j1], f2c_abs(r__1));
+                    tjj = (r__1 = t[j1 + j1 * t_dim1], f2c_abs(r__1));
                     tmp = t[j1 + j1 * t_dim1];
                     if (tjj < smin)
                     {
@@ -336,7 +336,7 @@ int slaqtr_(logical *ltran, logical *lreal, integer *n, real *t, integer *ldt, r
                         }
                     }
                     x[j1] /= tmp;
-                    xj = (r__1 = x[j1], abs(r__1));
+                    xj = (r__1 = x[j1], f2c_abs(r__1));
                     /* Scale x if necessary to avoid overflow when adding a */
                     /* multiple of column j1 of T. */
                     if (xj > 1.f)
@@ -355,7 +355,7 @@ int slaqtr_(logical *ltran, logical *lreal, integer *n, real *t, integer *ldt, r
                         saxpy_(&i__1, &r__1, &t[j1 * t_dim1 + 1], &c__1, &x[1] , &c__1);
                         i__1 = j1 - 1;
                         k = isamax_(&i__1, &x[1], &c__1);
-                        xmax = (r__1 = x[k], abs(r__1));
+                        xmax = (r__1 = x[k], f2c_abs(r__1));
                     }
                 }
                 else
@@ -380,8 +380,8 @@ int slaqtr_(logical *ltran, logical *lreal, integer *n, real *t, integer *ldt, r
                     /* Scale V(1,1) (= X(J1)) and/or V(2,1) (=X(J2)) */
                     /* to avoid overflow in updating right-hand side. */
                     /* Computing MAX */
-                    r__1 = abs(v[0]);
-                    r__2 = abs(v[1]); // , expr subst
+                    r__1 = f2c_abs(v[0]);
+                    r__2 = f2c_abs(v[1]); // , expr subst
                     xj = max(r__1,r__2);
                     if (xj > 1.f)
                     {
@@ -406,7 +406,7 @@ int slaqtr_(logical *ltran, logical *lreal, integer *n, real *t, integer *ldt, r
                         saxpy_(&i__1, &r__1, &t[j2 * t_dim1 + 1], &c__1, &x[1] , &c__1);
                         i__1 = j1 - 1;
                         k = isamax_(&i__1, &x[1], &c__1);
-                        xmax = (r__1 = x[k], abs(r__1));
+                        xmax = (r__1 = x[k], f2c_abs(r__1));
                     }
                 }
 L30:
@@ -442,7 +442,7 @@ L30:
                     /* 1 by 1 diagonal block */
                     /* Scale if necessary to avoid overflow in forming the */
                     /* right-hand side element by inner product. */
-                    xj = (r__1 = x[j1], abs(r__1));
+                    xj = (r__1 = x[j1], f2c_abs(r__1));
                     if (xmax > 1.f)
                     {
                         rec = 1.f / xmax;
@@ -455,8 +455,8 @@ L30:
                     }
                     i__2 = j1 - 1;
                     x[j1] -= sdot_(&i__2, &t[j1 * t_dim1 + 1], &c__1, &x[1], & c__1);
-                    xj = (r__1 = x[j1], abs(r__1));
-                    tjj = (r__1 = t[j1 + j1 * t_dim1], abs(r__1));
+                    xj = (r__1 = x[j1], f2c_abs(r__1));
+                    tjj = (r__1 = t[j1 + j1 * t_dim1], f2c_abs(r__1));
                     tmp = t[j1 + j1 * t_dim1];
                     if (tjj < smin)
                     {
@@ -477,7 +477,7 @@ L30:
                     x[j1] /= tmp;
                     /* Computing MAX */
                     r__2 = xmax;
-                    r__3 = (r__1 = x[j1], abs(r__1)); // , expr subst
+                    r__3 = (r__1 = x[j1], f2c_abs(r__1)); // , expr subst
                     xmax = max(r__2,r__3);
                 }
                 else
@@ -486,8 +486,8 @@ L30:
                     /* Scale if necessary to avoid overflow in forming the */
                     /* right-hand side elements by inner product. */
                     /* Computing MAX */
-                    r__3 = (r__1 = x[j1], abs(r__1));
-                    r__4 = (r__2 = x[j2], abs(r__2)); // , expr subst
+                    r__3 = (r__1 = x[j1], f2c_abs(r__1));
+                    r__4 = (r__2 = x[j2], f2c_abs(r__2)); // , expr subst
                     xj = max(r__3,r__4);
                     if (xmax > 1.f)
                     {
@@ -519,8 +519,8 @@ L30:
                     x[j1] = v[0];
                     x[j2] = v[1];
                     /* Computing MAX */
-                    r__3 = (r__1 = x[j1], abs(r__1));
-                    r__4 = (r__2 = x[j2], abs(r__2));
+                    r__3 = (r__1 = x[j1], f2c_abs(r__1));
+                    r__4 = (r__2 = x[j2], f2c_abs(r__2));
                     r__3 = max(r__3,r__4); // ; expr subst
                     xmax = max(r__3,xmax);
                 }
@@ -532,7 +532,7 @@ L40:
     else
     {
         /* Computing MAX */
-        r__1 = eps * abs(*w);
+        r__1 = eps * f2c_abs(*w);
         sminw = max(r__1,smin);
         if (notran)
         {
@@ -566,8 +566,8 @@ L40:
                     {
                         z__ = b[1];
                     }
-                    xj = (r__1 = x[j1], abs(r__1)) + (r__2 = x[*n + j1], abs( r__2));
-                    tjj = (r__1 = t[j1 + j1 * t_dim1], abs(r__1)) + abs(z__);
+                    xj = (r__1 = x[j1], f2c_abs(r__1)) + (r__2 = x[*n + j1], f2c_abs( r__2));
+                    tjj = (r__1 = t[j1 + j1 * t_dim1], f2c_abs(r__1)) + f2c_abs(z__);
                     tmp = t[j1 + j1 * t_dim1];
                     if (tjj < sminw)
                     {
@@ -592,7 +592,7 @@ L40:
                     sladiv_(&x[j1], &x[*n + j1], &tmp, &z__, &sr, &si);
                     x[j1] = sr;
                     x[*n + j1] = si;
-                    xj = (r__1 = x[j1], abs(r__1)) + (r__2 = x[*n + j1], abs( r__2));
+                    xj = (r__1 = x[j1], f2c_abs(r__1)) + (r__2 = x[*n + j1], f2c_abs( r__2));
                     /* Scale x if necessary to avoid overflow when adding a */
                     /* multiple of column j1 of T. */
                     if (xj > 1.f)
@@ -622,7 +622,7 @@ L40:
                         {
                             /* Computing MAX */
                             r__3 = xmax;
-                            r__4 = (r__1 = x[k], abs(r__1)) + ( r__2 = x[k + *n], abs(r__2)); // , expr subst
+                            r__4 = (r__1 = x[k], f2c_abs(r__1)) + ( r__2 = x[k + *n], f2c_abs(r__2)); // , expr subst
                             xmax = max(r__3,r__4);
                             /* L50: */
                         }
@@ -654,8 +654,8 @@ L40:
                     /* Scale X(J1), .... to avoid overflow in */
                     /* updating right hand side. */
                     /* Computing MAX */
-                    r__1 = abs(v[0]) + abs(v[2]);
-                    r__2 = abs(v[1]) + abs(v[3]) ; // , expr subst
+                    r__1 = f2c_abs(v[0]) + f2c_abs(v[2]);
+                    r__2 = f2c_abs(v[1]) + f2c_abs(v[3]) ; // , expr subst
                     xj = max(r__1,r__2);
                     if (xj > 1.f)
                     {
@@ -693,7 +693,7 @@ L40:
                                 ++k)
                         {
                             /* Computing MAX */
-                            r__3 = (r__1 = x[k], abs(r__1)) + (r__2 = x[k + * n], abs(r__2));
+                            r__3 = (r__1 = x[k], f2c_abs(r__1)) + (r__2 = x[k + * n], f2c_abs(r__2));
                             xmax = max(r__3,xmax);
                             /* L60: */
                         }
@@ -732,7 +732,7 @@ L70:
                     /* 1 by 1 diagonal block */
                     /* Scale if necessary to avoid overflow in forming the */
                     /* right-hand side element by inner product. */
-                    xj = (r__1 = x[j1], abs(r__1)) + (r__2 = x[j1 + *n], abs( r__2));
+                    xj = (r__1 = x[j1], f2c_abs(r__1)) + (r__2 = x[j1 + *n], f2c_abs( r__2));
                     if (xmax > 1.f)
                     {
                         rec = 1.f / xmax;
@@ -752,7 +752,7 @@ L70:
                         x[j1] -= b[j1] * x[*n + 1];
                         x[*n + j1] += b[j1] * x[1];
                     }
-                    xj = (r__1 = x[j1], abs(r__1)) + (r__2 = x[j1 + *n], abs( r__2));
+                    xj = (r__1 = x[j1], f2c_abs(r__1)) + (r__2 = x[j1 + *n], f2c_abs( r__2));
                     z__ = *w;
                     if (j1 == 1)
                     {
@@ -760,7 +760,7 @@ L70:
                     }
                     /* Scale if necessary to avoid overflow in */
                     /* complex division */
-                    tjj = (r__1 = t[j1 + j1 * t_dim1], abs(r__1)) + abs(z__);
+                    tjj = (r__1 = t[j1 + j1 * t_dim1], f2c_abs(r__1)) + f2c_abs(z__);
                     tmp = t[j1 + j1 * t_dim1];
                     if (tjj < sminw)
                     {
@@ -783,7 +783,7 @@ L70:
                     x[j1] = sr;
                     x[j1 + *n] = si;
                     /* Computing MAX */
-                    r__3 = (r__1 = x[j1], abs(r__1)) + (r__2 = x[j1 + *n], abs(r__2));
+                    r__3 = (r__1 = x[j1], f2c_abs(r__1)) + (r__2 = x[j1 + *n], f2c_abs(r__2));
                     xmax = max(r__3,xmax);
                 }
                 else
@@ -792,8 +792,8 @@ L70:
                     /* Scale if necessary to avoid overflow in forming the */
                     /* right-hand side element by inner product. */
                     /* Computing MAX */
-                    r__5 = (r__1 = x[j1], abs(r__1)) + (r__2 = x[*n + j1], abs(r__2));
-                    r__6 = (r__3 = x[j2], abs(r__3)) + ( r__4 = x[*n + j2], abs(r__4)); // , expr subst
+                    r__5 = (r__1 = x[j1], f2c_abs(r__1)) + (r__2 = x[*n + j1], f2c_abs(r__2));
+                    r__6 = (r__3 = x[j2], f2c_abs(r__3)) + ( r__4 = x[*n + j2], f2c_abs(r__4)); // , expr subst
                     xj = max(r__5,r__6);
                     if (xmax > 1.f)
                     {
@@ -835,8 +835,8 @@ L70:
                     x[*n + j1] = v[2];
                     x[*n + j2] = v[3];
                     /* Computing MAX */
-                    r__5 = (r__1 = x[j1], abs(r__1)) + (r__2 = x[*n + j1], abs(r__2));
-                    r__6 = (r__3 = x[j2], abs(r__3)) + ( r__4 = x[*n + j2], abs(r__4));
+                    r__5 = (r__1 = x[j1], f2c_abs(r__1)) + (r__2 = x[*n + j1], f2c_abs(r__2));
+                    r__6 = (r__3 = x[j2], f2c_abs(r__3)) + ( r__4 = x[*n + j2], f2c_abs(r__4));
                     r__5 = max(r__5, r__6); // ; expr subst
                     xmax = max(r__5,xmax);
                 }

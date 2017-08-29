@@ -39,7 +39,7 @@ static integer c__1 = 1;
 /* > \return DLANSB */
 /* > \verbatim */
 /* > */
-/* > DLANSB = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > DLANSB = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -50,7 +50,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -164,7 +164,7 @@ doublereal dlansb_(char *norm, char *uplo, integer *n, integer *k, doublereal *a
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
+        /* Find max(f2c_abs(A(i,j))). */
         value = 0.;
         if (lsame_(uplo, "U"))
         {
@@ -180,7 +180,7 @@ doublereal dlansb_(char *norm, char *uplo, integer *n, integer *k, doublereal *a
                         i__ <= i__3;
                         ++i__)
                 {
-                    sum = (d__1 = ab[i__ + j * ab_dim1], abs(d__1));
+                    sum = (d__1 = ab[i__ + j * ab_dim1], f2c_abs(d__1));
                     if (value < sum || disnan_(&sum))
                     {
                         value = sum;
@@ -205,7 +205,7 @@ doublereal dlansb_(char *norm, char *uplo, integer *n, integer *k, doublereal *a
                         i__ <= i__3;
                         ++i__)
                 {
-                    sum = (d__1 = ab[i__ + j * ab_dim1], abs(d__1));
+                    sum = (d__1 = ab[i__ + j * ab_dim1], f2c_abs(d__1));
                     if (value < sum || disnan_(&sum))
                     {
                         value = sum;
@@ -237,12 +237,12 @@ doublereal dlansb_(char *norm, char *uplo, integer *n, integer *k, doublereal *a
                         i__ <= i__4;
                         ++i__)
                 {
-                    absa = (d__1 = ab[l + i__ + j * ab_dim1], abs(d__1));
+                    absa = (d__1 = ab[l + i__ + j * ab_dim1], f2c_abs(d__1));
                     sum += absa;
                     work[i__] += absa;
                     /* L50: */
                 }
-                work[j] = sum + (d__1 = ab[*k + 1 + j * ab_dim1], abs(d__1));
+                work[j] = sum + (d__1 = ab[*k + 1 + j * ab_dim1], f2c_abs(d__1));
                 /* L60: */
             }
             i__1 = *n;
@@ -273,7 +273,7 @@ doublereal dlansb_(char *norm, char *uplo, integer *n, integer *k, doublereal *a
                     j <= i__1;
                     ++j)
             {
-                sum = work[j] + (d__1 = ab[j * ab_dim1 + 1], abs(d__1));
+                sum = work[j] + (d__1 = ab[j * ab_dim1 + 1], f2c_abs(d__1));
                 l = 1 - j;
                 /* Computing MIN */
                 i__3 = *n;
@@ -283,7 +283,7 @@ doublereal dlansb_(char *norm, char *uplo, integer *n, integer *k, doublereal *a
                         i__ <= i__4;
                         ++i__)
                 {
-                    absa = (d__1 = ab[l + i__ + j * ab_dim1], abs(d__1));
+                    absa = (d__1 = ab[l + i__ + j * ab_dim1], f2c_abs(d__1));
                     sum += absa;
                     work[i__] += absa;
                     /* L90: */

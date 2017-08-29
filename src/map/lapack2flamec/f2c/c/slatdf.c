@@ -288,8 +288,8 @@ int slatdf_(integer *ijob, integer *n, real *z__, integer * ldz, real *rhs, real
                 rhs[i__] -= rhs[k] * (z__[i__ + k * z_dim1] * temp);
                 /* L20: */
             }
-            splus += (r__1 = xp[i__ - 1], abs(r__1));
-            sminu += (r__1 = rhs[i__], abs(r__1));
+            splus += (r__1 = xp[i__ - 1], f2c_abs(r__1));
+            sminu += (r__1 = rhs[i__], f2c_abs(r__1));
             /* L30: */
         }
         if (splus > sminu)

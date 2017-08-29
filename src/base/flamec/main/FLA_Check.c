@@ -1316,7 +1316,7 @@ FLA_Error FLA_Check_valid_diag_offset( FLA_Obj A, FLA_Diag_off offset )
 {
   FLA_Error e_val = FLA_SUCCESS;
 
-  if ( FLA_Obj_min_dim( A ) <= abs( offset ) )
+  if ( FLA_Obj_min_dim( A ) <= f2c_abs( offset ) )
     e_val = FLA_INVALID_DIAG_OFFSET;
 
   return e_val;

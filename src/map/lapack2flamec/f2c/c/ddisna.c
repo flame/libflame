@@ -39,7 +39,7 @@
 /* > */
 /* > DLAMCH( 'E' ) * ( ANORM / SEP( I ) ) */
 /* > */
-/* > where ANORM = 2-norm(A) = max( abs( D(j) ) ). SEP(I) is not allowed */
+/* > where ANORM = 2-norm(A) = max( f2c_abs( D(j) ) ). SEP(I) is not allowed */
 /* > to be smaller than DLAMCH( 'E' )*ANORM in order to limit the size of */
 /* > the error bound. */
 /* > */
@@ -225,14 +225,14 @@ int ddisna_(char *job, integer *m, integer *n, doublereal * d__, doublereal *sep
     }
     else
     {
-        oldgap = (d__1 = d__[2] - d__[1], abs(d__1));
+        oldgap = (d__1 = d__[2] - d__[1], f2c_abs(d__1));
         sep[1] = oldgap;
         i__1 = k - 1;
         for (i__ = 2;
                 i__ <= i__1;
                 ++i__)
         {
-            newgap = (d__1 = d__[i__ + 1] - d__[i__], abs(d__1));
+            newgap = (d__1 = d__[i__ + 1] - d__[i__], f2c_abs(d__1));
             sep[i__] = min(oldgap,newgap);
             oldgap = newgap;
             /* L20: */
@@ -261,8 +261,8 @@ int ddisna_(char *job, integer *m, integer *n, doublereal * d__, doublereal *sep
     eps = dlamch_("E");
     safmin = dlamch_("S");
     /* Computing MAX */
-    d__2 = abs(d__[1]);
-    d__3 = (d__1 = d__[k], abs(d__1)); // , expr subst
+    d__2 = f2c_abs(d__[1]);
+    d__3 = (d__1 = d__[k], f2c_abs(d__1)); // , expr subst
     anorm = max(d__2,d__3);
     if (anorm == 0.)
     {

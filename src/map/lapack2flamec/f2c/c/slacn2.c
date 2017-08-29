@@ -199,7 +199,7 @@ L20:
     if (*n == 1)
     {
         v[1] = x[1];
-        *est = abs(v[1]);
+        *est = f2c_abs(v[1]);
         /* ... QUIT */
         goto L150;
     }
@@ -277,7 +277,7 @@ L90: /* TEST FOR CYCLING. */
 L110:
     jlast = isave[2];
     isave[2] = isamax_(n, &x[1], &c__1);
-    if (x[jlast] != (r__1 = x[isave[2]], abs(r__1)) && isave[3] < 5)
+    if (x[jlast] != (r__1 = x[isave[2]], f2c_abs(r__1)) && isave[3] < 5)
     {
         ++isave[3];
         goto L50;

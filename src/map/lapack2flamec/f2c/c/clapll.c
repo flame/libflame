@@ -94,7 +94,7 @@ int clapll_(integer *n, complex *x, integer *incx, complex * y, integer *incy, r
     complex q__1, q__2, q__3, q__4;
     /* Builtin functions */
     void r_cnjg(complex *, complex *);
-    double c_abs(complex *);
+    double c_f2c_abs(complex *);
     /* Local variables */
     complex c__, a11, a12, a22, tau;
     extern /* Subroutine */
@@ -159,9 +159,9 @@ int clapll_(integer *n, complex *x, integer *incx, complex * y, integer *incy, r
     a22.r = y[i__1].r;
     a22.i = y[i__1].i; // , expr subst
     /* Compute the SVD of 2-by-2 Upper triangular matrix. */
-    r__1 = c_abs(&a11);
-    r__2 = c_abs(&a12);
-    r__3 = c_abs(&a22);
+    r__1 = c_f2c_abs(&a11);
+    r__2 = c_f2c_abs(&a12);
+    r__3 = c_f2c_abs(&a22);
     slas2_(&r__1, &r__2, &r__3, ssmin, &ssmax);
     return 0;
     /* End of CLAPLL */

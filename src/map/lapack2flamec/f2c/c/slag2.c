@@ -180,8 +180,8 @@ int slag2_(real *a, integer *lda, real *b, integer *ldb, real *safmin, real *sca
     safmax = 1.f / *safmin;
     /* Scale A */
     /* Computing MAX */
-    r__5 = (r__1 = a[a_dim1 + 1], abs(r__1)) + (r__2 = a[a_dim1 + 2], abs( r__2));
-    r__6 = (r__3 = a[(a_dim1 << 1) + 1], abs(r__3)) + (r__4 = a[(a_dim1 << 1) + 2], abs(r__4));
+    r__5 = (r__1 = a[a_dim1 + 1], f2c_abs(r__1)) + (r__2 = a[a_dim1 + 2], f2c_abs( r__2));
+    r__6 = (r__3 = a[(a_dim1 << 1) + 1], f2c_abs(r__3)) + (r__4 = a[(a_dim1 << 1) + 2], f2c_abs(r__4));
     r__5 = max(r__5,r__6); // ; expr subst
     anorm = max(r__5,*safmin);
     ascale = 1.f / anorm;
@@ -194,27 +194,27 @@ int slag2_(real *a, integer *lda, real *b, integer *ldb, real *safmin, real *sca
     b12 = b[(b_dim1 << 1) + 1];
     b22 = b[(b_dim1 << 1) + 2];
     /* Computing MAX */
-    r__1 = abs(b11), r__2 = abs(b12), r__1 = max(r__1,r__2);
-    r__2 = abs(b22);
+    r__1 = f2c_abs(b11), r__2 = f2c_abs(b12), r__1 = max(r__1,r__2);
+    r__2 = f2c_abs(b22);
     r__1 = max(r__1,r__2); // ; expr subst
     bmin = rtmin * max(r__1,rtmin);
-    if (abs(b11) < bmin)
+    if (f2c_abs(b11) < bmin)
     {
         b11 = r_sign(&bmin, &b11);
     }
-    if (abs(b22) < bmin)
+    if (f2c_abs(b22) < bmin)
     {
         b22 = r_sign(&bmin, &b22);
     }
     /* Scale B */
     /* Computing MAX */
-    r__1 = abs(b11);
-    r__2 = abs(b12) + abs(b22);
+    r__1 = f2c_abs(b11);
+    r__2 = f2c_abs(b12) + f2c_abs(b22);
     r__1 = max(r__1,r__2); // ; expr subst
     bnorm = max(r__1,*safmin);
     /* Computing MAX */
-    r__1 = abs(b11);
-    r__2 = abs(b22); // , expr subst
+    r__1 = f2c_abs(b11);
+    r__2 = f2c_abs(b22); // , expr subst
     bsize = max(r__1,r__2);
     bscale = 1.f / bsize;
     b11 *= bscale;
@@ -226,7 +226,7 @@ int slag2_(real *a, integer *lda, real *b, integer *ldb, real *safmin, real *sca
     binv22 = 1.f / b22;
     s1 = a11 * binv11;
     s2 = a22 * binv22;
-    if (abs(s1) <= abs(s2))
+    if (f2c_abs(s1) <= f2c_abs(s2))
     {
         as12 = a12 - s1 * b12;
         as22 = a22 - s1 * b22;
@@ -245,30 +245,30 @@ int slag2_(real *a, integer *lda, real *b, integer *ldb, real *safmin, real *sca
         shift = s2;
     }
     qq = ss * as12;
-    if ((r__1 = pp * rtmin, abs(r__1)) >= 1.f)
+    if ((r__1 = pp * rtmin, f2c_abs(r__1)) >= 1.f)
     {
         /* Computing 2nd power */
         r__1 = rtmin * pp;
         discr = r__1 * r__1 + qq * *safmin;
-        r__ = sqrt((abs(discr))) * rtmax;
+        r__ = sqrt((f2c_abs(discr))) * rtmax;
     }
     else
     {
         /* Computing 2nd power */
         r__1 = pp;
-        if (r__1 * r__1 + abs(qq) <= *safmin)
+        if (r__1 * r__1 + f2c_abs(qq) <= *safmin)
         {
             /* Computing 2nd power */
             r__1 = rtmax * pp;
             discr = r__1 * r__1 + qq * safmax;
-            r__ = sqrt((abs(discr))) * rtmin;
+            r__ = sqrt((f2c_abs(discr))) * rtmin;
         }
         else
         {
             /* Computing 2nd power */
             r__1 = pp;
             discr = r__1 * r__1 + qq;
-            r__ = sqrt((abs(discr)));
+            r__ = sqrt((f2c_abs(discr)));
         }
     }
     /* Note: the test of R in the following IF is to cover the case when */
@@ -284,8 +284,8 @@ int slag2_(real *a, integer *lda, real *b, integer *ldb, real *safmin, real *sca
         /* Compute smaller eigenvalue */
         wsmall = shift + diff;
         /* Computing MAX */
-        r__1 = abs(wsmall);
-        if (abs(wbig) * .5f > max(r__1,*safmin))
+        r__1 = f2c_abs(wsmall);
+        if (f2c_abs(wbig) * .5f > max(r__1,*safmin))
         {
             wdet = (a11 * a22 - a12 * a21) * (binv11 * binv22);
             wsmall = wdet / wbig;
@@ -347,7 +347,7 @@ int slag2_(real *a, integer *lda, real *b, integer *ldb, real *safmin, real *sca
         c5 = 1.f;
     }
     /* Scale first eigenvalue */
-    wabs = abs(*wr1) + abs(*wi);
+    wabs = f2c_abs(*wr1) + f2c_abs(*wi);
     /* Computing MAX */
     /* Computing MIN */
     r__3 = c4;
@@ -386,10 +386,10 @@ int slag2_(real *a, integer *lda, real *b, integer *ldb, real *safmin, real *sca
         /* Computing MAX */
         /* Computing MIN */
         /* Computing MAX */
-        r__5 = abs(*wr2);
+        r__5 = f2c_abs(*wr2);
         r__3 = c4;
         r__4 = max(r__5,c5) * .5f; // , expr subst
-        r__1 = max(*safmin,c1), r__2 = (abs(*wr2) * c2 + c3) * 1.0000100000000001f;
+        r__1 = max(*safmin,c1), r__2 = (f2c_abs(*wr2) * c2 + c3) * 1.0000100000000001f;
         r__1 = max(r__1,r__2);
         r__2 = min(r__3, r__4); // ; expr subst
         wsize = max(r__1,r__2);

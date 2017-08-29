@@ -67,7 +67,7 @@ int strmv_(char *uplo, char *trans, char *diag, integer *n, real *a, integer *ld
     /* max( 1, n ). */
     /* Unchanged on exit. */
     /* X - REAL array of dimension at least */
-    /* ( 1 + ( n - 1 )*abs( INCX ) ). */
+    /* ( 1 + ( n - 1 )*f2c_abs( INCX ) ). */
     /* Before entry, the incremented array X must contain the n */
     /* element vector x. On exit, X is overwritten with the */
     /* tranformed vector x. */

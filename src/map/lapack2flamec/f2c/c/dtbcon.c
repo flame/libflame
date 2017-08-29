@@ -269,7 +269,7 @@ L10:
             if (scale != 1.)
             {
                 ix = idamax_(n, &work[1], &c__1);
-                xnorm = (d__1 = work[ix], abs(d__1));
+                xnorm = (d__1 = work[ix], f2c_abs(d__1));
                 if (scale < xnorm * smlnum || scale == 0.)
                 {
                     goto L20;

@@ -454,7 +454,7 @@ int slasq2_(integer *n, real *z__, integer *info)
         emax = 0.f;
         if (n0 > i0)
         {
-            emin = (r__1 = z__[(n0 << 2) - 5], abs(r__1));
+            emin = (r__1 = z__[(n0 << 2) - 5], f2c_abs(r__1));
         }
         else
         {

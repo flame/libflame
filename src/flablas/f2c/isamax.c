@@ -31,19 +31,19 @@ integer isamax_(integer *n, real *sx, integer *incx)
     }
     /* code for increment not equal to 1 */
     ix = 1;
-    smax = abs(sx[1]);
+    smax = f2c_abs(sx[1]);
     ix += *incx;
     i__1 = *n;
     for (i__ = 2;
             i__ <= i__1;
             ++i__)
     {
-        if ((r__1 = sx[ix], abs(r__1)) <= smax)
+        if ((r__1 = sx[ix], f2c_abs(r__1)) <= smax)
         {
             goto L5;
         }
         ret_val = i__;
-        smax = (r__1 = sx[ix], abs(r__1));
+        smax = (r__1 = sx[ix], f2c_abs(r__1));
 L5:
         ix += *incx;
         /* L10: */
@@ -51,18 +51,18 @@ L5:
     return ret_val;
     /* code for increment equal to 1 */
 L20:
-    smax = abs(sx[1]);
+    smax = f2c_abs(sx[1]);
     i__1 = *n;
     for (i__ = 2;
             i__ <= i__1;
             ++i__)
     {
-        if ((r__1 = sx[i__], abs(r__1)) <= smax)
+        if ((r__1 = sx[i__], f2c_abs(r__1)) <= smax)
         {
             goto L30;
         }
         ret_val = i__;
-        smax = (r__1 = sx[i__], abs(r__1));
+        smax = (r__1 = sx[i__], f2c_abs(r__1));
 L30:
         ;
     }

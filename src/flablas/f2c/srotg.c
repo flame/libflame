@@ -14,11 +14,11 @@ int srotg_(real *sa, real *sb, real *c__, real *s)
     /* construct givens plane rotation. */
     /* jack dongarra, linpack, 3/11/78. */
     roe = *sb;
-    if (abs(*sa) > abs(*sb))
+    if (f2c_abs(*sa) > f2c_abs(*sb))
     {
         roe = *sa;
     }
-    scale = abs(*sa) + abs(*sb);
+    scale = f2c_abs(*sa) + f2c_abs(*sb);
     if (scale != 0.f)
     {
         goto L10;
@@ -37,11 +37,11 @@ L10: /* Computing 2nd power */
     *c__ = *sa / r__;
     *s = *sb / r__;
     z__ = 1.f;
-    if (abs(*sa) > abs(*sb))
+    if (f2c_abs(*sa) > f2c_abs(*sb))
     {
         z__ = *s;
     }
-    if (abs(*sb) >= abs(*sa) && *c__ != 0.f)
+    if (f2c_abs(*sb) >= f2c_abs(*sa) && *c__ != 0.f)
     {
         z__ = 1.f / *c__;
     }

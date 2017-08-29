@@ -134,10 +134,10 @@ int slaev2_(real *a, real *b, real *c__, real *rt1, real * rt2, real *cs1, real 
     /* Compute the eigenvalues */
     sm = *a + *c__;
     df = *a - *c__;
-    adf = abs(df);
+    adf = f2c_abs(df);
     tb = *b + *b;
-    ab = abs(tb);
-    if (abs(*a) > abs(*c__))
+    ab = f2c_abs(tb);
+    if (f2c_abs(*a) > f2c_abs(*c__))
     {
         acmx = *a;
         acmn = *c__;
@@ -200,7 +200,7 @@ int slaev2_(real *a, real *b, real *c__, real *rt1, real * rt2, real *cs1, real 
         cs = df - rt;
         sgn2 = -1;
     }
-    acs = abs(cs);
+    acs = f2c_abs(cs);
     if (acs > ab)
     {
         ct = -tb / cs;

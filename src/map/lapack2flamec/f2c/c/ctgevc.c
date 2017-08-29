@@ -459,9 +459,9 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
     /* part of A and B to check for possible overflow in the triangular */
     /* solver. */
     i__1 = s_dim1 + 1;
-    anorm = (r__1 = s[i__1].r, abs(r__1)) + (r__2 = r_imag(&s[s_dim1 + 1]), abs(r__2));
+    anorm = (r__1 = s[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&s[s_dim1 + 1]), f2c_abs(r__2));
     i__1 = p_dim1 + 1;
-    bnorm = (r__1 = p[i__1].r, abs(r__1)) + (r__2 = r_imag(&p[p_dim1 + 1]), abs(r__2));
+    bnorm = (r__1 = p[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&p[p_dim1 + 1]), f2c_abs(r__2));
     rwork[1] = 0.f;
     rwork[*n + 1] = 0.f;
     i__1 = *n;
@@ -477,20 +477,20 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
                 ++i__)
         {
             i__3 = i__ + j * s_dim1;
-            rwork[j] += (r__1 = s[i__3].r, abs(r__1)) + (r__2 = r_imag(&s[i__ + j * s_dim1]), abs(r__2));
+            rwork[j] += (r__1 = s[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&s[i__ + j * s_dim1]), f2c_abs(r__2));
             i__3 = i__ + j * p_dim1;
-            rwork[*n + j] += (r__1 = p[i__3].r, abs(r__1)) + (r__2 = r_imag(& p[i__ + j * p_dim1]), abs(r__2));
+            rwork[*n + j] += (r__1 = p[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(& p[i__ + j * p_dim1]), f2c_abs(r__2));
             /* L30: */
         }
         /* Computing MAX */
         i__2 = j + j * s_dim1;
         r__3 = anorm;
-        r__4 = rwork[j] + ((r__1 = s[i__2].r, abs(r__1)) + ( r__2 = r_imag(&s[j + j * s_dim1]), abs(r__2))); // , expr subst
+        r__4 = rwork[j] + ((r__1 = s[i__2].r, f2c_abs(r__1)) + ( r__2 = r_imag(&s[j + j * s_dim1]), f2c_abs(r__2))); // , expr subst
         anorm = max(r__3,r__4);
         /* Computing MAX */
         i__2 = j + j * p_dim1;
         r__3 = bnorm;
-        r__4 = rwork[*n + j] + ((r__1 = p[i__2].r, abs(r__1)) + (r__2 = r_imag(&p[j + j * p_dim1]), abs(r__2))); // , expr subst
+        r__4 = rwork[*n + j] + ((r__1 = p[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&p[j + j * p_dim1]), f2c_abs(r__2))); // , expr subst
         bnorm = max(r__3,r__4);
         /* L40: */
     }
@@ -519,7 +519,7 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
                 ++ieig;
                 i__2 = je + je * s_dim1;
                 i__3 = je + je * p_dim1;
-                if ((r__2 = s[i__2].r, abs(r__2)) + (r__3 = r_imag(&s[je + je * s_dim1]), abs(r__3)) <= safmin && (r__1 = p[i__3].r, abs(r__1)) <= safmin)
+                if ((r__2 = s[i__2].r, f2c_abs(r__2)) + (r__3 = r_imag(&s[je + je * s_dim1]), f2c_abs(r__3)) <= safmin && (r__1 = p[i__3].r, f2c_abs(r__1)) <= safmin)
                 {
                     /* Singular matrix pencil -- return unit eigenvector */
                     i__2 = *n;
@@ -544,8 +544,8 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
                 /* Computing MAX */
                 i__2 = je + je * s_dim1;
                 i__3 = je + je * p_dim1;
-                r__4 = ((r__2 = s[i__2].r, abs(r__2)) + (r__3 = r_imag(&s[je + je * s_dim1]), abs(r__3))) * ascale;
-                r__5 = (r__1 = p[i__3].r, abs(r__1)) * bscale;
+                r__4 = ((r__2 = s[i__2].r, f2c_abs(r__2)) + (r__3 = r_imag(&s[je + je * s_dim1]), f2c_abs(r__3))) * ascale;
+                r__5 = (r__1 = p[i__3].r, f2c_abs(r__1)) * bscale;
                 r__4 = max(r__4,r__5); // ; expr subst
                 temp = 1.f / max(r__4,safmin);
                 i__2 = je + je * s_dim1;
@@ -563,27 +563,27 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
                 bcoeff.r = q__1.r;
                 bcoeff.i = q__1.i; // , expr subst
                 /* Scale to avoid underflow */
-                lsa = abs(sbeta) >= safmin && abs(acoeff) < small;
-                lsb = (r__1 = salpha.r, abs(r__1)) + (r__2 = r_imag(&salpha), abs(r__2)) >= safmin && (r__3 = bcoeff.r, abs(r__3)) + (r__4 = r_imag(&bcoeff), abs(r__4)) < small;
+                lsa = f2c_abs(sbeta) >= safmin && f2c_abs(acoeff) < small;
+                lsb = (r__1 = salpha.r, f2c_abs(r__1)) + (r__2 = r_imag(&salpha), f2c_abs(r__2)) >= safmin && (r__3 = bcoeff.r, f2c_abs(r__3)) + (r__4 = r_imag(&bcoeff), f2c_abs(r__4)) < small;
                 scale = 1.f;
                 if (lsa)
                 {
-                    scale = small / abs(sbeta) * min(anorm,big);
+                    scale = small / f2c_abs(sbeta) * min(anorm,big);
                 }
                 if (lsb)
                 {
                     /* Computing MAX */
                     r__3 = scale;
-                    r__4 = small / ((r__1 = salpha.r, abs(r__1)) + (r__2 = r_imag(&salpha), abs(r__2))) * min( bnorm,big); // , expr subst
+                    r__4 = small / ((r__1 = salpha.r, f2c_abs(r__1)) + (r__2 = r_imag(&salpha), f2c_abs(r__2))) * min( bnorm,big); // , expr subst
                     scale = max(r__3,r__4);
                 }
                 if (lsa || lsb)
                 {
                     /* Computing MIN */
                     /* Computing MAX */
-                    r__5 = 1.f, r__6 = abs(acoeff);
+                    r__5 = 1.f, r__6 = f2c_abs(acoeff);
                     r__5 = max(r__5,r__6);
-                    r__6 = (r__1 = bcoeff.r, abs(r__1)) + (r__2 = r_imag(&bcoeff), abs(r__2)); // ; expr subst
+                    r__6 = (r__1 = bcoeff.r, f2c_abs(r__1)) + (r__2 = r_imag(&bcoeff), f2c_abs(r__2)); // ; expr subst
                     r__3 = scale;
                     r__4 = 1.f / (safmin * max(r__5,r__6)); // , expr subst
                     scale = min(r__3,r__4);
@@ -612,8 +612,8 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
                         bcoeff.i = q__1.i; // , expr subst
                     }
                 }
-                acoefa = abs(acoeff);
-                bcoefa = (r__1 = bcoeff.r, abs(r__1)) + (r__2 = r_imag(& bcoeff), abs(r__2));
+                acoefa = f2c_abs(acoeff);
+                bcoefa = (r__1 = bcoeff.r, f2c_abs(r__1)) + (r__2 = r_imag(& bcoeff), f2c_abs(r__2));
                 xmax = 1.f;
                 i__2 = *n;
                 for (jr = 1;
@@ -714,18 +714,18 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
                     r_cnjg(&q__1, &q__2);
                     d__.r = q__1.r;
                     d__.i = q__1.i; // , expr subst
-                    if ((r__1 = d__.r, abs(r__1)) + (r__2 = r_imag(&d__), abs( r__2)) <= dmin__)
+                    if ((r__1 = d__.r, f2c_abs(r__1)) + (r__2 = r_imag(&d__), f2c_abs( r__2)) <= dmin__)
                     {
                         q__1.r = dmin__;
                         q__1.i = 0.f; // , expr subst
                         d__.r = q__1.r;
                         d__.i = q__1.i; // , expr subst
                     }
-                    if ((r__1 = d__.r, abs(r__1)) + (r__2 = r_imag(&d__), abs( r__2)) < 1.f)
+                    if ((r__1 = d__.r, f2c_abs(r__1)) + (r__2 = r_imag(&d__), f2c_abs( r__2)) < 1.f)
                     {
-                        if ((r__1 = sum.r, abs(r__1)) + (r__2 = r_imag(&sum), abs(r__2)) >= bignum * ((r__3 = d__.r, abs( r__3)) + (r__4 = r_imag(&d__), abs(r__4))))
+                        if ((r__1 = sum.r, f2c_abs(r__1)) + (r__2 = r_imag(&sum), f2c_abs(r__2)) >= bignum * ((r__3 = d__.r, f2c_abs( r__3)) + (r__4 = r_imag(&d__), f2c_abs(r__4))))
                         {
-                            temp = 1.f / ((r__1 = sum.r, abs(r__1)) + (r__2 = r_imag(&sum), abs(r__2)));
+                            temp = 1.f / ((r__1 = sum.r, f2c_abs(r__1)) + (r__2 = r_imag(&sum), f2c_abs(r__2)));
                             i__3 = j - 1;
                             for (jr = je;
                                     jr <= i__3;
@@ -755,7 +755,7 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
                     /* Computing MAX */
                     i__3 = j;
                     r__3 = xmax;
-                    r__4 = (r__1 = work[i__3].r, abs(r__1)) + ( r__2 = r_imag(&work[j]), abs(r__2)); // , expr subst
+                    r__4 = (r__1 = work[i__3].r, f2c_abs(r__1)) + ( r__2 = r_imag(&work[j]), f2c_abs(r__2)); // , expr subst
                     xmax = max(r__3,r__4);
                     /* L100: */
                 }
@@ -782,7 +782,7 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
                     /* Computing MAX */
                     i__3 = (isrc - 1) * *n + jr;
                     r__3 = xmax;
-                    r__4 = (r__1 = work[i__3].r, abs(r__1)) + ( r__2 = r_imag(&work[(isrc - 1) * *n + jr]), abs( r__2)); // , expr subst
+                    r__4 = (r__1 = work[i__3].r, f2c_abs(r__1)) + ( r__2 = r_imag(&work[(isrc - 1) * *n + jr]), f2c_abs( r__2)); // , expr subst
                     xmax = max(r__3,r__4);
                     /* L110: */
                 }
@@ -844,7 +844,7 @@ L140:
                 --ieig;
                 i__1 = je + je * s_dim1;
                 i__2 = je + je * p_dim1;
-                if ((r__2 = s[i__1].r, abs(r__2)) + (r__3 = r_imag(&s[je + je * s_dim1]), abs(r__3)) <= safmin && (r__1 = p[i__2].r, abs(r__1)) <= safmin)
+                if ((r__2 = s[i__1].r, f2c_abs(r__2)) + (r__3 = r_imag(&s[je + je * s_dim1]), f2c_abs(r__3)) <= safmin && (r__1 = p[i__2].r, f2c_abs(r__1)) <= safmin)
                 {
                     /* Singular matrix pencil -- return unit eigenvector */
                     i__1 = *n;
@@ -868,8 +868,8 @@ L140:
                 /* Computing MAX */
                 i__1 = je + je * s_dim1;
                 i__2 = je + je * p_dim1;
-                r__4 = ((r__2 = s[i__1].r, abs(r__2)) + (r__3 = r_imag(&s[je + je * s_dim1]), abs(r__3))) * ascale;
-                r__5 = (r__1 = p[i__2].r, abs(r__1)) * bscale;
+                r__4 = ((r__2 = s[i__1].r, f2c_abs(r__2)) + (r__3 = r_imag(&s[je + je * s_dim1]), f2c_abs(r__3))) * ascale;
+                r__5 = (r__1 = p[i__2].r, f2c_abs(r__1)) * bscale;
                 r__4 = max(r__4,r__5); // ; expr subst
                 temp = 1.f / max(r__4,safmin);
                 i__1 = je + je * s_dim1;
@@ -887,27 +887,27 @@ L140:
                 bcoeff.r = q__1.r;
                 bcoeff.i = q__1.i; // , expr subst
                 /* Scale to avoid underflow */
-                lsa = abs(sbeta) >= safmin && abs(acoeff) < small;
-                lsb = (r__1 = salpha.r, abs(r__1)) + (r__2 = r_imag(&salpha), abs(r__2)) >= safmin && (r__3 = bcoeff.r, abs(r__3)) + (r__4 = r_imag(&bcoeff), abs(r__4)) < small;
+                lsa = f2c_abs(sbeta) >= safmin && f2c_abs(acoeff) < small;
+                lsb = (r__1 = salpha.r, f2c_abs(r__1)) + (r__2 = r_imag(&salpha), f2c_abs(r__2)) >= safmin && (r__3 = bcoeff.r, f2c_abs(r__3)) + (r__4 = r_imag(&bcoeff), f2c_abs(r__4)) < small;
                 scale = 1.f;
                 if (lsa)
                 {
-                    scale = small / abs(sbeta) * min(anorm,big);
+                    scale = small / f2c_abs(sbeta) * min(anorm,big);
                 }
                 if (lsb)
                 {
                     /* Computing MAX */
                     r__3 = scale;
-                    r__4 = small / ((r__1 = salpha.r, abs(r__1)) + (r__2 = r_imag(&salpha), abs(r__2))) * min( bnorm,big); // , expr subst
+                    r__4 = small / ((r__1 = salpha.r, f2c_abs(r__1)) + (r__2 = r_imag(&salpha), f2c_abs(r__2))) * min( bnorm,big); // , expr subst
                     scale = max(r__3,r__4);
                 }
                 if (lsa || lsb)
                 {
                     /* Computing MIN */
                     /* Computing MAX */
-                    r__5 = 1.f, r__6 = abs(acoeff);
+                    r__5 = 1.f, r__6 = f2c_abs(acoeff);
                     r__5 = max(r__5,r__6);
-                    r__6 = (r__1 = bcoeff.r, abs(r__1)) + (r__2 = r_imag(&bcoeff), abs(r__2)); // ; expr subst
+                    r__6 = (r__1 = bcoeff.r, f2c_abs(r__1)) + (r__2 = r_imag(&bcoeff), f2c_abs(r__2)); // ; expr subst
                     r__3 = scale;
                     r__4 = 1.f / (safmin * max(r__5,r__6)); // , expr subst
                     scale = min(r__3,r__4);
@@ -936,8 +936,8 @@ L140:
                         bcoeff.i = q__1.i; // , expr subst
                     }
                 }
-                acoefa = abs(acoeff);
-                bcoefa = (r__1 = bcoeff.r, abs(r__1)) + (r__2 = r_imag(& bcoeff), abs(r__2));
+                acoefa = f2c_abs(acoeff);
+                bcoefa = (r__1 = bcoeff.r, f2c_abs(r__1)) + (r__2 = r_imag(& bcoeff), f2c_abs(r__2));
                 xmax = 1.f;
                 i__1 = *n;
                 for (jr = 1;
@@ -997,20 +997,20 @@ L140:
                     q__1.i = q__2.i - q__3.i; // , expr subst
                     d__.r = q__1.r;
                     d__.i = q__1.i; // , expr subst
-                    if ((r__1 = d__.r, abs(r__1)) + (r__2 = r_imag(&d__), abs( r__2)) <= dmin__)
+                    if ((r__1 = d__.r, f2c_abs(r__1)) + (r__2 = r_imag(&d__), f2c_abs( r__2)) <= dmin__)
                     {
                         q__1.r = dmin__;
                         q__1.i = 0.f; // , expr subst
                         d__.r = q__1.r;
                         d__.i = q__1.i; // , expr subst
                     }
-                    if ((r__1 = d__.r, abs(r__1)) + (r__2 = r_imag(&d__), abs( r__2)) < 1.f)
+                    if ((r__1 = d__.r, f2c_abs(r__1)) + (r__2 = r_imag(&d__), f2c_abs( r__2)) < 1.f)
                     {
                         i__1 = j;
-                        if ((r__1 = work[i__1].r, abs(r__1)) + (r__2 = r_imag( &work[j]), abs(r__2)) >= bignum * ((r__3 = d__.r, abs(r__3)) + (r__4 = r_imag(&d__), abs( r__4))))
+                        if ((r__1 = work[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag( &work[j]), f2c_abs(r__2)) >= bignum * ((r__3 = d__.r, f2c_abs(r__3)) + (r__4 = r_imag(&d__), f2c_abs( r__4))))
                         {
                             i__1 = j;
-                            temp = 1.f / ((r__1 = work[i__1].r, abs(r__1)) + ( r__2 = r_imag(&work[j]), abs(r__2)));
+                            temp = 1.f / ((r__1 = work[i__1].r, f2c_abs(r__1)) + ( r__2 = r_imag(&work[j]), f2c_abs(r__2)));
                             i__1 = je;
                             for (jr = 1;
                                     jr <= i__1;
@@ -1037,10 +1037,10 @@ L140:
                     {
                         /* w = w + x(j)*(a S(*,j) - b P(*,j) ) with scaling */
                         i__1 = j;
-                        if ((r__1 = work[i__1].r, abs(r__1)) + (r__2 = r_imag( &work[j]), abs(r__2)) > 1.f)
+                        if ((r__1 = work[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag( &work[j]), f2c_abs(r__2)) > 1.f)
                         {
                             i__1 = j;
-                            temp = 1.f / ((r__1 = work[i__1].r, abs(r__1)) + ( r__2 = r_imag(&work[j]), abs(r__2)));
+                            temp = 1.f / ((r__1 = work[i__1].r, f2c_abs(r__1)) + ( r__2 = r_imag(&work[j]), f2c_abs(r__2)));
                             if (acoefa * rwork[j] + bcoefa * rwork[*n + j] >= bignum * temp)
                             {
                                 i__1 = je;
@@ -1114,7 +1114,7 @@ L140:
                     /* Computing MAX */
                     i__2 = (isrc - 1) * *n + jr;
                     r__3 = xmax;
-                    r__4 = (r__1 = work[i__2].r, abs(r__1)) + ( r__2 = r_imag(&work[(isrc - 1) * *n + jr]), abs( r__2)); // , expr subst
+                    r__4 = (r__1 = work[i__2].r, f2c_abs(r__1)) + ( r__2 = r_imag(&work[(isrc - 1) * *n + jr]), f2c_abs( r__2)); // , expr subst
                     xmax = max(r__3,r__4);
                     /* L220: */
                 }

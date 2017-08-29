@@ -232,7 +232,7 @@ v**H denotes the conjugate transpose of v, and norm(u) */
 /* > where sigma-min denotes the smallest singular value. We approximate */
 /* > the smallest singular value by the reciprocal of an estimate of the */
 /* > one-norm of the inverse of T22 - lambda*I. If n = 1, SEP(1) is */
-/* > defined to be abs(T(1,1)). */
+/* > defined to be f2c_abs(T(1,1)). */
 /* > */
 /* > An approximate error bound for a computed right eigenvector VR(i) */
 /* > is given by */
@@ -249,7 +249,7 @@ int ctrsna_(char *job, char *howmny, logical *select, integer *n, complex *t, in
     real r__1, r__2;
     complex q__1;
     /* Builtin functions */
-    double c_abs(complex *), r_imag(complex *);
+    double c_f2c_abs(complex *), r_imag(complex *);
     /* Local variables */
     integer i__, j, k, ks, ix;
     real eps, est;
@@ -409,7 +409,7 @@ int ctrsna_(char *job, char *howmny, logical *select, integer *n, complex *t, in
         }
         if (wantsp)
         {
-            sep[1] = c_abs(&t[t_dim1 + 1]);
+            sep[1] = c_f2c_abs(&t[t_dim1 + 1]);
         }
         return 0;
     }
@@ -440,7 +440,7 @@ int ctrsna_(char *job, char *howmny, logical *select, integer *n, complex *t, in
             prod.i = q__1.i; // , expr subst
             rnrm = scnrm2_(n, &vr[ks * vr_dim1 + 1], &c__1);
             lnrm = scnrm2_(n, &vl[ks * vl_dim1 + 1], &c__1);
-            s[ks] = c_abs(&prod) / (rnrm * lnrm);
+            s[ks] = c_f2c_abs(&prod) / (rnrm * lnrm);
         }
         if (wantsp)
         {
@@ -496,7 +496,7 @@ L30:
                     i__2 = *n - 1;
                     ix = icamax_(&i__2, &work[work_offset], &c__1);
                     i__2 = ix + work_dim1;
-                    xnorm = (r__1 = work[i__2].r, abs(r__1)) + (r__2 = r_imag( &work[ix + work_dim1]), abs(r__2));
+                    xnorm = (r__1 = work[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag( &work[ix + work_dim1]), f2c_abs(r__2));
                     if (scale < xnorm * smlnum || scale == 0.f)
                     {
                         goto L40;

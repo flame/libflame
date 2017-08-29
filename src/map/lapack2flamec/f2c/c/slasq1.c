@@ -158,7 +158,7 @@ int slasq1_(integer *n, real *d__, real *e, real *work, integer *info)
     }
     else if (*n == 1)
     {
-        d__[1] = abs(d__[1]);
+        d__[1] = f2c_abs(d__[1]);
         return 0;
     }
     else if (*n == 2)
@@ -175,14 +175,14 @@ int slasq1_(integer *n, real *d__, real *e, real *work, integer *info)
             i__ <= i__1;
             ++i__)
     {
-        d__[i__] = (r__1 = d__[i__], abs(r__1));
+        d__[i__] = (r__1 = d__[i__], f2c_abs(r__1));
         /* Computing MAX */
         r__2 = sigmx;
-        r__3 = (r__1 = e[i__], abs(r__1)); // , expr subst
+        r__3 = (r__1 = e[i__], f2c_abs(r__1)); // , expr subst
         sigmx = max(r__2,r__3);
         /* L10: */
     }
-    d__[*n] = (r__1 = d__[*n], abs(r__1));
+    d__[*n] = (r__1 = d__[*n], f2c_abs(r__1));
     /* Early return if SIGMX is zero (matrix is already diagonal). */
     if (sigmx == 0.f)
     {

@@ -38,7 +38,7 @@ static integer c__1 = 1;
 /* > \return SLANTP */
 /* > \verbatim */
 /* > */
-/* > SLANTP = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > SLANTP = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -49,7 +49,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -159,7 +159,7 @@ real slantp_(char *norm, char *uplo, char *diag, integer *n, real *ap, real * wo
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
+        /* Find max(f2c_abs(A(i,j))). */
         k = 1;
         if (lsame_(diag, "U"))
         {
@@ -176,7 +176,7 @@ real slantp_(char *norm, char *uplo, char *diag, integer *n, real *ap, real * wo
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = (r__1 = ap[i__], abs(r__1));
+                        sum = (r__1 = ap[i__], f2c_abs(r__1));
                         if (value < sum || sisnan_(&sum))
                         {
                             value = sum;
@@ -199,7 +199,7 @@ real slantp_(char *norm, char *uplo, char *diag, integer *n, real *ap, real * wo
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = (r__1 = ap[i__], abs(r__1));
+                        sum = (r__1 = ap[i__], f2c_abs(r__1));
                         if (value < sum || sisnan_(&sum))
                         {
                             value = sum;
@@ -226,7 +226,7 @@ real slantp_(char *norm, char *uplo, char *diag, integer *n, real *ap, real * wo
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = (r__1 = ap[i__], abs(r__1));
+                        sum = (r__1 = ap[i__], f2c_abs(r__1));
                         if (value < sum || sisnan_(&sum))
                         {
                             value = sum;
@@ -249,7 +249,7 @@ real slantp_(char *norm, char *uplo, char *diag, integer *n, real *ap, real * wo
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = (r__1 = ap[i__], abs(r__1));
+                        sum = (r__1 = ap[i__], f2c_abs(r__1));
                         if (value < sum || sisnan_(&sum))
                         {
                             value = sum;
@@ -283,7 +283,7 @@ real slantp_(char *norm, char *uplo, char *diag, integer *n, real *ap, real * wo
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += (r__1 = ap[i__], abs(r__1));
+                        sum += (r__1 = ap[i__], f2c_abs(r__1));
                         /* L90: */
                     }
                 }
@@ -295,7 +295,7 @@ real slantp_(char *norm, char *uplo, char *diag, integer *n, real *ap, real * wo
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += (r__1 = ap[i__], abs(r__1));
+                        sum += (r__1 = ap[i__], f2c_abs(r__1));
                         /* L100: */
                     }
                 }
@@ -322,7 +322,7 @@ real slantp_(char *norm, char *uplo, char *diag, integer *n, real *ap, real * wo
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += (r__1 = ap[i__], abs(r__1));
+                        sum += (r__1 = ap[i__], f2c_abs(r__1));
                         /* L120: */
                     }
                 }
@@ -334,7 +334,7 @@ real slantp_(char *norm, char *uplo, char *diag, integer *n, real *ap, real * wo
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += (r__1 = ap[i__], abs(r__1));
+                        sum += (r__1 = ap[i__], f2c_abs(r__1));
                         /* L130: */
                     }
                 }
@@ -373,7 +373,7 @@ real slantp_(char *norm, char *uplo, char *diag, integer *n, real *ap, real * wo
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += (r__1 = ap[k], abs(r__1));
+                        work[i__] += (r__1 = ap[k], f2c_abs(r__1));
                         ++k;
                         /* L160: */
                     }
@@ -401,7 +401,7 @@ real slantp_(char *norm, char *uplo, char *diag, integer *n, real *ap, real * wo
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += (r__1 = ap[k], abs(r__1));
+                        work[i__] += (r__1 = ap[k], f2c_abs(r__1));
                         ++k;
                         /* L190: */
                     }
@@ -432,7 +432,7 @@ real slantp_(char *norm, char *uplo, char *diag, integer *n, real *ap, real * wo
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += (r__1 = ap[k], abs(r__1));
+                        work[i__] += (r__1 = ap[k], f2c_abs(r__1));
                         ++k;
                         /* L220: */
                     }
@@ -459,7 +459,7 @@ real slantp_(char *norm, char *uplo, char *diag, integer *n, real *ap, real * wo
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += (r__1 = ap[k], abs(r__1));
+                        work[i__] += (r__1 = ap[k], f2c_abs(r__1));
                         ++k;
                         /* L250: */
                     }

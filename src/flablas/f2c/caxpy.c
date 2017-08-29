@@ -22,7 +22,7 @@ int caxpy_(integer *n, complex *ca, complex *cx, integer * incx, complex *cy, in
     {
         return 0;
     }
-    if ((r__1 = ca->r, abs(r__1)) + (r__2 = r_imag(ca), abs(r__2)) == 0.f)
+    if ((r__1 = ca->r, f2c_abs(r__1)) + (r__2 = r_imag(ca), f2c_abs(r__2)) == 0.f)
     {
         return 0;
     }

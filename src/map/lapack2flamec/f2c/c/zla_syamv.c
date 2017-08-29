@@ -33,7 +33,7 @@
 /* > */
 /* > ZLA_SYAMV performs the matrix-vector operation */
 /* > */
-/* > y := alpha*abs(A)*abs(x) + beta*abs(y), */
+/* > y := alpha*f2c_abs(A)*f2c_abs(x) + beta*f2c_abs(y), */
 /* > */
 /* > where alpha and beta are scalars, x and y are vectors and A is an */
 /* > n by n symmetric matrix. */
@@ -100,7 +100,7 @@
 /* > \param[in] X */
 /* > \verbatim */
 /* > X is COMPLEX*16 array, DIMENSION at least */
-/* > ( 1 + ( n - 1 )*abs( INCX ) ) */
+/* > ( 1 + ( n - 1 )*f2c_abs( INCX ) ) */
 /* > Before entry, the incremented array X must contain the */
 /* > vector x. */
 /* > Unchanged on exit. */
@@ -125,7 +125,7 @@
 /* > \param[in,out] Y */
 /* > \verbatim */
 /* > Y is DOUBLE PRECISION array, dimension */
-/* > ( 1 + ( n - 1 )*abs( INCY ) ) */
+/* > ( 1 + ( n - 1 )*f2c_abs( INCY ) ) */
 /* > Before entry with BETA non-zero, the incremented array Y */
 /* > must contain the vector y. On exit, Y is overwritten by the */
 /* > updated vector y. */
@@ -264,7 +264,7 @@ int zla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublecomplex *a, i
     /* number of additions in each row. */
     safe1 = dlamch_("Safe minimum");
     safe1 = (*n + 1) * safe1;
-    /* Form y := alpha*abs(A)*abs(x) + beta*abs(y). */
+    /* Form y := alpha*f2c_abs(A)*f2c_abs(x) + beta*f2c_abs(y). */
     /* The O(N^2) SYMB_ZERO tests could be replaced by O(N) queries to */
     /* the inexact flag. Still doesn't help change the iteration order */
     /* to per-column. */
@@ -290,7 +290,7 @@ int zla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublecomplex *a, i
                 else
                 {
                     symb_zero__ = FALSE_;
-                    y[iy] = *beta * (d__1 = y[iy], abs(d__1));
+                    y[iy] = *beta * (d__1 = y[iy], f2c_abs(d__1));
                 }
                 if (*alpha != 0.)
                 {
@@ -300,11 +300,11 @@ int zla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublecomplex *a, i
                             ++j)
                     {
                         i__3 = j + i__ * a_dim1;
-                        temp = (d__1 = a[i__3].r, abs(d__1)) + (d__2 = d_imag( &a[j + i__ * a_dim1]), abs(d__2));
+                        temp = (d__1 = a[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag( &a[j + i__ * a_dim1]), f2c_abs(d__2));
                         i__3 = j;
                         symb_zero__ = symb_zero__ && (x[i__3].r == 0. && x[ i__3].i == 0. || temp == 0.);
                         i__3 = j;
-                        y[iy] += *alpha * ((d__1 = x[i__3].r, abs(d__1)) + ( d__2 = d_imag(&x[j]), abs(d__2))) * temp;
+                        y[iy] += *alpha * ((d__1 = x[i__3].r, f2c_abs(d__1)) + ( d__2 = d_imag(&x[j]), f2c_abs(d__2))) * temp;
                     }
                     i__2 = *n;
                     for (j = i__ + 1;
@@ -312,11 +312,11 @@ int zla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublecomplex *a, i
                             ++j)
                     {
                         i__3 = i__ + j * a_dim1;
-                        temp = (d__1 = a[i__3].r, abs(d__1)) + (d__2 = d_imag( &a[i__ + j * a_dim1]), abs(d__2));
+                        temp = (d__1 = a[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag( &a[i__ + j * a_dim1]), f2c_abs(d__2));
                         i__3 = j;
                         symb_zero__ = symb_zero__ && (x[i__3].r == 0. && x[ i__3].i == 0. || temp == 0.);
                         i__3 = j;
-                        y[iy] += *alpha * ((d__1 = x[i__3].r, abs(d__1)) + ( d__2 = d_imag(&x[j]), abs(d__2))) * temp;
+                        y[iy] += *alpha * ((d__1 = x[i__3].r, f2c_abs(d__1)) + ( d__2 = d_imag(&x[j]), f2c_abs(d__2))) * temp;
                     }
                 }
                 if (! symb_zero__)
@@ -345,7 +345,7 @@ int zla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublecomplex *a, i
                 else
                 {
                     symb_zero__ = FALSE_;
-                    y[iy] = *beta * (d__1 = y[iy], abs(d__1));
+                    y[iy] = *beta * (d__1 = y[iy], f2c_abs(d__1));
                 }
                 if (*alpha != 0.)
                 {
@@ -355,11 +355,11 @@ int zla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublecomplex *a, i
                             ++j)
                     {
                         i__3 = i__ + j * a_dim1;
-                        temp = (d__1 = a[i__3].r, abs(d__1)) + (d__2 = d_imag( &a[i__ + j * a_dim1]), abs(d__2));
+                        temp = (d__1 = a[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag( &a[i__ + j * a_dim1]), f2c_abs(d__2));
                         i__3 = j;
                         symb_zero__ = symb_zero__ && (x[i__3].r == 0. && x[ i__3].i == 0. || temp == 0.);
                         i__3 = j;
-                        y[iy] += *alpha * ((d__1 = x[i__3].r, abs(d__1)) + ( d__2 = d_imag(&x[j]), abs(d__2))) * temp;
+                        y[iy] += *alpha * ((d__1 = x[i__3].r, f2c_abs(d__1)) + ( d__2 = d_imag(&x[j]), f2c_abs(d__2))) * temp;
                     }
                     i__2 = *n;
                     for (j = i__ + 1;
@@ -367,11 +367,11 @@ int zla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublecomplex *a, i
                             ++j)
                     {
                         i__3 = j + i__ * a_dim1;
-                        temp = (d__1 = a[i__3].r, abs(d__1)) + (d__2 = d_imag( &a[j + i__ * a_dim1]), abs(d__2));
+                        temp = (d__1 = a[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag( &a[j + i__ * a_dim1]), f2c_abs(d__2));
                         i__3 = j;
                         symb_zero__ = symb_zero__ && (x[i__3].r == 0. && x[ i__3].i == 0. || temp == 0.);
                         i__3 = j;
-                        y[iy] += *alpha * ((d__1 = x[i__3].r, abs(d__1)) + ( d__2 = d_imag(&x[j]), abs(d__2))) * temp;
+                        y[iy] += *alpha * ((d__1 = x[i__3].r, f2c_abs(d__1)) + ( d__2 = d_imag(&x[j]), f2c_abs(d__2))) * temp;
                     }
                 }
                 if (! symb_zero__)
@@ -403,7 +403,7 @@ int zla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublecomplex *a, i
                 else
                 {
                     symb_zero__ = FALSE_;
-                    y[iy] = *beta * (d__1 = y[iy], abs(d__1));
+                    y[iy] = *beta * (d__1 = y[iy], f2c_abs(d__1));
                 }
                 jx = kx;
                 if (*alpha != 0.)
@@ -414,11 +414,11 @@ int zla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublecomplex *a, i
                             ++j)
                     {
                         i__3 = j + i__ * a_dim1;
-                        temp = (d__1 = a[i__3].r, abs(d__1)) + (d__2 = d_imag( &a[j + i__ * a_dim1]), abs(d__2));
+                        temp = (d__1 = a[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag( &a[j + i__ * a_dim1]), f2c_abs(d__2));
                         i__3 = j;
                         symb_zero__ = symb_zero__ && (x[i__3].r == 0. && x[ i__3].i == 0. || temp == 0.);
                         i__3 = jx;
-                        y[iy] += *alpha * ((d__1 = x[i__3].r, abs(d__1)) + ( d__2 = d_imag(&x[jx]), abs(d__2))) * temp;
+                        y[iy] += *alpha * ((d__1 = x[i__3].r, f2c_abs(d__1)) + ( d__2 = d_imag(&x[jx]), f2c_abs(d__2))) * temp;
                         jx += *incx;
                     }
                     i__2 = *n;
@@ -427,11 +427,11 @@ int zla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublecomplex *a, i
                             ++j)
                     {
                         i__3 = i__ + j * a_dim1;
-                        temp = (d__1 = a[i__3].r, abs(d__1)) + (d__2 = d_imag( &a[i__ + j * a_dim1]), abs(d__2));
+                        temp = (d__1 = a[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag( &a[i__ + j * a_dim1]), f2c_abs(d__2));
                         i__3 = j;
                         symb_zero__ = symb_zero__ && (x[i__3].r == 0. && x[ i__3].i == 0. || temp == 0.);
                         i__3 = jx;
-                        y[iy] += *alpha * ((d__1 = x[i__3].r, abs(d__1)) + ( d__2 = d_imag(&x[jx]), abs(d__2))) * temp;
+                        y[iy] += *alpha * ((d__1 = x[i__3].r, f2c_abs(d__1)) + ( d__2 = d_imag(&x[jx]), f2c_abs(d__2))) * temp;
                         jx += *incx;
                     }
                 }
@@ -461,7 +461,7 @@ int zla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublecomplex *a, i
                 else
                 {
                     symb_zero__ = FALSE_;
-                    y[iy] = *beta * (d__1 = y[iy], abs(d__1));
+                    y[iy] = *beta * (d__1 = y[iy], f2c_abs(d__1));
                 }
                 jx = kx;
                 if (*alpha != 0.)
@@ -472,11 +472,11 @@ int zla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublecomplex *a, i
                             ++j)
                     {
                         i__3 = i__ + j * a_dim1;
-                        temp = (d__1 = a[i__3].r, abs(d__1)) + (d__2 = d_imag( &a[i__ + j * a_dim1]), abs(d__2));
+                        temp = (d__1 = a[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag( &a[i__ + j * a_dim1]), f2c_abs(d__2));
                         i__3 = j;
                         symb_zero__ = symb_zero__ && (x[i__3].r == 0. && x[ i__3].i == 0. || temp == 0.);
                         i__3 = jx;
-                        y[iy] += *alpha * ((d__1 = x[i__3].r, abs(d__1)) + ( d__2 = d_imag(&x[jx]), abs(d__2))) * temp;
+                        y[iy] += *alpha * ((d__1 = x[i__3].r, f2c_abs(d__1)) + ( d__2 = d_imag(&x[jx]), f2c_abs(d__2))) * temp;
                         jx += *incx;
                     }
                     i__2 = *n;
@@ -485,11 +485,11 @@ int zla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublecomplex *a, i
                             ++j)
                     {
                         i__3 = j + i__ * a_dim1;
-                        temp = (d__1 = a[i__3].r, abs(d__1)) + (d__2 = d_imag( &a[j + i__ * a_dim1]), abs(d__2));
+                        temp = (d__1 = a[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag( &a[j + i__ * a_dim1]), f2c_abs(d__2));
                         i__3 = j;
                         symb_zero__ = symb_zero__ && (x[i__3].r == 0. && x[ i__3].i == 0. || temp == 0.);
                         i__3 = jx;
-                        y[iy] += *alpha * ((d__1 = x[i__3].r, abs(d__1)) + ( d__2 = d_imag(&x[jx]), abs(d__2))) * temp;
+                        y[iy] += *alpha * ((d__1 = x[i__3].r, f2c_abs(d__1)) + ( d__2 = d_imag(&x[jx]), f2c_abs(d__2))) * temp;
                         jx += *incx;
                     }
                 }

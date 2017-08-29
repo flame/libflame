@@ -40,8 +40,8 @@
 /* > = 1: real and imaginary parts each uniform (0,1) */
 /* > = 2: real and imaginary parts each uniform (-1,1) */
 /* > = 3: real and imaginary parts each normal (0,1) */
-/* > = 4: uniformly distributed on the disc abs(z) < 1 */
-/* > = 5: uniformly distributed on the circle abs(z) = 1 */
+/* > = 4: uniformly distributed on the disc f2c_abs(z) < 1 */
+/* > = 5: uniformly distributed on the circle f2c_abs(z) = 1 */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] ISEED */
