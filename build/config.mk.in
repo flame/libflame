@@ -12,7 +12,7 @@
 # Only include this block of code once
 ifndef CONFIG_MK_INCLUDED
 CONFIG_MK_INCLUDED := yes
-
+SHELL := /usr/bin/env bash
 
 
 #
@@ -45,7 +45,7 @@ FLA_MULTITHREADING_MODEL       := @fla_multithreading_model@
 # --- Utility program definitions ---------------------------------------------
 #
 
-SH         := /bin/sh
+SH         := /usr/bin/env bash
 MV         := mv
 CP         := cp
 CAT        := cat
