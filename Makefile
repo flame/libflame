@@ -415,7 +415,13 @@ ifeq ($(FLA_ENABLE_VERBOSE_MAKE_OUTPUT),yes)
 	$(LINKER) -shared $(LDFLAGS) -o $@ $?
 else
 	@echo "Dynamically linking $@"
+ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
+	@$(file > $@.in,$^)
+	@$(LINKER) -shared $(LDFLAGS) -o $@ @$@.in
+	@$(RM) $@.in
+else
 	@$(LINKER) -shared $(LDFLAGS) -o $@ $?
+endif
 endif
 
 
@@ -525,7 +531,7 @@ cleanmost: check-config
 	- $(FIND) $(BASE_LIB_DIR) -name "*.a" | $(XARGS) $(RM_F) 
 	- $(FIND) $(BASE_LIB_DIR) -name "*.so" | $(XARGS) $(RM_F) 
 	- $(RM_F) $(AR_OBJ_LIST_FILE)
-	- $(RM_F) $(AR_ARG_LIST_FILE)
+#	- $(RM_F) $(AR_ARG_LIST_FILE)
 	- $(RM_F) $(INCLUDE_LOCAL)/*.h
 
 distclean: check-config cleanmost cleanmk

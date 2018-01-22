@@ -120,8 +120,8 @@ CPPFLAGS     := @DEFS@
 
 # --- Determine the archiver and related flags ---
 AR               := @AR@
-ARFLAGS          := cru
-AR_ARG_LIST_FILE := ar_arg_list
+ARFLAGS          := cr
+#AR_ARG_LIST_FILE := ar_arg_list
 AR_OBJ_LIST_FILE := ar_obj_list
 
 
