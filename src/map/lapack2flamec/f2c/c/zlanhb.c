@@ -126,7 +126,7 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4;
     doublereal ret_val, d__1;
     /* Builtin functions */
-    double z_f2c_abs(doublecomplex *), sqrt(doublereal);
+    double z_abs(doublecomplex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j, l;
     doublereal sum, absa, scale;
@@ -183,7 +183,7 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
                         i__ <= i__3;
                         ++i__)
                 {
-                    sum = z_f2c_abs(&ab[i__ + j * ab_dim1]);
+                    sum = z_abs(&ab[i__ + j * ab_dim1]);
                     if (value < sum || disnan_(&sum))
                     {
                         value = sum;
@@ -220,7 +220,7 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
                         i__ <= i__3;
                         ++i__)
                 {
-                    sum = z_f2c_abs(&ab[i__ + j * ab_dim1]);
+                    sum = z_abs(&ab[i__ + j * ab_dim1]);
                     if (value < sum || disnan_(&sum))
                     {
                         value = sum;
@@ -252,7 +252,7 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
                         i__ <= i__4;
                         ++i__)
                 {
-                    absa = z_f2c_abs(&ab[l + i__ + j * ab_dim1]);
+                    absa = z_abs(&ab[l + i__ + j * ab_dim1]);
                     sum += absa;
                     work[i__] += absa;
                     /* L50: */
@@ -300,7 +300,7 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
                         i__ <= i__4;
                         ++i__)
                 {
-                    absa = z_f2c_abs(&ab[l + i__ + j * ab_dim1]);
+                    absa = z_abs(&ab[l + i__ + j * ab_dim1]);
                     sum += absa;
                     work[i__] += absa;
                     /* L90: */

@@ -169,7 +169,7 @@ int clatdf_(integer *ijob, integer *n, complex *z__, integer *ldz, complex *rhs,
     complex q__1, q__2, q__3;
     /* Builtin functions */
     void c_div(complex *, complex *, complex *);
-    double c_f2c_abs(complex *);
+    double c_abs(complex *);
     void c_sqrt(complex *, complex *);
     /* Local variables */
     integer i__, j, k;
@@ -364,8 +364,8 @@ int clatdf_(integer *ijob, integer *n, complex *z__, integer *ldz, complex *rhs,
                 rhs[i__2].i = q__1.i; // , expr subst
                 /* L20: */
             }
-            splus += c_f2c_abs(&work[i__ - 1]);
-            sminu += c_f2c_abs(&rhs[i__]);
+            splus += c_abs(&work[i__ - 1]);
+            sminu += c_abs(&rhs[i__]);
             /* L30: */
         }
         if (splus > sminu)

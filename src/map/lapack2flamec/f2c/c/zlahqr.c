@@ -198,7 +198,7 @@ int zlahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     /* Builtin functions */
     double d_imag(doublecomplex *);
     void d_cnjg(doublecomplex *, doublecomplex *);
-    double z_f2c_abs(doublecomplex *);
+    double z_abs(doublecomplex *);
     void z_sqrt(doublecomplex *, doublecomplex *), pow_zi(doublecomplex *, doublecomplex *, integer *);
     /* Local variables */
     integer i__, j, k, l, m;
@@ -331,13 +331,13 @@ int zlahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
             sc.r = z__1.r;
             sc.i = z__1.i; // , expr subst
             d_cnjg(&z__2, &sc);
-            d__1 = z_f2c_abs(&sc);
+            d__1 = z_abs(&sc);
             z__1.r = z__2.r / d__1;
             z__1.i = z__2.i / d__1; // , expr subst
             sc.r = z__1.r;
             sc.i = z__1.i; // , expr subst
             i__2 = i__ + (i__ - 1) * h_dim1;
-            d__1 = z_f2c_abs(&h__[i__ + (i__ - 1) * h_dim1]);
+            d__1 = z_abs(&h__[i__ + (i__ - 1) * h_dim1]);
             h__[i__2].r = d__1;
             h__[i__2].i = 0.; // , expr subst
             i__2 = jhi - i__ + 1;
@@ -791,7 +791,7 @@ L70: /* Single-shift QR step */
                 z__1.i = 0. - t1.i; // , expr subst
                 temp.r = z__1.r;
                 temp.i = z__1.i; // , expr subst
-                d__1 = z_f2c_abs(&temp);
+                d__1 = z_abs(&temp);
                 z__1.r = temp.r / d__1;
                 z__1.i = temp.i / d__1; // , expr subst
                 temp.r = z__1.r;
@@ -844,7 +844,7 @@ L70: /* Single-shift QR step */
         temp.i = h__[i__1].i; // , expr subst
         if (d_imag(&temp) != 0.)
         {
-            rtemp = z_f2c_abs(&temp);
+            rtemp = z_abs(&temp);
             i__1 = i__ + (i__ - 1) * h_dim1;
             h__[i__1].r = rtemp;
             h__[i__1].i = 0.; // , expr subst

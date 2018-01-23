@@ -110,7 +110,7 @@ doublereal zlansp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
     integer i__1, i__2;
     doublereal ret_val, d__1;
     /* Builtin functions */
-    double z_f2c_abs(doublecomplex *), d_imag(doublecomplex *), sqrt(doublereal);
+    double z_abs(doublecomplex *), d_imag(doublecomplex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j, k;
     doublereal sum, absa, scale;
@@ -164,7 +164,7 @@ doublereal zlansp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
                         i__ <= i__2;
                         ++i__)
                 {
-                    sum = z_f2c_abs(&ap[i__]);
+                    sum = z_abs(&ap[i__]);
                     if (value < sum || disnan_(&sum))
                     {
                         value = sum;
@@ -188,7 +188,7 @@ doublereal zlansp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
                         i__ <= i__2;
                         ++i__)
                 {
-                    sum = z_f2c_abs(&ap[i__]);
+                    sum = z_abs(&ap[i__]);
                     if (value < sum || disnan_(&sum))
                     {
                         value = sum;
@@ -218,13 +218,13 @@ doublereal zlansp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
                         i__ <= i__2;
                         ++i__)
                 {
-                    absa = z_f2c_abs(&ap[k]);
+                    absa = z_abs(&ap[k]);
                     sum += absa;
                     work[i__] += absa;
                     ++k;
                     /* L50: */
                 }
-                work[j] = sum + z_f2c_abs(&ap[k]);
+                work[j] = sum + z_abs(&ap[k]);
                 ++k;
                 /* L60: */
             }
@@ -256,14 +256,14 @@ doublereal zlansp_(char *norm, char *uplo, integer *n, doublecomplex *ap, double
                     j <= i__1;
                     ++j)
             {
-                sum = work[j] + z_f2c_abs(&ap[k]);
+                sum = work[j] + z_abs(&ap[k]);
                 ++k;
                 i__2 = *n;
                 for (i__ = j + 1;
                         i__ <= i__2;
                         ++i__)
                 {
-                    absa = z_f2c_abs(&ap[k]);
+                    absa = z_abs(&ap[k]);
                     sum += absa;
                     work[i__] += absa;
                     ++k;

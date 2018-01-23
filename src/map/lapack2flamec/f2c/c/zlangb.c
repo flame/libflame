@@ -118,7 +118,7 @@ doublereal zlangb_(char *norm, integer *n, integer *kl, integer *ku, doublecompl
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     doublereal ret_val;
     /* Builtin functions */
-    double z_f2c_abs(doublecomplex *), sqrt(doublereal);
+    double z_abs(doublecomplex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j, k, l;
     doublereal sum, temp, scale;
@@ -176,7 +176,7 @@ doublereal zlangb_(char *norm, integer *n, integer *kl, integer *ku, doublecompl
                     i__ <= i__3;
                     ++i__)
             {
-                temp = z_f2c_abs(&ab[i__ + j * ab_dim1]);
+                temp = z_abs(&ab[i__ + j * ab_dim1]);
                 if (value < temp || disnan_(&temp))
                 {
                     value = temp;
@@ -206,7 +206,7 @@ doublereal zlangb_(char *norm, integer *n, integer *kl, integer *ku, doublecompl
                     i__ <= i__2;
                     ++i__)
             {
-                sum += z_f2c_abs(&ab[i__ + j * ab_dim1]);
+                sum += z_abs(&ab[i__ + j * ab_dim1]);
                 /* L30: */
             }
             if (value < sum || disnan_(&sum))
@@ -244,7 +244,7 @@ doublereal zlangb_(char *norm, integer *n, integer *kl, integer *ku, doublecompl
                     i__ <= i__4;
                     ++i__)
             {
-                work[i__] += z_f2c_abs(&ab[k + i__ + j * ab_dim1]);
+                work[i__] += z_abs(&ab[k + i__ + j * ab_dim1]);
                 /* L60: */
             }
             /* L70: */

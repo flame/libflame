@@ -180,7 +180,7 @@ int zlaqps_(integer *m, integer *n, integer *offset, integer *nb, integer *kb, d
     /* Builtin functions */
     double sqrt(doublereal);
     void d_cnjg(doublecomplex *, doublecomplex *);
-    double z_f2c_abs(doublecomplex *);
+    double z_abs(doublecomplex *);
     integer i_dnnt(doublereal *);
     /* Local variables */
     integer j, k, rk;
@@ -358,7 +358,7 @@ L10:
                 {
                     /* NOTE: The following 4 lines follow from the analysis in */
                     /* Lapack Working Note 176. */
-                    temp = z_f2c_abs(&a[rk + j * a_dim1]) / vn1[j];
+                    temp = z_abs(&a[rk + j * a_dim1]) / vn1[j];
                     /* Computing MAX */
                     d__1 = 0.;
                     d__2 = (temp + 1.) * (1. - temp); // , expr subst

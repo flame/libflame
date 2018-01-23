@@ -112,7 +112,7 @@ real clanhp_(char *norm, char *uplo, integer *n, complex *ap, real *work)
     integer i__1, i__2;
     real ret_val, r__1;
     /* Builtin functions */
-    double c_f2c_abs(complex *), sqrt(doublereal);
+    double c_abs(complex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j, k;
     real sum, absa, scale;
@@ -166,7 +166,7 @@ real clanhp_(char *norm, char *uplo, integer *n, complex *ap, real *work)
                         i__ <= i__2;
                         ++i__)
                 {
-                    sum = c_f2c_abs(&ap[i__]);
+                    sum = c_abs(&ap[i__]);
                     if (value < sum || sisnan_(&sum))
                     {
                         value = sum;
@@ -202,7 +202,7 @@ real clanhp_(char *norm, char *uplo, integer *n, complex *ap, real *work)
                         i__ <= i__2;
                         ++i__)
                 {
-                    sum = c_f2c_abs(&ap[i__]);
+                    sum = c_abs(&ap[i__]);
                     if (value < sum || sisnan_(&sum))
                     {
                         value = sum;
@@ -232,7 +232,7 @@ real clanhp_(char *norm, char *uplo, integer *n, complex *ap, real *work)
                         i__ <= i__2;
                         ++i__)
                 {
-                    absa = c_f2c_abs(&ap[k]);
+                    absa = c_abs(&ap[k]);
                     sum += absa;
                     work[i__] += absa;
                     ++k;
@@ -279,7 +279,7 @@ real clanhp_(char *norm, char *uplo, integer *n, complex *ap, real *work)
                         i__ <= i__2;
                         ++i__)
                 {
-                    absa = c_f2c_abs(&ap[k]);
+                    absa = c_abs(&ap[k]);
                     sum += absa;
                     work[i__] += absa;
                     ++k;

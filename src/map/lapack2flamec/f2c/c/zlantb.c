@@ -135,7 +135,7 @@ doublereal zlantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, d
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal ret_val;
     /* Builtin functions */
-    double z_f2c_abs(doublecomplex *), sqrt(doublereal);
+    double z_abs(doublecomplex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j, l;
     doublereal sum, scale;
@@ -195,7 +195,7 @@ doublereal zlantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, d
                             i__ <= i__3;
                             ++i__)
                     {
-                        sum = z_f2c_abs(&ab[i__ + j * ab_dim1]);
+                        sum = z_abs(&ab[i__ + j * ab_dim1]);
                         if (value < sum || disnan_(&sum))
                         {
                             value = sum;
@@ -220,7 +220,7 @@ doublereal zlantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, d
                             i__ <= i__3;
                             ++i__)
                     {
-                        sum = z_f2c_abs(&ab[i__ + j * ab_dim1]);
+                        sum = z_abs(&ab[i__ + j * ab_dim1]);
                         if (value < sum || disnan_(&sum))
                         {
                             value = sum;
@@ -248,7 +248,7 @@ doublereal zlantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, d
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = z_f2c_abs(&ab[i__ + j * ab_dim1]);
+                        sum = z_abs(&ab[i__ + j * ab_dim1]);
                         if (value < sum || disnan_(&sum))
                         {
                             value = sum;
@@ -273,7 +273,7 @@ doublereal zlantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, d
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = z_f2c_abs(&ab[i__ + j * ab_dim1]);
+                        sum = z_abs(&ab[i__ + j * ab_dim1]);
                         if (value < sum || disnan_(&sum))
                         {
                             value = sum;
@@ -307,7 +307,7 @@ doublereal zlantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, d
                             i__ <= i__3;
                             ++i__)
                     {
-                        sum += z_f2c_abs(&ab[i__ + j * ab_dim1]);
+                        sum += z_abs(&ab[i__ + j * ab_dim1]);
                         /* L90: */
                     }
                 }
@@ -321,7 +321,7 @@ doublereal zlantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, d
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += z_f2c_abs(&ab[i__ + j * ab_dim1]);
+                        sum += z_abs(&ab[i__ + j * ab_dim1]);
                         /* L100: */
                     }
                 }
@@ -350,7 +350,7 @@ doublereal zlantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, d
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += z_f2c_abs(&ab[i__ + j * ab_dim1]);
+                        sum += z_abs(&ab[i__ + j * ab_dim1]);
                         /* L120: */
                     }
                 }
@@ -365,7 +365,7 @@ doublereal zlantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, d
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += z_f2c_abs(&ab[i__ + j * ab_dim1]);
+                        sum += z_abs(&ab[i__ + j * ab_dim1]);
                         /* L130: */
                     }
                 }
@@ -407,7 +407,7 @@ doublereal zlantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, d
                             i__ <= i__4;
                             ++i__)
                     {
-                        work[i__] += z_f2c_abs(&ab[l + i__ + j * ab_dim1]);
+                        work[i__] += z_abs(&ab[l + i__ + j * ab_dim1]);
                         /* L160: */
                     }
                     /* L170: */
@@ -437,7 +437,7 @@ doublereal zlantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, d
                             i__ <= i__3;
                             ++i__)
                     {
-                        work[i__] += z_f2c_abs(&ab[l + i__ + j * ab_dim1]);
+                        work[i__] += z_abs(&ab[l + i__ + j * ab_dim1]);
                         /* L190: */
                     }
                     /* L200: */
@@ -470,7 +470,7 @@ doublereal zlantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, d
                             i__ <= i__3;
                             ++i__)
                     {
-                        work[i__] += z_f2c_abs(&ab[l + i__ + j * ab_dim1]);
+                        work[i__] += z_abs(&ab[l + i__ + j * ab_dim1]);
                         /* L220: */
                     }
                     /* L230: */
@@ -500,7 +500,7 @@ doublereal zlantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, d
                             i__ <= i__3;
                             ++i__)
                     {
-                        work[i__] += z_f2c_abs(&ab[l + i__ + j * ab_dim1]);
+                        work[i__] += z_abs(&ab[l + i__ + j * ab_dim1]);
                         /* L250: */
                     }
                     /* L260: */

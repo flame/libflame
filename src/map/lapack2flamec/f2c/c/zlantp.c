@@ -120,7 +120,7 @@ doublereal zlantp_(char *norm, char *uplo, char *diag, integer *n, doublecomplex
     integer i__1, i__2;
     doublereal ret_val;
     /* Builtin functions */
-    double z_f2c_abs(doublecomplex *), sqrt(doublereal);
+    double z_abs(doublecomplex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j, k;
     doublereal sum, scale;
@@ -177,7 +177,7 @@ doublereal zlantp_(char *norm, char *uplo, char *diag, integer *n, doublecomplex
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = z_f2c_abs(&ap[i__]);
+                        sum = z_abs(&ap[i__]);
                         if (value < sum || disnan_(&sum))
                         {
                             value = sum;
@@ -200,7 +200,7 @@ doublereal zlantp_(char *norm, char *uplo, char *diag, integer *n, doublecomplex
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = z_f2c_abs(&ap[i__]);
+                        sum = z_abs(&ap[i__]);
                         if (value < sum || disnan_(&sum))
                         {
                             value = sum;
@@ -227,7 +227,7 @@ doublereal zlantp_(char *norm, char *uplo, char *diag, integer *n, doublecomplex
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = z_f2c_abs(&ap[i__]);
+                        sum = z_abs(&ap[i__]);
                         if (value < sum || disnan_(&sum))
                         {
                             value = sum;
@@ -250,7 +250,7 @@ doublereal zlantp_(char *norm, char *uplo, char *diag, integer *n, doublecomplex
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = z_f2c_abs(&ap[i__]);
+                        sum = z_abs(&ap[i__]);
                         if (value < sum || disnan_(&sum))
                         {
                             value = sum;
@@ -284,7 +284,7 @@ doublereal zlantp_(char *norm, char *uplo, char *diag, integer *n, doublecomplex
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += z_f2c_abs(&ap[i__]);
+                        sum += z_abs(&ap[i__]);
                         /* L90: */
                     }
                 }
@@ -296,7 +296,7 @@ doublereal zlantp_(char *norm, char *uplo, char *diag, integer *n, doublecomplex
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += z_f2c_abs(&ap[i__]);
+                        sum += z_abs(&ap[i__]);
                         /* L100: */
                     }
                 }
@@ -323,7 +323,7 @@ doublereal zlantp_(char *norm, char *uplo, char *diag, integer *n, doublecomplex
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += z_f2c_abs(&ap[i__]);
+                        sum += z_abs(&ap[i__]);
                         /* L120: */
                     }
                 }
@@ -335,7 +335,7 @@ doublereal zlantp_(char *norm, char *uplo, char *diag, integer *n, doublecomplex
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += z_f2c_abs(&ap[i__]);
+                        sum += z_abs(&ap[i__]);
                         /* L130: */
                     }
                 }
@@ -374,7 +374,7 @@ doublereal zlantp_(char *norm, char *uplo, char *diag, integer *n, doublecomplex
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += z_f2c_abs(&ap[k]);
+                        work[i__] += z_abs(&ap[k]);
                         ++k;
                         /* L160: */
                     }
@@ -402,7 +402,7 @@ doublereal zlantp_(char *norm, char *uplo, char *diag, integer *n, doublecomplex
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += z_f2c_abs(&ap[k]);
+                        work[i__] += z_abs(&ap[k]);
                         ++k;
                         /* L190: */
                     }
@@ -433,7 +433,7 @@ doublereal zlantp_(char *norm, char *uplo, char *diag, integer *n, doublecomplex
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += z_f2c_abs(&ap[k]);
+                        work[i__] += z_abs(&ap[k]);
                         ++k;
                         /* L220: */
                     }
@@ -460,7 +460,7 @@ doublereal zlantp_(char *norm, char *uplo, char *diag, integer *n, doublecomplex
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += z_f2c_abs(&ap[k]);
+                        work[i__] += z_abs(&ap[k]);
                         ++k;
                         /* L250: */
                     }

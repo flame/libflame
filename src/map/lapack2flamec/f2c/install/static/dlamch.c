@@ -85,7 +85,10 @@ doublereal dlamch_(char *cmach)
         if ( small >= sfmin)
             sfmin = small * (one + eps);
 
-        t    = DBL_DIG;
+		// For t, we need the number of base-2 digits, not base-10 digits.
+		// Here, we hardcode the value obtained from netlib LAPACK.
+        //t    = DBL_DIG;
+        t    = 53;
         emin = DBL_MIN_EXP;
         emax = DBL_MAX_EXP;
         rmin = DBL_MIN;

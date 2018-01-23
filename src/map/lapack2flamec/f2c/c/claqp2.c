@@ -144,7 +144,7 @@ int claqp2_(integer *m, integer *n, integer *offset, complex *a, integer *lda, i
     /* Builtin functions */
     double sqrt(doublereal);
     void r_cnjg(complex *, complex *);
-    double c_f2c_abs(complex *);
+    double c_abs(complex *);
     /* Local variables */
     integer i__, j, mn;
     complex aii;
@@ -252,7 +252,7 @@ int claqp2_(integer *m, integer *n, integer *offset, complex *a, integer *lda, i
                 /* NOTE: The following 4 lines follow from the analysis in */
                 /* Lapack Working Note 176. */
                 /* Computing 2nd power */
-                r__1 = c_f2c_abs(&a[offpi + j * a_dim1]) / vn1[j];
+                r__1 = c_abs(&a[offpi + j * a_dim1]) / vn1[j];
                 temp = 1.f - r__1 * r__1;
                 temp = max(temp,0.f);
                 /* Computing 2nd power */

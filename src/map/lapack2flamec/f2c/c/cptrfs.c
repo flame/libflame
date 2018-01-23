@@ -184,7 +184,7 @@ int cptrfs_(char *uplo, integer *n, integer *nrhs, real *d__, complex *e, real *
     /* Builtin functions */
     double r_imag(complex *);
     void r_cnjg(complex *, complex *);
-    double c_f2c_abs(complex *);
+    double c_abs(complex *);
     /* Local variables */
     integer i__, j;
     real s;
@@ -615,7 +615,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 i__ <= i__2;
                 ++i__)
         {
-            rwork[i__] = rwork[i__ - 1] * c_f2c_abs(&ef[i__ - 1]) + 1.f;
+            rwork[i__] = rwork[i__ - 1] * c_abs(&ef[i__ - 1]) + 1.f;
             /* L70: */
         }
         /* Solve D * M(L)**H * x = b. */
@@ -624,7 +624,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 i__ >= 1;
                 --i__)
         {
-            rwork[i__] = rwork[i__] / df[i__] + rwork[i__ + 1] * c_f2c_abs(&ef[ i__]);
+            rwork[i__] = rwork[i__] / df[i__] + rwork[i__ + 1] * c_abs(&ef[ i__]);
             /* L80: */
         }
         /* Compute norm(inv(A)) = max(x(i)), 1<=i<=n. */
@@ -639,7 +639,7 @@ L20: /* Loop until stopping criterion is satisfied. */
         {
             /* Computing MAX */
             r__1 = lstres;
-            r__2 = c_f2c_abs(&x[i__ + j * x_dim1]); // , expr subst
+            r__2 = c_abs(&x[i__ + j * x_dim1]); // , expr subst
             lstres = max(r__1,r__2);
             /* L90: */
         }

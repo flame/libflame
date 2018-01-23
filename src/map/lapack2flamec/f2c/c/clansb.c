@@ -124,7 +124,7 @@ real clansb_(char *norm, char *uplo, integer *n, integer *k, complex *ab, intege
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4;
     real ret_val;
     /* Builtin functions */
-    double c_f2c_abs(complex *), sqrt(doublereal);
+    double c_abs(complex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j, l;
     real sum, absa, scale;
@@ -181,7 +181,7 @@ real clansb_(char *norm, char *uplo, integer *n, integer *k, complex *ab, intege
                         i__ <= i__3;
                         ++i__)
                 {
-                    sum = c_f2c_abs(&ab[i__ + j * ab_dim1]);
+                    sum = c_abs(&ab[i__ + j * ab_dim1]);
                     if (value < sum || sisnan_(&sum))
                     {
                         value = sum;
@@ -206,7 +206,7 @@ real clansb_(char *norm, char *uplo, integer *n, integer *k, complex *ab, intege
                         i__ <= i__3;
                         ++i__)
                 {
-                    sum = c_f2c_abs(&ab[i__ + j * ab_dim1]);
+                    sum = c_abs(&ab[i__ + j * ab_dim1]);
                     if (value < sum || sisnan_(&sum))
                     {
                         value = sum;
@@ -238,12 +238,12 @@ real clansb_(char *norm, char *uplo, integer *n, integer *k, complex *ab, intege
                         i__ <= i__4;
                         ++i__)
                 {
-                    absa = c_f2c_abs(&ab[l + i__ + j * ab_dim1]);
+                    absa = c_abs(&ab[l + i__ + j * ab_dim1]);
                     sum += absa;
                     work[i__] += absa;
                     /* L50: */
                 }
-                work[j] = sum + c_f2c_abs(&ab[*k + 1 + j * ab_dim1]);
+                work[j] = sum + c_abs(&ab[*k + 1 + j * ab_dim1]);
                 /* L60: */
             }
             i__1 = *n;
@@ -274,7 +274,7 @@ real clansb_(char *norm, char *uplo, integer *n, integer *k, complex *ab, intege
                     j <= i__1;
                     ++j)
             {
-                sum = work[j] + c_f2c_abs(&ab[j * ab_dim1 + 1]);
+                sum = work[j] + c_abs(&ab[j * ab_dim1 + 1]);
                 l = 1 - j;
                 /* Computing MIN */
                 i__3 = *n;
@@ -284,7 +284,7 @@ real clansb_(char *norm, char *uplo, integer *n, integer *k, complex *ab, intege
                         i__ <= i__4;
                         ++i__)
                 {
-                    absa = c_f2c_abs(&ab[l + i__ + j * ab_dim1]);
+                    absa = c_abs(&ab[l + i__ + j * ab_dim1]);
                     sum += absa;
                     work[i__] += absa;
                     /* L90: */

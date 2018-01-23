@@ -118,7 +118,7 @@ real clangb_(char *norm, integer *n, integer *kl, integer *ku, complex *ab, inte
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     real ret_val;
     /* Builtin functions */
-    double c_f2c_abs(complex *), sqrt(doublereal);
+    double c_abs(complex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j, k, l;
     real sum, temp, scale;
@@ -176,7 +176,7 @@ real clangb_(char *norm, integer *n, integer *kl, integer *ku, complex *ab, inte
                     i__ <= i__3;
                     ++i__)
             {
-                temp = c_f2c_abs(&ab[i__ + j * ab_dim1]);
+                temp = c_abs(&ab[i__ + j * ab_dim1]);
                 if (value < temp || sisnan_(&temp))
                 {
                     value = temp;
@@ -206,7 +206,7 @@ real clangb_(char *norm, integer *n, integer *kl, integer *ku, complex *ab, inte
                     i__ <= i__2;
                     ++i__)
             {
-                sum += c_f2c_abs(&ab[i__ + j * ab_dim1]);
+                sum += c_abs(&ab[i__ + j * ab_dim1]);
                 /* L30: */
             }
             if (value < sum || sisnan_(&sum))
@@ -244,7 +244,7 @@ real clangb_(char *norm, integer *n, integer *kl, integer *ku, complex *ab, inte
                     i__ <= i__4;
                     ++i__)
             {
-                work[i__] += c_f2c_abs(&ab[k + i__ + j * ab_dim1]);
+                work[i__] += c_abs(&ab[k + i__ + j * ab_dim1]);
                 /* L60: */
             }
             /* L70: */

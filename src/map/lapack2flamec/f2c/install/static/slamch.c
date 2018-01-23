@@ -85,7 +85,10 @@ real slamch_(char *cmach)
         if ( small >= sfmin)
             sfmin = small * (one + eps);
 
-        t    = FLT_DIG;
+		// For t, we need the number of base-2 digits, not base-10 digits.
+		// Here, we hardcode the value obtained from netlib LAPACK.
+        //t    = FLT_DIG;
+        t    = 24;
         emin = FLT_MIN_EXP;
         emax = FLT_MAX_EXP;
         rmin = FLT_MIN;

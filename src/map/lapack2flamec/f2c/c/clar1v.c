@@ -222,7 +222,7 @@ int clar1v_(integer *n, integer *b1, integer *bn, real * lambda, real *d__, real
     real r__1;
     complex q__1, q__2;
     /* Builtin functions */
-    double c_f2c_abs(complex *), sqrt(doublereal);
+    double c_abs(complex *), sqrt(doublereal);
     /* Local variables */
     integer i__;
     real s;
@@ -484,7 +484,7 @@ L60:
             q__1.i = -q__2.i; // , expr subst
             z__[i__2].r = q__1.r;
             z__[i__2].i = q__1.i; // , expr subst
-            if ((c_f2c_abs(&z__[i__]) + c_f2c_abs(&z__[i__ + 1])) * (r__1 = ld[i__], f2c_abs(r__1)) < *gaptol)
+            if ((c_abs(&z__[i__]) + c_abs(&z__[i__ + 1])) * (r__1 = ld[i__], f2c_abs(r__1)) < *gaptol)
             {
                 i__2 = i__;
                 z__[i__2].r = 0.f;
@@ -533,7 +533,7 @@ L220:
                 z__[i__2].r = q__1.r;
                 z__[i__2].i = q__1.i; // , expr subst
             }
-            if ((c_f2c_abs(&z__[i__]) + c_f2c_abs(&z__[i__ + 1])) * (r__1 = ld[i__], f2c_abs(r__1)) < *gaptol)
+            if ((c_abs(&z__[i__]) + c_abs(&z__[i__ + 1])) * (r__1 = ld[i__], f2c_abs(r__1)) < *gaptol)
             {
                 i__2 = i__;
                 z__[i__2].r = 0.f;
@@ -568,7 +568,7 @@ L240:
             q__1.i = -q__2.i; // , expr subst
             z__[i__2].r = q__1.r;
             z__[i__2].i = q__1.i; // , expr subst
-            if ((c_f2c_abs(&z__[i__]) + c_f2c_abs(&z__[i__ + 1])) * (r__1 = ld[i__], f2c_abs(r__1)) < *gaptol)
+            if ((c_abs(&z__[i__]) + c_abs(&z__[i__ + 1])) * (r__1 = ld[i__], f2c_abs(r__1)) < *gaptol)
             {
                 i__2 = i__ + 1;
                 z__[i__2].r = 0.f;
@@ -617,7 +617,7 @@ L260:
                 z__[i__2].r = q__1.r;
                 z__[i__2].i = q__1.i; // , expr subst
             }
-            if ((c_f2c_abs(&z__[i__]) + c_f2c_abs(&z__[i__ + 1])) * (r__1 = ld[i__], f2c_abs(r__1)) < *gaptol)
+            if ((c_abs(&z__[i__]) + c_abs(&z__[i__ + 1])) * (r__1 = ld[i__], f2c_abs(r__1)) < *gaptol)
             {
                 i__2 = i__ + 1;
                 z__[i__2].r = 0.f;

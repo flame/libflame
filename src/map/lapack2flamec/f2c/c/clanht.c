@@ -94,7 +94,7 @@ real clanht_(char *norm, integer *n, real *d__, complex *e)
     integer i__1;
     real ret_val, r__1;
     /* Builtin functions */
-    double c_f2c_abs(complex *), sqrt(doublereal);
+    double c_abs(complex *), sqrt(doublereal);
     /* Local variables */
     integer i__;
     real sum, scale;
@@ -147,7 +147,7 @@ real clanht_(char *norm, integer *n, real *d__, complex *e)
             {
                 anorm = sum;
             }
-            sum = c_f2c_abs(&e[i__]);
+            sum = c_abs(&e[i__]);
             if (anorm < sum || sisnan_(&sum))
             {
                 anorm = sum;
@@ -164,8 +164,8 @@ real clanht_(char *norm, integer *n, real *d__, complex *e)
         }
         else
         {
-            anorm = f2c_abs(d__[1]) + c_f2c_abs(&e[1]);
-            sum = c_f2c_abs(&e[*n - 1]) + (r__1 = d__[*n], f2c_abs(r__1));
+            anorm = f2c_abs(d__[1]) + c_abs(&e[1]);
+            sum = c_abs(&e[*n - 1]) + (r__1 = d__[*n], f2c_abs(r__1));
             if (anorm < sum || sisnan_(&sum))
             {
                 anorm = sum;
@@ -175,7 +175,7 @@ real clanht_(char *norm, integer *n, real *d__, complex *e)
                     i__ <= i__1;
                     ++i__)
             {
-                sum = (r__1 = d__[i__], f2c_abs(r__1)) + c_f2c_abs(&e[i__]) + c_f2c_abs(& e[i__ - 1]);
+                sum = (r__1 = d__[i__], f2c_abs(r__1)) + c_abs(&e[i__]) + c_abs(& e[i__ - 1]);
                 if (anorm < sum || sisnan_(&sum))
                 {
                     anorm = sum;

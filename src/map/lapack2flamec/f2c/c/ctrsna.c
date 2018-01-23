@@ -249,7 +249,7 @@ int ctrsna_(char *job, char *howmny, logical *select, integer *n, complex *t, in
     real r__1, r__2;
     complex q__1;
     /* Builtin functions */
-    double c_f2c_abs(complex *), r_imag(complex *);
+    double c_abs(complex *), r_imag(complex *);
     /* Local variables */
     integer i__, j, k, ks, ix;
     real eps, est;
@@ -409,7 +409,7 @@ int ctrsna_(char *job, char *howmny, logical *select, integer *n, complex *t, in
         }
         if (wantsp)
         {
-            sep[1] = c_f2c_abs(&t[t_dim1 + 1]);
+            sep[1] = c_abs(&t[t_dim1 + 1]);
         }
         return 0;
     }
@@ -440,7 +440,7 @@ int ctrsna_(char *job, char *howmny, logical *select, integer *n, complex *t, in
             prod.i = q__1.i; // , expr subst
             rnrm = scnrm2_(n, &vr[ks * vr_dim1 + 1], &c__1);
             lnrm = scnrm2_(n, &vl[ks * vl_dim1 + 1], &c__1);
-            s[ks] = c_f2c_abs(&prod) / (rnrm * lnrm);
+            s[ks] = c_abs(&prod) / (rnrm * lnrm);
         }
         if (wantsp)
         {

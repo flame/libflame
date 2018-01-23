@@ -295,7 +295,7 @@ int chgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     real r__1, r__2, r__3, r__4, r__5, r__6;
     complex q__1, q__2, q__3, q__4, q__5, q__6;
     /* Builtin functions */
-    double c_f2c_abs(complex *);
+    double c_abs(complex *);
     void r_cnjg(complex *, complex *);
     double r_imag(complex *);
     void c_div(complex *, complex *, complex *), pow_ci(complex *, complex *, integer *), c_sqrt(complex *, complex *);
@@ -536,7 +536,7 @@ int chgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
             j <= i__1;
             ++j)
     {
-        absb = c_f2c_abs(&t[j + j * t_dim1]);
+        absb = c_abs(&t[j + j * t_dim1]);
         if (absb > safmin)
         {
             i__2 = j + j * t_dim1;
@@ -646,7 +646,7 @@ int chgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                 goto L60;
             }
         }
-        if (c_f2c_abs(&t[ilast + ilast * t_dim1]) <= btol)
+        if (c_abs(&t[ilast + ilast * t_dim1]) <= btol)
         {
             i__2 = ilast + ilast * t_dim1;
             t[i__2].r = 0.f;
@@ -680,7 +680,7 @@ int chgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                 }
             }
             /* Test 2: for T(j,j)=0 */
-            if (c_f2c_abs(&t[j + j * t_dim1]) < btol)
+            if (c_abs(&t[j + j * t_dim1]) < btol)
             {
                 i__3 = j + j * t_dim1;
                 t[i__3].r = 0.f;
@@ -835,7 +835,7 @@ L50:
         }
         /* H(ILAST,ILAST-1)=0 -- Standardize B, set ALPHA and BETA */
 L60:
-        absb = c_f2c_abs(&t[ilast + ilast * t_dim1]);
+        absb = c_abs(&t[ilast + ilast * t_dim1]);
         if (absb > safmin)
         {
             i__2 = ilast + ilast * t_dim1;
@@ -1327,7 +1327,7 @@ L190: /* Set Eigenvalues 1:ILO-1 */
             j <= i__1;
             ++j)
     {
-        absb = c_f2c_abs(&t[j + j * t_dim1]);
+        absb = c_abs(&t[j + j * t_dim1]);
         if (absb > safmin)
         {
             i__2 = j + j * t_dim1;

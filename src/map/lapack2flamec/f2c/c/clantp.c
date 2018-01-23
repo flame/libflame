@@ -120,7 +120,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
     integer i__1, i__2;
     real ret_val;
     /* Builtin functions */
-    double c_f2c_abs(complex *), sqrt(doublereal);
+    double c_abs(complex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j, k;
     real sum, scale;
@@ -177,7 +177,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = c_f2c_abs(&ap[i__]);
+                        sum = c_abs(&ap[i__]);
                         if (value < sum || sisnan_(&sum))
                         {
                             value = sum;
@@ -200,7 +200,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = c_f2c_abs(&ap[i__]);
+                        sum = c_abs(&ap[i__]);
                         if (value < sum || sisnan_(&sum))
                         {
                             value = sum;
@@ -227,7 +227,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = c_f2c_abs(&ap[i__]);
+                        sum = c_abs(&ap[i__]);
                         if (value < sum || sisnan_(&sum))
                         {
                             value = sum;
@@ -250,7 +250,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = c_f2c_abs(&ap[i__]);
+                        sum = c_abs(&ap[i__]);
                         if (value < sum || sisnan_(&sum))
                         {
                             value = sum;
@@ -284,7 +284,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += c_f2c_abs(&ap[i__]);
+                        sum += c_abs(&ap[i__]);
                         /* L90: */
                     }
                 }
@@ -296,7 +296,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += c_f2c_abs(&ap[i__]);
+                        sum += c_abs(&ap[i__]);
                         /* L100: */
                     }
                 }
@@ -323,7 +323,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += c_f2c_abs(&ap[i__]);
+                        sum += c_abs(&ap[i__]);
                         /* L120: */
                     }
                 }
@@ -335,7 +335,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += c_f2c_abs(&ap[i__]);
+                        sum += c_abs(&ap[i__]);
                         /* L130: */
                     }
                 }
@@ -374,7 +374,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += c_f2c_abs(&ap[k]);
+                        work[i__] += c_abs(&ap[k]);
                         ++k;
                         /* L160: */
                     }
@@ -402,7 +402,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += c_f2c_abs(&ap[k]);
+                        work[i__] += c_abs(&ap[k]);
                         ++k;
                         /* L190: */
                     }
@@ -433,7 +433,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += c_f2c_abs(&ap[k]);
+                        work[i__] += c_abs(&ap[k]);
                         ++k;
                         /* L220: */
                     }
@@ -460,7 +460,7 @@ real clantp_(char *norm, char *uplo, char *diag, integer *n, complex *ap, real *
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += c_f2c_abs(&ap[k]);
+                        work[i__] += c_abs(&ap[k]);
                         ++k;
                         /* L250: */
                     }
