@@ -412,7 +412,13 @@ endif
 # --- Dynamic library linker rules for libflame ---
 $(MK_ALL_FLAMEC_DLL): $(MK_ALL_FLAMEC_OBJS)
 ifeq ($(FLA_ENABLE_VERBOSE_MAKE_OUTPUT),yes)
+ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
+	$(file > $@.in,$^)
+	$(LINKER) -shared $(LDFLAGS) -o $@ @$@.in
+	$(RM) $@.in
+else
 	$(LINKER) -shared $(LDFLAGS) -o $@ $?
+endif
 else
 	@echo "Dynamically linking $@"
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)

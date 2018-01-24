@@ -88,7 +88,8 @@ real slamch_(char *cmach)
 		// For t, we need the number of base-2 digits, not base-10 digits.
 		// Here, we hardcode the value obtained from netlib LAPACK.
         //t    = FLT_DIG;
-        t    = 24;
+        //t    = 24;
+        t    = FLT_MANT_DIG;
         emin = FLT_MIN_EXP;
         emax = FLT_MAX_EXP;
         rmin = FLT_MIN;
