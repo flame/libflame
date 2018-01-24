@@ -643,7 +643,7 @@
 *
    90       CONTINUE
 *
-            ABSTOL = UNFL + UNFL
+            ABSTOL = 0
             IF( N.LE.1 ) THEN
                IL = 1
                IU = N
