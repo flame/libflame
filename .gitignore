@@ -43,3 +43,16 @@ include_local
 
 # -- misc. --
 
+# -- netlib LAPACK test suite files --
+
+*.out
+test?lamch
+testdsecnd
+testieee
+testlsame
+testsecond
+testversion
+xbla*
+xlin*
+xeig*
+testing_results.txt
