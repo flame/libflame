@@ -21,7 +21,9 @@ print_usage()
 	echo " Field G. Van Zee"
 	echo " "
 	echo " Finds all dependents of a given routine in a specified source"
-	echo " directory and outputs them on standard output. "
+	echo " directory and outputs them on standard output. The routine may"
+	echo " be specified instead as a quoted string of routines, in which"
+	echo " case all dependents will be aggregated indistinguishably."
 	echo " "
 	echo " Usage:"
 	echo "   ${script_name} [-fq] routine src_dir"
@@ -51,13 +53,9 @@ main()
 	local src_dir
 	local src_files
 	
-	
 	# Declare and initialize global varialbes
 	fast_flag=""
 	quiet_flag=""
-	result_list=""	
-	result_files=""
-	
 	
 	# Process our command line options.
 	while getopts ":fq" opt; do
@@ -69,61 +67,57 @@ main()
 	done
 	shift $(($OPTIND - 1))
 	
-	
 	# Check the number of arguments after command line option processing.
 	if [ $# != "2" ]; then
 		print_usage
 	fi
-	
 	
 	# Extract arguments.
 	script_name=${0##*/}
 	the_routine="$1"
 	src_dir="$2"
 	
-	
 	# Check existence of the directory provided through the command-line.
 	if [ ! -d "${src_dir}" ]; then
 		echo "${script_name}: Source directory does not exist (${src_dir})."
 		exit 1
 	fi
-	
-	
-	# Translate the routine name to uppercase.
-	the_routine=$(echo ${the_routine} | tr '[:lower:]' '[:upper:]')
-	
-	
-	# Get a list of the files in the source directory.
-	src_files="$(ls ${src_dir}/*.f)"
-	
-	
+
 	# Echo the current search if verbosity was requested.
 	if [ -z "${quiet_flag}" ]; then
 		echo "Searching for dependents of:"
 	fi
 	
+	result_files=""	
+
+	for item in ${the_routine}; do
 	
-	# Call a recursive routine that will find routine dependents until
-	# no more are found.
-	find_routine ${the_routine} "${src_dir}" ""
+		# Translate the routine name to uppercase.
+		item=$(echo ${item} | tr '[:lower:]' '[:upper:]')
 	
+		# Get a list of the files in the source directory.
+		src_files="$(ls ${src_dir}/*.f)"
 	
-	# Convert the list of routines into a list of their corresponding files.
-	for rout in ${result_list}; do
+		# Call a recursive routine that will find routine dependents until
+		# no more are found.
+		result_list=""	
+		find_routine ${item} "${src_dir}" ""
+	
+		# Convert the list of routines into a list of their corresponding files.
+		for rout in ${result_list}; do
 		
-		# Translate to lower case, and then add the fortran source file suffix.
-		filename=$(echo ${rout} | tr '[:upper:]' '[:lower:]')
-		filename="${filename}.f"
-		result_files="${result_files} ${filename}"
-	done
+			# Translate to lower case, and then add the fortran source file suffix.
+			filename=$(echo ${rout} | tr '[:upper:]' '[:lower:]')
+			filename="${filename}.f"
+			result_files="${result_files} ${filename}"
+		done
 	
+	done
 	
 	# Output the final list
 	echo " "
 	echo "Dependents of ${the_routine}:"
 	echo "${result_files}"
-	
-	
 	
 	# Exit peacefully.
 	return 0
@@ -134,6 +128,7 @@ find_routine()
 	local routine
 	local src_dir
 	local tabs
+	local newtabs
 	
 	local routine_files
 	local routine_list
@@ -143,26 +138,32 @@ find_routine()
 	local prev_rout
 	local rout
 	
-	
 	# Extract arguments.
 	routine="$1"
 	src_dir="$2"
 	tabs="$3"
 	
-	
 	# Echo the current search if verbosity was requested.
 	if [ -z "${quiet_flag}" ]; then
-		echo -e "${tabs}${routine}..."
+		if [ "${tabs}" == "" ]; then
+			#echo -e "${tabs}${routine}"
+			echo -e "${routine}"
+		else
+			echo -e "${tabs}^-- ${routine}"
+		fi
 	fi
-	
+
+	if [ "${tabs}" == "" ]; then
+		newtabs=" "
+	else
+		newtabs="    "
+	fi
 	
 	# Get a list of all file paths of files that call our routine.
 	routine_files=$(grep "${routine}(" ${src_dir}/*.f | grep "CALL" | cut -d':' -f1)
 	
-	
 	# Initialize the list of routines found to empty.
 	routine_list=""
-	
 	
 	# Process each file that contained the routine invocation.
 	for file in ${routine_files}; do
@@ -175,11 +176,9 @@ find_routine()
 		routine_list="${routine_list} ${temp_routine}"
 	done
 	
-	
 	# Initialize accumulation variables to empty
 	routine_set=""
 	prev_rout=""
-	
 	
 	# Add only the first occurance of each routine to our running list.
 	for rout in ${routine_list}; do
@@ -200,32 +199,31 @@ find_routine()
 				
 				result_list="${result_list} ${rout}"
 				
-				# If fast flag was given on command line, then we call find_routine()
+				# If fast flag was given on command line, we call find_routine()
 				# here so we only search for routines that have not yet been found.
 				if [ -n "${fast_flag}" ] ; then
-					find_routine ${rout} ${src_dir} "${tabs}\t"
+					find_routine ${rout} ${src_dir} "${newtabs}${tabs}"
 				fi
 			fi
 			
-			# Update the previous routine
+			# Update the previous routine.
 			prev_rout=${rout}
 		fi
 		
 	done
 	
-	
-	# If fast flag was not given on command line, then we always call find_routine() for the sake
-	# of building the hierarchy of dependents, even if we've already searched for a routine before.
+	# If fast flag was not given on command line, then we always call find_routine()
+	# for the sake of building the hierarchy of dependents, even if we've already
+	# searched for a routine before.
 	if [ -z "${fast_flag}" ] ; then
 		for rout in ${routine_set}; do
 			
 			# Recursively find dependents
-			find_routine ${rout} ${src_dir} "${tabs}\t"
+			find_routine ${rout} ${src_dir} "${newtabs}${tabs}"
 		done
 	fi
 	
-	
-	# Return peacefully
+	# Return peacefully.
 	return 0
 }
 
