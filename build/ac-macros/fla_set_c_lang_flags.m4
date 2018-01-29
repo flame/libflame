@@ -8,7 +8,7 @@ AC_DEFUN([FLA_SET_C_LANG_FLAGS],
 	case $CC in
 		dnl GNU gcc.
 		gcc)
-			fla_c_lang_flags='-std=c99'
+			fla_c_lang_flags='-std=c99 -Wall -Wno-unused-function -Wno-parentheses -Wfatal-errors'
 		;;
 		dnl Intel cc.
 		icc)

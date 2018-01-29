@@ -414,19 +414,19 @@ $(MK_ALL_FLAMEC_DLL): $(MK_ALL_FLAMEC_OBJS)
 ifeq ($(FLA_ENABLE_VERBOSE_MAKE_OUTPUT),yes)
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 	$(file > $@.in,$^)
-	$(LINKER) -shared $(LDFLAGS) -o $@ @$@.in
+	$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ @$@.in
 	$(RM) $@.in
 else
-	$(LINKER) -shared $(LDFLAGS) -o $@ $?
+	$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ $?
 endif
 else
 	@echo "Dynamically linking $@"
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 	@$(file > $@.in,$^)
-	@$(LINKER) -shared $(LDFLAGS) -o $@ @$@.in
+	@$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ @$@.in
 	@$(RM) $@.in
 else
-	@$(LINKER) -shared $(LDFLAGS) -o $@ $?
+	@$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ $?
 endif
 endif
 
