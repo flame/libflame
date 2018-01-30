@@ -79,7 +79,7 @@ FLA_Error FLA_Svd_uv_var1_components( dim_t n_iter_max, dim_t k_accum, dim_t b_a
 			// Extract the diagonal and superdiagonal from A.
 			FLA_Bidiag_UT( A, T, S );
 			FLA_Bidiag_UT_realify( A, rL, rR );
-			FLA_Bidiag_UT_extract_diagonals( A, d, e );
+			FLA_Bidiag_UT_extract_real_diagonals( A, d, e );
 			}
 			*dtime_bred = FLA_Clock() - dtime_temp;
 
@@ -153,7 +153,7 @@ FLA_Error FLA_Svd_uv_var1_components( dim_t n_iter_max, dim_t k_accum, dim_t b_a
 			// Extract the diagonal and superdiagonal from A.
 			FLA_Bidiag_UT( R, T, S );
 			FLA_Bidiag_UT_realify( R, rL, rR );
-			FLA_Bidiag_UT_extract_diagonals( R, d, e );
+			FLA_Bidiag_UT_extract_real_diagonals( R, d, e );
 			}
 			*dtime_bred = FLA_Clock() - dtime_temp;
 

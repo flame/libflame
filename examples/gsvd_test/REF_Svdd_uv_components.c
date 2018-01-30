@@ -63,7 +63,7 @@ FLA_Error REF_Svdd_uv_components( FLA_Obj A, FLA_Obj s, FLA_Obj U, FLA_Obj V,
       {
         // Reduce to bidiagonal form.
         FLA_Bidiag_blk_external( A, tu, tv );
-        FLA_Bidiag_UT_extract_diagonals( A, d, eT );
+        FLA_Bidiag_UT_extract_real_diagonals( A, d, eT );
       }
       *dtime_bred = FLA_Clock() - dtime_temp;
 
@@ -127,7 +127,7 @@ FLA_Error REF_Svdd_uv_components( FLA_Obj A, FLA_Obj s, FLA_Obj U, FLA_Obj V,
       {
         // Reduce R to bidiagonal form.
         FLA_Bidiag_blk_external( AT, tu, tv );
-        FLA_Bidiag_UT_extract_diagonals( A, d, eT );
+        FLA_Bidiag_UT_extract_real_diagonals( A, d, eT );
       }
       *dtime_bred = FLA_Clock() - dtime_temp;
 
