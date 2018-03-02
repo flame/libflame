@@ -219,7 +219,7 @@ int cgelsy_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
     real r__1, r__2;
     complex q__1;
     /* Builtin functions */
-    double c_f2c_abs(complex *);
+    double c_abs(complex *);
     /* Local variables */
     integer i__, j;
     complex c1, c2, s1, s2;
@@ -415,9 +415,9 @@ int cgelsy_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
     i__1 = ismax;
     work[i__1].r = 1.f;
     work[i__1].i = 0.f; // , expr subst
-    smax = c_f2c_abs(&a[a_dim1 + 1]);
+    smax = c_abs(&a[a_dim1 + 1]);
     smin = smax;
-    if (c_f2c_abs(&a[a_dim1 + 1]) == 0.f)
+    if (c_abs(&a[a_dim1 + 1]) == 0.f)
     {
         *rank = 0;
         i__1 = max(*m,*n);

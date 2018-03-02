@@ -103,7 +103,7 @@ int clarfgp_(integer *n, complex *alpha, complex *x, integer *incx, complex *tau
     real r__1, r__2;
     complex q__1, q__2;
     /* Builtin functions */
-    double r_imag(complex *), r_sign(real *, real *), c_f2c_abs(complex *);
+    double r_imag(complex *), r_sign(real *, real *), c_abs(complex *);
     /* Local variables */
     integer j;
     complex savealpha;
@@ -266,7 +266,7 @@ L10:
         }
         cladiv_(&q__1, &c_b5, alpha);
         alpha->r = q__1.r, alpha->i = q__1.i;
-        if (c_f2c_abs(tau) <= smlnum)
+        if (c_abs(tau) <= smlnum)
         {
             /* In the case where the computed TAU ends up being a denormalized number, */
             /* it loses relative accuracy. This is a BIG problem. Solution: flush TAU */

@@ -104,7 +104,7 @@ real clanhs_(char *norm, integer *n, complex *a, integer *lda, real *work)
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
     real ret_val;
     /* Builtin functions */
-    double c_f2c_abs(complex *), sqrt(doublereal);
+    double c_abs(complex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j;
     real sum, scale;
@@ -160,7 +160,7 @@ real clanhs_(char *norm, integer *n, complex *a, integer *lda, real *work)
                     i__ <= i__2;
                     ++i__)
             {
-                sum = c_f2c_abs(&a[i__ + j * a_dim1]);
+                sum = c_abs(&a[i__ + j * a_dim1]);
                 if (value < sum || sisnan_(&sum))
                 {
                     value = sum;
@@ -188,7 +188,7 @@ real clanhs_(char *norm, integer *n, complex *a, integer *lda, real *work)
                     i__ <= i__2;
                     ++i__)
             {
-                sum += c_f2c_abs(&a[i__ + j * a_dim1]);
+                sum += c_abs(&a[i__ + j * a_dim1]);
                 /* L30: */
             }
             if (value < sum || sisnan_(&sum))
@@ -222,7 +222,7 @@ real clanhs_(char *norm, integer *n, complex *a, integer *lda, real *work)
                     i__ <= i__2;
                     ++i__)
             {
-                work[i__] += c_f2c_abs(&a[i__ + j * a_dim1]);
+                work[i__] += c_abs(&a[i__ + j * a_dim1]);
                 /* L60: */
             }
             /* L70: */

@@ -434,7 +434,7 @@ int ztgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, inte
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2, i__3;
     doublecomplex z__1, z__2;
     /* Builtin functions */
-    double sqrt(doublereal), z_f2c_abs(doublecomplex *);
+    double sqrt(doublereal), z_abs(doublecomplex *);
     void d_cnjg(doublecomplex *, doublecomplex *);
     /* Local variables */
     integer i__, k, n1, n2, ks, mn2, ijb, kase, ierr;
@@ -805,7 +805,7 @@ L50:
             k <= i__1;
             ++k)
     {
-        dscale = z_f2c_abs(&b[k + k * b_dim1]);
+        dscale = z_abs(&b[k + k * b_dim1]);
         if (dscale > safmin)
         {
             i__2 = k + k * b_dim1;

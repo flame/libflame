@@ -16,7 +16,7 @@ export EXTRA_CFLAGS="-march=native"
 ./configure --prefix=${FLAME_INSTALL_PREFIX} \
             --disable-verbose-make-output \
             --enable-static-build \
-            --disable-dynamic-build \
+            --enable-dynamic-build \
             --enable-autodetect-f77-ldflags \
             --enable-autodetect-f77-name-mangling \
             --disable-max-arg-list-hack \
@@ -37,7 +37,7 @@ export EXTRA_CFLAGS="-march=native"
             --enable-debug \
             --disable-profiling \
             --enable-internal-error-checking=full \
-            --enable-memory-leak-counter \
+            --disable-memory-leak-counter \
             --enable-blis-use-of-fla-malloc \
             --disable-goto-interfaces \
             --disable-cblas-interfaces \

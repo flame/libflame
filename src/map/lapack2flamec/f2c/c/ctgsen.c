@@ -434,7 +434,7 @@ int ctgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, inte
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2, i__3;
     complex q__1, q__2;
     /* Builtin functions */
-    double sqrt(doublereal), c_f2c_abs(complex *);
+    double sqrt(doublereal), c_abs(complex *);
     void r_cnjg(complex *, complex *);
     /* Local variables */
     integer i__, k, n1, n2, ks, mn2, ijb, kase, ierr;
@@ -805,7 +805,7 @@ L50:
             k <= i__1;
             ++k)
     {
-        dscale = c_f2c_abs(&b[k + k * b_dim1]);
+        dscale = c_abs(&b[k + k * b_dim1]);
         if (dscale > safmin)
         {
             i__2 = k + k * b_dim1;

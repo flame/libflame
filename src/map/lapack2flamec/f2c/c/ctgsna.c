@@ -324,7 +324,7 @@ int ctgsna_(char *job, char *howmny, logical *select, integer *n, complex *a, in
     real r__1, r__2;
     complex q__1;
     /* Builtin functions */
-    double c_f2c_abs(complex *);
+    double c_abs(complex *);
     /* Local variables */
     integer i__, k, n1, n2, ks;
     real eps, cond;
@@ -526,8 +526,8 @@ int ctgsna_(char *job, char *howmny, logical *select, integer *n, complex *a, in
             cdotc_f2c_(&q__1, n, &work[1], &c__1, &vl[ks * vl_dim1 + 1], &c__1);
             yhbx.r = q__1.r;
             yhbx.i = q__1.i; // , expr subst
-            r__1 = c_f2c_abs(&yhax);
-            r__2 = c_f2c_abs(&yhbx);
+            r__1 = c_abs(&yhax);
+            r__2 = c_abs(&yhbx);
             cond = slapy2_(&r__1, &r__2);
             if (cond == 0.f)
             {
@@ -542,8 +542,8 @@ int ctgsna_(char *job, char *howmny, logical *select, integer *n, complex *a, in
         {
             if (*n == 1)
             {
-                r__1 = c_f2c_abs(&a[a_dim1 + 1]);
-                r__2 = c_f2c_abs(&b[b_dim1 + 1]);
+                r__1 = c_abs(&a[a_dim1 + 1]);
+                r__2 = c_abs(&b[b_dim1 + 1]);
                 dif[ks] = slapy2_(&r__1, &r__2);
             }
             else

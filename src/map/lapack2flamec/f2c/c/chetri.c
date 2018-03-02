@@ -117,7 +117,7 @@ int chetri_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv, com
     real r__1;
     complex q__1, q__2;
     /* Builtin functions */
-    double c_f2c_abs(complex *);
+    double c_abs(complex *);
     void r_cnjg(complex *, complex *);
     /* Local variables */
     real d__;
@@ -266,7 +266,7 @@ L30: /* If K > N, exit from loop. */
         {
             /* 2 x 2 diagonal block */
             /* Invert the diagonal block. */
-            t = c_f2c_abs(&a[k + (k + 1) * a_dim1]);
+            t = c_abs(&a[k + (k + 1) * a_dim1]);
             i__1 = k + k * a_dim1;
             ak = a[i__1].r / t;
             i__1 = k + 1 + (k + 1) * a_dim1;
@@ -438,7 +438,7 @@ L60: /* If K < 1, exit from loop. */
         {
             /* 2 x 2 diagonal block */
             /* Invert the diagonal block. */
-            t = c_f2c_abs(&a[k + (k - 1) * a_dim1]);
+            t = c_abs(&a[k + (k - 1) * a_dim1]);
             i__1 = k - 1 + (k - 1) * a_dim1;
             ak = a[i__1].r / t;
             i__1 = k + k * a_dim1;

@@ -178,7 +178,7 @@ int chbtrd_(char *vect, char *uplo, integer *n, integer *kd, complex *ab, intege
     complex q__1;
     /* Builtin functions */
     void r_cnjg(complex *, complex *);
-    double c_f2c_abs(complex *);
+    double c_abs(complex *);
     /* Local variables */
     integer i__, j, k, l;
     complex t;
@@ -523,7 +523,7 @@ int chbtrd_(char *vect, char *uplo, integer *n, integer *kd, complex *ab, intege
                 i__3 = *kd + (i__ + 1) * ab_dim1;
                 t.r = ab[i__3].r;
                 t.i = ab[i__3].i; // , expr subst
-                abst = c_f2c_abs(&t);
+                abst = c_abs(&t);
                 i__3 = *kd + (i__ + 1) * ab_dim1;
                 ab[i__3].r = abst;
                 ab[i__3].i = 0.f; // , expr subst
@@ -816,7 +816,7 @@ int chbtrd_(char *vect, char *uplo, integer *n, integer *kd, complex *ab, intege
                 i__2 = i__ * ab_dim1 + 2;
                 t.r = ab[i__2].r;
                 t.i = ab[i__2].i; // , expr subst
-                abst = c_f2c_abs(&t);
+                abst = c_abs(&t);
                 i__2 = i__ * ab_dim1 + 2;
                 ab[i__2].r = abst;
                 ab[i__2].i = 0.f; // , expr subst

@@ -61,12 +61,12 @@ FLA_Error FLA_Hevd_lv_var2_components( dim_t n_iter_max, FLA_Obj A, FLA_Obj l, d
 	FLA_Tridiag_UT_realify( uplo, A, r );
 
 	// Extract the diagonal and sub-diagonal from A.
-	FLA_Tridiag_UT_extract_diagonals( uplo, A, d, e );
+	FLA_Tridiag_UT_extract_real_diagonals( uplo, A, d, e );
 
   dtime_temp = FLA_Clock();
   {
 	// Form Q, overwriting A.
-	FLA_Tridiag_UT_form_Q( uplo, A, T );
+	FLA_Tridiag_UT_form_Q( uplo, A, T, A );
   }
   *dtime_appq = FLA_Clock() - dtime_temp;
 

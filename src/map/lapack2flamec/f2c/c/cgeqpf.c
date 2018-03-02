@@ -148,7 +148,7 @@ int cgeqpf_(integer *m, integer *n, complex *a, integer *lda, integer *jpvt, com
     /* Builtin functions */
     double sqrt(doublereal);
     void r_cnjg(complex *, complex *);
-    double c_f2c_abs(complex *);
+    double c_abs(complex *);
     /* Local variables */
     integer i__, j, ma, mn;
     complex aii;
@@ -326,7 +326,7 @@ int cgeqpf_(integer *m, integer *n, complex *a, integer *lda, integer *jpvt, com
                 {
                     /* NOTE: The following 4 lines follow from the analysis in */
                     /* Lapack Working Note 176. */
-                    temp = c_f2c_abs(&a[i__ + j * a_dim1]) / rwork[j];
+                    temp = c_abs(&a[i__ + j * a_dim1]) / rwork[j];
                     /* Computing MAX */
                     r__1 = 0.f;
                     r__2 = (temp + 1.f) * (1.f - temp); // , expr subst

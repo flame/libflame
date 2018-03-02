@@ -127,7 +127,7 @@ int zhetri2x_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *i
     doublereal d__1;
     doublecomplex z__1, z__2, z__3;
     /* Builtin functions */
-    double z_f2c_abs(doublecomplex *);
+    double z_abs(doublecomplex *);
     void z_div(doublecomplex *, doublecomplex *, doublecomplex *), d_cnjg( doublecomplex *, doublecomplex *);
     /* Local variables */
     extern /* Subroutine */
@@ -275,7 +275,7 @@ int zhetri2x_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *i
             else
             {
                 /* 2 x 2 diagonal NNB */
-                d__1 = z_f2c_abs(&work[k + 1 + work_dim1]);
+                d__1 = z_abs(&work[k + 1 + work_dim1]);
                 t.r = d__1;
                 t.i = 0.; // , expr subst
                 i__1 = k + k * a_dim1;
@@ -647,7 +647,7 @@ int zhetri2x_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *i
             else
             {
                 /* 2 x 2 diagonal NNB */
-                d__1 = z_f2c_abs(&work[k - 1 + work_dim1]);
+                d__1 = z_abs(&work[k - 1 + work_dim1]);
                 t.r = d__1;
                 t.i = 0.; // , expr subst
                 i__1 = k - 1 + (k - 1) * a_dim1;

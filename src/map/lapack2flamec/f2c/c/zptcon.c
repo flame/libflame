@@ -113,7 +113,7 @@ int zptcon_(integer *n, doublereal *d__, doublecomplex *e, doublereal *anorm, do
     integer i__1;
     doublereal d__1;
     /* Builtin functions */
-    double z_f2c_abs(doublecomplex *);
+    double z_abs(doublecomplex *);
     /* Local variables */
     integer i__, ix;
     extern integer idamax_(integer *, doublereal *, integer *);
@@ -195,7 +195,7 @@ int zptcon_(integer *n, doublereal *d__, doublecomplex *e, doublereal *anorm, do
             i__ <= i__1;
             ++i__)
     {
-        rwork[i__] = rwork[i__ - 1] * z_f2c_abs(&e[i__ - 1]) + 1.;
+        rwork[i__] = rwork[i__ - 1] * z_abs(&e[i__ - 1]) + 1.;
         /* L20: */
     }
     /* Solve D * M(L)**H * x = b. */
@@ -204,7 +204,7 @@ int zptcon_(integer *n, doublereal *d__, doublecomplex *e, doublereal *anorm, do
             i__ >= 1;
             --i__)
     {
-        rwork[i__] = rwork[i__] / d__[i__] + rwork[i__ + 1] * z_f2c_abs(&e[i__]);
+        rwork[i__] = rwork[i__] / d__[i__] + rwork[i__ + 1] * z_abs(&e[i__]);
         /* L30: */
     }
     /* Compute AINVNM = max(x(i)), 1<=i<=n. */

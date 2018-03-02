@@ -70,7 +70,7 @@ integer izmax1_(integer *n, doublecomplex *cx, integer *incx)
     /* System generated locals */
     integer ret_val, i__1;
     /* Builtin functions */
-    double z_f2c_abs(doublecomplex *);
+    double z_abs(doublecomplex *);
     /* Local variables */
     integer i__, ix;
     doublereal smax;
@@ -112,19 +112,19 @@ integer izmax1_(integer *n, doublecomplex *cx, integer *incx)
     }
     /* CODE FOR INCREMENT NOT EQUAL TO 1 */
     ix = 1;
-    smax = z_f2c_abs(&cx[1]);
+    smax = z_abs(&cx[1]);
     ix += *incx;
     i__1 = *n;
     for (i__ = 2;
             i__ <= i__1;
             ++i__)
     {
-        if (z_f2c_abs(&cx[ix]) <= smax)
+        if (z_abs(&cx[ix]) <= smax)
         {
             goto L10;
         }
         ret_val = i__;
-        smax = z_f2c_abs(&cx[ix]);
+        smax = z_abs(&cx[ix]);
 L10:
         ix += *incx;
         /* L20: */
@@ -132,18 +132,18 @@ L10:
     return ret_val;
     /* CODE FOR INCREMENT EQUAL TO 1 */
 L30:
-    smax = z_f2c_abs(&cx[1]);
+    smax = z_abs(&cx[1]);
     i__1 = *n;
     for (i__ = 2;
             i__ <= i__1;
             ++i__)
     {
-        if (z_f2c_abs(&cx[i__]) <= smax)
+        if (z_abs(&cx[i__]) <= smax)
         {
             goto L40;
         }
         ret_val = i__;
-        smax = z_f2c_abs(&cx[i__]);
+        smax = z_abs(&cx[i__]);
 L40:
         ;
     }

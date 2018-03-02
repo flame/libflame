@@ -370,7 +370,7 @@ int cgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
     real r__1, r__2;
     complex q__1;
     /* Builtin functions */
-    double c_f2c_abs(complex *);
+    double c_abs(complex *);
     /* Local variables */
     integer i__, j, j1, j2;
     real amax;
@@ -691,7 +691,7 @@ int cgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
                 {
                     /* Computing MAX */
                     r__1 = anorm;
-                    r__2 = c_f2c_abs(&ab[i__ + j * ab_dim1]); // , expr subst
+                    r__2 = c_abs(&ab[i__ + j * ab_dim1]); // , expr subst
                     anorm = max(r__1,r__2);
                     /* L80: */
                 }

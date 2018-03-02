@@ -126,7 +126,7 @@ real clanhb_(char *norm, char *uplo, integer *n, integer *k, complex *ab, intege
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4;
     real ret_val, r__1;
     /* Builtin functions */
-    double c_f2c_abs(complex *), sqrt(doublereal);
+    double c_abs(complex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j, l;
     real sum, absa, scale;
@@ -183,7 +183,7 @@ real clanhb_(char *norm, char *uplo, integer *n, integer *k, complex *ab, intege
                         i__ <= i__3;
                         ++i__)
                 {
-                    sum = c_f2c_abs(&ab[i__ + j * ab_dim1]);
+                    sum = c_abs(&ab[i__ + j * ab_dim1]);
                     if (value < sum || sisnan_(&sum))
                     {
                         value = sum;
@@ -220,7 +220,7 @@ real clanhb_(char *norm, char *uplo, integer *n, integer *k, complex *ab, intege
                         i__ <= i__3;
                         ++i__)
                 {
-                    sum = c_f2c_abs(&ab[i__ + j * ab_dim1]);
+                    sum = c_abs(&ab[i__ + j * ab_dim1]);
                     if (value < sum || sisnan_(&sum))
                     {
                         value = sum;
@@ -252,7 +252,7 @@ real clanhb_(char *norm, char *uplo, integer *n, integer *k, complex *ab, intege
                         i__ <= i__4;
                         ++i__)
                 {
-                    absa = c_f2c_abs(&ab[l + i__ + j * ab_dim1]);
+                    absa = c_abs(&ab[l + i__ + j * ab_dim1]);
                     sum += absa;
                     work[i__] += absa;
                     /* L50: */
@@ -300,7 +300,7 @@ real clanhb_(char *norm, char *uplo, integer *n, integer *k, complex *ab, intege
                         i__ <= i__4;
                         ++i__)
                 {
-                    absa = c_f2c_abs(&ab[l + i__ + j * ab_dim1]);
+                    absa = c_abs(&ab[l + i__ + j * ab_dim1]);
                     sum += absa;
                     work[i__] += absa;
                     /* L90: */

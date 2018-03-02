@@ -135,7 +135,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5;
     real ret_val;
     /* Builtin functions */
-    double c_f2c_abs(complex *), sqrt(doublereal);
+    double c_abs(complex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j, l;
     real sum, scale;
@@ -195,7 +195,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                             i__ <= i__3;
                             ++i__)
                     {
-                        sum = c_f2c_abs(&ab[i__ + j * ab_dim1]);
+                        sum = c_abs(&ab[i__ + j * ab_dim1]);
                         if (value < sum || sisnan_(&sum))
                         {
                             value = sum;
@@ -220,7 +220,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                             i__ <= i__3;
                             ++i__)
                     {
-                        sum = c_f2c_abs(&ab[i__ + j * ab_dim1]);
+                        sum = c_abs(&ab[i__ + j * ab_dim1]);
                         if (value < sum || sisnan_(&sum))
                         {
                             value = sum;
@@ -248,7 +248,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = c_f2c_abs(&ab[i__ + j * ab_dim1]);
+                        sum = c_abs(&ab[i__ + j * ab_dim1]);
                         if (value < sum || sisnan_(&sum))
                         {
                             value = sum;
@@ -273,7 +273,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = c_f2c_abs(&ab[i__ + j * ab_dim1]);
+                        sum = c_abs(&ab[i__ + j * ab_dim1]);
                         if (value < sum || sisnan_(&sum))
                         {
                             value = sum;
@@ -307,7 +307,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                             i__ <= i__3;
                             ++i__)
                     {
-                        sum += c_f2c_abs(&ab[i__ + j * ab_dim1]);
+                        sum += c_abs(&ab[i__ + j * ab_dim1]);
                         /* L90: */
                     }
                 }
@@ -321,7 +321,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += c_f2c_abs(&ab[i__ + j * ab_dim1]);
+                        sum += c_abs(&ab[i__ + j * ab_dim1]);
                         /* L100: */
                     }
                 }
@@ -350,7 +350,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += c_f2c_abs(&ab[i__ + j * ab_dim1]);
+                        sum += c_abs(&ab[i__ + j * ab_dim1]);
                         /* L120: */
                     }
                 }
@@ -365,7 +365,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += c_f2c_abs(&ab[i__ + j * ab_dim1]);
+                        sum += c_abs(&ab[i__ + j * ab_dim1]);
                         /* L130: */
                     }
                 }
@@ -407,7 +407,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                             i__ <= i__4;
                             ++i__)
                     {
-                        work[i__] += c_f2c_abs(&ab[l + i__ + j * ab_dim1]);
+                        work[i__] += c_abs(&ab[l + i__ + j * ab_dim1]);
                         /* L160: */
                     }
                     /* L170: */
@@ -437,7 +437,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                             i__ <= i__3;
                             ++i__)
                     {
-                        work[i__] += c_f2c_abs(&ab[l + i__ + j * ab_dim1]);
+                        work[i__] += c_abs(&ab[l + i__ + j * ab_dim1]);
                         /* L190: */
                     }
                     /* L200: */
@@ -470,7 +470,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                             i__ <= i__3;
                             ++i__)
                     {
-                        work[i__] += c_f2c_abs(&ab[l + i__ + j * ab_dim1]);
+                        work[i__] += c_abs(&ab[l + i__ + j * ab_dim1]);
                         /* L220: */
                     }
                     /* L230: */
@@ -500,7 +500,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                             i__ <= i__3;
                             ++i__)
                     {
-                        work[i__] += c_f2c_abs(&ab[l + i__ + j * ab_dim1]);
+                        work[i__] += c_abs(&ab[l + i__ + j * ab_dim1]);
                         /* L250: */
                     }
                     /* L260: */

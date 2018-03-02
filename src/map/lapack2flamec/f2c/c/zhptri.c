@@ -112,7 +112,7 @@ int zhptri_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, doublecomp
     doublereal d__1;
     doublecomplex z__1, z__2;
     /* Builtin functions */
-    double z_f2c_abs(doublecomplex *);
+    double z_abs(doublecomplex *);
     void d_cnjg(doublecomplex *, doublecomplex *);
     /* Local variables */
     doublereal d__;
@@ -260,7 +260,7 @@ L30: /* If K > N, exit from loop. */
         {
             /* 2 x 2 diagonal block */
             /* Invert the diagonal block. */
-            t = z_f2c_abs(&ap[kcnext + k - 1]);
+            t = z_abs(&ap[kcnext + k - 1]);
             i__1 = kc + k - 1;
             ak = ap[i__1].r / t;
             i__1 = kcnext + k;
@@ -440,7 +440,7 @@ L60: /* If K < 1, exit from loop. */
         {
             /* 2 x 2 diagonal block */
             /* Invert the diagonal block. */
-            t = z_f2c_abs(&ap[kcnext + 1]);
+            t = z_abs(&ap[kcnext + 1]);
             i__1 = kcnext;
             ak = ap[i__1].r / t;
             i__1 = kc;

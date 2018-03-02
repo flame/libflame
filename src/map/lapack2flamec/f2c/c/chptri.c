@@ -112,7 +112,7 @@ int chptri_(char *uplo, integer *n, complex *ap, integer * ipiv, complex *work, 
     real r__1;
     complex q__1, q__2;
     /* Builtin functions */
-    double c_f2c_abs(complex *);
+    double c_abs(complex *);
     void r_cnjg(complex *, complex *);
     /* Local variables */
     real d__;
@@ -262,7 +262,7 @@ L30: /* If K > N, exit from loop. */
         {
             /* 2 x 2 diagonal block */
             /* Invert the diagonal block. */
-            t = c_f2c_abs(&ap[kcnext + k - 1]);
+            t = c_abs(&ap[kcnext + k - 1]);
             i__1 = kc + k - 1;
             ak = ap[i__1].r / t;
             i__1 = kcnext + k;
@@ -442,7 +442,7 @@ L60: /* If K < 1, exit from loop. */
         {
             /* 2 x 2 diagonal block */
             /* Invert the diagonal block. */
-            t = c_f2c_abs(&ap[kcnext + 1]);
+            t = c_abs(&ap[kcnext + 1]);
             i__1 = kcnext;
             ak = ap[i__1].r / t;
             i__1 = kc;

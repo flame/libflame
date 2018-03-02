@@ -203,7 +203,7 @@ int cgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
     complex q__1, q__2, q__3;
     /* Builtin functions */
     void r_cnjg(complex *, complex *);
-    double c_f2c_abs(complex *);
+    double c_abs(complex *);
     /* Local variables */
     integer i__, j, l;
     complex t;
@@ -684,7 +684,7 @@ int cgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
             i__ <= i__1;
             ++i__)
     {
-        abst = c_f2c_abs(&t);
+        abst = c_abs(&t);
         d__[i__] = abst;
         if (abst != 0.f)
         {
@@ -736,7 +736,7 @@ int cgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
                     t.r = q__1.r;
                     t.i = q__1.i; // , expr subst
                 }
-                abst = c_f2c_abs(&t);
+                abst = c_abs(&t);
                 e[i__] = abst;
                 if (abst != 0.f)
                 {

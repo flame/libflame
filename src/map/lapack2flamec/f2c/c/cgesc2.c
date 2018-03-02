@@ -117,7 +117,7 @@ int cgesc2_(integer *n, complex *a, integer *lda, complex * rhs, integer *ipiv, 
     real r__1;
     complex q__1, q__2, q__3;
     /* Builtin functions */
-    double c_f2c_abs(complex *);
+    double c_abs(complex *);
     void c_div(complex *, complex *, complex *);
     /* Local variables */
     integer i__, j;
@@ -196,9 +196,9 @@ int cgesc2_(integer *n, complex *a, integer *lda, complex * rhs, integer *ipiv, 
     *scale = 1.f;
     /* Check for scaling */
     i__ = icamax_(n, &rhs[1], &c__1);
-    if (smlnum * 2.f * c_f2c_abs(&rhs[i__]) > c_f2c_abs(&a[*n + *n * a_dim1]))
+    if (smlnum * 2.f * c_abs(&rhs[i__]) > c_abs(&a[*n + *n * a_dim1]))
     {
-        r__1 = c_f2c_abs(&rhs[i__]);
+        r__1 = c_abs(&rhs[i__]);
         q__1.r = .5f / r__1;
         q__1.i = 0.f / r__1; // , expr subst
         temp.r = q__1.r;

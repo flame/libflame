@@ -118,7 +118,7 @@ doublereal zlanhe_(char *norm, char *uplo, integer *n, doublecomplex *a, integer
     integer a_dim1, a_offset, i__1, i__2;
     doublereal ret_val, d__1;
     /* Builtin functions */
-    double z_f2c_abs(doublecomplex *), sqrt(doublereal);
+    double z_abs(doublecomplex *), sqrt(doublereal);
     /* Local variables */
     integer i__, j;
     doublereal sum, absa, scale;
@@ -173,7 +173,7 @@ doublereal zlanhe_(char *norm, char *uplo, integer *n, doublecomplex *a, integer
                         i__ <= i__2;
                         ++i__)
                 {
-                    sum = z_f2c_abs(&a[i__ + j * a_dim1]);
+                    sum = z_abs(&a[i__ + j * a_dim1]);
                     if (value < sum || disnan_(&sum))
                     {
                         value = sum;
@@ -207,7 +207,7 @@ doublereal zlanhe_(char *norm, char *uplo, integer *n, doublecomplex *a, integer
                         i__ <= i__2;
                         ++i__)
                 {
-                    sum = z_f2c_abs(&a[i__ + j * a_dim1]);
+                    sum = z_abs(&a[i__ + j * a_dim1]);
                     if (value < sum || disnan_(&sum))
                     {
                         value = sum;
@@ -235,7 +235,7 @@ doublereal zlanhe_(char *norm, char *uplo, integer *n, doublecomplex *a, integer
                         i__ <= i__2;
                         ++i__)
                 {
-                    absa = z_f2c_abs(&a[i__ + j * a_dim1]);
+                    absa = z_abs(&a[i__ + j * a_dim1]);
                     sum += absa;
                     work[i__] += absa;
                     /* L50: */
@@ -279,7 +279,7 @@ doublereal zlanhe_(char *norm, char *uplo, integer *n, doublecomplex *a, integer
                         i__ <= i__2;
                         ++i__)
                 {
-                    absa = z_f2c_abs(&a[i__ + j * a_dim1]);
+                    absa = z_abs(&a[i__ + j * a_dim1]);
                     sum += absa;
                     work[i__] += absa;
                     /* L90: */

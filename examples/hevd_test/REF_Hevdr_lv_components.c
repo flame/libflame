@@ -44,7 +44,7 @@ FLA_Error REF_Hevdr_lv_components( FLA_Obj A, FLA_Obj l, FLA_Obj Z,
   {
     // Reduce to tridiagonal form.
     FLA_Tridiag_blk_external( uplo, A, t );
-    FLA_Tridiag_UT_extract_diagonals( uplo, A, d, eT );
+    FLA_Tridiag_UT_extract_real_diagonals( uplo, A, d, eT );
   }
   *dtime_tred = FLA_Clock() - dtime_temp;
 

@@ -159,7 +159,7 @@ int cgebal_(char *job, integer *n, complex *a, integer *lda, integer *ilo, integ
     integer a_dim1, a_offset, i__1, i__2, i__3;
     real r__1, r__2;
     /* Builtin functions */
-    double r_imag(complex *), c_f2c_abs(complex *);
+    double r_imag(complex *), c_abs(complex *);
     /* Local variables */
     real c__, f, g;
     integer i__, j, k, l, m;
@@ -367,10 +367,10 @@ L140:
         i__2 = l - k + 1;
         r__ = scnrm2_(&i__2, &a[i__ + k * a_dim1], lda);
         ica = icamax_(&l, &a[i__ * a_dim1 + 1], &c__1);
-        ca = c_f2c_abs(&a[ica + i__ * a_dim1]);
+        ca = c_abs(&a[ica + i__ * a_dim1]);
         i__2 = *n - k + 1;
         ira = icamax_(&i__2, &a[i__ + k * a_dim1], lda);
-        ra = c_f2c_abs(&a[i__ + (ira + k - 1) * a_dim1]);
+        ra = c_abs(&a[i__ + (ira + k - 1) * a_dim1]);
         /* Guard against zero C or R due to underflow. */
         if (c__ == 0.f || r__ == 0.f)
         {

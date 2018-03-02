@@ -99,7 +99,7 @@ doublereal zlangt_(char *norm, integer *n, doublecomplex *dl, doublecomplex * d_
     integer i__1;
     doublereal ret_val, d__1;
     /* Builtin functions */
-    double z_f2c_abs(doublecomplex *), sqrt(doublereal);
+    double z_abs(doublecomplex *), sqrt(doublereal);
     /* Local variables */
     integer i__;
     doublereal sum, temp, scale;
@@ -140,26 +140,26 @@ doublereal zlangt_(char *norm, integer *n, doublecomplex *dl, doublecomplex * d_
     else if (lsame_(norm, "M"))
     {
         /* Find max(f2c_abs(A(i,j))). */
-        anorm = z_f2c_abs(&d__[*n]);
+        anorm = z_abs(&d__[*n]);
         i__1 = *n - 1;
         for (i__ = 1;
                 i__ <= i__1;
                 ++i__)
         {
-            d__1 = z_f2c_abs(&dl[i__]);
-            if (anorm < z_f2c_abs(&dl[i__]) || disnan_(&d__1))
+            d__1 = z_abs(&dl[i__]);
+            if (anorm < z_abs(&dl[i__]) || disnan_(&d__1))
             {
-                anorm = z_f2c_abs(&dl[i__]);
+                anorm = z_abs(&dl[i__]);
             }
-            d__1 = z_f2c_abs(&d__[i__]);
-            if (anorm < z_f2c_abs(&d__[i__]) || disnan_(&d__1))
+            d__1 = z_abs(&d__[i__]);
+            if (anorm < z_abs(&d__[i__]) || disnan_(&d__1))
             {
-                anorm = z_f2c_abs(&d__[i__]);
+                anorm = z_abs(&d__[i__]);
             }
-            d__1 = z_f2c_abs(&du[i__]);
-            if (anorm < z_f2c_abs(&du[i__]) || disnan_(&d__1))
+            d__1 = z_abs(&du[i__]);
+            if (anorm < z_abs(&du[i__]) || disnan_(&d__1))
             {
-                anorm = z_f2c_abs(&du[i__]);
+                anorm = z_abs(&du[i__]);
             }
             /* L10: */
         }
@@ -169,12 +169,12 @@ doublereal zlangt_(char *norm, integer *n, doublecomplex *dl, doublecomplex * d_
         /* Find norm1(A). */
         if (*n == 1)
         {
-            anorm = z_f2c_abs(&d__[1]);
+            anorm = z_abs(&d__[1]);
         }
         else
         {
-            anorm = z_f2c_abs(&d__[1]) + z_f2c_abs(&dl[1]);
-            temp = z_f2c_abs(&d__[*n]) + z_f2c_abs(&du[*n - 1]);
+            anorm = z_abs(&d__[1]) + z_abs(&dl[1]);
+            temp = z_abs(&d__[*n]) + z_abs(&du[*n - 1]);
             if (anorm < temp || disnan_(&temp))
             {
                 anorm = temp;
@@ -184,7 +184,7 @@ doublereal zlangt_(char *norm, integer *n, doublecomplex *dl, doublecomplex * d_
                     i__ <= i__1;
                     ++i__)
             {
-                temp = z_f2c_abs(&d__[i__]) + z_f2c_abs(&dl[i__]) + z_f2c_abs(&du[i__ - 1] );
+                temp = z_abs(&d__[i__]) + z_abs(&dl[i__]) + z_abs(&du[i__ - 1] );
                 if (anorm < temp || disnan_(&temp))
                 {
                     anorm = temp;
@@ -198,12 +198,12 @@ doublereal zlangt_(char *norm, integer *n, doublecomplex *dl, doublecomplex * d_
         /* Find normI(A). */
         if (*n == 1)
         {
-            anorm = z_f2c_abs(&d__[1]);
+            anorm = z_abs(&d__[1]);
         }
         else
         {
-            anorm = z_f2c_abs(&d__[1]) + z_f2c_abs(&du[1]);
-            temp = z_f2c_abs(&d__[*n]) + z_f2c_abs(&dl[*n - 1]);
+            anorm = z_abs(&d__[1]) + z_abs(&du[1]);
+            temp = z_abs(&d__[*n]) + z_abs(&dl[*n - 1]);
             if (anorm < temp || disnan_(&temp))
             {
                 anorm = temp;
@@ -213,7 +213,7 @@ doublereal zlangt_(char *norm, integer *n, doublecomplex *dl, doublecomplex * d_
                     i__ <= i__1;
                     ++i__)
             {
-                temp = z_f2c_abs(&d__[i__]) + z_f2c_abs(&du[i__]) + z_f2c_abs(&dl[i__ - 1] );
+                temp = z_abs(&d__[i__]) + z_abs(&du[i__]) + z_abs(&dl[i__ - 1] );
                 if (anorm < temp || disnan_(&temp))
                 {
                     anorm = temp;

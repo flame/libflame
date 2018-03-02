@@ -115,7 +115,7 @@ int claesy_(complex *a, complex *b, complex *c__, complex * rt1, complex *rt2, c
     real r__1, r__2;
     complex q__1, q__2, q__3, q__4, q__5, q__6, q__7;
     /* Builtin functions */
-    double c_f2c_abs(complex *);
+    double c_abs(complex *);
     void pow_ci(complex *, complex *, integer *), c_sqrt(complex *, complex *) , c_div(complex *, complex *, complex *);
     /* Local variables */
     complex s, t;
@@ -138,11 +138,11 @@ int claesy_(complex *a, complex *b, complex *c__, complex * rt1, complex *rt2, c
     /* .. Executable Statements .. */
     /* Special case: The matrix is actually diagonal. */
     /* To avoid divide by zero later, we treat this case separately. */
-    if (c_f2c_abs(b) == 0.f)
+    if (c_abs(b) == 0.f)
     {
         rt1->r = a->r, rt1->i = a->i;
         rt2->r = c__->r, rt2->i = c__->i;
-        if (c_f2c_abs(rt1) < c_f2c_abs(rt2))
+        if (c_abs(rt1) < c_abs(rt2))
         {
             tmp.r = rt1->r;
             tmp.i = rt1->i; // , expr subst
@@ -176,8 +176,8 @@ int claesy_(complex *a, complex *b, complex *c__, complex * rt1, complex *rt2, c
         t.r = q__1.r;
         t.i = q__1.i; // , expr subst
         /* Take the square root carefully to avoid over/under flow. */
-        babs = c_f2c_abs(b);
-        tabs = c_f2c_abs(&t);
+        babs = c_abs(b);
+        tabs = c_abs(&t);
         z__ = max(babs,tabs);
         if (z__ > 0.f)
         {
@@ -203,7 +203,7 @@ int claesy_(complex *a, complex *b, complex *c__, complex * rt1, complex *rt2, c
         q__1.r = s.r - t.r;
         q__1.i = s.i - t.i; // , expr subst
         rt2->r = q__1.r, rt2->i = q__1.i;
-        if (c_f2c_abs(rt1) < c_f2c_abs(rt2))
+        if (c_abs(rt1) < c_abs(rt2))
         {
             tmp.r = rt1->r;
             tmp.i = rt1->i; // , expr subst
@@ -218,7 +218,7 @@ int claesy_(complex *a, complex *b, complex *c__, complex * rt1, complex *rt2, c
         q__2.i = rt1->i - a->i; // , expr subst
         c_div(&q__1, &q__2, b);
         sn1->r = q__1.r, sn1->i = q__1.i;
-        tabs = c_f2c_abs(sn1);
+        tabs = c_abs(sn1);
         if (tabs > 1.f)
         {
             /* Computing 2nd power */
@@ -245,7 +245,7 @@ int claesy_(complex *a, complex *b, complex *c__, complex * rt1, complex *rt2, c
             t.r = q__1.r;
             t.i = q__1.i; // , expr subst
         }
-        evnorm = c_f2c_abs(&t);
+        evnorm = c_abs(&t);
         if (evnorm >= .1f)
         {
             c_div(&q__1, &c_b1, &t);

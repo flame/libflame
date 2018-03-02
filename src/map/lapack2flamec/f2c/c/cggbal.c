@@ -176,7 +176,7 @@ int cggbal_(char *job, integer *n, complex *a, integer *lda, complex *b, integer
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
     real r__1, r__2, r__3;
     /* Builtin functions */
-    double r_lg10(real *), r_imag(complex *), c_f2c_abs(complex *), r_sign(real *, real *), pow_ri(real *, integer *);
+    double r_lg10(real *), r_imag(complex *), c_abs(complex *), r_sign(real *, real *), pow_ri(real *, integer *);
     /* Local variables */
     integer i__, j, k, l, m;
     real t;
@@ -678,12 +678,12 @@ L350:
     {
         i__2 = *n - *ilo + 1;
         irab = icamax_(&i__2, &a[i__ + *ilo * a_dim1], lda);
-        rab = c_f2c_abs(&a[i__ + (irab + *ilo - 1) * a_dim1]);
+        rab = c_abs(&a[i__ + (irab + *ilo - 1) * a_dim1]);
         i__2 = *n - *ilo + 1;
         irab = icamax_(&i__2, &b[i__ + *ilo * b_dim1], ldb);
         /* Computing MAX */
         r__1 = rab;
-        r__2 = c_f2c_abs(&b[i__ + (irab + *ilo - 1) * b_dim1]); // , expr subst
+        r__2 = c_abs(&b[i__ + (irab + *ilo - 1) * b_dim1]); // , expr subst
         rab = max(r__1,r__2);
         r__1 = rab + sfmin;
         lrab = (integer) (r_lg10(&r__1) / basl + 1.f);
@@ -695,11 +695,11 @@ L350:
         ir = min(i__2,i__3);
         lscale[i__] = pow_ri(&c_b36, &ir);
         icab = icamax_(ihi, &a[i__ * a_dim1 + 1], &c__1);
-        cab = c_f2c_abs(&a[icab + i__ * a_dim1]);
+        cab = c_abs(&a[icab + i__ * a_dim1]);
         icab = icamax_(ihi, &b[i__ * b_dim1 + 1], &c__1);
         /* Computing MAX */
         r__1 = cab;
-        r__2 = c_f2c_abs(&b[icab + i__ * b_dim1]); // , expr subst
+        r__2 = c_abs(&b[icab + i__ * b_dim1]); // , expr subst
         cab = max(r__1,r__2);
         r__1 = cab + sfmin;
         lcab = (integer) (r_lg10(&r__1) / basl + 1.f);

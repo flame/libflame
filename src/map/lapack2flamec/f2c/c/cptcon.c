@@ -113,7 +113,7 @@ int cptcon_(integer *n, real *d__, complex *e, real *anorm, real *rcond, real *r
     integer i__1;
     real r__1;
     /* Builtin functions */
-    double c_f2c_abs(complex *);
+    double c_abs(complex *);
     /* Local variables */
     integer i__, ix;
     extern /* Subroutine */
@@ -195,7 +195,7 @@ int cptcon_(integer *n, real *d__, complex *e, real *anorm, real *rcond, real *r
             i__ <= i__1;
             ++i__)
     {
-        rwork[i__] = rwork[i__ - 1] * c_f2c_abs(&e[i__ - 1]) + 1.f;
+        rwork[i__] = rwork[i__ - 1] * c_abs(&e[i__ - 1]) + 1.f;
         /* L20: */
     }
     /* Solve D * M(L)**H * x = b. */
@@ -204,7 +204,7 @@ int cptcon_(integer *n, real *d__, complex *e, real *anorm, real *rcond, real *r
             i__ >= 1;
             --i__)
     {
-        rwork[i__] = rwork[i__] / d__[i__] + rwork[i__ + 1] * c_f2c_abs(&e[i__]);
+        rwork[i__] = rwork[i__] / d__[i__] + rwork[i__ + 1] * c_abs(&e[i__]);
         /* L30: */
     }
     /* Compute AINVNM = max(x(i)), 1<=i<=n. */

@@ -191,7 +191,7 @@ int cgelsx_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3;
     complex q__1;
     /* Builtin functions */
-    double c_f2c_abs(complex *);
+    double c_abs(complex *);
     void r_cnjg(complex *, complex *);
     /* Local variables */
     integer i__, j, k;
@@ -342,9 +342,9 @@ int cgelsx_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
     i__1 = ismax;
     work[i__1].r = 1.f;
     work[i__1].i = 0.f; // , expr subst
-    smax = c_f2c_abs(&a[a_dim1 + 1]);
+    smax = c_abs(&a[a_dim1 + 1]);
     smin = smax;
-    if (c_f2c_abs(&a[a_dim1 + 1]) == 0.f)
+    if (c_abs(&a[a_dim1 + 1]) == 0.f)
     {
         *rank = 0;
         i__1 = max(*m,*n);

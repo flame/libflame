@@ -96,7 +96,7 @@ int zlartg_(doublecomplex *f, doublecomplex *g, doublereal * cs, doublecomplex *
     doublereal d__1, d__2, d__3, d__4, d__5, d__6, d__7, d__8, d__9, d__10;
     doublecomplex z__1, z__2, z__3;
     /* Builtin functions */
-    double log(doublereal), pow_di(doublereal *, integer *), d_imag( doublecomplex *), z_f2c_abs(doublecomplex *), sqrt(doublereal);
+    double log(doublereal), pow_di(doublereal *, integer *), d_imag( doublecomplex *), z_abs(doublecomplex *), sqrt(doublereal);
     void d_cnjg(doublecomplex *, doublecomplex *);
     /* Local variables */
     doublereal d__;
@@ -175,7 +175,7 @@ L10:
     }
     else if (scale <= safmn2)
     {
-        d__1 = z_f2c_abs(g);
+        d__1 = z_abs(g);
         if (g->r == 0. && g->i == 0. || disnan_(&d__1))
         {
             *cs = 1.;

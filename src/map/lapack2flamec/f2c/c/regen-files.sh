@@ -50,6 +50,10 @@ rm -f ._* ../netlib/*.f
 ./astyle.sh
 
 
+## Disable xblas-related code so shared libraries link properly.
+./disable_xblas.sh
+
+
 echo " "
 echo " Note that string-related f2c functions should not be used here (e.g., s_copy, s_cmp)."
 echo " It is a total mess when an actual string is mixed in C and FORTRAN.                  "
