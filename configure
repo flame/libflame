@@ -6811,6 +6811,9 @@ $as_echo "#define FLA_ENABLE_VECTOR_INTRINSICS 1" >>confdefs.h
 $as_echo_n "checking for (guessing) SSE flags for $CC... " >&6; }
 
 		case $CC in
+				clang)
+			fla_c_sse_flags='-msse3'
+		;;
 				icc)
 			fla_c_sse_flags='-msse3'
 		;;
