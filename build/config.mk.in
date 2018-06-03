@@ -95,26 +95,15 @@ endif
 
 # Aggregate all of the flags into two groups: one for optimizable code, and
 # one for code that should not be optimized.
-CFLAGS       := $(CDBGFLAGS) $(COPTFLAGS) $(CVECFLAGS) $(CWARNFLAGS) $(CMISCFLAGS) $(CPPROCFLAGS)
-CFLAGS_NOOPT := $(CDBGFLAGS) $(CWARNFLAGS) $(CMISCFLAGS) $(CPPROCFLAGS)
-
-# If the user requested that he supplement configure's CFLAGS with this own,
-# add them in.
-# *** Notice that we ALSO modify the 'no optimization' set of flags.
-#     THIS IS DANGEROUS. THE USER MUST TAKE CARE NOT TO ADD "EXTRA FLAGS"
-#     THAT WOULD DISRUPT THE NUMERICAL PROPERTIES OF SLAMCH/DLAMCH. ***
-ifeq (@fla_with_extra_cflags@,yes)
-CFLAGS       += @fla_extra_cflags@
-CFLAGS_NOOPT += @fla_extra_cflags@
-endif
+CFLAGS       := $(strip $(CDBGFLAGS) $(COPTFLAGS) $(CVECFLAGS) $(CWARNFLAGS) $(CMISCFLAGS) $(CPPROCFLAGS))
+CFLAGS_NOOPT := $(strip $(CDBGFLAGS) $(CWARNFLAGS) $(CMISCFLAGS) $(CPPROCFLAGS))
 
 # If the user provided his own CFLAGS, allow them to override our own.
-# *** Notice that we ALSO modify the 'no optimization' set of flags.
-#     THIS IS DANGEROUS. THE USER MUST TAKE CARE NOT TO ADD "EXTRA FLAGS"
-#     THAT WOULD DISRUPT THE NUMERICAL PROPERTIES OF SLAMCH/DLAMCH. ***
+# *** Notice that wo do not also modify the 'no optimization' set of flags.
+#     We do this to avoid potential numerical disruption of routines such
+#     as slamch/dlamch.
 ifneq (@fla_userdef_cflags@,)
-CFLAGS       := @CFLAGS@
-CFLAGS_NOOPT := @CFLAGS@
+CFLAGS       := @CFLAGS@ $(CFLAGS)
 endif
 
 

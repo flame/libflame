@@ -673,9 +673,6 @@ fla_enable_lapack2flame
 fla_enable_builtin_blas
 fla_enable_non_critical_code
 fla_c_lang_flags
-fla_extra_cflags
-fla_with_extra_cflags
-EXTRA_CFLAGS
 fla_enable_max_arg_list_hack
 fla_enable_dynamic_build
 fla_enable_static_build
@@ -769,7 +766,6 @@ enable_verbose_make_output
 enable_static_build
 enable_dynamic_build
 enable_max_arg_list_hack
-with_extra_cflags
 enable_non_critical_code
 enable_builtin_blas
 enable_lapack2flame
@@ -813,8 +809,7 @@ FIND
 XARGS
 F77
 FFLAGS
-CPP
-EXTRA_CFLAGS'
+CPP'
 
 
 # Initialize some variables set by options.
@@ -1642,13 +1637,6 @@ Optional Packages:
                           search list for the detected build architecture.
                           Note: the library archive indexer search list
                           usually consists only of "ranlib".
-  --with-extra-cflags=flagstring
-                          When compiling C code, use the flags in flagstring
-                          in addition to the flags that configure would
-                          normally use. This is useful when the user wants
-                          some extra flags passed to the compiler but does not
-                          want to manually set the CFLAGS environment variable
-                          and thus override all of the default compiler flags.
 
 Some influential environment variables:
   CC          C compiler command
@@ -1665,9 +1653,6 @@ Some influential environment variables:
   F77         Fortran 77 compiler command
   FFLAGS      Fortran 77 compiler flags
   CPP         C preprocessor
-  EXTRA_CFLAGS
-              extra C compiler flags to be used in addition to those
-              determined automatically by configure
 
 Use these variables to override the choices made by `configure' or to help
 it to find libraries and programs with nonstandard names/locations.
@@ -6047,59 +6032,6 @@ $as_echo "no" >&6; }
 
 
 
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested using extra C compiler flags" >&5
-$as_echo_n "checking whether user requested using extra C compiler flags... " >&6; }
-
-
-# Check whether --with-extra-cflags was given.
-if test "${with_extra_cflags+set}" = set; then :
-  withval=$with_extra_cflags;
-				if test "$withval" = "no" ; then
-
-						fla_with_extra_cflags=no
-			fla_extra_cflags=''
-
-		else
-
-						fla_with_extra_cflags=yes
-			fla_extra_cflags=$withval
-		fi
-
-else
-
-						fla_with_extra_cflags=no
-		fla_extra_cflags=''
-
-
-fi
-
-
-		if test "$fla_with_extra_cflags" = "no" ; then
-
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-
-	else
-
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes ($fla_extra_cflags)" >&5
-$as_echo "yes ($fla_extra_cflags)" >&6; }
-
-	fi
-
-		if test "$EXTRA_CFLAGS" != "" ; then
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: EXTRA_CFLAGS environment variable is set to $EXTRA_CFLAGS, which will override --with-extra-cflags option." >&5
-$as_echo "$as_me: EXTRA_CFLAGS environment variable is set to $EXTRA_CFLAGS, which will override --with-extra-cflags option." >&6;}
-        fla_with_extra_cflags=yes
-        fla_extra_cflags="$EXTRA_CFLAGS"
-	fi
-
-
-
-
-
-
-
-
 
 
 		case $CC in
@@ -6811,13 +6743,13 @@ $as_echo "#define FLA_ENABLE_VECTOR_INTRINSICS 1" >>confdefs.h
 $as_echo_n "checking for (guessing) SSE flags for $CC... " >&6; }
 
 		case $CC in
-				clang)
-			fla_c_sse_flags='-msse3'
-		;;
 				icc)
 			fla_c_sse_flags='-msse3'
 		;;
 				gcc)
+			fla_c_sse_flags='-msse3'
+		;;
+				clang)
 			fla_c_sse_flags='-msse3'
 		;;
 				pathcc)

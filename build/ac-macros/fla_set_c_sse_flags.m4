@@ -15,6 +15,10 @@ AC_DEFUN([FLA_SET_C_SSE_FLAGS],
 		gcc)
 			fla_c_sse_flags='-msse3'
 		;;
+		dnl Clang.
+		clang)
+			fla_c_sse_flags='-msse3'
+		;;
 		dnl PathScale pathcc
 		pathcc)
 			fla_c_sse_flags='unknown'

@@ -7,10 +7,9 @@ export FLAME_INSTALL_PREFIX=$HOME/flame
 export CC=gcc
 #export CC=icc
 
-# Add extra flags to the C compiler.
-# NOTE: DO NOT INSERT ANY FLAGS IN EXTRA_FLAGS THAT MIGHT DISRUPT NUMERICAL
-# PROPERTIES OF SLAMCH/DLAMCH.
-export EXTRA_CFLAGS="-march=native"
+# Any options specified in CFLAGS will be preprended to the flags that
+# libflame automatically determines.
+export CFLAGS="-march=native"
 
 # Run configure.
 ./configure --prefix=${FLAME_INSTALL_PREFIX} \
