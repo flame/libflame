@@ -384,7 +384,7 @@ ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 #	$(AR) @$(AR_ARG_LIST_FILE)
 	$(RANLIB) $@
 else
-	$(AR) $(ARFLAGS) $@ $?
+	$(AR) $(ARFLAGS) $@ $^
 	$(RANLIB) $@
 endif
 	mkdir -p include_local
@@ -400,7 +400,7 @@ ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 #	@$(AR) @$(AR_ARG_LIST_FILE)
 	@$(RANLIB) $@
 else
-	@$(AR) $(ARFLAGS) $@ $?
+	@$(AR) $(ARFLAGS) $@ $^
 	@$(RANLIB) $@
 endif
 	@mkdir -p include_local
@@ -414,21 +414,41 @@ $(MK_ALL_FLAMEC_DLL): $(MK_ALL_FLAMEC_OBJS)
 ifeq ($(FLA_ENABLE_VERBOSE_MAKE_OUTPUT),yes)
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 	$(file > $@.in,$^)
+	sleep 3
 	$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ @$@.in
 	$(RM) $@.in
 else
-	$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ $?
+	$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ $^
 endif
 else
 	@echo "Dynamically linking $@"
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 	@$(file > $@.in,$^)
+	@sleep 3
 	@$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ @$@.in
 	@$(RM) $@.in
 else
-	@$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ $?
+	@$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ $^
 endif
 endif
+
+# Alternative implementation of the above.
+#$(MK_ALL_FLAMEC_DLL): $(MK_ALL_FLAMEC_OBJS)
+#ifeq ($(FLA_ENABLE_VERBOSE_MAKE_OUTPUT),yes)
+#ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
+#	$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ @$(AR_OBJ_LIST_FILE)
+#else
+#	$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ $^
+#endif
+#else
+#	@echo "Dynamically linking $@"
+#ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
+#	@$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ @$(AR_OBJ_LIST_FILE)
+#else
+#	@$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ $^
+#endif
+#endif
+
 
 
 
