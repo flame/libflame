@@ -295,7 +295,7 @@ endif
 
 ### Kyungjoo 2015.10.21
 #AR_CHUNK_SIZE=4096
-AR_CHUNK_SIZE=256
+AR_CHUNK_SIZE=1024
 
 #
 # --- Targets/rules ------------------------------------------------------------
@@ -332,19 +332,6 @@ endif
 
 # --- Special source code / object code rules ---
 
-$(AR_OBJ_LIST_FILE): $(MK_ALL_FLAMEC_OBJS)
-ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
-ifeq ($(FLA_ENABLE_VERBOSE_MAKE_OUTPUT),yes)
-	echo $^ | xargs -n$(AR_CHUNK_SIZE) echo >> $(AR_OBJ_LIST_FILE)
-else
-	@echo "Creating temporary ARG_MAX hack file."
-	@echo $^ | xargs -n$(AR_CHUNK_SIZE) echo >> $(AR_OBJ_LIST_FILE)
-endif
-else
-	@touch $(AR_OBJ_LIST_FILE)
-endif
-
-
 FLA_SLAMCH=base/flamec/util/lapack/mch/fla_slamch
 $(BASE_OBJ_DIR)/$(FLA_SLAMCH).o: $(SRC_DIR)/$(FLA_SLAMCH).c $(CONFIG_MK_FRAGMENT)
 ifeq ($(FLA_ENABLE_VERBOSE_MAKE_OUTPUT),yes)
@@ -353,9 +340,9 @@ else
 	@echo "Compiling $<"
 	@$(CC) $(CFLAGS_NOOPT) -c $< -o $@
 endif
-#ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
-#	@echo $@ >> $(AR_OBJ_LIST_FILE)
-#endif
+ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
+	@echo $@ >> $(AR_OBJ_LIST_FILE)
+endif
 
 FLA_DLAMCH=base/flamec/util/lapack/mch/fla_dlamch
 $(BASE_OBJ_DIR)/$(FLA_DLAMCH).o: $(SRC_DIR)/$(FLA_DLAMCH).c $(CONFIG_MK_FRAGMENT)
@@ -365,9 +352,9 @@ else
 	@echo "Compiling $<"
 	@$(CC) $(CFLAGS_NOOPT) -c $< -o $@
 endif
-#ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
-#	@echo $@ >> $(AR_OBJ_LIST_FILE)
-#endif
+ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
+	@echo $@ >> $(AR_OBJ_LIST_FILE)
+endif
 
 # --- General source code / object code rules ---
 
@@ -379,14 +366,14 @@ else
 	@echo "Compiling $<"
 	@$(CC) $(CFLAGS) -c $< -o $@
 endif
-#ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
-#	@echo $@ >> $(AR_OBJ_LIST_FILE)
-#endif
+ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
+	@echo $@ >> $(AR_OBJ_LIST_FILE)
+endif
 
 
 
 # --- Static library archiver rules for libflame ---
-$(MK_ALL_FLAMEC_LIB): $(MK_ALL_FLAMEC_OBJS) $(AR_OBJ_LIST_FILE)
+$(MK_ALL_FLAMEC_LIB): $(MK_ALL_FLAMEC_OBJS)
 ifeq ($(FLA_ENABLE_VERBOSE_MAKE_OUTPUT),yes)
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 ### Kyungjoo 2015.10.21
@@ -398,7 +385,7 @@ ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 else
 #	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
 #	the list of prerequisites.
-	$(AR) $(ARFLAGS) $@ $(MK_ALL_FLAMEC_OBJS)
+	$(AR) $(ARFLAGS) $@ $^
 endif
 	$(RANLIB) $@
 	mkdir -p include_local
@@ -415,7 +402,7 @@ ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 else
 #	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
 #	the list of prerequisites.
-	@$(AR) $(ARFLAGS) $@ $(MK_ALL_FLAMEC_OBJS)
+	@$(AR) $(ARFLAGS) $@ $^
 endif
 	@$(RANLIB) $@
 	@mkdir -p include_local
@@ -424,14 +411,14 @@ endif
 
 
 # --- Dynamic library linker rules for libflame ---
-$(MK_ALL_FLAMEC_DLL): $(MK_ALL_FLAMEC_OBJS) $(AR_OBJ_LIST_FILE)
+$(MK_ALL_FLAMEC_DLL): $(MK_ALL_FLAMEC_OBJS)
 ifeq ($(FLA_ENABLE_VERBOSE_MAKE_OUTPUT),yes)
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 	$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ @$(AR_OBJ_LIST_FILE)
 else
 #	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
 #	the list of prerequisites.
-	$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ $(MK_ALL_FLAMEC_OBJS)
+	$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ $^
 endif
 else
 	@echo "Dynamically linking $@"
@@ -440,7 +427,7 @@ ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 else
 #	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
 #	the list of prerequisites.
-	@$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ $(MK_ALL_FLAMEC_OBJS)
+	@$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ $^
 endif
 endif
 
