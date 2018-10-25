@@ -1,9 +1,4 @@
-
-libflame library
-README
----
-
-Thank you for deciding to try out the libflame library!
+# libflame library
 
 libflame is a portable library for dense matrix computations, providing
 much of the functionality present in LAPACK. In fact, libflame includes
@@ -30,18 +25,18 @@ source. You may also find a nightly build of the document here:
 You can keep in touch with developers and other users of the project by
 joining the following mailing list:
 
-  o libflame-discuss - http://groups.google.com/group/libflame-discuss
+ - libflame-discuss - http://groups.google.com/group/libflame-discuss
     Please join and post to this mailing list if you have general questions
     or feedback regarding libflame.
 
-  o (NOTE: We do not yet have a developer's mailing list. For now,
+ -  (NOTE: We do not yet have a developer's mailing list. For now,
     developers and those with developer-related questions can simply post
     to libflame-discuss.
 
 Also, please read the LICENSE file for information on copying and
 distributing this software.
 
-Thanks again for your interest in libflame!
+Thanks for your interest in libflame!
 
 Regards,
 
