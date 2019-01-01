@@ -3,7 +3,7 @@
 # Makefile
 #
 # Field G. Van Zee
-# 
+#
 # Top-level makefile for libflame linear algebra library.
 #
 #
@@ -89,18 +89,18 @@ ALL_FLAMEC_DLL_NAME            := libflame.so
 MK_ALL_FLAMEC_LIB                     := $(BASE_LIB_DIR)/$(ALL_FLAMEC_LIB_NAME)
 MK_ALL_FLAMEC_DLL                     := $(BASE_LIB_DIR)/$(ALL_FLAMEC_DLL_NAME)
 
-MK_BASE_FLAMEC_SRC                    := 
-MK_BASE_FLAMEC_OBJS                   := 
+MK_BASE_FLAMEC_SRC                    :=
+MK_BASE_FLAMEC_OBJS                   :=
 
-MK_BLAS_FLAMEC_SRC                    := 
-MK_BLAS_FLAMEC_OBJS                   := 
+MK_BLAS_FLAMEC_SRC                    :=
+MK_BLAS_FLAMEC_OBJS                   :=
 
-MK_LAPACK_FLAMEC_SRC                  := 
-MK_LAPACK_FLAMEC_OBJS                 := 
+MK_LAPACK_FLAMEC_SRC                  :=
+MK_LAPACK_FLAMEC_OBJS                 :=
 
 
-MK_MAP_LAPACK2FLAMEC_SRC              := 
-MK_MAP_LAPACK2FLAMEC_OBJS             := 
+MK_MAP_LAPACK2FLAMEC_SRC              :=
+MK_MAP_LAPACK2FLAMEC_OBJS             :=
 
 MK_MAP_LAPACK2FLAMEC_F2C_SRC          :=
 MK_MAP_LAPACK2FLAMEC_F2C_OBJS         :=
@@ -111,8 +111,8 @@ MK_MAP_LAPACK2FLAMEC_F2C_FLAMEC_OBJS  :=
 MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_SRC  :=
 MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_OBJS :=
 
-MK_FLABLAS_F2C_SRC                    := 
-MK_FLABLAS_F2C_OBJS                   := 
+MK_FLABLAS_F2C_SRC                    :=
+MK_FLABLAS_F2C_OBJS                   :=
 
 # --- Define install target names for static libraries ---
 MK_FLAMEC_LIBS                    := $(MK_ALL_FLAMEC_LIB)
@@ -242,6 +242,7 @@ FFLAGS          := $(FFLAGS) $(INCLUDE_PATHS)
 # Convert source file paths to object file paths by replaying the base source
 # directory with the base object directory, and also replacing the source file
 # suffix (ie: '.c' or '.f') with '.o'.
+
 MK_FLABLAS_F2C_OBJS                   := $(patsubst $(SRC_DIR)/%.c, $(BASE_OBJ_DIR)/%.o, \
                                                     $(filter %.c, $(MK_FLABLAS_F2C_SRC)))
 
@@ -269,7 +270,7 @@ MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_OBJS := $(patsubst $(SRC_DIR)/%.c, $(BASE_OBJ_D
 # Combine the base, blas, and lapack libraries.
 MK_ALL_FLAMEC_OBJS        := $(MK_BASE_FLAMEC_OBJS) \
                              $(MK_BLAS_FLAMEC_OBJS) \
-                             $(MK_LAPACK_FLAMEC_OBJS) 
+                             $(MK_LAPACK_FLAMEC_OBJS)
 
 # Prepend the flablas source code files, if requested
 
@@ -288,13 +289,13 @@ ifeq ($(FLA_ENABLE_LAPACK2FLAME),no)
 MK_FLABLAS_F2C_OBJS       := $(MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_OBJS) \
                              $(MK_FLABLAS_F2C_OBJS)
 endif
-
 MK_ALL_FLAMEC_OBJS        := $(MK_FLABLAS_F2C_OBJS) \
                              $(MK_ALL_FLAMEC_OBJS)
 endif
 
 ### Kyungjoo 2015.10.21
-AR_CHUNK_SIZE=4096
+#AR_CHUNK_SIZE=4096
+AR_CHUNK_SIZE=1024
 
 #
 # --- Targets/rules ------------------------------------------------------------
@@ -373,20 +374,20 @@ endif
 
 # --- Static library archiver rules for libflame ---
 $(MK_ALL_FLAMEC_LIB): $(MK_ALL_FLAMEC_OBJS)
-
 ifeq ($(FLA_ENABLE_VERBOSE_MAKE_OUTPUT),yes)
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 ### Kyungjoo 2015.10.21
 	$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $@
-### Previous hack (works on linux, not on osx)
+### Previous hack (works on linux, not on osx; osx's ar does not support @file)
 #	echo $(ARFLAGS) $@ > $(AR_ARG_LIST_FILE)
 #	$(CAT) $(AR_OBJ_LIST_FILE) >> $(AR_ARG_LIST_FILE)
 #	$(AR) @$(AR_ARG_LIST_FILE)
-	$(RANLIB) $@
 else
-	$(AR) $(ARFLAGS) $@ $?
-	$(RANLIB) $@
+#	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
+#	the list of prerequisites.
+	$(AR) $(ARFLAGS) $@ $^
 endif
+	$(RANLIB) $@
 	mkdir -p include_local
 	cp -f $(MK_HEADER_FILES) include_local
 else
@@ -394,41 +395,66 @@ else
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 ### Kyungjoo 2015.10.21
 	@$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $@
-### Previous hack (works on linux, not on osx)
+### Previous hack (works on linux, not on osx; osx's ar does not support @file)
 #	@echo $(ARFLAGS) $@ > $(AR_ARG_LIST_FILE)
 #	@$(CAT) $(AR_OBJ_LIST_FILE) >> $(AR_ARG_LIST_FILE)
 #	@$(AR) @$(AR_ARG_LIST_FILE)
-	@$(RANLIB) $@
 else
-	@$(AR) $(ARFLAGS) $@ $?
-	@$(RANLIB) $@
+#	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
+#	the list of prerequisites.
+	@$(AR) $(ARFLAGS) $@ $^
 endif
+	@$(RANLIB) $@
 	@mkdir -p include_local
 	@cp -f $(MK_HEADER_FILES) include_local
 endif
-
 
 
 # --- Dynamic library linker rules for libflame ---
 $(MK_ALL_FLAMEC_DLL): $(MK_ALL_FLAMEC_OBJS)
 ifeq ($(FLA_ENABLE_VERBOSE_MAKE_OUTPUT),yes)
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
-	$(file > $@.in,$^)
-	$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ @$@.in
-	$(RM) $@.in
+	$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ @$(AR_OBJ_LIST_FILE)
 else
-	$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ $?
+#	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
+#	the list of prerequisites.
+	$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ $^
 endif
 else
 	@echo "Dynamically linking $@"
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
-	@$(file > $@.in,$^)
-	@$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ @$@.in
-	@$(RM) $@.in
+	@$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ @$(AR_OBJ_LIST_FILE)
 else
-	@$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ $?
+#	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
+#	the list of prerequisites.
+	@$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ $^
 endif
 endif
+
+# Original implementation of the rule above.
+# FGVZ: This rule has been observed to not work on at least one system, where
+# it appears the ".in" file is not fully written out, or written out at all,
+# prior to the shared library link command being executed.
+#$(MK_ALL_FLAMEC_DLL): $(MK_ALL_FLAMEC_OBJS)
+#ifeq ($(FLA_ENABLE_VERBOSE_MAKE_OUTPUT),yes)
+#ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
+#	$(file > $@.in,$^)
+#	$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ @$@.in
+#	$(RM) $@.in
+#else
+#	$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ $^
+#endif
+#else
+#	@echo "Dynamically linking $@"
+#ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
+#	@$(file > $@.in,$^)
+#	@$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ @$@.in
+#	@$(RM) $@.in
+#else
+#	@$(LINKER) -shared -Wl,-soname,libflame.so $(LDFLAGS) -o $@ $^
+#endif
+#endif
+
 
 
 
@@ -533,11 +559,10 @@ endif
 
 # --- Clean rules ---
 cleanmost: check-config
-	- $(FIND) $(BASE_OBJ_DIR) -name "*.o" | $(XARGS) $(RM_F) 
-	- $(FIND) $(BASE_LIB_DIR) -name "*.a" | $(XARGS) $(RM_F) 
-	- $(FIND) $(BASE_LIB_DIR) -name "*.so" | $(XARGS) $(RM_F) 
+	- $(FIND) $(BASE_OBJ_DIR) -name "*.o" | $(XARGS) $(RM_F)
+	- $(FIND) $(BASE_LIB_DIR) -name "*.a" | $(XARGS) $(RM_F)
+	- $(FIND) $(BASE_LIB_DIR) -name "*.so" | $(XARGS) $(RM_F)
 	- $(RM_F) $(AR_OBJ_LIST_FILE)
-#	- $(RM_F) $(AR_ARG_LIST_FILE)
 	- $(RM_F) $(INCLUDE_LOCAL)/*.h
 
 distclean: check-config cleanmost cleanmk
@@ -551,7 +576,7 @@ distclean: check-config cleanmost cleanmk
 	- $(RM_RF) config.sys_type
 
 cleanmk: check-config
-	- $(FIND) $(SRC_DIR) -name "$(FRAGMENT_MK)" | $(XARGS) $(RM_F) 
+	- $(FIND) $(SRC_DIR) -name "$(FRAGMENT_MK)" | $(XARGS) $(RM_F)
 
 cleanleaves: check-config
 	- $(FIND) $(SRC_DIR) -name "*.[osx]" | $(XARGS) $(RM_F)

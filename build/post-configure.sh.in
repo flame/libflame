@@ -91,6 +91,9 @@ echo "Enable compiler profiling symbols............... : @fla_enable_compiler_pr
 echo "   C compiler profiling flags................... : @fla_c_prof_flags@"
 
 echo ""
+echo "User-specified CFLAGS (prepended)............... : @fla_userdef_cflags@"
+
+echo ""
 echo "Enable internal error checking.................. : @fla_enable_internal_error_checking@"
 if   [ "@fla_enable_internal_error_checking@" = "yes" ] ; then
 echo "   Internal error checking level................ : @fla_internal_error_checking_level@"
@@ -140,12 +143,6 @@ echo "Autodetect Fortran name-mangling................ : @fla_enable_autodetect_
 if [ "@fla_enable_autodetect_f77_name_mangling@" = "yes" ] ; then
 echo "   Unmangled name............................... : @fla_f77_foobar_unmangled@"
 echo "   Mangled name................................. : @fla_f77_foobar_mangled@"
-fi
-
-echo ""
-echo "Compile with extra C compiler flags............. : @fla_with_extra_cflags@"
-if [ "@fla_with_extra_cflags@" = "yes" ] ; then
-echo "   User-requested extra C compiler flags........ : @fla_extra_cflags@"
 fi
 
 echo ""

@@ -313,10 +313,6 @@ dnl Make sure the user requested at least one type of build (static and/or
 dnl dynamic).
 FLA_REQUIRE_STATIC_OR_DYNAMIC_BUILD
 
-dnl Check whether the user requested the ability to specify extra C compiler
-dnl flags.
-FLA_CHECK_WITH_EXTRA_CFLAGS
-
 dnl Set any generally recommended C preprocessor flags for the chosen compiler.
 FLA_SET_C_PREPROC_FLAGS
 
