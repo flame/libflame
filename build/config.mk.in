@@ -19,15 +19,34 @@ SHELL := /usr/bin/env bash
 # --- Build definitions -------------------------------------------------------
 #
 
+SO_MAJOR  := @so_version_major@
+SO_MINORB := @so_version_minorbuild@
+SO_MMB    := $(SO_MAJOR).$(SO_MINORB)
+
 # This variable will identify the machine architecture (ie: x86_64, ia64, etc.)
 # It will be used to construct a string that is appended to the libflame
 # library name.
 ARCH                           := @fla_host_cpu@
 
-# The install prefix tell us where to install the libraries and header file
-# directory. Notice that we support the use of DESTDIR so that advanced users
-# may install to a temporary location.
-INSTALL_PREFIX                 := $(DESTDIR)@prefix@
+# We have to set these particular variables because some of the @anchors@
+# that are substituted in via configure may be defined *in terms of* these
+# variables. For example, @libdir@ may be replaced with '${exec_prefix}/lib',
+# and if we don't define exec_prefix, libdir will end up with '/lib', which
+# is definitely not what we want.
+prefix                         := @prefix@
+exec_prefix                    := @exec_prefix@
+libdir                         := @libdir@
+includedir                     := @includedir@
+
+# The library and header installation directories tell us where to install
+# the libraries and headers, respectively. Notice that we support the use of
+# DESTDIR so that advanced users may install to a temporary location.
+INSTALL_LIBDIR                 := $(DESTDIR)$(libdir)
+INSTALL_INCDIR                 := $(DESTDIR)$(includedir)
+
+#$(info INSTALL_LIBDIR = $(INSTALL_LIBDIR))
+#$(info INSTALL_INCDIR = $(INSTALL_INCDIR))
+#$(error .)
 
 # Variables corresponding to other configure-time options.
 FLA_ENABLE_VERBOSE_MAKE_OUTPUT := @fla_enable_verbose_make_output@
@@ -42,7 +61,6 @@ FLA_MULTITHREADING_MODEL       := @fla_multithreading_model@
 ifeq ($(V),1)
 FLA_ENABLE_VERBOSE_MAKE_OUTPUT := yes
 endif
-
 
 
 
@@ -130,18 +148,6 @@ else
 LDFLAGS      := @fla_c_prof_flags@ @LDFLAGS@ @FLIBS@
 endif
 endif
-
-
-
-
-#
-# --- send-thanks target definitions ------------------------------------------
-#
-
-THANKS_MSG_SUBJECT := "Thanks!"
-THANKS_MSG_BODY    := "Happy user."
-THANKS_MSG_EMAIL   := flame_thanks@cs.utexas.edu
-
 
 
 
