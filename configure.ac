@@ -26,7 +26,7 @@ dnl         [flame@cs.utexas.edu],
 dnl         [libflame],
 dnl         [http://www.cs.utexas.edu/users/flame/])
 AC_INIT([libflame],
-        [r`cat version`],
+        [`cat version`],
         [flame@cs.utexas.edu],
         [libflame],
         [http://www.cs.utexas.edu/users/flame/])
@@ -75,6 +75,10 @@ AC_CONFIG_COMMANDS_PRE(
 	dnl Create the lib/$host directory.
 	echo "configure: creating lib/$host"
 	mkdir -p lib/$host
+
+	dnl Create the include/$host directory.
+	echo "configure: creating include/$host"
+	mkdir -p include/$host
 
 	dnl Save the host string to a file so it can be retrieved from
 	dnl the config.status commands defined below.
@@ -128,7 +132,7 @@ FLA_OBSERVE_HOST_CPU_TYPE
 
 dnl Set the default value of the $prefix value, normally set by the --prefix
 dnl option to configure.
-AC_PREFIX_DEFAULT([$HOME/flame])
+dnl AC_PREFIX_DEFAULT([$HOME/flame])
 
 dnl Check for default set of C header files.
 dnl AC_DEFAULT_INCLUDES
@@ -429,6 +433,23 @@ dnl           [Unconditionally use libflame types (such as complex types) in BLI
 dnl Set a preprocessor constant so that the BLIS includes FLAME.h.
 fla_blis_flags="-DBLIS1_FROM_LIBFLAME"
 AC_SUBST(fla_blis_flags)
+
+
+dnl ----------------------------------------------------------------------------
+dnl Read shared object (so) version.
+dnl ----------------------------------------------------------------------------
+
+so_version_filepath='./so_version'
+
+# The first line of the 'so_version' file contains the .so major version.
+so_version_major=$(cat ${so_version_filepath} | sed -n "1p")
+
+# The second line contains the minor and build .so version numbers
+# (separated by a '.').
+so_version_minorbuild=$(cat ${so_version_filepath} | sed -n "2p")
+
+AC_SUBST(so_version_major)
+AC_SUBST(so_version_minorbuild)
 
 
 dnl ----------------------------------------------------------------------------

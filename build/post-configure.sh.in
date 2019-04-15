@@ -4,7 +4,11 @@ echo ""
 echo "libflame configuration summary"
 
 echo ""
-echo "revision........................................ : @PACKAGE_VERSION@"
+echo "version......................................... : @PACKAGE_VERSION@"
+
+echo ""
+echo "shared object (so) version (major).............. : @so_version_major@"
+echo "shared object (so) version (minor.build)........ : @so_version_minorbuild@"
 
 echo ""
 echo "build system type............................... : @build@"
@@ -146,7 +150,12 @@ echo "   Mangled name................................. : @fla_f77_foobar_mangled
 fi
 
 echo ""
-echo "libflame install directory prefix............... : @prefix@"
+echo "Installation directories"
+echo "   prefix....................................... : "'@prefix@'
+echo "   exec_prefix.................................. : "'@exec_prefix@'
+echo ""
+echo "   libraries will be installed in............... : "'@libdir@'
+echo "   header files will be installed in............ : "'@includedir@'
 echo ""
 echo "Configuration complete!"
 echo ""

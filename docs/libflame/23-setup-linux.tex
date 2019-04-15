@@ -270,14 +270,47 @@ unique to \libflamens.
 The standard command line options are: \\
 
 \noindent
-{\tt --prefix={\em prefixdir}} \\
+{\tt --prefix={\em PREFIX}} \\
 \configpar{
-The {\em prefixdir} directory specifies the install prefix directory (ie:
-the root directory at which all \libflame build products will be installed).
-If the directory does not exist, it is created.
-%At install-time, libraries will be placed into {\em prefixdir/lib} and
-%header files will be placed into {\em prefixdir/include}.
-This value defaults to {\tt \$HOME/flame}.
+This option sets the {\tt prefix} variable with {\tt\em PREFIX},
+which specifies the common installation prefix for all \libflame
+build products.
+
+If {\tt PREFIX} does not exist, it is created.
+The {\tt prefix} variable defaults to {\tt /usr/local}.
+}
+\noindent
+{\tt --exec-prefix={\em EXECPREFIX}} \\
+\configpar{
+This option sets the {\tt exec\_prefix} variable with {\tt\em EXECPREFIX},
+which specifies the installation prefix for the libraries directory.
+%Generally speaking, libraries will be installed
+%to {\tt \$exec\_prefix/lib}
+
+If {\tt EXECPREFIX} does not exist, it is created.
+The {\tt exec\_prefix} variable defaults to {\tt \$prefix}.
+}
+\noindent
+{\tt --libdir={\em LIBDIR}} \\
+\configpar{
+This option sets the {\tt libdir} variable with {\tt\em LIBDIR},
+which specifies the installation directory for libraries.
+%Generally speaking, libraries will be installed
+%to {\tt \$exec\_prefix/lib}
+
+If {\tt LIBDIR} does not exist, it is created.
+The {\tt libdir} variable defaults to {\tt \$exec\_prefix/lib}.
+}
+\noindent
+{\tt --includedir={\em INCLUDEDIR}} \\
+\configpar{
+This option sets the {\tt includedir} variable with {\tt\em INCLUDEDIR},
+which specifies the installation directory for header files.
+%Generally speaking, libraries will be installed
+%to {\tt \$exec\_prefix/lib}
+
+If {\tt INCLUDEDIR} does not exist, it is created.
+The {\tt includedir} variable defaults to {\tt \$prefix/include}.
 }
 %\newpage
 \noindent
@@ -768,24 +801,6 @@ checking whether gcc accepts -g... yes
 
 \configure has another purpose, though: to create makefile fragments for each
 directory in the source tree.
-The user can see this second half of the \configure process with output
-that looks something like:
-
-\begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
-gen-make-frag.sh: creating makefile fragment in src/base/flamec
-gen-make-frag.sh: creating makefile fragment in src/base/flamec/check
-gen-make-frag.sh: creating makefile fragment in src/base/flamec/check/base
-gen-make-frag.sh: creating makefile fragment in src/base/flamec/check/base/main
-gen-make-frag.sh: creating makefile fragment in src/base/flamec/check/base/util
-gen-make-frag.sh: creating makefile fragment in src/base/flamec/check/blas
-gen-make-frag.sh: creating makefile fragment in src/base/flamec/check/blas/1
-gen-make-frag.sh: creating makefile fragment in src/base/flamec/check/blas/2
-gen-make-frag.sh: creating makefile fragment in src/base/flamec/check/blas/3
-gen-make-frag.sh: creating makefile fragment in src/base/flamec/check/lapack
-gen-make-frag.sh: creating makefile fragment in src/base/flamec/check/lapack/util
-\end{Verbatim}
-
-\noindent
 These makefile fragments are included recursively by the top-level \makefile
 and give \make access to the source files which reside throughout the source
 tree.\footnote{
@@ -815,13 +830,12 @@ Autodetect Fortran name-mangling................ : yes
    Unmangled name............................... : foobar
    Mangled name................................. : foobar\_
 
-Compile with extra C compiler flags............. : no
+Installation directories
+   prefix....................................... : /usr/local
+   exec_prefix.................................. : ${prefix}
 
-libflame install directory prefix............... : /u/field/flame
-
-Compile with extra C compiler flags............. : no
-
-libflame install directory prefix............... : /u/field/flame
+   libraries will be installed in............... : ${exec_prefix}/lib
+   header files will be installed in............ : ${prefix}/include
 
 Configuration complete!
 
@@ -829,6 +843,9 @@ NOTE: Autodetection of Fortran linker flags was enabled. The configure
 script thinks that the flags listed above are necessary to successfully
 link a program to Fortran object code. If your program uses any Fortran
 libraries, you will probably need to link with these flags.
+
+You may now run 'make' to build all libflame libraries and then 'make install'
+to install the libraries.
 \end{Verbatim}
 
 The purpose of this note is to inform the user of Fortran linker flags\footnote{
@@ -954,6 +971,7 @@ The exact subdirectory name depends on the build system type.
 total 33872
 -rw-r--r-- 1 field dept 22548036 Nov 14 13:45 libflame.a
 -rwxr-xr-x 1 field dept 12060827 Nov 14 13:45 libflame.so
+lrwxrwxrwx 1 field dept       11 Nov 14 13:45 libflame.so.1 -> libflame.so
 \end{Verbatim}
 
 \noindent
@@ -962,17 +980,16 @@ build system type of {\tt i686-unknown-linux-gnu}, and so the
 library files reside in the directory
 {\tt lib/i686-unknown-linux-gnu}.
 
-At this point, you need to use the \install target to move the library
-and header files to a more permanent location.
+At this point, you may optionally use the \install target to copy the
+library and header files to a more permanent location.
 
 \begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
 > make install
-Installing libflame-i686-5.1.0-15.a into /u/field/flame/lib/
-Installing libflame-i686-5.1.0-15.so into /u/field/flame/lib/
-Installing C header files into /u/field/flame/include-i686-5.1.0-15
-Installing symlink libflame.a into /u/field/flame/lib/
-Installing symlink libflame.so into /u/field/flame/lib/
-Installing symlink include into /u/field/flame/
+Installing libflame.a into /usr/local/lib/
+Installing libflame.so.1.0.0 into /usr/local/lib/
+Installing symlink libflame.so into /usr/local/lib/
+Installing symlink libflame.so.1 into /usr/local/lib/
+Installing FLAME.h into /usr/local/include/
 \end{Verbatim}
 
 \noindent
@@ -982,27 +999,15 @@ Notice that the libraries and include directory are renamed to reflect
 the build architecture and the revision number.
 
 \begin{Verbatim}[frame=single,framesep=2.5mm,xleftmargin=5mm,commandchars=\\\{\},fontsize=\footnotesize]
-> ls -l $HOME/flame/
-total 8
-lrwxrwxrwx  1 field dept     18 Nov 14 13:46 include -> include-i686-5.1.0-15
-drwxr-xr-x  2 field dept  20480 Nov 14 13:46 include-i686-5.1.0-15
-drwxr-xr-x  5 field dept   4096 Nov 14 13:46 lib
-> ls -l $HOME/flame/lib/
-total 62024
-lrwxrwxrwx 1 field dept       21 Nov 14 13:46 libflame.a -> libflame-i686-5.1.0-15.a
-lrwxrwxrwx 1 field dept       22 Nov 14 13:46 libflame.so -> libflame-i686-5.1.0-15.so
--rw-r--r-- 1 field dept 22548036 Nov 14 13:46 libflame-i686-5.1.0-15.a
--rw-r--r-- 1 field dept 12060827 Nov 14 13:46 libflame-i686-5.1.0-15.so
+> ls -l /usr/local/lib/libflame.*
+-rw-r--r-- 1 field dept 50142282 Apr 15 15:57 /usr/local/lib/libflame.a
+lrwxrwxrwx 1 field dept       17 Apr 15 15:57 /usr/local/lib/libflame.so -> libflame.so.1.0.0
+lrwxrwxrwx 1 field dept       17 Apr 15 15:57 /usr/local/lib/libflame.so.1 -> libflame.so.1.0.0
+-rw-r--r-- 1 field dept 22773792 Apr 15 15:57 /usr/local/lib/libflame.so.1.0.0
+[
+> ls -l /usr/local/include/FLAME.*
+-rw-r--r-- 1 field dept 1005143 Apr 15 15:57 FLAME.h
 \end{Verbatim}
-
-\noindent
-Also notice that the \install target automatically creates abbreviated symbolic
-links to the actual library files so that you may simply refer to
-{\tt libflame.a} or {\tt libflame.so} when linking your application.
-A similarly shortened symbolic link is created for the include directory
-as well.
-If you do not wish to create and install these symbolic links along with
-\libflamens, you may instead invoke \installwithoutsymlinksns.
 
 Now that \libflame has been installed, you are ready to use it!
 %If you only plan on building \libflame for one architecture, then you may
@@ -1066,7 +1071,7 @@ application.
 This section will show you how to link \libflame with your existing application.
 
 Let's assume that you've installed \libflame to the default location in
-{\tt \$HOME/flame}.
+{\tt /usr/local}.
 Let's also assume that you invoked the \install target (and not the
 \installwithoutsymlinks target), giving
 you shorthand symbolic links to both \libflame and the directory containing
@@ -1078,8 +1083,8 @@ process:
 \item
 {\bf Add the \libflame header directory to the include path of your compiler}.
 Usually, this is done by with the {\tt -I} compiler option.
-For example, if you configured \libflame to use {\tt \$HOME/flame} as the
-install prefix, then you would add {\tt -I\$HOME/flame/include} to the command
+For example, if you configured \libflame to use {\tt /usr/local} as the
+install prefix, then you would add {\tt -I/usr/local/include} to the command
 line when invoking the compiler.
 Strictly speaking, this is only necessary when compiling source code files
 that use \libflame symbols or APIs, but it is generally safe to use when compiling
@@ -1154,9 +1159,9 @@ LIB_HOME   := $(HOME)
 BLAS_LIB   := $(LIB_HOME)/lib/libblas.a
 LAPACK_LIB := $(LIB_HOME)/lib/liblapack.a
 
-#textcolor{red}{FLAME_HOME := $(HOME)}
-#textcolor{red}{FLAME_INC  := $(FLAME_HOME)/flame/include}
-#textcolor{red}{FLAME_LIB  := $(FLAME_HOME)/flame/lib/libflame.a}
+#textcolor{red}{FLAME_HOME := /usr/local}
+#textcolor{red}{FLAME_INC  := /usr/local/include}
+#textcolor{red}{FLAME_LIB  := /usr/local/lib/libflame.a}
 
 CC         := icc
 LINKER     := $(CC)
