@@ -306,10 +306,22 @@ HEADERS_TO_INSTALL := $(FLAME_H_FLAT)
 HEADERS_INST       := $(addprefix $(MK_INCL_DIR_INST)/, $(notdir $(HEADERS_TO_INSTALL)))
 
 # Add -I to each header path so we can specify our include search paths to the
-# C and Fortran compilers. NOTE: There is currently only one directory path:
-# namely, the path to FLAME.h.
+# C and Fortran compilers. NOTE: This is primarily for access to the monolithic
+# (flattened) FLAME.h file, athough a few other files are placed there too (see
+# above).
 #INCLUDE_PATHS   := $(strip $(patsubst %, -I%, $(MK_HEADER_DIR_PATHS)))
 INCLUDE_PATHS   := $(strip $(patsubst %, -I%, $(BASE_INC_PATH)))
+
+# When lapack2flame is enabled, we need to add a -I option for the directory
+# in which the lapack2flame headers reside.
+ifeq ($(FLA_ENABLE_LAPACK2FLAME),yes)
+L2F_FRAG_DIR_PATHS   := $(filter ./src/map/lapack2flamec%,$(FRAGMENT_DIR_PATHS))
+L2F_HEADER_DIR_PATHS := $(dir $(foreach frag_path, $(L2F_FRAG_DIR_PATHS), \
+                                       $(firstword $(wildcard $(frag_path)/*.h))))
+INCLUDE_PATHS   += $(strip $(patsubst %, -I%, $(L2F_HEADER_DIR_PATHS)))
+endif
+
+# Add the include flags determined above to various compiler flags variables.
 CFLAGS          := $(CFLAGS) $(INCLUDE_PATHS)
 CFLAGS_NOOPT    := $(CFLAGS_NOOPT) $(INCLUDE_PATHS)
 CPPFLAGS        := $(CPPFLAGS) $(INCLUDE_PATHS)
