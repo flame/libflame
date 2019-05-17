@@ -1,26 +1,27 @@
 # libflame library
 
 libflame is a portable library for dense matrix computations, providing
-much of the functionality present in LAPACK. In fact, libflame includes
-a compatibility layer, FLAPACK, which includes a complete LAPACK
-implementation. The source code for libflame is hosted on github:
+much of the functionality present in LAPACK, developed by current and
+former members of the
+[Science of High-Performance Computing](http://shpc.ices.utexas.edu/)
+(SHPC) group in the
+[Institute for Computational Engineering and Sciences](https://www.ices.utexas.edu/)
+at [The University of Texas at Austin](https://www.utexas.edu/).
+libflame includes a compatibility layer, lapack2flame, which includes
+a complete LAPACK implementation.
+The source code for libflame is hosted on github:
 
   https://github.com/flame/libflame
 
 For detailed instructions on how to configure, build, install, and link
-against libflame, please visit the UTCS libflame webpage at:
-
-  http://www.cs.utexas.edu/~flame/web/
-
-We also encourage you to refer to the libflame reference manual. This
-manual contains all the information you need to get started with
+against libflame, please refer to the libflame reference manual.
+This manual contains all the information you need to get started with
 libflame, including installation directions, usage examples, and a
 complete API reference. If you have LaTeX installed on your system, you
 may simply change into the 'docs/libflame' subdirectory of the top-level
 directory of the libflame source tree and build the document from its
-source. You may also find a nightly build of the document here:
-
-  http://www.cs.utexas.edu/~flame/web/libflame.pdf
+source. You may also find a copy of the document
+[here](docs/libflame/libflame.pdf) on github.
 
 You can keep in touch with developers and other users of the project by
 joining the following mailing list:
@@ -41,5 +42,5 @@ Thanks for your interest in libflame!
 Regards,
 
 Field G. Van Zee
-(for the FLAME team)
+(for the SHPC team)
 field@cs.utexas.edu
