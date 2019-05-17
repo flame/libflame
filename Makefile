@@ -306,7 +306,7 @@ INCLUDE_PATHS   := $(strip $(patsubst %, -I%, $(BASE_INC_PATH)))
 # When lapack2flame is enabled, we need to add a -I option for the directory
 # in which the lapack2flame headers reside.
 ifeq ($(FLA_ENABLE_LAPACK2FLAME),yes)
-L2F_FRAG_DIR_PATHS   := $(filter /src/map/lapack2flamec%,$(FRAGMENT_DIR_PATHS))
+L2F_FRAG_DIR_PATHS   := $(filter ./src/map/lapack2flamec%,$(FRAGMENT_DIR_PATHS))
 L2F_HEADER_DIR_PATHS := $(dir $(foreach frag_path, $(L2F_FRAG_DIR_PATHS), \
                                        $(firstword $(wildcard $(frag_path)/*.h))))
 INCLUDE_PATHS   += $(strip $(patsubst %, -I%, $(L2F_HEADER_DIR_PATHS)))
