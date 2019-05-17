@@ -4,7 +4,10 @@ echo ""
 echo "libflame configuration summary"
 
 echo ""
-echo "version......................................... : @PACKAGE_VERSION@"
+echo "distribution path............................... : @dist_path@"
+
+echo ""
+echo "library version................................. : @version@"
 
 echo ""
 echo "shared object (so) version (major).............. : @so_version_major@"

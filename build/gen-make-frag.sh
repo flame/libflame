@@ -23,7 +23,19 @@ print_usage()
 	echo " Automatically generates makefile fragments for a given directory. "
 	echo " "
 	echo " Usage:"
-	echo "   ${script_name} [options] template.mk directory"
+	echo "   ${script_name} [options] root_dir frag_dir templ.mk"
+	echo " "
+	echo " Arguments (mandatory):"
+	echo " "
+	echo "   root_dir    The root directory to scan when generating makefile"
+	echo "               fragments."
+	echo " "
+	echo "   frag_dir    The root directory in which makefile fragments will be"
+	echo "               generated."
+	echo " "
+	echo "   templ.mk    The template makefile fragment used to generate the actual"
+	echo "               fragments."
+	echo " "
 	echo " "
 	echo " The following options are accepted:"
 	echo " "
@@ -63,6 +75,7 @@ gen_mkfile()
 	local mkfile_frag_var_name
 	local src_file_suffixes
 	local this_dir
+	local this_frag_dir
 	local mkfile_frag_tmpl_name 
 	local mkfile_name 
 	local mkfile_frag_path
@@ -80,6 +93,7 @@ gen_mkfile()
 	mkfile_frag_var_name=$2
 	src_file_suffixes="$3"
 	this_dir=$4
+	this_frag_dir=$5
 	
 	
 	# Strip the leading path from the template makefile path to get its
@@ -87,9 +101,9 @@ gen_mkfile()
 	# requested.
 	mkfile_frag_tmpl_name=${mkfile_frag_tmpl_path##*/}
 	if [ -n "$hide_flag" ]; then
-		mkfile_frag_path=$this_dir/.$mkfile_frag_tmpl_name
+		mkfile_frag_path=$this_frag_dir/.$mkfile_frag_tmpl_name
 	else
-		mkfile_frag_path=$this_dir/$mkfile_frag_tmpl_name
+		mkfile_frag_path=$this_frag_dir/$mkfile_frag_tmpl_name
 	fi
 	
 	
@@ -114,7 +128,6 @@ gen_mkfile()
 		item_suffix=${item_path##*.}
 		
 		# If the suffix matches, then add it to our list
-		#if [ $item_suffix = $src_file_suffix ]; then
 		if is_in_list $item_suffix "$src_file_suffixes"
 		then
 			local_src_files="$local_src_files $item"
@@ -186,11 +199,12 @@ gen_mkfile()
 gen_mkfiles()
 {
 	# Local variable declarations
-	local item sub_items curr_dir this_dir
+	local item sub_items curr_dir this_frag_dir this_dir
 	
 	
 	# Extract our argument
 	curr_dir=$1
+	this_frag_dir=$2
 	
 	
 	# Append a relevant suffix to the makefile variable name, if necesary
@@ -199,14 +213,14 @@ gen_mkfiles()
 	
 	# Be verbose if level 2 was requested
 	if   [ "$verbose_flag" = "2" ]; then
-		echo ">>>" $script_name $mkfile_frag_tmpl_path ${src_var_name}_$SRC "\"$src_file_suffixes\"" $curr_dir
+		echo ">>>" $script_name $mkfile_frag_tmpl_path ${src_var_name}_$SRC "\"$src_file_suffixes\"" $curr_dir $this_frag_dir
 	elif [ "$verbose_flag" = "1" ]; then
-		echo "$script_name: creating makefile fragment in $curr_dir"
+		echo "$script_name: creating makefile fragment in $this_frag_dir from $curr_dir"
 	fi
 	
 	
 	# Call our function to generate a makefile in the directory given.
-	gen_mkfile $mkfile_frag_tmpl_path "${src_var_name}_$SRC" "$src_file_suffixes" $curr_dir
+	gen_mkfile $mkfile_frag_tmpl_path "${src_var_name}_$SRC" "$src_file_suffixes" $curr_dir $this_frag_dir
 	
 	
 	# Get a listing of the directories in $directory
@@ -218,8 +232,7 @@ gen_mkfiles()
 		
 		# If item is a directory, and it's not in the ignore list, descend into it.
 		if [ -d "$curr_dir/$item" ] && ! should_ignore $item; then
-			this_dir=$curr_dir/$item
-			gen_mkfiles $this_dir
+			gen_mkfiles $curr_dir/$item $this_frag_dir/$item
 		fi
 	done
 	
@@ -378,7 +391,7 @@ read_mkfile_var_config()
 	# Read each line of the file describing the library types that might be
 	# built.
 	count=0
-	for i in $(cat "build/config/lib_list"); do
+	for i in $(cat "${script_path}/config/lib_list"); do
 		
 		# Get the index and library name for each line
 		#index=${i%%:*}
@@ -396,7 +409,7 @@ read_mkfile_var_config()
 	
 	# Read each line of the file describing leaf node types
 	count=0
-	for i in $(cat "build/config/leaf_list"); do
+	for i in $(cat "${script_path}/config/leaf_list"); do
 		
 		# Get the index, suffix, and directory name for each line
 		#index=${i%%:*}
@@ -417,7 +430,7 @@ read_mkfile_var_config()
 	
 	# Read each line of the file describing directories to ignore
 	count=0
-	for i in $(cat "build/config/ignore_list"); do
+	for i in $(cat "${script_path}/config/ignore_list"); do
 	
 		# Get the index and name for each line
 		#index=${i%%:*}
@@ -452,6 +465,9 @@ main()
 	
 	# The name of the script, stripped of any preceeding path.
 	script_name=${0##*/}
+
+	# The path to the script.
+	script_path=${0%/${script_name}}
 	
 	# The variable that always holds the string that will be passed to
 	# gen_mkfile() as the source variable to insert into the fragment.mk.
@@ -467,8 +483,9 @@ main()
 	
 	# The arguments to this function. They'll get assigned meaningful
 	# values after getopts.
-	mkfile_frag_tmpl_path=""
 	root_dir=""
+	frag_dir=""
+	mkfile_frag_tmpl_path=""
 	
 	# Flags set by getopts.
 	dry_run_flag=""	
@@ -508,18 +525,20 @@ main()
 	fi
 	
 	# Check the number of arguments after command line option processing.
-	if [ $# != "2" ]; then
+	if [ $# != "3" ]; then
 		print_usage
 	fi
 	
 	
 	# Extract our arguments
-	mkfile_frag_tmpl_path=$1
-	root_dir=$2
+	root_dir=$1
+	frag_dir=$2
+	mkfile_frag_tmpl_path=$3
 	
 	
 	# Strip / from end of directory path, if there is one.
 	root_dir=${root_dir%/}
+	frag_dir=${frag_dir%/}
 	
 	
 	# Append relevant suffixes to the makefile variable name based on the
@@ -529,14 +548,14 @@ main()
 	
 	# Be verbose if level 2 was requested
 	if   [ "$verbose_flag" = "2" ]; then
-		echo ">>>" $script_name $mkfile_frag_tmpl_path ${src_var_name}_$SRC "\"$src_file_suffixes\"" $root_dir
+		echo ">>>" $script_name $mkfile_frag_tmpl_path ${src_var_name}_$SRC "\"$src_file_suffixes\"" $root_dir $frag_dir
 	elif [ "$verbose_flag" = "1" ]; then
-		echo "$script_name: creating makefile fragment in $root_dir"
+		echo "$script_name: creating makefile fragment in $frag_dir from $root_dir"
 	fi
 	
 	
 	# Call our function to generate a makefile in the root directory given.
-	gen_mkfile $mkfile_frag_tmpl_path "${src_var_name}_$SRC" "$src_file_suffixes" $root_dir
+	gen_mkfile $mkfile_frag_tmpl_path "${src_var_name}_$SRC" "$src_file_suffixes" $root_dir $frag_dir
 	
 	
 	# If we were asked to act recursively, then continue processing
@@ -553,8 +572,7 @@ main()
 			# If item is a directory, and it's not in the ignore list, descend into it.
 			if [ -d "$root_dir/$item" ] && ! should_ignore $item ; then
 				
-				this_dir=$root_dir/$item
-				gen_mkfiles $this_dir
+				gen_mkfiles $root_dir/$item $frag_dir/$item
 			fi
 		done
 	fi

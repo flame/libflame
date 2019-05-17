@@ -44,6 +44,11 @@ includedir                     := @includedir@
 INSTALL_LIBDIR                 := $(DESTDIR)$(libdir)
 INSTALL_INCDIR                 := $(DESTDIR)$(includedir)
 
+# The directory path to the top level of the source distribution. When
+# building in-tree, this path is ".". When building out-of-tree, this path
+# is path used to identify the location of configure.
+DIST_PATH                      := @dist_path@
+
 #$(info INSTALL_LIBDIR = $(INSTALL_LIBDIR))
 #$(info INSTALL_INCDIR = $(INSTALL_INCDIR))
 #$(error .)
