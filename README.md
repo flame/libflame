@@ -25,14 +25,16 @@ source. You may also find a copy of the document
 
 You can keep in touch with developers and other users of the project by
 joining the following mailing list:
+- [libflame-discuss](http://groups.google.com/group/libflame-discuss)
+Please join and post to this mailing list if you have general questions
+or feedback regarding libflame.
+- NOTE: We do not yet have a developer's mailing list. For now,
+developers and those with developer-related questions can simply post
+to libflame-discuss.
 
- - libflame-discuss - http://groups.google.com/group/libflame-discuss
-    Please join and post to this mailing list if you have general questions
-    or feedback regarding libflame.
-
- -  (NOTE: We do not yet have a developer's mailing list. For now,
-    developers and those with developer-related questions can simply post
-    to libflame-discuss.
+If you encounter any problems or wish to submit a bug report, please
+consider [opening an issue](https://github.com/flame/libflame/issues) here
+on github.
 
 Also, please read the LICENSE file for information on copying and
 distributing this software.
@@ -41,6 +43,5 @@ Thanks for your interest in libflame!
 
 Regards,
 
-Field G. Van Zee
+[Field G. Van Zee](https://github.com/fgvanzee)
 (for the SHPC team)
-field@cs.utexas.edu
