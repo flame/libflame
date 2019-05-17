@@ -1,5 +1,11 @@
 #!/bin/bash
 
+# This code allows us to invoke configure with the same relative
+# path-to-the-top-level-directory component used to invoke this script.
+script_name=${0##*/}
+dist_path=${0%/run-conf/${script_name}}
+configure_path=${dist_path}/configure
+
 # The install prefix specifies the root directory of the installation.
 # If you enable this option, generally speaking, libraries will be
 # installed to $PREFIX_INST/lib and header files to $PREFIX_INST/include.
@@ -22,7 +28,7 @@ export PREFIX_INST="--prefix=$HOME/flame"
 export CFLAGS="-march=native"
 
 # Run configure.
-./configure \
+${configure_path} \
             ${PREFIX_INST} \
             ${LIBDIR_INST} \
             ${INCDIR_INST} \

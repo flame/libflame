@@ -26,7 +26,7 @@ dnl         [flame@cs.utexas.edu],
 dnl         [libflame],
 dnl         [http://www.cs.utexas.edu/users/flame/])
 AC_INIT([libflame],
-        [`cat version`],
+        [],
         [flame@cs.utexas.edu],
         [libflame],
         [http://www.cs.utexas.edu/users/flame/])
@@ -61,8 +61,8 @@ dnl object files.
 AC_CONFIG_COMMANDS_PRE(
 [
 	dnl Update the version file if we have a working copy.
-	echo "configure: updating/checking revision file."
-	build/update-version-file.sh
+	dnl echo "configure: updating/checking revision file."
+	dnl build/update-version-file.sh
 
 	dnl Create the config/$host directory.
 	echo "configure: creating config/$host"
@@ -70,7 +70,7 @@ AC_CONFIG_COMMANDS_PRE(
 
 	dnl Create the obj/$host directory.
 	echo "configure: creating obj/$host"
-	mkdir -p obj/$host
+	mkdir -p obj/$host/src
 
 	dnl Create the lib/$host directory.
 	echo "configure: creating lib/$host"
@@ -84,6 +84,61 @@ AC_CONFIG_COMMANDS_PRE(
 	dnl the config.status commands defined below.
 	echo "configure: creating config.sys_type"
 	echo $host > config.sys_type
+
+	dnl Determine the distribution path from the script name.
+	script_name=${0##*/}
+	dist_path=${0%/${script_name}}
+
+	dnl Save the distribution path to a file so it can be retreived from
+	dnl the config.status commands defined below.
+	echo "configure: creating config.dist_path"
+	echo "${dist_path}" > config.dist_path
+
+	dnl Determine the version string depending on whether this is a
+	dnl git clone or not.
+	version_file="version"
+	version_filepath="${dist_path}/${version_file}"
+
+	gitdir='.git'
+
+	echo "configure: determining default version string."
+
+	if [[ -d "${dist_path}/${gitdir}" ]]; then
+
+		echo "configure: found '${gitdir}' directory; assuming git clone."
+		echo "configure: executing: git describe --tags."
+
+		gd_stderr="git_describe_stderr.txt"
+
+		git_describe_str=$(git -C ${dist_path} describe --tags 2> ${gd_stderr})
+
+		git_error=$(cat ${gd_stderr})
+		rm -f ${gd_stderr}
+
+		if [[ -n "${git_error}" ]]; then
+			echo "configure: git returned an error: '${git_error}'."
+			echo "configure: using string from unmodified version file."
+			version=$(cat "${version_filepath}")
+		else
+			echo "configure: got back ${git_describe_str}."
+			new_version_str=$(echo ${git_describe_str} | cut -d- -f-2)
+			echo "configure: truncating to ${new_version_str}."
+			version="${new_version_str}"
+		fi
+	else
+		echo "configure: could not find '${gitdir}' directory; using unmodified version file."
+		version=$(cat "${version_filepath}")
+	fi
+
+	dnl Determine the so_version numbers.
+	so_version_file="so_version"
+	so_version_filepath="${dist_path}/${so_version_file}"
+
+	so_version_major=$(cat ${so_version_filepath} | sed -n "1p")
+	so_version_minorbuild=$(cat ${so_version_filepath} | sed -n "2p")
+
+	echo "configure: so major version: ${so_version_major}"
+	echo "configure: so minor.build version: ${so_version_minorbuild}"
 ])
 
 dnl Register commands to be executed by config.status after the main configure
@@ -95,22 +150,64 @@ AC_CONFIG_COMMANDS([config.status],
 	echo "config.status: retreiving host string from config.sys_type"
 	host=$(cat config.sys_type)
 
+	echo "config.status: retreiving dist_path from config.dist_path"
+	dist_path=$(cat config.dist_path)
+
 	dnl Move the config.status byproducts into the appropriate config
 	dnl sub-directory for the current architecture.
-	echo "config.status: moving config.mk to config/$host"
+	echo "config.status: moving build/config.mk to config/$host"
 	mv build/config.mk         config/$host/
-	echo "config.status: moving post-configure.sh to config/$host"
+	echo "config.status: moving build/post-configure.sh to config/$host"
 	mv build/post-configure.sh config/$host/
-	echo "config.status: moving FLA_config.h to config/$host"
+	echo "config.status: moving build/FLA_config.h to config/$host"
 	mv build/FLA_config.h      config/$host/
 
 	dnl Mirror the source tree directory in obj/$host.
-	echo "config.status: mirroring source directory into obj/$host"
-	build/mirror-tree.sh src obj/$host
+	echo "config.status: mirroring ${dist_path}/src into obj/$host/src"
+	${dist_path}/build/mirror-tree.sh ${dist_path}/src obj/$host/src
+
+	dnl gen_make_frag_sh=${dist_path}/build/gen-make-frag.sh
+	dnl root_path=${dist_path}/src
+	dnl frag_path=obj/$host
+	dnl fragment_mk=${dist_path}/build/templates/fragment.mk
 
 	dnl Generate makefile fragments throughout the source tree.
-	echo "config.status: running gen-make-frags.sh"
-	build/gen-make-frags.sh
+	echo "config.status: generating makefile fragments in obj/$host/src"
+	${dist_path}/build/gen-make-frag.sh -rhv0 \
+	                                    ${dist_path}/src \
+	                                    obj/$host/src \
+	                                    ${dist_path}/build/templates/fragment.mk
+
+	dummy_file='_libflame_dir_detect.tmp'
+	configured_oot="no"
+
+	dnl Determine whether we are performing an out-of-tree build.
+	if [[ "${dist_path}" != "./" ]]; then
+		touch "./${dummy_file}"
+		if [[ ! -f "${dist_path}/${dummy_file}" ]]; then
+			configured_oot="yes"
+		else
+			configured_oot="no"
+		fi
+		rm -f "./${dummy_file}"
+	fi
+
+	dnl If we are performing an out-of-tree build, we must make a symlink to
+	dnl the Makefile.
+	if [[ "${configured_oot}" = "yes" ]]; then
+
+		if [[ ! -e "./Makefile" ]]; then
+			echo "config.status: creating symbolic link to Makefile"
+			ln -s "${dist_path}/Makefile"
+		elif [[ -h "./Makefile" ]]; then
+			echo "config.status: symbolic link to Makefile already exists; forcing creation of new link"
+			ln -sf "${dist_path}/Makefile"
+		else
+			echo "config.status: Non-symbolic link file or directory 'Makefile' blocks creation of symlink."
+			echo "config.status: *** Please remove this entity and re-run configure."
+			exit 1
+		fi
+	fi
 
 	dnl Before running the post-configure script, make sure its permissions
 	dnl are set to be executable.
@@ -436,17 +533,47 @@ AC_SUBST(fla_blis_flags)
 
 
 dnl ----------------------------------------------------------------------------
+dnl Determine the distribution path.
+dnl ----------------------------------------------------------------------------
+
+dnl The name of the script, stripped of any preceeding path.
+dnl script_name=${0##*/}
+
+dnl The path to the script. We need this to find the top-level directory
+dnl of the source distribution in the event that the user has chosen to
+dnl build elsewhere.
+dnl dist_path=${0%/${script_name}}
+
+
+dnl ----------------------------------------------------------------------------
+dnl Handle the version number.
+dnl ----------------------------------------------------------------------------
+
+dnl The file in which the version string is kept.
+dnl version_file="version"
+dnl version_filepath="${dist_path}/${version_file}"
+
+dnl Grab the contents of the version file.
+dnl version=$(cat ${version_filepath})
+
+AC_SUBST(dist_path)
+AC_SUBST(version)
+
+
+dnl ----------------------------------------------------------------------------
 dnl Read shared object (so) version.
 dnl ----------------------------------------------------------------------------
 
-so_version_filepath='./so_version'
+dnl The file in which the so_version string is kept.
+dnl so_version_file="so_version"
+dnl so_version_filepath="${dist_path}/${so_version_file}"
 
-# The first line of the 'so_version' file contains the .so major version.
-so_version_major=$(cat ${so_version_filepath} | sed -n "1p")
+dnl The first line of the 'so_version' file contains the .so major version.
+dnl so_version_major=$(cat ${so_version_filepath} | sed -n "1p")
 
-# The second line contains the minor and build .so version numbers
-# (separated by a '.').
-so_version_minorbuild=$(cat ${so_version_filepath} | sed -n "2p")
+dnl The second line contains the minor and build .so version numbers
+dnl (separated by a '.').
+dnl so_version_minorbuild=$(cat ${so_version_filepath} | sed -n "2p")
 
 AC_SUBST(so_version_major)
 AC_SUBST(so_version_minorbuild)
