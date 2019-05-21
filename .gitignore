@@ -30,6 +30,7 @@ aclocal.m4
 config.log
 config.status
 config.sys_type
+config.dist_path
 config.mk
 version
 
