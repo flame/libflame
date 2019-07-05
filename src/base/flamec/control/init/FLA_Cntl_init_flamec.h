@@ -8,6 +8,8 @@
 
 */
 
+void FLA_Cntl_init_flamec_ts( void );
+
 void FLA_Cntl_init_flamec( void );
 void FLA_Cntl_finalize_flamec( void );
 
