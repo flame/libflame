@@ -10,6 +10,46 @@
 
 #include "FLAME.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void FLA_Lyap_cntl_init_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
+{
+	// Set blocksize with default value for conventional storage.
+	FLA_cntl_flamec_init_i->fla_lyap_bsize       = FLA_Query_blocksizes( FLA_DIMENSION_MIN );
+
+	// Create a control tree to invoke an unblocked variant.
+	FLA_cntl_flamec_init_i->fla_lyap_cntl_leaf   = FLA_Cntl_lyap_obj_create( FLA_FLAT,
+	                                                 FLA_UNBLOCKED_VARIANT1,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL );
+
+	// Create a control tree to invoke a blocked variant.
+	FLA_cntl_flamec_init_i->fla_lyap_cntl        = FLA_Cntl_lyap_obj_create( FLA_FLAT, 
+	                                                 FLA_BLOCKED_VARIANT1,
+	                                                 FLA_cntl_flamec_init_i->fla_lyap_bsize,
+	                                                 FLA_cntl_flamec_init_i->fla_scal_cntl_blas,
+	                                                 FLA_cntl_flamec_init_i->fla_lyap_cntl_leaf,
+	                                                 FLA_cntl_flamec_init_i->fla_sylv_cntl,
+	                                                 FLA_cntl_flamec_init_i->fla_gemm_cntl_blas,
+	                                                 FLA_cntl_flamec_init_i->fla_gemm_cntl_blas,
+	                                                 FLA_cntl_flamec_init_i->fla_hemm_cntl_blas,
+	                                                 FLA_cntl_flamec_init_i->fla_her2k_cntl_blas );
+}
+
+void FLA_Lyap_cntl_finalize_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
+{
+	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_lyap_cntl_leaf );
+	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_lyap_cntl );
+
+	FLA_Blocksize_free( FLA_cntl_flamec_init_i->fla_lyap_bsize );
+}
+#endif
+
 extern fla_scal_t*  fla_scal_cntl_blas;
 extern fla_gemm_t*  fla_gemm_cntl_blas;
 extern fla_hemm_t*  fla_hemm_cntl_blas;

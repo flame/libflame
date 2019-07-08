@@ -11,8 +11,14 @@
 // -----------------------------------------------------------------------------
 
 fla_blocksize_t* FLA_Blocksize_create( dim_t b_s, dim_t b_d, dim_t b_c, dim_t b_z );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+fla_blocksize_t* FLA_Blocksize_create_copy_ts( FLA_Cntl_init_flamec_s *FLA_Cntl_init_flamec_i, fla_blocksize_t* bp );
+#endif
 fla_blocksize_t* FLA_Blocksize_create_copy( fla_blocksize_t* bp );
 void             FLA_Blocksize_set( fla_blocksize_t* bp, dim_t b_s, dim_t b_d, dim_t b_c, dim_t b_z );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void             FLA_Blocksize_scale_ts( FLA_Cntl_init_flamec_s *FLA_Cntl_init_flamec_i, fla_blocksize_t* bp, double factor );
+#endif
 void             FLA_Blocksize_scale( fla_blocksize_t* bp, double factor );
 void             FLA_Blocksize_free( fla_blocksize_t* bp );
 dim_t            FLA_Blocksize_extract( FLA_Datatype dt, fla_blocksize_t* bp );
@@ -20,12 +26,20 @@ dim_t            FLA_Blocksize_extract( FLA_Datatype dt, fla_blocksize_t* bp );
 fla_blocksize_t* FLA_Query_blocksizes( FLA_Dimension dim );
 dim_t            FLA_Query_blocksize( FLA_Datatype dt, FLA_Dimension dim );
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+dim_t            FLA_Determine_blocksize_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A_unproc, FLA_Quadrant to_dir, fla_blocksize_t* bp );
+#endif
 dim_t            FLA_Determine_blocksize( FLA_Obj A_unproc, FLA_Quadrant to_dir, fla_blocksize_t* cntl_blocksizes );
 dim_t            FLA_determine_matrix_size( FLA_Obj A_unproc, FLA_Quadrant to_dir );
 
 
 
 // -----------------------------------------------------------------------------
+
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+unsigned int  FLA_Check_error_level_ts(FLA_cntl_init_s *FLA_cntl_init_i);
+unsigned int  FLA_Check_error_level_set_ts( FLA_cntl_init_s *FLA_cntl_init_i, unsigned int new_level );
+#endif
 
 unsigned int  FLA_Check_error_level( void );
 unsigned int  FLA_Check_error_level_set( unsigned int level );
@@ -38,6 +52,10 @@ FLA_Error     FLA_Check_valid_conj( FLA_Conj conj );
 FLA_Error     FLA_Check_valid_direct( FLA_Conj direct );
 FLA_Error     FLA_Check_valid_storev( FLA_Conj storev );
 FLA_Error     FLA_Check_valid_inverse( FLA_Inv inv );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+// FLA_Error     FLA_Check_valid_datatype_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Datatype datatype );
+FLA_Error     FLA_Check_valid_object_datatype_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A );
+#endif
 FLA_Error     FLA_Check_valid_datatype( FLA_Datatype datatype );
 FLA_Error     FLA_Check_valid_object_datatype( FLA_Obj A );
 FLA_Error     FLA_Check_valid_evd_type( FLA_Evd_type evd_type );
@@ -49,13 +67,25 @@ FLA_Error     FLA_Check_floating_datatype( FLA_Datatype datatype );
 FLA_Error     FLA_Check_int_datatype( FLA_Datatype datatype );
 FLA_Error     FLA_Check_real_datatype( FLA_Datatype datatype );
 FLA_Error     FLA_Check_complex_datatype( FLA_Datatype datatype );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Check_floating_object_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A );
+#endif
 FLA_Error     FLA_Check_floating_object( FLA_Obj A );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Check_int_object_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A );
+#endif
 FLA_Error     FLA_Check_int_object( FLA_Obj A );
 FLA_Error     FLA_Check_real_object( FLA_Obj A );
 FLA_Error     FLA_Check_comparable_object( FLA_Obj A );
 FLA_Error     FLA_Check_complex_object( FLA_Obj A );
 FLA_Error     FLA_Check_consistent_datatype( FLA_Datatype datatype, FLA_Obj A );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Check_consistent_object_datatype_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj B );
+#endif
 FLA_Error     FLA_Check_consistent_object_datatype( FLA_Obj A, FLA_Obj B );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Check_identical_object_precision_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj B );
+#endif
 FLA_Error     FLA_Check_identical_object_precision( FLA_Obj A, FLA_Obj B );
 FLA_Error     FLA_Check_square( FLA_Obj A );
 FLA_Error     FLA_Check_if_scalar( FLA_Obj A );
@@ -102,9 +132,21 @@ FLA_Error     FLA_Check_valid_complex_trans( FLA_Trans trans );
 FLA_Error     FLA_Check_valid_real_trans( FLA_Trans trans );
 FLA_Error     FLA_Check_valid_blas_trans( FLA_Trans trans );
 FLA_Error     FLA_Check_nonconstant_datatype( FLA_Datatype datatype );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Check_nonconstant_object_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A );
+#endif
 FLA_Error     FLA_Check_nonconstant_object( FLA_Obj A );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Check_identical_object_datatype_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj B );
+#endif
 FLA_Error     FLA_Check_identical_object_datatype( FLA_Obj A, FLA_Obj B );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Check_divide_by_zero_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj alpha );
+#endif
 FLA_Error     FLA_Check_divide_by_zero( FLA_Obj alpha );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Check_identical_object_elemtype_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj B );
+#endif
 FLA_Error     FLA_Check_identical_object_elemtype( FLA_Obj A, FLA_Obj B );
 FLA_Error     FLA_Check_pivot_index_range( FLA_Obj p, dim_t k1, dim_t k2 );
 FLA_Error     FLA_Check_householder_panel_dims( FLA_Obj A, FLA_Obj T );
@@ -142,6 +184,15 @@ void          FLA_Abort( void );
 
 
 // -----------------------------------------------------------------------------
+
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void          FLA_Init_ts( void **cntl_hndl);
+void          FLA_Finalize_ts( void **cntl_hndl);
+FLA_Bool      FLA_Initialized_ts( void** cntl_hndl);
+
+void          FLA_Init_safe_ts( void **cntl_hdl, FLA_Error* init_result );
+void          FLA_Finalize_safe_ts( void **cntl_hdl, FLA_Error init_result );
+#endif
 
 void          FLA_Init( void );
 void          FLA_Finalize( void );
@@ -230,17 +281,33 @@ void          FLA_shfree( void* ptr );
 FLA_Bool      FLA_is_owner( void );
 #endif
 FLA_Error     FLA_Obj_nullify( FLA_Obj *obj );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Obj_create_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Datatype datatype, dim_t m, dim_t n, dim_t rs, dim_t cs, FLA_Obj *obj );
+FLA_Error     FLA_Obj_create_ext_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Datatype datatype, FLA_Elemtype elemtype, dim_t m, dim_t n, dim_t m_inner, dim_t n_inner, dim_t rs, dim_t cs, FLA_Obj *obj );
+#endif
 FLA_Error     FLA_Obj_create( FLA_Datatype datatype, dim_t m, dim_t n, dim_t rs, dim_t cs, FLA_Obj *obj );
 FLA_Error     FLA_Obj_create_ext( FLA_Datatype datatype, FLA_Elemtype elemtype, dim_t m, dim_t n, dim_t m_inner, dim_t n_inner, dim_t rs, dim_t cs, FLA_Obj *obj );
 FLA_Error     FLA_Obj_create_conf_to( FLA_Trans trans, FLA_Obj old, FLA_Obj *obj );
 FLA_Error     FLA_Obj_create_copy_of( FLA_Trans trans, FLA_Obj old, FLA_Obj *obj );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Obj_create_without_buffer_ts( void **cntl_hndl, FLA_Datatype datatype, dim_t m, dim_t n, FLA_Obj *obj );
+#endif
 FLA_Error     FLA_Obj_create_without_buffer( FLA_Datatype datatype, dim_t m, dim_t n, FLA_Obj *obj );
 FLA_Error     FLA_Obj_create_constant( double const_real, FLA_Obj *obj );
 FLA_Error     FLA_Obj_create_constant_ext( float const_s, double const_d, FLA_Obj *obj );
 FLA_Error     FLA_Obj_create_complex_constant( double const_real, double const_imag, FLA_Obj *obj );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Obj_attach_buffer_ts( void **cntl_hndl, void *buffer, dim_t rs, dim_t cs, FLA_Obj *obj );
+#endif
 FLA_Error     FLA_Obj_attach_buffer( void *buffer, dim_t rs, dim_t cs, FLA_Obj *obj );
 FLA_Error     FLA_Obj_create_buffer( dim_t rs, dim_t cs, FLA_Obj *obj );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Obj_free_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj *obj );
+#endif
 FLA_Error     FLA_Obj_free( FLA_Obj *obj );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Obj_free_without_buffer_ts( void **cntl_hdl, FLA_Obj *obj );
+#endif
 FLA_Error     FLA_Obj_free_without_buffer( FLA_Obj *obj );
 FLA_Error     FLA_Obj_free_buffer( FLA_Obj *obj );
 dim_t         FLA_align_ldim( dim_t ldim, dim_t elem_size );
@@ -268,11 +335,23 @@ FLA_Error     FLA_Obj_free_buffer_task( FLA_Obj obj, void* cntl );
 
 // -----------------------------------------------------------------------------
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Datatype  FLA_Obj_datatype_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj obj );
+#endif
 FLA_Datatype  FLA_Obj_datatype( FLA_Obj obj );
 FLA_Datatype  FLA_Obj_datatype_proj_to_real( FLA_Obj A );
 FLA_Datatype  FLA_Obj_datatype_proj_to_complex( FLA_Obj A );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Elemtype  FLA_Obj_elemtype_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj obj );
+#endif
 FLA_Elemtype  FLA_Obj_elemtype( FLA_Obj obj );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+dim_t         FLA_Obj_datatype_size_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Datatype datatype );
+#endif
 dim_t         FLA_Obj_datatype_size( FLA_Datatype datatype );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+dim_t FLA_Obj_elem_size_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj obj );
+#endif
 dim_t         FLA_Obj_elem_size( FLA_Obj obj );
 dim_t         FLA_Obj_length( FLA_Obj obj );
 dim_t         FLA_Obj_width( FLA_Obj obj );
@@ -289,13 +368,28 @@ dim_t         FLA_Obj_base_length( FLA_Obj obj );
 dim_t         FLA_Obj_base_width( FLA_Obj obj );
 dim_t         FLA_Obj_num_elem_alloc( FLA_Obj obj );
 void*         FLA_Obj_base_buffer( FLA_Obj obj );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void*         FLA_Obj_buffer_at_view_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj obj );
+#endif
 void*         FLA_Obj_buffer_at_view( FLA_Obj obj );
 FLA_Bool      FLA_Obj_buffer_is_null( FLA_Obj obj );
 FLA_Bool      FLA_Obj_is_int( FLA_Obj A );
 FLA_Bool      FLA_Obj_is_floating_point( FLA_Obj A );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Bool      FLA_Obj_is_constant_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A );
+#endif
 FLA_Bool      FLA_Obj_is_constant( FLA_Obj A );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Bool      FLA_Obj_is_real_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A );
+#endif
 FLA_Bool      FLA_Obj_is_real( FLA_Obj A );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Bool      FLA_Obj_is_complex_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A );
+#endif
 FLA_Bool      FLA_Obj_is_complex( FLA_Obj A );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Bool FLA_Obj_is_single_precision_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A );
+#endif
 FLA_Bool      FLA_Obj_is_single_precision( FLA_Obj A );
 FLA_Bool      FLA_Obj_is_double_precision( FLA_Obj A );
 FLA_Bool      FLA_Obj_is_scalar( FLA_Obj A );
@@ -307,6 +401,9 @@ FLA_Bool      FLA_Obj_is_conformal_to( FLA_Trans trans, FLA_Obj A, FLA_Obj B );
 FLA_Bool      FLA_Obj_is( FLA_Obj A, FLA_Obj B );
 FLA_Bool      FLA_Obj_is_identical( FLA_Obj A, FLA_Obj B );
 FLA_Bool      FLA_Obj_is_overlapped( FLA_Obj A, FLA_Obj B );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Bool      FLA_Obj_equals_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj B );
+#endif
 FLA_Bool      FLA_Obj_equals( FLA_Obj A, FLA_Obj B );
 FLA_Bool      FLA_Obj_gt( FLA_Obj A, FLA_Obj B );
 FLA_Bool      FLA_Obj_ge( FLA_Obj A, FLA_Obj B );
@@ -319,8 +416,14 @@ FLA_Error     FLA_Obj_datatype_check( FLA_Obj obj );
 FLA_Error     FLA_Obj_datatype_proj_to_real_check( FLA_Obj obj );
 FLA_Error     FLA_Obj_elemtype_check( FLA_Obj obj );
 FLA_Error     FLA_Obj_datatype_size_check( FLA_Datatype datatype );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Obj_elem_size_check_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj obj );
+#endif
 FLA_Error     FLA_Obj_elem_size_check( FLA_Obj obj );
 FLA_Error     FLA_Obj_buffer_at_view_check( FLA_Obj obj );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Obj_equals_check_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj B );
+#endif
 FLA_Error     FLA_Obj_equals_check( FLA_Obj A, FLA_Obj B );
 FLA_Bool      FLA_Obj_gt_check( FLA_Obj A, FLA_Obj B );
 FLA_Bool      FLA_Obj_ge_check( FLA_Obj A, FLA_Obj B );
@@ -387,49 +490,108 @@ void          FLA_Param_map_netlib_to_flame_svd_type( char* svd, FLA_Svd_type* f
 
 // -----------------------------------------------------------------------------
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Part_2x2_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A,  FLA_Obj *A11, FLA_Obj *A12,
+                                    FLA_Obj *A21, FLA_Obj *A22, 
+                        dim_t  mb,  dim_t     nb, FLA_Quadrant quadrant );
+#endif
 FLA_Error     FLA_Part_2x2( FLA_Obj A,  FLA_Obj *A11, FLA_Obj *A12,
                                         FLA_Obj *A21, FLA_Obj *A22,
                             dim_t  mb,  dim_t     nb, FLA_Quadrant quadrant );
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Part_2x1_ts( FLA_cntl_init_s *FLA_cntl_init_i,
+                                    FLA_Obj A,  FLA_Obj *A1, 
+                                    FLA_Obj *A2,
+                        dim_t  mb,  FLA_Side side );
+#endif
 FLA_Error     FLA_Part_2x1 ( FLA_Obj A,  FLA_Obj *A1,
                                          FLA_Obj *A2,
                              dim_t  mb,  FLA_Side side );
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Part_1x2_ts( FLA_cntl_init_s *FLA_cntl_init_i,
+                           FLA_Obj A,  FLA_Obj *A1, FLA_Obj *A2,
+                                    dim_t    nb, FLA_Side side );
+#endif
 FLA_Error     FLA_Part_1x2( FLA_Obj A,  FLA_Obj *A1, FLA_Obj *A2,
                                         dim_t    nb, FLA_Side side );
  
 FLA_Error     FLA_Merge_2x2( FLA_Obj A11, FLA_Obj A12,
                              FLA_Obj A21, FLA_Obj A22,  FLA_Obj *A );
  
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Merge_2x1_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj AT,
+                         FLA_Obj AB,  FLA_Obj *A );
+#endif
 FLA_Error     FLA_Merge_2x1( FLA_Obj AT,
                              FLA_Obj AB,  FLA_Obj *A );
 
 FLA_Error     FLA_Merge_1x2( FLA_Obj AL, FLA_Obj AR,  FLA_Obj *A );
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Repart_2x2_to_3x3_ts( FLA_cntl_init_s *FLA_cntl_init_i,
+                                    FLA_Obj ATL, FLA_Obj ATR,  FLA_Obj *A00, FLA_Obj *A01, FLA_Obj *A02,
+                                                            FLA_Obj *A10, FLA_Obj *A11, FLA_Obj *A12,
+                                    FLA_Obj ABL, FLA_Obj ABR,  FLA_Obj *A20, FLA_Obj *A21, FLA_Obj *A22,
+                                    dim_t   mb,  dim_t    nb,  FLA_Quadrant quadrant );
+#endif
 FLA_Error     FLA_Repart_2x2_to_3x3( FLA_Obj ATL, FLA_Obj ATR,  FLA_Obj *A00, FLA_Obj *A01, FLA_Obj *A02,
                                                                 FLA_Obj *A10, FLA_Obj *A11, FLA_Obj *A12,
                                      FLA_Obj ABL, FLA_Obj ABR,  FLA_Obj *A20, FLA_Obj *A21, FLA_Obj *A22,
                                      dim_t   mb,  dim_t    nb,  FLA_Quadrant quadrant );
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Repart_2x1_to_3x1_ts( FLA_cntl_init_s *FLA_cntl_init_i,
+                                 FLA_Obj AT,  FLA_Obj *A0,
+                                              FLA_Obj *A1,
+                                 FLA_Obj AB,  FLA_Obj *A2,
+                                 dim_t   mb,  FLA_Side side );
+#endif
 FLA_Error     FLA_Repart_2x1_to_3x1( FLA_Obj AT,  FLA_Obj *A0,
                                                   FLA_Obj *A1,
                                      FLA_Obj AB,  FLA_Obj *A2,
                                      dim_t   mb,  FLA_Side side );
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Repart_1x2_to_1x3_ts( FLA_cntl_init_s *FLA_cntl_init_i,
+                                    FLA_Obj  AL,              FLA_Obj  AR,
+                                    FLA_Obj *A0, FLA_Obj *A1, FLA_Obj *A2,
+                                              dim_t    nb, FLA_Side side );
+#endif
 FLA_Error     FLA_Repart_1x2_to_1x3( FLA_Obj  AL,              FLA_Obj  AR,
                                      FLA_Obj *A0, FLA_Obj *A1, FLA_Obj *A2,
                                                   dim_t    nb, FLA_Side side );
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Cont_with_3x3_to_2x2_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj *ATL, FLA_Obj *ATR,  FLA_Obj A00, FLA_Obj A01, FLA_Obj A02,
+                                                                 FLA_Obj A10, FLA_Obj A11, FLA_Obj A12,
+                                    FLA_Obj *ABL, FLA_Obj *ABR,  FLA_Obj A20, FLA_Obj A21, FLA_Obj A22,
+                                                                 FLA_Quadrant quadrant );
+#endif
 FLA_Error     FLA_Cont_with_3x3_to_2x2( FLA_Obj *ATL, FLA_Obj *ATR,  FLA_Obj A00, FLA_Obj A01, FLA_Obj A02,
                                                                      FLA_Obj A10, FLA_Obj A11, FLA_Obj A12,
                                         FLA_Obj *ABL, FLA_Obj *ABR,  FLA_Obj A20, FLA_Obj A21, FLA_Obj A22,
                                                                      FLA_Quadrant quadrant );
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Cont_with_3x1_to_2x1_ts( FLA_cntl_init_s *FLA_cntl_init_i,
+                                       FLA_Obj *AT,  FLA_Obj A0,
+                                                  FLA_Obj A1,
+                                       FLA_Obj *AB,  FLA_Obj A2,
+                                                  FLA_Side side );
+#endif
 FLA_Error     FLA_Cont_with_3x1_to_2x1( FLA_Obj *AT,  FLA_Obj A0,
                                                       FLA_Obj A1,
                                         FLA_Obj *AB,  FLA_Obj A2,
                                                       FLA_Side side );
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Cont_with_1x3_to_1x2_ts( FLA_cntl_init_s *FLA_cntl_init_i,
+                                       FLA_Obj *AL,              FLA_Obj *AR,
+                                       FLA_Obj  A0, FLA_Obj  A1, FLA_Obj  A2,
+                                                              FLA_Side side );
+#endif
 FLA_Error     FLA_Cont_with_1x3_to_1x2( FLA_Obj *AL,              FLA_Obj *AR,
                                         FLA_Obj  A0, FLA_Obj  A1, FLA_Obj  A2,
                                                                   FLA_Side side );
@@ -456,49 +618,108 @@ FLA_Error     FLA_Cont_with_5x5_to_3x3( FLA_Obj *ATL, FLA_Obj *ATM, FLA_Obj *ATR
 
 
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Part_2x2_check_ts( FLA_cntl_init_s *FLA_cntl_init_i,
+                                 FLA_Obj A,  FLA_Obj *A11, FLA_Obj *A12,
+                                          FLA_Obj *A21, FLA_Obj *A22,
+                              dim_t  mb,  dim_t     nb, FLA_Quadrant quadrant );
+#endif
 FLA_Error     FLA_Part_2x2_check( FLA_Obj A,  FLA_Obj *A11, FLA_Obj *A12,
                                               FLA_Obj *A21, FLA_Obj *A22,
                                   dim_t  mb,  dim_t     nb, FLA_Quadrant quadrant );
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Part_2x1_check_ts( FLA_cntl_init_s *FLA_cntl_init_i,
+                                          FLA_Obj A,  FLA_Obj *A1,
+                                          FLA_Obj *A2,
+                              dim_t  mb,  FLA_Side side );
+#endif
 FLA_Error     FLA_Part_2x1_check( FLA_Obj A,  FLA_Obj *A1,
                                                FLA_Obj *A2,
                                    dim_t  mb,  FLA_Side side );
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Part_1x2_check_ts( FLA_cntl_init_s *FLA_cntl_init_i,
+                              FLA_Obj A,  FLA_Obj *A1, FLA_Obj *A2,
+                                          dim_t    nb, FLA_Side side );
+#endif
 FLA_Error     FLA_Part_1x2_check( FLA_Obj A,  FLA_Obj *A1, FLA_Obj *A2,
                                               dim_t    nb, FLA_Side side );
  
 FLA_Error     FLA_Merge_2x2_check( FLA_Obj A11, FLA_Obj A12,
                                    FLA_Obj A21, FLA_Obj A22,  FLA_Obj *A );
  
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Merge_2x1_check_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj AT,
+                               FLA_Obj AB,  FLA_Obj *A );
+#endif
 FLA_Error     FLA_Merge_2x1_check( FLA_Obj AT,
                                    FLA_Obj AB,  FLA_Obj *A );
 
 FLA_Error     FLA_Merge_1x2_check( FLA_Obj AL, FLA_Obj AR,  FLA_Obj *A );
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Repart_2x2_to_3x3_check_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj ATL, FLA_Obj ATR,  FLA_Obj *A00, FLA_Obj *A01, FLA_Obj *A02,
+                                                                  FLA_Obj *A10, FLA_Obj *A11, FLA_Obj *A12,
+                                       FLA_Obj ABL, FLA_Obj ABR,  FLA_Obj *A20, FLA_Obj *A21, FLA_Obj *A22,
+                                       dim_t   mb,  dim_t    nb,  FLA_Quadrant quadrant );
+#endif
 FLA_Error     FLA_Repart_2x2_to_3x3_check( FLA_Obj ATL, FLA_Obj ATR,  FLA_Obj *A00, FLA_Obj *A01, FLA_Obj *A02,
                                                                       FLA_Obj *A10, FLA_Obj *A11, FLA_Obj *A12,
                                            FLA_Obj ABL, FLA_Obj ABR,  FLA_Obj *A20, FLA_Obj *A21, FLA_Obj *A22,
                                            dim_t   mb,  dim_t    nb,  FLA_Quadrant quadrant );
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Repart_2x1_to_3x1_check_ts( FLA_cntl_init_s *FLA_cntl_init_i,
+                                       FLA_Obj AT,  FLA_Obj *A0,
+                                                    FLA_Obj *A1,
+                                       FLA_Obj AB,  FLA_Obj *A2,
+                                       dim_t   mb,  FLA_Side side );
+#endif
 FLA_Error     FLA_Repart_2x1_to_3x1_check( FLA_Obj AT,  FLA_Obj *A0,
                                                         FLA_Obj *A1,
                                            FLA_Obj AB,  FLA_Obj *A2,
                                            dim_t   mb,  FLA_Side side );
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Repart_1x2_to_1x3_check_ts( FLA_cntl_init_s *FLA_cntl_init_i,
+                                          FLA_Obj  AL,              FLA_Obj  AR,
+                                          FLA_Obj *A0, FLA_Obj *A1, FLA_Obj *A2,
+                                                    dim_t    nb, FLA_Side side );
+#endif
 FLA_Error     FLA_Repart_1x2_to_1x3_check( FLA_Obj  AL,              FLA_Obj  AR,
                                            FLA_Obj *A0, FLA_Obj *A1, FLA_Obj *A2,
                                                         dim_t    nb, FLA_Side side );
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Cont_with_3x3_to_2x2_check_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj *ATL, FLA_Obj *ATR,  FLA_Obj A00, FLA_Obj A01, FLA_Obj A02,
+                                                                       FLA_Obj A10, FLA_Obj A11, FLA_Obj A12,
+                                          FLA_Obj *ABL, FLA_Obj *ABR,  FLA_Obj A20, FLA_Obj A21, FLA_Obj A22,
+                                                                       FLA_Quadrant quadrant );
+#endif
 FLA_Error     FLA_Cont_with_3x3_to_2x2_check( FLA_Obj *ATL, FLA_Obj *ATR,  FLA_Obj A00, FLA_Obj A01, FLA_Obj A02,
                                                                            FLA_Obj A10, FLA_Obj A11, FLA_Obj A12,
                                               FLA_Obj *ABL, FLA_Obj *ABR,  FLA_Obj A20, FLA_Obj A21, FLA_Obj A22,
                                                                            FLA_Quadrant quadrant );
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Cont_with_3x1_to_2x1_check_ts( FLA_cntl_init_s *FLA_cntl_init_i,
+                                             FLA_Obj *AT,  FLA_Obj A0,
+                                                        FLA_Obj A1,
+                                             FLA_Obj *AB,  FLA_Obj A2,
+                                                        FLA_Side side );
+#endif
 FLA_Error     FLA_Cont_with_3x1_to_2x1_check( FLA_Obj *AT,  FLA_Obj A0,
                                                             FLA_Obj A1,
                                               FLA_Obj *AB,  FLA_Obj A2,
                                                             FLA_Side side );
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error     FLA_Cont_with_1x3_to_1x2_check_ts( FLA_cntl_init_s *FLA_cntl_init_i,
+                                             FLA_Obj *AL,              FLA_Obj *AR,
+                                             FLA_Obj  A0, FLA_Obj  A1, FLA_Obj  A2,
+                                                                    FLA_Side side );
+#endif
 FLA_Error     FLA_Cont_with_1x3_to_1x2_check( FLA_Obj *AL,              FLA_Obj *AR,
                                               FLA_Obj  A0, FLA_Obj  A1, FLA_Obj  A2,
                                                                         FLA_Side side );

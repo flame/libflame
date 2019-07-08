@@ -10,6 +10,122 @@
 
 #include "FLAME.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void FLASH_Gemm_cntl_init_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
+{
+	// Set gemm blocksize for hierarchical storage.
+	FLA_cntl_flash_init_i->flash_gemm_bsize      = FLA_Blocksize_create( 1, 1, 1, 1 );
+
+	// Create a control tree node that executes a gemm subproblem.
+	FLA_cntl_flash_init_i->flash_gemm_cntl_blas  = FLA_Cntl_gemm_obj_create( FLA_HIER,
+	                                                  FLA_SUBPROBLEM,
+	                                                  NULL,
+	                                                  NULL,
+	                                                  NULL );
+
+	// Create control trees for situations where one dimension is large.
+	FLA_cntl_flash_init_i->flash_gemm_cntl_pb_bb = FLA_Cntl_gemm_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT1,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_cntl_blas );
+	FLA_cntl_flash_init_i->flash_gemm_cntl_bp_bb = FLA_Cntl_gemm_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT3,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_cntl_blas );
+	FLA_cntl_flash_init_i->flash_gemm_cntl_ip_bb = FLA_Cntl_gemm_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT5,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_cntl_blas );
+
+	// Create control trees for situations where two dimensions are large.
+	FLA_cntl_flash_init_i->flash_gemm_cntl_mp_ip = FLA_Cntl_gemm_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT1,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_cntl_ip_bb );
+	FLA_cntl_flash_init_i->flash_gemm_cntl_op_bp = FLA_Cntl_gemm_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT1,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_cntl_bp_bb );
+	FLA_cntl_flash_init_i->flash_gemm_cntl_pm_ip = FLA_Cntl_gemm_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT3,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_cntl_ip_bb );
+	FLA_cntl_flash_init_i->flash_gemm_cntl_op_pb = FLA_Cntl_gemm_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT3,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_cntl_pb_bb );
+	FLA_cntl_flash_init_i->flash_gemm_cntl_mp_pb = FLA_Cntl_gemm_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT5,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_cntl_pb_bb );
+	FLA_cntl_flash_init_i->flash_gemm_cntl_pm_bp = FLA_Cntl_gemm_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT5,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_cntl_bp_bb );
+
+	// Create control trees for situations where all dimensions are large.
+	FLA_cntl_flash_init_i->flash_gemm_cntl_mm_pm = FLA_Cntl_gemm_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT1,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_cntl_pm_ip );
+	FLA_cntl_flash_init_i->flash_gemm_cntl_mm_mp = FLA_Cntl_gemm_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT3,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_cntl_mp_ip );
+	FLA_cntl_flash_init_i->flash_gemm_cntl_mm_op = FLA_Cntl_gemm_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT5,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_cntl_op_bp );
+
+	// Alias select control trees for convenience, when the caller doesn't
+	// care (as he usually doesn't when partitioning hierarchical matricies)
+	// which order the matrix is partitioned into blocks
+	FLA_cntl_flash_init_i->flash_gemm_cntl_mm = FLA_cntl_flash_init_i->flash_gemm_cntl_mm_op;
+	FLA_cntl_flash_init_i->flash_gemm_cntl_mp = FLA_cntl_flash_init_i->flash_gemm_cntl_mp_pb;
+	FLA_cntl_flash_init_i->flash_gemm_cntl_pm = FLA_cntl_flash_init_i->flash_gemm_cntl_pm_bp;
+	FLA_cntl_flash_init_i->flash_gemm_cntl_op = FLA_cntl_flash_init_i->flash_gemm_cntl_op_pb;
+	FLA_cntl_flash_init_i->flash_gemm_cntl_pb = FLA_cntl_flash_init_i->flash_gemm_cntl_pb_bb;
+	FLA_cntl_flash_init_i->flash_gemm_cntl_bp = FLA_cntl_flash_init_i->flash_gemm_cntl_bp_bb;
+	FLA_cntl_flash_init_i->flash_gemm_cntl_ip = FLA_cntl_flash_init_i->flash_gemm_cntl_ip_bb;
+	
+}
+
+void FLASH_Gemm_cntl_finalize_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
+{
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_gemm_cntl_blas );
+
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_gemm_cntl_pb_bb );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_gemm_cntl_bp_bb );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_gemm_cntl_ip_bb );
+
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_gemm_cntl_mp_ip );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_gemm_cntl_op_bp );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_gemm_cntl_pm_ip );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_gemm_cntl_op_pb );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_gemm_cntl_mp_pb );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_gemm_cntl_pm_bp );
+
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_gemm_cntl_mm_pm );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_gemm_cntl_mm_mp );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_gemm_cntl_mm_op );
+
+	FLA_Blocksize_free( FLA_cntl_flash_init_i->flash_gemm_bsize );
+}
+
+#endif
+
 extern fla_scal_t* flash_scal_cntl;
 
 fla_gemm_t*      flash_gemm_cntl_blas = NULL;

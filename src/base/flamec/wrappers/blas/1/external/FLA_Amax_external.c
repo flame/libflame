@@ -10,6 +10,83 @@
 
 #include "FLAME.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Amax_external_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj x, FLA_Obj index )
+{
+  FLA_Datatype datatype;
+  int          num_elem;
+  int          inc_x;
+  int         *buff_index;
+
+  if ( FLA_Check_error_level_ts(FLA_cntl_init_i) == FLA_FULL_ERROR_CHECKING ) 
+    FLA_Amax_check_ts( FLA_cntl_init_i, x, index );
+
+  buff_index = ( int * ) FLA_INT_PTR( index );
+
+  if ( FLA_Obj_has_zero_dim( x ) )
+  {
+    *buff_index = 0;
+    return FLA_SUCCESS;
+  }
+
+  datatype = FLA_Obj_datatype( x );
+
+  inc_x    = FLA_Obj_vector_inc( x );
+  num_elem = FLA_Obj_vector_dim( x );
+
+
+  switch ( datatype ){
+
+  case FLA_FLOAT:
+  {
+    float* buff_x = ( float * ) FLA_FLOAT_PTR( x );
+
+    bl1_samax( num_elem,
+               buff_x, inc_x,
+               buff_index );
+
+    break;
+  }
+  
+  case FLA_DOUBLE:
+  {
+    double* buff_x = ( double * ) FLA_DOUBLE_PTR( x );
+
+    bl1_damax( num_elem,
+               buff_x, inc_x,
+               buff_index );
+
+    break;
+  }
+  
+  case FLA_COMPLEX:
+  {
+    scomplex* buff_x = ( scomplex * ) FLA_COMPLEX_PTR( x );
+
+    bl1_camax( num_elem,
+               buff_x, inc_x,
+               buff_index );
+
+    break;
+  }
+
+  case FLA_DOUBLE_COMPLEX:
+  {
+    dcomplex* buff_x = ( dcomplex * ) FLA_DOUBLE_COMPLEX_PTR( x );
+
+    bl1_zamax( num_elem,
+               buff_x, inc_x,
+               buff_index );
+
+    break;
+  }
+
+  }
+
+  return FLA_SUCCESS;
+}
+#endif
+
 FLA_Error FLA_Amax_external( FLA_Obj x, FLA_Obj index )
 {
   FLA_Datatype datatype;

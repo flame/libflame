@@ -12,6 +12,21 @@
 #define FLASH_QUEUE_MAIN_PROTOTYPES_H
 
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+
+void FLASH_Queue_begin_ts( FLA_cntl_init_s *FLA_cntl_init_i);
+void FLASH_Queue_end_ts( FLA_cntl_init_s *FLA_cntl_init_i);
+unsigned int FLASH_Queue_stack_depth_ts( FLA_cntl_init_s *FLA_cntl_init_i);
+
+FLA_Error FLASH_Queue_enable_ts( FLA_cntl_init_s *FLA_cntl_init_i );
+FLA_Error FLASH_Queue_disable_ts( FLA_cntl_init_s *FLA_cntl_init_i);
+FLA_Bool FLASH_Queue_get_enabled_ts( FLA_cntl_init_s *FLA_cntl_init_i);
+
+void FLASH_Queue_set_num_threads_ts( FLA_cntl_init_s *FLA_cntl_init_i, unsigned int n_threads );
+unsigned int FLASH_Queue_get_num_threads_ts(FLA_cntl_init_s *FLA_cntl_init_i);
+
+#endif
+
 void           FLASH_Queue_begin( void );
 void           FLASH_Queue_end( void );
 unsigned int   FLASH_Queue_stack_depth( void );

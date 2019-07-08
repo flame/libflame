@@ -339,6 +339,9 @@ float     FLA_Mach_params_ops( FLA_Machval machval );
 double    FLA_Mach_params_opd( FLA_Machval machval );
 
 FLA_Error FLA_Apply_diag_matrix( FLA_Side side, FLA_Conj conj, FLA_Obj x, FLA_Obj A );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Shift_pivots_to_ts( void **cntl_hdl, FLA_Pivot_type ptype, FLA_Obj p );
+#endif
 FLA_Error FLA_Shift_pivots_to( FLA_Pivot_type ptype, FLA_Obj p );
 FLA_Error FLA_Form_perm_matrix( FLA_Obj p, FLA_Obj A );
 FLA_Error FLA_LU_find_zero_on_diagonal( FLA_Obj A );

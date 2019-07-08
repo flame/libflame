@@ -25,6 +25,9 @@
 #include "FLA_Trsm_run.h"
 #include "FLA_Trsm_rut.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Trsm_internal_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Side side, FLA_Uplo uplo, FLA_Trans transa, FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, fla_trsm_t* cntl );
+#endif
 FLA_Error FLA_Trsm_internal( FLA_Side side, FLA_Uplo uplo, FLA_Trans transa, FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, fla_trsm_t* cntl );
 
 FLA_Error FLA_Trsm_llc( FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, fla_trsm_t* cntl );
@@ -33,6 +36,9 @@ FLA_Error FLA_Trsm_lln( FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, fla_
 FLA_Error FLA_Trsm_llt( FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, fla_trsm_t* cntl );
 FLA_Error FLA_Trsm_luc( FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, fla_trsm_t* cntl );
 FLA_Error FLA_Trsm_luh( FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, fla_trsm_t* cntl );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Trsm_lun_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, fla_trsm_t* cntl );
+#endif
 FLA_Error FLA_Trsm_lun( FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, fla_trsm_t* cntl );
 FLA_Error FLA_Trsm_lut( FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, fla_trsm_t* cntl );
 FLA_Error FLA_Trsm_rlc( FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, fla_trsm_t* cntl );

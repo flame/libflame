@@ -10,6 +10,32 @@
 
 #include "FLAME.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void FLA_SPDinv_cntl_init_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
+{
+	// Rather than embed a blocksize, we store the cutoff matrix size for
+	// switching from external routines to internal FLAME variants.
+	FLA_cntl_flamec_init_i->fla_spdinv_size_cutoff = FLA_Query_blocksizes( FLA_DIMENSION_MIN );
+
+	// Initialize a control tree node that calls the top-level Cholesky
+	// factorization, Trinagular inversion, and Triangular-transpose matrix
+	// multiply control trees. 
+	FLA_cntl_flamec_init_i->fla_spdinv_cntl        = FLA_Cntl_spdinv_obj_create( FLA_FLAT,
+	                                                     FLA_BLOCKED_VARIANT1, 
+	                                                     FLA_cntl_flamec_init_i->fla_spdinv_size_cutoff,
+	                                                     FLA_cntl_flamec_init_i->fla_chol_cntl,
+	                                                     FLA_cntl_flamec_init_i->fla_trinv_cntl,
+	                                                     FLA_cntl_flamec_init_i->fla_ttmm_cntl );
+}
+
+void FLA_SPDinv_cntl_finalize_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
+{
+	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_spdinv_cntl );
+
+	FLA_Blocksize_free( FLA_cntl_flamec_init_i->fla_spdinv_size_cutoff );
+}
+#endif
+
 extern fla_chol_t*  fla_chol_cntl;
 extern fla_trinv_t* fla_trinv_cntl;
 extern fla_ttmm_t*  fla_ttmm_cntl;

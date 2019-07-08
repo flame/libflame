@@ -10,6 +10,42 @@
 
 #include "FLAME.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void FLASH_Apply_pivots_cntl_init_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
+{
+	// Set blocksize for hierarchical storage.
+	FLA_cntl_flash_init_i->flash_appiv_bsize       = FLA_Blocksize_create( 1, 1, 1, 1 );
+
+	// Create a control tree that assumes A is a b x b block.
+	FLA_cntl_flash_init_i->flash_appiv_cntl_leaf   = FLA_Cntl_appiv_obj_create( FLA_HIER,
+	                                                     FLA_SUBPROBLEM,
+	                                                     NULL,
+	                                                     NULL );
+
+	// Create a control tree that assumes A is large.
+	FLA_cntl_flash_init_i->flash_appiv_cntl_bp     = FLA_Cntl_appiv_obj_create( FLA_HIER,
+	                                                     FLA_BLOCKED_VARIANT1,
+	                                                     FLA_cntl_flash_init_i->flash_appiv_bsize,
+	                                                     FLA_cntl_flash_init_i->flash_appiv_cntl_leaf );
+
+	// Create a control tree that assumes A and p are large.
+	FLA_cntl_flash_init_i->flash_appiv_cntl        = FLA_Cntl_appiv_obj_create( FLA_HIER,
+	                                                     FLA_BLOCKED_VARIANT2,
+	                                                     FLA_cntl_flash_init_i->flash_appiv_bsize,
+	                                                     FLA_cntl_flash_init_i->flash_appiv_cntl_bp );
+}
+
+void FLASH_Apply_pivots_cntl_finalize_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
+{
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_appiv_cntl_leaf );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_appiv_cntl_bp );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_appiv_cntl );
+
+	FLA_Blocksize_free( FLA_cntl_flash_init_i->flash_appiv_bsize );
+}
+
+#endif
+
 fla_appiv_t*       flash_appiv_cntl_leaf = NULL;
 fla_appiv_t*       flash_appiv_cntl_bp = NULL;
 fla_appiv_t*       flash_appiv_cntl = NULL;

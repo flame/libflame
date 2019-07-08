@@ -10,6 +10,58 @@
 
 #include "FLAME.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void FLASH_Trmm_cntl_init_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
+{
+	// Set trmm blocksize for hierarchical storage.
+	FLA_cntl_flash_init_i->flash_trmm_bsize      = FLA_Blocksize_create( 1, 1, 1, 1 );
+
+	// Create a control tree that assumes A and B are b x b blocks.
+	FLA_cntl_flash_init_i->flash_trmm_cntl_blas  = FLA_Cntl_trmm_obj_create( FLA_HIER,
+	                                                  FLA_SUBPROBLEM,
+	                                                  NULL,
+	                                                  NULL,
+	                                                  NULL,
+	                                                  NULL );
+
+	// Create a control tree that assumes A is a block and B is a panel.
+	FLA_cntl_flash_init_i->flash_trmm_cntl_bp    = FLA_Cntl_trmm_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT3,
+	                                                  FLA_cntl_flash_init_i->flash_trmm_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_trmm_cntl_blas,
+	                                                  NULL );
+
+	// Create a control tree that assumes A is large and B is a panel.
+	FLA_cntl_flash_init_i->flash_trmm_cntl_mp    = FLA_Cntl_trmm_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT2,
+	                                                  FLA_cntl_flash_init_i->flash_trmm_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_trmm_cntl_blas,
+	                                                  FLA_cntl_flash_init_i->flash_gemm_cntl_op_bp );
+
+	// Create a control tree that assumes A and B are both large.
+	FLA_cntl_flash_init_i->flash_trmm_cntl_mm    = FLA_Cntl_trmm_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT3,
+	                                                  FLA_cntl_flash_init_i->flash_trmm_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_trmm_cntl_mp,
+	                                                  NULL );
+}
+
+void FLASH_Trmm_cntl_finalize_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
+{
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_trmm_cntl_blas );
+
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_trmm_cntl_bp );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_trmm_cntl_mp );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_trmm_cntl_mm );
+
+	FLA_Blocksize_free( FLA_cntl_flash_init_i->flash_trmm_bsize );
+}
+
+#endif
+
 extern fla_scal_t* flash_scal_cntl;
 extern fla_gemm_t* flash_gemm_cntl_op_bp;
 

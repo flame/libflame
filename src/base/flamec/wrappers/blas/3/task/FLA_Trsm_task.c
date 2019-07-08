@@ -25,6 +25,13 @@ FLA_Error FLA_Trsm_llh_task( FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B,
   return FLA_Trsm_external( FLA_LEFT, FLA_LOWER_TRIANGULAR, FLA_CONJ_TRANSPOSE, diag, alpha, A, B );
 }
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Trsm_lln_task_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, fla_trsm_t* cntl )
+{
+  return FLA_Trsm_external_ts( FLA_cntl_init_i, FLA_LEFT, FLA_LOWER_TRIANGULAR, FLA_NO_TRANSPOSE, diag, alpha, A, B );
+}
+#endif
+
 FLA_Error FLA_Trsm_lln_task( FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, fla_trsm_t* cntl )
 {
   return FLA_Trsm_external( FLA_LEFT, FLA_LOWER_TRIANGULAR, FLA_NO_TRANSPOSE, diag, alpha, A, B );
@@ -45,6 +52,12 @@ FLA_Error FLA_Trsm_luh_task( FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B,
   return FLA_Trsm_external( FLA_LEFT, FLA_UPPER_TRIANGULAR, FLA_CONJ_TRANSPOSE, diag, alpha, A, B );
 }
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Trsm_lun_task_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, fla_trsm_t* cntl )
+{
+  return FLA_Trsm_external_ts( FLA_cntl_init_i, FLA_LEFT, FLA_UPPER_TRIANGULAR, FLA_NO_TRANSPOSE, diag, alpha, A, B );
+}
+#endif
 FLA_Error FLA_Trsm_lun_task( FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, fla_trsm_t* cntl )
 {
   return FLA_Trsm_external( FLA_LEFT, FLA_UPPER_TRIANGULAR, FLA_NO_TRANSPOSE, diag, alpha, A, B );

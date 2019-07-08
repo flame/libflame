@@ -10,6 +10,23 @@
 
 #include "FLAME.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void FLA_Scalr_cntl_init_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
+{
+	// Create a control tree that assumes A is small.
+	FLA_cntl_flamec_init_i->fla_scalr_cntl_blas  = FLA_Cntl_scalr_obj_create( FLA_FLAT,
+	                                                  FLA_SUBPROBLEM,
+	                                                  NULL,
+	                                                  NULL,
+	                                                  NULL );
+}
+
+void FLA_Scalr_cntl_finalize_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
+{
+	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_scalr_cntl_blas );
+}
+#endif
+
 fla_scalr_t* fla_scalr_cntl_blas = NULL;
 
 void FLA_Scalr_cntl_init()

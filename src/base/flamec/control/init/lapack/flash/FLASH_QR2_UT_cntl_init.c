@@ -10,6 +10,45 @@
 
 #include "FLAME.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void FLASH_QR2_UT_cntl_init_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
+{
+	// Set blocksize for hierarchical storage.
+	FLA_cntl_flash_init_i->flash_qr2ut_var2_bsize = FLA_Blocksize_create( 1, 1, 1, 1 );
+
+	// Create a control tree to invoke variant 1.
+	FLA_cntl_flash_init_i->flash_qr2ut_cntl_leaf = FLA_Cntl_qr2ut_obj_create( FLA_HIER,
+	                                                   FLA_SUBPROBLEM, 
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL );
+
+	// Create a control tree to invoke variant 2.
+	FLA_cntl_flash_init_i->flash_qr2ut_cntl    = FLA_Cntl_qr2ut_obj_create( FLA_HIER,
+	                                                 FLA_BLOCKED_VARIANT2, 
+	                                                 FLA_cntl_flash_init_i->flash_qr2ut_var2_bsize,
+	                                                 FLA_cntl_flash_init_i->flash_qr2ut_cntl_leaf,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL );
+}
+
+void FLASH_QR2_UT_cntl_finalize_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
+{
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_qr2ut_cntl_leaf );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_qr2ut_cntl );
+
+	FLA_Blocksize_free( FLA_cntl_flash_init_i->flash_qr2ut_var2_bsize );
+}
+
+#endif
+
 fla_qr2ut_t*     flash_qr2ut_cntl_leaf = NULL;
 fla_qr2ut_t*     flash_qr2ut_cntl = NULL;
 fla_blocksize_t* flash_qr2ut_var2_bsize = NULL;

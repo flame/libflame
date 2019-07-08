@@ -10,6 +10,38 @@
 
 #include "FLAME.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void FLASH_Trsv_cntl_init_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
+{
+	// Set trsv blocksize for hierarchical storage.
+	FLA_cntl_flash_init_i->flash_trsv_bsize      = FLA_Blocksize_create( 1, 1, 1, 1 );
+
+	// Create a control tree that assumes A is a b x b block.
+	FLA_cntl_flash_init_i->flash_trsv_cntl_blas  = FLA_Cntl_trsv_obj_create( FLA_HIER,
+	                                                  FLA_SUBPROBLEM,
+	                                                  NULL,
+	                                                  NULL,
+	                                                  NULL );
+
+	// Create a control tree that assumes A is large.
+	FLA_cntl_flash_init_i->flash_trsv_cntl       = FLA_Cntl_trsv_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT2,
+	                                                  FLA_cntl_flash_init_i->flash_trsv_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_trsv_cntl_blas,
+	                                                  FLA_cntl_flash_init_i->flash_gemv_cntl_cp_bv );
+}
+
+void FLASH_Trsv_cntl_finalize_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
+{
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_trsv_cntl_blas );
+
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_trsv_cntl );
+
+	FLA_Blocksize_free( FLA_cntl_flash_init_i->flash_trsv_bsize );
+}
+
+#endif
+
 extern fla_gemv_t* flash_gemv_cntl_cp_bv;
 
 fla_trsv_t*        flash_trsv_cntl_blas = NULL;

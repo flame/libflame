@@ -10,6 +10,39 @@
 
 #include "FLAME.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void FLA_Bidiag_UT_cntl_init_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
+{
+	// Set blocksizes with default values for conventional storage.
+	FLA_cntl_flamec_init_i->fla_bidiagut_bsize_leaf = FLA_Query_blocksizes( FLA_DIMENSION_MIN );
+	FLA_Blocksize_scale_ts( FLA_cntl_flamec_init_i, FLA_cntl_flamec_init_i->fla_bidiagut_bsize_leaf, FLA_BIDIAG_INNER_TO_OUTER_B_RATIO );
+
+	// Create a control tree that uses fused subproblems.
+	FLA_cntl_flamec_init_i->fla_bidiagut_cntl_fused = FLA_Cntl_bidiagut_obj_create( FLA_FLAT, 
+	                                                        FLA_BLK_FUS_VARIANT4,
+	                                                        FLA_cntl_flamec_init_i->fla_bidiagut_bsize_leaf );
+
+	// Create a control tree that does not used any fusing.
+	FLA_cntl_flamec_init_i->fla_bidiagut_cntl_nofus = FLA_Cntl_bidiagut_obj_create( FLA_FLAT, 
+	                                                        FLA_BLOCKED_VARIANT4,
+	                                                        FLA_cntl_flamec_init_i->fla_bidiagut_bsize_leaf );
+
+	// Create a control tree that reflects the basic algorithm.
+	FLA_cntl_flamec_init_i->fla_bidiagut_cntl_plain = FLA_Cntl_bidiagut_obj_create( FLA_FLAT, 
+	                                                        FLA_BLOCKED_VARIANT1,
+	                                                        FLA_cntl_flamec_init_i->fla_bidiagut_bsize_leaf );
+}
+
+void FLA_Bidiag_UT_cntl_finalize_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
+{
+	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_bidiagut_cntl_fused );
+	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_bidiagut_cntl_nofus );
+	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_bidiagut_cntl_plain );
+
+	FLA_Blocksize_free( FLA_cntl_flamec_init_i->fla_bidiagut_bsize_leaf );
+}
+#endif
+
 fla_bidiagut_t*    fla_bidiagut_cntl_fused = NULL;
 fla_bidiagut_t*    fla_bidiagut_cntl_nofus = NULL;
 fla_bidiagut_t*    fla_bidiagut_cntl_plain = NULL;

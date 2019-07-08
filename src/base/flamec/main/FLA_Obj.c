@@ -52,6 +52,16 @@ FLA_Error FLA_Obj_nullify( FLA_Obj *obj )
   return FLA_SUCCESS;
 }
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Obj_create_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Datatype datatype, dim_t m, dim_t n, dim_t rs, dim_t cs, FLA_Obj *obj )
+{
+  FLA_Obj_create_ext_ts( FLA_cntl_init_i, datatype, FLA_SCALAR, m, n, m, n, rs, cs, obj );
+
+  return FLA_SUCCESS;
+}
+#endif
+
+
 FLA_Error FLA_Obj_create( FLA_Datatype datatype, dim_t m, dim_t n, dim_t rs, dim_t cs, FLA_Obj *obj )
 {
   FLA_Obj_create_ext( datatype, FLA_SCALAR, m, n, m, n, rs, cs, obj );
@@ -59,7 +69,76 @@ FLA_Error FLA_Obj_create( FLA_Datatype datatype, dim_t m, dim_t n, dim_t rs, dim
   return FLA_SUCCESS;
 }
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Obj_create_ext_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Datatype datatype, FLA_Elemtype elemtype, dim_t m, dim_t n, dim_t m_inner, dim_t n_inner, dim_t rs, dim_t cs, FLA_Obj *obj )
+{
+  size_t buffer_size;
+  size_t n_elem;
 
+  // Adjust the strides, if necessary.
+  FLA_adjust_strides( m, n, &rs, &cs );
+
+  if ( FLA_Check_error_level_ts(FLA_cntl_init_i) >= FLA_MIN_ERROR_CHECKING )
+    FLA_Obj_create_ext_check( datatype, elemtype, m, n, m_inner, n_inner, rs, cs, obj );
+
+  // Populate the fields in the view object.
+  obj->m                = m;
+  obj->n                = n;
+  obj->offm             = 0;
+  obj->offn             = 0;
+  obj->m_inner          = m_inner;
+  obj->n_inner          = n_inner;
+
+  // Allocate the base object field.
+  obj->base             = ( FLA_Base_obj * ) FLA_malloc( sizeof( FLA_Base_obj ) );
+
+  // Populate the fields in the base object.
+  obj->base->datatype   = datatype;
+  obj->base->elemtype   = elemtype;
+  obj->base->m          = m;
+  obj->base->n          = n;
+  obj->base->m_inner    = m_inner;
+  obj->base->n_inner    = n_inner;
+  obj->base->id         = ( unsigned long ) obj->base;
+  obj->base->m_index    = 0;
+  obj->base->n_index    = 0;
+
+  // Compute the number of elements needed for the buffer, adjusting
+  // the strides for alignment if needed.
+  n_elem = FLA_compute_num_elem( FLA_Obj_elem_size_ts( FLA_cntl_init_i, *obj ),
+                                 m, n, &rs, &cs );
+
+  // Compute the buffer size in bytes.
+  buffer_size = ( size_t ) n_elem *
+                ( size_t ) FLA_Obj_elem_size_ts( FLA_cntl_init_i, *obj );
+
+  // Allocate the base object's element buffer.
+#ifdef FLA_ENABLE_SCC
+  obj->base->buffer = ( FLA_Obj_elemtype( *obj ) == FLA_MATRIX ? FLA_malloc( buffer_size ) : FLA_shmalloc( buffer_size ) );
+#else
+  obj->base->buffer = FLA_malloc( buffer_size );
+#endif
+  obj->base->buffer_info = 0;
+
+  // Just in case this is a FLASH object, save the number of elements
+  // allocated so that we can more easily free the elements later on.
+  obj->base->n_elem_alloc = n_elem;
+
+  // Save the row and column strides used in the memory allocation.
+  obj->base->rs     = rs;
+  obj->base->cs     = cs;
+
+#ifdef FLA_ENABLE_SUPERMATRIX
+  // Initialize SuperMatrix fields.
+  obj->base->n_read_tasks   = 0;
+  obj->base->read_task_head = NULL;
+  obj->base->read_task_tail = NULL;
+  obj->base->write_task     = NULL;
+#endif
+
+  return FLA_SUCCESS;
+}
+#endif
 
 FLA_Error FLA_Obj_create_ext( FLA_Datatype datatype, FLA_Elemtype elemtype, dim_t m, dim_t n, dim_t m_inner, dim_t n_inner, dim_t rs, dim_t cs, FLA_Obj *obj )
 {
@@ -358,6 +437,56 @@ FLA_Error FLA_Obj_create_copy_of( FLA_Trans trans, FLA_Obj obj_cur, FLA_Obj *obj
   return FLA_SUCCESS;
 }
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Obj_create_without_buffer_ts( void **cntl_hndl, FLA_Datatype datatype, dim_t m, dim_t n, FLA_Obj *obj )
+{
+  FLA_cntl_init_s *FLA_cntl_init_i = (FLA_cntl_init_s *) *cntl_hndl;
+
+  if ( FLA_Check_error_level_ts(FLA_cntl_init_i) >= FLA_MIN_ERROR_CHECKING )
+    FLA_Obj_create_without_buffer_check( datatype, m, n, obj );
+
+  // Populate the fields in the view object.
+  obj->m                = m;
+  obj->n                = n;
+  obj->offm             = 0;
+  obj->offn             = 0;
+  obj->m_inner          = m;
+  obj->n_inner          = n;
+
+  // Allocate the base object field.
+  obj->base             = ( FLA_Base_obj * ) FLA_malloc( sizeof( FLA_Base_obj ) );
+
+  // Populate the fields in the base object.
+  obj->base->datatype   = datatype;
+  obj->base->elemtype   = FLA_SCALAR;
+  obj->base->m          = m;
+  obj->base->n          = n;
+  obj->base->m_inner    = m;
+  obj->base->n_inner    = n;
+  obj->base->id         = ( unsigned long ) obj->base;
+  obj->base->m_index    = 0;
+  obj->base->n_index    = 0;
+
+  // Set the row and column strides to invalid values.
+  obj->base->rs         = 0;
+  obj->base->cs         = 0;
+
+  // Initialize the base object's element buffer to NULL.
+  obj->base->buffer       = NULL;
+  obj->base->buffer_info  = 0;
+  obj->base->n_elem_alloc = 0;
+
+#ifdef FLA_ENABLE_SUPERMATRIX
+  // Initialize SuperMatrix fields.
+  obj->base->n_read_tasks   = 0;
+  obj->base->read_task_head = NULL;
+  obj->base->read_task_tail = NULL;
+  obj->base->write_task     = NULL;
+#endif
+
+  return FLA_SUCCESS;
+}
+#endif
 
 FLA_Error FLA_Obj_create_without_buffer( FLA_Datatype datatype, dim_t m, dim_t n, FLA_Obj *obj )
 {
@@ -518,6 +647,29 @@ FLA_Error FLA_Obj_create_complex_constant( double const_real, double const_imag,
 }
 
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Obj_attach_buffer_ts( void **cntl_hndl, void *buffer, dim_t rs, dim_t cs, FLA_Obj *obj )
+{
+  dim_t m, n;
+
+  FLA_cntl_init_s *FLA_cntl_init_i = (FLA_cntl_init_s *) *cntl_hndl;
+
+  m = FLA_Obj_length( *obj );
+  n = FLA_Obj_width( *obj );
+
+  // Adjust the strides, if necessary.
+  FLA_adjust_strides( m, n, &rs, &cs );
+
+  if ( FLA_Check_error_level_ts(FLA_cntl_init_i) >= FLA_MIN_ERROR_CHECKING )
+    FLA_Obj_attach_buffer_check( buffer, rs, cs, obj );
+
+  obj->base->buffer      = buffer;
+  obj->base->rs          = rs;
+  obj->base->cs          = cs;
+
+  return FLA_SUCCESS;
+}
+#endif
 
 FLA_Error FLA_Obj_attach_buffer( void *buffer, dim_t rs, dim_t cs, FLA_Obj *obj )
 {
@@ -585,6 +737,33 @@ FLA_Error FLA_Obj_create_buffer( dim_t rs, dim_t cs, FLA_Obj *obj )
 
 
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Obj_free_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj *obj )
+{
+  if ( FLA_Check_error_level_ts(FLA_cntl_init_i) >= FLA_MIN_ERROR_CHECKING )
+    FLA_Obj_free_check( obj );
+
+  if ( obj->base != NULL ) 
+  {
+#ifdef FLA_ENABLE_SCC
+    ( FLA_Obj_elemtype_ts( FLA_cntl_init_i, *obj ) == FLA_MATRIX ? FLA_free( obj->base->buffer ) : FLA_shfree( obj->base->buffer ) );
+#else
+    //printf( "freeing buff %p\n", obj->base->buffer ); fflush( stdout );
+    FLA_free( obj->base->buffer );
+#endif
+    //printf( "freeing base %p\n", obj->base ); fflush( stdout );
+    FLA_free( ( void * ) obj->base );
+  }
+
+  obj->offm = 0;
+  obj->offn = 0;
+  obj->m    = 0;
+  obj->n    = 0;
+
+  return FLA_SUCCESS;
+}
+#endif
+
 FLA_Error FLA_Obj_free( FLA_Obj *obj )
 {
   if ( FLA_Check_error_level() >= FLA_MIN_ERROR_CHECKING )
@@ -610,7 +789,24 @@ FLA_Error FLA_Obj_free( FLA_Obj *obj )
   return FLA_SUCCESS;
 }
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Obj_free_without_buffer_ts( void **cntl_hdl, FLA_Obj *obj )
+{
+  FLA_cntl_init_s *FLA_cntl_init_i = (FLA_cntl_init_s *) *cntl_hdl;
 
+  if ( FLA_Check_error_level_ts(FLA_cntl_init_i) >= FLA_MIN_ERROR_CHECKING )
+    FLA_Obj_free_without_buffer_check( obj );
+
+  FLA_free( ( void * ) obj->base );
+
+  obj->offm = 0;
+  obj->offn = 0;
+  obj->m    = 0;
+  obj->n    = 0;
+
+  return FLA_SUCCESS;
+}
+#endif
 
 FLA_Error FLA_Obj_free_without_buffer( FLA_Obj *obj )
 {

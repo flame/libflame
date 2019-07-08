@@ -78,6 +78,36 @@ FLA_Error FLASH_Copy_hier_to_buffer( dim_t i, dim_t j, FLA_Obj H, dim_t m, dim_t
 }
 
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLASH_Copy_flat_to_hier_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj F, dim_t i, dim_t j, FLA_Obj H )
+{
+	FLA_Obj HTL, HTR,
+	        HBL, HBR;
+	FLA_Obj HBR_tl, HBR_tr,
+	        HBR_bl, HBR_br;
+	dim_t   m, n;
+
+	m = FLA_Obj_length( F );
+	n = FLA_Obj_width( F );
+
+	FLASH_Part_create_2x2_ts( FLA_cntl_init_i, H,   &HTL, &HTR,
+	                            &HBL, &HBR,    i, j, FLA_TL );
+
+	FLASH_Part_create_2x2_ts( FLA_cntl_init_i, HBR,   &HBR_tl, &HBR_tr,
+	                              &HBR_bl, &HBR_br,    m, n, FLA_TL );
+
+	FLASH_Copy_hierarchy_ts( FLA_cntl_init_i, FLA_FLAT_TO_HIER, F, &HBR_tl );
+
+	FLASH_Part_free_2x2_ts( FLA_cntl_init_i, &HBR_tl, &HBR_tr,
+	                     &HBR_bl, &HBR_br );
+
+	FLASH_Part_free_2x2_ts( FLA_cntl_init_i, &HTL, &HTR,
+	                     &HBL, &HBR );
+
+	return FLA_SUCCESS;
+}
+#endif
+
 FLA_Error FLASH_Copy_flat_to_hier( FLA_Obj F, dim_t i, dim_t j, FLA_Obj H )
 {
 	FLA_Obj HTL, HTR,
@@ -107,6 +137,36 @@ FLA_Error FLASH_Copy_flat_to_hier( FLA_Obj F, dim_t i, dim_t j, FLA_Obj H )
 }
 
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLASH_Copy_hier_to_flat_ts( FLA_cntl_init_s *FLA_cntl_init_i, dim_t i, dim_t j, FLA_Obj H, FLA_Obj F )
+{
+	FLA_Obj HTL, HTR,
+	        HBL, HBR;
+	FLA_Obj HBR_tl, HBR_tr,
+	        HBR_bl, HBR_br;
+	dim_t   m, n;
+
+	m = FLA_Obj_length( F );
+	n = FLA_Obj_width( F );
+
+	FLASH_Part_create_2x2_ts( FLA_cntl_init_i, H,   &HTL, &HTR,
+	                            &HBL, &HBR,    i, j, FLA_TL );
+
+	FLASH_Part_create_2x2_ts( FLA_cntl_init_i, HBR,   &HBR_tl, &HBR_tr,
+	                              &HBR_bl, &HBR_br,    m, n, FLA_TL );
+
+	FLASH_Copy_hierarchy_ts( FLA_cntl_init_i, FLA_HIER_TO_FLAT, F, &HBR_tl );
+
+	FLASH_Part_free_2x2_ts( FLA_cntl_init_i, &HBR_tl, &HBR_tr,
+	                     &HBR_bl, &HBR_br );
+
+	FLASH_Part_free_2x2_ts( FLA_cntl_init_i, &HTL, &HTR,
+	                     &HBL, &HBR );
+
+	return FLA_SUCCESS;
+}
+#endif
+
 FLA_Error FLASH_Copy_hier_to_flat( dim_t i, dim_t j, FLA_Obj H, FLA_Obj F )
 {
 	FLA_Obj HTL, HTR,
@@ -135,6 +195,114 @@ FLA_Error FLASH_Copy_hier_to_flat( dim_t i, dim_t j, FLA_Obj H, FLA_Obj F )
 	return FLA_SUCCESS;
 }
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLASH_Copy_hierarchy_ts( FLA_cntl_init_s *FLA_cntl_init_i, int direction, FLA_Obj F, FLA_Obj* H )
+{
+	// Once we get down to a submatrix whose elements are scalars, we are down
+	// to our base case.
+	if ( FLA_Obj_elemtype( *H ) == FLA_SCALAR )
+	{
+		// Depending on which top-level function invoked us, we either copy
+		// the source data in the flat matrix to the leaf-level submatrix of
+		// the hierarchical matrix, or copy the data in the hierarchical
+		// submatrix to the flat matrix.
+		if      ( direction == FLA_FLAT_TO_HIER )
+		{
+#ifdef FLA_ENABLE_SCC
+			if ( FLA_is_owner() )
+#endif
+			FLA_Copy_external_ts( FLA_cntl_init_i, F, *H );
+		}
+		else if ( direction == FLA_HIER_TO_FLAT )
+		{
+#ifdef FLA_ENABLE_SCC
+			if ( FLA_is_owner() )
+#endif
+			FLA_Copy_external_ts( FLA_cntl_init_i, *H, F );
+		}
+	}
+	else
+	{
+		FLA_Obj HL,  HR,       H0,  H1,  H2;
+		FLA_Obj FL,  FR,       F0,  F1,  F2;
+
+		FLA_Obj H1T,           H01,
+		        H1B,           H11,
+		                       H21;
+		FLA_Obj F1T,           F01,
+		        F1B,           F11,
+		                       F21;
+
+		dim_t b_m;
+		dim_t b_n;
+
+		FLA_Part_1x2_ts( FLA_cntl_init_i, *H,    &HL,  &HR,      0, FLA_LEFT );
+		FLA_Part_1x2_ts( FLA_cntl_init_i,  F,    &FL,  &FR,      0, FLA_LEFT );
+
+		while ( FLA_Obj_width( HL ) < FLA_Obj_width( *H ) )
+		{
+			FLA_Repart_1x2_to_1x3_ts( FLA_cntl_init_i, HL,  /**/ HR,        &H0, /**/ &H1, &H2,
+			                       1, FLA_RIGHT );
+
+			// Get the scalar width of H1 and use that to determine the
+			// width of F1.
+			b_n = FLASH_Obj_scalar_width_ts( FLA_cntl_init_i, H1 );
+
+			FLA_Repart_1x2_to_1x3_ts( FLA_cntl_init_i, FL,  /**/ FR,        &F0, /**/ &F1, &F2,
+			                       b_n, FLA_RIGHT );
+
+			// -------------------------------------------------------------
+
+			FLA_Part_2x1_ts( FLA_cntl_init_i, H1,    &H1T,
+			                     &H1B,       0, FLA_TOP );
+			FLA_Part_2x1_ts( FLA_cntl_init_i, F1,    &F1T,
+			                     &F1B,       0, FLA_TOP );
+
+			while ( FLA_Obj_length( H1T ) < FLA_Obj_length( H1 ) )
+			{
+				FLA_Repart_2x1_to_3x1_ts( FLA_cntl_init_i, H1T,               &H01,
+				                    /* ** */            /* *** */
+				                                          &H11,
+				                       H1B,               &H21,        1, FLA_BOTTOM );
+
+				// Get the scalar length of H11 and use that to determine the
+				// length of F11.
+				b_m = FLASH_Obj_scalar_length_ts( FLA_cntl_init_i, H11 );
+
+				FLA_Repart_2x1_to_3x1_ts( FLA_cntl_init_i, F1T,               &F01,
+				                    /* ** */            /* *** */
+				                                          &F11,
+				                       F1B,               &F21,        b_m, FLA_BOTTOM );
+				// -------------------------------------------------------------
+
+				// Recursively copy between F11 and H11.
+				FLASH_Copy_hierarchy_ts( FLA_cntl_init_i, direction, F11,
+				                      FLASH_OBJ_PTR_AT_TS( FLA_cntl_init_i, H11 ) );
+
+				// -------------------------------------------------------------
+
+				FLA_Cont_with_3x1_to_2x1_ts( FLA_cntl_init_i, &H1T,               H01,
+				                                              H11,
+				                        /* ** */           /* *** */
+				                          &H1B,               H21,     FLA_TOP );
+				FLA_Cont_with_3x1_to_2x1_ts( FLA_cntl_init_i, &F1T,               F01,
+				                                              F11,
+				                        /* ** */           /* *** */
+				                          &F1B,               F21,     FLA_TOP );
+			}
+
+			// -------------------------------------------------------------
+
+			FLA_Cont_with_1x3_to_1x2_ts( FLA_cntl_init_i, &HL,  /**/ &HR,        H0, H1, /**/ H2,
+			                          FLA_LEFT );
+			FLA_Cont_with_1x3_to_1x2_ts( FLA_cntl_init_i, &FL,  /**/ &FR,        F0, F1, /**/ F2,
+			                          FLA_LEFT );
+		}
+	}
+
+	return FLA_SUCCESS;
+}
+#endif
 
 FLA_Error FLASH_Copy_hierarchy( int direction, FLA_Obj F, FLA_Obj* H )
 {

@@ -10,6 +10,75 @@
 
 #include "FLAME.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void FLA_Sylv_cntl_init_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
+{
+	// Set blocksize with default value for conventional storage.
+	FLA_cntl_flamec_init_i->fla_sylv_bsize       = FLA_Query_blocksizes( FLA_DIMENSION_MIN );
+
+	// Create a control tree to invoke LAPACK.
+	FLA_cntl_flamec_init_i->fla_sylv_cntl_leaf   = FLA_Cntl_sylv_obj_create( FLA_FLAT,
+#ifdef FLA_ENABLE_EXTERNAL_LAPACK_FOR_SUBPROBLEMS
+	                                                 FLA_BLOCKED_EXTERN, 
+#else
+	                                                 FLA_UNB_OPT_VARIANT1,
+#endif
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL );
+
+	// Create a control tree to invoke variant 15.
+	FLA_cntl_flamec_init_i->fla_sylv_cntl_mb     = FLA_Cntl_sylv_obj_create( FLA_FLAT, 
+	                                                 FLA_BLOCKED_VARIANT15,
+	                                                 FLA_cntl_flamec_init_i->fla_sylv_bsize,
+	                                                 FLA_cntl_flamec_init_i->fla_sylv_cntl_leaf,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 FLA_cntl_flamec_init_i->fla_gemm_cntl_blas,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL );
+
+	// Create a control tree to invoke variant 17.
+	FLA_cntl_flamec_init_i->fla_sylv_cntl        = FLA_Cntl_sylv_obj_create( FLA_FLAT, 
+	                                                 FLA_BLOCKED_VARIANT17,
+	                                                 FLA_cntl_flamec_init_i->fla_sylv_bsize,
+	                                                 FLA_cntl_flamec_init_i->fla_sylv_cntl_mb,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 FLA_cntl_flamec_init_i->fla_gemm_cntl_blas,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL );
+}
+
+void FLA_Sylv_cntl_finalize_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
+{
+	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_sylv_cntl_leaf );
+	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_sylv_cntl_mb );
+	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_sylv_cntl );
+
+	FLA_Blocksize_free( FLA_cntl_flamec_init_i->fla_sylv_bsize );
+}
+#endif
+
 extern fla_gemm_t* fla_gemm_cntl_blas;
 
 fla_sylv_t*        fla_sylv_cntl_leaf = NULL;

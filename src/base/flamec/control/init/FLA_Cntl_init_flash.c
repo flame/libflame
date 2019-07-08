@@ -10,6 +10,126 @@
 
 #include "FLAME.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void FLA_Cntl_init_flash_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
+{
+  // Level-1 BLAS
+  FLASH_Axpy_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Axpyt_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Copy_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Copyt_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Copyr_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Scal_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Scalr_cntl_init_ts(FLA_cntl_flash_init_i);
+
+  // Level-2 BLAS
+  FLASH_Gemv_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Trsv_cntl_init_ts(FLA_cntl_flash_init_i);
+
+  // Level-3 BLAS
+  // Note gemm must be first since it is used by all other level-3 BLAS.
+  FLASH_Gemm_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Hemm_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Herk_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Her2k_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Symm_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Syrk_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Syr2k_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Trmm_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Trsm_cntl_init_ts(FLA_cntl_flash_init_i);
+
+  // LAPACK-level
+  // These require level-3 BLAS operations to be initialized.
+  FLASH_Apply_pivots_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Chol_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_LU_nopiv_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_LU_piv_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_LU_incpiv_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Trinv_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Ttmm_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Sylv_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_QR2_UT_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_CAQR2_UT_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Apply_Q_UT_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Apply_Q2_UT_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Apply_CAQ2_UT_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Apply_QUD_UT_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Eig_gest_cntl_init_ts(FLA_cntl_flash_init_i);
+
+  // Compound LAPACK operations
+  // These require previous LAPACK operations to already be initialized.
+  FLASH_Lyap_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_SPDinv_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_QR_UT_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_QR_UT_inc_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_LQ_UT_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_CAQR_UT_inc_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Apply_Q_UT_inc_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Apply_CAQ_UT_inc_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_UDdate_UT_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_UDdate_UT_inc_cntl_init_ts(FLA_cntl_flash_init_i);
+  FLASH_Apply_QUD_UT_inc_cntl_init_ts(FLA_cntl_flash_init_i);
+}
+
+void FLA_Cntl_finalize_flash_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
+{
+  // Level-1 BLAS
+  FLASH_Axpy_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Axpyt_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Copy_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Copyt_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Copyr_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Scal_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Scalr_cntl_finalize_ts(FLA_cntl_flash_init_i);
+
+  // Level-2 BLAS
+  FLASH_Gemv_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Trsv_cntl_finalize_ts(FLA_cntl_flash_init_i);
+
+  // Level-3 BLAS
+  FLASH_Gemm_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Hemm_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Herk_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Her2k_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Symm_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Syrk_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Syr2k_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Trmm_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Trsm_cntl_finalize_ts(FLA_cntl_flash_init_i);
+
+  // LAPACK-level
+  FLASH_Apply_pivots_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Chol_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_LU_nopiv_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_LU_piv_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_LU_incpiv_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Trinv_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Ttmm_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Sylv_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_QR2_UT_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_CAQR2_UT_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Apply_Q_UT_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Apply_Q2_UT_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Apply_CAQ2_UT_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Apply_QUD_UT_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Eig_gest_cntl_finalize_ts(FLA_cntl_flash_init_i);
+
+  // Compound LAPACK operations
+  FLASH_Lyap_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_SPDinv_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_QR_UT_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_QR_UT_inc_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_LQ_UT_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_CAQR_UT_inc_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Apply_Q_UT_inc_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Apply_CAQ_UT_inc_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_UDdate_UT_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_UDdate_UT_inc_cntl_finalize_ts(FLA_cntl_flash_init_i);
+  FLASH_Apply_QUD_UT_inc_cntl_finalize_ts(FLA_cntl_flash_init_i);
+}
+
+#endif
+
 void FLA_Cntl_init_flash()
 {
   // Level-1 BLAS

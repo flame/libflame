@@ -10,6 +10,27 @@
 
 #include "FLAME.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void FLA_Hess_UT_cntl_init_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
+{
+	// Set blocksizes with default values for conventional storage.
+	FLA_cntl_flamec_init_i->fla_hessut_bsize_leaf = FLA_Query_blocksizes( FLA_DIMENSION_MIN );
+	FLA_Blocksize_scale_ts( FLA_cntl_flamec_init_i, FLA_cntl_flamec_init_i->fla_hessut_bsize_leaf, FLA_HESS_INNER_TO_OUTER_B_RATIO );
+
+	// Create a control tree for small-to-medium sequential problems.
+	FLA_cntl_flamec_init_i->fla_hessut_cntl_leaf = FLA_Cntl_hessut_obj_create( FLA_FLAT, 
+	                                                   FLA_BLOCKED_VARIANT5,
+	                                                   FLA_cntl_flamec_init_i->fla_hessut_bsize_leaf );
+}
+
+void FLA_Hess_UT_cntl_finalize_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
+{
+	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_hessut_cntl_leaf );
+
+	FLA_Blocksize_free( FLA_cntl_flamec_init_i->fla_hessut_bsize_leaf );
+}
+#endif
+
 fla_hessut_t*       fla_hessut_cntl_leaf = NULL;
 
 fla_blocksize_t*    fla_hessut_bsize_leaf = NULL;

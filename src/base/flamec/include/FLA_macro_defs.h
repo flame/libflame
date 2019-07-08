@@ -19,6 +19,7 @@
   #define restrict  __restrict
 #endif
 
+#define FLA_ENABLE_THREAD_SAFE_INTERFACES
 
 // --- Type-related macro definitions ------------------------------------------
 

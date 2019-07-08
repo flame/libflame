@@ -71,20 +71,35 @@ FLA_Error FLA_Axpy_external( FLA_Obj alpha, FLA_Obj A, FLA_Obj B );
 FLA_Error FLA_Axpys_external( FLA_Obj alpha0, FLA_Obj alpha1, FLA_Obj A, FLA_Obj beta, FLA_Obj B );
 FLA_Error FLA_Axpyt_external( FLA_Trans trans, FLA_Obj alpha, FLA_Obj A, FLA_Obj B );
 FLA_Error FLA_Axpyrt_external( FLA_Uplo uplo, FLA_Trans trans, FLA_Obj alpha, FLA_Obj A, FLA_Obj B );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Copy_external_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj B );
+#endif
 FLA_Error FLA_Copy_external( FLA_Obj A, FLA_Obj B );
 FLA_Error FLA_Copyr_external( FLA_Uplo uplo, FLA_Obj A, FLA_Obj B );
 FLA_Error FLA_Copyrt_external( FLA_Uplo uplo, FLA_Trans trans, FLA_Obj A, FLA_Obj B );
 FLA_Error FLA_Copyt_external( FLA_Trans trans, FLA_Obj A, FLA_Obj B );
 FLA_Error FLA_Dot_external( FLA_Obj x, FLA_Obj y, FLA_Obj rho );
 FLA_Error FLA_Dotc_external( FLA_Conj conj, FLA_Obj x, FLA_Obj y, FLA_Obj rho );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Dots_external_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj alpha, FLA_Obj x, FLA_Obj y, FLA_Obj beta, FLA_Obj rho );
+#endif
 FLA_Error FLA_Dots_external( FLA_Obj alpha, FLA_Obj x, FLA_Obj y, FLA_Obj beta, FLA_Obj rho );
 FLA_Error FLA_Dotcs_external( FLA_Conj conj, FLA_Obj alpha, FLA_Obj x, FLA_Obj y, FLA_Obj beta, FLA_Obj rho );
 FLA_Error FLA_Dot2s_external( FLA_Obj alpha, FLA_Obj x, FLA_Obj y, FLA_Obj beta, FLA_Obj rho );
 FLA_Error FLA_Dot2cs_external( FLA_Conj conj, FLA_Obj alpha, FLA_Obj x, FLA_Obj y, FLA_Obj beta, FLA_Obj rho );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Amax_external_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj x, FLA_Obj index );
+#endif
 FLA_Error FLA_Amax_external( FLA_Obj x, FLA_Obj index );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Inv_scal_external_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj alpha, FLA_Obj A );
+#endif
 FLA_Error FLA_Inv_scal_external( FLA_Obj alpha, FLA_Obj A );
 FLA_Error FLA_Inv_scalc_external( FLA_Conj conjalpha, FLA_Obj alpha, FLA_Obj A );
 FLA_Error FLA_Nrm2_external( FLA_Obj x, FLA_Obj nrm_x );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Scal_external_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj alpha, FLA_Obj A );
+#endif
 FLA_Error FLA_Scal_external( FLA_Obj alpha, FLA_Obj A );
 FLA_Error FLA_Scalc_external( FLA_Conj conjalpha, FLA_Obj alpha, FLA_Obj A );
 FLA_Error FLA_Scalr_external( FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A );
@@ -108,20 +123,35 @@ FLA_Error FLA_Axpy_check( FLA_Obj alpha, FLA_Obj A, FLA_Obj B );
 FLA_Error FLA_Axpys_check( FLA_Obj alpha0, FLA_Obj alpha1, FLA_Obj A, FLA_Obj beta, FLA_Obj B );
 FLA_Error FLA_Axpyt_check( FLA_Trans trans, FLA_Obj alpha, FLA_Obj A, FLA_Obj B );
 FLA_Error FLA_Axpyrt_check( FLA_Uplo uplo, FLA_Trans trans, FLA_Obj alpha, FLA_Obj A, FLA_Obj B );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Copy_check_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj B );
+#endif
 FLA_Error FLA_Copy_check( FLA_Obj A, FLA_Obj B );
 FLA_Error FLA_Copyr_check( FLA_Uplo uplo, FLA_Obj A, FLA_Obj B );
 FLA_Error FLA_Copyrt_check( FLA_Uplo uplo, FLA_Trans trans, FLA_Obj A, FLA_Obj B );
 FLA_Error FLA_Copyt_check( FLA_Trans trans, FLA_Obj A, FLA_Obj B );
 FLA_Error FLA_Dot_check( FLA_Obj x, FLA_Obj y, FLA_Obj rho );
 FLA_Error FLA_Dotc_check( FLA_Conj conj, FLA_Obj x, FLA_Obj y, FLA_Obj rho );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Dots_check_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj alpha, FLA_Obj x, FLA_Obj y, FLA_Obj beta, FLA_Obj rho );
+#endif
 FLA_Error FLA_Dots_check( FLA_Obj alpha, FLA_Obj x, FLA_Obj y, FLA_Obj beta, FLA_Obj rho );
 FLA_Error FLA_Dotcs_check( FLA_Conj conj, FLA_Obj alpha, FLA_Obj x, FLA_Obj y, FLA_Obj beta, FLA_Obj rho );
 FLA_Error FLA_Dot2s_check( FLA_Obj alpha, FLA_Obj x, FLA_Obj y, FLA_Obj beta, FLA_Obj rho );
 FLA_Error FLA_Dot2cs_check( FLA_Conj conj, FLA_Obj alpha, FLA_Obj x, FLA_Obj y, FLA_Obj beta, FLA_Obj rho );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Amax_check_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj x, FLA_Obj index );
+#endif
 FLA_Error FLA_Amax_check( FLA_Obj x, FLA_Obj index );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Inv_scal_check_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj alpha, FLA_Obj A );
+#endif
 FLA_Error FLA_Inv_scal_check( FLA_Obj alpha, FLA_Obj A );
 FLA_Error FLA_Inv_scalc_check( FLA_Conj conjalpha, FLA_Obj alpha, FLA_Obj A );
 FLA_Error FLA_Nrm2_check( FLA_Obj x, FLA_Obj nrm_x );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Scal_check_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj alpha, FLA_Obj A );
+#endif
 FLA_Error FLA_Scal_check( FLA_Obj alpha, FLA_Obj A );
 FLA_Error FLA_Scalc_check( FLA_Conj conjalpha, FLA_Obj alpha, FLA_Obj A );
 FLA_Error FLA_Scalr_check( FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A );

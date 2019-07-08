@@ -10,6 +10,72 @@
 
 #include "FLAME.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void FLASH_Sylv_cntl_init_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
+{
+	// Set blocksize for hierarchical storage.
+	FLA_cntl_flash_init_i->flash_sylv_bsize       = FLA_Blocksize_create( 1, 1, 1, 1 );
+
+	// Create a control tree that assumes A and B are b x b blocks.
+	FLA_cntl_flash_init_i->flash_sylv_cntl_leaf   = FLA_Cntl_sylv_obj_create( FLA_HIER,
+	                                                   FLA_SUBPROBLEM,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL );
+
+	// Create a control tree that assumes A is a matrix and B is a block.
+	FLA_cntl_flash_init_i->flash_sylv_cntl_mb     = FLA_Cntl_sylv_obj_create( FLA_HIER, 
+	                                                   FLA_BLOCKED_VARIANT17,
+	                                                   FLA_cntl_flash_init_i->flash_sylv_bsize,
+	                                                   FLA_cntl_flash_init_i->flash_sylv_cntl_leaf,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   FLA_cntl_flash_init_i->flash_gemm_cntl_ip_bb,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL );
+
+	// Create a control tree that assumes A is a matrix and B is a matrix.
+	FLA_cntl_flash_init_i->flash_sylv_cntl        = FLA_Cntl_sylv_obj_create( FLA_HIER, 
+	                                                   FLA_BLOCKED_VARIANT15,
+	                                                   FLA_cntl_flash_init_i->flash_sylv_bsize,
+	                                                   FLA_cntl_flash_init_i->flash_sylv_cntl_mb,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   FLA_cntl_flash_init_i->flash_gemm_cntl_pm_bp,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL );
+}
+
+void FLASH_Sylv_cntl_finalize_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
+{
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_sylv_cntl_leaf );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_sylv_cntl_mb );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_sylv_cntl );
+
+	FLA_Blocksize_free( FLA_cntl_flash_init_i->flash_sylv_bsize );
+}
+
+#endif
+
 extern fla_gemm_t* flash_gemm_cntl_pm_bp;
 extern fla_gemm_t* flash_gemm_cntl_ip_bb;
 

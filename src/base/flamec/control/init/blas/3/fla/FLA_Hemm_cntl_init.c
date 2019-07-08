@@ -10,6 +10,64 @@
 
 #include "FLAME.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void FLA_Hemm_cntl_init_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
+{
+	// Set blocksizes with default values for conventional storage.
+	FLA_cntl_flamec_init_i->fla_hemm_var1_bsize = FLA_Query_blocksizes( FLA_DIMENSION_MIN );
+	FLA_cntl_flamec_init_i->fla_hemm_var9_bsize = FLA_Query_blocksizes( FLA_DIMENSION_MIN );
+
+	// Create a control tree that assumes A and B are b x b blocks.
+	FLA_cntl_flamec_init_i->fla_hemm_cntl_blas  = FLA_Cntl_hemm_obj_create( FLA_FLAT, 
+	                                                FLA_SUBPROBLEM,
+	                                                NULL,
+	                                                NULL,
+	                                                NULL,
+	                                                NULL,
+	                                                NULL );
+
+	// Create a control tree that assumes A is a block and B is a panel.
+	FLA_cntl_flamec_init_i->fla_hemm_cntl_bp    = FLA_Cntl_hemm_obj_create( FLA_FLAT,
+	                                                FLA_BLOCKED_VARIANT9,
+	                                                FLA_cntl_flamec_init_i->fla_hemm_var9_bsize,
+	                                                FLA_cntl_flamec_init_i->fla_scal_cntl_blas,
+	                                                FLA_cntl_flamec_init_i->fla_hemm_cntl_blas,
+	                                                NULL,
+	                                                NULL );
+
+	// Create a control tree that assumes A is large and B is a panel.
+	FLA_cntl_flamec_init_i->fla_hemm_cntl_mp    = FLA_Cntl_hemm_obj_create( FLA_FLAT,
+	                                                FLA_BLOCKED_VARIANT1,
+	                                                FLA_cntl_flamec_init_i->fla_hemm_var1_bsize,
+	                                                FLA_cntl_flamec_init_i->fla_scal_cntl_blas,
+	                                                FLA_cntl_flamec_init_i->fla_hemm_cntl_blas,
+	                                                FLA_cntl_flamec_init_i->fla_gemm_cntl_blas,
+	                                                FLA_cntl_flamec_init_i->fla_gemm_cntl_blas );
+
+	// Create a control tree that assumes A and B are both large.
+	FLA_cntl_flamec_init_i->fla_hemm_cntl_mm    = FLA_Cntl_hemm_obj_create( FLA_FLAT,
+	                                                FLA_BLOCKED_VARIANT9,
+	                                                FLA_cntl_flamec_init_i->fla_hemm_var9_bsize,
+	                                                FLA_cntl_flamec_init_i->fla_scal_cntl_blas,
+	                                                FLA_cntl_flamec_init_i->fla_hemm_cntl_mp,
+	                                                NULL,
+	                                                NULL );
+
+}
+
+void FLA_Hemm_cntl_finalize_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
+{
+	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_hemm_cntl_blas );
+
+	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_hemm_cntl_bp );
+	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_hemm_cntl_mp );
+	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_hemm_cntl_mm );
+
+	FLA_Blocksize_free( FLA_cntl_flamec_init_i->fla_hemm_var1_bsize );
+	FLA_Blocksize_free( FLA_cntl_flamec_init_i->fla_hemm_var9_bsize );
+}
+#endif
+
 extern fla_scal_t* fla_scal_cntl_blas;
 extern fla_gemm_t* fla_gemm_cntl_blas;
 

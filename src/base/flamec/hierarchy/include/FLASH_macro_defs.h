@@ -11,6 +11,10 @@
 #ifndef FLASH_MACRO_DEFS_H
 #define FLASH_MACRO_DEFS_H
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+#define FLASH_OBJ_PTR_AT_TS( I, A )  ( (FLA_Obj *) FLA_Obj_buffer_at_view_ts( I, A ) )
+#endif
+
 #define FLASH_OBJ_PTR_AT( A )  ( (FLA_Obj *) FLA_Obj_buffer_at_view( A ) )
 
 #define FLA_FLAT_TO_HIER 4000

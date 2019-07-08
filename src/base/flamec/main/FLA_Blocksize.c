@@ -61,6 +61,27 @@ void FLA_Blocksize_set( fla_blocksize_t* bp, dim_t b_s, dim_t b_d, dim_t b_c, di
 }
 
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void FLA_Blocksize_scale_ts( FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i, fla_blocksize_t* bp, double factor )
+{
+	FLA_Error e_val;
+	
+	// Verify that the given blocksize pointer is valid.
+        // TODO:AMD: the below if check is removed, need to be added later
+	// if ( FLA_Check_error_level() >= FLA_MIN_ERROR_CHECKING )
+	{
+		e_val = FLA_Check_null_pointer( bp );
+		FLA_Check_error_code( e_val );
+	}
+	
+	// Assign the provided blocksize values into the corresponding fields.
+	bp->s = ( dim_t )( ( double ) bp->s * factor );
+	bp->d = ( dim_t )( ( double ) bp->d * factor );
+	bp->c = ( dim_t )( ( double ) bp->c * factor );
+	bp->z = ( dim_t )( ( double ) bp->z * factor );
+}
+#endif
+
 void FLA_Blocksize_scale( fla_blocksize_t* bp, double factor )
 {
 	FLA_Error e_val;
@@ -79,6 +100,35 @@ void FLA_Blocksize_scale( fla_blocksize_t* bp, double factor )
 	bp->z = ( dim_t )( ( double ) bp->z * factor );
 }
 
+
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+fla_blocksize_t* FLA_Blocksize_create_copy_ts( FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i, fla_blocksize_t* bp )
+{
+	fla_blocksize_t* bp_copy;
+	FLA_Error        e_val;
+	
+	// Verify that the given blocksize pointer is valid.
+        // TODO:AMD: the below if check is removed, need to be added later
+	// if ( FLA_Check_error_level_ts(FLA_cntl_ts) >= FLA_MIN_ERROR_CHECKING )
+	{
+		e_val = FLA_Check_null_pointer( bp );
+		FLA_Check_error_code( e_val );
+	}
+
+	// Allocate memory for the blocksize structure.
+	bp_copy = ( fla_blocksize_t* ) FLA_malloc( sizeof(fla_blocksize_t) );
+	
+	// Assign the provided blocksize object's values into the corresponding
+	// fields of the new object.
+	bp_copy->s = bp->s;
+	bp_copy->d = bp->d;
+	bp_copy->c = bp->c;
+	bp_copy->z = bp->z;
+	
+	// Return a pointer to the structure.
+	return bp_copy;
+}
+#endif
 
 fla_blocksize_t* FLA_Blocksize_create_copy( fla_blocksize_t* bp )
 {
@@ -112,6 +162,33 @@ void FLA_Blocksize_free( fla_blocksize_t* bp )
 	FLA_free( bp );
 }
 
+
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+dim_t FLA_Blocksize_extract_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Datatype dt, fla_blocksize_t* bp )
+{
+	dim_t     b = 0;
+	FLA_Error e_val;
+
+	// Verify that the given blocksize pointer is valid.
+	if ( FLA_Check_error_level_ts(FLA_cntl_init_i) >= FLA_MIN_ERROR_CHECKING )
+	{
+		e_val = FLA_Check_null_pointer( bp );
+		FLA_Check_error_code( e_val );
+	}
+
+	if      ( dt == FLA_FLOAT )
+		b = bp->s;
+	else if ( dt == FLA_DOUBLE )
+		b = bp->d;
+	else if ( dt == FLA_COMPLEX )
+		b = bp->c;
+	else if ( dt == FLA_DOUBLE_COMPLEX )
+		b = bp->z;
+	
+	// Return the blocksize corresponding with the datatype.
+	return b;
+}
+#endif
 
 dim_t FLA_Blocksize_extract( FLA_Datatype dt, fla_blocksize_t* bp )
 {
@@ -230,6 +307,40 @@ dim_t FLA_Query_blocksize( FLA_Datatype dt, FLA_Dimension dim )
 	return b_val;
 }
 
+
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+dim_t FLA_Determine_blocksize_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A_unproc, FLA_Quadrant to_dir, fla_blocksize_t* bp )
+{
+	FLA_Error    e_val;
+	FLA_Datatype datatype;
+	dim_t        A_unproc_size;
+	dim_t        typed_blocksize;
+	dim_t        b;
+
+	// Determine the size of the remaining portion of the matrix.
+	A_unproc_size = FLA_determine_matrix_size( A_unproc, to_dir );
+	
+	// Determine the datatype of the matrix.
+	datatype = FLA_Obj_datatype_ts( FLA_cntl_init_i, A_unproc );
+	
+	// Determine the raw blocksize value from the blocksize structure.
+	typed_blocksize = FLA_Blocksize_extract_ts( FLA_cntl_init_i, datatype, bp );
+
+	// Check blocksize for zero value.
+	if ( FLA_Check_error_level_ts(FLA_cntl_init_i) >= FLA_MIN_ERROR_CHECKING )
+	{
+		e_val = FLA_Check_blocksize_value( typed_blocksize );
+		FLA_Check_error_code( e_val );
+	}
+
+	// If the unprocessed partition is smaller than our blocksize allows,
+	// we have to use it's length/width instead.
+	b = min( A_unproc_size, typed_blocksize );
+	
+	// Return the computed blocksize.
+	return b;
+}
+#endif
 
 dim_t FLA_Determine_blocksize( FLA_Obj A_unproc, FLA_Quadrant to_dir, fla_blocksize_t* bp )
 {

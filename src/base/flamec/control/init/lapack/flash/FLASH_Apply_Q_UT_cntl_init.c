@@ -10,6 +10,67 @@
 
 #include "FLAME.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void FLASH_Apply_Q_UT_cntl_init_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
+{
+	// Set blocksize for hierarchical storage.
+	FLA_cntl_flash_init_i->flash_apqut_var1_bsize = FLA_Blocksize_create( 1, 1, 1, 1 );
+	FLA_cntl_flash_init_i->flash_apqut_var2_bsize = FLA_Blocksize_create( 1, 1, 1, 1 );
+
+	// Create a control tree to dereference block operands and perform
+	// flat subproblem.
+	FLA_cntl_flash_init_i->flash_apqut_cntl_leaf = FLA_Cntl_apqut_obj_create( FLA_HIER,
+	                                                   FLA_SUBPROBLEM, 
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL );
+
+	// Create a control tree to invoke variant 2 to further partition blocks.
+	FLA_cntl_flash_init_i->flash_apqut_cntl    = FLA_Cntl_apqut_obj_create( FLA_HIER,
+	                                                 FLA_BLOCKED_VARIANT2, 
+	                                                 FLA_cntl_flash_init_i->flash_apqut_var2_bsize,
+	                                                 FLA_cntl_flash_init_i->flash_apqut_cntl_leaf,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL,
+	                                                 NULL );
+
+	// Create a control tree to invoke variant 3, using hierarchical level-3
+	// BLAS control trees.
+	FLA_cntl_flash_init_i->flash_apqut_cntl_blas = FLA_Cntl_apqut_obj_create( FLA_HIER,
+	                                                   FLA_BLOCKED_VARIANT3, 
+	                                                   FLA_cntl_flash_init_i->flash_apqut_var1_bsize,
+	                                                   NULL,
+	                                                   FLA_cntl_flash_init_i->flash_trmm_cntl_bp,
+	                                                   FLA_cntl_flash_init_i->flash_trmm_cntl_bp,
+	                                                   FLA_cntl_flash_init_i->flash_gemm_cntl_pm,
+	                                                   FLA_cntl_flash_init_i->flash_gemm_cntl_op,
+	                                                   FLA_cntl_flash_init_i->flash_trsm_cntl_bp,
+	                                                   FLA_cntl_flash_init_i->flash_copyt_cntl,
+	                                                   FLA_cntl_flash_init_i->flash_axpyt_cntl );
+}
+
+void FLASH_Apply_Q_UT_cntl_finalize_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
+{
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_apqut_cntl_leaf );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_apqut_cntl );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_apqut_cntl_blas );
+
+	FLA_Blocksize_free( FLA_cntl_flash_init_i->flash_apqut_var1_bsize );
+	FLA_Blocksize_free( FLA_cntl_flash_init_i->flash_apqut_var2_bsize );
+}
+
+#endif
+
 extern fla_trmm_t*  flash_trmm_cntl_bp;
 extern fla_trmm_t*  flash_trmm_cntl_bp;
 extern fla_gemm_t*  flash_gemm_cntl_pm;

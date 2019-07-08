@@ -10,6 +10,59 @@
 
 #include "FLAME.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+void FLASH_Gemv_cntl_init_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
+{
+	// Set gemv blocksize for hierarchical storage.
+	FLA_cntl_flash_init_i->flash_gemv_bsize       = FLA_Blocksize_create( 1, 1, 1, 1 );
+
+	// Create a control tree node that executes a gemv subproblem.
+	FLA_cntl_flash_init_i->flash_gemv_cntl_blas   = FLA_Cntl_gemv_obj_create( FLA_HIER,
+	                                                   FLA_SUBPROBLEM,
+	                                                   NULL,
+	                                                   NULL,
+	                                                   NULL );
+
+	// Create control trees for situations where one dimension is large.
+	FLA_cntl_flash_init_i->flash_gemv_cntl_cp_bv = FLA_Cntl_gemv_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT1,
+	                                                  FLA_cntl_flash_init_i->flash_gemv_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_gemv_cntl_blas );
+	FLA_cntl_flash_init_i->flash_gemv_cntl_rp_bv = FLA_Cntl_gemv_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT5,
+	                                                  FLA_cntl_flash_init_i->flash_gemv_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_gemv_cntl_blas );
+
+	// Create control trees for situations where both dimensions are large.
+	FLA_cntl_flash_init_i->flash_gemv_cntl_fm_rp = FLA_Cntl_gemv_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT1,
+	                                                  FLA_cntl_flash_init_i->flash_gemv_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_gemv_cntl_rp_bv );
+	FLA_cntl_flash_init_i->flash_gemv_cntl_fm_cp = FLA_Cntl_gemv_obj_create( FLA_HIER,
+	                                                  FLA_BLOCKED_VARIANT5,
+	                                                  FLA_cntl_flash_init_i->flash_gemv_bsize,
+	                                                  FLA_cntl_flash_init_i->flash_scal_cntl,
+	                                                  FLA_cntl_flash_init_i->flash_gemv_cntl_cp_bv );
+}
+
+void FLASH_Gemv_cntl_finalize_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
+{
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_gemv_cntl_blas );
+
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_gemv_cntl_cp_bv );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_gemv_cntl_rp_bv );
+
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_gemv_cntl_fm_rp );
+	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_gemv_cntl_fm_cp );
+
+	FLA_Blocksize_free( FLA_cntl_flash_init_i->flash_gemv_bsize );
+}
+
+#endif
+
 extern fla_scal_t* flash_scal_cntl;
 
 fla_gemv_t*      flash_gemv_cntl_blas = NULL;

@@ -12,6 +12,84 @@
 
 #ifdef FLA_ENABLE_NON_CRITICAL_CODE
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_LU_piv_opt_var4_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj p )
+{
+  FLA_Error    r_val = FLA_SUCCESS;
+  FLA_Datatype datatype;
+  int          m_A, n_A;
+  int          rs_A, cs_A;
+  int          inc_p;
+
+  datatype = FLA_Obj_datatype_ts( FLA_cntl_init_i, A );
+
+  m_A      = FLA_Obj_length( A );
+  n_A      = FLA_Obj_width( A );
+  rs_A     = FLA_Obj_row_stride( A );
+  cs_A     = FLA_Obj_col_stride( A );
+
+  inc_p    = FLA_Obj_vector_inc( p );
+
+
+  switch ( datatype )
+  {
+    case FLA_FLOAT:
+    {
+      float* buff_A = FLA_FLOAT_PTR( A );
+      int*   buff_p = FLA_INT_PTR( p );
+
+      r_val = FLA_LU_piv_ops_var4( m_A,
+                                   n_A,
+                                   buff_A, rs_A, cs_A,
+                                   buff_p, inc_p );
+
+      break;
+    }
+
+    case FLA_DOUBLE:
+    {
+      double* buff_A = FLA_DOUBLE_PTR( A );
+      int*    buff_p = FLA_INT_PTR( p );
+
+      r_val = FLA_LU_piv_opd_var4( m_A,
+                                   n_A,
+                                   buff_A, rs_A, cs_A,
+                                   buff_p, inc_p );
+
+      break;
+    }
+
+    case FLA_COMPLEX:
+    {
+      scomplex* buff_A = FLA_COMPLEX_PTR( A );
+      int*      buff_p = FLA_INT_PTR( p );
+
+      r_val = FLA_LU_piv_opc_var4( m_A,
+                                   n_A,
+                                   buff_A, rs_A, cs_A,
+                                   buff_p, inc_p );
+
+      break;
+    }
+
+    case FLA_DOUBLE_COMPLEX:
+    {
+      dcomplex* buff_A = FLA_DOUBLE_COMPLEX_PTR( A );
+      int*      buff_p = FLA_INT_PTR( p );
+
+      r_val = FLA_LU_piv_opz_var4( m_A,
+                                   n_A,
+                                   buff_A, rs_A, cs_A,
+                                   buff_p, inc_p );
+
+      break;
+    }
+  }
+
+  return r_val;
+}
+#endif
+
 FLA_Error FLA_LU_piv_opt_var4( FLA_Obj A, FLA_Obj p )
 {
   FLA_Error    r_val = FLA_SUCCESS;

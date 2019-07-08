@@ -10,9 +10,18 @@
 
 #include "FLAME.h"
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Apply_pivots_ln_blk_var1_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj p, FLA_Obj A, fla_appiv_t* cntl );
+#endif
 FLA_Error FLA_Apply_pivots_ln_blk_var1( FLA_Obj p, FLA_Obj A, fla_appiv_t* cntl );
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Apply_pivots_ln_blk_var2_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj p, FLA_Obj A, fla_appiv_t* cntl );
+#endif
 FLA_Error FLA_Apply_pivots_ln_blk_var2( FLA_Obj p, FLA_Obj A, fla_appiv_t* cntl );
 
+#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
+FLA_Error FLA_Apply_pivots_ln_opt_var1_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj p, FLA_Obj A );
+#endif
 FLA_Error FLA_Apply_pivots_ln_opt_var1( FLA_Obj p, FLA_Obj A );
 FLA_Error FLA_Apply_pivots_ln_opi_var1( int n, 
                                         int*      a, int a_rs, int a_cs, 
