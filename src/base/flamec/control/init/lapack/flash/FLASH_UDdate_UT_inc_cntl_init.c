@@ -10,29 +10,6 @@
 
 #include "FLAME.h"
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-void FLASH_UDdate_UT_inc_cntl_init_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
-{
-	// Set blocksizes for hierarchical storage.
-	FLA_cntl_flash_init_i->flash_uddateutinc_var1_bsize = FLA_Blocksize_create( 1, 1, 1, 1 );
-
-	// Create a control tree to invoke variant 1.
-	FLA_cntl_flash_init_i->flash_uddateutinc_cntl = FLA_Cntl_uddateutinc_obj_create( FLA_HIER,
-	                                                          FLA_BLOCKED_VARIANT1, 
-	                                                          FLA_cntl_flash_init_i->flash_uddateutinc_var1_bsize,
-	                                                          FLA_cntl_flash_init_i->flash_uddateut_cntl,
-	                                                          FLA_cntl_flash_init_i->flash_apqudut_cntl );
-}
-
-void FLASH_UDdate_UT_inc_cntl_finalize_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
-{
-	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_uddateutinc_cntl );
-
-	FLA_Blocksize_free( FLA_cntl_flash_init_i->flash_uddateutinc_var1_bsize );
-}
-
-#endif
-
 extern fla_uddateut_t* flash_uddateut_cntl;
 extern fla_apqudut_t*  flash_apqudut_cntl;
 

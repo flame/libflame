@@ -10,59 +10,6 @@
 
 #include "FLAME.h"
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-void FLA_Herk_cntl_init_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
-{
-	// Set blocksizes with default values for conventional storage.
-	FLA_cntl_flamec_init_i->fla_herk_var2_bsize = FLA_Query_blocksizes( FLA_DIMENSION_MIN );
-	FLA_cntl_flamec_init_i->fla_herk_var5_bsize = FLA_Query_blocksizes( FLA_DIMENSION_MIN );
-
-	// Create a control tree that assumes A is a b x b block.
-	FLA_cntl_flamec_init_i->fla_herk_cntl_blas  = FLA_Cntl_herk_obj_create( FLA_FLAT,
-	                                                FLA_SUBPROBLEM,
-	                                                NULL,
-	                                                NULL,
-	                                                NULL,
-	                                                NULL );
-
-	// Create a control tree that assumes A * A' forms an inner panel product.
-	FLA_cntl_flamec_init_i->fla_herk_cntl_ip    = FLA_Cntl_herk_obj_create( FLA_FLAT,
-	                                                FLA_BLOCKED_VARIANT5,
-	                                                FLA_cntl_flamec_init_i->fla_herk_var5_bsize,
-	                                                FLA_cntl_flamec_init_i->fla_scalr_cntl_blas,
-	                                                FLA_cntl_flamec_init_i->fla_herk_cntl_blas,
-	                                                NULL );
-
-	// Create a control tree that assumes A * A' forms an outer panel product.
-	FLA_cntl_flamec_init_i->fla_herk_cntl_op    = FLA_Cntl_herk_obj_create( FLA_FLAT,
-	                                                FLA_BLOCKED_VARIANT2,
-	                                                FLA_cntl_flamec_init_i->fla_herk_var2_bsize,
-	                                                FLA_cntl_flamec_init_i->fla_scalr_cntl_blas,
-	                                                FLA_cntl_flamec_init_i->fla_herk_cntl_blas,
-	                                                FLA_cntl_flamec_init_i->fla_gemm_cntl_blas );
-
-	// Create a control tree that assumes A is large.
-	FLA_cntl_flamec_init_i->fla_herk_cntl_mm    = FLA_Cntl_herk_obj_create( FLA_FLAT,
-	                                                FLA_BLOCKED_VARIANT5,
-	                                                FLA_cntl_flamec_init_i->fla_herk_var5_bsize,
-	                                                FLA_cntl_flamec_init_i->fla_scalr_cntl_blas,
-	                                                FLA_cntl_flamec_init_i->fla_herk_cntl_op,
-	                                                NULL );
-}
-
-void FLA_Herk_cntl_finalize_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
-{
-	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_herk_cntl_blas );
-
-	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_herk_cntl_ip );
-	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_herk_cntl_op );
-	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_herk_cntl_mm );
-
-	FLA_Blocksize_free( FLA_cntl_flamec_init_i->fla_herk_var2_bsize );
-	FLA_Blocksize_free( FLA_cntl_flamec_init_i->fla_herk_var5_bsize );
-}
-#endif
-
 extern fla_scalr_t* fla_scalr_cntl_blas;
 extern fla_gemm_t*  fla_gemm_cntl_blas;
 

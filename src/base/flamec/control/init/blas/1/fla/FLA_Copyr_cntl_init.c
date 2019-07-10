@@ -10,23 +10,6 @@
 
 #include "FLAME.h"
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-void FLA_Copyr_cntl_init_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
-{
-	// Create a control tree that assumes A and B are small.
-	FLA_cntl_flamec_init_i->fla_copyr_cntl_blas = FLA_Cntl_copyr_obj_create( FLA_FLAT,
-	                                                 FLA_SUBPROBLEM,
-	                                                 NULL,
-	                                                 NULL,
-	                                                 NULL );
-}
-
-void FLA_Copyr_cntl_finalize_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
-{
-	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_copyr_cntl_blas );
-}
-#endif
-
 fla_copyr_t* fla_copyr_cntl_blas = NULL;
 
 void FLA_Copyr_cntl_init()

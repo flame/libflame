@@ -38,12 +38,6 @@ FLA_Error FLASH_Part_create_2x1( FLA_Obj A,    FLA_Obj* AT,
                                  dim_t n_rows, FLA_Side side );
 FLA_Error FLASH_Part_create_1x2( FLA_Obj A,    FLA_Obj* AL, FLA_Obj* AR,
                                  dim_t n_cols, FLA_Side side );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLASH_Part_create_2x2_ts( FLA_cntl_init_s *FLA_cntl_init_i,
-                                    FLA_Obj A, FLA_Obj* ATL, FLA_Obj* ATR,
-                                               FLA_Obj* ABL, FLA_Obj* ABR,
-                                 dim_t n_rows, dim_t n_cols, FLA_Side side );
-#endif
 FLA_Error FLASH_Part_create_2x2( FLA_Obj A,    FLA_Obj* ATL, FLA_Obj* ATR,
                                                FLA_Obj* ABL, FLA_Obj* ABR,
                                  dim_t n_rows, dim_t n_cols, FLA_Side side );
@@ -51,56 +45,22 @@ FLA_Error FLASH_Part_create_2x2( FLA_Obj A,    FLA_Obj* ATL, FLA_Obj* ATR,
 FLA_Error FLASH_Part_free_2x1( FLA_Obj* AT,
                                FLA_Obj* AB );
 FLA_Error FLASH_Part_free_1x2( FLA_Obj* AL, FLA_Obj* AR );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLASH_Part_free_2x2_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj* ATL, FLA_Obj* ATR,
-                                  FLA_Obj* ABL, FLA_Obj* ABR );
-#endif
 FLA_Error FLASH_Part_free_2x2( FLA_Obj* ATL, FLA_Obj* ATR,
                                FLA_Obj* ABL, FLA_Obj* ABR );
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLASH_Obj_adjust_views_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Bool attach_buffer, dim_t offm, dim_t offn, dim_t m, dim_t n, FLA_Obj A, FLA_Obj* S );
-#endif
 FLA_Error FLASH_Obj_adjust_views( FLA_Bool attach_buffer, dim_t offm, dim_t offn, dim_t m, dim_t n, FLA_Obj A, FLA_Obj* S );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLASH_Obj_adjust_views_hierarchy_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Bool attach_buffer, dim_t offm, dim_t offn, dim_t m, dim_t n, FLA_Obj A, FLA_Obj* S );
-#endif
 FLA_Error FLASH_Obj_adjust_views_hierarchy( FLA_Bool attach_buffer, dim_t offm, dim_t offn, dim_t m, dim_t n, FLA_Obj A, FLA_Obj* S );
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-dim_t FLASH_Obj_scalar_length_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj H );
-#endif
 dim_t FLASH_Obj_scalar_length( FLA_Obj H );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-dim_t FLASH_Obj_scalar_width_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj H );
-#endif
 dim_t FLASH_Obj_scalar_width( FLA_Obj H );
 dim_t FLASH_Obj_scalar_min_dim( FLA_Obj H );
 dim_t FLASH_Obj_scalar_max_dim( FLA_Obj H );
 dim_t FLASH_Obj_scalar_vector_dim( FLA_Obj H );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-dim_t FLASH_Obj_scalar_row_offset_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj H );
-#endif
 dim_t FLASH_Obj_scalar_row_offset( FLA_Obj H );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-dim_t FLASH_Obj_scalar_col_offset_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj H );
-#endif
 dim_t FLASH_Obj_scalar_col_offset( FLA_Obj H );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-dim_t FLASH_Obj_scalar_length_tl_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj H );
-#endif
 dim_t FLASH_Obj_scalar_length_tl( FLA_Obj H );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-dim_t FLASH_Obj_scalar_width_tl_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj H );
-#endif
 dim_t FLASH_Obj_scalar_width_tl( FLA_Obj H );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-dim_t FLASH_Obj_base_scalar_length_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj H );
-#endif
 dim_t FLASH_Obj_base_scalar_length( FLA_Obj H );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-dim_t FLASH_Obj_base_scalar_width_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj H );
-#endif
 dim_t FLASH_Obj_base_scalar_width( FLA_Obj H );
 
 FLA_Error FLASH_Obj_show( char* header, FLA_Obj H, char* elem_format, char* footer );
@@ -119,75 +79,36 @@ FLA_Error    FLASH_Axpy_hierarchy( int direction, FLA_Obj alpha, FLA_Obj F, FLA_
 
 FLA_Error    FLASH_Copy_buffer_to_hier( dim_t m, dim_t n, void* buffer, dim_t rs, dim_t cs, dim_t i, dim_t j, FLA_Obj H );
 FLA_Error    FLASH_Copy_hier_to_buffer( dim_t i, dim_t j, FLA_Obj H, dim_t m, dim_t n, void* buffer, dim_t rs, dim_t cs );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error    FLASH_Copy_flat_to_hier_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj F, dim_t i, dim_t j, FLA_Obj H );
-#endif
 FLA_Error    FLASH_Copy_flat_to_hier( FLA_Obj F, dim_t i, dim_t j, FLA_Obj H );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error    FLASH_Copy_hier_to_flat_ts( FLA_cntl_init_s *FLA_cntl_init_i, dim_t i, dim_t j, FLA_Obj H, FLA_Obj F );
-#endif
 FLA_Error    FLASH_Copy_hier_to_flat( dim_t i, dim_t j, FLA_Obj H, FLA_Obj F );
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error    FLASH_Copy_hierarchy_ts( FLA_cntl_init_s *FLA_cntl_init_i, int direction, FLA_Obj F, FLA_Obj* H );
-#endif
 FLA_Error    FLASH_Copy_hierarchy( int direction, FLA_Obj F, FLA_Obj* H );
 
 // -----------------------------------------------------------------------------
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Datatype FLASH_Obj_datatype_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj H );
-#endif
 FLA_Datatype FLASH_Obj_datatype( FLA_Obj H );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-dim_t        FLASH_Obj_depth_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj H );
-#endif
 dim_t        FLASH_Obj_depth( FLA_Obj H );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-dim_t        FLASH_Obj_blocksizes_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj H, dim_t* b_m, dim_t* b_n );
-#endif
 dim_t        FLASH_Obj_blocksizes( FLA_Obj H, dim_t* b_m, dim_t* b_n );
 
 FLA_Error    FLASH_Obj_create( FLA_Datatype datatype, dim_t m, dim_t n, dim_t depth, dim_t* b_mn, FLA_Obj* H );
 FLA_Error    FLASH_Obj_create_ext( FLA_Datatype datatype, dim_t m, dim_t n, dim_t depth, dim_t* b_m, dim_t* b_n, FLA_Obj* H );
 FLA_Error    FLASH_Obj_create_without_buffer( FLA_Datatype datatype, dim_t m, dim_t n, dim_t depth, dim_t* b_mn, FLA_Obj* H );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error    FLASH_Obj_create_without_buffer_ext_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Datatype datatype, dim_t m, dim_t n, dim_t depth, dim_t* b_m, dim_t* b_n, FLA_Obj* H );
-#endif
 FLA_Error    FLASH_Obj_create_without_buffer_ext( FLA_Datatype datatype, dim_t m, dim_t n, dim_t depth, dim_t* b_m, dim_t* b_n, FLA_Obj* H );
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error    FLASH_Obj_create_helper_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Bool without_buffer, FLA_Datatype datatype, dim_t m, dim_t n, dim_t depth, dim_t* b_m, dim_t* b_n, FLA_Obj* H );
-#endif
 FLA_Error    FLASH_Obj_create_helper( FLA_Bool without_buffer, FLA_Datatype datatype, dim_t m, dim_t n, dim_t depth, dim_t* b_m, dim_t* b_n, FLA_Obj* H );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error    FLASH_Obj_create_hierarchy_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Datatype datatype, dim_t m, dim_t n, dim_t depth, dim_t* elem_sizes_m, dim_t* elem_sizes_n, FLA_Obj flat_matrix, FLA_Obj* H, unsigned long id, dim_t depth_overall, dim_t* depth_sizes_m, dim_t* depth_sizes_n, dim_t* m_offsets, dim_t* n_offsets );
-#endif
 FLA_Error    FLASH_Obj_create_hierarchy( FLA_Datatype datatype, dim_t m, dim_t n, dim_t depth, dim_t* elem_sizes_m, dim_t* elem_sizes_n, FLA_Obj flat_matrix, FLA_Obj* H, unsigned long id, dim_t depth_overall, dim_t* depth_sizes_m, dim_t* depth_sizes_n, dim_t* m_offsets, dim_t* n_offsets );
 
 FLA_Error    FLASH_Obj_create_conf_to( FLA_Trans trans, FLA_Obj H_cur, FLA_Obj* H_new );
 FLA_Error    FLASH_Obj_create_hier_conf_to_flat( FLA_Trans trans, FLA_Obj F, dim_t depth, dim_t* b_mn, FLA_Obj* H );
 FLA_Error    FLASH_Obj_create_hier_conf_to_flat_ext( FLA_Trans trans, FLA_Obj F, dim_t depth, dim_t* b_m, dim_t* b_n, FLA_Obj* H );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error    FLASH_Obj_create_flat_conf_to_hier_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Trans trans, FLA_Obj H, FLA_Obj* F );
-#endif
 FLA_Error    FLASH_Obj_create_flat_conf_to_hier( FLA_Trans trans, FLA_Obj H, FLA_Obj* F );
 FLA_Error    FLASH_Obj_create_copy_of( FLA_Trans trans, FLA_Obj H_cur, FLA_Obj* H_new );
 FLA_Error    FLASH_Obj_create_hier_copy_of_flat( FLA_Obj F, dim_t depth, dim_t* b_mn, FLA_Obj* H );
 FLA_Error    FLASH_Obj_create_hier_copy_of_flat_ext( FLA_Obj F, dim_t depth, dim_t* b_m, dim_t* b_n, FLA_Obj* H );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error    FLASH_Obj_create_flat_copy_of_hier_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj H, FLA_Obj* F );
-#endif
 FLA_Error    FLASH_Obj_create_flat_copy_of_hier( FLA_Obj H, FLA_Obj* F );
 
 void         FLASH_Obj_free( FLA_Obj* H );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-void         FLASH_Obj_free_hierarchy_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj* H );
-#endif
 void         FLASH_Obj_free_hierarchy( FLA_Obj* H );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-void         FLASH_Obj_free_without_buffer_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj* H );
-#endif
 void         FLASH_Obj_free_without_buffer( FLA_Obj* H );
 
 FLA_Error    FLASH_Obj_attach_buffer( void* buffer, dim_t rs, dim_t cs, FLA_Obj* H );

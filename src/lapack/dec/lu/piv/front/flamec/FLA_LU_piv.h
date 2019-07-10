@@ -10,10 +10,6 @@
 
 #include "FLA_LU_piv_vars.h"
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_LU_piv_internal_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj p, fla_lu_t* cntl );
-#endif
-
 FLA_Error FLA_LU_piv_internal( FLA_Obj A, FLA_Obj p, fla_lu_t* cntl );
 
 FLA_Error FLA_LU_piv_solve( FLA_Obj A, FLA_Obj p, FLA_Obj B, FLA_Obj X );

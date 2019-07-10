@@ -10,62 +10,6 @@
 
 #include "FLAME.h"
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-void FLASH_Syr2k_cntl_init_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
-{
-	// Set syr2k blocksize for hierarchical storage.
-	FLA_cntl_flash_init_i->flash_syr2k_bsize      = FLA_Blocksize_create( 1, 1, 1, 1 );
-
-	// Create a control tree that assumes A and B are b x b blocks.
-	FLA_cntl_flash_init_i->flash_syr2k_cntl_blas  = FLA_Cntl_syr2k_obj_create( FLA_HIER,
-	                                                    FLA_SUBPROBLEM,
-	                                                    NULL,
-	                                                    NULL,
-	                                                    NULL,
-	                                                    NULL,
-	                                                    NULL );
-
-	// Create a control tree that assumes A and B form an inner panel product.
-	FLA_cntl_flash_init_i->flash_syr2k_cntl_ip    = FLA_Cntl_syr2k_obj_create( FLA_HIER,
-	                                                    FLA_BLOCKED_VARIANT9,
-	                                                    FLA_cntl_flash_init_i->flash_syr2k_bsize,
-	                                                    FLA_cntl_flash_init_i->flash_scalr_cntl,
-	                                                    FLA_cntl_flash_init_i->flash_syr2k_cntl_blas,
-	                                                    NULL,
-	                                                    NULL );
-
-	// Create a control tree that assumes A and B form an outer panel product.
-	FLA_cntl_flash_init_i->flash_syr2k_cntl_op    = FLA_Cntl_syr2k_obj_create( FLA_HIER,
-	                                                    FLA_BLOCKED_VARIANT4,
-	                                                    FLA_cntl_flash_init_i->flash_syr2k_bsize,
-	                                                    FLA_cntl_flash_init_i->flash_scalr_cntl,
-	                                                    FLA_cntl_flash_init_i->flash_syr2k_cntl_blas,
-	                                                    FLA_cntl_flash_init_i->flash_gemm_cntl_pb_bb,
-	                                                    FLA_cntl_flash_init_i->flash_gemm_cntl_pb_bb );
-
-	// Create a control tree that assumes A and B are both large.
-	FLA_cntl_flash_init_i->flash_syr2k_cntl_mm    = FLA_Cntl_syr2k_obj_create( FLA_HIER,
-	                                                    FLA_BLOCKED_VARIANT9,
-	                                                    FLA_cntl_flash_init_i->flash_syr2k_bsize,
-	                                                    FLA_cntl_flash_init_i->flash_scalr_cntl,
-	                                                    FLA_cntl_flash_init_i->flash_syr2k_cntl_op,
-	                                                    NULL,
-	                                                    NULL );
-}
-
-void FLASH_Syr2k_cntl_finalize_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
-{
-	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_syr2k_cntl_blas );
-
-	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_syr2k_cntl_ip );
-	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_syr2k_cntl_op );
-	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_syr2k_cntl_mm );
-
-	FLA_Blocksize_free( FLA_cntl_flash_init_i->flash_syr2k_bsize );
-}
-
-#endif
-
 extern fla_scalr_t* flash_scalr_cntl;
 extern fla_gemm_t*  flash_gemm_cntl_pb_bb;
 

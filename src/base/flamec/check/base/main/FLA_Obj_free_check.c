@@ -9,7 +9,6 @@
 */
 
 #include "FLAME.h"
-/* Not Required */
 
 FLA_Error FLA_Obj_free_check( FLA_Obj *obj )
 {

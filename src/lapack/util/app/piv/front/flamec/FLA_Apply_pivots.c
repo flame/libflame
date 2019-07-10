@@ -10,19 +10,6 @@
 
 #include "FLAME.h"
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_Apply_pivots_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Side side, FLA_Trans trans, FLA_Obj p, FLA_Obj A )
-{
-  FLA_Error r_val;
-
-  // Check parameters.
-  
-  r_val = FLA_Apply_pivots_internal( side, trans, p, A, FLA_cntl_init_i->FLA_Cntl_init_flamec_i->fla_appiv_cntl_leaf );
-  
-  return r_val;
-}
-#endif
-
 extern fla_appiv_t* fla_appiv_cntl_leaf;
 
 FLA_Error FLA_Apply_pivots( FLA_Side side, FLA_Trans trans, FLA_Obj p, FLA_Obj A )

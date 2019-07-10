@@ -11,48 +11,11 @@
 #include "FLAME.h"
 
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Datatype FLASH_Obj_datatype_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj H )
-{
-	return FLA_Obj_datatype_ts( FLA_cntl_init_i, H );
-}
-#endif
-
 FLA_Datatype FLASH_Obj_datatype( FLA_Obj H )
 {
 	return FLA_Obj_datatype( H );
 }
 
-
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-dim_t FLASH_Obj_depth_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj H )
-{
-	FLA_Elemtype elemtype;
-	FLA_Obj*     buffer_H;
-	dim_t        depth = 0;
-
-	// Recurse through the hierarchy to the first leaf node. We initialize
-	// the recursion here:
-	elemtype = FLA_Obj_elemtype_ts( FLA_cntl_init_i, H );
-	buffer_H = ( FLA_Obj* ) FLA_Obj_base_buffer( H );
-
-	while ( elemtype == FLA_MATRIX )
-	{
-		++depth;
-
-		// Get the element type of the top-leftmost underlying object. Also,
-		// get a pointer to the first element of the top-leftmost object and
-		// assume that it is of type FLA_Obj* in case elemtype is once again
-		// FLA_MATRIX.
-		elemtype = FLA_Obj_elemtype_ts( FLA_cntl_init_i, buffer_H[0] );
-		buffer_H = ( FLA_Obj * ) FLA_Obj_base_buffer( buffer_H[0] );
-	}
-
-	// At this point, the value of depth represents the depth of the matrix
-	// hierarchy.
-	return depth;
-}
-#endif
 
 dim_t FLASH_Obj_depth( FLA_Obj H )
 {
@@ -82,41 +45,6 @@ dim_t FLASH_Obj_depth( FLA_Obj H )
 	return depth;
 }
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-dim_t FLASH_Obj_blocksizes_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj H, dim_t* b_m, dim_t* b_n )
-{
-	FLA_Elemtype elemtype;
-	FLA_Obj*     buffer_H;
-	dim_t        depth = 0;
-
-	if ( FLA_Check_error_level_ts(FLA_cntl_init_i) >= FLA_MIN_ERROR_CHECKING )
-		FLASH_Obj_blocksizes_check( H, b_m, b_n );
-
-	// Recurse through the hierarchy to the first leaf node. We initialize
-	// the recursion here:
-	elemtype = FLA_Obj_elemtype_ts( FLA_cntl_init_i, H );
-	buffer_H = ( FLA_Obj* ) FLA_Obj_base_buffer( H );
-
-	while ( elemtype == FLA_MATRIX )
-	{
-		b_m[depth] = FLA_Obj_base_length( buffer_H[0] );
-		b_n[depth] = FLA_Obj_base_width( buffer_H[0] );
-		++depth;
-
-		// Get the element type of the top-leftmost underlying object. Also,
-		// get a pointer to the first element of the top-leftmost object and
-		// assume that it is of type FLA_Obj* in case elemtype is once again
-		// FLA_MATRIX.
-		elemtype = FLA_Obj_elemtype_ts( FLA_cntl_init_i, buffer_H[0] );
-		buffer_H = ( FLA_Obj * ) FLA_Obj_base_buffer( buffer_H[0] );
-	}
-
-	// At this point, the first depth elements of blocksizes have been filled
-	// with the blocksizes of H's various hierarchical levels. Return the
-	// matrix depth as a confirmation of how many blocksizes were found.
-	return depth;
-}
-#endif
 
 dim_t FLASH_Obj_blocksizes( FLA_Obj H, dim_t* b_m, dim_t* b_n )
 {
@@ -152,38 +80,6 @@ dim_t FLASH_Obj_blocksizes( FLA_Obj H, dim_t* b_m, dim_t* b_n )
 	return depth;
 }
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-dim_t FLASH_Obj_base_scalar_length_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj H )
-{
-	FLA_Obj* buffer;
-	dim_t    m;
-	dim_t    rs, cs;
-	dim_t    i;
-	dim_t    m_base = 0;
-
-	if ( FLA_Obj_elemtype_ts( FLA_cntl_init_i, H ) == FLA_SCALAR )
-		return FLA_Obj_base_length( H );
-
-	// Notice we use the base buffer since we are interested in the
-	// whole object, not just the part referened by the view.
-	buffer = FLA_Obj_base_buffer( H );
-	m      = FLA_Obj_base_length( H );
-	rs     = FLA_Obj_row_stride( H );
-	cs     = FLA_Obj_col_stride( H );
-
-	// Add up the row dimensions of all the base objects in the 0th
-	// column of objects.
-	for ( i = 0; i < m; ++i )
-	{
-		FLA_Obj hij = buffer[ i*rs + 0*cs ];
-
-		m_base += (hij.base)->m_inner;
-	}
-
-	return m_base;
-}
-#endif
-
 dim_t FLASH_Obj_base_scalar_length( FLA_Obj H )
 {
 	FLA_Obj* buffer;
@@ -213,38 +109,6 @@ dim_t FLASH_Obj_base_scalar_length( FLA_Obj H )
 
 	return m_base;
 }
-
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-dim_t FLASH_Obj_base_scalar_width_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj H )
-{
-	FLA_Obj* buffer;
-	dim_t    n;
-	dim_t    rs, cs;
-	dim_t    j;
-	dim_t    n_base = 0;
-
-	if ( FLA_Obj_elemtype_ts( FLA_cntl_init_i, H ) == FLA_SCALAR )
-		return FLA_Obj_base_width( H );
-
-	// Notice we use the base buffer since we are interested in the
-	// whole object, not just the part referened by the view.
-	buffer = FLA_Obj_base_buffer( H );
-	n      = FLA_Obj_base_width( H );
-	rs     = FLA_Obj_row_stride( H );
-	cs     = FLA_Obj_col_stride( H );
-
-	// Add up the column dimensions of all the base objects in the 0th
-	// row of objects.
-	for ( j = 0; j < n; ++j )
-	{
-		FLA_Obj hij = buffer[ 0*rs + j*cs ];
-
-		n_base += (hij.base)->n_inner;
-	}
-
-	return n_base;
-}
-#endif
 
 dim_t FLASH_Obj_base_scalar_width( FLA_Obj H )
 {
@@ -300,15 +164,6 @@ FLA_Error FLASH_Obj_create_without_buffer( FLA_Datatype datatype, dim_t m, dim_t
 }
 
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLASH_Obj_create_without_buffer_ext_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Datatype datatype, dim_t m, dim_t n, dim_t depth, dim_t* b_m, dim_t* b_n, FLA_Obj* H )
-{
-	FLASH_Obj_create_helper_ts( FLA_cntl_init_i, TRUE, datatype, m, n, depth, b_m, b_n, H );
-
-	return FLA_SUCCESS;
-}
-#endif
-
 FLA_Error FLASH_Obj_create_without_buffer_ext( FLA_Datatype datatype, dim_t m, dim_t n, dim_t depth, dim_t* b_m, dim_t* b_n, FLA_Obj* H )
 {
 	FLASH_Obj_create_helper( TRUE, datatype, m, n, depth, b_m, b_n, H );
@@ -316,102 +171,6 @@ FLA_Error FLASH_Obj_create_without_buffer_ext( FLA_Datatype datatype, dim_t m, d
 	return FLA_SUCCESS;
 }
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLASH_Obj_create_helper_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Bool without_buffer, FLA_Datatype datatype, dim_t m, dim_t n, dim_t depth, dim_t* b_m, dim_t* b_n, FLA_Obj* H )
-{
-	dim_t     i;
-	FLA_Obj   flat_matrix;
-
-	if ( FLA_Check_error_level_ts(FLA_cntl_init_i) >= FLA_MIN_ERROR_CHECKING )
-		FLASH_Obj_create_helper_check( without_buffer, datatype, m, n, depth, b_m, b_n, H );
-
-	if ( depth == 0 )
-	{
-		// Base case: create a single contiguous matrix block. If we are
-		// creating an object with a buffer, then we use column-major order.
-		if ( without_buffer == FALSE )
-			FLA_Obj_create_ts( FLA_cntl_init_i, datatype, m, n, 0, 0, H );
-		else
-			FLA_Obj_create_without_buffer_ts( (void **) &FLA_cntl_init_i, datatype, m, n, H );
-	}
-	else
-	{
-		// We need temporary arrays the same length as the blocksizes arrays.
-		dim_t* elem_sizes_m  = ( dim_t * ) FLA_malloc( depth * sizeof( dim_t ) );
-		dim_t* elem_sizes_n  = ( dim_t * ) FLA_malloc( depth * sizeof( dim_t ) );
-		dim_t* depth_sizes_m = ( dim_t * ) FLA_malloc( depth * sizeof( dim_t ) );
-		dim_t* depth_sizes_n = ( dim_t * ) FLA_malloc( depth * sizeof( dim_t ) );
-		dim_t* m_offsets     = ( dim_t * ) FLA_malloc( depth * sizeof( dim_t ) );
-		dim_t* n_offsets     = ( dim_t * ) FLA_malloc( depth * sizeof( dim_t ) );
-		
-		// Fill two sets of arrays: elem_sizes_m/elem_sizes_n and depth_sizes_m/
-		// depth_sizes_n.
-		//  - elem_sizes_m[i] will contain the number of numerical elements that span
-		//    the row dimension of a block at the ith level of the hierarchy. This is
-		//    just the product of all row blocksizes "internal" to and including the
-		//    current blocking level. (The elem_sizes_n array tracks similar values
-		//    in the column dimension.)
-		//  - depth_sizes_m[i] is similar to elem_sizes_m[i]. The only difference is
-		//    that instead of tracking the number of numerical elements in the row
-		//    dimension, it tracks the number of "storage" blocks that span the m
-		//    dimension of a block at the ith level, where the m dimension of a
-		//    storage block is the block size given in b_m[depth-1], ie:
-		//    the inner-most row dimension block size. (The depth_sizes_n array
-		//    tracks similar values in the column dimension.)
-		elem_sizes_m[depth-1]  = b_m[depth-1];
-		elem_sizes_n[depth-1]  = b_n[depth-1];
-		depth_sizes_m[depth-1] = 1;
-		depth_sizes_n[depth-1] = 1;
-		for ( i = depth - 1; i > 0; --i )
-		{
-			elem_sizes_m[i-1]  = elem_sizes_m[i]  * b_m[i-1];
-			elem_sizes_n[i-1]  = elem_sizes_n[i]  * b_n[i-1];
-			depth_sizes_m[i-1] = depth_sizes_m[i] * b_m[i-1];
-			depth_sizes_n[i-1] = depth_sizes_n[i] * b_n[i-1];
-		}
-	
-		// Initialize the m_offsets and n_offsets arrays to zero.
-		for ( i = 0; i < depth; i++ )
-		{
-			m_offsets[i] = 0;
-			n_offsets[i] = 0;
-		}
-
-		// Create a "flat" matrix object. All leaf-level child objects will refer
-		// to various offsets within this object's buffer. Whether we create the
-		// object with row- or column-major storage is moot, since either way it
-		// will be a 1-by-mn length matrix which we will partition through later
-		// on in FLASH_Obj_create_hierarchy(). Note that it is IMPORTANT that the
-		// matrix be 1-by-mn, and NOT m-by-n, since we want to use the 1x2
-		// partitioning routines to walk through it as we attach various parts of
-		// the buffer to the matrix hierarchy.
-		if ( without_buffer == FALSE )
-			FLA_Obj_create_ts( FLA_cntl_init_i, datatype, 1, m*n, 0, 0, &flat_matrix );
-		else
-			FLA_Obj_create_without_buffer_ts( (void **) &FLA_cntl_init_i, datatype, m, n, &flat_matrix );
-		
-		// Recursively create the matrix hierarchy.
-		FLASH_Obj_create_hierarchy_ts( FLA_cntl_init_i, datatype, m, n, depth, elem_sizes_m, elem_sizes_n, flat_matrix, H, 0, depth, depth_sizes_m, depth_sizes_n, m_offsets, n_offsets );
-		
-		// Free the flat_matrix object, but not its buffer. If we created a
-		// normal object with a buffer, we don't want to free the buffer because
-		// it is being used by the hierarchical objected we just created. If we
-		// created a bufferless object, we don't want to free the buffer because
-		// there was no buffer allocated in the first place.
-		FLA_Obj_free_without_buffer_ts( (void **) &FLA_cntl_init_i,  &flat_matrix );
-		
-		// Free the local arrays.
-		FLA_free( elem_sizes_m );
-		FLA_free( elem_sizes_n );
-		FLA_free( depth_sizes_m );
-		FLA_free( depth_sizes_n );
-		FLA_free( m_offsets );
-		FLA_free( n_offsets );
-	}
-
-	return FLA_SUCCESS;
-}
-#endif
 
 FLA_Error FLASH_Obj_create_helper( FLA_Bool without_buffer, FLA_Datatype datatype, dim_t m, dim_t n, dim_t depth, dim_t* b_m, dim_t* b_n, FLA_Obj* H )
 {
@@ -508,142 +267,6 @@ FLA_Error FLASH_Obj_create_helper( FLA_Bool without_buffer, FLA_Datatype datatyp
 	return FLA_SUCCESS;
 }
 
-
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLASH_Obj_create_hierarchy_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Datatype datatype, dim_t m, dim_t n, dim_t depth, dim_t* elem_sizes_m, dim_t* elem_sizes_n, FLA_Obj flat_matrix, FLA_Obj* H, unsigned long id, dim_t depth_overall, dim_t* depth_sizes_m, dim_t* depth_sizes_n, dim_t* m_offsets, dim_t* n_offsets )
-{
-	dim_t    i, j, b;
-	dim_t    next_m, next_n;
-	dim_t    num_m, num_n;
-	dim_t    m_inner, n_inner;
-	dim_t    elem_size_m_cur;
-	dim_t    elem_size_n_cur;
-	FLA_Obj  FL, FR, F0, F1, F2;
-	FLA_Obj* buffer_H;
-
-	if ( FLA_Check_error_level_ts(FLA_cntl_init_i) >= FLA_MIN_ERROR_CHECKING )
-		FLASH_Obj_create_hierarchy_check( datatype, m, n, depth, elem_sizes_m, elem_sizes_n, flat_matrix, H, id, depth_overall, depth_sizes_m, depth_sizes_n, m_offsets, n_offsets );
-
-	if ( depth == 0 )
-	{
-		// If we're asked to create a zero-depth matrix, we interpret that as
-		// a request to create leaf-level objects using the remaining portion
-		// of the segment of the flat_matrix buffer that was passed in.
-		FLA_Obj_create_without_buffer_ts( (void **) &FLA_cntl_init_i, datatype, m, n, H );
-		FLA_Obj_attach_buffer_ts( (void **) &FLA_cntl_init_i,  FLA_Obj_buffer_at_view( flat_matrix ), 1, m, H );
-#ifdef FLA_ENABLE_SUPERMATRIX
-		FLASH_Queue_set_block_size( m * n * FLA_Obj_datatype_size( datatype ) );
-#endif
-		H->base->id = id;
-
-		// Fill in the m_index and n_index variables, which identify the
-		// location of the current leaf node, in units of storage blocks,
-		// within the overall matrix.
-		for ( i = 0; i < depth_overall; i++ )
-		{
-			H->base->m_index += m_offsets[i] * depth_sizes_m[i];
-			H->base->n_index += n_offsets[i] * depth_sizes_n[i];
-		}
-	}
-	else
-	{
-		// The "current" level's elem_size value. That is, the number of numerical
-		// scalar elements along one side of a full block on the current level,
-		// for the row and column dimensions.
-		elem_size_m_cur = elem_sizes_m[0];
-		elem_size_n_cur = elem_sizes_n[0];
-
-		// Compute the number of rows and columns in the current hierarchical
-		// level of blocking.
-		num_m = m / elem_size_m_cur + ( (m % elem_size_m_cur) ? 1 : 0 );
-		num_n = n / elem_size_n_cur + ( (n % elem_size_n_cur) ? 1 : 0 );
-
-		// The total number of scalar elements contained within/below this level
-		// of the hierarchy. (The edge cases are handled by the computation of
-		// next_m and next_n below, since they are passed in as the new m and n
-		// for the next recursive call.)
-		m_inner = m;
-		n_inner = n;
-		
-		// Create a matrix whose elements are FLA_Objs for the current level of
-		// blocking.
-		FLA_Obj_create_ext_ts( FLA_cntl_init_i, datatype, FLA_MATRIX, num_m, num_n, m_inner, n_inner, 0, 0, H );
-
-		if ( depth == depth_overall )
-			id = H->base->id;
-		else
-			H->base->id = id;
-
-		// Grab the buffer from the new hierarchical object. This is an array of
-		// FLA_Objs.
-		buffer_H = ( FLA_Obj* ) FLA_Obj_buffer_at_view_ts( FLA_cntl_init_i, *H );
-		
-		// Prepare to partition through the flat matrix so we can further allocate
-		// segments of it to the various hierarchical sub-matrices. (The second
-		// case occurs when the current function is called with a flat_matrix
-		// argument that was created without a buffer.)
-		if ( FLA_Obj_buffer_at_view_ts( FLA_cntl_init_i, flat_matrix ) != NULL )
-			FLA_Part_1x2_ts( FLA_cntl_init_i, flat_matrix, &FL, &FR, 0, FLA_LEFT );
-		else
-			FLA_Obj_create_without_buffer_ts( (void **) &FLA_cntl_init_i, datatype, 0, 0, &F1 );
-		
-		for ( j = 0; j < num_n; ++j )
-		{
-			// Determine the number of elements along the column dimension
-			// that will be contained within the submatrix referenced by
-			// the (i,j)th FLA_MATRIX element in the current matrix.
-			if ( j != num_n-1 || (n % elem_size_n_cur) == 0 )
-				next_n = elem_size_n_cur;
-			else
-				next_n = n % elem_size_n_cur;
-			
-			n_offsets[depth_overall-depth] = j;
-                        
-			for ( i = 0; i < num_m; ++i )
-			{			
-				// Determine the number of elements along the row dimension
-				// that will be contained within the submatrix referenced by
-				// the (i,j)th FLA_MATRIX element in the current matrix.
-				if ( i != num_m-1 || (m % elem_size_m_cur) == 0 )
-					next_m = elem_size_m_cur;
-				else
-					next_m = m % elem_size_m_cur;
-
-				m_offsets[depth_overall-depth] = i;
-				
-				// Partition the next m*n elements from the flat matrix so we can
-				// "attach" them to the hierarchical matrices contained within the
-				// (i,j)th FLA_MATRIX object.
-				if ( FLA_Obj_buffer_at_view_ts( FLA_cntl_init_i, flat_matrix ) != NULL )
-				{
-					b = min( FLA_Obj_width( FR ), next_m * next_n );
-					FLA_Repart_1x2_to_1x3_ts( FLA_cntl_init_i, FL,  /**/ FR,        &F0, /**/ &F1, &F2,
-					                       b, FLA_RIGHT );
-				}
-				
-				// Recursively call ourselves, with the appropriate parameters for
-				// the next deeper level in the matrix hierarchy.
-				FLASH_Obj_create_hierarchy_ts( FLA_cntl_init_i, datatype, next_m, next_n, depth-1, &elem_sizes_m[1], &elem_sizes_n[1], F1, &buffer_H[j*num_m + i], id, depth_overall, depth_sizes_m, depth_sizes_n, m_offsets, n_offsets );
-
-				// Continue with the repartitioning.
-				if ( FLA_Obj_buffer_at_view_ts( FLA_cntl_init_i, flat_matrix ) != NULL )
-				{
-					FLA_Cont_with_1x3_to_1x2_ts( FLA_cntl_init_i, &FL,  /**/ &FR,        F0, F1, /**/ F2,
-					                          FLA_LEFT );
-				}
-			}
-		}
-
-		// Free the temporary flat matrix subpartition object, but only if it was
-		// created to begin with. Since it would have been created without a
-		// buffer, we must free it in a similar manner.
-		if ( FLA_Obj_buffer_at_view_ts( FLA_cntl_init_i, flat_matrix ) == NULL )
-			FLA_Obj_free_without_buffer_ts( (void **) &FLA_cntl_init_i, &F1 );
-	}
-	
-	return FLA_SUCCESS;
-}
-#endif
 
 FLA_Error FLASH_Obj_create_hierarchy( FLA_Datatype datatype, dim_t m, dim_t n, dim_t depth, dim_t* elem_sizes_m, dim_t* elem_sizes_n, FLA_Obj flat_matrix, FLA_Obj* H, unsigned long id, dim_t depth_overall, dim_t* depth_sizes_m, dim_t* depth_sizes_n, dim_t* m_offsets, dim_t* n_offsets )
 {
@@ -901,41 +524,6 @@ FLA_Error FLASH_Obj_create_hier_conf_to_flat_ext( FLA_Trans trans, FLA_Obj F, di
 }
 
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLASH_Obj_create_flat_conf_to_hier_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Trans trans, FLA_Obj H, FLA_Obj* F )
-{
-	FLA_Datatype datatype;
-	dim_t        m_H, n_H;
-	dim_t        m_F, n_F;
-
-	if ( FLA_Check_error_level_ts(FLA_cntl_init_i) >= FLA_MIN_ERROR_CHECKING )
-		FLASH_Obj_create_flat_conf_to_hier_check( trans, H, F );
-
-	// Acquire the numerical datatype, length, and width of the
-	// hierarchical matrix object.
-	datatype = FLASH_Obj_datatype_ts( FLA_cntl_init_i, H );
-	m_H      = FLASH_Obj_scalar_length_ts( FLA_cntl_init_i, H );
-	n_H      = FLASH_Obj_scalar_width_ts( FLA_cntl_init_i, H );
-
-	// Factor in the transposition, if requested.
-	if ( trans == FLA_NO_TRANSPOSE )
-	{
-		m_F = m_H;
-		n_F = n_H;
-	}
-	else
-	{
-		m_F = n_H;
-		n_F = m_H;
-	}
-
-	// Create the flat matrix object. Default to column-major storage.
-	FLA_Obj_create_ts( FLA_cntl_init_i, datatype, m_F, n_F, 0, 0, F );
-
-	return FLA_SUCCESS;
-}
-#endif
-
 FLA_Error FLASH_Obj_create_flat_conf_to_hier( FLA_Trans trans, FLA_Obj H, FLA_Obj* F )
 {
 	FLA_Datatype datatype;
@@ -1032,22 +620,6 @@ FLA_Error FLASH_Obj_create_hier_copy_of_flat_ext( FLA_Obj F, dim_t depth, dim_t*
 }
 
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLASH_Obj_create_flat_copy_of_hier_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj H, FLA_Obj* F )
-{
-	if ( FLA_Check_error_level_ts(FLA_cntl_init_i) >= FLA_MIN_ERROR_CHECKING )
-		FLASH_Obj_create_flat_copy_of_hier_check( H, F );
-
-	// Create a flat object conformal to the hierarchical object.
-	FLASH_Obj_create_flat_conf_to_hier_ts( FLA_cntl_init_i, FLA_NO_TRANSPOSE, H, F );
-
-	// Flatten the hierarchical object's contents into the new flat object.
-	FLASH_Copy_hier_to_flat_ts( FLA_cntl_init_i, 0, 0, H, *F );
-
-	return FLA_SUCCESS;
-}
-#endif
-
 FLA_Error FLASH_Obj_create_flat_copy_of_hier( FLA_Obj H, FLA_Obj* F )
 {
 	if ( FLA_Check_error_level() >= FLA_MIN_ERROR_CHECKING )
@@ -1099,32 +671,6 @@ void FLASH_Obj_free( FLA_Obj* H )
 }
 
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-void FLASH_Obj_free_without_buffer_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj* H )
-{
-	if ( FLA_Check_error_level_ts(FLA_cntl_init_i) >= FLA_MIN_ERROR_CHECKING )
-		FLASH_Obj_free_without_buffer_check( H );
-
-	// Free the object according to whether it contains a hierarchy.
-	if ( FLA_Obj_elemtype_ts( FLA_cntl_init_i, *H ) == FLA_MATRIX )
-	{
-		// Skip freeing the numerical data buffer, since the object was
-		// presumably created with FLASH_Obj_create_without_buffer().
-
-		// Free the interior of the matrix hierarchy. This includes non-leaf
-		// buffers and their corresponding base objects as well as leaf-level
-		// base objects.
-		FLASH_Obj_free_hierarchy_ts( FLA_cntl_init_i, H );
-	}
-	else
-	{
-		// If the matrix has no hierarchy, treat it like a flat object with
-		// no internal data buffer.
-		FLA_Obj_free_without_buffer_ts( (void **) &FLA_cntl_init_i, H );
-	}
-}
-#endif
-
 void FLASH_Obj_free_without_buffer( FLA_Obj* H )
 {
 	if ( FLA_Check_error_level() >= FLA_MIN_ERROR_CHECKING )
@@ -1149,48 +695,6 @@ void FLASH_Obj_free_without_buffer( FLA_Obj* H )
 	}
 }
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-void FLASH_Obj_free_hierarchy_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj* H )
-{
-	//dim_t    m_H, n_H, rs, cs, i, j;
-	dim_t    i;
-	dim_t    n_elem_alloc;
-	FLA_Obj* buffer_H;
-
-	if ( FLA_Check_error_level_ts(FLA_cntl_init_i) >= FLA_MIN_ERROR_CHECKING )
-		FLASH_Obj_free_hierarchy_check( H );
-
-	// If the element type of H is FLA_SCALAR, then it has no children to
-	// free, so free the base object. In order to avoid freeing the object's
-	// data buffer, which would have already been freed en masse by now if
-	// the calling function is FLASH_Obj_free(), we will call
-	// FLA_Obj_free_without_buffer().
-	if ( FLA_Obj_elemtype_ts( FLA_cntl_init_i, *H ) == FLA_SCALAR )
-	{
-		FLA_Obj_free_without_buffer_ts( (void **) &FLA_cntl_init_i, H );
-		return;
-	}
-	else
-	{
-		// Acquire the number of elements allocated when this node was
-		// created.
-		n_elem_alloc = FLA_Obj_num_elem_alloc( *H );
-
-		// Acquire the array of objects contained inside of H.
-		buffer_H = ( FLA_Obj* ) FLA_Obj_base_buffer( *H );
-
-		// For each allocated submatrix in H...
-		for ( i = 0; i < n_elem_alloc; ++i )
-		{
-			// Recurse with the ith element of the allocated buffer.
-			FLASH_Obj_free_hierarchy_ts( FLA_cntl_init_i, &buffer_H[i] );
-		}
-
-		// Finally, free the internal array of objects.
-		FLA_Obj_free( H );
-	}
-}
-#endif
 
 void FLASH_Obj_free_hierarchy( FLA_Obj* H )
 {

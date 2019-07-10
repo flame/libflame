@@ -10,35 +10,6 @@
 
 #include "FLAME.h"
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_Scal_check_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj alpha, FLA_Obj A )
-{
-  FLA_Error e_val;
-
-  e_val = FLA_Check_floating_object_ts( FLA_cntl_init_i, A );
-  FLA_Check_error_code( e_val );
-
-  e_val = FLA_Check_nonconstant_object_ts( FLA_cntl_init_i, A );
-  FLA_Check_error_code( e_val );
-
-  if ( FLA_Obj_is_real( A ) )
-  {
-    e_val = FLA_Check_consistent_object_datatype_ts( FLA_cntl_init_i, A, alpha );
-    FLA_Check_error_code( e_val );
-  }
-  else
-  {
-    e_val = FLA_Check_identical_object_precision_ts( FLA_cntl_init_i, A, alpha );
-    FLA_Check_error_code( e_val );
-  }
-
-  e_val = FLA_Check_if_scalar( alpha );
-  FLA_Check_error_code( e_val );
-
-  return FLA_SUCCESS;
-}
-#endif
-
 FLA_Error FLA_Scal_check( FLA_Obj alpha, FLA_Obj A )
 {
   FLA_Error e_val;

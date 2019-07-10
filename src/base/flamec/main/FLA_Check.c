@@ -10,27 +10,6 @@
 
 #include "FLAME.h"
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-unsigned int FLA_Check_error_level_ts(FLA_cntl_init_s *FLA_cntl_init_i)
-{
-  return FLA_cntl_init_i->fla_error_checking_level;
-}
-
-unsigned int FLA_Check_error_level_set_ts( FLA_cntl_init_s *FLA_cntl_init_i, unsigned int new_level )
-{
-  FLA_Error    e_val;
-  unsigned int old_level;
-
-  e_val = FLA_Check_valid_error_level( new_level );
-  FLA_Check_error_code( e_val );
-
-  old_level = FLA_cntl_init_i->fla_error_checking_level;
-
-  FLA_cntl_init_i->fla_error_checking_level = new_level;
-
-  return old_level;
-}
-#endif
 
 static unsigned int fla_error_checking_level = FLA_INTERNAL_ERROR_CHECKING_LEVEL;
 
@@ -189,20 +168,6 @@ FLA_Error FLA_Check_valid_datatype( FLA_Datatype datatype )
   return e_val;
 }
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_Check_valid_object_datatype_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A )
-{
-  FLA_Error    e_val;
-  FLA_Datatype datatype;
-
-  datatype = FLA_Obj_datatype_ts( FLA_cntl_init_i, A );
-
-  e_val = FLA_Check_valid_datatype( datatype );
-
-  return e_val;
-}
-#endif
-
 FLA_Error FLA_Check_valid_object_datatype( FLA_Obj A )
 {
   FLA_Error    e_val;
@@ -264,21 +229,6 @@ FLA_Error FLA_Check_complex_datatype( FLA_Datatype datatype )
   return e_val;
 }
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_Check_floating_object_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A )
-{
-  FLA_Error    e_val = FLA_SUCCESS;
-  FLA_Datatype datatype;
-
-  datatype = FLA_Obj_datatype_ts( FLA_cntl_init_i, A );
-
-  if ( FLA_Check_floating_datatype( datatype ) != FLA_SUCCESS )
-    e_val = FLA_OBJECT_NOT_FLOATING_POINT;
-
-  return e_val;
-}
-#endif
-
 FLA_Error FLA_Check_floating_object( FLA_Obj A )
 {
   FLA_Error    e_val = FLA_SUCCESS;
@@ -291,21 +241,6 @@ FLA_Error FLA_Check_floating_object( FLA_Obj A )
 
   return e_val;
 }
-
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_Check_int_object_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A )
-{
-  FLA_Error    e_val = FLA_SUCCESS;
-  FLA_Datatype datatype;
-
-  datatype = FLA_Obj_datatype_ts( FLA_cntl_init_i, A );
-
-  if ( FLA_Check_int_datatype( datatype ) != FLA_SUCCESS )
-    e_val = FLA_OBJECT_NOT_INTEGER;
-
-  return e_val;
-}
-#endif
 
 FLA_Error FLA_Check_int_object( FLA_Obj A )
 {
@@ -360,49 +295,6 @@ FLA_Error FLA_Check_complex_object( FLA_Obj A )
   return e_val;
 }
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_Check_identical_object_precision_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj B )
-{
-  FLA_Error    e_val = FLA_SUCCESS;
-  FLA_Datatype datatype_A;
-  FLA_Datatype datatype_B;
-  dim_t        precision_A;
-  dim_t        precision_B;
-
-  datatype_A = FLA_Obj_datatype_ts( FLA_cntl_init_i, A );
-  datatype_B = FLA_Obj_datatype_ts( FLA_cntl_init_i, B );
-
-  if ( datatype_A == FLA_CONSTANT ||
-       datatype_B == FLA_CONSTANT )
-  {
-    return FLA_SUCCESS;
-  }
-
-  if ( FLA_Check_floating_object_ts( FLA_cntl_init_i, A ) != FLA_SUCCESS ||
-       FLA_Check_floating_object_ts( FLA_cntl_init_i, B ) != FLA_SUCCESS )
-  {
-    return FLA_OBJECT_NOT_FLOATING_POINT;
-  }
-
-  datatype_A = FLA_Obj_datatype_ts( FLA_cntl_init_i, A );
-  datatype_B = FLA_Obj_datatype_ts( FLA_cntl_init_i, B );
-
-  precision_A = FLA_Obj_datatype_size_ts( FLA_cntl_init_i, datatype_A );
-  precision_B = FLA_Obj_datatype_size_ts( FLA_cntl_init_i, datatype_B );
-
-  if ( FLA_Obj_is_complex_ts( FLA_cntl_init_i, A ) )
-    precision_A = precision_A / 2;
-
-  if ( FLA_Obj_is_complex_ts( FLA_cntl_init_i, B ) )
-    precision_B = precision_B / 2;
-
-  if ( precision_A != precision_B )
-    e_val = FLA_INCONSISTENT_OBJECT_PRECISION;
-
-  return e_val;
-}
-#endif
-
 FLA_Error FLA_Check_identical_object_precision( FLA_Obj A, FLA_Obj B )
 {
   FLA_Error    e_val = FLA_SUCCESS;
@@ -444,20 +336,6 @@ FLA_Error FLA_Check_identical_object_precision( FLA_Obj A, FLA_Obj B )
   return e_val;
 }
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_Check_consistent_object_datatype_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj B )
-{
-  FLA_Error e_val = FLA_SUCCESS;
-
-  if ( FLA_Obj_datatype_ts( FLA_cntl_init_i, A ) != FLA_CONSTANT &&
-       FLA_Obj_datatype_ts( FLA_cntl_init_i, B ) != FLA_CONSTANT )
-    if ( FLA_Obj_datatype_ts( FLA_cntl_init_i, A ) != FLA_Obj_datatype_ts( FLA_cntl_init_i, B ) )
-      e_val = FLA_INCONSISTENT_DATATYPES;
-
-  return e_val;
-}
-#endif
-
 FLA_Error FLA_Check_consistent_object_datatype( FLA_Obj A, FLA_Obj B )
 {
   FLA_Error e_val = FLA_SUCCESS;
@@ -469,20 +347,6 @@ FLA_Error FLA_Check_consistent_object_datatype( FLA_Obj A, FLA_Obj B )
 
   return e_val;
 }
-
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_Check_consistent_datatype_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Datatype datatype, FLA_Obj A )
-{
-  FLA_Error e_val = FLA_SUCCESS;
-
-  if ( FLA_Obj_datatype_ts( FLA_cntl_init_i, A ) != FLA_CONSTANT &&
-                    datatype != FLA_CONSTANT )
-    if ( FLA_Obj_datatype_ts( FLA_cntl_init_i, A ) != datatype )
-      e_val = FLA_INCONSISTENT_DATATYPES;
-
-  return e_val;
-}
-#endif
 
 FLA_Error FLA_Check_consistent_datatype( FLA_Datatype datatype, FLA_Obj A )
 {
@@ -1087,21 +951,6 @@ FLA_Error FLA_Check_nonconstant_datatype( FLA_Datatype datatype )
   return e_val;
 }
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_Check_nonconstant_object_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A )
-{
-  FLA_Error    e_val = FLA_SUCCESS;
-  FLA_Datatype datatype;
-
-  datatype = FLA_Obj_datatype_ts( FLA_cntl_init_i, A );
-
-  if ( FLA_Check_nonconstant_datatype( datatype ) != FLA_SUCCESS )
-    e_val = FLA_OBJECT_NOT_NONCONSTANT;
-
-  return e_val;
-}
-#endif
-
 FLA_Error FLA_Check_nonconstant_object( FLA_Obj A )
 {
   FLA_Error    e_val = FLA_SUCCESS;
@@ -1115,18 +964,6 @@ FLA_Error FLA_Check_nonconstant_object( FLA_Obj A )
   return e_val;
 }
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_Check_identical_object_datatype_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj B )
-{
-  FLA_Error e_val = FLA_SUCCESS;
-
-  if ( FLA_Obj_datatype_ts( FLA_cntl_init_i, A ) != FLA_Obj_datatype_ts( FLA_cntl_init_i, B ) )
-    e_val = FLA_OBJECT_DATATYPES_NOT_EQUAL;
-
-  return e_val;
-}
-#endif
-
 FLA_Error FLA_Check_identical_object_datatype( FLA_Obj A, FLA_Obj B )
 {
   FLA_Error e_val = FLA_SUCCESS;
@@ -1137,18 +974,6 @@ FLA_Error FLA_Check_identical_object_datatype( FLA_Obj A, FLA_Obj B )
   return e_val;
 }
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_Check_divide_by_zero_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj alpha )
-{
-  FLA_Error e_val = FLA_SUCCESS;
-
-  if ( FLA_Obj_equals_ts( FLA_cntl_init_i, alpha, FLA_ZERO ) )
-    e_val = FLA_DIVIDE_BY_ZERO;
-
-  return e_val;
-}
-#endif
-
 FLA_Error FLA_Check_divide_by_zero( FLA_Obj alpha )
 {
   FLA_Error e_val = FLA_SUCCESS;
@@ -1158,18 +983,6 @@ FLA_Error FLA_Check_divide_by_zero( FLA_Obj alpha )
 
   return e_val;
 }
-
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_Check_identical_object_elemtype_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj B )
-{
-  FLA_Error e_val = FLA_SUCCESS;
-
-  if ( FLA_Obj_elemtype_ts( FLA_cntl_init_i, A ) != FLA_Obj_elemtype_ts( FLA_cntl_init_i, B ) )
-    e_val = FLA_OBJECT_ELEMTYPES_NOT_EQUAL;
-
-  return e_val;
-}
-#endif
 
 FLA_Error FLA_Check_identical_object_elemtype( FLA_Obj A, FLA_Obj B )
 {

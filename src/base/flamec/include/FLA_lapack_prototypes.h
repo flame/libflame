@@ -10,10 +10,6 @@
 
 // --- top-level wrapper prototypes --------------------------------------------
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_LU_piv_ts( void **cntl_hndl, FLA_Obj A, FLA_Obj p );
-#endif
- 
 FLA_Error FLA_Chol( FLA_Uplo uplo, FLA_Obj A );
 FLA_Error FLA_LU_nopiv( FLA_Obj A );
 FLA_Error FLA_LU_piv( FLA_Obj A, FLA_Obj p );
@@ -31,9 +27,6 @@ FLA_Error FLA_Accum_T_UT( FLA_Direct direct, FLA_Store storev, FLA_Obj A, FLA_Ob
 FLA_Error FLA_Apply_H2_UT( FLA_Side side, FLA_Obj tau, FLA_Obj u2, FLA_Obj a1, FLA_Obj A2 );
 FLA_Error FLA_Apply_HUD_UT( FLA_Side side, FLA_Obj tau, FLA_Obj w12t, FLA_Obj u2, FLA_Obj v2, FLA_Obj r12t, FLA_Obj C2, FLA_Obj D2 );
 FLA_Error FLA_Apply_Q_UT( FLA_Side side, FLA_Trans trans, FLA_Direct direct, FLA_Store storev, FLA_Obj A, FLA_Obj T, FLA_Obj W, FLA_Obj B );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_Apply_pivots_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Side side, FLA_Trans trans, FLA_Obj p, FLA_Obj A );
-#endif
 FLA_Error FLA_Apply_pivots( FLA_Side side, FLA_Trans trans, FLA_Obj p, FLA_Obj A );
 
 // --- task wrapper prototypes -------------------------------------------------
@@ -41,20 +34,11 @@ FLA_Error FLA_Apply_pivots( FLA_Side side, FLA_Trans trans, FLA_Obj p, FLA_Obj A
 FLA_Error FLA_Chol_task( FLA_Uplo uplo, FLA_Obj A, fla_chol_t* cntl );
 FLA_Error FLA_Chol_l_task( FLA_Obj A, fla_chol_t* cntl );
 FLA_Error FLA_Chol_u_task( FLA_Obj A, fla_chol_t* cntl );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_LU_piv_macro_task_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj p, fla_lu_t* cntl );
-#endif
 FLA_Error FLA_LU_piv_macro_task( FLA_Obj A, FLA_Obj p, fla_lu_t* cntl );
 FLA_Error FLA_Apply_pivots_task( FLA_Side side, FLA_Trans trans, FLA_Obj p, FLA_Obj A, fla_appiv_t* cntl );
 FLA_Error FLA_Apply_pivots_ln_task( FLA_Obj p, FLA_Obj A, fla_appiv_t* cntl );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_Apply_pivots_macro_task_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Side side, FLA_Trans trans, FLA_Obj p, FLA_Obj A, fla_appiv_t* cntl );
-#endif
 FLA_Error FLA_Apply_pivots_macro_task( FLA_Side side, FLA_Trans trans, FLA_Obj p, FLA_Obj A, fla_appiv_t* cntl );
 FLA_Error FLA_LU_nopiv_task( FLA_Obj A, fla_lu_t* cntl );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_LU_piv_task_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj p, fla_lu_t* cntl );
-#endif
 FLA_Error FLA_LU_piv_task( FLA_Obj A, FLA_Obj p, fla_lu_t* cntl );
 FLA_Error FLA_LU_piv_copy_task( FLA_Obj A, FLA_Obj p, FLA_Obj U, fla_lu_t* cntl );
 FLA_Error FLA_Trsm_piv_task( FLA_Obj A, FLA_Obj B, FLA_Obj p, fla_trsm_t* cntl );
@@ -118,14 +102,8 @@ FLA_Error FLA_Eig_gest_nu_task( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_gest_t*
 FLA_Error FLA_Apply_Q_blk_external( FLA_Side side, FLA_Trans trans, FLA_Store storev, FLA_Obj A, FLA_Obj t, FLA_Obj B );
 
 FLA_Error FLA_Apply_pivots_unb_external( FLA_Side side, FLA_Trans trans, FLA_Obj p, FLA_Obj A );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_Apply_pivots_ln_unb_ext_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj p, FLA_Obj A );
-#endif
 FLA_Error FLA_Apply_pivots_ln_unb_ext( FLA_Obj p, FLA_Obj A );
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_Apply_pivots_macro_external_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Side side, FLA_Trans trans, FLA_Obj p, FLA_Obj A );
-#endif
 FLA_Error FLA_Apply_pivots_macro_external( FLA_Side side, FLA_Trans trans, FLA_Obj p, FLA_Obj A );
 
 FLA_Error FLA_Chol_blk_external( FLA_Uplo uplo, FLA_Obj A );
@@ -136,14 +114,8 @@ FLA_Error FLA_Chol_l_unb_ext( FLA_Obj A );
 FLA_Error FLA_Chol_u_unb_ext( FLA_Obj A );
 
 FLA_Error FLA_LU_piv_blk_external( FLA_Obj A, FLA_Obj p );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_LU_piv_blk_ext_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj p );
-#endif
 FLA_Error FLA_LU_piv_blk_ext( FLA_Obj A, FLA_Obj p );
 FLA_Error FLA_LU_piv_unb_external( FLA_Obj A, FLA_Obj p );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_LU_piv_unb_ext_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj p );
-#endif
 FLA_Error FLA_LU_piv_unb_ext( FLA_Obj A, FLA_Obj p );
 
 FLA_Error FLA_QR_blk_external( FLA_Obj A, FLA_Obj t );
@@ -230,9 +202,6 @@ FLA_Error FLA_Chol_check( FLA_Uplo uplo, FLA_Obj A );
 FLA_Error FLA_Chol_solve_check( FLA_Uplo uplo, FLA_Obj A, FLA_Obj B, FLA_Obj X );
 FLA_Error FLA_LU_nopiv_check( FLA_Obj A );
 FLA_Error FLA_LU_nopiv_solve_check( FLA_Obj A, FLA_Obj B, FLA_Obj X );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_LU_piv_check_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj p );
-#endif
 FLA_Error FLA_LU_piv_check( FLA_Obj A, FLA_Obj p );
 FLA_Error FLA_LU_piv_solve_check( FLA_Obj A, FLA_Obj p, FLA_Obj B, FLA_Obj X );
 FLA_Error FLA_LU_incpiv_check( FLA_Obj A, FLA_Obj p, FLA_Obj L );

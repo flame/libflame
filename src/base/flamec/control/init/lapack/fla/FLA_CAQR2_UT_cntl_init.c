@@ -10,57 +10,6 @@
 
 #include "FLAME.h"
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-void FLA_CAQR2_UT_cntl_init_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
-{
-	// Set the blocksize to the default value for conventional storage,
-	// but scaled down.
-	FLA_cntl_flamec_init_i->fla_caqr2ut_var1_bsize = FLA_Query_blocksizes( FLA_DIMENSION_MIN );
-	FLA_Blocksize_scale_ts( FLA_cntl_flamec_init_i, FLA_cntl_flamec_init_i->fla_caqr2ut_var1_bsize, FLA_CAQR_INNER_TO_OUTER_B_RATIO );
-
-	// Create a control tree to invoke unblocked variant 1.
-	FLA_cntl_flamec_init_i->fla_caqr2ut_cntl_unb = FLA_Cntl_caqr2ut_obj_create( FLA_FLAT,
-	                                                    //FLA_UNBLOCKED_VARIANT1, 
-	                                                    FLA_UNB_OPT_VARIANT1, 
-	                                                    NULL,
-	                                                    NULL,
-	                                                    NULL,
-	                                                    NULL,
-	                                                    NULL,
-	                                                    NULL,
-	                                                    NULL,
-	                                                    NULL,
-	                                                    NULL,
-	                                                    NULL,
-	                                                    NULL );
-
-	// Create a control tree for small-to-medium sequential problems and
-	// as the means to compute on FLASH blocks.
-	FLA_cntl_flamec_init_i->fla_caqr2ut_cntl_leaf = FLA_Cntl_caqr2ut_obj_create( FLA_FLAT,
-	                                                     FLA_BLOCKED_VARIANT1, 
-	                                                     FLA_cntl_flamec_init_i->fla_caqr2ut_var1_bsize,
-	                                                     FLA_cntl_flamec_init_i->fla_caqr2ut_cntl_unb,
-	                                                     FLA_cntl_flamec_init_i->fla_gemm_cntl_blas,
-	                                                     FLA_cntl_flamec_init_i->fla_gemm_cntl_blas,
-	                                                     FLA_cntl_flamec_init_i->fla_trmm_cntl_blas,
-	                                                     FLA_cntl_flamec_init_i->fla_trmm_cntl_blas,
-	                                                     FLA_cntl_flamec_init_i->fla_trsm_cntl_blas,
-	                                                     FLA_cntl_flamec_init_i->fla_axpy_cntl_blas,
-	                                                     FLA_cntl_flamec_init_i->fla_axpy_cntl_blas,
-	                                                     FLA_cntl_flamec_init_i->fla_axpy_cntl_blas,
-	                                                     FLA_cntl_flamec_init_i->fla_copy_cntl_blas );
-
-}
-
-void FLA_CAQR2_UT_cntl_finalize_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
-{
-	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_caqr2ut_cntl_unb );
-	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_caqr2ut_cntl_leaf );
-
-	FLA_Blocksize_free( FLA_cntl_flamec_init_i->fla_caqr2ut_var1_bsize );
-}
-#endif
-
 extern fla_gemm_t* fla_gemm_cntl_blas;
 extern fla_trmm_t* fla_trmm_cntl_blas;
 extern fla_trsm_t* fla_trsm_cntl_blas;

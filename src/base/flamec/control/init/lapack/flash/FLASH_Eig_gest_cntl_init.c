@@ -10,57 +10,6 @@
 
 #include "FLAME.h"
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-void FLASH_Eig_gest_cntl_init_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
-{
-	// Set blocksize for hierarchical storage.
-	FLA_cntl_flash_init_i->flash_eig_gest_bsize       = FLA_Blocksize_create( 1, 1, 1, 1 );
-
-	// Create a control tree that assumes A is a b x b block.
-	FLA_cntl_flash_init_i->flash_eig_gest_cntl_leaf   = FLA_Cntl_eig_gest_obj_create( FLA_HIER,
-	                                                           FLA_SUBPROBLEM,
-	                                                           NULL,
-	                                                           NULL,
-	                                                           NULL,
-	                                                           NULL,
-	                                                           NULL,
-	                                                           NULL,
-	                                                           NULL,
-	                                                           NULL,
-	                                                           NULL,
-	                                                           NULL,
-	                                                           NULL,
-	                                                           NULL,
-	                                                           NULL );
-
-	// Create a control tree that assumes A is large.
-	FLA_cntl_flash_init_i->flash_eig_gest_cntl        = FLA_Cntl_eig_gest_obj_create( FLA_HIER,
-	                                                           FLA_BLOCKED_VARIANT1, 
-	                                                           FLA_cntl_flash_init_i->flash_eig_gest_bsize,
-	                                                           FLA_cntl_flash_init_i->flash_eig_gest_cntl_leaf,
-	                                                           FLA_cntl_flash_init_i->flash_axpy_cntl,
-	                                                           FLA_cntl_flash_init_i->flash_axpy_cntl,
-	                                                           NULL,
-	                                                           NULL,
-	                                                           NULL,
-	                                                           FLA_cntl_flash_init_i->flash_hemm_cntl_mm,
-	                                                           FLA_cntl_flash_init_i->flash_her2k_cntl_mm,
-	                                                           FLA_cntl_flash_init_i->flash_trmm_cntl_mm,
-	                                                           FLA_cntl_flash_init_i->flash_trmm_cntl_mm,
-	                                                           FLA_cntl_flash_init_i->flash_trsm_cntl_mm,
-	                                                           FLA_cntl_flash_init_i->flash_trsm_cntl_mm );
-}
-
-void FLASH_Eig_gest_cntl_finalize_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
-{
-	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_eig_gest_cntl_leaf );
-	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_eig_gest_cntl );
-
-	FLA_Blocksize_free( FLA_cntl_flash_init_i->flash_eig_gest_bsize );
-}
-
-#endif
-
 extern fla_axpy_t*  flash_axpy_cntl;
 extern fla_gemm_t*  flash_gemm_cntl_mm;
 extern fla_hemm_t*  flash_hemm_cntl_mm;

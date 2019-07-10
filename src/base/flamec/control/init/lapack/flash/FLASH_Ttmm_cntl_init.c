@@ -10,41 +10,6 @@
 
 #include "FLAME.h"
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-void FLASH_Ttmm_cntl_init_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
-{
-	// Set blocksize for hierarchical storage.
-	FLA_cntl_flash_init_i->flash_ttmm_bsize       = FLA_Blocksize_create( 1, 1, 1, 1 );
-
-	// Create a control tree that assumes A is a b x b block.
-	FLA_cntl_flash_init_i->flash_ttmm_cntl_leaf   = FLA_Cntl_ttmm_obj_create( FLA_HIER,
-	                                                   FLA_SUBPROBLEM,
-	                                                   NULL,
-	                                                   NULL,
-	                                                   NULL,
-	                                                   NULL,
-	                                                   NULL );
-
-	// Create a control tree that assumes A is large.
-	FLA_cntl_flash_init_i->flash_ttmm_cntl        = FLA_Cntl_ttmm_obj_create( FLA_HIER,
-	                                                   FLA_BLOCKED_VARIANT1, 
-	                                                   FLA_cntl_flash_init_i->flash_ttmm_bsize,
-	                                                   FLA_cntl_flash_init_i->flash_ttmm_cntl_leaf,
-	                                                   FLA_cntl_flash_init_i->flash_herk_cntl_op,
-	                                                   FLA_cntl_flash_init_i->flash_trmm_cntl_bp,
-	                                                   NULL );
-}
-
-void FLASH_Ttmm_cntl_finalize_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
-{
-	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_ttmm_cntl_leaf );
-	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_ttmm_cntl );
-
-	FLA_Blocksize_free( FLA_cntl_flash_init_i->flash_ttmm_bsize );
-}
-
-#endif
-
 extern fla_herk_t* flash_herk_cntl_op;
 extern fla_trmm_t* flash_trmm_cntl_bp;
 

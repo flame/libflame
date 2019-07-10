@@ -10,55 +10,6 @@
 
 #include "FLAME.h"
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-void FLA_Apply_Q_UT_cntl_init_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
-{
-	// Set the outer blocksize to the default value for conventional storage,
-	// and the inner blocksize to the same value but scaled down.
-	FLA_cntl_flamec_init_i->fla_apqut_var2_bsize = FLA_Query_blocksizes( FLA_DIMENSION_MIN );
-	FLA_cntl_flamec_init_i->fla_apqut_var1_bsize = FLA_Query_blocksizes( FLA_DIMENSION_MIN );
-	FLA_Blocksize_scale_ts( FLA_cntl_flamec_init_i, FLA_cntl_flamec_init_i->fla_apqut_var1_bsize, FLA_QR_INNER_TO_OUTER_B_RATIO );
-
-	// Create a control tree to invoke variant 1.
-	FLA_cntl_flamec_init_i->fla_apqut_cntl_leaf = FLA_Cntl_apqut_obj_create( FLA_FLAT,
-	                                                 FLA_BLOCKED_VARIANT1, 
-	                                                 FLA_cntl_flamec_init_i->fla_apqut_var1_bsize,
-	                                                 NULL,
-	                                                 FLA_cntl_flamec_init_i->fla_trmm_cntl_blas,
-	                                                 FLA_cntl_flamec_init_i->fla_trmm_cntl_blas,
-	                                                 FLA_cntl_flamec_init_i->fla_gemm_cntl_blas,
-	                                                 FLA_cntl_flamec_init_i->fla_gemm_cntl_blas,
-	                                                 FLA_cntl_flamec_init_i->fla_trsm_cntl_blas,
-	                                                 FLA_cntl_flamec_init_i->fla_copyt_cntl_blas,
-	                                                 FLA_cntl_flamec_init_i->fla_axpyt_cntl_blas );
-/*
-	// Create a control tree to invoke variant 2.
-	FLA_cntl_flamec_init_i->fla_apqut_cntl      = FLA_Cntl_apqut_obj_create( FLA_FLAT,
-	                                                 FLA_BLOCKED_VARIANT2, 
-	                                                 FLA_cntl_flamec_init_i->fla_apqut_var2_bsize,
-	                                                 FLA_cntl_flamec_init_i->fla_apqut_cntl_leaf,
-	                                                 NULL,
-	                                                 NULL,
-	                                                 NULL,
-	                                                 NULL,
-	                                                 NULL,
-	                                                 NULL,
-	                                                 NULL );
-*/
-}
-
-void FLA_Apply_Q_UT_cntl_finalize_ts(FLA_Cntl_init_flamec_s *FLA_cntl_flamec_init_i)
-{
-	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_apqut_cntl_leaf );
-/*
-	FLA_Cntl_obj_free( FLA_cntl_flamec_init_i->fla_apqut_cntl );
-*/
-
-	FLA_Blocksize_free( FLA_cntl_flamec_init_i->fla_apqut_var1_bsize );
-	FLA_Blocksize_free( FLA_cntl_flamec_init_i->fla_apqut_var2_bsize );
-}
-#endif
-
 extern fla_trmm_t*  fla_trmm_cntl_blas;
 extern fla_gemm_t*  fla_gemm_cntl_blas;
 extern fla_trsm_t*  fla_trsm_cntl_blas;

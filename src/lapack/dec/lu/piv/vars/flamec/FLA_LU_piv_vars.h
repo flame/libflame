@@ -12,14 +12,8 @@
 
 FLA_Error FLA_LU_piv_blk_var3( FLA_Obj A, FLA_Obj p, fla_lu_t* cntl );
 FLA_Error FLA_LU_piv_blk_var4( FLA_Obj A, FLA_Obj p, fla_lu_t* cntl );
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_LU_piv_blk_var5_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj p, fla_lu_t* cntl );
-#endif
 FLA_Error FLA_LU_piv_blk_var5( FLA_Obj A, FLA_Obj p, fla_lu_t* cntl );
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_LU_piv_unb_var3_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Obj A, FLA_Obj p );
-#endif
 FLA_Error FLA_LU_piv_unb_var3( FLA_Obj A, FLA_Obj p );
 FLA_Error FLA_LU_piv_unb_var3b( FLA_Obj A, FLA_Obj p );
 FLA_Error FLA_LU_piv_unb_var4( FLA_Obj A, FLA_Obj p );

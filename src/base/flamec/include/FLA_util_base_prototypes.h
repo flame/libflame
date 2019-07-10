@@ -50,9 +50,6 @@ FLA_Error FLA_Symmetrize( FLA_Uplo uplo, FLA_Obj A );
 FLA_Error FLA_Triangularize( FLA_Uplo uplo, FLA_Diag diag, FLA_Obj A );
 FLA_Error FLA_Transpose( FLA_Obj A );
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_Set_ts( void **cntl_hndl, FLA_Obj alpha, FLA_Obj A );
-#endif
 FLA_Error FLA_Set( FLA_Obj alpha, FLA_Obj A );
 FLA_Error FLA_Set_diag( FLA_Obj alpha, FLA_Obj A );
 FLA_Error FLA_Set_offdiag( int offset, FLA_Obj alpha, FLA_Obj A );

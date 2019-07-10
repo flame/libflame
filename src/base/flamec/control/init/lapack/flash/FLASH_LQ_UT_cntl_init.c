@@ -10,37 +10,6 @@
 
 #include "FLAME.h"
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-void FLASH_LQ_UT_cntl_init_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
-{
-	// Set blocksizes for hierarchical storage.
-	FLA_cntl_flash_init_i->flash_lqut_var3_bsize = FLA_Blocksize_create( 1, 1, 1, 1 );
-
-	// Create a control tree to compute the subproblem.
-	FLA_cntl_flash_init_i->flash_lqut_cntl_leaf = FLA_Cntl_lqut_obj_create( FLA_HIER,
-	                                                 FLA_SUBPROBLEM, 
-	                                                 NULL,
-	                                                 NULL,
-	                                                 NULL );
-
-	// Create a control tree to invoke variant 2.
-	FLA_cntl_flash_init_i->flash_lqut_cntl      = FLA_Cntl_lqut_obj_create( FLA_HIER,
-	                                                 FLA_BLOCKED_VARIANT3,
-	                                                 FLA_cntl_flash_init_i->flash_lqut_var3_bsize,
-	                                                 FLA_cntl_flash_init_i->flash_lqut_cntl_leaf,
-	                                                 FLA_cntl_flash_init_i->flash_apqut_cntl_blas );
-}
-
-void FLASH_LQ_UT_cntl_finalize_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
-{
-	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_lqut_cntl_leaf );
-	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_lqut_cntl );
-
-	FLA_Blocksize_free( FLA_cntl_flash_init_i->flash_lqut_var3_bsize );
-}
-
-#endif
-
 extern fla_apqut_t*  flash_apqut_cntl_blas;
 
 fla_lqut_t*          flash_lqut_cntl_leaf = NULL;

@@ -9,7 +9,7 @@
 */
 
 #include "FLAME.h"
-/* Not Required */
+
 FLA_Error FLA_Obj_elemtype_check( FLA_Obj obj )
 {
   FLA_Error e_val;

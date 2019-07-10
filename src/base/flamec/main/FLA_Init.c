@@ -38,100 +38,6 @@ const double   dzero = 0.0;
 const scomplex czero = { 0.0f, 0.0f };
 const dcomplex zzero = { 0.0 , 0.0  };
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES 
-/* *************************************************************************
-
-   FLA_Init_ts()
-
- *************************************************************************** */
-
-void FLA_Init_ts( void **cntl_hndl)
-{
-  FLA_cntl_init_s *FLA_cntl_hndl = FLA_malloc(sizeof(FLA_cntl_init_s));
-
-  *cntl_hndl = (void *) FLA_cntl_hndl;
-
-  FLA_cntl_hndl->FLA_initialized = TRUE;
-
-  FLA_Error_messages_init();
-
-  FLA_Memory_leak_counter_init();
-
-  FLA_Init_constants();
-
-  FLA_Cntl_init_ts(FLA_cntl_hndl);
-
-#if FLA_VECTOR_INTRINSIC_TYPE == FLA_SSE_INTRINSICS
-  _MM_SET_FLUSH_ZERO_MODE( _MM_FLUSH_ZERO_ON );
-#endif
-
-#ifdef FLA_ENABLE_SUPERMATRIX
-  FLASH_Queue_init();
-#endif
-}
-
-/* *************************************************************************
-
-  FLA_Finalize_ts()
-
- *************************************************************************** */
-
-void FLA_Finalize_ts( void **cntl_hndl)
-{
-  FLA_cntl_init_s *FLA_cntl_hndl = (FLA_cntl_init_s *) *cntl_hndl;
-
-  if ( FLA_cntl_hndl->FLA_initialized == FALSE ) return;
-
-  FLA_Finalize_constants();
-
-  FLA_Cntl_finalize_ts(FLA_cntl_hndl);
-
-#ifdef FLA_ENABLE_SUPERMATRIX
-  FLASH_Queue_finalize();
-#endif
-
-  FLA_free(FLA_cntl_hndl);
-
-  FLA_Memory_leak_counter_finalize();
-}
-
-/* *************************************************************************
-
-  FLA_Init_safe_ts()
-
- *************************************************************************** */
-
-void FLA_Init_safe_ts( void **cntl_hndl, FLA_Error* init_result)
-{
-  FLA_Init_ts(cntl_hndl);
-  *init_result = FLA_SUCCESS;
-}
-
-/* *************************************************************************
-
-  FLA_Finalize_safei_ts()
-
- *************************************************************************** */
-
-void FLA_Finalize_safe_ts( void **cntl_hndl, FLA_Error init_result )
-{
-  if ( init_result == FLA_SUCCESS )
-    FLA_Finalize_ts(cntl_hndl);
-}
-
-/* *************************************************************************
-
-   FLA_Initialized_ts()
-
- *************************************************************************** */
-
-FLA_Bool FLA_Initialized_ts( void** cntl_hndl )
-{
-  FLA_cntl_init_s *FLA_cntl_hndl = (FLA_cntl_init_s *) cntl_hndl;
-  return FLA_cntl_hndl->FLA_initialized;
-}
-#endif
-
 /* *************************************************************************
 
    FLA_Init()
@@ -161,7 +67,6 @@ void FLA_Init()
 #endif
 }
 
-
 /* *************************************************************************
 
   FLA_Finalize()
@@ -184,7 +89,6 @@ void FLA_Finalize()
 
   FLA_Memory_leak_counter_finalize();
 }
-
 
 /* *************************************************************************
 

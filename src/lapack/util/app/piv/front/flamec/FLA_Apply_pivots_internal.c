@@ -10,56 +10,6 @@
 
 #include "FLAME.h"
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-FLA_Error FLA_Apply_pivots_internal_ts( FLA_cntl_init_s *FLA_cntl_init_i, FLA_Side side, FLA_Trans trans, FLA_Obj p, FLA_Obj A, fla_appiv_t* cntl )
-{
-   FLA_Error r_val = FLA_SUCCESS;
-
-   if ( FLA_Cntl_matrix_type( cntl ) == FLA_HIER &&
-        FLA_Cntl_variant( cntl ) == FLA_SUBPROBLEM )
-   {
-      if ( FLASH_Queue_get_enabled_ts(FLA_cntl_init_i) )
-      {
-         // Enqueue
-         ENQUEUE_FLASH_Apply_pivots_macro( side, trans, *FLASH_OBJ_PTR_AT_TS( FLA_cntl_init_i, p ), A, cntl );
-      }
-      else
-      {
-         // Execute leaf
-         r_val = FLA_Apply_pivots_macro_task_ts( FLA_cntl_init_i, side, trans, *FLASH_OBJ_PTR_AT_TS( FLA_cntl_init_i, p ), A, cntl );
-      }
-   }
-   else
-   {
-      // Parameter combinations
-      if ( trans == FLA_NO_TRANSPOSE )
-      {
-         if      ( side == FLA_LEFT )
-         {
-            r_val = FLA_Apply_pivots_ln_ts( FLA_cntl_init_i, p, A, cntl );
-         }
-         else if ( side == FLA_RIGHT )
-         {
-            r_val = FLA_Apply_pivots_rn_ts( FLA_cntl_init_i, p, A, cntl );
-         }
-      }
-      else if ( trans == FLA_TRANSPOSE )
-      {
-         if      ( side == FLA_LEFT )
-         {
-            r_val = FLA_Apply_pivots_lt_ts( FLA_cntl_init_i, p, A, cntl );
-         }
-         else if ( side == FLA_RIGHT )
-         {
-            r_val = FLA_Apply_pivots_rt_ts( FLA_cntl_init_i, p, A, cntl );
-         }
-      }
-   }   
-
-   return r_val;
-}
-#endif
-
 FLA_Error FLA_Apply_pivots_internal( FLA_Side side, FLA_Trans trans, FLA_Obj p, FLA_Obj A, fla_appiv_t* cntl )
 {
    FLA_Error r_val = FLA_SUCCESS;

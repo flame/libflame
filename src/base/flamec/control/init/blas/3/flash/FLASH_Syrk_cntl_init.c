@@ -10,58 +10,6 @@
 
 #include "FLAME.h"
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-void FLASH_Syrk_cntl_init_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
-{
-	// Set syrk blocksize for hierarchical storage.
-	FLA_cntl_flash_init_i->flash_syrk_bsize      = FLA_Blocksize_create( 1, 1, 1, 1 );
-
-	// Create a control tree that assumes A is a b x b block.
-	FLA_cntl_flash_init_i->flash_syrk_cntl_blas  = FLA_Cntl_syrk_obj_create( FLA_HIER,
-	                                                  FLA_SUBPROBLEM,
-	                                                  NULL,
-	                                                  NULL,
-	                                                  NULL,
-	                                                  NULL );
-
-	// Create a control tree that assumes A * A' forms an inner panel product.
-	FLA_cntl_flash_init_i->flash_syrk_cntl_ip    = FLA_Cntl_syrk_obj_create( FLA_HIER,
-	                                                  FLA_BLOCKED_VARIANT5,
-	                                                  FLA_cntl_flash_init_i->flash_syrk_bsize,
-	                                                  FLA_cntl_flash_init_i->flash_scalr_cntl,
-	                                                  FLA_cntl_flash_init_i->flash_syrk_cntl_blas,
-	                                                  NULL );
-
-	// Create a control tree that assumes A * A' forms an outer panel product.
-	FLA_cntl_flash_init_i->flash_syrk_cntl_op    = FLA_Cntl_syrk_obj_create( FLA_HIER,
-	                                                  FLA_BLOCKED_VARIANT2,
-	                                                  FLA_cntl_flash_init_i->flash_syrk_bsize,
-	                                                  FLA_cntl_flash_init_i->flash_scalr_cntl,
-	                                                  FLA_cntl_flash_init_i->flash_syrk_cntl_blas,
-	                                                  FLA_cntl_flash_init_i->flash_gemm_cntl_pb_bb );
-
-	// Create a control tree that assumes A is large.
-	FLA_cntl_flash_init_i->flash_syrk_cntl_mm    = FLA_Cntl_syrk_obj_create( FLA_HIER,
-	                                                  FLA_BLOCKED_VARIANT5,
-	                                                  FLA_cntl_flash_init_i->flash_syrk_bsize,
-	                                                  FLA_cntl_flash_init_i->flash_scalr_cntl,
-	                                                  FLA_cntl_flash_init_i->flash_syrk_cntl_op,
-	                                                  NULL );
-}
-
-void FLASH_Syrk_cntl_finalize_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
-{
-	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_syrk_cntl_blas );
-
-	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_syrk_cntl_ip );
-	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_syrk_cntl_op );
-	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_syrk_cntl_mm );
-
-	FLA_Blocksize_free( FLA_cntl_flash_init_i->flash_syrk_bsize );
-}
-
-#endif
-
 extern fla_scalr_t* flash_scalr_cntl;
 extern fla_gemm_t*  flash_gemm_cntl_pb_bb;
 

@@ -37,37 +37,6 @@
                                int* info )
 
 // Note that p should be set zero.
-#if 1
-#define LAPACK_getrf_body(prefix)                                            \
-  FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);                     \
-  FLA_Obj      A, p;                                                         \
-  int          min_m_n    = min( *m, *n );                                   \
-  FLA_Error    e_val;                                                        \
-  FLA_Error    init_result;                                                  \
-  void *ts_hdl;                                                              \
-                                                                             \
-  FLA_Init_safe_ts( &ts_hdl, &init_result );                                 \
-                                                                             \
-  FLA_Obj_create_without_buffer_ts( &ts_hdl, datatype, *m, *n, &A );         \
-  FLA_Obj_attach_buffer_ts( &ts_hdl, buff_A, 1, *ldim_A, &A );               \
-                                                                             \
-  FLA_Obj_create_without_buffer_ts( &ts_hdl, FLA_INT, min_m_n, 1, &p );      \
-  FLA_Obj_attach_buffer_ts( &ts_hdl, buff_p, 1, min_m_n, &p );               \
-  FLA_Set_ts( &ts_hdl, FLA_ZERO, p );                                        \
-                                                                             \
-  e_val = FLA_LU_piv_ts( &ts_hdl, A, p );                                    \
-  FLA_Shift_pivots_to_ts( &ts_hdl, FLA_LAPACK_PIVOTS, p );                   \
-                                                                             \
-  FLA_Obj_free_without_buffer_ts( &ts_hdl, &A );                             \
-  FLA_Obj_free_without_buffer_ts( &ts_hdl, &p );                             \
-                                                                             \
-  FLA_Finalize_safe_ts( &ts_hdl, init_result );                              \
-                                                                             \
-  if ( e_val != FLA_SUCCESS ) *info = e_val + 1;                             \
-  else                        *info = 0;                                     \
-                                                                             \
-  return 0;
-#else
 #define LAPACK_getrf_body(prefix)                               \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   FLA_Obj      A, p;                                            \
@@ -96,7 +65,6 @@
   else                        *info = 0;                        \
                                                                 \
   return 0;
-#endif
 
 LAPACK_getrf(s)
 {

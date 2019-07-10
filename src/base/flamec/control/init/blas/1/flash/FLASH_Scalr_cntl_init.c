@@ -10,39 +10,6 @@
 
 #include "FLAME.h"
 
-#ifdef FLA_ENABLE_THREAD_SAFE_INTERFACES
-void FLASH_Scalr_cntl_init_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
-{
-	// Set blocksize for hierarchical storage.
-	FLA_cntl_flash_init_i->flash_scalr_bsize     = FLA_Blocksize_create( 1, 1, 1, 1 );
-
-	// Create a control tree that assumes A is small.
-	FLA_cntl_flash_init_i->flash_scalr_cntl_blas = FLA_Cntl_scalr_obj_create( FLA_HIER,
-	                                                   FLA_SUBPROBLEM,
-	                                                   NULL,
-	                                                   NULL,
-	                                                   NULL );
-
-	// Create a control tree that computes column panels, top-left to
-	// bottom-right.
-	FLA_cntl_flash_init_i->flash_scalr_cntl      = FLA_Cntl_scalr_obj_create( FLA_HIER,
-	                                                   FLA_BLOCKED_VARIANT3,
-	                                                   FLA_cntl_flash_init_i->flash_scalr_bsize,
-	                                                   FLA_cntl_flash_init_i->flash_scalr_cntl_blas,
-	                                                   FLA_cntl_flash_init_i->flash_scal_cntl_tb );
-}
-
-void FLASH_Scalr_cntl_finalize_ts(FLA_Cntl_init_flash_s *FLA_cntl_flash_init_i)
-{
-	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_scalr_cntl_blas );
-
-	FLA_Cntl_obj_free( FLA_cntl_flash_init_i->flash_scalr_cntl );
-
-	FLA_Blocksize_free( FLA_cntl_flash_init_i->flash_scalr_bsize );
-}
-
-#endif
-
 extern fla_scal_t* flash_scal_cntl_tb;
 
 fla_scalr_t*       flash_scalr_cntl_blas = NULL;
