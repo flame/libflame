@@ -280,7 +280,7 @@ void libfla_test_sylv_experiment( test_params_t params,
 
 
 
-extern fla_gemm_t* fla_gemm_cntl_blas;
+extern __thread fla_gemm_t* fla_gemm_cntl_blas;
 
 void libfla_test_sylv_cntl_create( unsigned int var,
                                    dim_t        b_alg_flat )

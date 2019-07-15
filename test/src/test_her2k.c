@@ -318,9 +318,9 @@ void libfla_test_her2k_experiment( test_params_t params,
 
 
 
-extern fla_scalr_t* fla_scalr_cntl_blas;
-extern fla_gemm_t*  fla_gemm_cntl_blas;
-extern fla_her2k_t* fla_her2k_cntl_blas;
+extern __thread fla_scalr_t* fla_scalr_cntl_blas;
+extern __thread fla_gemm_t*  fla_gemm_cntl_blas;
+extern __thread fla_her2k_t* fla_her2k_cntl_blas;
 
 void libfla_test_her2k_cntl_create( unsigned int var,
                                     dim_t        b_alg_flat )

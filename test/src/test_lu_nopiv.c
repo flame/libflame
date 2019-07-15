@@ -249,8 +249,8 @@ void libfla_test_lu_nopiv_experiment( test_params_t params,
 
 
 
-extern fla_gemm_t*  fla_gemm_cntl_blas;
-extern fla_trsm_t*  fla_trsm_cntl_blas;
+extern __thread fla_gemm_t*  fla_gemm_cntl_blas;
+extern __thread fla_trsm_t*  fla_trsm_cntl_blas;
 
 void libfla_test_lu_nopiv_cntl_create( unsigned int var,
                                        dim_t        b_alg_flat )
