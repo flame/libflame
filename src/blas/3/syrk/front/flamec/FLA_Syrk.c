@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_syrk_t* fla_syrk_cntl_mm;
+extern __thread fla_syrk_t* fla_syrk_cntl_mm;
 
 FLA_Error FLA_Syrk( FLA_Uplo uplo, FLA_Trans trans, FLA_Obj alpha, FLA_Obj A, FLA_Obj beta, FLA_Obj C )
 {

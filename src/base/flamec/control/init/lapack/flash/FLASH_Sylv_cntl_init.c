@@ -10,13 +10,13 @@
 
 #include "FLAME.h"
 
-extern fla_gemm_t* flash_gemm_cntl_pm_bp;
-extern fla_gemm_t* flash_gemm_cntl_ip_bb;
+extern __thread fla_gemm_t* flash_gemm_cntl_pm_bp;
+extern __thread fla_gemm_t* flash_gemm_cntl_ip_bb;
 
-fla_sylv_t*        flash_sylv_cntl_leaf = NULL;
-fla_sylv_t*        flash_sylv_cntl_mb = NULL;
-fla_sylv_t*        flash_sylv_cntl = NULL;
-fla_blocksize_t*   flash_sylv_bsize = NULL;
+__thread fla_sylv_t*        flash_sylv_cntl_leaf = NULL;
+__thread fla_sylv_t*        flash_sylv_cntl_mb = NULL;
+__thread fla_sylv_t*        flash_sylv_cntl = NULL;
+__thread fla_blocksize_t*   flash_sylv_bsize = NULL;
 
 void FLASH_Sylv_cntl_init()
 {

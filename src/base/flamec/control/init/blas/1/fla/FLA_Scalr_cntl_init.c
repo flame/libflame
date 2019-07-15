@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-fla_scalr_t* fla_scalr_cntl_blas = NULL;
+__thread fla_scalr_t* fla_scalr_cntl_blas = NULL;
 
 void FLA_Scalr_cntl_init()
 {

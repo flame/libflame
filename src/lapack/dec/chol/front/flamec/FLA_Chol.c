@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern fla_chol_t* fla_chol_cntl;
-extern fla_chol_t* fla_chol_cntl2;
+extern __thread fla_chol_t* fla_chol_cntl;
+extern __thread fla_chol_t* fla_chol_cntl2;
 
 FLA_Error FLA_Chol( FLA_Uplo uplo, FLA_Obj A )
 {

@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_gemv_t* fla_gemv_cntl_blas;
+extern __thread fla_gemv_t* fla_gemv_cntl_blas;
 
 FLA_Error FLA_Gemv( FLA_Trans transa, FLA_Obj alpha, FLA_Obj A, FLA_Obj x, FLA_Obj beta, FLA_Obj y )
 {

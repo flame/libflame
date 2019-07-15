@@ -11,30 +11,30 @@
 #ifndef FLA_EXTERN_DEFS_H
 #define FLA_EXTERN_DEFS_H
 
-extern FLA_Obj FLA_THREE;
-extern FLA_Obj FLA_TWO;
-extern FLA_Obj FLA_ONE;
-extern FLA_Obj FLA_ONE_HALF;
-extern FLA_Obj FLA_ZERO;
-extern FLA_Obj FLA_MINUS_ONE_HALF;
-extern FLA_Obj FLA_MINUS_ONE;
-extern FLA_Obj FLA_MINUS_TWO;
-extern FLA_Obj FLA_MINUS_THREE;
+extern __thread FLA_Obj FLA_THREE;
+extern __thread FLA_Obj FLA_TWO;
+extern __thread FLA_Obj FLA_ONE;
+extern __thread FLA_Obj FLA_ONE_HALF;
+extern __thread FLA_Obj FLA_ZERO;
+extern __thread FLA_Obj FLA_MINUS_ONE_HALF;
+extern __thread FLA_Obj FLA_MINUS_ONE;
+extern __thread FLA_Obj FLA_MINUS_TWO;
+extern __thread FLA_Obj FLA_MINUS_THREE;
 
-extern FLA_Obj FLA_EPSILON;
-extern FLA_Obj FLA_SAFE_MIN;
-extern FLA_Obj FLA_SAFE_MIN_SQUARE;
-extern FLA_Obj FLA_SAFE_INV_MIN;
-extern FLA_Obj FLA_SAFE_INV_MIN_SQUARE;
-extern FLA_Obj FLA_UNDERFLOW_THRES;
-extern FLA_Obj FLA_OVERFLOW_THRES;
-extern FLA_Obj FLA_UNDERFLOW_SQUARE_THRES;
-extern FLA_Obj FLA_OVERFLOW_SQUARE_THRES;
+extern __thread FLA_Obj FLA_EPSILON;
+extern __thread FLA_Obj FLA_SAFE_MIN;
+extern __thread FLA_Obj FLA_SAFE_MIN_SQUARE;
+extern __thread FLA_Obj FLA_SAFE_INV_MIN;
+extern __thread FLA_Obj FLA_SAFE_INV_MIN_SQUARE;
+extern __thread FLA_Obj FLA_UNDERFLOW_THRES;
+extern __thread FLA_Obj FLA_OVERFLOW_THRES;
+extern __thread FLA_Obj FLA_UNDERFLOW_SQUARE_THRES;
+extern __thread FLA_Obj FLA_OVERFLOW_SQUARE_THRES;
 
-extern const float    fzero;
-extern const double   dzero;
-extern const scomplex czero;
-extern const dcomplex zzero;
+extern __thread const float    fzero;
+extern __thread const double   dzero;
+extern __thread const scomplex czero;
+extern __thread const dcomplex zzero;
 
 #endif
 

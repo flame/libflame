@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern fla_copyr_t* flash_copyr_cntl_blas;
-extern fla_copyr_t* flash_copyr_cntl;
+extern __thread fla_copyr_t* flash_copyr_cntl_blas;
+extern __thread fla_copyr_t* flash_copyr_cntl;
 
 FLA_Error FLA_Copyr_internal( FLA_Uplo uplo, FLA_Obj A, FLA_Obj B, fla_copyr_t* cntl )
 {

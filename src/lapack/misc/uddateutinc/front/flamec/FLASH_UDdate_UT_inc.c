@@ -10,10 +10,10 @@
 
 #include "FLAME.h"
 
-extern fla_uddateut_t*    fla_uddateut_cntl_leaf;
-extern fla_apqudut_t*     fla_apqudut_cntl_leaf;
+extern __thread fla_uddateut_t*    fla_uddateut_cntl_leaf;
+extern __thread fla_apqudut_t*     fla_apqudut_cntl_leaf;
 
-extern fla_uddateutinc_t* flash_uddateutinc_cntl;
+extern __thread fla_uddateutinc_t* flash_uddateutinc_cntl;
 
 FLA_Error FLASH_UDdate_UT_inc( FLA_Obj R, FLA_Obj C, FLA_Obj D, FLA_Obj T, FLA_Obj W )
 {

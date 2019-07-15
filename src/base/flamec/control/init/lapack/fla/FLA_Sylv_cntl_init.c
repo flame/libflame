@@ -10,12 +10,12 @@
 
 #include "FLAME.h"
 
-extern fla_gemm_t* fla_gemm_cntl_blas;
+extern __thread fla_gemm_t* fla_gemm_cntl_blas;
 
-fla_sylv_t*        fla_sylv_cntl_leaf = NULL;
-fla_sylv_t*        fla_sylv_cntl_mb = NULL;
-fla_sylv_t*        fla_sylv_cntl = NULL;
-fla_blocksize_t*   fla_sylv_bsize = NULL;
+__thread fla_sylv_t*        fla_sylv_cntl_leaf = NULL;
+__thread fla_sylv_t*        fla_sylv_cntl_mb = NULL;
+__thread fla_sylv_t*        fla_sylv_cntl = NULL;
+__thread fla_blocksize_t*   fla_sylv_bsize = NULL;
 
 void FLA_Sylv_cntl_init()
 {

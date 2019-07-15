@@ -10,18 +10,18 @@
 
 #include "FLAME.h"
 
-extern fla_gemm_t*  fla_gemm_cntl_blas;
-extern fla_trsm_t*  fla_trsm_cntl_blas;
-extern fla_appiv_t* fla_appiv_cntl_leaf;
+extern __thread fla_gemm_t*  fla_gemm_cntl_blas;
+extern __thread fla_trsm_t*  fla_trsm_cntl_blas;
+extern __thread fla_appiv_t* fla_appiv_cntl_leaf;
 
-fla_lu_t*           fla_lu_piv_cntl = NULL;
-fla_lu_t*           fla_lu_piv_cntl2 = NULL;
+__thread fla_lu_t*           fla_lu_piv_cntl = NULL;
+__thread fla_lu_t*           fla_lu_piv_cntl2 = NULL;
 
-fla_lu_t*           fla_lu_piv_cntl_in = NULL;
-fla_lu_t*           fla_lu_piv_cntl_leaf = NULL;
-fla_blocksize_t*    fla_lu_piv_var5_bsize = NULL;
-fla_blocksize_t*    fla_lu_piv_var5_bsize_in = NULL;
-double              fla_lu_piv_var5_in_to_ou_bsize_ratio = 0.125;
+__thread fla_lu_t*           fla_lu_piv_cntl_in = NULL;
+__thread fla_lu_t*           fla_lu_piv_cntl_leaf = NULL;
+__thread fla_blocksize_t*    fla_lu_piv_var5_bsize = NULL;
+__thread fla_blocksize_t*    fla_lu_piv_var5_bsize_in = NULL;
+__thread double              fla_lu_piv_var5_in_to_ou_bsize_ratio = 0.125;
 
 void FLA_LU_piv_cntl_init()
 {

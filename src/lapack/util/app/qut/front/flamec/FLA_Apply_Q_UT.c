@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern fla_apqut_t* fla_apqut_cntl_leaf;
-extern fla_apqut_t* fla_apqut_cntl;
+extern __thread fla_apqut_t* fla_apqut_cntl_leaf;
+extern __thread fla_apqut_t* fla_apqut_cntl;
 
 FLA_Error FLA_Apply_Q_UT( FLA_Side side, FLA_Trans trans, FLA_Direct direct, FLA_Store storev, FLA_Obj A, FLA_Obj T, FLA_Obj W, FLA_Obj B )
 {

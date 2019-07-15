@@ -10,12 +10,12 @@
 
 #include "FLAME.h"
 
-extern fla_chol_t*  flash_chol_cntl;
-extern fla_trinv_t* flash_trinv_cntl;
-extern fla_ttmm_t*  flash_ttmm_cntl;
+extern __thread fla_chol_t*  flash_chol_cntl;
+extern __thread fla_trinv_t* flash_trinv_cntl;
+extern __thread fla_ttmm_t*  flash_ttmm_cntl;
 
-fla_spdinv_t*       flash_spdinv_cntl = NULL;
-fla_blocksize_t*    flash_spdinv_size_cutoff = NULL;
+__thread fla_spdinv_t*       flash_spdinv_cntl = NULL;
+__thread fla_blocksize_t*    flash_spdinv_size_cutoff = NULL;
 
 void FLASH_SPDinv_cntl_init()
 {

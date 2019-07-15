@@ -10,12 +10,12 @@
 
 #include "FLAME.h"
 
-extern fla_apqut_t* fla_apqut_cntl_leaf;
+extern __thread fla_apqut_t* fla_apqut_cntl_leaf;
 
-fla_lqut_t*         fla_lqut_cntl_unb = NULL;
-fla_lqut_t*         fla_lqut_cntl_leaf = NULL;
+__thread fla_lqut_t*         fla_lqut_cntl_unb = NULL;
+__thread fla_lqut_t*         fla_lqut_cntl_leaf = NULL;
 
-fla_blocksize_t*    fla_lqut_var1_bsize_leaf = NULL;
+__thread fla_blocksize_t*    fla_lqut_var1_bsize_leaf = NULL;
 
 void FLA_LQ_UT_cntl_init()
 {

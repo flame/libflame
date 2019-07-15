@@ -10,12 +10,12 @@
 
 #include "FLAME.h"
 
-extern fla_apqut_t*  flash_apqut_cntl_blas;
+extern __thread fla_apqut_t*  flash_apqut_cntl_blas;
 
-fla_lqut_t*          flash_lqut_cntl_leaf = NULL;
-fla_lqut_t*          flash_lqut_cntl = NULL;
+__thread fla_lqut_t*          flash_lqut_cntl_leaf = NULL;
+__thread fla_lqut_t*          flash_lqut_cntl = NULL;
 
-fla_blocksize_t*     flash_lqut_var3_bsize = NULL;
+__thread fla_blocksize_t*     flash_lqut_var3_bsize = NULL;
 
 void FLASH_LQ_UT_cntl_init()
 {

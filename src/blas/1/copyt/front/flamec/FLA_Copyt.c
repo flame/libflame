@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_copyt_t* fla_copyt_cntl_blas;
+extern __thread fla_copyt_t* fla_copyt_cntl_blas;
 
 FLA_Error FLA_Copyt( FLA_Trans trans, FLA_Obj A, FLA_Obj B )
 {

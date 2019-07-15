@@ -10,11 +10,11 @@
 
 #include "FLAME.h"
 
-fla_copyt_t*       flash_copyt_cntl_blas = NULL;
-fla_copyt_t*       flash_copyt_cntl_tb;
-fla_copyt_t*       flash_copyt_cntl_lr;
-fla_copyt_t*       flash_copyt_cntl;
-fla_blocksize_t*   flash_copyt_bsize;
+__thread fla_copyt_t*       flash_copyt_cntl_blas = NULL;
+__thread fla_copyt_t*       flash_copyt_cntl_tb;
+__thread fla_copyt_t*       flash_copyt_cntl_lr;
+__thread fla_copyt_t*       flash_copyt_cntl;
+__thread fla_blocksize_t*   flash_copyt_bsize;
 
 void FLASH_Copyt_cntl_init()
 {

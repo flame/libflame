@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern fla_eig_gest_t* fla_eig_gest_ix_cntl_leaf;
-extern fla_eig_gest_t* fla_eig_gest_nx_cntl_leaf;
+extern __thread fla_eig_gest_t* fla_eig_gest_ix_cntl_leaf;
+extern __thread fla_eig_gest_t* fla_eig_gest_nx_cntl_leaf;
 
 FLA_Error FLA_Eig_gest_task( FLA_Inv inv, FLA_Uplo uplo, FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_gest_t* cntl )
 {

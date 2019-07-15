@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_trmm_t* flash_trmm_cntl_mm;
+extern __thread fla_trmm_t* flash_trmm_cntl_mm;
 
 FLA_Error FLASH_Trmm( FLA_Side side, FLA_Uplo uplo, FLA_Trans trans, FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B )
 {

@@ -10,14 +10,14 @@
 
 #include "FLAME.h"
 
-extern fla_scal_t* flash_scal_cntl;
-extern fla_gemm_t* flash_gemm_cntl_op_bp;
+extern __thread fla_scal_t* flash_scal_cntl;
+extern __thread fla_gemm_t* flash_gemm_cntl_op_bp;
 
-fla_trmm_t*        flash_trmm_cntl_blas = NULL;
-fla_trmm_t*        flash_trmm_cntl_bp = NULL;
-fla_trmm_t*        flash_trmm_cntl_mp = NULL;
-fla_trmm_t*        flash_trmm_cntl_mm = NULL;
-fla_blocksize_t*   flash_trmm_bsize = NULL;
+__thread fla_trmm_t*        flash_trmm_cntl_blas = NULL;
+__thread fla_trmm_t*        flash_trmm_cntl_bp = NULL;
+__thread fla_trmm_t*        flash_trmm_cntl_mp = NULL;
+__thread fla_trmm_t*        flash_trmm_cntl_mm = NULL;
+__thread fla_blocksize_t*   flash_trmm_bsize = NULL;
 
 void FLASH_Trmm_cntl_init()
 {

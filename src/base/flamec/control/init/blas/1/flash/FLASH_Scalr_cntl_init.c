@@ -10,11 +10,11 @@
 
 #include "FLAME.h"
 
-extern fla_scal_t* flash_scal_cntl_tb;
+extern __thread fla_scal_t* flash_scal_cntl_tb;
 
-fla_scalr_t*       flash_scalr_cntl_blas = NULL;
-fla_scalr_t*       flash_scalr_cntl;
-fla_blocksize_t*   flash_scalr_bsize;
+__thread fla_scalr_t*       flash_scalr_cntl_blas = NULL;
+__thread fla_scalr_t*       flash_scalr_cntl;
+__thread fla_blocksize_t*   flash_scalr_bsize;
 
 void FLASH_Scalr_cntl_init()
 {

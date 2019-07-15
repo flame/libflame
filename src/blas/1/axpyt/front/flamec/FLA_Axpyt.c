@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_axpyt_t* fla_axpyt_cntl_blas;
+extern __thread fla_axpyt_t* fla_axpyt_cntl_blas;
 
 FLA_Error FLA_Axpyt( FLA_Trans trans, FLA_Obj alpha, FLA_Obj A, FLA_Obj B )
 {

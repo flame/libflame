@@ -10,9 +10,9 @@
 
 #include "FLAME.h"
 
-extern fla_tridiagut_t* fla_tridiagut_cntl_fused;
-extern fla_tridiagut_t* fla_tridiagut_cntl_nofus;
-extern fla_tridiagut_t* fla_tridiagut_cntl_plain;
+extern __thread fla_tridiagut_t* fla_tridiagut_cntl_fused;
+extern __thread fla_tridiagut_t* fla_tridiagut_cntl_nofus;
+extern __thread fla_tridiagut_t* fla_tridiagut_cntl_plain;
 
 FLA_Error FLA_Tridiag_UT( FLA_Uplo uplo, FLA_Obj A, FLA_Obj T )
 {

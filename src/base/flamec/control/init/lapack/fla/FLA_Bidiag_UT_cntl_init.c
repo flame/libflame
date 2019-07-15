@@ -10,11 +10,11 @@
 
 #include "FLAME.h"
 
-fla_bidiagut_t*    fla_bidiagut_cntl_fused = NULL;
-fla_bidiagut_t*    fla_bidiagut_cntl_nofus = NULL;
-fla_bidiagut_t*    fla_bidiagut_cntl_plain = NULL;
+__thread fla_bidiagut_t*    fla_bidiagut_cntl_fused = NULL;
+__thread fla_bidiagut_t*    fla_bidiagut_cntl_nofus = NULL;
+__thread fla_bidiagut_t*    fla_bidiagut_cntl_plain = NULL;
 
-fla_blocksize_t*   fla_bidiagut_bsize_leaf = NULL;
+__thread fla_blocksize_t*   fla_bidiagut_bsize_leaf = NULL;
 
 void FLA_Bidiag_UT_cntl_init()
 {

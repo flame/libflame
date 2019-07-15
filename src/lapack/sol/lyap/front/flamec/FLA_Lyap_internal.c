@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern fla_lyap_t* flash_lyap_cntl;
-extern fla_lyap_t* fla_lyap_cntl_leaf;
+extern __thread fla_lyap_t* flash_lyap_cntl;
+extern __thread fla_lyap_t* fla_lyap_cntl_leaf;
 
 FLA_Error FLA_Lyap_internal( FLA_Trans trans, FLA_Obj isgn, FLA_Obj A, FLA_Obj C, FLA_Obj scale, fla_lyap_t* cntl )
 {

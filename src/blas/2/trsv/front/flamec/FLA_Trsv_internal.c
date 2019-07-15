@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern fla_trsv_t* flash_trsv_cntl_blas;
-extern fla_trsv_t* flash_trsv_cntl;
+extern __thread fla_trsv_t* flash_trsv_cntl_blas;
+extern __thread fla_trsv_t* flash_trsv_cntl;
 
 FLA_Error FLA_Trsv_internal( FLA_Uplo uplo, FLA_Trans transa, FLA_Diag diag, FLA_Obj A, FLA_Obj x, fla_trsv_t* cntl )
 {

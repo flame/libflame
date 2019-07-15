@@ -10,31 +10,31 @@
 
 #include "FLAME.h"
 
-extern fla_scal_t* flash_scal_cntl;
+extern __thread fla_scal_t* flash_scal_cntl;
 
-fla_gemm_t*      flash_gemm_cntl_blas = NULL;
-fla_gemm_t*      flash_gemm_cntl_mm_mp = NULL;
-fla_gemm_t*      flash_gemm_cntl_mm_pm = NULL;
-fla_gemm_t*      flash_gemm_cntl_mm_op = NULL;
-fla_gemm_t*      flash_gemm_cntl_mp_pb = NULL;
-fla_gemm_t*      flash_gemm_cntl_mp_ip = NULL;
-fla_gemm_t*      flash_gemm_cntl_pm_bp = NULL;
-fla_gemm_t*      flash_gemm_cntl_pm_ip = NULL;
-fla_gemm_t*      flash_gemm_cntl_op_bp = NULL;
-fla_gemm_t*      flash_gemm_cntl_op_pb = NULL;
-fla_gemm_t*      flash_gemm_cntl_pb_bb = NULL;
-fla_gemm_t*      flash_gemm_cntl_bp_bb = NULL;
-fla_gemm_t*      flash_gemm_cntl_ip_bb = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_blas = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_mm_mp = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_mm_pm = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_mm_op = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_mp_pb = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_mp_ip = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_pm_bp = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_pm_ip = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_op_bp = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_op_pb = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_pb_bb = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_bp_bb = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_ip_bb = NULL;
 
-fla_gemm_t*      flash_gemm_cntl_mm = NULL;
-fla_gemm_t*      flash_gemm_cntl_mp = NULL;
-fla_gemm_t*      flash_gemm_cntl_pm = NULL;
-fla_gemm_t*      flash_gemm_cntl_op = NULL;
-fla_gemm_t*      flash_gemm_cntl_pb = NULL;
-fla_gemm_t*      flash_gemm_cntl_bp = NULL;
-fla_gemm_t*      flash_gemm_cntl_ip = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_mm = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_mp = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_pm = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_op = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_pb = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_bp = NULL;
+__thread fla_gemm_t*      flash_gemm_cntl_ip = NULL;
 
-fla_blocksize_t* flash_gemm_bsize;
+__thread fla_blocksize_t* flash_gemm_bsize;
 
 void FLASH_Gemm_cntl_init()
 {

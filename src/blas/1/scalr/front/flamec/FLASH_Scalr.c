@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_scalr_t* flash_scalr_cntl;
+extern __thread fla_scalr_t* flash_scalr_cntl;
 
 FLA_Error FLASH_Scalr( FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A )
 {

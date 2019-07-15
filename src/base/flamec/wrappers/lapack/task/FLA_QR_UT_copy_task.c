@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_qrut_t* fla_qrut_cntl_leaf;
+extern __thread fla_qrut_t* fla_qrut_cntl_leaf;
 
 FLA_Error FLA_QR_UT_copy_task( FLA_Obj A, FLA_Obj T, FLA_Obj U, fla_qrut_t* cntl )
 {

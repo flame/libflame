@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_axpy_t* flash_axpy_cntl;
+extern __thread fla_axpy_t* flash_axpy_cntl;
 
 FLA_Error FLASH_Axpy( FLA_Obj alpha, FLA_Obj A, FLA_Obj B )
 {

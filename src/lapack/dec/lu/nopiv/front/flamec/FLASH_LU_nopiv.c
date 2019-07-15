@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_lu_t* flash_lu_nopiv_cntl;
+extern __thread fla_lu_t* flash_lu_nopiv_cntl;
 
 FLA_Error FLASH_LU_nopiv( FLA_Obj A )
 {

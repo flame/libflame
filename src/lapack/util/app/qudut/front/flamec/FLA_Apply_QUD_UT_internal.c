@@ -10,9 +10,9 @@
 
 #include "FLAME.h"
 
-extern fla_apqudut_t* flash_apqudut_cntl;
-extern fla_apqudut_t* flash_apqudut_cntl_leaf;
-extern fla_apqudut_t* fla_apqudut_cntl_leaf;
+extern __thread fla_apqudut_t* flash_apqudut_cntl;
+extern __thread fla_apqudut_t* flash_apqudut_cntl_leaf;
+extern __thread fla_apqudut_t* fla_apqudut_cntl_leaf;
 
 FLA_Error FLA_Apply_QUD_UT_internal( FLA_Side side, FLA_Trans trans, FLA_Direct direct, FLA_Store storev,    
                                      FLA_Obj T, FLA_Obj W,

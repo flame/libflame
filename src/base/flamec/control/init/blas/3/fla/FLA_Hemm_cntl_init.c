@@ -10,15 +10,15 @@
 
 #include "FLAME.h"
 
-extern fla_scal_t* fla_scal_cntl_blas;
-extern fla_gemm_t* fla_gemm_cntl_blas;
+extern __thread fla_scal_t* fla_scal_cntl_blas;
+extern __thread fla_gemm_t* fla_gemm_cntl_blas;
 
-fla_hemm_t*        fla_hemm_cntl_blas = NULL;
-fla_hemm_t*        fla_hemm_cntl_bp = NULL;
-fla_hemm_t*        fla_hemm_cntl_mp = NULL;
-fla_hemm_t*        fla_hemm_cntl_mm = NULL;
-fla_blocksize_t*   fla_hemm_var1_bsize = NULL;
-fla_blocksize_t*   fla_hemm_var9_bsize = NULL;
+__thread fla_hemm_t*        fla_hemm_cntl_blas = NULL;
+__thread fla_hemm_t*        fla_hemm_cntl_bp = NULL;
+__thread fla_hemm_t*        fla_hemm_cntl_mp = NULL;
+__thread fla_hemm_t*        fla_hemm_cntl_mm = NULL;
+__thread fla_blocksize_t*   fla_hemm_var1_bsize = NULL;
+__thread fla_blocksize_t*   fla_hemm_var9_bsize = NULL;
 
 void FLA_Hemm_cntl_init()
 {

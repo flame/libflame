@@ -11,32 +11,32 @@
 #include "FLAME.h"
 
 
-static FLA_Bool FLA_initialized = FALSE;
+static __thread FLA_Bool FLA_initialized = FALSE;
 
-FLA_Obj FLA_THREE = {};
-FLA_Obj FLA_TWO = {};
-FLA_Obj FLA_ONE = {};
-FLA_Obj FLA_ONE_HALF = {};
-FLA_Obj FLA_ZERO = {};
-FLA_Obj FLA_MINUS_ONE_HALF = {};
-FLA_Obj FLA_MINUS_ONE = {};
-FLA_Obj FLA_MINUS_TWO = {};
-FLA_Obj FLA_MINUS_THREE = {};
+FLA_Obj __thread FLA_THREE = {};
+FLA_Obj __thread FLA_TWO = {};
+FLA_Obj __thread FLA_ONE = {};
+FLA_Obj __thread FLA_ONE_HALF = {};
+FLA_Obj __thread FLA_ZERO = {};
+FLA_Obj __thread FLA_MINUS_ONE_HALF = {};
+FLA_Obj __thread FLA_MINUS_ONE = {};
+FLA_Obj __thread FLA_MINUS_TWO = {};
+FLA_Obj __thread FLA_MINUS_THREE = {};
 
-FLA_Obj FLA_EPSILON = {};
-FLA_Obj FLA_SAFE_MIN = {};
-FLA_Obj FLA_SAFE_MIN_SQUARE = {};
-FLA_Obj FLA_SAFE_INV_MIN = {};
-FLA_Obj FLA_SAFE_INV_MIN_SQUARE = {};
-FLA_Obj FLA_UNDERFLOW_THRES = {};
-FLA_Obj FLA_OVERFLOW_THRES = {};
-FLA_Obj FLA_UNDERFLOW_SQUARE_THRES = {};
-FLA_Obj FLA_OVERFLOW_SQUARE_THRES = {};
+FLA_Obj __thread FLA_EPSILON = {};
+FLA_Obj __thread FLA_SAFE_MIN = {};
+FLA_Obj __thread FLA_SAFE_MIN_SQUARE = {};
+FLA_Obj __thread FLA_SAFE_INV_MIN = {};
+FLA_Obj __thread FLA_SAFE_INV_MIN_SQUARE = {};
+FLA_Obj __thread FLA_UNDERFLOW_THRES = {};
+FLA_Obj __thread FLA_OVERFLOW_THRES = {};
+FLA_Obj __thread FLA_UNDERFLOW_SQUARE_THRES = {};
+FLA_Obj __thread FLA_OVERFLOW_SQUARE_THRES = {};
 
-const float    fzero = 0.0f;
-const double   dzero = 0.0;
-const scomplex czero = { 0.0f, 0.0f };
-const dcomplex zzero = { 0.0 , 0.0  };
+const __thread float    fzero = 0.0f;
+const __thread double   dzero = 0.0;
+const __thread scomplex czero = { 0.0f, 0.0f };
+const __thread dcomplex zzero = { 0.0 , 0.0  };
 
 /* *************************************************************************
 

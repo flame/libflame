@@ -10,9 +10,9 @@
 
 #include "FLAME.h"
 
-extern fla_apq2ut_t* flash_apq2ut_cntl;
-extern fla_apq2ut_t* flash_apq2ut_cntl_leaf;
-extern fla_apq2ut_t* fla_apq2ut_cntl_leaf;
+extern __thread fla_apq2ut_t* flash_apq2ut_cntl;
+extern __thread fla_apq2ut_t* flash_apq2ut_cntl_leaf;
+extern __thread fla_apq2ut_t* fla_apq2ut_cntl_leaf;
 
 FLA_Error FLASH_Apply_Q2_UT( FLA_Side side, FLA_Trans trans, FLA_Direct direct, FLA_Store storev,
                              FLA_Obj D, FLA_Obj T, FLA_Obj W, FLA_Obj C,

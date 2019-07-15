@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_copy_t* flash_copy_cntl;
+extern __thread fla_copy_t* flash_copy_cntl;
 
 FLA_Error FLASH_Copy( FLA_Obj A, FLA_Obj B )
 {

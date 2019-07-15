@@ -10,12 +10,12 @@
 
 #include "FLAME.h"
 
-extern fla_gemm_t* flash_gemm_cntl_op_bp;
-extern fla_trsm_t* flash_trsm_cntl_bp;
+extern __thread fla_gemm_t* flash_gemm_cntl_op_bp;
+extern __thread fla_trsm_t* flash_trsm_cntl_bp;
 
-fla_lu_t*          flash_lu_nopiv_cntl_leaf = NULL;
-fla_lu_t*          flash_lu_nopiv_cntl = NULL;
-fla_blocksize_t*   flash_lu_nopiv_bsize = NULL;
+__thread fla_lu_t*          flash_lu_nopiv_cntl_leaf = NULL;
+__thread fla_lu_t*          flash_lu_nopiv_cntl = NULL;
+__thread fla_blocksize_t*   flash_lu_nopiv_bsize = NULL;
 
 void FLASH_LU_nopiv_cntl_init()
 {

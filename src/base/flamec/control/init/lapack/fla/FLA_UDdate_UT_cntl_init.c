@@ -10,11 +10,11 @@
 
 #include "FLAME.h"
 
-extern fla_apqudut_t* fla_apqudut_cntl_leaf;
+extern __thread fla_apqudut_t* fla_apqudut_cntl_leaf;
 
-fla_uddateut_t*       fla_uddateut_cntl_unb = NULL;
-fla_uddateut_t*       fla_uddateut_cntl_leaf = NULL;
-fla_blocksize_t*      fla_uddateut_var1_bsize = NULL;
+__thread fla_uddateut_t*       fla_uddateut_cntl_unb = NULL;
+__thread fla_uddateut_t*       fla_uddateut_cntl_leaf = NULL;
+__thread fla_blocksize_t*      fla_uddateut_var1_bsize = NULL;
 
 void FLA_UDdate_UT_cntl_init()
 {

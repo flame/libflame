@@ -10,10 +10,10 @@
 
 #include "FLAME.h"
 
-fla_axpy_t*        flash_axpy_cntl_blas = NULL;
-fla_axpy_t*        flash_axpy_cntl_tb;
-fla_axpy_t*        flash_axpy_cntl;
-fla_blocksize_t*   flash_axpy_bsize;
+__thread fla_axpy_t*        flash_axpy_cntl_blas = NULL;
+__thread fla_axpy_t*        flash_axpy_cntl_tb;
+__thread fla_axpy_t*        flash_axpy_cntl;
+__thread fla_blocksize_t*   flash_axpy_bsize;
 
 void FLASH_Axpy_cntl_init()
 {

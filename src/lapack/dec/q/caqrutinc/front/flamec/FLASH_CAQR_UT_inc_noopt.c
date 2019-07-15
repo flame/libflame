@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_caqrutinc_t* flash_caqrutinc_cntl;
+extern __thread fla_caqrutinc_t* flash_caqrutinc_cntl;
 
 FLA_Error FLASH_CAQR_UT_inc_noopt( dim_t p, FLA_Obj A, FLA_Obj ATW, FLA_Obj R, FLA_Obj RTW )
 {

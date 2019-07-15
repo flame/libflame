@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_apq2ut_t* fla_apq2ut_cntl_leaf;
+extern __thread fla_apq2ut_t* fla_apq2ut_cntl_leaf;
 
 FLA_Error FLA_Apply_Q2_UT_lnfc( FLA_Obj D, FLA_Obj T, FLA_Obj W, FLA_Obj C,
                                                                  FLA_Obj E, fla_apq2ut_t* cntl )

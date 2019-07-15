@@ -10,12 +10,12 @@
 
 #include "FLAME.h"
 
-extern fla_qrut_t*   fla_qrut_cntl_leaf;
-extern fla_apqut_t*  fla_apqut_cntl_leaf;
-extern fla_qr2ut_t*  fla_qr2ut_cntl_leaf;
-extern fla_apq2ut_t* fla_apq2ut_cntl_leaf;
+extern __thread fla_qrut_t*   fla_qrut_cntl_leaf;
+extern __thread fla_apqut_t*  fla_apqut_cntl_leaf;
+extern __thread fla_qr2ut_t*  fla_qr2ut_cntl_leaf;
+extern __thread fla_apq2ut_t* fla_apq2ut_cntl_leaf;
 
-extern fla_qrutinc_t* flash_qrutinc_cntl;
+extern __thread fla_qrutinc_t* flash_qrutinc_cntl;
 
 FLA_Error FLASH_QR_UT_inc_opt1( FLA_Obj A, FLA_Obj TW )
 {

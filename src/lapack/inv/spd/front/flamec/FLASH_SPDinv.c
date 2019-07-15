@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_spdinv_t* flash_spdinv_cntl;
+extern __thread fla_spdinv_t* flash_spdinv_cntl;
 
 FLA_Error FLASH_SPDinv( FLA_Uplo uplo, FLA_Obj A )
 {

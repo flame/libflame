@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern fla_lu_t* flash_lu_nopiv_cntl;
-extern fla_lu_t* fla_lu_nopiv_cntl_leaf;
+extern __thread fla_lu_t* flash_lu_nopiv_cntl;
+extern __thread fla_lu_t* fla_lu_nopiv_cntl_leaf;
 
 FLA_Error FLA_LU_nopiv_internal( FLA_Obj A, fla_lu_t* cntl )
 {

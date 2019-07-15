@@ -10,16 +10,16 @@
 
 #include "FLAME.h"
 
-extern fla_scal_t*  flash_scal_cntl;
-extern fla_gemm_t*  flash_gemm_cntl_pm;
-extern fla_hemm_t*  flash_hemm_cntl_mp;
-extern fla_her2k_t* flash_her2k_cntl_ip;
+extern __thread fla_scal_t*  flash_scal_cntl;
+extern __thread fla_gemm_t*  flash_gemm_cntl_pm;
+extern __thread fla_hemm_t*  flash_hemm_cntl_mp;
+extern __thread fla_her2k_t* flash_her2k_cntl_ip;
 
-extern fla_sylv_t*  flash_sylv_cntl;
+extern __thread fla_sylv_t*  flash_sylv_cntl;
 
-fla_lyap_t*         flash_lyap_cntl_leaf = NULL;
-fla_lyap_t*         flash_lyap_cntl = NULL;
-fla_blocksize_t*    flash_lyap_bsize = NULL;
+__thread fla_lyap_t*         flash_lyap_cntl_leaf = NULL;
+__thread fla_lyap_t*         flash_lyap_cntl = NULL;
+__thread fla_blocksize_t*    flash_lyap_bsize = NULL;
 
 void FLASH_Lyap_cntl_init()
 {

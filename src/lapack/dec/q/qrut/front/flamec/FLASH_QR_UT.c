@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern fla_qrut_t*   flash_qrut_cntl;
-extern fla_qrut_t*   fla_qrut_cntl_leaf;
+extern __thread fla_qrut_t*   flash_qrut_cntl;
+extern __thread fla_qrut_t*   fla_qrut_cntl_leaf;
 
 FLA_Error FLASH_QR_UT( FLA_Obj A, FLA_Obj TW )
 {

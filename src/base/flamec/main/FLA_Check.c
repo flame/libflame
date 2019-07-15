@@ -11,7 +11,7 @@
 #include "FLAME.h"
 
 
-static unsigned int fla_error_checking_level = FLA_INTERNAL_ERROR_CHECKING_LEVEL;
+static __thread unsigned int fla_error_checking_level = FLA_INTERNAL_ERROR_CHECKING_LEVEL;
 
 
 

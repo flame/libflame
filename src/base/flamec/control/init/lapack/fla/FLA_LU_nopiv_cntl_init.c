@@ -10,17 +10,17 @@
 
 #include "FLAME.h"
 
-extern fla_gemm_t* fla_gemm_cntl_blas;
-extern fla_trsm_t* fla_trsm_cntl_blas;
+extern __thread fla_gemm_t* fla_gemm_cntl_blas;
+extern __thread fla_trsm_t* fla_trsm_cntl_blas;
 
-fla_lu_t*          fla_lu_nopiv_cntl = NULL;
-fla_lu_t*          fla_lu_nopiv_cntl2 = NULL;
+__thread fla_lu_t*          fla_lu_nopiv_cntl = NULL;
+__thread fla_lu_t*          fla_lu_nopiv_cntl2 = NULL;
 
-fla_lu_t*          fla_lu_nopiv_cntl_in = NULL;
-fla_lu_t*          fla_lu_nopiv_cntl_leaf = NULL;
-fla_blocksize_t*   fla_lu_nopiv_var5_bsize = NULL;
-fla_blocksize_t*   fla_lu_nopiv_var5_bsize_in = NULL;
-double             fla_lu_nopiv_var5_in_to_ou_bsize_ratio = 0.25;
+__thread fla_lu_t*          fla_lu_nopiv_cntl_in = NULL;
+__thread fla_lu_t*          fla_lu_nopiv_cntl_leaf = NULL;
+__thread fla_blocksize_t*   fla_lu_nopiv_var5_bsize = NULL;
+__thread fla_blocksize_t*   fla_lu_nopiv_var5_bsize_in = NULL;
+__thread double             fla_lu_nopiv_var5_in_to_ou_bsize_ratio = 0.25;
 
 void FLA_LU_nopiv_cntl_init()
 {

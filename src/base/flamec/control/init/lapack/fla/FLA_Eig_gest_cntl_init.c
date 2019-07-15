@@ -10,18 +10,18 @@
 
 #include "FLAME.h"
 
-extern fla_axpy_t*  fla_axpy_cntl_blas;
-extern fla_gemm_t*  fla_gemm_cntl_blas;
-extern fla_hemm_t*  fla_hemm_cntl_blas;
-extern fla_her2k_t* fla_her2k_cntl_blas;
-extern fla_trmm_t*  fla_trmm_cntl_blas;
-extern fla_trsm_t*  fla_trsm_cntl_blas;
+extern __thread fla_axpy_t*  fla_axpy_cntl_blas;
+extern __thread fla_gemm_t*  fla_gemm_cntl_blas;
+extern __thread fla_hemm_t*  fla_hemm_cntl_blas;
+extern __thread fla_her2k_t* fla_her2k_cntl_blas;
+extern __thread fla_trmm_t*  fla_trmm_cntl_blas;
+extern __thread fla_trsm_t*  fla_trsm_cntl_blas;
 
-fla_eig_gest_t*     fla_eig_gest_ix_cntl = NULL;
-fla_eig_gest_t*     fla_eig_gest_nx_cntl = NULL;
-fla_eig_gest_t*     fla_eig_gest_ix_cntl_leaf = NULL;
-fla_eig_gest_t*     fla_eig_gest_nx_cntl_leaf = NULL;
-fla_blocksize_t*    fla_eig_gest_var1_bsize = NULL;
+__thread fla_eig_gest_t*     fla_eig_gest_ix_cntl = NULL;
+__thread fla_eig_gest_t*     fla_eig_gest_nx_cntl = NULL;
+__thread fla_eig_gest_t*     fla_eig_gest_ix_cntl_leaf = NULL;
+__thread fla_eig_gest_t*     fla_eig_gest_nx_cntl_leaf = NULL;
+__thread fla_blocksize_t*    fla_eig_gest_var1_bsize = NULL;
 
 void FLA_Eig_gest_cntl_init()
 {

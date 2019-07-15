@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_trinv_t* flash_trinv_cntl;
+extern __thread fla_trinv_t* flash_trinv_cntl;
 
 FLA_Error FLASH_Trinv( FLA_Uplo uplo, FLA_Diag diag, FLA_Obj A )
 {

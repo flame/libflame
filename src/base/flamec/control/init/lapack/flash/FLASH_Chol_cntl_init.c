@@ -10,12 +10,12 @@
 
 #include "FLAME.h"
 
-extern fla_herk_t* flash_herk_cntl_op;
-extern fla_trsm_t* flash_trsm_cntl_bp;
+extern __thread fla_herk_t* flash_herk_cntl_op;
+extern __thread fla_trsm_t* flash_trsm_cntl_bp;
 
-fla_chol_t*        flash_chol_cntl_leaf = NULL;
-fla_chol_t*        flash_chol_cntl = NULL;
-fla_blocksize_t*   flash_chol_bsize = NULL;
+__thread fla_chol_t*        flash_chol_cntl_leaf = NULL;
+__thread fla_chol_t*        flash_chol_cntl = NULL;
+__thread fla_blocksize_t*   flash_chol_bsize = NULL;
 
 void FLASH_Chol_cntl_init()
 {

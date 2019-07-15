@@ -10,13 +10,13 @@
 
 #include "FLAME.h"
 
-extern fla_gemm_t* fla_gemm_cntl_blas;
-extern fla_trmm_t* fla_trmm_cntl_blas;
-extern fla_trsm_t* fla_trsm_cntl_blas;
+extern __thread fla_gemm_t* fla_gemm_cntl_blas;
+extern __thread fla_trmm_t* fla_trmm_cntl_blas;
+extern __thread fla_trsm_t* fla_trsm_cntl_blas;
 
-fla_trinv_t*       fla_trinv_cntl_leaf = NULL;
-fla_trinv_t*       fla_trinv_cntl = NULL;
-fla_blocksize_t*   fla_trinv_var3_bsize = NULL;
+__thread fla_trinv_t*       fla_trinv_cntl_leaf = NULL;
+__thread fla_trinv_t*       fla_trinv_cntl = NULL;
+__thread fla_blocksize_t*   fla_trinv_var3_bsize = NULL;
 
 void FLA_Trinv_cntl_init()
 {

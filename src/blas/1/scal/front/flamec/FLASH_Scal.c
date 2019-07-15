@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_scal_t* flash_scal_cntl;
+extern __thread fla_scal_t* flash_scal_cntl;
 
 FLA_Error FLASH_Scal( FLA_Obj alpha, FLA_Obj A )
 {

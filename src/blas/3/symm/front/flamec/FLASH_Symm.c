@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_symm_t* flash_symm_cntl_mm;
+extern __thread fla_symm_t* flash_symm_cntl_mm;
 
 FLA_Error FLASH_Symm( FLA_Side side, FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, FLA_Obj beta, FLA_Obj C )
 {

@@ -10,14 +10,14 @@
 
 #include "FLAME.h"
 
-extern fla_scalr_t* flash_scalr_cntl;
-extern fla_gemm_t*  flash_gemm_cntl_pb_bb;
+extern __thread fla_scalr_t* flash_scalr_cntl;
+extern __thread fla_gemm_t*  flash_gemm_cntl_pb_bb;
 
-fla_her2k_t*        flash_her2k_cntl_blas = NULL;
-fla_her2k_t*        flash_her2k_cntl_ip = NULL;
-fla_her2k_t*        flash_her2k_cntl_op = NULL;
-fla_her2k_t*        flash_her2k_cntl_mm = NULL;
-fla_blocksize_t*    flash_her2k_bsize = NULL;
+__thread fla_her2k_t*        flash_her2k_cntl_blas = NULL;
+__thread fla_her2k_t*        flash_her2k_cntl_ip = NULL;
+__thread fla_her2k_t*        flash_her2k_cntl_op = NULL;
+__thread fla_her2k_t*        flash_her2k_cntl_mm = NULL;
+__thread fla_blocksize_t*    flash_her2k_bsize = NULL;
 
 void FLASH_Her2k_cntl_init()
 {
