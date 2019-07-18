@@ -149,13 +149,6 @@ int main(int argc, char *argv[])
   FLA_Finalize( );
     }
 
- //   sleep(5);
-    printf("EEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE\n");
-//    double *buff_A = ( double * ) FLA_DOUBLE_PTR( A[2] );
-
-//    int ij;
-//    for(ij = 0; ij < n; ij++)
-//	printf("%d %d %lf %lf %lf %lf\n", n, ij, buff_A[4 * ij + 0], buff_A[4 * ij + 1], buff_A[4 * ij + 2], buff_A[4 * ij + 3]);
 
     printf( "data_FLAME( %d, 1:2 ) = [ %d %le ];\n", i, n,
             gflops / dtime_best );
