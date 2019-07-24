@@ -72,7 +72,7 @@ LIBLAPACK      :=
 
 TEST_SRC_PATH  := lu
 TEST_SRC := driver
-TEST_SRC := dgetrf_test_gen
+#TEST_SRC := dgetrf_test_gen
 TEST_OBJ_PATH  := obj
 
 #FLA_LIB_PATH   := $(INSTALL_PREFIX)/lib
