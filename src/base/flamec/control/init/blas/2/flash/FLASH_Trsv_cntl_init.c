@@ -10,11 +10,11 @@
 
 #include "FLAME.h"
 
-extern __thread fla_gemv_t* flash_gemv_cntl_cp_bv;
+extern TLS_CLASS_SPEC fla_gemv_t* flash_gemv_cntl_cp_bv;
 
-__thread fla_trsv_t*        flash_trsv_cntl_blas = NULL;
-__thread fla_trsv_t*        flash_trsv_cntl;
-__thread fla_blocksize_t*   flash_trsv_bsize;
+TLS_CLASS_SPEC fla_trsv_t*        flash_trsv_cntl_blas = NULL;
+TLS_CLASS_SPEC fla_trsv_t*        flash_trsv_cntl;
+TLS_CLASS_SPEC fla_blocksize_t*   flash_trsv_bsize;
 
 void FLASH_Trsv_cntl_init()
 {

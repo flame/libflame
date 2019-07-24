@@ -10,12 +10,12 @@
 
 #include "FLAME.h"
 
-extern __thread fla_apqut_t*  flash_apqut_cntl_blas;
+extern TLS_CLASS_SPEC fla_apqut_t*  flash_apqut_cntl_blas;
 
-__thread fla_lqut_t*          flash_lqut_cntl_leaf = NULL;
-__thread fla_lqut_t*          flash_lqut_cntl = NULL;
+TLS_CLASS_SPEC fla_lqut_t*          flash_lqut_cntl_leaf = NULL;
+TLS_CLASS_SPEC fla_lqut_t*          flash_lqut_cntl = NULL;
 
-__thread fla_blocksize_t*     flash_lqut_var3_bsize = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*     flash_lqut_var3_bsize = NULL;
 
 void FLASH_LQ_UT_cntl_init()
 {

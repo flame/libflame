@@ -10,9 +10,9 @@
 
 #include "FLAME.h"
 
-__thread fla_qr2ut_t*     flash_qr2ut_cntl_leaf = NULL;
-__thread fla_qr2ut_t*     flash_qr2ut_cntl = NULL;
-__thread fla_blocksize_t* flash_qr2ut_var2_bsize = NULL;
+TLS_CLASS_SPEC fla_qr2ut_t*     flash_qr2ut_cntl_leaf = NULL;
+TLS_CLASS_SPEC fla_qr2ut_t*     flash_qr2ut_cntl = NULL;
+TLS_CLASS_SPEC fla_blocksize_t* flash_qr2ut_var2_bsize = NULL;
 
 void FLASH_QR2_UT_cntl_init()
 {

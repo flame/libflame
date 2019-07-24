@@ -15,7 +15,7 @@
 
 #define FLA_ALG_REFERENCE 0
 
-extern __thread int blas_cpu_number;
+extern TLS_CLASS_SPEC int blas_cpu_number;
 void       blas_thread_init(void);
 
 void time_Gemm_nn(

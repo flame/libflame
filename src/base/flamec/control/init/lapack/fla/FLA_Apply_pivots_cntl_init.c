@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-__thread fla_appiv_t* fla_appiv_cntl_leaf = NULL;
+TLS_CLASS_SPEC fla_appiv_t* fla_appiv_cntl_leaf = NULL;
 
 void FLA_Apply_pivots_cntl_init()
 {

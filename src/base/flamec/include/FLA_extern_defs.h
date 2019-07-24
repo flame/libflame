@@ -11,30 +11,30 @@
 #ifndef FLA_EXTERN_DEFS_H
 #define FLA_EXTERN_DEFS_H
 
-extern __thread FLA_Obj FLA_THREE;
-extern __thread FLA_Obj FLA_TWO;
-extern __thread FLA_Obj FLA_ONE;
-extern __thread FLA_Obj FLA_ONE_HALF;
-extern __thread FLA_Obj FLA_ZERO;
-extern __thread FLA_Obj FLA_MINUS_ONE_HALF;
-extern __thread FLA_Obj FLA_MINUS_ONE;
-extern __thread FLA_Obj FLA_MINUS_TWO;
-extern __thread FLA_Obj FLA_MINUS_THREE;
+extern TLS_CLASS_SPEC FLA_Obj FLA_THREE;
+extern TLS_CLASS_SPEC FLA_Obj FLA_TWO;
+extern TLS_CLASS_SPEC FLA_Obj FLA_ONE;
+extern TLS_CLASS_SPEC FLA_Obj FLA_ONE_HALF;
+extern TLS_CLASS_SPEC FLA_Obj FLA_ZERO;
+extern TLS_CLASS_SPEC FLA_Obj FLA_MINUS_ONE_HALF;
+extern TLS_CLASS_SPEC FLA_Obj FLA_MINUS_ONE;
+extern TLS_CLASS_SPEC FLA_Obj FLA_MINUS_TWO;
+extern TLS_CLASS_SPEC FLA_Obj FLA_MINUS_THREE;
 
-extern __thread FLA_Obj FLA_EPSILON;
-extern __thread FLA_Obj FLA_SAFE_MIN;
-extern __thread FLA_Obj FLA_SAFE_MIN_SQUARE;
-extern __thread FLA_Obj FLA_SAFE_INV_MIN;
-extern __thread FLA_Obj FLA_SAFE_INV_MIN_SQUARE;
-extern __thread FLA_Obj FLA_UNDERFLOW_THRES;
-extern __thread FLA_Obj FLA_OVERFLOW_THRES;
-extern __thread FLA_Obj FLA_UNDERFLOW_SQUARE_THRES;
-extern __thread FLA_Obj FLA_OVERFLOW_SQUARE_THRES;
+extern TLS_CLASS_SPEC FLA_Obj FLA_EPSILON;
+extern TLS_CLASS_SPEC FLA_Obj FLA_SAFE_MIN;
+extern TLS_CLASS_SPEC FLA_Obj FLA_SAFE_MIN_SQUARE;
+extern TLS_CLASS_SPEC FLA_Obj FLA_SAFE_INV_MIN;
+extern TLS_CLASS_SPEC FLA_Obj FLA_SAFE_INV_MIN_SQUARE;
+extern TLS_CLASS_SPEC FLA_Obj FLA_UNDERFLOW_THRES;
+extern TLS_CLASS_SPEC FLA_Obj FLA_OVERFLOW_THRES;
+extern TLS_CLASS_SPEC FLA_Obj FLA_UNDERFLOW_SQUARE_THRES;
+extern TLS_CLASS_SPEC FLA_Obj FLA_OVERFLOW_SQUARE_THRES;
 
-extern __thread const float    fzero;
-extern __thread const double   dzero;
-extern __thread const scomplex czero;
-extern __thread const dcomplex zzero;
+extern TLS_CLASS_SPEC const float    fzero;
+extern TLS_CLASS_SPEC const double   dzero;
+extern TLS_CLASS_SPEC const scomplex czero;
+extern TLS_CLASS_SPEC const dcomplex zzero;
 
 #endif
 

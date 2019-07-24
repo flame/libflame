@@ -39,7 +39,7 @@ INC_PATH        := $(INCLUDE_DIR)/$(HOST)/
 # CC             := gcc
 # LINKER         := $(CC)
 # CFLAGS         := -g -O2 -Wall -Wno-comment
- CFLAGS         := -g -O2 -Wall -Wno-comment -fopenmp
+CFLAGS         := -g -O2 -Wall -Wno-comment -fopenmp
 LDFLAGS        := -lm -fopenmp -lgfortran 
 # INSTALL_PREFIX := $(HOME)/flame
 
@@ -71,8 +71,8 @@ LIBLAPACK      :=
 #
 
 TEST_SRC_PATH  := lu
-TEST_SRC := driver
-#TEST_SRC := dgetrf_test_gen
+#TEST_SRC := driver
+TEST_SRC := dgetrf_test_gen
 TEST_OBJ_PATH  := obj
 
 #FLA_LIB_PATH   := $(INSTALL_PREFIX)/lib

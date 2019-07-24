@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern __thread fla_lyap_t* fla_lyap_cntl;
+extern TLS_CLASS_SPEC fla_lyap_t* fla_lyap_cntl;
 
 FLA_Error FLA_Lyap( FLA_Trans trans, FLA_Obj isgn, FLA_Obj A, FLA_Obj C, FLA_Obj scale )
 {

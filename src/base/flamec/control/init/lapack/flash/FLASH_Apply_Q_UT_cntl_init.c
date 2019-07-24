@@ -10,19 +10,19 @@
 
 #include "FLAME.h"
 
-extern __thread fla_trmm_t*  flash_trmm_cntl_bp;
-extern __thread fla_trmm_t*  flash_trmm_cntl_bp;
-extern __thread fla_gemm_t*  flash_gemm_cntl_pm;
-extern __thread fla_gemm_t*  flash_gemm_cntl_op;
-extern __thread fla_trsm_t*  flash_trsm_cntl_bp;
-extern __thread fla_copyt_t*  flash_copyt_cntl;
-extern __thread fla_axpyt_t*  flash_axpyt_cntl;
+extern TLS_CLASS_SPEC fla_trmm_t*  flash_trmm_cntl_bp;
+extern TLS_CLASS_SPEC fla_trmm_t*  flash_trmm_cntl_bp;
+extern TLS_CLASS_SPEC fla_gemm_t*  flash_gemm_cntl_pm;
+extern TLS_CLASS_SPEC fla_gemm_t*  flash_gemm_cntl_op;
+extern TLS_CLASS_SPEC fla_trsm_t*  flash_trsm_cntl_bp;
+extern TLS_CLASS_SPEC fla_copyt_t*  flash_copyt_cntl;
+extern TLS_CLASS_SPEC fla_axpyt_t*  flash_axpyt_cntl;
 
-__thread fla_apqut_t*        flash_apqut_cntl_leaf = NULL;
-__thread fla_apqut_t*        flash_apqut_cntl = NULL;
-__thread fla_apqut_t*        flash_apqut_cntl_blas = NULL;
-__thread fla_blocksize_t*    flash_apqut_var1_bsize = NULL;
-__thread fla_blocksize_t*    flash_apqut_var2_bsize = NULL;
+TLS_CLASS_SPEC fla_apqut_t*        flash_apqut_cntl_leaf = NULL;
+TLS_CLASS_SPEC fla_apqut_t*        flash_apqut_cntl = NULL;
+TLS_CLASS_SPEC fla_apqut_t*        flash_apqut_cntl_blas = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*    flash_apqut_var1_bsize = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*    flash_apqut_var2_bsize = NULL;
 
 void FLASH_Apply_Q_UT_cntl_init()
 {

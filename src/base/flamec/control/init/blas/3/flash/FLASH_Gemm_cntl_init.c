@@ -10,31 +10,31 @@
 
 #include "FLAME.h"
 
-extern __thread fla_scal_t* flash_scal_cntl;
+extern TLS_CLASS_SPEC fla_scal_t* flash_scal_cntl;
 
-__thread fla_gemm_t*      flash_gemm_cntl_blas = NULL;
-__thread fla_gemm_t*      flash_gemm_cntl_mm_mp = NULL;
-__thread fla_gemm_t*      flash_gemm_cntl_mm_pm = NULL;
-__thread fla_gemm_t*      flash_gemm_cntl_mm_op = NULL;
-__thread fla_gemm_t*      flash_gemm_cntl_mp_pb = NULL;
-__thread fla_gemm_t*      flash_gemm_cntl_mp_ip = NULL;
-__thread fla_gemm_t*      flash_gemm_cntl_pm_bp = NULL;
-__thread fla_gemm_t*      flash_gemm_cntl_pm_ip = NULL;
-__thread fla_gemm_t*      flash_gemm_cntl_op_bp = NULL;
-__thread fla_gemm_t*      flash_gemm_cntl_op_pb = NULL;
-__thread fla_gemm_t*      flash_gemm_cntl_pb_bb = NULL;
-__thread fla_gemm_t*      flash_gemm_cntl_bp_bb = NULL;
-__thread fla_gemm_t*      flash_gemm_cntl_ip_bb = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_blas = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_mm_mp = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_mm_pm = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_mm_op = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_mp_pb = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_mp_ip = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_pm_bp = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_pm_ip = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_op_bp = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_op_pb = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_pb_bb = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_bp_bb = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_ip_bb = NULL;
 
-__thread fla_gemm_t*      flash_gemm_cntl_mm = NULL;
-__thread fla_gemm_t*      flash_gemm_cntl_mp = NULL;
-__thread fla_gemm_t*      flash_gemm_cntl_pm = NULL;
-__thread fla_gemm_t*      flash_gemm_cntl_op = NULL;
-__thread fla_gemm_t*      flash_gemm_cntl_pb = NULL;
-__thread fla_gemm_t*      flash_gemm_cntl_bp = NULL;
-__thread fla_gemm_t*      flash_gemm_cntl_ip = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_mm = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_mp = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_pm = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_op = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_pb = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_bp = NULL;
+TLS_CLASS_SPEC fla_gemm_t*      flash_gemm_cntl_ip = NULL;
 
-__thread fla_blocksize_t* flash_gemm_bsize;
+TLS_CLASS_SPEC fla_blocksize_t* flash_gemm_bsize;
 
 void FLASH_Gemm_cntl_init()
 {

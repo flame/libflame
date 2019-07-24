@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern __thread fla_axpy_t* flash_axpy_cntl;
+extern TLS_CLASS_SPEC fla_axpy_t* flash_axpy_cntl;
 
 FLA_Error FLASH_Axpy( FLA_Obj alpha, FLA_Obj A, FLA_Obj B )
 {

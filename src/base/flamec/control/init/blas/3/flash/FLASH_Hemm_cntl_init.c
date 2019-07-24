@@ -10,16 +10,16 @@
 
 #include "FLAME.h"
 
-extern __thread fla_scal_t* flash_scal_cntl;
-extern __thread fla_gemm_t* flash_gemm_cntl_op_bp;
-extern __thread fla_gemm_t* flash_gemm_cntl_mm_pm;
-extern __thread fla_gemm_t* flash_gemm_cntl_mm_mp;
+extern TLS_CLASS_SPEC fla_scal_t* flash_scal_cntl;
+extern TLS_CLASS_SPEC fla_gemm_t* flash_gemm_cntl_op_bp;
+extern TLS_CLASS_SPEC fla_gemm_t* flash_gemm_cntl_mm_pm;
+extern TLS_CLASS_SPEC fla_gemm_t* flash_gemm_cntl_mm_mp;
 
-__thread fla_hemm_t*        flash_hemm_cntl_blas = NULL;
-__thread fla_hemm_t*        flash_hemm_cntl_bp = NULL;
-__thread fla_hemm_t*        flash_hemm_cntl_mp = NULL;
-__thread fla_hemm_t*        flash_hemm_cntl_mm = NULL;
-__thread fla_blocksize_t*   flash_hemm_bsize = NULL;
+TLS_CLASS_SPEC fla_hemm_t*        flash_hemm_cntl_blas = NULL;
+TLS_CLASS_SPEC fla_hemm_t*        flash_hemm_cntl_bp = NULL;
+TLS_CLASS_SPEC fla_hemm_t*        flash_hemm_cntl_mp = NULL;
+TLS_CLASS_SPEC fla_hemm_t*        flash_hemm_cntl_mm = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*   flash_hemm_bsize = NULL;
 
 void FLASH_Hemm_cntl_init()
 {

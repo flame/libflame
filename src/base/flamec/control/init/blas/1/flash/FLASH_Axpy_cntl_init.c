@@ -10,10 +10,10 @@
 
 #include "FLAME.h"
 
-__thread fla_axpy_t*        flash_axpy_cntl_blas = NULL;
-__thread fla_axpy_t*        flash_axpy_cntl_tb;
-__thread fla_axpy_t*        flash_axpy_cntl;
-__thread fla_blocksize_t*   flash_axpy_bsize;
+TLS_CLASS_SPEC fla_axpy_t*        flash_axpy_cntl_blas = NULL;
+TLS_CLASS_SPEC fla_axpy_t*        flash_axpy_cntl_tb;
+TLS_CLASS_SPEC fla_axpy_t*        flash_axpy_cntl;
+TLS_CLASS_SPEC fla_blocksize_t*   flash_axpy_bsize;
 
 void FLASH_Axpy_cntl_init()
 {

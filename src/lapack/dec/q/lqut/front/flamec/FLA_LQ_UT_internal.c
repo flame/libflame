@@ -10,9 +10,9 @@
 
 #include "FLAME.h"
 
-extern __thread fla_lqut_t* flash_lqut_cntl;
-extern __thread fla_lqut_t* flash_lqut_cntl_leaf;
-extern __thread fla_lqut_t* fla_lqut_cntl_leaf;
+extern TLS_CLASS_SPEC fla_lqut_t* flash_lqut_cntl;
+extern TLS_CLASS_SPEC fla_lqut_t* flash_lqut_cntl_leaf;
+extern TLS_CLASS_SPEC fla_lqut_t* fla_lqut_cntl_leaf;
 
 FLA_Error FLA_LQ_UT_internal( FLA_Obj A, FLA_Obj T, fla_lqut_t* cntl )
 {

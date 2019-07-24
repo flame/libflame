@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern __thread fla_apq2ut_t* fla_apq2ut_cntl_leaf;
+extern TLS_CLASS_SPEC fla_apq2ut_t* fla_apq2ut_cntl_leaf;
 
 FLA_Error FLA_Apply_Q2_UT_task( FLA_Side side, FLA_Trans trans, FLA_Direct direct, FLA_Store storev,
                                 FLA_Obj D, FLA_Obj T, FLA_Obj W, FLA_Obj C,

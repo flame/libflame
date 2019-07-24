@@ -10,11 +10,11 @@
 
 #include "FLAME.h"
 
-extern __thread fla_caqr2ut_t*  flash_caqr2ut_cntl;
-extern __thread fla_apcaq2ut_t* flash_apcaq2ut_cntl;
+extern TLS_CLASS_SPEC fla_caqr2ut_t*  flash_caqr2ut_cntl;
+extern TLS_CLASS_SPEC fla_apcaq2ut_t* flash_apcaq2ut_cntl;
 
-__thread fla_caqrutinc_t*     flash_caqrutinc_cntl = NULL;
-__thread fla_blocksize_t*     flash_caqrutinc_var1_bsize = NULL;
+TLS_CLASS_SPEC fla_caqrutinc_t*     flash_caqrutinc_cntl = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*     flash_caqrutinc_var1_bsize = NULL;
 
 void FLASH_CAQR_UT_inc_cntl_init()
 {

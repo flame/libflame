@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern __thread fla_caqr2ut_t* flash_caqr2ut_cntl;
-extern __thread fla_caqr2ut_t* fla_caqr2ut_cntl_leaf;
+extern TLS_CLASS_SPEC fla_caqr2ut_t* flash_caqr2ut_cntl;
+extern TLS_CLASS_SPEC fla_caqr2ut_t* fla_caqr2ut_cntl_leaf;
 
 FLA_Error FLA_CAQR2_UT_internal( FLA_Obj B,
                                  FLA_Obj D, FLA_Obj T, fla_caqr2ut_t* cntl )

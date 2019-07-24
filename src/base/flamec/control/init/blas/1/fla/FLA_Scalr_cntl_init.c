@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-__thread fla_scalr_t* fla_scalr_cntl_blas = NULL;
+TLS_CLASS_SPEC fla_scalr_t* fla_scalr_cntl_blas = NULL;
 
 void FLA_Scalr_cntl_init()
 {

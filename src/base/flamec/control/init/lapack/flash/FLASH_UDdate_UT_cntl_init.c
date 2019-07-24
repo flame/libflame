@@ -10,9 +10,9 @@
 
 #include "FLAME.h"
 
-__thread fla_uddateut_t*  flash_uddateut_cntl_leaf = NULL;
-__thread fla_uddateut_t*  flash_uddateut_cntl = NULL;
-__thread fla_blocksize_t* flash_uddateut_var2_bsize = NULL;
+TLS_CLASS_SPEC fla_uddateut_t*  flash_uddateut_cntl_leaf = NULL;
+TLS_CLASS_SPEC fla_uddateut_t*  flash_uddateut_cntl = NULL;
+TLS_CLASS_SPEC fla_blocksize_t* flash_uddateut_var2_bsize = NULL;
 
 void FLASH_UDdate_UT_cntl_init()
 {

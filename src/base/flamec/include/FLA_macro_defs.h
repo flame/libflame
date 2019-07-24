@@ -19,6 +19,14 @@
   #define restrict  __restrict
 #endif
 
+// --- Macro to enable/disable Thread Local Storage (TLS) for global variables -
+#define ENABLE_THREAD_LOCAL_STORAGE 1
+
+#if ENABLE_THREAD_LOCAL_STORAGE
+#define TLS_CLASS_SPEC __thread
+#else
+#define TLS_CLASS_SPEC
+#endif
 
 // --- Type-related macro definitions ------------------------------------------
 

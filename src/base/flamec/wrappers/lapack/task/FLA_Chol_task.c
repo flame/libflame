@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern __thread fla_chol_t* fla_chol_cntl_leaf;
+extern TLS_CLASS_SPEC fla_chol_t* fla_chol_cntl_leaf;
 
 FLA_Error FLA_Chol_task( FLA_Uplo uplo, FLA_Obj A, fla_chol_t* cntl )
 {

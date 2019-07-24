@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern __thread fla_copyr_t* flash_copyr_cntl;
+extern TLS_CLASS_SPEC fla_copyr_t* flash_copyr_cntl;
 
 FLA_Error FLASH_Copyr( FLA_Uplo uplo, FLA_Obj A, FLA_Obj B )
 {

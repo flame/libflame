@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern __thread fla_scalr_t* fla_scalr_cntl_blas;
+extern TLS_CLASS_SPEC fla_scalr_t* fla_scalr_cntl_blas;
 
 FLA_Error FLA_Scalr( FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A )
 {

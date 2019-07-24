@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern __thread fla_uddateut_t* fla_uddateut_cntl_leaf;
-extern __thread fla_apqudut_t*  fla_apqudut_cntl_leaf;
+extern TLS_CLASS_SPEC fla_uddateut_t* fla_uddateut_cntl_leaf;
+extern TLS_CLASS_SPEC fla_apqudut_t*  fla_apqudut_cntl_leaf;
 
 FLA_Error FLA_UDdate_UT( FLA_Obj R, FLA_Obj C, FLA_Obj D, FLA_Obj T )
 {

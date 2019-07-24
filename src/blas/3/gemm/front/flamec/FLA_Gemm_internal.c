@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern __thread fla_gemm_t* flash_gemm_cntl_blas;
-extern __thread fla_gemm_t* flash_gemm_cntl_mm_op;
+extern TLS_CLASS_SPEC fla_gemm_t* flash_gemm_cntl_blas;
+extern TLS_CLASS_SPEC fla_gemm_t* flash_gemm_cntl_mm_op;
 
 FLA_Error FLA_Gemm_internal( FLA_Trans transa, FLA_Trans transb, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, FLA_Obj beta, FLA_Obj C, fla_gemm_t* cntl )
 {

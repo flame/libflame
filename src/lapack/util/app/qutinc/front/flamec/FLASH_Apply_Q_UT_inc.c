@@ -10,10 +10,10 @@
 
 #include "FLAME.h"
 
-extern __thread fla_apqut_t*  fla_apqut_cntl_leaf;
-extern __thread fla_apq2ut_t* fla_apq2ut_cntl_leaf;
+extern TLS_CLASS_SPEC fla_apqut_t*  fla_apqut_cntl_leaf;
+extern TLS_CLASS_SPEC fla_apq2ut_t* fla_apq2ut_cntl_leaf;
 
-extern __thread fla_apqutinc_t* flash_apqutinc_cntl;
+extern TLS_CLASS_SPEC fla_apqutinc_t* flash_apqutinc_cntl;
 
 FLA_Error FLASH_Apply_Q_UT_inc( FLA_Side side, FLA_Trans trans, FLA_Direct direct, FLA_Store storev,
                                 FLA_Obj A, FLA_Obj TW, FLA_Obj W1, FLA_Obj B )

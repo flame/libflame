@@ -10,14 +10,14 @@
 
 #include "FLAME.h"
 
-extern __thread fla_gemm_t* fla_gemm_cntl_blas;
-extern __thread fla_trmm_t* fla_trmm_cntl_blas;
-extern __thread fla_trsm_t* fla_trsm_cntl_blas;
-extern __thread fla_axpy_t* fla_axpy_cntl_blas;
-extern __thread fla_copy_t* fla_copy_cntl_blas;
+extern TLS_CLASS_SPEC fla_gemm_t* fla_gemm_cntl_blas;
+extern TLS_CLASS_SPEC fla_trmm_t* fla_trmm_cntl_blas;
+extern TLS_CLASS_SPEC fla_trsm_t* fla_trsm_cntl_blas;
+extern TLS_CLASS_SPEC fla_axpy_t* fla_axpy_cntl_blas;
+extern TLS_CLASS_SPEC fla_copy_t* fla_copy_cntl_blas;
 
-__thread fla_apcaq2ut_t*     fla_apcaq2ut_cntl_leaf = NULL;
-__thread fla_blocksize_t*    fla_apcaq2ut_var1_bsize = NULL;
+TLS_CLASS_SPEC fla_apcaq2ut_t*     fla_apcaq2ut_cntl_leaf = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*    fla_apcaq2ut_var1_bsize = NULL;
 
 void FLA_Apply_CAQ2_UT_cntl_init()
 {

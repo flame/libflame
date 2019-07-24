@@ -335,12 +335,12 @@ void libfla_test_eig_gest_experiment( test_params_t params,
 
 
 
-extern __thread fla_axpy_t*  fla_axpy_cntl_blas;
-extern __thread fla_gemm_t*  fla_gemm_cntl_blas;
-extern __thread fla_hemm_t*  fla_hemm_cntl_blas;
-extern __thread fla_her2k_t* fla_her2k_cntl_blas;
-extern __thread fla_trmm_t*  fla_trmm_cntl_blas;
-extern __thread fla_trsm_t*  fla_trsm_cntl_blas;
+extern TLS_CLASS_SPEC fla_axpy_t*  fla_axpy_cntl_blas;
+extern TLS_CLASS_SPEC fla_gemm_t*  fla_gemm_cntl_blas;
+extern TLS_CLASS_SPEC fla_hemm_t*  fla_hemm_cntl_blas;
+extern TLS_CLASS_SPEC fla_her2k_t* fla_her2k_cntl_blas;
+extern TLS_CLASS_SPEC fla_trmm_t*  fla_trmm_cntl_blas;
+extern TLS_CLASS_SPEC fla_trsm_t*  fla_trsm_cntl_blas;
 
 void libfla_test_eig_gest_cntl_create( unsigned int var,
                                        dim_t        b_alg_flat )

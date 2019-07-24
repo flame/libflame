@@ -10,13 +10,13 @@
 
 #include "FLAME.h"
 
-extern __thread fla_gemm_t* flash_gemm_cntl_pm_bp;
-extern __thread fla_gemm_t* flash_gemm_cntl_ip_bb;
+extern TLS_CLASS_SPEC fla_gemm_t* flash_gemm_cntl_pm_bp;
+extern TLS_CLASS_SPEC fla_gemm_t* flash_gemm_cntl_ip_bb;
 
-__thread fla_sylv_t*        flash_sylv_cntl_leaf = NULL;
-__thread fla_sylv_t*        flash_sylv_cntl_mb = NULL;
-__thread fla_sylv_t*        flash_sylv_cntl = NULL;
-__thread fla_blocksize_t*   flash_sylv_bsize = NULL;
+TLS_CLASS_SPEC fla_sylv_t*        flash_sylv_cntl_leaf = NULL;
+TLS_CLASS_SPEC fla_sylv_t*        flash_sylv_cntl_mb = NULL;
+TLS_CLASS_SPEC fla_sylv_t*        flash_sylv_cntl = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*   flash_sylv_bsize = NULL;
 
 void FLASH_Sylv_cntl_init()
 {

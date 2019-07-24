@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern __thread fla_apcaqutinc_t* flash_apcaqutinc_cntl;
+extern TLS_CLASS_SPEC fla_apcaqutinc_t* flash_apcaqutinc_cntl;
 
 FLA_Error FLASH_Apply_CAQ_UT_inc( dim_t p,
                                   FLA_Side side, FLA_Trans trans, FLA_Direct direct, FLA_Store storev,

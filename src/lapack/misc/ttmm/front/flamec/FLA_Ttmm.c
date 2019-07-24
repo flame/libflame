@@ -10,9 +10,9 @@
 
 #include "FLAME.h"
 
-extern __thread fla_ttmm_t*      fla_ttmm_cntl_leaf;
-extern __thread fla_ttmm_t*      fla_ttmm_cntl;
-extern __thread fla_blocksize_t* fla_ttmm_var1_bsize;
+extern TLS_CLASS_SPEC fla_ttmm_t*      fla_ttmm_cntl_leaf;
+extern TLS_CLASS_SPEC fla_ttmm_t*      fla_ttmm_cntl;
+extern TLS_CLASS_SPEC fla_blocksize_t* fla_ttmm_var1_bsize;
 
 FLA_Error FLA_Ttmm( FLA_Uplo uplo, FLA_Obj A )
 {

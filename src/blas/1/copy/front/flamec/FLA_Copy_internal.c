@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern __thread fla_copy_t* flash_copy_cntl_blas;
-extern __thread fla_copy_t* flash_copy_cntl;
+extern TLS_CLASS_SPEC fla_copy_t* flash_copy_cntl_blas;
+extern TLS_CLASS_SPEC fla_copy_t* flash_copy_cntl;
 
 FLA_Error FLA_Copy_internal( FLA_Obj A, FLA_Obj B, fla_copy_t* cntl )
 {

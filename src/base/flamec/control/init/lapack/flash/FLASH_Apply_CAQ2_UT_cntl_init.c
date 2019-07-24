@@ -10,11 +10,11 @@
 
 #include "FLAME.h"
 
-__thread fla_apcaq2ut_t*  flash_apcaq2ut_cntl_leaf = NULL;
-__thread fla_apcaq2ut_t*  flash_apcaq2ut_cntl_mid = NULL;
-__thread fla_apcaq2ut_t*  flash_apcaq2ut_cntl = NULL;
-__thread fla_blocksize_t* flash_apcaq2ut_var2_bsize = NULL;
-__thread fla_blocksize_t* flash_apcaq2ut_var3_bsize = NULL;
+TLS_CLASS_SPEC fla_apcaq2ut_t*  flash_apcaq2ut_cntl_leaf = NULL;
+TLS_CLASS_SPEC fla_apcaq2ut_t*  flash_apcaq2ut_cntl_mid = NULL;
+TLS_CLASS_SPEC fla_apcaq2ut_t*  flash_apcaq2ut_cntl = NULL;
+TLS_CLASS_SPEC fla_blocksize_t* flash_apcaq2ut_var2_bsize = NULL;
+TLS_CLASS_SPEC fla_blocksize_t* flash_apcaq2ut_var3_bsize = NULL;
 
 void FLASH_Apply_CAQ2_UT_cntl_init()
 {

@@ -26,7 +26,7 @@
   be fixed to use complex datatypes for those diagonals.
 */
 
-extern __thread fla_bidiagut_t* fla_bidiagut_cntl_plain;
+extern TLS_CLASS_SPEC fla_bidiagut_t* fla_bidiagut_cntl_plain;
 
 #define LAPACK_gebrd(prefix)                                            \
   int F77_ ## prefix ## gebrd( int* m,                                  \

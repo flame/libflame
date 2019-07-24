@@ -10,16 +10,16 @@
 
 #include "FLAME.h"
 
-extern __thread fla_scal_t* flash_scal_cntl;
-extern __thread fla_gemm_t* flash_gemm_cntl_op_bp;
-extern __thread fla_gemm_t* flash_gemm_cntl_mm_pm;
-extern __thread fla_gemm_t* flash_gemm_cntl_mm_mp;
+extern TLS_CLASS_SPEC fla_scal_t* flash_scal_cntl;
+extern TLS_CLASS_SPEC fla_gemm_t* flash_gemm_cntl_op_bp;
+extern TLS_CLASS_SPEC fla_gemm_t* flash_gemm_cntl_mm_pm;
+extern TLS_CLASS_SPEC fla_gemm_t* flash_gemm_cntl_mm_mp;
 
-__thread fla_symm_t*        flash_symm_cntl_blas = NULL;
-__thread fla_symm_t*        flash_symm_cntl_bp = NULL;
-__thread fla_symm_t*        flash_symm_cntl_mp = NULL;
-__thread fla_symm_t*        flash_symm_cntl_mm = NULL;
-__thread fla_blocksize_t*   flash_symm_bsize = NULL;
+TLS_CLASS_SPEC fla_symm_t*        flash_symm_cntl_blas = NULL;
+TLS_CLASS_SPEC fla_symm_t*        flash_symm_cntl_bp = NULL;
+TLS_CLASS_SPEC fla_symm_t*        flash_symm_cntl_mp = NULL;
+TLS_CLASS_SPEC fla_symm_t*        flash_symm_cntl_mm = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*   flash_symm_bsize = NULL;
 
 void FLASH_Symm_cntl_init()
 {

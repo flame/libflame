@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern __thread fla_trinv_t* fla_trinv_cntl_leaf;
+extern TLS_CLASS_SPEC fla_trinv_t* fla_trinv_cntl_leaf;
 
 FLA_Error FLA_Trinv_task( FLA_Uplo uplo, FLA_Diag diag, FLA_Obj A, fla_trinv_t* cntl )
 {

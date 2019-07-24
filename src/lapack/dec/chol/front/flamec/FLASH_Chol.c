@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern __thread fla_chol_t* flash_chol_cntl;
+extern TLS_CLASS_SPEC fla_chol_t* flash_chol_cntl;
 
 FLA_Error FLASH_Chol( FLA_Uplo uplo, FLA_Obj A )
 {

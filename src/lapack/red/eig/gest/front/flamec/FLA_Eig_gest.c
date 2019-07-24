@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern __thread fla_eig_gest_t* fla_eig_gest_ix_cntl;
-extern __thread fla_eig_gest_t* fla_eig_gest_nx_cntl;
+extern TLS_CLASS_SPEC fla_eig_gest_t* fla_eig_gest_ix_cntl;
+extern TLS_CLASS_SPEC fla_eig_gest_t* fla_eig_gest_nx_cntl;
 
 FLA_Error FLA_Eig_gest( FLA_Inv inv, FLA_Uplo uplo, FLA_Obj A, FLA_Obj B )
 {

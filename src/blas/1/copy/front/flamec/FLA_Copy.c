@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern __thread fla_copy_t* fla_copy_cntl_blas;
+extern TLS_CLASS_SPEC fla_copy_t* fla_copy_cntl_blas;
 
 FLA_Error FLA_Copy( FLA_Obj A, FLA_Obj B )
 {

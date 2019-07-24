@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern __thread fla_qrut_t*  fla_qrut_piv_cntl_leaf;
+extern TLS_CLASS_SPEC fla_qrut_t*  fla_qrut_piv_cntl_leaf;
 
 FLA_Error FLA_QR_UT_piv( FLA_Obj A, FLA_Obj T, FLA_Obj w, FLA_Obj p )
 {

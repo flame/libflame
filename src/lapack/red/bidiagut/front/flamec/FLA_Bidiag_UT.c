@@ -10,9 +10,9 @@
 
 #include "FLAME.h"
 
-extern __thread fla_bidiagut_t* fla_bidiagut_cntl_fused;
-extern __thread fla_bidiagut_t* fla_bidiagut_cntl_nofus;
-extern __thread fla_bidiagut_t* fla_bidiagut_cntl_plain;
+extern TLS_CLASS_SPEC fla_bidiagut_t* fla_bidiagut_cntl_fused;
+extern TLS_CLASS_SPEC fla_bidiagut_t* fla_bidiagut_cntl_nofus;
+extern TLS_CLASS_SPEC fla_bidiagut_t* fla_bidiagut_cntl_plain;
 
 FLA_Error FLA_Bidiag_UT( FLA_Obj A, FLA_Obj TU, FLA_Obj TV )
 {

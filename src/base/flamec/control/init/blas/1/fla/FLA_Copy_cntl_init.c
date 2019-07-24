@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-__thread fla_copy_t* fla_copy_cntl_blas = NULL;
+TLS_CLASS_SPEC fla_copy_t* fla_copy_cntl_blas = NULL;
 
 void FLA_Copy_cntl_init()
 {

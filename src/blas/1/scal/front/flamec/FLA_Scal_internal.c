@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern __thread fla_scal_t* flash_scal_cntl_blas;
-extern __thread fla_scal_t* flash_scal_cntl;
+extern TLS_CLASS_SPEC fla_scal_t* flash_scal_cntl_blas;
+extern TLS_CLASS_SPEC fla_scal_t* flash_scal_cntl;
 
 FLA_Error FLA_Scal_internal( FLA_Obj alpha, FLA_Obj A, fla_scal_t* cntl )
 {

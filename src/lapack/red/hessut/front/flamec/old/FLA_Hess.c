@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern __thread fla_hess_t*      fla_hess_cntl;
-extern __thread fla_blocksize_t* fla_hess_blocksize;
+extern TLS_CLASS_SPEC fla_hess_t*      fla_hess_cntl;
+extern TLS_CLASS_SPEC fla_blocksize_t* fla_hess_blocksize;
 
 FLA_Error FLA_Hess( FLA_Obj A, FLA_Obj t, int ilo, int ihi )
 {

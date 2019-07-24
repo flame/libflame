@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern __thread fla_qr2ut_t* fla_qr2ut_cntl_leaf;
+extern TLS_CLASS_SPEC fla_qr2ut_t* fla_qr2ut_cntl_leaf;
 
 FLA_Error FLA_QR2_UT_task( FLA_Obj B, FLA_Obj D, FLA_Obj T, fla_qr2ut_t* cntl )
 {

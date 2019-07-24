@@ -278,12 +278,12 @@ void libfla_test_lyap_experiment( test_params_t params,
 
 
 
-extern __thread fla_scal_t*  fla_scal_cntl_blas;
-extern __thread fla_gemm_t*  fla_gemm_cntl_blas;
-extern __thread fla_hemm_t*  fla_hemm_cntl_blas;
-extern __thread fla_her2k_t* fla_her2k_cntl_blas;
-extern __thread fla_sylv_t*  fla_sylv_cntl;
-extern __thread fla_lyap_t*  fla_lyap_cntl_leaf;
+extern TLS_CLASS_SPEC fla_scal_t*  fla_scal_cntl_blas;
+extern TLS_CLASS_SPEC fla_gemm_t*  fla_gemm_cntl_blas;
+extern TLS_CLASS_SPEC fla_hemm_t*  fla_hemm_cntl_blas;
+extern TLS_CLASS_SPEC fla_her2k_t* fla_her2k_cntl_blas;
+extern TLS_CLASS_SPEC fla_sylv_t*  fla_sylv_cntl;
+extern TLS_CLASS_SPEC fla_lyap_t*  fla_lyap_cntl_leaf;
 
 void libfla_test_lyap_cntl_create( unsigned int var,
                                    dim_t        b_alg_flat )

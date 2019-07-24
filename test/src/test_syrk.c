@@ -288,9 +288,9 @@ void libfla_test_syrk_experiment( test_params_t params,
 
 
 
-extern __thread fla_scalr_t* fla_scalr_cntl_blas;
-extern __thread fla_gemm_t*  fla_gemm_cntl_blas;
-extern __thread fla_syrk_t*  fla_syrk_cntl_blas;
+extern TLS_CLASS_SPEC fla_scalr_t* fla_scalr_cntl_blas;
+extern TLS_CLASS_SPEC fla_gemm_t*  fla_gemm_cntl_blas;
+extern TLS_CLASS_SPEC fla_syrk_t*  fla_syrk_cntl_blas;
 
 void libfla_test_syrk_cntl_create( unsigned int var,
                                    dim_t        b_alg_flat )

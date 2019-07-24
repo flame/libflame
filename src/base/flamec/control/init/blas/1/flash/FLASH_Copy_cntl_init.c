@@ -10,10 +10,10 @@
 
 #include "FLAME.h"
 
-__thread fla_copy_t*        flash_copy_cntl_blas = NULL;
-__thread fla_copy_t*        flash_copy_cntl_tb;
-__thread fla_copy_t*        flash_copy_cntl;
-__thread fla_blocksize_t*   flash_copy_bsize;
+TLS_CLASS_SPEC fla_copy_t*        flash_copy_cntl_blas = NULL;
+TLS_CLASS_SPEC fla_copy_t*        flash_copy_cntl_tb;
+TLS_CLASS_SPEC fla_copy_t*        flash_copy_cntl;
+TLS_CLASS_SPEC fla_blocksize_t*   flash_copy_bsize;
 
 void FLASH_Copy_cntl_init()
 {
