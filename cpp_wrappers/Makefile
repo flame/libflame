@@ -72,9 +72,7 @@ LIBLAPACK      :=
 #
 
 TEST_SRC_PATH  := test
-#TEST_SRC := driver
-#TEST_SRC := dgetrf_test_gen
-TEST_SRC := driver
+TEST_SRC := libflame_test
 TEST_OBJ_PATH  := obj
 
 #FLA_LIB_PATH   := $(INSTALL_PREFIX)/lib
@@ -85,6 +83,7 @@ LIBFLAME       := /home/managala/code/libflame/lib/x86_64-unknown-linux-gnu/libf
 #LIBFLAME       := $(FLA_LIB_PATH)/libflame.a
 #LIBFLAME       := $(FLA_LIB_PATH)/libflame.so
 
+CFLAGS      += -Isrc
 CFLAGS      += -I/home/managala/code/libflame/include
 CFLAGS         += -I$(TEST_SRC_PATH)
 #CFLAGS         += -I$(FLA_INC_PATH) -I$(TEST_SRC_PATH)
