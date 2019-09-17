@@ -21,7 +21,7 @@
 *******************************************************************************/
 
 /*! @file libflame.hh
- *  libflame.hh defines all the overloaded CPP functions to be invoked from 
+ *  libflame.hh defines all the overloaded CPP functions to be invoked from
  *  template interfaces
  *  */
 #ifndef LIBFLAME_HH
@@ -48,17 +48,15 @@ namespace libflame{
   {
     F77_cpotrf(uplo, n, a, lda, info );
   }
-
   inline void potrf( char* uplo, int* n, dcomplex* a, int* lda, int* info )
   {
     F77_zpotrf(uplo, n, a, lda, info );
-  }  
-  
+  }
+
   inline void potf2( char* uplo, int* n, float* a, int* lda, int* info )
   {
     F77_spotf2( uplo, n, a, lda, info );
   }
- 
   inline void potf2( char* uplo, int* n, double*    a, int* lda, int* info )
   {
     F77_dpotf2( uplo, n, a, lda, info );
@@ -72,23 +70,24 @@ namespace libflame{
     F77_zpotf2( uplo, n, a, lda, info );
   }
 
-  // --- LU factorization with partial pivoting 
-  inline void getrf( int* m, int* n, lapack_stype * buff_A, int* ldim_A, int* buff_p, int* info )
+  // --- LU factorization with partial pivoting
+  inline void getrf( int* m, int* n, float*    a, int* lda, int* ipiv, int* info )
   {
-    F77_sgetrf( m, n, buff_A, ldim_A, buff_p, info );    
+    F77_sgetrf( m, n, a, lda, ipiv, info );
   }
-  inline void getrf( int* m, int* n, lapack_dtype* buff_A, int* ldim_A, int* buff_p, int* info)
+  inline void getrf( int* m, int* n, double*   a, int* lda, int* ipiv, int* info )
   {
-    F77_dgetrf( m, n, buff_A, ldim_A, buff_p, info );
+    F77_dgetrf( m, n, a, lda, ipiv, info );
   }
-  inline void getrf( int* m, int* n, lapack_ctype* buff_A, int* ldim_A, int* buff_p, int* info )
+  inline void getrf( int* m, int* n, scomplex* a, int* lda, int* ipiv, int* info )
   {
-    F77_cgetrf( m, n, buff_A, ldim_A, buff_p, info );
+    F77_cgetrf( m, n, a, lda, ipiv, info );
   }
-  inline void getrf( int* m, int* n, lapack_ztype* buff_A, int* ldim_A, int* buff_p, int* info )
+  inline void getrf( int* m, int* n, dcomplex* a, int* lda, int* ipiv, int* info )
   {
-    F77_zgetrf( m, n, buff_A, ldim_A, buff_p, info );
-  }  
+    F77_zgetrf( m, n, a, lda, ipiv, info );
+  }
+
   inline void getf2( int* m, int* n, float* a, int* lda, int* ipiv, int* info )
   {
     F77_sgetf2( m, n, a, lda, ipiv, info );
@@ -100,12 +99,12 @@ namespace libflame{
   inline void getf2( int* m, int* n, scomplex* a, int* lda, int* ipiv, int* info )
   {
     F77_cgetf2( m, n, a, lda, ipiv, info );
-  }  
+  }
   inline void getf2( int* m, int* n, dcomplex* a, int* lda, int* ipiv, int* info )
   {
     F77_zgetf2( m, n, a, lda, ipiv, info );
   }
-  
+
   // --- QR factorization (classic) ---
   inline void geqrf( int* m, int* n, float* a, int* lda, float* tau, float* work, int* lwork, int* info )
   {
@@ -158,7 +157,7 @@ namespace libflame{
   {
     F77_zgeqpf( m, n, a, lda, jpvt, tau, work, rwork, info );
   }
-  
+
   inline void geqp3( int* m, int* n, float* a, int* lda, int* jpvt, float* tau, float* work, int* lwork,     int* info )
   {
     F77_sgeqp3( m, n, a, lda, jpvt, tau, work, lwork, info );
@@ -175,8 +174,8 @@ namespace libflame{
   {
     F77_zgeqp3( m, n, a, lda, jpvt, tau, work, lwork, rwork, info );
   }
-  
-  // --- LQ factorization (classic) ---  
+
+  // --- LQ factorization (classic) ---
   inline void gelqf( int* m, int* n, float* a, int* lda, float* tau, float* work, int* lwork, int* info )
   {
     F77_sgelqf( m, n, a, lda, tau, work, lwork, info );
@@ -193,7 +192,7 @@ namespace libflame{
   {
     F77_zgelqf( m, n, a, lda, tau, work, lwork, info );
   }
-  
+
   inline void gelq2( int* m, int* n, float* a, int* lda, float* tau, float* work, int* info )
   {
     F77_sgelq2( m, n, a, lda, tau, work, info );
@@ -210,8 +209,8 @@ namespace libflame{
   {
     F77_zgelq2( m, n, a, lda, tau, work, info );
   }
-  
-  // --- LS solver ---  
+
+  // --- LS solver ---
   inline void gelsd( int* m, int* n, int* nrhs, float* a, int* lda, float* b, int* ldb, float*  s, float*  rcond, int* rank, float* work, int* lwork,     int* iwork, int* info )
   {
     F77_sgelsd( m, n, nrhs, a, lda, b, ldb, s, rcond, rank, work, lwork, iwork, info );
@@ -228,7 +227,7 @@ namespace libflame{
   {
     F77_zgelsd( m, n, nrhs, a, lda, b, ldb, s, rcond, rank, work, lwork, rwork, iwork, info );
   }
-  
+
   inline void gelss( int* m, int* n, int* nrhs, float* a, int* lda, float* b, int* ldb, float*  s, float*  rcond, int* rank, float* work, int* lwork,     int* info )
   {
     F77_sgelss( m, n, nrhs, a, lda, b, ldb, s, rcond, rank, work, lwork, info );
@@ -245,7 +244,7 @@ namespace libflame{
   {
     F77_zgelss( m, n, nrhs, a, lda, b, ldb, s, rcond, rank, work, lwork, rwork, info );
   }
-  
+
   // --- Triangular-transpose matrix multiply ---
   inline void lauum( char* uplo, int* n, float* a, int* lda, int* info )
   {
@@ -263,7 +262,7 @@ namespace libflame{
   {
     F77_zlauum( uplo, n, a, lda, info );
   }
-  
+
   inline void lauu2( char* uplo, int* n, float* a, int* lda, int* info )
   {
     F77_slauu2( uplo, n, a, lda, info );
@@ -280,8 +279,8 @@ namespace libflame{
   {
     F77_zlauu2( uplo, n, a, lda, info );
   }
-  
-  // --- Symmetric (hermitian) positive definite matrix inversion ---  
+
+  // --- Symmetric (hermitian) positive definite matrix inversion ---
   inline void potri( char* uplo, int*  n, float* buff_A, int*  ldim_A, int*  info )
   {
     F77_spotri( uplo, n, buff_A, ldim_A, info );
@@ -298,8 +297,8 @@ namespace libflame{
   {
     F77_zpotri( uplo, n, buff_A, ldim_A, info );
   }
-  
-  // --- Triangular matrix inversion ---  
+
+  // --- Triangular matrix inversion ---
   inline void trtri( char* uplo, char* diag, int* n, float* a, int* lda, int* info )
   {
     F77_strtri( uplo, diag, n, a, lda, info );
@@ -316,7 +315,7 @@ namespace libflame{
   {
     F77_ztrtri( uplo, diag, n, a, lda, info );
   }
-  
+
   inline void trti2( char* uplo, char* diag, int* n, float* a, int* lda, int* info )
   {
     F77_strti2( uplo, diag, n, a, lda, info );
@@ -333,8 +332,8 @@ namespace libflame{
   {
     F77_ztrti2( uplo, diag, n, a, lda, info );
   }
-  
-  // --- Triangular Sylvester equation solve ---  
+
+  // --- Triangular Sylvester equation solve ---
   inline void trsyl( char* transa, char* transb, int* isgn, int* m, int* n, float* a, int* lda, float* b, int* ldb, float* c, int* ldc, float* scale, int* info )
   {
     F77_strsyl( transa, transb, isgn, m, n, a, lda, b, ldb, c, ldc, scale, info );
@@ -351,8 +350,8 @@ namespace libflame{
   {
     F77_ztrsyl( transa, transb, isgn, m, n, a, lda, b, ldb, c, ldc, scale, info );
   }
-  
-  // --- Reduction to upper Hessenberg form ---  
+
+  // --- Reduction to upper Hessenberg form ---
   inline void gehrd( int* n, int* ilo, int* ihi, float* a, int* lda, float* tau, float* work, int* lwork, int* info )
   {
     F77_sgehrd( n, ilo, ihi, a, lda, tau, work, lwork, info );
@@ -369,7 +368,7 @@ namespace libflame{
   {
     F77_zgehrd( n, ilo, ihi, a, lda, tau, work, lwork, info );
   }
-  
+
   inline void gehd2( int* n, int* ilo, int* ihi, float* a, int* lda, float* tau, float* work, int* info )
   {
     F77_sgehd2( n, ilo, ihi, a, lda, tau, work, info );
@@ -386,8 +385,8 @@ namespace libflame{
   {
     F77_zgehd2( n, ilo, ihi, a, lda, tau, work, info );
   }
-  
-  // --- Reduction to tridiagonal form ---  
+
+  // --- Reduction to tridiagonal form ---
   inline void sytrd( char* uplo, int* n, float* a, int* lda, float*  d, float*  e, float* tau, float* work, int* lwork, int* info )
   {
     F77_ssytrd( uplo, n, a, lda, d, e, tau, work, lwork, info );
@@ -404,7 +403,7 @@ namespace libflame{
   {
     F77_zhetrd( uplo, n, a, lda, d, e, tau, work, lwork, info );
   }
-  
+
   inline void sytd2( char* uplo, int* n, float* a, int* lda, float*  d, float*  e, float* tau, int* info )
   {
     F77_ssytd2( uplo, n, a, lda, d, e, tau, info );
@@ -421,8 +420,8 @@ namespace libflame{
   {
     F77_zhetd2( uplo, n, a, lda, d, e, tau, info );
   }
-  
-  // --- Reduction to bidiagonal form ---  
+
+  // --- Reduction to bidiagonal form ---
   inline void gebrd( int* m, int* n, float* a, int* lda, float*  d, float*  e, float* tauq, float* taup, float* work, int* lwork, int* info )
   {
     F77_sgebrd( m, n, a, lda, d, e, tauq, taup, work, lwork, info );
@@ -439,7 +438,7 @@ namespace libflame{
   {
     F77_zgebrd( m, n, a, lda, d, e, tauq, taup, work, lwork, info );
   }
-  
+
   inline void gebd2( int* m, int* n, float* a, int* lda, float*  d, float*  e, float* tauq, float* taup, float* work, int* info )
   {
     F77_sgebd2( m, n, a, lda, d, e, tauq, taup, work, info );
@@ -456,8 +455,8 @@ namespace libflame{
   {
     F77_zgebd2( m, n, a, lda, d, e, tauq, taup, work, info );
   }
-  
-  // --- Reduce Hermitian-definite generalized eigenproblem to standard form ---  
+
+  // --- Reduce Hermitian-definite generalized eigenproblem to standard form ---
   inline void sygst( int* itype, char* uplo, int* n, float* a, int* lda, float* b, int* ldb, int* info )
   {
     F77_ssygst( itype, uplo, n, a, lda, b, ldb, info );
@@ -466,15 +465,15 @@ namespace libflame{
   {
     F77_dsygst( itype, uplo, n, a, lda, b, ldb, info );
   }
-  inline void sygst( int* itype, char* uplo, int* n, scomplex* a, int* lda, scomplex* b, int* ldb, int* info )
+  inline void hegst( int* itype, char* uplo, int* n, scomplex* a, int* lda, scomplex* b, int* ldb, int* info )
   {
     F77_chegst( itype, uplo, n, a, lda, b, ldb, info );
   }
-  inline void sygst( int* itype, char* uplo, int* n, dcomplex* a, int* lda, dcomplex* b, int* ldb, int* info )
+  inline void hegst( int* itype, char* uplo, int* n, dcomplex* a, int* lda, dcomplex* b, int* ldb, int* info )
   {
     F77_zhegst( itype, uplo, n, a, lda, b, ldb, info );
   }
-  
+
   inline void sygs2( int* itype, char* uplo, int* n, float* a, int* lda, float* b, int* ldb, int* info )
   {
     F77_ssygs2( itype, uplo, n, a, lda, b, ldb, info );
@@ -491,8 +490,8 @@ namespace libflame{
   {
     F77_zhegs2( itype, uplo, n, a, lda, b, ldb, info );
   }
-  
-  // --- Accumulate block Householder matrix T (classic) ---  
+
+  // --- Accumulate block Householder matrix T (classic) ---
   inline void larft( char* direct, char* storev, int* n, int* k, float* v, int* ldv, float* tau, float* t, int* ldt )
   {
     F77_slarft( direct, storev, n, k, v, ldv, tau, t, ldt );
@@ -509,8 +508,8 @@ namespace libflame{
   {
     F77_zlarft( direct, storev, n, k, v, ldv, tau, t, ldt );
   }
-  
-  // --- Generate a Householder vector (classic) ---  
+
+  // --- Generate a Householder vector (classic) ---
   inline void larfg( int* n, float* alpha, float* x, int* incx, float* tau )
   {
     F77_slarfg( n, alpha, x, incx, tau );
@@ -527,7 +526,7 @@ namespace libflame{
   {
     F77_zlarfg( n, alpha, x, incx, tau );
   }
-  
+
   inline void larfgp( int* n, float* alpha, float* x, int* incx, float* tau )
   {
     F77_slarfgp( n, alpha, x, incx, tau );
@@ -544,8 +543,8 @@ namespace libflame{
   {
     F77_zlarfgp( n, alpha, x, incx, tau );
   }
-  
-  // --- Form Q from QR factorization ---  
+
+  // --- Form Q from QR factorization ---
   inline void orgqr( int* m, int* n, int* k, float* a, int* lda, float* tau, float* work, int* lwork, int* info )
   {
      F77_sorgqr( m, n, k, a, lda, tau, work, lwork, info );
@@ -554,34 +553,34 @@ namespace libflame{
   {
     F77_dorgqr( m, n, k, a, lda, tau, work, lwork, info );
   }
-  inline void orgqr( int* m, int* n, int* k, scomplex*    a, int* lda, scomplex*    tau, scomplex*    work, int* lwork, int* info )
+  inline void ungqr( int* m, int* n, int* k, scomplex*    a, int* lda, scomplex*    tau, scomplex*    work, int* lwork, int* info )
   {
     F77_cungqr( m, n, k, a, lda, tau, work, lwork, info );
   }
-  inline void orgqr( int* m, int* n, int* k, dcomplex*    a, int* lda, dcomplex*    tau, dcomplex*    work, int* lwork, int* info )
+  inline void ungqr( int* m, int* n, int* k, dcomplex*    a, int* lda, dcomplex*    tau, dcomplex*    work, int* lwork, int* info )
   {
     F77_zungqr( m, n, k, a, lda, tau, work, lwork, info );
   }
-  
-  
-  // --- Apply Q or Q' from QR factorization ---  
-  inline void sormqr( char* side, char* trans, int* m, int* n, int* k, float* a, int* lda, float* tau, float* c, int* ldc, float* work, int* lwork, int* info )
+
+
+  // --- Apply Q or Q' from QR factorization ---
+  inline void ormqr( char* side, char* trans, int* m, int* n, int* k, float* a, int* lda, float* tau, float* c, int* ldc, float* work, int* lwork, int* info )
   {
     F77_sormqr( side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
   }
-  inline void dormqr( char* side, char* trans, int* m, int* n, int* k, double*    a, int* lda, double*    tau, double*    c, int* ldc, double*    work, int* lwork, int* info )
+  inline void ormqr( char* side, char* trans, int* m, int* n, int* k, double*    a, int* lda, double*    tau, double*    c, int* ldc, double*    work, int* lwork, int* info )
   {
     F77_dormqr( side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
   }
-  inline void cunmqr( char* side, char* trans, int* m, int* n, int* k, scomplex*    a, int* lda, scomplex*    tau, scomplex*    c, int* ldc, scomplex*    work, int* lwork, int* info )
+  inline void unmqr( char* side, char* trans, int* m, int* n, int* k, scomplex*    a, int* lda, scomplex*    tau, scomplex*    c, int* ldc, scomplex*    work, int* lwork, int* info )
   {
     F77_cunmqr( side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
   }
-  inline void zunmqr( char* side, char* trans, int* m, int* n, int* k, dcomplex*    a, int* lda, dcomplex*    tau, dcomplex*    c, int* ldc, dcomplex*    work, int* lwork, int* info )
+  inline void unmqr( char* side, char* trans, int* m, int* n, int* k, dcomplex*    a, int* lda, dcomplex*    tau, dcomplex*    c, int* ldc, dcomplex*    work, int* lwork, int* info )
   {
     F77_zunmqr( side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
   }
-  
+
   inline void orm2r( char* side, char* trans, int* m, int* n, int* k, float* a, int* lda, float* tau, float* c, int* ldc, float* work, int* info )
   {
     F77_sorm2r( side, trans, m, n, k, a, lda, tau, c, ldc, work, info );
@@ -590,16 +589,16 @@ namespace libflame{
   {
     F77_dorm2r( side, trans, m, n, k, a, lda, tau, c, ldc, work, info );
   }
-  inline void orm2r( char* side, char* trans, int* m, int* n, int* k, scomplex*    a, int* lda, scomplex*    tau, scomplex*    c, int* ldc, scomplex*    work, int* info )
+  inline void unm2r( char* side, char* trans, int* m, int* n, int* k, scomplex*    a, int* lda, scomplex*    tau, scomplex*    c, int* ldc, scomplex*    work, int* info )
   {
     F77_cunm2r( side, trans, m, n, k,  a, lda, tau, c, ldc, work, info );
   }
-  inline void orm2r( char* side, char* trans, int* m, int* n, int* k, dcomplex*    a, int* lda, dcomplex*    tau, dcomplex*    c, int* ldc, dcomplex*    work, int* info )
+  inline void unm2r( char* side, char* trans, int* m, int* n, int* k, dcomplex*    a, int* lda, dcomplex*    tau, dcomplex*    c, int* ldc, dcomplex*    work, int* info )
   {
     F77_zunm2r( side, trans, m, n, k, a, lda, tau, c, ldc, work, info );
   }
-  
-  // --- Form Q from LQ factorization ---  
+
+  // --- Form Q from LQ factorization ---
   inline void orglq( int* m, int* n, int* k, float* a, int* lda, float* tau, float* work, int* lwork, int* info )
   {
     F77_sorglq( m, n, k, a, lda, tau, work, lwork, info );
@@ -608,16 +607,16 @@ namespace libflame{
   {
     F77_dorglq( m, n, k, a, lda, tau, work, lwork, info );
   }
-  inline void orglq( int* m, int* n, int* k, scomplex* a, int* lda, scomplex* tau, scomplex* work, int* lwork, int* info )
+  inline void unglq( int* m, int* n, int* k, scomplex* a, int* lda, scomplex* tau, scomplex* work, int* lwork, int* info )
   {
     F77_cunglq( m, n, k, a, lda, tau, work, lwork, info );
   }
-  inline void orglq( int* m, int* n, int* k, dcomplex* a, int* lda, dcomplex* tau, dcomplex* work, int* lwork, int* info )
+  inline void unglq( int* m, int* n, int* k, dcomplex* a, int* lda, dcomplex* tau, dcomplex* work, int* lwork, int* info )
   {
     F77_zunglq( m, n, k, a, lda, tau, work, lwork, info );
   }
-  
-  // --- Apply Q or Q' from LQ factorization ---  
+
+  // --- Apply Q or Q' from LQ factorization ---
   inline void ormlq( char* side, char* trans, int* m, int* n, int* k, float* a, int* lda, float* tau, float* c, int* ldc, float* work, int* lwork, int* info )
   {
     F77_sormlq( side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
@@ -626,15 +625,15 @@ namespace libflame{
   {
     F77_dormlq( side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
   }
-  inline void ormlq( char* side, char* trans, int* m, int* n, int* k, scomplex*    a, int* lda, scomplex*    tau, scomplex*    c, int* ldc, scomplex*    work, int* lwork, int* info )
+  inline void unmlq( char* side, char* trans, int* m, int* n, int* k, scomplex*    a, int* lda, scomplex*    tau, scomplex*    c, int* ldc, scomplex*    work, int* lwork, int* info )
   {
     F77_cunmlq( side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
   }
-  inline void ormlq( char* side, char* trans, int* m, int* n, int* k, dcomplex*    a, int* lda, dcomplex*    tau, dcomplex*    c, int* ldc, dcomplex*    work, int* lwork, int* info )
+  inline void unmlq( char* side, char* trans, int* m, int* n, int* k, dcomplex*    a, int* lda, dcomplex*    tau, dcomplex*    c, int* ldc, dcomplex*    work, int* lwork, int* info )
   {
     F77_zunmlq( side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
   }
-  
+
   inline void orml2( char* side, char* trans, int* m, int* n, int* k, float* a, int* lda, float* tau, float* c, int* ldc, float* work, int* info )
   {
     F77_sorml2( side, trans, m, n, k, a, lda, tau, c, ldc, work, info );
@@ -643,16 +642,16 @@ namespace libflame{
   {
     F77_dorml2( side, trans, m, n, k, a, lda, tau, c, ldc, work, info );
   }
-  inline void orml2( char* side, char* trans, int* m, int* n, int* k, scomplex*    a, int* lda, scomplex*    tau, scomplex*    c, int* ldc, scomplex*    work, int* info )
+  inline void unml2( char* side, char* trans, int* m, int* n, int* k, scomplex*    a, int* lda, scomplex*    tau, scomplex*    c, int* ldc, scomplex*    work, int* info )
   {
     F77_cunml2( side, trans, m, n, k, a, lda, tau, c, ldc, work, info );
   }
-  inline void orml2( char* side, char* trans, int* m, int* n, int* k, dcomplex*    a, int* lda, dcomplex*    tau, dcomplex*    c, int* ldc, dcomplex*    work, int* info )
+  inline void unml2( char* side, char* trans, int* m, int* n, int* k, dcomplex*    a, int* lda, dcomplex*    tau, dcomplex*    c, int* ldc, dcomplex*    work, int* info )
   {
     F77_zunml2( side, trans, m, n, k, a, lda, tau, c, ldc, work, info );
   }
-  
-  // --- Form Q from tridiagonal reduction ---  
+
+  // --- Form Q from tridiagonal reduction ---
   inline void orgtr( char* uplo, int* m, float* a, int* lda, float* tau, float* work, int* lwork, int* info )
   {
     F77_sorgtr( uplo, m, a, lda, tau, work, lwork, info );
@@ -661,16 +660,16 @@ namespace libflame{
   {
     F77_dorgtr( uplo, m, a, lda, tau, work, lwork, info );
   }
-  inline void orgtr( char* uplo, int* m, scomplex* a, int* lda, scomplex* tau, scomplex* work, int* lwork, int* info )
+  inline void oungtr( char* uplo, int* m, scomplex* a, int* lda, scomplex* tau, scomplex* work, int* lwork, int* info )
   {
     F77_cungtr( uplo, m, a, lda, tau, work, lwork, info );
   }
-  inline void orgtr( char* uplo, int* m, dcomplex* a, int* lda, dcomplex* tau, dcomplex* work, int* lwork, int* info )
+  inline void oungtr( char* uplo, int* m, dcomplex* a, int* lda, dcomplex* tau, dcomplex* work, int* lwork, int* info )
   {
     F77_zungtr( uplo, m, a, lda, tau, work, lwork, info );
   }
-  
-  // --- Apply Q or Q' from tridiagonal reduction ---  
+
+  // --- Apply Q or Q' from tridiagonal reduction ---
   inline void ormtr( char* side, char* uplo, char* trans, int* m, int* n, float* a, int* lda, float* tau, float* c, int* ldc, float* work, int* lwork, int* info )
   {
     F77_sormtr( side, uplo, trans, m, n, a, lda, tau, c, ldc, work, lwork, info );
@@ -679,16 +678,16 @@ namespace libflame{
   {
     F77_dormtr( side, uplo, trans, m, n, a, lda, tau, c, ldc, work, lwork, info );
   }
-  inline void ormtr( char* side, char* uplo, char* trans, int* m, int* n, scomplex* a, int* lda, scomplex* tau, scomplex* c, int* ldc, scomplex* work, int* lwork, int* info )
+  inline void unmtr( char* side, char* uplo, char* trans, int* m, int* n, scomplex* a, int* lda, scomplex* tau, scomplex* c, int* ldc, scomplex* work, int* lwork, int* info )
   {
     F77_cunmtr( side, uplo, trans, m, n, a, lda, tau, c, ldc, work, lwork, info );
   }
-  inline void ormtr( char* side, char* uplo, char* trans, int* m, int* n, dcomplex* a, int* lda, dcomplex* tau, dcomplex* c, int* ldc, dcomplex* work, int* lwork, int* info )
+  inline void unmtr( char* side, char* uplo, char* trans, int* m, int* n, dcomplex* a, int* lda, dcomplex* tau, dcomplex* c, int* ldc, dcomplex* work, int* lwork, int* info )
   {
     F77_zunmtr( side, uplo, trans, m, n, a, lda, tau, c, ldc, work, lwork, info );
   }
-  
-  // --- Form Q from bidiagonal reduction ---  
+
+  // --- Form Q from bidiagonal reduction ---
   inline void orgbr( char* vect, int* m, int* n, int* k, float* a, int* lda, float* tau, float* work, int* lwork, int* info )
   {
     F77_sorgbr( vect, m, n, k, a, lda, tau, work, lwork, info );
@@ -697,16 +696,16 @@ namespace libflame{
   {
     F77_dorgbr( vect, m, n, k, a, lda, tau, work, lwork, info );
   }
-  inline void orgbr( char* vect, int* m, int* n, int* k, scomplex* a, int* lda, scomplex* tau, scomplex* work, int* lwork, int* info )
+  inline void ungbr( char* vect, int* m, int* n, int* k, scomplex* a, int* lda, scomplex* tau, scomplex* work, int* lwork, int* info )
   {
     F77_cungbr( vect, m, n, k, a, lda, tau, work, lwork, info );
   }
-  inline void orgbr( char* vect, int* m, int* n, int* k, dcomplex* a, int* lda, dcomplex* tau, dcomplex* work, int* lwork, int* info )
+  inline void ungbr( char* vect, int* m, int* n, int* k, dcomplex* a, int* lda, dcomplex* tau, dcomplex* work, int* lwork, int* info )
   {
     F77_zungbr( vect, m, n, k, a, lda, tau, work, lwork, info );
   }
-  
-  // --- Apply Q or Q' from bidiagonal reduction ---  
+
+  // --- Apply Q or Q' from bidiagonal reduction ---
   inline void ormbr( char* vect, char* side, char* trans, int* m, int* n, int* k, float* a, int* lda, float* tau, float* c, int* ldc, float* work, int* lwork, int* info )
   {
     F77_sormbr( vect, side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
@@ -715,33 +714,33 @@ namespace libflame{
   {
     F77_dormbr( vect, side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
   }
-  inline void ormbr( char* vect, char* side, char* trans, int* m, int* n, int* k, scomplex* a, int* lda, scomplex* tau, scomplex* c, int* ldc, scomplex* work, int* lwork, int* info )
+  inline void unmbr( char* vect, char* side, char* trans, int* m, int* n, int* k, scomplex* a, int* lda, scomplex* tau, scomplex* c, int* ldc, scomplex* work, int* lwork, int* info )
   {
     F77_cunmbr( vect, side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
   }
-  inline void ormbr( char* vect, char* side, char* trans, int* m, int* n, int* k, dcomplex* a, int* lda, dcomplex* tau, dcomplex* c, int* ldc, dcomplex* work, int* lwork, int* info )
+  inline void unmbr( char* vect, char* side, char* trans, int* m, int* n, int* k, dcomplex* a, int* lda, dcomplex* tau, dcomplex* c, int* ldc, dcomplex* work, int* lwork, int* info )
   {
     F77_zunmbr( vect, side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
   }
-  
-  // --- Tridiagonal QR algorithm ---  
+
+  // --- Tridiagonal QR algorithm ---
   inline void steqr( char* jobz, int* n, float* d, float* e, float* z, int* ldz, float*  work, int* info )
   {
     F77_ssteqr( jobz, n, d, e, z, ldz, work, info );
   }
   inline void steqr( char* jobz, int* n, double*    d, double*    e, double*    z, int* ldz, double* work, int* info )
   {
-    F77_dsteqr( jobz, n, d, e, z, ldz, work, info ); 
+    F77_dsteqr( jobz, n, d, e, z, ldz, work, info );
   }
   inline void steqr( char* jobz, int* n, float* d, float* e, scomplex* z, int* ldz, float*  work, int* info )
   {
-    F77_csteqr( jobz, n, d, e, z, ldz, work, info ); 
+    F77_csteqr( jobz, n, d, e, z, ldz, work, info );
   }
   inline void steqr( char* jobz, int* n, double*    d, double*    e, dcomplex* z, int* ldz, double* work, int* info )
   {
-    F77_zsteqr( jobz, n, d, e, z, ldz, work, info ); 
+    F77_zsteqr( jobz, n, d, e, z, ldz, work, info );
   }
-  
+
   // --- Tridiagonal divide-and-conquer algorithm ---
   inline void stedc( char* compz, int* n, float* d, float* e, float* z, int* ldz, float* work, int* lwork,          int* iwork, int* liwork, int* info )
   {
@@ -759,8 +758,8 @@ namespace libflame{
   {
     F77_zstedc( compz, n, d, e, z, ldz, work, lwork, rwork, lrwork, iwork, liwork, info );
   }
-  
-  // --- Tridiagonal MRRR algorithm ---  
+
+  // --- Tridiagonal MRRR algorithm ---
   inline void stemr( char* jobz, char* range, int* n, float*  d, float*  e, int* vl, int* vu, int* il, int* iu, int* m, float*  w, float* z, int* ldz, int* nzc, int* isuppz, int* tryrac, float*  work, int* lwork, int* iwork, int* liwork, int* info )
   {
     F77_sstemr( jobz, range, n, d, e, vl, vu, il, iu, m, w, z, ldz, nzc, isuppz, tryrac, work, lwork, iwork, liwork, info );
@@ -777,90 +776,90 @@ namespace libflame{
   {
     F77_zstemr( jobz, range, n, d, e, vl, vu, il, iu, m, w, z, ldz, nzc, isuppz, tryrac, work, lwork, iwork, liwork, info );
   }
-  
-  // --- Hermitian eigenvalue decomposition (QR algorithm) ---  
+
+  // --- Hermitian eigenvalue decomposition (QR algorithm) ---
   inline void syev( char* jobz, char* uplo, int* n, float* a, int* lda, float*  w, float* work, int* lwork, float*  rwork, int* info )
   {
-    F77_ssyev( jobz, uplo, n, a, lda, w, work, lwork, rwork, info ); 
+    F77_ssyev( jobz, uplo, n, a, lda, w, work, lwork, rwork, info );
   }
   inline void syev( char* jobz, char* uplo, int* n, double*    a, int* lda, double* w, double*    work, int* lwork, double* rwork, int* info )
   {
-    F77_dsyev( jobz, uplo, n, a, lda, w, work, lwork, rwork, info ); 
+    F77_dsyev( jobz, uplo, n, a, lda, w, work, lwork, rwork, info );
   }
-  inline void syev( char* jobz, char* uplo, int* n, scomplex* a, int* lda, float*  w, scomplex* work, int* lwork, float*  rwork, int* info )
+  inline void heev( char* jobz, char* uplo, int* n, scomplex* a, int* lda, float*  w, scomplex* work, int* lwork, float*  rwork, int* info )
   {
-    F77_cheev( jobz, uplo, n, a, lda, w, work, lwork, rwork, info ); 
+    F77_cheev( jobz, uplo, n, a, lda, w, work, lwork, rwork, info );
   }
-  inline void syev( char* jobz, char* uplo, int* n, dcomplex* a, int* lda, double* w, dcomplex* work, int* lwork, double* rwork, int* info )
+  inline void heev( char* jobz, char* uplo, int* n, dcomplex* a, int* lda, double* w, dcomplex* work, int* lwork, double* rwork, int* info )
   {
-    F77_zheev( jobz, uplo, n, a, lda, w, work, lwork, rwork, info ); 
+    F77_zheev( jobz, uplo, n, a, lda, w, work, lwork, rwork, info );
   }
-  
-  // --- Hermitian eigenvalue decomposition (divide-and-conquer) ---  
+
+  // --- Hermitian eigenvalue decomposition (divide-and-conquer) ---
   inline void syevd( char* jobz, char* uplo, int* n, float* a, int* lda, float*  w, float* work, int* lwork,          int* iwork, int* liwork, int* info )
   {
-    F77_ssyevd( jobz, uplo, n, a, lda, w, work, lwork, iwork, liwork, info ); 
+    F77_ssyevd( jobz, uplo, n, a, lda, w, work, lwork, iwork, liwork, info );
   }
   inline void syevd( char* jobz, char* uplo, int* n, double*    a, int* lda, double* w, double*    work, int* lwork,          int* iwork, int* liwork, int* info )
   {
-    F77_dsyevd( jobz, uplo, n, a, lda, w, work, lwork, iwork, liwork, info ); 
+    F77_dsyevd( jobz, uplo, n, a, lda, w, work, lwork, iwork, liwork, info );
   }
-  inline void syevd( char* jobz, char* uplo, int* n, scomplex* a, int* lda, float*  w, scomplex* work, int* lwork, float*  rwork, int* lrwork, int* iwork, int* liwork, int* info )
+  inline void heevd( char* jobz, char* uplo, int* n, scomplex* a, int* lda, float*  w, scomplex* work, int* lwork, float*  rwork, int* lrwork, int* iwork, int* liwork, int* info )
   {
-    F77_cheevd( jobz, uplo, n, a, lda, w, work, lwork, rwork, lrwork, iwork, liwork, info ); 
+    F77_cheevd( jobz, uplo, n, a, lda, w, work, lwork, rwork, lrwork, iwork, liwork, info );
   }
-  inline void syevd( char* jobz, char* uplo, int* n, dcomplex* a, int* lda, double* w, dcomplex* work, int* lwork, double* rwork, int* lrwork, int* iwork, int* liwork, int* info )
+  inline void heevd( char* jobz, char* uplo, int* n, dcomplex* a, int* lda, double* w, dcomplex* work, int* lwork, double* rwork, int* lrwork, int* iwork, int* liwork, int* info )
   {
-    F77_zheevd( jobz, uplo, n, a, lda, w, work, lwork, rwork, lrwork, iwork, liwork, info ); 
+    F77_zheevd( jobz, uplo, n, a, lda, w, work, lwork, rwork, lrwork, iwork, liwork, info );
   }
-  
+
   // --- Hermitian eigenvalue decomposition (MRRR) ---
   inline void syevr( char* jobz, char* range, char* uplo, int* n, float* a, int* lda, float*  vl, float*  vu, int* il, int* iu, float*  abstol, int* m, float*  w, float* z, int* ldz, int* isuppz, float* work, int* lwork,          int* iwork, int* liwork, int* info )
   {
-    F77_ssyevr( jobz, range, uplo, n, a, lda, vl, vu, il, iu, abstol, m, w, z, ldz, isuppz, work, lwork, iwork, liwork, info ); 
+    F77_ssyevr( jobz, range, uplo, n, a, lda, vl, vu, il, iu, abstol, m, w, z, ldz, isuppz, work, lwork, iwork, liwork, info );
   }
   inline void syevr( char* jobz, char* range, char* uplo, int* n, double*    a, int* lda, double* vl, double* vu, int* il, int* iu, double* abstol, int* m, double* w, double*    z, int* ldz, int* isuppz, double*    work, int* lwork,          int* iwork, int* liwork, int* info )
   {
     F77_dsyevr( jobz, range, uplo, n, a, lda, vl, vu, il, iu, abstol, m, w, z, ldz, isuppz, work, lwork,  iwork, liwork, info );
   }
-  inline void syevr( char* jobz, char* range, char* uplo, int* n, scomplex* a, int* lda, float*  vl, float*  vu, int* il, int* iu, float*  abstol, int* m, float*  w, scomplex* z, int* ldz, int* isuppz, scomplex* work, int* lwork, float*  rwork, int* lrwork, int* iwork, int* liwork, int* info )
+  inline void heevr( char* jobz, char* range, char* uplo, int* n, scomplex* a, int* lda, float*  vl, float*  vu, int* il, int* iu, float*  abstol, int* m, float*  w, scomplex* z, int* ldz, int* isuppz, scomplex* work, int* lwork, float*  rwork, int* lrwork, int* iwork, int* liwork, int* info )
   {
-    F77_cheevr( jobz, range, uplo, n, a, lda, vl, vu, il, iu, abstol, m, w, z, ldz, isuppz, work, lwork, rwork, lrwork, iwork, liwork, info ); 
+    F77_cheevr( jobz, range, uplo, n, a, lda, vl, vu, il, iu, abstol, m, w, z, ldz, isuppz, work, lwork, rwork, lrwork, iwork, liwork, info );
   }
-  inline void syevr( char* jobz, char* range, char* uplo, int* n, dcomplex* a, int* lda, double* vl, double* vu, int* il, int* iu, double* abstol, int* m, double* w, dcomplex* z, int* ldz, int* isuppz, dcomplex* work, int* lwork, double* rwork, int* lrwork, int* iwork, int* liwork, int* info )
+  inline void heevr( char* jobz, char* range, char* uplo, int* n, dcomplex* a, int* lda, double* vl, double* vu, int* il, int* iu, double* abstol, int* m, double* w, dcomplex* z, int* ldz, int* isuppz, dcomplex* work, int* lwork, double* rwork, int* lrwork, int* iwork, int* liwork, int* info )
   {
-    F77_zheevr( jobz, range, uplo, n, a, lda, vl, vu, il, iu, abstol, m, w, z, ldz, isuppz, work, lwork, rwork, lrwork, iwork, liwork, info ); 
+    F77_zheevr( jobz, range, uplo, n, a, lda, vl, vu, il, iu, abstol, m, w, z, ldz, isuppz, work, lwork, rwork, lrwork, iwork, liwork, info );
   }
-  
-  // --- Bidiagonal QR algorithm ---  
+
+  // --- Bidiagonal QR algorithm ---
   inline void bdsqr( char* uplo, int* n, int* ncvt, int* nru, int* ncc, float* d, float* e, float* vt, int* ldvt, float* u, int* ldu, float* c, int* ldc, float*  rwork, int* info )
   {
-    F77_sbdsqr( uplo, n, ncvt, nru, ncc, d, e, vt, ldvt, u, ldu, c, ldc, rwork, info ); 
+    F77_sbdsqr( uplo, n, ncvt, nru, ncc, d, e, vt, ldvt, u, ldu, c, ldc, rwork, info );
   }
   inline void bdsqr( char* uplo, int* n, int* ncvt, int* nru, int* ncc, double*    d, double*    e, double*    vt, int* ldvt, double*    u, int* ldu, double*    c, int* ldc, double* rwork, int* info )
   {
-    F77_dbdsqr( uplo, n, ncvt, nru, ncc, d, e, vt, ldvt, u, ldu, c, ldc, rwork, info ); 
+    F77_dbdsqr( uplo, n, ncvt, nru, ncc, d, e, vt, ldvt, u, ldu, c, ldc, rwork, info );
   }
   inline void bdsqr( char* uplo, int* n, int* ncvt, int* nru, int* ncc, float* d, float* e, scomplex* vt, int* ldvt, scomplex* u, int* ldu, scomplex* c, int* ldc, float*  rwork, int* info )
   {
-    F77_cbdsqr( uplo, n, ncvt, nru, ncc, d, e, vt, ldvt, u, ldu, c, ldc, rwork, info ); 
+    F77_cbdsqr( uplo, n, ncvt, nru, ncc, d, e, vt, ldvt, u, ldu, c, ldc, rwork, info );
   }
   inline void bdsqr( char* uplo, int* n, int* ncvt, int* nru, int* ncc, double*    d, double*    e, dcomplex* vt, int* ldvt, dcomplex* u, int* ldu, dcomplex* c, int* ldc, double* rwork, int* info )
   {
-    F77_zbdsqr( uplo, n, ncvt, nru, ncc, d, e, vt, ldvt, u, ldu, c, ldc, rwork, info ); 
+    F77_zbdsqr( uplo, n, ncvt, nru, ncc, d, e, vt, ldvt, u, ldu, c, ldc, rwork, info );
   }
-  
-  // --- Bidiagonal divide-and-conquor algorithm ---  
+
+  // --- Bidiagonal divide-and-conquor algorithm ---
   inline void bdsdc( char* uplo, char* compq, int* n, float*  d, float*  e, float*  u, int* ldu, float*  vt, int* ldvt, float*  q, float*  iq, float*  work, int* iwork, int* info )
   {
-    F77_sbdsdc( uplo, compq, n, d, e, u, ldu, vt, ldvt, q, iq, work, iwork, info ); 
+    F77_sbdsdc( uplo, compq, n, d, e, u, ldu, vt, ldvt, q, iq, work, iwork, info );
   }
   inline void bdsdc( char* uplo, char* compq, int* n, double* d, double* e, double* u, int* ldu, double* vt, int* ldvt, double* q, double* iq, double* work, int* iwork, int* info )
   {
-    F77_dbdsdc( uplo, compq, n, d, e, u, ldu, vt, ldvt, q, iq, work, iwork, info ); 
+    F77_dbdsdc( uplo, compq, n, d, e, u, ldu, vt, ldvt, q, iq, work, iwork, info );
   }
-  
-  // --- General matrix singular value decomposition (QR algorithm) ---  
+
+  // --- General matrix singular value decomposition (QR algorithm) ---
   inline void gesvd( char* jobu, char* jobv, int* m, int* n, float* a, int* lda, float*  s, float* u, int* ldu, float* vt, int* ldvt, float* work, int* lwork,     int* info )
   {
     F77_sgesvd( jobu, jobv, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, info );
@@ -877,8 +876,8 @@ namespace libflame{
   {
     F77_zgesvd( jobu, jobv, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, rwork, info );
   }
-  
-  // --- General matrix singular value decomposition (divide-and-conquer) ---  
+
+  // --- General matrix singular value decomposition (divide-and-conquer) ---
   inline void gesdd( char* jobz, int* m, int* n, float* a, int* lda, float*  s, float* u, int* ldu, float* vt, int* ldvt, float* work, int* lwork,     int* iwork, int* info )
   {
     F77_sgesdd( jobz, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, iwork, info );
@@ -895,8 +894,8 @@ namespace libflame{
   {
     F77_zgesdd( jobz, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, rwork, iwork, info );
   }
-  
-  // --- Swap rows ---  
+
+  // --- Swap rows ---
   inline void laswp( int* n, float* a, int* lda, int* k1, int* k2, int* ipiv, int* incx )
   {
     F77_slaswp( n, a, lda, k1, k2, ipiv, incx );
@@ -913,8 +912,8 @@ namespace libflame{
   {
     F77_zlaswp( n, a, lda, k1, k2, ipiv, incx );
   }
-  
-  // --- Initialize a matrix ---  
+
+  // --- Initialize a matrix ---
   inline void laset( char* uplo, int* m, int* n, float* alpha, float* beta, float* a, int* lda )
   {
     F77_slaset( uplo, m, n, alpha, beta, a, lda );

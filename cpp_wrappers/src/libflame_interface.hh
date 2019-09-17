@@ -68,7 +68,7 @@ namespace libflame{
     LDA is int*. \n
     The leading dimension of the matrix A, LDA >= max(1,N)
 
-	\param[out] INFO
+    \param[out] INFO
     INFO is int*. \n
     = 0:  successful exit \n
     < 0:  if INFO = -i, the i-th argument had an illegal value \n
@@ -98,7 +98,7 @@ namespace libflame{
   template< typename T >
   void getf2( int* m, int* n, T* a, int* lda, int* ipiv, int* info )
   {
-    dgetf2(m, n, a, lda, ipiv, info );
+    getf2(m, n, a, lda, ipiv, info );
   }
   // --- QR factorization (classic) ---
 
@@ -287,9 +287,21 @@ namespace libflame{
   }
 
   template< typename T >
+  void hegst( int* itype, char* uplo, int* n, T* a, int* lda, T* b, int* ldb, int* info )
+  {
+    hegst( itype, uplo, n, a, lda, b, ldb, info );
+  }
+
+  template< typename T >
   void sygs2( int* itype, char* uplo, int* n, T* a, int* lda, T* b, int* ldb, int* info )
   {
     sygs2( itype, uplo, n, a, lda, b, ldb, info );
+  }
+
+  template< typename T >
+  void hegs2( int* itype, char* uplo, int* n, T* a, int* lda, T* b, int* ldb, int* info )
+  {
+    hegs2(itype, uplo, n, a, lda, b, ldb, info );
   }
 
   // --- Accumulate block Householder matrix T (classic) ---
@@ -319,6 +331,11 @@ namespace libflame{
     orgqr(  m, n, k,  a, lda, tau, work, lwork, info );
   }
 
+  template< typename T >
+  void ungqr( int* m, int* n, int* k, T*   a, int* lda, T*   tau, T*   work, int* lwork, int* info )
+  {
+    ungqr( m, n, k, a, lda, tau, work, lwork, info );
+  }
   // --- Apply Q or Q' from QR factorization ---
   template< typename T >
   void ormqr( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* tau, T* c, int* ldc, T* work, int* lwork, int* info )
@@ -327,9 +344,21 @@ namespace libflame{
   }
 
   template< typename T >
+  void unmqr( char* side, char* trans, int* m, int* n, int* k, T*   a, int* lda, T*   tau, T*   c, int* ldc, T*   work, int* lwork, int* info )
+  {
+    unmqr( side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
+  }
+
+  template< typename T >
   void orm2r( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* tau, T* c, int* ldc, T* work, int* info )
   {
     orm2r( side, trans,  m, n, k, a, lda, tau, c, ldc, work, info );
+  }
+
+  template< typename T >
+  void unm2r( char* side, char* trans, int* m, int* n, int* k, T*   a, int* lda, T*   tau, T*   c, int* ldc, T*   work, int* info )
+  {
+    unm2r(side, trans, m, n, k, a, lda, tau, c, ldc, work, info );
   }
 
   // --- Form Q from LQ factorization ---
@@ -337,6 +366,12 @@ namespace libflame{
   void orglq( int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, int* lwork, int* info )
   {
     orglq( m, n, k, a, lda, tau, work, lwork, info );
+  }
+
+  template< typename T >
+  void unglq( int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, int* lwork, int* info )
+  {
+    unglq( m, n, k, a, lda, tau, work, lwork, info );
   }
 
   // --- Apply Q or Q' from LQ factorization ---
@@ -347,9 +382,21 @@ namespace libflame{
   }
 
   template< typename T >
+  void unmlq( char* side, char* trans, int* m, int* n, int* k, T*   a, int* lda, T*   tau, T*   c, int* ldc, T*   work, int* lwork, int* info )
+  {
+      unmlq( side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
+  }
+
+  template< typename T >
   void orml2( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* tau, T* c, int* ldc, T* work, int* info )
   {
     orml2( side, trans, m, n, k, a, lda, tau, c, ldc, work, info );
+  }
+
+  template< typename T >
+  void unml2( char* side, char* trans, int* m, int* n, int* k, T*   a, int* lda, T*   tau, T*   c, int* ldc, T*   work, int* info )
+  {
+    unml2( side, trans, m, n, k, a, lda, tau, c, ldc, work, info );
   }
 
   // --- Form Q from tridiagonal reduction ---
@@ -359,11 +406,23 @@ namespace libflame{
     orgtr( uplo, m, a, lda, tau, work, lwork, info );
   }
 
+  template< typename T >
+  void ungtr( char* uplo, int* m, T* a, int* lda, T* tau, T* work, int* lwork, int* info )
+  {
+    ungtr( uplo, m, a, lda, tau, work, work, info );
+  }
+
   // --- Apply Q or Q' from tridiagonal reduction ---
   template< typename T >
   void ormtr( char* side, char* uplo, char* trans, int* m, int* n, T* a, int* lda, T* tau, T* c, int* ldc, T* work, int* lwork, int* info )
   {
     ormtr( side, uplo, trans, m, n, a, lda, tau, c, ldc, work, lwork, info );
+  }
+
+  template< typename T >
+  void unmtr( char* side, char* uplo, char* trans, int* m, int* n, T* a, int* lda, T* tau, T* c, int* ldc, T* work, int* lwork, int* info )
+  {
+    unmtr( side, uplo, trans, m, n, a, lda, tau, c, ldc, work, lwork, info );
   }
 
   // --- Form Q from bidiagonal reduction ---
@@ -373,11 +432,23 @@ namespace libflame{
     orgbr( vect, m, n, k, a, lda, tau, work, lwork, info );
   }
 
+  template< typename T >
+  void ungbr( char* vect, int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, int* lwork, int* info )
+  {
+    ngbr( vect, m, n, k, a, lda, tau, work, lwork, info );
+  }
+
   // --- Apply Q or Q' from bidiagonal reduction ---
   template< typename T >
   void ormbr( char* vect, char* side, char* trans, int* m, int* n, int* k, T* a, int* lda,T* tau, T* c, int* ldc, T* work, int* lwork, int* info )
   {
     ormbr( vect, side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
+  }
+
+  template< typename T >
+  void unmbr( char* vect, char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* tau, T* c, int* ldc, T* work, int* lwork, int* info )
+  {
+    unmbr( vect, side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
   }
 
   // --- Tridiagonal QR algorithm ---
