@@ -609,7 +609,7 @@ int geqpf( int* m, int* n, Ta* a, int* lda, int* jpvt, Ta* tau, Ta* work, Tb* rw
     The scalar factors of the elementary reflectors.
 
     * @param[out] work
-    work is float/double array, dimension (MAX(1,lwork)) \n
+    work is float/double array, dimension (max(1,lwork)) \n
     On exit, if info=0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -694,7 +694,7 @@ int geqp3( int* m, int* n, T* a, int* lda, int* jpvt, T* tau, T* work, int* lwor
     The scalar factors of the elementary reflectors.
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info=0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -773,7 +773,7 @@ int geqp3( int* m, int* n, Ta* a, int* lda, int* jpvt, Ta* tau, Ta* work, int* l
     The scalar factors of the elementary reflectors (see Further Details).
 
     * @param[out] work
-    work is float/double/scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is float/double/scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -835,7 +835,7 @@ int gelqf( int* m, int* n, T* a, int* lda, T* tau, T* work, int* lwork, int* inf
     On entry, the m-by-n matrix. \n
     On exit, the elements on and below the diagonal of the array
     contain the m by min(m,n) lower trapezoidal matrix L (L is
-    lower triangular if M <= N); the elements above the diagonal,
+    lower triangular if m <= n); the elements above the diagonal,
     with the array tau, represent the orthogonal matrix Q as a
     product of elementary reflectors (see Further Details).
 
@@ -933,7 +933,7 @@ int gelq2( int* m, int* n, T* a, int* lda, T* tau, T* work, int* info )
     b is float/double array, dimension (ldb,nrhs) \n
     On entry, the m-by-n matrix. \n
     On exit, b is overwritten by the n-by-nrhs solution
-    matrix X.  If m >= n and rank = N, the residual
+    matrix X.  If m >= n and rank = n, the residual
     sum-of-squares for the solution in the i-th column is given
     by the sum of squares of elements n+1:m in that column.
 
@@ -958,7 +958,7 @@ int gelq2( int* m, int* n, T* a, int* lda, T* tau, T* work, int* info )
     which are greater than rcond*S(1).
 
     * @param[out] work
-    work is float/double array, dimension (MAX(1,lwork)) \n
+    work is float/double array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -973,7 +973,7 @@ int gelq2( int* m, int* n, T* a, int* lda, T* tau, T* work, int* info )
     SMLSIZ is returned by ILAENV and is equal to the maximum
     size of the subproblems at the bottom of the computation
     tree (usually about 25), and \n
-    NLVL = MAX( 0, INT( LOG_2( MIN( m,n )/(SMLSIZ+1) ) ) + 1 ) \n
+    NLVL = max( 0, INT( LOG_2( MIN( m,n )/(SMLSIZ+1) ) ) + 1 ) \n
     For good performance, lwork should generally be larger. \n \n
 
     If lwork = -1, then a workspace query is assumed; the routine
@@ -983,7 +983,7 @@ int gelq2( int* m, int* n, T* a, int* lda, T* tau, T* work, int* info )
     message related to lwork is issued by XERBLA.
 
     * @param[out] iwork
-    iwork is int array, dimension (MAX(1,liwork)) \n
+    iwork is int array, dimension (max(1,liwork)) \n
     liwork >= max(1, 3*MINMN*NLVL + 11*MINMN), \n
     where MINMN = MIN( m,n ). \n
     On exit, if info = 0, iwork(1) returns the minimum liwork.
@@ -1060,7 +1060,7 @@ int gelsd( int* m, int* n, int* nrhs, T* a, int* lda, T* b, int* ldb, T* s, T* r
     b is scomplex/dcomplex array, dimension (ldb,nrhs) \n
     On entry, the m-by-n matrix. \n
     On exit, b is overwritten by the n-by-nrhs solution
-    matrix X.  If m >= n and rank = N, the residual
+    matrix X.  If m >= n and rank = n, the residual
     sum-of-squares for the solution in the i-th column is given
     by the sum of squares of elements n+1:m in that column.
 
@@ -1069,7 +1069,7 @@ int gelsd( int* m, int* n, int* nrhs, T* a, int* lda, T* b, int* ldb, T* s, T* r
     The leading dimension of the matrix b, ldb >= max(1,max(m,n)).
 
     * @param[out] s
-    s is scomplex/dcomplex array, dimension (min(m,n)) \n
+    s is float/double array, dimension (min(m,n)) \n
     The singular values of A in decreasing order. \n
     The condition number of A in the 2-norm = S(1)/S(min(m,n)).
 
@@ -1085,7 +1085,7 @@ int gelsd( int* m, int* n, int* nrhs, T* a, int* lda, T* b, int* ldb, T* s, T* r
     which are greater than rcond*S(1).
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -1100,7 +1100,7 @@ int gelsd( int* m, int* n, int* nrhs, T* a, int* lda, T* b, int* ldb, T* s, T* r
     SMLSIZ is returned by ILAENV and is equal to the maximum
     size of the subproblems at the bottom of the computation
     tree (usually about 25), and \n
-    NLVL = MAX( 0, INT( LOG_2( MIN( m,n )/(SMLSIZ+1) ) ) + 1 ) \n
+    NLVL = max( 0, INT( LOG_2( MIN( m,n )/(SMLSIZ+1) ) ) + 1 ) \n
     For good performance, lwork should generally be larger. \n \n
     If lwork = -1, then a workspace query is assumed; the routine
     only calculates the optimal size of the array work and the
@@ -1109,22 +1109,22 @@ int gelsd( int* m, int* n, int* nrhs, T* a, int* lda, T* b, int* ldb, T* s, T* r
     message related to lwork is issued by XERBLA.
 
     * @param[out] rwork
-    rwork is float/double array, dimension (MAX(1,lrwork)) \n
+    rwork is float/double array, dimension (max(1,lrwork)) \n
     lrwork >= \n
     10*N + 2*N*SMLSIZ + 8*N*NLVL + 3*SMLSIZ*nrhs + \n
-    MAX( (SMLSIZ+1)**2, N*(1+nrhs) + 2*nrhs ) \n
+    max( (SMLSIZ+1)**2, N*(1+nrhs) + 2*nrhs ) \n
     if M is greater than or equal to N or \n
     10*M + 2*M*SMLSIZ + 8*M*NLVL + 3*SMLSIZ*nrhs + \n
-    MAX( (SMLSIZ+1)**2, N*(1+nrhs) + 2*nrhs ) \n
+    max( (SMLSIZ+1)**2, N*(1+nrhs) + 2*nrhs ) \n
     if M is less than N, the code will execute correctly. \n
     SMLSIZ is returned by ILAENV and is equal to the maximum
     size of the subproblems at the bottom of the computation
     tree (usually about 25), and \n
-    NLVL = MAX( 0, INT( LOG_2( MIN( m,n )/(SMLSIZ+1) ) ) + 1 ) \n
+    NLVL = max( 0, INT( LOG_2( MIN( m,n )/(SMLSIZ+1) ) ) + 1 ) \n
     On exit, if info = 0, rwork(1) returns the minimum lrwork.
 
     * @param[out] iwork
-    iwork is int array, dimension (MAX(1,liwork)) \n
+    iwork is int array, dimension (max(1,liwork)) \n
     liwork >= max(1, 3*MINMN*NLVL + 11*MINMN), \n
     where MINMN = MIN( m,n ). \n
     On exit, if info = 0, iwork(1) returns the minimum liwork.
@@ -1214,7 +1214,7 @@ int gelsd( int* m, int* n, int* nrhs, Ta* a, int* lda, Ta* b, int* ldb, Tb* s, T
     which are greater than rcond*S(1).
 
     * @param[out] work
-    work is float/double array, dimension (MAX(1,lwork)) \n
+    work is float/double array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -1296,12 +1296,12 @@ int gelss( int* m, int* n, int* nrhs, T* a, int* lda, T* b, int* ldb, T*  s, T* 
     The leading dimension of the matrix b, ldb >= max(1,max(m,n)).
 
     * @param[out] s
-    s is scomplex/dcomplex array, dimension (min(m,n)) \n
+    s is float/double array, dimension (min(m,n)) \n
     The singular values of A in decreasing order.
     The condition number of A in the 2-norm = S(1)/S(min(m,n)).
 
     * @param[in] rcond
-    rcond is COMPLEX \n
+    rcond is float/double \n
     rcond is used to determine the effective rank of A.
     Singular values S(i) <= rcond*S(1) are treated as zero. \n
     If rcond < 0, machine precision is used instead.
@@ -1312,7 +1312,7 @@ int gelss( int* m, int* n, int* nrhs, T* a, int* lda, T* b, int* ldb, T*  s, T* 
     which are greater than rcond*S(1).
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -1461,7 +1461,7 @@ int lauu2( char* uplo, int* n, T* a, int* lda, int* info )
     n is int*  \n
     The order of the matrix a.  n >= 0.
 
-    * @param[in,out] a
+    * @param[in,out] buff_A
     a is float/double/scomplex/dcomplex array, dimension (lda,n) \n
     On entry, the triangular factor U or L from the Cholesky
     factorization A = U**T*U or A = L*L**T, as computed by
@@ -1752,7 +1752,7 @@ int trsyl( char* transa, char* transb, int* isgn, int* m, int* n, T* a, int* lda
     The leading dimension of the array b. ldb >= max(1,n).
 
     * @param[in,out] c
-    C is scomplex/dcomplex array, dimension (ldc,n) \n
+    c is scomplex/dcomplex array, dimension (ldc,n) \n
     On entry, the m-by-n right hand side matrix c. \n
     On exit, c is overwritten by the solution matrix X.
 
@@ -1879,7 +1879,6 @@ int gehrd( int* n, int* ilo, int* ihi, T* a, int* lda, T* tau, T* work, int* lwo
 
 /*! @brief Reduction to upper Hessenberg form using an unblocked algorithm
     *
-
     * @details
     * \b Purpose:
     * \verbatim
@@ -2027,7 +2026,7 @@ int gehd2( int* n, int* ilo, int* ihi, T* a, int* lda, T* tau, T* work, int* inf
     Details).
 
     * @param[out] work
-    work is float/double array, dimension (MAX(1,lwork)) \n
+    work is float/double array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -2151,7 +2150,7 @@ int sytrd( char* uplo, int* n, T* a, int* lda, T*  d, T*  e, T* tau, T* work, in
     Details).
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -2456,7 +2455,7 @@ int hetd2( char* uplo, int* n, Ta* a, int* lda, Tb*  d, Tb*  e, Ta* tau, int* in
     The number of columns in the matrix a.  n >= 0.
 
     * @param[in,out] a
-    a is float/double/scomplex/dcomplex array, dimension (lda,n) \n
+    a is float/double array, dimension (lda,n) \n
     On entry, the m-by-n general matrix to be reduced. \n
     On exit, \n
     if m >= n, the diagonal and the first superdiagonal are
@@ -2491,19 +2490,19 @@ int hetd2( char* uplo, int* n, Ta* a, int* lda, Tb*  d, Tb*  e, Ta* tau, int* in
     if m < n, E(i) = A(i+1,i) for i = 1,2,...,m-1.
 
     * @param[out] tauq
-    tauq is float/doublearray, dimension (min(m,n)) \n
+    tauq is float/double array, dimension (min(m,n)) \n
     The scalar factors of the elementary reflectors which
     represent the orthogonal matrix Q. \n
     See Further Details.
 
     * @param[out] taup
-    taup is float/double/scomplex/dcomplex array, dimension (min(m,n)) \n
+    taup is float/double array, dimension (min(m,n)) \n
     The scalar factors of the elementary reflectors which
     represent the orthogonal matrix P. \n
     See Further Details.
 
     * @param[out] work
-    work is float/double array, dimension (MAX(1,lwork)) \n
+    work is float/double array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -2642,7 +2641,7 @@ int gebrd( int* m, int* n, T* a, int* lda, T*  d, T*  e, T* tauq, T* taup, T* wo
     \n See Further Details.
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -2781,7 +2780,7 @@ int gebrd( int* m, int* n, Ta* a, int* lda, Tb* d, Tb* e, Ta* tauq, Ta* taup, Ta
     See Further Details.
 
     * @param[out] work
-    work is float/double array, dimension (MAX(m,n))
+    work is float/double array, dimension (max(m,n))
 
     * @param[out] info
     info is int* \n
@@ -2909,7 +2908,7 @@ int gebd2( int* m, int* n, T* a, int* lda, T*  d, T*  e, T* tauq, T* taup, T* wo
     See Further Details.
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(m,n))
+    work is scomplex/dcomplex array, dimension (max(m,n))
 
     * @param[out] info
     info is int* \n
@@ -3475,7 +3474,7 @@ int larfgp( int* n, T* alpha, T* x, int* incx, T* tau )
     * @param[in] k
     k is int* \n
     The number of elementary reflectors whose product defines the
-    matrix Q. N >= k >= 0. \n
+    matrix Q. n >= k >= 0. \n
 
     * @param[in,out] a
     a is float/double array, dimension (lda,n) \n
@@ -3495,7 +3494,7 @@ int larfgp( int* n, T* alpha, T* x, int* incx, T* tau )
     reflector H(i), as returned by SGEQRF.
 
     * @param[out] work
-    work is float/double array, dimension (MAX(1,lwork)) \n
+    work is float/double array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -3544,7 +3543,7 @@ int orgqr( int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, int* lwork, 
     * @param[in] k
     k is int* \n
     The number of elementary reflectors whose product defines the
-    matrix Q. N >= k >= 0.
+    matrix Q. n >= k >= 0.
 
     * @param[in,out] a
     a is scomplex/dcomplex array, dimension (lda,n) \n
@@ -3564,7 +3563,7 @@ int orgqr( int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, int* lwork, 
     reflector H(i), as returned by SGEQRF.
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -3624,17 +3623,17 @@ int ungqr( int* m, int* n, int* k, T*   a, int* lda, T* tau, T* work, int* lwork
 
     * @param[in] n
     n is int* \n
-    The number of columns of the matrix C. n >= 0.
+    The number of columns of the matrix c. n >= 0.
 
     * @param[in] k
     k is int* \n
     The number of elementary reflectors whose product defines
     the matrix Q. \n
-    If side = 'L', M >= k >= 0; \n
-    if side = 'R', N >= k >= 0.
+    If side = 'L', m >= k >= 0; \n
+    if side = 'R', n >= k >= 0.
 
     * @param[in] a
-    a is float/double array, dimension (lda,K) \n
+    a is float/double array, dimension (lda,k) \n
     The i-th column must contain the vector which defines the
     elementary reflector H(i), for i = 1,2,...,k, as returned by
     SGEQRF in the first k columns of its array argument a.
@@ -3642,7 +3641,7 @@ int ungqr( int* m, int* n, int* k, T*   a, int* lda, T* tau, T* work, int* lwork
     * @param[in] lda
     lda is int* \n
     The leading dimension of the array a. \n
-    If side = 'L', lda >= max(1,M); \n
+    If side = 'L', lda >= max(1,m); \n
     if side = 'R', lda >= max(1,n).
 
     * @param[in] tau
@@ -3660,7 +3659,7 @@ int ungqr( int* m, int* n, int* k, T*   a, int* lda, T* tau, T* work, int* lwork
     The leading dimension of the array c. ldc >= max(1,m).
 
     * @param[out] work
-    work is float/double array, dimension (MAX(1,lwork)) \n
+    work is float/double array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -3721,17 +3720,17 @@ int ormqr( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
 
     * @param[in] n
     n is int* \n
-    The number of columns of the matrix C. n >= 0.
+    The number of columns of the matrix c. n >= 0.
 
     * @param[in] k
     k is int* \n
     The number of elementary reflectors whose product defines
     the matrix Q. \n
-    If side = 'L', M >= k >= 0; \n
-    if side = 'R', N >= k >= 0.
+    If side = 'L', m >= k >= 0; \n
+    if side = 'R', n >= k >= 0.
 
     * @param[in] a
-    a is scomplex/dcomplex array, dimension (lda,K) \n
+    a is scomplex/dcomplex array, dimension (lda,k) \n
     The i-th column must contain the vector which defines the
     elementary reflector H(i), for i = 1,2,...,k, as returned by
     CGEQRF in the first k columns of its array argument a.
@@ -3739,7 +3738,7 @@ int ormqr( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
     * @param[in] lda
     lda is int* \n
     The leading dimension of the array a. \n
-    If side = 'L', lda >= max(1,M); \n
+    If side = 'L', lda >= max(1,m); \n
     if side = 'R', lda >= max(1,n).
 
     * @param[in] tau
@@ -3748,7 +3747,7 @@ int ormqr( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
     reflector H(i), as returned by SGEQRF.
 
     * @param[in,out] c
-    C is scomplex/dcomplex array, dimension (ldc,n) \n
+    c is scomplex/dcomplex array, dimension (ldc,n) \n
     On entry, the m-by-n matrix c. \n
     On exit, c is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
 
@@ -3757,13 +3756,13 @@ int ormqr( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
     The leading dimension of the array c. ldc >= max(1,m).
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
     lwork is int* \n
     The dimension of the array work. \n
-    If side = 'L', lwork >= max(1,N); \n
+    If side = 'L', lwork >= max(1,n); \n
     if side = 'R', lwork >= max(1,m). \n
     For good performance, lwork should generally be larger. \n \n
     If lwork = -1, then a workspace query is assumed; the routine
@@ -3824,17 +3823,17 @@ int unmqr( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
 
     * @param[in] n
     n is int* \n
-    The number of columns of the matrix C. n >= 0.
+    The number of columns of the matrix c. n >= 0.
 
     * @param[in] k
     k is int* \n
     The number of elementary reflectors whose product defines
     the matrix Q. \n
-    If side = 'L', M >= k >= 0; \n
-    if side = 'R', N >= k >= 0.
+    If side = 'L', m >= k >= 0; \n
+    if side = 'R', n >= k >= 0.
 
     * @param[in] a
-    a is float/double array, dimension (lda,K) \n
+    a is float/double array, dimension (lda,k) \n
     The i-th column must contain the vector which defines the
     elementary reflector H(i), for i = 1,2,...,k, as returned by
     SGEQRF in the first k columns of its array argument a.
@@ -3842,7 +3841,7 @@ int unmqr( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
     * @param[in] lda
     lda is int* \n
     The leading dimension of the array a. \n
-    If side = 'L', lda >= max(1,M); \n
+    If side = 'L', lda >= max(1,m); \n
     if side = 'R', lda >= max(1,n).
 
     * @param[in] tau
@@ -3860,7 +3859,7 @@ int unmqr( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
     The leading dimension of the array c. ldc >= max(1,m).
 
     * @param[out] work
-    work is float/double array, dimension (MAX(1,lwork)) \n
+    work is float/double array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[out] info
@@ -3916,17 +3915,17 @@ int orm2r( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
 
     * @param[in] n
     n is int* \n
-    The number of columns of the matrix C. n >= 0.
+    The number of columns of the matrix c. n >= 0.
 
     * @param[in] k
     k is int* \n
     The number of elementary reflectors whose product defines
     the matrix Q. \n
-    If side = 'L', M >= k >= 0; \n
-    if side = 'R', N >= k >= 0.
+    If side = 'L', m >= k >= 0; \n
+    if side = 'R', n >= k >= 0.
 
     * @param[in] a
-    a is scomplex/dcomplex array, dimension (lda,K) \n
+    a is scomplex/dcomplex array, dimension (lda,k) \n
     The i-th column must contain the vector which defines the
     elementary reflector H(i), for i = 1,2,...,k, as returned by
     CGEQRF in the first k columns of its array argument a.
@@ -3934,7 +3933,7 @@ int orm2r( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
     * @param[in] lda
     lda is int* \n
     The leading dimension of the array a. \n
-    If side = 'L', lda >= max(1,M); \n
+    If side = 'L', lda >= max(1,m); \n
     if side = 'R', lda >= max(1,n).
 
     * @param[in] tau
@@ -3943,7 +3942,7 @@ int orm2r( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
     reflector H(i), as returned by CGEQRF.
 
     * @param[in,out] c
-    C is scomplex/dcomplex array, dimension (ldc,n) \n
+    c is scomplex/dcomplex array, dimension (ldc,n) \n
     On entry, the m-by-n matrix c. \n
     On exit, c is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
 
@@ -3952,7 +3951,7 @@ int orm2r( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
     The leading dimension of the array c. ldc >= max(1,m).
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[out] info
@@ -3986,12 +3985,12 @@ int unm2r( char* side, char* trans, int* m, int* n, int* k, T*   a, int* lda, T*
 
     * @param[in] n
     n is int* \n
-    The number of columns of the matrix Q. N >= M.
+    The number of columns of the matrix Q. n >= m.
 
     * @param[in] k
     k is int* \n
     The number of elementary reflectors whose product defines the
-    matrix Q. M >= k >= 0.
+    matrix Q. m >= k >= 0.
 
     * @param[in,out] a
     a is float/doublearray, dimension (lda,n) \n
@@ -4010,7 +4009,7 @@ int unm2r( char* side, char* trans, int* m, int* n, int* k, T*   a, int* lda, T*
     reflector H(i), as returned by SGELQF.
 
     * @param[out] work
-    work is float/double array, dimension (MAX(1,lwork)) \n
+    work is float/double array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -4054,12 +4053,12 @@ int orglq( int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, int* lwork, 
 
     * @param[in] n
     n is int* \n
-    The number of columns of the matrix Q. N >= M.
+    The number of columns of the matrix Q. n >= m.
 
     * @param[in] k
     k is int* \n
     The number of elementary reflectors whose product defines the
-    matrix Q. M >= k >= 0.
+    matrix Q. m >= k >= 0.
 
     * @param[in,out] a
     a is scomplex/dcomplex array, dimension (lda,n) \n
@@ -4078,7 +4077,7 @@ int orglq( int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, int* lwork, 
     reflector H(i), as returned by CGELQF.
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -4137,14 +4136,14 @@ int unglq( int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, int* lwork, 
 
     * @param[in] n
     n is int* \n
-    The number of columns of the matrix C. n >= 0.
+    The number of columns of the matrix c. n >= 0.
 
     * @param[in] k
     k is int* \n
     The number of elementary reflectors whose product defines
     the matrix Q. \n
-    If side = 'L', M >= k >= 0; \n
-    if side = 'R', N >= k >= 0.
+    If side = 'L', m >= k >= 0; \n
+    if side = 'R', n >= k >= 0.
 
     * @param[in] a
     a is float/double/ array, dimension \n
@@ -4156,7 +4155,7 @@ int unglq( int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, int* lwork, 
 
     * @param[in] lda
     lda is int* \n
-    The leading dimension of the array a. lda >= max(1,K).
+    The leading dimension of the array a. lda >= max(1,k).
 
     * @param[in] tau
     tau is float/double array, dimension (k) \n
@@ -4173,7 +4172,7 @@ int unglq( int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, int* lwork, 
     The leading dimension of the array c. ldc >= max(1,m).
 
     * @param[out] work
-    work is float/double array, dimension (MAX(1,lwork)) \n
+    work is float/double array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -4233,14 +4232,14 @@ int ormlq( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
 
     * @param[in] n
     n is int* \n
-    The number of columns of the matrix C. n >= 0.
+    The number of columns of the matrix c. n >= 0.
 
     * @param[in] k
     k is int* \n
     The number of elementary reflectors whose product defines
     the matrix Q. \n
-    If side = 'L', M >= k >= 0; \n
-    if side = 'R', N >= k >= 0.
+    If side = 'L', m >= k >= 0; \n
+    if side = 'R', n >= k >= 0.
 
     * @param[in] a
     a is scomplex/dcomplex array, dimension \n
@@ -4252,15 +4251,14 @@ int ormlq( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
 
     * @param[in] lda
     lda is int* \n
-    The leading dimension of the array a. lda >= max(1,K).
-
+    The leading dimension of the array a. lda >= max(1,k).
     * @param[in] tau
     tau is scomplex/dcomplex array, dimension (k) \n
     tau(i) must contain the scalar factor of the elementary
     reflector H(i), as returned by CGELQF.
 
     * @param[in,out] c
-    C is scomplex/dcomplex array, dimension (ldc,n) \n
+    c is scomplex/dcomplex array, dimension (ldc,n) \n
     On entry, the m-by-n matrix c. \n
     On exit, c is overwritten by Q*C or Q**T*C or C*Q**T or C*Q.
 
@@ -4269,7 +4267,7 @@ int ormlq( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
     The leading dimension of the array c. ldc >= max(1,m).
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -4333,14 +4331,14 @@ int unmlq( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
 
     * @param[in] n
     n is int* \n
-    The number of columns of the matrix C. n >= 0.
+    The number of columns of the matrix c. n >= 0.
 
     * @param[in] k
     k is int* \n
     The number of elementary reflectors whose product defines
     the matrix Q. \n
-    If side = 'L', M >= k >= 0; \n
-    if side = 'R', N >= k >= 0. \n
+    If side = 'L', m >= k >= 0; \n
+    if side = 'R', n >= k >= 0. \n
 
     * @param[in] a
     a is float/double array, dimension \n
@@ -4353,7 +4351,7 @@ int unmlq( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
 
     * @param[in] lda
     lda is int* \n
-    The leading dimension of the array a. lda >= max(1,K).
+    The leading dimension of the array a. lda >= max(1,k).
 
     * @param[in] tau
     tau is float/double array, dimension (k) \n
@@ -4424,14 +4422,14 @@ int orml2( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
 
     * @param[in] n
     n is int* \n
-    The number of columns of the matrix C. n >= 0.
+    The number of columns of the matrix c. n >= 0.
 
     * @param[in] k
     k is int* \n
     The number of elementary reflectors whose product defines
     the matrix Q. \n
-    If side = 'L', M >= k >= 0; \n
-    if side = 'R', N >= k >= 0. \n
+    If side = 'L', m >= k >= 0; \n
+    if side = 'R', n >= k >= 0. \n
 
     * @param[in] a
     a is scomplex/dcomplex array, dimension \n
@@ -4444,7 +4442,7 @@ int orml2( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
 
     * @param[in] lda
     lda is int* \n
-    The leading dimension of the array a. lda >= max(1,K).
+    The leading dimension of the array a. lda >= max(1,k).
 
     * @param[in] tau
     tau is scomplex/dcomplex array, dimension (k) \n
@@ -4452,7 +4450,7 @@ int orml2( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
     reflector H(i), as returned by CGELQF.
 
     * @param[in,out] c
-    C is scomplex/dcomplex array, dimension (ldc,n) \n
+    c is scomplex/dcomplex array, dimension (ldc,n) \n
     On entry, the m-by-n matrix c. \n
     On exit, c is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
 
@@ -4505,7 +4503,7 @@ int unml2( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
     a is float/double array, dimension (lda,m) \n
     On entry, the vectors which define the elementary reflectors,
     as returned by SSYTRD. \n
-    On exit, the M-by-M orthogonal matrix Q.
+    On exit, the m-by-m orthogonal matrix Q.
 
     * @param[in] lda
     lda is int* \n
@@ -4517,13 +4515,13 @@ int unml2( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
     reflector H(i), as returned by SSYTRD.
 
     * @param[out] work
-    work is float/double, dimension (MAX(1,lwork)) \n
+    work is float/double, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
     lwork is int* \n
-    The dimension of the array work. lwork >= max(1,M-1). \n
-    For optimum performance lwork >= (M-1)*NB, \n
+    The dimension of the array work. lwork >= max(1,m-1). \n
+    For optimum performance lwork >= (m-1)*NB, \n
     where NB is the optimal blocksize. \n \n
     If lwork = -1, then a workspace query is assumed; the routine
     only calculates the optimal size of the work array, returns
@@ -4570,7 +4568,7 @@ int orgtr( char* uplo, int* m, T* a, int* lda, T* tau, T* work, int* lwork, int*
     a is scomplex/dcomplex array, dimension (lda,m) \n
     On entry, the vectors which define the elementary reflectors,
     as returned by CHETRD. \n
-    On exit, the M-by-M orthogonal matrix Q.
+    On exit, the m-by-m orthogonal matrix Q.
 
     * @param[in] lda
     lda is int* \n
@@ -4582,13 +4580,13 @@ int orgtr( char* uplo, int* m, T* a, int* lda, T* tau, T* work, int* lwork, int*
     reflector H(i), as returned by CHETRD.
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
     lwork is int* \n
-    The dimension of the array work. lwork >= max(1,M-1). \n
-    For optimum performance lwork >= (M-1)*NB, \n
+    The dimension of the array work. lwork >= max(1,m-1). \n
+    For optimum performance lwork >= (m-1)*NB, \n
     where NB is the optimal blocksize. \n \n
     If lwork = -1, then a workspace query is assumed; the routine
     only calculates the optimal size of the work array, returns
@@ -4649,7 +4647,7 @@ int ungtr( char* uplo, int* m, T* a, int* lda, T* tau, T* work, int* lwork, int*
 
     * @param[in] n
     n is int* \n
-    The number of columns of the matrix C. n >= 0.
+    The number of columns of the matrix c. n >= 0.
 
     * @param[in] a
     a is float/double array, dimension \n
@@ -4665,8 +4663,8 @@ int ungtr( char* uplo, int* m, T* a, int* lda, T* tau, T* work, int* lwork, int*
 
     * @param[in] tau
     tau is float/double array, dimension \n
-    (M-1) if side = 'L' \n
-    (N-1) if side = 'R' \n
+    (m-1) if side = 'L' \n
+    (n-1) if side = 'R' \n
     tau(i) must contain the scalar factor of the elementary
     reflector H(i), as returned by SSYTRD.
 
@@ -4680,7 +4678,7 @@ int ungtr( char* uplo, int* m, T* a, int* lda, T* tau, T* work, int* lwork, int*
     The leading dimension of the array c. ldc >= max(1,m).
 
     * @param[out] work
-    work is float/double array, dimension (MAX(1,lwork)) \n
+    work is float/double array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -4750,7 +4748,7 @@ int ormtr( char* side, char* uplo, char* trans, int* m, int* n, T* a, int* lda, 
 
     * @param[in] n
     n is int* \n
-    The number of columns of the matrix C. n >= 0.
+    The number of columns of the matrix c. n >= 0.
 
     * @param[in] a
     a is scomplex/dcomplex array, dimension \n
@@ -4766,13 +4764,13 @@ int ormtr( char* side, char* uplo, char* trans, int* m, int* n, T* a, int* lda, 
 
     * @param[in] tau
     tau is scomplex/dcomplex array, dimension \n
-    (M-1) if side = 'L' \n
-    (N-1) if side = 'R' \n
+    (m-1) if side = 'L' \n
+    (n-1) if side = 'R' \n
     tau(i) must contain the scalar factor of the elementary
     reflector H(i), as returned by CHETRD.
 
     * @param[in,out] c
-    C is scomplex/dcomplex array, dimension (ldc,n) \n
+    c is scomplex/dcomplex array, dimension (ldc,n) \n
     On entry, the m-by-n matrix c. \n
     On exit, c is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
 
@@ -4781,7 +4779,7 @@ int ormtr( char* side, char* uplo, char* trans, int* m, int* n, T* a, int* lda, 
     The leading dimension of the array c. ldc >= max(1,m).
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -4845,8 +4843,8 @@ int unmtr( char* side, char* uplo, char* trans, int* m, int* n, T* a, int* lda, 
     n is int* \n
     The number of columns of the matrix Q or P**T to be returned.
     n >= 0. \n
-    If vect = 'Q', m >= n >= min(M,K); \n
-    if vect = 'P', N >= M >= min(N,K).
+    If vect = 'Q', m >= n >= min(m,k); \n
+    if vect = 'P', n >= m >= min(n,k).
 
     * @param[in] k
     k is int* \n
@@ -4868,14 +4866,14 @@ int unmtr( char* side, char* uplo, char* trans, int* m, int* n, T* a, int* lda, 
 
     * @param[in] tau
     tau is float/double array, dimension \n
-    (min(M,K)) if vect = 'Q' \n
-    (min(N,K)) if vect = 'P' \n
+    (min(m,k)) if vect = 'Q' \n
+    (min(n,k)) if vect = 'P' \n
     tau(i) must contain the scalar factor of the elementary
     reflector H(i) or G(i), which determines Q or P**T, as
     returned by SGEBRD in its array argument tauq or taup.
 
     * @param[out] work
-    work is float/double/scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is float/double array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -4936,8 +4934,8 @@ int orgbr( char* vect, int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, 
     n is int* \n
     The number of columns of the matrix Q or P**H to be returned.
     n >= 0. \n
-    If vect = 'Q', m >= n >= min(M,K); \n
-    if vect = 'P', N >= M >= min(N,K).
+    If vect = 'Q', m >= n >= min(m,k); \n
+    if vect = 'P', n >= m >= min(n,k).
 
     * @param[in] k
     k is int* \n
@@ -4959,14 +4957,14 @@ int orgbr( char* vect, int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, 
 
     * @param[in] tau
     tau is scomplex/dcomplex array, dimension \n
-    (min(M,K)) if vect = 'Q' \n
-    (min(N,K)) if vect = 'P' \n
+    (min(m,k)) if vect = 'Q' \n
+    (min(n,k)) if vect = 'P' \n
     tau(i) must contain the scalar factor of the elementary
     reflector H(i) or G(i), which determines Q or P**H, as
     returned by CGEBRD in its array argument tauq or taup.
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -5043,7 +5041,7 @@ int ungbr( char* vect, int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, 
 
     * @param[in] n
     n is int* \n
-    The number of columns of the matrix C. n >= 0.
+    The number of columns of the matrix c. n >= 0.
 
     * @param[in] k
     k is int* \n
@@ -5055,7 +5053,7 @@ int ungbr( char* vect, int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, 
 
     * @param[in] a
     a is float/double array, dimension \n
-    (lda,min(nq,K)) if vect = 'Q' \n
+    (lda,min(nq,k)) if vect = 'Q' \n
     (lda,nq)  if vect = 'P' \n
     The vectors which define the elementary reflectors H(i) and
     G(i), whose products determine the matrices Q and P, as
@@ -5065,10 +5063,10 @@ int ungbr( char* vect, int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, 
     lda is int* \n
     The leading dimension of the array a. \n
     If vect = 'Q', lda >= max(1,nq); \n
-    if vect = 'P', lda >= max(1,min(nq,K)).
+    if vect = 'P', lda >= max(1,min(nq,k)).
 
     * @param[in] tau
-    tau is float/double array, dimension (min(nq,K)) \n
+    tau is float/double array, dimension (min(nq,k)) \n
     tau(i) must contain the scalar factor of the elementary
     reflector H(i) or G(i) which determines Q or P, as returned
     by SGEBRD in the array argument tauq or taup.
@@ -5084,7 +5082,7 @@ int ungbr( char* vect, int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, 
     The leading dimension of the array c. ldc >= max(1,m).
 
     * @param[out] work
-    work is float/double array, dimension (MAX(1,lwork)) \n
+    work is float/double array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -5164,7 +5162,7 @@ int ormbr( char* vect, char* side, char* trans, int* m, int* n, int* k, T* a, in
 
     * @param[in] n
     n is int* \n
-    The number of columns of the matrix C. n >= 0.
+    The number of columns of the matrix c. n >= 0.
 
     * @param[in] k
     k is int* \n
@@ -5176,7 +5174,7 @@ int ormbr( char* vect, char* side, char* trans, int* m, int* n, int* k, T* a, in
 
     * @param[in] a
     a is scomplex/dcomplex array, dimension \n
-    (lda,min(nq,K)) if vect = 'Q' \n
+    (lda,min(nq,k)) if vect = 'Q' \n
     (lda,nq)  if vect = 'P' \n
     The vectors which define the elementary reflectors H(i) and
     G(i), whose products determine the matrices Q and P, as
@@ -5186,16 +5184,16 @@ int ormbr( char* vect, char* side, char* trans, int* m, int* n, int* k, T* a, in
     lda is int* \n
     The leading dimension of the array a. \n
     If vect = 'Q', lda >= max(1,nq); \n
-    if vect = 'P', lda >= max(1,min(nq,K)).
+    if vect = 'P', lda >= max(1,min(nq,k)).
 
     * @param[in] tau
-    tau is scomplex/dcomplex array, dimension (min(nq,K)) \n
+    tau is scomplex/dcomplex array, dimension (min(nq,k)) \n
     tau(i) must contain the scalar factor of the elementary
     reflector H(i) or G(i) which determines Q or P, as returned
     by CGEBRD in the array argument tauq or taup.
 
     * @param[in,out] c
-    C is scomplex/dcomplex array, dimension (ldc,n) \n
+    c is scomplex/dcomplex array, dimension (ldc,n) \n
     On entry, the m-by-n matrix c. \n
     On exit, c is overwritten by Q*C or Q**H*C or C*Q**H or C*Q
     or P*C or P**H*C or C*P or C*P**H.
@@ -5205,7 +5203,7 @@ int ormbr( char* vect, char* side, char* trans, int* m, int* n, int* k, T* a, in
     The leading dimension of the array c. ldc >= max(1,m).
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -5271,7 +5269,7 @@ int unmbr( char* vect, char* side, char* trans, int* m, int* n, int* k, T* a, in
     On exit, E has been destroyed.
 
     * @param[in,out] z
-    z is float/double array, dimension (ldz, N) \n
+    z is float/double array, dimension (ldz, n) \n
     On entry, if  jobz = 'V', then Z contains the orthogonal
     matrix used in the reduction to tridiagonal form. \n
     On exit, if info = 0, then if  jobz = 'V', Z contains the
@@ -5346,7 +5344,7 @@ int steqr( char* jobz, int* n, T* d, T* e, T* z, int* ldz, T*  work, int* info )
     On exit, E has been destroyed.
 
     * @param[in,out] z
-    z is scomplex/dcomplex array, dimension (ldz, N) \n
+    z is scomplex/dcomplex array, dimension (ldz, n) \n
     On entry, if  jobz = 'V', then Z contains the unitary
     matrix used in the reduction to tridiagonal form. \n
     On exit, if info = 0, then if  jobz = 'V', Z contains the
@@ -5423,7 +5421,7 @@ int steqr( char* jobz, int* n, Tb* d, Tb* e, Ta* z, int* ldz, Tb* work, int* inf
     On exit, E has been destroyed.
 
     * @param[in,out] z
-    z is float/double array, dimension (ldz,N) \n
+    z is float/double array, dimension (ldz,n) \n
     On entry, if compz = 'V', then Z contains the orthogonal
     matrix used in the reduction to tridiagonal form. \n
     On exit, if info = 0, then if compz = 'V', Z contains the
@@ -5438,7 +5436,7 @@ int steqr( char* jobz, int* n, Tb* d, Tb* e, Ta* z, int* ldz, Tb* work, int* inf
     If eigenvectors are desired, then ldz >= max(1,n).
 
     * @param[out] work
-    work is float/double array, dimension (MAX(1,lwork)) \n
+    work is float/double array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -5460,7 +5458,7 @@ int steqr( char* jobz, int* n, Tb* d, Tb* e, Ta* z, int* ldz, Tb* work, int* inf
     message related to lwork is issued by XERBLA.
 
     * @param[out] iwork
-    iwork is int array, dimension (MAX(1,liwork)) \n
+    iwork is int array, dimension (max(1,liwork)) \n
     On exit, if info = 0, iwork(1) returns the optimal liwork.
 
     * @param[in] liwork
@@ -5534,7 +5532,7 @@ int stedc( char* compz, int* n, T* d, T* e, T* z, int* ldz, T* work, int* lwork,
     On exit, E has been destroyed.
 
     * @param[in,out] z
-    z is scomplex/dcomplex array, dimension (ldz,N) \n
+    z is scomplex/dcomplex array, dimension (ldz,n) \n
     On entry, if compz = 'V', then Z contains the unitary
     matrix used in the reduction to tridiagonal form. \n
     On exit, if info = 0, then if compz = 'V', Z contains the
@@ -5549,7 +5547,7 @@ int stedc( char* compz, int* n, T* d, T* e, T* z, int* ldz, T* work, int* lwork,
     If eigenvectors are desired, then ldz >= max(1,n).
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -5567,7 +5565,7 @@ int stedc( char* compz, int* n, T* d, T* e, T* z, int* ldz, T* work, int* lwork,
     related to lwork or lrwork or liwork is issued by XERBLA.
 
     * @param[out] rwork
-    rwork is float/double array, dimension (MAX(1,lrwork)) \n
+    rwork is float/double array, dimension (max(1,lrwork)) \n
     On exit, if info = 0, rwork(1) returns the optimal lrwork.
 
     * @param[in] lrwork
@@ -5590,7 +5588,7 @@ int stedc( char* compz, int* n, T* d, T* e, T* z, int* ldz, T* work, int* lwork,
     related to lwork or lrwork or liwork is issued by XERBLA.
 
     @param[out] iwork
-    iwork is int array, dimension (MAX(1,liwork)) \n
+    iwork is int array, dimension (max(1,liwork)) \n
     On exit, if info = 0, iwork(1) returns the optimal liwork.
 
     * @param[in] liwork
@@ -5702,13 +5700,13 @@ int stedc( char* compz, int* n, Tb* d, Tb* e, Ta* z, int* ldz, Ta* work, int* lw
 
     * @param[in,out] e
     e is float/double array, dimension (n) \n
-    On entry, the (N-1) subdiagonal elements of the tridiagonal
-    matrix T in elements 1 to N-1 of E. E(N) need not be set on
+    On entry, the (n-1) subdiagonal elements of the tridiagonal
+    matrix T in elements 1 to n-1 of E. E(n) need not be set on
     input, but is used internally as workspace. \n
     On exit, E is overwritten.
 
     * @param[in] vl
-    vl is float/double* \n
+    vl is int* \n
     If range='V', the lower bound of the interval to
     be searched for eigenvalues. vl < vu. \n
     Not referenced if range = 'A' or 'I'.
@@ -5932,18 +5930,18 @@ int stemr( char* jobz, char* range, int* n, T*  d, T*  e, int* vl, int* vu, int*
     * @param[in,out] e
     e is float/double array, dimension (n) \n
     On entry, the (N-1) subdiagonal elements of the tridiagonal
-    matrix T in elements 1 to N-1 of E. E(N) need not be set on
+    matrix T in elements 1 to n-1 of E. E(n) need not be set on
     input, but is used internally as workspace. \n
     On exit, E is overwritten.
 
     * @param[in] vl
-    vl is float\double* \n
+    vl is int* \n
     If range='V', the lower bound of the interval to
     be searched for eigenvalues. vl < vu. \n
     Not referenced if range = 'A' or 'I'.
 
     * @param[in] vu
-    vu is float\double* \n
+    vu is int* \n
     If range='V', the upper bound of the interval to
     be searched for eigenvalues. vl < vu. \n
     Not referenced if range = 'A' or 'I'.
@@ -6114,7 +6112,7 @@ int stemr( char* jobz, char* range, int* n, Tb*  d, Tb*  e, int* vl, int* vu, in
     If info = 0, the eigenvalues in ascending order.
 
     * @param[out] work
-    work is float/double array, dimension (MAX(1,lwork)) \n
+    work is float/double array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -6128,7 +6126,7 @@ int stemr( char* jobz, char* range, int* n, Tb*  d, Tb*  e, int* vl, int* vu, in
     message related to lwork is issued by XERBLA.
 
     * @param[out] rwork
-    rwork is double array, dimension (max(1, 3*N-2))
+    rwork is float/double array, dimension (max(1, 3*N-2))
 
     * @param[out] info
     info is int* \n
@@ -6190,13 +6188,13 @@ int syev( char* jobz, char* uplo, int* n, T* a, int* lda, T*  w, T* work, int* l
     If info = 0, the eigenvalues in ascending order.
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
     lwork is int* \n
     The length of the array work.  lwork >= max(1,2*n-1). \n
-    For optimal efficiency, lwork >= (NB+1)*N, \n
+    For optimal efficiency, lwork >= (NB+1)*n, \n
     where NB is the blocksize for CHETRD returned by ILAENV. \n \n
     If lwork = -1, then a workspace query is assumed; the routine
     only calculates the optimal size of the work array, returns
@@ -6292,7 +6290,7 @@ int heev( char* jobz, char* uplo, int* n, Ta* a, int* lda, Tb*  w, Ta* work, int
     liwork is issued by XERBLA.
 
     * @param[out] iwork
-    iwork is int array, dimension (MAX(1,liwork)) \n
+    iwork is int array, dimension (max(1,liwork)) \n
     On exit, if info = 0, iwork(1) returns the optimal liwork.
 
     * @param[in] liwork
@@ -6381,7 +6379,7 @@ int syevd( char* jobz, char* uplo, int* n, T* a, int* lda, T*  w, T* work, int* 
     If info = 0, the eigenvalues in ascending order.
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -6414,7 +6412,7 @@ int syevd( char* jobz, char* uplo, int* n, T* a, int* lda, T*  w, T* work, int* 
     related to lwork or lrwork or liwork is issued by XERBLA.
 
     * @param[out] iwork
-    iwork is int array, dimension (MAX(1,liwork)) \n
+    iwork is int array, dimension (max(1,liwork)) \n
     On exit, if info = 0, iwork(1) returns the optimal liwork.
 
     * @param[in] liwork
@@ -6609,7 +6607,7 @@ int heevd( char* jobz, char* uplo, int* n, Ta* a, int* lda, Tb*  w, Ta* work, in
     ascending order.
 
     * @param[out] z
-    z is float/double array, dimension (ldz, max(1,M)) \n
+    z is float/double array, dimension (ldz, max(1,m)) \n
     If jobz = 'V', then if info = 0, the first M columns of Z
     contain the orthonormal eigenvectors of the matrix a
     corresponding to the selected eigenvalues, with the i-th
@@ -6636,7 +6634,7 @@ int heevd( char* jobz, char* uplo, int* n, Ta* a, int* lda, Tb*  w, Ta* work, in
     Implemented only for range = 'A' or 'I' and iu - il = N - 1
 
     * @param[out] work
-    work is float/double array, dimension (MAX(1,lwork)) \n
+    work is float/double array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -6652,7 +6650,7 @@ int heevd( char* jobz, char* uplo, int* n, Ta* a, int* lda, Tb*  w, Ta* work, in
     liwork is issued by XERBLA.
 
     * @param[out] iwork
-    iwork is int array, dimension (MAX(1,liwork)) \n
+    iwork is int array, dimension (max(1,liwork)) \n
     On exit, if info = 0, iwork(1) returns the optimal lwork.
 
     * @param[in] liwork
@@ -6835,7 +6833,7 @@ int syevr( char* jobz, char* range, char* uplo, int* n, T* a, int* lda, T* vl, T
     ascending order.
 
     * @param[out] z
-    z is scomplex/dcomplex array, dimension (ldz, max(1,M)) \n
+    z is scomplex/dcomplex array, dimension (ldz, max(1,m)) \n
     If jobz = 'V', then if info = 0, the first M columns of Z
     contain the orthonormal eigenvectors of the matrix a
     corresponding to the selected eigenvalues, with the i-th
@@ -6861,7 +6859,7 @@ int syevr( char* jobz, char* range, char* uplo, int* n, T* a, int* lda, T* vl, T
     Implemented only for range = 'A' or 'I' and iu - il = N - 1
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -6877,7 +6875,7 @@ int syevr( char* jobz, char* range, char* uplo, int* n, T* a, int* lda, T* vl, T
     related to lwork or lrwork or liwork is issued by XERBLA.
 
     * @param[out] rwork
-    rwork is float/double array, dimension (MAX(1,lrwork)) \n
+    rwork is float/double array, dimension (max(1,lrwork)) \n
     On exit, if info = 0, rwork(1) returns the optimal
     (and minimal) lrwork.
 
@@ -6891,7 +6889,7 @@ int syevr( char* jobz, char* range, char* uplo, int* n, T* a, int* lda, T* vl, T
     related to lwork or lrwork or liwork is issued by XERBLA.
 
     * @param[out] iwork
-    iwork is int array, dimension (MAX(1,liwork)) \n
+    iwork is int array, dimension (max(1,liwork)) \n
     On exit, if info = 0, iwork(1) returns the optimal
     (and minimal) liwork.
 
@@ -6918,7 +6916,6 @@ int heevr( char* jobz, char* range, char* uplo, int* n, Ta* a, int* lda, Tb*  vl
 
 /*! @brief Bidiagonal QR algorithm
     *
-
     * @details
     * \b Purpose:
     * \verbatim
@@ -6989,7 +6986,7 @@ int heevr( char* jobz, char* range, char* uplo, int* n, Ta* a, int* lda, Tb*  vl
 
     * @param[in,out] vt
     vt is float/double array, dimension (ldvt, ncvt) \n
-    On entry, an N-by-ncvt matrix vt. \n
+    On entry, an n-by-ncvt matrix vt. \n
     On exit, vt is overwritten by P**T * vt. \n
     Not referenced if ncvt = 0.
 
@@ -6998,9 +6995,9 @@ int heevr( char* jobz, char* range, char* uplo, int* n, Ta* a, int* lda, Tb*  vl
     The leading dimension of the array vt. \n
     ldvt >= max(1,n) if ncvt > 0; ldvt >= 1 if ncvt = 0.
 
-    * @param[in,out] U
-    U is float/double array, dimension (ldu, N) \n
-    On entry, an nru-by-N matrix U. \n
+    * @param[in,out] u
+    u is float/double array, dimension (ldu, n) \n
+    On entry, an nru-by-n matrix U. \n
     On exit, U is overwritten by U * Q. \n
     Not referenced if nru = 0.
 
@@ -7010,7 +7007,7 @@ int heevr( char* jobz, char* range, char* uplo, int* n, Ta* a, int* lda, Tb*  vl
 
     * @param[in,out] c
     c is float/doublearray, dimension (ldc, ncc) \n
-    On entry, an N-by-ncc matrix c. \n
+    On entry, an n-by-ncc matrix c. \n
     On exit, c is overwritten by Q**T * C. \n
     Not referenced if ncc = 0.
 
@@ -7144,7 +7141,7 @@ int bdsqr( char* uplo, int* n, int* ncvt, int* nru, int* ncc, T* d, T* e, T* vt,
 
     * @param[in,out] vt
     vt is scomplex/dcomplex array, dimension (ldvt, ncvt) \n
-    On entry, an N-by-ncvt matrix vt. \n
+    On entry, an n-by-ncvt matrix vt. \n
     On exit, vt is overwritten by P**H * vt. \n
     Not referenced if ncvt = 0.
 
@@ -7153,9 +7150,9 @@ int bdsqr( char* uplo, int* n, int* ncvt, int* nru, int* ncc, T* d, T* e, T* vt,
     The leading dimension of the array vt. \n
     ldvt >= max(1,n) if ncvt > 0; ldvt >= 1 if ncvt = 0.
 
-    * @param[in,out] U
-    U is scomplex/dcomplex array, dimension (ldu, N) \n
-    On entry, an nru-by-N matrix U. \n
+    * @param[in,out] u
+    u is scomplex/dcomplex array, dimension (ldu, n) \n
+    On entry, an nru-by-n matrix U. \n
     On exit, U is overwritten by U * Q. \n
     Not referenced if nru = 0.
 
@@ -7164,8 +7161,8 @@ int bdsqr( char* uplo, int* n, int* ncvt, int* nru, int* ncc, T* d, T* e, T* vt,
     The leading dimension of the array U.  ldu >= max(1,nru).
 
     * @param[in,out] c
-    C is scomplex/dcomplex array, dimension (ldc, ncc) \n
-    On entry, an N-by-ncc matrix c. \n
+    c is scomplex/dcomplex array, dimension (ldc, ncc) \n
+    On entry, an n-by-ncc matrix c. \n
     On exit, c is overwritten by Q**H * C. \n
     Not referenced if ncc = 0.
 
@@ -7308,7 +7305,7 @@ int bdsqr( char* uplo, int* n, int* ncvt, int* nru, int* ncc, Tb* d, Tb* e, Ta* 
     For other values of compq, Q is not referenced.
 
     * @param[out] iq
-    iq is int array, dimension (LDIQ) \n
+    iq is float/double array, dimension (LDIQ) \n
     If  compq = 'P', then: \n
     On exit, if info = 0, Q and iq contain the left
     and right singular vectors in a compact form,
@@ -7321,7 +7318,7 @@ int bdsqr( char* uplo, int* n, int* ncvt, int* nru, int* ncc, Tb* d, Tb* e, Ta* 
     For other values of compq, iq is not referenced. \n
 
     * @param[out] work
-    work is float/double/scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is float/double, dimension (max(1,lwork)) \n
     If compq = 'N' then lwork >= (4 * N). \n
     If compq = 'P' then lwork >= (6 * N). \n
     If compq = 'I' then lwork >= (3 * N**2 + 4 * N).
@@ -7418,7 +7415,7 @@ int bdsdc( char* uplo, char* compq, int* n, T*  d, T*  e, T*  u, int* ldu, T*  v
     * @param[out] u
     U is float/double array, dimension (ldu,UCOL) \n
     (ldu,M) if jobu = 'A' or (ldu,min(m,n)) if jobu = 'S'. \n
-    If jobu = 'A', U contains the M-by-M orthogonal matrix U; \n
+    If jobu = 'A', U contains the m-by-m orthogonal matrix U; \n
     if jobu = 'S', U contains the first min(m,n) columns of U
     (the left singular vectors, stored columnwise); \n
     if jobu = 'N' or 'O', U is not referenced.
@@ -7442,7 +7439,7 @@ int bdsdc( char* uplo, char* compq, int* n, T*  d, T*  e, T*  u, int* ldu, T*  v
     jobv = 'A', ldvt >= N; if jobv = 'S', ldvt >= min(m,n).
 
     * @param[out] work
-    work is float/double/scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is float/double array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork; \n
     if info > 0, work(2:MIN(m,n)) contains the unconverged
     superdiagonal elements of an upper bidiagonal matrix b
@@ -7453,10 +7450,10 @@ int bdsdc( char* uplo, char* compq, int* n, T*  d, T*  e, T*  u, int* ldu, T*  v
     * @param[in] lwork
     lwork is int* \n
     The dimension of the array work. \n
-    lwork >= MAX(1,5*MIN(m,n)) for the paths (see comments inside code): \n
+    lwork >= max(1,5*MIN(m,n)) for the paths (see comments inside code): \n
     - PATH 1  (M much larger than N, jobu='N') \n
     - PATH 1t (N much larger than M, jobv='N') \n
-    lwork >= MAX(1,3*MIN(m,n)+MAX(m,n),5*MIN(m,n)) for the other paths
+    lwork >= max(1,3*MIN(m,n)+max(m,n),5*MIN(m,n)) for the other paths
     For good performance, lwork should generally be larger. \n \n
     If lwork = -1, then a workspace query is assumed; the routine
     only calculates the optimal size of the work array, returns
@@ -7554,7 +7551,7 @@ int gesvd( char* jobu, char* jobv, int* m, int* n, T* a, int* lda, T*  s, T* u, 
     * @param[out] u
     U is scomplex/dcomplex array, dimension (ldu,UCOL) \n
     (ldu,M) if jobu = 'A' or (ldu,min(m,n)) if jobu = 'S'. \n
-    If jobu = 'A', U contains the M-by-M unitary matrix U; \n
+    If jobu = 'A', U contains the m-by-m unitary matrix U; \n
     if jobu = 'S', U contains the first min(m,n) columns of U
     (the left singular vectors, stored columnwise); \n
     if jobu = 'N' or 'O', U is not referenced.
@@ -7578,13 +7575,13 @@ int gesvd( char* jobu, char* jobv, int* m, int* n, T* a, int* lda, T*  s, T* u, 
     jobv = 'A', ldvt >= N; if jobv = 'S', ldvt >= min(m,n).
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
     lwork is int* \n
     The dimension of the array work. \n
-    lwork >=  MAX(1,2*MIN(m,n)+MAX(m,n)). \n
+    lwork >=  max(1,2*MIN(m,n)+max(m,n)). \n
     For good performance, lwork should generally be larger. \n \n
     If lwork = -1, then a workspace query is assumed; the routine
     only calculates the optimal size of the work array, returns
@@ -7717,7 +7714,7 @@ int gesvd( char* jobu, char* jobv, int* m, int* n, Ta* a, int* lda, Tb*  s, Ta* 
     if jobz = 'S', ldvt >= min(m,n).
 
     * @param[out] work
-    work is float/double array, dimension (MAX(1,lwork)) \n
+    work is float/double array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork;
 
     * @param[in] lwork
@@ -7851,7 +7848,7 @@ int gesdd( char* jobz, int* m, int* n, T* a, int* lda, T*  s, T* u, int* ldu, T*
     if jobz = 'S', ldvt >= min(m,n).
 
     * @param[out] work
-    work is scomplex/dcomplex array, dimension (MAX(1,lwork)) \n
+    work is scomplex/dcomplex array, dimension (max(1,lwork)) \n
     On exit, if info = 0, work(1) returns the optimal lwork.
 
     * @param[in] lwork
@@ -7870,7 +7867,7 @@ int gesdd( char* jobz, int* m, int* n, T* a, int* lda, T*  s, T* u, int* ldu, T*
     a query is recommended.
 
     * @param[out] rwork
-    rwork is float/double array, dimension (MAX(1,lrwork)) \n
+    rwork is float/double array, dimension (max(1,lrwork)) \n
     Let mx = max(m,n) and mn = min(m,n). \n
     If jobz = 'N',    lrwork >= 5*mn (LAPACK <= 3.6 needs 7*mn); \n
     else if mx >> mn, lrwork >= 5*mn*mn + 5*mn; \n
@@ -7978,7 +7975,7 @@ int laswp( int* n, T* a, int* lda, int* k1, int* k2, int* ipiv, int* incx )
     beta is float/double/scomplex/dcomplex* \n
     The constant to which the diagonal elements are to be set.
 
-    * @param[out] A
+    * @param[out] a
     a is float/double/scomplex/dcomplex array, dimension (lda,n) \n
     On exit, the leading m-by-n submatrix of A is set as follows: \n \n
     if uplo = 'U', A(i,j) = alpha, 1<=i<=j-1, 1<=j<=n, \n
