@@ -80,7 +80,7 @@ namespace libflame{
 template< typename T >
 int potrf( char* uplo, int* n, T* a, int* lda, int* info )
 {
-  potrf(uplo, n, a, lda, info);
+  return potrf(uplo, n, a, lda, info);
 }
 
 /*! @brief Cholesky factorization of a real symmetric
@@ -135,7 +135,7 @@ int potrf( char* uplo, int* n, T* a, int* lda, int* info )
 template< typename T >
 int potf2( char* uplo, int* n, T* a, int* lda, int* info )
 {
-  potf2(uplo, n, a, lda, info );
+  return potf2(uplo, n, a, lda, info );
 }
 
 /*! @brief LU factorization of a general m-by-n matrix a
@@ -188,7 +188,7 @@ int potf2( char* uplo, int* n, T* a, int* lda, int* info )
 template< typename T >
 int getrf( int* m, int* n, T* a, int* lda, int* ipiv, int* info )
 {
-  getrf(m, n, a, lda, ipiv, info );
+  return getrf(m, n, a, lda, ipiv, info );
 }
 
 
@@ -246,7 +246,7 @@ int getrf( int* m, int* n, T* a, int* lda, int* ipiv, int* info )
 template< typename T >
 int getf2( int* m, int* n, T* a, int* lda, int* ipiv, int* info )
 {
-  getf2(m, n, a, lda, ipiv, info );
+  return getf2(m, n, a, lda, ipiv, info );
 }
 
 /*! @brief QR factorization of a real m-by-n matrix a
@@ -322,7 +322,7 @@ int getf2( int* m, int* n, T* a, int* lda, int* ipiv, int* info )
 template< typename T >
 int geqrf( int* m, int* n, T* a, int* lda, T* tau, T* work, int* lwork, int* info )
 {
-  geqrf( m, n, a, lda, tau, work, lwork, info );
+  return geqrf( m, n, a, lda, tau, work, lwork, info );
 }
 
 /*! @brief QR factorization of a real m-by-n matrix a
@@ -385,7 +385,7 @@ int geqrf( int* m, int* n, T* a, int* lda, T* tau, T* work, int* lwork, int* inf
 template< typename T >
 int geqr2( int* m, int* n, T* a, int* lda, T* tau, T* work, int* info )
 {
-  geqr2( m, n, a, lda, tau, work, info );
+  return geqr2( m, n, a, lda, tau, work, info );
 }
 
 
@@ -472,7 +472,7 @@ int geqr2( int* m, int* n, T* a, int* lda, T* tau, T* work, int* info )
 template< typename T >
 int geqpf( int* m, int* n, T* a, int* lda, int* jpvt, T* tau,T* work, int* info )
 {
-  geqpf( m, n, a, lda, jpvt, tau, work, info );
+  return geqpf( m, n, a, lda, jpvt, tau, work, info );
 }
 
 /*! @brief QR factorization of a real m-by-n matrix a
@@ -561,7 +561,7 @@ int geqpf( int* m, int* n, T* a, int* lda, int* jpvt, T* tau,T* work, int* info 
 template< typename Ta, typename Tb >
 int geqpf( int* m, int* n, Ta* a, int* lda, int* jpvt, Ta* tau, Ta* work, Tb* rwork, int* info )
 {
-  geqpf( m, n, a, lda, jpvt, tau, work, rwork, info );
+  return geqpf( m, n, a, lda, jpvt, tau, work, rwork, info );
 }
 
 /*! @brief QR factorization of a real m-by-n matrix a
@@ -645,7 +645,7 @@ int geqpf( int* m, int* n, Ta* a, int* lda, int* jpvt, Ta* tau, Ta* work, Tb* rw
 template< typename T >
 int geqp3( int* m, int* n, T* a, int* lda, int* jpvt, T* tau, T* work, int* lwork,  int* info )
 {
-  geqp3( m, n, a, lda, jpvt, tau, work, lwork, info );
+  return geqp3( m, n, a, lda, jpvt, tau, work, lwork, info );
 }
 
 
@@ -733,7 +733,7 @@ int geqp3( int* m, int* n, T* a, int* lda, int* jpvt, T* tau, T* work, int* lwor
 template< typename Ta, typename Tb >
 int geqp3( int* m, int* n, Ta* a, int* lda, int* jpvt, Ta* tau, Ta* work, int* lwork, Tb* rwork, int* info )
 {
-  geqp3( m, n, a, lda, jpvt, tau, work, lwork, rwork, info );
+  return geqp3( m, n, a, lda, jpvt, tau, work, lwork, rwork, info );
 }
 
 /*! @brief LQ factorization of a real m-by-n matrix a
@@ -808,7 +808,7 @@ int geqp3( int* m, int* n, Ta* a, int* lda, int* jpvt, Ta* tau, Ta* work, int* l
 template< typename T >
 int gelqf( int* m, int* n, T* a, int* lda, T* tau, T* work, int* lwork, int* info )
 {
-  gelqf( m, n, a, lda, tau, work, lwork, info );
+  return gelqf( m, n, a, lda, tau, work, lwork, info );
 }
 
 /*! @brief LQ factorization of a real m-by-n matrix a
@@ -872,7 +872,7 @@ int gelqf( int* m, int* n, T* a, int* lda, T* tau, T* work, int* lwork, int* inf
 template< typename T >
 int gelq2( int* m, int* n, T* a, int* lda, T* tau, T* work, int* info )
 {
-  gelq2( m, n, a, lda, tau, work, info );
+  return gelq2( m, n, a, lda, tau, work, info );
 }
 
 /*! @brief The minimum-norm solution to a real linear least squares problem
@@ -999,7 +999,7 @@ int gelq2( int* m, int* n, T* a, int* lda, T* tau, T* work, int* info )
 template< typename T >
 int gelsd( int* m, int* n, int* nrhs, T* a, int* lda, T* b, int* ldb, T* s, T* rcond, int* rank, T* work, int* lwork, int* iwork, int* info )
 {
-  gelsd( m, n, nrhs, a, lda, b, ldb, s, rcond, rank, work, lwork, iwork, info );
+  return gelsd( m, n, nrhs, a, lda, b, ldb, s, rcond, rank, work, lwork, iwork, info );
 }
 
 /*! @brief The minimum-norm solution to a real linear least squares problem
@@ -1140,7 +1140,7 @@ int gelsd( int* m, int* n, int* nrhs, T* a, int* lda, T* b, int* ldb, T* s, T* r
 template< typename Ta, typename Tb >
 int gelsd( int* m, int* n, int* nrhs, Ta* a, int* lda, Ta* b, int* ldb, Tb* s, Tb*  rcond, int* rank, Ta* work, int* lwork, Tb*  rwork, int* iwork, int* info )
 {
-  gelsd( m,  n, nrhs, a, lda, b, ldb, s, rcond, rank,  work, lwork, rwork, iwork, info );
+  return gelsd( m,  n, nrhs, a, lda, b, ldb, s, rcond, rank,  work, lwork, rwork, iwork, info );
 }
 
 /*! @brief The minimum-norm solution to a real linear least squares problem
@@ -1238,7 +1238,7 @@ int gelsd( int* m, int* n, int* nrhs, Ta* a, int* lda, Ta* b, int* ldb, Tb* s, T
 template< typename T >
 int gelss( int* m, int* n, int* nrhs, T* a, int* lda, T* b, int* ldb, T*  s, T* rcond, int* rank, T* work, int* lwork, int* info )
 {
-  gelss( m, n, nrhs, a, lda, b,ldb, s, rcond, rank, work, lwork, info );
+  return gelss( m, n, nrhs, a, lda, b,ldb, s, rcond, rank, work, lwork, info );
 }
 
 /*! @brief The minimum-norm solution to a real linear least squares problem
@@ -1339,7 +1339,7 @@ int gelss( int* m, int* n, int* nrhs, T* a, int* lda, T* b, int* ldb, T*  s, T* 
 template< typename Ta, typename Tb >
 int gelss( int* m, int* n, int* nrhs, Ta* a, int* lda, Ta* b, int* ldb, Tb*  s, Tb*  rcond, int* rank, Ta* work, int* lwork, Tb* rwork, int* info )
 {
-  gelss( m, n, nrhs, a, lda, b, ldb, s, rcond, rank, work, lwork, rwork, info );
+  return gelss( m, n, nrhs, a, lda, b, ldb, s, rcond, rank, work, lwork, rwork, info );
 }
 
 /*! @brief Product UUH or LHL, where U and L are upper or lower triangular matrices (blocked algorithm).
@@ -1389,7 +1389,7 @@ int gelss( int* m, int* n, int* nrhs, Ta* a, int* lda, Ta* b, int* ldb, Tb*  s, 
 template< typename T >
 int lauum( char* uplo, int* n, T* a, int* lda, int* info )
 {
-  lauum( uplo, n, a, lda, info );
+  return lauum( uplo, n, a, lda, info );
 }
 
 /*! @brief Product UUH or LHL, where U and L are upper or lower triangular matrices (unblocked algorithm).
@@ -1439,7 +1439,7 @@ int lauum( char* uplo, int* n, T* a, int* lda, int* info )
 template< typename T >
 int lauu2( char* uplo, int* n, T* a, int* lda, int* info )
 {
-  lauu2( uplo, n, a, lda, info );
+  return lauu2( uplo, n, a, lda, info );
 }
 
 /*! @brief Inverse of a real symmetric positive definite matrix.
@@ -1483,7 +1483,7 @@ int lauu2( char* uplo, int* n, T* a, int* lda, int* info )
 template< typename T >
 int potri( char* uplo, int* n, T* buff_A, int*  ldim_A, int* info )
 {
-  potri( uplo, n, buff_A, ldim_A, info );
+  return potri( uplo, n, buff_A, ldim_A, info );
 }
 
 /*! @brief Inverse of a real upper or lower triangular matrix.
@@ -1539,7 +1539,7 @@ int potri( char* uplo, int* n, T* buff_A, int*  ldim_A, int* info )
 template< typename T >
 int trtri( char* uplo, char* diag, int* n, T* a, int* lda, int* info )
 {
-  trtri( uplo, diag, n, a, lda, info );
+  return trtri( uplo, diag, n, a, lda, info );
 }
 
 
@@ -1594,7 +1594,7 @@ int trtri( char* uplo, char* diag, int* n, T* a, int* lda, int* info )
 template< typename T >
 int trti2( char* uplo, char* diag, int* n, T* a, int* lda, int* info )
 {
-  trti2( uplo, diag, n, a, lda, info );
+  return trti2( uplo, diag, n, a, lda, info );
 }
 
 /*! @brief Solving Sylvester matrix equation
@@ -1686,7 +1686,7 @@ int trti2( char* uplo, char* diag, int* n, T* a, int* lda, int* info )
 template< typename T >
 int trsyl( char* transa, char* transb, int* isgn, int* m, int* n, T* a, int* lda, T* b, int* ldb, T* c, int* ldc, T* scale, int* info )
 {
-  trsyl( transa, transb, isgn, m, n, a, lda, b, ldb, c, ldc, scale, info );
+  return trsyl( transa, transb, isgn, m, n, a, lda, b, ldb, c, ldc, scale, info );
 }
 
 /*! @brief Solving Sylvester matrix equation
@@ -1775,7 +1775,7 @@ int trsyl( char* transa, char* transb, int* isgn, int* m, int* n, T* a, int* lda
 template< typename Ta, typename Tb >
 int trsyl( char* transa, char* transb, int* isgn, int* m, int* n, Ta* a, int* lda, Ta* b, int* ldb, Ta* c, int* ldc, Tb* scale, int* info )
 {
-  trsyl( transa, transb, isgn, m, n, a, lda, b, ldb, c, ldc, scale, info );
+  return trsyl( transa, transb, isgn, m, n, a, lda, b, ldb, c, ldc, scale, info );
 }
 
 /*! @brief Reduction to upper Hessenberg form
@@ -1874,7 +1874,7 @@ int trsyl( char* transa, char* transb, int* isgn, int* m, int* n, Ta* a, int* ld
 template< typename T >
 int gehrd( int* n, int* ilo, int* ihi, T* a, int* lda, T* tau, T* work, int* lwork, int* info )
 {
-  gehrd( n, ilo, ihi, a, lda, tau, work, lwork, info );
+  return gehrd( n, ilo, ihi, a, lda, tau, work, lwork, info );
 }
 
 /*! @brief Reduction to upper Hessenberg form using an unblocked algorithm
@@ -1961,7 +1961,7 @@ int gehrd( int* n, int* ilo, int* ihi, T* a, int* lda, T* tau, T* work, int* lwo
 template< typename T >
 int gehd2( int* n, int* ilo, int* ihi, T* a, int* lda, T* tau, T* work, int* info )
 {
-  gehd2( n, ilo, ihi, a, lda, tau, work, info );
+  return gehd2( n, ilo, ihi, a, lda, tau, work, info );
 }
 
 
@@ -2086,7 +2086,7 @@ int gehd2( int* n, int* ilo, int* ihi, T* a, int* lda, T* tau, T* work, int* inf
 template< typename T >
 int sytrd( char* uplo, int* n, T* a, int* lda, T*  d, T*  e, T* tau, T* work, int* lwork, int* info )
 {
-  sytrd( uplo, n, a, lda, d, e, tau, work, lwork, info );
+  return sytrd( uplo, n, a, lda, d, e, tau, work, lwork, info );
 }
 
 /*! @brief Reduction of a complex Hermitian matrix a to real symmetric tridiagonal form
@@ -2210,7 +2210,7 @@ int sytrd( char* uplo, int* n, T* a, int* lda, T*  d, T*  e, T* tau, T* work, in
 template< typename Ta, typename Tb >
 int hetrd( char* uplo, int* n, Ta* a, int* lda, Tb*  d, Tb*  e, Ta* tau, Ta* work, int* lwork, int* info )
 {
-  hetrd( uplo, n, a, lda, d, e, tau, work, lwork, info );
+  return hetrd( uplo, n, a, lda, d, e, tau, work, lwork, info );
 }
 
 /*! @brief Reduction of a real symmetric matrix a to real symmetric tridiagonal form (unblocked algorithm)
@@ -2320,7 +2320,7 @@ int hetrd( char* uplo, int* n, Ta* a, int* lda, Tb*  d, Tb*  e, Ta* tau, Ta* wor
 template< typename T >
 int sytd2( char* uplo, int* n, T* a, int* lda, T*  d, T*  e, T* tau, int* info )
 {
-  sytd2( uplo, n, a, lda, d, e, tau, info );
+  return sytd2( uplo, n, a, lda, d, e, tau, info );
 }
 
 
@@ -2431,7 +2431,7 @@ int sytd2( char* uplo, int* n, T* a, int* lda, T*  d, T*  e, T* tau, int* info )
 template< typename Ta, typename Tb >
 int hetd2( char* uplo, int* n, Ta* a, int* lda, Tb*  d, Tb*  e, Ta* tau, int* info )
 {
-  hetd2( uplo, n, a, lda, d, e, tau, info );
+  return hetd2( uplo, n, a, lda, d, e, tau, info );
 }
 
 /*! @brief Reduction to bidiagonal form
@@ -2569,7 +2569,7 @@ int hetd2( char* uplo, int* n, Ta* a, int* lda, Tb*  d, Tb*  e, Ta* tau, int* in
 template< typename T >
 int gebrd( int* m, int* n, T* a, int* lda, T*  d, T*  e, T* tauq, T* taup, T* work, int* lwork, int* info )
 {
-  gebrd( m, n, a, lda, d, e, tauq, taup, work, lwork, info );
+  return gebrd( m, n, a, lda, d, e, tauq, taup, work, lwork, info );
 }
 
 
@@ -2708,7 +2708,7 @@ int gebrd( int* m, int* n, T* a, int* lda, T*  d, T*  e, T* tauq, T* taup, T* wo
 template< typename Ta, typename Tb >
 int gebrd( int* m, int* n, Ta* a, int* lda, Tb* d, Tb* e, Ta* tauq, Ta* taup, Ta* work, int* lwork, int* info )
 {
-  gebrd( m, n, a, lda, d, e, tauq, taup, work, lwork, info );
+  return gebrd( m, n, a, lda, d, e, tauq, taup, work, lwork, info );
 }
 
 
@@ -2836,7 +2836,7 @@ int gebrd( int* m, int* n, Ta* a, int* lda, Tb* d, Tb* e, Ta* tauq, Ta* taup, Ta
 template< typename T >
 int gebd2( int* m, int* n, T* a, int* lda, T*  d, T*  e, T* tauq, T* taup, T* work, int* info )
 {
-  gebd2( m, n, a, lda, d, e, tauq, taup, work, info );
+  return gebd2( m, n, a, lda, d, e, tauq, taup, work, info );
 }
 
 
@@ -2964,7 +2964,7 @@ int gebd2( int* m, int* n, T* a, int* lda, T*  d, T*  e, T* tauq, T* taup, T* wo
 template< typename Ta, typename Tb >
 int gebd2( int* m, int* n, Ta* a, int* lda, Tb*  d, Tb*  e, Ta* tauq, Ta* taup, Ta* work, int* info )
 {
-  gebd2( m, n, a,lda, d, e, tauq, taup, work, info );
+  return gebd2( m, n, a,lda, d, e, tauq, taup, work, info );
 }
 
 /*! @brief Reduction of a real symmetric-definite generalized eigenproblem to standard form
@@ -3033,7 +3033,7 @@ int gebd2( int* m, int* n, Ta* a, int* lda, Tb*  d, Tb*  e, Ta* tauq, Ta* taup, 
 template< typename T >
 int sygst( int* itype, char* uplo, int* n, T* a, int* lda, T* b, int* ldb, int* info )
 {
-  sygst( itype, uplo, n, a, lda, b, ldb, info );
+  return sygst( itype, uplo, n, a, lda, b, ldb, info );
 }
 
 /*! @brief Reduction of a complex Hermitian-definite generalized eigenproblem to standard form
@@ -3102,7 +3102,7 @@ int sygst( int* itype, char* uplo, int* n, T* a, int* lda, T* b, int* ldb, int* 
 template< typename T >
 int hegst( int* itype, char* uplo, int* n, T* a, int* lda, T* b, int* ldb, int* info )
 {
-  hegst( itype, uplo, n, a, lda, b, ldb, info );
+  return hegst( itype, uplo, n, a, lda, b, ldb, info );
 }
 
 /*! @brief Reduction of a symmetric-definite generalized eigenproblem to standard form (unblocked algorithm)
@@ -3171,7 +3171,7 @@ int hegst( int* itype, char* uplo, int* n, T* a, int* lda, T* b, int* ldb, int* 
 template< typename T >
 int sygs2( int* itype, char* uplo, int* n, T* a, int* lda, T* b, int* ldb, int* info )
 {
-  sygs2( itype, uplo, n, a, lda, b, ldb, info );
+  return sygs2( itype, uplo, n, a, lda, b, ldb, info );
 }
 
 /*! @brief Reduction of a Hermitian-definite generalized eigenproblem to standard form (unblocked algorithm)
@@ -3240,7 +3240,7 @@ int sygs2( int* itype, char* uplo, int* n, T* a, int* lda, T* b, int* ldb, int* 
 template< typename T >
 int hegs2( int* itype, char* uplo, int* n, T* a, int* lda, T* b, int* ldb, int* info )
 {
-  hegs2(itype, uplo, n, a, lda, b, ldb, info );
+  return hegs2(itype, uplo, n, a, lda, b, ldb, info );
 }
 
 /*! @brief Triangular factor of a block reflector
@@ -3343,7 +3343,7 @@ int hegs2( int* itype, char* uplo, int* n, T* a, int* lda, T* b, int* ldb, int* 
 template< typename T >
 int larft( char* direct, char* storev, int* n, int* k, T* v, int* ldv, T* tau, T* t, int* ldt )
 {
-  larft( direct, storev, n, k, v, ldv, tau, t, ldt );
+  return larft( direct, storev, n, k, v, ldv, tau, t, ldt );
 }
 
 /*! @brief Generation of an elementary reflector (Householder matrix)
@@ -3395,7 +3395,7 @@ int larft( char* direct, char* storev, int* n, int* k, T* v, int* ldv, T* tau, T
 template< typename T >
 int larfg( int* n, T* alpha, T* x, int* incx, T* tau )
 {
-  larfg( n, alpha, x, incx, tau );
+  return larfg( n, alpha, x, incx, tau );
 }
 
 /*! @brief Generation of an elementary reflector (Householder matrix) with non-negative beta
@@ -3446,7 +3446,7 @@ int larfg( int* n, T* alpha, T* x, int* incx, T* tau )
 template< typename T >
 int larfgp( int* n, T* alpha, T* x, int* incx, T* tau )
 {
-  larfgp( n,  alpha, x, incx, tau );
+  return larfgp( n,  alpha, x, incx, tau );
 }
 
 /*! @brief Form Q from QR factorization
@@ -3515,7 +3515,7 @@ int larfgp( int* n, T* alpha, T* x, int* incx, T* tau )
 template< typename T >
 int orgqr( int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, int* lwork, int* info )
 {
-  orgqr(  m, n, k,  a, lda, tau, work, lwork, info );
+  return orgqr(  m, n, k,  a, lda, tau, work, lwork, info );
 }
 
 /*! @brief Form Q from QR factorization
@@ -3584,7 +3584,7 @@ int orgqr( int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, int* lwork, 
 template< typename T >
 int ungqr( int* m, int* n, int* k, T*   a, int* lda, T* tau, T* work, int* lwork, int* info )
 {
-  ungqr( m, n, k, a, lda, tau, work, lwork, info );
+  return ungqr( m, n, k, a, lda, tau, work, lwork, info );
 }
 
 /*! @brief Apply Q or Q' from QR factorization
@@ -3681,7 +3681,7 @@ int ungqr( int* m, int* n, int* k, T*   a, int* lda, T* tau, T* work, int* lwork
 template< typename T >
 int ormqr( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* tau, T* c, int* ldc, T* work, int* lwork, int* info )
 {
-  ormqr( side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
+  return ormqr( side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
 }
 
 /*! @brief Apply Q or Q' from QR factorization
@@ -3778,7 +3778,7 @@ int ormqr( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
 template< typename T >
 int unmqr( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* tau, T* c, int* ldc, T* work, int* lwork, int* info )
 {
-  unmqr( side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
+  return unmqr( side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
 }
 
 /*! @brief Multiply a general matrix by the orthogonal matrix from a QR factorization
@@ -3870,7 +3870,7 @@ int unmqr( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
 template< typename T >
 int orm2r( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* tau, T* c, int* ldc, T* work, int* info )
 {
-  orm2r( side, trans,  m, n, k, a, lda, tau, c, ldc, work, info );
+  return orm2r( side, trans,  m, n, k, a, lda, tau, c, ldc, work, info );
 }
 
 /*! @brief Multiply a general matrix by the orthogonal matrix from a QR factorization
@@ -3962,7 +3962,7 @@ int orm2r( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
 template< typename T >
 int unm2r( char* side, char* trans, int* m, int* n, int* k, T*   a, int* lda, T* tau, T* c, int* ldc, T* work, int* info )
 {
-  unm2r(side, trans, m, n, k, a, lda, tau, c, ldc, work, info );
+  return unm2r(side, trans, m, n, k, a, lda, tau, c, ldc, work, info );
 }
 
 /*! @brief Form Q from LQ factorization
@@ -4030,7 +4030,7 @@ int unm2r( char* side, char* trans, int* m, int* n, int* k, T*   a, int* lda, T*
 template< typename T >
 int orglq( int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, int* lwork, int* info )
 {
-  orglq( m, n, k, a, lda, tau, work, lwork, info );
+  return orglq( m, n, k, a, lda, tau, work, lwork, info );
 }
 
 /*! @brief Form Q from LQ factorization
@@ -4098,7 +4098,7 @@ int orglq( int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, int* lwork, 
 template< typename T >
 int unglq( int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, int* lwork, int* info )
 {
-  unglq( m, n, k, a, lda, tau, work, lwork, info );
+  return unglq( m, n, k, a, lda, tau, work, lwork, info );
 }
 
 /*! @brief Apply Q or Q' from LQ factorization
@@ -4194,7 +4194,7 @@ int unglq( int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, int* lwork, 
 template< typename T >
 int ormlq( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* tau, T* c, int* ldc, T* work, int* lwork, int* info )
 {
-  ormlq( side, trans,  m, n, k, a, lda, tau, c, ldc, work, lwork, info );
+  return ormlq( side, trans,  m, n, k, a, lda, tau, c, ldc, work, lwork, info );
 }
 
 /*! @brief Apply Q or Q' from LQ factorization
@@ -4289,7 +4289,7 @@ int ormlq( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
 template< typename T >
 int unmlq( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* tau, T* c, int* ldc, T* work, int* lwork, int* info )
 {
-    unmlq( side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
+  return   unmlq( side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
 }
 
 /*! @brief Apply Q or Q' from LQ factorization
@@ -4380,7 +4380,7 @@ int unmlq( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
 template< typename T >
 int orml2( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* tau, T* c, int* ldc, T* work, int* info )
 {
-  orml2( side, trans, m, n, k, a, lda, tau, c, ldc, work, info );
+  return orml2( side, trans, m, n, k, a, lda, tau, c, ldc, work, info );
 }
 
 /*! @brief Apply Q or Q' from LQ factorization
@@ -4471,7 +4471,7 @@ int orml2( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
 template< typename T >
 int unml2( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* tau, T*   c, int* ldc, T*   work, int* info )
 {
-  unml2( side, trans, m, n, k, a, lda, tau, c, ldc, work, info );
+  return unml2( side, trans, m, n, k, a, lda, tau, c, ldc, work, info );
 }
 
 /*! @brief Form Q from tridiagonal reduction
@@ -4536,7 +4536,7 @@ int unml2( char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* t
 template< typename T >
 int orgtr( char* uplo, int* m, T* a, int* lda, T* tau, T* work, int* lwork, int* info )
 {
-  orgtr( uplo, m, a, lda, tau, work, lwork, info );
+  return orgtr( uplo, m, a, lda, tau, work, lwork, info );
 }
 
 /*! @brief Form Q from tridiagonal reduction
@@ -4601,7 +4601,7 @@ int orgtr( char* uplo, int* m, T* a, int* lda, T* tau, T* work, int* lwork, int*
 template< typename T >
 int ungtr( char* uplo, int* m, T* a, int* lda, T* tau, T* work, int* lwork, int* info )
 {
-  ungtr( uplo, m, a, lda, tau, work, lwork, info );
+  return ungtr( uplo, m, a, lda, tau, work, lwork, info );
 }
 
 /*! @brief Apply Q or Q' from tridiagonal reduction
@@ -4702,7 +4702,7 @@ int ungtr( char* uplo, int* m, T* a, int* lda, T* tau, T* work, int* lwork, int*
 template< typename T >
 int ormtr( char* side, char* uplo, char* trans, int* m, int* n, T* a, int* lda, T* tau, T* c, int* ldc, T* work, int* lwork, int* info )
 {
-  ormtr( side, uplo, trans, m, n, a, lda, tau, c, ldc, work, lwork, info );
+  return ormtr( side, uplo, trans, m, n, a, lda, tau, c, ldc, work, lwork, info );
 }
 
 /*! @brief Apply Q or Q' from tridiagonal reduction
@@ -4803,7 +4803,7 @@ int ormtr( char* side, char* uplo, char* trans, int* m, int* n, T* a, int* lda, 
 template< typename T >
 int unmtr( char* side, char* uplo, char* trans, int* m, int* n, T* a, int* lda, T* tau, T* c, int* ldc, T* work, int* lwork, int* info )
 {
-  unmtr( side, uplo, trans, m, n, a, lda, tau, c, ldc, work, lwork, info );
+  return unmtr( side, uplo, trans, m, n, a, lda, tau, c, ldc, work, lwork, info );
 }
 
 /*! @brief Form Q from bidiagonal reduction
@@ -4894,7 +4894,7 @@ int unmtr( char* side, char* uplo, char* trans, int* m, int* n, T* a, int* lda, 
 template< typename T >
 int orgbr( char* vect, int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, int* lwork, int* info )
 {
-  orgbr( vect, m, n, k, a, lda, tau, work, lwork, info );
+  return orgbr( vect, m, n, k, a, lda, tau, work, lwork, info );
 }
 
 /*! @brief Form Q from bidiagonal reduction
@@ -4985,7 +4985,7 @@ int orgbr( char* vect, int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, 
 template< typename T >
 int ungbr( char* vect, int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, int* lwork, int* info )
 {
-  ungbr( vect, m, n, k, a, lda, tau, work, lwork, info );
+  return ungbr( vect, m, n, k, a, lda, tau, work, lwork, info );
 }
 
 /*! @brief Apply Q or Q' from bidiagonal reduction
@@ -5106,7 +5106,7 @@ int ungbr( char* vect, int* m, int* n, int* k, T* a, int* lda, T* tau, T* work, 
 template< typename T >
 int ormbr( char* vect, char* side, char* trans, int* m, int* n, int* k, T* a, int* lda,T* tau, T* c, int* ldc, T* work, int* lwork, int* info )
 {
-  ormbr( vect, side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
+  return ormbr( vect, side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
 }
 
     /*! @brief Apply Q or Q' from bidiagonal reduction
@@ -5227,7 +5227,7 @@ int ormbr( char* vect, char* side, char* trans, int* m, int* n, int* k, T* a, in
 template< typename T >
 int unmbr( char* vect, char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* tau, T* c, int* ldc, T* work, int* lwork, int* info )
 {
-  unmbr( vect, side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
+  return unmbr( vect, side, trans, m, n, k, a, lda, tau, c, ldc, work, lwork, info );
 }
 
 /*! @brief Tridiagonal QR algorithm
@@ -5301,7 +5301,7 @@ int unmbr( char* vect, char* side, char* trans, int* m, int* n, int* k, T* a, in
 template< typename T >
 int steqr( char* jobz, int* n, T* d, T* e, T* z, int* ldz, T*  work, int* info )
 {
-  steqr( jobz, n, d, e, z, ldz, work, info );
+  return steqr( jobz, n, d, e, z, ldz, work, info );
 }
 
 
@@ -5376,7 +5376,7 @@ int steqr( char* jobz, int* n, T* d, T* e, T* z, int* ldz, T*  work, int* info )
 template< typename Ta, typename Tb >
 int steqr( char* jobz, int* n, Tb* d, Tb* e, Ta* z, int* ldz, Tb* work, int* info )
 {
-  steqr( jobz, n, d, e, z, ldz, work, info );
+  return steqr( jobz, n, d, e, z, ldz, work, info );
 }
 
 /*! @brief Tridiagonal divide-and-conquer algorithm
@@ -5488,7 +5488,7 @@ int steqr( char* jobz, int* n, Tb* d, Tb* e, Ta* z, int* ldz, Tb* work, int* inf
 template< typename T >
 int stedc( char* compz, int* n, T* d, T* e, T* z, int* ldz, T* work, int* lwork, int* iwork, int* liwork, int* info )
 {
-  stedc( compz, n, d, e, z, ldz, work, lwork, iwork, liwork, info );
+  return stedc( compz, n, d, e, z, ldz, work, lwork, iwork, liwork, info );
 }
 
 /*! @brief Tridiagonal divide-and-conquer algorithm
@@ -5619,7 +5619,7 @@ int stedc( char* compz, int* n, T* d, T* e, T* z, int* ldz, T* work, int* lwork,
 template< typename Ta, typename Tb >
 int stedc( char* compz, int* n, Tb* d, Tb* e, Ta* z, int* ldz, Ta* work, int* lwork, Tb*  rwork, int* lrwork, int* iwork, int* liwork, int* info )
 {
-  stedc( compz, n, d, e, z, ldz, work, lwork, rwork, lrwork, iwork, liwork, info );
+  return stedc( compz, n, d, e, z, ldz, work, lwork, rwork, lrwork, iwork, liwork, info );
 }
 
 /*! @brief Tridiagonal MRRR algorithm
@@ -5834,7 +5834,7 @@ int stedc( char* compz, int* n, Tb* d, Tb* e, Ta* z, int* ldz, Ta* work, int* lw
 template< typename T >
 int stemr( char* jobz, char* range, int* n, T*  d, T*  e, int* vl, int* vu, int* il, int* iu, int* m, T*  w, T* z, int* ldz, int* nzc, int* isuppz, int* tryrac, T*  work, int* lwork, int* iwork, int* liwork, int* info )
 {
-  stemr( jobz, range, n, d, e, vl, vu, il, iu, m, w, z, ldz, nzc, isuppz, tryrac, work, lwork, iwork, liwork, info );
+  return stemr( jobz, range, n, d, e, vl, vu, il, iu, m, w, z, ldz, nzc, isuppz, tryrac, work, lwork, iwork, liwork, info );
 }
 
 /*! @brief Tridiagonal MRRR algorithm
@@ -6063,7 +6063,7 @@ int stemr( char* jobz, char* range, int* n, T*  d, T*  e, int* vl, int* vu, int*
 template< typename Ta, typename Tb >
 int stemr( char* jobz, char* range, int* n, Tb*  d, Tb*  e, int* vl, int* vu, int* il, int* iu, int* m, Tb*  w, Ta* z, int* ldz, int* nzc, int* isuppz, int* tryrac, Tb*  work, int* lwork, int* iwork, int* liwork, int* info )
 {
-  stemr( jobz, range, n, d, e, vl, vu, il, iu, m, w, z, ldz, nzc, isuppz, tryrac, work, lwork, iwork, liwork, info );
+  return stemr( jobz, range, n, d, e, vl, vu, il, iu, m, w, z, ldz, nzc, isuppz, tryrac, work, lwork, iwork, liwork, info );
 }
 
 /*! @brief Eigenvalue decomposition (QR algorithm)
@@ -6139,7 +6139,7 @@ int stemr( char* jobz, char* range, int* n, Tb*  d, Tb*  e, int* vl, int* vu, in
 template< typename T >
 int syev( char* jobz, char* uplo, int* n, T* a, int* lda, T*  w, T* work, int* lwork, T*  rwork, int* info )
 {
-  syev( jobz, uplo, n, a, lda, w, work, lwork, rwork, info );
+  return syev( jobz, uplo, n, a, lda, w, work, lwork, rwork, info );
 }
 
 /*! @brief Eigenvalue decomposition (QR algorithm)
@@ -6215,7 +6215,7 @@ int syev( char* jobz, char* uplo, int* n, T* a, int* lda, T*  w, T* work, int* l
 template< typename Ta, typename Tb >
 int heev( char* jobz, char* uplo, int* n, Ta* a, int* lda, Tb*  w, Ta* work, int* lwork, Tb*  rwork, int* info )
 {
-  heev( jobz, uplo, n, a, lda, w, work, lwork, rwork, info );
+  return heev( jobz, uplo, n, a, lda, w, work, lwork, rwork, info );
 }
 
 /*! @brief Eigenvalue decomposition (divide-and-conquer)
@@ -6320,7 +6320,7 @@ int heev( char* jobz, char* uplo, int* n, Ta* a, int* lda, Tb*  w, Ta* work, int
 template< typename T >
 int syevd( char* jobz, char* uplo, int* n, T* a, int* lda, T*  w, T* work, int* lwork, int* iwork, int* liwork, int* info )
 {
-  syevd( jobz, uplo, n, a, lda, w, work, lwork, iwork, liwork, info );
+  return syevd( jobz, uplo, n, a, lda, w, work, lwork, iwork, liwork, info );
 }
 
 /*! @brief Eigenvalue decomposition (divide-and-conquer)
@@ -6442,7 +6442,7 @@ int syevd( char* jobz, char* uplo, int* n, T* a, int* lda, T*  w, T* work, int* 
 template< typename Ta, typename Tb >
 int heevd( char* jobz, char* uplo, int* n, Ta* a, int* lda, Tb*  w, Ta* work, int* lwork, Tb*  rwork, int* lrwork, int* iwork, int* liwork, int* info )
 {
-  heevd( jobz, uplo, n, a, lda, w, work, lwork, rwork, lrwork, iwork, liwork, info );
+  return heevd( jobz, uplo, n, a, lda, w, work, lwork, rwork, lrwork, iwork, liwork, info );
 }
 
 /*! @brief Hermitian eigenvalue decomposition (MRRR)
@@ -6671,7 +6671,7 @@ int heevd( char* jobz, char* uplo, int* n, Ta* a, int* lda, Tb*  w, Ta* work, in
 template< typename T >
 int syevr( char* jobz, char* range, char* uplo, int* n, T* a, int* lda, T* vl, T*  vu, int* il, int* iu, T*  abstol, int* m, T*  w, T* z, int* ldz, int* isuppz, T* work, int* lwork, int* iwork, int* liwork, int* info )
 {
-  syevr( jobz, range, uplo, n, a, lda, vl, vu, il, iu, abstol, m, w, z, ldz, isuppz, work, lwork, iwork, liwork, info );
+  return syevr( jobz, range, uplo, n, a, lda, vl, vu, il, iu, abstol, m, w, z, ldz, isuppz, work, lwork, iwork, liwork, info );
 }
 
 /*! @brief Hermitian eigenvalue decomposition (MRRR)
@@ -6911,7 +6911,7 @@ int syevr( char* jobz, char* range, char* uplo, int* n, T* a, int* lda, T* vl, T
 template< typename Ta, typename Tb >
 int heevr( char* jobz, char* range, char* uplo, int* n, Ta* a, int* lda, Tb*  vl, Tb*  vu, int* il, int* iu, Tb*  abstol, int* m, Tb* w, Ta* z, int* ldz, int* isuppz, Ta* work, int* lwork, Tb*  rwork, int* lrwork, int* iwork, int* liwork, int* info )
 {
-  heevr( jobz, range, uplo, n, a, lda, vl, vu, il, iu, abstol, m, w, z, ldz, isuppz, work, lwork, rwork, lrwork, iwork, liwork, info );
+  return heevr( jobz, range, uplo, n, a, lda, vl, vu, il, iu, abstol, m, w, z, ldz, isuppz, work, lwork, rwork, lrwork, iwork, liwork, info );
 }
 
 /*! @brief Bidiagonal QR algorithm
@@ -7064,7 +7064,7 @@ int heevr( char* jobz, char* range, char* uplo, int* n, Ta* a, int* lda, Tb*  vl
 template< typename T >
 int bdsqr( char* uplo, int* n, int* ncvt, int* nru, int* ncc, T* d, T* e, T* vt, int* ldvt, T* u, int* ldu, T* c, int* ldc, T* rwork, int* info )
 {
-   bdsqr( uplo, n, ncvt, nru, ncc, d, e, vt, ldvt, u, ldu, c, ldc, rwork, info );
+  return  bdsqr( uplo, n, ncvt, nru, ncc, d, e, vt, ldvt, u, ldu, c, ldc, rwork, info );
 }
 
 /*! @brief Bidiagonal QR algorithm
@@ -7211,7 +7211,7 @@ int bdsqr( char* uplo, int* n, int* ncvt, int* nru, int* ncc, T* d, T* e, T* vt,
 template< typename Ta, typename Tb >
 int bdsqr( char* uplo, int* n, int* ncvt, int* nru, int* ncc, Tb* d, Tb* e, Ta* vt, int* ldvt, Ta* u, int* ldu, Ta* c, int* ldc, Tb*  rwork, int* info )
 {
-  bdsqr( uplo, n, ncvt, nru, ncc, d, e, vt, ldvt, u, ldu, c, ldc, rwork, info );
+  return bdsqr( uplo, n, ncvt, nru, ncc, d, e, vt, ldvt, u, ldu, c, ldc, rwork, info );
 }
 
 /*! @brief Bidiagonal divide-and-conquer algorithm
@@ -7336,7 +7336,7 @@ int bdsqr( char* uplo, int* n, int* ncvt, int* nru, int* ncc, Tb* d, Tb* e, Ta* 
 template< typename T >
 int bdsdc( char* uplo, char* compq, int* n, T*  d, T*  e, T*  u, int* ldu, T*  vt, int* ldvt, T*  q, T*  iq, T*  work, int* iwork, int* info )
 {
-  bdsdc( uplo, compq, n, d, e, u, ldu, vt, ldvt, q, iq, work, iwork, info );
+  return bdsdc( uplo, compq, n, d, e, u, ldu, vt, ldvt, q, iq, work, iwork, info );
 }
 
 /*! @brief General matrix singular value decomposition (QR algorithm)
@@ -7472,7 +7472,7 @@ int bdsdc( char* uplo, char* compq, int* n, T*  d, T*  e, T*  u, int* ldu, T*  v
 template< typename T >
 int gesvd( char* jobu, char* jobv, int* m, int* n, T* a, int* lda, T*  s, T* u, int* ldu, T* vt, int* ldvt, T* work, int* lwork, int* info )
 {
-  gesvd( jobu, jobv, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, info );
+  return gesvd( jobu, jobv, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, info );
 }
 
 /*! @brief General matrix singular value decomposition (QR algorithm)
@@ -7608,7 +7608,7 @@ int gesvd( char* jobu, char* jobv, int* m, int* n, T* a, int* lda, T*  s, T* u, 
 template< typename Ta, typename Tb >
 int gesvd( char* jobu, char* jobv, int* m, int* n, Ta* a, int* lda, Tb*  s, Ta* u, int* ldu, Ta* vt, int* ldvt, Ta* work, int* lwork, Tb* rwork, int* info )
 {
-  gesvd( jobu, jobv, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, rwork, info );
+  return gesvd( jobu, jobv, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, rwork, info );
 }
 
 /*! @brief General matrix singular value decomposition (divide-and-conquer)
@@ -7744,7 +7744,7 @@ int gesvd( char* jobu, char* jobv, int* m, int* n, Ta* a, int* lda, Tb*  s, Ta* 
 template< typename T >
 int gesdd( char* jobz, int* m, int* n, T* a, int* lda, T*  s, T* u, int* ldu, T* vt, int* ldvt, T* work, int* lwork, int* iwork, int* info )
 {
-  gesdd( jobz, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, iwork, info );
+  return gesdd( jobz, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, iwork, info );
 }
 
 /*! @brief General matrix singular value decomposition (divide-and-conquer)
@@ -7886,7 +7886,7 @@ int gesdd( char* jobz, int* m, int* n, T* a, int* lda, T*  s, T* u, int* ldu, T*
 template< typename Ta, typename Tb >
 int gesdd( char* jobz, int* m, int* n, Ta* a, int* lda, Tb*  s, Ta* u, int* ldu, Ta* vt, int* ldvt, Ta* work, int* lwork, Tb*  rwork, int* iwork, int* info )
 {
-  gesdd( jobz, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, rwork, iwork, info );
+  return gesdd( jobz, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, rwork, iwork, info );
 }
 
 /*! @brief Swap rows
@@ -7938,7 +7938,7 @@ int gesdd( char* jobz, int* m, int* n, Ta* a, int* lda, Tb*  s, Ta* u, int* ldu,
 template< typename T >
 int laswp( int* n, T* a, int* lda, int* k1, int* k2, int* ipiv, int* incx )
 {
-  laswp( n, a, lda, k1, k2, ipiv, incx );
+  return laswp( n, a, lda, k1, k2, ipiv, incx );
 }
 
 /*! @brief Initialize the off-diagonal elements and the diagonal elements of a matrix to given values
@@ -7990,7 +7990,7 @@ int laswp( int* n, T* a, int* lda, int* k1, int* k2, int* ipiv, int* incx )
 template< typename T >
 int laset( char* uplo, int* m, int* n, T* alpha, T* beta, T* a, int* lda )
 {
-  laset( uplo, m, n, alpha, beta, a, lda );
+  return laset( uplo, m, n, alpha, beta, a, lda );
 }
 
 }  // namespace libflame
