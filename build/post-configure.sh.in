@@ -18,6 +18,10 @@ echo "build system type............................... : @build@"
 echo "host system type................................ : @host@"
 
 echo ""
+echo "OS name......................................... : @os_name@"
+echo "OS version...................................... : @os_vers@"
+
+echo ""
 echo "Enable verbose make output...................... : @fla_enable_verbose_make_output@"
 
 echo ""
@@ -25,6 +29,7 @@ echo "Enable maximum argument list hack............... : @fla_enable_max_arg_lis
 
 echo ""
 echo "C compiler...................................... : @CC@"
+echo "C compiler vendor............................... : @CC_VENDOR@"
 echo "Library archiver................................ : @AR@"
 echo "Library archive indexer......................... : @RANLIB@"
 

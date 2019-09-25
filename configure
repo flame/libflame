@@ -698,6 +698,7 @@ INSTALL_SCRIPT
 INSTALL_PROGRAM
 RANLIB
 AR
+CC_VENDOR
 fla_userdef_cflags
 OBJEXT
 EXEEXT
@@ -707,6 +708,8 @@ LDFLAGS
 CFLAGS
 CC
 fla_gnu_make_found
+os_vers
+os_name
 fla_host_cpu
 host_os
 host_vendor
@@ -2738,6 +2741,15 @@ case $host_os in *\ *) host_os=`echo "$host_os" | sed 's/ /-/g'`;; esac
 
 
 
+	os_name=$(uname -s)
+	os_vers=$(uname -r)
+
+
+
+
+
+
+
 
 
 
@@ -3461,6 +3473,9 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 	if test "$CC" = "" ; then
 		as_fn_error 1 "Could not locate any of the following C compilers: $CC $fla_requested_cc $fla_c_compiler_list. Cannot continue without a C compiler." "$LINENO" 5
 	fi
+
+		CC_VENDOR=$(echo "$CC" | egrep -o 'icc|gcc|clang|emcc|pnacl|IBM' | { read first rest ; echo $first ; })
+
 
 
 

@@ -92,7 +92,12 @@ endif
 
 # --- Shared library extension ---
 
-SHLIB_EXT            := so
+# The shared (dynamic) library file suffix is different for Linux and OS X.
+ifeq ($(OS_NAME),Darwin)
+SHLIB_EXT          := dylib
+else
+SHLIB_EXT          := so
+endif
 
 # --- Library names ---
 
@@ -107,8 +112,15 @@ LIBFLAME_SO          := $(LIBFLAME).$(SHLIB_EXT)
 LIBFLAME_A_PATH      := $(BASE_LIB_PATH)/$(LIBFLAME_A)
 LIBFLAME_SO_PATH     := $(BASE_LIB_PATH)/$(LIBFLAME_SO)
 
+ifeq ($(OS_NAME),Darwin)
+# OS X shared library extensions.
+LIBFLAME_SO_MAJ_EXT  := $(SO_MAJOR).$(SHLIB_EXT)
+LIBFLAME_SO_MMB_EXT  := $(SO_MMB).$(SHLIB_EXT)
+else
+# Linux shared library extensions.
 LIBFLAME_SO_MAJ_EXT  := $(SHLIB_EXT).$(SO_MAJOR)
 LIBFLAME_SO_MMB_EXT  := $(SHLIB_EXT).$(SO_MMB)
+endif
 
 LIBFLAME_SONAME      := $(LIBFLAME).$(LIBFLAME_SO_MAJ_EXT)
 LIBFLAME_SO_MAJ_PATH := $(BASE_LIB_PATH)/$(LIBFLAME_SONAME)
@@ -124,8 +136,16 @@ LIBFLAME_SO_OUTPUT_NAME := $(LIBFLAME_SO_PATH)
 
 # Specify the shared library's 'soname' field.
 # NOTE: The flag for creating shared objects is different for Linux and OS X.
+ifeq ($(OS_NAME),Darwin)
+# OS X shared library link flags.
+SOFLAGS    := -dynamiclib
+SOFLAGS    += -Wl,-install_name,$(LIBFLAME_SONAME)
+else
 SOFLAGS    := -shared
+# Linux shared library link flags.
 SOFLAGS    += -Wl,-soname,$(LIBFLAME_SONAME)
+endif
+endif
 
 
 
