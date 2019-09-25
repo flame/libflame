@@ -145,7 +145,6 @@ SOFLAGS    := -shared
 # Linux shared library link flags.
 SOFLAGS    += -Wl,-soname,$(LIBFLAME_SONAME)
 endif
-endif
 
 
 
