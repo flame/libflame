@@ -21,7 +21,7 @@
 *******************************************************************************/
 
 /*! @file libflame_test.hh
- *  libflame_test.hh defines all the common functions which is required 
+ *  libflame_test.hh defines all the common functions which is required
  *  to validate CPP template interfaces for all libflame modules
  *  */
 #ifndef LIBFLAME_TEST_HH
@@ -30,29 +30,49 @@
 #include "libflame_interface.hh"
 using namespace std;
 
-/*Compute difference of two buffers with Template datatype */
 template< typename T >
-void computeError(int size, T *Out, T *Out_ref)
+T* typecast( FLA_Obj buff, int dataType)
+{
+  if(dataType == FLA_FLOAT)
+    return  (T * ) FLA_FLOAT_PTR( buff );
+  else if(dataType == FLA_DOUBLE)
+    return  (T * ) FLA_DOUBLE_PTR( buff );
+  if(dataType == FLA_COMPLEX)
+    return  (T * ) FLA_COMPLEX_PTR( buff );
+  else if(dataType == FLA_DOUBLE_COMPLEX)
+    return  (T * ) FLA_DOUBLE_COMPLEX_PTR( buff );
+  else if(dataType == FLA_INT)
+    return  (T * ) FLA_INT_PTR( buff );
+}
+template< typename T >
+int getDataType()
+{
+  if (is_same<float, T>::value)
+    return FLA_FLOAT;
+  if (is_same<double, T>::value)
+    return FLA_DOUBLE;
+  if (is_same<scomplex, T>::value)
+    return FLA_COMPLEX;
+  if (is_same<dcomplex, T>::value)
+    return FLA_DOUBLE_COMPLEX;
+  if (is_same<int, T>::value)
+    return FLA_INT;
+}
+template< typename T >
+double computeDiff(int size, T *Out, T *Out_ref)
 {
   int j;
   T diff = 0;
-  
+
   for ( j = 0; j < size; j ++ ) {
-    diff += abs(Out_ref[j] - Out[j]) ;
+   diff += abs(Out_ref[j] - Out[j]) ;
   }
-  if(diff)
-  {
-    printf( "Failure Diff = %E\n", diff);
-  }
-  else{
-    printf( "Success\n");
-  }
-  
+  return diff;
 }
 
 /*Compute difference of two buffers of complex number type */
 template< typename T >
-void computeErrorComplex(int size, T *Out, T *Out_ref)
+double computeErrorComplex(int size, T *Out, T *Out_ref)
 {
   int j;
   double diff = 0;
@@ -60,41 +80,84 @@ void computeErrorComplex(int size, T *Out, T *Out_ref)
     diff += abs(Out_ref[j].real - Out[j].real) ;
     diff += abs(Out_ref[j].imag - Out[j].imag) ;
   }
-  if(diff)
-  {
-    printf( "Failure Diff = %E\n", diff);
-  }
-  else{
-    printf( "Success\n");
-  }
-  
+  return diff;
 }
 
-/*Allocate memory and initialise memory with random values*/
+// Compute difference of two buffers with Template datatype
 template< typename T >
-void allocate_init_buffer(T *&Ain, T *&Aref, int size)
+double computeError(int n, int m, T *out, T *out_ref)
 {
-  Ain =  new T [size];
-  Aref = (T *) malloc(size * sizeof(T));
+  double retDiff = 0;
+  int dataType = getDataType<T>();
+  if( dataType == FLA_FLOAT)
+    retDiff = computeDiff<float>(n*m, (float*)out, (float*)out_ref);
+  else if (dataType == FLA_DOUBLE)
+    retDiff = computeDiff<double>(n*m, (double *)out, (double *)out_ref);
+  else if (dataType == FLA_INT)
+    retDiff = computeDiff<int>(n*m, (int *)out, (int *)out_ref );
+  else if( dataType == FLA_COMPLEX)
+    retDiff = computeErrorComplex<scomplex>(n*m, (scomplex *)out, (scomplex *)out_ref);
+  else if (dataType == FLA_DOUBLE_COMPLEX)
+    retDiff = computeErrorComplex<dcomplex>(n*m, (dcomplex *)out, (dcomplex *)out_ref);
+
+  return retDiff;
+}
+
+// Allocate memory and initialise memory with random values
+void allocate_init_buffer(int *&aIn, int *&aRef, int size)
+{
+  aIn =  new int [size];
+  aRef = (int *) malloc(size * sizeof(int));
   for(int i = 0; i < size; i++)
   {
-    Ain[i] = ( (T) rand() / ((T) RAND_MAX / 2.0)) - 1.0;
-    Aref[i] =  Ain[i] ; 
+    aIn[i] = ( (int) rand() / ((int) RAND_MAX / 2.0)) - 1.0;
+    aRef[i] =  aIn[i] ;
+  }
+}
+void allocate_init_buffer(float *&aIn, float *&aRef, int size)
+{
+  aIn =  new float [size];
+  aRef = (float *) malloc(size * sizeof(float));
+  for(int i = 0; i < size; i++)
+  {
+    aIn[i] = ( (float) rand() / ((float) RAND_MAX / 2.0)) - 1.0;
+    aRef[i] =  aIn[i] ;
+  }
+}
+void allocate_init_buffer(double *&aIn, double *&aRef, int size)
+{
+  aIn =  new double [size];
+  aRef = new double [size];
+  for(int i = 0; i < size; i++)
+  {
+    aIn[i] = ( (double) rand() / ((double) RAND_MAX / 2.0)) - 1.0;
+    aRef[i] =  aIn[i] ;
   }
 }
 
-/*Allocate memory and initialise memory with random values for complex number*/
-template< typename T >
-void allocate_init_buffer_complex(T *&Ain, T *&Aref, int size)
+// Allocate memory and initialise memory with random values for complex number
+void allocate_init_buffer(scomplex *&aIn, scomplex *&aRef, int size)
 {
-  Ain =  new T [size];
-  Aref = (T *) malloc(size * sizeof(T));
+  aIn = new scomplex [size];
+  aRef = new scomplex [size];
   for(int i = 0; i < size; i++)
   {
-    Ain[i].real = ( (float) rand() / ((float) RAND_MAX / 2.0)) - 1.0;          
-    Ain[i].imag = ( (float) rand() / ((float) RAND_MAX / 2.0)) - 1.0;          
-    Aref[i].real = Ain[i].real;
-    Aref[i].imag = Ain[i].imag;
+    aIn[i].real = ( (float) rand() / ((float) RAND_MAX / 2.0)) - 1.0;
+    aIn[i].imag = ( (float) rand() / ((float) RAND_MAX / 2.0)) - 1.0;
+    aRef[i].real = aIn[i].real;
+    aRef[i].imag = aIn[i].imag;
+  }
+}
+void allocate_init_buffer(dcomplex *&aIn, dcomplex *&aRef, int size)
+{
+  aIn =  new dcomplex [size];
+  aRef = (dcomplex *) malloc(size * sizeof(dcomplex));
+  for(int i = 0; i < size; i++)
+  {
+    aIn[i].real = ( (float) rand() / ((float) RAND_MAX / 2.0)) - 1.0;
+    aIn[i].imag = ( (float) rand() / ((float) RAND_MAX / 2.0)) - 1.0;
+    aRef[i].real = aIn[i].real;
+    aRef[i].imag = aIn[i].imag;
   }
 }
 
