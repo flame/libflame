@@ -22,7 +22,7 @@ use or performance of this software.
 ****************************************************************/
 
 /* sequential formatted external common routines*/
-#include <f2c_config.h>
+#include "f2c_config.h"
 #include "f2c.h"
 #include "fio.h"
 
