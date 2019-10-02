@@ -1,5 +1,9 @@
 /* lsame.f -- translated by f2c (version 19991025). You must link the resulting object file with the libraries: -lf2c -lm (in that order) */
+#include "FLAME.h"
 #include "FLA_f2c.h"
+
+#ifdef  FLA_ENABLE_BUILTIN_BLAS
+#ifndef FLA_ENABLE_LAPACK2FLAME
 logical lsame_(char *ca, char *cb)
 {
     /* System generated locals */
@@ -85,5 +89,7 @@ logical lsame_(char *ca, char *cb)
     /* End of LSAME */
     return ret_val;
 }
+#endif
+#endif
 /* lsame_ */
 
