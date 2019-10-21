@@ -2,12 +2,12 @@ AC_DEFUN([FLA_SET_C_OPT_FLAGS],
 [
 	AC_REQUIRE([FLA_OBSERVE_HOST_CPU_TYPE])
 	
-	AC_MSG_CHECKING([for (guessing) appropriate $CC optimization flags])
+	AC_MSG_CHECKING([for (guessing) appropriate ${CC_VENDOR} optimization flags])
 
 	if test "$1" == "yes" ; then
 
 		dnl Set C compiler flags assuming we found...
-		case $CC in
+		case ${CC_VENDOR} in
 			dnl GNU gcc.
 			gcc)
 				fla_c_opt_flags='-O3'
@@ -44,7 +44,7 @@ AC_DEFUN([FLA_SET_C_OPT_FLAGS],
 	else
 		
 		dnl Set C compiler flags assuming we found...
-		case $CC in
+		case ${CC_VENDOR} in
 			dnl GNU gcc.
 			gcc)
 				fla_c_opt_flags='-O0'

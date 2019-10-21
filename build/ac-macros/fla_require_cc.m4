@@ -20,9 +20,10 @@ AC_DEFUN([FLA_REQUIRE_CC],
 	fi
 
 	dnl Ascertain the compiler "vendor".
-	CC_VENDOR=$(echo "$CC" | egrep -o 'icc|gcc|clang|emcc|pnacl|IBM' | { read first rest ; echo $first ; })
+	dnl CC_VENDOR=$(echo "$CC" | egrep -o 'icc|gcc|clang|emcc|pnacl|IBM' | { read first rest ; echo $first ; })
+	dnl AC_MSG_NOTICE([[CC_VENDOR environment variable is set to ${CC_VENDOR}.]])
 	
 	dnl Substitute the user-defined CFLAGS into the autoconf output files.
 	AC_SUBST(fla_userdef_cflags)
-	AC_SUBST(CC_VENDOR)
+	dnl AC_SUBST(CC_VENDOR)
 ])

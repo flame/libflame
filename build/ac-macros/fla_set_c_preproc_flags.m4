@@ -3,7 +3,7 @@ AC_DEFUN([FLA_SET_C_PREPROC_FLAGS],
 	AC_REQUIRE([FLA_OBSERVE_HOST_CPU_TYPE])
 	
 	dnl Set C preprocessor flags assuming we found...
-	case $CC in
+	case ${CC_VENDOR} in
 		dnl GNU gcc.
 		gcc)
 			dnl Define the _GNU_SOURCE macro.
