@@ -492,7 +492,7 @@ namespace libflame{
   {
     return LAPACKE_zhegst( matrix_layout, *itype, *uplo, *n, a, *lda, b, *ldb );
   }
-  #if 0
+
   // --- Accumulate block Householder matrix T (classic) ---
   inline int larft( int matrix_layout, char* direct, char* storev, int *n, int* k, float* v, int* ldv, float* tau, float* t, int* ldt )
   {
@@ -512,40 +512,40 @@ namespace libflame{
   }
 
   // --- Generate a Householder vector (classic) ---
-  inline int larfg( int matrix_layout, int *n, float* alpha, float* x, int* incx, float* tau )
+  inline int larfg( int *n, float* alpha, float* x, int* incx, float* tau )
   {
-    return LAPACKE_slarfg( matrix_layout, *n, alpha, x, *incx, tau );
+    return LAPACKE_slarfg( *n, alpha, x, *incx, tau );
   }
-  inline int larfg( int matrix_layout, int *n, double* alpha, double* x, int* incx, double* tau )
+  inline int larfg( int *n, double* alpha, double* x, int* incx, double* tau )
   {
-    return LAPACKE_dlarfg( matrix_layout, *n, alpha, x, *incx, tau );
+    return LAPACKE_dlarfg( *n, alpha, x, *incx, tau );
   }
-  inline int larfg( int matrix_layout, int *n, lapack_complex_float* alpha, lapack_complex_float* x, int* incx, lapack_complex_float* tau )
+  inline int larfg( int *n, lapack_complex_float* alpha, lapack_complex_float* x, int* incx, lapack_complex_float* tau )
   {
-    return LAPACKE_clarfg( matrix_layout, *n, alpha, x, *incx, tau );
+    return LAPACKE_clarfg( *n, alpha, x, *incx, tau );
   }
-  inline int larfg( int matrix_layout, int *n, lapack_complex_double* alpha, lapack_complex_double* x, int* incx, lapack_complex_double* tau )
+  inline int larfg( int *n, lapack_complex_double* alpha, lapack_complex_double* x, int* incx, lapack_complex_double* tau )
   {
-    return LAPACKE_zlarfg( matrix_layout, *n, alpha, x, *incx, tau );
+    return LAPACKE_zlarfg( *n, alpha, x, *incx, tau );
   }
 
-  inline int larfgp( int matrix_layout, int *n, float* alpha, float* x, int* incx, float* tau )
+  inline int larfgp( int *n, float* alpha, float* x, int* incx, float* tau )
   {
-    return LAPACKE_slarfgp( matrix_layout, *n, alpha, x, *incx, tau );
+    return LAPACKE_slarfg( *n, alpha, x, *incx, tau );
   }
-  inline int larfgp( int matrix_layout, int *n, double* alpha, double* x, int* incx, double* tau )
+  inline int larfgp( int *n, double* alpha, double* x, int* incx, double* tau )
   {
-    return LAPACKE_dlarfgp( matrix_layout, *n, alpha, x, *incx, tau );
+    return LAPACKE_dlarfg( *n, alpha, x, *incx, tau );
   }
-  inline int larfgp( int matrix_layout, int *n, lapack_complex_float* alpha, lapack_complex_float* x, int* incx, lapack_complex_float* tau )
+  inline int larfgp( int *n, lapack_complex_float* alpha, lapack_complex_float* x, int* incx, lapack_complex_float* tau )
   {
-    return LAPACKE_clarfgp( matrix_layout, *n, alpha, x, *incx, tau );
+    return LAPACKE_clarfg( *n, alpha, x, *incx, tau );
   }
-  inline int larfgp( int matrix_layout, int *n, lapack_complex_double* alpha, lapack_complex_double* x, int* incx, lapack_complex_double* tau )
+  inline int larfgp( int *n, lapack_complex_double* alpha, lapack_complex_double* x, int* incx, lapack_complex_double* tau )
   {
-    return LAPACKE_zlarfgp( matrix_layout, *n, alpha, x, *incx, tau );
+    return LAPACKE_zlarfg( *n, alpha, x, *incx, tau );
   }
-#endif
+
   // --- Form Q from QR factorization ---
   inline int orgqr( int matrix_layout, int* m, int *n, int* k, float* a, int* lda, float* tau )
   {
@@ -564,7 +564,6 @@ namespace libflame{
     return LAPACKE_zungqr( matrix_layout, *m, *n, *k, a, *lda, tau );
   }
 
-#if 0
   // --- Apply Q or Q' from QR factorization ---
   inline int ormqr( int matrix_layout, char* side, char* trans, int* m, int *n, int* k, float* a, int* lda, float* tau, float* c, int* ldc )
   {
@@ -585,19 +584,19 @@ namespace libflame{
 
   inline int orm2r( int matrix_layout, char* side, char* trans, int* m, int *n, int* k, float* a, int* lda, float* tau, float* c, int* ldc )
   {
-    return LAPACKE_sorm2r( matrix_layout, *side, *trans, *m, *n, *k, a, *lda, tau, c, *ldc );
+    return LAPACKE_sormqr( matrix_layout, *side, *trans, *m, *n, *k, a, *lda, tau, c, *ldc );
   }
   inline int orm2r( int matrix_layout, char* side, char* trans, int* m, int *n, int* k, double* a, int* lda, double* tau, double* c, int* ldc )
   {
-    return LAPACKE_dorm2r( matrix_layout, *side, *trans, *m, *n, *k, a, *lda, tau, c, *ldc );
+    return LAPACKE_dormqr( matrix_layout, *side, *trans, *m, *n, *k, a, *lda, tau, c, *ldc );
   }
   inline int unm2r( int matrix_layout, char* side, char* trans, int* m, int *n, int* k, lapack_complex_float* a, int* lda, lapack_complex_float* tau, lapack_complex_float* c, int* ldc )
   {
-    return LAPACKE_cunm2r( matrix_layout, side, trans, *m, *n, k,  a, *lda, tau, c, *ldc );
+    return LAPACKE_cunmqr( matrix_layout, *side, *trans, *m, *n, *k,  a, *lda, tau, c, *ldc );
   }
   inline int unm2r( int matrix_layout, char* side, char* trans, int* m, int *n, int* k, lapack_complex_double* a, int* lda, lapack_complex_double* tau, lapack_complex_double* c, int* ldc )
   {
-    return LAPACKE_zunm2r( matrix_layout, *side, *trans, *m, *n, *k, a, *lda, tau, c, *ldc );
+    return LAPACKE_zunmqr( matrix_layout, *side, *trans, *m, *n, *k, a, *lda, tau, c, *ldc );
   }
 
   // --- Form Q from LQ factorization ---
@@ -638,19 +637,19 @@ namespace libflame{
 
   inline int orml2( int matrix_layout, char* side, char* trans, int* m, int *n, int* k, float* a, int* lda, float* tau, float* c, int* ldc )
   {
-    return LAPACKE_sorml2( matrix_layout, *side, *trans, *m, *n, *k, a, *lda, tau, c, *ldc );
+    return LAPACKE_sormlq( matrix_layout, *side, *trans, *m, *n, *k, a, *lda, tau, c, *ldc );
   }
   inline int orml2( int matrix_layout, char* side, char* trans, int* m, int *n, int* k, double* a, int* lda, double* tau, double* c, int* ldc )
   {
-    return LAPACKE_dorml2( matrix_layout, *side, *trans, *m, *n, *k, a, *lda, tau, c, *ldc );
+    return LAPACKE_dormlq( matrix_layout, *side, *trans, *m, *n, *k, a, *lda, tau, c, *ldc );
   }
   inline int unml2( int matrix_layout, char* side, char* trans, int* m, int *n, int* k, lapack_complex_float* a, int* lda, lapack_complex_float* tau, lapack_complex_float* c, int* ldc )
   {
-    return LAPACKE_cunml2( matrix_layout, *side, *trans, *m, *n, *k, a, *lda, tau, c, *ldc );
+    return LAPACKE_cunmlq( matrix_layout, *side, *trans, *m, *n, *k, a, *lda, tau, c, *ldc );
   }
   inline int unml2( int matrix_layout, char* side, char* trans, int* m, int *n, int* k, lapack_complex_double* a, int* lda, lapack_complex_double* tau, lapack_complex_double* c, int* ldc )
   {
-    return LAPACKE_zunml2( matrix_layout, *side, *trans, *m, *n, *k, a, *lda, tau, c, *ldc );
+    return LAPACKE_zunmlq( matrix_layout, *side, *trans, *m, *n, *k, a, *lda, tau, c, *ldc );
   }
 
   // --- Form Q from tridiagonal reduction ---
@@ -662,11 +661,11 @@ namespace libflame{
   {
     return LAPACKE_dorgtr( matrix_layout, *uplo, *m, a, *lda, tau );
   }
-  inline int oungtr( int matrix_layout, char* uplo, int* m, lapack_complex_float* a, int* lda, lapack_complex_float* tau )
+  inline int ungtr( int matrix_layout, char* uplo, int* m, lapack_complex_float* a, int* lda, lapack_complex_float* tau )
   {
     return LAPACKE_cungtr( matrix_layout, *uplo, *m, a, *lda, tau );
   }
-  inline int oungtr( int matrix_layout, char* uplo, int* m, lapack_complex_double* a, int* lda, lapack_complex_double* tau )
+  inline int ungtr( int matrix_layout, char* uplo, int* m, lapack_complex_double* a, int* lda, lapack_complex_double* tau )
   {
     return LAPACKE_zungtr( matrix_layout, *uplo, *m, a, *lda, tau );
   }
@@ -818,19 +817,19 @@ namespace libflame{
   // --- Hermitian eigenvalue decomposition (MRRR) ---
   inline int syevr( int matrix_layout, char* jobz, char* range, char* uplo, int *n, float* a, int* lda, float*  vl, float*  vu, int* il, int* iu, float*  abstol, int* m, float*  w, float* z, int* ldz, int* isuppz )
   {
-    return LAPACKE_ssyevr( matrix_layout, *jobz, *range, *uplo, *n, a, *lda, *vl, *vu, *il, *iu, abstol, m, w, z, *ldz, isuppz );
+    return LAPACKE_ssyevr( matrix_layout, *jobz, *range, *uplo, *n, a, *lda, *vl, *vu, *il, *iu, *abstol, m, w, z, *ldz, isuppz );
   }
   inline int syevr( int matrix_layout, char* jobz, char* range, char* uplo, int *n, double* a, int* lda, double* vl, double* vu, int* il, int* iu, double* abstol, int* m, double* w, double* z, int* ldz, int* isuppz )
   {
-    return LAPACKE_dsyevr( matrix_layout, *jobz, *range, *uplo, *n, a, *lda, *vl, *vu, *il, *iu, abstol, m, w, z, *ldz, isuppz );
+    return LAPACKE_dsyevr( matrix_layout, *jobz, *range, *uplo, *n, a, *lda, *vl, *vu, *il, *iu, *abstol, m, w, z, *ldz, isuppz );
   }
   inline int heevr( int matrix_layout, char* jobz, char* range, char* uplo, int *n, lapack_complex_float* a, int* lda, float*  vl, float*  vu, int* il, int* iu, float*  abstol, int* m, float*  w, lapack_complex_float* z, int* ldz, int* isuppz )
   {
-    return LAPACKE_cheevr( matrix_layout, *jobz, *range, *uplo, *n, a, *lda, *vl, *vu, *il, *iu, abstol, m, w, z, *ldz, isuppz );
+    return LAPACKE_cheevr( matrix_layout, *jobz, *range, *uplo, *n, a, *lda, *vl, *vu, *il, *iu, *abstol, m, w, z, *ldz, isuppz );
   }
   inline int heevr( int matrix_layout, char* jobz, char* range, char* uplo, int *n, lapack_complex_double* a, int* lda, double* vl, double* vu, int* il, int* iu, double* abstol, int* m, double* w, lapack_complex_double* z, int* ldz, int* isuppz )
   {
-    return LAPACKE_zheevr( matrix_layout, *jobz, *range, *uplo, *n, a, *lda, *vl, *vu, *il, *iu, abstol, m, w, z, *ldz, isuppz );
+    return LAPACKE_zheevr( matrix_layout, *jobz, *range, *uplo, *n, a, *lda, *vl, *vu, *il, *iu, *abstol, m, w, z, *ldz, isuppz );
   }
 
   // --- Bidiagonal QR algorithm ---
@@ -850,35 +849,36 @@ namespace libflame{
   {
     return LAPACKE_zbdsqr( matrix_layout, *uplo, *n, *ncvt, *nru, *ncc, d, e, vt, *ldvt, u, *ldu, c, *ldc );
   }
-
+#if 0
   // --- Bidiagonal divide-and-conquor algorithm ---
   inline int bdsdc( int matrix_layout, char* uplo, char* compq, int *n, float*  d, float*  e, float*  u, int* ldu, float*  vt, int* ldvt, float*  q, float*  iq )
   {
-    return LAPACKE_sbdsdc( matrix_layout, *uplo, compq, *n, d, e, u, *ldu, vt, *ldvt, q, iq );
+    return LAPACKE_sbdsdc( matrix_layout, *uplo, *compq, *n, d, e, u, *ldu, vt, *ldvt, q, iq );
   }
   inline int bdsdc( int matrix_layout, char* uplo, char* compq, int *n, double* d, double* e, double* u, int* ldu, double* vt, int* ldvt, double* q, double* iq )
   {
-    return LAPACKE_dbdsdc( matrix_layout, *uplo, compq, *n, d, e, u, *ldu, vt, *ldvt, q, iq );
+    return LAPACKE_dbdsdc( matrix_layout, *uplo, *compq, *n, d, e, u, *ldu, vt, *ldvt, q, iq );
   }
 
+//*superb required
   // --- General matrix singular value decomposition (QR algorithm) ---
   inline int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int *n, float* a, int* lda, float* s, float* u, int* ldu, float* vt, int* ldvt )
   {
-    return LAPACKE_sgesvd( matrix_layout, jobu, jobv, *m, *n, a, *lda, s, u, *ldu, vt, *ldvt );
+    return LAPACKE_sgesvd( matrix_layout, *jobu, *jobv, *m, *n, a, *lda, s, u, *ldu, vt, *ldvt );
   }
   inline int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int *n, double* a, int* lda, double* s, double* u, int* ldu, double* vt, int* ldvt )
   {
-    return LAPACKE_dgesvd( matrix_layout, jobu, jobv, *m, *n, a, *lda, s, u, *ldu, vt, *ldvt );
+    return LAPACKE_dgesvd( matrix_layout, *jobu, *jobv, *m, *n, a, *lda, s, u, *ldu, vt, *ldvt );
   }
   inline int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int *n, lapack_complex_float* a, int* lda, float*  s, lapack_complex_float* u, int* ldu, lapack_complex_float* vt, int* ldvt )
   {
-    return LAPACKE_cgesvd( matrix_layout, jobu, jobv, *m, *n, a, *lda, s, u, *ldu, vt, *ldvt );
+    return LAPACKE_cgesvd( matrix_layout, *jobu, *jobv, *m, *n, a, *lda, s, u, *ldu, vt, *ldvt );
   }
   inline int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int *n, lapack_complex_double* a, int* lda, double* s, lapack_complex_double* u, int* ldu, lapack_complex_double* vt, int* ldvt)
   {
-    return LAPACKE_zgesvd( matrix_layout, jobu, jobv, *m, *n, a, *lda, s, u, *ldu, vt, *ldvt );
+    return LAPACKE_zgesvd( matrix_layout, *jobu, *jobv, *m, *n, a, *lda, s, u, *ldu, vt, *ldvt );
   }
-
+#endif
   // --- General matrix singular value decomposition (divide-and-conquer) ---
   inline int gesdd( int matrix_layout, char* jobz, int* m, int *n, float* a, int* lda, float*  s, float* u, int* ldu, float* vt, int* ldvt )
   {
@@ -932,7 +932,7 @@ namespace libflame{
   {
     return LAPACKE_zlaset( matrix_layout, *uplo, *m, *n, *alpha, *beta, a, *lda );
   }
-#endif
+
 }//namespace libflame
 
 #endif  //  #ifndef LIBFLAME_HH

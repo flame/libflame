@@ -2829,9 +2829,9 @@ int larft( int matrix_layout, char* direct, char* storev, int* n, int* k, T* v, 
     The value tau.
     *  */
 template< typename T >
-int larfg( int matrix_layout, int* n, T* alpha, T* x, int* incx, T* tau )
+int larfg( int* n, T* alpha, T* x, int* incx, T* tau )
 {
-  return larfg( matrix_layout, n, alpha, x, incx, tau );
+  return larfg( n, alpha, x, incx, tau );
 }
 
 /*! @brief Generation of an elementary reflector (Householder matrix) with non-negative beta
@@ -2905,7 +2905,7 @@ int larfgp( int matrix_layout, int* n, T* alpha, T* x, int* incx, T* tau )
 
     * @param[in] n
     n is int* \n
-    The number of columns of the matrix Q. M >= n >= 0.
+    The number of columns of the matrix Q. m >= n >= 0.
 
     * @param[in] k
     k is int* \n
@@ -2955,7 +2955,7 @@ int orgqr( int matrix_layout, int* m, int* n, int* k, T* a, int* lda, T* tau )
 
     * @param[in] n
     n is int* \n
-    The number of columns of the matrix Q. M >= n >= 0.
+    The number of columns of the matrix Q. m >= n >= 0.
 
     * @param[in] k
     k is int* \n
@@ -2980,7 +2980,7 @@ int orgqr( int matrix_layout, int* m, int* n, int* k, T* a, int* lda, T* tau )
     reflector H(i), as returned by SGEQRF.
     *  */
 template< typename T >
-int ungqr( int matrix_layout, int* m, int* n, int* k, T*   a, int* lda, T* tau )
+int ungqr( int matrix_layout, int* m, int* n, int* k, T* a, int* lda, T* tau )
 {
   return ungqr( matrix_layout, m, n, k, a, lda, tau );
 }
@@ -3300,7 +3300,7 @@ int orm2r( int matrix_layout, char* side, char* trans, int* m, int* n, int* k, T
     The leading dimension of the array c. ldc >= max(1,m).
     *  */
 template< typename T >
-int unm2r( int matrix_layout, char* side, char* trans, int* m, int* n, int* k, T*   a, int* lda, T* tau, T* c, int* ldc )
+int unm2r( int matrix_layout, char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* tau, T* c, int* ldc )
 {
   return unm2r( matrix_layout, side, trans, m, n, k, a, lda, tau, c, ldc );
 }
@@ -4204,7 +4204,7 @@ int ungbr( int matrix_layout, char* vect, int* m, int* n, int* k, T* a, int* lda
     The leading dimension of the array c. ldc >= max(1,m).
     *  */
 template< typename T >
-int ormbr( int matrix_layout, char* vect, char* side, char* trans, int* m, int* n, int* k, T* a, int* lda,T* tau, T* c, int* ldc )
+int ormbr( int matrix_layout, char* vect, char* side, char* trans, int* m, int* n, int* k, T* a, int* lda, T* tau, T* c, int* ldc )
 {
   return ormbr( matrix_layout, vect, side, trans, m, n, k, a, lda, tau, c, ldc );
 }
