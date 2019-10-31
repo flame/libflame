@@ -43,7 +43,13 @@ namespace libflame{
         This is the block version of the algorithm, calling Level 3 BLAS.
     \endverbatim
 
-    \param[in] uplo
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
+    * @param[in] uplo
     uplo is char*. \n
     uplo specifies output format \n
     = 'U': Output is upper triangular factorization of A \n
@@ -89,6 +95,12 @@ int potrf( int matrix_layout, char* uplo, int* n, T* a, int* lda )
 
         This is the unblocked version of the algorithm, calling Level 2 BLAS.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = 'LAPACK_COL_MAJOR': Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] uplo
     uplo is char* \n
@@ -137,6 +149,12 @@ int potf2( int matrix_layout, char* uplo, int* n, T* a, int* lda )
         This is the right-looking Level 3 BLAS version of the algorithm.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] m
     m is int* \n
     The number of rows of the matrix a.  m >= 0.
@@ -182,6 +200,12 @@ int getrf( int matrix_layout, int* m, int* n, T* a, int* lda, int* ipiv )
         This is the right-looking Level 2 BLAS version of the algorithm.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] m
     m is int* \n
     The number of rows of the matrix a.  m >= 0.
@@ -221,6 +245,12 @@ int getf2( int matrix_layout, int* m, int* n, T* a, int* lda, int* ipiv )
         The factorization has the form
             A = Q * R
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] m
     m is int* \n
@@ -277,6 +307,12 @@ int geqrf( int matrix_layout, int* m, int* n, T* a, int* lda, T* tau )
         The factorization has the form
             A = Q * R
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] m
     m is int* \n
@@ -337,6 +373,12 @@ int geqr2( int matrix_layout, int* m, int* n, T* a, int* lda, T* tau )
         The factorization has the form:
             A*P = Q*R.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] m
     m is int* \n
@@ -413,6 +455,12 @@ int geqpf( int matrix_layout, int* m, int* n, T* a, int* lda, int* jpvt, T* tau 
         using Level 3 BLAS.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] m
     m is int* \n
     The number of rows of the matrix a.  m >= 0.
@@ -467,7 +515,6 @@ int geqp3( int matrix_layout, int* m, int* n, T* a, int* lda, int* jpvt, T* tau 
   return geqp3( matrix_layout, m, n, a, lda, jpvt, tau );
 }
 
-
 /*! @brief QR factorization of a real m-by-n matrix a
     *
 
@@ -478,6 +525,12 @@ int geqp3( int matrix_layout, int* m, int* n, T* a, int* lda, int* jpvt, T* tau 
             A*P = Q*R
         using Level 3 BLAS.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] m
     m is int* \n
@@ -544,6 +597,12 @@ int geqp3( int matrix_layout, int* m, int* n, Ta* a, int* lda, int* jpvt, Ta* ta
             A = L * Q
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] m
     m is int* \n
     The number of rows of the matrix a.  m >= 0.
@@ -599,6 +658,12 @@ int gelqf( int matrix_layout, int* m, int* n, T* a, int* lda, T* tau )
         The factorization has the form
         A = Q * R
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] m
     m is int* \n
@@ -677,6 +742,12 @@ int gelq2( int matrix_layout, int* m, int* n, T* a, int* lda, T* tau )
         guard digits, but we know of none.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] m
     m is int* \n
     The number of rows of the matrix a.  m >= 0.
@@ -718,13 +789,13 @@ int gelq2( int matrix_layout, int* m, int* n, T* a, int* lda, T* tau )
 
     * @param[in] rcond
     rcond is float/double* \n
-    rcond is used to determine the effective rank of A. \n
+    rcond is used to determine the effective rank of a. \n
     Singular values S(i) <= rcond*S(1) are treated as zero. \n
     If rcond < 0, machine precision is used instead.
 
     * @param[out] rank
     rank is int* \n
-    The effective rank of A, i.e., the number of singular values
+    The effective rank of a, i.e., the number of singular values
     which are greater than rcond*S(1).
     *  */
 template< typename T >
@@ -764,6 +835,12 @@ int gelsd( int matrix_layout, int* m, int* n, int* nrhs, T* a, int* lda, T* b, i
         Cray C-90, or Cray-2. It could conceivably fail on hexadecimal or decimal machines without
         guard digits, but we know of none.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] m
     m is int* \n
@@ -806,7 +883,7 @@ int gelsd( int matrix_layout, int* m, int* n, int* nrhs, T* a, int* lda, T* b, i
 
     * @param[in] rcond
     rcond is float/double \n
-    rcond is used to determine the effective rank of A. \n
+    rcond is used to determine the effective rank of a. \n
     Singular values S(i) <= rcond*S(1) are treated as zero. \n
     If rcond < 0, machine precision is used instead.
 
@@ -839,6 +916,12 @@ int gelsd( int matrix_layout, int* m, int* n, int* nrhs, Ta* a, int* lda, Ta* b,
         The effective rank of A is determined by treating as zero those singular values which are
         less than rcond times the largest singular value.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] m
     m is int* \n
@@ -882,13 +965,13 @@ int gelsd( int matrix_layout, int* m, int* n, int* nrhs, Ta* a, int* lda, Ta* b,
 
     * @param[in] rcond
     rcond is float/double* \n
-    rcond is used to determine the effective rank of A.
+    rcond is used to determine the effective rank of a.
     Singular values S(i) <= rcond*S(1) are treated as zero. \n
     If rcond < 0, machine precision is used instead.
 
     * @param[out] rank
     rank is int* \n
-    The effective rank of A, i.e., the number of singular values
+    The effective rank of a, i.e., the number of singular values
     which are greater than rcond*S(1).
     *  */
 template< typename T >
@@ -915,6 +998,12 @@ int gelss( int matrix_layout, int* m, int* n, int* nrhs, T* a, int* lda, T* b, i
         The effective rank of A is determined by treating as zero those singular values which are
         less than rcond times the largest singular value.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] m
     m is int* \n
@@ -958,13 +1047,13 @@ int gelss( int matrix_layout, int* m, int* n, int* nrhs, T* a, int* lda, T* b, i
 
     * @param[in] rcond
     rcond is float/double \n
-    rcond is used to determine the effective rank of A.
+    rcond is used to determine the effective rank of a.
     Singular values S(i) <= rcond*S(1) are treated as zero. \n
     If rcond < 0, machine precision is used instead.
 
     * @param[out] rank
     rank is int* \n
-    The effective rank of A, i.e., the number of singular values
+    The effective rank of a, i.e., the number of singular values
     which are greater than rcond*S(1).
     *  */
 template< typename Ta, typename Tb >
@@ -989,6 +1078,12 @@ int gelss( int matrix_layout, int* m, int* n, int* nrhs, Ta* a, int* lda, Ta* b,
         This is the blocked form of the algorithm, calling Level 3 BLAS.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] uplo
     uplo is char* \n
     Specifies whether the triangular factor stored in the array a
@@ -1003,9 +1098,9 @@ int gelss( int matrix_layout, int* m, int* n, int* nrhs, Ta* a, int* lda, Ta* b,
     * @param[in,out] a
     a is float/double/lapack_complex_float/lapack_complex_double array, dimension (lda,n) \n
     On entry, the triangular factor U or L. \n
-    On exit, if uplo = 'U', the upper triangle of A is
+    On exit, if uplo = 'U', the upper triangle of a is
     overwritten with the upper triangle of the product U * U**T; \n
-    if uplo = 'L', the lower triangle of A is overwritten with
+    if uplo = 'L', the lower triangle of a is overwritten with
     the lower triangle of the product L**T * L.
 
     * @param[in] lda
@@ -1034,6 +1129,12 @@ int lauum(int matrix_layout, char* uplo, int* n, T* a, int* lda )
         This is the unblocked form of the algorithm, calling Level 2 BLAS.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] uplo
     uplo is char* \n
     Specifies whether the triangular factor stored in the array a
@@ -1048,9 +1149,9 @@ int lauum(int matrix_layout, char* uplo, int* n, T* a, int* lda )
     * @param[in,out] a
     a is float/double/lapack_complex_float/lapack_complex_double array, dimension (lda,n) \n
     On entry, the triangular factor U or L. \n
-    On exit, if uplo = 'U', the upper triangle of A is
+    On exit, if uplo = 'U', the Upper triangle of a is
     overwritten with the upper triangle of the product U * U**T; \n
-    if uplo = 'L', the lower triangle of A is overwritten with
+    if uplo = 'L', the lower triangle of a is overwritten with
     the lower triangle of the product L**T * L.
 
     * @param[in] lda
@@ -1073,10 +1174,16 @@ int lauu2( int matrix_layout, char* uplo, int* n, T* a, int* lda )
         Cholesky factorization A = U**T*U or A = L*L**T computed by SPOTRF.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] uplo
     uplo is char* \n
-    = 'U':  Upper triangle of A is stored; \n
-    = 'L':  Lower triangle of A is stored.
+    = 'U':  Upper triangle of a is stored; \n
+    = 'L':  Lower triangle of a is stored.
 
     * @param[in] n
     n is int*  \n
@@ -1110,6 +1217,12 @@ int potri( int matrix_layout, char* uplo, int* n, T* buff_A, int*  ldim_A )
 
         This is the Level 3 BLAS version of the algorithm.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] uplo
     uplo is char* \n
@@ -1160,6 +1273,12 @@ int trtri( int matrix_layout, char* uplo, char* diag, int* n, T* a, int* lda )
 
         This is the Level 2 BLAS version of the algorithm.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] uplo
     uplo is char* \n
@@ -1217,6 +1336,12 @@ int trti2( int matrix_layout, char* uplo, char* diag, int* n, T* a, int* lda )
         triangular with 1-by-1 and 2-by-2 diagonal blocks; each 2-by-2 diagonal block has its
         diagonal elements equal and its off-diagonal elements of opposite sign.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] transa
     transa is char* \n
@@ -1301,6 +1426,12 @@ int trsyl( int matrix_layout, char* transa, char* transb, int* isgn, int* m, int
         diagonal elements equal and its off-diagonal elements of opposite sign.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] transa
     transa is char* \n
     Specifies the option op(A): \n
@@ -1374,6 +1505,12 @@ int trsyl( int matrix_layout, char* transa, char* transb, int* isgn, int* m, int
     similarity transformation:
     Q**T * A * Q = H .
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] n
     n is int* \n
@@ -1454,6 +1591,12 @@ int gehrd( int matrix_layout, int* n, int* ilo, int* ihi, T* a, int* lda, T* tau
         similarity transformation:
         Q**T * A * Q = H .
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] n
     n is int* \n
@@ -1536,10 +1679,16 @@ int gehd2( int matrix_layout, int* n, int* ilo, int* ihi, T* a, int* lda, T* tau
             Q**T * A * Q = T.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] uplo
     uplo is char* \n
-    = 'U':  Upper triangle of A is stored; \n
-    = 'L':  Lower triangle of A is stored.
+    = 'U':  Upper triangle of a is stored; \n
+    = 'L':  Lower triangle of a is stored.
 
     * @param[in] n
     n is int* \n
@@ -1641,10 +1790,16 @@ int sytrd( int matrix_layout, char* uplo, int* n, T* a, int* lda, T*  d, T*  e, 
         Q**H * A * Q = T.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] uplo
     uplo is char* \n
-    = 'U':  Upper triangle of A is stored; \n
-    = 'L':  Lower triangle of A is stored.
+    = 'U':  Upper triangle of a is stored; \n
+    = 'L':  Lower triangle of a is stored.
 
     * @param[in] n
     n is int* \n
@@ -1746,10 +1901,16 @@ int hetrd( int matrix_layout, char* uplo, int* n, Ta* a, int* lda, Tb*  d, Tb*  
             Q**T * A * Q = T.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] uplo
     uplo is char*
-    = 'U':  Upper triangle of A is stored;
-    = 'L':  Lower triangle of A is stored.
+    = 'U':  Upper triangle of a is stored;
+    = 'L':  Lower triangle of a is stored.
 
     * @param[in] n
     n is int*
@@ -1835,7 +1996,6 @@ int sytd2( int matrix_layout, char* uplo, int* n, T* a, int* lda, T*  d, T*  e, 
   return sytd2( matrix_layout, uplo, n, a, lda, d, e, tau );
 }
 
-
 /*! @brief Reduction of a Hermitian matrix a to real symmetric tridiagonal form (unblocked algorithm)
     *
 
@@ -1847,10 +2007,16 @@ int sytd2( int matrix_layout, char* uplo, int* n, T* a, int* lda, T*  d, T*  e, 
             Q**T * A * Q = T.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] uplo
     uplo is char* \n
-    = 'U':  Upper triangle of A is stored; \n
-    = 'L':  Lower triangle of A is stored.
+    = 'U':  Upper triangle of a is stored; \n
+    = 'L':  Lower triangle of a is stored.
 
     * @param[in] n
     n is int* \n
@@ -1952,6 +2118,12 @@ int hetd2( int matrix_layout, char* uplo, int* n, Ta* a, int* lda, Tb*  d, Tb*  
 
         If m >= n, B is upper bidiagonal; if m < n, B is lower bidiagonal.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] m
     m is int* \n
@@ -2073,6 +2245,12 @@ int gebrd( int matrix_layout, int* m, int* n, T* a, int* lda, T*  d, T*  e, T* t
         If m >= n, B is upper bidiagonal; if m < n, B is lower bidiagonal.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] m
     m is int* \n
     The number of rows in the matrix a.  m >= 0.
@@ -2193,6 +2371,12 @@ int gebrd( int matrix_layout, int* m, int* n, Ta* a, int* lda, Tb* d, Tb* e, Ta*
         If m >= n, B is upper bidiagonal; if m < n, B is lower bidiagonal.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] m
     m is int* \n
     The number of rows in the matrix a.  m >= 0.
@@ -2312,6 +2496,12 @@ int gebd2( int matrix_layout, int* m, int* n, T* a, int* lda, T*  d, T*  e, T* t
 
         If m >= n, B is upper bidiagonal; if m < n, B is lower bidiagonal.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] m
     m is int* \n
@@ -2437,6 +2627,12 @@ int gebd2( int matrix_layout, int* m, int* n, Ta* a, int* lda, Tb*  d, Tb*  e, T
         B must have been previously factorized as U**T*U or L*L**T by SPOTRF.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] itype
     itype is int* \n
     = 1: compute inv(U**T)*A*inv(U) or inv(L)*A*inv(L**T); \n
@@ -2444,14 +2640,14 @@ int gebd2( int matrix_layout, int* m, int* n, Ta* a, int* lda, Tb*  d, Tb*  e, T
 
     * @param[in] uplo
     uplo is char* \n
-    = 'U':  Upper triangle of A is stored and B is factored as
+    = 'U':  Upper triangle of a is stored and b is factored as
     U**T*U; \n
-    = 'L':  Lower triangle of A is stored and B is factored as
+    = 'L':  Lower triangle of a is stored and b is factored as
     L*L**T.
 
     * @param[in] n
     n is int* \n
-    The order of the matrices A and B.  n >= 0.
+    The order of the matrices a and b.  n >= 0.
 
     * @param[in,out] a
     a is float/double array, dimension (lda,n) \n
@@ -2471,7 +2667,7 @@ int gebd2( int matrix_layout, int* m, int* n, Ta* a, int* lda, Tb*  d, Tb*  e, T
 
     * @param[in] b
     b is float/double array, dimension (ldb,n) \n
-    The triangular factor from the Cholesky factorization of B,
+    The triangular factor from the Cholesky factorization of b,
     as returned by SPOTRF.
 
     * @param[in] ldb
@@ -2501,6 +2697,12 @@ int sygst( int matrix_layout, int* itype, char* uplo, int* n, T* a, int* lda, T*
         B must have been previously factorized as U**H*U or L*L**H by SPOTRF.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] itype
     itype is int* \n
     = 1: compute inv(U**H)*A*inv(U) or inv(L)*A*inv(L**H); \n
@@ -2508,14 +2710,14 @@ int sygst( int matrix_layout, int* itype, char* uplo, int* n, T* a, int* lda, T*
 
     * @param[in] uplo
     uplo is char* \n
-    = 'U':  Upper triangle of A is stored and B is factored as
+    = 'U':  Upper triangle of a is stored and b is factored as
     U**H*U; \n
-    = 'L':  Lower triangle of A is stored and B is factored as
+    = 'L':  Lower triangle of a is stored and b is factored as
     L*L**H.
 
     * @param[in] n
     n is int* \n
-    The order of the matrices A and B.  n >= 0.
+    The order of the matrices a and b.  n >= 0.
 
     * @param[in,out] a
     a is lapack_complex_float/lapack_complex_double array, dimension (lda,n) \n
@@ -2535,13 +2737,12 @@ int sygst( int matrix_layout, int* itype, char* uplo, int* n, T* a, int* lda, T*
 
     * @param[in] b
     b is lapack_complex_float/lapack_complex_double array, dimension (ldb,n) \n
-    The triangular factor from the Cholesky factorization of B,
+    The triangular factor from the Cholesky factorization of b,
     as returned by SPOTRF.
 
     * @param[in] ldb
     ldb is int* \n
     The leading dimension of the array b.  ldb >= max(1,n).
-
 
     *  */
 template< typename T >
@@ -2567,6 +2768,12 @@ int hegst( int matrix_layout, int* itype, char* uplo, int* n, T* a, int* lda, T*
         B must have been previously factorized as U**T *U or L*L**T by SPOTRF.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] itype
     itype is int* \n
     = 1: compute inv(U**T)*A*inv(U) or inv(L)*A*inv(L**T); \n
@@ -2575,13 +2782,13 @@ int hegst( int matrix_layout, int* itype, char* uplo, int* n, T* a, int* lda, T*
     * @param[in] uplo
     uplo is char* \n
     Specifies whether the upper or lower triangular part of the
-    symmetric matrix a is stored, and how B has been factorized. \n
+    symmetric matrix a is stored, and how b has been factorized. \n
     = 'U':  Upper triangular \n
     = 'L':  Lower triangular
 
     * @param[in] n
     n is int* \n
-    The order of the matrices A and B.  n >= 0.
+    The order of the matrices a and b.  n >= 0.
 
     * @param[in,out] a
     a is float/doublearray, dimension (lda,n) \n
@@ -2601,7 +2808,7 @@ int hegst( int matrix_layout, int* itype, char* uplo, int* n, T* a, int* lda, T*
 
     * @param[in] b
     b is float/double array, dimension (ldb,n) \n
-    The triangular factor from the Cholesky factorization of B,
+    The triangular factor from the Cholesky factorization of b,
     as returned by SPOTRF.
 
     * @param[in] ldb
@@ -2632,6 +2839,12 @@ int sygs2( int matrix_layout, int* itype, char* uplo, int* n, T* a, int* lda, T*
         B must have been previously factorized as U**H *U or L*L**H by CPOTRF.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] itype
     itype is int* \n
     = 1: compute inv(U**H)*A*inv(U) or inv(L)*A*inv(L**H); \n
@@ -2640,13 +2853,13 @@ int sygs2( int matrix_layout, int* itype, char* uplo, int* n, T* a, int* lda, T*
     * @param[in] uplo
     uplo is char* \n
     Specifies whether the upper or lower triangular part of the
-    Hermitian matrix a is stored, and how B has been factorized. \n
+    Hermitian matrix a is stored, and how b has been factorized. \n
     = 'U':  Upper triangular \n
     = 'L':  Lower triangular
 
     * @param[in] n
     n is int* \n
-    The order of the matrices A and B.  n >= 0.
+    The order of the matrices a and b.  n >= 0.
 
     * @param[in,out] a
     a is lapack_complex_float/lapack_complex_double array, dimension (lda,n) \n
@@ -2666,7 +2879,7 @@ int sygs2( int matrix_layout, int* itype, char* uplo, int* n, T* a, int* lda, T*
 
     * @param[in] b
     b is lapack_complex_float/lapack_complex_double array, dimension (ldb,n) \n
-    The triangular factor from the Cholesky factorization of B,
+    The triangular factor from the Cholesky factorization of b,
     as returned by CPOTRF.
 
     * @param[in] ldb
@@ -2703,6 +2916,12 @@ int hegs2( int matrix_layout, int* itype, char* uplo, int* n, T* a, int* lda, T*
         H  =  I - V**T * T * V
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] direct
     direct is char* \n
     Specifies the order in which the elementary reflectors are
@@ -2728,14 +2947,14 @@ int hegs2( int matrix_layout, int* itype, char* uplo, int* n, T* a, int* lda, T*
 
     * @param[in] v
     v is float/double/lapack_complex_float/lapack_complex_double array, dimension \n
-    (ldv,K) if storev = 'C' \n
-    (ldv,N) if storev = 'R' \n
-    The matrix V. See further details.
+    (ldv,k) if storev = 'C' \n
+    (ldv,k) if storev = 'R' \n
+    The matrix v. See further details.
 
     * @param[in] ldv
     ldv is int* \n
     The leading dimension of the array V. \n
-    If storev = 'C', ldv >= max(1,N); if storev = 'R', ldv >= K.
+    If storev = 'C', ldv >= max(1,n); if storev = 'R', ldv >= k.
 
     * @param[in] tau
     tau is float/double/lapack_complex_float/lapack_complex_double array, dimension (k) \n
@@ -2743,14 +2962,14 @@ int hegs2( int matrix_layout, int* itype, char* uplo, int* n, T* a, int* lda, T*
     reflector H(i).
 
     * @param[out] t
-    t is float/double/lapack_complex_float/lapack_complex_double array, dimension (ldt,K) \n
+    t is float/double/lapack_complex_float/lapack_complex_double array, dimension (ldt,k) \n
     The k by k triangular factor T of the block reflector. \n
     If direct = 'F', T is upper triangular; if direct = 'B', T is
     lower triangular. The rest of the array is not used.
 
     * @param[in] ldt
     ldt is int* \n
-    The leading dimension of the array T. ldt >= K.
+    The leading dimension of the array T. ldt >= k.
     *
     * \n
     * **Further Details**
@@ -2806,6 +3025,12 @@ int larft( int matrix_layout, char* direct, char* storev, int* n, int* k, T* v, 
         Otherwise  1 <= tau <= 2.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] n
     n is int* \n
     The order of the elementary reflector.
@@ -2857,6 +3082,12 @@ int larfg( int* n, T* alpha, T* x, int* incx, T* tau )
         If the elements of x are all zero, then tau = 0 and H is taken to be the unit matrix.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] n
     n is int* \n
     The order of the elementary reflector.
@@ -2898,6 +3129,12 @@ int larfgp( int matrix_layout, int* n, T* alpha, T* x, int* incx, T* tau )
 
         as returned by SGEQRF.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] m
     m is int* \n
@@ -2948,6 +3185,12 @@ int orgqr( int matrix_layout, int* m, int* n, int* k, T* a, int* lda, T* tau )
 
         as returned by SGEQRF.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] m
     m is int* \n
@@ -3004,6 +3247,12 @@ int ungqr( int matrix_layout, int* m, int* n, int* k, T* a, int* lda, T* tau )
 
         as returned by SGEQRF. Q is of order M if side = 'L' and of order N if side = 'R'.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] side
     side is char* \n
@@ -3081,6 +3330,12 @@ int ormqr( int matrix_layout, char* side, char* trans, int* m, int* n, int* k, T
 
         as returned by CGEQRF. Q is of order M if side = 'L' and of order N if side = 'R'.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] side
     side is char* \n
@@ -3165,6 +3420,12 @@ int unmqr( int matrix_layout, char* side, char* trans, int* m, int* n, int* k, T
         as returned by SGEQRF. Q is of order m if side = 'L' and of order n if side = 'R'.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] side
     side is char* \n
     = 'L': apply Q or Q**T from the Left; \n
@@ -3248,6 +3509,12 @@ int orm2r( int matrix_layout, char* side, char* trans, int* m, int* n, int* k, T
         as returned by SGEQRF. Q is of order m if side = 'L' and of order n if side = 'R'.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] side
     side is char* \n
     = 'L': apply Q or Q**H from the Left; \n
@@ -3319,6 +3586,12 @@ int unm2r( int matrix_layout, char* side, char* trans, int* m, int* n, int* k, T
         as returned by SGELQF.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] m
     m is int* \n
     The number of rows of the matrix Q. m >= 0.
@@ -3367,6 +3640,12 @@ int orglq( int matrix_layout, int* m, int* n, int* k, T* a, int* lda, T* tau )
 
         as returned by CGELQF.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] m
     m is int* \n
@@ -3421,6 +3700,12 @@ int unglq( int matrix_layout, int* m, int* n, int* k, T* a, int* lda, T* tau )
 
         as returned by SGELQF. Q is of order M if side = 'L' and of order N if side = 'R'.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] side
     side is char* \n
@@ -3497,6 +3782,12 @@ int ormlq( int matrix_layout, char* side, char* trans, int* m, int* n, int* k, T
 
         as returned by CGELQF. Q is of order M if side = 'L' and of order N if side = 'R'.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] side
     side is char* \n
@@ -3576,6 +3867,12 @@ int unmlq( int matrix_layout, char* side, char* trans, int* m, int* n, int* k, T
 
         as returned by SGELQF. Q is of order m if side = 'L' and of order n
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] side
     side is char* \n
@@ -3658,6 +3955,12 @@ int orml2( int matrix_layout, char* side, char* trans, int* m, int* n, int* k, T
         as returned by CGELQF. Q is of order m if side = 'L' and of order n
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] side
     side is char* \n
     = 'L': apply Q or Q**T from the Left; \n
@@ -3730,11 +4033,17 @@ int unml2( int matrix_layout, char* side, char* trans, int* m, int* n, int* k, T
         if uplo = 'L', Q = H(1) H(2) . . . H(n-1).
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] uplo
     uplo is char* \n
-    = 'U': Upper triangle of A contains elementary reflectors
+    = 'U': Upper triangle of a contains elementary reflectors
     from SSYTRD; \n
-    = 'L': Lower triangle of A contains elementary reflectors
+    = 'L': Lower triangle of a contains elementary reflectors
     from SSYTRD.
 
     * @param[in] m
@@ -3776,11 +4085,17 @@ int orgtr( int matrix_layout, char* uplo, int* m, T* a, int* lda, T* tau )
         if uplo = 'L', Q = H(1) H(2) . . . H(n-1).
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] uplo
     uplo is char* \n
-    = 'U': Upper triangle of A contains elementary reflectors
+    = 'U': Upper triangle of a contains elementary reflectors
     from CHETRD; \n
-    = 'L': Lower triangle of A contains elementary reflectors
+    = 'L': Lower triangle of a contains elementary reflectors
     from CHETRD.
 
     * @param[in] m
@@ -3828,6 +4143,12 @@ int ungtr( int matrix_layout, char* uplo, int* m, T* a, int* lda, T* tau )
         if uplo = 'L', Q = H(1) H(2) . . . H(nq-1).
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] side
     side is char* \n
     = 'L': apply Q or Q**T from the Left; \n
@@ -3835,9 +4156,9 @@ int ungtr( int matrix_layout, char* uplo, int* m, T* a, int* lda, T* tau )
 
     * @param[in] uplo
     uplo is char* \n
-    = 'U': Upper triangle of A contains elementary reflectors
+    = 'U': Upper triangle of a contains elementary reflectors
     from SSYTRD; \n
-    = 'L': Lower triangle of A contains elementary reflectors
+    = 'L': Lower triangle of a contains elementary reflectors
     from SSYTRD.
 
     * @param[in] trans
@@ -3907,6 +4228,12 @@ int ormtr( int matrix_layout, char* side, char* uplo, char* trans, int* m, int* 
             if uplo = 'L', Q = H(1) H(2) . . . H(nq-1).
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] side
     side is char* \n
     = 'L': apply Q or Q**H from the Left; \n
@@ -3914,9 +4241,9 @@ int ormtr( int matrix_layout, char* side, char* uplo, char* trans, int* m, int* 
 
     * @param[in] uplo
     uplo is char* \n
-    = 'U': Upper triangle of A contains elementary reflectors
+    = 'U': Upper triangle of a contains elementary reflectors
     from CHETRD; \n
-    = 'L': Lower triangle of A contains elementary reflectors
+    = 'L': Lower triangle of a contains elementary reflectors
     from CHETRD.
 
     * @param[in] trans
@@ -3986,6 +4313,12 @@ int unmtr( int matrix_layout, char* side, char* uplo, char* trans, int* m, int* 
         where n >= m >= k;
         if k >= n, P**T = G(n-1) . . . G(2) G(1) and SORGBR returns P**T as an n-by-n matrix.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] vect
     vect is char* \n
@@ -4058,6 +4391,12 @@ int orgbr( int matrix_layout, char* vect, int* m, int* n, int* k, T* a, int* lda
         where n >= m >= k;
         if k >= n, P**H = G(n-1) . . . G(2) G(1) and CUNGBR returns P**H as an n-by-n matrix.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] vect
     vect is char* \n
@@ -4141,6 +4480,12 @@ int ungbr( int matrix_layout, char* vect, int* m, int* n, int* k, T* a, int* lda
             if k < nq, P = G(1) G(2) . . . G(k);
             if k >= nq, P = G(1) G(2) . . . G(nq-1).
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] vect
     vect is char* \n
@@ -4241,6 +4586,12 @@ int ormbr( int matrix_layout, char* vect, char* side, char* trans, int* m, int* 
             if k >= nq, P = G(1) G(2) . . . G(nq-1).
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] vect
     vect is char* \n
     = 'Q': apply Q or Q**H; \n
@@ -4320,6 +4671,12 @@ int unmbr( int matrix_layout, char* vect, char* side, char* trans, int* m, int* 
         to tridiagonal form.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] jobz
     jobz is char* \n
     = 'N':  Compute eigenvalues only. \n
@@ -4391,6 +4748,12 @@ int steqr( int matrix_layout, char* jobz, int* n, T* d, T* e, T* z, int* ldz )
             tridiagonal matrix.  Z is initialized to the identity
             matrix.
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] n
     n is int* \n
     The order of the matrix.  n >= 0.
@@ -4444,6 +4807,12 @@ int steqr( int matrix_layout, char* jobz, int* n, Tb* d, Tb* e, Ta* z, int* ldz 
         conceivably fail on hexadecimal or decimal machines without guard digits, but we know of
         none.  See SLAED3 for details.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] compz
     compz is char* \n
@@ -4506,6 +4875,12 @@ int stedc( int matrix_layout, char* compz, int* n, T* d, T* e, T* z, int* ldz )
         conceivably fail on hexadecimal or decimal machines without guard digits, but we know of
         none.  See SLAED3 for details.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] compz
     compz is char* \n
@@ -4603,6 +4978,12 @@ int stedc( int matrix_layout, char* compz, int* n, Tb* d, Tb* e, Ta* z, int* ldz
         handling of infinities and NaNs. This permits the use of efficient inner loops avoiding a
         check for zero divisors.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] jobz
     jobz is char* \n
@@ -4794,6 +5175,12 @@ int stemr( int matrix_layout, char* jobz, char* range, int* n, T*  d, T*  e, int
         facilitate interoperability with CUNMTR or CUPMTR.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] jobz
     jobz is char* \n
     = 'N':  Compute eigenvalues only; \n
@@ -4926,6 +5313,12 @@ int stemr( int matrix_layout, char* jobz, char* range, int* n, Tb*  d, Tb*  e, i
         Computation of all eigenvalues and, optionally, eigenvectors of a real symmetric matrix a.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] jobz
     jobz is char* \n
     = 'N':  Compute eigenvalues only; \n
@@ -4933,8 +5326,8 @@ int stemr( int matrix_layout, char* jobz, char* range, int* n, Tb*  d, Tb*  e, i
 
     * @param[in] uplo
     uplo is char* \n
-    = 'U':  Upper triangle of A is stored; \n
-    = 'L':  Lower triangle of A is stored.
+    = 'U':  Upper triangle of a is stored; \n
+    = 'L':  Lower triangle of a is stored.
 
     * @param[in] n
     n is int* \n
@@ -4977,6 +5370,12 @@ int syev( int matrix_layout, char* jobz, char* uplo, int* n, T* a, int* lda, T* 
         Computation of all eigenvalues and, optionally, eigenvectors of a complex Hermitian matrix a.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] jobz
     jobz is char* \n
     = 'N':  Compute eigenvalues only; \n
@@ -4984,8 +5383,8 @@ int syev( int matrix_layout, char* jobz, char* uplo, int* n, T* a, int* lda, T* 
 
     * @param[in] uplo
     uplo is char* \n
-    = 'U':  Upper triangle of A is stored; \n
-    = 'L':  Lower triangle of A is stored.
+    = 'U':  Upper triangle of a is stored; \n
+    = 'L':  Lower triangle of a is stored.
 
     * @param[in] n
     n is int* \n
@@ -5037,6 +5436,12 @@ int heev( int matrix_layout, char* jobz, char* uplo, int* n, Ta* a, int* lda, Tb
         Because of large use of BLAS of level 3, SSYEVD needs N**2 more workspace than SSYEVX.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] jobz
     jobz is char* \n
     = 'N':  Compute eigenvalues only; \n
@@ -5044,8 +5449,8 @@ int heev( int matrix_layout, char* jobz, char* uplo, int* n, Ta* a, int* lda, Tb
 
     * @param[in] uplo
     uplo is char* \n
-    = 'U':  Upper triangle of A is stored; \n
-    = 'L':  Lower triangle of A is stored.
+    = 'U':  Upper triangle of a is stored; \n
+    = 'L':  Lower triangle of a is stored.
 
     * @param[in] n
     n is int* \n
@@ -5098,6 +5503,12 @@ int syevd( int matrix_layout, char* jobz, char* uplo, int* n, T* a, int* lda, T*
         guard digits, but we know of none.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] jobz
     jobz is char* \n
     = 'N':  Compute eigenvalues only; \n
@@ -5105,8 +5516,8 @@ int syevd( int matrix_layout, char* jobz, char* uplo, int* n, T* a, int* lda, T*
 
     * @param[in] uplo
     uplo is char* \n
-    = 'U':  Upper triangle of A is stored; \n
-    = 'L':  Lower triangle of A is stored.
+    = 'U':  Upper triangle of a is stored; \n
+    = 'L':  Lower triangle of a is stored.
 
     * @param[in] n
     n is int* \n
@@ -5201,6 +5612,12 @@ int heevd( int matrix_layout, char* jobz, char* uplo, int* n, Ta* a, int* lda, T
         ieee standard default manner.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] jobz
     jobz is char* \n
     = 'N':  Compute eigenvalues only; \n
@@ -5217,8 +5634,8 @@ int heevd( int matrix_layout, char* jobz, char* uplo, int* n, Ta* a, int* lda, T
 
     * @param[in] uplo
     uplo is char* \n
-    = 'U':  Upper triangle of A is stored; \n
-    = 'L':  Lower triangle of A is stored.
+    = 'U':  Upper triangle of a is stored; \n
+    = 'L':  Lower triangle of a is stored.
 
     * @param[in] n
     n is int* \n
@@ -5392,6 +5809,12 @@ int syevr( int matrix_layout, char* jobz, char* range, char* uplo, int* n, T* a,
         ieee standard default manner.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] jobz
     jobz is char* \n
     = 'N':  Compute eigenvalues only; \n
@@ -5408,8 +5831,8 @@ int syevr( int matrix_layout, char* jobz, char* range, char* uplo, int* n, T* a,
 
     * @param[in] uplo
     uplo is char* \n
-    = 'U':  Upper triangle of A is stored; \n
-    = 'L':  Lower triangle of A is stored.
+    = 'U':  Upper triangle of a is stored; \n
+    = 'L':  Lower triangle of a is stored.
 
     * @param[in] n
     n is int* \n
@@ -5557,6 +5980,12 @@ int heevr( int matrix_layout, char* jobz, char* range, char* uplo, int* n, Ta* a
         July 1992 for a detailed description of the algorithm.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] uplo
     uplo is char* \n
     = 'U':  B is upper bidiagonal; \n
@@ -5693,6 +6122,12 @@ int bdsqr( int matrix_layout, char* uplo, int* n, int* ncvt, int* nru, int* ncc,
         July 1992 for a detailed description of the algorithm.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] uplo
     uplo is char* \n
     = 'U':  B is upper bidiagonal; \n
@@ -5817,6 +6252,12 @@ int bdsqr( int matrix_layout, char* uplo, int* n, int* ncvt, int* nru, int* ncc,
         slightly modified to compute singular values using the divide and conquer method.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] uplo
     uplo is char* \n
     = 'U':  B is upper bidiagonal. \n
@@ -5884,7 +6325,7 @@ int bdsqr( int matrix_layout, char* uplo, int* n, int* ncvt, int* nru, int* ncc,
     For other values of compq, Q is not referenced.
 
     * @param[out] iq
-    iq is float/double array, dimension (LDIQ) \n
+    iq is int array, dimension (LDIQ) \n
     If  compq = 'P', then: \n
     On exit, if info = 0, Q and iq contain the left
     and right singular vectors in a compact form,
@@ -5897,7 +6338,7 @@ int bdsqr( int matrix_layout, char* uplo, int* n, int* ncvt, int* nru, int* ncc,
     For other values of compq, iq is not referenced. \n
     *  */
 template< typename T >
-int bdsdc( int matrix_layout, char* uplo, char* compq, int* n, T*  d, T*  e, T*  u, int* ldu, T*  vt, int* ldvt, T*  q, T*  iq )
+int bdsdc( int matrix_layout, char* uplo, char* compq, int* n, T*  d, T*  e, T*  u, int* ldu, T*  vt, int* ldvt, T*  q, int* iq )
 {
   return bdsdc( matrix_layout, uplo, compq, n, d, e, u, ldu, vt, ldvt, q, iq );
 }
@@ -5921,6 +6362,12 @@ int bdsdc( int matrix_layout, char* uplo, char* compq, int* n, T*  d, T*  e, T* 
 
         Note that the routine returns V**T, not V.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] jobu
     jobu is char* \n
@@ -6000,11 +6447,15 @@ int bdsdc( int matrix_layout, char* uplo, char* compq, int* n, T*  d, T*  e, T* 
     ldvt is int* \n
     The leading dimension of the array vt.  ldvt >= 1; if
     jobv = 'A', ldvt >= N; if jobv = 'S', ldvt >= min(m,n).
+
+    * @param[out] superb
+    superb is float/double array, dimension (min(m,n)) \n
+    Backup of data from working array.
     *  */
 template< typename T >
-int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int* n, T* a, int* lda, T*  s, T* u, int* ldu, T* vt, int* ldvt )
+int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int* n, T* a, int* lda, T*  s, T* u, int* ldu, T* vt, int* ldvt, T* superb )
 {
-  return gesvd( matrix_layout, jobu, jobv, m, n, a, lda, s, u, ldu, vt, ldvt );
+  return gesvd( matrix_layout, jobu, jobv, m, n, a, lda, s, u, ldu, vt, ldvt, superb );
 }
 
 /*! @brief General matrix singular value decomposition (QR algorithm)
@@ -6050,6 +6501,12 @@ int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int* n, T* a, int*
     = 'N':  no rows of V**H (no right singular vectors) are
             computed. \n \n
     jobv and jobu cannot both be 'O'.
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] m
     m is int* \n
@@ -6105,11 +6562,15 @@ int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int* n, T* a, int*
     ldvt is int* \n
     The leading dimension of the array vt.  ldvt >= 1; if
     jobv = 'A', ldvt >= N; if jobv = 'S', ldvt >= min(m,n).
+
+    * @param[out] superb
+    superb is float/double array, dimension (min(m,n)) \n
+    Backup of data from working array.
     *  */
 template< typename Ta, typename Tb >
-int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int* n, Ta* a, int* lda, Tb*  s, Ta* u, int* ldu, Ta* vt, int* ldvt )
+int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int* n, Ta* a, int* lda, Tb*  s, Ta* u, int* ldu, Ta* vt, int* ldvt,Tb* superb )
 {
-  return gesvd( matrix_layout, jobu, jobv, m, n, a, lda, s, u, ldu, vt, ldvt );
+  return gesvd( matrix_layout, jobu, jobv, m, n, a, lda, s, u, ldu, vt, ldvt, superb );
 }
 
 /*! @brief General matrix singular value decomposition (divide-and-conquer)
@@ -6140,6 +6601,12 @@ int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int* n, Ta* a, int
         C-90, or Cray-2. It could conceivably fail on hexadecimal or decimal machines without
         guard digits, but we know of none.
     \endverbatim
+
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
 
     * @param[in] jobz
     jobz is char* \n
@@ -6247,6 +6714,12 @@ int gesdd( int matrix_layout, char* jobz, int* m, int* n, T* a, int* lda, T*  s,
         guard digits, but we know of none.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] jobz
     jobz is char* \n
     Specifies options for computing all or part of the matrix U: \n
@@ -6336,6 +6809,12 @@ int gesdd( int matrix_layout, char* jobz, int* m, int* n, Ta* a, int* lda, Tb*  
         One row interchange is initiated for each of rows k1 through k2 of A.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] n
     n is int* \n
     The number of columns of the matrix a.
@@ -6387,6 +6866,12 @@ int laswp( int matrix_layout, int* n, T* a, int* lda, int* k1, int* k2, int* ipi
         Initialize an m-by-n matrix a to beta on the diagonal and alpha on the offdiagonals.
     \endverbatim
 
+    * @param[in] matrix_layout
+    matrix_layout is int. \n
+    matrix_layout specifies method of storing array \n
+    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
+    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
+
     * @param[in] uplo
     uplo is char* \n
     Specifies the part of the matrix a to be set. \n
@@ -6431,6 +6916,6 @@ int laset( int matrix_layout, char* uplo, int* m, int* n, T* alpha, T* beta, T* 
 }
 
 }  // namespace libflame
-#endif  //  #ifndef INTERFACE_HH
+#endif  //  #ifndef LIBFLAME_INTERFACE_HH
 
 

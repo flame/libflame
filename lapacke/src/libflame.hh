@@ -144,19 +144,23 @@ namespace libflame{
   }
   inline int geqpf( int matrix_layout, int* m, int *n, float* a, int* lda, int* jpvt, float* tau )
   {
-    return LAPACKE_sgeqpf( matrix_layout, *m, *n, a, *lda, jpvt, tau );
+    printf(" Function sgeqpf() is been deprecated and has been replaced by function sgeqp3() \n");
+    return LAPACKE_sgeqp3( matrix_layout, *m, *n, a, *lda, jpvt, tau );
   }
   inline int geqpf( int matrix_layout, int* m, int *n, double* a, int* lda, int* jpvt, double* tau )
   {
-    return LAPACKE_dgeqpf( matrix_layout, *m, *n, a, *lda, jpvt, tau );
+    printf(" Function dgeqpf() is been deprecated and has been replaced by function dgeqp3() \n");
+    return LAPACKE_dgeqp3( matrix_layout, *m, *n, a, *lda, jpvt, tau );
   }
   inline int geqpf( int matrix_layout, int* m, int *n, lapack_complex_float* a, int* lda, int* jpvt, lapack_complex_float* tau )
   {
-    return LAPACKE_cgeqpf( matrix_layout, *m, *n, a, *lda, jpvt, tau);
+    printf(" Function cgeqpf() is been deprecated and has been replaced by function cgeqp3() \n");
+    return LAPACKE_cgeqp3( matrix_layout, *m, *n, a, *lda, jpvt, tau);
   }
   inline int geqpf( int matrix_layout, int* m, int *n, lapack_complex_double* a, int* lda, int* jpvt, lapack_complex_double* tau)
   {
-    return LAPACKE_zgeqpf( matrix_layout, *m, *n, a, *lda, jpvt, tau);
+    printf(" Function zgeqpf() is been deprecated and has been replaced by function zgeqp3() \n");
+    return LAPACKE_zgeqp3( matrix_layout, *m, *n, a, *lda, jpvt, tau);
   }
 
   inline int geqp3( int matrix_layout, int* m, int *n, float* a, int* lda, int* jpvt, float* tau )
@@ -456,7 +460,7 @@ namespace libflame{
   {
     return LAPACKE_zgebrd( matrix_layout, *m, *n, a, *lda, d, e, tauq, taup );
   }
-  
+
   // --- Reduce Hermitian-definite generalized eigenproblem to standard form ---
   inline int sygst( int matrix_layout, int* itype, char* uplo, int *n, float* a, int* lda, float* b, int* ldb )
   {
@@ -849,36 +853,35 @@ namespace libflame{
   {
     return LAPACKE_zbdsqr( matrix_layout, *uplo, *n, *ncvt, *nru, *ncc, d, e, vt, *ldvt, u, *ldu, c, *ldc );
   }
-#if 0
+
   // --- Bidiagonal divide-and-conquor algorithm ---
-  inline int bdsdc( int matrix_layout, char* uplo, char* compq, int *n, float*  d, float*  e, float*  u, int* ldu, float*  vt, int* ldvt, float*  q, float*  iq )
+  inline int bdsdc( int matrix_layout, char* uplo, char* compq, int *n, float*  d, float*  e, float*  u, int* ldu, float*  vt, int* ldvt, float*  q, int*  iq )
   {
     return LAPACKE_sbdsdc( matrix_layout, *uplo, *compq, *n, d, e, u, *ldu, vt, *ldvt, q, iq );
   }
-  inline int bdsdc( int matrix_layout, char* uplo, char* compq, int *n, double* d, double* e, double* u, int* ldu, double* vt, int* ldvt, double* q, double* iq )
+  inline int bdsdc( int matrix_layout, char* uplo, char* compq, int *n, double* d, double* e, double* u, int* ldu, double* vt, int* ldvt, double* q, int* iq )
   {
     return LAPACKE_dbdsdc( matrix_layout, *uplo, *compq, *n, d, e, u, *ldu, vt, *ldvt, q, iq );
   }
 
-//*superb required
   // --- General matrix singular value decomposition (QR algorithm) ---
-  inline int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int *n, float* a, int* lda, float* s, float* u, int* ldu, float* vt, int* ldvt )
+  inline int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int *n, float* a, int* lda, float* s, float* u, int* ldu, float* vt, int* ldvt, float *superb )
   {
-    return LAPACKE_sgesvd( matrix_layout, *jobu, *jobv, *m, *n, a, *lda, s, u, *ldu, vt, *ldvt );
+    return LAPACKE_sgesvd( matrix_layout, *jobu, *jobv, *m, *n, a, *lda, s, u, *ldu, vt, *ldvt, superb );
   }
-  inline int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int *n, double* a, int* lda, double* s, double* u, int* ldu, double* vt, int* ldvt )
+  inline int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int *n, double* a, int* lda, double* s, double* u, int* ldu, double* vt, int* ldvt, double *superb )
   {
-    return LAPACKE_dgesvd( matrix_layout, *jobu, *jobv, *m, *n, a, *lda, s, u, *ldu, vt, *ldvt );
+    return LAPACKE_dgesvd( matrix_layout, *jobu, *jobv, *m, *n, a, *lda, s, u, *ldu, vt, *ldvt, superb );
   }
-  inline int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int *n, lapack_complex_float* a, int* lda, float*  s, lapack_complex_float* u, int* ldu, lapack_complex_float* vt, int* ldvt )
+  inline int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int *n, lapack_complex_float* a, int* lda, float*  s, lapack_complex_float* u, int* ldu, lapack_complex_float* vt, int* ldvt, float *superb )
   {
-    return LAPACKE_cgesvd( matrix_layout, *jobu, *jobv, *m, *n, a, *lda, s, u, *ldu, vt, *ldvt );
+    return LAPACKE_cgesvd( matrix_layout, *jobu, *jobv, *m, *n, a, *lda, s, u, *ldu, vt, *ldvt, superb );
   }
-  inline int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int *n, lapack_complex_double* a, int* lda, double* s, lapack_complex_double* u, int* ldu, lapack_complex_double* vt, int* ldvt)
+  inline int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int *n, lapack_complex_double* a, int* lda, double* s, lapack_complex_double* u, int* ldu, lapack_complex_double* vt, int* ldvt, double *superb )
   {
-    return LAPACKE_zgesvd( matrix_layout, *jobu, *jobv, *m, *n, a, *lda, s, u, *ldu, vt, *ldvt );
+    return LAPACKE_zgesvd( matrix_layout, *jobu, *jobv, *m, *n, a, *lda, s, u, *ldu, vt, *ldvt, superb );
   }
-#endif
+
   // --- General matrix singular value decomposition (divide-and-conquer) ---
   inline int gesdd( int matrix_layout, char* jobz, int* m, int *n, float* a, int* lda, float*  s, float* u, int* ldu, float* vt, int* ldvt )
   {
