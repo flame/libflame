@@ -879,6 +879,63 @@ FLA_Error FLA_Sylv_unb_external1( FLA_Trans transa, FLA_Trans transb, FLA_Obj is
   return info;
 }
 
+
+FLA_Error laset_C( FLA_Uplo uplo, FLA_Obj alphaObj, FLA_Obj betaObj, FLA_Obj A)
+{
+  int          info = 0;
+
+#ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
+  FLA_Datatype datatype;
+  datatype = FLA_Obj_datatype( A );
+  int m_A      = FLA_Obj_length( A );
+  int n_A      = FLA_Obj_width( A );
+  int cs_A     = FLA_Obj_col_stride( A );
+  char blas_uplo;
+  FLA_Param_map_flame_to_netlib_uplo( uplo, &blas_uplo );
+  
+  switch( datatype ){
+    case FLA_FLOAT:
+    {
+      float *buff_A    = ( float * ) FLA_FLOAT_PTR( A );
+      float *alpha    = ( float * ) FLA_FLOAT_PTR( alphaObj );
+      float *beta    = ( float * ) FLA_FLOAT_PTR( betaObj );
+      slaset_( &blas_uplo, &m_A, &n_A, alpha, beta, buff_A, &cs_A );
+      break;
+    }
+    case FLA_DOUBLE:
+    {
+      double *buff_A    = ( double * ) FLA_DOUBLE_PTR( A );
+      double *alpha    = ( double * ) FLA_DOUBLE_PTR( alphaObj );
+      double *beta    = ( double * ) FLA_DOUBLE_PTR( betaObj );
+      dlaset_( &blas_uplo, &m_A, &n_A, alpha, beta, buff_A, &cs_A );
+      break;
+    }
+
+    case FLA_COMPLEX:
+    {
+      lapack_complex_float *buff_A    = ( lapack_complex_float * ) FLA_COMPLEX_PTR( A );
+      lapack_complex_float *alpha    = ( lapack_complex_float * ) FLA_COMPLEX_PTR( alphaObj );
+      lapack_complex_float *beta    = ( lapack_complex_float * ) FLA_COMPLEX_PTR( betaObj );
+       claset_( &blas_uplo, &m_A, &n_A, alpha, beta, buff_A, &cs_A );
+      break;
+    }
+    case FLA_DOUBLE_COMPLEX:
+    {
+      lapack_complex_double *buff_A    = ( lapack_complex_double * ) FLA_DOUBLE_COMPLEX_PTR( A );
+      lapack_complex_double *alpha    = ( lapack_complex_double * ) FLA_DOUBLE_COMPLEX_PTR( alphaObj );
+      lapack_complex_double *beta    = ( lapack_complex_double * ) FLA_DOUBLE_COMPLEX_PTR( betaObj );
+      zlaset_( &blas_uplo, &m_A, &n_A, alpha, beta, buff_A, &cs_A );
+      break;
+    }
+  }
+#else
+  FLA_Check_error_code( FLA_EXTERNAL_LAPACK_NOT_IMPLEMENTED );
+#endif
+
+  return info;
+}
+
+
 template< typename T >
 void potrf_test()
 {
@@ -1198,8 +1255,8 @@ void geqr2_test()
 template< typename T >
 void geqpf_test()
 {
-  int m = 256;
-  int n = 256;//4096;
+  int m = 1024;
+  int n = 2048;
 
   srand (time(NULL));
 
@@ -1261,10 +1318,8 @@ void geqpf_test()
 template< typename Ta, typename Tb >
 void geqpf_test()
 {
-
   int m = 128;
-  int n = 128;
-
+  int n = 512;
   srand (time(NULL));
 
   FLA_Init( );
@@ -1324,13 +1379,11 @@ void geqpf_test()
   FLA_Obj_free( &rworkRefObj );
 }
 
-
-
 template< typename T >
 void geqp3_test()
 {
-  int m = 256;
-  int n = 4096;
+  int m = 2048;
+  int n = 1024;
   srand (time(NULL));
 
   FLA_Init( );
@@ -1392,8 +1445,8 @@ void geqp3_test()
 template< typename Ta, typename Tb >
 void geqp3_test()
 {
-  int m = 128;//2048;
-  int n = 128;//512;
+  int m = 128;
+  int n = 512;
 
   srand (time(NULL));
 
@@ -2229,23 +2282,27 @@ void gehd2_test()
   FLA_Obj aCIOObj, tauCOObj;
   T *aCPPIOBuff, *aCIOBuff ;
   T *tauCPPOBuff, *tauCOBuff ;
-  int iho = 10;
-  int ilo = 10;
-
+  int iho = 1;
+  int ilo = 1;
+  char uplo = 'U';
   int datatype = getDatatype<T>();
 
   //Allocate and initialize buffers for C and CPP functions with random values
   allocate_init_buffer(aCPPIOBuff, aCIOBuff, n*n);
+  //allocate_init_buffer(tauCPPOBuff, tauCOBuff, (n-1));
 
   tauCPPOBuff =  new T [n-1];
   tauCOBuff =  new T [n-1];
-  for(int j=0; j < n-1; j++)
-  {
-    tauCPPOBuff[j] = 0;
-    tauCOBuff[j] = 0;
-  }
+  T *d =  new T [n];
+  T *e =  new T [n-1];
+  //for(int j=0; j < n-1; j++)
+  //{
+  //  tauCPPOBuff[j] = 0;
+  //  tauCOBuff[j] = 0;
+  //}
 
   //Call CPP function
+  libflame::sytrd( LAPACK_COL_MAJOR, &uplo, &n, aCPPIOBuff, &n, d, e, tauCPPOBuff );
   libflame::gehd2( LAPACK_COL_MAJOR, &n, &ilo, &iho, aCPPIOBuff, &n, tauCPPOBuff );
 
   //Allocate Object for C function and copy already allocated and filled buffer
@@ -2255,8 +2312,14 @@ void gehd2_test()
   FLA_Obj_attach_buffer( tauCOBuff, 1, n-1, &tauCOObj );
 
   //Call C function
-  FLA_Hess_unb_external( aCIOObj, tauCOObj, ilo, iho );
-
+  FLA_Tridiag_blk_external( FLA_UPPER_TRIANGULAR, aCIOObj, tauCOObj );
+  FLA_Hess_unb_external( aCIOObj, tauCOObj, 1, 1 );
+  //FILE *fp = fopen("src/in","a+");
+  //print(fp,n-1,tauCPPOBuff, tauCPPOBuff );
+  //fclose(fp);
+  //  fp = fopen("src/out","a+");
+  //print(fp,n-1,tauCOBuff, tauCOBuff);
+  //fclose(fp);
   double diff =  computeError<T>( n, n, aCIOBuff, aCPPIOBuff );
   diff +=  computeError<T>( 1, n-1, tauCOBuff, tauCPPOBuff );
 
@@ -3153,7 +3216,7 @@ void ungqr_test()
 {
   int m = 512;
   int n = 256;
-  int k = 128;
+  int k = 256;
   int min_m_n = min( m, n );
   srand (time(NULL));
 
@@ -4294,9 +4357,9 @@ void syev_test()
   srand (time(NULL));
 
   FLA_Init( );
-  FLA_Obj aCIOObj, wCOObj, lCIOObj;
+  FLA_Obj aCIOObj, wCOObj;
   T *aCPPIOBuff, *wCPPOBuff;
-  T *aCIOBuff, *wCOBuff, *lCIOBuff;
+  T *aCIOBuff, *wCOBuff;
   char jobz = 'N';
   char uplo = 'U';
   int datatype = getDatatype<T>();
@@ -4305,13 +4368,6 @@ void syev_test()
   allocate_init_buffer(aCPPIOBuff, aCIOBuff, n*n);
   wCPPOBuff  = new T[n];
   wCOBuff  = new T[n];
-  aCIOBuff  = new T[n*n];
-  lCIOBuff  = new T[n*n];
-  for(int j=0; j<n*n; j++)
-  {
-	  aCIOBuff[j] = 0;
-	  lCIOBuff[j] = 0;
-}
 
   //Call CPP function
   libflame::syev( LAPACK_COL_MAJOR, &jobz, &uplo, &n, aCPPIOBuff, &n, wCPPOBuff );
@@ -4319,69 +4375,12 @@ void syev_test()
   //Allocate Object for C function and copy already allocated and filled buffer
   FLA_Obj_create_without_buffer( datatype, n, n, &aCIOObj );
   FLA_Obj_create_without_buffer( datatype, n, 1, &wCOObj );
-  FLA_Obj_create_without_buffer( datatype, n, n, &lCIOObj );
   FLA_Obj_attach_buffer( aCIOBuff, 1, n, &aCIOObj );
   FLA_Obj_attach_buffer( wCOBuff, 1, n, &wCOObj );
-  FLA_Obj_attach_buffer( lCIOBuff, 1, n, &lCIOObj );
 
   //Call C function
- // FLA_Error FLA_Hevdr_external( FLA_Evd_type jobz, FLA_Uplo uplo, FLA_Obj A, FLA_Obj l, FLA_Obj Z )
-  FLA_Hevdr_external( FLA_EVD_WITHOUT_VECTORS, FLA_UPPER_TRIANGULAR, aCIOObj, wCOObj, lCIOObj );
-  
-  double diff =  computeError<T>( n, n, aCIOBuff, aCPPIOBuff );
-  //diff +=  computeError<T>( n, 1, wCOBuff, wCPPOBuff );
+  FLA_Hevd_external( FLA_EVD_WITHOUT_VECTORS, FLA_UPPER_TRIANGULAR, aCIOObj, wCOObj );
 
-  if(diff != 0.0)
-  {
-    printf( "syev(): Failure Diff = %E\n", diff);
-  }else{
-    printf( "syev(): Success\n");
-  }
-
-  //Free up the buffers
-  delete aCPPIOBuff ;
-  delete wCPPOBuff ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &wCOObj );
-  FLA_Obj_free( &lCIOObj );
-}
-
-template< typename Ta, typename Tb >
-void heev_test()
-{
-	#if 0
-  int n = 512;
-  srand (time(NULL));
-
-  FLA_Init( );
-  FLA_Obj aCIOObj, wCOObj, lCIOObj;
-  T *aCPPIOBuff, *wCPPOBuff;
-  T *aCIOBuff, *wCOBuff, *lCIOBuff;
-  char jobz = 'V';
-  char uplo = 'U';
-  int datatype = getDatatype<T>();
-
-  //Allocate and initialize buffers for C and CPP functions with random values
-  allocate_init_buffer(aCPPIOBuff, aCIOBuff, n*n);
-  wCPPOBuff  = new T[n];
-  wCOBuff  = new T[n];
-  aCIOBuff  = new T[n*n];
-
-  //Call CPP function
-  libflame::syev( LAPACK_COL_MAJOR, &jobz, &uplo, &n, aCPPIOBuff, &n, wCPPOBuff );
-
-  //Allocate Object for C function and copy already allocated and filled buffer
-  FLA_Obj_create_without_buffer( datatype, n, n, &aCIOObj );
-  FLA_Obj_create_without_buffer( datatype, n, 1, &wCOObj );
-  FLA_Obj_create_without_buffer( datatype, n, n, &lCIOObj );
-  FLA_Obj_attach_buffer( aCIOBuff, 1, n, &aCIOObj );
-  FLA_Obj_attach_buffer( wCOBuff, 1, n, &wCOObj );
-  FLA_Obj_attach_buffer( lCIOBuff, 1, n, &lCIOObj );
-
-  //Call C function
- // FLA_Error FLA_Hevdr_external( FLA_Evd_type jobz, FLA_Uplo uplo, FLA_Obj A, FLA_Obj l, FLA_Obj Z )
-  FLA_Hevdr_external( FLA_EVD_WITH_VECTORS, FLA_UPPER_TRIANGULAR, aCIOObj, wCOObj, lCIOObj );
-  
   double diff =  computeError<T>( n, n, aCIOBuff, aCPPIOBuff );
   diff +=  computeError<T>( n, 1, wCOBuff, wCPPOBuff );
 
@@ -4397,10 +4396,156 @@ void heev_test()
   delete wCPPOBuff ;
   FLA_Obj_free( &aCIOObj );
   FLA_Obj_free( &wCOObj );
-  FLA_Obj_free( &lCIOObj );
-  #endif
 }
 
+template< typename Ta, typename Tb >
+void heev_test()
+{
+  int n = 2048;
+  srand (time(NULL));
+
+  FLA_Init( );
+  FLA_Obj aCIOObj, wCOObj;
+  Ta *aCPPIOBuff, *aCIOBuff;
+  Tb *wCPPOBuff, *wCOBuff;
+  char jobz = 'N';
+  char uplo = 'U';
+  int datatype = getDatatype<Ta>();
+  int datatypeTb = getDatatype<Tb>();
+
+  //Allocate and initialize buffers for C and CPP functions with random values
+  allocate_init_buffer(aCPPIOBuff, aCIOBuff, n*n);
+  wCPPOBuff  = new Tb[n];
+  wCOBuff  = new Tb[n];
+
+  //Call CPP function
+  libflame::heev( LAPACK_COL_MAJOR, &jobz, &uplo, &n, aCPPIOBuff, &n, wCPPOBuff );
+
+  //Allocate Object for C function and copy already allocated and filled buffer
+  FLA_Obj_create_without_buffer( datatype, n, n, &aCIOObj );
+  FLA_Obj_create_without_buffer( datatypeTb, n, 1, &wCOObj );
+  FLA_Obj_attach_buffer( aCIOBuff, 1, n, &aCIOObj );
+  FLA_Obj_attach_buffer( wCOBuff, 1, n, &wCOObj );
+
+  //Call C function
+  FLA_Hevd_external( FLA_EVD_WITHOUT_VECTORS, FLA_UPPER_TRIANGULAR, aCIOObj, wCOObj );
+
+  double diff =  computeError<Ta>( n, n, aCIOBuff, aCPPIOBuff );
+  diff +=  computeError<Tb>( n, 1, wCOBuff, wCPPOBuff );
+
+  if(diff != 0.0)
+  {
+    printf( "heev(): Failure Diff = %E\n", diff);
+  }else{
+    printf( "heev(): Success\n");
+  }
+
+  //Free up the buffers
+  delete aCPPIOBuff ;
+  delete wCPPOBuff ;
+  FLA_Obj_free( &aCIOObj );
+  FLA_Obj_free( &wCOObj );
+}
+
+template< typename T >
+void syevd_test()
+{
+  int n = 512;
+  srand (time(NULL));
+
+  FLA_Init( );
+  FLA_Obj aCIOObj, wCOObj;
+  T *aCPPIOBuff, *wCPPOBuff;
+  T *aCIOBuff, *wCOBuff;
+  char jobz = 'N';
+  char uplo = 'L';
+  int datatype = getDatatype<T>();
+
+  //Allocate and initialize buffers for C and CPP functions with random values
+  allocate_init_buffer(aCPPIOBuff, aCIOBuff, n*n);
+  wCPPOBuff  = new T[n];
+  wCOBuff  = new T[n];
+
+  //Call CPP function
+  libflame::syevd( LAPACK_COL_MAJOR, &jobz, &uplo, &n, aCPPIOBuff, &n, wCPPOBuff );
+
+  //Allocate Object for C function and copy already allocated and filled buffer
+  FLA_Obj_create_without_buffer( datatype, n, n, &aCIOObj );
+  FLA_Obj_create_without_buffer( datatype, n, 1, &wCOObj );
+  FLA_Obj_attach_buffer( aCIOBuff, 1, n, &aCIOObj );
+  FLA_Obj_attach_buffer( wCOBuff, 1, n, &wCOObj );
+
+  //Call C function
+  FLA_Hevdd_external( FLA_EVD_WITHOUT_VECTORS, FLA_LOWER_TRIANGULAR, aCIOObj, wCOObj );
+
+  double diff =  computeError<T>( n, n, aCIOBuff, aCPPIOBuff );
+ // diff +=  computeError<T>( n, 1, wCOBuff, wCPPOBuff );
+
+  if(diff != 0.0)
+  {
+    printf( "syevd(): Failure Diff = %E\n", diff);
+  }else{
+    printf( "syevd(): Success\n");
+  }
+
+  //Free up the buffers
+  delete aCPPIOBuff ;
+  delete wCPPOBuff ;
+  FLA_Obj_free( &aCIOObj );
+  FLA_Obj_free( &wCOObj );
+}
+
+template< typename Ta, typename Tb >
+void heevd_test()
+{
+  int n = 2048;
+  srand (time(NULL));
+
+  FLA_Init( );
+  FLA_Obj aCIOObj, wCOObj;
+  Ta *aCPPIOBuff, *aCIOBuff;
+  Tb *wCPPOBuff, *wCOBuff;
+  char jobz = 'N';
+  char uplo = 'U';
+  int datatype = getDatatype<Ta>();
+  int datatypeTb = getDatatype<Tb>();
+
+  //Allocate and initialize buffers for C and CPP functions with random values
+  allocate_init_buffer(aCPPIOBuff, aCIOBuff, n*n);
+  wCPPOBuff  = new Tb[n];
+  wCOBuff  = new Tb[n];
+
+  //Call CPP function
+  libflame::heevd( LAPACK_COL_MAJOR, &jobz, &uplo, &n, aCPPIOBuff, &n, wCPPOBuff );
+
+  //Allocate Object for C function and copy already allocated and filled buffer
+  FLA_Obj_create_without_buffer( datatype, n, n, &aCIOObj );
+  FLA_Obj_create_without_buffer( datatypeTb, n, 1, &wCOObj );
+  FLA_Obj_attach_buffer( aCIOBuff, 1, n, &aCIOObj );
+  FLA_Obj_attach_buffer( wCOBuff, 1, n, &wCOObj );
+
+  //Call C function
+  FLA_Hevdd_external( FLA_EVD_WITHOUT_VECTORS, FLA_UPPER_TRIANGULAR, aCIOObj, wCOObj );
+
+  double diff =  computeError<Ta>( n, n, aCIOBuff, aCPPIOBuff );
+  diff +=  computeError<Tb>( n, 1, wCOBuff, wCPPOBuff );
+
+  if(diff != 0.0)
+  {
+    printf( "heevd(): Failure Diff = %E\n", diff);
+  }else{
+    printf( "heevd(): Success\n");
+  }
+
+  //Free up the buffers
+  delete aCPPIOBuff ;
+  delete wCPPOBuff ;
+  FLA_Obj_free( &aCIOObj );
+  FLA_Obj_free( &wCOObj );
+}
+
+
+#if 0
 template< typename T >
 void syevd_test()
 {
@@ -4434,13 +4579,14 @@ void syevd_test()
   FLA_Obj_attach_buffer( lCIOBuff, 1, n, &lCIOObj );
 
   //Call C function
-  FLA_Hevdd_external( FLA_EVD_WITHOUT_VECTORS, FLA_UPPER_TRIANGULAR, aCIOObj, wCOObj );
+  FLA_Hevdd_external( FLA_EVD_WITH_VECTORS, FLA_UPPER_TRIANGULAR, aCIOObj, wCOObj );
   
   double diff =  computeError<T>( n, n, aCIOBuff, aCPPIOBuff );
   //diff +=  computeError<T>( n, 1, wCOBuff, wCPPOBuff );
-FILE *fp = fopen("test/in.txt", "a+");
-print(fp, n, wCOBuff, wCPPOBuff);
-fclose(fp);
+
+//FILE *fp = fopen("src/in.txt", "a+");
+//print(fp, n, aCIOBuff, wCPPOBuff);
+//fclose(fp);
 
   if(diff != 0.0)
   {
@@ -4455,6 +4601,167 @@ fclose(fp);
   FLA_Obj_free( &aCIOObj );
   FLA_Obj_free( &wCOObj );
   FLA_Obj_free( &lCIOObj );
+}
+#endif
+
+template< typename T >
+void syevr_test()
+{
+  int n = 512;
+  srand (time(NULL));
+
+  FLA_Init( );
+  FLA_Obj aCIOObj, wCOObj, lCIOObj;
+  T *aCPPIOBuff, *wCPPOBuff;
+  T *aCIOBuff, *wCOBuff, *lCIOBuff;
+  char jobz = 'N';
+  char uplo = 'U';
+  int datatype = getDatatype<T>();
+
+  //Allocate and initialize buffers for C and CPP functions with random values
+  allocate_init_buffer(aCPPIOBuff, aCIOBuff, n*n);
+  wCPPOBuff  = new T[n];
+  wCOBuff  = new T[n];
+  aCIOBuff  = new T[n*n];
+  lCIOBuff  = new T[n*n];
+  for(int j=0; j<n*n; j++)
+  {
+	  aCIOBuff[j] = 0;
+	  lCIOBuff[j] = 0;
+}
+
+  //Call CPP function
+//  libflame::syevr( LAPACK_COL_MAJOR, &jobz, &uplo, &n, aCPPIOBuff, &n, wCPPOBuff );
+//syevr( int matrix_layout, char* jobz, char* range, char* uplo, int *n, double* a, int* lda, double* vl, double* vu, int* il, int* iu, double* abstol, int* m, double* w, double* z, int* ldz, int* isuppz )
+  //Allocate Object for C function and copy already allocated and filled buffer
+  FLA_Obj_create_without_buffer( datatype, n, n, &aCIOObj );
+  FLA_Obj_create_without_buffer( datatype, n, 1, &wCOObj );
+  FLA_Obj_create_without_buffer( datatype, n, n, &lCIOObj );
+  FLA_Obj_attach_buffer( aCIOBuff, 1, n, &aCIOObj );
+  FLA_Obj_attach_buffer( wCOBuff, 1, n, &wCOObj );
+  FLA_Obj_attach_buffer( lCIOBuff, 1, n, &lCIOObj );
+
+  //Call C function
+ // FLA_Error FLA_Hevdr_external( FLA_Evd_type jobz, FLA_Uplo uplo, FLA_Obj A, FLA_Obj l, FLA_Obj Z )
+  FLA_Hevdr_external( FLA_EVD_WITHOUT_VECTORS, FLA_UPPER_TRIANGULAR, aCIOObj, wCOObj, lCIOObj );
+  
+  double diff =  computeError<T>( n, n, aCIOBuff, aCPPIOBuff );
+  //diff +=  computeError<T>( n, 1, wCOBuff, wCPPOBuff );
+
+  if(diff != 0.0)
+  {
+    printf( "syev(): Failure Diff = %E\n", diff);
+  }else{
+    printf( "syev(): Success\n");
+  }
+
+  //Free up the buffers
+  delete aCPPIOBuff ;
+  delete wCPPOBuff ;
+  FLA_Obj_free( &aCIOObj );
+  FLA_Obj_free( &wCOObj );
+  FLA_Obj_free( &lCIOObj );
+}
+
+template< typename T >
+void laswp_test()
+{
+  int n = 1024;
+  srand (time(NULL));
+
+  FLA_Init( );
+  FLA_Obj aCIOObj, ipivIObj;
+  T *aCPPIOBuff, *aCIOBuff;
+  int *ipivCPPIBuff, *ipivCIBuff;
+  int k1 = 1;
+  int k2 =  128;
+  int incx = 1;
+  int pivDim = (k1+(k2-k1)*abs(incx));
+  int datatype = getDatatype<T>();
+  int datatypeTb = getDatatype<int>();
+
+  //Allocate and initialize buffers for C and CPP functions with random values
+  allocate_init_buffer(aCPPIOBuff, aCIOBuff, n*n);
+  allocate_init_buffer(ipivCPPIBuff, ipivCIBuff, pivDim);
+  
+  for (int i = 0; i < pivDim; i++ )
+  {
+    ipivCPPIBuff[ i ] = ipivCIBuff[ i ] + i + 1;
+  }
+  
+  //Call CPP function
+  libflame::laswp( LAPACK_COL_MAJOR, &n, aCPPIOBuff, &n, &k1, &pivDim, ipivCPPIBuff, &incx );
+
+  //Allocate Object for C function and copy already allocated and filled buffer
+  FLA_Obj_create_without_buffer( datatype, n, n, &aCIOObj );
+  FLA_Obj_create_without_buffer( datatypeTb, pivDim, 1, &ipivIObj );
+  FLA_Obj_attach_buffer( aCIOBuff, 1, n, &aCIOObj );
+  FLA_Obj_attach_buffer( ipivCIBuff, 1, pivDim, &ipivIObj );
+
+  //Call C function
+  FLA_Apply_pivots_unb_external( FLA_LEFT, FLA_NO_TRANSPOSE, ipivIObj, aCIOObj  );
+  
+  double diff =  computeError<T>( n, n, aCIOBuff, aCPPIOBuff );
+
+  if(diff != 0.0)
+  {
+    printf( "laswp(): Failure Diff = %E\n", diff);
+  }else{
+    printf( "laswp(): Success\n");
+  }
+
+  //Free up the buffers
+  delete aCPPIOBuff ;
+  delete ipivCPPIBuff ;
+  FLA_Obj_free( &aCIOObj );
+  FLA_Obj_free( &ipivIObj );
+}
+
+template< typename T >
+void laset_test()
+{
+  int m = 1024;
+  int n = 512;
+  srand (time(NULL));
+
+  FLA_Init( );
+  FLA_Obj aCIOObj, alphaObj, betaObj;
+  T *aCPPIOBuff;
+  T *aCIOBuff;
+  T alpha =1;
+  T beta =1;
+  char uplo = 'U';
+  int datatype = getDatatype<T>();
+  
+  //Allocate and initialize buffers for C and CPP functions with random values
+  allocate_init_buffer(aCPPIOBuff, aCIOBuff, m*n);
+
+  //Call CPP function
+  libflame::laset( LAPACK_COL_MAJOR, &uplo, &m, &n, &alpha, &beta, aCPPIOBuff, &m );
+
+  //Allocate Object for C function and copy already allocated and filled buffer
+  FLA_Obj_create_without_buffer( datatype, m, n, &aCIOObj );
+  FLA_Obj_create_without_buffer( datatype, 1, 1, &alphaObj );
+  FLA_Obj_create_without_buffer( datatype, 1, 1, &betaObj );
+  FLA_Obj_attach_buffer( aCIOBuff, 1, m, &aCIOObj );
+  FLA_Obj_attach_buffer( &alpha, 1, 1, &alphaObj );
+  FLA_Obj_attach_buffer( &beta, 1, 1, &betaObj );
+
+  //Call C function
+  laset_C( FLA_UPPER_TRIANGULAR, alphaObj, betaObj, aCIOObj  );
+  
+  double diff =  computeError<T>( m, n, aCIOBuff, aCPPIOBuff );
+
+  if(diff != 0.0)
+  {
+    printf( "laset(): Failure Diff = %E\n", diff);
+  }else{
+    printf( "laset(): Success\n");
+  }
+
+  //Free up the buffers
+  delete aCPPIOBuff ;
+  FLA_Obj_free( &aCIOObj );
 }
 
 void potrf_testall_variants(){
@@ -4769,9 +5076,28 @@ void syevd_testall_variants(){
   syevd_test<float>();
   syevd_test<double>();
 }
-//heevd_testall_variants();
-//syevr_testall_variants();
+void heevd_testall_variants(){
+  heevd_test<lapack_complex_float, float>();
+  heevd_test<lapack_complex_double, double >();
+}
+void syevr_testall_variants(){
+  syevr_test<float>();
+  syevr_test<double>();
+}
 
+void laswp_testall_variants(){
+  laswp_test<float>();
+  laswp_test<float>();
+  laswp_test<lapack_complex_float>();
+  laswp_test<lapack_complex_double>();
+}
+
+void laset_testall_variants(){
+  laset_test<float>();
+  laset_test<float>();
+  laset_test<lapack_complex_float>();
+  laset_test<lapack_complex_double>();
+}
 
 //void unglq_testall_variants(){
 //  unglq_test<float>();
@@ -4789,46 +5115,39 @@ void syevd_testall_variants(){
 
 int main(int argc, char *argv[])
 {
-  // steqr_testall_variants();//pass
-  // stedc_testall_variants();//pass
-  //stemr_testall_variants();
-  //syev_testall_variants(); //fail
-  //heev_testall_variants();
-  //syevd_testall_variants(); // cout is zero
-  //heevd_testall_variants();
-  //syevr_testall_variants();
-  //heevr
-  //heevr
-  //bdsqr
-  //bdsdc
-  //gesvd
-  //gesdd
-  //laswp
-  //laset
-
-
-
+  //getrf_testall_variants(); //pivot mismatch
+  //getf2_testall_variants();//pivot mismatch
+  trtri_testall_variants(); //pass
+  trti2_testall_variants(); //pass
+  //gehd2_testall_variants(); //pass //tau buff  out is 0
+  //hetd2_testall_variants(); //fails //in/out buff failure--after 3 decimal point
+  //gebd2_testall_variants(); //fails //alll buff mismatch-- after few decimal point
+  //hegst_testall_variants();//pass //m>128 fails for complex float
+  //sygs2_testall_variants();//pass //m>64 fails for complex float
+  //hegs2_testall_variants();//pass //m>64 fails for complex float
   //larft_testall_variants(); //larft not found
   //larfgp_testall_variants(); //slarfg_ not defined
   //orm2r_testall_variants();//sorm2r_ not defined
   //unm2r_testall_variants();//sunm2r_ not defined
-  //orglq_testall_variants(); //Pending
-  //unglq_testall_variants(); //Pending
-  //ormlq_testall_variants(); //pass
-  //unmlq_testall_variants(); //pass
-  //orml2_testall_variants(); //pass
-  //unml2_testall_variants(); //pass
-  //trsyl_testall_variants(); //pass
-  //gehd2_testall_variants(); //pass
-#if 1
+  //orglq_testall_variants();//implemenation pending
+  //unglq_testall_variants();//implemenation pending
+  //stemr_testall_variants(); //more arg
+  //syevr_testall_variants(); //more arg
+  //heevr_testall_variants(); //Pending
+  //bdsqr_testall_variants(); //Pending
+  //bdsdc_testall_variants(); //Pending
+  //gesvd_testall_variants(); //Pending
+  //gesdd_testall_variants();
+  //laswp_testall_variants(); //pass //pivot buff adjusting
+
+#if 0
   potrf_testall_variants(); //pass
   potf2_testall_variants(); //pass
   getrf_testall_variants(); //pivot mismatch
   getf2_testall_variants();//pivot mismatch
   geqrf_testall_variants(); //pass
   geqr2_testall_variants(); //pass
-  geqpf_testall_variants(); //pass  //m,n>128 fails
-  geqp3_testall_variants(); //pass  //m,n>128 fails
+  geqp3_testall_variants(); //pass 
   gelqf_testall_variants(); //pass
   gelq2_testall_variants(); //pass
   gelsd_testall_variants(); //pass
@@ -4836,7 +5155,7 @@ int main(int argc, char *argv[])
   lauum_testall_variants(); //pass
   lauu2_testall_variants(); //pass
   potri_testall_variants(); //pass
-  trtri_testall_variants(); //pass //m>128 fails
+  trtri_testall_variants(); //pass 
   trti2_testall_variants(); //pass //m>128 fails
   trsyl_testall_variants(); //pass
   gehrd_testall_variants();//pass
@@ -4856,7 +5175,7 @@ int main(int argc, char *argv[])
   larfg_testall_variants(); //pass
   //larfgp_testall_variants(); //slarfg_ not defined
   orgqr_testall_variants(); //pass
-  //ungqr_testall_variants(); //fails
+  ungqr_testall_variants(); //pass
   ormqr_testall_variants(); //pass
   unmqr_testall_variants(); //pass
   //orm2r
@@ -4865,8 +5184,8 @@ int main(int argc, char *argv[])
   //unglq_testall_variants();//implemenation pending
   ormlq_testall_variants(); //pass
   unmlq_testall_variants(); //pass
-  //orml2
-  //unml2
+  orml2_testall_variants(); //pass
+  unml2_testall_variants(); //pass
   orgtr_testall_variants(); //pass
   ungtr_testall_variants(); //pass
   ormtr_testall_variants(); //pass
@@ -4875,13 +5194,13 @@ int main(int argc, char *argv[])
   ungbr_testall_variants(); //pass
   ormbr_testall_variants(); //pass
   unmbr_testall_variants(); //pass
-  //steqr_testall_variants(); //pass
-  //stedc_testall_variants(); //pass
+  steqr_testall_variants(); //pass
+  stedc_testall_variants(); //pass
   //stemr
-  //syev
-  //heev
-  //syevd
-  //heevd
+  syev_testall_variants(); //pass
+  heev_testall_variants(); //pass
+  syevd_testall_variants(); //pass
+  heevd_testall_variants(); //pass
   //syevr
   //heevr
   //heevr
@@ -4889,9 +5208,10 @@ int main(int argc, char *argv[])
   //bdsdc
   //gesvd
   //gesdd
-  //laswp
-  //laset
+  laswp_testall_variants(); //pass
+  laset_testall_variants(); //pass
   #endif
 }
 
 
+	
