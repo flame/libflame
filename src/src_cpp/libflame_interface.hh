@@ -144,7 +144,7 @@ int potf2( int matrix_layout, char* uplo, int* n, T* a, int* lda )
         The factorization has the form
             A = P * L * U
         where P is a permutation matrix, L is lower triangular with unit diagonal elements (lower
-        trapezoidal if M > N), and U is upper triangular (upper trapezoidal if M < N).
+        trapezoidal if M >	, and U is upper triangular (upper trapezoidal if M < N).
 
         This is the right-looking Level 3 BLAS version of the algorithm.
     \endverbatim
@@ -1486,7 +1486,7 @@ int trsyl( int matrix_layout, char* transa, char* transb, int* isgn, int* m, int
     The leading dimension of the array c. ldc >= max(1,m)
 
     * @param[out] scale
-    scale is float\double* \n
+    scale is float\double value \n
     The scale factor, scale, set <= 1 to avoid overflow in X..
     *  */
 template< typename Ta, typename Tb >
@@ -1950,6 +1950,11 @@ int hetrd( int matrix_layout, char* uplo, int* n, Ta* a, int* lda, Tb*  d, Tb*  
     e is float/double array, dimension (n-1) \n
     The off-diagonal elements of the tridiagonal matrix T: \n
     E(i) = A(i,i+1) if uplo = 'U', E(i) = A(i+1,i) if uplo = 'L'.
+    
+    * @param[out] tau
+    tau is lapack_complex_float/lapack_complex_double array, dimension (n-1) \n
+    The scalar factors of the elementary reflectors (see Further
+    Details).
     *
     * \n
     * **Further Details**
@@ -3025,12 +3030,6 @@ int larft( int matrix_layout, char* direct, char* storev, int* n, int* k, T* v, 
         Otherwise  1 <= tau <= 2.
     \endverbatim
 
-    * @param[in] matrix_layout
-    matrix_layout is int. \n
-    matrix_layout specifies method of storing array \n
-    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
-    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
-
     * @param[in] n
     n is int* \n
     The order of the elementary reflector.
@@ -3082,12 +3081,6 @@ int larfg( int* n, T* alpha, T* x, int* incx, T* tau )
         If the elements of x are all zero, then tau = 0 and H is taken to be the unit matrix.
     \endverbatim
 
-    * @param[in] matrix_layout
-    matrix_layout is int. \n
-    matrix_layout specifies method of storing array \n
-    = "LAPACK_COL_MAJOR": Input array is stored in column major order \n
-    = "LAPACK_ROW_MAJOR": Input array is stored in row major order
-
     * @param[in] n
     n is int* \n
     The order of the elementary reflector.
@@ -3111,9 +3104,9 @@ int larfg( int* n, T* alpha, T* x, int* incx, T* tau )
     The value tau.
     *  */
 template< typename T >
-int larfgp( int matrix_layout, int* n, T* alpha, T* x, int* incx, T* tau )
+int larfgp( int* n, T* alpha, T* x, int* incx, T* tau )
 {
-  return larfgp( matrix_layout, n,  alpha, x, incx, tau );
+  return larfgp( n,  alpha, x, incx, tau );
 }
 
 /*! @brief Form Q from QR factorization
@@ -5334,7 +5327,7 @@ int stemr( int matrix_layout, char* jobz, char* range, int* n, Tb*  d, Tb*  e, i
     The order of the matrix a.  n >= 0.
 
     * @param[in,out] a
-    a is float/double array, dimension (lda, N) \n
+    a is float/double array, dimension (lda, n) \n
     On entry, the symmetric matrix a.  If uplo = 'U', the
     leading n-by-n upper triangular part of a contains the
     upper triangular part of the matrix a.  If uplo = 'L',
@@ -5391,7 +5384,7 @@ int syev( int matrix_layout, char* jobz, char* uplo, int* n, T* a, int* lda, T* 
     The order of the matrix a.  n >= 0.
 
     * @param[in,out] a
-    a is lapack_complex_float/lapack_complex_double array, dimension (lda, N) \n
+    a is lapack_complex_float/lapack_complex_double array, dimension (lda, n) \n
     On entry, the Hermitian matrix a.  If uplo = 'U', the
     leading n-by-n upper triangular part of a contains the
     upper triangular part of the matrix a.  If uplo = 'L',
@@ -5457,7 +5450,7 @@ int heev( int matrix_layout, char* jobz, char* uplo, int* n, Ta* a, int* lda, Tb
     The order of the matrix a.  n >= 0.
 
     * @param[in,out] a
-    a is float/double array, dimension (lda, N) \n
+    a is float/double array, dimension (lda, n) \n
     On entry, the symmetric matrix a.  If uplo = 'U', the
     leading n-by-n upper triangular part of a contains the
     upper triangular part of the matrix a.  If uplo = 'L',
@@ -5524,7 +5517,7 @@ int syevd( int matrix_layout, char* jobz, char* uplo, int* n, T* a, int* lda, T*
     The order of the matrix a.  n >= 0.
 
     * @param[in,out] a
-    a is lapack_complex_float/lapack_complex_double array, dimension (lda, N) \n
+    a is lapack_complex_float/lapack_complex_double array, dimension (lda, n) \n
     On entry, the Hermitian matrix a.  If uplo = 'U', the
     leading n-by-n upper triangular part of a contains the
     upper triangular part of the matrix a.  If uplo = 'L',
@@ -5642,7 +5635,7 @@ int heevd( int matrix_layout, char* jobz, char* uplo, int* n, Ta* a, int* lda, T
     The order of the matrix a.  n >= 0.
 
     * @param[in,out] a
-    a is float/double array, dimension (lda, N) \n
+    a is float/double array, dimension (lda, n) \n
     On entry, the symmetric matrix a.  If uplo = 'U', the
     leading n-by-n upper triangular part of a contains the
     upper triangular part of the matrix a.  If uplo = 'L',
@@ -5839,7 +5832,7 @@ int syevr( int matrix_layout, char* jobz, char* range, char* uplo, int* n, T* a,
     The order of the matrix a.  n >= 0.
 
     * @param[in,out] a
-    a is lapack_complex_float/lapack_complex_double array, dimension (lda, N) \n
+    a is lapack_complex_float/lapack_complex_double array, dimension (lda, n) \n
     On entry, the Hermitian matrix a.  If uplo = 'U', the
     leading n-by-n upper triangular part of a contains the
     upper triangular part of the matrix a.  If uplo = 'L',
@@ -5880,7 +5873,7 @@ int syevr( int matrix_layout, char* jobz, char* range, char* uplo, int* n, T* a,
     Not referenced if range = 'A' or 'V'.
 
     * @param[in] abstol
-    abstol is float\double \n
+    abstol is float\double array\n
     The absolute error tolerance for the eigenvalues.
     An approximate eigenvalue is accepted as converged
     when it is determined to lie in an interval [a,b]
@@ -6288,7 +6281,7 @@ int bdsqr( int matrix_layout, char* uplo, int* n, int* ncvt, int* nru, int* ncc,
     On exit, E has been destroyed.
 
     * @param[out] u
-    U is float/double array, dimension (ldu,N) \n
+    U is float/double array, dimension (ldu,n) \n
     If  compq = 'I', then: \n
     On exit, if info = 0, U contains the left singular vectors
     of the bidiagonal matrix. \n
@@ -6297,10 +6290,10 @@ int bdsqr( int matrix_layout, char* uplo, int* n, int* ncvt, int* nru, int* ncc,
     * @param[in] ldu
     ldu is int* \n
     The leading dimension of the array U.  ldu >= 1. \n
-    If singular vectors are desired, then ldu >= max( 1, N ).
+    If singular vectors are desired, then ldu >= max( 1, n ).
 
     * @param[out] vt
-    vt is float/double array, dimension (ldvt,N) \n
+    vt is float/double array, dimension (ldvt,n) \n
     If  compq = 'I', then: \n
     On exit, if info = 0, vt**T contains the right singular
     vectors of the bidiagonal matrix. \n
@@ -6309,7 +6302,7 @@ int bdsqr( int matrix_layout, char* uplo, int* n, int* ncvt, int* nru, int* ncc,
     * @param[in] ldvt
     ldvt is int* \n
     The leading dimension of the array vt.  ldvt >= 1. \n
-    If singular vectors are desired, then ldvt >= max( 1, N ).
+    If singular vectors are desired, then ldvt >= max( 1, n ).
 
     * @param[out] q
     q is float/double array, dimension (LDQ) \n
@@ -6568,7 +6561,7 @@ int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int* n, T* a, int*
     Backup of data from working array.
     *  */
 template< typename Ta, typename Tb >
-int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int* n, Ta* a, int* lda, Tb*  s, Ta* u, int* ldu, Ta* vt, int* ldvt,Tb* superb )
+int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int* n, Ta* a, int* lda, Tb*  s, Ta* u, int* ldu, Ta* vt, int* ldvt, Tb* superb )
 {
   return gesvd( matrix_layout, jobu, jobv, m, n, a, lda, s, u, ldu, vt, ldvt, superb );
 }
@@ -6654,9 +6647,9 @@ int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int* n, Ta* a, int
 
     * @param[out] u
     U is float/double array, dimension (ldu,UCOL) \n
-    UCOL = M if jobz = 'A' or jobz = 'O' and M < N; \n
+    UCOL = m if jobz = 'A' or jobz = 'O' and M < N; \n
     UCOL = min(m,n) if jobz = 'S'. \n
-    If jobz = 'A' or jobz = 'O' and M < N, U contains the M-by-M
+    If jobz = 'A' or jobz = 'O' and m < m, U contains the m-by-m
     orthogonal matrix U; \n
     if jobz = 'S', U contains the first min(m,n) columns of U
     (the left singular vectors, stored columnwise); \n
@@ -6665,10 +6658,10 @@ int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int* n, Ta* a, int
     * @param[in] ldu
     ldu is int* \n
     The leading dimension of the array U.  ldu >= 1; if
-    jobz = 'S' or 'A' or jobz = 'O' and M < N, ldu >= M.
+    jobz = 'S' or 'A' or jobz = 'O' and m < n, ldu >= m.
 
     * @param[out] vt
-    vt is float/double array, dimension (ldvt,N) \n
+    vt is float/double array, dimension (ldvt,n) \n
     If jobz = 'A' or jobz = 'O' and m >= n, vt contains the
     n-by-n orthogonal matrix V**T; \n
     if jobz = 'S', vt contains the first min(m,n) rows of
@@ -6678,7 +6671,7 @@ int gesvd( int matrix_layout, char* jobu, char* jobv, int* m, int* n, Ta* a, int
     * @param[in] ldvt
     ldvt is int* \n
     The leading dimension of the array vt.  ldvt >= 1; \n
-    if jobz = 'A' or jobz = 'O' and m >= n, ldvt >= N; \n
+    if jobz = 'A' or jobz = 'O' and m >= n, ldvt >= n; \n
     if jobz = 'S', ldvt >= min(m,n).
     *  */
 template< typename T >
@@ -6821,7 +6814,7 @@ int gesdd( int matrix_layout, char* jobz, int* m, int* n, Ta* a, int* lda, Tb*  
 
     * @param[in,out] a
     a is float/double/lapack_complex_float/lapack_complex_double array, dimension (lda,n) \n
-    On entry, the matrix of column dimension N to which the row
+    On entry, the matrix of column dimension n to which the row
     interchanges will be applied. \n
     On exit, the permuted matrix.
 
