@@ -144,7 +144,7 @@ int potf2( int matrix_layout, char* uplo, int* n, T* a, int* lda )
         The factorization has the form
             A = P * L * U
         where P is a permutation matrix, L is lower triangular with unit diagonal elements (lower
-        trapezoidal if M >	, and U is upper triangular (upper trapezoidal if M < N).
+        trapezoidal if M >  , and U is upper triangular (upper trapezoidal if M < N).
 
         This is the right-looking Level 3 BLAS version of the algorithm.
     \endverbatim
@@ -1950,7 +1950,7 @@ int hetrd( int matrix_layout, char* uplo, int* n, Ta* a, int* lda, Tb*  d, Tb*  
     e is float/double array, dimension (n-1) \n
     The off-diagonal elements of the tridiagonal matrix T: \n
     E(i) = A(i,i+1) if uplo = 'U', E(i) = A(i+1,i) if uplo = 'L'.
-    
+
     * @param[out] tau
     tau is lapack_complex_float/lapack_complex_double array, dimension (n-1) \n
     The scalar factors of the elementary reflectors (see Further
@@ -3041,7 +3041,7 @@ int larft( int matrix_layout, char* direct, char* storev, int* n, int* k, T* v, 
 
     * @param[in,out] x
     x is float/double/lapack_complex_float/lapack_complex_double array, dimension (1+(N-2)*abs(incx)) \n
-    On entry, the vector X. \n
+    On entry, the vector x. \n
     On exit, it is overwritten with the vector v.
 
     * @param[in] incx
@@ -5702,12 +5702,12 @@ int heevd( int matrix_layout, char* jobz, char* uplo, int* n, Ta* a, int* lda, T
 
     * @param[out] m
     m is int* \n
-    The total number of eigenvalues found.  0 <= M <= N. \n
-    If range = 'A', M = N, and if range = 'I', M = iu-il+1.
+    The total number of eigenvalues found.  0 <= m <= n. \n
+    If range = 'A', m = n, and if range = 'I', m = iu-il+1.
 
     * @param[out] w
     w is float/double/lapack_complex_float/lapack_complex_double array, dimension (n) \n
-    The first M elements contain the selected eigenvalues in
+    The first m elements contain the selected eigenvalues in
     ascending order.
 
     * @param[out] z
@@ -5718,9 +5718,9 @@ int heevd( int matrix_layout, char* jobz, char* uplo, int* n, Ta* a, int* lda, T
     column of Z holding the eigenvector associated with W(i). \n
     If jobz = 'N', then Z is not referenced. \n
     Note: the user must ensure that at least max(1,m) columns are
-    supplied in the array Z; if range = 'V', the exact value of M
+    supplied in the array Z; if range = 'V', the exact value of m
     is not known in advance and an upper bound must be used.
-    Supplying N columns is always safe.
+    Supplying n columns is always safe.
 
     * @param[in] ldz
     ldz is int* \n
@@ -5994,7 +5994,7 @@ int heevr( int matrix_layout, char* jobz, char* range, char* uplo, int* n, Ta* a
 
     * @param[in] nru
     nru is int* \n
-    The number of rows of the matrix U. nru >= 0.
+    The number of rows of the matrix u. nru >= 0.
 
     * @param[in] ncc
     ncc is int* \n
@@ -6034,7 +6034,7 @@ int heevr( int matrix_layout, char* jobz, char* range, char* uplo, int* n, Ta* a
 
     * @param[in] ldu
     ldu is int* \n
-    The leading dimension of the array U.  ldu >= max(1,nru).
+    The leading dimension of the array u.  ldu >= max(1,nru).
 
     * @param[in,out] c
     c is float/doublearray, dimension (ldc, ncc) \n

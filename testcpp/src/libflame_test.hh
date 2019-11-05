@@ -28,8 +28,6 @@
 #define LIBFLAME_TEST_HH
 
 #include "libflame_interface.hh"
-//#include "FLAME.h"
-//#define FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES 1
 
 #define FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
 
@@ -82,30 +80,14 @@ double computeErrorComplex(int size, T *Out, T *Out_ref)
 {
   int j;
   double diff = 0;
-  for ( j = 0; j < size; j ++ ) {
- // if((isnan(creal(Out_ref[j])) && isnan(creal(Out_ref[j])))
- //   || (isnan(cimag(Out_ref[j])) && isnan(cimag(Out_ref[j]))))
-    {
-      diff += abs(creal(Out_ref[j]) - creal(Out[j])) ;
-      diff += abs(cimag(Out_ref[j]) - cimag(Out[j])) ;
-    }
+  for ( j = 0; j < size; j ++ )
+  {
+    diff += abs(creal(Out_ref[j]) - creal(Out[j])) ;
+    diff += abs(cimag(Out_ref[j]) - cimag(Out[j])) ;
   }
+
    return diff;
 }
-
-FILE *fp;
-   //fp = fopen("test/in","a+");
-   //print(fp,m*m,aInBuff, aRefBuff);
-   //fclose(fp);
-   //  fp = fopen("test/out","a+");
-   //print(fp,m*m,aInBuff, aRefBuff);
-   //fclose(fp);
-   //  fp = fopen("test/out1","a+");
-   //print(fp,m*m,aInBuff, aInBuff);
-   //fclose(fp);
-   //  fp = fopen("test/out2","a+");
-   //print(fp,m*m,aRefBuff, aRefBuff);
-   //fclose(fp);
 
 void print(FILE *fp, int size, int *Out, int *Out_ref)
 {

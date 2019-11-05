@@ -144,22 +144,22 @@ namespace libflame{
   }
   inline int geqpf( int matrix_layout, int* m, int *n, float* a, int* lda, int* jpvt, float* tau )
   {
-    printf(" Function sgeqpf() is been deprecated and has been replaced by function sgeqp3() \n");
+    printf(" Function sgeqpf() has been deprecated. Please use sgep3() instead.\n");
     return LAPACKE_sgeqp3( matrix_layout, *m, *n, a, *lda, jpvt, tau );
   }
   inline int geqpf( int matrix_layout, int* m, int *n, double* a, int* lda, int* jpvt, double* tau )
   {
-    printf(" Function dgeqpf() is been deprecated and has been replaced by function dgeqp3() \n");
+    printf(" Function dgeqpf() has been deprecated. Please use dgep3() instead.\n");
     return LAPACKE_dgeqp3( matrix_layout, *m, *n, a, *lda, jpvt, tau );
   }
   inline int geqpf( int matrix_layout, int* m, int *n, lapack_complex_float* a, int* lda, int* jpvt, lapack_complex_float* tau )
   {
-    printf(" Function cgeqpf() is been deprecated and has been replaced by function cgeqp3() \n");
+    printf(" Function cgeqpf() has been deprecated. Please use cgep3() instead.\n");
     return LAPACKE_cgeqp3( matrix_layout, *m, *n, a, *lda, jpvt, tau);
   }
   inline int geqpf( int matrix_layout, int* m, int *n, lapack_complex_double* a, int* lda, int* jpvt, lapack_complex_double* tau)
   {
-    printf(" Function zgeqpf() is been deprecated and has been replaced by function zgeqp3() \n");
+    printf(" Function zgeqpf() has been deprecated. Please use zgep3() instead.\n");
     return LAPACKE_zgeqp3( matrix_layout, *m, *n, a, *lda, jpvt, tau);
   }
 
