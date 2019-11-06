@@ -65,8 +65,9 @@ LIBLAPACK      :=
 #
 
 TEST_SRC_PATH  := src
-TEST_SRC := libflame_test
+TEST_SRC := libflame_potrf
 TEST_OBJ_PATH  := obj
+TEST_BIN_PATH := bin
 
 FLA_LIB_PATH   := $(LIB_PATH)
 FLA_INC_PATH   := $(INC_PATH)
@@ -80,12 +81,12 @@ FNAME          := libflame
 TEST_OBJS      := $(patsubst $(TEST_SRC_PATH)/$(TEST_SRC).cc, \
                              $(TEST_OBJ_PATH)/$(TEST_SRC).o, \
                              $(wildcard $(TEST_SRC_PATH)/$(TEST_SRC).cc))
-TEST_BIN       := libflame_cpp_test
+TEST_BIN       := $(TEST_SRC)
 
 $(TEST_OBJ_PATH)/%.o: $(TEST_SRC_PATH)/%.cc
 	$(CC) $(CFLAGS) -c $< -o $@
 
-test_$(FNAME): $(TEST_OBJS)
+test_$(TEST_SRC): $(TEST_OBJS)
 	$(LINKER) $(TEST_OBJS) $(LAPACKE) $(LIBFLAME) $(LIBBLAS) $(LDFLAGS) -o $(TEST_BIN)
 
 clean:

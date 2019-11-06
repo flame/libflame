@@ -28,11 +28,10 @@
 #define LIBFLAME_TEST_HH
 
 #include "libflame_interface.hh"
-
 #define FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
 
 using namespace std;
-FLA_Error geqpf_C( FLA_Obj A, int *jpvt, FLA_Obj t, FLA_Obj rwork );
+typedef int FLA_Error;
 
 template< typename T >
 T* typecast( FLA_Obj buff, int dataType)
