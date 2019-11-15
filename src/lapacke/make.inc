@@ -76,8 +76,8 @@ TIMER = INT_ETIME
 #  machine-specific, optimized BLAS library should be used whenever
 #  possible.)
 #
-BLASLIB      = $(TOPSRCDIR)/librefblas.a
-CBLASLIB     = $(TOPSRCDIR)/libcblas.a
-LAPACKLIB    = $(TOPSRCDIR)/liblapack.a
-TMGLIB       = $(TOPSRCDIR)/libtmglib.a
+#BLASLIB      = $(TOPSRCDIR)/librefblas.a
+#CBLASLIB     = $(TOPSRCDIR)/libcblas.a
+#LAPACKLIB    = $(TOPSRCDIR)/liblapack.a
+#TMGLIB       = $(TOPSRCDIR)/libtmglib.a
 LAPACKELIB   = $(TOPSRCDIR)/liblapacke.a

@@ -7,6 +7,15 @@
 #
 
 
+#
+# --- Makefile PHONY target definitions ----------------------------------------
+#
+
+.PHONY: all \
+        libflame \
+        clean cleanx
+
+
 
 #
 # --- Include libflame config makefile fragment --------------------------------
@@ -49,8 +58,7 @@ LDFLAGS        := -lm -fopenmp -lgfortran
 
 # BLAS implementation path. A BLAS library must be given in order to run
 # the libflame test suite. Modify these definitions if needed.
-#LIBBLAS_PATH   := /home/pradeep/amd/aocl/2.0/libs
-LIBBLAS_PATH   := /home/managala/2019/blis/lib/zen
+LIBBLAS_PATH   := 
 LIBBLAS        := $(LIBBLAS_PATH)/libblis.a
 
 # LAPACK implementation path. These values only matter if libflame was
@@ -58,37 +66,109 @@ LIBBLAS        := $(LIBBLAS_PATH)/libblis.a
 # these definitions if needed.
 LIBLAPACK      :=
 
-
+all: libflame
+libflame: libflame_potrf.x \
+			libflame_potf2.x \
+			libflame_getrf.x \
+			libflame_getf2.x \
+			libflame_geqrf.x \
+			libflame_geqr2.x \
+			libflame_geqpf.x \
+			libflame_geqp3.x \
+			libflame_gelqf.x \
+			libflame_gelq2.x \
+			libflame_gelsd.x \
+			libflame_gelss.x \
+			libflame_lauum.x \
+			libflame_lauu2.x \
+			libflame_potri.x \
+			libflame_trtri.x \
+			libflame_trti2.x \
+			libflame_trsyl.x \
+			libflame_gehrd.x \
+			libflame_gehd2.x \
+			libflame_sytrd.x \
+			libflame_hetrd.x \
+			libflame_sytd2.x \
+			libflame_hetd2.x \
+			libflame_gebrd.x \
+			libflame_gebd2.x \
+			libflame_sygst.x \
+			libflame_hegst.x \
+			libflame_sygs2.x \
+			libflame_hegs2.x \
+			libflame_larft.x \
+			libflame_larfg.x \
+			libflame_larfgp.x \
+			libflame_orgqr.x \
+			libflame_ungqr.x \
+			libflame_ormqr.x \
+			libflame_unmqr.x \
+			libflame_orm2r.x \
+			libflame_unm2r.x \
+			libflame_orglq.x \
+			libflame_unglq.x \
+			libflame_ormlq.x \
+			libflame_unmlq.x \
+			libflame_orml2.x \
+			libflame_unml2.x \
+			libflame_orgtr.x \
+			libflame_ungtr.x \
+			libflame_ormtr.x \
+			libflame_unmtr.x \
+			libflame_orgbr.x \
+			libflame_ungbr.x \
+			libflame_ormbr.x \
+			libflame_unmbr.x \
+			libflame_steqr.x \
+			libflame_stedc.x \
+			libflame_stemr.x \
+			libflame_syev.x \
+			libflame_heev.x \
+			libflame_syevd.x \
+			libflame_heevd.x \
+			libflame_syevr.x \
+			libflame_heevr.x \
+			libflame_bdsqr.x \
+			libflame_bdsdc.x \
+			libflame_gesvd.x \
+			libflame_gesdd.x \
+			libflame_laswp.x \
+			libflame_laset.x
 
 #
 # --- General build definitions ------------------------------------------------
 #
 
 TEST_SRC_PATH  := src
-TEST_SRC := libflame_potrf
 TEST_OBJ_PATH  := obj
 TEST_BIN_PATH := bin
 
 FLA_LIB_PATH   := $(LIB_PATH)
 FLA_INC_PATH   := $(INC_PATH)
 LIBFLAME       := $(FLA_LIB_PATH)/libflame.a
-#LIBFLAME       := $(FLA_LIB_PATH)/libflame.so
 LAPACKE        := $(SRC_PATH)/lapacke/liblapacke.a
 
 CFLAGS         += -I$(FLA_INC_PATH) -I$(SRC_PATH)/src_cpp -I$(SRC_PATH)/lapacke/LAPACKE/include -I$(TEST_SRC_PATH) 
 FNAME          := libflame
 
-TEST_OBJS      := $(patsubst $(TEST_SRC_PATH)/$(TEST_SRC).cc, \
-                             $(TEST_OBJ_PATH)/$(TEST_SRC).o, \
-                             $(wildcard $(TEST_SRC_PATH)/$(TEST_SRC).cc))
-TEST_BIN       := $(TEST_SRC)
+TEST_OBJS      := $(patsubst $(TEST_SRC_PATH)/%.c, \
+                             $(TEST_OBJ_PATH)/%.o, \
+                             $(wildcard $(TEST_SRC_PATH)/*.c))
 
 $(TEST_OBJ_PATH)/%.o: $(TEST_SRC_PATH)/%.cc
 	$(CC) $(CFLAGS) -c $< -o $@
 
-test_$(TEST_SRC): $(TEST_OBJS)
-	$(LINKER) $(TEST_OBJS) $(LAPACKE) $(LIBFLAME) $(LIBBLAS) $(LDFLAGS) -o $(TEST_BIN)
+$(TEST_OBJ_PATH)/libflame_%.o: libflame_%.cc
+	$(CC) $(CFLAGS) -c $< -o $@
 
-clean:
-	$(RM_F) $(TEST_OBJS) $(TEST_BIN)
+libflame_%.x: $(TEST_OBJ_PATH)/libflame_%.o $(LIBFLAME)
+	$(LINKER) $^       $(TEST_OBJS) $(LAPACKE) $(LIBFLAME) $(LIBBLAS) $(LDFLAGS) -o $@
 
+
+# -- Clean rules --
+
+clean: cleanx
+
+cleanx:
+	- $(RM_F) *.o *.x
