@@ -157,6 +157,7 @@ TEST_OBJS      := $(patsubst $(TEST_SRC_PATH)/%.c, \
                              $(wildcard $(TEST_SRC_PATH)/*.c))
 
 $(TEST_OBJ_PATH)/%.o: $(TEST_SRC_PATH)/%.cc
+	mkdir -p $(TEST_OBJ_PATH)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(TEST_OBJ_PATH)/libflame_%.o: libflame_%.cc
@@ -171,4 +172,5 @@ libflame_%.x: $(TEST_OBJ_PATH)/libflame_%.o $(LIBFLAME)
 clean: cleanx
 
 cleanx:
-	- $(RM_F) *.o *.x
+	- $(RM_RF) $(TEST_OBJ_PATH)
+	- $(RM_F) *.x
