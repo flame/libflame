@@ -58,6 +58,7 @@ CONFIG_DIR      := config
 OBJ_DIR         := obj
 LIB_DIR         := lib
 INC_DIR         := include
+LAPACKE_DIR     := lapacke
 
 # Use the system type to name the config, object, and library directories.
 # These directories are special in that they will contain products specific
@@ -101,6 +102,8 @@ LIBFLAME             := libflame
 LIBFLAME_A           := $(LIBFLAME).a
 LIBFLAME_SO          := $(LIBFLAME).$(SHLIB_EXT)
 
+LAPACKE_A	     := liblapacke.a
+
 # --- Library filepaths ---
 
 # Append the base library path to the library names.
@@ -112,6 +115,8 @@ LIBFLAME_SO_MMB_EXT  := $(SHLIB_EXT).$(SO_MMB)
 
 LIBFLAME_SONAME      := $(LIBFLAME).$(LIBFLAME_SO_MAJ_EXT)
 LIBFLAME_SO_MAJ_PATH := $(BASE_LIB_PATH)/$(LIBFLAME_SONAME)
+
+LAPACKE_A_PATH       := $(SRC_DIR)/$(LAPACKE_DIR)/$(LAPACKE_A)
 
 # Construct the output path when building a shared library.
 LIBFLAME_SO_OUTPUT_NAME := $(LIBFLAME_SO_PATH)
@@ -167,7 +172,6 @@ LIBFLAME_A_INST       := $(INSTALL_LIBDIR)/$(LIBFLAME_A)
 LIBFLAME_SO_INST      := $(INSTALL_LIBDIR)/$(LIBFLAME_SO)
 LIBFLAME_SO_MAJ_INST  := $(INSTALL_LIBDIR)/$(LIBFLAME_SONAME)
 LIBFLAME_SO_MMB_INST  := $(INSTALL_LIBDIR)/$(LIBFLAME).$(LIBFLAME_SO_MMB_EXT)
-
 # --- Determine which libraries to build ---
 
 MK_LIBS                   :=
@@ -179,6 +183,8 @@ MK_LIBS                   += $(LIBFLAME_A_PATH)
 MK_LIBS_INST              += $(LIBFLAME_A_INST)
 MK_LIBS_SYML              +=
 endif
+
+MK_LIBS                   += $(LAPACKE_A_PATH)
 
 ifeq ($(FLA_ENABLE_DYNAMIC_BUILD),yes)
 MK_LIBS                   += $(LIBFLAME_SO_PATH) \
@@ -269,6 +275,9 @@ BLIS1_H_FLAT  := $(BASE_INC_PATH)/$(BLIS1_H)
 FLAF2C_H      := FLA_f2c.h
 FLAF2C_H_FLAT := $(BASE_INC_PATH)/$(FLAF2C_H)
 
+#Define path of CPP Template header files
+CPP_TEMPLATE_H_PATH := ./$(SRC_DIR)/src_cpp
+
 # Expand the fragment paths that contain .h files to attain the set of header
 # files present in all fragment paths.
 MK_HEADER_FILES := $(foreach frag_path, $(FRAGMENT_DIR_PATHS), $(wildcard $(frag_path)/*.h))
@@ -294,6 +303,7 @@ HEADERS_TO_FLATTEN := $(FLAME_H_FLAT) $(BLIS1_H_FLAT) $(FLAF2C_H_FLAT)
 # Define a list of headers to install and their installation path. The default
 # is to only install FLAME.h.
 HEADERS_TO_INSTALL := $(FLAME_H_FLAT)
+HEADERS_TO_INSTALL += $(CPP_TEMPLATE_H_PATH)/*.hh
 HEADERS_INST       := $(addprefix $(MK_INCL_DIR_INST)/, $(notdir $(HEADERS_TO_INSTALL)))
 
 # Add -I to each header path so we can specify our include search paths to the
@@ -399,7 +409,6 @@ uninstall: uninstall-libs uninstall-lib-symlinks uninstall-headers
 clean: cleanh cleanlib
 
 
-
 # --- Environment check rules ---
 
 check-env: check-env-config check-env-fragments
@@ -500,6 +509,14 @@ libflame: check-env $(MK_LIBS)
 
 
 # --- Static library archiver rules ---
+$(LAPACKE_A_PATH):
+ifeq ($(ENABLE_VERBOSE),yes)
+	$(MAKE) -C $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE
+else
+	@echo -n "Generating LAPACKE library"
+	$(MAKE) -C $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE
+	@echo "Generated LAPACKE library"
+endif
 
 $(LIBFLAME_A_PATH): $(MK_ALL_FLAMEC_OBJS)
 ifeq ($(ENABLE_VERBOSE),yes)
@@ -633,10 +650,12 @@ $(INSTALL_LIBDIR)/%.a: $(BASE_LIB_PATH)/%.a $(CONFIG_MK_FILE)
 ifeq ($(ENABLE_VERBOSE),yes)
 	$(MKDIR) $(@D)
 	$(INSTALL) -m 0644 $< $@
+	$(INSTALL) -m 0644 $(LAPACKE_A_PATH) $(INSTALL_LIBDIR)/$(LAPACKE_A)
 else
 	@echo "Installing $(@F) into $(INSTALL_LIBDIR)/"
 	@$(MKDIR) $(@D)
 	@$(INSTALL) -m 0644 $< $@
+	@$(INSTALL) -m 0644 $(LAPACKE_A_PATH) $(INSTALL_LIBDIR)/$(LAPACKE_A)
 endif
 
 # Install shared library.
@@ -703,14 +722,14 @@ cleanlib:
 ifeq ($(IS_CONFIGURED),yes)
 ifeq ($(ENABLE_VERBOSE),yes)
 	- $(FIND) $(BASE_OBJ_PATH) -name "*.o" | $(XARGS) $(RM_F)
-	- $(RM_F) $(LIBBLIS_A_PATH)
-	- $(RM_F) $(LIBBLIS_SO_PATH)
+	- $(RM_F) $(LAPACKE_A_PATH)
+	- $(RM_F) $(BASE_LIB_PATH)/*
 else
 	@echo "Removing object files from $(BASE_OBJ_PATH)"
 	@$(FIND) $(BASE_OBJ_PATH) -name "*.o" | $(XARGS) $(RM_F)
 	@echo "Removing libraries from $(BASE_LIB_PATH)"
-	@$(RM_F) $(LIBBLIS_A_PATH)
-	@$(RM_F) $(LIBBLIS_SO_PATH)
+	@$(RM_F) $(LAPACKE_A_PATH)
+	@$(RM_F) $(BASE_LIB_PATH)/*
 endif
 endif
 
