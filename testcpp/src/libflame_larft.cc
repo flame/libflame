@@ -131,9 +131,9 @@ void larft_test()
 
   if(diff != 0.0)
   {
-    printf( "larft(): Failure Diff = %E\n", diff);
+    printf( "larft(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "larft(): Success\n");
+    printf( "larft(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

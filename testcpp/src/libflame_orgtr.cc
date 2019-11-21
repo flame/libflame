@@ -65,9 +65,9 @@ void orgtr_test()
 
   if(diff != 0.0)
   {
-    printf( "orgtr(): Failure Diff = %E\n", diff);
+    printf( "orgtr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "orgtr(): Success\n");
+    printf( "orgtr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

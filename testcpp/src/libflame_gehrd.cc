@@ -67,9 +67,9 @@ void gehrd_test()
 
   if(diff != 0.0)
   {
-    printf( "gehrd(): Failure Diff = %E\n", diff);
+    printf( "gehrd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gehrd(): Success\n");
+    printf( "gehrd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

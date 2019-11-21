@@ -64,9 +64,9 @@ void heevd_test()
 
   if(diff != 0.0)
   {
-    printf( "heevd(): Failure Diff = %E\n", diff);
+    printf( "heevd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "heevd(): Success\n");
+    printf( "heevd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

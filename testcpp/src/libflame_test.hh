@@ -28,6 +28,17 @@
 #define LIBFLAME_TEST_HH
 
 #include "libflame_interface.hh"
+
+extern "C"{
+#include "blis_type_defs.h"
+#include "FLA_type_defs.h"
+#include "FLA_Cntl.h"
+#include "FLA_main_prototypes.h"
+#include "FLA_macro_defs.h"
+#include "FLA_macro_ptr_defs.h"
+#include "FLA_lapack_prototypes.h"
+}
+
 #define FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
 
 using namespace std;

@@ -70,9 +70,9 @@ void gebrd_test()
 
   if(diff != 0.0)
   {
-    printf( "gebrd(): Failure Diff = %E\n", diff);
+    printf( "gebrd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gebrd(): Success\n");
+    printf( "gebrd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -128,9 +128,9 @@ void gebrd_test()
 
   if(diff != 0.0)
   {
-    printf( "gebrd(): Failure Diff = %E\n", diff);
+    printf( "gebrd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gebrd(): Success\n");
+    printf( "gebrd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

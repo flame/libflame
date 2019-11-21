@@ -59,9 +59,9 @@ void lauum_test()
 
   if(diff != 0.0)
   {
-    printf( "lauum(): Failure Diff = %E\n", diff);
+    printf( "lauum(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "lauum(): Success\n");
+    printf( "lauum(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

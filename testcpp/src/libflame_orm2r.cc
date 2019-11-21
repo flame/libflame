@@ -71,9 +71,9 @@ void orm2r_test()
 
   if(diff != 0.0)
   {
-    printf( "orm2r(): Failure Diff = %E\n", diff);
+    printf( "orm2r(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "orm2r(): Success\n");
+    printf( "orm2r(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

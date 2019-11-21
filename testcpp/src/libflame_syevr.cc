@@ -82,9 +82,9 @@ void syevr_test()
 
   if(diff != 0.0)
   {
-    printf( "syevr(): Failure Diff = %E\n", diff);
+    printf( "syevr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "syevr(): Success\n");
+    printf( "syevr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

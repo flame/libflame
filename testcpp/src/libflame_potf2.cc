@@ -58,9 +58,9 @@ void potf2_test()
 
   if(diff != 0.0)
   {
-    printf( "potf2():Failure Diff = %E\n", diff);
+    printf( "potf2():%s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "potf2(): Success\n");
+    printf( "potf2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

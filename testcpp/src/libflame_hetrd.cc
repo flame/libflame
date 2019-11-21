@@ -65,9 +65,9 @@ void hetrd_test()
 
   if(diff != 0.0)
   {
-    printf( "hetrd(): Failure Diff = %E\n", diff);
+    printf( "hetrd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "hetrd(): Success\n");
+    printf( "hetrd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

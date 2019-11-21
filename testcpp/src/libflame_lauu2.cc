@@ -59,9 +59,9 @@ void lauu2_test()
 
   if(diff != 0.0)
   {
-    printf( "lauu2(): Failure Diff = %E\n", diff);
+    printf( "lauu2(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "lauu2(): Success\n");
+    printf( "lauu2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

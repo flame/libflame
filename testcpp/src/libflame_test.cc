@@ -849,9 +849,9 @@ void potrf_test()
 
   if(diff != 0.0)
   {
-    printf( "potrf(): Failure Diff = %E\n", diff);
+    printf( "potrf(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "potrf(): Success\n");
+    printf( "potrf(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -892,9 +892,9 @@ void potf2_test()
 
   if(diff != 0.0)
   {
-    printf( "potf2():Failure Diff = %E\n", diff);
+    printf( "potf2():%s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "potf2(): Success\n");
+    printf( "potf2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -944,11 +944,11 @@ void getrf_test()
 
   if(diff != 0.0)
   {
-    printf( "Failure Diff = %E\n", diff);
+    printf( "%s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else if(diffInt !=0){
     printf( "getrf(): Failure Pivot Buffer mismatach Diff = %d\n", diffInt);
   }else{
-    printf( "getrf(): Success\n");
+    printf( "getrf(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -999,11 +999,11 @@ void getf2_test()
 
   if(diff != 0.0)
   {
-    printf( "Failure Diff = %E\n", diff);
+    printf( "%s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else if(diffInt !=0){
     printf( "getf2(): Failure:Pivot Buffer Mismatch Diff = %d\n", diffInt);
   }else{
-    printf( "getf2(): Success\n");
+    printf( "getf2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -1067,9 +1067,9 @@ void geqrf_test()
 
   if(diff != 0.0)
   {
-    printf( "geqrf(): Failure Diff = %E\n", diff);
+    printf( "geqrf(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "geqrf(): Success\n");
+    printf( "geqrf(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -1122,11 +1122,11 @@ void geqr2_test()
 
   if(diff != 0.0)
   {
-    printf( "Failure Diff = %E\n", diff) ;
+    printf( "%s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else if(diffInt !=0){
     printf( "geqr2(): Failure Diff = %d\n", diffInt) ;
   }else{
-    printf( "geqr2(): Success\n");
+    printf( "geqr2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -1183,11 +1183,11 @@ void geqpf_test()
 
   if(diff != 0.0)
   {
-    printf( "geqpf(): Failure Diff = %E\n", diff) ;
+    printf( "geqpf(): %s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else if(diffInt !=0){
     printf( "geqpf(): Failure Diff = %d\n", diffInt) ;
   }else{
-    printf( "geqpf(): Success\n");
+    printf( "geqpf(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -1247,11 +1247,11 @@ void geqpf_test()
 
   if(diff != 0.0)
   {
-    printf( "geqpf(): Failure Diff = %E\n", diff) ;
+    printf( "geqpf(): %s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else if(diffInt !=0){
     printf( "geqpf(): Failure Diff = %d\n", diffInt) ;
   }else{
-    printf( "geqpf(): Success\n");
+    printf( "geqpf(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -1310,11 +1310,11 @@ void geqp3_test()
 
   if(diff != 0.0)
   {
-    printf( "geqp3(): Failure Diff = %E\n", diff) ;
+    printf( "geqp3(): %s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else if(diffInt !=0){
     printf( "geqp3(): Failure Diff = %d\n", diffInt) ;
   }else{
-    printf( "geqp3(): Success\n");
+    printf( "geqp3(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -1375,11 +1375,11 @@ void geqp3_test()
 
   if(diff != 0.0)
   {
-    printf( "geqp3(): Failure Diff = %E\n", diff) ;
+    printf( "geqp3(): %s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else if(diffInt !=0){
     printf( "geqp3(): Failure Diff1111 = %d\n", diffInt) ;
   }else{
-    printf( "geqp3(): Success\n");
+    printf( "geqp3(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -1435,11 +1435,11 @@ void gelqf_test()
 
   if(diff != 0.0)
   {
-    printf( "Failure Diff = %E\n", diff) ;
+    printf( "%s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else if(diffInt !=0){
     printf( "gelqf(): Failure Diff = %d\n", diffInt) ;
   }else{
-    printf( "gelqf(): Success\n");
+    printf( "gelqf(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -1489,11 +1489,11 @@ void gelq2_test()
 
   if(diff != 0.0)
   {
-    printf( "Failure Diff = %E\n", diff) ;
+    printf( "%s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else if(diffInt !=0){
     printf( "gelq2(): Failure Diff = %d\n", diffInt) ;
   }else{
-    printf( "gelq2(): Success\n");
+    printf( "gelq2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -1554,9 +1554,9 @@ void gelsd_test()
 
   if(diff != 0.0)
   {
-    printf( "gelsd(): Failure Diff = %E\n", diff) ;
+    printf( "gelsd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else{
-    printf( "gelsd(): Success\n");
+    printf( "gelsd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
  //Free up the buffers
@@ -1619,9 +1619,9 @@ void gelsd_test()
 
   if(diff != 0.0)
   {
-    printf( "gelsd(): Failure Diff = %E\n", diff) ;
+    printf( "gelsd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else{
-    printf( "gelsd(): Success\n");
+    printf( "gelsd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
  //Free up the buffers
@@ -1684,9 +1684,9 @@ void gelss_test()
 
   if(diff != 0.0)
   {
-    printf( "gelss(): Failure Diff = %E\n", diff) ;
+    printf( "gelss(): %s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else{
-    printf( "gelss(): Success\n");
+    printf( "gelss(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
  //Free up the buffers
@@ -1749,9 +1749,9 @@ void gelss_test()
 
   if(diff != 0.0)
   {
-    printf( "gelss(): Failure Diff = %E\n", diff) ;
+    printf( "gelss(): %s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else{
-    printf( "gelss(): Success\n");
+    printf( "gelss(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
  //Free up the buffers
@@ -1795,9 +1795,9 @@ void lauum_test()
 
   if(diff != 0.0)
   {
-    printf( "lauum(): Failure Diff = %E\n", diff);
+    printf( "lauum(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "lauum(): Success\n");
+    printf( "lauum(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -1838,9 +1838,9 @@ void lauu2_test()
 
   if(diff != 0.0)
   {
-    printf( "lauu2(): Failure Diff = %E\n", diff);
+    printf( "lauu2(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "lauu2(): Success\n");
+    printf( "lauu2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -1880,9 +1880,9 @@ void potri_test()
 
   if(diff != 0.0)
   {
-    printf( "potri(): Failure Diff = %E\n", diff);
+    printf( "potri(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "potri(): Success\n");
+    printf( "potri(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -1921,9 +1921,9 @@ void trtri_test()
 
   if(diff != 0.0)
   {
-    printf( "trtri(): Failure Diff = %E\n", diff);
+    printf( "trtri(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "trtri(): Success\n");
+    printf( "trtri(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -1964,9 +1964,9 @@ void trti2_test()
 
   if(diff != 0.0)
   {
-    printf( "trti2(): Failure Diff = %E\n", diff);
+    printf( "trti2(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "trti2(): Success\n");
+    printf( "trti2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2018,9 +2018,9 @@ void trsyl_test()
 
   if(diff != 0.0)
   {
-    printf( "trsyl(): Failure Diff = %E\n", diff);
+    printf( "trsyl(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-   printf( "trsyl(): Success\n");
+   printf( "trsyl(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2076,9 +2076,9 @@ void trsyl_test()
 
   if(diff != 0.0)
   {
-    printf( "trsyl(): Failure Diff = %E\n", diff);
+    printf( "trsyl(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-   printf( "trsyl(): Success\n");
+   printf( "trsyl(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2129,9 +2129,9 @@ void gehrd_test()
 
   if(diff != 0.0)
   {
-    printf( "gehrd(): Failure Diff = %E\n", diff);
+    printf( "gehrd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gehrd(): Success\n");
+    printf( "gehrd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2183,9 +2183,9 @@ void gehd2_test()
 
   if(diff != 0.0)
   {
-    printf( "gehd2(): Failure Diff = %E\n", diff);
+    printf( "gehd2(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gehd2(): Success\n");
+    printf( "gehd2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2233,9 +2233,9 @@ void sytrd_test()
 
   if(diff != 0.0)
   {
-    printf( "sytrd(): Failure Diff = %E\n", diff);
+    printf( "sytrd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "sytrd(): Success\n");
+    printf( "sytrd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2283,9 +2283,9 @@ void hetrd_test()
 
   if(diff != 0.0)
   {
-    printf( "hetrd(): Failure Diff = %E\n", diff);
+    printf( "hetrd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "hetrd(): Success\n");
+    printf( "hetrd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2333,9 +2333,9 @@ void sytd2_test()
 
   if(diff != 0.0)
   {
-    printf( "sytd2(): Failure Diff = %E\n", diff);
+    printf( "sytd2(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "sytd2(): Success\n");
+    printf( "sytd2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2383,9 +2383,9 @@ void hetd2_test()
 
   if(diff != 0.0)
   {
-    printf( "hetd2(): Failure Diff = %E\n", diff);
+    printf( "hetd2(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "hetd2(): Success\n");
+    printf( "hetd2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2441,9 +2441,9 @@ void gebrd_test()
 
   if(diff != 0.0)
   {
-    printf( "gebrd(): Failure Diff = %E\n", diff);
+    printf( "gebrd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gebrd(): Success\n");
+    printf( "gebrd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2499,9 +2499,9 @@ void gebrd_test()
 
   if(diff != 0.0)
   {
-    printf( "gebrd(): Failure Diff = %E\n", diff);
+    printf( "gebrd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gebrd(): Success\n");
+    printf( "gebrd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2559,9 +2559,9 @@ void gebd2_test()
 
   if(diff != 0.0)
   {
-    printf( "gebd2(): Failure Diff = %E\n", diff);
+    printf( "gebd2(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gebd2(): Success\n");
+    printf( "gebd2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2617,9 +2617,9 @@ void gebd2_test()
 
   if(diff != 0.0)
   {
-    printf( "gebd2(): Failure Diff = %E\n", diff);
+    printf( "gebd2(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gebd2(): Success\n");
+    printf( "gebd2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2669,9 +2669,9 @@ void sygst_test()
 
   if(diff != 0.0)
   {
-    printf( "sygst(): Failure Diff = %E\n", diff);
+    printf( "sygst(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "sygst(): Success\n");
+    printf( "sygst(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2718,9 +2718,9 @@ void hegst_test()
 
   if(diff != 0.0)
   {
-    printf( "hegst(): Failure Diff = %E\n", diff);
+    printf( "hegst(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "hegst(): Success\n");
+    printf( "hegst(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2765,9 +2765,9 @@ void sygs2_test()
 
   if(diff != 0.0)
   {
-    printf( "sygs2(): Failure Diff = %E\n", diff);
+    printf( "sygs2(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "sygst(): Success\n");
+    printf( "sygst(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2814,9 +2814,9 @@ void hegs2_test()
 
   if(diff != 0.0)
   {
-    printf( "hegs2(): Failure Diff = %E\n", diff);
+    printf( "hegs2(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "hegs2(): Success\n");
+    printf( "hegs2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2873,9 +2873,9 @@ void larft_test()
 
   if(diff != 0.0)
   {
-    printf( "larft(): Failure Diff = %E\n", diff);
+    printf( "larft(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "larft(): Success\n");
+    printf( "larft(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2925,10 +2925,10 @@ void larfg_test()
 
   if(diff != 0.0)
   {
-    printf( "larfg(): Failure Diff = %E\n", diff);
+    printf( "larfg(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }
   else{
-    printf( "larfg(): Success\n");
+    printf( "larfg(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -2974,10 +2974,10 @@ void larfgp_test()
 
   if(diff != 0.0)
   {
-    printf( "larfgp(): Failure Diff = %E\n", diff);
+    printf( "larfgp(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }
   else{
-    printf( "larfgp(): Success\n");
+    printf( "larfgp(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -3024,9 +3024,9 @@ void orgqr_test()
 
   if(diff != 0.0)
   {
-    printf( "orgqr(): Failure Diff = %E\n", diff);
+    printf( "orgqr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "orgqr(): Success\n");
+    printf( "orgqr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -3074,9 +3074,9 @@ void ungqr_test()
 
   if(diff != 0.0)
   {
-    printf( "ungqr(): Failure Diff = %E\n", diff);
+    printf( "ungqr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "ungqr(): Success\n");
+    printf( "ungqr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -3130,9 +3130,9 @@ void ormqr_test()
 
   if(diff != 0.0)
   {
-    printf( "ormqr(): Failure Diff = %E\n", diff);
+    printf( "ormqr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "ormqr(): Success\n");
+    printf( "ormqr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -3187,9 +3187,9 @@ void unmqr_test()
 
   if(diff != 0.0)
   {
-    printf( "unmqr(): Failure Diff = %E\n", diff);
+    printf( "unmqr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "unmqr(): Success\n");
+    printf( "unmqr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -3244,9 +3244,9 @@ void orm2r_test()
 
   if(diff != 0.0)
   {
-    printf( "orm2r(): Failure Diff = %E\n", diff);
+    printf( "orm2r(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "orm2r(): Success\n");
+    printf( "orm2r(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -3301,9 +3301,9 @@ void unm2r_test()
 
   if(diff != 0.0)
   {
-    printf( "unm2r(): Failure Diff = %E\n", diff);
+    printf( "unm2r(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "unm2r(): Success\n");
+    printf( "unm2r(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -3352,9 +3352,9 @@ void orglq_test()
 
   if(diff != 0.0)
   {
-    printf( "orglq(): Failure Diff = %E\n", diff);
+    printf( "orglq(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "orglq(): Success\n");
+    printf( "orglq(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -3403,9 +3403,9 @@ void unglq_test()
 
   if(diff != 0.0)
   {
-    printf( "unglq(): Failure Diff = %E\n", diff);
+    printf( "unglq(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "unglq(): Success\n");
+    printf( "unglq(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -3460,9 +3460,9 @@ void ormlq_test()
 
   if(diff != 0.0)
   {
-    printf( "ormlq(): Failure Diff = %E\n", diff);
+    printf( "ormlq(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "ormlq(): Success\n");
+    printf( "ormlq(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -3518,9 +3518,9 @@ void unmlq_test()
 
   if(diff != 0.0)
   {
-    printf( "unmlq(): Failure Diff = %E\n", diff);
+    printf( "unmlq(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "unmlq(): Success\n");
+    printf( "unmlq(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -3582,9 +3582,9 @@ void orml2_test()
 
   if(diff != 0.0)
   {
-    printf( "orml2(): Failure Diff = %E\n", diff);
+    printf( "orml2(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "orml2(): Success\n");
+    printf( "orml2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -3647,9 +3647,9 @@ void unml2_test()
 
   if(diff != 0.0)
   {
-    printf( "unml2(): Failure Diff = %E\n", diff);
+    printf( "unml2(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "unml2(): Success\n");
+    printf( "unml2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -3698,9 +3698,9 @@ void orgtr_test()
 
   if(diff != 0.0)
   {
-    printf( "orgtr(): Failure Diff = %E\n", diff);
+    printf( "orgtr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "orgtr(): Success\n");
+    printf( "orgtr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -3750,9 +3750,9 @@ void ungtr_test()
 
   if(diff != 0.0)
   {
-    printf( "ungtr(): Failure Diff = %E\n", diff);
+    printf( "ungtr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "ungtr(): Success\n");
+    printf( "ungtr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -3807,9 +3807,9 @@ void ormtr_test()
 
   if(diff != 0.0)
   {
-    printf( "ormtr(): Failure Diff = %E\n", diff);
+    printf( "ormtr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "ormtr(): Success\n");
+    printf( "ormtr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -3864,9 +3864,9 @@ void unmtr_test()
 
   if(diff != 0.0)
   {
-    printf( "unmtr(): Failure Diff = %E\n", diff);
+    printf( "unmtr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "unmtr(): Success\n");
+    printf( "unmtr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -3925,9 +3925,9 @@ void orgbr_test()
 
   if(diff != 0.0)
   {
-    printf( "orgbr(): Failure Diff = %E\n", diff);
+    printf( "orgbr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "orgbr(): Success\n");
+    printf( "orgbr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -3985,9 +3985,9 @@ void ungbr_test()
 
   if(diff != 0.0)
   {
-    printf( "ungbr(): Failure Diff = %E\n", diff);
+    printf( "ungbr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "ungbr(): Success\n");
+    printf( "ungbr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -4050,9 +4050,9 @@ void ormbr_test()
 
   if(diff != 0.0)
   {
-    printf( "ormbr(): Failure Diff = %E\n", diff);
+    printf( "ormbr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "ormbr(): Success\n");
+    printf( "ormbr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -4116,9 +4116,9 @@ void unmbr_test()
 
   if(diff != 0.0)
   {
-    printf( "unmbr(): Failure Diff = %E\n", diff);
+    printf( "unmbr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "unmbr(): Success\n");
+    printf( "unmbr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -4169,9 +4169,9 @@ void steqr_test()
 
   if(diff != 0.0)
   {
-    printf( "steqr(): Failure Diff = %E\n", diff);
+    printf( "steqr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "steqr(): Success\n");
+    printf( "steqr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -4224,9 +4224,9 @@ void steqr_test()
 
   if(diff != 0.0)
   {
-    printf( "steqr(): Failure Diff = %E\n", diff);
+    printf( "steqr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "steqr(): Success\n");
+    printf( "steqr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -4276,9 +4276,9 @@ void stedc_test()
 
   if(diff != 0.0)
   {
-    printf( "stedc(): Failure Diff = %E\n", diff);
+    printf( "stedc(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "stedc(): Success\n");
+    printf( "stedc(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -4330,9 +4330,9 @@ void stedc_test()
 
   if(diff != 0.0)
   {
-    printf( "stedc(): Failure Diff = %E\n", diff);
+    printf( "stedc(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "stedc(): Success\n");
+    printf( "stedc(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -4404,9 +4404,9 @@ void stemr_test()
 
   if(diff != 0.0)
   {
-    printf( "stemr(): Failure Diff = %E\n", diff);
+    printf( "stemr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "stemr(): Success\n");
+    printf( "stemr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -4484,9 +4484,9 @@ void stemr_test()
 
   if(diff != 0.0)
   {
-    printf( "stemr(): Failure Diff = %E\n", diff);
+    printf( "stemr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "stemr(): Success\n");
+    printf( "stemr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -4539,9 +4539,9 @@ void syev_test()
 
   if(diff != 0.0)
   {
-    printf( "syev(): Failure Diff = %E\n", diff);
+    printf( "syev(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "syev(): Success\n");
+    printf( "syev(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -4588,9 +4588,9 @@ void heev_test()
 
   if(diff != 0.0)
   {
-    printf( "heev(): Failure Diff = %E\n", diff);
+    printf( "heev(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "heev(): Success\n");
+    printf( "heev(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -4636,9 +4636,9 @@ void syevd_test()
 
   if(diff != 0.0)
   {
-    printf( "syevd(): Failure Diff = %E\n", diff);
+    printf( "syevd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "syevd(): Success\n");
+    printf( "syevd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -4685,9 +4685,9 @@ void heevd_test()
 
   if(diff != 0.0)
   {
-    printf( "heevd(): Failure Diff = %E\n", diff);
+    printf( "heevd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "heevd(): Success\n");
+    printf( "heevd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -4752,9 +4752,9 @@ void syevr_test()
 
   if(diff != 0.0)
   {
-    printf( "syevr(): Failure Diff = %E\n", diff);
+    printf( "syevr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "syevr(): Success\n");
+    printf( "syevr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -4826,9 +4826,9 @@ void heevr_test()
 
   if(diff != 0.0)
   {
-    printf( "heevr(): Failure Diff = %E\n", diff);
+    printf( "heevr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "heevr(): Success\n");
+    printf( "heevr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -4895,9 +4895,9 @@ void bdsqr_test()
 
   if(diff != 0.0)
   {
-    printf( "bdsqr(): Failure Diff = %E\n", diff);
+    printf( "bdsqr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "bdsqr(): Success\n");
+    printf( "bdsqr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -4960,9 +4960,9 @@ void bdsqr_test()
 
   if(diff != 0.0)
   {
-    printf( "bdsqr(): Failure Diff = %E\n", diff);
+    printf( "bdsqr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "bdsqr(): Success\n");
+    printf( "bdsqr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -5030,9 +5030,9 @@ void bdsdc_test()
 
   if(diff != 0.0)
   {
-    printf( "bdsdc(): Failure Diff = %E\n", diff);
+    printf( "bdsdc(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "bdsdc(): Success\n");
+    printf( "bdsdc(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -5107,9 +5107,9 @@ void gesvd_test()
 
   if(diff != 0.0)
   {
-    printf( "gesvd(): Failure Diff = %E\n", diff);
+    printf( "gesvd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gesvd(): Success\n");
+    printf( "gesvd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -5182,9 +5182,9 @@ void gesvd_test()
 
   if(diff != 0.0)
   {
-    printf( "gesvd(): Failure Diff = %E\n", diff);
+    printf( "gesvd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gesvd(): Success\n");
+    printf( "gesvd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -5254,9 +5254,9 @@ void gesdd_test()
 
   if(diff != 0.0)
   {
-    printf( "gessd(): Failure Diff = %E\n", diff);
+    printf( "gessd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gessd(): Success\n");
+    printf( "gessd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -5327,9 +5327,9 @@ void gesdd_test()
 
   if(diff != 0.0)
   {
-    printf( "gessd(): Failure Diff = %E\n", diff);
+    printf( "gessd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gessd(): Success\n");
+    printf( "gessd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -5386,9 +5386,9 @@ void laswp_test()
 
   if(diff != 0.0)
   {
-    printf( "laswp(): Failure Diff = %E\n", diff);
+    printf( "laswp(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "laswp(): Success\n");
+    printf( "laswp(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -5435,9 +5435,9 @@ void laset_test()
 
   if(diff != 0.0)
   {
-    printf( "laset(): Failure Diff = %E\n", diff);
+    printf( "laset(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "laset(): Success\n");
+    printf( "laset(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

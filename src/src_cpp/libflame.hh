@@ -29,13 +29,6 @@
 
 #include  <complex>
 extern "C" {
-  #include "../../src/base/flamec/blis/include/blis_type_defs.h"
-  #include "../../src/base/flamec/include/FLA_type_defs.h"
-  #include "../../src/base/flamec/control/FLA_Cntl.h"
-  #include "../../src/base/flamec/include/FLA_main_prototypes.h"
-  #include "../../src/base/flamec/include/FLA_macro_defs.h"
-  #include "../../src/base/flamec/include/FLA_macro_ptr_defs.h"
-  #include "../../src/base/flamec/include/FLA_lapack_prototypes.h"
   #include "lapacke.h"
 }
 

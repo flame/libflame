@@ -25,6 +25,7 @@
  *  libflame_potrf.cc Test application to validate CPP template interface
  *  */
 
+#include "libflame_interface.hh"
 #include "libflame_test.hh"
 
 template< typename T >
@@ -56,9 +57,9 @@ void potrf_test()
 
   if(diff != 0.0)
   {
-    printf( "potrf(): Failure Diff = %E\n", diff);
+    printf( "potrf(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "potrf(): Success\n");
+    printf( "potrf(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

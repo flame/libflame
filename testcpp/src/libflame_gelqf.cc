@@ -69,11 +69,11 @@ void gelqf_test()
 
   if(diff != 0.0)
   {
-    printf( "Failure Diff = %E\n", diff) ;
+    printf( "%s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else if(diffInt !=0){
     printf( "gelqf(): Failure Diff = %d\n", diffInt) ;
   }else{
-    printf( "gelqf(): Success\n");
+    printf( "gelqf(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

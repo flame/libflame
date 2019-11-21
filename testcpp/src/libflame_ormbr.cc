@@ -76,9 +76,9 @@ void ormbr_test()
 
   if(diff != 0.0)
   {
-    printf( "ormbr(): Failure Diff = %E\n", diff);
+    printf( "ormbr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "ormbr(): Success\n");
+    printf( "ormbr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

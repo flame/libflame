@@ -183,11 +183,11 @@ void geqpf_test()
 
   if(diff != 0.0)
   {
-    printf( "geqpf(): Failure Diff = %E\n", diff) ;
+    printf( "geqpf(): %s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else if(diffInt !=0){
     printf( "geqpf(): Failure Diff = %d\n", diffInt) ;
   }else{
-    printf( "geqpf(): Success\n");
+    printf( "geqpf(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -247,11 +247,11 @@ void geqpf_test()
 
   if(diff != 0.0)
   {
-    printf( "geqpf(): Failure Diff = %E\n", diff) ;
+    printf( "geqpf(): %s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else if(diffInt !=0){
     printf( "geqpf(): Failure Diff = %d\n", diffInt) ;
   }else{
-    printf( "geqpf(): Success\n");
+    printf( "geqpf(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

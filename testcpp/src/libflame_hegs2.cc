@@ -64,9 +64,9 @@ void hegs2_test()
 
   if(diff != 0.0)
   {
-    printf( "hegs2(): Failure Diff = %E\n", diff);
+    printf( "hegs2(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "hegs2(): Success\n");
+    printf( "hegs2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

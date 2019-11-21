@@ -64,9 +64,9 @@ void ungtr_test()
 
   if(diff != 0.0)
   {
-    printf( "ungtr(): Failure Diff = %E\n", diff);
+    printf( "ungtr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "ungtr(): Success\n");
+    printf( "ungtr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

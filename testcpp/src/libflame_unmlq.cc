@@ -72,9 +72,9 @@ void unmlq_test()
 
   if(diff != 0.0)
   {
-    printf( "unmlq(): Failure Diff = %E\n", diff);
+    printf( "unmlq(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "unmlq(): Success\n");
+    printf( "unmlq(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

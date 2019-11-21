@@ -60,9 +60,9 @@ void trti2_test()
 
   if(diff != 0.0)
   {
-    printf( "trti2(): Failure Diff = %E\n", diff);
+    printf( "trti2(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "trti2(): Success\n");
+    printf( "trti2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

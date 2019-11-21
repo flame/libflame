@@ -17,6 +17,7 @@
         check-env check-env-config check-env-fragments \
         flat-headers \
         test \
+	checkcpp cleancpptest \
         install-headers install-libs install-lib-symlinks \
         clean cleanmk cleanh cleanlib cleanleaves distclean \
         install \
@@ -59,6 +60,7 @@ OBJ_DIR         := obj
 LIB_DIR         := lib
 INC_DIR         := include
 LAPACKE_DIR     := lapacke
+CPP_TEST_DIR    := testcpp
 
 # Use the system type to name the config, object, and library directories.
 # These directories are special in that they will contain products specific
@@ -641,6 +643,10 @@ else
 endif
 
 
+# Run CPP Tests
+checkcpp:
+	$(MAKE) -C $(CPP_TEST_DIR)
+
 # --- Install library rules ---
 
 install-libs: check-env $(MK_LIBS_INST)
@@ -776,6 +782,14 @@ else
 	@echo "Removing leaf-level build objects from source tree"
 	@$(FIND) $(BASE_OBJ_PATH) -name "*.[osx]" | $(XARGS) $(RM_F)
 endif
+endif
+
+cleancpptest:
+ifeq ($(ENABLE_VERBOSE),yes)
+	- $(MAKE) -C $(CPP_TEST_DIR) clean
+else
+	@echo "Clean up CPP tests"
+	@@$(MAKE) -C $(CPP_TEST_DIR) clean
 endif
 
 # --- Uninstall rules ---

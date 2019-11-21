@@ -214,9 +214,9 @@ void unml2_test()
 
   if(diff != 0.0)
   {
-    printf( "unml2(): Failure Diff = %E\n", diff);
+    printf( "unml2(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "unml2(): Success\n");
+    printf( "unml2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

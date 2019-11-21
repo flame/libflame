@@ -70,9 +70,9 @@ void unmtr_test()
 
   if(diff != 0.0)
   {
-    printf( "unmtr(): Failure Diff = %E\n", diff);
+    printf( "unmtr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "unmtr(): Success\n");
+    printf( "unmtr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

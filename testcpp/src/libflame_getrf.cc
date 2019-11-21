@@ -67,11 +67,12 @@ void getrf_test()
 
   if(diff != 0.0)
   {
-    printf( "getrf(): Failure Diff = %E\n", diff);
+    printf( "getrf(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else if(diffInt !=0){
+    printf( "getrf(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
     printf( "getrf(): Failure Pivot Buffer mismatach Diff = %d\n", diffInt);
   }else{
-    printf( "getrf(): Success\n");
+    printf( "getrf(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

@@ -137,9 +137,9 @@ void potri_test()
 
   if(diff != 0.0)
   {
-    printf( "potri(): Failure Diff = %E\n", diff);
+    printf( "potri(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "potri(): Success\n");
+    printf( "potri(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

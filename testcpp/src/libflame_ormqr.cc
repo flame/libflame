@@ -71,9 +71,9 @@ void ormqr_test()
 
   if(diff != 0.0)
   {
-    printf( "ormqr(): Failure Diff = %E\n", diff);
+    printf( "ormqr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "ormqr(): Success\n");
+    printf( "ormqr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

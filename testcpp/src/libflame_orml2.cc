@@ -214,9 +214,9 @@ void orml2_test()
 
   if(diff != 0.0)
   {
-    printf( "orml2(): Failure Diff = %E\n", diff);
+    printf( "orml2(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "orml2(): Success\n");
+    printf( "orml2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

@@ -70,9 +70,9 @@ void gebd2_test()
 
   if(diff != 0.0)
   {
-    printf( "gebd2(): Failure Diff = %E\n", diff);
+    printf( "gebd2(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gebd2(): Success\n");
+    printf( "gebd2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -128,9 +128,9 @@ void gebd2_test()
 
   if(diff != 0.0)
   {
-    printf( "gebd2(): Failure Diff = %E\n", diff);
+    printf( "gebd2(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gebd2(): Success\n");
+    printf( "gebd2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

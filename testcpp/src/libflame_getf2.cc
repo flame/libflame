@@ -66,11 +66,12 @@ void getf2_test()
 
   if(diff != 0.0)
   {
-    printf( "Failure Diff = %E\n", diff);
+    printf( "%s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else if(diffInt !=0){
+    printf( "%s TEST FAIL\n" , __PRETTY_FUNCTION__);
     printf( "getf2(): Failure:Pivot Buffer Mismatch Diff = %d\n", diffInt);
   }else{
-    printf( "getf2(): Success\n");
+    printf( "getf2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

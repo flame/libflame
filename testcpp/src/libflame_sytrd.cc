@@ -65,9 +65,9 @@ void sytrd_test()
 
   if(diff != 0.0)
   {
-    printf( "sytrd(): Failure Diff = %E\n", diff);
+    printf( "sytrd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "sytrd(): Success\n");
+    printf( "sytrd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

@@ -57,7 +57,7 @@ void trtri_test()
 
   if(diff != 0.0)
   {
-    printf( "trtri(): Failure Diff = %E\n", diff);
+    printf( "trtri(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
     FILE *fp = fopen("1.txt", "a+");
 	print(fp,m, aCIOBuff, aCIOBuff);
 	fclose(fp);
@@ -65,7 +65,7 @@ void trtri_test()
 	print(fp,m, aCPPIOBuff, aCPPIOBuff);
 	fclose(fp);
   }else{
-    printf( "trtri(): Success\n");
+    printf( "trtri(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

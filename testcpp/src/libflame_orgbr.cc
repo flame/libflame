@@ -72,9 +72,9 @@ void orgbr_test()
 
   if(diff != 0.0)
   {
-    printf( "orgbr(): Failure Diff = %E\n", diff);
+    printf( "orgbr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "orgbr(): Success\n");
+    printf( "orgbr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

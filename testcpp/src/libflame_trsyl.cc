@@ -72,9 +72,9 @@ void trsyl_test()
 
   if(diff != 0.0)
   {
-    printf( "trsyl(): Failure Diff = %E\n", diff);
+    printf( "trsyl(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-   printf( "trsyl(): Success\n");
+   printf( "trsyl(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -131,9 +131,9 @@ void trsyl_test()
 
   if(diff != 0.0)
   {
-    printf( "trsyl(): Failure Diff = %E\n", diff);
+    printf( "trsyl(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-   printf( "trsyl(): Success\n");
+   printf( "trsyl(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

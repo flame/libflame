@@ -63,9 +63,9 @@ void sygst_test()
 
   if(diff != 0.0)
   {
-    printf( "sygst(): Failure Diff = %E\n", diff);
+    printf( "sygst(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "sygst(): Success\n");
+    printf( "sygst(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

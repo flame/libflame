@@ -65,9 +65,9 @@ void orgqr_test()
 
   if(diff != 0.0)
   {
-    printf( "orgqr(): Failure Diff = %E\n", diff);
+    printf( "orgqr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "orgqr(): Success\n");
+    printf( "orgqr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

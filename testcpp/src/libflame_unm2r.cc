@@ -69,9 +69,9 @@ void unm2r_test()
 
   if(diff != 0.0)
   {
-    printf( "unm2r(): Failure Diff = %E\n", diff);
+    printf( "unm2r(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "unm2r(): Success\n");
+    printf( "unm2r(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

@@ -64,9 +64,9 @@ void steqr_test()
 
   if(diff != 0.0)
   {
-    printf( "steqr(): Failure Diff = %E\n", diff);
+    printf( "steqr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "steqr(): Success\n");
+    printf( "steqr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -119,9 +119,9 @@ void steqr_test()
 
   if(diff != 0.0)
   {
-    printf( "steqr(): Failure Diff = %E\n", diff);
+    printf( "steqr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "steqr(): Success\n");
+    printf( "steqr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

@@ -68,9 +68,9 @@ void geqrf_test()
 
   if(diff != 0.0)
   {
-    printf( "geqrf(): Failure Diff = %E\n", diff);
+    printf( "geqrf(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "geqrf(): Success\n");
+    printf( "geqrf(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

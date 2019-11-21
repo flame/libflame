@@ -70,9 +70,9 @@ void ormtr_test()
 
   if(diff != 0.0)
   {
-    printf( "ormtr(): Failure Diff = %E\n", diff);
+    printf( "ormtr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "ormtr(): Success\n");
+    printf( "ormtr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

@@ -82,9 +82,9 @@ void gesdd_test()
 
   if(diff != 0.0)
   {
-    printf( "gessd(): Failure Diff = %E\n", diff);
+    printf( "gessd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gessd(): Success\n");
+    printf( "gessd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -155,9 +155,9 @@ void gesdd_test()
 
   if(diff != 0.0)
   {
-    printf( "gessd(): Failure Diff = %E\n", diff);
+    printf( "gessd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gessd(): Success\n");
+    printf( "gessd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

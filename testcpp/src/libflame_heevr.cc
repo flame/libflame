@@ -86,9 +86,9 @@ void heevr_test()
 
   if(diff != 0.0)
   {
-    printf( "heevr(): Failure Diff = %E\n", diff);
+    printf( "heevr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "heevr(): Success\n");
+    printf( "heevr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

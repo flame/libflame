@@ -79,9 +79,9 @@ void unmbr_test()
 
   if(diff != 0.0)
   {
-    printf( "unmbr(): Failure Diff = %E\n", diff);
+    printf( "unmbr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "unmbr(): Success\n");
+    printf( "unmbr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

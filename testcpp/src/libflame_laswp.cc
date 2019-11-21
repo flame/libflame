@@ -69,9 +69,9 @@ void laswp_test()
 
   if(diff != 0.0)
   {
-    printf( "laswp(): Failure Diff = %E\n", diff);
+    printf( "laswp(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "laswp(): Success\n");
+    printf( "laswp(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

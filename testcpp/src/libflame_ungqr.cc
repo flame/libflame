@@ -64,9 +64,9 @@ void ungqr_test()
 
   if(diff != 0.0)
   {
-    printf( "ungqr(): Failure Diff = %E\n", diff);
+    printf( "ungqr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "ungqr(): Success\n");
+    printf( "ungqr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

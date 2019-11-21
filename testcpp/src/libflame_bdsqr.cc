@@ -80,9 +80,9 @@ void bdsqr_test()
 
   if(diff != 0.0)
   {
-    printf( "bdsqr(): Failure Diff = %E\n", diff);
+    printf( "bdsqr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "bdsqr(): Success\n");
+    printf( "bdsqr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -145,9 +145,9 @@ void bdsqr_test()
 
   if(diff != 0.0)
   {
-    printf( "bdsqr(): Failure Diff = %E\n", diff);
+    printf( "bdsqr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "bdsqr(): Success\n");
+    printf( "bdsqr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

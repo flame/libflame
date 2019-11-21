@@ -184,11 +184,11 @@ void geqp3_test()
 
   if(diff != 0.0)
   {
-    printf( "geqp3(): Failure Diff = %E\n", diff) ;
+    printf( "geqp3(): %s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else if(diffInt !=0){
     printf( "geqp3(): Failure Diff = %d\n", diffInt) ;
   }else{
-    printf( "geqp3(): Success\n");
+    printf( "geqp3(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -249,11 +249,11 @@ void geqp3_test()
 
   if(diff != 0.0)
   {
-    printf( "geqp3(): Failure Diff = %E\n", diff) ;
+    printf( "geqp3(): %s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else if(diffInt !=0){
     printf( "geqp3(): Failure Diff1111 = %d\n", diffInt) ;
   }else{
-    printf( "geqp3(): Success\n");
+    printf( "geqp3(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

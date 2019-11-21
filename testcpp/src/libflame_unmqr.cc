@@ -71,9 +71,9 @@ void unmqr_test()
 
   if(diff != 0.0)
   {
-    printf( "unmqr(): Failure Diff = %E\n", diff);
+    printf( "unmqr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "unmqr(): Success\n");
+    printf( "unmqr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

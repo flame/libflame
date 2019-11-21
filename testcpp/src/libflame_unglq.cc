@@ -131,9 +131,9 @@ void unglq_test()
 
   if(diff != 0.0)
   {
-    printf( "unglq(): Failure Diff = %E\n", diff);
+    printf( "unglq(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "unglq(): Success\n");
+    printf( "unglq(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

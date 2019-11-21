@@ -72,9 +72,9 @@ void ormlq_test()
 
   if(diff != 0.0)
   {
-    printf( "ormlq(): Failure Diff = %E\n", diff);
+    printf( "ormlq(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "ormlq(): Success\n");
+    printf( "ormlq(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

@@ -63,9 +63,9 @@ void syevd_test()
 
   if(diff != 0.0)
   {
-    printf( "syevd(): Failure Diff = %E\n", diff);
+    printf( "syevd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "syevd(): Success\n");
+    printf( "syevd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

@@ -67,11 +67,11 @@ void geqr2_test()
 
   if(diff != 0.0)
   {
-    printf( "Failure Diff = %E\n", diff) ;
+    printf( "%s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else if(diffInt !=0){
     printf( "geqr2(): Failure Diff = %d\n", diffInt) ;
   }else{
-    printf( "geqr2(): Success\n");
+    printf( "geqr2(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

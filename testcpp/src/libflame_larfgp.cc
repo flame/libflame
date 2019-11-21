@@ -116,10 +116,10 @@ void larfgp_test()
 
   if(diff != 0.0)
   {
-    printf( "larfgp(): Failure Diff = %E\n", diff);
+    printf( "larfgp(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }
   else{
-    printf( "larfgp(): Success\n");
+    printf( "larfgp(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

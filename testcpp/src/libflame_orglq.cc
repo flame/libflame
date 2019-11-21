@@ -131,9 +131,9 @@ void orglq_test()
 
   if(diff != 0.0)
   {
-    printf( "orglq(): Failure Diff = %E\n", diff);
+    printf( "orglq(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "orglq(): Success\n");
+    printf( "orglq(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

@@ -85,9 +85,9 @@ void gesvd_test()
 
   if(diff != 0.0)
   {
-    printf( "gesvd(): Failure Diff = %E\n", diff);
+    printf( "gesvd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gesvd(): Success\n");
+    printf( "gesvd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -160,9 +160,9 @@ void gesvd_test()
 
   if(diff != 0.0)
   {
-    printf( "gesvd(): Failure Diff = %E\n", diff);
+    printf( "gesvd(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "gesvd(): Success\n");
+    printf( "gesvd(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

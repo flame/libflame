@@ -87,9 +87,9 @@ void stemr_test()
 
   if(diff != 0.0)
   {
-    printf( "stemr(): Failure Diff = %E\n", diff);
+    printf( "stemr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "stemr(): Success\n");
+    printf( "stemr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
@@ -167,9 +167,9 @@ void stemr_test()
 
   if(diff != 0.0)
   {
-    printf( "stemr(): Failure Diff = %E\n", diff);
+    printf( "stemr(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "stemr(): Success\n");
+    printf( "stemr(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

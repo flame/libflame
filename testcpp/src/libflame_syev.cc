@@ -63,9 +63,9 @@ void syev_test()
 
   if(diff != 0.0)
   {
-    printf( "syev(): Failure Diff = %E\n", diff);
+    printf( "syev(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "syev(): Success\n");
+    printf( "syev(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers

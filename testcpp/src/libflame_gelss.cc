@@ -194,9 +194,9 @@ void gelss_test()
 
   if(diff != 0.0)
   {
-    printf( "gelss(): Failure Diff = %E\n", diff) ;
+    printf( "gelss(): %s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else{
-    printf( "gelss(): Success\n");
+    printf( "gelss(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
  //Free up the buffers
@@ -259,9 +259,9 @@ void gelss_test()
 
   if(diff != 0.0)
   {
-    printf( "gelss(): Failure Diff = %E\n", diff) ;
+    printf( "gelss(): %s TEST FAIL\n" , __PRETTY_FUNCTION__) ;
   }else{
-    printf( "gelss(): Success\n");
+    printf( "gelss(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
  //Free up the buffers

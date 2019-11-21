@@ -119,9 +119,9 @@ void laset_test()
 
   if(diff != 0.0)
   {
-    printf( "laset(): Failure Diff = %E\n", diff);
+    printf( "laset(): %s TEST FAIL\n" , __PRETTY_FUNCTION__);
   }else{
-    printf( "laset(): Success\n");
+    printf( "laset(): %s TEST PASS\n" , __PRETTY_FUNCTION__);
   }
 
   //Free up the buffers
