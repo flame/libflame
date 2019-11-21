@@ -27,7 +27,7 @@ BUILD_DIR       := ../build
 CONFIG_DIR      := ../config
 LIB_DIR         := ../lib
 INCLUDE_DIR     := ../src/base/flamec/include
-SRC_PATH         := ../src
+SRC_PATH        := ../src
 HOST            := $(shell sh $(BUILD_DIR)/ac-utils/config.guess)
 CONFIG_MK_FILE  := $(CONFIG_DIR)/$(HOST)/config.mk
 LIB_PATH        := $(LIB_DIR)/$(HOST)
@@ -47,7 +47,8 @@ INC_PATH        := $(INCLUDE_DIR)
 CC             := g++
 LINKER         := $(CC)
 
-CFLAGS         += -O2 -Wall -Wno-comment -fopenmp
+
+CXXFLAGS       += -O2 -Wall -Wno-comment -fopenmp
 LDFLAGS        := -lm -fopenmp -lgfortran 
 
 
@@ -58,7 +59,7 @@ LDFLAGS        := -lm -fopenmp -lgfortran
 
 # BLAS implementation path. A BLAS library must be given in order to run
 # the libflame test suite. Modify these definitions if needed.
-LIBBLAS_PATH   := /home/pradeep/amd/aocl/2.0/amd-blis/lib
+LIBBLAS_PATH   := 
 LIBBLAS        := $(LIBBLAS_PATH)/libblis.a
 
 # LAPACK implementation path. These values only matter if libflame was
@@ -149,7 +150,7 @@ FLA_INC_PATH   := $(INC_PATH)
 LIBFLAME       := $(FLA_LIB_PATH)/libflame.a
 LAPACKE        := $(SRC_PATH)/lapacke/liblapacke.a
 
-CFLAGS         += -I$(FLA_INC_PATH) -I$(SRC_PATH)/testcpp/src -I$(SRC_PATH)/src_cpp -I$(SRC_PATH)/lapacke/LAPACKE/include -I$(TEST_SRC_PATH) -I$(SRC_PATH)/base/flamec/blis/include -I$(SRC_PATH)/base/flamec/control
+CXXFLAGS         += -I$(FLA_INC_PATH) -I$(SRC_PATH)/testcpp/src -I$(SRC_PATH)/src_cpp -I$(SRC_PATH)/lapacke/LAPACKE/include -I$(TEST_SRC_PATH) -I$(SRC_PATH)/base/flamec/blis/include -I$(SRC_PATH)/base/flamec/control
 FNAME          := libflame
 
 TEST_OBJS      := $(patsubst $(TEST_SRC_PATH)/%.c, \
@@ -158,10 +159,10 @@ TEST_OBJS      := $(patsubst $(TEST_SRC_PATH)/%.c, \
 
 $(TEST_OBJ_PATH)/%.o: $(TEST_SRC_PATH)/%.cc
 	@mkdir -p $(TEST_OBJ_PATH)
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CXXFLAGS) -c $< -o $@
 
 $(TEST_OBJ_PATH)/libflame_%.o: libflame_%.cc
-	@$(CC) $(CFLAGS) -c $< -o $@
+	@$(CC) $(CXXFLAGS) -c $< -o $@
 
 libflame_%.x: $(TEST_OBJ_PATH)/libflame_%.o 
 	@$(LINKER) $^ $(TEST_OBJS) $(LAPACKE) $(LIBFLAME) $(LIBBLAS) $(LDFLAGS) -o $@
