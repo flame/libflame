@@ -122,8 +122,9 @@ void larfg_test()
   }
 
   //Free up the buffers
-  delete xCPPIOBuff ;
-  FLA_Obj_free( &xCIOObj );
+  delete[] xCPPIOBuff ;
+  delete[] xCIOBuff ;
+  FLA_Obj_free_without_buffer( &xCIOObj );
 }
 
 void larfg_testall_variants(){

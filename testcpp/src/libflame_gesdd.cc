@@ -88,14 +88,18 @@ void gesdd_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete sCPPOBuff ;
-  delete uCPPOBuff ;
-  delete vtCPPOBuff ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &sCOObj );
-  FLA_Obj_free( &uCOObj );
-  FLA_Obj_free( &vtCOObj );
+  delete[] aCPPIOBuff ;
+  delete[] sCPPOBuff ;
+  delete[] uCPPOBuff ;
+  delete[] vtCPPOBuff ;
+  delete[] aCIOBuff ;
+  delete[] sCOBuff ;
+  delete[] uCOBuff ;
+  delete[] vtCOBuff ;  
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &sCOObj );
+  FLA_Obj_free_without_buffer( &uCOObj );
+  FLA_Obj_free_without_buffer( &vtCOObj );
 }
 
 template< typename Ta, typename Tb >
@@ -161,14 +165,18 @@ void gesdd_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete sCPPOBuff ;
-  delete uCPPOBuff ;
-  delete vtCPPOBuff ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &sCOObj );
-  FLA_Obj_free( &uCOObj );
-  FLA_Obj_free( &vtCOObj );
+  delete[] aCPPIOBuff ;
+  delete[] sCPPOBuff ;
+  delete[] uCPPOBuff ;
+  delete[] vtCPPOBuff ;
+  delete[] aCIOBuff ;
+  delete[] sCOBuff ;
+  delete[] uCOBuff ;
+  delete[] vtCOBuff ;    
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &sCOObj );
+  FLA_Obj_free_without_buffer( &uCOObj );
+  FLA_Obj_free_without_buffer( &vtCOObj );
 }
 
 void gesdd_testall_variants(){

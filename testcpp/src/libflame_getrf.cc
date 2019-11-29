@@ -76,10 +76,10 @@ void getrf_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete pivCPPOBuff ;
-  delete aCIOBuff ;
-  delete pivCOBuff ;
+  delete[] aCPPIOBuff ;
+  delete[] pivCPPOBuff ;
+  delete[] aCIOBuff ;
+  delete[] pivCOBuff ;
   FLA_Obj_free_without_buffer( &aCIOObj );
   FLA_Obj_free_without_buffer( &pivCOObj );
 }

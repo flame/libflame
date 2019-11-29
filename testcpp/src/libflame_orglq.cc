@@ -42,50 +42,50 @@ FLA_Error orglq_C( FLA_Obj A, FLA_Obj t, int k )
   cs_A     = FLA_Obj_col_stride( A );
   int lwork    = m_A * FLA_Query_blocksize( datatype, FLA_DIMENSION_MIN );
   FLA_Obj_create( datatype, lwork, 1, 0, 0, &work_obj );
+  
   switch( datatype ){
-
-  case FLA_FLOAT:
-  {
-    float *buff_A    = ( float * ) FLA_FLOAT_PTR( A );
-    float *buff_t    = ( float * ) FLA_FLOAT_PTR( t );
-    float *buff_work = ( float * ) FLA_FLOAT_PTR( work_obj );
-     sorglq_( &m_A, &n_A, &k, buff_A, &cs_A, buff_t, buff_work, &lwork, &info );
-
-    break;
+    case FLA_FLOAT:
+    {
+      float *buff_A    = ( float * ) FLA_FLOAT_PTR( A );
+      float *buff_t    = ( float * ) FLA_FLOAT_PTR( t );
+      float *buff_work = ( float * ) FLA_FLOAT_PTR( work_obj );
+       sorglq_( &m_A, &n_A, &k, buff_A, &cs_A, buff_t, buff_work, &lwork, &info );
+    
+      break;
+    }
+    
+    case FLA_DOUBLE:
+    {
+      double *buff_A    = ( double * ) FLA_DOUBLE_PTR( A );
+      double *buff_t    = ( double * ) FLA_DOUBLE_PTR( t );
+      double *buff_work = ( double * ) FLA_DOUBLE_PTR( work_obj );
+      dorglq_( &m_A, &n_A, &k, buff_A, &cs_A, buff_t, buff_work, &lwork, &info );
+    
+      break;
+    }
+    
+    case FLA_COMPLEX:
+    {
+      lapack_complex_float *buff_A    = ( lapack_complex_float * ) FLA_COMPLEX_PTR( A );
+      lapack_complex_float *buff_t    = ( lapack_complex_float * ) FLA_COMPLEX_PTR( t );
+      lapack_complex_float *buff_work = ( lapack_complex_float * ) FLA_COMPLEX_PTR( work_obj );
+      cunglq_( &m_A, &n_A, &k, buff_A, &cs_A, buff_t, buff_work, &lwork, &info );
+    
+      break;
+    }
+    
+    case FLA_DOUBLE_COMPLEX:
+    {
+      lapack_complex_double *buff_A    = ( lapack_complex_double * ) FLA_DOUBLE_COMPLEX_PTR( A );
+      lapack_complex_double *buff_t    = ( lapack_complex_double * ) FLA_DOUBLE_COMPLEX_PTR( t );
+      lapack_complex_double *buff_work = ( lapack_complex_double * ) FLA_DOUBLE_COMPLEX_PTR( work_obj );
+      zunglq_( &m_A, &n_A, &k, buff_A, &cs_A, buff_t, buff_work, &lwork, &info );
+    
+      break;
+    }
   }
-
-  case FLA_DOUBLE:
-  {
-    double *buff_A    = ( double * ) FLA_DOUBLE_PTR( A );
-    double *buff_t    = ( double * ) FLA_DOUBLE_PTR( t );
-    double *buff_work = ( double * ) FLA_DOUBLE_PTR( work_obj );
-    dorglq_( &m_A, &n_A, &k, buff_A, &cs_A, buff_t, buff_work, &lwork, &info );
-
-    break;
-  }
-
-  case FLA_COMPLEX:
-  {
-    lapack_complex_float *buff_A    = ( lapack_complex_float * ) FLA_COMPLEX_PTR( A );
-    lapack_complex_float *buff_t    = ( lapack_complex_float * ) FLA_COMPLEX_PTR( t );
-    lapack_complex_float *buff_work = ( lapack_complex_float * ) FLA_COMPLEX_PTR( work_obj );
-    cunglq_( &m_A, &n_A, &k, buff_A, &cs_A, buff_t, buff_work, &lwork, &info );
-
-    break;
-  }
-
-  case FLA_DOUBLE_COMPLEX:
-  {
-    lapack_complex_double *buff_A    = ( lapack_complex_double * ) FLA_DOUBLE_COMPLEX_PTR( A );
-    lapack_complex_double *buff_t    = ( lapack_complex_double * ) FLA_DOUBLE_COMPLEX_PTR( t );
-    lapack_complex_double *buff_work = ( lapack_complex_double * ) FLA_DOUBLE_COMPLEX_PTR( work_obj );
-    zunglq_( &m_A, &n_A, &k, buff_A, &cs_A, buff_t, buff_work, &lwork, &info );
-
-    break;
-  }
-
-  FLA_Obj_free( &work_obj );
-  }
+  
+  FLA_Obj_free_without_buffer( &work_obj );
 #else
   FLA_Check_error_code( FLA_EXTERNAL_LAPACK_NOT_IMPLEMENTED );
 #endif
@@ -137,10 +137,12 @@ void orglq_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete tauCPPOBuff ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &tauCOObj );
+  delete[] aCPPIOBuff ;
+  delete[] tauCPPOBuff ;
+  delete[] aCIOBuff ;
+  delete[] tauCOBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &tauCOObj );
 }
 
 void orglq_testall_variants(){

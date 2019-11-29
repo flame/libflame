@@ -78,12 +78,15 @@ void trsyl_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff;
-  delete bCPPIOBuff;
-  delete cCPPIOBuff;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &bCIOObj );
-  FLA_Obj_free( &cCIOObj );
+  delete[] aCPPIOBuff;
+  delete[] bCPPIOBuff;
+  delete[] cCPPIOBuff;
+  delete[] aCIOBuff;
+  delete[] bCIOBuff;
+  delete[] cCIOBuff;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &bCIOObj );
+  FLA_Obj_free_without_buffer( &cCIOObj );
 }
 
 
@@ -137,12 +140,15 @@ void trsyl_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff;
-  delete bCPPIOBuff;
-  delete cCPPIOBuff;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &bCIOObj );
-  FLA_Obj_free( &cCIOObj );
+  delete[] aCPPIOBuff;
+  delete[] bCPPIOBuff;
+  delete[] cCPPIOBuff;
+  delete[] aCIOBuff;
+  delete[] bCIOBuff;
+  delete[] cCIOBuff;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &bCIOObj );
+  FLA_Obj_free_without_buffer( &cCIOObj );
 }
 
 void trsyl_testall_variants(){

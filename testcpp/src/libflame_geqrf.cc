@@ -40,16 +40,13 @@ void geqrf_test()
   FLA_Obj aCIOObj, tauCOObj;
   T *aCPPIOBuff, *aCIOBuff ;
   T *tauCPPOBuff, *tauCOBuff ;
-  T *workBuff ;
   int min_m_n = min( m, n );
   int datatype = getDatatype<T>();
-  int lwork    = n * FLA_Query_blocksize( datatype, FLA_DIMENSION_MIN );
 
   //Allocate and initialize buffers for C and CPP functions with random values
   allocate_init_buffer(aCPPIOBuff, aCIOBuff, m*n);
   tauCPPOBuff =  new T [min_m_n];
   tauCOBuff =  new T [min_m_n];
-  workBuff =  new T [lwork];
 
  //Call CPP function
   libflame::geqrf( LAPACK_COL_MAJOR, &m, &n, aCPPIOBuff, &m, tauCPPOBuff );
@@ -74,11 +71,12 @@ void geqrf_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete tauCPPOBuff ;
-  delete workBuff ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &tauCOObj );
+  delete[] aCPPIOBuff ;
+  delete[] tauCPPOBuff ;
+  delete[] aCIOBuff ;
+  delete[] tauCOBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &tauCOObj );
 }
 
 void geqrf_testall_variants(){

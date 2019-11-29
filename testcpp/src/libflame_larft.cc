@@ -89,40 +89,40 @@ void larft_test()
 {
   int n = 64;//256;
   int k = 64;//128;
- srand (time(NULL));
+  srand (time(NULL));
+  
+  FLA_Init( );
+  FLA_Obj vCIObj, tauCIObj, tCOObj;
+  T *vCPPIBuff, *vCIBuff, *tCPPOBuff, *tCOBuff ;
+  T *tauCPPIBuff, *tauCIBuff ;
+  int datatype = getDatatype<T>();
+  char direct  = 'F';
+  char storev = 'C';
+  int ldv = n;
+  int ldt = k;
+  //Allocate and initialize buffers for C and CPP functions with random values
+  allocate_init_buffer(vCPPIBuff, vCIBuff, ldv*k);
+  tauCPPIBuff =  new T [k];
+  tauCIBuff =  new T [k];
+  tCPPOBuff =  new T [ldt*k];
+  tCOBuff =  new T [ldt*k];
+  for(int i =0; i <ldt*k; i++)
+  {
+     tCPPOBuff[i] = 0;
+     tCOBuff[i] = 0;
+  }
 
- FLA_Init( );
- FLA_Obj vCIObj, tauCIObj, tCOObj;
- T *vCPPIBuff, *vCIBuff, *tCPPOBuff, *tCOBuff ;
- T *tauCPPIBuff, *tauCIBuff ;
- int datatype = getDatatype<T>();
- char direct  = 'F';
- char storev = 'C';
- int ldv = n;
- int ldt = k;
- //Allocate and initialize buffers for C and CPP functions with random values
- allocate_init_buffer(vCPPIBuff, vCIBuff, ldv*k);
- tauCPPIBuff =  new T [k];
- tauCIBuff =  new T [k];
- tCPPOBuff =  new T [ldt*k];
- tCOBuff =  new T [ldt*k];
- for(int i =0; i <ldt*k; i++)
- {
-    tCPPOBuff[i] = 0;
-    tCOBuff[i] = 0;
- }
-
- //Call CPP function
+  //Call CPP function
   libflame::geqrf( LAPACK_COL_MAJOR, &n, &k, vCPPIBuff, &n, tauCPPIBuff );
   libflame::larft( LAPACK_COL_MAJOR, &direct, &storev, &n, &k, vCPPIBuff, &ldv, tauCPPIBuff, tCPPOBuff, &ldt );
 
- //Allocate Object for C function and copy already allocated and filled buffer
- FLA_Obj_create_without_buffer( datatype, ldv, k, &vCIObj );
- FLA_Obj_create_without_buffer( datatype, k, 1, &tauCIObj );
- FLA_Obj_create_without_buffer( datatype, ldt, k, &tCOObj );
- FLA_Obj_attach_buffer( vCIBuff, 1, ldv, &vCIObj );
- FLA_Obj_attach_buffer( tauCIBuff, 1, k, &tauCIObj );
- FLA_Obj_attach_buffer( tCOBuff, 1, ldt, &tCOObj );
+  //Allocate Object for C function and copy already allocated and filled buffer
+  FLA_Obj_create_without_buffer( datatype, ldv, k, &vCIObj );
+  FLA_Obj_create_without_buffer( datatype, k, 1, &tauCIObj );
+  FLA_Obj_create_without_buffer( datatype, ldt, k, &tCOObj );
+  FLA_Obj_attach_buffer( vCIBuff, 1, ldv, &vCIObj );
+  FLA_Obj_attach_buffer( tauCIBuff, 1, k, &tauCIObj );
+  FLA_Obj_attach_buffer( tCOBuff, 1, ldt, &tCOObj );
 
   //Call C function
   FLA_QR_blk_external( vCIObj, tauCIObj );
@@ -137,12 +137,15 @@ void larft_test()
   }
 
   //Free up the buffers
-  delete vCPPIBuff ;
-  delete tauCPPIBuff ;
-  delete tCPPOBuff;
-  FLA_Obj_free( &vCIObj );
-  FLA_Obj_free( &tauCIObj );
-  FLA_Obj_free( &tCOObj );
+  delete[] vCPPIBuff ;
+  delete[] tauCPPIBuff ;
+  delete[] tCPPOBuff;
+  delete[] vCIBuff ;
+  delete[] tauCIBuff ;
+  delete[] tCOBuff;
+  FLA_Obj_free_without_buffer( &vCIObj );
+  FLA_Obj_free_without_buffer( &tauCIObj );
+  FLA_Obj_free_without_buffer( &tCOObj );
 }
 
 void larft_testall_variants(){

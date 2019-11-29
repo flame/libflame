@@ -48,8 +48,8 @@ FLA_Error gelsd_C( FLA_Obj A, FLA_Obj B, FLA_Obj sCOBuff, FLA_Obj rcondC, int *r
   FLA_Obj_create( FLA_INT, lwork, 1, 0, 0, &iwork_obj );
   FLA_Obj_create( FLA_FLOAT, lwork, 1, 0, 0, &iwork_obj_float );
   FLA_Obj_create( FLA_DOUBLE, lwork, 1, 0, 0, &iwork_obj_double );
+  
   switch( datatype ){
-
     case FLA_FLOAT:
     {
       float *buff_A    = ( float * ) FLA_FLOAT_PTR( A );
@@ -140,9 +140,9 @@ FLA_Error gelsd_C( FLA_Obj A, FLA_Obj B, FLA_Obj sCOBuff, FLA_Obj rcondC, int *r
   }
 
   FLA_Obj_free( &work_obj );
-  FLA_Obj_free(  &iwork_obj );
-  FLA_Obj_free(  &iwork_obj_float );
-  FLA_Obj_free(  &iwork_obj_double );
+  FLA_Obj_free( &iwork_obj );
+  FLA_Obj_free( &iwork_obj_float );
+  FLA_Obj_free( &iwork_obj_double );
 
 #else
   FLA_Check_error_code( FLA_EXTERNAL_LAPACK_NOT_IMPLEMENTED );

@@ -71,12 +71,14 @@ void orgtr_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete tauCPPOBuff ;
-  delete d ;
-  delete e ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &tauCOObj );
+  delete[] aCPPIOBuff ;
+  delete[] tauCPPOBuff ;
+  delete[] d ;
+  delete[] e ;
+  delete[] aCIOBuff ;
+  delete[] tauCOBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &tauCOObj );
 }
 
 void orgtr_testall_variants(){

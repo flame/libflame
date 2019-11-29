@@ -31,7 +31,6 @@ template< typename T >
 void geqr2_test()
 {
 
-
   int m = 128;
   int n = 128;
 
@@ -75,10 +74,12 @@ void geqr2_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete tauCPPOBuff ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &tauCOObj );
+  delete[] aCPPIOBuff ;
+  delete[] tauCPPOBuff ;
+  delete[] aCIOBuff ;
+  delete[] tauCOBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &tauCOObj );
 }
 
 void geqr2_testall_variants(){

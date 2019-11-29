@@ -86,16 +86,20 @@ void bdsdc_test()
   }
 
   //Free up the buffers
-  delete dCPPIOBuff ;
-  delete eCPPIOBuff ;
-  delete uCPPOBuff ;
-  delete vtCPPIBuff ;
-  delete qCPPOBuff ;
-  delete iqCPPOBuff ;
-  FLA_Obj_free( &dCIOObj );
-  FLA_Obj_free( &eCIOObj );
-  FLA_Obj_free( &uCOObj );
-  FLA_Obj_free( &vtCIObj );
+  delete[] dCPPIOBuff ;
+  delete[] eCPPIOBuff ;
+  delete[] uCPPOBuff ;
+  delete[] vtCPPIBuff ;
+  delete[] qCPPOBuff ;
+  delete[] iqCPPOBuff ;
+  delete[] dCIOBuff ;
+  delete[] eCIOBuff ;
+  delete[] uCOBuff ;
+  delete[] vtCIBuff ; 
+  FLA_Obj_free_without_buffer( &dCIOObj );
+  FLA_Obj_free_without_buffer( &eCIOObj );
+  FLA_Obj_free_without_buffer( &uCOObj );
+  FLA_Obj_free_without_buffer( &vtCIObj );
 }
 
 void bdsdc_testall_variants(){

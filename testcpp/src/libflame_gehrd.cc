@@ -39,7 +39,6 @@ void gehrd_test()
   FLA_Obj aCIOObj, tauCOObj;
   T *aCPPIOBuff, *aCIOBuff ;
   T *tauCPPOBuff, *tauCOBuff ;
-  T *workBuff ;
   int iho = 10;
   int ilo = 10;
 
@@ -49,7 +48,6 @@ void gehrd_test()
   allocate_init_buffer(aCPPIOBuff, aCIOBuff, n*n);
   tauCPPOBuff =  new T [n-1];
   tauCOBuff =  new T [n-1];
-  workBuff =  new T [n];
 
   //Call CPP function
   libflame::gehrd( LAPACK_COL_MAJOR, &n, &ilo, &iho, aCPPIOBuff, &n, tauCPPOBuff );
@@ -73,11 +71,12 @@ void gehrd_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete tauCPPOBuff ;
-  delete workBuff ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &tauCOObj );
+  delete[] aCPPIOBuff ;
+  delete[] tauCPPOBuff ;
+  delete[] aCIOBuff ;
+  delete[] tauCOBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &tauCOObj );
 }
 
 void gehrd_testall_variants(){

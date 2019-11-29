@@ -76,14 +76,17 @@ void unmtr_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete cCPPIOBuff ;
-  delete tauCPPOBuff ;
-  delete d ;
-  delete e ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &cCIOObj );
-  FLA_Obj_free( &tauCOObj );
+  delete[] aCPPIOBuff ;
+  delete[] cCPPIOBuff ;
+  delete[] tauCPPOBuff ;
+  delete[] d ;
+  delete[] e ;
+  delete[] aCIOBuff ;
+  delete[] cCIOBuff ;
+  delete[] tauCOBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &cCIOObj );
+  FLA_Obj_free_without_buffer( &tauCOObj );
 }
 
 void unmtr_testall_variants(){

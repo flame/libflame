@@ -24,7 +24,7 @@
 /*! @file liblame_heevd.cc
  *  libflame_heevd.cc Test application to validate CPP template interface
  *  */
- 
+
 #include "libflame_test.hh"
 
 template< typename Ta, typename Tb >
@@ -70,10 +70,12 @@ void heevd_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete wCPPOBuff ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &wCOObj );
+  delete[] aCPPIOBuff ;
+  delete[] wCPPOBuff ;
+  delete[] aCIOBuff ;
+  delete[] wCOBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &wCOObj );
 }
 
 void heevd_testall_variants(){

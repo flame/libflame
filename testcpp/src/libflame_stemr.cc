@@ -93,15 +93,19 @@ void stemr_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete wCPPOBuff ;
-  delete zCPPOBuff ;
-  delete eCPPIOBuff ;
-  delete isuppzCPPOBuff ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &wCOObj );
-  FLA_Obj_free( &zCOObj );
-  FLA_Obj_free( &eCIOObj );
+  delete[] aCPPIOBuff ;
+  delete[] wCPPOBuff ;
+  delete[] zCPPOBuff ;
+  delete[] eCPPIOBuff ;
+  delete[] isuppzCPPOBuff ;
+  delete[] aCIOBuff ;
+  delete[] wCOBuff ;
+  delete[] zCOBuff ;
+  delete[] eCIOBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &wCOObj );
+  FLA_Obj_free_without_buffer( &zCOObj );
+  FLA_Obj_free_without_buffer( &eCIOObj );
 }
 
 template< typename Ta, typename Tb >
@@ -173,15 +177,19 @@ void stemr_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete wCPPOBuff ;
-  delete zCPPOBuff ;
-  delete eCPPIOBuff ;
-  delete isuppzCPPOBuff ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &wCOObj );
-  FLA_Obj_free( &zCOObj );
-  FLA_Obj_free( &eCIOObj );
+  delete[] aCPPIOBuff ;
+  delete[] wCPPOBuff ;
+  delete[] zCPPOBuff ;
+  delete[] eCPPIOBuff ;
+  delete[] isuppzCPPOBuff ;
+  delete[] aCIOBuff ;
+  delete[] wCOBuff ;
+  delete[] zCOBuff ;
+  delete[] eCIOBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &wCOObj );
+  FLA_Obj_free_without_buffer( &zCOObj );
+  FLA_Obj_free_without_buffer( &eCIOObj );
 }
 
 void stemr_testall_variants(){

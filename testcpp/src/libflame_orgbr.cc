@@ -78,12 +78,15 @@ void orgbr_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete tauqCPPOBuff ;
-  delete taupCPPOBuff ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &tauqCOObj );
-  FLA_Obj_free( &taupCOObj );
+  delete[] aCPPIOBuff ;
+  delete[] tauqCPPOBuff ;
+  delete[] taupCPPOBuff ;
+  delete[] aCIOBuff ;
+  delete[] tauqCOBuff ;
+  delete[] taupCOBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &tauqCOObj );
+  FLA_Obj_free_without_buffer( &taupCOObj );
 }
 
 void orgbr_testall_variants(){

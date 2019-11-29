@@ -47,8 +47,8 @@ FLA_Error gelss_C( FLA_Obj A, FLA_Obj B, FLA_Obj sCOBuff, FLA_Obj rcondC, int *r
   FLA_Obj_create( datatype, lwork, 1, 0, 0, &work_obj );
   FLA_Obj_create( FLA_FLOAT, lwork, 1, 0, 0, &iwork_obj_float );
   FLA_Obj_create( FLA_DOUBLE, lwork, 1, 0, 0, &iwork_obj_double );
+  
   switch( datatype ){
-
     case FLA_FLOAT:
     {
       float *buff_A    = ( float * ) FLA_FLOAT_PTR( A );
@@ -134,8 +134,10 @@ FLA_Error gelss_C( FLA_Obj A, FLA_Obj B, FLA_Obj sCOBuff, FLA_Obj rcondC, int *r
     }
   }
 
-
   FLA_Obj_free( &work_obj );
+  FLA_Obj_free( &iwork_obj_float );
+  FLA_Obj_free( &iwork_obj_double );
+  
 #else
   FLA_Check_error_code( FLA_EXTERNAL_LAPACK_NOT_IMPLEMENTED );
 #endif
@@ -200,12 +202,15 @@ void gelss_test()
   }
 
  //Free up the buffers
- delete aCPPIOBuff ;
- delete bCPPIOBuff ;
- delete sCPPOBuff ;
- FLA_Obj_free( &aCIOObj );
- FLA_Obj_free( &bCIOObj );
- FLA_Obj_free(&sCOObj );
+ delete[] aCPPIOBuff ;
+ delete[] bCPPIOBuff ;
+ delete[] sCPPOBuff ;
+ delete[] aCIOBuff ;
+ delete[] bCIOBuff ;
+ delete[] sCOBuff ;
+ FLA_Obj_free_without_buffer( &aCIOObj );
+ FLA_Obj_free_without_buffer( &bCIOObj );
+ FLA_Obj_free_without_buffer(&sCOObj );
 }
 
 template< typename Ta, typename Tb >
@@ -265,12 +270,15 @@ void gelss_test()
   }
 
  //Free up the buffers
- delete aCPPIOBuff ;
- delete bCPPIOBuff ;
- delete sCPPOBuff ;
- FLA_Obj_free( &aCIOObj );
- FLA_Obj_free( &bCIOObj );
- FLA_Obj_free(&sCOObj );
+ delete[] aCPPIOBuff ;
+ delete[] bCPPIOBuff ;
+ delete[] sCPPOBuff ;
+ delete[] aCIOBuff ;
+ delete[] bCIOBuff ;
+ delete[] sCOBuff ;
+ FLA_Obj_free_without_buffer( &aCIOObj );
+ FLA_Obj_free_without_buffer( &bCIOObj );
+ FLA_Obj_free_without_buffer(&sCOObj );
 }
 
 

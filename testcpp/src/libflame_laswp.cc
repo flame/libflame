@@ -75,10 +75,12 @@ void laswp_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete ipivCPPIBuff ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &ipivIObj );
+  delete[] aCPPIOBuff ;
+  delete[] ipivCPPIBuff ;
+  delete[] aCIOBuff ;
+  delete[] ipivCIBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &ipivIObj );
 }
 
 void laswp_testall_variants(){

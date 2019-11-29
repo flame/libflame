@@ -69,10 +69,12 @@ void heev_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete wCPPOBuff ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &wCOObj );
+  delete[] aCPPIOBuff ;
+  delete[] wCPPOBuff ;
+  delete[] aCIOBuff ;
+  delete[] wCOBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &wCOObj );
 }
 
 void heev_testall_variants(){

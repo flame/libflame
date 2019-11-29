@@ -88,13 +88,16 @@ void syevr_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete wCPPOBuff ;
-  delete zCPPOBuff ;
-  delete isuppzCPPOBuff ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &wCOObj );
-  FLA_Obj_free( &zCOObj );
+  delete[] aCPPIOBuff ;
+  delete[] wCPPOBuff ;
+  delete[] zCPPOBuff ;
+  delete[] isuppzCPPOBuff ;
+  delete[] aCIOBuff ;
+  delete[] wCOBuff ;
+  delete[] zCOBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &wCOObj );
+  FLA_Obj_free_without_buffer( &zCOObj );
 }
 
 void syevr_testall_variants(){

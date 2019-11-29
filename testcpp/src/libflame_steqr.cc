@@ -70,12 +70,15 @@ void steqr_test()
   }
 
   //Free up the buffers
-  delete dCPPIOBuff ;
-  delete eCPPIOBuff ;
-  delete zCPPIOBuff ;
-  FLA_Obj_free( &dCIOObj );
-  FLA_Obj_free( &eCIOObj );
-  FLA_Obj_free( &zCIOObj );
+  delete[] dCPPIOBuff ;
+  delete[] eCPPIOBuff ;
+  delete[] zCPPIOBuff ;
+  delete[] dCIOBuff ;
+  delete[] eCIOBuff ;
+  delete[] zCIOBuff ;
+  FLA_Obj_free_without_buffer( &dCIOObj );
+  FLA_Obj_free_without_buffer( &eCIOObj );
+  FLA_Obj_free_without_buffer( &zCIOObj );
 
 }
 
@@ -125,12 +128,15 @@ void steqr_test()
   }
 
   //Free up the buffers
-  delete dCPPIOBuff ;
-  delete eCPPIOBuff ;
-  delete zCPPIOBuff ;
-  FLA_Obj_free( &dCIOObj );
-  FLA_Obj_free( &eCIOObj );
-  FLA_Obj_free( &zCIOObj );
+  delete[] dCPPIOBuff ;
+  delete[] eCPPIOBuff ;
+  delete[] zCPPIOBuff ;
+  delete[] dCIOBuff ;
+  delete[] eCIOBuff ;
+  delete[] zCIOBuff ;
+  FLA_Obj_free_without_buffer( &dCIOObj );
+  FLA_Obj_free_without_buffer( &eCIOObj );
+  FLA_Obj_free_without_buffer( &zCIOObj );
 
 }
 

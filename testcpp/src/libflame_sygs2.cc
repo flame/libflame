@@ -68,10 +68,12 @@ void sygs2_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete b ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &bCIOObj );
+  delete[] aCPPIOBuff ;
+  delete[] b ;
+  delete[] aCIOBuff ;
+  delete[] bRefBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &bCIOObj );
 }
 
 void sygs2_testall_variants(){

@@ -51,82 +51,80 @@ FLA_Error geqp3_C( FLA_Obj A, int *jpvt, FLA_Obj t, FLA_Obj rwork )
   FLA_Obj_create( datatype, lwork, 1, 0, 0, &work_obj );
 
   switch( datatype ){
-
-  case FLA_FLOAT:
-  {
-    float *buff_A    = ( float * ) FLA_FLOAT_PTR( A );
-    float *buff_t    = ( float * ) FLA_FLOAT_PTR( t );
-    float *buff_work = ( float * ) FLA_FLOAT_PTR( work_obj );
-    sgeqp3_( &m_A,
-                &n_A,
-                buff_A, &cs_A,
-                jpvt,
-                buff_t,
-                buff_work,
-                &lwork,
-                &info );
-
-    break;
-  }
-
-  case FLA_DOUBLE:
-  {
-    double *buff_A    = ( double * ) FLA_DOUBLE_PTR( A );
-    double *buff_t    = ( double * ) FLA_DOUBLE_PTR( t );
-    double *buff_work = ( double * ) FLA_DOUBLE_PTR( work_obj );
-
-   dgeqp3_( &m_A,
-                &n_A,
-                buff_A, &cs_A,
-                jpvt,
-                buff_t,
-                buff_work,
-                &lwork,
-                &info );
-
-    break;
-  }
-
-  case FLA_COMPLEX:
-  {
-    lapack_complex_float *buff_A    = ( lapack_complex_float * ) FLA_COMPLEX_PTR( A );
-    lapack_complex_float *buff_t    = ( lapack_complex_float * ) FLA_COMPLEX_PTR( t );
-    lapack_complex_float *buff_work = ( lapack_complex_float * ) FLA_COMPLEX_PTR( work_obj );
-    float *r_work = ( float * ) FLA_FLOAT_PTR( rwork );
-
-    cgeqp3_( &m_A,
-                &n_A,
-                buff_A, &cs_A,
-                jpvt,
-                buff_t,
-                buff_work,
-                &lwork,
-                r_work,
-                &info );
-
-    break;
-  }
-
-  case FLA_DOUBLE_COMPLEX:
-  {
-    lapack_complex_double *buff_A    = ( lapack_complex_double * ) FLA_DOUBLE_COMPLEX_PTR( A );
-    lapack_complex_double *buff_t    = ( lapack_complex_double * ) FLA_DOUBLE_COMPLEX_PTR( t );
-    lapack_complex_double *buff_work = ( lapack_complex_double * ) FLA_DOUBLE_COMPLEX_PTR( work_obj );
-    double *r_work = ( double * ) FLA_DOUBLE_PTR( rwork );
-
-    zgeqp3_( &m_A,
-                &n_A,
-                buff_A, &cs_A,
-                jpvt,
-                buff_t,
-                buff_work,
-                &lwork,
-                r_work,
-                &info );
-
-    break;
-  }
-
+    case FLA_FLOAT:
+    {
+      float *buff_A    = ( float * ) FLA_FLOAT_PTR( A );
+      float *buff_t    = ( float * ) FLA_FLOAT_PTR( t );
+      float *buff_work = ( float * ) FLA_FLOAT_PTR( work_obj );
+      sgeqp3_( &m_A,
+                  &n_A,
+                  buff_A, &cs_A,
+                  jpvt,
+                  buff_t,
+                  buff_work,
+                  &lwork,
+                  &info );
+    
+      break;
+    }
+    
+    case FLA_DOUBLE:
+    {
+      double *buff_A    = ( double * ) FLA_DOUBLE_PTR( A );
+      double *buff_t    = ( double * ) FLA_DOUBLE_PTR( t );
+      double *buff_work = ( double * ) FLA_DOUBLE_PTR( work_obj );
+    
+     dgeqp3_( &m_A,
+                  &n_A,
+                  buff_A, &cs_A,
+                  jpvt,
+                  buff_t,
+                  buff_work,
+                  &lwork,
+                  &info );
+    
+      break;
+    }
+    
+    case FLA_COMPLEX:
+    {
+      lapack_complex_float *buff_A    = ( lapack_complex_float * ) FLA_COMPLEX_PTR( A );
+      lapack_complex_float *buff_t    = ( lapack_complex_float * ) FLA_COMPLEX_PTR( t );
+      lapack_complex_float *buff_work = ( lapack_complex_float * ) FLA_COMPLEX_PTR( work_obj );
+      float *r_work = ( float * ) FLA_FLOAT_PTR( rwork );
+    
+      cgeqp3_( &m_A,
+                  &n_A,
+                  buff_A, &cs_A,
+                  jpvt,
+                  buff_t,
+                  buff_work,
+                  &lwork,
+                  r_work,
+                  &info );
+    
+      break;
+    }
+    
+    case FLA_DOUBLE_COMPLEX:
+    {
+      lapack_complex_double *buff_A    = ( lapack_complex_double * ) FLA_DOUBLE_COMPLEX_PTR( A );
+      lapack_complex_double *buff_t    = ( lapack_complex_double * ) FLA_DOUBLE_COMPLEX_PTR( t );
+      lapack_complex_double *buff_work = ( lapack_complex_double * ) FLA_DOUBLE_COMPLEX_PTR( work_obj );
+      double *r_work = ( double * ) FLA_DOUBLE_PTR( rwork );
+    
+      zgeqp3_( &m_A,
+                  &n_A,
+                  buff_A, &cs_A,
+                  jpvt,
+                  buff_t,
+                  buff_work,
+                  &lwork,
+                  r_work,
+                  &info );
+    
+      break;
+    }
   }
 
   FLA_Obj_free( &work_obj );
@@ -192,12 +190,15 @@ void geqp3_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete tauCPPOBuff ;
-  delete jpvtCPPOBuff;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &tauCOObj );
-  FLA_Obj_free( &rworkRefObj );
+  delete[] aCPPIOBuff ;
+  delete[] tauCPPOBuff ;
+  delete[] jpvtCPPOBuff;
+  delete[] aCIOBuff ;
+  delete[] tauCOBuff ;
+  delete[] jpvtCOBuff;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &tauCOObj );
+  FLA_Obj_free_without_buffer( &rworkRefObj );
 }
 
 template< typename Ta, typename Tb >
@@ -257,12 +258,15 @@ void geqp3_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete tauCPPOBuff ;
-  delete jpvtCPPOBuff;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &tauCOObj );
-  FLA_Obj_free( &rworkRefObj );
+  delete[] aCPPIOBuff ;
+  delete[] tauCPPOBuff ;
+  delete[] jpvtCPPOBuff ;
+  delete[] aCIOBuff ;
+  delete[] tauCOBuff ;
+  delete[] jpvtCOBuff;
+  FLA_Obj_free_without_buffer( &aCIOObj ) ;
+  FLA_Obj_free_without_buffer( &tauCOObj ) ;
+  FLA_Obj_free_without_buffer( &rworkRefObj ) ;
 }
 
 void geqp3_testall_variants(){

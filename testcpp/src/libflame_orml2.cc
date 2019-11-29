@@ -67,9 +67,7 @@ FLA_Error unml2_C( FLA_Side side, FLA_Trans trans, FLA_Store storev, FLA_Obj A, 
 
   FLA_Obj_create( datatype, lwork, 1, 0, 0, &work_obj );
 
-
   switch( datatype ){
-
     case FLA_FLOAT:
     {
       float *buff_A    = ( float * ) FLA_FLOAT_PTR( A );
@@ -152,7 +150,6 @@ FLA_Error unml2_C( FLA_Side side, FLA_Trans trans, FLA_Store storev, FLA_Obj A, 
 
       break;
     }
-
   }
 
   FLA_Obj_free( &work_obj );
@@ -220,10 +217,12 @@ void orml2_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete tauCPPOBuff ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &tauCOObj );
+  delete[] aCPPIOBuff ;
+  delete[] tauCPPOBuff ;
+  delete[] aCIOBuff ;
+  delete[] tauCOBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &tauCOObj );
 
 }
 

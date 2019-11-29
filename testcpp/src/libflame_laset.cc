@@ -125,8 +125,9 @@ void laset_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  FLA_Obj_free( &aCIOObj );
+  delete[] aCPPIOBuff ;
+  delete[] aCIOBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
 }
 
 void laset_testall_variants(){

@@ -76,12 +76,15 @@ void gebrd_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete tauqCPPOBuff ;
-  delete taupCPPOBuff ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &tauqCOObj );
-  FLA_Obj_free( &taupCOObj );
+  delete[] aCPPIOBuff ;
+  delete[] tauqCPPOBuff ;
+  delete[] taupCPPOBuff ;
+  delete[] aCIOBuff ;
+  delete[] tauqCOBuff ;
+  delete[] taupCOBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &tauqCOObj );
+  FLA_Obj_free_without_buffer( &taupCOObj );
 }
 
 template< typename Ta, typename Tb >
@@ -134,14 +137,17 @@ void gebrd_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff ;
-  delete tauqCPPOBuff ;
-  delete taupCPPOBuff ;
-  delete d ;
-  delete e ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &tauqCOObj );
-  FLA_Obj_free( &taupCOObj );
+  delete[] aCPPIOBuff ;
+  delete[] tauqCPPOBuff ;
+  delete[] taupCPPOBuff ;
+  delete[] d ;
+  delete[] e ;
+  delete[] aCIOBuff ;
+  delete[] tauqCOBuff ;
+  delete[] taupCOBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &tauqCOObj );
+  FLA_Obj_free_without_buffer( &taupCOObj );
 }
 
 void gebrd_testall_variants(){

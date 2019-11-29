@@ -56,7 +56,6 @@ void bdsqr_test()
     uCPPOBuff[i] = 0;
   }
 
-
   //Call CPP function
   libflame::bdsqr( LAPACK_COL_MAJOR, &uplo, &n, &ncvt, &nru, &ncc, dCPPIOBuff, eCPPIOBuff, vtCPPIBuff, &n,  uCPPOBuff, &n, cCPPOBuff, &ldc);
 
@@ -86,15 +85,19 @@ void bdsqr_test()
   }
 
   //Free up the buffers
-  delete dCPPIOBuff ;
-  delete eCPPIOBuff ;
-  delete uCPPOBuff ;
-  delete vtCPPIBuff ;
-  delete cCPPOBuff ;
-  FLA_Obj_free( &dCIOObj );
-  FLA_Obj_free( &eCIOObj );
-  FLA_Obj_free( &uCOObj );
-  FLA_Obj_free( &vtCIObj );
+  delete[] dCPPIOBuff ;
+  delete[] eCPPIOBuff ;
+  delete[] uCPPOBuff ;
+  delete[] vtCPPIBuff ;
+  delete[] cCPPOBuff ;
+  delete[] dCIOBuff ;
+  delete[] eCIOBuff ;
+  delete[] uCOBuff ;
+  delete[] vtCIBuff ;
+  FLA_Obj_free_without_buffer( &dCIOObj );
+  FLA_Obj_free_without_buffer( &eCIOObj );
+  FLA_Obj_free_without_buffer( &uCOObj );
+  FLA_Obj_free_without_buffer( &vtCIObj );
 }
 
 template< typename Ta, typename Tb >
@@ -151,15 +154,19 @@ void bdsqr_test()
   }
 
   //Free up the buffers
-  delete dCPPIOBuff ;
-  delete eCPPIOBuff ;
-  delete uCPPOBuff ;
-  delete vtCPPIBuff ;
-  delete cCPPOBuff ;
-  FLA_Obj_free( &dCIOObj );
-  FLA_Obj_free( &eCIOObj );
-  FLA_Obj_free( &uCOObj );
-  FLA_Obj_free( &vtCIObj );
+  delete[] dCPPIOBuff ;
+  delete[] eCPPIOBuff ;
+  delete[] uCPPOBuff ;
+  delete[] vtCPPIBuff ;
+  delete[] cCPPOBuff ;
+  delete[] dCIOBuff ;
+  delete[] eCIOBuff ;
+  delete[] uCOBuff ;
+  delete[] vtCIBuff ;
+  FLA_Obj_free_without_buffer( &dCIOObj );
+  FLA_Obj_free_without_buffer( &eCIOObj );
+  FLA_Obj_free_without_buffer( &uCOObj );
+  FLA_Obj_free_without_buffer( &vtCIObj );
 }
 
 void bdsqr_testall_variants(){

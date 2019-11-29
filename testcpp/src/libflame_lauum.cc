@@ -65,8 +65,9 @@ void lauum_test()
   }
 
   //Free up the buffers
-  delete aCPPIOBuff;
-  FLA_Obj_free( &aCIOObj );
+  delete[] aCPPIOBuff;
+  delete[] aCIOBuff;
+  FLA_Obj_free_without_buffer( &aCIOObj );
 }
 
 void lauum_testall_variants(){
