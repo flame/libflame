@@ -24,7 +24,7 @@
 /*! @file liblame_getf2.cc
  *  libflame_getf2.cc Test application to validate CPP template interface
  *  */
- 
+
 #include "libflame_test.hh"
 
 template< typename T >
@@ -60,6 +60,7 @@ void getf2_test()
 
   //Call C function
   FLA_LU_piv_unb_external( aCIOObj, pivCOObj );
+  FLA_Shift_pivots_to( FLA_LAPACK_PIVOTS, pivCOObj );
 
   double diff =  computeError<T>( n, m, aCIOBuff, aCPPIOBuff );
   int diffInt =  computeError<int>( 1, min_m_n, pivCOBuff, pivCPPOBuff );
@@ -77,8 +78,10 @@ void getf2_test()
   //Free up the buffers
   delete aCPPIOBuff ;
   delete pivCPPOBuff ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &pivCOObj );
+  delete aCIOBuff ;
+  delete pivCOBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &pivCOObj );
 }
 
 void getf2_testall_variants(){

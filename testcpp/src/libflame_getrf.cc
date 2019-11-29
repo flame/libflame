@@ -24,7 +24,7 @@
 /*! @file liblame_getrf.cc
  *  libflame_getrd.cc Test application to validate CPP template interface
  *  */
- 
+
 #include "libflame_test.hh"
 
 template< typename T >
@@ -49,7 +49,6 @@ void getrf_test()
   pivCPPOBuff =  new int [min_m_n];
   pivCOBuff =  new int [min_m_n];
 
-
  //Call CPP function
   libflame::getrf( LAPACK_COL_MAJOR, &m, &n, aCPPIOBuff, &m, pivCPPOBuff );
 
@@ -61,6 +60,7 @@ void getrf_test()
 
   //Call C function
   FLA_LU_piv_blk_external( aCIOObj, pivCOObj );
+  FLA_Shift_pivots_to( FLA_LAPACK_PIVOTS, pivCOObj );
 
   double diff =  computeError<T>( n, m, aCIOBuff, aCPPIOBuff );
   int diffInt =  computeError<int>( 1, min_m_n, pivCOBuff, pivCPPOBuff );
@@ -78,8 +78,10 @@ void getrf_test()
   //Free up the buffers
   delete aCPPIOBuff ;
   delete pivCPPOBuff ;
-  FLA_Obj_free( &aCIOObj );
-  FLA_Obj_free( &pivCOObj );
+  delete aCIOBuff ;
+  delete pivCOBuff ;
+  FLA_Obj_free_without_buffer( &aCIOObj );
+  FLA_Obj_free_without_buffer( &pivCOObj );
 }
 
 void getrf_testall_variants(){

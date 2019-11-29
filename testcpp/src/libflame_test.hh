@@ -1,3 +1,4 @@
+
 /******************************************************************************
 * Copyright (c) 2019 - present Advanced Micro Devices, Inc. All rights reserved.
 *
@@ -24,6 +25,7 @@
  *  libflame_test.hh defines all the common functions which is required
  *  to validate CPP template interfaces for all libflame modules
  *  */
+
 #ifndef LIBFLAME_TEST_HH
 #define LIBFLAME_TEST_HH
 
@@ -37,6 +39,8 @@ extern "C"{
 #include "FLA_macro_defs.h"
 #include "FLA_macro_ptr_defs.h"
 #include "FLA_lapack_prototypes.h"
+#include "FLA_f2c.h"
+#include "FLA_util_lapack_prototypes.h"
 }
 
 #define FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
@@ -72,6 +76,7 @@ int getDatatype()
   if (is_same<int, T>::value)
     return FLA_INT;
 }
+
 template< typename T >
 double computeDiff(int size, T *Out, T *Out_ref)
 {
@@ -79,7 +84,7 @@ double computeDiff(int size, T *Out, T *Out_ref)
   T diff = 0;
 
   for ( j = 0; j < size; j ++ ) {
-   diff += abs(Out_ref[j] - Out[j]) ;
+    diff += abs(Out_ref[j] - Out[j]) ;
   }
   return diff;
 }
@@ -95,7 +100,6 @@ double computeErrorComplex(int size, T *Out, T *Out_ref)
     diff += abs(creal(Out_ref[j]) - creal(Out[j])) ;
     diff += abs(cimag(Out_ref[j]) - cimag(Out[j])) ;
   }
-
    return diff;
 }
 
@@ -204,7 +208,7 @@ void allocate_init_buffer(double *&aIn, double *&aRef, int size)
 void allocate_init_buffer(lapack_complex_float *&Ain, lapack_complex_float *&Aref, int size)
 {
   Ain =  new lapack_complex_float [size];
-  Aref = (lapack_complex_float *) malloc(size * sizeof(lapack_complex_float));
+  Aref = new lapack_complex_float [size];
   for(int i = 0; i < size; i++)
   {
     float real = ( (float) rand() / ((float) RAND_MAX / 2.0)) - 1.0;
@@ -217,7 +221,8 @@ void allocate_init_buffer(lapack_complex_float *&Ain, lapack_complex_float *&Are
 void allocate_init_buffer(lapack_complex_double *&Ain, lapack_complex_double *&Aref, int size)
 {
   Ain =  new lapack_complex_double [size];
-  Aref = (lapack_complex_double *) malloc(size * sizeof(lapack_complex_double));
+  Aref =  new lapack_complex_double [size];
+
   for(int i = 0; i < size; i++)
   {
     double real = ( (double) rand() / ((double) RAND_MAX / 2.0)) - 1.0;

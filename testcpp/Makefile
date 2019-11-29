@@ -150,7 +150,7 @@ FLA_INC_PATH   := $(INC_PATH)
 LIBFLAME       := $(FLA_LIB_PATH)/libflame.a
 LAPACKE        := $(SRC_PATH)/lapacke/liblapacke.a
 
-CXXFLAGS         += -I$(FLA_INC_PATH) -I$(SRC_PATH)/testcpp/src -I$(SRC_PATH)/src_cpp -I$(SRC_PATH)/lapacke/LAPACKE/include -I$(TEST_SRC_PATH) -I$(SRC_PATH)/base/flamec/blis/include -I$(SRC_PATH)/base/flamec/control
+CXXFLAGS         += -I$(FLA_INC_PATH) -I$(SRC_PATH)/testcpp/src -I$(SRC_PATH)/src_cpp -I$(SRC_PATH)/lapacke/LAPACKE/include -I$(TEST_SRC_PATH) -I$(SRC_PATH)/base/flamec/blis/include -I$(SRC_PATH)/base/flamec/control  -I$(SRC_PATH)/base/flamec/include
 FNAME          := libflame
 
 TEST_OBJS      := $(patsubst $(TEST_SRC_PATH)/%.c, \

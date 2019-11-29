@@ -24,7 +24,7 @@
 /*! @file liblame_stedc.cc
  *  libflame_stedc.cc Test application to validate CPP template interface
  *  */
- 
+
 #include "libflame_test.hh"
 
 template< typename T >
@@ -37,7 +37,7 @@ void stedc_test()
   FLA_Obj dCIOObj, eCIOObj, zCIOObj;
   T *dCPPIOBuff, *eCPPIOBuff, *zCPPIOBuff;
   T *dCIOBuff, *eCIOBuff, *zCIOBuff;
-  char jobz = 'V';
+  char jobz = 'N';
   int datatype = getDatatype<T>();
 
   //Allocate and initialize buffers for C and CPP functions with random values
@@ -57,7 +57,7 @@ void stedc_test()
   FLA_Obj_attach_buffer( zCIOBuff, 1, n, &zCIOObj );
 
   //Call C function
-  FLA_Tevdd_external( FLA_EVD_WITH_VECTORS, dCIOObj, eCIOObj, zCIOObj);
+  FLA_Tevdd_external( FLA_EVD_WITHOUT_VECTORS, dCIOObj, eCIOObj, zCIOObj);
   double diff =  computeError<T>( n, 1, dCIOBuff, dCPPIOBuff );
   diff +=  computeError<T>( (n-1), 1, eCIOBuff, eCPPIOBuff );
   diff +=  computeError<T>( n, n, zCIOBuff, zCPPIOBuff );
@@ -70,12 +70,15 @@ void stedc_test()
   }
 
   //Free up the buffers
-  delete dCPPIOBuff ;
-  delete eCPPIOBuff ;
-  delete zCPPIOBuff ;
-  FLA_Obj_free( &dCIOObj );
-  FLA_Obj_free( &eCIOObj );
-  FLA_Obj_free( &zCIOObj );
+  delete[] dCPPIOBuff ;
+  delete[] eCPPIOBuff ;
+  delete[] zCPPIOBuff ;
+  delete[] dCIOBuff ;
+  delete[] eCIOBuff ;
+  delete[] zCIOBuff ;
+  FLA_Obj_free_without_buffer( &dCIOObj);
+  FLA_Obj_free_without_buffer( &eCIOObj);
+  FLA_Obj_free_without_buffer( &zCIOObj);
 }
 
 template< typename Ta, typename Tb >
@@ -124,12 +127,15 @@ void stedc_test()
   }
 
   //Free up the buffers
-  delete dCPPIOBuff ;
-  delete eCPPIOBuff ;
-  delete zCPPIOBuff ;
-  FLA_Obj_free( &dCIOObj );
-  FLA_Obj_free( &eCIOObj );
-  FLA_Obj_free( &zCIOObj );
+  delete[] dCPPIOBuff ;
+  delete[] eCPPIOBuff ;
+  delete[] zCPPIOBuff ;
+  delete[] dCIOBuff ;
+  delete[] eCIOBuff ;
+  delete[] zCIOBuff ;
+  FLA_Obj_free_without_buffer( &dCIOObj);
+  FLA_Obj_free_without_buffer( &eCIOObj);
+  FLA_Obj_free_without_buffer( &zCIOObj);
 }
 
 void stedc_testall_variants(){

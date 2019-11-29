@@ -60,14 +60,14 @@ FLA_Error gelsd_C( FLA_Obj A, FLA_Obj B, FLA_Obj sCOBuff, FLA_Obj rcondC, int *r
       int *buff_iwork = ( int * ) FLA_INT_PTR( iwork_obj );
 
       sgelsd_( &m_A,
-                  &n_A,
-                  &n_A,
-                  buff_A, &cs_A,
-                  buff_B, &cs_B,
-                  buff_s, rcondCVal,
-                  rank,
-                  buff_work, &lwork, buff_iwork,
-                  &info);
+               &n_A,
+               &n_A,
+               buff_A, &cs_A,
+               buff_B, &cs_B,
+               buff_s, rcondCVal,
+               rank,
+               buff_work, &lwork, buff_iwork,
+               &info);
 
       break;
     }
@@ -78,18 +78,18 @@ FLA_Error gelsd_C( FLA_Obj A, FLA_Obj B, FLA_Obj sCOBuff, FLA_Obj rcondC, int *r
       double *buff_B    = ( double * ) FLA_DOUBLE_PTR( B );
       double *buff_s    = ( double * ) FLA_DOUBLE_PTR( sCOBuff );
       double *rcondCVal  = ( double * ) FLA_DOUBLE_PTR( rcondC );
-        double *buff_work = ( double * ) FLA_DOUBLE_PTR( work_obj );
+      double *buff_work = ( double * ) FLA_DOUBLE_PTR( work_obj );
       int *buff_iwork = ( int * ) FLA_INT_PTR( iwork_obj );
 
-        dgelsd_( &m_A,
-                  &n_A,
-                  &n_A,
-                  buff_A, &cs_A,
-                  buff_B, &cs_B,
-                  buff_s, rcondCVal,
-                  rank,
-                  buff_work, &lwork, buff_iwork,
-                  &info);
+      dgelsd_( &m_A,
+               &n_A,
+               &n_A,
+               buff_A, &cs_A,
+               buff_B, &cs_B,
+               buff_s, rcondCVal,
+               rank,
+               buff_work, &lwork, buff_iwork,
+               &info);
 
       break;
     }
@@ -102,16 +102,16 @@ FLA_Error gelsd_C( FLA_Obj A, FLA_Obj B, FLA_Obj sCOBuff, FLA_Obj rcondC, int *r
       float *rcondCVal    =  ( float * ) FLA_FLOAT_PTR( rcondC );
       lapack_complex_float *buff_work = ( lapack_complex_float * ) FLA_COMPLEX_PTR( work_obj );
       int *buff_iwork = ( int * ) FLA_INT_PTR( iwork_obj );
-     float *buff_r    = ( float * ) FLA_FLOAT_PTR( iwork_obj_float );
+      float *buff_r    = ( float * ) FLA_FLOAT_PTR( iwork_obj_float );
 
-     cgelsd_( &m_A,
-                  &n_A,
-                  &n_A,
-                  buff_A, &cs_A,
-                  buff_B, &cs_B,
-                  buff_s, rcondCVal, rank,
-                  buff_work, &lwork, buff_r,
-                  buff_iwork, &info);
+      cgelsd_( &m_A,
+               &n_A,
+               &n_A,
+               buff_A, &cs_A,
+               buff_B, &cs_B,
+               buff_s, rcondCVal, rank,
+               buff_work, &lwork, buff_r,
+               buff_iwork, &info);
 
       break;
     }
@@ -122,25 +122,28 @@ FLA_Error gelsd_C( FLA_Obj A, FLA_Obj B, FLA_Obj sCOBuff, FLA_Obj rcondC, int *r
       lapack_complex_double *buff_B    = ( lapack_complex_double * ) FLA_DOUBLE_COMPLEX_PTR( B );
       double *buff_s    = ( double * ) FLA_DOUBLE_PTR( sCOBuff );
       double *rcondCVal  = ( double * ) FLA_DOUBLE_PTR( rcondC );
-        lapack_complex_double *buff_work = ( lapack_complex_double * ) FLA_DOUBLE_COMPLEX_PTR( work_obj );
+      lapack_complex_double *buff_work = ( lapack_complex_double * ) FLA_DOUBLE_COMPLEX_PTR( work_obj );
       int *buff_iwork = ( int * ) FLA_INT_PTR( iwork_obj );
-     double *buff_r    = ( double * ) FLA_DOUBLE_PTR( iwork_obj_double );
-     zgelsd_( &m_A,
-                  &n_A,
-                  &n_A,
-                  buff_A, &cs_A,
-                  buff_B, &cs_B,
-                  buff_s, rcondCVal,
-                  rank,
-                  buff_work, &lwork, buff_r,
-                  buff_iwork, &info);
+      double *buff_r    = ( double * ) FLA_DOUBLE_PTR( iwork_obj_double );
+      zgelsd_( &m_A,
+               &n_A,
+               &n_A,
+               buff_A, &cs_A,
+               buff_B, &cs_B,
+               buff_s, rcondCVal,
+               rank,
+               buff_work, &lwork, buff_r,
+               buff_iwork, &info);
 
       break;
     }
   }
 
-
   FLA_Obj_free( &work_obj );
+  FLA_Obj_free(  &iwork_obj );
+  FLA_Obj_free(  &iwork_obj_float );
+  FLA_Obj_free(  &iwork_obj_double );
+
 #else
   FLA_Check_error_code( FLA_EXTERNAL_LAPACK_NOT_IMPLEMENTED );
 #endif
@@ -152,8 +155,8 @@ extern TLS_CLASS_SPEC FLA_Obj FLA_ZERO;
 template< typename T >
 void gelsd_test()
 {
-  int m = 128;
-  int n = 1024;
+  int m = 16384;
+  int n = 128;
 
   srand (time(NULL));
 
@@ -177,6 +180,7 @@ void gelsd_test()
   //Allocate and initialize buffers for C and CPP functions with random values
   allocate_init_buffer(aCPPIOBuff, aCIOBuff, m*n) ;
   allocate_init_buffer(bCPPIOBuff, bCIOBuff, ldb*n) ;
+  allocate_init_buffer(sCPPOBuff, sCOBuff, min_m_n, 0);
 
   //Allocate Object for C function and copy already allocated and filled buffer
   FLA_Obj_create_without_buffer( datatype, m, n, &aCIOObj ) ;
@@ -193,7 +197,7 @@ void gelsd_test()
   gelsd_C( aCIOObj, bCIOObj, sCOObj, FLA_ZERO, &rankC );
 
   double diff =  computeError<T>( n, m, aCIOBuff, aCPPIOBuff ) ;
-  diff +=  computeError<T>( ldb, n, bCIOBuff, bCPPIOBuff ) ;
+  diff +=  computeError<T>( n, n, bCIOBuff, bCPPIOBuff ) ;
   diff +=  computeError<T>( 1, min_m_n, sCOBuff, sCPPOBuff ) ;
   diff += abs(rankCPP - rankC);
 
@@ -205,12 +209,15 @@ void gelsd_test()
   }
 
  //Free up the buffers
- delete aCPPIOBuff ;
- delete bCPPIOBuff ;
- delete sCPPOBuff ;
- FLA_Obj_free( &aCIOObj );
- FLA_Obj_free( &bCIOObj );
- FLA_Obj_free(&sCOObj );
+ delete[] aCPPIOBuff ;
+ delete[] bCPPIOBuff ;
+ delete[] sCPPOBuff ;
+ delete[] aCIOBuff ;
+ delete[] bCIOBuff ;
+ delete[] sCOBuff ;
+ FLA_Obj_free_without_buffer(&aCIOObj);
+ FLA_Obj_free_without_buffer(&bCIOObj);
+ FLA_Obj_free_without_buffer(&sCOObj);
 }
 
 template< typename Ta, typename Tb >
@@ -242,6 +249,7 @@ void gelsd_test()
   //Allocate and initialize buffers for C and CPP functions with random values
   allocate_init_buffer(aCPPIOBuff, aCIOBuff, m*n) ;
   allocate_init_buffer(bCPPIOBuff, bCIOBuff, ldb*n) ;
+  allocate_init_buffer(sCPPOBuff, sCOBuff, min_m_n, 0);
 
   //Allocate Object for C function and copy already allocated and filled buffer
   FLA_Obj_create_without_buffer( datatype, m, n, &aCIOObj ) ;
@@ -258,7 +266,7 @@ void gelsd_test()
   gelsd_C( aCIOObj, bCIOObj, sCOObj, FLA_ZERO, &rankC );
 
   double diff =  computeError<Ta>( n, m, aCIOBuff, aCPPIOBuff ) ;
-  diff +=  computeError<Ta>( ldb, n, bCIOBuff, bCPPIOBuff ) ;
+  diff +=  computeError<Ta>( n, n, bCIOBuff, bCPPIOBuff ) ;
   diff +=  computeError<Tb>( 1, min_m_n, sCOBuff, sCPPOBuff ) ;
   diff += abs(rankCPP - rankC);
 
@@ -270,12 +278,15 @@ void gelsd_test()
   }
 
  //Free up the buffers
- delete aCPPIOBuff ;
- delete bCPPIOBuff ;
- delete sCPPOBuff ;
- FLA_Obj_free( &aCIOObj );
- FLA_Obj_free( &bCIOObj );
- FLA_Obj_free(&sCOObj );
+ delete[] aCPPIOBuff ;
+ delete[] bCPPIOBuff ;
+ delete[] sCPPOBuff ;
+ delete[] aCIOBuff ;
+ delete[] bCIOBuff ;
+ delete[] sCOBuff ;
+ FLA_Obj_free_without_buffer(&aCIOObj);
+ FLA_Obj_free_without_buffer(&bCIOObj);
+ FLA_Obj_free_without_buffer(&sCOObj);
 }
 
 void gelsd_testall_variants(){
