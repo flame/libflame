@@ -110,7 +110,7 @@ template< typename T >
 void potri_test()
 {
   int m = 64; //64 works
-  char uplo = 'L';
+  char uplo = 'U';
   srand (time(NULL));
 
   FLA_Init( );
@@ -123,6 +123,7 @@ void potri_test()
   allocate_init_buffer(aCPPIOBuff, aCIOBuff, m*m);
 
   //Call CPP function
+  libflame::potrf(LAPACK_COL_MAJOR, &uplo, &m, aCPPIOBuff, &m );
   libflame::potri( LAPACK_COL_MAJOR, &uplo, &m, aCPPIOBuff, &m );
 
   //Allocate Object for C function and copy already allocated and filled buffer
@@ -130,7 +131,8 @@ void potri_test()
   FLA_Obj_attach_buffer( aCIOBuff, 1, m, &aCIOObj );
 
   //Call C function
-  potri_C( FLA_LOWER_TRIANGULAR, aCIOObj );
+  FLA_Chol_blk_external( FLA_UPPER_TRIANGULAR, aCIOObj );
+  potri_C( FLA_UPPER_TRIANGULAR, aCIOObj );
 
   //Compute Difference in C and CPP buffer
   double diff =  computeError<T>( m, m, aCIOBuff, aCPPIOBuff );

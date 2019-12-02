@@ -188,7 +188,7 @@ void allocate_init_buffer(float *&aIn, float *&aRef, int size)
   aRef = new float [size];
   for(int i = 0; i < size; i++)
   {
-    aIn[i] = ((float) rand() / ((float) RAND_MAX / 2.0)) - 1.0;
+    aIn[i] = ((float) rand() / ((float) RAND_MAX / 2.0)) ;
     aRef[i] =  aIn[i] ;
   }
 
@@ -199,7 +199,7 @@ void allocate_init_buffer(double *&aIn, double *&aRef, int size)
   aRef = new double [size];
   for(int i = 0; i < size; i++)
   {
-    aIn[i] = ( (double) rand() / ((double) RAND_MAX / 2.0)) - 1.0;
+    aIn[i] = ( (double) rand() / ((double) RAND_MAX / 2.0));
     aRef[i] =  aIn[i] ;
   }
 }

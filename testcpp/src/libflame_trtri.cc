@@ -31,7 +31,7 @@ void trtri_test()
 {
   int m = 128;
   char uplo = 'L';
-  char blas_diag = 'N';
+  char blas_diag = 'U';
   srand (time(NULL));
 
   FLA_Init( );
@@ -50,7 +50,7 @@ void trtri_test()
   FLA_Obj_attach_buffer( aCIOBuff, 1, m, &aCIOObj );
 
   //Call C function
-  FLA_Trinv_blk_external( FLA_LOWER_TRIANGULAR, FLA_NONUNIT_DIAG, aCIOObj );
+  FLA_Trinv_blk_external( FLA_LOWER_TRIANGULAR, FLA_UNIT_DIAG, aCIOObj );
 
   //Compute Difference in C and CPP buffer
   double diff =  computeError<T>( m, m, aCIOBuff, aCPPIOBuff );

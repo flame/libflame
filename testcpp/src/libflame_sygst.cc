@@ -39,8 +39,8 @@ void sygst_test()
   T *aCPPIOBuff, *aCIOBuff, *bRefBuff, *b;
   char uplo  ='L';
   int datatype = getDatatype<T>();
-  int itype = 1 ; //1 or 2
-  int itype_c = FLA_INVERSE;
+  int itype = 2 ; //1 or 2
+  int itype_c = FLA_NO_INVERSE;
 
   //Allocate and initialize buffers for C and CPP functions with random values
   allocate_init_buffer(aCPPIOBuff, aCIOBuff, n*n);
