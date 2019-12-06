@@ -562,7 +562,8 @@ endif
 $(LIBFLAME_SO_PATH): $(MK_ALL_FLAMEC_OBJS)
 ifeq ($(ENABLE_VERBOSE),yes)
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
-	$(LINKER) $(SOFLAGS) $(LDFLAGS) -o $@ @$(AR_OBJ_LIST_FILE)
+	$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $(LIBFLAME_A)
+	$(LINKER) $(SOFLAGS) $(LDFLAGS) -o $@ -Wl,-force_load,$(LIBFLAME_A)
 else
 #	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
 #	the list of prerequisites.
@@ -571,7 +572,8 @@ endif
 else
 	@echo "Dynamically linking $@"
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
-	@$(LINKER) $(SOFLAGS) $(LDFLAGS) -o $@ @$(AR_OBJ_LIST_FILE)
+	@$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $(LIBFLAME_A)
+	@$(LINKER) $(SOFLAGS) $(LDFLAGS) -o $@ -Wl,-force_load,$(LIBFLAME_A)
 else
 #	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
 #	the list of prerequisites.
