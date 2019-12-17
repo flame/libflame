@@ -564,28 +564,28 @@ ifeq ($(ENABLE_VERBOSE),yes)
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 	$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $(LIBFLAME_A)
 ifeq ($(OS_NAME),Darwin)
-	$(LINKER) $(SOFLAGS) $(LDFLAGS) -o $@ -Wl,-force_load,$(LIBFLAME_A)
+	$(LINKER) $(SOFLAGS) -o $@ -Wl,-force_load,$(LIBFLAME_A) $(LDFLAGS)
 else
-	$(LINKER) $(SOFLAGS) $(LDFLAGS) -o $@ -Wl,--whole-archive,$(LIBFLAME_A),--no-whole-archive
+	$(LINKER) $(SOFLAGS) -o $@ -Wl,--whole-archive,$(LIBFLAME_A),--no-whole-archive $(LDFLAGS)
 endif
 else
 #	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
 #	the list of prerequisites.
-	$(LINKER) $(SOFLAGS) $(LDFLAGS) -o $@ $^
+	$(LINKER) $(SOFLAGS) -o $@ $^ $(LDFLAGS)
 endif
 else
 	@echo "Dynamically linking $@"
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 	@$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $(LIBFLAME_A)
 ifeq ($(OS_NAME),Darwin)
-	@$(LINKER) $(SOFLAGS) $(LDFLAGS) -o $@ -Wl,-force_load,$(LIBFLAME_A)
+	@$(LINKER) $(SOFLAGS) -o $@ -Wl,-force_load,$(LIBFLAME_A) $(LDFLAGS)
 else
-	@$(LINKER) $(SOFLAGS) $(LDFLAGS) -o $@ -Wl,--whole-archive,$(LIBFLAME_A),--no-whole-archive
+	@$(LINKER) $(SOFLAGS) -o $@ -Wl,--whole-archive,$(LIBFLAME_A),--no-whole-archive $(LDFLAGS)
 endif
 else
 #	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
 #	the list of prerequisites.
-	@$(LINKER) $(SOFLAGS) $(LDFLAGS) -o $@ $^
+	@$(LINKER) $(SOFLAGS) -o $@ $^ $(LDFLAGS)
 endif
 endif
 
