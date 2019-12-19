@@ -24,7 +24,6 @@
         uninstall-libs uninstall-lib-symlinks uninstall-headers
 
 
-
 # Accept an abbreivated request for verbosity (e.g. 'make V=1 ...')
 ifeq ($(V),1)
 ENABLE_VERBOSE := yes
@@ -513,10 +512,10 @@ libflame: check-env $(MK_LIBS)
 # --- Static library archiver rules ---
 $(LAPACKE_A_PATH):
 ifeq ($(ENABLE_VERBOSE),yes)
-	$(MAKE) -C $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE
+	$(MAKE) -e -C $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE
 else
 	@echo -n "Generating LAPACKE library"
-	$(MAKE) -C $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE
+	$(MAKE) -e -C $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE
 	@echo "Generated LAPACKE library"
 endif
 
@@ -645,7 +644,7 @@ endif
 
 # Run CPP Tests
 checkcpp:
-	$(MAKE) -C $(CPP_TEST_DIR)
+	$(MAKE) -e -C $(CPP_TEST_DIR)
 
 # --- Install library rules ---
 

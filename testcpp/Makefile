@@ -159,7 +159,7 @@ TEST_OBJS      := $(patsubst $(TEST_SRC_PATH)/%.c, \
 
 $(TEST_OBJ_PATH)/%.o: $(TEST_SRC_PATH)/%.cc
 	@mkdir -p $(TEST_OBJ_PATH)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(TEST_OBJ_PATH)/libflame_%.o: libflame_%.cc
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
