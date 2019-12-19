@@ -39,7 +39,7 @@ INC_PATH        := $(INCLUDE_DIR)/$(HOST)/
 # CC             := gcc
 # LINKER         := $(CC)
 # CFLAGS         := -g -O2 -Wall -Wno-comment
-# LDFLAGS        := 
+LDFLAGS        := -lm -lpthread
 # INSTALL_PREFIX := $(HOME)/flame
 
 
@@ -52,14 +52,15 @@ INC_PATH        := $(INCLUDE_DIR)/$(HOST)/
 # the libflame test suite. Modify these definitions if needed.
 LIBBLAS_PATH   := $(INSTALL_LIBDIR)
 #LIBBLAS        := $(LIBBLAS_PATH)/libblas.a
-LIBBLAS        := $(LIBBLAS_PATH)/libopenblas.a
+#LIBBLAS        := $(LIBBLAS_PATH)/libopenblas.a
 #LIBBLAS        := $(HOME)/blis/lib/libblis.a
+LIBBLAS        := 
 
 # LAPACK implementation path. These values only matter if libflame was
 # configured with the external-lapack-interfaces option enabled. Modify
 # these definitions if needed.
 LIBLAPACK_PATH := $(INSTALL_LIBDIR)
-LIBLAPACK      := $(LIBLAPACK_PATH)/liblapack.a
+LIBLAPACK      := 
 
 
 
@@ -87,6 +88,7 @@ TEST_OBJS      := $(patsubst $(TEST_SRC_PATH)/%.c, \
 TEST_BIN       := test_$(FNAME).x
 
 $(TEST_OBJ_PATH)/%.o: $(TEST_SRC_PATH)/%.c
+	mkdir -p $(TEST_OBJ_PATH)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 test_$(FNAME): $(TEST_OBJS)

@@ -44,8 +44,8 @@ INC_PATH        := $(INCLUDE_DIR)
 
 # Uncomment and modify these definitions if you wish to override the values
 # present in the master config makefile fragment.
-CC             := g++
-LINKER         := $(CC)
+CXX            := g++
+LINKER         := $(CXX)
 
 
 CXXFLAGS       += -O2 -Wall -Wno-comment -fopenmp
@@ -159,10 +159,10 @@ TEST_OBJS      := $(patsubst $(TEST_SRC_PATH)/%.c, \
 
 $(TEST_OBJ_PATH)/%.o: $(TEST_SRC_PATH)/%.cc
 	@mkdir -p $(TEST_OBJ_PATH)
-	@$(CC) $(CXXFLAGS) -c $< -o $@
+	$(CXX) $(CXXFLAGS) -c $< -o $@
 
 $(TEST_OBJ_PATH)/libflame_%.o: libflame_%.cc
-	@$(CC) $(CXXFLAGS) -c $< -o $@
+	@$(CXX) $(CXXFLAGS) -c $< -o $@
 
 libflame_%.x: $(TEST_OBJ_PATH)/libflame_%.o 
 	@$(LINKER) $^ $(TEST_OBJS) $(LAPACKE) $(LIBFLAME) $(LIBBLAS) $(LDFLAGS) -o $@
