@@ -1,6 +1,7 @@
 /*
 
     Copyright (C) 2014, The University of Texas at Austin
+    Copyright (C) 2020, Advanced Micro Devices, Inc. 
 
     This file is part of libflame and is available under the 3-Clause
     BSD license, which can be found in the LICENSE file at the top-level
@@ -9,7 +10,7 @@
 */
 
 #include "FLAME.h"
-
+#include <limits.h>
 
 #ifdef FLA_ENABLE_SCC
 typedef volatile unsigned char* t_vcharp;
@@ -469,7 +470,15 @@ FLA_Error FLA_Obj_create_constant_ext( float const_s, double const_d, FLA_Obj *o
   temp_c       = FLA_COMPLEX_PTR( *obj );
   temp_z       = FLA_DOUBLE_COMPLEX_PTR( *obj );
 
-  *temp_i      = ( int   ) const_s;
+  // This check safely allows the float to int typecast by saturation check
+  if( const_s >= (float)(INT_MAX - 64)) // Comparing with float value equal to 0x7FFFFFFF
+  {
+      *temp_i      = INT_MAX;// equal to 0x7FFFFFFF
+  }
+  else
+  {
+      *temp_i      = ( int   ) const_s;
+  }
   *temp_s      =           const_s;
   *temp_d      =           const_d;
   temp_c->real =           const_s;
