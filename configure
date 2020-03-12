@@ -6508,7 +6508,7 @@ $as_echo_n "checking for (guessing) OpenMP flags for ${CC_VENDOR}... " >&6; }
 
 		case ${CC_VENDOR} in
 				icc)
-			fla_c_openmp_flags='-openmp'
+			fla_c_openmp_flags='-qopenmp'
 		;;
 				gcc)
 			fla_c_openmp_flags='-fopenmp'
