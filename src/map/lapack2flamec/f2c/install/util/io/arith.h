@@ -24,7 +24,7 @@ use or performance of this software.
 #ifndef F2C_ARITH_H
 #define F2C_ARITH_H
 
-#include <f2c_config.h>
+#include "f2c_config.h"
 #include <math.h>
 
 #ifdef _MSC_VER

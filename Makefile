@@ -94,7 +94,12 @@ endif
 
 # --- Shared library extension ---
 
-SHLIB_EXT            := so
+# The shared (dynamic) library file suffix is different for Linux and OS X.
+ifeq ($(OS_NAME),Darwin)
+SHLIB_EXT          := dylib
+else
+SHLIB_EXT          := so
+endif
 
 # --- Library names ---
 
@@ -111,8 +116,15 @@ LAPACKE_A	     := liblapacke.a
 LIBFLAME_A_PATH      := $(BASE_LIB_PATH)/$(LIBFLAME_A)
 LIBFLAME_SO_PATH     := $(BASE_LIB_PATH)/$(LIBFLAME_SO)
 
+ifeq ($(OS_NAME),Darwin)
+# OS X shared library extensions.
+LIBFLAME_SO_MAJ_EXT  := $(SO_MAJOR).$(SHLIB_EXT)
+LIBFLAME_SO_MMB_EXT  := $(SO_MMB).$(SHLIB_EXT)
+else
+# Linux shared library extensions.
 LIBFLAME_SO_MAJ_EXT  := $(SHLIB_EXT).$(SO_MAJOR)
 LIBFLAME_SO_MMB_EXT  := $(SHLIB_EXT).$(SO_MMB)
+endif
 
 LIBFLAME_SONAME      := $(LIBFLAME).$(LIBFLAME_SO_MAJ_EXT)
 LIBFLAME_SO_MAJ_PATH := $(BASE_LIB_PATH)/$(LIBFLAME_SONAME)
@@ -130,8 +142,15 @@ LIBFLAME_SO_OUTPUT_NAME := $(LIBFLAME_SO_PATH)
 
 # Specify the shared library's 'soname' field.
 # NOTE: The flag for creating shared objects is different for Linux and OS X.
+ifeq ($(OS_NAME),Darwin)
+# OS X shared library link flags.
+SOFLAGS    := -dynamiclib
+SOFLAGS    += -Wl,-install_name,$(LIBFLAME_SONAME)
+else
 SOFLAGS    := -shared
+# Linux shared library link flags.
 SOFLAGS    += -Wl,-soname,$(LIBFLAME_SONAME)
+endif
 
 
 
@@ -561,20 +580,30 @@ endif
 $(LIBFLAME_SO_PATH): $(MK_ALL_FLAMEC_OBJS)
 ifeq ($(ENABLE_VERBOSE),yes)
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
-	$(LINKER) $(SOFLAGS) $(LDFLAGS) -o $@ @$(AR_OBJ_LIST_FILE)
+	$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $(LIBFLAME_A)
+ifeq ($(OS_NAME),Darwin)
+	$(LINKER) $(SOFLAGS) -o $@ -Wl,-force_load,$(LIBFLAME_A) $(LDFLAGS)
+else
+	$(LINKER) $(SOFLAGS) -o $@ -Wl,--whole-archive,$(LIBFLAME_A),--no-whole-archive $(LDFLAGS)
+endif
 else
 #	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
 #	the list of prerequisites.
-	$(LINKER) $(SOFLAGS) $(LDFLAGS) -o $@ $^
+	$(LINKER) $(SOFLAGS) -o $@ $^ $(LDFLAGS)
 endif
 else
 	@echo "Dynamically linking $@"
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
-	@$(LINKER) $(SOFLAGS) $(LDFLAGS) -o $@ @$(AR_OBJ_LIST_FILE)
+	@$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $(LIBFLAME_A)
+ifeq ($(OS_NAME),Darwin)
+	@$(LINKER) $(SOFLAGS) -o $@ -Wl,-force_load,$(LIBFLAME_A) $(LDFLAGS)
+else
+	@$(LINKER) $(SOFLAGS) -o $@ -Wl,--whole-archive,$(LIBFLAME_A),--no-whole-archive $(LDFLAGS)
+endif
 else
 #	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
 #	the list of prerequisites.
-	@$(LINKER) $(SOFLAGS) $(LDFLAGS) -o $@ $^
+	@$(LINKER) $(SOFLAGS) -o $@ $^ $(LDFLAGS)
 endif
 endif
 
@@ -667,11 +696,11 @@ endif
 $(INSTALL_LIBDIR)/%.$(LIBFLAME_SO_MMB_EXT): $(BASE_LIB_PATH)/%.$(SHLIB_EXT) $(CONFIG_MK_FILE)
 ifeq ($(ENABLE_VERBOSE),yes)
 	$(MKDIR) $(@D)
-	$(INSTALL) -m 0644 $< $@
+	$(INSTALL) -m 0755 $< $@
 else
 	@echo "Installing $(@F) into $(INSTALL_LIBDIR)/"
 	@$(MKDIR) $(@D)
-	@$(INSTALL) -m 0644 $< $@
+	@$(INSTALL) -m 0755 $< $@
 endif
 
 

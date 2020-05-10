@@ -28,6 +28,10 @@ SO_MMB    := $(SO_MAJOR).$(SO_MINORB)
 # library name.
 ARCH                           := @fla_host_cpu@
 
+# This variable identifies the operating system / kernel. It is the result of
+# 'uname -s'.
+OS_NAME                        := @os_name@
+
 # We have to set these particular variables because some of the @anchors@
 # that are substituted in via configure may be defined *in terms of* these
 # variables. For example, @libdir@ may be replaced with '${exec_prefix}/lib',
@@ -101,6 +105,7 @@ EMPTY_FILE := /dev/null
 
 # --- Determine the C compiler and related flags ---
 CC           := @CC@
+CC_VENDOR    := @CC_VENDOR@
 CPPROCFLAGS  := -D_POSIX_C_SOURCE=200809L @DEFS@ @fla_blis_flags@
 CMISCFLAGS   := @fla_c_lang_flags@ @fla_c_openmp_flags@ @fla_c_prof_flags@
 CXXMISCFLAGS := -Wall -Wno-unused-function -Wno-parentheses -Wfatal-errors

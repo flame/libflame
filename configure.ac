@@ -227,6 +227,9 @@ dnl AC_PROG_CC and AC_PROG_F77 marcos in the variables fla_c_compiler_list and
 dnl fla_f77_compiler_list, respectively.
 FLA_OBSERVE_HOST_CPU_TYPE
 
+dnl Set the @os_name@ output variable to the output of 'uname -s'.
+FLA_OBSERVE_OS_NAME
+
 dnl Set the default value of the $prefix value, normally set by the --prefix
 dnl option to configure.
 dnl AC_PREFIX_DEFAULT([$HOME/flame])
@@ -252,8 +255,11 @@ dnl Check whether the user requested a specific C compiler. If so, add it to the
 dnl front of the compiler search list. Otherwise do nothing.
 FLA_CHECK_WITH_CC
 
-dnl Determine the C compiler.
+dnl Determine the C compiler (CC).
 FLA_REQUIRE_CC
+
+dnl Determine the C compiler vendor (CC_VENDOR).
+FLA_REQUIRE_CC_VENDOR
 
 dnl Check whether the user requested a specific library archiver. If so, assign
 dnl it to the requested archiver variable. Otherwise do nothing.

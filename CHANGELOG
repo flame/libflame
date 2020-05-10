@@ -1,3 +1,30 @@
+5.2 | bf23ef4 | 20190809
+------------------------
+ o Lots of build system updates, including:
+   - Bring aspects of build system up-to-date, especially relative to
+    that of BLIS.
+   - Support out-of-tree builds.
+   - Abide by GNU conventions for shared library names.
+   - Abide by GNU conventions for prefix, exec_prefix, libdir, and
+     include_dir variables and their recognition within the top-level
+     Makefile.
+   - Flatten various headers.
+   - ARG_MAX hack fixes/cleanups.
+   - Prepend preexisting contents of CFLAGS to CFLAGS.
+   - Support V=1 in top-level Makefile.
+   - Unconditionally define _POSIX_C_SOURCE=200809L.
+ o Added mixing I/O-related libf2c files.
+ o Initialize global scalar constants (e.g. FLA_ZERO, etc.) via
+   static initializers rather than at runtime. 
+ o Integrated netlib LAPACK test suite.
+ o Diabled lapack2flamec layer's xblas.
+ o Prepend license notice to most .c and .h files.
+ o Various bug fixes.
+
+5.1 | bf23ef4 | 20140318
+------------------------
+ o Initial import after moving from subversion to git.
+
 5.0 | r4648 | 20101028
 ----------------------
  o Implemented new operations:

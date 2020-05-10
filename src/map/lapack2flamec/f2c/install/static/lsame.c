@@ -10,9 +10,11 @@
 		http://www.netlib.org/f2c/libf2c.zip
 */
 
+#include "FLAME.h"
 #include "FLA_f2c.h"
 #include "stdio.h"
 
+#ifdef FLA_ENABLE_LAPACK2FLAME
 logical lsame_(char *ca, char *cb)
 {
     /* System generated locals */
@@ -126,4 +128,6 @@ logical lsame_(char *ca, char *cb)
     /*     End of LSAME */
 
     return ret_val;
-} /* lsame_ */
+}
+#endif
+/* lsame_ */

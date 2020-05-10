@@ -34,9 +34,9 @@ use or performance of this software.
 #include <math.h>
 #include <string.h>
 #ifdef _MSC_VER
-# include <f2c_types_win.h>
+# include "f2c_types_win.h"
 #else
-# include <f2c_types.h>
+# include "f2c_types.h"
 #endif
 
 #ifdef __cplusplus
@@ -308,7 +308,7 @@ void z_sqrt(doublecomplex *r, doublecomplex *z);
 
 #ifndef F2C_NO_INLINE_H
 # if defined(__GNUC__)
-#  include <f2c_inline.h>
+#  include "f2c_inline.h"
 # endif
 #endif
 

@@ -698,6 +698,7 @@ INSTALL_SCRIPT
 INSTALL_PROGRAM
 RANLIB
 AR
+CC_VENDOR
 fla_userdef_cflags
 OBJEXT
 EXEEXT
@@ -707,6 +708,8 @@ LDFLAGS
 CFLAGS
 CC
 fla_gnu_make_found
+os_vers
+os_name
 fla_host_cpu
 host_os
 host_vendor
@@ -2738,6 +2741,15 @@ case $host_os in *\ *) host_os=`echo "$host_os" | sed 's/ /-/g'`;; esac
 
 
 
+	os_name=$(uname -s)
+	os_vers=$(uname -r)
+
+
+
+
+
+
+
 
 
 
@@ -3460,6 +3472,22 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 	if test "$CC" = "" ; then
 		as_fn_error 1 "Could not locate any of the following C compilers: $CC $fla_requested_cc $fla_c_compiler_list. Cannot continue without a C compiler." "$LINENO" 5
+	fi
+
+
+
+
+
+
+
+
+		CC_VENDOR=$(echo "$CC" | egrep -o 'icc|gcc|clang|emcc|pnacl|IBM' | { read first rest ; echo $first ; })
+
+	if test "${CC_VENDOR}" = "" ; then
+		as_fn_error $? "configure can't determine the compiler vendor for $CC. Please submit a bug report to the FLAME developers." "$LINENO" 5
+	else
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: setting the CC_VENDOR environment variable to ${CC_VENDOR}." >&5
+$as_echo "$as_me: setting the CC_VENDOR environment variable to ${CC_VENDOR}." >&6;}
 	fi
 
 
@@ -6027,7 +6055,7 @@ $as_echo "no" >&6; }
 
 
 
-		case $CC in
+		case ${CC_VENDOR} in
 				gcc)
 
 $as_echo "#define _GNU_SOURCE 1" >>confdefs.h
@@ -6053,10 +6081,10 @@ $as_echo "#define _GNU_SOURCE 1" >>confdefs.h
 
 
 
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for (guessing) appropriate $CC language flags" >&5
-$as_echo_n "checking for (guessing) appropriate $CC language flags... " >&6; }
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for (guessing) appropriate ${CC_VENDOR} language flags" >&5
+$as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} language flags... " >&6; }
 
-		case $CC in
+		case ${CC_VENDOR} in
 				gcc)
 			fla_c_lang_flags='-std=c99 -Wall -Wno-unused-function -Wno-parentheses -Wfatal-errors'
 		;;
@@ -6475,12 +6503,12 @@ $as_echo "#define FLA_ENABLE_MULTITHREADING 1" >>confdefs.h
 
 
 
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for (guessing) OpenMP flags for $CC" >&5
-$as_echo_n "checking for (guessing) OpenMP flags for $CC... " >&6; }
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for (guessing) OpenMP flags for ${CC_VENDOR}" >&5
+$as_echo_n "checking for (guessing) OpenMP flags for ${CC_VENDOR}... " >&6; }
 
-		case $CC in
+		case ${CC_VENDOR} in
 				icc)
-			fla_c_openmp_flags='-openmp'
+			fla_c_openmp_flags='-qopenmp'
 		;;
 				gcc)
 			fla_c_openmp_flags='-fopenmp'
@@ -6507,7 +6535,7 @@ $as_echo "$fla_c_openmp_flags" >&6; }
 
 		if test "$fla_c_openmp_flags" = "unknown" ; then
 
-						as_fn_error $? "configure doesn't know what flag to give $CC in order to enable OpenMP support. Please submit a bug report to the FLAME developers." "$LINENO" 5
+						as_fn_error $? "configure doesn't know what flag to give ${CC_VENDOR} in order to enable OpenMP support. Please submit a bug report to the FLAME developers." "$LINENO" 5
 	fi
 
 
@@ -6732,10 +6760,10 @@ $as_echo "#define FLA_ENABLE_VECTOR_INTRINSICS 1" >>confdefs.h
 
 
 
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for (guessing) SSE flags for $CC" >&5
-$as_echo_n "checking for (guessing) SSE flags for $CC... " >&6; }
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for (guessing) SSE flags for ${CC_VENDOR}" >&5
+$as_echo_n "checking for (guessing) SSE flags for ${CC_VENDOR}... " >&6; }
 
-		case $CC in
+		case ${CC_VENDOR} in
 				icc)
 			fla_c_sse_flags='-msse3'
 		;;
@@ -6767,12 +6795,12 @@ $as_echo "$fla_c_sse_flags" >&6; }
 
 		if test "$fla_c_sse_flags" = "notvalid" ; then
 
-						as_fn_error $? "configure can't continue because the $CC compiler (probably) does not support SSE." "$LINENO" 5
+						as_fn_error $? "configure can't continue because the ${CC_VENDOR} compiler (probably) does not support SSE." "$LINENO" 5
 	fi
 
 		if test "$fla_c_sse_flags" = "unknown" ; then
 
-						as_fn_error $? "configure doesn't know what flag to give $CC in order to enable SSE. Please submit a bug report to the FLAME developers." "$LINENO" 5
+						as_fn_error $? "configure doesn't know what flag to give ${CC_VENDOR} in order to enable SSE. Please submit a bug report to the FLAME developers." "$LINENO" 5
 	fi
 
 
@@ -6957,12 +6985,12 @@ $as_echo "no" >&6; }
 
 
 
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for (guessing) appropriate $CC optimization flags" >&5
-$as_echo_n "checking for (guessing) appropriate $CC optimization flags... " >&6; }
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for (guessing) appropriate ${CC_VENDOR} optimization flags" >&5
+$as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} optimization flags... " >&6; }
 
 	if test "$fla_enable_compiler_optimizations" == "yes" ; then
 
-				case $CC in
+				case ${CC_VENDOR} in
 						gcc)
 				fla_c_opt_flags='-O3'
 			;;
@@ -6990,7 +7018,7 @@ $as_echo_n "checking for (guessing) appropriate $CC optimization flags... " >&6;
 		esac
 	else
 
-				case $CC in
+				case ${CC_VENDOR} in
 						gcc)
 				fla_c_opt_flags='-O0'
 			;;
@@ -7075,12 +7103,12 @@ $as_echo "no" >&6; }
 
 
 
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for (guessing) appropriate $CC warning flags" >&5
-$as_echo_n "checking for (guessing) appropriate $CC warning flags... " >&6; }
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for (guessing) appropriate ${CC_VENDOR} warning flags" >&5
+$as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} warning flags... " >&6; }
 
 	if test "$fla_enable_compiler_warnings" == "yes" ; then
 
-				case $CC in
+				case ${CC_VENDOR} in
 						gcc)
 				fla_c_warning_flags='-Wall -Wno-comment'
 			;;
@@ -7108,7 +7136,7 @@ $as_echo_n "checking for (guessing) appropriate $CC warning flags... " >&6; }
 		esac
 	else
 
-				case $CC in
+				case ${CC_VENDOR} in
 						gcc)
 				fla_c_warning_flags='-w'
 			;;
@@ -7192,12 +7220,12 @@ $as_echo "no" >&6; }
 
 
 
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for (guessing) appropriate $CC debug flags" >&5
-$as_echo_n "checking for (guessing) appropriate $CC debug flags... " >&6; }
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for (guessing) appropriate ${CC_VENDOR} debug flags" >&5
+$as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} debug flags... " >&6; }
 
 	if test "$fla_enable_compiler_debug" == "yes" ; then
 
-				case $CC in
+				case ${CC_VENDOR} in
 						gcc)
 				fla_c_debug_flags='-g'
 			;;
@@ -7225,7 +7253,7 @@ $as_echo_n "checking for (guessing) appropriate $CC debug flags... " >&6; }
 		esac
 	else
 
-				case $CC in
+				case ${CC_VENDOR} in
 						gcc)
 				fla_c_debug_flags='-g0'
 			;;
@@ -7310,12 +7338,12 @@ $as_echo "no" >&6; }
 
 
 
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for (guessing) appropriate $CC profiling flags" >&5
-$as_echo_n "checking for (guessing) appropriate $CC profiling flags... " >&6; }
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: checking for (guessing) appropriate ${CC_VENDOR} profiling flags" >&5
+$as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} profiling flags... " >&6; }
 
 	if test "$fla_enable_compiler_profiling" == "yes" ; then
 
-				case $CC in
+				case ${CC_VENDOR} in
 						gcc)
 				fla_c_prof_flags='-pg'
 			;;
@@ -7343,7 +7371,7 @@ $as_echo_n "checking for (guessing) appropriate $CC profiling flags... " >&6; }
 		esac
 	else
 
-				case $CC in
+				case ${CC_VENDOR} in
 						gcc)
 				fla_c_prof_flags=''
 			;;

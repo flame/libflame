@@ -32,7 +32,6 @@ config.status
 config.sys_type
 config.dist_path
 config.mk
-version
 
 # -- monolithic headers --
 

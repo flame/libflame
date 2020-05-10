@@ -2,10 +2,10 @@ AC_DEFUN([FLA_SET_C_LANG_FLAGS],
 [
 	AC_REQUIRE([FLA_OBSERVE_HOST_CPU_TYPE])
 	
-	AC_MSG_CHECKING([for (guessing) appropriate $CC language flags])
+	AC_MSG_CHECKING([for (guessing) appropriate ${CC_VENDOR} language flags])
 
 	dnl Set C compiler flags assuming we found...
-	case $CC in
+	case ${CC_VENDOR} in
 		dnl GNU gcc.
 		gcc)
 			fla_c_lang_flags='-std=c99 -Wall -Wno-unused-function -Wno-parentheses -Wfatal-errors'
