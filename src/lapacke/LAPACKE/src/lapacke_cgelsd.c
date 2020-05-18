@@ -79,7 +79,6 @@ lapack_int LAPACKE_cgelsd( int matrix_layout, lapack_int m, lapack_int n,
     lrwork = (lapack_int)rwork_query;
     lwork = LAPACK_C2INT( work_query );
     /* Allocate memory for work arrays */
-    printf("Memory Array sizes: %d %d %d\n", liwork, lrwork, lwork);
     iwork = (lapack_int*)LAPACKE_malloc( sizeof(lapack_int) * liwork );
     if( iwork == NULL ) {
         info = LAPACK_WORK_MEMORY_ERROR;
