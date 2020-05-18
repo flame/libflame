@@ -264,11 +264,9 @@ int cgebd2_(integer *m, integer *n, complex *a, integer *lda, real *d__, real *e
             i__2 = *m - i__ + 1;
             /* Computing MIN */
             i__3 = i__ + 1;
-		    printf("%d (%f %f) %d (%f %f), %d (%f %f)\n", i__2, alpha.r, alpha.i, min(i__3,*m) + i__ * a_dim1, a[min(i__3,*m) + i__ * a_dim1].r, a[min(i__3,*m) + i__ * a_dim1].i, c__1, tauq[i__].r, tauq[i__].i);
             clarfg_(&i__2, &alpha, &a[min(i__3,*m) + i__ * a_dim1], &c__1, &tauq[i__]);
             i__2 = i__;
             d__[i__2] = alpha.r;
-			printf("1: %d %f\n", i__2, alpha.r);
             i__2 = i__ + i__ * a_dim1;
             a[i__2].r = 1.f;
             a[i__2].i = 0.f; // , expr subst
