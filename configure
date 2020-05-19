@@ -1469,7 +1469,7 @@ Optional Features:
                           potential length of the argument list to ar. Use
                           this option if you get 'Argument list too long'
                           error messages when make tries to archive the
-                          library. (Disabled by default.)
+                          library. (Enabled by default.)
   --enable-non-critical-code
                           Enable code that provides non-critical
                           functionality. This code has been identified as
@@ -6014,7 +6014,7 @@ if test "${enable_max_arg_list_hack+set}" = set; then :
 
 else
 
-						fla_enable_max_arg_list_hack=no
+						fla_enable_max_arg_list_hack=yes
 
 
 fi
@@ -6508,7 +6508,7 @@ $as_echo_n "checking for (guessing) OpenMP flags for ${CC_VENDOR}... " >&6; }
 
 		case ${CC_VENDOR} in
 				icc)
-			fla_c_openmp_flags='-qopenmp'
+			fla_c_openmp_flags='-openmp'
 		;;
 				gcc)
 			fla_c_openmp_flags='-fopenmp'

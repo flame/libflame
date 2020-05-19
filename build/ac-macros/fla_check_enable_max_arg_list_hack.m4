@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_MAX_ARG_LIST_HACK],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([max-arg-list-hack],
-	              AC_HELP_STRING([--enable-max-arg-list-hack],[Enable makefile code that archives object files from a flat object directory, thus decreasing the potential length of the argument list to ar. Use this option if you get 'Argument list too long' error messages when make tries to archive the library. (Disabled by default.)]),
+	              AC_HELP_STRING([--enable-max-arg-list-hack],[Enable makefile code that archives object files from a flat object directory, thus decreasing the potential length of the argument list to ar. Use this option if you get 'Argument list too long' error messages when make tries to archive the library. (Enabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then
@@ -29,8 +29,8 @@ AC_DEFUN([FLA_CHECK_ENABLE_MAX_ARG_LIST_HACK],
 	],
 	[
 		dnl User did not specify whether to enable or disable the option.
-		dnl Default behavior is to disable the option.
-		fla_enable_max_arg_list_hack=no
+		dnl Default behavior is to enable the option.
+		fla_enable_max_arg_list_hack=yes
 	]
 	)
 	
