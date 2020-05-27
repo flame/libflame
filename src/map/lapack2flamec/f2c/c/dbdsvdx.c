@@ -244,7 +244,6 @@ n+2}
  doublereal tol, ulp;
  integer nru, nrv;
  doublereal emin;
- extern real dmax_(real *, doublereal *);
  extern doublereal ddot_(integer *, doublereal *, integer *, doublereal *, integer *);
  integer ntgk;
  doublereal smin, smax, nrmu, nrmv;
@@ -666,7 +665,7 @@ n+2}
  for (j1 = 1;
  j1 <= i__3;
  ++j1) {
- d1 = dmax_(&d1, &s[j1 - 1 + isbeg]);
+ d1 = max(d1, s[j1 - 1 + isbeg]);
  }
  emin = abs(d1);
  if (nsl > 0 && wantz) {
