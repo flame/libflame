@@ -210,8 +210,7 @@ ifeq ($(FLA_ENABLE_DYNAMIC_BUILD),yes)
 MK_LIBS                   += $(LIBFLAME_SO_PATH) \
                              $(LIBFLAME_SO_MAJ_PATH)
 MK_LIBS_INST              += $(LIBFLAME_SO_MMB_INST)
-MK_LIBS_SYML              += $(LIBFLAME_SO_INST) \
-                             $(LIBFLAME_SO_MAJ_INST)
+MK_LIBS_SYML              += $(LIBFLAME_SO_INST)
 endif
 
 # Strip leading, internal, and trailing whitespace.
