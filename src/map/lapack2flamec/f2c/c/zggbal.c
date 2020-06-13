@@ -493,7 +493,7 @@ L190:
                 goto L210;
             }
             i__3 = i__ + j * a_dim1;
-            d__3 = (d__1 = a[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&a[i__ + j * a_dim1]), f2c_abs(d__2));
+            d__3 = (d__1 = a[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&a[i__ + j * a_dim1]), f2c_dabs(d__2));
             ta = d_lg10(&d__3) / basl;
 L210:
             i__3 = i__ + j * b_dim1;
@@ -503,7 +503,7 @@ L210:
                 goto L220;
             }
             i__3 = i__ + j * b_dim1;
-            d__3 = (d__1 = b[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&b[i__ + j * b_dim1]), f2c_abs(d__2));
+            d__3 = (d__1 = b[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&b[i__ + j * b_dim1]), f2c_dabs(d__2));
             tb = d_lg10(&d__3) / basl;
 L220:
             work[i__ + (*n << 2)] = work[i__ + (*n << 2)] - ta - tb;
@@ -639,15 +639,15 @@ L320:
             ++i__)
     {
         cor = alpha * work[i__ + *n];
-        if (f2c_abs(cor) > cmax)
+        if (f2c_dabs(cor) > cmax)
         {
-            cmax = f2c_abs(cor);
+            cmax = f2c_dabs(cor);
         }
         lscale[i__] += cor;
         cor = alpha * work[i__];
-        if (f2c_abs(cor) > cmax)
+        if (f2c_dabs(cor) > cmax)
         {
-            cmax = f2c_abs(cor);
+            cmax = f2c_dabs(cor);
         }
         rscale[i__] += cor;
         /* L340: */

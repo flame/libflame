@@ -395,9 +395,9 @@ int dgelsy_(integer *m, integer *n, integer *nrhs, doublereal *a, integer *lda, 
     /* Determine RANK using incremental condition estimation */
     work[ismin] = 1.;
     work[ismax] = 1.;
-    smax = (d__1 = a[a_dim1 + 1], f2c_abs(d__1));
+    smax = (d__1 = a[a_dim1 + 1], f2c_dabs(d__1));
     smin = smax;
-    if ((d__1 = a[a_dim1 + 1], f2c_abs(d__1)) == 0.)
+    if ((d__1 = a[a_dim1 + 1], f2c_dabs(d__1)) == 0.)
     {
         *rank = 0;
         i__1 = max(*m,*n);

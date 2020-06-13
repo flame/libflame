@@ -277,7 +277,7 @@ int dlasy2_(logical *ltranl, logical *ltranr, integer *isgn, integer *n1, intege
     /* 1 by 1: TL11*X + SGN*X*TR11 = B11 */
 L10:
     tau1 = tl[tl_dim1 + 1] + sgn * tr[tr_dim1 + 1];
-    bet = f2c_abs(tau1);
+    bet = f2c_dabs(tau1);
     if (bet <= smlnum)
     {
         tau1 = smlnum;
@@ -285,22 +285,22 @@ L10:
         *info = 1;
     }
     *scale = 1.;
-    gam = (d__1 = b[b_dim1 + 1], f2c_abs(d__1));
+    gam = (d__1 = b[b_dim1 + 1], f2c_dabs(d__1));
     if (smlnum * gam > bet)
     {
         *scale = 1. / gam;
     }
     x[x_dim1 + 1] = b[b_dim1 + 1] * *scale / tau1;
-    *xnorm = (d__1 = x[x_dim1 + 1], f2c_abs(d__1));
+    *xnorm = (d__1 = x[x_dim1 + 1], f2c_dabs(d__1));
     return 0;
     /* 1 by 2: */
     /* TL11*[X11 X12] + ISGN*[X11 X12]*op[TR11 TR12] = [B11 B12] */
     /* [TR21 TR22] */
 L20: /* Computing MAX */
     /* Computing MAX */
-    d__7 = (d__1 = tl[tl_dim1 + 1], f2c_abs(d__1)), d__8 = (d__2 = tr[tr_dim1 + 1] , f2c_abs(d__2)), d__7 = max(d__7,d__8), d__8 = (d__3 = tr[(tr_dim1 << 1) + 1], f2c_abs(d__3)), d__7 = max(d__7,d__8), d__8 = (d__4 = tr[ tr_dim1 + 2], f2c_abs(d__4));
+    d__7 = (d__1 = tl[tl_dim1 + 1], f2c_dabs(d__1)), d__8 = (d__2 = tr[tr_dim1 + 1] , f2c_dabs(d__2)), d__7 = max(d__7,d__8), d__8 = (d__3 = tr[(tr_dim1 << 1) + 1], f2c_dabs(d__3)), d__7 = max(d__7,d__8), d__8 = (d__4 = tr[ tr_dim1 + 2], f2c_dabs(d__4));
     d__7 = max(d__7,d__8);
-    d__8 = (d__5 = tr[(tr_dim1 << 1) + 2], f2c_abs(d__5)); // ; expr subst
+    d__8 = (d__5 = tr[(tr_dim1 << 1) + 2], f2c_dabs(d__5)); // ; expr subst
     d__6 = eps * max(d__7,d__8);
     smin = max(d__6,smlnum);
     tmp[0] = tl[tl_dim1 + 1] + sgn * tr[tr_dim1 + 1];
@@ -323,9 +323,9 @@ L20: /* Computing MAX */
     /* [TL21 TL22] [X21] [X21] [B21] */
 L30: /* Computing MAX */
     /* Computing MAX */
-    d__7 = (d__1 = tr[tr_dim1 + 1], f2c_abs(d__1)), d__8 = (d__2 = tl[tl_dim1 + 1] , f2c_abs(d__2)), d__7 = max(d__7,d__8), d__8 = (d__3 = tl[(tl_dim1 << 1) + 1], f2c_abs(d__3)), d__7 = max(d__7,d__8), d__8 = (d__4 = tl[ tl_dim1 + 2], f2c_abs(d__4));
+    d__7 = (d__1 = tr[tr_dim1 + 1], f2c_dabs(d__1)), d__8 = (d__2 = tl[tl_dim1 + 1] , f2c_dabs(d__2)), d__7 = max(d__7,d__8), d__8 = (d__3 = tl[(tl_dim1 << 1) + 1], f2c_dabs(d__3)), d__7 = max(d__7,d__8), d__8 = (d__4 = tl[ tl_dim1 + 2], f2c_dabs(d__4));
     d__7 = max(d__7,d__8);
-    d__8 = (d__5 = tl[(tl_dim1 << 1) + 2], f2c_abs(d__5)); // ; expr subst
+    d__8 = (d__5 = tl[(tl_dim1 << 1) + 2], f2c_dabs(d__5)); // ; expr subst
     d__6 = eps * max(d__7,d__8);
     smin = max(d__6,smlnum);
     tmp[0] = tl[tl_dim1 + 1] + sgn * tr[tr_dim1 + 1];
@@ -346,7 +346,7 @@ L40: /* Solve 2 by 2 system using complete pivoting. */
     /* Set pivots less than SMIN to SMIN. */
     ipiv = idamax_(&c__4, tmp, &c__1);
     u11 = tmp[ipiv - 1];
-    if (f2c_abs(u11) <= smin)
+    if (f2c_dabs(u11) <= smin)
     {
         *info = 1;
         u11 = smin;
@@ -356,7 +356,7 @@ L40: /* Solve 2 by 2 system using complete pivoting. */
     u22 = tmp[locu22[ipiv - 1] - 1] - u12 * l21;
     xswap = xswpiv[ipiv - 1];
     bswap = bswpiv[ipiv - 1];
-    if (f2c_abs(u22) <= smin)
+    if (f2c_dabs(u22) <= smin)
     {
         *info = 1;
         u22 = smin;
@@ -372,11 +372,11 @@ L40: /* Solve 2 by 2 system using complete pivoting. */
         btmp[1] -= l21 * btmp[0];
     }
     *scale = 1.;
-    if (smlnum * 2. * f2c_abs(btmp[1]) > f2c_abs(u22) || smlnum * 2. * f2c_abs(btmp[0]) > f2c_abs(u11))
+    if (smlnum * 2. * f2c_dabs(btmp[1]) > f2c_dabs(u22) || smlnum * 2. * f2c_dabs(btmp[0]) > f2c_dabs(u11))
     {
         /* Computing MAX */
-        d__1 = f2c_abs(btmp[0]);
-        d__2 = f2c_abs(btmp[1]); // , expr subst
+        d__1 = f2c_dabs(btmp[0]);
+        d__2 = f2c_dabs(btmp[1]); // , expr subst
         *scale = .5 / max(d__1,d__2);
         btmp[0] *= *scale;
         btmp[1] *= *scale;
@@ -393,14 +393,14 @@ L40: /* Solve 2 by 2 system using complete pivoting. */
     if (*n1 == 1)
     {
         x[(x_dim1 << 1) + 1] = x2[1];
-        *xnorm = (d__1 = x[x_dim1 + 1], f2c_abs(d__1)) + (d__2 = x[(x_dim1 << 1) + 1], f2c_abs(d__2));
+        *xnorm = (d__1 = x[x_dim1 + 1], f2c_dabs(d__1)) + (d__2 = x[(x_dim1 << 1) + 1], f2c_dabs(d__2));
     }
     else
     {
         x[x_dim1 + 2] = x2[1];
         /* Computing MAX */
-        d__3 = (d__1 = x[x_dim1 + 1], f2c_abs(d__1));
-        d__4 = (d__2 = x[x_dim1 + 2] , f2c_abs(d__2)); // , expr subst
+        d__3 = (d__1 = x[x_dim1 + 1], f2c_dabs(d__1));
+        d__4 = (d__2 = x[x_dim1 + 2] , f2c_dabs(d__2)); // , expr subst
         *xnorm = max(d__3,d__4);
     }
     return 0;
@@ -410,14 +410,14 @@ L40: /* Solve 2 by 2 system using complete pivoting. */
     /* Solve equivalent 4 by 4 system using complete pivoting. */
     /* Set pivots less than SMIN to SMIN. */
 L50: /* Computing MAX */
-    d__5 = (d__1 = tr[tr_dim1 + 1], f2c_abs(d__1)), d__6 = (d__2 = tr[(tr_dim1 << 1) + 1], f2c_abs(d__2)), d__5 = max(d__5,d__6), d__6 = (d__3 = tr[ tr_dim1 + 2], f2c_abs(d__3));
+    d__5 = (d__1 = tr[tr_dim1 + 1], f2c_dabs(d__1)), d__6 = (d__2 = tr[(tr_dim1 << 1) + 1], f2c_dabs(d__2)), d__5 = max(d__5,d__6), d__6 = (d__3 = tr[ tr_dim1 + 2], f2c_dabs(d__3));
     d__5 = max(d__5,d__6);
-    d__6 = (d__4 = tr[(tr_dim1 << 1) + 2], f2c_abs(d__4)); // ; expr subst
+    d__6 = (d__4 = tr[(tr_dim1 << 1) + 2], f2c_dabs(d__4)); // ; expr subst
     smin = max(d__5,d__6);
     /* Computing MAX */
-    d__5 = smin, d__6 = (d__1 = tl[tl_dim1 + 1], f2c_abs(d__1)), d__5 = max(d__5, d__6), d__6 = (d__2 = tl[(tl_dim1 << 1) + 1], f2c_abs(d__2)), d__5 = max(d__5,d__6), d__6 = (d__3 = tl[tl_dim1 + 2], f2c_abs(d__3));
+    d__5 = smin, d__6 = (d__1 = tl[tl_dim1 + 1], f2c_dabs(d__1)), d__5 = max(d__5, d__6), d__6 = (d__2 = tl[(tl_dim1 << 1) + 1], f2c_dabs(d__2)), d__5 = max(d__5,d__6), d__6 = (d__3 = tl[tl_dim1 + 2], f2c_dabs(d__3));
     d__5 = max(d__5,d__6);
-    d__6 = (d__4 = tl[(tl_dim1 << 1) + 2], f2c_abs(d__4)) ; // ; expr subst
+    d__6 = (d__4 = tl[(tl_dim1 << 1) + 2], f2c_dabs(d__4)) ; // ; expr subst
     smin = max(d__5,d__6);
     /* Computing MAX */
     d__1 = eps * smin;
@@ -474,9 +474,9 @@ L50: /* Computing MAX */
                     jp <= 4;
                     ++jp)
             {
-                if ((d__1 = t16[ip + (jp << 2) - 5], f2c_abs(d__1)) >= xmax)
+                if ((d__1 = t16[ip + (jp << 2) - 5], f2c_dabs(d__1)) >= xmax)
                 {
-                    xmax = (d__1 = t16[ip + (jp << 2) - 5], f2c_abs(d__1));
+                    xmax = (d__1 = t16[ip + (jp << 2) - 5], f2c_dabs(d__1));
                     ipsv = ip;
                     jpsv = jp;
                 }
@@ -496,7 +496,7 @@ L50: /* Computing MAX */
             dswap_(&c__4, &t16[(jpsv << 2) - 4], &c__1, &t16[(i__ << 2) - 4], &c__1);
         }
         jpiv[i__ - 1] = jpsv;
-        if ((d__1 = t16[i__ + (i__ << 2) - 5], f2c_abs(d__1)) < smin)
+        if ((d__1 = t16[i__ + (i__ << 2) - 5], f2c_dabs(d__1)) < smin)
         {
             *info = 1;
             t16[i__ + (i__ << 2) - 5] = smin;
@@ -518,17 +518,17 @@ L50: /* Computing MAX */
         }
         /* L100: */
     }
-    if (f2c_abs(t16[15]) < smin)
+    if (f2c_dabs(t16[15]) < smin)
     {
         t16[15] = smin;
     }
     *scale = 1.;
-    if (smlnum * 8. * f2c_abs(btmp[0]) > f2c_abs(t16[0]) || smlnum * 8. * f2c_abs(btmp[1]) > f2c_abs(t16[5]) || smlnum * 8. * f2c_abs(btmp[2]) > f2c_abs(t16[10]) || smlnum * 8. * f2c_abs(btmp[3]) > f2c_abs(t16[15]))
+    if (smlnum * 8. * f2c_dabs(btmp[0]) > f2c_dabs(t16[0]) || smlnum * 8. * f2c_dabs(btmp[1]) > f2c_dabs(t16[5]) || smlnum * 8. * f2c_dabs(btmp[2]) > f2c_dabs(t16[10]) || smlnum * 8. * f2c_dabs(btmp[3]) > f2c_dabs(t16[15]))
     {
         /* Computing MAX */
-        d__1 = f2c_abs(btmp[0]), d__2 = f2c_abs(btmp[1]), d__1 = max(d__1,d__2), d__2 = f2c_abs(btmp[2]);
+        d__1 = f2c_dabs(btmp[0]), d__2 = f2c_dabs(btmp[1]), d__1 = max(d__1,d__2), d__2 = f2c_dabs(btmp[2]);
         d__1 = max(d__1,d__2);
-        d__2 = f2c_abs(btmp[3]); // ; expr subst
+        d__2 = f2c_dabs(btmp[3]); // ; expr subst
         *scale = .125 / max(d__1,d__2);
         btmp[0] *= *scale;
         btmp[1] *= *scale;
@@ -568,8 +568,8 @@ L50: /* Computing MAX */
     x[(x_dim1 << 1) + 1] = tmp[2];
     x[(x_dim1 << 1) + 2] = tmp[3];
     /* Computing MAX */
-    d__1 = f2c_abs(tmp[0]) + f2c_abs(tmp[2]);
-    d__2 = f2c_abs(tmp[1]) + f2c_abs(tmp[3]); // , expr subst
+    d__1 = f2c_dabs(tmp[0]) + f2c_dabs(tmp[2]);
+    d__2 = f2c_dabs(tmp[1]) + f2c_dabs(tmp[3]); // , expr subst
     *xnorm = max(d__1,d__2);
     return 0;
     /* End of DLASY2 */

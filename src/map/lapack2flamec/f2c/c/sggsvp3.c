@@ -415,7 +415,7 @@
  for (i__ = 1;
  i__ <= i__1;
  ++i__) {
- if ((r__1 = b[i__ + i__ * b_dim1], abs(r__1)) > *tolb) {
+ if ((r__1 = b[i__ + i__ * b_dim1], f2c_abs(r__1)) > *tolb) {
  ++(*l);
  }
  /* L20: */
@@ -501,7 +501,7 @@
  for (i__ = 1;
  i__ <= i__1;
  ++i__) {
- if ((r__1 = a[i__ + i__ * a_dim1], abs(r__1)) > *tola) {
+ if ((r__1 = a[i__ + i__ * a_dim1], f2c_abs(r__1)) > *tola) {
  ++(*k);
  }
  /* L80: */

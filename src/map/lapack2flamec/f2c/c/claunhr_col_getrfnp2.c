@@ -265,7 +265,7 @@
  sfmin = slamch_("S");
  /* Construct the subdiagonal elements of L */
  i__1 = a_dim1 + 1;
- if ((doublereal) ((r__1 = a[i__1].r, abs(r__1)) + (r__2 = r_imag(&a[ a_dim1 + 1]), abs(r__2))) >= sfmin) {
+ if ((doublereal) ((r__1 = a[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&a[ a_dim1 + 1]), f2c_abs(r__2))) >= sfmin) {
  i__1 = *m - 1;
  c_div(&q__1, &c_b1, &a[a_dim1 + 1]);
  cscal_(&i__1, &q__1, &a[a_dim1 + 2], &c__1);

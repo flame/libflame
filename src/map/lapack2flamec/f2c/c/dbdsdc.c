@@ -340,7 +340,7 @@ int dbdsdc_(char *uplo, char *compq, integer *n, doublereal * d__, doublereal *e
             u[u_dim1 + 1] = d_sign(&c_b15, &d__[1]);
             vt[vt_dim1 + 1] = 1.;
         }
-        d__[1] = f2c_abs(d__[1]);
+        d__[1] = f2c_dabs(d__[1]);
         return 0;
     }
     nm1 = *n - 1;
@@ -443,7 +443,7 @@ int dbdsdc_(char *uplo, char *compq, integer *n, doublereal * d__, doublereal *e
             i__ <= i__1;
             ++i__)
     {
-        if ((d__1 = d__[i__], f2c_abs(d__1)) < eps)
+        if ((d__1 = d__[i__], f2c_dabs(d__1)) < eps)
         {
             d__[i__] = d_sign(&eps, &d__[i__]);
         }
@@ -456,7 +456,7 @@ int dbdsdc_(char *uplo, char *compq, integer *n, doublereal * d__, doublereal *e
             i__ <= i__1;
             ++i__)
     {
-        if ((d__1 = e[i__], f2c_abs(d__1)) < eps || i__ == nm1)
+        if ((d__1 = e[i__], f2c_dabs(d__1)) < eps || i__ == nm1)
         {
             /* Subproblem found. First determine its size and then */
             /* apply divide and conquer on it. */
@@ -465,7 +465,7 @@ int dbdsdc_(char *uplo, char *compq, integer *n, doublereal * d__, doublereal *e
                 /* A subproblem with E(I) small for I < NM1. */
                 nsize = i__ - start + 1;
             }
-            else if ((d__1 = e[i__], f2c_abs(d__1)) >= eps)
+            else if ((d__1 = e[i__], f2c_dabs(d__1)) >= eps)
             {
                 /* A subproblem with E(NM1) not too small but I = NM1. */
                 nsize = *n - start + 1;
@@ -486,7 +486,7 @@ int dbdsdc_(char *uplo, char *compq, integer *n, doublereal * d__, doublereal *e
                     q[*n + (qstart - 1) * *n] = d_sign(&c_b15, &d__[*n]);
                     q[*n + (smlsiz + qstart - 1) * *n] = 1.;
                 }
-                d__[*n] = (d__1 = d__[*n], f2c_abs(d__1));
+                d__[*n] = (d__1 = d__[*n], f2c_dabs(d__1));
             }
             if (icompq == 2)
             {

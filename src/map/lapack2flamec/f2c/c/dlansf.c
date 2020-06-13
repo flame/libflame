@@ -38,7 +38,7 @@ static integer c__1 = 1;
 /* > \return DLANSF */
 /* > \verbatim */
 /* > */
-/* > DLANSF = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
+/* > DLANSF = ( max(f2c_dabs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -49,7 +49,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(f2c_abs(A(i,j))) is not a matrix norm. */
+/* > squares). Note that max(f2c_dabs(A(i,j))) is not a matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -245,7 +245,7 @@ doublereal dlansf_(char *norm, char *transr, char *uplo, integer *n, doublereal 
     }
     else if (*n == 1)
     {
-        ret_val = f2c_abs(a[0]);
+        ret_val = f2c_dabs(a[0]);
         return ret_val;
     }
     /* set noe = 1 if n is odd. if n is even set noe=0 */
@@ -288,7 +288,7 @@ doublereal dlansf_(char *norm, char *transr, char *uplo, integer *n, doublereal 
     }
     if (lsame_(norm, "M"))
     {
-        /* Find max(f2c_abs(A(i,j))). */
+        /* Find max(f2c_dabs(A(i,j))). */
         k = (*n + 1) / 2;
         value = 0.;
         if (noe == 1)
@@ -307,7 +307,7 @@ doublereal dlansf_(char *norm, char *transr, char *uplo, integer *n, doublereal 
                             i__ <= i__2;
                             ++i__)
                     {
-                        temp = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        temp = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         if (value < temp || disnan_(&temp))
                         {
                             value = temp;
@@ -329,7 +329,7 @@ doublereal dlansf_(char *norm, char *transr, char *uplo, integer *n, doublereal 
                             i__ <= i__2;
                             ++i__)
                     {
-                        temp = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        temp = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         if (value < temp || disnan_(&temp))
                         {
                             value = temp;
@@ -354,7 +354,7 @@ doublereal dlansf_(char *norm, char *transr, char *uplo, integer *n, doublereal 
                             i__ <= i__2;
                             ++i__)
                     {
-                        temp = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        temp = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         if (value < temp || disnan_(&temp))
                         {
                             value = temp;
@@ -376,7 +376,7 @@ doublereal dlansf_(char *norm, char *transr, char *uplo, integer *n, doublereal 
                             i__ <= i__2;
                             ++i__)
                     {
-                        temp = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        temp = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         if (value < temp || disnan_(&temp))
                         {
                             value = temp;
@@ -415,12 +415,12 @@ doublereal dlansf_(char *norm, char *transr, char *uplo, integer *n, doublereal 
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* -> A(i,j+k) */
                             s += aa;
                             work[i__] += aa;
                         }
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         /* -> A(j+k,j+k) */
                         work[j + k] = s + aa;
                         if (i__ == k + k)
@@ -428,7 +428,7 @@ doublereal dlansf_(char *norm, char *transr, char *uplo, integer *n, doublereal 
                             goto L10;
                         }
                         ++i__;
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         /* -> A(j,j) */
                         work[j] += aa;
                         s = 0.;
@@ -438,7 +438,7 @@ doublereal dlansf_(char *norm, char *transr, char *uplo, integer *n, doublereal 
                                 ++l)
                         {
                             ++i__;
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* -> A(l,j) */
                             s += aa;
                             work[l] += aa;
@@ -481,21 +481,21 @@ L10:
                                 i__ <= i__1;
                                 ++i__)
                         {
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* -> A(j+k,i+k) */
                             s += aa;
                             work[i__ + k] += aa;
                         }
                         if (j > 0)
                         {
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* -> A(j+k,j+k) */
                             s += aa;
                             work[i__ + k] += s;
                             /* i=j */
                             ++i__;
                         }
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         /* -> A(j,j) */
                         work[j] = aa;
                         s = 0.;
@@ -505,7 +505,7 @@ L10:
                                 ++l)
                         {
                             ++i__;
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* -> A(l,j) */
                             s += aa;
                             work[l] += aa;
@@ -549,16 +549,16 @@ L10:
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* -> A(i,j+k) */
                             s += aa;
                             work[i__] += aa;
                         }
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         /* -> A(j+k,j+k) */
                         work[j + k] = s + aa;
                         ++i__;
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         /* -> A(j,j) */
                         work[j] += aa;
                         s = 0.;
@@ -568,7 +568,7 @@ L10:
                                 ++l)
                         {
                             ++i__;
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* -> A(l,j) */
                             s += aa;
                             work[l] += aa;
@@ -608,18 +608,18 @@ L10:
                                 i__ <= i__1;
                                 ++i__)
                         {
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* -> A(j+k,i+k) */
                             s += aa;
                             work[i__ + k] += aa;
                         }
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         /* -> A(j+k,j+k) */
                         s += aa;
                         work[i__ + k] += s;
                         /* i=j */
                         ++i__;
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         /* -> A(j,j) */
                         work[j] = aa;
                         s = 0.;
@@ -629,7 +629,7 @@ L10:
                                 ++l)
                         {
                             ++i__;
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* -> A(l,j) */
                             s += aa;
                             work[l] += aa;
@@ -682,7 +682,7 @@ L10:
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* A(j,n1+i) */
                             work[i__ + n1] += aa;
                             s += aa;
@@ -690,14 +690,14 @@ L10:
                         work[j] = s;
                     }
                     /* j=n1=k-1 is special */
-                    s = (d__1 = a[j * lda], f2c_abs(d__1));
+                    s = (d__1 = a[j * lda], f2c_dabs(d__1));
                     /* A(k-1,k-1) */
                     i__1 = k - 1;
                     for (i__ = 1;
                             i__ <= i__1;
                             ++i__)
                     {
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         /* A(k-1,i+n1) */
                         work[i__ + n1] += aa;
                         s += aa;
@@ -714,18 +714,18 @@ L10:
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* A(i,j-k) */
                             work[i__] += aa;
                             s += aa;
                         }
                         /* i=j-k */
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         /* A(j-k,j-k) */
                         s += aa;
                         work[j - k] += s;
                         ++i__;
-                        s = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        s = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         /* A(j,j) */
                         i__2 = *n - 1;
                         for (l = j + 1;
@@ -733,7 +733,7 @@ L10:
                                 ++l)
                         {
                             ++i__;
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* A(j,l) */
                             work[l] += aa;
                             s += aa;
@@ -777,19 +777,19 @@ L10:
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* A(j,i) */
                             work[i__] += aa;
                             s += aa;
                         }
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         /* i=j so process of A(j,j) */
                         s += aa;
                         work[j] = s;
                         /* is initialised here */
                         ++i__;
                         /* i=j process A(j+k,j+k) */
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         s = aa;
                         i__2 = *n - 1;
                         for (l = k + j + 1;
@@ -797,7 +797,7 @@ L10:
                                 ++l)
                         {
                             ++i__;
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* A(l,k+j) */
                             s += aa;
                             work[l] += aa;
@@ -811,13 +811,13 @@ L10:
                             i__ <= i__1;
                             ++i__)
                     {
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         /* A(k,i) */
                         work[i__] += aa;
                         s += aa;
                     }
                     /* i=k-1 */
-                    aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                    aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                     /* A(k-1,k-1) */
                     s += aa;
                     work[i__] = s;
@@ -834,7 +834,7 @@ L10:
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* A(j,i) */
                             work[i__] += aa;
                             s += aa;
@@ -878,7 +878,7 @@ L10:
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* A(j,i+k) */
                             work[i__ + k] += aa;
                             s += aa;
@@ -886,7 +886,7 @@ L10:
                         work[j] = s;
                     }
                     /* j=k */
-                    aa = (d__1 = a[j * lda], f2c_abs(d__1));
+                    aa = (d__1 = a[j * lda], f2c_dabs(d__1));
                     /* A(k,k) */
                     s = aa;
                     i__1 = k - 1;
@@ -894,7 +894,7 @@ L10:
                             i__ <= i__1;
                             ++i__)
                     {
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         /* A(k,k+i) */
                         work[i__ + k] += aa;
                         s += aa;
@@ -911,18 +911,18 @@ L10:
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* A(i,j-k-1) */
                             work[i__] += aa;
                             s += aa;
                         }
                         /* i=j-1-k */
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         /* A(j-k-1,j-k-1) */
                         s += aa;
                         work[j - k - 1] += s;
                         ++i__;
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         /* A(j,j) */
                         s = aa;
                         i__2 = *n - 1;
@@ -931,7 +931,7 @@ L10:
                                 ++l)
                         {
                             ++i__;
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* A(j,l) */
                             work[l] += aa;
                             s += aa;
@@ -945,13 +945,13 @@ L10:
                             i__ <= i__1;
                             ++i__)
                     {
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         /* A(i,k-1) */
                         work[i__] += aa;
                         s += aa;
                     }
                     /* i=k-1 */
-                    aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                    aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                     /* A(k-1,k-1) */
                     s += aa;
                     work[i__] += s;
@@ -979,14 +979,14 @@ L10:
                         work[i__] = 0.;
                     }
                     /* j=0 is special :process col A(k:n-1,k) */
-                    s = f2c_abs(a[0]);
+                    s = f2c_dabs(a[0]);
                     /* A(k,k) */
                     i__1 = k - 1;
                     for (i__ = 1;
                             i__ <= i__1;
                             ++i__)
                     {
-                        aa = (d__1 = a[i__], f2c_abs(d__1));
+                        aa = (d__1 = a[i__], f2c_dabs(d__1));
                         /* A(k+i,k) */
                         work[i__ + k] += aa;
                         s += aa;
@@ -1004,19 +1004,19 @@ L10:
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* A(j-1,i) */
                             work[i__] += aa;
                             s += aa;
                         }
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         /* i=j-1 so process of A(j-1,j-1) */
                         s += aa;
                         work[j - 1] = s;
                         /* is initialised here */
                         ++i__;
                         /* i=j process A(j+k,j+k) */
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         s = aa;
                         i__2 = *n - 1;
                         for (l = k + j + 1;
@@ -1024,7 +1024,7 @@ L10:
                                 ++l)
                         {
                             ++i__;
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* A(l,k+j) */
                             s += aa;
                             work[l] += aa;
@@ -1038,13 +1038,13 @@ L10:
                             i__ <= i__1;
                             ++i__)
                     {
-                        aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                        aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                         /* A(k,i) */
                         work[i__] += aa;
                         s += aa;
                     }
                     /* i=k-1 */
-                    aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                    aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                     /* A(k-1,k-1) */
                     s += aa;
                     work[i__] = s;
@@ -1061,7 +1061,7 @@ L10:
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            aa = (d__1 = a[i__ + j * lda], f2c_abs(d__1));
+                            aa = (d__1 = a[i__ + j * lda], f2c_dabs(d__1));
                             /* A(j-1,i) */
                             work[i__] += aa;
                             s += aa;

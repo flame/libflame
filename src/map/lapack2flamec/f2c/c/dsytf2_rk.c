@@ -325,14 +325,14 @@
  p = k;
  /* Determine rows and columns to be interchanged and whether */
  /* a 1-by-1 or 2-by-2 pivot block will be used */
- absakk = (d__1 = a[k + k * a_dim1], abs(d__1));
+ absakk = (d__1 = a[k + k * a_dim1], f2c_dabs(d__1));
  /* IMAX is the row-index of the largest off-diagonal element in */
  /* column K, and COLMAX is its absolute value. */
  /* Determine both COLMAX and IMAX. */
  if (k > 1) {
  i__1 = k - 1;
  imax = idamax_(&i__1, &a[k * a_dim1 + 1], &c__1);
- colmax = (d__1 = a[imax + k * a_dim1], abs(d__1));
+ colmax = (d__1 = a[imax + k * a_dim1], f2c_dabs(d__1));
  }
  else {
  colmax = 0.;
@@ -367,7 +367,7 @@
  if (imax != k) {
  i__1 = k - imax;
  jmax = imax + idamax_(&i__1, &a[imax + (imax + 1) * a_dim1], lda);
- rowmax = (d__1 = a[imax + jmax * a_dim1], abs(d__1));
+ rowmax = (d__1 = a[imax + jmax * a_dim1], f2c_dabs(d__1));
  }
  else {
  rowmax = 0.;
@@ -375,7 +375,7 @@
  if (imax > 1) {
  i__1 = imax - 1;
  itemp = idamax_(&i__1, &a[imax * a_dim1 + 1], &c__1);
- dtemp = (d__1 = a[itemp + imax * a_dim1], abs(d__1));
+ dtemp = (d__1 = a[itemp + imax * a_dim1], f2c_dabs(d__1));
  if (dtemp > rowmax) {
  rowmax = dtemp;
  jmax = itemp;
@@ -383,7 +383,7 @@
  }
  /* Equivalent to testing for (used to handle NaN and Inf) */
  /* ABS( A( IMAX, IMAX ) ).GE.ALPHA*ROWMAX */
- if (! ((d__1 = a[imax + imax * a_dim1], abs(d__1)) < alpha * rowmax)) {
+ if (! ((d__1 = a[imax + imax * a_dim1], f2c_dabs(d__1)) < alpha * rowmax)) {
  /* interchange rows and columns K and IMAX, */
  /* use 1-by-1 pivot block */
  kp = imax;
@@ -468,7 +468,7 @@
  if (k > 1) {
  /* Perform a rank-1 update of A(1:k-1,1:k-1) and */
  /* store U(k) in column k */
- if ((d__1 = a[k + k * a_dim1], abs(d__1)) >= sfmin) {
+ if ((d__1 = a[k + k * a_dim1], f2c_dabs(d__1)) >= sfmin) {
  /* Perform a rank-1 update of A(1:k-1,1:k-1) as */
  /* A := A - U(k)*D(k)*U(k)**T */
  /* = A - W(k)*1/D(k)*W(k)**T */
@@ -569,14 +569,14 @@
  p = k;
  /* Determine rows and columns to be interchanged and whether */
  /* a 1-by-1 or 2-by-2 pivot block will be used */
- absakk = (d__1 = a[k + k * a_dim1], abs(d__1));
+ absakk = (d__1 = a[k + k * a_dim1], f2c_dabs(d__1));
  /* IMAX is the row-index of the largest off-diagonal element in */
  /* column K, and COLMAX is its absolute value. */
  /* Determine both COLMAX and IMAX. */
  if (k < *n) {
  i__1 = *n - k;
  imax = k + idamax_(&i__1, &a[k + 1 + k * a_dim1], &c__1);
- colmax = (d__1 = a[imax + k * a_dim1], abs(d__1));
+ colmax = (d__1 = a[imax + k * a_dim1], f2c_dabs(d__1));
  }
  else {
  colmax = 0.;
@@ -610,7 +610,7 @@
  if (imax != k) {
  i__1 = imax - k;
  jmax = k - 1 + idamax_(&i__1, &a[imax + k * a_dim1], lda);
- rowmax = (d__1 = a[imax + jmax * a_dim1], abs(d__1));
+ rowmax = (d__1 = a[imax + jmax * a_dim1], f2c_dabs(d__1));
  }
  else {
  rowmax = 0.;
@@ -618,7 +618,7 @@
  if (imax < *n) {
  i__1 = *n - imax;
  itemp = imax + idamax_(&i__1, &a[imax + 1 + imax * a_dim1] , &c__1);
- dtemp = (d__1 = a[itemp + imax * a_dim1], abs(d__1));
+ dtemp = (d__1 = a[itemp + imax * a_dim1], f2c_dabs(d__1));
  if (dtemp > rowmax) {
  rowmax = dtemp;
  jmax = itemp;
@@ -626,7 +626,7 @@
  }
  /* Equivalent to testing for (used to handle NaN and Inf) */
  /* ABS( A( IMAX, IMAX ) ).GE.ALPHA*ROWMAX */
- if (! ((d__1 = a[imax + imax * a_dim1], abs(d__1)) < alpha * rowmax)) {
+ if (! ((d__1 = a[imax + imax * a_dim1], f2c_dabs(d__1)) < alpha * rowmax)) {
  /* interchange rows and columns K and IMAX, */
  /* use 1-by-1 pivot block */
  kp = imax;
@@ -711,7 +711,7 @@
  if (k < *n) {
  /* Perform a rank-1 update of A(k+1:n,k+1:n) and */
  /* store L(k) in column k */
- if ((d__1 = a[k + k * a_dim1], abs(d__1)) >= sfmin) {
+ if ((d__1 = a[k + k * a_dim1], f2c_dabs(d__1)) >= sfmin) {
  /* Perform a rank-1 update of A(k+1:n,k+1:n) as */
  /* A := A - L(k)*D(k)*L(k)**T */
  /* = A - W(k)*(1/D(k))*W(k)**T */

@@ -305,7 +305,7 @@ int dlaed2_(integer *k, integer *n, integer *n1, doublereal * d__, doublereal *q
     t = 1. / sqrt(2.);
     dscal_(n, &t, &z__[1], &c__1);
     /* RHO = ABS( norm(z)**2 * RHO ) */
-    *rho = (d__1 = *rho * 2., f2c_abs(d__1));
+    *rho = (d__1 = *rho * 2., f2c_dabs(d__1));
     /* Sort the eigenvalues into increasing order */
     i__1 = *n;
     for (i__ = n1p1;
@@ -338,13 +338,13 @@ int dlaed2_(integer *k, integer *n, integer *n1, doublereal * d__, doublereal *q
     jmax = idamax_(n, &d__[1], &c__1);
     eps = dlamch_("Epsilon");
     /* Computing MAX */
-    d__3 = (d__1 = d__[jmax], f2c_abs(d__1));
-    d__4 = (d__2 = z__[imax], f2c_abs(d__2)) ; // , expr subst
+    d__3 = (d__1 = d__[jmax], f2c_dabs(d__1));
+    d__4 = (d__2 = z__[imax], f2c_dabs(d__2)) ; // , expr subst
     tol = eps * 8. * max(d__3,d__4);
     /* If the rank-1 modifier is small enough, no more needs to be done */
     /* except to reorganize Q so that its columns correspond with the */
     /* elements in D. */
-    if (*rho * (d__1 = z__[imax], f2c_abs(d__1)) <= tol)
+    if (*rho * (d__1 = z__[imax], f2c_dabs(d__1)) <= tol)
     {
         *k = 0;
         iq2 = 1;
@@ -392,7 +392,7 @@ int dlaed2_(integer *k, integer *n, integer *n1, doublereal * d__, doublereal *q
             ++j)
     {
         nj = indx[j];
-        if (*rho * (d__1 = z__[nj], f2c_abs(d__1)) <= tol)
+        if (*rho * (d__1 = z__[nj], f2c_dabs(d__1)) <= tol)
         {
             /* Deflate due to small z component. */
             --k2;
@@ -417,7 +417,7 @@ L80:
     {
         goto L100;
     }
-    if (*rho * (d__1 = z__[nj], f2c_abs(d__1)) <= tol)
+    if (*rho * (d__1 = z__[nj], f2c_dabs(d__1)) <= tol)
     {
         /* Deflate due to small z component. */
         --k2;
@@ -435,7 +435,7 @@ L80:
         t = d__[nj] - d__[pj];
         c__ /= tau;
         s = -s / tau;
-        if ((d__1 = t * c__ * s, f2c_abs(d__1)) <= tol)
+        if ((d__1 = t * c__ * s, f2c_dabs(d__1)) <= tol)
         {
             /* Deflation is possible. */
             z__[nj] = tau;

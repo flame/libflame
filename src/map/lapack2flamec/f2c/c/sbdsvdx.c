@@ -373,12 +373,12 @@ n+2}
  if (*n == 1) {
  if (allsv || indsv) {
  *ns = 1;
- s[1] = abs(d__[1]);
+ s[1] = f2c_dabs(d__[1]);
  }
  else {
- if (*vl < abs(d__[1]) && *vu >= abs(d__[1])) {
+ if (*vl < f2c_dabs(d__[1]) && *vu >= f2c_dabs(d__[1])) {
  *ns = 1;
- s[1] = abs(d__[1]);
+ s[1] = f2c_dabs(d__[1]);
  }
  }
  if (wantz) {
@@ -404,21 +404,21 @@ n+2}
  tol = max(r__1,r__2) * eps;
  /* Compute approximate maximum, minimum singular values. */
  i__ = isamax_(n, &d__[1], &c__1);
- smax = (r__1 = d__[i__], abs(r__1));
+ smax = (r__1 = d__[i__], f2c_abs(r__1));
  i__1 = *n - 1;
  i__ = isamax_(&i__1, &e[1], &c__1);
  /* Computing MAX */
- r__2 = smax; r__3 = (r__1 = e[i__], abs(r__1)); // , expr subst  
+ r__2 = smax; r__3 = (r__1 = e[i__], f2c_abs(r__1)); // , expr subst  
  smax = max(r__2,r__3);
  /* Compute threshold for neglecting D's and E's. */
- smin = abs(d__[1]);
+ smin = f2c_dabs(d__[1]);
  if (smin != 0.f) {
  mu = smin;
  i__1 = *n;
  for (i__ = 2;
  i__ <= i__1;
  ++i__) {
- mu = (r__2 = d__[i__], abs(r__2)) * (mu / (mu + (r__1 = e[i__ - 1] , abs(r__1))));
+ mu = (r__2 = d__[i__], f2c_abs(r__2)) * (mu / (mu + (r__1 = e[i__ - 1] , f2c_abs(r__1))));
  smin = min(smin,mu);
  if (smin == 0.f) {
  goto L2;
@@ -433,14 +433,14 @@ n+2}
  for (i__ = 1;
  i__ <= i__1;
  ++i__) {
- if ((r__1 = d__[i__], abs(r__1)) <= thresh) {
+ if ((r__1 = d__[i__], f2c_abs(r__1)) <= thresh) {
  d__[i__] = 0.f;
  }
- if ((r__1 = e[i__], abs(r__1)) <= thresh) {
+ if ((r__1 = e[i__], f2c_abs(r__1)) <= thresh) {
  e[i__] = 0.f;
  }
  }
- if ((r__1 = d__[*n], abs(r__1)) <= thresh) {
+ if ((r__1 = d__[*n], f2c_abs(r__1)) <= thresh) {
  d__[*n] = 0.f;
  }
  /* Pointers for arrays used by SSTEVX. */
@@ -673,7 +673,7 @@ n+2}
  r__1 = d1; r__2 = s[j1 - 1 + isbeg]; // , expr subst  
  d1 = max(r__1,r__2);
  }
- emin = abs(d1);
+ emin = f2c_dabs(d1);
  if (nsl > 0 && wantz) {
  /* Normalize u=Z([2,4,...],:) and v=Z([1,3,...],:), */
  /* changing the sign of v as discussed in the leading */
@@ -718,7 +718,7 @@ n+2}
  }
  r__1 = 1.f / nrmu;
  sscal_(&nru, &r__1, &z__[irowu + (icolz + i__) * z_dim1], &c__2);
- if (nrmu != 1.f && (r__1 = nrmu - ortol, abs(r__1) ) * sqrt2 > 1.f) {
+ if (nrmu != 1.f && (r__1 = nrmu - ortol, f2c_abs(r__1) ) * sqrt2 > 1.f) {
  i__4 = i__ - 1;
  for (j = 0;
  j <= i__4;
@@ -744,7 +744,7 @@ n+2}
  }
  r__1 = -1.f / nrmv;
  sscal_(&nrv, &r__1, &z__[irowv + (icolz + i__) * z_dim1], &c__2);
- if (nrmv != 1.f && (r__1 = nrmv - ortol, abs(r__1) ) * sqrt2 > 1.f) {
+ if (nrmv != 1.f && (r__1 = nrmv - ortol, f2c_abs(r__1) ) * sqrt2 > 1.f) {
  i__4 = i__ - 1;
  for (j = 0;
  j <= i__4;
@@ -784,7 +784,7 @@ n+2}
  for (i__ = 0;
  i__ <= i__3;
  ++i__) {
- s[isbeg + i__] = (r__1 = s[isbeg + i__], abs(r__1));
+ s[isbeg + i__] = (r__1 = s[isbeg + i__], f2c_abs(r__1));
  }
  /* Update pointers for TGK, S and Z. */
  isbeg += nsl;

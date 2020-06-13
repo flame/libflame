@@ -492,7 +492,7 @@
  d__1 = mxaapq; d__2 = -aapq1; // , expr subst  
  mxaapq = max(d__1,d__2);
  /* TO rotate or NOT to rotate, THAT is the question ... */
- if (abs(aapq1) > *tol) {
+ if (f2c_dabs(aapq1) > *tol) {
  d__1 = z_abs(&aapq);
  z__1.r = aapq.r / d__1; z__1.i = aapq.i / d__1; // , expr subst  
  ompq.r = z__1.r; ompq.i = z__1.i; // , expr subst  
@@ -503,11 +503,11 @@
  if (rotok) {
  aqoap = aaqq / aapp;
  apoaq = aapp / aaqq;
- theta = (d__1 = aqoap - apoaq, abs( d__1)) * -.5 / aapq1;
+ theta = (d__1 = aqoap - apoaq, f2c_dabs( d__1)) * -.5 / aapq1;
  if (aaqq > aapp0) {
  theta = -theta;
  }
- if (abs(theta) > bigtheta) {
+ if (f2c_dabs(theta) > bigtheta) {
  t = .5 / theta;
  cs = 1.;
  d_cnjg(&z__2, &ompq);
@@ -525,7 +525,7 @@
  d__1 = 0.; d__2 = 1. - t * aqoap * aapq1; // , expr subst  
  aapp *= sqrt((max(d__1,d__2)));
  /* Computing MAX */
- d__1 = mxsinj; d__2 = abs(t); // , expr subst  
+ d__1 = mxsinj; d__2 = f2c_dabs(t); // , expr subst  
  mxsinj = max(d__1,d__2);
  }
  else {
@@ -538,7 +538,7 @@
  cs = sqrt(1. / (t * t + 1.));
  sn = t * cs;
  /* Computing MAX */
- d__1 = mxsinj; d__2 = abs(sn); // , expr subst  
+ d__1 = mxsinj; d__2 = f2c_dabs(sn); // , expr subst  
  mxsinj = max(d__1,d__2);
  /* Computing MAX */
  d__1 = 0.; d__2 = t * apoaq * aapq1 + 1.; // , expr subst  
@@ -671,7 +671,7 @@
  for (p = igl;
  p <= i__3;
  ++p) {
- sva[p] = (d__1 = sva[p], abs(d__1));
+ sva[p] = (d__1 = sva[p], f2c_dabs(d__1));
  /* L2012: */
  }
  /* ** */

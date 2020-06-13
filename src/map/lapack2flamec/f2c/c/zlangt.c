@@ -38,7 +38,7 @@ static integer c__1 = 1;
 /* > \return ZLANGT */
 /* > \verbatim */
 /* > */
-/* > ZLANGT = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
+/* > ZLANGT = ( max(f2c_dabs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -49,7 +49,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_dabs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -139,7 +139,7 @@ doublereal zlangt_(char *norm, integer *n, doublecomplex *dl, doublecomplex * d_
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(f2c_abs(A(i,j))). */
+        /* Find max(f2c_dabs(A(i,j))). */
         anorm = z_abs(&d__[*n]);
         i__1 = *n - 1;
         for (i__ = 1;

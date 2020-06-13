@@ -285,13 +285,13 @@ L10:
             done = TRUE_;
             cfromc = 1.;
         }
-        else if (f2c_abs(cfrom1) > f2c_abs(ctoc) && ctoc != 0.)
+        else if (f2c_dabs(cfrom1) > f2c_dabs(ctoc) && ctoc != 0.)
         {
             mul = smlnum;
             done = FALSE_;
             cfromc = cfrom1;
         }
-        else if (f2c_abs(cto1) > f2c_abs(cfromc))
+        else if (f2c_dabs(cto1) > f2c_dabs(cfromc))
         {
             mul = bignum;
             done = FALSE_;

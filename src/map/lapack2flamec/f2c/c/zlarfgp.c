@@ -70,7 +70,7 @@ static doublecomplex c_b5 =
 /* > \param[in,out] X */
 /* > \verbatim */
 /* > X is COMPLEX*16 array, dimension */
-/* > (1+(N-2)*f2c_abs(INCX)) */
+/* > (1+(N-2)*f2c_dabs(INCX)) */
 /* > On entry, the vector x. */
 /* > On exit, it is overwritten with the vector v. */
 /* > \endverbatim */
@@ -153,7 +153,7 @@ int zlarfgp_(integer *n, doublecomplex *alpha, doublecomplex *x, integer *incx, 
     alphi = d_imag(alpha);
     if (xnorm == 0.)
     {
-        /* H = [1-alpha/f2c_abs(alpha) 0;
+        /* H = [1-alpha/f2c_dabs(alpha) 0;
         0 I], sign chosen so ALPHA >= 0. */
         if (alphi == 0.)
         {
@@ -212,7 +212,7 @@ int zlarfgp_(integer *n, doublecomplex *alpha, doublecomplex *x, integer *incx, 
         smlnum = dlamch_("S") / dlamch_("E");
         bignum = 1. / smlnum;
         knt = 0;
-        if (f2c_abs(beta) < smlnum)
+        if (f2c_dabs(beta) < smlnum)
         {
             /* XNORM, BETA may be inaccurate;
             scale X and recompute them */
@@ -223,7 +223,7 @@ L10:
             beta *= bignum;
             alphi *= bignum;
             alphr *= bignum;
-            if (f2c_abs(beta) < smlnum)
+            if (f2c_dabs(beta) < smlnum)
             {
                 goto L10;
             }

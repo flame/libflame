@@ -192,7 +192,7 @@ IL = 1 and IU = 0 if N = 0. */
 /* > I_j = (a_j, b_j] that includes eigenvalue j. The eigenvalue */
 /* > approximation is given as the interval midpoint */
 /* > W(j)= ( a_j + b_j)/2. The corresponding error is bounded by */
-/* > WERR(j) = f2c_abs( a_j - b_j)/2 */
+/* > WERR(j) = f2c_dabs( a_j - b_j)/2 */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WERR */
@@ -489,8 +489,8 @@ int dlarrd_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
     }
     /* Compute global Gerschgorin bounds and spectral diameter */
     /* Computing MAX */
-    d__1 = f2c_abs(gl);
-    d__2 = f2c_abs(gu); // , expr subst
+    d__1 = f2c_dabs(gl);
+    d__2 = f2c_dabs(gu); // , expr subst
     tnorm = max(d__1,d__2);
     gl = gl - tnorm * 2. * eps * *n - *pivmin * 4.;
     gu = gu + tnorm * 2. * eps * *n + *pivmin * 4.;
@@ -733,7 +733,7 @@ int dlarrd_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
                 /* eigenvalue approximation is middle point of interval */
                 tmp1 = (work[j + *n] + work[j + in + *n]) * .5;
                 /* semi length of error interval */
-                tmp2 = (d__1 = work[j + *n] - work[j + in + *n], f2c_abs(d__1)) * .5;
+                tmp2 = (d__1 = work[j + *n] - work[j + in + *n], f2c_dabs(d__1)) * .5;
                 if (j > iout - iinfo)
                 {
                     /* Flag non-convergence. */

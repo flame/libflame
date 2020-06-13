@@ -1050,10 +1050,10 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
                                 }
                                 /* Computing MAX */
                                 d__1 = mxaapq;
-                                d__2 = f2c_abs(aapq); // , expr subst
+                                d__2 = f2c_dabs(aapq); // , expr subst
                                 mxaapq = max(d__1,d__2);
                                 /* TO rotate or NOT to rotate, THAT is the question ... */
-                                if (f2c_abs(aapq) > tol)
+                                if (f2c_dabs(aapq) > tol)
                                 {
                                     /* .. rotate */
                                     /* [RTD] ROTATED = ROTATED + ONE */
@@ -1067,8 +1067,8 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
                                     {
                                         aqoap = aaqq / aapp;
                                         apoaq = aapp / aaqq;
-                                        theta = (d__1 = aqoap - apoaq, f2c_abs( d__1)) * -.5 / aapq;
-                                        if (f2c_abs(theta) > bigtheta)
+                                        theta = (d__1 = aqoap - apoaq, f2c_dabs( d__1)) * -.5 / aapq;
+                                        if (f2c_dabs(theta) > bigtheta)
                                         {
                                             t = .5 / theta;
                                             fastr[2] = t * work[p] / work[q];
@@ -1088,7 +1088,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
                                             aapp *= sqrt((max(d__1,d__2)));
                                             /* Computing MAX */
                                             d__1 = mxsinj;
-                                            d__2 = f2c_abs(t); // , expr subst
+                                            d__2 = f2c_dabs(t); // , expr subst
                                             mxsinj = max(d__1,d__2);
                                         }
                                         else
@@ -1100,7 +1100,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
                                             sn = t * cs;
                                             /* Computing MAX */
                                             d__1 = mxsinj;
-                                            d__2 = f2c_abs(sn); // , expr subst
+                                            d__2 = f2c_dabs(sn); // , expr subst
                                             mxsinj = max(d__1,d__2);
                                             /* Computing MAX */
                                             d__1 = 0.;
@@ -1379,10 +1379,10 @@ L2103: /* bailed out of q-loop */
                                 }
                                 /* Computing MAX */
                                 d__1 = mxaapq;
-                                d__2 = f2c_abs(aapq); // , expr subst
+                                d__2 = f2c_dabs(aapq); // , expr subst
                                 mxaapq = max(d__1,d__2);
                                 /* TO rotate or NOT to rotate, THAT is the question ... */
-                                if (f2c_abs(aapq) > tol)
+                                if (f2c_dabs(aapq) > tol)
                                 {
                                     notrot = 0;
                                     /* [RTD] ROTATED = ROTATED + 1 */
@@ -1392,12 +1392,12 @@ L2103: /* bailed out of q-loop */
                                     {
                                         aqoap = aaqq / aapp;
                                         apoaq = aapp / aaqq;
-                                        theta = (d__1 = aqoap - apoaq, f2c_abs( d__1)) * -.5 / aapq;
+                                        theta = (d__1 = aqoap - apoaq, f2c_dabs( d__1)) * -.5 / aapq;
                                         if (aaqq > aapp0)
                                         {
                                             theta = -theta;
                                         }
-                                        if (f2c_abs(theta) > bigtheta)
+                                        if (f2c_dabs(theta) > bigtheta)
                                         {
                                             t = .5 / theta;
                                             fastr[2] = t * work[p] / work[q];
@@ -1417,7 +1417,7 @@ L2103: /* bailed out of q-loop */
                                             aapp *= sqrt((max(d__1,d__2)));
                                             /* Computing MAX */
                                             d__1 = mxsinj;
-                                            d__2 = f2c_abs(t); // , expr subst
+                                            d__2 = f2c_dabs(t); // , expr subst
                                             mxsinj = max(d__1,d__2);
                                         }
                                         else
@@ -1433,7 +1433,7 @@ L2103: /* bailed out of q-loop */
                                             sn = t * cs;
                                             /* Computing MAX */
                                             d__1 = mxsinj;
-                                            d__2 = f2c_abs(sn); // , expr subst
+                                            d__2 = f2c_dabs(sn); // , expr subst
                                             mxsinj = max(d__1,d__2);
                                             /* Computing MAX */
                                             d__1 = 0.;
@@ -1660,7 +1660,7 @@ L2011: /* 2011 bailed out of the jbc-loop */
                     p <= i__2;
                     ++p)
             {
-                sva[p] = (d__1 = sva[p], f2c_abs(d__1));
+                sva[p] = (d__1 = sva[p], f2c_dabs(d__1));
                 /* L2012: */
             }
             /* ** */

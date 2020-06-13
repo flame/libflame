@@ -262,7 +262,7 @@
  sfmin = dlamch_("S");
  /* Construct the subdiagonal elements of L */
  i__1 = a_dim1 + 1;
- if ((d__1 = a[i__1].r, abs(d__1)) + (d__2 = d_imag(&a[a_dim1 + 1]), abs(d__2)) >= sfmin) {
+ if ((d__1 = a[i__1].r, f2c_dabs(d__1)) + (d__2 = d_imag(&a[a_dim1 + 1]), f2c_dabs(d__2)) >= sfmin) {
  i__1 = *m - 1;
  z_div(&z__1, &c_b1, &a[a_dim1 + 1]);
  zscal_(&i__1, &z__1, &a[a_dim1 + 2], &c__1);

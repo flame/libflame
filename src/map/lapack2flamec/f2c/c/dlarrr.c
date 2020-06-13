@@ -137,7 +137,7 @@ int dlarrr_(integer *n, doublereal *d__, doublereal *e, integer *info)
     /* instead of the current OFFDIG + OFFDIG2 < 1 */
     yesrel = TRUE_;
     offdig = 0.;
-    tmp = sqrt((f2c_abs(d__[1])));
+    tmp = sqrt((f2c_dabs(d__[1])));
     if (tmp < rmin)
     {
         yesrel = FALSE_;
@@ -151,7 +151,7 @@ int dlarrr_(integer *n, doublereal *d__, doublereal *e, integer *info)
             i__ <= i__1;
             ++i__)
     {
-        tmp2 = sqrt((d__1 = d__[i__], f2c_abs(d__1)));
+        tmp2 = sqrt((d__1 = d__[i__], f2c_dabs(d__1)));
         if (tmp2 < rmin)
         {
             yesrel = FALSE_;
@@ -160,7 +160,7 @@ int dlarrr_(integer *n, doublereal *d__, doublereal *e, integer *info)
         {
             goto L11;
         }
-        offdig2 = (d__1 = e[i__ - 1], f2c_abs(d__1)) / (tmp * tmp2);
+        offdig2 = (d__1 = e[i__ - 1], f2c_dabs(d__1)) / (tmp * tmp2);
         if (offdig + offdig2 >= .999)
         {
             yesrel = FALSE_;

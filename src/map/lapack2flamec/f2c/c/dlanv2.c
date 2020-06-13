@@ -110,7 +110,7 @@ static doublereal c_b4 = 1.;
 /* > Modified by V. Sima, Research Institute for Informatics, Bucharest, */
 /* > Romania, to reduce the risk of cancellation errors, */
 /* > when computing real eigenvalues, and to ensure, if possible, that */
-/* > f2c_abs(RT1R) >= f2c_abs(RT2R). */
+/* > f2c_dabs(RT1R) >= f2c_dabs(RT2R). */
 /* > \endverbatim */
 /* > */
 /* ===================================================================== */
@@ -170,15 +170,15 @@ int dlanv2_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doub
         temp = *a - *d__;
         p = temp * .5;
         /* Computing MAX */
-        d__1 = f2c_abs(*b);
-        d__2 = f2c_abs(*c__); // , expr subst
+        d__1 = f2c_dabs(*b);
+        d__2 = f2c_dabs(*c__); // , expr subst
         bcmax = max(d__1,d__2);
         /* Computing MIN */
-        d__1 = f2c_abs(*b);
-        d__2 = f2c_abs(*c__); // , expr subst
+        d__1 = f2c_dabs(*b);
+        d__2 = f2c_dabs(*c__); // , expr subst
         bcmis = min(d__1,d__2) * d_sign(&c_b4, b) * d_sign(&c_b4, c__);
         /* Computing MAX */
-        d__1 = f2c_abs(p);
+        d__1 = f2c_dabs(p);
         scale = max(d__1,bcmax);
         z__ = p / scale * p + bcmax / scale * bcmis;
         /* If Z is of the order of the machine accuracy, postpone the */
@@ -203,7 +203,7 @@ int dlanv2_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doub
             /* Make diagonal elements equal. */
             sigma = *b + *c__;
             tau = dlapy2_(&sigma, &temp);
-            *cs = sqrt((f2c_abs(sigma) / tau + 1.) * .5);
+            *cs = sqrt((f2c_dabs(sigma) / tau + 1.) * .5);
             *sn = -(p / (tau * *cs)) * d_sign(&c_b4, &sigma);
             /* Compute [ AA BB ] = [ A B ] [ CS -SN ] */
             /* [ CC DD ] [ C D ] [ SN CS ] */
@@ -227,11 +227,11 @@ int dlanv2_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doub
                     if (d_sign(&c_b4, b) == d_sign(&c_b4, c__))
                     {
                         /* Real eigenvalues: reduce to upper triangular form */
-                        sab = sqrt((f2c_abs(*b)));
-                        sac = sqrt((f2c_abs(*c__)));
+                        sab = sqrt((f2c_dabs(*b)));
+                        sac = sqrt((f2c_dabs(*c__)));
                         d__1 = sab * sac;
                         p = d_sign(&d__1, c__);
-                        tau = 1. / sqrt((d__1 = *b + *c__, f2c_abs(d__1)));
+                        tau = 1. / sqrt((d__1 = *b + *c__, f2c_dabs(d__1)));
                         *a = temp + p;
                         *d__ = temp - p;
                         *b -= *c__;
@@ -264,7 +264,7 @@ L10: /* Store eigenvalues in (RT1R,RT1I) and (RT2R,RT2I). */
     }
     else
     {
-        *rt1i = sqrt((f2c_abs(*b))) * sqrt((f2c_abs(*c__)));
+        *rt1i = sqrt((f2c_dabs(*b))) * sqrt((f2c_dabs(*c__)));
         *rt2i = -(*rt1i);
     }
     return 0;

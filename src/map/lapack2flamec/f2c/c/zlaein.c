@@ -271,7 +271,7 @@ int zlaein_(logical *rightv, logical *noinit, integer *n, doublecomplex *h__, in
             ei.r = h__[i__2].r;
             ei.i = h__[i__2].i; // , expr subst
             i__2 = i__ + i__ * b_dim1;
-            if ((d__1 = b[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&b[i__ + i__ * b_dim1]), f2c_abs(d__2)) < (d__3 = ei.r, f2c_abs(d__3)) + (d__4 = d_imag(&ei), f2c_abs(d__4)))
+            if ((d__1 = b[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag(&b[i__ + i__ * b_dim1]), f2c_dabs(d__2)) < (d__3 = ei.r, f2c_dabs(d__3)) + (d__4 = d_imag(&ei), f2c_dabs(d__4)))
             {
                 /* Interchange rows and eliminate. */
                 zladiv_(&z__1, &b[i__ + i__ * b_dim1], &ei);
@@ -358,7 +358,7 @@ int zlaein_(logical *rightv, logical *noinit, integer *n, doublecomplex *h__, in
             ej.r = h__[i__1].r;
             ej.i = h__[i__1].i; // , expr subst
             i__1 = j + j * b_dim1;
-            if ((d__1 = b[i__1].r, f2c_abs(d__1)) + (d__2 = d_imag(&b[j + j * b_dim1]), f2c_abs(d__2)) < (d__3 = ej.r, f2c_abs(d__3)) + (d__4 = d_imag(&ej), f2c_abs(d__4)))
+            if ((d__1 = b[i__1].r, f2c_dabs(d__1)) + (d__2 = d_imag(&b[j + j * b_dim1]), f2c_dabs(d__2)) < (d__3 = ej.r, f2c_dabs(d__3)) + (d__4 = d_imag(&ej), f2c_dabs(d__4)))
             {
                 /* Interchange columns and eliminate. */
                 zladiv_(&z__1, &b[j + j * b_dim1], &ej);
@@ -478,7 +478,7 @@ int zlaein_(logical *rightv, logical *noinit, integer *n, doublecomplex *h__, in
 L120: /* Normalize eigenvector. */
     i__ = izamax_(n, &v[1], &c__1);
     i__1 = i__;
-    d__3 = 1. / ((d__1 = v[i__1].r, f2c_abs(d__1)) + (d__2 = d_imag(&v[i__]), f2c_abs( d__2)));
+    d__3 = 1. / ((d__1 = v[i__1].r, f2c_dabs(d__1)) + (d__2 = d_imag(&v[i__]), f2c_dabs( d__2)));
     zdscal_(n, &d__3, &v[1], &c__1);
     return 0;
     /* End of ZLAEIN */

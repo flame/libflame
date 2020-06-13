@@ -629,13 +629,13 @@ int dhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
         }
         else
         {
-            if ((d__1 = h__[ilast + (ilast - 1) * h_dim1], f2c_abs(d__1)) <= atol)
+            if ((d__1 = h__[ilast + (ilast - 1) * h_dim1], f2c_dabs(d__1)) <= atol)
             {
                 h__[ilast + (ilast - 1) * h_dim1] = 0.;
                 goto L80;
             }
         }
-        if ((d__1 = t[ilast + ilast * t_dim1], f2c_abs(d__1)) <= btol)
+        if ((d__1 = t[ilast + ilast * t_dim1], f2c_dabs(d__1)) <= btol)
         {
             t[ilast + ilast * t_dim1] = 0.;
             goto L70;
@@ -653,7 +653,7 @@ int dhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
             }
             else
             {
-                if ((d__1 = h__[j + (j - 1) * h_dim1], f2c_abs(d__1)) <= atol)
+                if ((d__1 = h__[j + (j - 1) * h_dim1], f2c_dabs(d__1)) <= atol)
                 {
                     h__[j + (j - 1) * h_dim1] = 0.;
                     ilazro = TRUE_;
@@ -664,22 +664,22 @@ int dhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                 }
             }
             /* Test 2: for T(j,j)=0 */
-            if ((d__1 = t[j + j * t_dim1], f2c_abs(d__1)) < btol)
+            if ((d__1 = t[j + j * t_dim1], f2c_dabs(d__1)) < btol)
             {
                 t[j + j * t_dim1] = 0.;
                 /* Test 1a: Check for 2 consecutive small subdiagonals in A */
                 ilazr2 = FALSE_;
                 if (! ilazro)
                 {
-                    temp = (d__1 = h__[j + (j - 1) * h_dim1], f2c_abs(d__1));
-                    temp2 = (d__1 = h__[j + j * h_dim1], f2c_abs(d__1));
+                    temp = (d__1 = h__[j + (j - 1) * h_dim1], f2c_dabs(d__1));
+                    temp2 = (d__1 = h__[j + j * h_dim1], f2c_dabs(d__1));
                     tempr = max(temp,temp2);
                     if (tempr < 1. && tempr != 0.)
                     {
                         temp /= tempr;
                         temp2 /= tempr;
                     }
-                    if (temp * (ascale * (d__1 = h__[j + 1 + j * h_dim1], f2c_abs( d__1))) <= temp2 * (ascale * atol))
+                    if (temp * (ascale * (d__1 = h__[j + 1 + j * h_dim1], f2c_dabs( d__1))) <= temp2 * (ascale * atol))
                     {
                         ilazr2 = TRUE_;
                     }
@@ -712,7 +712,7 @@ int dhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                             h__[jch + (jch - 1) * h_dim1] *= c__;
                         }
                         ilazr2 = FALSE_;
-                        if ((d__1 = t[jch + 1 + (jch + 1) * t_dim1], f2c_abs(d__1) ) >= btol)
+                        if ((d__1 = t[jch + 1 + (jch + 1) * t_dim1], f2c_dabs(d__1) ) >= btol)
                         {
                             if (jch + 1 >= ilast)
                             {
@@ -866,7 +866,7 @@ L110:
         {
             /* Exceptional shift. Chosen for no particularly good reason. */
             /* (Single shift only.) */
-            if ((doublereal) maxit * safmin * (d__1 = h__[ilast + (ilast - 1) * h_dim1], f2c_abs(d__1)) < (d__2 = t[ilast - 1 + (ilast - 1) * t_dim1], f2c_abs(d__2)))
+            if ((doublereal) maxit * safmin * (d__1 = h__[ilast + (ilast - 1) * h_dim1], f2c_dabs(d__1)) < (d__2 = t[ilast - 1 + (ilast - 1) * t_dim1], f2c_dabs(d__2)))
             {
                 eshift = h__[ilast + (ilast - 1) * h_dim1] / t[ilast - 1 + ( ilast - 1) * t_dim1];
             }
@@ -884,7 +884,7 @@ L110:
             /* returned by DLAG2 is the Wilkinson shift (AEP p.512), */
             d__1 = safmin * 100.;
             dlag2_(&h__[ilast - 1 + (ilast - 1) * h_dim1], ldh, &t[ilast - 1 + (ilast - 1) * t_dim1], ldt, &d__1, &s1, &s2, &wr, &wr2, &wi);
-            if ((d__1 = wr / s1 * t[ilast + ilast * t_dim1] - h__[ilast + ilast * h_dim1], f2c_abs(d__1)) > (d__2 = wr2 / s2 * t[ilast + ilast * t_dim1] - h__[ilast + ilast * h_dim1], f2c_abs(d__2) ))
+            if ((d__1 = wr / s1 * t[ilast + ilast * t_dim1] - h__[ilast + ilast * h_dim1], f2c_dabs(d__1)) > (d__2 = wr2 / s2 * t[ilast + ilast * t_dim1] - h__[ilast + ilast * h_dim1], f2c_dabs(d__2) ))
             {
                 temp = wr;
                 wr = wr2;
@@ -895,9 +895,9 @@ L110:
             }
             /* Computing MAX */
             /* Computing MAX */
-            d__3 = 1., d__4 = f2c_abs(wr);
+            d__3 = 1., d__4 = f2c_dabs(wr);
             d__3 = max(d__3,d__4);
-            d__4 = f2c_abs(wi); // ; expr subst
+            d__4 = f2c_dabs(wi); // ; expr subst
             d__1 = s1;
             d__2 = safmin * max(d__3,d__4); // , expr subst
             temp = max(d__1,d__2);
@@ -917,11 +917,11 @@ L110:
             scale = 1.;
         }
         temp = min(bscale,1.) * (safmax * .5);
-        if (f2c_abs(wr) > temp)
+        if (f2c_dabs(wr) > temp)
         {
             /* Computing MIN */
             d__1 = scale;
-            d__2 = temp / f2c_abs(wr); // , expr subst
+            d__2 = temp / f2c_dabs(wr); // , expr subst
             scale = min(d__1,d__2);
         }
         s1 = scale * s1;
@@ -933,15 +933,15 @@ L110:
                 --j)
         {
             istart = j;
-            temp = (d__1 = s1 * h__[j + (j - 1) * h_dim1], f2c_abs(d__1));
-            temp2 = (d__1 = s1 * h__[j + j * h_dim1] - wr * t[j + j * t_dim1], f2c_abs(d__1));
+            temp = (d__1 = s1 * h__[j + (j - 1) * h_dim1], f2c_dabs(d__1));
+            temp2 = (d__1 = s1 * h__[j + j * h_dim1] - wr * t[j + j * t_dim1], f2c_dabs(d__1));
             tempr = max(temp,temp2);
             if (tempr < 1. && tempr != 0.)
             {
                 temp /= tempr;
                 temp2 /= tempr;
             }
-            if ((d__1 = ascale * h__[j + 1 + j * h_dim1] * temp, f2c_abs(d__1)) <= ascale * atol * temp2)
+            if ((d__1 = ascale * h__[j + 1 + j * h_dim1] * temp, f2c_dabs(d__1)) <= ascale * atol * temp2)
             {
                 goto L130;
             }
@@ -1131,7 +1131,7 @@ L200:
             c21 = s1 * a21;
             c22r = s1 * a22 - wr * b22;
             c22i = -wi * b22;
-            if (f2c_abs(c11r) + f2c_abs(c11i) + f2c_abs(c12) > f2c_abs(c21) + f2c_abs(c22r) + f2c_abs( c22i))
+            if (f2c_dabs(c11r) + f2c_dabs(c11i) + f2c_dabs(c12) > f2c_dabs(c21) + f2c_dabs(c22r) + f2c_dabs( c22i))
             {
                 t1 = dlapy3_(&c12, &c11r, &c11i);
                 cz = c12 / t1;
@@ -1161,9 +1161,9 @@ L200:
             /* ( CQ SQ ) */
             /* ( __ ) A or B */
             /* ( -SQ CQ ) */
-            an = f2c_abs(a11) + f2c_abs(a12) + f2c_abs(a21) + f2c_abs(a22);
-            bn = f2c_abs(b11) + f2c_abs(b22);
-            wabs = f2c_abs(wr) + f2c_abs(wi);
+            an = f2c_dabs(a11) + f2c_dabs(a12) + f2c_dabs(a21) + f2c_dabs(a22);
+            bn = f2c_dabs(b11) + f2c_dabs(b22);
+            wabs = f2c_dabs(wr) + f2c_dabs(wi);
             if (s1 * an > wabs * bn)
             {
                 cq = cz * b11;
@@ -1308,12 +1308,12 @@ L200:
                 /* Swap rows to pivot */
                 ilpivt = FALSE_;
                 /* Computing MAX */
-                d__3 = (d__1 = t[j + 1 + (j + 1) * t_dim1], f2c_abs(d__1));
-                d__4 = (d__2 = t[j + 1 + (j + 2) * t_dim1], f2c_abs(d__2)); // , expr subst
+                d__3 = (d__1 = t[j + 1 + (j + 1) * t_dim1], f2c_dabs(d__1));
+                d__4 = (d__2 = t[j + 1 + (j + 2) * t_dim1], f2c_dabs(d__2)); // , expr subst
                 temp = max(d__3,d__4);
                 /* Computing MAX */
-                d__3 = (d__1 = t[j + 2 + (j + 1) * t_dim1], f2c_abs(d__1));
-                d__4 = (d__2 = t[j + 2 + (j + 2) * t_dim1], f2c_abs(d__2)); // , expr subst
+                d__3 = (d__1 = t[j + 2 + (j + 1) * t_dim1], f2c_dabs(d__1));
+                d__4 = (d__2 = t[j + 2 + (j + 2) * t_dim1], f2c_dabs(d__2)); // , expr subst
                 temp2 = max(d__3,d__4);
                 if (max(temp,temp2) < safmin)
                 {
@@ -1341,7 +1341,7 @@ L200:
                     u1 = t[j + 2 + j * t_dim1];
                 }
                 /* Swap columns if nec. */
-                if (f2c_abs(w12) > f2c_abs(w11))
+                if (f2c_dabs(w12) > f2c_dabs(w11))
                 {
                     ilpivt = TRUE_;
                     temp = w12;
@@ -1358,22 +1358,22 @@ L200:
                 w21 = 0.;
                 /* Compute SCALE */
                 scale = 1.;
-                if (f2c_abs(w22) < safmin)
+                if (f2c_dabs(w22) < safmin)
                 {
                     scale = 0.;
                     u2 = 1.;
                     u1 = -w12 / w11;
                     goto L250;
                 }
-                if (f2c_abs(w22) < f2c_abs(u2))
+                if (f2c_dabs(w22) < f2c_dabs(u2))
                 {
-                    scale = (d__1 = w22 / u2, f2c_abs(d__1));
+                    scale = (d__1 = w22 / u2, f2c_dabs(d__1));
                 }
-                if (f2c_abs(w11) < f2c_abs(u1))
+                if (f2c_dabs(w11) < f2c_dabs(u1))
                 {
                     /* Computing MIN */
                     d__2 = scale;
-                    d__3 = (d__1 = w11 / u1, f2c_abs(d__1)); // , expr subst
+                    d__3 = (d__1 = w11 / u1, f2c_dabs(d__1)); // , expr subst
                     scale = min(d__2,d__3);
                 }
                 /* Solve */

@@ -40,7 +40,7 @@ static integer c__1 = 1;
 /* > \return ZLANSB */
 /* > \verbatim */
 /* > */
-/* > ZLANSB = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
+/* > ZLANSB = ( max(f2c_dabs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -51,7 +51,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_dabs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -165,7 +165,7 @@ doublereal zlansb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(f2c_abs(A(i,j))). */
+        /* Find max(f2c_dabs(A(i,j))). */
         value = 0.;
         if (lsame_(uplo, "U"))
         {

@@ -163,7 +163,7 @@ int dlasq1_(integer *n, doublereal *d__, doublereal *e, doublereal *work, intege
     }
     else if (*n == 1)
     {
-        d__[1] = f2c_abs(d__[1]);
+        d__[1] = f2c_dabs(d__[1]);
         return 0;
     }
     else if (*n == 2)
@@ -180,14 +180,14 @@ int dlasq1_(integer *n, doublereal *d__, doublereal *e, doublereal *work, intege
             i__ <= i__1;
             ++i__)
     {
-        d__[i__] = (d__1 = d__[i__], f2c_abs(d__1));
+        d__[i__] = (d__1 = d__[i__], f2c_dabs(d__1));
         /* Computing MAX */
         d__2 = sigmx;
-        d__3 = (d__1 = e[i__], f2c_abs(d__1)); // , expr subst
+        d__3 = (d__1 = e[i__], f2c_dabs(d__1)); // , expr subst
         sigmx = max(d__2,d__3);
         /* L10: */
     }
-    d__[*n] = (d__1 = d__[*n], f2c_abs(d__1));
+    d__[*n] = (d__1 = d__[*n], f2c_dabs(d__1));
     /* Early return if SIGMX is zero (matrix is already diagonal). */
     if (sigmx == 0.)
     {

@@ -340,14 +340,14 @@
  }
  /* Determine rows and columns to be interchanged and whether */
  /* a 1-by-1 or 2-by-2 pivot block will be used */
- absakk = (d__1 = w[k + kw * w_dim1], abs(d__1));
+ absakk = (d__1 = w[k + kw * w_dim1], f2c_dabs(d__1));
  /* IMAX is the row-index of the largest off-diagonal element in */
  /* column K, and COLMAX is its absolute value. */
  /* Determine both COLMAX and IMAX. */
  if (k > 1) {
  i__1 = k - 1;
  imax = idamax_(&i__1, &w[kw * w_dim1 + 1], &c__1);
- colmax = (d__1 = w[imax + kw * w_dim1], abs(d__1));
+ colmax = (d__1 = w[imax + kw * w_dim1], f2c_dabs(d__1));
  }
  else {
  colmax = 0.;
@@ -391,7 +391,7 @@
  if (imax != k) {
  i__1 = k - imax;
  jmax = imax + idamax_(&i__1, &w[imax + 1 + (kw - 1) * w_dim1], &c__1);
- rowmax = (d__1 = w[jmax + (kw - 1) * w_dim1], abs(d__1));
+ rowmax = (d__1 = w[jmax + (kw - 1) * w_dim1], f2c_dabs(d__1));
  }
  else {
  rowmax = 0.;
@@ -399,7 +399,7 @@
  if (imax > 1) {
  i__1 = imax - 1;
  itemp = idamax_(&i__1, &w[(kw - 1) * w_dim1 + 1], &c__1);
- dtemp = (d__1 = w[itemp + (kw - 1) * w_dim1], abs(d__1));
+ dtemp = (d__1 = w[itemp + (kw - 1) * w_dim1], f2c_dabs(d__1));
  if (dtemp > rowmax) {
  rowmax = dtemp;
  jmax = itemp;
@@ -408,7 +408,7 @@
  /* Equivalent to testing for */
  /* ABS( W( IMAX, KW-1 ) ).GE.ALPHA*ROWMAX */
  /* (used to handle NaN and Inf) */
- if (! ((d__1 = w[imax + (kw - 1) * w_dim1], abs(d__1)) < alpha * rowmax)) {
+ if (! ((d__1 = w[imax + (kw - 1) * w_dim1], f2c_dabs(d__1)) < alpha * rowmax)) {
  /* interchange rows and columns K and IMAX, */
  /* use 1-by-1 pivot block */
  kp = imax;
@@ -475,7 +475,7 @@
  /* Store U(k) in column k of A */
  dcopy_(&k, &w[kw * w_dim1 + 1], &c__1, &a[k * a_dim1 + 1], & c__1);
  if (k > 1) {
- if ((d__1 = a[k + k * a_dim1], abs(d__1)) >= sfmin) {
+ if ((d__1 = a[k + k * a_dim1], f2c_dabs(d__1)) >= sfmin) {
  r1 = 1. / a[k + k * a_dim1];
  i__1 = k - 1;
  dscal_(&i__1, &r1, &a[k * a_dim1 + 1], &c__1);
@@ -591,14 +591,14 @@
  }
  /* Determine rows and columns to be interchanged and whether */
  /* a 1-by-1 or 2-by-2 pivot block will be used */
- absakk = (d__1 = w[k + k * w_dim1], abs(d__1));
+ absakk = (d__1 = w[k + k * w_dim1], f2c_dabs(d__1));
  /* IMAX is the row-index of the largest off-diagonal element in */
  /* column K, and COLMAX is its absolute value. */
  /* Determine both COLMAX and IMAX. */
  if (k < *n) {
  i__1 = *n - k;
  imax = k + idamax_(&i__1, &w[k + 1 + k * w_dim1], &c__1);
- colmax = (d__1 = w[imax + k * w_dim1], abs(d__1));
+ colmax = (d__1 = w[imax + k * w_dim1], f2c_dabs(d__1));
  }
  else {
  colmax = 0.;
@@ -645,7 +645,7 @@
  if (imax != k) {
  i__1 = imax - k;
  jmax = k - 1 + idamax_(&i__1, &w[k + (k + 1) * w_dim1], & c__1);
- rowmax = (d__1 = w[jmax + (k + 1) * w_dim1], abs(d__1));
+ rowmax = (d__1 = w[jmax + (k + 1) * w_dim1], f2c_dabs(d__1));
  }
  else {
  rowmax = 0.;
@@ -653,7 +653,7 @@
  if (imax < *n) {
  i__1 = *n - imax;
  itemp = imax + idamax_(&i__1, &w[imax + 1 + (k + 1) * w_dim1], &c__1);
- dtemp = (d__1 = w[itemp + (k + 1) * w_dim1], abs(d__1));
+ dtemp = (d__1 = w[itemp + (k + 1) * w_dim1], f2c_dabs(d__1));
  if (dtemp > rowmax) {
  rowmax = dtemp;
  jmax = itemp;
@@ -662,7 +662,7 @@
  /* Equivalent to testing for */
  /* ABS( W( IMAX, K+1 ) ).GE.ALPHA*ROWMAX */
  /* (used to handle NaN and Inf) */
- if (! ((d__1 = w[imax + (k + 1) * w_dim1], abs(d__1)) < alpha * rowmax)) {
+ if (! ((d__1 = w[imax + (k + 1) * w_dim1], f2c_dabs(d__1)) < alpha * rowmax)) {
  /* interchange rows and columns K and IMAX, */
  /* use 1-by-1 pivot block */
  kp = imax;
@@ -727,7 +727,7 @@
  i__1 = *n - k + 1;
  dcopy_(&i__1, &w[k + k * w_dim1], &c__1, &a[k + k * a_dim1], & c__1);
  if (k < *n) {
- if ((d__1 = a[k + k * a_dim1], abs(d__1)) >= sfmin) {
+ if ((d__1 = a[k + k * a_dim1], f2c_dabs(d__1)) >= sfmin) {
  r1 = 1. / a[k + k * a_dim1];
  i__1 = *n - k;
  dscal_(&i__1, &r1, &a[k + 1 + k * a_dim1], &c__1);

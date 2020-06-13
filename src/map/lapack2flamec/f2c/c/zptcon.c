@@ -185,8 +185,8 @@ int zptcon_(integer *n, doublereal *d__, doublecomplex *e, doublereal *anorm, do
         /* L10: */
     }
     /* Solve M(A) * x = e, where M(A) = (m(i,j)) is given by */
-    /* m(i,j) = f2c_abs(A(i,j)); i = j; */
-    /* m(i,j) = -f2c_abs(A(i,j)), i .ne. j, */
+    /* m(i,j) = f2c_dabs(A(i,j)); i = j; */
+    /* m(i,j) = -f2c_dabs(A(i,j)), i .ne. j, */
     /* and e = [ 1, 1, ..., 1 ]**T. Note M(A) = M(L)*D*M(L)**H. */
     /* Solve M(L) * x = e. */
     rwork[1] = 1.;
@@ -209,7 +209,7 @@ int zptcon_(integer *n, doublereal *d__, doublecomplex *e, doublereal *anorm, do
     }
     /* Compute AINVNM = max(x(i)), 1<=i<=n. */
     ix = idamax_(n, &rwork[1], &c__1);
-    ainvnm = (d__1 = rwork[ix], f2c_abs(d__1));
+    ainvnm = (d__1 = rwork[ix], f2c_dabs(d__1));
     /* Compute the reciprocal condition number. */
     if (ainvnm != 0.)
     {

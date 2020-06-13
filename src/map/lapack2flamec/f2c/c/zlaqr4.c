@@ -508,7 +508,7 @@ L20:
                     kwtop = kbot - nw + 1;
                     i__2 = kwtop + (kwtop - 1) * h_dim1;
                     i__3 = kwtop - 1 + (kwtop - 2) * h_dim1;
-                    if ((d__1 = h__[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[ kwtop + (kwtop - 1) * h_dim1]), f2c_abs(d__2)) > ( d__3 = h__[i__3].r, f2c_abs(d__3)) + (d__4 = d_imag(& h__[kwtop - 1 + (kwtop - 2) * h_dim1]), f2c_abs(d__4)) )
+                    if ((d__1 = h__[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag(&h__[ kwtop + (kwtop - 1) * h_dim1]), f2c_dabs(d__2)) > ( d__3 = h__[i__3].r, f2c_dabs(d__3)) + (d__4 = d_imag(& h__[kwtop - 1 + (kwtop - 2) * h_dim1]), f2c_dabs(d__4)) )
                     {
                         ++nw;
                     }
@@ -583,7 +583,7 @@ L20:
                         i__3 = i__;
                         i__4 = i__ + i__ * h_dim1;
                         i__5 = i__ + (i__ - 1) * h_dim1;
-                        d__3 = ((d__1 = h__[i__5].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[i__ + (i__ - 1) * h_dim1]), f2c_abs( d__2))) * .75;
+                        d__3 = ((d__1 = h__[i__5].r, f2c_dabs(d__1)) + (d__2 = d_imag(&h__[i__ + (i__ - 1) * h_dim1]), f2c_dabs( d__2))) * .75;
                         z__1.r = h__[i__4].r + d__3;
                         z__1.i = h__[i__4].i; // , expr subst
                         w[i__3].r = z__1.r;
@@ -621,7 +621,7 @@ L20:
                             i__3 = kbot + (kbot - 1) * h_dim1;
                             i__4 = kbot - 1 + kbot * h_dim1;
                             i__5 = kbot + kbot * h_dim1;
-                            s = (d__1 = h__[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[kbot - 1 + (kbot - 1) * h_dim1]), f2c_abs(d__2)) + ((d__3 = h__[i__3] .r, f2c_abs(d__3)) + (d__4 = d_imag(&h__[kbot + (kbot - 1) * h_dim1]), f2c_abs(d__4))) + (( d__5 = h__[i__4].r, f2c_abs(d__5)) + (d__6 = d_imag(&h__[kbot - 1 + kbot * h_dim1]), f2c_abs(d__6))) + ((d__7 = h__[i__5].r, f2c_abs( d__7)) + (d__8 = d_imag(&h__[kbot + kbot * h_dim1]), f2c_abs(d__8)));
+                            s = (d__1 = h__[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag(&h__[kbot - 1 + (kbot - 1) * h_dim1]), f2c_dabs(d__2)) + ((d__3 = h__[i__3] .r, f2c_dabs(d__3)) + (d__4 = d_imag(&h__[kbot + (kbot - 1) * h_dim1]), f2c_dabs(d__4))) + (( d__5 = h__[i__4].r, f2c_dabs(d__5)) + (d__6 = d_imag(&h__[kbot - 1 + kbot * h_dim1]), f2c_dabs(d__6))) + ((d__7 = h__[i__5].r, f2c_dabs( d__7)) + (d__8 = d_imag(&h__[kbot + kbot * h_dim1]), f2c_dabs(d__8)));
                             i__2 = kbot - 1 + (kbot - 1) * h_dim1;
                             z__1.r = h__[i__2].r / s;
                             z__1.i = h__[i__2].i / s; // , expr subst
@@ -703,7 +703,7 @@ L20:
                             {
                                 i__4 = i__;
                                 i__5 = i__ + 1;
-                                if ((d__1 = w[i__4].r, f2c_abs(d__1)) + (d__2 = d_imag(&w[i__]), f2c_abs(d__2)) < (d__3 = w[i__5].r, f2c_abs(d__3)) + (d__4 = d_imag(&w[i__ + 1]), f2c_abs(d__4)))
+                                if ((d__1 = w[i__4].r, f2c_dabs(d__1)) + (d__2 = d_imag(&w[i__]), f2c_dabs(d__2)) < (d__3 = w[i__5].r, f2c_dabs(d__3)) + (d__4 = d_imag(&w[i__ + 1]), f2c_dabs(d__4)))
                                 {
                                     sorted = FALSE_;
                                     i__4 = i__;
@@ -741,7 +741,7 @@ L60:
                     z__4.i = w[i__4].i - h__[i__5].i; // , expr subst
                     z__3.r = z__4.r;
                     z__3.i = z__4.i; // , expr subst
-                    if ((d__1 = z__1.r, f2c_abs(d__1)) + (d__2 = d_imag(&z__1), f2c_abs(d__2)) < (d__3 = z__3.r, f2c_abs(d__3)) + (d__4 = d_imag(&z__3), f2c_abs(d__4)))
+                    if ((d__1 = z__1.r, f2c_dabs(d__1)) + (d__2 = d_imag(&z__1), f2c_dabs(d__2)) < (d__3 = z__3.r, f2c_dabs(d__3)) + (d__4 = d_imag(&z__3), f2c_dabs(d__4)))
                     {
                         i__2 = kbot - 1;
                         i__3 = kbot;

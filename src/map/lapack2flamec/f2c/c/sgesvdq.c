@@ -1003,7 +1003,7 @@
  for (p = 2;
  p <= i__1;
  ++p) {
- if ((r__2 = a[p + p * a_dim1], abs(r__2)) < rtmp * (r__1 = a[ a_dim1 + 1], abs(r__1))) {
+ if ((r__2 = a[p + p * a_dim1], f2c_abs(r__2)) < rtmp * (r__1 = a[ a_dim1 + 1], f2c_abs(r__1))) {
  goto L3002;
  }
  ++nr;
@@ -1023,7 +1023,7 @@
  for (p = 2;
  p <= i__1;
  ++p) {
- if ((r__2 = a[p + p * a_dim1], abs(r__2)) < epsln * (r__1 = a[p - 1 + (p - 1) * a_dim1], abs(r__1)) || (r__3 = a[p + p * a_dim1], abs(r__3)) < sfmin) {
+ if ((r__2 = a[p + p * a_dim1], f2c_abs(r__2)) < epsln * (r__1 = a[p - 1 + (p - 1) * a_dim1], f2c_abs(r__1)) || (r__3 = a[p + p * a_dim1], f2c_abs(r__3)) < sfmin) {
  goto L3402;
  }
  ++nr;
@@ -1042,7 +1042,7 @@
  for (p = 2;
  p <= i__1;
  ++p) {
- if ((r__1 = a[p + p * a_dim1], abs(r__1)) == 0.f) {
+ if ((r__1 = a[p + p * a_dim1], f2c_abs(r__1)) == 0.f) {
  goto L3502;
  }
  ++nr;

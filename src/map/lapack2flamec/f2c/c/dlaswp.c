@@ -69,7 +69,7 @@
 /* > */
 /* > \param[in] IPIV */
 /* > \verbatim */
-/* > IPIV is INTEGER array, dimension (K2*f2c_abs(INCX)) */
+/* > IPIV is INTEGER array, dimension (K2*f2c_dabs(INCX)) */
 /* > The vector of pivot indices. Only the elements in positions */
 /* > K1 through K2 of IPIV are accessed. */
 /* > IPIV(K) = L implies rows K and L are to be interchanged. */

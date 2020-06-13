@@ -168,8 +168,8 @@ int dlarrk_(integer *n, integer *iw, doublereal *gl, doublereal *gu, doublereal 
     /* Function Body */
     eps = dlamch_("P");
     /* Computing MAX */
-    d__1 = f2c_abs(*gl);
-    d__2 = f2c_abs(*gu); // , expr subst
+    d__1 = f2c_dabs(*gl);
+    d__2 = f2c_dabs(*gu); // , expr subst
     tnorm = max(d__1,d__2);
     rtoli = *reltol;
     atoli = *pivmin * 4.;
@@ -179,10 +179,10 @@ int dlarrk_(integer *n, integer *iw, doublereal *gl, doublereal *gu, doublereal 
     right = *gu + tnorm * 2. * eps * *n + *pivmin * 4.;
     it = 0;
 L10: /* Check if interval converged or maximum number of iterations reached */
-    tmp1 = (d__1 = right - left, f2c_abs(d__1));
+    tmp1 = (d__1 = right - left, f2c_dabs(d__1));
     /* Computing MAX */
-    d__1 = f2c_abs(right);
-    d__2 = f2c_abs(left); // , expr subst
+    d__1 = f2c_dabs(right);
+    d__2 = f2c_dabs(left); // , expr subst
     tmp2 = max(d__1,d__2);
     /* Computing MAX */
     d__1 = max(atoli,*pivmin);
@@ -201,7 +201,7 @@ L10: /* Check if interval converged or maximum number of iterations reached */
     mid = (left + right) * .5;
     negcnt = 0;
     tmp1 = d__[1] - mid;
-    if (f2c_abs(tmp1) < *pivmin)
+    if (f2c_dabs(tmp1) < *pivmin)
     {
         tmp1 = -(*pivmin);
     }
@@ -215,7 +215,7 @@ L10: /* Check if interval converged or maximum number of iterations reached */
             ++i__)
     {
         tmp1 = d__[i__] - e2[i__ - 1] / tmp1 - mid;
-        if (f2c_abs(tmp1) < *pivmin)
+        if (f2c_dabs(tmp1) < *pivmin)
         {
             tmp1 = -(*pivmin);
         }
@@ -236,7 +236,7 @@ L10: /* Check if interval converged or maximum number of iterations reached */
     goto L10;
 L30: /* Converged or maximum number of iterations reached */
     *w = (left + right) * .5;
-    *werr = (d__1 = right - left, f2c_abs(d__1)) * .5;
+    *werr = (d__1 = right - left, f2c_dabs(d__1)) * .5;
     return 0;
     /* End of DLARRK */
 }

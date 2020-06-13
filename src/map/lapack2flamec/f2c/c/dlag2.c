@@ -180,8 +180,8 @@ int dlag2_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal 
     safmax = 1. / *safmin;
     /* Scale A */
     /* Computing MAX */
-    d__5 = (d__1 = a[a_dim1 + 1], f2c_abs(d__1)) + (d__2 = a[a_dim1 + 2], f2c_abs( d__2));
-    d__6 = (d__3 = a[(a_dim1 << 1) + 1], f2c_abs(d__3)) + (d__4 = a[(a_dim1 << 1) + 2], f2c_abs(d__4));
+    d__5 = (d__1 = a[a_dim1 + 1], f2c_dabs(d__1)) + (d__2 = a[a_dim1 + 2], f2c_dabs( d__2));
+    d__6 = (d__3 = a[(a_dim1 << 1) + 1], f2c_dabs(d__3)) + (d__4 = a[(a_dim1 << 1) + 2], f2c_dabs(d__4));
     d__5 = max(d__5,d__6); // ; expr subst
     anorm = max(d__5,*safmin);
     ascale = 1. / anorm;
@@ -194,27 +194,27 @@ int dlag2_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal 
     b12 = b[(b_dim1 << 1) + 1];
     b22 = b[(b_dim1 << 1) + 2];
     /* Computing MAX */
-    d__1 = f2c_abs(b11), d__2 = f2c_abs(b12), d__1 = max(d__1,d__2);
-    d__2 = f2c_abs(b22);
+    d__1 = f2c_dabs(b11), d__2 = f2c_dabs(b12), d__1 = max(d__1,d__2);
+    d__2 = f2c_dabs(b22);
     d__1 = max(d__1,d__2); // ; expr subst
     bmin = rtmin * max(d__1,rtmin);
-    if (f2c_abs(b11) < bmin)
+    if (f2c_dabs(b11) < bmin)
     {
         b11 = d_sign(&bmin, &b11);
     }
-    if (f2c_abs(b22) < bmin)
+    if (f2c_dabs(b22) < bmin)
     {
         b22 = d_sign(&bmin, &b22);
     }
     /* Scale B */
     /* Computing MAX */
-    d__1 = f2c_abs(b11);
-    d__2 = f2c_abs(b12) + f2c_abs(b22);
+    d__1 = f2c_dabs(b11);
+    d__2 = f2c_dabs(b12) + f2c_dabs(b22);
     d__1 = max(d__1,d__2); // ; expr subst
     bnorm = max(d__1,*safmin);
     /* Computing MAX */
-    d__1 = f2c_abs(b11);
-    d__2 = f2c_abs(b22); // , expr subst
+    d__1 = f2c_dabs(b11);
+    d__2 = f2c_dabs(b22); // , expr subst
     bsize = max(d__1,d__2);
     bscale = 1. / bsize;
     b11 *= bscale;
@@ -226,7 +226,7 @@ int dlag2_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal 
     binv22 = 1. / b22;
     s1 = a11 * binv11;
     s2 = a22 * binv22;
-    if (f2c_abs(s1) <= f2c_abs(s2))
+    if (f2c_dabs(s1) <= f2c_dabs(s2))
     {
         as12 = a12 - s1 * b12;
         as22 = a22 - s1 * b22;
@@ -245,30 +245,30 @@ int dlag2_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal 
         shift = s2;
     }
     qq = ss * as12;
-    if ((d__1 = pp * rtmin, f2c_abs(d__1)) >= 1.)
+    if ((d__1 = pp * rtmin, f2c_dabs(d__1)) >= 1.)
     {
         /* Computing 2nd power */
         d__1 = rtmin * pp;
         discr = d__1 * d__1 + qq * *safmin;
-        r__ = sqrt((f2c_abs(discr))) * rtmax;
+        r__ = sqrt((f2c_dabs(discr))) * rtmax;
     }
     else
     {
         /* Computing 2nd power */
         d__1 = pp;
-        if (d__1 * d__1 + f2c_abs(qq) <= *safmin)
+        if (d__1 * d__1 + f2c_dabs(qq) <= *safmin)
         {
             /* Computing 2nd power */
             d__1 = rtmax * pp;
             discr = d__1 * d__1 + qq * safmax;
-            r__ = sqrt((f2c_abs(discr))) * rtmin;
+            r__ = sqrt((f2c_dabs(discr))) * rtmin;
         }
         else
         {
             /* Computing 2nd power */
             d__1 = pp;
             discr = d__1 * d__1 + qq;
-            r__ = sqrt((f2c_abs(discr)));
+            r__ = sqrt((f2c_dabs(discr)));
         }
     }
     /* Note: the test of R in the following IF is to cover the case when */
@@ -284,8 +284,8 @@ int dlag2_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal 
         /* Compute smaller eigenvalue */
         wsmall = shift + diff;
         /* Computing MAX */
-        d__1 = f2c_abs(wsmall);
-        if (f2c_abs(wbig) * .5 > max(d__1,*safmin))
+        d__1 = f2c_dabs(wsmall);
+        if (f2c_dabs(wbig) * .5 > max(d__1,*safmin))
         {
             wdet = (a11 * a22 - a12 * a21) * (binv11 * binv22);
             wsmall = wdet / wbig;
@@ -347,7 +347,7 @@ int dlag2_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal 
         c5 = 1.;
     }
     /* Scale first eigenvalue */
-    wabs = f2c_abs(*wr1) + f2c_abs(*wi);
+    wabs = f2c_dabs(*wr1) + f2c_dabs(*wi);
     /* Computing MAX */
     /* Computing MIN */
     d__3 = c4;
@@ -386,10 +386,10 @@ int dlag2_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal 
         /* Computing MAX */
         /* Computing MIN */
         /* Computing MAX */
-        d__5 = f2c_abs(*wr2);
+        d__5 = f2c_dabs(*wr2);
         d__3 = c4;
         d__4 = max(d__5,c5) * .5; // , expr subst
-        d__1 = max(*safmin,c1), d__2 = (f2c_abs(*wr2) * c2 + c3) * 1.0000100000000001;
+        d__1 = max(*safmin,c1), d__2 = (f2c_dabs(*wr2) * c2 + c3) * 1.0000100000000001;
         d__1 = max(d__1,d__2);
         d__2 = min(d__3, d__4); // ; expr subst
         wsize = max(d__1,d__2);

@@ -192,7 +192,7 @@
  a[i__ + a_dim1] = temp;
  }
  /* Compute elements 2:M of the column */
- if ((d__1 = a[a_dim1 + 1], abs(d__1)) >= sfmin) {
+ if ((d__1 = a[a_dim1 + 1], f2c_dabs(d__1)) >= sfmin) {
  i__1 = *m - 1;
  d__1 = 1. / a[a_dim1 + 1];
  dscal_(&i__1, &d__1, &a[a_dim1 + 2], &c__1);

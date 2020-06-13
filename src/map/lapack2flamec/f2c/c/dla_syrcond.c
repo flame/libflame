@@ -235,14 +235,14 @@ doublereal dla_syrcond_(char *uplo, integer *n, doublereal *a, integer *lda, dou
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (d__1 = a[j + i__ * a_dim1] * c__[j], f2c_abs(d__1));
+                    tmp += (d__1 = a[j + i__ * a_dim1] * c__[j], f2c_dabs(d__1));
                 }
                 i__2 = *n;
                 for (j = i__ + 1;
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (d__1 = a[i__ + j * a_dim1] * c__[j], f2c_abs(d__1));
+                    tmp += (d__1 = a[i__ + j * a_dim1] * c__[j], f2c_dabs(d__1));
                 }
             }
             else if (*cmode == 0)
@@ -252,14 +252,14 @@ doublereal dla_syrcond_(char *uplo, integer *n, doublereal *a, integer *lda, dou
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (d__1 = a[j + i__ * a_dim1], f2c_abs(d__1));
+                    tmp += (d__1 = a[j + i__ * a_dim1], f2c_dabs(d__1));
                 }
                 i__2 = *n;
                 for (j = i__ + 1;
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
+                    tmp += (d__1 = a[i__ + j * a_dim1], f2c_dabs(d__1));
                 }
             }
             else
@@ -269,14 +269,14 @@ doublereal dla_syrcond_(char *uplo, integer *n, doublereal *a, integer *lda, dou
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (d__1 = a[j + i__ * a_dim1] / c__[j], f2c_abs(d__1));
+                    tmp += (d__1 = a[j + i__ * a_dim1] / c__[j], f2c_dabs(d__1));
                 }
                 i__2 = *n;
                 for (j = i__ + 1;
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (d__1 = a[i__ + j * a_dim1] / c__[j], f2c_abs(d__1));
+                    tmp += (d__1 = a[i__ + j * a_dim1] / c__[j], f2c_dabs(d__1));
                 }
             }
             work[(*n << 1) + i__] = tmp;
@@ -297,14 +297,14 @@ doublereal dla_syrcond_(char *uplo, integer *n, doublereal *a, integer *lda, dou
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (d__1 = a[i__ + j * a_dim1] * c__[j], f2c_abs(d__1));
+                    tmp += (d__1 = a[i__ + j * a_dim1] * c__[j], f2c_dabs(d__1));
                 }
                 i__2 = *n;
                 for (j = i__ + 1;
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (d__1 = a[j + i__ * a_dim1] * c__[j], f2c_abs(d__1));
+                    tmp += (d__1 = a[j + i__ * a_dim1] * c__[j], f2c_dabs(d__1));
                 }
             }
             else if (*cmode == 0)
@@ -314,14 +314,14 @@ doublereal dla_syrcond_(char *uplo, integer *n, doublereal *a, integer *lda, dou
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
+                    tmp += (d__1 = a[i__ + j * a_dim1], f2c_dabs(d__1));
                 }
                 i__2 = *n;
                 for (j = i__ + 1;
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (d__1 = a[j + i__ * a_dim1], f2c_abs(d__1));
+                    tmp += (d__1 = a[j + i__ * a_dim1], f2c_dabs(d__1));
                 }
             }
             else
@@ -331,14 +331,14 @@ doublereal dla_syrcond_(char *uplo, integer *n, doublereal *a, integer *lda, dou
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (d__1 = a[i__ + j * a_dim1] / c__[j], f2c_abs(d__1));
+                    tmp += (d__1 = a[i__ + j * a_dim1] / c__[j], f2c_dabs(d__1));
                 }
                 i__2 = *n;
                 for (j = i__ + 1;
                         j <= i__2;
                         ++j)
                 {
-                    tmp += (d__1 = a[j + i__ * a_dim1] / c__[j], f2c_abs(d__1));
+                    tmp += (d__1 = a[j + i__ * a_dim1] / c__[j], f2c_dabs(d__1));
                 }
             }
             work[(*n << 1) + i__] = tmp;

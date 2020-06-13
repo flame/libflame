@@ -32,8 +32,8 @@
 /* > */
 /* > ZLA_GBAMV performs one of the matrix-vector operations */
 /* > */
-/* > y := alpha*f2c_abs(A)*f2c_abs(x) + beta*f2c_abs(y), */
-/* > or y := alpha*f2c_abs(A)**T*f2c_abs(x) + beta*f2c_abs(y), */
+/* > y := alpha*f2c_dabs(A)*f2c_dabs(x) + beta*f2c_dabs(y), */
+/* > or y := alpha*f2c_dabs(A)**T*f2c_dabs(x) + beta*f2c_dabs(y), */
 /* > */
 /* > where alpha and beta are scalars, x and y are vectors and A is an */
 /* > m by n matrix. */
@@ -55,9 +55,9 @@
 /* > On entry, TRANS specifies the operation to be performed as */
 /* > follows: */
 /* > */
-/* > BLAS_NO_TRANS y := alpha*f2c_abs(A)*f2c_abs(x) + beta*f2c_abs(y) */
-/* > BLAS_TRANS y := alpha*f2c_abs(A**T)*f2c_abs(x) + beta*f2c_abs(y) */
-/* > BLAS_CONJ_TRANS y := alpha*f2c_abs(A**T)*f2c_abs(x) + beta*f2c_abs(y) */
+/* > BLAS_NO_TRANS y := alpha*f2c_dabs(A)*f2c_dabs(x) + beta*f2c_dabs(y) */
+/* > BLAS_TRANS y := alpha*f2c_dabs(A**T)*f2c_dabs(x) + beta*f2c_dabs(y) */
+/* > BLAS_CONJ_TRANS y := alpha*f2c_dabs(A**T)*f2c_dabs(x) + beta*f2c_dabs(y) */
 /* > */
 /* > Unchanged on exit. */
 /* > \endverbatim */
@@ -117,9 +117,9 @@
 /* > \param[in] X */
 /* > \verbatim */
 /* > X is COMPLEX*16 array, dimension */
-/* > ( 1 + ( n - 1 )*f2c_abs( INCX ) ) when TRANS = 'N' or 'n' */
+/* > ( 1 + ( n - 1 )*f2c_dabs( INCX ) ) when TRANS = 'N' or 'n' */
 /* > and at least */
-/* > ( 1 + ( m - 1 )*f2c_abs( INCX ) ) otherwise. */
+/* > ( 1 + ( m - 1 )*f2c_dabs( INCX ) ) otherwise. */
 /* > Before entry, the incremented array X must contain the */
 /* > vector x. */
 /* > Unchanged on exit. */
@@ -144,9 +144,9 @@
 /* > \param[in,out] Y */
 /* > \verbatim */
 /* > Y is DOUBLE PRECISION array, dimension */
-/* > ( 1 + ( m - 1 )*f2c_abs( INCY ) ) when TRANS = 'N' or 'n' */
+/* > ( 1 + ( m - 1 )*f2c_dabs( INCY ) ) when TRANS = 'N' or 'n' */
 /* > and at least */
-/* > ( 1 + ( n - 1 )*f2c_abs( INCY ) ) otherwise. */
+/* > ( 1 + ( n - 1 )*f2c_dabs( INCY ) ) otherwise. */
 /* > Before entry with BETA non-zero, the incremented array Y */
 /* > must contain the vector y. On exit, Y is overwritten by the */
 /* > updated vector y. */
@@ -296,7 +296,7 @@ int zla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
     /* number of additions in each row. */
     safe1 = dlamch_("Safe minimum");
     safe1 = (*n + 1) * safe1;
-    /* Form y := alpha*f2c_abs(A)*f2c_abs(x) + beta*f2c_abs(y). */
+    /* Form y := alpha*f2c_dabs(A)*f2c_dabs(x) + beta*f2c_dabs(y). */
     /* The O(M*N) SYMB_ZERO tests could be replaced by O(N) queries to */
     /* the inexact flag. Still doesn't help change the iteration order */
     /* to per-column. */
@@ -324,7 +324,7 @@ int zla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                 else
                 {
                     symb_zero__ = FALSE_;
-                    y[iy] = *beta * (d__1 = y[iy], f2c_abs(d__1));
+                    y[iy] = *beta * (d__1 = y[iy], f2c_dabs(d__1));
                 }
                 if (*alpha != 0.)
                 {
@@ -338,11 +338,11 @@ int zla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                             ++j)
                     {
                         i__2 = kd + i__ - j + j * ab_dim1;
-                        temp = (d__1 = ab[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&ab[kd + i__ - j + j * ab_dim1]), f2c_abs( d__2));
+                        temp = (d__1 = ab[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag(&ab[kd + i__ - j + j * ab_dim1]), f2c_dabs( d__2));
                         i__2 = j;
                         symb_zero__ = symb_zero__ && (x[i__2].r == 0. && x[ i__2].i == 0. || temp == 0.);
                         i__2 = j;
-                        y[iy] += *alpha * ((d__1 = x[i__2].r, f2c_abs(d__1)) + ( d__2 = d_imag(&x[j]), f2c_abs(d__2))) * temp;
+                        y[iy] += *alpha * ((d__1 = x[i__2].r, f2c_dabs(d__1)) + ( d__2 = d_imag(&x[j]), f2c_dabs(d__2))) * temp;
                     }
                 }
                 if (! symb_zero__)
@@ -371,7 +371,7 @@ int zla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                 else
                 {
                     symb_zero__ = FALSE_;
-                    y[iy] = *beta * (d__1 = y[iy], f2c_abs(d__1));
+                    y[iy] = *beta * (d__1 = y[iy], f2c_dabs(d__1));
                 }
                 if (*alpha != 0.)
                 {
@@ -385,11 +385,11 @@ int zla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                             ++j)
                     {
                         i__3 = ke - i__ + j + i__ * ab_dim1;
-                        temp = (d__1 = ab[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&ab[ke - i__ + j + i__ * ab_dim1]), f2c_abs(d__2));
+                        temp = (d__1 = ab[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&ab[ke - i__ + j + i__ * ab_dim1]), f2c_dabs(d__2));
                         i__3 = j;
                         symb_zero__ = symb_zero__ && (x[i__3].r == 0. && x[ i__3].i == 0. || temp == 0.);
                         i__3 = j;
-                        y[iy] += *alpha * ((d__1 = x[i__3].r, f2c_abs(d__1)) + ( d__2 = d_imag(&x[j]), f2c_abs(d__2))) * temp;
+                        y[iy] += *alpha * ((d__1 = x[i__3].r, f2c_dabs(d__1)) + ( d__2 = d_imag(&x[j]), f2c_dabs(d__2))) * temp;
                     }
                 }
                 if (! symb_zero__)
@@ -421,7 +421,7 @@ int zla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                 else
                 {
                     symb_zero__ = FALSE_;
-                    y[iy] = *beta * (d__1 = y[iy], f2c_abs(d__1));
+                    y[iy] = *beta * (d__1 = y[iy], f2c_dabs(d__1));
                 }
                 if (*alpha != 0.)
                 {
@@ -436,11 +436,11 @@ int zla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                             ++j)
                     {
                         i__2 = kd + i__ - j + j * ab_dim1;
-                        temp = (d__1 = ab[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&ab[kd + i__ - j + j * ab_dim1]), f2c_abs( d__2));
+                        temp = (d__1 = ab[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag(&ab[kd + i__ - j + j * ab_dim1]), f2c_dabs( d__2));
                         i__2 = jx;
                         symb_zero__ = symb_zero__ && (x[i__2].r == 0. && x[ i__2].i == 0. || temp == 0.);
                         i__2 = jx;
-                        y[iy] += *alpha * ((d__1 = x[i__2].r, f2c_abs(d__1)) + ( d__2 = d_imag(&x[jx]), f2c_abs(d__2))) * temp;
+                        y[iy] += *alpha * ((d__1 = x[i__2].r, f2c_dabs(d__1)) + ( d__2 = d_imag(&x[jx]), f2c_dabs(d__2))) * temp;
                         jx += *incx;
                     }
                 }
@@ -470,7 +470,7 @@ int zla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                 else
                 {
                     symb_zero__ = FALSE_;
-                    y[iy] = *beta * (d__1 = y[iy], f2c_abs(d__1));
+                    y[iy] = *beta * (d__1 = y[iy], f2c_dabs(d__1));
                 }
                 if (*alpha != 0.)
                 {
@@ -485,11 +485,11 @@ int zla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                             ++j)
                     {
                         i__3 = ke - i__ + j + i__ * ab_dim1;
-                        temp = (d__1 = ab[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&ab[ke - i__ + j + i__ * ab_dim1]), f2c_abs(d__2));
+                        temp = (d__1 = ab[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&ab[ke - i__ + j + i__ * ab_dim1]), f2c_dabs(d__2));
                         i__3 = jx;
                         symb_zero__ = symb_zero__ && (x[i__3].r == 0. && x[ i__3].i == 0. || temp == 0.);
                         i__3 = jx;
-                        y[iy] += *alpha * ((d__1 = x[i__3].r, f2c_abs(d__1)) + ( d__2 = d_imag(&x[jx]), f2c_abs(d__2))) * temp;
+                        y[iy] += *alpha * ((d__1 = x[i__3].r, f2c_dabs(d__1)) + ( d__2 = d_imag(&x[jx]), f2c_dabs(d__2))) * temp;
                         jx += *incx;
                     }
                 }

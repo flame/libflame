@@ -138,7 +138,7 @@ int dlaqr1_(integer *n, doublereal *h__, integer *ldh, doublereal *sr1, doublere
     /* Function Body */
     if (*n == 2)
     {
-        s = (d__1 = h__[h_dim1 + 1] - *sr2, f2c_abs(d__1)) + f2c_abs(*si2) + (d__2 = h__[h_dim1 + 2], f2c_abs(d__2));
+        s = (d__1 = h__[h_dim1 + 1] - *sr2, f2c_dabs(d__1)) + f2c_dabs(*si2) + (d__2 = h__[h_dim1 + 2], f2c_dabs(d__2));
         if (s == 0.)
         {
             v[1] = 0.;
@@ -153,7 +153,7 @@ int dlaqr1_(integer *n, doublereal *h__, integer *ldh, doublereal *sr1, doublere
     }
     else
     {
-        s = (d__1 = h__[h_dim1 + 1] - *sr2, f2c_abs(d__1)) + f2c_abs(*si2) + (d__2 = h__[h_dim1 + 2], f2c_abs(d__2)) + (d__3 = h__[h_dim1 + 3], f2c_abs( d__3));
+        s = (d__1 = h__[h_dim1 + 1] - *sr2, f2c_dabs(d__1)) + f2c_dabs(*si2) + (d__2 = h__[h_dim1 + 2], f2c_dabs(d__2)) + (d__3 = h__[h_dim1 + 3], f2c_dabs( d__3));
         if (s == 0.)
         {
             v[1] = 0.;

@@ -356,10 +356,18 @@
  /* Factorize columns k-kb+1:k of A and use blocked code to */
  /* update columns 1:k-kb */
  slasyf_rk_(uplo, &k, &nb, &kb, &a[a_offset], lda, &e[1], &ipiv[1] , &work[1], &ldwork, &iinfo);
+ FILE *fptr = fopen("program.txt","a");
+fprintf(fptr, "slasyf_rk_=%f\n", a[a_offset]);
+fclose(fptr);
  }
  else {
  /* Use unblocked code to factorize columns 1:k of A */
  ssytf2_rk_(uplo, &k, &a[a_offset], lda, &e[1], &ipiv[1], &iinfo);
+  FILE *fptr = fopen("program.txt","a");
+fprintf(fptr, "ssytf2_rk_=%f\n", a[a_offset]);
+fclose(fptr);
+ 
+
  kb = k;
  }
  /* Set INFO on the first occurrence of a zero pivot */
@@ -409,12 +417,20 @@
  /* update columns k+kb:n */
  i__1 = *n - k + 1;
  slasyf_rk_(uplo, &i__1, &nb, &kb, &a[k + k * a_dim1], lda, &e[k], &ipiv[k], &work[1], &ldwork, &iinfo);
+   FILE *fptr = fopen("program.txt","a");
+fprintf(fptr, "slasyf_rk__=%f\n", a[k + k * a_dim1]);
+fclose(fptr);
+
  }
  else {
  /* Use unblocked code to factorize columns k:n of A */
  i__1 = *n - k + 1;
  ssytf2_rk_(uplo, &i__1, &a[k + k * a_dim1], lda, &e[k], &ipiv[k], &iinfo);
  kb = *n - k + 1;
+   FILE *fptr = fopen("program.txt","a");
+fprintf(fptr, "ssytf2_rk_=%f\n", a[k + k * a_dim1]);
+fclose(fptr);
+
  }
  /* Set INFO on the first occurrence of a zero pivot */
  if (*info == 0 && iinfo > 0) {

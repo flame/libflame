@@ -427,7 +427,7 @@ int dtrevc_(char *side, char *howmny, logical *select, integer *n, doublereal *t
                 i__ <= i__2;
                 ++i__)
         {
-            work[j] += (d__1 = t[i__ + j * t_dim1], f2c_abs(d__1));
+            work[j] += (d__1 = t[i__ + j * t_dim1], f2c_dabs(d__1));
             /* L20: */
         }
         /* L30: */
@@ -482,10 +482,10 @@ L40:
             wi = 0.;
             if (ip != 0)
             {
-                wi = sqrt((d__1 = t[ki + (ki - 1) * t_dim1], f2c_abs(d__1))) * sqrt((d__2 = t[ki - 1 + ki * t_dim1], f2c_abs(d__2)));
+                wi = sqrt((d__1 = t[ki + (ki - 1) * t_dim1], f2c_dabs(d__1))) * sqrt((d__2 = t[ki - 1 + ki * t_dim1], f2c_dabs(d__2)));
             }
             /* Computing MAX */
-            d__1 = ulp * (f2c_abs(wr) + f2c_abs(wi));
+            d__1 = ulp * (f2c_dabs(wr) + f2c_dabs(wi));
             smin = max(d__1,smlnum);
             if (ip == 0)
             {
@@ -589,7 +589,7 @@ L60:
                 {
                     dcopy_(&ki, &work[*n + 1], &c__1, &vr[is * vr_dim1 + 1], & c__1);
                     ii = idamax_(&ki, &vr[is * vr_dim1 + 1], &c__1);
-                    remax = 1. / (d__1 = vr[ii + is * vr_dim1], f2c_abs(d__1));
+                    remax = 1. / (d__1 = vr[ii + is * vr_dim1], f2c_dabs(d__1));
                     dscal_(&ki, &remax, &vr[is * vr_dim1 + 1], &c__1);
                     i__1 = *n;
                     for (k = ki + 1;
@@ -608,7 +608,7 @@ L60:
                         dgemv_("N", n, &i__1, &c_b22, &vr[vr_offset], ldvr, & work[*n + 1], &c__1, &work[ki + *n], &vr[ki * vr_dim1 + 1], &c__1);
                     }
                     ii = idamax_(n, &vr[ki * vr_dim1 + 1], &c__1);
-                    remax = 1. / (d__1 = vr[ii + ki * vr_dim1], f2c_abs(d__1));
+                    remax = 1. / (d__1 = vr[ii + ki * vr_dim1], f2c_dabs(d__1));
                     dscal_(n, &remax, &vr[ki * vr_dim1 + 1], &c__1);
                 }
             }
@@ -618,7 +618,7 @@ L60:
                 /* Initial solve */
                 /* [ (T(KI-1,KI-1) T(KI-1,KI) ) - (WR + I* WI)]*X = 0. */
                 /* [ (T(KI,KI-1) T(KI,KI) ) ] */
-                if ((d__1 = t[ki - 1 + ki * t_dim1], f2c_abs(d__1)) >= (d__2 = t[ ki + (ki - 1) * t_dim1], f2c_abs(d__2)))
+                if ((d__1 = t[ki - 1 + ki * t_dim1], f2c_dabs(d__1)) >= (d__2 = t[ ki + (ki - 1) * t_dim1], f2c_dabs(d__2)))
                 {
                     work[ki - 1 + *n] = 1.;
                     work[ki + n2] = wi / t[ki - 1 + ki * t_dim1];
@@ -755,7 +755,7 @@ L90:
                     {
                         /* Computing MAX */
                         d__3 = emax;
-                        d__4 = (d__1 = vr[k + (is - 1) * vr_dim1] , f2c_abs(d__1)) + (d__2 = vr[k + is * vr_dim1], f2c_abs(d__2)); // , expr subst
+                        d__4 = (d__1 = vr[k + (is - 1) * vr_dim1] , f2c_dabs(d__1)) + (d__2 = vr[k + is * vr_dim1], f2c_dabs(d__2)); // , expr subst
                         emax = max(d__3,d__4);
                         /* L100: */
                     }
@@ -794,7 +794,7 @@ L90:
                     {
                         /* Computing MAX */
                         d__3 = emax;
-                        d__4 = (d__1 = vr[k + (ki - 1) * vr_dim1] , f2c_abs(d__1)) + (d__2 = vr[k + ki * vr_dim1], f2c_abs(d__2)); // , expr subst
+                        d__4 = (d__1 = vr[k + (ki - 1) * vr_dim1] , f2c_dabs(d__1)) + (d__2 = vr[k + ki * vr_dim1], f2c_dabs(d__2)); // , expr subst
                         emax = max(d__3,d__4);
                         /* L120: */
                     }
@@ -856,10 +856,10 @@ L150:
             wi = 0.;
             if (ip != 0)
             {
-                wi = sqrt((d__1 = t[ki + (ki + 1) * t_dim1], f2c_abs(d__1))) * sqrt((d__2 = t[ki + 1 + ki * t_dim1], f2c_abs(d__2)));
+                wi = sqrt((d__1 = t[ki + (ki + 1) * t_dim1], f2c_dabs(d__1))) * sqrt((d__2 = t[ki + 1 + ki * t_dim1], f2c_dabs(d__2)));
             }
             /* Computing MAX */
-            d__1 = ulp * (f2c_abs(wr) + f2c_abs(wi));
+            d__1 = ulp * (f2c_dabs(wr) + f2c_dabs(wi));
             smin = max(d__1,smlnum);
             if (ip == 0)
             {
@@ -924,7 +924,7 @@ L150:
                         }
                         work[j + *n] = x[0];
                         /* Computing MAX */
-                        d__2 = (d__1 = work[j + *n], f2c_abs(d__1));
+                        d__2 = (d__1 = work[j + *n], f2c_dabs(d__1));
                         vmax = max(d__2,vmax);
                         vcrit = bignum / vmax;
                     }
@@ -962,8 +962,8 @@ L150:
                         work[j + *n] = x[0];
                         work[j + 1 + *n] = x[1];
                         /* Computing MAX */
-                        d__3 = (d__1 = work[j + *n], f2c_abs(d__1));
-                        d__4 = (d__2 = work[j + 1 + *n], f2c_abs(d__2));
+                        d__3 = (d__1 = work[j + *n], f2c_dabs(d__1));
+                        d__4 = (d__2 = work[j + 1 + *n], f2c_dabs(d__2));
                         d__3 = max( d__3,d__4); // ; expr subst
                         vmax = max(d__3,vmax);
                         vcrit = bignum / vmax;
@@ -978,7 +978,7 @@ L170:
                     dcopy_(&i__2, &work[ki + *n], &c__1, &vl[ki + is * vl_dim1], &c__1);
                     i__2 = *n - ki + 1;
                     ii = idamax_(&i__2, &vl[ki + is * vl_dim1], &c__1) + ki - 1;
-                    remax = 1. / (d__1 = vl[ii + is * vl_dim1], f2c_abs(d__1));
+                    remax = 1. / (d__1 = vl[ii + is * vl_dim1], f2c_dabs(d__1));
                     i__2 = *n - ki + 1;
                     dscal_(&i__2, &remax, &vl[ki + is * vl_dim1], &c__1);
                     i__2 = ki - 1;
@@ -998,7 +998,7 @@ L170:
                         dgemv_("N", n, &i__2, &c_b22, &vl[(ki + 1) * vl_dim1 + 1], ldvl, &work[ki + 1 + *n], &c__1, &work[ ki + *n], &vl[ki * vl_dim1 + 1], &c__1);
                     }
                     ii = idamax_(n, &vl[ki * vl_dim1 + 1], &c__1);
-                    remax = 1. / (d__1 = vl[ii + ki * vl_dim1], f2c_abs(d__1));
+                    remax = 1. / (d__1 = vl[ii + ki * vl_dim1], f2c_dabs(d__1));
                     dscal_(n, &remax, &vl[ki * vl_dim1 + 1], &c__1);
                 }
             }
@@ -1008,7 +1008,7 @@ L170:
                 /* Initial solve: */
                 /* ((T(KI,KI) T(KI,KI+1) )**T - (WR - I* WI))*X = 0. */
                 /* ((T(KI+1,KI) T(KI+1,KI+1)) ) */
-                if ((d__1 = t[ki + (ki + 1) * t_dim1], f2c_abs(d__1)) >= (d__2 = t[ki + 1 + ki * t_dim1], f2c_abs(d__2)))
+                if ((d__1 = t[ki + (ki + 1) * t_dim1], f2c_dabs(d__1)) >= (d__2 = t[ki + 1 + ki * t_dim1], f2c_dabs(d__2)))
                 {
                     work[ki + *n] = wi / t[ki + (ki + 1) * t_dim1];
                     work[ki + 1 + n2] = 1.;
@@ -1088,8 +1088,8 @@ L170:
                         work[j + *n] = x[0];
                         work[j + n2] = x[2];
                         /* Computing MAX */
-                        d__3 = (d__1 = work[j + *n], f2c_abs(d__1));
-                        d__4 = (d__2 = work[j + n2], f2c_abs(d__2));
+                        d__3 = (d__1 = work[j + *n], f2c_dabs(d__1));
+                        d__4 = (d__2 = work[j + n2], f2c_dabs(d__2));
                         d__3 = max(d__3, d__4); // ; expr subst
                         vmax = max(d__3,vmax);
                         vcrit = bignum / vmax;
@@ -1139,8 +1139,8 @@ L170:
                         work[j + 1 + *n] = x[1];
                         work[j + 1 + n2] = x[3];
                         /* Computing MAX */
-                        d__1 = f2c_abs(x[0]), d__2 = f2c_abs(x[2]), d__1 = max(d__1, d__2), d__2 = f2c_abs(x[1]), d__1 = max(d__1,d__2) ;
-                        d__2 = f2c_abs(x[3]);
+                        d__1 = f2c_dabs(x[0]), d__2 = f2c_dabs(x[2]), d__1 = max(d__1, d__2), d__2 = f2c_dabs(x[1]), d__1 = max(d__1,d__2) ;
+                        d__2 = f2c_dabs(x[3]);
                         d__1 = max(d__1,d__2); // ; expr subst
                         vmax = max(d__1,vmax);
                         vcrit = bignum / vmax;
@@ -1163,7 +1163,7 @@ L200:
                     {
                         /* Computing MAX */
                         d__3 = emax;
-                        d__4 = (d__1 = vl[k + is * vl_dim1], f2c_abs( d__1)) + (d__2 = vl[k + (is + 1) * vl_dim1], f2c_abs(d__2)); // , expr subst
+                        d__4 = (d__1 = vl[k + is * vl_dim1], f2c_dabs( d__1)) + (d__2 = vl[k + (is + 1) * vl_dim1], f2c_dabs(d__2)); // , expr subst
                         emax = max(d__3,d__4);
                         /* L220: */
                     }
@@ -1204,7 +1204,7 @@ L200:
                     {
                         /* Computing MAX */
                         d__3 = emax;
-                        d__4 = (d__1 = vl[k + ki * vl_dim1], f2c_abs( d__1)) + (d__2 = vl[k + (ki + 1) * vl_dim1], f2c_abs(d__2)); // , expr subst
+                        d__4 = (d__1 = vl[k + ki * vl_dim1], f2c_dabs( d__1)) + (d__2 = vl[k + (ki + 1) * vl_dim1], f2c_dabs(d__2)); // , expr subst
                         emax = max(d__3,d__4);
                         /* L240: */
                     }

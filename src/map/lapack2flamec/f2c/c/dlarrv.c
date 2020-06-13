@@ -692,7 +692,7 @@ L40:
                         /* boundary of the child cluster */
                         newlst = j;
                     }
-                    else if (wgap[wbegin + j - 1] >= *minrgp * (d__1 = work[ wbegin + j - 1], f2c_abs(d__1)))
+                    else if (wgap[wbegin + j - 1] >= *minrgp * (d__1 = work[ wbegin + j - 1], f2c_dabs(d__1)))
                     {
                         /* the right relative gap is big enough, the child cluster */
                         /* (NEWFST,..,NEWLST) is well separated from the following */
@@ -803,9 +803,9 @@ L40:
                                     k <= i__4;
                                     ++k)
                             {
-                                fudge = eps * 3. * (d__1 = work[wbegin + k - 1], f2c_abs(d__1));
+                                fudge = eps * 3. * (d__1 = work[wbegin + k - 1], f2c_dabs(d__1));
                                 work[wbegin + k - 1] -= tau;
-                                fudge += eps * 4. * (d__1 = work[wbegin + k - 1], f2c_abs(d__1));
+                                fudge += eps * 4. * (d__1 = work[wbegin + k - 1], f2c_dabs(d__1));
                                 /* Fudge errors */
                                 werr[wbegin + k - 1] += fudge;
                                 /* Gaps are not fudged. Provided that WERR is small */
@@ -871,8 +871,8 @@ L40:
                             /* thus to inadequately early RQI 'convergence'. */
                             /* Prevent this by forcing a small left gap. */
                             /* Computing MAX */
-                            d__1 = f2c_abs(left);
-                            d__2 = f2c_abs(right); // , expr subst
+                            d__1 = f2c_dabs(left);
+                            d__2 = f2c_dabs(right); // , expr subst
                             lgap = eps * max(d__1,d__2);
                         }
                         else
@@ -887,8 +887,8 @@ L40:
                             /* thus to inadequately early RQI 'convergence'. */
                             /* Prevent this by forcing a small right gap. */
                             /* Computing MAX */
-                            d__1 = f2c_abs(left);
-                            d__2 = f2c_abs(right); // , expr subst
+                            d__1 = f2c_dabs(left);
+                            d__2 = f2c_dabs(right); // , expr subst
                             rgap = eps * max(d__1,d__2);
                         }
                         else
@@ -973,7 +973,7 @@ L120: /* Check if bisection should be used to refine eigenvalue */
                         /* a role in the quotient */
                         /* Convergence test for Rayleigh-Quotient iteration */
                         /* (omitted when Bisection has been used) */
-                        if (resid > tol * gap && f2c_abs(rqcorr) > rqtol * f2c_abs( lambda) && ! usedbs)
+                        if (resid > tol * gap && f2c_dabs(rqcorr) > rqtol * f2c_dabs( lambda) && ! usedbs)
                         {
                             /* We need to check that the RQCORR update doesn't */
                             /* move the eigenvalue away from the desired one and */
@@ -1026,7 +1026,7 @@ L120: /* Check if bisection should be used to refine eigenvalue */
                             {
                                 needbs = TRUE_;
                             }
-                            if (right - left < rqtol * f2c_abs(lambda))
+                            if (right - left < rqtol * f2c_dabs(lambda))
                             {
                                 /* The eigenvalue is computed to bisection accuracy */
                                 /* compute eigenvector and stop */

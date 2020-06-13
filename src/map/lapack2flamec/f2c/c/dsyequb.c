@@ -225,24 +225,24 @@ int dsyequb_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *s
             {
                 /* Computing MAX */
                 d__2 = s[i__];
-                d__3 = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1)); // , expr subst
+                d__3 = (d__1 = a[i__ + j * a_dim1], f2c_dabs(d__1)); // , expr subst
                 s[i__] = max(d__2,d__3);
                 /* Computing MAX */
                 d__2 = s[j];
-                d__3 = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1)); // , expr subst
+                d__3 = (d__1 = a[i__ + j * a_dim1], f2c_dabs(d__1)); // , expr subst
                 s[j] = max(d__2,d__3);
                 /* Computing MAX */
                 d__2 = *amax;
-                d__3 = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1)); // , expr subst
+                d__3 = (d__1 = a[i__ + j * a_dim1], f2c_dabs(d__1)); // , expr subst
                 *amax = max(d__2,d__3);
             }
             /* Computing MAX */
             d__2 = s[j];
-            d__3 = (d__1 = a[j + j * a_dim1], f2c_abs(d__1)); // , expr subst
+            d__3 = (d__1 = a[j + j * a_dim1], f2c_dabs(d__1)); // , expr subst
             s[j] = max(d__2,d__3);
             /* Computing MAX */
             d__2 = *amax;
-            d__3 = (d__1 = a[j + j * a_dim1], f2c_abs(d__1)); // , expr subst
+            d__3 = (d__1 = a[j + j * a_dim1], f2c_dabs(d__1)); // , expr subst
             *amax = max(d__2,d__3);
         }
     }
@@ -255,11 +255,11 @@ int dsyequb_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *s
         {
             /* Computing MAX */
             d__2 = s[j];
-            d__3 = (d__1 = a[j + j * a_dim1], f2c_abs(d__1)); // , expr subst
+            d__3 = (d__1 = a[j + j * a_dim1], f2c_dabs(d__1)); // , expr subst
             s[j] = max(d__2,d__3);
             /* Computing MAX */
             d__2 = *amax;
-            d__3 = (d__1 = a[j + j * a_dim1], f2c_abs(d__1)); // , expr subst
+            d__3 = (d__1 = a[j + j * a_dim1], f2c_dabs(d__1)); // , expr subst
             *amax = max(d__2,d__3);
             i__2 = *n;
             for (i__ = j + 1;
@@ -268,15 +268,15 @@ int dsyequb_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *s
             {
                 /* Computing MAX */
                 d__2 = s[i__];
-                d__3 = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1)); // , expr subst
+                d__3 = (d__1 = a[i__ + j * a_dim1], f2c_dabs(d__1)); // , expr subst
                 s[i__] = max(d__2,d__3);
                 /* Computing MAX */
                 d__2 = s[j];
-                d__3 = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1)); // , expr subst
+                d__3 = (d__1 = a[i__ + j * a_dim1], f2c_dabs(d__1)); // , expr subst
                 s[j] = max(d__2,d__3);
                 /* Computing MAX */
                 d__2 = *amax;
-                d__3 = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1)); // , expr subst
+                d__3 = (d__1 = a[i__ + j * a_dim1], f2c_dabs(d__1)); // , expr subst
                 *amax = max(d__2,d__3);
             }
         }
@@ -315,11 +315,11 @@ int dsyequb_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *s
                         i__ <= i__2;
                         ++i__)
                 {
-                    t = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
-                    work[i__] += (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1)) * s[ j];
-                    work[j] += (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1)) * s[ i__];
+                    t = (d__1 = a[i__ + j * a_dim1], f2c_dabs(d__1));
+                    work[i__] += (d__1 = a[i__ + j * a_dim1], f2c_dabs(d__1)) * s[ j];
+                    work[j] += (d__1 = a[i__ + j * a_dim1], f2c_dabs(d__1)) * s[ i__];
                 }
-                work[j] += (d__1 = a[j + j * a_dim1], f2c_abs(d__1)) * s[j];
+                work[j] += (d__1 = a[j + j * a_dim1], f2c_dabs(d__1)) * s[j];
             }
         }
         else
@@ -329,15 +329,15 @@ int dsyequb_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *s
                     j <= i__1;
                     ++j)
             {
-                work[j] += (d__1 = a[j + j * a_dim1], f2c_abs(d__1)) * s[j];
+                work[j] += (d__1 = a[j + j * a_dim1], f2c_dabs(d__1)) * s[j];
                 i__2 = *n;
                 for (i__ = j + 1;
                         i__ <= i__2;
                         ++i__)
                 {
-                    t = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
-                    work[i__] += (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1)) * s[ j];
-                    work[j] += (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1)) * s[ i__];
+                    t = (d__1 = a[i__ + j * a_dim1], f2c_dabs(d__1));
+                    work[i__] += (d__1 = a[i__ + j * a_dim1], f2c_dabs(d__1)) * s[ j];
+                    work[j] += (d__1 = a[i__ + j * a_dim1], f2c_dabs(d__1)) * s[ i__];
                 }
             }
         }
@@ -370,7 +370,7 @@ int dsyequb_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *s
                 i__ <= i__1;
                 ++i__)
         {
-            t = (d__1 = a[i__ + i__ * a_dim1], f2c_abs(d__1));
+            t = (d__1 = a[i__ + i__ * a_dim1], f2c_dabs(d__1));
             si = s[i__];
             c2 = (*n - 1) * t;
             c1 = (*n - 2) * (work[i__] - t * si);
@@ -391,7 +391,7 @@ int dsyequb_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *s
                         j <= i__2;
                         ++j)
                 {
-                    t = (d__1 = a[j + i__ * a_dim1], f2c_abs(d__1));
+                    t = (d__1 = a[j + i__ * a_dim1], f2c_dabs(d__1));
                     u += s[j] * t;
                     work[j] += d__ * t;
                 }
@@ -400,7 +400,7 @@ int dsyequb_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *s
                         j <= i__2;
                         ++j)
                 {
-                    t = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
+                    t = (d__1 = a[i__ + j * a_dim1], f2c_dabs(d__1));
                     u += s[j] * t;
                     work[j] += d__ * t;
                 }
@@ -412,7 +412,7 @@ int dsyequb_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *s
                         j <= i__2;
                         ++j)
                 {
-                    t = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
+                    t = (d__1 = a[i__ + j * a_dim1], f2c_dabs(d__1));
                     u += s[j] * t;
                     work[j] += d__ * t;
                 }
@@ -421,7 +421,7 @@ int dsyequb_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *s
                         j <= i__2;
                         ++j)
                 {
-                    t = (d__1 = a[j + i__ * a_dim1], f2c_abs(d__1));
+                    t = (d__1 = a[j + i__ * a_dim1], f2c_dabs(d__1));
                     u += s[j] * t;
                     work[j] += d__ * t;
                 }

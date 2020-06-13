@@ -38,7 +38,7 @@ static integer c__1 = 1;
 /* > \return DLANTP */
 /* > \verbatim */
 /* > */
-/* > DLANTP = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
+/* > DLANTP = ( max(f2c_dabs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -49,7 +49,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_dabs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -159,7 +159,7 @@ doublereal dlantp_(char *norm, char *uplo, char *diag, integer *n, doublereal *a
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(f2c_abs(A(i,j))). */
+        /* Find max(f2c_dabs(A(i,j))). */
         k = 1;
         if (lsame_(diag, "U"))
         {
@@ -176,7 +176,7 @@ doublereal dlantp_(char *norm, char *uplo, char *diag, integer *n, doublereal *a
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = (d__1 = ap[i__], f2c_abs(d__1));
+                        sum = (d__1 = ap[i__], f2c_dabs(d__1));
                         if (value < sum || disnan_(&sum))
                         {
                             value = sum;
@@ -199,7 +199,7 @@ doublereal dlantp_(char *norm, char *uplo, char *diag, integer *n, doublereal *a
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = (d__1 = ap[i__], f2c_abs(d__1));
+                        sum = (d__1 = ap[i__], f2c_dabs(d__1));
                         if (value < sum || disnan_(&sum))
                         {
                             value = sum;
@@ -226,7 +226,7 @@ doublereal dlantp_(char *norm, char *uplo, char *diag, integer *n, doublereal *a
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = (d__1 = ap[i__], f2c_abs(d__1));
+                        sum = (d__1 = ap[i__], f2c_dabs(d__1));
                         if (value < sum || disnan_(&sum))
                         {
                             value = sum;
@@ -249,7 +249,7 @@ doublereal dlantp_(char *norm, char *uplo, char *diag, integer *n, doublereal *a
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum = (d__1 = ap[i__], f2c_abs(d__1));
+                        sum = (d__1 = ap[i__], f2c_dabs(d__1));
                         if (value < sum || disnan_(&sum))
                         {
                             value = sum;
@@ -283,7 +283,7 @@ doublereal dlantp_(char *norm, char *uplo, char *diag, integer *n, doublereal *a
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += (d__1 = ap[i__], f2c_abs(d__1));
+                        sum += (d__1 = ap[i__], f2c_dabs(d__1));
                         /* L90: */
                     }
                 }
@@ -295,7 +295,7 @@ doublereal dlantp_(char *norm, char *uplo, char *diag, integer *n, doublereal *a
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += (d__1 = ap[i__], f2c_abs(d__1));
+                        sum += (d__1 = ap[i__], f2c_dabs(d__1));
                         /* L100: */
                     }
                 }
@@ -322,7 +322,7 @@ doublereal dlantp_(char *norm, char *uplo, char *diag, integer *n, doublereal *a
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += (d__1 = ap[i__], f2c_abs(d__1));
+                        sum += (d__1 = ap[i__], f2c_dabs(d__1));
                         /* L120: */
                     }
                 }
@@ -334,7 +334,7 @@ doublereal dlantp_(char *norm, char *uplo, char *diag, integer *n, doublereal *a
                             i__ <= i__2;
                             ++i__)
                     {
-                        sum += (d__1 = ap[i__], f2c_abs(d__1));
+                        sum += (d__1 = ap[i__], f2c_dabs(d__1));
                         /* L130: */
                     }
                 }
@@ -373,7 +373,7 @@ doublereal dlantp_(char *norm, char *uplo, char *diag, integer *n, doublereal *a
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += (d__1 = ap[k], f2c_abs(d__1));
+                        work[i__] += (d__1 = ap[k], f2c_dabs(d__1));
                         ++k;
                         /* L160: */
                     }
@@ -401,7 +401,7 @@ doublereal dlantp_(char *norm, char *uplo, char *diag, integer *n, doublereal *a
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += (d__1 = ap[k], f2c_abs(d__1));
+                        work[i__] += (d__1 = ap[k], f2c_dabs(d__1));
                         ++k;
                         /* L190: */
                     }
@@ -432,7 +432,7 @@ doublereal dlantp_(char *norm, char *uplo, char *diag, integer *n, doublereal *a
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += (d__1 = ap[k], f2c_abs(d__1));
+                        work[i__] += (d__1 = ap[k], f2c_dabs(d__1));
                         ++k;
                         /* L220: */
                     }
@@ -459,7 +459,7 @@ doublereal dlantp_(char *norm, char *uplo, char *diag, integer *n, doublereal *a
                             i__ <= i__2;
                             ++i__)
                     {
-                        work[i__] += (d__1 = ap[k], f2c_abs(d__1));
+                        work[i__] += (d__1 = ap[k], f2c_dabs(d__1));
                         ++k;
                         /* L250: */
                     }

@@ -52,7 +52,7 @@ static doublecomplex c_b5 =
 /* > If the elements of x are all zero and alpha is real, then tau = 0 */
 /* > and H is taken to be the unit matrix. */
 /* > */
-/* > Otherwise 1 <= real(tau) <= 2 and f2c_abs(tau-1) <= 1 . */
+/* > Otherwise 1 <= real(tau) <= 2 and f2c_dabs(tau-1) <= 1 . */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -72,7 +72,7 @@ static doublecomplex c_b5 =
 /* > \param[in,out] X */
 /* > \verbatim */
 /* > X is COMPLEX*16 array, dimension */
-/* > (1+(N-2)*f2c_abs(INCX)) */
+/* > (1+(N-2)*f2c_dabs(INCX)) */
 /* > On entry, the vector x. */
 /* > On exit, it is overwritten with the vector v. */
 /* > \endverbatim */
@@ -164,7 +164,7 @@ int zlarfg_(integer *n, doublecomplex *alpha, doublecomplex * x, integer *incx, 
         safmin = dlamch_("S") / dlamch_("E");
         rsafmn = 1. / safmin;
         knt = 0;
-        if (f2c_abs(beta) < safmin)
+        if (f2c_dabs(beta) < safmin)
         {
             /* XNORM, BETA may be inaccurate;
             scale X and recompute them */
@@ -175,7 +175,7 @@ L10:
             beta *= rsafmn;
             alphi *= rsafmn;
             alphr *= rsafmn;
-            if (f2c_abs(beta) < safmin)
+            if (f2c_dabs(beta) < safmin)
             {
                 goto L10;
             }

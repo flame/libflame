@@ -459,7 +459,7 @@
  for (i__ = 1;
  i__ <= i__3;
  ++i__) {
- work[j] += (d__1 = t[i__ + j * t_dim1], abs(d__1));
+ work[j] += (d__1 = t[i__ + j * t_dim1], f2c_dabs(d__1));
  /* L20: */
  }
  /* L30: */
@@ -522,7 +522,7 @@
  wr = t[ki + ki * t_dim1];
  wi = 0.;
  if (ip != 0) {
- wi = sqrt((d__1 = t[ki + (ki - 1) * t_dim1], abs(d__1))) * sqrt((d__2 = t[ki - 1 + ki * t_dim1], abs(d__2)));
+ wi = sqrt((d__1 = t[ki + (ki - 1) * t_dim1], f2c_dabs(d__1))) * sqrt((d__2 = t[ki - 1 + ki * t_dim1], f2c_dabs(d__2)));
  }
  /* Computing MAX */
  d__1 = ulp * (abs(wr) + abs(wi));
@@ -615,7 +615,7 @@
  /* no back-transform: copy x to VR and normalize. */
  dcopy_(&ki, &work[iv * *n + 1], &c__1, &vr[is * vr_dim1 + 1], &c__1);
  ii = idamax_(&ki, &vr[is * vr_dim1 + 1], &c__1);
- remax = 1. / (d__1 = vr[ii + is * vr_dim1], abs(d__1));
+ remax = 1. / (d__1 = vr[ii + is * vr_dim1], f2c_dabs(d__1));
  dscal_(&ki, &remax, &vr[is * vr_dim1 + 1], &c__1);
  i__2 = *n;
  for (k = ki + 1;
@@ -633,7 +633,7 @@
  dgemv_("N", n, &i__2, &c_b29, &vr[vr_offset], ldvr, & work[iv * *n + 1], &c__1, &work[ki + iv * *n], &vr[ki * vr_dim1 + 1], &c__1);
  }
  ii = idamax_(n, &vr[ki * vr_dim1 + 1], &c__1);
- remax = 1. / (d__1 = vr[ii + ki * vr_dim1], abs(d__1));
+ remax = 1. / (d__1 = vr[ii + ki * vr_dim1], f2c_dabs(d__1));
  dscal_(n, &remax, &vr[ki * vr_dim1 + 1], &c__1);
  }
  else {
@@ -656,7 +656,7 @@
  /* Initial solve */
  /* [ ( T(KI-1,KI-1) T(KI-1,KI) ) - (WR + I*WI) ]*X = 0. */
  /* [ ( T(KI, KI-1) T(KI, KI) ) ] */
- if ((d__1 = t[ki - 1 + ki * t_dim1], abs(d__1)) >= (d__2 = t[ ki + (ki - 1) * t_dim1], abs(d__2))) {
+ if ((d__1 = t[ki - 1 + ki * t_dim1], f2c_dabs(d__1)) >= (d__2 = t[ ki + (ki - 1) * t_dim1], f2c_dabs(d__2))) {
  work[ki - 1 + (iv - 1) * *n] = 1.;
  work[ki + iv * *n] = wi / t[ki - 1 + ki * t_dim1];
  }
@@ -775,7 +775,7 @@
  k <= i__2;
  ++k) {
  /* Computing MAX */
- d__3 = emax; d__4 = (d__1 = vr[k + (is - 1) * vr_dim1] , abs(d__1)) + (d__2 = vr[k + is * vr_dim1], abs(d__2)); // , expr subst  
+ d__3 = emax; d__4 = (d__1 = vr[k + (is - 1) * vr_dim1] , f2c_dabs(d__1)) + (d__2 = vr[k + is * vr_dim1], f2c_dabs(d__2)); // , expr subst  
  emax = max(d__3,d__4);
  /* L100: */
  }
@@ -810,7 +810,7 @@
  k <= i__2;
  ++k) {
  /* Computing MAX */
- d__3 = emax; d__4 = (d__1 = vr[k + (ki - 1) * vr_dim1] , abs(d__1)) + (d__2 = vr[k + ki * vr_dim1], abs(d__2)); // , expr subst  
+ d__3 = emax; d__4 = (d__1 = vr[k + (ki - 1) * vr_dim1] , f2c_dabs(d__1)) + (d__2 = vr[k + ki * vr_dim1], f2c_dabs(d__2)); // , expr subst  
  emax = max(d__3,d__4);
  /* L120: */
  }
@@ -860,7 +860,7 @@
  if (iscomplex[k - 1] == 0) {
  /* real eigenvector */
  ii = idamax_(n, &work[(nb + k) * *n + 1], &c__1);
- remax = 1. / (d__1 = work[ii + (nb + k) * *n], abs(d__1));
+ remax = 1. / (d__1 = work[ii + (nb + k) * *n], f2c_dabs(d__1));
  }
  else if (iscomplex[k - 1] == 1) {
  /* first eigenvector of conjugate pair */
@@ -870,7 +870,7 @@
  ii <= i__3;
  ++ii) {
  /* Computing MAX */
- d__3 = emax; d__4 = (d__1 = work[ii + (nb + k) * *n], abs(d__1)) + (d__2 = work[ii + (nb + k + 1) * *n], abs(d__2)); // , expr subst  
+ d__3 = emax; d__4 = (d__1 = work[ii + (nb + k) * *n], f2c_dabs(d__1)) + (d__2 = work[ii + (nb + k + 1) * *n], f2c_dabs(d__2)); // , expr subst  
  emax = max(d__3,d__4);
  }
  remax = 1. / emax;
@@ -940,7 +940,7 @@
  wr = t[ki + ki * t_dim1];
  wi = 0.;
  if (ip != 0) {
- wi = sqrt((d__1 = t[ki + (ki + 1) * t_dim1], abs(d__1))) * sqrt((d__2 = t[ki + 1 + ki * t_dim1], abs(d__2)));
+ wi = sqrt((d__1 = t[ki + (ki + 1) * t_dim1], f2c_dabs(d__1))) * sqrt((d__2 = t[ki + 1 + ki * t_dim1], f2c_dabs(d__2)));
  }
  /* Computing MAX */
  d__1 = ulp * (abs(wr) + abs(wi));
@@ -1000,7 +1000,7 @@
  }
  work[j + iv * *n] = x[0];
  /* Computing MAX */
- d__2 = (d__1 = work[j + iv * *n], abs(d__1));
+ d__2 = (d__1 = work[j + iv * *n], f2c_dabs(d__1));
  vmax = max(d__2,vmax);
  vcrit = bignum / vmax;
  }
@@ -1034,7 +1034,7 @@
  work[j + iv * *n] = x[0];
  work[j + 1 + iv * *n] = x[1];
  /* Computing MAX */
- d__3 = (d__1 = work[j + iv * *n], abs(d__1)); d__4 = ( d__2 = work[j + 1 + iv * *n], abs(d__2)); d__3 = max(d__3,d__4); // ; expr subst  
+ d__3 = (d__1 = work[j + iv * *n], f2c_dabs(d__1)); d__4 = ( d__2 = work[j + 1 + iv * *n], f2c_dabs(d__2)); d__3 = max(d__3,d__4); // ; expr subst  
  vmax = max(d__3,vmax);
  vcrit = bignum / vmax;
  }
@@ -1048,7 +1048,7 @@
  dcopy_(&i__3, &work[ki + iv * *n], &c__1, &vl[ki + is * vl_dim1], &c__1);
  i__3 = *n - ki + 1;
  ii = idamax_(&i__3, &vl[ki + is * vl_dim1], &c__1) + ki - 1;
- remax = 1. / (d__1 = vl[ii + is * vl_dim1], abs(d__1));
+ remax = 1. / (d__1 = vl[ii + is * vl_dim1], f2c_dabs(d__1));
  i__3 = *n - ki + 1;
  dscal_(&i__3, &remax, &vl[ki + is * vl_dim1], &c__1);
  i__3 = ki - 1;
@@ -1067,7 +1067,7 @@
  dgemv_("N", n, &i__3, &c_b29, &vl[(ki + 1) * vl_dim1 + 1], ldvl, &work[ki + 1 + iv * *n], &c__1, & work[ki + iv * *n], &vl[ki * vl_dim1 + 1], & c__1);
  }
  ii = idamax_(n, &vl[ki * vl_dim1 + 1], &c__1);
- remax = 1. / (d__1 = vl[ii + ki * vl_dim1], abs(d__1));
+ remax = 1. / (d__1 = vl[ii + ki * vl_dim1], f2c_dabs(d__1));
  dscal_(n, &remax, &vl[ki * vl_dim1 + 1], &c__1);
  }
  else {
@@ -1091,7 +1091,7 @@
  /* Initial solve: */
  /* [ ( T(KI,KI) T(KI,KI+1) )**T - (WR - I* WI) ]*X = 0. */
  /* [ ( T(KI+1,KI) T(KI+1,KI+1) ) ] */
- if ((d__1 = t[ki + (ki + 1) * t_dim1], abs(d__1)) >= (d__2 = t[ki + 1 + ki * t_dim1], abs(d__2))) {
+ if ((d__1 = t[ki + (ki + 1) * t_dim1], f2c_dabs(d__1)) >= (d__2 = t[ki + 1 + ki * t_dim1], f2c_dabs(d__2))) {
  work[ki + iv * *n] = wi / t[ki + (ki + 1) * t_dim1];
  work[ki + 1 + (iv + 1) * *n] = 1.;
  }
@@ -1161,7 +1161,7 @@
  work[j + iv * *n] = x[0];
  work[j + (iv + 1) * *n] = x[2];
  /* Computing MAX */
- d__3 = (d__1 = work[j + iv * *n], abs(d__1)); d__4 = ( d__2 = work[j + (iv + 1) * *n], abs(d__2)); d__3 = max(d__3,d__4); // ; expr subst  
+ d__3 = (d__1 = work[j + iv * *n], f2c_dabs(d__1)); d__4 = ( d__2 = work[j + (iv + 1) * *n], f2c_dabs(d__2)); d__3 = max(d__3,d__4); // ; expr subst  
  vmax = max(d__3,vmax);
  vcrit = bignum / vmax;
  }
@@ -1226,7 +1226,7 @@
  k <= i__3;
  ++k) {
  /* Computing MAX */
- d__3 = emax; d__4 = (d__1 = vl[k + is * vl_dim1], abs( d__1)) + (d__2 = vl[k + (is + 1) * vl_dim1], abs(d__2)); // , expr subst  
+ d__3 = emax; d__4 = (d__1 = vl[k + is * vl_dim1], f2c_dabs( d__1)) + (d__2 = vl[k + (is + 1) * vl_dim1], f2c_dabs(d__2)); // , expr subst  
  emax = max(d__3,d__4);
  /* L220: */
  }
@@ -1263,7 +1263,7 @@
  k <= i__3;
  ++k) {
  /* Computing MAX */
- d__3 = emax; d__4 = (d__1 = vl[k + ki * vl_dim1], abs( d__1)) + (d__2 = vl[k + (ki + 1) * vl_dim1], abs(d__2)); // , expr subst  
+ d__3 = emax; d__4 = (d__1 = vl[k + ki * vl_dim1], f2c_dabs( d__1)) + (d__2 = vl[k + (ki + 1) * vl_dim1], f2c_dabs(d__2)); // , expr subst  
  emax = max(d__3,d__4);
  /* L240: */
  }
@@ -1313,7 +1313,7 @@
  if (iscomplex[k - 1] == 0) {
  /* real eigenvector */
  ii = idamax_(n, &work[(nb + k) * *n + 1], &c__1);
- remax = 1. / (d__1 = work[ii + (nb + k) * *n], abs(d__1));
+ remax = 1. / (d__1 = work[ii + (nb + k) * *n], f2c_dabs(d__1));
  }
  else if (iscomplex[k - 1] == 1) {
  /* first eigenvector of conjugate pair */
@@ -1323,7 +1323,7 @@
  ii <= i__4;
  ++ii) {
  /* Computing MAX */
- d__3 = emax; d__4 = (d__1 = work[ii + (nb + k) * *n], abs(d__1)) + (d__2 = work[ii + (nb + k + 1) * *n], abs(d__2)); // , expr subst  
+ d__3 = emax; d__4 = (d__1 = work[ii + (nb + k) * *n], f2c_dabs(d__1)) + (d__2 = work[ii + (nb + k + 1) * *n], f2c_dabs(d__2)); // , expr subst  
  emax = max(d__3,d__4);
  }
  remax = 1. / emax;

@@ -178,8 +178,8 @@ row i of the matrix was interchanged */
 /* > BERR_OUT is DOUBLE PRECISION array, dimension (NRHS) */
 /* > On exit, BERR_OUT(j) contains the componentwise relative backward */
 /* > error for right-hand-side j from the formula */
-/* > max(i) ( f2c_abs(RES(i)) / ( f2c_abs(op(A_s))*f2c_abs(Y) + f2c_abs(B_s) )(i) ) */
-/* > where f2c_abs(Z) is the componentwise absolute value of the matrix */
+/* > max(i) ( f2c_dabs(RES(i)) / ( f2c_dabs(op(A_s))*f2c_dabs(Y) + f2c_dabs(B_s) )(i) ) */
+/* > where f2c_dabs(Z) is the componentwise absolute value of the matrix */
 /* > or vector Z. This is computed by DLA_LIN_BERR. */
 /* > \endverbatim */
 /* > */
@@ -201,9 +201,9 @@ row i of the matrix was interchanged */
 /* > normwise relative error, which is defined as follows: */
 /* > */
 /* > Normwise relative error in the ith solution vector: */
-/* > max_j (f2c_abs(XTRUE(j,i) - X(j,i))) */
+/* > max_j (f2c_dabs(XTRUE(j,i) - X(j,i))) */
 /* > ------------------------------ */
-/* > max_j f2c_abs(X(j,i)) */
+/* > max_j f2c_dabs(X(j,i)) */
 /* > */
 /* > The array is indexed by the type of error information as described */
 /* > below. There currently are up to three pieces of information */
@@ -250,9 +250,9 @@ row i of the matrix was interchanged */
 /* > componentwise relative error, which is defined as follows: */
 /* > */
 /* > Componentwise relative error in the ith solution vector: */
-/* > f2c_abs(XTRUE(j,i) - X(j,i)) */
+/* > f2c_dabs(XTRUE(j,i) - X(j,i)) */
 /* > max_j ---------------------- */
-/* > f2c_abs(X(j,i)) */
+/* > f2c_dabs(X(j,i)) */
 /* > */
 /* > The array is indexed by the right-hand side i (on which the */
 /* > componentwise relative error depends), and the type of error */
@@ -551,8 +551,8 @@ int dla_gerfsx_extended_(integer *prec_type__, integer * trans_type__, integer *
                     i__ <= i__3;
                     ++i__)
             {
-                yk = (d__1 = y[i__ + j * y_dim1], f2c_abs(d__1));
-                dyk = (d__1 = dy[i__], f2c_abs(d__1));
+                yk = (d__1 = y[i__ + j * y_dim1], f2c_dabs(d__1));
+                dyk = (d__1 = dy[i__], f2c_dabs(d__1));
                 if (yk != 0.)
                 {
                     /* Computing MAX */
@@ -740,8 +740,8 @@ L666: /* Set final_* when cnt hits ithresh. */
             errs_c__[j + (errs_c_dim1 << 1)] = final_dz_z__ / (1 - dzratmax);
         }
         /* Compute componentwise relative backward error from formula */
-        /* max(i) ( f2c_abs(R(i)) / ( f2c_abs(op(A_s))*f2c_abs(Y) + f2c_abs(B_s) )(i) ) */
-        /* where f2c_abs(Z) is the componentwise absolute value of the matrix */
+        /* max(i) ( f2c_dabs(R(i)) / ( f2c_dabs(op(A_s))*f2c_dabs(Y) + f2c_dabs(B_s) )(i) ) */
+        /* where f2c_dabs(Z) is the componentwise absolute value of the matrix */
         /* or vector Z. */
         /* Compute residual RES = B_s - op(A_s) * Y, */
         /* op(A) = A, A**T, or A**H depending on TRANS (and type). */
@@ -752,9 +752,9 @@ L666: /* Set final_* when cnt hits ithresh. */
                 i__ <= i__2;
                 ++i__)
         {
-            ayb[i__] = (d__1 = b[i__ + j * b_dim1], f2c_abs(d__1));
+            ayb[i__] = (d__1 = b[i__ + j * b_dim1], f2c_dabs(d__1));
         }
-        /* Compute f2c_abs(op(A_s))*f2c_abs(Y) + f2c_abs(B_s). */
+        /* Compute f2c_dabs(op(A_s))*f2c_dabs(Y) + f2c_dabs(B_s). */
         dla_geamv_(trans_type__, n, n, &c_b8, &a[a_offset], lda, &y[j * y_dim1 + 1], &c__1, &c_b8, &ayb[1], &c__1);
         dla_lin_berr_(n, n, &c__1, &res[1], &ayb[1], &berr_out__[j]);
         /* End of loop for each RHS. */

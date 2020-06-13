@@ -241,7 +241,7 @@
  /* Determine machine safe minimum */
  sfmin = slamch_("S");
  /* Construct the subdiagonal elements of L */
- if ((r__1 = a[a_dim1 + 1], abs(r__1)) >= sfmin) {
+ if ((r__1 = a[a_dim1 + 1], f2c_abs(r__1)) >= sfmin) {
  i__1 = *m - 1;
  r__1 = 1.f / a[a_dim1 + 1];
  sscal_(&i__1, &r__1, &a[a_dim1 + 2], &c__1);

@@ -76,8 +76,8 @@ static doublereal c_b5 = 1.;
 /* > \param[in] V */
 /* > \verbatim */
 /* > V is DOUBLE PRECISION array, dimension */
-/* > (1 + (M-1)*f2c_abs(INCV)) if SIDE = 'L' */
-/* > (1 + (N-1)*f2c_abs(INCV)) if SIDE = 'R' */
+/* > (1 + (M-1)*f2c_dabs(INCV)) if SIDE = 'L' */
+/* > (1 + (N-1)*f2c_dabs(INCV)) if SIDE = 'R' */
 /* > The vector v in the representation of P. V is not used */
 /* > if TAU = 0. */
 /* > \endverbatim */

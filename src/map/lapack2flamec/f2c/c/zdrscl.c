@@ -50,7 +50,7 @@
 /* > \param[in,out] SX */
 /* > \verbatim */
 /* > SX is COMPLEX*16 array, dimension */
-/* > (1+(N-1)*f2c_abs(INCX)) */
+/* > (1+(N-1)*f2c_dabs(INCX)) */
 /* > The n-element vector x. */
 /* > \endverbatim */
 /* > */
@@ -119,14 +119,14 @@ int zdrscl_(integer *n, doublereal *sa, doublecomplex *sx, integer *incx)
 L10:
     cden1 = cden * smlnum;
     cnum1 = cnum / bignum;
-    if (f2c_abs(cden1) > f2c_abs(cnum) && cnum != 0.)
+    if (f2c_dabs(cden1) > f2c_dabs(cnum) && cnum != 0.)
     {
         /* Pre-multiply X by SMLNUM if CDEN is large compared to CNUM. */
         mul = smlnum;
         done = FALSE_;
         cden = cden1;
     }
-    else if (f2c_abs(cnum1) > f2c_abs(cden))
+    else if (f2c_dabs(cnum1) > f2c_dabs(cden))
     {
         /* Pre-multiply X by BIGNUM if CDEN is small compared to CNUM. */
         mul = bignum;

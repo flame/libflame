@@ -349,9 +349,9 @@ int zcgesv_(integer *n, integer *nrhs, doublecomplex *a, integer *lda, integer *
             ++i__)
     {
         i__2 = izamax_(n, &x[i__ * x_dim1 + 1], &c__1) + i__ * x_dim1;
-        xnrm = (d__1 = x[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&x[izamax_(n, & x[i__ * x_dim1 + 1], &c__1) + i__ * x_dim1]), f2c_abs(d__2));
+        xnrm = (d__1 = x[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag(&x[izamax_(n, & x[i__ * x_dim1 + 1], &c__1) + i__ * x_dim1]), f2c_dabs(d__2));
         i__2 = izamax_(n, &work[i__ * work_dim1 + 1], &c__1) + i__ * work_dim1;
-        rnrm = (d__1 = work[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&work[ izamax_(n, &work[i__ * work_dim1 + 1], &c__1) + i__ * work_dim1]), f2c_abs(d__2));
+        rnrm = (d__1 = work[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag(&work[ izamax_(n, &work[i__ * work_dim1 + 1], &c__1) + i__ * work_dim1]), f2c_dabs(d__2));
         if (rnrm > xnrm * cte)
         {
             goto L10;
@@ -397,9 +397,9 @@ L10:
                 ++i__)
         {
             i__2 = izamax_(n, &x[i__ * x_dim1 + 1], &c__1) + i__ * x_dim1;
-            xnrm = (d__1 = x[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&x[izamax_( n, &x[i__ * x_dim1 + 1], &c__1) + i__ * x_dim1]), f2c_abs( d__2));
+            xnrm = (d__1 = x[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag(&x[izamax_( n, &x[i__ * x_dim1 + 1], &c__1) + i__ * x_dim1]), f2c_dabs( d__2));
             i__2 = izamax_(n, &work[i__ * work_dim1 + 1], &c__1) + i__ * work_dim1;
-            rnrm = (d__1 = work[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&work[ izamax_(n, &work[i__ * work_dim1 + 1], &c__1) + i__ * work_dim1]), f2c_abs(d__2));
+            rnrm = (d__1 = work[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag(&work[ izamax_(n, &work[i__ * work_dim1 + 1], &c__1) + i__ * work_dim1]), f2c_dabs(d__2));
             if (rnrm > xnrm * cte)
             {
                 goto L20;

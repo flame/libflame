@@ -1005,7 +1005,7 @@ i<>j}
  r__1 = mxaapq; r__2 = -aapq1; // , expr subst  
  mxaapq = max(r__1,r__2);
  /* TO rotate or NOT to rotate, THAT is the question ... */
- if (abs(aapq1) > tol) {
+ if (f2c_abs(aapq1) > tol) {
  r__1 = c_abs(&aapq);
  q__1.r = aapq.r / r__1; q__1.i = aapq.i / r__1; // , expr subst  
  ompq.r = q__1.r; ompq.i = q__1.i; // , expr subst  
@@ -1019,8 +1019,8 @@ i<>j}
  if (rotok) {
  aqoap = aaqq / aapp;
  apoaq = aapp / aaqq;
- theta = (r__1 = aqoap - apoaq, abs( r__1)) * -.5f / aapq1;
- if (abs(theta) > bigtheta) {
+ theta = (r__1 = aqoap - apoaq, f2c_abs( r__1)) * -.5f / aapq1;
+ if (f2c_abs(theta) > bigtheta) {
  t = .5f / theta;
  cs = 1.f;
  r_cnjg(&q__2, &ompq);
@@ -1038,7 +1038,7 @@ i<>j}
  r__1 = 0.f; r__2 = 1.f - t * aqoap * aapq1; // , expr subst  
  aapp *= sqrt((max(r__1,r__2)));
  /* Computing MAX */
- r__1 = mxsinj; r__2 = abs(t); // , expr subst  
+ r__1 = mxsinj; r__2 = f2c_abs(t); // , expr subst  
  mxsinj = max(r__1,r__2);
  }
  else {
@@ -1048,7 +1048,7 @@ i<>j}
  cs = sqrt(1.f / (t * t + 1.f));
  sn = t * cs;
  /* Computing MAX */
- r__1 = mxsinj; r__2 = abs(sn); // , expr subst  
+ r__1 = mxsinj; r__2 = f2c_abs(sn); // , expr subst  
  mxsinj = max(r__1,r__2);
  /* Computing MAX */
  r__1 = 0.f; r__2 = t * apoaq * aapq1 + 1.f; // , expr subst  
@@ -1236,7 +1236,7 @@ i<>j}
  r__1 = mxaapq; r__2 = -aapq1; // , expr subst  
  mxaapq = max(r__1,r__2);
  /* TO rotate or NOT to rotate, THAT is the question ... */
- if (abs(aapq1) > tol) {
+ if (f2c_abs(aapq1) > tol) {
  r__1 = c_abs(&aapq);
  q__1.r = aapq.r / r__1; q__1.i = aapq.i / r__1; // , expr subst  
  ompq.r = q__1.r; ompq.i = q__1.i; // , expr subst  
@@ -1247,11 +1247,11 @@ i<>j}
  if (rotok) {
  aqoap = aaqq / aapp;
  apoaq = aapp / aaqq;
- theta = (r__1 = aqoap - apoaq, abs( r__1)) * -.5f / aapq1;
+ theta = (r__1 = aqoap - apoaq, f2c_abs( r__1)) * -.5f / aapq1;
  if (aaqq > aapp0) {
  theta = -theta;
  }
- if (abs(theta) > bigtheta) {
+ if (f2c_abs(theta) > bigtheta) {
  t = .5f / theta;
  cs = 1.f;
  r_cnjg(&q__2, &ompq);
@@ -1269,7 +1269,7 @@ i<>j}
  r__1 = 0.f; r__2 = 1.f - t * aqoap * aapq1; // , expr subst  
  aapp *= sqrt((max(r__1,r__2)));
  /* Computing MAX */
- r__1 = mxsinj; r__2 = abs(t); // , expr subst  
+ r__1 = mxsinj; r__2 = f2c_abs(t); // , expr subst  
  mxsinj = max(r__1,r__2);
  }
  else {
@@ -1282,7 +1282,7 @@ i<>j}
  cs = sqrt(1.f / (t * t + 1.f));
  sn = t * cs;
  /* Computing MAX */
- r__1 = mxsinj; r__2 = abs(sn); // , expr subst  
+ r__1 = mxsinj; r__2 = f2c_abs(sn); // , expr subst  
  mxsinj = max(r__1,r__2);
  /* Computing MAX */
  r__1 = 0.f; r__2 = t * apoaq * aapq1 + 1.f; // , expr subst  
@@ -1415,7 +1415,7 @@ i<>j}
  for (p = igl;
  p <= i__2;
  ++p) {
- sva[p] = (r__1 = sva[p], abs(r__1));
+ sva[p] = (r__1 = sva[p], f2c_abs(r__1));
  /* L2012: */
  }
  /* ** */

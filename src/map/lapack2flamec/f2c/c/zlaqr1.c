@@ -138,7 +138,7 @@ int zlaqr1_(integer *n, doublecomplex *h__, integer *ldh, doublecomplex *s1, dou
         z__1.r = z__2.r;
         z__1.i = z__2.i; // , expr subst
         i__2 = h_dim1 + 2;
-        s = (d__1 = z__1.r, f2c_abs(d__1)) + (d__2 = d_imag(&z__1), f2c_abs(d__2)) + ( (d__3 = h__[i__2].r, f2c_abs(d__3)) + (d__4 = d_imag(&h__[h_dim1 + 2]), f2c_abs(d__4)));
+        s = (d__1 = z__1.r, f2c_dabs(d__1)) + (d__2 = d_imag(&z__1), f2c_dabs(d__2)) + ( (d__3 = h__[i__2].r, f2c_dabs(d__3)) + (d__4 = d_imag(&h__[h_dim1 + 2]), f2c_dabs(d__4)));
         if (s == 0.)
         {
             v[1].r = 0.;
@@ -193,7 +193,7 @@ int zlaqr1_(integer *n, doublecomplex *h__, integer *ldh, doublecomplex *s1, dou
         z__1.i = z__2.i; // , expr subst
         i__2 = h_dim1 + 2;
         i__3 = h_dim1 + 3;
-        s = (d__1 = z__1.r, f2c_abs(d__1)) + (d__2 = d_imag(&z__1), f2c_abs(d__2)) + ( (d__3 = h__[i__2].r, f2c_abs(d__3)) + (d__4 = d_imag(&h__[h_dim1 + 2]), f2c_abs(d__4))) + ((d__5 = h__[i__3].r, f2c_abs(d__5)) + (d__6 = d_imag(&h__[h_dim1 + 3]), f2c_abs(d__6)));
+        s = (d__1 = z__1.r, f2c_dabs(d__1)) + (d__2 = d_imag(&z__1), f2c_dabs(d__2)) + ( (d__3 = h__[i__2].r, f2c_dabs(d__3)) + (d__4 = d_imag(&h__[h_dim1 + 2]), f2c_dabs(d__4))) + ((d__5 = h__[i__3].r, f2c_dabs(d__5)) + (d__6 = d_imag(&h__[h_dim1 + 3]), f2c_dabs(d__6)));
         if (s == 0.)
         {
             v[1].r = 0.;

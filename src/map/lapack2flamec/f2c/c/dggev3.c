@@ -548,7 +548,7 @@
  jr <= i__2;
  ++jr) {
  /* Computing MAX */
- d__2 = temp; d__3 = (d__1 = vl[jr + jc * vl_dim1], abs(d__1)); // , expr subst  
+ d__2 = temp; d__3 = (d__1 = vl[jr + jc * vl_dim1], f2c_dabs(d__1)); // , expr subst  
  temp = max(d__2,d__3);
  /* L10: */
  }
@@ -559,7 +559,7 @@
  jr <= i__2;
  ++jr) {
  /* Computing MAX */
- d__3 = temp; d__4 = (d__1 = vl[jr + jc * vl_dim1], abs(d__1)) + (d__2 = vl[jr + (jc + 1) * vl_dim1], abs(d__2)); // , expr subst  
+ d__3 = temp; d__4 = (d__1 = vl[jr + jc * vl_dim1], f2c_dabs(d__1)) + (d__2 = vl[jr + (jc + 1) * vl_dim1], f2c_dabs(d__2)); // , expr subst  
  temp = max(d__3,d__4);
  /* L20: */
  }
@@ -606,7 +606,7 @@
  jr <= i__2;
  ++jr) {
  /* Computing MAX */
- d__2 = temp; d__3 = (d__1 = vr[jr + jc * vr_dim1], abs(d__1)); // , expr subst  
+ d__2 = temp; d__3 = (d__1 = vr[jr + jc * vr_dim1], f2c_dabs(d__1)); // , expr subst  
  temp = max(d__2,d__3);
  /* L60: */
  }
@@ -617,7 +617,7 @@
  jr <= i__2;
  ++jr) {
  /* Computing MAX */
- d__3 = temp; d__4 = (d__1 = vr[jr + jc * vr_dim1], abs(d__1)) + (d__2 = vr[jr + (jc + 1) * vr_dim1], abs(d__2)); // , expr subst  
+ d__3 = temp; d__4 = (d__1 = vr[jr + jc * vr_dim1], f2c_dabs(d__1)) + (d__2 = vr[jr + (jc + 1) * vr_dim1], f2c_dabs(d__2)); // , expr subst  
  temp = max(d__3,d__4);
  /* L70: */
  }

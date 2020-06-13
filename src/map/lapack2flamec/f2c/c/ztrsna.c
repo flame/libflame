@@ -232,7 +232,7 @@ v**H denotes the conjugate transpose of v, and norm(u) */
 /* > where sigma-min denotes the smallest singular value. We approximate */
 /* > the smallest singular value by the reciprocal of an estimate of the */
 /* > one-norm of the inverse of T22 - lambda*I. If n = 1, SEP(1) is */
-/* > defined to be f2c_abs(T(1,1)). */
+/* > defined to be f2c_dabs(T(1,1)). */
 /* > */
 /* > An approximate error bound for a computed right eigenvector VR(i) */
 /* > is given by */
@@ -497,7 +497,7 @@ L30:
                     i__2 = *n - 1;
                     ix = izamax_(&i__2, &work[work_offset], &c__1);
                     i__2 = ix + work_dim1;
-                    xnorm = (d__1 = work[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag( &work[ix + work_dim1]), f2c_abs(d__2));
+                    xnorm = (d__1 = work[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag( &work[ix + work_dim1]), f2c_dabs(d__2));
                     if (scale < xnorm * smlnum || scale == 0.)
                     {
                         goto L40;

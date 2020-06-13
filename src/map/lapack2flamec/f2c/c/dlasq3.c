@@ -339,7 +339,7 @@ L70:
         /* Success. */
         goto L90;
     }
-    else if (*dmin__ < 0. && *dmin1 > 0. && z__[(*n0 - 1 << 2) - *pp] < tol * (*sigma + *dn1) && f2c_abs(*dn) < tol * *sigma)
+    else if (*dmin__ < 0. && *dmin1 > 0. && z__[(*n0 - 1 << 2) - *pp] < tol * (*sigma + *dn1) && f2c_dabs(*dn) < tol * *sigma)
     {
         /* Convergence hidden by negative DN. */
         z__[(*n0 - 1 << 2) - *pp + 2] = 0.;

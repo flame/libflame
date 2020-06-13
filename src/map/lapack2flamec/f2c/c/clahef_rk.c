@@ -367,7 +367,7 @@
  /* Determine rows and columns to be interchanged and whether */
  /* a 1-by-1 or 2-by-2 pivot block will be used */
  i__1 = k + kw * w_dim1;
- absakk = (r__1 = w[i__1].r, abs(r__1));
+ absakk = (r__1 = w[i__1].r, f2c_abs(r__1));
  /* IMAX is the row-index of the largest off-diagonal element in */
  /* column K, and COLMAX is its absolute value. */
  /* Determine both COLMAX and IMAX. */
@@ -375,7 +375,7 @@
  i__1 = k - 1;
  imax = icamax_(&i__1, &w[kw * w_dim1 + 1], &c__1);
  i__1 = imax + kw * w_dim1;
- colmax = (r__1 = w[i__1].r, abs(r__1)) + (r__2 = r_imag(&w[imax + kw * w_dim1]), abs(r__2));
+ colmax = (r__1 = w[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&w[imax + kw * w_dim1]), f2c_abs(r__2));
  }
  else {
  colmax = 0.f;
@@ -443,7 +443,7 @@
  i__1 = k - imax;
  jmax = imax + icamax_(&i__1, &w[imax + 1 + (kw - 1) * w_dim1], &c__1);
  i__1 = jmax + (kw - 1) * w_dim1;
- rowmax = (r__1 = w[i__1].r, abs(r__1)) + (r__2 = r_imag(& w[jmax + (kw - 1) * w_dim1]), abs(r__2));
+ rowmax = (r__1 = w[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(& w[jmax + (kw - 1) * w_dim1]), f2c_abs(r__2));
  }
  else {
  rowmax = 0.f;
@@ -452,7 +452,7 @@
  i__1 = imax - 1;
  itemp = icamax_(&i__1, &w[(kw - 1) * w_dim1 + 1], &c__1);
  i__1 = itemp + (kw - 1) * w_dim1;
- stemp = (r__1 = w[i__1].r, abs(r__1)) + (r__2 = r_imag(&w[ itemp + (kw - 1) * w_dim1]), abs(r__2));
+ stemp = (r__1 = w[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&w[ itemp + (kw - 1) * w_dim1]), f2c_abs(r__2));
  if (stemp > rowmax) {
  rowmax = stemp;
  jmax = itemp;
@@ -463,7 +463,7 @@
  /* ABS( REAL( W( IMAX,KW-1 ) ) ).GE.ALPHA*ROWMAX */
  /* (used to handle NaN and Inf) */
  i__1 = imax + (kw - 1) * w_dim1;
- if (! ((r__1 = w[i__1].r, abs(r__1)) < alpha * rowmax)) {
+ if (! ((r__1 = w[i__1].r, f2c_abs(r__1)) < alpha * rowmax)) {
  /* interchange rows and columns K and IMAX, */
  /* use 1-by-1 pivot block */
  kp = imax;
@@ -582,7 +582,7 @@
  /* Handle division by a small number */
  i__1 = k + k * a_dim1;
  t = a[i__1].r;
- if (abs(t) >= sfmin) {
+ if (f2c_abs(t) >= sfmin) {
  r1 = 1.f / t;
  i__1 = k - 1;
  csscal_(&i__1, &r1, &a[k * a_dim1 + 1], &c__1);
@@ -803,7 +803,7 @@
  /* Determine rows and columns to be interchanged and whether */
  /* a 1-by-1 or 2-by-2 pivot block will be used */
  i__1 = k + k * w_dim1;
- absakk = (r__1 = w[i__1].r, abs(r__1));
+ absakk = (r__1 = w[i__1].r, f2c_abs(r__1));
  /* IMAX is the row-index of the largest off-diagonal element in */
  /* column K, and COLMAX is its absolute value. */
  /* Determine both COLMAX and IMAX. */
@@ -811,7 +811,7 @@
  i__1 = *n - k;
  imax = k + icamax_(&i__1, &w[k + 1 + k * w_dim1], &c__1);
  i__1 = imax + k * w_dim1;
- colmax = (r__1 = w[i__1].r, abs(r__1)) + (r__2 = r_imag(&w[imax + k * w_dim1]), abs(r__2));
+ colmax = (r__1 = w[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&w[imax + k * w_dim1]), f2c_abs(r__2));
  }
  else {
  colmax = 0.f;
@@ -880,7 +880,7 @@
  i__1 = imax - k;
  jmax = k - 1 + icamax_(&i__1, &w[k + (k + 1) * w_dim1], & c__1);
  i__1 = jmax + (k + 1) * w_dim1;
- rowmax = (r__1 = w[i__1].r, abs(r__1)) + (r__2 = r_imag(& w[jmax + (k + 1) * w_dim1]), abs(r__2));
+ rowmax = (r__1 = w[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(& w[jmax + (k + 1) * w_dim1]), f2c_abs(r__2));
  }
  else {
  rowmax = 0.f;
@@ -889,7 +889,7 @@
  i__1 = *n - imax;
  itemp = imax + icamax_(&i__1, &w[imax + 1 + (k + 1) * w_dim1], &c__1);
  i__1 = itemp + (k + 1) * w_dim1;
- stemp = (r__1 = w[i__1].r, abs(r__1)) + (r__2 = r_imag(&w[ itemp + (k + 1) * w_dim1]), abs(r__2));
+ stemp = (r__1 = w[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&w[ itemp + (k + 1) * w_dim1]), f2c_abs(r__2));
  if (stemp > rowmax) {
  rowmax = stemp;
  jmax = itemp;
@@ -900,7 +900,7 @@
  /* ABS( REAL( W( IMAX,K+1 ) ) ).GE.ALPHA*ROWMAX */
  /* (used to handle NaN and Inf) */
  i__1 = imax + (k + 1) * w_dim1;
- if (! ((r__1 = w[i__1].r, abs(r__1)) < alpha * rowmax)) {
+ if (! ((r__1 = w[i__1].r, f2c_abs(r__1)) < alpha * rowmax)) {
  /* interchange rows and columns K and IMAX, */
  /* use 1-by-1 pivot block */
  kp = imax;
@@ -1018,7 +1018,7 @@
  /* Handle division by a small number */
  i__1 = k + k * a_dim1;
  t = a[i__1].r;
- if (abs(t) >= sfmin) {
+ if (f2c_abs(t) >= sfmin) {
  r1 = 1.f / t;
  i__1 = *n - k;
  csscal_(&i__1, &r1, &a[k + 1 + k * a_dim1], &c__1);

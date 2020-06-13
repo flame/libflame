@@ -360,8 +360,8 @@ int dtgex2_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
         /* using Givens rotations and perform the swap tentatively. */
         f = s[5] * t[0] - t[5] * s[0];
         g = s[5] * t[4] - t[5] * s[4];
-        sb = f2c_abs(t[5]);
-        sa = f2c_abs(s[5]);
+        sb = f2c_dabs(t[5]);
+        sa = f2c_dabs(s[5]);
         dlartg_(&f, &g, &ir[4], ir, &ddum);
         ir[1] = -ir[4];
         ir[5] = ir[0];
@@ -381,7 +381,7 @@ int dtgex2_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
         li[4] = -li[1];
         /* Weak stability test: */
         /* |S21| + |T21| <= O(EPS * F-norm((S, T))) */
-        ws = f2c_abs(s[1]) + f2c_abs(t[1]);
+        ws = f2c_dabs(s[1]) + f2c_dabs(t[1]);
         weak = ws <= thresh;
         if (! weak)
         {

@@ -207,9 +207,9 @@ int dlaed6_(integer *kniter, logical *orgati, doublereal * rho, doublereal *d__,
             b = c__ * d__[1] * d__[2] + z__[1] * d__[2] + z__[2] * d__[1];
         }
         /* Computing MAX */
-        d__1 = f2c_abs(a), d__2 = f2c_abs(b);
+        d__1 = f2c_dabs(a), d__2 = f2c_dabs(b);
         d__1 = max(d__1,d__2);
-        d__2 = f2c_abs(c__); // ; expr subst
+        d__2 = f2c_dabs(c__); // ; expr subst
         temp = max(d__1,d__2);
         a /= temp;
         b /= temp;
@@ -220,11 +220,11 @@ int dlaed6_(integer *kniter, logical *orgati, doublereal * rho, doublereal *d__,
         }
         else if (a <= 0.)
         {
-            *tau = (a - sqrt((d__1 = a * a - b * 4. * c__, f2c_abs(d__1)))) / ( c__ * 2.);
+            *tau = (a - sqrt((d__1 = a * a - b * 4. * c__, f2c_dabs(d__1)))) / ( c__ * 2.);
         }
         else
         {
-            *tau = b * 2. / (a + sqrt((d__1 = a * a - b * 4. * c__, f2c_abs(d__1)) ));
+            *tau = b * 2. / (a + sqrt((d__1 = a * a - b * 4. * c__, f2c_dabs(d__1)) ));
         }
         if (*tau < lbd || *tau > ubd)
         {
@@ -245,7 +245,7 @@ int dlaed6_(integer *kniter, logical *orgati, doublereal * rho, doublereal *d__,
             {
                 ubd = *tau;
             }
-            if (f2c_abs(*finit) <= f2c_abs(temp))
+            if (f2c_dabs(*finit) <= f2c_dabs(temp))
             {
                 *tau = 0.;
             }
@@ -267,15 +267,15 @@ int dlaed6_(integer *kniter, logical *orgati, doublereal * rho, doublereal *d__,
     if (*orgati)
     {
         /* Computing MIN */
-        d__3 = (d__1 = d__[2] - *tau, f2c_abs(d__1));
-        d__4 = (d__2 = d__[3] - * tau, f2c_abs(d__2)); // , expr subst
+        d__3 = (d__1 = d__[2] - *tau, f2c_dabs(d__1));
+        d__4 = (d__2 = d__[3] - * tau, f2c_dabs(d__2)); // , expr subst
         temp = min(d__3,d__4);
     }
     else
     {
         /* Computing MIN */
-        d__3 = (d__1 = d__[1] - *tau, f2c_abs(d__1));
-        d__4 = (d__2 = d__[2] - * tau, f2c_abs(d__2)); // , expr subst
+        d__3 = (d__1 = d__[1] - *tau, f2c_dabs(d__1));
+        d__4 = (d__2 = d__[2] - * tau, f2c_dabs(d__2)); // , expr subst
         temp = min(d__3,d__4);
     }
     scale = FALSE_;
@@ -336,7 +336,7 @@ int dlaed6_(integer *kniter, logical *orgati, doublereal * rho, doublereal *d__,
         /* L30: */
     }
     f = *finit + *tau * fc;
-    if (f2c_abs(f) <= 0.)
+    if (f2c_dabs(f) <= 0.)
     {
         goto L60;
     }
@@ -375,9 +375,9 @@ int dlaed6_(integer *kniter, logical *orgati, doublereal * rho, doublereal *d__,
         b = temp1 * temp2 * f;
         c__ = f - (temp1 + temp2) * df + temp1 * temp2 * ddf;
         /* Computing MAX */
-        d__1 = f2c_abs(a), d__2 = f2c_abs(b);
+        d__1 = f2c_dabs(a), d__2 = f2c_dabs(b);
         d__1 = max(d__1,d__2);
-        d__2 = f2c_abs(c__); // ; expr subst
+        d__2 = f2c_dabs(c__); // ; expr subst
         temp = max(d__1,d__2);
         a /= temp;
         b /= temp;
@@ -388,11 +388,11 @@ int dlaed6_(integer *kniter, logical *orgati, doublereal * rho, doublereal *d__,
         }
         else if (a <= 0.)
         {
-            eta = (a - sqrt((d__1 = a * a - b * 4. * c__, f2c_abs(d__1)))) / (c__ * 2.);
+            eta = (a - sqrt((d__1 = a * a - b * 4. * c__, f2c_dabs(d__1)))) / (c__ * 2.);
         }
         else
         {
-            eta = b * 2. / (a + sqrt((d__1 = a * a - b * 4. * c__, f2c_abs(d__1))) );
+            eta = b * 2. / (a + sqrt((d__1 = a * a - b * 4. * c__, f2c_dabs(d__1))) );
         }
         if (f * eta >= 0.)
         {
@@ -419,7 +419,7 @@ int dlaed6_(integer *kniter, logical *orgati, doublereal * rho, doublereal *d__,
                 temp3 = temp2 * temp;
                 temp4 = temp1 / dscale[i__ - 1];
                 fc += temp4;
-                erretm += f2c_abs(temp4);
+                erretm += f2c_dabs(temp4);
                 df += temp2;
                 ddf += temp3;
             }
@@ -430,8 +430,8 @@ int dlaed6_(integer *kniter, logical *orgati, doublereal * rho, doublereal *d__,
             /* L40: */
         }
         f = *finit + *tau * fc;
-        erretm = (f2c_abs(*finit) + f2c_abs(*tau) * erretm) * 8. + f2c_abs(*tau) * df;
-        if (f2c_abs(f) <= eps * erretm)
+        erretm = (f2c_dabs(*finit) + f2c_dabs(*tau) * erretm) * 8. + f2c_dabs(*tau) * df;
+        if (f2c_dabs(f) <= eps * erretm)
         {
             goto L60;
         }

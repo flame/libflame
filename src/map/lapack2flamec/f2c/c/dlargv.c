@@ -143,7 +143,7 @@ int dlargv_(integer *n, doublereal *x, integer *incx, doublereal *y, integer *in
             y[iy] = 1.;
             x[ix] = g;
         }
-        else if (f2c_abs(f) > f2c_abs(g))
+        else if (f2c_dabs(f) > f2c_dabs(g))
         {
             t = g / f;
             tt = sqrt(t * t + 1.);

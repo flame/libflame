@@ -327,8 +327,8 @@ int dsgesv_(integer *n, integer *nrhs, doublereal *a, integer *lda, integer *ipi
             i__ <= i__1;
             ++i__)
     {
-        xnrm = (d__1 = x[idamax_(n, &x[i__ * x_dim1 + 1], &c__1) + i__ * x_dim1], f2c_abs(d__1));
-        rnrm = (d__1 = work[idamax_(n, &work[i__ * work_dim1 + 1], &c__1) + i__ * work_dim1], f2c_abs(d__1));
+        xnrm = (d__1 = x[idamax_(n, &x[i__ * x_dim1 + 1], &c__1) + i__ * x_dim1], f2c_dabs(d__1));
+        rnrm = (d__1 = work[idamax_(n, &work[i__ * work_dim1 + 1], &c__1) + i__ * work_dim1], f2c_dabs(d__1));
         if (rnrm > xnrm * cte)
         {
             goto L10;
@@ -373,8 +373,8 @@ L10:
                 i__ <= i__1;
                 ++i__)
         {
-            xnrm = (d__1 = x[idamax_(n, &x[i__ * x_dim1 + 1], &c__1) + i__ * x_dim1], f2c_abs(d__1));
-            rnrm = (d__1 = work[idamax_(n, &work[i__ * work_dim1 + 1], &c__1) + i__ * work_dim1], f2c_abs(d__1));
+            xnrm = (d__1 = x[idamax_(n, &x[i__ * x_dim1 + 1], &c__1) + i__ * x_dim1], f2c_dabs(d__1));
+            rnrm = (d__1 = work[idamax_(n, &work[i__ * work_dim1 + 1], &c__1) + i__ * work_dim1], f2c_dabs(d__1));
             if (rnrm > xnrm * cte)
             {
                 goto L20;

@@ -478,14 +478,14 @@ L190:
             {
                 goto L210;
             }
-            d__1 = f2c_abs(ta);
+            d__1 = f2c_dabs(ta);
             ta = d_lg10(&d__1) / basl;
 L210:
             if (tb == 0.)
             {
                 goto L220;
             }
-            d__1 = f2c_abs(tb);
+            d__1 = f2c_dabs(tb);
             tb = d_lg10(&d__1) / basl;
 L220:
             work[i__ + (*n << 2)] = work[i__ + (*n << 2)] - ta - tb;
@@ -617,15 +617,15 @@ L320:
             ++i__)
     {
         cor = alpha * work[i__ + *n];
-        if (f2c_abs(cor) > cmax)
+        if (f2c_dabs(cor) > cmax)
         {
-            cmax = f2c_abs(cor);
+            cmax = f2c_dabs(cor);
         }
         lscale[i__] += cor;
         cor = alpha * work[i__];
-        if (f2c_abs(cor) > cmax)
+        if (f2c_dabs(cor) > cmax)
         {
-            cmax = f2c_abs(cor);
+            cmax = f2c_dabs(cor);
         }
         rscale[i__] += cor;
         /* L340: */
@@ -657,12 +657,12 @@ L350:
     {
         i__2 = *n - *ilo + 1;
         irab = idamax_(&i__2, &a[i__ + *ilo * a_dim1], lda);
-        rab = (d__1 = a[i__ + (irab + *ilo - 1) * a_dim1], f2c_abs(d__1));
+        rab = (d__1 = a[i__ + (irab + *ilo - 1) * a_dim1], f2c_dabs(d__1));
         i__2 = *n - *ilo + 1;
         irab = idamax_(&i__2, &b[i__ + *ilo * b_dim1], ldb);
         /* Computing MAX */
         d__2 = rab;
-        d__3 = (d__1 = b[i__ + (irab + *ilo - 1) * b_dim1], f2c_abs( d__1)); // , expr subst
+        d__3 = (d__1 = b[i__ + (irab + *ilo - 1) * b_dim1], f2c_dabs( d__1)); // , expr subst
         rab = max(d__2,d__3);
         d__1 = rab + sfmin;
         lrab = (integer) (d_lg10(&d__1) / basl + 1.);
@@ -674,11 +674,11 @@ L350:
         ir = min(i__2,i__3);
         lscale[i__] = pow_di(&c_b35, &ir);
         icab = idamax_(ihi, &a[i__ * a_dim1 + 1], &c__1);
-        cab = (d__1 = a[icab + i__ * a_dim1], f2c_abs(d__1));
+        cab = (d__1 = a[icab + i__ * a_dim1], f2c_dabs(d__1));
         icab = idamax_(ihi, &b[i__ * b_dim1 + 1], &c__1);
         /* Computing MAX */
         d__2 = cab;
-        d__3 = (d__1 = b[icab + i__ * b_dim1], f2c_abs(d__1)); // , expr subst
+        d__3 = (d__1 = b[icab + i__ * b_dim1], f2c_dabs(d__1)); // , expr subst
         cab = max(d__2,d__3);
         d__1 = cab + sfmin;
         lcab = (integer) (d_lg10(&d__1) / basl + 1.);

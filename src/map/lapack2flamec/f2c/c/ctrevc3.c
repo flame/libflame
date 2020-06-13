@@ -463,7 +463,7 @@
  }
  /* Computing MAX */
  i__1 = ki + ki * t_dim1;
- r__3 = ulp * ((r__1 = t[i__1].r, abs(r__1)) + (r__2 = r_imag(&t[ ki + ki * t_dim1]), abs(r__2)));
+ r__3 = ulp * ((r__1 = t[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&t[ ki + ki * t_dim1]), f2c_abs(r__2)));
  smin = max(r__3,smlnum);
  /* -------------------------------------------------------- */
  /* Complex right eigenvector */
@@ -492,7 +492,7 @@
  q__1.r = t[i__4].r - t[i__5].r; q__1.i = t[i__4].i - t[i__5] .i; // , expr subst  
  t[i__3].r = q__1.r; t[i__3].i = q__1.i; // , expr subst  
  i__3 = k + k * t_dim1;
- if ((r__1 = t[i__3].r, abs(r__1)) + (r__2 = r_imag(&t[k + k * t_dim1]), abs(r__2)) < smin) {
+ if ((r__1 = t[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&t[k + k * t_dim1]), f2c_abs(r__2)) < smin) {
  i__4 = k + k * t_dim1;
  t[i__4].r = smin; t[i__4].i = 0.f; // , expr subst  
  }
@@ -511,7 +511,7 @@
  ccopy_(&ki, &work[iv * *n + 1], &c__1, &vr[is * vr_dim1 + 1], &c__1);
  ii = icamax_(&ki, &vr[is * vr_dim1 + 1], &c__1);
  i__1 = ii + is * vr_dim1;
- remax = 1.f / ((r__1 = vr[i__1].r, abs(r__1)) + (r__2 = r_imag(&vr[ii + is * vr_dim1]), abs(r__2)));
+ remax = 1.f / ((r__1 = vr[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&vr[ii + is * vr_dim1]), f2c_abs(r__2)));
  csscal_(&ki, &remax, &vr[is * vr_dim1 + 1], &c__1);
  i__1 = *n;
  for (k = ki + 1;
@@ -532,7 +532,7 @@
  }
  ii = icamax_(n, &vr[ki * vr_dim1 + 1], &c__1);
  i__1 = ii + ki * vr_dim1;
- remax = 1.f / ((r__1 = vr[i__1].r, abs(r__1)) + (r__2 = r_imag(&vr[ii + ki * vr_dim1]), abs(r__2)));
+ remax = 1.f / ((r__1 = vr[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&vr[ii + ki * vr_dim1]), f2c_abs(r__2)));
  csscal_(n, &remax, &vr[ki * vr_dim1 + 1], &c__1);
  }
  else {
@@ -560,7 +560,7 @@
  ++k) {
  ii = icamax_(n, &work[(nb + k) * *n + 1], &c__1);
  i__3 = ii + (nb + k) * *n;
- remax = 1.f / ((r__1 = work[i__3].r, abs(r__1)) + ( r__2 = r_imag(&work[ii + (nb + k) * *n]), abs( r__2)));
+ remax = 1.f / ((r__1 = work[i__3].r, f2c_abs(r__1)) + ( r__2 = r_imag(&work[ii + (nb + k) * *n]), f2c_abs( r__2)));
  csscal_(n, &remax, &work[(nb + k) * *n + 1], &c__1);
  }
  i__1 = nb - iv + 1;
@@ -606,7 +606,7 @@
  }
  /* Computing MAX */
  i__3 = ki + ki * t_dim1;
- r__3 = ulp * ((r__1 = t[i__3].r, abs(r__1)) + (r__2 = r_imag(&t[ ki + ki * t_dim1]), abs(r__2)));
+ r__3 = ulp * ((r__1 = t[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&t[ ki + ki * t_dim1]), f2c_abs(r__2)));
  smin = max(r__3,smlnum);
  /* -------------------------------------------------------- */
  /* Complex left eigenvector */
@@ -635,7 +635,7 @@
  q__1.r = t[i__5].r - t[i__6].r; q__1.i = t[i__5].i - t[i__6] .i; // , expr subst  
  t[i__4].r = q__1.r; t[i__4].i = q__1.i; // , expr subst  
  i__4 = k + k * t_dim1;
- if ((r__1 = t[i__4].r, abs(r__1)) + (r__2 = r_imag(&t[k + k * t_dim1]), abs(r__2)) < smin) {
+ if ((r__1 = t[i__4].r, f2c_abs(r__1)) + (r__2 = r_imag(&t[k + k * t_dim1]), f2c_abs(r__2)) < smin) {
  i__5 = k + k * t_dim1;
  t[i__5].r = smin; t[i__5].i = 0.f; // , expr subst  
  }
@@ -656,7 +656,7 @@
  i__3 = *n - ki + 1;
  ii = icamax_(&i__3, &vl[ki + is * vl_dim1], &c__1) + ki - 1;
  i__3 = ii + is * vl_dim1;
- remax = 1.f / ((r__1 = vl[i__3].r, abs(r__1)) + (r__2 = r_imag(&vl[ii + is * vl_dim1]), abs(r__2)));
+ remax = 1.f / ((r__1 = vl[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&vl[ii + is * vl_dim1]), f2c_abs(r__2)));
  i__3 = *n - ki + 1;
  csscal_(&i__3, &remax, &vl[ki + is * vl_dim1], &c__1);
  i__3 = ki - 1;
@@ -678,7 +678,7 @@
  }
  ii = icamax_(n, &vl[ki * vl_dim1 + 1], &c__1);
  i__3 = ii + ki * vl_dim1;
- remax = 1.f / ((r__1 = vl[i__3].r, abs(r__1)) + (r__2 = r_imag(&vl[ii + ki * vl_dim1]), abs(r__2)));
+ remax = 1.f / ((r__1 = vl[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&vl[ii + ki * vl_dim1]), f2c_abs(r__2)));
  csscal_(n, &remax, &vl[ki * vl_dim1 + 1], &c__1);
  }
  else {
@@ -706,7 +706,7 @@
  ++k) {
  ii = icamax_(n, &work[(nb + k) * *n + 1], &c__1);
  i__4 = ii + (nb + k) * *n;
- remax = 1.f / ((r__1 = work[i__4].r, abs(r__1)) + ( r__2 = r_imag(&work[ii + (nb + k) * *n]), abs( r__2)));
+ remax = 1.f / ((r__1 = work[i__4].r, f2c_abs(r__1)) + ( r__2 = r_imag(&work[ii + (nb + k) * *n]), f2c_abs( r__2)));
  csscal_(n, &remax, &work[(nb + k) * *n + 1], &c__1);
  }
  clacpy_("F", n, &iv, &work[(nb + 1) * *n + 1], n, &vl[(ki - iv + 1) * vl_dim1 + 1], ldvl);

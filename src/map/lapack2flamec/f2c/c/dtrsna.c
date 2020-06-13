@@ -252,7 +252,7 @@ v**T denotes the transpose of v, and norm(u) */
 /* > where sigma-min denotes the smallest singular value. We approximate */
 /* > the smallest singular value by the reciprocal of an estimate of the */
 /* > one-norm of the inverse of T22 - lambda*I. If n = 1, SEP(1) is */
-/* > defined to be f2c_abs(T(1,1)). */
+/* > defined to be f2c_dabs(T(1,1)). */
 /* > */
 /* > An approximate error bound for a computed right eigenvector VR(i) */
 /* > is given by */
@@ -462,7 +462,7 @@ int dtrsna_(char *job, char *howmny, logical *select, integer *n, doublereal *t,
         }
         if (wantsp)
         {
-            sep[1] = (d__1 = t[t_dim1 + 1], f2c_abs(d__1));
+            sep[1] = (d__1 = t[t_dim1 + 1], f2c_dabs(d__1));
         }
         return 0;
     }
@@ -521,7 +521,7 @@ int dtrsna_(char *job, char *howmny, logical *select, integer *n, doublereal *t,
                 prod = ddot_(n, &vr[ks * vr_dim1 + 1], &c__1, &vl[ks * vl_dim1 + 1], &c__1);
                 rnrm = dnrm2_(n, &vr[ks * vr_dim1 + 1], &c__1);
                 lnrm = dnrm2_(n, &vl[ks * vl_dim1 + 1], &c__1);
-                s[ks] = f2c_abs(prod) / (rnrm * lnrm);
+                s[ks] = f2c_dabs(prod) / (rnrm * lnrm);
             }
             else
             {
@@ -583,7 +583,7 @@ int dtrsna_(char *job, char *howmny, logical *select, integer *n, doublereal *t,
                     /* eigenvalue lambda with positive imaginary part. (2,2) */
                     /* position of WORK is the complex eigenvalue lambda */
                     /* with negative imaginary part. */
-                    mu = sqrt((d__1 = work[(work_dim1 << 1) + 1], f2c_abs(d__1))) * sqrt((d__2 = work[work_dim1 + 2], f2c_abs(d__2)));
+                    mu = sqrt((d__1 = work[(work_dim1 << 1) + 1], f2c_dabs(d__1))) * sqrt((d__2 = work[work_dim1 + 2], f2c_dabs(d__2)));
                     delta = dlapy2_(&mu, &work[work_dim1 + 2]);
                     cs = mu / delta;
                     sn = -work[work_dim1 + 2] / delta;

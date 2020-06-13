@@ -360,10 +360,10 @@ L140:
         i__2 = l - k + 1;
         r__ = dnrm2_(&i__2, &a[i__ + k * a_dim1], lda);
         ica = idamax_(&l, &a[i__ * a_dim1 + 1], &c__1);
-        ca = (d__1 = a[ica + i__ * a_dim1], f2c_abs(d__1));
+        ca = (d__1 = a[ica + i__ * a_dim1], f2c_dabs(d__1));
         i__2 = *n - k + 1;
         ira = idamax_(&i__2, &a[i__ + k * a_dim1], lda);
-        ra = (d__1 = a[i__ + (ira + k - 1) * a_dim1], f2c_abs(d__1));
+        ra = (d__1 = a[i__ + (ira + k - 1) * a_dim1], f2c_dabs(d__1));
         /* Guard against zero C or R due to underflow. */
         if (c__ == 0. || r__ == 0.)
         {

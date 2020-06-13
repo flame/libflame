@@ -229,7 +229,7 @@ doublereal zla_gercond_c_(char *trans, integer *n, doublecomplex *a, integer *ld
                         ++j)
                 {
                     i__3 = i__ + j * a_dim1;
-                    tmp += ((d__1 = a[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&a[ i__ + j * a_dim1]), f2c_abs(d__2))) / c__[j];
+                    tmp += ((d__1 = a[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&a[ i__ + j * a_dim1]), f2c_dabs(d__2))) / c__[j];
                 }
             }
             else
@@ -240,7 +240,7 @@ doublereal zla_gercond_c_(char *trans, integer *n, doublecomplex *a, integer *ld
                         ++j)
                 {
                     i__3 = i__ + j * a_dim1;
-                    tmp += (d__1 = a[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&a[ i__ + j * a_dim1]), f2c_abs(d__2));
+                    tmp += (d__1 = a[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&a[ i__ + j * a_dim1]), f2c_dabs(d__2));
                 }
             }
             rwork[i__] = tmp;
@@ -263,7 +263,7 @@ doublereal zla_gercond_c_(char *trans, integer *n, doublecomplex *a, integer *ld
                         ++j)
                 {
                     i__3 = j + i__ * a_dim1;
-                    tmp += ((d__1 = a[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&a[ j + i__ * a_dim1]), f2c_abs(d__2))) / c__[j];
+                    tmp += ((d__1 = a[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&a[ j + i__ * a_dim1]), f2c_dabs(d__2))) / c__[j];
                 }
             }
             else
@@ -274,7 +274,7 @@ doublereal zla_gercond_c_(char *trans, integer *n, doublecomplex *a, integer *ld
                         ++j)
                 {
                     i__3 = j + i__ * a_dim1;
-                    tmp += (d__1 = a[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&a[ j + i__ * a_dim1]), f2c_abs(d__2));
+                    tmp += (d__1 = a[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&a[ j + i__ * a_dim1]), f2c_dabs(d__2));
                 }
             }
             rwork[i__] = tmp;
