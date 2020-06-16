@@ -1,0 +1,19 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Obj_attach_buffer_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Obj_attach_buffer_hierarchy_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Obj_blocksizes_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Obj_create_conf_to_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Obj_create_flat_conf_to_hier_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Obj_create_flat_copy_of_hier_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Obj_create_helper_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Obj_create_hier_conf_to_flat_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Obj_create_hier_conf_to_flat_ext_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Obj_create_hier_copy_of_flat_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Obj_create_hier_copy_of_flat_ext_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Obj_create_hierarchy_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Obj_free_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Obj_free_hierachy_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Obj_free_without_buffer_check.c
+	)

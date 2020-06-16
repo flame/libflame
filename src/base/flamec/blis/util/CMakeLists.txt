@@ -1,0 +1,41 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_allocm.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_allocv.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_apdiagmv.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_constants.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_create_contigm.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_create_contigmr.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_create_contigmsr.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_create_contigmt.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_ewinvscalmt.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_ewinvscalv.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_ewscalmt.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_ewscalv.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_free.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_free_contigm.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_free_saved_contigm.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_free_saved_contigmr.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_free_saved_contigmsr.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_ident.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_invert2s.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_inverts.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_invertv.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_maxabsm.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_maxabsmr.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_maxabsv.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_randm.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_randmr.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_rands.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_randv.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_scalediag.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_set_contig_strides.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_set_dims.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_setdiag.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_setm.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_setmr.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_setv.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_shiftdiag.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_symmize.c
+	)

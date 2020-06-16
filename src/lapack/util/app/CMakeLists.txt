@@ -1,0 +1,12 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.## 
+add_subdirectory(caq2ut)
+add_subdirectory(caqutinc)
+add_subdirectory(givens)
+add_subdirectory(h2ut)
+add_subdirectory(hudut)
+add_subdirectory(piv)
+add_subdirectory(q2ut)
+add_subdirectory(qudut)
+add_subdirectory(qudutinc)
+add_subdirectory(qut)
+add_subdirectory(qutinc)

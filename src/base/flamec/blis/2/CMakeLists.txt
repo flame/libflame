@@ -1,0 +1,16 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_gemv.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_ger.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_hemv.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_her.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_her2.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_symv.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_syr.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_syr2.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_trmv.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_trmvsx.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_trsv.c
+${CMAKE_CURRENT_SOURCE_DIR}/bl1_trsvsx.c
+	)

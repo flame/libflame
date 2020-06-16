@@ -34,6 +34,33 @@ extern "C" {
         return (pow(*ap, *bp));
     }
 
+#ifdef _WIN32
+    /* Complex */
+    void pow_ci(complex *p, complex *a, integer *b)
+    {
+        _Dcomplex a_ = {a->r, a->i};
+        _Dcomplex b_ = {*b , 0 };
+        _Dcomplex ret_val = cpow(a_, b_);
+        p->r = creal(ret_val);
+        p->i = cimag(ret_val);
+    }
+    void pow_zz(doublecomplex *r, doublecomplex *a, doublecomplex *b)
+    {
+        _Dcomplex a_ = {a->r, a->i};
+        _Dcomplex b_ = { a->r, a->i };
+        _Dcomplex ret_val = cpow(a_, b_);
+        r->r = creal(ret_val);
+        r->i = cimag(ret_val);
+    }
+    void pow_zi(doublecomplex *p, doublecomplex *a, integer *b)
+    {
+        _Dcomplex a_ = {a->r, a->i};
+        _Dcomplex b_ = {*b , 0 };
+        _Dcomplex ret_val = cpow(a_, b_);
+        p->r = creal(ret_val);
+        p->i = cimag(ret_val);
+    }
+#else
     /* Complex */
     void pow_ci(complex *p, complex *a, integer *b)
     {
@@ -53,7 +80,7 @@ extern "C" {
         p->r = creal(ret_val);
         p->i = cimag(ret_val);
     }
-
+#endif
 
 #ifdef __cplusplus
 }

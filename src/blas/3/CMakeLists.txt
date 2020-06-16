@@ -1,0 +1,10 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.## 
+add_subdirectory(gemm)
+add_subdirectory(hemm)
+add_subdirectory(her2k)
+add_subdirectory(herk)
+add_subdirectory(symm)
+add_subdirectory(syr2k)
+add_subdirectory(syrk)
+add_subdirectory(trmm)
+add_subdirectory(trsm)

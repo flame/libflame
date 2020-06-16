@@ -1,0 +1,21 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Gemv_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Gemvc_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Ger_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Gerc_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Hemv_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Hemvc_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Her_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Her2_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Her2c_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Herc_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Symv_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Syr_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Syr2_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Trmv_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Trmvsx_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Trsv_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Trsvsx_external.c
+	)

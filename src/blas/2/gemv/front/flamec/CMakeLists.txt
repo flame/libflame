@@ -1,0 +1,11 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Gemv.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Gemv.h
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Gemv_h.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Gemv_internal.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Gemv_n.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Gemv_t.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Gemv.c
+	)

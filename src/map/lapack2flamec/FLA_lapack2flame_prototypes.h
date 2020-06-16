@@ -538,7 +538,7 @@ double dla_syrcond_check(char *uplo, int *n, double *a, int *lda, double *af, in
 int dla_syrfsx_extended_check(int *prec_type__, char *uplo, int *n, int *nrhs, double *a, int *lda, double * af, int *ldaf, int *ipiv, logical *colequ, double *c__, double *b, int *ldb, double *y, int *ldy, double * berr_out__, int *n_norms__, double *err_bnds_norm__, double *err_bnds_comp__, double *res, double *ayb, double *dy, double *y_tail__, double *rcond, int * ithresh, double *rthresh, double *dz_ub__, logical * ignore_cwise__, int *info);
 double dla_syrpvgrw_check(char *uplo, int *n, int *info, double * a, int *lda, double *af, int *ldaf, int *ipiv, double *work);
 int dla_wwaddw_check(int *n, double *x, double *y, double *w);
-int dlabad_check(double *small, double *large);
+int dlabad_check(double *small_, double *large);
 int dlabrd_check(int *m, int *n, int *nb, double * a, int *lda, double *d__, double *e, double *tauq, double *taup, double *x, int *ldx, double *y, int *ldy);
 int dlacn2_check(int *n, double *v, double *x, int *isgn, double *est, int *kase, int *isave);
 int dlacon_check(int *n, double *v, double *x, int *isgn, double *est, int *kase);
@@ -993,7 +993,7 @@ float sla_syrcond_check(char *uplo, int *n, float *a, int *lda, float *af, int *
 int sla_syrfsx_extended_check(int *prec_type__, char *uplo, int *n, int *nrhs, float *a, int *lda, float *af, int * ldaf, int *ipiv, logical *colequ, float *c__, float *b, int * ldb, float *y, int *ldy, float *berr_out__, int *n_norms__, float *err_bnds_norm__, float *err_bnds_comp__, float *res, float *ayb, float *dy, float *y_tail__, float *rcond, int *ithresh, float * rthresh, float *dz_ub__, logical *ignore_cwise__, int *info);
 float sla_syrpvgrw_check(char *uplo, int *n, int *info, float *a, int * lda, float *af, int *ldaf, int *ipiv, float *work);
 int sla_wwaddw_check(int *n, float *x, float *y, float *w);
-int slabad_check(float *small, float *large);
+int slabad_check(float *small_, float *large);
 int slabrd_check(int *m, int *n, int *nb, float *a, int *lda, float *d__, float *e, float *tauq, float *taup, float *x, int *ldx, float *y, int *ldy);
 int slacn2_check(int *n, float *v, float *x, int *isgn, float *est, int *kase, int *isave);
 int slacon_check(int *n, float *v, float *x, int *isgn, float *est, int *kase);

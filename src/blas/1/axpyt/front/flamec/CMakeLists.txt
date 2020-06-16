@@ -1,0 +1,12 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Axpyt.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Axpyt.h
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Axpyt_c.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Axpyt_h.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Axpyt_internal.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Axpyt_n.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Axpyt_t.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Axpyt.c
+	)
