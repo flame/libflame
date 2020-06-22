@@ -303,7 +303,7 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
         {
             *rank = 1;
             clascl_("G", &c__0, &c__0, &d__[1], &c_b10, &c__1, nrhs, &b[ b_offset], ldb, info);
-            d__[1] = f2c_abs(d__[1]);
+            d__[1] = f2c_dabs(d__[1]);
         }
         return 0;
     }

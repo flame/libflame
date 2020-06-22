@@ -543,7 +543,7 @@
  for (i__ = 1;
  i__ <= i__1;
  ++i__) {
- ip = (i__2 = ipiv[i__], abs(i__2));
+ ip = (i__2 = ipiv[i__], f2c_dabs(i__2));
  if (ip != i__) {
  if (i__ < ip) {
  zsyswapr_(uplo, n, &a[a_offset], lda, &i__, &ip);
@@ -836,7 +836,7 @@
  for (i__ = *n;
  i__ >= 1;
  --i__) {
- ip = (i__1 = ipiv[i__], abs(i__1));
+ ip = (i__1 = ipiv[i__], f2c_dabs(i__1));
  if (ip != i__) {
  if (i__ < ip) {
  zsyswapr_(uplo, n, &a[a_offset], lda, &i__, &ip);

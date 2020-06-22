@@ -525,7 +525,7 @@
  wi = sqrt((d__1 = t[ki + (ki - 1) * t_dim1], f2c_dabs(d__1))) * sqrt((d__2 = t[ki - 1 + ki * t_dim1], f2c_dabs(d__2)));
  }
  /* Computing MAX */
- d__1 = ulp * (abs(wr) + abs(wi));
+ d__1 = ulp * (f2c_dabs(wr) + f2c_dabs(wi));
  smin = max(d__1,smlnum);
  if (ip == 0) {
  /* -------------------------------------------------------- */
@@ -943,7 +943,7 @@
  wi = sqrt((d__1 = t[ki + (ki + 1) * t_dim1], f2c_dabs(d__1))) * sqrt((d__2 = t[ki + 1 + ki * t_dim1], f2c_dabs(d__2)));
  }
  /* Computing MAX */
- d__1 = ulp * (abs(wr) + abs(wi));
+ d__1 = ulp * (f2c_dabs(wr) + f2c_dabs(wi));
  smin = max(d__1,smlnum);
  if (ip == 0) {
  /* -------------------------------------------------------- */
@@ -1034,7 +1034,7 @@
  work[j + iv * *n] = x[0];
  work[j + 1 + iv * *n] = x[1];
  /* Computing MAX */
- d__3 = (d__1 = work[j + iv * *n], f2c_dabs(d__1)); d__4 = ( d__2 = work[j + 1 + iv * *n], f2c_dabs(d__2)); d__3 = max(d__3,d__4); // ; expr subst  
+ d__3 = (d__1 = work[j + iv * *n], f2c_dabs(d__1)); d__4 = ( d__2 = work[j + 1 + iv * *n], f2c_dabs(d__2)); d__3 = max(d__3,d__4); // ; expr subst
  vmax = max(d__3,vmax);
  vcrit = bignum / vmax;
  }
@@ -1206,7 +1206,7 @@
  work[j + 1 + iv * *n] = x[1];
  work[j + 1 + (iv + 1) * *n] = x[3];
  /* Computing MAX */
- d__1 = abs(x[0]), d__2 = abs(x[2]), d__1 = max(d__1, d__2), d__2 = abs(x[1]), d__1 = max(d__1,d__2) ; d__2 = abs(x[3]); d__1 = max(d__1,d__2); // ; expr subst  
+ d__1 = f2c_dabs(x[0]), d__2 = f2c_dabs(x[2]), d__1 = max(d__1, d__2), d__2 = f2c_dabs(x[1]), d__1 = max(d__1,d__2) ; d__2 = f2c_dabs(x[3]); d__1 = max(d__1,d__2); // ; expr subst
  vmax = max(d__1,vmax);
  vcrit = bignum / vmax;
  }

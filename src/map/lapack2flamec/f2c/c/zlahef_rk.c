@@ -579,7 +579,7 @@
  /* Handle division by a small number */
  i__1 = k + k * a_dim1;
  t = a[i__1].r;
- if (abs(t) >= sfmin) {
+ if (f2c_dabs(t) >= sfmin) {
  r1 = 1. / t;
  i__1 = k - 1;
  zdscal_(&i__1, &r1, &a[k * a_dim1 + 1], &c__1);
@@ -1015,7 +1015,7 @@
  /* Handle division by a small number */
  i__1 = k + k * a_dim1;
  t = a[i__1].r;
- if (abs(t) >= sfmin) {
+ if (f2c_dabs(t) >= sfmin) {
  r1 = 1. / t;
  i__1 = *n - k;
  zdscal_(&i__1, &r1, &a[k + 1 + k * a_dim1], &c__1);

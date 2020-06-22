@@ -241,7 +241,7 @@
  for (k = *n;
  k >= 1;
  --k) {
- kp = (i__1 = ipiv[k], abs(i__1));
+ kp = (i__1 = ipiv[k], f2c_dabs(i__1));
  if (kp != k) {
  zswap_(nrhs, &b[k + b_dim1], ldb, &b[kp + b_dim1], ldb);
  }
@@ -303,7 +303,7 @@
  for (k = 1;
  k <= i__1;
  ++k) {
- kp = (i__2 = ipiv[k], abs(i__2));
+ kp = (i__2 = ipiv[k], f2c_dabs(i__2));
  if (kp != k) {
  zswap_(nrhs, &b[k + b_dim1], ldb, &b[kp + b_dim1], ldb);
  }
@@ -322,7 +322,7 @@
  for (k = 1;
  k <= i__1;
  ++k) {
- kp = (i__2 = ipiv[k], abs(i__2));
+ kp = (i__2 = ipiv[k], f2c_dabs(i__2));
  if (kp != k) {
  zswap_(nrhs, &b[k + b_dim1], ldb, &b[kp + b_dim1], ldb);
  }
@@ -383,7 +383,7 @@
  for (k = *n;
  k >= 1;
  --k) {
- kp = (i__1 = ipiv[k], abs(i__1));
+ kp = (i__1 = ipiv[k], f2c_dabs(i__1));
  if (kp != k) {
  zswap_(nrhs, &b[k + b_dim1], ldb, &b[kp + b_dim1], ldb);
  }

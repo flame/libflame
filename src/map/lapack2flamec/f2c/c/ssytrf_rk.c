@@ -387,7 +387,7 @@ fclose(fptr);
  for (i__ = k;
  i__ >= i__1;
  --i__) {
- ip = (i__2 = ipiv[i__], abs(i__2));
+ ip = (i__2 = ipiv[i__], f2c_abs(i__2));
  if (ip != i__) {
  i__2 = *n - k;
  sswap_(&i__2, &a[i__ + (k + 1) * a_dim1], lda, &a[ip + (k + 1) * a_dim1], lda);
@@ -460,7 +460,7 @@ fclose(fptr);
  for (i__ = k;
  i__ <= i__1;
  ++i__) {
- ip = (i__2 = ipiv[i__], abs(i__2));
+ ip = (i__2 = ipiv[i__], f2c_abs(i__2));
  if (ip != i__) {
  i__2 = k - 1;
  sswap_(&i__2, &a[i__ + a_dim1], lda, &a[ip + a_dim1], lda) ;
