@@ -136,6 +136,7 @@
  /* .. Executable Statements .. */
  /* Test the input parameters */
  /* Parameter adjustments */
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  a_dim1 = *lda;
  a_offset = 1 + a_dim1;
  a -= a_offset;
@@ -205,6 +206,7 @@
  }
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DPOTRF2 */
  }

@@ -3,6 +3,7 @@
 /* Subroutine */
 int dtrsm_(char *side, char *uplo, char *transa, char *diag, integer *m, integer *n, doublereal *alpha, doublereal *a, integer * lda, doublereal *b, integer *ldb)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -566,7 +567,8 @@ int dtrsm_(char *side, char *uplo, char *transa, char *diag, integer *m, integer
         }
     }
     return 0;
-    /* End of DTRSM . */
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+/* End of DTRSM . */
 }
 /* dtrsm_ */
 

@@ -231,3 +231,7 @@ void FLA_Finalize_constants()
   FLA_Obj_free( &FLA_OVERFLOW_SQUARE_THRES );
 }
 
+char*     FLA_Get_AOCL_Version( void )
+{
+   return  "AOCL 2.2.1";
+}

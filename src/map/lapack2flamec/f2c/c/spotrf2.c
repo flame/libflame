@@ -98,6 +98,7 @@
  /* ===================================================================== */
  /* Subroutine */
  int spotrf2_(char *uplo, integer *n, real *a, integer *lda, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* System generated locals */
  integer a_dim1, a_offset, i__1;
  /* Builtin functions */
@@ -201,6 +202,7 @@
  }
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of SPOTRF2 */
  }
