@@ -26,7 +26,7 @@
 BUILD_DIR       := ../build
 CONFIG_DIR      := ../config
 LIB_DIR         := ../lib
-INCLUDE_DIR     := ../src/base/flamec/include
+INCLUDE_DIR     := ../src/aocl_dtl ../src/base/flamec/include
 SRC_PATH        := ../src
 HOST            := $(shell sh $(BUILD_DIR)/ac-utils/config.guess)
 CONFIG_MK_FILE  := $(CONFIG_DIR)/$(HOST)/config.mk
@@ -59,7 +59,7 @@ LDFLAGS        := -lm -fopenmp -lgfortran
 
 # BLAS implementation path. A BLAS library must be given in order to run
 # the libflame test suite. Modify these definitions if needed.
-LIBBLAS_PATH   := 
+LIBBLAS_PATH   :=
 LIBBLAS        := $(LIBBLAS_PATH)/libblis.a
 
 # LAPACK implementation path. These values only matter if libflame was
