@@ -63,6 +63,8 @@ int main( int argc, char** argv )
 	// Initialize libflame.
 	FLA_Init();
 
+	printf(" LibFlame version: %s \n", FLA_Get_AOCL_Version() );
+
 	// Initialize some strings.
 	libfla_test_init_strings();
 
