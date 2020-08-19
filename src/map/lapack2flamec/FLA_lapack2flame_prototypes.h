@@ -68,6 +68,7 @@ int cgesvxx_check(char *fact, char *trans, int *n, int * nrhs, scomplex *a, int 
 int cgetc2_check(int *n, scomplex *a, int *lda, int * ipiv, int *jpiv, int *info);
 int cgetf2_check(int *m, int *n, scomplex *a, int *lda, int *ipiv, int *info);
 int cgetrf_check(int *m, int *n, scomplex *a, int *lda, int *ipiv, int *info);
+int cgetrfnp_check(int *m, int *n, scomplex *a, int *lda, int *info);
 int cgetri_check(int *n, scomplex *a, int *lda, int * ipiv, scomplex *work, int *lwork, int *info);
 int cgetrs_check(char *trans, int *n, int *nrhs, scomplex * a, int *lda, int *ipiv, scomplex *b, int *ldb, int * info);
 int cggbak_check(char *job, char *side, int *n, int *ilo, int *ihi, float *lscale, float *rscale, int *m, scomplex *v, int *ldv, int *info);
@@ -493,6 +494,7 @@ int dgesvxx_check(char *fact, char *trans, int *n, int * nrhs, double *a, int *l
 int dgetc2_check(int *n, double *a, int *lda, int *ipiv, int *jpiv, int *info);
 int dgetf2_check(int *m, int *n, double *a, int * lda, int *ipiv, int *info);
 int dgetrf_check(int *m, int *n, double *a, int * lda, int *ipiv, int *info);
+int dgetrfnp_check(int *m, int *n, double *a, int * lda, int *info);
 int dgetri_check(int *n, double *a, int *lda, int *ipiv, double *work, int *lwork, int *info);
 int dgetrs_check(char *trans, int *n, int *nrhs, double *a, int *lda, int *ipiv, double *b, int * ldb, int *info);
 int dggbak_check(char *job, char *side, int *n, int *ilo, int *ihi, double *lscale, double *rscale, int *m, double *v, int *ldv, int *info);
@@ -948,6 +950,7 @@ int sgesvxx_check(char *fact, char *trans, int *n, int * nrhs, float *a, int *ld
 int sgetc2_check(int *n, float *a, int *lda, int *ipiv, int *jpiv, int *info);
 int sgetf2_check(int *m, int *n, float *a, int *lda, int *ipiv, int *info);
 int sgetrf_check(int *m, int *n, float *a, int *lda, int *ipiv, int *info);
+int sgetrfnp_check(int *m, int *n, float *a, int *lda, int *info);
 int sgetri_check(int *n, float *a, int *lda, int *ipiv, float *work, int *lwork, int *info);
 int sgetrs_check(char *trans, int *n, int *nrhs, float *a, int *lda, int *ipiv, float *b, int *ldb, int *info);
 int sggbak_check(char *job, char *side, int *n, int *ilo, int *ihi, float *lscale, float *rscale, int *m, float *v, int *ldv, int *info);
@@ -1382,6 +1385,7 @@ int zgesvxx_check(char *fact, char *trans, int *n, int * nrhs, dcomplex *a, int 
 int zgetc2_check(int *n, dcomplex *a, int *lda, int *ipiv, int *jpiv, int *info);
 int zgetf2_check(int *m, int *n, dcomplex *a, int *lda, int *ipiv, int *info);
 int zgetrf_check(int *m, int *n, dcomplex *a, int *lda, int *ipiv, int *info);
+int zgetrfnp_check(int *m, int *n, dcomplex *a, int *lda, int *info);
 int zgetri_check(int *n, dcomplex *a, int *lda, int *ipiv, dcomplex *work, int *lwork, int *info);
 int zgetrs_check(char *trans, int *n, int *nrhs, dcomplex *a, int *lda, int *ipiv, dcomplex *b, int *ldb, int *info);
 int zggbak_check(char *job, char *side, int *n, int *ilo, int *ihi, double *lscale, double *rscale, int *m, dcomplex *v, int *ldv, int *info);

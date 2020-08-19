@@ -270,8 +270,8 @@ void libfla_test_read_operation_file( char* input_filename, test_ops_t* ops )
 	libfla_test_output_op_struct( "chol", ops->chol );
 
 	// Read the operation tests for LU_nopiv factorization.
-	libfla_test_read_tests_for_op( input_stream, &(ops->lu_nopiv) );
-	libfla_test_output_op_struct( "lu_nopiv", ops->lu_nopiv );
+	libfla_test_read_tests_for_op_ext( input_stream, &(ops->lu_nopiv) );
+	libfla_test_output_op_struct_ext( "lu_nopiv", ops->lu_nopiv );
 
 	// Read the operation tests for LU_piv factorization.
 	libfla_test_read_tests_for_op( input_stream, &(ops->lu_piv) );
@@ -373,6 +373,15 @@ void libfla_test_output_op_struct( char* op_str, test_op_t op )
 	libfla_test_output_info( "%s fla_blk_vars %d\n", op_str, op.fla_blk_vars );
 }
 
+void libfla_test_output_op_struct_ext( char* op_str, test_op_t op )
+{
+	libfla_test_output_info( "%s flash_front  %d\n", op_str, op.flash_front );
+	libfla_test_output_info( "%s fla_front    %d\n", op_str, op.fla_front );
+	libfla_test_output_info( "%s fla_unb_vars %d\n", op_str, op.fla_unb_vars );
+	libfla_test_output_info( "%s fla_opt_vars %d\n", op_str, op.fla_opt_vars );
+	libfla_test_output_info( "%s fla_blk_vars %d\n", op_str, op.fla_blk_vars );
+	libfla_test_output_info( "%s fla_blk_ext  %d\n", op_str, op.fla_blk_ext );
+}
 
 
 void libfla_test_output_op_struct_flash_only( char* op_str, test_op_t op )
@@ -470,6 +479,64 @@ void libfla_test_read_tests_for_op( FILE* input_stream, test_op_t* op )
 	}
 }
 
+void libfla_test_read_tests_for_op_ext( FILE* input_stream, test_op_t* op )
+{
+	char buffer[ INPUT_BUFFER_SIZE ];
+	int  op_switch;
+	int  flash_front;
+	int  fla_front;
+	int  fla_unb_vars;
+	int  fla_opt_vars;
+	int  fla_blk_vars;
+	int  fla_blk_ext;
+
+	// Read the line for the overall operation switch.
+	libfla_test_read_next_line( buffer, input_stream );
+	sscanf( buffer, "%d ", &op_switch );
+
+	// Read the line for the FLASH front-end.
+	libfla_test_read_next_line( buffer, input_stream );
+	sscanf( buffer, "%d ", &flash_front );
+
+	// Read the line for the FLA front-end.
+	libfla_test_read_next_line( buffer, input_stream );
+	sscanf( buffer, "%d ", &fla_front );
+
+	// Read the line for the unblocked variants.
+	libfla_test_read_next_line( buffer, input_stream );
+	sscanf( buffer, "%d ", &fla_unb_vars );
+
+	// Read the line for the optimized unblocked variants.
+	libfla_test_read_next_line( buffer, input_stream );
+	sscanf( buffer, "%d ", &fla_opt_vars );
+
+	// Read the line for the blocked variants.
+	libfla_test_read_next_line( buffer, input_stream );
+	sscanf( buffer, "%d ", &fla_blk_vars );
+
+	// Read the line for the blocked external variant.
+	libfla_test_read_next_line( buffer, input_stream );
+	sscanf( buffer, "%d ", &fla_blk_ext );
+
+	if ( op_switch == DISABLE_ALL )
+	{
+		op->flash_front  = DISABLE;
+		op->fla_front    = DISABLE;
+		op->fla_unb_vars = DISABLE;
+		op->fla_opt_vars = DISABLE;
+		op->fla_blk_vars = DISABLE;
+		op->fla_blk_ext  = DISABLE;
+	}
+	else
+	{
+		op->flash_front  = flash_front;
+		op->fla_front    = fla_front;
+		op->fla_unb_vars = fla_unb_vars;
+		op->fla_opt_vars = fla_opt_vars;
+		op->fla_blk_vars = fla_blk_vars;
+		op->fla_blk_ext  = fla_blk_ext;
+	}
+}
 
 
 void libfla_test_read_tests_for_op_flash_only( FILE* input_stream, test_op_t* op )
