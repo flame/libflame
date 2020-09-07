@@ -237,7 +237,7 @@ n+2}
  double d_sign(doublereal *, doublereal *), sqrt(doublereal), pow_dd( doublereal *, doublereal *);
  /* Local variables */
  integer i__, j, k;
- real d1;
+ doublereal d1;
  integer j1, j2;
  doublereal mu, eps;
  integer nsl;
@@ -267,7 +267,7 @@ n+2}
  extern /* Subroutine */
  int daxpy_(integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), dswap_(integer *, doublereal *, integer *, doublereal *, integer *);
  logical lower;
- real vltgk;
+ doublereal vltgk;
  doublereal zjtji;
  logical split, valsv;
  integer isplt;

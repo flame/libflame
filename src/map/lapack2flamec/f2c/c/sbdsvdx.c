@@ -666,6 +666,7 @@ n+2}
  }
  /* EMIN = ABS( MAXVAL( S( ISBEG:ISBEG+NSL-1 ) ) ) */
  i__3 = nsl;
+ d1 = s[isbeg];
  for (j1 = 1;
  j1 <= i__3;
  ++j1) {
