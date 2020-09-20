@@ -20,7 +20,9 @@
 #endif
 
 // --- Macro to enable/disable Thread Local Storage (TLS) for global variables -
+#if !defined FLA_ENABLE_MULTITHREADING && !defined FLA_ENABLE_SUPERMATRIX
 #define ENABLE_THREAD_LOCAL_STORAGE 1
+#endif
 
 #if ENABLE_THREAD_LOCAL_STORAGE
 #define TLS_CLASS_SPEC __thread

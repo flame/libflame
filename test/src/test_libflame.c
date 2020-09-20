@@ -54,6 +54,8 @@ char libfla_test_warn_string[ MAX_PASS_STRING_LENGTH + 1 ];
 char libfla_test_fail_string[ MAX_PASS_STRING_LENGTH + 1 ];
 
 char libfla_test_stor_chars[ NUM_STORAGE_CHARS + 1 ];
+void libfla_test_read_tests_for_op_ext( FILE* input_stream, test_op_t* op );
+void libfla_test_output_op_struct_ext( char* op_str, test_op_t op );
 
 int main( int argc, char** argv )
 {

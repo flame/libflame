@@ -51,7 +51,14 @@ void libfla_test_lu_nopiv_impl( int         impl,
 void libfla_test_lu_nopiv_cntl_create( unsigned int var,
                                        dim_t        b_alg_flat );
 void libfla_test_lu_nopiv_cntl_free( void );
-
+void FLA_GETRFNP( int m, 
+		  int n, 
+		  FLA_Obj A_save, 
+		  FLA_Obj A, 
+		  int lda, 
+		  FLA_Datatype datatype, 
+		  unsigned int n_repeats, 
+		  double* time_min_);
 
 void libfla_test_lu_nopiv( FILE* output_stream, test_params_t params, test_op_t op )
 {

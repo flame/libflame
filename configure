@@ -6513,6 +6513,9 @@ $as_echo_n "checking for (guessing) OpenMP flags for ${CC_VENDOR}... " >&6; }
 				gcc)
 			fla_c_openmp_flags='-fopenmp'
 		;;
+				clang)
+			fla_c_openmp_flags='-fopenmp'
+		;;
 				pathcc)
 			fla_c_openmp_flags='-mp'
 		;;
