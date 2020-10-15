@@ -33,6 +33,11 @@
 #define F77_cgetrfnp F77_FUNC( cgetrfnp , CGETRFNP )
 #define F77_zgetrfnp F77_FUNC( zgetrfnp , ZGETRFNP )
 
+#define F77_sgetrfnpi F77_FUNC( sgetrfnpi , SGETRFNPI )
+#define F77_dgetrfnpi F77_FUNC( dgetrfnpi , DGETRFNPI )
+#define F77_cgetrfnpi F77_FUNC( cgetrfnpi , CGETRFNPI )
+#define F77_zgetrfnpi F77_FUNC( zgetrfnpi , ZGETRFNPI )
+
 #define F77_sgetf2 F77_FUNC( sgetf2 , SGETF2 )
 #define F77_dgetf2 F77_FUNC( dgetf2 , DGETF2 )
 #define F77_cgetf2 F77_FUNC( cgetf2 , CGETF2 )
@@ -361,6 +366,13 @@ int F77_sgetrfnp( int* m, int* n, float*   a, int* lda, int* info );
 int F77_dgetrfnp( int* m, int* n, double*   a, int* lda, int* info );
 int F77_cgetrfnp( int* m, int* n, scomplex*   a, int* lda, int* info );
 int F77_zgetrfnp( int* m, int* n, dcomplex*   a, int* lda, int* info );
+
+// --- LU factorization complete and incomplete without pivoting ---
+
+int F77_sgetrfnpi( int* m, int* n, int* nfact, float*   a, int* lda, int* info );
+int F77_dgetrfnpi( int* m, int* n, int* nfact, double*   a, int* lda, int* info );
+int F77_cgetrfnpi( int* m, int* n, int* nfact, scomplex*   a, int* lda, int* info );
+int F77_zgetrfnpi( int* m, int* n, int* nfact, dcomplex*   a, int* lda, int* info );
 
 // --- QR factorization (classic) ---
 

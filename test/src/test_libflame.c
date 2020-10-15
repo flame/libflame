@@ -23,6 +23,7 @@
 #include "test_trmm.h"
 #include "test_trsm.h"
 #include "test_chol.h"
+#include "test_lu_nopiv_i.h"
 #include "test_lu_nopiv.h"
 #include "test_lu_piv.h"
 #include "test_lu_incpiv.h"
@@ -59,6 +60,8 @@ char libfla_test_storage_format_string[ 100 ];
 char libfla_test_stor_chars[ NUM_STORAGE_CHARS + 1 ];
 void libfla_test_read_tests_for_op_ext( FILE* input_stream, test_op_t* op );
 void libfla_test_output_op_struct_ext( char* op_str, test_op_t op );
+void libfla_test_read_tests_for_op_fla_ext( FILE* input_stream, test_op_t* op );
+void libfla_test_output_op_struct_fla_ext( char* op_str, test_op_t op );
 
 int main( int argc, char** argv )
 {
@@ -81,7 +84,7 @@ int main( int argc, char** argv )
 
 	// Read which operations we're going to test.
 	libfla_test_read_operation_file( OPERATIONS_FILENAME, &ops );
-	
+
 	// Test the BLAS level-3 operations.
 	libfla_test_blas3_suite( stdout, params, ops );
 
@@ -94,7 +97,6 @@ int main( int argc, char** argv )
 	// Return peacefully.
 	return 0;
 }
-
 
 
 void libfla_test_blas3_suite( FILE* output_stream, test_params_t params, test_ops_t ops )
@@ -142,12 +144,15 @@ void libfla_test_lapack_suite( FILE* output_stream, test_params_t params, test_o
 	libfla_test_output_info( "\n" );
 	libfla_test_output_info( "--- LAPACK-level operation tests ---------------------\n" );
 	libfla_test_output_info( "\n" );
-	
+
   // Cholesky factorization.
 	libfla_test_chol( output_stream, params, ops.chol );
 
 	// LU factorization without pivoting.
 	libfla_test_lu_nopiv( output_stream, params, ops.lu_nopiv );
+
+	// LU complete/incomplete factorization based on nfact without pivoting.
+	libfla_test_lu_nopiv_i( output_stream, params, ops.lu_nopiv_i );
 
 	// LU factorization with partial pivoting.
 	libfla_test_lu_piv( output_stream, params, ops.lu_piv );
@@ -283,6 +288,10 @@ void libfla_test_read_operation_file( char* input_filename, test_ops_t* ops )
 	libfla_test_read_tests_for_op_ext( input_stream, &(ops->lu_nopiv) );
 	libfla_test_output_op_struct_ext( "lu_nopiv", ops->lu_nopiv );
 
+	//Read the operation tests for LU_nopiv_i factorization
+	libfla_test_read_tests_for_op_fla_ext( input_stream, &(ops->lu_nopiv_i) );
+	libfla_test_output_op_struct_fla_ext( "lu_nopiv_i", ops->lu_nopiv_i );
+
 	// Read the operation tests for LU_piv factorization.
 	libfla_test_read_tests_for_op_ext( input_stream, &(ops->lu_piv) );
 	libfla_test_output_op_struct_ext( "lu_piv", ops->lu_piv );
@@ -397,6 +406,10 @@ void libfla_test_output_op_struct_ext( char* op_str, test_op_t op )
 	libfla_test_output_info( "%s fla_blk_ext  %d\n", op_str, op.fla_blk_ext );
 }
 
+void libfla_test_output_op_struct_fla_ext( char* op_str, test_op_t op )
+{
+	libfla_test_output_info( "%s fla_blk_ext  %d\n", op_str, op.fla_blk_ext );
+}
 
 void libfla_test_output_op_struct_flash_only( char* op_str, test_op_t op )
 {
@@ -552,6 +565,29 @@ void libfla_test_read_tests_for_op_ext( FILE* input_stream, test_op_t* op )
 	}
 }
 
+void libfla_test_read_tests_for_op_fla_ext( FILE* input_stream, test_op_t* op )
+{
+	char buffer[ INPUT_BUFFER_SIZE ];
+	int  op_switch;
+	int  fla_blk_ext;
+
+    // Read the line for the overall operation switch.
+	libfla_test_read_next_line( buffer, input_stream );
+	sscanf( buffer, "%d ", &op_switch );
+
+    // Read the line for the blocked external variant.
+	libfla_test_read_next_line( buffer, input_stream );
+	sscanf( buffer, "%d ", &fla_blk_ext );
+
+	if ( op_switch == DISABLE_ALL )
+	{
+		op->fla_blk_ext  = DISABLE;
+	}
+	else
+	{
+		op->fla_blk_ext  = fla_blk_ext;
+	}
+}
 
 void libfla_test_read_tests_for_op_flash_only( FILE* input_stream, test_op_t* op )
 {
@@ -775,7 +811,7 @@ void libfla_test_read_parameter_file( char* input_filename, test_params_t* param
 		libfla_test_output_error( "Failed to open input file %s. Check existence and permissions.\n",
 		                          input_filename );
 	}
-	
+
 	// Read the number of repeats.
 	libfla_test_read_next_line( buffer, input_stream );
 	sscanf( buffer, "%u ", &(params->n_repeats) );
@@ -851,10 +887,10 @@ void libfla_test_read_parameter_file( char* input_filename, test_params_t* param
 	sscanf( buffer, "%lu ", &(params->p_inc) );
 
 	// Read the partial number of matrix size for incomplete factorization.
-	libfla_test_read_next_line( buffer, input_stream );
-	sscanf( buffer, "%lu ", &(params->p_nfact) );
+        libfla_test_read_next_line( buffer, input_stream );
+	sscanf( buffer, "%d ", &(params->p_nfact) );
 
-	// Read the number of SuperMatrix threads to test with.
+        // Read the number of SuperMatrix threads to test with.
 	libfla_test_read_next_line( buffer, input_stream );
 	sscanf( buffer, "%u ", &(params->n_threads) );
 
@@ -891,6 +927,7 @@ void libfla_test_read_parameter_file( char* input_filename, test_params_t* param
 	libfla_test_output_info( "p_first              %u\n", params->p_first );
 	libfla_test_output_info( "p_max                %u\n", params->p_max );
 	libfla_test_output_info( "p_inc                %u\n", params->p_inc );
+	libfla_test_output_info( "p_nfact              %d\n", params->p_nfact );
 	libfla_test_output_info( "n_threads            %u\n", params->n_threads );
 	libfla_test_output_info( "reaction_to_failure  %c\n", params->reaction_to_failure );
 }
@@ -982,7 +1019,7 @@ void libfla_test_parse_message( FILE* output_stream, char* message, va_list args
 	char*         the_string;
 	char          the_char;
 
-	// Begin looping over message to insert variables wherever there are 
+	// Begin looping over message to insert variables wherever there are
 	// format specifiers.
 	for ( c = 0; message[c] != '\0'; )
 	{
@@ -1060,7 +1097,6 @@ void libfla_test_parse_command_line( int argc, char** argv )
 		fprintf( stderr, "Too many command line arguments.\n" );
 		exit(1);
 	}
-	
 	// Copy the binary name to a global string so we can use it later.
 	strncpy( libfla_test_binary_name, argv[0], MAX_BINARY_NAME_LENGTH );
 }
@@ -1288,7 +1324,7 @@ void libfla_test_op_driver( char*         func_str,
 				for ( p_cur = p_first; p_cur <= p_max; p_cur += p_inc )
 				{
 					// Loop over the operation's parameter combinations.
-					for ( pci = 0; pci < n_pc; ++pci )	
+					for ( pci = 0; pci < n_pc; ++pci )
 					{
 						//If external interface is selected and row storage is set
 						//then do not proceed. Row storage is not supported for
@@ -1299,7 +1335,7 @@ void libfla_test_op_driver( char*         func_str,
 						  perf = residual = 0.0f;
 						}
 						else
-						{							
+						{
 						  f_exp( params,
 						       var,
 						       sc_str[sci],
@@ -1341,7 +1377,7 @@ void libfla_test_op_driver( char*         func_str,
 						}
 					}
 				}
-		
+
 				libfla_test_output_info( "\n" );
 			}
 		}
@@ -1435,7 +1471,7 @@ void libfla_test_obj_create( FLA_Datatype dt, FLA_Trans trans, char storage, dim
 	dim_t n_trans = n;
 	dim_t rs_g;
 	dim_t cs_g;
-	
+
 	if ( trans == FLA_TRANSPOSE || trans == FLA_CONJ_TRANSPOSE )
 	{
 		m_trans = n;

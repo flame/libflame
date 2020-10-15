@@ -1,4 +1,4 @@
-target_sources(test_libFLAME 
+target_sources(test_libFLAME
      PRIVATE
 ${CMAKE_CURRENT_SOURCE_DIR}/test_apcaqutinc.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_apcaqutinc.h
@@ -32,6 +32,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/test_libflame.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_libflame.h
 ${CMAKE_CURRENT_SOURCE_DIR}/test_lqut.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_lqut.h
+${CMAKE_CURRENT_SOURCE_DIR}/test_lu_nopiv_i.c
+${CMAKE_CURRENT_SOURCE_DIR}/test_lu_nopiv_i.h
 ${CMAKE_CURRENT_SOURCE_DIR}/test_lu_incpiv.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_lu_incpiv.h
 ${CMAKE_CURRENT_SOURCE_DIR}/test_lu_nopiv.c

@@ -77,6 +77,9 @@
 1     - FLA blocked variants                      (0 = disable; 1 = enable)
 1     - FLA external                              (0 = disable; 1 = enable)
 
+1   LU factorization incomplete without pivot     (0 = disable all; 1 = specify)
+1     - FLA external                              (0 = disable; 1 = enable)
+
 1   LU factorization with pivoting                (0 = disable all; 1 = specify)
 0     - FLASH front-end                           (0 = disable; 1 = enable)
 1     - FLA front-end                             (0 = disable; 1 = enable)
