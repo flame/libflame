@@ -268,24 +268,24 @@ void libfla_test_read_operation_file( char* input_filename, test_ops_t* ops )
 	libfla_test_output_op_struct_blas3( "trsm", ops->trsm );
 
 	// Read the operation tests for Cholesky factorization.
-	libfla_test_read_tests_for_op( input_stream, &(ops->chol) );
-	libfla_test_output_op_struct( "chol", ops->chol );
+	libfla_test_read_tests_for_op_ext( input_stream, &(ops->chol) );
+	libfla_test_output_op_struct_ext( "chol", ops->chol );
 
 	// Read the operation tests for LU_nopiv factorization.
 	libfla_test_read_tests_for_op_ext( input_stream, &(ops->lu_nopiv) );
 	libfla_test_output_op_struct_ext( "lu_nopiv", ops->lu_nopiv );
 
 	// Read the operation tests for LU_piv factorization.
-	libfla_test_read_tests_for_op( input_stream, &(ops->lu_piv) );
-	libfla_test_output_op_struct( "lu_piv", ops->lu_piv );
+	libfla_test_read_tests_for_op_ext( input_stream, &(ops->lu_piv) );
+	libfla_test_output_op_struct_ext( "lu_piv", ops->lu_piv );
 
 	// Read the operation tests for LU_incpiv factorization.
 	libfla_test_read_tests_for_op_flash_only( input_stream, &(ops->lu_incpiv) );
 	libfla_test_output_op_struct_flash_only( "lu_incpiv", ops->lu_incpiv );
 
 	// Read the operation tests for QR_UT factorization.
-	libfla_test_read_tests_for_op( input_stream, &(ops->qrut) );
-	libfla_test_output_op_struct( "qrut", ops->qrut );
+	libfla_test_read_tests_for_op_ext( input_stream, &(ops->qrut) );
+	libfla_test_output_op_struct_ext( "qrut", ops->qrut );
 
 	// Read the operation tests for QR_UT_inc factorization.
 	libfla_test_read_tests_for_op_flash_only( input_stream, &(ops->qrutinc) );

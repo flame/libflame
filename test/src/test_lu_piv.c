@@ -23,6 +23,7 @@ static char* fla_front_str            = "FLA_LU_piv";
 static char* fla_unb_var_str          = "unb_var";
 static char* fla_opt_var_str          = "opt_var";
 static char* fla_blk_var_str          = "blk_var";
+static char* fla_blk_ext_str          = "external";
 static char* pc_str[NUM_PARAM_COMBOS] = { "" };
 static test_thresh_t thresh           = { 1e-02, 1e-03,   // warn, pass for s
                                           1e-10, 1e-11,   // warn, pass for d
@@ -51,7 +52,14 @@ void libfla_test_lu_piv_impl( int         impl,
 void libfla_test_lu_piv_cntl_create( unsigned int var,
                                      dim_t        b_alg_flat );
 void libfla_test_lu_piv_cntl_free( void );
-
+void FLA_GETRF( int m,
+                int n,
+                FLA_Obj A_save,
+                FLA_Obj A,
+                FLA_Obj p_obj,
+                FLA_Datatype datatype,
+                unsigned int n_repeats,
+                double* time_min_ );
 
 void libfla_test_lu_piv( FILE* output_stream, test_params_t params, test_op_t op )
 {
@@ -117,6 +125,15 @@ void libfla_test_lu_piv( FILE* output_stream, test_params_t params, test_op_t op
 		                       FLA_TEST_FLAT_BLK_VAR,
 		                       params, thresh, libfla_test_lu_piv_experiment );
 	}
+        if ( op.fla_blk_ext == ENABLE )
+        {
+                libfla_test_op_driver( fla_front_str, fla_blk_ext_str,
+                                       FIRST_VARIANT, LAST_VARIANT,
+                                       NUM_PARAM_COMBOS, pc_str,
+                                       NUM_MATRIX_ARGS,
+                                       FLA_TEST_FLAT_BLK_EXT,
+                                       params, thresh, libfla_test_lu_piv_experiment );
+        }
 }
 
 
@@ -190,20 +207,29 @@ void libfla_test_lu_piv_experiment( test_params_t params,
 	     impl == FLA_TEST_FLAT_BLK_VAR )
 		libfla_test_lu_piv_cntl_create( var, b_alg_flat );
 
-	// Repeat the experiment n_repeats times and record results.
-	for ( i = 0; i < n_repeats; ++i )
-	{
-		if ( impl == FLA_TEST_HIER_FRONT_END )
-			FLASH_Obj_hierarchify( A_save, A_test );
-		else
-			FLA_Copy_external( A_save, A_test );
+	// Invoke FLA_GETRF for external getrf call
+        if ( impl == FLA_TEST_FLAT_BLK_EXT )
+        {
+                FLA_GETRF( m, n, A_save, A_test, p_test, datatype, n_repeats, &time_min );
+        	FLA_Shift_pivots_to( FLA_NATIVE_PIVOTS, p_test );
+	}
+        else
+        {
+		// Repeat the experiment n_repeats times and record results.
+		for ( i = 0; i < n_repeats; ++i )
+		{
+			if ( impl == FLA_TEST_HIER_FRONT_END )
+				FLASH_Obj_hierarchify( A_save, A_test );
+			else
+				FLA_Copy_external( A_save, A_test );
 		
-		time = FLA_Clock();
+			time = FLA_Clock();
 
-		libfla_test_lu_piv_impl( impl, A_test, p_test );
+			libfla_test_lu_piv_impl( impl, A_test, p_test );
 		
-		time = FLA_Clock() - time;
-		time_min = min( time_min, time );
+			time = FLA_Clock() - time;
+			time_min = min( time_min, time );
+		}
 	}
 
 	// Perform a linear solve with the result.
@@ -347,5 +373,98 @@ void libfla_test_lu_piv_impl( int     impl,
 		default:
 		libfla_test_output_error( "Invalid implementation type.\n" );
 	}
+}
+
+/*
+ *  FLA_GETRF calls LAPACK interface of
+ *  LU Factorization with pivoting - getrf
+ *  */
+void FLA_GETRF( int m,
+                int n,
+                FLA_Obj A_save,
+                FLA_Obj A,
+                FLA_Obj p_obj,
+                FLA_Datatype datatype,
+                unsigned int n_repeats,
+                double* time_min_ )
+{
+        int          info;
+        unsigned int i;
+        double       time;
+        double       time_min   = 1e9;
+	int lda;
+	int* p;
+
+	lda     = (int)FLA_Obj_col_stride( A );
+        p     = ( int * ) FLA_INT_PTR( p_obj );
+        
+        switch( datatype )
+        {
+                case FLA_FLOAT:
+                {
+                        for ( i = 0; i < n_repeats; ++i )
+                        {
+                           FLA_Copy_external( A_save, A );
+                           float *buff_A     = ( float * ) FLA_FLOAT_PTR( A );
+
+                           time = FLA_Clock();
+
+                           sgetrf_(&m, &n, buff_A, &lda, p, &info);
+
+                           time = FLA_Clock() - time;
+                           time_min = min( time_min, time );
+                        }
+                        break;
+                }
+                case FLA_DOUBLE:
+                {
+                        for ( i = 0; i < n_repeats; ++i )
+                        {
+                           FLA_Copy_external( A_save, A );
+                           double *buff_A     = ( double * ) FLA_DOUBLE_PTR( A );
+
+                           time = FLA_Clock();
+
+                           dgetrf_(&m, &n, buff_A, &lda, p, &info);
+
+                           time = FLA_Clock() - time;
+                           time_min = min( time_min, time );
+                        }
+                        break;
+                }
+                case FLA_COMPLEX:
+                {
+                        for ( i = 0; i < n_repeats; ++i )
+                        {
+                           FLA_Copy_external( A_save, A );
+                           scomplex *buff_A     = ( scomplex * ) FLA_COMPLEX_PTR( A );
+
+                           time = FLA_Clock();
+
+                           cgetrf_(&m, &n, buff_A, &lda, p, &info);
+
+                           time = FLA_Clock() - time;
+                           time_min = min( time_min, time );
+                        }
+                        break;
+                }
+                case FLA_DOUBLE_COMPLEX:
+                {
+                        for ( i = 0; i < n_repeats; ++i )
+                        {
+                           FLA_Copy_external( A_save, A );
+                           dcomplex *buff_A     = ( dcomplex * ) FLA_DOUBLE_COMPLEX_PTR( A );
+
+                           time = FLA_Clock();
+
+                           zgetrf_(&m, &n, buff_A, &lda, p, &info);
+
+                           time = FLA_Clock() - time;
+                           time_min = min( time_min, time );
+                        }
+                        break;
+                }
+        }
+        *time_min_ = time_min;
 }
 

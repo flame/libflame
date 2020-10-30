@@ -23,6 +23,7 @@ static char* fla_front_str            = "FLA_QR_UT";
 static char* fla_unb_var_str          = "unb_var";
 static char* fla_opt_var_str          = "opt_var";
 static char* fla_blk_var_str          = "blk_var";
+static char* fla_blk_ext_str          = "external";
 static char* pc_str[NUM_PARAM_COMBOS] = { "" };
 static test_thresh_t thresh           = { 1e-02, 1e-03,   // warn, pass for s
                                           1e-11, 1e-12,   // warn, pass for d
@@ -53,6 +54,14 @@ void libfla_test_qrut_impl( int     impl,
 void libfla_test_qrut_cntl_create( unsigned int var,
                                    dim_t        b_alg_flat );
 void libfla_test_qrut_cntl_free( void );
+void FLA_GEQRF( int m,
+                int n,
+                FLA_Obj A_save,
+                FLA_Obj A,
+                FLA_Obj T_obj,
+                FLA_Datatype datatype,
+                unsigned int n_repeats,
+                double* time_min_ );
 
 
 void libfla_test_qrut( FILE* output_stream, test_params_t params, test_op_t op )
@@ -119,7 +128,15 @@ void libfla_test_qrut( FILE* output_stream, test_params_t params, test_op_t op )
 		                       FLA_TEST_FLAT_BLK_VAR,
 		                       params, thresh, libfla_test_qrut_experiment );
 	}
-
+        if ( op.fla_blk_ext == ENABLE )
+        {
+                libfla_test_op_driver( fla_front_str, fla_blk_ext_str,
+                                       FIRST_VARIANT, LAST_VARIANT,
+                                       NUM_PARAM_COMBOS, pc_str,
+                                       NUM_MATRIX_ARGS,
+                                       FLA_TEST_FLAT_BLK_EXT,
+                                       params, thresh, libfla_test_qrut_experiment );
+        }
 }
 
 
@@ -161,6 +178,7 @@ void libfla_test_qrut_experiment( test_params_t params,
 	libfla_test_obj_create( datatype, FLA_NO_TRANSPOSE, sc_str[0], m, n, &A );
 
 	if ( impl == FLA_TEST_FLAT_FRONT_END ||
+	     ( impl == FLA_TEST_FLAT_BLK_EXT ) ||
 	     ( impl == FLA_TEST_FLAT_BLK_VAR && var == 1 ) )
 		libfla_test_obj_create( datatype, FLA_NO_TRANSPOSE, sc_str[1], b_alg_flat, min_m_n, &T );
 	else if ( var == 2 )
@@ -203,23 +221,41 @@ void libfla_test_qrut_experiment( test_params_t params,
 	     impl == FLA_TEST_FLAT_OPT_VAR ||
 	     impl == FLA_TEST_FLAT_BLK_VAR )
 		libfla_test_qrut_cntl_create( var, b_alg_flat );
-
-	// Repeat the experiment n_repeats times and record results.
-	for ( i = 0; i < n_repeats; ++i )
-	{
-		if ( impl == FLA_TEST_HIER_FRONT_END )
-			FLASH_Obj_hierarchify( A_save, A_test );
-		else
-			FLA_Copy_external( A_save, A_test );
+	
+	// Invoke FLA_GETRF for external geqrf call
+        if ( impl == FLA_TEST_FLAT_BLK_EXT )
+        {
+                FLA_GEQRF( m, n, A_save, A_test, T_test, datatype, n_repeats, &time_min );
+        }
+        else
+        {
+		// Repeat the experiment n_repeats times and record results.
+		for ( i = 0; i < n_repeats; ++i )
+		{
+			if ( impl == FLA_TEST_HIER_FRONT_END )
+				FLASH_Obj_hierarchify( A_save, A_test );
+			else
+				FLA_Copy_external( A_save, A_test );
 		
-		time = FLA_Clock();
+			time = FLA_Clock();
 
-		libfla_test_qrut_impl( impl, A_test, T_test );
+			libfla_test_qrut_impl( impl, A_test, T_test );
 		
-		time = FLA_Clock() - time;
-		time_min = min( time_min, time );
+			time = FLA_Clock() - time;
+			time_min = min( time_min, time );
+		}
 	}
 
+	// Compute the performance of the best experiment repeat.
+	*perf = (         2.0   * m * n * n - 
+	          ( 2.0 / 3.0 ) * n * n * n ) / time_min / FLOPS_PER_UNIT_PERF;
+	if ( FLA_Obj_is_complex( A ) ) *perf *= 4.0;
+	
+	//TODO: The TAU output format from External call GEQRF does not
+	//match with internal FLA QR API. Skipping validation till
+	//test for that is updated 
+	if ( impl != FLA_TEST_FLAT_BLK_EXT ){
+	
 	// Perform a linear solve with the result.
 	if ( impl == FLA_TEST_HIER_FRONT_END )
 	{
@@ -227,7 +263,7 @@ void libfla_test_qrut_experiment( test_params_t params,
 		FLASH_Obj_flatten( x_test, x );
 	}
 	else
-    {
+        {
 		FLA_QR_UT_solve( A_test, T_test, b, x );
 	}
 
@@ -246,16 +282,14 @@ void libfla_test_qrut_experiment( test_params_t params,
 	     impl == FLA_TEST_FLAT_BLK_VAR )
 		libfla_test_qrut_cntl_free();
 
-	// Compute the performance of the best experiment repeat.
-	*perf = (         2.0   * m * n * n - 
-	          ( 2.0 / 3.0 ) * n * n * n ) / time_min / FLOPS_PER_UNIT_PERF;
-	if ( FLA_Obj_is_complex( A ) ) *perf *= 4.0;
 
 	// Compute the residual.
 	FLA_Gemv_external( FLA_NO_TRANSPOSE, FLA_ONE, A_save, x, FLA_MINUS_ONE, b );
 	FLA_Gemv_external( FLA_CONJ_TRANSPOSE, FLA_ONE, A_save, b, FLA_ZERO, y );
 	FLA_Nrm2_external( y, norm );
 	FLA_Obj_extract_real_scalar( norm, residual );
+	
+	}
 
 	// Free the supporting flat objects.
 	FLA_Obj_free( &x );
@@ -369,5 +403,152 @@ void libfla_test_qrut_impl( int     impl,
 		default:
 		libfla_test_output_error( "Invalid implementation type.\n" );
 	}
+}
+
+/*
+ *  FLA_GEQRF calls LAPACK interface of
+ *  QR Factorization  - geqrf
+ *    *  */
+void FLA_GEQRF( int m,
+                int n,
+                FLA_Obj A_save,
+                FLA_Obj A,
+                FLA_Obj T_obj,
+                FLA_Datatype datatype,
+                unsigned int n_repeats,
+                double* time_min_ )
+{
+        int          info;
+        unsigned int i;
+        double       time;
+        double       time_min   = 1e9;
+        int lda;
+        int lwork;
+	int min_m_n = min(m, n);
+
+        lda     = (int)FLA_Obj_col_stride( A );
+
+        switch( datatype )
+        {
+                case FLA_FLOAT:
+                {
+        		float* buff_T;
+			float* work;
+			float worksize;
+                        float *buff_A     = ( float * ) FLA_FLOAT_PTR( A );
+			
+        		buff_T     = ( float * )malloc(min_m_n * sizeof(float));
+			
+			lwork = -1;
+			sgeqrf_(&m, &n, buff_A, &lda, buff_T, &worksize, &lwork, &info);
+			
+			lwork = (int)worksize;
+			work = (float * )malloc(lwork * sizeof(float));
+
+                        for ( i = 0; i < n_repeats; ++i )
+                        {
+                           FLA_Copy_external( A_save, A );
+                           float *buff_A     = ( float * ) FLA_FLOAT_PTR( A );
+
+                           time = FLA_Clock();
+
+                           sgeqrf_(&m, &n, buff_A, &lda, buff_T, work, &lwork, &info);
+
+                           time = FLA_Clock() - time;
+                           time_min = min( time_min, time );
+                        }
+                        break;
+                }
+                case FLA_DOUBLE:
+                {
+        		double* buff_T;
+			double* work;
+			double worksize;
+                        double *buff_A     = ( double * ) FLA_DOUBLE_PTR( A );
+			
+        		buff_T     = ( double * )malloc(min_m_n * sizeof(double));
+			
+			lwork = -1;
+			dgeqrf_(&m, &n, buff_A, &lda, buff_T, &worksize, &lwork, &info);
+			
+			lwork = (int)worksize;
+			work = (double * )malloc(lwork * sizeof(double));
+
+                        for ( i = 0; i < n_repeats; ++i )
+                        {
+                           FLA_Copy_external( A_save, A );
+
+                           time = FLA_Clock();
+
+                           dgeqrf_(&m, &n, buff_A, &lda, buff_T, work, &lwork, &info);
+
+                           time = FLA_Clock() - time;
+                           time_min = min( time_min, time );
+                        }
+
+                        break;
+                }
+                case FLA_COMPLEX:
+                {
+        		scomplex* buff_T;
+			scomplex* work;
+			scomplex worksize;
+                        scomplex *buff_A     = ( scomplex * ) FLA_COMPLEX_PTR( A );
+			
+        		buff_T     = ( scomplex * )malloc(min_m_n * sizeof(scomplex));
+			
+			lwork = -1;
+			cgeqrf_(&m, &n, buff_A, &lda, buff_T, &worksize, &lwork, &info);
+			
+			lwork = (int)worksize.real;
+			work = (scomplex * )malloc(lwork * sizeof(scomplex));
+
+                        for ( i = 0; i < n_repeats; ++i )
+                        {
+                           FLA_Copy_external( A_save, A );
+                           scomplex *buff_A     = ( scomplex * ) FLA_COMPLEX_PTR( A );
+
+                           time = FLA_Clock();
+
+                           cgeqrf_(&m, &n, buff_A, &lda, buff_T, work, &lwork, &info);
+
+                           time = FLA_Clock() - time;
+                           time_min = min( time_min, time );
+                        }
+
+                        break;
+                }
+                case FLA_DOUBLE_COMPLEX:
+                {
+        		dcomplex* buff_T;
+			dcomplex* work;
+			dcomplex worksize;
+                        dcomplex *buff_A     = ( dcomplex * ) FLA_DOUBLE_COMPLEX_PTR( A );
+			
+        		buff_T     = ( dcomplex * )malloc(min_m_n * sizeof(dcomplex));
+			
+			lwork = -1;
+			zgeqrf_(&m, &n, buff_A, &lda, buff_T, &worksize, &lwork, &info);
+			
+			lwork = (int)worksize.real;
+			work = (dcomplex * )malloc(lwork * sizeof(dcomplex));
+
+                        for ( i = 0; i < n_repeats; ++i )
+                        {
+                           FLA_Copy_external( A_save, A );
+                           dcomplex *buff_A     = ( dcomplex * ) FLA_DOUBLE_COMPLEX_PTR( A );
+
+                           time = FLA_Clock();
+
+                           zgeqrf_(&m, &n, buff_A, &lda, buff_T, work, &lwork, &info);
+
+                           time = FLA_Clock() - time;
+                           time_min = min( time_min, time );
+                        }
+
+                        break;
+                }
+        }
+        *time_min_ = time_min;
 }
 
