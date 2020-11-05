@@ -63,6 +63,7 @@ void FLA_POTRF( char* uplo,
 
 void libfla_test_chol( FILE* output_stream, test_params_t params, test_op_t op )
 {
+	printf("Version: %s",FLA_Get_AOCL_Version());
 	libfla_test_output_info( "--- %s ---\n", op_str );
 	libfla_test_output_info( "\n" );
 

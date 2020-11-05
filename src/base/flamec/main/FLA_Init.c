@@ -233,5 +233,5 @@ void FLA_Finalize_constants()
 
 char*     FLA_Get_AOCL_Version( void )
 {
-   return  "AOCL 2.2.1";
+   return  "AOCL 3.0";
 }
