@@ -320,6 +320,16 @@
 #define F77_claset F77_FUNC( claset , CLASET )
 #define F77_zlaset F77_FUNC( zlaset , ZLASET )
       
+      
+#define F77_sspffrt2 F77_FUNC( sspffrt2 , SSPFFRT2 )
+#define F77_dspffrt2 F77_FUNC( dspffrt2 , DSPFFRT2 )
+#define F77_cspffrt2 F77_FUNC( cspffrt2 , CSPFFRT2 )
+#define F77_zspffrt2 F77_FUNC( zspffrt2 , ZSPFFRT2 )
+      
+#define F77_sspffrtx F77_FUNC( sspffrtx , SSPFFRTX )
+#define F77_dspffrtx F77_FUNC( dspffrtx , DSPFFRTX )
+#define F77_cspffrtx F77_FUNC( cspffrtx , CSPFFRTX )
+#define F77_zspffrtx F77_FUNC( zspffrtx , ZSPFFRTX )
 
 // --- Cholesky factorization ---
 
@@ -650,4 +660,14 @@ int F77_slaset( char* uplo, int* m, int* n, float*    alpha, float*    beta, flo
 int F77_dlaset( char* uplo, int* m, int* n, double*   alpha, double*   beta, double*   a, int* lda );
 int F77_claset( char* uplo, int* m, int* n, scomplex* alpha, scomplex* beta, scomplex* a, int* lda );
 int F77_zlaset( char* uplo, int* m, int* n, dcomplex* alpha, dcomplex* beta, dcomplex* a, int* lda );
+
+int F77_sspffrt2(float *ap, int *n, int * ncolm, float *work, float *work2);
+int F77_dspffrt2(double *ap, int *n, int * ncolm, double *work, double *work2);
+int F77_cspffrt2(scomplex *ap, int *n, int *ncolm, scomplex *work, scomplex *work2 );
+int F77_zspffrt2(dcomplex *ap, int *n, int *ncolm, dcomplex *work, dcomplex *work2 );
+
+int F77_sspffrtx(float *ap, int *n, int * ncolm, float *work, float *work2);
+int F77_dspffrtx(double *ap, int *n, int * ncolm, double *work, double *work2);
+int F77_cspffrtx(scomplex *ap, int *n, int *ncolm, scomplex *work, scomplex *work2 );
+int F77_zspffrtx(dcomplex *ap, int *n, int *ncolm, dcomplex *work, dcomplex *work2 );
 

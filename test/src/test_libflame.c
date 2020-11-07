@@ -45,6 +45,8 @@
 #include "test_spdinv.h"
 #include "test_sylv.h"
 #include "test_lyap.h"
+#include "test_ldlt2_nopiv_ps.h"
+#include "test_ldltx_nopiv_ps.h"
 
 
 // Global variables.
@@ -140,8 +142,8 @@ void libfla_test_lapack_suite( FILE* output_stream, test_params_t params, test_o
 	libfla_test_output_info( "\n" );
 	libfla_test_output_info( "--- LAPACK-level operation tests ---------------------\n" );
 	libfla_test_output_info( "\n" );
-
-	// Cholesky factorization.
+	
+  // Cholesky factorization.
 	libfla_test_chol( output_stream, params, ops.chol );
 
 	// LU factorization without pivoting.
@@ -209,6 +211,11 @@ void libfla_test_lapack_suite( FILE* output_stream, test_params_t params, test_o
 
 	// Triangular Lyapunov equation solve.
 	libfla_test_lyap( output_stream, params, ops.lyap );
+
+	// LDLT Transform incomplete
+	libfla_test_ldlt2_nopiv_ps( &params, ops.ldlt_nopiv_part );
+	libfla_test_ldltx_nopiv_ps( &params, ops.ldlt_nopiv_part );
+
 }
 
 
@@ -283,6 +290,10 @@ void libfla_test_read_operation_file( char* input_filename, test_ops_t* ops )
 	// Read the operation tests for LU_incpiv factorization.
 	libfla_test_read_tests_for_op_flash_only( input_stream, &(ops->lu_incpiv) );
 	libfla_test_output_op_struct_flash_only( "lu_incpiv", ops->lu_incpiv );
+
+	// Read the operation tests for LDLT_nopiv_part factorization.
+	libfla_test_read_tests_for_op_ext( input_stream, &(ops->ldlt_nopiv_part) );
+	libfla_test_output_op_struct_ext( "ldlt_nopiv_part", ops->ldlt_nopiv_part );
 
 	// Read the operation tests for QR_UT factorization.
 	libfla_test_read_tests_for_op_ext( input_stream, &(ops->qrut) );
@@ -839,6 +850,10 @@ void libfla_test_read_parameter_file( char* input_filename, test_params_t* param
 	libfla_test_read_next_line( buffer, input_stream );
 	sscanf( buffer, "%lu ", &(params->p_inc) );
 
+	// Read the partial number of matrix size for incomplete factorization.
+	libfla_test_read_next_line( buffer, input_stream );
+	sscanf( buffer, "%lu ", &(params->p_nfact) );
+
 	// Read the number of SuperMatrix threads to test with.
 	libfla_test_read_next_line( buffer, input_stream );
 	sscanf( buffer, "%u ", &(params->n_threads) );
@@ -1335,6 +1350,36 @@ void libfla_test_op_driver( char*         func_str,
 	for ( sci = 0; sci < n_storage_run; ++sci )
 		free( sc_str[sci] );
 	free( sc_str );
+}
+
+
+
+void libfla_test_print_result_info(char  *func_param_str,
+                                   char  *datatype_char,
+                                   char  *sc_str,
+                                   int    p_cur,
+                                   double perf,
+                                   double residual,
+                                   char  *pass_str,
+                                   int    nfact )
+{
+	char blank_str[32];
+	int  n_spaces;
+
+	n_spaces = MAX_FUNC_STRING_LENGTH - strlen( func_param_str );
+	fill_string_with_n_spaces( blank_str, n_spaces );
+
+  if( pass_str[0] == 'P' )
+     libfla_test_output_info( "   %s%s  %c|%-6s  %5u  %6.3lf  %9.2le   %s\n",
+                                      func_param_str, blank_str,
+                                      datatype_char, sc_str,
+                                      p_cur, perf, residual, pass_str );
+  else
+     libfla_test_output_info( "   %s%s  %c|%-6s  %5u  %6.3lf  %9.2le   %s for nfact=%d\n",
+                                      func_param_str, blank_str,
+                                      datatype_char, sc_str,
+                                      p_cur, perf, residual, pass_str, nfact );
+
 }
 
 
