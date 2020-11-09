@@ -52,6 +52,7 @@ char libfla_test_binary_name[ MAX_BINARY_NAME_LENGTH + 1 ];
 char libfla_test_pass_string[ MAX_PASS_STRING_LENGTH + 1 ];
 char libfla_test_warn_string[ MAX_PASS_STRING_LENGTH + 1 ];
 char libfla_test_fail_string[ MAX_PASS_STRING_LENGTH + 1 ];
+char libfla_test_storage_format_string[ 100 ];
 
 char libfla_test_stor_chars[ NUM_STORAGE_CHARS + 1 ];
 void libfla_test_read_tests_for_op_ext( FILE* input_stream, test_op_t* op );
@@ -1092,6 +1093,7 @@ void libfla_test_init_strings( void )
 	sprintf( libfla_test_pass_string, "PASS" );
 	sprintf( libfla_test_warn_string, "MARGINAL" );
 	sprintf( libfla_test_fail_string, "FAILURE" );
+	sprintf( libfla_test_storage_format_string, "Row storage format is not supported for External LAPACK interface" );
 
 	sprintf( libfla_test_stor_chars, STORAGE_SCHEME_CHARS );
 }
@@ -1273,16 +1275,27 @@ void libfla_test_op_driver( char*         func_str,
 					// Loop over the operation's parameter combinations.
 					for ( pci = 0; pci < n_pc; ++pci )	
 					{
-						f_exp( params,
+						//If external interface is selected and row storage is set
+						//then do not proceed. Row storage is not supported for
+						//external lapack interface
+						if (impl == FLA_TEST_FLAT_BLK_EXT && sc_str[sci][0] == 'r')
+						{
+						  pass_str = libfla_test_storage_format_string;
+						  perf = residual = 0.0f;
+						}
+						else
+						{							
+						  f_exp( params,
 						       var,
 						       sc_str[sci],
 						       datatype,
 						       p_cur, pci, n_repeats, impl,
 						       &perf, &residual );
 
-						pass_str = libfla_test_get_string_for_result( residual,
+						  pass_str = libfla_test_get_string_for_result( residual,
 						                                              datatype,
 						                                              &thresh );
+						}
 
 						// Output the results. Use different formats depending on
 						// whether the results are from a front-end or variant.
