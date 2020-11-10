@@ -25,19 +25,29 @@ FLA_Error FLA_Givens2_opd( double* chi_1,
 	float  chi_2_orig = *(chi_2); \
 	float  g, s; \
 	float  norm_x; \
+  float  nscl; \
 \
-	norm_x = ( float  ) sqrt( ( float ) ( chi_1_orig * chi_1_orig + \
-	                                      chi_2_orig * chi_2_orig ) ); \
+  nscl = fabs( chi_1_orig ) + fabs( chi_2_orig ); \
+  if ( nscl == 0.0F ) \
+  { \
+    g = 1.0F; \
+    s = 0.0F; \
+    norm_x = 0.0F; \
+  } \
+  else \
+  { \
+    norm_x = ( float ) nscl * sqrt( (chi_1_orig / nscl) * (chi_1_orig / nscl) + \
+                                    (chi_2_orig / nscl) * (chi_2_orig / nscl) ); \
+    g = chi_1_orig / norm_x; \
+    s = chi_2_orig / norm_x; \
 \
-	g = chi_1_orig / norm_x; \
-	s = chi_2_orig / norm_x; \
-\
-	if ( fabs( chi_1_orig ) > fabs( chi_2_orig ) && g < 0.0F ) \
-	{ \
-		g      = -g; \
-		s      = -s; \
-		norm_x = -norm_x; \
-	} \
+    if ( fabs( chi_1_orig ) > fabs( chi_2_orig ) && g < 0.0F) \
+    { \
+      g      = -g; \
+      s      = -s; \
+      norm_x = -norm_x; \
+    } \
+  } \
 \
 	*(gamma)     = g; \
 	*(sigma)     = s; \
@@ -51,19 +61,29 @@ FLA_Error FLA_Givens2_opd( double* chi_1,
 	double chi_2_orig = *(chi_2); \
 	double g, s; \
 	double norm_x; \
+  double nscl; \
 \
-	norm_x = ( double ) sqrt( chi_1_orig * chi_1_orig + \
-	                          chi_2_orig * chi_2_orig ); \
+  nscl = fabs( chi_1_orig ) + fabs( chi_2_orig ); \
+  if ( nscl == 0.0 ) \
+  { \
+    g = 1.0; \
+    s = 0.0; \
+    norm_x = 0.0; \
+  } \
+  else \
+  { \
+    norm_x = ( double ) nscl * sqrt( (chi_1_orig / nscl) * (chi_1_orig / nscl) + \
+                                     (chi_2_orig / nscl) * (chi_2_orig / nscl) ); \
+    g = chi_1_orig / norm_x; \
+    s = chi_2_orig / norm_x; \
 \
-	g = chi_1_orig / norm_x; \
-	s = chi_2_orig / norm_x; \
-\
-	if ( fabs( chi_1_orig ) > fabs( chi_2_orig ) && g < 0.0 ) \
-	{ \
-		g      = -g; \
-		s      = -s; \
-		norm_x = -norm_x; \
-	} \
+    if ( fabs( chi_1_orig ) > fabs( chi_2_orig ) && g < 0.0 ) \
+    { \
+      g      = -g; \
+      s      = -s; \
+      norm_x = -norm_x; \
+    } \
+  } \
 \
 	*(gamma)     = g; \
 	*(sigma)     = s; \
