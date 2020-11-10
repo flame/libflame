@@ -209,7 +209,8 @@
       CHARACTER*3        PATH, MATPATH
       INTEGER            I, I1, I2, IMAT, IN, INB, INFO, IOFF, IRHS,
      $                   IUPLO, IZERO, J, K, KL, KU, LDA, LWORK, MODE,
-     $                   N, NB, NERRS, NFAIL, NIMAT, NRHS, NRUN, NT
+     $                   N, NB, NERRS, NFAIL, NIMAT, NRHS, NRUN, NT,
+     $                   IH
       DOUBLE PRECISION   ANORM, CNDNUM
 *     ..
 *     .. Local Arrays ..
@@ -426,6 +427,10 @@
 *                 preserve the test matrix A for subsequent tests.
 *
                   CALL ZLACPY( UPLO, N, N, A, LDA, AFAC, LDA )
+                  DO 190 IH = 1, N
+                     AFAC( IH+(IH-1)*LDA ) = REAL( 
+     $                                       AFAC( IH+(IH-1)*LDA ) )
+  190             CONTINUE
 *
 *                 Compute the L*D*L**T or U*D*U**T factorization of the
 *                 matrix. IWORK stores details of the interchanges and
