@@ -639,6 +639,7 @@ fla_multithreading_model
 fla_enable_multithreading
 fla_c_openmp_flags
 fla_enable_blas3_front_end_cntl_trees
+fla_enable_f2c_dotc
 fla_enable_external_lapack_interfaces
 fla_enable_external_lapack_for_subproblems
 fla_enable_lapack2flame
@@ -744,6 +745,7 @@ enable_non_critical_code
 enable_builtin_blas
 enable_lapack2flame
 enable_external_lapack_for_subproblems
+enable_f2c_dotc
 enable_external_lapack_interfaces
 enable_blas3_front_end_cntl_trees
 enable_multithreading
@@ -1452,6 +1454,13 @@ Optional Features:
                           if this option is enabled, then
                           external-lapack-for-subproblems MUST be disabled.
                           (Disabled by default.)
+  --enable-f2c-dotc
+                          Enable code that allows the user to invoke f2c
+                          based calling convention for complex datatype
+                          dotc function of BLAS. If this option is enabled
+                          libflame calls cdotc/zdotc function with output as
+                          first parameter of the function instead of as return
+                          type. (Disabled by default.)
   --enable-external-lapack-for-subproblems
                           Enable code that causes most of the
                           computationally-intensive functions within libflame
@@ -6304,10 +6313,34 @@ $as_echo "no" >&6; }
 	fi
 
 
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested enabling F2C convention for Complex dotc function" >&5
+$as_echo_n "checking whether user requested enabling F2C calling format for complex dotc function... " >&6; }
+
+	# Check whether --enable-f2c-dotc was given.
+        if test "${enable_f2c_dotc+set}" = set; then :
+             enableval=$enable_f2c_dotc;
+             if test "$enableval" = "no" ; then
+                fla_enable_f2c_dotc=no
+	     elif test "$enableval" = "yes" ; then
+		fla_enable_f2c_dotc=yes
+             else
+		as_fn_error "Reached unreachable branch in FLA_CHECK_ENABLE_F2C_DOTC!" "$LINENO" 5
+             fi
+        else
+             fla_enable_f2c_dotc=no
+        fi
 
 
-
-
+	if   test "$fla_enable_f2c_dotc" = "yes" ; then
+             { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+               $as_echo "yes" >&6; }
+             $as_echo "#define FLA_ENABLE_F2C_DOTC 1" >>confdefs.h
+	elif test "$fla_enable_f2c_dotc" = "no" ; then
+             { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+               $as_echo "no" >&6; }
+	else
+            as_fn_error "Reached unreachable branch in FLA_CHECK_ENABLE_F2C_DOTC!" "$LINENO" 5
+	fi
 
 
 

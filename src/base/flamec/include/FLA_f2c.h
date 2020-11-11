@@ -18,9 +18,16 @@
 #include <complex.h>
 #undef complex
 #include "aocldtl.h"
+#include "FLA_config.h"
 
 #ifndef F2C_INCLUDE
 #define F2C_INCLUDE
+
+/* Call F2C convention for Complex DOTC functions */
+#ifdef FLA_ENABLE_F2C_DOTC
+#define cdotc_f2c_ cdotc_
+#define zdotc_f2c_ zdotc_
+#endif
 
 /* typedef long int integer; */
 typedef int integer; 

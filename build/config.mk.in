@@ -65,6 +65,7 @@ FLA_ENABLE_MAX_ARG_LIST_HACK   := @fla_enable_max_arg_list_hack@
 FLA_ENABLE_BUILTIN_BLAS        := @fla_enable_builtin_blas@
 FLA_ENABLE_LAPACK2FLAME        := @fla_enable_lapack2flame@
 FLA_MULTITHREADING_MODEL       := @fla_multithreading_model@
+FLA_ENABLE_F2C_DOTC            := @fla_enable_f2c_dotc@
 
 # Alias the variable 'V' to the flag for verbosity.
 ifeq ($(V),1)

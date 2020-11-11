@@ -450,6 +450,10 @@ dnl Observe whether we should build code that provides FLAME-like interfaces to
 dnl certain LAPACK routines.
 FLA_CHECK_ENABLE_EXTERNAL_LAPACK_INTERFACES
 
+dnl Observe whether we should build code that provides f2c caling convention for
+dnl complex dotc function.
+FLA_CHECK_ENABLE_F2C_DOTC
+
 dnl Make sure the user did not enable both lapack2flame and external LAPACK
 dnl interfaces.
 FLA_REQUIRE_NO_LAPACK_NAMESPACE_CONFLICT
