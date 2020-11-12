@@ -157,10 +157,10 @@ void test_ldlt2_nopiv_ps_s( test_params_t *params )
       pcode = strpass;
       snrm = 0.0;
       perf = 0.0;
-      if( (int) params->p_nfact == -1 )
+      if( (int) params->p_nfact == -2 )
       {
          n_repeats = (params->n_repeats < 5) ? params->n_repeats : 5;
-         for( ni = 1; ni <= n; ni++ )
+         for( ni = 0; ni <= n; ni++ )
          {
             time_min   = 1e9;
             for( i = 0; i < n_repeats; i++ )
@@ -200,7 +200,7 @@ void test_ldlt2_nopiv_ps_s( test_params_t *params )
       {
          time_min   = 1e9;
          snrm = 0.0f;
-         if( params->p_nfact == 0 )
+         if( (int) params->p_nfact == -1 )
          {
             ni = rand() % n;
          }
@@ -229,7 +229,7 @@ void test_ldlt2_nopiv_ps_s( test_params_t *params )
          }
 
          /* Calculate performance in GFLOPS */
-         perf = (2*ni*ni-6*ni*n+3*ni+6*n*n-6*n+7) / time_min / FLOPS_PER_UNIT_PERF;
+         perf = ni/6.0f*(2*ni*ni-6*ni*n+3*ni+6*n*n-6*n+7) / time_min / FLOPS_PER_UNIT_PERF;
 
          libfla_test_print_result_info("SPFFRT2",
                                        (char *) 's',
@@ -379,10 +379,10 @@ void test_ldlt2_nopiv_ps_d( test_params_t *params )
       pcode = strpass;
       dnrm = 0.0;
       perf = 0.0;
-      if( (int) params->p_nfact == -1 )
+      if( (int) params->p_nfact == -2 )
       {        
          n_repeats = (params->n_repeats < 5) ? params->n_repeats : 5;
-         for( ni = 1; ni <= n; ni++ )
+         for( ni = 0; ni <= n; ni++ )
          {
             time_min   = 1e9;
             for( i = 0; i < n_repeats; i++ )
@@ -422,7 +422,7 @@ void test_ldlt2_nopiv_ps_d( test_params_t *params )
       {
          time_min   = 1e9;
          dnrm = 0.0;
-         if( params->p_nfact == 0 )
+         if( (int) params->p_nfact == -1 )
          {
             ni = rand() % n;
          }
@@ -614,10 +614,10 @@ void test_ldlt2_nopiv_ps_c( test_params_t *params )
       pcode = strpass;
       snrm = 0.0;
       perf = 0.0;
-      if( (int) params->p_nfact == -1 )
+      if( (int) params->p_nfact == -2 )
       {        
          n_repeats = (params->n_repeats < 5) ? params->n_repeats : 5;
-         for( ni = 1; ni <= n; ni++ )
+         for( ni = 0; ni <= n; ni++ )
          {
             time_min   = 1e9;
             for( i = 0; i < n_repeats; i++ )
@@ -658,7 +658,7 @@ void test_ldlt2_nopiv_ps_c( test_params_t *params )
       {
          time_min   = 1e9;
          snrm = 0.0f;
-         if( params->p_nfact == 0 )
+         if( (int) params->p_nfact == -1 )
          {
             ni = rand() % n;
          }
@@ -850,10 +850,10 @@ void test_ldlt2_nopiv_ps_z( test_params_t *params )
       pcode = strpass;
       dnrm = 0.0;
       perf = 0.0;
-      if( (int) params->p_nfact == -1 )
+      if( (int) params->p_nfact == -2 )
       {        
          n_repeats = (params->n_repeats < 5) ? params->n_repeats : 5;
-         for( ni = 1; ni <= n; ni++ )
+         for( ni = 0; ni <= n; ni++ )
          {
             time_min   = 1e9;
             for( i = 0; i < n_repeats; i++ )
@@ -893,7 +893,7 @@ void test_ldlt2_nopiv_ps_z( test_params_t *params )
       {
          time_min   = 1e9;
          dnrm = 0.0f;
-         if( params->p_nfact == 0 )
+         if( (int) params->p_nfact == -1 )
          {
             ni = rand() % n;
          }

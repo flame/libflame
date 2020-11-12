@@ -155,10 +155,10 @@ void test_ldltx_nopiv_ps_s( test_params_t *params )
       pcode = strpass;
       snrm = 0.0;
       perf = 0.0;
-      if( (int) params->p_nfact == -1 )
+      if( (int) params->p_nfact == -2 )
       {        
          n_repeats = (params->n_repeats < 5) ? params->n_repeats : 5;
-         for( ni = 1; ni <= n; ni++ )
+         for( ni = 0; ni <= n; ni++ )
          {
             time_min   = 1e9;
             for( i = 0; i < n_repeats; i++ )
@@ -198,7 +198,7 @@ void test_ldltx_nopiv_ps_s( test_params_t *params )
       {
          time_min   = 1e9;
          snrm = 0.0f;
-         if( params->p_nfact == 0 )
+         if( (int) params->p_nfact == -1 )
          {
             ni = rand() % n;
          }
@@ -376,10 +376,10 @@ void test_ldltx_nopiv_ps_d( test_params_t *params )
       pcode = strpass;
       dnrm = 0.0;
       perf = 0.0;
-      if( (int) params->p_nfact == -1 )
+      if( (int) params->p_nfact == -2 )
       {        
          n_repeats = (params->n_repeats < 5) ? params->n_repeats : 5;
-         for( ni = 1; ni <= n; ni++ )
+         for( ni = 0; ni <= n; ni++ )
          {
             time_min   = 1e9;
             for( i = 0; i < n_repeats; i++ )
@@ -419,7 +419,7 @@ void test_ldltx_nopiv_ps_d( test_params_t *params )
       {
          time_min   = 1e9;
          dnrm = 0.0;
-         if( params->p_nfact == 0 )
+         if( (int) params->p_nfact == -1 )
          {
             ni = rand() % n;
          }
@@ -609,10 +609,10 @@ void test_ldltx_nopiv_ps_c( test_params_t *params )
       pcode = strpass;
       snrm = 0.0;
       perf = 0.0;
-      if( (int) params->p_nfact == -1 )
+      if( (int) params->p_nfact == -2 )
       {        
          n_repeats = (params->n_repeats < 5) ? params->n_repeats : 5;
-         for( ni = 1; ni <= n; ni++ )
+         for( ni = 0; ni <= n; ni++ )
          {
             time_min   = 1e9;
             for( i = 0; i < n_repeats; i++ )
@@ -652,7 +652,7 @@ void test_ldltx_nopiv_ps_c( test_params_t *params )
       {
          time_min   = 1e9;
          snrm = 0.0f;
-         if( params->p_nfact == 0 )
+         if( (int) params->p_nfact == -1 )
          {
             ni = rand() % n;
          }
@@ -842,10 +842,10 @@ void test_ldltx_nopiv_ps_z( test_params_t *params )
       pcode = strpass;
       dnrm = 0.0;
       perf = 0.0;
-      if( (int) params->p_nfact == -1 )
+      if( (int) params->p_nfact == -2 )
       {        
          n_repeats = (params->n_repeats < 5) ? params->n_repeats : 5;
-         for( ni = 1; ni <= n; ni++ )
+         for( ni = 0; ni <= n; ni++ )
          {
             time_min   = 1e9;
             for( i = 0; i < n_repeats; i++ )
@@ -885,7 +885,7 @@ void test_ldltx_nopiv_ps_z( test_params_t *params )
       {
          time_min   = 1e9;
          dnrm = 0.0f;
-         if( params->p_nfact == 0 )
+         if( (int) params->p_nfact == -1 )
          {
             ni = rand() % n;
          }
