@@ -917,7 +917,7 @@ void test_ldltx_nopiv_ps_z( test_params_t *params )
          perf = ni/3.0f*(4*ni*ni-12*ni*n+9*ni+12*n*n-18*n+8) / time_min / FLOPS_PER_UNIT_PERF;
 
          libfla_test_print_result_info("SPFFRTX",
-                                       (char *) 'd',
+                                       (char *) 'z',
                                        "c",
                                        n,
                                        perf,
