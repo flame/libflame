@@ -26,7 +26,7 @@
 BUILD_DIR       := ../build
 CONFIG_DIR      := ../config
 LIB_DIR         := ../lib
-INCLUDE_DIR     := ../src/aocl_dtl ../src/base/flamec/include -I../config/x86_64-unknown-linux-gnu
+INCLUDE_DIR     := ../src/aocl_dtl -I../src/base/flamec/include -I../config/x86_64-unknown-linux-gnu
 SRC_PATH        := ../src
 HOST            := $(shell sh $(BUILD_DIR)/ac-utils/config.guess)
 CONFIG_MK_FILE  := $(CONFIG_DIR)/$(HOST)/config.mk

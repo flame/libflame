@@ -43,7 +43,9 @@ extern "C"{
 #include "FLA_util_lapack_prototypes.h"
 }
 
+#ifndef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
 #define FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
+#endif
 
 using namespace std;
 typedef int FLA_Error;
