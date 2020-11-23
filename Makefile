@@ -16,7 +16,7 @@
         libs libflame \
         check-env check-env-config check-env-fragments \
         flat-headers \
-        test \
+        test check checklibflame\
 	checkcpp cleancpptest \
         install-headers install-libs install-lib-symlinks \
         clean cleanmk cleanh cleanlib cleanleaves distclean \
@@ -59,6 +59,7 @@ OBJ_DIR         := obj
 LIB_DIR         := lib
 INC_DIR         := include
 LAPACKE_DIR     := lapacke
+TEST_DIR        := test
 CPP_TEST_DIR    := testcpp
 
 # Use the system type to name the config, object, and library directories.
@@ -428,6 +429,8 @@ all: libs
 
 libs: libflame
 
+check: checklibflame
+
 install: libs install-libs install-lib-symlinks install-headers
 
 uninstall: uninstall-libs uninstall-lib-symlinks uninstall-headers
@@ -656,9 +659,50 @@ endif
 
 # --- Test suite rules ---
 
+# The test binary executable filename.
+#
+#   $(TEST_WRAPPER) ./$(TEST_BIN) ... > $(TEST_OUT_FILE)
+#
+# "TEST_WRAPPER can be used to set additional environment variables
+#  such as LD_LIBRARY_PATH, numactl and others"
+#
+TEST_BIN      := test_$(LIBFLAME).x
+TEST_WRAPPER  ?=
+TEST_CHECK    := check-flametest.sh
 
+# The location of the script that checks the BLIS testsuite output.
+TEST_CHECK_PATH    := $(DIST_PATH)/$(TEST_DIR)/$(TEST_CHECK)
 
+test-bin: check-env $(TEST_BIN)
 
+TEST_OUT_FILE := output.test
+
+# Check the results of the LIBLFLAME tests.
+$(TEST_BIN):
+ifeq ($(ENABLE_VERBOSE),yes)
+	$(MAKE) -C $(TEST_DIR)
+else
+	@$(MAKE) -C $(TEST_DIR)
+endif
+
+test-run: test-bin
+ifeq ($(ENABLE_VERBOSE),yes)
+	cd $(TEST_DIR) && $(TEST_WRAPPER) ./$(TEST_BIN) > $(TEST_OUT_FILE)
+else
+	@echo "Running $(TEST_BIN) with output redirected to '$(TEST_OUT_FILE)'"
+	@chmod +x $(TEST_DIR)/$(TEST_CHECK)
+	@echo "Please wait for tests to complete..."
+	@cd $(TEST_DIR) && $(TEST_WRAPPER) ./$(TEST_BIN) > $(TEST_OUT_FILE)
+endif
+
+checklibflame:test-run
+ifeq ($(ENABLE_VERBOSE),yes)
+	- $(TEST_CHECK_PATH) $(TEST_DIR)/$(TEST_OUT_FILE)
+else 
+	- $(TEST_CHECK_PATH) $(TEST_DIR)/$(TEST_OUT_FILE)
+endif
+
+ 
 # --- Install rules ---
 
 
