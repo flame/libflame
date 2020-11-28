@@ -32,7 +32,7 @@
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date September 2012 */
+/* > \date November 2019 */
 /* > \ingroup auxOTHERauxiliary */
 /* ===================================================================== */
 /* Subroutine */
@@ -45,7 +45,7 @@ int ilaver_(integer *vers_major__, integer *vers_minor__, integer *vers_patch__)
     /* ===================================================================== */
     /* ===================================================================== */
     *vers_major__ = 3;
-    *vers_minor__ = 5;
+    *vers_minor__ = 9;
     *vers_patch__ = 0;
     /* ===================================================================== */
     return 0;
