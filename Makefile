@@ -59,6 +59,7 @@ OBJ_DIR         := obj
 LIB_DIR         := lib
 INC_DIR         := include
 LAPACKE_DIR     := lapacke
+AOCLDTL_DIR     := aocl_dtl
 TEST_DIR        := test
 CPP_TEST_DIR    := testcpp
 
@@ -110,6 +111,8 @@ LIBFLAME_A           := $(LIBFLAME).a
 LIBFLAME_SO          := $(LIBFLAME).$(SHLIB_EXT)
 
 LAPACKE_A	     := liblapacke.a
+AOCLDTL_A            := libaocldtl.a
+AOCLDTL_SO           := libaocldtl.so
 
 # --- Library filepaths ---
 
@@ -131,6 +134,10 @@ LIBFLAME_SONAME      := $(LIBFLAME).$(LIBFLAME_SO_MAJ_EXT)
 LIBFLAME_SO_MAJ_PATH := $(BASE_LIB_PATH)/$(LIBFLAME_SONAME)
 
 LAPACKE_A_PATH       := $(SRC_DIR)/$(LAPACKE_DIR)/$(LAPACKE_A)
+AOCLDTL_A_PATH       := $(SRC_DIR)/$(AOCLDTL_DIR)/$(AOCLDTL_A)
+AOCLDTL_SO_PATH      := $(SRC_DIR)/$(AOCLDTL_DIR)/$(AOCLDTL_SO)
+AOCLDTL_obj_PATH     := $(SRC_DIR)/$(AOCLDTL_DIR)/*.o
+AOCLDTL_gch_PATH     := $(SRC_DIR)/$(AOCLDTL_DIR)/*.gch
 
 # Construct the output path when building a shared library.
 LIBFLAME_SO_OUTPUT_NAME := $(LIBFLAME_SO_PATH)
@@ -205,11 +212,12 @@ MK_LIBS_INST              += $(LIBFLAME_A_INST)
 MK_LIBS_SYML              +=
 endif
 
-MK_LIBS                   += $(LAPACKE_A_PATH)
+MK_LIBS                   += $(LAPACKE_A_PATH) \
+			     $(AOCLDTL_A_PATH)
 
 ifeq ($(FLA_ENABLE_DYNAMIC_BUILD),yes)
 MK_LIBS                   += $(LIBFLAME_SO_PATH) \
-                             $(LIBFLAME_SO_MAJ_PATH)
+                             $(LIBFLAME_SO_MAJ_PATH) 
 MK_LIBS_INST              += $(LIBFLAME_SO_MMB_INST)
 MK_LIBS_SYML              += $(LIBFLAME_SO_INST) \
 			     $(LIBFLAME_SO_MAJ_INST)
@@ -547,6 +555,15 @@ else
 	@echo "Generated LAPACKE library"
 endif
 
+$(AOCLDTL_A_PATH):
+ifeq ($(ENABLE_VERBOSE),yes)
+	$(MAKE) -e -C $(SRC_DIR)/$(AOCLDTL_DIR)
+else
+	@echo -n "Generating AOCLDTL library"
+	$(MAKE) -e -C $(SRC_DIR)/$(AOCLDTL_DIR)
+	@echo "Generated AOCLDTL library"
+endif
+
 $(LIBFLAME_A_PATH): $(MK_ALL_FLAMEC_OBJS)
 ifeq ($(ENABLE_VERBOSE),yes)
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
@@ -735,11 +752,13 @@ ifeq ($(ENABLE_VERBOSE),yes)
 	$(MKDIR) $(@D)
 	$(INSTALL) -m 0644 $< $@
 	$(INSTALL) -m 0644 $(LAPACKE_A_PATH) $(INSTALL_LIBDIR)/$(LAPACKE_A)
+	$(INSTALL) -m 0644 $(AOCLDTL_A_PATH) $(INSTALL_LIBDIR)/$(AOCLDTL_A)
 else
 	@echo "Installing $(@F) into $(INSTALL_LIBDIR)/"
 	@$(MKDIR) $(@D)
 	@$(INSTALL) -m 0644 $< $@
 	@$(INSTALL) -m 0644 $(LAPACKE_A_PATH) $(INSTALL_LIBDIR)/$(LAPACKE_A)
+	@$(INSTALL) -m 0644 $(AOCLDTL_A_PATH) $(INSTALL_LIBDIR)/$(AOCLDTL_A)
 endif
 
 # Install shared library.
@@ -747,10 +766,12 @@ $(INSTALL_LIBDIR)/%.$(LIBFLAME_SO_MMB_EXT): $(BASE_LIB_PATH)/%.$(SHLIB_EXT) $(CO
 ifeq ($(ENABLE_VERBOSE),yes)
 	$(MKDIR) $(@D)
 	$(INSTALL) -m 0755 $< $@
+	$(INSTALL) -m 0644 $(AOCLDTL_SO_PATH) $(INSTALL_LIBDIR)/$(AOCLDTL_SO)
 else
 	@echo "Installing $(@F) into $(INSTALL_LIBDIR)/"
 	@$(MKDIR) $(@D)
 	@$(INSTALL) -m 0755 $< $@
+	@$(INSTALL) -m 0644 $(AOCLDTL_SO_PATH) $(INSTALL_LIBDIR)/$(AOCLDTL_SO)
 endif
 
 
@@ -807,12 +828,20 @@ ifeq ($(IS_CONFIGURED),yes)
 ifeq ($(ENABLE_VERBOSE),yes)
 	- $(FIND) $(BASE_OBJ_PATH) -name "*.o" | $(XARGS) $(RM_F)
 	- $(RM_F) $(LAPACKE_A_PATH)
+	- $(RM_F) $(AOCLDTL_A_PATH)
+	- $(RM_F) $(AOCLDTL_SO_PATH)
+	- $(RM_F) $(AOCLDTL_obj_PATH)
+	- $(RM_F) $(AOCLDTL_gch_PATH)
 	- $(RM_F) $(BASE_LIB_PATH)/*
 else
 	@echo "Removing object files from $(BASE_OBJ_PATH)"
 	@$(FIND) $(BASE_OBJ_PATH) -name "*.o" | $(XARGS) $(RM_F)
 	@echo "Removing libraries from $(BASE_LIB_PATH)"
 	@$(RM_F) $(LAPACKE_A_PATH)
+	@$(RM_F) $(AOCLDTL_A_PATH)
+	@$(RM_F) $(AOCLDTL_SO_PATH)
+	@$(RM_F) $(AOCLDTL_obj_PATH)
+	@$(RM_F) $(AOCLDTL_gch_PATH)
 	@$(RM_F) $(BASE_LIB_PATH)/*
 endif
 endif

@@ -69,12 +69,27 @@ extern integer sscal_(integer *, real *, real *, integer *);
 
     \endverbatim
     *  */
+extern void DTL_Trace(
+    uint8 ui8LogLevel,
+    uint8 ui8LogType,
+    const int8 *pi8FileName,
+    const int8 *pi8FunctionName,
+    uint32 ui32LineNumber,
+    const int8 *pi8Message);
+
 void sspffrtx_fla(real *ap, integer *n, integer * ncolm, real *work, real *work2)
 {
     real d__1;
     integer i__1, k, kc;
     real r1;
     integer c__1 = 1;
+    
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    #if AOCL_DTL_LOG_ENABLE
+    	char buffer[256];
+	sprintf(buffer, "sspffrtx inputs: n %d, ncolm %d\n", *n, *ncolm);
+	AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+    #endif
 
     --ap;
     /* Factorize A as L*D*L**T using the lower triangle of A */
@@ -97,6 +112,7 @@ void sspffrtx_fla(real *ap, integer *n, integer * ncolm, real *work, real *work2
 
        kc = kc + *n - k + 1;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return;
     /* End of DSPTRF */
 }

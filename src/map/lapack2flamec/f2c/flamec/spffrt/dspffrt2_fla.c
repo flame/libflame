@@ -68,12 +68,28 @@ extern integer dspr_(char *, integer *, doublereal *, doublereal *, integer *, d
 
     \endverbatim
     *  */
+
+extern void DTL_Trace(
+    uint8 ui8LogLevel,
+    uint8 ui8LogType,
+    const int8 *pi8FileName,
+    const int8 *pi8FunctionName,
+    uint32 ui32LineNumber,
+    const int8 *pi8Message);
+
 void dspffrt2_fla(doublereal *ap, integer *n, integer * ncolm, doublereal *work, doublereal *work2)
 {
     doublereal d__1;
     integer i__1, k, kc;
     integer c__1 = 1;
     doublereal r1;
+    
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    #if AOCL_DTL_LOG_ENABLE
+    	char buffer[256];
+	sprintf(buffer, "dspffrt2 inputs: n %d, ncolm %d\n", *n, *ncolm);
+	AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+    #endif
 
     --ap;
     /* Factorize A as L*D*L**T using the lower triangle of A */
@@ -96,6 +112,7 @@ void dspffrt2_fla(doublereal *ap, integer *n, integer * ncolm, doublereal *work,
        ap[kc] = r1;
        kc = kc + *n - k + 1;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return;
 }
 /* dspffrt2_fla */

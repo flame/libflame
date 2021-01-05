@@ -18,6 +18,7 @@
 #define AOCL_FAL_WRITE_ERROR        -3
 #define AOCL_FAL_EOF_ERROR          -6
 #define AOCL_FAL_FERROR             -7
+#include "aocltpdef.h"
 
 /* The type definition for FILE */
 #define AOCL_FAL_FILE FILE
