@@ -20,6 +20,14 @@
   GEQRF computes a QR factorization of a M-by-N matrix A: A = Q * R.
 */
 
+extern void DTL_Trace(
+		    uint8 ui8LogLevel,
+		    uint8 ui8LogType,
+		    const int8 *pi8FileName,
+		    const int8 *pi8FunctionName,
+		    uint32 ui32LineNumber,
+		    const int8 *pi8Message);
+
 // GEQRF and GEQR2
 #define LAPACK_geqrf(prefix)                                            \
   int F77_ ## prefix ## geqrf(int* m,                                   \
@@ -30,6 +38,7 @@
                               int* info )
 
 #define LAPACK_geqrf_body(prefix)                               \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5); 		\
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   FLA_Obj      A, t, T;                                         \
   int          min_m_n  = min( *m, *n );                        \
@@ -58,6 +67,7 @@
                                                                         \
   *info = 0;                                                            \
                                                                         \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  	\
   return 0;
 
 LAPACK_geqrf(s)
