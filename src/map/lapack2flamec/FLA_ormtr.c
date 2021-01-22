@@ -163,7 +163,7 @@ extern int zunmtr_fla(char *side, char *uplo, char *trans, integer *m, integer *
 LAPACK_ormtr(s, orm)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             sormtr_fla( side, uplo, trans,
                         m, n,
@@ -191,7 +191,7 @@ LAPACK_ormtr(s, orm)
 LAPACK_ormtr(d, orm)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             dormtr_fla( side, uplo, trans,
                         m, n,
@@ -221,7 +221,7 @@ LAPACK_ormtr(d, orm)
 LAPACK_ormtr(c, unm)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             cunmtr_fla( side, uplo, trans,
                         m, n,
@@ -249,7 +249,7 @@ LAPACK_ormtr(c, unm)
 LAPACK_ormtr(z, unm)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             zunmtr_fla( side, uplo, trans,
                         m, n,

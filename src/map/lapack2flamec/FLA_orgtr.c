@@ -121,7 +121,7 @@ extern int zungtr_fla(char *uplo, integer *n, doublecomplex *a, integer *lda, do
 LAPACK_orgtr(s, org)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             sorgtr_fla( uplo, m,
                         buff_A, ldim_A,
@@ -146,7 +146,7 @@ LAPACK_orgtr(s, org)
 LAPACK_orgtr(d, org)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             dorgtr_fla( uplo, m,
                         buff_A, ldim_A,
@@ -172,7 +172,7 @@ LAPACK_orgtr(d, org)
 LAPACK_orgtr(c, ung)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             cungtr_fla( uplo, m,
                         (complex*)buff_A, ldim_A,
@@ -196,7 +196,7 @@ LAPACK_orgtr(c, ung)
 LAPACK_orgtr(z, ung)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             zungtr_fla( uplo, m,
                         (doublecomplex*) buff_A, ldim_A,

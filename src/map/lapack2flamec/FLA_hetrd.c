@@ -144,7 +144,7 @@ extern int zhetrd_fla(char *uplo, integer *n, doublecomplex *a, integer *lda, do
 LAPACK_hetrd(s,sy)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             ssytrd_fla( uplo, m,
                         buff_A, ldim_A,
@@ -170,7 +170,7 @@ LAPACK_hetrd(s,sy)
 LAPACK_hetrd(d,sy)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             dsytrd_fla( uplo, m,
                         buff_A, ldim_A,
@@ -198,7 +198,7 @@ LAPACK_hetrd(d,sy)
 LAPACK_hetrd(c,he)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             chetrd_fla( uplo, m,
                         (complex*)buff_A, ldim_A,
@@ -224,7 +224,7 @@ LAPACK_hetrd(c,he)
 LAPACK_hetrd(z,he)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             zhetrd_fla( uplo, m,
                         (doublecomplex*)buff_A, ldim_A,
@@ -261,7 +261,7 @@ LAPACK_hetrd(z,he)
 LAPACK_hetd2(s,sy)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             ssytd2_fla( uplo, m,
                         buff_A, ldim_A,
@@ -285,7 +285,7 @@ LAPACK_hetd2(s,sy)
 LAPACK_hetd2(d,sy)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             dsytd2_fla( uplo, m,
                         buff_A, ldim_A,
@@ -311,7 +311,7 @@ LAPACK_hetd2(d,sy)
 LAPACK_hetd2(c,he)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             chetd2_fla( uplo, m,
                         (complex*)buff_A, ldim_A,
@@ -335,7 +335,7 @@ LAPACK_hetd2(c,he)
 LAPACK_hetd2(z,he)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             zhetd2_fla( uplo, m,
                         (doublecomplex*)buff_A, ldim_A,
