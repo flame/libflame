@@ -29,6 +29,14 @@
   to solve a system of equations.
 */
 
+extern void DTL_Trace(
+		    uint8 ui8LogLevel,
+		    uint8 ui8LogType,
+		    const int8 *pi8FileName,
+		    const int8 *pi8FunctionName,
+		    uint32 ui32LineNumber,
+		    const int8 *pi8Message);
+
 #define LAPACK_getrf(prefix)                                            \
   int F77_ ## prefix ## getrf( int* m,                                  \
                                int* n,                                  \
@@ -38,6 +46,7 @@
 
 // Note that p should be set zero.
 #define LAPACK_getrf_body(prefix)                               \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5); 		\
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   FLA_Obj      A, p;                                            \
   int          min_m_n    = min( *m, *n );                      \
@@ -64,6 +73,7 @@
   if ( e_val != FLA_SUCCESS ) *info = e_val + 1;                \
   else                        *info = 0;                        \
                                                                 \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  \
   return 0;
 
 LAPACK_getrf(s)

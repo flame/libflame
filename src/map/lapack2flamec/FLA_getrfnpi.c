@@ -40,6 +40,13 @@
 
 */
 
+extern void DTL_Trace(
+		uint8 ui8LogLevel,
+		uint8 ui8LogType,
+		const int8 *pi8FileName,
+		const int8 *pi8FunctionName,
+		uint32 ui32LineNumber,
+		const int8 *pi8Message);
 
 #define LAPACK_getrfnpi(prefix)                                                       \
   int F77_ ## prefix ## getrfnpi( int* m,                                             \
@@ -49,6 +56,7 @@
                                   int* info )
 
 #define LAPACK_getrfnpi_body(prefix)                            \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5); \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   FLA_Obj      A;                                               \
   FLA_Error    e_val;                                           \
@@ -68,6 +76,7 @@
   if ( e_val != FLA_SUCCESS ) *info = e_val + 1;                \
   else                        *info = 0;                        \
                                                                 \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  \
   return 0;
 
 
