@@ -217,7 +217,7 @@ MK_LIBS                   += $(LAPACKE_A_PATH) \
 
 ifeq ($(FLA_ENABLE_DYNAMIC_BUILD),yes)
 MK_LIBS                   += $(LIBFLAME_SO_PATH) \
-                             $(LIBFLAME_SO_MAJ_PATH) 
+                             $(LIBFLAME_SO_MAJ_PATH)
 MK_LIBS_INST              += $(LIBFLAME_SO_MMB_INST)
 MK_LIBS_SYML              += $(LIBFLAME_SO_INST) \
 			     $(LIBFLAME_SO_MAJ_INST)
@@ -508,8 +508,10 @@ else
 	@echo "Compiling $<"
 	@$(CC) $(CFLAGS_NOOPT) -c $< -o $@
 endif
+ifeq ($(OS_NAME),Darwin)
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 	@echo $@ >> $(AR_OBJ_LIST_FILE)
+endif
 endif
 
 FLA_DLAMCH=base/flamec/util/lapack/mch/fla_dlamch
@@ -520,10 +522,11 @@ else
 	@echo "Compiling $<"
 	@$(CC) $(CFLAGS_NOOPT) -c $< -o $@
 endif
+ifeq ($(OS_NAME),Darwin)
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 	@echo $@ >> $(AR_OBJ_LIST_FILE)
 endif
-
+endif
 
 # --- General source code / object code rules ---
 
@@ -535,10 +538,11 @@ else
 	@echo "Compiling $<"
 	@$(CC) $(CFLAGS) -c $< -o $@
 endif
+ifeq ($(OS_NAME),Darwin)
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 	@echo $@ >> $(AR_OBJ_LIST_FILE)
 endif
-
+endif
 
 # --- All-purpose library rule (static and shared) ---
 
@@ -567,12 +571,18 @@ endif
 $(LIBFLAME_A_PATH): $(MK_ALL_FLAMEC_OBJS)
 ifeq ($(ENABLE_VERBOSE),yes)
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
+ifeq ($(OS_NAME),Darwin)
 ### Kyungjoo 2015.10.21
 	$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $@
 ### Previous hack (works on linux, not on osx; osx's ar does not support @file)
 #	echo $(ARFLAGS) $@ > $(AR_ARG_LIST_FILE)
 #	$(CAT) $(AR_OBJ_LIST_FILE) >> $(AR_ARG_LIST_FILE)
 #	$(AR) @$(AR_ARG_LIST_FILE)
+else
+	$(file > $@.in,$^)
+	$(AR) $(ARFLAGS) $@ @$@.in
+	$(RM_F) $@.in
+endif 
 else
 #	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
 #	the list of prerequisites.
@@ -584,12 +594,18 @@ endif
 else
 	@echo "Archiving $@"
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
+ifeq ($(OS_NAME),Darwin)
 ### Kyungjoo 2015.10.21
 	@$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $@
 ### Previous hack (works on linux, not on osx; osx's ar does not support @file)
 #	@echo $(ARFLAGS) $@ > $(AR_ARG_LIST_FILE)
 #	@$(CAT) $(AR_OBJ_LIST_FILE) >> $(AR_ARG_LIST_FILE)
 #	@$(AR) @$(AR_ARG_LIST_FILE)
+else
+	@$(file > $@.in,$^)
+	@$(AR) $(ARFLAGS) $@ @$@.in
+	@$(RM_F) $@.in
+endif
 else
 #	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
 #	the list of prerequisites.
@@ -606,30 +622,34 @@ endif
 $(LIBFLAME_SO_PATH): $(MK_ALL_FLAMEC_OBJS)
 ifeq ($(ENABLE_VERBOSE),yes)
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
-	$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $(LIBFLAME_A)
 ifeq ($(OS_NAME),Darwin)
+	$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $(LIBFLAME_A)
 	$(LINKER) $(SOFLAGS) -o $@ -Wl,-force_load,$(LIBFLAME_A) $(LDFLAGS)
 else
-	$(LINKER) $(SOFLAGS) -o $@ -Wl,--whole-archive,$(LIBFLAME_A),--no-whole-archive $(LDFLAGS)
+	$(file > $@.in,$^)
+	$(LINKER) $(SOFLAGS) -o $(LIBFLAME_SO_OUTPUT_NAME) @$@.in $(LDFLAGS)
+	$(RM_F) $@.in
 endif
 else
 #	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
 #	the list of prerequisites.
-	$(LINKER) $(SOFLAGS) -o $@ $^ $(LDFLAGS)
+	$(LINKER) $(SOFLAGS) -o $(LIBFLAME_SO_OUTPUT_NAME) $^ $(LDFLAGS)
 endif
 else
 	@echo "Dynamically linking $@"
 ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
-	@$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $(LIBFLAME_A)
 ifeq ($(OS_NAME),Darwin)
+	@$(CAT) $(AR_OBJ_LIST_FILE) | xargs -n$(AR_CHUNK_SIZE) $(AR) $(ARFLAGS) $(LIBFLAME_A)
 	@$(LINKER) $(SOFLAGS) -o $@ -Wl,-force_load,$(LIBFLAME_A) $(LDFLAGS)
 else
-	@$(LINKER) $(SOFLAGS) -o $@ -Wl,--whole-archive,$(LIBFLAME_A),--no-whole-archive $(LDFLAGS)
+	@$(file > $@.in,$^)
+	@$(LINKER) $(SOFLAGS) -o $(LIBFLAME_SO_OUTPUT_NAME) @$@.in $(LDFLAGS)
+	@$(RM_F) $@.in
 endif
 else
 #	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
 #	the list of prerequisites.
-	@$(LINKER) $(SOFLAGS) -o $@ $^ $(LDFLAGS)
+	@$(LINKER) $(SOFLAGS) -o $(LIBFLAME_SO_OUTPUT_NAME) $^ $(LDFLAGS)
 endif
 endif
 
@@ -715,11 +735,11 @@ endif
 checklibflame:test-run
 ifeq ($(ENABLE_VERBOSE),yes)
 	- $(TEST_CHECK_PATH) $(TEST_DIR)/$(TEST_OUT_FILE)
-else 
+else
 	- $(TEST_CHECK_PATH) $(TEST_DIR)/$(TEST_OUT_FILE)
 endif
 
- 
+
 # --- Install rules ---
 
 
@@ -849,7 +869,9 @@ endif
 distclean: cleanmk cleanh cleanlib
 ifeq ($(IS_CONFIGURED),yes)
 ifeq ($(ENABLE_VERBOSE),yes)
+ifeq ($(OS_NAME),Darwin)
 	- $(RM_F) $(AR_OBJ_LIST_FILE)
+endif 
 	- $(RM_RF) $(CONFIG_DIR)
 	- $(RM_RF) $(OBJ_DIR)
 	- $(RM_RF) $(LIB_DIR)
@@ -861,8 +883,10 @@ ifeq ($(ENABLE_VERBOSE),yes)
 	- $(RM_RF) config.sys_type
 	- $(RM_RF) config.dist_path
 else
+ifeq ($(OS_NAME),Darwin)
 	@echo "Removing $(AR_OBJ_LIST_FILE)"
 	@$(RM_F) $(AR_OBJ_LIST_FILE)
+endif 
 	@echo "Removing $(CONFIG_DIR)"
 	@$(RM_RF) $(CONFIG_DIR)
 	@echo "Removing $(OBJ_DIR)"
