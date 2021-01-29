@@ -470,6 +470,10 @@ FLA_CHECK_ENABLE_SUPERMATRIX
 dnl Observe the GPU extension switch.
 FLA_CHECK_ENABLE_GPU
 
+dnl Observe whether we should build code that calls GEMMT blas extension call
+dnl to get better performance for DSPFFRT2 LAPACK API.
+FLA_CHECK_ENABLE_BLAS_EXT_GEMMT
+
 dnl Make sure the user did not request a weird combination of parallelization
 dnl options.
 FLA_REQUIRE_SUPERMATRIX_ENABLED

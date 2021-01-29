@@ -145,7 +145,7 @@ void libfla_test_lapack_suite( FILE* output_stream, test_params_t params, test_o
 	libfla_test_output_info( "--- LAPACK-level operation tests ---------------------\n" );
 	libfla_test_output_info( "\n" );
 
-  // Cholesky factorization.
+    // Cholesky factorization.
 	libfla_test_chol( output_stream, params, ops.chol );
 
 	// LU factorization without pivoting.
@@ -1400,17 +1400,10 @@ void libfla_test_print_result_info(char  *func_param_str,
 	n_spaces = MAX_FUNC_STRING_LENGTH - strlen( func_param_str );
 	fill_string_with_n_spaces( blank_str, n_spaces );
 
-  if( pass_str[0] == 'P' )
-     libfla_test_output_info( "   %s%s  %c|%-6s  %5u  %6.3lf  %9.2le   %s\n",
-                                      func_param_str, blank_str,
-                                      datatype_char, sc_str,
-                                      p_cur, perf, residual, pass_str );
-  else
-     libfla_test_output_info( "   %s%s  %c|%-6s  %5u  %6.3lf  %9.2le   %s for nfact=%d\n",
-                                      func_param_str, blank_str,
-                                      datatype_char, sc_str,
-                                      p_cur, perf, residual, pass_str, nfact );
-
+    libfla_test_output_info( "   %s%s  %c|%-6s  %5u  %6.3lf  %9.2le   %s for nfact=%d\n",
+                                 func_param_str, blank_str,
+                                 datatype_char, sc_str,
+                                 p_cur, perf, residual, pass_str, nfact );
 }
 
 

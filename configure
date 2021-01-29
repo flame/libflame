@@ -662,6 +662,7 @@ fla_enable_memory_alignment
 fla_vector_intrinsic_type
 fla_enable_vector_intrinsics
 fla_c_sse_flags
+fla_enable_blas_ext_gemmt
 fla_enable_gpu
 fla_enable_supermatrix
 fla_multithreading_model
@@ -781,6 +782,7 @@ enable_blas3_front_end_cntl_trees
 enable_multithreading
 enable_supermatrix
 enable_gpu
+enable_blas_ext_gemmt
 enable_vector_intrinsics
 enable_memory_alignment
 enable_ldim_alignment
@@ -1525,6 +1527,11 @@ Optional Features:
                           front-ends invoke their corresponding external
                           implementations. Note that control trees are always
                           used for LAPACK-like operations. (Disabled by
+                          default.)
+  --enable-blas-ext-gemmt Enable code that uses GEMMT to get better
+                          performance for computations involving symmetric
+                          matrices. To use this option, GEMMT has to be
+                          supported by the BLAS library used. (Disabled by
                           default.)
   --enable-multithreading=model
                           Enable multithreading support. Valid values for
@@ -6719,6 +6726,51 @@ $as_echo "no" >&6; }
 	fi
 
 
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested enabling gemmt based optimizations" >&5
+$as_echo_n "checking whether user requested enabling gemmt based optimizations... " >&6; }
+
+				# Check whether --enable-blas-ext-gemmt was given.
+if test "${enable_blas_ext_gemmt+set}" = set; then :
+  enableval=$enable_blas_ext_gemmt;
+				if test "$enableval" = "no" ; then
+
+
+						fla_enable_blas_ext_gemmt=no
+
+		elif test "$enableval" = "yes" ; then
+
+						fla_enable_blas_ext_gemmt=yes
+		else
+
+												as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_BLAS_EXT_GEMMT!" "$LINENO" 5
+		fi
+
+else
+
+						fla_enable_blas_ext_gemmt=no
+
+
+fi
+
+
+		if   test "$fla_enable_blas_ext_gemmt" = "yes" ; then
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+
+$as_echo "#define FLA_ENABLE_BLAS_EXT_GEMMT 1" >>confdefs.h
+
+
+	elif test "$fla_enable_blas_ext_gemmt" = "no" ; then
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+	else
+				as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_BLAS_EXT_GEMMT!" "$LINENO" 5
+	fi
 
 
 

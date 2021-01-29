@@ -210,7 +210,13 @@
 #define FLA_BIDIAG_INNER_TO_OUTER_B_RATIO  (0.25)
 #define FLA_CAQR_INNER_TO_OUTER_B_RATIO    (0.25)
 
-
+// LDLT Factorization for packed matrices uses different threshold to choose
+// between blocked /  unblocked variants and also the blocksize for the blocked
+// variant. The thresholds are defined here
+#define FLA_SPFFRT2__NTHRESH    (201)
+#define FLA_SPFFRT2__NCOLTHRESH (3)
+#define FLA_SPFFRT2__BSIZE_NL1  (256)
+#define FLA_SPFFRT2__BSIZE_NL2  (4096)
 
 // --- Error-related macro definitions -----------------------------------------
 

@@ -9,6 +9,7 @@
 #include "test_common.h"
 
 #define THRESH 30
+#define THRESH2 300
 
 // static variables
 static char* op_str                   = "Partial / Incomplete LDLT(2) factorization without Pivoting";
@@ -28,7 +29,7 @@ extern double dlamch_(char *cmach);
 
 /*************************************************************************/
 /*                     SINGLE PRECISION ROUTINES                         */
-/*************************************************************************/ 
+/*************************************************************************/
 
 float diff_norm_s( float *ad, float *fod, int n, int ni )
 {
@@ -44,7 +45,7 @@ float diff_norm_s( float *ad, float *fod, int n, int ni )
    char *tf = "No Transpose";
    char *nm = "1";
    char *ul = "lower";
- 
+
    L   = (float *) malloc( n * n * sizeof( float ) );
    D   = (float *) malloc( n * n * sizeof( float ) );
    Lt  = (float *) malloc( n * n * sizeof( float ) );
@@ -134,7 +135,8 @@ void test_ldlt2_nopiv_ps_s( test_params_t *params )
    double time, perf;
    double time_min;
    char   *strpass = "PASS";
-   char   *strfail = "MARGINAL";
+   char   *strmarg = "MARGINAL";
+   char   *strfail = "FAIL";
    char   *pcode;
 
    for( n = params->p_first; n <= params->p_max; n += params->p_inc )
@@ -167,22 +169,27 @@ void test_ldlt2_nopiv_ps_s( test_params_t *params )
             {
                copy_matrix_s(od, ad, pn, 1, 1, 1);
 
- 	             time = FLA_Clock();
+               time = FLA_Clock();
                sspffrt2_(ad, &n, &ni, NULL, NULL);
- 	             time = FLA_Clock() - time;
- 	             time_min = min( time_min, time );
+               time = FLA_Clock() - time;
+               time_min = min( time_min, time );
 
                /* Calculate error norm */
                snrm = diff_norm_s( ad, fod, n, ni );
 
-               if( snrm >= THRESH )
+               if( snrm >= THRESH2 )
                {
                   pcode = strfail;
                   break;
                }
+               else if( snrm >= THRESH )
+               {
+                  pcode = strmarg;
+                  break;
+               }
             }
             /* Calculate performance in GFLOPS */
-            perf = ni/6.0f*(2*ni*ni-6*ni*n+3*ni+6*n*n-6*n+7) / time_min / FLOPS_PER_UNIT_PERF;
+            perf = ni/6.0f*(2.0*ni*ni-6.0*ni*n+3.0*ni+6.0*n*n-6.0*n+7) / time_min / FLOPS_PER_UNIT_PERF;
 
             libfla_test_print_result_info("SPFFRT2",
                                           (char *) 's',
@@ -213,23 +220,28 @@ void test_ldlt2_nopiv_ps_s( test_params_t *params )
          {
             copy_matrix_s(od, ad, pn, 1, 1, 1);
 
- 	          time = FLA_Clock();
+            time = FLA_Clock();
             sspffrt2_(ad, &n, &ni, NULL, NULL);
- 	          time = FLA_Clock() - time;
- 	          time_min = min( time_min, time );
+            time = FLA_Clock() - time;
+            time_min = min( time_min, time );
 
             /* Calculate error norm */
             snrm = diff_norm_s( ad, fod, n, ni );
 
-            if( snrm >= THRESH )
+            if( snrm >= THRESH2 )
             {
                pcode = strfail;
+               break;
+            }
+            else if( snrm >= THRESH )
+            {
+               pcode = strmarg;
                break;
             }
          }
 
          /* Calculate performance in GFLOPS */
-         perf = ni/6.0f*(2*ni*ni-6*ni*n+3*ni+6*n*n-6*n+7) / time_min / FLOPS_PER_UNIT_PERF;
+         perf = ni/6.0f*(2.0*ni*ni-6.0*ni*n+3.0*ni+6.0*n*n-6.0*n+7) / time_min / FLOPS_PER_UNIT_PERF;
 
          libfla_test_print_result_info("SPFFRT2",
                                        (char *) 's',
@@ -250,7 +262,7 @@ void test_ldlt2_nopiv_ps_s( test_params_t *params )
 
 /*************************************************************************/
 /*                     DOUBLE PRECISION ROUTINES                         */
-/*************************************************************************/ 
+/*************************************************************************/
 
 double diff_norm_d( double *ad, double *fod, int n, int ni )
 {
@@ -266,7 +278,7 @@ double diff_norm_d( double *ad, double *fod, int n, int ni )
    char *tf = "No Transpose";
    char *nm = "1";
    char *ul = "lower";
- 
+
    L   = (double *) malloc( n * n * sizeof( double ) );
    D   = (double *) malloc( n * n * sizeof( double ) );
    Lt  = (double *) malloc( n * n * sizeof( double ) );
@@ -349,19 +361,24 @@ void test_ldlt2_nopiv_ps_d( test_params_t *params )
 {
    int n, ni;
    double *od, *ad;
+   double *work;
    double *fod;
    double dnrm;
 
    int    i, n_repeats;
-	 double time, perf;
-	 double time_min;
+   double time, perf;
+   double time_min;
    char   *strpass = "PASS";
-   char   *strfail = "MARGINAL";
+   char   *strmarg = "MARGINAL";
+   char   *strfail = "FAIL";
    char   *pcode;
 
    for( n = params->p_first; n <= params->p_max; n += params->p_inc )
    {
       int pn = n * (n + 1) / 2;
+
+      work = (double *) malloc( 2 * n * sizeof( double ) );
+
       /* allocate packed matrices */
       od = (double *) malloc( pn * sizeof( double ) );
       ad = (double *) malloc( pn * sizeof( double ) );
@@ -380,7 +397,7 @@ void test_ldlt2_nopiv_ps_d( test_params_t *params )
       dnrm = 0.0;
       perf = 0.0;
       if( (int) params->p_nfact == -2 )
-      {        
+      {
          n_repeats = (params->n_repeats < 5) ? params->n_repeats : 5;
          for( ni = 0; ni <= n; ni++ )
          {
@@ -389,22 +406,27 @@ void test_ldlt2_nopiv_ps_d( test_params_t *params )
             {
                copy_matrix_d(od, ad, pn, 1, 1, 1);
 
- 	             time = FLA_Clock();
-               dspffrt2_(ad, &n, &ni, NULL, NULL);
- 	             time = FLA_Clock() - time;
- 	             time_min = min( time_min, time );
+               time = FLA_Clock();
+               dspffrt2_(ad, &n, &ni, work, NULL);
+               time = FLA_Clock() - time;
+               time_min = min( time_min, time );
 
                /* Calculate error norm */
                dnrm = diff_norm_d( ad, fod, n, ni );
 
-               if( dnrm >= THRESH )
+               if( dnrm >= THRESH2 )
                {
                   pcode = strfail;
                   break;
                }
+               else if( dnrm >= THRESH )
+               {
+                  pcode = strmarg;
+                  break;
+               }
             }
             /* Calculate performance in GFLOPS */
-            perf = ni/6.0*(2*ni*ni-6*ni*n+3*ni+6*n*n-6*n+7) / time_min / FLOPS_PER_UNIT_PERF;
+            perf = ni/6.0*(2.0*ni*ni-6.0*ni*n+3.0*ni+6.0*n*n-6.0*n+7) / time_min / FLOPS_PER_UNIT_PERF;
 
             libfla_test_print_result_info("SPFFRT2",
                                           (char *) 'd',
@@ -435,23 +457,28 @@ void test_ldlt2_nopiv_ps_d( test_params_t *params )
          {
             copy_matrix_d(od, ad, pn, 1, 1, 1);
 
- 	          time = FLA_Clock();
-            dspffrt2_(ad, &n, &ni, NULL, NULL);
- 	          time = FLA_Clock() - time;
- 	          time_min = min( time_min, time );
+            time = FLA_Clock();
+            dspffrt2_(ad, &n, &ni, work, NULL);
+            time = FLA_Clock() - time;
+            time_min = min( time_min, time );
 
             /* Calculate error norm */
-             dnrm = diff_norm_d( ad, fod, n, ni );
+            dnrm = diff_norm_d( ad, fod, n, ni );
 
-             if( dnrm >= THRESH )
-             {
-                pcode = strfail;
-                break;
-             }
+            if( dnrm >= THRESH2 )
+            {
+               pcode = strfail;
+               break;
+            }
+            else if( dnrm >= THRESH )
+            {
+               pcode = strmarg;
+               break;
+            }
          }
 
          /* Calculate performance in GFLOPS */
-         perf = ni/6.0f*(2*ni*ni-6*ni*n+3*ni+6*n*n-6*n+7) / time_min / FLOPS_PER_UNIT_PERF;
+         perf = ni/6.0f*(2.0*ni*ni-6.0*ni*n+3.0*ni+6.0*n*n-6.0*n+7) / time_min / FLOPS_PER_UNIT_PERF;
 
          libfla_test_print_result_info("SPFFRT2",
                                        (char *) 'd',
@@ -473,7 +500,7 @@ void test_ldlt2_nopiv_ps_d( test_params_t *params )
 
 /*************************************************************************/
 /*                    COMPLEX PRECISION ROUTINES                         */
-/*************************************************************************/ 
+/*************************************************************************/
 
 float diff_norm_c( scomplex *ad, scomplex *fod, int n, int ni )
 {
@@ -494,7 +521,7 @@ float diff_norm_c( scomplex *ad, scomplex *fod, int n, int ni )
    czero.imag = 0.0;
    cone.real = 1.0;
    cone.imag = 0.0;
- 
+
    L   = (scomplex *) malloc( n * n * sizeof( scomplex ) );
    D   = (scomplex *) malloc( n * n * sizeof( scomplex ) );
    Lt  = (scomplex *) malloc( n * n * sizeof( scomplex ) );
@@ -588,10 +615,11 @@ void test_ldlt2_nopiv_ps_c( test_params_t *params )
    float  snrm;
 
    int    i, n_repeats;
-	 double time, perf;
-	 double time_min;
+   double time, perf;
+   double time_min;
    char   *strpass = "PASS";
-   char   *strfail = "MARGINAL";
+   char   *strmarg = "MARGINAL";
+   char   *strfail = "FAIL";
    char   *pcode;
 
    for( n = params->p_first; n <= params->p_max; n += params->p_inc )
@@ -624,24 +652,29 @@ void test_ldlt2_nopiv_ps_c( test_params_t *params )
             {
                copy_matrix_c(od, ad, pn, 1, 1, 1);
 
- 	             time = FLA_Clock();
+               time = FLA_Clock();
                cspffrt2_(ad, &n, &ni, NULL, NULL);
- 	             time = FLA_Clock() - time;
- 	             time_min = min( time_min, time );
+               time = FLA_Clock() - time;
+               time_min = min( time_min, time );
 
                /* Calculate error norm */
                snrm = diff_norm_c( ad, fod, n, ni );
 
-               if( snrm >= THRESH )
+               if( snrm >= THRESH2 )
                {
                   pcode = strfail;
+                  break;
+               }
+               else if( snrm >= THRESH )
+               {
+                  pcode = strmarg;
                   break;
                }
             }
 
             /* Calculate performance in GFLOPS */
-            perf = ni/3.0f*(4*ni*ni-12*ni*n+9*ni+12*n*n-18*n+8) / time_min / FLOPS_PER_UNIT_PERF;
-   
+            perf = ni/3.0f*(4.0*ni*ni-12.0*ni*n+9.0*ni+12.0*n*n-18.0*n+8) / time_min / FLOPS_PER_UNIT_PERF;
+
             libfla_test_print_result_info("SPFFRT2",
                                           (char *) 'c',
                                           "c",
@@ -671,23 +704,28 @@ void test_ldlt2_nopiv_ps_c( test_params_t *params )
          {
             copy_matrix_c(od, ad, pn, 1, 1, 1);
 
- 	          time = FLA_Clock();
+            time = FLA_Clock();
             cspffrt2_(ad, &n, &ni, NULL, NULL);
- 	          time = FLA_Clock() - time;
- 	          time_min = min( time_min, time );
+            time = FLA_Clock() - time;
+            time_min = min( time_min, time );
 
             /* Calculate error norm */
             snrm = diff_norm_c( ad, fod, n, ni );
 
-            if( snrm >= THRESH )
+            if( snrm >= THRESH2 )
             {
                pcode = strfail;
+               break;
+            }
+            else if( snrm >= THRESH )
+            {
+               pcode = strmarg;
                break;
             }
          }
 
          /* Calculate performance in GFLOPS */
-         perf = ni/3.0f*(4*ni*ni-12*ni*n+9*ni+12*n*n-18*n+8) / time_min / FLOPS_PER_UNIT_PERF;
+         perf = ni/3.0f*(4.0*ni*ni-12.0*ni*n+9.0*ni+12.0*n*n-18.0*n+8) / time_min / FLOPS_PER_UNIT_PERF;
 
          libfla_test_print_result_info("SPFFRT2",
                                        (char *) 'c',
@@ -709,7 +747,7 @@ void test_ldlt2_nopiv_ps_c( test_params_t *params )
 
 /*************************************************************************/
 /*               DOUBLE COMPLEX PRECISION ROUTINES                       */
-/*************************************************************************/ 
+/*************************************************************************/
 
 double diff_norm_z( dcomplex *ad, dcomplex *fod, int n, int ni )
 {
@@ -730,7 +768,7 @@ double diff_norm_z( dcomplex *ad, dcomplex *fod, int n, int ni )
    czero.imag = 0.0;
    cone.real = 1.0;
    cone.imag = 0.0;
- 
+
    L   = (dcomplex *) malloc( n * n * sizeof( dcomplex ) );
    D   = (dcomplex *) malloc( n * n * sizeof( dcomplex ) );
    Lt  = (dcomplex *) malloc( n * n * sizeof( dcomplex ) );
@@ -824,10 +862,11 @@ void test_ldlt2_nopiv_ps_z( test_params_t *params )
    double dnrm;
 
    int    i, n_repeats;
-	 double time, perf;
-	 double time_min;
+   double time, perf;
+   double time_min;
    char   *strpass = "PASS";
-   char   *strfail = "MARGINAL";
+   char   *strmarg = "MARGINAL";
+   char   *strfail = "FAIL";
    char   *pcode;
 
    for( n = params->p_first; n <= params->p_max; n += params->p_inc )
@@ -851,7 +890,7 @@ void test_ldlt2_nopiv_ps_z( test_params_t *params )
       dnrm = 0.0;
       perf = 0.0;
       if( (int) params->p_nfact == -2 )
-      {        
+      {
          n_repeats = (params->n_repeats < 5) ? params->n_repeats : 5;
          for( ni = 0; ni <= n; ni++ )
          {
@@ -860,22 +899,27 @@ void test_ldlt2_nopiv_ps_z( test_params_t *params )
             {
                copy_matrix_z(od, ad, pn, 1, 1, 1);
 
- 	             time = FLA_Clock();
+               time = FLA_Clock();
                zspffrt2_(ad, &n, &ni, NULL, NULL);
- 	             time = FLA_Clock() - time;
- 	             time_min = min( time_min, time );
+               time = FLA_Clock() - time;
+               time_min = min( time_min, time );
 
                /* Calculate error norm */
                dnrm = diff_norm_z( ad, fod, n, ni );
 
-               if( dnrm >= THRESH )
+               if( dnrm >= THRESH2 )
                {
                   pcode = strfail;
                   break;
                }
+               else if( dnrm >= THRESH )
+               {
+                  pcode = strmarg;
+                  break;
+               }
             }
             /* Calculate performance in GFLOPS */
-            perf = ni/3.0f*(4*ni*ni-12*ni*n+9*ni+12*n*n-18*n+8) / time_min / FLOPS_PER_UNIT_PERF;
+            perf = ni/3.0f*(4.0*ni*ni-12.0*ni*n+9.0*ni+12.0*n*n-18.0*n+8) / time_min / FLOPS_PER_UNIT_PERF;
 
             libfla_test_print_result_info("SPFFRT2",
                                           (char *) 'z',
@@ -906,23 +950,28 @@ void test_ldlt2_nopiv_ps_z( test_params_t *params )
          {
             copy_matrix_z(od, ad, pn, 1, 1, 1);
 
- 	          time = FLA_Clock();
+            time = FLA_Clock();
             zspffrt2_(ad, &n, &ni, NULL, NULL);
- 	          time = FLA_Clock() - time;
- 	          time_min = min( time_min, time );
+            time = FLA_Clock() - time;
+            time_min = min( time_min, time );
 
             /* Calculate error norm */
             dnrm = diff_norm_z( ad, fod, n, ni );
 
-            if( dnrm >= THRESH )
+            if( dnrm >= THRESH2 )
             {
                pcode = strfail;
+               break;
+            }
+            else if( dnrm >= THRESH )
+            {
+               pcode = strmarg;
                break;
             }
          }
 
          /* Calculate performance in GFLOPS */
-         perf = ni/3.0f*(4*ni*ni-12*ni*n+9*ni+12*n*n-18*n+8) / time_min / FLOPS_PER_UNIT_PERF;
+         perf = ni/3.0f*(4.0*ni*ni-12.0*ni*n+9.0*ni+12.0*n*n-18.0*n+8) / time_min / FLOPS_PER_UNIT_PERF;
 
          libfla_test_print_result_info("SPFFRT2",
                                        (char *) 'z',
@@ -946,11 +995,11 @@ void libfla_test_ldlt2_nopiv_ps( test_params_t *params, test_op_t op )
 {
    int i;
 
-	 libfla_test_output_info( "--- %s ---\n", op_str );
-	 libfla_test_output_info( "\n" );
+   libfla_test_output_info( "--- %s ---\n", op_str );
+   libfla_test_output_info( "\n" );
 
-	 if ( op.fla_blk_ext == ENABLE )
-	 {
+   if ( op.fla_blk_ext == ENABLE )
+   {
       for( i = 0; i < params->n_datatypes; ++i )
       {
          switch( params->datatype[i] )
@@ -971,9 +1020,9 @@ void libfla_test_ldlt2_nopiv_ps( test_params_t *params, test_op_t op )
                printf("FLA_ERROR: Unknown Datatype Encountered\n");
                break;
          }
-   	  }
+      }
    }
-	 libfla_test_output_info( "\n" );
+   libfla_test_output_info( "\n" );
 }
 
 
