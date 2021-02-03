@@ -16,6 +16,11 @@ int dorgbr_check(char *vect, int *m, int *n, int *k, double *a, int *lda, double
                double *, double *, int *, int *);
     int mn, lwkopt;
     logical lquery;
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "dorgbr inputs: vect %c, m %d, n %d, k %d, lda %d\n", *vect, *m, *n, *k, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

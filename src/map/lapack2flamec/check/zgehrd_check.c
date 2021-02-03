@@ -14,6 +14,12 @@ int zgehrd_check(int *n, int *ilo, int *ihi, dcomplex *a, int *lda, dcomplex *ta
     int lwkopt;
     logical lquery;
 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "zgehrd inputs: n %d, ilo %d, ihi %d, lda %d\n", *n, *ilo, *ihi, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
+
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

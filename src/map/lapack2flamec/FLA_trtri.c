@@ -41,6 +41,7 @@
                                int* info )
 
 #define LAPACK_trtri_body(prefix)                               \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                 \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   FLA_Uplo     uplo_fla;                                        \
   FLA_Diag     diag_fla;                                        \
@@ -62,6 +63,7 @@
   FLA_Finalize_safe( init_result );                                     \
                                                                         \
   *info = 0;                                                            \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  	      \
                                                                         \
   return 0;
 

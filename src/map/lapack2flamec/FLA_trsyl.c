@@ -49,6 +49,7 @@
                                int* info )
 
 #define LAPACK_trsyl_body(prefix, srname)                       \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                 \
   FLA_Datatype datatype       =  PREFIX2FLAME_DATATYPE(prefix); \
   FLA_Datatype datatype_scale =  PREFIX2FLAME_REALTYPE(prefix); \
   FLA_Trans    transa_fla;                                      \
@@ -93,6 +94,7 @@
   if ( e_val != FLA_SUCCESS ) *info = 1;                                \
   else                        *info = 0;                                \
                                                                         \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  	      \
   return 0;
 
 

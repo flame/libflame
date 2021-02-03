@@ -12,6 +12,12 @@ int dorglq_check(int *m, int *n, int *k, double * a, int *lda, double *tau, doub
     int lwkopt;
     logical lquery;
 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "dorglq inputs: m %d, n %d, k %d, lda %d\n", *m, *n, *k, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
+
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

@@ -4,6 +4,13 @@ int cungl2_check(int *m, int *n, int *k, scomplex *a, int *lda, scomplex *tau, s
 {
     /* System generated locals */
     int a_dim1, a_offset, i__1;
+
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "cungl2 inputs: m %d, n %d, k %d, lda %d\n", *m, *n, *k, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
+
     /* Builtin functions */
     /* Parameter adjustments */
     a_dim1 = *lda;

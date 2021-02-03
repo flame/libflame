@@ -46,6 +46,7 @@
 // This does not perform pre-ordering when jpiv include non-zero pivots.
 //
 #define LAPACK_geqpf_body(prefix)                                       \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);                \
   FLA_Obj      A, t, T, w, p, jpiv;                                     \
   dim_t        min_m_n  = min( *m, *n );                                \
@@ -94,6 +95,7 @@
                                                                         \
   *info = 0;                                                            \
                                                                         \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                          \
   return 0;
 
 

@@ -8,6 +8,11 @@ int strti2_check(char *uplo, char *diag, int *n, float *a, int *lda, int *info)
     /* Local variables */
     logical upper;
     logical nounit;
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "strti2 inputs: uplo %c, diag %c, n %d, lda %d\n", *uplo, *diag, *n, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

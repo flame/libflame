@@ -15,7 +15,11 @@ int sgesdd_check(char *jobz, int *m, int *n, real *a, int *lda, real *s, real *u
     int minwrk,  maxwrk;
     logical wntqas;
     logical lquery;
-
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "sgesdd inputs: jobz %c, m %d, n %d, lda %d, ldu %d, ldvt %d\n", *jobz, *m, *n, *lda, *ldu, *ldvt);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

@@ -100,6 +100,14 @@
  /* .. Executable Statements .. */
  /* Quick return if possible */
  /* Parameter adjustments */
+ 
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ sprintf(buffer, "drscl inputs: n %d, incx %d\n", *n, *incx);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
+
  --sx;
  /* Function Body */
  if (*n <= 0) {
@@ -136,6 +144,7 @@
  if (! done) {
  goto L10;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DRSCL */
  }

@@ -7,7 +7,13 @@ int zhegst_check(int *itype, char *uplo, int *n, dcomplex *a, int *lda, dcomplex
     int a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */
     logical upper;
-    
+
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "zhegst inputs: itype %d, uplo %c, n %d, lda %d, ldb %d\n", *itype, *uplo, *n, *lda, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
+
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

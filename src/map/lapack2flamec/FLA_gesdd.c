@@ -62,6 +62,7 @@
                                int *info )
 
 #define LAPACK_gesdd_real_body(prefix)                                  \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                 	\
   char jobu[1], jobv[1];                                                \
                                                                         \
   if ( *jobz == 'O' ) {                                                 \
@@ -82,9 +83,11 @@
                            buff_Vh, ldim_Vh,                            \
                            buff_w,  lwork,                              \
                            info );                                      \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  	\
   return 0;
 
 #define LAPACK_gesdd_complex_body(prefix)                               \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \
   char jobu[1], jobv[1];                                                \
                                                                         \
   if ( *jobz == 'O' ) {                                                 \
@@ -106,6 +109,7 @@
                            buff_w,  lwork,                              \
                            buff_r,                                      \
                            info );                                      \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                          \
   return 0;
 
 LAPACK_gesdd_real(s)

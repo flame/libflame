@@ -38,6 +38,7 @@
                                     int* info)
 
 #define LAPACK_orgqr_body(prefix)                                       \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \
   FLA_Datatype datatype   = PREFIX2FLAME_DATATYPE(prefix);              \
   FLA_Obj      A, AL, AR, t, T;                                         \
   FLA_Error    init_result;                                             \
@@ -72,6 +73,7 @@
                                                                         \
   *info = 0;                                                            \
                                                                         \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                          \
   return 0;
 
 LAPACK_orgqr(s, org)

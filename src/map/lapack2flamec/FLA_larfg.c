@@ -39,6 +39,7 @@
 
 #define LAPACK_larfg_body(prefix)                                       \
   FLA_Error    init_result;                                             \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \
   FLA_Init_safe( &init_result );                                        \
   if ( *n > 0 ) {                                                       \
     FLA_Househ2_UT_l_op ## prefix ( *n - 1,                             \
@@ -50,6 +51,7 @@
 }                                                                     \
 FLA_Finalize_safe( init_result );
 \
+AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  	      \
 return 0;
 
 

@@ -40,6 +40,7 @@ extern TLS_CLASS_SPEC fla_bidiagut_t* fla_bidiagut_cntl_plain;
                                int* info)
 
 #define LAPACK_gebrd_body(prefix)                                       \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);                \
   FLA_Datatype dtype_re = PREFIX2FLAME_REALTYPE(prefix);                \
   dim_t        min_m_n  = min( *m, *n );                                \
@@ -134,6 +135,7 @@ extern TLS_CLASS_SPEC fla_bidiagut_t* fla_bidiagut_cntl_plain;
                                                                         \
   *info = 0;                                                            \
                                                                         \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                          \
   return 0;
 
 

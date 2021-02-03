@@ -20,6 +20,12 @@ int sgelsd_check(int *m, int *n, int *nrhs, float *a, int *lda, float *b, int *l
     int liwork, minwrk, maxwrk;
     logical lquery;
     int smlsiz;
+                
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "sgelsd inputs: m %d, n %d, nrhs %d, lda %d, ldb %d, rank %d\n", *m, *n, *nrhs, *lda, *ldb, *rank);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
 
     /* Parameter adjustments */
     a_dim1 = *lda;

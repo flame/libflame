@@ -30,6 +30,7 @@
                                      int*  info )
 
 #define LAPACK_hegst_body(prefix)                               \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                 \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   FLA_Inv      inv_fla;                                         \
   FLA_Uplo     uplo_fla;                                        \
@@ -56,6 +57,7 @@
                                                                 \
   *info = 0;                                                    \
                                                                 \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  \
   return 0;
 
 

@@ -8,6 +8,12 @@ int ssytd2_check(char *uplo, int *n, float *a, int *lda, float *d__, float *e, f
     /* Local variables */
     logical upper;
 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "hetd2-ssytd2 inputs: uplo %c, n %d, lda %d\n", *uplo, *n, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
+
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

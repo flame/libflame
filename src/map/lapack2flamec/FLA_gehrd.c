@@ -31,6 +31,7 @@
                                int* info )
 
 #define LAPACK_gehrd_body(prefix)                               \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                 \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   dim_t        m_t      = ( *m - 1 );                           \
   FLA_Obj      A, t, T;                                         \
@@ -58,6 +59,7 @@
                                                                 \
   *info = 0;                                                    \
                                                                 \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  \
   return 0;
 
 
