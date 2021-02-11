@@ -213,10 +213,13 @@
 // LDLT Factorization for packed matrices uses different threshold to choose
 // between blocked /  unblocked variants and also the blocksize for the blocked
 // variant. The thresholds are defined here
-#define FLA_SPFFRT2__NTHRESH    (201)
-#define FLA_SPFFRT2__NCOLTHRESH (3)
-#define FLA_SPFFRT2__BSIZE_NL1  (256)
-#define FLA_SPFFRT2__BSIZE_NL2  (4096)
+#define FLA_SPFFRT2__NTHRESH1         (64)
+#define FLA_SPFFRT2__NTHRESH2         (201)
+#define FLA_SPFFRT2__NCOLTHRESH       (3)
+#define FLA_SPFFRT2__NCOLFRAC_THRESH1 (25)
+#define FLA_SPFFRT2__NCOLFRAC_THRESH2 (80)
+#define FLA_SPFFRT2__BSIZE_NL1        (256)
+#define FLA_SPFFRT2__BSIZE_NL2        (4096)
 
 // --- Error-related macro definitions -----------------------------------------
 

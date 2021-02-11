@@ -7,10 +7,13 @@
 #include "FLAME.h"
 
 extern integer dspr_( char *, integer *, doublereal *, doublereal *, integer *, doublereal * );
+#ifdef FLA_ENABLE_BLAS_EXT_GEMMT
 extern integer dgemmt_( char *, char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer * );
+#endif
 
 static void dspffrt2_fla_def( doublereal *ap, integer *n, integer *ncolm, doublereal *work );
-static void dspffrt2_fla_unp( doublereal *ap, integer *n, integer *ncolm, doublereal *work );
+static void dspffrt2_fla_unp_var1( doublereal *ap, integer *n, integer *ncolm, doublereal *work );
+static void dspffrt2_fla_unp_var2( doublereal *ap, integer *n, integer *ncolm, doublereal *work );
 
 extern void DTL_Trace(
     uint8 ui8LogLevel,
@@ -90,10 +93,24 @@ void dspffrt2_fla( doublereal *ap, integer *n, integer * ncolm, doublereal *work
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
     #endif
 
-    if( *n < FLA_SPFFRT2__NTHRESH || *ncolm <= FLA_SPFFRT2__NCOLTHRESH )
+    /* ncolm as fraction of n */
+    integer ncolm_pc = (integer) ( ( *ncolm * 100 ) / *n );
+
+    if( ( *n < FLA_SPFFRT2__NTHRESH1 ) || ( *n < FLA_SPFFRT2__NTHRESH2 && ncolm_pc < FLA_SPFFRT2__NCOLFRAC_THRESH1 ) || ( *ncolm <= FLA_SPFFRT2__NCOLTHRESH ) )
+    {
+        /* dspr based implementation for small problem sizes */
         dspffrt2_fla_def( ap, n, ncolm, work );
+    }
+    else if( ncolm_pc < FLA_SPFFRT2__NCOLFRAC_THRESH2 )
+    {
+        /* Unpacking/packing based variant for large ncolm values */
+        dspffrt2_fla_unp_var1( ap, n, ncolm, work );
+    }
     else
-        dspffrt2_fla_unp( ap, n, ncolm, work );
+    {
+        /* Unpacking/packing based variant for smaller ncolm values */
+        dspffrt2_fla_unp_var2( ap, n, ncolm, work );
+    }
 
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return;
@@ -104,16 +121,16 @@ void dspffrt2_fla( doublereal *ap, integer *n, integer * ncolm, doublereal *work
  *  triangular part of unpacked full matrix.
  *  The strictly upper triangular part is left untouched.
  */
-void dunpack_fla( doublereal *A, doublereal *B, integer N, integer LDA )
+void dunpack_fla( doublereal *a, doublereal *b, integer m, integer n, integer lda )
 {
    integer i, j;
-   doublereal *aptr = A;
+   doublereal *aptr = a;
 
-   for( i = 0; i < N; i++ )
+   for( i = 0; i < n; i++ )
    {
-      for( j = i; j < N; j++ )
+      for( j = i; j < m; j++ )
       {
-         B[ i * LDA + j ] = *aptr++;
+         b[i * lda + j] = *aptr++;
       }
    }
 
@@ -126,16 +143,16 @@ void dunpack_fla( doublereal *A, doublereal *B, integer N, integer LDA )
  *  The strictly upper triangular parts of the input and output are
  *  left unused and untouched respectiely.
  */
-void dpack_fla( doublereal *A, doublereal *B, integer N, integer LDA )
+void dpack_fla( doublereal *a, doublereal *b, integer m, integer n, integer lda )
 {
    integer i, j;
-   doublereal *bptr = B;
+   doublereal *bptr = b;
 
-   for( i = 0; i < N; i++ )
+   for( i = 0; i < m; i++ )
    {
-      for( j = i; j < N; j++ )
+      for( j = i; j < m; j++ )
       {
-         *bptr++ = A[ i * LDA + j ];
+         *bptr++ = a[i * lda + j];
       }
    }
 
@@ -143,13 +160,13 @@ void dpack_fla( doublereal *A, doublereal *B, integer N, integer LDA )
 }
 
 /*
- * LDLT factorization of skinny symmetric matrices (M > N)
+ * LDLT factorization of skinny symmetric matrices (m > n)
  * in unpacked format.
  *
  * Only the lower trapezoidal part of the matrix is updated.
  * The strictly upper triangular part is left untouched.
  */
-void dsffrk2_fla( doublereal *au, integer *m, integer *n, integer *lda, doublereal *bt, doublereal *work )
+void dsffrk2_fla( doublereal *au, integer *m, integer *n, integer *lda, doublereal *bt, integer *ldbt )
 {
     doublereal d__1;
     integer i__1, i__2, i__3;
@@ -175,8 +192,8 @@ void dsffrk2_fla( doublereal *au, integer *m, integer *n, integer *lda, doublere
         dger_( &i__2, &i__1, &d__1, &au[kc + 1], &c__1, &au[kc + 1], &c__1, &au[kcn], lda );
 
         /* Compute b**T/a for nb columns */
-        dcopy_( &i__3, &au[kc + *n - k + 1], &c__1, &bt[k], n);
-        dscal_( &i__3, &d__1, &bt[k], n);
+        dcopy_( &i__3, &au[kc + *n - k + 1], &c__1, &bt[k], ldbt );
+        dscal_( &i__3, &d__1, &bt[k], ldbt );
 
         au[kc] = r1;
         kc = kcn;
@@ -186,22 +203,25 @@ void dsffrk2_fla( doublereal *au, integer *m, integer *n, integer *lda, doublere
 }
 
 /*
- * LDLT factorization of symmetric matrices (M > N)
- * in unpacked format.
+ * LDLT factorization of symmetric matrices in unpacked format.
  * Blocked algorithm employing GEMMT is used for better
  * performance.
  *
  * Only the lower triangular part of the matrix is updated.
  * The strictly upper triangular part is left untouched.
+ *
+ * Variant 1 does both factorization of (N x ncolm) and
+ * trailing matrix is update inside the main loop
  */
-void dspffrt2_fla_unp( doublereal *ap, integer *n, integer *ncolm, doublereal *work )
+
+void dspffrt2_fla_unp_var1( doublereal *ap, integer *n, integer *ncolm, doublereal *work )
 {
     doublereal d__1 = 1.0;
-    integer k, kc, m;
+    integer k, kc;
+    integer m, nb;
 
     doublereal *au, *bt;
     doublereal *mau, *mbt;
-    integer nb;
 
     /* Choose block size for the blocked variant */
     if( *n < FLA_SPFFRT2__BSIZE_NL1 )
@@ -210,13 +230,13 @@ void dspffrt2_fla_unp( doublereal *ap, integer *n, integer *ncolm, doublereal *w
         nb = 32;
     else
         nb = 64;
-    nb = (nb > *ncolm) ? *ncolm : nb;
+    nb = ( nb > *ncolm ) ? *ncolm : nb;
 
     /* Allocate unpacked matrix and do the unpacking */
     mau = ( doublereal * ) malloc( *n * *n * sizeof( doublereal ) );
     mbt = ( doublereal * ) malloc( nb * (*n - nb) * sizeof( doublereal ) );
 
-    dunpack_fla(ap, mau, *n, *n);
+    dunpack_fla( ap, mau, *n, *n, *n );
 
     --ap;
     au = mau - 1;
@@ -230,7 +250,7 @@ void dspffrt2_fla_unp( doublereal *ap, integer *n, integer *ncolm, doublereal *w
         kc = k * *n - *n + k;
 
         /* Panel factorization using unblocked variant */
-        dsffrk2_fla( &au[kc], &m, &nb, n, &bt[1], work );
+        dsffrk2_fla( &au[kc], &m, &nb, n, &bt[1], &nb );
         m -= nb;
 
         /* Update trailing matrix */
@@ -248,7 +268,7 @@ void dspffrt2_fla_unp( doublereal *ap, integer *n, integer *ncolm, doublereal *w
         nb = *ncolm - k + 1;
 
         /* Panel factorization using unblocked variant */
-        dsffrk2_fla( &au[kc], &m, &nb, n, &bt[1], work );
+        dsffrk2_fla( &au[kc], &m, &nb, n, &bt[1], &nb );
         m -= nb;
 
         /* Update trailing matrix */
@@ -260,10 +280,98 @@ void dspffrt2_fla_unp( doublereal *ap, integer *n, integer *ncolm, doublereal *w
     }
 
     /* Pack the updated matrix */
-    dpack_fla( mau, &ap[1], *n, *n );
+    dpack_fla( mau, &ap[1], *n, *n, *n );
 
     free( mau );
     free( mbt );
+    return;
+}
+
+/*
+ * LDLT factorization of symmetric matrices in unpacked format.
+ * Blocked algorithm employing GEMMT is used for better
+ * performance.
+ *
+ * Only the lower triangular part of the matrix is updated.
+ * The strictly upper triangular part is left untouched.
+ *
+ * Variant 2 does factorization of (N x ncolm) in the main loop
+ * and the trailing matrix is updated outside the main loop
+ */
+
+void dspffrt2_fla_unp_var2( doublereal *ap, integer *n, integer *ncolm, doublereal *work )
+{
+    doublereal d__1 = 1.0;
+    integer kc, mg, nb;
+    integer k, ni, mp;
+
+    doublereal *au;
+    doublereal *mau;
+
+    /* Choose block size for the blocked variant */
+    if( *n < FLA_SPFFRT2__BSIZE_NL1 )
+        nb = 8;
+    else if( *n < FLA_SPFFRT2__BSIZE_NL2 )
+        nb = 32;
+    else
+        nb = 64;
+    nb = ( nb > *ncolm ) ? *ncolm : nb;
+
+    /* Allocate unpacked matrix and do the unpacking */
+    mau = ( doublereal * ) malloc( *n * *n * sizeof( doublereal ) );
+
+    dunpack_fla( ap, mau, *n, *n, *n );
+
+    --ap;
+    au = mau - 1;
+
+    /* Factorize A as L*D*L**T using the lower triangle of A */
+    /* k is the main loop index, increasing from 1 to ncolm in steps of nb */
+    mp = *n + nb;
+    mg = *n - *ncolm;
+    ni = *ncolm;
+    for( k = 1; k <= ( *ncolm - nb ); k += nb )
+    {
+        mp -= nb;
+        kc = k * *n - *n + k;
+        ni = ni - nb;
+
+        /* Panel factorization using unblocked variant */
+        dsffrk2_fla( &au[kc], &mp, &nb, n, &au[kc + nb * *n], n );
+
+        /* Update trailing matrix within the panel */
+#ifndef FLA_ENABLE_BLAS_EXT_GEMMT
+        mg = *n - *ncolm + ni;
+        dgemm_( "N", "N", &mg, &ni, &nb, &d__1, &au[kc + nb], n, &au[kc + nb * *n], n, &d__1, &au[kc + nb * *n + nb], n );
+#else
+        dgemmt_( "L", "N", "N", &ni, &nb, &d__1, &au[kc + nb], n, &au[kc + nb * *n], n, &d__1, &au[kc + nb * *n + nb], n );
+        dgemm_( "N", "N", &mg, &ni, &nb, &d__1, &au[kc + ni + nb], n, &au[kc + nb * *n], n, &d__1, &au[kc + nb * *n + nb + ni], n );
+#endif
+    }
+
+    /* Process the remaining columns */
+    if( k <= *ncolm )
+    {
+        mp -= nb;
+        kc = k * *n - *n + k;
+        nb = *ncolm - k + 1;
+
+        /* Panel factorization using unblocked variant */
+        dsffrk2_fla( &au[kc], &mp, &nb, n, &au[kc + nb * *n], n );
+    }
+
+    /* Update trailing matrix */
+#ifndef FLA_ENABLE_BLAS_EXT_GEMMT
+    mg = *n - *ncolm;
+    dgemm_( "N", "N", &mg, &mg, ncolm, &d__1, &au[*ncolm + 1], n, &au[*ncolm * *n + 1], n, &d__1, &au[*ncolm + *ncolm * *n + 1], n );
+#else
+    dgemmt_( "L", "N", "N", &mg, ncolm, &d__1, &au[*ncolm + 1], n, &au[*ncolm * *n + 1], n, &d__1, &au[*ncolm + *ncolm * *n + 1], n );
+#endif
+
+    /* Pack the updated matrix */
+    dpack_fla( mau, &ap[1], *n, *n, *n );
+
+    free( mau );
     return;
 }
 
