@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Advanced Micro Devices, Inc. All rights reserved.
+ * Copyright (c) 2021 Advanced Micro Devices, Inc. All rights reserved.
  * */
 
 #include "FLA_lapack2flame_return_defs.h"
@@ -29,9 +29,13 @@ int dgetrfnpi_check(int *m, int *n, int *nfact, double *a, int * lda, int *info)
     {
         *info = -2;
     }
+    else if ((*nfact < 0) || (*nfact > min(*m,*n)))
+    {
+        *info = -3;
+    }
     else if (*lda < max(1,*m))
     {
-        *info = -4;
+        *info = -5;
     }
     if (*info != 0)
     {
@@ -40,11 +44,7 @@ int dgetrfnpi_check(int *m, int *n, int *nfact, double *a, int * lda, int *info)
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */
-     if(*nfact < 0 || *nfact > min(*m,*n))
-    {
-        return LAPACK_FAILURE;
-    }
-    if (*m == 0 || *n == 0)
+    if (*m == 0 || *n == 0 || *nfact == 0)
     {
         return LAPACK_QUICK_RETURN;
     }

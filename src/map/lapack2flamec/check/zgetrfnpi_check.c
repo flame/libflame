@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2020 Advanced Micro Devices, Inc. All rights reserved.
+ * Copyright (c) 2021 Advanced Micro Devices, Inc. All rights reserved.
  * */
 
 #include "FLA_lapack2flame_return_defs.h"
@@ -8,7 +8,7 @@
 int zgetrfnpi_check(int *m, int *n, int *nfact, dcomplex *a, int *lda, int *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;    
+    int a_dim1, a_offset, i__1;
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
     sprintf(buffer, "zgetrfnpi inputs: m %d, n %d, nfact %d, lda %d\n", *m, *n, *nfact, *lda);
@@ -28,9 +28,13 @@ int zgetrfnpi_check(int *m, int *n, int *nfact, dcomplex *a, int *lda, int *info
     {
         *info = -2;
     }
+    else if ((*nfact < 0) || (*nfact > min(*m,*n)))
+    {
+        *info = -3;
+    }
     else if (*lda < max(1,*m))
     {
-        *info = -4;
+        *info = -5;
     }
     if (*info != 0)
     {
@@ -39,11 +43,7 @@ int zgetrfnpi_check(int *m, int *n, int *nfact, dcomplex *a, int *lda, int *info
         return LAPACK_FAILURE;
     }
     /* Quick return if possible */
-     if(*nfact < 0 || *nfact > min(*m,*n))
-    {
-        return LAPACK_FAILURE;
-    }
-    if (*m == 0 || *n == 0)
+     if (*m == 0 || *n == 0 || *nfact == 0)
     {
         return LAPACK_QUICK_RETURN;
     }

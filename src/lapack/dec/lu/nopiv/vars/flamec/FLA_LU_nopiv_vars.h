@@ -8,6 +8,10 @@
 
 */
 
+/*
+   Copyright (c) 2021 Advanced Micro Devices, Inc. All rights reserved.
+* */
+
 #include "FLAME.h"
 
 FLA_Error FLA_LU_nopiv_blk_var1( FLA_Obj A, fla_lu_t* cntl );
@@ -92,3 +96,11 @@ FLA_Error FLA_LU_nopiv_opz_var5( int m_A,
                                  int n_A,
                                  dcomplex* A, int rs_A, int cs_A );
 
+
+FLA_Error FLA_LU_nopiv_i_blk_var1( FLA_Obj A, dim_t nfact );
+FLA_Error FLA_LU_nopiv_id_unblk_var1( int m_A,
+                                      int n_A,
+                                      double* A, int nfact, int rs_A, int cs_A );
+FLA_Error FLA_LU_nopiv_id_unblk_var2( int m_A,
+                                      int n_A,
+                                      double* A, int nfact, int rs_A, int cs_A );

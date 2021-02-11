@@ -221,6 +221,12 @@
 #define FLA_SPFFRT2__BSIZE_NL1        (256)
 #define FLA_SPFFRT2__BSIZE_NL2        (4096)
 
+// GETRFNPI , these thresholds are used to chose between 3 algorithms to get best
+// results in terms of perfmormance
+#define FLA_MN_SIZE            (373321)
+#define FLA_NFACT_PERCENT      (0.51)
+#define FLA_FULL_DGER_CONSTANT (200)
+
 // --- Error-related macro definitions -----------------------------------------
 
 // Useful when determining the relative index base of the error codes.

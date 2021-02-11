@@ -1,5 +1,5 @@
 /*
- *  Copyright (c) 2020 Advanced Micro Devices, Inc. All rights reserved.
+ *  Copyright (c) 2020-21 Advanced Micro Devices, Inc. All rights reserved.
  * */
 
 #include "FLAME.h"
@@ -48,35 +48,41 @@ extern void DTL_Trace(
 		uint32 ui32LineNumber,
 		const int8 *pi8Message);
 
-#define LAPACK_getrfnpi(prefix)                                                       \
-  int F77_ ## prefix ## getrfnpi( int* m,                                             \
-                                  int* n,                                             \
-                                  int* nfact,                                         \
-                                  PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+#define LAPACK_getrfnpi(prefix)                                                                \
+  int F77_ ## prefix ## getrfnpi( int* m,                                                      \
+                                  int* n,                                                      \
+                                  int* nfact,                                                  \
+                                  PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A,          \
                                   int* info )
 
-#define LAPACK_getrfnpi_body(prefix)                            \
-  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5); \
-  FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
-  FLA_Obj      A;                                               \
-  FLA_Error    e_val;                                           \
-  FLA_Error    init_result;                                     \
-                                                                \
-  FLA_Init_safe( &init_result);                                 \
-                                                                \
-  FLA_Obj_create_without_buffer( datatype, *m, *n, &A );        \
-  FLA_Obj_attach_buffer( buff_A, 1, *ldim_A, &A );              \
-                                                                \
-  e_val = FLA_LU_nopiv_blk_var6( A, *nfact);                    \
-                                                                \
-  FLA_Obj_free_without_buffer( &A );                            \
-                                                                \
-  FLA_Finalize_safe( init_result );                             \
-                                                                \
-  if ( e_val != FLA_SUCCESS ) *info = e_val + 1;                \
-  else                        *info = 0;                        \
-                                                                \
-  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  \
+#define LAPACK_getrfnpi_body(prefix)                                                           \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                                                \
+  FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);                                       \
+  FLA_Error e_val ;                                                                            \
+                                                                                               \
+  int use_fast_path = 0;                                                                                                                         \
+  if ( (datatype == FLA_DOUBLE) && ((*m) * (*n) <=  FLA_MN_SIZE) && ((*nfact) <= (FLA_NFACT_PERCENT * (*m))) && ((*m) == (*n)) ) use_fast_path=1;\
+  if( use_fast_path  == 1 )    /* For smaller sizes fast path is better  */                                                                      \
+  {                                                                                                                                              \
+    if( (*n)*(*nfact)-(*nfact-1)/4 <= FLA_FULL_DGER_CONSTANT  )                                                                                  \
+    e_val = FLA_LU_nopiv_id_unblk_var2( *m, *n, buff_A, *nfact, 1, *ldim_A);                                                                     \
+    else                                                                                                                                         \
+    e_val =  FLA_LU_nopiv_id_unblk_var1( *m, *n, buff_A,  *nfact, 1, *ldim_A);                                                                   \
+  }                                                                                                                                              \
+  else                                                                                                                                           \
+  {                                                                                                                                              \
+     FLA_Obj   A;                                                                                                                                \
+     FLA_Error init_result;                                                                                                                      \
+     FLA_Init_safe( &init_result );                                                                                                              \
+     FLA_Obj_create_without_buffer( datatype, *m, *n, &A );                                                                                      \
+     FLA_Obj_attach_buffer( buff_A, 1, *ldim_A, &A );                                                                                            \
+     e_val = FLA_LU_nopiv_i_blk_var1( A, *nfact);                                                                                                \
+     FLA_Obj_free_without_buffer( &A );                                                                                                          \
+     FLA_Finalize_safe( init_result );  }                                                                                                        \
+  if ( e_val != FLA_SUCCESS ) *info = e_val + 1;                                                                                                 \
+  else                        *info = 0;                                                                                                         \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                                                                                                   \
+                                                                                                                                                 \
   return 0;
 
 
