@@ -12,6 +12,10 @@ AC_DEFUN([FLA_SET_C_OPT_FLAGS],
 			gcc)
 				fla_c_opt_flags='-O3'
 			;;
+			dnl LLVM clang.
+			clang)
+				fla_c_opt_flags='-O3'
+			;;
 			dnl Intel cc.
 			icc)
 				fla_c_opt_flags='-O3'
@@ -47,6 +51,10 @@ AC_DEFUN([FLA_SET_C_OPT_FLAGS],
 		case ${CC_VENDOR} in
 			dnl GNU gcc.
 			gcc)
+				fla_c_opt_flags='-O0'
+			;;
+			dnl LLVM clang.
+			clang)
 				fla_c_opt_flags='-O0'
 			;;
 			dnl Intel cc.

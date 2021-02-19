@@ -6958,6 +6958,9 @@ $as_echo_n "checking for (guessing) appropriate $CC optimization flags... " >&6;
 						gcc)
 				fla_c_opt_flags='-O3'
 			;;
+						clang)
+				fla_c_opt_flags='-O3'
+			;;
 						icc)
 				fla_c_opt_flags='-O3'
 			;;
@@ -6984,6 +6987,9 @@ $as_echo_n "checking for (guessing) appropriate $CC optimization flags... " >&6;
 
 				case $CC in
 						gcc)
+				fla_c_opt_flags='-O0'
+			;;
+						clang)
 				fla_c_opt_flags='-O0'
 			;;
 						icc)
