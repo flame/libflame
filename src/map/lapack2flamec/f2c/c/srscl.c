@@ -100,11 +100,19 @@ int srscl_(integer *n, real *sa, real *sx, integer *incx)
     /* .. */
     /* .. Executable Statements .. */
     /* Quick return if possible */
+    /* Logging and tracing code */
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    #if AOCL_DTL_LOG_ENABLE
+      char buffer[256];
+      sprintf(buffer, "srscl inputs: n %d, incx %d \n", *n, *incx);
+      AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+    #endif
     /* Parameter adjustments */
     --sx;
     /* Function Body */
     if (*n <= 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine parameters */
@@ -143,6 +151,7 @@ L10:
     {
         goto L10;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SRSCL */
 }
