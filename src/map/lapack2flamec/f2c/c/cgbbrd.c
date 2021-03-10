@@ -261,7 +261,13 @@ int cgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
     c__ -= c_offset;
     --work;
     --rwork;
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "cgbbrd inputs: vect %c, m %d, n %d, ncc %d, kl %d, ku %d, ldab %d, ldq %d, ldpt %d, ldc %d\n", *vect, *m, *n, *ncc, *kl, *ku, *ldab, *ldq, *ldpt, *ldc);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     wantb = lsame_(vect, "B");
     wantq = lsame_(vect, "Q") || wantb;
     wantpt = lsame_(vect, "P") || wantb;
@@ -764,6 +770,7 @@ int cgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
         }
         /* L120: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGBBRD */
 }

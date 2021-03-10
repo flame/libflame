@@ -446,7 +446,13 @@ int cgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
     --berr;
     --work;
     --rwork;
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "cgbsvx inputs: fact %c, trans %c, n %d, kl %d, ku %d, nrhs %d, ldab %d, ldafb %d, ipiv %d, equed %c, ldb %d, ldx %d\n", *fact, *trans, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ipiv, *equed, *ldb, *ldx);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     *info = 0;
     nofact = lsame_(fact, "N");
     equil = lsame_(fact, "E");
@@ -822,6 +828,7 @@ int cgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
         *info = *n + 1;
     }
     rwork[1] = rpvgrw;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGBSVX */
 }

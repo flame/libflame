@@ -298,7 +298,13 @@ int cbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, 
     c_offset = 1 + c_dim1;
     c__ -= c_offset;
     --rwork;
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "cbdsqr inputs: uplo %c, n %d, ncvt %d, nru %d, ncc %d, ldvt %d, ldu %d, ldc %d\n", *uplo, *n, *ncvt, *nru, *ncc, *ldvt, *ldu, *ldc);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     *info = 0;
     lower = lsame_(uplo, "L");
     if (! lsame_(uplo, "U") && ! lower)
@@ -973,6 +979,7 @@ L200:
         /* L210: */
     }
 L220:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CBDSQR */
 }

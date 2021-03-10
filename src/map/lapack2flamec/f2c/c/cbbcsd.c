@@ -422,7 +422,14 @@ int cbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     --b22d;
     --b22e;
     --rwork;
+    
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "cbbcsd inputs: jobu1 %c, jobu2 %c, jobv1t %c, jobv2t %c, trans %c, m %d, p %d, q %d, ldu1 %d, ldu2 %d, ldv1t %d, ldv2t %d\n", *jobu1, *jobu2, *jobv1t, *jobv2t, *trans, *m, *p, *q, *ldu1, *ldu2, *ldv1t, *ldv2t);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     *info = 0;
     lquery = *lrwork == -1;
     wantu1 = lsame_(jobu1, "Y");
@@ -1302,6 +1309,7 @@ int cbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CBBCSD */
 }

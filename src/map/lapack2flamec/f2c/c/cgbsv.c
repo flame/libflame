@@ -181,7 +181,13 @@ int cgbsv_(integer *n, integer *kl, integer *ku, integer * nrhs, complex *ab, in
     b_dim1 = *ldb;
     b_offset = 1 + b_dim1;
     b -= b_offset;
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "cgbsv inputs: n %d, kl %d, ku %d, nrhs %d, ldab %d, ipiv %d, ldb %d\n", *n, *kl, *ku, *nrhs, *ldab, *ipiv, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     *info = 0;
     if (*n < 0)
     {
@@ -220,6 +226,7 @@ int cgbsv_(integer *n, integer *kl, integer *ku, integer * nrhs, complex *ab, in
         /* Solve the system A*X = B, overwriting B with X. */
         cgbtrs_("No transpose", n, kl, ku, nrhs, &ab[ab_offset], ldab, &ipiv[ 1], &b[b_offset], ldb, info);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGBSV */
 }

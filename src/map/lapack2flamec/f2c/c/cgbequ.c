@@ -184,7 +184,13 @@ int cgbequ_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
     ab -= ab_offset;
     --r__;
     --c__;
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "cgbequ inputs: m %d, n %d, kl %d, ku %d, ldab %d\n", *m, *n, *kl, *ku, *ldab);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     *info = 0;
     if (*m < 0)
     {
@@ -397,6 +403,7 @@ int cgbequ_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
         /* Compute COLCND = min(C(J)) / max(C(J)) */
         *colcnd = max(rcmin,smlnum) / min(rcmax,bignum);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGBEQU */
 }
