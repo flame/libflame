@@ -254,7 +254,13 @@
  vr -= vr_offset;
  --work;
  --rwork;
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ sprintf(buffer, "cgeev inputs: jobvl %c, jobvr %c, n %d, lda %d, ldvl %d, ldvr %d\n", *jobvl, *jobvr, *n, *lda, *ldvl, *ldvr);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  *info = 0;
  lquery = *lwork == -1;
  wantvl = lsame_(jobvl, "V");
@@ -523,7 +529,8 @@
  clascl_("G", &c__0, &c__0, &cscale, &anrm, &i__1, &c__1, &w[1], n, &ierr);
  }
  }
- work[1].r = (real) maxwrk; work[1].i = 0.f; // , expr subst  
+ work[1].r = (real) maxwrk; work[1].i = 0.f; // , expr subst 
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5); 
  return 0;
  /* End of CGEEV */
  }

@@ -162,7 +162,13 @@ int cgebak_(char *job, char *side, integer *n, integer *ilo, integer *ihi, real 
     v_dim1 = *ldv;
     v_offset = 1 + v_dim1;
     v -= v_offset;
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "cgebak inputs: job %c, side %c, n %d, ilo %d, ihi %d, m %d, ldv %d\n", *job, *side, *n, *ilo, *ihi, *m, *ldv);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     rightv = lsame_(side, "R");
     leftv = lsame_(side, "L");
     *info = 0;
@@ -304,6 +310,7 @@ L50:
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGEBAK */
 }

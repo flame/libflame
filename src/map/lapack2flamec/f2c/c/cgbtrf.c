@@ -193,7 +193,13 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
     ab_offset = 1 + ab_dim1;
     ab -= ab_offset;
     --ipiv;
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "cgbtrf inputs: m %d, n %d, kl %d, ku %d, ldab %d, ipiv %d\n", *m, *n, *kl, *ku, *ldab, *ipiv);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     kv = *ku + *kl;
     /* Test the input parameters. */
     *info = 0;
@@ -625,6 +631,7 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
             /* L180: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGBTRF */
 }

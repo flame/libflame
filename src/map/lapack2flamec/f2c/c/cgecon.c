@@ -172,7 +172,13 @@ int cgecon_(char *norm, integer *n, complex *a, integer *lda, real *anorm, real 
     a -= a_offset;
     --work;
     --rwork;
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "cgecon inputs: norm %c, n %d, lda %d\n", *norm, *n, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     *info = 0;
     onenrm = *(unsigned char *)norm == '1' || lsame_(norm, "O");
     if (! onenrm && ! lsame_(norm, "I"))
@@ -260,6 +266,7 @@ L10:
         *rcond = 1.f / ainvnm / *anorm;
     }
 L20:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGECON */
 }

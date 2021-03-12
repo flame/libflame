@@ -256,7 +256,13 @@
  --tauq;
  --taup;
  --work;
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ sprintf(buffer, "cgebrd inputs: m %d, n %d, lda %d\n", *m, *n, *lda);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  *info = 0;
  /* Computing MAX */
  i__1 = 1; i__2 = ilaenv_(&c__1, "CGEBRD", " ", m, n, &c_n1, &c_n1); // , expr subst  
@@ -381,6 +387,7 @@
  i__1 = *n - i__ + 1;
  cgebd2_(&i__2, &i__1, &a[i__ + i__ * a_dim1], lda, &d__[i__], &e[i__], & tauq[i__], &taup[i__], &work[1], &iinfo);
  work[1].r = (real) ws; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CGEBRD */
  }

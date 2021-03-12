@@ -170,7 +170,13 @@ int cgeequ_(integer *m, integer *n, complex *a, integer *lda, real *r__, real *c
     a -= a_offset;
     --r__;
     --c__;
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "cgeequ inputs: m %d, n %d, lda %d\n", *m, *n, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     *info = 0;
     if (*m < 0)
     {
@@ -365,6 +371,7 @@ int cgeequ_(integer *m, integer *n, complex *a, integer *lda, real *r__, real *c
         /* Compute COLCND = min(C(J)) / max(C(J)) */
         *colcnd = max(rcmin,smlnum) / min(rcmax,bignum);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGEEQU */
 }

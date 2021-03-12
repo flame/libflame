@@ -199,7 +199,13 @@
  a_offset = 1 + a_dim1;
  a -= a_offset;
  --scale;
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ sprintf(buffer, "cgebal inputs: job %c, n %d, lda %d, ilo %d, ihi %d\n", *job, *n, *lda, *ilo, *ihi);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  *info = 0;
  if (! lsame_(job, "N") && ! lsame_(job, "P") && ! lsame_(job, "S") && ! lsame_(job, "B")) {
  *info = -1;
@@ -397,6 +403,7 @@
  }
  L210: *ilo = k;
  *ihi = l;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CGEBAL */
  }

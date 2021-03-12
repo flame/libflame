@@ -373,7 +373,13 @@
  --rcondv;
  --work;
  --rwork;
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ sprintf(buffer, "cgeevx inputs: balanc %c, jobvl %c, jobvr %c, sense %c, n %d, lda %d, ldvl %d, ldvr %d, ilo %d, ihi %d\n", *balanc, *jobvl, *jobvr, *sense, *n, *lda, *ldvl, *ldvr, *ilo, *ihi);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  *info = 0;
  lquery = *lwork == -1;
  wantvl = lsame_(jobvl, "V");
@@ -696,6 +702,7 @@
  }
  }
  work[1].r = (real) maxwrk; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CGEEVX */
  }

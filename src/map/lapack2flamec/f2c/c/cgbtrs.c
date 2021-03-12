@@ -174,7 +174,13 @@ int cgbtrs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, c
     b_dim1 = *ldb;
     b_offset = 1 + b_dim1;
     b -= b_offset;
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "cgbtrs inputs: trans %c, n %d, kl %d, ku %d, nrhs %d, ldab %d, ipiv %d, ldb %d\n", *trans, *n, *kl, *ku, *nrhs, *ldab, *ipiv, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     *info = 0;
     notran = lsame_(trans, "N");
     if (! notran && ! lsame_(trans, "T") && ! lsame_( trans, "C"))
@@ -333,6 +339,7 @@ int cgbtrs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, c
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGBTRS */
 }
