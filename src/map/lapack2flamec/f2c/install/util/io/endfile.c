@@ -26,7 +26,11 @@ use or performance of this software.
 #include "fio.h"
 
 #ifdef HAVE_FTRUNCATE
+#ifdef _WIN32
+#include <io.h>
+#else
 #include <unistd.h>
+#endif
 #endif
 
 #undef abs

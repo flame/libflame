@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_lu_t* flash_lu_incpiv_cntl;
+extern TLS_CLASS_SPEC fla_lu_t* flash_lu_incpiv_cntl;
 
 FLA_Error FLASH_LU_incpiv_noopt( FLA_Obj A, FLA_Obj p, FLA_Obj L )
 {

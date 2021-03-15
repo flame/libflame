@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_apqudut_t* fla_apqudut_cntl_leaf;
+extern TLS_CLASS_SPEC fla_apqudut_t* fla_apqudut_cntl_leaf;
 
 FLA_Error FLA_Apply_QUD_UT_lhfc( FLA_Obj T, FLA_Obj W,
                                             FLA_Obj R,

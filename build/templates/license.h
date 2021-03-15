@@ -1,5 +1,5 @@
 /*
-
+    Copyright (c) 2017, Advanced Micro Devices, Inc.
     Copyright (C) 2014, The University of Texas at Austin
 
     This file is part of libflame and is available under the 3-Clause

@@ -10,12 +10,12 @@
 
 #include "FLAME.h"
 
-extern fla_herk_t* flash_herk_cntl_op;
-extern fla_trmm_t* flash_trmm_cntl_bp;
+extern TLS_CLASS_SPEC fla_herk_t* flash_herk_cntl_op;
+extern TLS_CLASS_SPEC fla_trmm_t* flash_trmm_cntl_bp;
 
-fla_ttmm_t*        flash_ttmm_cntl_leaf = NULL;
-fla_ttmm_t*        flash_ttmm_cntl = NULL;
-fla_blocksize_t*   flash_ttmm_bsize = NULL;
+TLS_CLASS_SPEC fla_ttmm_t*        flash_ttmm_cntl_leaf = NULL;
+TLS_CLASS_SPEC fla_ttmm_t*        flash_ttmm_cntl = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*   flash_ttmm_bsize = NULL;
 
 void FLASH_Ttmm_cntl_init()
 {

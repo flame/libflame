@@ -23,6 +23,19 @@ extern "C" {
         return ( *x >= 0 ? (*x) : (- *x) );
     }
 
+#ifdef _WIN32
+    /* Complex */
+    double c_abs(complex *z)
+    {
+        _Dcomplex z_ = {z->r, z->i};
+        return  (cabs(z_));
+    }
+    double z_abs(doublecomplex *z)
+    {
+        _Dcomplex z_ = { z->r, z->i };
+        return  (cabs(z_));
+    }
+#else
     /* Complex */
     double c_abs(complex *z)
     {
@@ -32,6 +45,7 @@ extern "C" {
     {
       return  (cabs(z->r + I*z->i));
     }
+#endif
 
 #ifdef __cplusplus
 }

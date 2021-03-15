@@ -10,16 +10,16 @@
 
 #include "FLAME.h"
 
-extern fla_axpy_t*  flash_axpy_cntl;
-extern fla_gemm_t*  flash_gemm_cntl_mm;
-extern fla_hemm_t*  flash_hemm_cntl_mm;
-extern fla_her2k_t* flash_her2k_cntl_mm;
-extern fla_trmm_t*  flash_trmm_cntl_mm;
-extern fla_trsm_t*  flash_trsm_cntl_mm;
+extern TLS_CLASS_SPEC fla_axpy_t*  flash_axpy_cntl;
+extern TLS_CLASS_SPEC fla_gemm_t*  flash_gemm_cntl_mm;
+extern TLS_CLASS_SPEC fla_hemm_t*  flash_hemm_cntl_mm;
+extern TLS_CLASS_SPEC fla_her2k_t* flash_her2k_cntl_mm;
+extern TLS_CLASS_SPEC fla_trmm_t*  flash_trmm_cntl_mm;
+extern TLS_CLASS_SPEC fla_trsm_t*  flash_trsm_cntl_mm;
 
-fla_eig_gest_t*     flash_eig_gest_cntl_leaf = NULL;
-fla_eig_gest_t*     flash_eig_gest_cntl = NULL;
-fla_blocksize_t*    flash_eig_gest_bsize = NULL;
+TLS_CLASS_SPEC fla_eig_gest_t*     flash_eig_gest_cntl_leaf = NULL;
+TLS_CLASS_SPEC fla_eig_gest_t*     flash_eig_gest_cntl = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*    flash_eig_gest_bsize = NULL;
 
 void FLASH_Eig_gest_cntl_init()
 {

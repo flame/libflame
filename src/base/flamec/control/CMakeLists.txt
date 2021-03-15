@@ -1,0 +1,16 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Cntl.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Cntl.h
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Cntl_blas1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Cntl_blas1.h
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Cntl_blas2.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Cntl_blas2.h
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Cntl_blas3.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Cntl_blas3.h
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Cntl_lapack.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Cntl_lapack.h
+	)
+	
+add_subdirectory(init)

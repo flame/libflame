@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_hessut_t* fla_hessut_cntl_leaf;
+extern TLS_CLASS_SPEC fla_hessut_t* fla_hessut_cntl_leaf;
 
 FLA_Error FLA_Hess_UT( FLA_Obj A, FLA_Obj T )
 {

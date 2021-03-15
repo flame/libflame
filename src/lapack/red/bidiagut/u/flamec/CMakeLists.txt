@@ -1,0 +1,30 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.## 
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u.h
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_blf_var2.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_blf_var3.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_blf_var4.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_blk_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_blk_var2.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_blk_var3.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_blk_var4.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_blk_var5.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_fus_var2.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_fus_var3.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_fus_var4.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_opt_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_opt_var2.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_opt_var3.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_opt_var4.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_opt_var5.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_unb_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_unb_var2.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_unb_var3.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_unb_var4.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_u_unb_var5.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Fused_Ahx_Axpy_Ax_opt_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Fused_Gerc2_Ahx_Axpy_Ax_opt_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Fused_Gerc2_opt_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Fused_UYx_ZVx_opt_var1.c
+	)

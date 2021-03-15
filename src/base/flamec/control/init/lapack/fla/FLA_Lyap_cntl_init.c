@@ -10,15 +10,15 @@
 
 #include "FLAME.h"
 
-extern fla_scal_t*  fla_scal_cntl_blas;
-extern fla_gemm_t*  fla_gemm_cntl_blas;
-extern fla_hemm_t*  fla_hemm_cntl_blas;
-extern fla_her2k_t* fla_her2k_cntl_blas;
-extern fla_sylv_t*  fla_sylv_cntl;
+extern TLS_CLASS_SPEC fla_scal_t*  fla_scal_cntl_blas;
+extern TLS_CLASS_SPEC fla_gemm_t*  fla_gemm_cntl_blas;
+extern TLS_CLASS_SPEC fla_hemm_t*  fla_hemm_cntl_blas;
+extern TLS_CLASS_SPEC fla_her2k_t* fla_her2k_cntl_blas;
+extern TLS_CLASS_SPEC fla_sylv_t*  fla_sylv_cntl;
 
-fla_lyap_t*         fla_lyap_cntl_leaf = NULL;
-fla_lyap_t*         fla_lyap_cntl = NULL;
-fla_blocksize_t*    fla_lyap_bsize = NULL;
+TLS_CLASS_SPEC fla_lyap_t*         fla_lyap_cntl_leaf = NULL;
+TLS_CLASS_SPEC fla_lyap_t*         fla_lyap_cntl = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*    fla_lyap_bsize = NULL;
 
 void FLA_Lyap_cntl_init()
 {

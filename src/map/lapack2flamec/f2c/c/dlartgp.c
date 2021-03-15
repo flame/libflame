@@ -133,21 +133,21 @@ int dlartgp_(doublereal *f, doublereal *g, doublereal *cs, doublereal *sn, doubl
     {
         *cs = d_sign(&c_b6, f);
         *sn = 0.;
-        *r__ = f2c_abs(*f);
+        *r__ = f2c_dabs(*f);
     }
     else if (*f == 0.)
     {
         *cs = 0.;
         *sn = d_sign(&c_b6, g);
-        *r__ = f2c_abs(*g);
+        *r__ = f2c_dabs(*g);
     }
     else
     {
         f1 = *f;
         g1 = *g;
         /* Computing MAX */
-        d__1 = f2c_abs(f1);
-        d__2 = f2c_abs(g1); // , expr subst
+        d__1 = f2c_dabs(f1);
+        d__2 = f2c_dabs(g1); // , expr subst
         scale = max(d__1,d__2);
         if (scale >= safmx2)
         {
@@ -157,8 +157,8 @@ L10:
             f1 *= safmn2;
             g1 *= safmn2;
             /* Computing MAX */
-            d__1 = f2c_abs(f1);
-            d__2 = f2c_abs(g1); // , expr subst
+            d__1 = f2c_dabs(f1);
+            d__2 = f2c_dabs(g1); // , expr subst
             scale = max(d__1,d__2);
             if (scale >= safmx2)
             {
@@ -188,8 +188,8 @@ L30:
             f1 *= safmx2;
             g1 *= safmx2;
             /* Computing MAX */
-            d__1 = f2c_abs(f1);
-            d__2 = f2c_abs(g1); // , expr subst
+            d__1 = f2c_dabs(f1);
+            d__2 = f2c_dabs(g1); // , expr subst
             scale = max(d__1,d__2);
             if (scale <= safmn2)
             {

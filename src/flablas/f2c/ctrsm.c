@@ -9,6 +9,7 @@ static complex c_b1 =
 /* Subroutine */
 int ctrsm_(char *side, char *uplo, char *transa, char *diag, integer *m, integer *n, complex *alpha, complex *a, integer *lda, complex *b, integer *ldb)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7;
     complex q__1, q__2, q__3;
@@ -757,7 +758,8 @@ int ctrsm_(char *side, char *uplo, char *transa, char *diag, integer *m, integer
         }
     }
     return 0;
-    /* End of CTRSM . */
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+/* End of CTRSM . */
 }
 /* ctrsm_ */
 

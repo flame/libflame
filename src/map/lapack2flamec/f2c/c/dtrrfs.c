@@ -319,8 +319,8 @@ int dtrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
         dtrmv_(uplo, trans, diag, n, &a[a_offset], lda, &work[*n + 1], &c__1);
         daxpy_(n, &c_b19, &b[j * b_dim1 + 1], &c__1, &work[*n + 1], &c__1);
         /* Compute componentwise relative backward error from formula */
-        /* max(i) ( f2c_abs(R(i)) / ( f2c_abs(op(A))*f2c_abs(X) + f2c_abs(B) )(i) ) */
-        /* where f2c_abs(Z) is the componentwise absolute value of the matrix */
+        /* max(i) ( f2c_dabs(R(i)) / ( f2c_dabs(op(A))*f2c_dabs(X) + f2c_dabs(B) )(i) ) */
+        /* where f2c_dabs(Z) is the componentwise absolute value of the matrix */
         /* or vector Z. If the i-th component of the denominator is less */
         /* than SAFE2, then SAFE1 is added to the i-th components of the */
         /* numerator and denominator before dividing. */
@@ -329,12 +329,12 @@ int dtrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
                 i__ <= i__2;
                 ++i__)
         {
-            work[i__] = (d__1 = b[i__ + j * b_dim1], f2c_abs(d__1));
+            work[i__] = (d__1 = b[i__ + j * b_dim1], f2c_dabs(d__1));
             /* L20: */
         }
         if (notran)
         {
-            /* Compute f2c_abs(A)*f2c_abs(X) + f2c_abs(B). */
+            /* Compute f2c_dabs(A)*f2c_dabs(X) + f2c_dabs(B). */
             if (upper)
             {
                 if (nounit)
@@ -344,13 +344,13 @@ int dtrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
                             k <= i__2;
                             ++k)
                     {
-                        xk = (d__1 = x[k + j * x_dim1], f2c_abs(d__1));
+                        xk = (d__1 = x[k + j * x_dim1], f2c_dabs(d__1));
                         i__3 = k;
                         for (i__ = 1;
                                 i__ <= i__3;
                                 ++i__)
                         {
-                            work[i__] += (d__1 = a[i__ + k * a_dim1], f2c_abs( d__1)) * xk;
+                            work[i__] += (d__1 = a[i__ + k * a_dim1], f2c_dabs( d__1)) * xk;
                             /* L30: */
                         }
                         /* L40: */
@@ -363,13 +363,13 @@ int dtrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
                             k <= i__2;
                             ++k)
                     {
-                        xk = (d__1 = x[k + j * x_dim1], f2c_abs(d__1));
+                        xk = (d__1 = x[k + j * x_dim1], f2c_dabs(d__1));
                         i__3 = k - 1;
                         for (i__ = 1;
                                 i__ <= i__3;
                                 ++i__)
                         {
-                            work[i__] += (d__1 = a[i__ + k * a_dim1], f2c_abs( d__1)) * xk;
+                            work[i__] += (d__1 = a[i__ + k * a_dim1], f2c_dabs( d__1)) * xk;
                             /* L50: */
                         }
                         work[k] += xk;
@@ -386,13 +386,13 @@ int dtrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
                             k <= i__2;
                             ++k)
                     {
-                        xk = (d__1 = x[k + j * x_dim1], f2c_abs(d__1));
+                        xk = (d__1 = x[k + j * x_dim1], f2c_dabs(d__1));
                         i__3 = *n;
                         for (i__ = k;
                                 i__ <= i__3;
                                 ++i__)
                         {
-                            work[i__] += (d__1 = a[i__ + k * a_dim1], f2c_abs( d__1)) * xk;
+                            work[i__] += (d__1 = a[i__ + k * a_dim1], f2c_dabs( d__1)) * xk;
                             /* L70: */
                         }
                         /* L80: */
@@ -405,13 +405,13 @@ int dtrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
                             k <= i__2;
                             ++k)
                     {
-                        xk = (d__1 = x[k + j * x_dim1], f2c_abs(d__1));
+                        xk = (d__1 = x[k + j * x_dim1], f2c_dabs(d__1));
                         i__3 = *n;
                         for (i__ = k + 1;
                                 i__ <= i__3;
                                 ++i__)
                         {
-                            work[i__] += (d__1 = a[i__ + k * a_dim1], f2c_abs( d__1)) * xk;
+                            work[i__] += (d__1 = a[i__ + k * a_dim1], f2c_dabs( d__1)) * xk;
                             /* L90: */
                         }
                         work[k] += xk;
@@ -422,7 +422,7 @@ int dtrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
         }
         else
         {
-            /* Compute f2c_abs(A**T)*f2c_abs(X) + f2c_abs(B). */
+            /* Compute f2c_dabs(A**T)*f2c_dabs(X) + f2c_dabs(B). */
             if (upper)
             {
                 if (nounit)
@@ -438,7 +438,7 @@ int dtrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
                                 i__ <= i__3;
                                 ++i__)
                         {
-                            s += (d__1 = a[i__ + k * a_dim1], f2c_abs(d__1)) * ( d__2 = x[i__ + j * x_dim1], f2c_abs(d__2));
+                            s += (d__1 = a[i__ + k * a_dim1], f2c_dabs(d__1)) * ( d__2 = x[i__ + j * x_dim1], f2c_dabs(d__2));
                             /* L110: */
                         }
                         work[k] += s;
@@ -452,13 +452,13 @@ int dtrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
                             k <= i__2;
                             ++k)
                     {
-                        s = (d__1 = x[k + j * x_dim1], f2c_abs(d__1));
+                        s = (d__1 = x[k + j * x_dim1], f2c_dabs(d__1));
                         i__3 = k - 1;
                         for (i__ = 1;
                                 i__ <= i__3;
                                 ++i__)
                         {
-                            s += (d__1 = a[i__ + k * a_dim1], f2c_abs(d__1)) * ( d__2 = x[i__ + j * x_dim1], f2c_abs(d__2));
+                            s += (d__1 = a[i__ + k * a_dim1], f2c_dabs(d__1)) * ( d__2 = x[i__ + j * x_dim1], f2c_dabs(d__2));
                             /* L130: */
                         }
                         work[k] += s;
@@ -481,7 +481,7 @@ int dtrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
                                 i__ <= i__3;
                                 ++i__)
                         {
-                            s += (d__1 = a[i__ + k * a_dim1], f2c_abs(d__1)) * ( d__2 = x[i__ + j * x_dim1], f2c_abs(d__2));
+                            s += (d__1 = a[i__ + k * a_dim1], f2c_dabs(d__1)) * ( d__2 = x[i__ + j * x_dim1], f2c_dabs(d__2));
                             /* L150: */
                         }
                         work[k] += s;
@@ -495,13 +495,13 @@ int dtrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
                             k <= i__2;
                             ++k)
                     {
-                        s = (d__1 = x[k + j * x_dim1], f2c_abs(d__1));
+                        s = (d__1 = x[k + j * x_dim1], f2c_dabs(d__1));
                         i__3 = *n;
                         for (i__ = k + 1;
                                 i__ <= i__3;
                                 ++i__)
                         {
-                            s += (d__1 = a[i__ + k * a_dim1], f2c_abs(d__1)) * ( d__2 = x[i__ + j * x_dim1], f2c_abs(d__2));
+                            s += (d__1 = a[i__ + k * a_dim1], f2c_dabs(d__1)) * ( d__2 = x[i__ + j * x_dim1], f2c_dabs(d__2));
                             /* L170: */
                         }
                         work[k] += s;
@@ -520,14 +520,14 @@ int dtrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
             {
                 /* Computing MAX */
                 d__2 = s;
-                d__3 = (d__1 = work[*n + i__], f2c_abs(d__1)) / work[ i__]; // , expr subst
+                d__3 = (d__1 = work[*n + i__], f2c_dabs(d__1)) / work[ i__]; // , expr subst
                 s = max(d__2,d__3);
             }
             else
             {
                 /* Computing MAX */
                 d__2 = s;
-                d__3 = ((d__1 = work[*n + i__], f2c_abs(d__1)) + safe1) / (work[i__] + safe1); // , expr subst
+                d__3 = ((d__1 = work[*n + i__], f2c_dabs(d__1)) + safe1) / (work[i__] + safe1); // , expr subst
                 s = max(d__2,d__3);
             }
             /* L190: */
@@ -535,21 +535,21 @@ int dtrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
         berr[j] = s;
         /* Bound error from formula */
         /* norm(X - XTRUE) / norm(X) .le. FERR = */
-        /* norm( f2c_abs(inv(op(A)))* */
-        /* ( f2c_abs(R) + NZ*EPS*( f2c_abs(op(A))*f2c_abs(X)+f2c_abs(B) ))) / norm(X) */
+        /* norm( f2c_dabs(inv(op(A)))* */
+        /* ( f2c_dabs(R) + NZ*EPS*( f2c_dabs(op(A))*f2c_dabs(X)+f2c_dabs(B) ))) / norm(X) */
         /* where */
         /* norm(Z) is the magnitude of the largest component of Z */
         /* inv(op(A)) is the inverse of op(A) */
-        /* f2c_abs(Z) is the componentwise absolute value of the matrix or */
+        /* f2c_dabs(Z) is the componentwise absolute value of the matrix or */
         /* vector Z */
         /* NZ is the maximum number of nonzeros in any row of A, plus 1 */
         /* EPS is machine epsilon */
-        /* The i-th component of f2c_abs(R)+NZ*EPS*(f2c_abs(op(A))*f2c_abs(X)+f2c_abs(B)) */
+        /* The i-th component of f2c_dabs(R)+NZ*EPS*(f2c_dabs(op(A))*f2c_dabs(X)+f2c_dabs(B)) */
         /* is incremented by SAFE1 if the i-th component of */
-        /* f2c_abs(op(A))*f2c_abs(X) + f2c_abs(B) is less than SAFE2. */
+        /* f2c_dabs(op(A))*f2c_dabs(X) + f2c_dabs(B) is less than SAFE2. */
         /* Use DLACN2 to estimate the infinity-norm of the matrix */
         /* inv(op(A)) * diag(W), */
-        /* where W = f2c_abs(R) + NZ*EPS*( f2c_abs(op(A))*f2c_abs(X)+f2c_abs(B) ))) */
+        /* where W = f2c_dabs(R) + NZ*EPS*( f2c_dabs(op(A))*f2c_dabs(X)+f2c_dabs(B) ))) */
         i__2 = *n;
         for (i__ = 1;
                 i__ <= i__2;
@@ -557,11 +557,11 @@ int dtrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
         {
             if (work[i__] > safe2)
             {
-                work[i__] = (d__1 = work[*n + i__], f2c_abs(d__1)) + nz * eps * work[i__];
+                work[i__] = (d__1 = work[*n + i__], f2c_dabs(d__1)) + nz * eps * work[i__];
             }
             else
             {
-                work[i__] = (d__1 = work[*n + i__], f2c_abs(d__1)) + nz * eps * work[i__] + safe1;
+                work[i__] = (d__1 = work[*n + i__], f2c_dabs(d__1)) + nz * eps * work[i__] + safe1;
             }
             /* L200: */
         }
@@ -607,7 +607,7 @@ L210:
         {
             /* Computing MAX */
             d__2 = lstres;
-            d__3 = (d__1 = x[i__ + j * x_dim1], f2c_abs(d__1)); // , expr subst
+            d__3 = (d__1 = x[i__ + j * x_dim1], f2c_dabs(d__1)); // , expr subst
             lstres = max(d__2,d__3);
             /* L240: */
         }

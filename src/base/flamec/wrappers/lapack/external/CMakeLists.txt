@@ -1,0 +1,47 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_pivots_macro_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_pivots_unb_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_Q_blk_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_apply_U_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_apply_V_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_blk_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_form_U_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_form_V_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_unb_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bsvd_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bsvdd_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Chol_blk_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Chol_unb_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Eig_gest_blk_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Eig_gest_unb_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Hess_blk_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Hess_unb_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Hevd_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Hevdd_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Hevdr_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LQ_blk_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LQ_unb_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_piv_blk_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_piv_unb_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_QR_blk_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_QR_form_Q_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_QR_unb_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_SPDinv_blk_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Svd_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Svdd_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_blk_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_unb_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Tevd_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Tevdd_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Tevdr_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Tridiag_apply_Q_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Tridiag_blk_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Tridiag_form_Q_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Tridiag_unb_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Trinv_blk_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Trinv_unb_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Ttmm_blk_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Ttmm_unb_external.c
+	)

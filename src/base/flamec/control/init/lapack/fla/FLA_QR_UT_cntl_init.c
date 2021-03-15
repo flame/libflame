@@ -10,15 +10,15 @@
 
 #include "FLAME.h"
 
-extern fla_apqut_t* fla_apqut_cntl_leaf;
+extern TLS_CLASS_SPEC fla_apqut_t* fla_apqut_cntl_leaf;
 
-fla_qrut_t*         fla_qrut_cntl_unb = NULL;
-fla_qrut_t*         fla_qrut_cntl_leaf = NULL;
+TLS_CLASS_SPEC fla_qrut_t*         fla_qrut_cntl_unb = NULL;
+TLS_CLASS_SPEC fla_qrut_t*         fla_qrut_cntl_leaf = NULL;
 
-fla_qrut_t*         fla_qrut_piv_cntl_unb = NULL;
-fla_qrut_t*         fla_qrut_piv_cntl_leaf = NULL;
+TLS_CLASS_SPEC fla_qrut_t*         fla_qrut_piv_cntl_unb = NULL;
+TLS_CLASS_SPEC fla_qrut_t*         fla_qrut_piv_cntl_leaf = NULL;
 
-fla_blocksize_t*    fla_qrut_var1_bsize_leaf = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*    fla_qrut_var1_bsize_leaf = NULL;
 
 void FLA_QR_UT_cntl_init()
 {

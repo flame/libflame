@@ -1,0 +1,10 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+add_subdirectory(blis)
+add_subdirectory(check)
+add_subdirectory(control)
+add_subdirectory(hierarchy)
+add_subdirectory(include)
+add_subdirectory(main)
+add_subdirectory(supermatrix)
+add_subdirectory(util)
+add_subdirectory(wrappers)

@@ -434,7 +434,7 @@ int cbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, 
     if (tol >= 0.f)
     {
         /* Relative accuracy desired */
-        sminoa = f2c_abs(d__[1]);
+        sminoa = f2c_dabs(d__[1]);
         if (sminoa == 0.f)
         {
             goto L50;

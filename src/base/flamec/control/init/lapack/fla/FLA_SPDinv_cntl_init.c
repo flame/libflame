@@ -10,12 +10,12 @@
 
 #include "FLAME.h"
 
-extern fla_chol_t*  fla_chol_cntl;
-extern fla_trinv_t* fla_trinv_cntl;
-extern fla_ttmm_t*  fla_ttmm_cntl;
+extern TLS_CLASS_SPEC fla_chol_t*  fla_chol_cntl;
+extern TLS_CLASS_SPEC fla_trinv_t* fla_trinv_cntl;
+extern TLS_CLASS_SPEC fla_ttmm_t*  fla_ttmm_cntl;
 
-fla_spdinv_t*       fla_spdinv_cntl = NULL;
-fla_blocksize_t*    fla_spdinv_size_cutoff = NULL;
+TLS_CLASS_SPEC fla_spdinv_t*       fla_spdinv_cntl = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*    fla_spdinv_size_cutoff = NULL;
 
 void FLA_SPDinv_cntl_init()
 {

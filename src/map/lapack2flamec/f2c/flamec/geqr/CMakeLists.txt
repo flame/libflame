@@ -1,0 +1,20 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.## 
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/cung2r_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/cungqr_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/cunm2r_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/cunmqr_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/dorg2r_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/dorgqr_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/dorm2r_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/dormqr_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/sorg2r_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/sorgqr_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/sorm2r_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/sormqr_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/zung2r_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/zungqr_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/zunm2r_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/zunmqr_fla.c
+	)

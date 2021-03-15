@@ -307,8 +307,8 @@ L20: /* Loop until stopping criterion is satisfied. */
         z__1.i = -0.; // , expr subst
         zhpmv_(uplo, n, &z__1, &ap[1], &x[j * x_dim1 + 1], &c__1, &c_b1, & work[1], &c__1);
         /* Compute componentwise relative backward error from formula */
-        /* max(i) ( f2c_abs(R(i)) / ( f2c_abs(A)*f2c_abs(X) + f2c_abs(B) )(i) ) */
-        /* where f2c_abs(Z) is the componentwise absolute value of the matrix */
+        /* max(i) ( f2c_dabs(R(i)) / ( f2c_dabs(A)*f2c_dabs(X) + f2c_dabs(B) )(i) ) */
+        /* where f2c_dabs(Z) is the componentwise absolute value of the matrix */
         /* or vector Z. If the i-th component of the denominator is less */
         /* than SAFE2, then SAFE1 is added to the i-th components of the */
         /* numerator and denominator before dividing. */
@@ -318,10 +318,10 @@ L20: /* Loop until stopping criterion is satisfied. */
                 ++i__)
         {
             i__3 = i__ + j * b_dim1;
-            rwork[i__] = (d__1 = b[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&b[ i__ + j * b_dim1]), f2c_abs(d__2));
+            rwork[i__] = (d__1 = b[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&b[ i__ + j * b_dim1]), f2c_dabs(d__2));
             /* L30: */
         }
-        /* Compute f2c_abs(A)*f2c_abs(X) + f2c_abs(B). */
+        /* Compute f2c_dabs(A)*f2c_dabs(X) + f2c_dabs(B). */
         kk = 1;
         if (upper)
         {
@@ -332,7 +332,7 @@ L20: /* Loop until stopping criterion is satisfied. */
             {
                 s = 0.;
                 i__3 = k + j * x_dim1;
-                xk = (d__1 = x[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&x[k + j * x_dim1]), f2c_abs(d__2));
+                xk = (d__1 = x[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&x[k + j * x_dim1]), f2c_dabs(d__2));
                 ik = kk;
                 i__3 = k - 1;
                 for (i__ = 1;
@@ -340,15 +340,15 @@ L20: /* Loop until stopping criterion is satisfied. */
                         ++i__)
                 {
                     i__4 = ik;
-                    rwork[i__] += ((d__1 = ap[i__4].r, f2c_abs(d__1)) + (d__2 = d_imag(&ap[ik]), f2c_abs(d__2))) * xk;
+                    rwork[i__] += ((d__1 = ap[i__4].r, f2c_dabs(d__1)) + (d__2 = d_imag(&ap[ik]), f2c_dabs(d__2))) * xk;
                     i__4 = ik;
                     i__5 = i__ + j * x_dim1;
-                    s += ((d__1 = ap[i__4].r, f2c_abs(d__1)) + (d__2 = d_imag(&ap[ ik]), f2c_abs(d__2))) * ((d__3 = x[i__5].r, f2c_abs(d__3)) + (d__4 = d_imag(&x[i__ + j * x_dim1]), f2c_abs(d__4) ));
+                    s += ((d__1 = ap[i__4].r, f2c_dabs(d__1)) + (d__2 = d_imag(&ap[ ik]), f2c_dabs(d__2))) * ((d__3 = x[i__5].r, f2c_dabs(d__3)) + (d__4 = d_imag(&x[i__ + j * x_dim1]), f2c_dabs(d__4) ));
                     ++ik;
                     /* L40: */
                 }
                 i__3 = kk + k - 1;
-                rwork[k] = rwork[k] + (d__1 = ap[i__3].r, f2c_abs(d__1)) * xk + s;
+                rwork[k] = rwork[k] + (d__1 = ap[i__3].r, f2c_dabs(d__1)) * xk + s;
                 kk += k;
                 /* L50: */
             }
@@ -362,9 +362,9 @@ L20: /* Loop until stopping criterion is satisfied. */
             {
                 s = 0.;
                 i__3 = k + j * x_dim1;
-                xk = (d__1 = x[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&x[k + j * x_dim1]), f2c_abs(d__2));
+                xk = (d__1 = x[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&x[k + j * x_dim1]), f2c_dabs(d__2));
                 i__3 = kk;
-                rwork[k] += (d__1 = ap[i__3].r, f2c_abs(d__1)) * xk;
+                rwork[k] += (d__1 = ap[i__3].r, f2c_dabs(d__1)) * xk;
                 ik = kk + 1;
                 i__3 = *n;
                 for (i__ = k + 1;
@@ -372,10 +372,10 @@ L20: /* Loop until stopping criterion is satisfied. */
                         ++i__)
                 {
                     i__4 = ik;
-                    rwork[i__] += ((d__1 = ap[i__4].r, f2c_abs(d__1)) + (d__2 = d_imag(&ap[ik]), f2c_abs(d__2))) * xk;
+                    rwork[i__] += ((d__1 = ap[i__4].r, f2c_dabs(d__1)) + (d__2 = d_imag(&ap[ik]), f2c_dabs(d__2))) * xk;
                     i__4 = ik;
                     i__5 = i__ + j * x_dim1;
-                    s += ((d__1 = ap[i__4].r, f2c_abs(d__1)) + (d__2 = d_imag(&ap[ ik]), f2c_abs(d__2))) * ((d__3 = x[i__5].r, f2c_abs(d__3)) + (d__4 = d_imag(&x[i__ + j * x_dim1]), f2c_abs(d__4) ));
+                    s += ((d__1 = ap[i__4].r, f2c_dabs(d__1)) + (d__2 = d_imag(&ap[ ik]), f2c_dabs(d__2))) * ((d__3 = x[i__5].r, f2c_dabs(d__3)) + (d__4 = d_imag(&x[i__ + j * x_dim1]), f2c_dabs(d__4) ));
                     ++ik;
                     /* L60: */
                 }
@@ -395,7 +395,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 /* Computing MAX */
                 i__3 = i__;
                 d__3 = s;
-                d__4 = ((d__1 = work[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&work[i__]), f2c_abs(d__2))) / rwork[i__]; // , expr subst
+                d__4 = ((d__1 = work[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&work[i__]), f2c_dabs(d__2))) / rwork[i__]; // , expr subst
                 s = max(d__3,d__4);
             }
             else
@@ -403,7 +403,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 /* Computing MAX */
                 i__3 = i__;
                 d__3 = s;
-                d__4 = ((d__1 = work[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&work[i__]), f2c_abs(d__2)) + safe1) / (rwork[i__] + safe1); // , expr subst
+                d__4 = ((d__1 = work[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&work[i__]), f2c_dabs(d__2)) + safe1) / (rwork[i__] + safe1); // , expr subst
                 s = max(d__3,d__4);
             }
             /* L80: */
@@ -425,21 +425,21 @@ L20: /* Loop until stopping criterion is satisfied. */
         }
         /* Bound error from formula */
         /* norm(X - XTRUE) / norm(X) .le. FERR = */
-        /* norm( f2c_abs(inv(A))* */
-        /* ( f2c_abs(R) + NZ*EPS*( f2c_abs(A)*f2c_abs(X)+f2c_abs(B) ))) / norm(X) */
+        /* norm( f2c_dabs(inv(A))* */
+        /* ( f2c_dabs(R) + NZ*EPS*( f2c_dabs(A)*f2c_dabs(X)+f2c_dabs(B) ))) / norm(X) */
         /* where */
         /* norm(Z) is the magnitude of the largest component of Z */
         /* inv(A) is the inverse of A */
-        /* f2c_abs(Z) is the componentwise absolute value of the matrix or */
+        /* f2c_dabs(Z) is the componentwise absolute value of the matrix or */
         /* vector Z */
         /* NZ is the maximum number of nonzeros in any row of A, plus 1 */
         /* EPS is machine epsilon */
-        /* The i-th component of f2c_abs(R)+NZ*EPS*(f2c_abs(A)*f2c_abs(X)+f2c_abs(B)) */
+        /* The i-th component of f2c_dabs(R)+NZ*EPS*(f2c_dabs(A)*f2c_dabs(X)+f2c_dabs(B)) */
         /* is incremented by SAFE1 if the i-th component of */
-        /* f2c_abs(A)*f2c_abs(X) + f2c_abs(B) is less than SAFE2. */
+        /* f2c_dabs(A)*f2c_dabs(X) + f2c_dabs(B) is less than SAFE2. */
         /* Use ZLACN2 to estimate the infinity-norm of the matrix */
         /* inv(A) * diag(W), */
-        /* where W = f2c_abs(R) + NZ*EPS*( f2c_abs(A)*f2c_abs(X)+f2c_abs(B) ))) */
+        /* where W = f2c_dabs(R) + NZ*EPS*( f2c_dabs(A)*f2c_dabs(X)+f2c_dabs(B) ))) */
         i__2 = *n;
         for (i__ = 1;
                 i__ <= i__2;
@@ -448,12 +448,12 @@ L20: /* Loop until stopping criterion is satisfied. */
             if (rwork[i__] > safe2)
             {
                 i__3 = i__;
-                rwork[i__] = (d__1 = work[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&work[i__]), f2c_abs(d__2)) + nz * eps * rwork[i__] ;
+                rwork[i__] = (d__1 = work[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&work[i__]), f2c_dabs(d__2)) + nz * eps * rwork[i__] ;
             }
             else
             {
                 i__3 = i__;
-                rwork[i__] = (d__1 = work[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&work[i__]), f2c_abs(d__2)) + nz * eps * rwork[i__] + safe1;
+                rwork[i__] = (d__1 = work[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&work[i__]), f2c_dabs(d__2)) + nz * eps * rwork[i__] + safe1;
             }
             /* L90: */
         }
@@ -512,7 +512,7 @@ L100:
             /* Computing MAX */
             i__3 = i__ + j * x_dim1;
             d__3 = lstres;
-            d__4 = (d__1 = x[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&x[i__ + j * x_dim1]), f2c_abs(d__2)); // , expr subst
+            d__4 = (d__1 = x[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&x[i__ + j * x_dim1]), f2c_dabs(d__2)); // , expr subst
             lstres = max(d__3,d__4);
             /* L130: */
         }

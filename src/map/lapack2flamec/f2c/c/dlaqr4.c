@@ -512,7 +512,7 @@ L20:
                 else
                 {
                     kwtop = kbot - nw + 1;
-                    if ((d__1 = h__[kwtop + (kwtop - 1) * h_dim1], f2c_abs(d__1)) > (d__2 = h__[kwtop - 1 + (kwtop - 2) * h_dim1], f2c_abs(d__2)))
+                    if ((d__1 = h__[kwtop + (kwtop - 1) * h_dim1], f2c_dabs(d__1)) > (d__2 = h__[kwtop - 1 + (kwtop - 2) * h_dim1], f2c_dabs(d__2)))
                     {
                         ++nw;
                     }
@@ -587,7 +587,7 @@ L20:
                             i__ >= i__2;
                             i__ += -2)
                     {
-                        ss = (d__1 = h__[i__ + (i__ - 1) * h_dim1], f2c_abs(d__1)) + (d__2 = h__[i__ - 1 + (i__ - 2) * h_dim1], f2c_abs(d__2));
+                        ss = (d__1 = h__[i__ + (i__ - 1) * h_dim1], f2c_dabs(d__1)) + (d__2 = h__[i__ - 1 + (i__ - 2) * h_dim1], f2c_dabs(d__2));
                         aa = ss * .75 + h__[i__ + i__ * h_dim1];
                         bb = ss;
                         cc = ss * -.4375;
@@ -651,7 +651,7 @@ L20:
                                     i__ <= i__3;
                                     ++i__)
                             {
-                                if ((d__1 = wr[i__], f2c_abs(d__1)) + (d__2 = wi[ i__], f2c_abs(d__2)) < (d__3 = wr[i__ + 1] , f2c_abs(d__3)) + (d__4 = wi[i__ + 1], f2c_abs(d__4)))
+                                if ((d__1 = wr[i__], f2c_dabs(d__1)) + (d__2 = wi[ i__], f2c_dabs(d__2)) < (d__3 = wr[i__ + 1] , f2c_dabs(d__3)) + (d__4 = wi[i__ + 1], f2c_dabs(d__4)))
                                 {
                                     sorted = FALSE_;
                                     swap = wr[i__];
@@ -698,7 +698,7 @@ L60:
                 {
                     if (wi[kbot] == 0.)
                     {
-                        if ((d__1 = wr[kbot] - h__[kbot + kbot * h_dim1], f2c_abs( d__1)) < (d__2 = wr[kbot - 1] - h__[kbot + kbot * h_dim1], f2c_abs(d__2)))
+                        if ((d__1 = wr[kbot] - h__[kbot + kbot * h_dim1], f2c_dabs( d__1)) < (d__2 = wr[kbot - 1] - h__[kbot + kbot * h_dim1], f2c_dabs(d__2)))
                         {
                             wr[kbot - 1] = wr[kbot];
                         }

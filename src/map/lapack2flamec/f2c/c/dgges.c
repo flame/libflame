@@ -650,14 +650,14 @@ int dgges_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, integer *n, doub
             {
                 if (alphar[i__] / safmax > anrmto / anrm || safmin / alphar[ i__] > anrm / anrmto)
                 {
-                    work[1] = (d__1 = a[i__ + i__ * a_dim1] / alphar[i__], f2c_abs(d__1));
+                    work[1] = (d__1 = a[i__ + i__ * a_dim1] / alphar[i__], f2c_dabs(d__1));
                     beta[i__] *= work[1];
                     alphar[i__] *= work[1];
                     alphai[i__] *= work[1];
                 }
                 else if (alphai[i__] / safmax > anrmto / anrm || safmin / alphai[i__] > anrm / anrmto)
                 {
-                    work[1] = (d__1 = a[i__ + (i__ + 1) * a_dim1] / alphai[ i__], f2c_abs(d__1));
+                    work[1] = (d__1 = a[i__ + (i__ + 1) * a_dim1] / alphai[ i__], f2c_dabs(d__1));
                     beta[i__] *= work[1];
                     alphar[i__] *= work[1];
                     alphai[i__] *= work[1];
@@ -677,7 +677,7 @@ int dgges_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, integer *n, doub
             {
                 if (beta[i__] / safmax > bnrmto / bnrm || safmin / beta[i__] > bnrm / bnrmto)
                 {
-                    work[1] = (d__1 = b[i__ + i__ * b_dim1] / beta[i__], f2c_abs( d__1));
+                    work[1] = (d__1 = b[i__ + i__ * b_dim1] / beta[i__], f2c_dabs( d__1));
                     beta[i__] *= work[1];
                     alphar[i__] *= work[1];
                     alphai[i__] *= work[1];

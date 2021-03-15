@@ -144,7 +144,7 @@ static integer c_n1 = -1;
 /* > stored one after another in the columns of VL, in the same */
 /* > order as their eigenvalues. */
 /* > Each eigenvector is scaled so the largest component has */
-/* > f2c_abs(real part) + f2c_abs(imag. part) = 1. */
+/* > f2c_dabs(real part) + f2c_dabs(imag. part) = 1. */
 /* > Not referenced if JOBVL = 'N'. */
 /* > \endverbatim */
 /* > */
@@ -162,7 +162,7 @@ static integer c_n1 = -1;
 /* > stored one after another in the columns of VR, in the same */
 /* > order as their eigenvalues. */
 /* > Each eigenvector is scaled so the largest component has */
-/* > f2c_abs(real part) + f2c_abs(imag. part) = 1. */
+/* > f2c_dabs(real part) + f2c_dabs(imag. part) = 1. */
 /* > Not referenced if JOBVR = 'N'. */
 /* > \endverbatim */
 /* > */
@@ -595,7 +595,7 @@ int zggev_(char *jobvl, char *jobvr, integer *n, doublecomplex *a, integer *lda,
                     /* Computing MAX */
                     i__3 = jr + jc * vl_dim1;
                     d__3 = temp;
-                    d__4 = (d__1 = vl[i__3].r, f2c_abs(d__1)) + ( d__2 = d_imag(&vl[jr + jc * vl_dim1]), f2c_abs(d__2)); // , expr subst
+                    d__4 = (d__1 = vl[i__3].r, f2c_dabs(d__1)) + ( d__2 = d_imag(&vl[jr + jc * vl_dim1]), f2c_dabs(d__2)); // , expr subst
                     temp = max(d__3,d__4);
                     /* L10: */
                 }
@@ -638,7 +638,7 @@ L30:
                     /* Computing MAX */
                     i__3 = jr + jc * vr_dim1;
                     d__3 = temp;
-                    d__4 = (d__1 = vr[i__3].r, f2c_abs(d__1)) + ( d__2 = d_imag(&vr[jr + jc * vr_dim1]), f2c_abs(d__2)); // , expr subst
+                    d__4 = (d__1 = vr[i__3].r, f2c_dabs(d__1)) + ( d__2 = d_imag(&vr[jr + jc * vr_dim1]), f2c_dabs(d__2)); // , expr subst
                     temp = max(d__3,d__4);
                     /* L40: */
                 }

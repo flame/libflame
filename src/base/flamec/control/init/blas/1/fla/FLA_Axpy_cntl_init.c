@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-fla_axpy_t* fla_axpy_cntl_blas = NULL;
+TLS_CLASS_SPEC fla_axpy_t* fla_axpy_cntl_blas = NULL;
 
 void FLA_Axpy_cntl_init()
 {

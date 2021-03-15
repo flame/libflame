@@ -38,7 +38,7 @@ static integer c__1 = 1;
 /* > \return DLANST */
 /* > \verbatim */
 /* > */
-/* > DLANST = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
+/* > DLANST = ( max(f2c_dabs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -49,7 +49,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_dabs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -132,19 +132,19 @@ doublereal dlanst_(char *norm, integer *n, doublereal *d__, doublereal *e)
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(f2c_abs(A(i,j))). */
-        anorm = (d__1 = d__[*n], f2c_abs(d__1));
+        /* Find max(f2c_dabs(A(i,j))). */
+        anorm = (d__1 = d__[*n], f2c_dabs(d__1));
         i__1 = *n - 1;
         for (i__ = 1;
                 i__ <= i__1;
                 ++i__)
         {
-            sum = (d__1 = d__[i__], f2c_abs(d__1));
+            sum = (d__1 = d__[i__], f2c_dabs(d__1));
             if (anorm < sum || disnan_(&sum))
             {
                 anorm = sum;
             }
-            sum = (d__1 = e[i__], f2c_abs(d__1));
+            sum = (d__1 = e[i__], f2c_dabs(d__1));
             if (anorm < sum || disnan_(&sum))
             {
                 anorm = sum;
@@ -157,12 +157,12 @@ doublereal dlanst_(char *norm, integer *n, doublereal *d__, doublereal *e)
         /* Find norm1(A). */
         if (*n == 1)
         {
-            anorm = f2c_abs(d__[1]);
+            anorm = f2c_dabs(d__[1]);
         }
         else
         {
-            anorm = f2c_abs(d__[1]) + f2c_abs(e[1]);
-            sum = (d__1 = e[*n - 1], f2c_abs(d__1)) + (d__2 = d__[*n], f2c_abs(d__2));
+            anorm = f2c_dabs(d__[1]) + f2c_dabs(e[1]);
+            sum = (d__1 = e[*n - 1], f2c_dabs(d__1)) + (d__2 = d__[*n], f2c_dabs(d__2));
             if (anorm < sum || disnan_(&sum))
             {
                 anorm = sum;
@@ -172,7 +172,7 @@ doublereal dlanst_(char *norm, integer *n, doublereal *d__, doublereal *e)
                     i__ <= i__1;
                     ++i__)
             {
-                sum = (d__1 = d__[i__], f2c_abs(d__1)) + (d__2 = e[i__], f2c_abs(d__2) ) + (d__3 = e[i__ - 1], f2c_abs(d__3));
+                sum = (d__1 = d__[i__], f2c_dabs(d__1)) + (d__2 = e[i__], f2c_dabs(d__2) ) + (d__3 = e[i__ - 1], f2c_dabs(d__3));
                 if (anorm < sum || disnan_(&sum))
                 {
                     anorm = sum;

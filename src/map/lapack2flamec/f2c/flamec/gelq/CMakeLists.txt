@@ -1,0 +1,20 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.## 
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/cungl2_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/cunglq_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/cunml2_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/cunmlq_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/dorgl2_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/dorglq_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/dorml2_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/dormlq_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/sorgl2_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/sorglq_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/sorml2_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/sormlq_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/zungl2_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/zunglq_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/zunml2_fla.c
+${CMAKE_CURRENT_SOURCE_DIR}/zunmlq_fla.c
+	)

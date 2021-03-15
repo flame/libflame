@@ -132,7 +132,7 @@ int dlaed5_(integer *i__, doublereal *d__, doublereal *z__, doublereal *delta, d
             b = del + *rho * (z__[1] * z__[1] + z__[2] * z__[2]);
             c__ = *rho * z__[1] * z__[1] * del;
             /* B > ZERO, always */
-            tau = c__ * 2. / (b + sqrt((d__1 = b * b - c__ * 4., f2c_abs(d__1))));
+            tau = c__ * 2. / (b + sqrt((d__1 = b * b - c__ * 4., f2c_dabs(d__1))));
             *dlam = d__[1] + tau;
             delta[1] = -z__[1] / tau;
             delta[2] = z__[2] / (del - tau);

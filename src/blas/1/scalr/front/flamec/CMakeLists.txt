@@ -1,0 +1,10 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Scalr.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Scalr.h
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Scalr_internal.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Scalr_l.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Scalr_u.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Scalr.c
+	)

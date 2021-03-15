@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern fla_apqudut_t*    fla_apqudut_cntl_leaf;
-extern fla_apqudutinc_t* flash_apqudutinc_cntl;
+extern TLS_CLASS_SPEC fla_apqudut_t*    fla_apqudut_cntl_leaf;
+extern TLS_CLASS_SPEC fla_apqudutinc_t* flash_apqudutinc_cntl;
 
 FLA_Error FLASH_Apply_QUD_UT_inc( FLA_Side side, FLA_Trans trans, FLA_Direct direct, FLA_Store storev,
                                   FLA_Obj T, FLA_Obj W,

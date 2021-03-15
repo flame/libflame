@@ -1,0 +1,35 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Amax_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Asum_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Axpy_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Axpy_internal_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Axpyrt_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Axpys_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Axpyt_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Axpyt_internal_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Copy_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Copy_internal_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Copyr_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Copyr_internal_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Copyrt_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Copyt_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Copyt_internal_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Dot_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Dot2cs_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Dot2s_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Dotc_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Dotcs_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Dots_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Inv_scal_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Inv_scalc_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Nrm2_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Scal_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Scal_internal_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Scalc_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Scalr_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Scalr_internal_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Swap_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Swapt_check.c
+	)

@@ -197,8 +197,8 @@ int dlagv2_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal
     ulp = dlamch_("P");
     /* Scale A */
     /* Computing MAX */
-    d__5 = (d__1 = a[a_dim1 + 1], f2c_abs(d__1)) + (d__2 = a[a_dim1 + 2], f2c_abs( d__2));
-    d__6 = (d__3 = a[(a_dim1 << 1) + 1], f2c_abs(d__3)) + (d__4 = a[(a_dim1 << 1) + 2], f2c_abs(d__4));
+    d__5 = (d__1 = a[a_dim1 + 1], f2c_dabs(d__1)) + (d__2 = a[a_dim1 + 2], f2c_dabs( d__2));
+    d__6 = (d__3 = a[(a_dim1 << 1) + 1], f2c_dabs(d__3)) + (d__4 = a[(a_dim1 << 1) + 2], f2c_dabs(d__4));
     d__5 = max(d__5,d__6); // ; expr subst
     anorm = max(d__5,safmin);
     ascale = 1. / anorm;
@@ -208,8 +208,8 @@ int dlagv2_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal
     a[(a_dim1 << 1) + 2] = ascale * a[(a_dim1 << 1) + 2];
     /* Scale B */
     /* Computing MAX */
-    d__4 = (d__3 = b[b_dim1 + 1], f2c_abs(d__3));
-    d__5 = (d__1 = b[(b_dim1 << 1) + 1], f2c_abs(d__1)) + (d__2 = b[(b_dim1 << 1) + 2], f2c_abs(d__2));
+    d__4 = (d__3 = b[b_dim1 + 1], f2c_dabs(d__3));
+    d__5 = (d__1 = b[(b_dim1 << 1) + 1], f2c_dabs(d__1)) + (d__2 = b[(b_dim1 << 1) + 2], f2c_dabs(d__2));
     d__4 = max(d__4,d__5); // ; expr subst
     bnorm = max(d__4,safmin);
     bscale = 1. / bnorm;
@@ -217,7 +217,7 @@ int dlagv2_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal
     b[(b_dim1 << 1) + 1] = bscale * b[(b_dim1 << 1) + 1];
     b[(b_dim1 << 1) + 2] = bscale * b[(b_dim1 << 1) + 2];
     /* Check if A can be deflated */
-    if ((d__1 = a[a_dim1 + 2], f2c_abs(d__1)) <= ulp)
+    if ((d__1 = a[a_dim1 + 2], f2c_dabs(d__1)) <= ulp)
     {
         *csl = 1.;
         *snl = 0.;
@@ -228,7 +228,7 @@ int dlagv2_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal
         wi = 0.;
         /* Check if B is singular */
     }
-    else if ((d__1 = b[b_dim1 + 1], f2c_abs(d__1)) <= ulp)
+    else if ((d__1 = b[b_dim1 + 1], f2c_dabs(d__1)) <= ulp)
     {
         dlartg_(&a[a_dim1 + 1], &a[a_dim1 + 2], csl, snl, &r__);
         *csr = 1.;
@@ -240,7 +240,7 @@ int dlagv2_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal
         b[b_dim1 + 2] = 0.;
         wi = 0.;
     }
-    else if ((d__1 = b[(b_dim1 << 1) + 2], f2c_abs(d__1)) <= ulp)
+    else if ((d__1 = b[(b_dim1 << 1) + 2], f2c_dabs(d__1)) <= ulp)
     {
         dlartg_(&a[(a_dim1 << 1) + 2], &a[a_dim1 + 2], csr, snr, &t);
         *snr = -(*snr);
@@ -284,14 +284,14 @@ int dlagv2_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal
             drot_(&c__2, &b[b_dim1 + 1], &c__1, &b[(b_dim1 << 1) + 1], &c__1, csr, snr);
             /* compute inf norms of A and B */
             /* Computing MAX */
-            d__5 = (d__1 = a[a_dim1 + 1], f2c_abs(d__1)) + (d__2 = a[(a_dim1 << 1) + 1], f2c_abs(d__2));
-            d__6 = (d__3 = a[a_dim1 + 2], f2c_abs(d__3) ) + (d__4 = a[(a_dim1 << 1) + 2], f2c_abs(d__4)); // , expr subst
+            d__5 = (d__1 = a[a_dim1 + 1], f2c_dabs(d__1)) + (d__2 = a[(a_dim1 << 1) + 1], f2c_dabs(d__2));
+            d__6 = (d__3 = a[a_dim1 + 2], f2c_dabs(d__3) ) + (d__4 = a[(a_dim1 << 1) + 2], f2c_dabs(d__4)); // , expr subst
             h1 = max(d__5,d__6);
             /* Computing MAX */
-            d__5 = (d__1 = b[b_dim1 + 1], f2c_abs(d__1)) + (d__2 = b[(b_dim1 << 1) + 1], f2c_abs(d__2));
-            d__6 = (d__3 = b[b_dim1 + 2], f2c_abs(d__3) ) + (d__4 = b[(b_dim1 << 1) + 2], f2c_abs(d__4)); // , expr subst
+            d__5 = (d__1 = b[b_dim1 + 1], f2c_dabs(d__1)) + (d__2 = b[(b_dim1 << 1) + 1], f2c_dabs(d__2));
+            d__6 = (d__3 = b[b_dim1 + 2], f2c_dabs(d__3) ) + (d__4 = b[(b_dim1 << 1) + 2], f2c_dabs(d__4)); // , expr subst
             h2 = max(d__5,d__6);
-            if (scale1 * h1 >= f2c_abs(wr1) * h2)
+            if (scale1 * h1 >= f2c_dabs(wr1) * h2)
             {
                 /* find left rotation matrix Q to zero out B(2,1) */
                 dlartg_(&b[b_dim1 + 1], &b[b_dim1 + 2], csl, snl, &r__);

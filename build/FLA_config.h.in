@@ -40,6 +40,9 @@
 /* Determines whether to enable external LAPACK for small subproblems. */
 #undef FLA_ENABLE_EXTERNAL_LAPACK_FOR_SUBPROBLEMS
 
+/* Determines whether to enable f2c calling convention for complex dotc. */
+#undef FLA_ENABLE_F2C_DOTC
+
 /* Determines whether to enable interfaces to external LAPACK routines. */
 #undef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
 

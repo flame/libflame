@@ -1,0 +1,13 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Gemm_task.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Hemm_task.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Her2k_task.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Herk_task.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Symm_task.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Syr2k_task.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Syrk_task.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Trmm_task.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Trsm_task.c
+	)

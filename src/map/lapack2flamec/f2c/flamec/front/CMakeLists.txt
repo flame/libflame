@@ -1,0 +1,14 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.## 
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/dopgtr.c
+${CMAKE_CURRENT_SOURCE_DIR}/dorcsd.c
+${CMAKE_CURRENT_SOURCE_DIR}/dorcsd2by1.c
+${CMAKE_CURRENT_SOURCE_DIR}/dorghr.c
+${CMAKE_CURRENT_SOURCE_DIR}/dormhr.c
+${CMAKE_CURRENT_SOURCE_DIR}/sopgtr.c
+${CMAKE_CURRENT_SOURCE_DIR}/sorcsd.c
+${CMAKE_CURRENT_SOURCE_DIR}/sorcsd2by1.c
+${CMAKE_CURRENT_SOURCE_DIR}/sorghr.c
+${CMAKE_CURRENT_SOURCE_DIR}/sormhr.c
+	)

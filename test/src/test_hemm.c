@@ -311,9 +311,9 @@ void libfla_test_hemm_experiment( test_params_t params,
 
 
 
-extern fla_scal_t* fla_scal_cntl_blas;
-extern fla_gemm_t* fla_gemm_cntl_blas;
-extern fla_hemm_t* fla_hemm_cntl_blas;
+extern TLS_CLASS_SPEC fla_scal_t* fla_scal_cntl_blas;
+extern TLS_CLASS_SPEC fla_gemm_t* fla_gemm_cntl_blas;
+extern TLS_CLASS_SPEC fla_hemm_t* fla_hemm_cntl_blas;
 
 void libfla_test_hemm_cntl_create( unsigned int var,
                                    dim_t        b_alg_flat )

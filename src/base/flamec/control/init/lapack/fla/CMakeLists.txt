@@ -1,0 +1,26 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_CAQ2_UT_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_pivots_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_Q_UT_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_Q2_UT_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_QUD_UT_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Bidiag_UT_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_CAQR2_UT_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Chol_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Eig_gest_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Hess_UT_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LQ_UT_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_piv_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Lyap_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_QR_UT_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_QR2_UT_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_SPDinv_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Tridiag_UT_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Trinv_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Ttmm_cntl_init.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_UDdate_UT_cntl_init.c
+	)

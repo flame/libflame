@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern fla_axpyt_t* flash_axpyt_cntl_blas;
-extern fla_axpyt_t* flash_axpyt_cntl;
+extern TLS_CLASS_SPEC fla_axpyt_t* flash_axpyt_cntl_blas;
+extern TLS_CLASS_SPEC fla_axpyt_t* flash_axpyt_cntl;
 
 FLA_Error FLA_Axpyt_internal( FLA_Trans trans, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, fla_axpyt_t* cntl )
 {

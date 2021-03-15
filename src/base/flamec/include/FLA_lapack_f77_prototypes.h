@@ -28,6 +28,16 @@
 #define F77_cgetrf F77_FUNC( cgetrf , CGETRF )
 #define F77_zgetrf F77_FUNC( zgetrf , ZGETRF )
       
+#define F77_sgetrfnp F77_FUNC( sgetrfnp , SGETRFNP )
+#define F77_dgetrfnp F77_FUNC( dgetrfnp , DGETRFNP )
+#define F77_cgetrfnp F77_FUNC( cgetrfnp , CGETRFNP )
+#define F77_zgetrfnp F77_FUNC( zgetrfnp , ZGETRFNP )
+
+#define F77_sgetrfnpi F77_FUNC( sgetrfnpi , SGETRFNPI )
+#define F77_dgetrfnpi F77_FUNC( dgetrfnpi , DGETRFNPI )
+#define F77_cgetrfnpi F77_FUNC( cgetrfnpi , CGETRFNPI )
+#define F77_zgetrfnpi F77_FUNC( zgetrfnpi , ZGETRFNPI )
+
 #define F77_sgetf2 F77_FUNC( sgetf2 , SGETF2 )
 #define F77_dgetf2 F77_FUNC( dgetf2 , DGETF2 )
 #define F77_cgetf2 F77_FUNC( cgetf2 , CGETF2 )
@@ -315,6 +325,16 @@
 #define F77_claset F77_FUNC( claset , CLASET )
 #define F77_zlaset F77_FUNC( zlaset , ZLASET )
       
+      
+#define F77_sspffrt2 F77_FUNC( sspffrt2 , SSPFFRT2 )
+#define F77_dspffrt2 F77_FUNC( dspffrt2 , DSPFFRT2 )
+#define F77_cspffrt2 F77_FUNC( cspffrt2 , CSPFFRT2 )
+#define F77_zspffrt2 F77_FUNC( zspffrt2 , ZSPFFRT2 )
+      
+#define F77_sspffrtx F77_FUNC( sspffrtx , SSPFFRTX )
+#define F77_dspffrtx F77_FUNC( dspffrtx , DSPFFRTX )
+#define F77_cspffrtx F77_FUNC( cspffrtx , CSPFFRTX )
+#define F77_zspffrtx F77_FUNC( zspffrtx , ZSPFFRTX )
 
 // --- Cholesky factorization ---
 
@@ -339,6 +359,20 @@ int F77_sgetf2( int* m, int* n, float*    a, int* lda, int* ipiv, int* info );
 int F77_dgetf2( int* m, int* n, double*   a, int* lda, int* ipiv, int* info );
 int F77_cgetf2( int* m, int* n, scomplex* a, int* lda, int* ipiv, int* info );
 int F77_zgetf2( int* m, int* n, dcomplex* a, int* lda, int* ipiv, int* info );
+
+// --- LU factorization without pivoting ---
+
+int F77_sgetrfnp( int* m, int* n, float*   a, int* lda, int* info );
+int F77_dgetrfnp( int* m, int* n, double*   a, int* lda, int* info );
+int F77_cgetrfnp( int* m, int* n, scomplex*   a, int* lda, int* info );
+int F77_zgetrfnp( int* m, int* n, dcomplex*   a, int* lda, int* info );
+
+// --- LU factorization complete and incomplete without pivoting ---
+
+int F77_sgetrfnpi( int* m, int* n, int* nfact, float*   a, int* lda, int* info );
+int F77_dgetrfnpi( int* m, int* n, int* nfact, double*   a, int* lda, int* info );
+int F77_cgetrfnpi( int* m, int* n, int* nfact, scomplex*   a, int* lda, int* info );
+int F77_zgetrfnpi( int* m, int* n, int* nfact, dcomplex*   a, int* lda, int* info );
 
 // --- QR factorization (classic) ---
 
@@ -638,4 +672,14 @@ int F77_slaset( char* uplo, int* m, int* n, float*    alpha, float*    beta, flo
 int F77_dlaset( char* uplo, int* m, int* n, double*   alpha, double*   beta, double*   a, int* lda );
 int F77_claset( char* uplo, int* m, int* n, scomplex* alpha, scomplex* beta, scomplex* a, int* lda );
 int F77_zlaset( char* uplo, int* m, int* n, dcomplex* alpha, dcomplex* beta, dcomplex* a, int* lda );
+
+int F77_sspffrt2(float *ap, int *n, int * ncolm, float *work, float *work2);
+int F77_dspffrt2(double *ap, int *n, int * ncolm, double *work, double *work2);
+int F77_cspffrt2(scomplex *ap, int *n, int *ncolm, scomplex *work, scomplex *work2 );
+int F77_zspffrt2(dcomplex *ap, int *n, int *ncolm, dcomplex *work, dcomplex *work2 );
+
+int F77_sspffrtx(float *ap, int *n, int * ncolm, float *work, float *work2);
+int F77_dspffrtx(double *ap, int *n, int * ncolm, double *work, double *work2);
+int F77_cspffrtx(scomplex *ap, int *n, int *ncolm, scomplex *work, scomplex *work2 );
+int F77_zspffrtx(dcomplex *ap, int *n, int *ncolm, dcomplex *work, dcomplex *work2 );
 

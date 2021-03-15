@@ -16,12 +16,12 @@
         libs libflame \
         check-env check-env-config check-env-fragments \
         flat-headers \
-        test \
+        test check checklibflame\
+	checkcpp cleancpptest \
         install-headers install-libs install-lib-symlinks \
         clean cleanmk cleanh cleanlib cleanleaves distclean \
         install \
         uninstall-libs uninstall-lib-symlinks uninstall-headers
-
 
 
 # Accept an abbreivated request for verbosity (e.g. 'make V=1 ...')
@@ -58,6 +58,9 @@ CONFIG_DIR      := config
 OBJ_DIR         := obj
 LIB_DIR         := lib
 INC_DIR         := include
+LAPACKE_DIR     := lapacke
+TEST_DIR        := test
+CPP_TEST_DIR    := testcpp
 
 # Use the system type to name the config, object, and library directories.
 # These directories are special in that they will contain products specific
@@ -106,6 +109,8 @@ LIBFLAME             := libflame
 LIBFLAME_A           := $(LIBFLAME).a
 LIBFLAME_SO          := $(LIBFLAME).$(SHLIB_EXT)
 
+LAPACKE_A	     := liblapacke.a
+
 # --- Library filepaths ---
 
 # Append the base library path to the library names.
@@ -124,6 +129,8 @@ endif
 
 LIBFLAME_SONAME      := $(LIBFLAME).$(LIBFLAME_SO_MAJ_EXT)
 LIBFLAME_SO_MAJ_PATH := $(BASE_LIB_PATH)/$(LIBFLAME_SONAME)
+
+LAPACKE_A_PATH       := $(SRC_DIR)/$(LAPACKE_DIR)/$(LAPACKE_A)
 
 # Construct the output path when building a shared library.
 LIBFLAME_SO_OUTPUT_NAME := $(LIBFLAME_SO_PATH)
@@ -186,7 +193,6 @@ LIBFLAME_A_INST       := $(INSTALL_LIBDIR)/$(LIBFLAME_A)
 LIBFLAME_SO_INST      := $(INSTALL_LIBDIR)/$(LIBFLAME_SO)
 LIBFLAME_SO_MAJ_INST  := $(INSTALL_LIBDIR)/$(LIBFLAME_SONAME)
 LIBFLAME_SO_MMB_INST  := $(INSTALL_LIBDIR)/$(LIBFLAME).$(LIBFLAME_SO_MMB_EXT)
-
 # --- Determine which libraries to build ---
 
 MK_LIBS                   :=
@@ -199,12 +205,14 @@ MK_LIBS_INST              += $(LIBFLAME_A_INST)
 MK_LIBS_SYML              +=
 endif
 
+MK_LIBS                   += $(LAPACKE_A_PATH)
+
 ifeq ($(FLA_ENABLE_DYNAMIC_BUILD),yes)
 MK_LIBS                   += $(LIBFLAME_SO_PATH) \
                              $(LIBFLAME_SO_MAJ_PATH)
 MK_LIBS_INST              += $(LIBFLAME_SO_MMB_INST)
 MK_LIBS_SYML              += $(LIBFLAME_SO_INST) \
-                             $(LIBFLAME_SO_MAJ_INST)
+			     $(LIBFLAME_SO_MAJ_INST)
 endif
 
 # Strip leading, internal, and trailing whitespace.
@@ -288,6 +296,9 @@ BLIS1_H_FLAT  := $(BASE_INC_PATH)/$(BLIS1_H)
 FLAF2C_H      := FLA_f2c.h
 FLAF2C_H_FLAT := $(BASE_INC_PATH)/$(FLAF2C_H)
 
+#Define path of CPP Template header files
+CPP_TEMPLATE_H_PATH := ./$(SRC_DIR)/src_cpp
+
 # Expand the fragment paths that contain .h files to attain the set of header
 # files present in all fragment paths.
 MK_HEADER_FILES := $(foreach frag_path, $(FRAGMENT_DIR_PATHS), $(wildcard $(frag_path)/*.h))
@@ -313,6 +324,13 @@ HEADERS_TO_FLATTEN := $(FLAME_H_FLAT) $(BLIS1_H_FLAT) $(FLAF2C_H_FLAT)
 # Define a list of headers to install and their installation path. The default
 # is to only install FLAME.h.
 HEADERS_TO_INSTALL := $(FLAME_H_FLAT)
+HEADERS_TO_INSTALL += $(CPP_TEMPLATE_H_PATH)/*.hh
+#LAPACKE headers for cpp interface
+LAPACKE_HEADERS    := $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE/include/lapacke.h
+LAPACKE_HEADERS    += $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE/include/lapacke_mangling.h
+LAPACKE_HEADERS    += $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE/include/lapack.h
+
+HEADERS_TO_INSTALL += $(LAPACKE_HEADERS)
 HEADERS_INST       := $(addprefix $(MK_INCL_DIR_INST)/, $(notdir $(HEADERS_TO_INSTALL)))
 
 # Add -I to each header path so we can specify our include search paths to the
@@ -411,12 +429,13 @@ all: libs
 
 libs: libflame
 
+check: checklibflame
+
 install: libs install-libs install-lib-symlinks install-headers
 
 uninstall: uninstall-libs uninstall-lib-symlinks uninstall-headers
 
 clean: cleanh cleanlib
-
 
 
 # --- Environment check rules ---
@@ -519,6 +538,14 @@ libflame: check-env $(MK_LIBS)
 
 
 # --- Static library archiver rules ---
+$(LAPACKE_A_PATH):
+ifeq ($(ENABLE_VERBOSE),yes)
+	$(MAKE) -e -C $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE
+else
+	@echo -n "Generating LAPACKE library"
+	$(MAKE) -e -C $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE
+	@echo "Generated LAPACKE library"
+endif
 
 $(LIBFLAME_A_PATH): $(MK_ALL_FLAMEC_OBJS)
 ifeq ($(ENABLE_VERBOSE),yes)
@@ -632,9 +659,50 @@ endif
 
 # --- Test suite rules ---
 
+# The test binary executable filename.
+#
+#   $(TEST_WRAPPER) ./$(TEST_BIN) ... > $(TEST_OUT_FILE)
+#
+# "TEST_WRAPPER can be used to set additional environment variables
+#  such as LD_LIBRARY_PATH, numactl and others"
+#
+TEST_BIN      := test_$(LIBFLAME).x
+TEST_WRAPPER  ?=
+TEST_CHECK    := check-flametest.sh
 
+# The location of the script that checks the BLIS testsuite output.
+TEST_CHECK_PATH    := $(DIST_PATH)/$(TEST_DIR)/$(TEST_CHECK)
 
+test-bin: check-env $(TEST_BIN)
 
+TEST_OUT_FILE := output.test
+
+# Check the results of the LIBLFLAME tests.
+$(TEST_BIN):
+ifeq ($(ENABLE_VERBOSE),yes)
+	$(MAKE) -C $(TEST_DIR)
+else
+	@$(MAKE) -C $(TEST_DIR)
+endif
+
+test-run: test-bin
+ifeq ($(ENABLE_VERBOSE),yes)
+	cd $(TEST_DIR) && $(TEST_WRAPPER) ./$(TEST_BIN) > $(TEST_OUT_FILE)
+else
+	@echo "Running $(TEST_BIN) with output redirected to '$(TEST_OUT_FILE)'"
+	@chmod +x $(TEST_DIR)/$(TEST_CHECK)
+	@echo "Please wait for tests to complete..."
+	@cd $(TEST_DIR) && $(TEST_WRAPPER) ./$(TEST_BIN) > $(TEST_OUT_FILE)
+endif
+
+checklibflame:test-run
+ifeq ($(ENABLE_VERBOSE),yes)
+	- $(TEST_CHECK_PATH) $(TEST_DIR)/$(TEST_OUT_FILE)
+else 
+	- $(TEST_CHECK_PATH) $(TEST_DIR)/$(TEST_OUT_FILE)
+endif
+
+ 
 # --- Install rules ---
 
 
@@ -653,6 +721,10 @@ else
 endif
 
 
+# Run CPP Tests
+checkcpp:
+	$(MAKE) -e -C $(CPP_TEST_DIR)
+
 # --- Install library rules ---
 
 install-libs: check-env $(MK_LIBS_INST)
@@ -662,10 +734,12 @@ $(INSTALL_LIBDIR)/%.a: $(BASE_LIB_PATH)/%.a $(CONFIG_MK_FILE)
 ifeq ($(ENABLE_VERBOSE),yes)
 	$(MKDIR) $(@D)
 	$(INSTALL) -m 0644 $< $@
+	$(INSTALL) -m 0644 $(LAPACKE_A_PATH) $(INSTALL_LIBDIR)/$(LAPACKE_A)
 else
 	@echo "Installing $(@F) into $(INSTALL_LIBDIR)/"
 	@$(MKDIR) $(@D)
 	@$(INSTALL) -m 0644 $< $@
+	@$(INSTALL) -m 0644 $(LAPACKE_A_PATH) $(INSTALL_LIBDIR)/$(LAPACKE_A)
 endif
 
 # Install shared library.
@@ -732,14 +806,14 @@ cleanlib:
 ifeq ($(IS_CONFIGURED),yes)
 ifeq ($(ENABLE_VERBOSE),yes)
 	- $(FIND) $(BASE_OBJ_PATH) -name "*.o" | $(XARGS) $(RM_F)
-	- $(RM_F) $(LIBBLIS_A_PATH)
-	- $(RM_F) $(LIBBLIS_SO_PATH)
+	- $(RM_F) $(LAPACKE_A_PATH)
+	- $(RM_F) $(BASE_LIB_PATH)/*
 else
 	@echo "Removing object files from $(BASE_OBJ_PATH)"
 	@$(FIND) $(BASE_OBJ_PATH) -name "*.o" | $(XARGS) $(RM_F)
 	@echo "Removing libraries from $(BASE_LIB_PATH)"
-	@$(RM_F) $(LIBBLIS_A_PATH)
-	@$(RM_F) $(LIBBLIS_SO_PATH)
+	@$(RM_F) $(LAPACKE_A_PATH)
+	@$(RM_F) $(BASE_LIB_PATH)/*
 endif
 endif
 
@@ -786,6 +860,14 @@ else
 	@echo "Removing leaf-level build objects from source tree"
 	@$(FIND) $(BASE_OBJ_PATH) -name "*.[osx]" | $(XARGS) $(RM_F)
 endif
+endif
+
+cleancpptest:
+ifeq ($(ENABLE_VERBOSE),yes)
+	- $(MAKE) -C $(CPP_TEST_DIR) clean
+else
+	@echo "Clean up CPP tests"
+	@@$(MAKE) -C $(CPP_TEST_DIR) clean
 endif
 
 # --- Uninstall rules ---

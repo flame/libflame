@@ -114,10 +114,10 @@ int dlae2_(doublereal *a, doublereal *b, doublereal *c__, doublereal *rt1, doubl
     /* Compute the eigenvalues */
     sm = *a + *c__;
     df = *a - *c__;
-    adf = f2c_abs(df);
+    adf = f2c_dabs(df);
     tb = *b + *b;
-    ab = f2c_abs(tb);
-    if (f2c_abs(*a) > f2c_abs(*c__))
+    ab = f2c_dabs(tb);
+    if (f2c_dabs(*a) > f2c_dabs(*c__))
     {
         acmx = *a;
         acmn = *c__;

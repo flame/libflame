@@ -173,7 +173,7 @@ int zlaic1_(integer *job, integer *j, doublecomplex *x, doublereal *sest, double
     alpha.i = z__1.i; // , expr subst
     absalp = z_abs(&alpha);
     absgam = z_abs(gamma);
-    absest = f2c_abs(*sest);
+    absest = f2c_dabs(*sest);
     if (*job == 1)
     {
         /* Estimating largest singular value */

@@ -329,7 +329,7 @@ int zlaed8_(integer *k, integer *n, integer *qsiz, doublecomplex *q, integer *ld
         /* L10: */
     }
     dscal_(n, &t, &z__[1], &c__1);
-    *rho = (d__1 = *rho * 2., f2c_abs(d__1));
+    *rho = (d__1 = *rho * 2., f2c_dabs(d__1));
     /* Sort the eigenvalues into increasing order */
     i__1 = *n;
     for (i__ = *cutpnt + 1;
@@ -364,11 +364,11 @@ int zlaed8_(integer *k, integer *n, integer *qsiz, doublecomplex *q, integer *ld
     imax = idamax_(n, &z__[1], &c__1);
     jmax = idamax_(n, &d__[1], &c__1);
     eps = dlamch_("Epsilon");
-    tol = eps * 8. * (d__1 = d__[jmax], f2c_abs(d__1));
+    tol = eps * 8. * (d__1 = d__[jmax], f2c_dabs(d__1));
     /* If the rank-1 modifier is small enough, no more needs to be done */
     /* -- except to reorganize Q so that its columns correspond with the */
     /* elements in D. */
-    if (*rho * (d__1 = z__[imax], f2c_abs(d__1)) <= tol)
+    if (*rho * (d__1 = z__[imax], f2c_dabs(d__1)) <= tol)
     {
         *k = 0;
         i__1 = *n;
@@ -395,7 +395,7 @@ int zlaed8_(integer *k, integer *n, integer *qsiz, doublecomplex *q, integer *ld
             j <= i__1;
             ++j)
     {
-        if (*rho * (d__1 = z__[j], f2c_abs(d__1)) <= tol)
+        if (*rho * (d__1 = z__[j], f2c_dabs(d__1)) <= tol)
         {
             /* Deflate due to small z component. */
             --k2;
@@ -418,7 +418,7 @@ L70:
     {
         goto L90;
     }
-    if (*rho * (d__1 = z__[j], f2c_abs(d__1)) <= tol)
+    if (*rho * (d__1 = z__[j], f2c_dabs(d__1)) <= tol)
     {
         /* Deflate due to small z component. */
         --k2;
@@ -435,7 +435,7 @@ L70:
         t = d__[j] - d__[jlam];
         c__ /= tau;
         s = -s / tau;
-        if ((d__1 = t * c__ * s, f2c_abs(d__1)) <= tol)
+        if ((d__1 = t * c__ * s, f2c_dabs(d__1)) <= tol)
         {
             /* Deflation is possible. */
             z__[j] = tau;

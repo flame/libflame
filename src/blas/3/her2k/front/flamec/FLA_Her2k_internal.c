@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern fla_her2k_t* flash_her2k_cntl_blas;
-extern fla_her2k_t* flash_her2k_cntl_mm;
+extern TLS_CLASS_SPEC fla_her2k_t* flash_her2k_cntl_blas;
+extern TLS_CLASS_SPEC fla_her2k_t* flash_her2k_cntl_mm;
 
 FLA_Error FLA_Her2k_internal( FLA_Uplo uplo, FLA_Trans trans, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, FLA_Obj beta, FLA_Obj C, fla_her2k_t* cntl )
 {

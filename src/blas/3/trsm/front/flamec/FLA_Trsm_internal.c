@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern fla_trsm_t* flash_trsm_cntl_blas;
-extern fla_trsm_t* flash_trsm_cntl_mm;
+extern TLS_CLASS_SPEC fla_trsm_t* flash_trsm_cntl_blas;
+extern TLS_CLASS_SPEC fla_trsm_t* flash_trsm_cntl_mm;
 
 FLA_Error FLA_Trsm_internal( FLA_Side side, FLA_Uplo uplo, FLA_Trans transa, FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, fla_trsm_t* cntl )
 {

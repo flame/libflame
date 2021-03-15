@@ -1,0 +1,28 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Amax_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Asum_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Axpy_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Axpyrt_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Axpys_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Axpyt_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Copy_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Copyr_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Copyrt_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Copyt_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Dot_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Dot2cs_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Dot2s_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Dotc_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Dotcs_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Dots_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Inv_scal_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Inv_scalc_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Nrm2_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Scal_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Scalc_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Scalr_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Swap_external.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Swapt_external.c
+	)

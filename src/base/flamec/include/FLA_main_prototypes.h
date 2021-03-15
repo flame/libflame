@@ -156,7 +156,7 @@ void          FLA_Finalize_constants( void );
 void          FLA_Init_numerical_constants( void );
 void          FLA_Finalize_numerical_constants( void );
 
-
+char*         FLA_Get_AOCL_Version( void );
 
 //------------------------------------------------------------------------------
 

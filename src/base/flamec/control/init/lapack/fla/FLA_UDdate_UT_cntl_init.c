@@ -10,11 +10,11 @@
 
 #include "FLAME.h"
 
-extern fla_apqudut_t* fla_apqudut_cntl_leaf;
+extern TLS_CLASS_SPEC fla_apqudut_t* fla_apqudut_cntl_leaf;
 
-fla_uddateut_t*       fla_uddateut_cntl_unb = NULL;
-fla_uddateut_t*       fla_uddateut_cntl_leaf = NULL;
-fla_blocksize_t*      fla_uddateut_var1_bsize = NULL;
+TLS_CLASS_SPEC fla_uddateut_t*       fla_uddateut_cntl_unb = NULL;
+TLS_CLASS_SPEC fla_uddateut_t*       fla_uddateut_cntl_leaf = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*      fla_uddateut_var1_bsize = NULL;
 
 void FLA_UDdate_UT_cntl_init()
 {

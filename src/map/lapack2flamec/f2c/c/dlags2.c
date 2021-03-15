@@ -173,7 +173,7 @@ int dlags2_(logical *upper, doublereal *a1, doublereal *a2, doublereal *a3, doub
         /* ( CSL -SNL )*( A B )*( CSR SNR ) = ( R 0 ) */
         /* ( SNL CSL ) ( 0 D ) ( -SNR CSR ) ( 0 T ) */
         dlasv2_(&a, &b, &d__, &s1, &s2, &snr, &csr, &snl, &csl);
-        if (f2c_abs(csl) >= f2c_abs(snl) || f2c_abs(csr) >= f2c_abs(snr))
+        if (f2c_dabs(csl) >= f2c_dabs(snl) || f2c_dabs(csr) >= f2c_dabs(snr))
         {
             /* Compute the (1,1) and (1,2) elements of U**T *A and V**T *B, */
             /* and (1,2) element of |U|**T *|A| and |V|**T *|B|. */
@@ -181,12 +181,12 @@ int dlags2_(logical *upper, doublereal *a1, doublereal *a2, doublereal *a3, doub
             ua12 = csl * *a2 + snl * *a3;
             vb11r = csr * *b1;
             vb12 = csr * *b2 + snr * *b3;
-            aua12 = f2c_abs(csl) * f2c_abs(*a2) + f2c_abs(snl) * f2c_abs(*a3);
-            avb12 = f2c_abs(csr) * f2c_abs(*b2) + f2c_abs(snr) * f2c_abs(*b3);
+            aua12 = f2c_dabs(csl) * f2c_dabs(*a2) + f2c_dabs(snl) * f2c_dabs(*a3);
+            avb12 = f2c_dabs(csr) * f2c_dabs(*b2) + f2c_dabs(snr) * f2c_dabs(*b3);
             /* zero (1,2) elements of U**T *A and V**T *B */
-            if (f2c_abs(ua11r) + f2c_abs(ua12) != 0.)
+            if (f2c_dabs(ua11r) + f2c_dabs(ua12) != 0.)
             {
-                if (aua12 / (f2c_abs(ua11r) + f2c_abs(ua12)) <= avb12 / (f2c_abs(vb11r) + f2c_abs(vb12)))
+                if (aua12 / (f2c_dabs(ua11r) + f2c_dabs(ua12)) <= avb12 / (f2c_dabs(vb11r) + f2c_dabs(vb12)))
                 {
                     d__1 = -ua11r;
                     dlartg_(&d__1, &ua12, csq, snq, &r__);
@@ -215,12 +215,12 @@ int dlags2_(logical *upper, doublereal *a1, doublereal *a2, doublereal *a3, doub
             ua22 = -snl * *a2 + csl * *a3;
             vb21 = -snr * *b1;
             vb22 = -snr * *b2 + csr * *b3;
-            aua22 = f2c_abs(snl) * f2c_abs(*a2) + f2c_abs(csl) * f2c_abs(*a3);
-            avb22 = f2c_abs(snr) * f2c_abs(*b2) + f2c_abs(csr) * f2c_abs(*b3);
+            aua22 = f2c_dabs(snl) * f2c_dabs(*a2) + f2c_dabs(csl) * f2c_dabs(*a3);
+            avb22 = f2c_dabs(snr) * f2c_dabs(*b2) + f2c_dabs(csr) * f2c_dabs(*b3);
             /* zero (2,2) elements of U**T*A and V**T*B, and then swap. */
-            if (f2c_abs(ua21) + f2c_abs(ua22) != 0.)
+            if (f2c_dabs(ua21) + f2c_dabs(ua22) != 0.)
             {
-                if (aua22 / (f2c_abs(ua21) + f2c_abs(ua22)) <= avb22 / (f2c_abs(vb21) + f2c_abs(vb22)))
+                if (aua22 / (f2c_dabs(ua21) + f2c_dabs(ua22)) <= avb22 / (f2c_dabs(vb21) + f2c_dabs(vb22)))
                 {
                     d__1 = -ua21;
                     dlartg_(&d__1, &ua22, csq, snq, &r__);
@@ -254,7 +254,7 @@ int dlags2_(logical *upper, doublereal *a1, doublereal *a2, doublereal *a3, doub
         /* ( CSL -SNL )*( A 0 )*( CSR SNR ) = ( R 0 ) */
         /* ( SNL CSL ) ( C D ) ( -SNR CSR ) ( 0 T ) */
         dlasv2_(&a, &c__, &d__, &s1, &s2, &snr, &csr, &snl, &csl);
-        if (f2c_abs(csr) >= f2c_abs(snr) || f2c_abs(csl) >= f2c_abs(snl))
+        if (f2c_dabs(csr) >= f2c_dabs(snr) || f2c_dabs(csl) >= f2c_dabs(snl))
         {
             /* Compute the (2,1) and (2,2) elements of U**T *A and V**T *B, */
             /* and (2,1) element of |U|**T *|A| and |V|**T *|B|. */
@@ -262,12 +262,12 @@ int dlags2_(logical *upper, doublereal *a1, doublereal *a2, doublereal *a3, doub
             ua22r = csr * *a3;
             vb21 = -snl * *b1 + csl * *b2;
             vb22r = csl * *b3;
-            aua21 = f2c_abs(snr) * f2c_abs(*a1) + f2c_abs(csr) * f2c_abs(*a2);
-            avb21 = f2c_abs(snl) * f2c_abs(*b1) + f2c_abs(csl) * f2c_abs(*b2);
+            aua21 = f2c_dabs(snr) * f2c_dabs(*a1) + f2c_dabs(csr) * f2c_dabs(*a2);
+            avb21 = f2c_dabs(snl) * f2c_dabs(*b1) + f2c_dabs(csl) * f2c_dabs(*b2);
             /* zero (2,1) elements of U**T *A and V**T *B. */
-            if (f2c_abs(ua21) + f2c_abs(ua22r) != 0.)
+            if (f2c_dabs(ua21) + f2c_dabs(ua22r) != 0.)
             {
-                if (aua21 / (f2c_abs(ua21) + f2c_abs(ua22r)) <= avb21 / (f2c_abs(vb21) + f2c_abs(vb22r)))
+                if (aua21 / (f2c_dabs(ua21) + f2c_dabs(ua22r)) <= avb21 / (f2c_dabs(vb21) + f2c_dabs(vb22r)))
                 {
                     dlartg_(&ua22r, &ua21, csq, snq, &r__);
                 }
@@ -293,12 +293,12 @@ int dlags2_(logical *upper, doublereal *a1, doublereal *a2, doublereal *a3, doub
             ua12 = snr * *a3;
             vb11 = csl * *b1 + snl * *b2;
             vb12 = snl * *b3;
-            aua11 = f2c_abs(csr) * f2c_abs(*a1) + f2c_abs(snr) * f2c_abs(*a2);
-            avb11 = f2c_abs(csl) * f2c_abs(*b1) + f2c_abs(snl) * f2c_abs(*b2);
+            aua11 = f2c_dabs(csr) * f2c_dabs(*a1) + f2c_dabs(snr) * f2c_dabs(*a2);
+            avb11 = f2c_dabs(csl) * f2c_dabs(*b1) + f2c_dabs(snl) * f2c_dabs(*b2);
             /* zero (1,1) elements of U**T*A and V**T*B, and then swap. */
-            if (f2c_abs(ua11) + f2c_abs(ua12) != 0.)
+            if (f2c_dabs(ua11) + f2c_dabs(ua12) != 0.)
             {
-                if (aua11 / (f2c_abs(ua11) + f2c_abs(ua12)) <= avb11 / (f2c_abs(vb11) + f2c_abs(vb12)))
+                if (aua11 / (f2c_dabs(ua11) + f2c_dabs(ua12)) <= avb11 / (f2c_dabs(vb11) + f2c_dabs(vb12)))
                 {
                     dlartg_(&ua12, &ua11, csq, snq, &r__);
                 }

@@ -150,7 +150,7 @@ doublereal dla_gbrpvgrw_(integer *n, integer *kl, integer *ku, integer * ncols, 
                 ++i__)
         {
             /* Computing MAX */
-            d__2 = (d__1 = ab[kd + i__ - j + j * ab_dim1], f2c_abs(d__1));
+            d__2 = (d__1 = ab[kd + i__ - j + j * ab_dim1], f2c_dabs(d__1));
             amax = max(d__2,amax);
         }
         /* Computing MAX */
@@ -161,7 +161,7 @@ doublereal dla_gbrpvgrw_(integer *n, integer *kl, integer *ku, integer * ncols, 
                 ++i__)
         {
             /* Computing MAX */
-            d__2 = (d__1 = afb[kd + i__ - j + j * afb_dim1], f2c_abs(d__1));
+            d__2 = (d__1 = afb[kd + i__ - j + j * afb_dim1], f2c_dabs(d__1));
             umax = max(d__2,umax);
         }
         if (umax != 0.)
