@@ -1537,7 +1537,11 @@ Optional Features:
                           Enable multithreading support. Valid values for
                           model are "pthreads" and "openmp". Multithreading
                           must be enabled to access SMP parallelized
-                          implementations. (Disabled by default.)
+                          implementations. If enabled, use the environment
+                          variable FLA_NUM_THREADS to specify the number of
+                          threads to parallelize computations for LAPACK
+                          interfaces (FLA external interfaces). (Disabled
+                          by default.)
   --enable-supermatrix    Enable Ernie Chan's dependency-aware task scheduling
                           and parallel execution system. (Disabled by
                           default.)

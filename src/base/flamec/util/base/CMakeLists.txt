@@ -45,6 +45,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sort.c
 ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sqrt.c
 ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Symmetrize.c
 ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Triangularize.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_env.c
 	)
 	
 add_subdirectory(transpose)

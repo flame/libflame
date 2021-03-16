@@ -11,7 +11,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_MULTITHREADING],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([multithreading],
-	              AC_HELP_STRING([--enable-multithreading=model],[Enable multithreading support. Valid values for model are "pthreads" and "openmp". Multithreading must be enabled to access SMP parallelized implementations. (Disabled by default.)]),
+	              AC_HELP_STRING([--enable-multithreading=model],[Enable multithreading support. Valid values for model are "pthreads" and "openmp". Multithreading must be enabled to access SMP parallelized implementations. If enabled, use the environment variable FLA_NUM_THREADS to specify the number of threads to parallelize computations for LAPACK interfaces (FLA external interfaces). (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "openmp" ; then

@@ -8,6 +8,11 @@
 
 */
 
+/*
+    Copyright (c) 2021 Advanced Micro Devices, Inc.  All rights reserved.
+    Mar 16, 2021
+*/
+
 
 
 // --- Miscellaneous macro definitions -----------------------------------------
@@ -193,6 +198,10 @@
 #ifndef FLA_DEFAULT_N_BLOCKSIZE
   #define FLA_DEFAULT_N_BLOCKSIZE  128
 #endif
+
+// Blocksize for hierarchical storage of matrices for FLASH based
+// external interfaces
+#define FLA_EXT_HIER_BLOCKSIZE 128
 
 // QR and LQ factorizations typically has an inner blocksize that corresponds
 // to the length of the S (or T) block Householder matrix. For consistency, we

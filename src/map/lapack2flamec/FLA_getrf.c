@@ -8,6 +8,11 @@
 
 */
 
+/*
+    Copyright (c) 2021 Advanced Micro Devices, Inc.  All rights reserved.
+    Mar 16, 2021
+*/
+
 #include "FLAME.h"
 
 #ifdef FLA_ENABLE_LAPACK2FLAME
@@ -44,9 +49,11 @@ extern void DTL_Trace(
                                int* buff_p,                             \
                                int* info )
 
+#ifndef FLA_ENABLE_MULTITHREADING
+
 // Note that p should be set zero.
 #define LAPACK_getrf_body(prefix)                               \
-  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5); 		\
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                 \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   FLA_Obj      A, p;                                            \
   int          min_m_n    = min( *m, *n );                      \
@@ -60,7 +67,6 @@ extern void DTL_Trace(
                                                                 \
   FLA_Obj_create_without_buffer( FLA_INT, min_m_n, 1, &p );     \
   FLA_Obj_attach_buffer( buff_p, 1, min_m_n, &p );              \
-  FLA_Set( FLA_ZERO, p );                                       \
                                                                 \
   e_val = FLA_LU_piv( A, p );                                   \
   FLA_Shift_pivots_to( FLA_LAPACK_PIVOTS, p );                  \
@@ -75,6 +81,57 @@ extern void DTL_Trace(
                                                                 \
   AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  \
   return 0;
+
+#else /* FLA_ENABLE_MULTITHREADING */
+
+// Note that p should be set zero.
+#define LAPACK_getrf_body(prefix)                               \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                 \
+  FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
+  FLA_Obj      A, p, AH, ph;                                    \
+  int          min_m_n    = min( *m, *n );                      \
+  dim_t        nth, b_flash;                                    \
+  FLA_Error    e_val;                                           \
+  FLA_Error    init_result;                                     \
+                                                                \
+  nth = FLASH_get_num_threads( 1 );                             \
+  b_flash = FLA_EXT_HIER_BLOCKSIZE;                             \
+                                                                \
+  FLA_Init_safe( &init_result );                                \
+  FLASH_Queue_set_num_threads( nth );                           \
+                                                                \
+  FLA_Obj_create_without_buffer( datatype, *m, *n, &A );        \
+  FLA_Obj_attach_buffer( buff_A, 1, *ldim_A, &A );              \
+                                                                \
+  FLA_Obj_create_without_buffer( FLA_INT, min_m_n, 1, &p );     \
+  FLA_Obj_attach_buffer( buff_p, 1, min_m_n, &p );              \
+                                                                \
+  FLA_Set( FLA_ZERO, p );                                       \
+                                                                \
+  FLASH_Obj_create_hier_copy_of_flat( A, 1, &b_flash, &AH );    \
+  FLASH_Obj_create_hier_copy_of_flat( p, 1, &b_flash, &ph );    \
+                                                                \
+  e_val = FLASH_LU_piv( AH, ph );                               \
+                                                                \
+  FLASH_Obj_flatten( AH, A );                                   \
+  FLASH_Obj_flatten( ph, p );                                   \
+  FLA_Shift_pivots_to( FLA_LAPACK_PIVOTS, p );                  \
+                                                                \
+  FLA_Obj_free( &AH );                                          \
+  FLA_Obj_free( &ph );                                          \
+                                                                \
+  FLA_Obj_free_without_buffer( &A );                            \
+  FLA_Obj_free_without_buffer( &p );                            \
+                                                                \
+  FLA_Finalize_safe( init_result );                             \
+                                                                \
+  if ( e_val != FLA_SUCCESS ) *info = e_val + 1;                \
+  else                        *info = 0;                        \
+                                                                \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  \
+  return 0;
+
+#endif /* FLA_ENABLE_MULTITHREADING */
 
 LAPACK_getrf(s)
 {
