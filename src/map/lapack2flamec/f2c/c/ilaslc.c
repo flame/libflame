@@ -82,7 +82,15 @@
  /* .. Local Scalars .. */
  /* .. */
  /* .. Executable Statements .. */
+ /* Logging and tracing code */
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+ #if AOCL_DTL_LOG_ENABLE
+   char buffer[256];
+   sprintf(buffer, "ilaslc inputs: m %d, n %d lda %d\n", *m, *n, *lda);
+   AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+ #endif
  /* Quick test for the common case where one corner is non-zero. */
+
  /* Parameter adjustments */
  a_dim1 = *lda;
  a_offset = 1 + a_dim1;
@@ -104,11 +112,13 @@
  i__ <= i__1;
  ++i__) {
  if (a[i__ + ret_val * a_dim1] != 0.f) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  }
  }
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  }
  /* ilaslc_ */
