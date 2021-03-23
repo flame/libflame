@@ -136,7 +136,7 @@ void test_ldlt2_nopiv_ps_s( test_params_t *params )
    double time_min;
    char   *strpass = "PASS";
    char   *strmarg = "MARGINAL";
-   char   *strfail = "FAIL";
+   char   *strfail = "FAILURE";
    char   *pcode;
 
    for( n = params->p_first; n <= params->p_max; n += params->p_inc )
@@ -370,7 +370,7 @@ void test_ldlt2_nopiv_ps_d( test_params_t *params )
    double time_min;
    char   *strpass = "PASS";
    char   *strmarg = "MARGINAL";
-   char   *strfail = "FAIL";
+   char   *strfail = "FAILURE";
    char   *pcode;
 
    for( n = params->p_first; n <= params->p_max; n += params->p_inc )
@@ -619,7 +619,7 @@ void test_ldlt2_nopiv_ps_c( test_params_t *params )
    double time_min;
    char   *strpass = "PASS";
    char   *strmarg = "MARGINAL";
-   char   *strfail = "FAIL";
+   char   *strfail = "FAILURE";
    char   *pcode;
 
    for( n = params->p_first; n <= params->p_max; n += params->p_inc )
@@ -866,7 +866,7 @@ void test_ldlt2_nopiv_ps_z( test_params_t *params )
    double time_min;
    char   *strpass = "PASS";
    char   *strmarg = "MARGINAL";
-   char   *strfail = "FAIL";
+   char   *strfail = "FAILURE";
    char   *pcode;
 
    for( n = params->p_first; n <= params->p_max; n += params->p_inc )

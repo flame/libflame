@@ -39,13 +39,15 @@ ansi_green="\033[0;32m"     #prints the message on console in green
 ansi_normal="\033[0m"
 
 passmsg="All LIBFLAME tests passed!"
-failmsg="Please see output.test for details."
+failmsg0="Some tests have failed."
+failmsg1="Please see test/output.test for details!"
 
 grep -q FAILURE $1
 
 if [ $? -eq 0 ]; then
-	printf "${ansi_red}""${script_name}: ${failmsg}""${ansi_normal}\n"
-	exit 1
+	printf "${ansi_red}""${script_name}: ${failmsg0}""${ansi_normal}\n"
+	printf "${ansi_red}""${script_name}: ${failmsg1}""${ansi_normal}\n"
+	exit 0
 else
 	printf "${ansi_green}""${script_name}: ${passmsg}""${ansi_normal}\n"
 	exit 0
