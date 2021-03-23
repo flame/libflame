@@ -87,15 +87,24 @@
  /* .. Intrinsic Functions .. */
  /* .. */
  /* .. Executable Statements .. */
+ /* Logging and tracing code */
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    #if AOCL_DTL_LOG_ENABLE
+      char buffer[256];
+      sprintf(buffer, "icmax1 inputs: n %d, incx %d \n", *n, *incx);
+      AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+    #endif
  /* Parameter adjustments */
  --cx;
  /* Function Body */
  ret_val = 0;
  if (*n < 1 || *incx <= 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  }
  ret_val = 1;
  if (*n == 1) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  }
  if (*incx == 1) {
@@ -127,6 +136,7 @@
  ix += *incx;
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  /* End of ICMAX1 */
  }
