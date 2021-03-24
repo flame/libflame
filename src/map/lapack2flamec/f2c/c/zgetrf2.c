@@ -194,12 +194,12 @@
  /* Apply the interchange */
  if (i__ != 1) {
  i__1 = a_dim1 + 1;
- temp.r = a[i__1].r; temp.i = a[i__1].i; // , expr subst  
+ temp.r = a[i__1].r; temp.i = a[i__1].i; // , expr subst
  i__1 = a_dim1 + 1;
  i__2 = i__ + a_dim1;
- a[i__1].r = a[i__2].r; a[i__1].i = a[i__2].i; // , expr subst  
+ a[i__1].r = a[i__2].r; a[i__1].i = a[i__2].i; // , expr subst
  i__1 = i__ + a_dim1;
- a[i__1].r = temp.r; a[i__1].i = temp.i; // , expr subst  
+ a[i__1].r = temp.r; a[i__1].i = temp.i; // , expr subst
  }
  /* Compute elements 2:M of the column */
  if (z_abs(&a[a_dim1 + 1]) >= sfmin) {
@@ -214,7 +214,7 @@
  ++i__) {
  i__2 = i__ + 1 + a_dim1;
  z_div(&z__1, &a[i__ + 1 + a_dim1], &a[a_dim1 + 1]);
- a[i__2].r = z__1.r; a[i__2].i = z__1.i; // , expr subst  
+ a[i__2].r = z__1.r; a[i__2].i = z__1.i; // , expr subst
  /* L10: */
  }
  }
@@ -242,7 +242,7 @@
  ztrsm_("L", "L", "N", "U", &n1, &n2, &c_b1, &a[a_offset], lda, &a[(n1 + 1) * a_dim1 + 1], lda);
  /* Update A22 */
  i__1 = *m - n1;
- z__1.r = -1.; z__1.i = -0.; // , expr subst  
+ z__1.r = -1.; z__1.i = -0.; // , expr subst
  zgemm_("N", "N", &i__1, &n2, &n1, &z__1, &a[n1 + 1 + a_dim1], lda, &a[ (n1 + 1) * a_dim1 + 1], lda, &c_b1, &a[n1 + 1 + (n1 + 1) * a_dim1], lda);
  /* Factor A22 */
  i__1 = *m - n1;
@@ -267,4 +267,4 @@
  /* End of ZGETRF2 */
  }
  /* zgetrf2_ */
- 
+

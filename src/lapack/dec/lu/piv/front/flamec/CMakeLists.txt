@@ -7,4 +7,14 @@ ${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_piv_internal.c
 ${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_piv_solve.c
 ${CMAKE_CURRENT_SOURCE_DIR}/FLASH_LU_piv.c
 ${CMAKE_CURRENT_SOURCE_DIR}/FLASH_LU_piv_solve.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dgetrf.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dgetf2.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sgetrf.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sgetf2.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_cgetrf.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_cgetf2.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_zgetrf.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_zgetf2.c
+
+
 	)

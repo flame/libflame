@@ -59,27 +59,63 @@ extern void DTL_Trace(
   int          min_m_n    = min( *m, *n );                      \
   FLA_Error    e_val;                                           \
   FLA_Error    init_result;                                     \
+  FLA_Bool skip = FALSE;                                        \
                                                                 \
-  FLA_Init_safe( &init_result );                                \
-                                                                \
-  FLA_Obj_create_without_buffer( datatype, *m, *n, &A );        \
-  FLA_Obj_attach_buffer( buff_A, 1, *ldim_A, &A );              \
-                                                                \
-  FLA_Obj_create_without_buffer( FLA_INT, min_m_n, 1, &p );     \
-  FLA_Obj_attach_buffer( buff_p, 1, min_m_n, &p );              \
-                                                                \
-  e_val = FLA_LU_piv( A, p );                                   \
-  FLA_Shift_pivots_to( FLA_LAPACK_PIVOTS, p );                  \
-                                                                \
-  FLA_Obj_free_without_buffer( &A );                            \
-  FLA_Obj_free_without_buffer( &p );                            \
-                                                                \
-  FLA_Finalize_safe( init_result );                             \
-                                                                \
-  if ( e_val != FLA_SUCCESS ) *info = e_val + 1;                \
-  else                        *info = 0;                        \
-                                                                \
-  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  \
+  if( *m < FLA_GETRF_SMALL  && *n < FLA_GETRF_SMALL )  /* Small sizes- lapack path */                               \
+  {                                                                                                                 \
+    switch(datatype)                                                                                                \
+    {                                                                                                               \
+       case FLA_FLOAT:                                                                                              \
+       { e_val = lapack_sgetrf( m, n, buff_A, ldim_A, buff_p, info); break; }                                       \
+       case FLA_DOUBLE:                                                                                             \
+       { e_val = lapack_dgetrf( m, n, buff_A, ldim_A, buff_p, info); break; }                                       \
+       case FLA_COMPLEX:                                                                                            \
+       { e_val = lapack_cgetrf( m, n, buff_A, ldim_A, buff_p, info); break; }                                       \
+       case FLA_DOUBLE_COMPLEX:                                                                                     \
+       { e_val = lapack_zgetrf( m, n, buff_A, ldim_A, buff_p, info); break; }                                       \
+       e_val--;                                                                                                     \
+    }                                                                                                               \
+  }                                                                                                                 \
+  else if( ( datatype == FLA_FLOAT && *m < FLA_GETRF_FLOAT && * n < FLA_GETRF_FLOAT  )||                            \
+           ( datatype == FLA_COMPLEX && *m < FLA_GETRF_COMPLEX  && *n < FLA_GETRF_COMPLEX  ) ||                     \
+	   ( datatype == FLA_DOUBLE_COMPLEX && *m < FLA_GETRF_DOUBLE_COMPLEX  && *n < FLA_GETRF_DOUBLE_COMPLEX  ) ) \
+  {                                                                                    \
+    FLA_Init_safe( &init_result );                                                     \
+                                                                                       \
+    FLA_Obj_create_without_buffer( datatype, *m, *n, &A );                             \
+    FLA_Obj_attach_buffer( buff_A, 1, *ldim_A, &A );                                   \
+                                                                                       \
+    FLA_Obj_create_without_buffer( FLA_INT, min_m_n, 1, &p );                          \
+    FLA_Obj_attach_buffer( buff_p, 1, min_m_n, &p );                                   \
+    FLA_Set( FLA_ZERO, p );                                                            \
+                                                                                       \
+    e_val = FLA_LU_piv( A, p );                                                        \
+    FLA_Shift_pivots_to( FLA_LAPACK_PIVOTS, p );                                       \
+                                                                                       \
+    FLA_Obj_free_without_buffer( &A );                                                 \
+    FLA_Obj_free_without_buffer( &p );                                                 \
+                                                                                       \
+    FLA_Finalize_safe( init_result );                                                  \
+ }                                                                                     \
+  else                                                                                 \
+  {                                                                                    \
+    switch(datatype)                                                                   \
+    {                                                                                  \
+       case FLA_FLOAT:                                                                 \
+       { sgetrf2_( m, n, buff_A, ldim_A, buff_p, info); break; }                       \
+       case FLA_DOUBLE:                                                                \
+       { dgetrf2_( m, n, buff_A, ldim_A, buff_p, info); break; }                       \
+       case FLA_COMPLEX:                                                               \
+       { cgetrf2_( m, n, buff_A, ldim_A, buff_p, info); break; }                       \
+       case FLA_DOUBLE_COMPLEX:                                                        \
+       { zgetrf2_( m, n, buff_A, ldim_A, buff_p, info); break; }                       \
+       if ( *info != 0 ) skip  = TRUE;                                                 \
+    }                                                                                  \
+  }                                                                                    \
+                                                                                       \
+  if ( e_val != FLA_SUCCESS ) *info = e_val + 1;                                       \
+  else if( skip != TRUE )       *info = 0;                                             \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                                         \
   return 0;
 
 #else /* FLA_ENABLE_MULTITHREADING */

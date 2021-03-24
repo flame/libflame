@@ -235,6 +235,12 @@
 #define FLA_SPFFRT2__BSIZE2           (32)
 #define FLA_SPFFRT2__BSIZE3           (64)
 
+//GETRF , threshold numbers to chose paths for performance
+#define FLA_GETRF_SMALL               (85)
+#define FLA_GETRF_FLOAT               (1440)
+#define FLA_GETRF_COMPLEX             (670)
+#define FLA_GETRF_DOUBLE_COMPLEX      (1630)
+
 // GETRFNPI , these thresholds are used to chose between 3 algorithms to get best
 // results in terms of perfmormance
 #define FLA_MN_SIZE            (373321)

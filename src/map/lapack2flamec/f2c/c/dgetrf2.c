@@ -165,6 +165,7 @@
  xerbla_("DGETRF2", &i__1);
  return 0;
  }
+ 
  /* Quick return if possible */
  if (*m == 0 || *n == 0) {
  return 0;
