@@ -38,6 +38,8 @@
 /* Subroutine */
 int ilaver_(integer *vers_major__, integer *vers_minor__, integer *vers_patch__)
 {
+    /* Logging and tracing code */
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* -- LAPACK computational routine (version 3.5.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -48,6 +50,7 @@ int ilaver_(integer *vers_major__, integer *vers_minor__, integer *vers_patch__)
     *vers_minor__ = 9;
     *vers_patch__ = 0;
     /* ===================================================================== */
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
 /* ilaver_ */

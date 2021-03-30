@@ -83,6 +83,13 @@ integer ilaslr_(integer *m, integer *n, real *a, integer *lda)
     /* .. Local Scalars .. */
     /* .. */
     /* .. Executable Statements .. */
+    /* Logging and tracing code */
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    #if AOCL_DTL_LOG_ENABLE
+      char buffer[256];
+      sprintf(buffer, "ilaslr inputs: m %d, n %d lda %d\n", *m, *n, *lda);
+      AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+    #endif
     /* Quick test for the common case where one corner is non-zero. */
     /* Parameter adjustments */
     a_dim1 = *lda;
@@ -114,6 +121,7 @@ integer ilaslr_(integer *m, integer *n, real *a, integer *lda)
             ret_val = max(ret_val,i__);
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return ret_val;
 }
 /* ilaslr_ */

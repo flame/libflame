@@ -84,6 +84,13 @@ integer ilaclc_(integer *m, integer *n, complex *a, integer *lda)
     /* .. */
     /* .. Executable Statements .. */
     /* Quick test for the common case where one corner is non-zero. */
+    /* Logging and tracing code */
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    #if AOCL_DTL_LOG_ENABLE
+      char buffer[256];
+      sprintf(buffer, "ilaclc inputs: m %d, n %d lda %d\n", *m, *n, *lda);
+      AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+    #endif
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;
@@ -116,12 +123,14 @@ integer ilaclc_(integer *m, integer *n, complex *a, integer *lda)
                     i__2 = i__ + ret_val * a_dim1;
                     if (a[i__2].r != 0.f || a[i__2].i != 0.f)
                     {
+                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                         return ret_val;
                     }
                 }
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return ret_val;
 }
 /* ilaclc_ */
