@@ -460,7 +460,13 @@ D=diag}
  v -= v_offset;
  --cwork;
  --rwork;
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ snprintf(buffer, 256, "cgesvj inputs: joba %c, jobu %c, jobv %c, m %d, n %d, lda %d, mv %d, ldv %d\n", *joba, *jobu, *jobv, *m, *n, *lda, *mv, *ldv);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  lsvec = lsame_(jobu, "U") || lsame_(jobu, "F");
  uctol = lsame_(jobu, "C");
  rsvec = lsame_(jobv, "V") || lsame_(jobv, "J");
@@ -514,10 +520,12 @@ D=diag}
  i__1 = *m + *n;
  cwork[1].r = (real) i__1; cwork[1].i = 0.f; // , expr subst  
  rwork[1] = (real) max(*n,6);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* #:) Quick return for void matrix */
  if (*m == 0 || *n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Set numerical parameters */
@@ -557,6 +565,7 @@ i<>j}
  *info = -4;
  i__1 = -(*info);
  xerbla_("CGESVJ", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Initialize the right singular vector matrix. */
@@ -593,6 +602,7 @@ i<>j}
  *info = -6;
  i__2 = -(*info);
  xerbla_("CGESVJ", &i__2);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  aaqq = sqrt(aaqq);
@@ -629,6 +639,7 @@ i<>j}
  *info = -6;
  i__2 = -(*info);
  xerbla_("CGESVJ", &i__2);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  aaqq = sqrt(aaqq);
@@ -665,6 +676,7 @@ i<>j}
  *info = -6;
  i__2 = -(*info);
  xerbla_("CGESVJ", &i__2);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  aaqq = sqrt(aaqq);
@@ -721,6 +733,7 @@ i<>j}
  rwork[4] = 0.f;
  rwork[5] = 0.f;
  rwork[6] = 0.f;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* #:) Quick return for one-column matrix */
@@ -739,6 +752,7 @@ i<>j}
  rwork[4] = 0.f;
  rwork[5] = 0.f;
  rwork[6] = 0.f;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Protect small singular values from underflow, and try to */
@@ -1536,6 +1550,7 @@ i<>j}
  rwork[6] = mxsinj;
  /* MXSINJ is the largest absolute value of the sines of Jacobi angles */
  /* in the last sweep */
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* .. */
  /* .. END OF CGESVJ */

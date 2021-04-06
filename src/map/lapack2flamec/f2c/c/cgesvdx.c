@@ -361,7 +361,13 @@
  --work;
  --rwork;
  --iwork;
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ snprintf(buffer, 256, "cgesvdx inputs: jobu %c, jobvt %c, range %c, m %d, n %d, lda %d, il %d, iu %d, ns %d, ldu %d, ldvt %d\n", *jobu, *jobvt, *range, *m, *n, *lda, *il, *iu, *ns, *ldu, *ldvt);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  *ns = 0;
  *info = 0;
  abstol = slamch_("S") * 2;
@@ -504,13 +510,16 @@
  if (*info != 0) {
  i__2 = -(*info);
  xerbla_("CGESVDX", &i__2);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*m == 0 || *n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Set singular values indices accord to RANGE='A'. */
@@ -884,6 +893,7 @@
  r__1 = (real) maxwrk;
  q__1.r = r__1; q__1.i = 0.f; // , expr subst  
  work[1].r = q__1.r; work[1].i = q__1.i; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CGESVDX */
  }

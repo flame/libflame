@@ -415,7 +415,13 @@ int cgesvx_(char *fact, char *trans, integer *n, integer * nrhs, complex *a, int
     --berr;
     --work;
     --rwork;
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ snprintf(buffer, 256, "cgesvx inputs: fact %c, trans %c, n %d, nrhs %d, lda %d, ldaf %d, ipiv %d, equed %c, ldb %d, ldx %d\n", *fact, *trans, *n, *nrhs, *lda, *ldaf, *ipiv, *equed, *ldb, *ldx);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     *info = 0;
     nofact = lsame_(fact, "N");
     equil = lsame_(fact, "E");
@@ -544,6 +550,7 @@ int cgesvx_(char *fact, char *trans, integer *n, integer * nrhs, complex *a, int
     {
         i__1 = -(*info);
         xerbla_("CGESVX", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (equil)
@@ -631,6 +638,7 @@ int cgesvx_(char *fact, char *trans, integer *n, integer * nrhs, complex *a, int
             }
             rwork[1] = rpvgrw;
             *rcond = 0.f;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -737,6 +745,7 @@ int cgesvx_(char *fact, char *trans, integer *n, integer * nrhs, complex *a, int
         *info = *n + 1;
     }
     rwork[1] = rpvgrw;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGESVX */
 }

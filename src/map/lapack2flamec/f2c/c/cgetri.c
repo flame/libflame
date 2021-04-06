@@ -159,7 +159,13 @@ int cgetri_(integer *n, complex *a, integer *lda, integer * ipiv, complex *work,
     a -= a_offset;
     --ipiv;
     --work;
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+   char buffer[256];
+   snprintf(buffer, 256, "cgetri inputs: n %d, lda %d, ipiv %d\n", *n, *lda, *ipiv);
+   AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     *info = 0;
     nb = ilaenv_(&c__1, "CGETRI", " ", n, &c_n1, &c_n1, &c_n1);
     lwkopt = *n * nb;
@@ -182,15 +188,18 @@ int cgetri_(integer *n, complex *a, integer *lda, integer * ipiv, complex *work,
     {
         i__1 = -(*info);
         xerbla_("CGETRI", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Form inv(U). If INFO > 0 from CTRTRI, then U is singular, */
@@ -316,6 +325,7 @@ int cgetri_(integer *n, complex *a, integer *lda, integer * ipiv, complex *work,
     }
     work[1].r = (real) iws;
     work[1].i = 0.f; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGETRI */
 }

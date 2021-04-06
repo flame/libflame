@@ -147,10 +147,17 @@
  a -= a_offset;
  --ipiv;
  --jpiv;
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ snprintf(buffer, 256, "cgetc2 inputs: n %d, lda %d\n", *n, *lda);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  *info = 0;
  /* Quick return if possible */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Set constants to control overflow */
@@ -168,6 +175,7 @@
  q__1.r = smlnum; q__1.i = 0.f; // , expr subst  
  a[i__1].r = q__1.r; a[i__1].i = q__1.i; // , expr subst  
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Factorize A using complete pivoting. */
@@ -240,6 +248,7 @@
  /* Set last pivots to N */
  ipiv[*n] = *n;
  jpiv[*n] = *n;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CGETC2 */
  }

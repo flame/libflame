@@ -514,7 +514,13 @@
  --iwork;
  --cwork;
  --rwork;
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ snprintf(buffer, 256, "cgesvdq inputs: joba %c, jobp %c, jobr %c, jobu %c, jobv %c, m %d, n %d, lda %d, ldu %d, ldv %d, numrank %d, liwork %d, lcwork %d, lrwork %d\n", *joba, *jobp, *jobr, *jobu, *jobv, *m, *n, *lda, *ldu, *ldv, *numrank, *liwork, *lcwork, *lrwork);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  wntus = lsame_(jobu, "S") || lsame_(jobu, "U");
  wntur = lsame_(jobu, "R");
  wntua = lsame_(jobu, "A");
@@ -848,6 +854,7 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CGESVDQ", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
@@ -856,11 +863,13 @@
  cwork[1].r = (real) optwrk; cwork[1].i = 0.f; // , expr subst  
  cwork[2].r = (real) minwrk; cwork[2].i = 0.f; // , expr subst  
  rwork[1] = (real) rminwrk;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if the matrix is void. */
  if (*m == 0 || *n == 0) {
  /* .. all output is void. */
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  big = slamch_("O");
@@ -936,6 +945,7 @@
  rwork[1] = -1.f;
  }
  rwork[2] = -1.f;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (rwork[1] > big / sqrt((real) (*m))) {
@@ -958,6 +968,7 @@
  *info = -8;
  i__1 = -(*info);
  xerbla_("CGESVDQ", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (rtmp > big / sqrt((real) (*m))) {
@@ -1800,6 +1811,7 @@
  /* exact zeros in CGESVD() applied to the (possibly truncated) */
  /* full row rank triangular (trapezoidal) factor of A. */
  *numrank = nr;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CGESVDQ */
  }

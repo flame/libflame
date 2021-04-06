@@ -154,7 +154,13 @@ int cgetrs_(char *trans, integer *n, integer *nrhs, complex * a, integer *lda, i
     b_dim1 = *ldb;
     b_offset = 1 + b_dim1;
     b -= b_offset;
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256, "cgetrs inputs: trans %c, n %d, nrhs %d, lda %d, ipiv %d, ldb %d\n", *trans, *n, *nrhs, *lda, *ipiv, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     *info = 0;
     notran = lsame_(trans, "N");
     if (! notran && ! lsame_(trans, "T") && ! lsame_( trans, "C"))
@@ -181,11 +187,13 @@ int cgetrs_(char *trans, integer *n, integer *nrhs, complex * a, integer *lda, i
     {
         i__1 = -(*info);
         xerbla_("CGETRS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0 || *nrhs == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (notran)
@@ -208,6 +216,7 @@ int cgetrs_(char *trans, integer *n, integer *nrhs, complex * a, integer *lda, i
         /* Apply row interchanges to the solution vectors. */
         claswp_(nrhs, &b[b_offset], ldb, &c__1, n, &ipiv[1], &c_n1);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGETRS */
 }
