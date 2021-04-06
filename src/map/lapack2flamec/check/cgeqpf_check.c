@@ -1,9 +1,9 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
-int cgeqpf_check(int *m, int *n, scomplex *a, int *lda, int *jpvt, scomplex *tau, scomplex *work, float *rwork, int * info)
+int cgeqpf_check(integer *m, integer *n, scomplex *a, integer *lda, integer *jpvt, scomplex *tau, scomplex *work, float *rwork, integer * info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
     sprintf(buffer, "cgeqpf inputs: m %d, n %d, lda %d, jpvt %d\n", *m, *n, *lda, *jpvt);

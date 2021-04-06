@@ -38,7 +38,7 @@ void libfla_test_bidiagut_experiment( test_params_t params,
                                       unsigned int  var,
                                       char*         sc_str,
                                       FLA_Datatype  datatype,
-                                      unsigned int  p,
+                                      uinteger  p,
                                       unsigned int  pci,
                                       unsigned int  n_repeats,
                                       signed int    impl,
@@ -114,7 +114,7 @@ void libfla_test_bidiagut_experiment( test_params_t params,
                                       unsigned int  var,
                                       char*         sc_str,
                                       FLA_Datatype  datatype,
-                                      unsigned int  p_cur,
+                                      uinteger  p_cur,
                                       unsigned int  pci,
                                       unsigned int  n_repeats,
                                       signed int    impl,
@@ -125,9 +125,9 @@ void libfla_test_bidiagut_experiment( test_params_t params,
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	unsigned int m, n, min_m_n;
-	signed int   m_input    = -1;
-	signed int   n_input    = -2;
+	uinteger m, n, min_m_n;
+	integer   m_input    = -1;
+	integer   n_input    = -2;
 	FLA_Obj      A, TU, TV, WU, WV, QUh, QV, AQV, QUhAQV, norm;
 	FLA_Obj      AL, AR;
 	FLA_Obj      QVL, QVR;
@@ -162,8 +162,8 @@ void libfla_test_bidiagut_experiment( test_params_t params,
 	}
 	else // if ( pc_str[pci][0] == 'l' )
 	{
-		unsigned int m_temp = n;
-		unsigned int n_temp = m;
+		uinteger m_temp = n;
+		uinteger n_temp = m;
 		m = m_temp;
 		n = n_temp;
 	}

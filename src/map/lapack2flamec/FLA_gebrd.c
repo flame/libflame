@@ -29,15 +29,15 @@
 extern TLS_CLASS_SPEC fla_bidiagut_t* fla_bidiagut_cntl_plain;
 
 #define LAPACK_gebrd(prefix)                                            \
-  int F77_ ## prefix ## gebrd( int* m,                                  \
-                               int* n,                                  \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+  int F77_ ## prefix ## gebrd( integer* m,                                  \
+                               integer* n,                                  \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_d,   \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_e,   \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_tu,  \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_tv,  \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, int* lwork, \
-                               int* info)
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, integer* lwork, \
+                               integer* info)
 
 #define LAPACK_gebrd_body(prefix)                                       \
   AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \
@@ -50,7 +50,7 @@ extern TLS_CLASS_SPEC fla_bidiagut_t* fla_bidiagut_cntl_plain;
   FLA_Obj      A, d, e, tu, tv, TU, TV, alpha;                          \
   FLA_Error    init_result;                                             \
   FLA_Uplo     uplo;                                                    \
-  int          apply_scale;                                             \
+  integer          apply_scale;                                             \
                                                                         \
   FLA_Init_safe( &init_result );                                        \
                                                                         \
@@ -200,15 +200,15 @@ LAPACK_gebrd(z)
 #endif
 
 #define LAPACK_gebd2(prefix)                                            \
-  int F77_ ## prefix ## gebd2( int* m,                                  \
-                               int* n,                                  \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+  int F77_ ## prefix ## gebd2( integer* m,                                  \
+                               integer* n,                                  \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_d,   \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_e,   \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_tu,  \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_tv,  \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_w,   \
-                               int* info )
+                               integer* info )
 
 LAPACK_gebd2(s)
 {

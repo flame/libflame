@@ -6,7 +6,7 @@
 #include "FLA_f2c.h"
 
 extern void c_div(complex *, complex *, complex *);
-extern integer cspr_(char *, integer *, complex *, complex *, integer *, complex *);
+extern int cspr_(char *, integer *, complex *, complex *, integer *, complex *);
 
 /*! @brief Partial LDL' factorization without pivoting
     *

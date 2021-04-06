@@ -10,7 +10,7 @@
 
 #include "blis1.h"
 
-void bl1_sscalv( conj1_t conj, int n, float* alpha, float* x, int incx )
+void bl1_sscalv( conj1_t conj, integer n, float* alpha, float* x, integer incx )
 {
 	// Return early if possible.
 	if ( bl1_zero_dim1( n ) ) return;
@@ -21,7 +21,7 @@ void bl1_sscalv( conj1_t conj, int n, float* alpha, float* x, int incx )
 	           x, incx );
 }
 
-void bl1_dscalv( conj1_t conj, int n, double* alpha, double* x, int incx )
+void bl1_dscalv( conj1_t conj, integer n, double* alpha, double* x, integer incx )
 {
 	// Return early if possible.
 	if ( bl1_zero_dim1( n ) ) return;
@@ -32,7 +32,7 @@ void bl1_dscalv( conj1_t conj, int n, double* alpha, double* x, int incx )
 	           x, incx );
 }
 
-void bl1_csscalv( conj1_t conj, int n, float* alpha, scomplex* x, int incx )
+void bl1_csscalv( conj1_t conj, integer n, float* alpha, scomplex* x, integer incx )
 {
 	// Return early if possible.
 	if ( bl1_zero_dim1( n ) ) return;
@@ -43,7 +43,7 @@ void bl1_csscalv( conj1_t conj, int n, float* alpha, scomplex* x, int incx )
 	            x, incx );
 }
 
-void bl1_cscalv( conj1_t conj, int n, scomplex* alpha, scomplex* x, int incx )
+void bl1_cscalv( conj1_t conj, integer n, scomplex* alpha, scomplex* x, integer incx )
 {
 	scomplex alpha_conj;
 
@@ -58,7 +58,7 @@ void bl1_cscalv( conj1_t conj, int n, scomplex* alpha, scomplex* x, int incx )
 	           x, incx );
 }
 
-void bl1_zdscalv( conj1_t conj, int n, double* alpha, dcomplex* x, int incx )
+void bl1_zdscalv( conj1_t conj, integer n, double* alpha, dcomplex* x, integer incx )
 {
 	// Return early if possible.
 	if ( bl1_zero_dim1( n ) ) return;
@@ -69,7 +69,7 @@ void bl1_zdscalv( conj1_t conj, int n, double* alpha, dcomplex* x, int incx )
 	            x, incx );
 }
 
-void bl1_zscalv( conj1_t conj, int n, dcomplex* alpha, dcomplex* x, int incx )
+void bl1_zscalv( conj1_t conj, integer n, dcomplex* alpha, dcomplex* x, integer incx )
 {
 	dcomplex alpha_conj;
 

@@ -14,9 +14,9 @@ FLA_Error FLA_Copyrt_external( FLA_Uplo uplo, FLA_Trans trans, FLA_Obj A, FLA_Ob
 {
   FLA_Datatype dt_A;
   FLA_Datatype dt_B;
-  int          m_B, n_B;
-  int          rs_A, cs_A;
-  int          rs_B, cs_B;
+  integer          m_B, n_B;
+  integer          rs_A, cs_A;
+  integer          rs_B, cs_B;
   uplo1_t       blis_uplo;
   trans1_t      blis_trans;
 
@@ -95,8 +95,8 @@ FLA_Error FLA_Copyrt_external( FLA_Uplo uplo, FLA_Trans trans, FLA_Obj A, FLA_Ob
 /*
   else if ( dt_A == FLA_INT )
   {
-    int*      buff_A = ( int * ) FLA_INT_PTR( A );
-    int*      buff_B = ( int * ) FLA_INT_PTR( B );
+    integer*      buff_A = ( integer * ) FLA_INT_PTR( A );
+    integer*      buff_B = ( integer * ) FLA_INT_PTR( B );
 
     bl1_icopymrt( blis_uplo,
                   blis_trans,

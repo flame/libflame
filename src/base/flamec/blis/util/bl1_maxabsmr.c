@@ -10,17 +10,17 @@
 
 #include "blis1.h"
 
-void bl1_smaxabsmr( uplo1_t uplo, int m, int n, float* a, int a_rs, int a_cs, float* maxabs )
+void bl1_smaxabsmr( uplo1_t uplo, integer m, integer n, float* a, integer a_rs, integer a_cs, float* maxabs )
 {
 	float     zero = bl1_s0();
 	float*    a_begin;
 	float     maxabs_cand;
 	float     maxabs_temp;
-	int       inca, lda;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       inca, lda;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) { *maxabs = zero; return; }
@@ -75,17 +75,17 @@ void bl1_smaxabsmr( uplo1_t uplo, int m, int n, float* a, int a_rs, int a_cs, fl
 	*maxabs = maxabs_cand;
 }
 
-void bl1_dmaxabsmr( uplo1_t uplo, int m, int n, double* a, int a_rs, int a_cs, double* maxabs )
+void bl1_dmaxabsmr( uplo1_t uplo, integer m, integer n, double* a, integer a_rs, integer a_cs, double* maxabs )
 {
 	double    zero = bl1_d0();
 	double*   a_begin;
 	double    maxabs_cand;
 	double    maxabs_temp;
-	int       inca, lda;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       inca, lda;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) { *maxabs = zero; return; }
@@ -140,17 +140,17 @@ void bl1_dmaxabsmr( uplo1_t uplo, int m, int n, double* a, int a_rs, int a_cs, d
 	*maxabs = maxabs_cand;
 }
 
-void bl1_cmaxabsmr( uplo1_t uplo, int m, int n, scomplex* a, int a_rs, int a_cs, float* maxabs )
+void bl1_cmaxabsmr( uplo1_t uplo, integer m, integer n, scomplex* a, integer a_rs, integer a_cs, float* maxabs )
 {
 	float     zero = bl1_d0();
 	scomplex* a_begin;
 	float     maxabs_cand;
 	float     maxabs_temp;
-	int       inca, lda;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       inca, lda;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) { *maxabs = zero; return; }
@@ -205,17 +205,17 @@ void bl1_cmaxabsmr( uplo1_t uplo, int m, int n, scomplex* a, int a_rs, int a_cs,
 	*maxabs = maxabs_cand;
 }
 
-void bl1_zmaxabsmr( uplo1_t uplo, int m, int n, dcomplex* a, int a_rs, int a_cs, double* maxabs )
+void bl1_zmaxabsmr( uplo1_t uplo, integer m, integer n, dcomplex* a, integer a_rs, integer a_cs, double* maxabs )
 {
 	double    zero = bl1_d0();
 	dcomplex* a_begin;
 	double    maxabs_cand;
 	double    maxabs_temp;
-	int       inca, lda;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       inca, lda;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) { *maxabs = zero; return; }

@@ -409,6 +409,9 @@ FLA_CHECK_ENABLE_STATIC_BUILD
 dnl Observe whether we're going to build a dynamic library.
 FLA_CHECK_ENABLE_DYNAMIC_BUILD
 
+dnl Observe whether we're going to enable ILP64.
+FLA_CHECK_ENABLE_ILP64
+
 dnl Observe whether we should archive object files from a separate flat object
 dnl directory so that systems with kernels with small ARG_MAX can still archive
 dnl the library.

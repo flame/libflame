@@ -65,7 +65,7 @@ void FLA_Obj_extract_complex_scalar( FLA_Obj alpha, dcomplex* alpha_value )
 void FLA_Obj_extract_real_part( FLA_Obj a, FLA_Obj b )
 {
   FLA_Datatype datatype;
-  int          m, inc_a, inc_b;
+  integer          m, inc_a, inc_b;
   
   if ( FLA_Check_error_level() >= FLA_MIN_ERROR_CHECKING )
     FLA_Obj_extract_real_part_check( a, b );
@@ -120,7 +120,7 @@ void FLA_Obj_extract_real_part( FLA_Obj a, FLA_Obj b )
 void FLA_Obj_extract_imag_part( FLA_Obj a, FLA_Obj b )
 {
   FLA_Datatype datatype;
-  int          m, inc_a, inc_b;
+  integer          m, inc_a, inc_b;
 
   if ( FLA_Check_error_level() >= FLA_MIN_ERROR_CHECKING )
     FLA_Obj_extract_imag_part_check( a, b );
@@ -300,13 +300,13 @@ FLA_Error FLA_Obj_fshow( FILE* file, char *s1, FLA_Obj A, char *format, char *s2
 
   case FLA_CONSTANT:
   {
-    int*      consti = FLA_INT_PTR( A );
+    integer*      consti = FLA_INT_PTR( A );
     float*    consts = FLA_FLOAT_PTR( A );
     double*   constd = FLA_DOUBLE_PTR( A );
     scomplex* constc = FLA_COMPLEX_PTR( A );
     dcomplex* constz = FLA_DOUBLE_COMPLEX_PTR( A );
 
-    fprintf( file, "int      = %d\n", *consti );
+    fprintf( file, "integer      = %d\n", *consti );
     fprintf( file, "float    = %e\n", *consts );
     fprintf( file, "double   = %e\n", *constd );
     fprintf( file, "scomplex = %e + %e\n", constc->real, constc->imag );
@@ -393,7 +393,7 @@ FLA_Error FLA_Obj_fshow( FILE* file, char *s1, FLA_Obj A, char *format, char *s2
 
   case FLA_INT:
   {
-    int *buffer = ( int * ) FLA_INT_PTR( A );
+    integer *buffer = ( integer * ) FLA_INT_PTR( A );
 
     for ( i = 0; i < m; i++ )
     {

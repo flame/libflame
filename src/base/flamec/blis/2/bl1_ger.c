@@ -10,14 +10,14 @@
 
 #include "blis1.h"
 
-void bl1_sger( conj1_t conjx, conj1_t conjy, int m, int n, float* alpha, float* x, int incx, float* y, int incy, float* a, int a_rs, int a_cs )
+void bl1_sger( conj1_t conjx, conj1_t conjy, integer m, integer n, float* alpha, float* x, integer incx, float* y, integer incy, float* a, integer a_rs, integer a_cs )
 {
-	int       m_save    = m;
-	int       n_save    = n;
+	integer       m_save    = m;
+	integer       n_save    = n;
 	float*    a_save    = a;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       lda, inca;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       lda, inca;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -59,14 +59,14 @@ void bl1_sger( conj1_t conjx, conj1_t conjy, int m, int n, float* alpha, float* 
 	                         &a,     &a_rs,     &a_cs );
 }
 
-void bl1_dger( conj1_t conjx, conj1_t conjy, int m, int n, double* alpha, double* x, int incx, double* y, int incy, double* a, int a_rs, int a_cs )
+void bl1_dger( conj1_t conjx, conj1_t conjy, integer m, integer n, double* alpha, double* x, integer incx, double* y, integer incy, double* a, integer a_rs, integer a_cs )
 {
-	int       m_save    = m;
-	int       n_save    = n;
+	integer       m_save    = m;
+	integer       n_save    = n;
 	double*   a_save    = a;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       lda, inca;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       lda, inca;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -108,16 +108,16 @@ void bl1_dger( conj1_t conjx, conj1_t conjy, int m, int n, double* alpha, double
 	                         &a,     &a_rs,     &a_cs );
 }
 
-void bl1_cger( conj1_t conjx, conj1_t conjy, int m, int n, scomplex* alpha, scomplex* x, int incx, scomplex* y, int incy, scomplex* a, int a_rs, int a_cs )
+void bl1_cger( conj1_t conjx, conj1_t conjy, integer m, integer n, scomplex* alpha, scomplex* x, integer incx, scomplex* y, integer incy, scomplex* a, integer a_rs, integer a_cs )
 {
-	int       m_save    = m;
-	int       n_save    = n;
+	integer       m_save    = m;
+	integer       n_save    = n;
 	scomplex* a_save    = a;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
 	scomplex* x_conj;
-	int       incx_conj;
-	int       lda, inca;
+	integer       incx_conj;
+	integer       lda, inca;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -191,16 +191,16 @@ void bl1_cger( conj1_t conjx, conj1_t conjy, int m, int n, scomplex* alpha, scom
 	                         &a,     &a_rs,     &a_cs );
 }
 
-void bl1_zger( conj1_t conjx, conj1_t conjy, int m, int n, dcomplex* alpha, dcomplex* x, int incx, dcomplex* y, int incy, dcomplex* a, int a_rs, int a_cs )
+void bl1_zger( conj1_t conjx, conj1_t conjy, integer m, integer n, dcomplex* alpha, dcomplex* x, integer incx, dcomplex* y, integer incy, dcomplex* a, integer a_rs, integer a_cs )
 {
-	int       m_save    = m;
-	int       n_save    = n;
+	integer       m_save    = m;
+	integer       n_save    = n;
 	dcomplex* a_save    = a;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
 	dcomplex* x_conj;
-	int       incx_conj;
-	int       lda, inca;
+	integer       incx_conj;
+	integer       lda, inca;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -276,7 +276,7 @@ void bl1_zger( conj1_t conjx, conj1_t conjy, int m, int n, dcomplex* alpha, dcom
 
 // --- Classic routine wrappers ---
 
-void bl1_sger_blas( int m, int n, float* alpha, float* x, int incx, float* y, int incy, float* a, int lda )
+void bl1_sger_blas( integer m, integer n, float* alpha, float* x, integer incx, float* y, integer incy, float* a, integer lda )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;
@@ -298,7 +298,7 @@ void bl1_sger_blas( int m, int n, float* alpha, float* x, int incx, float* y, in
 #endif
 }
 
-void bl1_dger_blas( int m, int n, double* alpha, double* x, int incx, double* y, int incy, double* a, int lda )
+void bl1_dger_blas( integer m, integer n, double* alpha, double* x, integer incx, double* y, integer incy, double* a, integer lda )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;
@@ -320,7 +320,7 @@ void bl1_dger_blas( int m, int n, double* alpha, double* x, int incx, double* y,
 #endif
 }
 
-void bl1_cgerc_blas( int m, int n, scomplex* alpha, scomplex* x, int incx, scomplex* y, int incy, scomplex* a, int lda )
+void bl1_cgerc_blas( integer m, integer n, scomplex* alpha, scomplex* x, integer incx, scomplex* y, integer incy, scomplex* a, integer lda )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;
@@ -342,7 +342,7 @@ void bl1_cgerc_blas( int m, int n, scomplex* alpha, scomplex* x, int incx, scomp
 #endif
 }
 
-void bl1_cgeru_blas( int m, int n, scomplex* alpha, scomplex* x, int incx, scomplex* y, int incy, scomplex* a, int lda )
+void bl1_cgeru_blas( integer m, integer n, scomplex* alpha, scomplex* x, integer incx, scomplex* y, integer incy, scomplex* a, integer lda )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;
@@ -364,7 +364,7 @@ void bl1_cgeru_blas( int m, int n, scomplex* alpha, scomplex* x, int incx, scomp
 #endif
 }
 
-void bl1_zgerc_blas( int m, int n, dcomplex* alpha, dcomplex* x, int incx, dcomplex* y, int incy, dcomplex* a, int lda )
+void bl1_zgerc_blas( integer m, integer n, dcomplex* alpha, dcomplex* x, integer incx, dcomplex* y, integer incy, dcomplex* a, integer lda )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;
@@ -386,7 +386,7 @@ void bl1_zgerc_blas( int m, int n, dcomplex* alpha, dcomplex* x, int incx, dcomp
 #endif
 }
 
-void bl1_zgeru_blas( int m, int n, dcomplex* alpha, dcomplex* x, int incx, dcomplex* y, int incy, dcomplex* a, int lda )
+void bl1_zgeru_blas( integer m, integer n, dcomplex* alpha, dcomplex* x, integer incx, dcomplex* y, integer incy, dcomplex* a, integer lda )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;

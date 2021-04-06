@@ -24,8 +24,8 @@ FLA_Error FLA_Gemm_nn_omp_var53( FLA_Obj alpha, FLA_Obj A, FLA_Obj B, FLA_Obj C,
 
   FLA_Obj C1_local;
 
-  int b_n, b_k;
-  int i;
+  integer b_n, b_k;
+  integer i;
 
   FLA_Part_1x2( A,    &AL,  &AR,      0, FLA_LEFT );
 

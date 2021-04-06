@@ -27,9 +27,9 @@ void Synch_all() {
 
 
 //extern "C" {
-int RCCE_APP( int argc, char* argv[] )
+integer RCCE_APP( integer argc, char* argv[] )
 { 
-   int
+   integer
       i, j,
       rank,
       n_threads,

@@ -1,16 +1,16 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h" 
-static int c__1 = 1;
-static int c_n1 = -1;
+static integer c__1 = 1;
+static integer c_n1 = -1;
 
-int chetrd_check(char *uplo, int *n, scomplex *a, int *lda, float *d__, float *e, scomplex *tau, scomplex *work, int *lwork, int *info)
+int chetrd_check(char *uplo, integer *n, scomplex *a, integer *lda, float *d__, float *e, scomplex *tau, scomplex *work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
     /* Local variables */
-    int nb;
+    integer nb;
     logical upper;
-    int lwkopt;
+    integer lwkopt;
     logical lquery;
 
 #if AOCL_DTL_LOG_ENABLE

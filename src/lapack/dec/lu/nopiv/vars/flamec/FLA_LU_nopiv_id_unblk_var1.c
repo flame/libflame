@@ -12,14 +12,14 @@
    * ABR size : (m_A-nfact)*(n_A-nfact)
 ***************************************************************************************/
 
-FLA_Error FLA_LU_nopiv_id_unblk_var1( int m_A, int n_A, double* A , int nfact, int rs_A, int cs_A )
+FLA_Error FLA_LU_nopiv_id_unblk_var1( integer m_A, integer n_A, double* A , integer nfact, integer rs_A, integer cs_A )
 {
   double rminusone = bl1_dm1();
   double *Minusone = &rminusone;
   double rone = bl1_d1();
   double *One = &rone;
   double rzero = bl1_d0();
-  int inc_x, inc_y, i, diff, mnfactdiff, nnfactdiff;
+  integer inc_x, inc_y, i, diff, mnfactdiff, nnfactdiff;
   double alpha_inv;
   double *alpha;
   double dscalinv;

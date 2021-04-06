@@ -16,7 +16,7 @@ FLA_Error FLA_Syrk_ln_omp1t_var5( FLA_Obj A, FLA_Obj C )
   FLA_Obj AL,    AR,       A0,  A1,  A2;
   FLA_Obj MyC;
 
-  int b;
+  integer b;
   
   FLA_Part_1x2( A,    &AL,  &AR,      0, FLA_LEFT );
 

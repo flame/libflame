@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-static int      fla_mem_leak_counter;
+static integer      fla_mem_leak_counter;
 static FLA_Bool fla_mem_leak_counter_status;
 #ifdef FLA_ENABLE_MULTITHREADING
 static FLA_Lock fla_mem_leak_counter_lock;
@@ -113,7 +113,7 @@ void* FLA_malloc( size_t size )
   void*     ptr = NULL;
   FLA_Error e_val;
 #ifdef FLA_ENABLE_MEMORY_ALIGNMENT
-  int       r_val;
+  integer       r_val;
 #endif
 
   // In practice, the size argument should very rarely be zero. However, if the

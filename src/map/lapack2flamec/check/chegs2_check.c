@@ -1,10 +1,10 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
 
-int chegs2_check(int *itype, char *uplo, int *n, scomplex * a, int *lda, scomplex *b, int *ldb, int *info)
+int chegs2_check(integer *itype, char *uplo, integer *n, scomplex * a, integer *lda, scomplex *b, integer *ldb, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, b_dim1, b_offset, i__1;
+    integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     logical upper;
 
 #if AOCL_DTL_LOG_ENABLE

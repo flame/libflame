@@ -27,8 +27,8 @@ FLA_Error FLA_Gemm_nn_omp_var15( FLA_Obj alpha, FLA_Obj A, FLA_Obj B, FLA_Obj C,
                            B2;
   FLA_Obj C1_local;
 
-  int i, j, lock_ldim, lock_i;
-  int b_m, b_k;
+  integer i, j, lock_ldim, lock_i;
+  integer b_m, b_k;
 
   FLA_Part_2x1( A,    &AT, 
                       &AB,            0, FLA_TOP );

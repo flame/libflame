@@ -42,7 +42,7 @@ void libfla_test_qrut_experiment( test_params_t params,
                                   unsigned int  var,
                                   char*         sc_str,
                                   FLA_Datatype  datatype,
-                                  unsigned int  p,
+                                  uinteger  p,
                                   unsigned int  pci,
                                   unsigned int  n_repeats,
                                   signed int    impl,
@@ -54,8 +54,8 @@ void libfla_test_qrut_impl( int     impl,
 void libfla_test_qrut_cntl_create( unsigned int var,
                                    dim_t        b_alg_flat );
 void libfla_test_qrut_cntl_free( void );
-void FLA_GEQRF( int m,
-                int n,
+void FLA_GEQRF( integer m,
+                integer n,
                 FLA_Obj A_save,
                 FLA_Obj A,
                 FLA_Obj T_obj,
@@ -145,7 +145,7 @@ void libfla_test_qrut_experiment( test_params_t params,
                                   unsigned int  var,
                                   char*         sc_str,
                                   FLA_Datatype  datatype,
-                                  unsigned int  p_cur,
+                                  uinteger  p_cur,
                                   unsigned int  pci,
                                   unsigned int  n_repeats,
                                   signed int    impl,
@@ -157,10 +157,10 @@ void libfla_test_qrut_experiment( test_params_t params,
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	unsigned int m, n;
-	unsigned int min_m_n;
-	signed int   m_input    = -2;
-	signed int   n_input    = -1;
+	uinteger m, n;
+	uinteger min_m_n;
+	integer   m_input    = -2;
+	integer   n_input    = -1;
 	FLA_Obj      A, T, x, b, y, norm;
 	FLA_Obj      A_save;
 	FLA_Obj      A_test, T_test, x_test, b_test;
@@ -305,11 +305,11 @@ void libfla_test_qrut_experiment( test_params_t params,
 
 
 
-extern TLS_CLASS_SPEC fla_axpyt_t* fla_axpyt_cntl_blas;
-extern TLS_CLASS_SPEC fla_copyt_t* fla_copyt_cntl_blas;
-extern TLS_CLASS_SPEC fla_gemm_t*  fla_gemm_cntl_blas;
-extern TLS_CLASS_SPEC fla_trmm_t*  fla_trmm_cntl_blas;
-extern TLS_CLASS_SPEC fla_trsm_t*  fla_trsm_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_axpyt_t* fla_axpyt_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_copyt_t* fla_copyt_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_gemm_t*  fla_gemm_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_trmm_t*  fla_trmm_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_trsm_t*  fla_trsm_cntl_blas;
 
 void libfla_test_qrut_cntl_create( unsigned int var,
                                    dim_t        b_alg_flat )
@@ -409,8 +409,8 @@ void libfla_test_qrut_impl( int     impl,
  *  FLA_GEQRF calls LAPACK interface of
  *  QR Factorization  - geqrf
  *    *  */
-void FLA_GEQRF( int m,
-                int n,
+void FLA_GEQRF( integer m,
+                integer n,
                 FLA_Obj A_save,
                 FLA_Obj A,
                 FLA_Obj T_obj,
@@ -418,15 +418,15 @@ void FLA_GEQRF( int m,
                 unsigned int n_repeats,
                 double* time_min_ )
 {
-        int          info;
+        integer      info;
         unsigned int i;
         double       time;
         double       time_min   = 1e9;
-        int lda;
-        int lwork;
-	int min_m_n = min(m, n);
+        integer lda;
+        integer lwork;
+	integer min_m_n = min(m, n);
 
-        lda     = (int)FLA_Obj_col_stride( A );
+        lda     = (integer)FLA_Obj_col_stride( A );
 
         switch( datatype )
         {
@@ -442,7 +442,7 @@ void FLA_GEQRF( int m,
 			lwork = -1;
 			sgeqrf_(&m, &n, buff_A, &lda, buff_T, &worksize, &lwork, &info);
 			
-			lwork = (int)worksize;
+			lwork = (integer)worksize;
 			work = (float * )malloc(lwork * sizeof(float));
 
                         for ( i = 0; i < n_repeats; ++i )
@@ -471,7 +471,7 @@ void FLA_GEQRF( int m,
 			lwork = -1;
 			dgeqrf_(&m, &n, buff_A, &lda, buff_T, &worksize, &lwork, &info);
 			
-			lwork = (int)worksize;
+			lwork = (integer)worksize;
 			work = (double * )malloc(lwork * sizeof(double));
 
                         for ( i = 0; i < n_repeats; ++i )
@@ -500,7 +500,7 @@ void FLA_GEQRF( int m,
 			lwork = -1;
 			cgeqrf_(&m, &n, buff_A, &lda, buff_T, &worksize, &lwork, &info);
 			
-			lwork = (int)worksize.real;
+			lwork = (integer)worksize.real;
 			work = (scomplex * )malloc(lwork * sizeof(scomplex));
 
                         for ( i = 0; i < n_repeats; ++i )
@@ -530,7 +530,7 @@ void FLA_GEQRF( int m,
 			lwork = -1;
 			zgeqrf_(&m, &n, buff_A, &lda, buff_T, &worksize, &lwork, &info);
 			
-			lwork = (int)worksize.real;
+			lwork = (integer)worksize.real;
 			work = (dcomplex * )malloc(lwork * sizeof(dcomplex));
 
                         for ( i = 0; i < n_repeats; ++i )

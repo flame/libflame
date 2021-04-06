@@ -14,10 +14,10 @@ FLA_Error FLA_QR2_UT_opt_var1( FLA_Obj U,
                                FLA_Obj D, FLA_Obj T )
 {
   FLA_Datatype datatype;
-  int          m_UT, m_D;
-  int          rs_U, cs_U;
-  int          rs_D, cs_D;
-  int          rs_T, cs_T;
+  integer          m_UT, m_D;
+  integer          rs_U, cs_U;
+  integer          rs_D, cs_D;
+  integer          rs_T, cs_T;
 
   datatype = FLA_Obj_datatype( U );
 
@@ -100,15 +100,15 @@ FLA_Error FLA_QR2_UT_opt_var1( FLA_Obj U,
 
 
 
-FLA_Error FLA_QR2_UT_ops_var1( int m_UT,
-                               int m_D,
-                               float* buff_U, int rs_U, int cs_U,
-                               float* buff_D, int rs_D, int cs_D,
-                               float* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_QR2_UT_ops_var1( integer m_UT,
+                               integer m_D,
+                               float* buff_U, integer rs_U, integer cs_U,
+                               float* buff_D, integer rs_D, integer cs_D,
+                               float* buff_T, integer rs_T, integer cs_T )
 {
   float*    buff_1  = FLA_FLOAT_PTR( FLA_ONE );
   float*    buff_0  = FLA_FLOAT_PTR( FLA_ZERO );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < m_UT; ++i )
   {
@@ -122,8 +122,8 @@ FLA_Error FLA_QR2_UT_ops_var1( int m_UT,
     float*    tau11     = buff_T + (i  )*cs_T + (i  )*rs_T;
     float*    t01       = buff_T + (i  )*cs_T + (0  )*rs_T;
 
-    int       mn_ahead  = m_UT - i - 1;
-    int       mn_behind = i;
+    integer       mn_ahead  = m_UT - i - 1;
+    integer       mn_behind = i;
 
     //------------------------------------------------------------//
 
@@ -164,15 +164,15 @@ FLA_Error FLA_QR2_UT_ops_var1( int m_UT,
 
 
 
-FLA_Error FLA_QR2_UT_opd_var1( int m_UT,
-                               int m_D,
-                               double* buff_U, int rs_U, int cs_U,
-                               double* buff_D, int rs_D, int cs_D,
-                               double* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_QR2_UT_opd_var1( integer m_UT,
+                               integer m_D,
+                               double* buff_U, integer rs_U, integer cs_U,
+                               double* buff_D, integer rs_D, integer cs_D,
+                               double* buff_T, integer rs_T, integer cs_T )
 {
   double*   buff_1  = FLA_DOUBLE_PTR( FLA_ONE );
   double*   buff_0  = FLA_DOUBLE_PTR( FLA_ZERO );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < m_UT; ++i )
   {
@@ -186,8 +186,8 @@ FLA_Error FLA_QR2_UT_opd_var1( int m_UT,
     double*   tau11     = buff_T + (i  )*cs_T + (i  )*rs_T;
     double*   t01       = buff_T + (i  )*cs_T + (0  )*rs_T;
 
-    int       mn_ahead  = m_UT - i - 1;
-    int       mn_behind = i;
+    integer       mn_ahead  = m_UT - i - 1;
+    integer       mn_behind = i;
 
     //------------------------------------------------------------//
 
@@ -228,15 +228,15 @@ FLA_Error FLA_QR2_UT_opd_var1( int m_UT,
 
 
 
-FLA_Error FLA_QR2_UT_opc_var1( int m_UT,
-                               int m_D,
-                               scomplex* buff_U, int rs_U, int cs_U,
-                               scomplex* buff_D, int rs_D, int cs_D,
-                               scomplex* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_QR2_UT_opc_var1( integer m_UT,
+                               integer m_D,
+                               scomplex* buff_U, integer rs_U, integer cs_U,
+                               scomplex* buff_D, integer rs_D, integer cs_D,
+                               scomplex* buff_T, integer rs_T, integer cs_T )
 {
   scomplex* buff_1  = FLA_COMPLEX_PTR( FLA_ONE );
   scomplex* buff_0  = FLA_COMPLEX_PTR( FLA_ZERO );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < m_UT; ++i )
   {
@@ -250,8 +250,8 @@ FLA_Error FLA_QR2_UT_opc_var1( int m_UT,
     scomplex* tau11     = buff_T + (i  )*cs_T + (i  )*rs_T;
     scomplex* t01       = buff_T + (i  )*cs_T + (0  )*rs_T;
 
-    int       mn_ahead  = m_UT - i - 1;
-    int       mn_behind = i;
+    integer       mn_ahead  = m_UT - i - 1;
+    integer       mn_behind = i;
 
     //------------------------------------------------------------//
 
@@ -292,15 +292,15 @@ FLA_Error FLA_QR2_UT_opc_var1( int m_UT,
 
 
 
-FLA_Error FLA_QR2_UT_opz_var1( int m_UT,
-                               int m_D,
-                               dcomplex* buff_U, int rs_U, int cs_U,
-                               dcomplex* buff_D, int rs_D, int cs_D,
-                               dcomplex* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_QR2_UT_opz_var1( integer m_UT,
+                               integer m_D,
+                               dcomplex* buff_U, integer rs_U, integer cs_U,
+                               dcomplex* buff_D, integer rs_D, integer cs_D,
+                               dcomplex* buff_T, integer rs_T, integer cs_T )
 {
   dcomplex* buff_1  = FLA_DOUBLE_COMPLEX_PTR( FLA_ONE );
   dcomplex* buff_0  = FLA_DOUBLE_COMPLEX_PTR( FLA_ZERO );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < m_UT; ++i )
   {
@@ -314,8 +314,8 @@ FLA_Error FLA_QR2_UT_opz_var1( int m_UT,
     dcomplex* tau11     = buff_T + (i  )*cs_T + (i  )*rs_T;
     dcomplex* t01       = buff_T + (i  )*cs_T + (0  )*rs_T;
 
-    int       mn_ahead  = m_UT - i - 1;
-    int       mn_behind = i;
+    integer       mn_ahead  = m_UT - i - 1;
+    integer       mn_behind = i;
 
     //------------------------------------------------------------//
 

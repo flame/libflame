@@ -8,7 +8,7 @@
 static integer c__1 = 1;
 static doublereal c_b8 = -1.;
 
-/* Subroutine */ int lapack_dgetf2(integer *m, integer *n, doublereal *a, integer *
+/* Subroutine */ integer lapack_dgetf2(integer *m, integer *n, doublereal *a, integer *
 	lda, integer *ipiv, integer *info)
 {
     /* System generated locals */

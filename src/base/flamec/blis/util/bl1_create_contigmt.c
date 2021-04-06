@@ -10,9 +10,9 @@
 
 #include "blis1.h"
 
-void bl1_screate_contigmt( trans1_t trans_dims, int m, int n, float* a_save, int a_rs_save, int a_cs_save, float** a, int* a_rs, int* a_cs )
+void bl1_screate_contigmt( trans1_t trans_dims, integer m, integer n, float* a_save, integer a_rs_save, integer a_cs_save, float** a, integer* a_rs, integer* a_cs )
 {
-	int m_contig, n_contig;
+	integer m_contig, n_contig;
 
 	if ( bl1_is_gen_storage( a_rs_save, a_cs_save ) )
 	{
@@ -48,9 +48,9 @@ void bl1_screate_contigmt( trans1_t trans_dims, int m, int n, float* a_save, int
 	}
 }
 
-void bl1_dcreate_contigmt( trans1_t trans_dims, int m, int n, double* a_save, int a_rs_save, int a_cs_save, double** a, int* a_rs, int* a_cs )
+void bl1_dcreate_contigmt( trans1_t trans_dims, integer m, integer n, double* a_save, integer a_rs_save, integer a_cs_save, double** a, integer* a_rs, integer* a_cs )
 {
-	int m_contig, n_contig;
+	integer m_contig, n_contig;
 
 	if ( bl1_is_gen_storage( a_rs_save, a_cs_save ) )
 	{
@@ -86,9 +86,9 @@ void bl1_dcreate_contigmt( trans1_t trans_dims, int m, int n, double* a_save, in
 	}
 }
 
-void bl1_ccreate_contigmt( trans1_t trans_dims, int m, int n, scomplex* a_save, int a_rs_save, int a_cs_save, scomplex** a, int* a_rs, int* a_cs )
+void bl1_ccreate_contigmt( trans1_t trans_dims, integer m, integer n, scomplex* a_save, integer a_rs_save, integer a_cs_save, scomplex** a, integer* a_rs, integer* a_cs )
 {
-	int m_contig, n_contig;
+	integer m_contig, n_contig;
 
 	if ( bl1_is_gen_storage( a_rs_save, a_cs_save ) )
 	{
@@ -124,9 +124,9 @@ void bl1_ccreate_contigmt( trans1_t trans_dims, int m, int n, scomplex* a_save, 
 	}
 }
 
-void bl1_zcreate_contigmt( trans1_t trans_dims, int m, int n, dcomplex* a_save, int a_rs_save, int a_cs_save, dcomplex** a, int* a_rs, int* a_cs )
+void bl1_zcreate_contigmt( trans1_t trans_dims, integer m, integer n, dcomplex* a_save, integer a_rs_save, integer a_cs_save, dcomplex** a, integer* a_rs, integer* a_cs )
 {
-	int m_contig, n_contig;
+	integer m_contig, n_contig;
 
 	if ( bl1_is_gen_storage( a_rs_save, a_cs_save ) )
 	{

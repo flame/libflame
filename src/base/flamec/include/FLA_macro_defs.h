@@ -25,12 +25,22 @@
 #endif
 
 // --- Macro to enable/disable Thread Local Storage (TLS) for global variables -
+#if defined(WINDOWS_FLA_SHARED_BUILD) && defined(WINDOWS_FLA_TEST)
+#define ENABLE_THREAD_LOCAL_STORAGE 0
+#define LIBFLAME_IMPORT __declspec(dllimport)
+#else
 #if !defined FLA_ENABLE_MULTITHREADING && !defined FLA_ENABLE_SUPERMATRIX
 #define ENABLE_THREAD_LOCAL_STORAGE 1
+#define LIBFLAME_IMPORT
+#endif
 #endif
 
 #if ENABLE_THREAD_LOCAL_STORAGE
+#ifdef FLA_ENABLE_WINDOWS_BUILD
+#define TLS_CLASS_SPEC __declspec(thread)
+#else
 #define TLS_CLASS_SPEC __thread
+#endif
 #else
 #define TLS_CLASS_SPEC
 #endif
@@ -218,22 +228,6 @@
 #define FLA_TRIDIAG_INNER_TO_OUTER_B_RATIO (0.25)
 #define FLA_BIDIAG_INNER_TO_OUTER_B_RATIO  (0.25)
 #define FLA_CAQR_INNER_TO_OUTER_B_RATIO    (0.25)
-
-// LDLT Factorization for packed matrices uses different threshold to choose
-// between blocked /  unblocked variants and also the blocksize for the blocked
-// variant. The thresholds and blocksizes re defined here
-#define FLA_SPFFRT2__NTHRESH1         (64)
-#define FLA_SPFFRT2__NTHRESH2         (201)
-#define FLA_SPFFRT2__NTHRESH3         (4096)
-#define FLA_SPFFRT2__NCOLTHRESH       (3)
-#define FLA_SPFFRT2__NCOLFRAC_THRESH1 (25)
-#define FLA_SPFFRT2__NCOLFRAC_THRESH2 (80)
-#define FLA_SPFFRT2__NCOLFRAC_THRESH3 (20)
-#define FLA_SPFFRT2__BSIZE_NL1        (256)
-#define FLA_SPFFRT2__BSIZE_NL2        (4096)
-#define FLA_SPFFRT2__BSIZE1           (8)
-#define FLA_SPFFRT2__BSIZE2           (32)
-#define FLA_SPFFRT2__BSIZE3           (64)
 
 //GETRF , threshold numbers to chose paths for performance
 #define FLA_GETRF_SMALL               (85)

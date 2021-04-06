@@ -10,7 +10,7 @@
 
 #include "blis1.h"
 
-void bl1_shemm( side1_t side, uplo1_t uplo, int m, int n, float* alpha, float* a, int a_rs, int a_cs, float* b, int b_rs, int b_cs, float* beta, float* c, int c_rs, int c_cs )
+void bl1_shemm( side1_t side, uplo1_t uplo, integer m, integer n, float* alpha, float* a, integer a_rs, integer a_cs, float* b, integer b_rs, integer b_cs, float* beta, float* c, integer c_rs, integer c_cs )
 {
 	bl1_ssymm( side,
 	           uplo,
@@ -22,7 +22,7 @@ void bl1_shemm( side1_t side, uplo1_t uplo, int m, int n, float* alpha, float* a
 	           beta,
 	           c, c_rs, c_cs );
 }
-void bl1_dhemm( side1_t side, uplo1_t uplo, int m, int n, double* alpha, double* a, int a_rs, int a_cs, double* b, int b_rs, int b_cs, double* beta, double* c, int c_rs, int c_cs )
+void bl1_dhemm( side1_t side, uplo1_t uplo, integer m, integer n, double* alpha, double* a, integer a_rs, integer a_cs, double* b, integer b_rs, integer b_cs, double* beta, double* c, integer c_rs, integer c_cs )
 {
 	bl1_dsymm( side,
 	           uplo,
@@ -35,36 +35,36 @@ void bl1_dhemm( side1_t side, uplo1_t uplo, int m, int n, double* alpha, double*
 	           c, c_rs, c_cs );
 }
 
-void bl1_chemm( side1_t side, uplo1_t uplo, int m, int n, scomplex* alpha, scomplex* a, int a_rs, int a_cs, scomplex* b, int b_rs, int b_cs, scomplex* beta, scomplex* c, int c_rs, int c_cs )
+void bl1_chemm( side1_t side, uplo1_t uplo, integer m, integer n, scomplex* alpha, scomplex* a, integer a_rs, integer a_cs, scomplex* b, integer b_rs, integer b_cs, scomplex* beta, scomplex* c, integer c_rs, integer c_cs )
 {
-	int       m_save    = m;
-	int       n_save    = n;
+	integer       m_save    = m;
+	integer       n_save    = n;
 	scomplex* a_save    = a;
 	scomplex* b_save    = b;
 	scomplex* c_save    = c;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       b_rs_save = b_rs;
-	int       b_cs_save = b_cs;
-	int       c_rs_save = c_rs;
-	int       c_cs_save = c_cs;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       b_rs_save = b_rs;
+	integer       b_cs_save = b_cs;
+	integer       c_rs_save = c_rs;
+	integer       c_cs_save = c_cs;
 	scomplex  zero = bl1_c0();
 	scomplex  one  = bl1_c1();
 	scomplex* a_conj;
 	scomplex* b_copy;
 	scomplex* c_trans;
-	int       dim_a;
-	int       lda, inca;
-	int       ldb, incb;
-	int       ldc, incc;
-	int       lda_conj, inca_conj;
-	int       ldb_copy, incb_copy;
-	int       ldc_trans, incc_trans;
-	int       hemm_needs_conja  = FALSE;
-	int       hemm_needs_copyb  = FALSE;
-	int       hemm_needs_transb = FALSE;
-	int       hemm_needs_axpyt  = FALSE;
-	int       a_was_copied;
+	integer       dim_a;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       ldc, incc;
+	integer       lda_conj, inca_conj;
+	integer       ldb_copy, incb_copy;
+	integer       ldc_trans, incc_trans;
+	integer       hemm_needs_conja  = FALSE;
+	integer       hemm_needs_copyb  = FALSE;
+	integer       hemm_needs_transb = FALSE;
+	integer       hemm_needs_axpyt  = FALSE;
+	integer       a_was_copied;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -211,7 +211,7 @@ void bl1_chemm( side1_t side, uplo1_t uplo, int m, int n, scomplex* alpha, scomp
 	
 	if ( hemm_needs_conja && !a_was_copied )
 	{
-		int dim_a;
+		integer dim_a;
 
 		bl1_set_dim_with_side( side, m, n, &dim_a );
 		
@@ -228,7 +228,7 @@ void bl1_chemm( side1_t side, uplo1_t uplo, int m, int n, scomplex* alpha, scomp
 	}
 	else if ( hemm_needs_conja && a_was_copied )
 	{
-		int dim_a;
+		integer dim_a;
 
 		bl1_set_dim_with_side( side, m, n, &dim_a );
 
@@ -345,36 +345,36 @@ void bl1_chemm( side1_t side, uplo1_t uplo, int m, int n, scomplex* alpha, scomp
 	                         &c,     &c_rs,     &c_cs );
 }
 
-void bl1_zhemm( side1_t side, uplo1_t uplo, int m, int n, dcomplex* alpha, dcomplex* a, int a_rs, int a_cs, dcomplex* b, int b_rs, int b_cs, dcomplex* beta, dcomplex* c, int c_rs, int c_cs )
+void bl1_zhemm( side1_t side, uplo1_t uplo, integer m, integer n, dcomplex* alpha, dcomplex* a, integer a_rs, integer a_cs, dcomplex* b, integer b_rs, integer b_cs, dcomplex* beta, dcomplex* c, integer c_rs, integer c_cs )
 {
-	int       m_save    = m;
-	int       n_save    = n;
+	integer       m_save    = m;
+	integer       n_save    = n;
 	dcomplex* a_save    = a;
 	dcomplex* b_save    = b;
 	dcomplex* c_save    = c;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       b_rs_save = b_rs;
-	int       b_cs_save = b_cs;
-	int       c_rs_save = c_rs;
-	int       c_cs_save = c_cs;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       b_rs_save = b_rs;
+	integer       b_cs_save = b_cs;
+	integer       c_rs_save = c_rs;
+	integer       c_cs_save = c_cs;
 	dcomplex  zero = bl1_z0();
 	dcomplex  one  = bl1_z1();
 	dcomplex* a_conj;
 	dcomplex* b_copy;
 	dcomplex* c_trans;
-	int       dim_a;
-	int       lda, inca;
-	int       ldb, incb;
-	int       ldc, incc;
-	int       lda_conj, inca_conj;
-	int       ldb_copy, incb_copy;
-	int       ldc_trans, incc_trans;
-	int       hemm_needs_conja  = FALSE;
-	int       hemm_needs_copyb  = FALSE;
-	int       hemm_needs_transb = FALSE;
-	int       hemm_needs_axpyt  = FALSE;
-	int       a_was_copied;
+	integer       dim_a;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       ldc, incc;
+	integer       lda_conj, inca_conj;
+	integer       ldb_copy, incb_copy;
+	integer       ldc_trans, incc_trans;
+	integer       hemm_needs_conja  = FALSE;
+	integer       hemm_needs_copyb  = FALSE;
+	integer       hemm_needs_transb = FALSE;
+	integer       hemm_needs_axpyt  = FALSE;
+	integer       a_was_copied;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -521,7 +521,7 @@ void bl1_zhemm( side1_t side, uplo1_t uplo, int m, int n, dcomplex* alpha, dcomp
 	
 	if ( hemm_needs_conja && !a_was_copied )
 	{
-		int dim_a;
+		integer dim_a;
 
 		bl1_set_dim_with_side( side, m, n, &dim_a );
 		
@@ -538,7 +538,7 @@ void bl1_zhemm( side1_t side, uplo1_t uplo, int m, int n, dcomplex* alpha, dcomp
 	}
 	else if ( hemm_needs_conja && a_was_copied )
 	{
-		int dim_a;
+		integer dim_a;
 
 		bl1_set_dim_with_side( side, m, n, &dim_a );
 		
@@ -657,7 +657,7 @@ void bl1_zhemm( side1_t side, uplo1_t uplo, int m, int n, dcomplex* alpha, dcomp
 
 // --- Classic routine wrappers ---
 
-void bl1_chemm_blas( side1_t side, uplo1_t uplo, int m, int n, scomplex* alpha, scomplex* a, int lda, scomplex* b, int ldb, scomplex* beta, scomplex* c, int ldc )
+void bl1_chemm_blas( side1_t side, uplo1_t uplo, integer m, integer n, scomplex* alpha, scomplex* a, integer lda, scomplex* b, integer ldb, scomplex* beta, scomplex* c, integer ldc )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;
@@ -696,7 +696,7 @@ void bl1_chemm_blas( side1_t side, uplo1_t uplo, int m, int n, scomplex* alpha, 
 #endif
 }
 
-void bl1_zhemm_blas( side1_t side, uplo1_t uplo, int m, int n, dcomplex* alpha, dcomplex* a, int lda, dcomplex* b, int ldb, dcomplex* beta, dcomplex* c, int ldc )
+void bl1_zhemm_blas( side1_t side, uplo1_t uplo, integer m, integer n, dcomplex* alpha, dcomplex* a, integer lda, dcomplex* b, integer ldb, dcomplex* beta, dcomplex* c, integer ldc )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;

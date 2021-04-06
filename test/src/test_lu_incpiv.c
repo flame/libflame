@@ -34,7 +34,7 @@ void libfla_test_lu_incpiv_experiment( test_params_t params,
                                        unsigned int  var,
                                        char*         sc_str,
                                        FLA_Datatype  datatype,
-                                       unsigned int  p,
+                                       uinteger  p,
                                        unsigned int  pci,
                                        unsigned int  n_repeats,
                                        signed int    impl,
@@ -71,7 +71,7 @@ void libfla_test_lu_incpiv_experiment( test_params_t params,
                                        unsigned int  var,
                                        char*         sc_str,
                                        FLA_Datatype  datatype,
-                                       unsigned int  p_cur,
+                                       uinteger  p_cur,
                                        unsigned int  pci,
                                        unsigned int  n_repeats,
                                        signed int    impl,
@@ -83,9 +83,9 @@ void libfla_test_lu_incpiv_experiment( test_params_t params,
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	unsigned int m, n;
-	signed int   m_input    = -1;
-	signed int   n_input    = -1;
+	uinteger m, n;
+	integer   m_input    = -1;
+	integer   n_input    = -1;
 	FLA_Obj      A, x, b, norm;
 	FLA_Obj      A_save;
 	FLA_Obj      A_test, p_test, L_test, x_test, b_test;

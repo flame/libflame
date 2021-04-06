@@ -10,14 +10,14 @@
 
 #include "blis1.h"
 
-void bl1_sapdiagmv( side1_t side, conj1_t conj, int m, int n, float* x, int incx, float* a, int a_rs, int a_cs )
+void bl1_sapdiagmv( side1_t side, conj1_t conj, integer m, integer n, float* x, integer incx, float* a, integer a_rs, integer a_cs )
 {
 	float*    chi;
 	float*    a_begin;
-	int       inca, lda;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       inca, lda;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -65,14 +65,14 @@ void bl1_sapdiagmv( side1_t side, conj1_t conj, int m, int n, float* x, int incx
 	}
 }
 
-void bl1_dapdiagmv( side1_t side, conj1_t conj, int m, int n, double* x, int incx, double* a, int a_rs, int a_cs )
+void bl1_dapdiagmv( side1_t side, conj1_t conj, integer m, integer n, double* x, integer incx, double* a, integer a_rs, integer a_cs )
 {
 	double*   chi;
 	double*   a_begin;
-	int       inca, lda;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       inca, lda;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -120,14 +120,14 @@ void bl1_dapdiagmv( side1_t side, conj1_t conj, int m, int n, double* x, int inc
 	}
 }
 
-void bl1_csapdiagmv( side1_t side, conj1_t conj, int m, int n, float* x, int incx, scomplex* a, int a_rs, int a_cs )
+void bl1_csapdiagmv( side1_t side, conj1_t conj, integer m, integer n, float* x, integer incx, scomplex* a, integer a_rs, integer a_cs )
 {
 	float*    chi;
 	scomplex* a_begin;
-	int       inca, lda;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       inca, lda;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -175,14 +175,14 @@ void bl1_csapdiagmv( side1_t side, conj1_t conj, int m, int n, float* x, int inc
 	}
 }
 
-void bl1_capdiagmv( side1_t side, conj1_t conj, int m, int n, scomplex* x, int incx, scomplex* a, int a_rs, int a_cs )
+void bl1_capdiagmv( side1_t side, conj1_t conj, integer m, integer n, scomplex* x, integer incx, scomplex* a, integer a_rs, integer a_cs )
 {
 	scomplex* chi;
 	scomplex* a_begin;
-	int       inca, lda;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       inca, lda;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -230,14 +230,14 @@ void bl1_capdiagmv( side1_t side, conj1_t conj, int m, int n, scomplex* x, int i
 	}
 }
 
-void bl1_zdapdiagmv( side1_t side, conj1_t conj, int m, int n, double* x, int incx, dcomplex* a, int a_rs, int a_cs )
+void bl1_zdapdiagmv( side1_t side, conj1_t conj, integer m, integer n, double* x, integer incx, dcomplex* a, integer a_rs, integer a_cs )
 {
 	double*   chi;
 	dcomplex* a_begin;
-	int       inca, lda;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       inca, lda;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -285,14 +285,14 @@ void bl1_zdapdiagmv( side1_t side, conj1_t conj, int m, int n, double* x, int in
 	}
 }
 
-void bl1_zapdiagmv( side1_t side, conj1_t conj, int m, int n, dcomplex* x, int incx, dcomplex* a, int a_rs, int a_cs )
+void bl1_zapdiagmv( side1_t side, conj1_t conj, integer m, integer n, dcomplex* x, integer incx, dcomplex* a, integer a_rs, integer a_cs )
 {
 	dcomplex* chi;
 	dcomplex* a_begin;
-	int       inca, lda;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       inca, lda;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;

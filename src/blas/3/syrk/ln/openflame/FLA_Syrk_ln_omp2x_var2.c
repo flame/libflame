@@ -28,7 +28,7 @@ FLA_Error FLA_Syrk_ln_omp2x_var2( FLA_Obj A, FLA_Obj C )
   FLA_Obj C21_T,           C21_0,
           C21_B,           C21_1,
                            C21_2;
-  int b, b2;
+  integer b, b2;
 
   FLA_Part_2x1( A,    &AT, 
                       &AB,            0, FLA_TOP );

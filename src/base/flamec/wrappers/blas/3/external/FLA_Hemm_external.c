@@ -13,10 +13,10 @@
 FLA_Error FLA_Hemm_external( FLA_Side side, FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, FLA_Obj beta, FLA_Obj C )
 {
   FLA_Datatype datatype;
-  int          m_C, n_C;
-  int          rs_A, cs_A;
-  int          rs_B, cs_B;
-  int          rs_C, cs_C;
+  integer          m_C, n_C;
+  integer          rs_A, cs_A;
+  integer          rs_B, cs_B;
+  integer          rs_C, cs_C;
   side1_t       blis_side;
   uplo1_t       blis_uplo; 
 

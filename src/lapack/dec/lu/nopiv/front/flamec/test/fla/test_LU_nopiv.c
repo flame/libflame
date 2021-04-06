@@ -18,14 +18,14 @@
 char* pc_str[N_PIVOT_COMBOS] = { "nopiv" };
 
 void time_LU(
-              int is_pivoting, int type, int n_repeats, int m, int n,
+              integer is_pivoting, integer type, integer n_repeats, integer m, integer n,
               FLA_Obj C, FLA_Obj b, FLA_Obj b_orig, FLA_Obj b_norm, 
               double *dtime, double *diff, double *gflops );
 
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     datatype,
     m_input, n_input,
     m, n, min_m_n,

@@ -20,34 +20,34 @@
 */
 
 void bl1_saxmyv2( conj1_t    conjx,
-                  int       n,
+                  integer       n,
                   float*    alpha,
                   float*    beta,
-                  float*    x, int inc_x,
-                  float*    y, int inc_y,
-                  float*    z, int inc_z )
+                  float*    x, integer inc_x,
+                  float*    y, integer inc_y,
+                  float*    z, integer inc_z )
 {
 	bl1_abort();
 }
 
 
 void bl1_daxmyv2( conj1_t    conjx,
-                  int       n,
+                  integer       n,
                   double*   alpha,
                   double*   beta,
-                  double*   x, int inc_x,
-                  double*   y, int inc_y,
-                  double*   z, int inc_z )
+                  double*   x, integer inc_x,
+                  double*   y, integer inc_y,
+                  double*   z, integer inc_z )
 #if BLIS1_VECTOR_INTRINSIC_TYPE == BLIS1_SSE_INTRINSICS
 {
 	double*   restrict chi1;
 	double*   restrict psi1;
 	double*   restrict zeta1;
-	int       i;
+	integer       i;
 
-	int       n_pre;
-	int       n_run;
-	int       n_left;
+	integer       n_pre;
+	integer       n_run;
+	integer       n_left;
 
 	v2df_t    a1v, b1v;
 	v2df_t    x1v, y1v, z1v;
@@ -142,11 +142,11 @@ void bl1_daxmyv2( conj1_t    conjx,
 	double*   restrict zeta1;
 	double    alpha_c;
 	double    beta_c;
-	int       i;
+	integer       i;
 
-	int       n_pre;
-	int       n_run;
-	int       n_left;
+	integer       n_pre;
+	integer       n_run;
+	integer       n_left;
 
 	if ( inc_x != 1 ||
 	     inc_y != 1 ||
@@ -236,24 +236,24 @@ void bl1_daxmyv2( conj1_t    conjx,
 
 
 void bl1_caxmyv2( conj1_t    conjx,
-                  int       n,
+                  integer       n,
                   scomplex* alpha,
                   scomplex* beta,
-                  scomplex* x, int inc_x,
-                  scomplex* y, int inc_y,
-                  scomplex* z, int inc_z )
+                  scomplex* x, integer inc_x,
+                  scomplex* y, integer inc_y,
+                  scomplex* z, integer inc_z )
 {
 	bl1_abort();
 }
 
 
 void bl1_zaxmyv2( conj1_t    conjx,
-                  int       n,
+                  integer       n,
                   dcomplex* alpha,
                   dcomplex* beta,
-                  dcomplex* x, int inc_x,
-                  dcomplex* y, int inc_y,
-                  dcomplex* z, int inc_z )
+                  dcomplex* x, integer inc_x,
+                  dcomplex* y, integer inc_y,
+                  dcomplex* z, integer inc_z )
 #if BLIS1_VECTOR_INTRINSIC_TYPE == BLIS1_SSE_INTRINSICS
 {
 	dcomplex* restrict chi1;
@@ -261,7 +261,7 @@ void bl1_zaxmyv2( conj1_t    conjx,
 	dcomplex* restrict zeta1;
 	dcomplex  alpha_c;
 	dcomplex  beta_c;
-	int       i;
+	integer       i;
 	v2df_t    alphav, alpharv;
 	v2df_t    betav,  betarv;
 	v2df_t    x11v, x12v, y1v, z1v;
@@ -361,7 +361,7 @@ void bl1_zaxmyv2( conj1_t    conjx,
 	dcomplex* restrict zeta1;
 	dcomplex  alpha_c;
 	dcomplex  beta_c;
-	int       i;
+	integer       i;
 
 	chi1  = x;
 	psi1  = y;

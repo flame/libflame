@@ -17,17 +17,17 @@
 
 FLA_Error REF_Gemm( FLA_Trans transa, FLA_Trans transb, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, FLA_Obj beta, FLA_Obj C );
 void time_Gemm(
-               int param_combo, int type, int nrepeatm, int m, int k, int n,
+               integer param_combo, integer type, integer nrepeatm, integer m, integer k, integer n,
                FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj C_ref,
                double *dtime, double *diff, double *gflops );
 
 
 void time_Gemm( 
-               int param_combo, int type, int nrepeats, int m, int k, int n,
+               integer param_combo, integer type, integer nrepeats, integer m, integer k, integer n,
                FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj C_ref,
                double *dtime, double *diff, double *gflops )
 {
-  int
+  integer
     irep;
 
   double

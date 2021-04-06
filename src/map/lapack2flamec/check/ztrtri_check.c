@@ -1,10 +1,10 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
 
-int ztrtri_check(char *uplo, char *diag, int *n, dcomplex *a, int *lda, int *info)
+int ztrtri_check(char *uplo, char *diag, integer *n, dcomplex *a, integer *lda, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1, i__2;
+    integer a_dim1, a_offset, i__1, i__2;
 
     /* Local variables */
     logical upper;

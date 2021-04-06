@@ -1,21 +1,21 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
-static int c__1 = 1;
-static int c_n1 = -1;
+static integer c__1 = 1;
+static integer c_n1 = -1;
 
-int cunmlq_check(char *side, char *trans, int *m, int *n, int *k, scomplex *a, int *lda, scomplex *tau, scomplex *c__, int *ldc, scomplex *work, int *lwork, int *info)
+int cunmlq_check(char *side, char *trans, integer *m, integer *n, integer *k, scomplex *a, integer *lda, scomplex *tau, scomplex *c__, integer *ldc, scomplex *work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, c_dim1, c_offset, i__1, i__2;
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
 
     /* Local variables */
-    int nb, nq, nw;
+    integer nb, nq, nw;
     logical left;
     logical notran;
-    int lwkopt;
+    integer lwkopt;
     logical lquery;
 
 #if AOCL_DTL_LOG_ENABLE

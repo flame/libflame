@@ -14,17 +14,17 @@
 
 
 void time_UDdate_UT(
-                 int variant, int type, int n_repeats, int mB, int mC, int mD, int n,
+                 integer variant, integer type, integer n_repeats, integer mB, integer mC, integer mD, integer n,
                  FLA_Obj B, FLA_Obj C, FLA_Obj D, FLA_Obj T, FLA_Obj R, FLA_Obj E,
                  double *dtime, double *diff, double *gflops );
 
 
 void time_UDdate_UT(
-                 int variant, int type, int n_repeats, int mB, int mC, int mD, int n,
+                 integer variant, integer type, integer n_repeats, integer mB, integer mC, integer mD, integer n,
                  FLA_Obj B, FLA_Obj C, FLA_Obj D, FLA_Obj T, FLA_Obj R, FLA_Obj E,
                  double *dtime, double *diff, double *gflops )
 {
-  int
+  integer
     irep;
 
   double

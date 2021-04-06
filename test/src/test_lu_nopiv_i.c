@@ -24,7 +24,7 @@ void libfla_test_lu_nopiv_i_experiment( test_params_t params,
 					unsigned int  var,
 					char*         sc_str,
 					FLA_Datatype  datatype,
-					unsigned int  p_cur,
+					uinteger  p_cur,
 					unsigned int  pci,
 					unsigned int  n_repeats,
 					signed int    impl,
@@ -32,12 +32,12 @@ void libfla_test_lu_nopiv_i_experiment( test_params_t params,
 					double*       residual );
 void libfla_test_lu_nopiv_i_impl( int         impl,
                                   FLA_Obj     A );
-void FLA_GETRFNPI(  int m,
-		    int n,
-		    int nfact,
+void FLA_GETRFNPI(  integer m,
+		    integer n,
+		    integer nfact,
 		    FLA_Obj A_save,
 		    FLA_Obj A,
-		    int lda,
+		    integer lda,
 		    FLA_Datatype datatype,
 		    unsigned int n_repeats,
 		    double* time_min_ );
@@ -67,7 +67,7 @@ void libfla_test_lu_nopiv_i_experiment( test_params_t params,
 					unsigned int  var,
 					char*         sc_str,
 					FLA_Datatype  datatype,
-					unsigned int  p_cur,
+					uinteger  p_cur,
 					unsigned int  pci,
 					unsigned int  n_repeats,
 					signed int    impl,
@@ -76,11 +76,11 @@ void libfla_test_lu_nopiv_i_experiment( test_params_t params,
 {
         double time_min   = 1e9;
         double time;
-	unsigned int i;
-	unsigned int m, n, nfact;
-	unsigned int lda;
-	signed int   m_input    = -1;
-	signed int   n_input    = -1;
+	uinteger i;
+	uinteger m, n, nfact;
+	uinteger lda;
+	integer   m_input    = -1;
+	integer   n_input    = -1;
 	FLA_Obj      A, x, b, norm;
 	FLA_Obj      A_save;
 	FLA_Obj      A_test;
@@ -217,17 +217,17 @@ void libfla_test_lu_nopiv_i_experiment( test_params_t params,
 /*
  * FLA_GETRFNPI calls getrfnpi
  * */
-void FLA_GETRFNPI(  int m,
-		    int n,
-		    int nfact,
+void FLA_GETRFNPI(  integer m,
+		    integer n,
+		    integer nfact,
 		    FLA_Obj A_save,
 		    FLA_Obj A,
-		    int lda,
+		    integer lda,
 		    FLA_Datatype datatype,
 		    unsigned int n_repeats,
 		    double* time_min_ )
 {
-	int          info;
+	integer      info;
 	unsigned int i;
 	double       time;
 	double       time_min   = 1e9;

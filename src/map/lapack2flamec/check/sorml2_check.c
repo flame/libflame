@@ -1,11 +1,11 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
-int sorml2_check(char *side, char *trans, int *m, int *n, int *k, float *a, int *lda, float *tau, float *c__, int *ldc, float *work, int *info)
+int sorml2_check(char *side, char *trans, integer *m, integer *n, integer *k, float *a, integer *lda, float *tau, float *c__, integer *ldc, float *work, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, c_dim1, c_offset, i__1;
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1;
     /* Local variables */
-    int nq;
+    integer nq;
     logical left;
     logical notran;
 

@@ -44,13 +44,13 @@
 
 #define LAPACK_hetrd(prefix, name)                                      \
   int F77_ ## prefix ## name ## trd( char* uplo,                        \
-                                     int*  m,                           \
-                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+                                     integer*  m,                           \
+                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
                                      PREFIX2LAPACK_REALDEF(prefix)* buff_d, \
                                      PREFIX2LAPACK_REALDEF(prefix)* buff_e, \
                                      PREFIX2LAPACK_TYPEDEF(prefix)* buff_t, \
-                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, int* lwork, \
-                                     int*  info )
+                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, integer* lwork, \
+                                     integer*  info )
 
 #define LAPACK_hetrd_body(prefix)                                     \
   AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                       \
@@ -253,12 +253,12 @@ LAPACK_hetrd(z,he)
 
 #define LAPACK_hetd2(prefix, name)                                      \
   int F77_ ## prefix ## name ## td2( char* uplo,                        \
-                                     int*  m,                           \
-                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+                                     integer*  m,                           \
+                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
                                      PREFIX2LAPACK_REALDEF(prefix)* buff_d, \
                                      PREFIX2LAPACK_REALDEF(prefix)* buff_e, \
                                      PREFIX2LAPACK_TYPEDEF(prefix)* buff_t, \
-                                     int*  info )
+                                     integer*  info )
 
 LAPACK_hetd2(s,sy)
 {

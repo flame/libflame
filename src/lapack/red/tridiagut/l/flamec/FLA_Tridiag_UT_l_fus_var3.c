@@ -27,10 +27,10 @@ FLA_Error FLA_Tridiag_UT_l_ofu_var3( FLA_Obj A, FLA_Obj T )
 FLA_Error FLA_Tridiag_UT_l_step_ofu_var3( FLA_Obj A, FLA_Obj Z, FLA_Obj T )
 {
   FLA_Datatype datatype;
-  int          m_A, m_T;
-  int          rs_A, cs_A;
-  int          rs_Z, cs_Z;
-  int          rs_T, cs_T;
+  integer          m_A, m_T;
+  integer          rs_A, cs_A;
+  integer          rs_Z, cs_Z;
+  integer          rs_T, cs_T;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -115,11 +115,11 @@ FLA_Error FLA_Tridiag_UT_l_step_ofu_var3( FLA_Obj A, FLA_Obj Z, FLA_Obj T )
 
 
 
-FLA_Error FLA_Tridiag_UT_l_step_ofs_var3( int m_A,
-                                          int m_T,
-                                          float* buff_A, int rs_A, int cs_A, 
-                                          float* buff_Z, int rs_Z, int cs_Z,
-                                          float* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_Tridiag_UT_l_step_ofs_var3( integer m_A,
+                                          integer m_T,
+                                          float* buff_A, integer rs_A, integer cs_A, 
+                                          float* buff_Z, integer rs_Z, integer cs_Z,
+                                          float* buff_T, integer rs_T, integer cs_T )
 {
   float*    buff_2  = FLA_FLOAT_PTR( FLA_TWO );
   float*    buff_1  = FLA_FLOAT_PTR( FLA_ONE );
@@ -130,10 +130,10 @@ FLA_Error FLA_Tridiag_UT_l_step_ofs_var3( int m_A,
   float     beta;
   float     inv_tau11;
   float     minus_inv_tau11;
-  int       i;
+  integer       i;
 
   // b_alg = FLA_Obj_length( T );
-  int       b_alg = m_T;
+  integer       b_alg = m_T;
 
   // FLA_Set( FLA_ZERO, Z );
   bl1_ssetm( m_A,
@@ -166,9 +166,9 @@ FLA_Error FLA_Tridiag_UT_l_step_ofs_var3( int m_A,
 
     float*    a2       = alpha11;
 
-    int       m_ahead  = m_A - i - 1;
-    int       m_behind = i;
-    int       n_behind = i;
+    integer       m_ahead  = m_A - i - 1;
+    integer       m_behind = i;
+    integer       n_behind = i;
 
     /*------------------------------------------------------------*/
 
@@ -288,11 +288,11 @@ FLA_Error FLA_Tridiag_UT_l_step_ofs_var3( int m_A,
 
 
 
-FLA_Error FLA_Tridiag_UT_l_step_ofd_var3( int m_A,
-                                          int m_T,
-                                          double* buff_A, int rs_A, int cs_A, 
-                                          double* buff_Z, int rs_Z, int cs_Z,
-                                          double* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_Tridiag_UT_l_step_ofd_var3( integer m_A,
+                                          integer m_T,
+                                          double* buff_A, integer rs_A, integer cs_A, 
+                                          double* buff_Z, integer rs_Z, integer cs_Z,
+                                          double* buff_T, integer rs_T, integer cs_T )
 {
   double*   buff_2  = FLA_DOUBLE_PTR( FLA_TWO );
   double*   buff_1  = FLA_DOUBLE_PTR( FLA_ONE );
@@ -303,10 +303,10 @@ FLA_Error FLA_Tridiag_UT_l_step_ofd_var3( int m_A,
   double    beta;
   double    inv_tau11;
   double    minus_inv_tau11;
-  int       i;
+  integer       i;
 
   // b_alg = FLA_Obj_length( T );
-  int       b_alg = m_T;
+  integer       b_alg = m_T;
 
   // FLA_Set( FLA_ZERO, Z );
   bl1_dsetm( m_A,
@@ -339,9 +339,9 @@ FLA_Error FLA_Tridiag_UT_l_step_ofd_var3( int m_A,
 
     double*   a2       = alpha11;
 
-    int       m_ahead  = m_A - i - 1;
-    int       m_behind = i;
-    int       n_behind = i;
+    integer       m_ahead  = m_A - i - 1;
+    integer       m_behind = i;
+    integer       n_behind = i;
 
     /*------------------------------------------------------------*/
 
@@ -461,11 +461,11 @@ FLA_Error FLA_Tridiag_UT_l_step_ofd_var3( int m_A,
 
 
 
-FLA_Error FLA_Tridiag_UT_l_step_ofc_var3( int m_A,
-                                          int m_T,
-                                          scomplex* buff_A, int rs_A, int cs_A, 
-                                          scomplex* buff_Z, int rs_Z, int cs_Z,
-                                          scomplex* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_Tridiag_UT_l_step_ofc_var3( integer m_A,
+                                          integer m_T,
+                                          scomplex* buff_A, integer rs_A, integer cs_A, 
+                                          scomplex* buff_Z, integer rs_Z, integer cs_Z,
+                                          scomplex* buff_T, integer rs_T, integer cs_T )
 {
   scomplex* buff_2  = FLA_COMPLEX_PTR( FLA_TWO );
   scomplex* buff_1  = FLA_COMPLEX_PTR( FLA_ONE );
@@ -476,10 +476,10 @@ FLA_Error FLA_Tridiag_UT_l_step_ofc_var3( int m_A,
   scomplex  beta;
   scomplex  inv_tau11;
   scomplex  minus_inv_tau11;
-  int       i;
+  integer       i;
 
   // b_alg = FLA_Obj_length( T );
-  int       b_alg = m_T;
+  integer       b_alg = m_T;
 
   // FLA_Set( FLA_ZERO, Z );
   bl1_csetm( m_A,
@@ -512,9 +512,9 @@ FLA_Error FLA_Tridiag_UT_l_step_ofc_var3( int m_A,
 
     scomplex* a2       = alpha11;
 
-    int       m_ahead  = m_A - i - 1;
-    int       m_behind = i;
-    int       n_behind = i;
+    integer       m_ahead  = m_A - i - 1;
+    integer       m_behind = i;
+    integer       n_behind = i;
 
     /*------------------------------------------------------------*/
 
@@ -635,11 +635,11 @@ FLA_Error FLA_Tridiag_UT_l_step_ofc_var3( int m_A,
 
 
 
-FLA_Error FLA_Tridiag_UT_l_step_ofz_var3( int m_A,
-                                          int m_T,
-                                          dcomplex* buff_A, int rs_A, int cs_A, 
-                                          dcomplex* buff_Z, int rs_Z, int cs_Z,
-                                          dcomplex* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_Tridiag_UT_l_step_ofz_var3( integer m_A,
+                                          integer m_T,
+                                          dcomplex* buff_A, integer rs_A, integer cs_A, 
+                                          dcomplex* buff_Z, integer rs_Z, integer cs_Z,
+                                          dcomplex* buff_T, integer rs_T, integer cs_T )
 {
   dcomplex* buff_2  = FLA_DOUBLE_COMPLEX_PTR( FLA_TWO );
   dcomplex* buff_1  = FLA_DOUBLE_COMPLEX_PTR( FLA_ONE );
@@ -650,10 +650,10 @@ FLA_Error FLA_Tridiag_UT_l_step_ofz_var3( int m_A,
   dcomplex  beta;
   dcomplex  inv_tau11;
   dcomplex  minus_inv_tau11;
-  int       i;
+  integer       i;
 
   // b_alg = FLA_Obj_length( T );
-  int       b_alg = m_T;
+  integer       b_alg = m_T;
 
   // FLA_Set( FLA_ZERO, Z );
   bl1_zsetm( m_A,
@@ -686,9 +686,9 @@ FLA_Error FLA_Tridiag_UT_l_step_ofz_var3( int m_A,
 
     dcomplex* a2       = alpha11;
 
-    int       m_ahead  = m_A - i - 1;
-    int       m_behind = i;
-    int       n_behind = i;
+    integer       m_ahead  = m_A - i - 1;
+    integer       m_behind = i;
+    integer       n_behind = i;
 
     /*------------------------------------------------------------*/
 

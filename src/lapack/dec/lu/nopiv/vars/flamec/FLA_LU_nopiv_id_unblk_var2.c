@@ -14,14 +14,14 @@
  nfact*(m or n) <= 200+45+45 nfact>8 and nfact<=12 etc
 *******************************************************************************************/
 
-FLA_Error FLA_LU_nopiv_id_unblk_var2( int m_A, int n_A, double* A, int nfact, int rs_A, int cs_A )
+FLA_Error FLA_LU_nopiv_id_unblk_var2( integer m_A, integer n_A, double* A, integer nfact, integer rs_A, integer cs_A )
 {
   double rminusone = bl1_dm1();
   double *Minusone = &rminusone;
   double rone = bl1_d1();
   double *One = &rone;
   double rzero = bl1_d0();
-  int inc_x, inc_y, i, mdiff, ndiff;
+  integer inc_x, inc_y, i, mdiff, ndiff;
   double alpha_inv;
   double *alpha;
   FLA_Error e_val = FLA_SUCCESS;

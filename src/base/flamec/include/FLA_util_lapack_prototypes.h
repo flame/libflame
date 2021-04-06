@@ -11,111 +11,111 @@
 // --- LAPACK-related utility prototypes ---------------------------------------
 
 FLA_Error FLA_Househ2_UT( FLA_Side side, FLA_Obj chi_1, FLA_Obj x2, FLA_Obj tau );
-FLA_Error FLA_Househ2_UT_l_ops( int m_x2,
+FLA_Error FLA_Househ2_UT_l_ops( integer m_x2,
                                 float* chi_1,
-                                float* x2, int inc_x2,
+                                float* x2, integer inc_x2,
                                 float* tau );
-FLA_Error FLA_Househ2_UT_l_opd( int m_x2,
+FLA_Error FLA_Househ2_UT_l_opd( integer m_x2,
                                 double* chi_1,
-                                double* x2, int inc_x2,
+                                double* x2, integer inc_x2,
                                 double* tau );
-FLA_Error FLA_Househ2_UT_l_opc( int m_x2,
+FLA_Error FLA_Househ2_UT_l_opc( integer m_x2,
                                 scomplex* chi_1,
-                                scomplex* x2, int inc_x2,
+                                scomplex* x2, integer inc_x2,
                                 scomplex* tau );
-FLA_Error FLA_Househ2_UT_l_opz( int m_x2,
+FLA_Error FLA_Househ2_UT_l_opz( integer m_x2,
                                 dcomplex* chi_1,
-                                dcomplex* x2, int inc_x2,
+                                dcomplex* x2, integer inc_x2,
                                 dcomplex* tau );
-FLA_Error FLA_Househ2_UT_r_ops( int m_x2,
+FLA_Error FLA_Househ2_UT_r_ops( integer m_x2,
                                 float* chi_1,
-                                float* x2, int inc_x2,
+                                float* x2, integer inc_x2,
                                 float* tau );
-FLA_Error FLA_Househ2_UT_r_opd( int m_x2,
+FLA_Error FLA_Househ2_UT_r_opd( integer m_x2,
                                 double* chi_1,
-                                double* x2, int inc_x2,
+                                double* x2, integer inc_x2,
                                 double* tau );
-FLA_Error FLA_Househ2_UT_r_opc( int m_x2,
+FLA_Error FLA_Househ2_UT_r_opc( integer m_x2,
                                 scomplex* chi_1,
-                                scomplex* x2, int inc_x2,
+                                scomplex* x2, integer inc_x2,
                                 scomplex* tau );
-FLA_Error FLA_Househ2_UT_r_opz( int m_x2,
+FLA_Error FLA_Househ2_UT_r_opz( integer m_x2,
                                 dcomplex* chi_1,
-                                dcomplex* x2, int inc_x2,
+                                dcomplex* x2, integer inc_x2,
                                 dcomplex* tau );
 
 FLA_Error FLA_Househ3UD_UT( FLA_Obj chi_1, FLA_Obj x2, FLA_Obj y2, FLA_Obj tau );
-FLA_Error FLA_Househ3UD_UT_ops( int m_x2,
-                                int m_y2,
+FLA_Error FLA_Househ3UD_UT_ops( integer m_x2,
+                                integer m_y2,
                                 float* chi_1,
-                                float* x2, int inc_x2,
-                                float* y2, int inc_y2,
+                                float* x2, integer inc_x2,
+                                float* y2, integer inc_y2,
                                 float* tau );
-FLA_Error FLA_Househ3UD_UT_opd( int m_x2,
-                                int m_y2,
+FLA_Error FLA_Househ3UD_UT_opd( integer m_x2,
+                                integer m_y2,
                                 double* chi_1,
-                                double* x2, int inc_x2,
-                                double* y2, int inc_y2,
+                                double* x2, integer inc_x2,
+                                double* y2, integer inc_y2,
                                 double* tau );
-FLA_Error FLA_Househ3UD_UT_opc( int m_x2,
-                                int m_y2,
+FLA_Error FLA_Househ3UD_UT_opc( integer m_x2,
+                                integer m_y2,
                                 scomplex* chi_1,
-                                scomplex* x2, int inc_x2,
-                                scomplex* y2, int inc_y2,
+                                scomplex* x2, integer inc_x2,
+                                scomplex* y2, integer inc_y2,
                                 scomplex* tau );
-FLA_Error FLA_Househ3UD_UT_opz( int m_x2,
-                                int m_y2,
+FLA_Error FLA_Househ3UD_UT_opz( integer m_x2,
+                                integer m_y2,
                                 dcomplex* chi_1,
-                                dcomplex* x2, int inc_x2,
-                                dcomplex* y2, int inc_y2,
+                                dcomplex* x2, integer inc_x2,
+                                dcomplex* y2, integer inc_y2,
                                 dcomplex* tau );
 
 FLA_Error FLA_Househ2s_UT( FLA_Side side, FLA_Obj chi_1, FLA_Obj x2, FLA_Obj alpha, FLA_Obj chi_1_minus_alpha, FLA_Obj tau );
-FLA_Error FLA_Househ2s_UT_l_ops( int    m_x2,
+FLA_Error FLA_Househ2s_UT_l_ops( integer    m_x2,
                                  float* chi_1,
-                                 float* x2, int inc_x2,
+                                 float* x2, integer inc_x2,
                                  float* alpha,
                                  float* chi_1_minus_alpha,
                                  float* tau );
-FLA_Error FLA_Househ2s_UT_l_opd( int     m_x2,
+FLA_Error FLA_Househ2s_UT_l_opd( integer     m_x2,
                                  double* chi_1,
-                                 double* x2, int inc_x2,
+                                 double* x2, integer inc_x2,
                                  double* alpha,
                                  double* chi_1_minus_alpha,
                                  double* tau );
-FLA_Error FLA_Househ2s_UT_l_opc( int       m_x2,
+FLA_Error FLA_Househ2s_UT_l_opc( integer       m_x2,
                                  scomplex* chi_1,
-                                 scomplex* x2, int inc_x2,
+                                 scomplex* x2, integer inc_x2,
                                  scomplex* alpha,
                                  scomplex* chi_1_minus_alpha,
                                  scomplex* tau );
-FLA_Error FLA_Househ2s_UT_l_opz( int       m_x2,
+FLA_Error FLA_Househ2s_UT_l_opz( integer       m_x2,
                                  dcomplex* chi_1,
-                                 dcomplex* x2, int inc_x2,
+                                 dcomplex* x2, integer inc_x2,
                                  dcomplex* alpha,
                                  dcomplex* chi_1_minus_alpha,
                                  dcomplex* tau );
-FLA_Error FLA_Househ2s_UT_r_ops( int    m_x2,
+FLA_Error FLA_Househ2s_UT_r_ops( integer    m_x2,
                                  float* chi_1,
-                                 float* x2, int inc_x2,
+                                 float* x2, integer inc_x2,
                                  float* alpha,
                                  float* chi_1_minus_alpha,
                                  float* tau );
-FLA_Error FLA_Househ2s_UT_r_opd( int     m_x2,
+FLA_Error FLA_Househ2s_UT_r_opd( integer     m_x2,
                                  double* chi_1,
-                                 double* x2, int inc_x2,
+                                 double* x2, integer inc_x2,
                                  double* alpha,
                                  double* chi_1_minus_alpha,
                                  double* tau );
-FLA_Error FLA_Househ2s_UT_r_opc( int       m_x2,
+FLA_Error FLA_Househ2s_UT_r_opc( integer       m_x2,
                                  scomplex* chi_1,
-                                 scomplex* x2, int inc_x2,
+                                 scomplex* x2, integer inc_x2,
                                  scomplex* alpha,
                                  scomplex* chi_1_minus_alpha,
                                  scomplex* tau );
-FLA_Error FLA_Househ2s_UT_r_opz( int       m_x2,
+FLA_Error FLA_Househ2s_UT_r_opz( integer       m_x2,
                                  dcomplex* chi_1,
-                                 dcomplex* x2, int inc_x2,
+                                 dcomplex* x2, integer inc_x2,
                                  dcomplex* alpha,
                                  dcomplex* chi_1_minus_alpha,
                                  dcomplex* tau );
@@ -194,109 +194,109 @@ FLA_Error FLA_Pythag3_opd( double*   chi,
                            double*   rho );
 
 FLA_Error FLA_Sort_evd( FLA_Direct direct, FLA_Obj l, FLA_Obj V );
-FLA_Error FLA_Sort_evd_f_ops( int       m_A,
-                              float*    l, int inc_l,
-                              float*    V, int rs_V, int cs_V );
-FLA_Error FLA_Sort_evd_b_ops( int       m_A,
-                              float*    l, int inc_l,
-                              float*    V, int rs_V, int cs_V );
-FLA_Error FLA_Sort_evd_f_opd( int       m_A,
-                              double*   l, int inc_l,
-                              double*   V, int rs_V, int cs_V );
-FLA_Error FLA_Sort_evd_b_opd( int       m_A,
-                              double*   l, int inc_l,
-                              double*   V, int rs_V, int cs_V );
-FLA_Error FLA_Sort_evd_f_opc( int       m_A,
-                              float*    l, int inc_l,
-                              scomplex* V, int rs_V, int cs_V );
-FLA_Error FLA_Sort_evd_b_opc( int       m_A,
-                              float*    l, int inc_l,
-                              scomplex* V, int rs_V, int cs_V );
-FLA_Error FLA_Sort_evd_f_opz( int       m_A,
-                              double*   l, int inc_l,
-                              dcomplex* V, int rs_V, int cs_V );
-FLA_Error FLA_Sort_evd_b_opz( int       m_A,
-                              double*   l, int inc_l,
-                              dcomplex* V, int rs_V, int cs_V );
+FLA_Error FLA_Sort_evd_f_ops( integer       m_A,
+                              float*    l, integer inc_l,
+                              float*    V, integer rs_V, integer cs_V );
+FLA_Error FLA_Sort_evd_b_ops( integer       m_A,
+                              float*    l, integer inc_l,
+                              float*    V, integer rs_V, integer cs_V );
+FLA_Error FLA_Sort_evd_f_opd( integer       m_A,
+                              double*   l, integer inc_l,
+                              double*   V, integer rs_V, integer cs_V );
+FLA_Error FLA_Sort_evd_b_opd( integer       m_A,
+                              double*   l, integer inc_l,
+                              double*   V, integer rs_V, integer cs_V );
+FLA_Error FLA_Sort_evd_f_opc( integer       m_A,
+                              float*    l, integer inc_l,
+                              scomplex* V, integer rs_V, integer cs_V );
+FLA_Error FLA_Sort_evd_b_opc( integer       m_A,
+                              float*    l, integer inc_l,
+                              scomplex* V, integer rs_V, integer cs_V );
+FLA_Error FLA_Sort_evd_f_opz( integer       m_A,
+                              double*   l, integer inc_l,
+                              dcomplex* V, integer rs_V, integer cs_V );
+FLA_Error FLA_Sort_evd_b_opz( integer       m_A,
+                              double*   l, integer inc_l,
+                              dcomplex* V, integer rs_V, integer cs_V );
 
 FLA_Error FLA_Sort_bsvd_ext( FLA_Direct direct, FLA_Obj s,
                              FLA_Bool apply_U, FLA_Obj U,
                              FLA_Bool apply_V, FLA_Obj V,
                              FLA_Bool apply_C, FLA_Obj C );
-FLA_Error FLA_Sort_bsvd_ext_f_ops( int m_s, float* s, int inc_s,
-                                   int m_U, float* U, int rs_U, int cs_U,
-                                   int m_V, float* V, int rs_V, int cs_V,
-                                   int n_C, float* C, int rs_C, int cs_C );
-FLA_Error FLA_Sort_bsvd_ext_b_ops( int m_s, float* s, int inc_s,
-                                   int m_U, float* U, int rs_U, int cs_U,
-                                   int m_V, float* V, int rs_V, int cs_V,
-                                   int n_C, float* C, int rs_C, int cs_C );
-FLA_Error FLA_Sort_bsvd_ext_f_opd( int m_s, double* s, int inc_s,
-                                   int m_U, double* U, int rs_U, int cs_U,
-                                   int m_V, double* V, int rs_V, int cs_V,
-                                   int n_C, double* C, int rs_C, int cs_C );
-FLA_Error FLA_Sort_bsvd_ext_b_opd( int m_s, double* s, int inc_s,
-                                   int m_U, double* U, int rs_U, int cs_U,
-                                   int m_V, double* V, int rs_V, int cs_V,
-                                   int n_C, double* C, int rs_C, int cs_C );
-FLA_Error FLA_Sort_bsvd_ext_f_opc( int m_s, float*    s, int inc_s,
-                                   int m_U, scomplex* U, int rs_U, int cs_U,
-                                   int m_V, scomplex* V, int rs_V, int cs_V,
-                                   int n_C, scomplex* C, int rs_C, int cs_C );
-FLA_Error FLA_Sort_bsvd_ext_b_opc( int m_s, float*    s, int inc_s,
-                                   int m_U, scomplex* U, int rs_U, int cs_U,
-                                   int m_V, scomplex* V, int rs_V, int cs_V,
-                                   int n_C, scomplex* C, int rs_C, int cs_C );
-FLA_Error FLA_Sort_bsvd_ext_f_opz( int m_s, double*   s, int inc_s,
-                                   int m_U, dcomplex* U, int rs_U, int cs_U,
-                                   int m_V, dcomplex* V, int rs_V, int cs_V,
-                                   int n_C, dcomplex* C, int rs_C, int cs_C );
-FLA_Error FLA_Sort_bsvd_ext_b_opz( int m_s, double*   s, int inc_s,
-                                   int m_U, dcomplex* U, int rs_U, int cs_U,
-                                   int m_V, dcomplex* V, int rs_V, int cs_V,
-                                   int n_C, dcomplex* C, int rs_C, int cs_C );
+FLA_Error FLA_Sort_bsvd_ext_f_ops( integer m_s, float* s, integer inc_s,
+                                   integer m_U, float* U, integer rs_U, integer cs_U,
+                                   integer m_V, float* V, integer rs_V, integer cs_V,
+                                   integer n_C, float* C, integer rs_C, integer cs_C );
+FLA_Error FLA_Sort_bsvd_ext_b_ops( integer m_s, float* s, integer inc_s,
+                                   integer m_U, float* U, integer rs_U, integer cs_U,
+                                   integer m_V, float* V, integer rs_V, integer cs_V,
+                                   integer n_C, float* C, integer rs_C, integer cs_C );
+FLA_Error FLA_Sort_bsvd_ext_f_opd( integer m_s, double* s, integer inc_s,
+                                   integer m_U, double* U, integer rs_U, integer cs_U,
+                                   integer m_V, double* V, integer rs_V, integer cs_V,
+                                   integer n_C, double* C, integer rs_C, integer cs_C );
+FLA_Error FLA_Sort_bsvd_ext_b_opd( integer m_s, double* s, integer inc_s,
+                                   integer m_U, double* U, integer rs_U, integer cs_U,
+                                   integer m_V, double* V, integer rs_V, integer cs_V,
+                                   integer n_C, double* C, integer rs_C, integer cs_C );
+FLA_Error FLA_Sort_bsvd_ext_f_opc( integer m_s, float*    s, integer inc_s,
+                                   integer m_U, scomplex* U, integer rs_U, integer cs_U,
+                                   integer m_V, scomplex* V, integer rs_V, integer cs_V,
+                                   integer n_C, scomplex* C, integer rs_C, integer cs_C );
+FLA_Error FLA_Sort_bsvd_ext_b_opc( integer m_s, float*    s, integer inc_s,
+                                   integer m_U, scomplex* U, integer rs_U, integer cs_U,
+                                   integer m_V, scomplex* V, integer rs_V, integer cs_V,
+                                   integer n_C, scomplex* C, integer rs_C, integer cs_C );
+FLA_Error FLA_Sort_bsvd_ext_f_opz( integer m_s, double*   s, integer inc_s,
+                                   integer m_U, dcomplex* U, integer rs_U, integer cs_U,
+                                   integer m_V, dcomplex* V, integer rs_V, integer cs_V,
+                                   integer n_C, dcomplex* C, integer rs_C, integer cs_C );
+FLA_Error FLA_Sort_bsvd_ext_b_opz( integer m_s, double*   s, integer inc_s,
+                                   integer m_U, dcomplex* U, integer rs_U, integer cs_U,
+                                   integer m_V, dcomplex* V, integer rs_V, integer cs_V,
+                                   integer n_C, dcomplex* C, integer rs_C, integer cs_C );
 
 FLA_Error FLA_Sort_svd( FLA_Direct direct, FLA_Obj s, FLA_Obj U, FLA_Obj V );
-FLA_Error FLA_Sort_svd_f_ops( int       m_U,
-                              int       n_V,
-                              float*    s, int inc_s,
-                              float*    U, int rs_U, int cs_U,
-                              float*    V, int rs_V, int cs_V );
-FLA_Error FLA_Sort_svd_b_ops( int       m_U,
-                              int       n_V,
-                              float*    s, int inc_s,
-                              float*    U, int rs_U, int cs_U,
-                              float*    V, int rs_V, int cs_V );
-FLA_Error FLA_Sort_svd_f_opd( int       m_U,
-                              int       n_V,
-                              double*   s, int inc_s,
-                              double*   U, int rs_U, int cs_U,
-                              double*   V, int rs_V, int cs_V );
-FLA_Error FLA_Sort_svd_b_opd( int       m_U,
-                              int       n_V,
-                              double*   s, int inc_s,
-                              double*   U, int rs_U, int cs_U,
-                              double*   V, int rs_V, int cs_V );
-FLA_Error FLA_Sort_svd_f_opc( int       m_U,
-                              int       n_V,
-                              float*    s, int inc_s,
-                              scomplex* U, int rs_U, int cs_U,
-                              scomplex* V, int rs_V, int cs_V );
-FLA_Error FLA_Sort_svd_b_opc( int       m_U,
-                              int       n_V,
-                              float*    s, int inc_s,
-                              scomplex* U, int rs_U, int cs_U,
-                              scomplex* V, int rs_V, int cs_V );
-FLA_Error FLA_Sort_svd_f_opz( int       m_U,
-                              int       n_V,
-                              double*   s, int inc_s,
-                              dcomplex* U, int rs_U, int cs_U,
-                              dcomplex* V, int rs_V, int cs_V );
-FLA_Error FLA_Sort_svd_b_opz( int       m_U,
-                              int       n_V,
-                              double*   s, int inc_s,
-                              dcomplex* U, int rs_U, int cs_U,
-                              dcomplex* V, int rs_V, int cs_V );
+FLA_Error FLA_Sort_svd_f_ops( integer       m_U,
+                              integer       n_V,
+                              float*    s, integer inc_s,
+                              float*    U, integer rs_U, integer cs_U,
+                              float*    V, integer rs_V, integer cs_V );
+FLA_Error FLA_Sort_svd_b_ops( integer       m_U,
+                              integer       n_V,
+                              float*    s, integer inc_s,
+                              float*    U, integer rs_U, integer cs_U,
+                              float*    V, integer rs_V, integer cs_V );
+FLA_Error FLA_Sort_svd_f_opd( integer       m_U,
+                              integer       n_V,
+                              double*   s, integer inc_s,
+                              double*   U, integer rs_U, integer cs_U,
+                              double*   V, integer rs_V, integer cs_V );
+FLA_Error FLA_Sort_svd_b_opd( integer       m_U,
+                              integer       n_V,
+                              double*   s, integer inc_s,
+                              double*   U, integer rs_U, integer cs_U,
+                              double*   V, integer rs_V, integer cs_V );
+FLA_Error FLA_Sort_svd_f_opc( integer       m_U,
+                              integer       n_V,
+                              float*    s, integer inc_s,
+                              scomplex* U, integer rs_U, integer cs_U,
+                              scomplex* V, integer rs_V, integer cs_V );
+FLA_Error FLA_Sort_svd_b_opc( integer       m_U,
+                              integer       n_V,
+                              float*    s, integer inc_s,
+                              scomplex* U, integer rs_U, integer cs_U,
+                              scomplex* V, integer rs_V, integer cs_V );
+FLA_Error FLA_Sort_svd_f_opz( integer       m_U,
+                              integer       n_V,
+                              double*   s, integer inc_s,
+                              dcomplex* U, integer rs_U, integer cs_U,
+                              dcomplex* V, integer rs_V, integer cs_V );
+FLA_Error FLA_Sort_svd_b_opz( integer       m_U,
+                              integer       n_V,
+                              double*   s, integer inc_s,
+                              dcomplex* U, integer rs_U, integer cs_U,
+                              dcomplex* V, integer rs_V, integer cs_V );
 
 FLA_Error FLA_Sv_2x2( FLA_Obj alpha11, FLA_Obj alpha12, FLA_Obj alpha22,
                       FLA_Obj sigma1, FLA_Obj sigma2 );

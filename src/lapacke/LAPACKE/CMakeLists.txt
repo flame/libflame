@@ -1,3 +1,10 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.## 
+if(INCLUDE_LAPACKE)
+add_subdirectory(include)
+add_subdirectory(src)
+add_subdirectory(utils)
+
+else(NOT INCLUDE_LAPACKE)
 message(STATUS "LAPACKE enable")
 enable_language(C)
 
@@ -130,3 +137,4 @@ install(EXPORT lapacke-targets
   DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/lapacke-${LAPACK_VERSION}
   COMPONENT Development
   )
+endif()

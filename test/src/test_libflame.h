@@ -190,7 +190,7 @@ void libfla_test_op_driver( char*         func_str,
                                            unsigned int,  // var
                                            char*,         // sc_cur_str (current storage string)
                                            FLA_Datatype,  // datatype
-                                           unsigned int,  // p_cur
+                                           uinteger,  // p_cur
                                            unsigned int,  // pci (param combo counter)
                                            unsigned int,  // n_repeats
                                            signed int,    // impl
@@ -200,7 +200,7 @@ void libfla_test_op_driver( char*         func_str,
 void libfla_test_print_result_info( char  *func_param_str,
                                     char  *datatype_char,
                                     char  *sc_str,
-                                    int    p_cur,
+                                    integer    p_cur,
                                     double perf,
                                     double residual,
                                     char  *pass_str,

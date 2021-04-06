@@ -19,17 +19,17 @@
 FLA_Error REF_Sylv_nn( FLA_Obj isgn, FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj scale );
 
 void time_Sylv_nn(
-                   int variant, int type, int n_repeats, int m, int n, int nb_alg,
+                   integer variant, integer type, integer n_repeats, integer m, integer n, integer nb_alg,
                    FLA_Obj isgn, FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj C_ref, FLA_Obj scale,
                    double *dtime, double *diff, double *gflops );
 
 
 void time_Sylv_nn(
-                   int variant, int type, int n_repeats, int m, int n, int nb_alg,
+                   integer variant, integer type, integer n_repeats, integer m, integer n, integer nb_alg,
                    FLA_Obj isgn, FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj C_ref, FLA_Obj scale,
                    double *dtime, double *diff, double *gflops )
 {
-  int
+  integer
     irep;
 
   double

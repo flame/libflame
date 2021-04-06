@@ -13,13 +13,13 @@
 FLA_Error FLA_SA_Apply_pivots( FLA_Obj C, FLA_Obj E, FLA_Obj p )
 {
   FLA_Datatype datatype;
-  int          m_C, n_C, cs_C;
-  int                    cs_E;
-  // int                    rs_C;
-  // int                    rs_E;
-  int          m_p;
-  int          i;
-  int*         buff_p;
+  integer          m_C, n_C, cs_C;
+  integer                    cs_E;
+  // integer                    rs_C;
+  // integer                    rs_E;
+  integer          m_p;
+  integer          i;
+  integer*         buff_p;
 
   if ( FLA_Obj_has_zero_dim( C ) ) return FLA_SUCCESS;
 
@@ -35,7 +35,7 @@ FLA_Error FLA_SA_Apply_pivots( FLA_Obj C, FLA_Obj E, FLA_Obj p )
 
   m_p    = FLA_Obj_length( p );
   
-  buff_p = ( int * ) FLA_INT_PTR( p );
+  buff_p = ( integer * ) FLA_INT_PTR( p );
 
 
   switch ( datatype ){

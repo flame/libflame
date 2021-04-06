@@ -17,34 +17,34 @@
      w   = w + kappa * a;
 */
 
-void bl1_sdotaxpy( int       n,
-                   float*    a, int inc_a,
-                   float*    x, int inc_x,
+void bl1_sdotaxpy( integer       n,
+                   float*    a, integer inc_a,
+                   float*    x, integer inc_x,
                    float*    kappa,
                    float*    rho,
-                   float*    w, int inc_w )
+                   float*    w, integer inc_w )
 {
 	bl1_abort();
 }
 
 
-void bl1_ddotaxpy( int       n,
-                   double*   a, int inc_a,
-                   double*   x, int inc_x,
+void bl1_ddotaxpy( integer       n,
+                   double*   a, integer inc_a,
+                   double*   x, integer inc_x,
                    double*   kappa,
                    double*   rho,
-                   double*   w, int inc_w )
+                   double*   w, integer inc_w )
 #if BLIS1_VECTOR_INTRINSIC_TYPE == BLIS1_SSE_INTRINSICS
 {
 	double*   restrict alpha1;
 	double*   restrict chi1;
 	double*   restrict omega1;
 	double             rho_c;
-	int                i;
+	integer                i;
 
-	int                n_pre;
-	int                n_run;
-	int                n_left;
+	integer                n_pre;
+	integer                n_run;
+	integer                n_left;
 
 	v2df_t    k1v, rho1v;
 	v2df_t    a1v, x1v, w1v;
@@ -149,11 +149,11 @@ void bl1_ddotaxpy( int       n,
 	double*   restrict omega1;
 	double             kappa_c;
 	double             rho_c;
-	int                i;
+	integer                i;
 
-	int                n_pre;
-	int                n_run;
-	int                n_left;
+	integer                n_pre;
+	integer                n_run;
+	integer                n_left;
 	
 	if ( inc_a != 1 ||
 	     inc_x != 1 ||
@@ -244,29 +244,29 @@ void bl1_ddotaxpy( int       n,
 #endif
 
 
-void bl1_cdotaxpy( int       n,
-                   scomplex* a, int inc_a,
-                   scomplex* x, int inc_x,
+void bl1_cdotaxpy( integer       n,
+                   scomplex* a, integer inc_a,
+                   scomplex* x, integer inc_x,
                    scomplex* kappa,
                    scomplex* rho,
-                   scomplex* w, int inc_w )
+                   scomplex* w, integer inc_w )
 {
 	bl1_abort();
 }
 
 
-void bl1_zdotaxpy( int       n,
-                   dcomplex* a, int inc_a,
-                   dcomplex* x, int inc_x,
+void bl1_zdotaxpy( integer       n,
+                   dcomplex* a, integer inc_a,
+                   dcomplex* x, integer inc_x,
                    dcomplex* kappa,
                    dcomplex* rho,
-                   dcomplex* w, int inc_w )
+                   dcomplex* w, integer inc_w )
 #if BLIS1_VECTOR_INTRINSIC_TYPE == BLIS1_SSE_INTRINSICS
 {
 	dcomplex* restrict alpha1;
 	dcomplex* restrict chi1;
 	dcomplex* restrict omega1;
-	int                i;
+	integer                i;
 
 	v2df_t    kappa1v, kappa1rv;
 	v2df_t    rho1v;
@@ -333,7 +333,7 @@ void bl1_zdotaxpy( int       n,
 	dcomplex* restrict omega1;
 	dcomplex           kappa_c;
 	dcomplex           rho_c;
-	int                i;
+	integer                i;
 
 	alpha1   = a;
 	chi1     = x;

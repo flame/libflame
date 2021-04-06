@@ -10,7 +10,7 @@
 
 #include "blis1.h"
 
-void bl1_set_contig_strides( int m, int n, int* rs, int* cs )
+void bl1_set_contig_strides( integer m, integer n, integer* rs, integer* cs )
 {
 	// Default to column-major order.
 	*rs = 1;

@@ -39,14 +39,14 @@
 #define LAPACK_trsyl(prefix)                                            \
   int F77_ ## prefix ## trsyl( char* transa,                            \
                                char* transb,                            \
-                               int* sgn,                                \
-                               int* m,                                  \
-                               int* n,                                  \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_B, int* ldim_B, \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_C, int* ldim_C, \
+                               integer* sgn,                                \
+                               integer* m,                                  \
+                               integer* n,                                  \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_B, integer* ldim_B, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_C, integer* ldim_C, \
                                PREFIX2LAPACK_REALDEF(prefix)* scale,          \
-                               int* info )
+                               integer* info )
 
 #define LAPACK_trsyl_body(prefix, srname)                       \
   AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                 \

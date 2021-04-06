@@ -15,11 +15,11 @@ FLA_Error FLA_UDdate_UT_opt_var1( FLA_Obj R,
                                   FLA_Obj D, FLA_Obj T )
 {
   FLA_Datatype datatype;
-  int          mn_RT, m_C, m_D;
-  int          rs_R, cs_R;
-  int          rs_C, cs_C;
-  int          rs_D, cs_D;
-  int          rs_T, cs_T;
+  integer          mn_RT, m_C, m_D;
+  integer          rs_R, cs_R;
+  integer          rs_C, cs_C;
+  integer          rs_D, cs_D;
+  integer          rs_T, cs_T;
 
   datatype = FLA_Obj_datatype( R );
 
@@ -117,18 +117,18 @@ FLA_Error FLA_UDdate_UT_opt_var1( FLA_Obj R,
 
 
 
-FLA_Error FLA_UDdate_UT_ops_var1( int mn_RT,
-                                  int m_C,
-                                  int m_D,
-                                  float* buff_R, int rs_R, int cs_R,
-                                  float* buff_C, int rs_C, int cs_C,
-                                  float* buff_D, int rs_D, int cs_D,
-                                  float* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_UDdate_UT_ops_var1( integer mn_RT,
+                                  integer m_C,
+                                  integer m_D,
+                                  float* buff_R, integer rs_R, integer cs_R,
+                                  float* buff_C, integer rs_C, integer cs_C,
+                                  float* buff_D, integer rs_D, integer cs_D,
+                                  float* buff_T, integer rs_T, integer cs_T )
 {
   float*    buff_half = FLA_FLOAT_PTR( FLA_ONE_HALF );
   float*    buff_1    = FLA_FLOAT_PTR( FLA_ONE );
   float*    buff_m1   = FLA_FLOAT_PTR( FLA_MINUS_ONE );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < mn_RT; ++i )
   {
@@ -144,7 +144,7 @@ FLA_Error FLA_UDdate_UT_ops_var1( int mn_RT,
     float*    tau11     = buff_T + (i  )*cs_T + (i  )*rs_T;
     float*    w12t      = buff_T + (i+1)*cs_T + (i  )*rs_T;
 
-    int       mn_ahead  = mn_RT - i - 1;
+    integer       mn_ahead  = mn_RT - i - 1;
 
     //------------------------------------------------------------//
 
@@ -215,18 +215,18 @@ FLA_Error FLA_UDdate_UT_ops_var1( int mn_RT,
 
 
 
-FLA_Error FLA_UDdate_UT_opd_var1( int mn_RT,
-                                  int m_C,
-                                  int m_D,
-                                  double* buff_R, int rs_R, int cs_R,
-                                  double* buff_C, int rs_C, int cs_C,
-                                  double* buff_D, int rs_D, int cs_D,
-                                  double* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_UDdate_UT_opd_var1( integer mn_RT,
+                                  integer m_C,
+                                  integer m_D,
+                                  double* buff_R, integer rs_R, integer cs_R,
+                                  double* buff_C, integer rs_C, integer cs_C,
+                                  double* buff_D, integer rs_D, integer cs_D,
+                                  double* buff_T, integer rs_T, integer cs_T )
 {
   double*   buff_half = FLA_DOUBLE_PTR( FLA_ONE_HALF );
   double*   buff_1    = FLA_DOUBLE_PTR( FLA_ONE );
   double*   buff_m1   = FLA_DOUBLE_PTR( FLA_MINUS_ONE );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < mn_RT; ++i )
   {
@@ -242,7 +242,7 @@ FLA_Error FLA_UDdate_UT_opd_var1( int mn_RT,
     double*   tau11     = buff_T + (i  )*cs_T + (i  )*rs_T;
     double*   w12t      = buff_T + (i+1)*cs_T + (i  )*rs_T;
 
-    int       mn_ahead  = mn_RT - i - 1;
+    integer       mn_ahead  = mn_RT - i - 1;
 
     //------------------------------------------------------------//
 
@@ -313,18 +313,18 @@ FLA_Error FLA_UDdate_UT_opd_var1( int mn_RT,
 
 
 
-FLA_Error FLA_UDdate_UT_opc_var1( int mn_RT,
-                                  int m_C,
-                                  int m_D,
-                                  scomplex* buff_R, int rs_R, int cs_R,
-                                  scomplex* buff_C, int rs_C, int cs_C,
-                                  scomplex* buff_D, int rs_D, int cs_D,
-                                  scomplex* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_UDdate_UT_opc_var1( integer mn_RT,
+                                  integer m_C,
+                                  integer m_D,
+                                  scomplex* buff_R, integer rs_R, integer cs_R,
+                                  scomplex* buff_C, integer rs_C, integer cs_C,
+                                  scomplex* buff_D, integer rs_D, integer cs_D,
+                                  scomplex* buff_T, integer rs_T, integer cs_T )
 {
   scomplex* buff_half = FLA_COMPLEX_PTR( FLA_ONE_HALF );
   float*    buff_1    = FLA_FLOAT_PTR( FLA_ONE );
   float*    buff_m1   = FLA_FLOAT_PTR( FLA_MINUS_ONE );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < mn_RT; ++i )
   {
@@ -340,7 +340,7 @@ FLA_Error FLA_UDdate_UT_opc_var1( int mn_RT,
     scomplex* tau11     = buff_T + (i  )*cs_T + (i  )*rs_T;
     scomplex* w12t      = buff_T + (i+1)*cs_T + (i  )*rs_T;
 
-    int       mn_ahead  = mn_RT - i - 1;
+    integer       mn_ahead  = mn_RT - i - 1;
 
     //------------------------------------------------------------//
 
@@ -411,18 +411,18 @@ FLA_Error FLA_UDdate_UT_opc_var1( int mn_RT,
 
 
 
-FLA_Error FLA_UDdate_UT_opz_var1( int mn_RT,
-                                  int m_C,
-                                  int m_D,
-                                  dcomplex* buff_R, int rs_R, int cs_R,
-                                  dcomplex* buff_C, int rs_C, int cs_C,
-                                  dcomplex* buff_D, int rs_D, int cs_D,
-                                  dcomplex* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_UDdate_UT_opz_var1( integer mn_RT,
+                                  integer m_C,
+                                  integer m_D,
+                                  dcomplex* buff_R, integer rs_R, integer cs_R,
+                                  dcomplex* buff_C, integer rs_C, integer cs_C,
+                                  dcomplex* buff_D, integer rs_D, integer cs_D,
+                                  dcomplex* buff_T, integer rs_T, integer cs_T )
 {
   dcomplex* buff_half = FLA_DOUBLE_COMPLEX_PTR( FLA_ONE_HALF );
   double*   buff_1    = FLA_DOUBLE_PTR( FLA_ONE );
   double*   buff_m1   = FLA_DOUBLE_PTR( FLA_MINUS_ONE );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < mn_RT; ++i )
   {
@@ -438,7 +438,7 @@ FLA_Error FLA_UDdate_UT_opz_var1( int mn_RT,
     dcomplex* tau11     = buff_T + (i  )*cs_T + (i  )*rs_T;
     dcomplex* w12t      = buff_T + (i+1)*cs_T + (i  )*rs_T;
 
-    int       mn_ahead  = mn_RT - i - 1;
+    integer       mn_ahead  = mn_RT - i - 1;
 
     //------------------------------------------------------------//
 

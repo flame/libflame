@@ -1,16 +1,16 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h" 
-static int c__1 = 1;
-static int c_n1 = -1;
+static integer c__1 = 1;
+static integer c_n1 = -1;
 
-int sgehrd_check(int *n, int *ilo, int *ihi, float *a, int *lda, float *tau, float *work, int *lwork, int *info)
+int sgehrd_check(integer *n, integer *ilo, integer *ihi, float *a, integer *lda, float *tau, float *work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1, i__2;
+    integer a_dim1, a_offset, i__1, i__2;
     /* Local variables */
-    int i__;
-    int nb, nh;
-    int lwkopt;
+    integer i__;
+    integer nb, nh;
+    integer lwkopt;
     logical lquery;
 
 #if AOCL_DTL_LOG_ENABLE

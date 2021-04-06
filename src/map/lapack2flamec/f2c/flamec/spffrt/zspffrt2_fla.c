@@ -4,10 +4,9 @@
 */
 
 #include "FLA_f2c.h"
-#include "FLAME.h"
 
 extern void z_div(doublecomplex *, doublecomplex *, doublecomplex *);
-extern integer zspr_(char *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *);
+extern int zspr_(char *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *);
 #ifdef FLA_ENABLE_BLAS_EXT_GEMMT
 extern integer zgemmt_( char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer * );
 #endif

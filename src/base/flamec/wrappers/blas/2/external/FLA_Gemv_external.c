@@ -13,10 +13,10 @@
 FLA_Error FLA_Gemv_external( FLA_Trans transa, FLA_Obj alpha, FLA_Obj A, FLA_Obj x, FLA_Obj beta, FLA_Obj y )
 {
   FLA_Datatype datatype;
-  int          m_A, n_A;
-  int          rs_A, cs_A;
-  int          inc_x;
-  int          inc_y;
+  integer          m_A, n_A;
+  integer          rs_A, cs_A;
+  integer          inc_x;
+  integer          inc_y;
   trans1_t      blis_transa;
   conj1_t       blis_conjx;
 

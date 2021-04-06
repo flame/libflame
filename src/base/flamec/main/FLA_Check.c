@@ -20,10 +20,10 @@ unsigned int FLA_Check_error_level()
   return fla_error_checking_level;
 }
 
-unsigned int FLA_Check_error_level_set( unsigned int new_level )
+unsigned int FLA_Check_error_level_set(unsigned int new_level )
 {
   FLA_Error    e_val;
-  unsigned int old_level;
+  uinteger old_level;
 
   e_val = FLA_Check_valid_error_level( new_level );
   FLA_Check_error_code( e_val );
@@ -881,7 +881,7 @@ FLA_Error FLA_Check_object_matrix_elemtype( FLA_Obj A )
   return e_val;
 }
 
-FLA_Error FLA_Check_num_threads( unsigned int n_threads )
+FLA_Error FLA_Check_num_threads(unsigned int n_threads )
 {
   FLA_Error e_val = FLA_SUCCESS;
 
@@ -1076,7 +1076,7 @@ FLA_Error FLA_Check_object_width_min( FLA_Obj A, dim_t n )
   return e_val;
 }
 
-FLA_Error FLA_Check_valid_error_level( unsigned int level )
+FLA_Error FLA_Check_valid_error_level(unsigned int level )
 {
   FLA_Error e_val = FLA_SUCCESS;
 

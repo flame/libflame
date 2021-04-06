@@ -13,9 +13,9 @@
 FLA_Error FLA_Dot2cs_external( FLA_Conj conj, FLA_Obj alpha, FLA_Obj x, FLA_Obj y, FLA_Obj beta, FLA_Obj rho )
 {
   FLA_Datatype datatype;
-  int          num_elem;
-  int          inc_x;
-  int          inc_y;
+  integer          num_elem;
+  integer          inc_x;
+  integer          inc_y;
   conj1_t       blis_conj;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING ) 

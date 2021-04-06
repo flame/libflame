@@ -101,7 +101,7 @@ double FLA_Clock_helper()
 // Global variables that are used only for non-portable FLA_Clock() definitions.
 static double        clocks             = 0.0;
 #ifdef __i386__
-static unsigned int  initialclockoffset = 0;
+static uinteger  initialclockoffset = 0;
 #endif
 
 
@@ -142,8 +142,8 @@ double FLA_Clock_helper()
 #ifdef __i386__
 
 // rdtsc was once declared static. neccessary?
-inline void rdtsc( unsigned int *high, unsigned int *low );
-inline void rdtsc( unsigned int *high, unsigned int *low )
+inline void rdtsc( uinteger *high, uinteger *low );
+inline void rdtsc( uinteger *high, uinteger *low )
 {
   asm("rdtsc" : "=a" (*low), "=d"(*high): : "cc");
 }
@@ -151,7 +151,7 @@ inline void rdtsc( unsigned int *high, unsigned int *low )
 
 double FLA_Clock_helper()
 {
-  unsigned int high, low;
+  uinteger high, low;
   unsigned long long totalclocks;
 
   if (!clocks) detect_clocks();
@@ -209,7 +209,7 @@ void detect_clocks()
   FILE *infile;
   char buffer[256], *p;
 #ifdef __i386__
-  unsigned int high, low;
+  uinteger high, low;
 #endif
 
   if ( clocks == 0.0 )

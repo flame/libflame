@@ -22,19 +22,19 @@ extern TLS_CLASS_SPEC fla_axpyt_t* fla_axpyt_cntl_blas;
 
 FLA_Error REF_LQ_UT( FLA_Obj A, FLA_Obj t );
 void time_LQ(
-               int variant, int type, int n_repeats, int m, int n, int nb_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer n, integer nb_alg,
                FLA_Obj A, FLA_Obj t, FLA_Obj T, FLA_Obj TT, FLA_Obj w, FLA_Obj W, FLA_Obj WW, FLA_Obj b, FLA_Obj b_ref,
                double *dtime, double *diff, double *gflops );
 
 
 void time_LQ(
-               int variant, int type, int n_repeats, int m, int n, int nb_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer n, integer nb_alg,
                FLA_Obj A, FLA_Obj t, FLA_Obj T, FLA_Obj TT, FLA_Obj w, FLA_Obj W, FLA_Obj WW, FLA_Obj b, FLA_Obj b_ref,
                double *dtime, double *diff, double *gflops )
 {
-  int
+  integer
     irep;
-  int nb_alg_sm;
+  integer nb_alg_sm;
 
   double
     dtime_old = 1.0e9;

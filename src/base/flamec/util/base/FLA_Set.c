@@ -29,8 +29,8 @@ FLA_Error FLA_Set( FLA_Obj alpha, FLA_Obj A )
 
   case FLA_INT:
   {
-    int *buff_A     = ( int * ) FLA_INT_PTR( A );
-    int *buff_alpha = ( int * ) FLA_INT_PTR( alpha );
+    integer *buff_A     = ( integer * ) FLA_INT_PTR( A );
+    integer *buff_alpha = ( integer * ) FLA_INT_PTR( alpha );
 
     bl1_isetm( m_A,
                n_A,

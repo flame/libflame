@@ -17,14 +17,14 @@
 
 
 void time_Sylv_nh(
-               int variant, int type, int n_repeats, int m, int n, int nb_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer n, integer nb_alg,
                FLA_Obj isgn, FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj C_ref, FLA_Obj scale,
                double *dtime, double *diff, double *gflops );
 
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     m_input, n_input,
     m, n,
     p_first, p_last, p_inc,
@@ -36,9 +36,9 @@ int main(int argc, char *argv[])
     datatype,
     n_variants = 18;
 
-  int  sign;
+  integer  sign;
   
-  int  blocksize[16];
+  integer  blocksize[16];
 
   char *colors = "brkgmcbrkg";
   char *ticks  = "o+*xso+*xs";

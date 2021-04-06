@@ -20,14 +20,14 @@ char* pc_str[N_PARAM_COMBOS] = { "lc", "ln", "lt",
                                  "uc", "un", "ut" }; 
 
 void time_Trsv(
-               int param_combo, int type, int n_repeats, int m,
+               integer param_combo, integer type, integer n_repeats, integer m,
                FLA_Obj A, FLA_Obj x, FLA_Obj x_ref,
                double *dtime, double *diff, double *gflops );
 
 
-int main(int argc, char *argv[])
+int main(integer argc, char *argv[])
 {
-  int 
+  integer 
     datatype,
     precision,
     nb_alg,
@@ -39,7 +39,7 @@ int main(int argc, char *argv[])
     param_combo,
     i,
     n_param_combos = N_PARAM_COMBOS;
-  int one = 1;
+  integer one = 1;
   
   char *colors = "brkgmcbrkgmcbrkgmc";
   char *ticks  = "o+*xso+*xso+*xso+*xs";

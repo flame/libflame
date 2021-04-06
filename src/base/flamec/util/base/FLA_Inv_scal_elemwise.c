@@ -13,9 +13,9 @@
 FLA_Error FLA_Inv_scal_elemwise( FLA_Trans trans, FLA_Obj A, FLA_Obj B )
 {
   FLA_Datatype datatype;
-  int          m_B, n_B;
-  int          rs_A, cs_A;
-  int          rs_B, cs_B;
+  integer          m_B, n_B;
+  integer          rs_A, cs_A;
+  integer          rs_B, cs_B;
   trans1_t      blis_trans;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING ) 

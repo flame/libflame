@@ -10,35 +10,35 @@
 
 #include "FLAME.h"
 
-FLA_Error FLA_Tevd_iteracc_n_ops_var1( int       m_A,
-                                       int       n_G,
-                                       int       ijTL,
-                                       float*    buff_d, int inc_d, 
-                                       float*    buff_e, int inc_e,
-                                       int*      n_iter_perf )
+FLA_Error FLA_Tevd_iteracc_n_ops_var1( integer       m_A,
+                                       integer       n_G,
+                                       integer       ijTL,
+                                       float*    buff_d, integer inc_d, 
+                                       float*    buff_e, integer inc_e,
+                                       integer*      n_iter_perf )
 {
 	return FLA_SUCCESS;
 }
 
 //#define PRINTF
 
-FLA_Error FLA_Tevd_iteracc_n_opd_var1( int       m_A,
-                                       int       n_G,
-                                       int       ijTL,
-                                       double*   buff_d, int inc_d, 
-                                       double*   buff_e, int inc_e,
-                                       int*      n_iter_perf )
+FLA_Error FLA_Tevd_iteracc_n_opd_var1( integer       m_A,
+                                       integer       n_G,
+                                       integer       ijTL,
+                                       double*   buff_d, integer inc_d, 
+                                       double*   buff_e, integer inc_e,
+                                       integer*      n_iter_perf )
 {
 	FLA_Error r_val;
-	int       i, k;
-	int       k_iter       = 0;
-	int       n_deflations = 0;
+	integer       i, k;
+	integer       k_iter       = 0;
+	integer       n_deflations = 0;
 
 	// Iterate from back to front until all that is left is a 2x2.
 	for ( i = m_A - 1; i > 1; --i )
 	{
-		int       m_ATL  = i + 1;
-		int       k_left = n_G - k_iter;
+		integer       m_ATL  = i + 1;
+		integer       k_left = n_G - k_iter;
 
 		/*------------------------------------------------------------*/
 
@@ -88,20 +88,20 @@ FLA_Error FLA_Tevd_iteracc_n_opd_var1( int       m_A,
 		// ATL. Therefore, we must recurse with two subproblems.
 		if ( r_val != i )
 		{
-			int       m_TLr = r_val + 1;
-			int       m_BRr = m_ATL - m_TLr;
-			int       ijTLr = 0;
-			int       ijBRr = m_TLr;
-			int       n_Gr  = n_G - k_iter;
+			integer       m_TLr = r_val + 1;
+			integer       m_BRr = m_ATL - m_TLr;
+			integer       ijTLr = 0;
+			integer       ijBRr = m_TLr;
+			integer       n_Gr  = n_G - k_iter;
 			double*   dTL   = buff_d + (0    )*inc_d;
 			double*   eTL   = buff_e + (0    )*inc_e;
 			double*   dBR   = buff_d + (ijBRr)*inc_d;
 			double*   eBR   = buff_e + (ijBRr)*inc_e;
 
-			int       n_deflationsTL;
-			int       n_deflationsBR;
-			int       n_iter_perfTL;
-			int       n_iter_perfBR;
+			integer       n_deflationsTL;
+			integer       n_deflationsBR;
+			integer       n_iter_perfTL;
+			integer       n_iter_perfBR;
 
 #ifdef PRINTF
 printf( "FLA_Tevd_iteracc_n_opd_var1: Internal deflation in col %d\n", ijTL+r_val );

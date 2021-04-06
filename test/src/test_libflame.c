@@ -1226,7 +1226,7 @@ void libfla_test_op_driver( char*         func_str,
                                            unsigned int,  // var
                                            char*,         // sc_cur_str (current storage string)
                                            FLA_Datatype,  // datatype
-                                           unsigned int,  // p_cur
+                                           uinteger,  // p_cur
                                            unsigned int,  // pci (param combo counter)
                                            unsigned int,  // n_repeats
                                            signed int,    // impl
@@ -1236,12 +1236,12 @@ void libfla_test_op_driver( char*         func_str,
 	unsigned int n_threads           = params.n_threads;
 	unsigned int n_storage           = params.n_storage;
 	unsigned int n_datatypes         = params.n_datatypes;
-	unsigned int p_first             = params.p_first;
-	unsigned int p_max               = params.p_max;
-	unsigned int p_inc               = params.p_inc;
-	unsigned int n_repeats           = params.n_repeats;
-	unsigned int reaction_to_failure = params.reaction_to_failure;
-	unsigned int sci, dt, p_cur, mat, pci, var;
+	uinteger p_first             = params.p_first;
+	uinteger p_max               = params.p_max;
+	uinteger p_inc               = params.p_inc;
+	uinteger n_repeats           = params.n_repeats;
+	uinteger reaction_to_failure = params.reaction_to_failure;
+	uinteger sci, dt, p_cur, mat, pci, var;
 	char         datatype_char;
 	FLA_Datatype datatype;
 	double       perf, residual;
@@ -1388,14 +1388,14 @@ void libfla_test_op_driver( char*         func_str,
 void libfla_test_print_result_info(char  *func_param_str,
                                    char  *datatype_char,
                                    char  *sc_str,
-                                   int    p_cur,
+                                   integer    p_cur,
                                    double perf,
                                    double residual,
                                    char  *pass_str,
                                    int    nfact )
 {
 	char blank_str[32];
-	int  n_spaces;
+	integer  n_spaces;
 
 	n_spaces = MAX_FUNC_STRING_LENGTH - strlen( func_param_str );
 	fill_string_with_n_spaces( blank_str, n_spaces );
@@ -1486,7 +1486,11 @@ void libfla_test_sleep( void )
 	for ( i = SECONDS_TO_SLEEP; i > 0; --i )
 	{
 		libfla_test_output_info( "%d ", i );
-		sleep(1);
+#ifdef _WIN32
+		Sleep(1);
+#else
+        sleep(1);
+#endif
 	}
 	libfla_test_output_info( "\n" );
 }

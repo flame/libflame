@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-FLA_Error REF_Hess( FLA_Obj A, FLA_Obj t, int ilo, int ihi )
+FLA_Error REF_Hess( FLA_Obj A, FLA_Obj t, integer ilo, integer ihi )
 {
   return FLA_Hess_blk_external( A, t, ilo, ihi );
 }

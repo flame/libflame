@@ -16,17 +16,17 @@
 
 
 void time_QR2_UT(
-               int param_combo, int type, int nrepeats, int m, int n,
+               integer param_combo, integer type, integer nrepeats, integer m, integer n,
                FLA_Obj A_flat, FLA_Obj A_flat_ref, FLA_Obj B_flat, FLA_Obj D_flat, FLA_Obj T_flat,
                double *dtime, double *diff, double *gflops );
 
 
 void time_QR2_UT(
-               int param_combo, int type, int nrepeats, int m, int n,
+               integer param_combo, integer type, integer nrepeats, integer m, integer n,
                FLA_Obj A_flat, FLA_Obj A_flat_ref, FLA_Obj B_flat, FLA_Obj D_flat, FLA_Obj T_flat,
                double *dtime, double *diff, double *gflops )
 {
-  int
+  integer
     irep;
 
   double

@@ -20,7 +20,7 @@
 	float*  restrict  alpha2 = a2; \
 	float             temp1; \
 	float             temp2; \
-	int               i; \
+	integer               i; \
 \
 	for ( i = 0; i < m_A; ++i ) \
 	{ \
@@ -47,7 +47,7 @@
 	scomplex* restrict alpha2 = a2; \
 	scomplex           temp1; \
 	scomplex           temp2; \
-	int                i; \
+	integer                i; \
 \
 	for ( i = 0; i < m_A; ++i ) \
 	{ \
@@ -77,7 +77,7 @@
 	double* restrict  alpha2 = a2; \
 	double            temp1; \
 	double            temp2; \
-	int               i; \
+	integer               i; \
 \
 	for ( i = 0; i < m_A; ++i ) \
 	{ \
@@ -104,7 +104,7 @@
 	dcomplex* restrict alpha2 = a2; \
 	dcomplex           temp1; \
 	dcomplex           temp2; \
-	int                i; \
+	integer                i; \
 \
 	for ( i = 0; i < m_A; ++i ) \
 	{ \

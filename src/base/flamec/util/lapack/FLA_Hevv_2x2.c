@@ -144,7 +144,7 @@ FLA_Error FLA_Hevv_2x2_ops( float*    alpha11,
 	float  l1, l2;
 	float  g1, s1;
 	float  ab, acmn, acmx, acs, adf, cs, ct, df, rt, sm, tb, tn;
-	int    sgn1, sgn2;
+	integer    sgn1, sgn2;
 
 	a11 = *alpha11;
 	a21 = *alpha21;
@@ -258,7 +258,7 @@ FLA_Error FLA_Hevv_2x2_opd( double*   alpha11,
 	double l1, l2;
 	double g1, s1;
 	double ab, acmn, acmx, acs, adf, cs, ct, df, rt, sm, tb, tn;
-	int    sgn1, sgn2;
+	integer    sgn1, sgn2;
 
 	a11 = *alpha11;
 	a21 = *alpha21;

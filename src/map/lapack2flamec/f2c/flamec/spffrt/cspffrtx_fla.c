@@ -5,8 +5,8 @@
 
 #include "FLA_f2c.h"
 
-extern integer cspr_(char *, integer *, complex *, complex *, integer *, complex *);
-extern integer cscal_(integer *, complex *, complex *, integer *);
+extern int cspr_(char *, integer *, complex *, complex *, integer *, complex *);
+extern void cscal_(integer *, complex *, complex *, integer *);
 extern void c_div(complex *, complex *, complex *);
 
 /*! @brief Partial LDL' factorization without pivoting

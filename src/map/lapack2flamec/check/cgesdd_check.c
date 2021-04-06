@@ -1,18 +1,18 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
-static int c__1 = 1;
-static int c_n1 = -1;
+static integer c__1 = 1;
+static integer c_n1 = -1;
 
-int cgesdd_check(char *jobz, int *m, int *n, scomplex *a, int *lda, float *s, scomplex *u, int *ldu, scomplex *vt, int *ldvt, scomplex *work, int *lwork, float *rwork, int *iwork, int *info)
+int cgesdd_check(char *jobz, integer *m, integer *n, scomplex *a, integer *lda, float *s, scomplex *u, integer *ldu, scomplex *vt, integer *ldvt, scomplex *work, integer *lwork, float *rwork, integer *iwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1, i__2;
+    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1, i__2;
     /* Local variables */
-    int minmn, wrkbl;
+    integer minmn, wrkbl;
     logical wntqa;
     logical wntqn, wntqo, wntqs;
-    int mnthr1, mnthr2;
-    int minwrk, maxwrk;
+    integer mnthr1, mnthr2;
+    integer minwrk, maxwrk;
     logical wntqas;    
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
@@ -36,8 +36,8 @@ int cgesdd_check(char *jobz, int *m, int *n, scomplex *a, int *lda, float *s, sc
     /* Function Body */
     *info = 0;
     minmn = min(*m,*n);
-    mnthr1 = (int) (minmn * 17.f / 9.f);
-    mnthr2 = (int) (minmn * 5.f / 3.f);
+    mnthr1 = (integer) (minmn * 17.f / 9.f);
+    mnthr2 = (integer) (minmn * 5.f / 3.f);
     wntqa = lsame_(jobz, "A");
     wntqs = lsame_(jobz, "S");
     wntqas = wntqa || wntqs;

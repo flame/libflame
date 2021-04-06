@@ -17,17 +17,17 @@
 FLA_Error REF_Hevd_ln( FLA_Obj A, FLA_Obj l );
 FLA_Error REF_Hevdd_ln( FLA_Obj A, FLA_Obj l );
 void time_Hevd_ln(
-               int variant, int type, int n_repeats, int m, int b_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer b_alg,
                FLA_Obj A, FLA_Obj l,
                double *dtime, double *diff, double *gflops );
 
 
 void time_Hevd_ln(
-               int variant, int type, int n_repeats, int m, int b_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer b_alg,
                FLA_Obj A, FLA_Obj l,
                double *dtime, double *diff, double *gflops )
 {
-  int irep;
+  integer irep;
 
   double
     k, dtime_old = 1.0e9;

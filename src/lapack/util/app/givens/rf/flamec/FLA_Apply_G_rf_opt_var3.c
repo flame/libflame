@@ -31,9 +31,9 @@ FLA_Error FLA_Apply_G_rf_opt_var3( FLA_Obj G, FLA_Obj A )
 */
 {
 	FLA_Datatype datatype;
-	int          k_G, m_A, n_A;
-	int          rs_G, cs_G;
-	int          rs_A, cs_A;
+	integer          k_G, m_A, n_A;
+	integer          rs_G, cs_G;
+	integer          rs_A, cs_A;
 
 	datatype = FLA_Obj_datatype( A );
 
@@ -109,11 +109,11 @@ FLA_Error FLA_Apply_G_rf_opt_var3( FLA_Obj G, FLA_Obj A )
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Apply_G_rf_ops_var3( int       k_G,
-                                   int       m_A,
-                                   int       n_A,
-                                   scomplex* buff_G, int rs_G, int cs_G,
-                                   float*    buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Apply_G_rf_ops_var3( integer       k_G,
+                                   integer       m_A,
+                                   integer       n_A,
+                                   scomplex* buff_G, integer rs_G, integer cs_G,
+                                   float*    buff_A, integer rs_A, integer cs_A )
 {
 	float     one  = bl1_s1();
 	float     zero = bl1_s0();
@@ -133,16 +133,16 @@ FLA_Error FLA_Apply_G_rf_ops_var3( int       k_G,
 	scomplex* g34_k1;
 	scomplex* g12_k2;
 	scomplex* g23_k2;
-	int       i, j, g, k;
-	int       nG, nG_app;
-	int       n_iter;
-	int       n_left;
-	int       k_minus_1;
-	int       n_fuse;
-	int       k_fuse;
-	int       is_ident23_k1, is_ident34_k1;
-	int       is_ident12_k2, is_ident23_k2;
-	int       has_ident;
+	integer       i, j, g, k;
+	integer       nG, nG_app;
+	integer       n_iter;
+	integer       n_left;
+	integer       k_minus_1;
+	integer       n_fuse;
+	integer       k_fuse;
+	integer       is_ident23_k1, is_ident34_k1;
+	integer       is_ident12_k2, is_ident23_k2;
+	integer       has_ident;
 
 	k_minus_1 = k_G - 1;
 	nG        = n_A - 1;
@@ -562,11 +562,11 @@ FLA_Error FLA_Apply_G_rf_ops_var3( int       k_G,
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Apply_G_rf_opd_var3( int       k_G,
-                                   int       m_A,
-                                   int       n_A,
-                                   dcomplex* buff_G, int rs_G, int cs_G,
-                                   double*   buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Apply_G_rf_opd_var3( integer       k_G,
+                                   integer       m_A,
+                                   integer       n_A,
+                                   dcomplex* buff_G, integer rs_G, integer cs_G,
+                                   double*   buff_A, integer rs_A, integer cs_A )
 {
 	double    one  = bl1_d1();
 	double    zero = bl1_d0();
@@ -586,16 +586,16 @@ FLA_Error FLA_Apply_G_rf_opd_var3( int       k_G,
 	dcomplex* g34_k1;
 	dcomplex* g12_k2;
 	dcomplex* g23_k2;
-	int       i, j, g, k;
-	int       nG, nG_app;
-	int       n_iter;
-	int       n_left;
-	int       k_minus_1;
-	int       n_fuse;
-	int       k_fuse;
-	int       is_ident23_k1, is_ident34_k1;
-	int       is_ident12_k2, is_ident23_k2;
-	int       has_ident;
+	integer       i, j, g, k;
+	integer       nG, nG_app;
+	integer       n_iter;
+	integer       n_left;
+	integer       k_minus_1;
+	integer       n_fuse;
+	integer       k_fuse;
+	integer       is_ident23_k1, is_ident34_k1;
+	integer       is_ident12_k2, is_ident23_k2;
+	integer       has_ident;
 
 	k_minus_1 = k_G - 1;
 	nG        = n_A - 1;
@@ -1015,11 +1015,11 @@ FLA_Error FLA_Apply_G_rf_opd_var3( int       k_G,
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Apply_G_rf_opc_var3( int       k_G,
-                                   int       m_A,
-                                   int       n_A,
-                                   scomplex* buff_G, int rs_G, int cs_G,
-                                   scomplex* buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Apply_G_rf_opc_var3( integer       k_G,
+                                   integer       m_A,
+                                   integer       n_A,
+                                   scomplex* buff_G, integer rs_G, integer cs_G,
+                                   scomplex* buff_A, integer rs_A, integer cs_A )
 {
 	float     one  = bl1_s1();
 	float     zero = bl1_s0();
@@ -1039,16 +1039,16 @@ FLA_Error FLA_Apply_G_rf_opc_var3( int       k_G,
 	scomplex* g34_k1;
 	scomplex* g12_k2;
 	scomplex* g23_k2;
-	int       i, j, g, k;
-	int       nG, nG_app;
-	int       n_iter;
-	int       n_left;
-	int       k_minus_1;
-	int       n_fuse;
-	int       k_fuse;
-	int       is_ident23_k1, is_ident34_k1;
-	int       is_ident12_k2, is_ident23_k2;
-	int       has_ident;
+	integer       i, j, g, k;
+	integer       nG, nG_app;
+	integer       n_iter;
+	integer       n_left;
+	integer       k_minus_1;
+	integer       n_fuse;
+	integer       k_fuse;
+	integer       is_ident23_k1, is_ident34_k1;
+	integer       is_ident12_k2, is_ident23_k2;
+	integer       has_ident;
 
 	k_minus_1 = k_G - 1;
 	nG        = n_A - 1;
@@ -1468,11 +1468,11 @@ FLA_Error FLA_Apply_G_rf_opc_var3( int       k_G,
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Apply_G_rf_opz_var3( int       k_G,
-                                   int       m_A,
-                                   int       n_A,
-                                   dcomplex* buff_G, int rs_G, int cs_G,
-                                   dcomplex* buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Apply_G_rf_opz_var3( integer       k_G,
+                                   integer       m_A,
+                                   integer       n_A,
+                                   dcomplex* buff_G, integer rs_G, integer cs_G,
+                                   dcomplex* buff_A, integer rs_A, integer cs_A )
 {
 	double    one  = bl1_d1();
 	double    zero = bl1_d0();
@@ -1492,16 +1492,16 @@ FLA_Error FLA_Apply_G_rf_opz_var3( int       k_G,
 	dcomplex* g34_k1;
 	dcomplex* g12_k2;
 	dcomplex* g23_k2;
-	int       i, j, g, k;
-	int       nG, nG_app;
-	int       n_iter;
-	int       n_left;
-	int       k_minus_1;
-	int       n_fuse;
-	int       k_fuse;
-	int       is_ident23_k1, is_ident34_k1;
-	int       is_ident12_k2, is_ident23_k2;
-	int       has_ident;
+	integer       i, j, g, k;
+	integer       nG, nG_app;
+	integer       n_iter;
+	integer       n_left;
+	integer       k_minus_1;
+	integer       n_fuse;
+	integer       k_fuse;
+	integer       is_ident23_k1, is_ident34_k1;
+	integer       is_ident12_k2, is_ident23_k2;
+	integer       has_ident;
 
 	k_minus_1 = k_G - 1;
 	nG        = n_A - 1;

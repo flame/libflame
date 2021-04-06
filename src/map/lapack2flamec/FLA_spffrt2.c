@@ -18,8 +18,8 @@
 
 #define LAPACK_spffrt2(prefix)                                           \
   int F77_ ## prefix ## spffrt2( PREFIX2LAPACK_TYPEDEF(prefix)* buff_AP, \
-                                 int* n,                                 \
-                                 int* ncolm,                             \
+                                 integer* n,                                 \
+                                 integer* ncolm,                             \
                                  PREFIX2LAPACK_TYPEDEF(prefix)* work,    \
                                  PREFIX2LAPACK_TYPEDEF(prefix)* work2 )
 

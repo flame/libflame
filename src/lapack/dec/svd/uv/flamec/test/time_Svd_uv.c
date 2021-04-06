@@ -18,17 +18,17 @@ FLA_Error REF_Svd_uv( FLA_Obj A, FLA_Obj s, FLA_Obj U, FLA_Obj V );
 FLA_Error REF_Svdd_uv( FLA_Obj A, FLA_Obj s, FLA_Obj U, FLA_Obj V );
 
 void time_Svd_uv(
-               int variant, int type, int n_repeats, int m, int n, int n_iter_max, int k_accum, int b_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer n, integer n_iter_max, integer k_accum, integer b_alg,
                FLA_Obj A, FLA_Obj s, FLA_Obj U, FLA_Obj V,
-               double *dtime, double *diff1, double* diff2, double *gflops, int* k_perf );
+               double *dtime, double *diff1, double* diff2, double *gflops, integer* k_perf );
 
 
 void time_Svd_uv(
-               int variant, int type, int n_repeats, int m, int n, int n_iter_max, int k_accum, int b_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer n, integer n_iter_max, integer k_accum, integer b_alg,
                FLA_Obj A, FLA_Obj s, FLA_Obj U, FLA_Obj V,
-               double *dtime, double *diff1, double* diff2, double *gflops, int* k_perf )
+               double *dtime, double *diff1, double* diff2, double *gflops, integer* k_perf )
 {
-  int irep;
+  integer irep;
 
   double
     k, dtime_old = 1.0e9;

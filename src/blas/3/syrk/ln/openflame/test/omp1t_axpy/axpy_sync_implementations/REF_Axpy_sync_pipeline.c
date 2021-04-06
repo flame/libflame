@@ -14,8 +14,8 @@
 FLA_Error REF_Axpy_sync_pipeline( FLA_Obj alpha, FLA_Obj X, FLA_Obj B )
 {
   double* x_buf, *b_buf;
-  int     x_m, x_n, x_ldim, b_ldim;
-  int     b, j, j2, j_part, nb_alg;
+  integer     x_m, x_n, x_ldim, b_ldim;
+  integer     b, j, j2, j_part, nb_alg;
   int     i_one = 1;
   double  alpha_value;
 

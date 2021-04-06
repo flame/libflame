@@ -1,15 +1,15 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
 
-int zbdsqr_check(char *uplo, int *n, int *ncvt, int * nru, int *ncc, 
+int zbdsqr_check(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, 
                  double *d__, double *e, 
-                 dcomplex *vt, int *ldvt, 
-                 dcomplex *u, int *ldu, 
-                 dcomplex *c__, int *ldc, 
-                 double *rwork, int *info)
+                 dcomplex *vt, integer *ldvt, 
+                 dcomplex *u, integer *ldu, 
+                 dcomplex *c__, integer *ldc, 
+                 double *rwork, integer *info)
 {
     /* System generated locals */
-    int c_dim1, c_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1;
+    integer c_dim1, c_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1;
     logical lower;
 
 #if AOCL_DTL_LOG_ENABLE

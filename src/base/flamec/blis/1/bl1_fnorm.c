@@ -10,14 +10,14 @@
 
 #include "blis1.h"
 
-void bl1_sfnorm( int m, int n, float* a, int a_rs, int a_cs, float* norm )
+void bl1_sfnorm( integer m, integer n, float* a, integer a_rs, integer a_cs, float* norm )
 {
 	float*    a_ij;
 	float     sum;
-	int       lda, inca;
-	int       n_iter;
-	int       n_elem;
-	int       i, j;
+	integer       lda, inca;
+	integer       n_iter;
+	integer       n_elem;
+	integer       i, j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -64,14 +64,14 @@ void bl1_sfnorm( int m, int n, float* a, int a_rs, int a_cs, float* norm )
 	*norm = ( float ) sqrt( sum );
 }
 
-void bl1_dfnorm( int m, int n, double* a, int a_rs, int a_cs, double* norm )
+void bl1_dfnorm( integer m, integer n, double* a, integer a_rs, integer a_cs, double* norm )
 {
 	double*   a_ij;
 	double    sum;
-	int       lda, inca;
-	int       n_iter;
-	int       n_elem;
-	int       i, j;
+	integer       lda, inca;
+	integer       n_iter;
+	integer       n_elem;
+	integer       i, j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -118,14 +118,14 @@ void bl1_dfnorm( int m, int n, double* a, int a_rs, int a_cs, double* norm )
 	*norm = sqrt( sum );
 }
 
-void bl1_cfnorm( int m, int n, scomplex* a, int a_rs, int a_cs, float* norm )
+void bl1_cfnorm( integer m, integer n, scomplex* a, integer a_rs, integer a_cs, float* norm )
 {
 	scomplex* a_ij;
 	float     sum;
-	int       lda, inca;
-	int       n_iter;
-	int       n_elem;
-	int       i, j;
+	integer       lda, inca;
+	integer       n_iter;
+	integer       n_elem;
+	integer       i, j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -172,14 +172,14 @@ void bl1_cfnorm( int m, int n, scomplex* a, int a_rs, int a_cs, float* norm )
 	*norm = ( float ) sqrt( sum );
 }
 
-void bl1_zfnorm( int m, int n, dcomplex* a, int a_rs, int a_cs, double* norm )
+void bl1_zfnorm( integer m, integer n, dcomplex* a, integer a_rs, integer a_cs, double* norm )
 {
 	dcomplex* a_ij;
 	double    sum;
-	int       lda, inca;
-	int       n_iter;
-	int       n_elem;
-	int       i, j;
+	integer       lda, inca;
+	integer       n_iter;
+	integer       n_elem;
+	integer       i, j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;

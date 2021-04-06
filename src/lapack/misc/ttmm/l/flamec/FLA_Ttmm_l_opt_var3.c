@@ -15,8 +15,8 @@
 FLA_Error FLA_Ttmm_l_opt_var3( FLA_Obj A )
 {
   FLA_Datatype datatype;
-  int          mn_A;
-  int          rs_A, cs_A;
+  integer          mn_A;
+  integer          rs_A, cs_A;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -73,11 +73,11 @@ FLA_Error FLA_Ttmm_l_opt_var3( FLA_Obj A )
 
 
 
-FLA_Error FLA_Ttmm_l_ops_var3( int mn_A,
-                               float* buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Ttmm_l_ops_var3( integer mn_A,
+                               float* buff_A, integer rs_A, integer cs_A )
 {
   float*    buff_1  = FLA_FLOAT_PTR( FLA_ONE );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < mn_A; ++i )
   {
@@ -85,7 +85,7 @@ FLA_Error FLA_Ttmm_l_ops_var3( int mn_A,
     float*    a21       = buff_A + (i  )*cs_A + (i+1)*rs_A;
     float*    A22       = buff_A + (i+1)*cs_A + (i+1)*rs_A;
 
-    int       mn_ahead  = mn_A - i - 1;
+    integer       mn_ahead  = mn_A - i - 1;
 
     /*------------------------------------------------------------*/
 
@@ -118,11 +118,11 @@ FLA_Error FLA_Ttmm_l_ops_var3( int mn_A,
 
 
 
-FLA_Error FLA_Ttmm_l_opd_var3( int mn_A,
-                               double* buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Ttmm_l_opd_var3( integer mn_A,
+                               double* buff_A, integer rs_A, integer cs_A )
 {
   double*   buff_1  = FLA_DOUBLE_PTR( FLA_ONE );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < mn_A; ++i )
   {
@@ -130,7 +130,7 @@ FLA_Error FLA_Ttmm_l_opd_var3( int mn_A,
     double*   a21       = buff_A + (i  )*cs_A + (i+1)*rs_A;
     double*   A22       = buff_A + (i+1)*cs_A + (i+1)*rs_A;
 
-    int       mn_ahead  = mn_A - i - 1;
+    integer       mn_ahead  = mn_A - i - 1;
 
     /*------------------------------------------------------------*/
 
@@ -163,11 +163,11 @@ FLA_Error FLA_Ttmm_l_opd_var3( int mn_A,
 
 
 
-FLA_Error FLA_Ttmm_l_opc_var3( int mn_A,
-                               scomplex* buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Ttmm_l_opc_var3( integer mn_A,
+                               scomplex* buff_A, integer rs_A, integer cs_A )
 {
   scomplex* buff_1  = FLA_COMPLEX_PTR( FLA_ONE );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < mn_A; ++i )
   {
@@ -175,7 +175,7 @@ FLA_Error FLA_Ttmm_l_opc_var3( int mn_A,
     scomplex* a21       = buff_A + (i  )*cs_A + (i+1)*rs_A;
     scomplex* A22       = buff_A + (i+1)*cs_A + (i+1)*rs_A;
 
-    int       mn_ahead  = mn_A - i - 1;
+    integer       mn_ahead  = mn_A - i - 1;
 
     /*------------------------------------------------------------*/
 
@@ -208,11 +208,11 @@ FLA_Error FLA_Ttmm_l_opc_var3( int mn_A,
 
 
 
-FLA_Error FLA_Ttmm_l_opz_var3( int mn_A,
-                               dcomplex* buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Ttmm_l_opz_var3( integer mn_A,
+                               dcomplex* buff_A, integer rs_A, integer cs_A )
 {
   dcomplex* buff_1  = FLA_DOUBLE_COMPLEX_PTR( FLA_ONE );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < mn_A; ++i )
   {
@@ -220,7 +220,7 @@ FLA_Error FLA_Ttmm_l_opz_var3( int mn_A,
     dcomplex* a21       = buff_A + (i  )*cs_A + (i+1)*rs_A;
     dcomplex* A22       = buff_A + (i+1)*cs_A + (i+1)*rs_A;
 
-    int       mn_ahead  = mn_A - i - 1;
+    integer       mn_ahead  = mn_A - i - 1;
 
     /*------------------------------------------------------------*/
 

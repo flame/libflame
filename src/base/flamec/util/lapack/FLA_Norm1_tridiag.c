@@ -13,9 +13,9 @@
 FLA_Error FLA_Norm1_tridiag( FLA_Obj d, FLA_Obj e, FLA_Obj norm )
 {
 	FLA_Datatype datatype;
-	int          m_A;
-	int          inc_d;
-	int          inc_e;
+	integer          m_A;
+	integer          inc_d;
+	integer          inc_e;
 
 	datatype = FLA_Obj_datatype( d );
 
@@ -61,15 +61,15 @@ FLA_Error FLA_Norm1_tridiag( FLA_Obj d, FLA_Obj e, FLA_Obj norm )
 
 
 
-FLA_Error FLA_Norm1_tridiag_ops( int       m_A,
-                                 float*    buff_d, int inc_d, 
-                                 float*    buff_e, int inc_e,
+FLA_Error FLA_Norm1_tridiag_ops( integer       m_A,
+                                 float*    buff_d, integer inc_d, 
+                                 float*    buff_e, integer inc_e,
                                  float*    norm )
 {
 	float*  d  = buff_d;
 	float*  e  = buff_e;
 	float   nm;
-	int     i;
+	integer     i;
 
 	if ( m_A == 1 )
 	{
@@ -108,15 +108,15 @@ FLA_Error FLA_Norm1_tridiag_ops( int       m_A,
 
 
 
-FLA_Error FLA_Norm1_tridiag_opd( int       m_A,
-                                 double*   buff_d, int inc_d, 
-                                 double*   buff_e, int inc_e,
+FLA_Error FLA_Norm1_tridiag_opd( integer       m_A,
+                                 double*   buff_d, integer inc_d, 
+                                 double*   buff_e, integer inc_e,
                                  double*   norm )
 {
 	double* d  = buff_d;
 	double* e  = buff_e;
 	double  nm;
-	int     i;
+	integer     i;
 
 	if ( m_A == 1 )
 	{

@@ -13,11 +13,11 @@
 FLA_Error FLA_Bsvd_francis_v_opt_var1( FLA_Obj shift, FLA_Obj g, FLA_Obj h, FLA_Obj d, FLA_Obj e )
 {
     FLA_Datatype datatype;
-    int          m_A;
-    int          inc_g;
-    int          inc_h;
-    int          inc_d;
-    int          inc_e;
+    integer          m_A;
+    integer          inc_g;
+    integer          inc_h;
+    integer          inc_d;
+    integer          inc_e;
 
     datatype = FLA_Obj_datatype( d );
 
@@ -73,16 +73,16 @@ FLA_Error FLA_Bsvd_francis_v_opt_var1( FLA_Obj shift, FLA_Obj g, FLA_Obj h, FLA_
 
 
 
-FLA_Error FLA_Bsvd_francis_v_ops_var1( int       m_A,
+FLA_Error FLA_Bsvd_francis_v_ops_var1( integer       m_A,
                                        float     shift,
-                                       scomplex* buff_g, int inc_g,
-                                       scomplex* buff_h, int inc_h,
-                                       float*    buff_d, int inc_d,
-                                       float*    buff_e, int inc_e )
+                                       scomplex* buff_g, integer inc_g,
+                                       scomplex* buff_h, integer inc_h,
+                                       float*    buff_d, integer inc_d,
+                                       float*    buff_e, integer inc_e )
 {
     float     one   = bl1_s1();
     float     bulge = 0.0F;
-    int       i;
+    integer       i;
 
     // If the shift is zero, perform a simplified Francis step.
     if ( shift == 0.0F )
@@ -111,21 +111,21 @@ FLA_Error FLA_Bsvd_francis_v_ops_var1( int       m_A,
             float*   sigmaR   = &(buff_h[(i  )*inc_h].imag);
 
             a11temp = *alpha11 * cs;
-            MAC_Givens2_ops( &a11temp,
-                             alpha12,
-                             &cs,
-                             &sn,
-                             &r );
+            MAC_Givens2_slartgp( &a11temp,
+                                 alpha12,
+                                 &cs,
+                                 &sn,
+                                 &r );
 
             if ( i > 0 ) *alpha01 = oldsn * r;
 
             a11temp = oldcs * r;
             a22temp = *alpha22 * sn;
-            MAC_Givens2_ops( &a11temp,
-                             &a22temp,
-                             &oldcs,
-                             &oldsn,
-                             alpha11 );
+            MAC_Givens2_slartgp( &a11temp,
+                                 &a22temp,
+                                 &oldcs,
+                                 &oldsn,
+                                 alpha11 );
 
             *gammaR = cs;
             *sigmaR = sn;
@@ -161,7 +161,7 @@ FLA_Error FLA_Bsvd_francis_v_ops_var1( int       m_A,
         float     alpha01_new;
         float     alpha11_new;
 
-        int       mn_ahead  = m_A - i - 2;
+        integer       mn_ahead  = m_A - i - 2;
 
         /*------------------------------------------------------------*/
 
@@ -177,11 +177,11 @@ FLA_Error FLA_Bsvd_francis_v_ops_var1( int       m_A,
             alpha12_temp = *buff_e;
 
             // Compute a Givens rotation that introduces the bulge.
-            MAC_Givens2_ops( &alpha11_temp,
-                             &alpha12_temp,
-                             gammaR,
-                             sigmaR,
-                             &alpha11_new );
+            MAC_Givens2_slartgp( &alpha11_temp,
+                                 &alpha12_temp,
+                                 gammaR,
+                                 sigmaR,
+                                 &alpha11_new );
 
             // Apply the bulge-introducting Givens rotation (from the right)
             // to the top-left 2x2 matrix.
@@ -196,11 +196,11 @@ FLA_Error FLA_Bsvd_francis_v_ops_var1( int       m_A,
         {
             // Compute a new Givens rotation to push the bulge (from the
             // right).
-            MAC_Givens2_ops( alpha01,
-                             alpha02,
-                             gammaR,
-                             sigmaR,
-                             &alpha01_new );
+            MAC_Givens2_slartgp( alpha01,
+                                 alpha02,
+                                 gammaR,
+                                 sigmaR,
+                                 &alpha01_new );
 
             // Apply the Givens rotation (from the right) to the 1x2 vector
             // from which it was computed, which annihilates alpha02.
@@ -218,11 +218,11 @@ FLA_Error FLA_Bsvd_francis_v_ops_var1( int       m_A,
         }
 
         // Compute a new Givens rotation to push the bulge (from the left).
-        MAC_Givens2_ops( alpha11,
-                         alpha21,
-                         gammaL,
-                         sigmaL,
-                         &alpha11_new );
+        MAC_Givens2_slartgp( alpha11,
+                             alpha21,
+                             gammaL,
+                             sigmaL,
+                             &alpha11_new );
 
         // Apply the Givens rotation (from the left) to the 2x1 vector
         // from which it was computed, which annihilates alpha11.
@@ -258,16 +258,16 @@ FLA_Error FLA_Bsvd_francis_v_ops_var1( int       m_A,
 
 
 
-FLA_Error FLA_Bsvd_francis_v_opd_var1( int       m_A,
+FLA_Error FLA_Bsvd_francis_v_opd_var1( integer       m_A,
                                        double    shift,
-                                       dcomplex* buff_g, int inc_g,
-                                       dcomplex* buff_h, int inc_h,
-                                       double*   buff_d, int inc_d,
-                                       double*   buff_e, int inc_e )
+                                       dcomplex* buff_g, integer inc_g,
+                                       dcomplex* buff_h, integer inc_h,
+                                       double*   buff_d, integer inc_d,
+                                       double*   buff_e, integer inc_e )
 {
     double    one   = bl1_d1();
     double    bulge = 0.0;
-    int       i;
+    integer       i;
 
     // If the shift is zero, perform a simplified Francis step.
     if ( shift == 0.0 )
@@ -296,21 +296,21 @@ FLA_Error FLA_Bsvd_francis_v_opd_var1( int       m_A,
             double*   sigmaR   = &(buff_h[(i  )*inc_h].imag);
 
             a11temp = *alpha11 * cs;
-            MAC_Givens2_opd( &a11temp,
-                             alpha12,
-                             &cs,
-                             &sn,
-                             &r );
+            MAC_Givens2_dlartgp( &a11temp,
+                                 alpha12,
+                                 &cs,
+                                 &sn,
+                                 &r );
 
             if ( i > 0 ) *alpha01 = oldsn * r;
 
             a11temp = oldcs * r;
             a22temp = *alpha22 * sn;
-            MAC_Givens2_opd( &a11temp,
-                             &a22temp,
-                             &oldcs,
-                             &oldsn,
-                             alpha11 );
+            MAC_Givens2_dlartgp( &a11temp,
+                                 &a22temp,
+                                 &oldcs,
+                                 &oldsn,
+                                 alpha11 );
 
             *gammaR = cs;
             *sigmaR = sn;
@@ -346,7 +346,7 @@ FLA_Error FLA_Bsvd_francis_v_opd_var1( int       m_A,
         double    alpha01_new;
         double    alpha11_new;
 
-        int       mn_ahead  = m_A - i - 2;
+        integer       mn_ahead  = m_A - i - 2;
 
         /*------------------------------------------------------------*/
 
@@ -362,11 +362,11 @@ FLA_Error FLA_Bsvd_francis_v_opd_var1( int       m_A,
             alpha12_temp = *buff_e;
 
             // Compute a Givens rotation that introduces the bulge.
-            MAC_Givens2_opd( &alpha11_temp,
-                             &alpha12_temp,
-                             gammaR,
-                             sigmaR,
-                             &alpha11_new );
+            MAC_Givens2_dlartgp( &alpha11_temp,
+                                 &alpha12_temp,
+                                 gammaR,
+                                 sigmaR,
+                                 &alpha11_new );
 
             // Apply the bulge-introducting Givens rotation (from the right)
             // to the top-left 2x2 matrix.
@@ -381,11 +381,11 @@ FLA_Error FLA_Bsvd_francis_v_opd_var1( int       m_A,
         {
             // Compute a new Givens rotation to push the bulge (from the
             // right).
-            MAC_Givens2_opd( alpha01,
-                             alpha02,
-                             gammaR,
-                             sigmaR,
-                             &alpha01_new );
+            MAC_Givens2_dlartgp( alpha01,
+                                 alpha02,
+                                 gammaR,
+                                 sigmaR,
+                                 &alpha01_new );
 
             // Apply the Givens rotation (from the right) to the 1x2 vector
             // from which it was computed, which annihilates alpha02.
@@ -403,11 +403,11 @@ FLA_Error FLA_Bsvd_francis_v_opd_var1( int       m_A,
         }
 
         // Compute a new Givens rotation to push the bulge (from the left).
-        MAC_Givens2_opd( alpha11,
-                         alpha21,
-                         gammaL,
-                         sigmaL,
-                         &alpha11_new );
+        MAC_Givens2_dlartgp( alpha11,
+                             alpha21,
+                             gammaL,
+                             sigmaL,
+                             &alpha11_new );
 
         // Apply the Givens rotation (from the left) to the 2x1 vector
         // from which it was computed, which annihilates alpha11.

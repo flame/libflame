@@ -13,11 +13,11 @@
 FLA_Error FLA_Tevd_v_opt_var5( FLA_Obj d, FLA_Obj e, FLA_Obj G, FLA_Obj U )
 {
 	FLA_Datatype datatype;
-	int          m_A, m_U;
-	int          inc_d;
-	int          inc_e;
-	int          rs_G, cs_G;
-	int          rs_U, cs_U;
+	integer          m_A, m_U;
+	integer          inc_d;
+	integer          inc_e;
+	integer          rs_G, cs_G;
+	integer          rs_U, cs_U;
 
 	datatype = FLA_Obj_datatype( U );
 
@@ -110,60 +110,60 @@ FLA_Error FLA_Tevd_v_opt_var5( FLA_Obj d, FLA_Obj e, FLA_Obj G, FLA_Obj U )
 
 
 
-FLA_Error FLA_Tevd_v_ops_var5( int       m_A,
-                               int       m_U,
-                               float*    buff_d, int inc_d, 
-                               float*    buff_e, int inc_e,
-                               float*    buff_G, int rs_G, int cs_G,
-                               float*    buff_U, int rs_U, int cs_U )
+FLA_Error FLA_Tevd_v_ops_var5( integer       m_A,
+                               integer       m_U,
+                               float*    buff_d, integer inc_d, 
+                               float*    buff_e, integer inc_e,
+                               float*    buff_G, integer rs_G, integer cs_G,
+                               float*    buff_U, integer rs_U, integer cs_U )
 {
 	return FLA_SUCCESS;
 }
 
 
 
-FLA_Error FLA_Tevd_v_opd_var5( int       m_A,
-                               int       m_U,
-                               double*   buff_d, int inc_d, 
-                               double*   buff_e, int inc_e,
-                               double*   buff_G, int rs_G, int cs_G,
-                               double*   buff_U, int rs_U, int cs_U )
+FLA_Error FLA_Tevd_v_opd_var5( integer       m_A,
+                               integer       m_U,
+                               double*   buff_d, integer inc_d, 
+                               double*   buff_e, integer inc_e,
+                               double*   buff_G, integer rs_G, integer cs_G,
+                               double*   buff_U, integer rs_U, integer cs_U )
 {
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Tevd_v_opc_var5( int       m_A,
-                               int       m_U,
-                               float*    buff_d, int inc_d, 
-                               float*    buff_e, int inc_e,
-                               float*    buff_G, int rs_G, int cs_G,
-                               scomplex* buff_U, int rs_U, int cs_U )
+FLA_Error FLA_Tevd_v_opc_var5( integer       m_A,
+                               integer       m_U,
+                               float*    buff_d, integer inc_d, 
+                               float*    buff_e, integer inc_e,
+                               float*    buff_G, integer rs_G, integer cs_G,
+                               scomplex* buff_U, integer rs_U, integer cs_U )
 {
 	return FLA_SUCCESS;
 }
 
 //#define PRINTF
 
-FLA_Error FLA_Tevd_v_opz_var5( int       m_A,
-                               int       m_U,
-                               double*   buff_d, int inc_d, 
-                               double*   buff_e, int inc_e,
-                               double*   buff_G, int rs_G, int cs_G,
-                               dcomplex* buff_U, int rs_U, int cs_U )
+FLA_Error FLA_Tevd_v_opz_var5( integer       m_A,
+                               integer       m_U,
+                               double*   buff_d, integer inc_d, 
+                               double*   buff_e, integer inc_e,
+                               double*   buff_G, integer rs_G, integer cs_G,
+                               dcomplex* buff_U, integer rs_U, integer cs_U )
 {
 	double  one  = bl1_d1();
 	double  zero = bl1_d0();
 	double* buff_Ur;
 	double* buff_Uc;
-	int     rs_Ur, cs_Ur;
-	int     rs_Uc, cs_Uc;
-	int     i;
+	integer     rs_Ur, cs_Ur;
+	integer     rs_Uc, cs_Uc;
+	integer     i;
 	dgiv_t  rots;
 	
 /*
 	double* buff_d_copy;
 	double* buff_e_copy;
-	int     n_iter;
+	integer     n_iter;
 
 	buff_d_copy = bl1_dallocv( m_A );
 	buff_e_copy = bl1_dallocv( m_A - 1 );
@@ -185,11 +185,11 @@ FLA_Error FLA_Tevd_v_opz_var5( int       m_A,
 /*
 typedef struct fla_dgivens
 {
-	int        n_g;
-	int        n_g_alloc;
+	integer        n_g;
+	integer        n_g_alloc;
 	dcomplex** g;
-	int*       j_off;
-	int*       m_g;
+	integer*       j_off;
+	integer*       m_g;
 	
 } dgiv_t;
 */

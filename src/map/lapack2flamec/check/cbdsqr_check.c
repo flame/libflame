@@ -1,10 +1,10 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
 
-int cbdsqr_check(char *uplo, int *n, int *ncvt, int * nru, int *ncc, float *d__, float *e, scomplex *vt, int *ldvt, scomplex *u, int *ldu, scomplex *c__, int *ldc, float *rwork, int *info)
+int cbdsqr_check(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, float *d__, float *e, scomplex *vt, integer *ldvt, scomplex *u, integer *ldu, scomplex *c__, integer *ldc, float *rwork, integer *info)
 {
     /* System generated locals */
-  int c_dim1, c_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1;
+  integer c_dim1, c_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1;
     logical lower;
 
 #if AOCL_DTL_LOG_ENABLE

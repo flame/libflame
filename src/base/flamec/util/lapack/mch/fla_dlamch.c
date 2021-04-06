@@ -75,7 +75,7 @@ doublereal fla_dlamch(char *cmach, ftnlen cmach_len)
     static doublereal rmin, rmax, t, rmach;
     extern logical fla_lsame(char *, char *, ftnlen, ftnlen);
     static doublereal small, sfmin;
-    extern /* Subroutine */ int fla_dlamc2(integer *, integer *, logical *, 
+    extern /* Subroutine */ integer fla_dlamc2(integer *, integer *, logical *, 
 	    doublereal *, integer *, doublereal *, integer *, doublereal *);
     static integer it;
     static doublereal rnd, eps;
@@ -198,7 +198,7 @@ doublereal fla_dlamch(char *cmach, ftnlen cmach_len)
 
 /* *********************************************************************** */
 
-/* Subroutine */ int fla_dlamc1(integer *beta, integer *t, logical *rnd, logical 
+/* Subroutine */ integer fla_dlamc1(integer *beta, integer *t, logical *rnd, logical 
 	*ieee1)
 {
     /* Initialized data */
@@ -408,7 +408,7 @@ L30:
 
 /* *********************************************************************** */
 
-/* Subroutine */ int fla_dlamc2(integer *beta, integer *t, logical *rnd, 
+/* Subroutine */ integer fla_dlamc2(integer *beta, integer *t, logical *rnd, 
 	doublereal *eps, integer *emin, doublereal *rmin, integer *emax, 
 	doublereal *rmax)
 {
@@ -443,11 +443,11 @@ explicitly.\002,/)";
     static doublereal small;
     static integer gpmin;
     static doublereal third, lrmin, lrmax, sixth;
-    extern /* Subroutine */ int fla_dlamc1(integer *, integer *, logical *, 
+    extern /* Subroutine */ integer fla_dlamc1(integer *, integer *, logical *, 
 	    logical *);
     extern doublereal fla_dlamc3(doublereal *, doublereal *);
     static logical lieee1;
-    extern /* Subroutine */ int fla_dlamc4(integer *, doublereal *, integer *), 
+    extern /* Subroutine */ integer fla_dlamc4(integer *, doublereal *, integer *), 
 	    fla_dlamc5(integer *, integer *, integer *, logical *, integer *, 
 	    doublereal *);
     static integer lt, ngnmin, ngpmin;
@@ -765,7 +765,7 @@ doublereal fla_dlamc3(doublereal *a, doublereal *b)
 
 /* *********************************************************************** */
 
-/* Subroutine */ int fla_dlamc4(integer *emin, doublereal *start, integer *base)
+/* Subroutine */ integer fla_dlamc4(integer *emin, doublereal *start, integer *base)
 {
     /* System generated locals */
     integer i__1;
@@ -863,7 +863,7 @@ L10:
 
 /* *********************************************************************** */
 
-/* Subroutine */ int fla_dlamc5(integer *beta, integer *p, integer *emin, 
+/* Subroutine */ integer fla_dlamc5(integer *beta, integer *p, integer *emin, 
 	logical *ieee, integer *emax, doublereal *rmax)
 {
     /* System generated locals */

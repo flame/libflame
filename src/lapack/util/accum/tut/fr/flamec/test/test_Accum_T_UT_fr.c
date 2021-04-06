@@ -15,14 +15,14 @@
 #define FLA_ALG_UNB_OPT   2
 
 void time_Accum_T_UT_fr(
-                 int variant, int type, int n_repeats, int m, int n,
+                 integer variant, integer type, integer n_repeats, integer m, integer n,
                  FLA_Obj A, FLA_Obj t, FLA_Obj T, FLA_Obj W, FLA_Obj b, FLA_Obj b_ref,
                  double *dtime, double *diff, double *gflops );
 
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     datatype,
     m_input, n_input,
     m, n, min_m_n,

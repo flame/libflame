@@ -130,7 +130,7 @@ dim_t FLASH_Queue_get_gpu_num_blocks( void )
 // --- helper functions --- ===================================================
 
 
-FLA_Error FLASH_Queue_bind_gpu( int thread )
+FLA_Error FLASH_Queue_bind_gpu( integer thread )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_bind_gpu

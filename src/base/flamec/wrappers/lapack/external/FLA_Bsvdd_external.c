@@ -16,12 +16,12 @@ FLA_Error FLA_Bsvdd_external( FLA_Uplo uplo, FLA_Obj d, FLA_Obj e, FLA_Obj U, FL
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
   FLA_Datatype datatype;
   FLA_Datatype dt_real;
-  int          m_U, cs_U;
-  int          n_V, cs_V;
-  int          n_C, cs_C;
-  int          min_m_n;
-  int          inc_d, inc_e;
-  int          lwork, liwork;
+  integer          m_U, cs_U;
+  integer          n_V, cs_V;
+  integer          n_C, cs_C;
+  integer          min_m_n;
+  integer          inc_d, inc_e;
+  integer          lwork, liwork;
   FLA_Obj      work, iwork;
   char         blas_uplo;
   char         blas_compq = 'I';
@@ -67,7 +67,7 @@ FLA_Error FLA_Bsvdd_external( FLA_Uplo uplo, FLA_Obj d, FLA_Obj e, FLA_Obj U, FL
       float*    buff_Q     = ( float * ) NULL;
       float*    buff_IQ    = ( float * ) NULL;
       float*    buff_work  = ( float * ) FLA_FLOAT_PTR( work );
-      int*      buff_iwork = ( int   * ) FLA_INT_PTR( iwork );
+      integer*      buff_iwork = ( integer   * ) FLA_INT_PTR( iwork );
   
       F77_sbdsdc( &blas_uplo,
                   &blas_compq,
@@ -94,7 +94,7 @@ FLA_Error FLA_Bsvdd_external( FLA_Uplo uplo, FLA_Obj d, FLA_Obj e, FLA_Obj U, FL
       double*   buff_Q     = ( double * ) NULL;
       double*   buff_IQ    = ( double * ) NULL;
       double*   buff_work  = ( double * ) FLA_DOUBLE_PTR( work );
-      int*      buff_iwork = ( int    * ) FLA_INT_PTR( iwork );
+      integer*      buff_iwork = ( integer    * ) FLA_INT_PTR( iwork );
   
       F77_dbdsdc( &blas_uplo,
                   &blas_compq,

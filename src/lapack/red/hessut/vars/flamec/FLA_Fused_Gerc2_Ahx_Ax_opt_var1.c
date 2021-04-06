@@ -19,9 +19,9 @@ FLA_Error FLA_Fused_Gerc2_Ahx_Ax_opt_var1( FLA_Obj alpha, FLA_Obj u, FLA_Obj y, 
    w = A  * x;
 */
   FLA_Datatype datatype;
-  int          m_A, n_A;
-  int          rs_A, cs_A;
-  int          inc_u, inc_y, inc_z, inc_x, inc_v, inc_w;
+  integer          m_A, n_A;
+  integer          rs_A, cs_A;
+  integer          inc_u, inc_y, inc_z, inc_x, inc_v, inc_w;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -147,19 +147,19 @@ FLA_Error FLA_Fused_Gerc2_Ahx_Ax_opt_var1( FLA_Obj alpha, FLA_Obj u, FLA_Obj y, 
 
 
 
-FLA_Error FLA_Fused_Gerc2_Ahx_Ax_ops_var1( int m_A,
-                                           int n_A,
+FLA_Error FLA_Fused_Gerc2_Ahx_Ax_ops_var1( integer m_A,
+                                           integer n_A,
                                            float* buff_alpha, 
-                                           float* buff_u, int inc_u, 
-                                           float* buff_y, int inc_y, 
-                                           float* buff_z, int inc_z, 
-                                           float* buff_A, int rs_A, int cs_A, 
-                                           float* buff_x, int inc_x, 
-                                           float* buff_v, int inc_v, 
-                                           float* buff_w, int inc_w )
+                                           float* buff_u, integer inc_u, 
+                                           float* buff_y, integer inc_y, 
+                                           float* buff_z, integer inc_z, 
+                                           float* buff_A, integer rs_A, integer cs_A, 
+                                           float* buff_x, integer inc_x, 
+                                           float* buff_v, integer inc_v, 
+                                           float* buff_w, integer inc_w )
 {
   float*    buff_0  = FLA_FLOAT_PTR( FLA_ZERO );
-  int       i;
+  integer       i;
 
   bl1_ssetv( m_A,
              buff_0,
@@ -245,16 +245,16 @@ FLA_Error FLA_Fused_Gerc2_Ahx_Ax_ops_var1( int m_A,
 
 
 
-FLA_Error FLA_Fused_Gerc2_Ahx_Ax_opd_var1( int m_A,
-                                           int n_A,
+FLA_Error FLA_Fused_Gerc2_Ahx_Ax_opd_var1( integer m_A,
+                                           integer n_A,
                                            double* buff_alpha, 
-                                           double* buff_u, int inc_u, 
-                                           double* buff_y, int inc_y, 
-                                           double* buff_z, int inc_z, 
-                                           double* buff_A, int rs_A, int cs_A, 
-                                           double* buff_x, int inc_x, 
-                                           double* buff_v, int inc_v, 
-                                           double* buff_w, int inc_w )
+                                           double* buff_u, integer inc_u, 
+                                           double* buff_y, integer inc_y, 
+                                           double* buff_z, integer inc_z, 
+                                           double* buff_A, integer rs_A, integer cs_A, 
+                                           double* buff_x, integer inc_x, 
+                                           double* buff_v, integer inc_v, 
+                                           double* buff_w, integer inc_w )
 {
   double             zero  = bl1_d0();
 
@@ -273,14 +273,14 @@ FLA_Error FLA_Fused_Gerc2_Ahx_Ax_opd_var1( int m_A,
   double             alpha_psi1;
   double             alpha_upsilon1;
 
-  int       n_run         = n_A / 1;
-  //int       n_left        = n_A % 1;
-  int       step_a1       = 1*cs_A;
-  int       step_nu1      = 1*inc_v;
-  int       step_chi1     = 1*inc_x;
-  int       step_psi1     = 1*inc_y;
-  int       step_upsilon1 = 1*inc_u;
-  int       i;
+  integer       n_run         = n_A / 1;
+  //integer       n_left        = n_A % 1;
+  integer       step_a1       = 1*cs_A;
+  integer       step_nu1      = 1*inc_v;
+  integer       step_chi1     = 1*inc_x;
+  integer       step_psi1     = 1*inc_y;
+  integer       step_upsilon1 = 1*inc_u;
+  integer       i;
 
   bl1_dsetv( m_A,
              &zero,
@@ -324,19 +324,19 @@ FLA_Error FLA_Fused_Gerc2_Ahx_Ax_opd_var1( int m_A,
 
 
 
-FLA_Error FLA_Fused_Gerc2_Ahx_Ax_opc_var1( int m_A,
-                                           int n_A,
+FLA_Error FLA_Fused_Gerc2_Ahx_Ax_opc_var1( integer m_A,
+                                           integer n_A,
                                            scomplex* buff_alpha, 
-                                           scomplex* buff_u, int inc_u, 
-                                           scomplex* buff_y, int inc_y, 
-                                           scomplex* buff_z, int inc_z, 
-                                           scomplex* buff_A, int rs_A, int cs_A, 
-                                           scomplex* buff_x, int inc_x, 
-                                           scomplex* buff_v, int inc_v, 
-                                           scomplex* buff_w, int inc_w )
+                                           scomplex* buff_u, integer inc_u, 
+                                           scomplex* buff_y, integer inc_y, 
+                                           scomplex* buff_z, integer inc_z, 
+                                           scomplex* buff_A, integer rs_A, integer cs_A, 
+                                           scomplex* buff_x, integer inc_x, 
+                                           scomplex* buff_v, integer inc_v, 
+                                           scomplex* buff_w, integer inc_w )
 {
   scomplex* buff_0  = FLA_COMPLEX_PTR( FLA_ZERO );
-  int       i;
+  integer       i;
 
   bl1_csetv( m_A,
              buff_0,
@@ -418,16 +418,16 @@ FLA_Error FLA_Fused_Gerc2_Ahx_Ax_opc_var1( int m_A,
 
 
 
-FLA_Error FLA_Fused_Gerc2_Ahx_Ax_opz_var1( int m_A,
-                                           int n_A,
+FLA_Error FLA_Fused_Gerc2_Ahx_Ax_opz_var1( integer m_A,
+                                           integer n_A,
                                            dcomplex* buff_alpha, 
-                                           dcomplex* buff_u, int inc_u, 
-                                           dcomplex* buff_y, int inc_y, 
-                                           dcomplex* buff_z, int inc_z, 
-                                           dcomplex* buff_A, int rs_A, int cs_A, 
-                                           dcomplex* buff_x, int inc_x, 
-                                           dcomplex* buff_v, int inc_v, 
-                                           dcomplex* buff_w, int inc_w )
+                                           dcomplex* buff_u, integer inc_u, 
+                                           dcomplex* buff_y, integer inc_y, 
+                                           dcomplex* buff_z, integer inc_z, 
+                                           dcomplex* buff_A, integer rs_A, integer cs_A, 
+                                           dcomplex* buff_x, integer inc_x, 
+                                           dcomplex* buff_v, integer inc_v, 
+                                           dcomplex* buff_w, integer inc_w )
 {
   dcomplex           zero  = bl1_z0();
 
@@ -448,14 +448,14 @@ FLA_Error FLA_Fused_Gerc2_Ahx_Ax_opz_var1( int m_A,
   dcomplex           conj_psi1;
   dcomplex           conj_upsilon1;
 
-  int       n_run         = n_A / 1;
-  //int       n_left        = n_A % 1;
-  int       step_a1       = 1*cs_A;
-  int       step_nu1      = 1*inc_v;
-  int       step_chi1     = 1*inc_x;
-  int       step_psi1     = 1*inc_y;
-  int       step_upsilon1 = 1*inc_u;
-  int       i;
+  integer       n_run         = n_A / 1;
+  //integer       n_left        = n_A % 1;
+  integer       step_a1       = 1*cs_A;
+  integer       step_nu1      = 1*inc_v;
+  integer       step_chi1     = 1*inc_x;
+  integer       step_psi1     = 1*inc_y;
+  integer       step_upsilon1 = 1*inc_u;
+  integer       i;
 
   bl1_zsetv( m_A,
              &zero,

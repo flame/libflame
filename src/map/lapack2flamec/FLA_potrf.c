@@ -38,10 +38,10 @@ extern void DTL_Trace(
 
 #define LAPACK_potrf(prefix)                                    \
   int F77_ ## prefix ## potrf( char* uplo,                      \
-                               int*  n,                         \
+                               integer*  n,                         \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, \
-                               int*  ldim_A,                    \
-                               int*  info )
+                               integer*  ldim_A,                    \
+                               integer*  info )
 
 #define LAPACK_potrf_body(prefix)                               \
   AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5); 		\
@@ -116,10 +116,10 @@ LAPACK_potrf(z)
 
 #define LAPACK_potf2(prefix)                                    \
   int F77_ ## prefix ## potf2( char* uplo,                      \
-                               int*  n,                         \
+                               integer*  n,                         \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, \
-                               int*  ldim_A,                    \
-                               int*  info )
+                               integer*  ldim_A,                    \
+                               integer*  info )
 
 LAPACK_potf2(s)
 {

@@ -15,8 +15,8 @@
 FLA_Error FLA_Trinv_lu_opt_var1( FLA_Obj A )
 {
   FLA_Datatype datatype;
-  int          mn_A;
-  int          rs_A, cs_A;
+  integer          mn_A;
+  integer          rs_A, cs_A;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -73,18 +73,18 @@ FLA_Error FLA_Trinv_lu_opt_var1( FLA_Obj A )
 
 
 
-FLA_Error FLA_Trinv_lu_ops_var1( int mn_A,
-                                 float* buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Trinv_lu_ops_var1( integer mn_A,
+                                 float* buff_A, integer rs_A, integer cs_A )
 {
   float*    buff_m1 = FLA_FLOAT_PTR( FLA_MINUS_ONE );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < mn_A; ++i )
   {
     float*    A00       = buff_A + (0  )*cs_A + (0  )*rs_A;
     float*    a10t      = buff_A + (0  )*cs_A + (i  )*rs_A;
 
-    int       mn_behind = i;
+    integer       mn_behind = i;
 
     /*------------------------------------------------------------*/
 
@@ -111,18 +111,18 @@ FLA_Error FLA_Trinv_lu_ops_var1( int mn_A,
 
 
 
-FLA_Error FLA_Trinv_lu_opd_var1( int mn_A,
-                                 double* buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Trinv_lu_opd_var1( integer mn_A,
+                                 double* buff_A, integer rs_A, integer cs_A )
 {
   double*   buff_m1 = FLA_DOUBLE_PTR( FLA_MINUS_ONE );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < mn_A; ++i )
   {
     double*   A00       = buff_A + (0  )*cs_A + (0  )*rs_A;
     double*   a10t      = buff_A + (0  )*cs_A + (i  )*rs_A;
 
-    int       mn_behind = i;
+    integer       mn_behind = i;
 
     /*------------------------------------------------------------*/
 
@@ -149,18 +149,18 @@ FLA_Error FLA_Trinv_lu_opd_var1( int mn_A,
 
 
 
-FLA_Error FLA_Trinv_lu_opc_var1( int mn_A,
-                                 scomplex* buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Trinv_lu_opc_var1( integer mn_A,
+                                 scomplex* buff_A, integer rs_A, integer cs_A )
 {
   scomplex* buff_m1 = FLA_COMPLEX_PTR( FLA_MINUS_ONE );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < mn_A; ++i )
   {
     scomplex* A00       = buff_A + (0  )*cs_A + (0  )*rs_A;
     scomplex* a10t      = buff_A + (0  )*cs_A + (i  )*rs_A;
 
-    int       mn_behind = i;
+    integer       mn_behind = i;
 
     /*------------------------------------------------------------*/
 
@@ -187,18 +187,18 @@ FLA_Error FLA_Trinv_lu_opc_var1( int mn_A,
 
 
 
-FLA_Error FLA_Trinv_lu_opz_var1( int mn_A,
-                                 dcomplex* buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Trinv_lu_opz_var1( integer mn_A,
+                                 dcomplex* buff_A, integer rs_A, integer cs_A )
 {
   dcomplex* buff_m1 = FLA_DOUBLE_COMPLEX_PTR( FLA_MINUS_ONE );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < mn_A; ++i )
   {
     dcomplex* A00       = buff_A + (0  )*cs_A + (0  )*rs_A;
     dcomplex* a10t      = buff_A + (0  )*cs_A + (i  )*rs_A;
 
-    int       mn_behind = i;
+    integer       mn_behind = i;
 
     /*------------------------------------------------------------*/
 

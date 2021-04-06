@@ -1,10 +1,10 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h" /* Table of constant values */
 
-int zgeqpf_check(int *m, int *n, dcomplex *a, int *lda, int *jpvt, dcomplex *tau, dcomplex *work, double *rwork, int *info)
+int zgeqpf_check(integer *m, integer *n, dcomplex *a, integer *lda, integer *jpvt, dcomplex *tau, dcomplex *work, double *rwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
 
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];

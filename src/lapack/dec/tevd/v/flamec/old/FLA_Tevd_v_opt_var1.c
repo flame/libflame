@@ -13,11 +13,11 @@
 FLA_Error FLA_Tevd_v_opt_var1( FLA_Obj d, FLA_Obj e, FLA_Obj G, FLA_Obj U )
 {
 	FLA_Datatype datatype;
-	int          m_A, m_U, n_G;
-	int          inc_d;
-	int          inc_e;
-	int          rs_G, cs_G;
-	int          rs_U, cs_U;
+	integer          m_A, m_U, n_G;
+	integer          inc_d;
+	integer          inc_e;
+	integer          rs_G, cs_G;
+	integer          rs_U, cs_U;
 
 	datatype = FLA_Obj_datatype( U );
 
@@ -115,55 +115,55 @@ FLA_Error FLA_Tevd_v_opt_var1( FLA_Obj d, FLA_Obj e, FLA_Obj G, FLA_Obj U )
 
 
 
-FLA_Error FLA_Tevd_v_ops_var1( int       m_A,
-                               int       m_U,
-                               int       n_G,
-                               float*    buff_d, int inc_d, 
-                               float*    buff_e, int inc_e,
-                               scomplex* buff_G, int rs_G, int cs_G,
-                               float*    buff_U, int rs_U, int cs_U )
+FLA_Error FLA_Tevd_v_ops_var1( integer       m_A,
+                               integer       m_U,
+                               integer       n_G,
+                               float*    buff_d, integer inc_d, 
+                               float*    buff_e, integer inc_e,
+                               scomplex* buff_G, integer rs_G, integer cs_G,
+                               float*    buff_U, integer rs_U, integer cs_U )
 {
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Tevd_v_opd_var1( int       m_A,
-                               int       m_U,
-                               int       n_G,
-                               double*   buff_d, int inc_d, 
-                               double*   buff_e, int inc_e,
-                               dcomplex* buff_G, int rs_G, int cs_G,
-                               double*   buff_U, int rs_U, int cs_U )
+FLA_Error FLA_Tevd_v_opd_var1( integer       m_A,
+                               integer       m_U,
+                               integer       n_G,
+                               double*   buff_d, integer inc_d, 
+                               double*   buff_e, integer inc_e,
+                               dcomplex* buff_G, integer rs_G, integer cs_G,
+                               double*   buff_U, integer rs_U, integer cs_U )
 {
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Tevd_v_opc_var1( int       m_A,
-                               int       m_U,
-                               int       n_G,
-                               float*    buff_d, int inc_d, 
-                               float*    buff_e, int inc_e,
-                               scomplex* buff_G, int rs_G, int cs_G,
-                               scomplex* buff_U, int rs_U, int cs_U )
+FLA_Error FLA_Tevd_v_opc_var1( integer       m_A,
+                               integer       m_U,
+                               integer       n_G,
+                               float*    buff_d, integer inc_d, 
+                               float*    buff_e, integer inc_e,
+                               scomplex* buff_G, integer rs_G, integer cs_G,
+                               scomplex* buff_U, integer rs_U, integer cs_U )
 {
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Tevd_v_opz_var1( int       m_A,
-                               int       m_U,
-                               int       n_G,
-                               double*   buff_d, int inc_d, 
-                               double*   buff_e, int inc_e,
-                               dcomplex* buff_G, int rs_G, int cs_G,
-                               dcomplex* buff_U, int rs_U, int cs_U )
+FLA_Error FLA_Tevd_v_opz_var1( integer       m_A,
+                               integer       m_U,
+                               integer       n_G,
+                               double*   buff_d, integer inc_d, 
+                               double*   buff_e, integer inc_e,
+                               dcomplex* buff_G, integer rs_G, integer cs_G,
+                               dcomplex* buff_U, integer rs_U, integer cs_U )
 {
 	double  gamma, sigma;
-	int     i, k;
-	int     k_total = 0;
-	int     k_weight = 0;
+	integer     i, k;
+	integer     k_total = 0;
+	integer     k_weight = 0;
 
 	for ( i = m_A - 1; i > 1; --i )
 	{
-		int m_ATL = i + 1;
+		integer m_ATL = i + 1;
 
 		/*------------------------------------------------------------*/
 

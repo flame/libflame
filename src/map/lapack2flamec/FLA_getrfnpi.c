@@ -48,12 +48,12 @@ extern void DTL_Trace(
 		uint32 ui32LineNumber,
 		const int8 *pi8Message);
 
-#define LAPACK_getrfnpi(prefix)                                                                \
-  int F77_ ## prefix ## getrfnpi( int* m,                                                      \
-                                  int* n,                                                      \
-                                  int* nfact,                                                  \
-                                  PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A,          \
-                                  int* info )
+#define LAPACK_getrfnpi(prefix)                                                       \
+  int F77_ ## prefix ## getrfnpi( integer* m,                                             \
+                                  integer* n,                                             \
+                                  integer* nfact,                                         \
+                                  PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
+                                  integer* info )
 
 #define LAPACK_getrfnpi_body(prefix)                                                           \
   AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                                                \

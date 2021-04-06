@@ -20,14 +20,14 @@
 
 
 void time_Trmm_rlh(
-               int variant, int type, int n_repeats, int n, int nb_alg,
+               integer variant, integer type, integer n_repeats, integer n, integer nb_alg,
                FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj C_ref,
                double *dtime, double *diff, double *gflops );
 
 
-int main(int argc, char *argv[])
+int main(integer argc, char *argv[])
 {
-  int 
+  integer 
     m_input, n_input,
     m, n,
     p_first, p_last, p_inc,

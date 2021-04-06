@@ -1,10 +1,10 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h" 
 
-int zgehd2_check(int *n, int *ilo, int *ihi, dcomplex *a, int *lda, dcomplex *tau, dcomplex * work, int *info)
+int zgehd2_check(integer *n, integer *ilo, integer *ihi, dcomplex *a, integer *lda, dcomplex *tau, dcomplex * work, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
 
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];

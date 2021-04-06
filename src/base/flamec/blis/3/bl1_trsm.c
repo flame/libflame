@@ -10,19 +10,19 @@
 
 #include "blis1.h"
 
-void bl1_strsm( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m, int n, float* alpha, float* a, int a_rs, int a_cs, float* b, int b_rs, int b_cs )
+void bl1_strsm( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, integer n, float* alpha, float* a, integer a_rs, integer a_cs, float* b, integer b_rs, integer b_cs )
 {
-	int       m_save    = m;
-	int       n_save    = n;
+	integer       m_save    = m;
+	integer       n_save    = n;
 	float*    a_save    = a;
 	float*    b_save    = b;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       b_rs_save = b_rs;
-	int       b_cs_save = b_cs;
-	int       dim_a;
-	int       lda, inca;
-	int       ldb, incb;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       b_rs_save = b_rs;
+	integer       b_cs_save = b_cs;
+	integer       dim_a;
+	integer       lda, inca;
+	integer       ldb, incb;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -113,19 +113,19 @@ void bl1_strsm( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m,
 	                         &b,     &b_rs,     &b_cs );
 }
 
-void bl1_dtrsm( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m, int n, double* alpha, double* a, int a_rs, int a_cs, double* b, int b_rs, int b_cs )
+void bl1_dtrsm( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, integer n, double* alpha, double* a, integer a_rs, integer a_cs, double* b, integer b_rs, integer b_cs )
 {
-	int       m_save    = m;
-	int       n_save    = n;
+	integer       m_save    = m;
+	integer       n_save    = n;
 	double*   a_save    = a;
 	double*   b_save    = b;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       b_rs_save = b_rs;
-	int       b_cs_save = b_cs;
-	int       dim_a;
-	int       lda, inca;
-	int       ldb, incb;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       b_rs_save = b_rs;
+	integer       b_cs_save = b_cs;
+	integer       dim_a;
+	integer       lda, inca;
+	integer       ldb, incb;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -216,22 +216,22 @@ void bl1_dtrsm( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m,
 	                         &b,     &b_rs,     &b_cs );
 }
 
-void bl1_ctrsm( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m, int n, scomplex* alpha, scomplex* a, int a_rs, int a_cs, scomplex* b, int b_rs, int b_cs )
+void bl1_ctrsm( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, integer n, scomplex* alpha, scomplex* a, integer a_rs, integer a_cs, scomplex* b, integer b_rs, integer b_cs )
 {
-	int       m_save    = m;
-	int       n_save    = n;
+	integer       m_save    = m;
+	integer       n_save    = n;
 	scomplex* a_save    = a;
 	scomplex* b_save    = b;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       b_rs_save = b_rs;
-	int       b_cs_save = b_cs;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       b_rs_save = b_rs;
+	integer       b_cs_save = b_cs;
 	scomplex* a_conj;
-	int       dim_a;
-	int       lda, inca;
-	int       ldb, incb;
-	int       lda_conj, inca_conj;
-	int       a_was_copied;
+	integer       dim_a;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       lda_conj, inca_conj;
+	integer       a_was_copied;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -314,7 +314,7 @@ void bl1_ctrsm( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m,
 	// by making a conjugated copy of A.
 	if ( bl1_is_conjnotrans( trans ) && !a_was_copied )
 	{
-		int dim_a;
+		integer dim_a;
 
 		bl1_set_dim_with_side( side, m, n, &dim_a );
 		
@@ -331,7 +331,7 @@ void bl1_ctrsm( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m,
 	}
 	else if ( bl1_is_conjnotrans( trans ) && a_was_copied )
 	{
-		int dim_a;
+		integer dim_a;
 
 		bl1_set_dim_with_side( side, m, n, &dim_a );
 		
@@ -366,22 +366,22 @@ void bl1_ctrsm( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m,
 	                         &b,     &b_rs,     &b_cs );
 }
 
-void bl1_ztrsm( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m, int n, dcomplex* alpha, dcomplex* a, int a_rs, int a_cs, dcomplex* b, int b_rs, int b_cs )
+void bl1_ztrsm( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, integer n, dcomplex* alpha, dcomplex* a, integer a_rs, integer a_cs, dcomplex* b, integer b_rs, integer b_cs )
 {
-	int       m_save    = m;
-	int       n_save    = n;
+	integer       m_save    = m;
+	integer       n_save    = n;
 	dcomplex* a_save    = a;
 	dcomplex* b_save    = b;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       b_rs_save = b_rs;
-	int       b_cs_save = b_cs;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       b_rs_save = b_rs;
+	integer       b_cs_save = b_cs;
 	dcomplex* a_conj;
-	int       dim_a;
-	int       lda, inca;
-	int       ldb, incb;
-	int       lda_conj, inca_conj;
-	int       a_was_copied;
+	integer       dim_a;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       lda_conj, inca_conj;
+	integer       a_was_copied;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -464,7 +464,7 @@ void bl1_ztrsm( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m,
 	// by making a conjugated copy of A.
 	if ( bl1_is_conjnotrans( trans ) && !a_was_copied )
 	{
-		int dim_a;
+		integer dim_a;
 
 		bl1_set_dim_with_side( side, m, n, &dim_a );
 		
@@ -481,7 +481,7 @@ void bl1_ztrsm( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m,
 	}
 	else if ( bl1_is_conjnotrans( trans ) && a_was_copied )
 	{
-		int dim_a;
+		integer dim_a;
 
 		bl1_set_dim_with_side( side, m, n, &dim_a );
 		
@@ -517,7 +517,7 @@ void bl1_ztrsm( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m,
 
 // --- Classic routine wrappers ---
 
-void bl1_strsm_blas( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m, int n, float* alpha, float* a, int lda, float* b, int ldb )
+void bl1_strsm_blas( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, integer n, float* alpha, float* a, integer lda, float* b, integer ldb )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;
@@ -564,7 +564,7 @@ void bl1_strsm_blas( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, i
 #endif
 }
 
-void bl1_dtrsm_blas( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m, int n, double* alpha, double* a, int lda, double* b, int ldb )
+void bl1_dtrsm_blas( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, integer n, double* alpha, double* a, integer lda, double* b, integer ldb )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;
@@ -611,7 +611,7 @@ void bl1_dtrsm_blas( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, i
 #endif
 }
 
-void bl1_ctrsm_blas( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m, int n, scomplex* alpha, scomplex* a, int lda, scomplex* b, int ldb )
+void bl1_ctrsm_blas( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, integer n, scomplex* alpha, scomplex* a, integer lda, scomplex* b, integer ldb )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;
@@ -658,7 +658,7 @@ void bl1_ctrsm_blas( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, i
 #endif
 }
 
-void bl1_ztrsm_blas( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m, int n, dcomplex* alpha, dcomplex* a, int lda, dcomplex* b, int ldb )
+void bl1_ztrsm_blas( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, integer n, dcomplex* alpha, dcomplex* a, integer lda, dcomplex* b, integer ldb )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;

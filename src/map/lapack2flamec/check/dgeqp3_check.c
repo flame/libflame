@@ -1,16 +1,16 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h" /* Table of constant values */
-static int c__1 = 1;
-static int c_n1 = -1;
+static integer c__1 = 1;
+static integer c_n1 = -1;
 
-int dgeqp3_check(int *m, int *n, double *a, int * lda, int *jpvt, double *tau, double *work, int *lwork, int *info)
+int dgeqp3_check(integer *m, integer *n, double *a, integer * lda, integer *jpvt, double *tau, double *work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
     /* Local variables */
-    int nb, iws;
-    int minmn;
-    int lwkopt;
+    integer nb, iws;
+    integer minmn;
+    integer lwkopt;
     logical lquery;
 
 #if AOCL_DTL_LOG_ENABLE
@@ -70,11 +70,6 @@ int dgeqp3_check(int *m, int *n, double *a, int * lda, int *jpvt, double *tau, d
     else if (lquery)
     {
         return LAPACK_QUERY_RETURN;
-    }
-    /* Quick return if possible. */
-    if (minmn == 0)
-    {
-        return LAPACK_QUICK_RETURN;
     }
 
     return LAPACK_SUCCESS;

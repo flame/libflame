@@ -13,11 +13,11 @@
 FLA_Error FLA_Herk_external( FLA_Uplo uplo, FLA_Trans trans, FLA_Obj alpha, FLA_Obj A, FLA_Obj beta, FLA_Obj C )
 {
   FLA_Datatype datatype;
-  int          k_A;
-  int          m_A, n_A;
-  int          m_C;
-  int          rs_A, cs_A;
-  int          rs_C, cs_C;
+  integer          k_A;
+  integer          m_A, n_A;
+  integer          m_C;
+  integer          rs_A, cs_A;
+  integer          rs_C, cs_C;
   uplo1_t       blis_uplo; 
   trans1_t      blis_trans;
 

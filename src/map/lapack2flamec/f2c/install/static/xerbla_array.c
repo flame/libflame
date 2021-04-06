@@ -105,7 +105,7 @@ array.f"> */
 /* > \ingroup auxOTHERauxiliary */
 
 /*  ===================================================================== */
-/* Subroutine */ int xerbla_array__(char *srname_array__, integer *
+/* Subroutine */ int xerbla_array_(char *srname_array__, integer *
                                     srname_len__, integer *info)
 {
     /* System generated locals */

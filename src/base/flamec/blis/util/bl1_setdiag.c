@@ -10,10 +10,10 @@
 
 #include "blis1.h"
 
-void bl1_isetdiag( int offset, int m, int n, int* sigma, int* a, int a_rs, int a_cs )
+void bl1_isetdiag( integer offset, integer m, integer n, integer* sigma, integer* a, integer a_rs, integer a_cs )
 {
-	int*   alpha;
-	int    i, j;
+	integer*   alpha;
+	integer    i, j;
 
 	i = j = 0;
 
@@ -31,10 +31,10 @@ void bl1_isetdiag( int offset, int m, int n, int* sigma, int* a, int a_rs, int a
 	}
 }
 
-void bl1_ssetdiag( int offset, int m, int n, float* sigma, float* a, int a_rs, int a_cs )
+void bl1_ssetdiag( integer offset, integer m, integer n, float* sigma, float* a, integer a_rs, integer a_cs )
 {
 	float* alpha;
-	int    i, j;
+	integer    i, j;
 
 	i = j = 0;
 
@@ -52,10 +52,10 @@ void bl1_ssetdiag( int offset, int m, int n, float* sigma, float* a, int a_rs, i
 	}
 }
 
-void bl1_dsetdiag( int offset, int m, int n, double* sigma, double* a, int a_rs, int a_cs )
+void bl1_dsetdiag( integer offset, integer m, integer n, double* sigma, double* a, integer a_rs, integer a_cs )
 {
 	double* alpha;
-	int     i, j;
+	integer     i, j;
 
 	i = j = 0;
 
@@ -73,10 +73,10 @@ void bl1_dsetdiag( int offset, int m, int n, double* sigma, double* a, int a_rs,
 	}
 }
 
-void bl1_csetdiag( int offset, int m, int n, scomplex* sigma, scomplex* a, int a_rs, int a_cs )
+void bl1_csetdiag( integer offset, integer m, integer n, scomplex* sigma, scomplex* a, integer a_rs, integer a_cs )
 {
 	scomplex* alpha;
-	int       i, j;
+	integer       i, j;
 
 	i = j = 0;
 
@@ -95,10 +95,10 @@ void bl1_csetdiag( int offset, int m, int n, scomplex* sigma, scomplex* a, int a
 	}
 }
 
-void bl1_zsetdiag( int offset, int m, int n, dcomplex* sigma, dcomplex* a, int a_rs, int a_cs )
+void bl1_zsetdiag( integer offset, integer m, integer n, dcomplex* sigma, dcomplex* a, integer a_rs, integer a_cs )
 {
 	dcomplex* alpha;
-	int       i, j;
+	integer       i, j;
 
 	i = j = 0;
 

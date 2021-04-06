@@ -13,8 +13,8 @@
 FLA_Error FLA_Scalc_external( FLA_Conj conj, FLA_Obj alpha, FLA_Obj A )
 {
   FLA_Datatype datatype, dt_alpha;
-  int          m_A, n_A;
-  int          rs_A, cs_A;
+  integer          m_A, n_A;
+  integer          rs_A, cs_A;
   conj1_t       blis_conj;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING )

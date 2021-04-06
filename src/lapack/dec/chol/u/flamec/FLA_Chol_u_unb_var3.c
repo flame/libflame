@@ -18,7 +18,7 @@ FLA_Error FLA_Chol_u_unb_var3( FLA_Obj A )
           ABL,   ABR,      a10t, alpha11, a12t,
                            A20,  a21,     A22;
 
-  int value = 0;
+  integer value = 0;
 
   FLA_Part_2x2( A,    &ATL, &ATR,
                       &ABL, &ABR,     0, 0, FLA_TL );

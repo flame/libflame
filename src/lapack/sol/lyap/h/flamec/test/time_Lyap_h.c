@@ -19,7 +19,7 @@
 FLA_Error REF_Lyap_h( FLA_Obj isgn, FLA_Obj A, FLA_Obj C, FLA_Obj scale );
 
 void time_Lyap_h(
-               int variant, int type, int n_repeats, int m, int nb_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer nb_alg,
                FLA_Obj isgn, FLA_Obj A, FLA_Obj C, FLA_Obj C_ref, FLA_Obj scale,
                double *dtime, double *diff, double *gflops );
 
@@ -31,11 +31,11 @@ extern TLS_CLASS_SPEC fla_sylv_t*  fla_sylv_cntl;
 extern TLS_CLASS_SPEC fla_lyap_t*  fla_lyap_cntl_leaf;
 
 void time_Lyap_h(
-               int variant, int type, int n_repeats, int m, int nb_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer nb_alg,
                FLA_Obj isgn, FLA_Obj A, FLA_Obj C, FLA_Obj C_ref, FLA_Obj scale,
                double *dtime, double *diff, double *gflops )
 {
-  int irep;
+  integer irep;
 
   double dtime_old = 1.0e9;
 

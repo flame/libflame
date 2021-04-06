@@ -16,6 +16,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/test_caqrutinc.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_caqrutinc.h
 ${CMAKE_CURRENT_SOURCE_DIR}/test_chol.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_chol.h
+${CMAKE_CURRENT_SOURCE_DIR}/test_common.c
+${CMAKE_CURRENT_SOURCE_DIR}/test_common.h
 ${CMAKE_CURRENT_SOURCE_DIR}/test_eig_gest.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_eig_gest.h
 ${CMAKE_CURRENT_SOURCE_DIR}/test_gemm.c
@@ -32,6 +34,10 @@ ${CMAKE_CURRENT_SOURCE_DIR}/test_libflame.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_libflame.h
 ${CMAKE_CURRENT_SOURCE_DIR}/test_lqut.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_lqut.h
+${CMAKE_CURRENT_SOURCE_DIR}/test_ldlt2_nopiv_ps.c
+${CMAKE_CURRENT_SOURCE_DIR}/test_ldlt2_nopiv_ps.h
+${CMAKE_CURRENT_SOURCE_DIR}/test_ldltx_nopiv_ps.c
+${CMAKE_CURRENT_SOURCE_DIR}/test_ldltx_nopiv_ps.h
 ${CMAKE_CURRENT_SOURCE_DIR}/test_lu_nopiv_i.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_lu_nopiv_i.h
 ${CMAKE_CURRENT_SOURCE_DIR}/test_lu_incpiv.c

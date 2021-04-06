@@ -30,8 +30,13 @@ use or performance of this software.
 
 #ifdef HAVE_FSEEKO
 #define OFF_T off_t
-#define FSEEK fseeko
-#define FTELL ftello
+#ifdef _WIN32
+	#define FSEEK fseek
+	#define FTELL ftell
+#else
+	#define FSEEK fseeko
+	#define FTELL ftello
+#endif
 #else
 #define OFF_T long
 #define FSEEK fseek

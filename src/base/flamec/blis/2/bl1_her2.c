@@ -10,7 +10,7 @@
 
 #include "blis1.h"
 
-void bl1_sher2( uplo1_t uplo, conj1_t conj, int m, float* alpha, float* x, int incx, float* y, int incy, float* a, int a_rs, int a_cs )
+void bl1_sher2( uplo1_t uplo, conj1_t conj, integer m, float* alpha, float* x, integer incx, float* y, integer incy, float* a, integer a_rs, integer a_cs )
 {
 	bl1_ssyr2( uplo,
 	           m,
@@ -20,7 +20,7 @@ void bl1_sher2( uplo1_t uplo, conj1_t conj, int m, float* alpha, float* x, int i
 	           a, a_rs, a_cs );
 }
 
-void bl1_dher2( uplo1_t uplo, conj1_t conj, int m, double* alpha, double* x, int incx, double* y, int incy, double* a, int a_rs, int a_cs )
+void bl1_dher2( uplo1_t uplo, conj1_t conj, integer m, double* alpha, double* x, integer incx, double* y, integer incy, double* a, integer a_rs, integer a_cs )
 {
 	bl1_dsyr2( uplo,
 	           m,
@@ -30,17 +30,17 @@ void bl1_dher2( uplo1_t uplo, conj1_t conj, int m, double* alpha, double* x, int
 	           a, a_rs, a_cs );
 }
 
-void bl1_cher2( uplo1_t uplo, conj1_t conj, int m, scomplex* alpha, scomplex* x, int incx, scomplex* y, int incy, scomplex* a, int a_rs, int a_cs )
+void bl1_cher2( uplo1_t uplo, conj1_t conj, integer m, scomplex* alpha, scomplex* x, integer incx, scomplex* y, integer incy, scomplex* a, integer a_rs, integer a_cs )
 {
-	int       m_save    = m;
+	integer       m_save    = m;
 	scomplex* a_save    = a;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
 	scomplex* x_conj;
 	scomplex* y_conj;
-	int       incx_conj;
-	int       incy_conj;
-	int       lda, inca;
+	integer       incx_conj;
+	integer       incy_conj;
+	integer       lda, inca;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -118,17 +118,17 @@ void bl1_cher2( uplo1_t uplo, conj1_t conj, int m, scomplex* alpha, scomplex* x,
 	                         &a,     &a_rs,     &a_cs );
 }
 
-void bl1_zher2( uplo1_t uplo, conj1_t conj, int m, dcomplex* alpha, dcomplex* x, int incx, dcomplex* y, int incy, dcomplex* a, int a_rs, int a_cs )
+void bl1_zher2( uplo1_t uplo, conj1_t conj, integer m, dcomplex* alpha, dcomplex* x, integer incx, dcomplex* y, integer incy, dcomplex* a, integer a_rs, integer a_cs )
 {
-	int       m_save    = m;
+	integer       m_save    = m;
 	dcomplex* a_save    = a;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
 	dcomplex* x_conj;
 	dcomplex* y_conj;
-	int       incx_conj;
-	int       incy_conj;
-	int       lda, inca;
+	integer       incx_conj;
+	integer       incy_conj;
+	integer       lda, inca;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -208,7 +208,7 @@ void bl1_zher2( uplo1_t uplo, conj1_t conj, int m, dcomplex* alpha, dcomplex* x,
 
 // --- Classic routine wrappers ---
 
-void bl1_cher2_blas( uplo1_t uplo, int m, scomplex* alpha, scomplex* x, int incx, scomplex* y, int incy, scomplex* a, int lda )
+void bl1_cher2_blas( uplo1_t uplo, integer m, scomplex* alpha, scomplex* x, integer incx, scomplex* y, integer incy, scomplex* a, integer lda )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;
@@ -237,7 +237,7 @@ void bl1_cher2_blas( uplo1_t uplo, int m, scomplex* alpha, scomplex* x, int incx
 #endif
 }
 
-void bl1_zher2_blas( uplo1_t uplo, int m, dcomplex* alpha, dcomplex* x, int incx, dcomplex* y, int incy, dcomplex* a, int lda )
+void bl1_zher2_blas( uplo1_t uplo, integer m, dcomplex* alpha, dcomplex* x, integer incx, dcomplex* y, integer incy, dcomplex* a, integer lda )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;

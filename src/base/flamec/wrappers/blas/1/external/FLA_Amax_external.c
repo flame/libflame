@@ -13,14 +13,14 @@
 FLA_Error FLA_Amax_external( FLA_Obj x, FLA_Obj index )
 {
   FLA_Datatype datatype;
-  int          num_elem;
-  int          inc_x;
-  int         *buff_index;
+  integer          num_elem;
+  integer          inc_x;
+  integer         *buff_index;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING ) 
     FLA_Amax_check( x, index );
 
-  buff_index = ( int * ) FLA_INT_PTR( index );
+  buff_index = ( integer * ) FLA_INT_PTR( index );
 
   if ( FLA_Obj_has_zero_dim( x ) )
   {

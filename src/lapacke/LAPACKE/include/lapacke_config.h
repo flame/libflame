@@ -43,9 +43,33 @@ extern "C" {
 
 #include <stdlib.h>
 
+#ifdef __cplusplus
+    // For C++, include stdint.h.
+#include <stdint.h> // skipped
+#elif __STDC_VERSION__ >= 199901L
+    // For C99 (or later), include stdint.h.
+#include <stdint.h> // skipped
+#else
+    // When stdint.h is not available, manually typedef the types we will use.
+#ifdef _WIN32
+    typedef          __int32  int32_t;
+    typedef unsigned __int32 uint32_t;
+    typedef          __int64  int64_t;
+    typedef unsigned __int64 uint64_t;
+#define FLA_ENABLE_ILP64 1
+#else
+#error "Attempting to compile on pre-C99 system without stdint.h."
+#endif
+#endif
+
+
+#if defined(FLA_ENABLE_ILP64)
+#define LAPACK_ILP64
+#endif
+
 #ifndef lapack_int
 #if defined(LAPACK_ILP64)
-#define lapack_int              long
+#define lapack_int              int64_t
 #else
 #define lapack_int              int
 #endif

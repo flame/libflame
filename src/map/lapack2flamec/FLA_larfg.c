@@ -31,10 +31,10 @@
   where tau is a real scalar and u2 is a real (n-1)-element vector.
 */
 #define LAPACK_larfg(prefix)                                            \
-  int F77_ ## prefix ## larfg( int *n,                                  \
+  int F77_ ## prefix ## larfg( integer *n,                                  \
                                PREFIX2LAPACK_TYPEDEF(prefix)* chi,      \
                                PREFIX2LAPACK_TYPEDEF(prefix)* x2,       \
-                               int* inc_x2,                             \
+                               integer* inc_x2,                             \
                                PREFIX2LAPACK_TYPEDEF(prefix)* tau )
 
 #define LAPACK_larfg_body(prefix)                                       \
@@ -73,10 +73,10 @@ LAPACK_larfg(z)
 }
 
 #define LAPACK_larfgp(prefix)                                           \
-  int F77_ ## prefix ## larfgp( int *n,                                 \
+  int F77_ ## prefix ## larfgp( integer *n,                                 \
                                 PREFIX2LAPACK_TYPEDEF(prefix)* chi,     \
                                 PREFIX2LAPACK_TYPEDEF(prefix)* x2,      \
-                                int* inc_x2,                            \
+                                integer* inc_x2,                            \
                                 PREFIX2LAPACK_TYPEDEF(prefix)* tau )
 
 LAPACK_larfgp(s)

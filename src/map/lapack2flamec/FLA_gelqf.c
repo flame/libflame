@@ -21,17 +21,17 @@
 */
 
 #define LAPACK_gelqf(prefix)                                            \
-  int F77_ ## prefix ## gelqf( int* m,                                  \
-                               int* n,                                  \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+  int F77_ ## prefix ## gelqf( integer* m,                                  \
+                               integer* n,                                  \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_t,   \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, int* lwork, \
-                               int* info )
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, integer* lwork, \
+                               integer* info )
 
 #define LAPACK_gelqf_body(prefix)                               \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   FLA_Obj      A, t, T;                                         \
-  int          min_m_n  = min( *m, *n );                        \
+  integer          min_m_n  = min( *m, *n );                        \
   FLA_Error    init_result;                                     \
                                                                 \
   FLA_Init_safe( &init_result );                                \
@@ -116,12 +116,12 @@ LAPACK_gelqf(z)
 #endif
 
 #define LAPACK_gelq2(prefix)                                            \
-  int F77_ ## prefix ## gelq2( int* m,                                  \
-                               int* n,                                  \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+  int F77_ ## prefix ## gelq2( integer* m,                                  \
+                               integer* n,                                  \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_t,   \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_w,   \
-                               int* info )
+                               integer* info )
 LAPACK_gelq2(s)
 {
     {

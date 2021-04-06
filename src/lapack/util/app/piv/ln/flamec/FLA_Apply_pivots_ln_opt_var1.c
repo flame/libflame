@@ -13,10 +13,10 @@
 FLA_Error FLA_Apply_pivots_ln_opt_var1( FLA_Obj p, FLA_Obj A )
 {
   FLA_Datatype datatype;
-  int          n_A;
-  int          rs_A, cs_A;
-  int          inc_p;
-  int          k1_0, k2_0;
+  integer          n_A;
+  integer          rs_A, cs_A;
+  integer          inc_p;
+  integer          k1_0, k2_0;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -29,14 +29,14 @@ FLA_Error FLA_Apply_pivots_ln_opt_var1( FLA_Obj p, FLA_Obj A )
 
   // Use zero-based indices.
   k1_0     = 0;
-  k2_0     = ( int ) FLA_Obj_vector_dim( p ) - 1;
+  k2_0     = ( integer ) FLA_Obj_vector_dim( p ) - 1;
 
   switch ( datatype )
   {
     case FLA_INT:
     {
-      int*   buff_A = FLA_INT_PTR( A );
-      int*   buff_p = FLA_INT_PTR( p );
+      integer*   buff_A = FLA_INT_PTR( A );
+      integer*   buff_p = FLA_INT_PTR( p );
 
       FLA_Apply_pivots_ln_opi_var1( n_A,
                                     buff_A, rs_A, cs_A,
@@ -50,7 +50,7 @@ FLA_Error FLA_Apply_pivots_ln_opt_var1( FLA_Obj p, FLA_Obj A )
     case FLA_FLOAT:
     {
       float* buff_A = FLA_FLOAT_PTR( A );
-      int*   buff_p = FLA_INT_PTR( p );
+      integer*   buff_p = FLA_INT_PTR( p );
 
       FLA_Apply_pivots_ln_ops_var1( n_A,
                                     buff_A, rs_A, cs_A,
@@ -64,7 +64,7 @@ FLA_Error FLA_Apply_pivots_ln_opt_var1( FLA_Obj p, FLA_Obj A )
     case FLA_DOUBLE:
     {
       double* buff_A = FLA_DOUBLE_PTR( A );
-      int*    buff_p = FLA_INT_PTR( p );
+      integer*    buff_p = FLA_INT_PTR( p );
 
       FLA_Apply_pivots_ln_opd_var1( n_A,
                                     buff_A, rs_A, cs_A,
@@ -78,7 +78,7 @@ FLA_Error FLA_Apply_pivots_ln_opt_var1( FLA_Obj p, FLA_Obj A )
     case FLA_COMPLEX:
     {
       scomplex* buff_A = FLA_COMPLEX_PTR( A );
-      int*      buff_p = FLA_INT_PTR( p );
+      integer*      buff_p = FLA_INT_PTR( p );
 
       FLA_Apply_pivots_ln_opc_var1( n_A,
                                     buff_A, rs_A, cs_A,
@@ -92,7 +92,7 @@ FLA_Error FLA_Apply_pivots_ln_opt_var1( FLA_Obj p, FLA_Obj A )
     case FLA_DOUBLE_COMPLEX:
     {
       dcomplex* buff_A = FLA_DOUBLE_COMPLEX_PTR( A );
-      int*      buff_p = FLA_INT_PTR( p );
+      integer*      buff_p = FLA_INT_PTR( p );
 
       FLA_Apply_pivots_ln_opz_var1( n_A,
                                     buff_A, rs_A, cs_A,
@@ -107,21 +107,21 @@ FLA_Error FLA_Apply_pivots_ln_opt_var1( FLA_Obj p, FLA_Obj A )
   return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Apply_pivots_ln_opi_var1( int n, 
-                                        int* a, int a_rs, int a_cs, 
-                                        int k1, 
-                                        int k2, 
-                                        int* p, int incp )
+FLA_Error FLA_Apply_pivots_ln_opi_var1( integer n, 
+                                        integer* a, integer a_rs, integer a_cs, 
+                                        integer k1, 
+                                        integer k2, 
+                                        integer* p, integer incp )
 {
-	int       temp;
-	int*      a_i_0;
-	int*      a_pi_0;
-	int*      a_0_j;
-	int*      a_i_j;
-	int*      a_pi_j;
-	int       i, j;
-	int       i_begin, i_bound, i_inc;
-	int       p_inc;
+	integer       temp;
+	integer*      a_i_0;
+	integer*      a_pi_0;
+	integer*      a_0_j;
+	integer*      a_i_j;
+	integer*      a_pi_j;
+	integer       i, j;
+	integer       i_begin, i_bound, i_inc;
+	integer       p_inc;
 
 	// Handle both positive and negative increments for the pivot vector.
 	if ( incp > 0 )
@@ -189,11 +189,11 @@ FLA_Error FLA_Apply_pivots_ln_opi_var1( int n,
 
 
 
-FLA_Error FLA_Apply_pivots_ln_ops_var1( int n, 
-                                        float* a, int a_rs, int a_cs, 
-                                        int k1, 
-                                        int k2, 
-                                        int* p, int incp )
+FLA_Error FLA_Apply_pivots_ln_ops_var1( integer n, 
+                                        float* a, integer a_rs, integer a_cs, 
+                                        integer k1, 
+                                        integer k2, 
+                                        integer* p, integer incp )
 {
 	float     temp;
 	float*    a_i_0;
@@ -201,9 +201,9 @@ FLA_Error FLA_Apply_pivots_ln_ops_var1( int n,
 	float*    a_0_j;
 	float*    a_i_j;
 	float*    a_pi_j;
-	int       i, j;
-	int       i_begin, i_bound, i_inc;
-	int       p_inc;
+	integer       i, j;
+	integer       i_begin, i_bound, i_inc;
+	integer       p_inc;
 
 	// Handle both positive and negative increments for the pivot vector.
 	if ( incp > 0 )
@@ -271,11 +271,11 @@ FLA_Error FLA_Apply_pivots_ln_ops_var1( int n,
 
 
 
-FLA_Error FLA_Apply_pivots_ln_opd_var1( int n,
-                                        double* a, int a_rs, int a_cs,
-                                        int k1,
-                                        int k2,
-                                        int* p, int incp )
+FLA_Error FLA_Apply_pivots_ln_opd_var1( integer n,
+                                        double* a, integer a_rs, integer a_cs,
+                                        integer k1,
+                                        integer k2,
+                                        integer* p, integer incp )
 {
 	double    temp;
 	double*   a_i_0;
@@ -283,9 +283,9 @@ FLA_Error FLA_Apply_pivots_ln_opd_var1( int n,
 	double*   a_0_j;
 	double*   a_i_j;
 	double*   a_pi_j;
-	int       i, j;
-	int       i_begin, i_bound, i_inc;
-	int       p_inc;
+	integer       i, j;
+	integer       i_begin, i_bound, i_inc;
+	integer       p_inc;
 
 	// Handle both positive and negative increments for the pivot vector.
 	if ( incp > 0 )
@@ -353,11 +353,11 @@ FLA_Error FLA_Apply_pivots_ln_opd_var1( int n,
 
 
 
-FLA_Error FLA_Apply_pivots_ln_opc_var1( int n,
-                                        scomplex* a, int a_rs, int a_cs,
-                                        int k1,
-                                        int k2,
-                                        int* p, int incp )
+FLA_Error FLA_Apply_pivots_ln_opc_var1( integer n,
+                                        scomplex* a, integer a_rs, integer a_cs,
+                                        integer k1,
+                                        integer k2,
+                                        integer* p, integer incp )
 {
 	scomplex  temp;
 	scomplex* a_i_0;
@@ -365,9 +365,9 @@ FLA_Error FLA_Apply_pivots_ln_opc_var1( int n,
 	scomplex* a_0_j;
 	scomplex* a_i_j;
 	scomplex* a_pi_j;
-	int       i, j;
-	int       i_begin, i_bound, i_inc;
-	int       p_inc;
+	integer       i, j;
+	integer       i_begin, i_bound, i_inc;
+	integer       p_inc;
 
 	// Handle both positive and negative increments for the pivot vector.
 	if ( incp > 0 )
@@ -435,11 +435,11 @@ FLA_Error FLA_Apply_pivots_ln_opc_var1( int n,
 
 
 
-FLA_Error FLA_Apply_pivots_ln_opz_var1( int n,
-                                        dcomplex* a, int a_rs, int a_cs,
-                                        int k1,
-                                        int k2,
-                                        int* p, int incp )
+FLA_Error FLA_Apply_pivots_ln_opz_var1( integer n,
+                                        dcomplex* a, integer a_rs, integer a_cs,
+                                        integer k1,
+                                        integer k2,
+                                        integer* p, integer incp )
 {
 	dcomplex  temp;
 	dcomplex* a_i_0;
@@ -447,9 +447,9 @@ FLA_Error FLA_Apply_pivots_ln_opz_var1( int n,
 	dcomplex* a_0_j;
 	dcomplex* a_i_j;
 	dcomplex* a_pi_j;
-	int       i, j;
-	int       i_begin, i_bound, i_inc;
-	int       p_inc;
+	integer       i, j;
+	integer       i_begin, i_bound, i_inc;
+	integer       p_inc;
 
 	// Handle both positive and negative increments for the pivot vector.
 	if ( incp > 0 )

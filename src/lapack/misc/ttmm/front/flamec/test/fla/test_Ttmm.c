@@ -18,14 +18,14 @@
 char* pc_str[N_PARAM_COMBOS] = { "l", "u" };
 
 void time_Ttmm(
-                 int param_combo, int type, int n_repeats, int m, FLA_Uplo uplo,
+                 integer param_combo, integer type, integer n_repeats, integer m, FLA_Uplo uplo,
                  FLA_Obj A, FLA_Obj x, FLA_Obj b, FLA_Obj norm,
                  double *dtime, double *diff, double *gflops );
 
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     datatype,
     m_input,
     m,

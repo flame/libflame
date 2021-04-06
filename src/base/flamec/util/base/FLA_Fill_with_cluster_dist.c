@@ -20,10 +20,10 @@ FLA_Error FLA_Fill_with_cluster_dist( FLA_Obj n_clusters, FLA_Obj cluster_width,
 	FLA_Obj      l, k;
 	FLA_Datatype dt_real;
 	dim_t        n_x;
-	int          nc;
-	int          n_regions;
-	int          region_width;
-	int          leftover_width;
+	integer          nc;
+	integer          n_regions;
+	integer          region_width;
+	integer          leftover_width;
 	
 
 	if ( FLA_Check_error_level() >= FLA_MIN_ERROR_CHECKING )

@@ -1,21 +1,21 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h" /* Table of constant values */
-static int c_n1 = -1;
+static integer c_n1 = -1;
 
-int cungbr_check(char *vect, int *m, int *n, int *k, scomplex *a, int *lda, scomplex *tau, scomplex *work, int *lwork, int *info)
+int cungbr_check(char *vect, integer *m, integer *n, integer *k, scomplex *a, integer *lda, scomplex *tau, scomplex *work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1, i__2, i__3;
+    integer a_dim1, a_offset, i__1, i__2, i__3;
     /* Local variables */
-    int mn;
-    int iinfo;
+    integer mn;
+    integer iinfo;
     logical wantq;
-    extern int 
-      cunglq_check( int *, int *, int *, scomplex *, 
-                    int *, scomplex *, scomplex *, int *, int *), 
-      cungqr_check(int *, int *, int *, scomplex *, 
-              int *, scomplex *, scomplex *, int *, int *);
-    int lwkopt;
+    extern integer 
+      cunglq_check( integer *, integer *, integer *, scomplex *, 
+                    integer *, scomplex *, scomplex *, integer *, integer *), 
+      cungqr_check(integer *, integer *, integer *, scomplex *, 
+              integer *, scomplex *, scomplex *, integer *, integer *);
+    integer lwkopt;
     logical lquery;
 
 #if AOCL_DTL_LOG_ENABLE

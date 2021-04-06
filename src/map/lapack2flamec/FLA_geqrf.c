@@ -30,18 +30,18 @@ extern void DTL_Trace(
 
 // GEQRF and GEQR2
 #define LAPACK_geqrf(prefix)                                            \
-  int F77_ ## prefix ## geqrf(int* m,                                   \
-                              int* n,                                   \
-                              PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+  int F77_ ## prefix ## geqrf(integer* m,                                   \
+                              integer* n,                                   \
+                              PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_t,          \
-                              PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, int* lwork, \
-                              int* info )
+                              PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, integer* lwork, \
+                              integer* info )
 
 #define LAPACK_geqrf_body(prefix)                               \
   AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5); 		\
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   FLA_Obj      A, t, T;                                         \
-  int          min_m_n  = min( *m, *n );                        \
+  integer          min_m_n  = min( *m, *n );                        \
   FLA_Error    init_result;                                     \
                                                                 \
   FLA_Init_safe( &init_result );                                        \
@@ -127,12 +127,12 @@ LAPACK_geqrf(z)
 #endif
 
 #define LAPACK_geqr2(prefix)                                            \
-  int F77_ ## prefix ## geqr2( int* m,                                  \
-                               int* n,                                  \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+  int F77_ ## prefix ## geqr2( integer* m,                                  \
+                               integer* n,                                  \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_t,         \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_w,         \
-                               int* info )
+                               integer* info )
 
 LAPACK_geqr2(s)
 {
@@ -192,12 +192,12 @@ LAPACK_geqr2(z)
 
 // GEQRFP and GEQR2P
 #define LAPACK_geqrfp(prefix)                                            \
-  int F77_ ## prefix ## geqrfp(int* m,                                  \
-                               int* n,                                  \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+  int F77_ ## prefix ## geqrfp(integer* m,                                  \
+                               integer* n,                                  \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_t,   \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, int* lwork, \
-                               int* info )
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, integer* lwork, \
+                               integer* info )
 LAPACK_geqrfp(s)
 {
     {
@@ -255,12 +255,12 @@ LAPACK_geqrfp(z)
 #endif
 
 #define LAPACK_geqr2p(prefix)                                            \
-  int F77_ ## prefix ## geqr2p( int* m,                                  \
-                                int* n,                                 \
-                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+  int F77_ ## prefix ## geqr2p( integer* m,                                  \
+                                integer* n,                                 \
+                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
                                 PREFIX2LAPACK_TYPEDEF(prefix)* buff_t,  \
                                 PREFIX2LAPACK_TYPEDEF(prefix)* buff_w,  \
-                                int* info )
+                                integer* info )
 
 LAPACK_geqr2p(s)
 {

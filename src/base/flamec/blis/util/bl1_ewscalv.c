@@ -10,11 +10,11 @@
 
 #include "blis1.h"
 
-void bl1_sewscalv( conj1_t conj, int n, float* x, int incx, float* y, int incy )
+void bl1_sewscalv( conj1_t conj, integer n, float* x, integer incx, float* y, integer incy )
 {
 	float*    chi;
 	float*    psi;
-	int       i;
+	integer       i;
 
 	for ( i = 0; i < n; ++i )
 	{
@@ -25,11 +25,11 @@ void bl1_sewscalv( conj1_t conj, int n, float* x, int incx, float* y, int incy )
 	}
 }
 
-void bl1_dewscalv( conj1_t conj, int n, double* x, int incx, double* y, int incy )
+void bl1_dewscalv( conj1_t conj, integer n, double* x, integer incx, double* y, integer incy )
 {
 	double*   chi;
 	double*   psi;
-	int       i;
+	integer       i;
 
 	for ( i = 0; i < n; ++i )
 	{
@@ -40,11 +40,11 @@ void bl1_dewscalv( conj1_t conj, int n, double* x, int incx, double* y, int incy
 	}
 }
 
-void bl1_csewscalv( conj1_t conj, int n, float* x, int incx, scomplex* y, int incy )
+void bl1_csewscalv( conj1_t conj, integer n, float* x, integer incx, scomplex* y, integer incy )
 {
 	float*    chi;
 	scomplex* psi;
-	int       i;
+	integer       i;
 
 	for ( i = 0; i < n; ++i )
 	{
@@ -55,12 +55,12 @@ void bl1_csewscalv( conj1_t conj, int n, float* x, int incx, scomplex* y, int in
 	}
 }
 
-void bl1_cewscalv( conj1_t conj, int n, scomplex* x, int incx, scomplex* y, int incy )
+void bl1_cewscalv( conj1_t conj, integer n, scomplex* x, integer incx, scomplex* y, integer incy )
 {
 	scomplex* chi;
 	scomplex* psi;
 	scomplex  conjchi;
-	int       i;
+	integer       i;
 
 	if ( bl1_is_conj( conj ) )
 	{
@@ -85,11 +85,11 @@ void bl1_cewscalv( conj1_t conj, int n, scomplex* x, int incx, scomplex* y, int 
 	}
 }
 
-void bl1_zdewscalv( conj1_t conj, int n, double* x, int incx, dcomplex* y, int incy )
+void bl1_zdewscalv( conj1_t conj, integer n, double* x, integer incx, dcomplex* y, integer incy )
 {
 	double*   chi;
 	dcomplex* psi;
-	int       i;
+	integer       i;
 
 	for ( i = 0; i < n; ++i )
 	{
@@ -100,12 +100,12 @@ void bl1_zdewscalv( conj1_t conj, int n, double* x, int incx, dcomplex* y, int i
 	}
 }
 
-void bl1_zewscalv( conj1_t conj, int n, dcomplex* x, int incx, dcomplex* y, int incy )
+void bl1_zewscalv( conj1_t conj, integer n, dcomplex* x, integer incx, dcomplex* y, integer incy )
 {
 	dcomplex* chi;
 	dcomplex* psi;
 	dcomplex  conjchi;
-	int       i;
+	integer       i;
 
 	if ( bl1_is_conj( conj ) )
 	{

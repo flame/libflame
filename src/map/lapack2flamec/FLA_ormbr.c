@@ -50,14 +50,14 @@
   int F77_ ## prefix ## name ## br( char* vect,                         \
                                     char* side,                         \
                                     char* trans,                        \
-                                    int*  m,                            \
-                                    int*  n,                            \
-                                    int*  k,                            \
-                                    PREFIX2LAPACK_TYPEDEF(prefix) *buff_A, int *ldim_A, \
+                                    integer*  m,                            \
+                                    integer*  n,                            \
+                                    integer*  k,                            \
+                                    PREFIX2LAPACK_TYPEDEF(prefix) *buff_A, integer *ldim_A, \
                                     PREFIX2LAPACK_TYPEDEF(prefix) *buff_t, \
-                                    PREFIX2LAPACK_TYPEDEF(prefix) *buff_C, int *ldim_C, \
-                                    PREFIX2LAPACK_TYPEDEF(prefix) *buff_w, int *lwork, \
-                                    int *info )
+                                    PREFIX2LAPACK_TYPEDEF(prefix) *buff_C, integer *ldim_C, \
+                                    PREFIX2LAPACK_TYPEDEF(prefix) *buff_w, integer *lwork, \
+                                    integer *info )
 
 #define LAPACK_ormbr_body(prefix)                                       \
   AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \

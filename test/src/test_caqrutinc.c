@@ -34,7 +34,7 @@ void libfla_test_caqrutinc_experiment( test_params_t params,
                                        unsigned int  var,
                                        char*         sc_str,
                                        FLA_Datatype  datatype,
-                                       unsigned int  p,
+                                       uinteger  p,
                                        unsigned int  pci,
                                        unsigned int  n_repeats,
                                        signed int    impl,
@@ -73,7 +73,7 @@ void libfla_test_caqrutinc_experiment( test_params_t params,
                                        unsigned int  var,
                                        char*         sc_str,
                                        FLA_Datatype  datatype,
-                                       unsigned int  p_cur,
+                                       uinteger  p_cur,
                                        unsigned int  pci,
                                        unsigned int  n_repeats,
                                        signed int    impl,
@@ -85,10 +85,10 @@ void libfla_test_caqrutinc_experiment( test_params_t params,
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	unsigned int m, n;
-	signed int   m_input    = -8;
-	signed int   n_input    = -1;
-	unsigned int p          = 4;  // p <= abs(m_input) must hold!
+	uinteger m, n;
+	integer   m_input    = -8;
+	integer   n_input    = -1;
+	uinteger p          = 4;  // p <= abs(m_input) must hold!
 	FLA_Obj      A, x, b, y, norm;
 	FLA_Obj      A_save;
 	FLA_Obj      A_test, ATW_test;

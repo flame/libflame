@@ -14,13 +14,13 @@ FLA_Error FLA_Apply_pivots_unb_external( FLA_Side side, FLA_Trans trans, FLA_Obj
 {
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
   FLA_Datatype datatype;
-  int          n_A, cs_A;
-  int          m_p;
-  int          inc_p;
-  int*         buff_p;
-  int          k1_1, k2_1;
-  int*         pivots_lapack;
-  int          i;
+  integer          n_A, cs_A;
+  integer          m_p;
+  integer          inc_p;
+  integer*         buff_p;
+  integer          k1_1, k2_1;
+  integer*         pivots_lapack;
+  integer          i;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING )
     FLA_Apply_pivots_check( side, trans, p, A );
@@ -46,9 +46,9 @@ FLA_Error FLA_Apply_pivots_unb_external( FLA_Side side, FLA_Trans trans, FLA_Obj
   // FLA_Shift_pivots_to(), is NOT in-place, but rather done separately
   // in a temporary buffer.
 #ifdef FLA_ENABLE_WINDOWS_BUILD
-  pivots_lapack = ( int * ) _alloca( m_p * sizeof( int ) );
+  pivots_lapack = ( integer * ) _alloca( m_p * sizeof( integer ) );
 #else
-  pivots_lapack = ( int * )  alloca( m_p * sizeof( int ) );
+  pivots_lapack = ( integer * )  alloca( m_p * sizeof( integer ) );
 #endif
 
   for ( i = 0; i < m_p; i++ )

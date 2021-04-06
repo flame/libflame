@@ -34,14 +34,14 @@
 #define LAPACK_ormlq(prefix, name)                                      \
   int F77_ ## prefix ## name ## lq( char* side,                         \
                                     char* trans,                        \
-                                    int* m,                             \
-                                    int* n,                             \
-                                    int* k,                             \
-                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+                                    integer* m,                             \
+                                    integer* n,                             \
+                                    integer* k,                             \
+                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_t, \
-                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_B, int* ldim_B, \
-                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, int* lwork, \
-                                    int* info )
+                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_B, integer* ldim_B, \
+                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, integer* lwork, \
+                                    integer* info )
 
 #define LAPACK_ormlq_body(prefix)                                       \
   AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \
@@ -163,14 +163,14 @@ LAPACK_ormlq(z, unm)
 #define LAPACK_orml2(prefix, name)                                      \
   int F77_ ## prefix ## name ## l2( char* side,                         \
                                     char* trans,                        \
-                                    int* m,                             \
-                                    int* n,                             \
-                                    int* k,                             \
-                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+                                    integer* m,                             \
+                                    integer* n,                             \
+                                    integer* k,                             \
+                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_t, \
-                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_B, int* ldim_B, \
+                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_B, integer* ldim_B, \
                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, \
-                                    int* info )
+                                    integer* info )
 
 LAPACK_orml2(s, orm)
 {

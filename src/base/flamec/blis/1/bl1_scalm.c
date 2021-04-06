@@ -10,14 +10,14 @@
 
 #include "blis1.h"
 
-void bl1_sscalm( conj1_t conj, int m, int n, float* alpha, float* a, int a_rs, int a_cs )
+void bl1_sscalm( conj1_t conj, integer m, integer n, float* alpha, float* a, integer a_rs, integer a_cs )
 {
 	float     alpha_conj;
 	float*    a_begin;
-	int       lda, inca;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -62,14 +62,14 @@ void bl1_sscalm( conj1_t conj, int m, int n, float* alpha, float* a, int a_rs, i
 	}
 }
 
-void bl1_dscalm( conj1_t conj, int m, int n, double* alpha, double* a, int a_rs, int a_cs )
+void bl1_dscalm( conj1_t conj, integer m, integer n, double* alpha, double* a, integer a_rs, integer a_cs )
 {
 	double    alpha_conj;
 	double*   a_begin;
-	int       lda, inca;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -114,14 +114,14 @@ void bl1_dscalm( conj1_t conj, int m, int n, double* alpha, double* a, int a_rs,
 	}
 }
 
-void bl1_csscalm( conj1_t conj, int m, int n, float* alpha, scomplex* a, int a_rs, int a_cs )
+void bl1_csscalm( conj1_t conj, integer m, integer n, float* alpha, scomplex* a, integer a_rs, integer a_cs )
 {
 	float     alpha_conj;
 	scomplex* a_begin;
-	int       lda, inca;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -166,14 +166,14 @@ void bl1_csscalm( conj1_t conj, int m, int n, float* alpha, scomplex* a, int a_r
 	}
 }
 
-void bl1_cscalm( conj1_t conj, int m, int n, scomplex* alpha, scomplex* a, int a_rs, int a_cs )
+void bl1_cscalm( conj1_t conj, integer m, integer n, scomplex* alpha, scomplex* a, integer a_rs, integer a_cs )
 {
 	scomplex  alpha_conj;
 	scomplex* a_begin;
-	int       lda, inca;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -218,14 +218,14 @@ void bl1_cscalm( conj1_t conj, int m, int n, scomplex* alpha, scomplex* a, int a
 	}
 }
 
-void bl1_zdscalm( conj1_t conj, int m, int n, double* alpha, dcomplex* a, int a_rs, int a_cs )
+void bl1_zdscalm( conj1_t conj, integer m, integer n, double* alpha, dcomplex* a, integer a_rs, integer a_cs )
 {
 	double    alpha_conj;
 	dcomplex* a_begin;
-	int       lda, inca;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -270,14 +270,14 @@ void bl1_zdscalm( conj1_t conj, int m, int n, double* alpha, dcomplex* a, int a_
 	}
 }
 
-void bl1_zscalm( conj1_t conj, int m, int n, dcomplex* alpha, dcomplex* a, int a_rs, int a_cs )
+void bl1_zscalm( conj1_t conj, integer m, integer n, dcomplex* alpha, dcomplex* a, integer a_rs, integer a_cs )
 {
 	dcomplex  alpha_conj;
 	dcomplex* a_begin;
-	int       lda, inca;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;

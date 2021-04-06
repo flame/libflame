@@ -19,14 +19,14 @@ FLA_Error FLA_Fused_UYx_ZVx_opt_var1( FLA_Obj delta, FLA_Obj a, FLA_Obj U, FLA_O
    t  = V' conj(a);
 */
   FLA_Datatype datatype;
-  int          m_U, n_U;
-  int          m_V, n_V;
-  int          rs_A, cs_A;
-  int          rs_U, cs_U;
-  int          rs_Y, cs_Y;
-  int          rs_Z, cs_Z;
-  int          rs_V, cs_V;
-  int          inc_a, inc_temp, inc_t, inc_w, inc_al;
+  integer          m_U, n_U;
+  integer          m_V, n_V;
+  integer          rs_A, cs_A;
+  integer          rs_U, cs_U;
+  integer          rs_Y, cs_Y;
+  integer          rs_Z, cs_Z;
+  integer          rs_V, cs_V;
+  integer          inc_a, inc_temp, inc_t, inc_w, inc_al;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -198,25 +198,25 @@ FLA_Error FLA_Fused_UYx_ZVx_opt_var1( FLA_Obj delta, FLA_Obj a, FLA_Obj U, FLA_O
 
 
 
-FLA_Error FLA_Fused_UYx_ZVx_ops_var1( int m_U,
-                                      int n_U,
-                                      int m_V,
-                                      int n_V,
+FLA_Error FLA_Fused_UYx_ZVx_ops_var1( integer m_U,
+                                      integer n_U,
+                                      integer m_V,
+                                      integer n_V,
                                       float* buff_delta, 
-                                      float* buff_U, int rs_U, int cs_U, 
-                                      float* buff_Y, int rs_Y, int cs_Y, 
-                                      float* buff_Z, int rs_Z, int cs_Z, 
-                                      float* buff_V, int rs_V, int cs_V, 
-                                      float* buff_A, int rs_A, int cs_A, 
-                                      float* buff_temp, int inc_temp, 
-                                      float* buff_t, int inc_t, 
-                                      float* buff_a, int inc_a, 
-                                      float* buff_w, int inc_w, 
-                                      float* buff_al, int inc_al ) 
+                                      float* buff_U, integer rs_U, integer cs_U, 
+                                      float* buff_Y, integer rs_Y, integer cs_Y, 
+                                      float* buff_Z, integer rs_Z, integer cs_Z, 
+                                      float* buff_V, integer rs_V, integer cs_V, 
+                                      float* buff_A, integer rs_A, integer cs_A, 
+                                      float* buff_temp, integer inc_temp, 
+                                      float* buff_t, integer inc_t, 
+                                      float* buff_a, integer inc_a, 
+                                      float* buff_w, integer inc_w, 
+                                      float* buff_al, integer inc_al ) 
 {
-  int       i;
-  int       m_A = m_U;
-  int       m_Z = m_U;
+  integer       i;
+  integer       m_A = m_U;
+  integer       m_Z = m_U;
 
   bl1_scopyv( BLIS1_NO_CONJUGATE,
               m_A,
@@ -328,26 +328,26 @@ FLA_Error FLA_Fused_UYx_ZVx_ops_var1( int m_U,
 
 
 
-FLA_Error FLA_Fused_UYx_ZVx_opd_var1( int m_U,
-                                      int n_U,
-                                      int m_V,
-                                      int n_V,
+FLA_Error FLA_Fused_UYx_ZVx_opd_var1( integer m_U,
+                                      integer n_U,
+                                      integer m_V,
+                                      integer n_V,
                                       double* buff_delta, 
-                                      double* buff_U, int rs_U, int cs_U, 
-                                      double* buff_Y, int rs_Y, int cs_Y, 
-                                      double* buff_Z, int rs_Z, int cs_Z, 
-                                      double* buff_V, int rs_V, int cs_V, 
-                                      double* buff_A, int rs_A, int cs_A, 
-                                      double* buff_temp, int inc_temp, 
-                                      double* buff_t, int inc_t, 
-                                      double* buff_a, int inc_a, 
-                                      double* buff_w, int inc_w, 
-                                      double* buff_al, int inc_al ) 
+                                      double* buff_U, integer rs_U, integer cs_U, 
+                                      double* buff_Y, integer rs_Y, integer cs_Y, 
+                                      double* buff_Z, integer rs_Z, integer cs_Z, 
+                                      double* buff_V, integer rs_V, integer cs_V, 
+                                      double* buff_A, integer rs_A, integer cs_A, 
+                                      double* buff_temp, integer inc_temp, 
+                                      double* buff_t, integer inc_t, 
+                                      double* buff_a, integer inc_a, 
+                                      double* buff_w, integer inc_w, 
+                                      double* buff_al, integer inc_al ) 
 {
   double    zero = bl1_d0();
-  int       i;
-  int       m_A = m_U;
-  int       m_Z = m_U;
+  integer       i;
+  integer       m_A = m_U;
+  integer       m_Z = m_U;
 
   bl1_dcopyv( BLIS1_NO_CONJUGATE,
               m_A,
@@ -421,25 +421,25 @@ FLA_Error FLA_Fused_UYx_ZVx_opd_var1( int m_U,
 
 
 
-FLA_Error FLA_Fused_UYx_ZVx_opc_var1( int m_U,
-                                      int n_U,
-                                      int m_V,
-                                      int n_V,
+FLA_Error FLA_Fused_UYx_ZVx_opc_var1( integer m_U,
+                                      integer n_U,
+                                      integer m_V,
+                                      integer n_V,
                                       scomplex* buff_delta, 
-                                      scomplex* buff_U, int rs_U, int cs_U, 
-                                      scomplex* buff_Y, int rs_Y, int cs_Y, 
-                                      scomplex* buff_Z, int rs_Z, int cs_Z, 
-                                      scomplex* buff_V, int rs_V, int cs_V, 
-                                      scomplex* buff_A, int rs_A, int cs_A, 
-                                      scomplex* buff_temp, int inc_temp, 
-                                      scomplex* buff_t, int inc_t, 
-                                      scomplex* buff_a, int inc_a, 
-                                      scomplex* buff_w, int inc_w, 
-                                      scomplex* buff_al, int inc_al ) 
+                                      scomplex* buff_U, integer rs_U, integer cs_U, 
+                                      scomplex* buff_Y, integer rs_Y, integer cs_Y, 
+                                      scomplex* buff_Z, integer rs_Z, integer cs_Z, 
+                                      scomplex* buff_V, integer rs_V, integer cs_V, 
+                                      scomplex* buff_A, integer rs_A, integer cs_A, 
+                                      scomplex* buff_temp, integer inc_temp, 
+                                      scomplex* buff_t, integer inc_t, 
+                                      scomplex* buff_a, integer inc_a, 
+                                      scomplex* buff_w, integer inc_w, 
+                                      scomplex* buff_al, integer inc_al ) 
 {
-  int       i;
-  int       m_A = m_U;
-  int       m_Z = m_U;
+  integer       i;
+  integer       m_A = m_U;
+  integer       m_Z = m_U;
 
   bl1_ccopyv( BLIS1_NO_CONJUGATE,
               m_A,
@@ -539,26 +539,26 @@ FLA_Error FLA_Fused_UYx_ZVx_opc_var1( int m_U,
 
 
 
-FLA_Error FLA_Fused_UYx_ZVx_opz_var1( int m_U,
-                                      int n_U,
-                                      int m_V,
-                                      int n_V,
+FLA_Error FLA_Fused_UYx_ZVx_opz_var1( integer m_U,
+                                      integer n_U,
+                                      integer m_V,
+                                      integer n_V,
                                       dcomplex* buff_delta, 
-                                      dcomplex* buff_U, int rs_U, int cs_U, 
-                                      dcomplex* buff_Y, int rs_Y, int cs_Y, 
-                                      dcomplex* buff_Z, int rs_Z, int cs_Z, 
-                                      dcomplex* buff_V, int rs_V, int cs_V, 
-                                      dcomplex* buff_A, int rs_A, int cs_A, 
-                                      dcomplex* buff_temp, int inc_temp, 
-                                      dcomplex* buff_t, int inc_t, 
-                                      dcomplex* buff_a, int inc_a, 
-                                      dcomplex* buff_w, int inc_w, 
-                                      dcomplex* buff_al, int inc_al ) 
+                                      dcomplex* buff_U, integer rs_U, integer cs_U, 
+                                      dcomplex* buff_Y, integer rs_Y, integer cs_Y, 
+                                      dcomplex* buff_Z, integer rs_Z, integer cs_Z, 
+                                      dcomplex* buff_V, integer rs_V, integer cs_V, 
+                                      dcomplex* buff_A, integer rs_A, integer cs_A, 
+                                      dcomplex* buff_temp, integer inc_temp, 
+                                      dcomplex* buff_t, integer inc_t, 
+                                      dcomplex* buff_a, integer inc_a, 
+                                      dcomplex* buff_w, integer inc_w, 
+                                      dcomplex* buff_al, integer inc_al ) 
 {
   dcomplex  zero = bl1_z0();
-  int       i;
-  int       m_A = m_U;
-  int       m_Z = m_U;
+  integer       i;
+  integer       m_A = m_U;
+  integer       m_Z = m_U;
 
   bl1_zcopyv( BLIS1_NO_CONJUGATE,
               m_A,

@@ -28,8 +28,8 @@ FLASH_Queue           _tq;
 
 static FLA_Bool       flash_queue_initialized     = FALSE;
 
-static int            flash_queue_n_read_blocks   = 0;
-static int            flash_queue_n_write_blocks  = 0;
+static integer            flash_queue_n_read_blocks   = 0;
+static integer            flash_queue_n_write_blocks  = 0;
 
 static FLASH_Verbose  flash_queue_verbose         = FLASH_QUEUE_VERBOSE_NONE;
 static FLA_Bool       flash_queue_sorting         = FALSE;
@@ -44,16 +44,16 @@ static dim_t          flash_queue_block_size      = 0;
 static dim_t          flash_queue_cache_size      = 2 * 1024 * 1024;
 static dim_t          flash_queue_cache_line_size = 64;
 
-static int            flash_queue_cores_per_cache = 1;
-static int            flash_queue_cores_per_queue = 0;
+static integer            flash_queue_cores_per_cache = 1;
+static integer            flash_queue_cores_per_queue = 0;
 
 #endif
 
 
-static unsigned int   flash_queue_stack           = 0;
+static uinteger   flash_queue_stack           = 0;
 static FLA_Bool       flash_queue_enabled         = TRUE;
 
-static unsigned int   flash_queue_n_threads       = 1;
+static uinteger   flash_queue_n_threads       = 1;
 
 
 void FLASH_Queue_begin( void )
@@ -103,7 +103,7 @@ void FLASH_Queue_end( void )
 }
 
 
-unsigned int FLASH_Queue_stack_depth( void )
+uinteger FLASH_Queue_stack_depth( void )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_stack_depth
@@ -184,7 +184,7 @@ FLA_Bool FLASH_Queue_get_enabled( void )
 }
 
 
-void FLASH_Queue_set_num_threads( unsigned int n_threads )
+void FLASH_Queue_set_num_threads( uinteger n_threads )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_set_num_threads
@@ -220,7 +220,7 @@ void FLASH_Queue_set_num_threads( unsigned int n_threads )
 }
 
 
-unsigned int FLASH_Queue_get_num_threads( void )
+uinteger FLASH_Queue_get_num_threads( void )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_get_num_threads
@@ -281,7 +281,7 @@ void FLASH_Queue_finalize( void )
 }
 
 
-unsigned int FLASH_Queue_get_num_tasks( void )
+uinteger FLASH_Queue_get_num_tasks( void )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_get_num_tasks
@@ -532,7 +532,7 @@ dim_t FLASH_Queue_get_cache_line_size( void )
 }
 
 
-void FLASH_Queue_set_cores_per_cache( int cores )
+void FLASH_Queue_set_cores_per_cache( integer cores )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_set_cores_per_cache
@@ -545,7 +545,7 @@ void FLASH_Queue_set_cores_per_cache( int cores )
 }
 
 
-int FLASH_Queue_get_cores_per_cache( void )
+integer FLASH_Queue_get_cores_per_cache( void )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_get_cores_per_cache
@@ -556,7 +556,7 @@ int FLASH_Queue_get_cores_per_cache( void )
 }
 
 
-void FLASH_Queue_set_cores_per_queue( int cores )
+void FLASH_Queue_set_cores_per_queue( integer cores )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_set_cores_per_queue
@@ -569,7 +569,7 @@ void FLASH_Queue_set_cores_per_queue( int cores )
 }
 
 
-int FLASH_Queue_get_cores_per_queue( void )
+integer FLASH_Queue_get_cores_per_queue( void )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_get_cores_per_queue
@@ -626,10 +626,10 @@ void FLASH_Queue_push( void* func,
                        void* cntl,
                        char* name,
                        FLA_Bool enabled_gpu,
-                       int n_int_args,
-                       int n_fla_args,
-                       int n_input_args,
-                       int n_output_args,
+                       integer n_int_args,
+                       integer n_fla_args,
+                       integer n_input_args,
+                       integer n_output_args,
                        ... )
 /*----------------------------------------------------------------------------
 
@@ -637,7 +637,7 @@ void FLASH_Queue_push( void* func,
 
 ----------------------------------------------------------------------------*/
 {
-   int         i;
+   integer         i;
    va_list     var_arg_list;
    FLASH_Task* t;
    FLA_Obj     obj;
@@ -655,7 +655,7 @@ void FLASH_Queue_push( void* func,
 
    // Extract the integer arguments.
    for ( i = 0; i < n_int_args; i++ )
-      t->int_arg[i] = va_arg( var_arg_list, int );
+      t->int_arg[i] = va_arg( var_arg_list, integer );
    
    // Extract the FLA_Obj arguments.
    for ( i = 0; i < n_fla_args; i++ )
@@ -847,7 +847,7 @@ void FLASH_Queue_push_output( FLA_Obj obj,
 
 ----------------------------------------------------------------------------*/
 {
-   int         i;
+   integer         i;
    FLASH_Task* task;
    FLASH_Dep*  d;
    FLASH_Dep*  next_dep;
@@ -957,10 +957,10 @@ FLASH_Task* FLASH_Task_alloc( void *func,
                               void *cntl,
                               char *name,
                               FLA_Bool enabled_gpu,
-                              int n_int_args,
-                              int n_fla_args,
-                              int n_input_args,
-                              int n_output_args )
+                              integer n_int_args,
+                              integer n_fla_args,
+                              integer n_input_args,
+                              integer n_output_args )
 /*----------------------------------------------------------------------------
 
    FLASH_Task_alloc
@@ -973,7 +973,7 @@ FLASH_Task* FLASH_Task_alloc( void *func,
    t             = (FLASH_Task *) FLA_malloc( sizeof(FLASH_Task) );
 
    // Allocate space for the task's integer arguments.
-   t->int_arg    = (int *) FLA_malloc( n_int_args * sizeof(int) );
+   t->int_arg    = (integer *) FLA_malloc( n_int_args * sizeof(integer) );
 
    // Allocate space for the task's FLA_Obj arguments.
    t->fla_arg    = (FLA_Obj *) FLA_malloc( n_fla_args * sizeof(FLA_Obj) );
@@ -1024,7 +1024,7 @@ void FLASH_Task_free( FLASH_Task *t )
 
 ----------------------------------------------------------------------------*/
 {
-   int        i, j, k;
+   integer        i, j, k;
    FLA_Obj    obj;
    FLASH_Dep* d;
    FLASH_Dep* next_dep;
@@ -1153,8 +1153,8 @@ void FLASH_Queue_exec_task( FLASH_Task* t )
    typedef FLA_Error(*flash_lu_piv_p)(FLA_Obj A, FLA_Obj p, fla_lu_t* cntl);
    typedef FLA_Error(*flash_lu_piv_copy_p)(FLA_Obj A, FLA_Obj p, FLA_Obj U, fla_lu_t* cntl);
    typedef FLA_Error(*flash_trsm_piv_p)(FLA_Obj A, FLA_Obj C, FLA_Obj p, fla_trsm_t* cntl);
-   typedef FLA_Error(*flash_sa_lu_p)(FLA_Obj U, FLA_Obj D, FLA_Obj p, FLA_Obj L, int nb_alg, fla_lu_t* cntl);
-   typedef FLA_Error(*flash_sa_fs_p)(FLA_Obj L, FLA_Obj D, FLA_Obj p, FLA_Obj C, FLA_Obj E, int nb_alg, fla_gemm_t* cntl);
+   typedef FLA_Error(*flash_sa_lu_p)(FLA_Obj U, FLA_Obj D, FLA_Obj p, FLA_Obj L, integer nb_alg, fla_lu_t* cntl);
+   typedef FLA_Error(*flash_sa_fs_p)(FLA_Obj L, FLA_Obj D, FLA_Obj p, FLA_Obj C, FLA_Obj E, integer nb_alg, fla_gemm_t* cntl);
    typedef FLA_Error(*flash_lu_nopiv_p)(FLA_Obj A, fla_lu_t* cntl);
    typedef FLA_Error(*flash_trinv_p)(FLA_Uplo uplo, FLA_Diag diag, FLA_Obj A, fla_trinv_t* cntl);
    typedef FLA_Error(*flash_ttmm_p)(FLA_Uplo uplo, FLA_Obj A, fla_ttmm_t* cntl);
@@ -1786,9 +1786,9 @@ void FLASH_Queue_verbose_output( void )
 
 ----------------------------------------------------------------------------*/
 {
-   int           i, j, k;
-   int           n_threads = FLASH_Queue_get_num_threads();
-   int           n_tasks   = FLASH_Queue_get_num_tasks();
+   integer           i, j, k;
+   integer           n_threads = FLASH_Queue_get_num_threads();
+   integer           n_tasks   = FLASH_Queue_get_num_tasks();
    FLASH_Verbose verbose   = FLASH_Queue_get_verbose_output();
    FLASH_Task*   t;
    FLASH_Dep*    d;

@@ -87,40 +87,40 @@ int bl1_is_zero_diag( diag1_t diag )
 
 // --- storage-related ---------------------------------------------------------
 
-int bl1_is_col_storage( int rs, int cs )
+int bl1_is_col_storage( integer rs, integer cs )
 {
 	return ( rs == 1 ); 
 }
 
-int bl1_is_row_storage( int rs, int cs )
+int bl1_is_row_storage( integer rs, integer cs )
 {
 	return ( cs == 1 ); 
 }
 
-int bl1_is_gen_storage( int rs, int cs )
+int bl1_is_gen_storage( integer rs, integer cs )
 {
 	return ( !bl1_is_col_storage( rs, cs ) && 
              !bl1_is_row_storage( rs, cs ) ); 
 }
 
-int bl1_is_vector( int m, int n )
+int bl1_is_vector( integer m, integer n )
 {
 	return ( m == 1 || n == 1 ); 
 }
 
 // --- dimension-related -------------------------------------------------------
 
-int bl1_zero_dim1( int m )
+int bl1_zero_dim1( integer m )
 {
 	return ( m == 0 ); 
 }
 
-int bl1_zero_dim2( int m, int n )
+int bl1_zero_dim2( integer m, integer n )
 {
 	return ( m == 0 || n == 0 ); 
 }
 
-int bl1_zero_dim3( int m, int k, int n )
+int bl1_zero_dim3( integer m, integer k, integer n )
 {
 	return ( m == 0 || k == 0 || n == 0 ); 
 }

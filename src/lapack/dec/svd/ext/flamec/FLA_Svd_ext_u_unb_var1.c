@@ -27,7 +27,7 @@ FLA_Error FLA_Svd_ext_u_unb_var1( FLA_Svd_type jobu, FLA_Svd_type jobv,
     double       crossover_ratio = 17.0 / 9.0;
     FLA_Bool     u_is_formed = FALSE, 
                  v_is_formed = FALSE;
-    int          apply_scale;
+    integer          apply_scale;
 
     n_GH    = k_accum;
 

@@ -17,12 +17,12 @@
 FLA_Error FLA_Gemm_external_gpu( FLA_Trans transa, FLA_Trans transb, FLA_Obj alpha, FLA_Obj A, void* A_gpu, FLA_Obj B, void* B_gpu, FLA_Obj beta, FLA_Obj C, void* C_gpu )
 {
   FLA_Datatype datatype;
-  int          k_AB;
-  int          m_A, n_A;
-  int          m_C, n_C;
-  int          ldim_A;
-  int          ldim_B;
-  int          ldim_C;
+  integer          k_AB;
+  integer          m_A, n_A;
+  integer          m_C, n_C;
+  integer          ldim_A;
+  integer          ldim_B;
+  integer          ldim_C;
   char         blas_transa;
   char         blas_transb;
 

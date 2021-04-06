@@ -16,19 +16,19 @@
 
 
 void time_Apply_Q2_UT(
-               int param_combo, int type, int nrepeats, int m,
+               integer param_combo, integer type, integer nrepeats, integer m,
                FLA_Obj A, FLA_Obj A_ref, FLA_Obj B, FLA_Obj C, FLA_Obj D, FLA_Obj E,
                FLA_Obj T, FLA_Obj TB, FLA_Obj TD, FLA_Obj TE, FLA_Obj W,
                double *dtime, double *diff, double *gflops );
 
 
 void time_Apply_Q2_UT(
-               int param_combo, int type, int nrepeats, int m,
+               integer param_combo, integer type, integer nrepeats, integer m,
                FLA_Obj A, FLA_Obj A_ref, FLA_Obj B, FLA_Obj C, FLA_Obj D, FLA_Obj E,
                FLA_Obj T, FLA_Obj TB, FLA_Obj TD, FLA_Obj TE, FLA_Obj W,
                double *dtime, double *diff, double *gflops )
 {
-  int
+  integer
     irep;
 
   double

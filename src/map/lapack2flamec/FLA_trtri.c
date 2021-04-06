@@ -35,10 +35,10 @@
 #define LAPACK_trtri(prefix)                                    \
   int F77_ ## prefix ## trtri( char* uplo,                      \
                                char* diag,                      \
-                               int* n,                          \
+                               integer* n,                          \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, \
-                               int* ldim_A,                     \
-                               int* info )
+                               integer* ldim_A,                     \
+                               integer* info )
 
 #define LAPACK_trtri_body(prefix)                               \
   AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                 \
@@ -116,10 +116,10 @@ LAPACK_trtri(z)
 #define LAPACK_trti2(prefix)                                    \
   int F77_ ## prefix ## trti2( char* uplo,                      \
                                char* diag,                      \
-                               int* n,                          \
+                               integer* n,                          \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, \
-                               int* ldim_A,                     \
-                               int* info )
+                               integer* ldim_A,                     \
+                               integer* info )
 
 LAPACK_trti2(s)
 {

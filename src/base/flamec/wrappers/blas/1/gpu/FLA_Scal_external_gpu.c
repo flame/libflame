@@ -17,9 +17,9 @@
 FLA_Error FLA_Scal_external_gpu( FLA_Obj alpha, FLA_Obj A, void* A_gpu )
 {
   FLA_Datatype datatype;
-  int          m_A, n_A;
-  int          ldim_A, inc_A;
-  int          i;
+  integer          m_A, n_A;
+  integer          ldim_A, inc_A;
+  integer          i;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING )
     FLA_Scal_check( alpha, A );

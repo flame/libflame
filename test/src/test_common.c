@@ -9,7 +9,7 @@
 
 /* Initialize matrix with random values */
 
-void rand_matrix_s( float * A, int M, int N, int LDA )
+void rand_matrix_s( float * A, integer M, integer N, integer LDA )
 {
    int i, j;
 
@@ -24,7 +24,7 @@ void rand_matrix_s( float * A, int M, int N, int LDA )
    return;
 }
 
-void rand_matrix_d( double * A, int M, int N, int LDA )
+void rand_matrix_d( double * A, integer M, integer N, integer LDA )
 {
    int i, j;
 
@@ -39,7 +39,7 @@ void rand_matrix_d( double * A, int M, int N, int LDA )
    return;
 }
 
-void rand_matrix_c( scomplex * A, int M, int N, int LDA )
+void rand_matrix_c( scomplex * A, integer M, integer N, integer LDA )
 {
    int i, j;
 
@@ -55,7 +55,7 @@ void rand_matrix_c( scomplex * A, int M, int N, int LDA )
    return;
 }
 
-void rand_matrix_z( dcomplex * A, int M, int N, int LDA )
+void rand_matrix_z( dcomplex * A, integer M, integer N, integer LDA )
 {
    int i, j;
 
@@ -73,7 +73,7 @@ void rand_matrix_z( dcomplex * A, int M, int N, int LDA )
 
 /* Initialize symmetric matrix with random values */
 
-void rand_sym_matrix_s( float * A, int M, int N, int LDA )
+void rand_sym_matrix_s( float * A, integer M, integer N, integer LDA )
 {
    int i, j;
 
@@ -96,7 +96,7 @@ void rand_sym_matrix_s( float * A, int M, int N, int LDA )
    return;
 }
 
-void rand_sym_matrix_d( double * A, int M, int N, int LDA )
+void rand_sym_matrix_d( double * A, integer M, integer N, integer LDA )
 {
    int i, j;
 
@@ -119,7 +119,7 @@ void rand_sym_matrix_d( double * A, int M, int N, int LDA )
    return;
 }
 
-void rand_sym_matrix_c( scomplex * A, int M, int N, int LDA )
+void rand_sym_matrix_c( scomplex * A, integer M, integer N, integer LDA )
 {
    int i, j;
 
@@ -144,7 +144,7 @@ void rand_sym_matrix_c( scomplex * A, int M, int N, int LDA )
    return;
 }
 
-void rand_sym_matrix_z( dcomplex * A, int M, int N, int LDA )
+void rand_sym_matrix_z( dcomplex * A, integer M, integer N, integer LDA )
 {
    int i, j;
 
@@ -171,7 +171,7 @@ void rand_sym_matrix_z( dcomplex * A, int M, int N, int LDA )
 
 /* Copy a matrix */
 
-void copy_matrix_s( float *sM, float *dM, int M, int N, int LDS, int LDD )
+void copy_matrix_s( float *sM, float *dM, integer M, integer N, integer LDS, integer LDD )
 {
    int i, j;
 
@@ -186,7 +186,7 @@ void copy_matrix_s( float *sM, float *dM, int M, int N, int LDS, int LDD )
    return;
 }
 
-void copy_matrix_d( double *sM, double *dM, int M, int N, int LDS, int LDD )
+void copy_matrix_d( double *sM, double *dM, integer M, integer N, integer LDS, integer LDD )
 {
    int i, j;
 
@@ -201,7 +201,7 @@ void copy_matrix_d( double *sM, double *dM, int M, int N, int LDS, int LDD )
    return;
 }
 
-void copy_matrix_c( scomplex *sM, scomplex *dM, int M, int N, int LDS, int LDD )
+void copy_matrix_c( scomplex *sM, scomplex *dM, integer M, integer N, integer LDS, integer LDD )
 {
    int i, j;
 
@@ -217,7 +217,7 @@ void copy_matrix_c( scomplex *sM, scomplex *dM, int M, int N, int LDS, int LDD )
    return;
 }
 
-void copy_matrix_z( dcomplex *sM, dcomplex *dM, int M, int N, int LDS, int LDD )
+void copy_matrix_z( dcomplex *sM, dcomplex *dM, integer M, integer N, integer LDS, integer LDD )
 {
    int i, j;
 
@@ -235,7 +235,7 @@ void copy_matrix_z( dcomplex *sM, dcomplex *dM, int M, int N, int LDS, int LDD )
 
 /* Pack a symmetric matrix in column first order */
 
-void pack_matrix_lt_s( float *A, float *B, int N, int LDA )
+void pack_matrix_lt_s( float *A, float *B, integer N, integer LDA )
 {
    int i, j;
    float *bptr = B;
@@ -251,7 +251,7 @@ void pack_matrix_lt_s( float *A, float *B, int N, int LDA )
    return;
 }
 
-void pack_matrix_lt_d( double *A, double *B, int N, int LDA )
+void pack_matrix_lt_d( double *A, double *B, integer N, integer LDA )
 {
    int i, j;
    double *bptr = B;
@@ -267,7 +267,7 @@ void pack_matrix_lt_d( double *A, double *B, int N, int LDA )
    return;
 }
 
-void pack_matrix_lt_c( scomplex *A, scomplex *B, int N, int LDA )
+void pack_matrix_lt_c( scomplex *A, scomplex *B, integer N, integer LDA )
 {
    int i, j;
    scomplex *bptr = B;
@@ -285,7 +285,7 @@ void pack_matrix_lt_c( scomplex *A, scomplex *B, int N, int LDA )
    return;
 }
 
-void pack_matrix_lt_z( dcomplex *A, dcomplex *B, int N, int LDA )
+void pack_matrix_lt_z( dcomplex *A, dcomplex *B, integer N, integer LDA )
 {
    int i, j;
    dcomplex *bptr = B;
@@ -305,7 +305,7 @@ void pack_matrix_lt_z( dcomplex *A, dcomplex *B, int N, int LDA )
 
 /* Initialize a matrix with zeros */
 
-void reset_matrix_s( float *A, int M, int N, int LDA )
+void reset_matrix_s( float *A, integer M, integer N, integer LDA )
 {
    int i, j;
 
@@ -320,7 +320,7 @@ void reset_matrix_s( float *A, int M, int N, int LDA )
    return;
 }
 
-void reset_matrix_d( double *A, int M, int N, int LDA )
+void reset_matrix_d( double *A, integer M, integer N, integer LDA )
 {
    int i, j;
 
@@ -335,7 +335,7 @@ void reset_matrix_d( double *A, int M, int N, int LDA )
    return;
 }
 
-void reset_matrix_c( scomplex *A, int M, int N, int LDA )
+void reset_matrix_c( scomplex *A, integer M, integer N, integer LDA )
 {
    int i, j;
 
@@ -351,7 +351,7 @@ void reset_matrix_c( scomplex *A, int M, int N, int LDA )
    return;
 }
 
-void reset_matrix_z( dcomplex *A, int M, int N, int LDA )
+void reset_matrix_z( dcomplex *A, integer M, integer N, integer LDA )
 {
    int i, j;
 
@@ -369,7 +369,7 @@ void reset_matrix_z( dcomplex *A, int M, int N, int LDA )
 
 /* Set a matrix to identity */
 
-void set_identity_s( float *A, int M, int N, int LDA )
+void set_identity_s( float *A, integer M, integer N, integer LDA )
 {
    int i, j;
 
@@ -385,7 +385,7 @@ void set_identity_s( float *A, int M, int N, int LDA )
    return;
 }
 
-void set_identity_d( double *A, int M, int N, int LDA )
+void set_identity_d( double *A, integer M, integer N, integer LDA )
 {
    int i, j;
 
@@ -401,7 +401,7 @@ void set_identity_d( double *A, int M, int N, int LDA )
    return;
 }
 
-void set_identity_c( scomplex *A, int M, int N, int LDA )
+void set_identity_c( scomplex *A, integer M, integer N, integer LDA )
 {
    int i, j;
 
@@ -419,7 +419,7 @@ void set_identity_c( scomplex *A, int M, int N, int LDA )
    return;
 }
 
-void set_identity_z( dcomplex *A, int M, int N, int LDA )
+void set_identity_z( dcomplex *A, integer M, integer N, integer LDA )
 {
    int i, j;
 

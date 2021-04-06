@@ -16,10 +16,10 @@ extern "C" {
 #ifdef _WIN32
     void c_exp(complex *r, complex *z)
     {
-        _Dcomplex z_ = { z->r, z->i };
-        _Dcomplex ret_val = cexp(z_);
-        r->r = creal(ret_val);
-        r->i = cimag(ret_val);
+        _Fcomplex z_ = { z->r, z->i };
+        _Fcomplex ret_val = cexpf(z_);
+        r->r = crealf(ret_val);
+        r->i = cimagf(ret_val);
     }
     void z_exp(doublecomplex *r, doublecomplex *z)
     {

@@ -17,14 +17,14 @@
 
 
 void time_Gemm_nn(
-               int variant, int type, int nrepeats, int n, int nb_alg,
+               integer variant, integer type, integer nrepeats, integer n, integer nb_alg,
                FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj Cref,
                double *dtime, double *diff, double *gflops );
 
 
-int main(int argc, char *argv[])
+int main(integer argc, char *argv[])
 {
-  int 
+  integer 
     m_input, k_input, n_input,
     m, n, k,
     p_first, p_last, p_inc,
@@ -34,7 +34,7 @@ int main(int argc, char *argv[])
     variant,
     i, j;
 
-  int n_threads_exp[64];
+  integer n_threads_exp[64];
 
   char *colors = "brkgmckkk";
   char *ticks  = "o+*xso+*x";

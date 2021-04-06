@@ -14,10 +14,10 @@ FLA_Error FLA_Tevd_n_opt_var1( dim_t n_iter_max, FLA_Obj d, FLA_Obj e, FLA_Obj G
 {
 	FLA_Error    r_val = FLA_SUCCESS;
 	FLA_Datatype datatype;
-	int          m_A, m_U, n_G;
-	int          inc_d;
-	int          inc_e;
-	int          rs_G, cs_G;
+	integer          m_A, m_U, n_G;
+	integer          inc_d;
+	integer          inc_e;
+	integer          rs_G, cs_G;
 
 	datatype = FLA_Obj_datatype( U );
 
@@ -128,50 +128,50 @@ FLA_Obj_free( &de );
 
 
 
-FLA_Error FLA_Tevd_n_ops_var1( int       m_A,
-                               int       m_U,
-                               int       n_G,
-                               int       n_iter_max,
-                               float*    buff_d, int inc_d, 
-                               float*    buff_e, int inc_e,
-                               scomplex* buff_G, int rs_G, int cs_G )
+FLA_Error FLA_Tevd_n_ops_var1( integer       m_A,
+                               integer       m_U,
+                               integer       n_G,
+                               integer       n_iter_max,
+                               float*    buff_d, integer inc_d, 
+                               float*    buff_e, integer inc_e,
+                               scomplex* buff_G, integer rs_G, integer cs_G )
 {
 	return FLA_SUCCESS;
 }
 
 
 
-FLA_Error FLA_Tevd_n_opd_var1( int       m_A,
-                               int       m_U,
-                               int       n_G,
-                               int       n_iter_max,
-                               double*   buff_d, int inc_d, 
-                               double*   buff_e, int inc_e,
-                               dcomplex* buff_G, int rs_G, int cs_G )
+FLA_Error FLA_Tevd_n_opd_var1( integer       m_A,
+                               integer       m_U,
+                               integer       n_G,
+                               integer       n_iter_max,
+                               double*   buff_d, integer inc_d, 
+                               double*   buff_e, integer inc_e,
+                               dcomplex* buff_G, integer rs_G, integer cs_G )
 {
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Tevd_n_opc_var1( int       m_A,
-                               int       m_U,
-                               int       n_G,
-                               int       n_iter_max,
-                               float*    buff_d, int inc_d, 
-                               float*    buff_e, int inc_e,
-                               scomplex* buff_G, int rs_G, int cs_G )
+FLA_Error FLA_Tevd_n_opc_var1( integer       m_A,
+                               integer       m_U,
+                               integer       n_G,
+                               integer       n_iter_max,
+                               float*    buff_d, integer inc_d, 
+                               float*    buff_e, integer inc_e,
+                               scomplex* buff_G, integer rs_G, integer cs_G )
 {
 	return FLA_SUCCESS;
 }
 
 //#define PRINTF
 
-FLA_Error FLA_Tevd_n_opz_var1( int       m_A,
-                               int       m_U,
-                               int       n_G,
-                               int       n_iter_max,
-                               double*   buff_d, int inc_d, 
-                               double*   buff_e, int inc_e,
-                               dcomplex* buff_G, int rs_G, int cs_G )
+FLA_Error FLA_Tevd_n_opz_var1( integer       m_A,
+                               integer       m_U,
+                               integer       n_G,
+                               integer       n_iter_max,
+                               double*   buff_d, integer inc_d, 
+                               double*   buff_e, integer inc_e,
+                               dcomplex* buff_G, integer rs_G, integer cs_G )
 {
 	dcomplex  one  = bl1_z1();
 	double    rone = bl1_d1();
@@ -186,17 +186,17 @@ FLA_Error FLA_Tevd_n_opz_var1( int       m_A,
 	dcomplex* G;
 	double*   d1;
 	double*   e1;
-	int       r_val;
-	int       done;
-	int       m_G_sweep_max;
-	int       ij_begin;
-	int       ijTL, ijBR;
-	int       m_A11;
-	int       n_iter_perf;
-	int       total_deflations;
-	int       n_deflations;
-	int       n_iter_prev;
-	int       n_iter_perf_sweep_max;
+	integer       r_val;
+	integer       done;
+	integer       m_G_sweep_max;
+	integer       ij_begin;
+	integer       ijTL, ijBR;
+	integer       m_A11;
+	integer       n_iter_perf;
+	integer       total_deflations;
+	integer       n_deflations;
+	integer       n_iter_prev;
+	integer       n_iter_perf_sweep_max;
 
 	// Initialize some numerical constants.
 	eps    = FLA_Mach_params_opd( FLA_MACH_EPS );

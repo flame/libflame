@@ -1,10 +1,10 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
 
-int dsytd2_check(char *uplo, int *n, double *a, int * lda, double *d__, double *e, double *tau, int *info)
+int dsytd2_check(char *uplo, integer *n, double *a, integer * lda, double *d__, double *e, double *tau, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
     /* Local variables */
     logical upper;
 

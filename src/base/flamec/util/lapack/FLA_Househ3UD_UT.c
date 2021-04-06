@@ -50,10 +50,10 @@ FLA_Error FLA_Househ3UD_UT( FLA_Obj chi_0, FLA_Obj x1, FLA_Obj y2, FLA_Obj tau )
 */
 {
   FLA_Datatype datatype;
-  int          m_x1;
-  int          m_y2;
-  int          inc_x1;
-  int          inc_y2;
+  integer          m_x1;
+  integer          m_y2;
+  integer          inc_x1;
+  integer          inc_y2;
 
   datatype = FLA_Obj_datatype( x1 );
 
@@ -137,11 +137,11 @@ FLA_Error FLA_Househ3UD_UT( FLA_Obj chi_0, FLA_Obj x1, FLA_Obj y2, FLA_Obj tau )
 
 
 
-FLA_Error FLA_Househ3UD_UT_ops( int       m_x1,
-                                int       m_y2,
+FLA_Error FLA_Househ3UD_UT_ops( integer       m_x1,
+                                integer       m_y2,
                                 float*    chi_0,
-                                float*    x1, int inc_x1,
-                                float*    y2, int inc_y2,
+                                float*    x1, integer inc_x1,
+                                float*    y2, integer inc_y2,
                                 float*    tau )
 {
   float    one_half = *FLA_FLOAT_PTR( FLA_ONE_HALF );
@@ -153,7 +153,7 @@ FLA_Error FLA_Househ3UD_UT_ops( int       m_x1,
   float    norm_y_2;
   float    lambda;
   float    abs_sq_chi_0_minus_alpha;
-  int      i_one = 1;
+  integer      i_one = 1;
 
   //
   // Compute the 2-norms of x_1 and y_2:
@@ -264,11 +264,11 @@ FLA_Error FLA_Househ3UD_UT_ops( int       m_x1,
 
 
 
-FLA_Error FLA_Househ3UD_UT_opd( int       m_x1,
-                                int       m_y2,
+FLA_Error FLA_Househ3UD_UT_opd( integer       m_x1,
+                                integer       m_y2,
                                 double*   chi_0,
-                                double*   x1, int inc_x1,
-                                double*   y2, int inc_y2,
+                                double*   x1, integer inc_x1,
+                                double*   y2, integer inc_y2,
                                 double*   tau )
 {
   double   one_half = *FLA_DOUBLE_PTR( FLA_ONE_HALF );
@@ -280,7 +280,7 @@ FLA_Error FLA_Househ3UD_UT_opd( int       m_x1,
   double   norm_y_2;
   double   lambda;
   double   abs_sq_chi_0_minus_alpha;
-  int      i_one = 1;
+  integer      i_one = 1;
 
   //
   // Compute the 2-norms of x_1 and y_2:
@@ -390,11 +390,11 @@ FLA_Error FLA_Househ3UD_UT_opd( int       m_x1,
 
 
 
-FLA_Error FLA_Househ3UD_UT_opc( int       m_x1,
-                                int       m_y2,
+FLA_Error FLA_Househ3UD_UT_opc( integer       m_x1,
+                                integer       m_y2,
                                 scomplex* chi_0,
-                                scomplex* x1, int inc_x1,
-                                scomplex* y2, int inc_y2,
+                                scomplex* x1, integer inc_x1,
+                                scomplex* y2, integer inc_y2,
                                 scomplex* tau )
 {
   scomplex one_half = *FLA_COMPLEX_PTR( FLA_ONE_HALF );
@@ -406,7 +406,7 @@ FLA_Error FLA_Househ3UD_UT_opc( int       m_x1,
   float    norm_y_2;
   float    lambda;
   float    abs_sq_chi_0_minus_alpha;
-  int      i_one = 1;
+  integer      i_one = 1;
 
   //
   // Compute the 2-norms of x_1 and y_2:
@@ -524,11 +524,11 @@ FLA_Error FLA_Househ3UD_UT_opc( int       m_x1,
 
 
 
-FLA_Error FLA_Househ3UD_UT_opz( int       m_x1,
-                                int       m_y2,
+FLA_Error FLA_Househ3UD_UT_opz( integer       m_x1,
+                                integer       m_y2,
                                 dcomplex* chi_0,
-                                dcomplex* x1, int inc_x1,
-                                dcomplex* y2, int inc_y2,
+                                dcomplex* x1, integer inc_x1,
+                                dcomplex* y2, integer inc_y2,
                                 dcomplex* tau )
 {
   dcomplex one_half = *FLA_DOUBLE_COMPLEX_PTR( FLA_ONE_HALF );
@@ -540,7 +540,7 @@ FLA_Error FLA_Househ3UD_UT_opz( int       m_x1,
   double   norm_y_2;
   double   lambda;
   double   abs_sq_chi_0_minus_alpha;
-  int      i_one = 1;
+  integer      i_one = 1;
 
   //
   // Compute the 2-norms of x_1 and y_2:

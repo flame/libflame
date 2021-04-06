@@ -60,6 +60,8 @@ LIB_DIR         := lib
 INC_DIR         := include
 LAPACKE_DIR     := lapacke
 AOCLDTL_DIR     := aocl_dtl
+LAPACKE_SRC_DIR := LAPACKE/src
+LAPACKE_UTIL_DIR:= LAPACKE/utils
 TEST_DIR        := test
 CPP_TEST_DIR    := testcpp
 
@@ -138,7 +140,8 @@ AOCLDTL_A_PATH       := $(SRC_DIR)/$(AOCLDTL_DIR)/$(AOCLDTL_A)
 AOCLDTL_SO_PATH      := $(SRC_DIR)/$(AOCLDTL_DIR)/$(AOCLDTL_SO)
 AOCLDTL_obj_PATH     := $(SRC_DIR)/$(AOCLDTL_DIR)/*.o
 AOCLDTL_gch_PATH     := $(SRC_DIR)/$(AOCLDTL_DIR)/*.gch
-
+LAPACKE_S_OBJS_PATH  := $(SRC_DIR)/$(LAPACKE_DIR)/$(LAPACKE_SRC_DIR)/*.o
+LAPACKE_U_OBJS_PATH  := $(SRC_DIR)/$(LAPACKE_DIR)/$(LAPACKE_UTIL_DIR)/*.o
 # Construct the output path when building a shared library.
 LIBFLAME_SO_OUTPUT_NAME := $(LIBFLAME_SO_PATH)
 
@@ -558,7 +561,8 @@ else
 	$(MAKE) -e -C $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE
 	@echo "Generated LAPACKE library"
 endif
-
+	@echo $(LAPACKE_S_OBJS_PATH) >> $(AR_OBJ_LIST_FILE)
+	@echo $(LAPACKE_U_OBJS_PATH) >> $(AR_OBJ_LIST_FILE)
 $(AOCLDTL_A_PATH):
 ifeq ($(ENABLE_VERBOSE),yes)
 	$(MAKE) -e -C $(SRC_DIR)/$(AOCLDTL_DIR)
@@ -846,6 +850,8 @@ cleanlib:
 ifeq ($(IS_CONFIGURED),yes)
 ifeq ($(ENABLE_VERBOSE),yes)
 	- $(FIND) $(BASE_OBJ_PATH) -name "*.o" | $(XARGS) $(RM_F)
+	- $(FIND) $(LAPACKE_S_OBJS_PATH) -name "*.o" | $(XARGS) $(RM_F)
+	- $(FIND) $(LAPACKE_U_OBJS_PATH) -name "*.o" | $(XARGS) $(RM_F)
 	- $(RM_F) $(LAPACKE_A_PATH)
 	- $(RM_F) $(AOCLDTL_A_PATH)
 	- $(RM_F) $(AOCLDTL_SO_PATH)
@@ -855,6 +861,8 @@ ifeq ($(ENABLE_VERBOSE),yes)
 else
 	@echo "Removing object files from $(BASE_OBJ_PATH)"
 	@$(FIND) $(BASE_OBJ_PATH) -name "*.o" | $(XARGS) $(RM_F)
+	@$(FIND) $(LAPACKE_S_OBJS_PATH) -name "*.o" | $(XARGS) $(RM_F)
+	@$(FIND) $(LAPACKE_U_OBJS_PATH) -name "*.o" | $(XARGS) $(RM_F)
 	@echo "Removing libraries from $(BASE_LIB_PATH)"
 	@$(RM_F) $(LAPACKE_A_PATH)
 	@$(RM_F) $(AOCLDTL_A_PATH)

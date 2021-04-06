@@ -18,14 +18,14 @@
 char* pc_str[N_PARAM_COMBOS] = { "n", "h" };
 
 void time_Lyap(
-                int param_combo, int type, int nrepeats, int m,
+                integer param_combo, integer type, integer nrepeats, integer m,
                 FLA_Obj isgn, FLA_Obj A, FLA_Obj C, FLA_Obj scale,
                 double *dtime, double *diff, double *gflops );
 
 
-int main( int argc, char *argv[] )
+integer main( integer argc, char *argv[] )
 {
-  int 
+  integer 
     datatype,
     n_threads,
     m_input,
@@ -37,7 +37,7 @@ int main( int argc, char *argv[] )
     i, j,
     n_param_combos = N_PARAM_COMBOS;
 
-  int sign;
+  integer sign;
 
   dim_t b_flash;
   

@@ -13,9 +13,9 @@
 FLA_Error FLA_Tevd_francis_n_opt_var1( FLA_Obj shift, FLA_Obj d, FLA_Obj e )
 {
 	FLA_Datatype datatype;
-	int          m_A;
-	int          inc_d;
-	int          inc_e;
+	integer          m_A;
+	integer          inc_d;
+	integer          inc_e;
 
 	datatype = FLA_Obj_datatype( d );
 
@@ -61,27 +61,27 @@ FLA_Error FLA_Tevd_francis_n_opt_var1( FLA_Obj shift, FLA_Obj d, FLA_Obj e )
 
 
 
-FLA_Error FLA_Tevd_francis_n_ops_var1( int       m_A,
+FLA_Error FLA_Tevd_francis_n_ops_var1( integer       m_A,
                                        float*    buff_shift,
-                                       float*    buff_d, int inc_d, 
-                                       float*    buff_e, int inc_e )
+                                       float*    buff_d, integer inc_d, 
+                                       float*    buff_e, integer inc_e )
 {
 	return FLA_SUCCESS;
 }
 
 
 
-FLA_Error FLA_Tevd_francis_n_opd_var1( int       m_A,
+FLA_Error FLA_Tevd_francis_n_opd_var1( integer       m_A,
                                        double*   buff_shift,
-                                       double*   buff_d, int inc_d, 
-                                       double*   buff_e, int inc_e )
+                                       double*   buff_d, integer inc_d, 
+                                       double*   buff_e, integer inc_e )
 {
 	double    eps2, safmin;
 	double    temp0, temp1;
 	double    bulge;
 	double    gamma, sigma;
-	int       ij_deflated;
-	int       i;
+	integer       ij_deflated;
+	integer       i;
 
 	// Initialize the deflation index.
 	ij_deflated = FLA_SUCCESS;
@@ -112,8 +112,8 @@ FLA_Error FLA_Tevd_francis_n_opd_var1( int       m_A,
 
 		double    alpha10_new;
 
-		int       m_behind = i;
-		int       m_ahead  = m_A - i - 2;
+		integer       m_behind = i;
+		integer       m_ahead  = m_A - i - 2;
 
 		/*------------------------------------------------------------*/
 

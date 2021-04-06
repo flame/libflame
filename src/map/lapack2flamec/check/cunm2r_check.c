@@ -1,13 +1,13 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
 
-int cunm2r_check(char *side, char *trans, int *m, int *n, int *k, scomplex *a, int *lda, scomplex *tau, scomplex *c__, int *ldc, scomplex *work, int *info)
+int cunm2r_check(char *side, char *trans, integer *m, integer *n, integer *k, scomplex *a, integer *lda, scomplex *tau, scomplex *c__, integer *ldc, scomplex *work, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, c_dim1, c_offset, i__1;
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1;
     /* Builtin functions */
     /* Local variables */
-    int nq;
+    integer nq;
     logical left;
     logical notran;
     

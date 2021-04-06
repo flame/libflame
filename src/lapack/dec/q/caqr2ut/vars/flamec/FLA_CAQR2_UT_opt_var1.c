@@ -14,10 +14,10 @@ FLA_Error FLA_CAQR2_UT_opt_var1( FLA_Obj U,
                                  FLA_Obj D, FLA_Obj T )
 {
   FLA_Datatype datatype;
-  int          mn_UT, m_D;
-  int          rs_U, cs_U;
-  int          rs_D, cs_D;
-  int          rs_T, cs_T;
+  integer          mn_UT, m_D;
+  integer          rs_U, cs_U;
+  integer          rs_D, cs_D;
+  integer          rs_T, cs_T;
 
   datatype = FLA_Obj_datatype( U );
 
@@ -100,15 +100,15 @@ FLA_Error FLA_CAQR2_UT_opt_var1( FLA_Obj U,
 
 
 
-FLA_Error FLA_CAQR2_UT_ops_var1( int mn_UT,
-                                 int m_D,
-                                 float* buff_U, int rs_U, int cs_U,
-                                 float* buff_D, int rs_D, int cs_D,
-                                 float* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_CAQR2_UT_ops_var1( integer mn_UT,
+                                 integer m_D,
+                                 float* buff_U, integer rs_U, integer cs_U,
+                                 float* buff_D, integer rs_D, integer cs_D,
+                                 float* buff_T, integer rs_T, integer cs_T )
 {
   float*    buff_1  = FLA_FLOAT_PTR( FLA_ONE );
-  int       i, j;
-  int       m_DT = m_D - mn_UT;
+  integer       i, j;
+  integer       m_DT = m_D - mn_UT;
 
   for ( i = m_DT, j = 0; j < mn_UT; ++i, ++j )
   {
@@ -125,9 +125,9 @@ FLA_Error FLA_CAQR2_UT_ops_var1( int mn_UT,
     float*    d1B       = d1  + (m_DT)*rs_D;
     float*    D00B      = D00 + (m_DT)*rs_D;
 
-    int       m_behind = i;
-    int       n_behind = j;
-    int       mn_ahead = mn_UT - j - 1;
+    integer       m_behind = i;
+    integer       n_behind = j;
+    integer       mn_ahead = mn_UT - j - 1;
 
     //------------------------------------------------------------//
 
@@ -181,15 +181,15 @@ FLA_Error FLA_CAQR2_UT_ops_var1( int mn_UT,
 
 
 
-FLA_Error FLA_CAQR2_UT_opd_var1( int mn_UT,
-                                 int m_D,
-                                 double* buff_U, int rs_U, int cs_U,
-                                 double* buff_D, int rs_D, int cs_D,
-                                 double* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_CAQR2_UT_opd_var1( integer mn_UT,
+                                 integer m_D,
+                                 double* buff_U, integer rs_U, integer cs_U,
+                                 double* buff_D, integer rs_D, integer cs_D,
+                                 double* buff_T, integer rs_T, integer cs_T )
 {
   double*   buff_1  = FLA_DOUBLE_PTR( FLA_ONE );
-  int       i, j;
-  int       m_DT = m_D - mn_UT;
+  integer       i, j;
+  integer       m_DT = m_D - mn_UT;
 
   for ( i = m_DT, j = 0; j < mn_UT; ++i, ++j )
   {
@@ -206,9 +206,9 @@ FLA_Error FLA_CAQR2_UT_opd_var1( int mn_UT,
     double*   d1B       = d1  + (m_DT)*rs_D;
     double*   D00B      = D00 + (m_DT)*rs_D;
 
-    int       m_behind = i;
-    int       n_behind = j;
-    int       mn_ahead = mn_UT - j - 1;
+    integer       m_behind = i;
+    integer       n_behind = j;
+    integer       mn_ahead = mn_UT - j - 1;
 
     //------------------------------------------------------------//
 
@@ -262,15 +262,15 @@ FLA_Error FLA_CAQR2_UT_opd_var1( int mn_UT,
 
 
 
-FLA_Error FLA_CAQR2_UT_opc_var1( int mn_UT,
-                                 int m_D,
-                                 scomplex* buff_U, int rs_U, int cs_U,
-                                 scomplex* buff_D, int rs_D, int cs_D,
-                                 scomplex* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_CAQR2_UT_opc_var1( integer mn_UT,
+                                 integer m_D,
+                                 scomplex* buff_U, integer rs_U, integer cs_U,
+                                 scomplex* buff_D, integer rs_D, integer cs_D,
+                                 scomplex* buff_T, integer rs_T, integer cs_T )
 {
   scomplex* buff_1  = FLA_COMPLEX_PTR( FLA_ONE );
-  int       i, j;
-  int       m_DT = m_D - mn_UT;
+  integer       i, j;
+  integer       m_DT = m_D - mn_UT;
 
   for ( i = m_DT, j = 0; j < mn_UT; ++i, ++j )
   {
@@ -287,9 +287,9 @@ FLA_Error FLA_CAQR2_UT_opc_var1( int mn_UT,
     scomplex* d1B       = d1  + (m_DT)*rs_D;
     scomplex* D00B      = D00 + (m_DT)*rs_D;
 
-    int       m_behind = i;
-    int       n_behind = j;
-    int       mn_ahead = mn_UT - j - 1;
+    integer       m_behind = i;
+    integer       n_behind = j;
+    integer       mn_ahead = mn_UT - j - 1;
 
     //------------------------------------------------------------//
 
@@ -343,15 +343,15 @@ FLA_Error FLA_CAQR2_UT_opc_var1( int mn_UT,
 
 
 
-FLA_Error FLA_CAQR2_UT_opz_var1( int mn_UT,
-                                 int m_D,
-                                 dcomplex* buff_U, int rs_U, int cs_U,
-                                 dcomplex* buff_D, int rs_D, int cs_D,
-                                 dcomplex* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_CAQR2_UT_opz_var1( integer mn_UT,
+                                 integer m_D,
+                                 dcomplex* buff_U, integer rs_U, integer cs_U,
+                                 dcomplex* buff_D, integer rs_D, integer cs_D,
+                                 dcomplex* buff_T, integer rs_T, integer cs_T )
 {
   dcomplex* buff_1  = FLA_DOUBLE_COMPLEX_PTR( FLA_ONE );
-  int       i, j;
-  int       m_DT = m_D - mn_UT;
+  integer       i, j;
+  integer       m_DT = m_D - mn_UT;
 
   for ( i = m_DT, j = 0; j < mn_UT; ++i, ++j )
   {
@@ -368,9 +368,9 @@ FLA_Error FLA_CAQR2_UT_opz_var1( int mn_UT,
     dcomplex* d1B       = d1  + (m_DT)*rs_D;
     dcomplex* D00B      = D00 + (m_DT)*rs_D;
 
-    int       m_behind = i;
-    int       n_behind = j;
-    int       mn_ahead = mn_UT - j - 1;
+    integer       m_behind = i;
+    integer       n_behind = j;
+    integer       mn_ahead = mn_UT - j - 1;
 
     //------------------------------------------------------------//
 

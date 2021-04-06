@@ -39,7 +39,7 @@ void libfla_test_trinv_experiment( test_params_t params,
                                    unsigned int  var,
                                    char*         sc_str,
                                    FLA_Datatype  datatype,
-                                   unsigned int  p_cur,
+                                   uinteger  p_cur,
                                    unsigned int  pci,
                                    unsigned int  n_repeats,
                                    signed int    impl,
@@ -116,7 +116,7 @@ void libfla_test_trinv_experiment( test_params_t params,
                                    unsigned int  var,
                                    char*         sc_str,
                                    FLA_Datatype  datatype,
-                                   unsigned int  p_cur,
+                                   uinteger  p_cur,
                                    unsigned int  pci,
                                    unsigned int  n_repeats,
                                    signed int    impl,
@@ -128,8 +128,8 @@ void libfla_test_trinv_experiment( test_params_t params,
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	unsigned int m;
-	signed int   m_input    = -1;
+	uinteger m;
+	integer   m_input    = -1;
 	FLA_Uplo     uplo;
 	FLA_Diag     diag;
 	FLA_Obj      A, x, b, norm;
@@ -248,9 +248,9 @@ void libfla_test_trinv_experiment( test_params_t params,
 
 
 
-extern TLS_CLASS_SPEC fla_trmm_t* fla_trmm_cntl_blas;
-extern TLS_CLASS_SPEC fla_trsm_t* fla_trsm_cntl_blas;
-extern TLS_CLASS_SPEC fla_gemm_t* fla_gemm_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_trmm_t* fla_trmm_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_trsm_t* fla_trsm_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_gemm_t* fla_gemm_cntl_blas;
 
 void libfla_test_trinv_cntl_create( unsigned int var,
                                     dim_t        b_alg_flat )

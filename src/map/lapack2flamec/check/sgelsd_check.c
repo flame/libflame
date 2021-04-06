@@ -1,25 +1,25 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h" /* Table of constant values */
-static int c__9 = 9;
-static int c__0 = 0;
-static int c__6 = 6;
-static int c_n1 = -1;
-static int c__1 = 1;
+static integer c__9 = 9;
+static integer c__0 = 0;
+static integer c__6 = 6;
+static integer c_n1 = -1;
+static integer c__1 = 1;
 
-int sgelsd_check(int *m, int *n, int *nrhs, float *a, int *lda, float *b, int *ldb, float *s, float *rcond, int * rank, float *work, int *lwork, int *iwork, int *info)
+int sgelsd_check(integer *m, integer *n, integer *nrhs, float *a, integer *lda, float *b, integer *ldb, float *s, float *rcond, integer * rank, float *work, integer *lwork, integer *iwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
+    integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
     /* Builtin functions */
     double log(double);
     /* Local variables */
-    int mm;
-    int nlvl;
-    int minmn, maxmn, mnthr;
-    int wlalsd;
-    int liwork, minwrk, maxwrk;
+    integer mm;
+    integer nlvl;
+    integer minmn, maxmn, mnthr;
+    integer wlalsd;
+    integer liwork, minwrk, maxwrk;
     logical lquery;
-    int smlsiz;
+    integer smlsiz;
                 
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
@@ -78,7 +78,7 @@ int sgelsd_check(int *m, int *n, int *nrhs, float *a, int *lda, float *b, int *l
             smlsiz = ilaenv_(&c__9, "SGELSD", " ", &c__0, &c__0, &c__0, &c__0);
             mnthr = ilaenv_(&c__6, "SGELSD", " ", m, n, nrhs, &c_n1);
             /* Computing MAX */
-            i__1 = (int) (log((float) minmn / (float) (smlsiz + 1)) / log( 2.f)) + 1;
+            i__1 = (integer) (log((float) minmn / (float) (smlsiz + 1)) / log( 2.f)) + 1;
             nlvl = max(i__1,0);
             liwork = minmn * 3 * nlvl + minmn * 11;
             mm = *m;

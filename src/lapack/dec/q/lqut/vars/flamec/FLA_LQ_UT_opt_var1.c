@@ -13,9 +13,9 @@
 FLA_Error FLA_LQ_UT_opt_var1( FLA_Obj A, FLA_Obj t )
 {
   FLA_Datatype datatype;
-  int          m_A, n_A;
-  int          rs_A, cs_A;
-  int          inc_t;
+  integer          m_A, n_A;
+  integer          rs_A, cs_A;
+  integer          inc_t;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -87,13 +87,13 @@ FLA_Error FLA_LQ_UT_opt_var1( FLA_Obj A, FLA_Obj t )
 
 
 
-FLA_Error FLA_LQ_UT_ops_var1( int m_A,
-                              int n_A,
-                              float* buff_A, int rs_A, int cs_A,
-                              float* buff_t, int inc_t )
+FLA_Error FLA_LQ_UT_ops_var1( integer m_A,
+                              integer n_A,
+                              float* buff_A, integer rs_A, integer cs_A,
+                              float* buff_t, integer inc_t )
 {
-  int min_m_n = min( m_A, n_A );
-  int i;
+  integer min_m_n = min( m_A, n_A );
+  integer i;
 
   for ( i = 0; i < min_m_n; ++i )
   {
@@ -104,8 +104,8 @@ FLA_Error FLA_LQ_UT_ops_var1( int m_A,
 
     float* tau1     = buff_t + (i  )*inc_t;
 
-    int    m_ahead  = m_A - i - 1;
-    int    n_ahead  = n_A - i - 1;
+    integer    m_ahead  = m_A - i - 1;
+    integer    n_ahead  = n_A - i - 1;
 
     /*------------------------------------------------------------*/
 
@@ -133,13 +133,13 @@ FLA_Error FLA_LQ_UT_ops_var1( int m_A,
 
 
 
-FLA_Error FLA_LQ_UT_opd_var1( int m_A,
-                              int n_A,
-                              double* buff_A, int rs_A, int cs_A,
-                              double* buff_t, int inc_t )
+FLA_Error FLA_LQ_UT_opd_var1( integer m_A,
+                              integer n_A,
+                              double* buff_A, integer rs_A, integer cs_A,
+                              double* buff_t, integer inc_t )
 {
-  int min_m_n = min( m_A, n_A );
-  int i;
+  integer min_m_n = min( m_A, n_A );
+  integer i;
 
   for ( i = 0; i < min_m_n; ++i )
   {
@@ -150,8 +150,8 @@ FLA_Error FLA_LQ_UT_opd_var1( int m_A,
 
     double* tau1    = buff_t + (i  )*inc_t;
 
-    int     m_ahead  = m_A - i - 1;
-    int     n_ahead  = n_A - i - 1;
+    integer     m_ahead  = m_A - i - 1;
+    integer     n_ahead  = n_A - i - 1;
 
     /*------------------------------------------------------------*/
 
@@ -179,13 +179,13 @@ FLA_Error FLA_LQ_UT_opd_var1( int m_A,
 
 
 
-FLA_Error FLA_LQ_UT_opc_var1( int m_A,
-                              int n_A,
-                              scomplex* buff_A, int rs_A, int cs_A,
-                              scomplex* buff_t, int inc_t )
+FLA_Error FLA_LQ_UT_opc_var1( integer m_A,
+                              integer n_A,
+                              scomplex* buff_A, integer rs_A, integer cs_A,
+                              scomplex* buff_t, integer inc_t )
 {
-  int min_m_n = min( m_A, n_A );
-  int i;
+  integer min_m_n = min( m_A, n_A );
+  integer i;
 
   for ( i = 0; i < min_m_n; ++i )
   {
@@ -196,8 +196,8 @@ FLA_Error FLA_LQ_UT_opc_var1( int m_A,
 
     scomplex* tau1     = buff_t + (i  )*inc_t;
 
-    int       m_ahead  = m_A - i - 1;
-    int       n_ahead  = n_A - i - 1;
+    integer       m_ahead  = m_A - i - 1;
+    integer       n_ahead  = n_A - i - 1;
 
     /*------------------------------------------------------------*/
 
@@ -225,13 +225,13 @@ FLA_Error FLA_LQ_UT_opc_var1( int m_A,
 
 
 
-FLA_Error FLA_LQ_UT_opz_var1( int m_A,
-                              int n_A,
-                              dcomplex* buff_A, int rs_A, int cs_A,
-                              dcomplex* buff_t, int inc_t )
+FLA_Error FLA_LQ_UT_opz_var1( integer m_A,
+                              integer n_A,
+                              dcomplex* buff_A, integer rs_A, integer cs_A,
+                              dcomplex* buff_t, integer inc_t )
 {
-  int min_m_n = min( m_A, n_A );
-  int i;
+  integer min_m_n = min( m_A, n_A );
+  integer i;
 
   for ( i = 0; i < min_m_n; ++i )
   {
@@ -242,8 +242,8 @@ FLA_Error FLA_LQ_UT_opz_var1( int m_A,
 
     dcomplex* tau1     = buff_t + (i  )*inc_t;
 
-    int       m_ahead  = m_A - i - 1;
-    int       n_ahead  = n_A - i - 1;
+    integer       m_ahead  = m_A - i - 1;
+    integer       n_ahead  = n_A - i - 1;
 
     /*------------------------------------------------------------*/
 

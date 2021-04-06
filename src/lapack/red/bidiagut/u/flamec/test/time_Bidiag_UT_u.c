@@ -19,17 +19,17 @@
 FLA_Error REF_Bidiag_UT_u( FLA_Obj A, FLA_Obj tu, FLA_Obj tv );
 
 void time_Bidiag_UT_u(
-               int variant, int type, int n_repeats, int m, int n, int nb_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer n, integer nb_alg,
                FLA_Obj A, FLA_Obj TU, FLA_Obj TV, FLA_Obj TTU, FLA_Obj TTV, FLA_Obj tu, FLA_Obj tv,
                double *dtime, double *diff, double *gflops );
 
 
 void time_Bidiag_UT_u(
-               int variant, int type, int n_repeats, int m, int n, int nb_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer n, integer nb_alg,
                FLA_Obj A, FLA_Obj TU, FLA_Obj TV, FLA_Obj TTU, FLA_Obj TTV, FLA_Obj tu, FLA_Obj tv,
                double *dtime, double *diff, double *gflops )
 {
-  int irep;
+  integer irep;
 
   double
     dtime_old = 1.0e9;

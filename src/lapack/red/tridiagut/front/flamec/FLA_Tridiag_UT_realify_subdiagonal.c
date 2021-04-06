@@ -25,8 +25,8 @@ FLA_Error FLA_Tridiag_UT_realify_subdiagonal( FLA_Obj b, FLA_Obj d )
 FLA_Error FLA_Tridiag_UT_realify_subdiagonal_opt( FLA_Obj b, FLA_Obj d )
 {
   FLA_Datatype datatype;
-  int          m, inc_b, inc_d;
-  int          i;
+  integer          m, inc_b, inc_d;
+  integer          i;
 
   datatype = FLA_Obj_datatype( d );
 

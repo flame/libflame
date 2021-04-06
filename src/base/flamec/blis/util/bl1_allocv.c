@@ -17,32 +17,32 @@
   #define BLIS1_MALLOC malloc
 #endif
 
-void*     bl1_vallocv( unsigned int n_elem, unsigned int elem_size )
+void*     bl1_vallocv( uinteger n_elem, uinteger elem_size )
 {
 	return ( void*  ) BLIS1_MALLOC( n_elem * elem_size );
 }
 
-int*      bl1_iallocv( unsigned int n_elem )
+integer*      bl1_iallocv( uinteger n_elem )
 {
-	return ( int*   ) BLIS1_MALLOC( n_elem * sizeof( int ) );
+	return ( integer*   ) BLIS1_MALLOC( n_elem * sizeof( integer ) );
 }
 
-float*    bl1_sallocv( unsigned int n_elem )
+float*    bl1_sallocv( uinteger n_elem )
 {
 	return ( float* ) BLIS1_MALLOC( n_elem * sizeof( float ) );
 }
 
-double*   bl1_dallocv( unsigned int n_elem )
+double*   bl1_dallocv( uinteger n_elem )
 {
 	return ( double* ) BLIS1_MALLOC( n_elem * sizeof( double ) );
 }
 
-scomplex* bl1_callocv( unsigned int n_elem )
+scomplex* bl1_callocv( uinteger n_elem )
 {
 	return ( scomplex* ) BLIS1_MALLOC( n_elem * sizeof( scomplex ) );
 }
 
-dcomplex* bl1_zallocv( unsigned int n_elem )
+dcomplex* bl1_zallocv( uinteger n_elem )
 {
 	return ( dcomplex* ) BLIS1_MALLOC( n_elem * sizeof( dcomplex ) );
 }

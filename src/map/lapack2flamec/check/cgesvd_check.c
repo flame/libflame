@@ -1,29 +1,29 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
-static int c__6 = 6;
-static int c__0 = 0;
-static int c_n1 = -1;
+static integer c__6 = 6;
+static integer c__0 = 0;
+static integer c_n1 = -1;
 
-int cgesvd_check(char *jobu, char *jobvt, int *m, int *n, scomplex *a, int *lda, float *s, scomplex *u, int *ldu, scomplex * vt, int *ldvt, scomplex *work, int *lwork, float *rwork, int *info)
+int cgesvd_check(char *jobu, char *jobvt, integer *m, integer *n, scomplex *a, integer *lda, float *s, scomplex *u, integer *ldu, scomplex * vt, integer *ldvt, scomplex *work, integer *lwork, float *rwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__2, i__3;
+    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__2, i__3;
     char ch__1[2];
     /* Local variables */
     float dum[2];
-    int ierr, lwork_cgebrd__, lwork_cgelqf__, lwork_cgeqrf__;
-    int minmn, wrkbl, mnthr;
+    integer ierr, lwork_cgebrd__, lwork_cgelqf__, lwork_cgeqrf__;
+    integer minmn, wrkbl, mnthr;
     logical wntua, wntva, wntun, wntuo, wntvn, wntvo, wntus, wntvs;
     extern int 
-      cgebrd_(int*, int*, scomplex*, int*, float*, float*, scomplex*, scomplex*, scomplex*, int*, int*),
-      cgelqf_(int*, int*, scomplex*, int*, scomplex*, scomplex*, int*, int* ), 
-      cgeqrf_(int*, int*, scomplex*, int*, scomplex*, scomplex*, int*, int* ),
-      cungbr_(char*, int*, int*, int*, scomplex*, int*, scomplex*, scomplex*, int*, int*),
-      cunglq_(int*, int*, int*, scomplex*, int*, scomplex*, scomplex*, int*, int*), 
-      cungqr_(int*, int*, int*, scomplex*, int*, scomplex*, scomplex*, int*, int*);
-    int minwrk, maxwrk;
+      cgebrd_(integer*, integer*, scomplex*, integer*, float*, float*, scomplex*, scomplex*, scomplex*, integer*, integer*),
+      cgelqf_(integer*, integer*, scomplex*, integer*, scomplex*, scomplex*, integer*, integer* ), 
+      cgeqrf_(integer*, integer*, scomplex*, integer*, scomplex*, scomplex*, integer*, integer* ),
+      cungbr_(char*, integer*, integer*, integer*, scomplex*, integer*, scomplex*, scomplex*, integer*, integer*),
+      cunglq_(integer*, integer*, integer*, scomplex*, integer*, scomplex*, scomplex*, integer*, integer*), 
+      cungqr_(integer*, integer*, integer*, scomplex*, integer*, scomplex*, scomplex*, integer*, integer*);
+    integer minwrk, maxwrk;
     logical lquery, wntuas, wntvas;
-    int lwork_cungbr_p__, lwork_cungbr_q__, lwork_cunglq_m__, lwork_cunglq_n__, lwork_cungqr_m__, lwork_cungqr_n__;
+    integer lwork_cungbr_p__, lwork_cungbr_q__, lwork_cunglq_m__, lwork_cunglq_n__, lwork_cungqr_m__, lwork_cungqr_n__;
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
     sprintf(buffer, "cgesvd inputs: jobu %c, jobvt %c, m %d, n %d, lda %d, ldu %d, ldvt %d\n", *jobu, *jobvt, *m, *n, *lda, *ldu, *ldvt);
@@ -101,20 +101,20 @@ int cgesvd_check(char *jobu, char *jobvt, int *m, int *n, scomplex *a, int *lda,
             mnthr = ilaenv_(&c__6, "CGESVD", ch__1, m, n, &c__0, &c__0);
             /* Compute space needed for CGEQRF */
             cgeqrf_(m, n, &a[a_offset], lda, (scomplex*)dum, (scomplex*)dum, &c_n1, &ierr);
-            lwork_cgeqrf__ = (int)dum[0];
+            lwork_cgeqrf__ = (integer)dum[0];
             /* Compute space needed for CUNGQR */
             cungqr_(m, n, n, &a[a_offset], lda, (scomplex*)dum, (scomplex*)dum, &c_n1, &ierr);
-            lwork_cungqr_n__ = (int)dum[0];
+            lwork_cungqr_n__ = (integer)dum[0];
             cungqr_(m, m, n, &a[a_offset], lda, (scomplex*)dum, (scomplex*)dum, &c_n1, &ierr);
-            lwork_cungqr_m__ = (int)dum[0];
+            lwork_cungqr_m__ = (integer)dum[0];
             /* Compute space needed for CGEBRD */
             cgebrd_(n, n, &a[a_offset], lda, &s[1], dum, (scomplex*)dum, (scomplex*)dum, (scomplex*)dum, &c_n1, &ierr);
-            lwork_cgebrd__ = (int)dum[0];
+            lwork_cgebrd__ = (integer)dum[0];
             /* Compute space needed for CUNGBR */
             cungbr_("P", n, n, n, &a[a_offset], lda, (scomplex*)dum, (scomplex*)dum, &c_n1, &ierr);
-            lwork_cungbr_p__ = (int)dum[0];
+            lwork_cungbr_p__ = (integer)dum[0];
             cungbr_("Q", n, n, n, &a[a_offset], lda, (scomplex*)dum, (scomplex*)dum, &c_n1, &ierr);
-            lwork_cungbr_q__ = (int)dum[0];
+            lwork_cungbr_q__ = (integer)dum[0];
             mnthr = ilaenv_(&c__6, "CGESVD", ch__1, m, n, &c__0, &c__0);
             if (*m >= mnthr)
             {
@@ -321,12 +321,12 @@ int cgesvd_check(char *jobu, char *jobvt, int *m, int *n, scomplex *a, int *lda,
             {
                 /* Path 10 (M at least N, but not much larger) */
                 cgebrd_(m, n, &a[a_offset], lda, &s[1], dum, (scomplex*)dum, (scomplex*)dum, (scomplex*)dum, & c_n1, &ierr);
-                lwork_cgebrd__ = (int)dum[0];
+                lwork_cgebrd__ = (integer)dum[0];
                 maxwrk = (*n << 1) + lwork_cgebrd__;
                 if (wntus || wntuo)
                 {
                     cungbr_("Q", m, n, n, &a[a_offset], lda, (scomplex*)dum, (scomplex*)dum, &c_n1, &ierr);
-                    lwork_cungbr_q__ = (int)dum[0];
+                    lwork_cungbr_q__ = (integer)dum[0];
                     /* Computing MAX */
                     i__2 = maxwrk;
                     i__3 = (*n << 1) + lwork_cungbr_q__; // , expr subst
@@ -335,7 +335,7 @@ int cgesvd_check(char *jobu, char *jobvt, int *m, int *n, scomplex *a, int *lda,
                 if (wntua)
                 {
                     cungbr_("Q", m, m, n, &a[a_offset], lda, (scomplex*)dum, (scomplex*)dum, &c_n1, &ierr);
-                    lwork_cungbr_q__ = (int)dum[0];
+                    lwork_cungbr_q__ = (integer)dum[0];
                     /* Computing MAX */
                     i__2 = maxwrk;
                     i__3 = (*n << 1) + lwork_cungbr_q__; // , expr subst
@@ -357,21 +357,21 @@ int cgesvd_check(char *jobu, char *jobvt, int *m, int *n, scomplex *a, int *lda,
             mnthr = ilaenv_(&c__6, "CGESVD", ch__1, m, n, &c__0, &c__0);
             /* Compute space needed for CGELQF */
             cgelqf_(m, n, &a[a_offset], lda, (scomplex*)dum, (scomplex*)dum, &c_n1, &ierr);
-            lwork_cgelqf__ = (int)dum[0];
+            lwork_cgelqf__ = (integer)dum[0];
             /* Compute space needed for CUNGLQ */
             cunglq_(n, n, m, (scomplex*)dum, n, (scomplex*)dum, (scomplex*)dum, &c_n1, &ierr);
-            lwork_cunglq_n__ = (int)dum[0];
+            lwork_cunglq_n__ = (integer)dum[0];
             cunglq_(m, n, m, &a[a_offset], lda, (scomplex*)dum, (scomplex*)dum, &c_n1, &ierr);
-            lwork_cunglq_m__ = (int)dum[0];
+            lwork_cunglq_m__ = (integer)dum[0];
             /* Compute space needed for CGEBRD */
             cgebrd_(m, m, &a[a_offset], lda, &s[1], dum, (scomplex*)dum, (scomplex*)dum, (scomplex*)dum, &c_n1, &ierr);
-            lwork_cgebrd__ = (int)dum[0];
+            lwork_cgebrd__ = (integer)dum[0];
             /* Compute space needed for CUNGBR P */
             cungbr_("P", m, m, m, &a[a_offset], n, (scomplex*)dum, (scomplex*)dum, &c_n1, &ierr);
-            lwork_cungbr_p__ = (int)dum[0];
+            lwork_cungbr_p__ = (integer)dum[0];
             /* Compute space needed for CUNGBR Q */
             cungbr_("Q", m, m, m, &a[a_offset], n, (scomplex*)dum, (scomplex*)dum, &c_n1, &ierr);
-            lwork_cungbr_q__ = (int)dum[0];
+            lwork_cungbr_q__ = (integer)dum[0];
             if (*n >= mnthr)
             {
                 if (wntvn)
@@ -577,13 +577,13 @@ int cgesvd_check(char *jobu, char *jobvt, int *m, int *n, scomplex *a, int *lda,
             {
                 /* Path 10t(N greater than M, but not much larger) */
                 cgebrd_(m, n, &a[a_offset], lda, &s[1], dum, (scomplex*)dum, (scomplex*)dum, (scomplex*)dum, & c_n1, &ierr);
-                lwork_cgebrd__ = (int)dum[0];
+                lwork_cgebrd__ = (integer)dum[0];
                 maxwrk = (*m << 1) + lwork_cgebrd__;
                 if (wntvs || wntvo)
                 {
                     /* Compute space needed for CUNGBR P */
                     cungbr_("P", m, n, m, &a[a_offset], n, (scomplex*)dum, (scomplex*)dum, &c_n1, & ierr);
-                    lwork_cungbr_p__ = (int)dum[0];
+                    lwork_cungbr_p__ = (integer)dum[0];
                     /* Computing MAX */
                     i__2 = maxwrk;
                     i__3 = (*m << 1) + lwork_cungbr_p__; // , expr subst
@@ -592,7 +592,7 @@ int cgesvd_check(char *jobu, char *jobvt, int *m, int *n, scomplex *a, int *lda,
                 if (wntva)
                 {
                     cungbr_("P", n, n, m, &a[a_offset], n, (scomplex*)dum, (scomplex*)dum, &c_n1, & ierr);
-                    lwork_cungbr_p__ = (int)dum[0];
+                    lwork_cungbr_p__ = (integer)dum[0];
                     /* Computing MAX */
                     i__2 = maxwrk;
                     i__3 = (*m << 1) + lwork_cungbr_p__; // , expr subst

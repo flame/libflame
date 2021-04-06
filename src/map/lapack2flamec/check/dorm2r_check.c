@@ -1,12 +1,12 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h" /* Table of constant values */
 
-int dorm2r_check(char *side, char *trans, int *m, int *n, int *k, double *a, int *lda, double *tau, double * c__, int *ldc, double *work, int *info)
+int dorm2r_check(char *side, char *trans, integer *m, integer *n, integer *k, double *a, integer *lda, double *tau, double * c__, integer *ldc, double *work, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, c_dim1, c_offset, i__1;
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1;
     /* Local variables */
-    int nq;
+    integer nq;
     logical left;
     logical notran;
 

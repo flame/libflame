@@ -10,9 +10,9 @@
 
 #include "blis1.h"
 
-void bl1_screate_contigmsr( side1_t side, uplo1_t uplo, int m, int n, float* a_save, int a_rs_save, int a_cs_save, float** a, int* a_rs, int* a_cs )
+void bl1_screate_contigmsr( side1_t side, uplo1_t uplo, integer m, integer n, float* a_save, integer a_rs_save, integer a_cs_save, float** a, integer* a_rs, integer* a_cs )
 {
-	int dim_a;
+	integer dim_a;
 
 	// Choose the dimension of the matrix based on the side parameter.
 	if ( bl1_is_left( side ) ) dim_a = m;
@@ -26,9 +26,9 @@ void bl1_screate_contigmsr( side1_t side, uplo1_t uplo, int m, int n, float* a_s
 	                      a,      a_rs,      a_cs );
 }
 
-void bl1_dcreate_contigmsr( side1_t side, uplo1_t uplo, int m, int n, double* a_save, int a_rs_save, int a_cs_save, double** a, int* a_rs, int* a_cs )
+void bl1_dcreate_contigmsr( side1_t side, uplo1_t uplo, integer m, integer n, double* a_save, integer a_rs_save, integer a_cs_save, double** a, integer* a_rs, integer* a_cs )
 {
-	int dim_a;
+	integer dim_a;
 
 	// Choose the dimension of the matrix based on the side parameter.
 	if ( bl1_is_left( side ) ) dim_a = m;
@@ -42,9 +42,9 @@ void bl1_dcreate_contigmsr( side1_t side, uplo1_t uplo, int m, int n, double* a_
 	                      a,      a_rs,      a_cs );
 }
 
-void bl1_ccreate_contigmsr( side1_t side, uplo1_t uplo, int m, int n, scomplex* a_save, int a_rs_save, int a_cs_save, scomplex** a, int* a_rs, int* a_cs )
+void bl1_ccreate_contigmsr( side1_t side, uplo1_t uplo, integer m, integer n, scomplex* a_save, integer a_rs_save, integer a_cs_save, scomplex** a, integer* a_rs, integer* a_cs )
 {
-	int dim_a;
+	integer dim_a;
 
 	// Choose the dimension of the matrix based on the side parameter.
 	if ( bl1_is_left( side ) ) dim_a = m;
@@ -58,9 +58,9 @@ void bl1_ccreate_contigmsr( side1_t side, uplo1_t uplo, int m, int n, scomplex* 
 	                      a,      a_rs,      a_cs );
 }
 
-void bl1_zcreate_contigmsr( side1_t side, uplo1_t uplo, int m, int n, dcomplex* a_save, int a_rs_save, int a_cs_save, dcomplex** a, int* a_rs, int* a_cs )
+void bl1_zcreate_contigmsr( side1_t side, uplo1_t uplo, integer m, integer n, dcomplex* a_save, integer a_rs_save, integer a_cs_save, dcomplex** a, integer* a_rs, integer* a_cs )
 {
-	int dim_a;
+	integer dim_a;
 
 	// Choose the dimension of the matrix based on the side parameter.
 	if ( bl1_is_left( side ) ) dim_a = m;

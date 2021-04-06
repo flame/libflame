@@ -141,42 +141,42 @@ man:
 clean:
 	$(MAKE) -C INSTALL clean
 	$(MAKE) -C BLAS clean
-	$(MAKE) -C CBLAS clean
+#	$(MAKE) -C CBLAS clean
 	$(MAKE) -C SRC clean
 	$(MAKE) -C SRC/VARIANTS clean
 	$(MAKE) -C TESTING clean
 	$(MAKE) -C TESTING/MATGEN clean
 	$(MAKE) -C TESTING/LIN clean
 	$(MAKE) -C TESTING/EIG clean
-	$(MAKE) -C LAPACKE clean
+#	$(MAKE) -C LAPACKE clean
 	rm -f *.a
 cleanobj:
 	$(MAKE) -C INSTALL cleanobj
 	$(MAKE) -C BLAS cleanobj
-	$(MAKE) -C CBLAS cleanobj
+#	$(MAKE) -C CBLAS cleanobj
 	$(MAKE) -C SRC cleanobj
 	$(MAKE) -C SRC/VARIANTS cleanobj
 	$(MAKE) -C TESTING/MATGEN cleanobj
 	$(MAKE) -C TESTING/LIN cleanobj
 	$(MAKE) -C TESTING/EIG cleanobj
-	$(MAKE) -C LAPACKE cleanobj
+#	$(MAKE) -C LAPACKE cleanobj
 cleanlib:
 	$(MAKE) -C BLAS cleanlib
-	$(MAKE) -C CBLAS cleanlib
+#	$(MAKE) -C CBLAS cleanlib
 	$(MAKE) -C SRC cleanlib
 	$(MAKE) -C SRC/VARIANTS cleanlib
 	$(MAKE) -C TESTING/MATGEN cleanlib
-	$(MAKE) -C LAPACKE cleanlib
+#	$(MAKE) -C LAPACKE cleanlib
 	rm -f *.a
 cleanexe:
 	$(MAKE) -C INSTALL cleanexe
 	$(MAKE) -C BLAS cleanexe
-	$(MAKE) -C CBLAS cleanexe
+#	$(MAKE) -C CBLAS cleanexe
 	$(MAKE) -C TESTING/LIN cleanexe
 	$(MAKE) -C TESTING/EIG cleanexe
-	$(MAKE) -C LAPACKE cleanexe
+#	$(MAKE) -C LAPACKE cleanexe
 cleantest:
 	$(MAKE) -C INSTALL cleantest
 	$(MAKE) -C BLAS cleantest
-	$(MAKE) -C CBLAS cleantest
+#	$(MAKE) -C CBLAS cleantest
 	$(MAKE) -C TESTING cleantest

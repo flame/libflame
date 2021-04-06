@@ -15,7 +15,7 @@ FLA_Error FLA_Ttmm_unb_external( FLA_Uplo uplo, FLA_Obj A )
   int          info = 0;
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
   FLA_Datatype datatype;
-  int          m_A, cs_A;
+  integer          m_A, cs_A;
   char         blas_uplo;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING )

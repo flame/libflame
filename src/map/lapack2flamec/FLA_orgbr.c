@@ -37,14 +37,14 @@
 
 #define LAPACK_orgbr(prefix, name)                                      \
   int F77_ ## prefix ## name ## br( char* vect,                         \
-                                    int*  m,                            \
-                                    int*  n,                            \
-                                    int*  k,                            \
-                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+                                    integer*  m,                            \
+                                    integer*  n,                            \
+                                    integer*  k,                            \
+                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_t, \
                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, \
-                                    int* lwork,                         \
-                                    int* info )
+                                    integer* lwork,                         \
+                                    integer* info )
 
 // buff_t shoud not include any zero. if it has one, that is the right dimension to go.
 #define LAPACK_orgbr_body(prefix)                                       \

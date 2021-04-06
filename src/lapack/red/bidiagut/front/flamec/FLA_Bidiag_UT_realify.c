@@ -159,12 +159,12 @@ FLA_Error FLA_Bidiag_UT_l_realify_unb( FLA_Obj A, FLA_Obj d, FLA_Obj e )
 FLA_Error FLA_Bidiag_UT_l_realify_opt( FLA_Obj A, FLA_Obj d, FLA_Obj e )
 {
   FLA_Datatype datatype;
-  int          m_A, n_A;
-  int          min_m_n;
-  int          rs_A, cs_A;
-  int          inc_d;
-  int          inc_e;
-  int          i;
+  integer          m_A, n_A;
+  integer          min_m_n;
+  integer          rs_A, cs_A;
+  integer          inc_d;
+  integer          inc_e;
+  integer          i;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -232,8 +232,8 @@ FLA_Error FLA_Bidiag_UT_l_realify_opt( FLA_Obj A, FLA_Obj d, FLA_Obj e )
         scomplex* epsilon1 = buff_e + (i  )*inc_e;
         scomplex  absv;
 
-        int       m_ahead  = m_A - i - 1;
-        int       m_behind = i;
+        integer       m_ahead  = m_A - i - 1;
+        integer       m_behind = i;
 
         if ( m_behind == 0 )
         {
@@ -300,8 +300,8 @@ FLA_Error FLA_Bidiag_UT_l_realify_opt( FLA_Obj A, FLA_Obj d, FLA_Obj e )
         dcomplex* epsilon1 = buff_e + (i  )*inc_e;
         dcomplex  absv;
 
-        int       m_ahead  = m_A - i - 1;
-        int       m_behind = i;
+        integer       m_ahead  = m_A - i - 1;
+        integer       m_behind = i;
 
         if ( m_behind == 0 )
         {
@@ -482,12 +482,12 @@ FLA_Error FLA_Bidiag_UT_u_realify_unb( FLA_Obj A, FLA_Obj d, FLA_Obj e )
 FLA_Error FLA_Bidiag_UT_u_realify_opt( FLA_Obj A, FLA_Obj d, FLA_Obj e )
 {
   FLA_Datatype datatype;
-  int          m_A, n_A;
-  int          min_m_n;
-  int          rs_A, cs_A;
-  int          inc_d;
-  int          inc_e;
-  int          i;
+  integer          m_A, n_A;
+  integer          min_m_n;
+  integer          rs_A, cs_A;
+  integer          inc_d;
+  integer          inc_e;
+  integer          i;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -554,8 +554,8 @@ FLA_Error FLA_Bidiag_UT_u_realify_opt( FLA_Obj A, FLA_Obj d, FLA_Obj e )
         scomplex* epsilon1 = buff_e + (i  )*inc_e;
         scomplex  absv;
 
-        int       n_ahead  = n_A - i - 1;
-        int       n_behind = i;
+        integer       n_ahead  = n_A - i - 1;
+        integer       n_behind = i;
 
         if ( n_behind == 0 )
         {
@@ -621,8 +621,8 @@ FLA_Error FLA_Bidiag_UT_u_realify_opt( FLA_Obj A, FLA_Obj d, FLA_Obj e )
         dcomplex* epsilon1 = buff_e + (i  )*inc_e;
         dcomplex  absv;
 
-        int       n_ahead  = n_A - i - 1;
-        int       n_behind = i;
+        integer       n_ahead  = n_A - i - 1;
+        integer       n_behind = i;
 
         if ( n_behind == 0 )
         {

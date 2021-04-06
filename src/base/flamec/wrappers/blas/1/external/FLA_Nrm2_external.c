@@ -13,8 +13,8 @@
 FLA_Error FLA_Nrm2_external( FLA_Obj x, FLA_Obj norm_x )
 {
   FLA_Datatype datatype;
-  int          num_elem;
-  int          inc_x;
+  integer          num_elem;
+  integer          inc_x;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING ) 
     FLA_Nrm2_check( x, norm_x );

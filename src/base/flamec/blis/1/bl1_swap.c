@@ -10,7 +10,7 @@
 
 #include "blis1.h"
 
-void bl1_sswap( int n, float* x, int incx, float* y, int incy )
+void bl1_sswap( integer n, float* x, integer incx, float* y, integer incy )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	cblas_sswap( n,
@@ -23,7 +23,7 @@ void bl1_sswap( int n, float* x, int incx, float* y, int incy )
 #endif
 }
 
-void bl1_dswap( int n, double* x, int incx, double* y, int incy )
+void bl1_dswap( integer n, double* x, integer incx, double* y, integer incy )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	cblas_dswap( n,
@@ -36,7 +36,7 @@ void bl1_dswap( int n, double* x, int incx, double* y, int incy )
 #endif
 }
 
-void bl1_cswap( int n, scomplex* x, int incx, scomplex* y, int incy )
+void bl1_cswap( integer n, scomplex* x, integer incx, scomplex* y, integer incy )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	cblas_cswap( n,
@@ -49,7 +49,7 @@ void bl1_cswap( int n, scomplex* x, int incx, scomplex* y, int incy )
 #endif
 }
 
-void bl1_zswap( int n, dcomplex* x, int incx, dcomplex* y, int incy )
+void bl1_zswap( integer n, dcomplex* x, integer incx, dcomplex* y, integer incy )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	cblas_zswap( n,

@@ -677,6 +677,7 @@ fla_enable_builtin_blas
 fla_enable_non_critical_code
 fla_c_lang_flags
 fla_enable_max_arg_list_hack
+fla_enable_ilp64
 fla_enable_dynamic_build
 fla_enable_static_build
 fla_enable_verbose_make_output
@@ -771,6 +772,7 @@ enable_autodetect_f77_name_mangling
 enable_verbose_make_output
 enable_static_build
 enable_dynamic_build
+enable_ilp64
 enable_max_arg_list_hack
 enable_non_critical_code
 enable_builtin_blas
@@ -1467,6 +1469,8 @@ Optional Features:
                           default.)
   --enable-dynamic-build  Enable dynamic/shared library generation. (Disabled
                           by default.)
+  --enable-ilp64          Enable ILP64 make int, long and pointer are 64 bit 
+                          lenth. (Enabled by default.)
   --enable-max-arg-list-hack
                           Enable makefile code that archives object files from
                           a flat object directory, thus decreasing the
@@ -6009,6 +6013,54 @@ $as_echo "no" >&6; }
 
 	fi
 
+
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested building ILP64 enabled library" >&5
+$as_echo_n "checking whether user requested enabling ILP64... " >&6; }
+
+				# Check whether --enable-ilp64 was given.
+if test "${enable_ilp64+set}" = set; then :
+  enableval=$enable_ilp64;
+				if test "$enableval" = "no" ; then
+
+						fla_enable_ilp64=no
+
+		elif test "$enableval" = "yes" ; then
+
+						fla_enable_ilp64=yes
+		else
+
+			as_fn_error "Reached unreachable branch in FLA_CHECK_ENABLE_ILP64!" "$LINENO" 5
+
+		fi
+
+else
+
+				fla_enable_ilp64=no
+
+
+fi
+
+
+		if   test "$fla_enable_ilp64" = "yes" ; then
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+
+$as_echo "#define FLA_ENABLE_ILP64 1" >>confdefs.h
+
+
+	elif test "$fla_enable_ilp64" = "no" ; then
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+	else
+
+				as_fn_error "Reached unreachable branch in FLA_ENABLE_ILP64!" "$LINENO" 5
+
+	fi
 
 
 

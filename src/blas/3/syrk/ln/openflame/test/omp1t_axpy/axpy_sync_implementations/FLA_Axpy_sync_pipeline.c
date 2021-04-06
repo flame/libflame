@@ -16,7 +16,7 @@ FLA_Error FLA_Axpy_sync_pipeline( FLA_Obj alpha, FLA_Obj X, FLA_Obj B )
   FLA_Obj XL,    XR,       X0,  X1,  X2;
   FLA_Obj BL,    BR,       B0,  B1,  B2;
 
-  int b, i, nb_alg;
+  integer b, i, nb_alg;
 
   FLA_Part_1x2( X,    &XL,  &XR,      0, FLA_LEFT );
   FLA_Part_1x2( B,    &BL,  &BR,      0, FLA_LEFT );

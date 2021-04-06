@@ -38,40 +38,40 @@ FLA_Error FLA_Tridiag_UT_realify_subdiagonal( FLA_Obj b, FLA_Obj d );
 FLA_Error FLA_Tridiag_UT_realify_subdiagonal_opt( FLA_Obj b, FLA_Obj d );
 
 FLA_Error FLA_Tridiag_UT_shift_U( FLA_Uplo uplo, FLA_Obj A );
-FLA_Error FLA_Tridiag_UT_shift_U_l_ops( int       m_A,
-                                        float*    buff_A, int rs_A, int cs_A );
-FLA_Error FLA_Tridiag_UT_shift_U_u_ops( int       m_A,
-                                        float*    buff_A, int rs_A, int cs_A );
-FLA_Error FLA_Tridiag_UT_shift_U_l_opd( int       m_A,
-                                        double*   buff_A, int rs_A, int cs_A );
-FLA_Error FLA_Tridiag_UT_shift_U_u_opd( int       m_A,
-                                        double*   buff_A, int rs_A, int cs_A );
-FLA_Error FLA_Tridiag_UT_shift_U_l_opc( int       m_A,
-                                        scomplex* buff_A, int rs_A, int cs_A );
-FLA_Error FLA_Tridiag_UT_shift_U_u_opc( int       m_A,
-                                        scomplex* buff_A, int rs_A, int cs_A );
-FLA_Error FLA_Tridiag_UT_shift_U_l_opz( int       m_A,
-                                        dcomplex* buff_A, int rs_A, int cs_A );
-FLA_Error FLA_Tridiag_UT_shift_U_u_opz( int       m_A,
-                                        dcomplex* buff_A, int rs_A, int cs_A );
+FLA_Error FLA_Tridiag_UT_shift_U_l_ops( integer       m_A,
+                                        float*    buff_A, integer rs_A, integer cs_A );
+FLA_Error FLA_Tridiag_UT_shift_U_u_ops( integer       m_A,
+                                        float*    buff_A, integer rs_A, integer cs_A );
+FLA_Error FLA_Tridiag_UT_shift_U_l_opd( integer       m_A,
+                                        double*   buff_A, integer rs_A, integer cs_A );
+FLA_Error FLA_Tridiag_UT_shift_U_u_opd( integer       m_A,
+                                        double*   buff_A, integer rs_A, integer cs_A );
+FLA_Error FLA_Tridiag_UT_shift_U_l_opc( integer       m_A,
+                                        scomplex* buff_A, integer rs_A, integer cs_A );
+FLA_Error FLA_Tridiag_UT_shift_U_u_opc( integer       m_A,
+                                        scomplex* buff_A, integer rs_A, integer cs_A );
+FLA_Error FLA_Tridiag_UT_shift_U_l_opz( integer       m_A,
+                                        dcomplex* buff_A, integer rs_A, integer cs_A );
+FLA_Error FLA_Tridiag_UT_shift_U_u_opz( integer       m_A,
+                                        dcomplex* buff_A, integer rs_A, integer cs_A );
 
 FLA_Error FLA_Tridiag_UT_form_Q( FLA_Uplo uplo, FLA_Obj A, FLA_Obj T, FLA_Obj Q );
 FLA_Error FLA_Tridiag_UT_form_Q_l_blk_var1( FLA_Obj A, FLA_Obj T, FLA_Obj W );
 FLA_Error FLA_Tridiag_UT_form_Q_u_blk_var1( FLA_Obj A, FLA_Obj T, FLA_Obj W );
 FLA_Error FLA_Tridiag_UT_form_Q_l_opt_var1( FLA_Obj A, FLA_Obj T );
-FLA_Error FLA_Tridiag_UT_form_Q_l_ops_var1( int       m_A,
-                                            int       n_AT,
-                                            float*    buff_A, int rs_A, int cs_A,
-                                            float*    buff_T, int rs_T, int cs_T );
-FLA_Error FLA_Tridiag_UT_form_Q_l_opd_var1( int       m_A,
-                                            int       n_AT,
-                                            double*   buff_A, int rs_A, int cs_A,
-                                            double*   buff_T, int rs_T, int cs_T );
-FLA_Error FLA_Tridiag_UT_form_Q_l_opc_var1( int       m_A,
-                                            int       n_AT,
-                                            scomplex* buff_A, int rs_A, int cs_A,
-                                            scomplex* buff_T, int rs_T, int cs_T );
-FLA_Error FLA_Tridiag_UT_form_Q_l_opz_var1( int       m_A,
-                                            int       n_AT,
-                                            dcomplex* buff_A, int rs_A, int cs_A,
-                                            dcomplex* buff_T, int rs_T, int cs_T );
+FLA_Error FLA_Tridiag_UT_form_Q_l_ops_var1( integer       m_A,
+                                            integer       n_AT,
+                                            float*    buff_A, integer rs_A, integer cs_A,
+                                            float*    buff_T, integer rs_T, integer cs_T );
+FLA_Error FLA_Tridiag_UT_form_Q_l_opd_var1( integer       m_A,
+                                            integer       n_AT,
+                                            double*   buff_A, integer rs_A, integer cs_A,
+                                            double*   buff_T, integer rs_T, integer cs_T );
+FLA_Error FLA_Tridiag_UT_form_Q_l_opc_var1( integer       m_A,
+                                            integer       n_AT,
+                                            scomplex* buff_A, integer rs_A, integer cs_A,
+                                            scomplex* buff_T, integer rs_T, integer cs_T );
+FLA_Error FLA_Tridiag_UT_form_Q_l_opz_var1( integer       m_A,
+                                            integer       n_AT,
+                                            dcomplex* buff_A, integer rs_A, integer cs_A,
+                                            dcomplex* buff_T, integer rs_T, integer cs_T );

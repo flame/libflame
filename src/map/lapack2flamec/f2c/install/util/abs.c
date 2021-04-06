@@ -27,8 +27,8 @@ extern "C" {
     /* Complex */
     double c_abs(complex *z)
     {
-        _Dcomplex z_ = {z->r, z->i};
-        return  (cabs(z_));
+        _Fcomplex z_ = {z->r, z->i};
+        return  (cabsf(z_));
     }
     double z_abs(doublecomplex *z)
     {

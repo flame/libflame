@@ -1,16 +1,16 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
-static int c__1 = 1;
-static int c_n1 = -1;
+static integer c__1 = 1;
+static integer c_n1 = -1;
 
-int dorgtr_check(char *uplo, int *n, double *a, int * lda, double *tau, double *work, int *lwork, int *info)
+int dorgtr_check(char *uplo, integer *n, double *a, integer * lda, double *tau, double *work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1, i__2, i__3;
+    integer a_dim1, a_offset, i__1, i__2, i__3;
     /* Local variables */
-    int nb;
+    integer nb;
     logical upper;
-    int lwkopt;
+    integer lwkopt;
     logical lquery;
 
 #if AOCL_DTL_LOG_ENABLE

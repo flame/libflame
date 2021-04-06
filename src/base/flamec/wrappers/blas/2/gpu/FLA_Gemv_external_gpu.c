@@ -17,10 +17,10 @@
 FLA_Error FLA_Gemv_external_gpu( FLA_Trans transa, FLA_Obj alpha, FLA_Obj A, void* A_gpu, FLA_Obj x, void* x_gpu, FLA_Obj beta, FLA_Obj y, void* y_gpu )
 {
   FLA_Datatype datatype;
-  int          m_A, n_A;
-  int          ldim_A;
-  int          inc_x;
-  int          inc_y;
+  integer          m_A, n_A;
+  integer          ldim_A;
+  integer          inc_x;
+  integer          inc_y;
   char         blas_transa;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING ) 

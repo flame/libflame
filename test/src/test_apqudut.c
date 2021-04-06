@@ -33,7 +33,7 @@ void libfla_test_apqudut_experiment( test_params_t params,
                                      unsigned int  var,
                                      char*         sc_str,
                                      FLA_Datatype  datatype,
-                                     unsigned int  p,
+                                     uinteger  p,
                                      unsigned int  pci,
                                      unsigned int  n_repeats,
                                      signed int    impl,
@@ -68,7 +68,7 @@ void libfla_test_apqudut_experiment( test_params_t params,
                                      unsigned int  var,
                                      char*         sc_str,
                                      FLA_Datatype  datatype,
-                                     unsigned int  p_cur,
+                                     uinteger  p_cur,
                                      unsigned int  pci,
                                      unsigned int  n_repeats,
                                      signed int    impl,
@@ -79,12 +79,12 @@ void libfla_test_apqudut_experiment( test_params_t params,
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	unsigned int mB, mC, mD, n, n_rhs;
-	signed int   mB_input    = -1;
-	signed int   mC_input    = -4;
-	signed int   mD_input    = -4;
-	signed int   n_input     = -1;
-	signed int   n_rhs_input = -1;
+	uinteger mB, mC, mD, n, n_rhs;
+	integer   mB_input    = -1;
+	integer   mC_input    = -4;
+	integer   mD_input    = -4;
+	integer   n_input     = -1;
+	integer   n_rhs_input = -1;
 	FLA_Obj      R_BD, R_BC, B, C, D, T, W;
 	FLA_Obj      bR_BD, bR_BC, bB, bC, bD;
 	FLA_Obj      bR_BD_save, bC_save, bD_save;

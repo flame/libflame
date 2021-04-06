@@ -17,17 +17,17 @@
 
 FLA_Error REF_Copy( FLA_Obj A, FLA_Obj B );
 void time_Copy(
-               int param_combo, int type, int nrepeats, int m, int n,
+               integer param_combo, integer type, integer nrepeats, integer m, integer n,
                FLA_Obj A, FLA_Obj C, FLA_Obj C_ref,
                double *dtime, double *diff, double *gflops );
 
 
 void time_Copy( 
-               int param_combo, int type, int nrepeats, int m, int n,
+               integer param_combo, integer type, integer nrepeats, integer m, integer n,
                FLA_Obj A, FLA_Obj C, FLA_Obj C_ref,
                double *dtime, double *diff, double *gflops )
 {
-  int
+  integer
     irep;
 
   double

@@ -38,28 +38,28 @@
 
 #define LAPACK_gesdd_real(prefix)                                       \
   int F77_ ## prefix ## gesdd( char* jobz,                              \
-                               int*  m,                                 \
-                               int*  n,                                 \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A,  int* ldim_A, \
+                               integer*  m,                                 \
+                               integer*  n,                                 \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A,  integer* ldim_A, \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_s,   \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_U,  int* ldim_U, \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_Vh, int* ldim_Vh, \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w,  int *lwork, \
-                               int *buff_i,                             \
-                               int *info )
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_U,  integer* ldim_U, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_Vh, integer* ldim_Vh, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w,  integer *lwork, \
+                               integer *buff_i,                             \
+                               integer *info )
 
 #define LAPACK_gesdd_complex(prefix)                                    \
   int F77_ ## prefix ## gesdd( char* jobz,                              \
-                               int*  m,                                 \
-                               int*  n,                                 \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A,  int* ldim_A, \
+                               integer*  m,                                 \
+                               integer*  n,                                 \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A,  integer* ldim_A, \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_s,   \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_U,  int* ldim_U, \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_Vh, int* ldim_Vh, \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w,  int* lwork, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_U,  integer* ldim_U, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_Vh, integer* ldim_Vh, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w,  integer* lwork, \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_r,   \
-                               int *buff_i,                             \
-                               int *info )
+                               integer *buff_i,                             \
+                               integer *info )
 
 #define LAPACK_gesdd_real_body(prefix)                                  \
   AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                 	\

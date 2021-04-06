@@ -4,7 +4,7 @@
 
 #include "FLAME.h"
 
-/* Subroutine */ int lapack_zgetrf(integer *m, integer *n, doublecomplex *a,
+/* Subroutine */ integer lapack_zgetrf(integer *m, integer *n, doublecomplex *a,
 	integer *lda, integer *ipiv, integer *info)
 {
 

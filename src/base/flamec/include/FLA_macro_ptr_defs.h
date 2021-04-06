@@ -21,8 +21,8 @@
 
 #define FLA_INT_PTR( x ) \
   ( ((x).base)->datatype == FLA_CONSTANT ? \
-    ( ( int * )      ( ( ( char * )     ((x).base)->buffer ) + FLA_CONSTANT_I_OFFSET             ) ) : \
-                     ( ( ( int * )      ((x).base)->buffer ) + ( size_t ) (x).offn * ((x).base)->cs + \
+    ( ( integer * )      ( ( ( char * )     ((x).base)->buffer ) + FLA_CONSTANT_I_OFFSET             ) ) : \
+                     ( ( ( integer * )      ((x).base)->buffer ) + ( size_t ) (x).offn * ((x).base)->cs + \
                                                                ( size_t ) (x).offm * ((x).base)->rs ) )
 
 #define FLA_FLOAT_PTR( x ) \

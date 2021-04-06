@@ -52,7 +52,7 @@ FLA_Error FLA_Transpose( FLA_Obj A );
 
 FLA_Error FLA_Set( FLA_Obj alpha, FLA_Obj A );
 FLA_Error FLA_Set_diag( FLA_Obj alpha, FLA_Obj A );
-FLA_Error FLA_Set_offdiag( int offset, FLA_Obj alpha, FLA_Obj A );
+FLA_Error FLA_Set_offdiag( integer offset, FLA_Obj alpha, FLA_Obj A );
 FLA_Error FLA_Set_to_identity( FLA_Obj A );
 FLA_Error FLA_Add_to_diag( void *diag_value, FLA_Obj A );
 FLA_Error FLA_Shift_diag( FLA_Conj conj, FLA_Obj sigma, FLA_Obj A );
@@ -116,12 +116,12 @@ FLA_Error FLA_Swap_t_blk_var1( FLA_Obj A, FLA_Obj B, fla_swap_t* cntl );
 FLA_Error FLA_Swap_t_blk_var2( FLA_Obj A, FLA_Obj B, fla_swap_t* cntl );
 
 FLA_Error FLA_Sort( FLA_Direct direct, FLA_Obj x );
-FLA_Error FLA_Sort_f_ops( int     m_x,
-                          float*  x, int inc_x );
-FLA_Error FLA_Sort_b_ops( int     m_x,
-                          float*  x, int inc_x );
-FLA_Error FLA_Sort_f_opd( int     m_x,
-                          double* x, int inc_x );
-FLA_Error FLA_Sort_b_opd( int     m_x,
-                          double* x, int inc_x );
+FLA_Error FLA_Sort_f_ops( integer     m_x,
+                          float*  x, integer inc_x );
+FLA_Error FLA_Sort_b_ops( integer     m_x,
+                          float*  x, integer inc_x );
+FLA_Error FLA_Sort_f_opd( integer     m_x,
+                          double* x, integer inc_x );
+FLA_Error FLA_Sort_b_opd( integer     m_x,
+                          double* x, integer inc_x );
 

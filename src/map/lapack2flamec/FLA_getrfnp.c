@@ -39,10 +39,10 @@ extern void DTL_Trace(
 		    const int8 *pi8Message);
 
 #define LAPACK_getrfnp(prefix)                                            \
-  int F77_ ## prefix ## getrfnp( int* m,                                  \
-                               int* n,                                  \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
-                               int* info )
+  int F77_ ## prefix ## getrfnp( integer* m,                                  \
+                               integer* n,                                  \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
+                               integer* info )
 
 #define LAPACK_getrfnp_body(prefix)                               \
   AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5); 		\

@@ -10,23 +10,23 @@
 
 #include "blis1.h"
 
-void bl1_strmmsx( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m, int n, float* alpha, float* a, int a_rs, int a_cs, float* b, int b_rs, int b_cs, float* beta, float* c, int c_rs, int c_cs )
+void bl1_strmmsx( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, integer n, float* alpha, float* a, integer a_rs, integer a_cs, float* b, integer b_rs, integer b_cs, float* beta, float* c, integer c_rs, integer c_cs )
 {
-	int       m_save    = m;
-	int       n_save    = n;
+	integer       m_save    = m;
+	integer       n_save    = n;
 	float*    a_save    = a;
 	float*    b_save    = b;
 	float*    c_save    = c;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       b_rs_save = b_rs;
-	int       b_cs_save = b_cs;
-	int       c_rs_save = c_rs;
-	int       c_cs_save = c_cs;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       b_rs_save = b_rs;
+	integer       b_cs_save = b_cs;
+	integer       c_rs_save = c_rs;
+	integer       c_cs_save = c_cs;
 	float     one = bl1_s1();
 	float*    b_copy;
-	int       dim_a;
-	int       b_copy_rs, b_copy_cs;
+	integer       dim_a;
+	integer       b_copy_rs, b_copy_cs;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -116,23 +116,23 @@ void bl1_strmmsx( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int 
 	                         &c,     &c_rs,     &c_cs );
 }
 
-void bl1_dtrmmsx( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m, int n, double* alpha, double* a, int a_rs, int a_cs, double* b, int b_rs, int b_cs, double* beta, double* c, int c_rs, int c_cs )
+void bl1_dtrmmsx( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, integer n, double* alpha, double* a, integer a_rs, integer a_cs, double* b, integer b_rs, integer b_cs, double* beta, double* c, integer c_rs, integer c_cs )
 {
-	int       m_save    = m;
-	int       n_save    = n;
+	integer       m_save    = m;
+	integer       n_save    = n;
 	double*   a_save    = a;
 	double*   b_save    = b;
 	double*   c_save    = c;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       b_rs_save = b_rs;
-	int       b_cs_save = b_cs;
-	int       c_rs_save = c_rs;
-	int       c_cs_save = c_cs;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       b_rs_save = b_rs;
+	integer       b_cs_save = b_cs;
+	integer       c_rs_save = c_rs;
+	integer       c_cs_save = c_cs;
 	double    one = bl1_d1();
 	double*   b_copy;
-	int       dim_a;
-	int       b_copy_rs, b_copy_cs;
+	integer       dim_a;
+	integer       b_copy_rs, b_copy_cs;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -222,23 +222,23 @@ void bl1_dtrmmsx( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int 
 	                         &c,     &c_rs,     &c_cs );
 }
 
-void bl1_ctrmmsx( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m, int n, scomplex* alpha, scomplex* a, int a_rs, int a_cs, scomplex* b, int b_rs, int b_cs, scomplex* beta, scomplex* c, int c_rs, int c_cs )
+void bl1_ctrmmsx( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, integer n, scomplex* alpha, scomplex* a, integer a_rs, integer a_cs, scomplex* b, integer b_rs, integer b_cs, scomplex* beta, scomplex* c, integer c_rs, integer c_cs )
 {
-	int       m_save    = m;
-	int       n_save    = n;
+	integer       m_save    = m;
+	integer       n_save    = n;
 	scomplex* a_save    = a;
 	scomplex* b_save    = b;
 	scomplex* c_save    = c;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       b_rs_save = b_rs;
-	int       b_cs_save = b_cs;
-	int       c_rs_save = c_rs;
-	int       c_cs_save = c_cs;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       b_rs_save = b_rs;
+	integer       b_cs_save = b_cs;
+	integer       c_rs_save = c_rs;
+	integer       c_cs_save = c_cs;
 	scomplex  one = bl1_c1();
 	scomplex* b_copy;
-	int       dim_a;
-	int       b_copy_rs, b_copy_cs;
+	integer       dim_a;
+	integer       b_copy_rs, b_copy_cs;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -328,23 +328,23 @@ void bl1_ctrmmsx( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int 
 	                         &c,     &c_rs,     &c_cs );
 }
 
-void bl1_ztrmmsx( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, int m, int n, dcomplex* alpha, dcomplex* a, int a_rs, int a_cs, dcomplex* b, int b_rs, int b_cs, dcomplex* beta, dcomplex* c, int c_rs, int c_cs )
+void bl1_ztrmmsx( side1_t side, uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, integer n, dcomplex* alpha, dcomplex* a, integer a_rs, integer a_cs, dcomplex* b, integer b_rs, integer b_cs, dcomplex* beta, dcomplex* c, integer c_rs, integer c_cs )
 {
-	int       m_save    = m;
-	int       n_save    = n;
+	integer       m_save    = m;
+	integer       n_save    = n;
 	dcomplex* a_save    = a;
 	dcomplex* b_save    = b;
 	dcomplex* c_save    = c;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       b_rs_save = b_rs;
-	int       b_cs_save = b_cs;
-	int       c_rs_save = c_rs;
-	int       c_cs_save = c_cs;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       b_rs_save = b_rs;
+	integer       b_cs_save = b_cs;
+	integer       c_rs_save = c_rs;
+	integer       c_cs_save = c_cs;
 	dcomplex  one = bl1_z1();
 	dcomplex* b_copy;
-	int       dim_a;
-	int       b_copy_rs, b_copy_cs;
+	integer       dim_a;
+	integer       b_copy_rs, b_copy_cs;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;

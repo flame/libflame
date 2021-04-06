@@ -17,9 +17,9 @@ FLA_Error FLA_Fused_Gerc2_opt_var1( FLA_Obj alpha, FLA_Obj u, FLA_Obj y, FLA_Obj
    A = A + alpha * ( u * y' + z * v' );
 */
   FLA_Datatype datatype;
-  int          m_A, n_A;
-  int          rs_A, cs_A;
-  int          inc_u, inc_y, inc_z, inc_v;
+  integer          m_A, n_A;
+  integer          rs_A, cs_A;
+  integer          inc_u, inc_y, inc_z, inc_v;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -127,16 +127,16 @@ FLA_Error FLA_Fused_Gerc2_opt_var1( FLA_Obj alpha, FLA_Obj u, FLA_Obj y, FLA_Obj
 
 
 
-FLA_Error FLA_Fused_Gerc2_ops_var1( int m_A,
-                                    int n_A,
+FLA_Error FLA_Fused_Gerc2_ops_var1( integer m_A,
+                                    integer n_A,
                                     float* buff_alpha, 
-                                    float* buff_u, int inc_u, 
-                                    float* buff_y, int inc_y, 
-                                    float* buff_z, int inc_z, 
-                                    float* buff_v, int inc_v, 
-                                    float* buff_A, int rs_A, int cs_A )
+                                    float* buff_u, integer inc_u, 
+                                    float* buff_y, integer inc_y, 
+                                    float* buff_z, integer inc_z, 
+                                    float* buff_v, integer inc_v, 
+                                    float* buff_A, integer rs_A, integer cs_A )
 {
-  int       i;
+  integer       i;
 
   for ( i = 0; i < n_A; ++i )
   {
@@ -190,16 +190,16 @@ FLA_Error FLA_Fused_Gerc2_ops_var1( int m_A,
 
 
 
-FLA_Error FLA_Fused_Gerc2_opd_var1( int m_A,
-                                    int n_A,
+FLA_Error FLA_Fused_Gerc2_opd_var1( integer m_A,
+                                    integer n_A,
                                     double* buff_alpha, 
-                                    double* buff_u, int inc_u, 
-                                    double* buff_y, int inc_y, 
-                                    double* buff_z, int inc_z, 
-                                    double* buff_v, int inc_v, 
-                                    double* buff_A, int rs_A, int cs_A ) 
+                                    double* buff_u, integer inc_u, 
+                                    double* buff_y, integer inc_y, 
+                                    double* buff_z, integer inc_z, 
+                                    double* buff_v, integer inc_v, 
+                                    double* buff_A, integer rs_A, integer cs_A ) 
 {
-  int       i;
+  integer       i;
 
   for ( i = 0; i < n_A; ++i )
   {
@@ -238,16 +238,16 @@ FLA_Error FLA_Fused_Gerc2_opd_var1( int m_A,
 
 
 
-FLA_Error FLA_Fused_Gerc2_opc_var1( int m_A,
-                                    int n_A,
+FLA_Error FLA_Fused_Gerc2_opc_var1( integer m_A,
+                                    integer n_A,
                                     scomplex* buff_alpha, 
-                                    scomplex* buff_u, int inc_u, 
-                                    scomplex* buff_y, int inc_y, 
-                                    scomplex* buff_z, int inc_z, 
-                                    scomplex* buff_v, int inc_v, 
-                                    scomplex* buff_A, int rs_A, int cs_A ) 
+                                    scomplex* buff_u, integer inc_u, 
+                                    scomplex* buff_y, integer inc_y, 
+                                    scomplex* buff_z, integer inc_z, 
+                                    scomplex* buff_v, integer inc_v, 
+                                    scomplex* buff_A, integer rs_A, integer cs_A ) 
 {
-  int       i;
+  integer       i;
 
   for ( i = 0; i < n_A; ++i )
   {
@@ -303,16 +303,16 @@ FLA_Error FLA_Fused_Gerc2_opc_var1( int m_A,
 
 
 
-FLA_Error FLA_Fused_Gerc2_opz_var1( int m_A,
-                                    int n_A,
+FLA_Error FLA_Fused_Gerc2_opz_var1( integer m_A,
+                                    integer n_A,
                                     dcomplex* buff_alpha, 
-                                    dcomplex* buff_u, int inc_u, 
-                                    dcomplex* buff_y, int inc_y, 
-                                    dcomplex* buff_z, int inc_z, 
-                                    dcomplex* buff_v, int inc_v, 
-                                    dcomplex* buff_A, int rs_A, int cs_A ) 
+                                    dcomplex* buff_u, integer inc_u, 
+                                    dcomplex* buff_y, integer inc_y, 
+                                    dcomplex* buff_z, integer inc_z, 
+                                    dcomplex* buff_v, integer inc_v, 
+                                    dcomplex* buff_A, integer rs_A, integer cs_A ) 
 {
-  int i;
+  integer i;
 
   for ( i = 0; i < n_A; ++i )
   {

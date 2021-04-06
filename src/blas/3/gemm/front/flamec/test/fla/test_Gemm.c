@@ -20,28 +20,28 @@ char* pc_str[N_PARAM_COMBOS] = { "cc", "cn", "ct",
                                  "nc", "nn", "nt", 
                                  "tc", "tn", "tt" };
 
-int sgemm_p;
-int cgemm_p;
-int dgemm_p;
-int zgemm_p;
-int sgemm_q;
-int cgemm_q;
-int dgemm_q;
-int zgemm_q;
-int sgemm_r;
-int cgemm_r;
-int dgemm_r;
-int zgemm_r;
+integer sgemm_p;
+integer cgemm_p;
+integer dgemm_p;
+integer zgemm_p;
+integer sgemm_q;
+integer cgemm_q;
+integer dgemm_q;
+integer zgemm_q;
+integer sgemm_r;
+integer cgemm_r;
+integer dgemm_r;
+integer zgemm_r;
 
 void time_Gemm(
-               int param_combo, int type, int n_repeats, int m, int k, int n,
+               integer param_combo, integer type, integer n_repeats, integer m, integer k, integer n,
                FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj C_ref,
                double *dtime, double *diff, double *gflops );
 
 
-int main(int argc, char *argv[])
+int main(integer argc, char *argv[])
 {
-  int 
+  integer 
     datatype,
     precision,
     m_input, k_input, n_input,

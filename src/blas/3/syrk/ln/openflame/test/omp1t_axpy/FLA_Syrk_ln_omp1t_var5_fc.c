@@ -11,12 +11,12 @@
 #include "FLAME.h"
 #include "FLA_Syrk_ln_omp.h"
 
-FLA_Error FLA_Syrk_ln_omp1t_var5_fc( FLA_Obj A, FLA_Obj C, int nb_alg )
+FLA_Error FLA_Syrk_ln_omp1t_var5_fc( FLA_Obj A, FLA_Obj C, integer nb_alg )
 {
   FLA_Obj AL,    AR,       A0,  A1,  A2;
   FLA_Obj MyC;
 
-  int b;
+  integer b;
   
   FLA_Part_1x2( A,    &AL,  &AR,      0, FLA_LEFT );
 

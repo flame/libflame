@@ -16,6 +16,10 @@
 #define BLIS1_NO_INTRINSICS  0
 #define BLIS1_SSE_INTRINSICS 3
 
+#ifdef FLA_ENABLE_WINDOWS_BUILD
+#define restrict  __restrict
+#endif
+
 // --- boolean ---
 
 #undef FALSE

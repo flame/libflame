@@ -4,7 +4,7 @@
 
 #include "FLAME.h"
 
-/* Subroutine */ int lapack_sgetf2(integer *m, integer *n, real *a, integer *lda,
+/* Subroutine */ integer lapack_sgetf2(integer *m, integer *n, real *a, integer *lda,
 	integer *ipiv, integer *info)
 {
 

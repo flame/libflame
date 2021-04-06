@@ -13,9 +13,9 @@
 FLA_Error FLA_Apply_diag_matrix( FLA_Side side, FLA_Conj conj, FLA_Obj x, FLA_Obj A )
 {
   FLA_Datatype dt_x, dt_A;
-  int          m_A, n_A;
-  int          rs_A, cs_A;
-  int          inc_x;
+  integer          m_A, n_A;
+  integer          rs_A, cs_A;
+  integer          inc_x;
   side1_t       blis_side; 
   conj1_t       blis_conj;
 

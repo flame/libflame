@@ -40,7 +40,7 @@ void libfla_test_syrk_experiment( test_params_t params,
                                   unsigned int  var,
                                   char*         sc_str,
                                   FLA_Datatype  datatype,
-                                  unsigned int  p_cur,
+                                  uinteger  p_cur,
                                   unsigned int  pci,
                                   unsigned int  n_repeats,
                                   signed int    impl,
@@ -120,7 +120,7 @@ void libfla_test_syrk_experiment( test_params_t params,
                                   unsigned int  var,
                                   char*         sc_str,
                                   FLA_Datatype  datatype,
-                                  unsigned int  p_cur,
+                                  uinteger  p_cur,
                                   unsigned int  pci,
                                   unsigned int  n_repeats,
                                   signed int    impl,
@@ -132,10 +132,10 @@ void libfla_test_syrk_experiment( test_params_t params,
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	unsigned int m;
-	signed int   m_input    = -1;
-	unsigned int k;
-	signed int   k_input    = -2;
+	uinteger m;
+	integer   m_input    = -1;
+	uinteger k;
+	integer   k_input    = -2;
 	FLA_Uplo     uplo;
 	FLA_Trans    trans;
 	FLA_Obj      A, C, x, y, z, w, norm;
@@ -288,9 +288,9 @@ void libfla_test_syrk_experiment( test_params_t params,
 
 
 
-extern TLS_CLASS_SPEC fla_scalr_t* fla_scalr_cntl_blas;
-extern TLS_CLASS_SPEC fla_gemm_t*  fla_gemm_cntl_blas;
-extern TLS_CLASS_SPEC fla_syrk_t*  fla_syrk_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_scalr_t* fla_scalr_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_gemm_t*  fla_gemm_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_syrk_t*  fla_syrk_cntl_blas;
 
 void libfla_test_syrk_cntl_create( unsigned int var,
                                    dim_t        b_alg_flat )

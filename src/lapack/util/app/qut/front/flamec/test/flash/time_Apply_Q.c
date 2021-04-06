@@ -17,17 +17,17 @@
 
 FLA_Error REF_Apply_Q( FLA_Side side, FLA_Uplo uplo, FLA_Trans trans, FLA_Obj A, FLA_Obj t, FLA_Obj B );
 void time_Apply_Q(
-               int param_combo, int type, int nrepeats, int m, int n,
+               integer param_combo, integer type, integer nrepeats, integer m, integer n,
                FLA_Obj A, FLA_Obj B, FLA_Obj B_ref, FLA_Obj t, FLA_Obj T, FLA_Obj W,
                double *dtime, double *diff, double *gflops );
 
 
 void time_Apply_Q( 
-               int param_combo, int type, int nrepeats, int m, int n,
+               integer param_combo, integer type, integer nrepeats, integer m, integer n,
                FLA_Obj A, FLA_Obj B, FLA_Obj B_ref, FLA_Obj t, FLA_Obj T, FLA_Obj W,
                double *dtime, double *diff, double *gflops )
 {
-  int
+  integer
     irep;
 
   double

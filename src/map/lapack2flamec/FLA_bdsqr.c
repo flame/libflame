@@ -46,15 +46,15 @@
 
 #define LAPACK_bdsqr(prefix)                                            \
   int F77_ ## prefix ## bdsqr( char* uplo,                              \
-                               int*  m_d,                               \
-                               int*  n_Vt,                              \
-                               int*  m_U,                               \
-                               int*  n_C,                               \
+                               integer*  m_d,                               \
+                               integer*  n_Vt,                              \
+                               integer*  m_U,                               \
+                               integer*  n_C,                               \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_d,   \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_e,   \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_Vt, int* ldim_Vt, \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_U,  int* ldim_U, \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_C,  int* ldim_C, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_Vt, integer* ldim_Vt, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_U,  integer* ldim_U, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_C,  integer* ldim_C, \
                                PREFIX2LAPACK_REALDEF(prefix)* rwork,    \
                                int*  info )
 

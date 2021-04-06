@@ -15,8 +15,8 @@ FLA_Error FLA_LQ_blk_external( FLA_Obj A, FLA_Obj t )
   int          info = 0;
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
   FLA_Datatype datatype;
-  int          m_A, n_A, cs_A;
-  int          lwork;
+  integer          m_A, n_A, cs_A;
+  integer          lwork;
   FLA_Obj      work_obj;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING )

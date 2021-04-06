@@ -48,22 +48,22 @@ conj1_t bl1_proj_trans1_to_conj( trans1_t trans );
 
 // --- storage-related ---
 
-void bl1_check_storage_3m( int a_rs, int a_cs, int b_rs, int b_cs, int c_rs, int c_cs );
-void bl1_check_storage_2m( int a_rs, int a_cs, int b_rs, int b_cs );
-int bl1_is_row_or_col_storage( int rs, int cs );
-int bl1_is_row_storage( int rs, int cs );
-int bl1_is_col_storage( int rs, int cs );
-int bl1_is_gen_storage( int rs, int cs );
-int bl1_is_vector( int m, int n );
+void bl1_check_storage_3m( integer a_rs, integer a_cs, integer b_rs, integer b_cs, integer c_rs, integer c_cs );
+void bl1_check_storage_2m( integer a_rs, integer a_cs, integer b_rs, integer b_cs );
+int bl1_is_row_or_col_storage( integer rs, integer cs );
+int bl1_is_row_storage( integer rs, integer cs );
+int bl1_is_col_storage( integer rs, integer cs );
+int bl1_is_gen_storage( integer rs, integer cs );
+int bl1_is_vector( integer m, integer n );
 
 // --- vector-related ---
 
-int bl1_vector_dim( int m, int n );
-int bl1_vector_inc( trans1_t trans, int m, int n, int rs, int cs );
+int bl1_vector_dim( integer m, integer n );
+int bl1_vector_inc( trans1_t trans, integer m, integer n, integer rs, integer cs );
 
 // --- dimension-related ---
 
-int bl1_zero_dim1( int m );
-int bl1_zero_dim2( int m, int n );
-int bl1_zero_dim3( int m, int k, int n );
+int bl1_zero_dim1( integer m );
+int bl1_zero_dim2( integer m, integer n );
+int bl1_zero_dim3( integer m, integer k, integer n );
 

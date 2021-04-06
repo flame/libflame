@@ -13,7 +13,7 @@
 FLA_Error REF_Syrk_ln( FLA_Obj A, FLA_Obj C )
 {
   FLA_Datatype datatype;
-  int          k, m, ldim_A, ldim_C;
+  integer          k, m, ldim_A, ldim_C;
 
   datatype = FLA_Obj_datatype( A );
   ldim_A   = FLA_Obj_ldim( A );

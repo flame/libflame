@@ -18,14 +18,14 @@
 char* pc_str[N_PARAM_COMBOS] = { "il", "iu", "nl", "nu" };
 
 void time_Eig_gest(
-                int param_combo, int type, int n_repeats, int n,
+                integer param_combo, integer type, integer n_repeats, integer n,
                 FLA_Inv inv, FLA_Uplo uplo, FLA_Obj A, FLA_Obj B, FLA_Obj norm,
                 double *dtime, double *diff, double *gflops );
 
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     m_input,
     m,
     p_first, p_last, p_inc,

@@ -40,7 +40,7 @@ void libfla_test_lu_nopiv_experiment( test_params_t params,
                                       unsigned int  var,
                                       char*         sc_str,
                                       FLA_Datatype  datatype,
-                                      unsigned int  p_cur,
+                                      uinteger  p_cur,
                                       unsigned int  pci,
                                       unsigned int  n_repeats,
                                       signed int    impl,
@@ -51,11 +51,11 @@ void libfla_test_lu_nopiv_impl( int         impl,
 void libfla_test_lu_nopiv_cntl_create( unsigned int var,
                                        dim_t        b_alg_flat );
 void libfla_test_lu_nopiv_cntl_free( void );
-void FLA_GETRFNP( int m, 
-		  int n, 
+void FLA_GETRFNP( integer m, 
+		  integer n, 
 		  FLA_Obj A_save, 
 		  FLA_Obj A, 
-		  int lda, 
+		  integer lda, 
 		  FLA_Datatype datatype, 
 		  unsigned int n_repeats, 
 		  double* time_min_);
@@ -143,7 +143,7 @@ void libfla_test_lu_nopiv_experiment( test_params_t params,
                                       unsigned int  var,
                                       char*         sc_str,
                                       FLA_Datatype  datatype,
-                                      unsigned int  p_cur,
+                                      uinteger  p_cur,
                                       unsigned int  pci,
                                       unsigned int  n_repeats,
                                       signed int    impl,
@@ -155,10 +155,10 @@ void libfla_test_lu_nopiv_experiment( test_params_t params,
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	unsigned int m, n;
-	unsigned int lda;
-	signed int   m_input    = -1;
-	signed int   n_input    = -1;
+	uinteger m, n;
+	uinteger lda;
+	integer   m_input    = -1;
+	integer   n_input    = -1;
 	FLA_Obj      A, x, b, norm;
 	FLA_Obj      A_save;
 	FLA_Obj      A_test, b_test, x_test;
@@ -277,8 +277,8 @@ void libfla_test_lu_nopiv_experiment( test_params_t params,
 
 
 
-extern TLS_CLASS_SPEC fla_gemm_t*  fla_gemm_cntl_blas;
-extern TLS_CLASS_SPEC fla_trsm_t*  fla_trsm_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_gemm_t*  fla_gemm_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_trsm_t*  fla_trsm_cntl_blas;
 
 void libfla_test_lu_nopiv_cntl_create( unsigned int var,
                                        dim_t        b_alg_flat )
@@ -373,16 +373,16 @@ void libfla_test_lu_nopiv_impl( int impl,
  * FLA_GETRFNP calls getrfnp which is a variant of 
  * LAPACK getrf API but without pivoting 
  * */
-void FLA_GETRFNP( int m, 
-		int n, 
+void FLA_GETRFNP( integer m, 
+		integer n, 
 		FLA_Obj A_save,
 		FLA_Obj A, 
-		int lda, 
+		integer lda, 
 		FLA_Datatype datatype, 
 		unsigned int n_repeats, 
 		double* time_min_ )
 {
-	int          info;
+	integer      info;
 	unsigned int i;
 	double       time;
 	double       time_min   = 1e9;

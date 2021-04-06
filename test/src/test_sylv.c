@@ -40,7 +40,7 @@ void libfla_test_sylv_experiment( test_params_t params,
                                   unsigned int  var,
                                   char*         sc_str,
                                   FLA_Datatype  datatype,
-                                  unsigned int  p_cur,
+                                  uinteger  p_cur,
                                   unsigned int  pci,
                                   unsigned int  n_repeats,
                                   signed int    impl,
@@ -123,7 +123,7 @@ void libfla_test_sylv_experiment( test_params_t params,
                                   unsigned int  var,
                                   char*         sc_str,
                                   FLA_Datatype  datatype,
-                                  unsigned int  p_cur,
+                                  uinteger  p_cur,
                                   unsigned int  pci,
                                   unsigned int  n_repeats,
                                   signed int    impl,
@@ -135,11 +135,11 @@ void libfla_test_sylv_experiment( test_params_t params,
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	unsigned int m;
-	signed int   m_input    = -1;
-	unsigned int n;
-	signed int   n_input    = -1;
-	signed int   sign       = 1;
+	uinteger m;
+	integer   m_input    = -1;
+	uinteger n;
+	integer   n_input    = -1;
+	integer   sign       = 1;
 	FLA_Trans    transa;
 	FLA_Trans    transb;
 	FLA_Obj      A, B, C, X, isgn, scale, norm;
@@ -280,7 +280,7 @@ void libfla_test_sylv_experiment( test_params_t params,
 
 
 
-extern TLS_CLASS_SPEC fla_gemm_t* fla_gemm_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_gemm_t* fla_gemm_cntl_blas;
 
 void libfla_test_sylv_cntl_create( unsigned int var,
                                    dim_t        b_alg_flat )

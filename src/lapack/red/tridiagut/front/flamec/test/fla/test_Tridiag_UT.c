@@ -18,13 +18,13 @@
 char* pc_str[N_PARAM_COMBOS] = { "l", "u" };
 
 void time_Tridiag_UT(
-                int param_combo, int type, int n_repeats, int m,
+                integer param_combo, integer type, integer n_repeats, integer m,
                 FLA_Obj A, FLA_Obj t, FLA_Obj T, FLA_Obj W,
                 double *dtime, double *diff, double *gflops );
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     m_input,
     m,
     p_first, p_last, p_inc,

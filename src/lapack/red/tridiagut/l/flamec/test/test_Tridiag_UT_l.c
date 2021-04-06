@@ -19,14 +19,14 @@
 
 
 void time_Tridiag_UT_l(
-               int variant, int type, int n_repeats, int m, int nb_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer nb_alg,
                FLA_Obj A, FLA_Obj U, FLA_Obj Y, FLA_Obj Z, FLA_Obj T, FLA_Obj TT, FLA_Obj t,
                double *dtime, double *diff, double *gflops );
 
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     m_input,
     m,
     p_first, p_last, p_inc,

@@ -1,10 +1,10 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
 
-int clauum_check(char *uplo, int *n, scomplex *a, int *lda, int *info)
+int clauum_check(char *uplo, integer *n, scomplex *a, integer *lda, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
     /* Local variables */
     logical upper;
     

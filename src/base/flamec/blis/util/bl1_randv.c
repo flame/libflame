@@ -10,10 +10,10 @@
 
 #include "blis1.h"
 
-void bl1_srandv( int n, float* x, int incx )
+void bl1_srandv( integer n, float* x, integer incx )
 {
 	float* chi;
-	int    i;
+	integer    i;
 
 	for ( i = 0; i < n; ++i )
 	{
@@ -23,10 +23,10 @@ void bl1_srandv( int n, float* x, int incx )
 	}
 }
 
-void bl1_drandv( int n, double* x, int incx )
+void bl1_drandv( integer n, double* x, integer incx )
 {
 	double* chi;
-	int     i;
+	integer     i;
 
 	for ( i = 0; i < n; ++i )
 	{
@@ -36,10 +36,10 @@ void bl1_drandv( int n, double* x, int incx )
 	}
 }
 
-void bl1_crandv( int n, scomplex* x, int incx )
+void bl1_crandv( integer n, scomplex* x, integer incx )
 {
 	scomplex* chi;
-	int       i;
+	integer       i;
 
 	for ( i = 0; i < n; ++i )
 	{
@@ -49,10 +49,10 @@ void bl1_crandv( int n, scomplex* x, int incx )
 	}
 }
 
-void bl1_zrandv( int n, dcomplex* x, int incx )
+void bl1_zrandv( integer n, dcomplex* x, integer incx )
 {
 	dcomplex* chi;
-	int       i;
+	integer       i;
 
 	for ( i = 0; i < n; ++i )
 	{

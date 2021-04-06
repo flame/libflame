@@ -222,7 +222,7 @@ void FLA_Error_messages_init( void )
 	sprintf( FLA_Error_string_for_code(FLA_INVALID_SVD_TYPE_AND_TRANS_COMBINATION),
              "Invalid svd type parameters (FLA_SVD_VECTORS_OVERWRITE) and trans parameters combination." );
 	sprintf( FLA_Error_string_for_code(FLA_OBJECT_NOT_COMPARABLE),
-             "Expected real or int object." );
+             "Expected real or integer object." );
 }
 
 /* ***************************************************************************

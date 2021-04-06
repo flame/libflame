@@ -6,9 +6,9 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
 
-int sspffrtx_check(float *ap, int *n, int * ncolm, float *work, float *work2)
+int sspffrtx_check(float *ap, integer *n, integer * ncolm, float *work, float *work2)
 {
-    int ret_val = LAPACK_SUCCESS;
+    integer ret_val = LAPACK_SUCCESS;
 
     if (*n < 0)
     {

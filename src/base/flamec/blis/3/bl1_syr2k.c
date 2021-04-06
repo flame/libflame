@@ -10,28 +10,28 @@
 
 #include "blis1.h"
 
-void bl1_ssyr2k( uplo1_t uplo, trans1_t trans, int m, int k, float* alpha, float* a, int a_rs, int a_cs, float* b, int b_rs, int b_cs, float* beta, float* c, int c_rs, int c_cs )
+void bl1_ssyr2k( uplo1_t uplo, trans1_t trans, integer m, integer k, float* alpha, float* a, integer a_rs, integer a_cs, float* b, integer b_rs, integer b_cs, float* beta, float* c, integer c_rs, integer c_cs )
 {
 	uplo1_t    uplo_save = uplo;
-	int       m_save    = m;
+	integer       m_save    = m;
 	float*    a_save    = a;
 	float*    b_save    = b;
 	float*    c_save    = c;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       b_rs_save = b_rs;
-	int       b_cs_save = b_cs;
-	int       c_rs_save = c_rs;
-	int       c_cs_save = c_cs;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       b_rs_save = b_rs;
+	integer       b_cs_save = b_cs;
+	integer       c_rs_save = c_rs;
+	integer       c_cs_save = c_cs;
 	float*    a_copy;
 	float*    b_copy;
-	int       lda, inca;
-	int       ldb, incb;
-	int       ldc, incc;
-	int       lda_copy, inca_copy;
-	int       ldb_copy, incb_copy;
-	int       syr2k_needs_copya = FALSE;
-	int       syr2k_needs_copyb = FALSE;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       ldc, incc;
+	integer       lda_copy, inca_copy;
+	integer       ldb_copy, incb_copy;
+	integer       syr2k_needs_copya = FALSE;
+	integer       syr2k_needs_copyb = FALSE;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, k ) ) return;
@@ -157,8 +157,8 @@ void bl1_ssyr2k( uplo1_t uplo, trans1_t trans, int m, int k, float* alpha, float
 	// We handle those two cases here.
 	if ( syr2k_needs_copya )
 	{
-		int m_a;
-		int n_a;
+		integer m_a;
+		integer n_a;
 
 		// Determine the dimensions of A according to the value of trans. We
 		// need this in order to set the leading dimension of the copy of A.
@@ -185,8 +185,8 @@ void bl1_ssyr2k( uplo1_t uplo, trans1_t trans, int m, int k, float* alpha, float
 	// We handle those two cases here.
 	if ( syr2k_needs_copyb )
 	{
-		int m_b;
-		int n_b;
+		integer m_b;
+		integer n_b;
 
 		// Determine the dimensions of B according to the value of trans. We
 		// need this in order to set the leading dimension of the copy of B.
@@ -236,28 +236,28 @@ void bl1_ssyr2k( uplo1_t uplo, trans1_t trans, int m, int k, float* alpha, float
 	                          &c,     &c_rs,     &c_cs );
 }
 
-void bl1_dsyr2k( uplo1_t uplo, trans1_t trans, int m, int k, double* alpha, double* a, int a_rs, int a_cs, double* b, int b_rs, int b_cs, double* beta, double* c, int c_rs, int c_cs )
+void bl1_dsyr2k( uplo1_t uplo, trans1_t trans, integer m, integer k, double* alpha, double* a, integer a_rs, integer a_cs, double* b, integer b_rs, integer b_cs, double* beta, double* c, integer c_rs, integer c_cs )
 {
 	uplo1_t    uplo_save = uplo;
-	int       m_save    = m;
+	integer       m_save    = m;
 	double*   a_save    = a;
 	double*   b_save    = b;
 	double*   c_save    = c;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       b_rs_save = b_rs;
-	int       b_cs_save = b_cs;
-	int       c_rs_save = c_rs;
-	int       c_cs_save = c_cs;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       b_rs_save = b_rs;
+	integer       b_cs_save = b_cs;
+	integer       c_rs_save = c_rs;
+	integer       c_cs_save = c_cs;
 	double*   a_copy;
 	double*   b_copy;
-	int       lda, inca;
-	int       ldb, incb;
-	int       ldc, incc;
-	int       lda_copy, inca_copy;
-	int       ldb_copy, incb_copy;
-	int       syr2k_needs_copya = FALSE;
-	int       syr2k_needs_copyb = FALSE;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       ldc, incc;
+	integer       lda_copy, inca_copy;
+	integer       ldb_copy, incb_copy;
+	integer       syr2k_needs_copya = FALSE;
+	integer       syr2k_needs_copyb = FALSE;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, k ) ) return;
@@ -383,8 +383,8 @@ void bl1_dsyr2k( uplo1_t uplo, trans1_t trans, int m, int k, double* alpha, doub
 	// We handle those two cases here.
 	if ( syr2k_needs_copya )
 	{
-		int m_a;
-		int n_a;
+		integer m_a;
+		integer n_a;
 
 		// Determine the dimensions of A according to the value of trans. We
 		// need this in order to set the leading dimension of the copy of A.
@@ -411,8 +411,8 @@ void bl1_dsyr2k( uplo1_t uplo, trans1_t trans, int m, int k, double* alpha, doub
 	// We handle those two cases here.
 	if ( syr2k_needs_copyb )
 	{
-		int m_b;
-		int n_b;
+		integer m_b;
+		integer n_b;
 
 		// Determine the dimensions of B according to the value of trans. We
 		// need this in order to set the leading dimension of the copy of B.
@@ -462,28 +462,28 @@ void bl1_dsyr2k( uplo1_t uplo, trans1_t trans, int m, int k, double* alpha, doub
 	                          &c,     &c_rs,     &c_cs );
 }
 
-void bl1_csyr2k( uplo1_t uplo, trans1_t trans, int m, int k, scomplex* alpha, scomplex* a, int a_rs, int a_cs, scomplex* b, int b_rs, int b_cs, scomplex* beta, scomplex* c, int c_rs, int c_cs )
+void bl1_csyr2k( uplo1_t uplo, trans1_t trans, integer m, integer k, scomplex* alpha, scomplex* a, integer a_rs, integer a_cs, scomplex* b, integer b_rs, integer b_cs, scomplex* beta, scomplex* c, integer c_rs, integer c_cs )
 {
 	uplo1_t    uplo_save = uplo;
-	int       m_save    = m;
+	integer       m_save    = m;
 	scomplex* a_save    = a;
 	scomplex* b_save    = b;
 	scomplex* c_save    = c;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       b_rs_save = b_rs;
-	int       b_cs_save = b_cs;
-	int       c_rs_save = c_rs;
-	int       c_cs_save = c_cs;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       b_rs_save = b_rs;
+	integer       b_cs_save = b_cs;
+	integer       c_rs_save = c_rs;
+	integer       c_cs_save = c_cs;
 	scomplex* a_copy;
 	scomplex* b_copy;
-	int       lda, inca;
-	int       ldb, incb;
-	int       ldc, incc;
-	int       lda_copy, inca_copy;
-	int       ldb_copy, incb_copy;
-	int       syr2k_needs_copya = FALSE;
-	int       syr2k_needs_copyb = FALSE;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       ldc, incc;
+	integer       lda_copy, inca_copy;
+	integer       ldb_copy, incb_copy;
+	integer       syr2k_needs_copya = FALSE;
+	integer       syr2k_needs_copyb = FALSE;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, k ) ) return;
@@ -609,8 +609,8 @@ void bl1_csyr2k( uplo1_t uplo, trans1_t trans, int m, int k, scomplex* alpha, sc
 	// We handle those two cases here.
 	if ( syr2k_needs_copya )
 	{
-		int m_a;
-		int n_a;
+		integer m_a;
+		integer n_a;
 
 		// Determine the dimensions of A according to the value of trans. We
 		// need this in order to set the leading dimension of the copy of A.
@@ -637,8 +637,8 @@ void bl1_csyr2k( uplo1_t uplo, trans1_t trans, int m, int k, scomplex* alpha, sc
 	// We handle those two cases here.
 	if ( syr2k_needs_copyb )
 	{
-		int m_b;
-		int n_b;
+		integer m_b;
+		integer n_b;
 
 		// Determine the dimensions of B according to the value of trans. We
 		// need this in order to set the leading dimension of the copy of B.
@@ -688,28 +688,28 @@ void bl1_csyr2k( uplo1_t uplo, trans1_t trans, int m, int k, scomplex* alpha, sc
 	                          &c,     &c_rs,     &c_cs );
 }
 
-void bl1_zsyr2k( uplo1_t uplo, trans1_t trans, int m, int k, dcomplex* alpha, dcomplex* a, int a_rs, int a_cs, dcomplex* b, int b_rs, int b_cs, dcomplex* beta, dcomplex* c, int c_rs, int c_cs )
+void bl1_zsyr2k( uplo1_t uplo, trans1_t trans, integer m, integer k, dcomplex* alpha, dcomplex* a, integer a_rs, integer a_cs, dcomplex* b, integer b_rs, integer b_cs, dcomplex* beta, dcomplex* c, integer c_rs, integer c_cs )
 {
 	uplo1_t    uplo_save = uplo;
-	int       m_save    = m;
+	integer       m_save    = m;
 	dcomplex* a_save    = a;
 	dcomplex* b_save    = b;
 	dcomplex* c_save    = c;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       b_rs_save = b_rs;
-	int       b_cs_save = b_cs;
-	int       c_rs_save = c_rs;
-	int       c_cs_save = c_cs;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       b_rs_save = b_rs;
+	integer       b_cs_save = b_cs;
+	integer       c_rs_save = c_rs;
+	integer       c_cs_save = c_cs;
 	dcomplex* a_copy;
 	dcomplex* b_copy;
-	int       lda, inca;
-	int       ldb, incb;
-	int       ldc, incc;
-	int       lda_copy, inca_copy;
-	int       ldb_copy, incb_copy;
-	int       syr2k_needs_copya = FALSE;
-	int       syr2k_needs_copyb = FALSE;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       ldc, incc;
+	integer       lda_copy, inca_copy;
+	integer       ldb_copy, incb_copy;
+	integer       syr2k_needs_copya = FALSE;
+	integer       syr2k_needs_copyb = FALSE;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, k ) ) return;
@@ -835,8 +835,8 @@ void bl1_zsyr2k( uplo1_t uplo, trans1_t trans, int m, int k, dcomplex* alpha, dc
 	// We handle those two cases here.
 	if ( syr2k_needs_copya )
 	{
-		int m_a;
-		int n_a;
+		integer m_a;
+		integer n_a;
 
 		// Determine the dimensions of A according to the value of trans. We
 		// need this in order to set the leading dimension of the copy of A.
@@ -863,8 +863,8 @@ void bl1_zsyr2k( uplo1_t uplo, trans1_t trans, int m, int k, dcomplex* alpha, dc
 	// We handle those two cases here.
 	if ( syr2k_needs_copyb )
 	{
-		int m_b;
-		int n_b;
+		integer m_b;
+		integer n_b;
 
 		// Determine the dimensions of B according to the value of trans. We
 		// need this in order to set the leading dimension of the copy of B.
@@ -916,7 +916,7 @@ void bl1_zsyr2k( uplo1_t uplo, trans1_t trans, int m, int k, dcomplex* alpha, dc
 
 // --- Classic routine wrappers ---
 
-void bl1_ssyr2k_blas( uplo1_t uplo, trans1_t trans, int m, int k, float* alpha, float* a, int lda, float* b, int ldb, float* beta, float* c, int ldc )
+void bl1_ssyr2k_blas( uplo1_t uplo, trans1_t trans, integer m, integer k, float* alpha, float* a, integer lda, float* b, integer ldb, float* beta, float* c, integer ldc )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER     cblas_order = CblasColMajor;
@@ -963,7 +963,7 @@ void bl1_ssyr2k_blas( uplo1_t uplo, trans1_t trans, int m, int k, float* alpha, 
 #endif
 }
 
-void bl1_dsyr2k_blas( uplo1_t uplo, trans1_t trans, int m, int k, double* alpha, double* a, int lda, double* b, int ldb, double* beta, double* c, int ldc )
+void bl1_dsyr2k_blas( uplo1_t uplo, trans1_t trans, integer m, integer k, double* alpha, double* a, integer lda, double* b, integer ldb, double* beta, double* c, integer ldc )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER     cblas_order = CblasColMajor;
@@ -1010,7 +1010,7 @@ void bl1_dsyr2k_blas( uplo1_t uplo, trans1_t trans, int m, int k, double* alpha,
 #endif
 }
 
-void bl1_csyr2k_blas( uplo1_t uplo, trans1_t trans, int m, int k, scomplex* alpha, scomplex* a, int lda, scomplex* b, int ldb, scomplex* beta, scomplex* c, int ldc )
+void bl1_csyr2k_blas( uplo1_t uplo, trans1_t trans, integer m, integer k, scomplex* alpha, scomplex* a, integer lda, scomplex* b, integer ldb, scomplex* beta, scomplex* c, integer ldc )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER     cblas_order = CblasColMajor;
@@ -1057,7 +1057,7 @@ void bl1_csyr2k_blas( uplo1_t uplo, trans1_t trans, int m, int k, scomplex* alph
 #endif
 }
 
-void bl1_zsyr2k_blas( uplo1_t uplo, trans1_t trans, int m, int k, dcomplex* alpha, dcomplex* a, int lda, dcomplex* b, int ldb, dcomplex* beta, dcomplex* c, int ldc )
+void bl1_zsyr2k_blas( uplo1_t uplo, trans1_t trans, integer m, integer k, dcomplex* alpha, dcomplex* a, integer lda, dcomplex* b, integer ldb, dcomplex* beta, dcomplex* c, integer ldc )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER     cblas_order = CblasColMajor;

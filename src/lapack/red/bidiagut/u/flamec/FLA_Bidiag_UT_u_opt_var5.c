@@ -35,12 +35,12 @@ FLA_Error FLA_Bidiag_UT_u_opt_var5( FLA_Obj A, FLA_Obj TU, FLA_Obj TV )
 FLA_Error FLA_Bidiag_UT_u_step_opt_var5( FLA_Obj A, FLA_Obj Y, FLA_Obj Z, FLA_Obj T, FLA_Obj S )
 {
   FLA_Datatype datatype;
-  int          m_A, n_A, m_TS;
-  int          rs_A, cs_A;
-  int          rs_Y, cs_Y;
-  int          rs_Z, cs_Z;
-  int          rs_T, cs_T;
-  int          rs_S, cs_S;
+  integer          m_A, n_A, m_TS;
+  integer          rs_A, cs_A;
+  integer          rs_Y, cs_Y;
+  integer          rs_Z, cs_Z;
+  integer          rs_T, cs_T;
+  integer          rs_S, cs_S;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -152,14 +152,14 @@ FLA_Error FLA_Bidiag_UT_u_step_opt_var5( FLA_Obj A, FLA_Obj Y, FLA_Obj Z, FLA_Ob
 
 
 
-FLA_Error FLA_Bidiag_UT_u_step_ops_var5( int m_A,
-                                         int n_A,
-                                         int m_TS,
-                                         float* buff_A, int rs_A, int cs_A, 
-                                         float* buff_Y, int rs_Y, int cs_Y, 
-                                         float* buff_Z, int rs_Z, int cs_Z, 
-                                         float* buff_T, int rs_T, int cs_T, 
-                                         float* buff_S, int rs_S, int cs_S )
+FLA_Error FLA_Bidiag_UT_u_step_ops_var5( integer m_A,
+                                         integer n_A,
+                                         integer m_TS,
+                                         float* buff_A, integer rs_A, integer cs_A, 
+                                         float* buff_Y, integer rs_Y, integer cs_Y, 
+                                         float* buff_Z, integer rs_Z, integer cs_Z, 
+                                         float* buff_T, integer rs_T, integer cs_T, 
+                                         float* buff_S, integer rs_S, integer cs_S )
 {
   float*    buff_1  = FLA_FLOAT_PTR( FLA_ONE );
   float*    buff_0  = FLA_FLOAT_PTR( FLA_ZERO );
@@ -167,10 +167,10 @@ FLA_Error FLA_Bidiag_UT_u_step_ops_var5( int m_A,
 
   float     beta;
   float     last_elem;
-  int       i;
+  integer       i;
 
   // b_alg = FLA_Obj_length( T );
-  int       b_alg = m_TS;
+  integer       b_alg = m_TS;
 
   // FLA_Obj_create( datatype_A, m_A, 1, 0, 0, &u );
   // FLA_Obj_create( datatype_A, n_A, 1, 0, 0, &v );
@@ -184,12 +184,12 @@ FLA_Error FLA_Bidiag_UT_u_step_ops_var5( int m_A,
   float*    buff_e  = ( float*    ) FLA_malloc( n_A * sizeof( *buff_A ) );
   float*    buff_f  = ( float*    ) FLA_malloc( m_A * sizeof( *buff_A ) );
   float*    buff_g  = ( float*    ) FLA_malloc( m_A * sizeof( *buff_A ) );
-  int       inc_u   = 1;
-  int       inc_v   = 1;
-  int       inc_d   = 1;
-  int       inc_e   = 1;
-  int       inc_f   = 1;
-  int       inc_g   = 1;
+  integer       inc_u   = 1;
+  integer       inc_v   = 1;
+  integer       inc_d   = 1;
+  integer       inc_e   = 1;
+  integer       inc_f   = 1;
+  integer       inc_g   = 1;
 
   // FLA_Set( FLA_ZERO, Y );
   // FLA_Set( FLA_ZERO, Z );
@@ -252,10 +252,10 @@ FLA_Error FLA_Bidiag_UT_u_step_ops_var5( int m_A,
 
     float*    a2        = alpha11;
 
-    int       m_ahead   = m_A - i - 1;
-    int       n_ahead   = n_A - i - 1;
-    int       m_behind  = i;
-    int       n_behind  = i;
+    integer       m_ahead   = m_A - i - 1;
+    integer       n_ahead   = n_A - i - 1;
+    integer       m_behind  = i;
+    integer       n_behind  = i;
 
     /*------------------------------------------------------------*/
 
@@ -547,14 +547,14 @@ FLA_Error FLA_Bidiag_UT_u_step_ops_var5( int m_A,
 
 
 
-FLA_Error FLA_Bidiag_UT_u_step_opd_var5( int m_A,
-                                         int n_A,
-                                         int m_TS,
-                                         double* buff_A, int rs_A, int cs_A, 
-                                         double* buff_Y, int rs_Y, int cs_Y, 
-                                         double* buff_Z, int rs_Z, int cs_Z, 
-                                         double* buff_T, int rs_T, int cs_T, 
-                                         double* buff_S, int rs_S, int cs_S )
+FLA_Error FLA_Bidiag_UT_u_step_opd_var5( integer m_A,
+                                         integer n_A,
+                                         integer m_TS,
+                                         double* buff_A, integer rs_A, integer cs_A, 
+                                         double* buff_Y, integer rs_Y, integer cs_Y, 
+                                         double* buff_Z, integer rs_Z, integer cs_Z, 
+                                         double* buff_T, integer rs_T, integer cs_T, 
+                                         double* buff_S, integer rs_S, integer cs_S )
 {
   double*   buff_1  = FLA_DOUBLE_PTR( FLA_ONE );
   double*   buff_0  = FLA_DOUBLE_PTR( FLA_ZERO );
@@ -562,10 +562,10 @@ FLA_Error FLA_Bidiag_UT_u_step_opd_var5( int m_A,
 
   double    beta;
   double    last_elem;
-  int       i;
+  integer       i;
 
   // b_alg = FLA_Obj_length( T );
-  int       b_alg = m_TS;
+  integer       b_alg = m_TS;
 
   // FLA_Obj_create( datatype_A, m_A, 1, 0, 0, &u );
   // FLA_Obj_create( datatype_A, n_A, 1, 0, 0, &v );
@@ -579,12 +579,12 @@ FLA_Error FLA_Bidiag_UT_u_step_opd_var5( int m_A,
   double*   buff_e  = ( double*   ) FLA_malloc( n_A * sizeof( *buff_A ) );
   double*   buff_f  = ( double*   ) FLA_malloc( m_A * sizeof( *buff_A ) );
   double*   buff_g  = ( double*   ) FLA_malloc( m_A * sizeof( *buff_A ) );
-  int       inc_u   = 1;
-  int       inc_v   = 1;
-  int       inc_d   = 1;
-  int       inc_e   = 1;
-  int       inc_f   = 1;
-  int       inc_g   = 1;
+  integer       inc_u   = 1;
+  integer       inc_v   = 1;
+  integer       inc_d   = 1;
+  integer       inc_e   = 1;
+  integer       inc_f   = 1;
+  integer       inc_g   = 1;
 
   // FLA_Set( FLA_ZERO, Y );
   // FLA_Set( FLA_ZERO, Z );
@@ -647,10 +647,10 @@ FLA_Error FLA_Bidiag_UT_u_step_opd_var5( int m_A,
 
     double*   a2        = alpha11;
 
-    int       m_ahead   = m_A - i - 1;
-    int       n_ahead   = n_A - i - 1;
-    int       m_behind  = i;
-    int       n_behind  = i;
+    integer       m_ahead   = m_A - i - 1;
+    integer       n_ahead   = n_A - i - 1;
+    integer       m_behind  = i;
+    integer       n_behind  = i;
 
     /*------------------------------------------------------------*/
 
@@ -942,14 +942,14 @@ FLA_Error FLA_Bidiag_UT_u_step_opd_var5( int m_A,
 
 
 
-FLA_Error FLA_Bidiag_UT_u_step_opc_var5( int m_A,
-                                         int n_A,
-                                         int m_TS,
-                                         scomplex* buff_A, int rs_A, int cs_A, 
-                                         scomplex* buff_Y, int rs_Y, int cs_Y, 
-                                         scomplex* buff_Z, int rs_Z, int cs_Z, 
-                                         scomplex* buff_T, int rs_T, int cs_T, 
-                                         scomplex* buff_S, int rs_S, int cs_S )
+FLA_Error FLA_Bidiag_UT_u_step_opc_var5( integer m_A,
+                                         integer n_A,
+                                         integer m_TS,
+                                         scomplex* buff_A, integer rs_A, integer cs_A, 
+                                         scomplex* buff_Y, integer rs_Y, integer cs_Y, 
+                                         scomplex* buff_Z, integer rs_Z, integer cs_Z, 
+                                         scomplex* buff_T, integer rs_T, integer cs_T, 
+                                         scomplex* buff_S, integer rs_S, integer cs_S )
 {
   scomplex* buff_1  = FLA_COMPLEX_PTR( FLA_ONE );
   scomplex* buff_0  = FLA_COMPLEX_PTR( FLA_ZERO );
@@ -957,10 +957,10 @@ FLA_Error FLA_Bidiag_UT_u_step_opc_var5( int m_A,
 
   scomplex  beta;
   scomplex  last_elem;
-  int       i;
+  integer       i;
 
   // b_alg = FLA_Obj_length( T );
-  int       b_alg = m_TS;
+  integer       b_alg = m_TS;
 
   // FLA_Obj_create( datatype_A, m_A, 1, 0, 0, &u );
   // FLA_Obj_create( datatype_A, n_A, 1, 0, 0, &v );
@@ -974,12 +974,12 @@ FLA_Error FLA_Bidiag_UT_u_step_opc_var5( int m_A,
   scomplex* buff_e  = ( scomplex* ) FLA_malloc( n_A * sizeof( *buff_A ) );
   scomplex* buff_f  = ( scomplex* ) FLA_malloc( m_A * sizeof( *buff_A ) );
   scomplex* buff_g  = ( scomplex* ) FLA_malloc( m_A * sizeof( *buff_A ) );
-  int       inc_u   = 1;
-  int       inc_v   = 1;
-  int       inc_d   = 1;
-  int       inc_e   = 1;
-  int       inc_f   = 1;
-  int       inc_g   = 1;
+  integer       inc_u   = 1;
+  integer       inc_v   = 1;
+  integer       inc_d   = 1;
+  integer       inc_e   = 1;
+  integer       inc_f   = 1;
+  integer       inc_g   = 1;
 
   // FLA_Set( FLA_ZERO, Y );
   // FLA_Set( FLA_ZERO, Z );
@@ -1042,10 +1042,10 @@ FLA_Error FLA_Bidiag_UT_u_step_opc_var5( int m_A,
 
     scomplex* a2        = alpha11;
 
-    int       m_ahead   = m_A - i - 1;
-    int       n_ahead   = n_A - i - 1;
-    int       m_behind  = i;
-    int       n_behind  = i;
+    integer       m_ahead   = m_A - i - 1;
+    integer       n_ahead   = n_A - i - 1;
+    integer       m_behind  = i;
+    integer       n_behind  = i;
 
     /*------------------------------------------------------------*/
 
@@ -1337,14 +1337,14 @@ FLA_Error FLA_Bidiag_UT_u_step_opc_var5( int m_A,
 
 
 
-FLA_Error FLA_Bidiag_UT_u_step_opz_var5( int m_A,
-                                         int n_A,
-                                         int m_TS,
-                                         dcomplex* buff_A, int rs_A, int cs_A, 
-                                         dcomplex* buff_Y, int rs_Y, int cs_Y, 
-                                         dcomplex* buff_Z, int rs_Z, int cs_Z, 
-                                         dcomplex* buff_T, int rs_T, int cs_T, 
-                                         dcomplex* buff_S, int rs_S, int cs_S )
+FLA_Error FLA_Bidiag_UT_u_step_opz_var5( integer m_A,
+                                         integer n_A,
+                                         integer m_TS,
+                                         dcomplex* buff_A, integer rs_A, integer cs_A, 
+                                         dcomplex* buff_Y, integer rs_Y, integer cs_Y, 
+                                         dcomplex* buff_Z, integer rs_Z, integer cs_Z, 
+                                         dcomplex* buff_T, integer rs_T, integer cs_T, 
+                                         dcomplex* buff_S, integer rs_S, integer cs_S )
 {
   dcomplex* buff_1  = FLA_DOUBLE_COMPLEX_PTR( FLA_ONE );
   dcomplex* buff_0  = FLA_DOUBLE_COMPLEX_PTR( FLA_ZERO );
@@ -1352,10 +1352,10 @@ FLA_Error FLA_Bidiag_UT_u_step_opz_var5( int m_A,
 
   dcomplex  beta;
   dcomplex  last_elem;
-  int       i;
+  integer       i;
 
   // b_alg = FLA_Obj_length( T );
-  int       b_alg = m_TS;
+  integer       b_alg = m_TS;
 
   // FLA_Obj_create( datatype_A, m_A, 1, 0, 0, &u );
   // FLA_Obj_create( datatype_A, n_A, 1, 0, 0, &v );
@@ -1369,12 +1369,12 @@ FLA_Error FLA_Bidiag_UT_u_step_opz_var5( int m_A,
   dcomplex* buff_e  = ( dcomplex* ) FLA_malloc( n_A * sizeof( *buff_A ) );
   dcomplex* buff_f  = ( dcomplex* ) FLA_malloc( m_A * sizeof( *buff_A ) );
   dcomplex* buff_g  = ( dcomplex* ) FLA_malloc( m_A * sizeof( *buff_A ) );
-  int       inc_u   = 1;
-  int       inc_v   = 1;
-  int       inc_d   = 1;
-  int       inc_e   = 1;
-  int       inc_f   = 1;
-  int       inc_g   = 1;
+  integer       inc_u   = 1;
+  integer       inc_v   = 1;
+  integer       inc_d   = 1;
+  integer       inc_e   = 1;
+  integer       inc_f   = 1;
+  integer       inc_g   = 1;
 
   // FLA_Set( FLA_ZERO, Y );
   // FLA_Set( FLA_ZERO, Z );
@@ -1437,10 +1437,10 @@ FLA_Error FLA_Bidiag_UT_u_step_opz_var5( int m_A,
 
     dcomplex* a2        = alpha11;
 
-    int       m_ahead   = m_A - i - 1;
-    int       n_ahead   = n_A - i - 1;
-    int       m_behind  = i;
-    int       n_behind  = i;
+    integer       m_ahead   = m_A - i - 1;
+    integer       n_ahead   = n_A - i - 1;
+    integer       m_behind  = i;
+    integer       n_behind  = i;
 
     /*------------------------------------------------------------*/
 

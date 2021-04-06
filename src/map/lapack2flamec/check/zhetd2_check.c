@@ -1,10 +1,10 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h" 
 
-int zhetd2_check(char *uplo, int *n, dcomplex *a, int *lda, double *d__, double *e, dcomplex *tau, int *info)
+int zhetd2_check(char *uplo, integer *n, dcomplex *a, integer *lda, double *d__, double *e, dcomplex *tau, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
     logical upper;
 
 #if AOCL_DTL_LOG_ENABLE

@@ -17,11 +17,11 @@
 
 
 void time_Trsm_lun( 
-               int variant, int type, int nrepeats, int n, int nb_alg,
+               integer variant, integer type, integer nrepeats, integer n, integer nb_alg,
                FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj C_ref,
                double *dtime, double *diff, double *gflops )
 {
-  int
+  integer
     irep;
 
   double

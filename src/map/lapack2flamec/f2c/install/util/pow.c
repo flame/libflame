@@ -38,11 +38,11 @@ extern "C" {
     /* Complex */
     void pow_ci(complex *p, complex *a, integer *b)
     {
-        _Dcomplex a_ = {a->r, a->i};
-        _Dcomplex b_ = {*b , 0 };
-        _Dcomplex ret_val = cpow(a_, b_);
-        p->r = creal(ret_val);
-        p->i = cimag(ret_val);
+        _Fcomplex a_ = {a->r, a->i};
+        _Fcomplex b_ = {*b , 0 };
+        _Fcomplex ret_val = cpowf(a_, b_);
+        p->r = crealf(ret_val);
+        p->i = cimagf(ret_val);
     }
     void pow_zz(doublecomplex *r, doublecomplex *a, doublecomplex *b)
     {

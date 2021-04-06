@@ -1,10 +1,10 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
 
-int dgebd2_check(int *m, int *n, double *a, int * lda, double *d__, double *e, double *tauq, double * taup, double *work, int *info)
+int dgebd2_check(integer *m, integer *n, double *a, integer * lda, double *d__, double *e, double *tauq, double * taup, double *work, integer *info)
 {
     /* System generated locals */
-  int a_dim1, a_offset, i__1;
+  integer a_dim1, a_offset, i__1;
 
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];

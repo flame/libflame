@@ -5,9 +5,9 @@
 
 #include "FLAME.h"
 
-int FLA_env_get_var( const char* env, int fallback )
+integer FLA_env_get_var( const char* env, integer fallback )
 {
-	int r_val;
+	integer r_val;
 	char*  str;
 
 	// Query the environment variable and store the result in str.
@@ -18,7 +18,7 @@ int FLA_env_get_var( const char* env, int fallback )
 	{
 		// If there was no error, convert the string to an integer and
 		// prepare to return that integer.
-		r_val = ( int )strtol( str, NULL, 10 );
+		r_val = ( integer )strtol( str, NULL, 10 );
 	}
 	else
 	{
@@ -29,9 +29,9 @@ int FLA_env_get_var( const char* env, int fallback )
 	return r_val;
 }
 
-int FLASH_get_num_threads( int fallback )
+integer FLASH_get_num_threads( integer fallback )
 {
-    int omp_threads, fla_threads;
+    integer omp_threads, fla_threads;
 
     omp_threads = FLA_env_get_var( "OMP_NUM_THREADS", -1 );
     fla_threads = FLA_env_get_var( "FLA_NUM_THREADS", -1 );

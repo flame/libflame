@@ -141,7 +141,11 @@ done:
 #else /* !HAVE_TRUNCATE */
 	if (b->urw & 2)
 		fflush(b->ufd); /* necessary on some Linux systems */
+#ifdef _WIN32
+	rc = _chsize_s(fileno(b->ufd), loc);
+#else
 	rc = ftruncate(fileno(b->ufd), loc);
+#endif
 	/* The following FSEEK is unnecessary on some systems, */
 	/* but should be harmless. */
 	FSEEK(b->ufd, (OFF_T)0, SEEK_END);

@@ -18,9 +18,9 @@ FLA_Error FLA_Hess_UT_opt_var1( FLA_Obj A, FLA_Obj T )
 FLA_Error FLA_Hess_UT_step_opt_var1( FLA_Obj A, FLA_Obj T )
 {
   FLA_Datatype datatype;
-  int          m_A, m_T;
-  int          rs_A, cs_A;
-  int          rs_T, cs_T;
+  integer          m_A, m_T;
+  integer          rs_A, cs_A;
+  integer          rs_T, cs_T;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -94,19 +94,19 @@ FLA_Error FLA_Hess_UT_step_opt_var1( FLA_Obj A, FLA_Obj T )
 
 
 
-FLA_Error FLA_Hess_UT_step_ops_var1( int m_A,
-                                     int m_T,
-                                     float* buff_A, int rs_A, int cs_A, 
-                                     float* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_Hess_UT_step_ops_var1( integer m_A,
+                                     integer m_T,
+                                     float* buff_A, integer rs_A, integer cs_A, 
+                                     float* buff_T, integer rs_T, integer cs_T )
 {
   float*    buff_1  = FLA_FLOAT_PTR( FLA_ONE );
   float*    buff_0  = FLA_FLOAT_PTR( FLA_ZERO );
 
   float     first_elem;
-  int       i;
+  integer       i;
 
   // b_alg = FLA_Obj_length( T );
-  int       b_alg = m_T;
+  integer       b_alg = m_T;
 
   for ( i = 0; i < b_alg; ++i )
   {
@@ -125,9 +125,9 @@ FLA_Error FLA_Hess_UT_step_ops_var1( int m_A,
     float*    t01      = buff_T + (i  )*cs_T + (0  )*rs_T;
     float*    tau11    = buff_T + (i  )*cs_T + (i  )*rs_T;
 
-    int       m_ahead  = m_A - i - 1;
-    int       n_ahead  = m_A - i - 1;
-    int       n_behind = i;
+    integer       m_ahead  = m_A - i - 1;
+    integer       n_ahead  = m_A - i - 1;
+    integer       n_behind = i;
 
     /*------------------------------------------------------------*/
 
@@ -187,19 +187,19 @@ FLA_Error FLA_Hess_UT_step_ops_var1( int m_A,
 
 
 
-FLA_Error FLA_Hess_UT_step_opd_var1( int m_A,
-                                     int m_T,
-                                     double* buff_A, int rs_A, int cs_A, 
-                                     double* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_Hess_UT_step_opd_var1( integer m_A,
+                                     integer m_T,
+                                     double* buff_A, integer rs_A, integer cs_A, 
+                                     double* buff_T, integer rs_T, integer cs_T )
 {
   double*   buff_1  = FLA_DOUBLE_PTR( FLA_ONE );
   double*   buff_0  = FLA_DOUBLE_PTR( FLA_ZERO );
 
   double    first_elem;
-  int       i;
+  integer       i;
 
   // b_alg = FLA_Obj_length( T );
-  int       b_alg = m_T;
+  integer       b_alg = m_T;
 
   for ( i = 0; i < b_alg; ++i )
   {
@@ -218,9 +218,9 @@ FLA_Error FLA_Hess_UT_step_opd_var1( int m_A,
     double*   t01      = buff_T + (i  )*cs_T + (0  )*rs_T;
     double*   tau11    = buff_T + (i  )*cs_T + (i  )*rs_T;
 
-    int       m_ahead  = m_A - i - 1;
-    int       n_ahead  = m_A - i - 1;
-    int       n_behind = i;
+    integer       m_ahead  = m_A - i - 1;
+    integer       n_ahead  = m_A - i - 1;
+    integer       n_behind = i;
 
     /*------------------------------------------------------------*/
 
@@ -280,19 +280,19 @@ FLA_Error FLA_Hess_UT_step_opd_var1( int m_A,
 
 
 
-FLA_Error FLA_Hess_UT_step_opc_var1( int m_A,
-                                     int m_T,
-                                     scomplex* buff_A, int rs_A, int cs_A, 
-                                     scomplex* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_Hess_UT_step_opc_var1( integer m_A,
+                                     integer m_T,
+                                     scomplex* buff_A, integer rs_A, integer cs_A, 
+                                     scomplex* buff_T, integer rs_T, integer cs_T )
 {
   scomplex* buff_1  = FLA_COMPLEX_PTR( FLA_ONE );
   scomplex* buff_0  = FLA_COMPLEX_PTR( FLA_ZERO );
 
   scomplex  first_elem;
-  int       i;
+  integer       i;
 
   // b_alg = FLA_Obj_length( T );
-  int       b_alg = m_T;
+  integer       b_alg = m_T;
 
   for ( i = 0; i < b_alg; ++i )
   {
@@ -311,9 +311,9 @@ FLA_Error FLA_Hess_UT_step_opc_var1( int m_A,
     scomplex* t01      = buff_T + (i  )*cs_T + (0  )*rs_T;
     scomplex* tau11    = buff_T + (i  )*cs_T + (i  )*rs_T;
 
-    int       m_ahead  = m_A - i - 1;
-    int       n_ahead  = m_A - i - 1;
-    int       n_behind = i;
+    integer       m_ahead  = m_A - i - 1;
+    integer       n_ahead  = m_A - i - 1;
+    integer       n_behind = i;
 
     /*------------------------------------------------------------*/
 
@@ -373,19 +373,19 @@ FLA_Error FLA_Hess_UT_step_opc_var1( int m_A,
 
 
 
-FLA_Error FLA_Hess_UT_step_opz_var1( int m_A,
-                                     int m_T,
-                                     dcomplex* buff_A, int rs_A, int cs_A, 
-                                     dcomplex* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_Hess_UT_step_opz_var1( integer m_A,
+                                     integer m_T,
+                                     dcomplex* buff_A, integer rs_A, integer cs_A, 
+                                     dcomplex* buff_T, integer rs_T, integer cs_T )
 {
   dcomplex* buff_1  = FLA_DOUBLE_COMPLEX_PTR( FLA_ONE );
   dcomplex* buff_0  = FLA_DOUBLE_COMPLEX_PTR( FLA_ZERO );
 
   dcomplex  first_elem;
-  int       i;
+  integer       i;
 
   // b_alg = FLA_Obj_length( T );
-  int       b_alg = m_T;
+  integer       b_alg = m_T;
 
   for ( i = 0; i < b_alg; ++i )
   {
@@ -404,9 +404,9 @@ FLA_Error FLA_Hess_UT_step_opz_var1( int m_A,
     dcomplex* t01      = buff_T + (i  )*cs_T + (0  )*rs_T;
     dcomplex* tau11    = buff_T + (i  )*cs_T + (i  )*rs_T;
 
-    int       m_ahead  = m_A - i - 1;
-    int       n_ahead  = m_A - i - 1;
-    int       n_behind = i;
+    integer       m_ahead  = m_A - i - 1;
+    integer       n_ahead  = m_A - i - 1;
+    integer       n_behind = i;
 
     /*------------------------------------------------------------*/
 

@@ -17,8 +17,8 @@ extern TLS_CLASS_SPEC fla_blocksize_t* fla_ttmm_var1_bsize;
 FLA_Error FLA_Ttmm( FLA_Uplo uplo, FLA_Obj A )
 {
   FLA_Datatype datatype;
-  int          m_A, r_val = 0;
-  int          FLA_TTMM_VAR1_BLOCKSIZE;
+  integer          m_A, r_val = 0;
+  integer          FLA_TTMM_VAR1_BLOCKSIZE;
 
   // Check parameters.
   if ( FLA_Check_error_level() >= FLA_MIN_ERROR_CHECKING )

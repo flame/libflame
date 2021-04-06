@@ -15,10 +15,10 @@ extern "C" {
 #ifdef _WIN32
     void c_sqrt(complex *r, complex *z)
     {
-        _Dcomplex z_ = { z->r, z->i };
-        _Dcomplex ret_val = csqrt(z_);
-        r->r = creal(ret_val);
-        r->i = cimag(ret_val);
+        _Fcomplex z_ = { z->r, z->i };
+        _Fcomplex ret_val = csqrtf(z_);
+        r->r = crealf(ret_val);
+        r->i = cimagf(ret_val);
     }
     void z_sqrt(doublecomplex *r, doublecomplex *z)
     {

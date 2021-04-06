@@ -13,10 +13,10 @@
 FLA_Error FLA_Tevd_francis_v_opt_var1( FLA_Obj shift, FLA_Obj g, FLA_Obj d, FLA_Obj e )
 {
 	FLA_Datatype datatype;
-	int          m_A;
-	int          inc_g;
-	int          inc_d;
-	int          inc_e;
+	integer          m_A;
+	integer          inc_g;
+	integer          inc_d;
+	integer          inc_e;
 
 	datatype = FLA_Obj_datatype( d );
 
@@ -67,28 +67,28 @@ FLA_Error FLA_Tevd_francis_v_opt_var1( FLA_Obj shift, FLA_Obj g, FLA_Obj d, FLA_
 
 
 
-FLA_Error FLA_Tevd_francis_v_ops_var1( int       m_A,
+FLA_Error FLA_Tevd_francis_v_ops_var1( integer       m_A,
                                        float*    buff_shift,
-                                       scomplex* buff_g, int inc_g, 
-                                       float*    buff_d, int inc_d, 
-                                       float*    buff_e, int inc_e )
+                                       scomplex* buff_g, integer inc_g, 
+                                       float*    buff_d, integer inc_d, 
+                                       float*    buff_e, integer inc_e )
 {
 	return FLA_SUCCESS;
 }
 
 
 
-FLA_Error FLA_Tevd_francis_v_opd_var1( int       m_A,
+FLA_Error FLA_Tevd_francis_v_opd_var1( integer       m_A,
                                        double*   buff_shift,
-                                       dcomplex* buff_g, int inc_g, 
-                                       double*   buff_d, int inc_d, 
-                                       double*   buff_e, int inc_e )
+                                       dcomplex* buff_g, integer inc_g, 
+                                       double*   buff_d, integer inc_d, 
+                                       double*   buff_e, integer inc_e )
 {
 	double    eps, safmin;
 	double    temp0, temp1;
 	double    bulge;
-	int       ij_deflated;
-	int       i;
+	integer       ij_deflated;
+	integer       i;
 
 	// Initialize the deflation index.
 	ij_deflated = FLA_SUCCESS;
@@ -119,8 +119,8 @@ FLA_Error FLA_Tevd_francis_v_opd_var1( int       m_A,
 
 		double    alpha10_new;
 
-		int       m_behind = i;
-		int       m_ahead  = m_A - i - 2;
+		integer       m_behind = i;
+		integer       m_ahead  = m_A - i - 2;
 
 		/*------------------------------------------------------------*/
 

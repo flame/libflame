@@ -10,16 +10,16 @@
 
 #include "blis1.h"
 
-void bl1_saxpysmt( trans1_t trans, int m, int n, float* alpha0, float* alpha1, float* a, int a_rs, int a_cs, float* beta, float* b, int b_rs, int b_cs )
+void bl1_saxpysmt( trans1_t trans, integer m, integer n, float* alpha0, float* alpha1, float* a, integer a_rs, integer a_cs, float* beta, float* b, integer b_rs, integer b_cs )
 {
 	float*    a_begin;
 	float*    b_begin;
 	float     alpha_prod;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -85,16 +85,16 @@ void bl1_saxpysmt( trans1_t trans, int m, int n, float* alpha0, float* alpha1, f
 	}
 }
 
-void bl1_daxpysmt( trans1_t trans, int m, int n, double* alpha0, double* alpha1, double* a, int a_rs, int a_cs, double* beta, double* b, int b_rs, int b_cs )
+void bl1_daxpysmt( trans1_t trans, integer m, integer n, double* alpha0, double* alpha1, double* a, integer a_rs, integer a_cs, double* beta, double* b, integer b_rs, integer b_cs )
 {
 	double*   a_begin;
 	double*   b_begin;
 	double    alpha_prod;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -160,18 +160,18 @@ void bl1_daxpysmt( trans1_t trans, int m, int n, double* alpha0, double* alpha1,
 	}
 }
 
-void bl1_caxpysmt( trans1_t trans, int m, int n, scomplex* alpha0, scomplex* alpha1, scomplex* a, int a_rs, int a_cs, scomplex* beta, scomplex* b, int b_rs, int b_cs )
+void bl1_caxpysmt( trans1_t trans, integer m, integer n, scomplex* alpha0, scomplex* alpha1, scomplex* a, integer a_rs, integer a_cs, scomplex* beta, scomplex* b, integer b_rs, integer b_cs )
 {
 	scomplex* a_begin;
 	scomplex* b_begin;
 	scomplex* a_temp;
 	scomplex  alpha_prod;
-	int       inca_temp;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       inca_temp;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -270,18 +270,18 @@ void bl1_caxpysmt( trans1_t trans, int m, int n, scomplex* alpha0, scomplex* alp
 	}
 }
 
-void bl1_zaxpysmt( trans1_t trans, int m, int n, dcomplex* alpha0, dcomplex* alpha1, dcomplex* a, int a_rs, int a_cs, dcomplex* beta, dcomplex* b, int b_rs, int b_cs )
+void bl1_zaxpysmt( trans1_t trans, integer m, integer n, dcomplex* alpha0, dcomplex* alpha1, dcomplex* a, integer a_rs, integer a_cs, dcomplex* beta, dcomplex* b, integer b_rs, integer b_cs )
 {
 	dcomplex* a_begin;
 	dcomplex* b_begin;
 	dcomplex* a_temp;
 	dcomplex  alpha_prod;
-	int       inca_temp;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       inca_temp;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;

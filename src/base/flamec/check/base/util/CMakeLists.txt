@@ -35,7 +35,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Negate_check.c
 ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Norm_frob_check.c
 ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Norm_inf_check.c
 ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Norm1_check.c
-${CMAKE_CURRENT_SOURCE_DIR}/FLA_Pow.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Pow_check.c
 ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Random_herm_matrix_check.c
 ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Random_matrix_check.c
 ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Random_spd_matrix_check.c

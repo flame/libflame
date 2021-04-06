@@ -1,10 +1,10 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h" 
 
-int zhegst_check(int *itype, char *uplo, int *n, dcomplex *a, int *lda, dcomplex *b, int *ldb, int *info)
+int zhegst_check(integer *itype, char *uplo, integer *n, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, b_dim1, b_offset, i__1;
+    integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */
     logical upper;
 

@@ -17,17 +17,17 @@
 
 FLA_Error REF_Syr2k( FLA_Uplo uplo, FLA_Trans trans, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, FLA_Obj beta, FLA_Obj C );
 void time_Syr2k(
-               int param_combo, int type, int nrepeats, int m, int k,
+               integer param_combo, integer type, integer nrepeats, integer m, integer k,
                FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj C_ref,
                double *dtime, double *diff, double *gflops );
 
 
 void time_Syr2k( 
-               int param_combo, int type, int nrepeats, int m, int k,
+               integer param_combo, integer type, integer nrepeats, integer m, integer k,
                FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj C_ref,
                double *dtime, double *diff, double *gflops )
 {
-  int
+  integer
     irep;
 
   double

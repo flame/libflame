@@ -40,7 +40,7 @@ void libfla_test_apqutinc_experiment( test_params_t params,
                                       unsigned int  var,
                                       char*         sc_str,
                                       FLA_Datatype  datatype,
-                                      unsigned int  p,
+                                      uinteger  p,
                                       unsigned int  pci,
                                       unsigned int  n_repeats,
                                       signed int    impl,
@@ -78,7 +78,7 @@ void libfla_test_apqutinc_experiment( test_params_t params,
                                       unsigned int  var,
                                       char*         sc_str,
                                       FLA_Datatype  datatype,
-                                      unsigned int  p_cur,
+                                      uinteger  p_cur,
                                       unsigned int  pci,
                                       unsigned int  n_repeats,
                                       signed int    impl,
@@ -90,10 +90,10 @@ void libfla_test_apqutinc_experiment( test_params_t params,
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	unsigned int m, n;
-	unsigned int min_m_n, k;
-	signed int   m_input;
-	signed int   n_input;
+	uinteger m, n;
+	uinteger min_m_n, k;
+	integer   m_input;
+	integer   n_input;
 	FLA_Side     side;
 	FLA_Trans    trans;
 	FLA_Direct   direct;

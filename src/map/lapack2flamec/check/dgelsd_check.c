@@ -1,25 +1,25 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
-static int c__6 = 6;
-static int c_n1 = -1;
-static int c__9 = 9;
-static int c__0 = 0;
-static int c__1 = 1;
+static integer c__6 = 6;
+static integer c_n1 = -1;
+static integer c__9 = 9;
+static integer c__0 = 0;
+static integer c__1 = 1;
 
-int dgelsd_check(int *m, int *n, int *nrhs, double *a, int *lda, double *b, int *ldb, double * s, double *rcond, int *rank, double *work, int *lwork, int *iwork, int *info)
+int dgelsd_check(integer *m, integer *n, integer *nrhs, double *a, integer *lda, double *b, integer *ldb, double * s, double *rcond, integer *rank, double *work, integer *lwork, integer *iwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
+    integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
     /* Builtin functions */
     double log(double);
     /* Local variables */
-    int mm;
-    int nlvl;
-    int minmn, maxmn, mnthr;
-    int wlalsd;
-    int liwork, minwrk, maxwrk;
+    integer mm;
+    integer nlvl;
+    integer minmn, maxmn, mnthr;
+    integer wlalsd;
+    integer liwork, minwrk, maxwrk;
     logical lquery;
-    int smlsiz;
+    integer smlsiz;
     
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
@@ -74,7 +74,7 @@ int dgelsd_check(int *m, int *n, int *nrhs, double *a, int *lda, double *b, int 
     liwork = 1;
     minmn = max(1,minmn);
     /* Computing MAX */
-    i__1 = (int) (log((double) minmn / (double) (smlsiz + 1)) / log(2.)) + 1;
+    i__1 = (integer) (log((double) minmn / (double) (smlsiz + 1)) / log(2.)) + 1;
     nlvl = max(i__1,0);
     if (*info == 0)
     {

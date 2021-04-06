@@ -19,10 +19,10 @@ extern double dlansy_( char *, char *, integer *, double *, integer *, double * 
 extern float  clansy_( char *, char *, integer *, scomplex *, integer *, scomplex * );
 extern double zlansy_( char *, char *, integer *, dcomplex *, integer *, dcomplex * );
 
-extern int sspffrt2_( float  *ap, int *n, int * ncolm, float  *work, float  *work2 );
-extern int dspffrt2_( double *ap, int *n, int * ncolm, double *work, double *work2 );
-extern int cspffrt2_( scomplex *ap, int *n, int * ncolm, scomplex *work, scomplex *work2 );
-extern int zspffrt2_( dcomplex *ap, int *n, int * ncolm, dcomplex *work, dcomplex *work2 );
+extern int sspffrt2_( float  *ap, integer *n, integer * ncolm, float  *work, float  *work2 );
+extern int dspffrt2_( double *ap, integer *n, integer * ncolm, double *work, double *work2 );
+extern int cspffrt2_( scomplex *ap, integer *n, integer * ncolm, scomplex *work, scomplex *work2 );
+extern int zspffrt2_( dcomplex *ap, integer *n, integer * ncolm, dcomplex *work, dcomplex *work2 );
 
 extern float slamch_(char *cmach);
 extern double dlamch_(char *cmach);
@@ -31,7 +31,7 @@ extern double dlamch_(char *cmach);
 /*                     SINGLE PRECISION ROUTINES                         */
 /*************************************************************************/
 
-float diff_norm_s( float *ad, float *fod, int n, int ni )
+float diff_norm_s( float *ad, float *fod, integer n, integer ni )
 {
    float *L, *D, *Lt;
    float *ra1, *ra2, *rad;
@@ -40,7 +40,7 @@ float diff_norm_s( float *ad, float *fod, int n, int ni )
    float snrm, anrm;
    float rnrm, eps;
 
-   int di, i, j;
+   integer di, i, j;
 
    char *tf = "No Transpose";
    char *nm = "1";
@@ -126,7 +126,7 @@ float diff_norm_s( float *ad, float *fod, int n, int ni )
 
 void test_ldlt2_nopiv_ps_s( test_params_t *params )
 {
-   int    n, ni;
+   integer    n, ni;
    float  *od, *ad;
    float  *fod;
    float  snrm;
@@ -141,7 +141,7 @@ void test_ldlt2_nopiv_ps_s( test_params_t *params )
 
    for( n = params->p_first; n <= params->p_max; n += params->p_inc )
    {
-      int pn = n * (n + 1) / 2;
+      integer pn = n * (n + 1) / 2;
       /* allocate packed matrices */
       od = (float *) malloc( pn * sizeof( float ) );
       ad = (float *) malloc( pn * sizeof( float ) );
@@ -159,7 +159,7 @@ void test_ldlt2_nopiv_ps_s( test_params_t *params )
       pcode = strpass;
       snrm = 0.0;
       perf = 0.0;
-      if( (int) params->p_nfact == -2 )
+      if( (integer) params->p_nfact == -2 )
       {
          n_repeats = (params->n_repeats < 5) ? params->n_repeats : 5;
          for( ni = 0; ni <= n; ni++ )
@@ -207,7 +207,7 @@ void test_ldlt2_nopiv_ps_s( test_params_t *params )
       {
          time_min   = 1e9;
          snrm = 0.0f;
-         if( (int) params->p_nfact == -1 )
+         if( (integer) params->p_nfact == -1 )
          {
             ni = rand() % n;
          }
@@ -264,7 +264,7 @@ void test_ldlt2_nopiv_ps_s( test_params_t *params )
 /*                     DOUBLE PRECISION ROUTINES                         */
 /*************************************************************************/
 
-double diff_norm_d( double *ad, double *fod, int n, int ni )
+double diff_norm_d( double *ad, double *fod, integer n, integer ni )
 {
    double *L, *D, *Lt;
    double *ra1, *ra2, *rad;
@@ -273,7 +273,7 @@ double diff_norm_d( double *ad, double *fod, int n, int ni )
    double dnrm, anrm;
    double rnrm, eps;
 
-   int di, i, j;
+   integer di, i, j;
 
    char *tf = "No Transpose";
    char *nm = "1";
@@ -359,7 +359,7 @@ double diff_norm_d( double *ad, double *fod, int n, int ni )
 
 void test_ldlt2_nopiv_ps_d( test_params_t *params )
 {
-   int n, ni;
+   integer n, ni;
    double *od, *ad;
    double *work;
    double *fod;
@@ -375,7 +375,7 @@ void test_ldlt2_nopiv_ps_d( test_params_t *params )
 
    for( n = params->p_first; n <= params->p_max; n += params->p_inc )
    {
-      int pn = n * (n + 1) / 2;
+      integer pn = n * (n + 1) / 2;
 
       work = (double *) malloc( 2 * n * sizeof( double ) );
 
@@ -396,8 +396,8 @@ void test_ldlt2_nopiv_ps_d( test_params_t *params )
       pcode = strpass;
       dnrm = 0.0;
       perf = 0.0;
-      if( (int) params->p_nfact == -2 )
-      {
+      if( (integer) params->p_nfact == -2 )
+      {        
          n_repeats = (params->n_repeats < 5) ? params->n_repeats : 5;
          for( ni = 0; ni <= n; ni++ )
          {
@@ -444,7 +444,7 @@ void test_ldlt2_nopiv_ps_d( test_params_t *params )
       {
          time_min   = 1e9;
          dnrm = 0.0;
-         if( (int) params->p_nfact == -1 )
+         if( (integer) params->p_nfact == -1 )
          {
             ni = rand() % n;
          }
@@ -502,7 +502,7 @@ void test_ldlt2_nopiv_ps_d( test_params_t *params )
 /*                    COMPLEX PRECISION ROUTINES                         */
 /*************************************************************************/
 
-float diff_norm_c( scomplex *ad, scomplex *fod, int n, int ni )
+float diff_norm_c( scomplex *ad, scomplex *fod, integer n, integer ni )
 {
    scomplex *L, *D, *Lt;
    scomplex *ra1, *ra2, *rad;
@@ -511,7 +511,7 @@ float diff_norm_c( scomplex *ad, scomplex *fod, int n, int ni )
    float snrm, anrm;
    double rnrm, eps;
 
-   int di, i, j;
+   integer di, i, j;
 
    char *tf = "No Transpose";
    char *nm = "1";
@@ -609,7 +609,7 @@ float diff_norm_c( scomplex *ad, scomplex *fod, int n, int ni )
 
 void test_ldlt2_nopiv_ps_c( test_params_t *params )
 {
-   int n, ni;
+   integer n, ni;
    scomplex *od, *ad;
    scomplex *fod;
    float  snrm;
@@ -624,7 +624,7 @@ void test_ldlt2_nopiv_ps_c( test_params_t *params )
 
    for( n = params->p_first; n <= params->p_max; n += params->p_inc )
    {
-      int pn = n * (n + 1) / 2;
+      integer pn = n * (n + 1) / 2;
       /* allocate packed matrices */
       od = (scomplex *) malloc( pn * sizeof( scomplex ) );
       ad = (scomplex *) malloc( pn * sizeof( scomplex ) );
@@ -642,7 +642,7 @@ void test_ldlt2_nopiv_ps_c( test_params_t *params )
       pcode = strpass;
       snrm = 0.0;
       perf = 0.0;
-      if( (int) params->p_nfact == -2 )
+      if( (integer) params->p_nfact == -2 )
       {        
          n_repeats = (params->n_repeats < 5) ? params->n_repeats : 5;
          for( ni = 0; ni <= n; ni++ )
@@ -691,7 +691,7 @@ void test_ldlt2_nopiv_ps_c( test_params_t *params )
       {
          time_min   = 1e9;
          snrm = 0.0f;
-         if( (int) params->p_nfact == -1 )
+         if( (integer) params->p_nfact == -1 )
          {
             ni = rand() % n;
          }
@@ -749,7 +749,7 @@ void test_ldlt2_nopiv_ps_c( test_params_t *params )
 /*               DOUBLE COMPLEX PRECISION ROUTINES                       */
 /*************************************************************************/
 
-double diff_norm_z( dcomplex *ad, dcomplex *fod, int n, int ni )
+double diff_norm_z( dcomplex *ad, dcomplex *fod, integer n, integer ni )
 {
    dcomplex *L, *D, *Lt;
    dcomplex *ra1, *ra2, *rad;
@@ -758,7 +758,7 @@ double diff_norm_z( dcomplex *ad, dcomplex *fod, int n, int ni )
    double dnrm, anrm;
    double rnrm, eps;
 
-   int di, i, j;
+   integer di, i, j;
 
    char *tf = "No Transpose";
    char *nm = "1";
@@ -856,7 +856,7 @@ double diff_norm_z( dcomplex *ad, dcomplex *fod, int n, int ni )
 
 void test_ldlt2_nopiv_ps_z( test_params_t *params )
 {
-   int n, ni;
+   integer n, ni;
    dcomplex *od, *ad;
    dcomplex *fod, *work, *work1;
    double dnrm;
@@ -871,7 +871,7 @@ void test_ldlt2_nopiv_ps_z( test_params_t *params )
 
    for( n = params->p_first; n <= params->p_max; n += params->p_inc )
    {
-      int pn = n * (n + 1) / 2;
+      integer pn = n * (n + 1) / 2;
       /* allocate packed matrices */
       od = (dcomplex *) malloc( pn * sizeof( dcomplex ) );
       ad = (dcomplex *) malloc( pn * sizeof( dcomplex ) );
@@ -891,8 +891,8 @@ void test_ldlt2_nopiv_ps_z( test_params_t *params )
       pcode = strpass;
       dnrm = 0.0;
       perf = 0.0;
-      if( (int) params->p_nfact == -2 )
-      {
+      if( (integer) params->p_nfact == -2 )
+      {        
          n_repeats = (params->n_repeats < 5) ? params->n_repeats : 5;
          for( ni = 0; ni <= n; ni++ )
          {
@@ -939,7 +939,7 @@ void test_ldlt2_nopiv_ps_z( test_params_t *params )
       {
          time_min   = 1e9;
          dnrm = 0.0f;
-         if( (int) params->p_nfact == -1 )
+         if( (integer) params->p_nfact == -1 )
          {
             ni = rand() % n;
          }

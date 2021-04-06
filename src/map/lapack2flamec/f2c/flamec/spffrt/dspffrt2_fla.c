@@ -4,7 +4,6 @@
 */
 
 #include "FLA_f2c.h"
-#include "FLAME.h"
 
 extern integer dspr_( char *, integer *, doublereal *, doublereal *, integer *, doublereal * );
 #ifdef FLA_ENABLE_BLAS_EXT_GEMMT

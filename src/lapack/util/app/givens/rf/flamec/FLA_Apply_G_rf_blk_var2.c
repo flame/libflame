@@ -13,9 +13,9 @@
 FLA_Error FLA_Apply_G_rf_blk_var2( FLA_Obj G, FLA_Obj A, dim_t b_alg )
 {
 	FLA_Datatype datatype;
-	int          k_G, m_A, n_A;
-	int          rs_G, cs_G;
-	int          rs_A, cs_A;
+	integer          k_G, m_A, n_A;
+	integer          rs_G, cs_G;
+	integer          rs_A, cs_A;
 
 	datatype = FLA_Obj_datatype( A );
 
@@ -96,20 +96,20 @@ FLA_Error FLA_Apply_G_rf_blk_var2( FLA_Obj G, FLA_Obj A, dim_t b_alg )
 }
 
 
-FLA_Error FLA_Apply_G_rf_bls_var2( int       k_G,
-                                   int       m_A,
-                                   int       n_A,
-                                   scomplex* buff_G, int rs_G, int cs_G,
-                                   float*    buff_A, int rs_A, int cs_A,
-                                   int       b_alg )
+FLA_Error FLA_Apply_G_rf_bls_var2( integer       k_G,
+                                   integer       m_A,
+                                   integer       n_A,
+                                   scomplex* buff_G, integer rs_G, integer cs_G,
+                                   float*    buff_A, integer rs_A, integer cs_A,
+                                   integer       b_alg )
 {
-	int i;
-	int b = 0;
+	integer i;
+	integer b = 0;
 
 	for ( i = 0; i < m_A; i += b )
 	{
 		float*    A1      = buff_A + (0  )*cs_A + (i  )*rs_A;
-		int       m_ahead = max( 0, m_A - i );
+		integer       m_ahead = max( 0, m_A - i );
 
 		b = min( b_alg, m_ahead );
 
@@ -124,20 +124,20 @@ FLA_Error FLA_Apply_G_rf_bls_var2( int       k_G,
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Apply_G_rf_bld_var2( int       k_G,
-                                   int       m_A,
-                                   int       n_A,
-                                   dcomplex* buff_G, int rs_G, int cs_G,
-                                   double*   buff_A, int rs_A, int cs_A,
-                                   int       b_alg )
+FLA_Error FLA_Apply_G_rf_bld_var2( integer       k_G,
+                                   integer       m_A,
+                                   integer       n_A,
+                                   dcomplex* buff_G, integer rs_G, integer cs_G,
+                                   double*   buff_A, integer rs_A, integer cs_A,
+                                   integer       b_alg )
 {
-	int i;
-	int b = 0;
+	integer i;
+	integer b = 0;
 
 	for ( i = 0; i < m_A; i += b )
 	{
 		double*   A1      = buff_A + (0  )*cs_A + (i  )*rs_A;
-		int       m_ahead = max( 0, m_A - i );
+		integer       m_ahead = max( 0, m_A - i );
 
 		b = min( b_alg, m_ahead );
 
@@ -152,20 +152,20 @@ FLA_Error FLA_Apply_G_rf_bld_var2( int       k_G,
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Apply_G_rf_blc_var2( int       k_G,
-                                   int       m_A,
-                                   int       n_A,
-                                   scomplex* buff_G, int rs_G, int cs_G,
-                                   scomplex* buff_A, int rs_A, int cs_A,
-                                   int       b_alg )
+FLA_Error FLA_Apply_G_rf_blc_var2( integer       k_G,
+                                   integer       m_A,
+                                   integer       n_A,
+                                   scomplex* buff_G, integer rs_G, integer cs_G,
+                                   scomplex* buff_A, integer rs_A, integer cs_A,
+                                   integer       b_alg )
 {
-	int i;
-	int b = 0;
+	integer i;
+	integer b = 0;
 
 	for ( i = 0; i < m_A; i += b )
 	{
 		scomplex* A1      = buff_A + (0  )*cs_A + (i  )*rs_A;
-		int       m_ahead = max( 0, m_A - i );
+		integer       m_ahead = max( 0, m_A - i );
 
 		b = min( b_alg, m_ahead );
 
@@ -180,20 +180,20 @@ FLA_Error FLA_Apply_G_rf_blc_var2( int       k_G,
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Apply_G_rf_blz_var2( int       k_G,
-                                   int       m_A,
-                                   int       n_A,
-                                   dcomplex* buff_G, int rs_G, int cs_G,
-                                   dcomplex* buff_A, int rs_A, int cs_A,
-                                   int       b_alg )
+FLA_Error FLA_Apply_G_rf_blz_var2( integer       k_G,
+                                   integer       m_A,
+                                   integer       n_A,
+                                   dcomplex* buff_G, integer rs_G, integer cs_G,
+                                   dcomplex* buff_A, integer rs_A, integer cs_A,
+                                   integer       b_alg )
 {
-	int i;
-	int b = 0;
+	integer i;
+	integer b = 0;
 
 	for ( i = 0; i < m_A; i += b )
 	{
 		dcomplex* A1      = buff_A + (0  )*cs_A + (i  )*rs_A;
-		int       m_ahead = max( 0, m_A - i );
+		integer       m_ahead = max( 0, m_A - i );
 
 		b = min( b_alg, m_ahead );
 

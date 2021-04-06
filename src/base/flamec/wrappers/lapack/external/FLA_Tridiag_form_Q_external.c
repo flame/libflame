@@ -15,9 +15,9 @@ FLA_Error FLA_Tridiag_form_Q_external( FLA_Uplo uplo, FLA_Obj A, FLA_Obj t )
   int          info = 0;
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
   FLA_Datatype datatype;
-  int          m_A;
-  int          cs_A;
-  int          lwork;
+  integer          m_A;
+  integer          cs_A;
+  integer          lwork;
   char         blas_uplo;
   FLA_Obj      work;
 

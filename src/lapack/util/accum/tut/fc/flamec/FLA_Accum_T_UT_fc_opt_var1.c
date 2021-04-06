@@ -13,10 +13,10 @@
 FLA_Error FLA_Accum_T_UT_fc_opt_var1( FLA_Obj A, FLA_Obj t, FLA_Obj T )
 {
   FLA_Datatype datatype;
-  int          m_A, n_AT;
-  int          rs_A, cs_A;
-  int          m_t, inc_t;
-  int          rs_T, cs_T;
+  integer          m_A, n_AT;
+  integer          rs_A, cs_A;
+  integer          m_t, inc_t;
+  integer          rs_T, cs_T;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -103,15 +103,15 @@ FLA_Error FLA_Accum_T_UT_fc_opt_var1( FLA_Obj A, FLA_Obj t, FLA_Obj T )
 
 
 
-FLA_Error FLA_Accum_T_UT_fc_ops_var1( int m_A,
-                                      int n_AT,
-                                      float* buff_A, int rs_A, int cs_A,
-                                      int m_t,
-                                      float* buff_t, int inc_t,
-                                      float* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_Accum_T_UT_fc_ops_var1( integer m_A,
+                                      integer n_AT,
+                                      float* buff_A, integer rs_A, integer cs_A,
+                                      integer m_t,
+                                      float* buff_t, integer inc_t,
+                                      float* buff_T, integer rs_T, integer cs_T )
 {
   float* buff_1   = FLA_FLOAT_PTR( FLA_ONE );
-  int    i;
+  integer    i;
 
   for ( i = 0; i < m_t; ++i )
   {
@@ -124,8 +124,8 @@ FLA_Error FLA_Accum_T_UT_fc_ops_var1( int m_A,
     float* tau11    = buff_T + (i  )*cs_T + (i  )*rs_T;
     float* t01      = buff_T + (i  )*cs_T + (0  )*rs_T;
 
-    int    m_ahead  = m_A  - i - 1;
-    int    n_behind = i;
+    integer    m_ahead  = m_A  - i - 1;
+    integer    n_behind = i;
 
     /*------------------------------------------------------------*/
 
@@ -158,15 +158,15 @@ FLA_Error FLA_Accum_T_UT_fc_ops_var1( int m_A,
 
 
 
-FLA_Error FLA_Accum_T_UT_fc_opd_var1( int m_A,
-                                      int n_AT,
-                                      double* buff_A, int rs_A, int cs_A,
-                                      int m_t, 
-                                      double* buff_t, int inc_t,
-                                      double* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_Accum_T_UT_fc_opd_var1( integer m_A,
+                                      integer n_AT,
+                                      double* buff_A, integer rs_A, integer cs_A,
+                                      integer m_t, 
+                                      double* buff_t, integer inc_t,
+                                      double* buff_T, integer rs_T, integer cs_T )
 {
   double* buff_1   = FLA_DOUBLE_PTR( FLA_ONE );
-  int     i;
+  integer     i;
 
   for ( i = 0; i < m_t; ++i )
   {
@@ -179,8 +179,8 @@ FLA_Error FLA_Accum_T_UT_fc_opd_var1( int m_A,
     double* tau11     = buff_T + (i  )*cs_T + (i  )*rs_T;
     double* t01       = buff_T + (i  )*cs_T + (0  )*rs_T;
 
-    int     m_ahead   = m_A  - i - 1;
-    int     n_behind  = i;
+    integer     m_ahead   = m_A  - i - 1;
+    integer     n_behind  = i;
 
     /*------------------------------------------------------------*/
 
@@ -213,15 +213,15 @@ FLA_Error FLA_Accum_T_UT_fc_opd_var1( int m_A,
 
 
 
-FLA_Error FLA_Accum_T_UT_fc_opc_var1( int m_A,
-                                      int n_AT,
-                                      scomplex* buff_A, int rs_A, int cs_A,
-                                      int m_t,
-                                      scomplex* buff_t, int inc_t,
-                                      scomplex* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_Accum_T_UT_fc_opc_var1( integer m_A,
+                                      integer n_AT,
+                                      scomplex* buff_A, integer rs_A, integer cs_A,
+                                      integer m_t,
+                                      scomplex* buff_t, integer inc_t,
+                                      scomplex* buff_T, integer rs_T, integer cs_T )
 {
   scomplex* buff_1   = FLA_COMPLEX_PTR( FLA_ONE );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < m_t; ++i )
   {
@@ -234,8 +234,8 @@ FLA_Error FLA_Accum_T_UT_fc_opc_var1( int m_A,
     scomplex* tau11     = buff_T + (i  )*cs_T + (i  )*rs_T;
     scomplex* t01       = buff_T + (i  )*cs_T + (0  )*rs_T;
 
-    int       m_ahead   = m_A  - i - 1;
-    int       n_behind  = i;
+    integer       m_ahead   = m_A  - i - 1;
+    integer       n_behind  = i;
 
     /*------------------------------------------------------------*/
 
@@ -267,15 +267,15 @@ FLA_Error FLA_Accum_T_UT_fc_opc_var1( int m_A,
 
 
 
-FLA_Error FLA_Accum_T_UT_fc_opz_var1( int m_A,
-                                      int n_AT,
-                                      dcomplex* buff_A, int rs_A, int cs_A,
-                                      int m_t,
-                                      dcomplex* buff_t, int inc_t,
-                                      dcomplex* buff_T, int rs_T, int cs_T )
+FLA_Error FLA_Accum_T_UT_fc_opz_var1( integer m_A,
+                                      integer n_AT,
+                                      dcomplex* buff_A, integer rs_A, integer cs_A,
+                                      integer m_t,
+                                      dcomplex* buff_t, integer inc_t,
+                                      dcomplex* buff_T, integer rs_T, integer cs_T )
 {
   dcomplex* buff_1   = FLA_DOUBLE_COMPLEX_PTR( FLA_ONE );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < m_t; ++i )
   {
@@ -288,8 +288,8 @@ FLA_Error FLA_Accum_T_UT_fc_opz_var1( int m_A,
     dcomplex* tau11     = buff_T + (i  )*cs_T + (i  )*rs_T;
     dcomplex* t01       = buff_T + (i  )*cs_T + (0  )*rs_T;
 
-    int       m_ahead   = m_A  - i - 1;
-    int       n_behind  = i;
+    integer       m_ahead   = m_A  - i - 1;
+    integer       n_behind  = i;
 
     /*------------------------------------------------------------*/
 

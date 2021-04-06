@@ -16,8 +16,8 @@
 FLA_Error FLA_Househ2s_UT( FLA_Side side, FLA_Obj chi_1, FLA_Obj x2, FLA_Obj alpha, FLA_Obj chi_1_minus_alpha, FLA_Obj tau )
 {
   FLA_Datatype datatype;
-  int          m_x2;
-  int          inc_x2;
+  integer          m_x2;
+  integer          inc_x2;
 
   datatype = FLA_Obj_datatype( x2 );
 
@@ -139,9 +139,9 @@ FLA_Error FLA_Househ2s_UT( FLA_Side side, FLA_Obj chi_1, FLA_Obj x2, FLA_Obj alp
 
 
 
-FLA_Error FLA_Househ2s_UT_l_ops( int    m_x2,
+FLA_Error FLA_Househ2s_UT_l_ops( integer    m_x2,
                                  float* chi_1,
-                                 float* x2, int inc_x2,
+                                 float* x2, integer inc_x2,
                                  float* alpha,
                                  float* chi_1_minus_alpha,
                                  float* tau )
@@ -153,8 +153,8 @@ FLA_Error FLA_Househ2s_UT_l_ops( int    m_x2,
   float    norm_x;
   float    abs_chi_1_minus_alpha;
   float    norm_x_2_div_abs_chi_1_minus_alpha;
-  int      i_one = 1;
-  int      i_two = 2;
+  integer      i_one = 1;
+  integer      i_two = 2;
 
   //
   // Compute the 2-norm of x_2:
@@ -234,9 +234,9 @@ FLA_Error FLA_Househ2s_UT_l_ops( int    m_x2,
 
 
 
-FLA_Error FLA_Househ2s_UT_l_opd( int     m_x2,
+FLA_Error FLA_Househ2s_UT_l_opd( integer     m_x2,
                                  double* chi_1,
-                                 double* x2, int inc_x2,
+                                 double* x2, integer inc_x2,
                                  double* alpha,
                                  double* chi_1_minus_alpha,
                                  double* tau )
@@ -248,8 +248,8 @@ FLA_Error FLA_Househ2s_UT_l_opd( int     m_x2,
   double   norm_x;
   double   abs_chi_1_minus_alpha;
   double   norm_x_2_div_abs_chi_1_minus_alpha;
-  int      i_one = 1;
-  int      i_two = 2;
+  integer      i_one = 1;
+  integer      i_two = 2;
 
   //
   // Compute the 2-norm of x_2:
@@ -329,9 +329,9 @@ FLA_Error FLA_Househ2s_UT_l_opd( int     m_x2,
 
 
 
-FLA_Error FLA_Househ2s_UT_l_opc( int       m_x2,
+FLA_Error FLA_Househ2s_UT_l_opc( integer       m_x2,
                                  scomplex* chi_1,
-                                 scomplex* x2, int inc_x2,
+                                 scomplex* x2, integer inc_x2,
                                  scomplex* alpha,
                                  scomplex* chi_1_minus_alpha,
                                  scomplex* tau )
@@ -343,8 +343,8 @@ FLA_Error FLA_Househ2s_UT_l_opc( int       m_x2,
   float    norm_x;
   float    abs_chi_1_minus_alpha;
   float    norm_x_2_div_abs_chi_1_minus_alpha;
-  int      i_one = 1;
-  int      i_two = 2;
+  integer      i_one = 1;
+  integer      i_two = 2;
 
   //
   // Compute the 2-norm of x_2:
@@ -440,9 +440,9 @@ FLA_Error FLA_Househ2s_UT_l_opc( int       m_x2,
 
 
 
-FLA_Error FLA_Househ2s_UT_l_opz( int       m_x2,
+FLA_Error FLA_Househ2s_UT_l_opz( integer       m_x2,
                                  dcomplex* chi_1,
-                                 dcomplex* x2, int inc_x2,
+                                 dcomplex* x2, integer inc_x2,
                                  dcomplex* alpha,
                                  dcomplex* chi_1_minus_alpha,
                                  dcomplex* tau )
@@ -454,8 +454,8 @@ FLA_Error FLA_Househ2s_UT_l_opz( int       m_x2,
   double   norm_x;
   double   abs_chi_1_minus_alpha;
   double   norm_x_2_div_abs_chi_1_minus_alpha;
-  int      i_one = 1;
-  int      i_two = 2;
+  integer      i_one = 1;
+  integer      i_two = 2;
 
   //
   // Compute the 2-norm of x_2:
@@ -552,9 +552,9 @@ FLA_Error FLA_Househ2s_UT_l_opz( int       m_x2,
 
 
 
-FLA_Error FLA_Househ2s_UT_r_ops( int    m_x2,
+FLA_Error FLA_Househ2s_UT_r_ops( integer    m_x2,
                                  float* chi_1,
-                                 float* x2, int inc_x2,
+                                 float* x2, integer inc_x2,
                                  float* alpha,
                                  float* chi_1_minus_alpha,
                                  float* tau )
@@ -569,9 +569,9 @@ FLA_Error FLA_Househ2s_UT_r_ops( int    m_x2,
   return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Househ2s_UT_r_opd( int     m_x2,
+FLA_Error FLA_Househ2s_UT_r_opd( integer     m_x2,
                                  double* chi_1,
-                                 double* x2, int inc_x2,
+                                 double* x2, integer inc_x2,
                                  double* alpha,
                                  double* chi_1_minus_alpha,
                                  double* tau )
@@ -586,9 +586,9 @@ FLA_Error FLA_Househ2s_UT_r_opd( int     m_x2,
   return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Househ2s_UT_r_opc( int       m_x2,
+FLA_Error FLA_Househ2s_UT_r_opc( integer       m_x2,
                                  scomplex* chi_1,
-                                 scomplex* x2, int inc_x2,
+                                 scomplex* x2, integer inc_x2,
                                  scomplex* alpha,
                                  scomplex* chi_1_minus_alpha,
                                  scomplex* tau )
@@ -607,9 +607,9 @@ FLA_Error FLA_Househ2s_UT_r_opc( int       m_x2,
 }
 
 
-FLA_Error FLA_Househ2s_UT_r_opz( int       m_x2,
+FLA_Error FLA_Househ2s_UT_r_opz( integer       m_x2,
                                  dcomplex* chi_1,
-                                 dcomplex* x2, int inc_x2,
+                                 dcomplex* x2, integer inc_x2,
                                  dcomplex* alpha,
                                  dcomplex* chi_1_minus_alpha,
                                  dcomplex* tau )

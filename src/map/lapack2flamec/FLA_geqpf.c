@@ -34,13 +34,13 @@
 
 // GEQPF
 #define LAPACK_geqpf(prefix)                                            \
-  int F77_ ## prefix ## geqpf( int* m,                                   \
-                               int* n,                                  \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
-                               int* buff_p,                             \
+  int F77_ ## prefix ## geqpf( integer* m,                                   \
+                               integer* n,                                  \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
+                               integer* buff_p,                             \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_t,   \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_w,   \
-                               int* info )
+                               integer* info )
 
 // Notation for LAPACK column pvioting is not consistent to pivoting in LU.
 // This does not perform pre-ordering when jpiv include non-zero pivots.
@@ -135,14 +135,14 @@ LAPACK_geqpf(d)
 }
 
 #define LAPACK_geqpf_complex(prefix)                                    \
-  int F77_ ## prefix ## geqpf( int* m,                                  \
-                               int* n,                                  \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
-                               int* buff_p,                             \
+  int F77_ ## prefix ## geqpf( integer* m,                                  \
+                               integer* n,                                  \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
+                               integer* buff_p,                             \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_t,   \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_w,   \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_r,   \
-                               int* info )
+                               integer* info )
 
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
 LAPACK_geqpf_complex(c)
@@ -185,18 +185,16 @@ LAPACK_geqpf_complex(z)
 
 // GEQP3
 #define LAPACK_geqp3(prefix)                                            \
-  int F77_ ## prefix ## geqp3( int* m,                                  \
-                               int* n,                                  \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
-                               int* buff_p,                             \
+  int F77_ ## prefix ## geqp3( integer* m,                                  \
+                               integer* n,                                  \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
+                               integer* buff_p,                             \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_t,   \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, int* lwork, \
-                               int* info )
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, integer* lwork, \
+                               integer* info )
 LAPACK_geqp3(s)
 {
-    {
-        for ( int i=0; i<*n; ++i) buff_p[i] = (i+1);
-    }
+  
     {
         LAPACK_RETURN_CHECK( sgeqp3_check( m, n,
                                            buff_A, ldim_A,
@@ -206,15 +204,19 @@ LAPACK_geqp3(s)
                                            info ) )
     }
     {
+        for (int i = 0; i < *n; ++i) buff_p[i] = (i + 1);
+        if( *m == 0 || *n == 0 )
+        {
+            return 0;
+        }
+    }
+    {
         LAPACK_geqpf_body(s)
     }
 }
 LAPACK_geqp3(d)
 {
-    {
-        for ( int i=0; i<*n; ++i) buff_p[i] = (i+1);
-    }
-    {
+   {
         LAPACK_RETURN_CHECK( dgeqp3_check( m, n,
                                            buff_A, ldim_A,
                                            buff_p,
@@ -223,20 +225,28 @@ LAPACK_geqp3(d)
                                            info ) )
     }
     {
+        for (int i = 0; i < *n; ++i) buff_p[i] = (i + 1);
+        if( *m == 0 || *n == 0 )
+        {
+            return 0;
+        }
+    }
+
+    {
         LAPACK_geqpf_body(d)
     }
 }
 
 
 #define LAPACK_geqp3_complex(prefix)                                            \
-  int F77_ ## prefix ## geqp3( int* m,                                  \
-                               int* n,                                  \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
-                               int* buff_p,                             \
+  int F77_ ## prefix ## geqp3( integer* m,                                  \
+                               integer* n,                                  \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
+                               integer* buff_p,                             \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_t,   \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, int* lwork, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, integer* lwork, \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_r,   \
-                               int* info )
+                               integer* info )
 
 
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX

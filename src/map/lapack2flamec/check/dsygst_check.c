@@ -1,10 +1,10 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
 
-int dsygst_check(int *itype, char *uplo, int *n, double *a, int *lda, double *b, int *ldb, int * info)
+int dsygst_check(integer *itype, char *uplo, integer *n, double *a, integer *lda, double *b, integer *ldb, integer * info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, b_dim1, b_offset, i__1;
+    integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */
     logical upper;
 

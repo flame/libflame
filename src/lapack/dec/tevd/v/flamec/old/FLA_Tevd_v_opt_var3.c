@@ -13,12 +13,12 @@
 FLA_Error FLA_Tevd_v_opt_var3( dim_t n_iter_max, FLA_Obj d, FLA_Obj e, FLA_Obj G, FLA_Obj U, dim_t b_alg )
 {
 	FLA_Datatype datatype;
-	int          m_A, m_U, n_G;
-	int          n_G_extra;
-	int          inc_d;
-	int          inc_e;
-	int          rs_G, cs_G;
-	int          rs_U, cs_U;
+	integer          m_A, m_U, n_G;
+	integer          n_G_extra;
+	integer          inc_d;
+	integer          inc_e;
+	integer          rs_G, cs_G;
+	integer          rs_U, cs_U;
 
 	datatype = FLA_Obj_datatype( U );
 
@@ -125,74 +125,74 @@ FLA_Error FLA_Tevd_v_opt_var3( dim_t n_iter_max, FLA_Obj d, FLA_Obj e, FLA_Obj G
 
 
 
-FLA_Error FLA_Tevd_v_ops_var3( int       m_A,
-                               int       m_U,
-                               int       n_G,
-                               int       n_G_extra,
-                               float*    buff_d, int inc_d, 
-                               float*    buff_e, int inc_e,
-                               scomplex* buff_G, int rs_G, int cs_G,
-                               float*    buff_U, int rs_U, int cs_U,
-                               int       b_alg )
+FLA_Error FLA_Tevd_v_ops_var3( integer       m_A,
+                               integer       m_U,
+                               integer       n_G,
+                               integer       n_G_extra,
+                               float*    buff_d, integer inc_d, 
+                               float*    buff_e, integer inc_e,
+                               scomplex* buff_G, integer rs_G, integer cs_G,
+                               float*    buff_U, integer rs_U, integer cs_U,
+                               integer       b_alg )
 {
 	return FLA_SUCCESS;
 }
 
 
 
-FLA_Error FLA_Tevd_v_opd_var3( int       m_A,
-                               int       m_U,
-                               int       n_G,
-                               int       n_G_extra,
-                               double*   buff_d, int inc_d, 
-                               double*   buff_e, int inc_e,
-                               dcomplex* buff_G, int rs_G, int cs_G,
-                               double*   buff_U, int rs_U, int cs_U,
-                               int       b_alg )
+FLA_Error FLA_Tevd_v_opd_var3( integer       m_A,
+                               integer       m_U,
+                               integer       n_G,
+                               integer       n_G_extra,
+                               double*   buff_d, integer inc_d, 
+                               double*   buff_e, integer inc_e,
+                               dcomplex* buff_G, integer rs_G, integer cs_G,
+                               double*   buff_U, integer rs_U, integer cs_U,
+                               integer       b_alg )
 {
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Tevd_v_opc_var3( int       m_A,
-                               int       m_U,
-                               int       n_G,
-                               int       n_G_extra,
-                               float*    buff_d, int inc_d, 
-                               float*    buff_e, int inc_e,
-                               scomplex* buff_G, int rs_G, int cs_G,
-                               scomplex* buff_U, int rs_U, int cs_U,
-                               int       b_alg )
+FLA_Error FLA_Tevd_v_opc_var3( integer       m_A,
+                               integer       m_U,
+                               integer       n_G,
+                               integer       n_G_extra,
+                               float*    buff_d, integer inc_d, 
+                               float*    buff_e, integer inc_e,
+                               scomplex* buff_G, integer rs_G, integer cs_G,
+                               scomplex* buff_U, integer rs_U, integer cs_U,
+                               integer       b_alg )
 {
 	return FLA_SUCCESS;
 }
 
 //#define PRINTF
 
-FLA_Error FLA_Tevd_v_opz_var3( int       m_A,
-                               int       m_U,
-                               int       n_G,
-                               int       n_G_extra,
-                               double*   buff_d, int inc_d, 
-                               double*   buff_e, int inc_e,
-                               dcomplex* buff_G, int rs_G, int cs_G,
-                               dcomplex* buff_U, int rs_U, int cs_U,
-                               int       b_alg )
+FLA_Error FLA_Tevd_v_opz_var3( integer       m_A,
+                               integer       m_U,
+                               integer       n_G,
+                               integer       n_G_extra,
+                               double*   buff_d, integer inc_d, 
+                               double*   buff_e, integer inc_e,
+                               dcomplex* buff_G, integer rs_G, integer cs_G,
+                               dcomplex* buff_U, integer rs_U, integer cs_U,
+                               integer       b_alg )
 {
 	dcomplex  one        = bl1_z1();
 	double    zero       = bl1_d0();
-	int       n_iter_max = n_G_extra;
+	integer       n_iter_max = n_G_extra;
 
 	dcomplex* G;
 	double*   d1;
 	double*   e1;
-	int       total_eigs_found;
-	int       n_eigs_found;
-	int       n_iter_perf;
-	int       n_U_apply;
-	int       m_G_sweep_max;
-	int       ij_begin;
-	int       ijTL, ijBR;
-	int       m_A11;
+	integer       total_eigs_found;
+	integer       n_eigs_found;
+	integer       n_iter_perf;
+	integer       n_U_apply;
+	integer       m_G_sweep_max;
+	integer       ij_begin;
+	integer       ijTL, ijBR;
+	integer       m_A11;
 
 	// Initialze a counter that holds the maximum number of rows of G
 	// that we would need to initialize for the next sweep.

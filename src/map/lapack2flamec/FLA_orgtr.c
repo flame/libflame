@@ -31,11 +31,11 @@
 
 #define LAPACK_orgtr(prefix, name)                                      \
   int F77_ ## prefix ## name ## tr( char* uplo,                         \
-                                    int*  m,                            \
-                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int *ldim_A, \
+                                    integer*  m,                            \
+                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer *ldim_A, \
                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_t, \
-                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, int *lwork, \
-                                    int *info )
+                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, integer *lwork, \
+                                    integer *info )
 
 #define LAPACK_orgtr_body(prefix)                                       \
   AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \

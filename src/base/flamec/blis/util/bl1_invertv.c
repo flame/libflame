@@ -10,11 +10,11 @@
 
 #include "blis1.h"
 
-void bl1_sinvertv( conj1_t conj, int n, float* x, int incx )
+void bl1_sinvertv( conj1_t conj, integer n, float* x, integer incx )
 {
 	float  one = 1.0F;
 	float* chi;
-	int    i;
+	integer    i;
 
 	for ( i = 0; i < n; ++i )
 	{
@@ -24,11 +24,11 @@ void bl1_sinvertv( conj1_t conj, int n, float* x, int incx )
 	}
 }
 
-void bl1_dinvertv( conj1_t conj, int n, double* x, int incx )
+void bl1_dinvertv( conj1_t conj, integer n, double* x, integer incx )
 {
 	double  one = 1.0;
 	double* chi;
-	int     i;
+	integer     i;
 
 	for ( i = 0; i < n; ++i )
 	{
@@ -38,14 +38,14 @@ void bl1_dinvertv( conj1_t conj, int n, double* x, int incx )
 	}
 }
 
-void bl1_cinvertv( conj1_t conj, int n, scomplex* x, int incx )
+void bl1_cinvertv( conj1_t conj, integer n, scomplex* x, integer incx )
 {
 	float     one = 1.0F;
 	float     temp;
 	float     s, xr_s, xi_s;
 	float     conjsign;
 	scomplex* chi;
-	int       i;
+	integer       i;
 
 	if ( bl1_is_conj( conj ) ) conjsign =  one;
 	else                       conjsign = -one;
@@ -64,14 +64,14 @@ void bl1_cinvertv( conj1_t conj, int n, scomplex* x, int incx )
 	}
 }
 
-void bl1_zinvertv( conj1_t conj, int n, dcomplex* x, int incx )
+void bl1_zinvertv( conj1_t conj, integer n, dcomplex* x, integer incx )
 {
 	double    one = 1.0;
 	double    temp;
 	double    s, xr_s, xi_s;
 	double    conjsign;
 	dcomplex* chi;
-	int       i;
+	integer       i;
 
 	if ( bl1_is_conj( conj ) ) conjsign =  one;
 	else                       conjsign = -one;

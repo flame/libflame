@@ -2,15 +2,15 @@
 
 
 #include "FLA_f2c.h" /* Table of constant values */
-static int c__1 = 1;
-static int c_n1 = -1;
-int cgeqrfp_check(int *m, int *n, scomplex *a, int * lda, scomplex *tau, scomplex *work, int *lwork, int *info)
+static integer c__1 = 1;
+static integer c_n1 = -1;
+int cgeqrfp_check(integer *m, integer *n, scomplex *a, integer * lda, scomplex *tau, scomplex *work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
     /* Local variables */
-    int k, nb;
-    int lwkopt;
+    integer k, nb;
+    integer lwkopt;
     logical lquery;
     /* Parameter adjustments */
     a_dim1 = *lda;

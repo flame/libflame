@@ -10,13 +10,13 @@
 
 #include "blis1.h"
 
-void bl1_srandm( int m, int n, float* a, int a_rs, int a_cs )
+void bl1_srandm( integer m, integer n, float* a, integer a_rs, integer a_cs )
 {
 	float*    a_begin;
-	int       inca, lda;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       inca, lda;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -44,13 +44,13 @@ void bl1_srandm( int m, int n, float* a, int a_rs, int a_cs )
 	}
 }
 
-void bl1_drandm( int m, int n, double* a, int a_rs, int a_cs )
+void bl1_drandm( integer m, integer n, double* a, integer a_rs, integer a_cs )
 {
 	double*   a_begin;
-	int       inca, lda;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       inca, lda;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -78,13 +78,13 @@ void bl1_drandm( int m, int n, double* a, int a_rs, int a_cs )
 	}
 }
 
-void bl1_crandm( int m, int n, scomplex* a, int a_rs, int a_cs )
+void bl1_crandm( integer m, integer n, scomplex* a, integer a_rs, integer a_cs )
 {
 	scomplex* a_begin;
-	int       inca, lda;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       inca, lda;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -112,13 +112,13 @@ void bl1_crandm( int m, int n, scomplex* a, int a_rs, int a_cs )
 	}
 }
 
-void bl1_zrandm( int m, int n, dcomplex* a, int a_rs, int a_cs )
+void bl1_zrandm( integer m, integer n, dcomplex* a, integer a_rs, integer a_cs )
 {
 	dcomplex* a_begin;
-	int       inca, lda;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       inca, lda;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;

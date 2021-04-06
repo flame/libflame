@@ -52,17 +52,17 @@
 */
 
 #define LAPACK_gelsd_real(prefix)                                       \
-  int F77_ ## prefix ## gelsd( int* m,                                  \
-                               int* n,                                  \
-                               int* nrhs,                               \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_B, int* ldim_B, \
+  int F77_ ## prefix ## gelsd( integer* m,                                  \
+                               integer* n,                                  \
+                               integer* nrhs,                               \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_B, integer* ldim_B, \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_s,   \
                                PREFIX2LAPACK_REALDEF(prefix)* rcond,    \
-                               int* rank,                               \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, int* lwork, \
-                               int* iwork,                              \
-                               int* info )
+                               integer* rank,                               \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, integer* lwork, \
+                               integer* iwork,                              \
+                               integer* info )
 
 #define LAPACK_gelsd_real_body(prefix)                                  \
   F77_ ## prefix ## gelss( m, n, nrhs,                                  \
@@ -109,18 +109,18 @@ LAPACK_gelsd_real(d)
 }
 
 #define LAPACK_gelsd_complex(prefix)                                    \
-  int F77_ ## prefix ## gelsd( int* m,                                  \
-                               int* n,                                  \
-                               int* nrhs,                               \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_B, int* ldim_B, \
+  int F77_ ## prefix ## gelsd( integer* m,                                  \
+                               integer* n,                                  \
+                               integer* nrhs,                               \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_B, integer* ldim_B, \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_s,   \
                                PREFIX2LAPACK_REALDEF(prefix)* rcond,    \
-                               int* rank,                               \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, int* lwork, \
+                               integer* rank,                               \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, integer* lwork, \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_r,   \
-                               int* iwork,                              \
-                               int* info )
+                               integer* iwork,                              \
+                               integer* info )
 
 #define LAPACK_gelsd_complex_body(prefix)                               \
   F77_ ## prefix ## gelss( m, n, nrhs,                                  \

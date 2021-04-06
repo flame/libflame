@@ -37,6 +37,9 @@
 /* Determines whether a built-in implementation of the BLAS is compiled. */
 #undef FLA_ENABLE_BUILTIN_BLAS
 
+/* Determines whether ILP64 enabled. */
+#undef FLA_ENABLE_ILP64
+
 /* Determines whether to enable CBLAS interfaces instead of Fortran-77
    interfaces to the BLAS. */
 #undef FLA_ENABLE_CBLAS_INTERFACES

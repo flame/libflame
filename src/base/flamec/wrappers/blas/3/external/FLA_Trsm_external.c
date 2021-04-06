@@ -13,9 +13,9 @@
 FLA_Error FLA_Trsm_external( FLA_Side side, FLA_Uplo uplo, FLA_Trans trans, FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B )
 {
   FLA_Datatype datatype;
-  int          m_B, n_B;
-  int          rs_A, cs_A;
-  int          rs_B, cs_B;
+  integer          m_B, n_B;
+  integer          rs_A, cs_A;
+  integer          rs_B, cs_B;
   side1_t       blis_side; 
   uplo1_t       blis_uplo;
   trans1_t      blis_trans;

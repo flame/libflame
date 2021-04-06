@@ -27,9 +27,9 @@
 FLA_Error FLA_Set_diagonal_vector( FLA_Obj A, FLA_Obj d )
 {
   FLA_Datatype datatype;
-  int          i, m;
-  int          rs_A, cs_A;
-  int          inc_d;
+  integer          i, m;
+  integer          rs_A, cs_A;
+  integer          inc_d;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -71,9 +71,9 @@ FLA_Error FLA_Set_diagonal_vector( FLA_Obj A, FLA_Obj d )
 FLA_Error FLA_Set_diagonal_matrix( FLA_Obj d, FLA_Obj A )
 {
   FLA_Datatype datatype;
-  int          i, m;
-  int          rs_A, cs_A;
-  int          inc_d;
+  integer          i, m;
+  integer          rs_A, cs_A;
+  integer          inc_d;
 
   datatype = FLA_Obj_datatype( A );
 

@@ -13,12 +13,12 @@
 FLA_Error FLA_Tevd_v_opt_var4r( FLA_Obj d, FLA_Obj e, FLA_Obj C, FLA_Obj S, FLA_Obj U )
 {
 	FLA_Datatype datatype;
-	int          m_A, m_U, n_CS;
-	int          inc_d;
-	int          inc_e;
-	int          rs_C, cs_C;
-	int          rs_S, cs_S;
-	int          rs_U, cs_U;
+	integer          m_A, m_U, n_CS;
+	integer          inc_d;
+	integer          inc_e;
+	integer          rs_C, cs_C;
+	integer          rs_S, cs_S;
+	integer          rs_U, cs_U;
 
 	datatype = FLA_Obj_datatype( U );
 
@@ -91,40 +91,40 @@ FLA_Error FLA_Tevd_v_opt_var4r( FLA_Obj d, FLA_Obj e, FLA_Obj C, FLA_Obj S, FLA_
 
 
 
-FLA_Error FLA_Tevd_v_ops_var4r( int       m_A,
-                                int       m_U,
-                                int       n_CS,
-                                int       ij,
-                                int       k_iter,
-                                float*    buff_d, int inc_d, 
-                                float*    buff_e, int inc_e,
-                                float*    buff_C, int rs_C, int cs_C,
-                                float*    buff_S, int rs_S, int cs_S,
-                                float*    buff_U, int rs_U, int cs_U )
+FLA_Error FLA_Tevd_v_ops_var4r( integer       m_A,
+                                integer       m_U,
+                                integer       n_CS,
+                                integer       ij,
+                                integer       k_iter,
+                                float*    buff_d, integer inc_d, 
+                                float*    buff_e, integer inc_e,
+                                float*    buff_C, integer rs_C, integer cs_C,
+                                float*    buff_S, integer rs_S, integer cs_S,
+                                float*    buff_U, integer rs_U, integer cs_U )
 {
 	return FLA_SUCCESS;
 }
 
 //#define PRINTF
 
-FLA_Error FLA_Tevd_v_opd_var4r( int       m_A,
-                                int       m_U,
-                                int       n_CS,
-                                int       ij,
-                                int       k_iter,
-                                double*   buff_d, int inc_d, 
-                                double*   buff_e, int inc_e,
-                                double*   buff_C, int rs_C, int cs_C,
-                                double*   buff_S, int rs_S, int cs_S,
-                                double*   buff_G, int rs_G, int cs_G )
+FLA_Error FLA_Tevd_v_opd_var4r( integer       m_A,
+                                integer       m_U,
+                                integer       n_CS,
+                                integer       ij,
+                                integer       k_iter,
+                                double*   buff_d, integer inc_d, 
+                                double*   buff_e, integer inc_e,
+                                double*   buff_C, integer rs_C, integer cs_C,
+                                double*   buff_S, integer rs_S, integer cs_S,
+                                double*   buff_G, integer rs_G, integer cs_G )
 {
 	FLA_Error r_val;
-	int       i, k;
+	integer       i, k;
 
 	// Iterate from back to front until all that is left is a 2x2.
 	for ( i = m_A - 1; i > 1; --i )
 	{
-		int m_ATL = i + 1;
+		integer m_ATL = i + 1;
 
 		/*------------------------------------------------------------*/
 
@@ -175,10 +175,10 @@ FLA_Error FLA_Tevd_v_opd_var4r( int       m_A,
 			// An eigenvalue converged somewhere within the diagonal (not at
 			// either the end), so we have to recurse with two subproblems.
 			{
-				int       m_ATL = r_val;
-				int       m_ABR = m_A - r_val - 1;
-				int       ijT   = 0;
-				int       ijB   = m_ATL + 1;
+				integer       m_ATL = r_val;
+				integer       m_ABR = m_A - r_val - 1;
+				integer       ijT   = 0;
+				integer       ijB   = m_ATL + 1;
 				double*   dTL   = buff_d + (0      )*inc_d;
 				double*   eTL   = buff_e + (0      )*inc_e;
 				double*   CT    = buff_C + (0      )*rs_C;

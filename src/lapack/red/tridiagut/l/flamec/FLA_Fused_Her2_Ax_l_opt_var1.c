@@ -18,9 +18,9 @@ FLA_Error FLA_Fused_Her2_Ax_l_opt_var1( FLA_Obj beta, FLA_Obj u, FLA_Obj z, FLA_
    w = A * x;
 */
   FLA_Datatype datatype;
-  int          m_A;
-  int          rs_A, cs_A;
-  int          inc_u, inc_z, inc_x, inc_w;
+  integer          m_A;
+  integer          rs_A, cs_A;
+  integer          inc_u, inc_z, inc_x, inc_w;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -123,16 +123,16 @@ FLA_Error FLA_Fused_Her2_Ax_l_opt_var1( FLA_Obj beta, FLA_Obj u, FLA_Obj z, FLA_
 
 
 
-FLA_Error FLA_Fused_Her2_Ax_l_ops_var1( int m_A,
+FLA_Error FLA_Fused_Her2_Ax_l_ops_var1( integer m_A,
                                         float* buff_beta, 
-                                        float* buff_u, int inc_u, 
-                                        float* buff_z, int inc_z, 
-                                        float* buff_A, int rs_A, int cs_A, 
-                                        float* buff_x, int inc_x, 
-                                        float* buff_w, int inc_w )
+                                        float* buff_u, integer inc_u, 
+                                        float* buff_z, integer inc_z, 
+                                        float* buff_A, integer rs_A, integer cs_A, 
+                                        float* buff_x, integer inc_x, 
+                                        float* buff_w, integer inc_w )
 {
   float*    buff_0  = FLA_FLOAT_PTR( FLA_ZERO );
-  int       i;
+  integer       i;
 
   bl1_ssetv( m_A,
              buff_0,
@@ -161,7 +161,7 @@ FLA_Error FLA_Fused_Her2_Ax_l_ops_var1( int m_A,
     float    minus_conj_zeta1;
     float    temp;
 
-    int      m_ahead   = m_A - i - 1;
+    integer      m_ahead   = m_A - i - 1;
 
     /*------------------------------------------------------------*/
 
@@ -243,16 +243,16 @@ FLA_Error FLA_Fused_Her2_Ax_l_ops_var1( int m_A,
 
 
 
-FLA_Error FLA_Fused_Her2_Ax_l_opd_var1( int m_A,
+FLA_Error FLA_Fused_Her2_Ax_l_opd_var1( integer m_A,
                                         double* buff_beta, 
-                                        double* buff_u, int inc_u, 
-                                        double* buff_z, int inc_z, 
-                                        double* buff_A, int rs_A, int cs_A, 
-                                        double* buff_x, int inc_x, 
-                                        double* buff_w, int inc_w )
+                                        double* buff_u, integer inc_u, 
+                                        double* buff_z, integer inc_z, 
+                                        double* buff_A, integer rs_A, integer cs_A, 
+                                        double* buff_x, integer inc_x, 
+                                        double* buff_w, integer inc_w )
 {
   double*   buff_0  = FLA_DOUBLE_PTR( FLA_ZERO );
-  int       i;
+  integer       i;
 
   bl1_dsetv( m_A,
              buff_0,
@@ -281,7 +281,7 @@ FLA_Error FLA_Fused_Her2_Ax_l_opd_var1( int m_A,
     double   minus_conj_zeta1;
     double   temp;
 
-    int      m_ahead   = m_A - i - 1;
+    integer      m_ahead   = m_A - i - 1;
 
     /*------------------------------------------------------------*/
 
@@ -326,16 +326,16 @@ FLA_Error FLA_Fused_Her2_Ax_l_opd_var1( int m_A,
 
 
 
-FLA_Error FLA_Fused_Her2_Ax_l_opc_var1( int m_A,
+FLA_Error FLA_Fused_Her2_Ax_l_opc_var1( integer m_A,
                                         scomplex* buff_beta, 
-                                        scomplex* buff_u, int inc_u, 
-                                        scomplex* buff_z, int inc_z, 
-                                        scomplex* buff_A, int rs_A, int cs_A, 
-                                        scomplex* buff_x, int inc_x, 
-                                        scomplex* buff_w, int inc_w )
+                                        scomplex* buff_u, integer inc_u, 
+                                        scomplex* buff_z, integer inc_z, 
+                                        scomplex* buff_A, integer rs_A, integer cs_A, 
+                                        scomplex* buff_x, integer inc_x, 
+                                        scomplex* buff_w, integer inc_w )
 {
   scomplex* buff_0  = FLA_COMPLEX_PTR( FLA_ZERO );
-  int       i;
+  integer       i;
 
   bl1_csetv( m_A,
              buff_0,
@@ -364,7 +364,7 @@ FLA_Error FLA_Fused_Her2_Ax_l_opc_var1( int m_A,
     scomplex minus_conj_zeta1;
     scomplex temp;
 
-    int      m_ahead   = m_A - i - 1;
+    integer      m_ahead   = m_A - i - 1;
 
     /*------------------------------------------------------------*/
 
@@ -447,16 +447,16 @@ FLA_Error FLA_Fused_Her2_Ax_l_opc_var1( int m_A,
 
 
 
-FLA_Error FLA_Fused_Her2_Ax_l_opz_var1( int m_A,
+FLA_Error FLA_Fused_Her2_Ax_l_opz_var1( integer m_A,
                                         dcomplex* buff_beta, 
-                                        dcomplex* buff_u, int inc_u, 
-                                        dcomplex* buff_z, int inc_z, 
-                                        dcomplex* buff_A, int rs_A, int cs_A, 
-                                        dcomplex* buff_x, int inc_x, 
-                                        dcomplex* buff_w, int inc_w )
+                                        dcomplex* buff_u, integer inc_u, 
+                                        dcomplex* buff_z, integer inc_z, 
+                                        dcomplex* buff_A, integer rs_A, integer cs_A, 
+                                        dcomplex* buff_x, integer inc_x, 
+                                        dcomplex* buff_w, integer inc_w )
 {
   dcomplex  zero = bl1_z0();
-  int       i;
+  integer       i;
 
   bl1_zsetv( m_A,
              &zero,
@@ -491,7 +491,7 @@ FLA_Error FLA_Fused_Her2_Ax_l_opz_var1( int m_A,
     dcomplex om1;
     dcomplex ch1;
     
-    int      m_ahead   = m_A - i - 1;
+    integer      m_ahead   = m_A - i - 1;
 
     /*------------------------------------------------------------*/
 

@@ -40,7 +40,7 @@ void libfla_test_lu_piv_experiment( test_params_t params,
                                     unsigned int  var,
                                     char*         sc_str,
                                     FLA_Datatype  datatype,
-                                    unsigned int  p,
+                                    uinteger  p,
                                     unsigned int  pci,
                                     unsigned int  n_repeats,
                                     signed int    impl,
@@ -52,8 +52,8 @@ void libfla_test_lu_piv_impl( int         impl,
 void libfla_test_lu_piv_cntl_create( unsigned int var,
                                      dim_t        b_alg_flat );
 void libfla_test_lu_piv_cntl_free( void );
-void FLA_GETRF( int m,
-                int n,
+void FLA_GETRF( integer m,
+                integer n,
                 FLA_Obj A_save,
                 FLA_Obj A,
                 FLA_Obj p_obj,
@@ -142,7 +142,7 @@ void libfla_test_lu_piv_experiment( test_params_t params,
                                     unsigned int  var,
                                     char*         sc_str,
                                     FLA_Datatype  datatype,
-                                    unsigned int  p_cur,
+                                    uinteger  p_cur,
                                     unsigned int  pci,
                                     unsigned int  n_repeats,
                                     signed int    impl,
@@ -154,9 +154,9 @@ void libfla_test_lu_piv_experiment( test_params_t params,
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	unsigned int m, n;
-	signed int   m_input    = -1;
-	signed int   n_input    = -1;
+	uinteger m, n;
+	integer   m_input    = -1;
+	integer   n_input    = -1;
 	FLA_Obj      A, p, x, b, norm;
 	FLA_Obj      A_save;
 	FLA_Obj      A_test, p_test, x_test, b_test;
@@ -281,9 +281,9 @@ void libfla_test_lu_piv_experiment( test_params_t params,
 
 
 
-extern TLS_CLASS_SPEC fla_gemm_t*  fla_gemm_cntl_blas;
-extern TLS_CLASS_SPEC fla_trsm_t*  fla_trsm_cntl_blas;
-extern TLS_CLASS_SPEC fla_appiv_t* fla_appiv_cntl_leaf;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_gemm_t*  fla_gemm_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_trsm_t*  fla_trsm_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_appiv_t* fla_appiv_cntl_leaf;
 
 void libfla_test_lu_piv_cntl_create( unsigned int var,
                                      dim_t        b_alg_flat )
@@ -379,8 +379,8 @@ void libfla_test_lu_piv_impl( int     impl,
  *  FLA_GETRF calls LAPACK interface of
  *  LU Factorization with pivoting - getrf
  *  */
-void FLA_GETRF( int m,
-                int n,
+void FLA_GETRF( integer m,
+                integer n,
                 FLA_Obj A_save,
                 FLA_Obj A,
                 FLA_Obj p_obj,
@@ -388,15 +388,15 @@ void FLA_GETRF( int m,
                 unsigned int n_repeats,
                 double* time_min_ )
 {
-        int          info;
+        integer      info;
         unsigned int i;
         double       time;
         double       time_min   = 1e9;
-	int lda;
-	int* p;
+	integer lda;
+	integer* p;
 
-	lda     = (int)FLA_Obj_col_stride( A );
-        p     = ( int * ) FLA_INT_PTR( p_obj );
+	lda     = (integer)FLA_Obj_col_stride( A );
+        p     = ( integer * ) FLA_INT_PTR( p_obj );
         
         switch( datatype )
         {
