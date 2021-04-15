@@ -727,16 +727,15 @@ ifeq ($(ENABLE_VERBOSE),yes)
 	cd $(TEST_DIR) && $(TEST_WRAPPER) ./$(TEST_BIN) > $(TEST_OUT_FILE)
 else
 	@echo "Running $(TEST_BIN) with output redirected to '$(TEST_OUT_FILE)'"
-	@chmod +x $(TEST_DIR)/$(TEST_CHECK)
 	@echo "Please wait for tests to complete..."
 	@cd $(TEST_DIR) && $(TEST_WRAPPER) ./$(TEST_BIN) > $(TEST_OUT_FILE)
 endif
 
 checklibflame:test-run
 ifeq ($(ENABLE_VERBOSE),yes)
-	- $(TEST_CHECK_PATH) $(TEST_DIR)/$(TEST_OUT_FILE)
+	-sh $(TEST_CHECK_PATH) $(TEST_DIR)/$(TEST_OUT_FILE)
 else
-	- $(TEST_CHECK_PATH) $(TEST_DIR)/$(TEST_OUT_FILE)
+	-@sh $(TEST_CHECK_PATH) $(TEST_DIR)/$(TEST_OUT_FILE)
 endif
 
 
