@@ -858,7 +858,7 @@ void test_ldlt2_nopiv_ps_z( test_params_t *params )
 {
    int n, ni;
    dcomplex *od, *ad;
-   dcomplex *fod;
+   dcomplex *fod, *work, *work1;
    double dnrm;
 
    int    i, n_repeats;
@@ -875,6 +875,8 @@ void test_ldlt2_nopiv_ps_z( test_params_t *params )
       /* allocate packed matrices */
       od = (dcomplex *) malloc( pn * sizeof( dcomplex ) );
       ad = (dcomplex *) malloc( pn * sizeof( dcomplex ) );
+      work = (dcomplex *) malloc( n * sizeof( dcomplex ) );
+      work1 = (dcomplex *) malloc( n * sizeof( dcomplex ) );
 
       /* full sized matrix to store original */
       fod = (dcomplex *) malloc( n * n * sizeof( dcomplex ) );
@@ -900,7 +902,7 @@ void test_ldlt2_nopiv_ps_z( test_params_t *params )
                copy_matrix_z(od, ad, pn, 1, 1, 1);
 
                time = FLA_Clock();
-               zspffrt2_(ad, &n, &ni, NULL, NULL);
+               zspffrt2_(ad, &n, &ni, work, work1);
                time = FLA_Clock() - time;
                time_min = min( time_min, time );
 
@@ -951,7 +953,7 @@ void test_ldlt2_nopiv_ps_z( test_params_t *params )
             copy_matrix_z(od, ad, pn, 1, 1, 1);
 
             time = FLA_Clock();
-            zspffrt2_(ad, &n, &ni, NULL, NULL);
+            zspffrt2_(ad, &n, &ni, work, work1);
             time = FLA_Clock() - time;
             time_min = min( time_min, time );
 
@@ -987,6 +989,8 @@ void test_ldlt2_nopiv_ps_z( test_params_t *params )
       free(ad);
 
       free(fod);
+      free(work);
+      free(work1);
    }
    return;
 }

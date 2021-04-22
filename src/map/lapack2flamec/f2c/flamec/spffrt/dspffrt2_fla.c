@@ -1,6 +1,6 @@
 /*
-    Copyright (c) 2020 Advanced Micro Devices, Inc.  All rights reserved.
-    Oct 09, 2020
+    Copyright (c) 2021 Advanced Micro Devices, Inc.  All rights reserved.
+    May 13, 2021
 */
 
 #include "FLA_f2c.h"
@@ -121,16 +121,16 @@ void dspffrt2_fla( doublereal *ap, integer *n, integer * ncolm, doublereal *work
  *  triangular part of unpacked full matrix.
  *  The strictly upper triangular part is left untouched.
  */
-void dunpack_fla( doublereal *a, doublereal *b, integer m, integer n, integer lda )
+void dunpack_fla( doublereal *ap, doublereal *a, integer m, integer n, integer lda )
 {
    integer i, j;
-   doublereal *aptr = a;
+   doublereal *aptr = ap;
 
    for( i = 0; i < n; i++ )
    {
       for( j = i; j < m; j++ )
       {
-         b[i * lda + j] = *aptr++;
+         a[i * lda + j] = *aptr++;
       }
    }
 
@@ -143,16 +143,16 @@ void dunpack_fla( doublereal *a, doublereal *b, integer m, integer n, integer ld
  *  The strictly upper triangular parts of the input and output are
  *  left unused and untouched respectiely.
  */
-void dpack_fla( doublereal *a, doublereal *b, integer m, integer n, integer lda )
+void dpack_fla( doublereal *a, doublereal *ap, integer m, integer n, integer lda )
 {
    integer i, j;
-   doublereal *bptr = b;
+   doublereal *aptr = ap;
 
-   for( i = 0; i < m; i++ )
+   for( i = 0; i < n; i++ )
    {
       for( j = i; j < m; j++ )
       {
-         *bptr++ = a[i * lda + j];
+         *aptr++ = a[i * lda + j];
       }
    }
 
@@ -191,7 +191,7 @@ void dsffrk2_fla( doublereal *au, integer *m, integer *n, integer *lda, doublere
         /* Update trailing matrix with rank-1 operation */
         dger_( &i__2, &i__1, &d__1, &au[kc + 1], &c__1, &au[kc + 1], &c__1, &au[kcn], lda );
 
-        /* Compute b**T/a for nb columns */
+        /* Compute b**T/a */
         dcopy_( &i__3, &au[kc + *n - k + 1], &c__1, &bt[k], ldbt );
         dscal_( &i__3, &d__1, &bt[k], ldbt );
 
@@ -211,7 +211,7 @@ void dsffrk2_fla( doublereal *au, integer *m, integer *n, integer *lda, doublere
  * The strictly upper triangular part is left untouched.
  *
  * Variant 1 does both factorization of (N x ncolm) and
- * trailing matrix is update inside the main loop
+ * trailing matrix update inside the main loop
  */
 
 void dspffrt2_fla_unp_var1( doublereal *ap, integer *n, integer *ncolm, doublereal *work )
@@ -225,11 +225,11 @@ void dspffrt2_fla_unp_var1( doublereal *ap, integer *n, integer *ncolm, doublere
 
     /* Choose block size for the blocked variant */
     if( *n < FLA_SPFFRT2__BSIZE_NL1 )
-        nb = 8;
+        nb = FLA_SPFFRT2__BSIZE1;
     else if( *n < FLA_SPFFRT2__BSIZE_NL2 )
-        nb = 32;
+        nb = FLA_SPFFRT2__BSIZE2;
     else
-        nb = 64;
+        nb = FLA_SPFFRT2__BSIZE3;
     nb = ( nb > *ncolm ) ? *ncolm : nb;
 
     /* Allocate unpacked matrix and do the unpacking */
@@ -310,11 +310,11 @@ void dspffrt2_fla_unp_var2( doublereal *ap, integer *n, integer *ncolm, doublere
 
     /* Choose block size for the blocked variant */
     if( *n < FLA_SPFFRT2__BSIZE_NL1 )
-        nb = 8;
+        nb = FLA_SPFFRT2__BSIZE1;
     else if( *n < FLA_SPFFRT2__BSIZE_NL2 )
-        nb = 32;
+        nb = FLA_SPFFRT2__BSIZE2;
     else
-        nb = 64;
+        nb = FLA_SPFFRT2__BSIZE3;
     nb = ( nb > *ncolm ) ? *ncolm : nb;
 
     /* Allocate unpacked matrix and do the unpacking */
