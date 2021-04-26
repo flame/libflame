@@ -235,6 +235,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int sbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, real *d__, real *e, real *vt, integer *ldvt, real * u, integer *ldu, real *c__, integer *ldc, real *work, integer *info) {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"sbdsqr inputs: uplo %c, n %d, ncvt %d, nru %d, ncc %d, ldvt %d, ldu %d, ldc %d",*uplo, *n, *ncvt, *nru, *ncc, *ldvt, *ldu, *ldc);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer c_dim1, c_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1, i__2;
  real r__1, r__2, r__3, r__4;
@@ -345,9 +351,11 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("SBDSQR", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n == 1) {
@@ -360,6 +368,7 @@
  slasq1_(n, &d__[1], &e[1], &work[1], info);
  /* If INFO equals 2, dqds didn't finish, try to finish */
  if (*info != 2) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  *info = 0;
@@ -884,6 +893,7 @@
  }
  /* L210: */
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  L220: return 0;
  /* End of SBDSQR */
  }
