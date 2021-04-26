@@ -363,6 +363,12 @@ if EQUED = 'N' or 'R', C */
 /* Subroutine */
 int sgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integer *nrhs, real *ab, integer *ldab, real *afb, integer *ldafb, integer *ipiv, char *equed, real *r__, real *c__, real *b, integer *ldb, real *x, integer *ldx, real *rcond, real *ferr, real *berr, real *work, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"sgbsvx inputs: fact %c, trans %c, n %d, kl %d, ku %d, nrhs %d, ldab %d, ldafb %d, ipiv %d, equed %c, ldb %d, ldx %d",*fact, *trans, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ipiv, *equed, *ldb, *ldx);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, afb_dim1, afb_offset, b_dim1, b_offset, x_dim1, x_offset, i__1, i__2, i__3, i__4, i__5;
     real r__1, r__2, r__3;
@@ -577,6 +583,7 @@ int sgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
     {
         i__1 = -(*info);
         xerbla_("SGBSVX", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (equil)
@@ -697,6 +704,7 @@ int sgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
             }
             work[1] = rpvgrw;
             *rcond = 0.f;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -792,6 +800,7 @@ int sgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
         *info = *n + 1;
     }
     work[1] = rpvgrw;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SGBSVX */
 }

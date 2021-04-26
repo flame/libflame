@@ -153,6 +153,12 @@ elements marked */
 /* Subroutine */
 int sgbsv_(integer *n, integer *kl, integer *ku, integer * nrhs, real *ab, integer *ldab, integer *ipiv, real *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"sgbsv inputs: n %d, kl %d, ku %d, nrhs %d, ldab %d, ipiv %d, ldb %d",*n, *kl, *ku, *nrhs, *ldab, *ipiv, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, b_dim1, b_offset, i__1;
     /* Local variables */
@@ -211,6 +217,7 @@ int sgbsv_(integer *n, integer *kl, integer *ku, integer * nrhs, real *ab, integ
     {
         i__1 = -(*info);
         xerbla_("SGBSV ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Compute the LU factorization of the band matrix A. */
@@ -220,6 +227,7 @@ int sgbsv_(integer *n, integer *kl, integer *ku, integer * nrhs, real *ab, integ
         /* Solve the system A*X = B, overwriting B with X. */
         sgbtrs_("No transpose", n, kl, ku, nrhs, &ab[ab_offset], ldab, &ipiv[ 1], &b[b_offset], ldb, info);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SGBSV */
 }

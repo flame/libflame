@@ -130,6 +130,12 @@ for 1 <= i <= N, row i of the matrix was */
 /* Subroutine */
 int sgbtrs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, real *ab, integer *ldab, integer *ipiv, real *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"sgbtrs inputs: trans %c, n %d, kl %d, ku %d, nrhs %d, ldab %d, ipiv %d, ldb %d",*trans, *n, *kl, *ku, *nrhs, *ldab, *ipiv, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, b_dim1, b_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -207,11 +213,13 @@ int sgbtrs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, r
     {
         i__1 = -(*info);
         xerbla_("SGBTRS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0 || *nrhs == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     kd = *ku + *kl + 1;
@@ -289,6 +297,7 @@ int sgbtrs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, r
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SGBTRS */
 }
