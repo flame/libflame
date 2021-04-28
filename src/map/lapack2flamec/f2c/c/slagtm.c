@@ -134,6 +134,12 @@ otherwise, */
 /* Subroutine */
 int slagtm_(char *trans, integer *n, integer *nrhs, real * alpha, real *dl, real *d__, real *du, real *x, integer *ldx, real * beta, real *b, integer *ldb)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"slagtm_ inputs: *trans %c, *n %d, *nrhs %d, *ldx %d, *ldb %d",*trans, *n, *nrhs, *ldx, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, x_dim1, x_offset, i__1, i__2;
     /* Local variables */
@@ -168,6 +174,7 @@ int slagtm_(char *trans, integer *n, integer *nrhs, real * alpha, real *dl, real
     /* Function Body */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Multiply B by BETA if BETA.NE.1. */
@@ -325,6 +332,7 @@ int slagtm_(char *trans, integer *n, integer *nrhs, real * alpha, real *dl, real
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SLAGTM */
 }

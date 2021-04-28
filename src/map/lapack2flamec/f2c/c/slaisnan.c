@@ -60,6 +60,7 @@
  /* > \ingroup OTHERauxiliary */
  /* ===================================================================== */
  logical slaisnan_(real *sin1, real *sin2) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* System generated locals */
  logical ret_val;
  /* -- LAPACK auxiliary routine (version 3.7.1) -- */
@@ -71,6 +72,7 @@
  /* ===================================================================== */
  /* .. Executable Statements .. */
  ret_val = *sin1 != *sin2;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  }
  /* slaisnan_ */

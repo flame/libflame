@@ -45,6 +45,7 @@
  /* > \ingroup OTHERauxiliary */
  /* ===================================================================== */
  logical sisnan_(real *sin__) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* System generated locals */
  logical ret_val;
  /* Local variables */
@@ -60,6 +61,7 @@
  /* .. */
  /* .. Executable Statements .. */
  ret_val = slaisnan_(sin__, sin__);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  }
  /* sisnan_ */

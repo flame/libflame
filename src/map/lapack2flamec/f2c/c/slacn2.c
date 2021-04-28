@@ -125,6 +125,12 @@ static real c_b11 = 1.f;
 /* Subroutine */
 int slacn2_(integer *n, real *v, real *x, integer *isgn, real *est, integer *kase, integer *isave)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"slacn2 inputs: n %d, isgn %d, kase %d, isave %d",*n, *isgn, *kase, *isave);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     real r__1;
@@ -178,6 +184,7 @@ int slacn2_(integer *n, real *v, real *x, integer *isgn, real *est, integer *kas
         }
         *kase = 1;
         isave[1] = 1;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     switch (isave[1])
@@ -215,6 +222,7 @@ L20:
     }
     *kase = 2;
     isave[1] = 2;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* ................ ENTRY (ISAVE( 1 ) = 2) */
     /* FIRST ITERATION. X HAS BEEN OVERWRITTEN BY TRANSPOSE(A)*X. */
@@ -234,6 +242,7 @@ L50:
     x[isave[2]] = 1.f;
     *kase = 1;
     isave[1] = 3;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* ................ ENTRY (ISAVE( 1 ) = 3) */
     /* X HAS BEEN OVERWRITTEN BY A*X. */
@@ -271,6 +280,7 @@ L90: /* TEST FOR CYCLING. */
     }
     *kase = 2;
     isave[1] = 4;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* ................ ENTRY (ISAVE( 1 ) = 4) */
     /* X HAS BEEN OVERWRITTEN BY TRANSPOSE(A)*X. */
@@ -296,6 +306,7 @@ L120:
     }
     *kase = 1;
     isave[1] = 5;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* ................ ENTRY (ISAVE( 1 ) = 5) */
     /* X HAS BEEN OVERWRITTEN BY A*X. */
@@ -308,6 +319,7 @@ L140:
     }
 L150:
     *kase = 0;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SLACN2 */
 }
