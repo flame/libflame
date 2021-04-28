@@ -200,6 +200,12 @@ IPIV(i) = i indicates a row interchange was not */
 /* Subroutine */
 int sgtrfs_(char *trans, integer *n, integer *nrhs, real *dl, real *d__, real *du, real *dlf, real *df, real *duf, real *du2, integer *ipiv, real *b, integer *ldb, real *x, integer *ldx, real * ferr, real *berr, real *work, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"sgtrfs inputs: trans %c, n %d, nrhs %d, ipiv %d, ldb %d, ldx %d",*trans, *n, *nrhs, *ipiv, *ldb, *ldx);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, x_dim1, x_offset, i__1, i__2;
     real r__1, r__2, r__3, r__4;
@@ -292,6 +298,7 @@ int sgtrfs_(char *trans, integer *n, integer *nrhs, real *dl, real *d__, real *d
     {
         i__1 = -(*info);
         xerbla_("SGTRFS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -306,6 +313,7 @@ int sgtrfs_(char *trans, integer *n, integer *nrhs, real *dl, real *d__, real *d
             berr[j] = 0.f;
             /* L10: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (notran)
@@ -506,6 +514,7 @@ L70:
         }
         /* L110: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SGTRFS */
 }
