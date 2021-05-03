@@ -93,6 +93,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int slarfg_(integer *n, real *alpha, real *x, integer *incx, real *tau) {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"slarfg inputs: n %d, incx %d",*n, *incx);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer i__1;
  real r__1;
@@ -132,6 +138,7 @@
  /* Function Body */
  if (*n <= 1) {
  *tau = 0.f;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  i__1 = *n - 1;
@@ -178,6 +185,7 @@
  }
  *alpha = beta;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of SLARFG */
  }
