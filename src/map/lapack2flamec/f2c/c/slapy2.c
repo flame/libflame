@@ -49,6 +49,7 @@
  /* > \ingroup OTHERauxiliary */
  /* ===================================================================== */
  real slapy2_(real *x, real *y) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* System generated locals */
  real ret_val, r__1;
  /* Builtin functions */
@@ -97,6 +98,7 @@
  ret_val = w * sqrt(r__1 * r__1 + 1.f);
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  /* End of SLAPY2 */
  }
