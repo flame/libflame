@@ -136,6 +136,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int slasyf_aa_(char *uplo, integer *j1, integer *m, integer *nb, real *a, integer *lda, integer *ipiv, real *h__, integer *ldh, real *work) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"slasyf inputs: uplo %c, j1 %d, m %d, nb %d, lda %d, ldh %d",*uplo, *j1, *m, *nb, *lda, *ldh);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, h_dim1, h_offset, i__1;
  /* Local variables */
@@ -406,6 +412,7 @@
  goto L30;
  L40: ;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of SLASYF_AA */
  }

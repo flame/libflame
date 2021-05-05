@@ -158,6 +158,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int slaswlq_(integer *m, integer *n, integer *mb, integer * nb, real *a, integer *lda, real *t, integer *ldt, real *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"slaswlq inputs: m %d, n %d, mb %d, nb %d, lda %d, ldt %d",*m, *n, *mb, *nb, *lda, *ldt);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, t_dim1, t_offset, i__1, i__2, i__3;
  /* Local variables */
@@ -223,18 +229,22 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("SLASWLQ", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (min(*m,*n) == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* The LQ Decomposition */
  if (*m >= *n || *nb <= *m || *nb >= *n) {
  sgelqt_(m, n, mb, &a[a_offset], lda, &t[t_offset], ldt, &work[1], info);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  kk = (*n - *m) % (*nb - *m);
@@ -257,6 +267,7 @@
  stplqt_(m, &kk, &c__0, mb, &a[a_dim1 + 1], lda, &a[ii * a_dim1 + 1], lda, &t[(ctr * *m + 1) * t_dim1 + 1], ldt, &work[1], info);
  }
  work[1] = (real) (*m * *mb);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of SLASWLQ */
  }
