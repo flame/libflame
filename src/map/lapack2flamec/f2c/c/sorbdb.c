@@ -283,6 +283,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int sorbdb_(char *trans, char *signs, integer *m, integer *p, integer *q, real *x11, integer *ldx11, real *x12, integer *ldx12, real *x21, integer *ldx21, real *x22, integer *ldx22, real *theta, real *phi, real *taup1, real *taup2, real *tauq1, real *tauq2, real * work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"sorbdb inputs: trans %c, signs %c, m %d, p %d, q %d, ldx11 %d, ldx12 %d, ldx21 %d, ldx22 %d",*trans, *signs, *m, *p, *q, *ldx11, *ldx12, *ldx21, *ldx22);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer x11_dim1, x11_offset, x12_dim1, x12_offset, x21_dim1, x21_offset, x22_dim1, x22_offset, i__1, i__2, i__3;
  real r__1;
@@ -421,9 +427,11 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("xORBDB", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Handle column-major and row-major separately */
@@ -776,6 +784,7 @@
  }
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of SORBDB */
  }

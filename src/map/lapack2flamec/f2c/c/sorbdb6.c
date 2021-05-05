@@ -146,6 +146,12 @@ static real c_b12 = -1.f;
 /* Subroutine */
 int sorbdb6_(integer *m1, integer *m2, integer *n, real *x1, integer *incx1, real *x2, integer *incx2, real *q1, integer *ldq1, real *q2, integer *ldq2, real *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"sorbdb6 inputs: m1 %d, m2 %d, n %d, incx1 %d, incx2 %d, ldq1 %d, ldq2 %d",*m1, *m2, *n, *incx1, *incx2, *ldq1, *ldq2);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer q1_dim1, q1_offset, q2_dim1, q2_offset, i__1;
     real r__1, r__2;
@@ -222,6 +228,7 @@ int sorbdb6_(integer *m1, integer *m2, integer *n, real *x1, integer *incx1, rea
     {
         i__1 = -(*info);
         xerbla_("SORBDB6", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* First, project X onto the orthogonal complement of Q's column */
@@ -270,10 +277,12 @@ int sorbdb6_(integer *m1, integer *m2, integer *n, real *x1, integer *incx1, rea
     /* Otherwise, project again. */
     if (normsq2 >= normsq1 * .01f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (normsq2 == 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     normsq1 = normsq2;
@@ -332,6 +341,7 @@ int sorbdb6_(integer *m1, integer *m2, integer *n, real *x1, integer *incx1, rea
             x2[i__] = 0.f;
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SORBDB6 */
 }

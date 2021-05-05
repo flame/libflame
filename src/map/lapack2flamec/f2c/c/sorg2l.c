@@ -104,6 +104,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int sorg2l_(integer *m, integer *n, integer *k, real *a, integer *lda, real *tau, real *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"sorg2l inputs: m %d, n %d, k %d, lda %d",*m, *n, *k, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     real r__1;
@@ -158,11 +164,13 @@ int sorg2l_(integer *m, integer *n, integer *k, real *a, integer *lda, real *tau
     {
         i__1 = -(*info);
         xerbla_("SORG2L", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n <= 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Initialise columns 1:n-k to columns of the unit matrix */
@@ -208,6 +216,7 @@ int sorg2l_(integer *m, integer *n, integer *k, real *a, integer *lda, real *tau
         }
         /* L40: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SORG2L */
 }

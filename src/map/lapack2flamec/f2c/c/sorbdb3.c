@@ -190,6 +190,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int sorbdb3_(integer *m, integer *p, integer *q, real *x11, integer *ldx11, real *x21, integer *ldx21, real *theta, real *phi, real *taup1, real *taup2, real *tauq1, real *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"sorbdb3 inputs: m %d, p %d, q %d, ldx11 %d, ldx21 %d",*m, *p, *q, *ldx11, *ldx21);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer x11_dim1, x11_offset, x21_dim1, x21_offset, i__1, i__2, i__3, i__4;
  real r__1, r__2;
@@ -288,9 +294,11 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("SORBDB3", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Reduce rows 1, ..., M-P of X11 and X21 */
@@ -354,6 +362,7 @@
  i__3 = *q - i__;
  slarf_("L", &i__2, &i__3, &x11[i__ + i__ * x11_dim1], &c__1, &taup1[ i__], &x11[i__ + (i__ + 1) * x11_dim1], ldx11, &work[ilarf]);
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of SORBDB3 */
  }

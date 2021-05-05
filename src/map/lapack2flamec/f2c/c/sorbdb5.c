@@ -143,6 +143,12 @@
 /* Subroutine */
 int sorbdb5_(integer *m1, integer *m2, integer *n, real *x1, integer *incx1, real *x2, integer *incx2, real *q1, integer *ldq1, real *q2, integer *ldq2, real *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"sorbdb5 inputs: m1 %d, m2 %d, n %d, incx1 %d, incx2 %d, ldq1 %d, ldq2 %d",*m1, *m2, *n, *incx1, *incx2, *ldq1, *ldq2);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer q1_dim1, q1_offset, q2_dim1, q2_offset, i__1, i__2;
     /* Local variables */
@@ -219,6 +225,7 @@ int sorbdb5_(integer *m1, integer *m2, integer *n, real *x1, integer *incx1, rea
     {
         i__1 = -(*info);
         xerbla_("SORBDB5", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Project X onto the orthogonal complement of Q */
@@ -226,6 +233,7 @@ int sorbdb5_(integer *m1, integer *m2, integer *n, real *x1, integer *incx1, rea
     /* If the projection is nonzero, then return */
     if (snrm2_(m1, &x1[1], incx1) != 0.f || snrm2_(m2, &x2[1], incx2) != 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Project each standard basis vector e_1,...,e_M1 in turn, stopping */
@@ -253,6 +261,7 @@ int sorbdb5_(integer *m1, integer *m2, integer *n, real *x1, integer *incx1, rea
         sorbdb6_(m1, m2, n, &x1[1], incx1, &x2[1], incx2, &q1[q1_offset], ldq1, &q2[q2_offset], ldq2, &work[1], lwork, &childinfo);
         if (snrm2_(m1, &x1[1], incx1) != 0.f || snrm2_(m2, &x2[1], incx2) != 0.f)
         {
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -281,9 +290,11 @@ int sorbdb5_(integer *m1, integer *m2, integer *n, real *x1, integer *incx1, rea
         sorbdb6_(m1, m2, n, &x1[1], incx1, &x2[1], incx2, &q1[q1_offset], ldq1, &q2[q2_offset], ldq2, &work[1], lwork, &childinfo);
         if (snrm2_(m1, &x1[1], incx1) != 0.f || snrm2_(m2, &x2[1], incx2) != 0.f)
         {
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SORBDB5 */
 }
