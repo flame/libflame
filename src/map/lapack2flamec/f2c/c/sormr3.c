@@ -165,6 +165,12 @@
 /* Subroutine */
 int sormr3_(char *side, char *trans, integer *m, integer *n, integer *k, integer *l, real *a, integer *lda, real *tau, real *c__, integer *ldc, real *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"sormr3 inputs: side %c, trans %c, m %d, n %d, k %d, l %d, lda %d, ldc %d",*side, *trans, *m, *n, *k, *l, *lda, *ldc);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2;
     /* Local variables */
@@ -251,11 +257,13 @@ int sormr3_(char *side, char *trans, integer *m, integer *n, integer *k, integer
     {
         i__1 = -(*info);
         xerbla_("SORMR3", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0 || *k == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (left && ! notran || ! left && notran)
@@ -304,6 +312,7 @@ int sormr3_(char *side, char *trans, integer *m, integer *n, integer *k, integer
         slarz_(side, &mi, &ni, l, &a[i__ + ja * a_dim1], lda, &tau[i__], &c__[ ic + jc * c_dim1], ldc, &work[1]);
         /* L10: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SORMR3 */
 }

@@ -150,6 +150,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int sorm2l_(char *side, char *trans, integer *m, integer *n, integer *k, real *a, integer *lda, real *tau, real *c__, integer *ldc, real *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"sorm2l inputs: side %c, trans %c, m %d, n %d, k %d, lda %d, ldc %d",*side, *trans, *m, *n, *k, *lda, *ldc);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2;
     /* Local variables */
@@ -235,11 +241,13 @@ int sorm2l_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
     {
         i__1 = -(*info);
         xerbla_("SORM2L", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0 || *k == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (left && notran || ! left && ! notran)
@@ -285,6 +293,7 @@ int sorm2l_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
         a[nq - *k + i__ + i__ * a_dim1] = aii;
         /* L10: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SORM2L */
 }
