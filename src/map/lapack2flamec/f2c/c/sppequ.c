@@ -106,6 +106,12 @@
 /* Subroutine */
 int sppequ_(char *uplo, integer *n, real *ap, real *s, real * scond, real *amax, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"sppequ inputs: uplo %c, n %d",*uplo, *n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     real r__1, r__2;
@@ -157,6 +163,7 @@ int sppequ_(char *uplo, integer *n, real *ap, real *s, real * scond, real *amax,
     {
         i__1 = -(*info);
         xerbla_("SPPEQU", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -164,6 +171,7 @@ int sppequ_(char *uplo, integer *n, real *ap, real *s, real * scond, real *amax,
     {
         *scond = 1.f;
         *amax = 0.f;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Initialize SMIN and AMAX. */
@@ -227,6 +235,7 @@ int sppequ_(char *uplo, integer *n, real *ap, real *s, real * scond, real *amax,
             if (s[i__] <= 0.f)
             {
                 *info = i__;
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* L30: */
@@ -247,6 +256,7 @@ int sppequ_(char *uplo, integer *n, real *ap, real *s, real * scond, real *amax,
         /* Compute SCOND = min(S(I)) / max(S(I)) */
         *scond = sqrt(smin) / sqrt(*amax);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SPPEQU */
 }
