@@ -140,6 +140,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int spteqr_(char *compz, integer *n, real *d__, real *e, real *z__, integer *ldz, real *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"spteqr inputs: compz %c, n %" FLA_IS ", ldz %" FLA_IS "",*compz, *n, *ldz);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer z_dim1, z_offset, i__1;
     /* Builtin functions */
@@ -221,11 +227,13 @@ int spteqr_(char *compz, integer *n, real *d__, real *e, real *z__, integer *ldz
     {
         i__1 = -(*info);
         xerbla_("SPTEQR", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 1)
@@ -234,6 +242,7 @@ int spteqr_(char *compz, integer *n, real *d__, real *e, real *z__, integer *ldz
         {
             z__[z_dim1 + 1] = 1.f;
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (icompz == 2)
@@ -244,6 +253,7 @@ int spteqr_(char *compz, integer *n, real *d__, real *e, real *z__, integer *ldz
     spttrf_(n, &d__[1], &e[1], info);
     if (*info != 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     i__1 = *n;
@@ -289,6 +299,7 @@ int spteqr_(char *compz, integer *n, real *d__, real *e, real *z__, integer *ldz
     {
         *info = *n + *info;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SPTEQR */
 }

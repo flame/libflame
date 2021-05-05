@@ -133,6 +133,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int spstrf_(char *uplo, integer *n, real *a, integer *lda, integer *piv, integer *rank, real *tol, real *work, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ snprintf(buffer, 256,"spstrf inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*uplo, *n, *lda);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
  real r__1;
@@ -202,10 +208,12 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("SPSTRF", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Get block size */
@@ -434,7 +442,8 @@
  /* that the factorization cannot be used to solve a system. */
  *rank = j - 1;
  *info = 1;
- L200: return 0;
+ L200: AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+ return 0;
  /* End of SPSTRF */
  }
  /* spstrf_ */
