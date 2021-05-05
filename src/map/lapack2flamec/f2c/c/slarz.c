@@ -135,6 +135,12 @@ static real c_b5 = 1.f;
 /* Subroutine */
 int slarz_(char *side, integer *m, integer *n, integer *l, real *v, integer *incv, real *tau, real *c__, integer *ldc, real * work)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"slarz inputs: side %c, m %d, n %d, l %d, incv %d, ldc %d",*side, *m, *n, *l, *incv, *ldc);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer c_dim1, c_offset;
     real r__1;
@@ -203,6 +209,7 @@ int slarz_(char *side, integer *m, integer *n, integer *l, real *v, integer *inc
             sger_(m, l, &r__1, &work[1], &c__1, &v[1], incv, &c__[(*n - *l + 1) * c_dim1 + 1], ldc);
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SLARZ */
 }
