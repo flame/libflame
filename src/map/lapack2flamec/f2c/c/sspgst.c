@@ -108,6 +108,12 @@ static real c_b11 = 1.f;
 /* Subroutine */
 int sspgst_(integer *itype, char *uplo, integer *n, real *ap, real *bp, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"sspgst inputs: itype %" FLA_IS ", uplo %c, n %" FLA_IS "",*itype, *uplo, *n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2;
     real r__1;
@@ -168,6 +174,7 @@ int sspgst_(integer *itype, char *uplo, integer *n, real *ap, real *bp, integer 
     {
         i__1 = -(*info);
         xerbla_("SSPGST", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*itype == 1)
@@ -296,6 +303,7 @@ int sspgst_(integer *itype, char *uplo, integer *n, real *ap, real *bp, integer 
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SSPGST */
 }

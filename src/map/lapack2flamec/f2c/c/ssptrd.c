@@ -147,6 +147,12 @@ v(i+2:n) is stored on exit in AP, */
 /* Subroutine */
 int ssptrd_(char *uplo, integer *n, real *ap, real *d__, real *e, real *tau, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"ssptrd inputs: uplo %c, n %" FLA_IS "",*uplo, *n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2;
     /* Local variables */
@@ -199,11 +205,13 @@ int ssptrd_(char *uplo, integer *n, real *ap, real *d__, real *e, real *tau, int
     {
         i__1 = -(*info);
         xerbla_("SSPTRD", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n <= 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (upper)
@@ -281,6 +289,7 @@ int ssptrd_(char *uplo, integer *n, real *ap, real *d__, real *e, real *tau, int
         }
         d__[*n] = ap[ii];
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SSPTRD */
 }

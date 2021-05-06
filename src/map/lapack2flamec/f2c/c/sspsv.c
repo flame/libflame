@@ -152,6 +152,12 @@
 /* Subroutine */
 int sspsv_(char *uplo, integer *n, integer *nrhs, real *ap, integer *ipiv, real *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"sspsv inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS "",*uplo, *n, *nrhs, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, i__1;
     /* Local variables */
@@ -203,6 +209,7 @@ int sspsv_(char *uplo, integer *n, integer *nrhs, real *ap, integer *ipiv, real 
     {
         i__1 = -(*info);
         xerbla_("SSPSV ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Compute the factorization A = U*D*U**T or A = L*D*L**T. */
@@ -212,6 +219,7 @@ int sspsv_(char *uplo, integer *n, integer *nrhs, real *ap, integer *ipiv, real 
         /* Solve the system A*X = B, overwriting B with X. */
         ssptrs_(uplo, n, nrhs, &ap[1], &ipiv[1], &b[b_offset], ldb, info);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SSPSV */
 }
