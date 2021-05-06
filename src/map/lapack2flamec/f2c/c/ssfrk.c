@@ -154,6 +154,12 @@
 /* Subroutine */
 int ssfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *alpha, real *a, integer *lda, real *beta, real * c__)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"ssfrk inputs: transr %c, uplo %c, trans %c, n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS "",*transr, *uplo, *trans, *n, *k, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1;
     /* Local variables */
@@ -234,6 +240,7 @@ int ssfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
     {
         i__1 = -info;
         xerbla_("SSFRK ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible. */
@@ -241,6 +248,7 @@ int ssfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
     /* done (it is in SSYRK for example) and left in the general case. */
     if (*n == 0 || (*alpha == 0.f || *k == 0) && *beta == 1.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*alpha == 0.f && *beta == 0.f)
@@ -252,6 +260,7 @@ int ssfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
         {
             c__[j] = 0.f;
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* C is N-by-N. */
@@ -456,6 +465,7 @@ int ssfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SSFRK */
 }

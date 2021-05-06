@@ -115,6 +115,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int sspcon_(char *uplo, integer *n, real *ap, integer *ipiv, real *anorm, real *rcond, real *work, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"sspcon inputs: uplo %c, n %" FLA_IS "",*uplo, *n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     /* Local variables */
@@ -172,6 +178,7 @@ int sspcon_(char *uplo, integer *n, real *ap, integer *ipiv, real *anorm, real *
     {
         i__1 = -(*info);
         xerbla_("SSPCON", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -179,10 +186,12 @@ int sspcon_(char *uplo, integer *n, real *ap, integer *ipiv, real *anorm, real *
     if (*n == 0)
     {
         *rcond = 1.f;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*anorm <= 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check that the diagonal matrix D is nonsingular. */
@@ -196,6 +205,7 @@ int sspcon_(char *uplo, integer *n, real *ap, integer *ipiv, real *anorm, real *
         {
             if (ipiv[i__] > 0 && ap[ip] == 0.f)
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             ip -= i__;
@@ -213,6 +223,7 @@ int sspcon_(char *uplo, integer *n, real *ap, integer *ipiv, real *anorm, real *
         {
             if (ipiv[i__] > 0 && ap[ip] == 0.f)
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             ip = ip + *n - i__ + 1;
@@ -234,6 +245,7 @@ L30:
     {
         *rcond = 1.f / ainvnm / *anorm;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SSPCON */
 }
