@@ -218,6 +218,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, real *b, integer *ldb, real *q, integer *ldq, real * z__, integer *ldz, integer *j1, integer *n1, integer *n2, real *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ snprintf(buffer, 256,"stgex2 inputs: n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", j1 %" FLA_IS ", n1 %" FLA_IS ", n2 %" FLA_IS "",*n, *lda, *ldb, *ldq, *ldz, *j1, *n1, *n2);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2;
  real r__1;
@@ -305,9 +311,11 @@
  *info = 0;
  /* Quick return if possible */
  if (*n <= 1 || *n1 <= 0 || *n2 <= 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n1 > *n || *j1 + *n1 > *n) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  m = *n1 + *n2;
@@ -318,6 +326,7 @@
  /* Computing MAX */
  i__1 = *n * m; i__2 = m * m << 1; // , expr subst  
  work[1] = (real) max(i__1,i__2);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  weak = FALSE_;
@@ -421,6 +430,7 @@
  srot_(n, &q[*j1 * q_dim1 + 1], &c__1, &q[(*j1 + 1) * q_dim1 + 1], &c__1, li, &li[1]);
  }
  /* Exit with INFO = 0 if swap was successfully performed. */
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else {
@@ -636,10 +646,12 @@
  slacpy_("Full", &i__, &m, &work[1], &i__, &b[*j1 * b_dim1 + 1], ldb);
  }
  /* Exit with INFO = 0 if swap was successfully performed. */
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Exit with INFO = 1 if swap was rejected. */
  L70: *info = 1;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of STGEX2 */
  }

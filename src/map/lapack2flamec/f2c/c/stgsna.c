@@ -381,6 +381,12 @@ Computing Eigenspaces with Specified */
 /* Subroutine */
 int stgsna_(char *job, char *howmny, logical *select, integer *n, real *a, integer *lda, real *b, integer *ldb, real *vl, integer *ldvl, real *vr, integer *ldvr, real *s, real *dif, integer * mm, integer *m, real *work, integer *lwork, integer *iwork, integer * info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"stgsna inputs: job %c, howmny %c, n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldvl %" FLA_IS ", ldvr %" FLA_IS ", mm %" FLA_IS "",*job, *howmny, *n, *lda, *ldb, *ldvl, *ldvr, *mm);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__2;
     real r__1, r__2;
@@ -578,15 +584,18 @@ int stgsna_(char *job, char *howmny, logical *select, integer *n, real *a, integ
     {
         i__1 = -(*info);
         xerbla_("STGSNA", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants */
@@ -778,6 +787,7 @@ L20:
         ;
     }
     work[1] = (real) lwmin;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of STGSNA */
 }
