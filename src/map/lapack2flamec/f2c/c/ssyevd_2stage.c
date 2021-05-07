@@ -224,6 +224,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int ssyevd_2stage_(char *jobz, char *uplo, integer *n, real *a, integer *lda, real *w, real *work, integer *lwork, integer *iwork, integer *liwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ snprintf(buffer, 256,"ssyevd_2stage inputs: jobz %c, uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*jobz, *uplo, *n, *lda);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1;
  real r__1;
@@ -344,13 +350,16 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("SSYEVD_2STAGE", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n == 1) {
@@ -358,6 +367,7 @@
  if (wantz) {
  a[a_dim1 + 1] = 1.f;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Get machine constants. */
@@ -400,6 +410,7 @@
  else {
  /* Not available in this release, and argument checking should not */
  /* let it getting here */
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  sstedc_("I", n, &w[1], &work[inde], &work[indwrk], n, &work[indwk2], & llwrk2, &iwork[1], liwork, info);
  sormtr_("L", uplo, "N", n, n, &a[a_offset], lda, &work[indtau], &work[ indwrk], n, &work[indwk2], &llwrk2, &iinfo);
@@ -412,6 +423,7 @@
  }
  work[1] = (real) lwmin;
  iwork[1] = liwmin;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of SSYEVD_2STAGE */
  }

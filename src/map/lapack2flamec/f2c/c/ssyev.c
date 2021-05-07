@@ -129,6 +129,12 @@ i */
 /* Subroutine */
 int ssyev_(char *jobz, char *uplo, integer *n, real *a, integer *lda, real *w, real *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"ssyev inputs: jobz %c, uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*jobz, *uplo, *n, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     real r__1;
@@ -233,15 +239,18 @@ int ssyev_(char *jobz, char *uplo, integer *n, real *a, integer *lda, real *w, r
     {
         i__1 = -(*info);
         xerbla_("SSYEV ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 1)
@@ -252,6 +261,7 @@ int ssyev_(char *jobz, char *uplo, integer *n, real *a, integer *lda, real *w, r
         {
             a[a_dim1 + 1] = 1.f;
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants. */
@@ -311,6 +321,7 @@ int ssyev_(char *jobz, char *uplo, integer *n, real *a, integer *lda, real *w, r
     }
     /* Set WORK(1) to optimal workspace size. */
     work[1] = (real) lwkopt;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SSYEV */
 }

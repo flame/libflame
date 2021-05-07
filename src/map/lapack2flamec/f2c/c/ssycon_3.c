@@ -161,6 +161,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int ssycon_3_(char *uplo, integer *n, real *a, integer *lda, real *e, integer *ipiv, real *anorm, real *rcond, real *work, integer *iwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ snprintf(buffer, 256,"ssycon_3 inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS "",*uplo, *n, *lda, *ipiv);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1;
  /* Local variables */
@@ -222,15 +228,18 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("SSYCON_3", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  *rcond = 0.f;
  if (*n == 0) {
  *rcond = 1.f;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (*anorm <= 0.f) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Check that the diagonal matrix D is nonsingular. */
@@ -240,6 +249,7 @@
  i__ >= 1;
  --i__) {
  if (ipiv[i__] > 0 && a[i__ + i__ * a_dim1] == 0.f) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  }
@@ -251,6 +261,7 @@
  i__ <= i__1;
  ++i__) {
  if (ipiv[i__] > 0 && a[i__ + i__ * a_dim1] == 0.f) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  }
@@ -267,6 +278,7 @@
  if (ainvnm != 0.f) {
  *rcond = 1.f / ainvnm / *anorm;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DSYCON_3 */
  }
