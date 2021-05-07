@@ -241,6 +241,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int ssytrd_sy2sb_(char *uplo, integer *n, integer *kd, real *a, integer *lda, real *ab, integer *ldab, real *tau, real *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ snprintf(buffer, 256,"ssytrd_sy2sb inputs: uplo %c, n %" FLA_IS ", kd %" FLA_IS ", lda %" FLA_IS ", ldab %" FLA_IS "",*uplo, *n, *kd, *lda, *ldab);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5;
  /* Local variables */
@@ -318,10 +324,12 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("SSYTRD_SY2SB", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
  work[1] = (real) lwmin;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
@@ -352,6 +360,7 @@
  }
  }
  work[1] = 1.f;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Determine the pointer position for the workspace */
@@ -484,6 +493,7 @@
  }
  }
  work[1] = (real) lwmin;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of SSYTRD_SY2SB */
  }
