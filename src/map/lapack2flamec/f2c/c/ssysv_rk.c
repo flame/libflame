@@ -219,6 +219,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int ssysv_rk_(char *uplo, integer *n, integer *nrhs, real * a, integer *lda, real *e, integer *ipiv, real *b, integer *ldb, real * work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"ssysv_rk inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ldb);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, b_dim1, b_offset, i__1;
  /* Local variables */
@@ -292,9 +298,11 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("SSYSV_RK ", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Compute the factorization A = P*U*D*(U**T)*(P**T) or */
@@ -305,6 +313,7 @@
  ssytrs_3_(uplo, n, nrhs, &a[a_offset], lda, &e[1], &ipiv[1], &b[ b_offset], ldb, info);
  }
  work[1] = (real) lwkopt;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of SSYSV_RK */
  }
