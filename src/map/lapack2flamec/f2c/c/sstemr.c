@@ -305,6 +305,12 @@ the */
 /* Subroutine */
 int sstemr_(char *jobz, char *range, integer *n, real *d__, real *e, real *vl, real *vu, integer *il, integer *iu, integer *m, real *w, real *z__, integer *ldz, integer *nzc, integer *isuppz, logical *tryrac, real *work, integer *lwork, integer *iwork, integer * liwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"sstemr inputs: jobz %c, range %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", ldz %" FLA_IS ", nzc %" FLA_IS "",*jobz, *range, *n, *il, *iu, *ldz, *nzc);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer z_dim1, z_offset, i__1, i__2;
     real r__1, r__2;
@@ -519,16 +525,19 @@ int sstemr_(char *jobz, char *range, integer *n, real *d__, real *e, real *vl, r
     {
         i__1 = -(*info);
         xerbla_("SSTEMR", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery || zquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Handle N = 0, 1, and 2 cases immediately */
     *m = 0;
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 1)
@@ -552,6 +561,7 @@ int sstemr_(char *jobz, char *range, integer *n, real *d__, real *e, real *vl, r
             isuppz[1] = 1;
             isuppz[2] = 1;
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 2)
@@ -737,6 +747,7 @@ int sstemr_(char *jobz, char *range, integer *n, real *d__, real *e, real *vl, r
         if (iinfo != 0)
         {
             *info = f2c_abs(iinfo) + 10;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         /* Note that if RANGE .NE. 'V', SLARRE computes bounds on the desired */
@@ -750,6 +761,7 @@ int sstemr_(char *jobz, char *range, integer *n, real *d__, real *e, real *vl, r
             if (iinfo != 0)
             {
                 *info = f2c_abs(iinfo) + 20;
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
         }
@@ -827,6 +839,7 @@ L39:
             if (iinfo != 0)
             {
                 *info = 3;
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
         }
@@ -872,6 +885,7 @@ L39:
     }
     work[1] = (real) lwmin;
     iwork[1] = liwmin;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SSTEMR */
 }

@@ -303,6 +303,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int sstevr_(char *jobz, char *range, integer *n, real *d__, real *e, real *vl, real *vu, integer *il, integer *iu, real *abstol, integer *m, real *w, real *z__, integer *ldz, integer *isuppz, real * work, integer *lwork, integer *iwork, integer *liwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ snprintf(buffer, 256,"sstevr inputs: jobz %c, range %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", ldz %" FLA_IS "",*jobz, *range, *n, *il, *iu, *ldz);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer z_dim1, z_offset, i__1, i__2;
  real r__1, r__2;
@@ -430,14 +436,17 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("SSTEVR", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  *m = 0;
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n == 1) {
@@ -454,6 +463,7 @@
  if (wantz) {
  z__[z_dim1 + 1] = 1.f;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Get machine constants. */
@@ -591,6 +601,7 @@
  /* IF (wantz .and. INDEIG ) Z( 1,1) = Z(1,1) / 1.002 + .002 */
  work[1] = (real) lwmin;
  iwork[1] = liwmin;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of SSTEVR */
  }

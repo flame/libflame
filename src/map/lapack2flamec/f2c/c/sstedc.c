@@ -183,6 +183,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int sstedc_(char *compz, integer *n, real *d__, real *e, real *z__, integer *ldz, real *work, integer *lwork, integer *iwork, integer *liwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ snprintf(buffer, 256,"sstedc inputs: compz %c, n %" FLA_IS ", ldz %" FLA_IS "",*compz, *n, *ldz);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer z_dim1, z_offset, i__1, i__2;
  real r__1, r__2;
@@ -315,19 +321,23 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("SSTEDC", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n == 1) {
  if (icompz != 0) {
  z__[z_dim1 + 1] = 1.f;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* If the following conditional clause is removed, then the routine */
@@ -467,6 +477,7 @@
  }
  L50: work[1] = (real) lwmin;
  iwork[1] = liwmin;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of SSTEDC */
  }
