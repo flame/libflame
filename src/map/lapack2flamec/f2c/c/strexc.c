@@ -142,6 +142,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int strexc_(char *compq, integer *n, real *t, integer *ldt, real *q, integer *ldq, integer *ifst, integer *ilst, real *work, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"strexc inputs: compq %c, n %d, ldt %d, ldq %d, ifst %d, ilst %d",*compq, *n, *ldt, *ldq, *ifst, *ilst);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer q_dim1, q_offset, t_dim1, t_offset, i__1;
  /* Local variables */
@@ -204,10 +210,12 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("STREXC", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n <= 1) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Determine the first row of specified block */
@@ -237,6 +245,7 @@
  }
  }
  if (*ifst == *ilst) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*ifst < *ilst) {
@@ -260,6 +269,7 @@
  slaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq, &here, & nbf, &nbnext, &work[1], info);
  if (*info != 0) {
  *ilst = here;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  here += nbnext;
@@ -283,6 +293,7 @@
  slaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq, &i__1, & c__1, &nbnext, &work[1], info);
  if (*info != 0) {
  *ilst = here;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (nbnext == 1) {
@@ -300,6 +311,7 @@
  slaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq, & here, &c__1, &nbnext, &work[1], info);
  if (*info != 0) {
  *ilst = here;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  here += 2;
@@ -332,6 +344,7 @@
  slaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq, &i__1, & nbnext, &nbf, &work[1], info);
  if (*info != 0) {
  *ilst = here;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  here -= nbnext;
@@ -355,6 +368,7 @@
  slaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq, &i__1, & nbnext, &c__1, &work[1], info);
  if (*info != 0) {
  *ilst = here;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (nbnext == 1) {
@@ -373,6 +387,7 @@
  slaexc_(&wantq, n, &t[t_offset], ldt, &q[q_offset], ldq, & i__1, &c__2, &c__1, &work[1], info);
  if (*info != 0) {
  *ilst = here;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  here += -2;
@@ -391,6 +406,7 @@
  }
  }
  *ilst = here;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of STREXC */
  }
