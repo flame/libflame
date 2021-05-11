@@ -211,6 +211,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int zgebrd_(integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *d__, doublereal *e, doublecomplex *tauq, doublecomplex *taup, doublecomplex *work, integer *lwork, integer * info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"zgebrd inputs: m %d, n %d, lda %d",*m, *n, *lda);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
  doublereal d__1;
@@ -281,15 +287,18 @@
  if (*info < 0) {
  i__1 = -(*info);
  xerbla_("ZGEBRD", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  minmn = min(*m,*n);
  if (minmn == 0) {
  work[1].r = 1.; work[1].i = 0.; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  ws = max(*m,*n);
@@ -377,6 +386,7 @@
  i__1 = *n - i__ + 1;
  zgebd2_(&i__2, &i__1, &a[i__ + i__ * a_dim1], lda, &d__[i__], &e[i__], & tauq[i__], &taup[i__], &work[1], &iinfo);
  work[1].r = (doublereal) ws; work[1].i = 0.; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of ZGEBRD */
  }
