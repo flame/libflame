@@ -102,6 +102,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int slasq2_(integer *n, real *z__, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"slasq2 inputs: n %d",*n);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer i__1, i__2, i__3;
  real r__1, r__2;
@@ -172,9 +178,11 @@
  if (*n < 0) {
  *info = -1;
  xerbla_("SLASQ2", &c__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (*n == 1) {
@@ -183,6 +191,7 @@
  *info = -201;
  xerbla_("SLASQ2", &c__2);
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (*n == 2) {
@@ -190,6 +199,7 @@
  if (z__[2] < 0.f || z__[3] < 0.f) {
  *info = -2;
  xerbla_("SLASQ2", &c__2);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (z__[3] > z__[1]) {
@@ -213,6 +223,7 @@
  }
  z__[2] = z__[3];
  z__[6] = z__[2] + z__[1];
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Check for negative data and compute sums of q's and e's. */
@@ -229,11 +240,13 @@
  if (z__[k] < 0.f) {
  *info = -(k + 200);
  xerbla_("SLASQ2", &c__2);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (z__[k + 1] < 0.f) {
  *info = -(k + 201);
  xerbla_("SLASQ2", &c__2);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  d__ += z__[k];
@@ -252,6 +265,7 @@
  if (z__[(*n << 1) - 1] < 0.f) {
  *info = -((*n << 1) + 199);
  xerbla_("SLASQ2", &c__2);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  d__ += z__[(*n << 1) - 1];
@@ -270,12 +284,14 @@
  }
  slasrt_("D", n, &z__[1], &iinfo);
  z__[(*n << 1) - 1] = d__;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  trace = d__ + e;
  /* Check for zero data. */
  if (trace == 0.f) {
  z__[(*n << 1) - 1] = 0.f;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Check whether the machine is IEEE conformable. */
@@ -406,6 +422,7 @@
  }
  if (sigma < 0.f) {
  *info = 1;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Find last unreduced submatrix's top index I0, find QMAX and */
@@ -583,12 +600,14 @@
  z__[k * 2] = 0.f;
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* end IWHILB */
  L150: /* L160: */
  ;
  }
  *info = 3;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* end IWHILA */
  L170: /* Move q's to the front. */
@@ -616,6 +635,7 @@
  i__1 = *n;
  z__[(*n << 1) + 4] = (real) ndiv / (real) (i__1 * i__1);
  z__[(*n << 1) + 5] = nfail * 100.f / (real) iter;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of SLASQ2 */
  }

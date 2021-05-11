@@ -305,6 +305,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int slasd6_(integer *icompq, integer *nl, integer *nr, integer *sqre, real *d__, real *vf, real *vl, real *alpha, real *beta, integer *idxq, integer *perm, integer *givptr, integer *givcol, integer *ldgcol, real *givnum, integer *ldgnum, real *poles, real * difl, real *difr, real *z__, integer *k, real *c__, real *s, real * work, integer *iwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"slasd6 inputs: icompq %d, nl %d, nr %d, sqre %d, idxq %d, ldgcol %d, ldgnum %d",*icompq, *nl, *nr, *sqre, *idxq, *ldgcol, *ldgnum);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer givcol_dim1, givcol_offset, givnum_dim1, givnum_offset, poles_dim1, poles_offset, i__1;
  real r__1, r__2;
@@ -380,6 +386,7 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("SLASD6", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* The following values are for bookkeeping purposes only. They are */
@@ -415,6 +422,7 @@
  slasd8_(icompq, k, &d__[1], &z__[1], &vf[1], &vl[1], &difl[1], &difr[1], ldgnum, &work[isigma], &work[iw], info);
  /* Report the possible convergence failure. */
  if (*info != 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Save the poles if ICOMPQ = 1. */
@@ -428,6 +436,7 @@
  n1 = *k;
  n2 = n - *k;
  slamrg_(&n1, &n2, &d__[1], &c__1, &c_n1, &idxq[1]);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of SLASD6 */
  }
