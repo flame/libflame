@@ -113,6 +113,12 @@ v(i+1:m) is stored on exit in A(i+1:m,i), */
 /* Subroutine */
 int zgeqr2_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *tau, doublecomplex *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"zgeqr2 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "",*m, *n, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     doublecomplex z__1;
@@ -166,6 +172,7 @@ int zgeqr2_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     {
         i__1 = -(*info);
         xerbla_("ZGEQR2", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     k = min(*m,*n);
@@ -198,6 +205,7 @@ int zgeqr2_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
         }
         /* L10: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZGEQR2 */
 }

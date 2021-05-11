@@ -170,6 +170,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int zgeqr_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *t, integer *tsize, doublecomplex *work, integer * lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ snprintf(buffer, 256,"zgeqr inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", tsize %" FLA_IS ", lwork %" FLA_IS "",*m, *n, *lda, *tsize, *lwork);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2, i__3;
  /* Local variables */
@@ -320,13 +326,16 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("ZGEQR", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (min(*m,*n) == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* The QR Decomposition */
@@ -340,6 +349,7 @@
  i__2 = 1; i__3 = nb * *n; // , expr subst  
  i__1 = max(i__2,i__3);
  work[1].r = (doublereal) i__1; work[1].i = 0.; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of ZGEQR */
  }
