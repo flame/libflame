@@ -143,6 +143,12 @@ elements marked */
 /* Subroutine */
 int zgbtf2_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab, integer *ldab, integer *ipiv, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zgbtf2 inputs: m %d, n %d, kl %d, ku %d, ldab %d",*m, *n, *kl, *ku, *ldab);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4;
     doublecomplex z__1;
@@ -208,11 +214,13 @@ int zgbtf2_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
     {
         i__1 = -(*info);
         xerbla_("ZGBTF2", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Gaussian elimination with partial pivoting */
@@ -310,6 +318,7 @@ int zgbtf2_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
         }
         /* L40: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZGBTF2 */
 }

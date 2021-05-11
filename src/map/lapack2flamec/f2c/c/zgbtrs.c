@@ -133,6 +133,12 @@ for 1 <= i <= N, row i of the matrix was */
 /* Subroutine */
 int zgbtrs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, doublecomplex *ab, integer *ldab, integer *ipiv, doublecomplex *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zgbtrs inputs: trans %c, n %d, kl %d, ku %d, nrhs %d, ldab %d, ldb %d",*trans, *n, *kl, *ku, *nrhs, *ldab, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, b_dim1, b_offset, i__1, i__2, i__3;
     doublecomplex z__1;
@@ -207,11 +213,13 @@ int zgbtrs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, d
     {
         i__1 = -(*info);
         xerbla_("ZGBTRS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0 || *nrhs == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     kd = *ku + *kl + 1;
@@ -331,6 +339,7 @@ int zgbtrs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, d
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZGBTRS */
 }
