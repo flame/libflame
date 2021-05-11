@@ -118,6 +118,12 @@ for 1<=i<=N, row i of the */
 /* Subroutine */
 int zgetrs_(char *trans, integer *n, integer *nrhs, doublecomplex *a, integer *lda, integer *ipiv, doublecomplex *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zgetrs inputs: trans %c, n %d, nrhs %d, lda %d, ldb %d, ipiv %d",*trans, *n, *nrhs, *lda, *ldb, *ipiv);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */
@@ -183,11 +189,13 @@ int zgetrs_(char *trans, integer *n, integer *nrhs, doublecomplex *a, integer *l
     {
         i__1 = -(*info);
         xerbla_("ZGETRS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0 || *nrhs == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (notran)
@@ -210,6 +218,7 @@ int zgetrs_(char *trans, integer *n, integer *nrhs, doublecomplex *a, integer *l
         /* Apply row interchanges to the solution vectors. */
         zlaswp_(nrhs, &b[b_offset], ldb, &c__1, n, &ipiv[1], &c_n1);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZGETRS */
 }
