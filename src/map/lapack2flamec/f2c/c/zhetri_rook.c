@@ -125,6 +125,12 @@ the matrix is singular and its */
 /* Subroutine */
 int zhetri_rook_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *ipiv, doublecomplex *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zhetri inputs: uplo %c, n %d, lda %d",*uplo, *n, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     doublereal d__1;
@@ -194,11 +200,13 @@ int zhetri_rook_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer
     {
         i__1 = -(*info);
         xerbla_("ZHETRI_ROOK", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
-    }
+        }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check that the diagonal matrix D is nonsingular. */
@@ -212,6 +220,7 @@ int zhetri_rook_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer
             i__1 = *info + *info * a_dim1;
             if (ipiv[*info] > 0 && (a[i__1].r == 0. && a[i__1].i == 0.))
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* L10: */
@@ -228,6 +237,7 @@ int zhetri_rook_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer
             i__2 = *info + *info * a_dim1;
             if (ipiv[*info] > 0 && (a[i__2].r == 0. && a[i__2].i == 0.))
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* L20: */
@@ -760,6 +770,7 @@ L80: /* If K < 1, exit from loop. */
 L120:
         ;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZHETRI_ROOK */
 }

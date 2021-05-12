@@ -117,6 +117,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int zhetri2x_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *ipiv, doublecomplex *work, integer *nb, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"zhetri2x inputs: uplo %c, n %d, lda %d, nb %d",*uplo, *n, *lda, *nb);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, work_dim1, work_offset, i__1, i__2, i__3, i__4, i__5, i__6;
  doublereal d__1;
@@ -193,9 +199,11 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("ZHETRI2X", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Convert A */
@@ -209,6 +217,7 @@
  --(*info)) {
  i__1 = *info + *info * a_dim1;
  if (ipiv[*info] > 0 && (a[i__1].r == 0. && a[i__1].i == 0.)) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  }
@@ -221,6 +230,7 @@
  ++(*info)) {
  i__2 = *info + *info * a_dim1;
  if (ipiv[*info] > 0 && (a[i__2].r == 0. && a[i__2].i == 0.)) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  }
@@ -821,6 +831,7 @@
  --i__;
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of ZHETRI2X */
  }
