@@ -133,6 +133,12 @@ IPIV(i) = i indicates a row interchange was not */
 /* Subroutine */
 int zgtcon_(char *norm, integer *n, doublecomplex *dl, doublecomplex *d__, doublecomplex *du, doublecomplex *du2, integer * ipiv, doublereal *anorm, doublereal *rcond, doublecomplex *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zgtcon inputs: norm %c, n %d",*norm, *n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2;
     /* Local variables */
@@ -194,6 +200,7 @@ int zgtcon_(char *norm, integer *n, doublecomplex *dl, doublecomplex *d__, doubl
     {
         i__1 = -(*info);
         xerbla_("ZGTCON", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -201,10 +208,12 @@ int zgtcon_(char *norm, integer *n, doublecomplex *dl, doublecomplex *d__, doubl
     if (*n == 0)
     {
         *rcond = 1.;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*anorm == 0.)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check that D(1:N) is non-zero. */
@@ -216,6 +225,7 @@ int zgtcon_(char *norm, integer *n, doublecomplex *dl, doublecomplex *d__, doubl
         i__2 = i__;
         if (d__[i__2].r == 0. && d__[i__2].i == 0.)
         {
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         /* L10: */
@@ -251,6 +261,7 @@ L20:
     {
         *rcond = 1. / ainvnm / *anorm;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZGTCON */
 }
