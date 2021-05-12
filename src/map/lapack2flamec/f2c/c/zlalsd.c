@@ -185,6 +185,12 @@ in this case a minimum norm solution is returned. */
 /* Subroutine */
 int zlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *d__, doublereal *e, doublecomplex *b, integer *ldb, doublereal *rcond, integer *rank, doublecomplex *work, doublereal * rwork, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"zlalsd inputs: uplo %c, smlsiz %" FLA_IS ", n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS "",*uplo, *smlsiz, *n, *nrhs, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     doublereal d__1;
@@ -271,6 +277,7 @@ int zlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
     {
         i__1 = -(*info);
         xerbla_("ZLALSD", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     eps = dlamch_("Epsilon");
@@ -287,6 +294,7 @@ int zlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
     /* Quick return if possible. */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*n == 1)
@@ -301,6 +309,7 @@ int zlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
             zlascl_("G", &c__0, &c__0, &d__[1], &c_b10, &c__1, nrhs, &b[ b_offset], ldb, info);
             d__[1] = f2c_dabs(d__[1]);
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Rotate the matrix if it is lower bidiagonal. */
@@ -353,6 +362,7 @@ int zlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
     if (orgnrm == 0.)
     {
         zlaset_("A", n, nrhs, &c_b1, &c_b1, &b[b_offset], ldb);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     dlascl_("G", &c__0, &c__0, &orgnrm, &c_b10, n, &c__1, &d__[1], n, info);
@@ -372,6 +382,7 @@ int zlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
         dlasdq_("U", &c__0, n, n, n, &c__0, &d__[1], &e[1], &rwork[irwvt], n, &rwork[irwu], n, &rwork[irwwrk], &c__1, &rwork[irwwrk], info);
         if (*info != 0)
         {
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         /* In the real version, B is passed to DLASDQ and multiplied */
@@ -527,6 +538,7 @@ int zlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
         dlascl_("G", &c__0, &c__0, &c_b10, &orgnrm, n, &c__1, &d__[1], n, info);
         dlasrt_("D", n, &d__[1], info);
         zlascl_("G", &c__0, &c__0, &orgnrm, &c_b10, n, nrhs, &b[b_offset], ldb, info);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Book-keeping and setting up some constants. */
@@ -618,6 +630,7 @@ int zlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
                 dlasdq_("U", &c__0, &nsize, &nsize, &nsize, &c__0, &d__[st], & e[st], &rwork[vt + st1], n, &rwork[u + st1], n, & rwork[nrwork], &c__1, &rwork[nrwork], info) ;
                 if (*info != 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 /* In the real version, B is passed to DLASDQ and multiplied */
@@ -693,12 +706,14 @@ int zlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
                 dlasda_(&icmpq1, smlsiz, &nsize, &sqre, &d__[st], &e[st], & rwork[u + st1], n, &rwork[vt + st1], &iwork[k + st1], &rwork[difl + st1], &rwork[difr + st1], &rwork[z__ + st1], &rwork[poles + st1], &iwork[givptr + st1], & iwork[givcol + st1], n, &iwork[perm + st1], &rwork[ givnum + st1], &rwork[c__ + st1], &rwork[s + st1], & rwork[nrwork], &iwork[iwk], info);
                 if (*info != 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 bxst = bx + st1;
                 zlalsa_(&icmpq2, smlsiz, &nsize, nrhs, &b[st + b_dim1], ldb, & work[bxst], n, &rwork[u + st1], n, &rwork[vt + st1], & iwork[k + st1], &rwork[difl + st1], &rwork[difr + st1] , &rwork[z__ + st1], &rwork[poles + st1], &iwork[ givptr + st1], &iwork[givcol + st1], n, &iwork[perm + st1], &rwork[givnum + st1], &rwork[c__ + st1], &rwork[ s + st1], &rwork[nrwork], &iwork[iwk], info);
                 if (*info != 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
             }
@@ -821,6 +836,7 @@ int zlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
             zlalsa_(&icmpq2, smlsiz, &nsize, nrhs, &work[bxst], n, &b[st + b_dim1], ldb, &rwork[u + st1], n, &rwork[vt + st1], & iwork[k + st1], &rwork[difl + st1], &rwork[difr + st1], & rwork[z__ + st1], &rwork[poles + st1], &iwork[givptr + st1], &iwork[givcol + st1], n, &iwork[perm + st1], &rwork[ givnum + st1], &rwork[c__ + st1], &rwork[s + st1], &rwork[ nrwork], &iwork[iwk], info);
             if (*info != 0)
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
         }
@@ -830,6 +846,7 @@ int zlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
     dlascl_("G", &c__0, &c__0, &c_b10, &orgnrm, n, &c__1, &d__[1], n, info);
     dlasrt_("D", n, &d__[1], info);
     zlascl_("G", &c__0, &c__0, &orgnrm, &c_b10, n, nrhs, &b[b_offset], ldb, info);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZLALSD */
 }
