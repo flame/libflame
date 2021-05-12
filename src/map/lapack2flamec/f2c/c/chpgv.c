@@ -161,6 +161,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int chpgv_(integer *itype, char *jobz, char *uplo, integer * n, complex *ap, complex *bp, real *w, complex *z__, integer *ldz, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"chpgv inputs: itype %d, jobz %c, uplo %c, n %d, ldz %d\n",*itype, *jobz, *uplo, *n, *ldz);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer z_dim1, z_offset, i__1;
     /* Local variables */
@@ -231,11 +237,13 @@ int chpgv_(integer *itype, char *jobz, char *uplo, integer * n, complex *ap, com
     {
         i__1 = -(*info);
         xerbla_("CHPGV ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Form a Cholesky factorization of B. */
@@ -243,6 +251,7 @@ int chpgv_(integer *itype, char *jobz, char *uplo, integer * n, complex *ap, com
     if (*info != 0)
     {
         *info = *n + *info;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Transform problem to standard eigenvalue problem and solve. */
@@ -301,6 +310,7 @@ int chpgv_(integer *itype, char *jobz, char *uplo, integer * n, complex *ap, com
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHPGV */
 }

@@ -285,6 +285,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int chgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integer *ihi, complex *h__, integer *ldh, complex *t, integer *ldt, complex *alpha, complex *beta, complex *q, integer *ldq, complex *z__, integer *ldz, complex *work, integer *lwork, real * rwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"chgeqz inputs: job %c, compq %c, compz %c, n %d, ilo %d, ihi %d, ldh %d, ldt %d, ldq %d, ldz %d\n",*job, *compq, *compz, *n, *ilo, *ihi, *ldh, *ldt, *ldq, *ldz);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer h_dim1, h_offset, q_dim1, q_offset, t_dim1, t_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5, i__6;
  real r__1, r__2, r__3, r__4, r__5, r__6;
@@ -462,15 +468,18 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CHGEQZ", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  /* WORK( 1 ) = CMPLX( 1 ) */
  if (*n <= 0) {
  work[1].r = 1.f; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Initialize Q and Z */
@@ -1109,6 +1118,7 @@
  /* Exit (other than argument error) -- return optimal workspace size */
  L210: q__1.r = (real) (*n); q__1.i = 0.f; // , expr subst  
  work[1].r = q__1.r; work[1].i = q__1.i; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CHGEQZ */
  }

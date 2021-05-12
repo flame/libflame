@@ -131,6 +131,12 @@ i */
 /* Subroutine */
 int chpev_(char *jobz, char *uplo, integer *n, complex *ap, real *w, complex *z__, integer *ldz, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"chpev inputs: jobz %c, uplo %c, n %d, ldz %d\n",*jobz, *uplo, *n, *ldz);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer z_dim1, z_offset, i__1;
     real r__1;
@@ -214,11 +220,13 @@ int chpev_(char *jobz, char *uplo, integer *n, complex *ap, real *w, complex *z_
     {
         i__1 = -(*info);
         xerbla_("CHPEV ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 1)
@@ -231,6 +239,7 @@ int chpev_(char *jobz, char *uplo, integer *n, complex *ap, real *w, complex *z_
             z__[i__1].r = 1.f;
             z__[i__1].i = 0.f; // , expr subst
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants. */
@@ -289,6 +298,7 @@ int chpev_(char *jobz, char *uplo, integer *n, complex *ap, real *w, complex *z_
         r__1 = 1.f / sigma;
         sscal_(&imax, &r__1, &w[1], &c__1);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHPEV */
 }

@@ -228,6 +228,12 @@ if RANGE = 'V', the exact value of M */
 /* Subroutine */
 int chpevx_(char *jobz, char *range, char *uplo, integer *n, complex *ap, real *vl, real *vu, integer *il, integer *iu, real * abstol, integer *m, real *w, complex *z__, integer *ldz, complex * work, real *rwork, integer *iwork, integer *ifail, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"chpevx inputs: jobz %c, range %c, uplo %c, n %d, il %d, iu %d, m %d, ldz %d\n",*jobz, *range, *uplo, *n, *il, *iu, *m, *ldz);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer z_dim1, z_offset, i__1, i__2;
     real r__1, r__2;
@@ -358,12 +364,14 @@ int chpevx_(char *jobz, char *range, char *uplo, integer *n, complex *ap, real *
     {
         i__1 = -(*info);
         xerbla_("CHPEVX", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     *m = 0;
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 1)
@@ -387,6 +395,7 @@ int chpevx_(char *jobz, char *range, char *uplo, integer *n, complex *ap, real *
             z__[i__1].r = 1.f;
             z__[i__1].i = 0.f; // , expr subst
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants. */
@@ -567,6 +576,7 @@ L20:
             /* L40: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHPEVX */
 }
