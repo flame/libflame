@@ -93,6 +93,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int zheswapr_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *i1, integer *i2) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"zheswapr inputs: uplo %c, n %d, lda %d, i1 %d, i2 %d",*uplo, *n, *lda, *i1, *i2);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2, i__3;
  doublecomplex z__1;
@@ -222,6 +228,7 @@
  a[i__2].r = tmp.r; a[i__2].i = tmp.i; // , expr subst  
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* zheswapr_ */

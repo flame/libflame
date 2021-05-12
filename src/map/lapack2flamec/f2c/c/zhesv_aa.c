@@ -152,6 +152,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int zhesv_aa_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *lda, integer *ipiv, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"zhesv inputs: uplo %c, n %d, nrhs %d, lda %d, ldb %d",*uplo, *n, *nrhs, *lda, *ldb);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2;
  /* Local variables */
@@ -228,9 +234,11 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("ZHESV_AA ", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Compute the factorization A = U**H*T*U or A = L*T*L**H. */
@@ -240,6 +248,7 @@
  zhetrs_aa_(uplo, n, nrhs, &a[a_offset], lda, &ipiv[1], &b[b_offset], ldb, &work[1], lwork, info);
  }
  work[1].r = (doublereal) lwkopt; work[1].i = 0.; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of ZHESV_AA */
  }

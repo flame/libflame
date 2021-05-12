@@ -275,6 +275,12 @@ the routine */
 /* Subroutine */
 int zhesvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublecomplex *a, integer *lda, doublecomplex *af, integer * ldaf, integer *ipiv, doublecomplex *b, integer *ldb, doublecomplex *x, integer *ldx, doublereal *rcond, doublereal *ferr, doublereal *berr, doublecomplex *work, integer *lwork, doublereal *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zhesvx inputs: fact %c, uplo %c, n %d, nrhs %d, lda %d, ldaf %d, ldb %d, ldx %d",*fact, *uplo, *n, *nrhs, *lda, *ldaf, *ldb, *ldx);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, b_dim1, b_offset, x_dim1, x_offset, i__1, i__2;
     /* Local variables */
@@ -397,10 +403,12 @@ int zhesvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublecomplex *a
     {
         i__1 = -(*info);
         xerbla_("ZHESVX", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (nofact)
@@ -412,6 +420,7 @@ int zhesvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublecomplex *a
         if (*info > 0)
         {
             *rcond = 0.;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -432,6 +441,7 @@ int zhesvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublecomplex *a
     }
     work[1].r = (doublereal) lwkopt;
     work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZHESVX */
 }
