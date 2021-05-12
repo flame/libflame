@@ -99,6 +99,12 @@
  /* > \ingroup complex16OTHERauxiliary */
  /* ===================================================================== */
  doublereal zlanhs_(char *norm, integer *n, doublecomplex *a, integer *lda, doublereal *work) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"zlanhs inputs: norm %c, n %d, lda %d",*norm, *n, *lda);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
  doublereal ret_val;
@@ -250,6 +256,7 @@
  value = ssq[0] * sqrt(ssq[1]);
  }
  ret_val = value;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  /* End of ZLANHS */
  }
