@@ -111,6 +111,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int chptrs_(char *uplo, integer *n, integer *nrhs, complex * ap, integer *ipiv, complex *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"chptrs inputs: uplo %c, n %d, nrhs %d, ldb %d\n",*uplo, *n, *nrhs, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, i__1, i__2;
     complex q__1, q__2, q__3;
@@ -178,11 +184,13 @@ int chptrs_(char *uplo, integer *n, integer *nrhs, complex * ap, integer *ipiv, 
     {
         i__1 = -(*info);
         xerbla_("CHPTRS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0 || *nrhs == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (upper)
@@ -533,6 +541,7 @@ L90: /* If K < 1, exit from loop. */
 L100:
         ;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHPTRS */
 }

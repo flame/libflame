@@ -246,6 +246,12 @@ here the magnitude of a complex number */
 /* Subroutine */
 int chsein_(char *side, char *eigsrc, char *initv, logical * select, integer *n, complex *h__, integer *ldh, complex *w, complex * vl, integer *ldvl, complex *vr, integer *ldvr, integer *mm, integer * m, complex *work, real *rwork, integer *ifaill, integer *ifailr, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"chsein inputs: side %c, eigsrc %c, initv %c, n %d, ldh %d, ldvl %d, ldvr %d, mm %d, m %d\n",*side, *eigsrc, *initv, *n, *ldh, *ldvl, *ldvr, *mm, *m);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer h_dim1, h_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__2, i__3;
     real r__1, r__2;
@@ -369,11 +375,13 @@ int chsein_(char *side, char *eigsrc, char *initv, logical * select, integer *n,
     {
         i__1 = -(*info);
         xerbla_("CHSEIN", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible. */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Set machine-dependent constants. */
@@ -452,6 +460,7 @@ L50:
                 if (sisnan_(&hnorm))
                 {
                     *info = -6;
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 else if (hnorm > 0.f)
@@ -546,6 +555,7 @@ L60:
         }
         /* L100: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHSEIN */
 }

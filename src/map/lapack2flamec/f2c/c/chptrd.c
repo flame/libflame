@@ -151,6 +151,12 @@ v(i+2:n) is stored on exit in AP, */
 /* Subroutine */
 int chptrd_(char *uplo, integer *n, complex *ap, real *d__, real *e, complex *tau, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"chptrd inputs: uplo %c, n %d\n",*uplo, *n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3;
     real r__1;
@@ -210,11 +216,13 @@ int chptrd_(char *uplo, integer *n, complex *ap, real *d__, real *e, complex *ta
     {
         i__1 = -(*info);
         xerbla_("CHPTRD", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n <= 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (upper)
@@ -348,6 +356,7 @@ int chptrd_(char *uplo, integer *n, complex *ap, real *d__, real *e, complex *ta
         i__2 = ii;
         d__[i__1] = ap[i__2].r;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHPTRD */
 }
