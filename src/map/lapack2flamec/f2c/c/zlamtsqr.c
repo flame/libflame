@@ -196,6 +196,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int zlamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, integer *mb, integer *nb, doublecomplex *a, integer * lda, doublecomplex *t, integer *ldt, doublecomplex *c__, integer *ldc, doublecomplex *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"zlamtsqr inputs: side %c, trans %c, m %d, n %d, k %d, mb %d, nb %d, lda %d, ldt %d, ldc %d",*side, *trans, *m, *n, *k, *mb, *nb, *lda, *ldt, *ldc);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, c_dim1, c_offset, t_dim1, t_offset, i__1, i__2, i__3;
  /* Local variables */
@@ -285,21 +291,25 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("ZLAMTSQR", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  /* Computing MIN */
  i__1 = min(*m,*n);
  if (min(i__1,*k) == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Computing MAX */
  i__1 = max(*m,*n);
  if (*mb <= *k || *mb >= max(i__1,*k)) {
  zgemqrt_(side, trans, m, n, k, nb, &a[a_offset], lda, &t[t_offset], ldt, &c__[c_offset], ldc, &work[1], info);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (left && notran) {
@@ -393,6 +403,7 @@
  }
  }
  work[1].r = (doublereal) lw; work[1].i = 0.; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of ZLAMTSQR */
  }

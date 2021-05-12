@@ -94,6 +94,12 @@
  /* > \ingroup complex16OTHERauxiliary */
  /* ===================================================================== */
  doublereal zlangt_(char *norm, integer *n, doublecomplex *dl, doublecomplex * d__, doublecomplex *du) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"zlangt inputs: norm %c, n %d",*norm, *n);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer i__1;
  doublereal ret_val, d__1;
@@ -217,6 +223,7 @@
  anorm = scale * sqrt(sum);
  }
  ret_val = anorm;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  /* End of ZLANGT */
  }

@@ -121,6 +121,12 @@
  /* > \ingroup complex16OTHERauxiliary */
  /* ===================================================================== */
  doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex *ab, integer *ldab, doublereal *work) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"zlanhb inputs: norm %c, uplo %c, n %d, k %d, ldab %d",*norm, *uplo, *n, *k, *ldab);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4;
  doublereal ret_val, d__1;
@@ -368,6 +374,7 @@
  value = ssq[0] * sqrt(ssq[1]);
  }
  ret_val = value;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  /* End of ZLANHB */
  }

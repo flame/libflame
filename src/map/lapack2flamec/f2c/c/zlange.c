@@ -104,6 +104,12 @@
  /* > \ingroup complex16GEauxiliary */
  /* ===================================================================== */
  doublereal zlange_(char *norm, integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *work) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"zlange inputs: norm %c, m %d, n %d, lda %d",*norm, *m, *n, *lda);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2;
  doublereal ret_val;
@@ -246,6 +252,7 @@
  value = ssq[0] * sqrt(ssq[1]);
  }
  ret_val = value;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  /* End of ZLANGE */
  }
