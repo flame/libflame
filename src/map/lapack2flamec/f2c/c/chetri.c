@@ -112,6 +112,12 @@ the matrix is singular and its */
 /* Subroutine */
 int chetri_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv, complex *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"chetri inputs: uplo %c, n %d, lda %d\n",*uplo, *n, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     real r__1;
@@ -181,11 +187,13 @@ int chetri_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv, com
     {
         i__1 = -(*info);
         xerbla_("CHETRI", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check that the diagonal matrix D is nonsingular. */
@@ -199,6 +207,7 @@ int chetri_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv, com
             i__1 = *info + *info * a_dim1;
             if (ipiv[*info] > 0 && (a[i__1].r == 0.f && a[i__1].i == 0.f))
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* L10: */
@@ -215,6 +224,7 @@ int chetri_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv, com
             i__2 = *info + *info * a_dim1;
             if (ipiv[*info] > 0 && (a[i__2].r == 0.f && a[i__2].i == 0.f))
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* L20: */
@@ -568,6 +578,7 @@ L60: /* If K < 1, exit from loop. */
 L80:
         ;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHETRI */
 }
