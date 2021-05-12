@@ -62,6 +62,12 @@
 /* Subroutine */
 int zlacgv_(integer *n, doublecomplex *x, integer *incx)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"zlacgv inputs: n %" FLA_IS ", incx %%" FLA_IS "",*n, *incx);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2;
     doublecomplex z__1;
@@ -120,6 +126,7 @@ int zlacgv_(integer *n, doublecomplex *x, integer *incx)
             /* L20: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZLACGV */
 }

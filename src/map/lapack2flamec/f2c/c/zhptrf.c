@@ -149,6 +149,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int zhptrf_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"zhptrf inputs: uplo %c, n %" FLA_IS "",*uplo, *n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3, i__4, i__5, i__6;
     doublereal d__1, d__2, d__3, d__4;
@@ -229,6 +235,7 @@ int zhptrf_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, integer *i
     {
         i__1 = -(*info);
         xerbla_("ZHPTRF", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Initialize ALPHA for use in choosing pivot block size. */
@@ -874,6 +881,7 @@ L60:
         goto L60;
     }
 L110:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZHPTRF */
 }
