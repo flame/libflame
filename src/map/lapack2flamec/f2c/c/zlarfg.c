@@ -97,6 +97,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int zlarfg_(integer *n, doublecomplex *alpha, doublecomplex * x, integer *incx, doublecomplex *tau) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"zlarfg inputs: n %d, incx %d",*n, *incx);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer i__1;
  doublereal d__1, d__2;
@@ -141,6 +147,7 @@
  /* Function Body */
  if (*n <= 0) {
  tau->r = 0., tau->i = 0.;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  i__1 = *n - 1;
@@ -197,6 +204,7 @@
  }
  alpha->r = beta, alpha->i = 0.;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of ZLARFG */
  }

@@ -91,6 +91,7 @@
 /* Subroutine */
 int zlartg_(doublecomplex *f, doublecomplex *g, doublereal * cs, doublecomplex *sn, doublecomplex *r__)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* System generated locals */
     integer i__1;
     doublereal d__1, d__2, d__3, d__4, d__5, d__6, d__7, d__8, d__9, d__10;
@@ -181,6 +182,7 @@ L10:
             *cs = 1.;
             sn->r = 0., sn->i = 0.;
             r__->r = f->r, r__->i = f->i;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
 L20:
@@ -228,6 +230,7 @@ L20:
             z__1.r = d__1;
             z__1.i = d__2; // , expr subst
             sn->r = z__1.r, sn->i = z__1.i;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         d__1 = fs.r;
@@ -342,6 +345,7 @@ L20:
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZLARTG */
 }

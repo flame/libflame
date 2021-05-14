@@ -158,6 +158,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int zlarft_(char *direct, char *storev, integer *n, integer * k, doublecomplex *v, integer *ldv, doublecomplex *tau, doublecomplex * t, integer *ldt) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"zlarft inputs: direct %c, storev %c, n %d, k %d, ldv %d, ldt %d",*direct, *storev, *n, *k, *ldv, *ldt);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer t_dim1, t_offset, v_dim1, v_offset, i__1, i__2, i__3, i__4, i__5;
  doublecomplex z__1, z__2, z__3;
@@ -200,6 +206,7 @@
  t -= t_offset;
  /* Function Body */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (lsame_(direct, "F")) {
@@ -392,6 +399,7 @@
  }
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of ZLARFT */
  }
