@@ -120,6 +120,12 @@
 /* Subroutine */
 int zpbequ_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *ldab, doublereal *s, doublereal *scond, doublereal *amax, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zpbequ inputs: uplo %c, n %d, kd %d, ldab %d",*uplo, *n, *kd, *ldab);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2;
     doublereal d__1, d__2;
@@ -181,6 +187,7 @@ int zpbequ_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
     {
         i__1 = -(*info);
         xerbla_("ZPBEQU", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -188,6 +195,7 @@ int zpbequ_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
     {
         *scond = 1.;
         *amax = 0.;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (upper)
@@ -232,6 +240,7 @@ int zpbequ_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
             if (s[i__] <= 0.)
             {
                 *info = i__;
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* L20: */
@@ -252,6 +261,7 @@ int zpbequ_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
         /* Compute SCOND = min(S(I)) / max(S(I)) */
         *scond = sqrt(smin) / sqrt(*amax);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZPBEQU */
 }
