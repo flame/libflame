@@ -184,6 +184,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int zsytf2_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *ipiv, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zsytf2 inputs: uplo %c, n %d, lda %d",*uplo, *n, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     doublereal d__1, d__2, d__3, d__4;
@@ -263,6 +269,7 @@ int zsytf2_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *ipi
     {
         i__1 = -(*info);
         xerbla_("ZSYTF2", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Initialize ALPHA for use in choosing pivot block size. */
@@ -753,6 +760,7 @@ L40: /* If K > N, exit from loop */
         goto L40;
     }
 L70:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZSYTF2 */
 }
