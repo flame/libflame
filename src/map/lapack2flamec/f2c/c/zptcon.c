@@ -109,6 +109,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int zptcon_(integer *n, doublereal *d__, doublecomplex *e, doublereal *anorm, doublereal *rcond, doublereal *rwork, integer * info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zptcon inputs: n %d",*n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     doublereal d__1;
@@ -159,6 +165,7 @@ int zptcon_(integer *n, doublereal *d__, doublecomplex *e, doublereal *anorm, do
     {
         i__1 = -(*info);
         xerbla_("ZPTCON", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -166,10 +173,12 @@ int zptcon_(integer *n, doublereal *d__, doublecomplex *e, doublereal *anorm, do
     if (*n == 0)
     {
         *rcond = 1.;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*anorm == 0.)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check that D(1:N) is positive. */
@@ -180,6 +189,7 @@ int zptcon_(integer *n, doublereal *d__, doublecomplex *e, doublereal *anorm, do
     {
         if (d__[i__] <= 0.)
         {
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         /* L10: */
@@ -215,6 +225,7 @@ int zptcon_(integer *n, doublereal *d__, doublecomplex *e, doublereal *anorm, do
     {
         *rcond = 1. / ainvnm / *anorm;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZPTCON */
 }

@@ -101,6 +101,12 @@
 /* Subroutine */
 int zptts2_(integer *iuplo, integer *n, integer *nrhs, doublereal *d__, doublecomplex *e, doublecomplex *b, integer *ldb)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zptts2 inputs: iuplo %d, n %d, nrhs %d, ldb %d",*iuplo, *n, *nrhs, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     doublereal d__1;
@@ -142,6 +148,7 @@ int zptts2_(integer *iuplo, integer *n, integer *nrhs, doublereal *d__, doubleco
             d__1 = 1. / d__[1];
             zdscal_(nrhs, &d__1, &b[b_offset], ldb);
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*iuplo == 1)
@@ -380,6 +387,7 @@ L80: /* Solve L * x = b. */
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZPTTS2 */
 }
