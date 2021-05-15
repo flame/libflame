@@ -139,6 +139,12 @@
 /* Subroutine */
 int zspmv_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *ap, doublecomplex *x, integer *incx, doublecomplex * beta, doublecomplex *y, integer *incy)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zspmv inputs: uplo %c, n %d, incx %d, incy %d",*uplo, *n, *incx, *incy);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3, i__4, i__5;
     doublecomplex z__1, z__2, z__3, z__4;
@@ -192,11 +198,13 @@ int zspmv_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *ap, doub
     if (info != 0)
     {
         xerbla_("ZSPMV ", &info);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible. */
     if (*n == 0 || alpha->r == 0. && alpha->i == 0. && (beta->r == 1. && beta->i == 0.))
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Set up the start points in X and Y. */
@@ -291,6 +299,7 @@ int zspmv_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *ap, doub
     }
     if (alpha->r == 0. && alpha->i == 0.)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     kk = 1;
@@ -550,6 +559,7 @@ int zspmv_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *ap, doub
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZSPMV */
 }

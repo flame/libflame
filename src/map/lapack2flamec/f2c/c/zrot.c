@@ -91,6 +91,12 @@
 /* Subroutine */
 int zrot_(integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, integer *incy, doublereal *c__, doublecomplex *s)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zrot inputs: n %d, incx %d, incy %d",*n, *incx, *incy);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3, i__4;
     doublecomplex z__1, z__2, z__3, z__4;
@@ -119,6 +125,7 @@ int zrot_(integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, integ
     /* Function Body */
     if (*n <= 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*incx == 1 && *incy == 1)
@@ -170,6 +177,7 @@ int zrot_(integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, integ
         iy += *incy;
         /* L10: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* Code for both increments equal to 1 */
 L20:
@@ -205,6 +213,7 @@ L20:
         cx[i__2].i = stemp.i; // , expr subst
         /* L30: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
 /* zrot_ */
