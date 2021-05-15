@@ -105,6 +105,12 @@ static doublecomplex c_b1 =
 /* Subroutine */
 int zpotrs_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zpotrs inputs: uplo %c, n %d, nrhs %d, lda %d, ldb %d",*uplo, *n, *nrhs, *lda, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */
@@ -167,11 +173,13 @@ int zpotrs_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     {
         i__1 = -(*info);
         xerbla_("ZPOTRS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0 || *nrhs == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (upper)
@@ -190,6 +198,7 @@ int zpotrs_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *ld
         /* Solve L**H *X = B, overwriting B with X. */
         ztrsm_("Left", "Lower", "Conjugate transpose", "Non-unit", n, nrhs, & c_b1, &a[a_offset], lda, &b[b_offset], ldb);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZPOTRS */
 }
