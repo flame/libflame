@@ -177,6 +177,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int zporfs_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *af, integer *ldaf, doublecomplex *b, integer *ldb, doublecomplex *x, integer *ldx, doublereal *ferr, doublereal *berr, doublecomplex *work, doublereal * rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zporfs inputs: uplo %c, n %d, nrhs %d, lda %d, ldaf %d, ldb %d, ldx %d",*uplo, *n, *nrhs, *lda, *ldaf, *ldb, *ldx);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, b_dim1, b_offset, x_dim1, x_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal d__1, d__2, d__3, d__4;
@@ -283,6 +289,7 @@ int zporfs_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     {
         i__1 = -(*info);
         xerbla_("ZPORFS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -297,6 +304,7 @@ int zporfs_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *ld
             berr[j] = 0.;
             /* L10: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* NZ = maximum number of nonzero elements in each row of A, plus 1 */
@@ -528,6 +536,7 @@ L100:
         }
         /* L140: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZPORFS */
 }
