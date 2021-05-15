@@ -255,6 +255,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int zlasyf_rk_(char *uplo, integer *n, integer *nb, integer *kb, doublecomplex *a, integer *lda, doublecomplex *e, integer *ipiv, doublecomplex *w, integer *ldw, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"zlasyf inputs: uplo %c, n %d, nb %d, lda %d, ldw %d",*uplo, *n, *nb, *lda, *ldw);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, w_dim1, w_offset, i__1, i__2, i__3, i__4, i__5;
  doublereal d__1, d__2;
@@ -925,6 +931,7 @@
  /* Set KB to the number of columns factorized */
  *kb = k - 1;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of ZLASYF_RK */
  }
