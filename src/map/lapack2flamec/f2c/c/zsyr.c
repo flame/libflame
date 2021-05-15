@@ -123,6 +123,12 @@
 /* Subroutine */
 int zsyr_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *x, integer *incx, doublecomplex *a, integer *lda)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zsyr inputs: uplo %c, n %d, incx %d, lda %d",*uplo, *n, *incx, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
     doublecomplex z__1, z__2;
@@ -179,11 +185,13 @@ int zsyr_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *x, intege
     if (info != 0)
     {
         xerbla_("ZSYR ", &info);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible. */
     if (*n == 0 || alpha->r == 0. && alpha->i == 0.)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Set the start point in X if the increment is not unity. */
@@ -354,6 +362,7 @@ int zsyr_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *x, intege
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZSYR */
 }
