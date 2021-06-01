@@ -229,6 +229,28 @@
 #define FLA_BIDIAG_INNER_TO_OUTER_B_RATIO  (0.25)
 #define FLA_CAQR_INNER_TO_OUTER_B_RATIO    (0.25)
 
+// LDLT Factorization for packed matrices uses different threshold to choose
+// between blocked /  unblocked variants and also the blocksize for the blocked
+// variant. The thresholds and blocksizes re defined here
+#define FLA_SPFFRT2__NTHRESH1         (64)
+#define FLA_SPFFRT2__NTHRESH2         (201)
+#define FLA_SPFFRT2__NTHRESH3         (4096)
+#define FLA_SPFFRT2__NCOLTHRESH       (3)
+#define FLA_SPFFRT2__NCOLFRAC_THRESH1 (25)
+#define FLA_SPFFRT2__NCOLFRAC_THRESH2 (80)
+#define FLA_SPFFRT2__NCOLFRAC_THRESH3 (20)
+#define FLA_SPFFRT2__BSIZE_NL1        (256)
+#define FLA_SPFFRT2__BSIZE_NL2        (4096)
+#define FLA_SPFFRT2__BSIZE1           (8)
+#define FLA_SPFFRT2__BSIZE2           (32)
+#define FLA_SPFFRT2__BSIZE3           (64)
+
+
+//POTRF, threshold numbers to chose paths for performance
+#define FLA_POTRF_FLOAT_SMALL         (70)
+#define FLA_POTRF_DOUBLE_SMALL        (75)
+#define FLA_POTRF_DOUBLE_MID          (423)
+
 //GETRF , threshold numbers to chose paths for performance
 #define FLA_GETRF_SMALL               (85)
 #define FLA_GETRF_FLOAT               (1440)

@@ -36,6 +36,8 @@ extern void DTL_Trace(
 		    uint32 ui32LineNumber,
 		    const int8 *pi8Message);
 
+#define FLA_ENABLE_ALT_PATHS  0
+
 #define LAPACK_potrf(prefix)                                    \
   int F77_ ## prefix ## potrf( char* uplo,                      \
                                integer*  n,                         \
@@ -43,14 +45,31 @@ extern void DTL_Trace(
                                integer*  ldim_A,                    \
                                integer*  info )
 
-#define LAPACK_potrf_body(prefix)                               \
-  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5); 		\
-  FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
-  FLA_Uplo     uplo_fla;                                        \
-  FLA_Obj      A;                                               \
-  FLA_Error    e_val;                                           \
-  FLA_Error    init_result;                                     \
-                                                                \
+#define LAPACK_potrf_body(prefix)                                                            \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                                              \
+  FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);                                     \
+  FLA_Uplo     uplo_fla;                                                                     \
+  FLA_Obj      A;                                                                            \
+  FLA_Error    e_val = FLA_SUCCESS;                                                          \
+  FLA_Error    init_result;                                                                  \
+  FLA_Bool skip = FALSE;                                                                     \
+                                                                                             \
+  if(datatype == FLA_FLOAT && !FLA_ENABLE_ALT_PATHS ){ /*sp doesnt go to lf*/                \
+  if( *n < FLA_POTRF_FLOAT_SMALL )                                                           \
+  lapack_spotf2( uplo, n, buff_A, ldim_A,  info );                                           \
+  else                                                                                       \
+  lapack_spotrf( uplo, n, buff_A, ldim_A,  info );                                           \
+  if( info != 0 ) skip = TRUE;                                                               \
+  }                                                                                          \
+  /*for sizes greater than 423 dp uses lf code*/                                             \
+  else if ( datatype == FLA_DOUBLE && *n < FLA_POTRF_DOUBLE_MID && !FLA_ENABLE_ALT_PATHS ) { \
+  if( *n < FLA_POTRF_DOUBLE_SMALL )                                                          \
+  lapack_dpotf2( uplo, n, buff_A, ldim_A,  info );                                           \
+  else                                                                                       \
+  lapack_dpotrf( uplo, n, buff_A, ldim_A,  info );                                           \
+  if( info != 0 ) skip = TRUE;                                                               \
+  }                                                                                          \
+  else {                                                                                     \
   FLA_Init_safe( &init_result );                                \
   FLA_Param_map_netlib_to_flame_uplo( uplo, &uplo_fla );        \
                                                                 \
@@ -62,9 +81,9 @@ extern void DTL_Trace(
   FLA_Obj_free_without_buffer( &A );                            \
                                                                 \
   FLA_Finalize_safe( init_result );                             \
-                                                                \
+  }                                                             \
   if ( e_val != FLA_SUCCESS ) *info = e_val + 1;                \
-  else                        *info = 0;                        \
+  else if( skip != TRUE)      *info = 0;                        \
                                                                 \
   AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  \
   return 0;
