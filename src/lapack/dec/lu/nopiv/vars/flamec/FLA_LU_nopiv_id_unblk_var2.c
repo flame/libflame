@@ -34,6 +34,7 @@ FLA_Error FLA_LU_nopiv_id_unblk_var2( integer m_A, integer n_A, double* A, integ
      alpha = A + i + i * cs_A;
      mdiff = m_A - i - 1;
      ndiff = n_A - i - 1;
+     if( *alpha == 0.0 ) break;
      if( *alpha != 1.0 )
      {
         alpha_inv = 1.0 / *alpha;

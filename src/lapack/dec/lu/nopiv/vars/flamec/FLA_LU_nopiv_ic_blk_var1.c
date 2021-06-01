@@ -4,10 +4,21 @@
 
 #include "FLAME.h"
 
-FLA_Error FLA_LU_nopiv_i_blk_var1( FLA_Obj A , dim_t nfact )
+FLA_Error FLA_LU_nopiv_ic_blk_var1( integer m_A, integer n_A,FLA_Obj A, scomplex* buff_A, integer nfact, integer rs_A, integer cs_A )
 {
-  FLA_Obj ATL, ATR, ABL, ABR;
 
+  scomplex* copy_A = (scomplex*)FLA_malloc(m_A*n_A*sizeof(scomplex));
+  FLA_memset(copy_A,0,sizeof(copy_A));
+
+  for(integer i=0;i<nfact;i++)
+  {
+    for(integer j=0;j<nfact;j++)
+    {
+      *(copy_A+i+j*cs_A) = *(buff_A+i+j*cs_A);
+    }
+  }
+
+  FLA_Obj ATL, ATR, ABL, ABR;
 
   FLA_Part_2x2( A,    &ATL, &ATR,
                       &ABL, &ABR,     nfact, nfact, FLA_TL );
@@ -23,8 +34,21 @@ FLA_Error FLA_LU_nopiv_i_blk_var1( FLA_Obj A , dim_t nfact )
   FLA_Error e_val = FLA_SUCCESS;
 
   // ATL = L1*U1
-  e_val = FLA_LU_nopiv( ATL );              // Singular check, returns e_val = (i) where i is index on diagonal where value is 0
-  if( e_val != FLA_SUCCESS ) return e_val;
+  e_val = FLA_LU_nopiv( ATL );                                             // Singular check, returns e_val = (i) where i is index on diagonal where value is 0
+  if( e_val != FLA_SUCCESS )
+  {
+    for(integer i=0;i<nfact;i++)
+    {
+      for(integer j=0;j<nfact;j++)
+      {
+        *(buff_A+i+j*cs_A) = *(copy_A+i+j*cs_A);
+      }
+    }
+    FLA_LU_nopiv_ic_unblk_var1(m_A,n_A,buff_A,e_val,rs_A,cs_A);            //restore original matrix and use unblocked variant 1 to recover last valid state$
+    return e_val;
+  }
+
+  FLA_free(copy_A);
 
   // U2 or new ATR = L1^-1 * ATR
   FLA_Trsm( FLA_LEFT, FLA_LOWER_TRIANGULAR,

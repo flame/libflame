@@ -96,11 +96,22 @@ FLA_Error FLA_LU_nopiv_opz_var5( integer m_A,
                                  integer n_A,
                                  dcomplex* A, integer rs_A, integer cs_A );
 
-
-FLA_Error FLA_LU_nopiv_i_blk_var1( FLA_Obj A, dim_t nfact );
+FLA_Error FLA_LU_nopiv_is_blk_var1( integer m_A, integer n_A,FLA_Obj A, float* buff_A, integer nfact, integer rs_A, integer cs_A );
+FLA_Error FLA_LU_nopiv_id_blk_var1( integer m_A, integer n_A,FLA_Obj A, double* buff_A, integer nfact, integer rs_A, integer cs_A );
+FLA_Error FLA_LU_nopiv_ic_blk_var1( integer m_A, integer n_A,FLA_Obj A, scomplex* buff_A, integer nfact, integer rs_A, integer cs_A );
+FLA_Error FLA_LU_nopiv_iz_blk_var1( integer m_A, integer n_A,FLA_Obj A, dcomplex* buff_A, integer nfact, integer rs_A, integer cs_A );
+FLA_Error FLA_LU_nopiv_is_unblk_var1( integer m_A,
+                                      integer n_A,
+                                      float* A, integer nfact, integer rs_A, integer cs_A );
 FLA_Error FLA_LU_nopiv_id_unblk_var1( integer m_A,
                                       integer n_A,
                                       double* A, integer nfact, integer rs_A, integer cs_A );
+FLA_Error FLA_LU_nopiv_ic_unblk_var1( integer m_A,
+                                      integer n_A,
+                                      scomplex* A, integer nfact, integer rs_A, integer cs_A );
+FLA_Error FLA_LU_nopiv_iz_unblk_var1( integer m_A,
+                                      integer n_A,
+                                      dcomplex* A, integer nfact, integer rs_A, integer cs_A );
 FLA_Error FLA_LU_nopiv_id_unblk_var2( integer m_A,
                                       integer n_A,
                                       double* A, integer nfact, integer rs_A, integer cs_A );
