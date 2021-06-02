@@ -2041,6 +2041,16 @@
 #define F77_sgetrfnpi F77_FUNC( sgetrfnpi , SGETRFNPI )
 #define F77_zgetrfnpi F77_FUNC( zgetrfnpi , ZGETRFNPI )
 
+#define F77_sopgtr F77_FUNC( sopgtr, SOPGTR )
+#define F77_dopgtr F77_FUNC( dopgtr, DOPGTR )
+#define F77_sorcsd F77_FUNC( sorcsd, SORCSD )
+#define F77_dorcsd F77_FUNC( dorcsd, DORCSD )
+#define F77_sorcsd2by1 F77_FUNC( sorcsd2by1, SORCSD2BY1 )
+#define F77_dorcsd2by1 F77_FUNC( dorcsd2by1, DORCSD2BY1 )
+#define F77_sorghr F77_FUNC( sorghr, SORGHR )
+#define F77_dorghr F77_FUNC( dorghr, DORGHR )
+#define F77_sormhr F77_FUNC( sormhr, SORMHR )
+#define F77_dormhr F77_FUNC( dormhr, DORMHR )
 
 // Function Prototypes declaration
 double F77_dla_gbrcond(char* trans, integer* n, integer* kl, integer* ku, double* ab, integer* ldab, double* afb, integer* ldafb, integer* ipiv, integer* cmode, double* c, integer* info, double* work, integer* iwork);
@@ -4071,3 +4081,14 @@ int F77_cgetrfnpi(integer *m, integer *n, integer *nfact, scomplex *a, integer *
 int F77_dgetrfnpi(integer *m, integer *n, integer *nfact, double *a, integer * lda, integer *info);
 int F77_sgetrfnpi(integer *m, integer *n, integer *nfact, float *a, integer *lda, integer *info);
 int F77_zgetrfnpi(integer *m, integer *n, integer*nfact, dcomplex *a, integer *lda, integer *info);
+
+int F77_sopgtr(char *uplo, integer *n, float *ap, float *tau, float *q, integer *ldq, float *work, integer *info);
+int F77_dopgtr(char *uplo, integer *n, double *ap, double *tau, double *q, integer *ldq, double *work, integer *info);
+int F77_sorcsd(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, char *signs, integer *m, integer *p, integer *q, float *x11, integer *ldx11, float *x12, integer *ldx12, float *x21, integer *ldx21, float *x22, integer *ldx22, float *theta, float *u1, integer *ldu1, float *u2, integer *ldu2, float *v1t, integer *ldv1t, float *v2t, integer *ldv2t, float *work, integer *lwork, integer *iwork, integer *info);
+int F77_dorcsd(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, char *signs, integer *m, integer *p, integer *q, double *x11, integer *ldx11, double *x12, integer *ldx12, double *x21, integer *ldx21, double *x22, integer *ldx22, double *theta, double *u1, integer *ldu1, double *u2, integer *ldu2, double *v1t, integer *ldv1t, double *v2t, integer *ldv2t, double *work, integer *lwork, integer *iwork, integer *info);
+int F77_sorcsd2by1(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, integer *q, float *x11, integer *ldx11, float * x21, integer *ldx21, float *theta, float *u1, integer *ldu1, float *u2, integer *ldu2, float *v1t, integer *ldv1t, float *work, integer *lwork, integer *iwork, integer *info);
+int F77_dorcsd2by1(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, integer *q, double *x11, integer *ldx11, double *x21, integer *ldx21, double *theta, double *u1, integer *ldu1, double *u2, integer *ldu2, double *v1t, integer *ldv1t, double *work, integer *lwork, integer *iwork, integer *info);
+int F77_sorghr(integer *n, integer *ilo, integer *ihi, float *a, integer *lda, float *tau, float *work, integer *lwork, integer *info);
+int F77_dorghr(integer *n, integer *ilo, integer *ihi, double *a, integer *lda, double *tau, double *work, integer *lwork, integer *info);
+int F77_sormhr(char *side, char *trans, integer *m, integer *n, integer *ilo, integer *ihi, float *a, integer *lda, float *tau, float * c__, integer *ldc, float *work, integer *lwork, integer *info);
+int F77_dormhr(char *side, char *trans, integer *m, integer *n, integer *ilo, integer *ihi, double *a, integer *lda, double * tau, double *c__, integer *ldc, double *work, integer *lwork, integer *info);
