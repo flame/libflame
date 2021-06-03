@@ -42,11 +42,13 @@ extern void DTL_Trace(
 		    uint32 ui32LineNumber,
 		    const int8 *pi8Message);
 
-#define LAPACK_getrf(prefix)                                            \
-  int F77_ ## prefix ## getrf( integer* m,                                  \
-                               integer* n,                                  \
+#define FLA_ENABLE_ALT_PATH 0
+
+#define LAPACK_getrf(prefix)                                                           \
+  int F77_ ## prefix ## getrf( integer* m,                                             \
+                               integer* n,                                             \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
-                               integer* buff_p,                             \
+                               integer* buff_p,                                        \
                                integer* info )
 
 #ifndef FLA_ENABLE_MULTITHREADING
@@ -56,23 +58,24 @@ extern void DTL_Trace(
   AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                 \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   FLA_Obj      A, p;                                            \
-  integer          min_m_n    = min( *m, *n );                      \
+  integer      min_m_n    = min( *m, *n );                      \
   FLA_Error    e_val;                                           \
   FLA_Error    init_result;                                     \
   FLA_Bool skip = FALSE;                                        \
                                                                 \
-  if( *m < FLA_GETRF_SMALL  && *n < FLA_GETRF_SMALL )  /* Small sizes- lapack path */                               \
+                                                                \
+  if( *m < FLA_GETRF_SMALL  && *n < FLA_GETRF_SMALL && !FLA_ENABLE_ALT_PATH )  /* Small sizes- lapack path */       \
   {                                                                                                                 \
     switch(datatype)                                                                                                \
     {                                                                                                               \
        case FLA_FLOAT:                                                                                              \
-       { lapack_sgetrf( m, n, buff_A, ldim_A, buff_p, info); break; }                                       \
+       { lapack_sgetrf( m, n, buff_A, ldim_A, buff_p, info); break; }                                               \
        case FLA_DOUBLE:                                                                                             \
-       { lapack_dgetrf( m, n, buff_A, ldim_A, buff_p, info); break; }                                       \
+       { lapack_dgetrf( m, n, buff_A, ldim_A, buff_p, info); break; }                                               \
        case FLA_COMPLEX:                                                                                            \
-       { lapack_cgetrf( m, n, buff_A, ldim_A, buff_p, info); break; }                                       \
+       { lapack_cgetrf( m, n, buff_A, ldim_A, buff_p, info); break; }                                               \
        case FLA_DOUBLE_COMPLEX:                                                                                     \
-       { lapack_zgetrf( m, n, buff_A, ldim_A, buff_p, info); break; }                                       \
+       { lapack_zgetrf( m, n, buff_A, ldim_A, buff_p, info); break; }                                               \
        if ( *info != 0 ) skip  = TRUE;                                                                              \
     }                                                                                                               \
   }                                                                                                                 \
