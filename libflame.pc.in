@@ -8,4 +8,4 @@ Description: A portable library for dense matrix computations, providing much of
 Version: @PACKAGE_VERSION@
 Libs: -L${libdir} -lflame
 Libs.private: @LDFLAGS@
-Cflags: -I${includedir}/libflame
+Cflags: -I${includedir}
