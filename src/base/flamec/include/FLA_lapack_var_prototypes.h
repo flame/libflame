@@ -15,6 +15,7 @@
 #include "FLA_LU_incpiv.h"
 #include "FLA_QR_UT.h"
 #include "FLA_QR_UT_piv.h"
+#include "FLA_EXT_geqrf.h"
 #include "FLA_QR2_UT.h"
 #include "FLA_QR_UT_inc.h"
 #include "FLA_LQ_UT.h"

@@ -42,7 +42,7 @@ void libfla_test_qrut_experiment( test_params_t params,
                                   unsigned int  var,
                                   char*         sc_str,
                                   FLA_Datatype  datatype,
-                                  uinteger  p,
+                                  uinteger      p,
                                   unsigned int  pci,
                                   unsigned int  n_repeats,
                                   signed int    impl,
@@ -145,7 +145,7 @@ void libfla_test_qrut_experiment( test_params_t params,
                                   unsigned int  var,
                                   char*         sc_str,
                                   FLA_Datatype  datatype,
-                                  uinteger  p_cur,
+                                  uinteger      p_cur,
                                   unsigned int  pci,
                                   unsigned int  n_repeats,
                                   signed int    impl,
@@ -157,11 +157,11 @@ void libfla_test_qrut_experiment( test_params_t params,
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	uinteger m, n;
-	uinteger min_m_n;
-	integer   m_input    = -2;
-	integer   n_input    = -1;
-	FLA_Obj      A, T, x, b, y, norm;
+	uinteger     m, n;
+	uinteger     min_m_n;
+	integer      m_input    = -2;
+	integer      n_input    = -1;
+	FLA_Obj      A, T, x, b, y, norm, b_copy;
 	FLA_Obj      A_save;
 	FLA_Obj      A_test, T_test, x_test, b_test;
 
@@ -202,7 +202,7 @@ void libfla_test_qrut_experiment( test_params_t params,
 
 	// Create a random right-hand side vector.
 	FLA_Random_matrix( b );
-
+	
 	// Use hierarchical matrices if we're testing the FLASH front-end.
 	if ( impl == FLA_TEST_HIER_FRONT_END )
 	{
@@ -221,15 +221,12 @@ void libfla_test_qrut_experiment( test_params_t params,
 	     impl == FLA_TEST_FLAT_OPT_VAR ||
 	     impl == FLA_TEST_FLAT_BLK_VAR )
 		libfla_test_qrut_cntl_create( var, b_alg_flat );
-	
-	// Invoke FLA_GETRF for external geqrf call
-        if ( impl == FLA_TEST_FLAT_BLK_EXT )
-        {
-                FLA_GEQRF( m, n, A_save, A_test, T_test, datatype, n_repeats, &time_min );
-        }
-        else
-        {
-		// Repeat the experiment n_repeats times and record results.
+    
+    // Invoke FLA_GETRF for external geqrf call
+    if ( impl != FLA_TEST_FLAT_BLK_EXT )
+    {
+      
+        // Repeat the experiment n_repeats times and record results.
 		for ( i = 0; i < n_repeats; ++i )
 		{
 			if ( impl == FLA_TEST_HIER_FRONT_END )
@@ -244,52 +241,249 @@ void libfla_test_qrut_experiment( test_params_t params,
 			time = FLA_Clock() - time;
 			time_min = min( time_min, time );
 		}
-	}
-
-	// Compute the performance of the best experiment repeat.
-	*perf = (         2.0   * m * n * n - 
-	          ( 2.0 / 3.0 ) * n * n * n ) / time_min / FLOPS_PER_UNIT_PERF;
-	if ( FLA_Obj_is_complex( A ) ) *perf *= 4.0;
+        
+        // Compute the performance of the best experiment repeat.
+        *perf = (         2.0   * m * n * n - 
+                ( 2.0 / 3.0 ) * n * n * n ) / time_min / FLOPS_PER_UNIT_PERF;
+        if ( FLA_Obj_is_complex( A ) ) *perf *= 4.0;
 	
-	//TODO: The TAU output format from External call GEQRF does not
-	//match with internal FLA QR API. Skipping validation till
-	//test for that is updated 
-	if ( impl != FLA_TEST_FLAT_BLK_EXT ){
-	
-	// Perform a linear solve with the result.
-	if ( impl == FLA_TEST_HIER_FRONT_END )
-	{
-		FLASH_QR_UT_solve( A_test, T_test, b_test, x_test );
-		FLASH_Obj_flatten( x_test, x );
-	}
-	else
+        // Perform a linear solve with the result.
+        if ( impl == FLA_TEST_HIER_FRONT_END )
         {
-		FLA_QR_UT_solve( A_test, T_test, b, x );
-	}
+            FLASH_QR_UT_solve( A_test, T_test, b_test, x_test );
+            FLASH_Obj_flatten( x_test, x );
+        }
+        else
+        {
+            FLA_QR_UT_solve( A_test, T_test, b, x );
+        }
 
-	// Free the hierarchical matrices if we're testing the FLASH front-end.
-	if ( impl == FLA_TEST_HIER_FRONT_END )
+        // Free the hierarchical matrices if we're testing the FLASH front-end.
+        if ( impl == FLA_TEST_HIER_FRONT_END )
+        {
+            FLASH_Obj_free( &A_test );
+            FLASH_Obj_free( &T_test );
+            FLASH_Obj_free( &b_test );
+            FLASH_Obj_free( &x_test );
+        }
+        
+        // Free the control trees if we're testing the variants.
+        if ( impl == FLA_TEST_FLAT_UNB_VAR ||
+             impl == FLA_TEST_FLAT_OPT_VAR ||
+             impl == FLA_TEST_FLAT_BLK_VAR )
+            libfla_test_qrut_cntl_free();
+
+        // Compute the residual.
+        FLA_Gemv_external( FLA_NO_TRANSPOSE, FLA_ONE, A_save, x, FLA_MINUS_ONE, b );
+        FLA_Gemv_external( FLA_CONJ_TRANSPOSE, FLA_ONE, A_save, b, FLA_ZERO, y );
+        FLA_Nrm2_external( y, norm );
+        FLA_Obj_extract_real_scalar( norm, residual );
+	}
+    else
+    {
+	// Repeat the experiment n_repeats times and record results.
+	for ( i = 0; i < n_repeats; ++i )
 	{
-		FLASH_Obj_free( &A_test );
-		FLASH_Obj_free( &T_test );
-		FLASH_Obj_free( &b_test );
-		FLASH_Obj_free( &x_test );
-	}
+            FLA_Copy_external( A_save, A_test );
+			
+            
+            FLA_GEQRF( m, n, A_save, A_test, T_test, datatype, n_repeats, &time_min );
+			
+        }
 
-	// Free the control trees if we're testing the variants.
-	if ( impl == FLA_TEST_FLAT_UNB_VAR ||
-	     impl == FLA_TEST_FLAT_OPT_VAR ||
-	     impl == FLA_TEST_FLAT_BLK_VAR )
-		libfla_test_qrut_cntl_free();
+        // Compute the performance of the best experiment repeat.
+        *perf = (         2.0   * m * n * n - 
+                ( 2.0 / 3.0 ) * n * n * n ) / time_min / FLOPS_PER_UNIT_PERF;
+        if ( FLA_Obj_is_complex( A ) ) *perf *= 4.0;
+
+        integer cs_A;
+        integer cs_b, lwork, tinfo;
+        integer mb, nb;
+        integer min_m_n;
+        FLA_Obj qbt;
+
+	min_m_n = min( m, n );
+
+        switch( datatype )
+        {
+            case FLA_FLOAT:
+            {
+                float* twork, wsize;
+                FLA_Obj_create( datatype, min_m_n, 1, 0, 0, &qbt );
+                
+                float* out_T   = FLA_FLOAT_PTR( T_test );
+                float* mat_A   = FLA_FLOAT_PTR( A_test );
+                float* ptr_b   = FLA_FLOAT_PTR( b );
+                float* ptr_qbt = FLA_FLOAT_PTR( qbt );
+
+                cs_A = FLA_Obj_col_stride( A_test );
 
 
-	// Compute the residual.
-	FLA_Gemv_external( FLA_NO_TRANSPOSE, FLA_ONE, A_save, x, FLA_MINUS_ONE, b );
-	FLA_Gemv_external( FLA_CONJ_TRANSPOSE, FLA_ONE, A_save, b, FLA_ZERO, y );
-	FLA_Nrm2_external( y, norm );
-	FLA_Obj_extract_real_scalar( norm, residual );
-	
-	}
+                mb = b.m;
+                nb = b.n;
+                cs_b = FLA_Obj_col_stride( b );
+
+                // Save the original object contents in a temporary object.
+                FLA_Obj_create_copy_of( FLA_NO_TRANSPOSE, b, &b_copy );
+
+                // b' = QT*b
+                // Get size of work buffer
+                lwork = -1;
+                sormqr_( "Left", "Transpose", &mb, &nb, &min_m_n, mat_A, &cs_A, out_T,
+                          ptr_b, &cs_b, &wsize, &lwork, &tinfo );
+
+                // allocate work buffer and calculate b'
+                lwork = (integer) wsize;
+                twork = malloc( lwork * sizeof( float ) );
+                sormqr_( "Left", "Transpose", &mb, &nb, &min_m_n, mat_A, &cs_A, out_T,
+                          ptr_b, &cs_b, twork, &lwork, &tinfo );
+                free( twork );
+
+                // Triangular Solve to find x in Ax=b
+                strtrs_( "Upper", "No-Tran", "Non-unit", &min_m_n, &nb, mat_A, &cs_A,
+                          ptr_b, &cs_b, &tinfo );
+
+                for( i = 0; i < min_m_n; i++ )
+                {
+                    ptr_qbt[i] = ptr_b[i];
+                }
+                break;
+            }
+
+            case FLA_DOUBLE:
+            {
+                double* twork, wsize;
+                FLA_Obj_create( datatype, min_m_n, 1, 0, 0, &qbt );
+                
+                double* out_T   = FLA_DOUBLE_PTR( T_test );
+                double* mat_A   = FLA_DOUBLE_PTR( A_test );
+                double* ptr_b   = FLA_DOUBLE_PTR( b );
+                double* ptr_qbt = FLA_DOUBLE_PTR( qbt );
+
+                cs_A = FLA_Obj_col_stride( A_test );
+
+                mb = b.m;
+                nb = b.n;
+                cs_b = FLA_Obj_col_stride( b );
+
+                // Save the original object contents in a temporary object.
+                FLA_Obj_create_copy_of( FLA_NO_TRANSPOSE, b, &b_copy );
+
+                // b' = QT*b
+                // Get size of work buffer
+                lwork = -1;
+                dormqr_( "Left", "Transpose", &mb, &nb, &min_m_n, mat_A, &cs_A, out_T,
+                          ptr_b, &cs_b, &wsize, &lwork, &tinfo );
+
+                // allocate work buffer and calculate b'
+                lwork = (integer) wsize;
+                twork = malloc( lwork * sizeof( double ) );
+                dormqr_( "Left", "Transpose", &mb, &nb, &min_m_n, mat_A, &cs_A, out_T,
+                          ptr_b, &cs_b, twork, &lwork, &tinfo );
+                free( twork );
+
+                // Triangular Solve to find x in Ax=b
+                dtrtrs_( "Upper", "No-Tran", "Non-unit", &min_m_n, &nb, mat_A, &cs_A,
+                          ptr_b, &cs_b, &tinfo );
+
+                for( i = 0; i < min_m_n; i++ )
+                {
+                    ptr_qbt[i] = ptr_b[i];
+                }
+                break;
+            }
+            case FLA_COMPLEX:
+            {
+                scomplex* twork, wsize;
+                FLA_Obj_create( datatype, min_m_n, 1, 0, 0, &qbt );
+                scomplex* out_T   = FLA_COMPLEX_PTR( T_test );
+                scomplex* mat_A   = FLA_COMPLEX_PTR( A_test );
+                scomplex* ptr_b   = FLA_COMPLEX_PTR( b );
+                scomplex* ptr_qbt = FLA_COMPLEX_PTR( qbt );
+
+                cs_A = FLA_Obj_col_stride( A_test );
+
+                mb = b.m;
+                nb = b.n;
+                cs_b = FLA_Obj_col_stride( b );
+
+                // Save the original object contents in a temporary object.
+                FLA_Obj_create_copy_of( FLA_NO_TRANSPOSE, b, &b_copy );
+
+                // b' = QT*b
+                // Get size of work buffer
+                lwork = -1;
+                cunmqr_( "Left", "Conjugate Transpose", &mb, &nb, &min_m_n, mat_A, &cs_A, out_T,
+                          ptr_b, &cs_b, &wsize, &lwork, &tinfo );
+
+                // allocate work buffer and calculate b'
+                lwork = (integer) wsize.real;
+                twork = malloc( lwork * sizeof( scomplex ) );
+                cunmqr_( "Left", "Conjugate Transpose", &mb, &nb, &min_m_n, mat_A, &cs_A, out_T,
+                          ptr_b, &cs_b, twork, &lwork, &tinfo );
+                free( twork );
+                // Triangular Solve to find x in Ax=b
+                ctrtrs_( "Upper", "No-Tran", "Non-unit", &min_m_n, &nb, mat_A, &cs_A,
+                          ptr_b, &cs_b, &tinfo );
+
+                for( i = 0; i < min_m_n; i++ )
+                {
+                    ptr_qbt[i].real = ptr_b[i].real;
+		            ptr_qbt[i].imag = ptr_b[i].imag;
+                }
+                break;
+            }
+            case FLA_DOUBLE_COMPLEX:
+            {
+                dcomplex* twork, wsize;
+                FLA_Obj_create( datatype, min_m_n, 1, 0, 0, &qbt );
+                dcomplex* out_T   = FLA_DOUBLE_COMPLEX_PTR( T_test );
+                dcomplex* mat_A   = FLA_DOUBLE_COMPLEX_PTR( A_test );
+                dcomplex* ptr_b   = FLA_DOUBLE_COMPLEX_PTR( b );
+                dcomplex* ptr_qbt = FLA_DOUBLE_COMPLEX_PTR( qbt );
+
+                cs_A = FLA_Obj_col_stride( A_test );
+
+                mb = b.m;
+                nb = b.n;
+                cs_b = FLA_Obj_col_stride( b );
+
+                // Save the original object contents in a temporary object.
+                FLA_Obj_create_copy_of( FLA_NO_TRANSPOSE, b, &b_copy );
+
+                // b' = QT*b
+                // Get size of work buffer
+                lwork = -1;
+                zunmqr_( "Left", "Conjugate Transpose", &mb, &nb, &min_m_n, mat_A, &cs_A, out_T,
+                          ptr_b, &cs_b, &wsize, &lwork, &tinfo );
+                // allocate work buffer and calculate b'
+                lwork = (integer) wsize.real;
+                twork = malloc( lwork * sizeof( dcomplex ) );
+                zunmqr_( "Left", "Conjugate Transpose", &mb, &nb, &min_m_n, mat_A, &cs_A, out_T,
+                          ptr_b, &cs_b, twork, &lwork, &tinfo );
+                free( twork );
+                // Triangular Solve to find x in Ax=b
+                ztrtrs_( "Upper", "No-Tran", "Non-unit", &min_m_n, &nb, mat_A, &cs_A,
+                          ptr_b, &cs_b, &tinfo );
+
+                for( i = 0; i < min_m_n; i++ )
+                {
+                    ptr_qbt[i].real = ptr_b[i].real;
+        		    ptr_qbt[i].imag = ptr_b[i].imag;
+                }
+                break;
+            }
+        }
+        
+        // Compute the residual.
+        FLA_Gemv_external( FLA_NO_TRANSPOSE, FLA_ONE, A_save, qbt, FLA_MINUS_ONE, b_copy );
+        FLA_Gemv_external( FLA_CONJ_TRANSPOSE, FLA_ONE, A_save, b_copy, FLA_ZERO, y );
+        FLA_Nrm2_external( y, norm );
+        FLA_Obj_extract_real_scalar( norm, residual );
+
+        FLA_Obj_free( &b_copy );
+        FLA_Obj_free( &qbt );
+    }
 
 	// Free the supporting flat objects.
 	FLA_Obj_free( &x );
@@ -418,95 +612,169 @@ void FLA_GEQRF( integer m,
                 unsigned int n_repeats,
                 double* time_min_ )
 {
-        integer      info;
-        unsigned int i;
-        double       time;
-        double       time_min   = 1e9;
-        integer lda;
-        integer lwork;
+    integer          info;
+    unsigned int i, j, k;
+    double       time;
+    double       time_min   = 1e9;
+    integer lda;
+    integer lwork;
 	integer min_m_n = min(m, n);
+    integer rs_A, cs_A;
 
-        lda     = (integer)FLA_Obj_col_stride( A );
+    lda     = (integer)FLA_Obj_col_stride( A );
+    
+    switch( datatype )
+    {
+        case FLA_FLOAT:
+            {
+                float* buff_T, *out_T;
+                float* work;
+                float  worksize;
+                float* mat_A = ( float * ) FLA_FLOAT_PTR( A );
+                float* buff_A = (float *) malloc( m * n * sizeof( float ) );
+                float* aptr = buff_A;
+			
+        		buff_T    = ( float * )malloc( min_m_n * sizeof( float ) );
+        		out_T     = FLA_FLOAT_PTR( T_obj );
+                
+                lwork = -1;
+                sgeqrf_(&m, &n, buff_A, &lda, buff_T, &worksize, &lwork, &info);
+                
+                lwork = (int)worksize;
+                work = (float * )malloc(lwork * sizeof(float));
+ 
+                rs_A     = FLA_Obj_row_stride( A );
+                cs_A     = FLA_Obj_col_stride( A );
 
-        switch( datatype )
-        {
-                case FLA_FLOAT:
+                for ( i = 0; i < n_repeats; ++i )
                 {
-        		float* buff_T;
-			float* work;
-			float worksize;
-                        float *buff_A     = ( float * ) FLA_FLOAT_PTR( A );
-			
-        		buff_T     = ( float * )malloc(min_m_n * sizeof(float));
-			
-			lwork = -1;
-			sgeqrf_(&m, &n, buff_A, &lda, buff_T, &worksize, &lwork, &info);
-			
-			lwork = (integer)worksize;
-			work = (float * )malloc(lwork * sizeof(float));
-
-                        for ( i = 0; i < n_repeats; ++i )
+                    FLA_Copy_external( A_save, A );
+                    
+                    for( k = 0; k < m; k++ )
+                    {
+                        for( j = 0; j < n; j++ )
                         {
-                           FLA_Copy_external( A_save, A );
-                           float *buff_A     = ( float * ) FLA_FLOAT_PTR( A );
-
-                           time = FLA_Clock();
-
-                           sgeqrf_(&m, &n, buff_A, &lda, buff_T, work, &lwork, &info);
-
-                           time = FLA_Clock() - time;
-                           time_min = min( time_min, time );
+                            aptr[m*j+k] = mat_A[cs_A * j + rs_A * k];
                         }
-                        break;
+                    }
+                    time = FLA_Clock();
+                    
+                    sgeqrf_(&m, &n, buff_A, &lda, buff_T, work, &lwork, &info);
+
+                    time = FLA_Clock() - time;
+                    time_min = min( time_min, time );
                 }
-                case FLA_DOUBLE:
+
+                // copy tau values to output FLA obj
+                for( i = 0; i < min_m_n; i++ )
                 {
-        		double* buff_T;
-			double* work;
-			double worksize;
-                        double *buff_A     = ( double * ) FLA_DOUBLE_PTR( A );
-			
-        		buff_T     = ( double * )malloc(min_m_n * sizeof(double));
-			
-			lwork = -1;
-			dgeqrf_(&m, &n, buff_A, &lda, buff_T, &worksize, &lwork, &info);
-			
-			lwork = (integer)worksize;
-			work = (double * )malloc(lwork * sizeof(double));
+                    out_T[i] = buff_T[i];
+                }
 
-                        for ( i = 0; i < n_repeats; ++i )
+                // copy output matrix
+                for( k = 0; k < m; k++ )
+                {
+                    for( j = 0; j < n; j++ )
+                    {
+                        mat_A[cs_A * j + rs_A * k] = aptr[m*j+k];
+                    }
+                }
+
+                free(buff_T);
+                free(work);
+                free(buff_A);
+                break;
+            }
+        case FLA_DOUBLE:
+            {
+                double* buff_T, *out_T;
+                double* work;
+                double  worksize;
+                double* mat_A = ( double * ) FLA_DOUBLE_PTR( A );
+                double* buff_A = ( double *) malloc( m * n * sizeof( double ) );
+                double* aptr = buff_A;
+			
+        		buff_T    = ( double * )malloc( min_m_n * sizeof( double ) );
+        		out_T     = FLA_DOUBLE_PTR( T_obj );
+                
+                lwork = -1;
+                dgeqrf_(&m, &n, buff_A, &lda, buff_T, &worksize, &lwork, &info);
+                
+                lwork = (int)worksize;
+                work = (double * )malloc(lwork * sizeof(double));
+
+                rs_A     = FLA_Obj_row_stride( A );
+                cs_A     = FLA_Obj_col_stride( A );
+                
+                for ( i = 0; i < n_repeats; ++i )
+                {
+                    FLA_Copy_external( A_save, A );
+                    
+                    for( k = 0; k < m; k++ )
+                    {
+                        for( j = 0; j < n; j++ )
                         {
-                           FLA_Copy_external( A_save, A );
-
-                           time = FLA_Clock();
-
-                           dgeqrf_(&m, &n, buff_A, &lda, buff_T, work, &lwork, &info);
-
-                           time = FLA_Clock() - time;
-                           time_min = min( time_min, time );
+                            aptr[m*j+k] = mat_A[cs_A * j + rs_A * k];
                         }
+                    }
+                    time = FLA_Clock();
+                    
+                    dgeqrf_(&m, &n, buff_A, &lda, buff_T, work, &lwork, &info);
 
-                        break;
+                    time = FLA_Clock() - time;
+                    time_min = min( time_min, time );
                 }
-                case FLA_COMPLEX:
-                {
-        		scomplex* buff_T;
-			scomplex* work;
-			scomplex worksize;
-                        scomplex *buff_A     = ( scomplex * ) FLA_COMPLEX_PTR( A );
-			
-        		buff_T     = ( scomplex * )malloc(min_m_n * sizeof(scomplex));
-			
-			lwork = -1;
-			cgeqrf_(&m, &n, buff_A, &lda, buff_T, &worksize, &lwork, &info);
-			
-			lwork = (integer)worksize.real;
-			work = (scomplex * )malloc(lwork * sizeof(scomplex));
 
-                        for ( i = 0; i < n_repeats; ++i )
-                        {
+                // copy tau values to output FLA obj
+                for( i = 0; i < min_m_n; i++ )
+                {
+                    out_T[i] = buff_T[i];
+                }
+
+                // copy output matrix
+                for( k = 0; k < m; k++ )
+                {
+                    for( j = 0; j < n; j++ )
+                    {
+                        mat_A[cs_A * j + rs_A * k] = aptr[m*j+k];
+                    }
+                }
+
+                free(buff_T);
+                free(work);
+                free(buff_A);
+                break;
+            }
+        case FLA_COMPLEX:
+                 {
+                  scomplex* buff_T, *out_T;
+                  scomplex* work;
+                  scomplex worksize;
+                  scomplex* mat_A = ( scomplex * ) FLA_COMPLEX_PTR( A );
+                  scomplex* buff_A = ( scomplex *) malloc( m * n * sizeof( scomplex ) );
+                  scomplex* aptr = buff_A;
+                  buff_T     = ( scomplex * )malloc(min_m_n * sizeof(scomplex));
+                  out_T     = FLA_COMPLEX_PTR( T_obj );
+                  lwork = -1;
+                  cgeqrf_(&m, &n, buff_A, &lda, buff_T, &worksize, &lwork, &info);
+
+                  lwork = (integer)worksize.real;
+                  work = (scomplex * )malloc(lwork * sizeof(scomplex));
+                  rs_A     = FLA_Obj_row_stride( A );
+                  cs_A     = FLA_Obj_col_stride( A );
+
+                 for ( i = 0; i < n_repeats; ++i )
+                 {
                            FLA_Copy_external( A_save, A );
-                           scomplex *buff_A     = ( scomplex * ) FLA_COMPLEX_PTR( A );
+                           for( k = 0; k < m; k++ )
+                           {
+                              for( j = 0; j < n; j++ )
+                             {
+                                aptr[m*j+k].real = mat_A[cs_A * j + rs_A * k].real;
+				aptr[m*j+k].imag = mat_A[cs_A * j + rs_A * k].imag;
+
+                             }
+                           }                    
 
                            time = FLA_Clock();
 
@@ -514,39 +782,91 @@ void FLA_GEQRF( integer m,
 
                            time = FLA_Clock() - time;
                            time_min = min( time_min, time );
-                        }
+                 }
+                 // copy tau values to output FLA obj
+                 for( i = 0; i < min_m_n; i++ )
+                 {
+                       out_T[i].real = buff_T[i].real;
+		       out_T[i].imag = buff_T[i].imag;
 
-                        break;
+                 }
+
+                    // copy output matrix
+                 for( k = 0; k < m; k++ )
+                 {
+                     for( j = 0; j < n; j++ )
+                     {
+                           mat_A[cs_A * j + rs_A * k].real = aptr[m*j+k].real;
+			   mat_A[cs_A * j + rs_A * k].imag = aptr[m*j+k].imag;
+
+
+                     }
+                 }
+
+                  free(buff_T);
+                  free(work);
+                  free(buff_A);
+                  break;
                 }
                 case FLA_DOUBLE_COMPLEX:
                 {
-        		dcomplex* buff_T;
-			dcomplex* work;
-			dcomplex worksize;
-                        dcomplex *buff_A     = ( dcomplex * ) FLA_DOUBLE_COMPLEX_PTR( A );
-			
-        		buff_T     = ( dcomplex * )malloc(min_m_n * sizeof(dcomplex));
-			
-			lwork = -1;
-			zgeqrf_(&m, &n, buff_A, &lda, buff_T, &worksize, &lwork, &info);
-			
-			lwork = (integer)worksize.real;
-			work = (dcomplex * )malloc(lwork * sizeof(dcomplex));
+                dcomplex* buff_T, *out_T;
+                dcomplex* work;
+                dcomplex worksize;
+                dcomplex* mat_A = ( dcomplex * ) FLA_DOUBLE_COMPLEX_PTR( A );
+                dcomplex* buff_A = ( dcomplex *) malloc( m * n * sizeof( dcomplex ) );
+                dcomplex* aptr = buff_A;
+                buff_T     = ( dcomplex * )malloc(min_m_n * sizeof(dcomplex));
+                out_T     = FLA_DOUBLE_COMPLEX_PTR( T_obj );
+                lwork = -1;
+                zgeqrf_(&m, &n, buff_A, &lda, buff_T, &worksize, &lwork, &info);
+                lwork = (integer)worksize.real;
+                work = (dcomplex * )malloc(lwork * sizeof(dcomplex));
 
-                        for ( i = 0; i < n_repeats; ++i )
-                        {
-                           FLA_Copy_external( A_save, A );
-                           dcomplex *buff_A     = ( dcomplex * ) FLA_DOUBLE_COMPLEX_PTR( A );
+                rs_A     = FLA_Obj_row_stride( A );
+                cs_A     = FLA_Obj_col_stride( A );
 
-                           time = FLA_Clock();
+                for ( i = 0; i < n_repeats; ++i )
+                {
+                    FLA_Copy_external( A_save, A );
+                    for( k = 0; k < m; k++ )
+                    {
+                       for( j = 0; j < n; j++ )
+                       {
+                                aptr[m*j+k].real = mat_A[cs_A * j + rs_A * k].real;
+				aptr[m*j+k].imag = mat_A[cs_A * j + rs_A * k].imag;
 
-                           zgeqrf_(&m, &n, buff_A, &lda, buff_T, work, &lwork, &info);
+                       }
+                     }                    
 
-                           time = FLA_Clock() - time;
-                           time_min = min( time_min, time );
-                        }
+                     time = FLA_Clock();
 
-                        break;
+                     zgeqrf_(&m, &n, buff_A, &lda, buff_T, work, &lwork, &info);
+
+                     time = FLA_Clock() - time;
+                     time_min = min( time_min, time );
+                 }
+                 // copy tau values to output FLA obj
+                 for( i = 0; i < min_m_n; i++ )
+                 {
+                       out_T[i].real = buff_T[i].real;
+		               out_T[i].imag = buff_T[i].imag;
+                 }
+
+                    // copy output matrix
+                 for( k = 0; k < m; k++ )
+                 {
+                     for( j = 0; j < n; j++ )
+                     {
+                            mat_A[cs_A * j + rs_A * k].real = aptr[m*j+k].real;
+                            mat_A[cs_A * j + rs_A * k].imag = aptr[m*j+k].imag;
+                     }
+                 }
+
+                 free(buff_T);
+                 free(work);
+                 free(buff_A);
+                 break;
                 }
         }
         *time_min_ = time_min;
