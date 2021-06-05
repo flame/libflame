@@ -1,5 +1,6 @@
 #include "FLA_f2c.h"
 
+#ifndef FLA_ENABLE_F2C_DOTC
 
 extern
 complex cdotu_(integer *n, complex *cx, integer *incx, complex *cy, integer *incy);
@@ -15,3 +16,4 @@ VOID zdotu_f2c_(doublecomplex *r, integer *n, doublecomplex *cx, integer *incx, 
   *r = zdotu_(n, cx, incx, cy, incy);
 }
 
+#endif

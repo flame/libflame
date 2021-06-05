@@ -1457,8 +1457,8 @@ Optional Features:
   --enable-f2c-dotc
                           Enable code that allows the user to invoke f2c
                           based calling convention for complex datatype
-                          dotc function of BLAS. If this option is enabled
-                          libflame calls cdotc/zdotc function with output as
+                          dotc/dotu function of BLAS. If this option is enabled
+                          libflame calls {c,z}dotc/dotu function with output as
                           first parameter of the function instead of as return
                           type. (Disabled by default.)
   --enable-external-lapack-for-subproblems
@@ -6313,8 +6313,8 @@ $as_echo "no" >&6; }
 	fi
 
 
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested enabling F2C convention for Complex dotc function" >&5
-$as_echo_n "checking whether user requested enabling F2C calling format for complex dotc function... " >&6; }
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested enabling F2C convention for Complex dotc/dotu function" >&5
+$as_echo_n "checking whether user requested enabling F2C calling format for complex dotc/dotu function... " >&6; }
 
 	# Check whether --enable-f2c-dotc was given.
         if test "${enable_f2c_dotc+set}" = set; then :

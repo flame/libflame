@@ -23,10 +23,13 @@
 #ifndef F2C_INCLUDE
 #define F2C_INCLUDE
 
-/* Call F2C convention for Complex DOTC functions */
+/* Call F2C convention for Complex DOTC and DOTU unctions */
 #ifdef FLA_ENABLE_F2C_DOTC
 #define cdotc_f2c_ cdotc_
 #define zdotc_f2c_ zdotc_
+
+#define cdotu_f2c_ cdotu_
+#define zdotu_f2c_ zdotu_
 #endif
 
 // LDLT Factorization for packed matrices uses different threshold to choose
