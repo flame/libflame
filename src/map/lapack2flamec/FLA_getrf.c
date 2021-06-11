@@ -59,7 +59,7 @@ extern void DTL_Trace(
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   FLA_Obj      A, p;                                            \
   integer      min_m_n    = min( *m, *n );                      \
-  FLA_Error    e_val;                                           \
+  FLA_Error    e_val = FLA_SUCCESS;                             \
   FLA_Error    init_result;                                     \
   FLA_Bool skip = FALSE;                                        \
                                                                 \
@@ -76,12 +76,12 @@ extern void DTL_Trace(
        { lapack_cgetrf( m, n, buff_A, ldim_A, buff_p, info); break; }                                               \
        case FLA_DOUBLE_COMPLEX:                                                                                     \
        { lapack_zgetrf( m, n, buff_A, ldim_A, buff_p, info); break; }                                               \
-       if ( *info != 0 ) skip  = TRUE;                                                                              \
-    }                                                                                                               \
+    }  if ( *info != 0 ) skip  = TRUE;                                                                              \
+                                                                                                                    \
   }                                                                                                                 \
   else if( ( datatype == FLA_FLOAT && *m < FLA_GETRF_FLOAT && * n < FLA_GETRF_FLOAT  )||                            \
            ( datatype == FLA_COMPLEX && *m < FLA_GETRF_COMPLEX  && *n < FLA_GETRF_COMPLEX  ) ||                     \
-	   ( datatype == FLA_DOUBLE_COMPLEX && *m < FLA_GETRF_DOUBLE_COMPLEX  && *n < FLA_GETRF_DOUBLE_COMPLEX  ) ) \
+           ( datatype == FLA_DOUBLE_COMPLEX && *m < FLA_GETRF_DOUBLE_COMPLEX  && *n < FLA_GETRF_DOUBLE_COMPLEX  ) ) \
   {                                                                                    \
     FLA_Init_safe( &init_result );                                                     \
                                                                                        \
@@ -111,8 +111,8 @@ extern void DTL_Trace(
        { cgetrf2_( m, n, buff_A, ldim_A, buff_p, info); break; }                       \
        case FLA_DOUBLE_COMPLEX:                                                        \
        { zgetrf2_( m, n, buff_A, ldim_A, buff_p, info); break; }                       \
-       if ( *info != 0 ) skip  = TRUE;                                                 \
-    }                                                                                  \
+    }  if ( *info != 0 ) skip  = TRUE;                                                 \
+                                                                                       \
   }                                                                                    \
                                                                                        \
   if ( e_val != FLA_SUCCESS ) *info = e_val + 1;                                       \
