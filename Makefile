@@ -337,9 +337,10 @@ HEADERS_TO_FLATTEN := $(FLAME_H_FLAT) $(BLIS1_H_FLAT) $(FLAF2C_H_FLAT)
 HEADERS_TO_INSTALL := $(FLAME_H_FLAT)
 HEADERS_TO_INSTALL += $(CPP_TEMPLATE_H_PATH)/*.hh
 #LAPACKE headers for cpp interface
-LAPACKE_HEADERS    := $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE/include/lapacke.h
-LAPACKE_HEADERS    += $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE/include/lapacke_mangling.h
-LAPACKE_HEADERS    += $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE/include/lapack.h
+LAPACKE_HEADERS_DIR := $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE/include
+LAPACKE_HEADERS    := $(LAPACKE_HEADERS_DIR)/lapacke.h
+LAPACKE_HEADERS    += $(LAPACKE_HEADERS_DIR)/lapacke_mangling.h
+LAPACKE_HEADERS    += $(LAPACKE_HEADERS_DIR)/lapack.h
 
 HEADERS_TO_INSTALL += $(LAPACKE_HEADERS)
 HEADERS_INST       := $(addprefix $(MK_INCL_DIR_INST)/, $(notdir $(HEADERS_TO_INSTALL)))
@@ -359,6 +360,8 @@ L2F_HEADER_DIR_PATHS := $(dir $(foreach frag_path, $(L2F_FRAG_DIR_PATHS), \
                                        $(firstword $(wildcard $(frag_path)/*.h))))
 INCLUDE_PATHS   += $(strip $(patsubst %, -I%, $(L2F_HEADER_DIR_PATHS)))
 endif
+
+INCLUDE_PATHS += $(strip $(patsubst %, -I%, $(LAPACKE_HEADERS_DIR)))
 
 # Add the include flags determined above to various compiler flags variables.
 CFLAGS          := $(CFLAGS) $(INCLUDE_PATHS)
@@ -400,9 +403,19 @@ MK_MAP_LAPACK2FLAMEC_F2C_FLAMEC_OBJS  := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_
 MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_OBJS := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
                                                     $(filter %.c, $(MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_SRC)))
 
+LAPACKE_S_SRC_PATH  := $(SRC_DIR)/$(LAPACKE_DIR)/$(LAPACKE_SRC_DIR)
+LAPACKE_U_SRC_PATH  := $(SRC_DIR)/$(LAPACKE_DIR)/$(LAPACKE_UTIL_DIR)
+
+LAPACKE_S_OBJS                        := $(patsubst $(LAPACKE_S_SRC_PATH)/%.c, $(LAPACKE_S_SRC_PATH)/%.o, \
+						   $(shell find $(LAPACKE_S_SRC_PATH) -name '*.c'))
+LAPACKE_U_OBJS                        := $(patsubst $(LAPACKE_U_SRC_PATH)/%.c, $(LAPACKE_U_SRC_PATH)/%.o, \
+                                                   $(shell find $(LAPACKE_U_SRC_PATH) -name '*.c')) 
+
 # Combine the base, blas, and lapack libraries.
 MK_ALL_FLAMEC_OBJS        := $(MK_BASE_FLAMEC_OBJS) \
                              $(MK_BLAS_FLAMEC_OBJS) \
+                             $(LAPACKE_S_OBJS) \
+                             $(LAPACKE_U_OBJS) \
                              $(MK_LAPACK_FLAMEC_OBJS)
 
 # Prepend the flablas source code files, if requested
@@ -561,8 +574,6 @@ else
 	$(MAKE) -e -C $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE
 	@echo "Generated LAPACKE library"
 endif
-	@echo $(LAPACKE_S_OBJS_PATH) >> $(AR_OBJ_LIST_FILE)
-	@echo $(LAPACKE_U_OBJS_PATH) >> $(AR_OBJ_LIST_FILE)
 $(AOCLDTL_A_PATH):
 ifeq ($(ENABLE_VERBOSE),yes)
 	$(MAKE) -e -C $(SRC_DIR)/$(AOCLDTL_DIR)
