@@ -64,6 +64,8 @@ LAPACKE_SRC_DIR := LAPACKE/src
 LAPACKE_UTIL_DIR:= LAPACKE/utils
 TEST_DIR        := test
 CPP_TEST_DIR    := testcpp
+LAPACKE_S_SRC_PATH  := $(SRC_DIR)/$(LAPACKE_DIR)/$(LAPACKE_SRC_DIR)
+LAPACKE_U_SRC_PATH  := $(SRC_DIR)/$(LAPACKE_DIR)/$(LAPACKE_UTIL_DIR)
 
 # Use the system type to name the config, object, and library directories.
 # These directories are special in that they will contain products specific
@@ -403,13 +405,11 @@ MK_MAP_LAPACK2FLAMEC_F2C_FLAMEC_OBJS  := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_
 MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_OBJS := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
                                                     $(filter %.c, $(MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_SRC)))
 
-LAPACKE_S_SRC_PATH  := $(SRC_DIR)/$(LAPACKE_DIR)/$(LAPACKE_SRC_DIR)
-LAPACKE_U_SRC_PATH  := $(SRC_DIR)/$(LAPACKE_DIR)/$(LAPACKE_UTIL_DIR)
 
 LAPACKE_S_OBJS                        := $(patsubst $(LAPACKE_S_SRC_PATH)/%.c, $(LAPACKE_S_SRC_PATH)/%.o, \
-						   $(shell find $(LAPACKE_S_SRC_PATH) -name '*.c'))
+						   $(shell find $(LAPACKE_S_SRC_PATH) -maxdepth 1 -name '*.c'))
 LAPACKE_U_OBJS                        := $(patsubst $(LAPACKE_U_SRC_PATH)/%.c, $(LAPACKE_U_SRC_PATH)/%.o, \
-                                                   $(shell find $(LAPACKE_U_SRC_PATH) -name '*.c')) 
+                                                   $(shell find $(LAPACKE_U_SRC_PATH) -maxdepth 1 -name '*.c')) 
 
 # Combine the base, blas, and lapack libraries.
 MK_ALL_FLAMEC_OBJS        := $(MK_BASE_FLAMEC_OBJS) \
