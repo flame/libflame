@@ -1746,7 +1746,7 @@ typedef doublereal E_f;	/* real function with -R not specified */
 #define sorgrq_                  SORGRQ 
 #define sorgtr_                  SORGTR 
 #define sorgtsqr_                SORGTSQR 
-#define sorhr_col_               SORHR_OL 
+#define sorhr_col_               SORHR_COL 
 #define sorm22_                  SORM22 
 #define sorm2l_                  SORM2L 
 #define sorm2r_                  SORM2R 
@@ -3888,7 +3888,7 @@ typedef doublereal E_f;	/* real function with -R not specified */
 #define sorgrq_                  sorgrq 
 #define sorgtr_                  sorgtr 
 #define sorgtsqr_                sorgtsqr 
-#define sorhr_col_               sorhr_ol 
+#define sorhr_col_               sorhr_col 
 #define sorm22_                  sorm22 
 #define sorm2l_                  sorm2l 
 #define sorm2r_                  sorm2r 

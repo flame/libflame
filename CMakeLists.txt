@@ -46,10 +46,9 @@ option (ENABLE_AUTODETECT_F77_UNDERSCORING "Enable autodetect F77 Underscore" OF
 option (ENABLE_UPPERCASE_BLAS "Enable invocation of Blas with Flame" OFF)
 option (ENABLE_UPPERCASE_LAPACK "Enable invocation of Lapack with Flame" OFF)
 option (ENABLE_GPU "Enable gpu advantage" OFF)
-
+option (ENABLE_XBLAS "Enable xblas API's" OFF)
 
 set (ENABLE_WINDOWS_BUILD "Enables windows build" ON)
-add_compile_definitions(FLA_ENABLE_WINDOWS_BUILD=1)
 
 if(ENABLE_UPPERCASE)
 add_definitions(-DBLIS1_ENABLE_UPPERCASE_F77)
@@ -58,6 +57,9 @@ elseif(NOT ENABLE_UPPERCASE)
 add_definitions(-DNOCHANGE)
 endif()
 
+if(ENABLE_XBLAS)
+add_definitions(-DFLA_ENABLE_XBLAS)
+endif()
 if (ENABLE_NON_CRITICAL_CODE)
     set (FLA_ENABLE_NON_CRITICAL_CODE TRUE)
 endif ()
@@ -102,7 +104,7 @@ if (ENABLE_BLAS3_FRNTEND_CNTL_TREES)
 endif ()
 
 if (ENABLE_WINDOWS_BUILD)
-	add_compile_definitions(FLA_ENABLE_WINDOWS_BUILD=1)
+	set(FLA_ENABLE_WINDOWS_BUILD TRUE)
 endif ()
 
 if (ENABLE_PORTABLE_TIMER)
