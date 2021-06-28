@@ -3369,21 +3369,21 @@ inline integer pstrf(char* uplo, integer* n, dcomplex* a, integer* lda, integer*
 }
 
 // --- computes the reciprocal of the condition number ---
-inline integer ptcon(integer* n,  float* d,  float* e, float* anorm, float* rcond, float* work, integer* info)
+inline integer ptcon(integer* n,  float* d,  float* e, float* anorm, float* rcond, float* rwork, integer* info)
 {
-  return sptcon_(n, d, e, anorm, rcond, work, info);
+  return sptcon_(n, d, e, anorm, rcond, rwork, info);
 }
-inline integer ptcon(integer* n,  double* d,  double* e, double* anorm, double* rcond, double* work, integer* info)
+inline integer ptcon(integer* n,  double* d,  double* e, double* anorm, double* rcond, double* rwork, integer* info)
 {
-  return dptcon_(n, d, e, anorm, rcond, work, info);
+  return dptcon_(n, d, e, anorm, rcond, rwork, info);
 }
-inline integer ptcon(integer* n,  float* d,  scomplex* e, float* anorm, float* rcond, float* work, integer* info)
+inline integer ptcon(integer* n,  float* d,  scomplex* e, float* anorm, float* rcond, float* rwork, integer* info)
 {
-  return cptcon_(n, d, e, anorm, rcond, work, info);
+  return cptcon_(n, d, e, anorm, rcond, rwork, info);
 }
-inline integer ptcon(integer* n,  double* d,  dcomplex* e, double* anorm, double* rcond, double* work, integer* info)
+inline integer ptcon(integer* n,  double* d,  dcomplex* e, double* anorm, double* rcond, double* rwork, integer* info)
 {
-  return zptcon_(n, d, e, anorm, rcond, work, info);
+  return zptcon_(n, d, e, anorm, rcond, rwork, info);
 }
 
 // --- computes all eigenvalues and, optionally, eigenvectors of a symmetric matrix ---
@@ -6292,6 +6292,14 @@ inline integer rscl(integer *n, float *sa, float *sx, integer *incx)
 inline integer rscl(integer *n, double *sa, double *sx, integer *incx)
 {
   return drscl_(n, sa, sx, incx);
+}
+inline integer rscl(integer *n, float *sa, scomplex *sx, integer *incx)
+{
+  return csrscl_(n, sa, sx, incx);
+}
+inline integer rscl(integer *n, double *sa, dcomplex *sx, integer *incx)
+{
+  return zdrscl_(n, sa, sx, incx);
 }
 
 // --- internal routine used by the SYTRD_SB2ST subroutine ---
