@@ -640,6 +640,7 @@ fla_enable_multithreading
 fla_c_openmp_flags
 fla_enable_blas3_front_end_cntl_trees
 fla_enable_f2c_dotc
+fla_enable_void_return_complex
 fla_enable_external_lapack_interfaces
 fla_enable_external_lapack_for_subproblems
 fla_enable_lapack2flame
@@ -746,6 +747,7 @@ enable_builtin_blas
 enable_lapack2flame
 enable_external_lapack_for_subproblems
 enable_f2c_dotc
+enable_void_return_complex
 enable_external_lapack_interfaces
 enable_blas3_front_end_cntl_trees
 enable_multithreading
@@ -1461,6 +1463,10 @@ Optional Features:
                           libflame calls {c,z}dotc/dotu function with output as
                           first parameter of the function instead of as return
                           type. (Disabled by default.)
+  --enable-void-return-complex
+                          Enable void return for functions that by default
+                          return complex type as per LAPACK standard.
+                          (Disabled by default.)
   --enable-external-lapack-for-subproblems
                           Enable code that causes most of the
                           computationally-intensive functions within libflame
@@ -6342,6 +6348,35 @@ $as_echo_n "checking whether user requested enabling F2C calling format for comp
             as_fn_error "Reached unreachable branch in FLA_CHECK_ENABLE_F2C_DOTC!" "$LINENO" 5
 	fi
 
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested enabling void return for functions that by default return complex type as per LAPACK standard" >&5
+$as_echo_n "checking whether user requested enabling void return for functions that by default return complex type as per LAPACK standard... " >&6; }
+
+	# Check whether --enable-void-return-complex was given.
+        if test "${enable_void_return_complex+set}" = set; then :
+             enableval=$enable_void_return_complex;
+             if test "$enableval" = "no" ; then
+                fla_enable_void_return_complex=no
+	     elif test "$enableval" = "yes" ; then
+		fla_enable_void_return_complex=yes
+             else
+		as_fn_error "Reached unreachable branch in FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION!" "$LINENO" 5
+             fi
+        else
+             fla_enable_void_return_complex=no
+        fi
+
+
+	if   test "$fla_enable_void_return_complex" = "yes" ; then
+             { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+               $as_echo "yes" >&6; }
+             $as_echo "#define FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION 1" >>confdefs.h
+	elif test "$fla_enable_void_return_complex" = "no" ; then
+             { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+               $as_echo "no" >&6; }
+	else
+            as_fn_error "Reached unreachable branch in FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION!" "$LINENO" 5
+	fi
 
 
 

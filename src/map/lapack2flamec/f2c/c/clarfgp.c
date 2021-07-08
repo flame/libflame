@@ -236,7 +236,7 @@
  q__1.r = r__1; q__1.i = alphi; // , expr subst  
  alpha->r = q__1.r, alpha->i = q__1.i;
  }
- cladiv_(&q__1, &c_b5, alpha);
+ cladiv_f2c_(&q__1, &c_b5, alpha);
  alpha->r = q__1.r, alpha->i = q__1.i;
  if (c_abs(tau) <= smlnum) {
  /* In the case where the computed TAU ends up being a denormalized number, */

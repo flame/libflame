@@ -345,7 +345,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                 q__3.i = 0.f; // , expr subst
                 q__2.r = vec.r * q__3.r - vec.i * q__3.i;
                 q__2.i = vec.r * q__3.i + vec.i * q__3.r; // , expr subst
-                cladiv_(&q__1, &q__2, &a11);
+                cladiv_f2c_(&q__1, &q__2, &a11);
                 x11.r = q__1.r;
                 x11.i = q__1.i; // , expr subst
                 if (scaloc != 1.f)
@@ -434,7 +434,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                 q__3.i = 0.f; // , expr subst
                 q__2.r = vec.r * q__3.r - vec.i * q__3.i;
                 q__2.i = vec.r * q__3.i + vec.i * q__3.r; // , expr subst
-                cladiv_(&q__1, &q__2, &a11);
+                cladiv_f2c_(&q__1, &q__2, &a11);
                 x11.r = q__1.r;
                 x11.i = q__1.i; // , expr subst
                 if (scaloc != 1.f)
@@ -531,7 +531,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                 q__3.i = 0.f; // , expr subst
                 q__2.r = vec.r * q__3.r - vec.i * q__3.i;
                 q__2.i = vec.r * q__3.i + vec.i * q__3.r; // , expr subst
-                cladiv_(&q__1, &q__2, &a11);
+                cladiv_f2c_(&q__1, &q__2, &a11);
                 x11.r = q__1.r;
                 x11.i = q__1.i; // , expr subst
                 if (scaloc != 1.f)
@@ -627,7 +627,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                 q__3.i = 0.f; // , expr subst
                 q__2.r = vec.r * q__3.r - vec.i * q__3.i;
                 q__2.i = vec.r * q__3.i + vec.i * q__3.r; // , expr subst
-                cladiv_(&q__1, &q__2, &a11);
+                cladiv_f2c_(&q__1, &q__2, &a11);
                 x11.r = q__1.r;
                 x11.i = q__1.i; // , expr subst
                 if (scaloc != 1.f)

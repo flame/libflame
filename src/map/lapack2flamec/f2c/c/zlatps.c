@@ -619,7 +619,7 @@ x(i), i=1,...,n}
  }
  }
  i__3 = j;
- zladiv_(&z__1, &x[j], &tjjs);
+ zladiv_f2c_(&z__1, &x[j], &tjjs);
  x[i__3].r = z__1.r; x[i__3].i = z__1.i; // , expr subst  
  i__3 = j;
  xj = (d__1 = x[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&x[j]) , f2c_abs(d__2));
@@ -640,7 +640,7 @@ x(i), i=1,...,n}
  xmax *= rec;
  }
  i__3 = j;
- zladiv_(&z__1, &x[j], &tjjs);
+ zladiv_f2c_(&z__1, &x[j], &tjjs);
  x[i__3].r = z__1.r; x[i__3].i = z__1.i; // , expr subst  
  i__3 = j;
  xj = (d__1 = x[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&x[j]) , f2c_abs(d__2));
@@ -745,7 +745,7 @@ x(i), i=1,...,n}
  /* Computing MIN */
  d__1 = 1.; d__2 = rec * tjj; // , expr subst  
  rec = min(d__1,d__2);
- zladiv_(&z__1, &uscal, &tjjs);
+ zladiv_f2c_(&z__1, &uscal, &tjjs);
  uscal.r = z__1.r; uscal.i = z__1.i; // , expr subst  
  }
  if (rec < 1.) {
@@ -835,7 +835,7 @@ x(i), i=1,...,n}
  }
  }
  i__3 = j;
- zladiv_(&z__1, &x[j], &tjjs);
+ zladiv_f2c_(&z__1, &x[j], &tjjs);
  x[i__3].r = z__1.r; x[i__3].i = z__1.i; // , expr subst  
  }
  else if (tjj > 0.) {
@@ -848,7 +848,7 @@ x(i), i=1,...,n}
  xmax *= rec;
  }
  i__3 = j;
- zladiv_(&z__1, &x[j], &tjjs);
+ zladiv_f2c_(&z__1, &x[j], &tjjs);
  x[i__3].r = z__1.r; x[i__3].i = z__1.i; // , expr subst  
  }
  else {
@@ -873,7 +873,7 @@ x(i), i=1,...,n}
  /* Compute x(j) := x(j) / A(j,j) - CSUMJ if the dot */
  /* product has already been divided by 1/A(j,j). */
  i__3 = j;
- zladiv_(&z__2, &x[j], &tjjs);
+ zladiv_f2c_(&z__2, &x[j], &tjjs);
  z__1.r = z__2.r - csumj.r; z__1.i = z__2.i - csumj.i; // , expr subst  
  x[i__3].r = z__1.r; x[i__3].i = z__1.i; // , expr subst  
  }
@@ -918,7 +918,7 @@ x(i), i=1,...,n}
  /* Computing MIN */
  d__1 = 1.; d__2 = rec * tjj; // , expr subst  
  rec = min(d__1,d__2);
- zladiv_(&z__1, &uscal, &tjjs);
+ zladiv_f2c_(&z__1, &uscal, &tjjs);
  uscal.r = z__1.r; uscal.i = z__1.i; // , expr subst  
  }
  if (rec < 1.) {
@@ -1008,7 +1008,7 @@ x(i), i=1,...,n}
  }
  }
  i__3 = j;
- zladiv_(&z__1, &x[j], &tjjs);
+ zladiv_f2c_(&z__1, &x[j], &tjjs);
  x[i__3].r = z__1.r; x[i__3].i = z__1.i; // , expr subst  
  }
  else if (tjj > 0.) {
@@ -1021,7 +1021,7 @@ x(i), i=1,...,n}
  xmax *= rec;
  }
  i__3 = j;
- zladiv_(&z__1, &x[j], &tjjs);
+ zladiv_f2c_(&z__1, &x[j], &tjjs);
  x[i__3].r = z__1.r; x[i__3].i = z__1.i; // , expr subst  
  }
  else {
@@ -1046,7 +1046,7 @@ x(i), i=1,...,n}
  /* Compute x(j) := x(j) / A(j,j) - CSUMJ if the dot */
  /* product has already been divided by 1/A(j,j). */
  i__3 = j;
- zladiv_(&z__2, &x[j], &tjjs);
+ zladiv_f2c_(&z__2, &x[j], &tjjs);
  z__1.r = z__2.r - csumj.r; z__1.i = z__2.i - csumj.i; // , expr subst  
  x[i__3].r = z__1.r; x[i__3].i = z__1.i; // , expr subst  
  }

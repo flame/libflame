@@ -749,7 +749,7 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
                     i__3 = j;
                     q__2.r = -sum.r;
                     q__2.i = -sum.i; // , expr subst
-                    cladiv_(&q__1, &q__2, &d__);
+                    cladiv_f2c_(&q__1, &q__2, &d__);
                     work[i__3].r = q__1.r;
                     work[i__3].i = q__1.i; // , expr subst
                     /* Computing MAX */
@@ -1030,7 +1030,7 @@ L140:
                     i__2 = j;
                     q__2.r = -work[i__2].r;
                     q__2.i = -work[i__2].i; // , expr subst
-                    cladiv_(&q__1, &q__2, &d__);
+                    cladiv_f2c_(&q__1, &q__2, &d__);
                     work[i__1].r = q__1.r;
                     work[i__1].i = q__1.i; // , expr subst
                     if (j > 1)

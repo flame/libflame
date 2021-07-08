@@ -183,7 +183,7 @@
  q__1.r = r__1; q__1.i = r__2; // , expr subst  
  tau->r = q__1.r, tau->i = q__1.i;
  q__2.r = alpha->r - beta; q__2.i = alpha->i; // , expr subst  
- cladiv_(&q__1, &c_b5, &q__2);
+ cladiv_f2c_(&q__1, &c_b5, &q__2);
  alpha->r = q__1.r, alpha->i = q__1.i;
  i__1 = *n - 1;
  cscal_(&i__1, alpha, &x[1], incx);

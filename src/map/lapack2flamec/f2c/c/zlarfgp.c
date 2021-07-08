@@ -243,7 +243,7 @@
  z__1.r = d__1; z__1.i = alphi; // , expr subst  
  alpha->r = z__1.r, alpha->i = z__1.i;
  }
- zladiv_(&z__1, &c_b5, alpha);
+ zladiv_f2c_(&z__1, &c_b5, alpha);
  alpha->r = z__1.r, alpha->i = z__1.i;
  if (z_abs(tau) <= smlnum) {
  /* In the case where the computed TAU ends up being a denormalized number, */

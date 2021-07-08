@@ -706,7 +706,7 @@ L90:
                         }
                     }
                     i__3 = j;
-                    cladiv_(&q__1, &x[j], &tjjs);
+                    cladiv_f2c_(&q__1, &x[j], &tjjs);
                     x[i__3].r = q__1.r;
                     x[i__3].i = q__1.i; // , expr subst
                     i__3 = j;
@@ -731,7 +731,7 @@ L90:
                         xmax *= rec;
                     }
                     i__3 = j;
-                    cladiv_(&q__1, &x[j], &tjjs);
+                    cladiv_f2c_(&q__1, &x[j], &tjjs);
                     x[i__3].r = q__1.r;
                     x[i__3].i = q__1.i; // , expr subst
                     i__3 = j;
@@ -867,7 +867,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                         r__1 = 1.f;
                         r__2 = rec * tjj; // , expr subst
                         rec = min(r__1,r__2);
-                        cladiv_(&q__1, &uscal, &tjjs);
+                        cladiv_f2c_(&q__1, &uscal, &tjjs);
                         uscal.r = q__1.r;
                         uscal.i = q__1.i; // , expr subst
                     }
@@ -1008,7 +1008,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                             }
                         }
                         i__3 = j;
-                        cladiv_(&q__1, &x[j], &tjjs);
+                        cladiv_f2c_(&q__1, &x[j], &tjjs);
                         x[i__3].r = q__1.r;
                         x[i__3].i = q__1.i; // , expr subst
                     }
@@ -1024,7 +1024,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                             xmax *= rec;
                         }
                         i__3 = j;
-                        cladiv_(&q__1, &x[j], &tjjs);
+                        cladiv_f2c_(&q__1, &x[j], &tjjs);
                         x[i__3].r = q__1.r;
                         x[i__3].i = q__1.i; // , expr subst
                     }
@@ -1056,7 +1056,7 @@ L145:
                     /* Compute x(j) := x(j) / A(j,j) - CSUMJ if the dot */
                     /* product has already been divided by 1/A(j,j). */
                     i__3 = j;
-                    cladiv_(&q__2, &x[j], &tjjs);
+                    cladiv_f2c_(&q__2, &x[j], &tjjs);
                     q__1.r = q__2.r - csumj.r;
                     q__1.i = q__2.i - csumj.i; // , expr subst
                     x[i__3].r = q__1.r;
@@ -1111,7 +1111,7 @@ L145:
                         r__1 = 1.f;
                         r__2 = rec * tjj; // , expr subst
                         rec = min(r__1,r__2);
-                        cladiv_(&q__1, &uscal, &tjjs);
+                        cladiv_f2c_(&q__1, &uscal, &tjjs);
                         uscal.r = q__1.r;
                         uscal.i = q__1.i; // , expr subst
                     }
@@ -1252,7 +1252,7 @@ L145:
                             }
                         }
                         i__3 = j;
-                        cladiv_(&q__1, &x[j], &tjjs);
+                        cladiv_f2c_(&q__1, &x[j], &tjjs);
                         x[i__3].r = q__1.r;
                         x[i__3].i = q__1.i; // , expr subst
                     }
@@ -1268,7 +1268,7 @@ L145:
                             xmax *= rec;
                         }
                         i__3 = j;
-                        cladiv_(&q__1, &x[j], &tjjs);
+                        cladiv_f2c_(&q__1, &x[j], &tjjs);
                         x[i__3].r = q__1.r;
                         x[i__3].i = q__1.i; // , expr subst
                     }
@@ -1300,7 +1300,7 @@ L185:
                     /* Compute x(j) := x(j) / A(j,j) - CSUMJ if the dot */
                     /* product has already been divided by 1/A(j,j). */
                     i__3 = j;
-                    cladiv_(&q__2, &x[j], &tjjs);
+                    cladiv_f2c_(&q__2, &x[j], &tjjs);
                     q__1.r = q__2.r - csumj.r;
                     q__1.i = q__2.i - csumj.i; // , expr subst
                     x[i__3].r = q__1.r;

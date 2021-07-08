@@ -748,7 +748,7 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
                     i__3 = j;
                     z__2.r = -sum.r;
                     z__2.i = -sum.i; // , expr subst
-                    zladiv_(&z__1, &z__2, &d__);
+                    zladiv_f2c_(&z__1, &z__2, &d__);
                     work[i__3].r = z__1.r;
                     work[i__3].i = z__1.i; // , expr subst
                     /* Computing MAX */
@@ -1029,7 +1029,7 @@ L140:
                     i__2 = j;
                     z__2.r = -work[i__2].r;
                     z__2.i = -work[i__2].i; // , expr subst
-                    zladiv_(&z__1, &z__2, &d__);
+                    zladiv_f2c_(&z__1, &z__2, &d__);
                     work[i__1].r = z__1.r;
                     work[i__1].i = z__1.i; // , expr subst
                     if (j > 1)

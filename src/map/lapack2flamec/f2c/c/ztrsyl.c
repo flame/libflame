@@ -345,7 +345,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
                 z__3.i = 0.; // , expr subst
                 z__2.r = vec.r * z__3.r - vec.i * z__3.i;
                 z__2.i = vec.r * z__3.i + vec.i * z__3.r; // , expr subst
-                zladiv_(&z__1, &z__2, &a11);
+                zladiv_f2c_(&z__1, &z__2, &a11);
                 x11.r = z__1.r;
                 x11.i = z__1.i; // , expr subst
                 if (scaloc != 1.)
@@ -434,7 +434,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
                 z__3.i = 0.; // , expr subst
                 z__2.r = vec.r * z__3.r - vec.i * z__3.i;
                 z__2.i = vec.r * z__3.i + vec.i * z__3.r; // , expr subst
-                zladiv_(&z__1, &z__2, &a11);
+                zladiv_f2c_(&z__1, &z__2, &a11);
                 x11.r = z__1.r;
                 x11.i = z__1.i; // , expr subst
                 if (scaloc != 1.)
@@ -531,7 +531,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
                 z__3.i = 0.; // , expr subst
                 z__2.r = vec.r * z__3.r - vec.i * z__3.i;
                 z__2.i = vec.r * z__3.i + vec.i * z__3.r; // , expr subst
-                zladiv_(&z__1, &z__2, &a11);
+                zladiv_f2c_(&z__1, &z__2, &a11);
                 x11.r = z__1.r;
                 x11.i = z__1.i; // , expr subst
                 if (scaloc != 1.)
@@ -627,7 +627,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
                 z__3.i = 0.; // , expr subst
                 z__2.r = vec.r * z__3.r - vec.i * z__3.i;
                 z__2.i = vec.r * z__3.i + vec.i * z__3.r; // , expr subst
-                zladiv_(&z__1, &z__2, &a11);
+                zladiv_f2c_(&z__1, &z__2, &a11);
                 x11.r = z__1.r;
                 x11.i = z__1.i; // , expr subst
                 if (scaloc != 1.)

@@ -503,7 +503,7 @@
  }
  }
  z__4.r = x.r + y.r; z__4.i = x.i + y.i; // , expr subst  
- zladiv_(&z__3, &u, &z__4);
+ zladiv_f2c_(&z__3, &u, &z__4);
  z__2.r = u.r * z__3.r - u.i * z__3.i; z__2.i = u.r * z__3.i + u.i * z__3.r; // , expr subst  
  z__1.r = t.r - z__2.r; z__1.i = t.i - z__2.i; // , expr subst  
  t.r = z__1.r; t.i = z__1.i; // , expr subst  

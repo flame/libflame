@@ -457,6 +457,10 @@ dnl Observe whether we should build code that provides f2c caling convention for
 dnl complex dotc/dotu function.
 FLA_CHECK_ENABLE_F2C_DOTC
 
+dnl Observe whether we should build code that enables void return for functions 
+dnl that by default return complex type as per LAPACK standard.
+FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION
+
 dnl Make sure the user did not enable both lapack2flame and external LAPACK
 dnl interfaces.
 FLA_REQUIRE_NO_LAPACK_NAMESPACE_CONFLICT

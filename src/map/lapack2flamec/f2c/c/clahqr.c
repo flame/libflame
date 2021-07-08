@@ -500,7 +500,7 @@
  }
  }
  q__4.r = x.r + y.r; q__4.i = x.i + y.i; // , expr subst  
- cladiv_(&q__3, &u, &q__4);
+ cladiv_f2c_(&q__3, &u, &q__4);
  q__2.r = u.r * q__3.r - u.i * q__3.i; q__2.i = u.r * q__3.i + u.i * q__3.r; // , expr subst  
  q__1.r = t.r - q__2.r; q__1.i = t.i - q__2.i; // , expr subst  
  t.r = q__1.r; t.i = q__1.i; // , expr subst  

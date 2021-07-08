@@ -190,7 +190,7 @@
  z__1.r = d__1; z__1.i = d__2; // , expr subst  
  tau->r = z__1.r, tau->i = z__1.i;
  z__2.r = alpha->r - beta; z__2.i = alpha->i; // , expr subst  
- zladiv_(&z__1, &c_b5, &z__2);
+ zladiv_f2c_(&z__1, &c_b5, &z__2);
  alpha->r = z__1.r, alpha->i = z__1.i;
  i__1 = *n - 1;
  zscal_(&i__1, alpha, &x[1], incx);

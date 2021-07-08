@@ -54,6 +54,10 @@
    and dotu function. */
 #undef FLA_ENABLE_F2C_DOTC
 
+/* Determines whether to enable void return for functions that by default 
+ * return complex type as per LAPACK standard */
+#undef FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION
+
 /* Determines whether to enable interfaces to internal/low-level libgoto
    symbols. */
 #undef FLA_ENABLE_GOTO_INTERFACES

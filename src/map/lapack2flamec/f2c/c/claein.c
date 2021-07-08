@@ -271,7 +271,7 @@ int claein_(logical *rightv, logical *noinit, integer *n, complex *h__, integer 
             if ((r__1 = b[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&b[i__ + i__ * b_dim1]), f2c_abs(r__2)) < (r__3 = ei.r, f2c_abs(r__3)) + (r__4 = r_imag(&ei), f2c_abs(r__4)))
             {
                 /* Interchange rows and eliminate. */
-                cladiv_(&q__1, &b[i__ + i__ * b_dim1], &ei);
+                cladiv_f2c_(&q__1, &b[i__ + i__ * b_dim1], &ei);
                 x.r = q__1.r;
                 x.i = q__1.i; // , expr subst
                 i__2 = i__ + i__ * b_dim1;
@@ -309,7 +309,7 @@ int claein_(logical *rightv, logical *noinit, integer *n, complex *h__, integer 
                     b[i__3].r = *eps3;
                     b[i__3].i = 0.f; // , expr subst
                 }
-                cladiv_(&q__1, &ei, &b[i__ + i__ * b_dim1]);
+                cladiv_f2c_(&q__1, &ei, &b[i__ + i__ * b_dim1]);
                 x.r = q__1.r;
                 x.i = q__1.i; // , expr subst
                 if (x.r != 0.f || x.i != 0.f)
@@ -358,7 +358,7 @@ int claein_(logical *rightv, logical *noinit, integer *n, complex *h__, integer 
             if ((r__1 = b[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&b[j + j * b_dim1]), f2c_abs(r__2)) < (r__3 = ej.r, f2c_abs(r__3)) + (r__4 = r_imag(&ej), f2c_abs(r__4)))
             {
                 /* Interchange columns and eliminate. */
-                cladiv_(&q__1, &b[j + j * b_dim1], &ej);
+                cladiv_f2c_(&q__1, &b[j + j * b_dim1], &ej);
                 x.r = q__1.r;
                 x.i = q__1.i; // , expr subst
                 i__1 = j + j * b_dim1;
@@ -396,7 +396,7 @@ int claein_(logical *rightv, logical *noinit, integer *n, complex *h__, integer 
                     b[i__2].r = *eps3;
                     b[i__2].i = 0.f; // , expr subst
                 }
-                cladiv_(&q__1, &ej, &b[j + j * b_dim1]);
+                cladiv_f2c_(&q__1, &ej, &b[j + j * b_dim1]);
                 x.r = q__1.r;
                 x.i = q__1.i; // , expr subst
                 if (x.r != 0.f || x.i != 0.f)

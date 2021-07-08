@@ -67,6 +67,7 @@ FLA_ENABLE_LAPACK2FLAME        := @fla_enable_lapack2flame@
 FLA_MULTITHREADING_MODEL       := @fla_multithreading_model@
 FLA_ENABLE_F2C_DOTC            := @fla_enable_f2c_dotc@
 FLA_ENABLE_ILP64               := @fla_enable_ilp64@
+FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION := @fla_enable_void_return_complex@
 
 # Alias the variable 'V' to the flag for verbosity.
 ifeq ($(V),1)
