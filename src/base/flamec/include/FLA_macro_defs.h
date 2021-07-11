@@ -20,6 +20,8 @@
 #undef  NULL
 #define NULL 0
 
+/* Enables AMD specific optimizations */
+#define FLA_AMD_OPT      1
 #ifdef FLA_ENABLE_WINDOWS_BUILD
   #define restrict  __restrict
 #endif
@@ -201,6 +203,7 @@
 #define FLA_Z_INDEX             3
 #define FLA_DTYPE_INDEX_MASK  0x3
 
+#define FLA_SMALL_LU_BLOCKSIZE 64
 // Default blocksize if none are available.
 #ifndef FLA_DEFAULT_M_BLOCKSIZE
   #define FLA_DEFAULT_M_BLOCKSIZE  128
@@ -246,6 +249,9 @@
 #define FLA_GETRF_FLOAT               (1440)
 #define FLA_GETRF_COMPLEX             (670)
 #define FLA_GETRF_DOUBLE_COMPLEX      (1630)
+
+#define FLA_DGETRF_SMALL_THRESH0      (22)
+#define FLA_DGETRF_SMALL_THRESH1      (80)
 
 // GETRFNPI , these thresholds are used to chose between 3 algorithms to get best
 // results in terms of perfmormance
