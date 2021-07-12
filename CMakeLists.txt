@@ -4,8 +4,9 @@ cmake_minimum_required(VERSION 3.0.0)
 
 project(AOCL-LibFLAME-Win)
 #change the dependency path to blis library path
-set (CMAKE_EXT_BLIS_LIBRARY_DEPENDENCY_PATH  "${CMAKE_SOURCE_DIR}/bin/Release")
-set (EXT_BLIS_LIBNAME "AOCL-LibBlis-Win")
+SET(CMAKE_EXT_BLIS_LIBRARY_DEPENDENCY_PATH "${CMAKE_SOURCE_DIR}/bin/Release" CACHE STRING "AOCL-BLIS library path name")
+SET(EXT_BLIS_LIBNAME "AOCL-LibBlis-Win.lib" CACHE STRING "AOCL-BLIS library name")
+
 #set the output directory path
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
@@ -553,7 +554,7 @@ endif ()
 # TODO : enable this flag to build source supplied blas library
 # link externally build blis library
 if (NOT ENABLE_BUILTIN_BLAS)
-target_link_libraries(${PROJECT_NAME} ${CMAKE_EXT_BLIS_LIBRARY_DEPENDENCY_PATH}/${EXT_BLIS_LIBNAME}.lib)
+target_link_libraries(${PROJECT_NAME} ${CMAKE_EXT_BLIS_LIBRARY_DEPENDENCY_PATH}/${EXT_BLIS_LIBNAME})
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_EXT_BLIS_LIBRARY_DEPENDENCY_PATH})
 endif ()
 
