@@ -1,0 +1,4 @@
+uplo  L U
+n     10 30
+lda   10 30
+anorm 1.0 0.0

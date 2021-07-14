@@ -58,7 +58,15 @@ LIBLAPACK      :=
 
 all: libflame
 libflame: libflame_hbev.x \
-libflame_hbevx.x
+libflame_hbev_2stage.x \
+libflame_hbevd.x \
+libflame_hbevd_2stage.x \
+libflame_hbevx.x \
+libflame_hbevx_2stage.x \
+libflame_hbgst.x \
+libflame_hbgv.x \
+libflame_hbtrd.x \
+libflame_heequb.x
 
 # --- General build definitions ------------------------------------------------
 #
