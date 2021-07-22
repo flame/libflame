@@ -275,6 +275,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, complex *a, integer *lda, real *vl, real *vu, integer * il, integer *iu, integer *ns, real *s, complex *u, integer *ldu, complex *vt, integer *ldvt, complex *work, integer *lwork, real * rwork, integer *iwork, integer *info) {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+   snprintf(buffer, 256,"cgesvdx inputs: jobu %c, jobvt %c, range %c, m %lld, n %lld, lda %lld, il %lld, iu %lld, ldu %lld, ldvt %lld, lwork %lld",*jobu, *jobvt, *range, *m, *n, *lda, *il, *iu, *ldu, *ldvt, *lwork);
+#else 
+   snprintf(buffer, 256,"cgesvdx inputs: jobu %c, jobvt %c, range %c, m %d, n %d, lda %d, il %d, iu %d, ldu %d, ldvt %d, lwork %d",*jobu, *jobvt, *range, *m, *n, *lda, *il, *iu, *ldu, *ldvt, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  address a__1[2];
  integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1[2], i__2, i__3, i__4, i__5;
@@ -361,13 +371,7 @@
  --work;
  --rwork;
  --iwork;
- AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
- char buffer[256];
- snprintf(buffer, 256, "cgesvdx inputs: jobu %c, jobvt %c, range %c, m %d, n %d, lda %d, il %d, iu %d, ns %d, ldu %d, ldvt %d\n", *jobu, *jobvt, *range, *m, *n, *lda, *il, *iu, *ns, *ldu, *ldvt);
- AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
  *ns = 0;
  *info = 0;
  abstol = slamch_("S") * 2;

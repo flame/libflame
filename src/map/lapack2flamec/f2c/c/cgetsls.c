@@ -164,6 +164,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cgetsls_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, integer *lda, complex *b, integer *ldb, complex * work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cgetsls inputs: trans %c, m %lld, n %lld, nrhs %lld, lda %lld, ldb %lld, lwork %lld",*trans, *m, *n, *nrhs, *lda, *ldb, *lwork);
+#else 
+ snprintf(buffer, 256,"cgetsls inputs: trans %c, m %d, n %d, nrhs %d, lda %d, ldb %d, lwork %d",*trans, *m, *n, *nrhs, *lda, *ldb, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3;
  real r__1;
@@ -303,6 +313,7 @@
  xerbla_("CGETSLS", &i__1);
  r__1 = (real) wsizeo;
  work[1].r = r__1; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (lquery) {
@@ -314,6 +325,7 @@
  r__1 = (real) wsizem;
  work[1].r = r__1; work[1].i = 0.f; // , expr subst  
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*lwork < wsizeo) {
@@ -330,6 +342,7 @@
  if (min(i__1,*nrhs) == 0) {
  i__1 = max(*m,*n);
  claset_("FULL", &i__1, nrhs, &c_b1, &c_b1, &b[b_offset], ldb);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Get machine parameters */
@@ -380,6 +393,7 @@
  /* B(1:N,1:NRHS) := inv(R) * B(1:N,1:NRHS) */
  ctrtrs_("U", "N", "N", n, nrhs, &a[a_offset], lda, &b[b_offset], ldb, info);
  if (*info > 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  scllen = *n;
@@ -389,6 +403,7 @@
  /* B(1:N,1:NRHS) := inv(R**T) * B(1:N,1:NRHS) */
  ctrtrs_("U", "C", "N", n, nrhs, &a[a_offset], lda, &b[b_offset], ldb, info);
  if (*info > 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* B(N+1:M,1:NRHS) = CZERO */
@@ -420,6 +435,7 @@
  /* B(1:M,1:NRHS) := inv(L) * B(1:M,1:NRHS) */
  ctrtrs_("L", "N", "N", m, nrhs, &a[a_offset], lda, &b[b_offset], ldb, info);
  if (*info > 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* B(M+1:N,1:NRHS) = 0 */
@@ -450,6 +466,7 @@
  /* B(1:M,1:NRHS) := inv(L**T) * B(1:M,1:NRHS) */
  ctrtrs_("L", "C", "N", m, nrhs, &a[a_offset], lda, &b[b_offset], ldb, info);
  if (*info > 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  scllen = *m;
@@ -470,6 +487,7 @@
  }
  L50: r__1 = (real) (tszo + lwo);
  work[1].r = r__1; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of ZGETSLS */
  }

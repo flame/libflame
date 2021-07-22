@@ -133,6 +133,16 @@ IPIV(i) = i indicates a row interchange was not */
 /* Subroutine */
 int cgtcon_(char *norm, integer *n, complex *dl, complex * d__, complex *du, complex *du2, integer *ipiv, real *anorm, real * rcond, complex *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgtcon inputs: norm %c, n %lld, ipiv %lld",*norm, *n, *ipiv);
+#else 
+    snprintf(buffer, 256,"cgtcon inputs: norm %c, n %d, ipiv %d",*norm, *n, *ipiv);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2;
     /* Local variables */
@@ -194,6 +204,7 @@ int cgtcon_(char *norm, integer *n, complex *dl, complex * d__, complex *du, com
     {
         i__1 = -(*info);
         xerbla_("CGTCON", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -201,10 +212,12 @@ int cgtcon_(char *norm, integer *n, complex *dl, complex * d__, complex *du, com
     if (*n == 0)
     {
         *rcond = 1.f;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*anorm == 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check that D(1:N) is non-zero. */
@@ -216,6 +229,7 @@ int cgtcon_(char *norm, integer *n, complex *dl, complex * d__, complex *du, com
         i__2 = i__;
         if (d__[i__2].r == 0.f && d__[i__2].i == 0.f)
         {
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         /* L10: */
@@ -251,6 +265,7 @@ L20:
     {
         *rcond = 1.f / ainvnm / *anorm;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGTCON */
 }

@@ -240,6 +240,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cgesdd_(char *jobz, integer *m, integer *n, complex *a, integer *lda, real *s, complex *u, integer *ldu, complex *vt, integer *ldvt, complex *work, integer *lwork, real *rwork, integer *iwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cgesdd inputs: jobz %c, m %lld, n %lld, lda %lld, ldu %lld, ldvt %lld, lwork %lld",*jobz, *m, *n, *lda, *ldu, *ldvt, *lwork);
+#else 
+ snprintf(buffer, 256,"cgesdd inputs: jobz %c, m %d, n %d, lda %d, ldu %d, ldvt %d, lwork %d",*jobz, *m, *n, *lda, *ldu, *ldvt, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1, i__2, i__3;
  /* Builtin functions */
@@ -317,13 +327,7 @@
  --work;
  --rwork;
  --iwork;
- AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
- char buffer[256];
- snprintf(buffer, 256, "cgesdd inputs: jobz %c, m %d, n %d, lda %d, ldu %d, ldvt %d\n", *jobz, *m, *n, *lda, *ldu, *ldvt);
- AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
  *info = 0;
  minmn = min(*m,*n);
  mnthr1 = (integer) (minmn * 17.f / 9.f);

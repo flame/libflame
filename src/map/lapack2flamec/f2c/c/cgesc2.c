@@ -112,6 +112,16 @@ for 1 <= j <= N, column j of the */
 /* Subroutine */
 int cgesc2_(integer *n, complex *a, integer *lda, complex * rhs, integer *ipiv, integer *jpiv, real *scale)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgesc2 inputs: n %lld, lda %lld, ipiv %lld, jpiv %lld",*n, *lda, *ipiv, *jpiv);
+#else 
+    snprintf(buffer, 256,"cgesc2 inputs: n %d, lda %d, ipiv %d, jpiv %d",*n, *lda, *ipiv, *jpiv);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     real r__1;
@@ -159,13 +169,7 @@ int cgesc2_(integer *n, complex *a, integer *lda, complex * rhs, integer *ipiv, 
     --rhs;
     --ipiv;
     --jpiv;
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256, "cgesc2 inputs: n %d, lda %d, ipiv %d, jpiv %d\n", *n, *lda, *ipiv, *jpiv);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
     eps = slamch_("P");
     smlnum = slamch_("S") / eps;
     bignum = 1.f / smlnum;

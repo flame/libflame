@@ -146,6 +146,16 @@ i */
 /* Subroutine */
 int chbev_(char *jobz, char *uplo, integer *n, integer *kd, complex *ab, integer *ldab, real *w, complex *z__, integer *ldz, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"chbev inputs: jobz %c, uplo %c, n %lld, kd %lld, ldab %lld, ldz %lld",*jobz, *uplo, *n, *kd, *ldab, *ldz);
+#else 
+    snprintf(buffer, 256,"chbev inputs: jobz %c, uplo %c, n %d, kd %d, ldab %d, ldz %d",*jobz, *uplo, *n, *kd, *ldab, *ldz);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, z_dim1, z_offset, i__1;
     real r__1;
@@ -238,11 +248,13 @@ int chbev_(char *jobz, char *uplo, integer *n, integer *kd, complex *ab, integer
     {
         i__1 = -(*info);
         xerbla_("CHBEV ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 1)
@@ -263,6 +275,7 @@ int chbev_(char *jobz, char *uplo, integer *n, integer *kd, complex *ab, integer
             z__[i__1].r = 1.f;
             z__[i__1].i = 0.f; // , expr subst
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants. */
@@ -323,6 +336,7 @@ int chbev_(char *jobz, char *uplo, integer *n, integer *kd, complex *ab, integer
         r__1 = 1.f / sigma;
         sscal_(&imax, &r__1, &w[1], &c__1);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHBEV */
 }

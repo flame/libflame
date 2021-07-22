@@ -175,6 +175,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cgglse_(integer *m, integer *n, integer *p, complex *a, integer *lda, complex *b, integer *ldb, complex *c__, complex *d__, complex *x, complex *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cgglse inputs: m %lld, n %lld, p %lld, lda %lld, ldb %lld, lwork %lld",*m, *n, *p, *lda, *ldb, *lwork);
+#else 
+ snprintf(buffer, 256,"cgglse inputs: m %d, n %d, p %d, lda %d, ldb %d, lwork %d",*m, *n, *p, *lda, *ldb, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
  complex q__1;
@@ -266,13 +276,16 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CGGLSE", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Compute the GRQ factorization of matrices B and A: */
@@ -299,6 +312,7 @@
  ctrtrs_("Upper", "No transpose", "Non-unit", p, &c__1, &b[(*n - *p + 1) * b_dim1 + 1], ldb, &d__[1], p, info);
  if (*info > 0) {
  *info = 1;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Put the solution in X */
@@ -315,6 +329,7 @@
  ctrtrs_("Upper", "No transpose", "Non-unit", &i__1, &c__1, &a[ a_offset], lda, &c__[1], &i__2, info);
  if (*info > 0) {
  *info = 2;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Put the solutions in X */
@@ -346,6 +361,7 @@
  i__2 = lopt; i__3 = (integer) work[i__4].r; // , expr subst  
  i__1 = *p + mn + max(i__2,i__3);
  work[1].r = (real) i__1; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CGGLSE */
  }

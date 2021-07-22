@@ -206,6 +206,16 @@ IPIV(i) = i indicates a row interchange was not */
 /* Subroutine */
 int cgtrfs_(char *trans, integer *n, integer *nrhs, complex * dl, complex *d__, complex *du, complex *dlf, complex *df, complex * duf, complex *du2, integer *ipiv, complex *b, integer *ldb, complex * x, integer *ldx, real *ferr, real *berr, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgtrfs inputs: trans %c, n %lld, nrhs %lld, ipiv %lld, ldb %lld, ldx %lld",*trans, *n, *nrhs, *ipiv, *ldb, *ldx);
+#else 
+    snprintf(buffer, 256,"cgtrfs inputs: trans %c, n %d, nrhs %d, ipiv %d, ldb %d, ldx %d",*trans, *n, *nrhs, *ipiv, *ldb, *ldx);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, x_dim1, x_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7, i__8, i__9;
     real r__1, r__2, r__3, r__4, r__5, r__6, r__7, r__8, r__9, r__10, r__11, r__12, r__13, r__14;
@@ -309,6 +319,7 @@ int cgtrfs_(char *trans, integer *n, integer *nrhs, complex * dl, complex *d__, 
     {
         i__1 = -(*info);
         xerbla_("CGTRFS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -323,6 +334,7 @@ int cgtrfs_(char *trans, integer *n, integer *nrhs, complex * dl, complex *d__, 
             berr[j] = 0.f;
             /* L10: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (notran)
@@ -574,6 +586,7 @@ L70:
         }
         /* L110: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGTRFS */
 }

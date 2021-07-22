@@ -207,6 +207,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int chbev_2stage_(char *jobz, char *uplo, integer *n, integer *kd, complex *ab, integer *ldab, real *w, complex *z__, integer *ldz, complex *work, integer *lwork, real *rwork, integer * info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"chbev inputs: jobz %c, uplo %c, n %lld, kd %lld, ldab %lld, ldz %lld, lwork %lld",*jobz, *uplo, *n, *kd, *ldab, *ldz, *lwork);
+#else 
+ snprintf(buffer, 256,"chbev inputs: jobz %c, uplo %c, n %d, kd %d, ldab %d, ldz %d, lwork %d",*jobz, *uplo, *n, *kd, *ldab, *ldz, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer ab_dim1, ab_offset, z_dim1, z_offset, i__1;
  real r__1;
@@ -319,13 +329,16 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CHBEV_2STAGE ", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n == 1) {
@@ -341,6 +354,7 @@
  i__1 = z_dim1 + 1;
  z__[i__1].r = 1.f; z__[i__1].i = 0.f; // , expr subst  
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Get machine constants. */
@@ -396,6 +410,7 @@
  }
  /* Set WORK(1) to optimal workspace size. */
  work[1].r = (real) lwmin; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CHBEV_2STAGE */
  }

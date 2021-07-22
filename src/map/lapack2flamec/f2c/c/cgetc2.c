@@ -105,6 +105,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cgetc2_(integer *n, complex *a, integer *lda, integer * ipiv, integer *jpiv, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cgetc2 inputs: n %lld, lda %lld",*n, *lda);
+#else 
+ snprintf(buffer, 256,"cgetc2 inputs: n %d, lda %d",*n, *lda);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2, i__3;
  real r__1;
@@ -147,13 +157,7 @@
  a -= a_offset;
  --ipiv;
  --jpiv;
- AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
- char buffer[256];
- snprintf(buffer, 256, "cgetc2 inputs: n %d, lda %d\n", *n, *lda);
- AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
  *info = 0;
  /* Quick return if possible */
  if (*n == 0) {

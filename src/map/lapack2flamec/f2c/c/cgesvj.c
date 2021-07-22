@@ -357,6 +357,16 @@ D=diag}
  /* ===================================================================== */
  /* Subroutine */
  int cgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, complex *a, integer *lda, real *sva, integer *mv, complex *v, integer *ldv, complex *cwork, integer *lwork, real *rwork, integer *lrwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cgesvj inputs: joba %c, jobu %c, jobv %c, m %lld, n %lld, lda %lld, mv %lld, ldv %lld, lwork %lld, lrwork %lld",*joba, *jobu, *jobv, *m, *n, *lda, *mv, *ldv, *lwork, *lrwork);
+#else 
+ snprintf(buffer, 256,"cgesvj inputs: joba %c, jobu %c, jobv %c, m %d, n %d, lda %d, mv %d, ldv %d, lwork %d, lrwork %d",*joba, *jobu, *jobv, *m, *n, *lda, *mv, *ldv, *lwork, *lrwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, v_dim1, v_offset, i__1, i__2, i__3, i__4, i__5, i__6;
  real r__1, r__2;
@@ -460,13 +470,7 @@ D=diag}
  v -= v_offset;
  --cwork;
  --rwork;
- AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
- char buffer[256];
- snprintf(buffer, 256, "cgesvj inputs: joba %c, jobu %c, jobv %c, m %d, n %d, lda %d, mv %d, ldv %d\n", *joba, *jobu, *jobv, *m, *n, *lda, *mv, *ldv);
- AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
  lsvec = lsame_(jobu, "U") || lsame_(jobu, "F");
  uctol = lsame_(jobu, "C");
  rsvec = lsame_(jobv, "V") || lsame_(jobv, "J");
@@ -514,6 +518,7 @@ D=diag}
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CGESVJ", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {

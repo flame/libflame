@@ -281,6 +281,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cggsvp3_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer *n, complex *a, integer *lda, complex *b, integer *ldb, real *tola, real *tolb, integer *k, integer *l, complex *u, integer *ldu, complex *v, integer *ldv, complex *q, integer *ldq, integer *iwork, real *rwork, complex *tau, complex *work, integer * lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cggsvp3 inputs: jobu %c, jobv %c, jobq %c, m %lld, p %lld, n %lld, lda %lld, ldb %lld, ldu %lld, ldv %lld, ldq %lld, lwork %lld",*jobu, *jobv, *jobq, *m, *p, *n, *lda, *ldb, *ldu, *ldv, *ldq, *lwork);
+#else 
+ snprintf(buffer, 256,"cggsvp3 inputs: jobu %c, jobv %c, jobq %c, m %d, p %d, n %d, lda %d, ldb %d, ldu %d, ldv %d, ldq %d, lwork %d",*jobu, *jobv, *jobq, *m, *p, *n, *lda, *ldb, *ldu, *ldv, *ldq, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, u_dim1, u_offset, v_dim1, v_offset, i__1, i__2, i__3;
  complex q__1;
@@ -406,9 +416,11 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CGGSVP3", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* QR with column pivoting of B: B*P = V*( S11 S12 ) */
@@ -623,6 +635,7 @@
  }
  q__1.r = (real) lwkopt; q__1.i = 0.f; // , expr subst  
  work[1].r = q__1.r; work[1].i = q__1.i; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CGGSVP3 */
  }

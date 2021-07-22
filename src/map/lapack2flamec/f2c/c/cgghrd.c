@@ -211,6 +211,16 @@ LDZ >= 1 otherwise. */
 /* Subroutine */
 int cgghrd_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgghrd inputs: compq %c, compz %c, n %lld, ilo %lld, ihi %lld, lda %lld, ldb %lld, ldq %lld, ldz %lld",*compq, *compz, *n, *ilo, *ihi, *lda, *ldb, *ldq, *ldz);
+#else 
+    snprintf(buffer, 256,"cgghrd inputs: compq %c, compz %c, n %d, ilo %d, ihi %d, lda %d, ldb %d, ldq %d, ldz %d",*compq, *compz, *n, *ilo, *ihi, *lda, *ldb, *ldq, *ldz);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2, i__3;
     complex q__1;
@@ -345,6 +355,7 @@ int cgghrd_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, c
     {
         i__1 = -(*info);
         xerbla_("CGGHRD", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Initialize Q and Z if desired. */
@@ -359,6 +370,7 @@ int cgghrd_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, c
     /* Quick return if possible */
     if (*n <= 1)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Zero out lower triangle of B */
@@ -426,6 +438,7 @@ int cgghrd_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, c
         }
         /* L40: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGGHRD */
 }

@@ -228,6 +228,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cgesvd_(char *jobu, char *jobvt, integer *m, integer *n, complex *a, integer *lda, real *s, complex *u, integer *ldu, complex * vt, integer *ldvt, complex *work, integer *lwork, real *rwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cgesvd inputs: jobu %c, jobvt %c, m %lld, n %lld, lda %lld, ldu %lld, ldvt %lld, lwork %lld",*jobu, *jobvt, *m, *n, *lda, *ldu, *ldvt, *lwork);
+#else 
+ snprintf(buffer, 256,"cgesvd inputs: jobu %c, jobvt %c, m %d, n %d, lda %d, ldu %d, ldvt %d, lwork %d",*jobu, *jobvt, *m, *n, *lda, *ldu, *ldvt, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  address a__1[2];
  integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1[2], i__2, i__3, i__4;
@@ -304,13 +314,7 @@
  vt -= vt_offset;
  --work;
  --rwork;
- AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
- char buffer[256];
- snprintf(buffer, 256, "cgesvd inputs: jobu %c, jobvt %c, m %d, n %d, lda %d, ldu %d, ldvt %d\n", *jobu, *jobvt, *m, *n, *lda, *ldu, *ldvt);
- AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
  *info = 0;
  minmn = min(*m,*n);
  wntua = lsame_(jobu, "A");

@@ -426,6 +426,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer *m, integer *n, complex *a, integer *lda, real *s, complex *u, integer *ldu, complex *v, integer *ldv, integer *numrank, integer *iwork, integer *liwork, complex *cwork, integer *lcwork, real *rwork, integer *lrwork, integer *info) {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+   snprintf(buffer, 256,"cgesvdq inputs: joba %c, jobp %c, jobr %c, jobu %c, jobv %c, m %lld, n %lld, lda %lld, ldu %lld, ldv %lld, liwork %lld, lrwork %lld",*joba, *jobp, *jobr, *jobu, *jobv, *m, *n, *lda, *ldu, *ldv, *liwork, *lrwork);
+#else 
+   snprintf(buffer, 256,"cgesvdq inputs: joba %c, jobp %c, jobr %c, jobu %c, jobv %c, m %d, n %d, lda %d, ldu %d, ldv %d, liwork %d, lrwork %d",*joba, *jobp, *jobr, *jobu, *jobv, *m, *n, *lda, *ldu, *ldv, *liwork, *lrwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, u_dim1, u_offset, v_dim1, v_offset, i__1, i__2, i__3;
  real r__1;
@@ -514,13 +524,7 @@
  --iwork;
  --cwork;
  --rwork;
- AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
- char buffer[256];
- snprintf(buffer, 256, "cgesvdq inputs: joba %c, jobp %c, jobr %c, jobu %c, jobv %c, m %d, n %d, lda %d, ldu %d, ldv %d, numrank %d, liwork %d, lcwork %d, lrwork %d\n", *joba, *jobp, *jobr, *jobu, *jobv, *m, *n, *lda, *ldu, *ldv, *numrank, *liwork, *lcwork, *lrwork);
- AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
  wntus = lsame_(jobu, "S") || lsame_(jobu, "U");
  wntur = lsame_(jobu, "R");
  wntua = lsame_(jobu, "A");
@@ -890,6 +894,7 @@
  *info = -8;
  i__2 = -(*info);
  xerbla_("CGESVDQ", &i__2);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* L1904: */

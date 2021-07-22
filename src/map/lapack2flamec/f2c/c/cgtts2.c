@@ -118,6 +118,16 @@ IPIV(i) = i indicates a row interchange was not */
 /* Subroutine */
 int cgtts2_(integer *itrans, integer *n, integer *nrhs, complex *dl, complex *d__, complex *du, complex *du2, integer *ipiv, complex *b, integer *ldb)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgtts2 inputs: itrans %lld, n %lld, nrhs %lld, ipiv %lld, ldb %lld",*itrans, *n, *nrhs, *ipiv, *ldb);
+#else 
+    snprintf(buffer, 256,"cgtts2 inputs: itrans %d, n %d, nrhs %d, ipiv %d, ldb %d",*itrans, *n, *nrhs, *ipiv, *ldb);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7, i__8;
     complex q__1, q__2, q__3, q__4, q__5, q__6, q__7, q__8;
@@ -153,6 +163,7 @@ int cgtts2_(integer *itrans, integer *n, integer *nrhs, complex *dl, complex *d_
     /* Function Body */
     if (*n == 0 || *nrhs == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*itrans == 0)
@@ -718,6 +729,7 @@ L130: /* Solve U**H * x = b. */
         }
     }
     /* End of CGTTS2 */
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
 /* cgtts2_ */

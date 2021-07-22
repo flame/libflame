@@ -238,6 +238,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, complex *work, integer *lwork, integer *info) {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+   snprintf(buffer, 256,"cgghd3 inputs: compq %c, compz %c, n %lld, ilo %lld, ihi %lld, lda %lld, ldb %lld, ldq %lld, ldz %lld, lwork %lld",*compq, *compz, *n, *ilo, *ihi, *lda, *ldb, *ldq, *ldz, *lwork);
+#else 
+   snprintf(buffer, 256,"cgghd3 inputs: compq %c, compz %c, n %d, ilo %d, ihi %d, lda %d, ldb %d, ldq %d, ldz %d, lwork %d",*compq, *compz, *n, *ilo, *ihi, *lda, *ldb, *ldq, *ldz, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7, i__8, i__9;
  complex q__1, q__2, q__3, q__4;
@@ -361,9 +371,11 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CGGHD3", &i__1);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Initialize Q and Z if desired. */
@@ -383,6 +395,7 @@
  nh = *ihi - *ilo + 1;
  if (nh <= 1) {
  work[1].r = 1.f; work[1].i = 0.f; // , expr subst  
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Determine the blocksize. */
@@ -1099,6 +1112,7 @@
  }
  q__1.r = (real) lwkopt; q__1.i = 0.f; // , expr subst  
  work[1].r = q__1.r; work[1].i = q__1.i; // , expr subst  
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CGGHD3 */
  }
