@@ -214,6 +214,16 @@ the routine */
 /* Subroutine */
 int cgelsy_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, complex *b, integer *ldb, integer *jpvt, real *rcond, integer *rank, complex *work, integer *lwork, real *rwork, integer * info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+   snprintf(buffer, 256,"cgelsy inputs: m %lld, n %lld, nrhs %lld, lda %lld, ldb %lld, jpvt %lld, lwork %lld",*m, *n, *nrhs, *lda, *ldb, *jpvt, *lwork);
+#else 
+   snprintf(buffer, 256,"cgelsy inputs: m %d, n %d, nrhs %d, lda %d, ldb %d, jpvt %d, lwork %d",*m, *n, *nrhs, *lda, *ldb, *jpvt, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
     real r__1, r__2;
@@ -345,10 +355,12 @@ int cgelsy_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
     {
         i__1 = -(*info);
         xerbla_("CGELSY", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -357,6 +369,7 @@ int cgelsy_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
     if (min(i__1,*nrhs) == 0)
     {
         *rank = 0;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine parameters */
@@ -560,6 +573,7 @@ L70:
     q__1.i = 0.f; // , expr subst
     work[1].r = q__1.r;
     work[1].i = q__1.i; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGELSY */
 }

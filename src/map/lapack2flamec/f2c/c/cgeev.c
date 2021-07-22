@@ -174,6 +174,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cgeev_(char *jobvl, char *jobvr, integer *n, complex *a, integer *lda, complex *w, complex *vl, integer *ldvl, complex *vr, integer *ldvr, complex *work, integer *lwork, real *rwork, integer * info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cgeev inputs: jobvl %c, jobvr %c, n %lld, lda %lld, ldvl %lld, ldvr %lld, lwork %lld",*jobvl, *jobvr, *n, *lda, *ldvl, *ldvr, *lwork);
+#else 
+ snprintf(buffer, 256,"cgeev inputs: jobvl %c, jobvr %c, n %d, lda %d, ldvl %d, ldvr %d, lwork %d",*jobvl, *jobvr, *n, *lda, *ldvl, *ldvr, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__2, i__3;
  real r__1, r__2;
@@ -254,13 +264,7 @@
  vr -= vr_offset;
  --work;
  --rwork;
- AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
- char buffer[256];
- sprintf(buffer, "cgeev inputs: jobvl %c, jobvr %c, n %d, lda %d, ldvl %d, ldvr %d\n", *jobvl, *jobvr, *n, *lda, *ldvl, *ldvr);
- AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
  *info = 0;
  lquery = *lwork == -1;
  wantvl = lsame_(jobvl, "V");
@@ -339,13 +343,16 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CGEEV ", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Get machine constants */
@@ -530,7 +537,7 @@
  }
  }
  work[1].r = (real) maxwrk; work[1].i = 0.f; // , expr subst 
- AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5); 
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CGEEV */
  }

@@ -154,6 +154,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cgebal_(char *job, integer *n, complex *a, integer *lda, integer *ilo, integer *ihi, real *scale, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cgebal inputs: job %c, n %lld, lda %lld",*job, *n, *lda);
+#else 
+ snprintf(buffer, 256,"cgebal inputs: job %c, n %d, lda %d",*job, *n, *lda);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2, i__3;
  real r__1, r__2;
@@ -199,13 +209,7 @@
  a_offset = 1 + a_dim1;
  a -= a_offset;
  --scale;
- AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
- char buffer[256];
- sprintf(buffer, "cgebal inputs: job %c, n %d, lda %d, ilo %d, ihi %d\n", *job, *n, *lda, *ilo, *ihi);
- AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
  *info = 0;
  if (! lsame_(job, "N") && ! lsame_(job, "P") && ! lsame_(job, "S") && ! lsame_(job, "B")) {
  *info = -1;
@@ -219,6 +223,7 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CGEBAL", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  k = 1;
@@ -354,6 +359,7 @@
  *info = -3;
  i__2 = -(*info);
  xerbla_("CGEBAL", &i__2);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  f *= 2.f;

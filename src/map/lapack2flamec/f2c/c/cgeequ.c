@@ -127,6 +127,16 @@
 /* Subroutine */
 int cgeequ_(integer *m, integer *n, complex *a, integer *lda, real *r__, real *c__, real *rowcnd, real *colcnd, real *amax, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgeequ inputs: m %lld, n %lld, lda %lld",*m, *n, *lda);
+#else 
+    snprintf(buffer, 256,"cgeequ inputs: m %d, n %d, lda %d",*m, *n, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     real r__1, r__2, r__3, r__4;
@@ -170,13 +180,7 @@ int cgeequ_(integer *m, integer *n, complex *a, integer *lda, real *r__, real *c
     a -= a_offset;
     --r__;
     --c__;
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "cgeequ inputs: m %d, n %d, lda %d\n", *m, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
     *info = 0;
     if (*m < 0)
     {
@@ -194,6 +198,7 @@ int cgeequ_(integer *m, integer *n, complex *a, integer *lda, real *r__, real *c
     {
         i__1 = -(*info);
         xerbla_("CGEEQU", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -202,6 +207,7 @@ int cgeequ_(integer *m, integer *n, complex *a, integer *lda, real *r__, real *c
         *rowcnd = 1.f;
         *colcnd = 1.f;
         *amax = 0.f;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants. */
@@ -266,6 +272,7 @@ int cgeequ_(integer *m, integer *n, complex *a, integer *lda, real *r__, real *c
             if (r__[i__] == 0.f)
             {
                 *info = i__;
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* L50: */
@@ -348,6 +355,7 @@ int cgeequ_(integer *m, integer *n, complex *a, integer *lda, real *r__, real *c
             if (c__[j] == 0.f)
             {
                 *info = *m + j;
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* L110: */

@@ -143,6 +143,16 @@ elements marked */
 /* Subroutine */
 int cgbtf2_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integer *ldab, integer *ipiv, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgbtf2 inputs: m %lld, n %lld, kl %lld, ku %lld, ldab %lld",*m, *n, *kl, *ku, *ldab);
+#else 
+    snprintf(buffer, 256,"cgbtf2 inputs: m %d, n %d, kl %d, ku %d, ldab %d",*m, *n, *kl, *ku, *ldab);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4;
     complex q__1;
@@ -182,13 +192,7 @@ int cgbtf2_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
     ab_offset = 1 + ab_dim1;
     ab -= ab_offset;
     --ipiv;
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "cgbtf2 inputs: m %d, n %d, kl %d, ku %d, ldab %d, ipiv %d\n", *m, *n, *kl, *ku, *ldab, *ipiv);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
     kv = *ku + *kl;
     /* Test the input parameters. */
     *info = 0;
@@ -216,11 +220,13 @@ int cgbtf2_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
     {
         i__1 = -(*info);
         xerbla_("CGBTF2", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Gaussian elimination with partial pivoting */

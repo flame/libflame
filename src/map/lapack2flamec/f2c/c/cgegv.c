@@ -287,6 +287,16 @@ the routine */
 /* Subroutine */
 int cgegv_(char *jobvl, char *jobvr, integer *n, complex *a, integer *lda, complex *b, integer *ldb, complex *alpha, complex *beta, complex *vl, integer *ldvl, complex *vr, integer *ldvr, complex * work, integer *lwork, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgegv inputs: jobvl %c, jobvr %c, n %lld, lda %lld, ldb %lld, ldvl %lld, ldvr %lld, lwork %lld",*jobvl, *jobvr, *n, *lda, *ldb, *ldvl, *ldvr, *lwork);
+#else 
+    snprintf(buffer, 256,"cgegv inputs: jobvl %c, jobvr %c, n %d, lda %d, ldb %d, ldvl %d, ldvr %d, lwork %d",*jobvl, *jobvr, *n, *lda, *ldb, *ldvl, *ldvr, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__2, i__3, i__4;
     real r__1, r__2, r__3, r__4;
@@ -472,15 +482,18 @@ int cgegv_(char *jobvl, char *jobvr, integer *n, complex *a, integer *lda, compl
     {
         i__1 = -(*info);
         xerbla_("CGEGV ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants */
@@ -506,6 +519,7 @@ int cgegv_(char *jobvl, char *jobvr, integer *n, complex *a, integer *lda, compl
         if (iinfo != 0)
         {
             *info = *n + 10;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -527,6 +541,7 @@ int cgegv_(char *jobvl, char *jobvr, integer *n, complex *a, integer *lda, compl
         if (iinfo != 0)
         {
             *info = *n + 10;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -893,6 +908,7 @@ L60:
 L80:
     work[1].r = (real) lwkopt;
     work[1].i = 0.f; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGEGV */
 }

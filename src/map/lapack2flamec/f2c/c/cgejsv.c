@@ -578,6 +578,16 @@ r+1}
  /* ===================================================================== */
  /* Subroutine */
  int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jobp, integer *m, integer *n, complex *a, integer * lda, real *sva, complex *u, integer *ldu, complex *v, integer *ldv, complex *cwork, integer *lwork, real *rwork, integer *lrwork, integer *iwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cgejsv inputs: cgejsv inputs: joba %c, jobu %c, jobv %c, jobr %c, jobt %c, jobp %c, m %lld, n %lld, lda %lld, ldu %lld, ldv %lld",*joba, *jobu, *jobv, *jobr, *jobt, *jobp, *m, *n, *lda, *ldu, *ldv);
+#else 
+ snprintf(buffer, 256,"cgejsv inputs: joba %c, jobu %c, jobv %c, jobr %c, jobt %c, jobp %c, m %d, n %d, lda %d, ldu %d, ldv %d",*joba, *jobu, *jobv, *jobr, *jobt, *jobp, *m, *n, *lda, *ldu, *ldv);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, u_dim1, u_offset, v_dim1, v_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7, i__8, i__9, i__10, i__11;
  real r__1, r__2, r__3;
@@ -1157,6 +1167,7 @@ r+1}
  /* #:( */
  i__1 = -(*info);
  xerbla_("CGEJSV", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
@@ -1164,6 +1175,7 @@ r+1}
  cwork[2].r = (real) minwrk; cwork[2].i = 0.f; // , expr subst  
  rwork[1] = (real) minrwrk;
  iwork[1] = max(4,miniwrk);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return for void matrix (Y3K safe) */
@@ -1214,6 +1226,7 @@ r+1}
  *info = -9;
  i__2 = -(*info);
  xerbla_("CGEJSV", &i__2);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  aaqq = sqrt(aaqq);
@@ -1276,6 +1289,7 @@ r+1}
  iwork[2] = 0;
  iwork[3] = 0;
  iwork[4] = -1;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Issue warning if denormalized column norms detected. Override the */
@@ -1339,6 +1353,7 @@ r+1}
  rwork[6] = 0.f;
  rwork[7] = 0.f;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  transp = FALSE_;
@@ -2824,6 +2839,7 @@ r+1}
  else {
  iwork[4] = -1;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* .. */
  /* .. END OF CGEJSV */

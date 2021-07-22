@@ -212,6 +212,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cgebrd_(integer *m, integer *n, complex *a, integer *lda, real *d__, real *e, complex *tauq, complex *taup, complex *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cgebrd inputs: m %lld, n %lld, lda %lld, lwork %lld",*m, *n, *lda, *lwork);
+#else 
+ snprintf(buffer, 256,"cgebrd inputs: m %d, n %d, lda %d, lwork %d",*m, *n, *lda, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
  real r__1;
@@ -256,13 +266,7 @@
  --tauq;
  --taup;
  --work;
- AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
- char buffer[256];
- sprintf(buffer, "cgebrd inputs: m %d, n %d, lda %d\n", *m, *n, *lda);
- AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
  *info = 0;
  /* Computing MAX */
  i__1 = 1; i__2 = ilaenv_(&c__1, "CGEBRD", " ", m, n, &c_n1, &c_n1); // , expr subst  
@@ -291,15 +295,18 @@
  if (*info < 0) {
  i__1 = -(*info);
  xerbla_("CGEBRD", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  minmn = min(*m,*n);
  if (minmn == 0) {
  work[1].r = 1.f; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  ws = max(*m,*n);

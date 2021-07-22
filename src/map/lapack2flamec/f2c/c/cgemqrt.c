@@ -158,6 +158,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cgemqrt_(char *side, char *trans, integer *m, integer *n, integer *k, integer *nb, complex *v, integer *ldv, complex *t, integer *ldt, complex *c__, integer *ldc, complex *work, integer * info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cgemqrt inputs: side %c, trans %c, m %lld, n %lld, k %lld, nb %lld, ldv %lld, ldt %lld, ldc %lld",*side, *trans, *m, *n, *k, *nb, *ldv, *ldt, *ldc);
+#else 
+ snprintf(buffer, 256,"cgemqrt inputs: side %c, trans %c, m %d, n %d, k %d, nb %d, ldv %d, ldt %d, ldc %d",*side, *trans, *m, *n, *k, *nb, *ldv, *ldt, *ldc);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer v_dim1, v_offset, c_dim1, c_offset, t_dim1, t_offset, i__1, i__2, i__3, i__4;
  /* Local variables */
@@ -244,10 +254,12 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CGEMQRT", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* .. Quick return if possible .. */
  if (*m == 0 || *n == 0 || *k == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (left && tran) {
@@ -302,6 +314,7 @@
  clarfb_("R", "C", "F", "C", m, &i__2, &ib, &v[i__ + i__ * v_dim1], ldv, &t[i__ * t_dim1 + 1], ldt, &c__[i__ * c_dim1 + 1], ldc, &work[1], &ldwork);
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CGEMQRT */
  }

@@ -191,6 +191,16 @@ tauq is stored in TAUQ(i) and taup in TAUP(i). */
 /* Subroutine */
 int cgebd2_(integer *m, integer *n, complex *a, integer *lda, real *d__, real *e, complex *tauq, complex *taup, complex *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgebd2 inputs: m %lld, n %lld, lda %lld",*m, *n, *lda);
+#else 
+    snprintf(buffer, 256,"cgebd2 inputs: m %d, n %d, lda %d",*m, *n, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     complex q__1;
@@ -229,13 +239,7 @@ int cgebd2_(integer *m, integer *n, complex *a, integer *lda, real *d__, real *e
     --tauq;
     --taup;
     --work;
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "cgebd2 inputs: m %d, n %d, lda %d\n", *m, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
     *info = 0;
     if (*m < 0)
     {
@@ -253,6 +257,7 @@ int cgebd2_(integer *m, integer *n, complex *a, integer *lda, real *d__, real *e
     {
         i__1 = -(*info);
         xerbla_("CGEBD2", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*m >= *n)

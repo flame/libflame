@@ -113,6 +113,16 @@ v(i+1:m) is stored on exit in A(i+1:m,i), */
 /* Subroutine */
 int cgeqr2p_(integer *m, integer *n, complex *a, integer * lda, complex *tau, complex *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgeqr2p inputs: m %lld, n %lld, lda %lld",*m, *n, *lda);
+#else 
+    snprintf(buffer, 256,"cgeqr2p inputs: m %d, n %d, lda %d",*m, *n, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     complex q__1;
@@ -166,6 +176,7 @@ int cgeqr2p_(integer *m, integer *n, complex *a, integer * lda, complex *tau, co
     {
         i__1 = -(*info);
         xerbla_("CGEQR2P", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     k = min(*m,*n);
@@ -198,6 +209,7 @@ int cgeqr2p_(integer *m, integer *n, complex *a, integer * lda, complex *tau, co
         }
         /* L10: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGEQR2P */
 }

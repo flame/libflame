@@ -114,6 +114,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int cgecon_(char *norm, integer *n, complex *a, integer *lda, real *anorm, real *rcond, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgecon inputs: norm %c, n %lld, lda %lld",*norm, *n, *lda);
+#else 
+    snprintf(buffer, 256,"cgecon inputs: norm %c, n %d, lda %d",*norm, *n, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1;
     real r__1, r__2;
@@ -172,13 +182,7 @@ int cgecon_(char *norm, integer *n, complex *a, integer *lda, real *anorm, real 
     a -= a_offset;
     --work;
     --rwork;
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "cgecon inputs: norm %c, n %d, lda %d\n", *norm, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
     *info = 0;
     onenrm = *(unsigned char *)norm == '1' || lsame_(norm, "O");
     if (! onenrm && ! lsame_(norm, "I"))
@@ -201,6 +205,7 @@ int cgecon_(char *norm, integer *n, complex *a, integer *lda, real *anorm, real 
     {
         i__1 = -(*info);
         xerbla_("CGECON", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -208,10 +213,12 @@ int cgecon_(char *norm, integer *n, complex *a, integer *lda, real *anorm, real 
     if (*n == 0)
     {
         *rcond = 1.f;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*anorm == 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     smlnum = slamch_("Safe minimum");

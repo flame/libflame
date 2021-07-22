@@ -170,6 +170,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cgeqr_(integer *m, integer *n, complex *a, integer *lda, complex *t, integer *tsize, complex *work, integer *lwork, integer * info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cgeqr inputs: m %lld, n %lld, lda %lld, tsize %lld, lwork %lld",*m, *n, *lda, *tsize, *lwork);
+#else 
+ snprintf(buffer, 256,"cgeqr inputs: m %d, n %d, lda %d, tsize %d, lwork %d",*m, *n, *lda, *tsize, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2, i__3;
  /* Local variables */
@@ -319,13 +329,16 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CGEQR", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (min(*m,*n) == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* The QR Decomposition */
@@ -339,6 +352,7 @@
  i__2 = 1; i__3 = nb * *n; // , expr subst  
  i__1 = max(i__2,i__3);
  work[1].r = (real) i__1; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CGEQR */
  }

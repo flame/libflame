@@ -123,6 +123,16 @@ ILO=1 and IHI=0, if N=0. */
 /* Subroutine */
 int cgebak_(char *job, char *side, integer *n, integer *ilo, integer *ihi, real *scale, integer *m, complex *v, integer *ldv, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgebak inputs: job %c, side %c, n %lld, ilo %lld, ihi %lld, m %lld, ldv %lld",*job, *side, *n, *ilo, *ihi, *m, *ldv);
+#else 
+    snprintf(buffer, 256,"cgebak inputs: job %c, side %c, n %d, ilo %d, ihi %d, m %d, ldv %d",*job, *side, *n, *ilo, *ihi, *m, *ldv);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer v_dim1, v_offset, i__1;
     /* Local variables */
@@ -162,13 +172,7 @@ int cgebak_(char *job, char *side, integer *n, integer *ilo, integer *ihi, real 
     v_dim1 = *ldv;
     v_offset = 1 + v_dim1;
     v -= v_offset;
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "cgebak inputs: job %c, side %c, n %d, ilo %d, ihi %d, m %d, ldv %d\n", *job, *side, *n, *ilo, *ihi, *m, *ldv);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
     rightv = lsame_(side, "R");
     leftv = lsame_(side, "L");
     *info = 0;
@@ -204,19 +208,23 @@ int cgebak_(char *job, char *side, integer *n, integer *ilo, integer *ihi, real 
     {
         i__1 = -(*info);
         xerbla_("CGEBAK", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*m == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (lsame_(job, "N"))
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*ilo == *ihi)

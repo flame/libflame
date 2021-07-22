@@ -124,6 +124,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cgeqrt2_(integer *m, integer *n, complex *a, integer * lda, complex *t, integer *ldt, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cgeqrt2 inputs: m %lld, n %lld, lda %lld, ldt %lld",*m, *n, *lda, *ldt);
+#else 
+ snprintf(buffer, 256,"cgeqrt2 inputs: m %d, n %d, lda %d, ldt %d",*m, *n, *lda, *ldt);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, t_dim1, t_offset, i__1, i__2, i__3;
  complex q__1, q__2;
@@ -178,6 +188,7 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CGEQRT2", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  k = min(*m,*n);
@@ -239,6 +250,7 @@
  t[i__2].r = 0.f; t[i__2].i = 0.f; // , expr subst  
  }
  /* End of CGEQRT2 */
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* cgeqrt2_ */

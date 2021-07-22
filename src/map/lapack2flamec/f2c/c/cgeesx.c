@@ -240,6 +240,16 @@ if */
 /* Subroutine */
 int cgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, complex *a, integer *lda, integer *sdim, complex * w, complex *vs, integer *ldvs, real *rconde, real *rcondv, complex * work, integer *lwork, real *rwork, logical *bwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgeesx inputs: jobvs %c, sort %c, sense %c, n %lld, lda %lld, ldvs %lld, lwork %lld",*jobvs, *sort, *sense, *n, *lda, *ldvs, *lwork);
+#else 
+    snprintf(buffer, 256,"cgeesx inputs: jobvs %c, sort %c, sense %c, n %d, lda %d, ldvs %d, lwork %d",*jobvs, *sort, *sense, *n, *lda, *ldvs, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, vs_dim1, vs_offset, i__1, i__2;
     /* Builtin functions */
@@ -310,13 +320,7 @@ int cgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, comp
     --work;
     --rwork;
     --bwork;
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "cgeesx inputs: jobvs %c, sort %c, sense %c, n %d, lda %d, sdim %d, ldvs %d\n", *jobvs, *sort, *sense, *n, *lda, *sdim, *ldvs);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
     *info = 0;
     wantvs = lsame_(jobvs, "V");
     wantst = lsame_(sort, "S");
@@ -407,16 +411,19 @@ int cgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, comp
     {
         i__1 = -(*info);
         xerbla_("CGEESX", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
         *sdim = 0;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants */

@@ -410,6 +410,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cgerfsx_(char *trans, char *equed, integer *n, integer * nrhs, complex *a, integer *lda, complex *af, integer *ldaf, integer * ipiv, real *r__, real *c__, complex *b, integer *ldb, complex *x, integer *ldx, real *rcond, real *berr, integer *n_err_bnds__, real * err_bnds_norm__, real *err_bnds_comp__, integer *nparams, real * params, complex *work, real *rwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cgerfsx inputs: trans %c, n %lld, nrhs %lld, lda %lld, ldaf %lld, ipiv %lld, ldb %lld, ldx %lld, n_err_bnds__ %lld, nparams %lld",*trans, *n, *nrhs, *lda, *ldaf, *ipiv, *ldb, *ldx, *n_err_bnds__, *nparams);
+#else 
+ snprintf(buffer, 256,"cgerfsx inputs: trans %c, n %d, nrhs %d, lda %d, ldaf %d, ipiv %d, ldb %d, ldx %d, n_err_bnds__ %d, nparams %d",*trans, *n, *nrhs, *lda, *ldaf, *ipiv, *ldb, *ldx, *n_err_bnds__, *nparams);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, af_dim1, af_offset, b_dim1, b_offset, x_dim1, x_offset, err_bnds_norm_dim1, err_bnds_norm_offset, err_bnds_comp_dim1, err_bnds_comp_offset, i__1;
  real r__1, r__2;
@@ -566,6 +576,7 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CGERFSX", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible. */
@@ -589,6 +600,7 @@
  err_bnds_comp__[j + err_bnds_comp_dim1 * 3] = 1.f;
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Default to failure. */
@@ -712,6 +724,7 @@
  }
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CGERFSX */
  }

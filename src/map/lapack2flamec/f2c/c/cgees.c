@@ -194,6 +194,16 @@ elements 1:ILO-1 and i+1:N of W */
 /* Subroutine */
 int cgees_(char *jobvs, char *sort, L_fp select, integer *n, complex *a, integer *lda, integer *sdim, complex *w, complex *vs, integer *ldvs, complex *work, integer *lwork, real *rwork, logical * bwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgees inputs: jobvs %c, sort %c, n %lld, lda %lld, ldvs %lld, lwork %lld",*jobvs, *sort, *n, *lda, *ldvs, *lwork);
+#else 
+    snprintf(buffer, 256,"cgees inputs: jobvs %c, sort %c, n %d, lda %d, ldvs %d, lwork %d",*jobvs, *sort, *n, *lda, *ldvs, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, vs_dim1, vs_offset, i__1, i__2;
     /* Builtin functions */
@@ -261,13 +271,7 @@ int cgees_(char *jobvs, char *sort, L_fp select, integer *n, complex *a, integer
     --work;
     --rwork;
     --bwork;
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "cgees inputs: jobvs %c, sort %c, n %d, lda %d, sdim %d, ldvs %d\n", *jobvs, *sort, *n, *lda, *sdim, *ldvs);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
     *info = 0;
     lquery = *lwork == -1;
     wantvs = lsame_(jobvs, "V");
@@ -339,16 +343,19 @@ int cgees_(char *jobvs, char *sort, L_fp select, integer *n, complex *a, integer
     {
         i__1 = -(*info);
         xerbla_("CGEES ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
         *sdim = 0;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants */

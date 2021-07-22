@@ -365,6 +365,16 @@ if EQUED = 'N' or 'R', C */
 /* Subroutine */
 int cgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integer *nrhs, complex *ab, integer *ldab, complex *afb, integer *ldafb, integer *ipiv, char *equed, real *r__, real *c__, complex *b, integer *ldb, complex *x, integer *ldx, real *rcond, real *ferr, real *berr, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+   snprintf(buffer, 256,"cgbsvx inputs: fact %c, trans %c, n %lld, kl %lld, ku %lld, nrhs %lld, ldab %lld, ldafb %lld, ipiv %lld, equed %c, ldb %lld, ldx %lld",*fact, *trans, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ipiv, *equed, *ldb, *ldx);
+#else 
+   snprintf(buffer, 256,"cgbsvx inputs: fact %c, trans %c, n %d, kl %d, ku %d, nrhs %d, ldab %d, ldafb %d, ipiv %d, equed %c, ldb %d, ldx %d",*fact, *trans, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ipiv, *equed, *ldb, *ldx);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, afb_dim1, afb_offset, b_dim1, b_offset, x_dim1, x_offset, i__1, i__2, i__3, i__4, i__5;
     real r__1, r__2;
@@ -446,13 +456,7 @@ int cgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
     --berr;
     --work;
     --rwork;
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "cgbsvx inputs: fact %c, trans %c, n %d, kl %d, ku %d, nrhs %d, ldab %d, ldafb %d, ipiv %d, equed %c, ldb %d, ldx %d\n", *fact, *trans, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ipiv, *equed, *ldb, *ldx);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
     *info = 0;
     nofact = lsame_(fact, "N");
     equil = lsame_(fact, "E");
@@ -589,6 +593,7 @@ int cgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
     {
         i__1 = -(*info);
         xerbla_("CGBSVX", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (equil)
@@ -721,6 +726,7 @@ int cgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
             }
             rwork[1] = rpvgrw;
             *rcond = 0.f;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }

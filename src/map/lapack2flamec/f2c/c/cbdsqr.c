@@ -220,6 +220,16 @@ if INFO = i, i */
 /* Subroutine */
 int cbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, real *d__, real *e, complex *vt, integer *ldvt, complex *u, integer *ldu, complex *c__, integer *ldc, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+   snprintf(buffer, 256,"cbdsqr inputs: uplo %c, n %lld, ncvt %lld, nru %lld, ncc %lld, ldvt %lld, ldu %lld, ldc %lld",*uplo, *n, *ncvt, *nru, *ncc, *ldvt, *ldu, *ldc);
+#else 
+   snprintf(buffer, 256,"cbdsqr inputs: uplo %c, n %d, ncvt %d, nru %d, ncc %d, ldvt %d, ldu %d, ldc %d",*uplo, *n, *ncvt, *nru, *ncc, *ldvt, *ldu, *ldc);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer c_dim1, c_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1, i__2;
     real r__1, r__2, r__3, r__4;
@@ -298,13 +308,7 @@ int cbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, 
     c_offset = 1 + c_dim1;
     c__ -= c_offset;
     --rwork;
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Function Body */
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "cbdsqr inputs: uplo %c, n %d, ncvt %d, nru %d, ncc %d, ldvt %d, ldu %d, ldc %d\n", *uplo, *n, *ncvt, *nru, *ncc, *ldvt, *ldu, *ldc);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
     *info = 0;
     lower = lsame_(uplo, "L");
     if (! lsame_(uplo, "U") && ! lower)
@@ -343,10 +347,12 @@ int cbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, 
     {
         i__1 = -(*info);
         xerbla_("CBDSQR", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 1)
@@ -362,6 +368,7 @@ int cbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, 
         /* If INFO equals 2, dqds didn't finish, try to finish */
         if (*info != 2)
         {
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         *info = 0;

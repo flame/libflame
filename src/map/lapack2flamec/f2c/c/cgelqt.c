@@ -115,6 +115,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cgelqt_(integer *m, integer *n, integer *mb, complex *a, integer *lda, complex *t, integer *ldt, complex *work, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cgelqt inputs: m %lld, n %lld, mb %lld, lda %lld, ldt %lld",*m, *n, *mb, *lda, *ldt);
+#else 
+ snprintf(buffer, 256,"cgelqt inputs: m %d, n %d, mb %d, lda %d, ldt %d",*m, *n, *mb, *lda, *ldt);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, t_dim1, t_offset, i__1, i__2, i__3, i__4, i__5;
  /* Local variables */
@@ -165,11 +175,13 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CGELQT", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  k = min(*m,*n);
  if (k == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Blocked loop of length K */
@@ -192,6 +204,7 @@
  clarfb_("R", "N", "F", "R", &i__3, &i__4, &ib, &a[i__ + i__ * a_dim1], lda, &t[i__ * t_dim1 + 1], ldt, &a[i__ + ib + i__ * a_dim1], lda, &work[1], &i__5);
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CGELQT */
  }

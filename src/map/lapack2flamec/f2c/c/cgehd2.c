@@ -141,6 +141,16 @@ v(i+2:ihi) is stored on */
 /* Subroutine */
 int cgehd2_(integer *n, integer *ilo, integer *ihi, complex * a, integer *lda, complex *tau, complex *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgehd2 inputs: n %lld, ilo %lld, ihi %lld, lda %lld",*n, *ilo, *ihi, *lda);
+#else 
+    snprintf(buffer, 256,"cgehd2 inputs: n %d, ilo %d, ihi %d, lda %d",*n, *ilo, *ihi, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     complex q__1;
@@ -198,6 +208,7 @@ int cgehd2_(integer *n, integer *ilo, integer *ihi, complex * a, integer *lda, c
     {
         i__1 = -(*info);
         xerbla_("CGEHD2", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     i__1 = *ihi - 1;
@@ -229,6 +240,7 @@ int cgehd2_(integer *n, integer *ilo, integer *ihi, complex * a, integer *lda, c
         a[i__2].i = alpha.i; // , expr subst
         /* L10: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGEHD2 */
 }
