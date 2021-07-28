@@ -15,7 +15,6 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 
 #enabling the configuration options
 option (ENABLE_ILP64 "Enable ILP64" ON)
-option (ENABLE_UPPERCASE "Enable uppercase API's" OFF)
 option (INCLUDE_LAPACKE "INCLUDE LAPACKE Code" ON)
 option (BUILD_SHARED_LIBS "Building shared Library" ON)
 option (BUILD_TEST "Building test directory" ON)
@@ -52,13 +51,6 @@ option (ENABLE_F2C_DOTC "Enable invoking Complex datatype BLAS functions DOTC an
 option (ENABLE_VOID_RETURN_COMPLEX_FUNCTION "Enable 'void' return instead of complex return type for libFLAME functions such as cladiv/zladiv that by default have complex return type" OFF)
 
 set (ENABLE_WINDOWS_BUILD "Enables windows build" ON)
-
-if(ENABLE_UPPERCASE)
-add_definitions(-DBLIS1_ENABLE_UPPERCASE_F77)
-add_definitions(-DUPPER)
-elseif(NOT ENABLE_UPPERCASE)  
-add_definitions(-DNOCHANGE)
-endif()
 
 if(ENABLE_XBLAS)
 add_definitions(-DFLA_ENABLE_XBLAS)
