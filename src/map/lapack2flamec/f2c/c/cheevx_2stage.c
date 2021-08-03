@@ -301,6 +301,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cheevx_2stage_(char *jobz, char *range, char *uplo, integer *n, complex *a, integer *lda, real *vl, real *vu, integer *il, integer *iu, real *abstol, integer *m, real *w, complex *z__, integer *ldz, complex *work, integer *lwork, real *rwork, integer * iwork, integer *ifail, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cheevx_2stage inputs: jobz %c, range %c, uplo %c, n %lld, lda %lld, il %lld, iu %lld, m %lld, ldz %lld, lwokr %lld",*jobz, *range, *uplo, *n, *lda, *il, *iu, *m, *ldz, *lwork);
+#else 
+ snprintf(buffer, 256,"cheevx_2stage inputs: jobz %c, range %c, uplo %c, n %d, lda %d, il %d, iu %d, m %d, ldz %d, lwork %d",*jobz, *range, *uplo, *n, *lda, *il, *iu, *m, *ldz, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, z_dim1, z_offset, i__1, i__2;
  real r__1, r__2;
@@ -453,14 +463,17 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CHEEVX_2STAGE", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  *m = 0;
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n == 1) {
@@ -482,6 +495,7 @@
  i__1 = z_dim1 + 1;
  z__[i__1].r = 1.f; z__[i__1].i = 0.f; // , expr subst  
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Get machine constants. */
@@ -650,6 +664,7 @@
  }
  /* Set WORK(1) to optimal complex workspace size. */
  work[1].r = (real) lwmin; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CHEEVX_2STAGE */
  }

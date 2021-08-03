@@ -152,6 +152,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int chesv_aa_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, integer *ipiv, complex *b, integer *ldb, complex *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"chesv_aa inputs: uplo %c, n %lld, nrhs %lld, lda %lld, ldb %lld, lwork %lld",*uplo, *n, *nrhs, *lda, *ldb, *lwork);
+#else 
+ snprintf(buffer, 256,"chesv_aa inputs: uplo %c, n %d, nrhs %d, lda %d, ldb %d, lwork %d",*uplo, *n, *nrhs, *lda, *ldb, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2;
  /* Local variables */
@@ -228,9 +238,11 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CHESV_AA ", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Compute the factorization A = U**H*T*U or A = L*T*L**H. */
@@ -240,6 +252,7 @@
  chetrs_aa_(uplo, n, nrhs, &a[a_offset], lda, &ipiv[1], &b[b_offset], ldb, &work[1], lwork, info);
  }
  work[1].r = (real) lwkopt; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CHESV_AA */
  }

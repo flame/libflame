@@ -183,6 +183,16 @@ in this case a minimum norm solution is returned. */
 /* Subroutine */
 int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, real *e, complex *b, integer *ldb, real *rcond, integer *rank, complex *work, real *rwork, integer *iwork, integer * info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+   snprintf(buffer, 256,"clalsd inputs: uplo %c, smlsiz %lld, n %lld, nrhs %lld, ldb %lld",*uplo, *smlsiz, *n, *nrhs, *ldb);
+#else 
+   snprintf(buffer, 256,"clalsd inputs: uplo %c, smlsiz %d, n %d, nrhs %d, ldb %d",*uplo, *smlsiz, *n, *nrhs, *ldb);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     real r__1;
@@ -275,6 +285,7 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
     {
         i__1 = -(*info);
         xerbla_("CLALSD", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     eps = slamch_("Epsilon");
@@ -291,6 +302,7 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
     /* Quick return if possible. */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*n == 1)
@@ -305,6 +317,7 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
             clascl_("G", &c__0, &c__0, &d__[1], &c_b10, &c__1, nrhs, &b[ b_offset], ldb, info);
             d__[1] = f2c_dabs(d__[1]);
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Rotate the matrix if it is lower bidiagonal. */
@@ -357,6 +370,7 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
     if (orgnrm == 0.f)
     {
         claset_("A", n, nrhs, &c_b1, &c_b1, &b[b_offset], ldb);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     slascl_("G", &c__0, &c__0, &orgnrm, &c_b10, n, &c__1, &d__[1], n, info);
@@ -376,6 +390,7 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
         slasdq_("U", &c__0, n, n, n, &c__0, &d__[1], &e[1], &rwork[irwvt], n, &rwork[irwu], n, &rwork[irwwrk], &c__1, &rwork[irwwrk], info);
         if (*info != 0)
         {
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         /* In the real version, B is passed to SLASDQ and multiplied */
@@ -531,6 +546,7 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
         slascl_("G", &c__0, &c__0, &c_b10, &orgnrm, n, &c__1, &d__[1], n, info);
         slasrt_("D", n, &d__[1], info);
         clascl_("G", &c__0, &c__0, &orgnrm, &c_b10, n, nrhs, &b[b_offset], ldb, info);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Book-keeping and setting up some constants. */
@@ -622,6 +638,7 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
                 slasdq_("U", &c__0, &nsize, &nsize, &nsize, &c__0, &d__[st], & e[st], &rwork[vt + st1], n, &rwork[u + st1], n, & rwork[nrwork], &c__1, &rwork[nrwork], info) ;
                 if (*info != 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 /* In the real version, B is passed to SLASDQ and multiplied */
@@ -697,12 +714,14 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
                 slasda_(&icmpq1, smlsiz, &nsize, &sqre, &d__[st], &e[st], & rwork[u + st1], n, &rwork[vt + st1], &iwork[k + st1], &rwork[difl + st1], &rwork[difr + st1], &rwork[z__ + st1], &rwork[poles + st1], &iwork[givptr + st1], & iwork[givcol + st1], n, &iwork[perm + st1], &rwork[ givnum + st1], &rwork[c__ + st1], &rwork[s + st1], & rwork[nrwork], &iwork[iwk], info);
                 if (*info != 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 bxst = bx + st1;
                 clalsa_(&icmpq2, smlsiz, &nsize, nrhs, &b[st + b_dim1], ldb, & work[bxst], n, &rwork[u + st1], n, &rwork[vt + st1], & iwork[k + st1], &rwork[difl + st1], &rwork[difr + st1] , &rwork[z__ + st1], &rwork[poles + st1], &iwork[ givptr + st1], &iwork[givcol + st1], n, &iwork[perm + st1], &rwork[givnum + st1], &rwork[c__ + st1], &rwork[ s + st1], &rwork[nrwork], &iwork[iwk], info);
                 if (*info != 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
             }
@@ -825,6 +844,7 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
             clalsa_(&icmpq2, smlsiz, &nsize, nrhs, &work[bxst], n, &b[st + b_dim1], ldb, &rwork[u + st1], n, &rwork[vt + st1], & iwork[k + st1], &rwork[difl + st1], &rwork[difr + st1], & rwork[z__ + st1], &rwork[poles + st1], &iwork[givptr + st1], &iwork[givcol + st1], n, &iwork[perm + st1], &rwork[ givnum + st1], &rwork[c__ + st1], &rwork[s + st1], &rwork[ nrwork], &iwork[iwk], info);
             if (*info != 0)
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
         }
@@ -834,6 +854,7 @@ int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, r
     slascl_("G", &c__0, &c__0, &c_b10, &orgnrm, n, &c__1, &d__[1], n, info);
     slasrt_("D", n, &d__[1], info);
     clascl_("G", &c__0, &c__0, &orgnrm, &c_b10, n, nrhs, &b[b_offset], ldb, info);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLALSD */
 }

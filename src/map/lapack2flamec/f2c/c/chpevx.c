@@ -231,7 +231,11 @@ int chpevx_(char *jobz, char *range, char *uplo, integer *n, complex *ap, real *
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
 #if AOCL_DTL_LOG_ENABLE 
     char buffer[256]; 
-    snprintf(buffer, 256,"chpevx inputs: jobz %c, range %c, uplo %c, n %d, il %d, iu %d, m %d, ldz %d\n",*jobz, *range, *uplo, *n, *il, *iu, *m, *ldz);
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"chpevx inputs: jobz %c, range %c, uplo %c, n %lld, il %lld, iu %lld, m %lld, ldz %lld",*jobz, *range, *uplo, *n, *il, *iu, *m, *ldz);
+#else 
+    snprintf(buffer, 256,"chpevx inputs: jobz %c, range %c, uplo %c, n %d, il %d, iu %d, m %d, ldz %d",*jobz, *range, *uplo, *n, *il, *iu, *m, *ldz);
+#endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */

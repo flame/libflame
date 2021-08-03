@@ -244,6 +244,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int chetrd_he2hb_(char *uplo, integer *n, integer *kd, complex *a, integer *lda, complex *ab, integer *ldab, complex *tau, complex *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"chetrd_he2hb inputs: uplo %c, n %lld, kd %lld, lda %lld, ldab %lld, lwork %lld",*uplo, *n, *kd, *lda, *ldab, *lwork);
+#else 
+ snprintf(buffer, 256,"chetrd_he2hb inputs: uplo %c, n %d, kd %d, lda %d, ldab %d, lwork %d",*uplo, *n, *kd, *lda, *ldab, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5;
  complex q__1;
@@ -324,10 +334,12 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CHETRD_HE2HB", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
  work[1].r = (real) lwmin; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
@@ -358,6 +370,7 @@
  }
  }
  work[1].r = 1.f; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Determine the pointer position for the workspace */
@@ -494,6 +507,7 @@
  }
  }
  work[1].r = (real) lwmin; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CHETRD_HE2HB */
  }

@@ -159,7 +159,11 @@ int chfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
 #if AOCL_DTL_LOG_ENABLE 
     char buffer[256]; 
-    snprintf(buffer, 256,"chfrk inputs: transr %c, uplo %c, trans %c, n %d, k %d, lda %d\n",*transr, *uplo, *trans, *n, *k, *lda);
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"chfrk inputs: transr %c, uplo %c, trans %c, n %lld, k %lld, lda %lld",*transr, *uplo, *trans, *n, *k, *lda);
+#else 
+    snprintf(buffer, 256,"chfrk inputs: transr %c, uplo %c, trans %c, n %d, k %d, lda %d",*transr, *uplo, *trans, *n, *k, *lda);
+#endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */

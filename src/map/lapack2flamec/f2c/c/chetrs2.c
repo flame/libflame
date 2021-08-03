@@ -121,7 +121,11 @@
  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
 #if AOCL_DTL_LOG_ENABLE 
  char buffer[256]; 
- snprintf(buffer, 256,"chetrs2 inputs: uplo %c, n %d, nrhs %d, lda %d, ldb %d\n",*uplo, *n, *nrhs, *lda, *ldb);
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"chetrs2 inputs: uplo %c, n %lld, nrhs %lld, lda %lld, ipiv %lld, ldb %lld",*uplo, *n, *nrhs, *lda, *ipiv, *ldb);
+#else 
+ snprintf(buffer, 256,"chetrs2 inputs: uplo %c, n %d, nrhs %d, lda %d, ipiv %d, ldb %d",*uplo, *n, *nrhs, *lda, *ipiv, *ldb);
+#endif
  AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
  /* System generated locals */

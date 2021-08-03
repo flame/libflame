@@ -128,6 +128,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int chetrf_aa_(char *uplo, integer *n, complex *a, integer * lda, integer *ipiv, complex *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"chetrf_aa inputs: uplo %c, n %lld, lda %lld, lwork %lld",*uplo, *n, *lda, *lwork);
+#else 
+ snprintf(buffer, 256,"chetrf_aa inputs: uplo %c, n %d, lda %d, lwork %d",*uplo, *n, *lda, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
  real r__1;
@@ -201,13 +211,16 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CHETRF_AA", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  ipiv[1] = 1;
@@ -216,6 +229,7 @@
  i__2 = a_dim1 + 1;
  r__1 = a[i__2].r;
  a[i__1].r = r__1; a[i__1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Adjust block size based on the workspace size */
@@ -435,6 +449,7 @@
  }
  goto L11;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  L20: return 0;
  /* End of CHETRF_AA */
  }

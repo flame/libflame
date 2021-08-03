@@ -295,6 +295,16 @@ IL = 1 and IU = 0 if N = 0. */
 /* Subroutine */
 int chbgvx_(char *jobz, char *range, char *uplo, integer *n, integer *ka, integer *kb, complex *ab, integer *ldab, complex *bb, integer *ldbb, complex *q, integer *ldq, real *vl, real *vu, integer * il, integer *iu, real *abstol, integer *m, real *w, complex *z__, integer *ldz, complex *work, real *rwork, integer *iwork, integer * ifail, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"chbgvx inputs: jobz %c, range %c, uplo %c, n %lld, ka %lld, kb %lld, ldab %lld, ldbb %lld, ldq %lld, il %lld, iu %lld, ldz %lld",*jobz, *range, *uplo, *n, *ka, *kb, *ldab, *ldbb, *ldq, *il, *iu, *ldz);
+#else 
+    snprintf(buffer, 256,"chbgvx inputs: jobz %c, range %c, uplo %c, n %d, ka %d, kb %d, ldab %d, ldbb %d, ldq %d, il %d, iu %d, ldz %d",*jobz, *range, *uplo, *n, *ka, *kb, *ldab, *ldbb, *ldq, *il, *iu, *ldz);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, bb_dim1, bb_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2;
     /* Local variables */
@@ -444,12 +454,14 @@ int chbgvx_(char *jobz, char *range, char *uplo, integer *n, integer *ka, intege
     {
         i__1 = -(*info);
         xerbla_("CHBGVX", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     *m = 0;
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Form a split Cholesky factorization of B. */
@@ -457,6 +469,7 @@ int chbgvx_(char *jobz, char *range, char *uplo, integer *n, integer *ka, intege
     if (*info != 0)
     {
         *info = *n + *info;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Transform problem to standard eigenvalue problem. */
@@ -590,6 +603,7 @@ L30: /* If eigenvalues are not in order, then sort them, along with */
             /* L50: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHBGVX */
 }

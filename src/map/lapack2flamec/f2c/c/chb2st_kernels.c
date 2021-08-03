@@ -163,9 +163,9 @@
 #if AOCL_DTL_LOG_ENABLE 
  char buffer[256]; 
 #if FLA_ENABLE_ILP64 
- snprintf(buffer, 256,"chb2st inputs: uplo %c, ttype %lld, st %lld, ed %lld, sweep %lld, n %lld, nb %lld, ib %lld, lda %lld, ldvt %lld",*uplo, *ttype, *st, *ed, *sweep, *n, *nb, *ib, *lda, *ldvt);
+ snprintf(buffer, 256,"chb2st_kernels inputs: uplo %c, ttype %lld, st %lld, ed %lld, sweep %lld, n %lld, nb %lld, ib %lld, lda %lld, ldvt %lld",*uplo, *ttype, *st, *ed, *sweep, *n, *nb, *ib, *lda, *ldvt);
 #else 
- snprintf(buffer, 256,"chb2st inputs: uplo %c, ttype %d, st %d, ed %d, sweep %d, n %d, nb %d, ib %d, lda %d, ldvt %d",*uplo, *ttype, *st, *ed, *sweep, *n, *nb, *ib, *lda, *ldvt);
+ snprintf(buffer, 256,"chb2st_kernels inputs: uplo %c, ttype %d, st %d, ed %d, sweep %d, n %d, nb %d, ib %d, lda %d, ldvt %d",*uplo, *ttype, *st, *ed, *sweep, *n, *nb, *ib, *lda, *ldvt);
 #endif
  AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

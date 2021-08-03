@@ -134,6 +134,16 @@ otherwise, */
 /* Subroutine */
 int clagtm_(char *trans, integer *n, integer *nrhs, real * alpha, complex *dl, complex *d__, complex *du, complex *x, integer * ldx, real *beta, complex *b, integer *ldb)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clagtm inputs: trans %c, n %lld, nrhs %lld, ldx %lld, ldb %lld",*trans, *n, *nrhs, *ldx, *ldb);
+#else 
+    snprintf(buffer, 256,"clagtm inputs: trans %c, n %d, nrhs %d, ldx %d, ldb %d",*trans, *n, *nrhs, *ldx, *ldb);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, x_dim1, x_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7, i__8, i__9, i__10;
     complex q__1, q__2, q__3, q__4, q__5, q__6, q__7, q__8, q__9;
@@ -173,6 +183,7 @@ int clagtm_(char *trans, integer *n, integer *nrhs, real * alpha, complex *dl, c
     /* Function Body */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Multiply B by BETA if BETA.NE.1. */
@@ -741,6 +752,7 @@ int clagtm_(char *trans, integer *n, integer *nrhs, real * alpha, complex *dl, c
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLAGTM */
 }

@@ -250,6 +250,16 @@ i off-diagonal elements of an */
 /* Subroutine */
 int chegvd_(integer *itype, char *jobz, char *uplo, integer * n, complex *a, integer *lda, complex *b, integer *ldb, real *w, complex *work, integer *lwork, real *rwork, integer *lrwork, integer * iwork, integer *liwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"chegvd inputs: itype %lld, jobz %c, uplo %c, n %lld, lda %lld, ldb %lld, lwork %lld, lrwork %lld, liwork %lld",*itype, *jobz, *uplo, *n, *lda, *ldb, *lwork, *lrwork, *liwork);
+#else 
+    snprintf(buffer, 256,"chegvd inputs: itype %d, jobz %c, uplo %c, n %d, lda %d, ldb %d, lwork %d, lrwork %d, liwork %d",*itype, *jobz, *uplo, *n, *lda, *ldb, *lwork, *lrwork, *liwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     real r__1, r__2;
@@ -375,15 +385,18 @@ int chegvd_(integer *itype, char *jobz, char *uplo, integer * n, complex *a, int
     {
         i__1 = -(*info);
         xerbla_("CHEGVD", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Form a Cholesky factorization of B. */
@@ -391,6 +404,7 @@ int chegvd_(integer *itype, char *jobz, char *uplo, integer * n, complex *a, int
     if (*info != 0)
     {
         *info = *n + *info;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Transform problem to standard eigenvalue problem and solve. */
@@ -445,6 +459,7 @@ int chegvd_(integer *itype, char *jobz, char *uplo, integer * n, complex *a, int
     work[1].i = 0.f; // , expr subst
     rwork[1] = (real) lropt;
     iwork[1] = liopt;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHEGVD */
 }

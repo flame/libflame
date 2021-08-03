@@ -251,6 +251,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int chbgvd_(char *jobz, char *uplo, integer *n, integer *ka, integer *kb, complex *ab, integer *ldab, complex *bb, integer *ldbb, real *w, complex *z__, integer *ldz, complex *work, integer *lwork, real *rwork, integer *lrwork, integer *iwork, integer *liwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"chbgvd inputs: jobz %c, uplo %c, n %lld, ka %lld, kb %lld, ldab %lld, ldbb %lld, ldz %lld, lwork %lld, lrwork %lld, liwork %lld",*jobz, *uplo, *n, *ka, *kb, *ldab, *ldbb, *ldz, *lwork, *lrwork, *liwork);
+#else 
+ snprintf(buffer, 256,"chbgvd inputs: jobz %c, uplo %c, n %d, ka %d, kb %d, ldab %d, ldbb %d, ldz %d, lwork %d, lrwork %d, liwork %d",*jobz, *uplo, *n, *ka, *kb, *ldab, *ldbb, *ldz, *lwork, *lrwork, *liwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer ab_dim1, ab_offset, bb_dim1, bb_offset, z_dim1, z_offset, i__1;
  /* Local variables */
@@ -370,19 +380,23 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CHBGVD", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Form a split Cholesky factorization of B. */
  cpbstf_(uplo, n, kb, &bb[bb_offset], ldbb, info);
  if (*info != 0) {
  *info = *n + *info;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Transform problem to standard eigenvalue problem. */
@@ -412,6 +426,7 @@
  work[1].r = (real) lwmin; work[1].i = 0.f; // , expr subst  
  rwork[1] = (real) lrwmin;
  iwork[1] = liwmin;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CHBGVD */
  }

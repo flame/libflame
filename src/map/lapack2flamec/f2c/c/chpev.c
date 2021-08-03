@@ -134,7 +134,11 @@ int chpev_(char *jobz, char *uplo, integer *n, complex *ap, real *w, complex *z_
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
 #if AOCL_DTL_LOG_ENABLE 
     char buffer[256]; 
-    snprintf(buffer, 256,"chpev inputs: jobz %c, uplo %c, n %d, ldz %d\n",*jobz, *uplo, *n, *ldz);
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"chpev inputs: jobz %c, uplo %c, n %lld, ldz %lld",*jobz, *uplo, *n, *ldz);
+#else 
+    snprintf(buffer, 256,"chpev inputs: jobz %c, uplo %c, n %d, ldz %d",*jobz, *uplo, *n, *ldz);
+#endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */

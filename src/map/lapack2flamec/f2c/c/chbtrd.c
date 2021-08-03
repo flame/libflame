@@ -172,6 +172,16 @@ if VECT = 'N' or 'V', then Q need not be set. */
 /* Subroutine */
 int chbtrd_(char *vect, char *uplo, integer *n, integer *kd, complex *ab, integer *ldab, real *d__, real *e, complex *q, integer * ldq, complex *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"chbtrd inputs: vect %c, uplo %c, n %lld, kd %lld, ldab %lld, ldq %lld",*vect, *uplo, *n, *kd, *ldab, *ldq);
+#else 
+    snprintf(buffer, 256,"chbtrd inputs: vect %c, uplo %c, n %d, kd %d, ldab %d, ldq %d",*vect, *uplo, *n, *kd, *ldab, *ldq);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, q_dim1, q_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     real r__1;
@@ -267,11 +277,13 @@ int chbtrd_(char *vect, char *uplo, integer *n, integer *kd, complex *ab, intege
     {
         i__1 = -(*info);
         xerbla_("CHBTRD", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Initialize Q to the unit matrix, if needed */
@@ -873,6 +885,7 @@ int chbtrd_(char *vect, char *uplo, integer *n, integer *kd, complex *ab, intege
             /* L240: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHBTRD */
 }

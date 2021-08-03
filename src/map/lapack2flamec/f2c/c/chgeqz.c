@@ -288,7 +288,11 @@
  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
 #if AOCL_DTL_LOG_ENABLE 
  char buffer[256]; 
- snprintf(buffer, 256,"chgeqz inputs: job %c, compq %c, compz %c, n %d, ilo %d, ihi %d, ldh %d, ldt %d, ldq %d, ldz %d\n",*job, *compq, *compz, *n, *ilo, *ihi, *ldh, *ldt, *ldq, *ldz);
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"chgeqz inputs: job %c, compq %c, compz %c, n %lld, ilo %lld, ihi %lld, ldh %lld, ldt %lld, ldq %lld, ldz %lld, lwork %lld",*job, *compq, *compz, *n, *ilo, *ihi, *ldh, *ldt, *ldq, *ldz, *lwork);
+#else 
+ snprintf(buffer, 256,"chgeqz inputs: job %c, compq %c, compz %c, n %d, ilo %d, ihi %d, ldh %d, ldt %d, ldq %d, ldz %d, lwork %d",*job, *compq, *compz, *n, *ilo, *ihi, *ldh, *ldt, *ldq, *ldz, *lwork);
+#endif
  AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
  /* System generated locals */

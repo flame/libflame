@@ -218,6 +218,16 @@ tauq is stored in TAUQ(i) and taup in TAUP(i). */
 /* Subroutine */
 int clabrd_(integer *m, integer *n, integer *nb, complex *a, integer *lda, real *d__, real *e, complex *tauq, complex *taup, complex *x, integer *ldx, complex *y, integer *ldy)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clabrd inputs: m %lld, n %lld, nb %lld, lda %lld, ldx %lld, ldy %lld",*m, *n, *nb, *lda, *ldx, *ldy);
+#else 
+    snprintf(buffer, 256,"clabrd inputs: m %d, n %d, nb %d, lda %d, ldx %d, ldy %d",*m, *n, *nb, *lda, *ldx, *ldy);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, x_dim1, x_offset, y_dim1, y_offset, i__1, i__2, i__3;
     complex q__1;
@@ -262,6 +272,7 @@ int clabrd_(integer *m, integer *n, integer *nb, complex *a, integer *lda, real 
     /* Function Body */
     if (*m <= 0 || *n <= 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*m >= *n)
@@ -505,6 +516,7 @@ int clabrd_(integer *m, integer *n, integer *nb, complex *a, integer *lda, real 
             /* L20: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLABRD */
 }

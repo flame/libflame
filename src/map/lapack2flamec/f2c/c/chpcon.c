@@ -112,7 +112,11 @@ int chpcon_(char *uplo, integer *n, complex *ap, integer * ipiv, real *anorm, re
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
 #if AOCL_DTL_LOG_ENABLE 
     char buffer[256]; 
-    snprintf(buffer, 256,"chpcon inputs: uplo %c, n %d\n",*uplo, *n);
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"chpcon inputs: uplo %c, n %lld, ipiv %lld",*uplo, *n, *ipiv);
+#else 
+    snprintf(buffer, 256,"chpcon inputs: uplo %c, n %d, ipiv %d",*uplo, *n, *ipiv);
+#endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */
@@ -171,7 +175,7 @@ int chpcon_(char *uplo, integer *n, complex *ap, integer * ipiv, real *anorm, re
     {
         i__1 = -(*info);
         xerbla_("CHPCON", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */

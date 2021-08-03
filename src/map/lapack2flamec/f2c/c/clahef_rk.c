@@ -255,6 +255,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int clahef_rk_(char *uplo, integer *n, integer *nb, integer *kb, complex *a, integer *lda, complex *e, integer *ipiv, complex *w, integer *ldw, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"clahef_rk inputs: uplo %c, n %lld, nb %lld, kb %lld, lda %lld, ldw %lld",*uplo, *n, *nb, *kb, *lda, *ldw);
+#else 
+ snprintf(buffer, 256,"clahef_rk inputs: uplo %c, n %d, nb %d, kb %d, lda %d, ldw %d",*uplo, *n, *nb, *kb, *lda, *ldw);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, w_dim1, w_offset, i__1, i__2, i__3, i__4, i__5;
  real r__1, r__2;
@@ -1203,6 +1213,7 @@
  /* Set KB to the number of columns factorized */
  *kb = k - 1;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CLAHEF_RK */
  }

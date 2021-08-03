@@ -196,6 +196,16 @@ the routine */
 /* Subroutine */
 int chesv_rook_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, integer *ipiv, complex *b, integer *ldb, complex *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"chesv_rook inputs: uplo %c, n %lld, nrhs %lld, lda %lld, ldb %lld, lwork %lld",*uplo, *n, *nrhs, *lda, *ldb, *lwork);
+#else 
+    snprintf(buffer, 256,"chesv_rook inputs: uplo %c, n %d, nrhs %d, lda %d, ldb %d, lwork %d",*uplo, *n, *nrhs, *lda, *ldb, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */
@@ -281,10 +291,12 @@ int chesv_rook_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda,
     {
         i__1 = -(*info);
         xerbla_("CHESV_ROOK ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Compute the factorization A = U*D*U**H or A = L*D*L**H. */
@@ -297,6 +309,7 @@ int chesv_rook_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda,
     }
     work[1].r = (real) lwkopt;
     work[1].i = 0.f; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHESV_ROOK */
 }

@@ -198,7 +198,11 @@
  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
 #if AOCL_DTL_LOG_ENABLE 
  char buffer[256]; 
- snprintf(buffer, 256,"chpevd inputs: jobz %c, uplo %c, n %d, ldz %d\n",*jobz, *uplo, *n, *ldz);
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"chpevd inputs: jobz %c, uplo %c, n %lld, ldz %lld, lwork %lld, lrwork %lld, liwork %lld",*jobz, *uplo, *n, *ldz, *lwork, *lrwork, *liwork);
+#else 
+ snprintf(buffer, 256,"chpevd inputs: jobz %c, uplo %c, n %d, ldz %d, lwork %d, lrwork %d, liwork %d",*jobz, *uplo, *n, *ldz, *lwork, *lrwork, *liwork);
+#endif
  AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
  /* System generated locals */

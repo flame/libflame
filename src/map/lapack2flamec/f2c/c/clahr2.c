@@ -178,6 +178,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int clahr2_(integer *n, integer *k, integer *nb, complex *a, integer *lda, complex *tau, complex *t, integer *ldt, complex *y, integer *ldy) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"clahr2 inputs: n %lld, k %lld, nb %lld, lda %lld, ldt %lld, ldy %lld",*n, *k, *nb, *lda, *ldt, *ldy);
+#else 
+ snprintf(buffer, 256,"clahr2 inputs: n %d, k %d, nb %d, lda %d, ldt %d, ldy %d",*n, *k, *nb, *lda, *ldt, *ldy);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, t_dim1, t_offset, y_dim1, y_offset, i__1, i__2, i__3;
  complex q__1;
@@ -218,6 +228,7 @@
  y -= y_offset;
  /* Function Body */
  if (*n <= 1) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  i__1 = *nb;
@@ -311,6 +322,7 @@
  cgemm_("NO TRANSPOSE", "NO TRANSPOSE", k, nb, &i__1, &c_b2, &a[(*nb + 2) * a_dim1 + 1], lda, &a[*k + 1 + *nb + a_dim1], lda, &c_b2, &y[y_offset], ldy);
  }
  ctrmm_("RIGHT", "Upper", "NO TRANSPOSE", "NON-UNIT", k, nb, &c_b2, &t[ t_offset], ldt, &y[y_offset], ldy);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CLAHR2 */
  }

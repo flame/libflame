@@ -211,9 +211,9 @@
 #if AOCL_DTL_LOG_ENABLE 
  char buffer[256]; 
 #if FLA_ENABLE_ILP64 
- snprintf(buffer, 256,"chbev inputs: jobz %c, uplo %c, n %lld, kd %lld, ldab %lld, ldz %lld, lwork %lld",*jobz, *uplo, *n, *kd, *ldab, *ldz, *lwork);
+ snprintf(buffer, 256,"chbev_2stage inputs: jobz %c, uplo %c, n %lld, kd %lld, ldab %lld, ldz %lld, lwork %lld",*jobz, *uplo, *n, *kd, *ldab, *ldz, *lwork);
 #else 
- snprintf(buffer, 256,"chbev inputs: jobz %c, uplo %c, n %d, kd %d, ldab %d, ldz %d, lwork %d",*jobz, *uplo, *n, *kd, *ldab, *ldz, *lwork);
+ snprintf(buffer, 256,"chbev_2stage inputs: jobz %c, uplo %c, n %d, kd %d, ldab %d, ldz %d, lwork %d",*jobz, *uplo, *n, *kd, *ldab, *ldz, *lwork);
 #endif
  AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

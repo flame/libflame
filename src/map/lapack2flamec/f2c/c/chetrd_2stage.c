@@ -220,6 +220,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int chetrd_2stage_(char *vect, char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e, complex *tau, complex * hous2, integer *lhous2, complex *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"chetrd_2stage inputs: vect %c, uplo %c, n %lld, lda %lld, lhous2 %lld, lwork %lld",*vect, *uplo, *n, *lda, *lhous2, *lwork);
+#else 
+ snprintf(buffer, 256,"chetrd_2stage inputs: vect %c, uplo %c, n %d, lda %d, lhous2 %d, lwork %d",*vect, *uplo, *n, *lda, *lhous2, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1;
  /* Local variables */
@@ -301,14 +311,17 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CHETRD_2STAGE", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0) {
  work[1].r = 1.f; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Determine pointer position */
@@ -320,16 +333,19 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CHETRD_HE2HB", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  chetrd_hb2st_("Y", vect, uplo, n, &kd, &work[abpos], &ldab, &d__[1], &e[ 1], &hous2[1], lhous2, &work[wpos], &lwrk, info);
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CHETRD_HB2ST", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  hous2[1].r = (real) lhmin; hous2[1].i = 0.f; // , expr subst  
  work[1].r = (real) lwmin; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CHETRD_2STAGE */
  }

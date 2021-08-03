@@ -190,6 +190,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int clahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *ihi, complex *h__, integer *ldh, complex *w, integer *iloz, integer *ihiz, complex *z__, integer *ldz, integer * info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"clahqr inputs: n %lld, ilo %lld, ihi %lld, ldh %lld, iloz %lld, ihiz %lld, ldz %lld",*n, *ilo, *ihi, *ldh, *iloz, *ihiz, *ldz);
+#else 
+ snprintf(buffer, 256,"clahqr inputs: n %d, ilo %d, ihi %d, ldh %d, iloz %d, ihiz %d, ldz %d",*n, *ilo, *ihi, *ldh, *iloz, *ihiz, *ldz);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer h_dim1, h_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5;
  real r__1, r__2, r__3, r__4, r__5, r__6;
@@ -268,12 +278,14 @@
  *info = 0;
  /* Quick return if possible */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*ilo == *ihi) {
  i__1 = *ilo;
  i__2 = *ilo + *ilo * h_dim1;
  w[i__1].r = h__[i__2].r; w[i__1].i = h__[i__2].i; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* ==== clear out the trash ==== */
@@ -718,6 +730,7 @@
  }
  /* Failure to converge in remaining number of iterations */
  *info = i__;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  L140: /* H(I,I-1) is negligible: one eigenvalue has converged. */
  i__1 = i__;
@@ -726,6 +739,7 @@
  /* return to start of the main loop with new value of I. */
  i__ = l - 1;
  goto L30;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  L150: return 0;
  /* End of CLAHQR */
  }

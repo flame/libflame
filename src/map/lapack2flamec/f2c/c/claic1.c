@@ -125,6 +125,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int claic1_(integer *job, integer *j, complex *x, real *sest, complex *w, complex *gamma, real *sestpr, complex *s, complex *c__)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"claic1 inputs: job %lld, j %lld",*job, *j);
+#else 
+    snprintf(buffer, 256,"claic1 inputs: job %d, j %d",*job, *j);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     real r__1, r__2;
     complex q__1, q__2, q__3, q__4, q__5, q__6;
@@ -212,6 +222,7 @@ int claic1_(integer *job, integer *j, complex *x, real *sest, complex *w, comple
                 c__->r = q__1.r, c__->i = q__1.i;
                 *sestpr = s1 * tmp;
             }
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         else if (absgam <= eps * absest)
@@ -222,6 +233,7 @@ int claic1_(integer *job, integer *j, complex *x, real *sest, complex *w, comple
             s1 = absest / tmp;
             s2 = absalp / tmp;
             *sestpr = tmp * sqrt(s1 * s1 + s2 * s2);
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         else if (absalp <= eps * absest)
@@ -240,6 +252,7 @@ int claic1_(integer *job, integer *j, complex *x, real *sest, complex *w, comple
                 c__->r = 1.f, c__->i = 0.f;
                 *sestpr = s1;
             }
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         else if (absest <= eps * absalp || absest <= eps * absgam)
@@ -278,6 +291,7 @@ int claic1_(integer *job, integer *j, complex *x, real *sest, complex *w, comple
                 q__1.i = q__2.i / scl; // , expr subst
                 c__->r = q__1.r, c__->i = q__1.i;
             }
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         else
@@ -343,6 +357,7 @@ int claic1_(integer *job, integer *j, complex *x, real *sest, complex *w, comple
             q__1.i = cosine.i / tmp; // , expr subst
             c__->r = q__1.r, c__->i = q__1.i;
             *sestpr = sqrt(t + 1.f) * absest;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -397,6 +412,7 @@ int claic1_(integer *job, integer *j, complex *x, real *sest, complex *w, comple
             q__1.r = c__->r / tmp;
             q__1.i = c__->i / tmp; // , expr subst
             c__->r = q__1.r, c__->i = q__1.i;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         else if (absgam <= eps * absest)
@@ -404,6 +420,7 @@ int claic1_(integer *job, integer *j, complex *x, real *sest, complex *w, comple
             s->r = 0.f, s->i = 0.f;
             c__->r = 1.f, c__->i = 0.f;
             *sestpr = absgam;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         else if (absalp <= eps * absest)
@@ -422,6 +439,7 @@ int claic1_(integer *job, integer *j, complex *x, real *sest, complex *w, comple
                 c__->r = 0.f, c__->i = 0.f;
                 *sestpr = s2;
             }
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         else if (absest <= eps * absalp || absest <= eps * absgam)
@@ -468,6 +486,7 @@ int claic1_(integer *job, integer *j, complex *x, real *sest, complex *w, comple
                 q__1.i = q__2.i / scl; // , expr subst
                 c__->r = q__1.r, c__->i = q__1.i;
             }
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         else
@@ -575,9 +594,11 @@ int claic1_(integer *job, integer *j, complex *x, real *sest, complex *w, comple
             q__1.r = cosine.r / tmp;
             q__1.i = cosine.i / tmp; // , expr subst
             c__->r = q__1.r, c__->i = q__1.i;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLAIC1 */
 }

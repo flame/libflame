@@ -298,6 +298,16 @@ the routine */
 /* Subroutine */
 int chegvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, complex *a, integer *lda, complex *b, integer *ldb, real *vl, real *vu, integer *il, integer *iu, real *abstol, integer * m, real *w, complex *z__, integer *ldz, complex *work, integer *lwork, real *rwork, integer *iwork, integer *ifail, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"chegvx inputs: itype %lld, jobz %c, range %c, uplo %c, n %lld, lda %lld, ldb %lld, il %lld, iu %lld, m %lld, ldz %lld, lwork %lld",*itype, *jobz, *range, *uplo, *n, *lda, *ldb, *il, *iu, *m, *ldz, *lwork);
+#else 
+    snprintf(buffer, 256,"chegvx inputs: itype %d, jobz %c, range %c, uplo %c, n %d, lda %d, ldb %d, il %d, iu %d, m %d, ldz %d, lwork %d",*itype, *jobz, *range, *uplo, *n, *lda, *ldb, *il, *iu, *m, *ldz, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, z_dim1, z_offset, i__1, i__2;
     /* Local variables */
@@ -437,16 +447,19 @@ int chegvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, co
     {
         i__1 = -(*info);
         xerbla_("CHEGVX", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     *m = 0;
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Form a Cholesky factorization of B. */
@@ -454,6 +467,7 @@ int chegvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, co
     if (*info != 0)
     {
         *info = *n + *info;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Transform problem to standard eigenvalue problem and solve. */
@@ -500,6 +514,7 @@ int chegvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, co
     /* Set WORK(1) to optimal complex workspace size. */
     work[1].r = (real) lwkopt;
     work[1].i = 0.f; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHEGVX */
 }

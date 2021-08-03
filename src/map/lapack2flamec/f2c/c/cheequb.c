@@ -122,6 +122,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cheequb_(char *uplo, integer *n, complex *a, integer * lda, real *s, real *scond, real *amax, complex *work, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cheequb inputs: uplo %c, n %lld, lda %lld",*uplo, *n, *lda);
+#else 
+ snprintf(buffer, 256,"cheequb inputs: uplo %c, n %d, lda %d",*uplo, *n, *lda);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
  real r__1, r__2, r__3, r__4;
@@ -191,6 +201,7 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CHEEQUB", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  up = lsame_(uplo, "U");
@@ -198,6 +209,7 @@
  /* Quick return if possible. */
  if (*n == 0) {
  *scond = 1.f;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  i__1 = *n;
@@ -408,6 +420,7 @@
  d__ = c1 * c1 - c0 * 4 * c2;
  if (d__ <= 0.f) {
  *info = -1;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  si = c0 * -2 / (c1 + sqrt(d__));
@@ -500,6 +513,7 @@
  smax = max(r__1,r__2);
  }
  *scond = max(smin,smlnum) / min(smax,bignum);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* cheequb_ */

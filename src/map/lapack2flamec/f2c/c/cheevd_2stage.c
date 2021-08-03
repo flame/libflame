@@ -250,6 +250,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cheevd_2stage_(char *jobz, char *uplo, integer *n, complex *a, integer *lda, real *w, complex *work, integer *lwork, real *rwork, integer *lrwork, integer *iwork, integer *liwork, integer *info) {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+   snprintf(buffer, 256,"cheevd_2stage inputs: jobz %c, uplo %c, n %lld, lda %lld, lwork %lld, lrwork %lld, liwork %lld",*jobz, *uplo, *n, *lda, *lwork, *lrwork, *liwork);
+#else 
+   snprintf(buffer, 256,"cheevd_2stage inputs: jobz %c, uplo %c, n %d, lda %d, lwork %d, lrwork %d, liwork %d",*jobz, *uplo, *n, *lda, *lwork, *lrwork, *liwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1;
  real r__1;
@@ -382,13 +392,16 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CHEEVD_2STAGE", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n == 1) {
@@ -398,6 +411,7 @@
  i__1 = a_dim1 + 1;
  a[i__1].r = 1.f; a[i__1].i = 0.f; // , expr subst  
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Get machine constants. */
@@ -459,6 +473,7 @@
  work[1].r = (real) lwmin; work[1].i = 0.f; // , expr subst  
  rwork[1] = (real) lrwmin;
  iwork[1] = liwmin;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CHEEVD_2STAGE */
  }

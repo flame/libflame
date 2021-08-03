@@ -115,7 +115,11 @@ int chetri_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv, com
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
 #if AOCL_DTL_LOG_ENABLE 
     char buffer[256]; 
-    snprintf(buffer, 256,"chetri inputs: uplo %c, n %d, lda %d\n",*uplo, *n, *lda);
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"chetri inputs: uplo %c, n %lld, lda %lld, ipiv %lld",*uplo, *n, *lda, *ipiv);
+#else 
+    snprintf(buffer, 256,"chetri inputs: uplo %c, n %d, lda %d, ipiv %d",*uplo, *n, *lda, *ipiv);
+#endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */

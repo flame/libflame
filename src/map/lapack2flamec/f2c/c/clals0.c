@@ -262,6 +262,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int clals0_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *nrhs, complex *b, integer *ldb, complex *bx, integer *ldbx, integer *perm, integer *givptr, integer *givcol, integer *ldgcol, real *givnum, integer *ldgnum, real *poles, real * difl, real *difr, real *z__, integer *k, real *c__, real *s, real * rwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"clals0 inputs: icompq %lld, nl %lld, nr %lld, sqre %lld, nrhs %lld, ldb %lld, ldbx %lld, ldgcol %lld, ldgnum %lld, k %lld",*icompq, *nl, *nr, *sqre, *nrhs, *ldb, *ldbx, *ldgcol, *ldgnum, *k);
+#else 
+ snprintf(buffer, 256,"clals0 inputs: icompq %d, nl %d, nr %d, sqre %d, nrhs %d, ldb %d, ldbx %d, ldgcol %d, ldgnum %d, k %d",*icompq, *nl, *nr, *sqre, *nrhs, *ldb, *ldbx, *ldgcol, *ldgnum, *k);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer givcol_dim1, givcol_offset, difr_dim1, difr_offset, givnum_dim1, givnum_offset, poles_dim1, poles_offset, b_dim1, b_offset, bx_dim1, bx_offset, i__1, i__2, i__3, i__4, i__5;
  real r__1;
@@ -365,6 +375,7 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CLALS0", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  m = n + *sqre;
@@ -625,6 +636,7 @@
  /* L200: */
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CLALS0 */
  }
