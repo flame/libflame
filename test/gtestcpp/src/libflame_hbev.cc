@@ -17,11 +17,13 @@
  * \b Purpose:
     \verbatim
 	  hbev_test is function template for hbev() functions.
-	  T can be lapack_complex_float, lapack_complex_double
+	  T can be scomplex, dcomplex
 	  Ta can be float, double.
 	  
 	  hbev_test() function template calls C and CPP based lbrary APIs with
-	  valid test values and returns the differences in output.
+	  valid test values, calculate the differences in output if INFO is >= 0.
+    And passses the test case if difference is <= threshold.
+    Fails the test case if difference > threshold or INFO < 0.
     
     Complex reference:
     http://www.netlib.org/lapack/explore-html/d9/d98/group__complex_o_t_h_e_reigen_ga0f6d76a9363386f7fe3d13b8e6a19229.html#ga0f6d76a9363386f7fe3d13b8e6a19229
@@ -32,12 +34,11 @@
           IP is INTEGER
           Used to pass Index of Eigen Parameters array present in config file.
 
- * @return DOUBLE
-          Returns Differences value after comparing output of C and CPP based
-          library APIs.
+ * @return VOID
+           Nothing.
  * */
 template<typename T, typename Ta>
-double hbev_test(int ip)
+void hbev_test(int ip)
 {
   typedef void (*Fptr_NL_LAPACK_hbev)(char *jobz, char *uplo, int *n,
                     int *kd, T *ab, int *ldab, Ta *w, T *z,
@@ -60,12 +61,12 @@ double hbev_test(int ip)
           = 'L':  Lower triangle of A is stored.*/
   char uplo = eig_paramslist[ip].uplo;
   if ((uplo != 'U') && (uplo != 'L')) {
-    PRINTF("jobz should be N or V. Please correct the input data.");
+    PRINTF("uplo should be U or L. Please correct the input data.");
   }
   
   /* N is INTEGER
           The order of the matrix A.  N >= 0.*/
-  int n = eig_paramslist[ip].n;
+  integer n = eig_paramslist[ip].n;
   if (n < 0) {
     PRINTF("n < 0 but should be: n >= 0. Please correct the input data.");
   }
@@ -73,7 +74,7 @@ double hbev_test(int ip)
   /* KD is INTEGER
 	    The number of superdiagonals of the matrix A if UPLO = 'U',
 	    or the number of subdiagonals if UPLO = 'L'.  KD >= 0.*/
-  int kd = 0;
+  integer kd = 0;
   if (uplo == 'U') {
     kd = eig_paramslist[ip].sda;
   } else if (uplo == 'L') {
@@ -85,7 +86,7 @@ double hbev_test(int ip)
   
   /* LDAB is INTEGER
           The leading dimension of the array AB.  LDAB >= KD + 1.*/
-  int ldab = eig_paramslist[ip].ldab;
+  integer ldab = eig_paramslist[ip].ldab;
   if (ldab < (kd+1)) {
     PRINTF("ldab < (kd+1) but it should be: LDAB >= KD + 1. Please correct" \
           " the input data.\n");
@@ -98,24 +99,24 @@ double hbev_test(int ip)
   /* W is REAL or DOUBLE PRECISION array, dimension (N)
           If INFO = 0, the eigenvalues in ascending order.*/
   Ta *wbuff = NULL, *wrefbuff = NULL;
-  allocate_init_buffer(wbuff, wrefbuff, n);
+  allocate_init_buffer(wbuff, wrefbuff, n, 0);
   
   /* LDZ is INTEGER
           The leading dimension of the array Z.  LDZ >= 1, and if
           JOBZ = 'V', LDZ >= max(1,N).*/
-  int ldz = eig_paramslist[ip].ldz;
+  integer ldz = eig_paramslist[ip].ldz;
   if (ldz < 1) {
     PRINTF("ldz < 1 but it should be: ldz >= 1. Please correct the input" \
           " data.\n");
   }
   if ((jobz == 'V') && (ldz < max(1,n))) {
-    PRINTF("When jobz is V, ldz < max(1,n) but it should be: ldz >= max(1,n)." \
-          "Please correct the input data.\n");
+    PRINTF("When jobz is V, ldz < max(1,n) but it should be: ldz >= max(1,n)" \
+          ". Please correct the input data.\n");
   }
   
   // Z is COMPLEX or COMPLEX*16 array, dimension (LDZ, N)
   T *zbuff = NULL, *zrefbuff = NULL;
-  allocate_init_buffer(zbuff, zrefbuff, ldz * n);
+  allocate_init_buffer(zbuff, zrefbuff, ldz * n, 0);
   
   // WORK is COMPLEX or COMPLEX*16 array, dimension (N)
   T *workbuff = NULL, *workrefbuff = NULL;
@@ -124,8 +125,66 @@ double hbev_test(int ip)
   // RWORK is REAL or DOUBLE PRECISION array, dimension (max(1,3*N-2))
   Ta *rworkbuff = NULL, *rworkrefbuff = NULL;
   allocate_init_buffer(rworkbuff, rworkrefbuff, max(1, 3*n-2), 0);
-
-  int info_cpp = -1, info_ref = -1;
+  
+  #if (defined(PRINT_INPUT_VALUES) && (PRINT_INPUT_VALUES == 1))
+    // Print input values other than arrays.
+    PRINTF("\nPrinting all Input values other than array contents...\n");
+    PRINTF("jobz = %c\n", jobz);
+    PRINTF("uplo = %c\n", uplo);
+    PRINTF("n = %d\n", n);
+    PRINTF("kd = %d\n", kd);
+    PRINTF("ldab = %d\n", ldab);
+    PRINTF("Size of AB array (ldab*n) = %d\n", (ldab*n));
+    PRINTF("Size of W array (n) = %d\n", n);
+    PRINTF("ldz = %d\n", ldz);
+    PRINTF("Size of Z array (ldz*n) = %d\n", ldz * n);
+    PRINTF("Size of WORK array (n) = %d\n", n);
+    PRINTF("Size of RWORK array (max(1, 3*n-2)) = %d\n", max(1, 3*n-2));
+  #endif
+  
+  #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1))
+  // Array to store array name to print.
+  char arrayname[20] = "";
+  integer arraysize = sizeof(arrayname);
+  #endif
+  
+  #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1) && \
+      defined(PRINT_INPUT_ARRAYS) && (PRINT_INPUT_ARRAYS == 1))
+    // Print all input arrays if PRINT_INPUT_ARRAYS macro is enabled
+    PRINTF("\nPrinting all Input arrays contents...\n");
+    
+    // Prints AB array contents
+    strncpy(arrayname, "AB input", arraysize);
+    print_array<T>(arrayname, abbuff, ldab * n);
+    strncpy(arrayname, "AB ref input", arraysize);
+    print_array<T>(arrayname, abrefbuff, ldab * n);
+    
+    // Prints W array contents
+    strncpy(arrayname, "W input", arraysize);
+    print_array<Ta>(arrayname, wbuff, n);
+    strncpy(arrayname, "W ref input", arraysize);
+    print_array<Ta>(arrayname, wrefbuff, n);
+    
+    // Prints Z array contents
+    strncpy(arrayname, "Z input", arraysize);
+    print_array<T>(arrayname, zbuff, ldz * n);
+    strncpy(arrayname, "Z ref input", arraysize);
+    print_array<T>(arrayname, zrefbuff, ldz * n);
+    
+    // Prints WORK array contents
+    strncpy(arrayname, "WORK input", arraysize);
+    print_array<T>(arrayname, workbuff, n);
+    strncpy(arrayname, "WORK ref input", arraysize);
+    print_array<T>(arrayname, workrefbuff, n);
+    
+    // Prints RWORK array contents
+    strncpy(arrayname, "RWORK input", arraysize);
+    print_array<Ta>(arrayname, rworkbuff, max(1, 3*n-2));
+    strncpy(arrayname, "RWORK ref input", arraysize);
+    print_array<Ta>(arrayname, rworkrefbuff, max(1, 3*n-2));
+  #endif
+  
+  integer info_cpp = -1, info_ref = -1;
   
   // Call CPP function
   libflame::hbev<T, Ta>(&jobz, &uplo, &n, &kd, abbuff, &ldab, wbuff,
@@ -151,51 +210,81 @@ double hbev_test(int ip)
   // Call C function - NetLib Lapack API
   HBEV(&jobz, &uplo, &n, &kd, abrefbuff, &ldab, wrefbuff, 
       zrefbuff, &ldz, workrefbuff, rworkrefbuff, &info_ref);
-
+  
+  PRINTF ("info_cpp: %d, info_ref: %d\n", info_cpp, info_ref);
+  
   // Calculate the differences of buffers.
-  double diff = 0.0;
-  if ((info_cpp == 0) && (info_ref == 0)) {
-    diff = computeError<T>(ldab, n, abrefbuff, abbuff);
+  if ((info_cpp >= 0) && (info_ref >= 0)) {
+    #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1) && \
+        defined(PRINT_OUTPUT_ARRAYS) && (PRINT_OUTPUT_ARRAYS == 1))
+      // Print all output arrays if PRINT_OUTPUT_ARRAYS macro is enabled
+      PRINTF("\nPrinting all Output arrays contents...\n");
+      // Prints AB array contents
+      strncpy(arrayname, "AB output", arraysize);
+      print_array<T>(arrayname, abbuff, ldab * n);
+      strncpy(arrayname, "AB ref output", arraysize);
+      print_array<T>(arrayname, abrefbuff, ldab * n);
+      
+      // Prints W array contents
+      strncpy(arrayname, "W output", arraysize);
+      print_array<Ta>(arrayname, wbuff, n);
+      strncpy(arrayname, "W ref output", arraysize);
+      print_array<Ta>(arrayname, wrefbuff, n);
+      
+      // Prints Z array contents
+      strncpy(arrayname, "Z output", arraysize);
+      print_array<T>(arrayname, zbuff, ldz * n);
+      strncpy(arrayname, "Z ref output", arraysize);
+      print_array<T>(arrayname, zrefbuff, ldz * n);
+    
+      // Prints WORK array contents
+      strncpy(arrayname, "WORK output", arraysize);
+      print_array<T>(arrayname, workbuff, n);
+      strncpy(arrayname, "WORK ref output", arraysize);
+      print_array<T>(arrayname, workrefbuff, n);
+      
+      // Prints RWORK array contents
+      strncpy(arrayname, "RWORK output", arraysize);
+      print_array<Ta>(arrayname, rworkbuff, max(1, 3*n-2));
+      strncpy(arrayname, "RWORK ref output", arraysize);
+      print_array<Ta>(arrayname, rworkrefbuff, max(1, 3*n-2));
+    #endif
+    
+    double diff = computeError<T>(ldab, n, abrefbuff, abbuff);
     diff += computeError<T>(ldz, n, zrefbuff, zbuff);
     diff += computeError<Ta>(1, n, wbuff, wrefbuff);
     diff += computeError<T>(1, n, workbuff, workrefbuff);
     diff += computeError<Ta>(1, max(1, 3*n-2), rworkbuff, rworkrefbuff);
+    PRINTF("diff: %lf\n", diff);
+    EXPECT_NEAR(0.0, abs(diff), SYM_EIGEN_THRESHOLD);
   } else {
     PRINTF("Info returned by CPP or C API is not successful(0) to compare" \
             " differences.\n");
+    EXPECT_FALSE((info_cpp < 0) || (info_ref < 0));
   }
   
-  // Free up the buffers
+  // Free up the allocated buffers
   delete[] abbuff; delete[] abrefbuff;
   delete[] zbuff; delete[] zrefbuff;
   delete[] wbuff; delete[] wrefbuff;
   delete[] workbuff; delete[] workrefbuff;
   delete[] rworkbuff; delete[] rworkrefbuff;
-  
-  // Return the difference.
-  return abs(diff);
 }
 
 /* Use TEST macro and call C++ test function template with
    scomplex and float as typenames.*/
 TEST(LAPACKCPP_hbev, CHBEV) {
-  double diff = 0.0;
   for (short int index = 0; index < NUM_SUB_TESTS; index++) {
     PRINTF("index: %d\n", index);
-	  diff = hbev_test<scomplex, float> (0);
-    EXPECT_NEAR(0.0, diff, SYM_EIGEN_THRESHOLD);
-    PRINTF("diff: %lf\n", diff);
+	  hbev_test<scomplex, float> (index);
   }
 }
 
 /* Use TEST macro and call C++ test function template with
    dcomplex and double as typenames.*/
 TEST(LAPACKCPP_hbev, ZHBEV) {
-  double diff = 0.0;
   for (short int index = 0; index < NUM_SUB_TESTS; index++) {
     PRINTF("index: %d\n", index);
-    diff = hbev_test<dcomplex, double> (index);
-    EXPECT_NEAR(0.0, diff, SYM_EIGEN_THRESHOLD);
-    PRINTF("diff: %lf\n", diff);
+    hbev_test<dcomplex, double> (index);
   }
 }

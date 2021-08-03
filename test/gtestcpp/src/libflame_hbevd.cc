@@ -21,7 +21,10 @@
 	  Ta can be float, double.
 	  
 	  hbevd_test() function template calls C and CPP based lbrary APIs with
-	  valid test values and returns the differences in output.
+	  valid test values, calculate the differences in output if INFO is >= 0.
+    And passses the test case if difference is <= threshold.
+    Fails the test case if difference > threshold or INFO < 0.
+    
 	  Complex reference:
 	  http://www.netlib.org/lapack/explore-html/d9/d98/group__complex_o_t_h_e_reigen_ga90a780f962a7affa9b0ee155985e80ab.html#ga90a780f962a7affa9b0ee155985e80ab
 	  Complex double reference:
@@ -32,12 +35,11 @@
           IP is INTEGER
           Used to pass Index of Eigen Parameters array present in config file.
 
- * @return DOUBLE
-          Returns Differences value after comparing output of C and CPP based
-          library APIs.
+ * @return VOID
+           Nothing.
  * */
 template<typename T, typename Ta>
-double hbevd_test(int ip)
+void hbevd_test(int ip)
 {
   typedef integer (*Fptr_NL_LAPACKE_hbevd)(char* jobz, char* uplo, integer* n,
                       integer* kd, T* ab, integer* ldab, Ta* w, T* z,
@@ -100,7 +102,7 @@ double hbevd_test(int ip)
   /* W is REAL or DOUBLE PRECISION array, dimension (N)
           If INFO = 0, the eigenvalues in ascending order.*/
   Ta *wbuff = NULL, *wrefbuff = NULL;
-  allocate_init_buffer(wbuff, wrefbuff, n);
+  allocate_init_buffer(wbuff, wrefbuff, n, 0);
   
   /* LDZ is INTEGER
           The leading dimension of the array Z.  LDZ >= 1, and if
@@ -117,7 +119,7 @@ double hbevd_test(int ip)
   
   // Z is COMPLEX or COMPLEX*16 array, dimension (LDZ, N)
   T *zbuff = NULL, *zrefbuff = NULL;
-  allocate_init_buffer(zbuff, zrefbuff, ldz*n);
+  allocate_init_buffer(zbuff, zrefbuff, ldz * n, 0);
   
   /* LWORK is INTEGER.
      The length of the array WORK.*/
@@ -201,7 +203,7 @@ double hbevd_test(int ip)
 
   // WORK is COMPLEX or COMPLEX*16  array, dimension (MAX(1,LWORK))
   T *workbuff = NULL, *workrefbuff = NULL;
-  allocate_init_buffer(workbuff, workrefbuff, max(1, lwork_size));
+  allocate_init_buffer(workbuff, workrefbuff, max(1, lwork_size), 0);
   
   // Check if lrwork = -1 for intializing random buffer size.
   if (lrwork != -1) {
@@ -226,7 +228,7 @@ double hbevd_test(int ip)
   
   // RWORK is REAL or DOUBLE PRECISION array, dimension (LRWORK)
   Ta *rworkbuff = NULL, *rworkrefbuff = NULL;
-  allocate_init_buffer(rworkbuff, rworkrefbuff, lrwork_size);
+  allocate_init_buffer(rworkbuff, rworkrefbuff, lrwork_size, 0);
   
   // Check if liwork = -1 for intializing random buffer size.
   if (liwork != -1) {
@@ -245,8 +247,76 @@ double hbevd_test(int ip)
   
   // IWORK is INTEGER array, dimension (MAX(1,LIWORK))
   integer *iworkbuff = NULL, *iworkrefbuff = NULL;
-  allocate_init_buffer(iworkbuff, iworkrefbuff, max(1, liwork_size));
+  allocate_init_buffer(iworkbuff, iworkrefbuff, max(1, liwork_size), 0);
+  
+  // Print input values other than arrays.
+  #if (defined(PRINT_INPUT_VALUES) && (PRINT_INPUT_VALUES == 1))
+    PRINTF("\nPrinting all Input values other than array contents...\n");
+    PRINTF("jobz = %c\n", jobz);
+    PRINTF("uplo = %c\n", uplo);
+    PRINTF("n = %d\n", n);
+    PRINTF("kd = %d\n", kd);
+    PRINTF("ldab = %d\n", ldab);
+    PRINTF("Size of AB array (ldab*n) = %d\n", (ldab*n));
+    PRINTF("Size of W array (n) = %d\n", n);
+    PRINTF("ldz = %d\n", ldz);
+    PRINTF("Size of Z array (ldz*n) = %d\n", ldz * n);
+    PRINTF("Size of WORK array (MAX(1, LWORK)) = %d\n", max(1, lwork_size));
+    PRINTF("LWORK = %d\n", lwork_size);
+    PRINTF("Size of RWORK array (LRWORK) = %d\n", lrwork_size);
+    PRINTF("LRWORK = %d\n", lrwork_size);
+    PRINTF("Size of IWORK array MAX(1, LIWORK) = %d\n", max(1, liwork_size));
+    PRINTF("LIWORK = %d\n", liwork_size);
+  #endif
 
+  #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1))
+  // Array to store array name to print.
+  char arrayname[20] = "";
+  integer arraysize = sizeof(arrayname);
+  #endif
+  
+  #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1) && \
+      defined(PRINT_INPUT_ARRAYS) && (PRINT_INPUT_ARRAYS == 1))
+    // Print all input arrays if PRINT_INPUT_ARRAYS macro is enabled
+    PRINTF("\nPrinting all Input arrays contents...\n");
+    
+    // Prints AB array contents
+    strncpy(arrayname, "AB input", arraysize);
+    print_array<T>(arrayname, abbuff, ldab * n);
+    strncpy(arrayname, "AB ref input", arraysize);
+    print_array<T>(arrayname, abrefbuff, ldab * n);
+    
+    // Prints W array contents
+    strncpy(arrayname, "W input", arraysize);
+    print_array<Ta>(arrayname, wbuff, n);
+    strncpy(arrayname, "W ref input", arraysize);
+    print_array<Ta>(arrayname, wrefbuff, n);
+    
+    // Prints Z array contents
+    strncpy(arrayname, "Z input", arraysize);
+    print_array<T>(arrayname, zbuff, ldz * n);
+    strncpy(arrayname, "Z ref input", arraysize);
+    print_array<T>(arrayname, zrefbuff, ldz * n);
+    
+    // Prints WORK array contents
+    strncpy(arrayname, "WORK input", arraysize);
+    print_array<T>(arrayname, workbuff, max(1, lwork_size));
+    strncpy(arrayname, "WORK ref input", arraysize);
+    print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
+    
+    // Prints RWORK array contents
+    strncpy(arrayname, "RWORK input", arraysize);
+    print_array<Ta>(arrayname, rworkbuff, lrwork_size);
+    strncpy(arrayname, "RWORK ref input", arraysize);
+    print_array<Ta>(arrayname, rworkrefbuff, lrwork_size);
+    
+    // Prints IWORK array contents
+    strncpy(arrayname, "IWORK input", arraysize);
+    print_array<integer>(arrayname, iworkbuff, max(1, liwork_size));
+    strncpy(arrayname, "IWORK ref input", arraysize);
+    print_array<integer>(arrayname, iworkrefbuff, max(1, liwork_size));
+  #endif
+  
   // Call CPP function
   integer info_ref = -1;
   libflame::hbevd<T, Ta>(&jobz, &uplo, &n, &kd, abbuff, &ldab, wbuff, zbuff,
@@ -275,9 +345,49 @@ double hbevd_test(int ip)
   PRINTF ("info_cpp: %d, info_ref: %d\n", info_cpp, info_ref);
   
   // Calculate the differences of buffers.
-  double diff = 0.0;
-  if ((info_cpp == 0) && (info_ref == 0)) {
-    diff = computeError<T>(ldab, n, abrefbuff, abbuff);
+  if ((info_cpp >= 0) && (info_ref >= 0)) {
+    #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1) && \
+        defined(PRINT_OUTPUT_ARRAYS) && (PRINT_OUTPUT_ARRAYS == 1))
+      // Print all output arrays if PRINT_OUTPUT_ARRAYS macro is enabled
+      PRINTF("\nPrinting all Output arrays contents...\n");
+      // Prints AB array contents
+      strncpy(arrayname, "AB output", arraysize);
+      print_array<T>(arrayname, abbuff, ldab * n);
+      strncpy(arrayname, "AB ref output", arraysize);
+      print_array<T>(arrayname, abrefbuff, ldab * n);
+      
+      // Prints W array contents
+      strncpy(arrayname, "W output", arraysize);
+      print_array<Ta>(arrayname, wbuff, n);
+      strncpy(arrayname, "W ref output", arraysize);
+      print_array<Ta>(arrayname, wrefbuff, n);
+      
+      // Prints Z array contents
+      strncpy(arrayname, "Z output", arraysize);
+      print_array<T>(arrayname, zbuff, ldz * n);
+      strncpy(arrayname, "Z ref output", arraysize);
+      print_array<T>(arrayname, zrefbuff, ldz * n);
+    
+      // Prints WORK array contents
+      strncpy(arrayname, "WORK output", arraysize);
+      print_array<T>(arrayname, workbuff, max(1, lwork_size));
+      strncpy(arrayname, "WORK ref output", arraysize);
+      print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
+      
+      // Prints RWORK array contents
+      strncpy(arrayname, "RWORK output", arraysize);
+      print_array<Ta>(arrayname, rworkbuff, lrwork_size);
+      strncpy(arrayname, "RWORK ref output", arraysize);
+      print_array<Ta>(arrayname, rworkrefbuff, lrwork_size);
+      
+      // Prints IWORK array contents
+      strncpy(arrayname, "IWORK output", arraysize);
+      print_array<integer>(arrayname, iworkbuff, max(1, liwork_size));
+      strncpy(arrayname, "IWORK ref output", arraysize);
+      print_array<integer>(arrayname, iworkrefbuff, max(1, liwork_size));
+    #endif
+    
+    double diff = computeError<T>(ldab, n, abrefbuff, abbuff);
     if (jobz == 'V') {
       diff += computeError<T>(ldz, n, zrefbuff, zbuff);
     }
@@ -286,9 +396,12 @@ double hbevd_test(int ip)
     diff += computeError<Ta>(1, lrwork_size, rworkbuff, rworkrefbuff);
     diff += computeError<integer>(1, max(1, liwork_size), iworkbuff,
                                   iworkrefbuff);
+    PRINTF("diff: %lf\n", diff);
+    EXPECT_NEAR(0.0, abs(diff), SYM_EIGEN_THRESHOLD);
   } else {
     PRINTF("Info returned by CPP or C API is not successful to compare" \
             " differences.\n");
+    EXPECT_FALSE((info_cpp < 0) || (info_ref < 0));
   }
   
   // Free up the buffers
@@ -298,31 +411,22 @@ double hbevd_test(int ip)
   delete[] workbuff; delete[] workrefbuff;
   delete[] rworkbuff; delete[] rworkrefbuff;
   delete[] iworkbuff; delete[] iworkrefbuff;
-  
-  // Return the difference.
-  return abs(diff);
 }
 
 /* Use TEST macro and call C++ test function template with
    scomplex and float as typenames.*/
 TEST(LAPACKCPP_hbevd, CHBEVD) {
-  double diff = 0.0;
   for (short int index = 0; index < NUM_SUB_TESTS; index++) {
     PRINTF("index: %d\n", index);
-    diff = hbevd_test<scomplex, float> (index);
-    EXPECT_NEAR(0.0, diff, SYM_EIGEN_THRESHOLD);
-    PRINTF("diff: %lf\n", diff);
+    hbevd_test<scomplex, float> (index);
   }
 }
 
 /* Use TEST macro and call C++ test function template with
    dcomplex and double as typenames.*/
 TEST(LAPACKCPP_hbevd, ZHBEVD) {
- double diff = 0.0;
   for (short int index = 0; index < NUM_SUB_TESTS; index++) {
     PRINTF("index: %d\n", index);
-    diff = hbevd_test<dcomplex, double> (index);
-    EXPECT_NEAR(0.0, diff, SYM_EIGEN_THRESHOLD);
-    PRINTF("diff: %lf\n", diff);
+    hbevd_test<dcomplex, double> (index);
   }
 }

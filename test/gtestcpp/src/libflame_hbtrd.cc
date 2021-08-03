@@ -21,7 +21,9 @@
 	  Ta can be float, double.
 	  
 	  hbtrd_test() function template calls C and CPP based lbrary APIs with
-	  valid test values and returns the differences in output.
+	  valid test values, calculate the differences in output if INFO is >= 0.
+    And passses the test case if difference is <= threshold.
+    Fails the test case if difference > threshold or INFO < 0.
 	  
 	  Complex reference:
 	  http://www.netlib.org/lapack/explore-html/d3/db9/group__complex_o_t_h_e_rcomputational_ga7de86c95768cba8a2168ee787f18f9f4.html#ga7de86c95768cba8a2168ee787f18f9f4
@@ -33,12 +35,11 @@
       IP is INTEGER
 		  Used to pass Index of Eigen Parameters array present in config file.
 
- * @return DOUBLE
-      Returns Differences value after comparing output of C and CPP based
-		  library APIs.
+ * @return VOID
+           Nothing.
  * */
 template< typename T, typename Ta >
-double hbtrd_test(int ip)
+void hbtrd_test(int ip)
 {
   typedef integer (*Fptr_NL_LAPACKE_hbtrd)(char* vect, char* uplo, integer* n,
                         integer* kd, T* ab, integer* ldab, Ta* d, Ta* e, T* q,
@@ -99,11 +100,11 @@ double hbtrd_test(int ip)
   
   // D is REAL or DOUBLE PRECISION array, dimension (N)
   Ta *dbuff, *drefbuff;
-  allocate_init_buffer(dbuff, drefbuff, n);
+  allocate_init_buffer(dbuff, drefbuff, n, 0);
   
   // E is REAL or DOUBLE PRECISION array, dimension (N-1)
   Ta *ebuff, *erefbuff;
-  allocate_init_buffer(ebuff, erefbuff, n-1);
+  allocate_init_buffer(ebuff, erefbuff, n-1, 0);
   
   /* LDQ is INTEGER
           The leading dimension of the array Q.
@@ -125,7 +126,65 @@ double hbtrd_test(int ip)
   
   // WORK is COMPLEX or COMPLEX*16  array, dimension (N)
   T *workbuff = NULL, *workrefbuff = NULL;
-  allocate_init_buffer(workbuff, workrefbuff, n);
+  allocate_init_buffer(workbuff, workrefbuff, n, 0);
+  
+  // Print input values other than arrays.
+  #if (defined(PRINT_INPUT_VALUES) && (PRINT_INPUT_VALUES == 1))
+    PRINTF("\nPrinting all Input values other than array contents...\n");
+    PRINTF("vect = %c\n", vect);
+    PRINTF("uplo = %c\n", uplo);
+    PRINTF("n = %d\n", n);
+    PRINTF("kd = %d\n", kd);
+    PRINTF("ldab = %d\n", ldab);
+    PRINTF("Size of AB array (ldab*n) = %d\n", ldab*n);
+    PRINTF("Size of D array (n) = %d\n", n);
+    PRINTF("Size of E array (n) = %d\n", n-1);
+    PRINTF("ldq = %d\n", ldq);
+    PRINTF("Size of Q array (ldq*n) = %d\n", ldq*n);
+    PRINTF("Size of WORK array (n) = %d\n", n);
+  #endif
+
+  #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1))
+  // Array to store array name to print.
+  char arrayname[20] = "";
+  integer arraysize = sizeof(arrayname);
+  #endif
+  
+  #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1) && \
+      defined(PRINT_INPUT_ARRAYS) && (PRINT_INPUT_ARRAYS == 1))
+    // Print all input arrays if PRINT_INPUT_ARRAYS macro is enabled
+    PRINTF("\nPrinting all Input arrays contents...\n");
+    
+    // Prints AB array contents
+    strncpy(arrayname, "AB input", arraysize);
+    print_array<T>(arrayname, abbuff, ldab * n);
+    strncpy(arrayname, "AB ref input", arraysize);
+    print_array<T>(arrayname, abrefbuff, ldab * n);
+    
+    // Prints D array contents
+    strncpy(arrayname, "D input", arraysize);
+    print_array<Ta>(arrayname, dbuff, n);
+    strncpy(arrayname, "D ref input", arraysize);
+    print_array<Ta>(arrayname, drefbuff, n);
+    
+    // Prints E array contents
+    strncpy(arrayname, "E input", arraysize);
+    print_array<Ta>(arrayname, ebuff, n);
+    strncpy(arrayname, "E ref input", arraysize);
+    print_array<Ta>(arrayname, erefbuff, n);
+    
+    // Prints Q array contents
+    strncpy(arrayname, "Q input", arraysize);
+    print_array<T>(arrayname, qbuff, ldq * n);
+    strncpy(arrayname, "Q ref input", arraysize);
+    print_array<T>(arrayname, qrefbuff, ldq * n);
+    
+    // Prints WORK array contents
+    strncpy(arrayname, "WORK input", arraysize);
+    print_array<T>(arrayname, workbuff, n);
+    strncpy(arrayname, "WORK ref input", arraysize);
+    print_array<T>(arrayname, workrefbuff, n);
+    #endif
   
   // Call CPP function
   integer info_cpp = libflame::hbtrd<T, Ta>(&vect, &uplo, &n, &kd, abbuff,
@@ -153,20 +212,58 @@ double hbtrd_test(int ip)
   integer info_ref = -1;
   HBTRD(&vect, &uplo, &n, &kd, abrefbuff, &ldab, drefbuff, erefbuff,
     qrefbuff, &ldq, workrefbuff, &info_ref);
-  PRINTF ("info_cpp: %u, info_ref: %u\n", info_cpp, info_ref);
+  PRINTF ("info_cpp: %d, info_ref: %d\n", info_cpp, info_ref);
   
   // Calculate the differences of buffers.
-  double diff = 0.0;
-  if ((info_cpp == 0) && (info_ref == 0)) {
-    diff =  computeError<T>(ldab, n, abrefbuff, abbuff);
-    diff +=  computeError<Ta>(1, n, dbuff, drefbuff);
-    diff +=  computeError<Ta>(1, n, ebuff, erefbuff);
+  if ((info_cpp >= 0) && (info_ref >= 0)) {
+    #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1) && \
+        defined(PRINT_OUTPUT_ARRAYS) && (PRINT_OUTPUT_ARRAYS == 1))
+      // Print all output arrays if PRINT_OUTPUT_ARRAYS macro is enabled
+      PRINTF("\nPrinting all Output arrays contents...\n");
+      
+      // Prints AB array contents
+      strncpy(arrayname, "AB output", arraysize);
+      print_array<T>(arrayname, abbuff, ldab * n);
+      strncpy(arrayname, "AB ref output", arraysize);
+      print_array<T>(arrayname, abrefbuff, ldab * n);
+      
+      // Prints D array contents
+      strncpy(arrayname, "D output", arraysize);
+      print_array<Ta>(arrayname, dbuff, n);
+      strncpy(arrayname, "D ref output", arraysize);
+      print_array<Ta>(arrayname, drefbuff, n);
+      
+      // Prints E array contents
+      strncpy(arrayname, "E output", arraysize);
+      print_array<Ta>(arrayname, ebuff, n);
+      strncpy(arrayname, "E ref output", arraysize);
+      print_array<Ta>(arrayname, erefbuff, n);
+      
+      // Prints Q array contents
+      strncpy(arrayname, "Q output", arraysize);
+      print_array<T>(arrayname, qbuff, ldq * n);
+      strncpy(arrayname, "Q ref output", arraysize);
+      print_array<T>(arrayname, qrefbuff, ldq * n);
+      
+      // Prints WORK array contents
+      strncpy(arrayname, "WORK output", arraysize);
+      print_array<T>(arrayname, workbuff, n);
+      strncpy(arrayname, "WORK ref output", arraysize);
+      print_array<T>(arrayname, workrefbuff, n);
+    #endif
+    
+    double diff = computeError<T>(ldab, n, abrefbuff, abbuff);
+    diff += computeError<Ta>(1, n, dbuff, drefbuff);
+    diff += computeError<Ta>(1, n, ebuff, erefbuff);
     if (vect != 'N') {
-      diff +=  computeError<T>(ldq, n, qbuff, qrefbuff);
+      diff += computeError<T>(ldq, n, qbuff, qrefbuff);
     }
+    PRINTF("diff: %lf\n", diff);
+    EXPECT_NEAR(0.0, abs(diff), SYM_EIGEN_THRESHOLD);
   } else {
     PRINTF("Info returned by CPP or C API is not successful to compare" \
             " differences.\n");
+    EXPECT_FALSE((info_cpp < 0) || (info_ref < 0));
   }
   
   // Free up the buffers
@@ -174,31 +271,22 @@ double hbtrd_test(int ip)
   delete[] dbuff; delete[] drefbuff;
   delete[] ebuff; delete[] erefbuff;
   delete[] qbuff; delete[] qrefbuff;
-  
-  // Return the difference.
-  return abs(diff);
 }
 
 /* Use TEST macro and call C++ test function template with
    scomplex and float as typenames.*/
 TEST(LAPACKCPP_hbtrd, CHBTRD) {
-  double diff = 0.0;
   for (short int index = 0; index < NUM_SUB_TESTS; index++) {
 	  PRINTF("index: %d\n", index);
-    diff = hbtrd_test<scomplex, float> (index);
-    EXPECT_NEAR(0.0, diff, SYM_EIGEN_THRESHOLD);
-    PRINTF("diff: %lf\n", diff);
+    hbtrd_test<scomplex, float> (index);
   }
 }
 
 /* Use TEST macro and call C++ test function template with
    dcomplex and double as typenames.*/
 TEST(LAPACKCPP_hbtrd, ZHBTRD) {
-  double diff = 0.0;
   for (short int index = 0; index < NUM_SUB_TESTS; index++) {
 	  PRINTF("index: %d\n", index);
-    diff = hbtrd_test<dcomplex, double> (index);
-    EXPECT_NEAR(0.0, diff, SYM_EIGEN_THRESHOLD);
-    PRINTF("diff: %lf\n", diff);
+    hbtrd_test<dcomplex, double> (index);
   }
 }

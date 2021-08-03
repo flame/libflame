@@ -461,4 +461,151 @@ void allocate_init_buffer(dcomplex *&aIn, dcomplex *&aRef, int size, int value)
   }
 }
 
+/*! @brief print_array_data is function to print the contents of array
+      If MAX_ARRAY_PRINT_SIZE is defined, then all the contents of
+      array will be printed. Else if ARRAY_PRINT_SIZE is defined and 
+      it is less than the arraysize parameter, then the contents with
+      ARRAY_PRINT_SIZE will be printed. Otherwise,
+      the contents of array will be printed till arraysize.
+
+ * @details
+ * \b Purpose:
+    \verbatim
+    print_array_data is function to print the contents of array
+    If MAX_ARRAY_PRINT_SIZE is defined, then all the contents of
+    array will be printed. Else if ARRAY_PRINT_SIZE is defined and 
+    it is less than the arraysize parameter, then the contents with
+    ARRAY_PRINT_SIZE will be printed. Otherwise,
+    the contents of array will be printed till arraysize.
+    \endverbatim
+ * @param[in] arrayname
+          arrayname is CHAR array.
+          Contains the name of the array.
+ * @param[in] aray
+          array is REAL array.
+          Array pointer to print the contents.
+ * @param[in] arraysize
+          arraysize is integer.
+          Size of the input array.
+
+ * @return VOID
+           Nothing.
+ * */
+template <typename T>
+void print_array_data(char *arrayname, T *array, integer arraysize)
+{
+  integer size = arraysize;
+
+  #if defined(MAX_ARRAY_PRINT_SIZE) && (MAX_ARRAY_PRINT_SIZE == 0) && \
+      defined(ARRAY_PRINT_SIZE) && (ARRAY_PRINT_SIZE > 0)
+      if (ARRAY_PRINT_SIZE < arraysize) {
+        size = ARRAY_PRINT_SIZE;
+      }
+  #endif
+  // Specifier default is to print float, changes based on integer.
+  char specifier[] = "%f ";
+  if (typeid(T) == typeid(integer)) {
+    specifier[1] = 'd';
+  }
+  PRINTF("Printing %s array with %d size.\n", arrayname, size);
+  for (int index = 0; index < size; index++) {
+    PRINTF(specifier, array[index]);
+  }
+  PRINTF("\n");
+}
+
+/*! @brief print_array_complex_data is function to print the contents of array
+      If MAX_ARRAY_PRINT_SIZE is defined, then all the contents of
+      array will be printed. Else if ARRAY_PRINT_SIZE is defined and 
+      it is less than the arraysize parameter, then the contents with
+      ARRAY_PRINT_SIZE will be printed. Otherwise,
+      the contents of array will be printed till arraysize.
+
+ * @details
+ * \b Purpose:
+    \verbatim
+    print_array_complex_data is function to print the contents of array
+    If MAX_ARRAY_PRINT_SIZE is defined, then all the contents of
+    array will be printed. Else if ARRAY_PRINT_SIZE is defined and 
+    it is less than the arraysize parameter, then the contents with
+    ARRAY_PRINT_SIZE will be printed. Otherwise,
+    the contents of array will be printed till arraysize.
+    \endverbatim
+ * @param[in] arrayname
+          arrayname is CHAR array.
+          Contains the name of the array.
+ * @param[in] array
+          array is REAL array.
+          Array pointer to print the contents.
+ * @param[in] arraysize
+          arraysize is integer.
+          Size of the input array.
+
+ * @return VOID
+           Nothing.
+ * */
+template <typename T>
+void print_array_complex_data(char *arrayname, T *array, integer arraysize)
+{
+  integer size = arraysize;
+  
+  #if defined(MAX_ARRAY_PRINT_SIZE) && (MAX_ARRAY_PRINT_SIZE == 0) && \
+      defined(ARRAY_PRINT_SIZE) && (ARRAY_PRINT_SIZE > 0)
+      if (ARRAY_PRINT_SIZE < arraysize) {
+        size = ARRAY_PRINT_SIZE;
+      }
+  #endif
+  PRINTF("Printing %s array with %d size.\n", arrayname, size);
+  for (int index = 0; index < size; index++) {
+    PRINTF("%f+%fi ", array[index].real, array[index].imag);
+  }
+  PRINTF("\n");
+}
+
+/*! @brief print_array is function to print the contents of array.
+      Based on the template data typename, it will call respective function.
+      print_array_data() will be called to print the contents of float, 
+      double and integer arrays.
+      print_array_complex_data() will be called to print the contents of
+      scomplex, dcomplex arrays.
+
+ * @details
+ * \b Purpose:
+    \verbatim
+    print_array is function to print the contents of array.
+    Based on the template data typename, it will call respective function.
+    print_array_data() will be called to print the contents of float, 
+    double and integer arrays.
+    print_array_complex_data() will be called to print the contents of
+    scomplex, dcomplex arrays.
+    \endverbatim
+ * @param[in] arrayname
+          arrayname is CHAR array.
+          Contains the name of the array.
+ * @param[in] array
+          array is REAL array.
+          Array pointer to print the contents.
+ * @param[in] arraysize
+          arraysize is integer.
+          Size of the input array.
+
+ * @return VOID
+           Nothing.
+ * */
+template <typename T>
+void print_array(char *arrayname, T *array, integer arraysize)
+{
+  if (typeid(T) == typeid(float)) {
+    print_array_data<float>(arrayname, (float *)array, arraysize);
+  } else if (typeid(T) == typeid(double)) {
+    print_array_data<double>(arrayname, (double *)array, arraysize);
+  } else if (typeid(T) == typeid(integer)) {
+    print_array_data<integer>(arrayname, (integer *)array, arraysize);
+  } else if (typeid(T) == typeid(scomplex)) {
+    print_array_complex_data<scomplex>(arrayname, (scomplex *)array, arraysize);
+  } else if (typeid(T) == typeid(dcomplex)) {
+    print_array_complex_data<dcomplex>(arrayname, (dcomplex *)array, arraysize);
+  }
+}
+
 #endif        //  #ifndef LIBFLAME_TEST_HH

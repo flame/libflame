@@ -249,13 +249,48 @@ void Read_Lin_solver_params(const char *file_name);
 void closelibs(void);
 
 // Macro to enable status/error messages of test APIs.
-#define PRINT_MSGS 0
+#define PRINT_MSGS 1
 
 #if PRINT_MSGS 
 #define PRINTF(...) printf(__VA_ARGS__)
 #else
 #define PRINTF(...) 
 #endif
+
+/* Macro to enable print of contents of arrays.
+   0 - disables the print of array contents.
+   1 - enables the print of array contents.
+   Note: This macro need to be enabled along with PRINT_INPUT_ARRAYS or
+   PRINT_OUTPUT_ARRAYS macros to print the array contents.*/
+#define PRINT_ARRAYS 0
+
+/* Macro to enable print of contents of input arrays.
+   0 - disables the print of input array contents.
+   1 - enables the print of input array contents.
+   Note: This macro need to be enabled along with PRINT_ARRAYS to
+   print the array contents.*/
+#define PRINT_INPUT_ARRAYS 1
+
+/* Macro to enable print of contents of output arrays.
+   0 - disables the print of output array contents.
+   1 - enables the print of output array contents.
+   Note: This macro need to be enabled along with PRINT_ARRAYS to
+   print the array contents.*/
+#define PRINT_OUTPUT_ARRAYS 1
+
+/* Macro to print input values other than array contents.
+   0 - disables the print of input values.
+   1 - enables the print of input values.*/
+#define PRINT_INPUT_VALUES 0
+
+/* Macro to enable print of all contents of each array.
+   0 - considers arrays of ARRAY_PRINT_SIZE size for PRINT_ARRAYS.
+   1 - considers maximum size of arrays allocated for PRINT_ARRAYS.*/
+#define MAX_ARRAY_PRINT_SIZE 0
+
+/* Macro to print specific size of contents of the buffer.
+   Increase or decrease the size as needed.*/
+#define ARRAY_PRINT_SIZE 10
 
 // Threshold values of different APIs
 

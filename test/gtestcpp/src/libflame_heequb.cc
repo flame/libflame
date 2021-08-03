@@ -21,7 +21,9 @@
 	  Ta can be float, double.
 	  
 	  heequb_test() function template calls C and CPP based lbrary APIs with
-	  valid test values and returns the differences in output.
+	  valid test values, calculate the differences in output if INFO is >= 0.
+    And passses the test case if difference is <= threshold.
+    Fails the test case if difference > threshold or INFO < 0.
 	  
 	  Complex reference:
 	  http://www.netlib.org/lapack/explore-html/d4/d74/group__complex_h_ecomputational_ga986174490b3d9eb0d10502d96883e153.html#ga986174490b3d9eb0d10502d96883e153
@@ -33,12 +35,11 @@
           IP is INTEGER
 		      Used to pass Index of Eigen Parameters array present in config file.
 
- * @return DOUBLE
-          Returns Differences value after comparing output of C and CPP based
-          library APIs.
+ * @return VOID
+           Nothing.
  * */
 template< typename T, typename Ta >
-double heequb_test(int ip)
+void heequb_test(int ip)
 {
   typedef int (*Fptr_NL_LAPACKE_heequb)(char* uplo, integer* n, T* a,
                   integer* lda, Ta* s, Ta* scond, Ta* amax, T* work,
@@ -87,6 +88,48 @@ double heequb_test(int ip)
   T *workbuff = NULL, *workrefbuff = NULL;
   allocate_init_buffer(workbuff, workrefbuff, 2*n);
   
+  // Print input values other than arrays.
+  #if PRINT_INPUT_VALUES
+    PRINTF("\nPrinting all Input values other than array contents...\n");
+    PRINTF("uplo = %c\n", uplo);
+    PRINTF("n = %d\n", n);
+    PRINTF("lda = %d\n", lda);
+    PRINTF("Size of A array (lda*n) = %d\n", lda*n);
+    PRINTF("Size of S array (n) = %d\n", n);
+    PRINTF("scond = %f\n", scond);
+    PRINTF("amax = %f\n", amax);
+    PRINTF("Size of WORK array (2*n) = %d\n", 2*n);
+  #endif
+
+  #if PRINT_ARRAYS
+  // Array to store array name to print.
+  char arrayname[20] = "";
+  integer arraysize = sizeof(arrayname);
+  #endif
+  
+  #if (PRINT_ARRAYS && PRINT_INPUT_ARRAYS)
+    // Print all input arrays if PRINT_INPUT_ARRAYS macro is enabled
+    PRINTF("\nPrinting all Input arrays contents...\n");
+    
+    // Prints A array contents
+    strncpy(arrayname, "A input", arraysize);
+    print_array<T>(arrayname, abuff, n);
+    strncpy(arrayname, "A ref input", arraysize);
+    print_array<T>(arrayname, arefbuff, n);
+    
+    // Prints S array contents
+    strncpy(arrayname, "S input", arraysize);
+    print_array<Ta>(arrayname, sbuff, n);
+    strncpy(arrayname, "S ref input", arraysize);
+    print_array<Ta>(arrayname, srefbuff, n);
+    
+    // Prints WORK array contents
+    strncpy(arrayname, "WORK input", arraysize);
+    print_array<T>(arrayname, workbuff, 2 * n);
+    strncpy(arrayname, "WORK ref input", arraysize);
+    print_array<T>(arrayname, workrefbuff, 2 * n);
+  #endif
+  
   integer info_cpp = -1;
   
   // Call CPP function
@@ -113,51 +156,63 @@ double heequb_test(int ip)
   // Call C function
   HEEQUB(&uplo, &n, arefbuff, &lda, srefbuff, &scondref, &amaxref,
         workrefbuff, &info_ref);
-  PRINTF ("info_cpp: %u, info_ref: %u\n", info_cpp, info_ref);
-  PRINTF ("scond: %lf, scondref: %lf\n", scond, scondref);
-  PRINTF ("amax: %lf, amaxref: %lf\n", amax, amaxref);
+  PRINTF ("info_cpp: %d, info_ref: %d\n", info_cpp, info_ref);
   
   // Calculate the differences of buffers.
-  double diff = -1;
-  if ((info_cpp == 0) && (info_ref == 0)) {
-    diff = computeError<Ta>(1, 1, &amaxref, &amax);
+  if ((info_cpp >= 0) && (info_ref >= 0)) {
+    #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1) && \
+        defined(PRINT_OUTPUT_ARRAYS) && (PRINT_OUTPUT_ARRAYS == 1))
+      // Print all output arrays if PRINT_OUTPUT_ARRAYS macro is enabled
+      PRINTF("\nPrinting all Output arrays contents...\n");
+      
+      // Prints S array contents
+      strncpy(arrayname, "S output", arraysize);
+      print_array<Ta>(arrayname, sbuff, n);
+      strncpy(arrayname, "S ref output", arraysize);
+      print_array<Ta>(arrayname, srefbuff, n);
+      
+      PRINTF ("scond: %lf, scondref: %lf\n", scond, scondref);
+      PRINTF ("amax: %lf, amaxref: %lf\n", amax, amaxref);
+  
+      // Prints WORK array contents
+      strncpy(arrayname, "WORK output", arraysize);
+      print_array<T>(arrayname, workbuff, 2 * n);
+      strncpy(arrayname, "WORK ref output", arraysize);
+      print_array<T>(arrayname, workrefbuff, 2 * n);
+    #endif
+    
+    double diff = computeError<Ta>(1, 1, &amaxref, &amax);
     diff = computeError<Ta>(1, 1, &scondref, &scond);
 	  diff += computeError<Ta>(1, n, srefbuff, sbuff);
     diff += computeError<T>(2, n, workbuff, workrefbuff);
+    PRINTF("diff: %lf\n", diff);
+    EXPECT_NEAR(0.0, diff, LIN_SLVR_THRESHOLD);
   } else {
     PRINTF("Info returned by CPP or C API is not successful to compare" \
             " differences.\n");
+    EXPECT_FALSE((info_cpp < 0) || (info_ref < 0));
   }
   
   // Free up the buffers
   delete[] abuff; delete[] arefbuff;
   delete[] sbuff; delete[] srefbuff;
   delete[] workbuff; delete[] workrefbuff;
-  
-  // Return the difference.
-  return abs(diff);
 }
 
 /* Use TEST macro and call C++ test function template with
    scomplex and float as typenames.*/
 TEST(LAPACKCPP_heequb, CHEEQUB) {
-  double diff = 0.0;
   for (short int index = 0; index < NUM_SUB_TESTS; index++) {
 	  PRINTF("index: %d\n", index);
-    diff = heequb_test<scomplex, float> (index);
-    EXPECT_NEAR(0.0, diff, LIN_SLVR_THRESHOLD);
-    PRINTF("diff: %lf\n", diff);
+    heequb_test<scomplex, float> (index);
   }
 }
 
 /* Use TEST macro and call C++ test function template with
    dcomplex and double as typenames.*/
 TEST(LAPACKCPP_heequb, ZHEEQUB) {
-  double diff = 0.0;
   for (short int index = 0; index < NUM_SUB_TESTS; index++) {
 	  PRINTF("index: %d\n", index);
-    diff = heequb_test<dcomplex, double> (index);
-    EXPECT_NEAR(0.0, diff, LIN_SLVR_THRESHOLD);
-    PRINTF("diff: %lf\n", diff);
+    heequb_test<dcomplex, double> (index);
   }
 }
