@@ -7,6 +7,10 @@
     directory, or at http://opensource.org/licenses/BSD-3-Clause
 
 */
+/*
+    Copyright (c) 2021 Advanced Micro Devices, Inc.  All rights reserved.
+    Aug 5, 2021
+*/
 
 #include "FLAME.h"
 
@@ -36,57 +40,54 @@ extern void DTL_Trace(
 		    uint32 ui32LineNumber,
 		    const int8 *pi8Message);
 
-#define FLA_ENABLE_ALT_PATHS  0
 
-#define LAPACK_potrf(prefix)                                    \
-  int F77_ ## prefix ## potrf( char* uplo,                      \
-                               integer*  n,                         \
+#define LAPACK_potrf(prefix)                                          \
+  int F77_ ## prefix ## potrf( char* uplo,                            \
+                               integer*  n,                           \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, \
-                               integer*  ldim_A,                    \
+                               integer*  ldim_A,                      \
                                integer*  info )
 
+#if FLA_AMD_OPT
+#define LAPACK_potrf_body_s(prefix)                                                          \
+  if( *n < FLA_POTRF_FLOAT_SMALL )                                                           \
+  lapack_spotf2( uplo, n, buff_A, ldim_A,  info );                                           \
+  else                                                                                       \
+  lapack_spotrf( uplo, n, buff_A, ldim_A,  info );                                           \
+  return 0;
+
+#define LAPACK_potrf_body_d(prefix)                                                          \
+  if( *n < FLA_POTRF_DOUBLE_SMALL )                                                          \
+  lapack_dpotf2( uplo, n, buff_A, ldim_A,  info );                                           \
+  else                                                                                       \
+  lapack_dpotrf( uplo, n, buff_A, ldim_A,  info );                                           \
+  return 0;
+#endif
+
 #define LAPACK_potrf_body(prefix)                                                            \
-  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                                              \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);                                     \
   FLA_Uplo     uplo_fla;                                                                     \
   FLA_Obj      A;                                                                            \
   FLA_Error    e_val = FLA_SUCCESS;                                                          \
   FLA_Error    init_result;                                                                  \
-  FLA_Bool skip = FALSE;                                                                     \
+  FLA_Init_safe( &init_result );                                                             \
+  FLA_Param_map_netlib_to_flame_uplo( uplo, &uplo_fla );                                     \
                                                                                              \
-  if(datatype == FLA_FLOAT && !FLA_ENABLE_ALT_PATHS ){ /*sp doesnt go to lf*/                \
-  if( *n < FLA_POTRF_FLOAT_SMALL )                                                           \
-  lapack_spotf2( uplo, n, buff_A, ldim_A,  info );                                           \
-  else                                                                                       \
-  lapack_spotrf( uplo, n, buff_A, ldim_A,  info );                                           \
-  if( info != 0 ) skip = TRUE;                                                               \
-  }                                                                                          \
-  /*for sizes greater than 423 dp uses lf code*/                                             \
-  else if ( datatype == FLA_DOUBLE && *n < FLA_POTRF_DOUBLE_MID && !FLA_ENABLE_ALT_PATHS ) { \
-  if( *n < FLA_POTRF_DOUBLE_SMALL )                                                          \
-  lapack_dpotf2( uplo, n, buff_A, ldim_A,  info );                                           \
-  else                                                                                       \
-  lapack_dpotrf( uplo, n, buff_A, ldim_A,  info );                                           \
-  if( info != 0 ) skip = TRUE;                                                               \
-  }                                                                                          \
-  else {                                                                                     \
-  FLA_Init_safe( &init_result );                                \
-  FLA_Param_map_netlib_to_flame_uplo( uplo, &uplo_fla );        \
-                                                                \
-  FLA_Obj_create_without_buffer( datatype, *n, *n, &A );        \
-  FLA_Obj_attach_buffer( buff_A, 1, *ldim_A, &A );              \
-                                                                \
-  e_val = FLA_Chol( uplo_fla, A );                              \
-                                                                \
-  FLA_Obj_free_without_buffer( &A );                            \
-                                                                \
-  FLA_Finalize_safe( init_result );                             \
-  }                                                             \
-  if ( e_val != FLA_SUCCESS ) *info = e_val + 1;                \
-  else if( skip != TRUE)      *info = 0;                        \
-                                                                \
-  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  \
+  FLA_Obj_create_without_buffer( datatype, *n, *n, &A );                                     \
+  FLA_Obj_attach_buffer( buff_A, 1, *ldim_A, &A );                                           \
+                                                                                             \
+  e_val = FLA_Chol( uplo_fla, A );                                                           \
+                                                                                             \
+  FLA_Obj_free_without_buffer( &A );                                                         \
+                                                                                             \
+  FLA_Finalize_safe( init_result );                                                          \
+                                                                                             \
+  if ( e_val != FLA_SUCCESS ) *info = e_val + 1;                                             \
+  else                        *info = 0;                                                     \
+                                                                                             \
   return 0;
+
+
 
 LAPACK_potrf(s)
 {
@@ -95,9 +96,15 @@ LAPACK_potrf(s)
                                            buff_A, ldim_A,
                                            info ) )
     }
+#if FLA_AMD_OPT
+    {    
+        LAPACK_potrf_body_s(s)
+    }
+#else
     {
         LAPACK_potrf_body(s)
     }
+#endif
 }
 LAPACK_potrf(d)
 {
@@ -106,9 +113,15 @@ LAPACK_potrf(d)
                                            buff_A, ldim_A,
                                            info ) )
     }
+#if FLA_AMD_OPT
+    {
+        LAPACK_potrf_body_d(d)
+    }
+#else
     {
         LAPACK_potrf_body(d)
     }
+#endif
 }
 LAPACK_potrf(c)
 {
@@ -133,6 +146,7 @@ LAPACK_potrf(z)
     }
 }
 
+
 #define LAPACK_potf2(prefix)                                    \
   int F77_ ## prefix ## potf2( char* uplo,                      \
                                integer*  n,                         \
@@ -147,9 +161,16 @@ LAPACK_potf2(s)
                                            buff_A, ldim_A,
                                            info ) )
     }
+#if FLA_AMD_OPT
+    {
+        LAPACK_potrf_body_s(s)
+    }
+#else
     {
         LAPACK_potrf_body(s)
     }
+#endif
+
 }
 LAPACK_potf2(d)
 {
@@ -158,9 +179,16 @@ LAPACK_potf2(d)
                                            buff_A, ldim_A,
                                            info ) )
     }
+#if FLA_AMD_OPT
+    {
+        LAPACK_potrf_body_d(d)
+    }
+#else
     {
         LAPACK_potrf_body(d)
     }
+#endif
+
 }
 LAPACK_potf2(c)
 {
@@ -184,5 +212,4 @@ LAPACK_potf2(z)
         LAPACK_potrf_body(z)
     }
 }
-
 #endif
