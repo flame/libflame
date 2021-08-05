@@ -277,6 +277,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int clarrv_(integer *n, real *vl, real *vu, real *d__, real * l, real *pivmin, integer *isplit, integer *m, integer *dol, integer * dou, real *minrgp, real *rtol1, real *rtol2, real *w, real *werr, real *wgap, integer *iblock, integer *indexw, real *gers, complex * z__, integer *ldz, integer *isuppz, real *work, integer *iwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"clarrv inputs: n %lld, isplit %lld, m %lld, dol %lld, dou %lld, iblock %lld, indexw %lld, ldz %lld",*n, *isplit, *m, *dol, *dou, *iblock, *indexw, *ldz);
+#else 
+ snprintf(buffer, 256,"clarrv inputs: n %d, isplit %d, m %d, dol %d, dou %d, iblock %d, indexw %d, ldz %d",*n, *isplit, *m, *dol, *dou, *iblock, *indexw, *ldz);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5, i__6;
  real r__1, r__2;
@@ -386,6 +396,7 @@
  *info = 0;
  /* Quick return if possible */
  if (*n <= 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* The first N entries of WORK are reserved for the eigenvalues */
@@ -547,6 +558,7 @@
  /* This is a crude protection against infinitely deep trees */
  if (ndepth > *m) {
  *info = -2;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* breadth first processing of the current level of the representation */
@@ -638,6 +650,7 @@
  slarrb_(&in, &d__[ibegin], &work[indlld + ibegin - 1], &p, &q, rtol1, rtol2, &offset, &work[wbegin], &wgap[ wbegin], &werr[wbegin], &work[indwrk], &iwork[ iindwk], pivmin, &spdiam, &in, &iinfo);
  if (iinfo != 0) {
  *info = -1;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* We also recompute the extremal gaps. W holds all eigenvalues */
@@ -816,6 +829,7 @@
  }
  else {
  *info = -2;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  }
@@ -916,6 +930,7 @@
  slarrb_(&in, &d__[ibegin], &work[indlld + ibegin - 1], &indeig, &indeig, &c_b28, &r__1, & offset, &work[wbegin], &wgap[wbegin], & werr[wbegin], &work[indwrk], &iwork[ iindwk], pivmin, &spdiam, &itmp1, &iinfo);
  if (iinfo != 0) {
  *info = -3;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  lambda = work[windex];
@@ -1008,6 +1023,7 @@
  }
  else {
  *info = 5;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  }
@@ -1090,6 +1106,7 @@
  wbegin = wend + 1;
  L170: ;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CLARRV */
  }

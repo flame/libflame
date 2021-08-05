@@ -130,6 +130,16 @@
  /* > \ingroup complexOTHERauxiliary */
  /* ===================================================================== */
  real clantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, complex *a, integer *lda, real *work) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"clantr inputs: norm %c, uplo %c, diag %c, m %lld, n %lld, lda %lld",*norm, *uplo, *diag, *m, *n, *lda);
+#else 
+ snprintf(buffer, 256,"clantr inputs: norm %c, uplo %c, diag %c, m %d, n %d, lda %d",*norm, *uplo, *diag, *m, *n, *lda);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
  real ret_val;
@@ -519,6 +529,7 @@
  value = ssq[0] * sqrt(ssq[1]);
  }
  ret_val = value;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  /* End of CLANTR */
  }

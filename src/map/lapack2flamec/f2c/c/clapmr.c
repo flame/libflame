@@ -92,6 +92,16 @@
 /* Subroutine */
 int clapmr_(logical *forwrd, integer *m, integer *n, complex *x, integer *ldx, integer *k)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clapmr inputs: m %lld, n %lld, ldx %lld, k %lld",*m, *n, *ldx, *k);
+#else 
+    snprintf(buffer, 256,"clapmr inputs: m %d, n %d, ldx %d, k %d",*m, *n, *ldx, *k);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer x_dim1, x_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
@@ -117,6 +127,7 @@ int clapmr_(logical *forwrd, integer *m, integer *n, complex *x, integer *ldx, i
     /* Function Body */
     if (*m <= 1)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     i__1 = *m;
@@ -215,6 +226,7 @@ L80: /* L90: */
             ;
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZLAPMT */
 }

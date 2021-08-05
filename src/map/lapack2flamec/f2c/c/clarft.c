@@ -158,6 +158,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int clarft_(char *direct, char *storev, integer *n, integer * k, complex *v, integer *ldv, complex *tau, complex *t, integer *ldt) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"clarft inputs: direct %c, storev %c, n %lld, k %lld, ldv %lld, ldt %lld",*direct, *storev, *n, *k, *ldv, *ldt);
+#else 
+ snprintf(buffer, 256,"clarft inputs: direct %c, storev %c, n %d, k %d, ldv %d, ldt %d",*direct, *storev, *n, *k, *ldv, *ldt);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer t_dim1, t_offset, v_dim1, v_offset, i__1, i__2, i__3, i__4, i__5;
  complex q__1, q__2, q__3;
@@ -200,6 +210,7 @@
  t -= t_offset;
  /* Function Body */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (lsame_(direct, "F")) {
@@ -392,6 +403,7 @@
  }
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CLARFT */
  }

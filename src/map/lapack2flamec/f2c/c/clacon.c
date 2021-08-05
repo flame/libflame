@@ -102,6 +102,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int clacon_(integer *n, complex *v, complex *x, real *est, integer *kase)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clacon inputs: n %lld, kase %lld",*n, *kase);
+#else 
+    snprintf(buffer, 256,"clacon inputs: n %d, kase %d",*n, *kase);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3;
     real r__1, r__2;
@@ -163,6 +173,7 @@ int clacon_(integer *n, complex *v, complex *x, real *est, integer *kase)
         }
         *kase = 1;
         jump = 1;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     switch (jump)
@@ -217,6 +228,7 @@ L20:
     }
     *kase = 2;
     jump = 2;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* ................ ENTRY (JUMP = 2) */
     /* FIRST ITERATION. X HAS BEEN OVERWRITTEN BY CTRANS(A)*X. */
@@ -240,6 +252,7 @@ L50:
     x[i__1].i = 0.f; // , expr subst
     *kase = 1;
     jump = 3;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* ................ ENTRY (JUMP = 3) */
     /* X HAS BEEN OVERWRITTEN BY A*X. */
@@ -279,6 +292,7 @@ L70:
     }
     *kase = 2;
     jump = 4;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* ................ ENTRY (JUMP = 4) */
     /* X HAS BEEN OVERWRITTEN BY CTRANS(A)*X. */
@@ -309,6 +323,7 @@ L100:
     }
     *kase = 1;
     jump = 5;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* ................ ENTRY (JUMP = 5) */
     /* X HAS BEEN OVERWRITTEN BY A*X. */
@@ -321,6 +336,7 @@ L120:
     }
 L130:
     *kase = 0;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLACON */
 }

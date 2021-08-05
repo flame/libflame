@@ -88,6 +88,16 @@
 /* Subroutine */
 int clapll_(integer *n, complex *x, integer *incx, complex * y, integer *incy, real *ssmin)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clapll inputs: n %lld, incx %lld, incy %lld",*n, *incx, *incy);
+#else 
+    snprintf(buffer, 256,"clapll inputs: n %d, incx %d, incy %d",*n, *incx, *incy);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     real r__1, r__2, r__3;
@@ -134,6 +144,7 @@ int clapll_(integer *n, complex *x, integer *incx, complex * y, integer *incy, r
     if (*n <= 1)
     {
         *ssmin = 0.f;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Compute the QR factorization of the N-by-2 matrix ( X Y ) */
@@ -163,6 +174,7 @@ int clapll_(integer *n, complex *x, integer *incx, complex * y, integer *incy, r
     r__2 = c_abs(&a12);
     r__3 = c_abs(&a22);
     slas2_(&r__1, &r__2, &r__3, ssmin, &ssmax);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLAPLL */
 }

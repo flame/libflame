@@ -183,6 +183,16 @@ the corresponding */
 /* Subroutine */
 int clarzt_(char *direct, char *storev, integer *n, integer * k, complex *v, integer *ldv, complex *tau, complex *t, integer *ldt)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clarzt inputs: direct %c, storev %c, n %lld, k %lld, ldv %lld, ldt %lld",*direct, *storev, *n, *k, *ldv, *ldt);
+#else 
+    snprintf(buffer, 256,"clarzt inputs: direct %c, storev %c, n %d, k %d, ldv %d, ldt %d",*direct, *storev, *n, *k, *ldv, *ldt);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer t_dim1, t_offset, v_dim1, v_offset, i__1, i__2;
     complex q__1;
@@ -234,6 +244,7 @@ int clarzt_(char *direct, char *storev, integer *n, integer * k, complex *v, int
     {
         i__1 = -info;
         xerbla_("CLARZT", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     for (i__ = *k;
@@ -279,6 +290,7 @@ int clarzt_(char *direct, char *storev, integer *n, integer * k, complex *v, int
         }
         /* L20: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLARZT */
 }

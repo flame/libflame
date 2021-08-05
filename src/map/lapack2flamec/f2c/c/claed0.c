@@ -137,6 +137,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int claed0_(integer *qsiz, integer *n, real *d__, real *e, complex *q, integer *ldq, complex *qstore, integer *ldqs, real *rwork, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"claed0 inputs: qsiz %lld, n %lld, ldq %lld, ldqs %lld",*qsiz, *n, *ldq, *ldqs);
+#else 
+    snprintf(buffer, 256,"claed0 inputs: qsiz %d, n %d, ldq %d, ldqs %d",*qsiz, *n, *ldq, *ldqs);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer q_dim1, q_offset, qstore_dim1, qstore_offset, i__1, i__2;
     real r__1;
@@ -224,11 +234,13 @@ int claed0_(integer *qsiz, integer *n, real *d__, real *e, complex *q, integer *
     {
         i__1 = -(*info);
         xerbla_("CLAED0", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     smlsiz = ilaenv_(&c__9, "CLAED0", " ", &c__0, &c__0, &c__0, &c__0);
@@ -336,6 +348,7 @@ L10:
         if (*info > 0)
         {
             *info = submat * (*n + 1) + submat + matsiz - 1;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         k = 1;
@@ -386,6 +399,7 @@ L80:
             if (*info > 0)
             {
                 *info = submat * (*n + 1) + submat + matsiz - 1;
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             iwork[i__ / 2 + 1] = iwork[i__ + 2];
@@ -409,6 +423,7 @@ L80:
         /* L100: */
     }
     scopy_(n, &rwork[1], &c__1, &d__[1], &c__1);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLAED0 */
 }

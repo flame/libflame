@@ -95,6 +95,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int clarfgp_(integer *n, complex *alpha, complex *x, integer *incx, complex *tau) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"clarfgp inputs: n %lld, incx %lld",*n, *incx);
+#else 
+ snprintf(buffer, 256,"clarfgp inputs: n %d, incx %d",*n, *incx);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer i__1, i__2;
  real r__1, r__2;
@@ -141,6 +151,7 @@
  /* Function Body */
  if (*n <= 0) {
  tau->r = 0.f, tau->i = 0.f;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  i__1 = *n - 1;
@@ -294,6 +305,7 @@
  }
  alpha->r = beta, alpha->i = 0.f;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CLARFGP */
  }

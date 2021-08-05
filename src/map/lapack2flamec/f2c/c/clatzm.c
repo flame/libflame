@@ -147,6 +147,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int clatzm_(char *side, integer *m, integer *n, complex *v, integer *incv, complex *tau, complex *c1, complex *c2, integer *ldc, complex *work)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clatzm inputs: side %c, m %lld, n %lld, incv %lld, ldc %lld",*side, *m, *n, *incv, *ldc);
+#else 
+    snprintf(buffer, 256,"clatzm inputs: side %c, m %d, n %d, incv %d, ldc %d",*side, *m, *n, *incv, *ldc);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer c1_dim1, c1_offset, c2_dim1, c2_offset, i__1;
     complex q__1;
@@ -186,6 +196,7 @@ int clatzm_(char *side, integer *m, integer *n, complex *v, integer *incv, compl
     /* Function Body */
     if (min(*m,*n) == 0 || tau->r == 0.f && tau->i == 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (lsame_(side, "L"))
@@ -221,6 +232,7 @@ int clatzm_(char *side, integer *m, integer *n, complex *v, integer *incv, compl
         q__1.i = -tau->i; // , expr subst
         cgerc_(m, &i__1, &q__1, &work[1], &c__1, &v[1], incv, &c2[c2_offset], ldc);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLATZM */
 }

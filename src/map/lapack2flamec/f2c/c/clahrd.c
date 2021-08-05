@@ -171,6 +171,16 @@ v(i+k+1:n) is stored on exit in */
 /* Subroutine */
 int clahrd_(integer *n, integer *k, integer *nb, complex *a, integer *lda, complex *tau, complex *t, integer *ldt, complex *y, integer *ldy)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clahrd inputs: n %lld, k %lld, nb %lld, lda %lld, ldt %lld, ldy %lld",*n, *k, *nb, *lda, *ldt, *ldy);
+#else 
+    snprintf(buffer, 256,"clahrd inputs: n %d, k %d, nb %d, lda %d, ldt %d, ldy %d",*n, *k, *nb, *lda, *ldt, *ldy);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, t_dim1, t_offset, y_dim1, y_offset, i__1, i__2, i__3;
     complex q__1;
@@ -212,6 +222,7 @@ int clahrd_(integer *n, integer *k, integer *nb, complex *a, integer *lda, compl
     /* Function Body */
     if (*n <= 1)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     i__1 = *nb;
@@ -305,6 +316,7 @@ int clahrd_(integer *n, integer *k, integer *nb, complex *a, integer *lda, compl
     i__1 = *k + *nb + *nb * a_dim1;
     a[i__1].r = ei.r;
     a[i__1].i = ei.i; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLAHRD */
 }

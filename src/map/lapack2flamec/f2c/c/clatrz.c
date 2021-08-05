@@ -127,6 +127,16 @@
 /* Subroutine */
 int clatrz_(integer *m, integer *n, integer *l, complex *a, integer *lda, complex *tau, complex *work)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clatrz inputs: m %lld, n %lld, l %lld, lda %lld",*m, *n, *l, *lda);
+#else 
+    snprintf(buffer, 256,"clatrz inputs: m %d, n %d, l %d, lda %d",*m, *n, *l, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     complex q__1;
@@ -165,6 +175,7 @@ int clatrz_(integer *m, integer *n, integer *l, complex *a, integer *lda, comple
     /* Function Body */
     if (*m == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*m == *n)
@@ -179,6 +190,7 @@ int clatrz_(integer *m, integer *n, integer *l, complex *a, integer *lda, comple
             tau[i__2].i = 0.f; // , expr subst
             /* L10: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     for (i__ = *m;
@@ -208,6 +220,7 @@ int clatrz_(integer *m, integer *n, integer *l, complex *a, integer *lda, comple
         a[i__1].i = q__1.i; // , expr subst
         /* L20: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLATRZ */
 }

@@ -164,6 +164,16 @@ for 1 <= j <= N, column j of the */
 /* Subroutine */
 int clatdf_(integer *ijob, integer *n, complex *z__, integer *ldz, complex *rhs, real *rdsum, real *rdscal, integer *ipiv, integer *jpiv)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clatdf inputs: ijob %lld, n %lld, ldz %lld, ipiv %lld, jpiv %lld",*ijob, *n, *ldz, *ipiv, *jpiv);
+#else 
+    snprintf(buffer, 256,"clatdf inputs: ijob %d, n %d, ldz %d, ipiv %d, jpiv %d",*ijob, *n, *ldz, *ipiv, *jpiv);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5;
     complex q__1, q__2, q__3;
@@ -377,6 +387,7 @@ int clatdf_(integer *ijob, integer *n, complex *z__, integer *ldz, complex *rhs,
         claswp_(&c__1, &rhs[1], ldz, &c__1, &i__1, &jpiv[1], &c_n1);
         /* Compute the sum of squares */
         classq_(n, &rhs[1], &c__1, rdscal, rdsum);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* ENTRY IJOB = 2 */
@@ -405,6 +416,7 @@ int clatdf_(integer *ijob, integer *n, complex *z__, integer *ldz, complex *rhs,
     }
     /* Compute the sum of squares */
     classq_(n, &rhs[1], &c__1, rdscal, rdsum);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLATDF */
 }

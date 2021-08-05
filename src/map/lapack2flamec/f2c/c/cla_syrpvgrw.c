@@ -109,6 +109,16 @@
  /* > \ingroup complexSYcomputational */
  /* ===================================================================== */
  real cla_syrpvgrw_(char *uplo, integer *n, integer *info, complex *a, integer *lda, complex *af, integer *ldaf, integer *ipiv, real *work) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cla_syrpvgrw inputs: uplo %c, n %lld, info %lld, lda %lld, ldaf %lld, ipiv %lld",*uplo, *n, *info, *lda, *ldaf, *ipiv);
+#else 
+ snprintf(buffer, 256,"cla_syrpvgrw inputs: uplo %c, n %d, info %d, lda %d, ldaf %d, ipiv %d",*uplo, *n, *info, *lda, *ldaf, *ipiv);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, af_dim1, af_offset, i__1, i__2, i__3;
  real ret_val, r__1, r__2, r__3, r__4;
@@ -389,6 +399,7 @@
  }
  }
  ret_val = rpvgrw;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  }
  /* cla_syrpvgrw__ */

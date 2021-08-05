@@ -119,6 +119,16 @@ static integer c__1 = 1;
 /* ===================================================================== */
 real cla_porcond_c_(char *uplo, integer *n, complex *a, integer *lda, complex *af, integer *ldaf, real *c__, logical *capply, integer *info, complex *work, real *rwork)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cla_porcond_c inputs: uplo %c, n %lld, lda %lld, ldaf %lld",*uplo, *n, *lda, *ldaf);
+#else 
+    snprintf(buffer, 256,"cla_porcond_c inputs: uplo %c, n %d, lda %d, ldaf %d",*uplo, *n, *lda, *ldaf);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, i__1, i__2, i__3, i__4;
     real ret_val, r__1, r__2;
@@ -197,6 +207,7 @@ real cla_porcond_c_(char *uplo, integer *n, complex *a, integer *lda, complex *a
     {
         i__1 = -(*info);
         xerbla_("CLA_PORCOND_C", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return ret_val;
     }
     up = FALSE_;
@@ -310,10 +321,12 @@ real cla_porcond_c_(char *uplo, integer *n, complex *a, integer *lda, complex *a
     if (*n == 0)
     {
         ret_val = 1.f;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return ret_val;
     }
     else if (anorm == 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return ret_val;
     }
     /* Estimate the norm of inv(op(A)). */
@@ -414,6 +427,7 @@ L10:
     {
         ret_val = 1.f / ainvnm;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return ret_val;
 }
 /* cla_porcond_c__ */

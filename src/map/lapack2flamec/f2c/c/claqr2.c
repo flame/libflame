@@ -270,6 +270,16 @@ CLAQR2 */
 /* Subroutine */
 int claqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *kbot, integer *nw, complex *h__, integer *ldh, integer *iloz, integer *ihiz, complex *z__, integer *ldz, integer * ns, integer *nd, complex *sh, complex *v, integer *ldv, integer *nh, complex *t, integer *ldt, integer *nv, complex *wv, integer *ldwv, complex *work, integer *lwork)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"claqr2 inputs: n %lld, ktop %lld, kbot %lld, nw %lld, ldh %lld, iloz %lld, ihiz %lld, ldz %lld, ldv %lld, nh %lld, ldt %lld, nv %lld, ldwv %lld, lwork %lld",*n, *ktop, *kbot, *nw, *ldh, *iloz, *ihiz, *ldz, *ldv, *nh, *ldt, *nv, *ldwv, *lwork);
+#else 
+    snprintf(buffer, 256,"claqr2 inputs: n %d, ktop %d, kbot %d, nw %d, ldh %d, iloz %d, ihiz %d, ldz %d, ldv %d, nh %d, ldt %d, nv %d, ldwv %d, lwork %d",*n, *ktop, *kbot, *nw, *ldh, *iloz, *ihiz, *ldz, *ldv, *nh, *ldt, *nv, *ldwv, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer h_dim1, h_offset, t_dim1, t_offset, v_dim1, v_offset, wv_dim1, wv_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4;
     real r__1, r__2, r__3, r__4, r__5, r__6;
@@ -375,6 +385,7 @@ int claqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
         q__1.i = 0.f; // , expr subst
         work[1].r = q__1.r;
         work[1].i = q__1.i; // , expr subst
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* ==== Nothing to do ... */
@@ -385,11 +396,13 @@ int claqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
     work[1].i = 0.f; // , expr subst
     if (*ktop > *kbot)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* ... nor for an empty deflation window. ==== */
     if (*nw < 1)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* ==== Machine constants ==== */
@@ -441,6 +454,7 @@ int claqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
         }
         work[1].r = 1.f;
         work[1].i = 0.f; // , expr subst
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* ==== Convert to spike-triangular form. (In case of a */
@@ -667,6 +681,7 @@ int claqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
     work[1].r = q__1.r;
     work[1].i = q__1.i; // , expr subst
     /* ==== End of CLAQR2 ==== */
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
 /* claqr2_ */

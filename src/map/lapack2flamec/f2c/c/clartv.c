@@ -95,6 +95,16 @@
 /* Subroutine */
 int clartv_(integer *n, complex *x, integer *incx, complex * y, integer *incy, real *c__, complex *s, integer *incc)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clartv inputs: n %lld, incx %lld, incy %lld, incc %lld",*n, *incx, *incy, *incc);
+#else 
+    snprintf(buffer, 256,"clartv inputs: n %d, incx %d, incy %d, incc %d",*n, *incx, *incy, *incc);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3, i__4;
     complex q__1, q__2, q__3, q__4;
@@ -164,6 +174,7 @@ int clartv_(integer *n, complex *x, integer *incx, complex * y, integer *incy, r
         ic += *incc;
         /* L10: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLARTV */
 }

@@ -173,6 +173,16 @@
 /* Subroutine */
 int cla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku, real *alpha, complex *ab, integer *ldab, complex *x, integer *incx, real *beta, real *y, integer *incy)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cla_gbamv inputs: trans %lld, m %lld, n %lld, kl %lld, ku %lld, ldab %lld, incx %lld, incy %lld",*trans, *m, *n, *kl, *ku, *ldab, *incx, *incy);
+#else 
+    snprintf(buffer, 256,"cla_gbamv inputs: trans %d, m %d, n %d, kl %d, ku %d, ldab %d, incx %d, incy %d",*trans, *m, *n, *kl, *ku, *ldab, *incx, *incy);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4;
     real r__1, r__2;
@@ -257,11 +267,13 @@ int cla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
     if (info != 0)
     {
         xerbla_("CLA_GBAMV ", &info);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible. */
     if (*m == 0 || *n == 0 || *alpha == 0.f && *beta == 1.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Set LENX and LENY, the lengths of the vectors x and y, and set */
@@ -501,6 +513,7 @@ int cla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLA_GBAMV */
 }

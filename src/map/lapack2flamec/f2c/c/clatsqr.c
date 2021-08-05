@@ -160,6 +160,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int clatsqr_(integer *m, integer *n, integer *mb, integer * nb, complex *a, integer *lda, complex *t, integer *ldt, complex *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"clatsqr inputs: m %lld, n %lld, mb %lld, nb %lld, lda %lld, ldt %lld, lwork %lld",*m, *n, *mb, *nb, *lda, *ldt, *lwork);
+#else 
+ snprintf(buffer, 256,"clatsqr inputs: m %d, n %d, mb %d, nb %d, lda %d, ldt %d, lwork %d",*m, *n, *mb, *nb, *lda, *ldt, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, t_dim1, t_offset, i__1, i__2, i__3;
  /* Local variables */
@@ -224,18 +234,22 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CLATSQR", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (min(*m,*n) == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* The QR Decomposition */
  if (*mb <= *n || *mb >= *m) {
  cgeqrt_(m, n, nb, &a[a_offset], lda, &t[t_offset], ldt, &work[1], info);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  kk = (*m - *n) % (*mb - *n);
@@ -259,6 +273,7 @@
  }
  i__2 = *n * *nb;
  work[1].r = (real) i__2; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CLATSQR */
  }

@@ -88,6 +88,16 @@ the array */
 /* Subroutine */
 int clarnv_(integer *idist, integer *iseed, integer *n, complex *x)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clarnv inputs: idist %lld, iseed %lld, n %lld",*idist, *iseed, *n);
+#else 
+    snprintf(buffer, 256,"clarnv inputs: idist %d, iseed %d, n %d",*idist, *iseed, *n);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3, i__4, i__5;
     real r__1, r__2;
@@ -238,6 +248,7 @@ int clarnv_(integer *idist, integer *iseed, integer *n, complex *x)
         }
         /* L60: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLARNV */
 }

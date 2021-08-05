@@ -104,6 +104,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int clarfy_(char *uplo, integer *n, complex *v, integer * incv, complex *tau, complex *c__, integer *ldc, complex *work) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"clarfy inputs: uplo %c, n %lld, incv %lld, ldc %lld",*uplo, *n, *incv, *ldc);
+#else 
+ snprintf(buffer, 256,"clarfy inputs: uplo %c, n %d, incv %d, ldc %d",*uplo, *n, *incv, *ldc);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer c_dim1, c_offset;
  complex q__1, q__2, q__3, q__4;
@@ -141,6 +151,7 @@
  --work;
  /* Function Body */
  if (tau->r == 0.f && tau->i == 0.f) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Form w:= C * v */
@@ -154,6 +165,7 @@
  /* C := C - v * w' - w * v' */
  q__1.r = -tau->r; q__1.i = -tau->i; // , expr subst  
  cher2_(uplo, n, &q__1, &v[1], incv, &work[1], &c__1, &c__[c_offset], ldc);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CLARFY */
  }

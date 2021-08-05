@@ -239,6 +239,16 @@ b(i), i=1,..,n}
 /* Subroutine */
 int clatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *kd, complex *ab, integer *ldab, complex * x, real *scale, real *cnorm, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clatbs inputs: uplo %c, trans %c, diag %c, normin %c, n %lld, kd %lld, ldab %lld",*uplo, *trans, *diag, *normin, *n, *kd, *ldab);
+#else 
+    snprintf(buffer, 256,"clatbs inputs: uplo %c, trans %c, diag %c, normin %c, n %d, kd %d, ldab %d",*uplo, *trans, *diag, *normin, *n, *kd, *ldab);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5;
     real r__1, r__2, r__3, r__4;
@@ -353,11 +363,13 @@ int clatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, inte
     {
         i__1 = -(*info);
         xerbla_("CLATBS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Determine machine dependent parameters to control overflow. */
@@ -1322,6 +1334,7 @@ L185:
         r__1 = 1.f / tscal;
         sscal_(n, &r__1, &cnorm[1], &c__1);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLATBS */
 }

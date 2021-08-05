@@ -94,6 +94,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int claqr1_(integer *n, complex *h__, integer *ldh, complex * s1, complex *s2, complex *v) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"claqr1 inputs: n %lld, ldh %lld",*n, *ldh);
+#else 
+ snprintf(buffer, 256,"claqr1 inputs: n %d, ldh %d",*n, *ldh);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer h_dim1, h_offset, i__1, i__2, i__3, i__4;
  real r__1, r__2, r__3, r__4, r__5, r__6;
@@ -131,6 +141,7 @@
  --v;
  /* Function Body */
  if (*n != 2 && *n != 3) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n == 2) {
@@ -220,6 +231,7 @@
  v[3].r = q__1.r; v[3].i = q__1.i; // , expr subst  
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* claqr1_ */

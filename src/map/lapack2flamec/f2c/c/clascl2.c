@@ -79,6 +79,16 @@
 /* Subroutine */
 int clascl2_(integer *m, integer *n, real *d__, complex *x, integer *ldx)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clascl2 inputs: m %lld, n %lld, ldx %lld",*m, *n, *ldx);
+#else 
+    snprintf(buffer, 256,"clascl2 inputs: m %d, n %d, ldx %d",*m, *n, *ldx);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer x_dim1, x_offset, i__1, i__2, i__3, i__4, i__5;
     complex q__1;
@@ -121,6 +131,7 @@ int clascl2_(integer *m, integer *n, real *d__, complex *x, integer *ldx)
             x[i__3].i = q__1.i; // , expr subst
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
 /* clascl2_ */
