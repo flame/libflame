@@ -195,6 +195,7 @@ void libfla_test_op_driver( char*         func_str,
                                            unsigned int,  // n_repeats
                                            signed int,    // impl
                                            double*,       // perf
+                                           double*,	      // time
                                            double* ) );   // residual
 
 void libfla_test_print_result_info( char  *func_param_str,
@@ -202,6 +203,7 @@ void libfla_test_print_result_info( char  *func_param_str,
                                     char  *sc_str,
                                     integer    p_cur,
                                     double perf,
+				    double time_min,
                                     double residual,
                                     char  *pass_str,
                                     int    nfact );

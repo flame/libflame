@@ -44,6 +44,7 @@ void libfla_test_apcaqutinc_experiment( test_params_t params,
                                         unsigned int  n_repeats,
                                         signed int    impl,
                                         double*       perf,
+                                        double*       t,
                                         double*       residual );
 void libfla_test_apcaqutinc_impl( int        impl,
                                   dim_t      p,
@@ -85,6 +86,7 @@ void libfla_test_apcaqutinc_experiment( test_params_t params,
                                         unsigned int  n_repeats,
                                         signed int    impl,
                                         double*       perf,
+                                        double*       t,
                                         double*       residual )
 {
 	dim_t        b_flash    = params.b_flash;
@@ -230,7 +232,8 @@ void libfla_test_apcaqutinc_experiment( test_params_t params,
 	FLA_Obj_extract_real_scalar( norm, residual );
 
 	// Compute the performance of the best experiment repeat.
-	*perf = (  4.0 *       m * n * 1 -
+	*t = time_min;
+  *perf = (  4.0 *       m * n * 1 -
 	           2.0 *       n * n * 1 ) / time_min / FLOPS_PER_UNIT_PERF;
 	if ( FLA_Obj_is_complex( A ) ) *perf *= 4.0;
 

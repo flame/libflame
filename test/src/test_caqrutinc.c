@@ -39,6 +39,7 @@ void libfla_test_caqrutinc_experiment( test_params_t params,
                                        unsigned int  n_repeats,
                                        signed int    impl,
                                        double*       perf,
+                                       double*       t,
                                        double*       residual );
 void libfla_test_caqrutinc_impl( int     impl,
                                  dim_t   p,
@@ -78,6 +79,7 @@ void libfla_test_caqrutinc_experiment( test_params_t params,
                                        unsigned int  n_repeats,
                                        signed int    impl,
                                        double*       perf,
+                                       double*       t,
                                        double*       residual )
 {
 	dim_t        b_flash    = params.b_flash;
@@ -153,7 +155,8 @@ void libfla_test_caqrutinc_experiment( test_params_t params,
 	FLASH_Obj_free( &x_test );
 
 	// Compute the performance of the best experiment repeat.
-	*perf = (         2.0   * m * n * n - 
+	*t = time_min;
+  *perf = (         2.0   * m * n * n - 
 	          ( 2.0 / 3.0 ) * n * n * n ) / time_min / FLOPS_PER_UNIT_PERF;
 	if ( FLA_Obj_is_complex( A ) ) *perf *= 4.0;
 

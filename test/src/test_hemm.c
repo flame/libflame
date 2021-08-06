@@ -45,6 +45,7 @@ void libfla_test_hemm_experiment( test_params_t params,
                                   unsigned int  n_repeats,
                                   signed int    impl,
                                   double*       perf,
+                                  double*       t,
                                   double*       residual );
 void libfla_test_hemm_impl( int         impl,
                             FLA_Side    side,
@@ -126,6 +127,7 @@ void libfla_test_hemm_experiment( test_params_t params,
                                   unsigned int  n_repeats,
                                   signed int    impl,
                                   double*       perf,
+                                  double*       t,
                                   double*       residual )
 {
 	dim_t        b_flash    = params.b_flash;
@@ -264,7 +266,8 @@ void libfla_test_hemm_experiment( test_params_t params,
 		libfla_test_hemm_cntl_free();
 
 	// Compute the performance of the best experiment repeat.
-	if ( side == FLA_LEFT )
+	*t = time_min;
+  if ( side == FLA_LEFT )
 		*perf = ( 1 * m * m * n ) / time_min / FLOPS_PER_UNIT_PERF;
 	else
 		*perf = ( 1 * m * n * n ) / time_min / FLOPS_PER_UNIT_PERF;

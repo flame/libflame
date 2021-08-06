@@ -45,6 +45,7 @@ void libfla_test_lu_piv_experiment( test_params_t params,
                                     unsigned int  n_repeats,
                                     signed int    impl,
                                     double*       perf,
+                                    double*       t,
                                     double*       residual );
 void libfla_test_lu_piv_impl( int         impl,
                               FLA_Obj     A,
@@ -147,6 +148,7 @@ void libfla_test_lu_piv_experiment( test_params_t params,
                                     unsigned int  n_repeats,
                                     signed int    impl,
                                     double*       perf,
+                                    double*       t,
                                     double*       residual )
 {
 	dim_t        b_flash    = params.b_flash;
@@ -259,7 +261,8 @@ void libfla_test_lu_piv_experiment( test_params_t params,
 		libfla_test_lu_piv_cntl_free();
 
 	// Compute the performance of the best experiment repeat.
-	*perf = 2.0 / 3.0 * m * m * m / time_min / FLOPS_PER_UNIT_PERF;
+	*t = time_min;
+  *perf = 2.0 / 3.0 * m * m * m / time_min / FLOPS_PER_UNIT_PERF;
 	if ( FLA_Obj_is_complex( A ) ) *perf *= 4.0;
 
 	// Compute the residual.

@@ -39,6 +39,7 @@ void libfla_test_uddateutinc_experiment( test_params_t params,
                                          unsigned int  n_repeats,
                                          signed int    impl,
                                          double*       perf,
+                                         double*       t,
                                          double*       residual );
 void libfla_test_uddateutinc_impl( int     impl,
                                    FLA_Obj R,
@@ -76,6 +77,7 @@ void libfla_test_uddateutinc_experiment( test_params_t params,
                                          unsigned int  n_repeats,
                                          signed int    impl,
                                          double*       perf,
+                                         double*       t,
                                          double*       residual )
 {
 	dim_t        b_flash    = params.b_flash;
@@ -152,6 +154,7 @@ void libfla_test_uddateutinc_experiment( test_params_t params,
 	FLASH_Gemm( FLA_CONJ_TRANSPOSE, FLA_NO_TRANSPOSE, FLA_ONE, E, E, FLA_ZERO, EE );
 
 	// Compute the performance of the best experiment repeat.
+  *t = time_min;
 	*perf = 2.0 * ( ( mC + mD ) * n * n +
 	                ( mC + mD ) * n * 6.0 ) / time_min / FLOPS_PER_UNIT_PERF;
 	if ( FLA_Obj_is_complex( R ) ) *perf *= 4.0;

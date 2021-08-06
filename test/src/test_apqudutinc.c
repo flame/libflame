@@ -39,6 +39,7 @@ void libfla_test_apqudutinc_experiment( test_params_t params,
                                         unsigned int  n_repeats,
                                         signed int    impl,
                                         double*       perf,
+                                        double*       t,
                                         double*       residual );
 void libfla_test_apqudutinc_impl( int     impl,
                                   FLA_Obj T, FLA_Obj W,
@@ -75,6 +76,7 @@ void libfla_test_apqudutinc_experiment( test_params_t params,
                                         unsigned int  n_repeats,
                                         signed int    impl,
                                         double*       perf,
+                                        double*       t,
                                         double*       residual )
 {
 	dim_t        b_flash    = params.b_flash;
@@ -202,7 +204,8 @@ void libfla_test_apqudutinc_experiment( test_params_t params,
 	*residual = FLASH_Max_elemwise_diff( bR_BD, bR_BC );
 
 	// Compute the performance of the best experiment repeat.
-	*perf = n * n_rhs * ( 2.0 * mC + 2.0 * mD + 0.5 * b_alg_hier + 0.5 ) /
+	*t = time_min;
+  *perf = n * n_rhs * ( 2.0 * mC + 2.0 * mD + 0.5 * b_alg_hier + 0.5 ) /
 	        time_min / FLOPS_PER_UNIT_PERF;
 	if ( FLA_Obj_is_complex( R_BD ) ) *perf *= 4.0;
 

@@ -194,6 +194,7 @@ void test_ldltx_nopiv_ps_s( test_params_t *params )
                                           "c",
                                           n,
                                           perf,
+                                          time_min,
                                           snrm,
                                           pcode,
                                           ni);
@@ -246,6 +247,7 @@ void test_ldltx_nopiv_ps_s( test_params_t *params )
                                        "c",
                                        n,
                                        perf,
+                                       time_min,
                                        snrm,
                                        pcode,
                                        ni);
@@ -426,6 +428,7 @@ void test_ldltx_nopiv_ps_d( test_params_t *params )
                                           "c",
                                           n,
                                           perf,
+                                          time_min,
                                           dnrm,
                                           pcode,
                                           ni);
@@ -478,6 +481,7 @@ void test_ldltx_nopiv_ps_d( test_params_t *params )
                                        "c",
                                        n,
                                        perf,
+                                       time_min,
                                        dnrm,
                                        pcode,
                                        ni);
@@ -670,6 +674,7 @@ void test_ldltx_nopiv_ps_c( test_params_t *params )
                                           "c",
                                           n,
                                           perf,
+                                          time_min,
                                           snrm,
                                           pcode,
                                           ni);
@@ -722,6 +727,7 @@ void test_ldltx_nopiv_ps_c( test_params_t *params )
                                        "c",
                                        n,
                                        perf,
+                                       time_min,
                                        snrm,
                                        pcode,
                                        ni);
@@ -914,6 +920,7 @@ void test_ldltx_nopiv_ps_z( test_params_t *params )
                                           "c",
                                           n,
                                           perf,
+                                          time_min,
                                           dnrm,
                                           pcode,
                                           ni);
@@ -966,6 +973,7 @@ void test_ldltx_nopiv_ps_z( test_params_t *params )
                                        "c",
                                        n,
                                        perf,
+                                       time_min,
                                        dnrm,
                                        pcode,
                                        ni);
@@ -985,6 +993,8 @@ void libfla_test_ldltx_nopiv_ps( test_params_t *params, test_op_t op )
 
    libfla_test_output_info( "--- %s ---\n", op_str );
    libfla_test_output_info( "\n" );
+   libfla_test_output_info( "%3sAPI%28s DATA_TYPE%4s SIZE%1s FLOPS%2s TIME(s)%6s ERROR%5s STATUS\n", "", "", "", "", "", "", "" );
+   libfla_test_output_info( "%3s====%28s==========%4s====%1s=======%2s========%5s==========%2s========\n", "", "", "", "", "", "", "" );
 
    if ( op.fla_blk_ext == ENABLE )
    {

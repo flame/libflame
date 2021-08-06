@@ -29,6 +29,7 @@ void libfla_test_lu_nopiv_i_experiment( test_params_t params,
 					unsigned int  n_repeats,
 					signed int    impl,
 					double*       perf,
+          double*       t,
 					double*       residual );
 void libfla_test_lu_nopiv_i_impl( int         impl,
                                   FLA_Obj     A );
@@ -72,6 +73,7 @@ void libfla_test_lu_nopiv_i_experiment( test_params_t params,
 					unsigned int  n_repeats,
 					signed int    impl,
 					double*       perf,
+          double*       t,
 					double*       residual )
 {
         double time_min   = 1e9;
@@ -152,7 +154,8 @@ void libfla_test_lu_nopiv_i_experiment( test_params_t params,
 	    }
 
 	// Compute the performance of the best experiment repeat.
-	*perf = 2.0 / 3.0 * m * m * m / time_min / FLOPS_PER_UNIT_PERF;
+	*t = time_min;
+  *perf = 2.0 / 3.0 * m * m * m / time_min / FLOPS_PER_UNIT_PERF;
 	if ( FLA_Obj_is_complex( A ) ) *perf *= 4.0;
 
         FLA_Obj ATL,ATR,ABL,ABR,AL,AR,L12,U12,AT,AB,A22;

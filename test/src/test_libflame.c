@@ -1231,6 +1231,7 @@ void libfla_test_op_driver( char*         func_str,
                                            unsigned int,  // n_repeats
                                            signed int,    // impl
                                            double*,       // perf
+                                           double*,       //time
                                            double* ) )    // residual
 {
 	unsigned int n_threads           = params.n_threads;
@@ -1244,7 +1245,7 @@ void libfla_test_op_driver( char*         func_str,
 	uinteger sci, dt, p_cur, mat, pci, var;
 	char         datatype_char;
 	FLA_Datatype datatype;
-	double       perf, residual;
+	double       perf, time, residual;
 	char*        pass_str;
 	char         blank_str[32];
 	char         func_param_str[64];
@@ -1301,7 +1302,9 @@ void libfla_test_op_driver( char*         func_str,
 			sc_str[sci][n_matrices] = '\0';
 		}
 	}
-
+  
+  libfla_test_output_info( "%3sAPI%28s DATA_TYPE%4s SIZE%1s FLOPS%2s TIME(s)%6s ERROR%5s STATUS\n", "", "", "", "", "", "", "" );
+  libfla_test_output_info( "%3s====%28s==========%4s====%1s=======%2s========%5s==========%2s========\n", "", "", "", "", "", "", "" );
 	// Loop over variant, if applicable.
 	for ( var = first_var; var <= last_var; ++var )
 	{
@@ -1327,7 +1330,7 @@ void libfla_test_op_driver( char*         func_str,
 							(sc_str[sci][0] == 'r' || sc_str[sci][0] == 'g'))
 						{
 						  pass_str = libfla_test_storage_format_string;
-						  perf = residual = 0.0f;
+						  perf = time = residual = 0.0f;
 						}
 						else
 						{
@@ -1336,7 +1339,7 @@ void libfla_test_op_driver( char*         func_str,
 						       sc_str[sci],
 						       datatype,
 						       p_cur, pci, n_repeats, impl,
-						       &perf, &residual );
+						       &perf, &time, &residual );
 
 						  pass_str = libfla_test_get_string_for_result( residual,
 						                                              datatype,
@@ -1352,11 +1355,11 @@ void libfla_test_op_driver( char*         func_str,
 
 						n_spaces = MAX_FUNC_STRING_LENGTH - strlen( func_param_str );
 						fill_string_with_n_spaces( blank_str, n_spaces );
-
-						libfla_test_output_info( "   %s%s  %c|%-6s  %5u  %6.3lf  %9.2le   %s\n",
+            
+						libfla_test_output_info( "   %s%s  %c|%-6s  %5u  %6.3lf  %6.10lf  %9.2le   %s\n",
 						                         func_param_str, blank_str,
 						                         datatype_char, sc_str[sci],
-						                         p_cur, perf, residual, pass_str );
+						                         p_cur, perf, time, residual, pass_str );
 
 						// If we need to check whether to do something on failure,
 						// do so now.
@@ -1390,6 +1393,7 @@ void libfla_test_print_result_info(char  *func_param_str,
                                    char  *sc_str,
                                    integer    p_cur,
                                    double perf,
+                                   double time,
                                    double residual,
                                    char  *pass_str,
                                    int    nfact )
@@ -1399,11 +1403,10 @@ void libfla_test_print_result_info(char  *func_param_str,
 
 	n_spaces = MAX_FUNC_STRING_LENGTH - strlen( func_param_str );
 	fill_string_with_n_spaces( blank_str, n_spaces );
-
-    libfla_test_output_info( "   %s%s  %c|%-6s  %5u  %6.3lf  %9.2le   %s for nfact=%d\n",
+  libfla_test_output_info( "   %s%s  %c|%-6s  %5u  %6.3lf  %6.10lf  %9.2le   %s for nfact=%d\n",
                                  func_param_str, blank_str,
                                  datatype_char, sc_str,
-                                 p_cur, perf, residual, pass_str, nfact );
+                                 p_cur, perf, time, residual, pass_str, nfact );
 }
 
 
