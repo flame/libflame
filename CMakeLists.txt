@@ -48,13 +48,15 @@ option (ENABLE_UPPERCASE_BLAS "Enable invocation of Blas with Flame" OFF)
 option (ENABLE_UPPERCASE_LAPACK "Enable invocation of Lapack with Flame" OFF)
 option (ENABLE_GPU "Enable gpu advantage" OFF)
 option (ENABLE_XBLAS "Enable xblas API's" OFF)
+option (ENABLE_F2C_DOTC "Enable invoking Complex datatype BLAS functions DOTC and DOTU using Fortran To C calling convention with void return instead of complex return type" OFF)
+option (ENABLE_VOID_RETURN_COMPLEX_FUNCTION "Enable 'void' return instead of complex return type for libFLAME functions such as cladiv/zladiv that by default have complex return type" OFF)
 
 set (ENABLE_WINDOWS_BUILD "Enables windows build" ON)
 
 if(ENABLE_UPPERCASE)
 add_definitions(-DBLIS1_ENABLE_UPPERCASE_F77)
 add_definitions(-DUPPER)
-elseif(NOT ENABLE_UPPERCASE)
+elseif(NOT ENABLE_UPPERCASE)  
 add_definitions(-DNOCHANGE)
 endif()
 
@@ -197,7 +199,16 @@ add_definitions(-DLAPACK_COMPLEX_STRUCTURE)
 add_definitions(-DBLIS1_ENABLE_WINDOWS_BUILD)
 add_definitions(-DHAVE_LAPACK_CONFIG_H)
 add_definitions(-DFLA_ENABLE_LAPACK2FLAME)
+
+if(ENABLE_F2C_DOTC)
+set(FLA_ENABLE_F2C_DOTC TRUE)
 add_definitions(-DFLA_ENABLE_F2C_DOTC)
+endif()
+
+if(ENABLE_VOID_RETURN_COMPLEX_FUNCTION)
+set(FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION TRUE)
+add_definitions(-DFLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION)
+endif()
 
 if(ENABLE_ILP64)
 add_definitions(-DFLA_ENABLE_ILP64)
