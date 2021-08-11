@@ -242,7 +242,6 @@
 //POTRF, threshold numbers to chose paths for performance
 #define FLA_POTRF_FLOAT_SMALL         (70)
 #define FLA_POTRF_DOUBLE_SMALL        (75)
-#define FLA_POTRF_DOUBLE_MID          (423)
 
 //GETRF , threshold numbers to chose paths for performance
 #define FLA_GETRF_SMALL               (85)
