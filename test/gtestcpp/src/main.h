@@ -174,7 +174,77 @@ typedef struct EIG_paramlist_t {
   integer ldx; /* LDX is INTEGER
                     The leading dimension of the array X.
                     LDX >= max(1,N) if VECT = 'V'; LDX >= 1 otherwise.*/
+  integer lda; /* LDA is INTEGER
+                  The leading dimension of the array A.  LDA >= max(1,N).*/
+  integer lwork_heev_2stage; /* LWORK is INTEGER
+                                The length of the array WORK. LWORK >= 1, when N <= 1;
+                                otherwise  
+                                If JOBZ = 'N' and N > 1, LWORK must be queried.
+                                                         LWORK = MAX(1, dimension) where
+                                                         dimension = max(stage1,stage2) + (KD+1)*N + N
+                                                                   = N*KD + N*max(KD+1,FACTOPTNB) 
+                                                                     + max(2*KD*KD, KD*NTHREADS) 
+                                                                     + (KD+1)*N + N
+                                                         where KD is the blocking size of the reduction,
+                                                         FACTOPTNB is the blocking used by the QR or LQ
+                                                         algorithm, usually FACTOPTNB=128 is a good choice
+                                                         NTHREADS is the number of threads used when
+                                                         openMP compilation is enabled, otherwise =1.
+                                If JOBZ = 'V' and N > 1, LWORK must be queried. Not yet available
+
+                                If LWORK = -1, then a workspace query is assumed; the routine
+                                only calculates the optimal size of the WORK array, returns
+                                this value as the first entry of the WORK array, and no error
+                                message related to LWORK is issued by XERBLA.*/
+  integer lwork_heevd_2stage;  /* LWORK is INTEGER
+                                  The dimension of the array WORK.
+                                  If N <= 1,               LWORK must be at least 1.
+                                  If JOBZ = 'N' and N > 1, LWORK must be queried.
+                                                           LWORK = MAX(1, dimension) where
+                                                           dimension = max(stage1,stage2) + (KD+1)*N + N+1
+                                                                     = N*KD + N*max(KD+1,FACTOPTNB) 
+                                                                       + max(2*KD*KD, KD*NTHREADS) 
+                                                                       + (KD+1)*N + N+1
+                                                           where KD is the blocking size of the reduction,
+                                                           FACTOPTNB is the blocking used by the QR or LQ
+                                                           algorithm, usually FACTOPTNB=128 is a good choice
+                                                           NTHREADS is the number of threads used when
+                                                           openMP compilation is enabled, otherwise =1.
+                                  If JOBZ = 'V' and N > 1, LWORK must be at least 2*N + N**2
+
+                                  If LWORK = -1, then a workspace query is assumed; the routine
+                                  only calculates the optimal sizes of the WORK, RWORK and
+                                  IWORK arrays, returns these values as the first entries of
+                                  the WORK, RWORK and IWORK arrays, and no error message
+                                  related to LWORK or LRWORK or LIWORK is issued by XERBLA.*/
+  integer lwork_heevr; /* LWORK is INTEGER
+                          The length of the array WORK.  LWORK >= max(1,2*N).
+                          For optimal efficiency, LWORK >= (NB+1)*N,
+                          where NB is the max of the blocksize for CHETRD and for
+                          CUNMTR as returned by ILAENV.
+
+                          If LWORK = -1, then a workspace query is assumed; the routine
+                          only calculates the optimal sizes of the WORK, RWORK and
+                          IWORK arrays, returns these values as the first entries of
+                          the WORK, RWORK and IWORK arrays, and no error message
+                          related to LWORK or LRWORK or LIWORK is issued by XERBLA.*/
+  integer lrwork_heevr;  /* LRWORK is INTEGER
+                            The length of the array RWORK.  LRWORK >= max(1,24*N).
+
+                            If LRWORK = -1, then a workspace query is assumed; the
+                            routine only calculates the optimal sizes of the WORK, RWORK
+                            and IWORK arrays, returns these values as the first entries
+                            of the WORK, RWORK and IWORK arrays, and no error message
+                            related to LWORK or LRWORK or LIWORK is issued by XERBLA.*/
   
+  integer liwork_heevr;  /* LIWORK is INTEGER
+                            The dimension of the array IWORK.  LIWORK >= max(1,10*N).
+
+                            If LIWORK = -1, then a workspace query is assumed; the
+                            routine only calculates the optimal sizes of the WORK, RWORK
+                            and IWORK arrays, returns these values as the first entries
+                            of the WORK, RWORK and IWORK arrays, and no error message
+                            related to LWORK or LRWORK or LIWORK is issued by XERBLA.*/
 } EIG_paramlist;
 
 /* structure to hold Linear solver parameters */

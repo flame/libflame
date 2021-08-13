@@ -33493,7 +33493,7 @@ integer heev_2stage(char* jobz, char* uplo, integer* n, T* a, integer* lda, Ta* 
 template< typename T, typename Ta >
 integer heevd_2stage(char* jobz, char* uplo, integer* n, T* a, integer* lda, Ta* w, T* work, integer* lwork, Ta* rwork, integer* lrwork, integer* iwork, integer* liwork, integer* info)
 {
-  return heev_2stage(jobz, uplo, n, a, lda, w, work, lwork, rwork, lrwork, iwork, liwork, info);
+  return heevd_2stage(jobz, uplo, n, a, lda, w, work, lwork, rwork, lrwork, iwork, liwork, info);
 }
 
 /*! @brief HEEVR_2STAGE computes the eigenvalues and, optionally, the left and/or right eigenvectors for HE matrices

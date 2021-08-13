@@ -65,8 +65,18 @@ libflame_hbevx.x \
 libflame_hbevx_2stage.x \
 libflame_hbgst.x \
 libflame_hbgv.x \
+libflame_hbgvd.x \
+libflame_hbgvx.x \
 libflame_hbtrd.x \
-libflame_heequb.x
+libflame_heequb.x \
+libflame_heev.x \
+libflame_heev_2stage.x \
+libflame_heevd.x \
+libflame_heevd_2stage.x \
+libflame_heevr.x \
+libflame_heevr_2stage.x \
+libflame_heevx.x \
+libflame_heevx_2stage.x
 
 # --- General build definitions ------------------------------------------------
 #

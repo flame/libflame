@@ -27,3 +27,9 @@ ldq_hbgvx 10 40
 vect V U
 vect_hbgst N V
 ldx 20 40
+lda 20 40
+lwork_heev_2stage 10000 -1
+lwork_heevd_2stage 10000 -1
+lwork_heevr 10000 -1
+lrwork_heevr 10000 -1
+liwork_heevr 10000 -1

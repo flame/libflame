@@ -198,8 +198,38 @@ void Read_EIG_params(const char *file_name)
   }
   
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%d", &eig_paramslist[index].ldx);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lda);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lwork_heev_2stage);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lwork_heevd_2stage);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lwork_heevr);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lrwork_heevr);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].liwork_heevr);
   }
   
   fclose(fp);
