@@ -101,6 +101,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cpotrf2_(char *uplo, integer *n, complex *a, integer * lda, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cpotrf2 inputs: uplo %c, n %lld, lda %lld",*uplo, *n, *lda);
+#else 
+ snprintf(buffer, 256,"cpotrf2 inputs: uplo %c, n %d, lda %d",*uplo, *n, *lda);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1;
  real r__1;
@@ -159,10 +169,12 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CPOTRF2", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* N=1 case */
@@ -172,6 +184,7 @@
  ajj = a[i__1].r;
  if (ajj <= 0.f || sisnan_(&ajj)) {
  *info = 1;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Factor */
@@ -187,6 +200,7 @@
  cpotrf2_(uplo, &n1, &a[a_dim1 + 1], lda, &iinfo);
  if (iinfo != 0) {
  *info = iinfo;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Compute the Cholesky factorization A = U**H*U */
@@ -198,6 +212,7 @@
  cpotrf2_(uplo, &n2, &a[n1 + 1 + (n1 + 1) * a_dim1], lda, &iinfo);
  if (iinfo != 0) {
  *info = iinfo + n1;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Compute the Cholesky factorization A = L*L**H */
@@ -210,10 +225,12 @@
  cpotrf2_(uplo, &n2, &a[n1 + 1 + (n1 + 1) * a_dim1], lda, &iinfo);
  if (iinfo != 0) {
  *info = iinfo + n1;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CPOTRF2 */
  }

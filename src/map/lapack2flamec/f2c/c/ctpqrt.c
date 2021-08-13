@@ -177,6 +177,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int ctpqrt_(integer *m, integer *n, integer *l, integer *nb, complex *a, integer *lda, complex *b, integer *ldb, complex *t, integer *ldt, complex *work, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"ctpqrt inputs: m %lld, n %lld, l %lld, nb %lld, lda %lld, ldb %lld, ldt %lld",*m, *n, *l, *nb, *lda, *ldb, *ldt);
+#else 
+ snprintf(buffer, 256,"ctpqrt inputs: m %d, n %d, l %d, nb %d, lda %d, ldb %d, ldt %d",*m, *n, *l, *nb, *lda, *ldb, *ldt);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, b_dim1, b_offset, t_dim1, t_offset, i__1, i__2, i__3;
  /* Local variables */
@@ -236,10 +246,12 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CTPQRT", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*m == 0 || *n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  i__1 = *n;
@@ -267,6 +279,7 @@
  ctprfb_("L", "C", "F", "C", &mb, &i__3, &ib, &lb, &b[i__ * b_dim1 + 1], ldb, &t[i__ * t_dim1 + 1], ldt, &a[i__ + (i__ + ib) * a_dim1], lda, &b[(i__ + ib) * b_dim1 + 1], ldb, &work[1] , &ib);
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CTPQRT */
  }

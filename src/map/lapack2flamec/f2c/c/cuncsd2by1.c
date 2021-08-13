@@ -246,6 +246,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, integer *q, complex *x11, integer *ldx11, complex *x21, integer *ldx21, real *theta, complex *u1, integer *ldu1, complex *u2, integer *ldu2, complex *v1t, integer *ldv1t, complex * work, integer *lwork, real *rwork, integer *lrwork, integer *iwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cuncsd2by1 inputs: jobu1 %c, jobu2 %c, jobv1t %c, m %lld, p %lld, q %lld, ldx11 %lld, ldx21 %lld, ldu1 %lld, ldu2 %lld, ldv1t %lld, lwork %lld, lrwork %lld",*jobu1, *jobu2, *jobv1t, *m, *p, *q, *ldx11, *ldx21, *ldu1, *ldu2, *ldv1t, *lwork, *lrwork);
+#else 
+ snprintf(buffer, 256,"cuncsd2by1 inputs: jobu1 %c, jobu2 %c, jobv1t %c, m %d, p %d, q %d, ldx11 %d, ldx21 %d, ldu1 %d, ldu2 %d, ldv1t %d, lwork %d, lrwork %d",*jobu1, *jobu2, *jobv1t, *m, *p, *q, *ldx11, *ldx21, *ldu1, *ldu2, *ldv1t, *lwork, *lrwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer u1_dim1, u1_offset, u2_dim1, u2_offset, v1t_dim1, v1t_offset, x11_dim1, x11_offset, x21_dim1, x21_offset, i__1, i__2, i__3;
  /* Local variables */
@@ -583,9 +593,11 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CUNCSD2BY1", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  lorgqr = *lwork - iorgqr + 1;
@@ -846,6 +858,7 @@
  }
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CUNCSD2BY1 */
  }

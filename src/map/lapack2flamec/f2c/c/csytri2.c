@@ -121,6 +121,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int csytri2_(char *uplo, integer *n, complex *a, integer * lda, integer *ipiv, complex *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"csytri2 inputs: uplo %c, n %lld, lda %lld, ipiv %lld, lwork %lld",*uplo, *n, *lda, *ipiv, *lwork);
+#else 
+ snprintf(buffer, 256,"csytri2 inputs: uplo %c, n %d, lda %d, ipiv %d, lwork %d",*uplo, *n, *lda, *ipiv, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1;
  /* Local variables */
@@ -187,13 +197,16 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CSYTRI2", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
  work[1].r = (real) minsize; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (nbmax >= *n) {
@@ -202,6 +215,7 @@
  else {
  csytri2x_(uplo, n, &a[a_offset], lda, &ipiv[1], &work[1], &nbmax, info);
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CSYTRI2 */
  }

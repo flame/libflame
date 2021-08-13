@@ -336,6 +336,16 @@ n-1}
  /* ===================================================================== */
  /* Subroutine */
  int cstemr_(char *jobz, char *range, integer *n, real *d__, real *e, real *vl, real *vu, integer *il, integer *iu, integer *m, real *w, complex *z__, integer *ldz, integer *nzc, integer *isuppz, logical *tryrac, real *work, integer *lwork, integer *iwork, integer * liwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cstemr inputs: jobz %c, range %c, n %lld, il %lld, iu %lld, m %lld, ldz %lld, nzc %lld, lwork %lld, liwork %lld",*jobz, *range, *n, *il, *iu, *m, *ldz, *nzc, *lwork, *liwork);
+#else 
+ snprintf(buffer, 256,"cstemr inputs: jobz %c, range %c, n %d, il %d, iu %d, m %d, ldz %d, nzc %d, lwork %d, liwork %d",*jobz, *range, *n, *il, *iu, *m, *ldz, *nzc, *lwork, *liwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer z_dim1, z_offset, i__1, i__2;
  real r__1, r__2;
@@ -531,14 +541,17 @@ n-1}
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CSTEMR", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery || zquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Handle N = 0, 1, and 2 cases immediately */
  *m = 0;
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n == 1) {
@@ -558,6 +571,7 @@ n-1}
  isuppz[1] = 1;
  isuppz[2] = 1;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n == 2) {
@@ -717,6 +731,7 @@ n-1}
  slarre_(range, n, &wl, &wu, &iil, &iiu, &d__[1], &e[1], &work[inde2], &rtol1, &rtol2, &thresh, &nsplit, &iwork[iinspl], m, &w[1], & work[inderr], &work[indgp], &iwork[iindbl], &iwork[iindw], & work[indgrs], &pivmin, &work[indwrk], &iwork[iindwk], &iinfo);
  if (iinfo != 0) {
  *info = f2c_abs(iinfo) + 10;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Note that if RANGE .NE. 'V', SLARRE computes bounds on the desired */
@@ -728,6 +743,7 @@ n-1}
  clarrv_(n, &wl, &wu, &d__[1], &e[1], &pivmin, &iwork[iinspl], m, & c__1, m, &c_b18, &rtol1, &rtol2, &w[1], &work[inderr], & work[indgp], &iwork[iindbl], &iwork[iindw], &work[indgrs], &z__[z_offset], ldz, &isuppz[1], &work[indwrk], &iwork[ iindwk], &iinfo);
  if (iinfo != 0) {
  *info = f2c_abs(iinfo) + 20;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  }
@@ -792,6 +808,7 @@ n-1}
  slasrt_("I", m, &w[1], &iinfo);
  if (iinfo != 0) {
  *info = 3;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  }
@@ -831,6 +848,7 @@ n-1}
  }
  work[1] = (real) lwmin;
  iwork[1] = liwmin;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CSTEMR */
  }

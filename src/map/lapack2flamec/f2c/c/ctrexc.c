@@ -117,6 +117,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int ctrexc_(char *compq, integer *n, complex *t, integer * ldt, complex *q, integer *ldq, integer *ifst, integer *ilst, integer * info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"ctrexc inputs: compq %c, n %lld, ldt %lld, ldq %lld, ifst %lld, ilst %lld",*compq, *n, *ldt, *ldq, *ifst, *ilst);
+#else 
+ snprintf(buffer, 256,"ctrexc inputs: compq %c, n %d, ldt %d, ldq %d, ifst %d, ilst %d",*compq, *n, *ldt, *ldq, *ifst, *ilst);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer q_dim1, q_offset, t_dim1, t_offset, i__1, i__2, i__3;
  complex q__1;
@@ -182,10 +192,12 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CTREXC", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n <= 1 || *ifst == *ilst) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*ifst < *ilst) {
@@ -232,6 +244,7 @@
  }
  /* L10: */
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CTREXC */
  }

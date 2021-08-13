@@ -154,6 +154,16 @@
 /* Subroutine */
 int cpbsv_(char *uplo, integer *n, integer *kd, integer * nrhs, complex *ab, integer *ldab, complex *b, integer *ldb, integer * info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cpbsv inputs: uplo %c, n %lld, kd %lld, nrhs %lld, ldab %lld, ldb %lld",*uplo, *n, *kd, *nrhs, *ldab, *ldb);
+#else 
+    snprintf(buffer, 256,"cpbsv inputs: uplo %c, n %d, kd %d, nrhs %d, ldab %d, ldb %d",*uplo, *n, *kd, *nrhs, *ldab, *ldb);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, b_dim1, b_offset, i__1;
     /* Local variables */
@@ -214,6 +224,7 @@ int cpbsv_(char *uplo, integer *n, integer *kd, integer * nrhs, complex *ab, int
     {
         i__1 = -(*info);
         xerbla_("CPBSV ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Compute the Cholesky factorization A = U**H*U or A = L*L**H. */
@@ -223,6 +234,7 @@ int cpbsv_(char *uplo, integer *n, integer *kd, integer * nrhs, complex *ab, int
         /* Solve the system A*X = B, overwriting B with X. */
         cpbtrs_(uplo, n, kd, nrhs, &ab[ab_offset], ldab, &b[b_offset], ldb, info);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CPBSV */
 }

@@ -184,6 +184,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int csytf2_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"csytf2 inputs: uplo %c, n %lld, lda %lld",*uplo, *n, *lda);
+#else 
+    snprintf(buffer, 256,"csytf2 inputs: uplo %c, n %d, lda %d",*uplo, *n, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     real r__1, r__2, r__3, r__4;
@@ -263,6 +273,7 @@ int csytf2_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv, int
     {
         i__1 = -(*info);
         xerbla_("CSYTF2", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Initialize ALPHA for use in choosing pivot block size. */
@@ -753,6 +764,7 @@ L40: /* If K > N, exit from loop */
         goto L40;
     }
 L70:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CSYTF2 */
 }

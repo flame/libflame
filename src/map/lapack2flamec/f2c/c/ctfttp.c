@@ -200,6 +200,16 @@
 /* Subroutine */
 int ctfttp_(char *transr, char *uplo, integer *n, complex * arf, complex *ap, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctfttp inputs: transr %c, uplo %c, n %lld",*transr, *uplo, *n);
+#else 
+    snprintf(buffer, 256,"ctfttp inputs: transr %c, uplo %c, n %d",*transr, *uplo, *n);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3, i__4;
     complex q__1;
@@ -255,11 +265,13 @@ int ctfttp_(char *transr, char *uplo, integer *n, complex * arf, complex *ap, in
     {
         i__1 = -(*info);
         xerbla_("CTFTTP", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 1)
@@ -275,6 +287,7 @@ int ctfttp_(char *transr, char *uplo, integer *n, complex * arf, complex *ap, in
             ap[0].r = q__1.r;
             ap[0].i = q__1.i; // , expr subst
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Size of array ARF(0:NT-1) */
@@ -699,6 +712,7 @@ int ctfttp_(char *transr, char *uplo, integer *n, complex * arf, complex *ap, in
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTFTTP */
 }

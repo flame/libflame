@@ -429,6 +429,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int ctgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, integer *n, complex *a, integer *lda, complex *b, integer *ldb, complex *alpha, complex *beta, complex *q, integer *ldq, complex *z__, integer *ldz, integer *m, real *pl, real *pr, real * dif, complex *work, integer *lwork, integer *iwork, integer *liwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"ctgsen inputs: ijob %lld, n %lld, lda %lld, ldb %lld, ldq %lld, ldz %lld, lwork %lld, liwork %lld",*ijob, *n, *lda, *ldb, *ldq, *ldz, *lwork, *liwork);
+#else 
+ snprintf(buffer, 256,"ctgsen inputs: ijob %d, n %d, lda %d, ldb %d, ldq %d, ldz %d, lwork %d, liwork %d",*ijob, *n, *lda, *ldb, *ldq, *ldz, *lwork, *liwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2, i__3;
  complex q__1, q__2;
@@ -525,6 +535,7 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CTGSEN", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  ierr = 0;
@@ -590,9 +601,11 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CTGSEN", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible. */
@@ -785,6 +798,7 @@
  }
  L70: work[1].r = (real) lwmin; work[1].i = 0.f; // , expr subst  
  iwork[1] = liwmin;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CTGSEN */
  }

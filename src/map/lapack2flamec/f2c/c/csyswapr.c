@@ -94,6 +94,16 @@ if UPLO = 'L' the lower triangular part of the */
 /* Subroutine */
 int csyswapr_(char *uplo, integer *n, complex *a, integer * lda, integer *i1, integer *i2)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"csyswapr inputs: uplo %c, n %lld, lda %lld, i1 %lld, i2 %lld",*uplo, *n, *lda, *i1, *i2);
+#else 
+    snprintf(buffer, 256,"csyswapr inputs: uplo %c, n %d, lda %d, i1 %d, i2 %d",*uplo, *n, *lda, *i1, *i2);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -234,6 +244,7 @@ int csyswapr_(char *uplo, integer *n, complex *a, integer * lda, integer *i1, in
             a[i__2].i = tmp.i; // , expr subst
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
 /* csyswapr_ */

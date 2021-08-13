@@ -177,6 +177,16 @@ static complex c_b16 =
 /* Subroutine */
 int cptrfs_(char *uplo, integer *n, integer *nrhs, real *d__, complex *e, real *df, complex *ef, complex *b, integer *ldb, complex *x, integer *ldx, real *ferr, real *berr, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cptrfs inputs: uplo %c, n %lld, nrhs %lld, ldb %lld, ldx %lld",*uplo, *n, *nrhs, *ldb, *ldx);
+#else 
+    snprintf(buffer, 256,"cptrfs inputs: uplo %c, n %d, nrhs %d, ldb %d, ldx %d",*uplo, *n, *nrhs, *ldb, *ldx);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, x_dim1, x_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     real r__1, r__2, r__3, r__4, r__5, r__6, r__7, r__8, r__9, r__10, r__11, r__12;
@@ -271,6 +281,7 @@ int cptrfs_(char *uplo, integer *n, integer *nrhs, real *d__, complex *e, real *
     {
         i__1 = -(*info);
         xerbla_("CPTRFS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -285,6 +296,7 @@ int cptrfs_(char *uplo, integer *n, integer *nrhs, real *d__, complex *e, real *
             berr[j] = 0.f;
             /* L10: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* NZ = maximum number of nonzero elements in each row of A, plus 1 */
@@ -649,6 +661,7 @@ L20: /* Loop until stopping criterion is satisfied. */
         }
         /* L100: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CPTRFS */
 }

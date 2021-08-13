@@ -244,6 +244,16 @@ v**H denotes the conjugate transpose of v, and norm(u) */
 /* Subroutine */
 int ctrsna_(char *job, char *howmny, logical *select, integer *n, complex *t, integer *ldt, complex *vl, integer *ldvl, complex *vr, integer *ldvr, real *s, real *sep, integer *mm, integer * m, complex *work, integer *ldwork, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctrsna inputs: job %c, howmny %c, n %lld, ldt %lld, ldvl %lld, ldvr %lld, mm %lld, ldwork %lld",*job, *howmny, *n, *ldt, *ldvl, *ldvr, *mm, *ldwork);
+#else 
+    snprintf(buffer, 256,"ctrsna inputs: job %c, howmny %c, n %d, ldt %d, ldvl %d, ldvr %d, mm %d, ldwork %d",*job, *howmny, *n, *ldt, *ldvl, *ldvr, *mm, *ldwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer t_dim1, t_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, work_dim1, work_offset, i__1, i__2, i__3, i__4, i__5;
     real r__1, r__2;
@@ -387,11 +397,13 @@ int ctrsna_(char *job, char *howmny, logical *select, integer *n, complex *t, in
     {
         i__1 = -(*info);
         xerbla_("CTRSNA", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 1)
@@ -400,6 +412,7 @@ int ctrsna_(char *job, char *howmny, logical *select, integer *n, complex *t, in
         {
             if (! select[1])
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
         }
@@ -411,6 +424,7 @@ int ctrsna_(char *job, char *howmny, logical *select, integer *n, complex *t, in
         {
             sep[1] = c_abs(&t[t_dim1 + 1]);
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants */
@@ -512,6 +526,7 @@ L40:
 L50:
         ;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTRSNA */
 }

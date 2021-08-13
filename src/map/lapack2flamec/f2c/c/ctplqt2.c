@@ -161,6 +161,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int ctplqt2_(integer *m, integer *n, integer *l, complex *a, integer *lda, complex *b, integer *ldb, complex *t, integer *ldt, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"ctplqt2 inputs: m %lld, n %lld, l %lld, lda %lld, ldb %lld, ldt %lld",*m, *n, *l, *lda, *ldb, *ldt);
+#else 
+ snprintf(buffer, 256,"ctplqt2 inputs: m %d, n %d, l %d, lda %d, ldb %d, ldt %d",*m, *n, *l, *lda, *ldb, *ldt);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, b_dim1, b_offset, t_dim1, t_offset, i__1, i__2, i__3, i__4, i__5;
  complex q__1, q__2;
@@ -225,10 +235,12 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CTPLQT2", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0 || *m == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  i__1 = *m;
@@ -390,6 +402,7 @@
  }
  }
  /* End of CTPLQT2 */
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* ctplqt2_ */

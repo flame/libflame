@@ -119,6 +119,16 @@
 /* Subroutine */
 int cposv_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, complex *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cposv inputs: uplo %c, n %lld, nrhs %lld, lda %lld, ldb %lld",*uplo, *n, *nrhs, *lda, *ldb);
+#else 
+    snprintf(buffer, 256,"cposv inputs: uplo %c, n %d, nrhs %d, lda %d, ldb %d",*uplo, *n, *nrhs, *lda, *ldb);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */
@@ -175,6 +185,7 @@ int cposv_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, comp
     {
         i__1 = -(*info);
         xerbla_("CPOSV ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Compute the Cholesky factorization A = U**H*U or A = L*L**H. */
@@ -184,6 +195,7 @@ int cposv_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, comp
         /* Solve the system A*X = B, overwriting B with X. */
         cpotrs_(uplo, n, nrhs, &a[a_offset], lda, &b[b_offset], ldb, info);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CPOSV */
 }

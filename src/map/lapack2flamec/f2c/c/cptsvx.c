@@ -222,6 +222,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int cptsvx_(char *fact, integer *n, integer *nrhs, real *d__, complex *e, real *df, complex *ef, complex *b, integer *ldb, complex *x, integer *ldx, real *rcond, real *ferr, real *berr, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cptsvx inputs: fact %c, n %lld, nrhs %lld, ldb %lld, ldx %lld",*fact, *n, *nrhs, *ldb, *ldx);
+#else 
+    snprintf(buffer, 256,"cptsvx inputs: fact %c, n %d, nrhs %d, ldb %d, ldx %d",*fact, *n, *nrhs, *ldb, *ldx);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, x_dim1, x_offset, i__1;
     /* Local variables */
@@ -296,6 +306,7 @@ int cptsvx_(char *fact, integer *n, integer *nrhs, real *d__, complex *e, real *
     {
         i__1 = -(*info);
         xerbla_("CPTSVX", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (nofact)
@@ -312,6 +323,7 @@ int cptsvx_(char *fact, integer *n, integer *nrhs, real *d__, complex *e, real *
         if (*info > 0)
         {
             *rcond = 0.f;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -330,6 +342,7 @@ int cptsvx_(char *fact, integer *n, integer *nrhs, real *d__, complex *e, real *
     {
         *info = *n + 1;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CPTSVX */
 }

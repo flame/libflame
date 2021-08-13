@@ -319,6 +319,16 @@ Computing Eigenspaces with Specified */
 /* Subroutine */
 int ctgsna_(char *job, char *howmny, logical *select, integer *n, complex *a, integer *lda, complex *b, integer *ldb, complex *vl, integer *ldvl, complex *vr, integer *ldvr, real *s, real *dif, integer *mm, integer *m, complex *work, integer *lwork, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctgsna inputs: job %c, howmny %c, n %lld, lda %lld, ldb %lld, ldvl %lld, ldvr %lld, mm %lld, m %lld, lwork %lld",*job, *howmny, *n, *lda, *ldb, *ldvl, *ldvr, *mm, *m, *lwork);
+#else 
+    snprintf(buffer, 256,"ctgsna inputs: job %c, howmny %c, n %d, lda %d, ldb %d, ldvl %d, ldvr %d, mm %d, m %d, lwork %d",*job, *howmny, *n, *lda, *ldb, *ldvl, *ldvr, *mm, *m, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1;
     real r__1, r__2;
@@ -480,15 +490,18 @@ int ctgsna_(char *job, char *howmny, logical *select, integer *n, complex *a, in
     {
         i__1 = -(*info);
         xerbla_("CTGSNA", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants */
@@ -581,6 +594,7 @@ L20:
     }
     work[1].r = (real) lwmin;
     work[1].i = 0.f; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTGSNA */
 }

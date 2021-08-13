@@ -217,6 +217,16 @@ static complex c_b1 =
 /* Subroutine */
 int cpftrs_(char *transr, char *uplo, integer *n, integer * nrhs, complex *a, complex *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cpftrs inputs: transr %c, uplo %c, n %lld, nrhs %lld, ldb %lld",*transr, *uplo, *n, *nrhs, *ldb);
+#else 
+    snprintf(buffer, 256,"cpftrs inputs: transr %c, uplo %c, n %d, nrhs %d, ldb %d",*transr, *uplo, *n, *nrhs, *ldb);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, i__1;
     /* Local variables */
@@ -280,11 +290,13 @@ int cpftrs_(char *transr, char *uplo, integer *n, integer * nrhs, complex *a, co
     {
         i__1 = -(*info);
         xerbla_("CPFTRS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0 || *nrhs == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* start execution: there are two triangular solves */
@@ -298,6 +310,7 @@ int cpftrs_(char *transr, char *uplo, integer *n, integer * nrhs, complex *a, co
         ctfsm_(transr, "L", uplo, "C", "N", n, nrhs, &c_b1, a, &b[b_offset], ldb);
         ctfsm_(transr, "L", uplo, "N", "N", n, nrhs, &c_b1, a, &b[b_offset], ldb);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CPFTRS */
 }

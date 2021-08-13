@@ -262,6 +262,16 @@ the routine */
 /* Subroutine */
 int ctrsen_(char *job, char *compq, logical *select, integer *n, complex *t, integer *ldt, complex *q, integer *ldq, complex *w, integer *m, real *s, real *sep, complex *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctrsen inputs: job %c, compq %c, n %lld, ldt %lld, ldq %lld, lwork %lld",*job, *compq, *n, *ldt, *ldq, *lwork);
+#else 
+    snprintf(buffer, 256,"ctrsen inputs: job %c, compq %c, n %d, ldt %d, ldq %d, lwork %d",*job, *compq, *n, *ldt, *ldq, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer q_dim1, q_offset, t_dim1, t_offset, i__1, i__2, i__3;
     /* Builtin functions */
@@ -392,10 +402,12 @@ int ctrsen_(char *job, char *compq, logical *select, integer *n, complex *t, int
     {
         i__1 = -(*info);
         xerbla_("CTRSEN", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -484,6 +496,7 @@ L40: /* Copy reordered eigenvalues to W. */
     }
     work[1].r = (real) lwmin;
     work[1].i = 0.f; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTRSEN */
 }

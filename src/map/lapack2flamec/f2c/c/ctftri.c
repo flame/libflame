@@ -222,6 +222,16 @@ If UPLO = 'L' the RFP A contains the nt */
 /* Subroutine */
 int ctftri_(char *transr, char *uplo, char *diag, integer *n, complex *a, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctftri inputs: transr %c, uplo %c, diag %c, n %lld",*transr, *uplo, *diag, *n);
+#else 
+    snprintf(buffer, 256,"ctftri inputs: transr %c, uplo %c, diag %c, n %d",*transr, *uplo, *diag, *n);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2;
     complex q__1;
@@ -281,11 +291,13 @@ int ctftri_(char *transr, char *uplo, char *diag, integer *n, complex *a, intege
     {
         i__1 = -(*info);
         xerbla_("CTFTRI", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* If N is odd, set NISODD = .TRUE. */
@@ -325,6 +337,7 @@ int ctftri_(char *transr, char *uplo, char *diag, integer *n, complex *a, intege
                 ctrtri_("L", diag, &n1, a, n, info);
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 q__1.r = -1.f;
@@ -337,6 +350,7 @@ int ctftri_(char *transr, char *uplo, char *diag, integer *n, complex *a, intege
                 }
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 ctrmm_("L", "U", "C", diag, &n2, &n1, &c_b1, &a[*n], n, &a[n1] , n);
@@ -349,6 +363,7 @@ int ctftri_(char *transr, char *uplo, char *diag, integer *n, complex *a, intege
                 ctrtri_("L", diag, &n1, &a[n2], n, info) ;
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 q__1.r = -1.f;
@@ -361,6 +376,7 @@ int ctftri_(char *transr, char *uplo, char *diag, integer *n, complex *a, intege
                 }
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 ctrmm_("R", "U", "N", diag, &n1, &n2, &c_b1, &a[n1], n, a, n);
@@ -376,6 +392,7 @@ int ctftri_(char *transr, char *uplo, char *diag, integer *n, complex *a, intege
                 ctrtri_("U", diag, &n1, a, &n1, info);
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 q__1.r = -1.f;
@@ -388,6 +405,7 @@ int ctftri_(char *transr, char *uplo, char *diag, integer *n, complex *a, intege
                 }
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 ctrmm_("R", "L", "C", diag, &n1, &n2, &c_b1, &a[1], &n1, &a[ n1 * n1], &n1);
@@ -399,6 +417,7 @@ int ctftri_(char *transr, char *uplo, char *diag, integer *n, complex *a, intege
                 ctrtri_("U", diag, &n1, &a[n2 * n2], &n2, info);
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 q__1.r = -1.f;
@@ -411,6 +430,7 @@ int ctftri_(char *transr, char *uplo, char *diag, integer *n, complex *a, intege
                 }
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 ctrmm_("L", "L", "N", diag, &n2, &n1, &c_b1, &a[n1 * n2], &n2, a, &n2);
@@ -432,6 +452,7 @@ int ctftri_(char *transr, char *uplo, char *diag, integer *n, complex *a, intege
                 ctrtri_("L", diag, &k, &a[1], &i__1, info);
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 q__1.r = -1.f;
@@ -447,6 +468,7 @@ int ctftri_(char *transr, char *uplo, char *diag, integer *n, complex *a, intege
                 }
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 i__1 = *n + 1;
@@ -462,6 +484,7 @@ int ctftri_(char *transr, char *uplo, char *diag, integer *n, complex *a, intege
                 ctrtri_("L", diag, &k, &a[k + 1], &i__1, info);
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 q__1.r = -1.f;
@@ -477,6 +500,7 @@ int ctftri_(char *transr, char *uplo, char *diag, integer *n, complex *a, intege
                 }
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 i__1 = *n + 1;
@@ -496,6 +520,7 @@ int ctftri_(char *transr, char *uplo, char *diag, integer *n, complex *a, intege
                 ctrtri_("U", diag, &k, &a[k], &k, info);
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 q__1.r = -1.f;
@@ -508,6 +533,7 @@ int ctftri_(char *transr, char *uplo, char *diag, integer *n, complex *a, intege
                 }
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 ctrmm_("R", "L", "C", diag, &k, &k, &c_b1, a, &k, &a[k * (k + 1)], &k);
@@ -521,6 +547,7 @@ int ctftri_(char *transr, char *uplo, char *diag, integer *n, complex *a, intege
                 ctrtri_("U", diag, &k, &a[k * (k + 1)], &k, info);
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 q__1.r = -1.f;
@@ -533,12 +560,14 @@ int ctftri_(char *transr, char *uplo, char *diag, integer *n, complex *a, intege
                 }
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 ctrmm_("L", "L", "N", diag, &k, &k, &c_b1, &a[k * k], &k, a, & k);
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTFTRI */
 }

@@ -91,6 +91,16 @@
 /* Subroutine */
 int crot_(integer *n, complex *cx, integer *incx, complex * cy, integer *incy, real *c__, complex *s)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"crot inputs: n %lld, incx %lld, incy %lld",*n, *incx, *incy);
+#else 
+    snprintf(buffer, 256,"crot inputs: n %d, incx %d, incy %d",*n, *incx, *incy);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3, i__4;
     complex q__1, q__2, q__3, q__4;
@@ -119,6 +129,7 @@ int crot_(integer *n, complex *cx, integer *incx, complex * cy, integer *incy, r
     /* Function Body */
     if (*n <= 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*incx == 1 && *incy == 1)
@@ -170,6 +181,7 @@ int crot_(integer *n, complex *cx, integer *incx, complex * cy, integer *incy, r
         iy += *incy;
         /* L10: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* Code for both increments equal to 1 */
 L20:
@@ -205,6 +217,7 @@ L20:
         cx[i__2].i = stemp.i; // , expr subst
         /* L30: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
 /* crot_ */

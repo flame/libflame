@@ -209,6 +209,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int ctpmqrt_(char *side, char *trans, integer *m, integer *n, integer *k, integer *l, integer *nb, complex *v, integer *ldv, complex *t, integer *ldt, complex *a, integer *lda, complex *b, integer *ldb, complex *work, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"ctpmqrt inputs: side %c, trans %c, m %lld, n %lld, k %lld, l %lld, nb %lld, ldv %lld, ldt %lld, lda %lld, ldb %lld",*side, *trans, *m, *n, *k, *l, *nb, *ldv, *ldt, *lda, *ldb);
+#else 
+ snprintf(buffer, 256,"ctpmqrt inputs: side %c, trans %c, m %d, n %d, k %d, l %d, nb %d, ldv %d, ldt %d, lda %d, ldb %d",*side, *trans, *m, *n, *k, *l, *nb, *ldv, *ldt, *lda, *ldb);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer v_dim1, v_offset, a_dim1, a_offset, b_dim1, b_offset, t_dim1, t_offset, i__1, i__2, i__3, i__4;
  /* Local variables */
@@ -304,10 +314,12 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CTPMQRT", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* .. Quick return if possible .. */
  if (*m == 0 || *n == 0 || *k == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (left && tran) {
@@ -394,6 +406,7 @@
  ctprfb_("R", "C", "F", "C", m, &mb, &ib, &lb, &v[i__ * v_dim1 + 1] , ldv, &t[i__ * t_dim1 + 1], ldt, &a[i__ * a_dim1 + 1], lda, &b[b_offset], ldb, &work[1], m);
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CTPMQRT */
  }

@@ -109,6 +109,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int cptcon_(integer *n, real *d__, complex *e, real *anorm, real *rcond, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cptcon inputs: n %lld",*n);
+#else 
+    snprintf(buffer, 256,"cptcon inputs: n %d",*n);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     real r__1;
@@ -159,6 +169,7 @@ int cptcon_(integer *n, real *d__, complex *e, real *anorm, real *rcond, real *r
     {
         i__1 = -(*info);
         xerbla_("CPTCON", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -166,10 +177,12 @@ int cptcon_(integer *n, real *d__, complex *e, real *anorm, real *rcond, real *r
     if (*n == 0)
     {
         *rcond = 1.f;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*anorm == 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check that D(1:N) is positive. */
@@ -180,6 +193,7 @@ int cptcon_(integer *n, real *d__, complex *e, real *anorm, real *rcond, real *r
     {
         if (d__[i__] <= 0.f)
         {
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         /* L10: */
@@ -215,6 +229,7 @@ int cptcon_(integer *n, real *d__, complex *e, real *anorm, real *rcond, real *r
     {
         *rcond = 1.f / ainvnm / *anorm;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CPTCON */
 }

@@ -491,6 +491,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cposvxx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *a, integer *lda, complex *af, integer *ldaf, char * equed, real *s, complex *b, integer *ldb, complex *x, integer *ldx, real *rcond, real *rpvgrw, real *berr, integer *n_err_bnds__, real * err_bnds_norm__, real *err_bnds_comp__, integer *nparams, real * params, complex *work, real *rwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cposvxx inputs: fact %c, uplo %c, n %lld, nrhs %lld, lda %lld, ldaf %lld, ldb %lld, ldx %lld, n_err_bnds__ %lld, nparams %lld",*fact, *uplo, *n, *nrhs, *lda, *ldaf, *ldb, *ldx, *n_err_bnds__, *nparams);
+#else 
+ snprintf(buffer, 256,"cposvxx inputs: fact %c, uplo %c, n %d, nrhs %d, lda %d, ldaf %d, ldb %d, ldx %d, n_err_bnds__ %d, nparams %d",*fact, *uplo, *n, *nrhs, *lda, *ldaf, *ldb, *ldx, *n_err_bnds__, *nparams);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, af_dim1, af_offset, b_dim1, b_offset, x_dim1, x_offset, err_bnds_norm_dim1, err_bnds_norm_offset, err_bnds_comp_dim1, err_bnds_comp_offset, i__1;
  real r__1, r__2;
@@ -635,6 +645,7 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CPOSVXX", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (equil) {
@@ -660,6 +671,7 @@
  /* Compute the reciprocal pivot growth factor of the */
  /* leading rank-deficient INFO columns of A. */
  *rpvgrw = cla_porpvgrw_(uplo, n, &a[a_offset], lda, &af[ af_offset], ldaf, &rwork[1]);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  }
@@ -675,6 +687,7 @@
  if (rcequ) {
  clascl2_(n, nrhs, &s[1], &x[x_offset], ldx);
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CPOSVXX */
  }

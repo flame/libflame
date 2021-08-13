@@ -123,6 +123,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int csytrs_aa_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, integer *ipiv, complex *b, integer *ldb, complex *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"csytrs_aa inputs: uplo %c, n %lld, nrhs %lld, lda %lld, ipiv %lld, ldb %lld, lwork %lld",*uplo, *n, *nrhs, *lda, *ipiv, *ldb, *lwork);
+#else 
+ snprintf(buffer, 256,"csytrs_aa inputs: uplo %c, n %d, nrhs %d, lda %d, ipiv %d, ldb %d, lwork %d",*uplo, *n, *nrhs, *lda, *ipiv, *ldb, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2;
  /* Local variables */
@@ -193,15 +203,18 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CSYTRS_AA", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
  lwkopt = *n * 3 - 2;
  work[1].r = (real) lwkopt; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0 || *nrhs == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (upper) {
@@ -298,6 +311,7 @@
  }
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CSYTRS_AA */
  }

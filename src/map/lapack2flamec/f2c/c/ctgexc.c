@@ -193,6 +193,16 @@ Computing Eigenspaces with Specified */
 /* Subroutine */
 int ctgexc_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, integer *ifst, integer * ilst, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctgexc inputs: n %lld, lda %lld, ldb %lld, ldq %lld, ldz %lld, ifst %lld, ilst %lld",*n, *lda, *ldb, *ldq, *ldz, *ifst, *ilst);
+#else 
+    snprintf(buffer, 256,"ctgexc inputs: n %d, lda %d, ldb %d, ldq %d, ldz %d, ifst %d, ilst %d",*n, *lda, *ldb, *ldq, *ldz, *ifst, *ilst);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1;
     /* Local variables */
@@ -263,15 +273,18 @@ int ctgexc_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda
     {
         i__1 = -(*info);
         xerbla_("CTGEXC", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n <= 1)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*ifst == *ilst)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*ifst < *ilst)
@@ -282,6 +295,7 @@ L10: /* Swap with next one below */
         if (*info != 0)
         {
             *ilst = here;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         ++here;
@@ -299,6 +313,7 @@ L20: /* Swap with next one above */
         if (*info != 0)
         {
             *ilst = here;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         --here;
@@ -309,6 +324,7 @@ L20: /* Swap with next one above */
         ++here;
     }
     *ilst = here;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTGEXC */
 }

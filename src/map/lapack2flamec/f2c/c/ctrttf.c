@@ -207,6 +207,16 @@
 /* Subroutine */
 int ctrttf_(char *transr, char *uplo, integer *n, complex *a, integer *lda, complex *arf, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctrttf inputs: transr %c, uplo %c, n %lld, lda %lld",*transr, *uplo, *n, *lda);
+#else 
+    snprintf(buffer, 256,"ctrttf inputs: transr %c, uplo %c, n %d, lda %d",*transr, *uplo, *n, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
     complex q__1;
@@ -269,6 +279,7 @@ int ctrttf_(char *transr, char *uplo, integer *n, complex *a, integer *lda, comp
     {
         i__1 = -(*info);
         xerbla_("CTRTTF", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -288,6 +299,7 @@ int ctrttf_(char *transr, char *uplo, integer *n, complex *a, integer *lda, comp
                 arf[0].i = q__1.i; // , expr subst
             }
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Size of array ARF(1:2,0:nt-1) */
@@ -729,6 +741,7 @@ int ctrttf_(char *transr, char *uplo, integer *n, complex *a, integer *lda, comp
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTRTTF */
 }

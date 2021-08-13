@@ -123,6 +123,16 @@
 /* Subroutine */
 int csyr_(char *uplo, integer *n, complex *alpha, complex *x, integer *incx, complex *a, integer *lda)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"csyr inputs: uplo %c, n %lld, incx %lld, lda %lld",*uplo, *n, *incx, *lda);
+#else 
+    snprintf(buffer, 256,"csyr inputs: uplo %c, n %d, incx %d, lda %d",*uplo, *n, *incx, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
     complex q__1, q__2;
@@ -179,11 +189,13 @@ int csyr_(char *uplo, integer *n, complex *alpha, complex *x, integer *incx, com
     if (info != 0)
     {
         xerbla_("CSYR ", &info);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible. */
     if (*n == 0 || alpha->r == 0.f && alpha->i == 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Set the start point in X if the increment is not unity. */
@@ -354,6 +366,7 @@ int csyr_(char *uplo, integer *n, complex *alpha, complex *x, integer *incx, com
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CSYR */
 }

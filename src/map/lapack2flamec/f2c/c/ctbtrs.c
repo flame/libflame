@@ -138,6 +138,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int ctbtrs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, integer *nrhs, complex *ab, integer *ldab, complex *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctbtrs inputs: uplo %c, trans %c, diag %c, n %lld, kd %lld, nrhs %lld, ldab %lld, ldb %lld",*uplo, *trans, *diag, *n, *kd, *nrhs, *ldab, *ldb);
+#else 
+    snprintf(buffer, 256,"ctbtrs inputs: uplo %c, trans %c, diag %c, n %d, kd %d, nrhs %d, ldab %d, ldb %d",*uplo, *trans, *diag, *n, *kd, *nrhs, *ldab, *ldb);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, b_dim1, b_offset, i__1, i__2;
     /* Local variables */
@@ -217,11 +227,13 @@ int ctbtrs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
     {
         i__1 = -(*info);
         xerbla_("CTBTRS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check for singularity. */
@@ -237,6 +249,7 @@ int ctbtrs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                 i__2 = *kd + 1 + *info * ab_dim1;
                 if (ab[i__2].r == 0.f && ab[i__2].i == 0.f)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 /* L10: */
@@ -252,6 +265,7 @@ int ctbtrs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                 i__2 = *info * ab_dim1 + 1;
                 if (ab[i__2].r == 0.f && ab[i__2].i == 0.f)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 /* L20: */
@@ -268,6 +282,7 @@ int ctbtrs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
         ctbsv_(uplo, trans, diag, n, kd, &ab[ab_offset], ldab, &b[j * b_dim1 + 1], &c__1);
         /* L30: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTBTRS */
 }

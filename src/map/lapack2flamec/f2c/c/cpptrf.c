@@ -112,6 +112,16 @@ static real c_b16 = -1.f;
 /* Subroutine */
 int cpptrf_(char *uplo, integer *n, complex *ap, integer * info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cpptrf inputs: uplo %c, n %lld",*uplo, *n);
+#else 
+    snprintf(buffer, 256,"cpptrf inputs: uplo %c, n %d",*uplo, *n);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3;
     real r__1;
@@ -167,11 +177,13 @@ int cpptrf_(char *uplo, integer *n, complex *ap, integer * info)
     {
         i__1 = -(*info);
         xerbla_("CPPTRF", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (upper)
@@ -254,6 +266,7 @@ int cpptrf_(char *uplo, integer *n, complex *ap, integer * info)
 L30:
     *info = j;
 L40:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CPPTRF */
 }

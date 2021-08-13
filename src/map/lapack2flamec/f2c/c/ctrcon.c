@@ -129,6 +129,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int ctrcon_(char *norm, char *uplo, char *diag, integer *n, complex *a, integer *lda, real *rcond, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctrcon inputs: norm %c, uplo %c, diag %c, n %lld, lda %lld",*norm, *uplo, *diag, *n, *lda);
+#else 
+    snprintf(buffer, 256,"ctrcon inputs: norm %c, uplo %c, diag %c, n %d, lda %d",*norm, *uplo, *diag, *n, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1;
     real r__1, r__2;
@@ -218,12 +228,14 @@ int ctrcon_(char *norm, char *uplo, char *diag, integer *n, complex *a, integer 
     {
         i__1 = -(*info);
         xerbla_("CTRCON", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
         *rcond = 1.f;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     *rcond = 0.f;
@@ -281,6 +293,7 @@ L10:
         }
     }
 L20:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTRCON */
 }

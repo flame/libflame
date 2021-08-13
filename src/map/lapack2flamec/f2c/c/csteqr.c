@@ -137,6 +137,16 @@ on exit, D */
 /* Subroutine */
 int csteqr_(char *compz, integer *n, real *d__, real *e, complex *z__, integer *ldz, real *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"csteqr inputs: compz %c, n %lld, ldz %lld",*compz, *n, *ldz);
+#else 
+    snprintf(buffer, 256,"csteqr inputs: compz %c, n %d, ldz %d",*compz, *n, *ldz);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer z_dim1, z_offset, i__1, i__2;
     real r__1, r__2;
@@ -244,11 +254,13 @@ int csteqr_(char *compz, integer *n, real *d__, real *e, complex *z__, integer *
     {
         i__1 = -(*info);
         xerbla_("CSTEQR", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 1)
@@ -259,6 +271,7 @@ int csteqr_(char *compz, integer *n, real *d__, real *e, complex *z__, integer *
             z__[i__1].r = 1.f;
             z__[i__1].i = 0.f; // , expr subst
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Determine the unit roundoff and over/underflow thresholds. */
@@ -618,6 +631,7 @@ L140:
             }
             /* L150: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     goto L10;
@@ -660,6 +674,7 @@ L160:
             /* L180: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CSTEQR */
 }

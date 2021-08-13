@@ -184,6 +184,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int cpbrfs_(char *uplo, integer *n, integer *kd, integer * nrhs, complex *ab, integer *ldab, complex *afb, integer *ldafb, complex *b, integer *ldb, complex *x, integer *ldx, real *ferr, real * berr, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cpbrfs inputs: uplo %c, n %lld, kd %lld, nrhs %lld, ldab %lld, ldafb %lld, ldb %lld, ldx %lld",*uplo, *n, *kd, *nrhs, *ldab, *ldafb, *ldb, *ldx);
+#else 
+    snprintf(buffer, 256,"cpbrfs inputs: uplo %c, n %d, kd %d, nrhs %d, ldab %d, ldafb %d, ldb %d, ldx %d",*uplo, *n, *kd, *nrhs, *ldab, *ldafb, *ldb, *ldx);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, afb_dim1, afb_offset, b_dim1, b_offset, x_dim1, x_offset, i__1, i__2, i__3, i__4, i__5;
     real r__1, r__2, r__3, r__4;
@@ -295,6 +305,7 @@ int cpbrfs_(char *uplo, integer *n, integer *kd, integer * nrhs, complex *ab, in
     {
         i__1 = -(*info);
         xerbla_("CPBRFS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -309,6 +320,7 @@ int cpbrfs_(char *uplo, integer *n, integer *kd, integer * nrhs, complex *ab, in
             berr[j] = 0.f;
             /* L10: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* NZ = maximum number of nonzero elements in each row of A, plus 1 */
@@ -551,6 +563,7 @@ L100:
         }
         /* L140: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CPBRFS */
 }

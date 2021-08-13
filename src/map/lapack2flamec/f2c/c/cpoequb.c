@@ -101,6 +101,16 @@
 /* Subroutine */
 int cpoequb_(integer *n, complex *a, integer *lda, real *s, real *scond, real *amax, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cpoequb inputs: n %lld, lda %lld",*n, *lda);
+#else 
+    snprintf(buffer, 256,"cpoequb inputs: n %d, lda %d",*n, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     real r__1, r__2;
@@ -153,6 +163,7 @@ int cpoequb_(integer *n, complex *a, integer *lda, real *s, real *scond, real *a
     {
         i__1 = -(*info);
         xerbla_("CPOEQUB", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible. */
@@ -160,6 +171,7 @@ int cpoequb_(integer *n, complex *a, integer *lda, real *s, real *scond, real *a
     {
         *scond = 1.f;
         *amax = 0.f;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     base = slamch_("B");
@@ -198,6 +210,7 @@ int cpoequb_(integer *n, complex *a, integer *lda, real *s, real *scond, real *a
             if (s[i__] <= 0.f)
             {
                 *info = i__;
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* L20: */
@@ -219,6 +232,7 @@ int cpoequb_(integer *n, complex *a, integer *lda, real *s, real *scond, real *a
         /* Compute SCOND = min(S(I)) / max(S(I)). */
         *scond = sqrt(smin) / sqrt(*amax);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CPOEQUB */
 }

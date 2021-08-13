@@ -193,6 +193,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cunbdb2_(integer *m, integer *p, integer *q, complex * x11, integer *ldx11, complex *x21, integer *ldx21, real *theta, real * phi, complex *taup1, complex *taup2, complex *tauq1, complex *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cunbdb2 inputs: m %lld, p %lld, q %lld, ldx11 %lld, ldx21 %lld, lwork %lld",*m, *p, *q, *ldx11, *ldx21, *lwork);
+#else 
+ snprintf(buffer, 256,"cunbdb2 inputs: m %d, p %d, q %d, ldx11 %d, ldx21 %d, lwork %d",*m, *p, *q, *ldx11, *ldx21, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer x11_dim1, x11_offset, x21_dim1, x21_offset, i__1, i__2, i__3, i__4;
  real r__1, r__2;
@@ -297,9 +307,11 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CUNBDB2", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Reduce rows 1, ..., P of X11 and X21 */
@@ -377,6 +389,7 @@
  r_cnjg(&q__1, &taup2[i__]);
  clarf_("L", &i__2, &i__3, &x21[i__ + i__ * x21_dim1], &c__1, &q__1, & x21[i__ + (i__ + 1) * x21_dim1], ldx21, &work[ilarf]);
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CUNBDB2 */
  }

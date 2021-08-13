@@ -72,6 +72,16 @@
 /* Subroutine */
 int csrscl_(integer *n, real *sa, complex *sx, integer *incx)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"csrscl inputs: n %d, incx %d\n", *n, *incx);
+#else 
+    snprintf(buffer, 256,"csrscl inputs: n %d, incx %d\n", *n, *incx);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     real mul, cden;
     logical done;
     real cnum, cden1, cnum1;
@@ -81,14 +91,6 @@ int csrscl_(integer *n, real *sa, complex *sx, integer *incx)
     extern /* Subroutine */
     int csscal_(integer *, real *, complex *, integer *);
     real bignum, smlnum;
-    
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "csrscl inputs: n %d, incx %d\n", *n, *incx);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
-
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -115,6 +117,7 @@ int csrscl_(integer *n, real *sa, complex *sx, integer *incx)
     /* Function Body */
     if (*n <= 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine parameters */

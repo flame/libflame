@@ -296,6 +296,16 @@ if EQUED = 'Y', */
 /* Subroutine */
 int cposvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *a, integer *lda, complex *af, integer *ldaf, char * equed, real *s, complex *b, integer *ldb, complex *x, integer *ldx, real *rcond, real *ferr, real *berr, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cposvx inputs: fact %c, uplo %c, n %lld, nrhs %lld, lda %lld, ldaf %lld, equed %c, ldb %lld, ldx %lld",*fact, *uplo, *n, *nrhs, *lda, *ldaf, *equed, *ldb, *ldx);
+#else 
+    snprintf(buffer, 256,"cposvx inputs: fact %c, uplo %c, n %d, nrhs %d, lda %d, ldaf %d, equed %c, ldb %d, ldx %d",*fact, *uplo, *n, *nrhs, *lda, *ldaf, *equed, *ldb, *ldx);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, b_dim1, b_offset, x_dim1, x_offset, i__1, i__2, i__3, i__4, i__5;
     real r__1, r__2;
@@ -452,6 +462,7 @@ int cposvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *a, inte
     {
         i__1 = -(*info);
         xerbla_("CPOSVX", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (equil)
@@ -499,6 +510,7 @@ int cposvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *a, inte
         if (*info > 0)
         {
             *rcond = 0.f;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -551,6 +563,7 @@ int cposvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *a, inte
     {
         *info = *n + 1;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CPOSVX */
 }

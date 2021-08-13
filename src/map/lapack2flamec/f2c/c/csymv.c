@@ -145,6 +145,16 @@
 /* Subroutine */
 int csymv_(char *uplo, integer *n, complex *alpha, complex * a, integer *lda, complex *x, integer *incx, complex *beta, complex *y, integer *incy)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"csymv inputs: uplo %c, n %lld, lda %lld, incx %lld, incy %lld",*uplo, *n, *lda, *incx, *incy);
+#else 
+    snprintf(buffer, 256,"csymv inputs: uplo %c, n %d, lda %d, incx %d, incy %d",*uplo, *n, *lda, *incx, *incy);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
     complex q__1, q__2, q__3, q__4;
@@ -206,11 +216,13 @@ int csymv_(char *uplo, integer *n, complex *alpha, complex * a, integer *lda, co
     if (info != 0)
     {
         xerbla_("CSYMV ", &info);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible. */
     if (*n == 0 || alpha->r == 0.f && alpha->i == 0.f && (beta->r == 1.f && beta->i == 0.f))
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Set up the start points in X and Y. */
@@ -306,6 +318,7 @@ int csymv_(char *uplo, integer *n, complex *alpha, complex * a, integer *lda, co
     }
     if (alpha->r == 0.f && alpha->i == 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (lsame_(uplo, "U"))
@@ -556,6 +569,7 @@ int csymv_(char *uplo, integer *n, complex *alpha, complex * a, integer *lda, co
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CSYMV */
 }

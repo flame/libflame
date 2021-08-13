@@ -104,6 +104,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int cung2l_(integer *m, integer *n, integer *k, complex *a, integer *lda, complex *tau, complex *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cung2l inputs: m %lld, n %lld, k %lld, lda %lld",*m, *n, *k, *lda);
+#else 
+    snprintf(buffer, 256,"cung2l inputs: m %d, n %d, k %d, lda %d",*m, *n, *k, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     complex q__1;
@@ -158,11 +168,13 @@ int cung2l_(integer *m, integer *n, integer *k, complex *a, integer *lda, comple
     {
         i__1 = -(*info);
         xerbla_("CUNG2L", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n <= 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Initialise columns 1:n-k to columns of the unit matrix */
@@ -223,6 +235,7 @@ int cung2l_(integer *m, integer *n, integer *k, complex *a, integer *lda, comple
         }
         /* L40: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CUNG2L */
 }

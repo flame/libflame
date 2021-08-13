@@ -93,6 +93,16 @@
 /* Subroutine */
 int ctpttr_(char *uplo, integer *n, complex *ap, complex *a, integer *lda, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctpttr inputs: uplo %c, n %lld, lda %lld",*uplo, *n, *lda);
+#else 
+    snprintf(buffer, 256,"ctpttr inputs: uplo %c, n %d, lda %d",*uplo, *n, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
@@ -144,6 +154,7 @@ int ctpttr_(char *uplo, integer *n, complex *ap, complex *a, integer *lda, integ
     {
         i__1 = -(*info);
         xerbla_("CTPTTR", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (lower)
@@ -188,6 +199,7 @@ int ctpttr_(char *uplo, integer *n, complex *ap, complex *a, integer *lda, integ
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTPTTR */
 }

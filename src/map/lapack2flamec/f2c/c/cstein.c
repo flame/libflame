@@ -172,6 +172,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cstein_(integer *n, real *d__, real *e, integer *m, real *w, integer *iblock, integer *isplit, complex *z__, integer *ldz, real *work, integer *iwork, integer *ifail, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cstein inputs: n %lld, m %lld, iblock %lld, isplit %lld, ldz %lld",*n, *m, *iblock, *isplit, *ldz);
+#else 
+ snprintf(buffer, 256,"cstein inputs: n %d, m %d, iblock %d, isplit %d, ldz %d",*n, *m, *iblock, *isplit, *ldz);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5;
  real r__1, r__2, r__3, r__4, r__5;
@@ -275,15 +285,18 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CSTEIN", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0 || *m == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (*n == 1) {
  i__1 = z_dim1 + 1;
  z__[i__1].r = 1.f; z__[i__1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Get machine constants. */
@@ -471,6 +484,7 @@
  }
  L180: ;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CSTEIN */
  }

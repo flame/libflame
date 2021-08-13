@@ -139,6 +139,16 @@
 /* Subroutine */
 int cspmv_(char *uplo, integer *n, complex *alpha, complex * ap, complex *x, integer *incx, complex *beta, complex *y, integer * incy)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cspmv inputs: uplo %c, n %lld, incx %lld, incy %lld",*uplo, *n, *incx, *incy);
+#else 
+    snprintf(buffer, 256,"cspmv inputs: uplo %c, n %d, incx %d, incy %d",*uplo, *n, *incx, *incy);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3, i__4, i__5;
     complex q__1, q__2, q__3, q__4;
@@ -192,11 +202,13 @@ int cspmv_(char *uplo, integer *n, complex *alpha, complex * ap, complex *x, int
     if (info != 0)
     {
         xerbla_("CSPMV ", &info);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible. */
     if (*n == 0 || alpha->r == 0.f && alpha->i == 0.f && (beta->r == 1.f && beta->i == 0.f))
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Set up the start points in X and Y. */
@@ -291,6 +303,7 @@ int cspmv_(char *uplo, integer *n, complex *alpha, complex * ap, complex *x, int
     }
     if (alpha->r == 0.f && alpha->i == 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     kk = 1;
@@ -550,6 +563,7 @@ int cspmv_(char *uplo, integer *n, complex *alpha, complex * ap, complex *x, int
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CSPMV */
 }

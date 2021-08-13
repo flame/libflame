@@ -159,6 +159,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int csytrf_aa_2stage_(char *uplo, integer *n, complex *a, integer *lda, complex *tb, integer *ltb, integer *ipiv, integer * ipiv2, complex *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"csytrf_aa_2stage inputs: uplo %c, n %lld, lda %lld, ltb %lld, lwork %lld",*uplo, *n, *lda, *ltb, *lwork);
+#else 
+ snprintf(buffer, 256,"csytrf_aa_2stage inputs: uplo %c, n %d, lda %d, ltb %d, lwork %d",*uplo, *n, *lda, *ltb, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
  complex q__1;
@@ -228,6 +238,7 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CSYTRF_AA_2STAGE", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Answer the query */
@@ -243,10 +254,12 @@
  }
  }
  if (tquery || wquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Determine the number of the block size */
@@ -647,6 +660,7 @@
  }
  /* Factor the band matrix */
  cgbtrf_(n, n, &nb, &nb, &tb[1], &ldtb, &ipiv2[1], info);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CSYTRF_AA_2STAGE */
  }

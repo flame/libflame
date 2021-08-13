@@ -312,6 +312,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int cuncsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, char *signs, integer *m, integer *p, integer *q, complex *x11, integer *ldx11, complex *x12, integer *ldx12, complex * x21, integer *ldx21, complex *x22, integer *ldx22, real *theta, complex *u1, integer *ldu1, complex *u2, integer *ldu2, complex *v1t, integer *ldv1t, complex *v2t, integer *ldv2t, complex *work, integer * lwork, real *rwork, integer *lrwork, integer *iwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"cuncsd inputs: jobu1 %c, jobu2 %c, jobv1t %c, jobv2t %c, trans %c, signs %c, m %lld, p %lld, q %lld, ldx11 %lld, ldx12 %lld, ldx21 %lld, ldx22 %lld, ldu1 %lld, ldu2 %lld, ldv1t %lld, ldv2t %lld, lwork %lld, lrwork %lld",*jobu1, *jobu2, *jobv1t, *jobv2t, *trans, *signs, *m, *p, *q, *ldx11, *ldx12, *ldx21, *ldx22, *ldu1, *ldu2, *ldv1t, *ldv2t, *lwork, *lrwork);
+#else 
+ snprintf(buffer, 256,"cuncsd inputs: jobu1 %c, jobu2 %c, jobv1t %c, jobv2t %c, trans %c, signs %c, m %d, p %d, q %d, ldx11 %d, ldx12 %d, ldx21 %d, ldx22 %d, ldu1 %d, ldu2 %d, ldv1t %d, ldv2t %d, lwork %d, lrwork %d",*jobu1, *jobu2, *jobv1t, *jobv2t, *trans, *signs, *m, *p, *q, *ldx11, *ldx12, *ldx21, *ldx22, *ldu1, *ldu2, *ldv1t, *ldv2t, *lwork, *lrwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer u1_dim1, u1_offset, u2_dim1, u2_offset, v1t_dim1, v1t_offset, v2t_dim1, v2t_offset, x11_dim1, x11_offset, x12_dim1, x12_offset, x21_dim1, x21_offset, x22_dim1, x22_offset, i__1, i__2, i__3, i__4, i__5, i__6;
  /* Local variables */
@@ -482,6 +492,7 @@
  *(unsigned char *)signst = 'D';
  }
  cuncsd_(jobv1t, jobv2t, jobu1, jobu2, transt, signst, m, q, p, &x11[ x11_offset], ldx11, &x21[x21_offset], ldx21, &x12[x12_offset], ldx12, &x22[x22_offset], ldx22, &theta[1], &v1t[v1t_offset], ldv1t, &v2t[v2t_offset], ldv2t, &u1[u1_offset], ldu1, &u2[ u2_offset], ldu2, &work[1], lwork, &rwork[1], lrwork, &iwork[ 1], info);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Work with permutation [ 0 I;
@@ -498,6 +509,7 @@
  i__1 = *m - *p;
  i__2 = *m - *q;
  cuncsd_(jobu2, jobu1, jobv2t, jobv1t, trans, signst, m, &i__1, &i__2, &x22[x22_offset], ldx22, &x21[x21_offset], ldx21, &x12[ x12_offset], ldx12, &x11[x11_offset], ldx11, &theta[1], &u2[ u2_offset], ldu2, &u1[u1_offset], ldu1, &v2t[v2t_offset], ldv2t, &v1t[v1t_offset], ldv1t, &work[1], lwork, &rwork[1], lrwork, &iwork[1], info);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Compute workspace */
@@ -595,9 +607,11 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CUNCSD", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery || lrquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Transform to bidiagonal block form */
@@ -757,6 +771,7 @@
  clapmr_(&c_false, &i__1, &i__2, &v2t[v2t_offset], ldv2t, &iwork[1] );
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End CUNCSD */
  }

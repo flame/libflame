@@ -219,6 +219,16 @@
  /* ===================================================================== */
  /* Subroutine */
  int csysv_rk_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, complex *e, integer *ipiv, complex *b, integer *ldb, complex *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+ snprintf(buffer, 256,"csysv_rk inputs: uplo %c, n %lld, nrhs %lld, lda %lld, ldb %lld, lwork %lld",*uplo, *n, *nrhs, *lda, *ldb, *lwork);
+#else 
+ snprintf(buffer, 256,"csysv_rk inputs: uplo %c, n %d, nrhs %d, lda %d, ldb %d, lwork %d",*uplo, *n, *nrhs, *lda, *ldb, *lwork);
+#endif
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, b_dim1, b_offset, i__1;
  /* Local variables */
@@ -292,9 +302,11 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CSYSV_RK ", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Compute the factorization A = U*D*U**T or A = L*D*L**T. */
@@ -304,6 +316,7 @@
  csytrs_3_(uplo, n, nrhs, &a[a_offset], lda, &e[1], &ipiv[1], &b[ b_offset], ldb, info);
  }
  work[1].r = (real) lwkopt; work[1].i = 0.f; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CSYSV_RK */
  }
