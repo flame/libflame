@@ -8,6 +8,11 @@
 
 */
 
+/*
+    Copyright (c) 2021 Advanced Micro Devices, Inc. All rights reserved.
+    Aug 4, 2021
+*/
+
 #include "FLAME.h"
 
 #ifdef FLA_ENABLE_LAPACK2FLAME
@@ -55,6 +60,13 @@
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_w,  integer* lwork, \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_r,   \
                                integer* info )
+
+
+#define LAPACK_gesvd_body_d(prefix)                                                                                \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                                                                    \
+  lapack_dgesvd( jobu, jobv, m, n, buff_A, ldim_A, buff_s, buff_U, ldim_U,buff_Vh , ldim_Vh, buff_w, lwork,info ); \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                                                                     \
+  return *info;                                                                                                        
 
 #define LAPACK_gesvd_body(prefix)                                       \
   AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \
@@ -144,19 +156,26 @@ LAPACK_gesvd_real(s)
 
 LAPACK_gesvd_real(d)
 {
+#ifdef FLA_AMD_OPT
     {
-        LAPACK_RETURN_CHECK( dgesvd_check( jobu, jobv,
-                                           m, n,
-                                           buff_A, ldim_A,
-                                           buff_s,
-                                           buff_U, ldim_U,
-                                           buff_Vh, ldim_Vh,
-                                           buff_w, lwork,
-                                           info ) )
+       LAPACK_gesvd_body_d(d)
+    }
+#else
+    {
+       LAPACK_RETURN_CHECK( dgesvd_check (  jobu, jobv,
+                                            m, n,
+                                            buff_A, ldim_A,
+                                            buff_s,
+                                            buff_U, ldim_U,
+                                            buff_Vh, ldim_Vh,
+                                            buff_w, lwork,
+                                            info ) )
+
     }
     {
         LAPACK_gesvd_body(d)
     }
+#endif
 }
 
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
