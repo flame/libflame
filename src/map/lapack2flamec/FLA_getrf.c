@@ -172,6 +172,8 @@ extern void DTL_Trace(
 
 #else /* FLA_ENABLE_MULTITHREADING */
 
+#define LAPACK_getrf_body_d LAPACK_getrf_body
+
 // Note that p should be set zero.
 #define LAPACK_getrf_body(prefix)                               \
   AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                 \
