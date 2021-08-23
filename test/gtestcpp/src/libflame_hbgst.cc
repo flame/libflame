@@ -3,7 +3,7 @@
 *******************************************************************************/
 
 /*! @file libflame_hbgst.cc
- *  @brief Test application to validate hbgst() using CPP template interface
+ *  @brief Test application to validate hbgst() using CPP template interface.
  *  */
 
 #include <gtest/gtest.h>
@@ -40,11 +40,11 @@
 template< typename T, typename Ta >
 void hbgst_test(int ip)
 {
-  typedef integer (*Fptr_NL_LAPACKE_hbgst)(char* vect, char* uplo, integer* n,
+  typedef integer (*fptr_NL_LAPACK_hbgst)(char* vect, char* uplo, integer* n,
                       integer* ka, integer* kb, T* ab, integer* ldab,  T* bb,
                       integer* ldbb, T* x, integer* ldx, T* work, Ta* rwork,
                       integer* info);
-  Fptr_NL_LAPACKE_hbgst HBGST;
+  fptr_NL_LAPACK_hbgst hbgst_ref;
 
   // Initialise random number generators with timestamp.
   srand (time(NULL));
@@ -220,21 +220,21 @@ void hbgst_test(int ip)
   /* Check the typename T passed to this function template and call respective
      function.*/
   if (typeid(T) == typeid(scomplex)) {
-    HBGST = (Fptr_NL_LAPACKE_hbgst)dlsym(lapackModule, "chbgst_");
+    hbgst_ref = (fptr_NL_LAPACK_hbgst)dlsym(lapackModule, "chbgst_");
   } else if (typeid(T) == typeid(dcomplex)) {
-    HBGST = (Fptr_NL_LAPACKE_hbgst)dlsym(lapackModule, "zhbgst_");
+    hbgst_ref = (fptr_NL_LAPACK_hbgst)dlsym(lapackModule, "zhbgst_");
   } else {
 	  PRINTF("Invalid typename is passed to %s() function template.\n",
            __FUNCTION__);
   }
   
-  if (HBGST == NULL) {
+  if (hbgst_ref == NULL) {
     PRINTF("Could not get the symbol. Exiting...\n");
     closelibs();
     exit (-1);
   }
   integer info_ref = -1;
-  HBGST(&vect, &uplo, &n, &ka, &kb, abrefbuff, &ldab, bbrefbuff, &ldbb,
+  hbgst_ref(&vect, &uplo, &n, &ka, &kb, abrefbuff, &ldab, bbrefbuff, &ldbb,
     xrefbuff, &ldx, workrefbuff, rworkrefbuff, &info_ref);
   PRINTF ("info_cpp: %d, info_ref: %d\n", info_cpp, info_ref);
   

@@ -30,7 +30,6 @@
 	  http://www.netlib.org/lapack/explore-html/d9/d98/group__complex_o_t_h_e_reigen_gad8820f8a084e192bc6e3713b766a6cdd.html#gad8820f8a084e192bc6e3713b766a6cdd
 	  Complex double reference:
 	  http://www.netlib.org/lapack/explore-html/db/d61/group__complex16_o_t_h_e_reigen_ga42094c90148d11dd8eb7627231144c09.html#ga42094c90148d11dd8eb7627231144c09
-
     \endverbatim
 	
  * @param[in] IP
@@ -43,13 +42,13 @@
 template<typename T, typename Ta>
 void hbevx_2stage_test(int ip)
 {
-  typedef integer (*Fptr_NL_LAPACKE_hbevx_2stage)(char* jobz, char* range,
+  typedef integer (*fptr_NL_LAPACK_hbevx_2stage)(char* jobz, char* range,
                   char* uplo, integer* n, integer* kd, T* ab, integer* ldab,
                   T* q, integer* ldq, Ta* vl, Ta* vu, integer* il, integer* iu,
                   Ta* abstol, integer* m, Ta* w, T* z, integer* ldz, T* work,
                   integer* lwork, Ta* rwork, integer* iwork, integer* ifail,
                   integer* info);
-  Fptr_NL_LAPACKE_hbevx_2stage HBEVX_2STAGE = NULL;
+  fptr_NL_LAPACK_hbevx_2stage hbevx_2stage_ref = NULL;
   
   // Initialise random number generators with timestamp
   srand (time(NULL));
@@ -367,24 +366,24 @@ void hbevx_2stage_test(int ip)
   /* Check the typename T passed to this function template and call respective
      function.*/
   if (typeid(T) == typeid(scomplex)) {
-    HBEVX_2STAGE = (Fptr_NL_LAPACKE_hbevx_2stage)dlsym(lapackModule,
+    hbevx_2stage_ref = (fptr_NL_LAPACK_hbevx_2stage)dlsym(lapackModule,
                               "chbevx_2stage_");
   } else if (typeid(T) == typeid(dcomplex)) {
-    HBEVX_2STAGE = (Fptr_NL_LAPACKE_hbevx_2stage)dlsym(lapackModule,
+    hbevx_2stage_ref = (fptr_NL_LAPACK_hbevx_2stage)dlsym(lapackModule,
                               "zhbevx_2stage_");
   } else {
 	  PRINTF("Invalid typename is passed to %s() function template.\n",
            __FUNCTION__);
   }
   
-  if (HBEVX_2STAGE == NULL) {
+  if (hbevx_2stage_ref == NULL) {
     PRINTF("Could not get the symbol. Exiting...\n");
 	  closelibs();
     exit(-1);
   }
   integer info_ref = -1;
   
-  HBEVX_2STAGE(&jobz, &range, &uplo, &n, &kd, abrefbuff, &ldab, qrefbuff,
+  hbevx_2stage_ref(&jobz, &range, &uplo, &n, &kd, abrefbuff, &ldab, qrefbuff,
         &ldq, &vl, &vu, &il, &iu, &abstol, &mref, wrefbuff, zrefbuff, &ldz,
         workrefbuff, &lwork_size, rworkrefbuff, iworkrefbuff, ifailref,
         &info_ref);

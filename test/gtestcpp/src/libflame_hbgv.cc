@@ -10,13 +10,13 @@
 #include "main.h"
 #include "libflame_test.hh"
 
-/*! @brief  hbgv_test is function template for hbgst() functions.
+/*! @brief  hbgv_test is function template for hbgv() functions.
             T can be scomplex, dcomplex
             Ta can be float, double.
  * @details
  * \b Purpose:
     \verbatim
-	  hbgv_test is function template for hbevx() functions.
+	  hbgv_test is function template for hbgv() functions.
 	  T can be scomplex, dcomplex
     Ta can be float, double.
 	  
@@ -41,11 +41,11 @@
 template< typename T, typename Ta >
 void hbgv_test(int ip)
 {
-  typedef integer (*Fptr_NL_LAPACKE_hbgv)(char* jobz, char* uplo, integer* n,
+  typedef integer (*fptr_NL_LAPACK_hbgv)(char* jobz, char* uplo, integer* n,
                       integer* ka, integer* kb, T* ab, integer* ldab, T* bb,
                       integer* ldbb, Ta* w, T* z, integer* ldz, T* work,
                       Ta* rwork, integer* info);
-  Fptr_NL_LAPACKE_hbgv HBGV = NULL;
+  fptr_NL_LAPACK_hbgv hbgv_ref = NULL;
   
   // Initialise random number generators with timestamp.
   srand (time(NULL));
@@ -231,22 +231,22 @@ void hbgv_test(int ip)
   /* Check the typename T passed to this function template and call respective
      function.*/
   if (typeid(T) == typeid(scomplex)) {
-    HBGV = (Fptr_NL_LAPACKE_hbgv)dlsym(lapackModule, "chbgv_");
+    hbgv_ref = (fptr_NL_LAPACK_hbgv)dlsym(lapackModule, "chbgv_");
   } else if (typeid(T) == typeid(dcomplex)) {
-    HBGV = (Fptr_NL_LAPACKE_hbgv)dlsym(lapackModule, "zhbgv_");
+    hbgv_ref = (fptr_NL_LAPACK_hbgv)dlsym(lapackModule, "zhbgv_");
   } else {
 	  PRINTF("Invalid typename is passed to %s() function template.\n",
            __FUNCTION__);
   }
   
-  if (HBGV == NULL) {
+  if (hbgv_ref == NULL) {
     PRINTF("Could not get the symbol. Exiting...\n");
 	  closelibs();
     exit(-1);
   }
   integer info_ref = -1;
   
-  HBGV(&jobz, &uplo, &n, &ka, &kb, abrefbuff, &ldab, bbrefbuff, &ldbb,
+  hbgv_ref(&jobz, &uplo, &n, &ka, &kb, abrefbuff, &ldab, bbrefbuff, &ldbb,
         wrefbuff, zrefbuff, &ldz, workrefbuff, rworkrefbuff, &info_ref);
   PRINTF ("info_cpp: %d, info_ref: %d\n", info_cpp, info_ref);
   

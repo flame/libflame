@@ -41,10 +41,10 @@
 template< typename T, typename Ta >
 void heequb_test(int ip)
 {
-  typedef int (*Fptr_NL_LAPACKE_heequb)(char* uplo, integer* n, T* a,
+  typedef int (*fptr_NL_LAPACK_heequb)(char* uplo, integer* n, T* a,
                   integer* lda, Ta* s, Ta* scond, Ta* amax, T* work,
                   integer* info);
-  Fptr_NL_LAPACKE_heequb HEEQUB;
+  fptr_NL_LAPACK_heequb heequb_ref;
   
   // Initialise random number generators with timestamp
   srand (time(NULL));
@@ -139,14 +139,14 @@ void heequb_test(int ip)
   /* Check the typename T passed to this function template and call respective
      function.*/
   if (typeid(T) == typeid(scomplex)) {
-    HEEQUB = (Fptr_NL_LAPACKE_heequb)dlsym(lapackModule, "cheequb_");
+    heequb_ref = (fptr_NL_LAPACK_heequb)dlsym(lapackModule, "cheequb_");
   } else if (typeid(T) == typeid(dcomplex)) {
-    HEEQUB = (Fptr_NL_LAPACKE_heequb)dlsym(lapackModule, "zheequb_");
+    heequb_ref = (fptr_NL_LAPACK_heequb)dlsym(lapackModule, "zheequb_");
   } else {
 	  PRINTF("Invalid typename is passed to %s() function template.\n",
            __FUNCTION__);
   }
-  if (HEEQUB == NULL) {
+  if (heequb_ref == NULL) {
     PRINTF("Could not get the symbol. Exiting...\n");
     closelibs();
     exit (-1);
@@ -154,7 +154,7 @@ void heequb_test(int ip)
   
   integer info_ref = -1;
   // Call C function
-  HEEQUB(&uplo, &n, arefbuff, &lda, srefbuff, &scondref, &amaxref,
+  heequb_ref(&uplo, &n, arefbuff, &lda, srefbuff, &scondref, &amaxref,
         workrefbuff, &info_ref);
   PRINTF ("info_cpp: %d, info_ref: %d\n", info_cpp, info_ref);
   

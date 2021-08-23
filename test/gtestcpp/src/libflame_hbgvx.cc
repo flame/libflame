@@ -41,14 +41,14 @@
 template<typename T, typename Ta>
 void hbgvx_test(int ip)
 {
-  typedef integer (*Fptr_NL_LAPACK_hbgvx)(char* jobz, char* range, char* uplo,
+  typedef integer (*fptr_NL_LAPACK_hbgvx)(char* jobz, char* range, char* uplo,
                       integer* n, integer* ka, integer* kb, T* ab,
                       integer* ldab, T* bb, integer* ldbb, T* q, integer* ldq,
                       Ta* vl, Ta* vu, integer* il, integer* iu, Ta* abstol,
                       integer* m, Ta* w, T* z, integer* ldz, T* work,
                       Ta* rwork, integer* iwork, integer* ifail,
                       integer* info);
-  Fptr_NL_LAPACK_hbgvx HBGVX;
+  fptr_NL_LAPACK_hbgvx hbgvx_ref;
   
   // Initialise random number generators with timestamp
   srand (time(NULL));
@@ -359,21 +359,21 @@ void hbgvx_test(int ip)
   /* Check the typename T passed to this function template and call respective
      function.*/
   if (typeid(T) == typeid(scomplex)) {
-    HBGVX = (Fptr_NL_LAPACK_hbgvx)dlsym(lapackModule, "chbgvx_");
+    hbgvx_ref = (fptr_NL_LAPACK_hbgvx)dlsym(lapackModule, "chbgvx_");
   } else if (typeid(T) == typeid(dcomplex)) {
-    HBGVX = (Fptr_NL_LAPACK_hbgvx)dlsym(lapackModule, "zhbgvx_");
+    hbgvx_ref = (fptr_NL_LAPACK_hbgvx)dlsym(lapackModule, "zhbgvx_");
   } else {
 	  PRINTF("Invalid typename is passed to %s() function template.\n",
            __FUNCTION__);
   }
-  if (NULL == HBGVX) {
+  if (NULL == hbgvx_ref) {
     PRINTF("Could not get the symbol. Exiting...\n");
     closelibs();
     exit (-1);
   }
 
   integer info_ref = -1;
-  HBGVX(&jobz, &range, &uplo, &n, &ka, &kb, abrefbuff, &ldab, bbrefbuff, &ldbb,
+  hbgvx_ref(&jobz, &range, &uplo, &n, &ka, &kb, abrefbuff, &ldab, bbrefbuff, &ldbb,
     qrefbuff, &ldq, &vl, &vu, &il, &iu, &abstol, &mref, wrefbuff, zrefbuff,
     &ldz, workrefbuff, rworkrefbuff, iworkrefbuff, ifailref, &info_ref);
   PRINTF ("info_cpp: %u, info_ref: %u\n", info_cpp, info_ref);

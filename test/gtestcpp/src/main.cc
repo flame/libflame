@@ -19,6 +19,7 @@ void *blasModule = NULL, *lapackModule = NULL;
 // Global arrays to hold test parameters data.
 EIG_paramlist eig_paramslist[NUM_SUB_TESTS];
 Lin_solver_paramlist lin_solver_paramslist[NUM_SUB_TESTS];
+Lin_driver_paramlist lin_driver_paramslist[NUM_SUB_TESTS];
 
 /*! @brief  Read_EIG_params is function used to read and initialize 
       Symmetric Eigen values/vectors routines input data into global array.
@@ -28,7 +29,6 @@ Lin_solver_paramlist lin_solver_paramslist[NUM_SUB_TESTS];
     This function reads parameters needed for Eigen APIs 
     from the config settings file 'EIG_PARAMS.dat' and saves in the 
     'eig_paramslist' structure array
-    
     \endverbatim
 	
  * @param[in] file_name
@@ -84,7 +84,7 @@ void Read_EIG_params(const char *file_name)
   }
 
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%d", &eig_paramslist[index].ldz);
   }
   
@@ -95,22 +95,22 @@ void Read_EIG_params(const char *file_name)
   }
   
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%d", &eig_paramslist[index].lwork);
   }
   
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%d", &eig_paramslist[index].lwork_hbevd);
   }
   
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%d", &eig_paramslist[index].lrwork_hbevd);
   }
   
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%d", &eig_paramslist[index].liwork_hbevd);
   }
   
@@ -121,67 +121,67 @@ void Read_EIG_params(const char *file_name)
   }
   
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%d", &eig_paramslist[index].ldq);
   }
   
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%lf", &eig_paramslist[index].vl);
   }
   
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%lf", &eig_paramslist[index].vu);
   }
   
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%d", &eig_paramslist[index].il);
   }
   
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%d", &eig_paramslist[index].iu);
   }
   
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%lf", &eig_paramslist[index].abstol);
   }
   
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%d", &eig_paramslist[index].ldz_hbgv);
   }
   
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%d", &eig_paramslist[index].sdb);
   }
   
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%d", &eig_paramslist[index].subdb);
   }
   
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%d", &eig_paramslist[index].ldab_hbgv);
   }
   
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%d", &eig_paramslist[index].ldbb);
   }
   
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%d", &eig_paramslist[index].lwork_hbgvd);
   }
   
   fscanf(fp, "%s", &line[0]);
-  for (index=0; index<NUM_SUB_TESTS; index++) {
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%d", &eig_paramslist[index].ldq_hbgvx);
   }
   
@@ -232,6 +232,21 @@ void Read_EIG_params(const char *file_name)
     fscanf(fp, "%d", &eig_paramslist[index].liwork_heevr);
   }
   
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].itype);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].ldb);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lwork_hegv);
+  }
+  
   fclose(fp);
 }
 
@@ -240,9 +255,9 @@ void Read_EIG_params(const char *file_name)
  * @details
  * \b Purpose:
     \verbatim
-    This function reads parameters needed for Linear solver APIs 
-   from the config settings file 'LIN_SLVR.dat' and saves in the 
-   'lin_solver_paramslist' structure array.
+      This function reads parameters needed for Linear solver APIs 
+     from the config settings file 'LIN_SLVR.dat' and saves in the 
+     'lin_solver_paramslist' structure array.
     \endverbatim
 	
  * @param[in] file_name
@@ -255,7 +270,7 @@ void Read_EIG_params(const char *file_name)
 void Read_Lin_solver_params (const char *file_name)
 {
   FILE *fp;
-  int i;
+  int index;
   char line[20];
   char *str;
 
@@ -267,26 +282,131 @@ void Read_Lin_solver_params (const char *file_name)
 
   str = &line[0];
   fscanf(fp, "%s", &line[0]);
-  for (i=0; i<NUM_SUB_TESTS; i++){
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%s", str);
-    lin_solver_paramslist[i].uplo = *str;
+    lin_solver_paramslist[index].uplo = *str;
   }
 
   fscanf(fp, "%s", &line[0]);
-  for (i=0; i<NUM_SUB_TESTS; i++){
-    fscanf(fp, "%d", &lin_solver_paramslist[i].n);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_solver_paramslist[index].n);
   }
 
   fscanf(fp, "%s", &line[0]);
-  for (i=0; i<NUM_SUB_TESTS; i++){
-    fscanf(fp, "%d", &lin_solver_paramslist[i].lda);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_solver_paramslist[index].lda);
   }
 
   fscanf(fp, "%s", &line[0]);
-  for (i=0; i<NUM_SUB_TESTS; i++) {
-    fscanf(fp, "%lf", &lin_solver_paramslist[i].anorm);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%lf", &lin_solver_paramslist[index].anorm);
   }
 
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_solver_paramslist[index].itype);
+  }
+
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_solver_paramslist[index].ldb);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_solver_paramslist[index].nrhs);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_solver_paramslist[index].ldaf);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_solver_paramslist[index].ldx);
+  }
+  
+  fclose(fp);
+}
+
+/*! @brief  Read_Lin_driver_params is function used to read and initialize 
+      Linear driver routines input data into global array.
+ * @details
+ * \b Purpose:
+    \verbatim
+     This function reads parameters needed for Linear driver APIs 
+     from the config settings file 'LIN_DRVR.dat' and saves in the 
+     'lin_driver_paramslist' structure array.
+    \endverbatim
+	
+ * @param[in] file_name
+    file_name is charater array.
+    Used to specify the name of the file to read the data.
+
+ * @return void
+    Nothing.
+ * */
+void Read_Lin_driver_params (const char *file_name)
+{
+  FILE *fp;
+  int index;
+  char line[20];
+  char *str;
+
+  fp = fopen(file_name, "r");
+  if (fp == NULL){
+    printf("Error: Lin driver config file missing. Exiting.. \n");
+    exit(-1);
+  }
+
+  str = &line[0];
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%s", str);
+    lin_driver_paramslist[index].uplo = *str;
+  }
+
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_driver_paramslist[index].n);
+  }
+
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_driver_paramslist[index].nrhs);
+  }
+
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_driver_paramslist[index].lda);
+  }
+
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_driver_paramslist[index].ldb);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_driver_paramslist[index].lwork);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_driver_paramslist[index].lwork_hesv_aa);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_driver_paramslist[index].ltb);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_driver_paramslist[index].lwork_hesv_aa_2stage);
+  }
+  
   fclose(fp);
 }
 
@@ -336,6 +456,9 @@ int main(int argc, char **argv)
   
   // Read linear solver parameters from config file.
   Read_Lin_solver_params("config/LIN_SLVR.dat");
+  
+  // Read linear driver parameters from config file.
+  Read_Lin_driver_params("config/LIN_DRVR.dat");
   
   // Check for opening BLAS & LAPACK library files.
   blasModule = dlopen(NETLIB_BLAS_LIB,RTLD_NOW | RTLD_GLOBAL);

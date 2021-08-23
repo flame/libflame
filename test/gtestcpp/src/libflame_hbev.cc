@@ -40,10 +40,10 @@
 template<typename T, typename Ta>
 void hbev_test(int ip)
 {
-  typedef void (*Fptr_NL_LAPACK_hbev)(char *jobz, char *uplo, int *n,
+  typedef void (*fptr_NL_LAPACK_hbev)(char *jobz, char *uplo, int *n,
                     int *kd, T *ab, int *ldab, Ta *w, T *z,
                     int *ldz, T* work, Ta* rwork, int *info);
-  Fptr_NL_LAPACK_hbev HBEV = NULL;
+  fptr_NL_LAPACK_hbev hbev_ref = NULL;
 
   // Initialise random number generators with timestamp
   srand (time(NULL));
@@ -193,22 +193,22 @@ void hbev_test(int ip)
   /* Check the typename T passed to this function template and call respective
      function.*/
   if (typeid(T) == typeid(scomplex)) {
-    HBEV = (Fptr_NL_LAPACK_hbev)dlsym(lapackModule, "chbev_");
+    hbev_ref = (fptr_NL_LAPACK_hbev)dlsym(lapackModule, "chbev_");
   } else if (typeid(T) == typeid(dcomplex)) {
-    HBEV = (Fptr_NL_LAPACK_hbev)dlsym(lapackModule, "zhbev_");
+    hbev_ref = (fptr_NL_LAPACK_hbev)dlsym(lapackModule, "zhbev_");
   } else {
 	  PRINTF("Invalid typename is passed to %s() function template.\n",
            __FUNCTION__);
   }
   
-  if (HBEV == NULL) {
+  if (hbev_ref == NULL) {
     PRINTF("Could not get the symbol. Exiting...\n");
 	  closelibs();
     exit(-1);
   }
   
   // Call C function - NetLib Lapack API
-  HBEV(&jobz, &uplo, &n, &kd, abrefbuff, &ldab, wrefbuff, 
+  hbev_ref(&jobz, &uplo, &n, &kd, abrefbuff, &ldab, wrefbuff, 
       zrefbuff, &ldz, workrefbuff, rworkrefbuff, &info_ref);
   
   PRINTF ("info_cpp: %d, info_ref: %d\n", info_cpp, info_ref);
@@ -259,7 +259,7 @@ void hbev_test(int ip)
     EXPECT_NEAR(0.0, abs(diff), SYM_EIGEN_THRESHOLD);
   } else {
     PRINTF("Info returned by CPP or C API is not successful(0) to compare" \
-            " differences.\n");
+           " differences.\n");
     EXPECT_FALSE((info_cpp < 0) || (info_ref < 0));
   }
   

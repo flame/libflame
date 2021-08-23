@@ -41,12 +41,12 @@
 template< typename T, typename Ta >
 void hbgvd_test(int ip)
 {
-  typedef integer (*Fptr_NL_LAPACK_hbgvd)(char* jobz, char* uplo, integer* n,
+  typedef integer (*fptr_NL_LAPACK_hbgvd)(char* jobz, char* uplo, integer* n,
                       integer* ka, integer* kb, T* ab, integer* ldab, T* bb,
                       integer* ldbb, Ta* w, T* z, integer* ldz, T* work,
                       integer* lwork, Ta* rwork, integer* lrwork,
                       integer* iwork, integer* liwork, integer* info);
-  Fptr_NL_LAPACK_hbgvd HBGVD = NULL;
+  fptr_NL_LAPACK_hbgvd hbgvd_ref = NULL;
   
   // Initialise random number generators with timestamp.
   srand (time(NULL));
@@ -358,22 +358,22 @@ void hbgvd_test(int ip)
   /* Check the typename T passed to this function template and call respective
      function.*/
   if (typeid(T) == typeid(scomplex)) {
-    HBGVD = (Fptr_NL_LAPACK_hbgvd)dlsym(lapackModule, "chbgvd_");
+    hbgvd_ref = (fptr_NL_LAPACK_hbgvd)dlsym(lapackModule, "chbgvd_");
   } else if (typeid(T) == typeid(dcomplex)) {
-    HBGVD = (Fptr_NL_LAPACK_hbgvd)dlsym(lapackModule, "zhbgvd_");
+    hbgvd_ref = (fptr_NL_LAPACK_hbgvd)dlsym(lapackModule, "zhbgvd_");
   } else {
 	  PRINTF("Invalid typename is passed to %s() function template.\n",
            __FUNCTION__);
   }
   
-  if (HBGVD == NULL) {
+  if (hbgvd_ref == NULL) {
     PRINTF("Could not get the symbol. Exiting...\n");
     closelibs();
     exit (-1);
   }
   
   integer info_ref = -1;
-  HBGVD(&jobz, &uplo, &n, &ka, &kb, abrefbuff, &ldab, bbrefbuff, &ldbb,
+  hbgvd_ref(&jobz, &uplo, &n, &ka, &kb, abrefbuff, &ldab, bbrefbuff, &ldbb,
     wrefbuff, zrefbuff, &ldz, workrefbuff, &lwork_size, rworkrefbuff,
     &lrwork_size, iworkrefbuff, &liwork_size, &info_ref);
   PRINTF ("info_cpp: %d, info_ref: %d\n", info_cpp, info_ref);

@@ -33,3 +33,6 @@ lwork_heevd_2stage 10000 -1
 lwork_heevr 10000 -1
 lrwork_heevr 10000 -1
 liwork_heevr 10000 -1
+itype 1 2
+ldb 20 40
+lwork_heevr 10000 -1

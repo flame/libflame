@@ -245,6 +245,21 @@ typedef struct EIG_paramlist_t {
                             and IWORK arrays, returns these values as the first entries
                             of the WORK, RWORK and IWORK arrays, and no error message
                             related to LWORK or LRWORK or LIWORK is issued by XERBLA.*/
+  // Added for hegst()
+  integer itype; /* ITYPE is INTEGER
+                    = 1: compute inv(U**H)*A*inv(U) or inv(L)*A*inv(L**H);
+                    = 2 or 3: compute U*A*U**H or L**H*A*L.*/
+  integer ldb; /* LDB is INTEGER
+                  The leading dimension of the array B.  LDB >= max(1,N).*/
+  integer lwork_hegv;  /* LWORK is INTEGER
+                          The length of the array WORK.  LWORK >= max(1,2*N-1).
+                          For optimal efficiency, LWORK >= (NB+1)*N,
+                          where NB is the blocksize for CHETRD returned by ILAENV.
+
+                          If LWORK = -1, then a workspace query is assumed; the routine
+                          only calculates the optimal size of the WORK array, returns
+                          this value as the first entry of the WORK array, and no error
+                          message related to LWORK is issued by XERBLA.*/
 } EIG_paramlist;
 
 /* structure to hold Linear solver parameters */
@@ -255,13 +270,85 @@ typedef struct Lin_solver_paramlist_t {
                   as an upper or lower triangular matrix.
                   = 'U':  Upper triangular, form is A = U*D*U**H;
                   = 'L':  Lower triangular, form is A = L*D*L**H.*/
-  int n;         // The order of matrix A; N >= 0.
-  int lda;       // The leading dimension of the array A. LDA >= max(1,N).
+  integer n;         // The order of matrix A; N >= 0.
+  integer lda;       // The leading dimension of the array A. LDA >= max(1,N).
   double anorm; // ANORM is DOUBLE PRECISION. The 1-norm of the original matrix A.
+  // Added for hegs2()
+  integer itype; /* ITYPE is INTEGER
+                    = 1: compute inv(U**H)*A*inv(U) or inv(L)*A*inv(L**H);
+                    = 2 or 3: compute U*A*U**H or L**H *A*L.*/
+  integer ldb; /* LDB is INTEGER
+                  The leading dimension of the array B.  LDB >= max(1,N).*/
+  // Added for herfs()
+  integer nrhs;  /* NRHS is INTEGER
+                    The number of right hand sides, i.e., the number of columns
+                    of the matrices B and X.  NRHS >= 0.*/
+  integer ldaf;  /* LDAF is INTEGER
+                    The leading dimension of the array AF.  LDAF >= max(1,N).*/
+  integer ldx; /* LDX is INTEGER
+                  The leading dimension of the array X.  LDX >= max(1,N).*/
+  
 } Lin_solver_paramlist;
+
+/* structure to hold Linear driver parameters */
+typedef struct Lin_driver_paramlist_t {
+  // Added for hesv()
+  char uplo; /* UPLO is CHARACTER*1
+                = 'U':  Upper triangle of A is stored;
+                = 'L':  Lower triangle of A is stored.*/
+  integer n; /* N is INTEGER
+                The number of linear equations, i.e., the order of the
+                matrix A.  N >= 0.*/
+  integer nrhs;  /* NRHS is INTEGER
+                    The number of right hand sides, i.e., the number of columns
+                    of the matrix B.  NRHS >= 0.*/
+  integer lda; /* LDA is INTEGER
+                  The leading dimension of the array A.  LDA >= max(1,N).*/
+  integer ldb; /* LDB is INTEGER
+                  The leading dimension of the array B.  LDB >= max(1,N).*/
+  integer lwork; /* LWORK is INTEGER
+                    The length of WORK.  LWORK >= 1, and for best performance
+                    LWORK >= max(1,N*NB), where NB is the optimal blocksize for
+                    CHETRF.
+                    for LWORK < N, TRS will be done with Level BLAS 2
+                    for LWORK >= N, TRS will be done with Level BLAS 3
+
+                    If LWORK = -1, then a workspace query is assumed; the routine
+                    only calculates the optimal size of the WORK array, returns
+                    this value as the first entry of the WORK array, and no error
+                    message related to LWORK is issued by XERBLA.*/
+  // Added for hesv_aa()
+  integer lwork_hesv_aa; /* LWORK is INTEGER
+                            The length of WORK.  LWORK >= MAX(1,2*N,3*N-2), and for best 
+                            performance LWORK >= MAX(1,N*NB), where NB is the optimal
+                            blocksize for CHETRF.
+
+                            If LWORK = -1, then a workspace query is assumed; the routine
+                            only calculates the optimal size of the WORK array, returns
+                            this value as the first entry of the WORK array, and no error
+                            message related to LWORK is issued by XERBLA.*/
+  // Added for hesv_aa_2stage()
+  integer ltb; /* LTB is INTEGER
+                  The size of the array TB. LTB >= 4*N, internally
+                  used to select NB such that LTB >= (3*NB+1)*N.
+
+                  If LTB = -1, then a workspace query is assumed; the
+                  routine only calculates the optimal size of LTB, 
+                  returns this value as the first entry of TB, and
+                  no error message related to LTB is issued by XERBLA.*/
+  integer lwork_hesv_aa_2stage;  /* LWORK is INTEGER
+                                    The size of WORK. LWORK >= N, internally used to select NB
+                                    such that LWORK >= N*NB.
+
+                                    If LWORK = -1, then a workspace query is assumed; the
+                                    routine only calculates the optimal size of the WORK array,
+                                    returns this value as the first entry of the WORK array, and
+                                    no error message related to LWORK is issued by XERBLA.*/
+} Lin_driver_paramlist;
 
 extern EIG_paramlist eig_paramslist[NUM_SUB_TESTS];
 extern Lin_solver_paramlist lin_solver_paramslist[NUM_SUB_TESTS];
+extern Lin_driver_paramlist lin_driver_paramslist[NUM_SUB_TESTS];
 
 /*! @brief  Read_EIG_params is function used to read and initialize 
       Symmetric Eigen values/vectors routines input data into global array.
@@ -319,7 +406,7 @@ void Read_Lin_solver_params(const char *file_name);
 void closelibs(void);
 
 // Macro to enable status/error messages of test APIs.
-#define PRINT_MSGS 1
+#define PRINT_MSGS 0
 
 #if PRINT_MSGS 
 #define PRINTF(...) printf(__VA_ARGS__)
@@ -369,5 +456,8 @@ void closelibs(void);
 
 // Threshold value from ctest.in or ztest.in for Linear solver APIs
 #define LIN_SLVR_THRESHOLD 30.0
+
+// Threshold value from glm.in for Generalized linear driver APIs
+#define LIN_DRVR_THRESHOLD 20.0
 
 #endif // MAIN_H

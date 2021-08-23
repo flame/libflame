@@ -35383,7 +35383,7 @@ integer hesv_aa_2stage(char* uplo, integer* n, integer* nrhs, T* a, integer* lda
 
  * @return INTEGER Return value of the function.
  * */
-template< typename T, typename Ta >
+template< typename T >
 integer hesv_rk(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, T* e, integer* ipiv, T* b, integer* ldb, T* work, integer* lwork, integer* info)
 {
   return hesv_rk(uplo, n, nrhs, a, lda, e, ipiv, b, ldb, work, lwork, info);

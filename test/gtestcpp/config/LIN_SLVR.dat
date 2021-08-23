@@ -2,3 +2,8 @@ uplo  L U
 n     10 30
 lda   10 30
 anorm 1.0 0.0
+itype 1 2
+ldb   10 30
+nrhs 5 15
+ldaf 20 40
+ldx 10 30

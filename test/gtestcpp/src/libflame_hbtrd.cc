@@ -41,10 +41,10 @@
 template< typename T, typename Ta >
 void hbtrd_test(int ip)
 {
-  typedef integer (*Fptr_NL_LAPACKE_hbtrd)(char* vect, char* uplo, integer* n,
+  typedef integer (*fptr_NL_LAPACK_hbtrd)(char* vect, char* uplo, integer* n,
                         integer* kd, T* ab, integer* ldab, Ta* d, Ta* e, T* q,
                         integer* ldq, T* work, integer* info);
-  Fptr_NL_LAPACKE_hbtrd HBTRD = NULL;
+  fptr_NL_LAPACK_hbtrd hbtrd_ref = NULL;
   
   // Initialise random number generators with timestamp
   srand (time(NULL));
@@ -195,22 +195,22 @@ void hbtrd_test(int ip)
   /* Check the typename T passed to this function template and call respective
      function.*/
   if (typeid(T) == typeid(scomplex)) {
-    HBTRD = (Fptr_NL_LAPACKE_hbtrd)dlsym(lapackModule, "chbtrd_");
+    hbtrd_ref = (fptr_NL_LAPACK_hbtrd)dlsym(lapackModule, "chbtrd_");
   } else if (typeid(T) == typeid(dcomplex)) {
-    HBTRD = (Fptr_NL_LAPACKE_hbtrd)dlsym(lapackModule, "zhbtrd_");
+    hbtrd_ref = (fptr_NL_LAPACK_hbtrd)dlsym(lapackModule, "zhbtrd_");
   } else {
 	  PRINTF("Invalid typename is passed to %s() function template.\n",
            __FUNCTION__);
   }
   
-  if (HBTRD == NULL) {
+  if (hbtrd_ref == NULL) {
     PRINTF("Could not get the symbol. Exiting...\n");
     closelibs();
     exit (-1);
   }
   
   integer info_ref = -1;
-  HBTRD(&vect, &uplo, &n, &kd, abrefbuff, &ldab, drefbuff, erefbuff,
+  hbtrd_ref(&vect, &uplo, &n, &kd, abrefbuff, &ldab, drefbuff, erefbuff,
     qrefbuff, &ldq, workrefbuff, &info_ref);
   PRINTF ("info_cpp: %d, info_ref: %d\n", info_cpp, info_ref);
   

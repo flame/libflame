@@ -41,13 +41,13 @@
 template< typename T, typename Ta >
 void heevr_test(int ip)
 {
-  typedef int (*Fptr_NL_LAPACK_heevr)(char* jobz, char* range, char* uplo,
+  typedef int (*fptr_NL_LAPACK_heevr)(char* jobz, char* range, char* uplo,
                   integer* n, T* a, integer* lda, Ta*  vl, Ta*  vu,
                   integer* il, integer* iu, Ta*  abstol, integer* m, Ta* w,
                   T* z, integer* ldz, integer* isuppz, T* work,
                   integer* lwork, Ta* rwork, integer* lrwork, integer* iwork,
                   integer* liwork, integer* info);
-  Fptr_NL_LAPACK_heevr HEEVR;
+  fptr_NL_LAPACK_heevr heevr_ref;
   
   // Initialise random number generators with timestamp
   srand (time(NULL));
@@ -356,22 +356,22 @@ void heevr_test(int ip)
 
   // Call C function
   if (typeid(T) == typeid(scomplex)) {
-    HEEVR = (Fptr_NL_LAPACK_heevr)dlsym(lapackModule, "cheevr_");
+    heevr_ref = (fptr_NL_LAPACK_heevr)dlsym(lapackModule, "cheevr_");
   } else if (typeid(T) == typeid(dcomplex)) {
-    HEEVR = (Fptr_NL_LAPACK_heevr)dlsym(lapackModule, "zheevr_");
+    heevr_ref = (fptr_NL_LAPACK_heevr)dlsym(lapackModule, "zheevr_");
   } else {
 	  PRINTF("Invalid typename is passed to %s() function template.\n",
            __FUNCTION__);
   }
   
-  if (HEEVR == NULL) {
+  if (heevr_ref == NULL) {
     PRINTF("Could not get the symbol. Exiting...\n");
 	  closelibs();
     exit(-1);
   }
   
   integer info_ref = -1;
-  HEEVR(&jobz, &range, &uplo, &n, arefbuff, &lda, &vl, &vu, &il, &iu, &abstol,
+  heevr_ref(&jobz, &range, &uplo, &n, arefbuff, &lda, &vl, &vu, &il, &iu, &abstol,
         &mref, wrefbuff, zrefbuff, &ldz, isuppzref, workrefbuff, &lwork_size,
         rworkrefbuff, &lrwork_size, iworkrefbuff, &liwork_size, &info_ref);
   PRINTF ("info_cpp: %d, info_ref: %d\n", info_cpp, info_ref);
