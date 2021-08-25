@@ -4,7 +4,7 @@ target_sources("${PROJECT_NAME}"
 ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Svd_ext.h
 ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Svd_ext_u_unb_var1.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dbdsqr.c
-${CMAKE_CURRENT_SOURCE_DIR}/lapack_dgesvd.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dgebrd.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dgebd2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dgelqf.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dgesvd.c
