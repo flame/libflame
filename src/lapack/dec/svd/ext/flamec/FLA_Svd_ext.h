@@ -52,6 +52,10 @@ int lapack_dormlq(char *side, char *trans, integer *m, integer *n,
 int lapack_dormqr(char *side, char *trans, integer *m, integer *n, 
 	          integer *k, doublereal *a, integer *lda, doublereal *tau, doublereal *
 	          c__, integer *ldc, doublereal *work, integer *lwork, integer *info);
+int  dgesvd2x2(   char *jobu, char *jobvt, integer *m, integer *n,
+                  doublereal *a, integer *lda, doublereal *s, doublereal *u, integer *
+                  ldu, doublereal *vt, integer *ldvt, doublereal *work, integer *lwork,
+                  integer *info);
 
 
 

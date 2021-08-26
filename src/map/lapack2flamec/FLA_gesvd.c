@@ -63,10 +63,13 @@
 
 
 #define LAPACK_gesvd_body_d(prefix)                                                                                \
-  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                                                                    \
-  lapack_dgesvd( jobu, jobv, m, n, buff_A, ldim_A, buff_s, buff_U, ldim_U,buff_Vh , ldim_Vh, buff_w, lwork,info ); \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                                                                \
+  if(*m==2 && *n==2)  {                     \
+  dgesvd2x2( jobu, jobv, m, n, buff_A, ldim_A, buff_s, buff_U, ldim_U,buff_Vh , ldim_Vh, buff_w, lwork,info );} \
+  else {                                                                                \
+  lapack_dgesvd ( jobu, jobv, m, n, buff_A, ldim_A, buff_s, buff_U, ldim_U,buff_Vh , ldim_Vh, buff_w, lwork,info );}   \
   AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                                                                     \
-  return *info;                                                                                                        
+  return *info;                                                                                                    
 
 #define LAPACK_gesvd_body(prefix)                                       \
   AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \

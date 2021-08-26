@@ -16,5 +16,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dorgqr.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dormbr.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dormlq.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dormqr.c
+${CMAKE_CURRENT_SOURCE_DIR}/dgesvd2x2.c
 
 	)
