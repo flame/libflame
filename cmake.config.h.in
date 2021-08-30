@@ -1,6 +1,7 @@
-
+#ifdef FLA_ENABLE_EXTRA_SYMBOLS
 #define F77_FUNC(name,NAME) name ## _
 #define F77_FUNC_(name,NAME) name ## _
+#endif
 
 // --- General options ---------------------------------------------------------
 
