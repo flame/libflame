@@ -3,7 +3,7 @@
 #include "FLA_f2c.h" /* > \brief \b CLARTG generates a plane rotation with real cosine and complex sine. */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
-/* http://www.netlib.org/lapack/explore-html/ */
+/* http://www.netlib.org/lapack/explore-html/  */
 /* > \htmlonly */
 /* > Download CLARTG + dependencies */
 /* > <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/clartg. f"> */

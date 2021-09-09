@@ -12,6 +12,37 @@
 
 // --- Define Fortran name-mangling macro --------------------------
 
+
+#define F77_cgetsqrhrt F77_FUNC( cgetsqrhrt , CGETSQRHRT )
+#define F77_claqz0 F77_FUNC( claqz0 , CLAQZ0 )
+#define F77_claqz1 F77_FUNC( claqz1 , CLAQZ1 )
+#define F77_claqz2 F77_FUNC( claqz2 , CLAQZ2 )
+#define F77_claqz3 F77_FUNC( claqz3 , CLAQZ3 )
+#define F77_clarfb_gett F77_FUNC( clarfb_gett , CLARFB_GETT )
+#define F77_cungtsqr_row F77_FUNC( cungtsqr_row , CUNGTSQR_ROW )
+#define F77_dgetsqrhrt F77_FUNC( dgetsqrhrt , DGETSQRHRT )
+#define F77_dlaqz0 F77_FUNC( dlaqz0 , DLAQZ0 )
+#define F77_dlaqz1 F77_FUNC( dlaqz1 , DLAQZ1 )
+#define F77_dlaqz2 F77_FUNC( dlaqz2 , DLAQZ2 )
+#define F77_dlaqz3 F77_FUNC( dlaqz3 , DLAQZ3 )
+#define F77_dlaqz4 F77_FUNC( dlaqz4 , DLAQZ4 )
+#define F77_dlarfb_gett F77_FUNC( dlarfb_gett , DLARFB_GETT )
+#define F77_dorgtsqr_row F77_FUNC( dorgtsqr_row , DORGTSQR_ROW )
+#define F77_sgetsqrhrt F77_FUNC( sgetsqrhrt , SGETSQRHRT )
+#define F77_slaqz0 F77_FUNC( slaqz0 , SLAQZ0 )
+#define F77_slaqz1 F77_FUNC( slaqz1 , SLAQZ1 )
+#define F77_slaqz2 F77_FUNC( slaqz2 , SLAQZ2 )
+#define F77_slaqz3 F77_FUNC( slaqz3 , SLAQZ3 )
+#define F77_slaqz4 F77_FUNC( slaqz4 , SLAQZ4 )
+#define F77_slarfb_gett F77_FUNC( slarfb_gett , SLARFB_GETT )
+#define F77_sorgtsqr_row F77_FUNC( sorgtsqr_row , SORGTSQR_ROW )
+#define F77_zgetsqrhrt F77_FUNC( zgetsqrhrt , ZGETSQRHRT )
+#define F77_zlaqz0 F77_FUNC( zlaqz0 , ZLAQZ0 )
+#define F77_zlaqz1 F77_FUNC( zlaqz1 , ZLAQZ1 )
+#define F77_zlaqz2 F77_FUNC( zlaqz2 , ZLAQZ2 )
+#define F77_zlaqz3 F77_FUNC( zlaqz3 , ZLAQZ3 )
+#define F77_zlarfb_gett F77_FUNC( zlarfb_gett , ZLARFB_GETT )
+#define F77_zungtsqr_row F77_FUNC( zungtsqr_row , ZUNGTSQR_ROW )
 #define F77_cbbcsd F77_FUNC( cbbcsd , CBBCSD )
 #define F77_cbdsqr F77_FUNC( cbdsqr , CBDSQR )
 #define F77_cgbbrd F77_FUNC( cgbbrd , CGBBRD )
@@ -2053,6 +2084,37 @@
 #define F77_dormhr F77_FUNC( dormhr, DORMHR )
 
 // Function Prototypes declaration
+
+int F77_cgetsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, complex *a, integer *lda, complex *t, integer *ldt, complex *work, integer *lwork, integer *info);
+int F77_claqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, complex *alpha, complex *beta, complex *q, integer *ldq, complex *z__, integer *ldz, complex *work, integer *lwork, real * rwork, integer *rec, integer *info);
+int F77_claqz1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, integer *nq, integer *qstart, complex *q, integer *ldq, integer *nz, integer *zstart, complex *z__, integer * ldz);
+int F77_claqz2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, complex *a, integer *lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, integer *ns, integer *nd, complex *alpha, complex *beta, complex *qc, integer *ldqc, complex *zc, integer *ldzc, complex *work, integer *lwork, real *rwork, integer *rec, integer * info);
+int F77_claqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, complex *alpha, complex *beta, complex *a, integer * lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, complex *qc, integer *ldqc, complex *zc, integer *ldzc, complex *work, integer *lwork, integer *info);
+int F77_clarfb_gett(char *ident, integer *m, integer *n, integer *k, complex *t, integer *ldt, complex *a, integer *lda, complex *b, integer *ldb, complex *work, integer *ldwork);
+int F77_cungtsqr_row(integer *m, integer *n, integer *mb, integer *nb, complex *a, integer *lda, complex *t, integer *ldt, complex *work, integer *lwork, integer *info);
+int F77_dgetsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, doublereal *a, integer *lda, doublereal * t, integer *ldt, doublereal *work, integer *lwork, integer *info);
+int F77_dlaqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *alphar, doublereal *alphai, doublereal *beta, doublereal *q, integer *ldq, doublereal *z__, integer *ldz, doublereal *work, integer *lwork, integer *rec, integer *info);
+int F77_dlaqz1(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *sr1, doublereal *sr2, doublereal *si, doublereal *beta1, doublereal *beta2, doublereal *v);
+int F77_dlaqz2(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, doublereal *a, integer *lda, doublereal *b, integer *ldb, integer *nq, integer *qstart, doublereal *q, integer *ldq, integer *nz, integer *zstart, doublereal *z__, integer *ldz);
+int F77_dlaqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *q, integer * ldq, doublereal *z__, integer *ldz, integer *ns, integer *nd, doublereal *alphar, doublereal *alphai, doublereal *beta, doublereal * qc, integer *ldqc, doublereal *zc, integer *ldzc, doublereal *work, integer *lwork, integer *rec, integer *info);
+int F77_dlaqz4(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, doublereal *sr, doublereal *si, doublereal *ss, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal * q, integer *ldq, doublereal *z__, integer *ldz, doublereal *qc, integer *ldqc, doublereal *zc, integer *ldzc, doublereal *work, integer *lwork, integer *info);
+int F77_dlarfb_gett(char *ident, integer *m, integer *n, integer *k, doublereal *t, integer *ldt, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *work, integer *ldwork);
+int F77_dorgtsqr_row(integer *m, integer *n, integer *mb, integer *nb, doublereal *a, integer *lda, doublereal *t, integer *ldt, doublereal *work, integer *lwork, integer *info);
+int F77_sgetsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, real *a, integer *lda, real *t, integer * ldt, real *work, integer *lwork, integer *info);
+int F77_slaqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, real *a, integer *lda, real *b, integer *ldb, real *alphar, real *alphai, real *beta, real *q, integer *ldq, real *z__, integer *ldz, real *work, integer *lwork, integer *rec, integer *info);
+int F77_slaqz1(real *a, integer *lda, real *b, integer *ldb, real *sr1, real *sr2, real *si, real *beta1, real *beta2, real *v);
+int F77_slaqz2(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, real *a, integer *lda, real * b, integer *ldb, integer *nq, integer *qstart, real *q, integer *ldq, integer *nz, integer *zstart, real *z__, integer *ldz);
+int F77_slaqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, real *a, integer *lda, real *b, integer *ldb, real *q, integer *ldq, real *z__, integer *ldz, integer *ns, integer *nd, real *alphar, real *alphai, real *beta, real *qc, integer *ldqc, real *zc, integer *ldzc, real * work, integer *lwork, integer *rec, integer *info);
+int F77_slaqz4(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, real *sr, real *si, real *ss, real *a, integer *lda, real *b, integer *ldb, real *q, integer *ldq, real *z__, integer * ldz, real *qc, integer *ldqc, real *zc, integer *ldzc, real *work, integer *lwork, integer *info);
+int F77_slarfb_gett(char *ident, integer *m, integer *n, integer *k, real *t, integer *ldt, real *a, integer *lda, real *b, integer *ldb, real *work, integer *ldwork);
+int F77_sorgtsqr_row(integer *m, integer *n, integer *mb, integer *nb, real *a, integer *lda, real *t, integer *ldt, real *work, integer *lwork, integer *info);
+int F77_zgetsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, doublecomplex *work, integer *lwork, integer *info);
+int F77_zlaqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * rec, integer *info);
+int F77_zlaqz1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, doublecomplex *a, integer * lda, doublecomplex *b, integer *ldb, integer *nq, integer *qstart, doublecomplex *q, integer *ldq, integer *nz, integer *zstart, doublecomplex *z__, integer *ldz);
+int F77_zlaqz2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, integer *ns, integer * nd, doublecomplex *alpha, doublecomplex *beta, doublecomplex *qc, integer *ldqc, doublecomplex *zc, integer *ldzc, doublecomplex *work, integer *lwork, doublereal *rwork, integer *rec, integer *info);
+int F77_zlaqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, doublecomplex *alpha, doublecomplex *beta, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, doublecomplex *qc, integer *ldqc, doublecomplex *zc, integer *ldzc, doublecomplex *work, integer *lwork, integer *info);
+int F77_zlarfb_gett(char *ident, integer *m, integer *n, integer *k, doublecomplex *t, integer *ldt, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer * ldwork);
+int F77_zungtsqr_row(integer *m, integer *n, integer *mb, integer *nb, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, doublecomplex *work, integer *lwork, integer *info);
 double F77_dla_gbrcond(char* trans, integer* n, integer* kl, integer* ku, double* ab, integer* ldab, double* afb, integer* ldafb, integer* ipiv, integer* cmode, double* c, integer* info, double* work, integer* iwork);
 double F77_dla_gbrpvgrw(integer* n, integer* kl, integer* ku, integer* ncols, double* ab, integer* ldab, double* afb, integer* ldafb);
 double F77_dla_gercond(char* trans, integer* n, double* a, integer* lda, double* af, integer* ldaf, integer* ipiv, integer* cmode, double* c, integer* info, double* work, integer* iwork);

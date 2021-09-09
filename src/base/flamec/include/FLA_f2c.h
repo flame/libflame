@@ -315,6 +315,37 @@ typedef doublereal E_f;	/* real function with -R not specified */
 #ifndef FLA_ENABLE_EXTRA_SYMBOLS
 #if (defined(_WIN32) || defined(_WIN64))
 #ifdef UPPER
+#define  cgetsqrhrt_  CGETSQRHRT
+#define  claqz0_  CLAQZ0
+#define  claqz1_  CLAQZ1
+#define  claqz2_  CLAQZ2
+#define  claqz3_  CLAQZ3
+#define  clarfb_gett_  CLARFB_GETT
+#define  cungtsqr_row_  CUNGTSQR_ROW
+#define  dgetsqrhrt_  DGETSQRHRT
+#define  dlaqz0_  DLAQZ0
+#define  dlaqz1_  DLAQZ1
+#define  dlaqz2_  DLAQZ2
+#define  dlaqz3_  DLAQZ3
+#define  dlaqz4_  DLAQZ4
+#define  dlarfb_gett_  DLARFB_GETT
+#define  dorgtsqr_row_  DORGTSQR_ROW
+#define  sgetsqrhrt_  SGETSQRHRT
+#define  slaqz0_  SLAQZ0
+#define  slaqz1_  SLAQZ1
+#define  slaqz2_  SLAQZ2
+#define  slaqz3_  SLAQZ3
+#define  slaqz4_  SLAQZ4
+#define  slarfb_gett_  SLARFB_GETT
+#define  sorgtsqr_row_  SORGTSQR_ROW
+#define  zgetsqrhrt_  ZGETSQRHRT
+#define  zlaqz0_  ZLAQZ0
+#define  zlaqz1_  ZLAQZ1
+#define  zlaqz2_  ZLAQZ2
+#define  zlaqz3_  ZLAQZ3
+#define  zlarfb_gett_  ZLARFB_GETT
+#define	 zungtsqr_row_  ZUNGTSQR_ROW
+
 #define  isamax_   ISAMAX     
 #define  idamax_   IDAMAX     
 #define  icamax_   ICAMAX     
@@ -2457,6 +2488,37 @@ typedef doublereal E_f;	/* real function with -R not specified */
 #define cgetrfnpi_               CGETRFNPI
 #define zgetrfnpi_               ZGETRFNPI
 #else
+#define  cgetsqrhrt_  cgetsqrhrt
+#define  claqz0_  claqz0
+#define  claqz1_  claqz1
+#define  claqz2_  claqz2
+#define  claqz3_  claqz3
+#define  clarfb_gett_  clarfb_gett
+#define  cungtsqr_row_  cungtsqr_row
+#define  dgetsqrhrt_  dgetsqrhrt
+#define  dlaqz0_  dlaqz0
+#define  dlaqz1_  dlaqz1
+#define  dlaqz2_  dlaqz2
+#define  dlaqz3_  dlaqz3
+#define  dlaqz4_  dlaqz4
+#define  dlarfb_gett_  dlarfb_gett
+#define  dorgtsqr_row_  dorgtsqr_row
+#define  sgetsqrhrt_  sgetsqrhrt
+#define  slaqz0_  slaqz0
+#define  slaqz1_  slaqz1
+#define  slaqz2_  slaqz2
+#define  slaqz3_  slaqz3
+#define  slaqz4_  slaqz4
+#define  slarfb_gett_  slarfb_gett
+#define  sorgtsqr_row_  sorgtsqr_row
+#define  zgetsqrhrt_  zgetsqrhrt
+#define  zlaqz0_  zlaqz0
+#define  zlaqz1_  zlaqz1
+#define  zlaqz2_  zlaqz2
+#define  zlaqz3_  zlaqz3
+#define  zlarfb_gett_  zlarfb_gett
+#define	 zungtsqr_row_  zungtsqr_row
+
 #define  isamax_   isamax     
 #define  idamax_   idamax     
 #define  icamax_   icamax     
