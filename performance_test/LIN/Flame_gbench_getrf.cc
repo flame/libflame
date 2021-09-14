@@ -1,18 +1,10 @@
-// Standard headers
-#include <cstdio>
-#include <iostream>
-#include <string>
-#include <cstring>
-#include <cassert>
-#include <memory>
-#include <math.h>
-#include <stdio.h>
+// Gbench headers
 #include "benchmark/benchmark.h"
 #include "gtest/gtest.h"
 
-// Library headers
+// Test suite headers
 #include "../Flame_gbench_main.h"
-#include "lapack.h"
+#include "../Flame_gbench_aux.h"
 
 using namespace std;
 
@@ -21,80 +13,74 @@ using namespace std;
    if (A!=NULL){ \
       free(A); \
    }\
-   if (b!=NULL){ \
-      free(b);  \
-   } \
    if (ipiv!=NULL){ \
       free(ipiv);  \
-   } 
+   }
 
-class getrf_double_parameters{
-   public:  
-      int m, n, nrhs, lda, ldb, info, inforef;
-      void *hModule, *dModule;
+/* Begin getrf_parameters  class definition */
+template <class T>
+
+class getrf_parameters{
+   public:
+      int m, n, lda, info;
+      int forced_loop_count;
 
       /* Local arrays */
-      double *A, *b;
+      T *A;
       int *ipiv, *ipivref;
-      double norm, normref; 
-   public: 
-      getrf_double_parameters ( int num_row, int num_col, int lda_, int ldb_);
-      ~getrf_double_parameters ();   
-    
-};  /* end of getrf_double_parameters  class definition */
-
-
-
-/* Constructor definition  getrf_double_parameters */
-getrf_double_parameters:: getrf_double_parameters ( int nrow, int ncol, int lda_, int ldb_)
-   {
-      int i, j;
+      T norm;
+   public:
+    ~getrf_parameters ();
+    getrf_parameters ( int nrow, int ncol, int lda_ )
+    {
       m = nrow;
       n = ncol; // set test matrix size
-      nrhs = 1;
       lda = lda_;
-      ldb = ldb_;
-      
-      A = (double *)malloc(m*n*sizeof(double)) ;
-      b = (double *)malloc(m*nrhs*sizeof(double)) ;
-      ipiv = (int *)malloc(m*sizeof(int));        
-      if ((ipiv==NULL) || (A==NULL) || (b==NULL)){
-        printf("error of memory allocation. Exiting ...\n");
-        free(A); free(b); free(ipiv);
-        exit(0); 
-      }
-      
-      /* Initialization of input matrices */
-      for( i = 0; i < m; i++ ) {
-         for( j = 0; j < n; j++ ) {
-           A[i+j*lda] = ((double) rand()) / ((double) RAND_MAX) - 0.5;
-         }
-      }
-      for(i=0;i<m*nrhs;i++) {
-         b[i] = ((double) rand()) / ((double) RAND_MAX) - 0.5;
-      }
-          
-   } /* end of Constructor  */
+      forced_loop_count = 1;
 
-/* Destructor definition  'getrf_double_parameters' class  */
-getrf_double_parameters:: ~getrf_double_parameters ()
+      if ( (m > FLAME_BIG_MATRIX_SIZE) || (n > FLAME_BIG_MATRIX_SIZE )){
+         forced_loop_count = FLAME_GBENCH_FORCED_ITERATION_COUNT;
+      }
+
+    /* Memory allocation of the buffers */
+      A = (T *)malloc(m*n*sizeof(T)) ;
+      ipiv = (int *)malloc(m*sizeof(int));
+      if ((ipiv==NULL) || (A==NULL) ){
+        printf("error of memory allocation. Exiting ...\n");
+        getrf_parameters_free();
+        exit(0);
+      }
+    /* Initialization of input Buffers */
+      Flame_gbench_init_buffer_rand( A, m*n );
+
+    } /* end of Constructor  */
+};  /* end of getrf_parameters  class definition */
+
+
+
+/* Destructor definition  'getrf_parameters' class  */
+template <class T>
+getrf_parameters<T>:: ~getrf_parameters ()
 {
-   //printf("\n buffer free happening \n");
+#if FLAME_TEST_VERBOSE
+   printf(" getrf_parameters object: destructor invoked. \n");
+#endif
    getrf_parameters_free ();
 }
 
-
-class dgetrf_test : public ::benchmark::Fixture {
+/* Fixture definition  */
+template <class T>
+class getrf_test : public ::benchmark::Fixture {
  public:
    int m,n, lda, ldb;
-   std::unique_ptr<getrf_double_parameters> data;
+   std::unique_ptr<getrf_parameters<T>> data;
 
  void SetUp(const ::benchmark::State& state) BENCHMARK_OVERRIDE {
     m = static_cast<size_t>(state.range(0));
     n = static_cast<size_t>(state.range(1));
-	
+
     assert(data.get() == nullptr);
-    data.reset(new getrf_double_parameters(m,n,m,n));
+    data.reset(new getrf_parameters<T>(m,n,m));
 
   }
 
@@ -103,65 +89,111 @@ class dgetrf_test : public ::benchmark::Fixture {
       data.reset();
   }
 
-  ~dgetrf_test() { assert(data == nullptr); }
+  ~getrf_test() { assert(data == nullptr); }
 
 };
 
-BENCHMARK_DEFINE_F(dgetrf_test, dgetrf1)(benchmark::State &state) {
+// Customized argument generator for getrf API
+static void CustomArguments(benchmark::internal::Benchmark* b) {
+   if (lin_solver_paramslist[0].mode == MODE_RANGE) {
+       for (int i = 0; i < lin_solver_paramslist[0].num_tests ; i++){
+           b->ArgsProduct({
+              {benchmark::CreateDenseRange( lin_solver_paramslist[i].m_range_start,
+                                            lin_solver_paramslist[i].m_range_end,
+                                            lin_solver_paramslist[i].m_range_step_size)} ,
+
+              {benchmark::CreateDenseRange( lin_solver_paramslist[i].n_range_start,
+                                            lin_solver_paramslist[i].n_range_end,
+                                            lin_solver_paramslist[i].n_range_step_size)}
+              });
+       }
+    }
+
+    if (lin_solver_paramslist[0].mode == MODE_DISCRETE) {
+       for (int i = 0; i < lin_solver_paramslist[0].num_tests ; i++)
+       {
+           b->Args({lin_solver_paramslist[i].m, lin_solver_paramslist[i].n});
+       }
+    }
+
+    if (lin_solver_paramslist[0].mode == MODE_COMBINATIONAL) {
+       for (int i = 0; i < lin_solver_paramslist[0].num_tests ; i++)
+       {
+          for (int j = 0; j < lin_solver_paramslist[0].num_tests ; j++){
+            b->Args({lin_solver_paramslist[i].m, lin_solver_paramslist[j].n});
+          }
+       }
+    }
+}
+
+/* Template Fixture for dgetrf API  */
+BENCHMARK_TEMPLATE_DEFINE_F(getrf_test, dgetrf, double)(benchmark::State &state) {
   assert(data.get() != nullptr);
-  int forced_loop_count = 1;
-  
-  if ( (data->m > FLAME_BIG_MATRIX_SIZE) || (data->n > FLAME_BIG_MATRIX_SIZE )){
-	  forced_loop_count = FLAME_GBENCH_FORCED_ITERATION_COUNT;
-  }
-  
-  //printf(" data->m: %d ,data->n : %d lda: %d, ldb: %d\n", data->m,data->n, data->lda, data->ldb);
 
   for (auto _ : state) {
-	for (int i=0; i<forced_loop_count; i++) {
-		/* Invoke the getrf API for benchmarking */  
-		dgetrf_(&data->m, &data->n,  data->A, &data->lda, data->ipiv, &data->info);
-		//state.PauseTiming();
+    for (int i=0; i<data->forced_loop_count; i++) {
+        /* Invoke the getrf API for benchmarking */
+        dgetrf_(&data->m, &data->n,  data->A, &data->lda, data->ipiv, &data->info);
 
-		if( data->info < 0 ) {
-			printf( "\n warning: The %d th argument dgetrf is wrong\n", data->info );
-		}
-		//state.ResumeTiming();
-	}
+        if( data->info < 0 ) {
+            printf( "\n warning: The %d th argument dgetrf is wrong\n", data->info );
+        }
+    }
   }
 }
 
-static void CustomArguments(benchmark::internal::Benchmark* b) {
-	if (lin_solver_paramslist[0].mode == MODE_RANGE) {
-	   for (int i = 0; i < lin_solver_paramslist[0].num_tests ; i++){
-	       b->ArgsProduct({ 
-              {benchmark::CreateDenseRange( lin_solver_paramslist[i].m_range_start, 
-											lin_solver_paramslist[i].m_range_end, 
-											lin_solver_paramslist[i].m_range_step_size)} , 
+BENCHMARK_REGISTER_F(getrf_test, dgetrf)->Apply(CustomArguments);
 
-			  {benchmark::CreateDenseRange( lin_solver_paramslist[i].n_range_start, 
-											lin_solver_paramslist[i].n_range_end, 
-											lin_solver_paramslist[i].n_range_step_size)} 
-			  });
-       }
-	}
-	if (lin_solver_paramslist[0].mode == MODE_DISCRETE) {
-	   for (int i = 0; i < lin_solver_paramslist[0].num_tests ; i++)
-	   {
-		   b->Args({lin_solver_paramslist[i].m, lin_solver_paramslist[i].n});
-	   }
-	}
+/* Template Fixture for sgettrf API  */
+BENCHMARK_TEMPLATE_DEFINE_F(getrf_test, sgetrf, float)(benchmark::State &state) {
+  assert(data.get() != nullptr);
 
-	if (lin_solver_paramslist[0].mode == MODE_COMBINATIONAL) {
-	   for (int i = 0; i < lin_solver_paramslist[0].num_tests ; i++)
-	   {
-		  for (int j = 0; j < lin_solver_paramslist[0].num_tests ; j++){
-			b->Args({lin_solver_paramslist[i].m, lin_solver_paramslist[j].n});
-		  }
-	   }
-	}
+  for (auto _ : state) {
+    for (int i=0; i<data->forced_loop_count; i++) {
+        /* Invoke the getrf API for benchmarking */
+        sgetrf_(&data->m, &data->n,  data->A, &data->lda, data->ipiv, &data->info);
 
+        if( data->info < 0 ) {
+            printf( "\n warning: The %d th argument sgetrf is wrong\n", data->info );
+        }
+    }
+  }
 }
 
-BENCHMARK_REGISTER_F(dgetrf_test, dgetrf1)->Apply(CustomArguments); 
+BENCHMARK_REGISTER_F(getrf_test, sgetrf)->Apply(CustomArguments);
 
+/* Template Fixture for cgetrf API  */
+BENCHMARK_TEMPLATE_DEFINE_F(getrf_test, cgetrf, float _Complex)(benchmark::State &state) {
+   assert(data.get() != nullptr);
+
+  for (auto _ : state) {
+    for (int i=0; i<data->forced_loop_count; i++) {
+        /* Invoke the getrf API for benchmarking */
+        cgetrf_(&data->m, &data->n,  data->A, &data->lda, data->ipiv, &data->info);
+
+        if( data->info < 0 ) {
+            printf( "\n warning: The %d th argument cgetrf is wrong\n", data->info );
+        }
+    }
+  }
+}
+
+BENCHMARK_REGISTER_F(getrf_test, cgetrf)->Apply(CustomArguments);
+
+/* Template Fixture for zgetrf API  */
+BENCHMARK_TEMPLATE_DEFINE_F(getrf_test, zgetrf, double _Complex)(benchmark::State &state) {
+  assert(data.get() != nullptr);
+
+  for (auto _ : state) {
+    for (int i=0; i<data->forced_loop_count; i++) {
+        /* Invoke the getrf API for benchmarking */
+        zgetrf_(&data->m, &data->n,  data->A, &data->lda, data->ipiv, &data->info);
+
+        if( data->info < 0 ) {
+            printf( "\n warning: The %d th argument zgetrf is wrong\n", data->info );
+        }
+    }
+  }
+}
+
+BENCHMARK_REGISTER_F(getrf_test, zgetrf)->Apply(CustomArguments);
