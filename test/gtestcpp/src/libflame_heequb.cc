@@ -47,7 +47,7 @@ void heequb_test(int ip)
   fptr_NL_LAPACK_heequb heequb_ref;
   
   // Initialise random number generators with timestamp
-  srand (time(NULL));
+  srand (SRAND_SEED_VALUE);
   
   /* UPLO is CHARACTER*1
           = 'U':  Upper triangle of A is stored;

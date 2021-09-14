@@ -47,7 +47,7 @@ void hegv_test(int ip)
   fptr_NL_LAPACK_hegv hegv_ref = NULL;
   
   // Initialise random number generators with timestamp
-  srand (time(NULL));
+  srand (SRAND_SEED_VALUE);
   
   /* ITYPE is INTEGER
           Specifies the problem type to be solved:

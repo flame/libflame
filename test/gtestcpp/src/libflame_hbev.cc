@@ -46,7 +46,7 @@ void hbev_test(int ip)
   fptr_NL_LAPACK_hbev hbev_ref = NULL;
 
   // Initialise random number generators with timestamp
-  srand (time(NULL));
+  srand (SRAND_SEED_VALUE);
   
   /* JOBZ is CHARACTER*1
           = 'N':  Compute eigenvalues only;

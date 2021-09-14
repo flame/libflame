@@ -48,7 +48,7 @@ void hegv_2stage_test(int ip)
                       Ta* rwork, integer* info);
   fptr_NL_LAPACK_hegv_2stage hegv_2stage_ref = NULL;
   
-  srand (time(NULL));
+  srand (SRAND_SEED_VALUE);
   
   /* ITYPE is INTEGER
           Specifies the problem type to be solved:
@@ -233,7 +233,7 @@ void hegv_2stage_test(int ip)
   
   hegv_2stage_ref(&itype, &jobz, &uplo, &n, arefbuff, &lda, brefbuff, &ldb,
               wrefbuff, workrefbuff, &lwork_size, rworkrefbuff, &info_ref);
-  printf ("info_cpp: %d, info_ref: %d\n", info_cpp, info_ref);
+  PRINTF ("info_cpp: %d, info_ref: %d\n", info_cpp, info_ref);
   
   if ((info_cpp >= 0) && (info_ref >= 0)) {
     #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1) && \

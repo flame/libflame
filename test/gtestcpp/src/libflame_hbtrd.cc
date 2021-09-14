@@ -47,7 +47,7 @@ void hbtrd_test(int ip)
   fptr_NL_LAPACK_hbtrd hbtrd_ref = NULL;
   
   // Initialise random number generators with timestamp
-  srand (time(NULL));
+  srand (SRAND_SEED_VALUE);
   
   /* VECT is CHARACTER*1
           = 'N':  do not form Q;

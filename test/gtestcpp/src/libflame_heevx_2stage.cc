@@ -50,7 +50,7 @@ void heevx_2stage_test(int ip)
   fptr_NL_LAPACK_heevx_2stage heevx_2stage_ref;
   
   // Initialise random number generators with timestamp
-  srand (time(NULL));
+  srand (SRAND_SEED_VALUE);
   
   /* JOBZ is CHARACTER*1
           = 'N':  Compute eigenvalues only;

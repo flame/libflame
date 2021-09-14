@@ -405,6 +405,11 @@ void Read_Lin_solver_params(const char *file_name);
  * */
 void closelibs(void);
 
+/* Macro to store seed value for srand().
+   1 - default value to get deterministic random values on multiple runs
+   of rand()*/
+#define SRAND_SEED_VALUE 1
+
 // Macro to enable status/error messages of test APIs.
 #define PRINT_MSGS 0
 

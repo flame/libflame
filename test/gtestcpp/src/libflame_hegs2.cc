@@ -45,7 +45,7 @@ void hegs2_test(int ip)
   fptr_NL_LAPACK_hegs2 hegs2_ref = NULL;
   
   // Initialise random number generators with timestamp
-  srand (time(NULL));
+  srand (SRAND_SEED_VALUE);
   
   /* ITYPE is INTEGER
           = 1: compute inv(U**H)*A*inv(U) or inv(L)*A*inv(L**H);

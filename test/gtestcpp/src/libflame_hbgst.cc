@@ -47,7 +47,7 @@ void hbgst_test(int ip)
   fptr_NL_LAPACK_hbgst hbgst_ref;
 
   // Initialise random number generators with timestamp.
-  srand (time(NULL));
+  srand (SRAND_SEED_VALUE);
   
   /* N is INTEGER
           The order of the matrices A and B.  N >= 0.*/

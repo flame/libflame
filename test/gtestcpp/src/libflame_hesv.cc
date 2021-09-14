@@ -45,7 +45,7 @@ void hesv_test(int ip)
   fptr_NL_LAPACK_hesv hesv_ref = NULL;
   
   // Initialise random number generators with timestamp
-  srand (time(NULL));
+  srand (SRAND_SEED_VALUE);
   
   /* UPLO is CHARACTER*1
           = 'U':  Upper triangle of A is stored;
@@ -206,7 +206,7 @@ void hesv_test(int ip)
   integer info_ref = -1;
   hesv_ref(&uplo, &n, &nrhs, arefbuff, &lda, ipivrefbuff, brefbuff, &ldb,
        workrefbuff, &lwork_size, &info_ref);
-  printf ("info_cpp: %d, info_ref: %d\n", info_cpp, info_ref);
+  PRINTF ("info_cpp: %d, info_ref: %d\n", info_cpp, info_ref);
   
   if ((info_cpp >= 0) && (info_ref >= 0)) {
     #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1) && \
