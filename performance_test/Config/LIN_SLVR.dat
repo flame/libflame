@@ -1,4 +1,4 @@
-Mode 1  // Enter:- 0: discrete, 1: Combinational, 2: Range with step increments of Matrix sizes
+Mode 0  // Enter:- 0: discrete, 1: Combinational, 2: Range with step increments of Matrix sizes
 Num_Ranges 4
 MRange_start 10 100 1000 2000
 MRange_end   20 300 1600 300

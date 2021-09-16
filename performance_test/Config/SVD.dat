@@ -1,3 +1,12 @@
+Mode 0  // Enter:- 0: discrete, 1: Combinational, 2: Range with step increments of Matrix sizes
+Num_Ranges 4
+MRange_start 10 100 1000 2000
+MRange_end   20 300 1600 3000
+MRange_step_size 10 100 200 1000
+NRange_start 5 120 1400 2500
+NRange_end   100 1000 2000 5000
+NRange_step_size 15 130 250 1600
+Num_Tests 4
 Matrix_Layout 101 101 102 102
 jobu  U N U N
 jobv  V N V N
@@ -9,7 +18,7 @@ tola 1.0  2.0  3.0
 tolb 2.0  2.0  1.0
 threshold 3.0 5.0 20.0 40.0
 jobu_gesvd   N A S O
-jobvt_gesvd  O A S N
+jobvt_gesvd  A A S N
 joba_gejsv C E F G
 jobu_gejsv U F W N
 jobv_gejsv V J W N
