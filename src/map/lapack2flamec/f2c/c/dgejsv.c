@@ -471,6 +471,12 @@ r+1}
  /* ===================================================================== */
  /* Subroutine */
  int dgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jobp, integer *m, integer *n, doublereal *a, integer *lda, doublereal *sva, doublereal *u, integer *ldu, doublereal *v, integer *ldv, doublereal *work, integer *lwork, integer *iwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dgejsv inputs: joba %c, jobu %c, jobv %c, jobr %c, jobt %c, jobp %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldv %" FLA_IS ", lwork %" FLA_IS "",*joba, *jobu, *jobv, *jobr, *jobt, *jobp, *m, *n, *lda, *ldu, *ldv, *lwork);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, u_dim1, u_offset, v_dim1, v_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7, i__8, i__9, i__10, i__11, i__12;
  doublereal d__1, d__2, d__3, d__4;
@@ -636,6 +642,7 @@ r+1}
  /* #:( */
  i__1 = -(*info);
  xerbla_("DGEJSV", &i__1);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return for void matrix (Y3K safe) */
@@ -653,6 +660,7 @@ r+1}
  ++j1) {
  work[j1] = 0.;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Determine whether the matrix U should be M x N or M x M */
@@ -687,6 +695,7 @@ r+1}
  *info = -9;
  i__2 = -(*info);
  xerbla_("DGEJSV", &i__2);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  aaqq = sqrt(aaqq);
@@ -748,6 +757,7 @@ r+1}
  iwork[1] = 0;
  iwork[2] = 0;
  iwork[3] = 0;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Issue warning if denormalized column norms detected. Override the */
@@ -809,6 +819,7 @@ r+1}
  work[6] = 0.;
  work[7] = 0.;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  transp = FALSE_;
@@ -2147,6 +2158,7 @@ r+1}
  iwork[1] = nr;
  iwork[2] = numrank;
  iwork[3] = warning;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* .. */
  /* .. END OF DGEJSV */

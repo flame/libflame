@@ -154,6 +154,12 @@ and second, applying a diagonal similarity transformation */
 /* Subroutine */
 int dgebal_(char *job, integer *n, doublereal *a, integer * lda, integer *ilo, integer *ihi, doublereal *scale, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dgebal inputs: job %c, n %" FLA_IS ", lda %" FLA_IS "",*job, *n, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     doublereal d__1, d__2;
@@ -219,6 +225,7 @@ int dgebal_(char *job, integer *n, doublereal *a, integer * lda, integer *ilo, i
     {
         i__1 = -(*info);
         xerbla_("DGEBAL", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     k = 1;
@@ -387,6 +394,7 @@ L160: /* Computing MAX */
             *info = -3;
             i__2 = -(*info);
             xerbla_("DGEBAL", &i__2);
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         f *= 2.;
@@ -448,6 +456,7 @@ L200:
 L210:
     *ilo = k;
     *ihi = l;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DGEBAL */
 }

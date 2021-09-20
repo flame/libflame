@@ -123,6 +123,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dgelqt3_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t, integer *ldt, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dgelqt3 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS "",*m, *n, *lda, *ldt);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, t_dim1, t_offset, i__1, i__2;
  /* Local variables */
@@ -172,6 +178,7 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DGELQT3", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*m == 1) {
@@ -246,6 +253,7 @@
  T = [T1 T3] */
  /* [ A(1:N1,J1:N) L2 ] [ 0 T2] */
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DGELQT3 */
  }

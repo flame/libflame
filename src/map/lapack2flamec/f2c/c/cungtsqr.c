@@ -170,6 +170,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int cungtsqr_(integer *m, integer *n, integer *mb, integer * nb, complex *a, integer *lda, complex *t, integer *ldt, complex *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"cungtsqr inputs: m %" FLA_IS ", n %" FLA_IS ", mb %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS ", lwork %" FLA_IS "",*m, *n, *mb, *nb, *lda, *ldt, *lwork);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, t_dim1, t_offset, i__1, i__2;
  complex q__1;
@@ -260,17 +266,20 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CUNGTSQR", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
  q__1.r = (real) lworkopt; q__1.i = 0.f; // , expr subst  
  work[1].r = q__1.r; work[1].i = q__1.i; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (min(*m,*n) == 0) {
  q__1.r = (real) lworkopt; q__1.i = 0.f; // , expr subst  
  work[1].r = q__1.r; work[1].i = q__1.i; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* (1) Form explicitly the tall-skinny M-by-N left submatrix Q1_in */
@@ -298,6 +307,7 @@
  }
  q__1.r = (real) lworkopt; q__1.i = 0.f; // , expr subst  
  work[1].r = q__1.r; work[1].i = q__1.i; // , expr subst  
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CUNGTSQR */
  }

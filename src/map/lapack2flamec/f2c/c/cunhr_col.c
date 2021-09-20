@@ -262,6 +262,12 @@ INB-by-M}
  /* ===================================================================== */
  /* Subroutine */
  int cunhr_col_(integer *m, integer *n, integer *nb, complex *a, integer *lda, complex *t, integer *ldt, complex *d__, integer * info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"cunhr_col inputs: m %" FLA_IS ", n %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS "", *m, *n, *nb, *lda, *ldt);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, t_dim1, t_offset, i__1, i__2, i__3, i__4, i__5;
  complex q__1;
@@ -326,10 +332,12 @@ INB-by-M}
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("CUNHR_COL", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (min(*m,*n) == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* On input, the M-by-N matrix A contains the unitary */
@@ -441,6 +449,7 @@ INB-by-M}
  /* (2-3b) Perform the triangular solve. */
  ctrsm_("R", "L", "C", "U", &jnb, &jnb, &c_b1, &a[jb + jb * a_dim1], lda, &t[jb * t_dim1 + 1], ldt);
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of CUNHR_COL */
  }

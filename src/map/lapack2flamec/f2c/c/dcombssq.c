@@ -47,6 +47,7 @@
  /* ===================================================================== */
  /* Subroutine */
  int dcombssq_(doublereal *v1, doublereal *v2) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* System generated locals */
  doublereal d__1;
  /* -- LAPACK auxiliary routine (version 3.7.0) -- */
@@ -76,6 +77,7 @@
  v1[2] = v2[2] + d__1 * d__1 * v1[2];
  v1[1] = v2[1];
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DCOMBSSQ */
  }

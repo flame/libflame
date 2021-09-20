@@ -199,6 +199,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dbdsdc_(char *uplo, char *compq, integer *n, doublereal * d__, doublereal *e, doublereal *u, integer *ldu, doublereal *vt, integer *ldvt, doublereal *q, integer *iq, doublereal *work, integer * iwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dbdsdc inputs: uplo %c, compq %c, n %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS "",*uplo, *compq, *n, *ldu, *ldvt);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer u_dim1, u_offset, vt_dim1, vt_offset, i__1, i__2;
  doublereal d__1;
@@ -307,10 +313,12 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DBDSDC", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  smlsiz = ilaenv_(&c__9, "DBDSDC", " ", &c__0, &c__0, &c__0, &c__0);
@@ -324,6 +332,7 @@
  vt[vt_dim1 + 1] = 1.;
  }
  d__[1] = f2c_abs(d__[1]);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  nm1 = *n - 1;
@@ -392,6 +401,7 @@
  /* Scale. */
  orgnrm = dlanst_("M", n, &d__[1], &e[1]);
  if (orgnrm == 0.) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  dlascl_("G", &c__0, &c__0, &orgnrm, &c_b15, n, &c__1, &d__[1], n, &ierr);
@@ -462,6 +472,7 @@
  dlasda_(&icompq, &smlsiz, &nsize, &sqre, &d__[start], &e[ start], &q[start + (iu + qstart - 2) * *n], n, &q[ start + (ivt + qstart - 2) * *n], &iq[start + k * *n], &q[start + (difl + qstart - 2) * *n], &q[start + ( difr + qstart - 2) * *n], &q[start + (z__ + qstart - 2) * *n], &q[start + (poles + qstart - 2) * *n], &iq[ start + givptr * *n], &iq[start + givcol * *n], n, & iq[start + perm * *n], &q[start + (givnum + qstart - 2) * *n], &q[start + (ic + qstart - 2) * *n], &q[ start + (is + qstart - 2) * *n], &work[wstart], & iwork[1], info);
  }
  if (*info != 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  start = i__ + 1;
@@ -518,6 +529,7 @@
  if (iuplo == 2 && icompq == 2) {
  dlasr_("L", "V", "B", n, n, &work[1], &work[*n], &u[u_offset], ldu);
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DBDSDC */
  }
