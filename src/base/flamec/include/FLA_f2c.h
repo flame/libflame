@@ -32,6 +32,13 @@
 #define zdotu_f2c_ zdotu_
 #endif
 
+//DTL purpose
+#if FLA_ENABLE_ILP64
+#define FLA_IS "lld"
+#else
+#define FLA_IS "d"
+#endif
+
 // LDLT Factorization for packed matrices uses different threshold to choose
 // between blocked /  unblocked variants and also the blocksize for the blocked
 // variant. The thresholds and blocksizes re defined here

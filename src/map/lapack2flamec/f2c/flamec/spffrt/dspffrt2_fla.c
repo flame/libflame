@@ -86,11 +86,11 @@ extern void DTL_Trace(
 void dspffrt2_fla( doublereal *ap, integer *n, integer * ncolm, doublereal *work, doublereal *work2 )
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-    #if AOCL_DTL_LOG_ENABLE
+#if AOCL_DTL_LOG_ENABLE
     char buffer[256];
-    sprintf(buffer, "dspffrt2 inputs: n %d, ncolm %d\n", *n, *ncolm);
+    snprintf(buffer, 256, "dspffrt2 inputs: n %" FLA_IS ", ncolm %" FLA_IS "", *n, *ncolm);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-    #endif
+#endif
 
     /* ncolm as fraction of n */
     integer ncolm_pc = (integer) ( ( *ncolm * 100 ) / *n );
