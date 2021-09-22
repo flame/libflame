@@ -91,7 +91,7 @@ typedef struct { real r, i; } complex;
 typedef struct { doublereal r, i; } doublecomplex;
 
 /* typedef long int logical; */
-typedef int logical; 
+typedef integer logical; 
 
 typedef short int shortlogical;
 typedef char logical1;
