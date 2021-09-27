@@ -143,9 +143,9 @@
  /* Subroutine */
  int zlasyf_aa_(char *uplo, integer *j1, integer *m, integer *nb, doublecomplex *a, integer *lda, integer *ipiv, doublecomplex * h__, integer *ldh, doublecomplex *work) {
  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
- char buffer[256]; 
- snprintf(buffer, 256,"zlasyf inputs: uplo %c, j1 %d, m %d, nb %d, lda %d, ldh %d",*uplo, *j1, *m, *nb, *lda, *ldh);
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ snprintf(buffer, 256,"zlasyf_aa inputs: uplo %c, j1 %" FLA_IS ", m %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldh %" FLA_IS "",*uplo, *j1, *m, *nb, *lda, *ldh);
  AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
  /* System generated locals */

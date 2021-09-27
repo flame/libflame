@@ -158,9 +158,9 @@
  /* Subroutine */
  int zhetri_3x_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecomplex *e, integer *ipiv, doublecomplex *work, integer *nb, integer *info) {
  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
- char buffer[256]; 
- snprintf(buffer, 256,"zhetri inputs: uplo %c, n %d, lda %d, nb %d",*uplo, *n, *lda, *nb);
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ snprintf(buffer, 256,"zhetri_3x inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", nb %" FLA_IS ", ipiv %" FLA_IS "",*uplo, *n, *lda, *nb, *ipiv);
  AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
  /* System generated locals */

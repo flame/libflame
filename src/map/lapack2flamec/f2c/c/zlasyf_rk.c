@@ -256,9 +256,9 @@
  /* Subroutine */
  int zlasyf_rk_(char *uplo, integer *n, integer *nb, integer *kb, doublecomplex *a, integer *lda, doublecomplex *e, integer *ipiv, doublecomplex *w, integer *ldw, integer *info) {
  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
- char buffer[256]; 
- snprintf(buffer, 256,"zlasyf inputs: uplo %c, n %d, nb %d, lda %d, ldw %d",*uplo, *n, *nb, *lda, *ldw);
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ snprintf(buffer, 256,"zlasyf_rk inputs: uplo %c, n %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldw %" FLA_IS "",*uplo, *n, *nb, *lda, *ldw);
  AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
  /* System generated locals */
