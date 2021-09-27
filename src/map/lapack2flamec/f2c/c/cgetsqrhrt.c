@@ -255,9 +255,8 @@
  else {
  /* Set block size for column blocks */
  nb1local = min(*nb1,*n);
- /* ADD CELING FOR NUM_ALL_ROW */
  /* Computing MAX */
- r__1 = 1.f; r__2 = (real) (*m - *n) / (real) (*mb1 - *n); // , expr subst  
+ r__1 = 1.f; r__2 = ceiling_f90_((real) (*m - *n) / (real) (*mb1 - *n)); // , expr subst  
  num_all_row_blocks__ = max(r__1,r__2);
  /* Length and leading dimension of WORK array to place */
  /* T array in TSQR. */

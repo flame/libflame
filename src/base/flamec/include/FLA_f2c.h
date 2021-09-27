@@ -231,6 +231,12 @@ struct Namelist {
 	};
 typedef struct Namelist Namelist;
 
+#ifndef ceiling_f90_
+  #define ceiling_f90_(x) ((integer)(x) + ((x) > 0 && (x) != (integer)(x)))
+#endif
+#ifndef floor_f90_
+  #define floor_f90_(x) ((integer)(x) - ((x) < 0 && (x) != (integer)(x)))
+#endif
 #ifndef f2c_abs
   #define f2c_abs(x) ((x) >= 0 ? (x) : -(x))
 #endif

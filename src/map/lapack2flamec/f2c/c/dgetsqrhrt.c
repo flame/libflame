@@ -254,9 +254,8 @@
  else {
  /* Set block size for column blocks */
  nb1local = min(*nb1,*n);
- /* add ceil */
  /* Computing MAX */
- d__1 = 1.; d__2 = (doublereal) (*m - *n) / (doublereal) (*mb1 - *n); // , expr subst  
+ d__1 = 1.; d__2 = ceiling_f90_((doublereal) (*m - *n) / (doublereal) (*mb1 - *n)); // , expr subst  
  num_all_row_blocks__ = (integer) max(d__1,d__2);
  /* Length and leading dimension of WORK array to place */
  /* T array in TSQR. */
