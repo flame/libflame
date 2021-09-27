@@ -178,9 +178,9 @@
  /* Subroutine */
  int zsysv_aa_2stage_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *tb, integer *ltb, integer *ipiv, integer *ipiv2, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info) {
  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
- char buffer[256]; 
- snprintf(buffer, 256,"zsysv inputs: uplo %c, n %d, nrhs %d, lda %d, ltb %d, ldb %d",*uplo, *n, *nrhs, *lda, *ltb, *ldb);
+#if AOCL_DTL_LOG_ENABLE
+ char buffer[256];
+ snprintf(buffer, 256,"zsysv_aa_2stage inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ltb %" FLA_IS ", ldb %" FLA_IS ", lwork %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ltb, *ldb, *lwork);
  AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
  /* System generated locals */
