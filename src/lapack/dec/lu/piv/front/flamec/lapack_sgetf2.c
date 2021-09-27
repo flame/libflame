@@ -70,6 +70,9 @@
     static integer jp;
     extern /* Subroutine */ int xerbla_(char *, integer *);
     extern integer isamax_(integer *, real *, integer *);
+    int kn;
+    float safmin;
+    float a_piv;
 #define a_ref(a_1,a_2) a[(a_2)*a_dim1 + a_1]
 
 
@@ -117,11 +120,25 @@
 
 /*           Compute elements J+1:M of J-th column. */
 
-	    if (j < *m) {
-		i__2 = *m - j;
-		r__1 = 1.f / a_ref(j, j);
-		sscal_(&i__2, &r__1, &a_ref(j + 1, j), &c__1);
-	    }
+           if (j < *m) {
+            i__2 = *m - j;
+            
+	    safmin = FLT_MIN;
+            a_piv = a_ref(j, j);
+            
+            if (fabs(a_piv) < safmin)
+            {
+                for (kn = 1; kn <= i__2; kn++) 
+                {
+                    a_ref(j + kn, j) = a_ref(j + kn, j) / a_piv;
+                }
+            }
+            else 
+            {
+                r__1 = 1.f / a_piv;
+                sscal_(&i__2, &r__1, &a_ref(j + 1, j), &c__1);
+            }
+           }
 
 	} else if (*info == 0) {
 

@@ -550,7 +550,7 @@ L12: /* BEGIN pivot search loop body */
                         i__1 = k - 1;
                         csscal_(&i__1, &r1, &a[k * a_dim1 + 1], &c__1);
                     }
-                    else
+                    else if(f2c_abs(t) != 0.f)
                     {
                         i__1 = k - 1;
                         for (ii = 1;
@@ -1076,7 +1076,7 @@ L72: /* BEGIN pivot search loop body */
                         i__1 = *n - k;
                         csscal_(&i__1, &r1, &a[k + 1 + k * a_dim1], &c__1);
                     }
-                    else
+                    else if (f2c_abs(t) != 0.f)
                     {
                         i__1 = *n;
                         for (ii = k + 1;
