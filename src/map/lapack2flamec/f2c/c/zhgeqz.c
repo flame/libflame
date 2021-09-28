@@ -1,4 +1,4 @@
-/* ../netlib/zhgeqz.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* zhgeqz.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
  #include "FLA_f2c.h" /* Table of constant values */
  static doublecomplex c_b1 = {
@@ -271,7 +271,6 @@
  /* > \author Univ. of California Berkeley */
  /* > \author Univ. of Colorado Denver */
  /* > \author NAG Ltd. */
- /* > \date April 2012 */
  /* > \ingroup complex16GEcomputational */
  /* > \par Further Details: */
  /* ===================== */
@@ -287,17 +286,17 @@
  int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integer *ihi, doublecomplex *h__, integer *ldh, doublecomplex *t, integer *ldt, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * info) {
  /* System generated locals */
  integer h_dim1, h_offset, q_dim1, q_offset, t_dim1, t_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5, i__6;
- doublereal d__1, d__2, d__3, d__4, d__5, d__6;
- doublecomplex z__1, z__2, z__3, z__4, z__5, z__6;
+ doublereal d__1, d__2, d__3, d__4, d__5, d__6, d__7, d__8;
+ doublecomplex z__1, z__2, z__3, z__4, z__5, z__6, z__7;
  /* Builtin functions */
  double z_abs(doublecomplex *);
  void d_cnjg(doublecomplex *, doublecomplex *);
  double d_imag(doublecomplex *);
- void z_div(doublecomplex *, doublecomplex *, doublecomplex *), pow_zi( doublecomplex *, doublecomplex *, integer *), z_sqrt( doublecomplex *, doublecomplex *);
+ void z_div(doublecomplex *, doublecomplex *, doublecomplex *), z_sqrt( doublecomplex *, doublecomplex *), pow_zi(doublecomplex *, doublecomplex *, integer *);
  /* Local variables */
  doublereal c__;
  integer j;
- doublecomplex s, t1;
+ doublecomplex s, x, y;
  integer jc, in;
  doublecomplex u12;
  integer jr;
@@ -305,7 +304,7 @@
  integer jch;
  logical ilq, ilz;
  doublereal ulp;
- doublecomplex abi22;
+ doublecomplex abi12, abi22;
  doublereal absb, atol, btol, temp;
  extern /* Subroutine */
  int zrot_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublecomplex *);
@@ -330,7 +329,8 @@
  doublecomplex eshift;
  logical ilschr;
  integer icompq, ilastm;
- doublecomplex rtdisc;
+ extern /* Double Complex */
+ VOID zladiv_f2c_(doublecomplex *, doublecomplex *, doublecomplex *);
  integer ischur;
  extern doublereal zlanhs_(char *, integer *, doublecomplex *, integer *, doublereal *);
  logical ilazro;
@@ -342,10 +342,9 @@
  int zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *);
  integer istart;
  logical lquery;
- /* -- LAPACK computational routine (version 3.7.0) -- */
+ /* -- LAPACK computational routine -- */
  /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
  /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
- /* April 2012 */
  /* .. Scalar Arguments .. */
  /* .. */
  /* .. Array Arguments .. */
@@ -394,6 +393,7 @@
  ischur = 2;
  }
  else {
+ ilschr = TRUE_;
  ischur = 0;
  }
  if (lsame_(compq, "N")) {
@@ -409,6 +409,7 @@
  icompq = 3;
  }
  else {
+ ilq = TRUE_;
  icompq = 0;
  }
  if (lsame_(compz, "N")) {
@@ -424,6 +425,7 @@
  icompz = 3;
  }
  else {
+ ilz = TRUE_;
  icompz = 0;
  }
  /* Check Argument Values */
@@ -582,13 +584,19 @@
  }
  else {
  i__2 = ilast + (ilast - 1) * h_dim1;
- if ((d__1 = h__[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[ilast + (ilast - 1) * h_dim1]), f2c_abs(d__2)) <= atol) {
+ /* Computing MAX */
+ i__3 = ilast + ilast * h_dim1;
+ i__4 = ilast - 1 + (ilast - 1) * h_dim1;
+ d__7 = safmin; d__8 = ulp * ((d__1 = h__[i__3].r, f2c_abs(d__1)) + ( d__2 = d_imag(&h__[ilast + ilast * h_dim1]), f2c_abs(d__2)) + ((d__3 = h__[i__4].r, f2c_abs(d__3)) + (d__4 = d_imag(&h__[ ilast - 1 + (ilast - 1) * h_dim1]), f2c_abs(d__4)))); // , expr subst  
+ if ((d__5 = h__[i__2].r, f2c_abs(d__5)) + (d__6 = d_imag(&h__[ilast + (ilast - 1) * h_dim1]), f2c_abs(d__6)) <= max(d__7,d__8)) {
  i__2 = ilast + (ilast - 1) * h_dim1;
  h__[i__2].r = 0.; h__[i__2].i = 0.; // , expr subst  
  goto L60;
  }
  }
- if (z_abs(&t[ilast + ilast * t_dim1]) <= btol) {
+ /* Computing MAX */
+ d__1 = safmin; d__2 = ulp * (z_abs(&t[ilast - 1 + ilast * t_dim1]) + z_abs(&t[ilast - 1 + (ilast - 1) * t_dim1])); // , expr subst  
+ if (z_abs(&t[ilast + ilast * t_dim1]) <= max(d__1,d__2)) {
  i__2 = ilast + ilast * t_dim1;
  t[i__2].r = 0.; t[i__2].i = 0.; // , expr subst  
  goto L50;
@@ -604,7 +612,11 @@
  }
  else {
  i__3 = j + (j - 1) * h_dim1;
- if ((d__1 = h__[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[j + (j - 1) * h_dim1]), f2c_abs(d__2)) <= atol) {
+ /* Computing MAX */
+ i__4 = j + j * h_dim1;
+ i__5 = j - 1 + (j - 1) * h_dim1;
+ d__7 = safmin; d__8 = ulp * ((d__1 = h__[i__4].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[j + j * h_dim1]), f2c_abs(d__2)) + ( (d__3 = h__[i__5].r, f2c_abs(d__3)) + (d__4 = d_imag(&h__[ j - 1 + (j - 1) * h_dim1]), f2c_abs(d__4)))); // , expr subst  
+ if ((d__5 = h__[i__3].r, f2c_abs(d__5)) + (d__6 = d_imag(&h__[j + (j - 1) * h_dim1]), f2c_abs(d__6)) <= max(d__7,d__8)) {
  i__3 = j + (j - 1) * h_dim1;
  h__[i__3].r = 0.; h__[i__3].i = 0.; // , expr subst  
  ilazro = TRUE_;
@@ -614,7 +626,13 @@
  }
  }
  /* Test 2: for T(j,j)=0 */
- if (z_abs(&t[j + j * t_dim1]) < btol) {
+ temp = z_abs(&t[j + (j + 1) * t_dim1]);
+ if (j > *ilo) {
+ temp += z_abs(&t[j - 1 + j * t_dim1]);
+ }
+ /* Computing MAX */
+ d__1 = safmin; d__2 = ulp * temp; // , expr subst  
+ if (z_abs(&t[j + j * t_dim1]) < max(d__1,d__2)) {
  i__3 = j + j * t_dim1;
  t[i__3].r = 0.; t[i__3].i = 0.; // , expr subst  
  /* Test 1a: Check for 2 consecutive small subdiagonals in A */
@@ -834,30 +852,59 @@
  z__2.r = u12.r * ad21.r - u12.i * ad21.i; z__2.i = u12.r * ad21.i + u12.i * ad21.r; // , expr subst  
  z__1.r = ad22.r - z__2.r; z__1.i = ad22.i - z__2.i; // , expr subst  
  abi22.r = z__1.r; abi22.i = z__1.i; // , expr subst  
- z__2.r = ad11.r + abi22.r; z__2.i = ad11.i + abi22.i; // , expr subst  
+ z__2.r = u12.r * ad11.r - u12.i * ad11.i; z__2.i = u12.r * ad11.i + u12.i * ad11.r; // , expr subst  
+ z__1.r = ad12.r - z__2.r; z__1.i = ad12.i - z__2.i; // , expr subst  
+ abi12.r = z__1.r; abi12.i = z__1.i; // , expr subst  
+ shift.r = abi22.r; shift.i = abi22.i; // , expr subst  
+ z_sqrt(&z__2, &abi12);
+ z_sqrt(&z__3, &ad21);
+ z__1.r = z__2.r * z__3.r - z__2.i * z__3.i; z__1.i = z__2.r * z__3.i + z__2.i * z__3.r; // , expr subst  
+ ctemp.r = z__1.r; ctemp.i = z__1.i; // , expr subst  
+ temp = (d__1 = ctemp.r, f2c_abs(d__1)) + (d__2 = d_imag(&ctemp), f2c_abs( d__2));
+ if (ctemp.r != 0. || ctemp.i != 0.) {
+ z__2.r = ad11.r - shift.r; z__2.i = ad11.i - shift.i; // , expr subst  
  z__1.r = z__2.r * .5; z__1.i = z__2.i * .5; // , expr subst  
- t1.r = z__1.r; t1.i = z__1.i; // , expr subst  
- pow_zi(&z__4, &t1, &c__2);
- z__5.r = ad12.r * ad21.r - ad12.i * ad21.i; z__5.i = ad12.r * ad21.i + ad12.i * ad21.r; // , expr subst  
- z__3.r = z__4.r + z__5.r; z__3.i = z__4.i + z__5.i; // , expr subst  
- z__6.r = ad11.r * ad22.r - ad11.i * ad22.i; z__6.i = ad11.r * ad22.i + ad11.i * ad22.r; // , expr subst  
- z__2.r = z__3.r - z__6.r; z__2.i = z__3.i - z__6.i; // , expr subst  
- z_sqrt(&z__1, &z__2);
- rtdisc.r = z__1.r; rtdisc.i = z__1.i; // , expr subst  
- z__1.r = t1.r - abi22.r; z__1.i = t1.i - abi22.i; // , expr subst  
- z__2.r = t1.r - abi22.r; z__2.i = t1.i - abi22.i; // , expr subst  
- temp = z__1.r * rtdisc.r + d_imag(&z__2) * d_imag(&rtdisc);
- if (temp <= 0.) {
- z__1.r = t1.r + rtdisc.r; z__1.i = t1.i + rtdisc.i; // , expr subst  
- shift.r = z__1.r; shift.i = z__1.i; // , expr subst  
+ x.r = z__1.r; x.i = z__1.i; // , expr subst  
+ temp2 = (d__1 = x.r, f2c_abs(d__1)) + (d__2 = d_imag(&x), f2c_abs( d__2));
+ /* Computing MAX */
+ d__3 = temp; d__4 = (d__1 = x.r, f2c_abs(d__1)) + (d__2 = d_imag(& x), f2c_abs(d__2)); // , expr subst  
+ temp = max(d__3,d__4);
+ z__5.r = x.r / temp; z__5.i = x.i / temp; // , expr subst  
+ pow_zi(&z__4, &z__5, &c__2);
+ z__7.r = ctemp.r / temp; z__7.i = ctemp.i / temp; // , expr subst  
+ pow_zi(&z__6, &z__7, &c__2);
+ z__3.r = z__4.r + z__6.r; z__3.i = z__4.i + z__6.i; // , expr subst  
+ z_sqrt(&z__2, &z__3);
+ z__1.r = temp * z__2.r; z__1.i = temp * z__2.i; // , expr subst  
+ y.r = z__1.r; y.i = z__1.i; // , expr subst  
+ if (temp2 > 0.) {
+ z__1.r = x.r / temp2; z__1.i = x.i / temp2; // , expr subst  
+ z__2.r = x.r / temp2; z__2.i = x.i / temp2; // , expr subst  
+ if (z__1.r * y.r + d_imag(&z__2) * d_imag(&y) < 0.) {
+ z__3.r = -y.r; z__3.i = -y.i; // , expr subst  
+ y.r = z__3.r; y.i = z__3.i; // , expr subst  
  }
- else {
- z__1.r = t1.r - rtdisc.r; z__1.i = t1.i - rtdisc.i; // , expr subst  
+ }
+ z__4.r = x.r + y.r; z__4.i = x.i + y.i; // , expr subst  
+ zladiv_f2c_(&z__3, &ctemp, &z__4);
+ z__2.r = ctemp.r * z__3.r - ctemp.i * z__3.i; z__2.i = ctemp.r * z__3.i + ctemp.i * z__3.r; // , expr subst  
+ z__1.r = shift.r - z__2.r; z__1.i = shift.i - z__2.i; // , expr subst  
  shift.r = z__1.r; shift.i = z__1.i; // , expr subst  
  }
  }
  else {
  /* Exceptional shift. Chosen for no particularly good reason. */
+ i__2 = ilast + ilast * t_dim1;
+ if (iiter / 20 * 20 == iiter && bscale * ((d__1 = t[i__2].r, f2c_abs( d__1)) + (d__2 = d_imag(&t[ilast + ilast * t_dim1]), f2c_abs( d__2))) > safmin) {
+ i__2 = ilast + ilast * h_dim1;
+ z__3.r = ascale * h__[i__2].r; z__3.i = ascale * h__[i__2].i; // , expr subst  
+ i__3 = ilast + ilast * t_dim1;
+ z__4.r = bscale * t[i__3].r; z__4.i = bscale * t[i__3].i; // , expr subst  
+ z_div(&z__2, &z__3, &z__4);
+ z__1.r = eshift.r + z__2.r; z__1.i = eshift.i + z__2.i; // , expr subst  
+ eshift.r = z__1.r; eshift.i = z__1.i; // , expr subst  
+ }
+ else {
  i__2 = ilast + (ilast - 1) * h_dim1;
  z__3.r = ascale * h__[i__2].r; z__3.i = ascale * h__[i__2].i; // , expr subst  
  i__3 = ilast - 1 + (ilast - 1) * t_dim1;
@@ -865,6 +912,7 @@
  z_div(&z__2, &z__3, &z__4);
  z__1.r = eshift.r + z__2.r; z__1.i = eshift.i + z__2.i; // , expr subst  
  eshift.r = z__1.r; eshift.i = z__1.i; // , expr subst  
+ }
  shift.r = eshift.r; shift.i = eshift.i; // , expr subst  
  }
  /* Now check for two consecutive small subdiagonals. */

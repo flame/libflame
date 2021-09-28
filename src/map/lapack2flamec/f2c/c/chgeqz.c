@@ -1,4 +1,4 @@
-/* ../netlib/chgeqz.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* chgeqz.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
  #include "FLA_f2c.h" /* Table of constant values */
  static complex c_b1 = {
@@ -271,7 +271,6 @@
  /* > \author Univ. of California Berkeley */
  /* > \author Univ. of Colorado Denver */
  /* > \author NAG Ltd. */
- /* > \date April 2012 */
  /* > \ingroup complexGEcomputational */
  /* > \par Further Details: */
  /* ===================== */
@@ -285,29 +284,27 @@
  /* ===================================================================== */
  /* Subroutine */
  int chgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integer *ihi, complex *h__, integer *ldh, complex *t, integer *ldt, complex *alpha, complex *beta, complex *q, integer *ldq, complex *z__, integer *ldz, complex *work, integer *lwork, real * rwork, integer *info) {
+ 
  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
 #if AOCL_DTL_LOG_ENABLE 
  char buffer[256]; 
-#if FLA_ENABLE_ILP64 
- snprintf(buffer, 256,"chgeqz inputs: job %c, compq %c, compz %c, n %lld, ilo %lld, ihi %lld, ldh %lld, ldt %lld, ldq %lld, ldz %lld, lwork %lld",*job, *compq, *compz, *n, *ilo, *ihi, *ldh, *ldt, *ldq, *ldz, *lwork);
-#else 
- snprintf(buffer, 256,"chgeqz inputs: job %c, compq %c, compz %c, n %d, ilo %d, ihi %d, ldh %d, ldt %d, ldq %d, ldz %d, lwork %d",*job, *compq, *compz, *n, *ilo, *ihi, *ldh, *ldt, *ldq, *ldz, *lwork);
-#endif
+ snprintf(buffer, 256,"chgeqz inputs: job %c, compq %c, compz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", ldh %" FLA_IS ", ldt %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", lwork %" FLA_IS "",*job, *compq, *compz, *n, *ilo, *ihi, *ldh, *ldt, *ldq, *ldz, *lwork);
  AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
+ 
  /* System generated locals */
  integer h_dim1, h_offset, q_dim1, q_offset, t_dim1, t_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5, i__6;
- real r__1, r__2, r__3, r__4, r__5, r__6;
- complex q__1, q__2, q__3, q__4, q__5, q__6;
+ real r__1, r__2, r__3, r__4, r__5, r__6, r__7, r__8;
+ complex q__1, q__2, q__3, q__4, q__5, q__6, q__7;
  /* Builtin functions */
  double c_abs(complex *);
  void r_cnjg(complex *, complex *);
  double r_imag(complex *);
- void c_div(complex *, complex *, complex *), pow_ci(complex *, complex *, integer *), c_sqrt(complex *, complex *);
+ void c_div(complex *, complex *, complex *), c_sqrt(complex *, complex *), pow_ci(complex *, complex *, integer *);
  /* Local variables */
  real c__;
  integer j;
- complex s, t1;
+ complex s, x, y;
  integer jc, in;
  complex u12;
  integer jr;
@@ -315,7 +312,7 @@
  integer jch;
  logical ilq, ilz;
  real ulp;
- complex abi22;
+ complex abi12, abi22;
  real absb, atol, btol, temp;
  extern /* Subroutine */
  int crot_(integer *, complex *, integer *, complex *, integer *, real *, complex *);
@@ -332,6 +329,8 @@
  complex ctemp2, ctemp3;
  logical ilazr2;
  real ascale, bscale;
+ extern /* Complex */
+ VOID cladiv_f2c_(complex *, complex *, complex *);
  complex signbc;
  extern real slamch_(char *), clanhs_(char *, integer *, complex *, integer *, real *);
  extern /* Subroutine */
@@ -341,16 +340,13 @@
  int xerbla_(char *, integer *);
  complex eshift;
  logical ilschr;
- integer icompq, ilastm;
- complex rtdisc;
- integer ischur;
+ integer icompq, ilastm, ischur;
  logical ilazro;
  integer icompz, ifirst, ifrstm, istart;
  logical lquery;
- /* -- LAPACK computational routine (version 3.7.0) -- */
+ /* -- LAPACK computational routine -- */
  /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
  /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
- /* April 2012 */
  /* .. Scalar Arguments .. */
  /* .. */
  /* .. Array Arguments .. */
@@ -399,6 +395,7 @@
  ischur = 2;
  }
  else {
+ ilschr = TRUE_;
  ischur = 0;
  }
  if (lsame_(compq, "N")) {
@@ -414,6 +411,7 @@
  icompq = 3;
  }
  else {
+ ilq = TRUE_;
  icompq = 0;
  }
  if (lsame_(compz, "N")) {
@@ -429,6 +427,7 @@
  icompz = 3;
  }
  else {
+ ilz = TRUE_;
  icompz = 0;
  }
  /* Check Argument Values */
@@ -471,8 +470,8 @@
  }
  if (*info != 0) {
  i__1 = -(*info);
- xerbla_("CHGEQZ", &i__1);
  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+ xerbla_("CHGEQZ", &i__1);
  return 0;
  }
  else if (lquery) {
@@ -590,13 +589,19 @@
  }
  else {
  i__2 = ilast + (ilast - 1) * h_dim1;
- if ((r__1 = h__[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&h__[ilast + (ilast - 1) * h_dim1]), f2c_abs(r__2)) <= atol) {
+ /* Computing MAX */
+ i__3 = ilast + ilast * h_dim1;
+ i__4 = ilast - 1 + (ilast - 1) * h_dim1;
+ r__7 = safmin; r__8 = ulp * ((r__1 = h__[i__3].r, f2c_abs(r__1)) + ( r__2 = r_imag(&h__[ilast + ilast * h_dim1]), f2c_abs(r__2)) + ((r__3 = h__[i__4].r, f2c_abs(r__3)) + (r__4 = r_imag(&h__[ ilast - 1 + (ilast - 1) * h_dim1]), f2c_abs(r__4)))); // , expr subst  
+ if ((r__5 = h__[i__2].r, f2c_abs(r__5)) + (r__6 = r_imag(&h__[ilast + (ilast - 1) * h_dim1]), f2c_abs(r__6)) <= max(r__7,r__8)) {
  i__2 = ilast + (ilast - 1) * h_dim1;
  h__[i__2].r = 0.f; h__[i__2].i = 0.f; // , expr subst  
  goto L60;
  }
  }
- if (c_abs(&t[ilast + ilast * t_dim1]) <= btol) {
+ /* Computing MAX */
+ r__1 = safmin; r__2 = ulp * (c_abs(&t[ilast - 1 + ilast * t_dim1]) + c_abs(&t[ilast - 1 + (ilast - 1) * t_dim1])); // , expr subst  
+ if (c_abs(&t[ilast + ilast * t_dim1]) <= max(r__1,r__2)) {
  i__2 = ilast + ilast * t_dim1;
  t[i__2].r = 0.f; t[i__2].i = 0.f; // , expr subst  
  goto L50;
@@ -612,7 +617,11 @@
  }
  else {
  i__3 = j + (j - 1) * h_dim1;
- if ((r__1 = h__[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&h__[j + (j - 1) * h_dim1]), f2c_abs(r__2)) <= atol) {
+ /* Computing MAX */
+ i__4 = j + j * h_dim1;
+ i__5 = j - 1 + (j - 1) * h_dim1;
+ r__7 = safmin; r__8 = ulp * ((r__1 = h__[i__4].r, f2c_abs(r__1)) + (r__2 = r_imag(&h__[j + j * h_dim1]), f2c_abs(r__2)) + ( (r__3 = h__[i__5].r, f2c_abs(r__3)) + (r__4 = r_imag(&h__[ j - 1 + (j - 1) * h_dim1]), f2c_abs(r__4)))); // , expr subst  
+ if ((r__5 = h__[i__3].r, f2c_abs(r__5)) + (r__6 = r_imag(&h__[j + (j - 1) * h_dim1]), f2c_abs(r__6)) <= max(r__7,r__8)) {
  i__3 = j + (j - 1) * h_dim1;
  h__[i__3].r = 0.f; h__[i__3].i = 0.f; // , expr subst  
  ilazro = TRUE_;
@@ -622,7 +631,13 @@
  }
  }
  /* Test 2: for T(j,j)=0 */
- if (c_abs(&t[j + j * t_dim1]) < btol) {
+ temp = c_abs(&t[j + (j + 1) * t_dim1]);
+ if (j > *ilo) {
+ temp += c_abs(&t[j - 1 + j * t_dim1]);
+ }
+ /* Computing MAX */
+ r__1 = safmin; r__2 = ulp * temp; // , expr subst  
+ if (c_abs(&t[j + j * t_dim1]) < max(r__1,r__2)) {
  i__3 = j + j * t_dim1;
  t[i__3].r = 0.f; t[i__3].i = 0.f; // , expr subst  
  /* Test 1a: Check for 2 consecutive small subdiagonals in A */
@@ -842,30 +857,59 @@
  q__2.r = u12.r * ad21.r - u12.i * ad21.i; q__2.i = u12.r * ad21.i + u12.i * ad21.r; // , expr subst  
  q__1.r = ad22.r - q__2.r; q__1.i = ad22.i - q__2.i; // , expr subst  
  abi22.r = q__1.r; abi22.i = q__1.i; // , expr subst  
- q__2.r = ad11.r + abi22.r; q__2.i = ad11.i + abi22.i; // , expr subst  
+ q__2.r = u12.r * ad11.r - u12.i * ad11.i; q__2.i = u12.r * ad11.i + u12.i * ad11.r; // , expr subst  
+ q__1.r = ad12.r - q__2.r; q__1.i = ad12.i - q__2.i; // , expr subst  
+ abi12.r = q__1.r; abi12.i = q__1.i; // , expr subst  
+ shift.r = abi22.r; shift.i = abi22.i; // , expr subst  
+ c_sqrt(&q__2, &abi12);
+ c_sqrt(&q__3, &ad21);
+ q__1.r = q__2.r * q__3.r - q__2.i * q__3.i; q__1.i = q__2.r * q__3.i + q__2.i * q__3.r; // , expr subst  
+ ctemp.r = q__1.r; ctemp.i = q__1.i; // , expr subst  
+ temp = (r__1 = ctemp.r, f2c_abs(r__1)) + (r__2 = r_imag(&ctemp), f2c_abs( r__2));
+ if (ctemp.r != 0.f || ctemp.i != 0.f) {
+ q__2.r = ad11.r - shift.r; q__2.i = ad11.i - shift.i; // , expr subst  
  q__1.r = q__2.r * .5f; q__1.i = q__2.i * .5f; // , expr subst  
- t1.r = q__1.r; t1.i = q__1.i; // , expr subst  
- pow_ci(&q__4, &t1, &c__2);
- q__5.r = ad12.r * ad21.r - ad12.i * ad21.i; q__5.i = ad12.r * ad21.i + ad12.i * ad21.r; // , expr subst  
- q__3.r = q__4.r + q__5.r; q__3.i = q__4.i + q__5.i; // , expr subst  
- q__6.r = ad11.r * ad22.r - ad11.i * ad22.i; q__6.i = ad11.r * ad22.i + ad11.i * ad22.r; // , expr subst  
- q__2.r = q__3.r - q__6.r; q__2.i = q__3.i - q__6.i; // , expr subst  
- c_sqrt(&q__1, &q__2);
- rtdisc.r = q__1.r; rtdisc.i = q__1.i; // , expr subst  
- q__1.r = t1.r - abi22.r; q__1.i = t1.i - abi22.i; // , expr subst  
- q__2.r = t1.r - abi22.r; q__2.i = t1.i - abi22.i; // , expr subst  
- temp = q__1.r * rtdisc.r + r_imag(&q__2) * r_imag(&rtdisc);
- if (temp <= 0.f) {
- q__1.r = t1.r + rtdisc.r; q__1.i = t1.i + rtdisc.i; // , expr subst  
- shift.r = q__1.r; shift.i = q__1.i; // , expr subst  
+ x.r = q__1.r; x.i = q__1.i; // , expr subst  
+ temp2 = (r__1 = x.r, f2c_abs(r__1)) + (r__2 = r_imag(&x), f2c_abs( r__2));
+ /* Computing MAX */
+ r__3 = temp; r__4 = (r__1 = x.r, f2c_abs(r__1)) + (r__2 = r_imag(& x), f2c_abs(r__2)); // , expr subst  
+ temp = max(r__3,r__4);
+ q__5.r = x.r / temp; q__5.i = x.i / temp; // , expr subst  
+ pow_ci(&q__4, &q__5, &c__2);
+ q__7.r = ctemp.r / temp; q__7.i = ctemp.i / temp; // , expr subst  
+ pow_ci(&q__6, &q__7, &c__2);
+ q__3.r = q__4.r + q__6.r; q__3.i = q__4.i + q__6.i; // , expr subst  
+ c_sqrt(&q__2, &q__3);
+ q__1.r = temp * q__2.r; q__1.i = temp * q__2.i; // , expr subst  
+ y.r = q__1.r; y.i = q__1.i; // , expr subst  
+ if (temp2 > 0.f) {
+ q__1.r = x.r / temp2; q__1.i = x.i / temp2; // , expr subst  
+ q__2.r = x.r / temp2; q__2.i = x.i / temp2; // , expr subst  
+ if (q__1.r * y.r + r_imag(&q__2) * r_imag(&y) < 0.f) {
+ q__3.r = -y.r; q__3.i = -y.i; // , expr subst  
+ y.r = q__3.r; y.i = q__3.i; // , expr subst  
  }
- else {
- q__1.r = t1.r - rtdisc.r; q__1.i = t1.i - rtdisc.i; // , expr subst  
+ }
+ q__4.r = x.r + y.r; q__4.i = x.i + y.i; // , expr subst  
+ cladiv_f2c_(&q__3, &ctemp, &q__4);
+ q__2.r = ctemp.r * q__3.r - ctemp.i * q__3.i; q__2.i = ctemp.r * q__3.i + ctemp.i * q__3.r; // , expr subst  
+ q__1.r = shift.r - q__2.r; q__1.i = shift.i - q__2.i; // , expr subst  
  shift.r = q__1.r; shift.i = q__1.i; // , expr subst  
  }
  }
  else {
  /* Exceptional shift. Chosen for no particularly good reason. */
+ i__2 = ilast + ilast * t_dim1;
+ if (iiter / 20 * 20 == iiter && bscale * ((r__1 = t[i__2].r, f2c_abs( r__1)) + (r__2 = r_imag(&t[ilast + ilast * t_dim1]), f2c_abs( r__2))) > safmin) {
+ i__2 = ilast + ilast * h_dim1;
+ q__3.r = ascale * h__[i__2].r; q__3.i = ascale * h__[i__2].i; // , expr subst  
+ i__3 = ilast + ilast * t_dim1;
+ q__4.r = bscale * t[i__3].r; q__4.i = bscale * t[i__3].i; // , expr subst  
+ c_div(&q__2, &q__3, &q__4);
+ q__1.r = eshift.r + q__2.r; q__1.i = eshift.i + q__2.i; // , expr subst  
+ eshift.r = q__1.r; eshift.i = q__1.i; // , expr subst  
+ }
+ else {
  i__2 = ilast + (ilast - 1) * h_dim1;
  q__3.r = ascale * h__[i__2].r; q__3.i = ascale * h__[i__2].i; // , expr subst  
  i__3 = ilast - 1 + (ilast - 1) * t_dim1;
@@ -873,6 +917,7 @@
  c_div(&q__2, &q__3, &q__4);
  q__1.r = eshift.r + q__2.r; q__1.i = eshift.i + q__2.i; // , expr subst  
  eshift.r = q__1.r; eshift.i = q__1.i; // , expr subst  
+ }
  shift.r = eshift.r; shift.i = eshift.i; // , expr subst  
  }
  /* Now check for two consecutive small subdiagonals. */

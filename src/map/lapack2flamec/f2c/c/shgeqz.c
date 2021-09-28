@@ -1,4 +1,4 @@
-/* ../netlib/shgeqz.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* shgeqz.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
  #include "FLA_f2c.h" /* Table of constant values */
  static real c_b12 = 0.f;
@@ -285,7 +285,6 @@
  /* > \author Univ. of California Berkeley */
  /* > \author Univ. of Colorado Denver */
  /* > \author NAG Ltd. */
- /* > \date June 2016 */
  /* > \ingroup realGEcomputational */
  /* > \par Further Details: */
  /* ===================== */
@@ -305,7 +304,7 @@
  int shgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integer *ihi, real *h__, integer *ldh, real *t, integer *ldt, real *alphar, real *alphai, real *beta, real *q, integer *ldq, real *z__, integer *ldz, real *work, integer *lwork, integer *info) {
  /* System generated locals */
  integer h_dim1, h_offset, q_dim1, q_offset, t_dim1, t_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4;
- real r__1, r__2, r__3, r__4;
+ real r__1, r__2, r__3, r__4, r__5;
  /* Builtin functions */
  double sqrt(doublereal);
  /* Local variables */
@@ -356,10 +355,9 @@
  logical ilazro;
  integer icompz, ifirst, ifrstm, istart;
  logical ilpivt, lquery;
- /* -- LAPACK computational routine (version 3.7.0) -- */
+ /* -- LAPACK computational routine -- */
  /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
  /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
- /* June 2016 */
  /* .. Scalar Arguments .. */
  /* .. */
  /* .. Array Arguments .. */
@@ -587,12 +585,16 @@
  goto L80;
  }
  else {
- if ((r__1 = h__[ilast + (ilast - 1) * h_dim1], f2c_abs(r__1)) <= atol) {
+ /* Computing MAX */
+ r__4 = safmin; r__5 = ulp * ((r__1 = h__[ilast + ilast * h_dim1], f2c_abs(r__1)) + (r__2 = h__[ilast - 1 + (ilast - 1) * h_dim1] , f2c_abs(r__2))); // , expr subst  
+ if ((r__3 = h__[ilast + (ilast - 1) * h_dim1], f2c_abs(r__3)) <= max( r__4,r__5)) {
  h__[ilast + (ilast - 1) * h_dim1] = 0.f;
  goto L80;
  }
  }
- if ((r__1 = t[ilast + ilast * t_dim1], f2c_abs(r__1)) <= btol) {
+ /* Computing MAX */
+ r__4 = safmin; r__5 = ulp * ((r__1 = t[ilast - 1 + ilast * t_dim1], f2c_abs(r__1)) + (r__2 = t[ilast - 1 + (ilast - 1) * t_dim1], f2c_abs( r__2))); // , expr subst  
+ if ((r__3 = t[ilast + ilast * t_dim1], f2c_abs(r__3)) <= max(r__4,r__5)) {
  t[ilast + ilast * t_dim1] = 0.f;
  goto L70;
  }
@@ -606,7 +608,9 @@
  ilazro = TRUE_;
  }
  else {
- if ((r__1 = h__[j + (j - 1) * h_dim1], f2c_abs(r__1)) <= atol) {
+ /* Computing MAX */
+ r__4 = safmin; r__5 = ulp * ((r__1 = h__[j + j * h_dim1], f2c_abs( r__1)) + (r__2 = h__[j - 1 + (j - 1) * h_dim1], f2c_abs( r__2))); // , expr subst  
+ if ((r__3 = h__[j + (j - 1) * h_dim1], f2c_abs(r__3)) <= max(r__4, r__5)) {
  h__[j + (j - 1) * h_dim1] = 0.f;
  ilazro = TRUE_;
  }
@@ -615,7 +619,13 @@
  }
  }
  /* Test 2: for T(j,j)=0 */
- if ((r__1 = t[j + j * t_dim1], f2c_abs(r__1)) < btol) {
+ temp = (r__1 = t[j + (j + 1) * t_dim1], f2c_abs(r__1));
+ if (j > *ilo) {
+ temp += (r__1 = t[j - 1 + j * t_dim1], f2c_abs(r__1));
+ }
+ /* Computing MAX */
+ r__2 = safmin; r__3 = ulp * temp; // , expr subst  
+ if ((r__1 = t[j + j * t_dim1], f2c_abs(r__1)) < max(r__2,r__3)) {
  t[j + j * t_dim1] = 0.f;
  /* Test 1a: Check for 2 consecutive small subdiagonals in A */
  ilazr2 = FALSE_;
