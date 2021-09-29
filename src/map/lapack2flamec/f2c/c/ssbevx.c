@@ -255,6 +255,12 @@ if RANGE = 'V', the exact value of M */
 /* Subroutine */
 int ssbevx_(char *jobz, char *range, char *uplo, integer *n, integer *kd, real *ab, integer *ldab, real *q, integer *ldq, real *vl, real *vu, integer *il, integer *iu, real *abstol, integer *m, real * w, real *z__, integer *ldz, real *work, integer *iwork, integer * ifail, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"ssbevx inputs: jobz %c, range %c, uplo %c, n %" FLA_IS ", kd %" FLA_IS ", ldab %" FLA_IS ", ldq %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", ldz %" FLA_IS "",*jobz, *range, *uplo, *n, *kd, *ldab, *ldq, *il, *iu, *ldz);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2;
     real r__1, r__2;
@@ -403,12 +409,14 @@ int ssbevx_(char *jobz, char *range, char *uplo, integer *n, integer *kd, real *
     {
         i__1 = -(*info);
         xerbla_("SSBEVX", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     *m = 0;
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 1)
@@ -437,6 +445,7 @@ int ssbevx_(char *jobz, char *range, char *uplo, integer *n, integer *kd, real *
                 z__[z_dim1 + 1] = 1.f;
             }
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants. */
@@ -628,6 +637,7 @@ L30:
             /* L50: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SSBEVX */
 }
