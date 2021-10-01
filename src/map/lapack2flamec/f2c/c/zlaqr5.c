@@ -253,7 +253,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
     /* System generated locals */
     integer h_dim1, h_offset, u_dim1, u_offset, v_dim1, v_offset, wh_dim1, wh_offset, wv_dim1, wv_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7, i__8, i__9, i__10, i__11;
     doublereal d__1, d__2, d__3, d__4, d__5, d__6, d__7, d__8, d__9, d__10;
-    doublecomplex z__1, z__2, z__3, z__4, z__5, z__6, z__7, z__8, z__9, z__a;
+    doublecomplex z__1, z__2, z__3, z__4, z__5, z__6, z__7, z__8;
     /* Builtin functions */
     void d_cnjg(doublecomplex *, doublecomplex *);
     double d_imag(doublecomplex *);
@@ -279,7 +279,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
     doublereal safmin, safmax;
     extern /* Subroutine */
     int zlarfg_(integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *);
-    doublecomplex refsum, refsum1;
+    doublecomplex refsum;
     extern /* Subroutine */
     int zlacpy_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *);
     integer mstart;
@@ -715,57 +715,69 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                 i__4 = m * v_dim1 + 1;
                 if (v[i__4].r != 0. || v[i__4].i != 0.)
                 {
+                    double v1r, v1i, v2r, v2i, v3r, v3i;
+                    double u1r, u1i, u2r, u2i, u3r, u3i;
+
                     k = krcol + (m - 1) * 3;
                     /* Computing MIN */
                     i__6 = *kbot;
                     i__7 = k + 3; // , expr subst
                     i__4 = min(i__6,i__7);
+
+                    v1r = v[m * v_dim1 + 1].r;
+                    v1i = v[m * v_dim1 + 1].i;
+                    v2r = v[m * v_dim1 + 2].r;
+                    v2i = v[m * v_dim1 + 2].i;
+                    v3r = v[m * v_dim1 + 3].r;
+                    v3i = v[m * v_dim1 + 3].i;
+
                     for (j = jtop;
                             j <= i__4;
                             ++j)
                     {
-                        i__6 = m * v_dim1 + 1;
-                        i__7 = j + (k + 1) * h_dim1;
-                        i__8 = m * v_dim1 + 2;
-                        i__9 = j + (k + 2) * h_dim1;
-                        z__4.r = v[i__8].r * h__[i__9].r - v[i__8].i * h__[ i__9].i;
-                        z__4.i = v[i__8].r * h__[i__9].i + v[ i__8].i * h__[i__9].r; // , expr subst
-                        z__3.r = h__[i__7].r + z__4.r;
-                        z__3.i = h__[i__7].i + z__4.i; // , expr subst
-                        i__10 = m * v_dim1 + 3;
-                        i__11 = j + (k + 3) * h_dim1;
-                        z__5.r = v[i__10].r * h__[i__11].r - v[i__10].i * h__[ i__11].i;
-                        z__5.i = v[i__10].r * h__[i__11].i + v[i__10].i * h__[i__11].r; // , expr subst
+                        i__6 = j + (k + 1) * h_dim1;
+                        i__7 = j + (k + 2) * h_dim1;
+                        i__9 = j + (k + 3) * h_dim1;
+
+                        u1r = h__[i__6].r;
+                        u1i = h__[i__6].i;
+                        u2r = h__[i__7].r;
+                        u2i = h__[i__7].i;
+                        u3r = h__[i__9].r;
+                        u3i = h__[i__9].i;
+
+                        z__4.r = v2r * u2r - v2i * u2i;
+                        z__4.i = v2r * u2i + v2i * u2r; // , expr subst
+                        z__3.r = u1r + z__4.r;
+                        z__3.i = u1i + z__4.i; // , expr subst
+
+                        z__5.r = v3r * u3r - v3i * u3i;
+                        z__5.i = v3r * u3i + v3i * u3r; // , expr subst
                         z__2.r = z__3.r + z__5.r;
                         z__2.i = z__3.i + z__5.i; // , expr subst
-                        z__1.r = v[i__6].r * z__2.r - v[i__6].i * z__2.i;
-                        z__1.i = v[i__6].r * z__2.i + v[i__6].i * z__2.r; // , expr subst
+                        z__1.r = v1r * z__2.r - v1i * z__2.i;
+                        z__1.i = v1r * z__2.i + v1i * z__2.r; // , expr subst
                         refsum.r = z__1.r;
                         refsum.i = z__1.i; // , expr subst
-                        i__6 = j + (k + 1) * h_dim1;
-                        i__7 = j + (k + 1) * h_dim1;
-                        z__1.r = h__[i__7].r - refsum.r;
-                        z__1.i = h__[i__7].i - refsum.i; // , expr subst
+
+                        z__1.r = u1r - refsum.r;
+                        z__1.i = u1i - refsum.i; // , expr subst
                         h__[i__6].r = z__1.r;
                         h__[i__6].i = z__1.i; // , expr subst
-                        i__6 = j + (k + 2) * h_dim1;
-                        i__7 = j + (k + 2) * h_dim1;
-                        d_cnjg(&z__3, &v[m * v_dim1 + 2]);
-                        z__2.r = refsum.r * z__3.r - refsum.i * z__3.i;
-                        z__2.i = refsum.r * z__3.i + refsum.i * z__3.r; // , expr subst
-                        z__1.r = h__[i__7].r - z__2.r;
-                        z__1.i = h__[i__7].i - z__2.i; // , expr subst
-                        h__[i__6].r = z__1.r;
-                        h__[i__6].i = z__1.i; // , expr subst
-                        i__6 = j + (k + 3) * h_dim1;
-                        i__7 = j + (k + 3) * h_dim1;
-                        d_cnjg(&z__3, &v[m * v_dim1 + 3]);
-                        z__2.r = refsum.r * z__3.r - refsum.i * z__3.i;
-                        z__2.i = refsum.r * z__3.i + refsum.i * z__3.r; // , expr subst
-                        z__1.r = h__[i__7].r - z__2.r;
-                        z__1.i = h__[i__7].i - z__2.i; // , expr subst
-                        h__[i__6].r = z__1.r;
-                        h__[i__6].i = z__1.i; // , expr subst
+
+                        z__2.r = refsum.r * v2r + refsum.i * v2i;
+                        z__2.i = refsum.i * v2r - refsum.r * v2i; // , expr subst
+                        z__1.r = u2r - z__2.r;
+                        z__1.i = u2i - z__2.i; // , expr subst
+                        h__[i__7].r = z__1.r;
+                        h__[i__7].i = z__1.i; // , expr subst
+
+                        z__2.r = refsum.r * v3r + refsum.i * v3i;
+                        z__2.i = refsum.i * v3r - refsum.r * v3i; // , expr subst
+                        z__1.r = u3r - z__2.r;
+                        z__1.i = u3i - z__2.i; // , expr subst
+                        h__[i__9].r = z__1.r;
+                        h__[i__9].i = z__1.i; // , expr subst
                         /* L50: */
                     }
                     if (accum)
