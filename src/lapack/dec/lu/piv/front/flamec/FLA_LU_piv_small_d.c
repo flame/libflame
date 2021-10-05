@@ -75,7 +75,7 @@ integer FLA_LU_piv_small_d_var0( integer *m, integer *n,
         }
         else
         {
-            *info = ( *info == 0 ) ? p_idx : *info;
+            *info = ( *info == 0 ) ? p_idx + 1 : *info;
         }
     }
     
