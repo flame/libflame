@@ -232,7 +232,7 @@ void Read_Lin_driver_param ( const char *file_name )
    FILE *fp;
    int i;
    char line[20];
-   char *str;
+   char str;
    fp = fopen( file_name, "r");
 
    if (fp == NULL){
@@ -252,8 +252,8 @@ void Read_Lin_driver_param ( const char *file_name )
 
    fscanf(fp, "%s", &line[0]);
    for (i=0; i<NUM_SUB_TESTS; i++){
-      fscanf(fp, "%s", str);
-      lin_driver_paramslist[i].fact = *str;
+      fscanf(fp, "%s", &str);
+      lin_driver_paramslist[i].fact = str;
    }
 
    fclose(fp);
@@ -268,11 +268,12 @@ void Read_EIG_params( const char *file_name )
    FILE *fp;
    int i;
    char line[20];
-   char *str;
+   char *str, c[20];
    int num_tests;
    int mode;
    int num_ranges;
 
+   str = c;
    fp = fopen( file_name, "r");
    if (fp == NULL){
     printf("Error: EIG params config file missing. Exiting.. \n");
@@ -480,10 +481,11 @@ void Read_EIG_non_sym_params( const char *file_name )
    FILE *fp;
    int i;
    char line[20];
-   char *str;
+   char *str, c[20];
    int num_tests;
    int mode;
    int num_ranges;
+   str = c;
    fp = fopen( file_name, "r");
    if (fp == NULL){
     printf("Error: EIG non symmetric API params config file missing. Exiting.. \n");
@@ -716,11 +718,12 @@ void Read_SVD_param ( const char *file_name )
    FILE *fp;
    int i;
    char line[25];
-   char *str;
+   char *str, c[20];
    int num_tests;
    int mode;
    int num_ranges;
 
+   str = c;
    fp = fopen( file_name, "r");
    if (fp == NULL){
     printf("Error: SVD config file missing. Exiting.. \n");
