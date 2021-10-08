@@ -1,10 +1,14 @@
-GBENCH_SRC_FILE_LIST = EIG/Flame_gbench_hseqr.o \
+GBENCH_SRC_FILE_LIST = \ 
+EIG/Flame_gbench_hseqr.o \
 EIG/Flame_gbench_geevx.o \
 EIG/Flame_gbench_heevd.o \
 LIN/Flame_gbench_getrs.o \
 EIG/Flame_gbench_geev.o \
 LIN/Flame_gbench_pocon.o \
 LIN/Flame_gbench_gecon.o \
+SVD/Flame_gbench_gesdd.o \
+EIG/Flame_gbench_sygvd.o \
+EIG/Flame_gbench_unghr.o \
 EIG/Flame_gbench_orghr.o \
 EIG/Flame_gbench_gehrd.o \
 LIN/Flame_gbench_geqr.o \
