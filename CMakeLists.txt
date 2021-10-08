@@ -14,7 +14,7 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 
 
 #enabling the configuration options
-option (ENABLE_ILP64 "Enable ILP64" ON)
+option (ENABLE_ILP64 "Enable ILP64" OFF)
 option (ENABLE_UPPERCASE "Enable uppercase API's" OFF)
 option (ENABLE_WRAPPER "Enable wrapper code" OFF)
 option (INCLUDE_LAPACKE "INCLUDE LAPACKE Code" ON)
@@ -31,8 +31,8 @@ option (ENABLE_PORTABLE_TIMER "Uses portable timer" ON)
 option (ENABLE_INTERNAL_ERROR_CHECKING "Enable internal checking levels" ON)
 set (ERROR_CHECKING_LEVEL 2) #1-Minimal error cheking 2-full error cheking 3-no error cheking
 option (ENABLE_MEMLK_CNTR "Enable memory leak counter" OFF)
-option (ENABLE_MULTITHREADING "Enables multithreading" OFF)
-option (ENABLE_OPENMP "Enables Threading model as Openmp" OFF)
+#option (ENABLE_MULTITHREADING "Enables multithreading" OFF)
+#option (ENABLE_OPENMP "Enables Threading model as Openmp" OFF)
 option (ENABLE_SUPER_MATRIX "Enable super matrix" OFF)
 option (ENABLE_CBLAS_INTERFACES "Enable cblas interfaces" OFF)
 option (ENABLE_GOTO_INTERFACES "Enable goto interfaces" OFF)
