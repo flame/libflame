@@ -25,6 +25,8 @@ int lapack_dgebrd(integer *m, integer *n, doublereal *a, integer *
 	          taup, doublereal *work, integer *lwork, integer *info);
 int lapack_dgelqf(integer *m, integer *n, doublereal *a, integer *
 	          lda, doublereal *tau, doublereal *work, integer *lwork, integer *info);
+int lapack_dgelq2(integer *m, integer *n, doublereal *a, integer * lda, 
+                  doublereal *tau, doublereal *work, integer *info);
 int lapack_dgesvd(char *jobu, char *jobvt, integer *m, integer *n, 
 	          doublereal *a, integer *lda, doublereal *s, doublereal *u, integer *
 	          ldu, doublereal *vt, integer *ldvt, doublereal *work, integer *lwork, 
@@ -42,6 +44,9 @@ int lapack_dorglq(integer *m, integer *n, integer *k, doublereal *
 int lapack_dorgqr(integer *m, integer *n, integer *k, doublereal *
 	          a, integer *lda, doublereal *tau, doublereal *work, integer *lwork, 
 	          integer *info);
+int lapack_dorm2r(char *side, char *trans, integer *m, integer *n, integer *k, 
+                  doublereal *a, integer *lda, doublereal *tau, doublereal * c__, 
+                  integer *ldc, doublereal *work, integer *info);
 int lapack_dormbr(char *vect, char *side, char *trans, integer *m, 
 	          integer *n, integer *k, doublereal *a, integer *lda, doublereal *tau, 
 	          doublereal *c__, integer *ldc, doublereal *work, integer *lwork, 
@@ -49,6 +54,9 @@ int lapack_dormbr(char *vect, char *side, char *trans, integer *m,
 int lapack_dormlq(char *side, char *trans, integer *m, integer *n, 
                   integer *k, doublereal *a, integer *lda, doublereal *tau, doublereal *
 	          c__, integer *ldc, doublereal *work, integer *lwork, integer *info);
+int lapack_dorml2(char *side, char *trans, integer *m, integer *n, integer *k, 
+                  doublereal *a, integer *lda, doublereal *tau, doublereal * c__, 
+                  integer *ldc, doublereal *work, integer *info); 
 int lapack_dormqr(char *side, char *trans, integer *m, integer *n, 
 	          integer *k, doublereal *a, integer *lda, doublereal *tau, doublereal *
 	          c__, integer *ldc, doublereal *work, integer *lwork, integer *info);
