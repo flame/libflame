@@ -16,6 +16,7 @@
 #include "FLAME.h"
 
 #ifdef FLA_ENABLE_LAPACK2FLAME
+#define FLA_ENABLE_SVD_OPT 0 
 
 #include "FLA_lapack2flame_util_defs.h"
 #include "FLA_lapack2flame_return_defs.h"
@@ -159,7 +160,7 @@ LAPACK_gesvd_real(s)
 
 LAPACK_gesvd_real(d)
 {
-#ifdef FLA_AMD_OPT
+#if FLA_AMD_OPT && FLA_ENABLE_SVD_OPT
     {
        LAPACK_gesvd_body_d(d)
     }
