@@ -51,11 +51,9 @@ LDFLAGS        := -lm -fopenmp -lgfortran
 
 # BLAS implementation path. A BLAS library must be given in order to run
 # the libflame test suite. Modify these definitions if needed.
-LIBBLAS_PATH   := /home/vasanth/code/amd_git/blis/lib
-#LIBBLAS_PATH   := /home/vasanth/code/amd_git/blis_origin/lib
-#LIBBLAS        := $(LIBBLAS_PATH)/libblas.a
-LIBBLAS        := $(LIBBLAS_PATH)/libblis.a
-#LIBBLAS        := $(HOME)/blis/lib/libblis.a
+#LIBBLAS_PATH   := $(INSTALL_LIBDIR) 
+#LIBBLAS        := $(LIBBLAS_PATH)/libblis.a
+LIBBLAS         := 
 
 # LAPACK implementation path. These values only matter if libflame was
 # configured with the external-lapack-interfaces option enabled. Modify

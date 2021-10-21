@@ -1,11 +1,7 @@
-/* dorgbr.f -- translated by f2c (version 20000121). You must link the resulting object file with the libraries: -lf2c -lm (in that order) */
-/*
-    Copyright (c) 2021 Advanced Micro Devices, Inc. All rights reserved.
-    Oct 12, 2021
-*/
-
-#include "FLAME.h"
-#include "FLA_f2c.h" /* Table of constant values */
+/* dorgbr.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+ on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
+ #include "FLAME.h"
+ #include "FLA_f2c.h" /* Table of constant values */
  static integer c_n1 = -1;
  /* > \brief \b DORGBR */
  /* =========== DOCUMENTATION =========== */
@@ -158,11 +154,10 @@
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2, i__3;
  /* Local variables */
- integer i__, j;
+ integer i__, j, mn;
  extern logical lsame_(char *, char *);
  integer iinfo;
  logical wantq;
- integer mn;
  extern /* Subroutine */
  int xerbla_(char *, integer *), lapack_dorglq( integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), lapack_dorgqr( integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
  integer lwkopt;
@@ -189,7 +184,7 @@
  /* Test the input arguments */
  /* Parameter adjustments */
  a_dim1 = *lda;
- a_offset = 1 + a_dim1 * 1;
+ a_offset = 1 + a_dim1;
  a -= a_offset;
  --tau;
  --work;
@@ -349,5 +344,5 @@
  return 0;
  /* End of DORGBR */
  }
- /* dorgbr_ */
+ /* lapack_dorgbr */
  

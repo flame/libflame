@@ -1,11 +1,7 @@
-/* dgebrd.f -- translated by f2c (version 20000121). You must link the resulting object file with the libraries: -lf2c -lm (in that order) */
-/*
-    Copyright (c) 2021 Advanced Micro Devices, Inc. All rights reserved.
-    Oct 12, 2021
-*/
-
-#include "FLAME.h" 
-#include "FLA_f2c.h" /* Table of constant values */
+/* dgebrd.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+ on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
+ #include "FLAME.h"
+ #include "FLA_f2c.h" /* Table of constant values */
  static integer c__1 = 1;
  static integer c_n1 = -1;
  static integer c__3 = 3;
@@ -217,17 +213,10 @@
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
  /* Local variables */
- integer i__, j;
-  /* Subroutine */
- static integer nbmin, iinfo, minmn;
+ integer i__, j, nb, nx, ws;
+ integer nbmin, iinfo, minmn;
  extern /* Subroutine */
- int lapack_dgebd2(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *);
- integer nb;
- extern /* Subroutine */
- int dlabrd_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *);
- integer nx, ws;
- extern /* Subroutine */
- int xerbla_(char *, integer *);
+ int lapack_dgebd2(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *), dlabrd_(integer *, integer *, integer * , doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *) , xerbla_(char *, integer *);
  extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
  integer ldwrkx, ldwrky, lwkopt;
  logical lquery;
@@ -253,7 +242,7 @@
  /* Test the input parameters */
  /* Parameter adjustments */
  a_dim1 = *lda;
- a_offset = 1 + a_dim1 * 1;
+ a_offset = 1 + a_dim1;
  a -= a_offset;
  --d__;
  --e;
@@ -377,5 +366,5 @@
  return 0;
  /* End of DGEBRD */
  }
- /* dgebrd_ */
+ /* lapack_dgebrd */
  

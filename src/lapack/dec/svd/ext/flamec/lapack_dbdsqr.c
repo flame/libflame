@@ -1,10 +1,7 @@
-/*
-    Copyright (c) 2021 Advanced Micro Devices, Inc. All rights reserved.
-    Oct 12, 2021
-*/
-/* dbdsqr.f -- translated by f2c (version 20000121). You must link the resulting object file with the libraries: -lf2c -lm (in that order) */
-#include "FLAME.h" 
-#include "FLA_f2c.h" /* Table of constant values */
+/* dbdsqr.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+ on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
+ #include "FLAME.h"
+ #include "FLA_f2c.h" /* Table of constant values */
  static doublereal c_b15 = -.125;
  static integer c__1 = 1;
  static doublereal c_b49 = 1.;
@@ -245,7 +242,16 @@
  /* Builtin functions */
  double pow_dd(doublereal *, doublereal *), sqrt(doublereal), d_sign( doublereal *, doublereal *);
  /* Local variables */
- doublereal abse;
+ integer iterdivn;
+ doublereal f, g, h__;
+ integer i__, j, m;
+ doublereal r__;
+ integer maxitdivn;
+ doublereal cs;
+ integer ll;
+ doublereal sn, mu;
+ integer nm1, nm12, nm13, lll;
+ doublereal eps, sll, tol, abse;
  integer idir;
  doublereal abss;
  integer oldm;
@@ -253,38 +259,24 @@
  integer isub, iter;
  doublereal unfl, sinl, cosr, smin, smax, sinr;
  extern /* Subroutine */
- int drot_(integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *);
- integer iterdivn;
- extern /* Subroutine */
- int dlas2_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
- doublereal f, g, h__;
- integer i__, j, m;
- doublereal r__;
- extern /* Subroutine */
- logical lsame_(char *, char *);
+ int drot_(integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *), dlas2_( doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
+ extern logical lsame_(char *, char *);
  doublereal oldcs;
  extern /* Subroutine */
  int dlasr_(char *, char *, char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *);
  integer oldll;
  doublereal shift, sigmn, oldsn;
-  /* Subroutine */
- static doublereal sminl, sigmx;
+ /* Subroutine */
+ doublereal sminl, sigmx;
  logical lower;
- integer maxitdivn;
  extern /* Subroutine */
  int dlasq1_(integer *, doublereal *, doublereal *, doublereal *, integer *), dlasv2_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
- doublereal cs;
- integer ll;
  extern doublereal dlamch_(char *);
- doublereal sn, mu;
  extern /* Subroutine */
  int dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *), xerbla_(char *, integer *);
  doublereal sminoa, thresh;
  logical rotate;
- integer nm1;
  doublereal tolmul;
- integer nm12, nm13, lll;
- doublereal eps, sll, tol;
  /* -- LAPACK computational routine -- */
  /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
  /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -309,13 +301,13 @@
  --d__;
  --e;
  vt_dim1 = *ldvt;
- vt_offset = 1 + vt_dim1 * 1;
+ vt_offset = 1 + vt_dim1;
  vt -= vt_offset;
  u_dim1 = *ldu;
- u_offset = 1 + u_dim1 * 1;
+ u_offset = 1 + u_dim1;
  u -= u_offset;
  c_dim1 = *ldc;
- c_offset = 1 + c_dim1 * 1;
+ c_offset = 1 + c_dim1;
  c__ -= c_offset;
  --work;
  /* Function Body */
@@ -889,5 +881,5 @@
  L220: return 0;
  /* End of DBDSQR */
  }
- /* dbdsqr_ */
+ /* lapack_dbdsqr */
  

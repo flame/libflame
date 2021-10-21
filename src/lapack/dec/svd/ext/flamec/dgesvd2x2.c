@@ -5,10 +5,10 @@
 
 #include "FLAME.h"
 #include "FLA_f2c.h" 
-static inline void multaat(double* AA, const double*  A, int lda);
-static inline void multata(double* AA, const double*  A, int lda);
+void multaat(double* AA, const double*  A, int lda);
+void multata(double* AA, const double*  A, int lda);
 //Helper functions to calculate A*Atranspose and Atranspose*A
-static inline void multaat(double* AA, const double*  A, int lda)
+void multaat(double* AA, const double*  A, int lda)
 {
         AA[0] = A[0] * A[0] + A[1] * A[1];
         AA[1] = A[0] * A[lda] + A[1] * A[lda + 1];
@@ -16,7 +16,7 @@ static inline void multaat(double* AA, const double*  A, int lda)
         AA[lda + 1] = A[lda] * A[lda] + A[lda + 1] * A[lda + 1];
 }
 
-static inline void multata(double * AA, const double * A, int lda)
+void multata(double * AA, const double * A, int lda)
 {
         AA[0] = A[0] * A[0] + A[lda] * A[lda];
         AA[1] = A[0] * A[1] + A[lda] * A[lda + 1];

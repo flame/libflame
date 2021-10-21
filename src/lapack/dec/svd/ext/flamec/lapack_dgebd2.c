@@ -1,11 +1,7 @@
-/* dgebd2.f -- translated by f2c (version 20000121). You must link the resulting object file with the libraries: -lf2c -lm (in that order) */
-/*
-    Copyright (c) 2021 Advanced Micro Devices, Inc. All rights reserved.
-    Oct 12, 2021
-*/
-
-#include "FLAME.h" 
-#include "FLA_f2c.h" /* Table of constant values */
+/* dgebd2.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+ on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
+ #include "FLAME.h"
+ #include "FLA_f2c.h" /* Table of constant values */
  static integer c__1 = 1;
  /* > \brief \b DGEBD2 reduces a general matrix to bidiagonal form using an unblocked algorithm. */
  /* =========== DOCUMENTATION =========== */
@@ -219,7 +215,7 @@
  /* Test the input parameters */
  /* Parameter adjustments */
  a_dim1 = *lda;
- a_offset = 1 + a_dim1 * 1;
+ a_offset = 1 + a_dim1;
  a -= a_offset;
  --d__;
  --e;
@@ -327,5 +323,5 @@
  return 0;
  /* End of DGEBD2 */
  }
- /* dgebd2_ */
+ /* lapack_dgebd2 */
  

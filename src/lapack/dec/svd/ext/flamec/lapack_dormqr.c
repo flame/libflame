@@ -1,11 +1,7 @@
-/* dormqr.f -- translated by f2c (version 20000121). You must link the resulting object file with the libraries: -lf2c -lm (in that order) */
-/*
-    Copyright (c) 2021 Advanced Micro Devices, Inc. All rights reserved.
-    Oct 12, 2021
-*/
-
-#include "FLAME.h" 
-#include "FLA_f2c.h" /* Table of constant values */
+/* dormqr.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+ on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
+ #include "FLAME.h"
+ #include "FLA_f2c.h" /* Table of constant values */
  static integer c__1 = 1;
  static integer c_n1 = -1;
  static integer c__2 = 2;
@@ -176,23 +172,16 @@
  /* Subroutine */
  
  /* Local variables */
+ integer i__, i1, i2, i3, ib, ic, jc, nb, mi, ni, nq, nw, iwt;
  logical left;
- integer i__;
  extern logical lsame_(char *, char *);
- integer nbmin, iinfo, i1, i2, i3;
+ integer nbmin, iinfo;
  extern /* Subroutine */
- int lapack_dorm2r(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *);
- integer ib, ic, jc, nb, mi, ni;
- extern /* Subroutine */
- int dlarfb_(char *, char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *);
- integer nq, nw;
- extern /* Subroutine */
- int dlarft_(char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
+ int lapack_dorm2r(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), dlarfb_(char *, char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dlarft_(char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
  extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
  logical notran;
  integer ldwork, lwkopt;
  logical lquery;
- integer iwt;
  /* -- LAPACK computational routine -- */
  /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
  /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -215,11 +204,11 @@
  /* Test the input arguments */
  /* Parameter adjustments */
  a_dim1 = *lda;
- a_offset = 1 + a_dim1 * 1;
+ a_offset = 1 + a_dim1;
  a -= a_offset;
  --tau;
  c_dim1 = *ldc;
- c_offset = 1 + c_dim1 * 1;
+ c_offset = 1 + c_dim1;
  c__ -= c_offset;
  --work;
  /* Function Body */
@@ -347,5 +336,5 @@
  return 0;
  /* End of DORMQR */
  }
- /* dormqr_ */
+ /* lapack_dormqr */
  

@@ -1,3 +1,4 @@
+#include "FLAME.h"
 #include "FLA_f2c.h"
 #include <float.h>
 
@@ -10,13 +11,13 @@ static doublereal zero  = 0.0;
 doublereal dlamch_(char *cmach)
 {
     /* Initialized data */
-    static logical first = TRUE_;
+    static TLS_CLASS_SPEC logical first = TRUE_;
 
     /* System generated locals */
     doublereal ret_val;
 
     /* Local variables */
-    static doublereal  eps, sfmin, base, prec, t, rnd, emin, rmin, emax, rmax;
+    static TLS_CLASS_SPEC doublereal  eps, sfmin, base, prec, t, rnd, emin, rmin, emax, rmax;
     doublereal rmach, small;
 
     extern logical lsame_(char *, char *);
