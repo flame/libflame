@@ -1,5 +1,4 @@
 #include "FLAME.h"
-#include "FLA_f2c.h"
 #include <float.h>
 
 /* Table of constant values */
@@ -18,7 +17,7 @@ doublereal dlamch_(char *cmach)
 
     /* Local variables */
     static TLS_CLASS_SPEC doublereal  eps, sfmin, base, prec, t, rnd, emin, rmin, emax, rmax;
-    doublereal rmach, small;
+    doublereal rmach, small_val;
 
     extern logical lsame_(char *, char *);
 
@@ -82,9 +81,9 @@ doublereal dlamch_(char *cmach)
         base  = FLT_RADIX;
         prec  = eps * base;
         sfmin = DBL_MIN;
-        small = one / DBL_MAX;
-        if ( small >= sfmin)
-            sfmin = small * (one + eps);
+        small_val = one / DBL_MAX;
+        if ( small_val >= sfmin)
+            sfmin = small_val * (one + eps);
 
 		// For t, we need the number of base-2 digits, not base-10 digits.
 		// Here, we hardcode the value obtained from netlib LAPACK.

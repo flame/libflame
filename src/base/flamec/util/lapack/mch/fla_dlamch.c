@@ -15,10 +15,8 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "FLA_f2c.h"
-#include "stdio.h"
 #include "FLAME.h"
-
+#include "stdio.h"
 /* Table of constant values */
 
 //static TLS_CLASS_SPEC integer c__1 = 1;
@@ -75,7 +73,7 @@ doublereal fla_dlamch(char *cmach, ftnlen cmach_len)
     static TLS_CLASS_SPEC logical lrnd;
     static TLS_CLASS_SPEC doublereal rmin, rmax, t, rmach;
     extern logical fla_lsame(char *, char *, ftnlen, ftnlen);
-    static TLS_CLASS_SPEC doublereal small, sfmin;
+    static TLS_CLASS_SPEC doublereal small_val, sfmin;
     extern /* Subroutine */ integer fla_dlamc2(integer *, integer *, logical *, 
 	    doublereal *, integer *, doublereal *, integer *, doublereal *);
     static TLS_CLASS_SPEC integer it;
@@ -156,13 +154,13 @@ doublereal fla_dlamch(char *cmach, ftnlen cmach_len)
 	emin = (doublereal) imin;
 	emax = (doublereal) imax;
 	sfmin = rmin;
-	small = 1. / rmax;
-	if (small >= sfmin) {
+	small_val = 1. / rmax;
+	if (small_val >= sfmin) {
 
 /*           Use SMALL plus a bit, to avoid the possibility of rounding */
 /*           causing overflow when computing  1/sfmin. */
 
-	    sfmin = small * (eps + 1.);
+	    sfmin = small_val * (eps + 1.);
 	}
     }
 
@@ -441,7 +439,7 @@ explicitly.\002,/)";
     static TLS_CLASS_SPEC integer i__, lbeta;
     static TLS_CLASS_SPEC doublereal rbase;
     static TLS_CLASS_SPEC integer lemin, lemax, gnmin;
-    static TLS_CLASS_SPEC doublereal small;
+    static TLS_CLASS_SPEC doublereal small_val;
     static TLS_CLASS_SPEC integer gpmin;
     static TLS_CLASS_SPEC doublereal third, lrmin, lrmax, sixth;
     extern /* Subroutine */ integer fla_dlamc1(integer *, integer *, logical *, 
@@ -604,13 +602,13 @@ L10:
 /*        is detected when we cannot recover the previous A. */
 
 	rbase = one / lbeta;
-	small = one;
+	small_val = one;
 	for (i__ = 1; i__ <= 3; ++i__) {
-	    d__1 = small * rbase;
-	    small = fla_dlamc3(&d__1, &zero);
+	    d__1 = small_val * rbase;
+	    small_val = fla_dlamc3(&d__1, &zero);
 /* L20: */
 	}
-	a = fla_dlamc3(&one, &small);
+	a = fla_dlamc3(&one, &small_val);
 	fla_dlamc4(&ngpmin, &one, &lbeta);
 	d__1 = -one;
 	fla_dlamc4(&ngnmin, &d__1, &lbeta);
