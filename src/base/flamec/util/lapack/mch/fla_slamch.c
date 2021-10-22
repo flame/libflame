@@ -15,15 +15,15 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "FLA_f2c.h"
+#include "FLAME.h"
 #include "stdio.h"
 
 /* Table of constant values */
 
-//static integer c__1 = 1;
-static real c_b32 = (float)0.;
+//static TLS_CLASS_SPEC integer c__1 = 1;
+static TLS_CLASS_SPEC real c_b32 = (float)0.;
 
-double fla_pow_ri(real *ap, integer *bp)
+double fla_pow_realint(real *ap, integer *bp)
 {
 	double        pow, x;
 	integer       n;
@@ -57,28 +57,28 @@ real fla_slamch(char *cmach, ftnlen cmach_len)
 {
     /* Initialized data */
 
-    static logical first = TRUE_;
+    static TLS_CLASS_SPEC logical first = TRUE_;
 
     /* System generated locals */
     integer i__1;
     real ret_val;
 
     /* Builtin functions */
-    double fla_pow_ri(real *, integer *);
+    double fla_pow_realint(real *, integer *);
 
     /* Local variables */
-    static real base;
-    static integer beta;
-    static real emin, prec, emax;
-    static integer imin, imax;
-    static logical lrnd;
-    static real rmin, rmax, t, rmach;
+    static TLS_CLASS_SPEC real base;
+    static TLS_CLASS_SPEC integer beta;
+    static TLS_CLASS_SPEC real emin, prec, emax;
+    static TLS_CLASS_SPEC integer imin, imax;
+    static TLS_CLASS_SPEC logical lrnd;
+    static TLS_CLASS_SPEC real rmin, rmax, t, rmach;
     extern logical fla_lsame(char *, char *, ftnlen, ftnlen);
-    static real small, sfmin;
+    static TLS_CLASS_SPEC real small, sfmin;
     extern /* Subroutine */ integer fla_slamc2(integer *, integer *, logical *, real 
 	    *, integer *, real *, integer *, real *);
-    static integer it;
-    static real rnd, eps;
+    static TLS_CLASS_SPEC integer it;
+    static TLS_CLASS_SPEC real rnd, eps;
 
 
 /*  -- LAPACK auxiliary routine (version 3.2) -- */
@@ -145,11 +145,11 @@ real fla_slamch(char *cmach, ftnlen cmach_len)
 	if (lrnd) {
 	    rnd = (float)1.;
 	    i__1 = 1 - it;
-	    eps = fla_pow_ri(&base, &i__1) / 2;
+	    eps = fla_pow_realint(&base, &i__1) / 2;
 	} else {
 	    rnd = (float)0.;
 	    i__1 = 1 - it;
-	    eps = fla_pow_ri(&base, &i__1);
+	    eps = fla_pow_realint(&base, &i__1);
 	}
 	prec = eps * base;
 	emin = (real) imin;
@@ -203,21 +203,21 @@ real fla_slamch(char *cmach, ftnlen cmach_len)
 {
     /* Initialized data */
 
-    static logical first = TRUE_;
+    static TLS_CLASS_SPEC logical first = TRUE_;
 
     /* System generated locals */
     real r__1, r__2;
 
     /* Local variables */
-    static logical lrnd;
-    static real a, b, c__, f;
-    static integer lbeta;
-    static real savec;
-    static logical lieee1;
-    static real t1, t2;
+    static TLS_CLASS_SPEC logical lrnd;
+    static TLS_CLASS_SPEC real a, b, c__, f;
+    static TLS_CLASS_SPEC integer lbeta;
+    static TLS_CLASS_SPEC real savec;
+    static TLS_CLASS_SPEC logical lieee1;
+    static TLS_CLASS_SPEC real t1, t2;
     extern real fla_slamc3(real *, real *);
-    static integer lt;
-    static real one, qtr;
+    static TLS_CLASS_SPEC integer lt;
+    static TLS_CLASS_SPEC real one, qtr;
 
 
 /*  -- LAPACK auxiliary routine (version 3.2) -- */
@@ -411,11 +411,11 @@ L30:
 {
     /* Initialized data */
 
-    static logical first = TRUE_;
-    static logical iwarn = FALSE_;
+    static TLS_CLASS_SPEC logical first = TRUE_;
+    static TLS_CLASS_SPEC logical iwarn = FALSE_;
 
     /* Format strings */
-    static char fmt_9999[] = "(//\002 WARNING. The value EMIN may be incorre\
+    static TLS_CLASS_SPEC char fmt_9999[] = "(//\002 WARNING. The value EMIN may be incorre\
 ct:-\002,\002  EMIN = \002,i8,/\002 If, after inspection, the value EMIN loo\
 ks\002,\002 acceptable please comment out \002,/\002 the IF block as marked \
 within the code of routine\002,\002 SLAMC2,\002,/\002 otherwise supply EMIN \
@@ -426,32 +426,32 @@ explicitly.\002,/)";
     real r__1, r__2, r__3, r__4, r__5;
 
     /* Builtin functions */
-    double fla_pow_ri(real *, integer *);
+    double fla_pow_realint(real *, integer *);
     //integer s_wsfe(cilist *), do_fio(integer *, char *, ftnlen), e_wsfe();
 
     /* Local variables */
-    static logical ieee;
-    static real half;
-    static logical lrnd;
-    static real leps, zero, a, b, c__;
-    static integer i__, lbeta;
-    static real rbase;
-    static integer lemin, lemax, gnmin;
-    static real small;
-    static integer gpmin;
-    static real third, lrmin, lrmax, sixth;
-    static logical lieee1;
+    static TLS_CLASS_SPEC logical ieee;
+    static TLS_CLASS_SPEC real half;
+    static TLS_CLASS_SPEC logical lrnd;
+    static TLS_CLASS_SPEC real leps, zero, a, b, c__;
+    static TLS_CLASS_SPEC integer i__, lbeta;
+    static TLS_CLASS_SPEC real rbase;
+    static TLS_CLASS_SPEC integer lemin, lemax, gnmin;
+    static TLS_CLASS_SPEC real small;
+    static TLS_CLASS_SPEC integer gpmin;
+    static TLS_CLASS_SPEC real third, lrmin, lrmax, sixth;
+    static TLS_CLASS_SPEC logical lieee1;
     extern /* Subroutine */ integer fla_slamc1(integer *, integer *, logical *, 
 	    logical *);
     extern real fla_slamc3(real *, real *);
     extern /* Subroutine */ integer fla_slamc4(integer *, real *, integer *), 
 	    fla_slamc5(integer *, integer *, integer *, logical *, integer *, 
 	    real *);
-    static integer lt, ngnmin, ngpmin;
-    static real one, two;
+    static TLS_CLASS_SPEC integer lt, ngnmin, ngpmin;
+    static TLS_CLASS_SPEC real one, two;
 
     /* Fortran I/O blocks */
-    //static cilist io___58 = { 0, 6, 0, fmt_9999, 0 };
+    //static TLS_CLASS_SPEC cilist io___58 = { 0, 6, 0, fmt_9999, 0 };
 
 
 
@@ -548,7 +548,7 @@ explicitly.\002,/)";
 
 	b = (real) lbeta;
 	i__1 = -lt;
-	a = fla_pow_ri(&b, &i__1);
+	a = fla_pow_realint(&b, &i__1);
 	leps = a;
 
 /*        Try some tricks to see whether or not this is the correct  EPS. */
@@ -767,11 +767,11 @@ real fla_slamc3(real *a, real *b)
     real r__1;
 
     /* Local variables */
-    static real zero, a;
-    static integer i__;
-    static real rbase, b1, b2, c1, c2, d1, d2;
+    static TLS_CLASS_SPEC real zero, a;
+    static TLS_CLASS_SPEC integer i__;
+    static TLS_CLASS_SPEC real rbase, b1, b2, c1, c2, d1, d2;
     extern real fla_slamc3(real *, real *);
-    static real one;
+    static TLS_CLASS_SPEC real one;
 
 
 /*  -- LAPACK auxiliary routine (version 3.2) -- */
@@ -866,14 +866,14 @@ L10:
     real r__1;
 
     /* Local variables */
-    static integer lexp;
-    static real oldy;
-    static integer uexp, i__;
-    static real y, z__;
-    static integer nbits;
+    static TLS_CLASS_SPEC integer lexp;
+    static TLS_CLASS_SPEC real oldy;
+    static TLS_CLASS_SPEC integer uexp, i__;
+    static TLS_CLASS_SPEC real y, z__;
+    static TLS_CLASS_SPEC integer nbits;
     extern real fla_slamc3(real *, real *);
-    static real recbas;
-    static integer exbits, expsum, try__;
+    static TLS_CLASS_SPEC real recbas;
+    static TLS_CLASS_SPEC integer exbits, expsum, try__;
 
 
 /*  -- LAPACK auxiliary routine (version 3.2) -- */

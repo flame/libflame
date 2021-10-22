@@ -1,22 +1,22 @@
-#include "FLA_f2c.h"
+#include "FLAME.h"
 #include <float.h>
 
 /* Table of constant values */
 
-static const real half  = 0.5f;
-static const real one   = 1.f;
-static const real zero  = 0.f;
+static TLS_CLASS_SPEC const real half  = 0.5f;
+static TLS_CLASS_SPEC const real one   = 1.f;
+static TLS_CLASS_SPEC const real zero  = 0.f;
 
 real slamch_(char *cmach)
 {
     /* Initialized data */
-    static logical first = TRUE_;
+    static TLS_CLASS_SPEC logical first = TRUE_;
 
     /* System generated locals */
     real ret_val;
 
     /* Local variables */
-    static real  eps, sfmin, base, prec, t, rnd, emin, rmin, emax, rmax;
+    static TLS_CLASS_SPEC real  eps, sfmin, base, prec, t, rnd, emin, rmin, emax, rmax;
     real rmach, small;
 
     extern logical lsame_(char *, char *);
