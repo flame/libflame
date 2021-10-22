@@ -17,7 +17,7 @@ real slamch_(char *cmach)
 
     /* Local variables */
     static TLS_CLASS_SPEC real  eps, sfmin, base, prec, t, rnd, emin, rmin, emax, rmax;
-    real rmach, small;
+    real rmach, small_val;
 
     extern logical lsame_(char *, char *);
 
@@ -81,9 +81,9 @@ real slamch_(char *cmach)
         base  = FLT_RADIX;
         prec  = eps * base;
         sfmin = FLT_MIN;
-        small = one / FLT_MAX;
-        if ( small >= sfmin)
-            sfmin = small * (one + eps);
+        small_val = one / FLT_MAX;
+        if ( small_val >= sfmin)
+            sfmin = small_val * (one + eps);
 
 		// For t, we need the number of base-2 digits, not base-10 digits.
 		// Here, we hardcode the value obtained from netlib LAPACK.

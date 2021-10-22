@@ -74,7 +74,7 @@ real fla_slamch(char *cmach, ftnlen cmach_len)
     static TLS_CLASS_SPEC logical lrnd;
     static TLS_CLASS_SPEC real rmin, rmax, t, rmach;
     extern logical fla_lsame(char *, char *, ftnlen, ftnlen);
-    static TLS_CLASS_SPEC real small, sfmin;
+    static TLS_CLASS_SPEC real small_val, sfmin;
     extern /* Subroutine */ integer fla_slamc2(integer *, integer *, logical *, real 
 	    *, integer *, real *, integer *, real *);
     static TLS_CLASS_SPEC integer it;
@@ -155,13 +155,13 @@ real fla_slamch(char *cmach, ftnlen cmach_len)
 	emin = (real) imin;
 	emax = (real) imax;
 	sfmin = rmin;
-	small = (float)1. / rmax;
-	if (small >= sfmin) {
+	small_val = (float)1. / rmax;
+	if (small_val >= sfmin) {
 
 /*           Use SMALL plus a bit, to avoid the possibility of rounding */
 /*           causing overflow when computing  1/sfmin. */
 
-	    sfmin = small * (eps + (float)1.);
+	    sfmin = small_val * (eps + (float)1.);
 	}
     }
 
@@ -437,7 +437,7 @@ explicitly.\002,/)";
     static TLS_CLASS_SPEC integer i__, lbeta;
     static TLS_CLASS_SPEC real rbase;
     static TLS_CLASS_SPEC integer lemin, lemax, gnmin;
-    static TLS_CLASS_SPEC real small;
+    static TLS_CLASS_SPEC real small_val;
     static TLS_CLASS_SPEC integer gpmin;
     static TLS_CLASS_SPEC real third, lrmin, lrmax, sixth;
     static TLS_CLASS_SPEC logical lieee1;
@@ -600,13 +600,13 @@ L10:
 /*        is detected when we cannot recover the previous A. */
 
 	rbase = one / lbeta;
-	small = one;
+	small_val = one;
 	for (i__ = 1; i__ <= 3; ++i__) {
-	    r__1 = small * rbase;
-	    small = fla_slamc3(&r__1, &zero);
+	    r__1 = small_val * rbase;
+	    small_val = fla_slamc3(&r__1, &zero);
 /* L20: */
 	}
-	a = fla_slamc3(&one, &small);
+	a = fla_slamc3(&one, &small_val);
 	fla_slamc4(&ngpmin, &one, &lbeta);
 	r__1 = -one;
 	fla_slamc4(&ngnmin, &r__1, &lbeta);
