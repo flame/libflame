@@ -144,6 +144,7 @@ def run_summary_test( f, cmdline, short_summary):
                 if not short_summary: print(line, end=' ')
                 whereisout= words_in_line.index("out")
                 nb_test_fail+=int(words_in_line[whereisout-1])
+                nb_test_run+=int(words_in_line[whereisout+2])
             if ((line.find("illegal")!=-1) or (line.find("Illegal")!=-1)):
                 if not short_summary: print(line, end=' ')
                 nb_test_illegal+=1
