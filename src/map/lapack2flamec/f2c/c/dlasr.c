@@ -266,27 +266,54 @@ int dlasr_(char *side, char *pivot, char *direct, integer *m, integer *n, double
         {
             if (lsame_(direct, "F"))
             {
+                double ct0, ct1;
+                double st0, st1;
+                double tmp0, tmp1, tmp2;
+                double res0, res1, res2;
+
                 i__1 = *m - 1;
-                for (j = 1;
-                        j <= i__1;
-                        ++j)
+                /* Apply two rotations in an iteration */
+                for (j = 1; j < i__1; j += 2)
                 {
-                    ctemp = c__[j];
-                    stemp = s[j];
-                    if (ctemp != 1. || stemp != 0.)
+                    ct0 = c__[j]; st0 = s[j];
+                    ct1 = c__[j + 1]; st1 = s[j + 1];
+                    i__2 = *n;
+                    for (i__ = 1; i__ <= i__2; ++i__)
+                    {
+                        tmp0 = a[j + 0 + i__ * a_dim1];
+                        tmp1 = a[j + 1 + i__ * a_dim1];
+                        tmp2 = a[j + 2 + i__ * a_dim1];
+
+                        res0 = ct0 * tmp0 + st0 * tmp1;
+                        tmp1 = ct0 * tmp1 - st0 * tmp0;
+
+                        res1 = ct1 * tmp1 + st1 * tmp2;
+                        res2 = ct1 * tmp2 - st1 * tmp1;
+
+                        a[j + 0 + i__ * a_dim1] = res0;
+                        a[j + 1 + i__ * a_dim1] = res1;
+                        a[j + 2 + i__ * a_dim1] = res2;
+                    }
+                }
+                /* Apply the remaining rotation */
+                if (i__1 & 1)
+                {
+                    ct0 = c__[i__1];
+                    st0 = s[i__1];
+                    if (ct0 != 1. || st0 != 0.)
                     {
                         i__2 = *n;
+                        j = i__1;
                         for (i__ = 1;
                                 i__ <= i__2;
                                 ++i__)
                         {
-                            temp = a[j + 1 + i__ * a_dim1];
-                            a[j + 1 + i__ * a_dim1] = ctemp * temp - stemp * a[j + i__ * a_dim1];
-                            a[j + i__ * a_dim1] = stemp * temp + ctemp * a[j + i__ * a_dim1];
+                            tmp0 = a[j + 1 + i__ * a_dim1];
+                            a[j + 1 + i__ * a_dim1] = ct0 * tmp0 - st0 * a[j + i__ * a_dim1];
+                            a[j + i__ * a_dim1] = st0 * tmp0 + ct0 * a[j + i__ * a_dim1];
                             /* L10: */
                         }
                     }
-                    /* L20: */
                 }
             }
             else if (lsame_(direct, "B"))
@@ -451,26 +478,49 @@ int dlasr_(char *side, char *pivot, char *direct, integer *m, integer *n, double
             }
             else if (lsame_(direct, "B"))
             {
-                for (j = *n - 1;
-                        j >= 1;
-                        --j)
+                double ct0, ct1;
+                double st0, st1;
+                double tmp0, tmp1, tmp2;
+                double res0, res1, res2;
+
+                /* Apply two rotations in an iteration */
+                for (j = *n - 1; j > 1; j -= 2)
                 {
-                    ctemp = c__[j];
-                    stemp = s[j];
-                    if (ctemp != 1. || stemp != 0.)
+                    ct0 = c__[j - 0]; st0 = s[j - 0];
+                    ct1 = c__[j - 1]; st1 = s[j - 1];
+                    i__1 = *m;
+                    for (i__ = 1; i__ <= i__1; ++i__)
+                    {
+                        tmp0 = a[i__ + (j + 1) * a_dim1];
+                        tmp1 = a[i__ + (j + 0) * a_dim1];
+                        tmp2 = a[i__ + (j - 1) * a_dim1];
+
+                        res0 = ct0 * tmp0 - st0 * tmp1;
+                        tmp1 = ct0 * tmp1 + st0 * tmp0;
+
+                        res1 = ct1 * tmp1 - st1 * tmp2;
+                        res2 = ct1 * tmp2 + st1 * tmp1;
+
+                        a[i__ + (j + 1) * a_dim1] = res0;
+                        a[i__ + (j + 0) * a_dim1] = res1;
+                        a[i__ + (j - 1) * a_dim1] = res2;
+                    }
+                }
+                /* Apply the remaining rotation */
+                if (!(*n & 1))
+                {
+                    ct0 = c__[1];
+                    st0 = s[1];
+                    if (ct0 != 1. || st0 != 0.)
                     {
                         i__1 = *m;
-                        for (i__ = 1;
-                                i__ <= i__1;
-                                ++i__)
+                        for (i__ = 1; i__ <= i__1; ++i__)
                         {
-                            temp = a[i__ + (j + 1) * a_dim1];
-                            a[i__ + (j + 1) * a_dim1] = ctemp * temp - stemp * a[i__ + j * a_dim1];
-                            a[i__ + j * a_dim1] = stemp * temp + ctemp * a[ i__ + j * a_dim1];
-                            /* L150: */
+                            tmp0 = a[i__ + 2 * a_dim1];
+                            a[i__ + 2 * a_dim1] = ct0 * tmp0 - st0 * a[i__ + 1 * a_dim1];
+                            a[i__ + 1 * a_dim1] = st0 * tmp0 + ct0 * a[i__ + 1 * a_dim1];
                         }
                     }
-                    /* L160: */
                 }
             }
         }
