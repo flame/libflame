@@ -49,6 +49,7 @@
  /* > \ingroup OTHERauxiliary */
  /* ===================================================================== */
  doublereal dlapy2_(doublereal *x, doublereal *y) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* System generated locals */
  doublereal ret_val, d__1;
  /* Builtin functions */
@@ -95,6 +96,7 @@
  ret_val = w * sqrt(d__1 * d__1 + 1.);
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  /* End of DLAPY2 */
  }
