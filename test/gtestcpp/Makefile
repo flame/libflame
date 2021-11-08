@@ -85,7 +85,17 @@ libflame_hegvx.x \
 libflame_hesv.x \
 libflame_hesv_aa.x \
 libflame_hesv_aa_2stage.x \
-libflame_hesv_rk.x
+libflame_hesv_rk.x \
+libflame_hesv_rook.x \
+libflame_heswapr.x \
+libflame_hetd2.x \
+libflame_hetf2.x \
+libflame_hetf2_rk.x \
+libflame_hetf2_rook.x \
+libflame_hetrd.x \
+libflame_hetrd_2stage.x \
+libflame_hetrd_hb2st.x \
+libflame_hetrd_he2hb.x
 
 # --- General build definitions ------------------------------------------------
 #

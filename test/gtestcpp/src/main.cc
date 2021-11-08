@@ -247,6 +247,63 @@ void Read_EIG_params(const char *file_name)
     fscanf(fp, "%d", &eig_paramslist[index].lwork_hegv);
   }
   
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].i1);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].i2);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lwork_hetrd);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lhous2);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lwork_hetrd_2stage);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%s", str);
+    eig_paramslist[index].vect_hetrd_2stage = *str;
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%s", str);
+    eig_paramslist[index].stage1 = *str;
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].kd);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lwork_hetrd_hb2st);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lhous);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lwork_hbtrd_he2hb);
+  }
+  
   fclose(fp);
 }
 
@@ -405,6 +462,44 @@ void Read_Lin_driver_params (const char *file_name)
   fscanf(fp, "%s", &line[0]);
   for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%d", &lin_driver_paramslist[index].lwork_hesv_aa_2stage);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%s", str);
+    lin_driver_paramslist[index].fact = *str;
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_driver_paramslist[index].ldaf);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_driver_paramslist[index].ldx);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%s", str);
+    lin_driver_paramslist[index].fact_hesvxx = *str;
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%s", str);
+    lin_driver_paramslist[index].equed = *str;
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_driver_paramslist[index].n_err_bnds);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_driver_paramslist[index].nparams);
   }
   
   fclose(fp);

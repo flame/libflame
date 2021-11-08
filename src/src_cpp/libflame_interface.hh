@@ -35976,7 +35976,7 @@ integer hesvxx(char* fact, char* uplo, integer* n, integer* nrhs, T* a, integer*
 
  * @return INTEGER Return value of the function.
  * */
-template< typename T, typename Ta >
+template< typename T >
 integer heswapr(char* uplo, integer* n, T* a, integer* lda, integer* i1, integer* i2)
 {
   return heswapr(uplo, n, a, lda, i1, i2);

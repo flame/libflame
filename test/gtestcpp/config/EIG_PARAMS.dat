@@ -36,3 +36,14 @@ liwork_heevr 10000 -1
 itype 1 2
 ldb 20 40
 lwork_heevr 10000 -1
+i1 5 10
+i2 10 20
+lwork_hetrd -1 4000
+lhous2 80 -1
+lwork_hetrd_2stage 10000 -1
+vect_hetrd_2stage N N
+stage1 N Y
+kd 10 15
+lwork_hetrd_hb2st 10000 -1
+lhous 80 -1
+lwork_hbtrd_he2hb 10000 -1

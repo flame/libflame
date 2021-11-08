@@ -260,6 +260,105 @@ typedef struct EIG_paramlist_t {
                           only calculates the optimal size of the WORK array, returns
                           this value as the first entry of the WORK array, and no error
                           message related to LWORK is issued by XERBLA.*/
+  // Added for heswapr()
+  integer i1;  /* I1 is INTEGER
+                  Index of the first row to swap*/
+  integer i2;  /* I2 is INTEGER
+                  Index of the second row to swap*/
+  // Added for hetrd()
+  integer lwork_hetrd; /* LWORK is INTEGER
+                          The dimension of the array WORK.  LWORK >= 1.
+                          For optimum performance LWORK >= N*NB, where NB is the
+                          optimal blocksize.
+
+                          If LWORK = -1, then a workspace query is assumed; the routine
+                          only calculates the optimal size of the WORK array, returns
+                          this value as the first entry of the WORK array, and no error
+                          message related to LWORK is issued by XERBLA.*/
+  // Added for hetrd_2stage()
+  integer lhous2;  /* LHOUS2 is INTEGER
+                      The dimension of the array HOUS2.
+                      If LWORK = -1, or LHOUS2=-1,
+                      then a query is assumed; the routine
+                      only calculates the optimal size of the HOUS2 array, returns
+                      this value as the first entry of the HOUS2 array, and no error
+                      message related to LHOUS2 is issued by XERBLA.
+                      If VECT='N', LHOUS2 = max(1, 4*n);
+                      if VECT='V', option not yet available.*/
+  integer lwork_hetrd_2stage;  /* LWORK is INTEGER
+                                  The dimension of the array WORK. LWORK = MAX(1, dimension)
+                                  If LWORK = -1, or LHOUS2 = -1,
+                                  then a workspace query is assumed; the routine
+                                  only calculates the optimal size of the WORK array, returns
+                                  this value as the first entry of the WORK array, and no error
+                                  message related to LWORK is issued by XERBLA.
+                                  LWORK = MAX(1, dimension) where
+                                  dimension   = max(stage1,stage2) + (KD+1)*N
+                                              = N*KD + N*max(KD+1,FACTOPTNB) 
+                                                + max(2*KD*KD, KD*NTHREADS) 
+                                                + (KD+1)*N 
+                                  where KD is the blocking size of the reduction,
+                                  FACTOPTNB is the blocking used by the QR or LQ
+                                  algorithm, usually FACTOPTNB=128 is a good choice
+                                  NTHREADS is the number of threads used when
+                                  openMP compilation is enabled, otherwise =1.*/
+  char vect_hetrd_2stage;  /* VECT is CHARACTER*1
+                              = 'N':  No need for the Housholder representation, 
+                                      in particular for the second stage (Band to
+                                      tridiagonal) and thus LHOUS2 is of size max(1, 4*N);
+                              = 'V':  the Householder representation is needed to 
+                                      either generate Q1 Q2 or to apply Q1 Q2, 
+                                      then LHOUS2 is to be queried and computed.
+                                      (NOT AVAILABLE IN THIS RELEASE).*/
+  // Added for hetrd_hb2st
+  char stage1; /* STAGE1 is CHARACTER*1
+                  = 'N':  "No": to mention that the stage 1 of the reduction  
+                          from dense to band using the chetrd_he2hb routine
+                          was not called before this routine to reproduce AB. 
+                          In other term this routine is called as standalone. 
+                  = 'Y':  "Yes": to mention that the stage 1 of the 
+                          reduction from dense to band using the chetrd_he2hb 
+                          routine has been called to produce AB (e.g., AB is
+                          the output of chetrd_he2hb.*/
+  integer kd;  /* KD is INTEGER
+                  The number of superdiagonals of the matrix A if UPLO = 'U',
+                  or the number of subdiagonals if UPLO = 'L'.  KD >= 0.*/
+  integer lwork_hetrd_hb2st;   /* LWORK is INTEGER
+                                  The dimension of the array WORK. LWORK = MAX(1, dimension)
+                                  If LWORK = -1, or LHOUS=-1,
+                                  then a workspace query is assumed; the routine
+                                  only calculates the optimal size of the WORK array, returns
+                                  this value as the first entry of the WORK array, and no error
+                                  message related to LWORK is issued by XERBLA.
+                                  LWORK = MAX(1, dimension) where
+                                  dimension   = (2KD+1)*N + KD*NTHREADS
+                                  where KD is the blocking size of the reduction,
+                                  FACTOPTNB is the blocking used by the QR or LQ
+                                  algorithm, usually FACTOPTNB=128 is a good choice
+                                  NTHREADS is the number of threads used when
+                                  openMP compilation is enabled, otherwise =1.*/
+  integer lhous; /* LHOUS is INTEGER
+                    The dimension of the array HOUS. LHOUS = MAX(1, dimension)
+                    If LWORK = -1, or LHOUS=-1,
+                    then a query is assumed; the routine
+                    only calculates the optimal size of the HOUS array, returns
+                    this value as the first entry of the HOUS array, and no error
+                    message related to LHOUS is issued by XERBLA.
+                    LHOUS = MAX(1, dimension) where
+                    dimension = 4*N if VECT='N'
+                    not available now if VECT='H' */
+  // Added for hbtrd_he2hb
+  integer lwork_hbtrd_he2hb;   /* LWORK is INTEGER
+                                  The dimension of the array WORK which should be calculated
+                                  by a workspace query. LWORK = MAX(1, LWORK_QUERY)
+                                  If LWORK = -1, then a workspace query is assumed; the routine
+                                  only calculates the optimal size of the WORK array, returns
+                                  this value as the first entry of the WORK array, and no error
+                                  message related to LWORK is issued by XERBLA.
+                                  LWORK_QUERY = N*KD + N*max(KD,FACTOPTNB) + 2*KD*KD
+                                  where FACTOPTNB is the blocking used by the QR or LQ
+                                  algorithm, usually FACTOPTNB=128 is a good choice otherwise
+                                  putting LWORK=-1 will provide the size of WORK.*/
 } EIG_paramlist;
 
 /* structure to hold Linear solver parameters */
@@ -344,6 +443,44 @@ typedef struct Lin_driver_paramlist_t {
                                     routine only calculates the optimal size of the WORK array,
                                     returns this value as the first entry of the WORK array, and
                                     no error message related to LWORK is issued by XERBLA.*/
+  // Added for hesvx()
+  char fact;   /* FACT is CHARACTER*1
+                  Specifies whether or not the factored form of A has been
+                  supplied on entry.
+                  = 'F':  On entry, AF and IPIV contain the factored form
+                          of A.  A, AF and IPIV will not be modified.
+                  = 'N':  The matrix A will be copied to AF and factored.*/
+  integer ldaf; /* LDAF is INTEGER
+                   The leading dimension of the array AF.  LDAF >= max(1,N).*/
+  integer ldx; /* LDX is INTEGER
+                   The leading dimension of the array X.  LDX >= max(1,N).*/
+  // Added for hesvxx()
+  char fact_hesvxx; /* FACT is CHARACTER*1
+                       Specifies whether or not the factored form of the matrix A is
+                       supplied on entry, and if not, whether the matrix A should be
+                       equilibrated before it is factored.
+                         = 'F':  On entry, AF and IPIV contain the factored form of A.
+                                 If EQUED is not 'N', the matrix A has been
+                                 equilibrated with scaling factors given by S.
+                                 A, AF, and IPIV are not modified.
+                         = 'N':  The matrix A will be copied to AF and factored.
+                         = 'E':  The matrix A will be equilibrated if necessary, then
+                                 copied to AF and factored.*/
+  char equed; /* EQUED is CHARACTER*1
+                 Specifies the form of equilibration that was done.
+                   = 'N':  No equilibration (always true if FACT = 'N').
+                   = 'Y':  Both row and column equilibration, i.e., A has been
+                           replaced by diag(S) * A * diag(S).
+                 EQUED is an input argument if FACT = 'F'; otherwise, it is an
+                 output argument.*/
+  integer n_err_bnds; /* N_ERR_BNDS is INTEGER
+                         Number of error bounds to return for each right hand side
+                         and each type (normwise or componentwise).  See ERR_BNDS_NORM and
+                         ERR_BNDS_COMP below.*/
+  integer nparams;  /* NPARAMS is INTEGER
+                       Specifies the number of parameters set in PARAMS.  If <= 0, the
+                       PARAMS array is never referenced and default values are used.*/
+  
 } Lin_driver_paramlist;
 
 extern EIG_paramlist eig_paramslist[NUM_SUB_TESTS];

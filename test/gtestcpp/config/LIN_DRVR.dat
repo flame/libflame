@@ -7,3 +7,10 @@ lwork 100 -1
 lwork_hesv_aa 28 -1
 ltb   40  -1
 lwork_hesv_aa_2stage 10 -1
+fact  F N
+ldaf  10 30
+ldx   10 30
+fact_hesvxx F E
+equed N Y
+n_err_bnds 10 30
+nparams 10 20
