@@ -3,9 +3,12 @@
                     Run netlib lapack tests
 ===============================================================================
 
-1. Use the script "run-netlib-test.sh" to run netlib lapack tests
+1. Run netlib lapack tests using script
 
-2. Usage :
+   For GCC: Use the script "run-netlib-test.sh" 
+   For AOCC: Use the script "run-netlib-test-aocc.sh" 
+
+2. Usage for GCC:
    
    $ sh run-netlib-test.sh BLAS_LIB_PATH=<blas library path> LAPACK_TEST_DIR=<lapack library path> 
                            [BLAS_LIB=<blas library] [LAPACK_LIB=<lapack library>] [ILP64=<0/1>] 
@@ -21,3 +24,5 @@
         BLAS_LIB_PATH : path of blas library chosen in BLAS_LIB
         LAPACK_LIB_PATH : path to lapack library chosen in LAPACK_LIB
         LAPACK_TEST_DIR : netlib lapack test directory name. Default=lapack-3.10.0
+
+  Usage for AOCC is on similar lines. Just replace script name from "run-netlib-test.sh" to "run-netlib-test-aocc.sh" 

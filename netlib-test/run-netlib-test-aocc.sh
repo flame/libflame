@@ -42,13 +42,13 @@ then
 	echo
 	echo "Usage :"
 	echo
-	echo "$ sh run-netlib-test.sh BLAS_LIB_PATH=<blas library path> LAPACK_LIB_PATH=<lapack library path> "
+	echo "$ sh run-netlib-test-aocc.sh BLAS_LIB_PATH=<blas library path> LAPACK_LIB_PATH=<lapack library path> "
 	echo "     [BLAS_LIB=<blas library] [LAPACK_LIB=<lapack library>] [ILP64=<0/1>] "
 	echo "     [LAPACK_TEST_DIR=<netlib lapack test directory name>]"
 	echo
 	echo "[] indicates optional argument"
 	echo 
-	echo "Example: $ sh run-netlib-test.sh BLAS_LIB_PATH=\"/home/user/blis/lib\" LAPACK_LIB_PATH=\"/home/user/libflame/lib\" BLAS_LIB=\"libblis.a\" LAPACK_LIB=\"libflame.a\""
+	echo "Example: $ sh run-netlib-test-aocc.sh BLAS_LIB_PATH=\"/home/user/blis/lib\" LAPACK_LIB_PATH=\"/home/user/libflame/lib\" BLAS_LIB=\"libblis.a\" LAPACK_LIB=\"libflame.a\""
         echo
         echo "BLAS_LIB : blas library to use. Default=libblist-mt.a"
 	echo "LAPACK_LIB : lapac library to use. Default=libflame.a"
