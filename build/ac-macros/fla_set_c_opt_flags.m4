@@ -10,11 +10,11 @@ AC_DEFUN([FLA_SET_C_OPT_FLAGS],
 		case ${CC_VENDOR} in
 			dnl GNU gcc.
 			gcc)
-				fla_c_opt_flags='-O3'
+				fla_c_opt_flags='-march=native -O3'
 			;;
 			dnl LLVM clang.
 			clang)
-				fla_c_opt_flags='-O3'
+				fla_c_opt_flags='-march=native -O3'
 			;;
 			dnl Intel cc.
 			icc)

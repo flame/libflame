@@ -7170,10 +7170,10 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} optimization flags.
 
 				case ${CC_VENDOR} in
 						gcc)
-				fla_c_opt_flags='-O3'
+				fla_c_opt_flags='-march=native -O3'
 			;;
 						clang)
-				fla_c_opt_flags='-O3'
+				fla_c_opt_flags='-march=native -O3'
 			;;
 						icc)
 				fla_c_opt_flags='-O3'
