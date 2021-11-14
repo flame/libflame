@@ -89,9 +89,9 @@ ulimit -s unlimited
 if [[ $ILP64 = "0" ]]
 then
 #LP64 mode
-OMP_NUM_THREADS=1 make FC="gfortran -fopenmp" LDFLAGS="-lpthread -fopenmp" -j
+OMP_NUM_THREADS=1 make CC=clang FC="flang -fopenmp" LDFLAGS="-lpthread -fopenmp" TIMER=NONE -j
 else
 #ILP64 mode
-OMP_NUM_THREADS=1 make FC="gfortran -fopenmp -fdefault-integer-8" LDFLAGS="-lpthread -fopenmp" -j
+OMP_NUM_THREADS=1 make CC=clang FC="flang -fopenmp -fdefault-integer-8" LDFLAGS="-lpthread -fopenmp" TIMER=NONE -j
 fi
 
