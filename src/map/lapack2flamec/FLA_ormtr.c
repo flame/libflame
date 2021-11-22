@@ -193,17 +193,19 @@ LAPACK_ormtr(s, orm)
 LAPACK_ormtr(d, orm)
 {
     {
+       #if !FLA_AMD_OPT
         if ( *uplo == 'U' || *uplo == 'u' )
-        {
-            dormtr_fla( side, uplo, trans,
-                        m, n,
-                        buff_A, ldim_A,
-                        buff_t,
-                        buff_C, ldim_C,
-                        buff_w, lwork,
-                        info );
-            return 0;
-        }
+       #endif
+       {
+          dormtr_fla( side, uplo, trans,
+                      m, n,
+                      buff_A, ldim_A,
+                      buff_t,
+                      buff_C, ldim_C,
+                      buff_w, lwork,
+                      info );
+          return 0;
+       }
     }
     {
         LAPACK_RETURN_CHECK( dormtr_check(  side, uplo, trans,

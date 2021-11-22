@@ -172,16 +172,19 @@ LAPACK_hetrd(s,sy)
 LAPACK_hetrd(d,sy)
 {
     {
-        if ( *uplo == 'U' || *uplo == 'u' )
-        {
-            dsytrd_fla( uplo, m,
-                        buff_A, ldim_A,
-                        buff_d, buff_e,
-                        buff_t,
-                        buff_w, lwork,
-                        info );
-            return 0;
-        }
+         
+    #if !FLA_AMD_OPT
+      if ( *uplo == 'U' || *uplo == 'u' )
+    #endif
+      {
+         dsytrd_fla( uplo, m,
+                     buff_A, ldim_A,
+                     buff_d, buff_e,
+                     buff_t,
+                     buff_w, lwork,
+                     info );
+         return 0;
+      }
     }
     {
         LAPACK_RETURN_CHECK( dsytrd_check( uplo, m,
