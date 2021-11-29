@@ -148,8 +148,10 @@ LAPACK_orgtr(s, org)
 LAPACK_orgtr(d, org)
 {
     {
+	#if !FLA_AMD_OPT
         if ( *uplo == 'U' || *uplo == 'u' )
-        {
+        #endif
+	{
             dorgtr_fla( uplo, m,
                         buff_A, ldim_A,
                         buff_t,
