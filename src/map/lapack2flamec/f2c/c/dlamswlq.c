@@ -203,6 +203,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlamswlq_(char *side, char *trans, integer *m, integer * n, integer *k, integer *mb, integer *nb, doublereal *a, integer *lda, doublereal *t, integer *ldt, doublereal *c__, integer *ldc, doublereal *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlamswlq inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", mb %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS ", ldc %" FLA_IS ", lwork %" FLA_IS "",*side, *trans, *m, *n, *k, *mb, *nb, *lda, *ldt, *ldc, *lwork);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, c_dim1, c_offset, t_dim1, t_offset, i__1, i__2, i__3;
  /* Local variables */
@@ -287,22 +293,26 @@
  i__1 = -(*info);
  xerbla_("DLAMSWLQ", &i__1);
  work[1] = (doublereal) lw;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
  work[1] = (doublereal) lw;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  /* Computing MIN */
  i__1 = min(*m,*n);
  if (min(i__1,*k) == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Computing MAX */
  i__1 = max(*m,*n);
  if (*nb <= *k || *nb >= max(i__1,*k)) {
  dgemlqt_(side, trans, m, n, k, mb, &a[a_offset], lda, &t[t_offset], ldt, &c__[c_offset], ldc, &work[1], info);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (left && tran) {
@@ -396,6 +406,7 @@
  }
  }
  work[1] = (doublereal) lw;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DLAMSWLQ */
  }
