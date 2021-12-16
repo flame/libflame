@@ -62,6 +62,7 @@
 /* Subroutine */
 int dlabad_(doublereal *small, doublereal *large)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* Builtin functions */
     double d_lg10(doublereal *), sqrt(doublereal);
     /* -- LAPACK auxiliary routine (version 3.4.0) -- */
@@ -81,6 +82,7 @@ int dlabad_(doublereal *small, doublereal *large)
         *small = sqrt(*small);
         *large = sqrt(*large);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DLABAD */
 }

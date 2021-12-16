@@ -204,6 +204,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlaed2_(integer *k, integer *n, integer *n1, doublereal * d__, doublereal *q, integer *ldq, integer *indxq, doublereal *rho, doublereal *z__, doublereal *dlamda, doublereal *w, doublereal *q2, integer *indx, integer *indxc, integer *indxp, integer *coltyp, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlaed2 inputs: n %" FLA_IS ", n1 %" FLA_IS ", ldq %" FLA_IS ", indxq %" FLA_IS "",*n, *n1, *ldq, *indxq);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer q_dim1, q_offset, i__1, i__2;
  doublereal d__1, d__2, d__3, d__4;
@@ -281,10 +287,12 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DLAED2", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  n2 = *n - *n1;
@@ -569,6 +577,7 @@
  coltyp[j] = ctot[j - 1];
  /* L180: */
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  L190: return 0;
  /* End of DLAED2 */
  }

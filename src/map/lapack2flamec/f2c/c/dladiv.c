@@ -78,6 +78,7 @@
  /* ===================================================================== */
  /* Subroutine */
  int dladiv_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doublereal *p, doublereal *q) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* System generated locals */
  doublereal d__1, d__2;
  /* Local variables */
@@ -146,6 +147,7 @@
  }
  *p *= s;
  *q *= s;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DLADIV */
  }
@@ -153,6 +155,7 @@
  /* > \ingroup doubleOTHERauxiliary */
  /* Subroutine */
  int dladiv1_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doublereal *p, doublereal *q) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  doublereal r__, t;
  extern doublereal dladiv2_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
  /* -- LAPACK auxiliary routine (version 3.7.0) -- */
@@ -173,12 +176,14 @@
  *p = dladiv2_(a, b, c__, d__, &r__, &t);
  *a = -(*a);
  *q = dladiv2_(b, a, c__, d__, &r__, &t);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DLADIV1 */
  }
  /* dladiv1_ */
  /* > \ingroup doubleOTHERauxiliary */
  doublereal dladiv2_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doublereal *r__, doublereal *t) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  /* System generated locals */
  doublereal ret_val;
  /* Local variables */
@@ -206,6 +211,7 @@
  else {
  ret_val = (*a + *d__ * (*b / *c__)) * *t;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  /* End of DLADIV12 */
  }

@@ -305,6 +305,12 @@
 /* Subroutine */
 int dlaebz_(integer *ijob, integer *nitmax, integer *n, integer *mmax, integer *minp, integer *nbmin, doublereal *abstol, doublereal *reltol, doublereal *pivmin, doublereal *d__, doublereal * e, doublereal *e2, integer *nval, doublereal *ab, doublereal *c__, integer *mout, integer *nab, doublereal *work, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dlaebz inputs: ijob %" FLA_IS ", nitmax %" FLA_IS ", n %" FLA_IS ", mmax %" FLA_IS ", minp %" FLA_IS ", nbmin %" FLA_IS ", nval %" FLA_IS ", nab %" FLA_IS "",*ijob, *nitmax, *n, *mmax, *minp, *nbmin, *nval, *nab);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer nab_dim1, nab_offset, ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     doublereal d__1, d__2, d__3, d__4;
@@ -348,6 +354,7 @@ int dlaebz_(integer *ijob, integer *nitmax, integer *n, integer *mmax, integer *
     if (*ijob < 1 || *ijob > 3)
     {
         *info = -1;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Initialize NAB */
@@ -395,6 +402,7 @@ int dlaebz_(integer *ijob, integer *nitmax, integer *n, integer *mmax, integer *
             *mout = *mout + nab[ji + (nab_dim1 << 1)] - nab[ji + nab_dim1];
             /* L30: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Initialize for loop */
@@ -514,6 +522,7 @@ int dlaebz_(integer *ijob, integer *nitmax, integer *n, integer *mmax, integer *
                 }
                 if (*info != 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 kl = klnew;
@@ -617,6 +626,7 @@ int dlaebz_(integer *ijob, integer *nitmax, integer *n, integer *mmax, integer *
                     else
                     {
                         *info = *mmax + 1;
+                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                         return 0;
                     }
                 }
@@ -705,6 +715,7 @@ L140: /* Computing MAX */
     i__1 = kl + 1 - kf;
     *info = max(i__1,0);
     *mout = kl;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DLAEBZ */
 }

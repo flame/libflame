@@ -309,6 +309,12 @@ static integer c__49 = 49;
 /* Subroutine */
 int dhseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, doublereal *h__, integer *ldh, doublereal *wr, doublereal *wi, doublereal *z__, integer *ldz, doublereal *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dhseqr inputs: job %c, compz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", ldh %" FLA_IS ", ldz %" FLA_IS ", lwork %" FLA_IS "",*job, *compz, *n, *ilo, *ihi, *ldh, *ldz, *lwork);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer h_dim1, h_offset, z_dim1, z_offset, i__1, i__3;
     doublereal d__1;
@@ -417,12 +423,14 @@ int dhseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, doub
         /* ==== Quick return in case of invalid argument. ==== */
         i__1 = -(*info);
         xerbla_("DHSEQR", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*n == 0)
     {
         /* ==== Quick return in case N = 0;
         nothing to do. ==== */
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
@@ -434,6 +442,7 @@ int dhseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, doub
         /* Computing MAX */
         d__1 = (doublereal) max(1,*n);
         work[1] = max(d__1,work[1]);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else
@@ -467,6 +476,7 @@ int dhseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, doub
         {
             wr[*ilo] = h__[*ilo + *ilo * h_dim1];
             wi[*ilo] = 0.;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         /* ==== DLAHQR/DLAQR0 crossover point ==== */
@@ -525,6 +535,7 @@ int dhseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, doub
         work[1] = max(d__1,work[1]);
     }
     /* ==== End of DHSEQR ==== */
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
 /* dhseqr_ */

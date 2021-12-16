@@ -128,6 +128,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlaed6_(integer *kniter, logical *orgati, doublereal * rho, doublereal *d__, doublereal *z__, doublereal *finit, doublereal * tau, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlaed6 inputs: kniter %" FLA_IS "",*kniter);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer i__1;
  doublereal d__1, d__2, d__3, d__4;
@@ -401,6 +407,7 @@
  if (scale) {
  *tau *= sclinv;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DLAED6 */
  }

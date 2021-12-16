@@ -249,6 +249,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlaed7_(integer *icompq, integer *n, integer *qsiz, integer *tlvls, integer *curlvl, integer *curpbm, doublereal *d__, doublereal *q, integer *ldq, integer *indxq, doublereal *rho, integer *cutpnt, doublereal *qstore, integer *qptr, integer *prmptr, integer * perm, integer *givptr, integer *givcol, doublereal *givnum, doublereal *work, integer *iwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlaed7 inputs: icompq %" FLA_IS ", n %" FLA_IS ", qsiz %" FLA_IS ", tlvls %" FLA_IS ", curlvl %" FLA_IS ", curpbm %" FLA_IS ", ldq %" FLA_IS ", cutpnt %" FLA_IS ", qptr %" FLA_IS ", prmptr %" FLA_IS ", perm %" FLA_IS ", givptr %" FLA_IS ", givcol %" FLA_IS "",*icompq, *n, *qsiz, *tlvls, *curlvl, *curpbm, *ldq, *cutpnt, *qptr, *prmptr, *perm, *givptr, *givcol);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer q_dim1, q_offset, i__1, i__2;
  /* Builtin functions */
@@ -318,10 +324,12 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DLAED7", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* The following values are for bookkeeping purposes only. They are */
@@ -394,6 +402,7 @@
  /* L20: */
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  L30: return 0;
  /* End of DLAED7 */
  }

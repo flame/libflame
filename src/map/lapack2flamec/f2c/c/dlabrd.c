@@ -209,6 +209,12 @@ tauq is stored in TAUQ(i) and taup in TAUP(i). */
 /* Subroutine */
 int dlabrd_(integer *m, integer *n, integer *nb, doublereal * a, integer *lda, doublereal *d__, doublereal *e, doublereal *tauq, doublereal *taup, doublereal *x, integer *ldx, doublereal *y, integer *ldy)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dlabrd inputs: m %" FLA_IS ", n %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldx %" FLA_IS ", ldy %" FLA_IS "",*m, *n, *nb, *lda, *ldx, *ldy);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, x_dim1, x_offset, y_dim1, y_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -251,6 +257,7 @@ int dlabrd_(integer *m, integer *n, integer *nb, doublereal * a, integer *lda, d
     /* Function Body */
     if (*m <= 0 || *n <= 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*m >= *n)
@@ -403,6 +410,7 @@ int dlabrd_(integer *m, integer *n, integer *nb, doublereal * a, integer *lda, d
             /* L20: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DLABRD */
 }

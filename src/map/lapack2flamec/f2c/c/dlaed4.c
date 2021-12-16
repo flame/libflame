@@ -132,6 +132,12 @@
 /* Subroutine */
 int dlaed4_(integer *n, integer *i__, doublereal *d__, doublereal *z__, doublereal *delta, doublereal *rho, doublereal *dlam, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dlaed4 inputs: n %" FLA_IS ", i__ %" FLA_IS "",*n, *i__);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     doublereal d__1;
@@ -193,11 +199,13 @@ int dlaed4_(integer *n, integer *i__, doublereal *d__, doublereal *z__, doublere
         /* Presumably, I=1 upon entry */
         *dlam = d__[1] + *rho * z__[1] * z__[1];
         delta[1] = 1.;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 2)
     {
         dlaed5_(i__, &d__[1], &z__[1], &delta[1], rho, dlam);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Compute machine epsilon */
@@ -1029,6 +1037,7 @@ int dlaed4_(integer *n, integer *i__, doublereal *d__, doublereal *z__, doublere
         }
     }
 L250:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DLAED4 */
 }
