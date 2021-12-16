@@ -144,6 +144,12 @@
 /* Subroutine */
 int dlagtf_(integer *n, doublereal *a, doublereal *lambda, doublereal *b, doublereal *c__, doublereal *tol, doublereal *d__, integer *in, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dlagtf inputs: n %" FLA_IS "",*n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     doublereal d__1, d__2;
@@ -186,10 +192,12 @@ int dlagtf_(integer *n, doublereal *a, doublereal *lambda, doublereal *b, double
         *info = -1;
         i__1 = -(*info);
         xerbla_("DLAGTF", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     a[1] -= *lambda;
@@ -200,6 +208,7 @@ int dlagtf_(integer *n, doublereal *a, doublereal *lambda, doublereal *b, double
         {
             in[1] = 1;
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     eps = dlamch_("Epsilon");
@@ -274,6 +283,7 @@ int dlagtf_(integer *n, doublereal *a, doublereal *lambda, doublereal *b, double
     {
         in[*n] = *n;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DLAGTF */
 }

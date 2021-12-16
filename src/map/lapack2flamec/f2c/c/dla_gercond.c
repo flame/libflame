@@ -140,6 +140,12 @@ row i of the matrix was interchanged */
 /* ===================================================================== */
 doublereal dla_gercond_(char *trans, integer *n, doublereal *a, integer *lda, doublereal *af, integer *ldaf, integer *ipiv, integer *cmode, doublereal *c__, integer *info, doublereal *work, integer *iwork)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dla_gercond inputs: trans %c, n %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", ipiv %" FLA_IS ", cmode %" FLA_IS ", work %" FLA_IS ", iwork %" FLA_IS "",*trans, *n, *lda, *ldaf, *ipiv, *cmode, *work, *iwork);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, i__1, i__2;
     doublereal ret_val, d__1;
@@ -210,11 +216,13 @@ doublereal dla_gercond_(char *trans, integer *n, doublereal *a, integer *lda, do
     {
         i__1 = -(*info);
         xerbla_("DLA_GERCOND", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return ret_val;
     }
     if (*n == 0)
     {
         ret_val = 1.;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return ret_val;
     }
     /* Compute the equilibration matrix R such that */
@@ -395,6 +403,7 @@ L10:
     {
         ret_val = 1. / ainvnm;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return ret_val;
 }
 /* dla_gercond__ */

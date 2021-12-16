@@ -149,6 +149,12 @@
 /* Subroutine */
 int dlagts_(integer *job, integer *n, doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, integer *in, doublereal *y, doublereal *tol, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dlagts inputs: job %" FLA_IS ", n %" FLA_IS ", in %" FLA_IS "",*job, *n, *in);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     doublereal d__1, d__2, d__3, d__4, d__5;
@@ -202,10 +208,12 @@ int dlagts_(integer *job, integer *n, doublereal *a, doublereal *b, doublereal *
     {
         i__1 = -(*info);
         xerbla_("DLAGTS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     eps = dlamch_("Epsilon");
@@ -289,6 +297,7 @@ int dlagts_(integer *job, integer *n, doublereal *a, doublereal *b, doublereal *
                         if (absak == 0. || f2c_dabs(temp) * sfmin > absak)
                         {
                             *info = k;
+                            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                             return 0;
                         }
                         else
@@ -300,6 +309,7 @@ int dlagts_(integer *job, integer *n, doublereal *a, doublereal *b, doublereal *
                     else if (f2c_dabs(temp) > absak * bignum)
                     {
                         *info = k;
+                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                         return 0;
                     }
                 }
@@ -388,6 +398,7 @@ L40:
                         if (absak == 0. || f2c_dabs(temp) * sfmin > absak)
                         {
                             *info = k;
+                            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                             return 0;
                         }
                         else
@@ -399,6 +410,7 @@ L40:
                     else if (f2c_dabs(temp) > absak * bignum)
                     {
                         *info = k;
+                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                         return 0;
                     }
                 }
@@ -474,6 +486,7 @@ L70:
         }
     }
     /* End of DLAGTS */
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
 /* dlagts_ */
