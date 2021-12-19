@@ -137,7 +137,6 @@ endif
 LIBFLAME_SONAME      := $(LIBFLAME).$(LIBFLAME_SO_MAJ_EXT)
 LIBFLAME_SO_MAJ_PATH := $(BASE_LIB_PATH)/$(LIBFLAME_SONAME)
 
-LAPACKE_A_PATH       := $(SRC_DIR)/$(LAPACKE_DIR)/$(LAPACKE_A)
 AOCLDTL_A_PATH       := $(SRC_DIR)/$(AOCLDTL_DIR)/$(AOCLDTL_A)
 AOCLDTL_SO_PATH      := $(SRC_DIR)/$(AOCLDTL_DIR)/$(AOCLDTL_SO)
 AOCLDTL_obj_PATH     := $(SRC_DIR)/$(AOCLDTL_DIR)/*.o
@@ -217,8 +216,7 @@ MK_LIBS_INST              += $(LIBFLAME_A_INST)
 MK_LIBS_SYML              +=
 endif
 
-MK_LIBS                   += $(LAPACKE_A_PATH) \
-			     $(AOCLDTL_A_PATH)
+MK_LIBS                   += $(AOCLDTL_A_PATH)
 
 ifeq ($(FLA_ENABLE_DYNAMIC_BUILD),yes)
 MK_LIBS                   += $(LIBFLAME_SO_PATH) \
@@ -566,14 +564,6 @@ libflame: check-env $(MK_LIBS)
 
 
 # --- Static library archiver rules ---
-$(LAPACKE_A_PATH):
-ifeq ($(ENABLE_VERBOSE),yes)
-	$(MAKE) -e -C $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE
-else
-	@echo -n "Generating LAPACKE library"
-	$(MAKE) -e -C $(SRC_DIR)/$(LAPACKE_DIR)/LAPACKE
-	@echo "Generated LAPACKE library"
-endif
 $(AOCLDTL_A_PATH):
 ifeq ($(ENABLE_VERBOSE),yes)
 	$(MAKE) -e -C $(SRC_DIR)/$(AOCLDTL_DIR)
@@ -785,13 +775,11 @@ $(INSTALL_LIBDIR)/%.a: $(BASE_LIB_PATH)/%.a $(CONFIG_MK_FILE)
 ifeq ($(ENABLE_VERBOSE),yes)
 	$(MKDIR) $(@D)
 	$(INSTALL) -m 0644 $< $@
-	$(INSTALL) -m 0644 $(LAPACKE_A_PATH) $(INSTALL_LIBDIR)/$(LAPACKE_A)
 	$(INSTALL) -m 0644 $(AOCLDTL_A_PATH) $(INSTALL_LIBDIR)/$(AOCLDTL_A)
 else
 	@echo "Installing $(@F) into $(INSTALL_LIBDIR)/"
 	@$(MKDIR) $(@D)
 	@$(INSTALL) -m 0644 $< $@
-	@$(INSTALL) -m 0644 $(LAPACKE_A_PATH) $(INSTALL_LIBDIR)/$(LAPACKE_A)
 	@$(INSTALL) -m 0644 $(AOCLDTL_A_PATH) $(INSTALL_LIBDIR)/$(AOCLDTL_A)
 endif
 
@@ -863,7 +851,6 @@ ifeq ($(ENABLE_VERBOSE),yes)
 	- $(FIND) $(BASE_OBJ_PATH) -name "*.o" | $(XARGS) $(RM_F)
 	- $(FIND) $(LAPACKE_S_OBJS_PATH) -name "*.o" | $(XARGS) $(RM_F)
 	- $(FIND) $(LAPACKE_U_OBJS_PATH) -name "*.o" | $(XARGS) $(RM_F)
-	- $(RM_F) $(LAPACKE_A_PATH)
 	- $(RM_F) $(AOCLDTL_A_PATH)
 	- $(RM_F) $(AOCLDTL_SO_PATH)
 	- $(RM_F) $(AOCLDTL_obj_PATH)
@@ -875,7 +862,6 @@ else
 	@$(FIND) $(LAPACKE_S_OBJS_PATH) -name "*.o" | $(XARGS) $(RM_F)
 	@$(FIND) $(LAPACKE_U_OBJS_PATH) -name "*.o" | $(XARGS) $(RM_F)
 	@echo "Removing libraries from $(BASE_LIB_PATH)"
-	@$(RM_F) $(LAPACKE_A_PATH)
 	@$(RM_F) $(AOCLDTL_A_PATH)
 	@$(RM_F) $(AOCLDTL_SO_PATH)
 	@$(RM_F) $(AOCLDTL_obj_PATH)

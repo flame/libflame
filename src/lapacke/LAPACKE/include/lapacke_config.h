@@ -56,14 +56,12 @@ extern "C" {
     typedef unsigned __int32 uint32_t;
     typedef          __int64  int64_t;
     typedef unsigned __int64 uint64_t;
-#define FLA_ENABLE_ILP64 1
 #else
 #error "Attempting to compile on pre-C99 system without stdint.h."
 #endif
 #endif
 
-
-#if defined(FLA_ENABLE_ILP64)
+#if FLA_ENABLE_ILP64
 #define LAPACK_ILP64
 #endif
 

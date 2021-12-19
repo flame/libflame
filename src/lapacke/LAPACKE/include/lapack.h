@@ -11,14 +11,23 @@
 #include "lapacke_mangling.h"
 
 #include <stdlib.h>
+#include <stdint.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
 /*----------------------------------------------------------------------------*/
+#if FLA_ENABLE_ILP64
+#define LAPACK_ILP64
+#endif
+
 #ifndef lapack_int
-#define lapack_int     int
+#if defined(LAPACK_ILP64)
+#define lapack_int    int64_t
+#else
+#define lapack_int    int
+#endif
 #endif
 
 #ifndef lapack_logical

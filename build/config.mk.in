@@ -117,6 +117,10 @@ CWARNFLAGS   := @fla_c_warning_flags@
 COPTFLAGS    := @fla_c_opt_flags@
 CVECFLAGS    := @fla_c_sse_flags@
 
+ifeq ($(FLA_ENABLE_ILP64),yes)
+CPPROCFLAGS   += -DFLA_ENABLE_ILP64=1 
+endif
+
 # Add position-independent code flag if building a dynamic library.
 ifeq ($(FLA_ENABLE_DYNAMIC_BUILD),yes)
 CMISCFLAGS   += -fPIC
