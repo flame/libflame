@@ -112,6 +112,12 @@ the unit diagonal elements of L are not stored. */
 /* Subroutine */
 int dgesv_(integer *n, integer *nrhs, doublereal *a, integer *lda, integer *ipiv, doublereal *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dgesv inputs: n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*n, *nrhs, *lda, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */
@@ -162,6 +168,7 @@ int dgesv_(integer *n, integer *nrhs, doublereal *a, integer *lda, integer *ipiv
     {
         i__1 = -(*info);
         xerbla_("DGESV ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Compute the LU factorization of A. */
@@ -171,6 +178,7 @@ int dgesv_(integer *n, integer *nrhs, doublereal *a, integer *lda, integer *ipiv
         /* Solve the system A*X = B, overwriting B with X. */
         dgetrs_("No transpose", n, nrhs, &a[a_offset], lda, &ipiv[1], &b[ b_offset], ldb, info);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DGESV */
 }
