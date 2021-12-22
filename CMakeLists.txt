@@ -5,7 +5,11 @@ cmake_minimum_required(VERSION 3.0.0)
 project(AOCL-LibFLAME-Win)
 #change the dependency path to blis library path
 SET(CMAKE_EXT_BLIS_LIBRARY_DEPENDENCY_PATH "${CMAKE_SOURCE_DIR}/bin/Release" CACHE STRING "AOCL-BLIS library path name")
-SET(EXT_BLIS_LIBNAME "AOCL-LibBlis-Win.lib" CACHE STRING "AOCL-BLIS library name")
+SET(EXT_BLIS_LIBNAME "AOCL-LibBlis-Win-MT-dll.lib" CACHE STRING "AOCL-BLIS library name")
+
+#Logic to create AOCL-libFLAME library name according to the linking AOCL-BLIS library name.
+string(REPLACE "LibBlis" "LibFlame" PROJECT_NAME ${EXT_BLIS_LIBNAME})
+string(REPLACE ".lib" "" PROJECT_NAME ${PROJECT_NAME})
 
 #set the output directory path
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
