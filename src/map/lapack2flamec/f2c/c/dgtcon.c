@@ -138,6 +138,12 @@ IPIV(i) = i indicates a row interchange was not */
 /* Subroutine */
 int dgtcon_(char *norm, integer *n, doublereal *dl, doublereal *d__, doublereal *du, doublereal *du2, integer *ipiv, doublereal *anorm, doublereal *rcond, doublereal *work, integer * iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dgtcon inputs: norm %c, n %" FLA_IS ", ipiv %" FLA_IS "",*norm, *n, *ipiv);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     /* Local variables */
@@ -198,6 +204,7 @@ int dgtcon_(char *norm, integer *n, doublereal *dl, doublereal *d__, doublereal 
     {
         i__1 = -(*info);
         xerbla_("DGTCON", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -205,10 +212,12 @@ int dgtcon_(char *norm, integer *n, doublereal *dl, doublereal *d__, doublereal 
     if (*n == 0)
     {
         *rcond = 1.;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*anorm == 0.)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check that D(1:N) is non-zero. */
@@ -219,6 +228,7 @@ int dgtcon_(char *norm, integer *n, doublereal *dl, doublereal *d__, doublereal 
     {
         if (d__[i__] == 0.)
         {
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         /* L10: */
@@ -254,6 +264,7 @@ L20:
     {
         *rcond = 1. / ainvnm / *anorm;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DGTCON */
 }

@@ -200,6 +200,12 @@ IPIV(i) = i indicates a row interchange was not */
 /* Subroutine */
 int dgtrfs_(char *trans, integer *n, integer *nrhs, doublereal *dl, doublereal *d__, doublereal *du, doublereal *dlf, doublereal *df, doublereal *duf, doublereal *du2, integer *ipiv, doublereal *b, integer *ldb, doublereal *x, integer *ldx, doublereal * ferr, doublereal *berr, doublereal *work, integer *iwork, integer * info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dgtrfs inputs: trans %c, n %" FLA_IS ", nrhs %" FLA_IS ", ipiv %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*trans, *n, *nrhs, *ipiv, *ldb, *ldx);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, x_dim1, x_offset, i__1, i__2;
     doublereal d__1, d__2, d__3, d__4;
@@ -298,6 +304,7 @@ int dgtrfs_(char *trans, integer *n, integer *nrhs, doublereal *dl, doublereal *
     {
         i__1 = -(*info);
         xerbla_("DGTRFS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -312,6 +319,7 @@ int dgtrfs_(char *trans, integer *n, integer *nrhs, doublereal *dl, doublereal *
             berr[j] = 0.;
             /* L10: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (notran)
@@ -512,6 +520,7 @@ L70:
         }
         /* L110: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DGTRFS */
 }

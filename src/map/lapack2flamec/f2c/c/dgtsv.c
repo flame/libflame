@@ -115,6 +115,12 @@
 /* Subroutine */
 int dgtsv_(integer *n, integer *nrhs, doublereal *dl, doublereal *d__, doublereal *du, doublereal *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dgtsv inputs: n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS "",*n, *nrhs, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, i__1, i__2;
     doublereal d__1, d__2;
@@ -166,10 +172,12 @@ int dgtsv_(integer *n, integer *nrhs, doublereal *dl, doublereal *d__, doublerea
     {
         i__1 = -(*info);
         xerbla_("DGTSV ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*nrhs == 1)
@@ -191,6 +199,7 @@ int dgtsv_(integer *n, integer *nrhs, doublereal *dl, doublereal *d__, doublerea
                 else
                 {
                     *info = i__;
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 dl[i__] = 0.;
@@ -225,6 +234,7 @@ int dgtsv_(integer *n, integer *nrhs, doublereal *dl, doublereal *d__, doublerea
                 else
                 {
                     *info = i__;
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
             }
@@ -243,6 +253,7 @@ int dgtsv_(integer *n, integer *nrhs, doublereal *dl, doublereal *d__, doublerea
         if (d__[*n] == 0.)
         {
             *info = *n;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -272,6 +283,7 @@ int dgtsv_(integer *n, integer *nrhs, doublereal *dl, doublereal *d__, doublerea
                 else
                 {
                     *info = i__;
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 dl[i__] = 0.;
@@ -320,6 +332,7 @@ int dgtsv_(integer *n, integer *nrhs, doublereal *dl, doublereal *d__, doublerea
                 else
                 {
                     *info = i__;
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
             }
@@ -345,6 +358,7 @@ int dgtsv_(integer *n, integer *nrhs, doublereal *dl, doublereal *d__, doublerea
         if (d__[*n] == 0.)
         {
             *info = *n;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -393,6 +407,7 @@ L70:
             /* L100: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DGTSV */
 }
