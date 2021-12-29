@@ -211,6 +211,12 @@ v(1:p-k+i-1) is stored on exit in */
 /* Subroutine */
 int dggqrf_(integer *n, integer *m, integer *p, doublereal * a, integer *lda, doublereal *taua, doublereal *b, integer *ldb, doublereal *taub, doublereal *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dggqrf inputs: n %" FLA_IS ", m %" FLA_IS ", p %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", lwork %" FLA_IS "",*n, *m, *p, *lda, *ldb, *lwork);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2;
     /* Local variables */
@@ -298,10 +304,12 @@ int dggqrf_(integer *n, integer *m, integer *p, doublereal * a, integer *lda, do
     {
         i__1 = -(*info);
         xerbla_("DGGQRF", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* QR factorization of N-by-M matrix A: A = Q*R */
@@ -320,6 +328,7 @@ int dggqrf_(integer *n, integer *m, integer *p, doublereal * a, integer *lda, do
     i__1 = lopt;
     i__2 = (integer) work[1]; // , expr subst
     work[1] = (doublereal) max(i__1,i__2);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DGGQRF */
 }

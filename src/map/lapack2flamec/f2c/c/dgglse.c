@@ -175,6 +175,12 @@ the least squares solution could not */
 /* Subroutine */
 int dgglse_(integer *m, integer *n, integer *p, doublereal * a, integer *lda, doublereal *b, integer *ldb, doublereal *c__, doublereal *d__, doublereal *x, doublereal *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dgglse inputs: m %" FLA_IS ", n %" FLA_IS ", p %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", lwork %" FLA_IS "",*m, *n, *p, *lda, *ldb, *lwork);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2;
     /* Local variables */
@@ -276,15 +282,18 @@ int dgglse_(integer *m, integer *n, integer *p, doublereal * a, integer *lda, do
     {
         i__1 = -(*info);
         xerbla_("DGGLSE", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Compute the GRQ factorization of matrices B and A: */
@@ -312,6 +321,7 @@ int dgglse_(integer *m, integer *n, integer *p, doublereal * a, integer *lda, do
         if (*info > 0)
         {
             *info = 1;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         /* Put the solution in X */
@@ -329,6 +339,7 @@ int dgglse_(integer *m, integer *n, integer *p, doublereal * a, integer *lda, do
         if (*info > 0)
         {
             *info = 2;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         /* Put the solutions in X */
@@ -361,6 +372,7 @@ int dgglse_(integer *m, integer *n, integer *p, doublereal * a, integer *lda, do
     i__1 = lopt;
     i__2 = (integer) work[*p + mn + 1]; // , expr subst
     work[1] = (doublereal) (*p + mn + max(i__1,i__2));
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DGGLSE */
 }

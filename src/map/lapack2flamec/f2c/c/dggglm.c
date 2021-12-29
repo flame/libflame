@@ -181,6 +181,12 @@ the least squares solution could not */
 /* Subroutine */
 int dggglm_(integer *n, integer *m, integer *p, doublereal * a, integer *lda, doublereal *b, integer *ldb, doublereal *d__, doublereal *x, doublereal *y, doublereal *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dggglm inputs: n %" FLA_IS ", m %" FLA_IS ", p %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", lwork %" FLA_IS "",*n, *m, *p, *lda, *ldb, *lwork);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
@@ -282,15 +288,18 @@ int dggglm_(integer *n, integer *m, integer *p, doublereal * a, integer *lda, do
     {
         i__1 = -(*info);
         xerbla_("DGGGLM", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Compute the GQR factorization of matrices A and B: */
@@ -320,6 +329,7 @@ int dggglm_(integer *n, integer *m, integer *p, doublereal * a, integer *lda, do
         if (*info > 0)
         {
             *info = 1;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         i__1 = *n - *m;
@@ -344,6 +354,7 @@ int dggglm_(integer *n, integer *m, integer *p, doublereal * a, integer *lda, do
         if (*info > 0)
         {
             *info = 2;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         /* Copy D to X */
@@ -360,6 +371,7 @@ int dggglm_(integer *n, integer *m, integer *p, doublereal * a, integer *lda, do
     i__1 = lopt;
     i__2 = (integer) work[*m + np + 1]; // , expr subst
     work[1] = (doublereal) (*m + np + max(i__1,i__2));
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DGGGLM */
 }

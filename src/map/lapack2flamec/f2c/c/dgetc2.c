@@ -103,6 +103,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dgetc2_(integer *n, doublereal *a, integer *lda, integer *ipiv, integer *jpiv, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dgetc2 inputs: n %" FLA_IS ", lda %" FLA_IS "",*n, *lda);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2, i__3;
  doublereal d__1;
@@ -147,6 +153,7 @@
  *info = 0;
  /* Quick return if possible */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Set constants to control overflow */
@@ -162,6 +169,7 @@
  *info = 1;
  a[a_dim1 + 1] = smlnum;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Factorize A using complete pivoting. */
@@ -228,6 +236,7 @@
  /* Set last pivots to N */
  ipiv[*n] = *n;
  jpiv[*n] = *n;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DGETC2 */
  }

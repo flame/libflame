@@ -210,6 +210,12 @@ v(i+1:p) is stored on exit in B(i+1:p,i), */
 /* Subroutine */
 int dggrqf_(integer *m, integer *p, integer *n, doublereal * a, integer *lda, doublereal *taua, doublereal *b, integer *ldb, doublereal *taub, doublereal *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dggrqf inputs: m %" FLA_IS ", p %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", lwork %" FLA_IS "",*m, *p, *n, *lda, *ldb, *lwork);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -297,10 +303,12 @@ int dggrqf_(integer *m, integer *p, integer *n, doublereal * a, integer *lda, do
     {
         i__1 = -(*info);
         xerbla_("DGGRQF", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* RQ factorization of M-by-N matrix A: A = R*Q */
@@ -322,6 +330,7 @@ int dggrqf_(integer *m, integer *p, integer *n, doublereal * a, integer *lda, do
     i__1 = lopt;
     i__2 = (integer) work[1]; // , expr subst
     work[1] = (doublereal) max(i__1,i__2);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DGGRQF */
 }
