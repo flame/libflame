@@ -145,6 +145,12 @@
 /* Subroutine */
 int dlaqgb_(integer *m, integer *n, integer *kl, integer *ku, doublereal *ab, integer *ldab, doublereal *r__, doublereal *c__, doublereal *rowcnd, doublereal *colcnd, doublereal *amax, char *equed)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dlaqgb inputs: m %" FLA_IS ", n %" FLA_IS ", kl %" FLA_IS ", ku %" FLA_IS ", ldab %" FLA_IS "",*m, *n, *kl, *ku, *ldab);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     /* Local variables */
@@ -180,6 +186,7 @@ int dlaqgb_(integer *m, integer *n, integer *kl, integer *ku, doublereal *ab, in
     if (*m <= 0 || *n <= 0)
     {
         *(unsigned char *)equed = 'N';
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Initialize LARGE and SMALL. */
@@ -274,6 +281,7 @@ int dlaqgb_(integer *m, integer *n, integer *kl, integer *ku, doublereal *ab, in
         }
         *(unsigned char *)equed = 'B';
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DLAQGB */
 }

@@ -128,6 +128,12 @@
 /* Subroutine */
 int dlaqge_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *r__, doublereal *c__, doublereal *rowcnd, doublereal *colcnd, doublereal *amax, char *equed)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dlaqge inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "",*m, *n, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     /* Local variables */
@@ -161,6 +167,7 @@ int dlaqge_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *r_
     if (*m <= 0 || *n <= 0)
     {
         *(unsigned char *)equed = 'N';
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Initialize LARGE and SMALL. */
@@ -237,6 +244,7 @@ int dlaqge_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *r_
         }
         *(unsigned char *)equed = 'B';
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DLAQGE */
 }
