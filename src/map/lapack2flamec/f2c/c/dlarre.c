@@ -295,6 +295,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlarre_(char *range, integer *n, doublereal *vl, doublereal *vu, integer *il, integer *iu, doublereal *d__, doublereal *e, doublereal *e2, doublereal *rtol1, doublereal *rtol2, doublereal * spltol, integer *nsplit, integer *isplit, integer *m, doublereal *w, doublereal *werr, doublereal *wgap, integer *iblock, integer *indexw, doublereal *gers, doublereal *pivmin, doublereal *work, integer * iwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlarre inputs: range %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS "",*range, *n, *il, *iu);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer i__1, i__2;
  doublereal d__1, d__2, d__3;
@@ -383,6 +389,7 @@
  *info = 0;
  /* Quick return if possible */
  if (*n <= 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Decode RANGE */
@@ -417,6 +424,7 @@
  }
  /* store the shift for the initial RRR, which is zero in this case */
  e[1] = 0.;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* General case: tridiagonal matrix of order > 1 */
@@ -481,6 +489,7 @@
  dlarrd_(range, "B", n, vl, vu, il, iu, &gers[1], &bsrtol, &d__[1], &e[ 1], &e2[1], pivmin, nsplit, &isplit[1], &mm, &w[1], &werr[1], vl, vu, &iblock[1], &indexw[1], &work[1], &iwork[1], &iinfo);
  if (iinfo != 0) {
  *info = -1;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Make sure that the entries M+1 to N in W, WERR, IBLOCK, INDEXW are 0 */
@@ -595,6 +604,7 @@
  dlarrk_(&in, &c__1, &gl, &gu, &d__[ibegin], &e2[ibegin], pivmin, & rtl, &tmp, &tmp1, &iinfo);
  if (iinfo != 0) {
  *info = -1;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Computing MAX */
@@ -603,6 +613,7 @@
  dlarrk_(&in, &in, &gl, &gu, &d__[ibegin], &e2[ibegin], pivmin, & rtl, &tmp, &tmp1, &iinfo);
  if (iinfo != 0) {
  *info = -1;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Computing MIN */
@@ -807,6 +818,7 @@
  /* if the program reaches this point, no base representation could be */
  /* found in MAXTRY iterations. */
  *info = 2;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  L83: /* At this point, we have found an initial base representation */
  /* T - SIGMA I = L D L^T with not too much element growth. */
@@ -873,6 +885,7 @@
  dlarrb_(&in, &d__[ibegin], &work[ibegin], &indl, &indu, rtol1, rtol2, &i__2, &w[wbegin], &wgap[wbegin], &werr[wbegin], & work[(*n << 1) + 1], &iwork[1], pivmin, &spdiam, &in, & iinfo);
  if (iinfo != 0) {
  *info = -4;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* DLARRB computes all gaps correctly except for the last one */
@@ -921,6 +934,7 @@
  /* and should be changed. The index is in IWORK(1) and the */
  /* gap is in WORK(N+1) */
  *info = -5;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else {
@@ -931,6 +945,7 @@
  ++i__) {
  if (work[i__] < 0.) {
  *info = -6;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* L149: */
@@ -987,6 +1002,7 @@
  wbegin = wend + 1;
  L170: ;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* end of DLARRE */
  }

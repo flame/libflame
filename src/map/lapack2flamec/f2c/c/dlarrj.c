@@ -152,6 +152,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlarrj_(integer *n, doublereal *d__, doublereal *e2, integer *ifirst, integer *ilast, doublereal *rtol, integer *offset, doublereal *w, doublereal *werr, doublereal *work, integer *iwork, doublereal *pivmin, doublereal *spdiam, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlarrj inputs: n %" FLA_IS ", ifirst %" FLA_IS ", ilast %" FLA_IS ", offset %" FLA_IS "",*n, *ifirst, *ilast, *offset);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer i__1, i__2;
  doublereal d__1, d__2;
@@ -194,6 +200,7 @@
  *info = 0;
  /* Quick return if possible */
  if (*n <= 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  maxitr = (integer) ((log(*spdiam + *pivmin) - log(*pivmin)) / log(2.)) + 2;
@@ -382,6 +389,7 @@
  }
  /* L110: */
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DLARRJ */
  }

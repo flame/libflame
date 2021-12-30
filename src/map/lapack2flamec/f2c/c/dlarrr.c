@@ -80,6 +80,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlarrr_(integer *n, doublereal *d__, doublereal *e, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlarrr inputs: n %" FLA_IS "",*n);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer i__1;
  doublereal d__1;
@@ -117,6 +123,7 @@
  /* Function Body */
  if (*n <= 0) {
  *info = 0;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* As a default, do NOT go for relative-accuracy preserving computations. */
@@ -172,6 +179,7 @@
  }
  L11: if (yesrel) {
  *info = 0;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else {
@@ -184,6 +192,7 @@
  /* In this case, the matrix needs to be flipped and, at the end */
  /* of the eigenvector computation, the flip needs to be applied */
  /* to the computed eigenvectors (and the support) */
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* END OF DLARRR */
  }

@@ -322,6 +322,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlarrd_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu, integer *il, integer *iu, doublereal *gers, doublereal *reltol, doublereal *d__, doublereal *e, doublereal *e2, doublereal *pivmin, integer *nsplit, integer *isplit, integer *m, doublereal *w, doublereal *werr, doublereal *wl, doublereal *wu, integer *iblock, integer *indexw, doublereal *work, integer *iwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlarrd inputs: range %c, order %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", nsplit %" FLA_IS ", isplit %" FLA_IS "",*range, *order, *n, *il, *iu, *nsplit, *isplit);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer i__1, i__2, i__3;
  doublereal d__1, d__2;
@@ -390,6 +396,7 @@
  *info = 0;
  /* Quick return if possible */
  if (*n <= 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Decode RANGE */
@@ -427,6 +434,7 @@
  *info = -7;
  }
  if (*info != 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Initialize error flags */
@@ -436,6 +444,7 @@
  /* Quick return if possible */
  *m = 0;
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Simplification: */
@@ -456,6 +465,7 @@
  iblock[1] = 1;
  indexw[1] = 1;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* NB is the minimum vector length for vector bisection, or 0 */
@@ -518,6 +528,7 @@
  dlaebz_(&c__3, &itmax, n, &c__2, &c__2, &nb, &atoli, &rtoli, pivmin, & d__[1], &e[1], &e2[1], &iwork[5], &work[*n + 1], &work[*n + 5] , &iout, &iwork[1], &w[1], &iblock[1], &iinfo);
  if (iinfo != 0) {
  *info = iinfo;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* On exit, output intervals may not be ordered by ascending negcount */
@@ -541,6 +552,7 @@
  /* and [WUL, WU] contains a value with negcount NWU. */
  if (nwl < 0 || nwl >= *n || nwu < 1 || nwu > *n) {
  *info = 4;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  }
@@ -680,6 +692,7 @@
  dlaebz_(&c__1, &c__0, &in, &in, &c__1, &nb, &atoli, &rtoli, pivmin, &d__[ibegin], &e[ibegin], &e2[ibegin], idumma, & work[*n + 1], &work[*n + (in << 1) + 1], &im, &iwork[1], & w[*m + 1], &iblock[*m + 1], &iinfo);
  if (iinfo != 0) {
  *info = iinfo;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  nwl += iwork[1];
@@ -690,6 +703,7 @@
  dlaebz_(&c__2, &itmax, &in, &in, &c__1, &nb, &atoli, &rtoli, pivmin, &d__[ibegin], &e[ibegin], &e2[ibegin], idumma, & work[*n + 1], &work[*n + (in << 1) + 1], &iout, &iwork[1], &w[*m + 1], &iblock[*m + 1], &iinfo);
  if (iinfo != 0) {
  *info = iinfo;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Copy eigenvalues into W and IBLOCK */
@@ -903,6 +917,7 @@
  if (toofew) {
  *info += 2;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DLARRD */
  }

@@ -280,6 +280,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlarrv_(integer *n, doublereal *vl, doublereal *vu, doublereal *d__, doublereal *l, doublereal *pivmin, integer *isplit, integer *m, integer *dol, integer *dou, doublereal *minrgp, doublereal *rtol1, doublereal *rtol2, doublereal *w, doublereal *werr, doublereal *wgap, integer *iblock, integer *indexw, doublereal *gers, doublereal *z__, integer *ldz, integer *isuppz, doublereal *work, integer *iwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlarrv inputs: n %" FLA_IS ", isplit %" FLA_IS ", m %" FLA_IS ", dol %" FLA_IS ", dou %" FLA_IS ", iblock %" FLA_IS ", indexw %" FLA_IS ", ldz %" FLA_IS "",*n, *isplit, *m, *dol, *dou, *iblock, *indexw, *ldz);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5;
  doublereal d__1, d__2;
@@ -389,6 +395,7 @@
  *info = 0;
  /* Quick return if possible */
  if (*n <= 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* The first N entries of WORK are reserved for the eigenvalues */
@@ -547,6 +554,7 @@
  /* This is a crude protection against infinitely deep trees */
  if (ndepth > *m) {
  *info = -2;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* breadth first processing of the current level of the representation */
@@ -628,6 +636,7 @@
  dlarrb_(&in, &d__[ibegin], &work[indlld + ibegin - 1], &p, &q, rtol1, rtol2, &offset, &work[wbegin], &wgap[ wbegin], &werr[wbegin], &work[indwrk], &iwork[ iindwk], pivmin, &spdiam, &in, &iinfo);
  if (iinfo != 0) {
  *info = -1;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* We also recompute the extremal gaps. W holds all eigenvalues */
@@ -783,6 +792,7 @@
  }
  else {
  *info = -2;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  }
@@ -883,6 +893,7 @@
  dlarrb_(&in, &d__[ibegin], &work[indlld + ibegin - 1], &indeig, &indeig, &c_b5, &d__1, & offset, &work[wbegin], &wgap[wbegin], & werr[wbegin], &work[indwrk], &iwork[ iindwk], pivmin, &spdiam, &itmp1, &iinfo);
  if (iinfo != 0) {
  *info = -3;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  lambda = work[windex];
@@ -975,6 +986,7 @@
  }
  else {
  *info = 5;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  }
@@ -1055,6 +1067,7 @@
  wbegin = wend + 1;
  L170: ;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DLARRV */
  }

@@ -123,6 +123,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlarra_(integer *n, doublereal *d__, doublereal *e, doublereal *e2, doublereal *spltol, doublereal *tnrm, integer *nsplit, integer *isplit, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlarra inputs: n %" FLA_IS "",*n);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer i__1;
  doublereal d__1, d__2;
@@ -156,6 +162,7 @@
  *info = 0;
  /* Quick return if possible */
  if (*n <= 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Compute splitting points */
@@ -194,6 +201,7 @@
  }
  }
  isplit[*nsplit] = *n;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DLARRA */
  }
