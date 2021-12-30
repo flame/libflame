@@ -108,6 +108,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlaqr1_(integer *n, doublereal *h__, integer *ldh, doublereal *sr1, doublereal *si1, doublereal *sr2, doublereal *si2, doublereal *v) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlaqr1 inputs: n %" FLA_IS ", ldh %" FLA_IS "",*n, *ldh);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer h_dim1, h_offset;
  doublereal d__1, d__2, d__3;
@@ -137,6 +143,7 @@
  --v;
  /* Function Body */
  if (*n != 2 && *n != 3) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n == 2) {
@@ -166,6 +173,7 @@
  v[3] = h31s * (h__[h_dim1 + 1] + h__[h_dim1 * 3 + 3] - *sr1 - * sr2) + h21s * h__[(h_dim1 << 1) + 3];
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* dlaqr1_ */

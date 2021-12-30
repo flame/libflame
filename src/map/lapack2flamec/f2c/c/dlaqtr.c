@@ -159,6 +159,12 @@ static logical c_true = TRUE_;
 /* Subroutine */
 int dlaqtr_(logical *ltran, logical *lreal, integer *n, doublereal *t, integer *ldt, doublereal *b, doublereal *w, doublereal *scale, doublereal *x, doublereal *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dlaqtr inputs: n %" FLA_IS ", ldt %" FLA_IS "",*n, *ldt);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer t_dim1, t_offset, i__1, i__2;
     doublereal d__1, d__2, d__3, d__4, d__5, d__6;
@@ -226,6 +232,7 @@ int dlaqtr_(logical *ltran, logical *lreal, integer *n, doublereal *t, integer *
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Set constants to control overflow */
@@ -846,6 +853,7 @@ L80:
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DLAQTR */
 }

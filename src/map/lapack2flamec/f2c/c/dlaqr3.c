@@ -269,6 +269,12 @@ DLAQR3 */
 /* Subroutine */
 int dlaqr3_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *kbot, integer *nw, doublereal *h__, integer * ldh, integer *iloz, integer *ihiz, doublereal *z__, integer *ldz, integer *ns, integer *nd, doublereal *sr, doublereal *si, doublereal * v, integer *ldv, integer *nh, doublereal *t, integer *ldt, integer * nv, doublereal *wv, integer *ldwv, doublereal *work, integer *lwork)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dlaqr3 inputs: n %" FLA_IS ", ktop %" FLA_IS ", kbot %" FLA_IS ", nw %" FLA_IS ", ldh %" FLA_IS ", iloz %" FLA_IS ", ihiz %" FLA_IS ", ldz %" FLA_IS ", ldv %" FLA_IS ", nh %" FLA_IS ", ldt %" FLA_IS ", nv %" FLA_IS ", ldwv %" FLA_IS ", lwork %" FLA_IS "",*n, *ktop, *kbot, *nw, *ldh, *iloz, *ihiz, *ldz, *ldv, *nh, *ldt, *nv, *ldwv, *lwork);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer h_dim1, h_offset, t_dim1, t_offset, v_dim1, v_offset, wv_dim1, wv_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4;
     doublereal d__1, d__2, d__3, d__4, d__5, d__6;
@@ -374,6 +380,7 @@ int dlaqr3_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
     if (*lwork == -1)
     {
         work[1] = (doublereal) lwkopt;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* ==== Nothing to do ... */
@@ -383,11 +390,13 @@ int dlaqr3_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
     work[1] = 1.;
     if (*ktop > *kbot)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* ... nor for an empty deflation window. ==== */
     if (*nw < 1)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* ==== Machine constants ==== */
@@ -430,6 +439,7 @@ int dlaqr3_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
             }
         }
         work[1] = 1.;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* ==== Convert to spike-triangular form. (In case of a */
@@ -764,6 +774,7 @@ L60:
     /* ==== Return optimal workspace. ==== */
     work[1] = (doublereal) lwkopt;
     /* ==== End of DLAQR3 ==== */
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
 /* dlaqr3_ */

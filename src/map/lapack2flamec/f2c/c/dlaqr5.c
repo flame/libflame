@@ -250,6 +250,12 @@ static integer c__2 = 2;
 /* Subroutine */
 int dlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer *ktop, integer *kbot, integer *nshfts, doublereal *sr, doublereal *si, doublereal *h__, integer *ldh, integer *iloz, integer *ihiz, doublereal *z__, integer *ldz, doublereal *v, integer * ldv, doublereal *u, integer *ldu, integer *nv, doublereal *wv, integer *ldwv, integer *nh, doublereal *wh, integer *ldwh)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dlaqr5 inputs: kacc22 %" FLA_IS ", n %" FLA_IS ", ktop %" FLA_IS ", kbot %" FLA_IS ", nshfts %" FLA_IS ", ldh %" FLA_IS ", iloz %" FLA_IS ", ihiz %" FLA_IS ", ldz %" FLA_IS ", ldv %" FLA_IS ", ldu %" FLA_IS ", nv %" FLA_IS ", ldwv %" FLA_IS ", nh %" FLA_IS ", ldwh %" FLA_IS "",*kacc22, *n, *ktop, *kbot, *nshfts, *ldh, *iloz, *ihiz, *ldz, *ldv, *ldu, *nv, *ldwv, *nh, *ldwh);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer h_dim1, h_offset, u_dim1, u_offset, v_dim1, v_offset, wh_dim1, wh_offset, wv_dim1, wv_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7;
     doublereal d__1, d__2, d__3, d__4, d__5;
@@ -329,12 +335,14 @@ int dlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
     /* Function Body */
     if (*nshfts < 2)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* ==== If the active block is empty or 1-by-1, then there */
     /* . is nothing to do. ==== */
     if (*ktop >= *kbot)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* ==== Shuffle shifts into pairs of real shifts and pairs */
@@ -1014,6 +1022,7 @@ int dlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
         /* L220: */
     }
     /* ==== End of DLAQR5 ==== */
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
 /* dlaqr5_ */
