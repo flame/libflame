@@ -110,6 +110,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int dlarfx_(char *side, integer *m, integer *n, doublereal * v, doublereal *tau, doublereal *c__, integer *ldc, doublereal *work)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dlarfx inputs: side %c, m %" FLA_IS ", n %" FLA_IS ", ldc %" FLA_IS "",*side, *m, *n, *ldc);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer c_dim1, c_offset, i__1;
     /* Local variables */
@@ -145,6 +151,7 @@ int dlarfx_(char *side, integer *m, integer *n, doublereal * v, doublereal *tau,
     /* Function Body */
     if (*tau == 0.)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (lsame_(side, "L"))
@@ -734,6 +741,7 @@ L390: /* Special code for 10 x 10 Householder */
         goto L410;
     }
 L410:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DLARFX */
 }

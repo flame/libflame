@@ -86,6 +86,12 @@ the array */
 /* Subroutine */
 int dlarnv_(integer *idist, integer *iseed, integer *n, doublereal *x)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dlarnv inputs: idist %" FLA_IS ", iseed %" FLA_IS ", n %" FLA_IS "",*idist, *iseed, *n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3;
     /* Builtin functions */
@@ -178,6 +184,7 @@ int dlarnv_(integer *idist, integer *iseed, integer *n, doublereal *x)
         }
         /* L40: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DLARNV */
 }

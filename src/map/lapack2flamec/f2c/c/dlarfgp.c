@@ -91,6 +91,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlarfgp_(integer *n, doublereal *alpha, doublereal *x, integer *incx, doublereal *tau) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlarfgp inputs: n %" FLA_IS ", incx %" FLA_IS "",*n, *incx);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer i__1;
  doublereal d__1;
@@ -132,6 +138,7 @@
  /* Function Body */
  if (*n <= 0) {
  *tau = 0.;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  i__1 = *n - 1;
@@ -229,6 +236,7 @@
  }
  *alpha = beta;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DLARFGP */
  }
