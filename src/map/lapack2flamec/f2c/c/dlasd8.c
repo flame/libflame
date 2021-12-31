@@ -156,6 +156,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlasd8_(integer *icompq, integer *k, doublereal *d__, doublereal *z__, doublereal *vf, doublereal *vl, doublereal *difl, doublereal *difr, integer *lddifr, doublereal *dsigma, doublereal * work, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlasd8 inputs: icompq %" FLA_IS ", k %" FLA_IS ", lddifr %" FLA_IS "",*icompq, *k, *lddifr);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer difr_dim1, difr_offset, i__1, i__2;
  doublereal d__1, d__2;
@@ -222,6 +228,7 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DLASD8", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
@@ -232,6 +239,7 @@
  difl[2] = 1.;
  difr[(difr_dim1 << 1) + 1] = 1.;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Modify values DSIGMA(i) to make sure all DSIGMA(i)-DSIGMA(j) can */
@@ -279,6 +287,7 @@
  dlasd4_(k, &j, &dsigma[1], &z__[1], &work[iwk1], &rho, &d__[j], &work[ iwk2], info);
  /* If the root finder fails, report the convergence failure. */
  if (*info != 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  work[iwk3i + j] = work[iwk3i + j] * work[j] * work[iwk2i + j];
@@ -346,6 +355,7 @@
  }
  dcopy_(k, &work[iwk2], &c__1, &vf[1], &c__1);
  dcopy_(k, &work[iwk3], &c__1, &vl[1], &c__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DLASD8 */
  }
