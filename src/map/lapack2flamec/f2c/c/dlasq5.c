@@ -131,6 +131,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlasq5_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *tau, doublereal *sigma, doublereal *dmin__, doublereal *dmin1, doublereal *dmin2, doublereal *dn, doublereal * dnm1, doublereal *dnm2, logical *ieee, doublereal *eps) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlasq5 inputs: i0 %" FLA_IS ", n0 %" FLA_IS ", pp %" FLA_IS "",*i0, *n0, *pp);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer i__1;
  doublereal d__1, d__2;
@@ -158,6 +164,7 @@
  --z__;
  /* Function Body */
  if (*n0 - *i0 - 1 <= 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  dthresh = *eps * (*sigma + *tau);
@@ -230,6 +237,7 @@
  j4 += 4) {
  z__[j4 - 2] = d__ + z__[j4 - 1];
  if (d__ < 0.) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else {
@@ -250,6 +258,7 @@
  j4 += 4) {
  z__[j4 - 3] = d__ + z__[j4];
  if (d__ < 0.) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else {
@@ -270,6 +279,7 @@
  j4p2 = j4 + (*pp << 1) - 1;
  z__[j4 - 2] = *dnm2 + z__[j4p2];
  if (*dnm2 < 0.) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else {
@@ -282,6 +292,7 @@
  j4p2 = j4 + (*pp << 1) - 1;
  z__[j4 - 2] = *dnm1 + z__[j4p2];
  if (*dnm1 < 0.) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else {
@@ -364,6 +375,7 @@
  j4 += 4) {
  z__[j4 - 2] = d__ + z__[j4 - 1];
  if (d__ < 0.) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else {
@@ -387,6 +399,7 @@
  j4 += 4) {
  z__[j4 - 3] = d__ + z__[j4];
  if (d__ < 0.) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else {
@@ -410,6 +423,7 @@
  j4p2 = j4 + (*pp << 1) - 1;
  z__[j4 - 2] = *dnm2 + z__[j4p2];
  if (*dnm2 < 0.) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else {
@@ -422,6 +436,7 @@
  j4p2 = j4 + (*pp << 1) - 1;
  z__[j4 - 2] = *dnm1 + z__[j4p2];
  if (*dnm1 < 0.) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else {
@@ -433,6 +448,7 @@
  }
  z__[j4 + 2] = *dn;
  z__[(*n0 << 2) - *pp] = emin;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DLASQ5 */
  }

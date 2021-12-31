@@ -137,6 +137,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlasq4_(integer *i0, integer *n0, doublereal *z__, integer *pp, integer *n0in, doublereal *dmin__, doublereal *dmin1, doublereal *dmin2, doublereal *dn, doublereal *dn1, doublereal *dn2, doublereal *tau, integer *ttype, doublereal *g) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlasq4 inputs: i0 %" FLA_IS ", n0 %" FLA_IS ", pp %" FLA_IS ", n0in %" FLA_IS "",*i0, *n0, *pp, *n0in);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer i__1;
  doublereal d__1, d__2;
@@ -170,6 +176,7 @@
  if (*dmin__ <= 0.) {
  *tau = -(*dmin__);
  *ttype = -1;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  nn = (*n0 << 2) + *pp;
@@ -218,6 +225,7 @@
  gam = *dn;
  a2 = 0.;
  if (z__[nn - 5] > z__[nn - 7]) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  b2 = z__[nn - 5] / z__[nn - 7];
@@ -227,10 +235,12 @@
  np = nn - (*pp << 1);
  gam = *dn1;
  if (z__[np - 4] > z__[np - 2]) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  a2 = z__[np - 4] / z__[np - 2];
  if (z__[nn - 9] > z__[nn - 11]) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  b2 = z__[nn - 9] / z__[nn - 11];
@@ -247,6 +257,7 @@
  }
  b1 = b2;
  if (z__[i4] > z__[i4 - 2]) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  b2 *= z__[i4] / z__[i4 - 2];
@@ -273,6 +284,7 @@
  b2 = z__[np - 6];
  gam = *dn2;
  if (z__[np - 8] > b2 || z__[np - 4] > b1) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  a2 = z__[np - 8] / b2 * (z__[np - 4] / b1 + 1.);
@@ -289,6 +301,7 @@
  }
  b1 = b2;
  if (z__[i4] > z__[i4 - 2]) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  b2 *= z__[i4] / z__[i4 - 2];
@@ -326,6 +339,7 @@
  *ttype = -7;
  s = *dmin1 * .333;
  if (z__[nn - 5] > z__[nn - 7]) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  b1 = z__[nn - 5] / z__[nn - 7];
@@ -339,6 +353,7 @@
  i4 += -4) {
  a2 = b1;
  if (z__[i4] > z__[i4 - 2]) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  b1 *= z__[i4] / z__[i4 - 2];
@@ -381,6 +396,7 @@
  *ttype = -10;
  s = *dmin2 * .333;
  if (z__[nn - 5] > z__[nn - 7]) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  b1 = z__[nn - 5] / z__[nn - 7];
@@ -393,6 +409,7 @@
  i4 >= i__1;
  i4 += -4) {
  if (z__[i4] > z__[i4 - 2]) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  b1 *= z__[i4] / z__[i4 - 2];
@@ -429,6 +446,7 @@
  *ttype = -12;
  }
  *tau = s;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DLASQ4 */
  }

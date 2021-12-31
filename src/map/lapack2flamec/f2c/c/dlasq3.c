@@ -167,6 +167,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlasq3_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *dmin__, doublereal *sigma, doublereal *desig, doublereal *qmax, integer *nfail, integer *iter, integer *ndiv, logical *ieee, integer *ttype, doublereal *dmin1, doublereal *dmin2, doublereal *dn, doublereal *dn1, doublereal *dn2, doublereal *g, doublereal *tau) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlasq3 inputs: i0 %" FLA_IS ", n0 %" FLA_IS ", pp %" FLA_IS ", nfail %" FLA_IS ", iter %" FLA_IS ", ndiv %" FLA_IS ", ttype %" FLA_IS "",*i0, *n0, *pp, *nfail, *iter, *ndiv, *ttype);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer i__1;
  doublereal d__1, d__2;
@@ -213,6 +219,7 @@
  tol2 = d__1 * d__1;
  /* Check for deflation. */
  L10: if (*n0 < *i0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n0 == *i0) {
@@ -364,6 +371,7 @@
  *desig = *sigma - (t - *tau) + *desig;
  }
  *sigma = t;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DLASQ3 */
  }
