@@ -95,6 +95,7 @@
 /* Subroutine */
 int dlas2_(doublereal *f, doublereal *g, doublereal *h__, doublereal *ssmin, doublereal *ssmax)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* System generated locals */
     doublereal d__1, d__2;
     /* Builtin functions */
@@ -173,6 +174,7 @@ int dlas2_(doublereal *f, doublereal *g, doublereal *h__, doublereal *ssmin, dou
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DLAS2 */
 }

@@ -176,6 +176,12 @@ if STOREV = 'R', LDV >= K. */
 /* Subroutine */
 int dlarzb_(char *side, char *trans, char *direct, char * storev, integer *m, integer *n, integer *k, integer *l, doublereal *v, integer *ldv, doublereal *t, integer *ldt, doublereal *c__, integer * ldc, doublereal *work, integer *ldwork)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dlarzb inputs: side %c, trans %c, direct %c, storev %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", l %" FLA_IS ", ldv %" FLA_IS ", ldt %" FLA_IS ", ldc %" FLA_IS ", ldwork %" FLA_IS "",*side, *trans, *direct, *storev, *m, *n, *k, *l, *ldv, *ldt, *ldc, *ldwork);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer c_dim1, c_offset, t_dim1, t_offset, v_dim1, v_offset, work_dim1, work_offset, i__1, i__2;
     /* Local variables */
@@ -221,6 +227,7 @@ int dlarzb_(char *side, char *trans, char *direct, char * storev, integer *m, in
     /* Function Body */
     if (*m <= 0 || *n <= 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check for currently supported options */
@@ -237,6 +244,7 @@ int dlarzb_(char *side, char *trans, char *direct, char * storev, integer *m, in
     {
         i__1 = -info;
         xerbla_("DLARZB", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (lsame_(trans, "N"))
@@ -333,6 +341,7 @@ int dlarzb_(char *side, char *trans, char *direct, char * storev, integer *m, in
             dgemm_("No transpose", "No transpose", m, l, k, &c_b23, &work[ work_offset], ldwork, &v[v_offset], ldv, &c_b13, &c__[(*n - *l + 1) * c_dim1 + 1], ldc);
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DLARZB */
 }

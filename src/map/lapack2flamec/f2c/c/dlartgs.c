@@ -77,6 +77,7 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlartgs_(doublereal *x, doublereal *y, doublereal *sigma, doublereal *cs, doublereal *sn) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  doublereal r__, s, w, z__;
  extern doublereal dlamch_(char *);
  doublereal thresh;
@@ -134,6 +135,7 @@
  /* reordering the arguments ensures that if Z = 0 then the rotation */
  /* is by PI/2. */
  dlartgp_(&w, &z__, sn, cs, &r__);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End DLARTGS */
  }

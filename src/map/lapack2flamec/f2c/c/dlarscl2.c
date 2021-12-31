@@ -78,6 +78,12 @@
 /* Subroutine */
 int dlarscl2_(integer *m, integer *n, doublereal *d__, doublereal *x, integer *ldx)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dlarscl2 inputs: m %" FLA_IS ", n %" FLA_IS ", ldx %" FLA_IS "",*m, *n, *ldx);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer x_dim1, x_offset, i__1, i__2;
     /* Local variables */
@@ -113,6 +119,7 @@ int dlarscl2_(integer *m, integer *n, doublereal *d__, doublereal *x, integer *l
             x[i__ + j * x_dim1] /= d__[i__];
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
 /* dlarscl2_ */
