@@ -216,7 +216,7 @@
  int dsterf_(integer *, doublereal *, doublereal *, integer *), dlasrt_(char *, integer *, doublereal *, integer *);
  integer liwmin, icompz;
  extern /* Subroutine */
- int dsteqr_(char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *);
+ int dsteqr_internal_(char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *);
  doublereal orgnrm;
  logical lquery;
  integer smlsiz, storez, strtrw;
@@ -348,7 +348,7 @@
  /* If N is smaller than the minimum divide size (SMLSIZ+1), then */
  /* solve the problem with another solver. */
  if (*n <= smlsiz) {
- dsteqr_(compz, n, &d__[1], &e[1], &z__[z_offset], ldz, &work[1], info);
+ dsteqr_internal_(compz, n, &d__[1], &e[1], &z__[z_offset], ldz, &work[1], info);
  }
  else {
  /* If COMPZ = 'V', the Z matrix must be stored elsewhere for later */
@@ -416,12 +416,12 @@
  /* Since QR won't update a Z matrix which is larger than */
  /* the length of D, we must solve the sub-problem in a */
  /* workspace and then multiply back into Z. */
- dsteqr_("I", &m, &d__[start], &e[start], &work[1], &m, & work[m * m + 1], info);
+ dsteqr_internal_("I", &m, &d__[start], &e[start], &work[1], &m, & work[m * m + 1], info);
  dlacpy_("A", n, &m, &z__[start * z_dim1 + 1], ldz, &work[ storez], n);
  dgemm_("N", "N", n, &m, &m, &c_b18, &work[storez], n, & work[1], &m, &c_b17, &z__[start * z_dim1 + 1], ldz);
  }
  else if (icompz == 2) {
- dsteqr_("I", &m, &d__[start], &e[start], &z__[start + start * z_dim1], ldz, &work[1], info);
+ dsteqr_internal_("I", &m, &d__[start], &e[start], &z__[start + start * z_dim1], ldz, &work[1], info);
  }
  else {
  dsterf_(&m, &d__[start], &e[start], info);
