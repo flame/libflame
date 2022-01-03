@@ -225,6 +225,12 @@ b(i), i=1,..,n}
 /* Subroutine */
 int dlatps_(char *uplo, char *trans, char *diag, char * normin, integer *n, doublereal *ap, doublereal *x, doublereal *scale, doublereal *cnorm, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dlatps inputs: uplo %c, trans %c, diag %c, normin %c, n %" FLA_IS "", *uplo, *trans, *normin, *n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3;
     doublereal d__1, d__2, d__3;
@@ -310,11 +316,13 @@ int dlatps_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
     {
         i__1 = -(*info);
         xerbla_("DLATPS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Determine machine dependent parameters to control overflow. */
@@ -884,6 +892,7 @@ L150:
         d__1 = 1. / tscal;
         dscal_(n, &d__1, &cnorm[1], &c__1);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DLATPS */
 }

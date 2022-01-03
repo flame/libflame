@@ -163,6 +163,12 @@ for 1 <= j <= N, column j of the */
 /* Subroutine */
 int dlatdf_(integer *ijob, integer *n, doublereal *z__, integer *ldz, doublereal *rhs, doublereal *rdsum, doublereal *rdscal, integer *ipiv, integer *jpiv)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dlatdf inputs: ijob %" FLA_IS ", n %" FLA_IS ", ldz %" FLA_IS "",*ijob, *n, *ldz);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer z_dim1, z_offset, i__1, i__2;
     doublereal d__1;
@@ -323,6 +329,7 @@ int dlatdf_(integer *ijob, integer *n, doublereal *z__, integer *ldz, doublereal
         /* Compute the sum of squares */
         dlassq_(n, &rhs[1], &c__1, rdscal, rdsum);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DLATDF */
 }

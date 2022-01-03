@@ -27,7 +27,7 @@ int dgesdd_fla_check(char *jobu, char *jobvt, integer *m, integer *n, double * a
     integer lwork_dorgbr_p__, lwork_dorgbr_q__, lwork_dorglq_m__, lwork_dorglq_n__, lwork_dorgqr_m__, lwork_dorgqr_n__;
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
-    sprintf(buffer, "dgesdd inputs: jobz %c, m %d, n %d, lda %d, ldu %d, ldvt %d\n", *jobz, *m, *n, *lda, *ldu, *ldvt);
+    snprintf(buffer, 256, "dgesdd inputs: jobu %c, jobvt %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS ", lwork %" FLA_IS "\n", *jobu, *jobvt, *m, *n, *lda, *ldu, *ldvt, *lwork);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* Parameter adjustments */

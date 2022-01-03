@@ -142,6 +142,12 @@ static doublereal c_b5 = 1.;
 /* Subroutine */
 int dlatzm_(char *side, integer *m, integer *n, doublereal * v, integer *incv, doublereal *tau, doublereal *c1, doublereal *c2, integer *ldc, doublereal *work)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dlatzm inputs: side %c, m %" FLA_IS ", n %" FLA_IS ", incv %" FLA_IS ", ldc %" FLA_IS "",*side, *m, *n, *incv, *ldc);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer c1_dim1, c1_offset, c2_dim1, c2_offset, i__1;
     doublereal d__1;
@@ -181,6 +187,7 @@ int dlatzm_(char *side, integer *m, integer *n, doublereal * v, integer *incv, d
     /* Function Body */
     if (min(*m,*n) == 0 || *tau == 0.)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (lsame_(side, "L"))
@@ -210,6 +217,7 @@ int dlatzm_(char *side, integer *m, integer *n, doublereal * v, integer *incv, d
         d__1 = -(*tau);
         dger_(m, &i__1, &d__1, &work[1], &c__1, &v[1], incv, &c2[c2_offset], ldc);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DLATZM */
 }

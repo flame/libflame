@@ -127,6 +127,12 @@
 /* Subroutine */
 int dlatrz_(integer *m, integer *n, integer *l, doublereal * a, integer *lda, doublereal *tau, doublereal *work)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dlatrz inputs: m %" FLA_IS ", n %" FLA_IS ", l %" FLA_IS ", lda %" FLA_IS "",*m, *n, *l, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     /* Local variables */
@@ -160,6 +166,7 @@ int dlatrz_(integer *m, integer *n, integer *l, doublereal * a, integer *lda, do
     /* Function Body */
     if (*m == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*m == *n)
@@ -172,6 +179,7 @@ int dlatrz_(integer *m, integer *n, integer *l, doublereal * a, integer *lda, do
             tau[i__] = 0.;
             /* L10: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     for (i__ = *m;
@@ -188,6 +196,7 @@ int dlatrz_(integer *m, integer *n, integer *l, doublereal * a, integer *lda, do
         dlarz_("Right", &i__1, &i__2, l, &a[i__ + (*n - *l + 1) * a_dim1], lda, &tau[i__], &a[i__ * a_dim1 + 1], lda, &work[1]);
         /* L20: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DLATRZ */
 }

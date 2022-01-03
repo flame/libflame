@@ -143,6 +143,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int dopmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, doublereal *ap, doublereal *tau, doublereal *c__, integer *ldc, doublereal *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dopmtr inputs: side %c, uplo %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", ldc %" FLA_IS "",*side, *uplo, *trans, *m, *n, *ldc);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer c_dim1, c_offset, i__1, i__2;
     /* Local variables */
@@ -226,11 +232,13 @@ int dopmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, doubler
     {
         i__1 = -(*info);
         xerbla_("DOPMTR", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (upper)
@@ -353,6 +361,7 @@ int dopmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, doubler
             /* L20: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DOPMTR */
 }

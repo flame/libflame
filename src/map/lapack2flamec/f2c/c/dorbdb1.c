@@ -191,6 +191,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dorbdb1_(integer *m, integer *p, integer *q, doublereal * x11, integer *ldx11, doublereal *x21, integer *ldx21, doublereal * theta, doublereal *phi, doublereal *taup1, doublereal *taup2, doublereal *tauq1, doublereal *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dorbdb1 inputs: m %" FLA_IS ", p %" FLA_IS ", q %" FLA_IS ", ldx11 %" FLA_IS ", ldx21 %" FLA_IS ", lwork %" FLA_IS "",*m, *p, *q, *ldx11, *ldx21, *lwork);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer x11_dim1, x11_offset, x21_dim1, x21_offset, i__1, i__2, i__3, i__4;
  doublereal d__1, d__2;
@@ -293,9 +299,11 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DORBDB1", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Reduce columns 1, ..., Q of X11 and X21 */
@@ -345,6 +353,7 @@
  dorbdb5_(&i__2, &i__3, &i__4, &x11[i__ + 1 + (i__ + 1) * x11_dim1] , &c__1, &x21[i__ + 1 + (i__ + 1) * x21_dim1], &c__1, & x11[i__ + 1 + (i__ + 2) * x11_dim1], ldx11, &x21[i__ + 1 + (i__ + 2) * x21_dim1], ldx21, &work[iorbdb5], &lorbdb5, &childinfo);
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DORBDB1 */
  }
