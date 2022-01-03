@@ -135,6 +135,12 @@
  /* > \ingroup doubleSYcomputational */
  /* ===================================================================== */
  doublereal dla_syrcond_(char *uplo, integer *n, doublereal *a, integer *lda, doublereal *af, integer *ldaf, integer *ipiv, integer *cmode, doublereal *c__, integer *info, doublereal *work, integer *iwork) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dla_syrcond inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", ipiv %" FLA_IS ", cmode %" FLA_IS "",*uplo, *n, *lda, *ldaf, *ipiv, *cmode);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, af_dim1, af_offset, i__1, i__2;
  doublereal ret_val, d__1;
@@ -201,10 +207,12 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DLA_SYRCOND", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  }
  if (*n == 0) {
  ret_val = 1.;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  }
  up = FALSE_;
@@ -392,6 +400,7 @@
  if (ainvnm != 0.) {
  ret_val = 1. / ainvnm;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return ret_val;
  }
  /* dla_syrcond__ */
