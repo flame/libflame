@@ -146,6 +146,12 @@ static doublereal c_b12 = -1.;
 /* Subroutine */
 int dorbdb6_(integer *m1, integer *m2, integer *n, doublereal *x1, integer *incx1, doublereal *x2, integer *incx2, doublereal *q1, integer *ldq1, doublereal *q2, integer *ldq2, doublereal *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dorbdb6 inputs: m1 %" FLA_IS ", m2 %" FLA_IS ", n %" FLA_IS ", incx1 %" FLA_IS ", incx2 %" FLA_IS ", ldq1 %" FLA_IS ", ldq2 %" FLA_IS ", lwork %" FLA_IS "",*m1, *m2, *n, *incx1, *incx2, *ldq1, *ldq2, *lwork);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer q1_dim1, q1_offset, q2_dim1, q2_offset, i__1;
     doublereal d__1, d__2;
@@ -222,6 +228,7 @@ int dorbdb6_(integer *m1, integer *m2, integer *n, doublereal *x1, integer *incx
     {
         i__1 = -(*info);
         xerbla_("DORBDB6", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* First, project X onto the orthogonal complement of Q's column */
@@ -270,10 +277,12 @@ int dorbdb6_(integer *m1, integer *m2, integer *n, doublereal *x1, integer *incx
     /* Otherwise, project again. */
     if (normsq2 >= normsq1 * .01)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (normsq2 == 0.)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     normsq1 = normsq2;
@@ -332,6 +341,7 @@ int dorbdb6_(integer *m1, integer *m2, integer *n, doublereal *x1, integer *incx
             x2[i__] = 0.;
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DORBDB6 */
 }

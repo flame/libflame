@@ -156,6 +156,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dorm22_(char *side, char *trans, integer *m, integer *n, integer *n1, integer *n2, doublereal *q, integer *ldq, doublereal * c__, integer *ldc, doublereal *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dorm22 inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", n1 %" FLA_IS ", n2 %" FLA_IS ", ldq %" FLA_IS ", ldc %" FLA_IS ", lwork %" FLA_IS "",*side, *trans, *m, *n, *n1, *n2, *ldq, *ldc, *lwork);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer q_dim1, q_offset, c_dim1, c_offset, i__1, i__2, i__3, i__4;
  /* Local variables */
@@ -249,25 +255,30 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DORM22", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*m == 0 || *n == 0) {
  work[1] = 1.;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Degenerate cases (N1 = 0 or N2 = 0) are handled using DTRMM. */
  if (*n1 == 0) {
  dtrmm_(side, "Upper", trans, "Non-Unit", m, n, &c_b10, &q[q_offset], ldq, &c__[c_offset], ldc);
  work[1] = 1.;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (*n2 == 0) {
  dtrmm_(side, "Lower", trans, "Non-Unit", m, n, &c_b10, &q[q_offset], ldq, &c__[c_offset], ldc);
  work[1] = 1.;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Compute the largest chunk size available from the workspace. */
@@ -375,6 +386,7 @@
  }
  }
  work[1] = (doublereal) lwkopt;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DORM22 */
  }
