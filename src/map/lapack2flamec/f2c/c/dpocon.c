@@ -111,6 +111,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int dpocon_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *anorm, doublereal *rcond, doublereal *work, integer * iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dpocon inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*uplo, *n, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1;
     doublereal d__1;
@@ -187,6 +193,7 @@ int dpocon_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *an
     {
         i__1 = -(*info);
         xerbla_("DPOCON", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -194,10 +201,12 @@ int dpocon_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *an
     if (*n == 0)
     {
         *rcond = 1.;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*anorm == 0.)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     smlnum = dlamch_("Safe minimum");
@@ -243,6 +252,7 @@ L10:
         *rcond = 1. / ainvnm / *anorm;
     }
 L20:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DPOCON */
 }

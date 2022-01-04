@@ -113,6 +113,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int dpbtrs_(char *uplo, integer *n, integer *kd, integer * nrhs, doublereal *ab, integer *ldab, doublereal *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dpbtrs inputs: uplo %c, n %" FLA_IS ", kd %" FLA_IS ", nrhs %" FLA_IS ", ldab %" FLA_IS ", ldb %" FLA_IS "",*uplo, *n, *kd, *nrhs, *ldab, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, b_dim1, b_offset, i__1;
     /* Local variables */
@@ -180,11 +186,13 @@ int dpbtrs_(char *uplo, integer *n, integer *kd, integer * nrhs, doublereal *ab,
     {
         i__1 = -(*info);
         xerbla_("DPBTRS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0 || *nrhs == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (upper)
@@ -217,6 +225,7 @@ int dpbtrs_(char *uplo, integer *n, integer *kd, integer * nrhs, doublereal *ab,
             /* L20: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DPBTRS */
 }
