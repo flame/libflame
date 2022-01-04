@@ -163,6 +163,12 @@ static doublereal c_b14 = 1.;
 /* Subroutine */
 int dpprfs_(char *uplo, integer *n, integer *nrhs, doublereal *ap, doublereal *afp, doublereal *b, integer *ldb, doublereal *x, integer *ldx, doublereal *ferr, doublereal *berr, doublereal *work, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dpprfs inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*uplo, *n, *nrhs, *ldb, *ldx);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, x_dim1, x_offset, i__1, i__2, i__3;
     doublereal d__1, d__2, d__3;
@@ -255,6 +261,7 @@ int dpprfs_(char *uplo, integer *n, integer *nrhs, doublereal *ap, doublereal *a
     {
         i__1 = -(*info);
         xerbla_("DPPRFS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -269,6 +276,7 @@ int dpprfs_(char *uplo, integer *n, integer *nrhs, doublereal *ap, doublereal *a
             berr[j] = 0.;
             /* L10: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* NZ = maximum number of nonzero elements in each row of A, plus 1 */
@@ -477,6 +485,7 @@ L100:
         }
         /* L140: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DPPRFS */
 }

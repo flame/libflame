@@ -98,6 +98,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dpotrf2_(char *uplo, integer *n, doublereal *a, integer * lda, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dpotrf2 inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*uplo, *n, *lda);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1;
  /* Builtin functions */
@@ -136,7 +142,6 @@
  /* .. Executable Statements .. */
  /* Test the input parameters */
  /* Parameter adjustments */
- AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
  a_dim1 = *lda;
  a_offset = 1 + a_dim1;
  a -= a_offset;
@@ -155,10 +160,12 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DPOTRF2", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* N=1 case */
@@ -166,6 +173,7 @@
  /* Test for non-positive-definiteness */
  if (a[a_dim1 + 1] <= 0. || disnan_(&a[a_dim1 + 1])) {
  *info = 1;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Factor */
@@ -179,6 +187,7 @@
  dpotrf2_(uplo, &n1, &a[a_dim1 + 1], lda, &iinfo);
  if (iinfo != 0) {
  *info = iinfo;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Compute the Cholesky factorization A = U**T*U */
@@ -190,6 +199,7 @@
  dpotrf2_(uplo, &n2, &a[n1 + 1 + (n1 + 1) * a_dim1], lda, &iinfo);
  if (iinfo != 0) {
  *info = iinfo + n1;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Compute the Cholesky factorization A = L*L**T */
@@ -202,6 +212,7 @@
  dpotrf2_(uplo, &n2, &a[n1 + 1 + (n1 + 1) * a_dim1], lda, &iinfo);
  if (iinfo != 0) {
  *info = iinfo + n1;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  }
