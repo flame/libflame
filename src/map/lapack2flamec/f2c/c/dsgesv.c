@@ -187,6 +187,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dsgesv_(integer *n, integer *nrhs, doublereal *a, integer *lda, integer *ipiv, doublereal *b, integer *ldb, doublereal * x, integer *ldx, doublereal *work, real *swork, integer *iter, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dsgesv inputs: n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*n, *nrhs, *lda, *ldb, *ldx);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, b_dim1, b_offset, work_dim1, work_offset, x_dim1, x_offset, i__1;
  doublereal d__1;
@@ -262,10 +268,12 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DSGESV", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if (N.EQ.0). */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Skip single precision iterative refinement if a priori slower */
@@ -323,6 +331,7 @@
  /* If we are here, the NRHS normwise backward errors satisfy the */
  /* stopping criterion. We are good to exit. */
  *iter = 0;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  L10: for (iiter = 1;
  iiter <= 30;
@@ -363,6 +372,7 @@
  /* If we are here, the NRHS normwise backward errors satisfy the */
  /* stopping criterion, we are good to exit. */
  *iter = iiter;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  L20: /* L30: */
  ;
@@ -376,10 +386,12 @@
  /* satisfactory solution, so we resort to double precision. */
  dgetrf_(n, n, &a[a_offset], lda, &ipiv[1], info);
  if (*info != 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  dlacpy_("All", n, nrhs, &b[b_offset], ldb, &x[x_offset], ldx);
  dgetrs_("No transpose", n, nrhs, &a[a_offset], lda, &ipiv[1], &x[x_offset] , ldx, info);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DSGESV. */
  }

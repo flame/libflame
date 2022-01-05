@@ -155,6 +155,12 @@ LDX >= 1 otherwise. */
 /* Subroutine */
 int dsbgst_(char *vect, char *uplo, integer *n, integer *ka, integer *kb, doublereal *ab, integer *ldab, doublereal *bb, integer * ldbb, doublereal *x, integer *ldx, doublereal *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dsbgst inputs: vect %c, uplo %c, n %" FLA_IS ", ka %" FLA_IS ", kb %" FLA_IS ", ldab %" FLA_IS ", ldbb %" FLA_IS ", ldx %" FLA_IS "",*vect, *uplo, *n, *ka, *kb, *ldab, *ldbb, *ldx);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, bb_dim1, bb_offset, x_dim1, x_offset, i__1, i__2, i__3, i__4;
     doublereal d__1;
@@ -251,11 +257,13 @@ int dsbgst_(char *vect, char *uplo, integer *n, integer *ka, integer *kb, double
     {
         i__1 = -(*info);
         xerbla_("DSBGST", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     inca = *ldab * ka1;
@@ -1098,6 +1106,7 @@ L490:
             i0 = m + 1;
             if (*ka == 0)
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             goto L490;
@@ -1108,6 +1117,7 @@ L490:
         i__ -= *ka;
         if (i__ < 2)
         {
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
