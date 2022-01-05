@@ -159,6 +159,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dsb2st_kernels_(char *uplo, logical *wantz, integer * ttype, integer *st, integer *ed, integer *sweep, integer *n, integer * nb, integer *ib, doublereal *a, integer *lda, doublereal *v, doublereal *tau, integer *ldvt, doublereal *work) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dsb2st_kernels inputs: uplo %c, ttype %" FLA_IS ", st %" FLA_IS ", ed %" FLA_IS ", sweep %" FLA_IS ", n %" FLA_IS ", nb %" FLA_IS ", ib %" FLA_IS ", lda %" FLA_IS ", ldvt %" FLA_IS "",*uplo, *ttype, *st, *ed, *sweep, *n, *nb, *ib, *lda, *ldvt);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1, i__2;
  doublereal d__1;
@@ -352,6 +358,7 @@
  }
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* END OF DSB2ST_KERNELS */
  }

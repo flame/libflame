@@ -102,6 +102,12 @@
 /* Subroutine */
 int dptsv_(integer *n, integer *nrhs, doublereal *d__, doublereal *e, doublereal *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dptsv inputs: n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS "",*n, *nrhs, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, i__1;
     /* Local variables */
@@ -146,6 +152,7 @@ int dptsv_(integer *n, integer *nrhs, doublereal *d__, doublereal *e, doublereal
     {
         i__1 = -(*info);
         xerbla_("DPTSV ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Compute the L*D*L**T (or U**T*D*U) factorization of A. */
@@ -155,6 +162,7 @@ int dptsv_(integer *n, integer *nrhs, doublereal *d__, doublereal *e, doublereal
         /* Solve the system A*X = B, overwriting B with X. */
         dpttrs_(n, nrhs, &d__[1], &e[1], &b[b_offset], ldb, info);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DPTSV */
 }
