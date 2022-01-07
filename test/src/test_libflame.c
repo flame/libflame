@@ -864,27 +864,27 @@ void libfla_test_read_parameter_file( char* input_filename, test_params_t* param
 
 	// Read the blocksize to use for blocked algorithms on flat matrices.
 	libfla_test_read_next_line( buffer, input_stream );
-	sscanf( buffer, "%lu ", &(params->b_alg_flat) );
+	sscanf( buffer, "%llu ", &(params->b_alg_flat) );
 
 	// Read the algorithmic blocksize to use for algorithms-by-blocks.
 	libfla_test_read_next_line( buffer, input_stream );
-	sscanf( buffer, "%lu ", &(params->b_alg_hier) );
+	sscanf( buffer, "%llu ", &(params->b_alg_hier) );
 
 	// Read the storage (FLASH) blocksize to use for algorithms-by-blocks.
 	libfla_test_read_next_line( buffer, input_stream );
-	sscanf( buffer, "%lu ", &(params->b_flash) );
+	sscanf( buffer, "%llu ", &(params->b_flash) );
 
 	// Read the initial problem size to test.
 	libfla_test_read_next_line( buffer, input_stream );
-	sscanf( buffer, "%lu ", &(params->p_first) );
+	sscanf( buffer, "%llu ", &(params->p_first) );
 
 	// Read the maximum problem size to test.
 	libfla_test_read_next_line( buffer, input_stream );
-	sscanf( buffer, "%lu ", &(params->p_max) );
+	sscanf( buffer, "%llu ", &(params->p_max) );
 
 	// Read the problem size increment to test.
 	libfla_test_read_next_line( buffer, input_stream );
-	sscanf( buffer, "%lu ", &(params->p_inc) );
+	sscanf( buffer, "%llu ", &(params->p_inc) );
 
 	// Read the partial number of matrix size for incomplete factorization.
         libfla_test_read_next_line( buffer, input_stream );

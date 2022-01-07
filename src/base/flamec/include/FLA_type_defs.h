@@ -96,7 +96,7 @@ typedef int FLA_Diag_off;
 
 #ifndef _DEFINED_DIM_T
 #define _DEFINED_DIM_T
-typedef unsigned long dim_t;
+typedef uinteger dim_t;
 #endif
 
 // --- Intrinsic/assembly definitions ----------------------------------------
