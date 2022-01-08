@@ -59,15 +59,15 @@
 
        Parameter adjustments */
     /* Table of constant values */
-    static integer c__1 = 1;
-    static real c_b6 = -1.f;
+    static TLS_CLASS_SPEC integer c__1 = 1;
+    static TLS_CLASS_SPEC real c_b6 = -1.f;
 
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     real r__1;
     /* Local variables */
-	static integer j;
-    static integer jp;
+	static TLS_CLASS_SPEC integer j;
+    static TLS_CLASS_SPEC integer jp;
     extern /* Subroutine */ int xerbla_(char *, integer *);
     extern integer isamax_(integer *, real *, integer *);
     int kn;
