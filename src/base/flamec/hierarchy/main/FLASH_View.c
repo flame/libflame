@@ -806,7 +806,7 @@ FLA_Error FLASH_Obj_show_hierarchy( FLA_Obj H, dim_t i, char* elem_format )
 
 		if ( datatype == FLA_INT )
 		{
-			int* buffer = FLA_Obj_buffer_at_view( H );
+			integer* buffer = FLA_Obj_buffer_at_view( H );
 
 			for ( j = 0; j < m; ++j )
 			{

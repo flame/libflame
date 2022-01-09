@@ -239,6 +239,16 @@ IHI .LE. IHIZ .LE. N. */
 /* Subroutine */
 int claqr0_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *ihi, complex *h__, integer *ldh, complex *w, integer *iloz, integer *ihiz, complex *z__, integer *ldz, complex * work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"claqr0 inputs: n %lld, ilo %lld, ihi %lld, ldh %lld, iloz %lld, ihiz %lld, ldz %lld, lwork %lld",*n, *ilo, *ihi, *ldh, *iloz, *ihiz, *ldz, *lwork);
+#else 
+    snprintf(buffer, 256,"claqr0 inputs: n %d, ilo %d, ihi %d, ldh %d, iloz %d, ihiz %d, ldz %d, lwork %d",*n, *ilo, *ihi, *ldh, *iloz, *ihiz, *ldz, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer h_dim1, h_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5;
     real r__1, r__2, r__3, r__4, r__5, r__6, r__7, r__8;
@@ -322,6 +332,7 @@ int claqr0_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     {
         work[1].r = 1.f;
         work[1].i = 0.f; // , expr subst
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n <= 11)
@@ -399,6 +410,7 @@ int claqr0_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
             q__1.i = 0.f; // , expr subst
             work[1].r = q__1.r;
             work[1].i = q__1.i; // , expr subst
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         /* ==== CLAHQR/CLAQR0 crossover point ==== */
@@ -810,6 +822,7 @@ L80:
     work[1].r = q__1.r;
     work[1].i = q__1.i; // , expr subst
     /* ==== End of CLAQR0 ==== */
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
 /* claqr0_ */

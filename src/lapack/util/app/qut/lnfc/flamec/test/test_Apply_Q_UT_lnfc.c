@@ -17,14 +17,14 @@
 
 
 void time_Apply_Q_UT_lnfc(
-               int variant, int type, int n_repeats, int m, int n, int b_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer n, integer b_alg,
                FLA_Obj A, FLA_Obj A_orig, FLA_Obj t, FLA_Obj T, FLA_Obj s, FLA_Obj S, FLA_Obj B,
                double *dtime, double *diff, double *gflops );
 
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     m_input, n_input,
     m, n, min_m_n,
     p_first, p_last, p_inc,

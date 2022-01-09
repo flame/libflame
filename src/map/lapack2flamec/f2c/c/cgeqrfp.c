@@ -132,6 +132,16 @@ v(i+1:m) is stored on exit in A(i+1:m,i), */
 /* Subroutine */
 int cgeqrfp_(integer *m, integer *n, complex *a, integer * lda, complex *tau, complex *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgeqrfp inputs: m %lld, n %lld, lda %lld, lwork %lld",*m, *n, *lda, *lwork);
+#else 
+    snprintf(buffer, 256,"cgeqrfp inputs: m %d, n %d, lda %d, lwork %d",*m, *n, *lda, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
@@ -195,10 +205,12 @@ int cgeqrfp_(integer *m, integer *n, complex *a, integer * lda, complex *tau, co
     {
         i__1 = -(*info);
         xerbla_("CGEQRFP", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -207,6 +219,7 @@ int cgeqrfp_(integer *m, integer *n, complex *a, integer * lda, complex *tau, co
     {
         work[1].r = 1.f;
         work[1].i = 0.f; // , expr subst
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     nbmin = 2;
@@ -279,6 +292,7 @@ int cgeqrfp_(integer *m, integer *n, complex *a, integer * lda, complex *tau, co
     }
     work[1].r = (real) iws;
     work[1].i = 0.f; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGEQRFP */
 }

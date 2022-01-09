@@ -13,11 +13,11 @@
 FLA_Error FLA_Sylv_hn_opt_var1( FLA_Obj isgn, FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj scale )
 {
   FLA_Datatype datatype;
-  int          m_C, n_C;
-  int          rs_A, cs_A;
-  int          rs_B, cs_B;
-  int          rs_C, cs_C;
-  int          info;
+  integer          m_C, n_C;
+  integer          rs_A, cs_A;
+  integer          rs_B, cs_B;
+  integer          rs_C, cs_C;
+  integer          info;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -37,7 +37,7 @@ FLA_Error FLA_Sylv_hn_opt_var1( FLA_Obj isgn, FLA_Obj A, FLA_Obj B, FLA_Obj C, F
   {
     case FLA_FLOAT:
     {
-      int*   buff_isgn  = FLA_INT_PTR( isgn );
+      integer*   buff_isgn  = FLA_INT_PTR( isgn );
       float* buff_A     = FLA_FLOAT_PTR( A );
       float* buff_B     = FLA_FLOAT_PTR( B );
       float* buff_C     = FLA_FLOAT_PTR( C );
@@ -58,7 +58,7 @@ FLA_Error FLA_Sylv_hn_opt_var1( FLA_Obj isgn, FLA_Obj A, FLA_Obj B, FLA_Obj C, F
 
     case FLA_DOUBLE:
     {
-      int*    buff_isgn  = FLA_INT_PTR( isgn );
+      integer*    buff_isgn  = FLA_INT_PTR( isgn );
       double* buff_A     = FLA_DOUBLE_PTR( A );
       double* buff_B     = FLA_DOUBLE_PTR( B );
       double* buff_C     = FLA_DOUBLE_PTR( C );
@@ -79,7 +79,7 @@ FLA_Error FLA_Sylv_hn_opt_var1( FLA_Obj isgn, FLA_Obj A, FLA_Obj B, FLA_Obj C, F
 
     case FLA_COMPLEX:
     {
-      int*      buff_isgn  = FLA_INT_PTR( isgn );
+      integer*      buff_isgn  = FLA_INT_PTR( isgn );
       scomplex* buff_A     = FLA_COMPLEX_PTR( A );
       scomplex* buff_B     = FLA_COMPLEX_PTR( B );
       scomplex* buff_C     = FLA_COMPLEX_PTR( C );
@@ -100,7 +100,7 @@ FLA_Error FLA_Sylv_hn_opt_var1( FLA_Obj isgn, FLA_Obj A, FLA_Obj B, FLA_Obj C, F
 
     case FLA_DOUBLE_COMPLEX:
     {
-      int*      buff_isgn  = FLA_INT_PTR( isgn );
+      integer*      buff_isgn  = FLA_INT_PTR( isgn );
       dcomplex* buff_A     = FLA_DOUBLE_COMPLEX_PTR( A );
       dcomplex* buff_B     = FLA_DOUBLE_COMPLEX_PTR( B );
       dcomplex* buff_C     = FLA_DOUBLE_COMPLEX_PTR( C );
@@ -126,15 +126,15 @@ FLA_Error FLA_Sylv_hn_opt_var1( FLA_Obj isgn, FLA_Obj A, FLA_Obj B, FLA_Obj C, F
 
 
 FLA_Error FLA_Sylv_hn_ops_var1( float sgn,
-                                int m_C,
-                                int n_C,
-                                float* buff_A, int rs_A, int cs_A,
-                                float* buff_B, int rs_B, int cs_B,
-                                float* buff_C, int rs_C, int cs_C,
+                                integer m_C,
+                                integer n_C,
+                                float* buff_A, integer rs_A, integer cs_A,
+                                float* buff_B, integer rs_B, integer cs_B,
+                                float* buff_C, integer rs_C, integer cs_C,
                                 float* buff_scale,
-                                int* info )
+                                integer* info )
 {
-  int l, k;
+  integer l, k;
 
   for ( l = 0; l < n_C; l++ )
   {
@@ -153,8 +153,8 @@ FLA_Error FLA_Sylv_hn_ops_var1( float sgn,
       float     a11;
       float     x11;
 
-      int       m_behind = k;
-      int       n_behind = l;
+      integer       m_behind = k;
+      integer       n_behind = l;
 
       /*------------------------------------------------------------*/
 
@@ -189,15 +189,15 @@ FLA_Error FLA_Sylv_hn_ops_var1( float sgn,
 
 
 FLA_Error FLA_Sylv_hn_opd_var1( double sgn,
-                                int m_C,
-                                int n_C,
-                                double* buff_A, int rs_A, int cs_A,
-                                double* buff_B, int rs_B, int cs_B,
-                                double* buff_C, int rs_C, int cs_C,
+                                integer m_C,
+                                integer n_C,
+                                double* buff_A, integer rs_A, integer cs_A,
+                                double* buff_B, integer rs_B, integer cs_B,
+                                double* buff_C, integer rs_C, integer cs_C,
                                 double* buff_scale,
-                                int* info )
+                                integer* info )
 {
-  int l, k;
+  integer l, k;
 
   for ( l = 0; l < n_C; l++ )
   {
@@ -216,8 +216,8 @@ FLA_Error FLA_Sylv_hn_opd_var1( double sgn,
       double    a11;
       double    x11;
 
-      int       m_behind = k;
-      int       n_behind = l;
+      integer       m_behind = k;
+      integer       n_behind = l;
 
       /*------------------------------------------------------------*/
 
@@ -252,15 +252,15 @@ FLA_Error FLA_Sylv_hn_opd_var1( double sgn,
 
 
 FLA_Error FLA_Sylv_hn_opc_var1( float sgn,
-                                int m_C,
-                                int n_C,
-                                scomplex* buff_A, int rs_A, int cs_A,
-                                scomplex* buff_B, int rs_B, int cs_B,
-                                scomplex* buff_C, int rs_C, int cs_C,
+                                integer m_C,
+                                integer n_C,
+                                scomplex* buff_A, integer rs_A, integer cs_A,
+                                scomplex* buff_B, integer rs_B, integer cs_B,
+                                scomplex* buff_C, integer rs_C, integer cs_C,
                                 scomplex* buff_scale,
-                                int* info )
+                                integer* info )
 {
-  int l, k;
+  integer l, k;
 
   for ( l = 0; l < n_C; l++ )
   {
@@ -279,8 +279,8 @@ FLA_Error FLA_Sylv_hn_opc_var1( float sgn,
       scomplex  a11;
       scomplex  x11;
 
-      int       m_behind = k;
-      int       n_behind = l;
+      integer       m_behind = k;
+      integer       n_behind = l;
 
       /*------------------------------------------------------------*/
 
@@ -317,15 +317,15 @@ FLA_Error FLA_Sylv_hn_opc_var1( float sgn,
 
 
 FLA_Error FLA_Sylv_hn_opz_var1( double sgn,
-                                int m_C,
-                                int n_C,
-                                dcomplex* buff_A, int rs_A, int cs_A,
-                                dcomplex* buff_B, int rs_B, int cs_B,
-                                dcomplex* buff_C, int rs_C, int cs_C,
+                                integer m_C,
+                                integer n_C,
+                                dcomplex* buff_A, integer rs_A, integer cs_A,
+                                dcomplex* buff_B, integer rs_B, integer cs_B,
+                                dcomplex* buff_C, integer rs_C, integer cs_C,
                                 dcomplex* buff_scale,
-                                int* info )
+                                integer* info )
 {
-  int l, k;
+  integer l, k;
 
   for ( l = 0; l < n_C; l++ )
   {
@@ -344,8 +344,8 @@ FLA_Error FLA_Sylv_hn_opz_var1( double sgn,
       dcomplex  a11;
       dcomplex  x11;
 
-      int       m_behind = k;
-      int       n_behind = l;
+      integer       m_behind = k;
+      integer       n_behind = l;
 
       /*------------------------------------------------------------*/
 

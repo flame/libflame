@@ -101,6 +101,16 @@
 /* Subroutine */
 int cptts2_(integer *iuplo, integer *n, integer *nrhs, real * d__, complex *e, complex *b, integer *ldb)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cptts2 inputs: iuplo %lld, n %lld, nrhs %lld, ldb %lld",*iuplo, *n, *nrhs, *ldb);
+#else 
+    snprintf(buffer, 256,"cptts2 inputs: iuplo %d, n %d, nrhs %d, ldb %d",*iuplo, *n, *nrhs, *ldb);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     real r__1;
@@ -142,6 +152,7 @@ int cptts2_(integer *iuplo, integer *n, integer *nrhs, real * d__, complex *e, c
             r__1 = 1.f / d__[1];
             csscal_(nrhs, &r__1, &b[b_offset], ldb);
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*iuplo == 1)
@@ -380,6 +391,7 @@ L65: /* Solve L * x = b. */
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CPTTS2 */
 }

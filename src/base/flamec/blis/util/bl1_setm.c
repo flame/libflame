@@ -10,10 +10,10 @@
 
 #include "blis1.h"
 
-void bl1_isetm( int m, int n, int* sigma, int* a, int a_rs, int a_cs )
+void bl1_isetm( integer m, integer n, integer* sigma, integer* a, integer a_rs, integer a_cs )
 {
-	int*   alpha;
-	int    i, j;
+	integer*   alpha;
+	integer    i, j;
 
 	for ( j = 0; j < n; ++j )
 	{
@@ -26,10 +26,10 @@ void bl1_isetm( int m, int n, int* sigma, int* a, int a_rs, int a_cs )
 	}
 }
 
-void bl1_ssetm( int m, int n, float* sigma, float* a, int a_rs, int a_cs )
+void bl1_ssetm( integer m, integer n, float* sigma, float* a, integer a_rs, integer a_cs )
 {
 	float* alpha;
-	int    i, j;
+	integer    i, j;
 
 	for ( j = 0; j < n; ++j )
 	{
@@ -42,10 +42,10 @@ void bl1_ssetm( int m, int n, float* sigma, float* a, int a_rs, int a_cs )
 	}
 }
 
-void bl1_dsetm( int m, int n, double* sigma, double* a, int a_rs, int a_cs )
+void bl1_dsetm( integer m, integer n, double* sigma, double* a, integer a_rs, integer a_cs )
 {
 	double* alpha;
-	int     i, j;
+	integer     i, j;
 
 	for ( j = 0; j < n; ++j )
 	{
@@ -58,10 +58,10 @@ void bl1_dsetm( int m, int n, double* sigma, double* a, int a_rs, int a_cs )
 	}
 }
 
-void bl1_csetm( int m, int n, scomplex* sigma, scomplex* a, int a_rs, int a_cs )
+void bl1_csetm( integer m, integer n, scomplex* sigma, scomplex* a, integer a_rs, integer a_cs )
 {
 	scomplex* alpha;
-	int       i, j;
+	integer       i, j;
 
 	for ( j = 0; j < n; ++j )
 	{
@@ -75,10 +75,10 @@ void bl1_csetm( int m, int n, scomplex* sigma, scomplex* a, int a_rs, int a_cs )
 	}
 }
 
-void bl1_zsetm( int m, int n, dcomplex* sigma, dcomplex* a, int a_rs, int a_cs )
+void bl1_zsetm( integer m, integer n, dcomplex* sigma, dcomplex* a, integer a_rs, integer a_cs )
 {
 	dcomplex* alpha;
-	int       i, j;
+	integer       i, j;
 
 	for ( j = 0; j < n; ++j )
 	{

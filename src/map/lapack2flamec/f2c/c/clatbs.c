@@ -239,6 +239,16 @@ b(i), i=1,..,n}
 /* Subroutine */
 int clatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *kd, complex *ab, integer *ldab, complex * x, real *scale, real *cnorm, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clatbs inputs: uplo %c, trans %c, diag %c, normin %c, n %lld, kd %lld, ldab %lld",*uplo, *trans, *diag, *normin, *n, *kd, *ldab);
+#else 
+    snprintf(buffer, 256,"clatbs inputs: uplo %c, trans %c, diag %c, normin %c, n %d, kd %d, ldab %d",*uplo, *trans, *diag, *normin, *n, *kd, *ldab);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5;
     real r__1, r__2, r__3, r__4;
@@ -353,11 +363,13 @@ int clatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, inte
     {
         i__1 = -(*info);
         xerbla_("CLATBS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Determine machine dependent parameters to control overflow. */
@@ -706,7 +718,7 @@ L90:
                         }
                     }
                     i__3 = j;
-                    cladiv_(&q__1, &x[j], &tjjs);
+                    cladiv_f2c_(&q__1, &x[j], &tjjs);
                     x[i__3].r = q__1.r;
                     x[i__3].i = q__1.i; // , expr subst
                     i__3 = j;
@@ -731,7 +743,7 @@ L90:
                         xmax *= rec;
                     }
                     i__3 = j;
-                    cladiv_(&q__1, &x[j], &tjjs);
+                    cladiv_f2c_(&q__1, &x[j], &tjjs);
                     x[i__3].r = q__1.r;
                     x[i__3].i = q__1.i; // , expr subst
                     i__3 = j;
@@ -867,7 +879,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                         r__1 = 1.f;
                         r__2 = rec * tjj; // , expr subst
                         rec = min(r__1,r__2);
-                        cladiv_(&q__1, &uscal, &tjjs);
+                        cladiv_f2c_(&q__1, &uscal, &tjjs);
                         uscal.r = q__1.r;
                         uscal.i = q__1.i; // , expr subst
                     }
@@ -1008,7 +1020,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                             }
                         }
                         i__3 = j;
-                        cladiv_(&q__1, &x[j], &tjjs);
+                        cladiv_f2c_(&q__1, &x[j], &tjjs);
                         x[i__3].r = q__1.r;
                         x[i__3].i = q__1.i; // , expr subst
                     }
@@ -1024,7 +1036,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                             xmax *= rec;
                         }
                         i__3 = j;
-                        cladiv_(&q__1, &x[j], &tjjs);
+                        cladiv_f2c_(&q__1, &x[j], &tjjs);
                         x[i__3].r = q__1.r;
                         x[i__3].i = q__1.i; // , expr subst
                     }
@@ -1056,7 +1068,7 @@ L145:
                     /* Compute x(j) := x(j) / A(j,j) - CSUMJ if the dot */
                     /* product has already been divided by 1/A(j,j). */
                     i__3 = j;
-                    cladiv_(&q__2, &x[j], &tjjs);
+                    cladiv_f2c_(&q__2, &x[j], &tjjs);
                     q__1.r = q__2.r - csumj.r;
                     q__1.i = q__2.i - csumj.i; // , expr subst
                     x[i__3].r = q__1.r;
@@ -1111,7 +1123,7 @@ L145:
                         r__1 = 1.f;
                         r__2 = rec * tjj; // , expr subst
                         rec = min(r__1,r__2);
-                        cladiv_(&q__1, &uscal, &tjjs);
+                        cladiv_f2c_(&q__1, &uscal, &tjjs);
                         uscal.r = q__1.r;
                         uscal.i = q__1.i; // , expr subst
                     }
@@ -1252,7 +1264,7 @@ L145:
                             }
                         }
                         i__3 = j;
-                        cladiv_(&q__1, &x[j], &tjjs);
+                        cladiv_f2c_(&q__1, &x[j], &tjjs);
                         x[i__3].r = q__1.r;
                         x[i__3].i = q__1.i; // , expr subst
                     }
@@ -1268,7 +1280,7 @@ L145:
                             xmax *= rec;
                         }
                         i__3 = j;
-                        cladiv_(&q__1, &x[j], &tjjs);
+                        cladiv_f2c_(&q__1, &x[j], &tjjs);
                         x[i__3].r = q__1.r;
                         x[i__3].i = q__1.i; // , expr subst
                     }
@@ -1300,7 +1312,7 @@ L185:
                     /* Compute x(j) := x(j) / A(j,j) - CSUMJ if the dot */
                     /* product has already been divided by 1/A(j,j). */
                     i__3 = j;
-                    cladiv_(&q__2, &x[j], &tjjs);
+                    cladiv_f2c_(&q__2, &x[j], &tjjs);
                     q__1.r = q__2.r - csumj.r;
                     q__1.i = q__2.i - csumj.i; // , expr subst
                     x[i__3].r = q__1.r;
@@ -1322,6 +1334,7 @@ L185:
         r__1 = 1.f / tscal;
         sscal_(n, &r__1, &cnorm[1], &c__1);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLATBS */
 }

@@ -1,10 +1,16 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h" /* Table of constant values */
 
-int sgeqpf_check(int *m, int *n, float *a, int *lda, int *jpvt, float *tau, float *work, int *info)
+int sgeqpf_check(integer *m, integer *n, float *a, integer *lda, integer *jpvt, float *tau, float *work, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
+
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "sgeqpf inputs: m %d, n %d, lda %d, jpvt %d\n", *m, *n, *lda, *jpvt);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
 
     /* Parameter adjustments */
     a_dim1 = *lda;

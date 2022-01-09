@@ -95,6 +95,16 @@
 /* Subroutine */
 int claset_(char *uplo, integer *m, integer *n, complex * alpha, complex *beta, complex *a, integer *lda)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"claset inputs: uplo %c, m %lld, n %lld, lda %lld",*uplo, *m, *n, *lda);
+#else 
+    snprintf(buffer, 256,"claset inputs: uplo %c, m %d, n %d, lda %d",*uplo, *m, *n, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -219,6 +229,7 @@ int claset_(char *uplo, integer *m, integer *n, complex * alpha, complex *beta, 
             /* L90: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLASET */
 }

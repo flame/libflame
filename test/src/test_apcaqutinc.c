@@ -39,11 +39,12 @@ void libfla_test_apcaqutinc_experiment( test_params_t params,
                                         unsigned int  var,
                                         char*         sc_str,
                                         FLA_Datatype  datatype,
-                                        unsigned int  p,
+                                        uinteger  p,
                                         unsigned int  pci,
                                         unsigned int  n_repeats,
                                         signed int    impl,
                                         double*       perf,
+                                        double*       t,
                                         double*       residual );
 void libfla_test_apcaqutinc_impl( int        impl,
                                   dim_t      p,
@@ -80,11 +81,12 @@ void libfla_test_apcaqutinc_experiment( test_params_t params,
                                         unsigned int  var,
                                         char*         sc_str,
                                         FLA_Datatype  datatype,
-                                        unsigned int  p_cur,
+                                        uinteger  p_cur,
                                         unsigned int  pci,
                                         unsigned int  n_repeats,
                                         signed int    impl,
                                         double*       perf,
+                                        double*       t,
                                         double*       residual )
 {
 	dim_t        b_flash    = params.b_flash;
@@ -92,11 +94,11 @@ void libfla_test_apcaqutinc_experiment( test_params_t params,
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	unsigned int m, n;
-	unsigned int min_m_n, k;
-	unsigned int p;
-	signed int   m_input;
-	signed int   n_input;
+	uinteger m, n;
+	uinteger min_m_n, k;
+	uinteger p;
+	integer   m_input;
+	integer   n_input;
 	FLA_Side     side;
 	FLA_Trans    trans;
 	FLA_Direct   direct;
@@ -230,7 +232,8 @@ void libfla_test_apcaqutinc_experiment( test_params_t params,
 	FLA_Obj_extract_real_scalar( norm, residual );
 
 	// Compute the performance of the best experiment repeat.
-	*perf = (  4.0 *       m * n * 1 -
+	*t = time_min;
+  *perf = (  4.0 *       m * n * 1 -
 	           2.0 *       n * n * 1 ) / time_min / FLOPS_PER_UNIT_PERF;
 	if ( FLA_Obj_is_complex( A ) ) *perf *= 4.0;
 

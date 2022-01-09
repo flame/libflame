@@ -110,6 +110,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int zppcon_(char *uplo, integer *n, doublecomplex *ap, doublereal *anorm, doublereal *rcond, doublecomplex *work, doublereal *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zppcon inputs: uplo %c, n %d",*uplo, *n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     doublereal d__1, d__2;
@@ -185,6 +191,7 @@ int zppcon_(char *uplo, integer *n, doublecomplex *ap, doublereal *anorm, double
     {
         i__1 = -(*info);
         xerbla_("ZPPCON", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -192,10 +199,12 @@ int zppcon_(char *uplo, integer *n, doublecomplex *ap, doublereal *anorm, double
     if (*n == 0)
     {
         *rcond = 1.;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*anorm == 0.)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     smlnum = dlamch_("Safe minimum");
@@ -228,7 +237,7 @@ L10:
         {
             ix = izamax_(n, &work[1], &c__1);
             i__1 = ix;
-            if (scale < ((d__1 = work[i__1].r, f2c_abs(d__1)) + (d__2 = d_imag(& work[ix]), f2c_abs(d__2))) * smlnum || scale == 0.)
+            if (scale < ((d__1 = work[i__1].r, f2c_dabs(d__1)) + (d__2 = d_imag(& work[ix]), f2c_dabs(d__2))) * smlnum || scale == 0.)
             {
                 goto L20;
             }
@@ -242,6 +251,7 @@ L10:
         *rcond = 1. / ainvnm / *anorm;
     }
 L20:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZPPCON */
 }

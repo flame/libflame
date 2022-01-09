@@ -13,7 +13,7 @@
 FLA_Error FLA_Pow( FLA_Obj base, FLA_Obj exp, FLA_Obj btoe )
 {
   FLA_Datatype datatype;
-  int          r_val = FLA_SUCCESS;
+  integer          r_val = FLA_SUCCESS;
 
   if ( FLA_Check_error_level() >= FLA_MIN_ERROR_CHECKING )
     FLA_Pow_check( base, exp, btoe );

@@ -36,6 +36,10 @@ echo "Library archive indexer......................... : @RANLIB@"
 echo ""
 echo "Enable Windows build (experimental)............. : @fla_enable_windows_build@"
 
+
+echo ""
+echo "Enable ILP64 data types for libflame............. : @fla_enable_ilp64@"
+
 echo ""
 echo "Create static library........................... : @fla_enable_static_build@"
 echo "Create shared (dynamically-linked) library...... : @fla_enable_dynamic_build@"

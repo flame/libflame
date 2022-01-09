@@ -10,7 +10,7 @@
 
 #include "blis1.h"
 
-void bl1_saxpyv( conj1_t conj, int n, float* alpha, float* x, int incx, float* y, int incy )
+void bl1_saxpyv( conj1_t conj, integer n, float* alpha, float* x, integer incx, float* y, integer incy )
 {
 	bl1_saxpy( n,
 	           alpha,
@@ -18,7 +18,7 @@ void bl1_saxpyv( conj1_t conj, int n, float* alpha, float* x, int incx, float* y
 	           y, incy );
 }
 
-void bl1_daxpyv( conj1_t conj, int n, double* alpha, double* x, int incx, double* y, int incy )
+void bl1_daxpyv( conj1_t conj, integer n, double* alpha, double* x, integer incx, double* y, integer incy )
 {
 	bl1_daxpy( n,
 	           alpha,
@@ -26,10 +26,10 @@ void bl1_daxpyv( conj1_t conj, int n, double* alpha, double* x, int incx, double
 	           y, incy );
 }
 
-void bl1_caxpyv( conj1_t conj, int n, scomplex* alpha, scomplex* x, int incx, scomplex* y, int incy )
+void bl1_caxpyv( conj1_t conj, integer n, scomplex* alpha, scomplex* x, integer incx, scomplex* y, integer incy )
 {
 	scomplex* x_copy;
-	int       incx_copy;
+	integer       incx_copy;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( n ) ) return;
@@ -57,10 +57,10 @@ void bl1_caxpyv( conj1_t conj, int n, scomplex* alpha, scomplex* x, int incx, sc
 		bl1_cfree( x_copy );
 }
 
-void bl1_zaxpyv( conj1_t conj, int n, dcomplex* alpha, dcomplex* x, int incx, dcomplex* y, int incy )
+void bl1_zaxpyv( conj1_t conj, integer n, dcomplex* alpha, dcomplex* x, integer incx, dcomplex* y, integer incy )
 {
 	dcomplex* x_copy;
-	int       incx_copy;
+	integer       incx_copy;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( n ) ) return;

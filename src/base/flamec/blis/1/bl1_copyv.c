@@ -10,11 +10,11 @@
 
 #include "blis1.h"
 
-void bl1_icopyv( conj1_t conj, int m, int* x, int incx, int* y, int incy )
+void bl1_icopyv( conj1_t conj, integer m, integer* x, integer incx, integer* y, integer incy )
 {
-	int*      chi;
-	int*      psi;
-	int       i;
+	integer*      chi;
+	integer*      psi;
+	integer       i;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -32,21 +32,21 @@ void bl1_icopyv( conj1_t conj, int m, int* x, int incx, int* y, int incy )
 	}
 }
 
-void bl1_scopyv( conj1_t conj, int m, float* x, int incx, float* y, int incy )
+void bl1_scopyv( conj1_t conj, integer m, float* x, integer incx, float* y, integer incy )
 {
 	bl1_scopy( m,
 	           x, incx, 
 	           y, incy );
 }
 
-void bl1_dcopyv( conj1_t conj, int m, double* x, int incx, double* y, int incy )
+void bl1_dcopyv( conj1_t conj, integer m, double* x, integer incx, double* y, integer incy )
 {
 	bl1_dcopy( m,
 	           x, incx, 
 	           y, incy );
 }
 
-void bl1_ccopyv( conj1_t conj, int m, scomplex* x, int incx, scomplex* y, int incy )
+void bl1_ccopyv( conj1_t conj, integer m, scomplex* x, integer incx, scomplex* y, integer incy )
 {
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -60,7 +60,7 @@ void bl1_ccopyv( conj1_t conj, int m, scomplex* x, int incx, scomplex* y, int in
 	                y, incy );
 }
 
-void bl1_zcopyv( conj1_t conj, int m, dcomplex* x, int incx, dcomplex* y, int incy )
+void bl1_zcopyv( conj1_t conj, integer m, dcomplex* x, integer incx, dcomplex* y, integer incy )
 {
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -77,11 +77,11 @@ void bl1_zcopyv( conj1_t conj, int m, dcomplex* x, int incx, dcomplex* y, int in
 // --- Mixed-datatype and general stride copy routines---------------
 
 // sd ds
-void bl1_sdcopyv( conj1_t conj, int m, float* x, int incx, double* y, int incy )
+void bl1_sdcopyv( conj1_t conj, integer m, float* x, integer incx, double* y, integer incy )
 {
 	float*    chi;
 	double*   psi;
-	int       i;
+	integer       i;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -98,11 +98,11 @@ void bl1_sdcopyv( conj1_t conj, int m, float* x, int incx, double* y, int incy )
 		psi += incy;
 	}
 }
-void bl1_dscopyv( conj1_t conj, int m, double* x, int incx, float* y, int incy )
+void bl1_dscopyv( conj1_t conj, integer m, double* x, integer incx, float* y, integer incy )
 {
 	double*   chi;
 	float*    psi;
-	int       i;
+	integer       i;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -121,11 +121,11 @@ void bl1_dscopyv( conj1_t conj, int m, double* x, int incx, float* y, int incy )
 }
 
 // sc cs
-void bl1_sccopyv( conj1_t conj, int m, float* x, int incx, scomplex* y, int incy )
+void bl1_sccopyv( conj1_t conj, integer m, float* x, integer incx, scomplex* y, integer incy )
 {
 	float*    chi;
 	scomplex* psi;
-	int       i;
+	integer       i;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -143,11 +143,11 @@ void bl1_sccopyv( conj1_t conj, int m, float* x, int incx, scomplex* y, int incy
 		psi += incy;
 	}
 }
-void bl1_cscopyv( conj1_t conj, int m, scomplex* x, int incx, float* y, int incy )
+void bl1_cscopyv( conj1_t conj, integer m, scomplex* x, integer incx, float* y, integer incy )
 {
 	scomplex* chi;
 	float*    psi;
-	int       i;
+	integer       i;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -166,11 +166,11 @@ void bl1_cscopyv( conj1_t conj, int m, scomplex* x, int incx, float* y, int incy
 }
 
 // sz zs
-void bl1_szcopyv( conj1_t conj, int m, float* x, int incx, dcomplex* y, int incy )
+void bl1_szcopyv( conj1_t conj, integer m, float* x, integer incx, dcomplex* y, integer incy )
 {
 	float*    chi;
 	dcomplex* psi;
-	int       i;
+	integer       i;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -188,11 +188,11 @@ void bl1_szcopyv( conj1_t conj, int m, float* x, int incx, dcomplex* y, int incy
 		psi += incy;
 	}
 }
-void bl1_zscopyv( conj1_t conj, int m, dcomplex* x, int incx, float* y, int incy )
+void bl1_zscopyv( conj1_t conj, integer m, dcomplex* x, integer incx, float* y, integer incy )
 {
 	dcomplex* chi;
 	float*    psi;
-	int       i;
+	integer       i;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -211,11 +211,11 @@ void bl1_zscopyv( conj1_t conj, int m, dcomplex* x, int incx, float* y, int incy
 }
 
 // dc cd
-void bl1_dccopyv( conj1_t conj, int m, double* x, int incx, scomplex* y, int incy )
+void bl1_dccopyv( conj1_t conj, integer m, double* x, integer incx, scomplex* y, integer incy )
 {
 	double*   chi;
 	scomplex* psi;
-	int       i;
+	integer       i;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -233,11 +233,11 @@ void bl1_dccopyv( conj1_t conj, int m, double* x, int incx, scomplex* y, int inc
 		psi += incy;
 	}
 }
-void bl1_cdcopyv( conj1_t conj, int m, scomplex* x, int incx, double* y, int incy )
+void bl1_cdcopyv( conj1_t conj, integer m, scomplex* x, integer incx, double* y, integer incy )
 {
 	scomplex* chi;
 	double*   psi;
-	int       i;
+	integer       i;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -256,11 +256,11 @@ void bl1_cdcopyv( conj1_t conj, int m, scomplex* x, int incx, double* y, int inc
 }
 
 // dz zd
-void bl1_dzcopyv( conj1_t conj, int m, double* x, int incx, dcomplex* y, int incy )
+void bl1_dzcopyv( conj1_t conj, integer m, double* x, integer incx, dcomplex* y, integer incy )
 {
 	double*   chi;
 	dcomplex* psi;
-	int       i;
+	integer       i;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -278,11 +278,11 @@ void bl1_dzcopyv( conj1_t conj, int m, double* x, int incx, dcomplex* y, int inc
 		psi += incy;
 	}
 }
-void bl1_zdcopyv( conj1_t conj, int m, dcomplex* x, int incx, double* y, int incy )
+void bl1_zdcopyv( conj1_t conj, integer m, dcomplex* x, integer incx, double* y, integer incy )
 {
 	dcomplex* chi;
 	double*   psi;
-	int       i;
+	integer       i;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -301,11 +301,11 @@ void bl1_zdcopyv( conj1_t conj, int m, dcomplex* x, int incx, double* y, int inc
 }
 
 // cz zc
-void bl1_czcopyv( conj1_t conj, int m, scomplex* x, int incx, dcomplex* y, int incy )
+void bl1_czcopyv( conj1_t conj, integer m, scomplex* x, integer incx, dcomplex* y, integer incy )
 {
 	scomplex* chi;
 	dcomplex* psi;
-	int       i;
+	integer       i;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -327,11 +327,11 @@ void bl1_czcopyv( conj1_t conj, int m, scomplex* x, int incx, dcomplex* y, int i
 		bl1_zconjv( m,
 	                y, incy );
 }
-void bl1_zccopyv( conj1_t conj, int m, dcomplex* x, int incx, scomplex* y, int incy )
+void bl1_zccopyv( conj1_t conj, integer m, dcomplex* x, integer incx, scomplex* y, integer incy )
 {
 	dcomplex* chi;
 	scomplex* psi;
-	int       i;
+	integer       i;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;

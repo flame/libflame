@@ -29,19 +29,19 @@ FLA_Error FLASH_QR_UT_solve( FLA_Obj A, FLA_Obj T, FLA_Obj B, FLA_Obj X );
 FLA_Error FLA_QR_UT_form_Q( FLA_Obj A, FLA_Obj T, FLA_Obj Q );
 FLA_Error FLA_QR_UT_form_Q_blk_var1( FLA_Obj A, FLA_Obj T, FLA_Obj W );
 FLA_Error FLA_QR_UT_form_Q_opt_var1( FLA_Obj A, FLA_Obj T );
-FLA_Error FLA_QR_UT_form_Q_ops_var1( int       m_A,
-                                     int       n_AT,
-                                     float*    buff_A, int rs_A, int cs_A,
-                                     float*    buff_T, int rs_T, int cs_T );
-FLA_Error FLA_QR_UT_form_Q_opd_var1( int       m_A,
-                                     int       n_AT,
-                                     double*   buff_A, int rs_A, int cs_A,
-                                     double*   buff_T, int rs_T, int cs_T );
-FLA_Error FLA_QR_UT_form_Q_opc_var1( int       m_A,
-                                     int       n_AT,
-                                     scomplex* buff_A, int rs_A, int cs_A,
-                                     scomplex* buff_T, int rs_T, int cs_T );
-FLA_Error FLA_QR_UT_form_Q_opz_var1( int       m_A,
-                                     int       n_AT,
-                                     dcomplex* buff_A, int rs_A, int cs_A,
-                                     dcomplex* buff_T, int rs_T, int cs_T );
+FLA_Error FLA_QR_UT_form_Q_ops_var1( integer       m_A,
+                                     integer       n_AT,
+                                     float*    buff_A, integer rs_A, integer cs_A,
+                                     float*    buff_T, integer rs_T, integer cs_T );
+FLA_Error FLA_QR_UT_form_Q_opd_var1( integer       m_A,
+                                     integer       n_AT,
+                                     double*   buff_A, integer rs_A, integer cs_A,
+                                     double*   buff_T, integer rs_T, integer cs_T );
+FLA_Error FLA_QR_UT_form_Q_opc_var1( integer       m_A,
+                                     integer       n_AT,
+                                     scomplex* buff_A, integer rs_A, integer cs_A,
+                                     scomplex* buff_T, integer rs_T, integer cs_T );
+FLA_Error FLA_QR_UT_form_Q_opz_var1( integer       m_A,
+                                     integer       n_AT,
+                                     dcomplex* buff_A, integer rs_A, integer cs_A,
+                                     dcomplex* buff_T, integer rs_T, integer cs_T );

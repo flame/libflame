@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 
-extern fla_syrk_t* flash_syrk_cntl_blas;
-extern fla_syrk_t* flash_syrk_cntl_mm;
+extern TLS_CLASS_SPEC fla_syrk_t* flash_syrk_cntl_blas;
+extern TLS_CLASS_SPEC fla_syrk_t* flash_syrk_cntl_mm;
 
 FLA_Error FLA_Syrk_internal( FLA_Uplo uplo, FLA_Trans trans, FLA_Obj alpha, FLA_Obj A, FLA_Obj beta, FLA_Obj C, fla_syrk_t* cntl )
 {

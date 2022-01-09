@@ -83,7 +83,7 @@ extern int FLAME_invert_ztau( FLA_Obj t );
 
 #define PREFIX2FLAME_INVERT_TAU(prefix, val) FLAME_invert_ ## prefix ## tau(val)
 
-extern int FLAME_QR_piv_preorder( FLA_Obj A, int *jpiv_lapack, int *jpiv_fla );
+extern int FLAME_QR_piv_preorder( FLA_Obj A, integer *jpiv_lapack, integer *jpiv_fla );
 
 
 #endif

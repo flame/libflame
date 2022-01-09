@@ -10,11 +10,11 @@
 
 #include "FLAME.h"
 
-fla_axpyt_t*       flash_axpyt_cntl_blas = NULL;
-fla_axpyt_t*       flash_axpyt_cntl_tb;
-fla_axpyt_t*       flash_axpyt_cntl_lr;
-fla_axpyt_t*       flash_axpyt_cntl;
-fla_blocksize_t*   flash_axpyt_bsize;
+TLS_CLASS_SPEC fla_axpyt_t*       flash_axpyt_cntl_blas = NULL;
+TLS_CLASS_SPEC fla_axpyt_t*       flash_axpyt_cntl_tb;
+TLS_CLASS_SPEC fla_axpyt_t*       flash_axpyt_cntl_lr;
+TLS_CLASS_SPEC fla_axpyt_t*       flash_axpyt_cntl;
+TLS_CLASS_SPEC fla_blocksize_t*   flash_axpyt_bsize;
 
 void FLASH_Axpyt_cntl_init()
 {

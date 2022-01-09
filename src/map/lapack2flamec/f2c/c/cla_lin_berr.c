@@ -89,6 +89,16 @@
 /* Subroutine */
 int cla_lin_berr_(integer *n, integer *nz, integer *nrhs, complex *res, real *ayb, real *berr)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cla_lin_berr inputs: n %lld, nz %lld, nrhs %lld",*n, *nz, *nrhs);
+#else 
+    snprintf(buffer, 256,"cla_lin_berr inputs: n %d, nz %d, nrhs %d",*n, *nz, *nrhs);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ayb_dim1, ayb_offset, res_dim1, res_offset, i__1, i__2, i__3, i__4;
     real r__1, r__2, r__3;
@@ -164,6 +174,7 @@ int cla_lin_berr_(integer *n, integer *nz, integer *nrhs, complex *res, real *ay
             /* the true residual also must be exactly 0.0. */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
 /* cla_lin_berr__ */

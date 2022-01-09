@@ -300,6 +300,16 @@ static integer c__49 = 49;
 /* Subroutine */
 int chseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, complex *h__, integer *ldh, complex *w, complex *z__, integer *ldz, complex *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"chseqr inputs: job %c, compz %c, n %lld, ilo %lld, ihi %lld, ldh %lld, ldz %lld, lwork %lld",*job, *compz, *n, *ilo, *ihi, *ldh, *ldz, *lwork);
+#else 
+    snprintf(buffer, 256,"chseqr inputs: job %c, compz %c, n %d, ilo %d, ihi %d, ldh %d, ldz %d, lwork %d",*job, *compz, *n, *ilo, *ihi, *ldh, *ldz, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer h_dim1, h_offset, z_dim1, z_offset, i__1, i__2;;
     real r__1, r__2, r__3;
@@ -411,12 +421,14 @@ int chseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, comp
         /* ==== Quick return in case of invalid argument. ==== */
         i__1 = -(*info);
         xerbla_("CHSEQR", &i__1);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*n == 0)
     {
         /* ==== Quick return in case N = 0;
         nothing to do. ==== */
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
@@ -433,6 +445,7 @@ int chseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, comp
         q__1.i = 0.f; // , expr subst
         work[1].r = q__1.r;
         work[1].i = q__1.i; // , expr subst
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else
@@ -462,6 +475,7 @@ int chseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, comp
             i__2 = *ilo + *ilo * h_dim1;
             w[i__1].r = h__[i__2].r;
             w[i__1].i = h__[i__2].i; // , expr subst
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         /* ==== CLAHQR/CLAQR0 crossover point ==== */
@@ -527,6 +541,7 @@ int chseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, comp
         work[1].i = q__1.i; // , expr subst
     }
     /* ==== End of CHSEQR ==== */
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
 /* chseqr_ */

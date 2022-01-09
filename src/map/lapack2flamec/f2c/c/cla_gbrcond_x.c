@@ -142,6 +142,16 @@ row i of the matrix was interchanged */
 /* ===================================================================== */
 real cla_gbrcond_x_(char *trans, integer *n, integer *kl, integer *ku, complex *ab, integer *ldab, complex *afb, integer *ldafb, integer * ipiv, complex *x, integer *info, complex *work, real *rwork)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cla_gbrcond_x inputs: trans %c, n %lld, kl %lld, ku %lld, ldab %lld, ldafb %lld, ipiv %lld",*trans, *n, *kl, *ku, *ldab, *ldafb, *ipiv);
+#else 
+    snprintf(buffer, 256,"cla_gbrcond_x inputs: trans %c, n %d, kl %d, ku %d, ldab %d, ldafb %d, ipiv %d",*trans, *n, *kl, *ku, *ldab, *ldafb, *ipiv);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, afb_dim1, afb_offset, i__1, i__2, i__3, i__4;
     real ret_val, r__1, r__2;
@@ -227,6 +237,7 @@ real cla_gbrcond_x_(char *trans, integer *n, integer *kl, integer *ku, complex *
     {
         i__1 = -(*info);
         xerbla_("CLA_GBRCOND_X", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return ret_val;
     }
     /* Compute norm of op(A)*op2(C). */
@@ -295,10 +306,12 @@ real cla_gbrcond_x_(char *trans, integer *n, integer *kl, integer *ku, complex *
     if (*n == 0)
     {
         ret_val = 1.f;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return ret_val;
     }
     else if (anorm == 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return ret_val;
     }
     /* Estimate the norm of inv(op(A)). */
@@ -387,6 +400,7 @@ L10:
     {
         ret_val = 1.f / ainvnm;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return ret_val;
 }
 /* cla_gbrcond_x__ */

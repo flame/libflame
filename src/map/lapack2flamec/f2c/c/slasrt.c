@@ -77,6 +77,12 @@
 /* Subroutine */
 int slasrt_(char *id, integer *n, real *d__, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"slasrt inputs: id %c, n %d",*id, *n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2;
     /* Local variables */
@@ -139,11 +145,13 @@ int slasrt_(char *id, integer *n, real *d__, integer *info)
     {
         i__1 = -(*info);
         xerbla_("SLASRT", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n <= 1)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     stkpnt = 1;
@@ -346,6 +354,7 @@ L110:
     {
         goto L10;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SLASRT */
 }

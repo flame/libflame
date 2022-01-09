@@ -17,14 +17,14 @@
 
 
 void time_Chol_l(
-               int variant, int type, int n_repeats, int n, int nb_alg,
+               integer variant, integer type, integer n_repeats, integer n, integer nb_alg,
                FLA_Obj A, FLA_Obj b, FLA_Obj b_orig, FLA_Obj norm,
                double *dtime, double *diff, double *gflops );
 
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     m_input,
     m,
     p_first, p_last, p_inc,
@@ -37,7 +37,7 @@ int main(int argc, char *argv[])
     datatype,
     n_variants = 3;
   
-  int  blocksize[16];
+  integer  blocksize[16];
 
   char *colors = "brkgmcbrkg";
   char *ticks  = "o+*xso+*xs";

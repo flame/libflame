@@ -11,16 +11,16 @@
 #include "FLAME.h"
 
 
-FLA_Error FLA_Bsvd_find_submatrix_ops( int       mn_A,
-                                       int       ij_begin,
-                                       float*    buff_d, int inc_d,
-                                       float*    buff_e, int inc_e,
-                                       int*      ijTL,
-                                       int*      ijBR )
+FLA_Error FLA_Bsvd_find_submatrix_ops( integer       mn_A,
+                                       integer       ij_begin,
+                                       float*    buff_d, integer inc_d,
+                                       float*    buff_e, integer inc_e,
+                                       integer*      ijTL,
+                                       integer*      ijBR )
 {
     float  rzero = bl1_s0();
-    int    ij_tl;
-    int    ij_br;
+    integer    ij_tl;
+    integer    ij_br;
 
     // Search for the first non-zero superdiagonal element starting at
     // the index specified by ij_begin.
@@ -70,16 +70,16 @@ FLA_Error FLA_Bsvd_find_submatrix_ops( int       mn_A,
 
 //#define PRINTF
 
-FLA_Error FLA_Bsvd_find_submatrix_opd( int       mn_A,
-                                       int       ij_begin,
-                                       double*   buff_d, int inc_d,
-                                       double*   buff_e, int inc_e,
-                                       int*      ijTL,
-                                       int*      ijBR )
+FLA_Error FLA_Bsvd_find_submatrix_opd( integer       mn_A,
+                                       integer       ij_begin,
+                                       double*   buff_d, integer inc_d,
+                                       double*   buff_e, integer inc_e,
+                                       integer*      ijTL,
+                                       integer*      ijBR )
 {
     double rzero = bl1_d0();
-    int    ij_tl;
-    int    ij_br;
+    integer    ij_tl;
+    integer    ij_br;
 
     // Search for the first non-zero superdiagonal element starting at
     // the index specified by ij_begin.

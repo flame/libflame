@@ -32,14 +32,14 @@
 /* > */
 /* > ( scl**2 )*ssq = x( 1 )**2 +...+ x( n )**2 + ( scale**2 )*sumsq, */
 /* > */
-/* > where x( i ) = f2c_abs( X( 1 + ( i - 1 )*INCX ) ). The value of sumsq is */
+/* > where x( i ) = f2c_dabs( X( 1 + ( i - 1 )*INCX ) ). The value of sumsq is */
 /* > assumed to be at least unity and the value of ssq will then satisfy */
 /* > */
 /* > 1.0 .le. ssq .le. ( sumsq + 2*n ). */
 /* > */
 /* > scale is assumed to be non-negative and scl returns the value */
 /* > */
-/* > scl = max( scale, f2c_abs( real( x( i ) ) ), f2c_abs( aimag( x( i ) ) ) ), */
+/* > scl = max( scale, f2c_dabs( real( x( i ) ) ), f2c_dabs( aimag( x( i ) ) ) ), */
 /* > i */
 /* > */
 /* > scale and sumsq must be supplied in SCALE and SUMSQ respectively. */
@@ -94,6 +94,12 @@
 /* Subroutine */
 int zlassq_(integer *n, doublecomplex *x, integer *incx, doublereal *scale, doublereal *sumsq)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zlassq inputs: n %d, incx %d",*n, *incx);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3;
     doublereal d__1;
@@ -133,7 +139,7 @@ int zlassq_(integer *n, doublecomplex *x, integer *incx, doublereal *scale, doub
                 ix += i__2)
         {
             i__3 = ix;
-            temp1 = (d__1 = x[i__3].r, f2c_abs(d__1));
+            temp1 = (d__1 = x[i__3].r, f2c_dabs(d__1));
             if (temp1 > 0. || disnan_(&temp1))
             {
                 if (*scale < temp1)
@@ -150,7 +156,7 @@ int zlassq_(integer *n, doublecomplex *x, integer *incx, doublereal *scale, doub
                     *sumsq += d__1 * d__1;
                 }
             }
-            temp1 = (d__1 = d_imag(&x[ix]), f2c_abs(d__1));
+            temp1 = (d__1 = d_imag(&x[ix]), f2c_dabs(d__1));
             if (temp1 > 0. || disnan_(&temp1))
             {
                 if (*scale < temp1)
@@ -170,6 +176,7 @@ int zlassq_(integer *n, doublecomplex *x, integer *incx, doublereal *scale, doub
             /* L10: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZLASSQ */
 }

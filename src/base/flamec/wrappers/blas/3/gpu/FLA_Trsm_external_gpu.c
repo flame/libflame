@@ -17,9 +17,9 @@
 FLA_Error FLA_Trsm_external_gpu( FLA_Side side, FLA_Uplo uplo, FLA_Trans trans, FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, void* A_gpu, FLA_Obj B, void* B_gpu )
 {
   FLA_Datatype datatype;
-  int          m_B, n_B;
-  int          ldim_A;
-  int          ldim_B;
+  integer          m_B, n_B;
+  integer          ldim_A;
+  integer          ldim_B;
   char         blas_side; 
   char         blas_uplo;
   char         blas_trans;

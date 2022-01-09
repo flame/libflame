@@ -15,12 +15,11 @@
 #ifdef __cplusplus
 extern "C" {
 #endif
-#include "FLA_f2c.h"
+#include "FLAME.h"
 #include "stdio.h"
-
 /* Table of constant values */
 
-//static integer c__1 = 1;
+//static TLS_CLASS_SPEC integer c__1 = 1;
 static doublereal c_b32 = 0.;
 
 double fla_pow_di(doublereal *ap, integer *bp)
@@ -57,7 +56,7 @@ doublereal fla_dlamch(char *cmach, ftnlen cmach_len)
 {
     /* Initialized data */
 
-    static logical first = TRUE_;
+    static TLS_CLASS_SPEC logical first = TRUE_;
 
     /* System generated locals */
     integer i__1;
@@ -67,18 +66,18 @@ doublereal fla_dlamch(char *cmach, ftnlen cmach_len)
     double fla_pow_di(doublereal *, integer *);
 
     /* Local variables */
-    static doublereal base;
-    static integer beta;
-    static doublereal emin, prec, emax;
-    static integer imin, imax;
-    static logical lrnd;
-    static doublereal rmin, rmax, t, rmach;
+    static TLS_CLASS_SPEC doublereal base;
+    static TLS_CLASS_SPEC integer beta;
+    static TLS_CLASS_SPEC doublereal emin, prec, emax;
+    static TLS_CLASS_SPEC integer imin, imax;
+    static TLS_CLASS_SPEC logical lrnd;
+    static TLS_CLASS_SPEC doublereal rmin, rmax, t, rmach;
     extern logical fla_lsame(char *, char *, ftnlen, ftnlen);
-    static doublereal small, sfmin;
-    extern /* Subroutine */ int fla_dlamc2(integer *, integer *, logical *, 
+    static TLS_CLASS_SPEC doublereal small_val, sfmin;
+    extern /* Subroutine */ integer fla_dlamc2(integer *, integer *, logical *, 
 	    doublereal *, integer *, doublereal *, integer *, doublereal *);
-    static integer it;
-    static doublereal rnd, eps;
+    static TLS_CLASS_SPEC integer it;
+    static TLS_CLASS_SPEC doublereal rnd, eps;
 
 
 /*  -- LAPACK auxiliary routine (version 3.2) -- */
@@ -155,13 +154,13 @@ doublereal fla_dlamch(char *cmach, ftnlen cmach_len)
 	emin = (doublereal) imin;
 	emax = (doublereal) imax;
 	sfmin = rmin;
-	small = 1. / rmax;
-	if (small >= sfmin) {
+	small_val = 1. / rmax;
+	if (small_val >= sfmin) {
 
 /*           Use SMALL plus a bit, to avoid the possibility of rounding */
 /*           causing overflow when computing  1/sfmin. */
 
-	    sfmin = small * (eps + 1.);
+	    sfmin = small_val * (eps + 1.);
 	}
     }
 
@@ -198,26 +197,26 @@ doublereal fla_dlamch(char *cmach, ftnlen cmach_len)
 
 /* *********************************************************************** */
 
-/* Subroutine */ int fla_dlamc1(integer *beta, integer *t, logical *rnd, logical 
+/* Subroutine */ integer fla_dlamc1(integer *beta, integer *t, logical *rnd, logical 
 	*ieee1)
 {
     /* Initialized data */
 
-    static logical first = TRUE_;
+    static TLS_CLASS_SPEC logical first = TRUE_;
 
     /* System generated locals */
     doublereal d__1, d__2;
 
     /* Local variables */
-    static logical lrnd;
-    static doublereal a, b, c__, f;
-    static integer lbeta;
-    static doublereal savec;
+    static TLS_CLASS_SPEC logical lrnd;
+    static TLS_CLASS_SPEC doublereal a, b, c__, f;
+    static TLS_CLASS_SPEC integer lbeta;
+    static TLS_CLASS_SPEC doublereal savec;
     extern doublereal fla_dlamc3(doublereal *, doublereal *);
-    static logical lieee1;
-    static doublereal t1, t2;
-    static integer lt;
-    static doublereal one, qtr;
+    static TLS_CLASS_SPEC logical lieee1;
+    static TLS_CLASS_SPEC doublereal t1, t2;
+    static TLS_CLASS_SPEC integer lt;
+    static TLS_CLASS_SPEC doublereal one, qtr;
 
 
 /*  -- LAPACK auxiliary routine (version 3.2) -- */
@@ -408,17 +407,17 @@ L30:
 
 /* *********************************************************************** */
 
-/* Subroutine */ int fla_dlamc2(integer *beta, integer *t, logical *rnd, 
+/* Subroutine */ integer fla_dlamc2(integer *beta, integer *t, logical *rnd, 
 	doublereal *eps, integer *emin, doublereal *rmin, integer *emax, 
 	doublereal *rmax)
 {
     /* Initialized data */
 
-    static logical first = TRUE_;
-    static logical iwarn = FALSE_;
+    static TLS_CLASS_SPEC logical first = TRUE_;
+    static TLS_CLASS_SPEC logical iwarn = FALSE_;
 
     /* Format strings */
-    static char fmt_9999[] = "(//\002 WARNING. The value EMIN may be incorre\
+    static TLS_CLASS_SPEC char fmt_9999[] = "(//\002 WARNING. The value EMIN may be incorre\
 ct:-\002,\002  EMIN = \002,i8,/\002 If, after inspection, the value EMIN loo\
 ks\002,\002 acceptable please comment out \002,/\002 the IF block as marked \
 within the code of routine\002,\002 DLAMC2,\002,/\002 otherwise supply EMIN \
@@ -433,28 +432,28 @@ explicitly.\002,/)";
     //integer s_wsfe(cilist *), do_fio(integer *, char *, ftnlen), e_wsfe();
 
     /* Local variables */
-    static logical ieee;
-    static doublereal half;
-    static logical lrnd;
-    static doublereal leps, zero, a, b, c__;
-    static integer i__, lbeta;
-    static doublereal rbase;
-    static integer lemin, lemax, gnmin;
-    static doublereal small;
-    static integer gpmin;
-    static doublereal third, lrmin, lrmax, sixth;
-    extern /* Subroutine */ int fla_dlamc1(integer *, integer *, logical *, 
+    static TLS_CLASS_SPEC logical ieee;
+    static TLS_CLASS_SPEC doublereal half;
+    static TLS_CLASS_SPEC logical lrnd;
+    static TLS_CLASS_SPEC doublereal leps, zero, a, b, c__;
+    static TLS_CLASS_SPEC integer i__, lbeta;
+    static TLS_CLASS_SPEC doublereal rbase;
+    static TLS_CLASS_SPEC integer lemin, lemax, gnmin;
+    static TLS_CLASS_SPEC doublereal small_val;
+    static TLS_CLASS_SPEC integer gpmin;
+    static TLS_CLASS_SPEC doublereal third, lrmin, lrmax, sixth;
+    extern /* Subroutine */ integer fla_dlamc1(integer *, integer *, logical *, 
 	    logical *);
     extern doublereal fla_dlamc3(doublereal *, doublereal *);
-    static logical lieee1;
-    extern /* Subroutine */ int fla_dlamc4(integer *, doublereal *, integer *), 
+    static TLS_CLASS_SPEC logical lieee1;
+    extern /* Subroutine */ integer fla_dlamc4(integer *, doublereal *, integer *), 
 	    fla_dlamc5(integer *, integer *, integer *, logical *, integer *, 
 	    doublereal *);
-    static integer lt, ngnmin, ngpmin;
-    static doublereal one, two;
+    static TLS_CLASS_SPEC integer lt, ngnmin, ngpmin;
+    static TLS_CLASS_SPEC doublereal one, two;
 
     /* Fortran I/O blocks */
-    //static cilist io___58 = { 0, 6, 0, fmt_9999, 0 };
+    //static TLS_CLASS_SPEC cilist io___58 = { 0, 6, 0, fmt_9999, 0 };
 
 
 
@@ -603,13 +602,13 @@ L10:
 /*        is detected when we cannot recover the previous A. */
 
 	rbase = one / lbeta;
-	small = one;
+	small_val = one;
 	for (i__ = 1; i__ <= 3; ++i__) {
-	    d__1 = small * rbase;
-	    small = fla_dlamc3(&d__1, &zero);
+	    d__1 = small_val * rbase;
+	    small_val = fla_dlamc3(&d__1, &zero);
 /* L20: */
 	}
-	a = fla_dlamc3(&one, &small);
+	a = fla_dlamc3(&one, &small_val);
 	fla_dlamc4(&ngpmin, &one, &lbeta);
 	d__1 = -one;
 	fla_dlamc4(&ngnmin, &d__1, &lbeta);
@@ -765,18 +764,18 @@ doublereal fla_dlamc3(doublereal *a, doublereal *b)
 
 /* *********************************************************************** */
 
-/* Subroutine */ int fla_dlamc4(integer *emin, doublereal *start, integer *base)
+/* Subroutine */ integer fla_dlamc4(integer *emin, doublereal *start, integer *base)
 {
     /* System generated locals */
     integer i__1;
     doublereal d__1;
 
     /* Local variables */
-    static doublereal zero, a;
-    static integer i__;
-    static doublereal rbase, b1, b2, c1, c2, d1, d2;
+    static TLS_CLASS_SPEC doublereal zero, a;
+    static TLS_CLASS_SPEC integer i__;
+    static TLS_CLASS_SPEC doublereal rbase, b1, b2, c1, c2, d1, d2;
     extern doublereal fla_dlamc3(doublereal *, doublereal *);
-    static doublereal one;
+    static TLS_CLASS_SPEC doublereal one;
 
 
 /*  -- LAPACK auxiliary routine (version 3.2) -- */
@@ -863,7 +862,7 @@ L10:
 
 /* *********************************************************************** */
 
-/* Subroutine */ int fla_dlamc5(integer *beta, integer *p, integer *emin, 
+/* Subroutine */ integer fla_dlamc5(integer *beta, integer *p, integer *emin, 
 	logical *ieee, integer *emax, doublereal *rmax)
 {
     /* System generated locals */
@@ -871,14 +870,14 @@ L10:
     doublereal d__1;
 
     /* Local variables */
-    static integer lexp;
-    static doublereal oldy;
-    static integer uexp, i__;
-    static doublereal y, z__;
-    static integer nbits;
+    static TLS_CLASS_SPEC integer lexp;
+    static TLS_CLASS_SPEC doublereal oldy;
+    static TLS_CLASS_SPEC integer uexp, i__;
+    static TLS_CLASS_SPEC doublereal y, z__;
+    static TLS_CLASS_SPEC integer nbits;
     extern doublereal fla_dlamc3(doublereal *, doublereal *);
-    static doublereal recbas;
-    static integer exbits, expsum, try__;
+    static TLS_CLASS_SPEC doublereal recbas;
+    static TLS_CLASS_SPEC integer exbits, expsum, try__;
 
 
 /*  -- LAPACK auxiliary routine (version 3.2) -- */

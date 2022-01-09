@@ -186,6 +186,12 @@ the least squares solution could not be */
 /* Subroutine */
 int dgels_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dgels inputs: trans %c, m %" FLA_IS ", n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", lwork %" FLA_IS "",*trans, *m, *n, *nrhs, *lda, *ldb, *lwork);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2;
     /* Local variables */
@@ -339,10 +345,12 @@ int dgels_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a, i
     {
         i__1 = -(*info);
         xerbla_("DGELS ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -352,6 +360,7 @@ int dgels_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a, i
     {
         i__1 = max(*m,*n);
         dlaset_("Full", &i__1, nrhs, &c_b33, &c_b33, &b[b_offset], ldb);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine parameters */
@@ -416,6 +425,7 @@ int dgels_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a, i
             dtrtrs_("Upper", "No transpose", "Non-unit", n, nrhs, &a[a_offset] , lda, &b[b_offset], ldb, info);
             if (*info > 0)
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             scllen = *n;
@@ -427,6 +437,7 @@ int dgels_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a, i
             dtrtrs_("Upper", "Transpose", "Non-unit", n, nrhs, &a[a_offset], lda, &b[b_offset], ldb, info);
             if (*info > 0)
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* B(N+1:M,1:NRHS) = ZERO */
@@ -465,6 +476,7 @@ int dgels_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a, i
             dtrtrs_("Lower", "No transpose", "Non-unit", m, nrhs, &a[a_offset] , lda, &b[b_offset], ldb, info);
             if (*info > 0)
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* B(M+1:N,1:NRHS) = 0 */
@@ -500,6 +512,7 @@ int dgels_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a, i
             dtrtrs_("Lower", "Transpose", "Non-unit", m, nrhs, &a[a_offset], lda, &b[b_offset], ldb, info);
             if (*info > 0)
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             scllen = *m;
@@ -524,6 +537,7 @@ int dgels_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a, i
     }
 L50:
     work[1] = (doublereal) wsize;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DGELS */
 }

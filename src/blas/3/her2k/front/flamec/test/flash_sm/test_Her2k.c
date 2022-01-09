@@ -20,14 +20,14 @@ char* pc_str[N_PARAM_COMBOS] = { "lh", "ln",
                                  "uh", "un" };
 
 void time_Her2k(
-               int param_combo, int type, int n_repeats, int m, int k,
+               integer param_combo, integer type, integer n_repeats, integer m, integer k,
                FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj C_ref,
                double *dtime, double *diff, double *gflops );
 
 
-int main(int argc, char *argv[])
+int main(integer argc, char *argv[])
 {
-  int 
+  integer 
     datatype,
     m_input, k_input,
     m, k,

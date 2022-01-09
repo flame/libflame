@@ -17,14 +17,14 @@
 
 
 void time_Eig_gest_iu(
-               int variant, int type, int n_repeats, int n, int b_alg,
+               integer variant, integer type, integer n_repeats, integer n, integer b_alg,
                FLA_Inv inv, FLA_Uplo uplo, FLA_Obj A, FLA_Obj Y, FLA_Obj B,
                double *dtime, double *diff, double *gflops );
 
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     m_input,
     m,
     p_first, p_last, p_inc,
@@ -36,7 +36,7 @@ int main(int argc, char *argv[])
     datatype,
     n_variants = 5;
   
-  int  blocksize[16];
+  integer  blocksize[16];
 
   char *colors = "brkgmcbrkg";
   char *ticks  = "o+*xso+*xs";

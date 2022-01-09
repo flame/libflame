@@ -395,6 +395,16 @@ V1**H *B13*Q1 = S1*R1, */
 /* Subroutine */
 int ctgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer *n, integer *k, integer *l, complex *a, integer * lda, complex *b, integer *ldb, real *tola, real *tolb, real *alpha, real *beta, complex *u, integer *ldu, complex *v, integer *ldv, complex *q, integer *ldq, complex *work, integer *ncycle, integer * info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctgsja inputs: jobu %c, jobv %c, jobq %c, m %lld, p %lld, n %lld, k %lld, l %lld, lda %lld, ldb %lld, ldu %lld, ldv %lld, ldq %lld",*jobu, *jobv, *jobq, *m, *p, *n, *k, *l, *lda, *ldb, *ldu, *ldv, *ldq);
+#else 
+    snprintf(buffer, 256,"ctgsja inputs: jobu %c, jobv %c, jobq %c, m %d, p %d, n %d, k %d, l %d, lda %d, ldb %d, ldu %d, ldv %d, ldq %d",*jobu, *jobv, *jobq, *m, *p, *n, *k, *l, *lda, *ldb, *ldu, *ldv, *ldq);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, u_dim1, u_offset, v_dim1, v_offset, i__1, i__2, i__3, i__4;
     real r__1;
@@ -519,6 +529,7 @@ int ctgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     {
         i__1 = -(*info);
         xerbla_("CTGSJA", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Initialize U, V and Q, if necessary */
@@ -799,6 +810,7 @@ L50: /* If ERROR <= MIN(TOLA,TOLB), then the algorithm has converged. */
     }
 L100:
     *ncycle = kcycle;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTGSJA */
 }

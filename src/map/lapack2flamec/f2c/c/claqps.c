@@ -174,6 +174,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int claqps_(integer *m, integer *n, integer *offset, integer *nb, integer *kb, complex *a, integer *lda, integer *jpvt, complex * tau, real *vn1, real *vn2, complex *auxv, complex *f, integer *ldf)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"claqps inputs: m %lld, n %lld, offset %lld, nb %lld, lda %lld, jpvt %lld, ldf %lld",*m, *n, *offset, *nb, *lda, *jpvt, *ldf);
+#else 
+    snprintf(buffer, 256,"claqps inputs: m %d, n %d, offset %d, nb %d, lda %d, jpvt %d, ldf %d",*m, *n, *offset, *nb, *lda, *jpvt, *ldf);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, f_dim1, f_offset, i__1, i__2, i__3;
     real r__1, r__2;
@@ -417,6 +427,7 @@ L60:
         lsticc = itemp;
         goto L60;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLAQPS */
 }

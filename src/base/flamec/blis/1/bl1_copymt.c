@@ -10,15 +10,15 @@
 
 #include "blis1.h"
 
-void bl1_icopymt( trans1_t trans, int m, int n, int* a, int a_rs, int a_cs, int* b, int b_rs, int b_cs )
+void bl1_icopymt( trans1_t trans, integer m, integer n, integer* a, integer a_rs, integer a_cs, integer* b, integer b_rs, integer b_cs )
 {
-	int*      a_begin;
-	int*      b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer*      a_begin;
+	integer*      b_begin;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -78,15 +78,15 @@ void bl1_icopymt( trans1_t trans, int m, int n, int* a, int a_rs, int a_cs, int*
 	}
 }
 
-void bl1_scopymt( trans1_t trans, int m, int n, float* a, int a_rs, int a_cs, float* b, int b_rs, int b_cs )
+void bl1_scopymt( trans1_t trans, integer m, integer n, float* a, integer a_rs, integer a_cs, float* b, integer b_rs, integer b_cs )
 {
 	float*    a_begin;
 	float*    b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -145,15 +145,15 @@ void bl1_scopymt( trans1_t trans, int m, int n, float* a, int a_rs, int a_cs, fl
 	}
 }
 
-void bl1_dcopymt( trans1_t trans, int m, int n, double* a, int a_rs, int a_cs, double* b, int b_rs, int b_cs )
+void bl1_dcopymt( trans1_t trans, integer m, integer n, double* a, integer a_rs, integer a_cs, double* b, integer b_rs, integer b_cs )
 {
 	double*   a_begin;
 	double*   b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -212,15 +212,15 @@ void bl1_dcopymt( trans1_t trans, int m, int n, double* a, int a_rs, int a_cs, d
 	}
 }
 
-void bl1_ccopymt( trans1_t trans, int m, int n, scomplex* a, int a_rs, int a_cs, scomplex* b, int b_rs, int b_cs )
+void bl1_ccopymt( trans1_t trans, integer m, integer n, scomplex* a, integer a_rs, integer a_cs, scomplex* b, integer b_rs, integer b_cs )
 {
 	scomplex* a_begin;
 	scomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -283,15 +283,15 @@ void bl1_ccopymt( trans1_t trans, int m, int n, scomplex* a, int a_rs, int a_cs,
 	}
 }
 
-void bl1_zcopymt( trans1_t trans, int m, int n, dcomplex* a, int a_rs, int a_cs, dcomplex* b, int b_rs, int b_cs )
+void bl1_zcopymt( trans1_t trans, integer m, integer n, dcomplex* a, integer a_rs, integer a_cs, dcomplex* b, integer b_rs, integer b_cs )
 {
 	dcomplex* a_begin;
 	dcomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -357,15 +357,15 @@ void bl1_zcopymt( trans1_t trans, int m, int n, dcomplex* a, int a_rs, int a_cs,
 // --- Mixed-datatype and general stride copy routines---------------
 
 // ss
-void bl1_sscopymt( trans1_t trans, int m, int n, float* a, int a_rs, int a_cs, float* b, int b_rs, int b_cs )
+void bl1_sscopymt( trans1_t trans, integer m, integer n, float* a, integer a_rs, integer a_cs, float* b, integer b_rs, integer b_cs )
 {
 	float*    a_begin;
 	float*    b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -425,15 +425,15 @@ void bl1_sscopymt( trans1_t trans, int m, int n, float* a, int a_rs, int a_cs, f
 }
 
 // sd ds
-void bl1_sdcopymt( trans1_t trans, int m, int n, float* a, int a_rs, int a_cs, double* b, int b_rs, int b_cs )
+void bl1_sdcopymt( trans1_t trans, integer m, integer n, float* a, integer a_rs, integer a_cs, double* b, integer b_rs, integer b_cs )
 {
 	float*    a_begin;
 	double*   b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -491,15 +491,15 @@ void bl1_sdcopymt( trans1_t trans, int m, int n, float* a, int a_rs, int a_cs, d
 		             b_begin, incb );
 	}
 }
-void bl1_dscopymt( trans1_t trans, int m, int n, double* a, int a_rs, int a_cs, float* b, int b_rs, int b_cs )
+void bl1_dscopymt( trans1_t trans, integer m, integer n, double* a, integer a_rs, integer a_cs, float* b, integer b_rs, integer b_cs )
 {
 	double*   a_begin;
 	float*    b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -559,15 +559,15 @@ void bl1_dscopymt( trans1_t trans, int m, int n, double* a, int a_rs, int a_cs, 
 }
 
 // sc cs
-void bl1_sccopymt( trans1_t trans, int m, int n, float* a, int a_rs, int a_cs, scomplex* b, int b_rs, int b_cs )
+void bl1_sccopymt( trans1_t trans, integer m, integer n, float* a, integer a_rs, integer a_cs, scomplex* b, integer b_rs, integer b_cs )
 {
 	float*    a_begin;
 	scomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -625,15 +625,15 @@ void bl1_sccopymt( trans1_t trans, int m, int n, float* a, int a_rs, int a_cs, s
 		             b_begin, incb );
 	}
 }
-void bl1_cscopymt( trans1_t trans, int m, int n, scomplex* a, int a_rs, int a_cs, float* b, int b_rs, int b_cs )
+void bl1_cscopymt( trans1_t trans, integer m, integer n, scomplex* a, integer a_rs, integer a_cs, float* b, integer b_rs, integer b_cs )
 {
 	scomplex* a_begin;
 	float*    b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -693,15 +693,15 @@ void bl1_cscopymt( trans1_t trans, int m, int n, scomplex* a, int a_rs, int a_cs
 }
 
 // sz zs
-void bl1_szcopymt( trans1_t trans, int m, int n, float* a, int a_rs, int a_cs, dcomplex* b, int b_rs, int b_cs )
+void bl1_szcopymt( trans1_t trans, integer m, integer n, float* a, integer a_rs, integer a_cs, dcomplex* b, integer b_rs, integer b_cs )
 {
 	float*    a_begin;
 	dcomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -759,15 +759,15 @@ void bl1_szcopymt( trans1_t trans, int m, int n, float* a, int a_rs, int a_cs, d
 		             b_begin, incb );
 	}
 }
-void bl1_zscopymt( trans1_t trans, int m, int n, dcomplex* a, int a_rs, int a_cs, float* b, int b_rs, int b_cs )
+void bl1_zscopymt( trans1_t trans, integer m, integer n, dcomplex* a, integer a_rs, integer a_cs, float* b, integer b_rs, integer b_cs )
 {
 	dcomplex* a_begin;
 	float*    b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -827,15 +827,15 @@ void bl1_zscopymt( trans1_t trans, int m, int n, dcomplex* a, int a_rs, int a_cs
 }
 
 // dd
-void bl1_ddcopymt( trans1_t trans, int m, int n, double* a, int a_rs, int a_cs, double* b, int b_rs, int b_cs )
+void bl1_ddcopymt( trans1_t trans, integer m, integer n, double* a, integer a_rs, integer a_cs, double* b, integer b_rs, integer b_cs )
 {
 	double*   a_begin;
 	double*   b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -895,15 +895,15 @@ void bl1_ddcopymt( trans1_t trans, int m, int n, double* a, int a_rs, int a_cs, 
 }
 
 // dc cd
-void bl1_dccopymt( trans1_t trans, int m, int n, double* a, int a_rs, int a_cs, scomplex* b, int b_rs, int b_cs )
+void bl1_dccopymt( trans1_t trans, integer m, integer n, double* a, integer a_rs, integer a_cs, scomplex* b, integer b_rs, integer b_cs )
 {
 	double*   a_begin;
 	scomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -961,15 +961,15 @@ void bl1_dccopymt( trans1_t trans, int m, int n, double* a, int a_rs, int a_cs, 
 		             b_begin, incb );
 	}
 }
-void bl1_cdcopymt( trans1_t trans, int m, int n, scomplex* a, int a_rs, int a_cs, double* b, int b_rs, int b_cs )
+void bl1_cdcopymt( trans1_t trans, integer m, integer n, scomplex* a, integer a_rs, integer a_cs, double* b, integer b_rs, integer b_cs )
 {
 	scomplex* a_begin;
 	double*   b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -1029,15 +1029,15 @@ void bl1_cdcopymt( trans1_t trans, int m, int n, scomplex* a, int a_rs, int a_cs
 }
 
 // dz zd
-void bl1_dzcopymt( trans1_t trans, int m, int n, double* a, int a_rs, int a_cs, dcomplex* b, int b_rs, int b_cs )
+void bl1_dzcopymt( trans1_t trans, integer m, integer n, double* a, integer a_rs, integer a_cs, dcomplex* b, integer b_rs, integer b_cs )
 {
 	double*   a_begin;
 	dcomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -1095,15 +1095,15 @@ void bl1_dzcopymt( trans1_t trans, int m, int n, double* a, int a_rs, int a_cs, 
 		             b_begin, incb );
 	}
 }
-void bl1_zdcopymt( trans1_t trans, int m, int n, dcomplex* a, int a_rs, int a_cs, double* b, int b_rs, int b_cs )
+void bl1_zdcopymt( trans1_t trans, integer m, integer n, dcomplex* a, integer a_rs, integer a_cs, double* b, integer b_rs, integer b_cs )
 {
 	dcomplex* a_begin;
 	double*   b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -1163,15 +1163,15 @@ void bl1_zdcopymt( trans1_t trans, int m, int n, dcomplex* a, int a_rs, int a_cs
 }
 
 // cc
-void bl1_cccopymt( trans1_t trans, int m, int n, scomplex* a, int a_rs, int a_cs, scomplex* b, int b_rs, int b_cs )
+void bl1_cccopymt( trans1_t trans, integer m, integer n, scomplex* a, integer a_rs, integer a_cs, scomplex* b, integer b_rs, integer b_cs )
 {
 	scomplex* a_begin;
 	scomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -1231,15 +1231,15 @@ void bl1_cccopymt( trans1_t trans, int m, int n, scomplex* a, int a_rs, int a_cs
 }
 
 // cz zc
-void bl1_czcopymt( trans1_t trans, int m, int n, scomplex* a, int a_rs, int a_cs, dcomplex* b, int b_rs, int b_cs )
+void bl1_czcopymt( trans1_t trans, integer m, integer n, scomplex* a, integer a_rs, integer a_cs, dcomplex* b, integer b_rs, integer b_cs )
 {
 	scomplex* a_begin;
 	dcomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -1297,15 +1297,15 @@ void bl1_czcopymt( trans1_t trans, int m, int n, scomplex* a, int a_rs, int a_cs
 		             b_begin, incb );
 	}
 }
-void bl1_zccopymt( trans1_t trans, int m, int n, dcomplex* a, int a_rs, int a_cs, scomplex* b, int b_rs, int b_cs )
+void bl1_zccopymt( trans1_t trans, integer m, integer n, dcomplex* a, integer a_rs, integer a_cs, scomplex* b, integer b_rs, integer b_cs )
 {
 	dcomplex* a_begin;
 	scomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -1365,15 +1365,15 @@ void bl1_zccopymt( trans1_t trans, int m, int n, dcomplex* a, int a_rs, int a_cs
 }
 
 // zz
-void bl1_zzcopymt( trans1_t trans, int m, int n, dcomplex* a, int a_rs, int a_cs, dcomplex* b, int b_rs, int b_cs )
+void bl1_zzcopymt( trans1_t trans, integer m, integer n, dcomplex* a, integer a_rs, integer a_cs, dcomplex* b, integer b_rs, integer b_cs )
 {
 	dcomplex* a_begin;
 	dcomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.

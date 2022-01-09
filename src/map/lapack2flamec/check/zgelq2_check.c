@@ -1,10 +1,10 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
 
-int zgelq2_check(int *m, int *n, dcomplex *a, int *lda, dcomplex *tau, dcomplex *work, int *info)
+int zgelq2_check(integer *m, integer *n, dcomplex *a, integer *lda, dcomplex *tau, dcomplex *work, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
 
     /* Parameter adjustments */
     a_dim1 = *lda;

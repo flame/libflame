@@ -19,14 +19,14 @@
 char* pc_str[N_PARAM_COMBOS] = { "ltc" };
 
 void time_Trmm(
-               int param_combo, int type, int nrepeats, int m, int n,
+               integer param_combo, integer type, integer nrepeats, integer m, integer n,
                FLA_Obj A, FLA_Obj B, FLA_Obj B_ref, FLA_Obj t, FLA_Obj T, FLA_Obj W,
                double *dtime, double *diff, double *gflops );
 
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     datatype,
     precision,
     nb_alg, bm, bn,

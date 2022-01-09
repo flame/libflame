@@ -157,7 +157,7 @@ doublereal zla_gbrpvgrw_(integer *n, integer *kl, integer *ku, integer * ncols, 
         {
             /* Computing MAX */
             i__2 = kd + i__ - j + j * ab_dim1;
-            d__3 = (d__1 = ab[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&ab[kd + i__ - j + j * ab_dim1]), f2c_abs(d__2));
+            d__3 = (d__1 = ab[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag(&ab[kd + i__ - j + j * ab_dim1]), f2c_dabs(d__2));
             amax = max(d__3,amax);
         }
         /* Computing MAX */
@@ -169,7 +169,7 @@ doublereal zla_gbrpvgrw_(integer *n, integer *kl, integer *ku, integer * ncols, 
         {
             /* Computing MAX */
             i__3 = kd + i__ - j + j * afb_dim1;
-            d__3 = (d__1 = afb[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&afb[kd + i__ - j + j * afb_dim1]), f2c_abs(d__2));
+            d__3 = (d__1 = afb[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&afb[kd + i__ - j + j * afb_dim1]), f2c_dabs(d__2));
             umax = max(d__3,umax);
         }
         if (umax != 0.)

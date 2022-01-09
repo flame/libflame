@@ -409,6 +409,9 @@ FLA_CHECK_ENABLE_STATIC_BUILD
 dnl Observe whether we're going to build a dynamic library.
 FLA_CHECK_ENABLE_DYNAMIC_BUILD
 
+dnl Observe whether we're going to enable ILP64.
+FLA_CHECK_ENABLE_ILP64
+
 dnl Observe whether we should archive object files from a separate flat object
 dnl directory so that systems with kernels with small ARG_MAX can still archive
 dnl the library.
@@ -450,6 +453,14 @@ dnl Observe whether we should build code that provides FLAME-like interfaces to
 dnl certain LAPACK routines.
 FLA_CHECK_ENABLE_EXTERNAL_LAPACK_INTERFACES
 
+dnl Observe whether we should build code that provides f2c caling convention for
+dnl complex dotc/dotu function.
+FLA_CHECK_ENABLE_F2C_DOTC
+
+dnl Observe whether we should build code that enables void return for functions 
+dnl that by default return complex type as per LAPACK standard.
+FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION
+
 dnl Make sure the user did not enable both lapack2flame and external LAPACK
 dnl interfaces.
 FLA_REQUIRE_NO_LAPACK_NAMESPACE_CONFLICT
@@ -465,6 +476,10 @@ FLA_CHECK_ENABLE_SUPERMATRIX
 
 dnl Observe the GPU extension switch.
 FLA_CHECK_ENABLE_GPU
+
+dnl Observe whether we should build code that calls GEMMT blas extension call
+dnl to get better performance for DSPFFRT2 LAPACK API.
+FLA_CHECK_ENABLE_BLAS_EXT_GEMMT
 
 dnl Make sure the user did not request a weird combination of parallelization
 dnl options.

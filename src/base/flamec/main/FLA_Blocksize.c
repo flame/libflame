@@ -164,8 +164,8 @@ dim_t FLA_Query_blocksize( FLA_Datatype dt, FLA_Dimension dim )
 
 #ifdef FLA_ENABLE_GOTO_INTERFACES
 
-	int dt_index;
-	int dim_index;
+	integer dt_index;
+	integer dim_index;
 
 	if ( first_time )
 	{

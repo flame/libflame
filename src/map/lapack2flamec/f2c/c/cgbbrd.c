@@ -198,6 +198,16 @@ LDC >= 1 if NCC = 0. */
 /* Subroutine */
 int cgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integer *ku, complex *ab, integer *ldab, real *d__, real *e, complex *q, integer *ldq, complex *pt, integer *ldpt, complex *c__, integer *ldc, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+   snprintf(buffer, 256,"cgbbrd inputs: vect %c, m %lld, n %lld, ncc %lld, kl %lld, ku %lld, ldab %lld, ldq %lld, ldpt %lld, ldc %lld",*vect, *m, *n, *ncc, *kl, *ku, *ldab, *ldq, *ldpt, *ldc);
+#else 
+   snprintf(buffer, 256,"cgbbrd inputs: vect %c, m %d, n %d, ncc %d, kl %d, ku %d, ldab %d, ldq %d, ldpt %d, ldc %d",*vect, *m, *n, *ncc, *kl, *ku, *ldab, *ldq, *ldpt, *ldc);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, c_dim1, c_offset, pt_dim1, pt_offset, q_dim1, q_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7;
     complex q__1, q__2, q__3;
@@ -312,6 +322,7 @@ int cgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
     {
         i__1 = -(*info);
         xerbla_("CGBBRD", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Initialize Q and P**H to the unit matrix, if needed */
@@ -326,6 +337,7 @@ int cgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
     /* Quick return if possible. */
     if (*m == 0 || *n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     minmn = min(*m,*n);
@@ -764,6 +776,7 @@ int cgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
         }
         /* L120: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGBBRD */
 }

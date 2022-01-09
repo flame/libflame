@@ -110,6 +110,7 @@ higher precision or correctly rounded or */
 /* Subroutine */
 int claev2_(complex *a, complex *b, complex *c__, real *rt1, real *rt2, real *cs1, complex *sn1)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* System generated locals */
     real r__1, r__2, r__3;
     complex q__1, q__2;
@@ -158,6 +159,7 @@ int claev2_(complex *a, complex *b, complex *c__, real *rt1, real *rt2, real *cs
     q__1.r = t * w.r;
     q__1.i = t * w.i; // , expr subst
     sn1->r = q__1.r, sn1->i = q__1.i;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLAEV2 */
 }

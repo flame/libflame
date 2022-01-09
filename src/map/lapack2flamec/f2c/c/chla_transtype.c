@@ -46,6 +46,16 @@
 /* Character */
 VOID chla_transtype_(char *ret_val, integer *trans)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"chla_transtype inputs: ret_val %c, trans %lld",*ret_val, *trans);
+#else 
+    snprintf(buffer, 256,"chla_transtype inputs: ret_val %c, trans %d",*ret_val, *trans);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -72,6 +82,7 @@ VOID chla_transtype_(char *ret_val, integer *trans)
     {
         *(unsigned char *)ret_val = 'X';
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return ;
     /* End of CHLA_TRANSTYPE */
 }

@@ -238,6 +238,16 @@ static integer c_n1 = -1;
 /* Subroutine */
 int claed7_(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, integer *curlvl, integer *curpbm, real *d__, complex * q, integer *ldq, real *rho, integer *indxq, real *qstore, integer * qptr, integer *prmptr, integer *perm, integer *givptr, integer * givcol, real *givnum, complex *work, real *rwork, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"claed7 inputs: n %lld, cutpnt %lld, qsiz %lld, tlvls %lld, curlvl %lld, curpbm %lld, ldq %lld, indxq %lld, qptr %lld, prmptr %lld",*n, *cutpnt, *qsiz, *tlvls, *curlvl, *curpbm, *ldq, *indxq, *qptr, *prmptr);
+#else 
+    snprintf(buffer, 256,"claed7 inputs: n %d, cutpnt %d, qsiz %d, tlvls %d, curlvl %d, curpbm %d, ldq %d, indxq %d, qptr %d, prmptr %d",*n, *cutpnt, *qsiz, *tlvls, *curlvl, *curpbm, *ldq, *indxq, *qptr, *prmptr);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer q_dim1, q_offset, i__1, i__2;
     /* Builtin functions */
@@ -308,11 +318,13 @@ int claed7_(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, integer 
     {
         i__1 = -(*info);
         xerbla_("CLAED7", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* The following values are for bookkeeping purposes only. They are */
@@ -363,6 +375,7 @@ int claed7_(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, integer 
         qptr[curr + 1] = qptr[curr] + i__1 * i__1;
         if (*info != 0)
         {
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         /* Prepare the INDXQ sorting premutation. */
@@ -382,6 +395,7 @@ int claed7_(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, integer 
             /* L20: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLAED7 */
 }

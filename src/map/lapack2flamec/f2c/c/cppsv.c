@@ -134,6 +134,16 @@
 /* Subroutine */
 int cppsv_(char *uplo, integer *n, integer *nrhs, complex * ap, complex *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cppsv inputs: uplo %c, n %lld, nrhs %lld, ldb %lld",*uplo, *n, *nrhs, *ldb);
+#else 
+    snprintf(buffer, 256,"cppsv inputs: uplo %c, n %d, nrhs %d, ldb %d",*uplo, *n, *nrhs, *ldb);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, i__1;
     /* Local variables */
@@ -184,6 +194,7 @@ int cppsv_(char *uplo, integer *n, integer *nrhs, complex * ap, complex *b, inte
     {
         i__1 = -(*info);
         xerbla_("CPPSV ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Compute the Cholesky factorization A = U**H *U or A = L*L**H. */
@@ -193,6 +204,7 @@ int cppsv_(char *uplo, integer *n, integer *nrhs, complex * ap, complex *b, inte
         /* Solve the system A*X = B, overwriting B with X. */
         cpptrs_(uplo, n, nrhs, &ap[1], &b[b_offset], ldb, info);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CPPSV */
 }

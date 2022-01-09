@@ -10,29 +10,29 @@
 
 #include "FLAME.h"
 
-FLA_Error FLA_Bsvd_iteracc_v_ops_var1( int       m_A,
-                                       int       n_GH,
-                                       int       ijTL,
+FLA_Error FLA_Bsvd_iteracc_v_ops_var1( integer       m_A,
+                                       integer       n_GH,
+                                       integer       ijTL,
                                        float     tol,
                                        float     thresh,
-                                       float*    buff_d, int inc_d,
-                                       float*    buff_e, int inc_e,
-                                       scomplex* buff_G, int rs_G, int cs_G,
-                                       scomplex* buff_H, int rs_H, int cs_H,
-                                       int*      n_iter_perf )
+                                       float*    buff_d, integer inc_d,
+                                       float*    buff_e, integer inc_e,
+                                       scomplex* buff_G, integer rs_G, integer cs_G,
+                                       scomplex* buff_H, integer rs_H, integer cs_H,
+                                       integer*      n_iter_perf )
 {
     FLA_Error r_val;
-    int       i, k;
-    int       k_iter       = 0;
-    int       n_deflations = 0;
+    integer       i, k;
+    integer       k_iter       = 0;
+    integer       n_deflations = 0;
 
     // Iterate from back to front until all that is left is a 2x2.
     for ( i = m_A - 1; i > 1; --i )
     {
         scomplex* G1     = buff_G + (k_iter)*cs_G;
         scomplex* H1     = buff_H + (k_iter)*cs_H;
-        int       m_ATL  = i + 1;
-        int       k_left = n_GH - k_iter;
+        integer       m_ATL  = i + 1;
+        integer       k_left = n_GH - k_iter;
 
         /*------------------------------------------------------------*/
 
@@ -71,11 +71,11 @@ FLA_Error FLA_Bsvd_iteracc_v_ops_var1( int       m_A,
         // Therefore, we must recurse with subproblems.
         if ( r_val != i )
         {
-            int       m_TLr = r_val + 1;
-            int       m_BRr = m_ATL - m_TLr;
-            int       ijTLr = 0;
-            int       ijBRr = m_TLr;
-            int       n_GHr = n_GH - k_iter;
+            integer       m_TLr = r_val + 1;
+            integer       m_BRr = m_ATL - m_TLr;
+            integer       ijTLr = 0;
+            integer       ijBRr = m_TLr;
+            integer       n_GHr = n_GH - k_iter;
             float*    dTL   = buff_d + (0    )*inc_d;
             float*    eTL   = buff_e + (0    )*inc_e;
             scomplex* GT    = buff_G + (0    )*rs_G + (k_iter)*cs_G;
@@ -85,10 +85,10 @@ FLA_Error FLA_Bsvd_iteracc_v_ops_var1( int       m_A,
             scomplex* GB    = buff_G + (ijBRr)*rs_G + (k_iter)*cs_G;
             scomplex* HB    = buff_H + (ijBRr)*rs_H + (k_iter)*cs_H;
 
-            int       n_deflationsTL;
-            int       n_deflationsBR;
-            int       n_iter_perfTL;
-            int       n_iter_perfBR;
+            integer       n_deflationsTL;
+            integer       n_deflationsBR;
+            integer       n_iter_perfTL;
+            integer       n_iter_perfBR;
 
             n_deflationsTL = FLA_Bsvd_iteracc_v_ops_var1( m_TLr,
                                                           n_GHr,
@@ -173,29 +173,29 @@ FLA_Error FLA_Bsvd_iteracc_v_ops_var1( int       m_A,
 
 //#define PRINTF
 
-FLA_Error FLA_Bsvd_iteracc_v_opd_var1( int       m_A,
-                                       int       n_GH,
-                                       int       ijTL,
+FLA_Error FLA_Bsvd_iteracc_v_opd_var1( integer       m_A,
+                                       integer       n_GH,
+                                       integer       ijTL,
                                        double    tol,
                                        double    thresh,
-                                       double*   buff_d, int inc_d,
-                                       double*   buff_e, int inc_e,
-                                       dcomplex* buff_G, int rs_G, int cs_G,
-                                       dcomplex* buff_H, int rs_H, int cs_H,
-                                       int*      n_iter_perf )
+                                       double*   buff_d, integer inc_d,
+                                       double*   buff_e, integer inc_e,
+                                       dcomplex* buff_G, integer rs_G, integer cs_G,
+                                       dcomplex* buff_H, integer rs_H, integer cs_H,
+                                       integer*      n_iter_perf )
 {
     FLA_Error r_val;
-    int       i, k;
-    int       k_iter       = 0;
-    int       n_deflations = 0;
+    integer       i, k;
+    integer       k_iter       = 0;
+    integer       n_deflations = 0;
 
     // Iterate from back to front until all that is left is a 2x2.
     for ( i = m_A - 1; i > 1; --i )
     {
         dcomplex* G1     = buff_G + (k_iter)*cs_G;
         dcomplex* H1     = buff_H + (k_iter)*cs_H;
-        int       m_ATL  = i + 1;
-        int       k_left = n_GH - k_iter;
+        integer       m_ATL  = i + 1;
+        integer       k_left = n_GH - k_iter;
 
         /*------------------------------------------------------------*/
 
@@ -244,11 +244,11 @@ FLA_Error FLA_Bsvd_iteracc_v_opd_var1( int       m_A,
         // Therefore, we must recurse with subproblems.
         if ( r_val != i )
         {
-            int       m_TLr = r_val + 1;
-            int       m_BRr = m_ATL - m_TLr;
-            int       ijTLr = 0;
-            int       ijBRr = m_TLr;
-            int       n_GHr = n_GH - k_iter;
+            integer       m_TLr = r_val + 1;
+            integer       m_BRr = m_ATL - m_TLr;
+            integer       ijTLr = 0;
+            integer       ijBRr = m_TLr;
+            integer       n_GHr = n_GH - k_iter;
             double*   dTL   = buff_d + (0    )*inc_d;
             double*   eTL   = buff_e + (0    )*inc_e;
             dcomplex* GT    = buff_G + (0    )*rs_G + (k_iter)*cs_G;
@@ -258,10 +258,10 @@ FLA_Error FLA_Bsvd_iteracc_v_opd_var1( int       m_A,
             dcomplex* GB    = buff_G + (ijBRr)*rs_G + (k_iter)*cs_G;
             dcomplex* HB    = buff_H + (ijBRr)*rs_H + (k_iter)*cs_H;
 
-            int       n_deflationsTL;
-            int       n_deflationsBR;
-            int       n_iter_perfTL;
-            int       n_iter_perfBR;
+            integer       n_deflationsTL;
+            integer       n_deflationsBR;
+            integer       n_iter_perfTL;
+            integer       n_iter_perfBR;
 
 #ifdef PRINTF
             printf( "FLA_Bsvd_iteracc_v_opd_var1: Deflation occurred in col %d\n", r_val );

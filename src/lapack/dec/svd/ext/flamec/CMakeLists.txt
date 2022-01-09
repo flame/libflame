@@ -1,0 +1,24 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.## 
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Svd_ext.h
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Svd_ext_u_unb_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dbdsqr.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dgebrd.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dgebd2.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dgelqf.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dgelq2.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dgesvd.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dorg2r.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dorgbr.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dorgl2.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dorglq.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dorgqr.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dormbr.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dormlq.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dorml2.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dormqr.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dorm2r.c
+${CMAKE_CURRENT_SOURCE_DIR}/dgesvd2x2.c
+
+	)

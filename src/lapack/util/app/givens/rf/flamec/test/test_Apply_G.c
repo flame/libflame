@@ -17,17 +17,17 @@
 #define FLA_ALG_BLOCKED       4
 
 void fill_cs( FLA_Obj G );
-void fill_a( int ij, FLA_Obj A );
+void fill_a( integer ij, FLA_Obj A );
 
 void time_Apply_G_rf(
-               int variant, int type, int n_repeats, int m, int k, int n, int b_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer k, integer n, integer b_alg,
                FLA_Obj A, FLA_Obj A_ref, FLA_Obj G, FLA_Obj P,
                double *dtime, double *diff, double *gflops );
 
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     m_input, k_input, n_input,
     m, k, n,
     p_first, p_last, p_inc,

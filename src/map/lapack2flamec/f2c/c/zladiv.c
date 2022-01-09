@@ -50,8 +50,10 @@
 /* > \ingroup complex16OTHERauxiliary */
 /* ===================================================================== */
 /* Double Complex */
+#ifdef FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION
 VOID zladiv_(doublecomplex * ret_val, doublecomplex *x, doublecomplex *y)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* System generated locals */
     doublereal d__1, d__2, d__3, d__4;
     doublecomplex z__1;
@@ -83,7 +85,62 @@ VOID zladiv_(doublecomplex * ret_val, doublecomplex *x, doublecomplex *y)
     z__1.r = zr;
     z__1.i = zi; // , expr subst
     ret_val->r = z__1.r, ret_val->i = z__1.i;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return ;
     /* End of ZLADIV */
 }
+#else
+doublecomplex zladiv_(doublecomplex *x, doublecomplex *y)
+{
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    /* System generated locals */
+    doublereal d__1, d__2, d__3, d__4;
+    doublecomplex z__1;
+    /* Builtin functions */
+    double d_imag(doublecomplex *);
+    /* Local variables */
+    doublereal zi, zr;
+    extern /* Subroutine */
+    int dladiv_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
+    /* -- LAPACK auxiliary routine (version 3.4.2) -- */
+    /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
+    /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
+    /* September 2012 */
+    /* .. Scalar Arguments .. */
+    /* .. */
+    /* ===================================================================== */
+    /* .. Local Scalars .. */
+    /* .. */
+    /* .. External Subroutines .. */
+    /* .. */
+    /* .. Intrinsic Functions .. */
+    /* .. */
+    /* .. Executable Statements .. */
+    d__1 = x->r;
+    d__2 = d_imag(x);
+    d__3 = y->r;
+    d__4 = d_imag(y);
+    dladiv_(&d__1, &d__2, &d__3, &d__4, &zr, &zi);
+    z__1.r = zr;
+    z__1.i = zi; // , expr subst
+    //ret_val->r = z__1.r, ret_val->i = z__1.i;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    return z__1;
+    /* End of ZLADIV */
+}
+
+#endif
+
+void zladiv_f2c_(doublecomplex *ret_val, doublecomplex *x, doublecomplex *y)
+{
+
+#ifdef FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION
+    zladiv_(ret_val, x, y);    
+#else
+    *ret_val = zladiv_(x, y);
+#endif
+
+    return;
+}
+
 /* zladiv_ */

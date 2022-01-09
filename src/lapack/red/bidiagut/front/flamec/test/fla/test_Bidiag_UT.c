@@ -14,13 +14,13 @@
 #define FLA_ALG_FRONT     1
 
 void time_Bidiag_UT(
-                int param_combo, int type, int n_repeats, int m, int n,
+                integer param_combo, integer type, integer n_repeats, integer m, integer n,
                 FLA_Obj A, FLA_Obj tu, FLA_Obj tv, FLA_Obj TU, FLA_Obj TV,
                 double *dtime, double *diff, double *gflops );
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     m_input, n_input,
     m, n,
     min_m_n,

@@ -185,6 +185,16 @@ Computing Eigenspaces with Specified */
 /* Subroutine */
 int ctgex2_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, integer *j1, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctgex2 inputs: n %lld, lda %lld, ldb %lld, ldq %lld, ldz %lld, j1 %lld",*n, *lda, *ldb, *ldq, *ldz, *j1);
+#else 
+    snprintf(buffer, 256,"ctgex2 inputs: n %d, lda %d, ldb %d, ldq %d, ldz %d, j1 %d",*n, *lda, *ldb, *ldq, *ldz, *j1);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2, i__3;
     real r__1;
@@ -254,6 +264,7 @@ int ctgex2_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda
     /* Quick return if possible */
     if (*n <= 1)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     m = 2;
@@ -424,10 +435,12 @@ int ctgex2_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda
         crot_(n, &q[*j1 * q_dim1 + 1], &c__1, &q[(*j1 + 1) * q_dim1 + 1], & c__1, &cq, &q__1);
     }
     /* Exit with INFO = 0 if swap was successfully performed. */
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* Exit with INFO = 1 if swap was rejected. */
 L20:
     *info = 1;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTGEX2 */
 }

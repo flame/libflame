@@ -138,6 +138,12 @@ IPIV(i) = i indicates a row interchange was not */
 /* Subroutine */
 int sgtcon_(char *norm, integer *n, real *dl, real *d__, real *du, real *du2, integer *ipiv, real *anorm, real *rcond, real * work, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"sgtcon inputs: norm %c, n %d, ipiv %d",*norm, *n, *ipiv);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     /* Local variables */
@@ -198,6 +204,7 @@ int sgtcon_(char *norm, integer *n, real *dl, real *d__, real *du, real *du2, in
     {
         i__1 = -(*info);
         xerbla_("SGTCON", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -205,10 +212,12 @@ int sgtcon_(char *norm, integer *n, real *dl, real *d__, real *du, real *du2, in
     if (*n == 0)
     {
         *rcond = 1.f;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*anorm == 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check that D(1:N) is non-zero. */
@@ -219,6 +228,7 @@ int sgtcon_(char *norm, integer *n, real *dl, real *d__, real *du, real *du2, in
     {
         if (d__[i__] == 0.f)
         {
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         /* L10: */
@@ -254,6 +264,7 @@ L20:
     {
         *rcond = 1.f / ainvnm / *anorm;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SGTCON */
 }

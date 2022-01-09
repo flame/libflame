@@ -143,6 +143,16 @@ elements marked */
 /* Subroutine */
 int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integer *ldab, integer *ipiv, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgbtrf inputs: m %lld, n %lld, kl %lld, ku %lld, ldab %lld",*m, *n, *kl, *ku, *ldab);
+#else 
+    snprintf(buffer, 256,"cgbtrf inputs: m %d, n %d, kl %d, ku %d, ldab %d",*m, *n, *kl, *ku, *ldab);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     complex q__1;
@@ -221,11 +231,13 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
     {
         i__1 = -(*info);
         xerbla_("CGBTRF", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Determine the block size for this environment */
@@ -625,6 +637,7 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
             /* L180: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGBTRF */
 }

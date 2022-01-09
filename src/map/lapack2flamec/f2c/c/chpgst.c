@@ -111,6 +111,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int chpgst_(integer *itype, char *uplo, integer *n, complex * ap, complex *bp, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"chpgst inputs: itype %lld, uplo %c, n %lld",*itype, *uplo, *n);
+#else 
+    snprintf(buffer, 256,"chpgst inputs: itype %d, uplo %c, n %d",*itype, *uplo, *n);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3, i__4;
     real r__1, r__2;
@@ -176,6 +186,7 @@ int chpgst_(integer *itype, char *uplo, integer *n, complex * ap, complex *bp, i
     {
         i__1 = -(*info);
         xerbla_("CHPGST", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*itype == 1)
@@ -343,6 +354,7 @@ int chpgst_(integer *itype, char *uplo, integer *n, complex * ap, complex *bp, i
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHPGST */
 }

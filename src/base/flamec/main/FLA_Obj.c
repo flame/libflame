@@ -1,6 +1,7 @@
 /*
 
     Copyright (C) 2014, The University of Texas at Austin
+    Copyright (C) 2020, Advanced Micro Devices, Inc. 
 
     This file is part of libflame and is available under the 3-Clause
     BSD license, which can be found in the LICENSE file at the top-level
@@ -9,13 +10,13 @@
 */
 
 #include "FLAME.h"
-
+#include <limits.h>
 
 #ifdef FLA_ENABLE_SCC
 typedef volatile unsigned char* t_vcharp;
 t_vcharp RCCE_shmalloc(size_t);
 void     RCCE_shfree(t_vcharp);
-int      RCCE_ue(void);
+integer      RCCE_ue(void);
 
 
 void* FLA_shmalloc( size_t size )
@@ -410,7 +411,7 @@ FLA_Error FLA_Obj_create_without_buffer( FLA_Datatype datatype, dim_t m, dim_t n
 
 FLA_Error FLA_Obj_create_constant( double const_real, FLA_Obj *obj )
 {
-  int*      temp_i;
+  integer*      temp_i;
   float*    temp_s;
   double*   temp_d;
   scomplex* temp_c;
@@ -432,7 +433,7 @@ FLA_Error FLA_Obj_create_constant( double const_real, FLA_Obj *obj )
   temp_c       = FLA_COMPLEX_PTR( *obj );
   temp_z       = FLA_DOUBLE_COMPLEX_PTR( *obj );
 
-  *temp_i      = ( int   ) const_real;
+  *temp_i      = ( integer   ) const_real;
   *temp_s      = ( float ) const_real;
   *temp_d      =           const_real;
   temp_c->real = ( float ) const_real;
@@ -447,7 +448,7 @@ FLA_Error FLA_Obj_create_constant( double const_real, FLA_Obj *obj )
 
 FLA_Error FLA_Obj_create_constant_ext( float const_s, double const_d, FLA_Obj *obj )
 {
-  int*      temp_i;
+  integer*      temp_i;
   float*    temp_s;
   double*   temp_d;
   scomplex* temp_c;
@@ -469,7 +470,15 @@ FLA_Error FLA_Obj_create_constant_ext( float const_s, double const_d, FLA_Obj *o
   temp_c       = FLA_COMPLEX_PTR( *obj );
   temp_z       = FLA_DOUBLE_COMPLEX_PTR( *obj );
 
-  *temp_i      = ( int   ) const_s;
+  // This check safely allows the float to integer typecast by saturation check
+  if( const_s >= (float)(INT_MAX - 64)) // Comparing with float value equal to 0x7FFFFFFF
+  {
+      *temp_i      = INT_MAX;// equal to 0x7FFFFFFF
+  }
+  else
+  {
+      *temp_i      = ( integer   ) const_s;
+  }
   *temp_s      =           const_s;
   *temp_d      =           const_d;
   temp_c->real =           const_s;
@@ -484,7 +493,7 @@ FLA_Error FLA_Obj_create_constant_ext( float const_s, double const_d, FLA_Obj *o
 
 FLA_Error FLA_Obj_create_complex_constant( double const_real, double const_imag, FLA_Obj *obj )
 {
-  int*      temp_i;
+  integer*      temp_i;
   float*    temp_s;
   double*   temp_d;
   scomplex* temp_c;
@@ -506,7 +515,7 @@ FLA_Error FLA_Obj_create_complex_constant( double const_real, double const_imag,
   temp_c       = FLA_COMPLEX_PTR( *obj );
   temp_z       = FLA_DOUBLE_COMPLEX_PTR( *obj );
 
-  *temp_i      = ( int   ) const_real;
+  *temp_i      = ( integer   ) const_real;
   *temp_s      = ( float ) const_real;
   *temp_d      =           const_real;
   temp_c->real = ( float ) const_real;

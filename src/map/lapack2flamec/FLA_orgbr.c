@@ -37,17 +37,18 @@
 
 #define LAPACK_orgbr(prefix, name)                                      \
   int F77_ ## prefix ## name ## br( char* vect,                         \
-                                    int*  m,                            \
-                                    int*  n,                            \
-                                    int*  k,                            \
-                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+                                    integer*  m,                            \
+                                    integer*  n,                            \
+                                    integer*  k,                            \
+                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_t, \
                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, \
-                                    int* lwork,                         \
-                                    int* info )
+                                    integer* lwork,                         \
+                                    integer* info )
 
 // buff_t shoud not include any zero. if it has one, that is the right dimension to go.
 #define LAPACK_orgbr_body(prefix)                                       \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \
   FLA_Datatype datatype   = PREFIX2FLAME_DATATYPE(prefix);              \
   FLA_Obj      A, ATL, ATR, ABL, ABR, A1, A2, Ah, T, TL, TR, t;         \
   FLA_Error    init_result;                                             \
@@ -166,6 +167,7 @@
                                                                         \
   *info = 0;                                                            \
                                                                         \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                          \
   return 0;
 
 LAPACK_orgbr(s, org)

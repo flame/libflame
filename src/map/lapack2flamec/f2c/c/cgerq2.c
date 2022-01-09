@@ -114,6 +114,16 @@ conjg(v(1:n-k+i-1)) is stored on */
 /* Subroutine */
 int cgerq2_(integer *m, integer *n, complex *a, integer *lda, complex *tau, complex *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgerq2 inputs: m %lld, n %lld, lda %lld",*m, *n, *lda);
+#else 
+    snprintf(buffer, 256,"cgerq2 inputs: m %d, n %d, lda %d",*m, *n, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     /* Local variables */
@@ -164,6 +174,7 @@ int cgerq2_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
     {
         i__1 = -(*info);
         xerbla_("CGERQ2", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     k = min(*m,*n);
@@ -194,6 +205,7 @@ int cgerq2_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
         clacgv_(&i__1, &a[*m - k + i__ + a_dim1], lda);
         /* L10: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGERQ2 */
 }

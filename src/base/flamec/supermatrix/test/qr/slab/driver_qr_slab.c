@@ -19,9 +19,9 @@
 #define OUTPUT_FILE "qr_slab"
 
 
-int main( int argc, char *argv[] ) 
+integer main( integer argc, char *argv[] ) 
 { 
-   int
+   integer
       i, j,
       n_threads,
       n_repeats,

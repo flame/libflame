@@ -15,7 +15,7 @@ FLA_Error FLA_Tridiag_unb_external( FLA_Uplo uplo, FLA_Obj A, FLA_Obj t )
   int          info = 0;
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
   FLA_Datatype datatype;
-  int          n_A, cs_A;
+  integer          n_A, cs_A;
   FLA_Obj      d, e;
   char         blas_uplo;
 

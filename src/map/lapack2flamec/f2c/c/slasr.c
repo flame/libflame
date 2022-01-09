@@ -187,6 +187,12 @@
 /* Subroutine */
 int slasr_(char *side, char *pivot, char *direct, integer *m, integer *n, real *c__, real *s, real *a, integer *lda)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"slasr inputs: side %c, pivot %c, direct %c, m %d, n %d, lda %d",*side, *pivot, *direct, *m, *n, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     /* Local variables */
@@ -252,11 +258,13 @@ int slasr_(char *side, char *pivot, char *direct, integer *m, integer *n, real *
     if (info != 0)
     {
         xerbla_("SLASR ", &info);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (lsame_(side, "L"))
@@ -579,6 +587,7 @@ int slasr_(char *side, char *pivot, char *direct, integer *m, integer *n, real *
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SLASR */
 }

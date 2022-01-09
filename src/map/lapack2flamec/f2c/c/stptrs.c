@@ -123,6 +123,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int stptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, real *ap, real *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"stptrs inputs: uplo %c, trans %c, diag %c, n %d, nrhs %d, ldb %d",*uplo, *trans, *diag, *n, *nrhs, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, i__1;
     /* Local variables */
@@ -190,11 +196,13 @@ int stptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, real
     {
         i__1 = -(*info);
         xerbla_("STPTRS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check for singularity. */
@@ -210,6 +218,7 @@ int stptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, real
             {
                 if (ap[jc + *info - 1] == 0.f)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 jc += *info;
@@ -226,6 +235,7 @@ int stptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, real
             {
                 if (ap[jc] == 0.f)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 jc = jc + *n - *info + 1;
@@ -243,6 +253,7 @@ int stptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, real
         stpsv_(uplo, trans, diag, n, &ap[1], &b[j * b_dim1 + 1], &c__1);
         /* L30: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of STPTRS */
 }

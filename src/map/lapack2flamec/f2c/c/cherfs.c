@@ -186,6 +186,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int cherfs_(char *uplo, integer *n, integer *nrhs, complex * a, integer *lda, complex *af, integer *ldaf, integer *ipiv, complex * b, integer *ldb, complex *x, integer *ldx, real *ferr, real *berr, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cherfs inputs: uplo %c, n %lld, nrhs %lld, lda %lld, ldaf %lld, ipiv %lld, ldb %lld, ldx %lld",*uplo, *n, *nrhs, *lda, *ldaf, *ipiv, *ldb, *ldx);
+#else 
+    snprintf(buffer, 256,"cherfs inputs: uplo %c, n %d, nrhs %d, lda %d, ldaf %d, ipiv %d, ldb %d, ldx %d",*uplo, *n, *nrhs, *lda, *ldaf, *ipiv, *ldb, *ldx);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, b_dim1, b_offset, x_dim1, x_offset, i__1, i__2, i__3, i__4, i__5;
     real r__1, r__2, r__3, r__4;
@@ -294,6 +304,7 @@ int cherfs_(char *uplo, integer *n, integer *nrhs, complex * a, integer *lda, co
     {
         i__1 = -(*info);
         xerbla_("CHERFS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -308,6 +319,7 @@ int cherfs_(char *uplo, integer *n, integer *nrhs, complex * a, integer *lda, co
             berr[j] = 0.f;
             /* L10: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* NZ = maximum number of nonzero elements in each row of A, plus 1 */
@@ -539,6 +551,7 @@ L100:
         }
         /* L140: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHERFS */
 }

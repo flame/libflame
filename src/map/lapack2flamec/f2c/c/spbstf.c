@@ -146,6 +146,12 @@ the */
 /* Subroutine */
 int spbstf_(char *uplo, integer *n, integer *kd, real *ab, integer *ldab, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"spbstf inputs: uplo %c, n %d, kd %d, ldab %d",*uplo, *n, *kd, *ldab);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2, i__3;
     real r__1;
@@ -211,11 +217,13 @@ int spbstf_(char *uplo, integer *n, integer *kd, real *ab, integer *ldab, intege
     {
         i__1 = -(*info);
         xerbla_("SPBSTF", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Computing MAX */
@@ -334,9 +342,11 @@ int spbstf_(char *uplo, integer *n, integer *kd, real *ab, integer *ldab, intege
             /* L40: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 L50:
     *info = j;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SPBSTF */
 }

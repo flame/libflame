@@ -206,6 +206,12 @@ IPIV(i) = i indicates a row interchange was not */
 /* Subroutine */
 int zgtrfs_(char *trans, integer *n, integer *nrhs, doublecomplex *dl, doublecomplex *d__, doublecomplex *du, doublecomplex *dlf, doublecomplex *df, doublecomplex *duf, doublecomplex *du2, integer *ipiv, doublecomplex *b, integer *ldb, doublecomplex *x, integer *ldx, doublereal *ferr, doublereal *berr, doublecomplex *work, doublereal *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zgtrfs inputs: trans %c, n %d, nrhs %d, ldb %d, ldx %d, ipiv %d",*trans, *n, *nrhs, *ldb, *ldx, *ipiv);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, x_dim1, x_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7, i__8, i__9;
     doublereal d__1, d__2, d__3, d__4, d__5, d__6, d__7, d__8, d__9, d__10, d__11, d__12, d__13, d__14;
@@ -305,6 +311,7 @@ int zgtrfs_(char *trans, integer *n, integer *nrhs, doublecomplex *dl, doublecom
     {
         i__1 = -(*info);
         xerbla_("ZGTRFS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -319,6 +326,7 @@ int zgtrfs_(char *trans, integer *n, integer *nrhs, doublecomplex *dl, doublecom
             berr[j] = 0.;
             /* L10: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (notran)
@@ -350,7 +358,7 @@ L20: /* Loop until stopping criterion is satisfied. */
         /* where op(A) = A, A**T, or A**H, depending on TRANS. */
         zcopy_(n, &b[j * b_dim1 + 1], &c__1, &work[1], &c__1);
         zlagtm_(trans, n, &c__1, &c_b18, &dl[1], &d__[1], &du[1], &x[j * x_dim1 + 1], ldx, &c_b19, &work[1], n);
-        /* Compute f2c_abs(op(A))*f2c_abs(x) + f2c_abs(b) for use in the backward */
+        /* Compute f2c_dabs(op(A))*f2c_dabs(x) + f2c_dabs(b) for use in the backward */
         /* error bound. */
         if (notran)
         {
@@ -358,14 +366,14 @@ L20: /* Loop until stopping criterion is satisfied. */
             {
                 i__2 = j * b_dim1 + 1;
                 i__3 = j * x_dim1 + 1;
-                rwork[1] = (d__1 = b[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&b[ j * b_dim1 + 1]), f2c_abs(d__2)) + ((d__3 = d__[1].r, f2c_abs( d__3)) + (d__4 = d_imag(&d__[1]), f2c_abs(d__4))) * (( d__5 = x[i__3].r, f2c_abs(d__5)) + (d__6 = d_imag(&x[j * x_dim1 + 1]), f2c_abs(d__6)));
+                rwork[1] = (d__1 = b[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag(&b[ j * b_dim1 + 1]), f2c_dabs(d__2)) + ((d__3 = d__[1].r, f2c_dabs( d__3)) + (d__4 = d_imag(&d__[1]), f2c_dabs(d__4))) * (( d__5 = x[i__3].r, f2c_dabs(d__5)) + (d__6 = d_imag(&x[j * x_dim1 + 1]), f2c_dabs(d__6)));
             }
             else
             {
                 i__2 = j * b_dim1 + 1;
                 i__3 = j * x_dim1 + 1;
                 i__4 = j * x_dim1 + 2;
-                rwork[1] = (d__1 = b[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&b[ j * b_dim1 + 1]), f2c_abs(d__2)) + ((d__3 = d__[1].r, f2c_abs( d__3)) + (d__4 = d_imag(&d__[1]), f2c_abs(d__4))) * (( d__5 = x[i__3].r, f2c_abs(d__5)) + (d__6 = d_imag(&x[j * x_dim1 + 1]), f2c_abs(d__6))) + ((d__7 = du[1].r, f2c_abs( d__7)) + (d__8 = d_imag(&du[1]), f2c_abs(d__8))) * ((d__9 = x[i__4].r, f2c_abs(d__9)) + (d__10 = d_imag(&x[j * x_dim1 + 2]), f2c_abs(d__10)));
+                rwork[1] = (d__1 = b[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag(&b[ j * b_dim1 + 1]), f2c_dabs(d__2)) + ((d__3 = d__[1].r, f2c_dabs( d__3)) + (d__4 = d_imag(&d__[1]), f2c_dabs(d__4))) * (( d__5 = x[i__3].r, f2c_dabs(d__5)) + (d__6 = d_imag(&x[j * x_dim1 + 1]), f2c_dabs(d__6))) + ((d__7 = du[1].r, f2c_dabs( d__7)) + (d__8 = d_imag(&du[1]), f2c_dabs(d__8))) * ((d__9 = x[i__4].r, f2c_dabs(d__9)) + (d__10 = d_imag(&x[j * x_dim1 + 2]), f2c_dabs(d__10)));
                 i__2 = *n - 1;
                 for (i__ = 2;
                         i__ <= i__2;
@@ -378,7 +386,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                     i__7 = i__ + j * x_dim1;
                     i__8 = i__;
                     i__9 = i__ + 1 + j * x_dim1;
-                    rwork[i__] = (d__1 = b[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&b[i__ + j * b_dim1]), f2c_abs(d__2)) + ((d__3 = dl[i__4].r, f2c_abs(d__3)) + (d__4 = d_imag(&dl[i__ - 1]), f2c_abs(d__4))) * ((d__5 = x[i__5].r, f2c_abs(d__5) ) + (d__6 = d_imag(&x[i__ - 1 + j * x_dim1]), f2c_abs( d__6))) + ((d__7 = d__[i__6].r, f2c_abs(d__7)) + ( d__8 = d_imag(&d__[i__]), f2c_abs(d__8))) * ((d__9 = x[i__7].r, f2c_abs(d__9)) + (d__10 = d_imag(&x[i__ + j * x_dim1]), f2c_abs(d__10))) + ((d__11 = du[i__8].r, f2c_abs(d__11)) + (d__12 = d_imag(&du[i__]), f2c_abs( d__12))) * ((d__13 = x[i__9].r, f2c_abs(d__13)) + ( d__14 = d_imag(&x[i__ + 1 + j * x_dim1]), f2c_abs( d__14)));
+                    rwork[i__] = (d__1 = b[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&b[i__ + j * b_dim1]), f2c_dabs(d__2)) + ((d__3 = dl[i__4].r, f2c_dabs(d__3)) + (d__4 = d_imag(&dl[i__ - 1]), f2c_dabs(d__4))) * ((d__5 = x[i__5].r, f2c_dabs(d__5) ) + (d__6 = d_imag(&x[i__ - 1 + j * x_dim1]), f2c_dabs( d__6))) + ((d__7 = d__[i__6].r, f2c_dabs(d__7)) + ( d__8 = d_imag(&d__[i__]), f2c_dabs(d__8))) * ((d__9 = x[i__7].r, f2c_dabs(d__9)) + (d__10 = d_imag(&x[i__ + j * x_dim1]), f2c_dabs(d__10))) + ((d__11 = du[i__8].r, f2c_dabs(d__11)) + (d__12 = d_imag(&du[i__]), f2c_dabs( d__12))) * ((d__13 = x[i__9].r, f2c_dabs(d__13)) + ( d__14 = d_imag(&x[i__ + 1 + j * x_dim1]), f2c_dabs( d__14)));
                     /* L30: */
                 }
                 i__2 = *n + j * b_dim1;
@@ -386,7 +394,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 i__4 = *n - 1 + j * x_dim1;
                 i__5 = *n;
                 i__6 = *n + j * x_dim1;
-                rwork[*n] = (d__1 = b[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&b[ *n + j * b_dim1]), f2c_abs(d__2)) + ((d__3 = dl[i__3].r, f2c_abs(d__3)) + (d__4 = d_imag(&dl[*n - 1]), f2c_abs(d__4))) * ((d__5 = x[i__4].r, f2c_abs(d__5)) + (d__6 = d_imag(&x[* n - 1 + j * x_dim1]), f2c_abs(d__6))) + ((d__7 = d__[i__5] .r, f2c_abs(d__7)) + (d__8 = d_imag(&d__[*n]), f2c_abs(d__8))) * ((d__9 = x[i__6].r, f2c_abs(d__9)) + (d__10 = d_imag(& x[*n + j * x_dim1]), f2c_abs(d__10)));
+                rwork[*n] = (d__1 = b[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag(&b[ *n + j * b_dim1]), f2c_dabs(d__2)) + ((d__3 = dl[i__3].r, f2c_dabs(d__3)) + (d__4 = d_imag(&dl[*n - 1]), f2c_dabs(d__4))) * ((d__5 = x[i__4].r, f2c_dabs(d__5)) + (d__6 = d_imag(&x[* n - 1 + j * x_dim1]), f2c_dabs(d__6))) + ((d__7 = d__[i__5] .r, f2c_dabs(d__7)) + (d__8 = d_imag(&d__[*n]), f2c_dabs(d__8))) * ((d__9 = x[i__6].r, f2c_dabs(d__9)) + (d__10 = d_imag(& x[*n + j * x_dim1]), f2c_dabs(d__10)));
             }
         }
         else
@@ -395,14 +403,14 @@ L20: /* Loop until stopping criterion is satisfied. */
             {
                 i__2 = j * b_dim1 + 1;
                 i__3 = j * x_dim1 + 1;
-                rwork[1] = (d__1 = b[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&b[ j * b_dim1 + 1]), f2c_abs(d__2)) + ((d__3 = d__[1].r, f2c_abs( d__3)) + (d__4 = d_imag(&d__[1]), f2c_abs(d__4))) * (( d__5 = x[i__3].r, f2c_abs(d__5)) + (d__6 = d_imag(&x[j * x_dim1 + 1]), f2c_abs(d__6)));
+                rwork[1] = (d__1 = b[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag(&b[ j * b_dim1 + 1]), f2c_dabs(d__2)) + ((d__3 = d__[1].r, f2c_dabs( d__3)) + (d__4 = d_imag(&d__[1]), f2c_dabs(d__4))) * (( d__5 = x[i__3].r, f2c_dabs(d__5)) + (d__6 = d_imag(&x[j * x_dim1 + 1]), f2c_dabs(d__6)));
             }
             else
             {
                 i__2 = j * b_dim1 + 1;
                 i__3 = j * x_dim1 + 1;
                 i__4 = j * x_dim1 + 2;
-                rwork[1] = (d__1 = b[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&b[ j * b_dim1 + 1]), f2c_abs(d__2)) + ((d__3 = d__[1].r, f2c_abs( d__3)) + (d__4 = d_imag(&d__[1]), f2c_abs(d__4))) * (( d__5 = x[i__3].r, f2c_abs(d__5)) + (d__6 = d_imag(&x[j * x_dim1 + 1]), f2c_abs(d__6))) + ((d__7 = dl[1].r, f2c_abs( d__7)) + (d__8 = d_imag(&dl[1]), f2c_abs(d__8))) * ((d__9 = x[i__4].r, f2c_abs(d__9)) + (d__10 = d_imag(&x[j * x_dim1 + 2]), f2c_abs(d__10)));
+                rwork[1] = (d__1 = b[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag(&b[ j * b_dim1 + 1]), f2c_dabs(d__2)) + ((d__3 = d__[1].r, f2c_dabs( d__3)) + (d__4 = d_imag(&d__[1]), f2c_dabs(d__4))) * (( d__5 = x[i__3].r, f2c_dabs(d__5)) + (d__6 = d_imag(&x[j * x_dim1 + 1]), f2c_dabs(d__6))) + ((d__7 = dl[1].r, f2c_dabs( d__7)) + (d__8 = d_imag(&dl[1]), f2c_dabs(d__8))) * ((d__9 = x[i__4].r, f2c_dabs(d__9)) + (d__10 = d_imag(&x[j * x_dim1 + 2]), f2c_dabs(d__10)));
                 i__2 = *n - 1;
                 for (i__ = 2;
                         i__ <= i__2;
@@ -415,7 +423,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                     i__7 = i__ + j * x_dim1;
                     i__8 = i__;
                     i__9 = i__ + 1 + j * x_dim1;
-                    rwork[i__] = (d__1 = b[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&b[i__ + j * b_dim1]), f2c_abs(d__2)) + ((d__3 = du[i__4].r, f2c_abs(d__3)) + (d__4 = d_imag(&du[i__ - 1]), f2c_abs(d__4))) * ((d__5 = x[i__5].r, f2c_abs(d__5) ) + (d__6 = d_imag(&x[i__ - 1 + j * x_dim1]), f2c_abs( d__6))) + ((d__7 = d__[i__6].r, f2c_abs(d__7)) + ( d__8 = d_imag(&d__[i__]), f2c_abs(d__8))) * ((d__9 = x[i__7].r, f2c_abs(d__9)) + (d__10 = d_imag(&x[i__ + j * x_dim1]), f2c_abs(d__10))) + ((d__11 = dl[i__8].r, f2c_abs(d__11)) + (d__12 = d_imag(&dl[i__]), f2c_abs( d__12))) * ((d__13 = x[i__9].r, f2c_abs(d__13)) + ( d__14 = d_imag(&x[i__ + 1 + j * x_dim1]), f2c_abs( d__14)));
+                    rwork[i__] = (d__1 = b[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&b[i__ + j * b_dim1]), f2c_dabs(d__2)) + ((d__3 = du[i__4].r, f2c_dabs(d__3)) + (d__4 = d_imag(&du[i__ - 1]), f2c_dabs(d__4))) * ((d__5 = x[i__5].r, f2c_dabs(d__5) ) + (d__6 = d_imag(&x[i__ - 1 + j * x_dim1]), f2c_dabs( d__6))) + ((d__7 = d__[i__6].r, f2c_dabs(d__7)) + ( d__8 = d_imag(&d__[i__]), f2c_dabs(d__8))) * ((d__9 = x[i__7].r, f2c_dabs(d__9)) + (d__10 = d_imag(&x[i__ + j * x_dim1]), f2c_dabs(d__10))) + ((d__11 = dl[i__8].r, f2c_dabs(d__11)) + (d__12 = d_imag(&dl[i__]), f2c_dabs( d__12))) * ((d__13 = x[i__9].r, f2c_dabs(d__13)) + ( d__14 = d_imag(&x[i__ + 1 + j * x_dim1]), f2c_dabs( d__14)));
                     /* L40: */
                 }
                 i__2 = *n + j * b_dim1;
@@ -423,12 +431,12 @@ L20: /* Loop until stopping criterion is satisfied. */
                 i__4 = *n - 1 + j * x_dim1;
                 i__5 = *n;
                 i__6 = *n + j * x_dim1;
-                rwork[*n] = (d__1 = b[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&b[ *n + j * b_dim1]), f2c_abs(d__2)) + ((d__3 = du[i__3].r, f2c_abs(d__3)) + (d__4 = d_imag(&du[*n - 1]), f2c_abs(d__4))) * ((d__5 = x[i__4].r, f2c_abs(d__5)) + (d__6 = d_imag(&x[* n - 1 + j * x_dim1]), f2c_abs(d__6))) + ((d__7 = d__[i__5] .r, f2c_abs(d__7)) + (d__8 = d_imag(&d__[*n]), f2c_abs(d__8))) * ((d__9 = x[i__6].r, f2c_abs(d__9)) + (d__10 = d_imag(& x[*n + j * x_dim1]), f2c_abs(d__10)));
+                rwork[*n] = (d__1 = b[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag(&b[ *n + j * b_dim1]), f2c_dabs(d__2)) + ((d__3 = du[i__3].r, f2c_dabs(d__3)) + (d__4 = d_imag(&du[*n - 1]), f2c_dabs(d__4))) * ((d__5 = x[i__4].r, f2c_dabs(d__5)) + (d__6 = d_imag(&x[* n - 1 + j * x_dim1]), f2c_dabs(d__6))) + ((d__7 = d__[i__5] .r, f2c_dabs(d__7)) + (d__8 = d_imag(&d__[*n]), f2c_dabs(d__8))) * ((d__9 = x[i__6].r, f2c_dabs(d__9)) + (d__10 = d_imag(& x[*n + j * x_dim1]), f2c_dabs(d__10)));
             }
         }
         /* Compute componentwise relative backward error from formula */
-        /* max(i) ( f2c_abs(R(i)) / ( f2c_abs(op(A))*f2c_abs(X) + f2c_abs(B) )(i) ) */
-        /* where f2c_abs(Z) is the componentwise absolute value of the matrix */
+        /* max(i) ( f2c_dabs(R(i)) / ( f2c_dabs(op(A))*f2c_dabs(X) + f2c_dabs(B) )(i) ) */
+        /* where f2c_dabs(Z) is the componentwise absolute value of the matrix */
         /* or vector Z. If the i-th component of the denominator is less */
         /* than SAFE2, then SAFE1 is added to the i-th components of the */
         /* numerator and denominator before dividing. */
@@ -443,7 +451,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 /* Computing MAX */
                 i__3 = i__;
                 d__3 = s;
-                d__4 = ((d__1 = work[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&work[i__]), f2c_abs(d__2))) / rwork[i__]; // , expr subst
+                d__4 = ((d__1 = work[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&work[i__]), f2c_dabs(d__2))) / rwork[i__]; // , expr subst
                 s = max(d__3,d__4);
             }
             else
@@ -451,7 +459,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 /* Computing MAX */
                 i__3 = i__;
                 d__3 = s;
-                d__4 = ((d__1 = work[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&work[i__]), f2c_abs(d__2)) + safe1) / (rwork[i__] + safe1); // , expr subst
+                d__4 = ((d__1 = work[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&work[i__]), f2c_dabs(d__2)) + safe1) / (rwork[i__] + safe1); // , expr subst
                 s = max(d__3,d__4);
             }
             /* L50: */
@@ -473,21 +481,21 @@ L20: /* Loop until stopping criterion is satisfied. */
         }
         /* Bound error from formula */
         /* norm(X - XTRUE) / norm(X) .le. FERR = */
-        /* norm( f2c_abs(inv(op(A)))* */
-        /* ( f2c_abs(R) + NZ*EPS*( f2c_abs(op(A))*f2c_abs(X)+f2c_abs(B) ))) / norm(X) */
+        /* norm( f2c_dabs(inv(op(A)))* */
+        /* ( f2c_dabs(R) + NZ*EPS*( f2c_dabs(op(A))*f2c_dabs(X)+f2c_dabs(B) ))) / norm(X) */
         /* where */
         /* norm(Z) is the magnitude of the largest component of Z */
         /* inv(op(A)) is the inverse of op(A) */
-        /* f2c_abs(Z) is the componentwise absolute value of the matrix or */
+        /* f2c_dabs(Z) is the componentwise absolute value of the matrix or */
         /* vector Z */
         /* NZ is the maximum number of nonzeros in any row of A, plus 1 */
         /* EPS is machine epsilon */
-        /* The i-th component of f2c_abs(R)+NZ*EPS*(f2c_abs(op(A))*f2c_abs(X)+f2c_abs(B)) */
+        /* The i-th component of f2c_dabs(R)+NZ*EPS*(f2c_dabs(op(A))*f2c_dabs(X)+f2c_dabs(B)) */
         /* is incremented by SAFE1 if the i-th component of */
-        /* f2c_abs(op(A))*f2c_abs(X) + f2c_abs(B) is less than SAFE2. */
+        /* f2c_dabs(op(A))*f2c_dabs(X) + f2c_dabs(B) is less than SAFE2. */
         /* Use ZLACN2 to estimate the infinity-norm of the matrix */
         /* inv(op(A)) * diag(W), */
-        /* where W = f2c_abs(R) + NZ*EPS*( f2c_abs(op(A))*f2c_abs(X)+f2c_abs(B) ))) */
+        /* where W = f2c_dabs(R) + NZ*EPS*( f2c_dabs(op(A))*f2c_dabs(X)+f2c_dabs(B) ))) */
         i__2 = *n;
         for (i__ = 1;
                 i__ <= i__2;
@@ -496,12 +504,12 @@ L20: /* Loop until stopping criterion is satisfied. */
             if (rwork[i__] > safe2)
             {
                 i__3 = i__;
-                rwork[i__] = (d__1 = work[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&work[i__]), f2c_abs(d__2)) + nz * eps * rwork[i__] ;
+                rwork[i__] = (d__1 = work[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&work[i__]), f2c_dabs(d__2)) + nz * eps * rwork[i__] ;
             }
             else
             {
                 i__3 = i__;
-                rwork[i__] = (d__1 = work[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&work[i__]), f2c_abs(d__2)) + nz * eps * rwork[i__] + safe1;
+                rwork[i__] = (d__1 = work[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&work[i__]), f2c_dabs(d__2)) + nz * eps * rwork[i__] + safe1;
             }
             /* L60: */
         }
@@ -560,7 +568,7 @@ L70:
             /* Computing MAX */
             i__3 = i__ + j * x_dim1;
             d__3 = lstres;
-            d__4 = (d__1 = x[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&x[i__ + j * x_dim1]), f2c_abs(d__2)); // , expr subst
+            d__4 = (d__1 = x[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&x[i__ + j * x_dim1]), f2c_dabs(d__2)); // , expr subst
             lstres = max(d__3,d__4);
             /* L100: */
         }
@@ -570,6 +578,7 @@ L70:
         }
         /* L110: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZGTRFS */
 }

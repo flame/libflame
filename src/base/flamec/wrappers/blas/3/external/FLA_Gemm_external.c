@@ -13,12 +13,12 @@
 FLA_Error FLA_Gemm_external( FLA_Trans transa, FLA_Trans transb, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, FLA_Obj beta, FLA_Obj C )
 {
   FLA_Datatype datatype;
-  int          k_AB;
-  int          m_A, n_A;
-  int          m_C, n_C;
-  int          rs_A, cs_A;
-  int          rs_B, cs_B;
-  int          rs_C, cs_C;
+  integer          k_AB;
+  integer          m_A, n_A;
+  integer          m_C, n_C;
+  integer          rs_A, cs_A;
+  integer          rs_B, cs_B;
+  integer          rs_C, cs_C;
   trans1_t      blis_transa;
   trans1_t      blis_transb;
 

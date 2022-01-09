@@ -112,6 +112,16 @@ for 1 <= j <= N, column j of the */
 /* Subroutine */
 int cgesc2_(integer *n, complex *a, integer *lda, complex * rhs, integer *ipiv, integer *jpiv, real *scale)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgesc2 inputs: n %lld, lda %lld, ipiv %lld, jpiv %lld",*n, *lda, *ipiv, *jpiv);
+#else 
+    snprintf(buffer, 256,"cgesc2 inputs: n %d, lda %d, ipiv %d, jpiv %d",*n, *lda, *ipiv, *jpiv);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     real r__1;
@@ -243,6 +253,7 @@ int cgesc2_(integer *n, complex *a, integer *lda, complex * rhs, integer *ipiv, 
     /* Apply permutations JPIV to the solution (RHS) */
     i__1 = *n - 1;
     claswp_(&c__1, &rhs[1], lda, &c__1, &i__1, &jpiv[1], &c_n1);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGESC2 */
 }

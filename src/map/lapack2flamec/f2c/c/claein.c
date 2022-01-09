@@ -142,6 +142,16 @@ V is set to the */
 /* Subroutine */
 int claein_(logical *rightv, logical *noinit, integer *n, complex *h__, integer *ldh, complex *w, complex *v, complex *b, integer *ldb, real *rwork, real *eps3, real *smlnum, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"claein inputs: n %lld, ldh %lld, ldb %lld",*n, *ldh, *ldb);
+#else 
+    snprintf(buffer, 256,"claein inputs: n %d, ldh %d, ldb %d",*n, *ldh, *ldb);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, h_dim1, h_offset, i__1, i__2, i__3, i__4, i__5;
     real r__1, r__2, r__3, r__4;
@@ -271,7 +281,7 @@ int claein_(logical *rightv, logical *noinit, integer *n, complex *h__, integer 
             if ((r__1 = b[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&b[i__ + i__ * b_dim1]), f2c_abs(r__2)) < (r__3 = ei.r, f2c_abs(r__3)) + (r__4 = r_imag(&ei), f2c_abs(r__4)))
             {
                 /* Interchange rows and eliminate. */
-                cladiv_(&q__1, &b[i__ + i__ * b_dim1], &ei);
+                cladiv_f2c_(&q__1, &b[i__ + i__ * b_dim1], &ei);
                 x.r = q__1.r;
                 x.i = q__1.i; // , expr subst
                 i__2 = i__ + i__ * b_dim1;
@@ -309,7 +319,7 @@ int claein_(logical *rightv, logical *noinit, integer *n, complex *h__, integer 
                     b[i__3].r = *eps3;
                     b[i__3].i = 0.f; // , expr subst
                 }
-                cladiv_(&q__1, &ei, &b[i__ + i__ * b_dim1]);
+                cladiv_f2c_(&q__1, &ei, &b[i__ + i__ * b_dim1]);
                 x.r = q__1.r;
                 x.i = q__1.i; // , expr subst
                 if (x.r != 0.f || x.i != 0.f)
@@ -358,7 +368,7 @@ int claein_(logical *rightv, logical *noinit, integer *n, complex *h__, integer 
             if ((r__1 = b[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&b[j + j * b_dim1]), f2c_abs(r__2)) < (r__3 = ej.r, f2c_abs(r__3)) + (r__4 = r_imag(&ej), f2c_abs(r__4)))
             {
                 /* Interchange columns and eliminate. */
-                cladiv_(&q__1, &b[j + j * b_dim1], &ej);
+                cladiv_f2c_(&q__1, &b[j + j * b_dim1], &ej);
                 x.r = q__1.r;
                 x.i = q__1.i; // , expr subst
                 i__1 = j + j * b_dim1;
@@ -396,7 +406,7 @@ int claein_(logical *rightv, logical *noinit, integer *n, complex *h__, integer 
                     b[i__2].r = *eps3;
                     b[i__2].i = 0.f; // , expr subst
                 }
-                cladiv_(&q__1, &ej, &b[j + j * b_dim1]);
+                cladiv_f2c_(&q__1, &ej, &b[j + j * b_dim1]);
                 x.r = q__1.r;
                 x.i = q__1.i; // , expr subst
                 if (x.r != 0.f || x.i != 0.f)
@@ -477,6 +487,7 @@ L120: /* Normalize eigenvector. */
     i__1 = i__;
     r__3 = 1.f / ((r__1 = v[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&v[i__]), f2c_abs(r__2)));
     csscal_(n, &r__3, &v[1], &c__1);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLAEIN */
 }

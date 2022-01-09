@@ -256,6 +256,12 @@ these eigenvalues are flagged by a */
 /* Subroutine */
 int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *il, integer *iu, real *abstol, real *d__, real *e, integer *m, integer *nsplit, real *w, integer *iblock, integer * isplit, real *work, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"sstebz inputs: range %c, order %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS "",*range, *order, *n, *il, *iu);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3;
     real r__1, r__2, r__3, r__4, r__5;
@@ -388,6 +394,7 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
     {
         i__1 = -(*info);
         xerbla_("SSTEBZ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Initialize error flags */
@@ -398,6 +405,7 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
     *m = 0;
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Simplifications: */
@@ -431,6 +439,7 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
             iblock[1] = 1;
             *m = 1;
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Compute Splitting Points */
@@ -547,6 +556,7 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
         if (nwl < 0 || nwl >= *n || nwu < 1 || nwu > *n)
         {
             *info = 4;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -889,6 +899,7 @@ L70:
     {
         *info += 2;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SSTEBZ */
 }

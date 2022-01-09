@@ -27,7 +27,7 @@
 	float              temp1; \
 	float              temp2; \
 	float              temp3; \
-	int                i; \
+	integer                i; \
 \
 	for ( i = 0; i < m_A; ++i ) \
 	{ \
@@ -68,7 +68,7 @@
 	scomplex           temp1; \
 	scomplex           temp2; \
 	scomplex           temp3; \
-	int                i; \
+	integer                i; \
 \
 	for ( i = 0; i < m_A; ++i ) \
 	{ \
@@ -115,7 +115,7 @@
 	double             temp1; \
 	double             temp2; \
 	double             temp3; \
-	int                i; \
+	integer                i; \
 \
 	for ( i = 0; i < m_A; ++i ) \
 	{ \
@@ -156,7 +156,7 @@
 	dcomplex           temp1; \
 	dcomplex           temp2; \
 	dcomplex           temp3; \
-	int                i; \
+	integer                i; \
 \
 	for ( i = 0; i < m_A; ++i ) \
 	{ \

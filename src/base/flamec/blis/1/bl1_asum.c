@@ -10,7 +10,7 @@
 
 #include "blis1.h"
 
-void bl1_sasum( int n, float* x, int incx, float* norm )
+void bl1_sasum( integer n, float* x, integer incx, float* norm )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	*norm = cblas_sasum( n,
@@ -21,7 +21,7 @@ void bl1_sasum( int n, float* x, int incx, float* norm )
 #endif
 }
 
-void bl1_dasum( int n, double* x, int incx, double* norm )
+void bl1_dasum( integer n, double* x, integer incx, double* norm )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	*norm = cblas_dasum( n,
@@ -32,7 +32,7 @@ void bl1_dasum( int n, double* x, int incx, double* norm )
 #endif
 }
 
-void bl1_casum( int n, scomplex* x, int incx, float* norm )
+void bl1_casum( integer n, scomplex* x, integer incx, float* norm )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	*norm = cblas_scasum( n,
@@ -43,7 +43,7 @@ void bl1_casum( int n, scomplex* x, int incx, float* norm )
 #endif
 }
 
-void bl1_zasum( int n, dcomplex* x, int incx, double* norm )
+void bl1_zasum( integer n, dcomplex* x, integer incx, double* norm )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	*norm = cblas_dzasum( n,

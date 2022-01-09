@@ -1,9 +1,9 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
-int cgelq2_check(int *m, int *n, scomplex *a, int *lda, scomplex *tau, scomplex *work, int *info)
+int cgelq2_check(integer *m, integer *n, scomplex *a, integer *lda, scomplex *tau, scomplex *work, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

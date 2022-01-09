@@ -39,16 +39,17 @@
 #define LAPACK_trsyl(prefix)                                            \
   int F77_ ## prefix ## trsyl( char* transa,                            \
                                char* transb,                            \
-                               int* sgn,                                \
-                               int* m,                                  \
-                               int* n,                                  \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_B, int* ldim_B, \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_C, int* ldim_C, \
+                               integer* sgn,                                \
+                               integer* m,                                  \
+                               integer* n,                                  \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_B, integer* ldim_B, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_C, integer* ldim_C, \
                                PREFIX2LAPACK_REALDEF(prefix)* scale,          \
-                               int* info )
+                               integer* info )
 
 #define LAPACK_trsyl_body(prefix, srname)                       \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                 \
   FLA_Datatype datatype       =  PREFIX2FLAME_DATATYPE(prefix); \
   FLA_Datatype datatype_scale =  PREFIX2FLAME_REALTYPE(prefix); \
   FLA_Trans    transa_fla;                                      \
@@ -93,6 +94,7 @@
   if ( e_val != FLA_SUCCESS ) *info = 1;                                \
   else                        *info = 0;                                \
                                                                         \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  	      \
   return 0;
 
 

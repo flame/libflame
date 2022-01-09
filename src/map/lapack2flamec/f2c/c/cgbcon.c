@@ -138,6 +138,16 @@ for 1 <= i <= N, row i of the matrix was */
 /* Subroutine */
 int cgbcon_(char *norm, integer *n, integer *kl, integer *ku, complex *ab, integer *ldab, integer *ipiv, real *anorm, real *rcond, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+   snprintf(buffer, 256,"cgbcon inputs: norm %c, n %lld, kl %lld, ku %lld, ldab %lld, ipiv %lld",*norm, *n, *kl, *ku, *ldab, *ipiv);
+#else 
+   snprintf(buffer, 256,"cgbcon inputs: norm %c, n %d, kl %d, ku %d, ldab %d, ipiv %d",*norm, *n, *kl, *ku, *ldab, *ipiv);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2, i__3;
     real r__1, r__2;
@@ -233,6 +243,7 @@ int cgbcon_(char *norm, integer *n, integer *kl, integer *ku, complex *ab, integ
     {
         i__1 = -(*info);
         xerbla_("CGBCON", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -240,10 +251,12 @@ int cgbcon_(char *norm, integer *n, integer *kl, integer *ku, complex *ab, integ
     if (*n == 0)
     {
         *rcond = 1.f;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*anorm == 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     smlnum = slamch_("Safe minimum");
@@ -364,6 +377,7 @@ L10:
         *rcond = 1.f / ainvnm / *anorm;
     }
 L40:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGBCON */
 }

@@ -133,6 +133,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int ctzrqf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctzrqf inputs: m %lld, n %lld, lda %lld",*m, *n, *lda);
+#else 
+    snprintf(buffer, 256,"ctzrqf inputs: m %d, n %d, lda %d",*m, *n, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     complex q__1, q__2;
@@ -187,11 +197,13 @@ int ctzrqf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, inte
     {
         i__1 = -(*info);
         xerbla_("CTZRQF", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Perform the factorization. */
     if (*m == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*m == *n)
@@ -267,6 +279,7 @@ int ctzrqf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, inte
             /* L20: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTZRQF */
 }

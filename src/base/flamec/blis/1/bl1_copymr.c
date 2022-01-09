@@ -10,16 +10,16 @@
 
 #include "blis1.h"
 
-void bl1_scopymr( uplo1_t uplo, int m, int n, float* a, int a_rs, int a_cs, float* b, int b_rs, int b_cs )
+void bl1_scopymr( uplo1_t uplo, integer m, integer n, float* a, integer a_rs, integer a_cs, float* b, integer b_rs, integer b_cs )
 {
 	float*    a_begin;
 	float*    b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -73,16 +73,16 @@ void bl1_scopymr( uplo1_t uplo, int m, int n, float* a, int a_rs, int a_cs, floa
 	}
 }
 
-void bl1_dcopymr( uplo1_t uplo, int m, int n, double* a, int a_rs, int a_cs, double* b, int b_rs, int b_cs )
+void bl1_dcopymr( uplo1_t uplo, integer m, integer n, double* a, integer a_rs, integer a_cs, double* b, integer b_rs, integer b_cs )
 {
 	double*   a_begin;
 	double*   b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -136,16 +136,16 @@ void bl1_dcopymr( uplo1_t uplo, int m, int n, double* a, int a_rs, int a_cs, dou
 	}
 }
 
-void bl1_ccopymr( uplo1_t uplo, int m, int n, scomplex* a, int a_rs, int a_cs, scomplex* b, int b_rs, int b_cs )
+void bl1_ccopymr( uplo1_t uplo, integer m, integer n, scomplex* a, integer a_rs, integer a_cs, scomplex* b, integer b_rs, integer b_cs )
 {
 	scomplex* a_begin;
 	scomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -199,16 +199,16 @@ void bl1_ccopymr( uplo1_t uplo, int m, int n, scomplex* a, int a_rs, int a_cs, s
 	}
 }
 
-void bl1_zcopymr( uplo1_t uplo, int m, int n, dcomplex* a, int a_rs, int a_cs, dcomplex* b, int b_rs, int b_cs )
+void bl1_zcopymr( uplo1_t uplo, integer m, integer n, dcomplex* a, integer a_rs, integer a_cs, dcomplex* b, integer b_rs, integer b_cs )
 {
 	dcomplex* a_begin;
 	dcomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -265,16 +265,16 @@ void bl1_zcopymr( uplo1_t uplo, int m, int n, dcomplex* a, int a_rs, int a_cs, d
 // --- Mixed-datatype and general stride copy routines---------------
 
 // ss
-void bl1_sscopymr( uplo1_t uplo, int m, int n, float* a, int a_rs, int a_cs, float* b, int b_rs, int b_cs )
+void bl1_sscopymr( uplo1_t uplo, integer m, integer n, float* a, integer a_rs, integer a_cs, float* b, integer b_rs, integer b_cs )
 {
 	float*    a_begin;
 	float*    b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -331,16 +331,16 @@ void bl1_sscopymr( uplo1_t uplo, int m, int n, float* a, int a_rs, int a_cs, flo
 }
 
 // sd ds
-void bl1_sdcopymr( uplo1_t uplo, int m, int n, float* a, int a_rs, int a_cs, double* b, int b_rs, int b_cs )
+void bl1_sdcopymr( uplo1_t uplo, integer m, integer n, float* a, integer a_rs, integer a_cs, double* b, integer b_rs, integer b_cs )
 {
 	float*    a_begin;
 	double*   b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -395,16 +395,16 @@ void bl1_sdcopymr( uplo1_t uplo, int m, int n, float* a, int a_rs, int a_cs, dou
 		}
 	}
 }
-void bl1_dscopymr( uplo1_t uplo, int m, int n, double* a, int a_rs, int a_cs, float* b, int b_rs, int b_cs )
+void bl1_dscopymr( uplo1_t uplo, integer m, integer n, double* a, integer a_rs, integer a_cs, float* b, integer b_rs, integer b_cs )
 {
 	double*   a_begin;
 	float*    b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -461,16 +461,16 @@ void bl1_dscopymr( uplo1_t uplo, int m, int n, double* a, int a_rs, int a_cs, fl
 }
 
 // sc cs
-void bl1_sccopymr( uplo1_t uplo, int m, int n, float* a, int a_rs, int a_cs, scomplex* b, int b_rs, int b_cs )
+void bl1_sccopymr( uplo1_t uplo, integer m, integer n, float* a, integer a_rs, integer a_cs, scomplex* b, integer b_rs, integer b_cs )
 {
 	float*    a_begin;
 	scomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -525,16 +525,16 @@ void bl1_sccopymr( uplo1_t uplo, int m, int n, float* a, int a_rs, int a_cs, sco
 		}
 	}
 }
-void bl1_cscopymr( uplo1_t uplo, int m, int n, scomplex* a, int a_rs, int a_cs, float* b, int b_rs, int b_cs )
+void bl1_cscopymr( uplo1_t uplo, integer m, integer n, scomplex* a, integer a_rs, integer a_cs, float* b, integer b_rs, integer b_cs )
 {
 	scomplex* a_begin;
 	float*    b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -591,16 +591,16 @@ void bl1_cscopymr( uplo1_t uplo, int m, int n, scomplex* a, int a_rs, int a_cs, 
 }
 
 // sz zs
-void bl1_szcopymr( uplo1_t uplo, int m, int n, float* a, int a_rs, int a_cs, dcomplex* b, int b_rs, int b_cs )
+void bl1_szcopymr( uplo1_t uplo, integer m, integer n, float* a, integer a_rs, integer a_cs, dcomplex* b, integer b_rs, integer b_cs )
 {
 	float*    a_begin;
 	dcomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -655,16 +655,16 @@ void bl1_szcopymr( uplo1_t uplo, int m, int n, float* a, int a_rs, int a_cs, dco
 		}
 	}
 }
-void bl1_zscopymr( uplo1_t uplo, int m, int n, dcomplex* a, int a_rs, int a_cs, float* b, int b_rs, int b_cs )
+void bl1_zscopymr( uplo1_t uplo, integer m, integer n, dcomplex* a, integer a_rs, integer a_cs, float* b, integer b_rs, integer b_cs )
 {
 	dcomplex* a_begin;
 	float*    b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -721,16 +721,16 @@ void bl1_zscopymr( uplo1_t uplo, int m, int n, dcomplex* a, int a_rs, int a_cs, 
 }
 
 // dd
-void bl1_ddcopymr( uplo1_t uplo, int m, int n, double* a, int a_rs, int a_cs, double* b, int b_rs, int b_cs )
+void bl1_ddcopymr( uplo1_t uplo, integer m, integer n, double* a, integer a_rs, integer a_cs, double* b, integer b_rs, integer b_cs )
 {
 	double*   a_begin;
 	double*   b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -787,16 +787,16 @@ void bl1_ddcopymr( uplo1_t uplo, int m, int n, double* a, int a_rs, int a_cs, do
 }
 
 // dc cd
-void bl1_dccopymr( uplo1_t uplo, int m, int n, double* a, int a_rs, int a_cs, scomplex* b, int b_rs, int b_cs )
+void bl1_dccopymr( uplo1_t uplo, integer m, integer n, double* a, integer a_rs, integer a_cs, scomplex* b, integer b_rs, integer b_cs )
 {
 	double*   a_begin;
 	scomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -851,16 +851,16 @@ void bl1_dccopymr( uplo1_t uplo, int m, int n, double* a, int a_rs, int a_cs, sc
 		}
 	}
 }
-void bl1_cdcopymr( uplo1_t uplo, int m, int n, scomplex* a, int a_rs, int a_cs, double* b, int b_rs, int b_cs )
+void bl1_cdcopymr( uplo1_t uplo, integer m, integer n, scomplex* a, integer a_rs, integer a_cs, double* b, integer b_rs, integer b_cs )
 {
 	scomplex* a_begin;
 	double*   b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -917,16 +917,16 @@ void bl1_cdcopymr( uplo1_t uplo, int m, int n, scomplex* a, int a_rs, int a_cs, 
 }
 
 // dz zd
-void bl1_dzcopymr( uplo1_t uplo, int m, int n, double* a, int a_rs, int a_cs, dcomplex* b, int b_rs, int b_cs )
+void bl1_dzcopymr( uplo1_t uplo, integer m, integer n, double* a, integer a_rs, integer a_cs, dcomplex* b, integer b_rs, integer b_cs )
 {
 	double*   a_begin;
 	dcomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -981,16 +981,16 @@ void bl1_dzcopymr( uplo1_t uplo, int m, int n, double* a, int a_rs, int a_cs, dc
 		}
 	}
 }
-void bl1_zdcopymr( uplo1_t uplo, int m, int n, dcomplex* a, int a_rs, int a_cs, double* b, int b_rs, int b_cs )
+void bl1_zdcopymr( uplo1_t uplo, integer m, integer n, dcomplex* a, integer a_rs, integer a_cs, double* b, integer b_rs, integer b_cs )
 {
 	dcomplex* a_begin;
 	double*   b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -1047,16 +1047,16 @@ void bl1_zdcopymr( uplo1_t uplo, int m, int n, dcomplex* a, int a_rs, int a_cs, 
 }
 
 // cc
-void bl1_cccopymr( uplo1_t uplo, int m, int n, scomplex* a, int a_rs, int a_cs, scomplex* b, int b_rs, int b_cs )
+void bl1_cccopymr( uplo1_t uplo, integer m, integer n, scomplex* a, integer a_rs, integer a_cs, scomplex* b, integer b_rs, integer b_cs )
 {
 	scomplex* a_begin;
 	scomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -1113,16 +1113,16 @@ void bl1_cccopymr( uplo1_t uplo, int m, int n, scomplex* a, int a_rs, int a_cs, 
 }
 
 // cz zc
-void bl1_czcopymr( uplo1_t uplo, int m, int n, scomplex* a, int a_rs, int a_cs, dcomplex* b, int b_rs, int b_cs )
+void bl1_czcopymr( uplo1_t uplo, integer m, integer n, scomplex* a, integer a_rs, integer a_cs, dcomplex* b, integer b_rs, integer b_cs )
 {
 	scomplex* a_begin;
 	dcomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -1177,16 +1177,16 @@ void bl1_czcopymr( uplo1_t uplo, int m, int n, scomplex* a, int a_rs, int a_cs, 
 		}
 	}
 }
-void bl1_zccopymr( uplo1_t uplo, int m, int n, dcomplex* a, int a_rs, int a_cs, scomplex* b, int b_rs, int b_cs )
+void bl1_zccopymr( uplo1_t uplo, integer m, integer n, dcomplex* a, integer a_rs, integer a_cs, scomplex* b, integer b_rs, integer b_cs )
 {
 	dcomplex* a_begin;
 	scomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;
@@ -1243,16 +1243,16 @@ void bl1_zccopymr( uplo1_t uplo, int m, int n, dcomplex* a, int a_rs, int a_cs, 
 }
 
 // zz
-void bl1_zzcopymr( uplo1_t uplo, int m, int n, dcomplex* a, int a_rs, int a_cs, dcomplex* b, int b_rs, int b_cs )
+void bl1_zzcopymr( uplo1_t uplo, integer m, integer n, dcomplex* a, integer a_rs, integer a_cs, dcomplex* b, integer b_rs, integer b_cs )
 {
 	dcomplex* a_begin;
 	dcomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem_max;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem_max;
+	integer       n_elem;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim2( m, n ) ) return;

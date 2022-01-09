@@ -1,15 +1,15 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h" /* Table of constant values */
-static int c__1 = 1;
-static int c_n1 = -1;
+static integer c__1 = 1;
+static integer c_n1 = -1;
 
-int sgeqrfp_check(int *m, int *n, float *a, int *lda, float *tau, float *work, int *lwork, int *info)
+int sgeqrfp_check(integer *m, integer *n, float *a, integer *lda, float *tau, float *work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
     /* Local variables */
-    int k, nb;
-    int lwkopt;
+    integer k, nb;
+    integer lwkopt;
     logical lquery;
 
     /* Parameter adjustments */

@@ -40,9 +40,9 @@
     /*      return the lapack patch version from the minor version */
 
     /*     .. Executable Statements .. */
-    /* Current version is 3.5.0 */
+    /* Current version is 3.9.0 */
     *vers_major__ = 3;
-    *vers_minor__ = 5;
+    *vers_minor__ = 9;
     *vers_patch__ = 0;
     /*  ===================================================================== */
 

@@ -52,17 +52,17 @@
 */
 
 #define LAPACK_gelsd_real(prefix)                                       \
-  int F77_ ## prefix ## gelsd( int* m,                                  \
-                               int* n,                                  \
-                               int* nrhs,                               \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_B, int* ldim_B, \
+  int F77_ ## prefix ## gelsd( integer* m,                                  \
+                               integer* n,                                  \
+                               integer* nrhs,                               \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_B, integer* ldim_B, \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_s,   \
                                PREFIX2LAPACK_REALDEF(prefix)* rcond,    \
-                               int* rank,                               \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, int* lwork, \
-                               int* iwork,                              \
-                               int* info )
+                               integer* rank,                               \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, integer* lwork, \
+                               integer* iwork,                              \
+                               integer* info )
 
 #define LAPACK_gelsd_real_body(prefix)                                  \
   F77_ ## prefix ## gelss( m, n, nrhs,                                  \
@@ -75,6 +75,7 @@
 
 LAPACK_gelsd_real(s)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                 	
     {
         LAPACK_RETURN_CHECK( sgelsd_check( m, n, nrhs,
                                            buff_A, ldim_A,
@@ -87,9 +88,11 @@ LAPACK_gelsd_real(s)
     {
         LAPACK_gelsd_real_body(s)
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
 }
 LAPACK_gelsd_real(d)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     {
         LAPACK_RETURN_CHECK( dgelsd_check( m, n, nrhs,
                                            buff_A, ldim_A,
@@ -102,21 +105,22 @@ LAPACK_gelsd_real(d)
     {
         LAPACK_gelsd_real_body(d)
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
 }
 
 #define LAPACK_gelsd_complex(prefix)                                    \
-  int F77_ ## prefix ## gelsd( int* m,                                  \
-                               int* n,                                  \
-                               int* nrhs,                               \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_B, int* ldim_B, \
+  int F77_ ## prefix ## gelsd( integer* m,                                  \
+                               integer* n,                                  \
+                               integer* nrhs,                               \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_B, integer* ldim_B, \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_s,   \
                                PREFIX2LAPACK_REALDEF(prefix)* rcond,    \
-                               int* rank,                               \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, int* lwork, \
+                               integer* rank,                               \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, integer* lwork, \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_r,   \
-                               int* iwork,                              \
-                               int* info )
+                               integer* iwork,                              \
+                               integer* info )
 
 #define LAPACK_gelsd_complex_body(prefix)                               \
   F77_ ## prefix ## gelss( m, n, nrhs,                                  \
@@ -129,6 +133,7 @@ LAPACK_gelsd_real(d)
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
 LAPACK_gelsd_complex(c)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     {
         LAPACK_RETURN_CHECK( cgelsd_check( m, n, nrhs,
                                            buff_A, ldim_A,
@@ -141,9 +146,11 @@ LAPACK_gelsd_complex(c)
     {
         LAPACK_gelsd_complex_body(c)
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
 }
 LAPACK_gelsd_complex(z)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     {
         LAPACK_RETURN_CHECK( zgelsd_check( m, n, nrhs,
                                            buff_A, ldim_A,
@@ -156,6 +163,7 @@ LAPACK_gelsd_complex(z)
     {
         LAPACK_gelsd_complex_body(z)
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
 }
 #endif
 

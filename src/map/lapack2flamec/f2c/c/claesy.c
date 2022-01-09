@@ -111,6 +111,7 @@ static integer c__2 = 2;
 /* Subroutine */
 int claesy_(complex *a, complex *b, complex *c__, complex * rt1, complex *rt2, complex *evscal, complex *cs1, complex *sn1)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* System generated locals */
     real r__1, r__2;
     complex q__1, q__2, q__3, q__4, q__5, q__6, q__7;
@@ -260,6 +261,7 @@ int claesy_(complex *a, complex *b, complex *c__, complex * rt1, complex *rt2, c
             evscal->r = 0.f, evscal->i = 0.f;
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLAESY */
 }

@@ -72,7 +72,7 @@
 /* > \param[in] X */
 /* > \verbatim */
 /* > X is COMPLEX*16 array, dimension at least */
-/* > ( 1 + ( N - 1 )*f2c_abs( INCX ) ). */
+/* > ( 1 + ( N - 1 )*f2c_dabs( INCX ) ). */
 /* > Before entry, the incremented array X must contain the N- */
 /* > element vector x. */
 /* > Unchanged on exit. */
@@ -120,6 +120,12 @@
 /* Subroutine */
 int zspr_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *x, integer *incx, doublecomplex *ap)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zspr inputs: uplo %c, n %d, incx %d",*uplo, *n, *incx);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3, i__4, i__5;
     doublecomplex z__1, z__2;
@@ -168,11 +174,13 @@ int zspr_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *x, intege
     if (info != 0)
     {
         xerbla_("ZSPR ", &info);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible. */
     if (*n == 0 || alpha->r == 0. && alpha->i == 0.)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Set the start point in X if the increment is not unity. */
@@ -415,6 +423,7 @@ int zspr_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *x, intege
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZSPR */
 }

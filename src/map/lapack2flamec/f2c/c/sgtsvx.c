@@ -283,6 +283,12 @@ IPIV(i) = i indicates */
 /* Subroutine */
 int sgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, real *dl, real *d__, real *du, real *dlf, real *df, real *duf, real *du2, integer *ipiv, real *b, integer *ldb, real *x, integer * ldx, real *rcond, real *ferr, real *berr, real *work, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"sgtsvx inputs: fact %c, trans %c, n %d, nrhs %d, ipiv %d, ldb %d, ldx %d",*fact, *trans, *n, *nrhs, *ipiv, *ldb, *ldx);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, x_dim1, x_offset, i__1;
     /* Local variables */
@@ -372,6 +378,7 @@ int sgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, real *dl, real 
     {
         i__1 = -(*info);
         xerbla_("SGTSVX", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (nofact)
@@ -390,6 +397,7 @@ int sgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, real *dl, real 
         if (*info > 0)
         {
             *rcond = 0.f;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -416,6 +424,7 @@ int sgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, real *dl, real 
     {
         *info = *n + 1;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SGTSVX */
 }

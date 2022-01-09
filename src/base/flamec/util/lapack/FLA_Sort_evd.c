@@ -106,25 +106,25 @@ FLA_Error FLA_Sort_evd( FLA_Direct direct, FLA_Obj l, FLA_Obj V )
 
 
 
-FLA_Error FLA_Sort_evd_f_ops( int       m_A,
-                              float*    l, int inc_l,
-                              float*    V, int rs_V, int cs_V )
+FLA_Error FLA_Sort_evd_f_ops( integer       m_A,
+                              float*    l, integer inc_l,
+                              float*    V, integer rs_V, integer cs_V )
 {
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Sort_evd_b_ops( int       m_A,
-                              float*    l, int inc_l,
-                              float*    V, int rs_V, int cs_V )
+FLA_Error FLA_Sort_evd_b_ops( integer       m_A,
+                              float*    l, integer inc_l,
+                              float*    V, integer rs_V, integer cs_V )
 {
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Sort_evd_f_opd( int       m_A,
-                              double*   l, int inc_l,
-                              double*   V, int rs_V, int cs_V )
+FLA_Error FLA_Sort_evd_f_opd( integer       m_A,
+                              double*   l, integer inc_l,
+                              double*   V, integer rs_V, integer cs_V )
 {
-	int    i, ii, j, k;
+	integer    i, ii, j, k;
 	double p;
 
 	for ( ii = 1; ii < m_A; ++ii )
@@ -156,11 +156,11 @@ FLA_Error FLA_Sort_evd_f_opd( int       m_A,
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Sort_evd_b_opd( int       m_A,
-                              double*   l, int inc_l,
-                              double*   V, int rs_V, int cs_V )
+FLA_Error FLA_Sort_evd_b_opd( integer       m_A,
+                              double*   l, integer inc_l,
+                              double*   V, integer rs_V, integer cs_V )
 {
-	int    i, ii, j, k;
+	integer    i, ii, j, k;
 	double p;
 
 	for ( ii = 1; ii < m_A; ++ii )
@@ -192,25 +192,25 @@ FLA_Error FLA_Sort_evd_b_opd( int       m_A,
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Sort_evd_f_opc( int       m_A,
-                              float*    l, int inc_l,
-                              scomplex* V, int rs_V, int cs_V )
+FLA_Error FLA_Sort_evd_f_opc( integer       m_A,
+                              float*    l, integer inc_l,
+                              scomplex* V, integer rs_V, integer cs_V )
 {
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Sort_evd_b_opc( int       m_A,
-                              float*    l, int inc_l,
-                              scomplex* V, int rs_V, int cs_V )
+FLA_Error FLA_Sort_evd_b_opc( integer       m_A,
+                              float*    l, integer inc_l,
+                              scomplex* V, integer rs_V, integer cs_V )
 {
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Sort_evd_f_opz( int       m_A,
-                              double*   l, int inc_l,
-                              dcomplex* V, int rs_V, int cs_V )
+FLA_Error FLA_Sort_evd_f_opz( integer       m_A,
+                              double*   l, integer inc_l,
+                              dcomplex* V, integer rs_V, integer cs_V )
 {
-	int    i, ii, j, k;
+	integer    i, ii, j, k;
 	double p;
 
 	for ( ii = 1; ii < m_A; ++ii )
@@ -242,11 +242,11 @@ FLA_Error FLA_Sort_evd_f_opz( int       m_A,
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Sort_evd_b_opz( int       m_A,
-                              double*   l, int inc_l,
-                              dcomplex* V, int rs_V, int cs_V )
+FLA_Error FLA_Sort_evd_b_opz( integer       m_A,
+                              double*   l, integer inc_l,
+                              dcomplex* V, integer rs_V, integer cs_V )
 {
-	int    i, ii, j, k;
+	integer    i, ii, j, k;
 	double p;
 
 	for ( ii = 1; ii < m_A; ++ii )

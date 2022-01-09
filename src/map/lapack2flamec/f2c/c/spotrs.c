@@ -101,6 +101,12 @@ static real c_b9 = 1.f;
 /* Subroutine */
 int spotrs_(char *uplo, integer *n, integer *nrhs, real *a, integer *lda, real *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"spotrs inputs: uplo %c, n %d, nrhs %d, lda %d, ldb %d",*uplo, *n, *nrhs, *lda, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */
@@ -163,11 +169,13 @@ int spotrs_(char *uplo, integer *n, integer *nrhs, real *a, integer *lda, real *
     {
         i__1 = -(*info);
         xerbla_("SPOTRS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0 || *nrhs == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (upper)
@@ -186,6 +194,7 @@ int spotrs_(char *uplo, integer *n, integer *nrhs, real *a, integer *lda, real *
         /* Solve L**T *X = B, overwriting B with X. */
         strsm_("Left", "Lower", "Transpose", "Non-unit", n, nrhs, &c_b9, &a[ a_offset], lda, &b[b_offset], ldb);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SPOTRS */
 }

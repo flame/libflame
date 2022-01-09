@@ -228,6 +228,16 @@ the routine */
 /* Subroutine */
 int cgegs_(char *jobvsl, char *jobvsr, integer *n, complex * a, integer *lda, complex *b, integer *ldb, complex *alpha, complex * beta, complex *vsl, integer *ldvsl, complex *vsr, integer *ldvsr, complex *work, integer *lwork, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgegs inputs: jobvsl %c, jobvsr %c, n %lld, lda %lld, ldb %lld, ldvsl %lld, ldvsr %lld, lwork %lld",*jobvsl, *jobvsr, *n, *lda, *ldb, *ldvsl, *ldvsr, *lwork);
+#else 
+    snprintf(buffer, 256,"cgegs inputs: jobvsl %c, jobvsr %c, n %d, lda %d, ldb %d, ldvsl %d, ldvsr %d, lwork %d",*jobvsl, *jobvsr, *n, *lda, *ldb, *ldvsl, *ldvsr, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, vsl_dim1, vsl_offset, vsr_dim1, vsr_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -393,15 +403,18 @@ int cgegs_(char *jobvsl, char *jobvsr, integer *n, complex * a, integer *lda, co
     {
         i__1 = -(*info);
         xerbla_("CGEGS ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants */
@@ -428,6 +441,7 @@ int cgegs_(char *jobvsl, char *jobvsr, integer *n, complex * a, integer *lda, co
         if (iinfo != 0)
         {
             *info = *n + 9;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -450,6 +464,7 @@ int cgegs_(char *jobvsl, char *jobvsr, integer *n, complex * a, integer *lda, co
         if (iinfo != 0)
         {
             *info = *n + 9;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -586,12 +601,14 @@ int cgegs_(char *jobvsl, char *jobvsr, integer *n, complex * a, integer *lda, co
         if (iinfo != 0)
         {
             *info = *n + 9;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         clascl_("G", &c_n1, &c_n1, &anrmto, &anrm, n, &c__1, &alpha[1], n, & iinfo);
         if (iinfo != 0)
         {
             *info = *n + 9;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -601,18 +618,21 @@ int cgegs_(char *jobvsl, char *jobvsr, integer *n, complex * a, integer *lda, co
         if (iinfo != 0)
         {
             *info = *n + 9;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         clascl_("G", &c_n1, &c_n1, &bnrmto, &bnrm, n, &c__1, &beta[1], n, & iinfo);
         if (iinfo != 0)
         {
             *info = *n + 9;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
 L10:
     work[1].r = (real) lwkopt;
     work[1].i = 0.f; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGEGS */
 }

@@ -1,0 +1,29 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.## 
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_blk_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_blk_var2.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_blk_var3.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_blk_var4.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_blk_var5.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_is_blk_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_id_blk_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_ic_blk_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_iz_blk_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_opt_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_opt_var2.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_opt_var3.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_opt_var4.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_opt_var5.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_unb_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_unb_var2.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_unb_var3.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_unb_var4.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_unb_var5.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_is_unblk_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_id_unblk_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_ic_unblk_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_iz_unblk_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_id_unblk_var2.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_LU_nopiv_vars.h
+	)

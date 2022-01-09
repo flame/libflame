@@ -175,6 +175,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int chprfs_(char *uplo, integer *n, integer *nrhs, complex * ap, complex *afp, integer *ipiv, complex *b, integer *ldb, complex *x, integer *ldx, real *ferr, real *berr, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"chprfs inputs: uplo %c, n %lld, nrhs %lld, ipiv %lld, ldb %lld, ldx %lld",*uplo, *n, *nrhs, *ipiv, *ldb, *ldx);
+#else 
+    snprintf(buffer, 256,"chprfs inputs: uplo %c, n %d, nrhs %d, ipiv %d, ldb %d, ldx %d",*uplo, *n, *nrhs, *ipiv, *ldb, *ldx);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, x_dim1, x_offset, i__1, i__2, i__3, i__4, i__5;
     real r__1, r__2, r__3, r__4;
@@ -271,6 +281,7 @@ int chprfs_(char *uplo, integer *n, integer *nrhs, complex * ap, complex *afp, i
     {
         i__1 = -(*info);
         xerbla_("CHPRFS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -285,6 +296,7 @@ int chprfs_(char *uplo, integer *n, integer *nrhs, complex * ap, complex *afp, i
             berr[j] = 0.f;
             /* L10: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* NZ = maximum number of nonzero elements in each row of A, plus 1 */
@@ -523,6 +535,7 @@ L100:
         }
         /* L140: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHPRFS */
 }

@@ -109,6 +109,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int clarfx_(char *side, integer *m, integer *n, complex *v, complex *tau, complex *c__, integer *ldc, complex *work)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clarfx inputs: side %c, m %lld, n %lld, ldc %lld",*side, *m, *n, *ldc);
+#else 
+    snprintf(buffer, 256,"clarfx inputs: side %c, m %d, n %d, ldc %d",*side, *m, *n, *ldc);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer c_dim1, c_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7, i__8, i__9, i__10, i__11;
     complex q__1, q__2, q__3, q__4, q__5, q__6, q__7, q__8, q__9, q__10, q__11, q__12, q__13, q__14, q__15, q__16, q__17, q__18, q__19;
@@ -149,6 +159,7 @@ int clarfx_(char *side, integer *m, integer *n, complex *v, complex *tau, comple
     /* Function Body */
     if (tau->r == 0.f && tau->i == 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (lsame_(side, "L"))
@@ -2636,6 +2647,7 @@ L390: /* Special code for 10 x 10 Householder */
         goto L410;
     }
 L410:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLARFX */
 }

@@ -13,8 +13,8 @@
 FLA_Error FLA_Random_matrix( FLA_Obj A )
 {
   FLA_Datatype datatype;
-  int          m_A, n_A;
-  int          rs_A, cs_A;
+  integer          m_A, n_A;
+  integer          rs_A, cs_A;
 
   if ( FLA_Check_error_level() >= FLA_MIN_ERROR_CHECKING )
     FLA_Random_matrix_check( A );

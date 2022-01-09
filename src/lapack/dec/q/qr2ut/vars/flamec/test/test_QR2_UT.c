@@ -19,14 +19,14 @@
 char* pc_str[N_PARAM_COMBOS] = { "" };
 
 void time_QR2_UT(
-               int param_combo, int type, int nrepeats, int m, int n,
+               integer param_combo, integer type, integer nrepeats, integer m, integer n,
                FLA_Obj A_flat, FLA_Obj A_flat_ref, FLA_Obj B_flat, FLA_Obj D_flat, FLA_Obj T_flat,
                double *dtime, double *diff, double *gflops );
 
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     datatype,
     nb_flash,
     m_input, n_input,

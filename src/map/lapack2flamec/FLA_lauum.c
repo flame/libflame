@@ -29,9 +29,9 @@
 
 #define LAPACK_lauum(prefix)                                            \
   int F77_ ## prefix ## lauum( char* uplo,                              \
-                               int* n,                                  \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
-                               int* info )
+                               integer* n,                                  \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
+                               integer* info )
 
 #define LAPACK_lauum_body(prefix)                               \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
@@ -103,9 +103,9 @@ LAPACK_lauum(z)
 
 #define LAPACK_lauu2(prefix)                                            \
   int F77_ ## prefix ## lauu2( char* uplo,                              \
-                               int* n,                                  \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
-                               int* info )
+                               integer* n,                                  \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
+                               integer* info )
 
 
 LAPACK_lauu2(s)

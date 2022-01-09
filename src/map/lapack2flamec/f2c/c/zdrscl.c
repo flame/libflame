@@ -50,7 +50,7 @@
 /* > \param[in,out] SX */
 /* > \verbatim */
 /* > SX is COMPLEX*16 array, dimension */
-/* > (1+(N-1)*f2c_abs(INCX)) */
+/* > (1+(N-1)*f2c_dabs(INCX)) */
 /* > The n-element vector x. */
 /* > \endverbatim */
 /* > */
@@ -102,11 +102,19 @@ int zdrscl_(integer *n, doublereal *sa, doublecomplex *sx, integer *incx)
     /* .. */
     /* .. Executable Statements .. */
     /* Quick return if possible */
+    /* Logging and tracing code */
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    #if AOCL_DTL_LOG_ENABLE
+      char buffer[256];
+      sprintf(buffer, "zdrscl inputs: n %d, incx %d \n", *n, *incx);
+      AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+    #endif
     /* Parameter adjustments */
     --sx;
     /* Function Body */
     if (*n <= 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine parameters */
@@ -119,14 +127,14 @@ int zdrscl_(integer *n, doublereal *sa, doublecomplex *sx, integer *incx)
 L10:
     cden1 = cden * smlnum;
     cnum1 = cnum / bignum;
-    if (f2c_abs(cden1) > f2c_abs(cnum) && cnum != 0.)
+    if (f2c_dabs(cden1) > f2c_dabs(cnum) && cnum != 0.)
     {
         /* Pre-multiply X by SMLNUM if CDEN is large compared to CNUM. */
         mul = smlnum;
         done = FALSE_;
         cden = cden1;
     }
-    else if (f2c_abs(cnum1) > f2c_abs(cden))
+    else if (f2c_dabs(cnum1) > f2c_dabs(cden))
     {
         /* Pre-multiply X by BIGNUM if CDEN is small compared to CNUM. */
         mul = bignum;
@@ -145,6 +153,7 @@ L10:
     {
         goto L10;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZDRSCL */
 }

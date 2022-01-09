@@ -1,14 +1,20 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
 
-int ztrtri_check(char *uplo, char *diag, int *n, dcomplex *a, int *lda, int *info)
+int ztrtri_check(char *uplo, char *diag, integer *n, dcomplex *a, integer *lda, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1, i__2;
+    integer a_dim1, a_offset, i__1, i__2;
 
     /* Local variables */
     logical upper;
     logical nounit;
+
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "ztrtri inputs: uplo %c, diag %c, n %d, lda %d\n", *uplo, *diag, *n, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
 
     /* Parameter adjustments */
     a_dim1 = *lda;

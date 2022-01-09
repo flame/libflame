@@ -18,14 +18,14 @@
 char* pc_str[N_PARAM_COMBOS] = { "lhfc", "lnfr" };
 
 void time_Chol(
-                int param_combo, int type, int nrepeats, int m, int n,
+                integer param_combo, integer type, integer nrepeats, integer m, integer n,
                 FLA_Obj A, FLA_Obj A_ref, FLA_Obj T, FLA_Obj t_ref, FLA_Obj B, FLA_Obj B_ref, FLA_Obj X, FLA_Obj X_ref, FLA_Obj W,
                 double *dtime, double *diff, double *gflops );
 
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     m_input, n_input,
     m, n,
     p_first, p_last, p_inc,

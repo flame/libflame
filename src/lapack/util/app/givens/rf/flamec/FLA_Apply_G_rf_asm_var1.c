@@ -31,9 +31,9 @@ FLA_Error FLA_Apply_G_rf_asm_var1( FLA_Obj G, FLA_Obj A )
 */
 {
 	FLA_Datatype datatype;
-	int          k_G, m_A, n_A;
-	int          rs_G, cs_G;
-	int          rs_A, cs_A;
+	integer          k_G, m_A, n_A;
+	integer          rs_G, cs_G;
+	integer          rs_A, cs_A;
 
 	datatype = FLA_Obj_datatype( A );
 
@@ -110,16 +110,16 @@ FLA_Error FLA_Apply_G_rf_asm_var1( FLA_Obj G, FLA_Obj A )
 }
 
 
-FLA_Error FLA_Apply_G_rf_ass_var1( int       k_G,
-                                   int       m_A,
-                                   int       n_A,
-                                   scomplex* buff_G, int rs_G, int cs_G,
-                                   float*    buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Apply_G_rf_ass_var1( integer       k_G,
+                                   integer       m_A,
+                                   integer       n_A,
+                                   scomplex* buff_G, integer rs_G, integer cs_G,
+                                   float*    buff_A, integer rs_A, integer cs_A )
 {
 	float     one    = bl1_s1();
 	float     zero   = bl1_s0();
-	int       nG_app = n_A - 1;
-	int       l, j;
+	integer       nG_app = n_A - 1;
+	integer       l, j;
 	float     gamma;
 	float     sigma;
 	float*    a1;
@@ -161,16 +161,16 @@ FLA_Error FLA_Apply_G_rf_ass_var1( int       k_G,
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Apply_G_rf_asd_var1( int       k_G,
-                                   int       m_A,
-                                   int       n_A,
-                                   dcomplex* buff_G, int rs_G, int cs_G,
-                                   double*   buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Apply_G_rf_asd_var1( integer       k_G,
+                                   integer       m_A,
+                                   integer       n_A,
+                                   dcomplex* buff_G, integer rs_G, integer cs_G,
+                                   double*   buff_A, integer rs_A, integer cs_A )
 {
 	double    one    = bl1_d1();
 	double    zero   = bl1_d0();
-	int       nG_app = n_A - 1;
-	int       l, j;
+	integer       nG_app = n_A - 1;
+	integer       l, j;
 	double    gamma;
 	double    sigma;
 	double*   a1;
@@ -212,16 +212,16 @@ FLA_Error FLA_Apply_G_rf_asd_var1( int       k_G,
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Apply_G_rf_asc_var1( int       k_G,
-                                   int       m_A,
-                                   int       n_A,
-                                   scomplex* buff_G, int rs_G, int cs_G,
-                                   scomplex* buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Apply_G_rf_asc_var1( integer       k_G,
+                                   integer       m_A,
+                                   integer       n_A,
+                                   scomplex* buff_G, integer rs_G, integer cs_G,
+                                   scomplex* buff_A, integer rs_A, integer cs_A )
 {
 	float     one    = bl1_s1();
 	float     zero   = bl1_s0();
-	int       nG_app = n_A - 1;
-	int       l, j;
+	integer       nG_app = n_A - 1;
+	integer       l, j;
 	float     gamma;
 	float     sigma;
 	scomplex* a1;
@@ -264,16 +264,16 @@ FLA_Error FLA_Apply_G_rf_asc_var1( int       k_G,
 }
 
 
-FLA_Error FLA_Apply_G_rf_asz_var1( int       k_G,
-                                   int       m_A,
-                                   int       n_A,
-                                   dcomplex* buff_G, int rs_G, int cs_G,
-                                   dcomplex* buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Apply_G_rf_asz_var1( integer       k_G,
+                                   integer       m_A,
+                                   integer       n_A,
+                                   dcomplex* buff_G, integer rs_G, integer cs_G,
+                                   dcomplex* buff_A, integer rs_A, integer cs_A )
 {
 	double    one    = bl1_d1();
 	double    zero   = bl1_d0();
-	int       nG_app = n_A - 1;
-	int       l, j;
+	integer       nG_app = n_A - 1;
+	integer       l, j;
 	double    gamma;
 	double    sigma;
 	dcomplex* a1;

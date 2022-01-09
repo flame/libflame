@@ -30,9 +30,9 @@ FLA_Error FLA_Bidiag_UT_scale_diagonals( FLA_Obj alpha, FLA_Obj A )
 FLA_Error FLA_Bidiag_UT_u_scale_diagonals( FLA_Obj alpha, FLA_Obj A )
 {
   FLA_Datatype datatype;
-  int          n_A;
-  int          rs_A, cs_A;
-  int          i;
+  integer          n_A;
+  integer          rs_A, cs_A;
+  integer          i;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -51,7 +51,7 @@ FLA_Error FLA_Bidiag_UT_u_scale_diagonals( FLA_Obj alpha, FLA_Obj A )
       {
         float*    alpha11  = buff_A + (i  )*cs_A + (i  )*rs_A;
         float*    a12t_l   = buff_A + (i+1)*cs_A + (i  )*rs_A;
-        int       n_ahead  = n_A - i - 1;
+        integer       n_ahead  = n_A - i - 1;
 
         bl1_sscals( buff_alpha, alpha11 );
 
@@ -70,7 +70,7 @@ FLA_Error FLA_Bidiag_UT_u_scale_diagonals( FLA_Obj alpha, FLA_Obj A )
       {
         double*   alpha11  = buff_A + (i  )*cs_A + (i  )*rs_A;
         double*   a12t_l   = buff_A + (i+1)*cs_A + (i  )*rs_A;
-        int       n_ahead  = n_A - i - 1;
+        integer       n_ahead  = n_A - i - 1;
 
         bl1_dscals( buff_alpha, alpha11 );
 
@@ -89,7 +89,7 @@ FLA_Error FLA_Bidiag_UT_u_scale_diagonals( FLA_Obj alpha, FLA_Obj A )
       {
         scomplex* alpha11  = buff_A + (i  )*cs_A + (i  )*rs_A;
         scomplex* a12t_l   = buff_A + (i+1)*cs_A + (i  )*rs_A;
-        int       n_ahead  = n_A - i - 1;
+        integer       n_ahead  = n_A - i - 1;
 
         bl1_csscals( buff_alpha, alpha11 );
 
@@ -108,7 +108,7 @@ FLA_Error FLA_Bidiag_UT_u_scale_diagonals( FLA_Obj alpha, FLA_Obj A )
       {
         dcomplex* alpha11  = buff_A + (i  )*cs_A + (i  )*rs_A;
         dcomplex* a12t_l   = buff_A + (i+1)*cs_A + (i  )*rs_A;
-        int       n_ahead  = n_A - i - 1;
+        integer       n_ahead  = n_A - i - 1;
 
         bl1_zdscals( buff_alpha, alpha11 );
 
@@ -126,9 +126,9 @@ FLA_Error FLA_Bidiag_UT_u_scale_diagonals( FLA_Obj alpha, FLA_Obj A )
 FLA_Error FLA_Bidiag_UT_l_scale_diagonals( FLA_Obj alpha, FLA_Obj A )
 {
   FLA_Datatype datatype;
-  int          m_A;
-  int          rs_A, cs_A;
-  int          i;
+  integer          m_A;
+  integer          rs_A, cs_A;
+  integer          i;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -147,7 +147,7 @@ FLA_Error FLA_Bidiag_UT_l_scale_diagonals( FLA_Obj alpha, FLA_Obj A )
       {
         float*    alpha11  = buff_A + (i  )*cs_A + (i  )*rs_A;
         float*    a21_t    = buff_A + (i  )*cs_A + (i+1)*rs_A;
-        int       m_ahead  = m_A - i - 1;
+        integer       m_ahead  = m_A - i - 1;
 
         bl1_sscals( buff_alpha, alpha11 );
 
@@ -166,7 +166,7 @@ FLA_Error FLA_Bidiag_UT_l_scale_diagonals( FLA_Obj alpha, FLA_Obj A )
       {
         double*   alpha11  = buff_A + (i  )*cs_A + (i  )*rs_A;
         double*   a21_t    = buff_A + (i  )*cs_A + (i+1)*rs_A;
-        int       m_ahead  = m_A - i - 1;
+        integer       m_ahead  = m_A - i - 1;
 
         bl1_dscals( buff_alpha, alpha11 );
 
@@ -185,7 +185,7 @@ FLA_Error FLA_Bidiag_UT_l_scale_diagonals( FLA_Obj alpha, FLA_Obj A )
       {
         scomplex* alpha11  = buff_A + (i  )*cs_A + (i  )*rs_A;
         scomplex* a21_t    = buff_A + (i  )*cs_A + (i+1)*rs_A;
-        int       m_ahead  = m_A - i - 1;
+        integer       m_ahead  = m_A - i - 1;
 
         bl1_csscals( buff_alpha, alpha11 );
 
@@ -204,7 +204,7 @@ FLA_Error FLA_Bidiag_UT_l_scale_diagonals( FLA_Obj alpha, FLA_Obj A )
       {
         dcomplex* alpha11  = buff_A + (i  )*cs_A + (i  )*rs_A;
         dcomplex* a21_t    = buff_A + (i  )*cs_A + (i+1)*rs_A;
-        int       m_ahead  = m_A - i - 1;
+        integer       m_ahead  = m_A - i - 1;
 
         bl1_zdscals( buff_alpha, alpha11 );
 

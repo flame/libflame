@@ -1,17 +1,21 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h" /* Table of constant values */
-static int c__1 = 1;
-static int c_n1 = -1;
+static integer c__1 = 1;
+static integer c_n1 = -1;
 
-int zgeqrf_check(int *m, int *n, dcomplex *a, int *lda, dcomplex *tau, dcomplex *work, int *lwork, int *info)
+int zgeqrf_check(integer *m, integer *n, dcomplex *a, integer *lda, dcomplex *tau, dcomplex *work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
     /* Local variables */
-    int k, nb;
-    int lwkopt;
+    integer k, nb;
+    integer lwkopt;
     logical lquery;
-
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "zgeqrf inputs: m %d, n %d, lda %d\n", *m, *n, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

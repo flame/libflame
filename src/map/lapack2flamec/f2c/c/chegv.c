@@ -182,6 +182,16 @@ the routine */
 /* Subroutine */
 int chegv_(integer *itype, char *jobz, char *uplo, integer * n, complex *a, integer *lda, complex *b, integer *ldb, real *w, complex *work, integer *lwork, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"chegv inputs: itype %lld, jobz %c, uplo %c, n %lld, lda %lld, ldb %lld, lwork %lld",*itype, *jobz, *uplo, *n, *lda, *ldb, *lwork);
+#else 
+    snprintf(buffer, 256,"chegv inputs: itype %d, jobz %c, uplo %c, n %d, lda %d, ldb %d, lwork %d",*itype, *jobz, *uplo, *n, *lda, *ldb, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2;
     /* Local variables */
@@ -283,15 +293,18 @@ int chegv_(integer *itype, char *jobz, char *uplo, integer * n, complex *a, inte
     {
         i__1 = -(*info);
         xerbla_("CHEGV ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Form a Cholesky factorization of B. */
@@ -299,6 +312,7 @@ int chegv_(integer *itype, char *jobz, char *uplo, integer * n, complex *a, inte
     if (*info != 0)
     {
         *info = *n + *info;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Transform problem to standard eigenvalue problem and solve. */
@@ -345,6 +359,7 @@ int chegv_(integer *itype, char *jobz, char *uplo, integer * n, complex *a, inte
     }
     work[1].r = (real) lwkopt;
     work[1].i = 0.f; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHEGV */
 }

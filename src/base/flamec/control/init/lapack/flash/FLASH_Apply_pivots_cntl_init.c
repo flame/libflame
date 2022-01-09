@@ -10,10 +10,10 @@
 
 #include "FLAME.h"
 
-fla_appiv_t*       flash_appiv_cntl_leaf = NULL;
-fla_appiv_t*       flash_appiv_cntl_bp = NULL;
-fla_appiv_t*       flash_appiv_cntl = NULL;
-fla_blocksize_t*   flash_appiv_bsize = NULL;
+TLS_CLASS_SPEC fla_appiv_t*       flash_appiv_cntl_leaf = NULL;
+TLS_CLASS_SPEC fla_appiv_t*       flash_appiv_cntl_bp = NULL;
+TLS_CLASS_SPEC fla_appiv_t*       flash_appiv_cntl = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*   flash_appiv_bsize = NULL;
 
 void FLASH_Apply_pivots_cntl_init()
 {

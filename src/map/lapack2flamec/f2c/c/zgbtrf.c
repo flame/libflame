@@ -143,6 +143,12 @@ elements marked */
 /* Subroutine */
 int zgbtrf_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab, integer *ldab, integer *ipiv, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zgbtrf inputs: m %d, n %d, kl %d, ku %d, ldab %d",*m, *n, *kl, *ku, *ldab);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     doublecomplex z__1;
@@ -218,11 +224,13 @@ int zgbtrf_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
     {
         i__1 = -(*info);
         xerbla_("ZGBTRF", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Determine the block size for this environment */
@@ -622,6 +630,7 @@ int zgbtrf_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
             /* L180: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZGBTRF */
 }

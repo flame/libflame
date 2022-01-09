@@ -10,14 +10,14 @@
 
 #include "blis1.h"
 
-void bl1_ssymmize( conj1_t conj, uplo1_t uplo, int m, float* a, int a_rs, int a_cs )
+void bl1_ssymmize( conj1_t conj, uplo1_t uplo, integer m, float* a, integer a_rs, integer a_cs )
 {
 	float*    a_src;
 	float*    a_dst;
-	int       rs_src, cs_src, inc_src;
-	int       rs_dst, cs_dst, inc_dst;
-	int       n_iter;
-	int       j;
+	integer       rs_src, cs_src, inc_src;
+	integer       rs_dst, cs_dst, inc_dst;
+	integer       n_iter;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -121,14 +121,14 @@ void bl1_ssymmize( conj1_t conj, uplo1_t uplo, int m, float* a, int a_rs, int a_
 	}
 }
 
-void bl1_dsymmize( conj1_t conj, uplo1_t uplo, int m, double* a, int a_rs, int a_cs )
+void bl1_dsymmize( conj1_t conj, uplo1_t uplo, integer m, double* a, integer a_rs, integer a_cs )
 {
 	double*   a_src;
 	double*   a_dst;
-	int       rs_src, cs_src, inc_src;
-	int       rs_dst, cs_dst, inc_dst;
-	int       n_iter;
-	int       j;
+	integer       rs_src, cs_src, inc_src;
+	integer       rs_dst, cs_dst, inc_dst;
+	integer       n_iter;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -232,15 +232,15 @@ void bl1_dsymmize( conj1_t conj, uplo1_t uplo, int m, double* a, int a_rs, int a
 	}
 }
 
-void bl1_csymmize( conj1_t conj, uplo1_t uplo, int m, scomplex* a, int a_rs, int a_cs )
+void bl1_csymmize( conj1_t conj, uplo1_t uplo, integer m, scomplex* a, integer a_rs, integer a_cs )
 {
 	scomplex* a_src;
 	scomplex* a_dst;
 	scomplex* a_jj;
-	int       rs_src, cs_src, inc_src;
-	int       rs_dst, cs_dst, inc_dst;
-	int       n_iter;
-	int       j;
+	integer       rs_src, cs_src, inc_src;
+	integer       rs_dst, cs_dst, inc_dst;
+	integer       n_iter;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -350,15 +350,15 @@ void bl1_csymmize( conj1_t conj, uplo1_t uplo, int m, scomplex* a, int a_rs, int
 	}
 }
 
-void bl1_zsymmize( conj1_t conj, uplo1_t uplo, int m, dcomplex* a, int a_rs, int a_cs )
+void bl1_zsymmize( conj1_t conj, uplo1_t uplo, integer m, dcomplex* a, integer a_rs, integer a_cs )
 {
 	dcomplex* a_src;
 	dcomplex* a_dst;
 	dcomplex* a_jj;
-	int       rs_src, cs_src, inc_src;
-	int       rs_dst, cs_dst, inc_dst;
-	int       n_iter;
-	int       j;
+	integer       rs_src, cs_src, inc_src;
+	integer       rs_dst, cs_dst, inc_dst;
+	integer       n_iter;
+	integer       j;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;

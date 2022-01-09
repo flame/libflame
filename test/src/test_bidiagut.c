@@ -38,11 +38,12 @@ void libfla_test_bidiagut_experiment( test_params_t params,
                                       unsigned int  var,
                                       char*         sc_str,
                                       FLA_Datatype  datatype,
-                                      unsigned int  p,
+                                      uinteger  p,
                                       unsigned int  pci,
                                       unsigned int  n_repeats,
                                       signed int    impl,
                                       double*       perf,
+                                      double*       t,
                                       double*       residual );
 void libfla_test_bidiagut_impl( int      impl,
                                 FLA_Obj  A,
@@ -114,20 +115,21 @@ void libfla_test_bidiagut_experiment( test_params_t params,
                                       unsigned int  var,
                                       char*         sc_str,
                                       FLA_Datatype  datatype,
-                                      unsigned int  p_cur,
+                                      uinteger  p_cur,
                                       unsigned int  pci,
                                       unsigned int  n_repeats,
                                       signed int    impl,
                                       double*       perf,
+                                      double*       t,
                                       double*       residual )
 {
 	dim_t        b_alg_flat = params.b_alg_flat;
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	unsigned int m, n, min_m_n;
-	signed int   m_input    = -1;
-	signed int   n_input    = -2;
+	uinteger m, n, min_m_n;
+	integer   m_input    = -1;
+	integer   n_input    = -2;
 	FLA_Obj      A, TU, TV, WU, WV, QUh, QV, AQV, QUhAQV, norm;
 	FLA_Obj      AL, AR;
 	FLA_Obj      QVL, QVR;
@@ -162,8 +164,8 @@ void libfla_test_bidiagut_experiment( test_params_t params,
 	}
 	else // if ( pc_str[pci][0] == 'l' )
 	{
-		unsigned int m_temp = n;
-		unsigned int n_temp = m;
+		uinteger m_temp = n;
+		uinteger n_temp = m;
 		m = m_temp;
 		n = n_temp;
 	}
@@ -232,7 +234,8 @@ void libfla_test_bidiagut_experiment( test_params_t params,
 		libfla_test_bidiagut_cntl_free();
 
 	// Compute the performance of the best experiment repeat.
-	*perf = ( 4.0 * n * n * ( m - n / 3.0 ) ) / time_min / FLOPS_PER_UNIT_PERF;
+	*t = time_min;
+  *perf = ( 4.0 * n * n * ( m - n / 3.0 ) ) / time_min / FLOPS_PER_UNIT_PERF;
 	if ( FLA_Obj_is_complex( A ) ) *perf *= 4.0;
 
 	// Check the result by computing R - Q' A_orig Q.

@@ -20,9 +20,9 @@
 #define OUTPUT_FILE "qr_plasma"
 
 
-int main( int argc, char *argv[] ) 
+integer main( integer argc, char *argv[] ) 
 { 
-   int
+   integer
       i, j,
       size,
       n_threads,

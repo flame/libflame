@@ -19,14 +19,14 @@
 
 
 void time_Trinv_lu(
-                  int variant, int type, int n_repeats, int m, int nb_alg,
+                  integer variant, integer type, integer n_repeats, integer m, integer nb_alg,
                   FLA_Obj A, FLA_Obj x, FLA_Obj b, FLA_Obj norm,
                   double *dtime, double *diff, double *gflops );
 
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     datatype,
     m_input,
     m,

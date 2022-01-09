@@ -318,6 +318,12 @@ S and */
 /* Subroutine */
 int strsen_(char *job, char *compq, logical *select, integer *n, real *t, integer *ldt, real *q, integer *ldq, real *wr, real *wi, integer *m, real *s, real *sep, real *work, integer *lwork, integer * iwork, integer *liwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"strsen inputs: job %c, compq %c, n %" FLA_IS ", ldt %" FLA_IS ", ldq %" FLA_IS ", lwork %" FLA_IS ", liwork %" FLA_IS "",*job, *compq, *n, *ldt, *ldq, *lwork, *liwork);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer q_dim1, q_offset, t_dim1, t_offset, i__1, i__2;
     real r__1, r__2;
@@ -495,10 +501,12 @@ int strsen_(char *job, char *compq, logical *select, integer *n, real *t, intege
     {
         i__1 = -(*info);
         xerbla_("STRSEN", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible. */
@@ -634,6 +642,7 @@ L40: /* Store the output eigenvalues in WR and WI. */
     }
     work[1] = (real) lwmin;
     iwork[1] = liwmin;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of STRSEN */
 }

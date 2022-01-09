@@ -13,9 +13,9 @@
 FLA_Error FLA_Apply_G_lf_blk_var3( FLA_Obj G, FLA_Obj A, dim_t b_alg )
 {
     FLA_Datatype datatype;
-    int          k_G, m_A, n_A;
-    int          rs_G, cs_G;
-    int          rs_A, cs_A;
+    integer          k_G, m_A, n_A;
+    integer          rs_G, cs_G;
+    integer          rs_A, cs_A;
 
     datatype = FLA_Obj_datatype( A );
 

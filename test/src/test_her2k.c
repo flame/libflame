@@ -40,11 +40,12 @@ void libfla_test_her2k_experiment( test_params_t params,
                                    unsigned int  var,
                                    char*         sc_str,
                                    FLA_Datatype  datatype,
-                                   unsigned int  p_cur,
+                                   uinteger  p_cur,
                                    unsigned int  pci,
                                    unsigned int  n_repeats,
                                    signed int    impl,
                                    double*       perf,
+                                   double*       t,
                                    double*       residual );
 void libfla_test_her2k_impl( int         impl,
                              FLA_Uplo    uplo,
@@ -121,11 +122,12 @@ void libfla_test_her2k_experiment( test_params_t params,
                                    unsigned int  var,
                                    char*         sc_str,
                                    FLA_Datatype  datatype,
-                                   unsigned int  p_cur,
+                                   uinteger  p_cur,
                                    unsigned int  pci,
                                    unsigned int  n_repeats,
                                    signed int    impl,
                                    double*       perf,
+                                   double*       t,
                                    double*       residual )
 {
 	dim_t        b_flash    = params.b_flash;
@@ -133,10 +135,10 @@ void libfla_test_her2k_experiment( test_params_t params,
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	unsigned int m;
-	signed int   m_input    = -1;
-	unsigned int k;
-	signed int   k_input    = -2;
+	uinteger m;
+	integer   m_input    = -1;
+	uinteger k;
+	integer   k_input    = -2;
 	FLA_Uplo     uplo;
 	FLA_Trans    trans;
 	FLA_Obj      A, B, C, x, y, z, w, norm;
@@ -268,7 +270,8 @@ void libfla_test_her2k_experiment( test_params_t params,
 		libfla_test_her2k_cntl_free();
 
 	// Compute the performance of the best experiment repeat.
-	*perf = ( 2 * m * m * k ) / time_min / FLOPS_PER_UNIT_PERF;
+	*t = time_min;
+  *perf = ( 2 * m * m * k ) / time_min / FLOPS_PER_UNIT_PERF;
 	if ( FLA_Obj_is_complex( A ) ) *perf *= 4.0;
 
 	// Compute:
@@ -318,9 +321,9 @@ void libfla_test_her2k_experiment( test_params_t params,
 
 
 
-extern fla_scalr_t* fla_scalr_cntl_blas;
-extern fla_gemm_t*  fla_gemm_cntl_blas;
-extern fla_her2k_t* fla_her2k_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_scalr_t* fla_scalr_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_gemm_t*  fla_gemm_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_her2k_t* fla_her2k_cntl_blas;
 
 void libfla_test_her2k_cntl_create( unsigned int var,
                                     dim_t        b_alg_flat )

@@ -10,12 +10,12 @@
 
 #include "blis1.h"
 
-void bl1_ssymv( uplo1_t uplo, int m, float* alpha, float* a, int a_rs, int a_cs, float* x, int incx, float* beta, float* y, int incy )
+void bl1_ssymv( uplo1_t uplo, integer m, float* alpha, float* a, integer a_rs, integer a_cs, float* x, integer incx, float* beta, float* y, integer incy )
 {
 	float*    a_save    = a;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       lda, inca;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       lda, inca;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -53,12 +53,12 @@ void bl1_ssymv( uplo1_t uplo, int m, float* alpha, float* a, int a_rs, int a_cs,
 	                   &a,     &a_rs,     &a_cs );
 }
 
-void bl1_dsymv( uplo1_t uplo, int m, double* alpha, double* a, int a_rs, int a_cs, double* x, int incx, double* beta, double* y, int incy )
+void bl1_dsymv( uplo1_t uplo, integer m, double* alpha, double* a, integer a_rs, integer a_cs, double* x, integer incx, double* beta, double* y, integer incy )
 {
 	double*   a_save    = a;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       lda, inca;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       lda, inca;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -96,12 +96,12 @@ void bl1_dsymv( uplo1_t uplo, int m, double* alpha, double* a, int a_rs, int a_c
 	                   &a,     &a_rs,     &a_cs );
 }
 
-void bl1_csymv( uplo1_t uplo, int m, scomplex* alpha, scomplex* a, int a_rs, int a_cs, scomplex* x, int incx, scomplex* beta, scomplex* y, int incy )
+void bl1_csymv( uplo1_t uplo, integer m, scomplex* alpha, scomplex* a, integer a_rs, integer a_cs, scomplex* x, integer incx, scomplex* beta, scomplex* y, integer incy )
 {
 	scomplex* a_save    = a;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       lda, inca;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       lda, inca;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -139,12 +139,12 @@ void bl1_csymv( uplo1_t uplo, int m, scomplex* alpha, scomplex* a, int a_rs, int
 	                   &a,     &a_rs,     &a_cs );
 }
 
-void bl1_zsymv( uplo1_t uplo, int m, dcomplex* alpha, dcomplex* a, int a_rs, int a_cs, dcomplex* x, int incx, dcomplex* beta, dcomplex* y, int incy )
+void bl1_zsymv( uplo1_t uplo, integer m, dcomplex* alpha, dcomplex* a, integer a_rs, integer a_cs, dcomplex* x, integer incx, dcomplex* beta, dcomplex* y, integer incy )
 {
 	dcomplex* a_save    = a;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       lda, inca;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       lda, inca;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -184,7 +184,7 @@ void bl1_zsymv( uplo1_t uplo, int m, dcomplex* alpha, dcomplex* a, int a_rs, int
 
 // --- Classic routine wrappers ---
 
-void bl1_ssymv_blas( uplo1_t uplo, int m, float* alpha, float* a, int lda, float* x, int incx, float* beta, float* y, int incy )
+void bl1_ssymv_blas( uplo1_t uplo, integer m, float* alpha, float* a, integer lda, float* x, integer incx, float* beta, float* y, integer incy )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;
@@ -215,7 +215,7 @@ void bl1_ssymv_blas( uplo1_t uplo, int m, float* alpha, float* a, int lda, float
 #endif
 }
 
-void bl1_dsymv_blas( uplo1_t uplo, int m, double* alpha, double* a, int lda, double* x, int incx, double* beta, double* y, int incy )
+void bl1_dsymv_blas( uplo1_t uplo, integer m, double* alpha, double* a, integer lda, double* x, integer incx, double* beta, double* y, integer incy )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;
@@ -246,13 +246,13 @@ void bl1_dsymv_blas( uplo1_t uplo, int m, double* alpha, double* a, int lda, dou
 #endif
 }
 
-void bl1_csymv_blas( uplo1_t uplo, int m, scomplex* alpha, scomplex* a, int lda, scomplex* x, int incx, scomplex* beta, scomplex* y, int incy )
+void bl1_csymv_blas( uplo1_t uplo, integer m, scomplex* alpha, scomplex* a, integer lda, scomplex* x, integer incx, scomplex* beta, scomplex* y, integer incy )
 {
 	scomplex* x_copy;
 	scomplex* y_copy;
-	int       n   = 1;
-	int       ldx = m;
-	int       ldy = m;
+	integer       n   = 1;
+	integer       ldx = m;
+	integer       ldy = m;
 
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;
@@ -334,13 +334,13 @@ void bl1_csymv_blas( uplo1_t uplo, int m, scomplex* alpha, scomplex* a, int lda,
 #endif
 }
 
-void bl1_zsymv_blas( uplo1_t uplo, int m, dcomplex* alpha, dcomplex* a, int lda, dcomplex* x, int incx, dcomplex* beta, dcomplex* y, int incy )
+void bl1_zsymv_blas( uplo1_t uplo, integer m, dcomplex* alpha, dcomplex* a, integer lda, dcomplex* x, integer incx, dcomplex* beta, dcomplex* y, integer incy )
 {
 	dcomplex*        x_copy;
 	dcomplex*        y_copy;
-	int              n   = 1;
-	int              ldx = m;
-	int              ldy = m;
+	integer              n   = 1;
+	integer              ldx = m;
+	integer              ldy = m;
 
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;

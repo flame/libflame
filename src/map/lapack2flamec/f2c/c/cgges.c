@@ -274,6 +274,16 @@ the routine */
 /* Subroutine */
 int cgges_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, integer *n, complex *a, integer *lda, complex *b, integer * ldb, integer *sdim, complex *alpha, complex *beta, complex *vsl, integer *ldvsl, complex *vsr, integer *ldvsr, complex *work, integer * lwork, real *rwork, logical *bwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgges inputs: jobvsl %c, jobvsr %c, sort %c, n %lld, lda %lld, ldb %lld, ldvsl %lld, ldvsr %lld, lwork %lld",*jobvsl, *jobvsr, *sort, *n, *lda, *ldb, *ldvsl, *ldvsr, *lwork);
+#else 
+    snprintf(buffer, 256,"cgges inputs: jobvsl %c, jobvsr %c, sort %c, n %d, lda %d, ldb %d, ldvsl %d, ldvsr %d, lwork %d",*jobvsl, *jobvsr, *sort, *n, *lda, *ldb, *ldvsl, *ldvsr, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, vsl_dim1, vsl_offset, vsr_dim1, vsr_offset, i__1, i__2;
     /* Builtin functions */
@@ -462,16 +472,19 @@ int cgges_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, integer *n, comp
     {
         i__1 = -(*info);
         xerbla_("CGGES ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
         *sdim = 0;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants */
@@ -654,6 +667,7 @@ int cgges_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, integer *n, comp
 L30:
     work[1].r = (real) lwkopt;
     work[1].i = 0.f; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGGES */
 }

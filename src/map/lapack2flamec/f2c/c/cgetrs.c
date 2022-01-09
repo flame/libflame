@@ -118,6 +118,16 @@ for 1<=i<=N, row i of the */
 /* Subroutine */
 int cgetrs_(char *trans, integer *n, integer *nrhs, complex * a, integer *lda, integer *ipiv, complex *b, integer *ldb, integer * info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgetrs inputs: trans %c, n %lld, nrhs %lld, lda %lld, ipiv %lld, ldb %lld",*trans, *n, *nrhs, *lda, *ipiv, *ldb);
+#else 
+    snprintf(buffer, 256,"cgetrs inputs: trans %c, n %d, nrhs %d, lda %d, ipiv %d, ldb %d",*trans, *n, *nrhs, *lda, *ipiv, *ldb);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */
@@ -181,11 +191,13 @@ int cgetrs_(char *trans, integer *n, integer *nrhs, complex * a, integer *lda, i
     {
         i__1 = -(*info);
         xerbla_("CGETRS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0 || *nrhs == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (notran)
@@ -208,6 +220,7 @@ int cgetrs_(char *trans, integer *n, integer *nrhs, complex * a, integer *lda, i
         /* Apply row interchanges to the solution vectors. */
         claswp_(nrhs, &b[b_offset], ldb, &c__1, n, &ipiv[1], &c_n1);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGETRS */
 }

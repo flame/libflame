@@ -16,12 +16,12 @@ FLA_Error FLA_Bsvd_external( FLA_Uplo uplo, FLA_Obj d, FLA_Obj e, FLA_Obj U, FLA
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
   FLA_Datatype datatype;
   FLA_Datatype dt_real;
-  int          m_U, cs_U;
-  int          n_V, cs_V;
-  int          n_C, cs_C;
-  int          min_m_n;
-  int          inc_d, inc_e;
-  int          lrwork;
+  integer          m_U, cs_U;
+  integer          n_V, cs_V;
+  integer          n_C, cs_C;
+  integer          min_m_n;
+  integer          inc_d, inc_e;
+  integer          lrwork;
   FLA_Obj      rwork;
   char         blas_uplo;
 

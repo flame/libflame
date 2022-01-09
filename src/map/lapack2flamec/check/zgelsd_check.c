@@ -1,25 +1,31 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h" /* Table of constant values */
-static int c__9 = 9;
-static int c__0 = 0;
-static int c__6 = 6;
-static int c_n1 = -1;
-static int c__1 = 1;
+static integer c__9 = 9;
+static integer c__0 = 0;
+static integer c__6 = 6;
+static integer c_n1 = -1;
+static integer c__1 = 1;
 
-int zgelsd_check(int *m, int *n, int *nrhs, dcomplex *a, int *lda, dcomplex *b, int *ldb, double *s, double *rcond, int *rank, dcomplex *work, int *lwork, double *rwork, int *iwork, int *info)
+int zgelsd_check(integer *m, integer *n, integer *nrhs, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, double *s, double *rcond, integer *rank, dcomplex *work, integer *lwork, double *rwork, integer *iwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
+    integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
     /* Builtin functions */
     double log(double);
     /* Local variables */
-    int mm;
-    int nlvl;
-    int minmn, maxmn, mnthr;
-    int liwork, minwrk, maxwrk;
-    int lrwork;
+    integer mm;
+    integer nlvl;
+    integer minmn, maxmn, mnthr;
+    integer liwork, minwrk, maxwrk;
+    integer lrwork;
     logical lquery;
-    int smlsiz;
+    integer smlsiz;
+
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "zgelsd inputs: m %d, n %d, nrhs %d, lda %d, ldb %d, rank %d\n", *m, *n, *nrhs, *lda, *ldb, *rank);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
 
     /* Parameter adjustments */
     a_dim1 = *lda;
@@ -74,7 +80,7 @@ int zgelsd_check(int *m, int *n, int *nrhs, dcomplex *a, int *lda, dcomplex *b, 
             smlsiz = ilaenv_(&c__9, "ZGELSD", " ", &c__0, &c__0, &c__0, &c__0);
             mnthr = ilaenv_(&c__6, "ZGELSD", " ", m, n, nrhs, &c_n1);
             /* Computing MAX */
-            i__1 = (int) (log((double) minmn / (double) (smlsiz + 1)) / log(2.)) + 1;
+            i__1 = (integer) (log((double) minmn / (double) (smlsiz + 1)) / log(2.)) + 1;
             nlvl = max(i__1,0);
             liwork = minmn * 3 * nlvl + minmn * 11;
             mm = *m;

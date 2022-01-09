@@ -1,20 +1,27 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
-static int c__1 = 1;
-static int c_n1 = -1;
+static integer c__1 = 1;
+static integer c_n1 = -1;
 
-int dormbr_check(char *vect, char *side, char *trans, int *m, int *n, int *k, double *a, int *lda, double *tau, double *c__, int *ldc, double *work, int *lwork, int *info)
+int dormbr_check(char *vect, char *side, char *trans, integer *m, integer *n, integer *k, double *a, integer *lda, double *tau, double *c__, integer *ldc, double *work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, c_dim1, c_offset, i__1, i__2;
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2;
     char ch__1[2];
     /* Local variables */
-    int nb, nq, nw;
+    integer nb, nq, nw;
     logical left;
     logical notran;
     logical applyq;
-    int lwkopt;
+    integer lwkopt;
     logical lquery;
+    
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "dormbr inputs: vect %c, side %c, trans %c, m %d, n %d, k %d, lda %d, ldc %d\n", *vect, *side, *trans, *m, *n, *k, *lda, *ldc);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
+
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

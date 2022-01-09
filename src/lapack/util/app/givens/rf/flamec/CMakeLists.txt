@@ -1,0 +1,26 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.## 
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf.h
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_asm_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_asm_var2.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_asm_var3.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_asm_var3b.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_asm_var6.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_asm_var6b.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_asm_var9.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_asm_var9b.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_blk_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_blk_var2.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_blk_var3.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_blk_var3b.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_blk_var6.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_blk_var6b.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_blk_var9.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_blk_var9b.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_opt_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_opt_var2.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_opt_var3.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_opt_var6.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Apply_G_rf_opt_var9.c
+	)

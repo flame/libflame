@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_ttmm_t* flash_ttmm_cntl;
+extern TLS_CLASS_SPEC fla_ttmm_t* flash_ttmm_cntl;
 
 FLA_Error FLASH_Ttmm( FLA_Uplo uplo, FLA_Obj A )
 {

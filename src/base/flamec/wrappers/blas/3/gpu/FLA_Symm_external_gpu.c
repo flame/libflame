@@ -17,10 +17,10 @@
 FLA_Error FLA_Symm_external_gpu( FLA_Side side, FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, void* A_gpu, FLA_Obj B, void* B_gpu, FLA_Obj beta, FLA_Obj C, void* C_gpu )
 {
   FLA_Datatype datatype;
-  int          m_C, n_C;
-  int          ldim_A;
-  int          ldim_B;
-  int          ldim_C;
+  integer          m_C, n_C;
+  integer          ldim_A;
+  integer          ldim_B;
+  integer          ldim_C;
   char         blas_side;
   char         blas_uplo; 
 

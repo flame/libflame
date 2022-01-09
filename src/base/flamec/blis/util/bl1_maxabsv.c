@@ -10,12 +10,12 @@
 
 #include "blis1.h"
 
-void bl1_smaxabsv( int n, float* x, int incx, float* maxabs )
+void bl1_smaxabsv( integer n, float* x, integer incx, float* maxabs )
 {
 	float*    chi;
 	float     maxabs_cand;
 	float     maxabs_temp;
-	int       i;
+	integer       i;
 
 	bl1_sabsval2( x, &maxabs_cand );
 
@@ -31,12 +31,12 @@ void bl1_smaxabsv( int n, float* x, int incx, float* maxabs )
 	*maxabs = maxabs_cand;
 }
 
-void bl1_dmaxabsv( int n, double* x, int incx, double* maxabs )
+void bl1_dmaxabsv( integer n, double* x, integer incx, double* maxabs )
 {
 	double*   chi;
 	double    maxabs_cand;
 	double    maxabs_temp;
-	int       i;
+	integer       i;
 
 	bl1_dabsval2( x, &maxabs_cand );
 
@@ -52,12 +52,12 @@ void bl1_dmaxabsv( int n, double* x, int incx, double* maxabs )
 	*maxabs = maxabs_cand;
 }
 
-void bl1_cmaxabsv( int n, scomplex* x, int incx, float* maxabs )
+void bl1_cmaxabsv( integer n, scomplex* x, integer incx, float* maxabs )
 {
 	scomplex* chi;
 	float     maxabs_cand;
 	float     maxabs_temp;
-	int       i;
+	integer       i;
 
 	bl1_csabsval2( x, &maxabs_cand );
 
@@ -73,12 +73,12 @@ void bl1_cmaxabsv( int n, scomplex* x, int incx, float* maxabs )
 	*maxabs = maxabs_cand;
 }
 
-void bl1_zmaxabsv( int n, dcomplex* x, int incx, double* maxabs )
+void bl1_zmaxabsv( integer n, dcomplex* x, integer incx, double* maxabs )
 {
 	dcomplex* chi;
 	double    maxabs_cand;
 	double    maxabs_temp;
-	int       i;
+	integer       i;
 
 	bl1_zdabsval2( x, &maxabs_cand );
 

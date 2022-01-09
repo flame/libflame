@@ -188,6 +188,16 @@
 /* Subroutine */
 int clasr_(char *side, char *pivot, char *direct, integer *m, integer *n, real *c__, real *s, complex *a, integer *lda)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clasr inputs: side %c, pivot %c, direct %c, m %lld, n %lld, lda %lld",*side, *pivot, *direct, *m, *n, *lda);
+#else 
+    snprintf(buffer, 256,"clasr inputs: side %c, pivot %c, direct %c, m %d, n %d, lda %d",*side, *pivot, *direct, *m, *n, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
     complex q__1, q__2, q__3;
@@ -254,11 +264,13 @@ int clasr_(char *side, char *pivot, char *direct, integer *m, integer *n, real *
     if (info != 0)
     {
         xerbla_("CLASR ", &info);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (lsame_(side, "L"))
@@ -821,6 +833,7 @@ int clasr_(char *side, char *pivot, char *direct, integer *m, integer *n, real *
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLASR */
 }

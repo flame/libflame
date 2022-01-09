@@ -1,16 +1,22 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
 
-int dbdsqr_check(char *uplo, int *n, int *ncvt, int * nru, int *ncc, 
+int dbdsqr_check(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, 
                  double *d__, double *e, 
-                 double *vt, int *ldvt, 
-                 double *u, int *ldu, 
-                 double *c__, int * ldc, 
-                 double *work, int *info)
+                 double *vt, integer *ldvt, 
+                 double *u, integer *ldu, 
+                 double *c__, integer * ldc, 
+                 double *work, integer *info)
 {
     /* System generated locals */
-    int c_dim1, c_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1;
+    integer c_dim1, c_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1;
     logical lower;
+
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "dbdsqr inputs: uplo %c, n %d, ncvt %d, nru %d, ncc %d, ldvt %d, ldu %d, ldc %d\n", *uplo, *n, *ncvt, *nru, *ncc, *ldvt, *ldu, *ldc);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
 
     /* Parameter adjustments */
     --d__;

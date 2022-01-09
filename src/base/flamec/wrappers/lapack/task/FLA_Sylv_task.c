@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_sylv_t* fla_sylv_cntl_leaf;
+extern TLS_CLASS_SPEC fla_sylv_t* fla_sylv_cntl_leaf;
 
 FLA_Error FLA_Sylv_task( FLA_Trans transa, FLA_Trans transb, FLA_Obj isgn, FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj scale, fla_sylv_t* cntl )
 {

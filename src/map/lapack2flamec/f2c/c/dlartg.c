@@ -2,7 +2,7 @@
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* > \brief \b DLARTG generates a plane rotation with real cosine and real sine. */
 /* =========== DOCUMENTATION =========== */
-/* Online html documentation available at */
+/* Online html documentation available at  */
 /* http://www.netlib.org/lapack/explore-html/ */
 /* > \htmlonly */
 /* > Download DLARTG + dependencies */
@@ -146,8 +146,8 @@ int dlartg_(doublereal *f, doublereal *g, doublereal *cs, doublereal *sn, double
         f1 = *f;
         g1 = *g;
         /* Computing MAX */
-        d__1 = f2c_abs(f1);
-        d__2 = f2c_abs(g1); // , expr subst
+        d__1 = f2c_dabs(f1);
+        d__2 = f2c_dabs(g1); // , expr subst
         scale = max(d__1,d__2);
         if (scale >= safmx2)
         {
@@ -157,8 +157,8 @@ L10:
             f1 *= safmn2;
             g1 *= safmn2;
             /* Computing MAX */
-            d__1 = f2c_abs(f1);
-            d__2 = f2c_abs(g1); // , expr subst
+            d__1 = f2c_dabs(f1);
+            d__2 = f2c_dabs(g1); // , expr subst
             scale = max(d__1,d__2);
             if (scale >= safmx2)
             {
@@ -188,8 +188,8 @@ L30:
             f1 *= safmx2;
             g1 *= safmx2;
             /* Computing MAX */
-            d__1 = f2c_abs(f1);
-            d__2 = f2c_abs(g1); // , expr subst
+            d__1 = f2c_dabs(f1);
+            d__2 = f2c_dabs(g1); // , expr subst
             scale = max(d__1,d__2);
             if (scale <= safmn2)
             {
@@ -221,7 +221,7 @@ L30:
             *cs = f1 / *r__;
             *sn = g1 / *r__;
         }
-        if (f2c_abs(*f) > f2c_abs(*g) && *cs < 0.)
+        if (f2c_dabs(*f) > f2c_dabs(*g) && *cs < 0.)
         {
             *cs = -(*cs);
             *sn = -(*sn);

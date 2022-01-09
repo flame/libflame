@@ -10,10 +10,10 @@
 
 #include "blis1.h"
 
-void bl1_sident( int m, float* a, int a_rs, int a_cs )
+void bl1_sident( integer m, float* a, integer a_rs, integer a_cs )
 {
 	float* alpha;
-	int    i, j;
+	integer    i, j;
 
 	for ( j = 0; j < m; ++j )
 	{
@@ -29,10 +29,10 @@ void bl1_sident( int m, float* a, int a_rs, int a_cs )
 	}
 }
 
-void bl1_dident( int m, double* a, int a_rs, int a_cs )
+void bl1_dident( integer m, double* a, integer a_rs, integer a_cs )
 {
 	double* alpha;
-	int     i, j;
+	integer     i, j;
 
 	for ( j = 0; j < m; ++j )
 	{
@@ -48,10 +48,10 @@ void bl1_dident( int m, double* a, int a_rs, int a_cs )
 	}
 }
 
-void bl1_cident( int m, scomplex* a, int a_rs, int a_cs )
+void bl1_cident( integer m, scomplex* a, integer a_rs, integer a_cs )
 {
 	scomplex* alpha;
-	int       i, j;
+	integer       i, j;
 
 	for ( j = 0; j < m; ++j )
 	{
@@ -68,10 +68,10 @@ void bl1_cident( int m, scomplex* a, int a_rs, int a_cs )
 	}
 }
 
-void bl1_zident( int m, dcomplex* a, int a_rs, int a_cs )
+void bl1_zident( integer m, dcomplex* a, integer a_rs, integer a_cs )
 {
 	dcomplex* alpha;
-	int       i, j;
+	integer       i, j;
 
 	for ( j = 0; j < m; ++j )
 	{

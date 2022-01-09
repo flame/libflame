@@ -10,7 +10,7 @@
 
 #include "blis1.h"
 
-void bl1_sdot( conj1_t conj, int n, float* x, int incx, float* y, int incy, float* rho )
+void bl1_sdot( conj1_t conj, integer n, float* x, integer incx, float* y, integer incy, float* rho )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	*rho = cblas_sdot( n,
@@ -23,7 +23,7 @@ void bl1_sdot( conj1_t conj, int n, float* x, int incx, float* y, int incy, floa
 #endif
 }
 
-void bl1_ddot( conj1_t conj, int n, double* x, int incx, double* y, int incy, double* rho )
+void bl1_ddot( conj1_t conj, integer n, double* x, integer incx, double* y, integer incy, double* rho )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	*rho = cblas_ddot( n,
@@ -36,7 +36,7 @@ void bl1_ddot( conj1_t conj, int n, double* x, int incx, double* y, int incy, do
 #endif
 }
 
-void bl1_cdot( conj1_t conj, int n, scomplex* x, int incx, scomplex* y, int incy, scomplex* rho )
+void bl1_cdot( conj1_t conj, integer n, scomplex* x, integer incx, scomplex* y, integer incy, scomplex* rho )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	if ( bl1_is_conj( conj ) )
@@ -62,7 +62,7 @@ void bl1_cdot( conj1_t conj, int n, scomplex* x, int incx, scomplex* y, int incy
 #endif
 }
 
-void bl1_zdot( conj1_t conj, int n, dcomplex* x, int incx, dcomplex* y, int incy, dcomplex* rho )
+void bl1_zdot( conj1_t conj, integer n, dcomplex* x, integer incx, dcomplex* y, integer incy, dcomplex* rho )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	if ( bl1_is_conj( conj ) )
@@ -91,14 +91,14 @@ void bl1_zdot( conj1_t conj, int n, dcomplex* x, int incx, dcomplex* y, int incy
 
 // --- Inlined helper implementations ---
 
-void bl1_cdot_in( conj1_t conj, int n, scomplex* x, int incx, scomplex* y, int incy, scomplex* rho )
+void bl1_cdot_in( conj1_t conj, integer n, scomplex* x, integer incx, scomplex* y, integer incy, scomplex* rho )
 {
 	scomplex* xip;
 	scomplex* yip;
 	scomplex  xi;
 	scomplex  yi;
 	scomplex  rho_temp;
-	int       i;
+	integer       i;
 
 	rho_temp.real = 0.0F;
 	rho_temp.imag = 0.0F;
@@ -143,14 +143,14 @@ void bl1_cdot_in( conj1_t conj, int n, scomplex* x, int incx, scomplex* y, int i
 	rho->imag = rho_temp.imag;
 }
 
-void bl1_zdot_in( conj1_t conj, int n, dcomplex* x, int incx, dcomplex* y, int incy, dcomplex* rho )
+void bl1_zdot_in( conj1_t conj, integer n, dcomplex* x, integer incx, dcomplex* y, integer incy, dcomplex* rho )
 {
 	dcomplex* xip;
 	dcomplex* yip;
 	dcomplex  xi;
 	dcomplex  yi;
 	dcomplex  rho_temp;
-	int       i;
+	integer       i;
 
 	rho_temp.real = 0.0;
 	rho_temp.imag = 0.0;

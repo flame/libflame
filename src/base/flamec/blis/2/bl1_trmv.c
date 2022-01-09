@@ -10,12 +10,12 @@
 
 #include "blis1.h"
 
-void bl1_strmv( uplo1_t uplo, trans1_t trans, diag1_t diag, int m, float* a, int a_rs, int a_cs, float* x, int incx )
+void bl1_strmv( uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, float* a, integer a_rs, integer a_cs, float* x, integer incx )
 {
 	float*    a_save    = a;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       lda, inca;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       lda, inca;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -53,12 +53,12 @@ void bl1_strmv( uplo1_t uplo, trans1_t trans, diag1_t diag, int m, float* a, int
 	                   &a,     &a_rs,     &a_cs );
 }
 
-void bl1_dtrmv( uplo1_t uplo, trans1_t trans, diag1_t diag, int m, double* a, int a_rs, int a_cs, double* x, int incx )
+void bl1_dtrmv( uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, double* a, integer a_rs, integer a_cs, double* x, integer incx )
 {
 	double*   a_save    = a;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
-	int       lda, inca;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
+	integer       lda, inca;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -96,14 +96,14 @@ void bl1_dtrmv( uplo1_t uplo, trans1_t trans, diag1_t diag, int m, double* a, in
 	                   &a,     &a_rs,     &a_cs );
 }
 
-void bl1_ctrmv( uplo1_t uplo, trans1_t trans, diag1_t diag, int m, scomplex* a, int a_rs, int a_cs, scomplex* x, int incx )
+void bl1_ctrmv( uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, scomplex* a, integer a_rs, integer a_cs, scomplex* x, integer incx )
 {
 	scomplex* a_save    = a;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
 	scomplex* x_conj;
-	int       incx_conj;
-	int       lda, inca;
+	integer       incx_conj;
+	integer       lda, inca;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -174,14 +174,14 @@ void bl1_ctrmv( uplo1_t uplo, trans1_t trans, diag1_t diag, int m, scomplex* a, 
 	                   &a,     &a_rs,     &a_cs );
 }
 
-void bl1_ztrmv( uplo1_t uplo, trans1_t trans, diag1_t diag, int m, dcomplex* a, int a_rs, int a_cs, dcomplex* x, int incx )
+void bl1_ztrmv( uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, dcomplex* a, integer a_rs, integer a_cs, dcomplex* x, integer incx )
 {
 	dcomplex* a_save    = a;
-	int       a_rs_save = a_rs;
-	int       a_cs_save = a_cs;
+	integer       a_rs_save = a_rs;
+	integer       a_cs_save = a_cs;
 	dcomplex* x_conj;
-	int       incx_conj;
-	int       lda, inca;
+	integer       incx_conj;
+	integer       lda, inca;
 
 	// Return early if possible.
 	if ( bl1_zero_dim1( m ) ) return;
@@ -254,7 +254,7 @@ void bl1_ztrmv( uplo1_t uplo, trans1_t trans, diag1_t diag, int m, dcomplex* a, 
 
 // --- Classic routine wrappers ---
 
-void bl1_strmv_blas( uplo1_t uplo, trans1_t trans, diag1_t diag, int m, float* a, int lda, float* x, int incx )
+void bl1_strmv_blas( uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, float* a, integer lda, float* x, integer incx )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;
@@ -291,7 +291,7 @@ void bl1_strmv_blas( uplo1_t uplo, trans1_t trans, diag1_t diag, int m, float* a
 #endif
 }
 
-void bl1_dtrmv_blas( uplo1_t uplo, trans1_t trans, diag1_t diag, int m, double* a, int lda, double* x, int incx )
+void bl1_dtrmv_blas( uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, double* a, integer lda, double* x, integer incx )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;
@@ -328,7 +328,7 @@ void bl1_dtrmv_blas( uplo1_t uplo, trans1_t trans, diag1_t diag, int m, double* 
 #endif
 }
 
-void bl1_ctrmv_blas( uplo1_t uplo, trans1_t trans, diag1_t diag, int m, scomplex* a, int lda, scomplex* x, int incx )
+void bl1_ctrmv_blas( uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, scomplex* a, integer lda, scomplex* x, integer incx )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;
@@ -365,7 +365,7 @@ void bl1_ctrmv_blas( uplo1_t uplo, trans1_t trans, diag1_t diag, int m, scomplex
 #endif
 }
 
-void bl1_ztrmv_blas( uplo1_t uplo, trans1_t trans, diag1_t diag, int m, dcomplex* a, int lda, dcomplex* x, int incx )
+void bl1_ztrmv_blas( uplo1_t uplo, trans1_t trans, diag1_t diag, integer m, dcomplex* a, integer lda, dcomplex* x, integer incx )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	enum CBLAS_ORDER cblas_order = CblasColMajor;

@@ -14,7 +14,7 @@
 #define FLA_ALG_FRONT     1
 
 void time_Apply_QUD_UT(
-                 int n_repeats, int mB, int mC, int mD, int n, int n_rhs, int b_alg,
+                 integer n_repeats, integer mB, integer mC, integer mD, integer n, integer n_rhs, integer b_alg,
                  FLA_Obj R_BC, FLA_Obj R_BD, FLA_Obj C, FLA_Obj D, FLA_Obj T, FLA_Obj W,
                  FLA_Obj bR_BC, FLA_Obj bR_BD, FLA_Obj bC, FLA_Obj bD,
                  double *dtime, double *diff, double *gflops );
@@ -23,7 +23,7 @@ void time_Apply_QUD_UT(
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     datatype,
     n_input,
     n_rhs_input,

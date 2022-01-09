@@ -301,6 +301,16 @@ the routine */
 /* Subroutine */
 int ctgsyl_(char *trans, integer *ijob, integer *m, integer * n, complex *a, integer *lda, complex *b, integer *ldb, complex *c__, integer *ldc, complex *d__, integer *ldd, complex *e, integer *lde, complex *f, integer *ldf, real *scale, real *dif, complex *work, integer *lwork, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctgsyl inputs: trans %c, ijob %lld, m %lld, n %lld, lda %lld, ldb %lld, ldc %lld, ldd %lld, lde %lld, ldf %lld, lwork %lld",*trans, *ijob, *m, *n, *lda, *ldb, *ldc, *ldd, *lde, *ldf, *lwork);
+#else 
+    snprintf(buffer, 256,"ctgsyl inputs: trans %c, ijob %d, m %d, n %d, lda %d, ldb %d, ldc %d, ldd %d, lde %d, ldf %d, lwork %d",*trans, *ijob, *m, *n, *lda, *ldb, *ldc, *ldd, *lde, *ldf, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, c_dim1, c_offset, d_dim1, d_offset, e_dim1, e_offset, f_dim1, f_offset, i__1, i__2, i__3, i__4;
     complex q__1;
@@ -449,10 +459,12 @@ int ctgsyl_(char *trans, integer *ijob, integer *m, integer * n, complex *a, int
     {
         i__1 = -(*info);
         xerbla_("CTGSYL", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -466,6 +478,7 @@ int ctgsyl_(char *trans, integer *ijob, integer *m, integer * n, complex *a, int
                 *dif = 0.f;
             }
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Determine optimal block sizes MB and NB */
@@ -530,6 +543,7 @@ int ctgsyl_(char *trans, integer *ijob, integer *m, integer * n, complex *a, int
             }
             /* L30: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Determine block structure of A */
@@ -835,6 +849,7 @@ L70:
     }
     work[1].r = (real) lwmin;
     work[1].i = 0.f; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTGSYL */
 }

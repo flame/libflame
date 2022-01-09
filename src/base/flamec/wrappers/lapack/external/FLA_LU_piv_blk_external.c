@@ -14,9 +14,9 @@ FLA_Error FLA_LU_piv_blk_external( FLA_Obj A, FLA_Obj p )
 {
   FLA_Error    r_val = FLA_SUCCESS;
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
-  int          info;
+  integer          info;
   FLA_Datatype datatype;
-  int          m_A, n_A, cs_A;
+  integer          m_A, n_A, cs_A;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING )
     FLA_LU_piv_check( A, p );
@@ -35,7 +35,7 @@ FLA_Error FLA_LU_piv_blk_external( FLA_Obj A, FLA_Obj p )
   case FLA_FLOAT:
   {
     float *buff_A = ( float * ) FLA_FLOAT_PTR( A );
-    int   *buff_p = ( int   * ) FLA_INT_PTR( p );
+    integer   *buff_p = ( integer   * ) FLA_INT_PTR( p );
 
     F77_sgetrf( &m_A,
                 &n_A,
@@ -49,7 +49,7 @@ FLA_Error FLA_LU_piv_blk_external( FLA_Obj A, FLA_Obj p )
   case FLA_DOUBLE:
   {
     double *buff_A = ( double * ) FLA_DOUBLE_PTR( A );
-    int    *buff_p = ( int    * ) FLA_INT_PTR( p );
+    integer    *buff_p = ( integer    * ) FLA_INT_PTR( p );
 
     F77_dgetrf( &m_A,
                 &n_A,
@@ -63,7 +63,7 @@ FLA_Error FLA_LU_piv_blk_external( FLA_Obj A, FLA_Obj p )
   case FLA_COMPLEX:
   {
     scomplex *buff_A = ( scomplex * ) FLA_COMPLEX_PTR( A );
-    int      *buff_p = ( int      * ) FLA_INT_PTR( p );
+    integer      *buff_p = ( integer      * ) FLA_INT_PTR( p );
 
     F77_cgetrf( &m_A,
                 &n_A,
@@ -77,7 +77,7 @@ FLA_Error FLA_LU_piv_blk_external( FLA_Obj A, FLA_Obj p )
   case FLA_DOUBLE_COMPLEX:
   {
     dcomplex *buff_A = ( dcomplex * ) FLA_DOUBLE_COMPLEX_PTR( A );
-    int      *buff_p = ( int      * ) FLA_INT_PTR( p );
+    integer      *buff_p = ( integer      * ) FLA_INT_PTR( p );
 
     F77_zgetrf( &m_A,
                 &n_A,

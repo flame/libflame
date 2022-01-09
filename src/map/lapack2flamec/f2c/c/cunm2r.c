@@ -150,6 +150,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int cunm2r_(char *side, char *trans, integer *m, integer *n, integer *k, complex *a, integer *lda, complex *tau, complex *c__, integer *ldc, complex *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"cunm2r inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS "",*side, *trans, *m, *n, *k, *lda, *ldc);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3;
     complex q__1;
@@ -241,11 +247,13 @@ int cunm2r_(char *side, char *trans, integer *m, integer *n, integer *k, complex
     {
         i__1 = -(*info);
         xerbla_("CUNM2R", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0 || *k == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (left && ! notran || ! left && notran)
@@ -313,6 +321,7 @@ int cunm2r_(char *side, char *trans, integer *m, integer *n, integer *k, complex
         a[i__3].i = aii.i; // , expr subst
         /* L10: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CUNM2R */
 }

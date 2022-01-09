@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_eig_gest_t* flash_eig_gest_cntl;
+extern TLS_CLASS_SPEC fla_eig_gest_t* flash_eig_gest_cntl;
 
 FLA_Error FLASH_Eig_gest( FLA_Inv inv, FLA_Uplo uplo, FLA_Obj A, FLA_Obj B )
 {

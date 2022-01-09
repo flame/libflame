@@ -14,15 +14,15 @@
 #define FLA_ALG_FRONT     1
 
 void time_Hess(
-              int variant, int type, int n_repeats, int m,
-              int nfc, int nlc,
+              integer variant, integer type, integer n_repeats, integer m,
+              integer nfc, integer nlc,
               FLA_Obj C, FLA_Obj C_ref, FLA_Obj t,
               double *dtime, double *diff, double *gflops );
 
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     datatype,
     m_input,
     m,

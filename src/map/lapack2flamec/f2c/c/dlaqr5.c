@@ -473,7 +473,7 @@ int dlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         alpha = vt[0];
                         dlarfg_(&c__3, &alpha, &vt[1], &c__1, vt);
                         refsum = vt[0] * (h__[k + 1 + k * h_dim1] + vt[1] * h__[k + 2 + k * h_dim1]);
-                        if ((d__1 = h__[k + 2 + k * h_dim1] - refsum * vt[1], f2c_abs(d__1)) + (d__2 = refsum * vt[2], f2c_abs(d__2) ) > ulp * ((d__3 = h__[k + k * h_dim1], f2c_abs( d__3)) + (d__4 = h__[k + 1 + (k + 1) * h_dim1] , f2c_abs(d__4)) + (d__5 = h__[k + 2 + (k + 2) * h_dim1], f2c_abs(d__5))))
+                        if ((d__1 = h__[k + 2 + k * h_dim1] - refsum * vt[1], f2c_dabs(d__1)) + (d__2 = refsum * vt[2], f2c_dabs(d__2) ) > ulp * ((d__3 = h__[k + k * h_dim1], f2c_dabs( d__3)) + (d__4 = h__[k + 1 + (k + 1) * h_dim1] , f2c_dabs(d__4)) + (d__5 = h__[k + 2 + (k + 2) * h_dim1], f2c_dabs(d__5))))
                         {
                             /* ==== Starting a new bulge here would */
                             /* . create non-negligible fill. Use */
@@ -733,54 +733,54 @@ int dlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                 /* . unnecessary. ==== */
                 if (h__[k + 1 + k * h_dim1] != 0.)
                 {
-                    tst1 = (d__1 = h__[k + k * h_dim1], f2c_abs(d__1)) + (d__2 = h__[k + 1 + (k + 1) * h_dim1], f2c_abs(d__2));
+                    tst1 = (d__1 = h__[k + k * h_dim1], f2c_dabs(d__1)) + (d__2 = h__[k + 1 + (k + 1) * h_dim1], f2c_dabs(d__2));
                     if (tst1 == 0.)
                     {
                         if (k >= *ktop + 1)
                         {
-                            tst1 += (d__1 = h__[k + (k - 1) * h_dim1], f2c_abs( d__1));
+                            tst1 += (d__1 = h__[k + (k - 1) * h_dim1], f2c_dabs( d__1));
                         }
                         if (k >= *ktop + 2)
                         {
-                            tst1 += (d__1 = h__[k + (k - 2) * h_dim1], f2c_abs( d__1));
+                            tst1 += (d__1 = h__[k + (k - 2) * h_dim1], f2c_dabs( d__1));
                         }
                         if (k >= *ktop + 3)
                         {
-                            tst1 += (d__1 = h__[k + (k - 3) * h_dim1], f2c_abs( d__1));
+                            tst1 += (d__1 = h__[k + (k - 3) * h_dim1], f2c_dabs( d__1));
                         }
                         if (k <= *kbot - 2)
                         {
-                            tst1 += (d__1 = h__[k + 2 + (k + 1) * h_dim1], f2c_abs(d__1));
+                            tst1 += (d__1 = h__[k + 2 + (k + 1) * h_dim1], f2c_dabs(d__1));
                         }
                         if (k <= *kbot - 3)
                         {
-                            tst1 += (d__1 = h__[k + 3 + (k + 1) * h_dim1], f2c_abs(d__1));
+                            tst1 += (d__1 = h__[k + 3 + (k + 1) * h_dim1], f2c_dabs(d__1));
                         }
                         if (k <= *kbot - 4)
                         {
-                            tst1 += (d__1 = h__[k + 4 + (k + 1) * h_dim1], f2c_abs(d__1));
+                            tst1 += (d__1 = h__[k + 4 + (k + 1) * h_dim1], f2c_dabs(d__1));
                         }
                     }
                     /* Computing MAX */
                     d__2 = smlnum;
                     d__3 = ulp * tst1; // , expr subst
-                    if ((d__1 = h__[k + 1 + k * h_dim1], f2c_abs(d__1)) <= max( d__2,d__3))
+                    if ((d__1 = h__[k + 1 + k * h_dim1], f2c_dabs(d__1)) <= max( d__2,d__3))
                     {
                         /* Computing MAX */
-                        d__3 = (d__1 = h__[k + 1 + k * h_dim1], f2c_abs(d__1));
-                        d__4 = (d__2 = h__[k + (k + 1) * h_dim1], f2c_abs( d__2)); // , expr subst
+                        d__3 = (d__1 = h__[k + 1 + k * h_dim1], f2c_dabs(d__1));
+                        d__4 = (d__2 = h__[k + (k + 1) * h_dim1], f2c_dabs( d__2)); // , expr subst
                         h12 = max(d__3,d__4);
                         /* Computing MIN */
-                        d__3 = (d__1 = h__[k + 1 + k * h_dim1], f2c_abs(d__1));
-                        d__4 = (d__2 = h__[k + (k + 1) * h_dim1], f2c_abs( d__2)); // , expr subst
+                        d__3 = (d__1 = h__[k + 1 + k * h_dim1], f2c_dabs(d__1));
+                        d__4 = (d__2 = h__[k + (k + 1) * h_dim1], f2c_dabs( d__2)); // , expr subst
                         h21 = min(d__3,d__4);
                         /* Computing MAX */
-                        d__3 = (d__1 = h__[k + 1 + (k + 1) * h_dim1], f2c_abs( d__1));
-                        d__4 = (d__2 = h__[k + k * h_dim1] - h__[k + 1 + (k + 1) * h_dim1], f2c_abs(d__2)); // , expr subst
+                        d__3 = (d__1 = h__[k + 1 + (k + 1) * h_dim1], f2c_dabs( d__1));
+                        d__4 = (d__2 = h__[k + k * h_dim1] - h__[k + 1 + (k + 1) * h_dim1], f2c_dabs(d__2)); // , expr subst
                         h11 = max(d__3,d__4);
                         /* Computing MIN */
-                        d__3 = (d__1 = h__[k + 1 + (k + 1) * h_dim1], f2c_abs( d__1));
-                        d__4 = (d__2 = h__[k + k * h_dim1] - h__[k + 1 + (k + 1) * h_dim1], f2c_abs(d__2)); // , expr subst
+                        d__3 = (d__1 = h__[k + 1 + (k + 1) * h_dim1], f2c_dabs( d__1));
+                        d__4 = (d__2 = h__[k + k * h_dim1] - h__[k + 1 + (k + 1) * h_dim1], f2c_dabs(d__2)); // , expr subst
                         h22 = min(d__3,d__4);
                         scl = h11 + h12;
                         tst2 = h22 * (h11 / scl);

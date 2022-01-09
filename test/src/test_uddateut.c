@@ -39,11 +39,12 @@ void libfla_test_uddateut_experiment( test_params_t params,
                                       unsigned int  var,
                                       char*         sc_str,
                                       FLA_Datatype  datatype,
-                                      unsigned int  p,
+                                      uinteger  p,
                                       unsigned int  pci,
                                       unsigned int  n_repeats,
                                       signed int    impl,
                                       double*       perf,
+                                      double*       t,
                                       double*       residual );
 void libfla_test_uddateut_impl( int     impl,
                                 FLA_Obj R,
@@ -108,22 +109,23 @@ void libfla_test_uddateut_experiment( test_params_t params,
                                       unsigned int  var,
                                       char*         sc_str,
                                       FLA_Datatype  datatype,
-                                      unsigned int  p_cur,
+                                      uinteger  p_cur,
                                       unsigned int  pci,
                                       unsigned int  n_repeats,
                                       signed int    impl,
                                       double*       perf,
+                                      double*       t,
                                       double*       residual )
 {
 	dim_t        b_alg_flat = params.b_alg_flat;
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	unsigned int mB, mC, mD, n;
-	signed int   mB_input   = -1;
-	signed int   mC_input   = -4;
-	signed int   mD_input   = -4;
-	signed int   n_input    = -1;
+	uinteger mB, mC, mD, n;
+	integer   mB_input   = -1;
+	integer   mC_input   = -4;
+	integer   mD_input   = -4;
+	integer   n_input    = -1;
 	FLA_Obj      B, C, D, T, R, RR, E, EE;
 	FLA_Obj      R_save, C_save, D_save;
 
@@ -206,7 +208,8 @@ void libfla_test_uddateut_experiment( test_params_t params,
 		libfla_test_uddateut_cntl_free();
 
 	// Compute the performance of the best experiment repeat.
-	*perf = 2.0 * ( ( mC + mD ) * n * n +
+	*t = time_min;
+  *perf = 2.0 * ( ( mC + mD ) * n * n +
 	                ( mC + mD ) * n * 6.0 ) / time_min / FLOPS_PER_UNIT_PERF;
 	if ( FLA_Obj_is_complex( R ) ) *perf *= 4.0;
 
@@ -232,11 +235,11 @@ void libfla_test_uddateut_experiment( test_params_t params,
 
 
 
-extern fla_axpyt_t* fla_axpyt_cntl_blas;
-extern fla_copyt_t* fla_copyt_cntl_blas;
-extern fla_gemm_t*  fla_gemm_cntl_blas;
-extern fla_trmm_t*  fla_trmm_cntl_blas;
-extern fla_trsm_t*  fla_trsm_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_axpyt_t* fla_axpyt_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_copyt_t* fla_copyt_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_gemm_t*  fla_gemm_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_trmm_t*  fla_trmm_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_trsm_t*  fla_trsm_cntl_blas;
 
 void libfla_test_uddateut_cntl_create( unsigned int var,
                                        dim_t        b_alg_flat )

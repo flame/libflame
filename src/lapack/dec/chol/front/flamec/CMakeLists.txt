@@ -1,0 +1,17 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.## 
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Chol.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Chol.h
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Chol_internal.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Chol_l.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Chol_solve.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Chol_u.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Chol.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Chol_solve.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_spotrf.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_spotf2.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dpotrf.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dpotf2.c
+
+)

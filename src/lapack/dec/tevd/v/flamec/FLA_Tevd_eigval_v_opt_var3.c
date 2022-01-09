@@ -11,32 +11,32 @@
 #include "FLAME.h"
 
 
-FLA_Error FLA_Tevd_eigval_v_ops_var3( int       m_A,
-                                      int       m_U,
-                                      int       n_G,
-                                      scomplex* buff_G, int rs_G, int cs_G,
-                                      float*    buff_d, int inc_d, 
-                                      float*    buff_e, int inc_e,
-                                      float*    buff_l, int inc_l,
-                                      int*      buff_ls, int inc_ls,
-                                      float*    buff_pu, int inc_pu,
-                                      int*      n_iter )
+FLA_Error FLA_Tevd_eigval_v_ops_var3( integer       m_A,
+                                      integer       m_U,
+                                      integer       n_G,
+                                      scomplex* buff_G, integer rs_G, integer cs_G,
+                                      float*    buff_d, integer inc_d, 
+                                      float*    buff_e, integer inc_e,
+                                      float*    buff_l, integer inc_l,
+                                      integer*      buff_ls, integer inc_ls,
+                                      float*    buff_pu, integer inc_pu,
+                                      integer*      n_iter )
 {
 	return FLA_SUCCESS;
 }
 
 //#define PRINTF
 
-FLA_Error FLA_Tevd_eigval_v_opd_var3( int       m_A,
-                                      int       m_U,
-                                      int       n_G,
-                                      dcomplex* buff_G, int rs_G, int cs_G,
-                                      double*   buff_d, int inc_d, 
-                                      double*   buff_e, int inc_e,
-                                      double*   buff_l, int inc_l,
-                                      int*      buff_ls, int inc_ls,
-                                      double*   buff_pu, int inc_pu,
-                                      int*      n_iter )
+FLA_Error FLA_Tevd_eigval_v_opd_var3( integer       m_A,
+                                      integer       m_U,
+                                      integer       n_G,
+                                      dcomplex* buff_G, integer rs_G, integer cs_G,
+                                      double*   buff_d, integer inc_d, 
+                                      double*   buff_e, integer inc_e,
+                                      double*   buff_l, integer inc_l,
+                                      integer*      buff_ls, integer inc_ls,
+                                      double*   buff_pu, integer inc_pu,
+                                      integer*      n_iter )
 {
 	FLA_Error r_val;
 	double    eps;
@@ -45,9 +45,9 @@ FLA_Error FLA_Tevd_eigval_v_opd_var3( int       m_A,
 	double*   d_last;
 	double*   d_last_m1;
 	double    shift;
-	int       ij_shift;
-	int       k;
-	int       n_iter_allowed = n_G;
+	integer       ij_shift;
+	integer       k;
+	integer       n_iter_allowed = n_G;
 
 	// Query epsilon and safmin, which are used in the test for convergence.
 	eps    = FLA_Mach_params_opd( FLA_MACH_EPS );

@@ -145,6 +145,7 @@
 /* Subroutine */
 int clags2_(logical *upper, real *a1, complex *a2, real *a3, real *b1, complex *b2, real *b3, real *csu, complex *snu, real *csv, complex *snv, real *csq, complex *snq)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* System generated locals */
     real r__1, r__2, r__3, r__4, r__5, r__6, r__7, r__8;
     complex q__1, q__2, q__3, q__4, q__5;
@@ -553,6 +554,7 @@ int clags2_(logical *upper, real *a1, complex *a2, real *a3, real *b1, complex *
             snv->r = q__1.r, snv->i = q__1.i;
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLAGS2 */
 }

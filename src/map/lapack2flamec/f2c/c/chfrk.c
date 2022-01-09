@@ -156,6 +156,16 @@
 /* Subroutine */
 int chfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *alpha, complex *a, integer *lda, real *beta, complex *c__)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"chfrk inputs: transr %c, uplo %c, trans %c, n %lld, k %lld, lda %lld",*transr, *uplo, *trans, *n, *k, *lda);
+#else 
+    snprintf(buffer, 256,"chfrk inputs: transr %c, uplo %c, trans %c, n %d, k %d, lda %d",*transr, *uplo, *trans, *n, *k, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     complex q__1;
@@ -240,6 +250,7 @@ int chfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
     {
         i__1 = -info;
         xerbla_("CHFRK ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible. */
@@ -247,6 +258,7 @@ int chfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
     /* done (it is in CHERK for example) and left in the general case. */
     if (*n == 0 || (*alpha == 0.f || *k == 0) && *beta == 1.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*alpha == 0.f && *beta == 0.f)
@@ -260,6 +272,7 @@ int chfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
             c__[i__2].r = 0.f;
             c__[i__2].i = 0.f; // , expr subst
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     q__1.r = *alpha;
@@ -472,6 +485,7 @@ int chfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHFRK */
 }

@@ -325,7 +325,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
                 z__1.i = a[i__2].i + z__2.i; // , expr subst
                 a11.r = z__1.r;
                 a11.i = z__1.i; // , expr subst
-                da11 = (d__1 = a11.r, f2c_abs(d__1)) + (d__2 = d_imag(&a11), f2c_abs( d__2));
+                da11 = (d__1 = a11.r, f2c_dabs(d__1)) + (d__2 = d_imag(&a11), f2c_dabs( d__2));
                 if (da11 <= smin)
                 {
                     a11.r = smin;
@@ -333,7 +333,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
                     da11 = smin;
                     *info = 1;
                 }
-                db = (d__1 = vec.r, f2c_abs(d__1)) + (d__2 = d_imag(&vec), f2c_abs( d__2));
+                db = (d__1 = vec.r, f2c_dabs(d__1)) + (d__2 = d_imag(&vec), f2c_dabs( d__2));
                 if (da11 < 1. && db > 1.)
                 {
                     if (db > bignum * da11)
@@ -345,7 +345,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
                 z__3.i = 0.; // , expr subst
                 z__2.r = vec.r * z__3.r - vec.i * z__3.i;
                 z__2.i = vec.r * z__3.i + vec.i * z__3.r; // , expr subst
-                zladiv_(&z__1, &z__2, &a11);
+                zladiv_f2c_(&z__1, &z__2, &a11);
                 x11.r = z__1.r;
                 x11.i = z__1.i; // , expr subst
                 if (scaloc != 1.)
@@ -414,7 +414,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
                 z__1.i = z__2.i + z__3.i; // , expr subst
                 a11.r = z__1.r;
                 a11.i = z__1.i; // , expr subst
-                da11 = (d__1 = a11.r, f2c_abs(d__1)) + (d__2 = d_imag(&a11), f2c_abs( d__2));
+                da11 = (d__1 = a11.r, f2c_dabs(d__1)) + (d__2 = d_imag(&a11), f2c_dabs( d__2));
                 if (da11 <= smin)
                 {
                     a11.r = smin;
@@ -422,7 +422,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
                     da11 = smin;
                     *info = 1;
                 }
-                db = (d__1 = vec.r, f2c_abs(d__1)) + (d__2 = d_imag(&vec), f2c_abs( d__2));
+                db = (d__1 = vec.r, f2c_dabs(d__1)) + (d__2 = d_imag(&vec), f2c_dabs( d__2));
                 if (da11 < 1. && db > 1.)
                 {
                     if (db > bignum * da11)
@@ -434,7 +434,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
                 z__3.i = 0.; // , expr subst
                 z__2.r = vec.r * z__3.r - vec.i * z__3.i;
                 z__2.i = vec.r * z__3.i + vec.i * z__3.r; // , expr subst
-                zladiv_(&z__1, &z__2, &a11);
+                zladiv_f2c_(&z__1, &z__2, &a11);
                 x11.r = z__1.r;
                 x11.i = z__1.i; // , expr subst
                 if (scaloc != 1.)
@@ -511,7 +511,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
                 d_cnjg(&z__1, &z__2);
                 a11.r = z__1.r;
                 a11.i = z__1.i; // , expr subst
-                da11 = (d__1 = a11.r, f2c_abs(d__1)) + (d__2 = d_imag(&a11), f2c_abs( d__2));
+                da11 = (d__1 = a11.r, f2c_dabs(d__1)) + (d__2 = d_imag(&a11), f2c_dabs( d__2));
                 if (da11 <= smin)
                 {
                     a11.r = smin;
@@ -519,7 +519,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
                     da11 = smin;
                     *info = 1;
                 }
-                db = (d__1 = vec.r, f2c_abs(d__1)) + (d__2 = d_imag(&vec), f2c_abs( d__2));
+                db = (d__1 = vec.r, f2c_dabs(d__1)) + (d__2 = d_imag(&vec), f2c_dabs( d__2));
                 if (da11 < 1. && db > 1.)
                 {
                     if (db > bignum * da11)
@@ -531,7 +531,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
                 z__3.i = 0.; // , expr subst
                 z__2.r = vec.r * z__3.r - vec.i * z__3.i;
                 z__2.i = vec.r * z__3.i + vec.i * z__3.r; // , expr subst
-                zladiv_(&z__1, &z__2, &a11);
+                zladiv_f2c_(&z__1, &z__2, &a11);
                 x11.r = z__1.r;
                 x11.i = z__1.i; // , expr subst
                 if (scaloc != 1.)
@@ -607,7 +607,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
                 z__1.i = a[i__1].i + z__2.i; // , expr subst
                 a11.r = z__1.r;
                 a11.i = z__1.i; // , expr subst
-                da11 = (d__1 = a11.r, f2c_abs(d__1)) + (d__2 = d_imag(&a11), f2c_abs( d__2));
+                da11 = (d__1 = a11.r, f2c_dabs(d__1)) + (d__2 = d_imag(&a11), f2c_dabs( d__2));
                 if (da11 <= smin)
                 {
                     a11.r = smin;
@@ -615,7 +615,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
                     da11 = smin;
                     *info = 1;
                 }
-                db = (d__1 = vec.r, f2c_abs(d__1)) + (d__2 = d_imag(&vec), f2c_abs( d__2));
+                db = (d__1 = vec.r, f2c_dabs(d__1)) + (d__2 = d_imag(&vec), f2c_dabs( d__2));
                 if (da11 < 1. && db > 1.)
                 {
                     if (db > bignum * da11)
@@ -627,7 +627,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
                 z__3.i = 0.; // , expr subst
                 z__2.r = vec.r * z__3.r - vec.i * z__3.i;
                 z__2.i = vec.r * z__3.i + vec.i * z__3.r; // , expr subst
-                zladiv_(&z__1, &z__2, &a11);
+                zladiv_f2c_(&z__1, &z__2, &a11);
                 x11.r = z__1.r;
                 x11.i = z__1.i; // , expr subst
                 if (scaloc != 1.)

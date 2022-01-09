@@ -35,12 +35,13 @@
 #define LAPACK_trtri(prefix)                                    \
   int F77_ ## prefix ## trtri( char* uplo,                      \
                                char* diag,                      \
-                               int* n,                          \
+                               integer* n,                          \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, \
-                               int* ldim_A,                     \
-                               int* info )
+                               integer* ldim_A,                     \
+                               integer* info )
 
 #define LAPACK_trtri_body(prefix)                               \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                 \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   FLA_Uplo     uplo_fla;                                        \
   FLA_Diag     diag_fla;                                        \
@@ -62,6 +63,7 @@
   FLA_Finalize_safe( init_result );                                     \
                                                                         \
   *info = 0;                                                            \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  	      \
                                                                         \
   return 0;
 
@@ -114,10 +116,10 @@ LAPACK_trtri(z)
 #define LAPACK_trti2(prefix)                                    \
   int F77_ ## prefix ## trti2( char* uplo,                      \
                                char* diag,                      \
-                               int* n,                          \
+                               integer* n,                          \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, \
-                               int* ldim_A,                     \
-                               int* info )
+                               integer* ldim_A,                     \
+                               integer* info )
 
 LAPACK_trti2(s)
 {

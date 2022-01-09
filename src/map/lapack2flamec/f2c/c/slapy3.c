@@ -55,6 +55,7 @@
 /* ===================================================================== */
 real slapy3_(real *x, real *y, real *z__)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* System generated locals */
     real ret_val, r__1, r__2, r__3;
     /* Builtin functions */
@@ -98,6 +99,7 @@ real slapy3_(real *x, real *y, real *z__)
         r__3 = zabs / w;
         ret_val = w * sqrt(r__1 * r__1 + r__2 * r__2 + r__3 * r__3);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return ret_val;
     /* End of SLAPY3 */
 }

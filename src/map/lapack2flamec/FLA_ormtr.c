@@ -40,15 +40,16 @@
   int F77_ ## prefix ## name ## tr( char* side,                         \
                                     char* uplo,                         \
                                     char* trans,                        \
-                                    int*  m,                            \
-                                    int*  n,                            \
-                                    PREFIX2LAPACK_TYPEDEF(prefix) *buff_A, int* ldim_A, \
+                                    integer*  m,                            \
+                                    integer*  n,                            \
+                                    PREFIX2LAPACK_TYPEDEF(prefix) *buff_A, integer* ldim_A, \
                                     PREFIX2LAPACK_TYPEDEF(prefix) *buff_t, \
-                                    PREFIX2LAPACK_TYPEDEF(prefix) *buff_C, int* ldim_C, \
-                                    PREFIX2LAPACK_TYPEDEF(prefix) *buff_w, int* lwork, \
-                                    int* info )
+                                    PREFIX2LAPACK_TYPEDEF(prefix) *buff_C, integer* ldim_C, \
+                                    PREFIX2LAPACK_TYPEDEF(prefix) *buff_w, integer* lwork, \
+                                    integer* info )
 
 #define LAPACK_ormtr_body(prefix)                                       \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);                \
   FLA_Side     side_fla;                                                \
   FLA_Uplo     uplo_fla;                                                \
@@ -152,6 +153,7 @@
   FLA_Finalize_safe( init_result );                                     \
                                                                         \
   *info = 0;                                                            \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                          \
                                                                         \
   return 0;
 
@@ -163,7 +165,7 @@ extern int zunmtr_fla(char *side, char *uplo, char *trans, integer *m, integer *
 LAPACK_ormtr(s, orm)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             sormtr_fla( side, uplo, trans,
                         m, n,
@@ -191,7 +193,7 @@ LAPACK_ormtr(s, orm)
 LAPACK_ormtr(d, orm)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             dormtr_fla( side, uplo, trans,
                         m, n,
@@ -221,7 +223,7 @@ LAPACK_ormtr(d, orm)
 LAPACK_ormtr(c, unm)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             cunmtr_fla( side, uplo, trans,
                         m, n,
@@ -249,7 +251,7 @@ LAPACK_ormtr(c, unm)
 LAPACK_ormtr(z, unm)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             zunmtr_fla( side, uplo, trans,
                         m, n,

@@ -33,11 +33,12 @@ void libfla_test_apqudut_experiment( test_params_t params,
                                      unsigned int  var,
                                      char*         sc_str,
                                      FLA_Datatype  datatype,
-                                     unsigned int  p,
+                                     uinteger  p,
                                      unsigned int  pci,
                                      unsigned int  n_repeats,
                                      signed int    impl,
                                      double*       perf,
+                                     double*       t,
                                      double*       residual );
 void libfla_test_apqudut_impl( int     impl,
                                FLA_Obj T, FLA_Obj W,
@@ -68,23 +69,24 @@ void libfla_test_apqudut_experiment( test_params_t params,
                                      unsigned int  var,
                                      char*         sc_str,
                                      FLA_Datatype  datatype,
-                                     unsigned int  p_cur,
+                                     uinteger  p_cur,
                                      unsigned int  pci,
                                      unsigned int  n_repeats,
                                      signed int    impl,
                                      double*       perf,
+                                     double*       t,
                                      double*       residual )
 {
 	dim_t        b_alg_flat = params.b_alg_flat;
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	unsigned int mB, mC, mD, n, n_rhs;
-	signed int   mB_input    = -1;
-	signed int   mC_input    = -4;
-	signed int   mD_input    = -4;
-	signed int   n_input     = -1;
-	signed int   n_rhs_input = -1;
+	uinteger mB, mC, mD, n, n_rhs;
+	integer   mB_input    = -1;
+	integer   mC_input    = -4;
+	integer   mD_input    = -4;
+	integer   n_input     = -1;
+	integer   n_rhs_input = -1;
 	FLA_Obj      R_BD, R_BC, B, C, D, T, W;
 	FLA_Obj      bR_BD, bR_BC, bB, bC, bD;
 	FLA_Obj      bR_BD_save, bC_save, bD_save;
@@ -187,7 +189,8 @@ void libfla_test_apqudut_experiment( test_params_t params,
 	*residual = FLA_Max_elemwise_diff( bR_BD, bR_BC );
 
 	// Compute the performance of the best experiment repeat.
-	*perf = n * n_rhs * ( 2.0 * mC + 2.0 * mD + 0.5 * b_alg_flat + 0.5 ) /
+	*t = time_min;
+  *perf = n * n_rhs * ( 2.0 * mC + 2.0 * mD + 0.5 * b_alg_flat + 0.5 ) /
 	        time_min / FLOPS_PER_UNIT_PERF;
 	if ( FLA_Obj_is_complex( bR_BD ) ) *perf *= 4.0;
 

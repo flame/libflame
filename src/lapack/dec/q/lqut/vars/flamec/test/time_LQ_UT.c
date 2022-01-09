@@ -14,27 +14,27 @@
 #define FLA_ALG_UNBLOCKED 2
 #define FLA_ALG_UNB_OPT1  3
 
-extern fla_gemm_t*  fla_gemm_cntl_blas;
-extern fla_trmm_t*  fla_trmm_cntl_blas;
-extern fla_trsm_t*  fla_trsm_cntl_blas;
-extern fla_copyt_t* fla_copyt_cntl_blas;
-extern fla_axpyt_t* fla_axpyt_cntl_blas;
+extern TLS_CLASS_SPEC fla_gemm_t*  fla_gemm_cntl_blas;
+extern TLS_CLASS_SPEC fla_trmm_t*  fla_trmm_cntl_blas;
+extern TLS_CLASS_SPEC fla_trsm_t*  fla_trsm_cntl_blas;
+extern TLS_CLASS_SPEC fla_copyt_t* fla_copyt_cntl_blas;
+extern TLS_CLASS_SPEC fla_axpyt_t* fla_axpyt_cntl_blas;
 
 FLA_Error REF_LQ_UT( FLA_Obj A, FLA_Obj t );
 void time_LQ(
-               int variant, int type, int n_repeats, int m, int n, int nb_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer n, integer nb_alg,
                FLA_Obj A, FLA_Obj t, FLA_Obj T, FLA_Obj TT, FLA_Obj w, FLA_Obj W, FLA_Obj WW, FLA_Obj b, FLA_Obj b_ref,
                double *dtime, double *diff, double *gflops );
 
 
 void time_LQ(
-               int variant, int type, int n_repeats, int m, int n, int nb_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer n, integer nb_alg,
                FLA_Obj A, FLA_Obj t, FLA_Obj T, FLA_Obj TT, FLA_Obj w, FLA_Obj W, FLA_Obj WW, FLA_Obj b, FLA_Obj b_ref,
                double *dtime, double *diff, double *gflops )
 {
-  int
+  integer
     irep;
-  int nb_alg_sm;
+  integer nb_alg_sm;
 
   double
     dtime_old = 1.0e9;

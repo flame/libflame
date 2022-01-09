@@ -1,16 +1,23 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
-static int c__1 = 1;
-static int c_n1 = -1;
-int cgeqp3_check(int *m, int *n, scomplex *a, int *lda, int *jpvt, scomplex *tau, scomplex *work, int *lwork, float * rwork, int *info)
+static integer c__1 = 1;
+static integer c_n1 = -1;
+int cgeqp3_check(integer *m, integer *n, scomplex *a, integer *lda, integer *jpvt, scomplex *tau, scomplex *work, integer *lwork, float * rwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
     /* Local variables */
-    int nb,  iws;
-    int minmn;
-    int lwkopt;
+    integer nb,  iws;
+    integer minmn;
+    integer lwkopt;
     logical lquery;
+
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "cgeqp3 inputs: m %d, n %d, lda %d, jpvt %d\n", *m, *n, *lda, *jpvt);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
+
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

@@ -12,9 +12,9 @@
 
 FLA_Error FLA_Shift_pivots_to( FLA_Pivot_type ptype, FLA_Obj p )
 {
-  int  m_p, n_p;
-  int* buff_p;
-  int  i;
+  integer  m_p, n_p;
+  integer* buff_p;
+  integer  i;
 
   if ( FLA_Check_error_level() >= FLA_MIN_ERROR_CHECKING )
     FLA_Shift_pivots_to_check( ptype, p );

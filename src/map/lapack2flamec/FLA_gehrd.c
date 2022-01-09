@@ -22,15 +22,16 @@
 */
 
 #define LAPACK_gehrd(prefix)                                            \
-  int F77_ ## prefix ## gehrd( int* m,                                  \
-                               int* ilo,                                \
-                               int* ihi,                                \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+  int F77_ ## prefix ## gehrd( integer* m,                                  \
+                               integer* ilo,                                \
+                               integer* ihi,                                \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_t,   \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, int* lwork, \
-                               int* info )
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, integer* lwork, \
+                               integer* info )
 
 #define LAPACK_gehrd_body(prefix)                               \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                 \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   dim_t        m_t      = ( *m - 1 );                           \
   FLA_Obj      A, t, T;                                         \
@@ -58,6 +59,7 @@
                                                                 \
   *info = 0;                                                    \
                                                                 \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  \
   return 0;
 
 
@@ -121,10 +123,10 @@ LAPACK_gehrd(z)
 #endif
 
 #define LAPACK_gehd2(prefix)                                            \
-  int F77_ ## prefix ## gehd2( int* m,                                  \
-                               int* ilo,                                \
-                               int* ihi,                                \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+  int F77_ ## prefix ## gehd2( integer* m,                                  \
+                               integer* ilo,                                \
+                               integer* ihi,                                \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_t,   \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_w,   \
                                int* info )

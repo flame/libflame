@@ -1,0 +1,19 @@
+This directory contains sample implementations of different LA routines .
+
+Steps:
+======
+
+1) In the makefile, set up the paths to where you have the libflame and BLAS
+   libraries are installed.
+
+2) Choose the algorithm you want to test by modifying TEST_SRC_PATH
+
+3) Multi-threading can be enabled or disabled by changing the value of ENABLE_OMP_THREADS macro in driver.c
+
+4) Create a folder named 'obj' where .o files will be stored
+
+5) Run 'make' to compile.
+
+6) run ./driver.x to run
+
+Enjoy.

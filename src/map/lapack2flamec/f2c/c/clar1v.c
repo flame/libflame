@@ -217,6 +217,16 @@ is largest */
 /* Subroutine */
 int clar1v_(integer *n, integer *b1, integer *bn, real * lambda, real *d__, real *l, real *ld, real *lld, real *pivmin, real * gaptol, complex *z__, logical *wantnc, integer *negcnt, real *ztz, real *mingma, integer *r__, integer *isuppz, real *nrminv, real * resid, real *rqcorr, real *work)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clar1v inputs: n %lld, b1 %lld, bn %lld, r__ %lld",*n, *b1, *bn, *r__);
+#else 
+    snprintf(buffer, 256,"clar1v inputs: n %d, b1 %d, bn %d, r__ %d",*n, *b1, *bn, *r__);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3, i__4;
     real r__1;
@@ -640,6 +650,7 @@ L280:
     *nrminv = sqrt(tmp);
     *resid = f2c_abs(*mingma) * *nrminv;
     *rqcorr = *mingma * tmp;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLAR1V */
 }

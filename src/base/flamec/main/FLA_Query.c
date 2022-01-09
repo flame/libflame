@@ -68,7 +68,7 @@ dim_t FLA_Obj_datatype_size( FLA_Datatype datatype )
   switch( datatype )
   {
     case FLA_INT: 
-      datatype_size = sizeof( int );
+      datatype_size = sizeof( integer );
       break;
     case FLA_FLOAT: 
       datatype_size = sizeof( float );
@@ -571,8 +571,8 @@ FLA_Bool FLA_Obj_equals( FLA_Obj A, FLA_Obj B )
 
     case FLA_INT:
     {
-      int *buff_A = ( int * ) FLA_INT_PTR( A );
-      int *buff_B = ( int * ) FLA_INT_PTR( B );
+      integer *buff_A = ( integer * ) FLA_INT_PTR( A );
+      integer *buff_B = ( integer * ) FLA_INT_PTR( B );
 
       for ( j = 0; j < n; j++ )
         for ( i = 0; i < m; i++ )
@@ -699,8 +699,8 @@ FLA_Bool FLA_Obj_gt( FLA_Obj A, FLA_Obj B )
 
     case FLA_INT:
     {
-      int *buff_A = ( int * ) FLA_INT_PTR( A );
-      int *buff_B = ( int * ) FLA_INT_PTR( B );
+      integer *buff_A = ( integer * ) FLA_INT_PTR( A );
+      integer *buff_B = ( integer * ) FLA_INT_PTR( B );
 
       if ( !( *buff_A > *buff_B ) ) return FALSE;
 
@@ -777,8 +777,8 @@ FLA_Bool FLA_Obj_ge( FLA_Obj A, FLA_Obj B )
 
     case FLA_INT:
     {
-      int *buff_A = ( int * ) FLA_INT_PTR( A );
-      int *buff_B = ( int * ) FLA_INT_PTR( B );
+      integer *buff_A = ( integer * ) FLA_INT_PTR( A );
+      integer *buff_B = ( integer * ) FLA_INT_PTR( B );
 
       if ( !( *buff_A >= *buff_B ) ) return FALSE;
 
@@ -854,8 +854,8 @@ FLA_Bool FLA_Obj_lt( FLA_Obj A, FLA_Obj B )
 
     case FLA_INT:
     {
-      int *buff_A = ( int * ) FLA_INT_PTR( A );
-      int *buff_B = ( int * ) FLA_INT_PTR( B );
+      integer *buff_A = ( integer * ) FLA_INT_PTR( A );
+      integer *buff_B = ( integer * ) FLA_INT_PTR( B );
 
       if ( !( *buff_A < *buff_B ) ) return FALSE;
 
@@ -931,8 +931,8 @@ FLA_Bool FLA_Obj_le( FLA_Obj A, FLA_Obj B )
 
     case FLA_INT:
     {
-      int *buff_A = ( int * ) FLA_INT_PTR( A );
-      int *buff_B = ( int * ) FLA_INT_PTR( B );
+      integer *buff_A = ( integer * ) FLA_INT_PTR( A );
+      integer *buff_B = ( integer * ) FLA_INT_PTR( B );
 
       if ( !( *buff_A <= *buff_B ) ) return FALSE;
 
@@ -976,7 +976,7 @@ void* FLA_Submatrix_at( FLA_Datatype datatype, void* buffer, dim_t i, dim_t j, d
   switch( datatype )
   {
     case FLA_INT:
-      r_val = ( void* ) ( (      ( int* ) buffer ) + i * rs + j * cs );
+      r_val = ( void* ) ( (      ( integer* ) buffer ) + i * rs + j * cs );
       break;
 
     case FLA_FLOAT:

@@ -1,4 +1,4 @@
-1              Number of repeats per experiment
+2              Number of repeats per experiment
 c              Flat matrix storage scheme(s) to test ('c' = col-major; 'r' = row-major; 'g' = general; 'm' = mixed)
 sdcz           Datatype(s) to test
 40             Algorithmic blocksize for blocked algorithms
@@ -7,5 +7,6 @@ sdcz           Datatype(s) to test
 80             Problem size: first to test
 160            Problem size: maximum to test
 40             Problem size: increment between experiments
+10             Size of sub-matrix to be factorized for incomplete factorizations ( '-2'-> Test for possible valid sizes, '-1' -> Test for Random value  (or) Given valid value )
 2              Number of SuperMatrix threads (0 = disable SuperMatrix in FLASH front-ends)
 i              Reaction to test failure ('i' = ignore; 's' = sleep() and continue; 'a' = abort)

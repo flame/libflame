@@ -1,0 +1,23 @@
+This directory contains sample implementations of different LA routines .
+
+Steps:
+======
+
+1) In the makefile, set up the paths to where you have the libflame and BLAS
+   libraries are installed.
+
+2) Multi-threading can be enabled or disabled by changing the value of ENABLE_OMP_THREADS macro in driver.c
+
+3) Create a folder named 'obj' where .o files will be stored
+
+4) Two source files are provided in lu folder
+    1. Test cases can be created by using dgetrf_test_gen.c
+    2. Created test case can be tested using driver.c
+  Which file to compile to get the executable can be controlled in Makefile
+
+5) Run 'make' to compile.
+
+6) run ./driver.x to run
+
+
+Enjoy.

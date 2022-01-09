@@ -123,6 +123,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int ctptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, complex *ap, complex *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctptrs inputs: uplo %c, trans %c, diag %c, n %lld, nrhs %lld, ldb %lld",*uplo, *trans, *diag, *n, *nrhs, *ldb);
+#else 
+    snprintf(buffer, 256,"ctptrs inputs: uplo %c, trans %c, diag %c, n %d, nrhs %d, ldb %d",*uplo, *trans, *diag, *n, *nrhs, *ldb);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, i__1, i__2;
     /* Local variables */
@@ -190,11 +200,13 @@ int ctptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, comp
     {
         i__1 = -(*info);
         xerbla_("CTPTRS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check for singularity. */
@@ -211,6 +223,7 @@ int ctptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, comp
                 i__2 = jc + *info - 1;
                 if (ap[i__2].r == 0.f && ap[i__2].i == 0.f)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 jc += *info;
@@ -228,6 +241,7 @@ int ctptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, comp
                 i__2 = jc;
                 if (ap[i__2].r == 0.f && ap[i__2].i == 0.f)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 jc = jc + *n - *info + 1;
@@ -245,6 +259,7 @@ int ctptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, comp
         ctpsv_(uplo, trans, diag, n, &ap[1], &b[j * b_dim1 + 1], &c__1);
         /* L30: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTPTRS */
 }

@@ -13,9 +13,9 @@
 FLA_Error FLA_Bsvd_find_converged( FLA_Obj tol, FLA_Obj d, FLA_Obj e, FLA_Obj sminl )
 {
     FLA_Datatype datatype;
-    int          m_A;
-    int          inc_d;
-    int          inc_e;
+    integer          m_A;
+    integer          inc_d;
+    integer          inc_e;
 
     datatype = FLA_Obj_datatype( d );
 
@@ -65,16 +65,16 @@ FLA_Error FLA_Bsvd_find_converged( FLA_Obj tol, FLA_Obj d, FLA_Obj e, FLA_Obj sm
 
 
 
-FLA_Error FLA_Bsvd_find_converged_ops( int       m_A,
+FLA_Error FLA_Bsvd_find_converged_ops( integer       m_A,
                                        float     tol,
-                                       float*    buff_d, int inc_d,
-                                       float*    buff_e, int inc_e,
+                                       float*    buff_d, integer inc_d,
+                                       float*    buff_e, integer inc_e,
                                        float*    sminl )
 {
     float*  epsilon_last;
     float*  delta_last;
     float   mu;
-    int     i;
+    integer     i;
 
     epsilon_last = buff_e + (m_A-2)*inc_e;
     delta_last   = buff_d + (m_A-1)*inc_d;
@@ -114,16 +114,16 @@ FLA_Error FLA_Bsvd_find_converged_ops( int       m_A,
     return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Bsvd_find_converged_opd( int       m_A,
+FLA_Error FLA_Bsvd_find_converged_opd( integer       m_A,
                                        double    tol,
-                                       double*   buff_d, int inc_d,
-                                       double*   buff_e, int inc_e,
+                                       double*   buff_d, integer inc_d,
+                                       double*   buff_e, integer inc_e,
                                        double*   sminl )
 {
     double* epsilon_last;
     double* delta_last;
     double  mu;
-    int     i;
+    integer     i;
 
     epsilon_last = buff_e + (m_A-2)*inc_e;
     delta_last   = buff_d + (m_A-1)*inc_d;

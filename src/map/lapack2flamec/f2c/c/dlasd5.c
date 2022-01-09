@@ -143,7 +143,7 @@ int dlasd5_(integer *i__, doublereal *d__, doublereal *z__, doublereal *delta, d
             c__ = *rho * z__[1] * z__[1] * delsq;
             /* B > ZERO, always */
             /* The following TAU is DSIGMA * DSIGMA - D( 1 ) * D( 1 ) */
-            tau = c__ * 2. / (b + sqrt((d__1 = b * b - c__ * 4., f2c_abs(d__1))));
+            tau = c__ * 2. / (b + sqrt((d__1 = b * b - c__ * 4., f2c_dabs(d__1))));
             /* The following TAU is DSIGMA - D( 1 ) */
             tau /= d__[1] + sqrt(d__[1] * d__[1] + tau);
             *dsigma = d__[1] + tau;
@@ -168,7 +168,7 @@ int dlasd5_(integer *i__, doublereal *d__, doublereal *z__, doublereal *delta, d
                 tau = (b - sqrt(b * b + c__ * 4.)) / 2.;
             }
             /* The following TAU is DSIGMA - D( 2 ) */
-            tau /= d__[2] + sqrt((d__1 = d__[2] * d__[2] + tau, f2c_abs(d__1)));
+            tau /= d__[2] + sqrt((d__1 = d__[2] * d__[2] + tau, f2c_dabs(d__1)));
             *dsigma = d__[2] + tau;
             delta[1] = -(del + tau);
             delta[2] = -tau;

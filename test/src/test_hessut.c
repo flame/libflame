@@ -38,11 +38,12 @@ void libfla_test_hessut_experiment( test_params_t params,
                                     unsigned int  var,
                                     char*         sc_str,
                                     FLA_Datatype  datatype,
-                                    unsigned int  p,
+                                    uinteger  p,
                                     unsigned int  pci,
                                     unsigned int  n_repeats,
                                     signed int    impl,
                                     double*       perf,
+                                    double*       t,
                                     double*       residual );
 void libfla_test_hessut_impl( int     impl,
                               FLA_Obj A,
@@ -113,19 +114,20 @@ void libfla_test_hessut_experiment( test_params_t params,
                                     unsigned int  var,
                                     char*         sc_str,
                                     FLA_Datatype  datatype,
-                                    unsigned int  p_cur,
+                                    uinteger  p_cur,
                                     unsigned int  pci,
                                     unsigned int  n_repeats,
                                     signed int    impl,
                                     double*       perf,
+                                    double*       t,
                                     double*       residual )
 {
 	dim_t        b_alg_flat = params.b_alg_flat;
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	unsigned int m;
-	signed int   m_input    = -1;
+	uinteger m;
+	integer   m_input    = -1;
 	FLA_Obj      A, T, W, Qh, AQ, QhAQ, norm;
 	FLA_Obj      AT, AB;
 	FLA_Obj      QhT, QhB;
@@ -190,7 +192,8 @@ void libfla_test_hessut_experiment( test_params_t params,
 		libfla_test_hessut_cntl_free();
 
 	// Compute the performance of the best experiment repeat.
-	*perf = ( 10.0 / 3.0 * m * m * m ) / time_min / FLOPS_PER_UNIT_PERF;
+	*t = time_min;
+  *perf = ( 10.0 / 3.0 * m * m * m ) / time_min / FLOPS_PER_UNIT_PERF;
 	if ( FLA_Obj_is_complex( A ) ) *perf *= 4.0;
 
 	// Check the result by computing R - Q' A_orig Q.

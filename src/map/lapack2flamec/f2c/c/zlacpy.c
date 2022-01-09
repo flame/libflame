@@ -92,6 +92,12 @@ if UPLO = 'L', only the lower trapezium is */
 /* Subroutine */
 int zlacpy_(char *uplo, integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"zlacpy inputs: uplo %c, m %" FLA_IS ", n %" FLA_IS ", lda %%" FLA_IS ", ldb %" FLA_IS "",*uplo, *m, *n, *lda, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
@@ -184,6 +190,7 @@ int zlacpy_(char *uplo, integer *m, integer *n, doublecomplex *a, integer *lda, 
             /* L60: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZLACPY */
 }

@@ -1,0 +1,10 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Copyr.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Copyr.h
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Copyr_internal.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Copyr_l.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Copyr_u.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLASH_Copyr.c
+	)

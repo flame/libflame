@@ -30,11 +30,11 @@ FLA_Error FLA_Bidiag_UT_extract_diagonals( FLA_Obj A, FLA_Obj d, FLA_Obj e )
 FLA_Error FLA_Bidiag_UT_u_extract_diagonals( FLA_Obj A, FLA_Obj d, FLA_Obj e )
 {
   FLA_Datatype datatype;
-  int          n_A;
-  int          rs_A, cs_A;
-  int          inc_d;
-  int          inc_e;
-  int          i;
+  integer          n_A;
+  integer          rs_A, cs_A;
+  integer          inc_d;
+  integer          inc_e;
+  integer          i;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -65,7 +65,7 @@ FLA_Error FLA_Bidiag_UT_u_extract_diagonals( FLA_Obj A, FLA_Obj d, FLA_Obj e )
         float*    delta1   = buff_d + (i  )*inc_d;
         float*    epsilon1 = buff_e + (i  )*inc_e;
 
-        int       n_ahead  = n_A - i - 1;
+        integer       n_ahead  = n_A - i - 1;
 
         // delta1 = alpha11;
         *delta1 = *alpha11;
@@ -91,7 +91,7 @@ FLA_Error FLA_Bidiag_UT_u_extract_diagonals( FLA_Obj A, FLA_Obj d, FLA_Obj e )
         double*   delta1   = buff_d + (i  )*inc_d;
         double*   epsilon1 = buff_e + (i  )*inc_e;
 
-        int       n_ahead  = n_A - i - 1;
+        integer       n_ahead  = n_A - i - 1;
 
         // delta1 = alpha11;
         *delta1 = *alpha11;
@@ -117,7 +117,7 @@ FLA_Error FLA_Bidiag_UT_u_extract_diagonals( FLA_Obj A, FLA_Obj d, FLA_Obj e )
         scomplex* delta1   = buff_d + (i  )*inc_d;
         scomplex* epsilon1 = buff_e + (i  )*inc_e;
 
-        int       n_ahead  = n_A - i - 1;
+        integer       n_ahead  = n_A - i - 1;
 
         // delta1 = alpha11;
         *delta1 = *alpha11;
@@ -143,7 +143,7 @@ FLA_Error FLA_Bidiag_UT_u_extract_diagonals( FLA_Obj A, FLA_Obj d, FLA_Obj e )
         dcomplex* delta1   = buff_d + (i  )*inc_d;
         dcomplex* epsilon1 = buff_e + (i  )*inc_e;
 
-        int       n_ahead  = n_A - i - 1;
+        integer       n_ahead  = n_A - i - 1;
 
         // delta1 = alpha11;
         *delta1 = *alpha11;
@@ -165,11 +165,11 @@ FLA_Error FLA_Bidiag_UT_u_extract_diagonals( FLA_Obj A, FLA_Obj d, FLA_Obj e )
 FLA_Error FLA_Bidiag_UT_l_extract_diagonals( FLA_Obj A, FLA_Obj d, FLA_Obj e )
 {
   FLA_Datatype datatype;
-  int          m_A;
-  int          rs_A, cs_A;
-  int          inc_d;
-  int          inc_e;
-  int          i;
+  integer          m_A;
+  integer          rs_A, cs_A;
+  integer          inc_d;
+  integer          inc_e;
+  integer          i;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -200,7 +200,7 @@ FLA_Error FLA_Bidiag_UT_l_extract_diagonals( FLA_Obj A, FLA_Obj d, FLA_Obj e )
         float*    delta1   = buff_d + (i  )*inc_d;
         float*    epsilon1 = buff_e + (i  )*inc_e;
 
-        int       m_ahead  = m_A - i - 1;
+        integer       m_ahead  = m_A - i - 1;
 
         // delta1 = alpha11;
         *delta1 = *alpha11;
@@ -226,7 +226,7 @@ FLA_Error FLA_Bidiag_UT_l_extract_diagonals( FLA_Obj A, FLA_Obj d, FLA_Obj e )
         double*   delta1   = buff_d + (i  )*inc_d;
         double*   epsilon1 = buff_e + (i  )*inc_e;
 
-        int       m_ahead  = m_A - i - 1;
+        integer       m_ahead  = m_A - i - 1;
 
         // delta1 = alpha11;
         *delta1 = *alpha11;
@@ -252,7 +252,7 @@ FLA_Error FLA_Bidiag_UT_l_extract_diagonals( FLA_Obj A, FLA_Obj d, FLA_Obj e )
         scomplex* delta1   = buff_d + (i  )*inc_d;
         scomplex* epsilon1 = buff_e + (i  )*inc_e;
 
-        int       m_ahead  = m_A - i - 1;
+        integer       m_ahead  = m_A - i - 1;
 
         // delta1 = alpha11;
         *delta1 = *alpha11;
@@ -278,7 +278,7 @@ FLA_Error FLA_Bidiag_UT_l_extract_diagonals( FLA_Obj A, FLA_Obj d, FLA_Obj e )
         dcomplex* delta1   = buff_d + (i  )*inc_d;
         dcomplex* epsilon1 = buff_e + (i  )*inc_e;
 
-        int       m_ahead  = m_A - i - 1;
+        integer       m_ahead  = m_A - i - 1;
 
         // delta1 = alpha11;
         *delta1 = *alpha11;

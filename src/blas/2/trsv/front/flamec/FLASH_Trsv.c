@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_trsv_t* flash_trsv_cntl;
+extern TLS_CLASS_SPEC fla_trsv_t* flash_trsv_cntl;
 
 FLA_Error FLASH_Trsv( FLA_Uplo uplo, FLA_Trans trans, FLA_Diag diag, FLA_Obj A, FLA_Obj x )
 {

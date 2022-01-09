@@ -12,6 +12,22 @@ extern "C" {
     {
         return( sin(*x) );
     }
+#ifdef _WIN32
+    void c_sin(complex *r, complex *z)
+    {
+        _Fcomplex z_ = { z->r, z->i };
+        _Fcomplex ret_val = csinf(z_);
+        r->r = crealf(ret_val);
+        r->i = cimagf(ret_val);
+    }
+    void z_sin(doublecomplex *r, doublecomplex *z)
+    {
+        _Dcomplex z_ = { z->r, z->i };
+        _Dcomplex ret_val = csin(z_);
+        r->r = creal(ret_val);
+        r->i = cimag(ret_val);
+    }
+#else
     void c_sin(complex *r, complex *z)
     {
         double _Complex ret_val = csin(z->r + I*z->i);
@@ -24,6 +40,7 @@ extern "C" {
         r->r = creal(ret_val);
         r->i = cimag(ret_val);
     }
+#endif
 
 #ifdef __cplusplus
 }

@@ -13,9 +13,9 @@
 FLA_Error FLA_Syr_external( FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj x, FLA_Obj A )
 {
   FLA_Datatype datatype;
-  int          m_A;
-  int          rs_A, cs_A;
-  int          inc_x; 
+  integer          m_A;
+  integer          rs_A, cs_A;
+  integer          inc_x; 
   uplo1_t       blis_uplo;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING ) 

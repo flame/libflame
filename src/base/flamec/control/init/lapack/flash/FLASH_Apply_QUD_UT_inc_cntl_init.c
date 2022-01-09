@@ -10,10 +10,10 @@
 
 #include "FLAME.h"
 
-extern fla_apqudut_t* flash_apqudut_cntl;
+extern TLS_CLASS_SPEC fla_apqudut_t* flash_apqudut_cntl;
 
-fla_apqudutinc_t*     flash_apqudutinc_cntl = NULL;
-fla_blocksize_t*      flash_apqudutinc_var1_bsize = NULL;
+TLS_CLASS_SPEC fla_apqudutinc_t*     flash_apqudutinc_cntl = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*      flash_apqudutinc_var1_bsize = NULL;
 
 void FLASH_Apply_QUD_UT_inc_cntl_init()
 {

@@ -65,6 +65,9 @@ FLA_ENABLE_MAX_ARG_LIST_HACK   := @fla_enable_max_arg_list_hack@
 FLA_ENABLE_BUILTIN_BLAS        := @fla_enable_builtin_blas@
 FLA_ENABLE_LAPACK2FLAME        := @fla_enable_lapack2flame@
 FLA_MULTITHREADING_MODEL       := @fla_multithreading_model@
+FLA_ENABLE_F2C_DOTC            := @fla_enable_f2c_dotc@
+FLA_ENABLE_ILP64               := @fla_enable_ilp64@
+FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION := @fla_enable_void_return_complex@
 
 # Alias the variable 'V' to the flag for verbosity.
 ifeq ($(V),1)
@@ -108,6 +111,7 @@ CC           := @CC@
 CC_VENDOR    := @CC_VENDOR@
 CPPROCFLAGS  := -D_POSIX_C_SOURCE=200809L @DEFS@ @fla_blis_flags@
 CMISCFLAGS   := @fla_c_lang_flags@ @fla_c_openmp_flags@ @fla_c_prof_flags@
+CXXMISCFLAGS := -Wall -Wno-unused-function -Wno-parentheses -Wfatal-errors
 CDBGFLAGS    := @fla_c_debug_flags@
 CWARNFLAGS   := @fla_c_warning_flags@
 COPTFLAGS    := @fla_c_opt_flags@
@@ -116,6 +120,7 @@ CVECFLAGS    := @fla_c_sse_flags@
 # Add position-independent code flag if building a dynamic library.
 ifeq ($(FLA_ENABLE_DYNAMIC_BUILD),yes)
 CMISCFLAGS   += -fPIC
+CXXMISCFLAGS += -fPIC
 endif
 
 # Add explicit C99 support.
@@ -125,6 +130,7 @@ endif
 # one for code that should not be optimized.
 CFLAGS       := $(strip $(CDBGFLAGS) $(COPTFLAGS) $(CVECFLAGS) $(CWARNFLAGS) $(CMISCFLAGS) $(CPPROCFLAGS))
 CFLAGS_NOOPT := $(strip $(CDBGFLAGS) $(CWARNFLAGS) $(CMISCFLAGS) $(CPPROCFLAGS))
+CXXFLAGS     := $(strip $(CDBGFLAGS) $(COPTFLAGS) $(CVECFLAGS) $(CWARNFLAGS) $(CXXMISCFLAGS) $(CPPROCFLAGS))
 
 # If the user provided his own CFLAGS, allow them to override our own.
 # *** Notice that wo do not also modify the 'no optimization' set of flags.

@@ -1,17 +1,23 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h" /* Table of constant values */
-static int c__1 = 1;
-static int c_n1 = -1;
+static integer c__1 = 1;
+static integer c_n1 = -1;
 
-int zungqr_check(int *m, int *n, int *k, dcomplex *a, int *lda, dcomplex *tau, dcomplex * work, int *lwork, int *info)
+int zungqr_check(integer *m, integer *n, integer *k, dcomplex *a, integer *lda, dcomplex *tau, dcomplex * work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
 
     /* Local variables */
-    int nb;
-    int lwkopt;
+    integer nb;
+    integer lwkopt;
     logical lquery;
+
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "zungqr inputs: m %d, n %d, k %d, lda %d\n", *m, *n, *k, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
 
     /* Parameter adjustments */
     a_dim1 = *lda;

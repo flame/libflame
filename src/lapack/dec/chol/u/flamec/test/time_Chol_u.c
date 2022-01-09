@@ -17,17 +17,17 @@
 
 
 void time_Chol_u(
-                  int variant, int type, int nrepeats, int n, int nb_alg,
+                  integer variant, integer type, integer nrepeats, integer n, integer nb_alg,
                   FLA_Obj A, FLA_Obj b, FLA_Obj b_orig, FLA_Obj norm,
                   double *dtime, double *diff, double *gflops );
 
 
 void time_Chol_u(
-                  int variant, int type, int nrepeats, int n, int nb_alg,
+                  integer variant, integer type, integer nrepeats, integer n, integer nb_alg,
                   FLA_Obj A, FLA_Obj b, FLA_Obj b_orig, FLA_Obj norm,
                   double *dtime, double *diff, double *gflops )
 {
-  int
+  integer
     irep;
 
   double

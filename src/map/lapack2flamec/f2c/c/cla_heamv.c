@@ -165,6 +165,16 @@
 /* Subroutine */
 int cla_heamv_(integer *uplo, integer *n, real *alpha, complex *a, integer *lda, complex *x, integer *incx, real *beta, real *y, integer *incy)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cla_heamv inputs: uplo %lld, n %lld, lda %lld, incx %lld, incy %lld",*uplo, *n, *lda, *incx, *incy);
+#else 
+    snprintf(buffer, 256,"cla_heamv inputs: uplo %d, n %d, lda %d, incx %d, incy %d",*uplo, *n, *lda, *incx, *incy);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     real r__1, r__2;
@@ -235,11 +245,13 @@ int cla_heamv_(integer *uplo, integer *n, real *alpha, complex *a, integer *lda,
     if (info != 0)
     {
         xerbla_("CHEMV ", &info);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible. */
     if (*n == 0 || *alpha == 0.f && *beta == 1.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Set up the start points in X and Y. */
@@ -500,6 +512,7 @@ int cla_heamv_(integer *uplo, integer *n, real *alpha, complex *a, integer *lda,
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLA_HEAMV */
 }

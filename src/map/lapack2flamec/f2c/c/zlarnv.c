@@ -40,8 +40,8 @@
 /* > = 1: real and imaginary parts each uniform (0,1) */
 /* > = 2: real and imaginary parts each uniform (-1,1) */
 /* > = 3: real and imaginary parts each normal (0,1) */
-/* > = 4: uniformly distributed on the disc f2c_abs(z) < 1 */
-/* > = 5: uniformly distributed on the circle f2c_abs(z) = 1 */
+/* > = 4: uniformly distributed on the disc f2c_dabs(z) < 1 */
+/* > = 5: uniformly distributed on the circle f2c_dabs(z) = 1 */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] ISEED */
@@ -88,6 +88,12 @@ the array */
 /* Subroutine */
 int zlarnv_(integer *idist, integer *iseed, integer *n, doublecomplex *x)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zlarnv inputs: idist %d, iseed %d, n %d",*idist, *iseed, *n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3, i__4, i__5;
     doublereal d__1, d__2;
@@ -238,6 +244,7 @@ int zlarnv_(integer *idist, integer *iseed, integer *n, doublecomplex *x)
         }
         /* L60: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZLARNV */
 }

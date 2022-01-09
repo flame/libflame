@@ -196,6 +196,12 @@ the routine */
 /* Subroutine */
 int zhesv_rook_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *lda, integer *ipiv, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"zhesv_rook inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", lwork %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ldb, *lwork);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */
@@ -281,10 +287,12 @@ int zhesv_rook_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer
     {
         i__1 = -(*info);
         xerbla_("ZHESV_ROOK ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Compute the factorization A = U*D*U**H or A = L*D*L**H. */
@@ -297,6 +305,7 @@ int zhesv_rook_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer
     }
     work[1].r = (doublereal) lwkopt;
     work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZHESV_ROOK */
 }

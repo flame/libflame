@@ -128,6 +128,12 @@
 /* Subroutine */
 int slaqsb_(char *uplo, integer *n, integer *kd, real *ab, integer *ldab, real *s, real *scond, real *amax, char *equed)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"slaqsb inputs: uplo %c, n %d, kd %d, ldab %d",*uplo, *n, *kd, *ldab);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
@@ -164,6 +170,7 @@ int slaqsb_(char *uplo, integer *n, integer *kd, real *ab, integer *ldab, real *
     if (*n <= 0)
     {
         *(unsigned char *)equed = 'N';
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Initialize LARGE and SMALL. */
@@ -225,6 +232,7 @@ int slaqsb_(char *uplo, integer *n, integer *kd, real *ab, integer *ldab, real *
         }
         *(unsigned char *)equed = 'Y';
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SLAQSB */
 }

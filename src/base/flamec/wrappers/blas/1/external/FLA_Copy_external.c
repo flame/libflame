@@ -14,9 +14,9 @@ FLA_Error FLA_Copy_external( FLA_Obj A, FLA_Obj B )
 {
   FLA_Datatype dt_A;
   FLA_Datatype dt_B;
-  int          m_B, n_B;
-  int          rs_A, cs_A;
-  int          rs_B, cs_B;
+  integer          m_B, n_B;
+  integer          rs_A, cs_A;
+  integer          rs_B, cs_B;
   trans1_t      blis_trans;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING ) 
@@ -91,8 +91,8 @@ FLA_Error FLA_Copy_external( FLA_Obj A, FLA_Obj B )
   }
   else if ( dt_A == FLA_INT )
   {
-    int*      buff_A = ( int * ) FLA_INT_PTR( A );
-    int*      buff_B = ( int * ) FLA_INT_PTR( B );
+    integer*      buff_A = ( integer * ) FLA_INT_PTR( A );
+    integer*      buff_B = ( integer * ) FLA_INT_PTR( B );
 
     bl1_icopymt( blis_trans,
                  m_B,

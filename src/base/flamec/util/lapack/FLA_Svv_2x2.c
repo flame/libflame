@@ -125,8 +125,8 @@ FLA_Error FLA_Svv_2x2_ops( float*    alpha11,
     float  csl, snl;
     float  csr, snr;
 
-    int    gasmal, swap;
-    int    pmax;
+    integer    gasmal, swap;
+    integer    pmax;
 
     f = *alpha11;
     g = *alpha12;
@@ -313,8 +313,8 @@ FLA_Error FLA_Svv_2x2_opd( double*   alpha11,
     double csl, snl;
     double csr, snr;
 
-    int    gasmal, swap;
-    int    pmax;
+    integer    gasmal, swap;
+    integer    pmax;
 
     f = *alpha11;
     g = *alpha12;

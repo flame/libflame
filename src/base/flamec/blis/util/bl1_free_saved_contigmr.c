@@ -10,7 +10,7 @@
 
 #include "blis1.h"
 
-void bl1_sfree_saved_contigmr( uplo1_t uplo, int m, int n, float* a_save, int a_rs_save, int a_cs_save, float** a, int* a_rs, int* a_cs )
+void bl1_sfree_saved_contigmr( uplo1_t uplo, integer m, integer n, float* a_save, integer a_rs_save, integer a_cs_save, float** a, integer* a_rs, integer* a_cs )
 {
 	if ( bl1_is_gen_storage( a_rs_save, a_cs_save ) )
 	{
@@ -33,7 +33,7 @@ void bl1_sfree_saved_contigmr( uplo1_t uplo, int m, int n, float* a_save, int a_
 	}
 }
 
-void bl1_dfree_saved_contigmr( uplo1_t uplo, int m, int n, double* a_save, int a_rs_save, int a_cs_save, double** a, int* a_rs, int* a_cs )
+void bl1_dfree_saved_contigmr( uplo1_t uplo, integer m, integer n, double* a_save, integer a_rs_save, integer a_cs_save, double** a, integer* a_rs, integer* a_cs )
 {
 	if ( bl1_is_gen_storage( a_rs_save, a_cs_save ) )
 	{
@@ -56,7 +56,7 @@ void bl1_dfree_saved_contigmr( uplo1_t uplo, int m, int n, double* a_save, int a
 	}
 }
 
-void bl1_cfree_saved_contigmr( uplo1_t uplo, int m, int n, scomplex* a_save, int a_rs_save, int a_cs_save, scomplex** a, int* a_rs, int* a_cs )
+void bl1_cfree_saved_contigmr( uplo1_t uplo, integer m, integer n, scomplex* a_save, integer a_rs_save, integer a_cs_save, scomplex** a, integer* a_rs, integer* a_cs )
 {
 	if ( bl1_is_gen_storage( a_rs_save, a_cs_save ) )
 	{
@@ -79,7 +79,7 @@ void bl1_cfree_saved_contigmr( uplo1_t uplo, int m, int n, scomplex* a_save, int
 	}
 }
 
-void bl1_zfree_saved_contigmr( uplo1_t uplo, int m, int n, dcomplex* a_save, int a_rs_save, int a_cs_save, dcomplex** a, int* a_rs, int* a_cs )
+void bl1_zfree_saved_contigmr( uplo1_t uplo, integer m, integer n, dcomplex* a_save, integer a_rs_save, integer a_cs_save, dcomplex** a, integer* a_rs, integer* a_cs )
 {
 	if ( bl1_is_gen_storage( a_rs_save, a_cs_save ) )
 	{

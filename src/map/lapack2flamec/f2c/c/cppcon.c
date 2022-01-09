@@ -110,6 +110,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int cppcon_(char *uplo, integer *n, complex *ap, real *anorm, real *rcond, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cppcon inputs: uplo %c, n %lld",*uplo, *n);
+#else 
+    snprintf(buffer, 256,"cppcon inputs: uplo %c, n %d",*uplo, *n);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     real r__1, r__2;
@@ -184,6 +194,7 @@ int cppcon_(char *uplo, integer *n, complex *ap, real *anorm, real *rcond, compl
     {
         i__1 = -(*info);
         xerbla_("CPPCON", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -191,10 +202,12 @@ int cppcon_(char *uplo, integer *n, complex *ap, real *anorm, real *rcond, compl
     if (*n == 0)
     {
         *rcond = 1.f;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*anorm == 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     smlnum = slamch_("Safe minimum");
@@ -241,6 +254,7 @@ L10:
         *rcond = 1.f / ainvnm / *anorm;
     }
 L20:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CPPCON */
 }

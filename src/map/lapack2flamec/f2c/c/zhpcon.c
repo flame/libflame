@@ -109,6 +109,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int zhpcon_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, doublereal *anorm, doublereal *rcond, doublecomplex * work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"zhpcon inputs: uplo %c, n %" FLA_IS ", ipiv %" FLA_IS "",*uplo, *n, *ipiv);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2;
     /* Local variables */
@@ -165,6 +171,7 @@ int zhpcon_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, doublereal
     {
         i__1 = -(*info);
         xerbla_("ZHPCON", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -172,10 +179,12 @@ int zhpcon_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, doublereal
     if (*n == 0)
     {
         *rcond = 1.;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*anorm <= 0.)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check that the diagonal matrix D is nonsingular. */
@@ -190,6 +199,7 @@ int zhpcon_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, doublereal
             i__1 = ip;
             if (ipiv[i__] > 0 && (ap[i__1].r == 0. && ap[i__1].i == 0.))
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             ip -= i__;
@@ -208,6 +218,7 @@ int zhpcon_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, doublereal
             i__2 = ip;
             if (ipiv[i__] > 0 && (ap[i__2].r == 0. && ap[i__2].i == 0.))
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             ip = ip + *n - i__ + 1;
@@ -229,6 +240,7 @@ L30:
     {
         *rcond = 1. / ainvnm / *anorm;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZHPCON */
 }

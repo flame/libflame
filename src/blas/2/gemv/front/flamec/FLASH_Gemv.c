@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_gemv_t* flash_gemv_cntl_fm_rp;
+extern TLS_CLASS_SPEC fla_gemv_t* flash_gemv_cntl_fm_rp;
 
 FLA_Error FLASH_Gemv( FLA_Trans transa, FLA_Obj alpha, FLA_Obj A, FLA_Obj x, FLA_Obj beta, FLA_Obj y )
 {

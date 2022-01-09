@@ -149,6 +149,16 @@ perturbed */
 /* Subroutine */
 int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, complex *a, integer *lda, complex *b, integer *ldb, complex *c__, integer *ldc, real *scale, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctrsyl inputs: trana %c, tranb %c, isgn %lld, m %lld, n %lld, lda %lld, ldb %lld, ldc %lld",*trana, *tranb, *isgn, *m, *n, *lda, *ldb, *ldc);
+#else 
+    snprintf(buffer, 256,"ctrsyl inputs: trana %c, tranb %c, isgn %d, m %d, n %d, lda %d, ldb %d, ldc %d",*trana, *tranb, *isgn, *m, *n, *lda, *ldb, *ldc);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, c_dim1, c_offset, i__1, i__2, i__3, i__4;
     real r__1, r__2;
@@ -255,12 +265,14 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
     {
         i__1 = -(*info);
         xerbla_("CTRSYL", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     *scale = 1.f;
     if (*m == 0 || *n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Set constants to control overflow */
@@ -345,7 +357,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                 q__3.i = 0.f; // , expr subst
                 q__2.r = vec.r * q__3.r - vec.i * q__3.i;
                 q__2.i = vec.r * q__3.i + vec.i * q__3.r; // , expr subst
-                cladiv_(&q__1, &q__2, &a11);
+                cladiv_f2c_(&q__1, &q__2, &a11);
                 x11.r = q__1.r;
                 x11.i = q__1.i; // , expr subst
                 if (scaloc != 1.f)
@@ -434,7 +446,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                 q__3.i = 0.f; // , expr subst
                 q__2.r = vec.r * q__3.r - vec.i * q__3.i;
                 q__2.i = vec.r * q__3.i + vec.i * q__3.r; // , expr subst
-                cladiv_(&q__1, &q__2, &a11);
+                cladiv_f2c_(&q__1, &q__2, &a11);
                 x11.r = q__1.r;
                 x11.i = q__1.i; // , expr subst
                 if (scaloc != 1.f)
@@ -531,7 +543,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                 q__3.i = 0.f; // , expr subst
                 q__2.r = vec.r * q__3.r - vec.i * q__3.i;
                 q__2.i = vec.r * q__3.i + vec.i * q__3.r; // , expr subst
-                cladiv_(&q__1, &q__2, &a11);
+                cladiv_f2c_(&q__1, &q__2, &a11);
                 x11.r = q__1.r;
                 x11.i = q__1.i; // , expr subst
                 if (scaloc != 1.f)
@@ -627,7 +639,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                 q__3.i = 0.f; // , expr subst
                 q__2.r = vec.r * q__3.r - vec.i * q__3.i;
                 q__2.i = vec.r * q__3.i + vec.i * q__3.r; // , expr subst
-                cladiv_(&q__1, &q__2, &a11);
+                cladiv_f2c_(&q__1, &q__2, &a11);
                 x11.r = q__1.r;
                 x11.i = q__1.i; // , expr subst
                 if (scaloc != 1.f)
@@ -650,6 +662,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
             /* L120: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTRSYL */
 }

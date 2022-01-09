@@ -109,6 +109,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int zptcon_(integer *n, doublereal *d__, doublecomplex *e, doublereal *anorm, doublereal *rcond, doublereal *rwork, integer * info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zptcon inputs: n %d",*n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     doublereal d__1;
@@ -159,6 +165,7 @@ int zptcon_(integer *n, doublereal *d__, doublecomplex *e, doublereal *anorm, do
     {
         i__1 = -(*info);
         xerbla_("ZPTCON", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -166,10 +173,12 @@ int zptcon_(integer *n, doublereal *d__, doublecomplex *e, doublereal *anorm, do
     if (*n == 0)
     {
         *rcond = 1.;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*anorm == 0.)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check that D(1:N) is positive. */
@@ -180,13 +189,14 @@ int zptcon_(integer *n, doublereal *d__, doublecomplex *e, doublereal *anorm, do
     {
         if (d__[i__] <= 0.)
         {
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         /* L10: */
     }
     /* Solve M(A) * x = e, where M(A) = (m(i,j)) is given by */
-    /* m(i,j) = f2c_abs(A(i,j)); i = j; */
-    /* m(i,j) = -f2c_abs(A(i,j)), i .ne. j, */
+    /* m(i,j) = f2c_dabs(A(i,j)); i = j; */
+    /* m(i,j) = -f2c_dabs(A(i,j)), i .ne. j, */
     /* and e = [ 1, 1, ..., 1 ]**T. Note M(A) = M(L)*D*M(L)**H. */
     /* Solve M(L) * x = e. */
     rwork[1] = 1.;
@@ -209,12 +219,13 @@ int zptcon_(integer *n, doublereal *d__, doublecomplex *e, doublereal *anorm, do
     }
     /* Compute AINVNM = max(x(i)), 1<=i<=n. */
     ix = idamax_(n, &rwork[1], &c__1);
-    ainvnm = (d__1 = rwork[ix], f2c_abs(d__1));
+    ainvnm = (d__1 = rwork[ix], f2c_dabs(d__1));
     /* Compute the reciprocal condition number. */
     if (ainvnm != 0.)
     {
         *rcond = 1. / ainvnm / *anorm;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZPTCON */
 }

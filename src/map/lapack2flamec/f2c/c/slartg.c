@@ -2,7 +2,7 @@
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* > \brief \b SLARTG generates a plane rotation with real cosine and real sine. */
 /* =========== DOCUMENTATION =========== */
-/* Online html documentation available at */
+/* Online html documentation available at  */
 /* http://www.netlib.org/lapack/explore-html/ */
 /* > \htmlonly */
 /* > Download SLARTG + dependencies */
@@ -85,6 +85,7 @@
 /* Subroutine */
 int slartg_(real *f, real *g, real *cs, real *sn, real *r__)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* System generated locals */
     integer i__1;
     real r__1, r__2;
@@ -228,6 +229,7 @@ L30:
             *r__ = -(*r__);
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SLARTG */
 }

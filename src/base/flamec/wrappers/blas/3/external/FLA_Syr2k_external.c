@@ -13,12 +13,12 @@
 FLA_Error FLA_Syr2k_external( FLA_Uplo uplo, FLA_Trans trans, FLA_Obj alpha, FLA_Obj A, FLA_Obj B, FLA_Obj beta, FLA_Obj C )
 {
   FLA_Datatype datatype;
-  int          k_AB;
-  int          m_A, n_A;
-  int          m_C;
-  int          rs_A, cs_A;
-  int          rs_B, cs_B;
-  int          rs_C, cs_C;
+  integer          k_AB;
+  integer          m_A, n_A;
+  integer          m_C;
+  integer          rs_A, cs_A;
+  integer          rs_B, cs_B;
+  integer          rs_C, cs_C;
   uplo1_t       blis_uplo; 
   trans1_t      blis_trans;
 

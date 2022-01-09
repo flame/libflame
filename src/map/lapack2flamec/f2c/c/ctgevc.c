@@ -225,6 +225,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, integer *lds, complex *p, integer *ldp, complex *vl, integer *ldvl, complex *vr, integer *ldvr, integer *mm, integer *m, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctgevc inputs: side %c, howmny %c, n %lld, lds %lld, ldp %lld, ldvl %lld, ldvr %lld, mm %lld",*side, *howmny, *n, *lds, *ldp, *ldvl, *ldvr, *mm);
+#else 
+    snprintf(buffer, 256,"ctgevc inputs: side %c, howmny %c, n %d, lds %d, ldp %d, ldvl %d, ldvr %d, mm %d",*side, *howmny, *n, *lds, *ldp, *ldvl, *ldvr, *mm);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer p_dim1, p_offset, s_dim1, s_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__2, i__3, i__4, i__5;
     real r__1, r__2, r__3, r__4, r__5, r__6;
@@ -384,6 +394,7 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
     {
         i__1 = -(*info);
         xerbla_("CTGEVC", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Count the number of eigenvectors */
@@ -439,12 +450,14 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
     {
         i__1 = -(*info);
         xerbla_("CTGEVC", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     *m = im;
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Machine Constants */
@@ -749,7 +762,7 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
                     i__3 = j;
                     q__2.r = -sum.r;
                     q__2.i = -sum.i; // , expr subst
-                    cladiv_(&q__1, &q__2, &d__);
+                    cladiv_f2c_(&q__1, &q__2, &d__);
                     work[i__3].r = q__1.r;
                     work[i__3].i = q__1.i; // , expr subst
                     /* Computing MAX */
@@ -1030,7 +1043,7 @@ L140:
                     i__2 = j;
                     q__2.r = -work[i__2].r;
                     q__2.i = -work[i__2].i; // , expr subst
-                    cladiv_(&q__1, &q__2, &d__);
+                    cladiv_f2c_(&q__1, &q__2, &d__);
                     work[i__1].r = q__1.r;
                     work[i__1].i = q__1.i; // , expr subst
                     if (j > 1)
@@ -1154,6 +1167,7 @@ L250:
             ;
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTGEVC */
 }

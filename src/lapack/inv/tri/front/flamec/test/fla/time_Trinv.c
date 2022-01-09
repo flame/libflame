@@ -17,17 +17,17 @@
 FLA_Error REF_Trinv( FLA_Uplo uplo, FLA_Diag diag, FLA_Obj A );
 
 void time_Trinv(
-                 int param_combo, int type, int nrepeats, int m, FLA_Uplo uplo, FLA_Diag diag,
+                 integer param_combo, integer type, integer nrepeats, integer m, FLA_Uplo uplo, FLA_Diag diag,
                  FLA_Obj A, FLA_Obj b, FLA_Obj b_orig, FLA_Obj norm,
                  double *dtime, double *diff, double *gflops );
 
 
 void time_Trinv(
-                 int param_combo, int type, int nrepeats, int m, FLA_Uplo uplo, FLA_Diag diag,
+                 integer param_combo, integer type, integer nrepeats, integer m, FLA_Uplo uplo, FLA_Diag diag,
                  FLA_Obj A, FLA_Obj b, FLA_Obj b_orig, FLA_Obj norm,
                  double *dtime, double *diff, double *gflops )
 {
-  int
+  integer
     irep;
 
   double

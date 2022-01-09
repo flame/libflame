@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_appiv_t* flash_appiv_cntl;
+extern TLS_CLASS_SPEC fla_appiv_t* flash_appiv_cntl;
 
 FLA_Error FLASH_Apply_pivots( FLA_Side side, FLA_Trans trans, FLA_Obj p, FLA_Obj A )
 

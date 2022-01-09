@@ -212,6 +212,16 @@ k=N/2. IF TRANSR = 'C' then RFP is */
 /* Subroutine */
 int cpftrf_(char *transr, char *uplo, integer *n, complex *a, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cpftrf inputs: transr %c, uplo %c, n %lld",*transr, *uplo, *n);
+#else 
+    snprintf(buffer, 256,"cpftrf inputs: transr %c, uplo %c, n %d",*transr, *uplo, *n);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2;
     /* Local variables */
@@ -265,11 +275,13 @@ int cpftrf_(char *transr, char *uplo, integer *n, complex *a, integer *info)
     {
         i__1 = -(*info);
         xerbla_("CPFTRF", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* If N is odd, set NISODD = .TRUE. */
@@ -309,6 +321,7 @@ int cpftrf_(char *transr, char *uplo, integer *n, complex *a, integer *info)
                 cpotrf_("L", &n1, a, n, info);
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 ctrsm_("R", "L", "C", "N", &n2, &n1, &c_b1, a, n, &a[n1], n);
@@ -327,6 +340,7 @@ int cpftrf_(char *transr, char *uplo, integer *n, complex *a, integer *info)
                 cpotrf_("L", &n1, &a[n2], n, info);
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 ctrsm_("L", "L", "N", "N", &n1, &n2, &c_b1, &a[n2], n, a, n);
@@ -350,6 +364,7 @@ int cpftrf_(char *transr, char *uplo, integer *n, complex *a, integer *info)
                 cpotrf_("U", &n1, a, &n1, info);
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 ctrsm_("L", "U", "C", "N", &n1, &n2, &c_b1, a, &n1, &a[n1 * n1], &n1);
@@ -369,6 +384,7 @@ int cpftrf_(char *transr, char *uplo, integer *n, complex *a, integer *info)
                 cpotrf_("U", &n1, &a[n2 * n2], &n2, info);
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 ctrsm_("R", "U", "N", "N", &n2, &n1, &c_b1, &a[n2 * n2], &n2, a, &n2);
@@ -396,6 +412,7 @@ int cpftrf_(char *transr, char *uplo, integer *n, complex *a, integer *info)
                 cpotrf_("L", &k, &a[1], &i__1, info);
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 i__1 = *n + 1;
@@ -420,6 +437,7 @@ int cpftrf_(char *transr, char *uplo, integer *n, complex *a, integer *info)
                 cpotrf_("L", &k, &a[k + 1], &i__1, info);
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 i__1 = *n + 1;
@@ -448,6 +466,7 @@ int cpftrf_(char *transr, char *uplo, integer *n, complex *a, integer *info)
                 cpotrf_("U", &k, &a[k], &k, info);
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 ctrsm_("L", "U", "C", "N", &k, &k, &c_b1, &a[k], &n1, &a[k * ( k + 1)], &k);
@@ -467,6 +486,7 @@ int cpftrf_(char *transr, char *uplo, integer *n, complex *a, integer *info)
                 cpotrf_("U", &k, &a[k * (k + 1)], &k, info);
                 if (*info > 0)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 ctrsm_("R", "U", "N", "N", &k, &k, &c_b1, &a[k * (k + 1)], &k, a, &k);
@@ -479,6 +499,7 @@ int cpftrf_(char *transr, char *uplo, integer *n, complex *a, integer *info)
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CPFTRF */
 }

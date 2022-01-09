@@ -1,0 +1,150 @@
+#ifdef FLA_ENABLE_EXTRA_SYMBOLS
+#define F77_FUNC(name,NAME) name ## _
+#define F77_FUNC_(name,NAME) name ## _
+#endif
+
+// --- General options ---------------------------------------------------------
+
+// Determines whether to enable various segments of code identified as
+// providing non-critical functionality.
+#cmakedefine FLA_ENABLE_NON_CRITICAL_CODE
+
+//Determines to enable BuiltinBlas
+#cmakedefine FLA_ENABLE_BUILTIN_BLAS
+
+//Enables blis1 use of flamalloc
+#cmakedefine FLA_ENABLE_BLIS1_USE_OF_FLA_MALLOC
+
+// Determines whether the LAPACK compatibility layer is included in libflame.
+// NOTE: If lapack2flame is enabled, external-lapack-for-subproblems MUST
+// be disabled!
+// Determines whether ILP64 enabled. 
+#cmakedefine  FLA_ENABLE_ILP64
+
+#cmakedefine FLA_ENABLE_LAPACK2FLAME
+
+// Determines whether to enable external LAPACK for small subproblems.
+// NOTE: If external-lapack-for-subproblems is enabled, (a) lapack2flame MUST
+// be disabled, AND (b) external-lapack-interfaces MUST be enabled.
+#cmakedefine FLA_ENABLE_EXTERNAL_LAPACK_FOR_SUBPROBLEMS
+
+// Determines whether to enable interfaces to external LAPACK routines.
+// NOTE: If external-lapack-interfaces is enabled, an LAPACK library will be
+// required at link-time.
+#cmakedefine FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
+
+// Determines whether to use control trees to select a reasonable FLAME
+// variant and blocksize when level-3 BLAS front-ends are invoked.
+#cmakedefine FLA_ENABLE_BLAS3_FRONT_END_CNTL_TREES
+
+// Determines whether to modify various segments of code needed for
+// integrating libflame into Windows.
+#cmakedefine FLA_ENABLE_WINDOWS_BUILD
+
+// Determines whether to define a portable FLA_Clock() in terms of
+// gettimeofday() from time.h.
+#cmakedefine FLA_ENABLE_PORTABLE_TIMER
+
+
+// --- Runtime error checking and debugging ------------------------------------
+
+// Determines whether to enable internal runtime consistency checks of
+// function parameters and return values.
+#cmakedefine FLA_ENABLE_INTERNAL_ERROR_CHECKING
+
+// Encodes the default level of internal error checking chosen at
+// configure-time.
+// 1-minimal error cheking
+// 2-full error cheking
+// 3-no error cheking
+#cmakedefine FLA_INTERNAL_ERROR_CHECKING_LEVEL @ERROR_CHECKING_LEVEL@   
+
+// Determines whether to enable the FLA_malloc()/FLA_free() memory counter
+// by default.
+#cmakedefine FLA_ENABLE_MEMORY_LEAK_COUNTER
+
+
+// --- Multithreading and SuperMatrix ------------------------------------------
+
+// Determines whether thread-specific blocks of code should be compiled.
+#cmakedefine FLA_ENABLE_MULTITHREADING
+
+// Encodes the type of multithreading chosen at configure-time.
+// 1 - openmp
+// 2 - pthreads
+#cmakedefine FLA_MULTITHREADING_MODEL @MULTITHREADING_MODEL@
+
+// Determines whether SuperMatrix-specific blocks of code should be compiled.
+#cmakedefine FLA_ENABLE_SUPERMATRIX
+
+
+// --- BLAS and blocksizes -----------------------------------------------------
+
+// Determines whether to enable CBLAS interfaces instead of Fortran-77
+// interfaces to the BLAS.
+#cmakedefine FLA_ENABLE_CBLAS_INTERFACES
+
+// Determines whether to enable interfaces to internal/low-level libgoto
+// symbols.
+#cmakedefine FLA_ENABLE_GOTO_INTERFACES
+
+// Sets the default blocksize in the k dimension (used only if
+// libgoto interfaces are disabled).
+#cmakedefine FLA_DEFAULT_K_BLOCKSIZE @FLA_DEFAULT_K_BLKSZ@
+
+// Sets the default blocksize in the m dimension (used only if
+// libgoto interfaces are disabled).
+#cmakedefine FLA_DEFAULT_M_BLOCKSIZE @FLA_DEFAULT_M_BLKSZ@
+
+// Sets the default blocksize in the n dimension (used only if
+// libgoto interfaces are disabled).
+#cmakedefine FLA_DEFAULT_N_BLOCKSIZE @FLA_DEFAULT_N_BLKSZ@
+
+
+// --- Memory alignment --------------------------------------------------------
+
+// Determines whether memory is aligned to user-requested boundaries.
+#cmakedefine FLA_ENABLE_MEMORY_ALIGNMENT
+
+// Sets the byte boundary used to align the starting address of all memory
+// allocated dynamically through libflame. Only used if
+// FLA_ENABLE_MEMORY_ALIGNMENT is defined.
+#cmakedefine FLA_MEMORY_ALIGNMENT_BOUNDARY @CMAKE_SIZEOF_VOID_P@
+
+// Determines whether to enable code that will increase FLA_Obj leading
+// dimensions to ensure that matrix columns adhere to the alignment specified
+// by FLA_MEMORY_ALIGNMENT_BOUNDARY.
+#cmakedefine FLA_ENABLE_LDIM_ALIGNMENT
+
+
+// --- Fortran-77 compatibility ------------------------------------------------
+
+// Determines whether the Fortran name-mangling suffix was determined at
+// configure-time. This option is not used in Windows.
+#cmakedefine FLA_ENABLE_AUTODETECT_F77_UNDERSCORING
+
+// Determines whether the Fortran 77 compiler appends an underscore to symbol
+// names. Not used in Windows.
+#cmakedefine FLA_F77_UNDERSCORE
+
+// Determines whether the Fortran 77 compiler appends an extra underscore to
+// symbol names that already contain at least one underscore. Not used in
+// Windows.
+#cmakedefine FLA_F77_EXTRA_UNDERSCORE
+
+// Determines whether invocations to the BLAS within libflame are converted to
+// uppercase symbols.
+#cmakedefine FLA_ENABLE_UPPERCASE_BLAS
+
+// Determines whether invocations to LAPACK within libflame are converted to
+// uppercase symbols.
+#cmakedefine FLA_ENABLE_UPPERCASE_LAPACK
+
+
+// --- Experimental/unsupported/broken options ---------------------------------
+
+// Determines whether GPU-specific blocks of code should be compiled.
+#cmakedefine FLA_ENABLE_GPU
+
+//#define FLA_PORTABLE_TIMER_IS_CLOCK_GETTIME 1
+//#define FLA_VECTOR_INTRINSIC_TYPE 0

@@ -111,6 +111,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int spocon_(char *uplo, integer *n, real *a, integer *lda, real *anorm, real *rcond, real *work, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"spocon inputs: uplo %c, n %d, lda %d",*uplo, *n, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1;
     real r__1;
@@ -187,6 +193,7 @@ int spocon_(char *uplo, integer *n, real *a, integer *lda, real *anorm, real *rc
     {
         i__1 = -(*info);
         xerbla_("SPOCON", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -194,10 +201,12 @@ int spocon_(char *uplo, integer *n, real *a, integer *lda, real *anorm, real *rc
     if (*n == 0)
     {
         *rcond = 1.f;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*anorm == 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     smlnum = slamch_("Safe minimum");
@@ -243,6 +252,7 @@ L10:
         *rcond = 1.f / ainvnm / *anorm;
     }
 L20:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SPOCON */
 }

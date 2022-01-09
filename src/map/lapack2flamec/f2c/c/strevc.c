@@ -225,6 +225,12 @@ here the magnitude of a complex number */
 /* Subroutine */
 int strevc_(char *side, char *howmny, logical *select, integer *n, real *t, integer *ldt, real *vl, integer *ldvl, real *vr, integer *ldvr, integer *mm, integer *m, real *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"strevc inputs: side %c, howmny %c, n %d, ldt %d, ldvl %d, ldvr %d, mm %d",*side, *howmny, *n, *ldt, *ldvl, *ldvr, *mm);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer t_dim1, t_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__2, i__3;
     real r__1, r__2, r__3, r__4;
@@ -397,11 +403,13 @@ int strevc_(char *side, char *howmny, logical *select, integer *n, real *t, inte
     {
         i__1 = -(*info);
         xerbla_("STREVC", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible. */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Set the constants to control overflow. */
@@ -1228,6 +1236,7 @@ L250:
             /* L260: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of STREVC */
 }

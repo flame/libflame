@@ -1,10 +1,15 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
 
-int cgetrf_check(int *m, int *n, scomplex *a, int *lda, int *ipiv, int *info)
+int cgetrf_check(integer *m, integer *n, scomplex *a, integer *lda, integer *ipiv, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "cgetrf inputs: m %d, n %d, lda %d\n", *m, *n, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

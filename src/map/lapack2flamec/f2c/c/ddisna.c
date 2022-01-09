@@ -39,7 +39,7 @@
 /* > */
 /* > DLAMCH( 'E' ) * ( ANORM / SEP( I ) ) */
 /* > */
-/* > where ANORM = 2-norm(A) = max( f2c_abs( D(j) ) ). SEP(I) is not allowed */
+/* > where ANORM = 2-norm(A) = max( f2c_dabs( D(j) ) ). SEP(I) is not allowed */
 /* > to be smaller than DLAMCH( 'E' )*ANORM in order to limit the size of */
 /* > the error bound. */
 /* > */
@@ -107,6 +107,12 @@
 /* Subroutine */
 int ddisna_(char *job, integer *m, integer *n, doublereal * d__, doublereal *sep, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"ddisna inputs: job %c, m %" FLA_IS ", n %" FLA_IS "",*job, *m, *n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     doublereal d__1, d__2, d__3;
@@ -211,11 +217,13 @@ int ddisna_(char *job, integer *m, integer *n, doublereal * d__, doublereal *sep
     {
         i__1 = -(*info);
         xerbla_("DDISNA", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (k == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Compute reciprocal condition numbers */
@@ -225,14 +233,14 @@ int ddisna_(char *job, integer *m, integer *n, doublereal * d__, doublereal *sep
     }
     else
     {
-        oldgap = (d__1 = d__[2] - d__[1], f2c_abs(d__1));
+        oldgap = (d__1 = d__[2] - d__[1], f2c_dabs(d__1));
         sep[1] = oldgap;
         i__1 = k - 1;
         for (i__ = 2;
                 i__ <= i__1;
                 ++i__)
         {
-            newgap = (d__1 = d__[i__ + 1] - d__[i__], f2c_abs(d__1));
+            newgap = (d__1 = d__[i__ + 1] - d__[i__], f2c_dabs(d__1));
             sep[i__] = min(oldgap,newgap);
             oldgap = newgap;
             /* L20: */
@@ -261,8 +269,8 @@ int ddisna_(char *job, integer *m, integer *n, doublereal * d__, doublereal *sep
     eps = dlamch_("E");
     safmin = dlamch_("S");
     /* Computing MAX */
-    d__2 = f2c_abs(d__[1]);
-    d__3 = (d__1 = d__[k], f2c_abs(d__1)); // , expr subst
+    d__2 = f2c_dabs(d__[1]);
+    d__3 = (d__1 = d__[k], f2c_dabs(d__1)); // , expr subst
     anorm = max(d__2,d__3);
     if (anorm == 0.)
     {
@@ -284,6 +292,7 @@ int ddisna_(char *job, integer *m, integer *n, doublereal * d__, doublereal *sep
         sep[i__] = max(d__1,thresh);
         /* L30: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DDISNA */
 }

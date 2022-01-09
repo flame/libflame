@@ -191,6 +191,16 @@ tauq is stored in TAUQ(i) and taup in TAUP(i). */
 /* Subroutine */
 int cgebd2_(integer *m, integer *n, complex *a, integer *lda, real *d__, real *e, complex *tauq, complex *taup, complex *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgebd2 inputs: m %lld, n %lld, lda %lld",*m, *n, *lda);
+#else 
+    snprintf(buffer, 256,"cgebd2 inputs: m %d, n %d, lda %d",*m, *n, *lda);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     complex q__1;
@@ -247,6 +257,7 @@ int cgebd2_(integer *m, integer *n, complex *a, integer *lda, real *d__, real *e
     {
         i__1 = -(*info);
         xerbla_("CGEBD2", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*m >= *n)
@@ -264,7 +275,7 @@ int cgebd2_(integer *m, integer *n, complex *a, integer *lda, real *d__, real *e
             i__2 = *m - i__ + 1;
             /* Computing MIN */
             i__3 = i__ + 1;
-            clarfg_(&i__2, &alpha, &a[min(i__3,*m) + i__ * a_dim1], &c__1, & tauq[i__]);
+            clarfg_(&i__2, &alpha, &a[min(i__3,*m) + i__ * a_dim1], &c__1, &tauq[i__]);
             i__2 = i__;
             d__[i__2] = alpha.r;
             i__2 = i__ + i__ * a_dim1;
@@ -391,6 +402,7 @@ int cgebd2_(integer *m, integer *n, complex *a, integer *lda, real *d__, real *e
             /* L20: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGEBD2 */
 }

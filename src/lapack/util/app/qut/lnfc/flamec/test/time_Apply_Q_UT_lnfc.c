@@ -27,17 +27,17 @@ extern fla_apqut_t* fla_apqut_cntl_leaf;
 FLA_Error REF_Apply_Q_UT_lnfc( FLA_Obj A, FLA_Obj t, FLA_Obj B );
 FLA_Error REF_Bidiag_form_U_blk_external( FLA_Side side, FLA_Trans trans, FLA_Obj A, FLA_Obj t, FLA_Obj B );
 void time_Apply_Q_UT_lnfc(
-               int variant, int type, int n_repeats, int m, int n, int nb_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer n, integer nb_alg,
                FLA_Obj A, FLA_Obj A_orig, FLA_Obj t, FLA_Obj T, FLA_Obj s, FLA_Obj S, FLA_Obj B,
                double *dtime, double *diff, double *gflops );
 
 
 void time_Apply_Q_UT_lnfc(
-               int variant, int type, int n_repeats, int m, int n, int nb_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer n, integer nb_alg,
                FLA_Obj A, FLA_Obj A_orig, FLA_Obj t, FLA_Obj T, FLA_Obj s, FLA_Obj S, FLA_Obj B,
                double *dtime, double *diff, double *gflops )
 {
-  int
+  integer
     irep;
 
   double

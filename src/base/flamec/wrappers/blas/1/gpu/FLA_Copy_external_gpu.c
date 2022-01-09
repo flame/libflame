@@ -17,10 +17,10 @@
 FLA_Error FLA_Copy_external_gpu( FLA_Obj A, void* A_gpu, FLA_Obj B, void* B_gpu )
 {
   FLA_Datatype datatype;
-  int          m_B, n_B;
-  int          ldim_A, inc_A;
-  int          ldim_B, inc_B;
-  int          i;
+  integer          m_B, n_B;
+  integer          ldim_A, inc_A;
+  integer          ldim_B, inc_B;
+  integer          i;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING ) 
     FLA_Copy_check( A, B );

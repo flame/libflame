@@ -62,6 +62,7 @@ typedef struct
 	dim_t         p_first;
 	dim_t         p_max;
 	dim_t         p_inc;
+	int           p_nfact;
 	unsigned int  n_threads;
 	char          reaction_to_failure;
 } test_params_t;
@@ -97,6 +98,8 @@ typedef struct
 	test_op_t lu_nopiv;
 	test_op_t lu_piv;
 	test_op_t lu_incpiv;
+	test_op_t ldlt_nopiv_part;
+	test_op_t lu_nopiv_i;
 	test_op_t qrut;
 	test_op_t qrutinc;
 	test_op_t lqut;
@@ -187,12 +190,23 @@ void libfla_test_op_driver( char*         func_str,
                                            unsigned int,  // var
                                            char*,         // sc_cur_str (current storage string)
                                            FLA_Datatype,  // datatype
-                                           unsigned int,  // p_cur
+                                           uinteger,  // p_cur
                                            unsigned int,  // pci (param combo counter)
                                            unsigned int,  // n_repeats
                                            signed int,    // impl
                                            double*,       // perf
+                                           double*,	      // time
                                            double* ) );   // residual
+
+void libfla_test_print_result_info( char  *func_param_str,
+                                    char  *datatype_char,
+                                    char  *sc_str,
+                                    integer    p_cur,
+                                    double perf,
+				    double time_min,
+                                    double residual,
+                                    char  *pass_str,
+                                    int    nfact );
 
 void libfla_test_build_function_string( char*        func_base_str,
                                         signed int   impl,

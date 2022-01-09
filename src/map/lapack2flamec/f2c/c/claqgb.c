@@ -146,6 +146,16 @@
 /* Subroutine */
 int claqgb_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integer *ldab, real *r__, real *c__, real *rowcnd, real *colcnd, real *amax, char *equed)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"claqgb inputs: m %lld, n %lld, kl %lld, ku %lld, ldab %lld",*m, *n, *kl, *ku, *ldab);
+#else 
+    snprintf(buffer, 256,"claqgb inputs: m %d, n %d, kl %d, ku %d, ldab %d",*m, *n, *kl, *ku, *ldab);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     real r__1;
@@ -183,6 +193,7 @@ int claqgb_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
     if (*m <= 0 || *n <= 0)
     {
         *(unsigned char *)equed = 'N';
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Initialize LARGE and SMALL. */
@@ -294,6 +305,7 @@ int claqgb_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
         }
         *(unsigned char *)equed = 'B';
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLAQGB */
 }

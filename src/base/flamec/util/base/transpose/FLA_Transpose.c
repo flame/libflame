@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_tpose_t* fla_tpose_cntl;
+extern TLS_CLASS_SPEC fla_tpose_t* fla_tpose_cntl;
 
 FLA_Error FLA_Transpose( FLA_Obj A )
 {

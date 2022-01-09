@@ -12,7 +12,7 @@
 
 #include "FLAME.h"
 #include "FLA_f2c.h"
-#include "stdio.h"
+//#include "stdio.h"
 
 #ifdef FLA_ENABLE_LAPACK2FLAME
 logical lsame_(char *ca, char *cb)

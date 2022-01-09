@@ -44,15 +44,16 @@
 
 #define LAPACK_hetrd(prefix, name)                                      \
   int F77_ ## prefix ## name ## trd( char* uplo,                        \
-                                     int*  m,                           \
-                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+                                     integer*  m,                           \
+                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
                                      PREFIX2LAPACK_REALDEF(prefix)* buff_d, \
                                      PREFIX2LAPACK_REALDEF(prefix)* buff_e, \
                                      PREFIX2LAPACK_TYPEDEF(prefix)* buff_t, \
-                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, int* lwork, \
-                                     int*  info )
+                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, integer* lwork, \
+                                     integer*  info )
 
 #define LAPACK_hetrd_body(prefix)                                     \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                       \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);              \
   FLA_Datatype dtype_re = PREFIX2FLAME_REALTYPE(prefix);              \
   dim_t        m_d      = *m;                                         \
@@ -125,6 +126,7 @@
                                                                         \
   *info = 0;                                                            \
                                                                         \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                          \
   return 0;
 
 
@@ -144,7 +146,7 @@ extern int zhetrd_fla(char *uplo, integer *n, doublecomplex *a, integer *lda, do
 LAPACK_hetrd(s,sy)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             ssytrd_fla( uplo, m,
                         buff_A, ldim_A,
@@ -170,7 +172,7 @@ LAPACK_hetrd(s,sy)
 LAPACK_hetrd(d,sy)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             dsytrd_fla( uplo, m,
                         buff_A, ldim_A,
@@ -198,7 +200,7 @@ LAPACK_hetrd(d,sy)
 LAPACK_hetrd(c,he)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             chetrd_fla( uplo, m,
                         (complex*)buff_A, ldim_A,
@@ -224,7 +226,7 @@ LAPACK_hetrd(c,he)
 LAPACK_hetrd(z,he)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             zhetrd_fla( uplo, m,
                         (doublecomplex*)buff_A, ldim_A,
@@ -251,17 +253,17 @@ LAPACK_hetrd(z,he)
 
 #define LAPACK_hetd2(prefix, name)                                      \
   int F77_ ## prefix ## name ## td2( char* uplo,                        \
-                                     int*  m,                           \
-                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int* ldim_A, \
+                                     integer*  m,                           \
+                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer* ldim_A, \
                                      PREFIX2LAPACK_REALDEF(prefix)* buff_d, \
                                      PREFIX2LAPACK_REALDEF(prefix)* buff_e, \
                                      PREFIX2LAPACK_TYPEDEF(prefix)* buff_t, \
-                                     int*  info )
+                                     integer*  info )
 
 LAPACK_hetd2(s,sy)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             ssytd2_fla( uplo, m,
                         buff_A, ldim_A,
@@ -285,7 +287,7 @@ LAPACK_hetd2(s,sy)
 LAPACK_hetd2(d,sy)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             dsytd2_fla( uplo, m,
                         buff_A, ldim_A,
@@ -311,7 +313,7 @@ LAPACK_hetd2(d,sy)
 LAPACK_hetd2(c,he)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             chetd2_fla( uplo, m,
                         (complex*)buff_A, ldim_A,
@@ -335,7 +337,7 @@ LAPACK_hetd2(c,he)
 LAPACK_hetd2(z,he)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             zhetd2_fla( uplo, m,
                         (doublecomplex*)buff_A, ldim_A,

@@ -1,17 +1,23 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
-static int c__1 = 1;
-static int c_n1 = -1;
+static integer c__1 = 1;
+static integer c_n1 = -1;
 
-int sgeqp3_check(int *m, int *n, float *a, int *lda, int *jpvt, float *tau, float *work, int *lwork, int *info)
+int sgeqp3_check(integer *m, integer *n, float *a, integer *lda, integer *jpvt, float *tau, float *work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
     /* Local variables */
-    int iws, nb;
-    int minmn;
-    int lwkopt;
+    integer iws, nb;
+    integer minmn;
+    integer lwkopt;
     logical lquery;
+
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "sgeqp3 inputs: m %d, n %d, lda %d, jpvt %d\n", *m, *n, *lda, *jpvt);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
 
     /* Parameter adjustments */
     a_dim1 = *lda;
@@ -65,10 +71,6 @@ int sgeqp3_check(int *m, int *n, float *a, int *lda, int *jpvt, float *tau, floa
     {
         return LAPACK_QUERY_RETURN;
     }
-    /* Quick return if possible. */
-    if (minmn == 0)
-    {
-        return LAPACK_QUICK_RETURN;
-    }
+
     return LAPACK_SUCCESS;
 }

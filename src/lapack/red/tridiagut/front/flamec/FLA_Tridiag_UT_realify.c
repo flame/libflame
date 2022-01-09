@@ -119,10 +119,10 @@ FLA_Error FLA_Tridiag_UT_l_realify_unb( FLA_Obj A, FLA_Obj d )
 FLA_Error FLA_Tridiag_UT_l_realify_opt( FLA_Obj A, FLA_Obj d )
 {
   FLA_Datatype datatype;
-  int          m_A;
-  int          rs_A, cs_A;
-  int          inc_d;
-  int          i;
+  integer          m_A;
+  integer          rs_A, cs_A;
+  integer          inc_d;
+  integer          i;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -178,7 +178,7 @@ FLA_Error FLA_Tridiag_UT_l_realify_opt( FLA_Obj A, FLA_Obj d )
         scomplex  absv;
         scomplex  conj_delta1;
 
-        int       m_ahead  = m_A - i - 1;
+        integer       m_ahead  = m_A - i - 1;
 
         // FLA_Copyt( FLA_CONJ_NO_TRANSPOSE, a10t_r, delta1 );
         // FLA_Copyt( FLA_NO_TRANSPOSE, a10t_r, absv );
@@ -219,7 +219,7 @@ FLA_Error FLA_Tridiag_UT_l_realify_opt( FLA_Obj A, FLA_Obj d )
         dcomplex  absv;
         dcomplex  conj_delta1;
 
-        int       m_ahead  = m_A - i - 1;
+        integer       m_ahead  = m_A - i - 1;
 
         // FLA_Copyt( FLA_CONJ_NO_TRANSPOSE, a10t_r, delta1 );
         // FLA_Copyt( FLA_NO_TRANSPOSE, a10t_r, absv );
@@ -335,10 +335,10 @@ FLA_Error FLA_Tridiag_UT_u_realify_unb( FLA_Obj A, FLA_Obj d )
 FLA_Error FLA_Tridiag_UT_u_realify_opt( FLA_Obj A, FLA_Obj d )
 {
   FLA_Datatype datatype;
-  int          m_A;
-  int          rs_A, cs_A;
-  int          inc_d;
-  int          i;
+  integer          m_A;
+  integer          rs_A, cs_A;
+  integer          inc_d;
+  integer          i;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -394,7 +394,7 @@ FLA_Error FLA_Tridiag_UT_u_realify_opt( FLA_Obj A, FLA_Obj d )
         scomplex  absv;
         scomplex  conj_delta1;
 
-        int       m_ahead  = m_A - i - 1;
+        integer       m_ahead  = m_A - i - 1;
 
         // FLA_Copyt( FLA_CONJ_NO_TRANSPOSE, a01_b, delta1 );
         // FLA_Copyt( FLA_NO_TRANSPOSE, a01_b, absv );
@@ -435,7 +435,7 @@ FLA_Error FLA_Tridiag_UT_u_realify_opt( FLA_Obj A, FLA_Obj d )
         dcomplex  absv;
         dcomplex  conj_delta1;
 
-        int       m_ahead  = m_A - i - 1;
+        integer       m_ahead  = m_A - i - 1;
 
         // FLA_Copyt( FLA_CONJ_NO_TRANSPOSE, a01_b, delta1 );
         // FLA_Copyt( FLA_NO_TRANSPOSE, a01_b, absv );

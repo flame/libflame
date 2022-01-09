@@ -294,6 +294,16 @@ K=N/2. If */
 /* Subroutine */
 int ctfsm_(char *transr, char *side, char *uplo, char *trans, char *diag, integer *m, integer *n, complex *alpha, complex *a, complex *b, integer *ldb)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctfsm inputs: transr %c, side %c, uplo %c, trans %c, diag %c, m %lld, n %lld, ldb %lld",*transr, *side, *uplo, *trans, *diag, *m, *n, *ldb);
+#else 
+    snprintf(buffer, 256,"ctfsm inputs: transr %c, side %c, uplo %c, trans %c, diag %c, m %d, n %d, ldb %d",*transr, *side, *uplo, *trans, *diag, *m, *n, *ldb);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, i__1, i__2, i__3;
     complex q__1;
@@ -376,11 +386,13 @@ int ctfsm_(char *transr, char *side, char *uplo, char *trans, char *diag, intege
     {
         i__1 = -info;
         xerbla_("CTFSM ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return when ( (N.EQ.0).OR.(M.EQ.0) ) */
     if (*m == 0 || *n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return when ALPHA.EQ.(0E+0,0E+0) */
@@ -403,6 +415,7 @@ int ctfsm_(char *transr, char *side, char *uplo, char *trans, char *diag, intege
             }
             /* L20: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (lside)
@@ -941,6 +954,7 @@ int ctfsm_(char *transr, char *side, char *uplo, char *trans, char *diag, intege
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTFSM */
 }

@@ -23,6 +23,7 @@ static char* fla_front_str            = "FLA_Chol";
 static char* fla_unb_var_str          = "unb_var";
 static char* fla_opt_var_str          = "opt_var";
 static char* fla_blk_var_str          = "blk_var";
+static char* fla_blk_ext_str          = "external";
 static char* pc_str[NUM_PARAM_COMBOS] = { "l", "u" };
 static test_thresh_t thresh           = { 1e-02, 1e-03,   // warn, pass for s
                                           1e-11, 1e-12,   // warn, pass for d
@@ -39,11 +40,12 @@ void libfla_test_chol_experiment( test_params_t params,
                                   unsigned int  var,
                                   char*         sc_str,
                                   FLA_Datatype  datatype,
-                                  unsigned int  p_cur,
+                                  uinteger  p_cur,
                                   unsigned int  pci,
                                   unsigned int  n_repeats,
                                   signed int    impl,
                                   double*       perf,
+                                  double*       t,
                                   double*       residual );
 void libfla_test_chol_impl( int         impl,
                             FLA_Uplo    uplo,
@@ -51,10 +53,19 @@ void libfla_test_chol_impl( int         impl,
 void libfla_test_chol_cntl_create( unsigned int var,
                                    dim_t        b_alg_flat );
 void libfla_test_chol_cntl_free( void );
-
+void FLA_POTRF( char* uplo,
+                integer n,
+                FLA_Obj A_save,
+                FLA_Obj A,
+                integer lda,
+                FLA_Datatype datatype,
+                unsigned int n_repeats,
+                double* time_min_ );
 
 void libfla_test_chol( FILE* output_stream, test_params_t params, test_op_t op )
 {
+ 
+	//printf("Version: %s",FLA_Get_AOCL_Version());
 	libfla_test_output_info( "--- %s ---\n", op_str );
 	libfla_test_output_info( "\n" );
 
@@ -117,6 +128,17 @@ void libfla_test_chol( FILE* output_stream, test_params_t params, test_op_t op )
 		                       FLA_TEST_FLAT_BLK_VAR,
 		                       params, thresh, libfla_test_chol_experiment );
 	}
+        if ( op.fla_blk_ext == ENABLE )
+        {
+                //libfla_test_output_info( "%s() blocked external variants...\n", fla_front_str );
+                //libfla_test_output_info( "\n" );
+                libfla_test_op_driver( fla_front_str, fla_blk_ext_str,
+                                       FIRST_VARIANT, LAST_VARIANT,
+                                       NUM_PARAM_COMBOS, pc_str,
+                                       NUM_MATRIX_ARGS,
+                                       FLA_TEST_FLAT_BLK_EXT,
+                                       params, thresh, libfla_test_chol_experiment );
+        }
 }
 
 
@@ -125,11 +147,12 @@ void libfla_test_chol_experiment( test_params_t params,
                                   unsigned int  var,
                                   char*         sc_str,
                                   FLA_Datatype  datatype,
-                                  unsigned int  p_cur,
+                                  uinteger  p_cur,
                                   unsigned int  pci,
                                   unsigned int  n_repeats,
                                   signed int    impl,
                                   double*       perf,
+                                  double*       t,
                                   double*       residual )
 {
 	dim_t        b_flash    = params.b_flash;
@@ -137,8 +160,9 @@ void libfla_test_chol_experiment( test_params_t params,
 	double       time_min   = 1e9;
 	double       time;
 	unsigned int i;
-	unsigned int m;
-	signed int   m_input    = -1;
+	uinteger m;
+	uinteger lda;
+	integer   m_input    = -1;
 	FLA_Uplo     uplo;
 	FLA_Obj      A, x, b, norm;
 	FLA_Obj      A_save;
@@ -188,22 +212,30 @@ void libfla_test_chol_experiment( test_params_t params,
 	     impl == FLA_TEST_FLAT_BLK_VAR )
 		libfla_test_chol_cntl_create( var, b_alg_flat );
 
-	// Repeat the experiment n_repeats times and record results.
-	for ( i = 0; i < n_repeats; ++i )
+        // Invoke FLA_POTRF for external potrfnp call
+        if ( impl == FLA_TEST_FLAT_BLK_EXT )
 	{
-		if ( impl == FLA_TEST_HIER_FRONT_END )
-			FLASH_Obj_hierarchify( A_save, A_test );
-		else
-			FLA_Copy_external( A_save, A_test );
+		lda     = FLA_Obj_col_stride( A );
+		FLA_POTRF( pc_str[pci][0], m, A_save, A_test, lda, datatype, n_repeats, &time_min );
+	} 
+        else
+	{
+		// Repeat the experiment n_repeats times and record results.
+		for ( i = 0; i < n_repeats; ++i )
+		{
+			if ( impl == FLA_TEST_HIER_FRONT_END )
+				FLASH_Obj_hierarchify( A_save, A_test );
+			else
+				FLA_Copy_external( A_save, A_test );
 		
-		time = FLA_Clock();
+			time = FLA_Clock();
 
-		libfla_test_chol_impl( impl, uplo, A_test );
+			libfla_test_chol_impl( impl, uplo, A_test );
 		
-		time = FLA_Clock() - time;
-		time_min = min( time_min, time );
+			time = FLA_Clock() - time;
+			time_min = min( time_min, time );
+		}
 	}
-
 	// Perform a linear solve with the result.
 	if ( impl == FLA_TEST_HIER_FRONT_END )
 	{
@@ -211,7 +243,7 @@ void libfla_test_chol_experiment( test_params_t params,
 		FLASH_Obj_flatten( x_test, x );
 	}
 	else
-    {
+        {
 		FLA_Chol_solve( uplo, A_test, b, x );
 	}
 
@@ -230,6 +262,7 @@ void libfla_test_chol_experiment( test_params_t params,
 		libfla_test_chol_cntl_free();
 
 	// Compute the performance of the best experiment repeat.
+  	*t = time_min;
 	*perf = 1.0 / 3.0 * m * m * m / time_min / FLOPS_PER_UNIT_PERF;
 	if ( FLA_Obj_is_complex( A ) ) *perf *= 4.0;
 
@@ -251,9 +284,9 @@ void libfla_test_chol_experiment( test_params_t params,
 
 
 
-extern fla_herk_t* fla_herk_cntl_blas;
-extern fla_trsm_t* fla_trsm_cntl_blas;
-extern fla_gemm_t* fla_gemm_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_herk_t* fla_herk_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_trsm_t* fla_trsm_cntl_blas;
+extern LIBFLAME_IMPORT TLS_CLASS_SPEC fla_gemm_t* fla_gemm_cntl_blas;
 
 void libfla_test_chol_cntl_create( unsigned int var,
                                    dim_t        b_alg_flat )
@@ -331,5 +364,93 @@ void libfla_test_chol_impl( int impl,
 		default:
 		libfla_test_output_error( "Invalid implementation type.\n" );
 	}
+}
+
+/*
+ *  * FLA_POTRF calls LAPACK interface 
+ *  Cholesky Factorization - potrf 
+ *    * */
+void FLA_POTRF( char* uplo,
+                integer n,
+                FLA_Obj A_save,
+                FLA_Obj A,
+                integer lda,
+                FLA_Datatype datatype,
+                unsigned int n_repeats,
+                double* time_min_ )
+{
+        integer      info;
+        unsigned int i;
+        double       time;
+        double       time_min   = 1e9;
+
+        switch( datatype )
+        {
+                case FLA_FLOAT:
+                {
+                        for ( i = 0; i < n_repeats; ++i )
+                        {
+                           FLA_Copy_external( A_save, A );
+                           float *buff_A     = ( float * ) FLA_FLOAT_PTR( A );
+
+                           time = FLA_Clock();
+
+                           spotrf_(&uplo, &n, buff_A, &lda, &info);
+
+                           time = FLA_Clock() - time;
+                           time_min = min( time_min, time );
+                        }
+                        break;
+                }
+                case FLA_DOUBLE:
+                {
+                        for ( i = 0; i < n_repeats; ++i )
+                        {
+                           FLA_Copy_external( A_save, A );
+                           double *buff_A     = ( double * ) FLA_DOUBLE_PTR( A );
+
+                           time = FLA_Clock();
+
+                           dpotrf_(&uplo, &n, buff_A, &lda, &info);
+
+                           time = FLA_Clock() - time;
+                           time_min = min( time_min, time );
+                        }
+                        break;
+                }
+                case FLA_COMPLEX:
+                {
+                        for ( i = 0; i < n_repeats; ++i )
+                        {
+                           FLA_Copy_external( A_save, A );
+                           scomplex *buff_A     = ( scomplex * ) FLA_COMPLEX_PTR( A );
+
+                           time = FLA_Clock();
+
+                           cpotrf_(&uplo, &n, buff_A, &lda, &info);
+
+                           time = FLA_Clock() - time;
+                           time_min = min( time_min, time );
+                        }
+                        break;
+                }
+                case FLA_DOUBLE_COMPLEX:
+                {
+                        for ( i = 0; i < n_repeats; ++i )
+                        {
+                           FLA_Copy_external( A_save, A );
+                           dcomplex *buff_A     = ( dcomplex * ) FLA_DOUBLE_COMPLEX_PTR( A );
+
+                           time = FLA_Clock();
+
+                           zpotrf_(&uplo, &n, buff_A, &lda, &info);
+
+                           time = FLA_Clock() - time;
+                           time_min = min( time_min, time );
+                        }
+                        break;
+                }
+        }
+        *time_min_ = time_min;
 }
 

@@ -1,20 +1,24 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
-static int c__1 = 1;
-static int c_n1 = -1;
+static integer c__1 = 1;
+static integer c_n1 = -1;
 
-int dgesdd_check(char *jobz, int *m, int *n, double * a, int *lda, double *s, double *u, int *ldu, double *vt, int *ldvt, double *work, int *lwork, int *iwork, int *info)
+int dgesdd_check(char *jobz, integer *m, integer *n, double * a, integer *lda, double *s, double *u, integer *ldu, double *vt, integer *ldvt, double *work, integer *lwork, integer *iwork, integer *info)
 {
     /* System generated locals */
-  int a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1, i__2;
+  integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1, i__2;
     /* Local variables */
-    int minmn, wrkbl, mnthr;
+    integer minmn, wrkbl, mnthr;
     logical wntqa;
     logical wntqn, wntqo, wntqs;
-    int bdspac;
-    int minwrk, maxwrk;
-    logical wntqas, lquery;
-
+    integer bdspac;
+    integer minwrk, maxwrk;
+    logical wntqas, lquery;    
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "dgesdd inputs: jobz %c, m %d, n %d, lda %d, ldu %d, ldvt %d\n", *jobz, *m, *n, *lda, *ldu, *ldvt);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;
@@ -74,7 +78,7 @@ int dgesdd_check(char *jobz, int *m, int *n, double * a, int *lda, double *s, do
         if (*m >= *n && minmn > 0)
         {
             /* Compute space needed for DBDSDC */
-            mnthr = (int) (minmn * 11. / 6.);
+            mnthr = (integer) (minmn * 11. / 6.);
             if (wntqn)
             {
                 bdspac = *n * 7;
@@ -250,7 +254,7 @@ int dgesdd_check(char *jobz, int *m, int *n, double * a, int *lda, double *s, do
         else if (minmn > 0)
         {
             /* Compute space needed for DBDSDC */
-            mnthr = (int) (minmn * 11. / 6.);
+            mnthr = (integer) (minmn * 11. / 6.);
             if (wntqn)
             {
                 bdspac = *m * 7;

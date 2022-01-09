@@ -121,6 +121,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int zlacn2_(integer *n, doublecomplex *v, doublecomplex *x, doublereal *est, integer *kase, integer *isave)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"zlacn2 inputs: n %" FLA_IS ", kase %" FLA_IS ", isave %" FLA_IS "",*n, *kase, *isave);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3;
     doublereal d__1, d__2;
@@ -179,6 +185,7 @@ int zlacn2_(integer *n, doublecomplex *v, doublecomplex *x, doublereal *est, int
         }
         *kase = 1;
         isave[1] = 1;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     switch (isave[1])
@@ -233,6 +240,7 @@ L20:
     }
     *kase = 2;
     isave[1] = 2;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* ................ ENTRY (ISAVE( 1 ) = 2) */
     /* FIRST ITERATION. X HAS BEEN OVERWRITTEN BY CTRANS(A)*X. */
@@ -256,6 +264,7 @@ L50:
     x[i__1].i = 0.; // , expr subst
     *kase = 1;
     isave[1] = 3;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* ................ ENTRY (ISAVE( 1 ) = 3) */
     /* X HAS BEEN OVERWRITTEN BY A*X. */
@@ -295,6 +304,7 @@ L70:
     }
     *kase = 2;
     isave[1] = 4;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* ................ ENTRY (ISAVE( 1 ) = 4) */
     /* X HAS BEEN OVERWRITTEN BY CTRANS(A)*X. */
@@ -325,6 +335,7 @@ L100:
     }
     *kase = 1;
     isave[1] = 5;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* ................ ENTRY (ISAVE( 1 ) = 5) */
     /* X HAS BEEN OVERWRITTEN BY A*X. */
@@ -337,6 +348,7 @@ L120:
     }
 L130:
     *kase = 0;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZLACN2 */
 }

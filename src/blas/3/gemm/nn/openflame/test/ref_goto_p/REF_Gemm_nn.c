@@ -13,7 +13,7 @@
 FLA_Error REF_Gemm_nn( FLA_Obj A, FLA_Obj B, FLA_Obj C )
 {
   FLA_Datatype datatype;
-  int          m, k, n, ldim_A, ldim_B, ldim_C;
+  integer          m, k, n, ldim_A, ldim_B, ldim_C;
 
   datatype = FLA_Obj_datatype( A );
   ldim_A   = FLA_Obj_ldim( A );

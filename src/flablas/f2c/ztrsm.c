@@ -9,6 +9,7 @@ static doublecomplex c_b1 =
 /* Subroutine */
 int ztrsm_(char *side, char *uplo, char *transa, char *diag, integer *m, integer *n, doublecomplex *alpha, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7;
     doublecomplex z__1, z__2, z__3;
@@ -756,6 +757,7 @@ int ztrsm_(char *side, char *uplo, char *transa, char *diag, integer *m, integer
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZTRSM . */
 }

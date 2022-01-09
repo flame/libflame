@@ -17,14 +17,14 @@
 
 
 void time_Hevd_lv(
-               int variant, int type, int n_repeats, int m, int n_iter_max, int k_accum, int b_alg,
+               integer variant, integer type, integer n_repeats, integer m, integer n_iter_max, integer k_accum, integer b_alg,
                FLA_Obj A, FLA_Obj l,
-               double *dtime, double *diff1, double* diff2, double *gflops, int* k_perf );
+               double *dtime, double *diff1, double* diff2, double *gflops, integer* k_perf );
 
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     m_input,
     m,
     p_first, p_last, p_inc,

@@ -193,6 +193,16 @@ the corresponding */
 /* Subroutine */
 int clarfb_(char *side, char *trans, char *direct, char * storev, integer *m, integer *n, integer *k, complex *v, integer *ldv, complex *t, integer *ldt, complex *c__, integer *ldc, complex *work, integer *ldwork)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clarfb inputs: side %c, trans %c, direct %c, storev %c, m %lld, n %lld, k %lld, ldv %lld, ldt %lld, ldc %lld, ldwork %lld",*side, *trans, *direct, *storev, *m, *n, *k, *ldv, *ldt, *ldc, *ldwork);
+#else 
+    snprintf(buffer, 256,"clarfb inputs: side %c, trans %c, direct %c, storev %c, m %d, n %d, k %d, ldv %d, ldt %d, ldc %d, ldwork %d",*side, *trans, *direct, *storev, *m, *n, *k, *ldv, *ldt, *ldc, *ldwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer c_dim1, c_offset, t_dim1, t_offset, v_dim1, v_offset, work_dim1, work_offset, i__1, i__2, i__3, i__4, i__5;
     complex q__1, q__2;
@@ -243,6 +253,7 @@ int clarfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
     /* Function Body */
     if (*m <= 0 || *n <= 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (lsame_(trans, "N"))
@@ -745,6 +756,7 @@ int clarfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLARFB */
 }

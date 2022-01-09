@@ -18,7 +18,7 @@ FLA_Error FLA_Gemm_nn_omp_var6( FLA_Obj alpha, FLA_Obj A, FLA_Obj B, FLA_Obj C, 
           BB,              B1,
                            B2;
 
-  int b;
+  integer b;
 
   FLA_Part_1x2( A,    &AL,  &AR,      0, FLA_RIGHT );
 

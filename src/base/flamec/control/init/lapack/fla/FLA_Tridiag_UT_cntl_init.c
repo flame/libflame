@@ -10,11 +10,11 @@
 
 #include "FLAME.h"
 
-fla_tridiagut_t*    fla_tridiagut_cntl_fused = NULL;
-fla_tridiagut_t*    fla_tridiagut_cntl_nofus = NULL;
-fla_tridiagut_t*    fla_tridiagut_cntl_plain = NULL;
+TLS_CLASS_SPEC fla_tridiagut_t*    fla_tridiagut_cntl_fused = NULL;
+TLS_CLASS_SPEC fla_tridiagut_t*    fla_tridiagut_cntl_nofus = NULL;
+TLS_CLASS_SPEC fla_tridiagut_t*    fla_tridiagut_cntl_plain = NULL;
 
-fla_blocksize_t*    fla_tridiagut_bsize_leaf = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*    fla_tridiagut_bsize_leaf = NULL;
 
 void FLA_Tridiag_UT_cntl_init()
 {

@@ -16,17 +16,17 @@
 
 FLA_Error REF_Tevd_v( FLA_Obj d, FLA_Obj e, FLA_Obj U );
 void time_Tevd_v(
-               int variant, int type, int n_repeats, int m, int k_accum, int b_alg, int n_iter_max,
+               integer variant, integer type, integer n_repeats, integer m, integer k_accum, integer b_alg, integer n_iter_max,
                FLA_Obj A_orig, FLA_Obj d, FLA_Obj e, FLA_Obj G, FLA_Obj R, FLA_Obj W, FLA_Obj A, FLA_Obj l,
                double *dtime, double *diff1, double* diff2, double *gflops );
 
 
 void time_Tevd_v(
-               int variant, int type, int n_repeats, int m, int k_accum, int b_alg, int n_iter_max,
+               integer variant, integer type, integer n_repeats, integer m, integer k_accum, integer b_alg, integer n_iter_max,
                FLA_Obj A_orig, FLA_Obj d, FLA_Obj e, FLA_Obj G, FLA_Obj R, FLA_Obj W, FLA_Obj A, FLA_Obj l,
                double *dtime, double *diff1, double* diff2, double *gflops )
 {
-  int irep;
+  integer irep;
 
   double
     k, dtime_old = 1.0e9;

@@ -24,10 +24,10 @@
 
 #define LAPACK_potri(prefix)                                    \
   int F77_ ## prefix ## potri( char* uplo,                      \
-                               int*  n,                         \
+                               integer*  n,                         \
                                PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, \
-                               int*  ldim_A,                         \
-                               int*  info )
+                               integer*  ldim_A,                         \
+                               integer*  info )
 
 #define LAPACK_potri_body(prefix)                               \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \

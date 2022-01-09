@@ -3,19 +3,23 @@
 static integer c__1 = 1;
 static integer c_n1 = -1;
 
-int zgesdd_check(char *jobz, int *m, int *n, dcomplex *a, int *lda, double *s, dcomplex *u, int *ldu, dcomplex *vt, int *ldvt, dcomplex *work, int *lwork, double *rwork, int *iwork, int *info)
+int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, double *s, dcomplex *u, integer *ldu, dcomplex *vt, integer *ldvt, dcomplex *work, integer *lwork, double *rwork, integer *iwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1, i__2;
+    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1, i__2;
     /* Local variables */
-    int minmn;
-    int wrkbl;
+    integer minmn;
+    integer wrkbl;
     logical wntqa;
     logical wntqn, wntqo, wntqs;
-    int mnthr1, mnthr2;
-    int minwrk, maxwrk;
-    logical wntqas;
-
+    integer mnthr1, mnthr2;
+    integer minwrk, maxwrk;
+    logical wntqas; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "zgesdd inputs: jobz %c, m %d, n %d, lda %d, ldu %d, ldvt %d\n", *jobz, *m, *n, *lda, *ldu, *ldvt);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;
@@ -33,8 +37,8 @@ int zgesdd_check(char *jobz, int *m, int *n, dcomplex *a, int *lda, double *s, d
     /* Function Body */
     *info = 0;
     minmn = min(*m,*n);
-    mnthr1 = (int) (minmn * 17. / 9.);
-    mnthr2 = (int) (minmn * 5. / 3.);
+    mnthr1 = (integer) (minmn * 17. / 9.);
+    mnthr2 = (integer) (minmn * 5. / 3.);
     wntqa = lsame_(jobz, "A");
     wntqs = lsame_(jobz, "S");
     wntqas = wntqa || wntqs;

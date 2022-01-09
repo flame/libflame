@@ -36,8 +36,8 @@
   }
 
 extern int lsame_(char *, char *);
-extern int xerbla_(char *, int *);
-extern int ilaenv_(int *, char *, char *, int *, int *, int *, int *);
+extern int xerbla_(char *, integer *);
+extern int ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
 
 
 #endif

@@ -31,13 +31,14 @@
 
 #define LAPACK_orgtr(prefix, name)                                      \
   int F77_ ## prefix ## name ## tr( char* uplo,                         \
-                                    int*  m,                            \
-                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, int *ldim_A, \
+                                    integer*  m,                            \
+                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, integer *ldim_A, \
                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_t, \
-                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, int *lwork, \
-                                    int *info )
+                                    PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, integer *lwork, \
+                                    integer *info )
 
 #define LAPACK_orgtr_body(prefix)                                       \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \
   FLA_Datatype datatype   = PREFIX2FLAME_DATATYPE(prefix);              \
   FLA_Obj      A, ATL, ATR, ABL, ABR;                                   \
   FLA_Obj      t, T, TL, TR;                                            \
@@ -111,6 +112,7 @@
                                                                         \
   *info = 0;                                                            \
                                                                         \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                          \
   return 0;
 
 extern int sorgtr_fla(char *uplo, integer *n, real *a, integer *lda, real *tau, real *work, integer *lwork, integer *info);
@@ -121,7 +123,7 @@ extern int zungtr_fla(char *uplo, integer *n, doublecomplex *a, integer *lda, do
 LAPACK_orgtr(s, org)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             sorgtr_fla( uplo, m,
                         buff_A, ldim_A,
@@ -146,7 +148,7 @@ LAPACK_orgtr(s, org)
 LAPACK_orgtr(d, org)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             dorgtr_fla( uplo, m,
                         buff_A, ldim_A,
@@ -172,7 +174,7 @@ LAPACK_orgtr(d, org)
 LAPACK_orgtr(c, ung)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             cungtr_fla( uplo, m,
                         (complex*)buff_A, ldim_A,
@@ -196,7 +198,7 @@ LAPACK_orgtr(c, ung)
 LAPACK_orgtr(z, ung)
 {
     {
-        if ( *uplo == 'U' )
+        if ( *uplo == 'U' || *uplo == 'u' )
         {
             zungtr_fla( uplo, m,
                         (doublecomplex*) buff_A, ldim_A,

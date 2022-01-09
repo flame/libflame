@@ -17,11 +17,11 @@
 FLA_Error FLA_Syrk_external_gpu( FLA_Uplo uplo, FLA_Trans trans, FLA_Obj alpha, FLA_Obj A, void* A_gpu, FLA_Obj beta, FLA_Obj C, void* C_gpu )
 {
   FLA_Datatype datatype;
-  int          k_A;
-  int          m_A, n_A;
-  int          m_C;
-  int          ldim_A;
-  int          ldim_C;
+  integer          k_A;
+  integer          m_A, n_A;
+  integer          m_C;
+  integer          ldim_A;
+  integer          ldim_C;
   char         blas_uplo; 
   char         blas_trans;
 

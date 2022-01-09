@@ -112,6 +112,12 @@ the matrix is singular and its */
 /* Subroutine */
 int zsptri_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, doublecomplex *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zsptri inputs: uplo %c, n %d, ipiv %d",*uplo, *n, *ipiv);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3;
     doublecomplex z__1, z__2, z__3;
@@ -173,11 +179,13 @@ int zsptri_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, doublecomp
     {
         i__1 = -(*info);
         xerbla_("ZSPTRI", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check that the diagonal matrix D is nonsingular. */
@@ -192,6 +200,7 @@ int zsptri_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, doublecomp
             i__1 = kp;
             if (ipiv[*info] > 0 && (ap[i__1].r == 0. && ap[i__1].i == 0.))
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             kp -= *info;
@@ -210,6 +219,7 @@ int zsptri_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, doublecomp
             i__2 = kp;
             if (ipiv[*info] > 0 && (ap[i__2].r == 0. && ap[i__2].i == 0.))
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             kp = kp + *n - *info + 1;
@@ -339,7 +349,7 @@ L30: /* If K > N, exit from loop. */
             kstep = 2;
             kcnext = kcnext + k + 1;
         }
-        kp = (i__1 = ipiv[k], f2c_abs(i__1));
+        kp = (i__1 = ipiv[k], f2c_dabs(i__1));
         if (kp != k)
         {
             /* Interchange rows and columns K and KP in the leading */
@@ -519,7 +529,7 @@ L60: /* If K < 1, exit from loop. */
             kstep = 2;
             kcnext -= *n - k + 3;
         }
-        kp = (i__1 = ipiv[k], f2c_abs(i__1));
+        kp = (i__1 = ipiv[k], f2c_dabs(i__1));
         if (kp != k)
         {
             /* Interchange rows and columns K and KP in the trailing */
@@ -579,6 +589,7 @@ L60: /* If K < 1, exit from loop. */
 L80:
         ;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZSPTRI */
 }

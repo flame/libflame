@@ -187,6 +187,16 @@ only the remaining */
 /* Subroutine */
 int cgelsx_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, complex *b, integer *ldb, integer *jpvt, real *rcond, integer *rank, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgelsx inputs: m %lld, n %lld, nrhs %lld, lda %lld, ldb %lld, jpvt %lld",*m, *n, *nrhs, *lda, *ldb, *jpvt);
+#else 
+    snprintf(buffer, 256,"cgelsx inputs: m %d, n %d, nrhs %d, lda %d, ldb %d, jpvt %d",*m, *n, *nrhs, *lda, *ldb, *jpvt);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3;
     complex q__1;
@@ -279,6 +289,7 @@ int cgelsx_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
     {
         i__1 = -(*info);
         xerbla_("CGELSX", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -287,6 +298,7 @@ int cgelsx_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
     if (min(i__1,*nrhs) == 0)
     {
         *rank = 0;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine parameters */
@@ -522,6 +534,7 @@ L70:
         clascl_("G", &c__0, &c__0, &bignum, &bnrm, n, nrhs, &b[b_offset], ldb, info);
     }
 L100:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGELSX */
 }

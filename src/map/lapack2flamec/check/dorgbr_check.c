@@ -1,21 +1,26 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h" /* Table of constant values */
-static int c_n1 = -1;
+static integer c_n1 = -1;
 
-int dorgbr_check(char *vect, int *m, int *n, int *k, double *a, int *lda, double *tau, double *work, int *lwork, int *info)
+int dorgbr_check(char *vect, integer *m, integer *n, integer *k, double *a, integer *lda, double *tau, double *work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1, i__2, i__3;
+    integer a_dim1, a_offset, i__1, i__2, i__3;
     /* Local variables */
-    int iinfo;
+    integer iinfo;
     logical wantq;
     extern int
-      dorglq_check( int *, int *, int *, double *, int *,
-               double *, double *, int *, int *),
-      dorgqr_check( int *, int *, int *, double *, int *,
-               double *, double *, int *, int *);
-    int mn, lwkopt;
+      dorglq_check( integer *, integer *, integer *, double *, integer *,
+               double *, double *, integer *, integer *),
+      dorgqr_check( integer *, integer *, integer *, double *, integer *,
+               double *, double *, integer *, integer *);
+    integer mn, lwkopt;
     logical lquery;
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "dorgbr inputs: vect %c, m %d, n %d, k %d, lda %d\n", *vect, *m, *n, *k, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;
@@ -88,7 +93,7 @@ int dorgbr_check(char *vect, int *m, int *n, int *k, double *a, int *lda, double
                 }
             }
         }
-        lwkopt = (int) work[1];
+        lwkopt = (integer) work[1];
         lwkopt = max(lwkopt,mn);
     }
     if (*info != 0)

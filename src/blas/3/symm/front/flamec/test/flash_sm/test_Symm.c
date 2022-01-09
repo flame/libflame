@@ -20,14 +20,14 @@ char* pc_str[N_PARAM_COMBOS] = { "ll", "lu",
                                  "rl", "ru" };
 
 void time_Symm(
-               int param_combo, int type, int n_repeats, int m, int n,
+               integer param_combo, integer type, integer n_repeats, integer m, integer n,
                FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj C_ref,
                double *dtime, double *diff, double *gflops );
 
 
-int main(int argc, char *argv[])
+int main(integer argc, char *argv[])
 {
-  int 
+  integer 
     datatype,
     m_input, n_input,
     m, n,

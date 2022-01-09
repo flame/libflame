@@ -167,6 +167,12 @@ static real c_b9 = 1.f;
 /* Subroutine */
 int slasyf_(char *uplo, integer *n, integer *nb, integer *kb, real *a, integer *lda, integer *ipiv, real *w, integer *ldw, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"slasyf inputs: uplo %c, n %d, nb %d, lda %d, ldw %d",*uplo, *n, *nb, *lda, *ldw);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, w_dim1, w_offset, i__1, i__2, i__3, i__4, i__5;
     real r__1, r__2, r__3;
@@ -772,6 +778,7 @@ L120: /* Undo the interchanges (if any) of rows JJ and JP at each */
         /* Set KB to the number of columns factorized */
         *kb = k - 1;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SLASYF */
 }

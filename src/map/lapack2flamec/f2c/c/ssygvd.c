@@ -223,6 +223,12 @@ i off-diagonal elements of an */
 /* Subroutine */
 int ssygvd_(integer *itype, char *jobz, char *uplo, integer * n, real *a, integer *lda, real *b, integer *ldb, real *w, real *work, integer *lwork, integer *iwork, integer *liwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"ssygvd inputs: itype %" FLA_IS ", jobz %c, uplo %c, n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*itype, *jobz, *uplo, *n, *lda, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     real r__1, r__2;
@@ -340,15 +346,18 @@ int ssygvd_(integer *itype, char *jobz, char *uplo, integer * n, real *a, intege
     {
         i__1 = -(*info);
         xerbla_("SSYGVD", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Form a Cholesky factorization of B. */
@@ -356,6 +365,7 @@ int ssygvd_(integer *itype, char *jobz, char *uplo, integer * n, real *a, intege
     if (*info != 0)
     {
         *info = *n + *info;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Transform problem to standard eigenvalue problem and solve. */
@@ -404,6 +414,7 @@ int ssygvd_(integer *itype, char *jobz, char *uplo, integer * n, real *a, intege
     }
     work[1] = (real) lopt;
     iwork[1] = liopt;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SSYGVD */
 }

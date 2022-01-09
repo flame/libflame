@@ -17,17 +17,17 @@
 
 FLA_Error REF_Trsv( FLA_Uplo uplo, FLA_Trans trans, FLA_Diag diag, FLA_Obj A, FLA_Obj x );
 void time_Trsv(
-               int param_combo, int type, int nrepeats, int m,
+               integer param_combo, integer type, integer nrepeats, integer m,
                FLA_Obj A, FLA_Obj x, FLA_Obj x_ref,
                double *dtime, double *diff, double *gflops );
 
 
 void time_Trsv( 
-               int param_combo, int type, int nrepeats, int m,
+               integer param_combo, integer type, integer nrepeats, integer m,
                FLA_Obj A, FLA_Obj x, FLA_Obj x_ref,
                double *dtime, double *diff, double *gflops )
 {
-  int
+  integer
     irep;
 
   double

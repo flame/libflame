@@ -32,22 +32,23 @@
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date September 2012 */
 /* > \ingroup auxOTHERauxiliary */
 /* ===================================================================== */
 /* Subroutine */
 int ilaver_(integer *vers_major__, integer *vers_minor__, integer *vers_patch__)
 {
-    /* -- LAPACK computational routine (version 3.5.0) -- */
+    /* Logging and tracing code */
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    /* -- LAPACK computational routine-- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* November 2013 */
     /* ===================================================================== */
     /* ===================================================================== */
     *vers_major__ = 3;
-    *vers_minor__ = 5;
+    *vers_minor__ = 10;
     *vers_patch__ = 0;
     /* ===================================================================== */
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
 /* ilaver_ */

@@ -131,6 +131,16 @@ row i of the matrix was interchanged */
 /* ===================================================================== */
 real cla_gercond_c_(char *trans, integer *n, complex *a, integer *lda, complex *af, integer *ldaf, integer *ipiv, real *c__, logical *capply, integer *info, complex *work, real *rwork)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cla_gercond_c inputs: trans %c, n %lld, lda %lld, ldaf %lld, ipiv %lld",*trans, *n, *lda, *ldaf, *ipiv);
+#else 
+    snprintf(buffer, 256,"cla_gercond_c inputs: trans %c, n %d, lda %d, ldaf %d, ipiv %d",*trans, *n, *lda, *ldaf, *ipiv);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, i__1, i__2, i__3, i__4;
     real ret_val, r__1, r__2;
@@ -207,6 +217,7 @@ real cla_gercond_c_(char *trans, integer *n, complex *a, integer *lda, complex *
     {
         i__1 = -(*info);
         xerbla_("CLA_GERCOND_C", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return ret_val;
     }
     /* Compute norm of op(A)*op2(C). */
@@ -283,10 +294,12 @@ real cla_gercond_c_(char *trans, integer *n, complex *a, integer *lda, complex *
     if (*n == 0)
     {
         ret_val = 1.f;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return ret_val;
     }
     else if (anorm == 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return ret_val;
     }
     /* Estimate the norm of inv(op(A)). */
@@ -387,6 +400,7 @@ L10:
     {
         ret_val = 1.f / ainvnm;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return ret_val;
 }
 /* cla_gercond_c__ */

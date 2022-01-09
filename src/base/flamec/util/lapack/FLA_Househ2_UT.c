@@ -58,8 +58,8 @@ FLA_Error FLA_Househ2_UT( FLA_Side side, FLA_Obj chi_1, FLA_Obj x2, FLA_Obj tau 
 */
 {
   FLA_Datatype datatype;
-  int          m_x2;
-  int          inc_x2;
+  integer          m_x2;
+  integer          inc_x2;
 
   datatype = FLA_Obj_datatype( x2 );
 
@@ -157,9 +157,9 @@ FLA_Error FLA_Househ2_UT( FLA_Side side, FLA_Obj chi_1, FLA_Obj x2, FLA_Obj tau 
 
 
 
-FLA_Error FLA_Househ2_UT_l_ops( int       m_x2,
+FLA_Error FLA_Househ2_UT_l_ops( integer       m_x2,
                                 float*    chi_1,
-                                float*    x2, int inc_x2,
+                                float*    x2, integer inc_x2,
                                 float*    tau )
 {
   float    one_half = *FLA_FLOAT_PTR( FLA_ONE_HALF );
@@ -171,8 +171,10 @@ FLA_Error FLA_Househ2_UT_l_ops( int       m_x2,
   float    norm_x;
   float    abs_chi_1_minus_alpha;
   float    norm_x_2_div_abs_chi_1_minus_alpha;
+  float    safmin, rsafmn, sclf, lchi1;
   int      i_one = 1;
   int      i_two = 2;
+  int      kn;
 
   //
   // Compute the 2-norm of x_2:
@@ -197,24 +199,14 @@ FLA_Error FLA_Househ2_UT_l_ops( int       m_x2,
   }
 
   //
-  // Compute the absolute value (magnitude) of chi_1, which equals the 2-norm
-  // of chi_1:
-  //
-  //   abs_chi_1 :=  | chi_1 |  =  || chi_1 ||_2
-  //
-
-  bl1_snrm2( i_one,
-             chi_1, i_one,
-             &abs_chi_1 );
-
-  //
   // Compute the 2-norm of x via the two norms previously computed above:
   //
   //   norm_x :=  || x ||_2  =  || / chi_1 \ ||   =  || / || chi_1 ||_2 \ ||
   //                            || \  x_2  / ||_2    || \  || x_2 ||_2  / ||_2
   //
 
-  y[0] = abs_chi_1;
+  lchi1 = *chi_1;
+  y[0] = lchi1;
   y[1] = norm_x_2;
 
   bl1_snrm2( i_two,
@@ -236,7 +228,33 @@ FLA_Error FLA_Househ2_UT_l_ops( int       m_x2,
   //   x_2 := x_2 / ( chi_1 - alpha )
   //
 
-  chi_1_minus_alpha = *chi_1 - alpha;
+  chi_1_minus_alpha = lchi1 - alpha;
+
+  //
+  // Scale X2, chi_1_minus_alpha, alpha
+  // if norm factor is very less
+  //
+  safmin = fla_slamch("S", 1) / fla_slamch("E", 1);
+  abs_chi_1_minus_alpha = fabs( chi_1_minus_alpha );
+  kn = 0;
+
+  if( abs_chi_1_minus_alpha < safmin )
+  {
+    rsafmn = 1.0F / safmin;
+
+    for( kn = 1; kn < 20; kn++ )
+    {
+      bl1_sscalv( BLIS1_NO_CONJUGATE,
+                  m_x2,
+                  &rsafmn,
+                  x2, inc_x2 );
+      alpha = alpha * rsafmn;
+      chi_1_minus_alpha = chi_1_minus_alpha * rsafmn;
+      
+      if( fabs( chi_1_minus_alpha ) > safmin )
+        break;
+    }
+  }
 
   bl1_sinvscalv( BLIS1_NO_CONJUGATE,
                  m_x2,
@@ -250,13 +268,34 @@ FLA_Error FLA_Househ2_UT_l_ops( int       m_x2,
   //        = ( ( chi_1 - alpha ) * conj( chi_1 - alpha ) + x_2' * x_2 ) /
   //          ( 2 * ( chi_1 - alpha ) * conj( chi_1 - alpha ) )
   //        = 1/2 + ( || x ||_2 / | chi_1 - alpha | )^2
+  //        = alpha / ( alpha - chi_1 )
   //
+  if( abs_chi_1_minus_alpha >= safmin )
+  {
+    *tau = -1.0F * alpha / chi_1_minus_alpha;
+  }
+  else
+  {
+    //
+    // Brute force calculation for tau in case of low magnitude inputs
+    // to get desired accuracy:
+    //   tau := ( 1 + u_2' * u_2 ) / 2
+    //
+    bl1_sdot( BLIS1_NO_CONJUGATE,
+              m_x2,
+              x2, inc_x2,
+              x2, inc_x2,
+              tau );
+    *tau = (1.0F + *tau) / 2.0F;
+  }
 
-  bl1_sabsval2( &chi_1_minus_alpha, &abs_chi_1_minus_alpha );
-
-  norm_x_2_div_abs_chi_1_minus_alpha = norm_x_2 / abs_chi_1_minus_alpha;
-  *tau = one_half + one_half*(norm_x_2_div_abs_chi_1_minus_alpha * 
-                              norm_x_2_div_abs_chi_1_minus_alpha);
+  //
+  // Scale back alpha
+  //
+  for( ; kn > 0; kn-- )
+  {
+    alpha = alpha * safmin;
+  }
 
   //
   // Overwrite chi_1 with alpha:
@@ -270,10 +309,9 @@ FLA_Error FLA_Househ2_UT_l_ops( int       m_x2,
 }
 
 
-
-FLA_Error FLA_Househ2_UT_l_opd( int       m_x2,
+FLA_Error FLA_Househ2_UT_l_opd( integer       m_x2,
                                 double*   chi_1,
-                                double*   x2, int inc_x2,
+                                double*   x2, integer inc_x2,
                                 double*   tau )
 {
   double   one_half = *FLA_DOUBLE_PTR( FLA_ONE_HALF );
@@ -285,8 +323,10 @@ FLA_Error FLA_Househ2_UT_l_opd( int       m_x2,
   double   norm_x;
   double   abs_chi_1_minus_alpha;
   double   norm_x_2_div_abs_chi_1_minus_alpha;
+  double   safmin, rsafmn, sclf, lchi1;
   int      i_one = 1;
   int      i_two = 2;
+  int      kn;
 
   //
   // Compute the 2-norm of x_2:
@@ -311,24 +351,14 @@ FLA_Error FLA_Househ2_UT_l_opd( int       m_x2,
   }
 
   //
-  // Compute the absolute value (magnitude) of chi_1, which equals the 2-norm
-  // of chi_1:
-  //
-  //   abs_chi_1 :=  | chi_1 |  =  || chi_1 ||_2
-  //
-
-  bl1_dnrm2( i_one,
-             chi_1, i_one,
-             &abs_chi_1 );
-
-  //
   // Compute the 2-norm of x via the two norms previously computed above:
   //
   //   norm_x :=  || x ||_2  =  || / chi_1 \ ||   =  || / || chi_1 ||_2 \ ||
   //                            || \  x_2  / ||_2    || \  || x_2 ||_2  / ||_2
   //
 
-  y[0] = abs_chi_1;
+  lchi1 = *chi_1;
+  y[0] = lchi1;
   y[1] = norm_x_2;
 
   bl1_dnrm2( i_two,
@@ -342,7 +372,7 @@ FLA_Error FLA_Househ2_UT_l_opd( int       m_x2,
   //          = -sign( chi_1 ) * || x ||_2
   //
 
-  alpha = -dsign( *chi_1 ) * norm_x;
+  alpha = -dsign( lchi1 ) * norm_x;
 
   //
   // Overwrite x_2 with u_2:
@@ -350,7 +380,33 @@ FLA_Error FLA_Househ2_UT_l_opd( int       m_x2,
   //   x_2 := x_2 / ( chi_1 - alpha )
   //
 
-  chi_1_minus_alpha = *chi_1 - alpha;
+  chi_1_minus_alpha = lchi1 - alpha;
+
+  //
+  // Scale X2, chi_1_minus_alpha, alpha
+  // if norm factor is very less
+  //
+  safmin = fla_dlamch("S", 1) / fla_dlamch("E", 1);
+  abs_chi_1_minus_alpha = fabs( chi_1_minus_alpha );
+  kn = 0;
+
+  if( abs_chi_1_minus_alpha < safmin )
+  {
+    rsafmn = 1. / safmin;
+
+    for( kn = 1; kn < 20; kn++ )
+    {
+      bl1_dscalv( BLIS1_NO_CONJUGATE,
+                  m_x2,
+                  &rsafmn,
+                  x2, inc_x2 );
+      alpha = alpha * rsafmn;
+      chi_1_minus_alpha = chi_1_minus_alpha * rsafmn;
+      
+      if( fabs( chi_1_minus_alpha ) > safmin )
+        break;
+    }
+  }
 
   bl1_dinvscalv( BLIS1_NO_CONJUGATE,
                  m_x2,
@@ -364,15 +420,35 @@ FLA_Error FLA_Househ2_UT_l_opd( int       m_x2,
   //        = ( ( chi_1 - alpha ) * conj( chi_1 - alpha ) + x_2' * x_2 ) /
   //          ( 2 * ( chi_1 - alpha ) * conj( chi_1 - alpha ) )
   //        = 1/2 + ( || x ||_2 / | chi_1 - alpha | )^2
+  //        = alpha / ( alpha - chi_1 )
   //
 
-  bl1_dabsval2( &chi_1_minus_alpha, &abs_chi_1_minus_alpha );
+  if( abs_chi_1_minus_alpha >= safmin )
+  {
+    *tau = -1.0 * alpha / chi_1_minus_alpha;
+  }
+  else
+  {
+    //
+    // Brute force calculation for tau in case of low magnitude inputs
+    // to get desired accuracy:
+    //   tau := ( 1 + u_2' * u_2 ) / 2
+    //
+    bl1_ddot( BLIS1_NO_CONJUGATE,
+              m_x2,
+              x2, inc_x2,
+              x2, inc_x2,
+              tau );
+    *tau = (1.0 + *tau) / 2.0;
+  }
 
-  abs_chi_1_minus_alpha = (double)fabs(chi_1_minus_alpha);
-
-  norm_x_2_div_abs_chi_1_minus_alpha = norm_x_2 / abs_chi_1_minus_alpha;
-  *tau = one_half + one_half*(norm_x_2_div_abs_chi_1_minus_alpha * 
-                              norm_x_2_div_abs_chi_1_minus_alpha);
+  //
+  // Scale back alpha
+  //
+  for( ; kn > 0; kn-- )
+  {
+    alpha = alpha * safmin;
+  }
 
   //
   // Overwrite chi_1 with alpha:
@@ -386,10 +462,9 @@ FLA_Error FLA_Househ2_UT_l_opd( int       m_x2,
 }
 
 
-
-FLA_Error FLA_Househ2_UT_l_opc( int       m_x2,
+FLA_Error FLA_Househ2_UT_l_opc( integer       m_x2,
                                 scomplex* chi_1,
-                                scomplex* x2, int inc_x2,
+                                scomplex* x2, integer inc_x2,
                                 scomplex* tau )
 {
   scomplex one_half = *FLA_COMPLEX_PTR( FLA_ONE_HALF );
@@ -518,9 +593,9 @@ FLA_Error FLA_Househ2_UT_l_opc( int       m_x2,
 
 
 
-FLA_Error FLA_Househ2_UT_l_opz( int       m_x2,
+FLA_Error FLA_Househ2_UT_l_opz( integer       m_x2,
                                 dcomplex* chi_1,
-                                dcomplex* x2, int inc_x2,
+                                dcomplex* x2, integer inc_x2,
                                 dcomplex* tau )
 {
   dcomplex one_half = *FLA_DOUBLE_COMPLEX_PTR( FLA_ONE_HALF );
@@ -648,9 +723,9 @@ FLA_Error FLA_Househ2_UT_l_opz( int       m_x2,
 
 
 
-FLA_Error FLA_Househ2_UT_r_ops( int       m_x2,
+FLA_Error FLA_Househ2_UT_r_ops( integer       m_x2,
                                 float*    chi_1,
-                                float*    x2, int inc_x2,
+                                float*    x2, integer inc_x2,
                                 float*    tau )
 {
   FLA_Househ2_UT_l_ops( m_x2,
@@ -661,9 +736,9 @@ FLA_Error FLA_Househ2_UT_r_ops( int       m_x2,
   return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Househ2_UT_r_opd( int       m_x2,
+FLA_Error FLA_Househ2_UT_r_opd( integer       m_x2,
                                 double*   chi_1,
-                                double*   x2, int inc_x2,
+                                double*   x2, integer inc_x2,
                                 double*   tau )
 {
   FLA_Househ2_UT_l_opd( m_x2,
@@ -674,9 +749,9 @@ FLA_Error FLA_Househ2_UT_r_opd( int       m_x2,
   return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Househ2_UT_r_opc( int       m_x2,
+FLA_Error FLA_Househ2_UT_r_opc( integer       m_x2,
                                 scomplex* chi_1,
-                                scomplex* x2, int inc_x2,
+                                scomplex* x2, integer inc_x2,
                                 scomplex* tau )
 {
   FLA_Househ2_UT_l_opc( m_x2,
@@ -690,9 +765,9 @@ FLA_Error FLA_Househ2_UT_r_opc( int       m_x2,
   return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Househ2_UT_r_opz( int       m_x2,
+FLA_Error FLA_Househ2_UT_r_opz( integer       m_x2,
                                 dcomplex* chi_1,
-                                dcomplex* x2, int inc_x2,
+                                dcomplex* x2, integer inc_x2,
                                 dcomplex* tau )
 {
   FLA_Househ2_UT_l_opz( m_x2,

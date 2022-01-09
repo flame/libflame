@@ -109,6 +109,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int chpcon_(char *uplo, integer *n, complex *ap, integer * ipiv, real *anorm, real *rcond, complex *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"chpcon inputs: uplo %c, n %lld, ipiv %lld",*uplo, *n, *ipiv);
+#else 
+    snprintf(buffer, 256,"chpcon inputs: uplo %c, n %d, ipiv %d",*uplo, *n, *ipiv);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2;
     /* Local variables */
@@ -165,6 +175,7 @@ int chpcon_(char *uplo, integer *n, complex *ap, integer * ipiv, real *anorm, re
     {
         i__1 = -(*info);
         xerbla_("CHPCON", &i__1);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -172,10 +183,12 @@ int chpcon_(char *uplo, integer *n, complex *ap, integer * ipiv, real *anorm, re
     if (*n == 0)
     {
         *rcond = 1.f;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*anorm <= 0.f)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check that the diagonal matrix D is nonsingular. */
@@ -190,6 +203,7 @@ int chpcon_(char *uplo, integer *n, complex *ap, integer * ipiv, real *anorm, re
             i__1 = ip;
             if (ipiv[i__] > 0 && (ap[i__1].r == 0.f && ap[i__1].i == 0.f))
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             ip -= i__;
@@ -208,6 +222,7 @@ int chpcon_(char *uplo, integer *n, complex *ap, integer * ipiv, real *anorm, re
             i__2 = ip;
             if (ipiv[i__] > 0 && (ap[i__2].r == 0.f && ap[i__2].i == 0.f))
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             ip = ip + *n - i__ + 1;
@@ -229,6 +244,7 @@ L30:
     {
         *rcond = 1.f / ainvnm / *anorm;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHPCON */
 }

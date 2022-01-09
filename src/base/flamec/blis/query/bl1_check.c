@@ -12,7 +12,7 @@
 
 // --- storage-related ---------------------------------------------------------
 
-void bl1_check_storage_3m( int a_rs, int a_cs, int b_rs, int b_cs, int c_rs, int c_cs )
+void bl1_check_storage_3m( integer a_rs, integer a_cs, integer b_rs, integer b_cs, integer c_rs, integer c_cs )
 {
 	if ( bl1_is_gen_storage( a_rs, a_cs ) ||
 	     bl1_is_gen_storage( b_rs, b_cs ) ||
@@ -22,7 +22,7 @@ void bl1_check_storage_3m( int a_rs, int a_cs, int b_rs, int b_cs, int c_rs, int
 	}
 }
 
-void bl1_check_storage_2m( int a_rs, int a_cs, int b_rs, int b_cs )
+void bl1_check_storage_2m( integer a_rs, integer a_cs, integer b_rs, integer b_cs )
 {
 	if ( bl1_is_gen_storage( a_rs, a_cs ) ||
 	     bl1_is_gen_storage( b_rs, b_cs ) )

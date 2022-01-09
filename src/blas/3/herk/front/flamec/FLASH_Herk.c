@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_herk_t* flash_herk_cntl_mm;
+extern TLS_CLASS_SPEC fla_herk_t* flash_herk_cntl_mm;
 
 FLA_Error FLASH_Herk( FLA_Uplo uplo, FLA_Trans trans, FLA_Obj alpha, FLA_Obj A, FLA_Obj beta, FLA_Obj C )
 {

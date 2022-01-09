@@ -216,6 +216,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int sptsvx_(char *fact, integer *n, integer *nrhs, real *d__, real *e, real *df, real *ef, real *b, integer *ldb, real *x, integer *ldx, real *rcond, real *ferr, real *berr, real *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"sptsvx inputs: fact %c, n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*fact, *n, *nrhs, *ldb, *ldx);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, x_dim1, x_offset, i__1;
     /* Local variables */
@@ -292,6 +298,7 @@ int sptsvx_(char *fact, integer *n, integer *nrhs, real *d__, real *e, real *df,
     {
         i__1 = -(*info);
         xerbla_("SPTSVX", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (nofact)
@@ -308,6 +315,7 @@ int sptsvx_(char *fact, integer *n, integer *nrhs, real *d__, real *e, real *df,
         if (*info > 0)
         {
             *rcond = 0.f;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -326,6 +334,7 @@ int sptsvx_(char *fact, integer *n, integer *nrhs, real *d__, real *e, real *df,
     {
         *info = *n + 1;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SPTSVX */
 }

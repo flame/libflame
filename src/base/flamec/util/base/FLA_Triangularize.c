@@ -13,8 +13,8 @@
 FLA_Error FLA_Triangularize( FLA_Uplo uplo, FLA_Diag diag, FLA_Obj A )
 {
   FLA_Datatype datatype;
-  int          m_A, n_A;
-  int          rs_A, cs_A;
+  integer          m_A, n_A;
+  integer          rs_A, cs_A;
   uplo1_t       blis_uplo;
 
   if ( FLA_Check_error_level() >= FLA_MIN_ERROR_CHECKING )

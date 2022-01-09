@@ -18,31 +18,31 @@
      w   = w + kappa * a;
 */
 
-void bl1_saxpyv2bdotaxpy( int       n,
+void bl1_saxpyv2bdotaxpy( integer       n,
                           float*    beta,
-                          float*    u, int inc_u,
+                          float*    u, integer inc_u,
                           float*    gamma,
-                          float*    z, int inc_z,
-                          float*    a, int inc_a,
-                          float*    x, int inc_x,
+                          float*    z, integer inc_z,
+                          float*    a, integer inc_a,
+                          float*    x, integer inc_x,
                           float*    kappa,
                           float*    rho,
-                          float*    w, int inc_w )
+                          float*    w, integer inc_w )
 {
 	bl1_abort();
 }
 
 
-void bl1_daxpyv2bdotaxpy( int       n,
+void bl1_daxpyv2bdotaxpy( integer       n,
                           double*   beta,
-                          double*   u, int inc_u,
+                          double*   u, integer inc_u,
                           double*   gamma,
-                          double*   z, int inc_z,
-                          double*   a, int inc_a,
-                          double*   x, int inc_x,
+                          double*   z, integer inc_z,
+                          double*   a, integer inc_a,
+                          double*   x, integer inc_x,
                           double*   kappa,
                           double*   rho,
-                          double*   w, int inc_w )
+                          double*   w, integer inc_w )
 #if BLIS1_VECTOR_INTRINSIC_TYPE == BLIS1_SSE_INTRINSICS
 {
 	double*   restrict upsilon1;
@@ -51,7 +51,7 @@ void bl1_daxpyv2bdotaxpy( int       n,
 	double*   restrict chi1;
 	double*   restrict omega1;
 	double             rho_c;
-	int                i;
+	integer                i;
 	v2df_t             b1v, g1v, k1v;
 	v2df_t             rhov;
 	v2df_t             u1v, z1v, a1v;
@@ -59,9 +59,9 @@ void bl1_daxpyv2bdotaxpy( int       n,
 	v2df_t             x1v, w1v;
 	v2df_t             x2v, w2v;
 
-	int       n_pre;
-	int       n_run;
-	int       n_left;
+	integer       n_pre;
+	integer       n_run;
+	integer       n_left;
 
 	n_pre = 0;
 	if ( ( unsigned long ) a % 16 != 0 )
@@ -202,11 +202,11 @@ void bl1_daxpyv2bdotaxpy( int       n,
 	double             gamma_c;
 	double             kappa_c;
 	double             rho_c;
-	int                i;
+	integer                i;
 
-	int       n_pre;
-	int       n_run;
-	int       n_left;
+	integer       n_pre;
+	integer       n_run;
+	integer       n_left;
 
 	n_pre = 0;
 	//if ( ( unsigned long ) a % 16 != 0 )
@@ -324,31 +324,31 @@ void bl1_daxpyv2bdotaxpy( int       n,
 #endif
 
 
-void bl1_caxpyv2bdotaxpy( int       n,
+void bl1_caxpyv2bdotaxpy( integer       n,
                           scomplex* beta,
-                          scomplex* u, int inc_u,
+                          scomplex* u, integer inc_u,
                           scomplex* gamma,
-                          scomplex* z, int inc_z,
-                          scomplex* a, int inc_a,
-                          scomplex* x, int inc_x,
+                          scomplex* z, integer inc_z,
+                          scomplex* a, integer inc_a,
+                          scomplex* x, integer inc_x,
                           scomplex* kappa,
                           scomplex* rho,
-                          scomplex* w, int inc_w )
+                          scomplex* w, integer inc_w )
 {
 	bl1_abort();
 }
 
 
-void bl1_zaxpyv2bdotaxpy( int       n,
+void bl1_zaxpyv2bdotaxpy( integer       n,
                           dcomplex* beta,
-                          dcomplex* u, int inc_u,
+                          dcomplex* u, integer inc_u,
                           dcomplex* gamma,
-                          dcomplex* z, int inc_z,
-                          dcomplex* a, int inc_a,
-                          dcomplex* x, int inc_x,
+                          dcomplex* z, integer inc_z,
+                          dcomplex* a, integer inc_a,
+                          dcomplex* x, integer inc_x,
                           dcomplex* kappa,
                           dcomplex* rho,
-                          dcomplex* w, int inc_w )
+                          dcomplex* w, integer inc_w )
 #if BLIS1_VECTOR_INTRINSIC_TYPE == BLIS1_SSE_INTRINSICS
 {
 	dcomplex* restrict upsilon1;
@@ -356,7 +356,7 @@ void bl1_zaxpyv2bdotaxpy( int       n,
 	dcomplex* restrict alpha1;
 	dcomplex* restrict chi1;
 	dcomplex* restrict omega1;
-	int                i;
+	integer                i;
 
 	//v2df_t    beta1v, beta1rv;
 	//v2df_t    gamma1v, gamma1rv;
@@ -471,7 +471,7 @@ void bl1_zaxpyv2bdotaxpy( int       n,
 	dcomplex           gamma_c;
 	dcomplex           kappa_c;
 	dcomplex           rho_c;
-	int                i;
+	integer                i;
 
 	upsilon1 = u;
 	zeta1    = z;

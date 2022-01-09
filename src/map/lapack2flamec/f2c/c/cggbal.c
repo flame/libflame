@@ -172,6 +172,16 @@ and second, applying a diagonal similarity */
 /* Subroutine */
 int cggbal_(char *job, integer *n, complex *a, integer *lda, complex *b, integer *ldb, integer *ilo, integer *ihi, real *lscale, real *rscale, real *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cggbal inputs: job %c, n %lld, lda %lld, ldb %lld",*job, *n, *lda, *ldb);
+#else 
+    snprintf(buffer, 256,"cggbal inputs: job %c, n %d, lda %d, ldb %d",*job, *n, *lda, *ldb);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
     real r__1, r__2, r__3;
@@ -265,6 +275,7 @@ int cggbal_(char *job, integer *n, complex *a, integer *lda, complex *b, integer
     {
         i__1 = -(*info);
         xerbla_("CGGBAL", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -272,6 +283,7 @@ int cggbal_(char *job, integer *n, complex *a, integer *lda, complex *b, integer
     {
         *ilo = 1;
         *ihi = *n;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 1)
@@ -280,6 +292,7 @@ int cggbal_(char *job, integer *n, complex *a, integer *lda, complex *b, integer
         *ihi = *n;
         lscale[1] = 1.f;
         rscale[1] = 1.f;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (lsame_(job, "N"))
@@ -295,6 +308,7 @@ int cggbal_(char *job, integer *n, complex *a, integer *lda, complex *b, integer
             rscale[i__] = 1.f;
             /* L10: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     k = 1;
@@ -450,10 +464,12 @@ L190:
             rscale[i__] = 1.f;
             /* L195: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*ilo == *ihi)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Balance the submatrix in rows ILO to IHI. */
@@ -734,6 +750,7 @@ L350:
         csscal_(ihi, &rscale[j], &b[j * b_dim1 + 1], &c__1);
         /* L380: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGGBAL */
 }

@@ -24,14 +24,14 @@
                              a1, inc_a1, \
                              a2, inc_a2 ) \
 {\
-	int              n_iter32  = m_A / ( 4 * 8 ); \
-	int              n_left32  = m_A % ( 4 * 8 ); \
-	int              n_iter4   = n_left32 / ( 4 * 1 ); \
-	int              n_left    = n_left32 % ( 4 * 1 ); \
-	int              i; \
+	integer              n_iter32  = m_A / ( 4 * 8 ); \
+	integer              n_left32  = m_A % ( 4 * 8 ); \
+	integer              n_iter4   = n_left32 / ( 4 * 1 ); \
+	integer              n_left    = n_left32 % ( 4 * 1 ); \
+	integer              i; \
 \
-	const int        step_a1 = inc_a1 * 4; \
-	const int        step_a2 = inc_a2 * 4; \
+	const integer        step_a1 = inc_a1 * 4; \
+	const integer        step_a2 = inc_a2 * 4; \
 \
 	float*  restrict alpha1 = a1; \
 	float*  restrict alpha2 = a2; \
@@ -192,14 +192,14 @@
                              a1, inc_a1, \
                              a2, inc_a2 ) \
 {\
-	int              n_iter16  = m_A / ( 2 * 8 ); \
-	int              n_left16  = m_A % ( 2 * 8 ); \
-	int              n_iter2   = n_left16 / ( 2 * 1 ); \
-	int              n_left    = n_left16 % ( 2 * 1 ); \
-	int              i; \
+	integer              n_iter16  = m_A / ( 2 * 8 ); \
+	integer              n_left16  = m_A % ( 2 * 8 ); \
+	integer              n_iter2   = n_left16 / ( 2 * 1 ); \
+	integer              n_left    = n_left16 % ( 2 * 1 ); \
+	integer              i; \
 \
-	const int        step_a1 = inc_a1 * 2; \
-	const int        step_a2 = inc_a2 * 2; \
+	const integer        step_a1 = inc_a1 * 2; \
+	const integer        step_a2 = inc_a2 * 2; \
 \
 	double* restrict alpha1 = a1; \
 	double* restrict alpha2 = a2; \
@@ -357,14 +357,14 @@
                              a1, inc_a1, \
                              a2, inc_a2 ) \
 {\
-	int                n_iter16  = m_A / ( 2 * 8 ); \
-	int                n_left16  = m_A % ( 2 * 8 ); \
-	int                n_iter2   = n_left16 / ( 2 * 1 ); \
-	int                n_left    = n_left16 % ( 2 * 1 ); \
-	int                i; \
+	integer                n_iter16  = m_A / ( 2 * 8 ); \
+	integer                n_left16  = m_A % ( 2 * 8 ); \
+	integer                n_iter2   = n_left16 / ( 2 * 1 ); \
+	integer                n_left    = n_left16 % ( 2 * 1 ); \
+	integer                i; \
 \
-	const int          step_a1 = inc_a1 * 2; \
-	const int          step_a2 = inc_a2 * 2; \
+	const integer          step_a1 = inc_a1 * 2; \
+	const integer          step_a2 = inc_a2 * 2; \
 \
 	scomplex* restrict alpha1 = a1; \
 	scomplex* restrict alpha2 = a2; \
@@ -525,12 +525,12 @@
                              a1, inc_a1, \
                              a2, inc_a2 ) \
 {\
-	int                n_iter  = m_A / 8; \
-	int                n_left  = m_A % 8; \
-	int                i; \
+	integer                n_iter  = m_A / 8; \
+	integer                n_left  = m_A % 8; \
+	integer                i; \
 \
-	const int          step_a1 = inc_a1 * 1; \
-	const int          step_a2 = inc_a2 * 1; \
+	const integer          step_a1 = inc_a1 * 1; \
+	const integer          step_a2 = inc_a2 * 1; \
 \
 	dcomplex* restrict alpha1 = a1; \
 	dcomplex* restrict alpha2 = a2; \

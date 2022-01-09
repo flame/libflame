@@ -107,6 +107,16 @@ B is N by N and real;
 /* Subroutine */
 int clacrm_(integer *m, integer *n, complex *a, integer *lda, real *b, integer *ldb, complex *c__, integer *ldc, real *rwork)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clacrm inputs: m %lld, n %lld, lda %lld, ldb %lld, ldc %lld",*m, *n, *lda, *ldb, *ldc);
+#else 
+    snprintf(buffer, 256,"clacrm inputs: m %d, n %d, lda %d, ldb %d, ldc %d",*m, *n, *lda, *ldb, *ldc);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3, i__4, i__5;
     real r__1;
@@ -150,6 +160,7 @@ int clacrm_(integer *m, integer *n, complex *a, integer *lda, real *b, integer *
     /* Function Body */
     if (*m == 0 || *n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     i__1 = *n;
@@ -226,6 +237,7 @@ int clacrm_(integer *m, integer *n, complex *a, integer *lda, real *b, integer *
         }
         /* L80: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLACRM */
 }

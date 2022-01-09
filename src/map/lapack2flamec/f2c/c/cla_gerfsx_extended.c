@@ -401,6 +401,16 @@ i+1}
 /* Subroutine */
 int cla_gerfsx_extended_(integer *prec_type__, integer * trans_type__, integer *n, integer *nrhs, complex *a, integer *lda, complex *af, integer *ldaf, integer *ipiv, logical *colequ, real *c__, complex *b, integer *ldb, complex *y, integer *ldy, real *berr_out__, integer *n_norms__, real *errs_n__, real *errs_c__, complex *res, real *ayb, complex *dy, complex *y_tail__, real *rcond, integer * ithresh, real *rthresh, real *dz_ub__, logical *ignore_cwise__, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cla_gerfsx_extended inputs: prec_type__ %lld, trans_type__ %lld, n %lld, nrhs %lld, lda %lld, ldaf %lld, ipiv %lld, ldb %lld, ldy %lld, n_norms__ %lld, ithresh %lld",*prec_type__, *trans_type__, *n, *nrhs, *lda, *ldaf, *ipiv, *ldb, *ldy, *n_norms__, *ithresh);
+#else 
+    snprintf(buffer, 256,"cla_gerfsx_extended inputs: prec_type__ %d, trans_type__ %d, n %d, nrhs %d, lda %d, ldaf %d, ipiv %d, ldb %d, ldy %d, n_norms__ %d, ithresh %d",*prec_type__, *trans_type__, *n, *nrhs, *lda, *ldaf, *ipiv, *ldb, *ldy, *n_norms__, *ithresh);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, b_dim1, b_offset, y_dim1, y_offset, errs_n_dim1, errs_n_offset, errs_c_dim1, errs_c_offset, i__1, i__2, i__3, i__4;
     real r__1, r__2;
@@ -491,6 +501,7 @@ int cla_gerfsx_extended_(integer *prec_type__, integer * trans_type__, integer *
     /* Function Body */
     if (*info != 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     chla_transtype_(ch__1, trans_type__);
@@ -779,6 +790,7 @@ L666: /* Set final_* when cnt hits ithresh */
         cla_lin_berr_(n, n, &c__1, &res[1], &ayb[1], &berr_out__[j]);
         /* End of loop for each RHS. */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
 /* cla_gerfsx_extended__ */

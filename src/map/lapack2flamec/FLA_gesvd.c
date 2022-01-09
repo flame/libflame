@@ -8,9 +8,15 @@
 
 */
 
+/*
+    Copyright (c) 2021 Advanced Micro Devices, Inc. All rights reserved.
+    Aug 4, 2021
+*/
+
 #include "FLAME.h"
 
 #ifdef FLA_ENABLE_LAPACK2FLAME
+#define FLA_ENABLE_SVD_OPT 0 
 
 #include "FLA_lapack2flame_util_defs.h"
 #include "FLA_lapack2flame_return_defs.h"
@@ -34,29 +40,40 @@
 #define LAPACK_gesvd_real(prefix)                                       \
   int F77_ ## prefix ## gesvd( char* jobu,                              \
                                char* jobv,                              \
-                               int*  m,                                 \
-                               int*  n,                                 \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A,  int* ldim_A, \
+                               integer*  m,                                 \
+                               integer*  n,                                 \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A,  integer* ldim_A, \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_s,   \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_U,  int* ldim_U, \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_Vh, int* ldim_Vh, \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w,  int* lwork, \
-                               int* info )
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_U,  integer* ldim_U, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_Vh, integer* ldim_Vh, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w,  integer* lwork, \
+                               integer* info )
 
 #define LAPACK_gesvd_complex(prefix)                                    \
   int F77_ ## prefix ## gesvd( char* jobu,                              \
                                char* jobv,                              \
-                               int*  m,                                 \
-                               int*  n,                                 \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A,  int* ldim_A, \
+                               integer*  m,                                 \
+                               integer*  n,                                 \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_A,  integer* ldim_A, \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_s,   \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_U,  int* ldim_U, \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_Vh, int* ldim_Vh, \
-                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w,  int* lwork, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_U,  integer* ldim_U, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_Vh, integer* ldim_Vh, \
+                               PREFIX2LAPACK_TYPEDEF(prefix)* buff_w,  integer* lwork, \
                                PREFIX2LAPACK_REALDEF(prefix)* buff_r,   \
-                               int* info )
+                               integer* info )
+
+
+#define LAPACK_gesvd_body_d(prefix)                                                                                \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                                                                \
+  if(*m==2 && *n==2)  {                     \
+  dgesvd2x2( jobu, jobv, m, n, buff_A, ldim_A, buff_s, buff_U, ldim_U,buff_Vh , ldim_Vh, buff_w, lwork,info );} \
+  else {                                                                                \
+  lapack_dgesvd ( jobu, jobv, m, n, buff_A, ldim_A, buff_s, buff_U, ldim_U,buff_Vh , ldim_Vh, buff_w, lwork,info );}   \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                                                                     \
+  return *info;                                                                                                    
 
 #define LAPACK_gesvd_body(prefix)                                       \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);                \
   FLA_Datatype dtype_re = PREFIX2FLAME_REALTYPE(prefix);                \
   dim_t        min_m_n  = min( *m, *n );                                \
@@ -120,6 +137,7 @@
   FLA_Finalize_safe( init_result );                                     \
   *info = 0;                                                            \
                                                                         \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                          \
   return e_val;
 
 
@@ -142,19 +160,26 @@ LAPACK_gesvd_real(s)
 
 LAPACK_gesvd_real(d)
 {
+#if FLA_AMD_OPT && FLA_ENABLE_SVD_OPT
     {
-        LAPACK_RETURN_CHECK( dgesvd_check( jobu, jobv,
-                                           m, n,
-                                           buff_A, ldim_A,
-                                           buff_s,
-                                           buff_U, ldim_U,
-                                           buff_Vh, ldim_Vh,
-                                           buff_w, lwork,
-                                           info ) )
+       LAPACK_gesvd_body_d(d)
+    }
+#else
+    {
+       LAPACK_RETURN_CHECK( dgesvd_check (  jobu, jobv,
+                                            m, n,
+                                            buff_A, ldim_A,
+                                            buff_s,
+                                            buff_U, ldim_U,
+                                            buff_Vh, ldim_Vh,
+                                            buff_w, lwork,
+                                            info ) )
+
     }
     {
         LAPACK_gesvd_body(d)
     }
+#endif
 }
 
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX

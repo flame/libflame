@@ -127,6 +127,12 @@
 /* Subroutine */
 int zgeequ_(integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *r__, doublereal *c__, doublereal *rowcnd, doublereal *colcnd, doublereal *amax, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zgeequ inputs: m %d, n %d, lda %d",*m, *n, *lda);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     doublereal d__1, d__2, d__3, d__4;
@@ -188,6 +194,7 @@ int zgeequ_(integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *
     {
         i__1 = -(*info);
         xerbla_("ZGEEQU", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -196,6 +203,7 @@ int zgeequ_(integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *
         *rowcnd = 1.;
         *colcnd = 1.;
         *amax = 0.;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants. */
@@ -224,7 +232,7 @@ int zgeequ_(integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *
             /* Computing MAX */
             i__3 = i__ + j * a_dim1;
             d__3 = r__[i__];
-            d__4 = (d__1 = a[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&a[i__ + j * a_dim1]), f2c_abs(d__2)); // , expr subst
+            d__4 = (d__1 = a[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&a[i__ + j * a_dim1]), f2c_dabs(d__2)); // , expr subst
             r__[i__] = max(d__3,d__4);
             /* L20: */
         }
@@ -260,6 +268,7 @@ int zgeequ_(integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *
             if (r__[i__] == 0.)
             {
                 *info = i__;
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* L50: */
@@ -307,7 +316,7 @@ int zgeequ_(integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *
             /* Computing MAX */
             i__3 = i__ + j * a_dim1;
             d__3 = c__[j];
-            d__4 = ((d__1 = a[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&a[i__ + j * a_dim1]), f2c_abs(d__2))) * r__[i__]; // , expr subst
+            d__4 = ((d__1 = a[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&a[i__ + j * a_dim1]), f2c_dabs(d__2))) * r__[i__]; // , expr subst
             c__[j] = max(d__3,d__4);
             /* L80: */
         }
@@ -342,6 +351,7 @@ int zgeequ_(integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *
             if (c__[j] == 0.)
             {
                 *info = *m + j;
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* L110: */
@@ -365,6 +375,7 @@ int zgeequ_(integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *
         /* Compute COLCND = min(C(J)) / max(C(J)) */
         *colcnd = max(rcmin,smlnum) / min(rcmax,bignum);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZGEEQU */
 }

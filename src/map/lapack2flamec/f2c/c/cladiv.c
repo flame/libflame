@@ -50,6 +50,7 @@
 /* > \ingroup complexOTHERauxiliary */
 /* ===================================================================== */
 /* Complex */
+#ifdef FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION
 VOID cladiv_(complex * ret_val, complex *x, complex *y)
 {
     /* System generated locals */
@@ -83,7 +84,62 @@ VOID cladiv_(complex * ret_val, complex *x, complex *y)
     q__1.r = zr;
     q__1.i = zi; // , expr subst
     ret_val->r = q__1.r, ret_val->i = q__1.i;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return ;
     /* End of CLADIV */
 }
+
+#else
+
+complex cladiv_(complex *x, complex *y)
+{
+    /* System generated locals */
+    real r__1, r__2, r__3, r__4;
+    complex q__1;
+    /* Builtin functions */
+    double r_imag(complex *);
+    /* Local variables */
+    real zi, zr;
+    extern /* Subroutine */
+    int sladiv_(real *, real *, real *, real *, real * , real *);
+    /* -- LAPACK auxiliary routine (version 3.4.2) -- */
+    /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
+    /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
+    /* September 2012 */
+    /* .. Scalar Arguments .. */
+    /* .. */
+    /* ===================================================================== */
+    /* .. Local Scalars .. */
+    /* .. */
+    /* .. External Subroutines .. */
+    /* .. */
+    /* .. Intrinsic Functions .. */
+    /* .. */
+    /* .. Executable Statements .. */
+    r__1 = x->r;
+    r__2 = r_imag(x);
+    r__3 = y->r;
+    r__4 = r_imag(y);
+    sladiv_(&r__1, &r__2, &r__3, &r__4, &zr, &zi);
+    q__1.r = zr;
+    q__1.i = zi; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    return q__1;
+    /* End of CLADIV */
+}
+
+#endif
+
+void cladiv_f2c_(complex *ret_val, complex *x, complex *y)
+{
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5); 
+#ifdef FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION
+    cladiv_(ret_val, x, y);
+#else
+    *ret_val = cladiv_(x, y);
+#endif
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    return;
+}
+
 /* cladiv_ */

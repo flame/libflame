@@ -39,7 +39,7 @@ static integer c__1 = 1;
 /* > \return ZLANHT */
 /* > \verbatim */
 /* > */
-/* > ZLANHT = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
+/* > ZLANHT = ( max(f2c_dabs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -50,7 +50,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(f2c_dabs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -90,6 +90,12 @@ static integer c__1 = 1;
 /* ===================================================================== */
 doublereal zlanht_(char *norm, integer *n, doublereal *d__, doublecomplex *e)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zlanht inputs: norm %c, n %d",*norm, *n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     doublereal ret_val, d__1;
@@ -133,14 +139,14 @@ doublereal zlanht_(char *norm, integer *n, doublereal *d__, doublecomplex *e)
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(f2c_abs(A(i,j))). */
-        anorm = (d__1 = d__[*n], f2c_abs(d__1));
+        /* Find max(f2c_dabs(A(i,j))). */
+        anorm = (d__1 = d__[*n], f2c_dabs(d__1));
         i__1 = *n - 1;
         for (i__ = 1;
                 i__ <= i__1;
                 ++i__)
         {
-            sum = (d__1 = d__[i__], f2c_abs(d__1));
+            sum = (d__1 = d__[i__], f2c_dabs(d__1));
             if (anorm < sum || disnan_(&sum))
             {
                 anorm = sum;
@@ -158,12 +164,12 @@ doublereal zlanht_(char *norm, integer *n, doublereal *d__, doublecomplex *e)
         /* Find norm1(A). */
         if (*n == 1)
         {
-            anorm = f2c_abs(d__[1]);
+            anorm = f2c_dabs(d__[1]);
         }
         else
         {
-            anorm = f2c_abs(d__[1]) + z_abs(&e[1]);
-            sum = z_abs(&e[*n - 1]) + (d__1 = d__[*n], f2c_abs(d__1));
+            anorm = f2c_dabs(d__[1]) + z_abs(&e[1]);
+            sum = z_abs(&e[*n - 1]) + (d__1 = d__[*n], f2c_dabs(d__1));
             if (anorm < sum || disnan_(&sum))
             {
                 anorm = sum;
@@ -173,7 +179,7 @@ doublereal zlanht_(char *norm, integer *n, doublereal *d__, doublecomplex *e)
                     i__ <= i__1;
                     ++i__)
             {
-                sum = (d__1 = d__[i__], f2c_abs(d__1)) + z_abs(&e[i__]) + z_abs(& e[i__ - 1]);
+                sum = (d__1 = d__[i__], f2c_dabs(d__1)) + z_abs(&e[i__]) + z_abs(& e[i__ - 1]);
                 if (anorm < sum || disnan_(&sum))
                 {
                     anorm = sum;
@@ -197,6 +203,7 @@ doublereal zlanht_(char *norm, integer *n, doublereal *d__, doublecomplex *e)
         anorm = scale * sqrt(sum);
     }
     ret_val = anorm;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return ret_val;
     /* End of ZLANHT */
 }

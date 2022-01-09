@@ -217,6 +217,12 @@ static doublecomplex c_b1 =
 /* Subroutine */
 int zpftrs_(char *transr, char *uplo, integer *n, integer * nrhs, doublecomplex *a, doublecomplex *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zpftrs inputs: transr %c, uplo %c, n %d, nrhs %d, ldb %d",*transr, *uplo, *n, *nrhs, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, i__1;
     /* Local variables */
@@ -278,11 +284,13 @@ int zpftrs_(char *transr, char *uplo, integer *n, integer * nrhs, doublecomplex 
     {
         i__1 = -(*info);
         xerbla_("ZPFTRS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0 || *nrhs == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* start execution: there are two triangular solves */
@@ -296,6 +304,7 @@ int zpftrs_(char *transr, char *uplo, integer *n, integer * nrhs, doublecomplex 
         ztfsm_(transr, "L", uplo, "C", "N", n, nrhs, &c_b1, a, &b[b_offset], ldb);
         ztfsm_(transr, "L", uplo, "N", "N", n, nrhs, &c_b1, a, &b[b_offset], ldb);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZPFTRS */
 }

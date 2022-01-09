@@ -27,7 +27,7 @@ FLA_Bool       FLASH_Queue_get_enabled_gpu( void );
 void           FLASH_Queue_set_gpu_num_blocks( dim_t n_blocks );
 dim_t          FLASH_Queue_get_gpu_num_blocks( void );
 
-FLA_Error      FLASH_Queue_bind_gpu( int thread );
+FLA_Error      FLASH_Queue_bind_gpu( integer thread );
 FLA_Error      FLASH_Queue_alloc_gpu( dim_t size, FLA_Datatype datatype, void** buffer_gpu );
 FLA_Error      FLASH_Queue_free_gpu( void* buffer_gpu );
 FLA_Error      FLASH_Queue_write_gpu( FLA_Obj obj, void* buffer_gpu );

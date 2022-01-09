@@ -135,6 +135,16 @@ static complex c_b2 =
 /* Subroutine */
 int ctrtrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, complex *a, integer *lda, complex *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctrtrs inputs: uplo %c, trans %c, diag %c, n %lld, nrhs %lld, lda %lld, ldb %lld",*uplo, *trans, *diag, *n, *nrhs, *lda, *ldb);
+#else 
+    snprintf(buffer, 256,"ctrtrs inputs: uplo %c, trans %c, diag %c, n %d, nrhs %d, lda %d, ldb %d",*uplo, *trans, *diag, *n, *nrhs, *lda, *ldb);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2;
     /* Local variables */
@@ -205,11 +215,13 @@ int ctrtrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, comp
     {
         i__1 = -(*info);
         xerbla_("CTRTRS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check for singularity. */
@@ -223,6 +235,7 @@ int ctrtrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, comp
             i__2 = *info + *info * a_dim1;
             if (a[i__2].r == 0.f && a[i__2].i == 0.f)
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* L10: */
@@ -231,6 +244,7 @@ int ctrtrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, comp
     *info = 0;
     /* Solve A * x = b, A**T * x = b, or A**H * x = b. */
     ctrsm_("Left", uplo, trans, diag, n, nrhs, &c_b2, &a[a_offset], lda, &b[ b_offset], ldb);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTRTRS */
 }

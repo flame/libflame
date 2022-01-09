@@ -110,6 +110,16 @@
 /* Subroutine */
 int clargv_(integer *n, complex *x, integer *incx, complex * y, integer *incy, real *c__, integer *incc)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clargv inputs: n %lld, incx %lld, incy %lld, incc %lld",*n, *incx, *incy, *incc);
+#else 
+    snprintf(buffer, 256,"clargv inputs: n %d, incx %d, incy %d, incc %d",*n, *incx, *incy, *incc);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2;
     real r__1, r__2, r__3, r__4, r__5, r__6, r__7, r__8, r__9, r__10;
@@ -420,6 +430,7 @@ L50:
         ix += *incx;
         /* L60: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLARGV */
 }

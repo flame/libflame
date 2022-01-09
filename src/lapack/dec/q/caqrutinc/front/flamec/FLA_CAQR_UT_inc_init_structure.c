@@ -28,11 +28,11 @@ void FLA_CAQR_UT_inc_init_structure( dim_t p, dim_t nb_part, FLA_Obj R )
 	{
 		FLA_Obj* buff_R1 = buff_R + (ip*nb_part)*rs;
 
-		int  m_behind   = ip*nb_part;
-		int  m_ahead    = m - m_behind;
+		integer  m_behind   = ip*nb_part;
+		integer  m_ahead    = m - m_behind;
 
-		int  m_cur      = min( nb_part, m_ahead );
-		int  n_cur      = n;
+		integer  m_cur      = min( nb_part, m_ahead );
+		integer  n_cur      = n;
 
 		// Iterate across columns for the current panel.
 		for ( j = 0; j < n_cur; ++j )

@@ -69,6 +69,16 @@
 /* Subroutine */
 int cla_wwaddw_(integer *n, complex *x, complex *y, complex *w)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cla_wwaddw inputs: n %lld",*n);
+#else 
+    snprintf(buffer, 256,"cla_wwaddw inputs: n %d",*n);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3, i__4, i__5;
     complex q__1, q__2, q__3;
@@ -126,6 +136,7 @@ int cla_wwaddw_(integer *n, complex *x, complex *y, complex *w)
         x[i__2].i = s.i; // , expr subst
         /* L10: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
 /* cla_wwaddw__ */

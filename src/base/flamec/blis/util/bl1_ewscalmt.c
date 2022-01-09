@@ -10,15 +10,15 @@
 
 #include "blis1.h"
 
-void bl1_sewscalmt( trans1_t trans, int m, int n, float* a, int a_rs, int a_cs, float* b, int b_rs, int b_cs )
+void bl1_sewscalmt( trans1_t trans, integer m, integer n, float* a, integer a_rs, integer a_cs, float* b, integer b_rs, integer b_cs )
 {
 	float*    a_begin;
 	float*    b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -82,15 +82,15 @@ void bl1_sewscalmt( trans1_t trans, int m, int n, float* a, int a_rs, int a_cs, 
 	}
 }
 
-void bl1_dewscalmt( trans1_t trans, int m, int n, double* a, int a_rs, int a_cs, double* b, int b_rs, int b_cs )
+void bl1_dewscalmt( trans1_t trans, integer m, integer n, double* a, integer a_rs, integer a_cs, double* b, integer b_rs, integer b_cs )
 {
 	double*   a_begin;
 	double*   b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -154,15 +154,15 @@ void bl1_dewscalmt( trans1_t trans, int m, int n, double* a, int a_rs, int a_cs,
 	}
 }
 
-void bl1_csewscalmt( trans1_t trans, int m, int n, float* a, int a_rs, int a_cs, scomplex* b, int b_rs, int b_cs )
+void bl1_csewscalmt( trans1_t trans, integer m, integer n, float* a, integer a_rs, integer a_cs, scomplex* b, integer b_rs, integer b_cs )
 {
 	float*    a_begin;
 	scomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -226,15 +226,15 @@ void bl1_csewscalmt( trans1_t trans, int m, int n, float* a, int a_rs, int a_cs,
 	}
 }
 
-void bl1_cewscalmt( trans1_t trans, int m, int n, scomplex* a, int a_rs, int a_cs, scomplex* b, int b_rs, int b_cs )
+void bl1_cewscalmt( trans1_t trans, integer m, integer n, scomplex* a, integer a_rs, integer a_cs, scomplex* b, integer b_rs, integer b_cs )
 {
 	scomplex* a_begin;
 	scomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -298,15 +298,15 @@ void bl1_cewscalmt( trans1_t trans, int m, int n, scomplex* a, int a_rs, int a_c
 	}
 }
 
-void bl1_zdewscalmt( trans1_t trans, int m, int n, double* a, int a_rs, int a_cs, dcomplex* b, int b_rs, int b_cs )
+void bl1_zdewscalmt( trans1_t trans, integer m, integer n, double* a, integer a_rs, integer a_cs, dcomplex* b, integer b_rs, integer b_cs )
 {
 	double*   a_begin;
 	dcomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.
@@ -370,15 +370,15 @@ void bl1_zdewscalmt( trans1_t trans, int m, int n, double* a, int a_rs, int a_cs
 	}
 }
 
-void bl1_zewscalmt( trans1_t trans, int m, int n, dcomplex* a, int a_rs, int a_cs, dcomplex* b, int b_rs, int b_cs )
+void bl1_zewscalmt( trans1_t trans, integer m, integer n, dcomplex* a, integer a_rs, integer a_cs, dcomplex* b, integer b_rs, integer b_cs )
 {
 	dcomplex* a_begin;
 	dcomplex* b_begin;
-	int       lda, inca;
-	int       ldb, incb;
-	int       n_iter;
-	int       n_elem;
-	int       j;
+	integer       lda, inca;
+	integer       ldb, incb;
+	integer       n_iter;
+	integer       n_elem;
+	integer       j;
 	conj1_t    conj;
 
 	// Return early if possible.

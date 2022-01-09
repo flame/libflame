@@ -335,6 +335,16 @@ if EQUED = 'Y', */
 /* Subroutine */
 int cpbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, complex *ab, integer *ldab, complex *afb, integer * ldafb, char *equed, real *s, complex *b, integer *ldb, complex *x, integer *ldx, real *rcond, real *ferr, real *berr, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cpbsvx inputs: fact %c, uplo %c, n %lld, kd %lld, nrhs %lld, ldab %lld, ldafb %lld, equed %c, ldb %lld, ldx %lld",*fact, *uplo, *n, *kd, *nrhs, *ldab, *ldafb, *equed, *ldb, *ldx);
+#else 
+    snprintf(buffer, 256,"cpbsvx inputs: fact %c, uplo %c, n %d, kd %d, nrhs %d, ldab %d, ldafb %d, equed %c, ldb %d, ldx %d",*fact, *uplo, *n, *kd, *nrhs, *ldab, *ldafb, *equed, *ldb, *ldx);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, afb_dim1, afb_offset, b_dim1, b_offset, x_dim1, x_offset, i__1, i__2, i__3, i__4, i__5;
     real r__1, r__2;
@@ -498,6 +508,7 @@ int cpbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, comp
     {
         i__1 = -(*info);
         xerbla_("CPBSVX", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (equil)
@@ -574,6 +585,7 @@ int cpbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, comp
         if (*info > 0)
         {
             *rcond = 0.f;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -626,6 +638,7 @@ int cpbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, comp
     {
         *info = *n + 1;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CPBSVX */
 }

@@ -1,0 +1,41 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.## 
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn.h
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_blk_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_blk_var10.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_blk_var11.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_blk_var12.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_blk_var13.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_blk_var14.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_blk_var15.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_blk_var16.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_blk_var17.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_blk_var18.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_blk_var2.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_blk_var3.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_blk_var4.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_blk_var5.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_blk_var6.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_blk_var7.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_blk_var8.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_blk_var9.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_opt_var1.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_opt_var10.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_opt_var11.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_opt_var12.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_opt_var13.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_opt_var14.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_opt_var15.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_opt_var16.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_opt_var17.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_opt_var18.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_opt_var2.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_opt_var3.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_opt_var4.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_opt_var5.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_opt_var6.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_opt_var7.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_opt_var8.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Sylv_hn_opt_var9.c
+	)

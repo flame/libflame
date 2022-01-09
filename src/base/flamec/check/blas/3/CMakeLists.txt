@@ -1,0 +1,24 @@
+##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+target_sources("${PROJECT_NAME}" 
+     PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Gemm_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Gemm_internal_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Hemm_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Hemm_internal_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Her2k_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Her2k_internal_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Herk_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Herk_internal_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Symm_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Symm_internal_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Syr2k_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Syr2k_internal_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Syrk_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Syrk_internal_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Trmm_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Trmm_internal_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Trmmsx_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Trsm_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Trsm_internal_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Trsmsx_check.c
+	)

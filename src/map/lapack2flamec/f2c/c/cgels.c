@@ -189,6 +189,16 @@ the least squares solution could not be */
 /* Subroutine */
 int cgels_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, integer *lda, complex *b, integer *ldb, complex * work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cgels inputs: trans %c, m %lld, n %lld, nrhs %lld, lda %lld, ldb %lld, lwork %lld",*trans, *m, *n, *nrhs, *lda, *ldb, *lwork);
+#else 
+    snprintf(buffer, 256,"cgels inputs: trans %c, m %d, n %d, nrhs %d, lda %d, ldb %d, lwork %d",*trans, *m, *n, *nrhs, *lda, *ldb, *lwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3;
     real r__1;
@@ -348,10 +358,12 @@ int cgels_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, inte
     {
         i__1 = -(*info);
         xerbla_("CGELS ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -361,6 +373,7 @@ int cgels_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, inte
     {
         i__1 = max(*m,*n);
         claset_("Full", &i__1, nrhs, &c_b1, &c_b1, &b[b_offset], ldb);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine parameters */
@@ -425,6 +438,7 @@ int cgels_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, inte
             ctrtrs_("Upper", "No transpose", "Non-unit", n, nrhs, &a[a_offset] , lda, &b[b_offset], ldb, info);
             if (*info > 0)
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             scllen = *n;
@@ -436,6 +450,7 @@ int cgels_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, inte
             ctrtrs_("Upper", "Conjugate transpose", "Non-unit", n, nrhs, &a[ a_offset], lda, &b[b_offset], ldb, info);
             if (*info > 0)
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* B(N+1:M,1:NRHS) = ZERO */
@@ -476,6 +491,7 @@ int cgels_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, inte
             ctrtrs_("Lower", "No transpose", "Non-unit", m, nrhs, &a[a_offset] , lda, &b[b_offset], ldb, info);
             if (*info > 0)
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* B(M+1:N,1:NRHS) = 0 */
@@ -513,6 +529,7 @@ int cgels_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, inte
             ctrtrs_("Lower", "Conjugate transpose", "Non-unit", m, nrhs, &a[ a_offset], lda, &b[b_offset], ldb, info);
             if (*info > 0)
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             scllen = *m;
@@ -539,6 +556,7 @@ L50:
     r__1 = (real) wsize;
     work[1].r = r__1;
     work[1].i = 0.f; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CGELS */
 }

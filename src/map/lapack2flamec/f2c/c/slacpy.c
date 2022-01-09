@@ -92,6 +92,12 @@ if UPLO = 'L', only the lower */
 /* Subroutine */
 int slacpy_(char *uplo, integer *m, integer *n, real *a, integer *lda, real *b, integer *ldb)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"slacpy inputs: uplo %c, m %d, n %d, lda %d, ldb %d",*uplo, *m, *n, *lda, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2;
     /* Local variables */
@@ -175,6 +181,7 @@ int slacpy_(char *uplo, integer *m, integer *n, real *a, integer *lda, real *b, 
             /* L60: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SLACPY */
 }

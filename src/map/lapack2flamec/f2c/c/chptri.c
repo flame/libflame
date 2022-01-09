@@ -107,6 +107,16 @@ the matrix is singular and its */
 /* Subroutine */
 int chptri_(char *uplo, integer *n, complex *ap, integer * ipiv, complex *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+   snprintf(buffer, 256,"chptri inputs: uplo %c, n %lld, ipiv %lld",*uplo, *n, *ipiv);
+#else 
+   snprintf(buffer, 256,"chptri inputs: uplo %c, n %d, ipiv %d",*uplo, *n, *ipiv);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2, i__3;
     real r__1;
@@ -171,11 +181,13 @@ int chptri_(char *uplo, integer *n, complex *ap, integer * ipiv, complex *work, 
     {
         i__1 = -(*info);
         xerbla_("CHPTRI", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check that the diagonal matrix D is nonsingular. */
@@ -190,6 +202,7 @@ int chptri_(char *uplo, integer *n, complex *ap, integer * ipiv, complex *work, 
             i__1 = kp;
             if (ipiv[*info] > 0 && (ap[i__1].r == 0.f && ap[i__1].i == 0.f))
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             kp -= *info;
@@ -208,6 +221,7 @@ int chptri_(char *uplo, integer *n, complex *ap, integer * ipiv, complex *work, 
             i__2 = kp;
             if (ipiv[*info] > 0 && (ap[i__2].r == 0.f && ap[i__2].i == 0.f))
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             kp = kp + *n - *info + 1;
@@ -577,6 +591,7 @@ L60: /* If K < 1, exit from loop. */
 L80:
         ;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CHPTRI */
 }

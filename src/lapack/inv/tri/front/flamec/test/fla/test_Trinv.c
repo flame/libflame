@@ -19,14 +19,14 @@ char* pc_str[N_PARAM_COMBOS] = { "ln", "lu",
                                  "un", "uu" };
 
 void time_Trinv(
-                 int param_combo, int type, int n_repeats, int m, FLA_Uplo uplo, FLA_Diag diag,
+                 integer param_combo, integer type, integer n_repeats, integer m, FLA_Uplo uplo, FLA_Diag diag,
                  FLA_Obj A, FLA_Obj b, FLA_Obj b_orig, FLA_Obj norm,
                  double *dtime, double *diff, double *gflops );
 
 
 int main(int argc, char *argv[])
 {
-  int 
+  integer 
     datatype,
     m_input,
     m,

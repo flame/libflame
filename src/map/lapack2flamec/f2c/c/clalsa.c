@@ -257,6 +257,16 @@ and if */
 /* Subroutine */
 int clalsa_(integer *icompq, integer *smlsiz, integer *n, integer *nrhs, complex *b, integer *ldb, complex *bx, integer *ldbx, real *u, integer *ldu, real *vt, integer *k, real *difl, real *difr, real *z__, real *poles, integer *givptr, integer *givcol, integer * ldgcol, integer *perm, real *givnum, real *c__, real *s, real *rwork, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clalsa inputs: icompq %lld, smlsiz %lld, n %lld, nrhs %lld, ldb %lld, ldbx %lld, ldu %lld, k %lld, ldgcol %lld",*icompq, *smlsiz, *n, *nrhs, *ldb, *ldbx, *ldu, *k, *ldgcol);
+#else 
+    snprintf(buffer, 256,"clalsa inputs: icompq %d, smlsiz %d, n %d, nrhs %d, ldb %d, ldbx %d, ldu %d, k %d, ldgcol %d",*icompq, *smlsiz, *n, *nrhs, *ldb, *ldbx, *ldu, *k, *ldgcol);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer givcol_dim1, givcol_offset, perm_dim1, perm_offset, difl_dim1, difl_offset, difr_dim1, difr_offset, givnum_dim1, givnum_offset, poles_dim1, poles_offset, u_dim1, u_offset, vt_dim1, vt_offset, z_dim1, z_offset, b_dim1, b_offset, bx_dim1, bx_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     complex q__1;
@@ -367,6 +377,7 @@ int clalsa_(integer *icompq, integer *smlsiz, integer *n, integer *nrhs, complex
     {
         i__1 = -(*info);
         xerbla_("CLALSA", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Book-keeping and setting up the computation tree. */
@@ -793,6 +804,7 @@ L170: /* First now go through the right singular vector matrices of all */
         /* L320: */
     }
 L330:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLALSA */
 }

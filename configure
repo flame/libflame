@@ -662,12 +662,15 @@ fla_enable_memory_alignment
 fla_vector_intrinsic_type
 fla_enable_vector_intrinsics
 fla_c_sse_flags
+fla_enable_blas_ext_gemmt
 fla_enable_gpu
 fla_enable_supermatrix
 fla_multithreading_model
 fla_enable_multithreading
 fla_c_openmp_flags
 fla_enable_blas3_front_end_cntl_trees
+fla_enable_f2c_dotc
+fla_enable_void_return_complex
 fla_enable_external_lapack_interfaces
 fla_enable_external_lapack_for_subproblems
 fla_enable_lapack2flame
@@ -675,6 +678,7 @@ fla_enable_builtin_blas
 fla_enable_non_critical_code
 fla_c_lang_flags
 fla_enable_max_arg_list_hack
+fla_enable_ilp64
 fla_enable_dynamic_build
 fla_enable_static_build
 fla_enable_verbose_make_output
@@ -769,16 +773,20 @@ enable_autodetect_f77_name_mangling
 enable_verbose_make_output
 enable_static_build
 enable_dynamic_build
+enable_ilp64
 enable_max_arg_list_hack
 enable_non_critical_code
 enable_builtin_blas
 enable_lapack2flame
 enable_external_lapack_for_subproblems
+enable_f2c_dotc
+enable_void_return_complex
 enable_external_lapack_interfaces
 enable_blas3_front_end_cntl_trees
 enable_multithreading
 enable_supermatrix
 enable_gpu
+enable_blas_ext_gemmt
 enable_vector_intrinsics
 enable_memory_alignment
 enable_ldim_alignment
@@ -1463,6 +1471,8 @@ Optional Features:
                           default.)
   --enable-dynamic-build  Enable dynamic/shared library generation. (Disabled
                           by default.)
+  --enable-ilp64          Enable ILP64 make int, long and pointer are 64 bit 
+                          lenth. (Enabled by default.)
   --enable-max-arg-list-hack
                           Enable makefile code that archives object files from
                           a flat object directory, thus decreasing the
@@ -1488,6 +1498,18 @@ Optional Features:
                           parameters are detected, the library aborts. Also,
                           if this option is enabled, then
                           external-lapack-for-subproblems MUST be disabled.
+                          (Disabled by default.)
+  --enable-f2c-dotc
+                          Enable code that allows the user to invoke f2c
+                          based calling convention for complex datatype
+                          dotc and dotu function of BLAS. If this option is 
+                          enabled libflame calls cdotc/zdotc and cdotu/zdotu
+                          function with output as first parameter of the 
+                          function instead of as return type. (Disabled by 
+                          default.)
+  --enable-void-return-complex
+                          Enable void return for functions that by default
+                          return complex type as per LAPACK standard. 
                           (Disabled by default.)
   --enable-external-lapack-for-subproblems
                           Enable code that causes most of the
@@ -1517,11 +1539,20 @@ Optional Features:
                           implementations. Note that control trees are always
                           used for LAPACK-like operations. (Disabled by
                           default.)
+  --enable-blas-ext-gemmt Enable code that uses GEMMT to get better
+                          performance for computations involving symmetric
+                          matrices. To use this option, GEMMT has to be
+                          supported by the BLAS library used. (Disabled by
+                          default.)
   --enable-multithreading=model
                           Enable multithreading support. Valid values for
                           model are "pthreads" and "openmp". Multithreading
                           must be enabled to access SMP parallelized
-                          implementations. (Disabled by default.)
+                          implementations. If enabled, use the environment
+                          variable FLA_NUM_THREADS to specify the number of
+                          threads to parallelize computations for LAPACK
+                          interfaces (FLA external interfaces). (Disabled
+                          by default.)
   --enable-supermatrix    Enable Ernie Chan's dependency-aware task scheduling
                           and parallel execution system. (Disabled by
                           default.)
@@ -5991,6 +6022,54 @@ $as_echo "no" >&6; }
 
 
 
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested building ILP64 enabled library" >&5
+$as_echo_n "checking whether user requested enabling ILP64... " >&6; }
+
+				# Check whether --enable-ilp64 was given.
+if test "${enable_ilp64+set}" = set; then :
+  enableval=$enable_ilp64;
+				if test "$enableval" = "no" ; then
+
+						fla_enable_ilp64=no
+
+		elif test "$enableval" = "yes" ; then
+
+						fla_enable_ilp64=yes
+		else
+
+			as_fn_error "Reached unreachable branch in FLA_CHECK_ENABLE_ILP64!" "$LINENO" 5
+
+		fi
+
+else
+
+				fla_enable_ilp64=no
+
+
+fi
+
+
+		if   test "$fla_enable_ilp64" = "yes" ; then
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+
+$as_echo "#define FLA_ENABLE_ILP64 1" >>confdefs.h
+
+
+	elif test "$fla_enable_ilp64" = "no" ; then
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+	else
+
+				as_fn_error "Reached unreachable branch in FLA_ENABLE_ILP64!" "$LINENO" 5
+
+	fi
+
+
 
 
 
@@ -6371,11 +6450,62 @@ $as_echo "no" >&6; }
 
 
 
+       { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested enabling F2C convention for Complex dotc/dotu function" >&5
+			$as_echo_n "checking whether user requested enabling F2C calling format for complex dotc/dotu function... " >&6; }
+
+       # Check whether --enable-f2c-dotc was given.
+        if test "${enable_f2c_dotc+set}" = set; then :
+             enableval=$enable_f2c_dotc;
+             if test "$enableval" = "no" ; then
+                fla_enable_f2c_dotc=no
+             elif test "$enableval" = "yes" ; then
+                fla_enable_f2c_dotc=yes
+             else
+                as_fn_error "Reached unreachable branch in FLA_CHECK_ENABLE_F2C_DOTC!" "$LINENO" 5
+             fi
+        else
+             fla_enable_f2c_dotc=no
+        fi
+
+        if   test "$fla_enable_f2c_dotc" = "yes" ; then
+             { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+               $as_echo "yes" >&6; }
+             $as_echo "#define FLA_ENABLE_F2C_DOTC 1" >>confdefs.h
+        elif test "$fla_enable_f2c_dotc" = "no" ; then
+             { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+               $as_echo "no" >&6; }
+        else
+             as_fn_error "Reached unreachable branch in FLA_CHECK_ENABLE_F2C_DOTC!" "$LINENO" 5
+        fi
 
 
+       { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested enabling void return for functions that by default return complex type as per LAPACK standard" >&5
+			$as_echo_n "checking whether user requested enabling void return for functions that by default return complex type as per LAPACK standard... " >&6; }
 
+       # Check whether --enable-void-return-complex was given.
+        if test "${enable_void_return_complex+set}" = set; then :
+             enableval=$enable_void_return_complex;
+             if test "$enableval" = "no" ; then
+                fla_enable_void_return_complex=no
+             elif test "$enableval" = "yes" ; then
+                fla_enable_void_return_complex=yes
+             else
+                as_fn_error "Reached unreachable branch in FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION!" "$LINENO" 5
+             fi
+        else
+             fla_enable_void_return_complex=no
+        fi
 
-
+        if   test "$fla_enable_void_return_complex" = "yes" ; then
+             { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+               $as_echo "yes" >&6; }
+             $as_echo "#define FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION 1" >>confdefs.h
+        elif test "$fla_enable_void_return_complex" = "no" ; then
+             { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+               $as_echo "no" >&6; }
+        else
+             as_fn_error "Reached unreachable branch in FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION!" "$LINENO" 5
+        fi
 
 
 
@@ -6511,6 +6641,9 @@ $as_echo_n "checking for (guessing) OpenMP flags for ${CC_VENDOR}... " >&6; }
 			fla_c_openmp_flags='-openmp'
 		;;
 				gcc)
+			fla_c_openmp_flags='-fopenmp'
+		;;
+				clang)
 			fla_c_openmp_flags='-fopenmp'
 		;;
 				pathcc)
@@ -6684,6 +6817,51 @@ $as_echo "no" >&6; }
 	fi
 
 
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested enabling gemmt based optimizations" >&5
+$as_echo_n "checking whether user requested enabling gemmt based optimizations... " >&6; }
+
+				# Check whether --enable-blas-ext-gemmt was given.
+if test "${enable_blas_ext_gemmt+set}" = set; then :
+  enableval=$enable_blas_ext_gemmt;
+				if test "$enableval" = "no" ; then
+
+
+						fla_enable_blas_ext_gemmt=no
+
+		elif test "$enableval" = "yes" ; then
+
+						fla_enable_blas_ext_gemmt=yes
+		else
+
+												as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_BLAS_EXT_GEMMT!" "$LINENO" 5
+		fi
+
+else
+
+						fla_enable_blas_ext_gemmt=no
+
+
+fi
+
+
+		if   test "$fla_enable_blas_ext_gemmt" = "yes" ; then
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+
+$as_echo "#define FLA_ENABLE_BLAS_EXT_GEMMT 1" >>confdefs.h
+
+
+	elif test "$fla_enable_blas_ext_gemmt" = "no" ; then
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+	else
+				as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_BLAS_EXT_GEMMT!" "$LINENO" 5
+	fi
 
 
 
@@ -6994,6 +7172,9 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} optimization flags.
 						gcc)
 				fla_c_opt_flags='-O3'
 			;;
+						clang)
+				fla_c_opt_flags='-O3'
+			;;
 						icc)
 				fla_c_opt_flags='-O3'
 			;;
@@ -7020,6 +7201,9 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} optimization flags.
 
 				case ${CC_VENDOR} in
 						gcc)
+				fla_c_opt_flags='-O0'
+			;;
+						clang)
 				fla_c_opt_flags='-O0'
 			;;
 						icc)

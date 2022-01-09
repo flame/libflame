@@ -90,6 +90,16 @@ static integer c__1 = 1;
 /* ===================================================================== */
 real clanht_(char *norm, integer *n, real *d__, complex *e)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+   snprintf(buffer, 256,"clanht inputs: norm %c, n %lld",*norm, *n);
+#else 
+   snprintf(buffer, 256,"clanht inputs: norm %c, n %d",*norm, *n);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     real ret_val, r__1;
@@ -160,11 +170,11 @@ real clanht_(char *norm, integer *n, real *d__, complex *e)
         /* Find norm1(A). */
         if (*n == 1)
         {
-            anorm = f2c_abs(d__[1]);
+            anorm = f2c_dabs(d__[1]);
         }
         else
         {
-            anorm = f2c_abs(d__[1]) + c_abs(&e[1]);
+            anorm = f2c_dabs(d__[1]) + c_abs(&e[1]);
             sum = c_abs(&e[*n - 1]) + (r__1 = d__[*n], f2c_abs(r__1));
             if (anorm < sum || sisnan_(&sum))
             {
@@ -199,6 +209,7 @@ real clanht_(char *norm, integer *n, real *d__, complex *e)
         anorm = scale * sqrt(sum);
     }
     ret_val = anorm;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return ret_val;
     /* End of CLANHT */
 }

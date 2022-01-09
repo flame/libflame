@@ -10,39 +10,39 @@
 
 #include "FLAME.h"
 
-FLA_Error FLA_Tevd_iteracc_v_ops_var3( int       m_A,
-                                       int       m_U,
-                                       int       n_G,
-                                       int       ijTL,
-                                       float*    buff_d, int inc_d, 
-                                       float*    buff_e, int inc_e,
-                                       float*    buff_l, int inc_l,
-                                       int*      buff_ls, int inc_ls,
-                                       float*    buff_pu, int inc_pu,
-                                       scomplex* buff_G, int rs_G, int cs_G,
-                                       int*      n_iter_perf )
+FLA_Error FLA_Tevd_iteracc_v_ops_var3( integer       m_A,
+                                       integer       m_U,
+                                       integer       n_G,
+                                       integer       ijTL,
+                                       float*    buff_d, integer inc_d, 
+                                       float*    buff_e, integer inc_e,
+                                       float*    buff_l, integer inc_l,
+                                       integer*      buff_ls, integer inc_ls,
+                                       float*    buff_pu, integer inc_pu,
+                                       scomplex* buff_G, integer rs_G, integer cs_G,
+                                       integer*      n_iter_perf )
 {
 	return FLA_SUCCESS;
 }
 
 //#define PRINTF
 
-FLA_Error FLA_Tevd_iteracc_v_opd_var3( int       m_A,
-                                       int       m_U,
-                                       int       n_G,
-                                       int       ijTL,
-                                       double*   buff_d, int inc_d, 
-                                       double*   buff_e, int inc_e,
-                                       double*   buff_l, int inc_l,
-                                       int*      buff_ls, int inc_ls,
-                                       double*   buff_pu, int inc_pu,
-                                       dcomplex* buff_G, int rs_G, int cs_G,
-                                       int*      n_iter_perf )
+FLA_Error FLA_Tevd_iteracc_v_opd_var3( integer       m_A,
+                                       integer       m_U,
+                                       integer       n_G,
+                                       integer       ijTL,
+                                       double*   buff_d, integer inc_d, 
+                                       double*   buff_e, integer inc_e,
+                                       double*   buff_l, integer inc_l,
+                                       integer*      buff_ls, integer inc_ls,
+                                       double*   buff_pu, integer inc_pu,
+                                       dcomplex* buff_G, integer rs_G, integer cs_G,
+                                       integer*      n_iter_perf )
 {
 	FLA_Error r_val;
-	int       i, k;
-	int       k_iter       = 0;
-	int       n_deflations = 0;
+	integer       i, k;
+	integer       k_iter       = 0;
+	integer       n_deflations = 0;
 	//double    pshift;
 	//double    eps    = FLA_Mach_params_opd( FLA_MACH_EPS );
 	//double    safmin = FLA_Mach_params_opd( FLA_MACH_SFMIN );
@@ -51,8 +51,8 @@ FLA_Error FLA_Tevd_iteracc_v_opd_var3( int       m_A,
 	for ( i = m_A - 1; i > 1; --i )
 	{
 		dcomplex* G1     = buff_G + (k_iter)*cs_G;
-		int       m_ATL  = i + 1;
-		int       k_left = n_G - k_iter;
+		integer       m_ATL  = i + 1;
+		integer       k_left = n_G - k_iter;
 
 		/*------------------------------------------------------------*/
 
@@ -165,11 +165,11 @@ FLA_Error FLA_Tevd_iteracc_v_opd_var3( int       m_A,
 		// ATL. Therefore, we must recurse with two subproblems.
 		if ( r_val != i )
 		{
-			int       m_TLr = r_val + 1;
-			int       m_BRr = m_ATL - m_TLr;
-			int       ijTLr = 0;
-			int       ijBRr = m_TLr;
-			int       n_Gr  = n_G - k_iter;
+			integer       m_TLr = r_val + 1;
+			integer       m_BRr = m_ATL - m_TLr;
+			integer       ijTLr = 0;
+			integer       ijBRr = m_TLr;
+			integer       n_Gr  = n_G - k_iter;
 			double*   dTL   = buff_d + (0    )*inc_d;
 			double*   eTL   = buff_e + (0    )*inc_e;
 			double*   puTL  = buff_pu+ (0    )*inc_pu;
@@ -179,10 +179,10 @@ FLA_Error FLA_Tevd_iteracc_v_opd_var3( int       m_A,
 			double*   puBR  = buff_pu+ (ijBRr)*inc_pu;
 			dcomplex* GB    = buff_G + (ijBRr)*rs_G + (k_iter)*cs_G;
 
-			int       n_deflationsTL;
-			int       n_deflationsBR;
-			int       n_iter_perfTL;
-			int       n_iter_perfBR;
+			integer       n_deflationsTL;
+			integer       n_deflationsBR;
+			integer       n_iter_perfTL;
+			integer       n_iter_perfBR;
 
 #ifdef PRINTF
 printf( "FLA_Tevd_iteracc_v_opd_var3: Internal deflation in col %d\n", ijTL+r_val );

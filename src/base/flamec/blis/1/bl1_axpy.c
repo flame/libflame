@@ -10,7 +10,7 @@
 
 #include "blis1.h"
 
-void bl1_saxpy( int n, float* alpha, float* x, int incx, float* y, int incy )
+void bl1_saxpy( integer n, float* alpha, float* x, integer incx, float* y, integer incy )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	cblas_saxpy( n,
@@ -25,7 +25,7 @@ void bl1_saxpy( int n, float* alpha, float* x, int incx, float* y, int incy )
 #endif
 }
 
-void bl1_daxpy( int n, double* alpha, double* x, int incx, double* y, int incy )
+void bl1_daxpy( integer n, double* alpha, double* x, integer incx, double* y, integer incy )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	cblas_daxpy( n,
@@ -40,7 +40,7 @@ void bl1_daxpy( int n, double* alpha, double* x, int incx, double* y, int incy )
 #endif
 }
 
-void bl1_caxpy( int n, scomplex* alpha, scomplex* x, int incx, scomplex* y, int incy )
+void bl1_caxpy( integer n, scomplex* alpha, scomplex* x, integer incx, scomplex* y, integer incy )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	cblas_caxpy( n,
@@ -55,7 +55,7 @@ void bl1_caxpy( int n, scomplex* alpha, scomplex* x, int incx, scomplex* y, int 
 #endif
 }
 
-void bl1_zaxpy( int n, dcomplex* alpha, dcomplex* x, int incx, dcomplex* y, int incy )
+void bl1_zaxpy( integer n, dcomplex* alpha, dcomplex* x, integer incx, dcomplex* y, integer incy )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	cblas_zaxpy( n,

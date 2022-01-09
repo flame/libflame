@@ -10,10 +10,10 @@
 
 #include "FLAME.h"
 
-int fla_scomp_f( const void* a, const void* b );
-int fla_scomp_b( const void* a, const void* b );
-int fla_dcomp_f( const void* a, const void* b );
-int fla_dcomp_b( const void* a, const void* b );
+integer fla_scomp_f( const void* a, const void* b );
+integer fla_scomp_b( const void* a, const void* b );
+integer fla_dcomp_f( const void* a, const void* b );
+integer fla_dcomp_b( const void* a, const void* b );
 
 FLA_Error FLA_Sort( FLA_Direct direct, FLA_Obj x )
 {
@@ -85,8 +85,8 @@ FLA_Error FLA_Sort( FLA_Direct direct, FLA_Obj x )
 
 
 
-FLA_Error FLA_Sort_f_ops( int     m_x,
-                          float*  x, int inc_x )
+FLA_Error FLA_Sort_f_ops( integer     m_x,
+                          float*  x, integer inc_x )
 {
 	qsort( x,
 	       m_x,
@@ -96,8 +96,8 @@ FLA_Error FLA_Sort_f_ops( int     m_x,
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Sort_b_ops( int     m_x,
-                          float*  x, int inc_x )
+FLA_Error FLA_Sort_b_ops( integer     m_x,
+                          float*  x, integer inc_x )
 {
 	qsort( x,
 	       m_x,
@@ -107,8 +107,8 @@ FLA_Error FLA_Sort_b_ops( int     m_x,
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Sort_f_opd( int     m_x,
-                          double* x, int inc_x )
+FLA_Error FLA_Sort_f_opd( integer     m_x,
+                          double* x, integer inc_x )
 {
 	qsort( x,
 	       m_x,
@@ -118,8 +118,8 @@ FLA_Error FLA_Sort_f_opd( int     m_x,
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Sort_b_opd( int     m_x,
-                          double* x, int inc_x )
+FLA_Error FLA_Sort_b_opd( integer     m_x,
+                          double* x, integer inc_x )
 {
 	qsort( x,
 	       m_x,
@@ -133,11 +133,11 @@ FLA_Error FLA_Sort_b_opd( int     m_x,
 
 
 
-int fla_scomp_f( const void* a, const void* b )
+integer fla_scomp_f( const void* a, const void* b )
 {
 	float*  da = ( float*  ) a;
 	float*  db = ( float*  ) b;
-	int     r_val;
+	integer     r_val;
 
 	if      ( *da < *db ) r_val = -1;
 	else if ( *da > *db ) r_val =  1;
@@ -146,11 +146,11 @@ int fla_scomp_f( const void* a, const void* b )
 	return r_val;
 }
 
-int fla_scomp_b( const void* a, const void* b )
+integer fla_scomp_b( const void* a, const void* b )
 {
 	float*  da = ( float*  ) a;
 	float*  db = ( float*  ) b;
-	int     r_val;
+	integer     r_val;
 
 	if      ( *da < *db ) r_val =  1;
 	else if ( *da > *db ) r_val = -1;
@@ -159,11 +159,11 @@ int fla_scomp_b( const void* a, const void* b )
 	return r_val;
 }
 
-int fla_dcomp_f( const void* a, const void* b )
+integer fla_dcomp_f( const void* a, const void* b )
 {
 	double* da = ( double* ) a;
 	double* db = ( double* ) b;
-	int     r_val;
+	integer     r_val;
 
 	if      ( *da < *db ) r_val = -1;
 	else if ( *da > *db ) r_val =  1;
@@ -172,11 +172,11 @@ int fla_dcomp_f( const void* a, const void* b )
 	return r_val;
 }
 
-int fla_dcomp_b( const void* a, const void* b )
+integer fla_dcomp_b( const void* a, const void* b )
 {
 	double* da = ( double* ) a;
 	double* db = ( double* ) b;
-	int     r_val;
+	integer     r_val;
 
 	if      ( *da < *db ) r_val =  1;
 	else if ( *da > *db ) r_val = -1;

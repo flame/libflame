@@ -267,6 +267,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int cspsvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *ap, complex *afp, integer *ipiv, complex *b, integer * ldb, complex *x, integer *ldx, real *rcond, real *ferr, real *berr, complex *work, real *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cspsvx inputs: fact %c, uplo %c, n %lld, nrhs %lld, ipiv %lld, ldb %lld, ldx %lld",*fact, *uplo, *n, *nrhs, *ipiv, *ldb, *ldx);
+#else 
+    snprintf(buffer, 256,"cspsvx inputs: fact %c, uplo %c, n %d, nrhs %d, ipiv %d, ldb %d, ldx %d",*fact, *uplo, *n, *nrhs, *ipiv, *ldb, *ldx);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, x_dim1, x_offset, i__1;
     /* Local variables */
@@ -347,6 +357,7 @@ int cspsvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *ap, com
     {
         i__1 = -(*info);
         xerbla_("CSPSVX", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (nofact)
@@ -359,6 +370,7 @@ int cspsvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *ap, com
         if (*info > 0)
         {
             *rcond = 0.f;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -377,6 +389,7 @@ int cspsvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *ap, com
     {
         *info = *n + 1;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CSPSVX */
 }

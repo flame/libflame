@@ -10,13 +10,13 @@
 
 #include "FLAME.h"
 
-FLA_Error FLA_Hess_blk_external( FLA_Obj A, FLA_Obj t, int ilo, int ihi )
+FLA_Error FLA_Hess_blk_external( FLA_Obj A, FLA_Obj t, integer ilo, integer ihi )
 {
   int          info = 0;
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
   FLA_Datatype datatype;
-  int          n_A, cs_A;
-  int          lwork;
+  integer          n_A, cs_A;
+  integer          lwork;
   FLA_Obj      work_obj;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING )
@@ -121,7 +121,7 @@ FLA_Error FLA_Hess_blk_external( FLA_Obj A, FLA_Obj t, int ilo, int ihi )
   return info;
 }
 
-FLA_Error FLA_Hess_blk_ext( FLA_Obj A, FLA_Obj t, int ilo, int ihi )
+FLA_Error FLA_Hess_blk_ext( FLA_Obj A, FLA_Obj t, integer ilo, integer ihi )
 {
   return FLA_Hess_blk_external( A, t, ilo, ihi );
 }

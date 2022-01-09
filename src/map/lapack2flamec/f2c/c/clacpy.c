@@ -92,6 +92,16 @@ if UPLO = 'L', only the lower trapezium is */
 /* Subroutine */
 int clacpy_(char *uplo, integer *m, integer *n, complex *a, integer *lda, complex *b, integer *ldb)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"clacpy inputs: uplo %c, m %lld, n %lld, lda %lld, ldb %lld",*uplo, *m, *n, *lda, *ldb);
+#else 
+    snprintf(buffer, 256,"clacpy inputs: uplo %c, m %d, n %d, lda %d, ldb %d",*uplo, *m, *n, *lda, *ldb);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
@@ -184,6 +194,7 @@ int clacpy_(char *uplo, integer *m, integer *n, complex *a, integer *lda, comple
             /* L60: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLACPY */
 }

@@ -221,9 +221,9 @@ FLA_Error FLA_LQ_UT_form_Q( FLA_Obj A, FLA_Obj T, FLA_Obj Q )
 //// FLA_Error FLA_LQ_UT_form_Q_opt_var1( FLA_Obj A, FLA_Obj T )
 //// {
 ////     FLA_Datatype datatype;
-////     int          m_A, n_A;
-////     int          rs_A, cs_A;
-////     int          rs_T, cs_T;
+////     integer          m_A, n_A;
+////     integer          rs_A, cs_A;
+////     integer          rs_T, cs_T;
 //// 
 ////     datatype = FLA_Obj_datatype( A );
 //// 
@@ -293,14 +293,14 @@ FLA_Error FLA_LQ_UT_form_Q( FLA_Obj A, FLA_Obj T, FLA_Obj Q )
 ////     return FLA_SUCCESS;
 //// }
 //// 
-//// FLA_Error FLA_LQ_UT_form_Q_ops_var1( int       m_A,
-////                                      int       n_A,
-////                                      float*    buff_A, int rs_A, int cs_A,
-////                                      float*    buff_T, int rs_T, int cs_T )
+//// FLA_Error FLA_LQ_UT_form_Q_ops_var1( integer       m_A,
+////                                      integer       n_A,
+////                                      float*    buff_A, integer rs_A, integer cs_A,
+////                                      float*    buff_T, integer rs_T, integer cs_T )
 //// {
 ////     float    one     = bl1_d1();
-////     int      min_m_n = min( m_A, n_A );
-////     int      i;
+////     integer      min_m_n = min( m_A, n_A );
+////     integer      i;
 //// 
 ////     for ( i = min_m_n - 1; i >= 0; --i )
 ////     {
@@ -313,8 +313,8 @@ FLA_Error FLA_LQ_UT_form_Q( FLA_Obj A, FLA_Obj T, FLA_Obj Q )
 //// 
 ////         float     minus_inv_tau11;
 //// 
-////         int       n_ahead  = n_A - i - 1;
-////         int       m_ahead  = m_A - i - 1;
+////         integer       n_ahead  = n_A - i - 1;
+////         integer       m_ahead  = m_A - i - 1;
 //// 
 ////         FLA_Apply_H2_UT_r_ops_var1( m_ahead,
 ////                                     n_ahead,
@@ -336,14 +336,14 @@ FLA_Error FLA_LQ_UT_form_Q( FLA_Obj A, FLA_Obj T, FLA_Obj Q )
 ////     return FLA_SUCCESS;
 //// }
 //// 
-//// FLA_Error FLA_LQ_UT_form_Q_opd_var1( int       m_A,
-////                                      int       n_A,
-////                                      double*   buff_A, int rs_A, int cs_A,
-////                                      double*   buff_T, int rs_T, int cs_T )
+//// FLA_Error FLA_LQ_UT_form_Q_opd_var1( integer       m_A,
+////                                      integer       n_A,
+////                                      double*   buff_A, integer rs_A, integer cs_A,
+////                                      double*   buff_T, integer rs_T, integer cs_T )
 //// {
 ////     double   one     = bl1_d1();
-////     int      min_m_n = min( m_A, n_A );
-////     int      i;
+////     integer      min_m_n = min( m_A, n_A );
+////     integer      i;
 //// 
 ////     for ( i = min_m_n - 1; i >= 0; --i )
 ////     {
@@ -356,8 +356,8 @@ FLA_Error FLA_LQ_UT_form_Q( FLA_Obj A, FLA_Obj T, FLA_Obj Q )
 //// 
 ////         double    minus_inv_tau11;
 //// 
-////         int       n_ahead  = n_A - i - 1;
-////         int       m_ahead  = m_A - i - 1;
+////         integer       n_ahead  = n_A - i - 1;
+////         integer       m_ahead  = m_A - i - 1;
 //// 
 ////         FLA_Apply_H2_UT_r_opd_var1( m_ahead,
 ////                                     n_ahead,
@@ -380,15 +380,15 @@ FLA_Error FLA_LQ_UT_form_Q( FLA_Obj A, FLA_Obj T, FLA_Obj Q )
 //// }
 //// 
 //// 
-//// FLA_Error FLA_LQ_UT_form_Q_opc_var1( int       m_A,
-////                                      int       n_A,
-////                                      scomplex* buff_A, int rs_A, int cs_A,
-////                                      scomplex* buff_T, int rs_T, int cs_T )
+//// FLA_Error FLA_LQ_UT_form_Q_opc_var1( integer       m_A,
+////                                      integer       n_A,
+////                                      scomplex* buff_A, integer rs_A, integer cs_A,
+////                                      scomplex* buff_T, integer rs_T, integer cs_T )
 //// {
 ////     scomplex zero    = bl1_c0();
 ////     scomplex one     = bl1_c1();
-////     int      min_m_n = min( m_A, n_A );
-////     int      i;
+////     integer      min_m_n = min( m_A, n_A );
+////     integer      i;
 //// 
 ////     for ( i = min_m_n - 1; i >= 0; --i )
 ////     {
@@ -401,8 +401,8 @@ FLA_Error FLA_LQ_UT_form_Q( FLA_Obj A, FLA_Obj T, FLA_Obj Q )
 //// 
 ////         scomplex  minus_inv_tau11;
 //// 
-////         int       n_ahead  = n_A - i - 1;
-////         int       m_ahead  = m_A - i - 1;
+////         integer       n_ahead  = n_A - i - 1;
+////         integer       m_ahead  = m_A - i - 1;
 //// 
 ////         FLA_Apply_H2_UT_r_opc_var1( m_ahead,
 ////                                     n_ahead,
@@ -429,15 +429,15 @@ FLA_Error FLA_LQ_UT_form_Q( FLA_Obj A, FLA_Obj T, FLA_Obj Q )
 ////     return FLA_SUCCESS;
 //// }
 //// 
-//// FLA_Error FLA_LQ_UT_form_Q_opz_var1( int       m_A,
-////                                      int       n_A,
-////                                      dcomplex* buff_A, int rs_A, int cs_A,
-////                                      dcomplex* buff_T, int rs_T, int cs_T )
+//// FLA_Error FLA_LQ_UT_form_Q_opz_var1( integer       m_A,
+////                                      integer       n_A,
+////                                      dcomplex* buff_A, integer rs_A, integer cs_A,
+////                                      dcomplex* buff_T, integer rs_T, integer cs_T )
 //// {
 ////     dcomplex zero    = bl1_z0();
 ////     dcomplex one     = bl1_z1();
-////     int      min_m_n = min( m_A, n_A );
-////     int      i;
+////     integer      min_m_n = min( m_A, n_A );
+////     integer      i;
 //// 
 ////     for ( i = min_m_n - 1; i >= 0; --i )
 ////     {
@@ -450,8 +450,8 @@ FLA_Error FLA_LQ_UT_form_Q( FLA_Obj A, FLA_Obj T, FLA_Obj Q )
 //// 
 ////         dcomplex  minus_inv_tau11;
 //// 
-////         int       n_ahead  = n_A - i - 1;
-////         int       m_ahead  = m_A - i - 1;
+////         integer       n_ahead  = n_A - i - 1;
+////         integer       m_ahead  = m_A - i - 1;
 //// 
 ////         FLA_Apply_H2_UT_r_opz_var1( m_ahead,
 ////                                     n_ahead,

@@ -2,7 +2,7 @@
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* > \brief \b ZLARTG generates a plane rotation with real cosine and complex sine. */
 /* =========== DOCUMENTATION =========== */
-/* Online html documentation available at */
+/* Online html documentation available at  */
 /* http://www.netlib.org/lapack/explore-html/ */
 /* > \htmlonly */
 /* > Download ZLARTG + dependencies */
@@ -91,6 +91,7 @@
 /* Subroutine */
 int zlartg_(doublecomplex *f, doublecomplex *g, doublereal * cs, doublecomplex *sn, doublecomplex *r__)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* System generated locals */
     integer i__1;
     doublereal d__1, d__2, d__3, d__4, d__5, d__6, d__7, d__8, d__9, d__10;
@@ -142,11 +143,11 @@ int zlartg_(doublecomplex *f, doublecomplex *g, doublereal * cs, doublecomplex *
     safmx2 = 1. / safmn2;
     /* Computing MAX */
     /* Computing MAX */
-    d__7 = (d__1 = f->r, f2c_abs(d__1));
-    d__8 = (d__2 = d_imag(f), f2c_abs(d__2)); // , expr subst
+    d__7 = (d__1 = f->r, f2c_dabs(d__1));
+    d__8 = (d__2 = d_imag(f), f2c_dabs(d__2)); // , expr subst
     /* Computing MAX */
-    d__9 = (d__3 = g->r, f2c_abs(d__3));
-    d__10 = (d__4 = d_imag(g), f2c_abs(d__4)); // , expr subst
+    d__9 = (d__3 = g->r, f2c_dabs(d__3));
+    d__10 = (d__4 = d_imag(g), f2c_dabs(d__4)); // , expr subst
     d__5 = max(d__7,d__8);
     d__6 = max(d__9,d__10); // , expr subst
     scale = max(d__5,d__6);
@@ -181,6 +182,7 @@ L10:
             *cs = 1.;
             sn->r = 0., sn->i = 0.;
             r__->r = f->r, r__->i = f->i;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
 L20:
@@ -228,6 +230,7 @@ L20:
             z__1.r = d__1;
             z__1.i = d__2; // , expr subst
             sn->r = z__1.r, sn->i = z__1.i;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         d__1 = fs.r;
@@ -244,11 +247,11 @@ L20:
         /* and so CS .lt. sqrt(SAFMIN)/SAFMN2 = sqrt(EPS) */
         /* Therefore, CS = F2S/G2S / sqrt( 1 + (F2S/G2S)**2 ) = F2S/G2S */
         *cs = f2s / g2s;
-        /* Make sure f2c_abs(FF) = 1 */
+        /* Make sure f2c_dabs(FF) = 1 */
         /* Do complex/real division explicitly with 2 real divisions */
         /* Computing MAX */
-        d__3 = (d__1 = f->r, f2c_abs(d__1));
-        d__4 = (d__2 = d_imag(f), f2c_abs(d__2)); // , expr subst
+        d__3 = (d__1 = f->r, f2c_dabs(d__1));
+        d__4 = (d__2 = d_imag(f), f2c_dabs(d__2)); // , expr subst
         if (max(d__3,d__4) > 1.)
         {
             d__1 = f->r;
@@ -342,6 +345,7 @@ L20:
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZLARTG */
 }

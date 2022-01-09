@@ -13,10 +13,10 @@
 FLA_Error FLA_Eig_gest_il_opt_var3( FLA_Obj A, FLA_Obj Y, FLA_Obj B )
 {
   FLA_Datatype datatype;
-  int          m_AB;
-  int          rs_A, cs_A;
-  int          rs_Y, cs_Y;
-  int          rs_B, cs_B;
+  integer          m_AB;
+  integer          rs_A, cs_A;
+  integer          rs_Y, cs_Y;
+  integer          rs_B, cs_B;
 
   datatype = FLA_Obj_datatype( A );
 
@@ -95,15 +95,15 @@ FLA_Error FLA_Eig_gest_il_opt_var3( FLA_Obj A, FLA_Obj Y, FLA_Obj B )
 
 
 
-FLA_Error FLA_Eig_gest_il_ops_var3( int m_AB,
-                                    float* buff_A, int rs_A, int cs_A, 
-                                    float* buff_Y, int rs_Y, int cs_Y,
-                                    float* buff_B, int rs_B, int cs_B )
+FLA_Error FLA_Eig_gest_il_ops_var3( integer m_AB,
+                                    float* buff_A, integer rs_A, integer cs_A, 
+                                    float* buff_Y, integer rs_Y, integer cs_Y,
+                                    float* buff_B, integer rs_B, integer cs_B )
 {
   float*    buff_1   = FLA_FLOAT_PTR( FLA_ONE );
   float*    buff_m1  = FLA_FLOAT_PTR( FLA_MINUS_ONE );
   float*    buff_m1h = FLA_FLOAT_PTR( FLA_MINUS_ONE_HALF );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < m_AB; ++i )
   {
@@ -121,8 +121,8 @@ FLA_Error FLA_Eig_gest_il_ops_var3( int m_AB,
     float*    beta11   = buff_B + (i  )*cs_B + (i  )*rs_B;
     float*    b21      = buff_B + (i  )*cs_B + (i+1)*rs_B;
 
-    int       m_ahead  = m_AB - i - 1;
-    int       m_behind = i;
+    integer       m_ahead  = m_AB - i - 1;
+    integer       m_behind = i;
 
     /*------------------------------------------------------------*/
 
@@ -220,15 +220,15 @@ FLA_Error FLA_Eig_gest_il_ops_var3( int m_AB,
 
 
 
-FLA_Error FLA_Eig_gest_il_opd_var3( int m_AB,
-                                    double* buff_A, int rs_A, int cs_A, 
-                                    double* buff_Y, int rs_Y, int cs_Y,
-                                    double* buff_B, int rs_B, int cs_B )
+FLA_Error FLA_Eig_gest_il_opd_var3( integer m_AB,
+                                    double* buff_A, integer rs_A, integer cs_A, 
+                                    double* buff_Y, integer rs_Y, integer cs_Y,
+                                    double* buff_B, integer rs_B, integer cs_B )
 {
   double*   buff_1   = FLA_DOUBLE_PTR( FLA_ONE );
   double*   buff_m1  = FLA_DOUBLE_PTR( FLA_MINUS_ONE );
   double*   buff_m1h = FLA_DOUBLE_PTR( FLA_MINUS_ONE_HALF );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < m_AB; ++i )
   {
@@ -246,8 +246,8 @@ FLA_Error FLA_Eig_gest_il_opd_var3( int m_AB,
     double*   beta11   = buff_B + (i  )*cs_B + (i  )*rs_B;
     double*   b21      = buff_B + (i  )*cs_B + (i+1)*rs_B;
 
-    int       m_ahead  = m_AB - i - 1;
-    int       m_behind = i;
+    integer       m_ahead  = m_AB - i - 1;
+    integer       m_behind = i;
 
     /*------------------------------------------------------------*/
 
@@ -345,15 +345,15 @@ FLA_Error FLA_Eig_gest_il_opd_var3( int m_AB,
 
 
 
-FLA_Error FLA_Eig_gest_il_opc_var3( int m_AB,
-                                    scomplex* buff_A, int rs_A, int cs_A, 
-                                    scomplex* buff_Y, int rs_Y, int cs_Y,
-                                    scomplex* buff_B, int rs_B, int cs_B )
+FLA_Error FLA_Eig_gest_il_opc_var3( integer m_AB,
+                                    scomplex* buff_A, integer rs_A, integer cs_A, 
+                                    scomplex* buff_Y, integer rs_Y, integer cs_Y,
+                                    scomplex* buff_B, integer rs_B, integer cs_B )
 {
   scomplex* buff_1   = FLA_COMPLEX_PTR( FLA_ONE );
   scomplex* buff_m1  = FLA_COMPLEX_PTR( FLA_MINUS_ONE );
   scomplex* buff_m1h = FLA_COMPLEX_PTR( FLA_MINUS_ONE_HALF );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < m_AB; ++i )
   {
@@ -371,8 +371,8 @@ FLA_Error FLA_Eig_gest_il_opc_var3( int m_AB,
     scomplex* beta11   = buff_B + (i  )*cs_B + (i  )*rs_B;
     scomplex* b21      = buff_B + (i  )*cs_B + (i+1)*rs_B;
 
-    int       m_ahead  = m_AB - i - 1;
-    int       m_behind = i;
+    integer       m_ahead  = m_AB - i - 1;
+    integer       m_behind = i;
 
     /*------------------------------------------------------------*/
 
@@ -470,15 +470,15 @@ FLA_Error FLA_Eig_gest_il_opc_var3( int m_AB,
 
 
 
-FLA_Error FLA_Eig_gest_il_opz_var3( int m_AB,
-                                    dcomplex* buff_A, int rs_A, int cs_A, 
-                                    dcomplex* buff_Y, int rs_Y, int cs_Y,
-                                    dcomplex* buff_B, int rs_B, int cs_B )
+FLA_Error FLA_Eig_gest_il_opz_var3( integer m_AB,
+                                    dcomplex* buff_A, integer rs_A, integer cs_A, 
+                                    dcomplex* buff_Y, integer rs_Y, integer cs_Y,
+                                    dcomplex* buff_B, integer rs_B, integer cs_B )
 {
   dcomplex* buff_1   = FLA_DOUBLE_COMPLEX_PTR( FLA_ONE );
   dcomplex* buff_m1  = FLA_DOUBLE_COMPLEX_PTR( FLA_MINUS_ONE );
   dcomplex* buff_m1h = FLA_DOUBLE_COMPLEX_PTR( FLA_MINUS_ONE_HALF );
-  int       i;
+  integer       i;
 
   for ( i = 0; i < m_AB; ++i )
   {
@@ -496,8 +496,8 @@ FLA_Error FLA_Eig_gest_il_opz_var3( int m_AB,
     dcomplex* beta11   = buff_B + (i  )*cs_B + (i  )*rs_B;
     dcomplex* b21      = buff_B + (i  )*cs_B + (i+1)*rs_B;
 
-    int       m_ahead  = m_AB - i - 1;
-    int       m_behind = i;
+    integer       m_ahead  = m_AB - i - 1;
+    integer       m_behind = i;
 
     /*------------------------------------------------------------*/
 

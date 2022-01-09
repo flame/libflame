@@ -74,13 +74,13 @@ typedef struct FLASH_Queue_variables
    FLA_Lock*    cac_lock;
 
    // Number of queues.
-   int          n_queues;
+   integer          n_queues;
 
    // Number of caches.
-   int          n_caches;
+   integer          n_caches;
 
    // The number of blocks that can be stored in the cache on each thread.
-   int          size;
+   integer          size;
 
    // LRU cache simulation of blocks.
    FLA_Obj*     cache;
@@ -93,7 +93,7 @@ typedef struct FLASH_Queue_variables
 
    // A global task counter that keeps track of how many tasks on the waiting
    // queue have been processed.
-   int          pc;
+   integer          pc;
 
 #ifdef FLA_ENABLE_GPU
    // A lock that allows threads to safely access the cache structures.
@@ -125,12 +125,12 @@ void FLASH_Queue_exec( void )
 
 ----------------------------------------------------------------------------*/
 {
-   int          n_tasks    = FLASH_Queue_get_num_tasks();
-   int          n_threads  = FLASH_Queue_get_num_threads();
-   int          n_queues;
-   int          n_caches;
-   int          size;
-   int          i;
+   integer          n_tasks    = FLASH_Queue_get_num_tasks();
+   integer          n_threads  = FLASH_Queue_get_num_threads();
+   integer          n_queues;
+   integer          n_caches;
+   integer          size;
+   integer          i;
    dim_t        block_size = FLASH_Queue_get_block_size();
    double       dtime;
 
@@ -399,15 +399,15 @@ void FLASH_Queue_init_tasks( void* arg )
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int            i, j, k;
-   int            n_tasks    = FLASH_Queue_get_num_tasks();
-   int            n_queues   = args->n_queues;
-   int            n_prefetch = 0;
-   int            n_ready    = 0;
-   int            length     = 0;
-   int            width      = 0;
-   int            height     = 0;
-   int            size       = args->size;
+   integer            i, j, k;
+   integer            n_tasks    = FLASH_Queue_get_num_tasks();
+   integer            n_queues   = args->n_queues;
+   integer            n_prefetch = 0;
+   integer            n_ready    = 0;
+   integer            length     = 0;
+   integer            width      = 0;
+   integer            height     = 0;
+   integer            size       = args->size;
    FLASH_Data_aff data_aff   = FLASH_Queue_get_data_affinity();
    FLASH_Task*    t;
    FLASH_Dep*     d;
@@ -422,7 +422,7 @@ void FLASH_Queue_init_tasks( void* arg )
    // Find the 2D factorization of the number of threads.
    if ( data_aff == FLASH_QUEUE_AFFINITY_2D_BLOCK_CYCLIC )
    {
-      int sq_rt = 0;
+      integer sq_rt = 0;
       while ( sq_rt * sq_rt <= n_queues ) sq_rt++;
       sq_rt--;
       while ( n_queues % sq_rt != 0 ) sq_rt--;
@@ -631,7 +631,7 @@ void FLASH_Queue_wait_enqueue( FLASH_Task* t, void* arg )
 ----------------------------------------------------------------------------*/
 {  
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int queue = t->queue;
+   integer queue = t->queue;
 
    if ( args->wait_queue[queue].n_tasks == 0 )
    {
@@ -675,7 +675,7 @@ void FLASH_Queue_wait_enqueue( FLASH_Task* t, void* arg )
 }
 
 
-FLASH_Task* FLASH_Queue_wait_dequeue( int queue, int cache, void* arg )
+FLASH_Task* FLASH_Queue_wait_dequeue( integer queue, integer cache, void* arg )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_wait_dequeue
@@ -776,7 +776,7 @@ FLASH_Task* FLASH_Queue_wait_dequeue( int queue, int cache, void* arg )
 }
 
 
-FLASH_Task* FLASH_Queue_wait_dequeue_block( int queue, int cache, void* arg )
+FLASH_Task* FLASH_Queue_wait_dequeue_block( integer queue, integer cache, void* arg )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_wait_dequeue_block
@@ -784,9 +784,9 @@ FLASH_Task* FLASH_Queue_wait_dequeue_block( int queue, int cache, void* arg )
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int         i, j, k;
-   int         size    = args->size;
-   int         n_tasks = args->wait_queue[queue].n_tasks;
+   integer         i, j, k;
+   integer         size    = args->size;
+   integer         n_tasks = args->wait_queue[queue].n_tasks;
    FLA_Bool    enabled = FALSE;
    FLASH_Task* t;
    FLA_Obj     obj;
@@ -851,7 +851,7 @@ void FLASH_Queue_update_cache( FLASH_Task* t, void* arg )
 
 ----------------------------------------------------------------------------*/
 {
-   int      i, j;
+   integer      i, j;
    FLA_Bool duplicate;
    FLA_Obj  obj;
 
@@ -947,7 +947,7 @@ void FLASH_Queue_update_cache( FLASH_Task* t, void* arg )
 
 
 void FLASH_Queue_update_cache_block( FLA_Obj obj,
-                                     int cache, 
+                                     integer cache, 
                                      FLA_Bool output,
                                      void* arg )
 /*----------------------------------------------------------------------------
@@ -957,9 +957,9 @@ void FLASH_Queue_update_cache_block( FLA_Obj obj,
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int i, j, k;
-   int n_caches = args->n_caches;
-   int size     = args->size;
+   integer i, j, k;
+   integer n_caches = args->n_caches;
+   integer size     = args->size;
 
 #ifdef FLA_ENABLE_MULTITHREADING
    FLA_Lock_acquire( &(args->cac_lock[cache]) ); // C ***      
@@ -1021,7 +1021,7 @@ void FLASH_Queue_update_cache_block( FLA_Obj obj,
 }
 
 
-void FLASH_Queue_prefetch( int cache, void* arg )
+void FLASH_Queue_prefetch( integer cache, void* arg )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_prefetch
@@ -1029,8 +1029,8 @@ void FLASH_Queue_prefetch( int cache, void* arg )
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;   
-   int i;
-   int size = args->size;
+   integer i;
+   integer size = args->size;
    FLA_Obj obj;
 
    // Prefetch blocks in opposite order to maintain LRU.
@@ -1060,11 +1060,11 @@ void FLASH_Queue_prefetch_block( FLA_Obj obj )
 
 ----------------------------------------------------------------------------*/
 {
-   int          i, inc;
-   int          line_size = FLASH_Queue_get_cache_line_size();
-   int          elem_size = FLA_Obj_elem_size( obj );
-   int          length    = FLA_Obj_length( obj );
-   int          width     = FLA_Obj_width( obj );
+   integer          i, inc;
+   integer          line_size = FLASH_Queue_get_cache_line_size();
+   integer          elem_size = FLA_Obj_elem_size( obj );
+   integer          length    = FLA_Obj_length( obj );
+   integer          width     = FLA_Obj_width( obj );
    FLA_Datatype datatype  = FLA_Obj_datatype( obj );
 
    // Determine stride to prefetch block into cache.
@@ -1131,8 +1131,8 @@ void FLASH_Queue_prefetch_block( FLA_Obj obj )
       }
       case FLA_INT:
       {
-         int *buffer = ( int * ) FLA_INT_PTR( obj );
-         int access;
+         integer *buffer = ( integer * ) FLA_INT_PTR( obj );
+         integer access;
 
          // Access each cache line of the block.
          for ( i = 0; i < length * width; i += inc )
@@ -1152,7 +1152,7 @@ void FLASH_Queue_prefetch_block( FLA_Obj obj )
 }
 
 
-FLASH_Task* FLASH_Queue_work_stealing( int queue, void *arg )
+FLASH_Task* FLASH_Queue_work_stealing( integer queue, void *arg )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_work_stealing
@@ -1160,8 +1160,8 @@ FLASH_Task* FLASH_Queue_work_stealing( int queue, void *arg )
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int         q;
-   int         n_queues = args->n_queues;
+   integer         q;
+   integer         n_queues = args->n_queues;
    FLASH_Task* t = NULL;
 
    // Do not perform work stealing if there is only one queue.
@@ -1224,7 +1224,7 @@ FLASH_Task* FLASH_Queue_work_stealing( int queue, void *arg )
 
 #ifdef FLA_ENABLE_GPU
 
-void FLASH_Queue_create_gpu( int thread, void *arg )
+void FLASH_Queue_create_gpu( integer thread, void *arg )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_create_gpu
@@ -1232,7 +1232,7 @@ void FLASH_Queue_create_gpu( int thread, void *arg )
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int i;
+   integer i;
    dim_t gpu_n_blocks     = FLASH_Queue_get_gpu_num_blocks();
    dim_t block_size       = args->block_size;
    FLA_Datatype datatype  = args->datatype;
@@ -1252,7 +1252,7 @@ void FLASH_Queue_create_gpu( int thread, void *arg )
 }
 
 
-void FLASH_Queue_destroy_gpu( int thread, void *arg )
+void FLASH_Queue_destroy_gpu( integer thread, void *arg )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_destroy_gpu
@@ -1260,7 +1260,7 @@ void FLASH_Queue_destroy_gpu( int thread, void *arg )
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int i;
+   integer i;
    dim_t gpu_n_blocks = FLASH_Queue_get_gpu_num_blocks();
    FLA_Obj_gpu gpu_obj;
 
@@ -1310,7 +1310,7 @@ FLA_Bool FLASH_Queue_exec_gpu( FLASH_Task *t, void *arg )
    if ( !FLASH_Queue_check_gpu( t, arg ) )
    {
       FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-      int queue = t->queue;
+      integer queue = t->queue;
       t->hit = FALSE;
 
 #ifdef FLA_ENABLE_MULTITHREADING
@@ -1329,11 +1329,11 @@ FLA_Bool FLASH_Queue_exec_gpu( FLASH_Task *t, void *arg )
    // If GPU is enabled, but the task is not supported for GPU execution.
    if ( !t->enabled_gpu )
    {
-      int i, j, k;
-      int thread        = t->thread;
-      int n_input_args  = t->n_input_args;
-      int n_output_args = t->n_output_args;
-      int n_threads     = FLASH_Queue_get_num_threads();
+      integer i, j, k;
+      integer thread        = t->thread;
+      integer n_input_args  = t->n_input_args;
+      integer n_output_args = t->n_output_args;
+      integer n_threads     = FLASH_Queue_get_num_threads();
       FLA_Bool duplicate;
       FLA_Obj  obj;
 
@@ -1451,11 +1451,11 @@ FLA_Bool FLASH_Queue_check_gpu( FLASH_Task *t, void *arg )
 
 ----------------------------------------------------------------------------*/
 {
-   int i, j, k;
-   int thread        = t->thread;
-   int n_input_args  = t->n_input_args;
-   int n_output_args = t->n_output_args;
-   int n_threads     = FLASH_Queue_get_num_threads();
+   integer i, j, k;
+   integer thread        = t->thread;
+   integer n_input_args  = t->n_input_args;
+   integer n_output_args = t->n_output_args;
+   integer n_threads     = FLASH_Queue_get_num_threads();
    FLA_Bool r_val    = TRUE;
    FLA_Bool t_val;
    FLA_Bool duplicate;
@@ -1543,7 +1543,7 @@ FLA_Bool FLASH_Queue_check_gpu( FLASH_Task *t, void *arg )
 }
 
 
-FLA_Bool FLASH_Queue_check_block_gpu( FLA_Obj obj, int thread, void *arg )
+FLA_Bool FLASH_Queue_check_block_gpu( FLA_Obj obj, integer thread, void *arg )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_check_block_gpu
@@ -1551,7 +1551,7 @@ FLA_Bool FLASH_Queue_check_block_gpu( FLA_Obj obj, int thread, void *arg )
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int k;
+   integer k;
    dim_t gpu_n_blocks = FLASH_Queue_get_gpu_num_blocks();
    FLA_Bool r_val = TRUE;
 
@@ -1597,9 +1597,9 @@ void FLASH_Queue_update_gpu( FLASH_Task *t,
 
 ----------------------------------------------------------------------------*/
 {
-   int i, j, k;
-   int thread    = t->thread;
-   int n_threads = FLASH_Queue_get_num_threads();
+   integer i, j, k;
+   integer thread    = t->thread;
+   integer n_threads = FLASH_Queue_get_num_threads();
    FLA_Bool duplicate;
 
    // None of the arguments can be macroblocks yet.
@@ -1694,7 +1694,7 @@ void FLASH_Queue_update_gpu( FLASH_Task *t,
 
 void FLASH_Queue_update_block_gpu( FLA_Obj obj,
                                    void **buffer_gpu,
-                                   int thread, 
+                                   integer thread, 
                                    void *arg )
 /*----------------------------------------------------------------------------
 
@@ -1703,7 +1703,7 @@ void FLASH_Queue_update_block_gpu( FLA_Obj obj,
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int j, k;
+   integer j, k;
    dim_t gpu_n_blocks = FLASH_Queue_get_gpu_num_blocks();
    FLA_Bool transfer = FALSE;
    FLA_Bool evict = FALSE;
@@ -1792,8 +1792,8 @@ void FLASH_Queue_mark_gpu( FLASH_Task *t, void *arg )
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int i, j, k;
-   int thread = t->thread;
+   integer i, j, k;
+   integer thread = t->thread;
    dim_t gpu_n_blocks = FLASH_Queue_get_gpu_num_blocks();
    FLA_Bool duplicate;
    FLA_Obj  obj;
@@ -1841,7 +1841,7 @@ void FLASH_Queue_mark_gpu( FLASH_Task *t, void *arg )
 }
 
 
-void FLASH_Queue_invalidate_block_gpu( FLA_Obj obj, int thread, void *arg )
+void FLASH_Queue_invalidate_block_gpu( FLA_Obj obj, integer thread, void *arg )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_invalidate_block_gpu
@@ -1849,7 +1849,7 @@ void FLASH_Queue_invalidate_block_gpu( FLA_Obj obj, int thread, void *arg )
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int j, k;
+   integer j, k;
    dim_t gpu_n_blocks = FLASH_Queue_get_gpu_num_blocks();
    FLA_Obj_gpu gpu_obj;
 
@@ -1890,7 +1890,7 @@ void FLASH_Queue_invalidate_block_gpu( FLA_Obj obj, int thread, void *arg )
 }
 
 
-void FLASH_Queue_flush_block_gpu( FLA_Obj obj, int thread, void *arg )
+void FLASH_Queue_flush_block_gpu( FLA_Obj obj, integer thread, void *arg )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_flush_block_gpu
@@ -1898,7 +1898,7 @@ void FLASH_Queue_flush_block_gpu( FLA_Obj obj, int thread, void *arg )
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int k;
+   integer k;
    dim_t gpu_n_blocks = FLASH_Queue_get_gpu_num_blocks();
    FLA_Bool transfer = FALSE;
    FLA_Obj_gpu gpu_obj;
@@ -1958,7 +1958,7 @@ void FLASH_Queue_flush_block_gpu( FLA_Obj obj, int thread, void *arg )
 }
 
 
-void FLASH_Queue_flush_gpu( int thread, void *arg )
+void FLASH_Queue_flush_gpu( integer thread, void *arg )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_flush_gpu
@@ -1966,9 +1966,9 @@ void FLASH_Queue_flush_gpu( int thread, void *arg )
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int i, k;
+   integer i, k;
    dim_t gpu_n_blocks = FLASH_Queue_get_gpu_num_blocks();
-   int n_transfer = 0;
+   integer n_transfer = 0;
    FLA_Obj_gpu gpu_obj;
    
    // Exit if not using GPU.
@@ -2047,8 +2047,8 @@ void FLASH_Queue_exec_parallel( void* arg )
 
 ----------------------------------------------------------------------------*/
 {
-   int   i;
-   int   n_threads = FLASH_Queue_get_num_threads();
+   integer   i;
+   integer   n_threads = FLASH_Queue_get_num_threads();
    void* (*thread_entry_point)( void* );
 
    // Allocate the thread structures array. Here, an array of FLASH_Thread
@@ -2094,7 +2094,7 @@ void FLASH_Queue_exec_parallel( void* arg )
    // Create each POSIX thread needed in addition to the main thread.
    for ( i = 1; i < n_threads; i++ )
    {
-      int pthread_e_val;
+      integer pthread_e_val;
 
       // Create thread i with default attributes.
       pthread_e_val = pthread_create( &(thread[i].pthread_obj),
@@ -2120,9 +2120,9 @@ void FLASH_Queue_exec_parallel( void* arg )
       // unused variables if FLA_MULTITHREADING_MODEL == FLA_PTHREADS.
       // Strangely, the Intel compiler produces code that results in an
       // "unaligned access" runtime message if thread_status is declared as
-      // an int. Declaring it as a long or void* appears to force the
+      // an integer. Declaring it as a long or void* appears to force the
       // compiler (not surprisingly) into aligning it to an 8-byte boundary.
-      int   pthread_e_val;
+      integer   pthread_e_val;
       void* thread_status;
 
       // Wait for thread i to invoke its respective pthread_exit().
@@ -2161,12 +2161,12 @@ void* FLASH_Queue_exec_parallel_function( void* arg )
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args;   
-   int           i;
-   int           queue;
-   int           cache;
-   int           n_tasks   = FLASH_Queue_get_num_tasks();
-   int           n_threads = FLASH_Queue_get_num_threads();
-   int           n_cores   = FLASH_Queue_get_cores_per_cache();
+   integer           i;
+   integer           queue;
+   integer           cache;
+   integer           n_tasks   = FLASH_Queue_get_num_tasks();
+   integer           n_threads = FLASH_Queue_get_num_threads();
+   integer           n_cores   = FLASH_Queue_get_cores_per_cache();
    FLA_Bool      caching   = FLASH_Queue_get_caching();
    FLA_Bool      stealing  = FLASH_Queue_get_work_stealing();
    FLA_Bool      committed = TRUE;
@@ -2321,11 +2321,11 @@ FLASH_Task* FLASH_Task_update_dependencies( FLASH_Task* t, void* arg )
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int         i;
-   int         q = t->queue;
-   int         queue;
-   int         thread;
-   int         n_threads = FLASH_Queue_get_num_threads();
+   integer         i;
+   integer         q = t->queue;
+   integer         queue;
+   integer         thread;
+   integer         n_threads = FLASH_Queue_get_num_threads();
    FLA_Bool    caching   = FLASH_Queue_get_caching();
    FLA_Bool    stealing  = FLASH_Queue_get_work_stealing();
    FLA_Bool    available;
@@ -2400,7 +2400,7 @@ FLASH_Task* FLASH_Task_update_binding( FLASH_Task* t, FLASH_Task* r,
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int queue;
+   integer queue;
 
    if ( r == NULL )
    {
@@ -2451,9 +2451,9 @@ void FLASH_Task_free_parallel( FLASH_Task* t, void* arg )
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;   
-   int        i, j, k;
-   int        thread;
-   int        n_threads = FLASH_Queue_get_num_threads();
+   integer        i, j, k;
+   integer        thread;
+   integer        n_threads = FLASH_Queue_get_num_threads();
    FLASH_Dep* d;
    FLASH_Dep* next_dep;
    FLA_Obj    obj;
@@ -2594,14 +2594,14 @@ void FLASH_Queue_exec_simulation( void* arg )
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int           i, j;
-   int           queue;
-   int           cache;
-   int           n_stages  = 0;
-   int           n_queues  = args->n_queues;
-   int           n_tasks   = FLASH_Queue_get_num_tasks();
-   int           n_threads = FLASH_Queue_get_num_threads();
-   int           n_cores   = FLASH_Queue_get_cores_per_cache();
+   integer           i, j;
+   integer           queue;
+   integer           cache;
+   integer           n_stages  = 0;
+   integer           n_queues  = args->n_queues;
+   integer           n_tasks   = FLASH_Queue_get_num_tasks();
+   integer           n_threads = FLASH_Queue_get_num_threads();
+   integer           n_cores   = FLASH_Queue_get_cores_per_cache();
    FLASH_Verbose verbose   = FLASH_Queue_get_verbose_output();
    FLASH_Task*   task;
    FLASH_Task*   t;
@@ -2720,10 +2720,10 @@ void FLASH_Queue_exec_simulation( void* arg )
 
 #else // FLA_ENABLE_SCC
 
-int RCCE_acquire_lock(int);
-int RCCE_release_lock(int);
+integer RCCE_acquire_lock(integer);
+integer RCCE_release_lock(integer);
 double RCCE_wtime(void);
-int    RCCE_ue(void);
+integer    RCCE_ue(void);
 
 //This function needs to be defined in the driver
 // or linked in some how by the user.  
@@ -2739,17 +2739,17 @@ typedef struct FLASH_Queue_variables
    FLASH_Task** task_queue;
 
    // The waiting queue of tasks for each thread.
-   int*         n_ready;
+   integer*         n_ready;
 
    // The waiting queue of tasks for each thread.
-   int*         wait_queue;
+   integer*         wait_queue;
 
    // The number of tasks on waiting queue.
-   int*         n_wait;
+   integer*         n_wait;
 
    // A global task counter that keeps track of how many tasks on the waiting
    // queue have been processed.
-   int*         pc;
+   integer*         pc;
 } FLASH_Queue_vars;
 
 
@@ -2760,8 +2760,8 @@ void FLASH_Queue_exec( void )
 
 ----------------------------------------------------------------------------*/
 {
-   int         n_tasks    = FLASH_Queue_get_num_tasks();
-   int         i;
+   integer         n_tasks    = FLASH_Queue_get_num_tasks();
+   integer         i;
    double      dtime;
 
    // All the necessary variables for the SuperMatrix mechanism.
@@ -2779,10 +2779,10 @@ void FLASH_Queue_exec( void )
 
    // Allocate memory for task queues.
    args.task_queue = ( FLASH_Task** ) FLA_malloc( n_tasks * sizeof( FLASH_Task* ) );
-   args.n_ready = ( int* ) FLA_shmalloc( n_tasks * sizeof( int ) );
-   args.wait_queue = ( int* ) FLA_shmalloc( n_tasks * sizeof( int ) );
-   args.n_wait = ( int* ) FLA_shmalloc( sizeof( int ) );
-   args.pc = ( int* ) FLA_shmalloc( sizeof( int ) );
+   args.n_ready = ( integer* ) FLA_shmalloc( n_tasks * sizeof( integer ) );
+   args.wait_queue = ( integer* ) FLA_shmalloc( n_tasks * sizeof( integer ) );
+   args.n_wait = ( integer* ) FLA_shmalloc( sizeof( integer ) );
+   args.pc = ( integer* ) FLA_shmalloc( sizeof( integer ) );
 
    // Initialize data.
    if ( FLA_is_owner() )
@@ -2835,10 +2835,10 @@ void FLASH_Queue_init_tasks( void* arg )
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int            i, j;
-   int            n_tasks = FLASH_Queue_get_num_tasks();
-   int            n_ready = 0;
-   int            height;
+   integer            i, j;
+   integer            n_tasks = FLASH_Queue_get_num_tasks();
+   integer            n_ready = 0;
+   integer            height;
    FLASH_Task*    t;
    FLASH_Dep*     d;
 
@@ -2929,7 +2929,7 @@ void FLASH_Queue_wait_enqueue( FLASH_Task* t, void* arg )
 ----------------------------------------------------------------------------*/
 {  
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int i = args->n_wait[0] + args->pc[0];
+   integer i = args->n_wait[0] + args->pc[0];
 
    // Insertion sort of tasks in waiting queue.
    if ( FLASH_Queue_get_sorting() )
@@ -2953,7 +2953,7 @@ void FLASH_Queue_wait_enqueue( FLASH_Task* t, void* arg )
 }
 
 
-FLASH_Task* FLASH_Queue_wait_dequeue( int queue, int cache, void* arg )
+FLASH_Task* FLASH_Queue_wait_dequeue( integer queue, integer cache, void* arg )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_wait_dequeue
@@ -2987,11 +2987,11 @@ void* FLASH_Queue_exec_parallel_function( void* arg )
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int           i         = RCCE_ue();
-   int           queue     = 0;
-   int           cache     = 0;
-   int           n_tasks   = FLASH_Queue_get_num_tasks();
-   int           n_threads = FLASH_Queue_get_num_threads();
+   integer           i         = RCCE_ue();
+   integer           queue     = 0;
+   integer           cache     = 0;
+   integer           n_tasks   = FLASH_Queue_get_num_tasks();
+   integer           n_threads = FLASH_Queue_get_num_threads();
    FLA_Bool      condition;
    FLA_Bool      available;
    FLASH_Task*   t = NULL;
@@ -3049,9 +3049,9 @@ FLASH_Task* FLASH_Task_update_dependencies( FLASH_Task* t, void* arg )
 ----------------------------------------------------------------------------*/
 {
    FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
-   int         i;
-   int         n_threads = FLASH_Queue_get_num_threads();
-   int         thread;
+   integer         i;
+   integer         n_threads = FLASH_Queue_get_num_threads();
+   integer         thread;
    FLA_Bool    available;
    FLASH_Task* task;
    FLASH_Task* r = NULL;

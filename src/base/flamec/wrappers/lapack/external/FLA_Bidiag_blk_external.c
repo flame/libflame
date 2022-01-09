@@ -15,9 +15,9 @@ FLA_Error FLA_Bidiag_blk_external( FLA_Obj A, FLA_Obj tu, FLA_Obj tv )
   int          info = 0;
 #ifdef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
   FLA_Datatype datatype;
-  int          m_A, n_A, cs_A;
-  int          min_m_n, max_m_n;
-  int          lwork;
+  integer          m_A, n_A, cs_A;
+  integer          min_m_n, max_m_n;
+  integer          lwork;
   FLA_Obj      d, e, work_obj;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING )

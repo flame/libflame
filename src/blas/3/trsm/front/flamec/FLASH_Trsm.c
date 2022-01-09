@@ -10,7 +10,7 @@
 
 #include "FLAME.h"
 
-extern fla_trsm_t* flash_trsm_cntl_mm;
+extern TLS_CLASS_SPEC fla_trsm_t* flash_trsm_cntl_mm;
 
 FLA_Error FLASH_Trsm( FLA_Side side, FLA_Uplo uplo, FLA_Trans trans, FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, FLA_Obj B )
 {

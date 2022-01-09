@@ -15,9 +15,9 @@ FLA_Error FLA_Bsvd_compute_tol_thresh( FLA_Obj tolmul, FLA_Obj maxitr,
                                        FLA_Obj tol, FLA_Obj thresh )
 {
     FLA_Datatype datatype;
-    int          n_A;
-    int          inc_d;
-    int          inc_e;
+    integer          n_A;
+    integer          inc_d;
+    integer          inc_e;
 
     datatype = FLA_Obj_datatype( d );
 
@@ -75,11 +75,11 @@ FLA_Error FLA_Bsvd_compute_tol_thresh( FLA_Obj tolmul, FLA_Obj maxitr,
 
 
 
-FLA_Error FLA_Bsvd_compute_tol_thresh_ops( int       n_A,
+FLA_Error FLA_Bsvd_compute_tol_thresh_ops( integer       n_A,
                                            float     tolmul,
                                            float     maxitr,
-                                           float*    buff_d, int inc_d,
-                                           float*    buff_e, int inc_e,
+                                           float*    buff_d, integer inc_d,
+                                           float*    buff_e, integer inc_e,
                                            float*    tol,
                                            float*    thresh )
 {
@@ -87,7 +87,7 @@ FLA_Error FLA_Bsvd_compute_tol_thresh_ops( int       n_A,
     float  smin;
     float  eps, unfl;
     float  mu;
-    int    i;
+    integer    i;
 
     // Query machine epsilon and the safe minimum.
     eps  = FLA_Mach_params_ops( FLA_MACH_EPS );
@@ -134,11 +134,11 @@ FLA_Error FLA_Bsvd_compute_tol_thresh_ops( int       n_A,
 
 
 
-FLA_Error FLA_Bsvd_compute_tol_thresh_opd( int       n_A,
+FLA_Error FLA_Bsvd_compute_tol_thresh_opd( integer       n_A,
                                            double    tolmul,
                                            double    maxitr,
-                                           double*   buff_d, int inc_d,
-                                           double*   buff_e, int inc_e,
+                                           double*   buff_d, integer inc_d,
+                                           double*   buff_e, integer inc_e,
                                            double*   tol,
                                            double*   thresh )
 {
@@ -146,7 +146,7 @@ FLA_Error FLA_Bsvd_compute_tol_thresh_opd( int       n_A,
     double smin;
     double eps, unfl;
     double mu;
-    int    i;
+    integer    i;
 
     // Query machine epsilon and the safe minimum.
     eps  = FLA_Mach_params_opd( FLA_MACH_EPS );

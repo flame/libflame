@@ -337,6 +337,16 @@ the */
 /* Subroutine */
 int cbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, integer *m, integer *p, integer *q, real *theta, real *phi, complex *u1, integer *ldu1, complex *u2, integer *ldu2, complex *v1t, integer *ldv1t, complex *v2t, integer *ldv2t, real * b11d, real *b11e, real *b12d, real *b12e, real *b21d, real *b21e, real *b22d, real *b22e, real *rwork, integer *lrwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+   snprintf(buffer, 256,"cbbcsd inputs: jobu1 %c, jobu2 %c, jobv1t %c, jobv2t %c, trans %c, m %lld, p %lld, q %lld, ldu1 %lld, ldu2 %lld, ldv1t %lld, ldv2t %lld, lrwork %lld",*jobu1, *jobu2, *jobv1t, *jobv2t, *trans, *m, *p, *q, *ldu1, *ldu2, *ldv1t, *ldv2t, *lrwork);
+#else 
+   snprintf(buffer, 256,"cbbcsd inputs: jobu1 %c, jobu2 %c, jobv1t %c, jobv2t %c, trans %c, m %d, p %d, q %d, ldu1 %d, ldu2 %d, ldv1t %d, ldv2t %d, lrwork %d",*jobu1, *jobu2, *jobv1t, *jobv2t, *trans, *m, *p, *q, *ldu1, *ldu2, *ldv1t, *ldv2t, *lrwork);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer u1_dim1, u1_offset, u2_dim1, u2_offset, v1t_dim1, v1t_offset, v2t_dim1, v2t_offset, i__1, i__2;
     real r__1, r__2, r__3, r__4;
@@ -422,6 +432,7 @@ int cbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     --b22d;
     --b22e;
     --rwork;
+    
     /* Function Body */
     *info = 0;
     lquery = *lrwork == -1;
@@ -467,6 +478,7 @@ int cbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     {
         lrworkmin = 1;
         rwork[1] = (real) lrworkmin;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Compute workspace */
@@ -492,10 +504,12 @@ int cbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     {
         i__1 = -(*info);
         xerbla_("CBBCSD", &i__1);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants */
@@ -605,6 +619,7 @@ int cbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
                     ++(*info);
                 }
             }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
         iter = iter + imax - imin;
@@ -1302,6 +1317,7 @@ int cbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CBBCSD */
 }

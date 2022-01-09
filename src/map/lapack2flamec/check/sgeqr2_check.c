@@ -1,10 +1,10 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
 
-int sgeqr2_check(int *m, int *n, float *a, int *lda, float *tau, float *work, int *info)
+int sgeqr2_check(integer *m, integer *n, float *a, integer *lda, float *tau, float *work, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1;
 
     /* Parameter adjustments */
     a_dim1 = *lda;

@@ -172,7 +172,7 @@ if positive, then the j-th and */
 /* > u(j+1) = VL(:,j) - i*VL(:,j+1). */
 /* > */
 /* > Each eigenvector is scaled so that its largest component has */
-/* > f2c_abs(real part) + f2c_abs(imag. part) = 1, except for eigenvectors */
+/* > f2c_dabs(real part) + f2c_dabs(imag. part) = 1, except for eigenvectors */
 /* > corresponding to an eigenvalue with alpha = beta = 0, which */
 /* > are set to zero. */
 /* > Not referenced if JOBVL = 'N'. */
@@ -198,7 +198,7 @@ if positive, then the j-th and */
 /* > x(j+1) = VR(:,j) - i*VR(:,j+1). */
 /* > */
 /* > Each eigenvector is scaled so that its largest component has */
-/* > f2c_abs(real part) + f2c_abs(imag. part) = 1, except for eigenvalues */
+/* > f2c_dabs(real part) + f2c_dabs(imag. part) = 1, except for eigenvalues */
 /* > corresponding to an eigenvalue with alpha = beta = 0, which */
 /* > are set to zero. */
 /* > Not referenced if JOBVR = 'N'. */
@@ -303,6 +303,12 @@ the routine */
 /* Subroutine */
 int dgegv_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, doublereal *b, integer *ldb, doublereal *alphar, doublereal *alphai, doublereal *beta, doublereal *vl, integer *ldvl, doublereal *vr, integer *ldvr, doublereal *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dgegv inputs: jobvl %c, jobvr %c, n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldvl %" FLA_IS ", ldvr %" FLA_IS ", lwork %" FLA_IS "",*jobvl, *jobvr, *n, *lda, *ldb, *ldvl, *ldvr, *lwork);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__2;
     doublereal d__1, d__2, d__3, d__4;
@@ -477,15 +483,18 @@ int dgegv_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
     {
         i__1 = -(*info);
         xerbla_("DGEGV ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants */
@@ -512,6 +521,7 @@ int dgegv_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
         if (iinfo != 0)
         {
             *info = *n + 10;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -533,6 +543,7 @@ int dgegv_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
         if (iinfo != 0)
         {
             *info = *n + 10;
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -719,7 +730,7 @@ int dgegv_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
                     {
                         /* Computing MAX */
                         d__2 = temp;
-                        d__3 = (d__1 = vl[jr + jc * vl_dim1], f2c_abs(d__1)); // , expr subst
+                        d__3 = (d__1 = vl[jr + jc * vl_dim1], f2c_dabs(d__1)); // , expr subst
                         temp = max(d__2,d__3);
                         /* L10: */
                     }
@@ -733,7 +744,7 @@ int dgegv_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
                     {
                         /* Computing MAX */
                         d__3 = temp;
-                        d__4 = (d__1 = vl[jr + jc * vl_dim1], f2c_abs(d__1)) + (d__2 = vl[jr + (jc + 1) * vl_dim1], f2c_abs(d__2)); // , expr subst
+                        d__4 = (d__1 = vl[jr + jc * vl_dim1], f2c_dabs(d__1)) + (d__2 = vl[jr + (jc + 1) * vl_dim1], f2c_dabs(d__2)); // , expr subst
                         temp = max(d__3,d__4);
                         /* L20: */
                     }
@@ -797,7 +808,7 @@ L50:
                     {
                         /* Computing MAX */
                         d__2 = temp;
-                        d__3 = (d__1 = vr[jr + jc * vr_dim1], f2c_abs(d__1)); // , expr subst
+                        d__3 = (d__1 = vr[jr + jc * vr_dim1], f2c_dabs(d__1)); // , expr subst
                         temp = max(d__2,d__3);
                         /* L60: */
                     }
@@ -811,7 +822,7 @@ L50:
                     {
                         /* Computing MAX */
                         d__3 = temp;
-                        d__4 = (d__1 = vr[jr + jc * vr_dim1], f2c_abs(d__1)) + (d__2 = vr[jr + (jc + 1) * vr_dim1], f2c_abs(d__2)); // , expr subst
+                        d__4 = (d__1 = vr[jr + jc * vr_dim1], f2c_dabs(d__1)) + (d__2 = vr[jr + (jc + 1) * vr_dim1], f2c_dabs(d__2)); // , expr subst
                         temp = max(d__3,d__4);
                         /* L70: */
                     }
@@ -860,9 +871,9 @@ L100:
             jc <= i__1;
             ++jc)
     {
-        absar = (d__1 = alphar[jc], f2c_abs(d__1));
-        absai = (d__1 = alphai[jc], f2c_abs(d__1));
-        absb = (d__1 = beta[jc], f2c_abs(d__1));
+        absar = (d__1 = alphar[jc], f2c_dabs(d__1));
+        absai = (d__1 = alphai[jc], f2c_dabs(d__1));
+        absb = (d__1 = beta[jc], f2c_dabs(d__1));
         salfar = anrm * alphar[jc];
         salfai = anrm * alphai[jc];
         sbeta = bnrm * beta[jc];
@@ -873,7 +884,7 @@ L100:
         d__1 = safmin, d__2 = eps * absar;
         d__1 = max(d__1,d__2);
         d__2 = eps * absb; // ; expr subst
-        if (f2c_abs(salfai) < safmin && absai >= max(d__1,d__2))
+        if (f2c_dabs(salfai) < safmin && absai >= max(d__1,d__2))
         {
             ilimit = TRUE_;
             /* Computing MAX */
@@ -899,7 +910,7 @@ L100:
         d__1 = safmin, d__2 = eps * absai;
         d__1 = max(d__1,d__2);
         d__2 = eps * absb; // ; expr subst
-        if (f2c_abs(salfar) < safmin && absar >= max(d__1,d__2))
+        if (f2c_dabs(salfar) < safmin && absar >= max(d__1,d__2))
         {
             ilimit = TRUE_;
             /* Computing MAX */
@@ -915,7 +926,7 @@ L100:
         d__1 = safmin, d__2 = eps * absar;
         d__1 = max(d__1,d__2);
         d__2 = eps * absai; // ; expr subst
-        if (f2c_abs(sbeta) < safmin && absb >= max(d__1,d__2))
+        if (f2c_dabs(sbeta) < safmin && absb >= max(d__1,d__2))
         {
             ilimit = TRUE_;
             /* Computing MAX */
@@ -930,9 +941,9 @@ L100:
         if (ilimit)
         {
             /* Computing MAX */
-            d__1 = f2c_abs(salfar), d__2 = f2c_abs(salfai);
+            d__1 = f2c_dabs(salfar), d__2 = f2c_dabs(salfai);
             d__1 = max(d__1,d__2);
-            d__2 = f2c_abs(sbeta); // ; expr subst
+            d__2 = f2c_dabs(sbeta); // ; expr subst
             temp = scale * safmin * max(d__1,d__2);
             if (temp > 1.)
             {
@@ -957,6 +968,7 @@ L100:
     }
 L120:
     work[1] = (doublereal) lwkopt;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DGEGV */
 }

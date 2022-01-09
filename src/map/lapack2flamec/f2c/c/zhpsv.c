@@ -152,6 +152,12 @@
 /* Subroutine */
 int zhpsv_(char *uplo, integer *n, integer *nrhs, doublecomplex *ap, integer *ipiv, doublecomplex *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"zhpsv inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS ", ipiv %" FLA_IS "",*uplo, *n, *nrhs, *ldb, *ipiv);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, i__1;
     /* Local variables */
@@ -203,6 +209,7 @@ int zhpsv_(char *uplo, integer *n, integer *nrhs, doublecomplex *ap, integer *ip
     {
         i__1 = -(*info);
         xerbla_("ZHPSV ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Compute the factorization A = U*D*U**H or A = L*D*L**H. */
@@ -212,6 +219,7 @@ int zhpsv_(char *uplo, integer *n, integer *nrhs, doublecomplex *ap, integer *ip
         /* Solve the system A*X = B, overwriting B with X. */
         zhptrs_(uplo, n, nrhs, &ap[1], &ipiv[1], &b[b_offset], ldb, info);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZHPSV */
 }

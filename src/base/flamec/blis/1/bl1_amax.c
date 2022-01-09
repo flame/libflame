@@ -10,7 +10,7 @@
 
 #include "blis1.h"
 
-void bl1_samax( int n, float* x, int incx, int* index )
+void bl1_samax( integer n, float* x, integer incx, integer* index )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	*index = cblas_isamax( n,
@@ -21,7 +21,7 @@ void bl1_samax( int n, float* x, int incx, int* index )
 #endif
 }
 
-void bl1_damax( int n, double* x, int incx, int* index )
+void bl1_damax( integer n, double* x, integer incx, integer* index )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	*index = cblas_idamax( n,
@@ -32,7 +32,7 @@ void bl1_damax( int n, double* x, int incx, int* index )
 #endif
 }
 
-void bl1_camax( int n, scomplex* x, int incx, int* index )
+void bl1_camax( integer n, scomplex* x, integer incx, integer* index )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	*index = cblas_icamax( n,
@@ -43,7 +43,7 @@ void bl1_camax( int n, scomplex* x, int incx, int* index )
 #endif
 }
 
-void bl1_zamax( int n, dcomplex* x, int incx, int* index )
+void bl1_zamax( integer n, dcomplex* x, integer incx, integer* index )
 {
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
 	*index = cblas_izamax( n,

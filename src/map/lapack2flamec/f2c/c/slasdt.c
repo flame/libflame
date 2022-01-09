@@ -93,6 +93,12 @@
 /* Subroutine */
 int slasdt_(integer *n, integer *lvl, integer *nd, integer * inode, integer *ndiml, integer *ndimr, integer *msub)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"slasdt inputs: n %d, ndiml %d, ndimr %d, msub %d",*n,  *ndiml, *ndimr, *msub);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2;
     /* Builtin functions */
@@ -160,6 +166,7 @@ int slasdt_(integer *n, integer *lvl, integer *nd, integer * inode, integer *ndi
         /* L20: */
     }
     *nd = (llst << 1) - 1;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SLASDT */
 }

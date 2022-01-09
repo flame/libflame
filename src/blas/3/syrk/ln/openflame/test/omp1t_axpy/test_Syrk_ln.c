@@ -22,14 +22,14 @@
 
 
 void time_Syrk_ln(
-               int variant, int type, int nrepeats, int n, int nb_alg,
+               integer variant, integer type, integer nrepeats, integer n, integer nb_alg,
                FLA_Obj A, FLA_Obj B, FLA_Obj C, FLA_Obj Cref,
                double *dtime, double *diff, double *gflops );
 
 
-int main(int argc, char *argv[])
+int main(integer argc, char *argv[])
 {
-  int 
+  integer 
     m_input, n_input, m, n,
     nfirst, nlast, ninc,
     nb_alg,
@@ -48,7 +48,7 @@ int main(int argc, char *argv[])
   char *ticks = "o+*x-+*x";
   char matrix_config[3];
   char matrix_config_long[32];
-  int  matrix_config_flag;
+  integer  matrix_config_flag;
 
   double max_gflops=6.0;
 

@@ -115,6 +115,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int ctptri_(char *uplo, char *diag, integer *n, complex *ap, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"ctptri inputs: uplo %c, diag %c, n %lld",*uplo, *diag, *n);
+#else 
+    snprintf(buffer, 256,"ctptri inputs: uplo %c, diag %c, n %d",*uplo, *diag, *n);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2;
     complex q__1;
@@ -174,6 +184,7 @@ int ctptri_(char *uplo, char *diag, integer *n, complex *ap, integer *info)
     {
         i__1 = -(*info);
         xerbla_("CTPTRI", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check for singularity if non-unit. */
@@ -191,6 +202,7 @@ int ctptri_(char *uplo, char *diag, integer *n, complex *ap, integer *info)
                 i__2 = jj;
                 if (ap[i__2].r == 0.f && ap[i__2].i == 0.f)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 /* L10: */
@@ -207,6 +219,7 @@ int ctptri_(char *uplo, char *diag, integer *n, complex *ap, integer *info)
                 i__2 = jj;
                 if (ap[i__2].r == 0.f && ap[i__2].i == 0.f)
                 {
+                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                     return 0;
                 }
                 jj = jj + *n - *info + 1;
@@ -292,6 +305,7 @@ int ctptri_(char *uplo, char *diag, integer *n, complex *ap, integer *info)
             /* L40: */
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CTPTRI */
 }

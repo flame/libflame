@@ -10,15 +10,15 @@
 
 #include "FLAME.h"
 
-extern fla_scalr_t* fla_scalr_cntl_blas;
-extern fla_gemm_t*  fla_gemm_cntl_blas;
+extern TLS_CLASS_SPEC fla_scalr_t* fla_scalr_cntl_blas;
+extern TLS_CLASS_SPEC fla_gemm_t*  fla_gemm_cntl_blas;
 
-fla_herk_t*         fla_herk_cntl_blas = NULL;
-fla_herk_t*         fla_herk_cntl_ip = NULL;
-fla_herk_t*         fla_herk_cntl_op = NULL;
-fla_herk_t*         fla_herk_cntl_mm = NULL;
-fla_blocksize_t*    fla_herk_var2_bsize = NULL;
-fla_blocksize_t*    fla_herk_var5_bsize = NULL;
+TLS_CLASS_SPEC fla_herk_t*         fla_herk_cntl_blas = NULL;
+TLS_CLASS_SPEC fla_herk_t*         fla_herk_cntl_ip = NULL;
+TLS_CLASS_SPEC fla_herk_t*         fla_herk_cntl_op = NULL;
+TLS_CLASS_SPEC fla_herk_t*         fla_herk_cntl_mm = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*    fla_herk_var2_bsize = NULL;
+TLS_CLASS_SPEC fla_blocksize_t*    fla_herk_var5_bsize = NULL;
 
 void FLA_Herk_cntl_init()
 {

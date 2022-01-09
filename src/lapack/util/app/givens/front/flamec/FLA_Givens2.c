@@ -120,7 +120,7 @@ FLA_Error FLA_Givens2_opd( double* chi_1,
 	double sn;
 	double r;
 
-	int    count, i;
+	integer    count, i;
 	double eps, f1, g1, safmin, safmin2, safmax2, scale;
 	double base;
 
@@ -128,7 +128,7 @@ FLA_Error FLA_Givens2_opd( double* chi_1,
 	eps     = FLA_Mach_params_opd( FLA_MACH_EPS );
 	base    = FLA_Mach_params_opd( FLA_MACH_BASE );
 
-	safmin2 = pow( base, ( double )(( int )( log( safmin / eps ) /
+	safmin2 = pow( base, ( double )(( integer )( log( safmin / eps ) /
 	                                         log( base ) /
 	                                         two ) ) );
 	safmax2 = one / safmin2;

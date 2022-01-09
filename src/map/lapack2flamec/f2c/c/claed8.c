@@ -217,6 +217,16 @@ static integer c__1 = 1;
 /* Subroutine */
 int claed8_(integer *k, integer *n, integer *qsiz, complex * q, integer *ldq, real *d__, real *rho, integer *cutpnt, real *z__, real *dlamda, complex *q2, integer *ldq2, real *w, integer *indxp, integer *indx, integer *indxq, integer *perm, integer *givptr, integer *givcol, real *givnum, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"claed8 inputs: k %lld, n %lld, qsiz %lld, ldq %lld, cutpnt %lld, ldq2 %lld, indxp %lld, indx %lld, indxq %lld",*k, *n, *qsiz, *ldq, *cutpnt, *ldq2, *indxp, *indx, *indxq);
+#else 
+    snprintf(buffer, 256,"claed8 inputs: k %d, n %d, qsiz %d, ldq %d, cutpnt %d, ldq2 %d, indxp %d, indx %d, indxq %d",*k, *n, *qsiz, *ldq, *cutpnt, *ldq2, *indxp, *indx, *indxq);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer q_dim1, q_offset, q2_dim1, q2_offset, i__1;
     real r__1;
@@ -301,6 +311,7 @@ int claed8_(integer *k, integer *n, integer *qsiz, complex * q, integer *ldq, re
     {
         i__1 = -(*info);
         xerbla_("CLAED8", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Need to initialize GIVPTR to O here in case of quick exit */
@@ -311,6 +322,7 @@ int claed8_(integer *k, integer *n, integer *qsiz, complex * q, integer *ldq, re
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     n1 = *cutpnt;
@@ -383,6 +395,7 @@ int claed8_(integer *k, integer *n, integer *qsiz, complex * q, integer *ldq, re
             /* L50: */
         }
         clacpy_("A", qsiz, n, &q2[q2_dim1 + 1], ldq2, &q[q_dim1 + 1], ldq);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* If there are multiple eigenvalues then the problem deflates. Here */
@@ -514,6 +527,7 @@ L100: /* Sort the eigenvalues and corresponding eigenvectors into DLAMDA */
         i__1 = *n - *k;
         clacpy_("A", qsiz, &i__1, &q2[(*k + 1) * q2_dim1 + 1], ldq2, &q[(*k + 1) * q_dim1 + 1], ldq);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of CLAED8 */
 }

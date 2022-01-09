@@ -121,132 +121,132 @@
 // --- Level-1 BLAS prototypes -------------------
 
 // --- amax ---
-int      F77_isamax ( int* n, float*    x, int* incx );
-int      F77_idamax ( int* n, double*   x, int* incx );
-int      F77_icamax ( int* n, scomplex* x, int* incx );
-int      F77_izamax ( int* n, dcomplex* x, int* incx );
+integer  F77_isamax ( integer* n, float*    x, integer* incx );
+integer  F77_idamax ( integer* n, double*   x, integer* incx );
+integer  F77_icamax ( integer* n, scomplex* x, integer* incx );
+integer  F77_izamax ( integer* n, dcomplex* x, integer* incx );
 // --- asum ---
-float    F77_sasum  ( int* n, float*    x, int* incx );
-double   F77_dasum  ( int* n, double*   x, int* incx );
-float    F77_scasum ( int* n, scomplex* x, int* incx );
-double   F77_dzasum ( int* n, dcomplex* x, int* incx );
+float    F77_sasum  ( integer* n, float*    x, integer* incx );
+double   F77_dasum  ( integer* n, double*   x, integer* incx );
+float    F77_scasum ( integer* n, scomplex* x, integer* incx );
+double   F77_dzasum ( integer* n, dcomplex* x, integer* incx );
 // --- axpy ---
-void     F77_saxpy  ( int* n, float*    alpha, float*    x, int* incx,  float*    y, int* incy );
-void     F77_daxpy  ( int* n, double*   alpha, double*   x, int* incx,  double*   y, int* incy );
-void     F77_caxpy  ( int* n, scomplex* alpha, scomplex* x, int* incx,  scomplex* y, int* incy );
-void     F77_zaxpy  ( int* n, dcomplex* alpha, dcomplex* x, int* incx,  dcomplex* y, int* incy );
+void     F77_saxpy  ( integer* n, float*    alpha, float*    x, integer* incx,  float*    y, integer* incy );
+void     F77_daxpy  ( integer* n, double*   alpha, double*   x, integer* incx,  double*   y, integer* incy );
+void     F77_caxpy  ( integer* n, scomplex* alpha, scomplex* x, integer* incx,  scomplex* y, integer* incy );
+void     F77_zaxpy  ( integer* n, dcomplex* alpha, dcomplex* x, integer* incx,  dcomplex* y, integer* incy );
 // --- copy ---
-void     F77_scopy  ( int* n, float*    x, int* incx, float*    y, int* incy );
-void     F77_dcopy  ( int* n, double*   x, int* incx, double*   y, int* incy );
-void     F77_ccopy  ( int* n, scomplex* x, int* incx, scomplex* y, int* incy );
-void     F77_zcopy  ( int* n, dcomplex* x, int* incx, dcomplex* y, int* incy );
+void     F77_scopy  ( integer* n, float*    x, integer* incx, float*    y, integer* incy );
+void     F77_dcopy  ( integer* n, double*   x, integer* incx, double*   y, integer* incy );
+void     F77_ccopy  ( integer* n, scomplex* x, integer* incx, scomplex* y, integer* incy );
+void     F77_zcopy  ( integer* n, dcomplex* x, integer* incx, dcomplex* y, integer* incy );
 // --- dot ---
-float    F77_sdot   ( int* n, float*    x, int* incx, float*    y, int* incy );
-double   F77_ddot   ( int* n, double*   x, int* incx, double*   y, int* incy );
-scomplex F77_cdotu  ( int* n, scomplex* x, int* incx, scomplex* y, int* incy );
-scomplex F77_cdotc  ( int* n, scomplex* x, int* incx, scomplex* y, int* incy );
-dcomplex F77_zdotu  ( int* n, dcomplex* x, int* incx, dcomplex* y, int* incy );
-dcomplex F77_zdotc  ( int* n, dcomplex* x, int* incx, dcomplex* y, int* incy );
+float    F77_sdot   ( integer* n, float*    x, integer* incx, float*    y, integer* incy );
+double   F77_ddot   ( integer* n, double*   x, integer* incx, double*   y, integer* incy );
+scomplex F77_cdotu  ( integer* n, scomplex* x, integer* incx, scomplex* y, integer* incy );
+scomplex F77_cdotc  ( integer* n, scomplex* x, integer* incx, scomplex* y, integer* incy );
+dcomplex F77_zdotu  ( integer* n, dcomplex* x, integer* incx, dcomplex* y, integer* incy );
+dcomplex F77_zdotc  ( integer* n, dcomplex* x, integer* incx, dcomplex* y, integer* incy );
 // --- nrm2 ---
-float    F77_snrm2  ( int* n, float*    x, int* incx );
-double   F77_dnrm2  ( int* n, double*   x, int* incx );
-float    F77_scnrm2 ( int* n, scomplex* x, int* incx );
-double   F77_dznrm2 ( int* n, dcomplex* x, int* incx );
+float    F77_snrm2  ( integer* n, float*    x, integer* incx );
+double   F77_dnrm2  ( integer* n, double*   x, integer* incx );
+float    F77_scnrm2 ( integer* n, scomplex* x, integer* incx );
+double   F77_dznrm2 ( integer* n, dcomplex* x, integer* incx );
 // --- scal ---
-void     F77_sscal  ( int* n, float*    alpha, float*    y, int* incy );
-void     F77_dscal  ( int* n, double*   alpha, double*   y, int* incy );
-void     F77_cscal  ( int* n, scomplex* alpha, scomplex* y, int* incy );
-void     F77_csscal ( int* n, float*    alpha, scomplex* y, int* incy );
-void     F77_zscal  ( int* n, dcomplex* alpha, dcomplex* y, int* incy );
-void     F77_zdscal ( int* n, double*   alpha, dcomplex* y, int* incy );
+void     F77_sscal  ( integer* n, float*    alpha, float*    y, integer* incy );
+void     F77_dscal  ( integer* n, double*   alpha, double*   y, integer* incy );
+void     F77_cscal  ( integer* n, scomplex* alpha, scomplex* y, integer* incy );
+void     F77_csscal ( integer* n, float*    alpha, scomplex* y, integer* incy );
+void     F77_zscal  ( integer* n, dcomplex* alpha, dcomplex* y, integer* incy );
+void     F77_zdscal ( integer* n, double*   alpha, dcomplex* y, integer* incy );
 // --- swap ---
-void     F77_sswap  ( int* n, float*    x, int* incx, float*    y, int* incy );
-void     F77_dswap  ( int* n, double*   x, int* incx, double*   y, int* incy );
-void     F77_cswap  ( int* n, scomplex* x, int* incx, scomplex* y, int* incy );
-void     F77_zswap  ( int* n, dcomplex* x, int* incx, dcomplex* y, int* incy );
+void     F77_sswap  ( integer* n, float*    x, integer* incx, float*    y, integer* incy );
+void     F77_dswap  ( integer* n, double*   x, integer* incx, double*   y, integer* incy );
+void     F77_cswap  ( integer* n, scomplex* x, integer* incx, scomplex* y, integer* incy );
+void     F77_zswap  ( integer* n, dcomplex* x, integer* incx, dcomplex* y, integer* incy );
 
 // --- Level-2 BLAS prototypes -------------------
 
 // --- gemv ---
-void     F77_sgemv  ( char* transa, int* m, int* n, float*    alpha, float*    a, int* lda, float*    x, int* incx, float*    beta, float*    y, int* incy );
-void     F77_dgemv  ( char* transa, int* m, int* n, double*   alpha, double*   a, int* lda, double*   x, int* incx, double*   beta, double*   y, int* incy );
-void     F77_cgemv  ( char* transa, int* m, int* n, scomplex* alpha, scomplex* a, int* lda, scomplex* x, int* incx, scomplex* beta, scomplex* y, int* incy );
-void     F77_zgemv  ( char* transa, int* m, int* n, dcomplex* alpha, dcomplex* a, int* lda, dcomplex* x, int* incx, dcomplex* beta, dcomplex* y, int* incy );
+void     F77_sgemv  ( char* transa, integer* m, integer* n, float*    alpha, float*    a, integer* lda, float*    x, integer* incx, float*    beta, float*    y, integer* incy );
+void     F77_dgemv  ( char* transa, integer* m, integer* n, double*   alpha, double*   a, integer* lda, double*   x, integer* incx, double*   beta, double*   y, integer* incy );
+void     F77_cgemv  ( char* transa, integer* m, integer* n, scomplex* alpha, scomplex* a, integer* lda, scomplex* x, integer* incx, scomplex* beta, scomplex* y, integer* incy );
+void     F77_zgemv  ( char* transa, integer* m, integer* n, dcomplex* alpha, dcomplex* a, integer* lda, dcomplex* x, integer* incx, dcomplex* beta, dcomplex* y, integer* incy );
 // --- ger ---
-void     F77_sger   ( int* m, int* n, float*    alpha, float*    x, int* incx, float*    y, int* incy, float*    a, int* lda );
-void     F77_dger   ( int* m, int* n, double*   alpha, double*   x, int* incx, double*   y, int* incy, double*   a, int* lda );
-void     F77_cgerc  ( int* m, int* n, scomplex* alpha, scomplex* x, int* incx, scomplex* y, int* incy, scomplex* a, int* lda );
-void     F77_cgeru  ( int* m, int* n, scomplex* alpha, scomplex* x, int* incx, scomplex* y, int* incy, scomplex* a, int* lda );
-void     F77_zgerc  ( int* m, int* n, dcomplex* alpha, dcomplex* x, int* incx, dcomplex* y, int* incy, dcomplex* a, int* lda );
-void     F77_zgeru  ( int* m, int* n, dcomplex* alpha, dcomplex* x, int* incx, dcomplex* y, int* incy, dcomplex* a, int* lda );
+void     F77_sger   ( integer* m, integer* n, float*    alpha, float*    x, integer* incx, float*    y, integer* incy, float*    a, integer* lda );
+void     F77_dger   ( integer* m, integer* n, double*   alpha, double*   x, integer* incx, double*   y, integer* incy, double*   a, integer* lda );
+void     F77_cgerc  ( integer* m, integer* n, scomplex* alpha, scomplex* x, integer* incx, scomplex* y, integer* incy, scomplex* a, integer* lda );
+void     F77_cgeru  ( integer* m, integer* n, scomplex* alpha, scomplex* x, integer* incx, scomplex* y, integer* incy, scomplex* a, integer* lda );
+void     F77_zgerc  ( integer* m, integer* n, dcomplex* alpha, dcomplex* x, integer* incx, dcomplex* y, integer* incy, dcomplex* a, integer* lda );
+void     F77_zgeru  ( integer* m, integer* n, dcomplex* alpha, dcomplex* x, integer* incx, dcomplex* y, integer* incy, dcomplex* a, integer* lda );
 // --- hemv ---
-void     F77_chemv  ( char* uplo, int* n, scomplex* alpha, scomplex* a, int* lda, scomplex* x, int* incx, scomplex* beta, scomplex* y, int* incy );
-void     F77_zhemv  ( char* uplo, int* n, dcomplex* alpha, dcomplex* a, int* lda, dcomplex* x, int* incx, dcomplex* beta, dcomplex* y, int* incy );
+void     F77_chemv  ( char* uplo, integer* n, scomplex* alpha, scomplex* a, integer* lda, scomplex* x, integer* incx, scomplex* beta, scomplex* y, integer* incy );
+void     F77_zhemv  ( char* uplo, integer* n, dcomplex* alpha, dcomplex* a, integer* lda, dcomplex* x, integer* incx, dcomplex* beta, dcomplex* y, integer* incy );
 // --- her ---
-void     F77_cher   ( char* uplo, int* n, float*    alpha, scomplex* x, int* incx, scomplex* a, int* lda );
-void     F77_zher   ( char* uplo, int* n, double*   alpha, dcomplex* x, int* incx, dcomplex* a, int* lda );
+void     F77_cher   ( char* uplo, integer* n, float*    alpha, scomplex* x, integer* incx, scomplex* a, integer* lda );
+void     F77_zher   ( char* uplo, integer* n, double*   alpha, dcomplex* x, integer* incx, dcomplex* a, integer* lda );
 // --- her2 ---
-void     F77_cher2  ( char* uplo, int* n, scomplex* alpha, scomplex* x, int* incx, scomplex* y, int* incy, scomplex* a, int* lda );
-void     F77_zher2  ( char* uplo, int* n, dcomplex* alpha, dcomplex* x, int* incx, dcomplex* y, int* incy, dcomplex* a, int* lda );
+void     F77_cher2  ( char* uplo, integer* n, scomplex* alpha, scomplex* x, integer* incx, scomplex* y, integer* incy, scomplex* a, integer* lda );
+void     F77_zher2  ( char* uplo, integer* n, dcomplex* alpha, dcomplex* x, integer* incx, dcomplex* y, integer* incy, dcomplex* a, integer* lda );
 // --- symv ---
-void     F77_ssymv  ( char* uplo, int* n, float*    alpha, float*    a, int* lda, float*    x, int* incx, float*    beta, float*    y, int* incy );
-void     F77_dsymv  ( char* uplo, int* n, double*   alpha, double*   a, int* lda, double*   x, int* incx, double*   beta, double*   y, int* incy );
+void     F77_ssymv  ( char* uplo, integer* n, float*    alpha, float*    a, integer* lda, float*    x, integer* incx, float*    beta, float*    y, integer* incy );
+void     F77_dsymv  ( char* uplo, integer* n, double*   alpha, double*   a, integer* lda, double*   x, integer* incx, double*   beta, double*   y, integer* incy );
 // --- syr ---
-void     F77_ssyr   ( char* uplo, int* n, float*    alpha, float*    x, int* incx, float*    a, int* lda );
-void     F77_dsyr   ( char* uplo, int* n, double*   alpha, double*   x, int* incx, double*   a, int* lda );
+void     F77_ssyr   ( char* uplo, integer* n, float*    alpha, float*    x, integer* incx, float*    a, integer* lda );
+void     F77_dsyr   ( char* uplo, integer* n, double*   alpha, double*   x, integer* incx, double*   a, integer* lda );
 // --- syr2 ---
-void     F77_ssyr2  ( char* uplo, int* n, float*    alpha, float*    x, int* incx, float*    y, int* incy, float*    a, int* lda );
-void     F77_dsyr2  ( char* uplo, int* n, double*   alpha, double*   x, int* incx, double*   y, int* incy, double*   a, int* lda );
+void     F77_ssyr2  ( char* uplo, integer* n, float*    alpha, float*    x, integer* incx, float*    y, integer* incy, float*    a, integer* lda );
+void     F77_dsyr2  ( char* uplo, integer* n, double*   alpha, double*   x, integer* incx, double*   y, integer* incy, double*   a, integer* lda );
 // --- trmv ---
-void     F77_strmv  ( char* uplo, char* transa, char* diag, int* n,  float*    a, int* lda, float*    y, int* incy );
-void     F77_dtrmv  ( char* uplo, char* transa, char* diag, int* n,  double*   a, int* lda, double*   y, int* incy );
-void     F77_ctrmv  ( char* uplo, char* transa, char* diag, int* n,  scomplex* a, int* lda, scomplex* y, int* incy );
-void     F77_ztrmv  ( char* uplo, char* transa, char* diag, int* n,  dcomplex* a, int* lda, dcomplex* y, int* incy );
+void     F77_strmv  ( char* uplo, char* transa, char* diag, integer* n,  float*    a, integer* lda, float*    y, integer* incy );
+void     F77_dtrmv  ( char* uplo, char* transa, char* diag, integer* n,  double*   a, integer* lda, double*   y, integer* incy );
+void     F77_ctrmv  ( char* uplo, char* transa, char* diag, integer* n,  scomplex* a, integer* lda, scomplex* y, integer* incy );
+void     F77_ztrmv  ( char* uplo, char* transa, char* diag, integer* n,  dcomplex* a, integer* lda, dcomplex* y, integer* incy );
 // --- trsv ---
-void     F77_strsv  ( char* uplo, char* transa, char* diag, int* n,  float*    a, int* lda, float*    y, int* incy );
-void     F77_dtrsv  ( char* uplo, char* transa, char* diag, int* n,  double*   a, int* lda, double*   y, int* incy );
-void     F77_ctrsv  ( char* uplo, char* transa, char* diag, int* n,  scomplex* a, int* lda, scomplex* y, int* incy );
-void     F77_ztrsv  ( char* uplo, char* transa, char* diag, int* n,  dcomplex* a, int* lda, dcomplex* y, int* incy );
+void     F77_strsv  ( char* uplo, char* transa, char* diag, integer* n,  float*    a, integer* lda, float*    y, integer* incy );
+void     F77_dtrsv  ( char* uplo, char* transa, char* diag, integer* n,  double*   a, integer* lda, double*   y, integer* incy );
+void     F77_ctrsv  ( char* uplo, char* transa, char* diag, integer* n,  scomplex* a, integer* lda, scomplex* y, integer* incy );
+void     F77_ztrsv  ( char* uplo, char* transa, char* diag, integer* n,  dcomplex* a, integer* lda, dcomplex* y, integer* incy );
 
 // --- Level-3 BLAS prototypes -------------------
 
 // --- gemm ---
-void     F77_sgemm  ( char* transa, char* transb, int* m, int* n, int* k, float*    alpha, float*    a, int* lda, float*    b, int* ldb, float*    beta, float*    c, int* ldc );
-void     F77_dgemm  ( char* transa, char* transb, int* m, int* n, int* k, double*   alpha, double*   a, int* lda, double*   b, int* ldb, double*   beta, double*   c, int* ldc );
-void     F77_cgemm  ( char* transa, char* transb, int* m, int* n, int* k, scomplex* alpha, scomplex* a, int* lda, scomplex* b, int* ldb, scomplex* beta, scomplex* c, int* ldc );
-void     F77_zgemm  ( char* transa, char* transb, int* m, int* n, int* k, dcomplex* alpha, dcomplex* a, int* lda, dcomplex* b, int* ldb, dcomplex* beta, dcomplex* c, int* ldc );
+void     F77_sgemm  ( char* transa, char* transb, integer* m, integer* n, integer* k, float*    alpha, float*    a, integer* lda, float*    b, integer* ldb, float*    beta, float*    c, integer* ldc );
+void     F77_dgemm  ( char* transa, char* transb, integer* m, integer* n, integer* k, double*   alpha, double*   a, integer* lda, double*   b, integer* ldb, double*   beta, double*   c, integer* ldc );
+void     F77_cgemm  ( char* transa, char* transb, integer* m, integer* n, integer* k, scomplex* alpha, scomplex* a, integer* lda, scomplex* b, integer* ldb, scomplex* beta, scomplex* c, integer* ldc );
+void     F77_zgemm  ( char* transa, char* transb, integer* m, integer* n, integer* k, dcomplex* alpha, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, dcomplex* beta, dcomplex* c, integer* ldc );
 // --- hemm ---
-void     F77_chemm  ( char* side, char* uplo, int* m, int* n, scomplex* alpha, scomplex* a, int* lda, scomplex* b, int* ldb, scomplex* beta, scomplex* c, int* ldc );
-void     F77_zhemm  ( char* side, char* uplo, int* m, int* n, dcomplex* alpha, dcomplex* a, int* lda, dcomplex* b, int* ldb, dcomplex* beta, dcomplex* c, int* ldc );
+void     F77_chemm  ( char* side, char* uplo, integer* m, integer* n, scomplex* alpha, scomplex* a, integer* lda, scomplex* b, integer* ldb, scomplex* beta, scomplex* c, integer* ldc );
+void     F77_zhemm  ( char* side, char* uplo, integer* m, integer* n, dcomplex* alpha, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, dcomplex* beta, dcomplex* c, integer* ldc );
 // --- herk ---
-void     F77_cherk  ( char* uplo, char* transa, int* n, int* k, float*  alpha, scomplex* a, int* lda, float*  beta, scomplex* c, int* ldc );
-void     F77_zherk  ( char* uplo, char* transa, int* n, int* k, double* alpha, dcomplex* a, int* lda, double* beta, dcomplex* c, int* ldc );
+void     F77_cherk  ( char* uplo, char* transa, integer* n, integer* k, float*  alpha, scomplex* a, integer* lda, float*  beta, scomplex* c, integer* ldc );
+void     F77_zherk  ( char* uplo, char* transa, integer* n, integer* k, double* alpha, dcomplex* a, integer* lda, double* beta, dcomplex* c, integer* ldc );
 // --- her2k ---
-void     F77_cher2k ( char* uplo, char* transa, int* n, int* k, scomplex* alpha, scomplex* a, int* lda, scomplex* b, int* ldb, float*  beta, scomplex* c, int* ldc );
-void     F77_zher2k ( char* uplo, char* transa, int* n, int* k, dcomplex* alpha, dcomplex* a, int* lda, dcomplex* b, int* ldb, double* beta, dcomplex* c, int* ldc );
+void     F77_cher2k ( char* uplo, char* transa, integer* n, integer* k, scomplex* alpha, scomplex* a, integer* lda, scomplex* b, integer* ldb, float*  beta, scomplex* c, integer* ldc );
+void     F77_zher2k ( char* uplo, char* transa, integer* n, integer* k, dcomplex* alpha, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, double* beta, dcomplex* c, integer* ldc );
 // --- symm ---
-void     F77_ssymm  ( char* side, char* uplo, int* m, int* n, float*    alpha, float*    a, int* lda, float*    b, int* ldb, float*    beta, float*    c, int* ldc );
-void     F77_dsymm  ( char* side, char* uplo, int* m, int* n, double*   alpha, double*   a, int* lda, double*   b, int* ldb, double*   beta, double*   c, int* ldc );
-void     F77_csymm  ( char* side, char* uplo, int* m, int* n, scomplex* alpha, scomplex* a, int* lda, scomplex* b, int* ldb, scomplex* beta, scomplex* c, int* ldc );
-void     F77_zsymm  ( char* side, char* uplo, int* m, int* n, dcomplex* alpha, dcomplex* a, int* lda, dcomplex* b, int* ldb, dcomplex* beta, dcomplex* c, int* ldc );
+void     F77_ssymm  ( char* side, char* uplo, integer* m, integer* n, float*    alpha, float*    a, integer* lda, float*    b, integer* ldb, float*    beta, float*    c, integer* ldc );
+void     F77_dsymm  ( char* side, char* uplo, integer* m, integer* n, double*   alpha, double*   a, integer* lda, double*   b, integer* ldb, double*   beta, double*   c, integer* ldc );
+void     F77_csymm  ( char* side, char* uplo, integer* m, integer* n, scomplex* alpha, scomplex* a, integer* lda, scomplex* b, integer* ldb, scomplex* beta, scomplex* c, integer* ldc );
+void     F77_zsymm  ( char* side, char* uplo, integer* m, integer* n, dcomplex* alpha, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, dcomplex* beta, dcomplex* c, integer* ldc );
 // --- syrk ---
-void     F77_ssyrk  ( char* uplo, char* transa, int* n, int* k, float*    alpha, float*    a, int* lda, float*    beta, float*    c, int* ldc );
-void     F77_dsyrk  ( char* uplo, char* transa, int* n, int* k, double*   alpha, double*   a, int* lda, double*   beta, double*   c, int* ldc );
-void     F77_csyrk  ( char* uplo, char* transa, int* n, int* k, scomplex* alpha, scomplex* a, int* lda, scomplex* beta, scomplex* c, int* ldc );
-void     F77_zsyrk  ( char* uplo, char* transa, int* n, int* k, dcomplex* alpha, dcomplex* a, int* lda, dcomplex* beta, dcomplex* c, int* ldc );
+void     F77_ssyrk  ( char* uplo, char* transa, integer* n, integer* k, float*    alpha, float*    a, integer* lda, float*    beta, float*    c, integer* ldc );
+void     F77_dsyrk  ( char* uplo, char* transa, integer* n, integer* k, double*   alpha, double*   a, integer* lda, double*   beta, double*   c, integer* ldc );
+void     F77_csyrk  ( char* uplo, char* transa, integer* n, integer* k, scomplex* alpha, scomplex* a, integer* lda, scomplex* beta, scomplex* c, integer* ldc );
+void     F77_zsyrk  ( char* uplo, char* transa, integer* n, integer* k, dcomplex* alpha, dcomplex* a, integer* lda, dcomplex* beta, dcomplex* c, integer* ldc );
 // --- syr2k ---
-void     F77_ssyr2k ( char* uplo, char* transa, int* n, int* k, float*    alpha, float*    a, int* lda, float*    b, int* ldb, float*    beta, float*    c, int* ldc );
-void     F77_dsyr2k ( char* uplo, char* transa, int* n, int* k, double*   alpha, double*   a, int* lda, double*   b, int* ldb, double*   beta, double*   c, int* ldc );
-void     F77_csyr2k ( char* uplo, char* transa, int* n, int* k, scomplex* alpha, scomplex* a, int* lda, scomplex* b, int* ldb, scomplex* beta, scomplex* c, int* ldc );
-void     F77_zsyr2k ( char* uplo, char* transa, int* n, int* k, dcomplex* alpha, dcomplex* a, int* lda, dcomplex* b, int* ldb, dcomplex* beta, dcomplex* c, int* ldc );
+void     F77_ssyr2k ( char* uplo, char* transa, integer* n, integer* k, float*    alpha, float*    a, integer* lda, float*    b, integer* ldb, float*    beta, float*    c, integer* ldc );
+void     F77_dsyr2k ( char* uplo, char* transa, integer* n, integer* k, double*   alpha, double*   a, integer* lda, double*   b, integer* ldb, double*   beta, double*   c, integer* ldc );
+void     F77_csyr2k ( char* uplo, char* transa, integer* n, integer* k, scomplex* alpha, scomplex* a, integer* lda, scomplex* b, integer* ldb, scomplex* beta, scomplex* c, integer* ldc );
+void     F77_zsyr2k ( char* uplo, char* transa, integer* n, integer* k, dcomplex* alpha, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, dcomplex* beta, dcomplex* c, integer* ldc );
 // --- trmm ---
-void     F77_strmm  ( char* side, char* uplo, char* transa, char* diag, int* m, int* n, float*    alpha, float*    a, int* lda, float*    b, int* ldb );
-void     F77_dtrmm  ( char* side, char* uplo, char* transa, char* diag, int* m, int* n, double*   alpha, double*   a, int* lda, double*   b, int* ldb );
-void     F77_ctrmm  ( char* side, char* uplo, char* transa, char* diag, int* m, int* n, scomplex* alpha, scomplex* a, int* lda, scomplex* b, int* ldb );
-void     F77_ztrmm  ( char* side, char* uplo, char* transa, char* diag, int* m, int* n, dcomplex* alpha, dcomplex* a, int* lda, dcomplex* b, int* ldb );
+void     F77_strmm  ( char* side, char* uplo, char* transa, char* diag, integer* m, integer* n, float*    alpha, float*    a, integer* lda, float*    b, integer* ldb );
+void     F77_dtrmm  ( char* side, char* uplo, char* transa, char* diag, integer* m, integer* n, double*   alpha, double*   a, integer* lda, double*   b, integer* ldb );
+void     F77_ctrmm  ( char* side, char* uplo, char* transa, char* diag, integer* m, integer* n, scomplex* alpha, scomplex* a, integer* lda, scomplex* b, integer* ldb );
+void     F77_ztrmm  ( char* side, char* uplo, char* transa, char* diag, integer* m, integer* n, dcomplex* alpha, dcomplex* a, integer* lda, dcomplex* b, integer* ldb );
 // --- trsm ---
-void     F77_strsm  ( char* side, char* uplo, char* transa, char* diag, int* m, int* n, float*    alpha, float*    a, int* lda, float*    b, int* ldb );
-void     F77_dtrsm  ( char* side, char* uplo, char* transa, char* diag, int* m, int* n, double*   alpha, double*   a, int* lda, double*   b, int* ldb );
-void     F77_ctrsm  ( char* side, char* uplo, char* transa, char* diag, int* m, int* n, scomplex* alpha, scomplex* a, int* lda, scomplex* b, int* ldb );
-void     F77_ztrsm  ( char* side, char* uplo, char* transa, char* diag, int* m, int* n, dcomplex* alpha, dcomplex* a, int* lda, dcomplex* b, int* ldb );
+void     F77_strsm  ( char* side, char* uplo, char* transa, char* diag, integer* m, integer* n, float*    alpha, float*    a, integer* lda, float*    b, integer* ldb );
+void     F77_dtrsm  ( char* side, char* uplo, char* transa, char* diag, integer* m, integer* n, double*   alpha, double*   a, integer* lda, double*   b, integer* ldb );
+void     F77_ctrsm  ( char* side, char* uplo, char* transa, char* diag, integer* m, integer* n, scomplex* alpha, scomplex* a, integer* lda, scomplex* b, integer* ldb );
+void     F77_ztrsm  ( char* side, char* uplo, char* transa, char* diag, integer* m, integer* n, dcomplex* alpha, dcomplex* a, integer* lda, dcomplex* b, integer* ldb );
 

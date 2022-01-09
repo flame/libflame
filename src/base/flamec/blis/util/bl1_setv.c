@@ -10,10 +10,10 @@
 
 #include "blis1.h"
 
-void bl1_isetv( int n, int* sigma, int* x, int incx )
+void bl1_isetv( integer n, integer* sigma, integer* x, integer incx )
 {
-	int*   chi;
-	int    i;
+	integer*   chi;
+	integer    i;
 
 	for ( i = 0; i < n; ++i )
 	{
@@ -23,10 +23,10 @@ void bl1_isetv( int n, int* sigma, int* x, int incx )
 	}
 }
 
-void bl1_ssetv( int n, float* sigma, float* x, int incx )
+void bl1_ssetv( integer n, float* sigma, float* x, integer incx )
 {
 	float* chi;
-	int    i;
+	integer    i;
 
 	for ( i = 0; i < n; ++i )
 	{
@@ -36,10 +36,10 @@ void bl1_ssetv( int n, float* sigma, float* x, int incx )
 	}
 }
 
-void bl1_dsetv( int n, double* sigma, double* x, int incx )
+void bl1_dsetv( integer n, double* sigma, double* x, integer incx )
 {
 	double* chi;
-	int     i;
+	integer     i;
 
 	for ( i = 0; i < n; ++i )
 	{
@@ -49,10 +49,10 @@ void bl1_dsetv( int n, double* sigma, double* x, int incx )
 	}
 }
 
-void bl1_csetv( int n, scomplex* sigma, scomplex* x, int incx )
+void bl1_csetv( integer n, scomplex* sigma, scomplex* x, integer incx )
 {
 	scomplex* chi;
-	int       i;
+	integer       i;
 
 	for ( i = 0; i < n; ++i )
 	{
@@ -63,10 +63,10 @@ void bl1_csetv( int n, scomplex* sigma, scomplex* x, int incx )
 	}
 }
 
-void bl1_zsetv( int n, dcomplex* sigma, dcomplex* x, int incx )
+void bl1_zsetv( integer n, dcomplex* sigma, dcomplex* x, integer incx )
 {
 	dcomplex* chi;
-	int       i;
+	integer       i;
 
 	for ( i = 0; i < n; ++i )
 	{

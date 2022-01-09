@@ -458,9 +458,9 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
     /* part of A and B to check for possible overflow in the triangular */
     /* solver. */
     i__1 = s_dim1 + 1;
-    anorm = (d__1 = s[i__1].r, f2c_abs(d__1)) + (d__2 = d_imag(&s[s_dim1 + 1]), f2c_abs(d__2));
+    anorm = (d__1 = s[i__1].r, f2c_dabs(d__1)) + (d__2 = d_imag(&s[s_dim1 + 1]), f2c_dabs(d__2));
     i__1 = p_dim1 + 1;
-    bnorm = (d__1 = p[i__1].r, f2c_abs(d__1)) + (d__2 = d_imag(&p[p_dim1 + 1]), f2c_abs(d__2));
+    bnorm = (d__1 = p[i__1].r, f2c_dabs(d__1)) + (d__2 = d_imag(&p[p_dim1 + 1]), f2c_dabs(d__2));
     rwork[1] = 0.;
     rwork[*n + 1] = 0.;
     i__1 = *n;
@@ -476,20 +476,20 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
                 ++i__)
         {
             i__3 = i__ + j * s_dim1;
-            rwork[j] += (d__1 = s[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&s[i__ + j * s_dim1]), f2c_abs(d__2));
+            rwork[j] += (d__1 = s[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&s[i__ + j * s_dim1]), f2c_dabs(d__2));
             i__3 = i__ + j * p_dim1;
-            rwork[*n + j] += (d__1 = p[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(& p[i__ + j * p_dim1]), f2c_abs(d__2));
+            rwork[*n + j] += (d__1 = p[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(& p[i__ + j * p_dim1]), f2c_dabs(d__2));
             /* L30: */
         }
         /* Computing MAX */
         i__2 = j + j * s_dim1;
         d__3 = anorm;
-        d__4 = rwork[j] + ((d__1 = s[i__2].r, f2c_abs(d__1)) + ( d__2 = d_imag(&s[j + j * s_dim1]), f2c_abs(d__2))); // , expr subst
+        d__4 = rwork[j] + ((d__1 = s[i__2].r, f2c_dabs(d__1)) + ( d__2 = d_imag(&s[j + j * s_dim1]), f2c_dabs(d__2))); // , expr subst
         anorm = max(d__3,d__4);
         /* Computing MAX */
         i__2 = j + j * p_dim1;
         d__3 = bnorm;
-        d__4 = rwork[*n + j] + ((d__1 = p[i__2].r, f2c_abs(d__1)) + (d__2 = d_imag(&p[j + j * p_dim1]), f2c_abs(d__2))); // , expr subst
+        d__4 = rwork[*n + j] + ((d__1 = p[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag(&p[j + j * p_dim1]), f2c_dabs(d__2))); // , expr subst
         bnorm = max(d__3,d__4);
         /* L40: */
     }
@@ -518,7 +518,7 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
                 ++ieig;
                 i__2 = je + je * s_dim1;
                 i__3 = je + je * p_dim1;
-                if ((d__2 = s[i__2].r, f2c_abs(d__2)) + (d__3 = d_imag(&s[je + je * s_dim1]), f2c_abs(d__3)) <= safmin && (d__1 = p[i__3].r, f2c_abs(d__1)) <= safmin)
+                if ((d__2 = s[i__2].r, f2c_dabs(d__2)) + (d__3 = d_imag(&s[je + je * s_dim1]), f2c_dabs(d__3)) <= safmin && (d__1 = p[i__3].r, f2c_dabs(d__1)) <= safmin)
                 {
                     /* Singular matrix pencil -- return unit eigenvector */
                     i__2 = *n;
@@ -543,8 +543,8 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
                 /* Computing MAX */
                 i__2 = je + je * s_dim1;
                 i__3 = je + je * p_dim1;
-                d__4 = ((d__2 = s[i__2].r, f2c_abs(d__2)) + (d__3 = d_imag(&s[je + je * s_dim1]), f2c_abs(d__3))) * ascale;
-                d__5 = (d__1 = p[i__3].r, f2c_abs(d__1)) * bscale;
+                d__4 = ((d__2 = s[i__2].r, f2c_dabs(d__2)) + (d__3 = d_imag(&s[je + je * s_dim1]), f2c_dabs(d__3))) * ascale;
+                d__5 = (d__1 = p[i__3].r, f2c_dabs(d__1)) * bscale;
                 d__4 = max(d__4,d__5); // ; expr subst
                 temp = 1. / max(d__4,safmin);
                 i__2 = je + je * s_dim1;
@@ -562,27 +562,27 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
                 bcoeff.r = z__1.r;
                 bcoeff.i = z__1.i; // , expr subst
                 /* Scale to avoid underflow */
-                lsa = f2c_abs(sbeta) >= safmin && f2c_abs(acoeff) < small;
-                lsb = (d__1 = salpha.r, f2c_abs(d__1)) + (d__2 = d_imag(&salpha), f2c_abs(d__2)) >= safmin && (d__3 = bcoeff.r, f2c_abs(d__3)) + (d__4 = d_imag(&bcoeff), f2c_abs(d__4)) < small;
+                lsa = f2c_dabs(sbeta) >= safmin && f2c_dabs(acoeff) < small;
+                lsb = (d__1 = salpha.r, f2c_dabs(d__1)) + (d__2 = d_imag(&salpha), f2c_dabs(d__2)) >= safmin && (d__3 = bcoeff.r, f2c_dabs(d__3)) + (d__4 = d_imag(&bcoeff), f2c_dabs(d__4)) < small;
                 scale = 1.;
                 if (lsa)
                 {
-                    scale = small / f2c_abs(sbeta) * min(anorm,big);
+                    scale = small / f2c_dabs(sbeta) * min(anorm,big);
                 }
                 if (lsb)
                 {
                     /* Computing MAX */
                     d__3 = scale;
-                    d__4 = small / ((d__1 = salpha.r, f2c_abs(d__1)) + (d__2 = d_imag(&salpha), f2c_abs(d__2))) * min( bnorm,big); // , expr subst
+                    d__4 = small / ((d__1 = salpha.r, f2c_dabs(d__1)) + (d__2 = d_imag(&salpha), f2c_dabs(d__2))) * min( bnorm,big); // , expr subst
                     scale = max(d__3,d__4);
                 }
                 if (lsa || lsb)
                 {
                     /* Computing MIN */
                     /* Computing MAX */
-                    d__5 = 1., d__6 = f2c_abs(acoeff);
+                    d__5 = 1., d__6 = f2c_dabs(acoeff);
                     d__5 = max(d__5,d__6);
-                    d__6 = (d__1 = bcoeff.r, f2c_abs(d__1)) + (d__2 = d_imag(&bcoeff), f2c_abs(d__2)); // ; expr subst
+                    d__6 = (d__1 = bcoeff.r, f2c_dabs(d__1)) + (d__2 = d_imag(&bcoeff), f2c_dabs(d__2)); // ; expr subst
                     d__3 = scale;
                     d__4 = 1. / (safmin * max(d__5,d__6)); // , expr subst
                     scale = min(d__3,d__4);
@@ -611,8 +611,8 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
                         bcoeff.i = z__1.i; // , expr subst
                     }
                 }
-                acoefa = f2c_abs(acoeff);
-                bcoefa = (d__1 = bcoeff.r, f2c_abs(d__1)) + (d__2 = d_imag(& bcoeff), f2c_abs(d__2));
+                acoefa = f2c_dabs(acoeff);
+                bcoefa = (d__1 = bcoeff.r, f2c_dabs(d__1)) + (d__2 = d_imag(& bcoeff), f2c_dabs(d__2));
                 xmax = 1.;
                 i__2 = *n;
                 for (jr = 1;
@@ -713,18 +713,18 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
                     d_cnjg(&z__1, &z__2);
                     d__.r = z__1.r;
                     d__.i = z__1.i; // , expr subst
-                    if ((d__1 = d__.r, f2c_abs(d__1)) + (d__2 = d_imag(&d__), f2c_abs( d__2)) <= dmin__)
+                    if ((d__1 = d__.r, f2c_dabs(d__1)) + (d__2 = d_imag(&d__), f2c_dabs( d__2)) <= dmin__)
                     {
                         z__1.r = dmin__;
                         z__1.i = 0.; // , expr subst
                         d__.r = z__1.r;
                         d__.i = z__1.i; // , expr subst
                     }
-                    if ((d__1 = d__.r, f2c_abs(d__1)) + (d__2 = d_imag(&d__), f2c_abs( d__2)) < 1.)
+                    if ((d__1 = d__.r, f2c_dabs(d__1)) + (d__2 = d_imag(&d__), f2c_dabs( d__2)) < 1.)
                     {
-                        if ((d__1 = sum.r, f2c_abs(d__1)) + (d__2 = d_imag(&sum), f2c_abs(d__2)) >= bignum * ((d__3 = d__.r, f2c_abs( d__3)) + (d__4 = d_imag(&d__), f2c_abs(d__4))))
+                        if ((d__1 = sum.r, f2c_dabs(d__1)) + (d__2 = d_imag(&sum), f2c_dabs(d__2)) >= bignum * ((d__3 = d__.r, f2c_dabs( d__3)) + (d__4 = d_imag(&d__), f2c_dabs(d__4))))
                         {
-                            temp = 1. / ((d__1 = sum.r, f2c_abs(d__1)) + (d__2 = d_imag(&sum), f2c_abs(d__2)));
+                            temp = 1. / ((d__1 = sum.r, f2c_dabs(d__1)) + (d__2 = d_imag(&sum), f2c_dabs(d__2)));
                             i__3 = j - 1;
                             for (jr = je;
                                     jr <= i__3;
@@ -748,13 +748,13 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
                     i__3 = j;
                     z__2.r = -sum.r;
                     z__2.i = -sum.i; // , expr subst
-                    zladiv_(&z__1, &z__2, &d__);
+                    zladiv_f2c_(&z__1, &z__2, &d__);
                     work[i__3].r = z__1.r;
                     work[i__3].i = z__1.i; // , expr subst
                     /* Computing MAX */
                     i__3 = j;
                     d__3 = xmax;
-                    d__4 = (d__1 = work[i__3].r, f2c_abs(d__1)) + ( d__2 = d_imag(&work[j]), f2c_abs(d__2)); // , expr subst
+                    d__4 = (d__1 = work[i__3].r, f2c_dabs(d__1)) + ( d__2 = d_imag(&work[j]), f2c_dabs(d__2)); // , expr subst
                     xmax = max(d__3,d__4);
                     /* L100: */
                 }
@@ -781,7 +781,7 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
                     /* Computing MAX */
                     i__3 = (isrc - 1) * *n + jr;
                     d__3 = xmax;
-                    d__4 = (d__1 = work[i__3].r, f2c_abs(d__1)) + ( d__2 = d_imag(&work[(isrc - 1) * *n + jr]), f2c_abs( d__2)); // , expr subst
+                    d__4 = (d__1 = work[i__3].r, f2c_dabs(d__1)) + ( d__2 = d_imag(&work[(isrc - 1) * *n + jr]), f2c_dabs( d__2)); // , expr subst
                     xmax = max(d__3,d__4);
                     /* L110: */
                 }
@@ -843,7 +843,7 @@ L140:
                 --ieig;
                 i__1 = je + je * s_dim1;
                 i__2 = je + je * p_dim1;
-                if ((d__2 = s[i__1].r, f2c_abs(d__2)) + (d__3 = d_imag(&s[je + je * s_dim1]), f2c_abs(d__3)) <= safmin && (d__1 = p[i__2].r, f2c_abs(d__1)) <= safmin)
+                if ((d__2 = s[i__1].r, f2c_dabs(d__2)) + (d__3 = d_imag(&s[je + je * s_dim1]), f2c_dabs(d__3)) <= safmin && (d__1 = p[i__2].r, f2c_dabs(d__1)) <= safmin)
                 {
                     /* Singular matrix pencil -- return unit eigenvector */
                     i__1 = *n;
@@ -867,8 +867,8 @@ L140:
                 /* Computing MAX */
                 i__1 = je + je * s_dim1;
                 i__2 = je + je * p_dim1;
-                d__4 = ((d__2 = s[i__1].r, f2c_abs(d__2)) + (d__3 = d_imag(&s[je + je * s_dim1]), f2c_abs(d__3))) * ascale;
-                d__5 = (d__1 = p[i__2].r, f2c_abs(d__1)) * bscale;
+                d__4 = ((d__2 = s[i__1].r, f2c_dabs(d__2)) + (d__3 = d_imag(&s[je + je * s_dim1]), f2c_dabs(d__3))) * ascale;
+                d__5 = (d__1 = p[i__2].r, f2c_dabs(d__1)) * bscale;
                 d__4 = max(d__4,d__5); // ; expr subst
                 temp = 1. / max(d__4,safmin);
                 i__1 = je + je * s_dim1;
@@ -886,27 +886,27 @@ L140:
                 bcoeff.r = z__1.r;
                 bcoeff.i = z__1.i; // , expr subst
                 /* Scale to avoid underflow */
-                lsa = f2c_abs(sbeta) >= safmin && f2c_abs(acoeff) < small;
-                lsb = (d__1 = salpha.r, f2c_abs(d__1)) + (d__2 = d_imag(&salpha), f2c_abs(d__2)) >= safmin && (d__3 = bcoeff.r, f2c_abs(d__3)) + (d__4 = d_imag(&bcoeff), f2c_abs(d__4)) < small;
+                lsa = f2c_dabs(sbeta) >= safmin && f2c_dabs(acoeff) < small;
+                lsb = (d__1 = salpha.r, f2c_dabs(d__1)) + (d__2 = d_imag(&salpha), f2c_dabs(d__2)) >= safmin && (d__3 = bcoeff.r, f2c_dabs(d__3)) + (d__4 = d_imag(&bcoeff), f2c_dabs(d__4)) < small;
                 scale = 1.;
                 if (lsa)
                 {
-                    scale = small / f2c_abs(sbeta) * min(anorm,big);
+                    scale = small / f2c_dabs(sbeta) * min(anorm,big);
                 }
                 if (lsb)
                 {
                     /* Computing MAX */
                     d__3 = scale;
-                    d__4 = small / ((d__1 = salpha.r, f2c_abs(d__1)) + (d__2 = d_imag(&salpha), f2c_abs(d__2))) * min( bnorm,big); // , expr subst
+                    d__4 = small / ((d__1 = salpha.r, f2c_dabs(d__1)) + (d__2 = d_imag(&salpha), f2c_dabs(d__2))) * min( bnorm,big); // , expr subst
                     scale = max(d__3,d__4);
                 }
                 if (lsa || lsb)
                 {
                     /* Computing MIN */
                     /* Computing MAX */
-                    d__5 = 1., d__6 = f2c_abs(acoeff);
+                    d__5 = 1., d__6 = f2c_dabs(acoeff);
                     d__5 = max(d__5,d__6);
-                    d__6 = (d__1 = bcoeff.r, f2c_abs(d__1)) + (d__2 = d_imag(&bcoeff), f2c_abs(d__2)); // ; expr subst
+                    d__6 = (d__1 = bcoeff.r, f2c_dabs(d__1)) + (d__2 = d_imag(&bcoeff), f2c_dabs(d__2)); // ; expr subst
                     d__3 = scale;
                     d__4 = 1. / (safmin * max(d__5,d__6)); // , expr subst
                     scale = min(d__3,d__4);
@@ -935,8 +935,8 @@ L140:
                         bcoeff.i = z__1.i; // , expr subst
                     }
                 }
-                acoefa = f2c_abs(acoeff);
-                bcoefa = (d__1 = bcoeff.r, f2c_abs(d__1)) + (d__2 = d_imag(& bcoeff), f2c_abs(d__2));
+                acoefa = f2c_dabs(acoeff);
+                bcoefa = (d__1 = bcoeff.r, f2c_dabs(d__1)) + (d__2 = d_imag(& bcoeff), f2c_dabs(d__2));
                 xmax = 1.;
                 i__1 = *n;
                 for (jr = 1;
@@ -996,20 +996,20 @@ L140:
                     z__1.i = z__2.i - z__3.i; // , expr subst
                     d__.r = z__1.r;
                     d__.i = z__1.i; // , expr subst
-                    if ((d__1 = d__.r, f2c_abs(d__1)) + (d__2 = d_imag(&d__), f2c_abs( d__2)) <= dmin__)
+                    if ((d__1 = d__.r, f2c_dabs(d__1)) + (d__2 = d_imag(&d__), f2c_dabs( d__2)) <= dmin__)
                     {
                         z__1.r = dmin__;
                         z__1.i = 0.; // , expr subst
                         d__.r = z__1.r;
                         d__.i = z__1.i; // , expr subst
                     }
-                    if ((d__1 = d__.r, f2c_abs(d__1)) + (d__2 = d_imag(&d__), f2c_abs( d__2)) < 1.)
+                    if ((d__1 = d__.r, f2c_dabs(d__1)) + (d__2 = d_imag(&d__), f2c_dabs( d__2)) < 1.)
                     {
                         i__1 = j;
-                        if ((d__1 = work[i__1].r, f2c_abs(d__1)) + (d__2 = d_imag( &work[j]), f2c_abs(d__2)) >= bignum * ((d__3 = d__.r, f2c_abs(d__3)) + (d__4 = d_imag(&d__), f2c_abs( d__4))))
+                        if ((d__1 = work[i__1].r, f2c_dabs(d__1)) + (d__2 = d_imag( &work[j]), f2c_dabs(d__2)) >= bignum * ((d__3 = d__.r, f2c_dabs(d__3)) + (d__4 = d_imag(&d__), f2c_dabs( d__4))))
                         {
                             i__1 = j;
-                            temp = 1. / ((d__1 = work[i__1].r, f2c_abs(d__1)) + ( d__2 = d_imag(&work[j]), f2c_abs(d__2)));
+                            temp = 1. / ((d__1 = work[i__1].r, f2c_dabs(d__1)) + ( d__2 = d_imag(&work[j]), f2c_dabs(d__2)));
                             i__1 = je;
                             for (jr = 1;
                                     jr <= i__1;
@@ -1029,17 +1029,17 @@ L140:
                     i__2 = j;
                     z__2.r = -work[i__2].r;
                     z__2.i = -work[i__2].i; // , expr subst
-                    zladiv_(&z__1, &z__2, &d__);
+                    zladiv_f2c_(&z__1, &z__2, &d__);
                     work[i__1].r = z__1.r;
                     work[i__1].i = z__1.i; // , expr subst
                     if (j > 1)
                     {
                         /* w = w + x(j)*(a S(*,j) - b P(*,j) ) with scaling */
                         i__1 = j;
-                        if ((d__1 = work[i__1].r, f2c_abs(d__1)) + (d__2 = d_imag( &work[j]), f2c_abs(d__2)) > 1.)
+                        if ((d__1 = work[i__1].r, f2c_dabs(d__1)) + (d__2 = d_imag( &work[j]), f2c_dabs(d__2)) > 1.)
                         {
                             i__1 = j;
-                            temp = 1. / ((d__1 = work[i__1].r, f2c_abs(d__1)) + ( d__2 = d_imag(&work[j]), f2c_abs(d__2)));
+                            temp = 1. / ((d__1 = work[i__1].r, f2c_dabs(d__1)) + ( d__2 = d_imag(&work[j]), f2c_dabs(d__2)));
                             if (acoefa * rwork[j] + bcoefa * rwork[*n + j] >= bignum * temp)
                             {
                                 i__1 = je;
@@ -1113,7 +1113,7 @@ L140:
                     /* Computing MAX */
                     i__2 = (isrc - 1) * *n + jr;
                     d__3 = xmax;
-                    d__4 = (d__1 = work[i__2].r, f2c_abs(d__1)) + ( d__2 = d_imag(&work[(isrc - 1) * *n + jr]), f2c_abs( d__2)); // , expr subst
+                    d__4 = (d__1 = work[i__2].r, f2c_dabs(d__1)) + ( d__2 = d_imag(&work[(isrc - 1) * *n + jr]), f2c_dabs( d__2)); // , expr subst
                     xmax = max(d__3,d__4);
                     /* L220: */
                 }

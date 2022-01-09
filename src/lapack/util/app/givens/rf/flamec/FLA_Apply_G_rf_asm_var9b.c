@@ -28,9 +28,9 @@ FLA_Error FLA_Apply_G_rf_asm_var9b( FLA_Obj G, FLA_Obj A )
 */
 {
 	FLA_Datatype datatype;
-	int          k_G, m_A, n_A;
-	int          rs_G, cs_G;
-	int          rs_A, cs_A;
+	integer          k_G, m_A, n_A;
+	integer          rs_G, cs_G;
+	integer          rs_A, cs_A;
 
 	datatype = FLA_Obj_datatype( A );
 
@@ -115,26 +115,26 @@ FLA_Error FLA_Apply_G_rf_asm_var9b( FLA_Obj G, FLA_Obj A )
 }
 
 
-FLA_Error FLA_Apply_G_rf_ass_var9b( int       k_G,
-                                   int       m_A,
-                                   int       n_A,
-                                   int       i_k,
-                                   int       iTL,
-                                   scomplex* buff_G, int rs_G, int cs_G,
-                                   float*    buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Apply_G_rf_ass_var9b( integer       k_G,
+                                   integer       m_A,
+                                   integer       n_A,
+                                   integer       i_k,
+                                   integer       iTL,
+                                   scomplex* buff_G, integer rs_G, integer cs_G,
+                                   float*    buff_A, integer rs_A, integer cs_A )
 {
 	FLA_Check_error_code( FLA_NOT_YET_IMPLEMENTED );
 
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Apply_G_rf_asd_var9b( int       k_G,
-                                   int       m_A,
-                                   int       n_A,
-                                   int       i_k,
-                                   int       iTL,
-                                   dcomplex* buff_G, int rs_G, int cs_G,
-                                   double*   buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Apply_G_rf_asd_var9b( integer       k_G,
+                                   integer       m_A,
+                                   integer       n_A,
+                                   integer       i_k,
+                                   integer       iTL,
+                                   dcomplex* buff_G, integer rs_G, integer cs_G,
+                                   double*   buff_A, integer rs_A, integer cs_A )
 {
 	double    one  = bl1_d1();
 	double    zero = bl1_d0();
@@ -147,14 +147,14 @@ FLA_Error FLA_Apply_G_rf_asd_var9b( int       k_G,
 	double*   a3;
 	dcomplex* g12;
 	dcomplex* g23;
-	int       i, j, g, k;
-	int       nG, nG_app;
-	int       n_iter;
-	int       n_left;
-	int       k_minus_1;
-	int       n_fuse;
-	int       is_ident12, is_ident23;
-	int       m_app;
+	integer       i, j, g, k;
+	integer       nG, nG_app;
+	integer       n_iter;
+	integer       n_left;
+	integer       k_minus_1;
+	integer       n_fuse;
+	integer       is_ident12, is_ident23;
+	integer       m_app;
 
 
 	k_minus_1 = k_G - 1;
@@ -412,26 +412,26 @@ FLA_Error FLA_Apply_G_rf_asd_var9b( int       k_G,
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Apply_G_rf_asc_var9b( int       k_G,
-                                   int       m_A,
-                                   int       n_A,
-                                   int       i_k,
-                                   int       iTL,
-                                   scomplex* buff_G, int rs_G, int cs_G,
-                                   scomplex* buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Apply_G_rf_asc_var9b( integer       k_G,
+                                   integer       m_A,
+                                   integer       n_A,
+                                   integer       i_k,
+                                   integer       iTL,
+                                   scomplex* buff_G, integer rs_G, integer cs_G,
+                                   scomplex* buff_A, integer rs_A, integer cs_A )
 {
 	FLA_Check_error_code( FLA_NOT_YET_IMPLEMENTED );
 
 	return FLA_SUCCESS;
 }
 
-FLA_Error FLA_Apply_G_rf_asz_var9b( int       k_G,
-                                   int       m_A,
-                                   int       n_A,
-                                   int       i_k,
-                                   int       iTL,
-                                   dcomplex* buff_G, int rs_G, int cs_G,
-                                   dcomplex* buff_A, int rs_A, int cs_A )
+FLA_Error FLA_Apply_G_rf_asz_var9b( integer       k_G,
+                                   integer       m_A,
+                                   integer       n_A,
+                                   integer       i_k,
+                                   integer       iTL,
+                                   dcomplex* buff_G, integer rs_G, integer cs_G,
+                                   dcomplex* buff_A, integer rs_A, integer cs_A )
 {
 	FLA_Check_error_code( FLA_NOT_YET_IMPLEMENTED );
 

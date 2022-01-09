@@ -1,31 +1,35 @@
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_f2c.h"
-static int c__6 = 6;
-static int c__0 = 0;
-static int c_n1 = -1;
+static integer c__6 = 6;
+static integer c__0 = 0;
+static integer c_n1 = -1;
 
-int sgesvd_check(char *jobu, char *jobvt, int *m, int *n, float *a, int *lda, float *s, float *u, int *ldu, float *vt, int *ldvt, float *work, int *lwork, int *info)
+int sgesvd_check(char *jobu, char *jobvt, integer *m, integer *n, float *a, integer *lda, float *s, float *u, integer *ldu, float *vt, integer *ldvt, float *work, integer *lwork, integer *info)
 {
     /* System generated locals */
-    int a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__2, i__3;
+    integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__2, i__3;
     char ch__1[2];
     /* Local variables */
     float dum[1];
-    int ierr, lwork_sgebrd__, lwork_sgelqf__, lwork_sgeqrf__;
-    int minmn, wrkbl, mnthr;
+    integer ierr, lwork_sgebrd__, lwork_sgelqf__, lwork_sgeqrf__;
+    integer minmn, wrkbl, mnthr;
     logical wntua, wntva, wntun, wntuo, wntvn, wntvo, wntus, wntvs;
-    int bdspac;
+    integer bdspac;
     extern int 
-      sgebrd_(int *, int *, float *, int *, float *, float *, float *, float *, float *, int *, int *),
-      sgelqf_(int *, int *, float *, int *, float *, float *, int *, int *), 
-      sgeqrf_(int *, int *, float *, int *, float *, float *, int *, int *), 
-      sorgbr_(char *, int *, int *, int *, float *, int *, float * , float *, int *, int *), 
-      sorglq_(int *, int *, int *, float *, int *, float *, float *, int *, int *),
-      sorgqr_(int *, int *, int *, float *, int *, float *, float *, int *, int *);
-    int minwrk, maxwrk;
+      sgebrd_(integer *, integer *, float *, integer *, float *, float *, float *, float *, float *, integer *, integer *),
+      sgelqf_(integer *, integer *, float *, integer *, float *, float *, integer *, integer *), 
+      sgeqrf_(integer *, integer *, float *, integer *, float *, float *, integer *, integer *), 
+      sorgbr_(char *, integer *, integer *, integer *, float *, integer *, float * , float *, integer *, integer *), 
+      sorglq_(integer *, integer *, integer *, float *, integer *, float *, float *, integer *, integer *),
+      sorgqr_(integer *, integer *, integer *, float *, integer *, float *, float *, integer *, integer *);
+    integer minwrk, maxwrk;
     logical lquery, wntuas, wntvas;
-    int lwork_sorgbr_p__, lwork_sorgbr_q__, lwork_sorglq_m__, lwork_sorglq_n__, lwork_sorgqr_m__, lwork_sorgqr_n__;
-
+    integer lwork_sorgbr_p__, lwork_sorgbr_q__, lwork_sorglq_m__, lwork_sorglq_n__, lwork_sorgqr_m__, lwork_sorgqr_n__;
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "sgesvd inputs: jobu %c, jobvt %c, m %d, n %d, lda %d, ldu %d, ldvt %d\n", *jobu, *jobvt, *m, *n, *lda, *ldu, *ldvt);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;
@@ -97,21 +101,21 @@ int sgesvd_check(char *jobu, char *jobvt, int *m, int *n, float *a, int *lda, fl
             bdspac = *n * 5;
             /* Compute space needed for SGEQRF */
             sgeqrf_(m, n, &a[a_offset], lda, dum, dum, &c_n1, &ierr);
-            lwork_sgeqrf__ = (int)dum[0];
+            lwork_sgeqrf__ = (integer)dum[0];
             /* Compute space needed for SORGQR */
             sorgqr_(m, n, n, &a[a_offset], lda, dum, dum, &c_n1, &ierr);
-            lwork_sorgqr_n__ = (int)dum[0];
+            lwork_sorgqr_n__ = (integer)dum[0];
             sorgqr_(m, m, n, &a[a_offset], lda, dum, dum, &c_n1, &ierr);
-            lwork_sorgqr_m__ = (int)dum[0];
+            lwork_sorgqr_m__ = (integer)dum[0];
             /* Compute space needed for SGEBRD */
             sgebrd_(n, n, &a[a_offset], lda, &s[1], dum, dum, dum, dum, &c_n1, &ierr);
-            lwork_sgebrd__ = (int)dum[0];
+            lwork_sgebrd__ = (integer)dum[0];
             /* Compute space needed for SORGBR P */
             sorgbr_("P", n, n, n, &a[a_offset], lda, dum, dum, &c_n1, &ierr);
-            lwork_sorgbr_p__ = (int)dum[0];
+            lwork_sorgbr_p__ = (integer)dum[0];
             /* Compute space needed for SORGBR Q */
             sorgbr_("Q", n, n, n, &a[a_offset], lda, dum, dum, &c_n1, &ierr);
-            lwork_sorgbr_q__ = (int)dum[0];
+            lwork_sorgbr_q__ = (integer)dum[0];
             if (*m >= mnthr)
             {
                 if (wntun)
@@ -344,12 +348,12 @@ int sgesvd_check(char *jobu, char *jobvt, int *m, int *n, float *a, int *lda, fl
             {
                 /* Path 10 (M at least N, but not much larger) */
                 sgebrd_(m, n, &a[a_offset], lda, &s[1], dum, dum, dum, dum, & c_n1, &ierr);
-                lwork_sgebrd__ = (int)dum[0];
+                lwork_sgebrd__ = (integer)dum[0];
                 maxwrk = *n * 3 + lwork_sgebrd__;
                 if (wntus || wntuo)
                 {
                     sorgbr_("Q", m, n, n, &a[a_offset], lda, dum, dum, &c_n1, &ierr);
-                    lwork_sorgbr_q__ = (int)dum[0];
+                    lwork_sorgbr_q__ = (integer)dum[0];
                     /* Computing MAX */
                     i__2 = maxwrk;
                     i__3 = *n * 3 + lwork_sorgbr_q__; // , expr subst
@@ -358,7 +362,7 @@ int sgesvd_check(char *jobu, char *jobvt, int *m, int *n, float *a, int *lda, fl
                 if (wntua)
                 {
                     sorgbr_("Q", m, m, n, &a[a_offset], lda, dum, dum, &c_n1, &ierr);
-                    lwork_sorgbr_q__ = (int)dum[0];
+                    lwork_sorgbr_q__ = (integer)dum[0];
                     /* Computing MAX */
                     i__2 = maxwrk;
                     i__3 = *n * 3 + lwork_sorgbr_q__; // , expr subst
@@ -384,21 +388,21 @@ int sgesvd_check(char *jobu, char *jobvt, int *m, int *n, float *a, int *lda, fl
             bdspac = *m * 5;
             /* Compute space needed for SGELQF */
             sgelqf_(m, n, &a[a_offset], lda, dum, dum, &c_n1, &ierr);
-            lwork_sgelqf__ = (int)dum[0];
+            lwork_sgelqf__ = (integer)dum[0];
             /* Compute space needed for SORGLQ */
             sorglq_(n, n, m, dum, n, dum, dum, &c_n1, &ierr);
-            lwork_sorglq_n__ = (int)dum[0];
+            lwork_sorglq_n__ = (integer)dum[0];
             sorglq_(m, n, m, &a[a_offset], lda, dum, dum, &c_n1, &ierr);
-            lwork_sorglq_m__ = (int)dum[0];
+            lwork_sorglq_m__ = (integer)dum[0];
             /* Compute space needed for SGEBRD */
             sgebrd_(m, m, &a[a_offset], lda, &s[1], dum, dum, dum, dum, &c_n1, &ierr);
-            lwork_sgebrd__ = (int)dum[0];
+            lwork_sgebrd__ = (integer)dum[0];
             /* Compute space needed for SORGBR P */
             sorgbr_("P", m, m, m, &a[a_offset], n, dum, dum, &c_n1, &ierr);
-            lwork_sorgbr_p__ = (int)dum[0];
+            lwork_sorgbr_p__ = (integer)dum[0];
             /* Compute space needed for SORGBR Q */
             sorgbr_("Q", m, m, m, &a[a_offset], n, dum, dum, &c_n1, &ierr);
-            lwork_sorgbr_q__ = (int)dum[0];
+            lwork_sorgbr_q__ = (integer)dum[0];
             if (*n >= mnthr)
             {
                 if (wntvn)
@@ -632,13 +636,13 @@ int sgesvd_check(char *jobu, char *jobvt, int *m, int *n, float *a, int *lda, fl
             {
                 /* Path 10t(N greater than M, but not much larger) */
                 sgebrd_(m, n, &a[a_offset], lda, &s[1], dum, dum, dum, dum, & c_n1, &ierr);
-                lwork_sgebrd__ = (int)dum[0];
+                lwork_sgebrd__ = (integer)dum[0];
                 maxwrk = *m * 3 + lwork_sgebrd__;
                 if (wntvs || wntvo)
                 {
                     /* Compute space needed for SORGBR P */
                     sorgbr_("P", m, n, m, &a[a_offset], n, dum, dum, &c_n1, & ierr);
-                    lwork_sorgbr_p__ = (int)dum[0];
+                    lwork_sorgbr_p__ = (integer)dum[0];
                     /* Computing MAX */
                     i__2 = maxwrk;
                     i__3 = *m * 3 + lwork_sorgbr_p__; // , expr subst
@@ -647,7 +651,7 @@ int sgesvd_check(char *jobu, char *jobvt, int *m, int *n, float *a, int *lda, fl
                 if (wntva)
                 {
                     sorgbr_("P", n, n, m, &a[a_offset], n, dum, dum, &c_n1, & ierr);
-                    lwork_sorgbr_p__ = (int)dum[0];
+                    lwork_sorgbr_p__ = (integer)dum[0];
                     /* Computing MAX */
                     i__2 = maxwrk;
                     i__3 = *m * 3 + lwork_sorgbr_p__; // , expr subst

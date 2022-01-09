@@ -124,8 +124,8 @@ FLA_Error FLA_QR_unb_external( FLA_Obj A, FLA_Obj t );
 FLA_Error FLA_LQ_blk_external( FLA_Obj A, FLA_Obj t );
 FLA_Error FLA_LQ_unb_external( FLA_Obj A, FLA_Obj t );
 
-FLA_Error FLA_Hess_blk_external( FLA_Obj A, FLA_Obj t, int ilo, int ihi );
-FLA_Error FLA_Hess_unb_external( FLA_Obj A, FLA_Obj t, int ilo, int ihi );
+FLA_Error FLA_Hess_blk_external( FLA_Obj A, FLA_Obj t, integer ilo, integer ihi );
+FLA_Error FLA_Hess_unb_external( FLA_Obj A, FLA_Obj t, integer ilo, integer ihi );
 
 FLA_Error FLA_Tridiag_blk_external( FLA_Uplo uplo, FLA_Obj A, FLA_Obj t );
 FLA_Error FLA_Tridiag_unb_external( FLA_Uplo uplo, FLA_Obj A, FLA_Obj t );
@@ -217,7 +217,7 @@ FLA_Error FLA_LQ_UT_check( FLA_Obj A, FLA_Obj T );
 FLA_Error FLA_LQ_UT_solve_check( FLA_Obj A, FLA_Obj T, FLA_Obj B, FLA_Obj X );
 FLA_Error FLA_LQ_UT_recover_tau_check( FLA_Obj T, FLA_Obj tau );
 FLA_Error FLA_LQ_UT_form_Q_check( FLA_Obj A, FLA_Obj T, FLA_Obj Q );
-FLA_Error FLA_Hess_check( FLA_Obj A, FLA_Obj t, int ilo, int ihi );
+FLA_Error FLA_Hess_check( FLA_Obj A, FLA_Obj t, integer ilo, integer ihi );
 FLA_Error FLA_Hess_UT_check( FLA_Obj A, FLA_Obj T );
 FLA_Error FLA_Hess_UT_recover_tau_check( FLA_Obj T, FLA_Obj tau );
 FLA_Error FLA_Tridiag_check( FLA_Uplo uplo, FLA_Obj A, FLA_Obj t );

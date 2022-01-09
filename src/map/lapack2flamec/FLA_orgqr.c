@@ -27,17 +27,18 @@
 */
 
 #define LAPACK_orgqr(prefix, name)                                      \
-  int F77_ ## prefix ## name ## qr( int* m,                             \
-                                    int* n,                             \
-                                    int* k,                             \
+  int F77_ ## prefix ## name ## qr( integer* m,                             \
+                                    integer* n,                             \
+                                    integer* k,                             \
                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, \
-                                    int* ldim_A,                        \
+                                    integer* ldim_A,                        \
                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_t, \
                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, \
-                                    int* lwork,                         \
-                                    int* info)
+                                    integer* lwork,                         \
+                                    integer* info)
 
 #define LAPACK_orgqr_body(prefix)                                       \
+  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \
   FLA_Datatype datatype   = PREFIX2FLAME_DATATYPE(prefix);              \
   FLA_Obj      A, AL, AR, t, T;                                         \
   FLA_Error    init_result;                                             \
@@ -72,6 +73,7 @@
                                                                         \
   *info = 0;                                                            \
                                                                         \
+  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                          \
   return 0;
 
 LAPACK_orgqr(s, org)
@@ -131,14 +133,14 @@ LAPACK_orgqr(z, ung)
 #endif
 
 #define LAPACK_org2r(prefix, name)                                      \
-  int F77_ ## prefix ## name ## 2r( int* m,                                  \
-                                    int* n,                             \
-                                    int* k,                             \
+  int F77_ ## prefix ## name ## 2r( integer* m,                                  \
+                                    integer* n,                             \
+                                    integer* k,                             \
                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_A, \
-                                    int* ldim_A,                        \
+                                    integer* ldim_A,                        \
                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_t, \
                                     PREFIX2LAPACK_TYPEDEF(prefix)* buff_w, \
-                                    int* info)
+                                    integer* info)
 
 LAPACK_org2r(s, org)
 {

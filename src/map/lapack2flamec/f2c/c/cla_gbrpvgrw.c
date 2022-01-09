@@ -103,6 +103,16 @@
 /* ===================================================================== */
 real cla_gbrpvgrw_(integer *n, integer *kl, integer *ku, integer *ncols, complex *ab, integer *ldab, complex *afb, integer *ldafb)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+#if FLA_ENABLE_ILP64 
+    snprintf(buffer, 256,"cla_gbrpvgrw inputs: n %lld, kl %lld, ku %lld, ncols %lld, ldab %lld, ldafb %lld",*n, *kl, *ku, *ncols, *ldab, *ldafb);
+#else 
+    snprintf(buffer, 256,"cla_gbrpvgrw inputs: n %d, kl %d, ku %d, ncols %d, ldab %d, ldafb %d",*n, *kl, *ku, *ncols, *ldab, *ldafb);
+#endif
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, afb_dim1, afb_offset, i__1, i__2, i__3, i__4;
     real ret_val, r__1, r__2, r__3;
@@ -180,6 +190,7 @@ real cla_gbrpvgrw_(integer *n, integer *kl, integer *ku, integer *ncols, complex
         }
     }
     ret_val = rpvgrw;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return ret_val;
 }
 /* cla_gbrpvgrw__ */

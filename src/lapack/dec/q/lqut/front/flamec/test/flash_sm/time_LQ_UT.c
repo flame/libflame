@@ -16,17 +16,17 @@
 
 
 void time_LQ_UT(
-               int param_combo, int type, int nrepeats, int m, int n, int b_flash,
+               integer param_combo, integer type, integer nrepeats, integer m, integer n, integer b_flash,
                FLA_Obj A, FLA_Obj TW, FLA_Obj b, FLA_Obj x,
                double *dtime, double *diff, double *gflops );
 
 
 void time_LQ_UT(
-               int param_combo, int type, int nrepeats, int m, int n, int b_flash,
+               integer param_combo, integer type, integer nrepeats, integer m, integer n, integer b_flash,
                FLA_Obj A, FLA_Obj TW, FLA_Obj b, FLA_Obj x,
                double *dtime, double *diff, double *gflops )
 {
-  int
+  integer
     irep;
 
   double

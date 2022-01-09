@@ -10,13 +10,13 @@
 
 #include "blis1.h"
 
-int bl1_vector_dim( int m, int n )
+int bl1_vector_dim( integer m, integer n )
 {
 	if ( m == 1 ) return n;
 	else          return m;
 }
 
-int bl1_vector_inc( trans1_t trans, int m, int n, int rs, int cs )
+int bl1_vector_inc( trans1_t trans, integer m, integer n, integer rs, integer cs )
 {
 	if ( bl1_does_notrans( trans ) )
 	{
