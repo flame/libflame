@@ -4,24 +4,24 @@
 int drotmg_(doublereal *dd1, doublereal *dd2, doublereal * dx1, doublereal *dy1, doublereal *dparam)
 {
     /* Initialized data */
-    static doublereal zero = 0.;
-    static doublereal one = 1.;
-    static doublereal two = 2.;
-    static doublereal gam = 4096.;
-    static doublereal gamsq = 16777216.;
-    static doublereal rgamsq = 5.9604645e-8;
+    static const doublereal zero = 0.;
+    static const doublereal one = 1.;
+    static const doublereal two = 2.;
+    static const doublereal gam = 4096.;
+    static const doublereal gamsq = 16777216.;
+    static const doublereal rgamsq = 5.9604645e-8;
     /* Format strings */
-    static char fmt_120[] = "";
-    static char fmt_150[] = "";
-    static char fmt_180[] = "";
-    static char fmt_210[] = "";
+    char fmt_120[] = "";
+    char fmt_150[] = "";
+    char fmt_180[] = "";
+    char fmt_210[] = "";
     /* System generated locals */
     doublereal d__1;
     /* Local variables */
     doublereal dflag, dtemp, du, dp1, dp2, dq2, dq1, dh11, dh21, dh12, dh22;
     integer igo;
     /* Assigned format variables */
-    static char *igo_fmt;
+    char *igo_fmt;
     /* CONSTRUCT THE MODIFIED GIVENS TRANSFORMATION MATRIX H WHICH ZEROS */
     /* THE SECOND COMPONENT OF THE 2-VECTOR (DSQRT(DD1)*DX1,DSQRT(DD2)* */
     /* DY2)**T. */

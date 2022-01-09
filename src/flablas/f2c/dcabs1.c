@@ -4,7 +4,7 @@ doublereal dcabs1_(doublecomplex *z__)
 {
     /* System generated locals */
     doublereal ret_val;
-    static doublecomplex equiv_0[1];
+    doublecomplex equiv_0[1];
     /* Local variables */
 #define t ((doublereal *)equiv_0) 
 #define zz (equiv_0)

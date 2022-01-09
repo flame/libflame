@@ -4,8 +4,8 @@
 int drotm_(integer *n, doublereal *dx, integer *incx, doublereal *dy, integer *incy, doublereal *dparam)
 {
     /* Initialized data */
-    static doublereal zero = 0.;
-    static doublereal two = 2.;
+    static const doublereal zero = 0.;
+    static const doublereal two = 2.;
     /* System generated locals */
     integer i__1, i__2;
     /* Local variables */
