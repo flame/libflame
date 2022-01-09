@@ -119,16 +119,16 @@ int clacon_(integer *n, complex *v, complex *x, real *est, integer *kase)
     /* Builtin functions */
     double c_abs(complex *), r_imag(complex *);
     /* Local variables */
-    static integer i__, j, iter;
-    static real temp;
-    static integer jump;
-    static real absxi;
-    static integer jlast;
+    integer i__, j, iter;
+    real temp;
+    integer jump;
+    real absxi;
+    integer jlast;
     extern /* Subroutine */
     int ccopy_(integer *, complex *, integer *, complex *, integer *);
     extern integer icmax1_(integer *, complex *, integer *);
     extern real scsum1_(integer *, complex *, integer *), slamch_(char *);
-    static real safmin, altsgn, estold;
+    real safmin, altsgn, estold;
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */

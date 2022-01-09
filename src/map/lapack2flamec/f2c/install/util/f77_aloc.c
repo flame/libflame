@@ -4,7 +4,7 @@
 #undef max
 #include "stdio.h"
 
-static integer memfailure = 3;
+static const integer memfailure = 3;
 extern void exit_(integer*);
 
 #ifdef __cplusplus

@@ -1,10 +1,10 @@
 /* ../netlib/dlasy2.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
  #include "FLA_f2c.h" /* Table of constant values */
- static integer c__4 = 4;
- static integer c__1 = 1;
- static integer c__16 = 16;
- static integer c__0 = 0;
+ static const integer c__4 = 4;
+ static const integer c__1 = 1;
+ static const integer c__16 = 16;
+ static const integer c__0 = 0;
  /* > \brief \b DLASY2 solves the Sylvester matrix equation where the matrices are of order 1 or 2. */
  /* =========== DOCUMENTATION =========== */
  /* Online html documentation available at */
@@ -166,19 +166,19 @@
  /* Subroutine */
  int dlasy2_(logical *ltranl, logical *ltranr, integer *isgn, integer *n1, integer *n2, doublereal *tl, integer *ldtl, doublereal * tr, integer *ldtr, doublereal *b, integer *ldb, doublereal *scale, doublereal *x, integer *ldx, doublereal *xnorm, integer *info) {
  /* Initialized data */
- static integer locu12[4] = {
+ static const integer locu12[4] = {
  3,4,1,2 }
 ;
- static integer locl21[4] = {
+ static const integer locl21[4] = {
  2,1,4,3 }
 ;
- static integer locu22[4] = {
+ static const integer locu22[4] = {
  4,3,2,1 }
 ;
- static logical xswpiv[4] = {
+ static const logical xswpiv[4] = {
  FALSE_,FALSE_,TRUE_,TRUE_ }
 ;
- static logical bswpiv[4] = {
+ static const logical bswpiv[4] = {
  FALSE_,TRUE_,FALSE_,TRUE_ }
 ;
  /* System generated locals */

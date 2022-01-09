@@ -4,8 +4,8 @@
 int srotm_(integer *n, real *sx, integer *incx, real *sy, integer *incy, real *sparam)
 {
     /* Initialized data */
-    static real zero = 0.f;
-    static real two = 2.f;
+    static const real zero = 0.f;
+    static const real two = 2.f;
     /* System generated locals */
     integer i__1, i__2;
     /* Local variables */

@@ -118,15 +118,15 @@ int dlacon_(integer *n, doublereal *v, doublereal *x, integer *isgn, doublereal 
     double d_sign(doublereal *, doublereal *);
     integer i_dnnt(doublereal *);
     /* Local variables */
-    static integer i__, j, iter;
-    static doublereal temp;
-    static integer jump;
+    integer i__, j, iter;
+    doublereal temp;
+    integer jump;
     extern doublereal dasum_(integer *, doublereal *, integer *);
-    static integer jlast;
+    integer jlast;
     extern /* Subroutine */
     int dcopy_(integer *, doublereal *, integer *, doublereal *, integer *);
     extern integer idamax_(integer *, doublereal *, integer *);
-    static doublereal altsgn, estold;
+    doublereal altsgn, estold;
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */

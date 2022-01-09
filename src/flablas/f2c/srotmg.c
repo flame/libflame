@@ -4,24 +4,24 @@
 int srotmg_(real *sd1, real *sd2, real *sx1, real *sy1, real *sparam)
 {
     /* Initialized data */
-    static real zero = 0.f;
-    static real one = 1.f;
-    static real two = 2.f;
-    static real gam = 4096.f;
-    static real gamsq = 16777200.f;
-    static real rgamsq = 5.96046e-8f;
+    static const real zero = 0.f;
+    static const real one = 1.f;
+    static const real two = 2.f;
+    static const real gam = 4096.f;
+    static const real gamsq = 16777200.f;
+    static const real rgamsq = 5.96046e-8f;
     /* Format strings */
-    static char fmt_120[] = "";
-    static char fmt_150[] = "";
-    static char fmt_180[] = "";
-    static char fmt_210[] = "";
+    char fmt_120[] = "";
+    char fmt_150[] = "";
+    char fmt_180[] = "";
+    char fmt_210[] = "";
     /* System generated locals */
     real r__1;
     /* Local variables */
     real sflag, stemp, su, sp1, sp2, sq2, sq1, sh11, sh21, sh12, sh22;
     integer igo;
     /* Assigned format variables */
-    static char *igo_fmt;
+    char *igo_fmt;
     /* CONSTRUCT THE MODIFIED GIVENS TRANSFORMATION MATRIX H WHICH ZEROS */
     /* THE SECOND COMPONENT OF THE 2-VECTOR (SQRT(SD1)*SX1,SQRT(SD2)* */
     /* SY2)**T. */

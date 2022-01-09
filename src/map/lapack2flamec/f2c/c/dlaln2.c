@@ -212,17 +212,17 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* Initialized data */
-    static logical zswap[4] =
+    logical zswap[4] =
     {
         FALSE_,FALSE_,TRUE_,TRUE_
     }
     ;
-    static logical rswap[4] =
+    logical rswap[4] =
     {
         FALSE_,TRUE_,FALSE_,TRUE_
     }
     ;
-    static integer ipivot[16] /* was [4][4] */
+    integer ipivot[16] /* was [4][4] */
     =
     {
         1,2,3,4,2,1,4,3,3,4,1,2, 4,3,2,1
@@ -231,7 +231,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, x_dim1, x_offset;
     doublereal d__1, d__2, d__3, d__4, d__5, d__6;
-    static doublereal equiv_0[4], equiv_1[4];
+    doublereal equiv_0[4], equiv_1[4];
     /* Local variables */
     integer j;
 #define ci (equiv_0)
