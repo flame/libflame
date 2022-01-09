@@ -60,16 +60,16 @@
 
        Parameter adjustments */
     /* Table of constant values */
-    static doublecomplex c_b1 = {1.,0.};
-    static integer c__1 = 1;
-    static integer c_n1 = -1;
+    static TLS_CLASS_SPEC doublecomplex c_b1 = {1.,0.};
+    static TLS_CLASS_SPEC integer c__1 = 1;
+    static TLS_CLASS_SPEC integer c_n1 = -1;
 
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
     doublecomplex z__1;
     /* Local variables */
-    static integer i__, j, iinfo;
-    static integer jb, nb;
+    static TLS_CLASS_SPEC integer i__, j, iinfo;
+    static TLS_CLASS_SPEC integer jb, nb;
     extern /* Subroutine */ int xerbla_(char *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *,
 	    integer *, integer *, ftnlen, ftnlen);

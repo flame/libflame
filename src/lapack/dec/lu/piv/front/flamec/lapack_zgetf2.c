@@ -59,8 +59,8 @@
 
        Parameter adjustments */
     /* Table of constant values */
-    static doublecomplex c_b1 = {1.,0.};
-    static integer c__1 = 1;
+    static TLS_CLASS_SPEC doublecomplex c_b1 = {1.,0.};
+    static TLS_CLASS_SPEC integer c__1 = 1;
 
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
@@ -68,9 +68,9 @@
     /* Builtin functions */
     void z_div(doublecomplex *, doublecomplex *, doublecomplex *);
     /* Local variables */
-    static integer j;
+    static TLS_CLASS_SPEC integer j;
 
-    static integer jp;
+    static TLS_CLASS_SPEC integer jp;
     extern /* Subroutine */ int xerbla_(char *, integer *);
 #define a_subscr(a_1,a_2) (a_2)*a_dim1 + a_1
 #define a_ref(a_1,a_2) a[a_subscr(a_1,a_2)]

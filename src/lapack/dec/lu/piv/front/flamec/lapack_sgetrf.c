@@ -5,10 +5,10 @@
 #include "FLAME.h"
 /* Table of constant values */
 
-static integer c__1 = 1;
-static integer c_n1 = -1;
-static real c_b11 = -1.f;
-static real c_b12 = 1.f;
+static TLS_CLASS_SPEC integer c__1 = 1;
+static TLS_CLASS_SPEC integer c_n1 = -1;
+static TLS_CLASS_SPEC real c_b11 = -1.f;
+static TLS_CLASS_SPEC real c_b12 = 1.f;
 
 /* Subroutine */ integer lapack_sgetrf(integer *m, integer *n, real *a, integer *lda,
 	integer *ipiv, integer *info)
