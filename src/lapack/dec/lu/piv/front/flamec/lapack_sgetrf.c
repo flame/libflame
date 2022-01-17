@@ -18,8 +18,7 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
 
     /* Local variables */
     integer i__, j, jb, nb, iinfo;
-    extern integer ilaenv_(integer *, char *, char *, integer *, integer *,
-	    integer *, integer *);
+    extern integer ilaenv_(integer *, char *, char *, integer *, integer *,integer *, integer *);
     extern /* Subroutine */ int slaswp_(integer *, real *, integer *, integer
 	    *, integer *, integer *, integer *);
 

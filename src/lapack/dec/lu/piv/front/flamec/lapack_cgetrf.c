@@ -72,8 +72,7 @@
     static TLS_CLASS_SPEC integer iinfo;
     static TLS_CLASS_SPEC integer jb, nb;
     extern /* Subroutine */ int xerbla_(char *, integer *);
-    extern integer ilaenv_(integer *, char *, char *, integer *, integer *,
-	    integer *, integer *, ftnlen, ftnlen);
+    extern integer ilaenv_(integer *, char *, char *, integer *, integer *,integer *, integer *);
 #define a_subscr(a_1,a_2) (a_2)*a_dim1 + a_1
 #define a_ref(a_1,a_2) a[a_subscr(a_1,a_2)]
 
@@ -106,8 +105,7 @@
 
 /*     Determine the block size for this environment. */
 
-    nb = ilaenv_(&c__1, "CGETRF", " ", m, n, &c_n1, &c_n1, (ftnlen)6, (ftnlen)
-	    1);
+    nb = ilaenv_(&c__1, "CGETRF", " ", m, n, &c_n1, &c_n1);
     if (nb <= 1 || nb >= min(*m,*n)) {
 
 /*        Use unblocked code. */

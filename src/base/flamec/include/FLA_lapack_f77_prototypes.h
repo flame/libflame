@@ -12,7 +12,20 @@
 
 // --- Define Fortran name-mangling macro --------------------------
 
-
+#define F77_dlamch F77_FUNC( dlamch , DLAMCH )
+#define F77_dlamc3 F77_FUNC( dlamc3 , DLAMC3 )
+#define F77_dladiv2 F77_FUNC( dladiv2 , DLADIV2 )
+#define F77_dladiv1 F77_FUNC(dladiv1 , DLADIV1 )
+#define F77_lzspr F77_FUNC( lzspr , LZSPR )
+#define F77_sladiv2 F77_FUNC( sladiv2 , SLADIV2 )
+#define F77_sladiv1 F77_FUNC( sladiv1 , SLADIV1 )
+#define F77_xerbla_array F77_FUNC( xerbla_array , XERBLA_ARRAY )
+#define F77_iparmq F77_FUNC( iparmq, IPARMQ )
+#define F77_ilaenv F77_FUNC( ilaenv , ILAENV )
+#define F77_ieeeck F77_FUNC( ieeeck , IEEECK )
+#define F77_lsamen F77_FUNC( lsamen , LSAMEN )
+#define F77_slamc3 F77_FUNC( slamc3 , SLAMC3 )
+#define F77_slamch F77_FUNC( slamch, SLAMCH )
 #define F77_cgetsqrhrt F77_FUNC( cgetsqrhrt , CGETSQRHRT )
 #define F77_claqz0 F77_FUNC( claqz0 , CLAQZ0 )
 #define F77_claqz1 F77_FUNC( claqz1 , CLAQZ1 )
@@ -2085,6 +2098,20 @@
 
 // Function Prototypes declaration
 
+double F77_dlamch(char* cmach);
+double F77_dlamc3(double* a, double* b);
+doublereal F77_dladiv2(doublereal* a, doublereal* b, doublereal* c__, doublereal* d__, doublereal* r__, doublereal* t);
+int F77_dladiv1(doublereal* a, doublereal* b, doublereal* c__, doublereal* d__, doublereal* p, doublereal* q);
+int F77_lzspr(char* uplo, integer* n, dcomplex* alpha, dcomplex* x, integer* incx, dcomplex* ap, dcomplex* work);
+double F77_sladiv2(float* b, float* c, float* d, float* r, float* t);
+void F77_sladiv1(float* a, float* b, float* c, float* d, float* p, float* q);
+int F77_xerbla_array(char* srname_array__, integer* srname_len__, integer* info);
+int F77_iparmq(integer* ispec, char* name, char* opts, integer* n, integer* ilo, integer* ihi, integer* lwork);
+integer F77_ilaenv(integer* ispec, char* name, char* opts, integer* n1, integer* n2, integer* n3, integer* n4);
+int F77_ieeeck(integer* ispec, float* zero, float* one);
+int F77_lsamen(const integer* n, const char* ca, const char* cb, integer ca_len, integer cb_len);
+float F77_slamc3(float* a, float* b);
+float F77_slamch(char* cmach);
 int F77_cgetsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, complex *a, integer *lda, complex *t, integer *ldt, complex *work, integer *lwork, integer *info);
 int F77_claqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, complex *alpha, complex *beta, complex *q, integer *ldq, complex *z__, integer *ldz, complex *work, integer *lwork, real * rwork, integer *rec, integer *info);
 int F77_claqz1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, integer *nq, integer *qstart, complex *q, integer *ldq, integer *nz, integer *zstart, complex *z__, integer * ldz);

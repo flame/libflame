@@ -37,7 +37,7 @@
 
 extern int lsame_(char *, char *);
 extern int xerbla_(char *, integer *);
-extern int ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
+extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
 
 
 #endif

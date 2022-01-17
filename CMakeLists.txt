@@ -20,7 +20,7 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 #enabling the configuration options
 option (ENABLE_ILP64 "Enable ILP64" OFF)
 option (ENABLE_UPPERCASE "Enable uppercase API's" OFF)
-option (ENABLE_WRAPPER "Enable wrapper code" OFF)
+option (ENABLE_WRAPPER "Enable wrapper code" ON)
 option (INCLUDE_LAPACKE "INCLUDE LAPACKE Code" ON)
 option (BUILD_SHARED_LIBS "Building shared Library" ON)
 option (BUILD_TEST "Building test directory" ON)
@@ -61,12 +61,19 @@ set (ENABLE_WINDOWS_BUILD "Enables windows build" ON)
 if(ENABLE_UPPERCASE)
 add_definitions(-DBLIS1_ENABLE_UPPERCASE_F77)
 add_definitions(-DUPPER)
-elseif(NOT ENABLE_UPPERCASE)  
+elseif(NOT ENABLE_UPPERCASE)
 add_definitions(-DNOCHANGE)
 endif()
 
 if (ENABLE_WRAPPER)
 add_definitions(-DFLA_ENABLE_EXTRA_SYMBOLS)
+else()
+   if(ENABLE_UPPERCASE)
+      add_definitions(-DBLIS1_ENABLE_UPPERCASE_F77)
+      add_definitions(-DUPPER)
+   elseif(NOT ENABLE_UPPERCASE)
+      add_definitions(-DNOCHANGE)
+   endif()
 endif()
 
 if(ENABLE_XBLAS)
@@ -77,7 +84,7 @@ if (ENABLE_NON_CRITICAL_CODE)
 endif ()
 
 if(NOT BUILD_SHARED_LIBS)
-add_definitions(-DLIBFLAME_IS_BUILDING_LIBRARY)	
+add_definitions(-DLIBFLAME_IS_BUILDING_LIBRARY)
 endif()
 
 if (ENABLE_BUILTIN_BLAS)
@@ -245,6 +252,7 @@ string (APPEND MK_HEADER_DIR_PATHS
 	" ${CMAKE_SOURCE_DIR}/src/base/flamec/hierarchy/include/"
 	" ${CMAKE_SOURCE_DIR}/src/base/flamec/include/"
 	" ${CMAKE_SOURCE_DIR}/src/base/flamec/supermatrix/gpu/include/"
+    " ${CMAKE_SOURCE_DIR}/src/base/flamec/wrappers/base/wrapper/"
 	" ${CMAKE_SOURCE_DIR}/src/base/flamec/supermatrix/include/"
 	" ${CMAKE_SOURCE_DIR}/src/blas/1/axpy/front/flamec/"
 	" ${CMAKE_SOURCE_DIR}/src/blas/1/axpy/vars/flamec/"
@@ -477,13 +485,14 @@ string (APPEND MK_HEADER_DIR_PATHS
 	" ${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/example/"
 	" ${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/include/"
 	" ${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/src/"
-	" ${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/utils/"	
+	" ${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/utils/"
 	" ${CMAKE_SOURCE_DIR}/src/map/lapack2flamec/"
     " ${CMAKE_SOURCE_DIR}/src/map/lapack2flamec/check"
 	" ${CMAKE_SOURCE_DIR}/src/map/lapack2flamec/f2c"
 	" ${CMAKE_SOURCE_DIR}/src/map/lapack2flamec/f2c/c"
 	" ${CMAKE_SOURCE_DIR}/src/map/lapack2flamec/f2c/flamec"
 	" ${CMAKE_SOURCE_DIR}/src/map/lapack2flamec/f2c/install/util/io/"
+    " ${CMAKE_SOURCE_DIR}/src/map/lapack2flamec/f2c/install/static/"
 	)
 set (C_COMMENT "-c")
 set (VERBOSE "-v1")
@@ -534,6 +543,7 @@ include_directories(${CMAKE_SOURCE_DIR}/src/base/flamec/supermatrix/gpu/include)
 include_directories(${CMAKE_SOURCE_DIR}/src/base/flamec/blis/include)
 include_directories(${CMAKE_SOURCE_DIR}/src/base/flamec/hierarchy/include)
 include_directories(${CMAKE_SOURCE_DIR}/src/base/flamec/control)
+include_directories(${CMAKE_SOURCE_DIR}/src/base/flamec/wrappers/base/wrapper)
 include_directories(${CMAKE_SOURCE_DIR}/src/map)
 include_directories(${CMAKE_SOURCE_DIR}/src/map/lapack2flamec)
 include_directories(${CMAKE_SOURCE_DIR}/src/map/lapack2flamec/f2c)
@@ -547,7 +557,6 @@ include_directories(${CMAKE_SOURCE_DIR}/src/map/lapack2flamec/f2c/flamec/hetd)
 include_directories(${CMAKE_SOURCE_DIR}/src/map/lapack2flamec/f2c/flamec/spffrt)
 include_directories(${CMAKE_SOURCE_DIR}/src/map/lapack2flamec/f2c/install)
 include_directories(${CMAKE_SOURCE_DIR}/src/map/lapack2flamec/f2c/install/static)
-include_directories(${CMAKE_SOURCE_DIR}/src/map/lapack2flamec/f2c/install/static/other)
 include_directories(${CMAKE_SOURCE_DIR}/src/map/lapack2flamec/f2c/install/util)
 include_directories(${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/include)
 include_directories(${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/src)
@@ -564,7 +573,7 @@ if (BUILD_SHARED_LIBS)
                  ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLAME.h
                  )
 	target_compile_definitions("${PROJECT_NAME}" PUBLIC -DLIBFLAME_IS_BUILDING_LIBRARY)
-	target_compile_definitions("${PROJECT_NAME}" PUBLIC -DLIBFLAME_ENABLE_SHARED)	
+	target_compile_definitions("${PROJECT_NAME}" PUBLIC -DLIBFLAME_ENABLE_SHARED)
 else ()
 	add_library("${PROJECT_NAME}" STATIC ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/blis1.h
                  ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLA_f2c.h
