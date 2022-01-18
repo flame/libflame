@@ -32,6 +32,9 @@
   if SIDE = 'R'.
 */
 
+extern int dormqr_fla(char *side, char *trans, integer *m, integer *n, integer *k, doublereal *a, integer *lda, doublereal *tau, doublereal * c__, integer *ldc, doublereal *work, integer *lwork, integer *info);
+extern int sormqr_fla(char *side, char *trans, integer *m, integer *n, integer *k, real *a, integer *lda, real *tau, real * c__, integer *ldc, real *work, integer *lwork, integer *info);
+
 #define LAPACK_ormqr(prefix, name)                                      \
   int F77_ ## prefix ## name ## qr( char* side,                              \
                                     char* trans,                        \
@@ -98,6 +101,7 @@
 
 LAPACK_ormqr(s, orm)
 {
+#if !FLA_AMD_OPT
     {
         LAPACK_RETURN_CHECK( sormqr_check( side, trans,
                                            m, n, k,
@@ -110,9 +114,20 @@ LAPACK_ormqr(s, orm)
     {
         LAPACK_ormqr_body(s)
     }
+#else
+    {
+        sormqr_fla(side, trans, m, n, k,
+                   buff_A, ldim_A,
+                   buff_t,
+                   buff_B, ldim_B,
+                   buff_w, lwork, info);
+        return 0;
+    }
+#endif
 }
 LAPACK_ormqr(d, orm)
 {
+#if !FLA_AMD_OPT
     {
         LAPACK_RETURN_CHECK( dormqr_check( side, trans,
                                            m, n, k,
@@ -125,6 +140,16 @@ LAPACK_ormqr(d, orm)
     {
         LAPACK_ormqr_body(d)
     }
+#else
+    {
+        dormqr_fla(side, trans, m, n, k,
+                   buff_A, ldim_A,
+                   buff_t,
+                   buff_B, ldim_B,
+                   buff_w, lwork, info);
+        return 0;
+    }
+#endif
 }
 
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX

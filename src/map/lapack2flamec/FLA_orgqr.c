@@ -26,6 +26,9 @@
   as returned by SGEQRF.
 */
 
+extern int dorgqr_fla(integer *m, integer *n, integer *k, doublereal * a, integer *lda, doublereal *tau, doublereal *work, integer *lwork, integer *info);
+extern int sorgqr_fla(integer *m, integer *n, integer *k, real * a, integer *lda, real *tau, real *work, integer *lwork, integer *info);
+
 #define LAPACK_orgqr(prefix, name)                                      \
   int F77_ ## prefix ## name ## qr( integer* m,                             \
                                     integer* n,                             \
@@ -78,6 +81,7 @@
 
 LAPACK_orgqr(s, org)
 {
+#if !FLA_AMD_OPT
     {
         LAPACK_RETURN_CHECK( sorgqr_check( m, n, k,
                                            buff_A, ldim_A,
@@ -88,9 +92,20 @@ LAPACK_orgqr(s, org)
     {
         LAPACK_orgqr_body(s)
     }
+#else
+    {
+        sorgqr_fla(m, n, k,
+                   buff_A, ldim_A,
+                   buff_t,
+                   buff_w, lwork,
+                   info);
+        return 0;
+    }
+#endif
 }
 LAPACK_orgqr(d, org)
 {
+#if !FLA_AMD_OPT
     {
         LAPACK_RETURN_CHECK( dorgqr_check( m, n, k,
                                            buff_A, ldim_A,
@@ -101,6 +116,16 @@ LAPACK_orgqr(d, org)
     {
         LAPACK_orgqr_body(d)
     }
+#else
+    {
+        dorgqr_fla(m, n, k,
+                   buff_A, ldim_A,
+                   buff_t,
+                   buff_w, lwork,
+                   info);
+        return 0;
+    }
+#endif
 }
 
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX

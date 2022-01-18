@@ -25,6 +25,9 @@
   GEQRF computes a QR factorization of a M-by-N matrix A: A = Q * R.
 */
 
+extern int dgeqrf_fla(integer *m, integer *n, doublereal *a, integer * lda, doublereal *tau, doublereal *work, integer *lwork, integer *info);
+extern int sgeqrf_fla(integer *m, integer *n, real *a, integer *lda, real *tau, real *work, integer *lwork, integer *info);
+
 extern void DTL_Trace(
 		    uint8 ui8LogLevel,
 		    uint8 ui8LogType,
@@ -79,6 +82,7 @@ extern void DTL_Trace(
 
 LAPACK_geqrf(s)
 {
+#if !FLA_AMD_OPT
     {
         LAPACK_RETURN_CHECK( sgeqrf_check( m, n,
                                            buff_A, ldim_A,
@@ -86,19 +90,19 @@ LAPACK_geqrf(s)
                                            buff_w, lwork,
                                            info ) )
     }
-    if( ( *m < FLA_GEQRF__STHRESH ) || (*n < FLA_GEQRF__STHRESH ) && !FLA_ENABLE_ALT_PATHS)
-    {
-        FLA_EXT_sgeqrf( *m, *n, buff_A, *ldim_A, buff_t,
-                       buff_w, lwork, info );
-        return 0;
-    }
-    else
     {
         LAPACK_geqrf_body(s)
     }
+#else
+    {
+      sgeqrf_fla(m, n, buff_A, ldim_A, buff_t, buff_w, lwork, info);
+      return 0;
+    }
+#endif
 }
 LAPACK_geqrf(d)
 {
+#if !FLA_AMD_OPT
     {
         LAPACK_RETURN_CHECK( dgeqrf_check( m, n,
                                            buff_A, ldim_A,
@@ -106,16 +110,15 @@ LAPACK_geqrf(d)
                                            buff_w, lwork,
                                            info ) )
     }
-    if( ( *m < FLA_GEQRF__STHRESH ) || (*n < FLA_GEQRF__STHRESH ) && !FLA_ENABLE_ALT_PATHS)
-    {
-        FLA_EXT_dgeqrf( *m, *n, buff_A, *ldim_A, buff_t,
-                       buff_w, lwork, info );
-        return 0;
-    }
-    else
     {
         LAPACK_geqrf_body(d)
     }
+#else
+    {
+      dgeqrf_fla(m, n, buff_A, ldim_A, buff_t, buff_w, lwork, info);
+      return 0;
+    }
+#endif
 }
 
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
