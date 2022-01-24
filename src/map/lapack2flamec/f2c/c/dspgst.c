@@ -108,6 +108,12 @@ static doublereal c_b11 = 1.;
 /* Subroutine */
 int dspgst_(integer *itype, char *uplo, integer *n, doublereal *ap, doublereal *bp, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dspgst inputs: itype %" FLA_IS ", uplo %c, n %" FLA_IS "",*itype, *uplo, *n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1, i__2;
     doublereal d__1;
@@ -168,6 +174,7 @@ int dspgst_(integer *itype, char *uplo, integer *n, doublereal *ap, doublereal *
     {
         i__1 = -(*info);
         xerbla_("DSPGST", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*itype == 1)
@@ -296,6 +303,7 @@ int dspgst_(integer *itype, char *uplo, integer *n, doublereal *ap, doublereal *
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DSPGST */
 }
