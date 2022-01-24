@@ -108,6 +108,12 @@ i */
 /* Subroutine */
 int dstev_(char *jobz, integer *n, doublereal *d__, doublereal *e, doublereal *z__, integer *ldz, doublereal *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dstev inputs: jobz %c, n %" FLA_IS ", ldz %" FLA_IS "",*jobz, *n, *ldz);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer z_dim1, z_offset, i__1;
     doublereal d__1;
@@ -179,11 +185,13 @@ int dstev_(char *jobz, integer *n, doublereal *d__, doublereal *e, doublereal *z
     {
         i__1 = -(*info);
         xerbla_("DSTEV ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*n == 1)
@@ -192,6 +200,7 @@ int dstev_(char *jobz, integer *n, doublereal *d__, doublereal *e, doublereal *z
         {
             z__[z_dim1 + 1] = 1.;
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants. */
@@ -244,6 +253,7 @@ int dstev_(char *jobz, integer *n, doublereal *d__, doublereal *e, doublereal *z
         d__1 = 1. / sigma;
         dscal_(&imax, &d__1, &d__[1], &c__1);
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DSTEV */
 }

@@ -104,6 +104,12 @@ the matrix is singular and its */
 /* Subroutine */
 int dsptri_(char *uplo, integer *n, doublereal *ap, integer * ipiv, doublereal *work, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dsptri inputs: uplo %c, n %" FLA_IS ", ipiv %" FLA_IS "",*uplo, *n, *ipiv);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     doublereal d__1;
@@ -165,11 +171,13 @@ int dsptri_(char *uplo, integer *n, doublereal *ap, integer * ipiv, doublereal *
     {
         i__1 = -(*info);
         xerbla_("DSPTRI", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check that the diagonal matrix D is nonsingular. */
@@ -183,6 +191,7 @@ int dsptri_(char *uplo, integer *n, doublereal *ap, integer * ipiv, doublereal *
         {
             if (ipiv[*info] > 0 && ap[kp] == 0.)
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             kp -= *info;
@@ -200,6 +209,7 @@ int dsptri_(char *uplo, integer *n, doublereal *ap, integer * ipiv, doublereal *
         {
             if (ipiv[*info] > 0 && ap[kp] == 0.)
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             kp = kp + *n - *info + 1;
@@ -409,6 +419,7 @@ L60: /* If K < 1, exit from loop. */
 L80:
         ;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DSPTRI */
 }

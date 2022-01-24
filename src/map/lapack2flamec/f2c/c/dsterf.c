@@ -78,6 +78,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dsterf_(integer *n, doublereal *d__, doublereal *e, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dsterf inputs: n %" FLA_IS "",*n);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer i__1;
  doublereal d__1, d__2, d__3;
@@ -143,9 +149,11 @@
  *info = -1;
  i__1 = -(*info);
  xerbla_("DSTERF", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n <= 1) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Determine the unit roundoff for this environment. */
@@ -420,6 +428,7 @@
  goto L180;
  /* Sort eigenvalues in increasing order. */
  L170: dlasrt_("I", n, &d__[1], info);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  L180: return 0;
  /* End of DSTERF */
  }

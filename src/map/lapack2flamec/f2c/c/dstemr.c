@@ -313,6 +313,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dstemr_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e, doublereal *vl, doublereal *vu, integer *il, integer *iu, integer *m, doublereal *w, doublereal *z__, integer *ldz, integer *nzc, integer *isuppz, logical *tryrac, doublereal *work, integer *lwork, integer *iwork, integer *liwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dstemr inputs: jobz %c, range %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", ldz %" FLA_IS ", nzc %" FLA_IS ", lwork %" FLA_IS ", liwork %" FLA_IS "",*jobz, *range, *n, *il, *iu, *ldz, *nzc, *lwork, *liwork);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer z_dim1, z_offset, i__1, i__2;
  doublereal d__1, d__2;
@@ -501,14 +507,17 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DSTEMR", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery || zquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Handle N = 0, 1, and 2 cases immediately */
  *m = 0;
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n == 1) {
@@ -527,6 +536,7 @@
  isuppz[1] = 1;
  isuppz[2] = 1;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n == 2) {
@@ -679,6 +689,7 @@
  dlarre_(range, n, &wl, &wu, &iil, &iiu, &d__[1], &e[1], &work[inde2], &rtol1, &rtol2, &thresh, &nsplit, &iwork[iinspl], m, &w[1], & work[inderr], &work[indgp], &iwork[iindbl], &iwork[iindw], & work[indgrs], &pivmin, &work[indwrk], &iwork[iindwk], &iinfo);
  if (iinfo != 0) {
  *info = f2c_abs(iinfo) + 10;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Note that if RANGE .NE. 'V', DLARRE computes bounds on the desired */
@@ -690,6 +701,7 @@
  dlarrv_(n, &wl, &wu, &d__[1], &e[1], &pivmin, &iwork[iinspl], m, & c__1, m, &c_b18, &rtol1, &rtol2, &w[1], &work[inderr], & work[indgp], &iwork[iindbl], &iwork[iindw], &work[indgrs], &z__[z_offset], ldz, &isuppz[1], &work[indwrk], &iwork[ iindwk], &iinfo);
  if (iinfo != 0) {
  *info = f2c_abs(iinfo) + 20;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  }
@@ -754,6 +766,7 @@
  dlasrt_("I", m, &w[1], &iinfo);
  if (iinfo != 0) {
  *info = 3;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  }
@@ -793,6 +806,7 @@
  }
  work[1] = (doublereal) lwmin;
  iwork[1] = liwmin;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DSTEMR */
  }

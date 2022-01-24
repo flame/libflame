@@ -278,7 +278,7 @@ if(lsame_(compz, "I") && *n > 37 )
     liwork = iwkopt;
     iwork =  (int*)malloc( liwork*sizeof(int) );
     dsteqr_helper_("V", "L", &N, z__, &LDZ, d__,  worker,&lwork, iwork, &liwork, &info);
-AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
   }
 else

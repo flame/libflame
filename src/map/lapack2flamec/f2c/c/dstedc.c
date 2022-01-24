@@ -183,6 +183,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dstedc_(char *compz, integer *n, doublereal *d__, doublereal *e, doublereal *z__, integer *ldz, doublereal *work, integer *lwork, integer *iwork, integer *liwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dstedc inputs: compz %c, n %" FLA_IS ", ldz %" FLA_IS ", lwork %" FLA_IS ", liwork %" FLA_IS "",*compz, *n, *ldz, *lwork, *liwork);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer z_dim1, z_offset, i__1, i__2;
  doublereal d__1, d__2;
@@ -216,7 +222,7 @@
  int dsterf_(integer *, doublereal *, doublereal *, integer *), dlasrt_(char *, integer *, doublereal *, integer *);
  integer liwmin, icompz;
  extern /* Subroutine */
- int dsteqr_internal_(char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *);
+ int dsteqr_(char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *);
  doublereal orgnrm;
  logical lquery;
  integer smlsiz, storez, strtrw;
@@ -317,19 +323,23 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DSTEDC", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n == 1) {
  if (icompz != 0) {
  z__[z_dim1 + 1] = 1.;
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* If the following conditional clause is removed, then the routine */
@@ -348,7 +358,7 @@
  /* If N is smaller than the minimum divide size (SMLSIZ+1), then */
  /* solve the problem with another solver. */
  if (*n <= smlsiz) {
- dsteqr_internal_(compz, n, &d__[1], &e[1], &z__[z_offset], ldz, &work[1], info);
+ dsteqr_(compz, n, &d__[1], &e[1], &z__[z_offset], ldz, &work[1], info);
  }
  else {
  /* If COMPZ = 'V', the Z matrix must be stored elsewhere for later */
@@ -416,12 +426,12 @@
  /* Since QR won't update a Z matrix which is larger than */
  /* the length of D, we must solve the sub-problem in a */
  /* workspace and then multiply back into Z. */
- dsteqr_internal_("I", &m, &d__[start], &e[start], &work[1], &m, & work[m * m + 1], info);
+ dsteqr_("I", &m, &d__[start], &e[start], &work[1], &m, & work[m * m + 1], info);
  dlacpy_("A", n, &m, &z__[start * z_dim1 + 1], ldz, &work[ storez], n);
  dgemm_("N", "N", n, &m, &m, &c_b18, &work[storez], n, & work[1], &m, &c_b17, &z__[start * z_dim1 + 1], ldz);
  }
  else if (icompz == 2) {
- dsteqr_internal_("I", &m, &d__[start], &e[start], &z__[start + start * z_dim1], ldz, &work[1], info);
+ dsteqr_("I", &m, &d__[start], &e[start], &z__[start + start * z_dim1], ldz, &work[1], info);
  }
  else {
  dsterf_(&m, &d__[start], &e[start], info);
@@ -469,6 +479,7 @@
  }
  L50: work[1] = (doublereal) lwmin;
  iwork[1] = liwmin;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DSTEDC */
  }
