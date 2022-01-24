@@ -46,6 +46,9 @@
   Here dimenions m and n are defined w.r.t C.
 */
 
+extern int sormbr_fla(char *vect, char *side, char *trans, integer *m, integer *n, integer *k, real *a, integer *lda, real *tau, real *c__, integer *ldc, real *work, integer *lwork, integer *info);
+extern int dormbr_fla(char *vect, char *side, char *trans, integer *m, integer *n, integer *k, doublereal *a, integer *lda, doublereal *tau, doublereal *c__, integer *ldc, doublereal *work, integer *lwork, integer *info);
+
 #define LAPACK_ormbr(prefix, name)                                      \
   int F77_ ## prefix ## name ## br( char* vect,                         \
                                     char* side,                         \
@@ -233,7 +236,18 @@ LAPACK_ormbr(s, orm)
                                            info ) )
     }
     {
+#if !FLA_AMD_OPT
         LAPACK_ormbr_body(s)
+#else
+        sormbr_fla( vect, side, trans,
+                    m, n, k,
+                    buff_A, ldim_A,
+                    buff_t,
+                    buff_C, ldim_C,
+                    buff_w, lwork,
+                    info);
+        return 0;
+#endif
     }
 }
 LAPACK_ormbr(d, orm)
@@ -248,7 +262,19 @@ LAPACK_ormbr(d, orm)
                                            info ) )
     }
     {
+#if !FLA_AMD_OPT
         LAPACK_ormbr_body(d)
+#else
+        *info = 0;
+        dormbr_fla( vect, side, trans,
+                    m, n, k,
+                    buff_A, ldim_A,
+                    buff_t,
+                    buff_C, ldim_C,
+                    buff_w, lwork,
+                    info);
+        return 0;
+#endif
     }
 }
 

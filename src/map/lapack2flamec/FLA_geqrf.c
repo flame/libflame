@@ -27,6 +27,10 @@
 
 extern int dgeqrf_fla(integer *m, integer *n, doublereal *a, integer * lda, doublereal *tau, doublereal *work, integer *lwork, integer *info);
 extern int sgeqrf_fla(integer *m, integer *n, real *a, integer *lda, real *tau, real *work, integer *lwork, integer *info);
+extern int sgeqrfp_fla(integer *m, integer *n, real *a, integer *lda, real *tau, real *work, integer *lwork, integer *info);
+extern int dgeqrfp_fla(integer *m, integer *n, doublereal *a, integer * lda, doublereal *tau, doublereal *work, integer *lwork, integer *info);
+extern int sgeqr2p_fla(integer *m, integer *n, real *a, integer *lda, real *tau, real *work, integer *info);
+extern int dgeqr2p_fla(integer *m, integer *n, doublereal *a, integer * lda, doublereal *tau, doublereal *work, integer *info);
 
 extern void DTL_Trace(
 		    uint8 ui8LogLevel,
@@ -224,6 +228,7 @@ LAPACK_geqr2(z)
                                integer* info )
 LAPACK_geqrfp(s)
 {
+#if !FLA_AMD_OPT
     {
         LAPACK_RETURN_CHECK( sgeqrfp_check( m, n,
                                             buff_A, ldim_A,
@@ -234,9 +239,20 @@ LAPACK_geqrfp(s)
     {
         LAPACK_geqrf_body(s)
     }
+#else
+    {
+      sgeqrfp_fla( m, n,
+                   buff_A, ldim_A,
+                   buff_t,
+                   buff_w, lwork,
+                   info );
+      return 0;
+    }
+#endif
 }
 LAPACK_geqrfp(d)
 {
+#if !FLA_AMD_OPT
     {
         LAPACK_RETURN_CHECK( dgeqrfp_check( m, n,
                                             buff_A, ldim_A,
@@ -247,6 +263,16 @@ LAPACK_geqrfp(d)
     {
         LAPACK_geqrf_body(d)
     }
+#else
+    {
+      dgeqrfp_fla( m, n,
+                   buff_A, ldim_A,
+                   buff_t,
+                   buff_w, lwork,
+                   info );
+      return 0;
+    }
+#endif
 }
 
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
@@ -288,6 +314,7 @@ LAPACK_geqrfp(z)
 
 LAPACK_geqr2p(s)
 {
+#if !FLA_AMD_OPT
     {
         LAPACK_RETURN_CHECK( sgeqr2p_check( m, n,
                                             buff_A, ldim_A,
@@ -298,9 +325,20 @@ LAPACK_geqr2p(s)
     {
         LAPACK_geqrf_body(s)
     }
+#else
+    {
+        sgeqr2p_fla( m, n,
+                     buff_A, ldim_A,
+                     buff_t,
+                     buff_w,
+                     info );
+        return 0;
+    }
+#endif
 }
 LAPACK_geqr2p(d)
 {
+#if !FLA_AMD_OPT
     {
         LAPACK_RETURN_CHECK( dgeqr2p_check( m, n,
                                             buff_A, ldim_A,
@@ -311,6 +349,16 @@ LAPACK_geqr2p(d)
     {
         LAPACK_geqrf_body(d)
     }
+#else
+    {
+        dgeqr2p_fla( m, n,
+                     buff_A, ldim_A,
+                     buff_t,
+                     buff_w,
+                     info );
+        return 0;
+    }
+#endif
 }
 
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
