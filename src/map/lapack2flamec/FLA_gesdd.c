@@ -63,17 +63,6 @@
 
 #define LAPACK_gesdd_real_body(prefix)                                  \
   AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                 	\
-  char jobu[1], jobv[1];                                                \
-                                                                        \
-  if ( *jobz == 'O' ) {                                                 \
-    if ( *m >= *n ) {                                                   \
-      jobu[0] = 'O'; jobv[0] = 'A';                                     \
-    } else {                                                            \
-      jobu[0] = 'A'; jobv[0] = 'O';                                     \
-    }                                                                   \
-  } else {                                                              \
-    jobu[0] = *jobz; jobv[0] = *jobz;                                   \
-  }                                                                     \
                                                                         \
   F77_ ## prefix ## gesvd( jobu, jobv,                                  \
                            m, n,                                        \
@@ -114,15 +103,27 @@
 
 LAPACK_gesdd_real(s)
 {
-    {
-        LAPACK_RETURN_CHECK( sgesdd_check( jobz,
+    
+    char jobu[1], jobv[1];                                                
+                                                                        
+    if ( *jobz == 'O' ) {                                                 
+      if ( *m >= *n ) {                                                   
+        jobu[0] = 'O'; jobv[0] = 'A';                                     
+      } else {                                                            
+        jobu[0] = 'A'; jobv[0] = 'O';                                     
+      }                                                                   
+    } else {                                                              
+      jobu[0] = *jobz; jobv[0] = *jobz;                                   
+    }
+
+    {                                                                    
+        LAPACK_RETURN_CHECK( sgesvd_check( jobu, jobv,
                                            m, n,
                                            buff_A,  ldim_A,
                                            buff_s,
                                            buff_U,  ldim_U,
                                            buff_Vh, ldim_Vh,
                                            buff_w,  lwork,
-                                           buff_i,
                                            info ) )
     }
     {
@@ -131,15 +132,27 @@ LAPACK_gesdd_real(s)
 }
 LAPACK_gesdd_real(d)
 {
-    {
-        LAPACK_RETURN_CHECK( dgesdd_check( jobz,
+    
+    char jobu[1], jobv[1];                                                
+                                                                        
+    if ( *jobz == 'O' ) {                                                 
+      if ( *m >= *n ) {                                                   
+        jobu[0] = 'O'; jobv[0] = 'A';                                     
+      } else {                                                            
+        jobu[0] = 'A'; jobv[0] = 'O';                                     
+      }                                                                   
+    } else {                                                              
+      jobu[0] = *jobz; jobv[0] = *jobz;                                   
+    }
+
+    {                                                                    
+        LAPACK_RETURN_CHECK( dgesvd_check( jobu, jobv,
                                            m, n,
                                            buff_A,  ldim_A,
                                            buff_s,
                                            buff_U,  ldim_U,
                                            buff_Vh, ldim_Vh,
                                            buff_w,  lwork,
-                                           buff_i,
                                            info ) )
     }
     {
