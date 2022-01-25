@@ -2185,7 +2185,7 @@ double F77_zlanhs(char* norm, integer* n, dcomplex* a, integer* lda, double* wor
 double F77_zlanht(char* norm, integer* n, double* d, dcomplex* e);
 double F77_zlansb(char* norm, char* uplo, integer* n, integer* k, dcomplex* ab, integer* ldab, double* work);
 double F77_zlansp(char* norm, char* uplo, integer* n, dcomplex* ap, double* work);
-double F77_zlansy(char* norm, char* uplo, integer* n, dcomplex* a, integer* lda, dcomplex* work);
+double F77_zlansy(char* norm, char* uplo, integer* n, dcomplex* a, integer* lda, double* work);
 double F77_zlantb(char* norm, char* uplo, char* diag, integer* n, integer* k, dcomplex* ab, integer* ldab, double* work);
 double F77_zlantp(char* norm, char* uplo, char* diag, integer* n, dcomplex* ap, double* work);
 double F77_zlantr(char* norm, char* uplo, char* diag, integer* m, integer* n, dcomplex* a, integer* lda, double* work);
@@ -2215,7 +2215,7 @@ float F77_clanhs(char* norm, integer* n, scomplex* a, integer* lda, float* work)
 float F77_clanht(char* norm, integer* n, float* d, scomplex* e);
 float F77_clansb(char* norm, char* uplo, integer* n, integer* k, scomplex* ab, integer* ldab, float* work);
 float F77_clansp(char* norm, char* uplo, integer* n, scomplex* ap, float* work);
-float F77_clansy(char* norm, char* uplo, integer* n, scomplex* a, integer* lda, scomplex* work);
+float F77_clansy(char* norm, char* uplo, integer* n, scomplex* a, integer* lda, float* work);
 float F77_clantb(char* norm, char* uplo, char* diag, integer* n, integer* k, scomplex* ab, integer* ldab, float* work);
 float F77_clantp(char* norm, char* uplo, char* diag, integer* n, scomplex* ap, float* work);
 float F77_clantr(char* norm, char* uplo, char* diag, integer* m, integer* n, scomplex* a, integer* lda, float* work);
@@ -3098,7 +3098,7 @@ int F77_dsyconvf(char* uplo, char* way, integer* n, double* a, integer* lda, dou
 int F77_dsyconvf_rook(char* uplo, char* way, integer* n, double* a, integer* lda, double* e, integer* ipiv, integer* info);
 int F77_dsyequb(char* uplo, integer* n, double* a, integer* lda, double* s, double* scond, double* amax, double* work, integer* info);
 int F77_dsyev_2stage(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, integer* info);
-int F77_dsyev(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, double* rwork, integer* info);
+int F77_dsyev(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, integer* info);
 int F77_dsyevd_2stage(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
 int F77_dsyevd(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
 int F77_dsyevr_2stage(char* jobz, char* range, char* uplo, integer* n, double* a, integer* lda, double* vl, double* vu, integer* il, integer* iu, double* abstol, integer* m, double* w, double* z, integer* ldz, integer* isuppz, double* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
@@ -3584,7 +3584,7 @@ int F77_ssyconvf(char* uplo, char* way, integer* n, float* a, integer* lda, floa
 int F77_ssyconvf_rook(char* uplo, char* way, integer* n, float* a, integer* lda, float* e, integer* ipiv, integer* info);
 int F77_ssyequb(char* uplo, integer* n, float* a, integer* lda, float* s, float* scond, float* amax, float* work, integer* info);
 int F77_ssyev_2stage(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, integer* info);
-int F77_ssyev(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, float* rwork, integer* info);
+int F77_ssyev(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, integer* info);
 int F77_ssyevd_2stage(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
 int F77_ssyevd(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
 int F77_ssyevr_2stage(char* jobz, char* range, char* uplo, integer* n, float* a, integer* lda, float* vl, float* vu, integer* il, integer* iu, float* abstol, integer* m, float* w, float* z, integer* ldz, integer* isuppz, float* work, integer* lwork, integer* iwork, integer* liwork, integer* info);

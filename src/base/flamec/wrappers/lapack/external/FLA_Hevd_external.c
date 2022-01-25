@@ -69,7 +69,6 @@ FLA_Error FLA_Hevd_external( FLA_Evd_type jobz, FLA_Uplo uplo, FLA_Obj A, FLA_Ob
       float* buff_A     = ( float * ) FLA_FLOAT_PTR( A );
       float* buff_e     = ( float * ) FLA_FLOAT_PTR( e );
       float* buff_work  = ( float * ) FLA_FLOAT_PTR( work );
-      float* buff_rwork = ( float * ) FLA_FLOAT_PTR( rwork );
 
       F77_ssyev( &blas_jobz,
                  &blas_uplo,
@@ -77,9 +76,7 @@ FLA_Error FLA_Hevd_external( FLA_Evd_type jobz, FLA_Uplo uplo, FLA_Obj A, FLA_Ob
                  buff_A,     &cs_A,
                  buff_e,
                  buff_work,  &lwork,
-                 buff_rwork,
                  &info );
-
       break;
     }
 
@@ -88,7 +85,6 @@ FLA_Error FLA_Hevd_external( FLA_Evd_type jobz, FLA_Uplo uplo, FLA_Obj A, FLA_Ob
       double* buff_A     = ( double * ) FLA_DOUBLE_PTR( A );
       double* buff_e     = ( double * ) FLA_DOUBLE_PTR( e );
       double* buff_work  = ( double * ) FLA_DOUBLE_PTR( work );
-      double* buff_rwork = ( double * ) FLA_DOUBLE_PTR( rwork );
   
       F77_dsyev( &blas_jobz,
                  &blas_uplo,
@@ -96,9 +92,7 @@ FLA_Error FLA_Hevd_external( FLA_Evd_type jobz, FLA_Uplo uplo, FLA_Obj A, FLA_Ob
                  buff_A,     &cs_A,
                  buff_e,
                  buff_work,  &lwork,
-                 buff_rwork,
                  &info );
-  
       break;
     } 
   

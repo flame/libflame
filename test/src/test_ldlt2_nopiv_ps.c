@@ -16,8 +16,8 @@ static char* op_str                   = "Partial / Incomplete LDLT(2) factorizat
 
 extern float  slansy_( char *, char *, integer *, float  *, integer *, float  * );
 extern double dlansy_( char *, char *, integer *, double *, integer *, double * );
-extern float  clansy_( char *, char *, integer *, scomplex *, integer *, scomplex * );
-extern double zlansy_( char *, char *, integer *, dcomplex *, integer *, dcomplex * );
+extern float  clansy_( char *, char *, integer *, scomplex *, integer *, float * );
+extern double zlansy_( char *, char *, integer *, dcomplex *, integer *, double * );
 
 extern int sspffrt2_( float  *ap, integer *n, integer * ncolm, float  *work, float  *work2 );
 extern int dspffrt2_( double *ap, integer *n, integer * ncolm, double *work, double *work2 );
@@ -512,7 +512,7 @@ float diff_norm_c( scomplex *ad, scomplex *fod, integer n, integer ni )
    scomplex *ra1, *ra2, *rad;
    scomplex czero;
    scomplex cone;
-   float snrm, anrm;
+   float snrm, anrm, *work;
    double rnrm, eps;
 
    integer di, i, j;
@@ -532,6 +532,7 @@ float diff_norm_c( scomplex *ad, scomplex *fod, integer n, integer ni )
    ra1 = (scomplex *) malloc( n * n * sizeof( scomplex ) );
    ra2 = (scomplex *) malloc( n * n * sizeof( scomplex ) );
    rad = (scomplex *) malloc( n * n * sizeof( scomplex ) );
+   work = (float *) malloc( n * sizeof( float ) );
 
    set_identity_c(L,  n, n, n);
    set_identity_c(D,  n, n, n);
@@ -595,8 +596,8 @@ float diff_norm_c( scomplex *ad, scomplex *fod, integer n, integer ni )
       }
    }
    eps = slamch_("Epsilon");
-   anrm = clansy_( nm, ul, &n, fod, &n, L );
-   rnrm = clansy_( nm, ul, &n, rad, &n, L );
+   anrm = clansy_( nm, ul, &n, fod, &n, work );
+   rnrm = clansy_( nm, ul, &n, rad, &n, work );
 
    /* Calculate the final norm */
    snrm = rnrm / n / anrm / eps;
@@ -607,6 +608,7 @@ float diff_norm_c( scomplex *ad, scomplex *fod, integer n, integer ni )
    free( ra1 );
    free( ra2 );
    free( rad );
+   free( work );
 
    return snrm;
 }
@@ -762,7 +764,7 @@ double diff_norm_z( dcomplex *ad, dcomplex *fod, integer n, integer ni )
    dcomplex czero;
    dcomplex cone;
    double dnrm, anrm;
-   double rnrm, eps;
+   double rnrm, eps, *work;
 
    integer di, i, j;
 
@@ -781,6 +783,7 @@ double diff_norm_z( dcomplex *ad, dcomplex *fod, integer n, integer ni )
    ra1 = (dcomplex *) malloc( n * n * sizeof( dcomplex ) );
    ra2 = (dcomplex *) malloc( n * n * sizeof( dcomplex ) );
    rad = (dcomplex *) malloc( n * n * sizeof( dcomplex ) );
+   work = (double *) malloc( n * sizeof( double ) );
 
    set_identity_z(L,  n, n, n);
    set_identity_z(D,  n, n, n);
@@ -844,8 +847,8 @@ double diff_norm_z( dcomplex *ad, dcomplex *fod, integer n, integer ni )
       }
    }
    eps = dlamch_("Epsilon");
-   anrm = zlansy_( nm, ul, &n, fod, &n, L );
-   rnrm = zlansy_( nm, ul, &n, rad, &n, L );
+   anrm = zlansy_( nm, ul, &n, fod, &n, work );
+   rnrm = zlansy_( nm, ul, &n, rad, &n, work );
 
    /* Calculate the final norm */
    dnrm = rnrm / n / anrm / eps;
@@ -856,6 +859,7 @@ double diff_norm_z( dcomplex *ad, dcomplex *fod, integer n, integer ni )
    free( ra1 );
    free( ra2 );
    free( rad );
+   free( work );
 
    return dnrm;
 }

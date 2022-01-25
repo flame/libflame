@@ -3329,9 +3329,9 @@ extern int DSYEV_2STAGE(char* jobz, char* uplo, integer* n, double* a, integer* 
 extern int dsyev_2stage(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, integer* info);
 extern int DSYEV_2STAGE_(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, integer* info);
 
-extern int DSYEV(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, double* rwork, integer* info);
-extern int dsyev(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, double* rwork, integer* info);
-extern int DSYEV_(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, double* rwork, integer* info);
+extern int DSYEV(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, integer* info);
+extern int dsyev(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, integer* info);
+extern int DSYEV_(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, integer* info);
 
 extern int DSYEVD_2STAGE(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
 extern int dsyevd_2stage(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
@@ -5221,9 +5221,9 @@ extern int SSYEV_2STAGE(char* jobz, char* uplo, integer* n, float* a, integer* l
 extern int ssyev_2stage(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, integer* info);
 extern int SSYEV_2STAGE_(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, integer* info);
 
-extern int SSYEV(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, float* rwork, integer* info);
-extern int ssyev(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, float* rwork, integer* info);
-extern int SSYEV_(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, float* rwork, integer* info);
+extern int SSYEV(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, integer* info);
+extern int ssyev(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, integer* info);
+extern int SSYEV_(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, integer* info);
 
 extern int SSYEVD_2STAGE(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
 extern int ssyevd_2stage(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
@@ -7629,9 +7629,9 @@ extern double ZLANSP(char* norm, char* uplo, integer* n, dcomplex* ap, double* w
 extern double zlansp(char* norm, char* uplo, integer* n, dcomplex* ap, double* work);
 extern double ZLANSP_(char* norm, char* uplo, integer* n, dcomplex* ap, double* work);
 
-extern double ZLANSY(char* norm, char* uplo, integer* n, dcomplex* a, integer* lda, dcomplex* work);
-extern double zlansy(char* norm, char* uplo, integer* n, dcomplex* a, integer* lda, dcomplex* work);
-extern double ZLANSY_(char* norm, char* uplo, integer* n, dcomplex* a, integer* lda, dcomplex* work);
+extern double ZLANSY(char* norm, char* uplo, integer* n, dcomplex* a, integer* lda, double* work);
+extern double zlansy(char* norm, char* uplo, integer* n, dcomplex* a, integer* lda, double* work);
+extern double ZLANSY_(char* norm, char* uplo, integer* n, dcomplex* a, integer* lda, double* work);
 
 extern double ZLANTB(char* norm, char* uplo, char* diag, integer* n, integer* k, dcomplex* ab, integer* ldab, double* work);
 extern double zlantb(char* norm, char* uplo, char* diag, integer* n, integer* k, dcomplex* ab, integer* ldab, double* work);
@@ -7749,9 +7749,9 @@ extern float CLANSP(char* norm, char* uplo, integer* n, scomplex* ap, float* wor
 extern float clansp(char* norm, char* uplo, integer* n, scomplex* ap, float* work);
 extern float CLANSP_(char* norm, char* uplo, integer* n, scomplex* ap, float* work);
 
-extern float CLANSY(char* norm, char* uplo, integer* n, scomplex* a, integer* lda, scomplex* work);
-extern float clansy(char* norm, char* uplo, integer* n, scomplex* a, integer* lda, scomplex* work);
-extern float CLANSY_(char* norm, char* uplo, integer* n, scomplex* a, integer* lda, scomplex* work);
+extern float CLANSY(char* norm, char* uplo, integer* n, scomplex* a, integer* lda, float* work);
+extern float clansy(char* norm, char* uplo, integer* n, scomplex* a, integer* lda, float* work);
+extern float CLANSY_(char* norm, char* uplo, integer* n, scomplex* a, integer* lda, float* work);
 
 extern float CLANTB(char* norm, char* uplo, char* diag, integer* n, integer* k, scomplex* ab, integer* ldab, float* work);
 extern float clantb(char* norm, char* uplo, char* diag, integer* n, integer* k, scomplex* ab, integer* ldab, float* work);

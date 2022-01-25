@@ -789,13 +789,13 @@ inline integer stemr(char* jobz, char* range, integer* n, double* d, double* e, 
 }
 
 // --- Hermitian eigenvalue decomposition (QR algorithm) ---
-inline integer syev(char* jobz, char* uplo, integer* n, float* a, integer* lda, float*  w, float* work, integer* lwork, float* rwork, integer* info)
+inline integer syev(char* jobz, char* uplo, integer* n, float* a, integer* lda, float*  w, float* work, integer* lwork, integer* info)
 {
-  return ssyev_(jobz, uplo, n, a, lda, w, work, lwork, rwork, info);
+  return ssyev_(jobz, uplo, n, a, lda, w, work, lwork, info);
 }
-inline integer syev(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, double* rwork, integer* info)
+inline integer syev(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, integer* info)
 {
-  return dsyev_(jobz, uplo, n, a, lda, w, work, lwork, rwork, info);
+  return dsyev_(jobz, uplo, n, a, lda, w, work, lwork, info);
 }
 
 // --- performs the symmetric rank-1 update of a complex symmetric matrix ---
@@ -2429,11 +2429,11 @@ inline double lansy(char* norm, char* uplo, integer* n,  double* a, integer* lda
 {
   return dlansy_(norm, uplo, n,  a, lda, work);
 }
-inline float lansy(char* norm, char* uplo, integer* n,  scomplex* a, integer* lda, scomplex* work)
+inline float lansy(char* norm, char* uplo, integer* n,  scomplex* a, integer* lda, float* work)
 {
   return clansy_(norm, uplo, n,  a, lda, work);
 }
-inline double lansy(char* norm, char* uplo, integer* n,  dcomplex* a, integer* lda, dcomplex* work)
+inline double lansy(char* norm, char* uplo, integer* n,  dcomplex* a, integer* lda, double* work)
 {
   return zlansy_(norm, uplo, n,  a, lda, work);
 }

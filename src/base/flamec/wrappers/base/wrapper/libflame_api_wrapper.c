@@ -12419,19 +12419,19 @@ int DSYEV_2STAGE_(char* jobz, char* uplo, integer* n, double* a, integer* lda, d
 	return dsyev_2stage_( jobz, uplo, n, a, lda, w, work, lwork, info);
 }
 
-int DSYEV(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, double* rwork, integer* info)
+int DSYEV(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, integer* info)
 {
-	return dsyev_( jobz, uplo, n, a, lda, w, work, lwork, rwork, info);
+	return dsyev_( jobz, uplo, n, a, lda, w, work, lwork, info);
 }
 
-int dsyev(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, double* rwork, integer* info)
+int dsyev(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, integer* info)
 {
-	return dsyev_( jobz, uplo, n, a, lda, w, work, lwork, rwork, info);
+	return dsyev_( jobz, uplo, n, a, lda, w, work, lwork, info);
 }
 
-int DSYEV_(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, double* rwork, integer* info)
+int DSYEV_(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, integer* info)
 {
-	return dsyev_( jobz, uplo, n, a, lda, w, work, lwork, rwork, info);
+	return dsyev_( jobz, uplo, n, a, lda, w, work, lwork, info);
 }
 
 int DSYEVD_2STAGE(char* jobz, char* uplo, integer* n, double* a, integer* lda, double* w, double* work, integer* lwork, integer* iwork, integer* liwork, integer* info)
@@ -19521,19 +19521,19 @@ int SSYEV_2STAGE_(char* jobz, char* uplo, integer* n, float* a, integer* lda, fl
 	return ssyev_2stage_( jobz, uplo, n, a, lda, w, work, lwork, info);
 }
 
-int SSYEV(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, float* rwork, integer* info)
+int SSYEV(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, integer* info)
 {
-	return ssyev_( jobz, uplo, n, a, lda, w, work, lwork, rwork, info);
+	return ssyev_( jobz, uplo, n, a, lda, w, work, lwork, info);
 }
 
-int ssyev(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, float* rwork, integer* info)
+int ssyev(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, integer* info)
 {
-	return ssyev_( jobz, uplo, n, a, lda, w, work, lwork, rwork, info);
+	return ssyev_( jobz, uplo, n, a, lda, w, work, lwork, info);
 }
 
-int SSYEV_(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, float* rwork, integer* info)
+int SSYEV_(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, integer* info)
 {
-	return ssyev_( jobz, uplo, n, a, lda, w, work, lwork, rwork, info);
+	return ssyev_( jobz, uplo, n, a, lda, w, work, lwork, info);
 }
 
 int SSYEVD_2STAGE(char* jobz, char* uplo, integer* n, float* a, integer* lda, float* w, float* work, integer* lwork, integer* iwork, integer* liwork, integer* info)
@@ -28560,17 +28560,17 @@ double ZLANSP_(char* norm, char* uplo, integer* n, dcomplex* ap, double* work)
 	return zlansp_( norm, uplo, n, ap, work);
 }
 
-double ZLANSY(char* norm, char* uplo, integer* n, dcomplex* a, integer* lda, dcomplex* work)
+double ZLANSY(char* norm, char* uplo, integer* n, dcomplex* a, integer* lda, double* work)
 {
 	return zlansy_( norm, uplo, n, a, lda, work);
 }
 
-double zlansy(char* norm, char* uplo, integer* n, dcomplex* a, integer* lda, dcomplex* work)
+double zlansy(char* norm, char* uplo, integer* n, dcomplex* a, integer* lda, double* work)
 {
 	return zlansy_( norm, uplo, n, a, lda, work);
 }
 
-double ZLANSY_(char* norm, char* uplo, integer* n, dcomplex* a, integer* lda, dcomplex* work)
+double ZLANSY_(char* norm, char* uplo, integer* n, dcomplex* a, integer* lda, double* work)
 {
 	return zlansy_( norm, uplo, n, a, lda, work);
 }
@@ -29010,17 +29010,17 @@ float CLANSP_(char* norm, char* uplo, integer* n, scomplex* ap, float* work)
 	return clansp_( norm, uplo, n, ap, work);
 }
 
-float CLANSY(char* norm, char* uplo, integer* n, scomplex* a, integer* lda, scomplex* work)
+float CLANSY(char* norm, char* uplo, integer* n, scomplex* a, integer* lda, float* work)
 {
 	return clansy_( norm, uplo, n, a, lda, work);
 }
 
-float clansy(char* norm, char* uplo, integer* n, scomplex* a, integer* lda, scomplex* work)
+float clansy(char* norm, char* uplo, integer* n, scomplex* a, integer* lda, float* work)
 {
 	return clansy_( norm, uplo, n, a, lda, work);
 }
 
-float CLANSY_(char* norm, char* uplo, integer* n, scomplex* a, integer* lda, scomplex* work)
+float CLANSY_(char* norm, char* uplo, integer* n, scomplex* a, integer* lda, float* work)
 {
 	return clansy_( norm, uplo, n, a, lda, work);
 }

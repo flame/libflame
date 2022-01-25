@@ -62,7 +62,7 @@ namespace libflame {
 template<typename T>
 integer potrf(char* uplo, integer* n, T* a, integer* lda, integer* info)
 {
-  return potrf(uplo, n, a, lda);
+  return potrf(uplo, n, a, lda, info);
 }
 
 /*! @brief Cholesky factorization of a real symmetric
@@ -4601,9 +4601,9 @@ integer stemr(char* jobz, char* range, integer* n, Ta*  d, Ta*  e, Ta* vl, Ta* v
     * @return INTEGER Return value of the function.
     *  */
 template< typename T >
-integer syev(char* jobz, char* uplo, integer* n, T* a, integer* lda, T*  w, T* work, integer* lwork, T* rwork, integer* info)
+integer syev(char* jobz, char* uplo, integer* n, T* a, integer* lda, T*  w, T* work, integer* lwork, integer* info)
 {
-  return syev(jobz, uplo, n, a, lda, w, work, lwork, rwork, info);
+  return syev(jobz, uplo, n, a, lda, w, work, lwork, info);
 }
 
 /*! @brief SYR performs the symmetric rank-1 update of a complex symmetric matrix
@@ -15848,6 +15848,11 @@ Ta lange(char* norm, integer* m, integer* n,  T* a, integer* lda, Ta* work)
  * */
 template< typename T >
 T lansy(char* norm, char* uplo, integer* n,  T* a, integer* lda, T* work)
+{
+  return lansy(norm, uplo, n,  a, lda, work);
+}
+template< typename T, typename Ta >
+Ta lansy(char* norm, char* uplo, integer* n,  T* a, integer* lda, Ta* work)
 {
   return lansy(norm, uplo, n,  a, lda, work);
 }
@@ -29217,7 +29222,7 @@ integer hseqr(char* job, char* compz, integer* n, integer* ilo, integer* ihi, T*
 {
   return hseqr(job, compz, n, ilo, ihi, h, ldh, wr, wi, z, ldz, work, lwork, info);
 }
-template< typename T, typename Ta >
+template< typename T >
 integer hseqr(char* job, char* compz, integer* n, integer* ilo, integer* ihi, T* h, integer* ldh, T* w, T* z, integer* ldz, T* work, integer* lwork, integer* info)
 {
   return hseqr(job, compz, n, ilo, ihi, h, ldh, w, z, ldz, work, lwork, info);
