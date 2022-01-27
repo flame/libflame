@@ -212,8 +212,10 @@ LAPACK_orm2r(s, orm)
         LAPACK_ormqr_body(s)
     }
 }
+
 LAPACK_orm2r(d, orm)
 {
+#if !FLA_AMD_OPT
     {
         LAPACK_RETURN_CHECK( dorm2r_check( side, trans,
                                            m, n, k,
@@ -226,6 +228,19 @@ LAPACK_orm2r(d, orm)
     {
         LAPACK_ormqr_body(d)
     }
+#else
+    {
+        dorm2r_fla( side, trans,
+                    m, n, k,
+                    buff_A, ldim_A,
+                    buff_t,
+                    buff_B, ldim_B,
+                    buff_w,
+                    info );
+        return 0;
+
+    }
+#endif
 }
 
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
