@@ -57,6 +57,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/dgeqr2p_check.c
 ${CMAKE_CURRENT_SOURCE_DIR}/dgeqrf_check.c
 ${CMAKE_CURRENT_SOURCE_DIR}/dgeqrfp_check.c
 ${CMAKE_CURRENT_SOURCE_DIR}/dgesdd_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/dgesdd_fla_check.c
 ${CMAKE_CURRENT_SOURCE_DIR}/dgesvd_check.c
 ${CMAKE_CURRENT_SOURCE_DIR}/dgetf2_check.c
 ${CMAKE_CURRENT_SOURCE_DIR}/dgetrf_check.c
@@ -98,6 +99,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/sgeqr2p_check.c
 ${CMAKE_CURRENT_SOURCE_DIR}/sgeqrf_check.c
 ${CMAKE_CURRENT_SOURCE_DIR}/sgeqrfp_check.c
 ${CMAKE_CURRENT_SOURCE_DIR}/sgesdd_check.c
+${CMAKE_CURRENT_SOURCE_DIR}/sgesdd_fla_check.c
 ${CMAKE_CURRENT_SOURCE_DIR}/sgesvd_check.c
 ${CMAKE_CURRENT_SOURCE_DIR}/sgetf2_check.c
 ${CMAKE_CURRENT_SOURCE_DIR}/sgetrf_check.c
