@@ -662,6 +662,8 @@ fla_enable_memory_alignment
 fla_vector_intrinsic_type
 fla_enable_vector_intrinsics
 fla_c_sse_flags
+fla_enable_amd_flags
+fla_enable_amd_aocc_flags
 fla_enable_blas_ext_gemmt
 fla_enable_gpu
 fla_enable_supermatrix
@@ -786,6 +788,8 @@ enable_blas3_front_end_cntl_trees
 enable_multithreading
 enable_supermatrix
 enable_gpu
+enable_amd_flags
+enable_amd_aocc_flags
 enable_blas_ext_gemmt
 enable_vector_intrinsics
 enable_memory_alignment
@@ -1488,6 +1492,9 @@ Optional Features:
   --enable-builtin-blas   Enable code that provides a built-in implementation
                           of the BLAS. Note that some routines may not be
                           optimized yet. (Disabled by default.)
+  --enable-amd-flags      Enable options that encapsulates optimal build on AMD hardware. 
+  --enable-amd-aocc-flags Enable options that encapsulates optimal build on AMD hardware.
+                          Use this when compiling libFLAME using AOCC clang compiler.
   --enable-lapack2flame   Compile and build into libflame a compatibility
                           layer that maps LAPACK invocations to their
                           corresponding FLAME/C implementations. Note that
@@ -5981,44 +5988,35 @@ $as_echo "no" >&6; }
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested building a dynamic library" >&5
 $as_echo_n "checking whether user requested building a dynamic library... " >&6; }
 
-				# Check whether --enable-dynamic-build was given.
-if test "${enable_dynamic_build+set}" = set; then :
-  enableval=$enable_dynamic_build;
-				if test "$enableval" = "no" ; then
+# Check whether --enable-dynamic-build was given.
+if test "${enable_amd_flags+set}" != set && test "${enable_amd_aocc_flags+set}" != set; then :
+  if test "${enable_dynamic_build+set}" = set; then :
+    enableval=$enable_dynamic_build;
+          if test "$enableval" = "no" ; then
+            fla_enable_dynamic_build=no
 
-						fla_enable_dynamic_build=no
+          elif test "$enableval" = "yes" ; then
+            fla_enable_dynamic_build=yes
+  else
+    as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_DYNAMIC_BUILD!" "$LINENO" 5
+  fi
 
-		elif test "$enableval" = "yes" ; then
+  else
+    fla_enable_dynamic_build=no
+  fi
 
-						fla_enable_dynamic_build=yes
-		else
+  if   test "$fla_enable_dynamic_build" = "yes" ; then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+      $as_echo "yes" >&6; }
 
-												as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_DYNAMIC_BUILD!" "$LINENO" 5
-		fi
+  elif test "$fla_enable_dynamic_build" = "no" ; then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+    $as_echo "no" >&6; }
 
-else
-
-						fla_enable_dynamic_build=no
-
-
+  else
+    as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_DYNAMIC_BUILD!" "$LINENO" 5
+  fi
 fi
-
-
-		if   test "$fla_enable_dynamic_build" = "yes" ; then
-
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-
-	elif test "$fla_enable_dynamic_build" = "no" ; then
-
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-
-	else
-
-				as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_DYNAMIC_BUILD!" "$LINENO" 5
-
-	fi
 
 
 
@@ -6076,59 +6074,44 @@ $as_echo "no" >&6; }
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested hack to circumvent small ARG_MAX" >&5
 $as_echo_n "checking whether user requested hack to circumvent small ARG_MAX... " >&6; }
 
-				# Check whether --enable-max-arg-list-hack was given.
-if test "${enable_max_arg_list_hack+set}" = set; then :
-  enableval=$enable_max_arg_list_hack;
-				if test "$enableval" = "no" ; then
+# Check whether --enable-max-arg-list-hack was given.
+if test "${enable_amd_flags+set}" != set && test "${enable_amd_aocc_flags+set}" != set; then :  
+  if test "${enable_max_arg_list_hack+set}" = set; then :
+    enableval=$enable_max_arg_list_hack;
+      if test "$enableval" = "no" ; then
+        fla_enable_max_arg_list_hack=no
 
-						fla_enable_max_arg_list_hack=no
+      elif test "$enableval" = "yes" ; then
+        fla_enable_max_arg_list_hack=yes
+      else
+        as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_BUILTIN_LAPACK_FUNCTIONS!" "$LINENO" 5
+      fi
 
-		elif test "$enableval" = "yes" ; then
-
-						fla_enable_max_arg_list_hack=yes
-		else
-
-												as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_BUILTIN_LAPACK_FUNCTIONS!" "$LINENO" 5
-		fi
-
-else
-
-						fla_enable_max_arg_list_hack=no
+  else
+    fla_enable_max_arg_list_hack=no
+  fi
 
 
+  if  test "$fla_enable_max_arg_list_hack" = "yes" ; then
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+        $as_echo "yes" >&6; }
+
+  elif test "$fla_enable_max_arg_list_hack" = "no" ; then
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+      $as_echo "no" >&6; }
+
+  else
+      as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_BUILTIN_LAPACK_FUNCTIONS!" "$LINENO" 5
+  fi
 fi
 
 
-		if   test "$fla_enable_max_arg_list_hack" = "yes" ; then
 
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-
-	elif test "$fla_enable_max_arg_list_hack" = "no" ; then
-
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-
-	else
-				as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_BUILTIN_LAPACK_FUNCTIONS!" "$LINENO" 5
-	fi
-
-
-
-
-
-
-
-
-
-
-
-
-		if test "$fla_enable_static_build" = "no" ; then
-		if test "$fla_enable_dynamic_build" = "no" ; then
-			as_fn_error 1 "Configuring libflame to disable both static and dynamic builds is not allowed. Please enable a static build or a dynamic build (or both) and then re-run configure." "$LINENO" 5
-		fi
-	fi
+if test "$fla_enable_static_build" = "no" ; then
+  if test "$fla_enable_dynamic_build" = "no" ; then
+    as_fn_error 1 "Configuring libflame to disable both static and dynamic builds is not allowed. Please enable a static build or a dynamic build (or both) and then re-run configure." "$LINENO" 5
+  fi
+fi
 
 
 
@@ -6306,47 +6289,39 @@ $as_echo "no" >&6; }
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested the lapack2flame compatibility layer" >&5
 $as_echo_n "checking whether user requested the lapack2flame compatibility layer... " >&6; }
 
-				# Check whether --enable-lapack2flame was given.
-if test "${enable_lapack2flame+set}" = set; then :
-  enableval=$enable_lapack2flame;
-				if test "$enableval" = "no" ; then
+# Check whether --enable-lapack2flame was given.
+if test "${enable_amd_flags+set}" != set && test "${enable_amd_aocc_flags+set}" != set; then :
+  if test "${enable_lapack2flame+set}" = set; then :
+    enableval=$enable_lapack2flame;
+      if test "$enableval" = "no" ; then
+        fla_enable_lapack2flame=no
+
+      elif test "$enableval" = "yes" ; then
+        fla_enable_lapack2flame=yes
+      
+      else
+        as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_LAPACK2FLAME!" "$LINENO" 5
+      fi
+
+  else
+    fla_enable_lapack2flame=no
+
+  fi
 
 
-						fla_enable_lapack2flame=no
+  if  test "$fla_enable_lapack2flame" = "yes" ; then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+      $as_echo "yes" >&6; }
+      $as_echo "#define FLA_ENABLE_LAPACK2FLAME 1" >>confdefs.h
 
-		elif test "$enableval" = "yes" ; then
+  elif test "$fla_enable_lapack2flame" = "no" ; then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+      $as_echo "no" >&6; }
 
-						fla_enable_lapack2flame=yes
-		else
-
-												as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_LAPACK2FLAME!" "$LINENO" 5
-		fi
-
-else
-
-						fla_enable_lapack2flame=no
-
-
+  else
+    as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_LAPACK2FLAME!" "$LINENO" 5
+  fi
 fi
-
-
-		if   test "$fla_enable_lapack2flame" = "yes" ; then
-
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-
-
-$as_echo "#define FLA_ENABLE_LAPACK2FLAME 1" >>confdefs.h
-
-
-	elif test "$fla_enable_lapack2flame" = "no" ; then
-
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-
-	else
-				as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_LAPACK2FLAME!" "$LINENO" 5
-	fi
 
 
 
@@ -6406,116 +6381,116 @@ $as_echo "no" >&6; }
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested enabling interfaces to external LAPACK routines" >&5
 $as_echo_n "checking whether user requested enabling interfaces to external LAPACK routines... " >&6; }
 
-				# Check whether --enable-external-lapack-interfaces was given.
-if test "${enable_external_lapack_interfaces+set}" = set; then :
-  enableval=$enable_external_lapack_interfaces;
-				if test "$enableval" = "no" ; then
+# Check whether --enable-external-lapack-interfaces was given.
+if test "${enable_amd_flags+set}" != set && test "${enable_amd_aocc_flags+set}" != set; then :
+  if test "${enable_external_lapack_interfaces+set}" = set; then :
+    enableval=$enable_external_lapack_interfaces;
+      if test "$enableval" = "no" ; then
+        fla_enable_external_lapack_interfaces=no
+
+      elif test "$enableval" = "yes" ; then
+        fla_enable_external_lapack_interfaces=yes
+      else
+        as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_EXTERNAL_LAPACK_INTERFACES!" "$LINENO" 5
+      fi
+
+  else
+    fla_enable_external_lapack_interfaces=no
+
+  fi
 
 
-						fla_enable_external_lapack_interfaces=no
+  if   test "$fla_enable_external_lapack_interfaces" = "yes" ; then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+      $as_echo "yes" >&6; }
+      $as_echo "#define FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES 1" >>confdefs.h
 
-		elif test "$enableval" = "yes" ; then
+  elif test "$fla_enable_external_lapack_interfaces" = "no" ; then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+      $as_echo "no" >&6; }
 
-						fla_enable_external_lapack_interfaces=yes
-		else
-
-												as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_EXTERNAL_LAPACK_INTERFACES!" "$LINENO" 5
-		fi
-
-else
-
-						fla_enable_external_lapack_interfaces=no
-
-
+    else
+      as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_EXTERNAL_LAPACK_INTERFACES!" "$LINENO" 5
+    fi
 fi
-
-
-		if   test "$fla_enable_external_lapack_interfaces" = "yes" ; then
-
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-
-
-$as_echo "#define FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES 1" >>confdefs.h
-
-
-	elif test "$fla_enable_external_lapack_interfaces" = "no" ; then
-
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-
-	else
-				as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_EXTERNAL_LAPACK_INTERFACES!" "$LINENO" 5
-	fi
 
 
 
        { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested enabling F2C convention for Complex dotc/dotu function" >&5
 			$as_echo_n "checking whether user requested enabling F2C calling format for complex dotc/dotu function... " >&6; }
 
-       # Check whether --enable-f2c-dotc was given.
-        if test "${enable_f2c_dotc+set}" = set; then :
-             enableval=$enable_f2c_dotc;
-             if test "$enableval" = "no" ; then
-                fla_enable_f2c_dotc=no
-             elif test "$enableval" = "yes" ; then
-                fla_enable_f2c_dotc=yes
-             else
-                as_fn_error "Reached unreachable branch in FLA_CHECK_ENABLE_F2C_DOTC!" "$LINENO" 5
-             fi
-        else
-             fla_enable_f2c_dotc=no
-        fi
+# Check whether --enable-f2c-dotc was given.
+if test "${enable_amd_aocc_flags+set}" != set; then :
+  if test "${enable_f2c_dotc+set}" = set; then :
+      enableval=$enable_f2c_dotc;
+      if test "$enableval" = "no" ; then
+        fla_enable_f2c_dotc=no
 
-        if   test "$fla_enable_f2c_dotc" = "yes" ; then
-             { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-               $as_echo "yes" >&6; }
-             $as_echo "#define FLA_ENABLE_F2C_DOTC 1" >>confdefs.h
-        elif test "$fla_enable_f2c_dotc" = "no" ; then
-             { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-               $as_echo "no" >&6; }
-        else
-             as_fn_error "Reached unreachable branch in FLA_CHECK_ENABLE_F2C_DOTC!" "$LINENO" 5
-        fi
+      elif test "$enableval" = "yes" ; then
+        fla_enable_f2c_dotc=yes
+
+      else
+        as_fn_error "Reached unreachable branch in FLA_CHECK_ENABLE_F2C_DOTC!" "$LINENO" 5
+      fi
+  else
+      fla_enable_f2c_dotc=no
+  fi
+
+  if   test "$fla_enable_f2c_dotc" = "yes" ; then
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+        $as_echo "yes" >&6; }
+        $as_echo "#define FLA_ENABLE_F2C_DOTC 1" >>confdefs.h
+
+  elif test "$fla_enable_f2c_dotc" = "no" ; then
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+        $as_echo "no" >&6; }
+
+  else
+      as_fn_error "Reached unreachable branch in FLA_CHECK_ENABLE_F2C_DOTC!" "$LINENO" 5
+  fi
+fi
 
 
        { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested enabling void return for functions that by default return complex type as per LAPACK standard" >&5
 			$as_echo_n "checking whether user requested enabling void return for functions that by default return complex type as per LAPACK standard... " >&6; }
 
-       # Check whether --enable-void-return-complex was given.
-        if test "${enable_void_return_complex+set}" = set; then :
-             enableval=$enable_void_return_complex;
-             if test "$enableval" = "no" ; then
-                fla_enable_void_return_complex=no
-             elif test "$enableval" = "yes" ; then
-                fla_enable_void_return_complex=yes
-             else
-                as_fn_error "Reached unreachable branch in FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION!" "$LINENO" 5
-             fi
-        else
-             fla_enable_void_return_complex=no
-        fi
+# Check whether --enable-void-return-complex was given.
+if test "${enable_amd_aocc_flags+set}" != set; then : 
+  if test "${enable_void_return_complex+set}" = set; then :
+    enableval=$enable_void_return_complex;
+    if test "$enableval" = "no" ; then
+      fla_enable_void_return_complex=no
+    elif test "$enableval" = "yes" ; then
+      fla_enable_void_return_complex=yes
+    else
+      as_fn_error "Reached unreachable branch in FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION!" "$LINENO" 5
+    fi
+  else
+      fla_enable_void_return_complex=no
+  fi
 
-        if   test "$fla_enable_void_return_complex" = "yes" ; then
-             { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-               $as_echo "yes" >&6; }
-             $as_echo "#define FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION 1" >>confdefs.h
-        elif test "$fla_enable_void_return_complex" = "no" ; then
-             { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-               $as_echo "no" >&6; }
-        else
-             as_fn_error "Reached unreachable branch in FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION!" "$LINENO" 5
-        fi
+  if  test "$fla_enable_void_return_complex" = "yes" ; then
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+        $as_echo "yes" >&6; }
+        $as_echo "#define FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION 1" >>confdefs.h
+  elif test "$fla_enable_void_return_complex" = "no" ; then
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+        $as_echo "no" >&6; }
+  else
+      as_fn_error "Reached unreachable branch in FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION!" "$LINENO" 5
+  fi
+fi
 
 
 
-		if test "$fla_enable_lapack2flame" = "yes" ; then
+
+	if test "$fla_enable_lapack2flame" = "yes" ; then
 		if test "$fla_enable_external_lapack_for_subproblems" = "yes" ; then
 			as_fn_error 1 "Configuring libflame to enable both lapack2flame and external-lapack-for-subproblems is not allowed. lapack2flame requires that external-lapack-for-subproblems be disabled. Please adjust your configure options accordingly and then re-run configure." "$LINENO" 5
 		fi
 	fi
 
-		if test "$fla_enable_lapack2flame" = "no" ; then
+	if test "$fla_enable_lapack2flame" = "no" ; then
 		if test "$fla_enable_external_lapack_for_subproblems" = "yes" ; then
 			if test "$fla_enable_external_lapack_interfaces" = "no" ; then
 				as_fn_error 1 "Configuring libflame to enable external-lapack-for-subproblems without external-lapack-interfaces is not allowed. external-lapack-for-subproblems requires that external-lapack-interfaces be enabled. Please adjust your configure options accordingly and then re-run configure." "$LINENO" 5
@@ -6816,52 +6791,124 @@ $as_echo "no" >&6; }
 
 	fi
 
-
-
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested enabling gemmt based optimizations" >&5
-$as_echo_n "checking whether user requested enabling gemmt based optimizations... " >&6; }
+    $as_echo_n "checking whether user requested enabling gemmt based optimizations... " >&6; }
 
-				# Check whether --enable-blas-ext-gemmt was given.
-if test "${enable_blas_ext_gemmt+set}" = set; then :
-  enableval=$enable_blas_ext_gemmt;
-				if test "$enableval" = "no" ; then
+# Changes so that --enable-amd-flags encapsulates various other flags
+# Check whether --enable-amd-flags was given.
 
-
-						fla_enable_blas_ext_gemmt=no
-
-		elif test "$enableval" = "yes" ; then
-
-						fla_enable_blas_ext_gemmt=yes
-		else
-
-												as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_BLAS_EXT_GEMMT!" "$LINENO" 5
-		fi
+if test "${enable_amd_flags+set}" = set; then :
+  enableval=$enable_amd_flags;
+        if test "$enableval" = "no" ; then
+            fla_enable_amd_flags=no
+    
+        elif test "$enableval" = "yes" ; then
+            fla_enable_blas_ext_gemmt=yes
+            fla_enable_lapack2flame=yes
+            fla_enable_external_lapack_interfaces=yes
+            fla_enable_dynamic_build=yes
+            fla_enable_max_arg_list_hack=yes
+            fla_enable_amd_flags=yes
+    
+        else 
+            as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_ENABLE_AMD_FLAGS!" "$LINENO" 5
+        fi
 
 else
-
-						fla_enable_blas_ext_gemmt=no
-
-
+  fla_enable_amd_flags=no
 fi
 
+if   test "$fla_enable_amd_flags" = "yes" ; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+    $as_echo "yes" >&6; }
+    $as_echo "#define FLA_ENABLE_BLAS_EXT_GEMMT 1" >>confdefs.h
+    $as_echo "#define FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES 1" >>confdefs.h
+    $as_echo "#define FLA_ENABLE_LAPACK2FLAME 1" >>confdefs.h
+    $as_echo "#define FLA_ENABLE_AMD_FLAGS 1" >>confdefs.h
 
-		if   test "$fla_enable_blas_ext_gemmt" = "yes" ; then
+elif test "$fla_enable_amd_flags" = "no" ; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+    $as_echo "no" >&6; }
 
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
+else
+	as_fn_error $? "Reached unreachable branch in FLA_ENABLE_AMD_FLAGS!" "$LINENO" 5
+fi
 
+# Changes so that --enable-amd-aocc-flags encapsulates various other flags
+# Check whether --enable-amd-aocc-flags was given.
 
-$as_echo "#define FLA_ENABLE_BLAS_EXT_GEMMT 1" >>confdefs.h
+if test "${enable_amd_aocc_flags+set}" = set; then :
+  enableval=$enable_amd_aocc_flags;
+        if test "$enableval" = "no" ; then
+          fla_enable_amd_aocc_flags=no
+    
+        elif test "$enableval" = "yes" ; then
+          fla_enable_blas_ext_gemmt=yes
+          fla_enable_lapack2flame=yes
+          fla_enable_external_lapack_interfaces=yes
+          fla_enable_dynamic_build=yes
+          fla_enable_max_arg_list_hack=yes
+          fla_enable_f2c_dotc=yes
+          fla_enable_void_return_complex=yes
+          fla_enable_amd_aocc_flags=yes
+    
+        else 
+          as_fn_error $? "Reached. unreachable branch in FLA_CHECK_ENABLE_ENABLE_AMD_AOCC_FLAGS!" "$LINENO" 5
+        fi
 
+else
+  fla_enable_amd_aocc_flags=no
+fi
 
-	elif test "$fla_enable_blas_ext_gemmt" = "no" ; then
+if test "$fla_enable_amd_aocc_flags" = "yes" ; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+    $as_echo "yes" >&6; }
+    $as_echo "#define FLA_ENABLE_BLAS_EXT_GEMMT 1" >>confdefs.h
+    $as_echo "#define FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES 1" >>confdefs.h
+    $as_echo "#define FLA_ENABLE_LAPACK2FLAME 1" >>confdefs.h
+    $as_echo "#define FLA_ENABLE_F2C_DOTC 1" >>confdefs.h
+    $as_echo "#define FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION 1" >>confdefs.h
+    $as_echo "#define FLA_ENABLE_AMD_AOCC_FLAGS 1" >>confdefs.h
 
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
+elif test "$fla_enable_amd_aocc_flags" = "no" ; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+    $as_echo "no" >&6; }
 
-	else
-				as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_BLAS_EXT_GEMMT!" "$LINENO" 5
-	fi
+else
+	as_fn_error $? "Reached.. unreachable branch in FLA_ENABLE_AMD_AOCC_FLAGS!" "$LINENO" 5
+fi
+
+# Check whether --enable-blas-ext-gemmt was given.
+if test "${enable_amd_flags+set}" != set && test "${enable_amd_aocc_flags+set}" != set; then :
+  if test "${enable_blas_ext_gemmt+set}" = set; then :
+    enableval=$enable_blas_ext_gemmt;
+      if test "$enableval" = "no" ; then
+        fla_enable_blas_ext_gemmt=no
+
+      elif test "$enableval" = "yes" ; then
+        fla_enable_blas_ext_gemmt=yes
+
+      else
+        as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_BLAS_EXT_GEMMT!" "$LINENO" 5
+      fi
+
+  else
+    fla_enable_blas_ext_gemmt=no
+  fi
+
+  if   test "$fla_enable_blas_ext_gemmt" = "yes" ; then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+      $as_echo "yes" >&6; }
+      $as_echo "#define FLA_ENABLE_BLAS_EXT_GEMMT 1" >>confdefs.h
+
+  elif test "$fla_enable_blas_ext_gemmt" = "no" ; then
+    { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+      $as_echo "no" >&6; }
+
+  else
+    as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_BLAS_EXT_GEMMT!" "$LINENO" 5
+  fi
+fi
 
 
 
