@@ -133,6 +133,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int dsycon_rook_(char *uplo, integer *n, doublereal *a, integer *lda, integer *ipiv, doublereal *anorm, doublereal *rcond, doublereal *work, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dsycon_rook inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS "",*uplo, *n, *lda, *ipiv);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, i__1;
     /* Local variables */
@@ -199,6 +205,7 @@ int dsycon_rook_(char *uplo, integer *n, doublereal *a, integer *lda, integer *i
     {
         i__1 = -(*info);
         xerbla_("DSYCON_ROOK", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -206,10 +213,12 @@ int dsycon_rook_(char *uplo, integer *n, doublereal *a, integer *lda, integer *i
     if (*n == 0)
     {
         *rcond = 1.;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*anorm <= 0.)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Check that the diagonal matrix D is nonsingular. */
@@ -222,6 +231,7 @@ int dsycon_rook_(char *uplo, integer *n, doublereal *a, integer *lda, integer *i
         {
             if (ipiv[i__] > 0 && a[i__ + i__ * a_dim1] == 0.)
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* L10: */
@@ -237,6 +247,7 @@ int dsycon_rook_(char *uplo, integer *n, doublereal *a, integer *lda, integer *i
         {
             if (ipiv[i__] > 0 && a[i__ + i__ * a_dim1] == 0.)
             {
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* L20: */
@@ -257,6 +268,7 @@ L30:
     {
         *rcond = 1. / ainvnm / *anorm;
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DSYCON_ROOK */
 }
