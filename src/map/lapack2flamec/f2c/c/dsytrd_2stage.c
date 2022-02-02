@@ -220,6 +220,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dsytrd_2stage_(char *vect, char *uplo, integer *n, doublereal *a, integer *lda, doublereal *d__, doublereal *e, doublereal *tau, doublereal *hous2, integer *lhous2, doublereal *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dsytrd_2stage inputs: vect %c, uplo %c, n %" FLA_IS ", lda %" FLA_IS ", lhous2 %" FLA_IS ", lwork %" FLA_IS "",*vect, *uplo, *n, *lda, *lhous2, *lwork);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, i__1;
  /* Local variables */
@@ -301,14 +307,17 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DSYTRD_2STAGE", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n == 0) {
  work[1] = 1.;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Determine pointer position */
@@ -320,16 +329,19 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DSYTRD_SY2SB", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  dsytrd_sb2st_("Y", vect, uplo, n, &kd, &work[abpos], &ldab, &d__[1], &e[ 1], &hous2[1], lhous2, &work[wpos], &lwrk, info);
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DSYTRD_SB2ST", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  hous2[1] = (doublereal) lhmin;
  work[1] = (doublereal) lwmin;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DSYTRD_2STAGE */
  }
