@@ -136,6 +136,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int dtbcon_(char *norm, char *uplo, char *diag, integer *n, integer *kd, doublereal *ab, integer *ldab, doublereal *rcond, doublereal *work, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dtbcon inputs: norm %c, uplo %c, diag %c, n %" FLA_IS ", kd %" FLA_IS ", ldab %" FLA_IS "",*norm, *uplo, *diag, *n, *kd, *ldab);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1;
     doublereal d__1;
@@ -223,12 +229,14 @@ int dtbcon_(char *norm, char *uplo, char *diag, integer *n, integer *kd, doubler
     {
         i__1 = -(*info);
         xerbla_("DTBCON", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
         *rcond = 1.;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     *rcond = 0.;
@@ -285,6 +293,7 @@ L10:
         }
     }
 L20:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DTBCON */
 }

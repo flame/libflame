@@ -269,6 +269,12 @@ K=N/2. If */
 /* Subroutine */
 int dtfsm_(char *transr, char *side, char *uplo, char *trans, char *diag, integer *m, integer *n, doublereal *alpha, doublereal *a, doublereal *b, integer *ldb)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dtfsm inputs: transr %c, side %c, uplo %c, trans %c, diag %c, m %" FLA_IS ", n %" FLA_IS ", ldb %" FLA_IS "",*transr, *side, *uplo, *trans, *diag, *m, *n, *ldb);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer b_dim1, b_offset, i__1, i__2;
     /* Local variables */
@@ -350,11 +356,13 @@ int dtfsm_(char *transr, char *side, char *uplo, char *trans, char *diag, intege
     {
         i__1 = -info;
         xerbla_("DTFSM ", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return when ( (N.EQ.0).OR.(M.EQ.0) ) */
     if (*m == 0 || *n == 0)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return when ALPHA.EQ.(0D+0) */
@@ -375,6 +383,7 @@ int dtfsm_(char *transr, char *side, char *uplo, char *trans, char *diag, intege
             }
             /* L20: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (lside)
@@ -849,6 +858,7 @@ int dtfsm_(char *transr, char *side, char *uplo, char *trans, char *diag, intege
             }
         }
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DTFSM */
 }
