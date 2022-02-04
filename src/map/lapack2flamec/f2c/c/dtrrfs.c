@@ -174,6 +174,12 @@ static doublereal c_b19 = -1.;
 /* Subroutine */
 int dtrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doublereal *a, integer *lda, doublereal *b, integer * ldb, doublereal *x, integer *ldx, doublereal *ferr, doublereal *berr, doublereal *work, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dtrrfs inputs: uplo %c, trans %c, diag %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*uplo, *trans, *diag, *n, *nrhs, *lda, *ldb, *ldx);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, x_dim1, x_offset, i__1, i__2, i__3;
     doublereal d__1, d__2, d__3;
@@ -277,6 +283,7 @@ int dtrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
     {
         i__1 = -(*info);
         xerbla_("DTRRFS", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -291,6 +298,7 @@ int dtrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
             berr[j] = 0.;
             /* L10: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (notran)
@@ -617,6 +625,7 @@ L210:
         }
         /* L250: */
     }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DTRRFS */
 }

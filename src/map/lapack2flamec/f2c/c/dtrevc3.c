@@ -242,6 +242,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dtrevc3_(char *side, char *howmny, logical *select, integer *n, doublereal *t, integer *ldt, doublereal *vl, integer * ldvl, doublereal *vr, integer *ldvr, integer *mm, integer *m, doublereal *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dtrevc3 inputs: side %c, howmny %c, n %" FLA_IS ", ldt %" FLA_IS ", ldvl %" FLA_IS ", ldvr %" FLA_IS ", mm %" FLA_IS ", lwork %" FLA_IS "",*side, *howmny, *n, *ldt, *ldvl, *ldvr, *mm, *lwork);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  address a__1[2];
  integer t_dim1, t_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1[2], i__2, i__3, i__4;
@@ -420,13 +426,16 @@
  if (*info != 0) {
  i__2 = -(*info);
  xerbla_("DTREVC3", &i__2);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible. */
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Use blocked version of back-transformation if sufficient workspace. */
@@ -1348,6 +1357,7 @@
  L260: ;
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DTREVC3 */
  }
