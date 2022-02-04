@@ -306,6 +306,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *alphar, doublereal *alphai, doublereal *beta, doublereal *q, integer *ldq, doublereal *z__, integer *ldz, doublereal *work, integer *lwork, integer *rec, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlaqz0 inputs: wants %c, wantq %c, wantz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", lwork %" FLA_IS ", rec %" FLA_IS "",*wants, *wantq, *wantz, *n, *ilo, *ihi, *lda, *ldb, *ldq, *ldz, *lwork, *rec);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5;
  doublereal d__1, d__2, d__3, d__4, d__5;
@@ -456,11 +462,13 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DLAQZ0", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (*n <= 0) {
  work[1] = 1.;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Get the parameters */
@@ -487,6 +495,7 @@
  nbr = nsr + itemp1;
  if (*n < nmin || *rec >= 2) {
  dhgeqz_(wants, wantq, wantz, n, ilo, ihi, &a[a_offset], lda, &b[ b_offset], ldb, &alphar[1], &alphai[1], &beta[1], &q[q_offset] , ldq, &z__[z_offset], ldz, &work[1], lwork, info);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Find out required workspace */
@@ -506,6 +515,7 @@
  lworkreq = max(i__1,i__2);
  if (*lwork == -1) {
  work[1] = (doublereal) lworkreq;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (*lwork < lworkreq) {
@@ -513,6 +523,7 @@
  }
  if (*info != 0) {
  xerbla_("DLAQZ0", info);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Initialize Q and Z */
@@ -772,6 +783,7 @@
  /* the single shift might perform better. */
  L80: dhgeqz_(wants, wantq, wantz, n, ilo, ihi, &a[a_offset], lda, &b[b_offset], ldb, &alphar[1], &alphai[1], &beta[1], &q[q_offset], ldq, &z__[ z_offset], ldz, &work[1], lwork, &norm_info__);
  *info = norm_info__;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* dlaqz0_ */

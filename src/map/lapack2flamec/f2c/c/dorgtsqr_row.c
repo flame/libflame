@@ -180,6 +180,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dorgtsqr_row_(integer *m, integer *n, integer *mb, integer *nb, doublereal *a, integer *lda, doublereal *t, integer *ldt, doublereal *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dorgtsqr_row inputs: m %" FLA_IS ", n %" FLA_IS ", mb %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS ", lwork  %" FLA_IS "",*m, *n, *mb, *nb, *lda, *ldt, *lwork);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, t_dim1, t_offset, i__1, i__2, i__3, i__4, i__5;
  /* Local variables */
@@ -261,15 +267,18 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DORGTSQR_ROW", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
  work[1] = (doublereal) lworkopt;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (min(*m,*n) == 0) {
  work[1] = (doublereal) lworkopt;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* (0) Set the upper-triangular part of the matrix A to zero and */
@@ -356,6 +365,7 @@
  }
  }
  work[1] = (doublereal) lworkopt;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DORGTSQR_ROW */
  }

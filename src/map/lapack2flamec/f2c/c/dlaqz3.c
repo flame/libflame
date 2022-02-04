@@ -229,6 +229,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *q, integer * ldq, doublereal *z__, integer *ldz, integer *ns, integer *nd, doublereal *alphar, doublereal *alphai, doublereal *beta, doublereal * qc, integer *ldqc, doublereal *zc, integer *ldzc, doublereal *work, integer *lwork, integer *rec, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlaqz3 inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", nw %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", ldqc %" FLA_IS ", ldzc %" FLA_IS ", lwork %" FLA_IS ", rec %" FLA_IS "",*n, *ilo, *ihi, *nw, *lda, *ldb, *ldq, *ldz, *ldqc, *ldzc, *lwork, *rec);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, qc_dim1, qc_offset, zc_dim1, zc_offset, i__1, i__2, i__3, i__4, i__5;
  doublereal d__1, d__2, d__3, d__4, d__5, d__6;
@@ -327,6 +333,7 @@
  if (*lwork == -1) {
  /* workspace query, quick return */
  work[1] = (doublereal) lworkreq;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (*lwork < lworkreq) {
@@ -335,6 +342,7 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DLAQZ3", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Get machine constants */
@@ -383,6 +391,7 @@
  /* Computing 2nd power */
  i__1 = jw;
  dlacpy_("ALL", &jw, &jw, &work[i__1 * i__1 + 1], &jw, &b[kwtop + kwtop * b_dim1], ldb);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Deflation detection loop */
@@ -600,6 +609,7 @@
  dgemm_("N", "N", n, &jw, &jw, &c_b17, &z__[kwtop * z_dim1 + 1], ldz, & zc[zc_offset], ldzc, &c_b16, &work[1], n);
  dlacpy_("ALL", n, &jw, &work[1], n, &z__[kwtop * z_dim1 + 1], ldz);
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* dlaqz3_ */

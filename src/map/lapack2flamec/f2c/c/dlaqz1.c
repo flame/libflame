@@ -110,6 +110,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlaqz1_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *sr1, doublereal *sr2, doublereal *si, doublereal *beta1, doublereal *beta2, doublereal *v) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlaqz1 inputs: lda %" FLA_IS ", ldb %" FLA_IS "",*lda, *ldb);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, b_dim1, b_offset;
  /* Builtin functions */
@@ -163,6 +169,7 @@
  v[3] = 0.;
  }
  /* End of DLAQZ1 */
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* dlaqz1_ */

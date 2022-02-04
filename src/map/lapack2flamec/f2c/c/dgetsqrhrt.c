@@ -167,6 +167,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dgetsqrhrt_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, doublereal *a, integer *lda, doublereal * t, integer *ldt, doublereal *work, integer *lwork, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dgetsqrhrt inputs: m %" FLA_IS ", n %" FLA_IS ", mb1 %" FLA_IS ", nb1 %" FLA_IS ", nb2 %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS ", lwork %" FLA_IS "",*m, *n, *mb1, *nb1, *nb2, *lda, *ldt, *lwork);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, t_dim1, t_offset, i__1, i__2, i__3, i__4;
  doublereal d__1, d__2;
@@ -282,15 +288,18 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DGETSQRHRT", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  else if (lquery) {
  work[1] = (doublereal) lworkopt;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Quick return if possible */
  if (min(*m,*n) == 0) {
  work[1] = (doublereal) lworkopt;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  nb2local = min(*nb2,*n);
@@ -340,6 +349,7 @@
  }
  }
  work[1] = (doublereal) lworkopt;
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DGETSQRHRT */
  }

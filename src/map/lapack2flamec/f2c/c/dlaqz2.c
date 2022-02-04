@@ -158,6 +158,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dlaqz2_(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, doublereal *a, integer *lda, doublereal *b, integer *ldb, integer *nq, integer *qstart, doublereal *q, integer *ldq, integer *nz, integer *zstart, doublereal *z__, integer *ldz) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dlaqz2 inputs: k %" FLA_IS ", istartm %" FLA_IS ", istopm %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", nq %" FLA_IS ", qstart %" FLA_IS ", ldq %" FLA_IS ", nz %" FLA_IS ", zstart %" FLA_IS ", ldz %" FLA_IS "",*k, *istartm, *istopm, *ihi, *lda, *ldb, *nq, *qstart, *ldq, *nz, *zstart, *ldz);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2;
  /* Local variables */
@@ -302,6 +308,7 @@
  }
  }
  /* End of DLAQZ2 */
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* dlaqz2_ */
