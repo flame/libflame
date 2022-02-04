@@ -113,6 +113,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dsytri2x_(char *uplo, integer *n, doublereal *a, integer *lda, integer *ipiv, doublereal *work, integer *nb, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dsytri2x inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS ", nb %" FLA_IS "",*uplo, *n, *lda, *ipiv, *nb);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer a_dim1, a_offset, work_dim1, work_offset, i__1, i__2, i__3;
  /* Local variables */
@@ -182,9 +188,11 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DSYTRI2X", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (*n == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* Convert A */
@@ -197,6 +205,7 @@
  *info >= 1;
  --(*info)) {
  if (ipiv[*info] > 0 && a[*info + *info * a_dim1] == 0.) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  }
@@ -208,6 +217,7 @@
  *info <= i__1;
  ++(*info)) {
  if (ipiv[*info] > 0 && a[*info + *info * a_dim1] == 0.) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  }
@@ -651,6 +661,7 @@
  --i__;
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DSYTRI2X */
  }
