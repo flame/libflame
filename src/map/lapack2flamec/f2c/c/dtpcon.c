@@ -123,6 +123,12 @@ static integer c__1 = 1;
 /* Subroutine */
 int dtpcon_(char *norm, char *uplo, char *diag, integer *n, doublereal *ap, doublereal *rcond, doublereal *work, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dtpcon inputs: norm %c, uplo %c, diag %c, n %" FLA_IS "",*norm, *uplo, *diag, *n);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer i__1;
     doublereal d__1;
@@ -202,12 +208,14 @@ int dtpcon_(char *norm, char *uplo, char *diag, integer *n, doublereal *ap, doub
     {
         i__1 = -(*info);
         xerbla_("DTPCON", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
         *rcond = 1.;
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     *rcond = 0.;
@@ -264,6 +272,7 @@ L10:
         }
     }
 L20:
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DTPCON */
 }

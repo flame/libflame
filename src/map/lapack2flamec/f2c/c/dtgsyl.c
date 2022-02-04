@@ -293,6 +293,12 @@ the routine */
 /* Subroutine */
 int dtgsyl_(char *trans, integer *ijob, integer *m, integer * n, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *c__, integer *ldc, doublereal *d__, integer *ldd, doublereal *e, integer *lde, doublereal *f, integer *ldf, doublereal * scale, doublereal *dif, doublereal *work, integer *lwork, integer * iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"dtgsyl inputs: trans %c, ijob %" FLA_IS ", m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldc %" FLA_IS ", ldd %" FLA_IS ", lde %" FLA_IS ", ldf %" FLA_IS ", lwork %" FLA_IS "",*trans, *ijob, *m, *n, *lda, *ldb, *ldc, *ldd, *lde, *ldf, *lwork);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, c_dim1, c_offset, d_dim1, d_offset, e_dim1, e_offset, f_dim1, f_offset, i__1, i__2, i__3, i__4;
     /* Builtin functions */
@@ -442,10 +448,12 @@ int dtgsyl_(char *trans, integer *ijob, integer *m, integer * n, doublereal *a, 
     {
         i__1 = -(*info);
         xerbla_("DTGSYL", &i__1);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -459,6 +467,7 @@ int dtgsyl_(char *trans, integer *ijob, integer *m, integer * n, doublereal *a, 
                 *dif = 0.;
             }
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Determine optimal block sizes MB and NB */
@@ -522,6 +531,7 @@ int dtgsyl_(char *trans, integer *ijob, integer *m, integer * n, doublereal *a, 
             }
             /* L30: */
         }
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Determine block structure of A */
@@ -804,6 +814,7 @@ L70:
         }
     }
     work[1] = (doublereal) lwmin;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DTGSYL */
 }

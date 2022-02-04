@@ -209,6 +209,12 @@
  /* ===================================================================== */
  /* Subroutine */
  int dtpmqrt_(char *side, char *trans, integer *m, integer *n, integer *k, integer *l, integer *nb, doublereal *v, integer *ldv, doublereal *t, integer *ldt, doublereal *a, integer *lda, doublereal * b, integer *ldb, doublereal *work, integer *info) {
+ AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+ char buffer[256]; 
+ snprintf(buffer, 256,"dtpmqrt inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", l %" FLA_IS ", nb %" FLA_IS ", ldv %" FLA_IS ", ldt %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*side, *trans, *m, *n, *k, *l, *nb, *ldv, *ldt, *lda, *ldb);
+ AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
  /* System generated locals */
  integer v_dim1, v_offset, a_dim1, a_offset, b_dim1, b_offset, t_dim1, t_offset, i__1, i__2, i__3, i__4;
  /* Local variables */
@@ -304,10 +310,12 @@
  if (*info != 0) {
  i__1 = -(*info);
  xerbla_("DTPMQRT", &i__1);
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  /* .. Quick return if possible .. */
  if (*m == 0 || *n == 0 || *k == 0) {
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  }
  if (left && tran) {
@@ -394,6 +402,7 @@
  dtprfb_("R", "T", "F", "C", m, &mb, &ib, &lb, &v[i__ * v_dim1 + 1] , ldv, &t[i__ * t_dim1 + 1], ldt, &a[i__ * a_dim1 + 1], lda, &b[b_offset], ldb, &work[1], m);
  }
  }
+ AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
  return 0;
  /* End of DTPMQRT */
  }
