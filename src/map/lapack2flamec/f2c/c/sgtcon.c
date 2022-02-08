@@ -139,8 +139,8 @@ IPIV(i) = i indicates a row interchange was not */
 int sgtcon_(char *norm, integer *n, real *dl, real *d__, real *du, real *du2, integer *ipiv, real *anorm, real *rcond, real * work, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"sgtcon inputs: norm %c, n %d, ipiv %d",*norm, *n, *ipiv);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -250,7 +250,7 @@ L20:
         if (kase == kase1)
         {
             /* Multiply by inv(U)*inv(L). */
-            sgttrs_("No transpose", n, &c__1, &dl[1], &d__[1], &du[1], &du2[1] , &ipiv[1], &work[1], n, info);
+            sgttrs_("No transpose", n, &c__1, &dl[1], &d__[1], &du[1], &du2[1], &ipiv[1], &work[1], n, info);
         }
         else
         {

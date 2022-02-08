@@ -119,11 +119,11 @@ for 1<=i<=N, row i of the */
 int cgetrs_(char *trans, integer *n, integer *nrhs, complex * a, integer *lda, integer *ipiv, complex *b, integer *ldb, integer * info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgetrs inputs: trans %c, n %lld, nrhs %lld, lda %lld, ipiv %lld, ldb %lld",*trans, *n, *nrhs, *lda, *ipiv, *ldb);
-#else 
+#else
     snprintf(buffer, 256,"cgetrs inputs: trans %c, n %d, nrhs %d, lda %d, ipiv %d, ldb %d",*trans, *n, *nrhs, *lda, *ipiv, *ldb);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

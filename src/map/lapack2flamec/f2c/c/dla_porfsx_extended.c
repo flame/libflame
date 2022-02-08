@@ -386,8 +386,8 @@ i+1}
 int dla_porfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *nrhs, doublereal *a, integer *lda, doublereal * af, integer *ldaf, logical *colequ, doublereal *c__, doublereal *b, integer *ldb, doublereal *y, integer *ldy, doublereal *berr_out__, integer *n_norms__, doublereal *err_bnds_norm__, doublereal * err_bnds_comp__, doublereal *res, doublereal *ayb, doublereal *dy, doublereal *y_tail__, doublereal *rcond, integer *ithresh, doublereal *rthresh, doublereal *dz_ub__, logical *ignore_cwise__, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dla_porfsx_extended inputs: prec_type__ %" FLA_IS ", uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", ldb %" FLA_IS ", ldy %" FLA_IS ", n_norms__ %" FLA_IS ", ithresh %" FLA_IS "",*prec_type__, *uplo, *n, *nrhs, *lda, *ldaf, *ldb, *ldy, *n_norms__, *ithresh);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -399,7 +399,7 @@ int dla_porfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *
     integer i__, j;
     logical incr_prec__;
     extern /* Subroutine */
-    int dla_syamv_(integer *, integer *, doublereal * , doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *);
+    int dla_syamv_(integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *);
     doublereal prev_dz_z__, yk, final_dx_x__;
     extern /* Subroutine */
     int dla_wwaddw_(integer *, doublereal *, doublereal *, doublereal *);
@@ -407,7 +407,7 @@ int dla_porfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *
     integer cnt;
     doublereal dyk, eps, incr_thresh__, dx_x__, dz_z__;
     extern /* Subroutine */
-    int dla_lin_berr_(integer *, integer *, integer * , doublereal *, doublereal *, doublereal *);
+    int dla_lin_berr_(integer *, integer *, integer *, doublereal *, doublereal *, doublereal *);
     doublereal ymin;
     integer y_prec_state__;
     extern /* Subroutine */

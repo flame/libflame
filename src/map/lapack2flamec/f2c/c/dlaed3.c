@@ -177,8 +177,8 @@ static doublereal c_b23 = 0.;
 int dlaed3_(integer *k, integer *n, integer *n1, doublereal * d__, doublereal *q, integer *ldq, doublereal *rho, doublereal *dlamda, doublereal *q2, integer *indx, integer *ctot, doublereal *w, doublereal *s, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dlaed3 inputs: k %" FLA_IS ", n %" FLA_IS ", n1 %" FLA_IS ", ldq %" FLA_IS ", indx %" FLA_IS ", ctot %" FLA_IS "",*k, *n, *n1, *ldq, *indx, *ctot);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

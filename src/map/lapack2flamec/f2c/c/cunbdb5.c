@@ -144,11 +144,11 @@
 int cunbdb5_(integer *m1, integer *m2, integer *n, complex * x1, integer *incx1, complex *x2, integer *incx2, complex *q1, integer *ldq1, complex *q2, integer *ldq2, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cunbdb5 inputs: m1 %lld, m2 %lld, n %lld, incx1 %lld, incx2 %lld, ldq1 %lld, ldq2 %lld",*m1, *m2, *n, *incx1, *incx2, *ldq1, *ldq2);
-#else 
+#else
     snprintf(buffer, 256,"cunbdb5 inputs: m1 %d, m2 %d, n %d, incx1 %d, incx2 %d, ldq1 %d, ldq2 %d",*m1, *m2, *n, *incx1, *incx2, *ldq1, *ldq2);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -230,7 +230,7 @@ int cunbdb5_(integer *m1, integer *m2, integer *n, complex * x1, integer *incx1,
     {
         i__1 = -(*info);
         xerbla_("CUNBDB5", &i__1);
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Project X onto the orthogonal complement of Q */
@@ -240,7 +240,7 @@ int cunbdb5_(integer *m1, integer *m2, integer *n, complex * x1, integer *incx1,
     r__2 = scnrm2_(m2, &x2[1], incx2);
     if (r__1 != 0.f || r__2 != 0.f)
     {
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Project each standard basis vector e_1,...,e_M1 in turn, stopping */
@@ -276,7 +276,7 @@ int cunbdb5_(integer *m1, integer *m2, integer *n, complex * x1, integer *incx1,
         r__2 = scnrm2_(m2, &x2[1], incx2);
         if (r__1 != 0.f || r__2 != 0.f)
         {
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }
@@ -313,7 +313,7 @@ int cunbdb5_(integer *m1, integer *m2, integer *n, complex * x1, integer *incx1,
         r__2 = scnrm2_(m2, &x2[1], incx2);
         if (r__1 != 0.f || r__2 != 0.f)
         {
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
             return 0;
         }
     }

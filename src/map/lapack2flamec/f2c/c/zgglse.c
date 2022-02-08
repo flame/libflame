@@ -326,7 +326,7 @@ int zgglse_(integer *m, integer *n, integer *p, doublecomplex *a, integer *lda, 
         i__1 = *n - *p;
         z__1.r = -1.;
         z__1.i = -0.; // , expr subst
-        zgemv_("No transpose", &i__1, p, &z__1, &a[(*n - *p + 1) * a_dim1 + 1] , lda, &d__[1], &c__1, &c_b1, &c__[1], &c__1);
+        zgemv_("No transpose", &i__1, p, &z__1, &a[(*n - *p + 1) * a_dim1 + 1], lda, &d__[1], &c__1, &c_b1, &c__[1], &c__1);
     }
     /* Solve R11*x1 = c1 for x1 */
     if (*n > *p)

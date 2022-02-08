@@ -453,7 +453,7 @@ int zgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
                             i__3 < 0 ? j >= i__4 : j <= i__4;
                             j += i__3)
                     {
-                        zrot_(ncc, &c__[j - 1 + c_dim1], ldc, &c__[j + c_dim1] , ldc, &rwork[j], &work[j]);
+                        zrot_(ncc, &c__[j - 1 + c_dim1], ldc, &c__[j + c_dim1], ldc, &rwork[j], &work[j]);
                         /* L30: */
                     }
                 }

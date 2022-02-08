@@ -184,7 +184,7 @@ int ssbtrd_(char *vect, char *uplo, integer *n, integer *kd, real *ab, integer *
     int slar2v_(integer *, real *, real *, real *, integer *, real *, real *, integer *);
     integer iqaend;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slaset_( char *, integer *, integer *, real *, real *, real *, integer *), slartg_(real *, real *, real *, real *, real *), slargv_( integer *, real *, integer *, real *, integer *, real *, integer * ), slartv_(integer *, real *, integer *, real *, integer *, real * , real *, integer *);
+    int xerbla_(char *, integer *), slaset_( char *, integer *, integer *, real *, real *, real *, integer *), slartg_(real *, real *, real *, real *, real *), slargv_( integer *, real *, integer *, real *, integer *, real *, integer * ), slartv_(integer *, real *, integer *, real *, integer *, real *, real *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -334,7 +334,7 @@ int ssbtrd_(char *vect, char *uplo, integer *n, integer *kd, real *ab, integer *
                         {
                             /* generate plane rotation to annihilate a(i,i+k-1) */
                             /* within the band */
-                            slartg_(&ab[*kd - k + 3 + (i__ + k - 2) * ab_dim1] , &ab[*kd - k + 2 + (i__ + k - 1) * ab_dim1], &d__[i__ + k - 1], &work[i__ + k - 1], &temp);
+                            slartg_(&ab[*kd - k + 3 + (i__ + k - 2) * ab_dim1], &ab[*kd - k + 2 + (i__ + k - 1) * ab_dim1], &d__[i__ + k - 1], &work[i__ + k - 1], &temp);
                             ab[*kd - k + 3 + (i__ + k - 2) * ab_dim1] = temp;
                             /* apply rotation from the right */
                             i__3 = k - 3;
@@ -559,7 +559,7 @@ int ssbtrd_(char *vect, char *uplo, integer *n, integer *kd, real *ab, integer *
                                     i__2 < 0 ? jinc >= i__3 : jinc <= i__3;
                                     jinc += i__2)
                             {
-                                srot_(&kdm1, &ab[*kd + (jinc - *kd) * ab_dim1] , &incx, &ab[kd1 + (jinc - *kd) * ab_dim1], &incx, &d__[jinc], &work[ jinc]);
+                                srot_(&kdm1, &ab[*kd + (jinc - *kd) * ab_dim1], &incx, &ab[kd1 + (jinc - *kd) * ab_dim1], &incx, &d__[jinc], &work[ jinc]);
                                 /* L140: */
                             }
                         }

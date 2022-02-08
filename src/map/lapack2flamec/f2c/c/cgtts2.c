@@ -119,11 +119,11 @@ IPIV(i) = i indicates a row interchange was not */
 int cgtts2_(integer *itrans, integer *n, integer *nrhs, complex *dl, complex *d__, complex *du, complex *du2, integer *ipiv, complex *b, integer *ldb)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgtts2 inputs: itrans %lld, n %lld, nrhs %lld, ipiv %lld, ldb %lld",*itrans, *n, *nrhs, *ipiv, *ldb);
-#else 
+#else
     snprintf(buffer, 256,"cgtts2 inputs: itrans %d, n %d, nrhs %d, ipiv %d, ldb %d",*itrans, *n, *nrhs, *ipiv, *ldb);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

@@ -249,7 +249,7 @@ int sstevx_(char *jobz, char *range, integer *n, real *d__, real *e, real *vl, r
     integer indisp, indiwo, indwrk;
     extern real slanst_(char *, integer *, real *, real *);
     extern /* Subroutine */
-    int sstein_(integer *, real *, real *, integer *, real *, integer *, integer *, real *, integer *, real *, integer * , integer *, integer *), ssterf_(integer *, real *, real *, integer *);
+    int sstein_(integer *, real *, real *, integer *, real *, integer *, integer *, real *, integer *, real *, integer *, integer *, integer *), ssterf_(integer *, real *, real *, integer *);
     integer nsplit;
     extern /* Subroutine */
     int sstebz_(char *, char *, integer *, real *, real *, integer *, integer *, real *, real *, real *, integer *, integer *, real *, integer *, integer *, real *, integer *, integer *);

@@ -301,7 +301,7 @@ int zhesv_rook_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer
     {
         /* Solve the system A*X = B, overwriting B with X. */
         /* Solve with TRS ( Use Level BLAS 2) */
-        zhetrs_rook_(uplo, n, nrhs, &a[a_offset], lda, &ipiv[1], &b[b_offset] , ldb, info);
+        zhetrs_rook_(uplo, n, nrhs, &a[a_offset], lda, &ipiv[1], &b[b_offset], ldb, info);
     }
     work[1].r = (doublereal) lwkopt;
     work[1].i = 0.; // , expr subst

@@ -191,7 +191,7 @@ int slaein_(logical *rightv, logical *noinit, integer *n, real *h__, integer *ld
     real absbii, absbjj;
     extern integer isamax_(integer *, real *, integer *);
     extern /* Subroutine */
-    int sladiv_(real *, real *, real *, real *, real * , real *);
+    int sladiv_(real *, real *, real *, real *, real *, real *);
     char normin[1];
     real nrmsml;
     extern /* Subroutine */
@@ -741,7 +741,7 @@ L280: /* Normalize eigenvector. */
         {
             /* Computing MAX */
             r__3 = vnorm;
-            r__4 = (r__1 = vr[i__], f2c_abs(r__1)) + (r__2 = vi[i__] , f2c_abs(r__2)); // , expr subst
+            r__4 = (r__1 = vr[i__], f2c_abs(r__1)) + (r__2 = vi[i__], f2c_abs(r__2));  // , expr subst
             vnorm = max(r__3,r__4);
             /* L290: */
         }

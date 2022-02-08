@@ -110,11 +110,11 @@ static integer c__1 = 1;
 int clarfx_(char *side, integer *m, integer *n, complex *v, complex *tau, complex *c__, integer *ldc, complex *work)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clarfx inputs: side %c, m %lld, n %lld, ldc %lld",*side, *m, *n, *ldc);
-#else 
+#else
     snprintf(buffer, 256,"clarfx inputs: side %c, m %d, n %d, ldc %d",*side, *m, *n, *ldc);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -128,7 +128,7 @@ int clarfx_(char *side, integer *m, integer *n, complex *v, complex *tau, comple
     integer j;
     complex t1, t2, t3, t4, t5, t6, t7, t8, t9, v1, v2, v3, v4, v5, v6, v7, v8, v9, t10, v10, sum;
     extern /* Subroutine */
-    int clarf_(char *, integer *, integer *, complex * , integer *, complex *, complex *, integer *, complex *);
+    int clarf_(char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *);
     extern logical lsame_(char *, char *);
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */

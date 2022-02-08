@@ -169,11 +169,11 @@ LDX >= 1 otherwise. */
 int chbgst_(char *vect, char *uplo, integer *n, integer *ka, integer *kb, complex *ab, integer *ldab, complex *bb, integer *ldbb, complex *x, integer *ldx, complex *work, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chbgst inputs: vect %c, uplo %c, n %lld, ka %lld, kb %lld, ldab %lld, ldbb %lld, ldx %lld",*vect, *uplo, *n, *ka, *kb, *ldab, *ldbb, *ldx);
-#else 
+#else
     snprintf(buffer, 256,"chbgst inputs: vect %c, uplo %c, n %d, ka %d, kb %d, ldab %d, ldbb %d, ldx %d",*vect, *uplo, *n, *ka, *kb, *ldab, *ldbb, *ldx);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -544,7 +544,7 @@ L10:
                 if (i__ - k + *ka < *n && i__ - k > 1)
                 {
                     /* generate rotation to annihilate a(i,i-k+ka+1) */
-                    clartg_(&ab[k + 1 + (i__ - k + *ka) * ab_dim1], &ra1, & rwork[i__ - k + *ka - m], &work[i__ - k + *ka - m] , &ra);
+                    clartg_(&ab[k + 1 + (i__ - k + *ka) * ab_dim1], &ra1, & rwork[i__ - k + *ka - m], &work[i__ - k + *ka - m], &ra);
                     /* create nonzero element a(i-k,i-k+ka+1) outside the */
                     /* band and store it in WORK(i-k) */
                     i__2 = kb1 - k + i__ * bb_dim1;
@@ -1129,7 +1129,7 @@ L10:
                         l <= i__1;
                         ++l)
                 {
-                    clartv_(&nr, &ab[l + 1 + (j2 - l) * ab_dim1], &inca, &ab[ l + 2 + (j2 - l) * ab_dim1], &inca, &rwork[j2 - m] , &work[j2 - m], &ka1);
+                    clartv_(&nr, &ab[l + 1 + (j2 - l) * ab_dim1], &inca, &ab[ l + 2 + (j2 - l) * ab_dim1], &inca, &rwork[j2 - m], &work[j2 - m], &ka1);
                     /* L330: */
                 }
                 /* apply rotations in 1st set from both sides to diagonal */
@@ -1277,7 +1277,7 @@ L10:
             {
                 /* generate rotations in 2nd set to annihilate elements */
                 /* which have been created outside the band */
-                clargv_(&nr, &ab[ka1 + (j2 - *ka) * ab_dim1], &inca, &work[j2] , &ka1, &rwork[j2], &ka1);
+                clargv_(&nr, &ab[ka1 + (j2 - *ka) * ab_dim1], &inca, &work[j2], &ka1, &rwork[j2], &ka1);
                 /* apply rotations in 2nd set from the left */
                 i__4 = *ka - 1;
                 for (l = 1;
@@ -2179,7 +2179,7 @@ L490:
                 j1t = j2 - (nrt - 1) * ka1;
                 if (nrt > 0)
                 {
-                    clartv_(&nrt, &ab[ka1 - l + 1 + (j1t - ka1 + l) * ab_dim1] , &inca, &ab[ka1 - l + (j1t - ka1 + l) * ab_dim1], &inca, &rwork[j1t], &work[j1t], &ka1);
+                    clartv_(&nrt, &ab[ka1 - l + 1 + (j1t - ka1 + l) * ab_dim1], &inca, &ab[ka1 - l + (j1t - ka1 + l) * ab_dim1], &inca, &rwork[j1t], &work[j1t], &ka1);
                 }
                 /* L820: */
             }
@@ -2318,7 +2318,7 @@ L490:
                         l <= i__4;
                         ++l)
                 {
-                    clartv_(&nr, &ab[l + 1 + j1 * ab_dim1], &inca, &ab[l + 2 + (j1 - 1) * ab_dim1], &inca, &rwork[m - *kb + j1] , &work[m - *kb + j1], &ka1);
+                    clartv_(&nr, &ab[l + 1 + j1 * ab_dim1], &inca, &ab[l + 2 + (j1 - 1) * ab_dim1], &inca, &rwork[m - *kb + j1], &work[m - *kb + j1], &ka1);
                     /* L890: */
                 }
                 /* apply rotations in 2nd set from both sides to diagonal */
@@ -2336,7 +2336,7 @@ L490:
                 j1t = j2 - (nrt - 1) * ka1;
                 if (nrt > 0)
                 {
-                    clartv_(&nrt, &ab[ka1 - l + 1 + (j1t - ka1 + l) * ab_dim1] , &inca, &ab[ka1 - l + (j1t - ka1 + l) * ab_dim1], &inca, &rwork[m - *kb + j1t], &work[m - *kb + j1t], &ka1);
+                    clartv_(&nrt, &ab[ka1 - l + 1 + (j1t - ka1 + l) * ab_dim1], &inca, &ab[ka1 - l + (j1t - ka1 + l) * ab_dim1], &inca, &rwork[m - *kb + j1t], &work[m - *kb + j1t], &ka1);
                 }
                 /* L900: */
             }
@@ -2374,7 +2374,7 @@ L490:
                 j1t = j2 - (nrt - 1) * ka1;
                 if (nrt > 0)
                 {
-                    clartv_(&nrt, &ab[ka1 - l + 1 + (j1t - ka1 + l) * ab_dim1] , &inca, &ab[ka1 - l + (j1t - ka1 + l) * ab_dim1], &inca, &rwork[j1t], &work[j1t], &ka1);
+                    clartv_(&nrt, &ab[ka1 - l + 1 + (j1t - ka1 + l) * ab_dim1], &inca, &ab[ka1 - l + (j1t - ka1 + l) * ab_dim1], &inca, &rwork[j1t], &work[j1t], &ka1);
                 }
                 /* L930: */
             }

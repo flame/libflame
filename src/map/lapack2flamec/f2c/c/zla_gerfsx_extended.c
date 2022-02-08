@@ -6,7 +6,7 @@ static integer c__1 = 1;
 static doublecomplex c_b6 =
 {
     -1.,0.
-}
+    }
 ;
 static doublecomplex c_b8 =
 {
@@ -421,7 +421,7 @@ int zla_gerfsx_extended_(integer *prec_type__, integer * trans_type__, integer *
     integer cnt;
     doublereal dyk, eps, incr_thresh__, dx_x__, dz_z__, ymin;
     extern /* Subroutine */
-    int zla_lin_berr_(integer *, integer *, integer * , doublecomplex *, doublereal *, doublereal *), blas_zgemv_x_( integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, integer *);
+    int zla_lin_berr_(integer *, integer *, integer *, doublecomplex *, doublereal *, doublereal *), blas_zgemv_x_( integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, integer *);
     integer y_prec_state__;
     extern /* Subroutine */
     int blas_zgemv2_x_(integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, integer *);

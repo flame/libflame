@@ -725,7 +725,7 @@ int zheevr_(char *jobz, char *range, char *uplo, integer *n, doublecomplex *a, i
             {
                 indwkn = indwk;
                 llwrkn = *lwork - indwkn + 1;
-                zunmtr_("L", uplo, "N", n, m, &a[a_offset], lda, &work[indtau] , &z__[z_offset], ldz, &work[indwkn], &llwrkn, &iinfo);
+                zunmtr_("L", uplo, "N", n, m, &a[a_offset], lda, &work[indtau], &z__[z_offset], ldz, &work[indwkn], &llwrkn, &iinfo);
             }
         }
         if (*info == 0)

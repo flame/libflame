@@ -336,7 +336,7 @@ int sgees_(char *jobvs, char *sort, L_fp select, integer *n, real *a, integer *l
         {
             maxwrk = (*n << 1) + *n * ilaenv_(&c__1, "SGEHRD", " ", n, &c__1, n, &c__0);
             minwrk = *n * 3;
-            shseqr_("S", jobvs, n, &c__1, n, &a[a_offset], lda, &wr[1], &wi[1] , &vs[vs_offset], ldvs, &work[1], &c_n1, &ieval);
+            shseqr_("S", jobvs, n, &c__1, n, &a[a_offset], lda, &wr[1], &wi[1], &vs[vs_offset], ldvs, &work[1], &c_n1, &ieval);
             hswork = work[1];
             if (! wantvs)
             {

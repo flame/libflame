@@ -102,11 +102,11 @@ the elements of y are assumed to be real. */
 int clar2v_(integer *n, complex *x, complex *y, complex *z__, integer *incx, real *c__, complex *s, integer *incc)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clar2v inputs: n %lld, incx %lld, incc %lld",*n, *incx, *incc);
-#else 
+#else
     snprintf(buffer, 256,"clar2v inputs: n %d, incx %d, incc %d",*n, *incx, *incc);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

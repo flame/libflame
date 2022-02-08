@@ -95,8 +95,8 @@ if UPLO = 'L' the lower triangular part of the */
 int zsyswapr_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *i1, integer *i2)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"zsyswapr inputs: uplo %c, n %d, lda %d, i1 %d, i2 %d",*uplo, *n, *lda, *i1, *i2);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

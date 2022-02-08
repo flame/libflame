@@ -415,7 +415,7 @@ int sggevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, re
     logical ilascl, ilbscl;
     extern real slamch_(char *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), sgghrd_( char *, char *, integer *, integer *, integer *, real *, integer * , real *, integer *, real *, integer *, real *, integer *, integer *);
+    int xerbla_(char *, integer *), sgghrd_( char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *);
     logical ldumma[1];
     char chtemp[1];
     real bignum;
@@ -436,7 +436,7 @@ int sggevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, re
     logical wantse;
     real bnrmto;
     extern /* Subroutine */
-    int shgeqz_(char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real * , real *, real *, real *, integer *, real *, integer *, real *, integer *, integer *), stgevc_(char *, char *, logical *, integer *, real *, integer *, real *, integer * , real *, integer *, real *, integer *, integer *, integer *, real *, integer *), stgsna_(char *, char *, logical *, integer *, real *, integer *, real *, integer *, real * , integer *, real *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *, integer *);
+    int shgeqz_(char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, real *, real *, real *, integer *, real *, integer *, real *, integer *, integer *), stgevc_(char *, char *, logical *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *, integer *, real *, integer *), stgsna_(char *, char *, logical *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *, integer *);
     integer minwrk, maxwrk;
     logical wantsn;
     real smlnum;
@@ -755,7 +755,7 @@ int sggevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, re
     {
         *(unsigned char *)chtemp = 'E';
     }
-    shgeqz_(chtemp, jobvl, jobvr, n, ilo, ihi, &a[a_offset], lda, &b[b_offset] , ldb, &alphar[1], &alphai[1], &beta[1], &vl[vl_offset], ldvl, & vr[vr_offset], ldvr, &work[1], lwork, &ierr);
+    shgeqz_(chtemp, jobvl, jobvr, n, ilo, ihi, &a[a_offset], lda, &b[b_offset], ldb, &alphar[1], &alphai[1], &beta[1], &vl[vl_offset], ldvl, & vr[vr_offset], ldvr, &work[1], lwork, &ierr);
     if (ierr != 0)
     {
         if (ierr > 0 && ierr <= *n)

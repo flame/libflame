@@ -175,8 +175,8 @@ i */
 int dspevd_(char *jobz, char *uplo, integer *n, doublereal * ap, doublereal *w, doublereal *z__, integer *ldz, doublereal *work, integer *lwork, integer *iwork, integer *liwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dspevd inputs: jobz %c, uplo %c, n %" FLA_IS ", ldz %" FLA_IS ", lwork %" FLA_IS ", liwork %" FLA_IS "",*jobz, *uplo, *n, *ldz, *lwork, *liwork);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -209,7 +209,7 @@ int dspevd_(char *jobz, char *uplo, integer *n, doublereal * ap, doublereal *w, 
     int dsterf_(integer *, doublereal *, doublereal *, integer *);
     integer indwrk, liwmin;
     extern /* Subroutine */
-    int dsptrd_(char *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *), dopmtr_(char *, char *, char *, integer *, integer *, doublereal * , doublereal *, doublereal *, integer *, doublereal *, integer *);
+    int dsptrd_(char *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *), dopmtr_(char *, char *, char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *);
     integer llwork;
     doublereal smlnum;
     logical lquery;
@@ -364,7 +364,7 @@ int dspevd_(char *jobz, char *uplo, integer *n, doublereal * ap, doublereal *w, 
     {
         indwrk = indtau + *n;
         llwork = *lwork - indwrk + 1;
-        dstedc_("I", n, &w[1], &work[inde], &z__[z_offset], ldz, &work[indwrk] , &llwork, &iwork[1], liwork, info);
+        dstedc_("I", n, &w[1], &work[inde], &z__[z_offset], ldz, &work[indwrk], &llwork, &iwork[1], liwork, info);
         dopmtr_("L", uplo, "N", n, n, &ap[1], &work[indtau], &z__[z_offset], ldz, &work[indwrk], &iinfo);
     }
     /* If matrix was scaled, then rescale eigenvalues appropriately. */

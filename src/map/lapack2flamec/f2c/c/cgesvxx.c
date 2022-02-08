@@ -542,11 +542,11 @@ defaults */
 int cgesvxx_(char *fact, char *trans, integer *n, integer * nrhs, complex *a, integer *lda, complex *af, integer *ldaf, integer * ipiv, char *equed, real *r__, real *c__, complex *b, integer *ldb, complex *x, integer *ldx, real *rcond, real *rpvgrw, real *berr, integer *n_err_bnds__, real *err_bnds_norm__, real *err_bnds_comp__, integer *nparams, real *params, complex *work, real *rwork, integer * info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgesvxx inputs: fact %c, trans %c, n %lld, nrhs %lld, lda %lld, ldaf %lld, ipiv %lld, equed %c, ldb %lld, ldx %lld, n_err_bnds__ %lld, nparams %lld",*fact, *trans, *n, *nrhs, *lda, *ldaf, *ipiv, *equed, *ldb, *ldx, *n_err_bnds__, *nparams);
-#else 
+#else
     snprintf(buffer, 256,"cgesvxx inputs: fact %c, trans %c, n %d, nrhs %d, lda %d, ldaf %d, ipiv %d, equed %c, ldb %d, ldx %d, n_err_bnds__ %d, nparams %d",*fact, *trans, *n, *nrhs, *lda, *ldaf, *ipiv, *equed, *ldb, *ldx, *n_err_bnds__, *nparams);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -578,7 +578,7 @@ int cgesvxx_(char *fact, char *trans, integer *n, integer * nrhs, complex *a, in
     real smlnum;
     logical rowequ;
     extern /* Subroutine */
-    int clascl2_(integer *, integer *, real *, complex *, integer *), cgeequb_(integer *, integer *, complex *, integer *, real *, real *, real *, real *, real *, integer *), cgerfsx_(char *, char *, integer *, integer *, complex *, integer *, complex *, integer *, integer *, real *, real *, complex *, integer *, complex *, integer *, real *, real *, integer *, real * , real *, integer *, real *, complex *, real *, integer *);
+    int clascl2_(integer *, integer *, real *, complex *, integer *), cgeequb_(integer *, integer *, complex *, integer *, real *, real *, real *, real *, real *, integer *), cgerfsx_(char *, char *, integer *, integer *, complex *, integer *, complex *, integer *, integer *, real *, real *, complex *, integer *, complex *, integer *, real *, real *, integer *, real *, real *, integer *, real *, complex *, real *, integer *);
     /* -- LAPACK driver routine (version 3.4.1) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */

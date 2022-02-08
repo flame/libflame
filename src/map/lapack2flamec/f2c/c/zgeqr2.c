@@ -185,7 +185,7 @@ int zgeqr2_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
         i__2 = *m - i__ + 1;
         /* Computing MIN */
         i__3 = i__ + 1;
-        zlarfg_(&i__2, &a[i__ + i__ * a_dim1], &a[min(i__3,*m) + i__ * a_dim1] , &c__1, &tau[i__]);
+        zlarfg_(&i__2, &a[i__ + i__ * a_dim1], &a[min(i__3,*m) + i__ * a_dim1], &c__1, &tau[i__]);
         if (i__ < *n)
         {
             /* Apply H(i)**H to A(i:m,i+1:n) from the left */

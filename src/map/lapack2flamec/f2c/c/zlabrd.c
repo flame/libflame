@@ -486,7 +486,7 @@ int zlabrd_(integer *m, integer *n, integer *nb, doublecomplex *a, integer *lda,
                 /* Compute Y(i+1:n,i) */
                 i__2 = *m - i__;
                 i__3 = *n - i__;
-                zgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &a[i__ + 1 + (i__ + 1) * a_dim1], lda, &a[i__ + 1 + i__ * a_dim1] , &c__1, &c_b1, &y[i__ + 1 + i__ * y_dim1], &c__1);
+                zgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &a[i__ + 1 + (i__ + 1) * a_dim1], lda, &a[i__ + 1 + i__ * a_dim1], &c__1, &c_b1, &y[i__ + 1 + i__ * y_dim1], &c__1);
                 i__2 = *m - i__;
                 i__3 = i__ - 1;
                 zgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &a[i__ + 1 + a_dim1], lda, &a[i__ + 1 + i__ * a_dim1], &c__1, & c_b1, &y[i__ * y_dim1 + 1], &c__1);

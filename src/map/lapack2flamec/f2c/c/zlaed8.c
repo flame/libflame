@@ -377,7 +377,7 @@ int zlaed8_(integer *k, integer *n, integer *qsiz, doublecomplex *q, integer *ld
                 ++j)
         {
             perm[j] = indxq[indx[j]];
-            zcopy_(qsiz, &q[perm[j] * q_dim1 + 1], &c__1, &q2[j * q2_dim1 + 1] , &c__1);
+            zcopy_(qsiz, &q[perm[j] * q_dim1 + 1], &c__1, &q2[j * q2_dim1 + 1], &c__1);
             /* L50: */
         }
         zlacpy_("A", qsiz, n, &q2[q2_dim1 + 1], ldq2, &q[q_dim1 + 1], ldq);

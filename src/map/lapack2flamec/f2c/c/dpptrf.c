@@ -113,8 +113,8 @@ static doublereal c_b16 = -1.;
 int dpptrf_(char *uplo, integer *n, doublereal *ap, integer * info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dpptrf inputs: uplo %c, n %" FLA_IS "",*uplo, *n);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

@@ -227,8 +227,8 @@ the routine */
 int zgelsd_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublereal *s, doublereal *rcond, integer *rank, doublecomplex *work, integer *lwork, doublereal *rwork, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"zgelsd inputs: m %d, n %d, nrhs %d, lda %d, ldb %d",*m, *n, *nrhs, *lda, *ldb);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -678,7 +678,7 @@ int zgelsd_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
             /* Multiply B by transpose of left bidiagonalizing vectors. */
             /* (CWorkspace: need 2*M+NRHS, prefer 2*M+NRHS*NB) */
             i__1 = *lwork - nwork + 1;
-            zunmbr_("Q", "L", "C", m, nrhs, n, &a[a_offset], lda, &work[itauq] , &b[b_offset], ldb, &work[nwork], &i__1, info);
+            zunmbr_("Q", "L", "C", m, nrhs, n, &a[a_offset], lda, &work[itauq], &b[b_offset], ldb, &work[nwork], &i__1, info);
             /* Solve the bidiagonal least squares problem. */
             zlalsd_("L", &smlsiz, m, nrhs, &s[1], &rwork[ie], &b[b_offset], ldb, rcond, rank, &work[nwork], &rwork[nrwork], &iwork[1], info);
             if (*info != 0)
@@ -687,7 +687,7 @@ int zgelsd_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
             }
             /* Multiply B by right bidiagonalizing vectors of A. */
             i__1 = *lwork - nwork + 1;
-            zunmbr_("P", "L", "N", n, nrhs, m, &a[a_offset], lda, &work[itaup] , &b[b_offset], ldb, &work[nwork], &i__1, info);
+            zunmbr_("P", "L", "N", n, nrhs, m, &a[a_offset], lda, &work[itaup], &b[b_offset], ldb, &work[nwork], &i__1, info);
         }
     }
     /* Undo scaling. */

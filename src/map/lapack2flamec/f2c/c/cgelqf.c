@@ -132,11 +132,11 @@ conjg(v(i+1:n)) is stored on exit in */
 int cgelqf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgelqf inputs: m %lld, n %lld, lda %lld, lwork %lld",*m, *n, *lda, *lwork);
-#else 
+#else
     snprintf(buffer, 256,"cgelqf inputs: m %d, n %d, lda %d, lwork %d",*m, *n, *lda, *lwork);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -146,7 +146,7 @@ int cgelqf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
     /* Local variables */
     integer i__, k, ib, nb, nx, iws, nbmin, iinfo;
     extern /* Subroutine */
-    int cgelq2_(integer *, integer *, complex *, integer *, complex *, complex *, integer *), clarfb_(char *, char *, char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *), clarft_(char *, char * , integer *, integer *, complex *, integer *, complex *, complex * , integer *), xerbla_(char *, integer *);
+    int cgelq2_(integer *, integer *, complex *, integer *, complex *, complex *, integer *), clarfb_(char *, char *, char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *), clarft_(char *, char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *), xerbla_(char *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ldwork, lwkopt;
     logical lquery;
@@ -285,7 +285,7 @@ int cgelqf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
     {
         i__2 = *m - i__ + 1;
         i__1 = *n - i__ + 1;
-        cgelq2_(&i__2, &i__1, &a[i__ + i__ * a_dim1], lda, &tau[i__], &work[1] , &iinfo);
+        cgelq2_(&i__2, &i__1, &a[i__ + i__ * a_dim1], lda, &tau[i__], &work[1], &iinfo);
     }
     work[1].r = (real) iws;
     work[1].i = 0.f; // , expr subst

@@ -183,11 +183,11 @@ the routine */
 int chegv_(integer *itype, char *jobz, char *uplo, integer * n, complex *a, integer *lda, complex *b, integer *ldb, real *w, complex *work, integer *lwork, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chegv inputs: itype %lld, jobz %c, uplo %c, n %lld, lda %lld, ldb %lld, lwork %lld",*itype, *jobz, *uplo, *n, *lda, *ldb, *lwork);
-#else 
+#else
     snprintf(buffer, 256,"chegv inputs: itype %d, jobz %c, uplo %c, n %d, lda %d, ldb %d, lwork %d",*itype, *jobz, *uplo, *n, *lda, *ldb, *lwork);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -317,7 +317,7 @@ int chegv_(integer *itype, char *jobz, char *uplo, integer * n, complex *a, inte
     }
     /* Transform problem to standard eigenvalue problem and solve. */
     chegst_(itype, uplo, n, &a[a_offset], lda, &b[b_offset], ldb, info);
-    cheev_(jobz, uplo, n, &a[a_offset], lda, &w[1], &work[1], lwork, &rwork[1] , info);
+    cheev_(jobz, uplo, n, &a[a_offset], lda, &w[1], &work[1], lwork, &rwork[1], info);
     if (wantz)
     {
         /* Backtransform eigenvectors to the original problem. */

@@ -344,7 +344,7 @@ int sstemr_(char *jobz, char *range, integer *n, real *d__, real *e, real *vl, r
     int scopy_(integer *, real *, integer *, real *, integer *), sswap_(integer *, real *, integer *, real *, integer * );
     logical wantz;
     extern /* Subroutine */
-    int slaev2_(real *, real *, real *, real *, real * , real *, real *);
+    int slaev2_(real *, real *, real *, real *, real *, real *, real *);
     logical alleig;
     integer ibegin;
     logical indeig;
@@ -358,7 +358,7 @@ int sstemr_(char *jobz, char *range, integer *n, real *d__, real *e, real *vl, r
     real bignum;
     integer inderr, iindwk, indgrs, offset;
     extern /* Subroutine */
-    int slarrc_(char *, integer *, real *, real *, real *, real *, real *, integer *, integer *, integer *, integer * ), slarre_(char *, integer *, real *, real *, integer *, integer *, real *, real *, real *, real *, real *, real *, integer *, integer *, integer *, real *, real *, real *, integer * , integer *, real *, real *, real *, integer *, integer *) ;
+    int slarrc_(char *, integer *, real *, real *, real *, real *, real *, integer *, integer *, integer *, integer * ), slarre_(char *, integer *, real *, real *, integer *, integer *, real *, real *, real *, real *, real *, real *, integer *, integer *, integer *, real *, real *, real *, integer *, integer *, real *, real *, real *, integer *, integer *) ;
     real thresh;
     integer iinspl, indwrk, ifirst, liwmin, nzcmin;
     real pivmin;
@@ -367,7 +367,7 @@ int sstemr_(char *jobz, char *range, integer *n, real *d__, real *e, real *vl, r
     int slarrj_(integer *, real *, real *, integer *, integer *, real *, integer *, real *, real *, real *, integer *, real *, real *, integer *), slarrr_(integer *, real *, real *, integer *);
     integer nsplit;
     extern /* Subroutine */
-    int slarrv_(integer *, real *, real *, real *, real *, real *, integer *, integer *, integer *, integer *, real * , real *, real *, real *, real *, real *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer * );
+    int slarrv_(integer *, real *, real *, real *, real *, real *, integer *, integer *, integer *, integer *, real *, real *, real *, real *, real *, real *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer * );
     real smlnum;
     extern /* Subroutine */
     int slasrt_(char *, integer *, real *, integer *);

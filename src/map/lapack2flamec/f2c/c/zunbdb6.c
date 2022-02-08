@@ -4,7 +4,7 @@
 static doublecomplex c_b1 =
 {
     -1.,0.
-}
+    }
 ;
 static doublecomplex c_b2 =
 {

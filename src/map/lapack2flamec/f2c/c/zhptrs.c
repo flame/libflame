@@ -319,7 +319,7 @@ L40: /* If K > N, exit from loop. */
                 i__1 = k - 1;
                 z__1.r = -1.;
                 z__1.i = -0.; // , expr subst
-                zgemv_("Conjugate transpose", &i__1, nrhs, &z__1, &b[b_offset] , ldb, &ap[kc], &c__1, &c_b1, &b[k + b_dim1], ldb);
+                zgemv_("Conjugate transpose", &i__1, nrhs, &z__1, &b[b_offset], ldb, &ap[kc], &c__1, &c_b1, &b[k + b_dim1], ldb);
                 zlacgv_(nrhs, &b[k + b_dim1], ldb);
             }
             /* Interchange rows K and IPIV(K). */
@@ -342,13 +342,13 @@ L40: /* If K > N, exit from loop. */
                 i__1 = k - 1;
                 z__1.r = -1.;
                 z__1.i = -0.; // , expr subst
-                zgemv_("Conjugate transpose", &i__1, nrhs, &z__1, &b[b_offset] , ldb, &ap[kc], &c__1, &c_b1, &b[k + b_dim1], ldb);
+                zgemv_("Conjugate transpose", &i__1, nrhs, &z__1, &b[b_offset], ldb, &ap[kc], &c__1, &c_b1, &b[k + b_dim1], ldb);
                 zlacgv_(nrhs, &b[k + b_dim1], ldb);
                 zlacgv_(nrhs, &b[k + 1 + b_dim1], ldb);
                 i__1 = k - 1;
                 z__1.r = -1.;
                 z__1.i = -0.; // , expr subst
-                zgemv_("Conjugate transpose", &i__1, nrhs, &z__1, &b[b_offset] , ldb, &ap[kc + k], &c__1, &c_b1, &b[k + 1 + b_dim1], ldb);
+                zgemv_("Conjugate transpose", &i__1, nrhs, &z__1, &b[b_offset], ldb, &ap[kc + k], &c__1, &c_b1, &b[k + 1 + b_dim1], ldb);
                 zlacgv_(nrhs, &b[k + 1 + b_dim1], ldb);
             }
             /* Interchange rows K and -IPIV(K). */

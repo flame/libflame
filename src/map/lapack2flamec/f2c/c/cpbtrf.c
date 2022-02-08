@@ -142,11 +142,11 @@ static integer c__33 = 33;
 int cpbtrf_(char *uplo, integer *n, integer *kd, complex *ab, integer *ldab, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cpbtrf inputs: uplo %c, n %lld, kd %lld, ldab %lld",*uplo, *n, *kd, *ldab);
-#else 
+#else
     snprintf(buffer, 256,"cpbtrf inputs: uplo %c, n %d, kd %d, ldab %d",*uplo, *n, *kd, *ldab);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -159,7 +159,7 @@ int cpbtrf_(char *uplo, integer *n, integer *kd, complex *ab, integer *ldab, int
     complex work[1056] /* was [33][32] */
     ;
     extern /* Subroutine */
-    int cgemm_(char *, char *, integer *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *), cherk_(char *, char *, integer *, integer *, real *, complex *, integer *, real * , complex *, integer *);
+    int cgemm_(char *, char *, integer *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *), cherk_(char *, char *, integer *, integer *, real *, complex *, integer *, real *, complex *, integer *);
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
     int ctrsm_(char *, char *, char *, char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *), cpbtf2_(char *, integer *, integer *, complex *, integer *, integer *), cpotf2_(char *, integer *, complex *, integer *, integer *), xerbla_(char *, integer *);

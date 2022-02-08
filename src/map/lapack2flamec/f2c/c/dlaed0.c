@@ -166,8 +166,8 @@ static integer c__1 = 1;
 int dlaed0_(integer *icompq, integer *qsiz, integer *n, doublereal *d__, doublereal *e, doublereal *q, integer *ldq, doublereal *qstore, integer *ldqs, doublereal *work, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dlaed0 inputs: icompq %" FLA_IS ", qsiz %" FLA_IS ", n %" FLA_IS ", ldq %" FLA_IS ", ldqs %" FLA_IS "",*icompq, *qsiz, *n, *ldq, *ldqs);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -444,7 +444,7 @@ L80:
             }
             else
             {
-                dlaed7_(icompq, &matsiz, qsiz, &tlvls, &curlvl, &curprb, &d__[ submat], &qstore[submat * qstore_dim1 + 1], ldqs, & iwork[indxq + submat], &e[submat + msd2 - 1], &msd2, & work[iq], &iwork[iqptr], &iwork[iprmpt], &iwork[iperm] , &iwork[igivpt], &iwork[igivcl], &work[igivnm], & work[iwrem], &iwork[subpbs + 1], info);
+                dlaed7_(icompq, &matsiz, qsiz, &tlvls, &curlvl, &curprb, &d__[ submat], &qstore[submat * qstore_dim1 + 1], ldqs, & iwork[indxq + submat], &e[submat + msd2 - 1], &msd2, & work[iq], &iwork[iqptr], &iwork[iprmpt], &iwork[iperm], &iwork[igivpt], &iwork[igivcl], &work[igivnm], & work[iwrem], &iwork[subpbs + 1], info);
             }
             if (*info != 0)
             {

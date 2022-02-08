@@ -190,7 +190,7 @@ int ztrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
     integer isave[3];
     logical upper;
     extern /* Subroutine */
-    int zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), zaxpy_(integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), ztrmv_( char *, char *, char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), ztrsv_(char * , char *, char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), zlacn2_( integer *, doublecomplex *, doublecomplex *, doublereal *, integer *, integer *);
+    int zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), zaxpy_(integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), ztrmv_( char *, char *, char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), ztrsv_(char *, char *, char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), zlacn2_( integer *, doublecomplex *, doublecomplex *, doublereal *, integer *, integer *);
     extern doublereal dlamch_(char *);
     doublereal safmin;
     extern /* Subroutine */

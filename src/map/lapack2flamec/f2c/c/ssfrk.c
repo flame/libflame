@@ -306,7 +306,7 @@ int ssfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
                     /* N is odd, TRANSR = 'N', UPLO = 'L', and TRANS = 'T' */
                     ssyrk_("L", "T", &n1, k, alpha, &a[a_dim1 + 1], lda, beta, &c__[1], n);
                     ssyrk_("U", "T", &n2, k, alpha, &a[(n1 + 1) * a_dim1 + 1], lda, beta, &c__[*n + 1], n) ;
-                    sgemm_("T", "N", &n2, &n1, k, alpha, &a[(n1 + 1) * a_dim1 + 1], lda, &a[a_dim1 + 1], lda, beta, &c__[n1 + 1] , n);
+                    sgemm_("T", "N", &n2, &n1, k, alpha, &a[(n1 + 1) * a_dim1 + 1], lda, &a[a_dim1 + 1], lda, beta, &c__[n1 + 1], n);
                 }
             }
             else
@@ -396,7 +396,7 @@ int ssfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
                     i__1 = *n + 1;
                     ssyrk_("U", "T", &nk, k, alpha, &a[(nk + 1) * a_dim1 + 1], lda, beta, &c__[1], &i__1);
                     i__1 = *n + 1;
-                    sgemm_("T", "N", &nk, &nk, k, alpha, &a[(nk + 1) * a_dim1 + 1], lda, &a[a_dim1 + 1], lda, beta, &c__[nk + 2] , &i__1);
+                    sgemm_("T", "N", &nk, &nk, k, alpha, &a[(nk + 1) * a_dim1 + 1], lda, &a[a_dim1 + 1], lda, beta, &c__[nk + 2], &i__1);
                 }
             }
             else

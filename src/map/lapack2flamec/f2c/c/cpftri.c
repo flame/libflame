@@ -213,11 +213,11 @@ k=N/2. IF TRANSR = 'C' then RFP is */
 int cpftri_(char *transr, char *uplo, integer *n, complex *a, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cpftri inputs: transr %c, uplo %c, n %lld",*transr, *uplo, *n);
-#else 
+#else
     snprintf(buffer, 256,"cpftri inputs: transr %c, uplo %c, n %d",*transr, *uplo, *n);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -361,7 +361,7 @@ int cpftri_(char *transr, char *uplo, integer *n, complex *a, integer *info)
                 /* SRPA for UPPER, TRANSPOSE, and N is odd */
                 /* T1 -> a(0+N2*N2), T2 -> a(0+N1*N2), S -> a(0) */
                 clauum_("U", &n1, &a[n2 * n2], &n2, info);
-                cherk_("U", "C", &n1, &n2, &c_b12, a, &n2, &c_b12, &a[n2 * n2] , &n2);
+                cherk_("U", "C", &n1, &n2, &c_b12, a, &n2, &c_b12, &a[n2 * n2], &n2);
                 ctrmm_("L", "L", "C", "N", &n2, &n1, &c_b1, &a[n1 * n2], &n2, a, &n2);
                 clauum_("L", &n2, &a[n1 * n2], &n2, info);
             }

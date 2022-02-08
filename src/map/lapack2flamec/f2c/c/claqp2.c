@@ -138,11 +138,11 @@ if JPVT(i) = 0, */
 int claqp2_(integer *m, integer *n, integer *offset, complex *a, integer *lda, integer *jpvt, complex *tau, real *vn1, real *vn2, complex *work)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"claqp2 inputs: m %lld, n %lld, offset %lld, lda %lld, jpvt %lld",*m, *n, *offset, *lda, *jpvt);
-#else 
+#else
     snprintf(buffer, 256,"claqp2 inputs: m %d, n %d, offset %d, lda %d, jpvt %d",*m, *n, *offset, *lda, *jpvt);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -161,7 +161,7 @@ int claqp2_(integer *m, integer *n, integer *offset, complex *a, integer *lda, i
     integer pvt;
     real temp, temp2, tol3z;
     extern /* Subroutine */
-    int clarf_(char *, integer *, integer *, complex * , integer *, complex *, complex *, integer *, complex *);
+    int clarf_(char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *);
     integer offpi;
     extern /* Subroutine */
     int cswap_(integer *, complex *, integer *, complex *, integer *);

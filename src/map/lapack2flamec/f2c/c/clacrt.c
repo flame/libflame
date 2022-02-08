@@ -94,11 +94,11 @@
 int clacrt_(integer *n, complex *cx, integer *incx, complex * cy, integer *incy, complex *c__, complex *s)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clacrt inputs: n %lld, incx %lld, incy %lld",*n, *incx, *incy);
-#else 
+#else
     snprintf(buffer, 256,"clacrt inputs: n %d, incx %d, incy %d",*n, *incx, *incy);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

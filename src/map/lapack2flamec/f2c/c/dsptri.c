@@ -269,7 +269,7 @@ L30: /* If K > N, exit from loop. */
                 i__1 = k - 1;
                 ap[kc + k - 1] -= ddot_(&i__1, &work[1], &c__1, &ap[kc], & c__1);
                 i__1 = k - 1;
-                ap[kcnext + k - 1] -= ddot_(&i__1, &ap[kc], &c__1, &ap[kcnext] , &c__1);
+                ap[kcnext + k - 1] -= ddot_(&i__1, &ap[kc], &c__1, &ap[kcnext], &c__1);
                 i__1 = k - 1;
                 dcopy_(&i__1, &ap[kcnext], &c__1, &work[1], &c__1);
                 i__1 = k - 1;

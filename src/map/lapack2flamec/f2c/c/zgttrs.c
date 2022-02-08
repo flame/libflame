@@ -131,8 +131,8 @@ IPIV(i) = i indicates a row interchange was not */
 int zgttrs_(char *trans, integer *n, integer *nrhs, doublecomplex *dl, doublecomplex *d__, doublecomplex *du, doublecomplex *du2, integer *ipiv, doublecomplex *b, integer *ldb, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"zgttrs inputs: trans %c, n %d, nrhs %d, ldb %d",*trans, *n, *nrhs, *ldb);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -141,7 +141,7 @@ int zgttrs_(char *trans, integer *n, integer *nrhs, doublecomplex *dl, doublecom
     /* Local variables */
     integer j, jb, nb;
     extern /* Subroutine */
-    int zgtts2_(integer *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, doublecomplex * , integer *, doublecomplex *, integer *), xerbla_(char *, integer *);
+    int zgtts2_(integer *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer itrans;
     logical notran;

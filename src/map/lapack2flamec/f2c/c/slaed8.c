@@ -552,7 +552,7 @@ L110: /* Sort the eigenvalues and corresponding eigenvectors into DLAMDA */
             jp = indxp[j];
             dlamda[j] = d__[jp];
             perm[j] = indxq[indx[jp]];
-            scopy_(qsiz, &q[perm[j] * q_dim1 + 1], &c__1, &q2[j * q2_dim1 + 1] , &c__1);
+            scopy_(qsiz, &q[perm[j] * q_dim1 + 1], &c__1, &q2[j * q2_dim1 + 1], &c__1);
             /* L130: */
         }
     }

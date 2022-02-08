@@ -219,11 +219,11 @@ tauq is stored in TAUQ(i) and taup in TAUP(i). */
 int clabrd_(integer *m, integer *n, integer *nb, complex *a, integer *lda, real *d__, real *e, complex *tauq, complex *taup, complex *x, integer *ldx, complex *y, integer *ldy)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clabrd inputs: m %lld, n %lld, nb %lld, lda %lld, ldx %lld, ldy %lld",*m, *n, *nb, *lda, *ldx, *ldy);
-#else 
+#else
     snprintf(buffer, 256,"clabrd inputs: m %d, n %d, nb %d, lda %d, ldx %d, ldy %d",*m, *n, *nb, *lda, *ldx, *ldy);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -490,7 +490,7 @@ int clabrd_(integer *m, integer *n, integer *nb, complex *a, integer *lda, real 
                 /* Compute Y(i+1:n,i) */
                 i__2 = *m - i__;
                 i__3 = *n - i__;
-                cgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &a[i__ + 1 + (i__ + 1) * a_dim1], lda, &a[i__ + 1 + i__ * a_dim1] , &c__1, &c_b1, &y[i__ + 1 + i__ * y_dim1], &c__1);
+                cgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &a[i__ + 1 + (i__ + 1) * a_dim1], lda, &a[i__ + 1 + i__ * a_dim1], &c__1, &c_b1, &y[i__ + 1 + i__ * y_dim1], &c__1);
                 i__2 = *m - i__;
                 i__3 = i__ - 1;
                 cgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &a[i__ + 1 + a_dim1], lda, &a[i__ + 1 + i__ * a_dim1], &c__1, & c_b1, &y[i__ * y_dim1 + 1], &c__1);

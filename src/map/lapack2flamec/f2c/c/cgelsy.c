@@ -215,12 +215,12 @@ the routine */
 int cgelsy_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, complex *b, integer *ldb, integer *jpvt, real *rcond, integer *rank, complex *work, integer *lwork, real *rwork, integer * info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
-   snprintf(buffer, 256,"cgelsy inputs: m %lld, n %lld, nrhs %lld, lda %lld, ldb %lld, jpvt %lld, lwork %lld",*m, *n, *nrhs, *lda, *ldb, *jpvt, *lwork);
-#else 
-   snprintf(buffer, 256,"cgelsy inputs: m %d, n %d, nrhs %d, lda %d, ldb %d, jpvt %d, lwork %d",*m, *n, *nrhs, *lda, *ldb, *jpvt, *lwork);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
+    snprintf(buffer, 256,"cgelsy inputs: m %lld, n %lld, nrhs %lld, lda %lld, ldb %lld, jpvt %lld, lwork %lld",*m, *n, *nrhs, *lda, *ldb, *jpvt, *lwork);
+#else
+    snprintf(buffer, 256,"cgelsy inputs: m %d, n %d, nrhs %d, lda %d, ldb %d, jpvt %d, lwork %d",*m, *n, *nrhs, *lda, *ldb, *jpvt, *lwork);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

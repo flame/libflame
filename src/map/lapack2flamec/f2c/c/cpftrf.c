@@ -213,11 +213,11 @@ k=N/2. IF TRANSR = 'C' then RFP is */
 int cpftrf_(char *transr, char *uplo, integer *n, complex *a, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cpftrf inputs: transr %c, uplo %c, n %lld",*transr, *uplo, *n);
-#else 
+#else
     snprintf(buffer, 256,"cpftrf inputs: transr %c, uplo %c, n %d",*transr, *uplo, *n);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -388,7 +388,7 @@ int cpftrf_(char *transr, char *uplo, integer *n, complex *a, integer *info)
                     return 0;
                 }
                 ctrsm_("R", "U", "N", "N", &n2, &n1, &c_b1, &a[n2 * n2], &n2, a, &n2);
-                cherk_("L", "N", &n2, &n1, &c_b15, a, &n2, &c_b16, &a[n1 * n2] , &n2);
+                cherk_("L", "N", &n2, &n1, &c_b15, a, &n2, &c_b16, &a[n1 * n2], &n2);
                 cpotrf_("L", &n2, &a[n1 * n2], &n2, info);
                 if (*info > 0)
                 {

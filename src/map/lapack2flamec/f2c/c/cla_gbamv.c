@@ -174,11 +174,11 @@
 int cla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku, real *alpha, complex *ab, integer *ldab, complex *x, integer *incx, real *beta, real *y, integer *incy)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cla_gbamv inputs: trans %lld, m %lld, n %lld, kl %lld, ku %lld, ldab %lld, incx %lld, incy %lld",*trans, *m, *n, *kl, *ku, *ldab, *incx, *incy);
-#else 
+#else
     snprintf(buffer, 256,"cla_gbamv inputs: trans %d, m %d, n %d, kl %d, ku %d, ldab %d, incx %d, incy %d",*trans, *m, *n, *kl, *ku, *ldab, *incx, *incy);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

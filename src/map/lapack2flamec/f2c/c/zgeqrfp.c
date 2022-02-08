@@ -153,7 +153,7 @@ int zgeqrfp_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecompl
     integer lwkopt;
     logical lquery;
     extern /* Subroutine */
-    int zgeqr2p_(integer *, integer *, doublecomplex * , integer *, doublecomplex *, doublecomplex *, integer *);
+    int zgeqr2p_(integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -275,7 +275,7 @@ int zgeqrfp_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecompl
                 /* Apply H**H to A(i:m,i+ib:n) from the left */
                 i__3 = *m - i__ + 1;
                 i__4 = *n - i__ - ib + 1;
-                zlarfb_("Left", "Conjugate transpose", "Forward", "Columnwise" , &i__3, &i__4, &ib, &a[i__ + i__ * a_dim1], lda, & work[1], &ldwork, &a[i__ + (i__ + ib) * a_dim1], lda, &work[ib + 1], &ldwork);
+                zlarfb_("Left", "Conjugate transpose", "Forward", "Columnwise", &i__3, &i__4, &ib, &a[i__ + i__ * a_dim1], lda, & work[1], &ldwork, &a[i__ + (i__ + ib) * a_dim1], lda, &work[ib + 1], &ldwork);
             }
             /* L10: */
         }

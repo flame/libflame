@@ -244,7 +244,7 @@ int sggev_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b,
     logical ilascl, ilbscl;
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     extern /* Subroutine */
-    int xerbla_(char *, integer *), sgghrd_( char *, char *, integer *, integer *, integer *, real *, integer * , real *, integer *, real *, integer *, real *, integer *, integer *);
+    int xerbla_(char *, integer *), sgghrd_( char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *);
     logical ldumma[1];
     char chtemp[1];
     real bignum;
@@ -259,7 +259,7 @@ int sggev_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b,
     int slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *), stgevc_( char *, char *, logical *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *, integer *, real *, integer *);
     real anrmto, bnrmto;
     extern /* Subroutine */
-    int shgeqz_(char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real * , real *, real *, real *, integer *, real *, integer *, real *, integer *, integer *);
+    int shgeqz_(char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, real *, real *, real *, integer *, real *, integer *, real *, integer *, integer *);
     integer minwrk, maxwrk;
     real smlnum;
     extern /* Subroutine */

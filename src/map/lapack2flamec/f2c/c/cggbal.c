@@ -173,11 +173,11 @@ and second, applying a diagonal similarity */
 int cggbal_(char *job, integer *n, complex *a, integer *lda, complex *b, integer *ldb, integer *ilo, integer *ihi, real *lscale, real *rscale, real *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cggbal inputs: job %c, n %lld, lda %lld, ldb %lld",*job, *n, *lda, *ldb);
-#else 
+#else
     snprintf(buffer, 256,"cggbal inputs: job %c, n %d, lda %d, ldb %d",*job, *n, *lda, *ldb);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -535,7 +535,7 @@ L220:
     it = 1;
     /* Start generalized conjugate gradient iteration */
 L250:
-    gamma = sdot_(&nr, &work[*ilo + (*n << 2)], &c__1, &work[*ilo + (*n << 2)] , &c__1) + sdot_(&nr, &work[*ilo + *n * 5], &c__1, &work[*ilo + * n * 5], &c__1);
+    gamma = sdot_(&nr, &work[*ilo + (*n << 2)], &c__1, &work[*ilo + (*n << 2)], &c__1) + sdot_(&nr, &work[*ilo + *n * 5], &c__1, &work[*ilo + * n * 5], &c__1);
     ew = 0.f;
     ewc = 0.f;
     i__1 = *ihi;
@@ -672,7 +672,7 @@ L320:
         goto L350;
     }
     r__1 = -alpha;
-    saxpy_(&nr, &r__1, &work[*ilo + (*n << 1)], &c__1, &work[*ilo + (*n << 2)] , &c__1);
+    saxpy_(&nr, &r__1, &work[*ilo + (*n << 1)], &c__1, &work[*ilo + (*n << 2)], &c__1);
     r__1 = -alpha;
     saxpy_(&nr, &r__1, &work[*ilo + *n * 3], &c__1, &work[*ilo + *n * 5], & c__1);
     pgamma = gamma;

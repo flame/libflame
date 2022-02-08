@@ -337,7 +337,7 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
                 {
                     return 0;
                 }
-                ztrmm_("L", "U", "C", diag, &n2, &n1, &c_b1, &a[*n], n, &a[n1] , n);
+                ztrmm_("L", "U", "C", diag, &n2, &n1, &c_b1, &a[*n], n, &a[n1], n);
             }
             else
             {
@@ -449,7 +449,7 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
                 }
                 i__1 = *n + 1;
                 i__2 = *n + 1;
-                ztrmm_("L", "U", "C", diag, &k, &k, &c_b1, a, &i__1, &a[k + 1] , &i__2);
+                ztrmm_("L", "U", "C", diag, &k, &k, &c_b1, a, &i__1, &a[k + 1], &i__2);
             }
             else
             {

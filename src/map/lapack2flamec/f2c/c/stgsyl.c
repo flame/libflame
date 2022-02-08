@@ -317,7 +317,7 @@ int stgsyl_(char *trans, integer *ijob, integer *m, integer * n, real *a, intege
     integer lwmin;
     real scale2, dscale;
     extern /* Subroutine */
-    int stgsy2_(char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real * , integer *, real *, integer *, real *, integer *, real *, real *, real *, integer *, integer *, integer *);
+    int stgsy2_(char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, real *, real *, integer *, integer *, integer *);
     real scaloc;
     extern /* Subroutine */
     int xerbla_(char *, integer *);

@@ -242,7 +242,7 @@ int zgegs_(char *jobvsl, char *jobvsr, integer *n, doublecomplex *a, integer *ld
     integer irows;
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int zggbak_(char *, char *, integer *, integer *, integer *, doublereal *, doublereal *, integer *, doublecomplex *, integer *, integer *), zggbal_(char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer * , integer *, doublereal *, doublereal *, doublereal *, integer *);
+    int zggbak_(char *, char *, integer *, integer *, integer *, doublereal *, doublereal *, integer *, doublecomplex *, integer *, integer *), zggbal_(char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *);
     logical ilascl, ilbscl;
     doublereal safmin;
     extern /* Subroutine */

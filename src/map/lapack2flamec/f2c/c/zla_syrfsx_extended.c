@@ -6,7 +6,7 @@ static integer c__1 = 1;
 static doublecomplex c_b14 =
 {
     -1.,0.
-}
+    }
 ;
 static doublecomplex c_b15 =
 {
@@ -412,7 +412,7 @@ int zla_syrfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *
     logical incr_prec__;
     doublereal prev_dz_z__;
     extern /* Subroutine */
-    int zla_syamv_(integer *, integer *, doublereal * , doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, integer *);
+    int zla_syamv_(integer *, integer *, doublereal *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, integer *);
     doublereal yk, final_dx_x__, final_dz_z__;
     extern /* Subroutine */
     int zla_wwaddw_(integer *, doublecomplex *, doublecomplex *, doublecomplex *);
@@ -420,7 +420,7 @@ int zla_syrfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *
     integer cnt;
     doublereal dyk, eps, incr_thresh__, dx_x__, dz_z__, ymin;
     extern /* Subroutine */
-    int zla_lin_berr_(integer *, integer *, integer * , doublecomplex *, doublereal *, doublereal *);
+    int zla_lin_berr_(integer *, integer *, integer *, doublecomplex *, doublereal *, doublereal *);
     integer y_prec_state__, uplo2;
     extern /* Subroutine */
     int blas_zsymv_x_(integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, integer *) ;

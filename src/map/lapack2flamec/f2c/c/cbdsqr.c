@@ -221,12 +221,12 @@ if INFO = i, i */
 int cbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, real *d__, real *e, complex *vt, integer *ldvt, complex *u, integer *ldu, complex *c__, integer *ldc, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
-   snprintf(buffer, 256,"cbdsqr inputs: uplo %c, n %lld, ncvt %lld, nru %lld, ncc %lld, ldvt %lld, ldu %lld, ldc %lld",*uplo, *n, *ncvt, *nru, *ncc, *ldvt, *ldu, *ldc);
-#else 
-   snprintf(buffer, 256,"cbdsqr inputs: uplo %c, n %d, ncvt %d, nru %d, ncc %d, ldvt %d, ldu %d, ldc %d",*uplo, *n, *ncvt, *nru, *ncc, *ldvt, *ldu, *ldc);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
+    snprintf(buffer, 256,"cbdsqr inputs: uplo %c, n %lld, ncvt %lld, nru %lld, ncc %lld, ldvt %lld, ldu %lld, ldc %lld",*uplo, *n, *ncvt, *nru, *ncc, *ldvt, *ldu, *ldc);
+#else
+    snprintf(buffer, 256,"cbdsqr inputs: uplo %c, n %d, ncvt %d, nru %d, ncc %d, ldvt %d, ldu %d, ldc %d",*uplo, *n, *ncvt, *nru, *ncc, *ldvt, *ldu, *ldc);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -235,7 +235,7 @@ int cbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, 
     real r__1, r__2, r__3, r__4;
     doublereal d__1;
     /* Builtin functions */
-    double pow_dd(doublereal *, doublereal *), sqrt(doublereal), r_sign(real * , real *);
+    double pow_dd(doublereal *, doublereal *), sqrt(doublereal), r_sign(real *, real *);
     /* Local variables */
     real f, g, h__;
     integer i__, j, m;
@@ -264,7 +264,7 @@ int cbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, 
     real sminl, sigmx;
     logical lower;
     extern /* Subroutine */
-    int csrot_(integer *, complex *, integer *, complex *, integer *, real *, real *), slasq1_(integer *, real *, real *, real *, integer *), slasv2_(real *, real *, real *, real * , real *, real *, real *, real *, real *);
+    int csrot_(integer *, complex *, integer *, complex *, integer *, real *, real *), slasq1_(integer *, real *, real *, real *, integer *), slasv2_(real *, real *, real *, real *, real *, real *, real *, real *, real *);
     extern real slamch_(char *);
     extern /* Subroutine */
     int csscal_(integer *, real *, complex *, integer *), xerbla_(char *, integer *);
@@ -458,7 +458,7 @@ int cbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, 
                 i__ <= i__1;
                 ++i__)
         {
-            mu = (r__2 = d__[i__], f2c_abs(r__2)) * (mu / (mu + (r__1 = e[i__ - 1] , f2c_abs(r__1))));
+            mu = (r__2 = d__[i__], f2c_abs(r__2)) * (mu / (mu + (r__1 = e[i__ - 1], f2c_abs(r__1))));
             sminoa = min(sminoa,mu);
             if (sminoa == 0.f)
             {
@@ -638,7 +638,7 @@ L90:
                     e[lll] = 0.f;
                     goto L60;
                 }
-                mu = (r__2 = d__[lll], f2c_abs(r__2)) * (mu / (mu + (r__1 = e[lll] , f2c_abs(r__1))));
+                mu = (r__2 = d__[lll], f2c_abs(r__2)) * (mu / (mu + (r__1 = e[lll], f2c_abs(r__1))));
                 sminl = min(sminl,mu);
                 /* L110: */
             }

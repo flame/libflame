@@ -124,8 +124,8 @@ static integer c__1 = 1;
 int stptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, real *ap, real *b, integer *ldb, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"stptrs inputs: uplo %c, trans %c, diag %c, n %d, nrhs %d, ldb %d",*uplo, *trans, *diag, *n, *nrhs, *ldb);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -136,7 +136,7 @@ int stptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, real
     extern logical lsame_(char *, char *);
     logical upper;
     extern /* Subroutine */
-    int stpsv_(char *, char *, char *, integer *, real *, real *, integer *), xerbla_(char * , integer *);
+    int stpsv_(char *, char *, char *, integer *, real *, real *, integer *), xerbla_(char *, integer *);
     logical nounit;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */

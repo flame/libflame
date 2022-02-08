@@ -273,7 +273,7 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
     int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *);
     integer krcol, nbmps;
     extern /* Subroutine */
-    int strmm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), slaqr1_(integer *, real *, integer *, real *, real *, real *, real *, real *), slabad_(real * , real *);
+    int strmm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), slaqr1_(integer *, real *, integer *, real *, real *, real *, real *, real *), slabad_(real *, real *);
     extern real slamch_(char *);
     real safmin;
     extern /* Subroutine */
@@ -475,7 +475,7 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         alpha = vt[0];
                         slarfg_(&c__3, &alpha, &vt[1], &c__1, vt);
                         refsum = vt[0] * (h__[k + 1 + k * h_dim1] + vt[1] * h__[k + 2 + k * h_dim1]);
-                        if ((r__1 = h__[k + 2 + k * h_dim1] - refsum * vt[1], f2c_abs(r__1)) + (r__2 = refsum * vt[2], f2c_abs(r__2) ) > ulp * ((r__3 = h__[k + k * h_dim1], f2c_abs( r__3)) + (r__4 = h__[k + 1 + (k + 1) * h_dim1] , f2c_abs(r__4)) + (r__5 = h__[k + 2 + (k + 2) * h_dim1], f2c_abs(r__5))))
+                        if ((r__1 = h__[k + 2 + k * h_dim1] - refsum * vt[1], f2c_abs(r__1)) + (r__2 = refsum * vt[2], f2c_abs(r__2) ) > ulp * ((r__3 = h__[k + k * h_dim1], f2c_abs( r__3)) + (r__4 = h__[k + 1 + (k + 1) * h_dim1], f2c_abs(r__4)) + (r__5 = h__[k + 2 + (k + 2) * h_dim1], f2c_abs(r__5))))
                         {
                             /* ==== Starting a new bulge here would */
                             /* . create non-negligible fill. Use */
@@ -929,11 +929,11 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                     slacpy_("ALL", &knz, &jlen, &h__[incol + 1 + j2 + jcol * h_dim1], ldh, &wh[kzs + 1 + wh_dim1], ldwh);
                     /* ==== Multiply by U21**T ==== */
                     slaset_("ALL", &kzs, &jlen, &c_b7, &c_b7, &wh[wh_offset], ldwh);
-                    strmm_("L", "U", "C", "N", &knz, &jlen, &c_b8, &u[j2 + 1 + (kzs + 1) * u_dim1], ldu, &wh[kzs + 1 + wh_dim1] , ldwh);
+                    strmm_("L", "U", "C", "N", &knz, &jlen, &c_b8, &u[j2 + 1 + (kzs + 1) * u_dim1], ldu, &wh[kzs + 1 + wh_dim1], ldwh);
                     /* ==== Multiply top of H by U11**T ==== */
                     sgemm_("C", "N", &i2, &jlen, &j2, &c_b8, &u[u_offset], ldu, &h__[incol + 1 + jcol * h_dim1], ldh, &c_b8, &wh[wh_offset], ldwh);
                     /* ==== Copy top of H to bottom of WH ==== */
-                    slacpy_("ALL", &j2, &jlen, &h__[incol + 1 + jcol * h_dim1] , ldh, &wh[i2 + 1 + wh_dim1], ldwh);
+                    slacpy_("ALL", &j2, &jlen, &h__[incol + 1 + jcol * h_dim1], ldh, &wh[i2 + 1 + wh_dim1], ldwh);
                     /* ==== Multiply by U21**T ==== */
                     strmm_("L", "L", "C", "N", &j2, &jlen, &c_b8, &u[(i2 + 1) * u_dim1 + 1], ldu, &wh[i2 + 1 + wh_dim1], ldwh);
                     /* ==== Multiply by U22 ==== */
@@ -967,7 +967,7 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                     slacpy_("ALL", &jlen, &j2, &h__[jrow + (incol + 1) * h_dim1], ldh, &wv[(i2 + 1) * wv_dim1 + 1], ldwv);
                     /* ==== Multiply by U21 ==== */
                     i__5 = i4 - i2;
-                    strmm_("R", "L", "N", "N", &jlen, &i__5, &c_b8, &u[(i2 + 1) * u_dim1 + 1], ldu, &wv[(i2 + 1) * wv_dim1 + 1] , ldwv);
+                    strmm_("R", "L", "N", "N", &jlen, &i__5, &c_b8, &u[(i2 + 1) * u_dim1 + 1], ldu, &wv[(i2 + 1) * wv_dim1 + 1], ldwv);
                     /* ==== Multiply by U22 ==== */
                     i__5 = i4 - i2;
                     i__7 = j4 - j2;

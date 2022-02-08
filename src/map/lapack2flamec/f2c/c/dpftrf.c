@@ -195,8 +195,8 @@ k=N/2. IF TRANSR = 'T' then RFP is */
 int dpftrf_(char *transr, char *uplo, integer *n, doublereal *a, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dpftrf inputs: transr %c, uplo %c, n %" FLA_IS "",*transr, *uplo, *n);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -364,7 +364,7 @@ int dpftrf_(char *transr, char *uplo, integer *n, doublereal *a, integer *info)
                     return 0;
                 }
                 dtrsm_("R", "U", "N", "N", &n2, &n1, &c_b12, &a[n2 * n2], &n2, a, &n2);
-                dsyrk_("L", "N", &n2, &n1, &c_b15, a, &n2, &c_b12, &a[n1 * n2] , &n2);
+                dsyrk_("L", "N", &n2, &n1, &c_b15, a, &n2, &c_b12, &a[n1 * n2], &n2);
                 dpotrf_("L", &n2, &a[n1 * n2], &n2, info);
                 if (*info > 0)
                 {

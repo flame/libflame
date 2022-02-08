@@ -227,11 +227,11 @@ the routine */
 int cgelsd_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, complex *b, integer *ldb, real *s, real *rcond, integer *rank, complex *work, integer *lwork, real *rwork, integer * iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgelsd inputs: m %lld, n %lld, nrhs %lld, lda %lld, ldb %lld, lwork %lld",*m, *n, *nrhs, *lda, *ldb, *lwork);
-#else 
+#else
     snprintf(buffer, 256,"cgelsd inputs: m %d, n %d, nrhs %d, lda %d, ldb %d, lwork %d",*m, *n, *nrhs, *lda, *ldb, *lwork);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -250,7 +250,7 @@ int cgelsd_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
     int cgebrd_(integer *, integer *, complex *, integer *, real *, real *, complex *, complex *, complex *, integer *, integer *), slabad_(real *, real *);
     extern real clange_(char *, integer *, integer *, complex *, integer *, real *);
     extern /* Subroutine */
-    int cgelqf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), clalsd_( char *, integer *, integer *, integer *, real *, real *, complex * , integer *, real *, integer *, complex *, real *, integer *, integer *), clascl_(char *, integer *, integer *, real *, real *, integer *, integer *, complex *, integer *, integer *), cgeqrf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
+    int cgelqf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), clalsd_( char *, integer *, integer *, integer *, real *, real *, complex *, integer *, real *, integer *, complex *, real *, integer *, integer *), clascl_(char *, integer *, integer *, real *, real *, integer *, integer *, complex *, integer *, integer *), cgeqrf_(integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
     int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(char *, integer *);
@@ -680,7 +680,7 @@ int cgelsd_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
             /* Multiply B by transpose of left bidiagonalizing vectors. */
             /* (CWorkspace: need 2*M+NRHS, prefer 2*M+NRHS*NB) */
             i__1 = *lwork - nwork + 1;
-            cunmbr_("Q", "L", "C", m, nrhs, n, &a[a_offset], lda, &work[itauq] , &b[b_offset], ldb, &work[nwork], &i__1, info);
+            cunmbr_("Q", "L", "C", m, nrhs, n, &a[a_offset], lda, &work[itauq], &b[b_offset], ldb, &work[nwork], &i__1, info);
             /* Solve the bidiagonal least squares problem. */
             clalsd_("L", &smlsiz, m, nrhs, &s[1], &rwork[ie], &b[b_offset], ldb, rcond, rank, &work[nwork], &rwork[nrwork], &iwork[1], info);
             if (*info != 0)
@@ -689,7 +689,7 @@ int cgelsd_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
             }
             /* Multiply B by right bidiagonalizing vectors of A. */
             i__1 = *lwork - nwork + 1;
-            cunmbr_("P", "L", "N", n, nrhs, m, &a[a_offset], lda, &work[itaup] , &b[b_offset], ldb, &work[nwork], &i__1, info);
+            cunmbr_("P", "L", "N", n, nrhs, m, &a[a_offset], lda, &work[itaup], &b[b_offset], ldb, &work[nwork], &i__1, info);
         }
     }
     /* Undo scaling. */

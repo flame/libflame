@@ -354,7 +354,7 @@ int strsen_(char *job, char *compq, logical *select, integer *n, real *t, intege
     int strexc_(char *, integer *, real *, integer *, real *, integer *, integer *, integer *, real *, integer *);
     logical wantsp, lquery;
     extern /* Subroutine */
-    int strsyl_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer * , real *, integer *);
+    int strsyl_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *);
     /* -- LAPACK computational routine (version 3.4.1) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */

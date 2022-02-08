@@ -87,8 +87,8 @@ static integer c__1 = 1;
 int spptri_(char *uplo, integer *n, real *ap, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"spptri inputs: uplo %c, n %d",*uplo, *n);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -106,7 +106,7 @@ int spptri_(char *uplo, integer *n, real *ap, integer *info)
     int sscal_(integer *, real *, real *, integer *);
     logical upper;
     extern /* Subroutine */
-    int stpmv_(char *, char *, char *, integer *, real *, real *, integer *), xerbla_(char * , integer *), stptri_(char *, char *, integer *, real *, integer *);
+    int stpmv_(char *, char *, char *, integer *, real *, real *, integer *), xerbla_(char *, integer *), stptri_(char *, char *, integer *, real *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */

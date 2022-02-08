@@ -230,12 +230,12 @@ the */
 int chpgvd_(integer *itype, char *jobz, char *uplo, integer * n, complex *ap, complex *bp, real *w, complex *z__, integer *ldz, complex *work, integer *lwork, real *rwork, integer *lrwork, integer * iwork, integer *liwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
-   snprintf(buffer, 256,"chpgvd inputs: itype %lld, jobz %c, uplo %c, n %lld, ldz %lld, lwork %lld, lrwork %lld, liwork %lld",*itype, *jobz, *uplo, *n, *ldz, *lwork, *lrwork, *liwork);
-#else 
-   snprintf(buffer, 256,"chpgvd inputs: itype %d, jobz %c, uplo %c, n %d, ldz %d, lwork %d, lrwork %d, liwork %d",*itype, *jobz, *uplo, *n, *ldz, *lwork, *lrwork, *liwork);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
+    snprintf(buffer, 256,"chpgvd inputs: itype %lld, jobz %c, uplo %c, n %lld, ldz %lld, lwork %lld, lrwork %lld, liwork %lld",*itype, *jobz, *uplo, *n, *ldz, *lwork, *lrwork, *liwork);
+#else
+    snprintf(buffer, 256,"chpgvd inputs: itype %d, jobz %c, uplo %c, n %d, ldz %d, lwork %d, lrwork %d, liwork %d",*itype, *jobz, *uplo, *n, *ldz, *lwork, *lrwork, *liwork);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

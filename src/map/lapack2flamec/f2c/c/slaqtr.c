@@ -186,7 +186,7 @@ int slaqtr_(logical *ltran, logical *lreal, integer *n, real *t, integer *ldt, r
     real bignum;
     extern integer isamax_(integer *, real *, integer *);
     extern /* Subroutine */
-    int sladiv_(real *, real *, real *, real *, real * , real *);
+    int sladiv_(real *, real *, real *, real *, real *, real *);
     logical notran;
     real smlnum;
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
@@ -352,7 +352,7 @@ int slaqtr_(logical *ltran, logical *lreal, integer *n, real *t, integer *ldt, r
                     {
                         i__1 = j1 - 1;
                         r__1 = -x[j1];
-                        saxpy_(&i__1, &r__1, &t[j1 * t_dim1 + 1], &c__1, &x[1] , &c__1);
+                        saxpy_(&i__1, &r__1, &t[j1 * t_dim1 + 1], &c__1, &x[1], &c__1);
                         i__1 = j1 - 1;
                         k = isamax_(&i__1, &x[1], &c__1);
                         xmax = (r__1 = x[k], f2c_abs(r__1));
@@ -400,10 +400,10 @@ int slaqtr_(logical *ltran, logical *lreal, integer *n, real *t, integer *ldt, r
                     {
                         i__1 = j1 - 1;
                         r__1 = -x[j1];
-                        saxpy_(&i__1, &r__1, &t[j1 * t_dim1 + 1], &c__1, &x[1] , &c__1);
+                        saxpy_(&i__1, &r__1, &t[j1 * t_dim1 + 1], &c__1, &x[1], &c__1);
                         i__1 = j1 - 1;
                         r__1 = -x[j2];
-                        saxpy_(&i__1, &r__1, &t[j2 * t_dim1 + 1], &c__1, &x[1] , &c__1);
+                        saxpy_(&i__1, &r__1, &t[j2 * t_dim1 + 1], &c__1, &x[1], &c__1);
                         i__1 = j1 - 1;
                         k = isamax_(&i__1, &x[1], &c__1);
                         xmax = (r__1 = x[k], f2c_abs(r__1));
@@ -608,7 +608,7 @@ L40:
                     {
                         i__1 = j1 - 1;
                         r__1 = -x[j1];
-                        saxpy_(&i__1, &r__1, &t[j1 * t_dim1 + 1], &c__1, &x[1] , &c__1);
+                        saxpy_(&i__1, &r__1, &t[j1 * t_dim1 + 1], &c__1, &x[1], &c__1);
                         i__1 = j1 - 1;
                         r__1 = -x[*n + j1];
                         saxpy_(&i__1, &r__1, &t[j1 * t_dim1 + 1], &c__1, &x[* n + 1], &c__1);
@@ -674,10 +674,10 @@ L40:
                     {
                         i__1 = j1 - 1;
                         r__1 = -x[j1];
-                        saxpy_(&i__1, &r__1, &t[j1 * t_dim1 + 1], &c__1, &x[1] , &c__1);
+                        saxpy_(&i__1, &r__1, &t[j1 * t_dim1 + 1], &c__1, &x[1], &c__1);
                         i__1 = j1 - 1;
                         r__1 = -x[j2];
-                        saxpy_(&i__1, &r__1, &t[j2 * t_dim1 + 1], &c__1, &x[1] , &c__1);
+                        saxpy_(&i__1, &r__1, &t[j2 * t_dim1 + 1], &c__1, &x[1], &c__1);
                         i__1 = j1 - 1;
                         r__1 = -x[*n + j1];
                         saxpy_(&i__1, &r__1, &t[j1 * t_dim1 + 1], &c__1, &x[* n + 1], &c__1);

@@ -132,7 +132,7 @@ int slatrz_(integer *m, integer *n, integer *l, real *a, integer *lda, real *tau
     /* Local variables */
     integer i__;
     extern /* Subroutine */
-    int slarz_(char *, integer *, integer *, integer * , real *, integer *, real *, real *, integer *, real *), slarfg_(integer *, real *, real *, integer *, real *);
+    int slarz_(char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *), slarfg_(integer *, real *, real *, integer *, real *);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */

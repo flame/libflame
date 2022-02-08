@@ -151,8 +151,8 @@ static integer c__1 = 1;
 int cunm2r_(char *side, char *trans, integer *m, integer *n, integer *k, complex *a, integer *lda, complex *tau, complex *c__, integer *ldc, complex *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"cunm2r inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS "",*side, *trans, *m, *n, *k, *lda, *ldc);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -167,7 +167,7 @@ int cunm2r_(char *side, char *trans, integer *m, integer *n, integer *k, complex
     logical left;
     complex taui;
     extern /* Subroutine */
-    int clarf_(char *, integer *, integer *, complex * , integer *, complex *, complex *, integer *, complex *);
+    int clarf_(char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *);
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
     int xerbla_(char *, integer *);

@@ -530,7 +530,7 @@ int zggsvp_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
         {
             i__1 = *m - 1;
             i__2 = *n - *l;
-            zlacpy_("Lower", &i__1, &i__2, &a[a_dim1 + 2], lda, &u[u_dim1 + 2] , ldu);
+            zlacpy_("Lower", &i__1, &i__2, &a[a_dim1 + 2], lda, &u[u_dim1 + 2], ldu);
         }
         /* Computing MIN */
         i__2 = *m;

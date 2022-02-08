@@ -132,11 +132,11 @@ row i of the matrix was interchanged */
 real cla_gercond_c_(char *trans, integer *n, complex *a, integer *lda, complex *af, integer *ldaf, integer *ipiv, real *c__, logical *capply, integer *info, complex *work, real *rwork)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cla_gercond_c inputs: trans %c, n %lld, lda %lld, ldaf %lld, ipiv %lld",*trans, *n, *lda, *ldaf, *ipiv);
-#else 
+#else
     snprintf(buffer, 256,"cla_gercond_c inputs: trans %c, n %d, lda %d, ldaf %d, ipiv %d",*trans, *n, *lda, *ldaf, *ipiv);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

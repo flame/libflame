@@ -230,7 +230,7 @@ int dtzrqf_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *ta
                 i__1 = k - 1;
                 i__2 = *n - *m;
                 d__1 = -tau[k];
-                dger_(&i__1, &i__2, &d__1, &tau[1], &c__1, &a[k + m1 * a_dim1] , lda, &a[m1 * a_dim1 + 1], lda);
+                dger_(&i__1, &i__2, &d__1, &tau[1], &c__1, &a[k + m1 * a_dim1], lda, &a[m1 * a_dim1 + 1], lda);
             }
             /* L20: */
         }

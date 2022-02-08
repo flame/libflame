@@ -130,7 +130,7 @@ int zhpgst_(integer *itype, char *uplo, integer *n, doublecomplex *ap, doublecom
     VOID zdotc_f2c_(doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int zhpmv_(char *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zaxpy_(integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), ztpmv_(char *, char *, char *, integer *, doublecomplex *, doublecomplex *, integer *), ztpsv_(char *, char *, char *, integer *, doublecomplex * , doublecomplex *, integer *), xerbla_( char *, integer *), zdscal_(integer *, doublereal *, doublecomplex *, integer *);
+    int zhpmv_(char *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zaxpy_(integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), ztpmv_(char *, char *, char *, integer *, doublecomplex *, doublecomplex *, integer *), ztpsv_(char *, char *, char *, integer *, doublecomplex *, doublecomplex *, integer *), xerbla_( char *, integer *), zdscal_(integer *, doublereal *, doublecomplex *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -254,7 +254,7 @@ int zhpgst_(integer *itype, char *uplo, integer *n, doublecomplex *ap, doublecom
                     i__2 = *n - k;
                     z__1.r = -1.;
                     z__1.i = -0.; // , expr subst
-                    zhpr2_(uplo, &i__2, &z__1, &ap[kk + 1], &c__1, &bp[kk + 1] , &c__1, &ap[k1k1]);
+                    zhpr2_(uplo, &i__2, &z__1, &ap[kk + 1], &c__1, &bp[kk + 1], &c__1, &ap[k1k1]);
                     i__2 = *n - k;
                     zaxpy_(&i__2, &ct, &bp[kk + 1], &c__1, &ap[kk + 1], &c__1) ;
                     i__2 = *n - k;
@@ -335,7 +335,7 @@ int zhpgst_(integer *itype, char *uplo, integer *n, doublecomplex *ap, doublecom
                 i__2 = *n - j;
                 zhpmv_(uplo, &i__2, &c_b1, &ap[j1j1], &bp[jj + 1], &c__1, & c_b1, &ap[jj + 1], &c__1);
                 i__2 = *n - j + 1;
-                ztpmv_(uplo, "Conjugate transpose", "Non-unit", &i__2, &bp[jj] , &ap[jj], &c__1);
+                ztpmv_(uplo, "Conjugate transpose", "Non-unit", &i__2, &bp[jj], &ap[jj], &c__1);
                 jj = j1j1;
                 /* L40: */
             }

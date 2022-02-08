@@ -105,11 +105,11 @@ static integer c__1 = 1;
 int cung2l_(integer *m, integer *n, integer *k, complex *a, integer *lda, complex *tau, complex *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cung2l inputs: m %lld, n %lld, k %lld, lda %lld",*m, *n, *k, *lda);
-#else 
+#else
     snprintf(buffer, 256,"cung2l inputs: m %d, n %d, k %d, lda %d",*m, *n, *k, *lda);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

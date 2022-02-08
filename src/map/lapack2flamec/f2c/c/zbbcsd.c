@@ -4,7 +4,7 @@
 static doublecomplex c_b1 =
 {
     -1.,0.
-}
+    }
 ;
 static doublereal c_b11 = -.125;
 static integer c__1 = 1;
@@ -830,11 +830,11 @@ int zbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
             }
             else if (mu <= nu)
             {
-                dlartgs_(&b11d[i__], &b11e[i__], &mu, &rwork[iv1tcs + i__ - 1] , &rwork[iv1tsn + i__ - 1]);
+                dlartgs_(&b11d[i__], &b11e[i__], &mu, &rwork[iv1tcs + i__ - 1], &rwork[iv1tsn + i__ - 1]);
             }
             else
             {
-                dlartgs_(&b21d[i__], &b21e[i__], &nu, &rwork[iv1tcs + i__ - 1] , &rwork[iv1tsn + i__ - 1]);
+                dlartgs_(&b21d[i__], &b21e[i__], &nu, &rwork[iv1tcs + i__ - 1], &rwork[iv1tsn + i__ - 1]);
             }
             rwork[iv1tcs + i__ - 1] = -rwork[iv1tcs + i__ - 1];
             rwork[iv1tsn + i__ - 1] = -rwork[iv1tsn + i__ - 1];

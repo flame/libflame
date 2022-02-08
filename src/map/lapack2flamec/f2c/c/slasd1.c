@@ -206,10 +206,10 @@ int slasd1_(integer *nl, integer *nr, integer *sqre, real * d__, real *alpha, re
     /* Local variables */
     integer i__, k, m, n, n1, n2, iq, iz, iu2, ldq, idx, ldu2, ivt2, idxc, idxp, ldvt2;
     extern /* Subroutine */
-    int slasd2_(integer *, integer *, integer *, integer *, real *, real *, real *, real *, real *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *, integer *, integer *, integer *, integer *, integer *), slasd3_(integer *, integer *, integer *, integer *, real *, real *, integer *, real *, real *, integer *, real *, integer *, real * , integer *, real *, integer *, integer *, integer *, real *, integer *);
+    int slasd2_(integer *, integer *, integer *, integer *, real *, real *, real *, real *, real *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *, integer *, integer *, integer *, integer *, integer *), slasd3_(integer *, integer *, integer *, integer *, real *, real *, integer *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *, integer *, real *, integer *);
     integer isigma;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slascl_( char *, integer *, integer *, real *, real *, integer *, integer * , real *, integer *, integer *), slamrg_(integer *, integer *, real *, integer *, integer *, integer *);
+    int xerbla_(char *, integer *), slascl_( char *, integer *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), slamrg_(integer *, integer *, real *, integer *, integer *, integer *);
     real orgnrm;
     integer coltyp;
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */

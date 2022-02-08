@@ -240,11 +240,11 @@ b(i), i=1,..,n}
 int clatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *kd, complex *ab, integer *ldab, complex * x, real *scale, real *cnorm, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clatbs inputs: uplo %c, trans %c, diag %c, normin %c, n %lld, kd %lld, ldab %lld",*uplo, *trans, *diag, *normin, *n, *kd, *ldab);
-#else 
+#else
     snprintf(buffer, 256,"clatbs inputs: uplo %c, trans %c, diag %c, normin %c, n %d, kd %d, ldab %d",*uplo, *trans, *diag, *normin, *n, *kd, *ldab);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -278,7 +278,7 @@ int clatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, inte
     VOID cdotu_f2c_(complex *, integer *, complex *, integer *, complex *, integer *);
     complex csumj;
     extern /* Subroutine */
-    int ctbsv_(char *, char *, char *, integer *, integer *, complex *, integer *, complex *, integer *), caxpy_(integer *, complex *, complex *, integer * , complex *, integer *);
+    int ctbsv_(char *, char *, char *, integer *, integer *, complex *, integer *, complex *, integer *), caxpy_(integer *, complex *, complex *, integer *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
     int slabad_(real *, real *);
@@ -722,7 +722,7 @@ L90:
                     x[i__3].r = q__1.r;
                     x[i__3].i = q__1.i; // , expr subst
                     i__3 = j;
-                    xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[j]) , f2c_abs(r__2));
+                    xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[j]), f2c_abs(r__2));
                 }
                 else if (tjj > 0.f)
                 {
@@ -747,7 +747,7 @@ L90:
                     x[i__3].r = q__1.r;
                     x[i__3].i = q__1.i; // , expr subst
                     i__3 = j;
-                    xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[j]) , f2c_abs(r__2));
+                    xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[j]), f2c_abs(r__2));
                 }
                 else
                 {
@@ -805,7 +805,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                         q__2.i = -x[i__3].i; // , expr subst
                         q__1.r = tscal * q__2.r;
                         q__1.i = tscal * q__2.i; // , expr subst
-                        caxpy_(&jlen, &q__1, &ab[*kd + 1 - jlen + j * ab_dim1] , &c__1, &x[j - jlen], &c__1);
+                        caxpy_(&jlen, &q__1, &ab[*kd + 1 - jlen + j * ab_dim1], &c__1, &x[j - jlen], &c__1);
                         i__3 = j - 1;
                         i__ = icamax_(&i__3, &x[1], &c__1);
                         i__3 = i__;
@@ -902,7 +902,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                         i__3 = *kd;
                         i__4 = j - 1; // , expr subst
                         jlen = min(i__3,i__4);
-                        cdotu_f2c_(&q__1, &jlen, &ab[*kd + 1 - jlen + j * ab_dim1] , &c__1, &x[j - jlen], &c__1);
+                        cdotu_f2c_(&q__1, &jlen, &ab[*kd + 1 - jlen + j * ab_dim1], &c__1, &x[j - jlen], &c__1);
                         csumj.r = q__1.r;
                         csumj.i = q__1.i; // , expr subst
                     }
@@ -985,7 +985,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                     x[i__3].r = q__1.r;
                     x[i__3].i = q__1.i; // , expr subst
                     i__3 = j;
-                    xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[j]) , f2c_abs(r__2));
+                    xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[j]), f2c_abs(r__2));
                     if (nounit)
                     {
                         /* Compute x(j) = x(j) / A(j,j), scaling if necessary. */
@@ -1146,7 +1146,7 @@ L145:
                         i__3 = *kd;
                         i__4 = j - 1; // , expr subst
                         jlen = min(i__3,i__4);
-                        cdotc_f2c_(&q__1, &jlen, &ab[*kd + 1 - jlen + j * ab_dim1] , &c__1, &x[j - jlen], &c__1);
+                        cdotc_f2c_(&q__1, &jlen, &ab[*kd + 1 - jlen + j * ab_dim1], &c__1, &x[j - jlen], &c__1);
                         csumj.r = q__1.r;
                         csumj.i = q__1.i; // , expr subst
                     }
@@ -1229,7 +1229,7 @@ L145:
                     x[i__3].r = q__1.r;
                     x[i__3].i = q__1.i; // , expr subst
                     i__3 = j;
-                    xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[j]) , f2c_abs(r__2));
+                    xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[j]), f2c_abs(r__2));
                     if (nounit)
                     {
                         /* Compute x(j) = x(j) / A(j,j), scaling if necessary. */

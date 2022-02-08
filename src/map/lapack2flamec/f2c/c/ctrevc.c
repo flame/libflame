@@ -223,11 +223,11 @@ here the magnitude of a complex number */
 int ctrevc_(char *side, char *howmny, logical *select, integer *n, complex *t, integer *ldt, complex *vl, integer *ldvl, complex *vr, integer *ldvr, integer *mm, integer *m, complex *work, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"ctrevc inputs: side %c, howmny %c, n %lld, ldt %lld, ldvl %lld, ldvr %lld, mm %lld",*side, *howmny, *n, *ldt, *ldvl, *ldvr, *mm);
-#else 
+#else
     snprintf(buffer, 256,"ctrevc inputs: side %c, howmny %c, n %d, ldt %d, ldvl %d, ldvr %d, mm %d",*side, *howmny, *n, *ldt, *ldvl, *ldvr, *mm);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -248,7 +248,7 @@ int ctrevc_(char *side, char *howmny, logical *select, integer *n, complex *t, i
     real scale;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int cgemv_(char *, integer *, integer *, complex * , complex *, integer *, complex *, integer *, complex *, complex * , integer *);
+    int cgemv_(char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *);
     real remax;
     extern /* Subroutine */
     int ccopy_(integer *, complex *, integer *, complex *, integer *);
@@ -258,7 +258,7 @@ int ctrevc_(char *side, char *howmny, logical *select, integer *n, complex *t, i
     extern integer icamax_(integer *, complex *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int csscal_(integer *, real *, complex *, integer *), xerbla_(char *, integer *), clatrs_(char *, char *, char *, char *, integer *, complex *, integer *, complex *, real * , real *, integer *);
+    int csscal_(integer *, real *, complex *, integer *), xerbla_(char *, integer *), clatrs_(char *, char *, char *, char *, integer *, complex *, integer *, complex *, real *, real *, integer *);
     extern real scasum_(integer *, complex *, integer *);
     logical rightv;
     real smlnum;

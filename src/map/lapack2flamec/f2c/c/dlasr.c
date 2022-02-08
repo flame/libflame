@@ -188,8 +188,8 @@
 int dlasr_(char *side, char *pivot, char *direct, integer *m, integer *n, doublereal *c__, doublereal *s, doublereal *a, integer * lda)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dlasr inputs: side %c, pivot %c, direct %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "",*side, *pivot, *direct, *m, *n, *lda);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -283,8 +283,10 @@ int dlasr_(char *side, char *pivot, char *direct, integer *m, integer *n, double
                 /* Apply two rotations in an iteration */
                 for (j = 1; j < i__1; j += 2)
                 {
-                    ct0 = c__[j]; st0 = s[j];
-                    ct1 = c__[j + 1]; st1 = s[j + 1];
+                    ct0 = c__[j];
+                    st0 = s[j];
+                    ct1 = c__[j + 1];
+                    st1 = s[j + 1];
                     i__2 = *n;
                     for (i__ = 1; i__ <= i__2; ++i__)
                     {
@@ -494,8 +496,10 @@ int dlasr_(char *side, char *pivot, char *direct, integer *m, integer *n, double
                 /* Apply two rotations in an iteration */
                 for (j = *n - 1; j > 1; j -= 2)
                 {
-                    ct0 = c__[j - 0]; st0 = s[j - 0];
-                    ct1 = c__[j - 1]; st1 = s[j - 1];
+                    ct0 = c__[j - 0];
+                    st0 = s[j - 0];
+                    ct1 = c__[j - 1];
+                    st1 = s[j - 1];
                     i__1 = *m;
                     for (i__ = 1; i__ <= i__1; ++i__)
                     {

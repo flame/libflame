@@ -245,11 +245,11 @@ v**H denotes the conjugate transpose of v, and norm(u) */
 int ctrsna_(char *job, char *howmny, logical *select, integer *n, complex *t, integer *ldt, complex *vl, integer *ldvl, complex *vr, integer *ldvr, real *s, real *sep, integer *mm, integer * m, complex *work, integer *ldwork, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"ctrsna inputs: job %c, howmny %c, n %lld, ldt %lld, ldvl %lld, ldvr %lld, mm %lld, ldwork %lld",*job, *howmny, *n, *ldt, *ldvl, *ldvr, *mm, *ldwork);
-#else 
+#else
     snprintf(buffer, 256,"ctrsna inputs: job %c, howmny %c, n %d, ldt %d, ldvl %d, ldvr %d, mm %d, ldwork %d",*job, *howmny, *n, *ldt, *ldvl, *ldvr, *mm, *ldwork);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -487,7 +487,7 @@ int ctrsna_(char *job, char *howmny, logical *select, integer *n, complex *t, in
             *(unsigned char *)normin = 'N';
 L30:
             i__2 = *n - 1;
-            clacn2_(&i__2, &work[(*n + 1) * work_dim1 + 1], &work[work_offset] , &est, &kase, isave);
+            clacn2_(&i__2, &work[(*n + 1) * work_dim1 + 1], &work[work_offset], &est, &kase, isave);
             if (kase != 0)
             {
                 if (kase == 1)

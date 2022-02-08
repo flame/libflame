@@ -614,7 +614,7 @@ L72: /* Begin pivot search loop body */
                 {
                     i__1 = *n - k + 1;
                     i__2 = k - 1;
-                    sgemv_("No transpose", &i__1, &i__2, &c_b9, &a[k + a_dim1] , lda, &w[imax + w_dim1], ldw, &c_b10, &w[k + (k + 1) * w_dim1], &c__1);
+                    sgemv_("No transpose", &i__1, &i__2, &c_b9, &a[k + a_dim1], lda, &w[imax + w_dim1], ldw, &c_b10, &w[k + (k + 1) * w_dim1], &c__1);
                 }
                 /* JMAX is the column-index of the largest off-diagonal */
                 /* element in row IMAX, and ROWMAX is its absolute value. */

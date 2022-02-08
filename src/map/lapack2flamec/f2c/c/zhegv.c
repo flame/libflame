@@ -301,7 +301,7 @@ int zhegv_(integer *itype, char *jobz, char *uplo, integer * n, doublecomplex *a
     }
     /* Transform problem to standard eigenvalue problem and solve. */
     zhegst_(itype, uplo, n, &a[a_offset], lda, &b[b_offset], ldb, info);
-    zheev_(jobz, uplo, n, &a[a_offset], lda, &w[1], &work[1], lwork, &rwork[1] , info);
+    zheev_(jobz, uplo, n, &a[a_offset], lda, &w[1], &work[1], lwork, &rwork[1], info);
     if (wantz)
     {
         /* Backtransform eigenvectors to the original problem. */

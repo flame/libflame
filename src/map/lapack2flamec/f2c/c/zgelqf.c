@@ -132,8 +132,8 @@ conjg(v(i+1:n)) is stored on exit in */
 int zgelqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *tau, doublecomplex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"zgelqf inputs: m %d, n %d, lda %d",*m, *n, *lda);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -286,7 +286,7 @@ int zgelqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     {
         i__2 = *m - i__ + 1;
         i__1 = *n - i__ + 1;
-        zgelq2_(&i__2, &i__1, &a[i__ + i__ * a_dim1], lda, &tau[i__], &work[1] , &iinfo);
+        zgelq2_(&i__2, &i__1, &a[i__ + i__ * a_dim1], lda, &tau[i__], &work[1], &iinfo);
     }
     work[1].r = (doublereal) iws;
     work[1].i = 0.; // , expr subst

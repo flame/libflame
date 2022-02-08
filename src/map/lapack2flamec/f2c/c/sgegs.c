@@ -240,7 +240,7 @@ int sgegs_(char *jobvsl, char *jobvsr, integer *n, real *a, integer *lda, real *
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     real safmin;
     extern /* Subroutine */
-    int sgghrd_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer * , real *, integer *, integer *), xerbla_(char *, integer *);
+    int sgghrd_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *), xerbla_(char *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     real bignum;
     extern /* Subroutine */
@@ -255,7 +255,7 @@ int sgegs_(char *jobvsl, char *jobvsr, integer *n, real *a, integer *lda, real *
     integer lwkmin;
     real bnrmto;
     extern /* Subroutine */
-    int shgeqz_(char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real * , real *, real *, real *, integer *, real *, integer *, real *, integer *, integer *);
+    int shgeqz_(char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, real *, real *, real *, integer *, real *, integer *, real *, integer *, integer *);
     real smlnum;
     extern /* Subroutine */
     int sorgqr_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *);
@@ -531,7 +531,7 @@ int sgegs_(char *jobvsl, char *jobvsr, integer *n, real *a, integer *lda, real *
     /* left_permutation, right_permutation, work... */
     iwork = itau;
     i__1 = *lwork + 1 - iwork;
-    shgeqz_("S", jobvsl, jobvsr, n, &ilo, &ihi, &a[a_offset], lda, &b[ b_offset], ldb, &alphar[1], &alphai[1], &beta[1], &vsl[vsl_offset] , ldvsl, &vsr[vsr_offset], ldvsr, &work[iwork], &i__1, &iinfo);
+    shgeqz_("S", jobvsl, jobvsr, n, &ilo, &ihi, &a[a_offset], lda, &b[ b_offset], ldb, &alphar[1], &alphai[1], &beta[1], &vsl[vsl_offset], ldvsl, &vsr[vsr_offset], ldvsr, &work[iwork], &i__1, &iinfo);
     if (iinfo >= 0)
     {
         /* Computing MAX */

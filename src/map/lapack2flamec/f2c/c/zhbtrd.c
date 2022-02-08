@@ -197,7 +197,7 @@ int zhbtrd_(char *vect, char *uplo, integer *n, integer *kd, doublecomplex *ab, 
     int zlar2v_(integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, doublereal *, doublecomplex *, integer *);
     integer iqaend;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), zlacgv_( integer *, doublecomplex *, integer *), zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *), zlartg_(doublecomplex *, doublecomplex *, doublereal *, doublecomplex *, doublecomplex *), zlargv_(integer * , doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, integer *), zlartv_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublecomplex *, integer *);
+    int xerbla_(char *, integer *), zlacgv_( integer *, doublecomplex *, integer *), zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *), zlartg_(doublecomplex *, doublecomplex *, doublereal *, doublecomplex *, doublecomplex *), zlargv_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, integer *), zlartv_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublecomplex *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -351,7 +351,7 @@ int zhbtrd_(char *vect, char *uplo, integer *n, integer *kd, doublecomplex *ab, 
                         {
                             /* generate plane rotation to annihilate a(i,i+k-1) */
                             /* within the band */
-                            zlartg_(&ab[*kd - k + 3 + (i__ + k - 2) * ab_dim1] , &ab[*kd - k + 2 + (i__ + k - 1) * ab_dim1], &d__[i__ + k - 1], &work[i__ + k - 1], &temp);
+                            zlartg_(&ab[*kd - k + 3 + (i__ + k - 2) * ab_dim1], &ab[*kd - k + 2 + (i__ + k - 1) * ab_dim1], &d__[i__ + k - 1], &work[i__ + k - 1], &temp);
                             i__3 = *kd - k + 3 + (i__ + k - 2) * ab_dim1;
                             ab[i__3].r = temp.r;
                             ab[i__3].i = temp.i; // , expr subst
@@ -634,7 +634,7 @@ int zhbtrd_(char *vect, char *uplo, integer *n, integer *kd, doublecomplex *ab, 
                                     i__2 < 0 ? jinc >= i__3 : jinc <= i__3;
                                     jinc += i__2)
                             {
-                                zrot_(&kdm1, &ab[*kd + (jinc - *kd) * ab_dim1] , &incx, &ab[kd1 + (jinc - *kd) * ab_dim1], &incx, &d__[jinc], &work[ jinc]);
+                                zrot_(&kdm1, &ab[*kd + (jinc - *kd) * ab_dim1], &incx, &ab[kd1 + (jinc - *kd) * ab_dim1], &incx, &d__[jinc], &work[ jinc]);
                                 /* L140: */
                             }
                         }

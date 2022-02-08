@@ -231,7 +231,7 @@ int sspgst_(integer *itype, char *uplo, integer *n, real *ap, real *bp, integer 
                     i__2 = *n - k;
                     saxpy_(&i__2, &ct, &bp[kk + 1], &c__1, &ap[kk + 1], &c__1) ;
                     i__2 = *n - k;
-                    sspr2_(uplo, &i__2, &c_b9, &ap[kk + 1], &c__1, &bp[kk + 1] , &c__1, &ap[k1k1]);
+                    sspr2_(uplo, &i__2, &c_b9, &ap[kk + 1], &c__1, &bp[kk + 1], &c__1, &ap[k1k1]);
                     i__2 = *n - k;
                     saxpy_(&i__2, &ct, &bp[kk + 1], &c__1, &ap[kk + 1], &c__1) ;
                     i__2 = *n - k;

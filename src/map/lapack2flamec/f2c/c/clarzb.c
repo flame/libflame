@@ -180,11 +180,11 @@ if STOREV = 'R', LDV >= K. */
 int clarzb_(char *side, char *trans, char *direct, char * storev, integer *m, integer *n, integer *k, integer *l, complex *v, integer *ldv, complex *t, integer *ldt, complex *c__, integer *ldc, complex *work, integer *ldwork)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clarzb inputs: side %c, trans %c, direct %c, storev %c, m %lld, n %lld, k %lld, l %lld, ldv %lld, ldt %lld, ldc %lld",*side, *trans, *direct, *storev, *m, *n, *k, *l, *ldv, *ldt, *ldc);
-#else 
+#else
     snprintf(buffer, 256,"clarzb inputs: side %c, trans %c, direct %c, storev %c, m %d, n %d, k %d, l %d, ldv %d, ldt %d, ldc %d",*side, *trans, *direct, *storev, *m, *n, *k, *l, *ldv, *ldt, *ldc);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -282,7 +282,7 @@ int clarzb_(char *side, char *trans, char *direct, char * storev, integer *m, in
             cgemm_("Transpose", "Conjugate transpose", n, k, l, &c_b1, &c__[* m - *l + 1 + c_dim1], ldc, &v[v_offset], ldv, &c_b1, & work[work_offset], ldwork);
         }
         /* W( 1:n, 1:k ) = W( 1:n, 1:k ) * T**T or W( 1:m, 1:k ) * T */
-        ctrmm_("Right", "Lower", transt, "Non-unit", n, k, &c_b1, &t[t_offset] , ldt, &work[work_offset], ldwork);
+        ctrmm_("Right", "Lower", transt, "Non-unit", n, k, &c_b1, &t[t_offset], ldt, &work[work_offset], ldwork);
         /* C( 1:k, 1:n ) = C( 1:k, 1:n ) - W( 1:n, 1:k )**H */
         i__1 = *n;
         for (j = 1;

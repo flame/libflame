@@ -156,11 +156,11 @@ static integer c__1 = 1;
 int csptrf_(char *uplo, integer *n, complex *ap, integer * ipiv, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"csptrf inputs: uplo %c, n %lld",*uplo, *n);
-#else 
+#else
     snprintf(buffer, 256,"csptrf inputs: uplo %c, n %d",*uplo, *n);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

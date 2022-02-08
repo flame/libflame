@@ -136,7 +136,7 @@ int dstev_(char *jobz, integer *n, doublereal *d__, doublereal *e, doublereal *z
     doublereal bignum;
     extern doublereal dlanst_(char *, integer *, doublereal *, doublereal *);
     extern /* Subroutine */
-    int dsterf_(integer *, doublereal *, doublereal *, integer *), dsteqr_(char *, integer *, doublereal *, doublereal * , doublereal *, integer *, doublereal *, integer *);
+    int dsterf_(integer *, doublereal *, doublereal *, integer *), dsteqr_(char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *);
     doublereal smlnum;
     /* -- LAPACK driver routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */

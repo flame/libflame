@@ -112,11 +112,11 @@ static integer c__1 = 1;
 int chpgst_(integer *itype, char *uplo, integer *n, complex * ap, complex *bp, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chpgst inputs: itype %lld, uplo %c, n %lld",*itype, *uplo, *n);
-#else 
+#else
     snprintf(buffer, 256,"chpgst inputs: itype %d, uplo %c, n %d",*itype, *uplo, *n);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -134,12 +134,12 @@ int chpgst_(integer *itype, char *uplo, integer *n, complex * ap, complex *bp, i
     integer k1k1;
     real bjj, bkk;
     extern /* Subroutine */
-    int chpr2_(char *, integer *, complex *, complex * , integer *, complex *, integer *, complex *);
+    int chpr2_(char *, integer *, complex *, complex *, integer *, complex *, integer *, complex *);
     extern /* Complex */
     VOID cdotc_f2c_(complex *, integer *, complex *, integer *, complex *, integer *);
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int chpmv_(char *, integer *, complex *, complex * , complex *, integer *, complex *, complex *, integer *), caxpy_(integer *, complex *, complex *, integer *, complex *, integer *), ctpmv_(char *, char *, char *, integer *, complex *, complex *, integer *);
+    int chpmv_(char *, integer *, complex *, complex *, complex *, integer *, complex *, complex *, integer *), caxpy_(integer *, complex *, complex *, integer *, complex *, integer *), ctpmv_(char *, char *, char *, integer *, complex *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
     int ctpsv_(char *, char *, char *, integer *, complex *, complex *, integer *), csscal_( integer *, real *, complex *, integer *), xerbla_(char *, integer *);
@@ -267,7 +267,7 @@ int chpgst_(integer *itype, char *uplo, integer *n, complex * ap, complex *bp, i
                     i__2 = *n - k;
                     q__1.r = -1.f;
                     q__1.i = -0.f; // , expr subst
-                    chpr2_(uplo, &i__2, &q__1, &ap[kk + 1], &c__1, &bp[kk + 1] , &c__1, &ap[k1k1]);
+                    chpr2_(uplo, &i__2, &q__1, &ap[kk + 1], &c__1, &bp[kk + 1], &c__1, &ap[k1k1]);
                     i__2 = *n - k;
                     caxpy_(&i__2, &ct, &bp[kk + 1], &c__1, &ap[kk + 1], &c__1) ;
                     i__2 = *n - k;
@@ -348,7 +348,7 @@ int chpgst_(integer *itype, char *uplo, integer *n, complex * ap, complex *bp, i
                 i__2 = *n - j;
                 chpmv_(uplo, &i__2, &c_b1, &ap[j1j1], &bp[jj + 1], &c__1, & c_b1, &ap[jj + 1], &c__1);
                 i__2 = *n - j + 1;
-                ctpmv_(uplo, "Conjugate transpose", "Non-unit", &i__2, &bp[jj] , &ap[jj], &c__1);
+                ctpmv_(uplo, "Conjugate transpose", "Non-unit", &i__2, &bp[jj], &ap[jj], &c__1);
                 jj = j1j1;
                 /* L40: */
             }

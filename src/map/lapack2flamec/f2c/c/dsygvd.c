@@ -393,7 +393,7 @@ int dsygvd_(integer *itype, char *jobz, char *uplo, integer * n, doublereal *a, 
             {
                 *(unsigned char *)trans = 'T';
             }
-            dtrsm_("Left", uplo, trans, "Non-unit", n, n, &c_b11, &b[b_offset] , ldb, &a[a_offset], lda);
+            dtrsm_("Left", uplo, trans, "Non-unit", n, n, &c_b11, &b[b_offset], ldb, &a[a_offset], lda);
         }
         else if (*itype == 3)
         {
@@ -408,7 +408,7 @@ int dsygvd_(integer *itype, char *jobz, char *uplo, integer * n, doublereal *a, 
             {
                 *(unsigned char *)trans = 'N';
             }
-            dtrmm_("Left", uplo, trans, "Non-unit", n, n, &c_b11, &b[b_offset] , ldb, &a[a_offset], lda);
+            dtrmm_("Left", uplo, trans, "Non-unit", n, n, &c_b11, &b[b_offset], ldb, &a[a_offset], lda);
         }
     }
     work[1] = (doublereal) lopt;

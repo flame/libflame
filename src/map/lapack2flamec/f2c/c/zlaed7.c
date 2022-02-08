@@ -356,7 +356,7 @@ int zlaed7_(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, integer 
     /* Solve Secular Equation. */
     if (k != 0)
     {
-        dlaed9_(&k, &c__1, &k, n, &d__[1], &rwork[iq], &k, rho, &rwork[idlmda] , &rwork[iw], &qstore[qptr[curr]], &k, info);
+        dlaed9_(&k, &c__1, &k, n, &d__[1], &rwork[iq], &k, rho, &rwork[idlmda], &rwork[iw], &qstore[qptr[curr]], &k, info);
         zlacrm_(qsiz, &k, &work[1], qsiz, &qstore[qptr[curr]], &k, &q[ q_offset], ldq, &rwork[iq]);
         /* Computing 2nd power */
         i__1 = k;

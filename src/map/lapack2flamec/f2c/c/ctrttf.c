@@ -208,11 +208,11 @@
 int ctrttf_(char *transr, char *uplo, integer *n, complex *a, integer *lda, complex *arf, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"ctrttf inputs: transr %c, uplo %c, n %lld, lda %lld",*transr, *uplo, *n, *lda);
-#else 
+#else
     snprintf(buffer, 256,"ctrttf inputs: transr %c, uplo %c, n %d, lda %d",*transr, *uplo, *n, *lda);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

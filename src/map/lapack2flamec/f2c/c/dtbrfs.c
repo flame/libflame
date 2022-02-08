@@ -200,7 +200,7 @@ int dtbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
     extern logical lsame_(char *, char *);
     integer isave[3];
     extern /* Subroutine */
-    int dtbmv_(char *, char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dcopy_(integer *, doublereal *, integer * , doublereal *, integer *), dtbsv_(char *, char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), daxpy_(integer *, doublereal * , doublereal *, integer *, doublereal *, integer *);
+    int dtbmv_(char *, char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dcopy_(integer *, doublereal *, integer *, doublereal *, integer *), dtbsv_(char *, char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), daxpy_(integer *, doublereal *, doublereal *, integer *, doublereal *, integer *);
     logical upper;
     extern /* Subroutine */
     int dlacn2_(integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *);
@@ -420,7 +420,7 @@ int dtbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                                 i__ <= i__4;
                                 ++i__)
                         {
-                            work[i__] += (d__1 = ab[i__ + 1 - k + k * ab_dim1] , f2c_dabs(d__1)) * xk;
+                            work[i__] += (d__1 = ab[i__ + 1 - k + k * ab_dim1], f2c_dabs(d__1)) * xk;
                             /* L70: */
                         }
                         /* L80: */
@@ -442,7 +442,7 @@ int dtbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                                 i__ <= i__4;
                                 ++i__)
                         {
-                            work[i__] += (d__1 = ab[i__ + 1 - k + k * ab_dim1] , f2c_dabs(d__1)) * xk;
+                            work[i__] += (d__1 = ab[i__ + 1 - k + k * ab_dim1], f2c_dabs(d__1)) * xk;
                             /* L90: */
                         }
                         work[k] += xk;

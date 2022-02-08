@@ -113,11 +113,11 @@ static integer c__1 = 1;
 real cla_porcond_x_(char *uplo, integer *n, complex *a, integer *lda, complex *af, integer *ldaf, complex *x, integer *info, complex *work, real *rwork)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cla_porcond_x inputs: uplo %c, n %lld, lda %lld, ldaf %lld",*uplo, *n, *lda, *ldaf);
-#else 
+#else
     snprintf(buffer, 256,"cla_porcond_x inputs: uplo %c, n %d, lda %d, ldaf %d",*uplo, *n, *lda, *ldaf);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

@@ -201,8 +201,8 @@ static integer c__1 = 1;
 int slasdq_(char *uplo, integer *sqre, integer *n, integer * ncvt, integer *nru, integer *ncc, real *d__, real *e, real *vt, integer *ldvt, real *u, integer *ldu, real *c__, integer *ldc, real * work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"slasdq inputs: uplo %c, sqre %d, n %d, ncvt %d, nru %d, ncc %d, ldvt %d, ldu %d, ldc %d",*uplo, *sqre, *n, *ncvt, *nru, *ncc, *ldvt, *ldu, *ldc);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -222,7 +222,7 @@ int slasdq_(char *uplo, integer *sqre, integer *n, integer * ncvt, integer *nru,
     int sswap_(integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *), slartg_(real *, real *, real *, real *, real *);
     logical rotate;
     extern /* Subroutine */
-    int sbdsqr_(char *, integer *, integer *, integer *, integer *, real *, real *, real *, integer *, real *, integer * , real *, integer *, real *, integer *);
+    int sbdsqr_(char *, integer *, integer *, integer *, integer *, real *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer *);
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -448,7 +448,7 @@ int slasdq_(char *uplo, integer *sqre, integer *n, integer * ncvt, integer *nru,
             }
             if (*nru > 0)
             {
-                sswap_(nru, &u[isub * u_dim1 + 1], &c__1, &u[i__ * u_dim1 + 1] , &c__1);
+                sswap_(nru, &u[isub * u_dim1 + 1], &c__1, &u[i__ * u_dim1 + 1], &c__1);
             }
             if (*ncc > 0)
             {

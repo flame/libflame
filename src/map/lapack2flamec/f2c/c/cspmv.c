@@ -140,11 +140,11 @@
 int cspmv_(char *uplo, integer *n, complex *alpha, complex * ap, complex *x, integer *incx, complex *beta, complex *y, integer * incy)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cspmv inputs: uplo %c, n %lld, incx %lld, incy %lld",*uplo, *n, *incx, *incy);
-#else 
+#else
     snprintf(buffer, 256,"cspmv inputs: uplo %c, n %d, incx %d, incy %d",*uplo, *n, *incx, *incy);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

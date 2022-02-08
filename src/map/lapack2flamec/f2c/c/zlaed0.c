@@ -402,7 +402,7 @@ L80:
     {
         j = iwork[indxq + i__];
         rwork[i__] = d__[j];
-        zcopy_(qsiz, &qstore[j * qstore_dim1 + 1], &c__1, &q[i__ * q_dim1 + 1] , &c__1);
+        zcopy_(qsiz, &qstore[j * qstore_dim1 + 1], &c__1, &q[i__ * q_dim1 + 1], &c__1);
         /* L100: */
     }
     dcopy_(n, &rwork[1], &c__1, &d__[1], &c__1);

@@ -278,7 +278,7 @@ int zstegr_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e
     /* Function Body */
     *info = 0;
     tryrac = FALSE_;
-    zstemr_(jobz, range, n, &d__[1], &e[1], vl, vu, il, iu, m, &w[1], &z__[ z_offset], ldz, n, &isuppz[1], &tryrac, &work[1], lwork, &iwork[1] , liwork, info);
+    zstemr_(jobz, range, n, &d__[1], &e[1], vl, vu, il, iu, m, &w[1], &z__[ z_offset], ldz, n, &isuppz[1], &tryrac, &work[1], lwork, &iwork[1], liwork, info);
     /* End of ZSTEGR */
     return 0;
 }

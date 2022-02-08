@@ -674,7 +674,7 @@ int dsyevr_(char *jobz, char *range, char *uplo, integer *n, doublereal *a, inte
             {
                 indwkn = inde;
                 llwrkn = *lwork - indwkn + 1;
-                dormtr_("L", uplo, "N", n, m, &a[a_offset], lda, &work[indtau] , &z__[z_offset], ldz, &work[indwkn], &llwrkn, &iinfo);
+                dormtr_("L", uplo, "N", n, m, &a[a_offset], lda, &work[indtau], &z__[z_offset], ldz, &work[indwkn], &llwrkn, &iinfo);
             }
         }
         if (*info == 0)

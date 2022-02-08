@@ -239,7 +239,7 @@ int zhpgvd_(integer *itype, char *jobz, char *uplo, integer * n, doublecomplex *
     char trans[1];
     logical upper, wantz;
     extern /* Subroutine */
-    int ztpmv_(char *, char *, char *, integer *, doublecomplex *, doublecomplex *, integer *), ztpsv_(char *, char *, char *, integer *, doublecomplex * , doublecomplex *, integer *), xerbla_( char *, integer *);
+    int ztpmv_(char *, char *, char *, integer *, doublecomplex *, doublecomplex *, integer *), ztpsv_(char *, char *, char *, integer *, doublecomplex *, doublecomplex *, integer *), xerbla_( char *, integer *);
     integer liwmin;
     extern /* Subroutine */
     int zhpevd_(char *, char *, integer *, doublecomplex *, doublereal *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, integer *, integer *, integer *, integer *);

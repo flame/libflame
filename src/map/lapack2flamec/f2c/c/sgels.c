@@ -212,7 +212,7 @@ int sgels_(char *trans, integer *m, integer *n, integer * nrhs, real *a, integer
     int sormlq_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *);
     logical lquery;
     extern /* Subroutine */
-    int sormqr_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *), strtrs_(char *, char *, char *, integer *, integer *, real *, integer *, real *, integer * , integer *);
+    int sormqr_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *), strtrs_(char *, char *, char *, integer *, integer *, real *, integer *, real *, integer *, integer *);
     /* -- LAPACK driver routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -415,7 +415,7 @@ int sgels_(char *trans, integer *m, integer *n, integer * nrhs, real *a, integer
             sormqr_("Left", "Transpose", m, nrhs, n, &a[a_offset], lda, &work[ 1], &b[b_offset], ldb, &work[mn + 1], &i__1, info);
             /* workspace at least NRHS, optimally NRHS*NB */
             /* B(1:N,1:NRHS) := inv(R) * B(1:N,1:NRHS) */
-            strtrs_("Upper", "No transpose", "Non-unit", n, nrhs, &a[a_offset] , lda, &b[b_offset], ldb, info);
+            strtrs_("Upper", "No transpose", "Non-unit", n, nrhs, &a[a_offset], lda, &b[b_offset], ldb, info);
             if (*info > 0)
             {
                 return 0;
@@ -464,7 +464,7 @@ int sgels_(char *trans, integer *m, integer *n, integer * nrhs, real *a, integer
         {
             /* underdetermined system of equations A * X = B */
             /* B(1:M,1:NRHS) := inv(L) * B(1:M,1:NRHS) */
-            strtrs_("Lower", "No transpose", "Non-unit", m, nrhs, &a[a_offset] , lda, &b[b_offset], ldb, info);
+            strtrs_("Lower", "No transpose", "Non-unit", m, nrhs, &a[a_offset], lda, &b[b_offset], ldb, info);
             if (*info > 0)
             {
                 return 0;
@@ -510,19 +510,19 @@ int sgels_(char *trans, integer *m, integer *n, integer * nrhs, real *a, integer
     /* Undo scaling */
     if (iascl == 1)
     {
-        slascl_("G", &c__0, &c__0, &anrm, &smlnum, &scllen, nrhs, &b[b_offset] , ldb, info);
+        slascl_("G", &c__0, &c__0, &anrm, &smlnum, &scllen, nrhs, &b[b_offset], ldb, info);
     }
     else if (iascl == 2)
     {
-        slascl_("G", &c__0, &c__0, &anrm, &bignum, &scllen, nrhs, &b[b_offset] , ldb, info);
+        slascl_("G", &c__0, &c__0, &anrm, &bignum, &scllen, nrhs, &b[b_offset], ldb, info);
     }
     if (ibscl == 1)
     {
-        slascl_("G", &c__0, &c__0, &smlnum, &bnrm, &scllen, nrhs, &b[b_offset] , ldb, info);
+        slascl_("G", &c__0, &c__0, &smlnum, &bnrm, &scllen, nrhs, &b[b_offset], ldb, info);
     }
     else if (ibscl == 2)
     {
-        slascl_("G", &c__0, &c__0, &bignum, &bnrm, &scllen, nrhs, &b[b_offset] , ldb, info);
+        slascl_("G", &c__0, &c__0, &bignum, &bnrm, &scllen, nrhs, &b[b_offset], ldb, info);
     }
 L50:
     work[1] = (real) wsize;

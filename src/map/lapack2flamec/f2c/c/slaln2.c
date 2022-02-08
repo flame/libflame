@@ -240,7 +240,7 @@ int slaln2_(logical *ltrans, integer *na, integer *nw, real * smin, real *ca, re
     extern real slamch_(char *);
     real bignum;
     extern /* Subroutine */
-    int sladiv_(real *, real *, real *, real *, real * , real *);
+    int sladiv_(real *, real *, real *, real *, real *, real *);
     real smlnum;
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -482,7 +482,7 @@ int slaln2_(logical *ltrans, integer *na, integer *nw, real * smin, real *ca, re
             {
                 if ((r__1 = crv[j - 1], f2c_abs(r__1)) + (r__2 = civ[j - 1], f2c_abs( r__2)) > cmax)
                 {
-                    cmax = (r__1 = crv[j - 1], f2c_abs(r__1)) + (r__2 = civ[j - 1] , f2c_abs(r__2));
+                    cmax = (r__1 = crv[j - 1], f2c_abs(r__1)) + (r__2 = civ[j - 1], f2c_abs(r__2));
                     icmax = j;
                 }
                 /* L20: */

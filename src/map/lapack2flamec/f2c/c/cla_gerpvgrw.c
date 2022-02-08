@@ -86,11 +86,11 @@
 real cla_gerpvgrw_(integer *n, integer *ncols, complex *a, integer *lda, complex *af, integer *ldaf)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cla_gerpvgrw inputs: n %lld, ncols %lld, lda %lld, ldaf %lld",*n, *ncols, *lda, *ldaf);
-#else 
+#else
     snprintf(buffer, 256,"cla_gerpvgrw inputs: n %d, ncols %d, lda %d, ldaf %d",*n, *ncols, *lda, *ldaf);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

@@ -301,11 +301,11 @@ static integer c__49 = 49;
 int chseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, complex *h__, integer *ldh, complex *w, complex *z__, integer *ldz, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chseqr inputs: job %c, compz %c, n %lld, ilo %lld, ihi %lld, ldh %lld, ldz %lld, lwork %lld",*job, *compz, *n, *ilo, *ihi, *ldh, *ldz, *lwork);
-#else 
+#else
     snprintf(buffer, 256,"chseqr inputs: job %c, compz %c, n %d, ilo %d, ihi %d, ldh %d, ldz %d, lwork %d",*job, *compz, *n, *ilo, *ihi, *ldh, *ldz, *lwork);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -421,7 +421,7 @@ int chseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, comp
         /* ==== Quick return in case of invalid argument. ==== */
         i__1 = -(*info);
         xerbla_("CHSEQR", &i__1);
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (*n == 0)

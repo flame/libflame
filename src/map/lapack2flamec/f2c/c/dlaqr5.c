@@ -251,8 +251,8 @@ static integer c__2 = 2;
 int dlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer *ktop, integer *kbot, integer *nshfts, doublereal *sr, doublereal *si, doublereal *h__, integer *ldh, integer *iloz, integer *ihiz, doublereal *z__, integer *ldz, doublereal *v, integer * ldv, doublereal *u, integer *ldu, integer *nv, doublereal *wv, integer *ldwv, integer *nh, doublereal *wh, integer *ldwh)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dlaqr5 inputs: kacc22 %" FLA_IS ", n %" FLA_IS ", ktop %" FLA_IS ", kbot %" FLA_IS ", nshfts %" FLA_IS ", ldh %" FLA_IS ", iloz %" FLA_IS ", ihiz %" FLA_IS ", ldz %" FLA_IS ", ldv %" FLA_IS ", ldu %" FLA_IS ", nv %" FLA_IS ", ldwv %" FLA_IS ", nh %" FLA_IS ", ldwh %" FLA_IS "",*kacc22, *n, *ktop, *kbot, *nshfts, *ldh, *iloz, *ihiz, *ldz, *ldv, *ldu, *nv, *ldwv, *nh, *ldwh);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -481,7 +481,7 @@ int dlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         alpha = vt[0];
                         dlarfg_(&c__3, &alpha, &vt[1], &c__1, vt);
                         refsum = vt[0] * (h__[k + 1 + k * h_dim1] + vt[1] * h__[k + 2 + k * h_dim1]);
-                        if ((d__1 = h__[k + 2 + k * h_dim1] - refsum * vt[1], f2c_dabs(d__1)) + (d__2 = refsum * vt[2], f2c_dabs(d__2) ) > ulp * ((d__3 = h__[k + k * h_dim1], f2c_dabs( d__3)) + (d__4 = h__[k + 1 + (k + 1) * h_dim1] , f2c_dabs(d__4)) + (d__5 = h__[k + 2 + (k + 2) * h_dim1], f2c_dabs(d__5))))
+                        if ((d__1 = h__[k + 2 + k * h_dim1] - refsum * vt[1], f2c_dabs(d__1)) + (d__2 = refsum * vt[2], f2c_dabs(d__2) ) > ulp * ((d__3 = h__[k + k * h_dim1], f2c_dabs( d__3)) + (d__4 = h__[k + 1 + (k + 1) * h_dim1], f2c_dabs(d__4)) + (d__5 = h__[k + 2 + (k + 2) * h_dim1], f2c_dabs(d__5))))
                         {
                             /* ==== Starting a new bulge here would */
                             /* . create non-negligible fill. Use */
@@ -935,11 +935,11 @@ int dlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                     dlacpy_("ALL", &knz, &jlen, &h__[incol + 1 + j2 + jcol * h_dim1], ldh, &wh[kzs + 1 + wh_dim1], ldwh);
                     /* ==== Multiply by U21**T ==== */
                     dlaset_("ALL", &kzs, &jlen, &c_b7, &c_b7, &wh[wh_offset], ldwh);
-                    dtrmm_("L", "U", "C", "N", &knz, &jlen, &c_b8, &u[j2 + 1 + (kzs + 1) * u_dim1], ldu, &wh[kzs + 1 + wh_dim1] , ldwh);
+                    dtrmm_("L", "U", "C", "N", &knz, &jlen, &c_b8, &u[j2 + 1 + (kzs + 1) * u_dim1], ldu, &wh[kzs + 1 + wh_dim1], ldwh);
                     /* ==== Multiply top of H by U11**T ==== */
                     dgemm_("C", "N", &i2, &jlen, &j2, &c_b8, &u[u_offset], ldu, &h__[incol + 1 + jcol * h_dim1], ldh, &c_b8, &wh[wh_offset], ldwh);
                     /* ==== Copy top of H to bottom of WH ==== */
-                    dlacpy_("ALL", &j2, &jlen, &h__[incol + 1 + jcol * h_dim1] , ldh, &wh[i2 + 1 + wh_dim1], ldwh);
+                    dlacpy_("ALL", &j2, &jlen, &h__[incol + 1 + jcol * h_dim1], ldh, &wh[i2 + 1 + wh_dim1], ldwh);
                     /* ==== Multiply by U21**T ==== */
                     dtrmm_("L", "L", "C", "N", &j2, &jlen, &c_b8, &u[(i2 + 1) * u_dim1 + 1], ldu, &wh[i2 + 1 + wh_dim1], ldwh);
                     /* ==== Multiply by U22 ==== */
@@ -973,7 +973,7 @@ int dlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                     dlacpy_("ALL", &jlen, &j2, &h__[jrow + (incol + 1) * h_dim1], ldh, &wv[(i2 + 1) * wv_dim1 + 1], ldwv);
                     /* ==== Multiply by U21 ==== */
                     i__5 = i4 - i2;
-                    dtrmm_("R", "L", "N", "N", &jlen, &i__5, &c_b8, &u[(i2 + 1) * u_dim1 + 1], ldu, &wv[(i2 + 1) * wv_dim1 + 1] , ldwv);
+                    dtrmm_("R", "L", "N", "N", &jlen, &i__5, &c_b8, &u[(i2 + 1) * u_dim1 + 1], ldu, &wv[(i2 + 1) * wv_dim1 + 1], ldwv);
                     /* ==== Multiply by U22 ==== */
                     i__5 = i4 - i2;
                     i__7 = j4 - j2;

@@ -157,11 +157,11 @@
 int chfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *alpha, complex *a, integer *lda, real *beta, complex *c__)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chfrk inputs: transr %c, uplo %c, trans %c, n %lld, k %lld, lda %lld",*transr, *uplo, *trans, *n, *k, *lda);
-#else 
+#else
     snprintf(buffer, 256,"chfrk inputs: transr %c, uplo %c, trans %c, n %d, k %d, lda %d",*transr, *uplo, *trans, *n, *k, *lda);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -174,7 +174,7 @@ int chfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
     complex cbeta;
     logical normaltransr;
     extern /* Subroutine */
-    int cgemm_(char *, char *, integer *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *), cherk_(char *, char *, integer *, integer *, real *, complex *, integer *, real * , complex *, integer *);
+    int cgemm_(char *, char *, integer *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *), cherk_(char *, char *, integer *, integer *, real *, complex *, integer *, real *, complex *, integer *);
     extern logical lsame_(char *, char *);
     integer nrowa;
     logical lower;
@@ -319,7 +319,7 @@ int chfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
                     /* N is odd, TRANSR = 'N', UPLO = 'L', and TRANS = 'N' */
                     cherk_("L", "N", &n1, k, alpha, &a[a_dim1 + 1], lda, beta, &c__[1], n);
                     cherk_("U", "N", &n2, k, alpha, &a[n1 + 1 + a_dim1], lda, beta, &c__[*n + 1], n);
-                    cgemm_("N", "C", &n2, &n1, k, &calpha, &a[n1 + 1 + a_dim1] , lda, &a[a_dim1 + 1], lda, &cbeta, &c__[n1 + 1], n);
+                    cgemm_("N", "C", &n2, &n1, k, &calpha, &a[n1 + 1 + a_dim1], lda, &a[a_dim1 + 1], lda, &cbeta, &c__[n1 + 1], n);
                 }
                 else
                 {
@@ -377,7 +377,7 @@ int chfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
                     /* N is odd, TRANSR = 'C', UPLO = 'U', and TRANS = 'N' */
                     cherk_("U", "N", &n1, k, alpha, &a[a_dim1 + 1], lda, beta, &c__[n2 * n2 + 1], &n2);
                     cherk_("L", "N", &n2, k, alpha, &a[n1 + 1 + a_dim1], lda, beta, &c__[n1 * n2 + 1], &n2);
-                    cgemm_("N", "C", &n2, &n1, k, &calpha, &a[n1 + 1 + a_dim1] , lda, &a[a_dim1 + 1], lda, &cbeta, &c__[1], &n2);
+                    cgemm_("N", "C", &n2, &n1, k, &calpha, &a[n1 + 1 + a_dim1], lda, &a[a_dim1 + 1], lda, &cbeta, &c__[1], &n2);
                 }
                 else
                 {
@@ -406,7 +406,7 @@ int chfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
                     i__1 = *n + 1;
                     cherk_("U", "N", &nk, k, alpha, &a[nk + 1 + a_dim1], lda, beta, &c__[1], &i__1);
                     i__1 = *n + 1;
-                    cgemm_("N", "C", &nk, &nk, k, &calpha, &a[nk + 1 + a_dim1] , lda, &a[a_dim1 + 1], lda, &cbeta, &c__[nk + 2], &i__1);
+                    cgemm_("N", "C", &nk, &nk, k, &calpha, &a[nk + 1 + a_dim1], lda, &a[a_dim1 + 1], lda, &cbeta, &c__[nk + 2], &i__1);
                 }
                 else
                 {
@@ -473,7 +473,7 @@ int chfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
                     /* N is even, TRANSR = 'C', UPLO = 'U', and TRANS = 'N' */
                     cherk_("U", "N", &nk, k, alpha, &a[a_dim1 + 1], lda, beta, &c__[nk * (nk + 1) + 1], &nk);
                     cherk_("L", "N", &nk, k, alpha, &a[nk + 1 + a_dim1], lda, beta, &c__[nk * nk + 1], &nk);
-                    cgemm_("N", "C", &nk, &nk, k, &calpha, &a[nk + 1 + a_dim1] , lda, &a[a_dim1 + 1], lda, &cbeta, &c__[1], &nk);
+                    cgemm_("N", "C", &nk, &nk, k, &calpha, &a[nk + 1 + a_dim1], lda, &a[a_dim1 + 1], lda, &cbeta, &c__[1], &nk);
                 }
                 else
                 {

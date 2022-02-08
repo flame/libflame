@@ -251,11 +251,11 @@ static integer c__2 = 2;
 int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer *ktop, integer *kbot, integer *nshfts, complex *s, complex *h__, integer *ldh, integer *iloz, integer *ihiz, complex * z__, integer *ldz, complex *v, integer *ldv, complex *u, integer *ldu, integer *nv, complex *wv, integer *ldwv, integer *nh, complex *wh, integer *ldwh)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"claqr5 inputs: kacc22 %lld, n %lld, ktop %lld, kbot %lld, nshfts %lld, ldh %lld, iloz %lld, ihiz %lld, ldz %lld, ldv %lld, ldu %lld, nv %lld, ldwv %lld, nh %lld, ldwh %lld",*kacc22, *n, *ktop, *kbot, *nshfts, *ldh, *iloz, *ihiz, *ldz, *ldv, *ldu, *nv, *ldwv, *nh, *ldwh);
-#else 
+#else
     snprintf(buffer, 256,"claqr5 inputs: kacc22 %d, n %d, ktop %d, kbot %d, nshfts %d, ldh %d, iloz %d, ihiz %d, ldz %d, ldv %d, ldu %d, nv %d, ldwv %d, nh %d, ldwh %d",*kacc22, *n, *ktop, *kbot, *nshfts, *ldh, *iloz, *ihiz, *ldz, *ldv, *ldu, *nv, *ldwv, *nh, *ldwh);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -513,7 +513,7 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         i__6 = k + k * h_dim1;
                         i__7 = k + 1 + (k + 1) * h_dim1;
                         i__8 = k + 2 + (k + 2) * h_dim1;
-                        if ((r__1 = q__1.r, f2c_abs(r__1)) + (r__2 = r_imag(&q__1) , f2c_abs(r__2)) + ((r__3 = q__4.r, f2c_abs(r__3)) + ( r__4 = r_imag(&q__4), f2c_abs(r__4))) > ulp * (( r__5 = h__[i__6].r, f2c_abs(r__5)) + (r__6 = r_imag(&h__[k + k * h_dim1]), f2c_abs(r__6)) + (( r__7 = h__[i__7].r, f2c_abs(r__7)) + (r__8 = r_imag(&h__[k + 1 + (k + 1) * h_dim1]), f2c_abs( r__8))) + ((r__9 = h__[i__8].r, f2c_abs(r__9)) + ( r__10 = r_imag(&h__[k + 2 + (k + 2) * h_dim1]) , f2c_abs(r__10)))))
+                        if ((r__1 = q__1.r, f2c_abs(r__1)) + (r__2 = r_imag(&q__1), f2c_abs(r__2)) + ((r__3 = q__4.r, f2c_abs(r__3)) + ( r__4 = r_imag(&q__4), f2c_abs(r__4))) > ulp * (( r__5 = h__[i__6].r, f2c_abs(r__5)) + (r__6 = r_imag(&h__[k + k * h_dim1]), f2c_abs(r__6)) + (( r__7 = h__[i__7].r, f2c_abs(r__7)) + (r__8 = r_imag(&h__[k + 1 + (k + 1) * h_dim1]), f2c_abs( r__8))) + ((r__9 = h__[i__8].r, f2c_abs(r__9)) + ( r__10 = r_imag(&h__[k + 2 + (k + 2) * h_dim1]), f2c_abs(r__10)))))
                         {
                             /* ==== Starting a new bulge here would */
                             /* . create non-negligible fill. Use */
@@ -1306,11 +1306,11 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                     clacpy_("ALL", &knz, &jlen, &h__[incol + 1 + j2 + jcol * h_dim1], ldh, &wh[kzs + 1 + wh_dim1], ldwh);
                     /* ==== Multiply by U21**H ==== */
                     claset_("ALL", &kzs, &jlen, &c_b1, &c_b1, &wh[wh_offset], ldwh);
-                    ctrmm_("L", "U", "C", "N", &knz, &jlen, &c_b2, &u[j2 + 1 + (kzs + 1) * u_dim1], ldu, &wh[kzs + 1 + wh_dim1] , ldwh);
+                    ctrmm_("L", "U", "C", "N", &knz, &jlen, &c_b2, &u[j2 + 1 + (kzs + 1) * u_dim1], ldu, &wh[kzs + 1 + wh_dim1], ldwh);
                     /* ==== Multiply top of H by U11**H ==== */
                     cgemm_("C", "N", &i2, &jlen, &j2, &c_b2, &u[u_offset], ldu, &h__[incol + 1 + jcol * h_dim1], ldh, &c_b2, &wh[wh_offset], ldwh);
                     /* ==== Copy top of H to bottom of WH ==== */
-                    clacpy_("ALL", &j2, &jlen, &h__[incol + 1 + jcol * h_dim1] , ldh, &wh[i2 + 1 + wh_dim1], ldwh);
+                    clacpy_("ALL", &j2, &jlen, &h__[incol + 1 + jcol * h_dim1], ldh, &wh[i2 + 1 + wh_dim1], ldwh);
                     /* ==== Multiply by U21**H ==== */
                     ctrmm_("L", "L", "C", "N", &j2, &jlen, &c_b2, &u[(i2 + 1) * u_dim1 + 1], ldu, &wh[i2 + 1 + wh_dim1], ldwh);
                     /* ==== Multiply by U22 ==== */
@@ -1344,7 +1344,7 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                     clacpy_("ALL", &jlen, &j2, &h__[jrow + (incol + 1) * h_dim1], ldh, &wv[(i2 + 1) * wv_dim1 + 1], ldwv);
                     /* ==== Multiply by U21 ==== */
                     i__5 = i4 - i2;
-                    ctrmm_("R", "L", "N", "N", &jlen, &i__5, &c_b2, &u[(i2 + 1) * u_dim1 + 1], ldu, &wv[(i2 + 1) * wv_dim1 + 1] , ldwv);
+                    ctrmm_("R", "L", "N", "N", &jlen, &i__5, &c_b2, &u[(i2 + 1) * u_dim1 + 1], ldu, &wv[(i2 + 1) * wv_dim1 + 1], ldwv);
                     /* ==== Multiply by U22 ==== */
                     i__5 = i4 - i2;
                     i__7 = j4 - j2;

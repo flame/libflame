@@ -140,8 +140,8 @@ elements marked */
 int sgbtf2_(integer *m, integer *n, integer *kl, integer *ku, real *ab, integer *ldab, integer *ipiv, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"sgbtf2 inputs: m %d, n %d, kl %d, ku %d, ldab %d, ipiv %d",*m, *n, *kl, *ku, *ldab, *ipiv);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -151,7 +151,7 @@ int sgbtf2_(integer *m, integer *n, integer *kl, integer *ku, real *ab, integer 
     /* Local variables */
     integer i__, j, km, jp, ju, kv;
     extern /* Subroutine */
-    int sger_(integer *, integer *, real *, real *, integer *, real *, integer *, real *, integer *), sscal_(integer * , real *, real *, integer *), sswap_(integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
+    int sger_(integer *, integer *, real *, real *, integer *, real *, integer *, real *, integer *), sscal_(integer *, real *, real *, integer *), sswap_(integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
     extern integer isamax_(integer *, real *, integer *);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */

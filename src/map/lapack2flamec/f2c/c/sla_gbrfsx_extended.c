@@ -414,7 +414,7 @@ int sla_gbrfsx_extended_(integer *prec_type__, integer * trans_type__, integer *
     real dxratmax, dzratmax;
     integer i__, j, m;
     extern /* Subroutine */
-    int sla_gbamv_(integer *, integer *, integer *, integer *, integer *, real *, real *, integer *, real *, integer * , real *, real *, integer *);
+    int sla_gbamv_(integer *, integer *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *);
     logical incr_prec__;
     real prev_dz_z__, yk, final_dx_x__, final_dz_z__;
     extern /* Subroutine */
@@ -423,10 +423,10 @@ int sla_gbrfsx_extended_(integer *prec_type__, integer * trans_type__, integer *
     integer cnt;
     real dyk, eps, incr_thresh__, dx_x__, dz_z__, ymin;
     extern /* Subroutine */
-    int sla_lin_berr_(integer *, integer *, integer * , real *, real *, real *), blas_sgbmv_x_(integer *, integer *, integer *, integer *, integer *, real *, real *, integer *, real * , integer *, real *, real *, integer *, integer *);
+    int sla_lin_berr_(integer *, integer *, integer *, real *, real *, real *), blas_sgbmv_x_(integer *, integer *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *, integer *);
     integer y_prec_state__;
     extern /* Subroutine */
-    int blas_sgbmv2_x_(integer *, integer *, integer *, integer *, integer *, real *, real *, integer *, real *, real * , integer *, real *, real *, integer *, integer *), sgbmv_(char *, integer *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *);
+    int blas_sgbmv2_x_(integer *, integer *, integer *, integer *, integer *, real *, real *, integer *, real *, real *, integer *, real *, real *, integer *, integer *), sgbmv_(char *, integer *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *);
     real dxrat, dzrat;
     char trans[1];
     extern /* Subroutine */
@@ -551,7 +551,7 @@ int sla_gbrfsx_extended_(integer *prec_type__, integer * trans_type__, integer *
             }
             /* XXX: RES is no longer needed. */
             scopy_(n, &res[1], &c__1, &dy[1], &c__1);
-            sgbtrs_(trans, n, kl, ku, &c__1, &afb[afb_offset], ldafb, &ipiv[1] , &dy[1], n, info);
+            sgbtrs_(trans, n, kl, ku, &c__1, &afb[afb_offset], ldafb, &ipiv[1], &dy[1], n, info);
             /* Calculate relative changes DX_X, DZ_Z and ratios DXRAT, DZRAT. */
             normx = 0.f;
             normy = 0.f;

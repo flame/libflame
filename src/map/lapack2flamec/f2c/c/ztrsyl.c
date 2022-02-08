@@ -304,7 +304,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
                 suml.r = z__1.r;
                 suml.i = z__1.i; // , expr subst
                 i__2 = l - 1;
-                zdotu_f2c_(&z__1, &i__2, &c__[k + c_dim1], ldc, &b[l * b_dim1 + 1] , &c__1);
+                zdotu_f2c_(&z__1, &i__2, &c__[k + c_dim1], ldc, &b[l * b_dim1 + 1], &c__1);
                 sumr.r = z__1.r;
                 sumr.i = z__1.i; // , expr subst
                 i__2 = k + l * c_dim1;
@@ -393,7 +393,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
                 suml.r = z__1.r;
                 suml.i = z__1.i; // , expr subst
                 i__3 = l - 1;
-                zdotu_f2c_(&z__1, &i__3, &c__[k + c_dim1], ldc, &b[l * b_dim1 + 1] , &c__1);
+                zdotu_f2c_(&z__1, &i__3, &c__[k + c_dim1], ldc, &b[l * b_dim1 + 1], &c__1);
                 sumr.r = z__1.r;
                 sumr.i = z__1.i; // , expr subst
                 i__3 = k + l * c_dim1;

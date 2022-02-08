@@ -267,8 +267,8 @@ static integer c__2 = 2;
 int slasda_(integer *icompq, integer *smlsiz, integer *n, integer *sqre, real *d__, real *e, real *u, integer *ldu, real *vt, integer *k, real *difl, real *difr, real *z__, real *poles, integer * givptr, integer *givcol, integer *ldgcol, integer *perm, real *givnum, real *c__, real *s, real *work, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"slasda inputs: icompq %d, smlsiz %d, n %d, sqre %d, ldu %d, ldgcol %d",*icompq, *smlsiz, *n, *sqre, *ldu, *ldgcol);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -283,7 +283,7 @@ int slasda_(integer *icompq, integer *smlsiz, integer *n, integer *sqre, real *d
     real alpha;
     integer inode, ndiml, ndimr, idxqi, itemp, sqrei;
     extern /* Subroutine */
-    int scopy_(integer *, real *, integer *, real *, integer *), slasd6_(integer *, integer *, integer *, integer *, real *, real *, real *, real *, real *, integer *, integer *, integer *, integer *, integer *, real *, integer *, real *, real * , real *, real *, integer *, real *, real *, real *, integer *, integer *);
+    int scopy_(integer *, real *, integer *, real *, integer *), slasd6_(integer *, integer *, integer *, integer *, real *, real *, real *, real *, real *, integer *, integer *, integer *, integer *, integer *, real *, integer *, real *, real *, real *, real *, integer *, real *, real *, real *, integer *, integer *);
     integer nwork1, nwork2;
     extern /* Subroutine */
     int xerbla_(char *, integer *), slasdq_( char *, integer *, integer *, integer *, integer *, integer *, real *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer *), slasdt_(integer *, integer *, integer *, integer *, integer *, integer *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
@@ -384,7 +384,7 @@ int slasda_(integer *icompq, integer *smlsiz, integer *n, integer *sqre, real *d
         }
         else
         {
-            slasdq_("U", sqre, n, &m, n, &c__0, &d__[1], &e[1], &vt[vt_offset] , ldu, &u[u_offset], ldu, &u[u_offset], ldu, &work[1], info);
+            slasdq_("U", sqre, n, &m, n, &c__0, &d__[1], &e[1], &vt[vt_offset], ldu, &u[u_offset], ldu, &u[u_offset], ldu, &work[1], info);
         }
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;

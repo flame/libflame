@@ -190,7 +190,7 @@ int dsygv_(integer *itype, char *jobz, char *uplo, integer * n, doublereal *a, i
     int dtrsm_(char *, char *, char *, char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *);
     logical upper;
     extern /* Subroutine */
-    int dsyev_(char *, char *, integer *, doublereal * , integer *, doublereal *, doublereal *, integer *, integer *);
+    int dsyev_(char *, char *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
     logical wantz;
     extern /* Subroutine */
     int xerbla_(char *, integer *);

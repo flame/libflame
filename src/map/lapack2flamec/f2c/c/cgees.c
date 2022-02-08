@@ -195,11 +195,11 @@ elements 1:ILO-1 and i+1:N of W */
 int cgees_(char *jobvs, char *sort, L_fp select, integer *n, complex *a, integer *lda, integer *sdim, complex *w, complex *vs, integer *ldvs, complex *work, integer *lwork, real *rwork, logical * bwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgees inputs: jobvs %c, sort %c, n %lld, lda %lld, ldvs %lld, lwork %lld",*jobvs, *sort, *n, *lda, *ldvs, *lwork);
-#else 
+#else
     snprintf(buffer, 256,"cgees inputs: jobvs %c, sort %c, n %d, lda %d, ldvs %d, lwork %d",*jobvs, *sort, *n, *lda, *ldvs, *lwork);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

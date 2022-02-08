@@ -155,7 +155,7 @@ int slagv2_(real *a, integer *lda, real *b, integer *ldb, real *alphar, real *al
     int srot_(integer *, real *, integer *, real *, integer *, real *, real *), slag2_(real *, integer *, real *, integer *, real *, real *, real *, real *, real *, real *);
     real anorm, bnorm, scale1, scale2;
     extern /* Subroutine */
-    int slasv2_(real *, real *, real *, real *, real * , real *, real *, real *, real *);
+    int slasv2_(real *, real *, real *, real *, real *, real *, real *, real *, real *);
     extern real slapy2_(real *, real *);
     real ascale, bscale;
     extern real slamch_(char *);

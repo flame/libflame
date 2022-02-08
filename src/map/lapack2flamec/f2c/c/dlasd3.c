@@ -219,8 +219,8 @@ the second */
 int dlasd3_(integer *nl, integer *nr, integer *sqre, integer *k, doublereal *d__, doublereal *q, integer *ldq, doublereal *dsigma, doublereal *u, integer *ldu, doublereal *u2, integer *ldu2, doublereal *vt, integer *ldvt, doublereal *vt2, integer *ldvt2, integer *idxc, integer *ctot, doublereal *z__, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dlasd3 inputs: nl %" FLA_IS ", nr %" FLA_IS ", sqre %" FLA_IS ", k %" FLA_IS ", ldq %" FLA_IS ", ldu %" FLA_IS ", ldu2 %" FLA_IS ", ldvt %" FLA_IS ", ldvt2 %" FLA_IS ", idxc %" FLA_IS ", ctot %" FLA_IS "",*nl, *nr, *sqre, *k, *ldq, *ldu, *ldu2, *ldvt, *ldvt2, *idxc, *ctot);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -474,7 +474,7 @@ int dlasd3_(integer *nl, integer *nr, integer *sqre, integer *k, doublereal *d__
         if (ctot[3] > 0)
         {
             ktemp = ctot[1] + 2 + ctot[2];
-            dgemm_("N", "N", nl, k, &ctot[3], &c_b13, &u2[ktemp * u2_dim1 + 1] , ldu2, &q[ktemp + q_dim1], ldq, &c_b13, &u[u_dim1 + 1], ldu);
+            dgemm_("N", "N", nl, k, &ctot[3], &c_b13, &u2[ktemp * u2_dim1 + 1], ldu2, &q[ktemp + q_dim1], ldq, &c_b13, &u[u_dim1 + 1], ldu);
         }
     }
     else if (ctot[3] > 0)
@@ -513,7 +513,7 @@ L100:
     /* Update the right singular vector matrix. */
     if (*k == 2)
     {
-        dgemm_("N", "N", k, &m, k, &c_b13, &q[q_offset], ldq, &vt2[vt2_offset] , ldvt2, &c_b26, &vt[vt_offset], ldvt);
+        dgemm_("N", "N", k, &m, k, &c_b13, &q[q_offset], ldq, &vt2[vt2_offset], ldvt2, &c_b26, &vt[vt_offset], ldvt);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

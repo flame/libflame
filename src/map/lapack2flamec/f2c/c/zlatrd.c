@@ -404,7 +404,7 @@ int zlatrd_(char *uplo, integer *n, integer *nb, doublecomplex *a, integer *lda,
                 a[i__2].i = 0.; // , expr subst
                 /* Compute W(i+1:n,i) */
                 i__2 = *n - i__;
-                zhemv_("Lower", &i__2, &c_b2, &a[i__ + 1 + (i__ + 1) * a_dim1] , lda, &a[i__ + 1 + i__ * a_dim1], &c__1, &c_b1, &w[ i__ + 1 + i__ * w_dim1], &c__1);
+                zhemv_("Lower", &i__2, &c_b2, &a[i__ + 1 + (i__ + 1) * a_dim1], lda, &a[i__ + 1 + i__ * a_dim1], &c__1, &c_b1, &w[ i__ + 1 + i__ * w_dim1], &c__1);
                 i__2 = *n - i__;
                 i__3 = i__ - 1;
                 zgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &w[i__ + 1 + w_dim1], ldw, &a[i__ + 1 + i__ * a_dim1], &c__1, & c_b1, &w[i__ * w_dim1 + 1], &c__1);

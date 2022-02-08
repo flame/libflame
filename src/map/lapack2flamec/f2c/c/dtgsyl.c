@@ -308,7 +308,7 @@ int dtgsyl_(char *trans, integer *ijob, integer *m, integer * n, doublereal *a, 
     doublereal dsum;
     integer ppqq;
     extern /* Subroutine */
-    int dscal_(integer *, doublereal *, doublereal *, integer *), dgemm_(char *, char *, integer *, integer *, integer * , doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *);
+    int dscal_(integer *, doublereal *, doublereal *, integer *), dgemm_(char *, char *, integer *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *);
     extern logical lsame_(char *, char *);
     integer ifunc, linfo, lwmin;
     doublereal scale2;

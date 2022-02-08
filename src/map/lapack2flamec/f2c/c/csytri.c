@@ -118,11 +118,11 @@ the matrix is singular and its */
 int csytri_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv, complex *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"csytri inputs: uplo %c, n %lld, lda %lld, ipiv %lld",*uplo, *n, *lda, *ipiv);
-#else 
+#else
     snprintf(buffer, 256,"csytri inputs: uplo %c, n %d, lda %d, ipiv %d",*uplo, *n, *lda, *ipiv);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -148,7 +148,7 @@ int csytri_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv, com
     integer kstep;
     logical upper;
     extern /* Subroutine */
-    int csymv_(char *, integer *, complex *, complex * , integer *, complex *, integer *, complex *, complex *, integer * ), xerbla_(char *, integer *);
+    int csymv_(char *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer * ), xerbla_(char *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -350,7 +350,7 @@ L30: /* If K > N, exit from loop. */
                 i__1 = k + 1 + (k + 1) * a_dim1;
                 i__2 = k + 1 + (k + 1) * a_dim1;
                 i__3 = k - 1;
-                cdotu_f2c_(&q__2, &i__3, &work[1], &c__1, &a[(k + 1) * a_dim1 + 1] , &c__1);
+                cdotu_f2c_(&q__2, &i__3, &work[1], &c__1, &a[(k + 1) * a_dim1 + 1], &c__1);
                 q__1.r = a[i__2].r - q__2.r;
                 q__1.i = a[i__2].i - q__2.i; // , expr subst
                 a[i__1].r = q__1.r;

@@ -10,12 +10,12 @@ static doublereal c_b17 = 1.;
 int dsteqr_helper_(char *jobz, char *uplo, integer *n, doublereal * a, integer *lda, doublereal *w, doublereal *work, integer *lwork, integer *iwork, integer *liwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dsteqr_helper inputs: jobz %c, uplo %c, n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS ", liwork %" FLA_IS "",*jobz, *uplo, *n, *lda, *lwork, *liwork);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
-  /* System generated locals */
+    /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     doublereal d__1;
     /* Builtin functions */
@@ -177,7 +177,7 @@ int dsteqr_helper_(char *jobz, char *uplo, integer *n, doublereal * a, integer *
     {
         dlascl_(uplo, &c__0, &c__0, &c_b17, &sigma, n, n, &a[a_offset], lda, info);
     }
-  // printf("reaching after lascl\n");
+    // printf("reaching after lascl\n");
     /* Call DSYTRD to reduce symmetric matrix to tridiagonal form. */
     inde = 1;
     indtau = inde + *n;
@@ -190,7 +190,7 @@ int dsteqr_helper_(char *jobz, char *uplo, integer *n, doublereal * a, integer *
     /* tridiagonal matrix, then call DORMTR to multiply it by the */
     /* Householder transformations stored in A. */
     dsytrd_(uplo, n, &a[a_offset], lda, &w[1], &work[inde], &work[indtau], &
-	    work[indwrk], &llwork, &iinfo);
+            work[indwrk], &llwork, &iinfo);
     lopt = (integer) ((*n << 1) + work[indwrk]);
     if (! wantz)
     {
@@ -199,7 +199,7 @@ int dsteqr_helper_(char *jobz, char *uplo, integer *n, doublereal * a, integer *
     else
     {
         dstedc_("I", n, &w[1], &work[inde], &work[indwrk], n, &work[indwk2], & llwrk2, &iwork[1], liwork, info);
-        dormtr_("L", uplo, "N", n, n, &a[a_offset], lda, &work[indtau], &work[ indwrk], n, &work[indwk2], &llwrk2, &iinfo);     
+        dormtr_("L", uplo, "N", n, n, &a[a_offset], lda, &work[indtau], &work[ indwrk], n, &work[indwk2], &llwrk2, &iinfo);
         dlacpy_("A", n, n, &work[indwrk], n, &a[a_offset], lda);
     }
     /* If matrix was scaled, then rescale eigenvalues appropriately. */

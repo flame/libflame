@@ -314,7 +314,7 @@ int ssygvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, re
     integer lwkopt;
     logical lquery;
     extern /* Subroutine */
-    int ssygst_(integer *, char *, integer *, real *, integer *, real *, integer *, integer *), ssyevx_(char *, char *, char *, integer *, real *, integer *, real *, real *, integer *, integer *, real *, integer *, real *, real *, integer * , real *, integer *, integer *, integer *, integer *);
+    int ssygst_(integer *, char *, integer *, real *, integer *, real *, integer *, integer *), ssyevx_(char *, char *, char *, integer *, real *, integer *, real *, real *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *, integer *, integer *);
     /* -- LAPACK driver routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -481,7 +481,7 @@ int ssygvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, re
             {
                 *(unsigned char *)trans = 'T';
             }
-            strsm_("Left", uplo, trans, "Non-unit", n, m, &c_b19, &b[b_offset] , ldb, &z__[z_offset], ldz);
+            strsm_("Left", uplo, trans, "Non-unit", n, m, &c_b19, &b[b_offset], ldb, &z__[z_offset], ldz);
         }
         else if (*itype == 3)
         {
@@ -496,7 +496,7 @@ int ssygvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, re
             {
                 *(unsigned char *)trans = 'N';
             }
-            strmm_("Left", uplo, trans, "Non-unit", n, m, &c_b19, &b[b_offset] , ldb, &z__[z_offset], ldz);
+            strmm_("Left", uplo, trans, "Non-unit", n, m, &c_b19, &b[b_offset], ldb, &z__[z_offset], ldz);
         }
     }
     /* Set WORK(1) to optimal workspace size. */

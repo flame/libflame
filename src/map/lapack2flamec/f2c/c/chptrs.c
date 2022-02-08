@@ -112,11 +112,11 @@ static integer c__1 = 1;
 int chptrs_(char *uplo, integer *n, integer *nrhs, complex * ap, integer *ipiv, complex *b, integer *ldb, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chptrs inputs: uplo %c, n %lld, nrhs %lld, ipiv %lld, ldb %lld",*uplo, *n, *nrhs, *ipiv, *ldb);
-#else 
+#else
     snprintf(buffer, 256,"chptrs inputs: uplo %c, n %d, nrhs %d, ipiv %d, ldb %d",*uplo, *n, *nrhs, *ipiv, *ldb);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -135,7 +135,7 @@ int chptrs_(char *uplo, integer *n, integer *nrhs, complex * ap, integer *ipiv, 
     extern logical lsame_(char *, char *);
     complex denom;
     extern /* Subroutine */
-    int cgemv_(char *, integer *, integer *, complex * , complex *, integer *, complex *, integer *, complex *, complex * , integer *), cgeru_(integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, integer *), cswap_(integer *, complex *, integer *, complex *, integer *);
+    int cgemv_(char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *), cgeru_(integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, integer *), cswap_(integer *, complex *, integer *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
     int clacgv_(integer *, complex *, integer *), csscal_(integer *, real *, complex *, integer *), xerbla_(char *, integer *);
@@ -323,7 +323,7 @@ L40: /* If K > N, exit from loop. */
                 i__1 = k - 1;
                 q__1.r = -1.f;
                 q__1.i = -0.f; // , expr subst
-                cgemv_("Conjugate transpose", &i__1, nrhs, &q__1, &b[b_offset] , ldb, &ap[kc], &c__1, &c_b1, &b[k + b_dim1], ldb);
+                cgemv_("Conjugate transpose", &i__1, nrhs, &q__1, &b[b_offset], ldb, &ap[kc], &c__1, &c_b1, &b[k + b_dim1], ldb);
                 clacgv_(nrhs, &b[k + b_dim1], ldb);
             }
             /* Interchange rows K and IPIV(K). */
@@ -346,13 +346,13 @@ L40: /* If K > N, exit from loop. */
                 i__1 = k - 1;
                 q__1.r = -1.f;
                 q__1.i = -0.f; // , expr subst
-                cgemv_("Conjugate transpose", &i__1, nrhs, &q__1, &b[b_offset] , ldb, &ap[kc], &c__1, &c_b1, &b[k + b_dim1], ldb);
+                cgemv_("Conjugate transpose", &i__1, nrhs, &q__1, &b[b_offset], ldb, &ap[kc], &c__1, &c_b1, &b[k + b_dim1], ldb);
                 clacgv_(nrhs, &b[k + b_dim1], ldb);
                 clacgv_(nrhs, &b[k + 1 + b_dim1], ldb);
                 i__1 = k - 1;
                 q__1.r = -1.f;
                 q__1.i = -0.f; // , expr subst
-                cgemv_("Conjugate transpose", &i__1, nrhs, &q__1, &b[b_offset] , ldb, &ap[kc + k], &c__1, &c_b1, &b[k + 1 + b_dim1], ldb);
+                cgemv_("Conjugate transpose", &i__1, nrhs, &q__1, &b[b_offset], ldb, &ap[kc + k], &c__1, &c_b1, &b[k + 1 + b_dim1], ldb);
                 clacgv_(nrhs, &b[k + 1 + b_dim1], ldb);
             }
             /* Interchange rows K and -IPIV(K). */

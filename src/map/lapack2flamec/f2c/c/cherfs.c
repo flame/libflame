@@ -187,11 +187,11 @@ static integer c__1 = 1;
 int cherfs_(char *uplo, integer *n, integer *nrhs, complex * a, integer *lda, complex *af, integer *ldaf, integer *ipiv, complex * b, integer *ldb, complex *x, integer *ldx, real *ferr, real *berr, complex *work, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cherfs inputs: uplo %c, n %lld, nrhs %lld, lda %lld, ldaf %lld, ipiv %lld, ldb %lld, ldx %lld",*uplo, *n, *nrhs, *lda, *ldaf, *ipiv, *ldb, *ldx);
-#else 
+#else
     snprintf(buffer, 256,"cherfs inputs: uplo %c, n %d, nrhs %d, lda %d, ldaf %d, ipiv %d, ldb %d, ldx %d",*uplo, *n, *nrhs, *lda, *ldaf, *ipiv, *ldb, *ldx);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -211,7 +211,7 @@ int cherfs_(char *uplo, integer *n, integer *nrhs, complex * a, integer *lda, co
     real safe1, safe2;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int chemv_(char *, integer *, complex *, complex * , integer *, complex *, integer *, complex *, complex *, integer * );
+    int chemv_(char *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer * );
     integer isave[3];
     extern /* Subroutine */
     int ccopy_(integer *, complex *, integer *, complex *, integer *), caxpy_(integer *, complex *, complex *, integer *, complex *, integer *);

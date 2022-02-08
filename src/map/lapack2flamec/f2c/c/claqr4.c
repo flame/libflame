@@ -248,11 +248,11 @@ IHI .LE. IHIZ .LE. N. */
 int claqr4_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *ihi, complex *h__, integer *ldh, complex *w, integer *iloz, integer *ihiz, complex *z__, integer *ldz, complex * work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"claqr4 inputs: n %lld, ilo %lld, ihi %lld, ldh %lld, iloz %lld, ihiz %lld, ldz %lld, lwork %lld",*n, *ilo, *ihi, *ldh, *iloz, *ihiz, *ldz, *lwork);
-#else 
+#else
     snprintf(buffer, 256,"claqr4 inputs: n %d, ilo %d, ihi %d, ldh %d, iloz %d, ihiz %d, ldz %d, lwork %d",*n, *ilo, *ihi, *ldh, *iloz, *ihiz, *ldz, *lwork);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

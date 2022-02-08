@@ -547,7 +547,7 @@ int sgesvxx_(char *fact, char *trans, integer *n, integer * nrhs, real *a, integ
     /* Local variables */
     integer j;
     real amax;
-    extern real sla_gerpvgrw_(integer *, integer *, real *, integer *, real * , integer *);
+    extern real sla_gerpvgrw_(integer *, integer *, real *, integer *, real *, integer *);
     extern logical lsame_(char *, char *);
     real rcmin, rcmax;
     logical equil;

@@ -411,7 +411,7 @@ int stgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     int scopy_(integer *, real *, integer *, real *, integer *), slags2_(logical *, real *, real *, real *, real *, real *, real *, real *, real *, real *, real *, real *, real *);
     integer kcycle;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slapll_( integer *, real *, integer *, real *, integer *, real *), slartg_( real *, real *, real *, real *, real *), slaset_(char *, integer * , integer *, real *, real *, real *, integer *);
+    int xerbla_(char *, integer *), slapll_( integer *, real *, integer *, real *, integer *, real *), slartg_( real *, real *, real *, real *, real *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */

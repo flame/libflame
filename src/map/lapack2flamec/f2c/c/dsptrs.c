@@ -275,7 +275,7 @@ L40: /* If K > N, exit from loop. */
             /* Multiply by inv(U**T(K)), where U(K) is the transformation */
             /* stored in column K of A. */
             i__1 = k - 1;
-            dgemv_("Transpose", &i__1, nrhs, &c_b7, &b[b_offset], ldb, &ap[kc] , &c__1, &c_b19, &b[k + b_dim1], ldb);
+            dgemv_("Transpose", &i__1, nrhs, &c_b7, &b[b_offset], ldb, &ap[kc], &c__1, &c_b19, &b[k + b_dim1], ldb);
             /* Interchange rows K and IPIV(K). */
             kp = ipiv[k];
             if (kp != k)
@@ -291,7 +291,7 @@ L40: /* If K > N, exit from loop. */
             /* Multiply by inv(U**T(K+1)), where U(K+1) is the transformation */
             /* stored in columns K and K+1 of A. */
             i__1 = k - 1;
-            dgemv_("Transpose", &i__1, nrhs, &c_b7, &b[b_offset], ldb, &ap[kc] , &c__1, &c_b19, &b[k + b_dim1], ldb);
+            dgemv_("Transpose", &i__1, nrhs, &c_b7, &b[b_offset], ldb, &ap[kc], &c__1, &c_b19, &b[k + b_dim1], ldb);
             i__1 = k - 1;
             dgemv_("Transpose", &i__1, nrhs, &c_b7, &b[b_offset], ldb, &ap[kc + k], &c__1, &c_b19, &b[k + 1 + b_dim1], ldb);
             /* Interchange rows K and -IPIV(K). */

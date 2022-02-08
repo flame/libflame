@@ -555,7 +555,7 @@ int zheevx_(char *jobz, char *range, char *uplo, integer *n, doublecomplex *a, i
         else
         {
             zlacpy_("A", n, n, &a[a_offset], lda, &z__[z_offset], ldz);
-            zungtr_(uplo, n, &z__[z_offset], ldz, &work[indtau], &work[indwrk] , &llwork, &iinfo);
+            zungtr_(uplo, n, &z__[z_offset], ldz, &work[indtau], &work[indwrk], &llwork, &iinfo);
             i__1 = *n - 1;
             dcopy_(&i__1, &rwork[inde], &c__1, &rwork[indee], &c__1);
             zsteqr_(jobz, n, &w[1], &rwork[indee], &z__[z_offset], ldz, & rwork[indrwk], info);

@@ -112,8 +112,8 @@ static integer c__1 = 1;
 int zsptrs_(char *uplo, integer *n, integer *nrhs, doublecomplex *ap, integer *ipiv, doublecomplex *b, integer *ldb, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"zsptrs inputs: uplo %c, n %d, nrhs %d, ldb %d, ipiv %d",*uplo, *n, *nrhs, *ldb, *ipiv);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -312,7 +312,7 @@ L40: /* If K > N, exit from loop. */
             i__1 = k - 1;
             z__1.r = -1.;
             z__1.i = -0.; // , expr subst
-            zgemv_("Transpose", &i__1, nrhs, &z__1, &b[b_offset], ldb, &ap[kc] , &c__1, &c_b1, &b[k + b_dim1], ldb);
+            zgemv_("Transpose", &i__1, nrhs, &z__1, &b[b_offset], ldb, &ap[kc], &c__1, &c_b1, &b[k + b_dim1], ldb);
             /* Interchange rows K and IPIV(K). */
             kp = ipiv[k];
             if (kp != k)
@@ -330,7 +330,7 @@ L40: /* If K > N, exit from loop. */
             i__1 = k - 1;
             z__1.r = -1.;
             z__1.i = -0.; // , expr subst
-            zgemv_("Transpose", &i__1, nrhs, &z__1, &b[b_offset], ldb, &ap[kc] , &c__1, &c_b1, &b[k + b_dim1], ldb);
+            zgemv_("Transpose", &i__1, nrhs, &z__1, &b[b_offset], ldb, &ap[kc], &c__1, &c_b1, &b[k + b_dim1], ldb);
             i__1 = k - 1;
             z__1.r = -1.;
             z__1.i = -0.; // , expr subst

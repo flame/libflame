@@ -165,8 +165,8 @@ if VECT = 'N' or 'V', then Q need not be set. */
 int dsbtrd_(char *vect, char *uplo, integer *n, integer *kd, doublereal *ab, integer *ldab, doublereal *d__, doublereal *e, doublereal *q, integer *ldq, doublereal *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dsbtrd inputs: vect %c, uplo %c, n %" FLA_IS ", kd %" FLA_IS ", ldab %" FLA_IS ", ldq %" FLA_IS "",*vect, *uplo, *n, *kd, *ldab, *ldq);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -334,7 +334,7 @@ int dsbtrd_(char *vect, char *uplo, integer *n, integer *kd, doublereal *ab, int
                         {
                             /* generate plane rotation to annihilate a(i,i+k-1) */
                             /* within the band */
-                            dlartg_(&ab[*kd - k + 3 + (i__ + k - 2) * ab_dim1] , &ab[*kd - k + 2 + (i__ + k - 1) * ab_dim1], &d__[i__ + k - 1], &work[i__ + k - 1], &temp);
+                            dlartg_(&ab[*kd - k + 3 + (i__ + k - 2) * ab_dim1], &ab[*kd - k + 2 + (i__ + k - 1) * ab_dim1], &d__[i__ + k - 1], &work[i__ + k - 1], &temp);
                             ab[*kd - k + 3 + (i__ + k - 2) * ab_dim1] = temp;
                             /* apply rotation from the right */
                             i__3 = k - 3;
@@ -559,7 +559,7 @@ int dsbtrd_(char *vect, char *uplo, integer *n, integer *kd, doublereal *ab, int
                                     i__2 < 0 ? jinc >= i__3 : jinc <= i__3;
                                     jinc += i__2)
                             {
-                                drot_(&kdm1, &ab[*kd + (jinc - *kd) * ab_dim1] , &incx, &ab[kd1 + (jinc - *kd) * ab_dim1], &incx, &d__[jinc], &work[ jinc]);
+                                drot_(&kdm1, &ab[*kd + (jinc - *kd) * ab_dim1], &incx, &ab[kd1 + (jinc - *kd) * ab_dim1], &incx, &d__[jinc], &work[ jinc]);
                                 /* L140: */
                             }
                         }

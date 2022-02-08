@@ -204,7 +204,7 @@ int dsysv_rook_(char *uplo, integer *n, integer *nrhs, doublereal *a, integer *l
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */
     extern /* Subroutine */
-    int dsytrf_rook_(char *, integer *, doublereal *, integer *, integer *, doublereal *, integer *, integer *) , dsytrs_rook_(char *, integer *, integer *, doublereal *, integer *, integer *, doublereal *, integer *, integer *);
+    int dsytrf_rook_(char *, integer *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), dsytrs_rook_(char *, integer *, integer *, doublereal *, integer *, integer *, doublereal *, integer *, integer *);
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
     int xerbla_(char *, integer *);
@@ -296,7 +296,7 @@ int dsysv_rook_(char *uplo, integer *n, integer *nrhs, doublereal *a, integer *l
     {
         /* Solve the system A*X = B, overwriting B with X. */
         /* Solve with TRS_ROOK ( Use Level 2 BLAS) */
-        dsytrs_rook_(uplo, n, nrhs, &a[a_offset], lda, &ipiv[1], &b[b_offset] , ldb, info);
+        dsytrs_rook_(uplo, n, nrhs, &a[a_offset], lda, &ipiv[1], &b[b_offset], ldb, info);
     }
     work[1] = (doublereal) lwkopt;
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);

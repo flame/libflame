@@ -137,11 +137,11 @@ static integer c__1 = 1;
 int ctbcon_(char *norm, char *uplo, char *diag, integer *n, integer *kd, complex *ab, integer *ldab, real *rcond, complex *work, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"ctbcon inputs: norm %c, uplo %c, diag %c, n %lld, kd %lld, ldab %lld",*norm, *uplo, *diag, *n, *kd, *ldab);
-#else 
+#else
     snprintf(buffer, 256,"ctbcon inputs: norm %c, uplo %c, diag %c, n %d, kd %d, ldab %d",*norm, *uplo, *diag, *n, *kd, *ldab);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -164,7 +164,7 @@ int ctbcon_(char *norm, char *uplo, char *diag, integer *n, integer *kd, complex
     extern integer icamax_(integer *, complex *, integer *);
     extern real clantb_(char *, char *, char *, integer *, integer *, complex *, integer *, real *), slamch_(char *);
     extern /* Subroutine */
-    int clatbs_(char *, char *, char *, char *, integer *, integer *, complex *, integer *, complex *, real *, real *, integer *), xerbla_(char * , integer *);
+    int clatbs_(char *, char *, char *, char *, integer *, integer *, complex *, integer *, complex *, real *, real *, integer *), xerbla_(char *, integer *);
     real ainvnm;
     extern /* Subroutine */
     int csrscl_(integer *, real *, complex *, integer *);

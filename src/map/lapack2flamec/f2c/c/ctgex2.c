@@ -186,11 +186,11 @@ Computing Eigenspaces with Specified */
 int ctgex2_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, integer *j1, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"ctgex2 inputs: n %lld, lda %lld, ldb %lld, ldq %lld, ldz %lld, j1 %lld",*n, *lda, *ldb, *ldq, *ldz, *j1);
-#else 
+#else
     snprintf(buffer, 256,"ctgex2 inputs: n %d, lda %d, ldb %d, ldq %d, ldz %d, j1 %d",*n, *lda, *ldb, *ldq, *ldz, *j1);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

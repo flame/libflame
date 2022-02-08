@@ -174,11 +174,11 @@ v(i+2:n) is stored on exit in A(i+2:n,i), */
 int chetd2_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e, complex *tau, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chetd2 inputs: uplo %c, n %lld, lda %lld",*uplo, *n, *lda);
-#else 
+#else
     snprintf(buffer, 256,"chetd2 inputs: uplo %c, n %d, lda %d",*uplo, *n, *lda);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -191,13 +191,13 @@ int chetd2_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
     integer i__;
     complex taui;
     extern /* Subroutine */
-    int cher2_(char *, integer *, complex *, complex * , integer *, complex *, integer *, complex *, integer *);
+    int cher2_(char *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, integer *);
     complex alpha;
     extern /* Complex */
     VOID cdotc_f2c_(complex *, integer *, complex *, integer *, complex *, integer *);
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int chemv_(char *, integer *, complex *, complex * , integer *, complex *, integer *, complex *, complex *, integer * ), caxpy_(integer *, complex *, complex *, integer *, complex *, integer *);
+    int chemv_(char *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer * ), caxpy_(integer *, complex *, complex *, integer *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
     int clarfg_(integer *, complex *, complex *, integer *, complex *), xerbla_(char *, integer *);
@@ -290,7 +290,7 @@ int chetd2_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
                 q__3.i = -0.f; // , expr subst
                 q__2.r = q__3.r * taui.r - q__3.i * taui.i;
                 q__2.i = q__3.r * taui.i + q__3.i * taui.r; // , expr subst
-                cdotc_f2c_(&q__4, &i__, &tau[1], &c__1, &a[(i__ + 1) * a_dim1 + 1] , &c__1);
+                cdotc_f2c_(&q__4, &i__, &tau[1], &c__1, &a[(i__ + 1) * a_dim1 + 1], &c__1);
                 q__1.r = q__2.r * q__4.r - q__2.i * q__4.i;
                 q__1.i = q__2.r * q__4.i + q__2.i * q__4.r; // , expr subst
                 alpha.r = q__1.r;

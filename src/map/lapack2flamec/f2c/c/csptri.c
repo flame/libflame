@@ -113,11 +113,11 @@ the matrix is singular and its */
 int csptri_(char *uplo, integer *n, complex *ap, integer * ipiv, complex *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"csptri inputs: uplo %c, n %lld, ipiv %lld",*uplo, *n, *ipiv);
-#else 
+#else
     snprintf(buffer, 256,"csptri inputs: uplo %c, n %d, ipiv %d",*uplo, *n, *ipiv);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -142,7 +142,7 @@ int csptri_(char *uplo, integer *n, complex *ap, integer * ipiv, complex *work, 
     int cswap_(integer *, complex *, integer *, complex *, integer *);
     integer kstep;
     extern /* Subroutine */
-    int cspmv_(char *, integer *, complex *, complex * , complex *, integer *, complex *, complex *, integer *);
+    int cspmv_(char *, integer *, complex *, complex *, complex *, integer *, complex *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
     int xerbla_(char *, integer *);

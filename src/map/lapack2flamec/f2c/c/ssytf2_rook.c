@@ -591,7 +591,7 @@ L42: /* Begin pivot search loop body */
                 if (imax < *n)
                 {
                     i__1 = *n - imax;
-                    itemp = imax + isamax_(&i__1, &a[imax + 1 + imax * a_dim1] , &c__1);
+                    itemp = imax + isamax_(&i__1, &a[imax + 1 + imax * a_dim1], &c__1);
                     stemp = (r__1 = a[itemp + imax * a_dim1], f2c_abs(r__1));
                     if (stemp > rowmax)
                     {

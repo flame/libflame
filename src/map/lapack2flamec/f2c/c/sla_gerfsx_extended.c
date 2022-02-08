@@ -409,10 +409,10 @@ int sla_gerfsx_extended_(integer *prec_type__, integer * trans_type__, integer *
     integer cnt;
     real dyk, eps, incr_thresh__, dx_x__, dz_z__, ymin;
     extern /* Subroutine */
-    int sla_lin_berr_(integer *, integer *, integer * , real *, real *, real *), blas_sgemv_x_(integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *, integer *);
+    int sla_lin_berr_(integer *, integer *, integer *, real *, real *, real *), blas_sgemv_x_(integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *, integer *);
     integer y_prec_state__;
     extern /* Subroutine */
-    int blas_sgemv2_x_(integer *, integer *, integer *, real *, real *, integer *, real *, real *, integer *, real *, real *, integer *, integer *), sgemv_(char *, integer *, integer * , real *, real *, integer *, real *, integer *, real *, real *, integer *);
+    int blas_sgemv2_x_(integer *, integer *, integer *, real *, real *, integer *, real *, real *, integer *, real *, real *, integer *, integer *), sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *);
     real dxrat, dzrat;
     char trans[1];
     extern /* Subroutine */

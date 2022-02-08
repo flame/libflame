@@ -134,8 +134,8 @@ IPIV(i) = i indicates a row interchange was not */
 int zgtcon_(char *norm, integer *n, doublecomplex *dl, doublecomplex *d__, doublecomplex *du, doublecomplex *du2, integer * ipiv, doublereal *anorm, doublereal *rcond, doublecomplex *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"zgtcon inputs: norm %c, n %d",*norm, *n);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -150,7 +150,7 @@ int zgtcon_(char *norm, integer *n, doublecomplex *dl, doublecomplex *d__, doubl
     doublereal ainvnm;
     logical onenrm;
     extern /* Subroutine */
-    int zgttrs_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, doublecomplex * , integer *, doublecomplex *, integer *, integer *);
+    int zgttrs_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -247,7 +247,7 @@ L20:
         if (kase == kase1)
         {
             /* Multiply by inv(U)*inv(L). */
-            zgttrs_("No transpose", n, &c__1, &dl[1], &d__[1], &du[1], &du2[1] , &ipiv[1], &work[1], n, info);
+            zgttrs_("No transpose", n, &c__1, &dl[1], &d__[1], &du[1], &du2[1], &ipiv[1], &work[1], n, info);
         }
         else
         {

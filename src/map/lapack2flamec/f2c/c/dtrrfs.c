@@ -581,7 +581,7 @@ L210:
             if (kase == 1)
             {
                 /* Multiply by diag(W)*inv(op(A)**T). */
-                dtrsv_(uplo, transt, diag, n, &a[a_offset], lda, &work[*n + 1] , &c__1);
+                dtrsv_(uplo, transt, diag, n, &a[a_offset], lda, &work[*n + 1], &c__1);
                 i__2 = *n;
                 for (i__ = 1;
                         i__ <= i__2;

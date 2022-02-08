@@ -6,7 +6,7 @@ static integer c__1 = 1;
 static doublecomplex c_b6 =
 {
     -1.,0.
-}
+    }
 ;
 static doublecomplex c_b8 =
 {
@@ -434,13 +434,13 @@ int zla_gbrfsx_extended_(integer *prec_type__, integer * trans_type__, integer *
     integer cnt;
     doublereal dyk, eps, incr_thresh__, dx_x__, dz_z__, ymin;
     extern /* Subroutine */
-    int zla_lin_berr_(integer *, integer *, integer * , doublecomplex *, doublereal *, doublereal *), blas_zgbmv_x_( integer *, integer *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, integer *) ;
+    int zla_lin_berr_(integer *, integer *, integer *, doublecomplex *, doublereal *, doublereal *), blas_zgbmv_x_( integer *, integer *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, integer *) ;
     integer y_prec_state__;
     extern /* Subroutine */
     int blas_zgbmv2_x_(integer *, integer *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, integer *);
     doublereal dxrat, dzrat;
     extern /* Subroutine */
-    int zgbmv_(char *, integer *, integer *, integer * , integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *);
+    int zgbmv_(char *, integer *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *);
     char trans[1];
     doublereal normx, normy;
     extern /* Subroutine */
@@ -568,7 +568,7 @@ int zla_gbrfsx_extended_(integer *prec_type__, integer * trans_type__, integer *
             }
             /* XXX: RES is no longer needed. */
             zcopy_(n, &res[1], &c__1, &dy[1], &c__1);
-            zgbtrs_(trans, n, kl, ku, &c__1, &afb[afb_offset], ldafb, &ipiv[1] , &dy[1], n, info);
+            zgbtrs_(trans, n, kl, ku, &c__1, &afb[afb_offset], ldafb, &ipiv[1], &dy[1], n, info);
             /* Calculate relative changes DX_X, DZ_Z and ratios DXRAT, DZRAT. */
             normx = 0.;
             normy = 0.;

@@ -331,7 +331,7 @@ int dtgevc_(char *side, char *howmny, logical *select, integer *n, doublereal *s
     doublereal anorm, bnorm;
     logical compr;
     extern /* Subroutine */
-    int dlaln2_(logical *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, doublereal * , doublereal *, integer *, doublereal *, doublereal *, integer *);
+    int dlaln2_(logical *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *);
     doublereal temp2i;
     extern /* Subroutine */
     int dlabad_(doublereal *, doublereal *);
@@ -954,7 +954,7 @@ L10:
                 /* T */
                 /* Solve ( a A - b B ) y = SUM(,) */
                 /* with scaling and perturbation of the denominator */
-                dlaln2_(&c_true, &na, &nw, &dmin__, &acoef, &s[j + j * s_dim1] , lds, bdiag, &bdiag[1], sum, &c__2, &bcoefr, &bcoefi, &work[(*n << 1) + j], n, &scale, &temp, &iinfo);
+                dlaln2_(&c_true, &na, &nw, &dmin__, &acoef, &s[j + j * s_dim1], lds, bdiag, &bdiag[1], sum, &c__2, &bcoefr, &bcoefi, &work[(*n << 1) + j], n, &scale, &temp, &iinfo);
                 if (scale < 1.)
                 {
                     i__3 = nw - 1;

@@ -574,7 +574,7 @@ int zlaqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
             zlarf_("R", ns, ns, &work[1], &c__1, &tau, &t[t_offset], ldt, & work[jw + 1]);
             zlarf_("R", &jw, ns, &work[1], &c__1, &tau, &v[v_offset], ldv, & work[jw + 1]);
             i__1 = *lwork - jw;
-            zgehrd_(&jw, &c__1, ns, &t[t_offset], ldt, &work[1], &work[jw + 1] , &i__1, &info);
+            zgehrd_(&jw, &c__1, ns, &t[t_offset], ldt, &work[1], &work[jw + 1], &i__1, &info);
         }
         /* ==== Copy updated reduced window into place ==== */
         if (kwtop > 1)
@@ -586,7 +586,7 @@ int zlaqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
             h__[i__1].r = z__1.r;
             h__[i__1].i = z__1.i; // , expr subst
         }
-        zlacpy_("U", &jw, &jw, &t[t_offset], ldt, &h__[kwtop + kwtop * h_dim1] , ldh);
+        zlacpy_("U", &jw, &jw, &t[t_offset], ldt, &h__[kwtop + kwtop * h_dim1], ldh);
         i__1 = jw - 1;
         i__2 = *ldt + 1;
         i__3 = *ldh + 1;
@@ -652,7 +652,7 @@ int zlaqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
                 i__3 = *nv;
                 i__4 = *ihiz - krow + 1; // , expr subst
                 kln = min(i__3,i__4);
-                zgemm_("N", "N", &kln, &jw, &jw, &c_b2, &z__[krow + kwtop * z_dim1], ldz, &v[v_offset], ldv, &c_b1, &wv[wv_offset] , ldwv);
+                zgemm_("N", "N", &kln, &jw, &jw, &c_b2, &z__[krow + kwtop * z_dim1], ldz, &v[v_offset], ldv, &c_b1, &wv[wv_offset], ldwv);
                 zlacpy_("A", &kln, &jw, &wv[wv_offset], ldwv, &z__[krow + kwtop * z_dim1], ldz);
                 /* L80: */
             }

@@ -256,7 +256,7 @@ int zlahrd_(integer *n, integer *k, integer *nb, doublecomplex *a, integer *lda,
             zgemv_("No transpose", &i__2, &i__3, &z__1, &a[*k + i__ + a_dim1], lda, &t[*nb * t_dim1 + 1], &c__1, &c_b2, &a[*k + i__ + i__ * a_dim1], &c__1);
             /* b1 := b1 - V1*w */
             i__2 = i__ - 1;
-            ztrmv_("Lower", "No transpose", "Unit", &i__2, &a[*k + 1 + a_dim1] , lda, &t[*nb * t_dim1 + 1], &c__1);
+            ztrmv_("Lower", "No transpose", "Unit", &i__2, &a[*k + 1 + a_dim1], lda, &t[*nb * t_dim1 + 1], &c__1);
             i__2 = i__ - 1;
             z__1.r = -1.;
             z__1.i = -0.; // , expr subst

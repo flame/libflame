@@ -481,7 +481,7 @@ int dsygvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, do
             {
                 *(unsigned char *)trans = 'T';
             }
-            dtrsm_("Left", uplo, trans, "Non-unit", n, m, &c_b19, &b[b_offset] , ldb, &z__[z_offset], ldz);
+            dtrsm_("Left", uplo, trans, "Non-unit", n, m, &c_b19, &b[b_offset], ldb, &z__[z_offset], ldz);
         }
         else if (*itype == 3)
         {
@@ -496,7 +496,7 @@ int dsygvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, do
             {
                 *(unsigned char *)trans = 'N';
             }
-            dtrmm_("Left", uplo, trans, "Non-unit", n, m, &c_b19, &b[b_offset] , ldb, &z__[z_offset], ldz);
+            dtrmm_("Left", uplo, trans, "Non-unit", n, m, &c_b19, &b[b_offset], ldb, &z__[z_offset], ldz);
         }
     }
     /* Set WORK(1) to optimal workspace size. */

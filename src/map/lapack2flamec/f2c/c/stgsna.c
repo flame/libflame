@@ -429,7 +429,7 @@ int stgsna_(char *job, char *howmny, logical *select, integer *n, real *a, integ
     real alprqt, smlnum;
     logical lquery;
     extern /* Subroutine */
-    int stgsyl_(char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real * , integer *, real *, integer *, real *, integer *, real *, real *, real *, integer *, integer *, integer *);
+    int stgsyl_(char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, real *, real *, integer *, integer *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */

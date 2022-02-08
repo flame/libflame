@@ -135,7 +135,7 @@ void zladiv_f2c_(doublecomplex *ret_val, doublecomplex *x, doublecomplex *y)
 {
 
 #ifdef FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION
-    zladiv_(ret_val, x, y);    
+    zladiv_(ret_val, x, y);
 #else
     *ret_val = zladiv_(x, y);
 #endif

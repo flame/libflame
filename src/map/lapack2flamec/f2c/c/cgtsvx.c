@@ -285,11 +285,11 @@ IPIV(i) = i indicates */
 int cgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, complex *dl, complex *d__, complex *du, complex *dlf, complex * df, complex *duf, complex *du2, integer *ipiv, complex *b, integer * ldb, complex *x, integer *ldx, real *rcond, real *ferr, real *berr, complex *work, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgtsvx inputs: fact %c, trans %c, n %lld, nrhs %lld, ipiv %lld, ldb %lld, ldx %lld",*fact, *trans, *n, *nrhs, *ipiv, *ldb, *ldx);
-#else 
+#else
     snprintf(buffer, 256,"cgtsvx inputs: fact %c, trans %c, n %d, nrhs %d, ipiv %d, ldb %d, ldx %d",*fact, *trans, *n, *nrhs, *ipiv, *ldb, *ldx);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -420,7 +420,7 @@ int cgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, complex *dl, co
     cgttrs_(trans, n, nrhs, &dlf[1], &df[1], &duf[1], &du2[1], &ipiv[1], &x[ x_offset], ldx, info);
     /* Use iterative refinement to improve the computed solutions and */
     /* compute error bounds and backward error estimates for them. */
-    cgtrfs_(trans, n, nrhs, &dl[1], &d__[1], &du[1], &dlf[1], &df[1], &duf[1], &du2[1], &ipiv[1], &b[b_offset], ldb, &x[x_offset], ldx, &ferr[1] , &berr[1], &work[1], &rwork[1], info);
+    cgtrfs_(trans, n, nrhs, &dl[1], &d__[1], &du[1], &dlf[1], &df[1], &duf[1], &du2[1], &ipiv[1], &b[b_offset], ldb, &x[x_offset], ldx, &ferr[1], &berr[1], &work[1], &rwork[1], info);
     /* Set INFO = N+1 if the matrix is singular to working precision. */
     if (*rcond < slamch_("Epsilon"))
     {

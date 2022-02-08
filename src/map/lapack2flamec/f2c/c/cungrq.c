@@ -123,8 +123,8 @@ the routine */
 int cungrq_(integer *m, integer *n, integer *k, complex *a, integer *lda, complex *tau, complex *work, integer *lwork, integer * info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"cungrq inputs: m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "",*m, *n, *k, *lda, *lwork);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -309,7 +309,7 @@ int cungrq_(integer *m, integer *n, integer *k, complex *a, integer *lda, comple
             }
             /* Apply H**H to columns 1:n-k+i+ib-1 of current block */
             i__3 = *n - *k + i__ + ib - 1;
-            cungr2_(&ib, &i__3, &ib, &a[ii + a_dim1], lda, &tau[i__], &work[1] , &iinfo);
+            cungr2_(&ib, &i__3, &ib, &a[ii + a_dim1], lda, &tau[i__], &work[1], &iinfo);
             /* Set columns n-k+i+ib:n of current block to zero */
             i__3 = *n;
             for (l = *n - *k + i__ + ib;

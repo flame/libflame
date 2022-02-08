@@ -160,8 +160,8 @@ static logical c_true = TRUE_;
 int dlaqtr_(logical *ltran, logical *lreal, integer *n, doublereal *t, integer *ldt, doublereal *b, doublereal *w, doublereal *scale, doublereal *x, doublereal *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dlaqtr inputs: n %" FLA_IS ", ldt %" FLA_IS "",*n, *ldt);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -187,7 +187,7 @@ int dlaqtr_(logical *ltran, logical *lreal, integer *n, doublereal *t, integer *
     integer jnext;
     doublereal sminw, xnorm;
     extern /* Subroutine */
-    int dlaln2_(logical *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, doublereal * , doublereal *, integer *, doublereal *, doublereal *, integer *);
+    int dlaln2_(logical *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *);
     extern doublereal dlamch_(char *), dlange_(char *, integer *, integer *, doublereal *, integer *, doublereal *);
     extern integer idamax_(integer *, doublereal *, integer *);
     doublereal scaloc;
@@ -360,7 +360,7 @@ int dlaqtr_(logical *ltran, logical *lreal, integer *n, doublereal *t, integer *
                     {
                         i__1 = j1 - 1;
                         d__1 = -x[j1];
-                        daxpy_(&i__1, &d__1, &t[j1 * t_dim1 + 1], &c__1, &x[1] , &c__1);
+                        daxpy_(&i__1, &d__1, &t[j1 * t_dim1 + 1], &c__1, &x[1], &c__1);
                         i__1 = j1 - 1;
                         k = idamax_(&i__1, &x[1], &c__1);
                         xmax = (d__1 = x[k], f2c_dabs(d__1));
@@ -408,10 +408,10 @@ int dlaqtr_(logical *ltran, logical *lreal, integer *n, doublereal *t, integer *
                     {
                         i__1 = j1 - 1;
                         d__1 = -x[j1];
-                        daxpy_(&i__1, &d__1, &t[j1 * t_dim1 + 1], &c__1, &x[1] , &c__1);
+                        daxpy_(&i__1, &d__1, &t[j1 * t_dim1 + 1], &c__1, &x[1], &c__1);
                         i__1 = j1 - 1;
                         d__1 = -x[j2];
-                        daxpy_(&i__1, &d__1, &t[j2 * t_dim1 + 1], &c__1, &x[1] , &c__1);
+                        daxpy_(&i__1, &d__1, &t[j2 * t_dim1 + 1], &c__1, &x[1], &c__1);
                         i__1 = j1 - 1;
                         k = idamax_(&i__1, &x[1], &c__1);
                         xmax = (d__1 = x[k], f2c_dabs(d__1));
@@ -616,7 +616,7 @@ L40:
                     {
                         i__1 = j1 - 1;
                         d__1 = -x[j1];
-                        daxpy_(&i__1, &d__1, &t[j1 * t_dim1 + 1], &c__1, &x[1] , &c__1);
+                        daxpy_(&i__1, &d__1, &t[j1 * t_dim1 + 1], &c__1, &x[1], &c__1);
                         i__1 = j1 - 1;
                         d__1 = -x[*n + j1];
                         daxpy_(&i__1, &d__1, &t[j1 * t_dim1 + 1], &c__1, &x[* n + 1], &c__1);
@@ -682,10 +682,10 @@ L40:
                     {
                         i__1 = j1 - 1;
                         d__1 = -x[j1];
-                        daxpy_(&i__1, &d__1, &t[j1 * t_dim1 + 1], &c__1, &x[1] , &c__1);
+                        daxpy_(&i__1, &d__1, &t[j1 * t_dim1 + 1], &c__1, &x[1], &c__1);
                         i__1 = j1 - 1;
                         d__1 = -x[j2];
-                        daxpy_(&i__1, &d__1, &t[j2 * t_dim1 + 1], &c__1, &x[1] , &c__1);
+                        daxpy_(&i__1, &d__1, &t[j2 * t_dim1 + 1], &c__1, &x[1], &c__1);
                         i__1 = j1 - 1;
                         d__1 = -x[*n + j1];
                         daxpy_(&i__1, &d__1, &t[j1 * t_dim1 + 1], &c__1, &x[* n + 1], &c__1);

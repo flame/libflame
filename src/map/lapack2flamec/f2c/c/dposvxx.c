@@ -491,8 +491,8 @@ defaults */
 int dposvxx_(char *fact, char *uplo, integer *n, integer * nrhs, doublereal *a, integer *lda, doublereal *af, integer *ldaf, char *equed, doublereal *s, doublereal *b, integer *ldb, doublereal * x, integer *ldx, doublereal *rcond, doublereal *rpvgrw, doublereal * berr, integer *n_err_bnds__, doublereal *err_bnds_norm__, doublereal * err_bnds_comp__, integer *nparams, doublereal *params, doublereal * work, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dposvxx inputs: fact %c, uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", equed %c, ldb %" FLA_IS ", ldx %" FLA_IS ", n_err_bnds__ %" FLA_IS ", nparams %" FLA_IS "",*fact, *uplo, *n, *nrhs, *lda, *ldaf, *equed, *ldb, *ldx, *n_err_bnds__, *nparams);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -516,7 +516,7 @@ int dposvxx_(char *fact, char *uplo, integer *n, integer * nrhs, doublereal *a, 
     int dlaqsy_(char *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, char *), dpotrf_(char *, integer *, doublereal *, integer *, integer *);
     doublereal smlnum;
     extern /* Subroutine */
-    int dpotrs_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, integer *), dlascl2_(integer *, integer *, doublereal *, doublereal * , integer *), dpoequb_(integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *), dporfsx_( char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
+    int dpotrs_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, integer *), dlascl2_(integer *, integer *, doublereal *, doublereal *, integer *), dpoequb_(integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *), dporfsx_( char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
     /* -- LAPACK driver routine (version 3.4.1) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */

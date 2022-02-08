@@ -250,7 +250,7 @@ int zgeqpf_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *jpv
         if (ma < *n)
         {
             i__1 = *n - ma;
-            zunm2r_("Left", "Conjugate transpose", m, &i__1, &ma, &a[a_offset] , lda, &tau[1], &a[(ma + 1) * a_dim1 + 1], lda, &work[1], info);
+            zunm2r_("Left", "Conjugate transpose", m, &i__1, &ma, &a[a_offset], lda, &tau[1], &a[(ma + 1) * a_dim1 + 1], lda, &work[1], info);
         }
     }
     if (itemp < mn)
@@ -336,7 +336,7 @@ int zgeqpf_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *jpv
                         if (*m - i__ > 0)
                         {
                             i__3 = *m - i__;
-                            rwork[j] = dznrm2_(&i__3, &a[i__ + 1 + j * a_dim1] , &c__1);
+                            rwork[j] = dznrm2_(&i__3, &a[i__ + 1 + j * a_dim1], &c__1);
                             rwork[*n + j] = rwork[j];
                         }
                         else

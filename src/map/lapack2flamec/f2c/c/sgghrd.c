@@ -221,7 +221,7 @@ int sgghrd_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, r
     int xerbla_(char *, integer *);
     integer icompq;
     extern /* Subroutine */
-    int slaset_(char *, integer *, integer *, real *, real *, real *, integer *), slartg_(real *, real *, real * , real *, real *);
+    int slaset_(char *, integer *, integer *, real *, real *, real *, integer *), slartg_(real *, real *, real *, real *, real *);
     integer icompz;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */

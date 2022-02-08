@@ -115,8 +115,8 @@ IPIV(i) = i indicates a row interchange was not */
 int zgttrf_(integer *n, doublecomplex *dl, doublecomplex * d__, doublecomplex *du, doublecomplex *du2, integer *ipiv, integer * info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"zgttrf inputs: n %d",*n);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

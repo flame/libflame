@@ -275,7 +275,7 @@ int sspgvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, re
     int stpmv_(char *, char *, char *, integer *, real *, real *, integer *), stpsv_(char *, char *, char *, integer *, real *, real *, integer *);
     logical alleig, indeig, valeig;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), spptrf_( char *, integer *, real *, integer *), sspgst_(integer *, char *, integer *, real *, real *, integer *), sspevx_( char *, char *, char *, integer *, real *, real *, real *, integer *, integer *, real *, integer *, real *, real *, integer * , real *, integer *, integer *, integer *) ;
+    int xerbla_(char *, integer *), spptrf_( char *, integer *, real *, integer *), sspgst_(integer *, char *, integer *, real *, real *, integer *), sspevx_( char *, char *, char *, integer *, real *, real *, real *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *, integer *) ;
     /* -- LAPACK driver routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */

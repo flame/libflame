@@ -226,7 +226,7 @@ int sspgvd_(integer *itype, char *jobz, char *uplo, integer * n, real *ap, real 
     int stpmv_(char *, char *, char *, integer *, real *, real *, integer *), stpsv_(char *, char *, char *, integer *, real *, real *, integer *), xerbla_(char *, integer *);
     integer liwmin;
     extern /* Subroutine */
-    int sspevd_(char *, char *, integer *, real *, real *, real *, integer *, real *, integer *, integer *, integer * , integer *), spptrf_(char *, integer *, real *, integer *);
+    int sspevd_(char *, char *, integer *, real *, real *, real *, integer *, real *, integer *, integer *, integer *, integer *), spptrf_(char *, integer *, real *, integer *);
     logical lquery;
     extern /* Subroutine */
     int sspgst_(integer *, char *, integer *, real *, real *, integer *);

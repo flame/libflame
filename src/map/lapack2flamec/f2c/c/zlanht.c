@@ -91,8 +91,8 @@ static integer c__1 = 1;
 doublereal zlanht_(char *norm, integer *n, doublereal *d__, doublecomplex *e)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"zlanht inputs: norm %c, n %d",*norm, *n);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

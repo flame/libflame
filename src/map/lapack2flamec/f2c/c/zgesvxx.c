@@ -555,7 +555,7 @@ int zgesvxx_(char *fact, char *trans, integer *n, integer * nrhs, doublecomplex 
     int xerbla_(char *, integer *);
     doublereal bignum;
     extern /* Subroutine */
-    int zlaqge_(integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublereal *, doublereal * , doublereal *, char *);
+    int zlaqge_(integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, char *);
     integer infequ;
     logical colequ;
     doublereal rowcnd;

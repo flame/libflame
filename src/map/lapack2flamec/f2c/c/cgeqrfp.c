@@ -133,11 +133,11 @@ v(i+1:m) is stored on exit in A(i+1:m,i), */
 int cgeqrfp_(integer *m, integer *n, complex *a, integer * lda, complex *tau, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgeqrfp inputs: m %lld, n %lld, lda %lld, lwork %lld",*m, *n, *lda, *lwork);
-#else 
+#else
     snprintf(buffer, 256,"cgeqrfp inputs: m %d, n %d, lda %d, lwork %d",*m, *n, *lda, *lwork);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -274,7 +274,7 @@ int cgeqrfp_(integer *m, integer *n, complex *a, integer * lda, complex *tau, co
                 /* Apply H**H to A(i:m,i+ib:n) from the left */
                 i__3 = *m - i__ + 1;
                 i__4 = *n - i__ - ib + 1;
-                clarfb_("Left", "Conjugate transpose", "Forward", "Columnwise" , &i__3, &i__4, &ib, &a[i__ + i__ * a_dim1], lda, & work[1], &ldwork, &a[i__ + (i__ + ib) * a_dim1], lda, &work[ib + 1], &ldwork);
+                clarfb_("Left", "Conjugate transpose", "Forward", "Columnwise", &i__3, &i__4, &ib, &a[i__ + i__ * a_dim1], lda, & work[1], &ldwork, &a[i__ + (i__ + ib) * a_dim1], lda, &work[ib + 1], &ldwork);
             }
             /* L10: */
         }

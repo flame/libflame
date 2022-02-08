@@ -513,7 +513,7 @@ int sposvxx_(char *fact, char *uplo, integer *n, integer * nrhs, real *a, intege
     int slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *);
     real smlnum;
     extern /* Subroutine */
-    int slaqsy_(char *, integer *, real *, integer *, real *, real *, real *, char *), spotrf_(char *, integer *, real *, integer *, integer *), spotrs_(char *, integer *, integer *, real *, integer *, real *, integer *, integer *), slascl2_(integer *, integer *, real *, real *, integer *), spoequb_(integer *, real *, integer *, real *, real * , real *, integer *), sporfsx_(char *, char *, integer *, integer *, real *, integer *, real *, integer *, real *, real *, integer * , real *, integer *, real *, real *, integer *, real *, real *, integer *, real *, real *, integer *, integer *);
+    int slaqsy_(char *, integer *, real *, integer *, real *, real *, real *, char *), spotrf_(char *, integer *, real *, integer *, integer *), spotrs_(char *, integer *, integer *, real *, integer *, real *, integer *, integer *), slascl2_(integer *, integer *, real *, real *, integer *), spoequb_(integer *, real *, integer *, real *, real *, real *, integer *), sporfsx_(char *, char *, integer *, integer *, real *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *, real *, real *, integer *, real *, real *, integer *, integer *);
     /* -- LAPACK driver routine (version 3.4.1) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */

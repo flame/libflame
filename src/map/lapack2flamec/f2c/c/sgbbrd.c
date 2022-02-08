@@ -199,7 +199,7 @@ int sgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
     integer minmn;
     logical wantq;
     extern /* Subroutine */
-    int xerbla_(char *, integer *), slaset_( char *, integer *, integer *, real *, real *, real *, integer *), slartg_(real *, real *, real *, real *, real *), slargv_( integer *, real *, integer *, real *, integer *, real *, integer * ), slartv_(integer *, real *, integer *, real *, integer *, real * , real *, integer *);
+    int xerbla_(char *, integer *), slaset_( char *, integer *, integer *, real *, real *, real *, integer *), slartg_(real *, real *, real *, real *, real *), slargv_( integer *, real *, integer *, real *, integer *, real *, integer * ), slartv_(integer *, real *, integer *, real *, integer *, real *, real *, integer *);
     logical wantpt;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -424,7 +424,7 @@ int sgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
                             i__3 < 0 ? j >= i__4 : j <= i__4;
                             j += i__3)
                     {
-                        srot_(ncc, &c__[j - 1 + c_dim1], ldc, &c__[j + c_dim1] , ldc, &work[mn + j], &work[j]);
+                        srot_(ncc, &c__[j - 1 + c_dim1], ldc, &c__[j + c_dim1], ldc, &work[mn + j], &work[j]);
                         /* L30: */
                     }
                 }

@@ -133,7 +133,7 @@ int zhptri_(char *uplo, integer *n, doublecomplex *ap, integer *ipiv, doublecomp
     integer kstep;
     logical upper;
     extern /* Subroutine */
-    int zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), zhpmv_(char *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zswap_( integer *, doublecomplex *, integer *, doublecomplex *, integer *) , xerbla_(char *, integer *);
+    int zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), zhpmv_(char *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), zswap_( integer *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *);
     integer kcnext;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */

@@ -288,7 +288,7 @@ int slatrd_(char *uplo, integer *n, integer *nb, real *a, integer *lda, real *e,
                 i__2 = i__ - 1;
                 sscal_(&i__2, &tau[i__ - 1], &w[iw * w_dim1 + 1], &c__1);
                 i__2 = i__ - 1;
-                alpha = tau[i__ - 1] * -.5f * sdot_(&i__2, &w[iw * w_dim1 + 1] , &c__1, &a[i__ * a_dim1 + 1], &c__1);
+                alpha = tau[i__ - 1] * -.5f * sdot_(&i__2, &w[iw * w_dim1 + 1], &c__1, &a[i__ * a_dim1 + 1], &c__1);
                 i__2 = i__ - 1;
                 saxpy_(&i__2, &alpha, &a[i__ * a_dim1 + 1], &c__1, &w[iw * w_dim1 + 1], &c__1);
             }
@@ -322,7 +322,7 @@ int slatrd_(char *uplo, integer *n, integer *nb, real *a, integer *lda, real *e,
                 a[i__ + 1 + i__ * a_dim1] = 1.f;
                 /* Compute W(i+1:n,i) */
                 i__2 = *n - i__;
-                ssymv_("Lower", &i__2, &c_b6, &a[i__ + 1 + (i__ + 1) * a_dim1] , lda, &a[i__ + 1 + i__ * a_dim1], &c__1, &c_b16, &w[ i__ + 1 + i__ * w_dim1], &c__1);
+                ssymv_("Lower", &i__2, &c_b6, &a[i__ + 1 + (i__ + 1) * a_dim1], lda, &a[i__ + 1 + i__ * a_dim1], &c__1, &c_b16, &w[ i__ + 1 + i__ * w_dim1], &c__1);
                 i__2 = *n - i__;
                 i__3 = i__ - 1;
                 sgemv_("Transpose", &i__2, &i__3, &c_b6, &w[i__ + 1 + w_dim1], ldw, &a[i__ + 1 + i__ * a_dim1], &c__1, &c_b16, &w[ i__ * w_dim1 + 1], &c__1);

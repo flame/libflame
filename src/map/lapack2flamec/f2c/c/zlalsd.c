@@ -654,7 +654,7 @@ int zlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
                     }
                     /* L190: */
                 }
-                dgemm_("T", "N", &nsize, nrhs, &nsize, &c_b10, &rwork[u + st1] , n, &rwork[irwb], &nsize, &c_b35, &rwork[irwrb], & nsize);
+                dgemm_("T", "N", &nsize, nrhs, &nsize, &c_b10, &rwork[u + st1], n, &rwork[irwb], &nsize, &c_b35, &rwork[irwrb], & nsize);
                 j = irwb - 1;
                 i__2 = *nrhs;
                 for (jcol = 1;
@@ -672,7 +672,7 @@ int zlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
                     }
                     /* L210: */
                 }
-                dgemm_("T", "N", &nsize, nrhs, &nsize, &c_b10, &rwork[u + st1] , n, &rwork[irwb], &nsize, &c_b35, &rwork[irwib], & nsize);
+                dgemm_("T", "N", &nsize, nrhs, &nsize, &c_b10, &rwork[u + st1], n, &rwork[irwb], &nsize, &c_b35, &rwork[irwib], & nsize);
                 jreal = irwrb - 1;
                 jimag = irwib - 1;
                 i__2 = *nrhs;
@@ -710,7 +710,7 @@ int zlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
                     return 0;
                 }
                 bxst = bx + st1;
-                zlalsa_(&icmpq2, smlsiz, &nsize, nrhs, &b[st + b_dim1], ldb, & work[bxst], n, &rwork[u + st1], n, &rwork[vt + st1], & iwork[k + st1], &rwork[difl + st1], &rwork[difr + st1] , &rwork[z__ + st1], &rwork[poles + st1], &iwork[ givptr + st1], &iwork[givcol + st1], n, &iwork[perm + st1], &rwork[givnum + st1], &rwork[c__ + st1], &rwork[ s + st1], &rwork[nrwork], &iwork[iwk], info);
+                zlalsa_(&icmpq2, smlsiz, &nsize, nrhs, &b[st + b_dim1], ldb, & work[bxst], n, &rwork[u + st1], n, &rwork[vt + st1], & iwork[k + st1], &rwork[difl + st1], &rwork[difr + st1], &rwork[z__ + st1], &rwork[poles + st1], &iwork[ givptr + st1], &iwork[givcol + st1], n, &iwork[perm + st1], &rwork[givnum + st1], &rwork[c__ + st1], &rwork[ s + st1], &rwork[nrwork], &iwork[iwk], info);
                 if (*info != 0)
                 {
                     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);

@@ -106,8 +106,8 @@
 integer dlaneg_(integer *n, doublereal *d__, doublereal *lld, doublereal * sigma, doublereal *pivmin, integer *r__)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dlaneg inputs: n %" FLA_IS ", r__ %" FLA_IS "",*n, *r__);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

@@ -158,7 +158,7 @@ int slaed1_(integer *n, real *d__, real *q, integer *ldq, integer *indxq, real *
     /* Local variables */
     integer i__, k, n1, n2, is, iw, iz, iq2, cpp1, indx, indxc, indxp;
     extern /* Subroutine */
-    int scopy_(integer *, real *, integer *, real *, integer *), slaed2_(integer *, integer *, integer *, real *, real *, integer *, integer *, real *, real *, real *, real *, real *, integer *, integer *, integer *, integer *, integer *), slaed3_( integer *, integer *, integer *, real *, real *, integer *, real * , real *, real *, integer *, integer *, real *, real *, integer *) ;
+    int scopy_(integer *, real *, integer *, real *, integer *), slaed2_(integer *, integer *, integer *, real *, real *, integer *, integer *, real *, real *, real *, real *, real *, integer *, integer *, integer *, integer *, integer *), slaed3_( integer *, integer *, integer *, real *, real *, integer *, real *, real *, real *, integer *, integer *, real *, real *, integer *) ;
     integer idlmda;
     extern /* Subroutine */
     int xerbla_(char *, integer *), slamrg_( integer *, integer *, real *, integer *, integer *, integer *);

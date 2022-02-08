@@ -155,7 +155,7 @@ int ssteqr_(char *compz, integer *n, real *d__, real *e, real *z__, integer *ldz
     int slasr_(char *, char *, char *, integer *, integer *, real *, real *, real *, integer *), sswap_(integer *, real *, integer *, real *, integer *);
     integer lendm1, lendp1;
     extern /* Subroutine */
-    int slaev2_(real *, real *, real *, real *, real * , real *, real *);
+    int slaev2_(real *, real *, real *, real *, real *, real *, real *);
     extern real slapy2_(real *, real *);
     integer iscale;
     extern real slamch_(char *);

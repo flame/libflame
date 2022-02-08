@@ -275,12 +275,12 @@ int slaqr0_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     ;
     integer kacc22, itmax, nsmax, nwmax, kwtop;
     extern /* Subroutine */
-    int slanv2_(real *, real *, real *, real *, real * , real *, real *, real *, real *, real *), slaqr3_(logical *, logical *, integer *, integer *, integer *, integer *, real *, integer *, integer *, integer *, real *, integer *, integer *, integer *, real *, real *, real *, integer *, integer *, real *, integer *, integer *, real *, integer *, real *, integer *), slaqr4_(logical *, logical *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *, real *, integer *, real *, integer *, integer *), slaqr5_(logical *, logical *, integer *, integer *, integer *, integer *, integer *, real *, real *, real *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *, real * , integer *, integer *, real *, integer *);
+    int slanv2_(real *, real *, real *, real *, real *, real *, real *, real *, real *, real *), slaqr3_(logical *, logical *, integer *, integer *, integer *, integer *, real *, integer *, integer *, integer *, real *, integer *, integer *, integer *, real *, real *, real *, integer *, integer *, real *, integer *, integer *, real *, integer *, real *, integer *), slaqr4_(logical *, logical *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *, real *, integer *, real *, integer *, integer *), slaqr5_(logical *, logical *, integer *, integer *, integer *, integer *, integer *, real *, real *, real *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *, real *, integer *, integer *, real *, integer *);
     integer nibble;
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     char jbcmpz[2];
     extern /* Subroutine */
-    int slahqr_(logical *, logical *, integer *, integer *, integer *, real *, integer *, real *, real *, integer * , integer *, real *, integer *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *);
+    int slahqr_(logical *, logical *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *);
     integer nwupbd;
     logical sorted;
     integer lwkopt;
@@ -585,7 +585,7 @@ L20:
                         bb = ss;
                         cc = ss * -.4375f;
                         dd = aa;
-                        slanv2_(&aa, &bb, &cc, &dd, &wr[i__ - 1], &wi[i__ - 1] , &wr[i__], &wi[i__], &cs, &sn);
+                        slanv2_(&aa, &bb, &cc, &dd, &wr[i__ - 1], &wi[i__ - 1], &wr[i__], &wi[i__], &cs, &sn);
                         /* L30: */
                     }
                     if (ks == ktop)
@@ -651,7 +651,7 @@ L20:
                                     i__ <= i__3;
                                     ++i__)
                             {
-                                if ((r__1 = wr[i__], f2c_abs(r__1)) + (r__2 = wi[ i__], f2c_abs(r__2)) < (r__3 = wr[i__ + 1] , f2c_abs(r__3)) + (r__4 = wi[i__ + 1], f2c_abs(r__4)))
+                                if ((r__1 = wr[i__], f2c_abs(r__1)) + (r__2 = wi[ i__], f2c_abs(r__2)) < (r__3 = wr[i__ + 1], f2c_abs(r__3)) + (r__4 = wi[i__ + 1], f2c_abs(r__4)))
                                 {
                                     sorted = FALSE_;
                                     swap = wr[i__];

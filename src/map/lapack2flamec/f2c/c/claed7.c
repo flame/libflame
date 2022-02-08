@@ -239,11 +239,11 @@ static integer c_n1 = -1;
 int claed7_(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, integer *curlvl, integer *curpbm, real *d__, complex * q, integer *ldq, real *rho, integer *indxq, real *qstore, integer * qptr, integer *prmptr, integer *perm, integer *givptr, integer * givcol, real *givnum, complex *work, real *rwork, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"claed7 inputs: n %lld, cutpnt %lld, qsiz %lld, tlvls %lld, curlvl %lld, curpbm %lld, ldq %lld, indxq %lld, qptr %lld, prmptr %lld",*n, *cutpnt, *qsiz, *tlvls, *curlvl, *curpbm, *ldq, *indxq, *qptr, *prmptr);
-#else 
+#else
     snprintf(buffer, 256,"claed7 inputs: n %d, cutpnt %d, qsiz %d, tlvls %d, curlvl %d, curpbm %d, ldq %d, indxq %d, qptr %d, prmptr %d",*n, *cutpnt, *qsiz, *tlvls, *curlvl, *curpbm, *ldq, *indxq, *qptr, *prmptr);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -255,7 +255,7 @@ int claed7_(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, integer 
     /* Local variables */
     integer i__, k, n1, n2, iq, iw, iz, ptr, indx, curr, indxc, indxp;
     extern /* Subroutine */
-    int claed8_(integer *, integer *, integer *, complex *, integer *, real *, real *, integer *, real *, real *, complex *, integer *, real *, integer *, integer *, integer *, integer *, integer *, integer *, real *, integer *), slaed9_( integer *, integer *, integer *, integer *, real *, real *, integer *, real *, real *, real *, real *, integer *, integer *), slaeda_(integer *, integer *, integer *, integer *, integer *, integer *, integer *, integer *, real *, real *, integer *, real * , real *, integer *);
+    int claed8_(integer *, integer *, integer *, complex *, integer *, real *, real *, integer *, real *, real *, complex *, integer *, real *, integer *, integer *, integer *, integer *, integer *, integer *, real *, integer *), slaed9_( integer *, integer *, integer *, integer *, real *, real *, integer *, real *, real *, real *, real *, integer *, integer *), slaeda_(integer *, integer *, integer *, integer *, integer *, integer *, integer *, integer *, real *, real *, integer *, real *, real *, integer *);
     integer idlmda;
     extern /* Subroutine */
     int clacrm_(integer *, integer *, complex *, integer *, real *, integer *, complex *, integer *, real *), xerbla_(char *, integer *), slamrg_(integer *, integer *, real *, integer *, integer *, integer *);
@@ -368,7 +368,7 @@ int claed7_(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, integer 
     /* Solve Secular Equation. */
     if (k != 0)
     {
-        slaed9_(&k, &c__1, &k, n, &d__[1], &rwork[iq], &k, rho, &rwork[idlmda] , &rwork[iw], &qstore[qptr[curr]], &k, info);
+        slaed9_(&k, &c__1, &k, n, &d__[1], &rwork[iq], &k, rho, &rwork[idlmda], &rwork[iw], &qstore[qptr[curr]], &k, info);
         clacrm_(qsiz, &k, &work[1], qsiz, &qstore[qptr[curr]], &k, &q[ q_offset], ldq, &rwork[iq]);
         /* Computing 2nd power */
         i__1 = k;

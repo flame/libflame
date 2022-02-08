@@ -91,11 +91,11 @@ doublereal dzsum1_(integer *n, doublecomplex *cx, integer *incx)
     /* .. Executable Statements .. */
     /* Logging and tracing code */
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-    #if AOCL_DTL_LOG_ENABLE
-      char buffer[256];
-      sprintf(buffer, "dzsum1 inputs: n %d, incx %d \n", *n, *incx);
-      AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-    #endif
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    sprintf(buffer, "dzsum1 inputs: n %d, incx %d \n", *n, *incx);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* Parameter adjustments */
     --cx;
     /* Function Body */

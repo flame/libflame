@@ -6,7 +6,7 @@ static integer c__1 = 1;
 static complex c_b14 =
 {
     -1.f,0.f
-}
+    }
 ;
 static complex c_b15 =
 {
@@ -402,11 +402,11 @@ i+1}
 int cla_syrfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, complex *af, integer *ldaf, integer *ipiv, logical *colequ, real *c__, complex *b, integer *ldb, complex *y, integer *ldy, real *berr_out__, integer * n_norms__, real *err_bnds_norm__, real *err_bnds_comp__, complex *res, real *ayb, complex *dy, complex *y_tail__, real *rcond, integer * ithresh, real *rthresh, real *dz_ub__, logical *ignore_cwise__, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cla_syrfsx_extended inputs: prec_type__ %lld, uplo %c, n %lld, nrhs %lld, lda %lld, ldaf %lld, ipiv %lld, ldb %lld, ldy %lld, n_norms__ %lld, ithresh %lld",*prec_type__, *uplo, *n, *nrhs, *lda, *ldaf, *ipiv, *ldb, *ldy, *n_norms__, *ithresh);
-#else 
+#else
     snprintf(buffer, 256,"cla_syrfsx_extended inputs: prec_type__ %d, uplo %c, n %d, nrhs %d, lda %d, ldaf %d, ipiv %d, ldb %d, ldy %d, n_norms__ %d, ithresh %d",*prec_type__, *uplo, *n, *nrhs, *lda, *ldaf, *ipiv, *ldb, *ldy, *n_norms__, *ithresh);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -429,11 +429,11 @@ int cla_syrfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *
     integer cnt;
     real dyk, eps, incr_thresh__, dx_x__, dz_z__;
     extern /* Subroutine */
-    int cla_lin_berr_(integer *, integer *, integer * , complex *, real *, real *);
+    int cla_lin_berr_(integer *, integer *, integer *, complex *, real *, real *);
     real ymin;
     integer y_prec_state__;
     extern /* Subroutine */
-    int blas_csymv_x_(integer *, integer *, complex * , complex *, integer *, complex *, integer *, complex *, complex * , integer *, integer *);
+    int blas_csymv_x_(integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
     integer uplo2;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
@@ -443,7 +443,7 @@ int cla_syrfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *
     int caxpy_(integer *, complex *, complex *, integer *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int csymv_(char *, integer *, complex *, complex * , integer *, complex *, integer *, complex *, complex *, integer * );
+    int csymv_(char *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer * );
     real normx, normy;
     extern real slamch_(char *);
     extern /* Subroutine */

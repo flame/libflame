@@ -574,7 +574,7 @@ int dstebz_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
         {
             /* Computing MAX */
             d__4 = tnorm;
-            d__5 = (d__1 = d__[j], f2c_dabs(d__1)) + (d__2 = e[j - 1] , f2c_dabs(d__2)) + (d__3 = e[j], f2c_dabs(d__3)); // , expr subst
+            d__5 = (d__1 = d__[j], f2c_dabs(d__1)) + (d__2 = e[j - 1], f2c_dabs(d__2)) + (d__3 = e[j], f2c_dabs(d__3));  // , expr subst
             tnorm = max(d__4,d__5);
             /* L30: */
         }

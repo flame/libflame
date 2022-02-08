@@ -465,7 +465,7 @@ int slasd3_(integer *nl, integer *nr, integer *sqre, integer *k, real *d__, real
         if (ctot[3] > 0)
         {
             ktemp = ctot[1] + 2 + ctot[2];
-            sgemm_("N", "N", nl, k, &ctot[3], &c_b13, &u2[ktemp * u2_dim1 + 1] , ldu2, &q[ktemp + q_dim1], ldq, &c_b13, &u[u_dim1 + 1], ldu);
+            sgemm_("N", "N", nl, k, &ctot[3], &c_b13, &u2[ktemp * u2_dim1 + 1], ldu2, &q[ktemp + q_dim1], ldq, &c_b13, &u[u_dim1 + 1], ldu);
         }
     }
     else if (ctot[3] > 0)
@@ -504,7 +504,7 @@ L100:
     /* Update the right singular vector matrix. */
     if (*k == 2)
     {
-        sgemm_("N", "N", k, &m, k, &c_b13, &q[q_offset], ldq, &vt2[vt2_offset] , ldvt2, &c_b26, &vt[vt_offset], ldvt);
+        sgemm_("N", "N", k, &m, k, &c_b13, &q[q_offset], ldq, &vt2[vt2_offset], ldvt2, &c_b26, &vt[vt_offset], ldvt);
         return 0;
     }
     ktemp = ctot[1] + 1;

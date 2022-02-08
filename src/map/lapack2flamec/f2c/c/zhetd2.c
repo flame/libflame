@@ -278,7 +278,7 @@ int zhetd2_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublereal *
                 z__3.i = -0.; // , expr subst
                 z__2.r = z__3.r * taui.r - z__3.i * taui.i;
                 z__2.i = z__3.r * taui.i + z__3.i * taui.r; // , expr subst
-                zdotc_f2c_(&z__4, &i__, &tau[1], &c__1, &a[(i__ + 1) * a_dim1 + 1] , &c__1);
+                zdotc_f2c_(&z__4, &i__, &tau[1], &c__1, &a[(i__ + 1) * a_dim1 + 1], &c__1);
                 z__1.r = z__2.r * z__4.r - z__2.i * z__4.i;
                 z__1.i = z__2.r * z__4.i + z__2.i * z__4.r; // , expr subst
                 alpha.r = z__1.r;

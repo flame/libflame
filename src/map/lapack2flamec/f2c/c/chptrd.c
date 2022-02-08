@@ -152,11 +152,11 @@ v(i+2:n) is stored on exit in AP, */
 int chptrd_(char *uplo, integer *n, complex *ap, real *d__, real *e, complex *tau, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chptrd inputs: uplo %c, n %lld",*uplo, *n);
-#else 
+#else
     snprintf(buffer, 256,"chptrd inputs: uplo %c, n %d",*uplo, *n);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -169,13 +169,13 @@ int chptrd_(char *uplo, integer *n, complex *ap, real *d__, real *e, complex *ta
     integer i__, i1, ii, i1i1;
     complex taui;
     extern /* Subroutine */
-    int chpr2_(char *, integer *, complex *, complex * , integer *, complex *, integer *, complex *);
+    int chpr2_(char *, integer *, complex *, complex *, integer *, complex *, integer *, complex *);
     complex alpha;
     extern /* Complex */
     VOID cdotc_f2c_(complex *, integer *, complex *, integer *, complex *, integer *);
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int chpmv_(char *, integer *, complex *, complex * , complex *, integer *, complex *, complex *, integer *), caxpy_(integer *, complex *, complex *, integer *, complex *, integer *);
+    int chpmv_(char *, integer *, complex *, complex *, complex *, integer *, complex *, complex *, integer *), caxpy_(integer *, complex *, complex *, integer *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
     int clarfg_(integer *, complex *, complex *, integer *, complex *), xerbla_(char *, integer *);

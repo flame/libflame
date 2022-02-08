@@ -213,7 +213,7 @@ int sgelsy_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     int scopy_(integer *, real *, integer *, real *, integer *);
     real wsize;
     extern /* Subroutine */
-    int strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), slaic1_(integer *, integer *, real *, real *, real *, real *, real *, real *, real *), sgeqp3_( integer *, integer *, real *, integer *, integer *, real *, real * , integer *, integer *), slabad_(real *, real *);
+    int strsm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), slaic1_(integer *, integer *, real *, real *, real *, real *, real *, real *, real *), sgeqp3_( integer *, integer *, real *, integer *, integer *, real *, real *, integer *, integer *), slabad_(real *, real *);
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     extern /* Subroutine */
     int xerbla_(char *, integer *);

@@ -180,8 +180,8 @@ the corresponding */
 int dlarzt_(char *direct, char *storev, integer *n, integer * k, doublereal *v, integer *ldv, doublereal *tau, doublereal *t, integer *ldt)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dlarzt inputs: direct %c, storev %c, n %" FLA_IS ", k %" FLA_IS ", ldv %" FLA_IS ", ldt %" FLA_IS "",*direct, *storev, *n, *k, *ldv, *ldt);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -264,7 +264,7 @@ int dlarzt_(char *direct, char *storev, integer *n, integer * k, doublereal *v, 
                 dgemv_("No transpose", &i__1, n, &d__1, &v[i__ + 1 + v_dim1], ldv, &v[i__ + v_dim1], ldv, &c_b8, &t[i__ + 1 + i__ * t_dim1], &c__1);
                 /* T(i+1:k,i) = T(i+1:k,i+1:k) * T(i+1:k,i) */
                 i__1 = *k - i__;
-                dtrmv_("Lower", "No transpose", "Non-unit", &i__1, &t[i__ + 1 + (i__ + 1) * t_dim1], ldt, &t[i__ + 1 + i__ * t_dim1] , &c__1);
+                dtrmv_("Lower", "No transpose", "Non-unit", &i__1, &t[i__ + 1 + (i__ + 1) * t_dim1], ldt, &t[i__ + 1 + i__ * t_dim1], &c__1);
             }
             t[i__ + i__ * t_dim1] = tau[i__];
         }

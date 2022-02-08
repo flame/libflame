@@ -102,11 +102,11 @@
 int cpoequb_(integer *n, complex *a, integer *lda, real *s, real *scond, real *amax, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cpoequb inputs: n %lld, lda %lld",*n, *lda);
-#else 
+#else
     snprintf(buffer, 256,"cpoequb inputs: n %d, lda %d",*n, *lda);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

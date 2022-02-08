@@ -6,7 +6,7 @@ static integer c__1 = 1;
 static complex c_b6 =
 {
     -1.f,0.f
-}
+    }
 ;
 static complex c_b8 =
 {
@@ -416,11 +416,11 @@ i+1}
 int cla_gbrfsx_extended_(integer *prec_type__, integer * trans_type__, integer *n, integer *kl, integer *ku, integer *nrhs, complex *ab, integer *ldab, complex *afb, integer *ldafb, integer * ipiv, logical *colequ, real *c__, complex *b, integer *ldb, complex * y, integer *ldy, real *berr_out__, integer *n_norms__, real * err_bnds_norm__, real *err_bnds_comp__, complex *res, real *ayb, complex *dy, complex *y_tail__, real *rcond, integer *ithresh, real * rthresh, real *dz_ub__, logical *ignore_cwise__, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cla_gbrfsx_extended inputs: prec_type__ %lld, trans_type__ %lld, n %lld, kl %lld, ku %lld, nrhs %lld, ldab %lld, ldafb %lld, ipiv %lld, ldb %lld, ldy %lld, n_norms__ %lld, ithresh %lld",*prec_type__, *trans_type__, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ipiv, *ldb, *ldy, *n_norms__, *ithresh);
-#else 
+#else
     snprintf(buffer, 256,"cla_gbrfsx_extended inputs: prec_type__ %d, trans_type__ %d, n %d, kl %d, ku %d, nrhs %d, ldab %d, ldafb %d, ipiv %d, ldb %d, ldy %d, n_norms__ %d, ithresh %d",*prec_type__, *trans_type__, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ipiv, *ldb, *ldy, *n_norms__, *ithresh);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -444,10 +444,10 @@ int cla_gbrfsx_extended_(integer *prec_type__, integer * trans_type__, integer *
     integer cnt;
     real dyk, eps, incr_thresh__, dx_x__, dz_z__;
     extern /* Subroutine */
-    int cla_lin_berr_(integer *, integer *, integer * , complex *, real *, real *);
+    int cla_lin_berr_(integer *, integer *, integer *, complex *, real *, real *);
     real ymin;
     extern /* Subroutine */
-    int blas_cgbmv_x_(integer *, integer *, integer * , integer *, integer *, complex *, complex *, integer *, complex * , integer *, complex *, complex *, integer *, integer *);
+    int blas_cgbmv_x_(integer *, integer *, integer *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
     integer y_prec_state__;
     extern /* Subroutine */
     int blas_cgbmv2_x_(integer *, integer *, integer *, integer *, integer *, complex *, complex *, integer *, complex *, complex *, integer *, complex *, complex *, integer *, integer *), cgbmv_(char *, integer *, integer *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *), ccopy_(integer *, complex *, integer *, complex *, integer *);
@@ -580,7 +580,7 @@ int cla_gbrfsx_extended_(integer *prec_type__, integer * trans_type__, integer *
             }
             /* XXX: RES is no longer needed. */
             ccopy_(n, &res[1], &c__1, &dy[1], &c__1);
-            cgbtrs_(trans, n, kl, ku, &c__1, &afb[afb_offset], ldafb, &ipiv[1] , &dy[1], n, info);
+            cgbtrs_(trans, n, kl, ku, &c__1, &afb[afb_offset], ldafb, &ipiv[1], &dy[1], n, info);
             /* Calculate relative changes DX_X, DZ_Z and ratios DXRAT, DZRAT. */
             normx = 0.f;
             normy = 0.f;

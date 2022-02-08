@@ -442,7 +442,7 @@ int zlaein_(logical *rightv, logical *noinit, integer *n, doublecomplex *h__, in
         /* Solve U*x = scale*v for a right eigenvector */
         /* or U**H *x = scale*v for a left eigenvector, */
         /* overwriting x on v. */
-        zlatrs_("Upper", trans, "Nonunit", normin, n, &b[b_offset], ldb, &v[1] , &scale, &rwork[1], &ierr);
+        zlatrs_("Upper", trans, "Nonunit", normin, n, &b[b_offset], ldb, &v[1], &scale, &rwork[1], &ierr);
         *(unsigned char *)normin = 'Y';
         /* Test for sufficient growth in the norm of v. */
         vnorm = dzasum_(n, &v[1], &c__1);

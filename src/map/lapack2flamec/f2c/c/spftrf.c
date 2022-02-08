@@ -352,7 +352,7 @@ int spftrf_(char *transr, char *uplo, integer *n, real *a, integer *info)
                     return 0;
                 }
                 strsm_("R", "U", "N", "N", &n2, &n1, &c_b12, &a[n2 * n2], &n2, a, &n2);
-                ssyrk_("L", "N", &n2, &n1, &c_b15, a, &n2, &c_b12, &a[n1 * n2] , &n2);
+                ssyrk_("L", "N", &n2, &n1, &c_b15, a, &n2, &c_b12, &a[n1 * n2], &n2);
                 spotrf_("L", &n2, &a[n1 * n2], &n2, info);
                 if (*info > 0)
                 {

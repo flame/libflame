@@ -260,7 +260,7 @@ int sggsvp_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     extern logical lsame_(char *, char *);
     logical wantq, wantu, wantv;
     extern /* Subroutine */
-    int sgeqr2_(integer *, integer *, real *, integer *, real *, real *, integer *), sgerq2_(integer *, integer *, real *, integer *, real *, real *, integer *), sorg2r_(integer *, integer *, integer *, real *, integer *, real *, real *, integer * ), sorm2r_(char *, char *, integer *, integer *, integer *, real * , integer *, real *, real *, integer *, real *, integer *), sormr2_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *), xerbla_(char *, integer *), sgeqpf_( integer *, integer *, real *, integer *, integer *, real *, real * , integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *), slapmt_( logical *, integer *, integer *, real *, integer *, integer *);
+    int sgeqr2_(integer *, integer *, real *, integer *, real *, real *, integer *), sgerq2_(integer *, integer *, real *, integer *, real *, real *, integer *), sorg2r_(integer *, integer *, integer *, real *, integer *, real *, real *, integer * ), sorm2r_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *), sormr2_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *), xerbla_(char *, integer *), sgeqpf_( integer *, integer *, real *, integer *, integer *, real *, real *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *), slapmt_( logical *, integer *, integer *, real *, integer *, integer *);
     logical forwrd;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -498,7 +498,7 @@ int sggsvp_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
         {
             i__1 = *m - 1;
             i__2 = *n - *l;
-            slacpy_("Lower", &i__1, &i__2, &a[a_dim1 + 2], lda, &u[u_dim1 + 2] , ldu);
+            slacpy_("Lower", &i__1, &i__2, &a[a_dim1 + 2], lda, &u[u_dim1 + 2], ldu);
         }
         /* Computing MIN */
         i__2 = *m;

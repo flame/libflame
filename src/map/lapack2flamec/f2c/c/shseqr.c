@@ -326,10 +326,10 @@ int shseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, real
     real workl[49];
     logical wantt, wantz;
     extern /* Subroutine */
-    int slaqr0_(logical *, logical *, integer *, integer *, integer *, real *, integer *, real *, real *, integer * , integer *, real *, integer *, real *, integer *, integer *), xerbla_(char *, integer *);
+    int slaqr0_(logical *, logical *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *, real *, integer *, real *, integer *, integer *), xerbla_(char *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
-    int slahqr_(logical *, logical *, integer *, integer *, integer *, real *, integer *, real *, real *, integer * , integer *, real *, integer *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
+    int slahqr_(logical *, logical *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
     logical lquery;
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */

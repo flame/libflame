@@ -137,8 +137,8 @@ static integer c__33 = 33;
 int dpbtrf_(char *uplo, integer *n, integer *kd, doublereal * ab, integer *ldab, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dpbtrf inputs: uplo %c, n %" FLA_IS ", kd %" FLA_IS ", ldab %" FLA_IS "",*uplo, *n, *kd, *ldab);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -291,7 +291,7 @@ int dpbtrf_(char *uplo, integer *n, integer *kd, doublereal * ab, integer *ldab,
                         /* Update A12 */
                         i__3 = *ldab - 1;
                         i__4 = *ldab - 1;
-                        dtrsm_("Left", "Upper", "Transpose", "Non-unit", &ib, &i2, &c_b18, &ab[*kd + 1 + i__ * ab_dim1], & i__3, &ab[*kd + 1 - ib + (i__ + ib) * ab_dim1] , &i__4);
+                        dtrsm_("Left", "Upper", "Transpose", "Non-unit", &ib, &i2, &c_b18, &ab[*kd + 1 + i__ * ab_dim1], & i__3, &ab[*kd + 1 - ib + (i__ + ib) * ab_dim1], &i__4);
                         /* Update A22 */
                         i__3 = *ldab - 1;
                         i__4 = *ldab - 1;

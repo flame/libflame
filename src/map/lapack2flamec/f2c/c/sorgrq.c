@@ -123,8 +123,8 @@ the routine */
 int sorgrq_(integer *m, integer *n, integer *k, real *a, integer *lda, real *tau, real *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"sorgrq inputs: m %d, n %d, k %d, lda %d",*m, *n, *k, *lda);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -133,7 +133,7 @@ int sorgrq_(integer *m, integer *n, integer *k, real *a, integer *lda, real *tau
     /* Local variables */
     integer i__, j, l, ib, nb, ii, kk, nx, iws, nbmin, iinfo;
     extern /* Subroutine */
-    int sorgr2_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *), slarfb_(char *, char *, char *, char *, integer *, integer *, integer *, real *, integer * , real *, integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
+    int sorgr2_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *), slarfb_(char *, char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int slarft_(char *, char *, integer *, integer *, real *, integer *, real *, real *, integer *);
@@ -308,7 +308,7 @@ int sorgrq_(integer *m, integer *n, integer *k, real *a, integer *lda, real *tau
             }
             /* Apply H**T to columns 1:n-k+i+ib-1 of current block */
             i__3 = *n - *k + i__ + ib - 1;
-            sorgr2_(&ib, &i__3, &ib, &a[ii + a_dim1], lda, &tau[i__], &work[1] , &iinfo);
+            sorgr2_(&ib, &i__3, &ib, &a[ii + a_dim1], lda, &tau[i__], &work[1], &iinfo);
             /* Set columns n-k+i+ib:n of current block to zero */
             i__3 = *n;
             for (l = *n - *k + i__ + ib;

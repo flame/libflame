@@ -139,12 +139,12 @@ for 1 <= i <= N, row i of the matrix was */
 int cgbcon_(char *norm, integer *n, integer *kl, integer *ku, complex *ab, integer *ldab, integer *ipiv, real *anorm, real *rcond, complex *work, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
-   snprintf(buffer, 256,"cgbcon inputs: norm %c, n %lld, kl %lld, ku %lld, ldab %lld, ipiv %lld",*norm, *n, *kl, *ku, *ldab, *ipiv);
-#else 
-   snprintf(buffer, 256,"cgbcon inputs: norm %c, n %d, kl %d, ku %d, ldab %d, ipiv %d",*norm, *n, *kl, *ku, *ldab, *ipiv);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
+    snprintf(buffer, 256,"cgbcon inputs: norm %c, n %lld, kl %lld, ku %lld, ldab %lld, ipiv %lld",*norm, *n, *kl, *ku, *ldab, *ipiv);
+#else
+    snprintf(buffer, 256,"cgbcon inputs: norm %c, n %d, kl %d, ku %d, ldab %d, ipiv %d",*norm, *n, *kl, *ku, *ldab, *ipiv);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -171,7 +171,7 @@ int cgbcon_(char *norm, integer *n, integer *kl, integer *ku, complex *ab, integ
     extern integer icamax_(integer *, complex *, integer *);
     extern real slamch_(char *);
     extern /* Subroutine */
-    int clatbs_(char *, char *, char *, char *, integer *, integer *, complex *, integer *, complex *, real *, real *, integer *), xerbla_(char * , integer *);
+    int clatbs_(char *, char *, char *, char *, integer *, integer *, complex *, integer *, complex *, real *, real *, integer *), xerbla_(char *, integer *);
     real ainvnm;
     extern /* Subroutine */
     int csrscl_(integer *, real *, complex *, integer *);

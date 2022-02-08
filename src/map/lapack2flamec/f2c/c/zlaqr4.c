@@ -266,7 +266,7 @@ int zlaqr4_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     ;
     integer kacc22, itmax, nsmax, nwmax, kwtop;
     extern /* Subroutine */
-    int zlaqr2_(logical *, logical *, integer *, integer *, integer *, integer *, doublecomplex *, integer *, integer *, integer *, doublecomplex *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, integer * , doublecomplex *, integer *), zlaqr5_(logical *, logical *, integer *, integer *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, integer *);
+    int zlaqr2_(logical *, logical *, integer *, integer *, integer *, integer *, doublecomplex *, integer *, integer *, integer *, doublecomplex *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), zlaqr5_(logical *, logical *, integer *, integer *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, integer *);
     integer nibble;
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     char jbcmpz[2];

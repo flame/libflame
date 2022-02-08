@@ -334,7 +334,7 @@ L30: /* If K > N, exit from loop. */
                 i__1 = k + 1 + (k + 1) * a_dim1;
                 i__2 = k + 1 + (k + 1) * a_dim1;
                 i__3 = k - 1;
-                zdotu_f2c_(&z__2, &i__3, &work[1], &c__1, &a[(k + 1) * a_dim1 + 1] , &c__1);
+                zdotu_f2c_(&z__2, &i__3, &work[1], &c__1, &a[(k + 1) * a_dim1 + 1], &c__1);
                 z__1.r = a[i__2].r - z__2.r;
                 z__1.i = a[i__2].i - z__2.i; // , expr subst
                 a[i__1].r = z__1.r;

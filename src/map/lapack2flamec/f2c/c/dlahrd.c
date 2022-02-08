@@ -165,8 +165,8 @@ v(i+k+1:n) is stored on exit in */
 int dlahrd_(integer *n, integer *k, integer *nb, doublereal * a, integer *lda, doublereal *tau, doublereal *t, integer *ldt, doublereal *y, integer *ldy)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dlahrd inputs: n %" FLA_IS ", k %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS ", ldy %" FLA_IS "",*n, *k, *nb, *lda, *ldt, *ldy);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -248,7 +248,7 @@ int dlahrd_(integer *n, integer *k, integer *nb, doublereal * a, integer *lda, d
             dgemv_("No transpose", &i__2, &i__3, &c_b4, &a[*k + i__ + a_dim1], lda, &t[*nb * t_dim1 + 1], &c__1, &c_b5, &a[*k + i__ + i__ * a_dim1], &c__1);
             /* b1 := b1 - V1*w */
             i__2 = i__ - 1;
-            dtrmv_("Lower", "No transpose", "Unit", &i__2, &a[*k + 1 + a_dim1] , lda, &t[*nb * t_dim1 + 1], &c__1);
+            dtrmv_("Lower", "No transpose", "Unit", &i__2, &a[*k + 1 + a_dim1], lda, &t[*nb * t_dim1 + 1], &c__1);
             i__2 = i__ - 1;
             daxpy_(&i__2, &c_b4, &t[*nb * t_dim1 + 1], &c__1, &a[*k + 1 + i__ * a_dim1], &c__1);
             a[*k + i__ - 1 + (i__ - 1) * a_dim1] = ei;

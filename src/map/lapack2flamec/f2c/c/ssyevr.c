@@ -368,12 +368,12 @@ int ssyevr_(char *jobz, char *range, char *uplo, integer *n, real *a, integer *l
     integer indtau, indisp, indiwo, indwkn, liwmin;
     logical tryrac;
     extern /* Subroutine */
-    int sstein_(integer *, real *, real *, integer *, real *, integer *, integer *, real *, integer *, real *, integer * , integer *, integer *), ssterf_(integer *, real *, real *, integer *);
+    int sstein_(integer *, real *, real *, integer *, real *, integer *, integer *, real *, integer *, real *, integer *, integer *, integer *), ssterf_(integer *, real *, real *, integer *);
     integer llwrkn, llwork, nsplit;
     real smlnum;
     extern real slansy_(char *, char *, integer *, real *, integer *, real *);
     extern /* Subroutine */
-    int sstebz_(char *, char *, integer *, real *, real *, integer *, integer *, real *, real *, real *, integer *, integer *, real *, integer *, integer *, real *, integer *, integer *), sstemr_(char *, char *, integer *, real *, real *, real *, real *, integer *, integer *, integer *, real *, real *, integer *, integer *, integer *, logical *, real * , integer *, integer *, integer *, integer *);
+    int sstebz_(char *, char *, integer *, real *, real *, integer *, integer *, real *, real *, real *, integer *, integer *, real *, integer *, integer *, real *, integer *, integer *), sstemr_(char *, char *, integer *, real *, real *, real *, real *, integer *, integer *, integer *, real *, real *, integer *, integer *, integer *, logical *, real *, integer *, integer *, integer *, integer *);
     integer lwkopt;
     logical lquery;
     extern /* Subroutine */
@@ -680,7 +680,7 @@ int ssyevr_(char *jobz, char *range, char *uplo, integer *n, real *a, integer *l
             {
                 indwkn = inde;
                 llwrkn = *lwork - indwkn + 1;
-                sormtr_("L", uplo, "N", n, m, &a[a_offset], lda, &work[indtau] , &z__[z_offset], ldz, &work[indwkn], &llwrkn, &iinfo);
+                sormtr_("L", uplo, "N", n, m, &a[a_offset], lda, &work[indtau], &z__[z_offset], ldz, &work[indwkn], &llwrkn, &iinfo);
             }
         }
         if (*info == 0)

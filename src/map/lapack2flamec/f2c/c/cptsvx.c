@@ -223,11 +223,11 @@ static integer c__1 = 1;
 int cptsvx_(char *fact, integer *n, integer *nrhs, real *d__, complex *e, real *df, complex *ef, complex *b, integer *ldb, complex *x, integer *ldx, real *rcond, real *ferr, real *berr, complex *work, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cptsvx inputs: fact %c, n %lld, nrhs %lld, ldb %lld, ldx %lld",*fact, *n, *nrhs, *ldb, *ldx);
-#else 
+#else
     snprintf(buffer, 256,"cptsvx inputs: fact %c, n %d, nrhs %d, ldb %d, ldx %d",*fact, *n, *nrhs, *ldb, *ldx);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -238,11 +238,11 @@ int cptsvx_(char *fact, integer *n, integer *nrhs, real *d__, complex *e, real *
     extern logical lsame_(char *, char *);
     real anorm;
     extern /* Subroutine */
-    int ccopy_(integer *, complex *, integer *, complex *, integer *), scopy_(integer *, real *, integer *, real * , integer *);
+    int ccopy_(integer *, complex *, integer *, complex *, integer *), scopy_(integer *, real *, integer *, real *, integer *);
     extern real slamch_(char *), clanht_(char *, integer *, real *, complex *);
     logical nofact;
     extern /* Subroutine */
-    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *), cptcon_(integer *, real *, complex *, real *, real *, real *, integer *), cptrfs_(char *, integer *, integer *, real *, complex *, real *, complex *, complex *, integer *, complex *, integer *, real *, real *, complex *, real *, integer * ), cpttrf_(integer *, real *, complex *, integer *), cpttrs_(char *, integer *, integer *, real *, complex *, complex * , integer *, integer *);
+    int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *), cptcon_(integer *, real *, complex *, real *, real *, real *, integer *), cptrfs_(char *, integer *, integer *, real *, complex *, real *, complex *, complex *, integer *, complex *, integer *, real *, real *, complex *, real *, integer * ), cpttrf_(integer *, real *, complex *, integer *), cpttrs_(char *, integer *, integer *, real *, complex *, complex *, integer *, integer *);
     /* -- LAPACK driver routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */

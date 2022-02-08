@@ -111,8 +111,8 @@ static integer c__1 = 1;
 int stptri_(char *uplo, char *diag, integer *n, real *ap, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"stptri inputs: uplo %c, diag %c, n %d",*uplo, *diag, *n);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -126,7 +126,7 @@ int stptri_(char *uplo, char *diag, integer *n, real *ap, integer *info)
     int sscal_(integer *, real *, real *, integer *);
     logical upper;
     extern /* Subroutine */
-    int stpmv_(char *, char *, char *, integer *, real *, real *, integer *), xerbla_(char * , integer *);
+    int stpmv_(char *, char *, char *, integer *, real *, real *, integer *), xerbla_(char *, integer *);
     integer jclast;
     logical nounit;
     /* -- LAPACK computational routine (version 3.4.0) -- */

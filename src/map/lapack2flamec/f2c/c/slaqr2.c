@@ -294,7 +294,7 @@ int slaqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
     int scopy_(integer *, real *, integer *, real *, integer *);
     integer kwtop;
     extern /* Subroutine */
-    int slanv2_(real *, real *, real *, real *, real * , real *, real *, real *, real *, real *), slabad_(real *, real *) ;
+    int slanv2_(real *, real *, real *, real *, real *, real *, real *, real *, real *, real *), slabad_(real *, real *) ;
     extern real slamch_(char *);
     extern /* Subroutine */
     int sgehrd_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *);
@@ -303,7 +303,7 @@ int slaqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
     int slarfg_(integer *, real *, real *, integer *, real *);
     real safmax;
     extern /* Subroutine */
-    int slahqr_(logical *, logical *, integer *, integer *, integer *, real *, integer *, real *, real *, integer * , integer *, real *, integer *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
+    int slahqr_(logical *, logical *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *, real *, integer *, integer *), slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
     logical sorted;
     extern /* Subroutine */
     int strexc_(char *, integer *, real *, integer *, real *, integer *, integer *, integer *, real *, integer *), sormhr_(char *, char *, integer *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *);
@@ -667,14 +667,14 @@ L60:
             slarf_("R", ns, ns, &work[1], &c__1, &tau, &t[t_offset], ldt, & work[jw + 1]);
             slarf_("R", &jw, ns, &work[1], &c__1, &tau, &v[v_offset], ldv, & work[jw + 1]);
             i__1 = *lwork - jw;
-            sgehrd_(&jw, &c__1, ns, &t[t_offset], ldt, &work[1], &work[jw + 1] , &i__1, &info);
+            sgehrd_(&jw, &c__1, ns, &t[t_offset], ldt, &work[1], &work[jw + 1], &i__1, &info);
         }
         /* ==== Copy updated reduced window into place ==== */
         if (kwtop > 1)
         {
             h__[kwtop + (kwtop - 1) * h_dim1] = s * v[v_dim1 + 1];
         }
-        slacpy_("U", &jw, &jw, &t[t_offset], ldt, &h__[kwtop + kwtop * h_dim1] , ldh);
+        slacpy_("U", &jw, &jw, &t[t_offset], ldt, &h__[kwtop + kwtop * h_dim1], ldh);
         i__1 = jw - 1;
         i__2 = *ldt + 1;
         i__3 = *ldh + 1;

@@ -47,11 +47,11 @@
 VOID chla_transtype_(char *ret_val, integer *trans)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chla_transtype inputs: ret_val %c, trans %lld",*ret_val, *trans);
-#else 
+#else
     snprintf(buffer, 256,"chla_transtype inputs: ret_val %c, trans %d",*ret_val, *trans);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

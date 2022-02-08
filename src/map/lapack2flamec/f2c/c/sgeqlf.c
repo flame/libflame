@@ -140,7 +140,7 @@ int sgeqlf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
     /* Local variables */
     integer i__, k, ib, nb, ki, kk, mu, nu, nx, iws, nbmin, iinfo;
     extern /* Subroutine */
-    int sgeql2_(integer *, integer *, real *, integer *, real *, real *, integer *), slarfb_(char *, char *, char *, char *, integer *, integer *, integer *, real *, integer *, real * , integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
+    int sgeql2_(integer *, integer *, real *, integer *, real *, real *, integer *), slarfb_(char *, char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int slarft_(char *, char *, integer *, integer *, real *, integer *, real *, real *, integer *);

@@ -145,11 +145,11 @@ the routine */
 int ctzrzf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"ctzrzf inputs: m %lld, n %lld, lda %lld, lwork %lld",*m, *n, *lda, *lwork);
-#else 
+#else
     snprintf(buffer, 256,"ctzrzf inputs: m %d, n %d, lda %d, lwork %d",*m, *n, *lda, *lwork);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

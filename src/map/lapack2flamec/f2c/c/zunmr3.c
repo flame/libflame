@@ -176,7 +176,7 @@ int zunmr3_(char *side, char *trans, integer *m, integer *n, integer *k, integer
     doublecomplex taui;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int zlarz_(char *, integer *, integer *, integer * , doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *), xerbla_(char *, integer *);
+    int zlarz_(char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *), xerbla_(char *, integer *);
     logical notran;
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */

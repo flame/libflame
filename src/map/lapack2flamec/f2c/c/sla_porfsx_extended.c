@@ -398,14 +398,14 @@ int sla_porfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *
     integer cnt;
     real dyk, eps, incr_thresh__, dx_x__, dz_z__, ymin;
     extern /* Subroutine */
-    int sla_lin_berr_(integer *, integer *, integer * , real *, real *, real *);
+    int sla_lin_berr_(integer *, integer *, integer *, real *, real *, real *);
     integer y_prec_state__, uplo2;
     extern /* Subroutine */
     int blas_ssymv_x_(integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *, integer *);
     extern logical lsame_(char *, char *);
     real dxrat, dzrat;
     extern /* Subroutine */
-    int blas_ssymv2_x_(integer *, integer *, real *, real *, integer *, real *, real *, integer *, real *, real *, integer *, integer *), scopy_(integer *, real *, integer *, real * , integer *);
+    int blas_ssymv2_x_(integer *, integer *, real *, real *, integer *, real *, real *, integer *, real *, real *, integer *, integer *), scopy_(integer *, real *, integer *, real *, integer *);
     real normx, normy;
     extern /* Subroutine */
     int saxpy_(integer *, real *, real *, integer *, real *, integer *), ssymv_(char *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *);

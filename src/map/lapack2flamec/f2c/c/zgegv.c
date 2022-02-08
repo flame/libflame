@@ -308,7 +308,7 @@ int zgegv_(char *jobvl, char *jobvr, integer *n, doublecomplex *a, integer *lda,
     extern doublereal dlamch_(char *);
     doublereal salfai;
     extern /* Subroutine */
-    int zggbak_(char *, char *, integer *, integer *, integer *, doublereal *, doublereal *, integer *, doublecomplex *, integer *, integer *), zggbal_(char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer * , integer *, doublereal *, doublereal *, doublereal *, integer *);
+    int zggbak_(char *, char *, integer *, integer *, integer *, doublereal *, doublereal *, integer *, doublecomplex *, integer *, integer *), zggbal_(char *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *);
     doublereal salfar, safmin;
     extern /* Subroutine */
     int xerbla_(char *, integer *);

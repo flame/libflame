@@ -302,7 +302,7 @@ int ssbevx_(char *jobz, char *range, char *uplo, integer *n, integer *kd, real *
     int slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *);
     integer indwrk;
     extern /* Subroutine */
-    int ssbtrd_(char *, char *, integer *, integer *, real *, integer *, real *, real *, real *, integer *, real *, integer *), sstein_(integer *, real *, real *, integer *, real *, integer *, integer *, real *, integer *, real * , integer *, integer *, integer *), ssterf_(integer *, real *, real *, integer *);
+    int ssbtrd_(char *, char *, integer *, integer *, real *, integer *, real *, real *, real *, integer *, real *, integer *), sstein_(integer *, real *, real *, integer *, real *, integer *, integer *, real *, integer *, real *, integer *, integer *, integer *), ssterf_(integer *, real *, real *, integer *);
     integer nsplit;
     real smlnum;
     extern /* Subroutine */

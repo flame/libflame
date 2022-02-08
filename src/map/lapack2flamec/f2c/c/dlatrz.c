@@ -138,7 +138,7 @@ int dlatrz_(integer *m, integer *n, integer *l, doublereal * a, integer *lda, do
     /* Local variables */
     integer i__;
     extern /* Subroutine */
-    int dlarz_(char *, integer *, integer *, integer * , doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *), dlarfg_(integer *, doublereal *, doublereal *, integer *, doublereal *);
+    int dlarz_(char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *), dlarfg_(integer *, doublereal *, doublereal *, integer *, doublereal *);
     /* -- LAPACK computational routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */

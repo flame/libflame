@@ -215,8 +215,8 @@ the routine */
 int zgelsy_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, integer *jpvt, doublereal *rcond, integer *rank, doublecomplex *work, integer *lwork, doublereal *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"zgelsy inputs: m %d, n %d, nrhs %d, lda %d, ldb %d, jpvt %d",*m, *n, *nrhs, *lda, *ldb, *jpvt);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -234,7 +234,7 @@ int zgelsy_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     integer iascl, ibscl, ismin, ismax;
     doublereal wsize;
     extern /* Subroutine */
-    int zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), ztrsm_(char *, char *, char *, char * , integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), zlaic1_(integer *, integer *, doublecomplex *, doublereal *, doublecomplex *, doublecomplex *, doublereal *, doublecomplex *, doublecomplex *), dlabad_(doublereal *, doublereal *), zgeqp3_( integer *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublereal *, integer *);
+    int zcopy_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), ztrsm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), zlaic1_(integer *, integer *, doublecomplex *, doublereal *, doublecomplex *, doublecomplex *, doublereal *, doublecomplex *, doublecomplex *), dlabad_(doublereal *, doublereal *), zgeqp3_( integer *, integer *, doublecomplex *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublereal *, integer *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
     int xerbla_(char *, integer *);

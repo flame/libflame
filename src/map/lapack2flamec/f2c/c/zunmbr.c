@@ -393,7 +393,7 @@ int zunmbr_(char *vect, char *side, char *trans, integer *m, integer *n, integer
                 i2 = 2;
             }
             i__1 = nq - 1;
-            zunmqr_(side, trans, &mi, &ni, &i__1, &a[a_dim1 + 2], lda, &tau[1] , &c__[i1 + i2 * c_dim1], ldc, &work[1], lwork, &iinfo);
+            zunmqr_(side, trans, &mi, &ni, &i__1, &a[a_dim1 + 2], lda, &tau[1], &c__[i1 + i2 * c_dim1], ldc, &work[1], lwork, &iinfo);
         }
     }
     else

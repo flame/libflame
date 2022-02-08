@@ -223,8 +223,8 @@ static integer c__1 = 1;
 int zptsvx_(char *fact, integer *n, integer *nrhs, doublereal *d__, doublecomplex *e, doublereal *df, doublecomplex *ef, doublecomplex *b, integer *ldb, doublecomplex *x, integer *ldx, doublereal *rcond, doublereal *ferr, doublereal *berr, doublecomplex * work, doublereal *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"zptsvx inputs: fact %c, n %d, nrhs %d, ldb %d, ldx %d",*fact, *n, *nrhs, *ldb, *ldx);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -241,7 +241,7 @@ int zptsvx_(char *fact, integer *n, integer *nrhs, doublereal *d__, doublecomple
     int xerbla_(char *, integer *);
     extern doublereal zlanht_(char *, integer *, doublereal *, doublecomplex * );
     extern /* Subroutine */
-    int zlacpy_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), zptcon_(integer *, doublereal *, doublecomplex *, doublereal *, doublereal *, doublereal *, integer *), zptrfs_(char *, integer *, integer *, doublereal *, doublecomplex *, doublereal *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublereal *, integer *), zpttrf_(integer *, doublereal *, doublecomplex *, integer *), zpttrs_(char *, integer *, integer * , doublereal *, doublecomplex *, doublecomplex *, integer *, integer *);
+    int zlacpy_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), zptcon_(integer *, doublereal *, doublecomplex *, doublereal *, doublereal *, doublereal *, integer *), zptrfs_(char *, integer *, integer *, doublereal *, doublecomplex *, doublereal *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublereal *, integer *), zpttrf_(integer *, doublereal *, doublecomplex *, integer *), zpttrs_(char *, integer *, integer *, doublereal *, doublecomplex *, doublecomplex *, integer *, integer *);
     /* -- LAPACK driver routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */

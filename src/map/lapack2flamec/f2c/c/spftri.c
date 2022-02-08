@@ -286,7 +286,7 @@ int spftri_(char *transr, char *uplo, integer *n, real *a, integer *info)
                 /* T1 -> a(0), T2 -> a(n), S -> a(N1) */
                 slauum_("L", &n1, a, n, info);
                 ssyrk_("L", "T", &n1, &n2, &c_b11, &a[n1], n, &c_b11, a, n);
-                strmm_("L", "U", "N", "N", &n2, &n1, &c_b11, &a[*n], n, &a[n1] , n);
+                strmm_("L", "U", "N", "N", &n2, &n1, &c_b11, &a[*n], n, &a[n1], n);
                 slauum_("U", &n2, &a[*n], n, info);
             }
             else
@@ -317,7 +317,7 @@ int spftri_(char *transr, char *uplo, integer *n, real *a, integer *info)
                 /* SRPA for UPPER, TRANSPOSE, and N is odd */
                 /* T1 -> a(0+N2*N2), T2 -> a(0+N1*N2), S -> a(0) */
                 slauum_("U", &n1, &a[n2 * n2], &n2, info);
-                ssyrk_("U", "T", &n1, &n2, &c_b11, a, &n2, &c_b11, &a[n2 * n2] , &n2);
+                ssyrk_("U", "T", &n1, &n2, &c_b11, a, &n2, &c_b11, &a[n2 * n2], &n2);
                 strmm_("L", "L", "T", "N", &n2, &n1, &c_b11, &a[n1 * n2], &n2, a, &n2);
                 slauum_("L", &n2, &a[n1 * n2], &n2, info);
             }
@@ -341,7 +341,7 @@ int spftri_(char *transr, char *uplo, integer *n, real *a, integer *info)
                 ssyrk_("L", "T", &k, &k, &c_b11, &a[k + 1], &i__1, &c_b11, &a[ 1], &i__2);
                 i__1 = *n + 1;
                 i__2 = *n + 1;
-                strmm_("L", "U", "N", "N", &k, &k, &c_b11, a, &i__1, &a[k + 1] , &i__2);
+                strmm_("L", "U", "N", "N", &k, &k, &c_b11, a, &i__1, &a[k + 1], &i__2);
                 i__1 = *n + 1;
                 slauum_("U", &k, a, &i__1, info);
             }

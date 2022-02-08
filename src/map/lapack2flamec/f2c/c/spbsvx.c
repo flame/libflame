@@ -337,8 +337,8 @@ if EQUED = 'Y', */
 int spbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, real *ab, integer *ldab, real *afb, integer *ldafb, char *equed, real *s, real *b, integer *ldb, real *x, integer *ldx, real *rcond, real *ferr, real *berr, real *work, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"spbsvx inputs: fact %c, uplo %c, n %d, kd %d, nrhs %d, ldab %d, ldafb %d, ldb %d, ldx %d",*fact, *uplo, *n, *kd, *nrhs, *ldab, *ldafb, *ldb, *ldx);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -363,7 +363,7 @@ int spbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, real
     int spbcon_(char *, integer *, integer *, real *, integer *, real *, real *, real *, integer *, integer *), slaqsb_(char *, integer *, integer *, real *, integer *, real *, real *, real *, char *);
     integer infequ;
     extern /* Subroutine */
-    int slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), spbequ_(char *, integer *, integer *, real *, integer *, real *, real *, real *, integer *), spbrfs_(char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer * , real *, real *, real *, integer *, integer *), spbtrf_( char *, integer *, integer *, real *, integer *, integer *);
+    int slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), spbequ_(char *, integer *, integer *, real *, integer *, real *, real *, real *, integer *), spbrfs_(char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, real *, real *, integer *, integer *), spbtrf_( char *, integer *, integer *, real *, integer *, integer *);
     real smlnum;
     extern /* Subroutine */
     int spbtrs_(char *, integer *, integer *, integer *, real *, integer *, real *, integer *, integer *);
@@ -588,7 +588,7 @@ int spbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, real
     spbtrs_(uplo, n, kd, nrhs, &afb[afb_offset], ldafb, &x[x_offset], ldx, info);
     /* Use iterative refinement to improve the computed solution and */
     /* compute error bounds and backward error estimates for it. */
-    spbrfs_(uplo, n, kd, nrhs, &ab[ab_offset], ldab, &afb[afb_offset], ldafb, &b[b_offset], ldb, &x[x_offset], ldx, &ferr[1], &berr[1], &work[1] , &iwork[1], info);
+    spbrfs_(uplo, n, kd, nrhs, &ab[ab_offset], ldab, &afb[afb_offset], ldafb, &b[b_offset], ldb, &x[x_offset], ldx, &ferr[1], &berr[1], &work[1], &iwork[1], info);
     /* Transform the solution matrix X to a solution of the original */
     /* system. */
     if (rcequ)

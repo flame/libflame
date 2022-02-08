@@ -181,11 +181,11 @@ for 1<=i<=N, row i of the */
 int cgerfs_(char *trans, integer *n, integer *nrhs, complex * a, integer *lda, complex *af, integer *ldaf, integer *ipiv, complex * b, integer *ldb, complex *x, integer *ldx, real *ferr, real *berr, complex *work, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgerfs inputs: trans %c, n %lld, nrhs %lld, lda %lld, ldaf %lld, ipiv %lld, ldb %lld, ldx %lld",*trans, *n, *nrhs, *lda, *ldaf, *ipiv, *ldb, *ldx);
-#else 
+#else
     snprintf(buffer, 256,"cgerfs inputs: trans %c, n %d, nrhs %d, lda %d, ldaf %d, ipiv %d, ldb %d, ldx %d",*trans, *n, *nrhs, *lda, *ldaf, *ipiv, *ldb, *ldx);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -205,7 +205,7 @@ int cgerfs_(char *trans, integer *n, integer *nrhs, complex * a, integer *lda, c
     real safe1, safe2;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
-    int cgemv_(char *, integer *, integer *, complex * , complex *, integer *, complex *, integer *, complex *, complex * , integer *);
+    int cgemv_(char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *);
     integer isave[3];
     extern /* Subroutine */
     int ccopy_(integer *, complex *, integer *, complex *, integer *), caxpy_(integer *, complex *, complex *, integer *, complex *, integer *);

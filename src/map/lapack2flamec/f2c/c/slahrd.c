@@ -171,7 +171,7 @@ int slahrd_(integer *n, integer *k, integer *nb, real *a, integer *lda, real *ta
     integer i__;
     real ei;
     extern /* Subroutine */
-    int sscal_(integer *, real *, real *, integer *), sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), scopy_( integer *, real *, integer *, real *, integer *), saxpy_(integer * , real *, real *, integer *, real *, integer *), strmv_(char *, char *, char *, integer *, real *, integer *, real *, integer *), slarfg_(integer *, real *, real *, integer *, real *);
+    int sscal_(integer *, real *, real *, integer *), sgemv_(char *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *), scopy_( integer *, real *, integer *, real *, integer *), saxpy_(integer *, real *, real *, integer *, real *, integer *), strmv_(char *, char *, char *, integer *, real *, integer *, real *, integer *), slarfg_(integer *, real *, real *, integer *, real *);
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -241,7 +241,7 @@ int slahrd_(integer *n, integer *k, integer *nb, real *a, integer *lda, real *ta
             sgemv_("No transpose", &i__2, &i__3, &c_b4, &a[*k + i__ + a_dim1], lda, &t[*nb * t_dim1 + 1], &c__1, &c_b5, &a[*k + i__ + i__ * a_dim1], &c__1);
             /* b1 := b1 - V1*w */
             i__2 = i__ - 1;
-            strmv_("Lower", "No transpose", "Unit", &i__2, &a[*k + 1 + a_dim1] , lda, &t[*nb * t_dim1 + 1], &c__1);
+            strmv_("Lower", "No transpose", "Unit", &i__2, &a[*k + 1 + a_dim1], lda, &t[*nb * t_dim1 + 1], &c__1);
             i__2 = i__ - 1;
             saxpy_(&i__2, &c_b4, &t[*nb * t_dim1 + 1], &c__1, &a[*k + 1 + i__ * a_dim1], &c__1);
             a[*k + i__ - 1 + (i__ - 1) * a_dim1] = ei;

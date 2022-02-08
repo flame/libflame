@@ -284,7 +284,7 @@ int ssyevx_(char *jobz, char *range, char *uplo, integer *n, real *a, integer *l
     int slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *);
     integer indwrk, lwkmin;
     extern /* Subroutine */
-    int sstein_(integer *, real *, real *, integer *, real *, integer *, integer *, real *, integer *, real *, integer * , integer *, integer *), ssterf_(integer *, real *, real *, integer *);
+    int sstein_(integer *, real *, real *, integer *, real *, integer *, integer *, real *, integer *, real *, integer *, integer *, integer *), ssterf_(integer *, real *, real *, integer *);
     integer llwrkn, llwork, nsplit;
     real smlnum;
     extern real slansy_(char *, char *, integer *, real *, integer *, real *);
@@ -544,7 +544,7 @@ int ssyevx_(char *jobz, char *range, char *uplo, integer *n, real *a, integer *l
         else
         {
             slacpy_("A", n, n, &a[a_offset], lda, &z__[z_offset], ldz);
-            sorgtr_(uplo, n, &z__[z_offset], ldz, &work[indtau], &work[indwrk] , &llwork, &iinfo);
+            sorgtr_(uplo, n, &z__[z_offset], ldz, &work[indtau], &work[indwrk], &llwork, &iinfo);
             i__1 = *n - 1;
             scopy_(&i__1, &work[inde], &c__1, &work[indee], &c__1);
             ssteqr_(jobz, n, &w[1], &work[indee], &z__[z_offset], ldz, &work[ indwrk], info);

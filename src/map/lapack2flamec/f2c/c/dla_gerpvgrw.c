@@ -87,8 +87,8 @@
 doublereal dla_gerpvgrw_(integer *n, integer *ncols, doublereal *a, integer * lda, doublereal *af, integer *ldaf)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dla_gerpvgrw inputs: n %" FLA_IS ", ncols %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS "",*n, *ncols, *lda, *ldaf);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

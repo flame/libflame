@@ -221,8 +221,8 @@ if INFO = i, i */
 int zbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, doublereal *d__, doublereal *e, doublecomplex *vt, integer *ldvt, doublecomplex *u, integer *ldu, doublecomplex *c__, integer *ldc, doublereal *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"zbdsqr inputs: uplo %c, n %d, ncvt %d, nru %d, ncc %d, ldvt %d, ldu %d, ldc %d",*uplo, *n, *ncvt, *nru, *ncc, *ldvt, *ldu, *ldc);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -255,7 +255,7 @@ int zbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, 
     doublereal sminl, sigmx;
     logical lower;
     extern /* Subroutine */
-    int zlasr_(char *, char *, char *, integer *, integer *, doublereal *, doublereal *, doublecomplex *, integer *), zdrot_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublereal *) , zswap_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), dlasq1_(integer *, doublereal *, doublereal *, doublereal *, integer *), dlasv2_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
+    int zlasr_(char *, char *, char *, integer *, integer *, doublereal *, doublereal *, doublecomplex *, integer *), zdrot_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublereal *), zswap_(integer *, doublecomplex *, integer *, doublecomplex *, integer *), dlasq1_(integer *, doublereal *, doublereal *, doublereal *, integer *), dlasv2_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
     int dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *), xerbla_(char *, integer *), zdscal_(integer *, doublereal *, doublecomplex *, integer *);
@@ -445,7 +445,7 @@ int zbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, 
                 i__ <= i__1;
                 ++i__)
         {
-            mu = (d__2 = d__[i__], f2c_dabs(d__2)) * (mu / (mu + (d__1 = e[i__ - 1] , f2c_dabs(d__1))));
+            mu = (d__2 = d__[i__], f2c_dabs(d__2)) * (mu / (mu + (d__1 = e[i__ - 1], f2c_dabs(d__1))));
             sminoa = min(sminoa,mu);
             if (sminoa == 0.)
             {
@@ -625,7 +625,7 @@ L90:
                     e[lll] = 0.;
                     goto L60;
                 }
-                mu = (d__2 = d__[lll], f2c_dabs(d__2)) * (mu / (mu + (d__1 = e[lll] , f2c_dabs(d__1))));
+                mu = (d__2 = d__[lll], f2c_dabs(d__2)) * (mu / (mu + (d__1 = e[lll], f2c_dabs(d__1))));
                 sminl = min(sminl,mu);
                 /* L110: */
             }

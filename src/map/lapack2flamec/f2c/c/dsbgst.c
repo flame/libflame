@@ -156,8 +156,8 @@ LDX >= 1 otherwise. */
 int dsbgst_(char *vect, char *uplo, integer *n, integer *ka, integer *kb, doublereal *ab, integer *ldab, doublereal *bb, integer * ldbb, doublereal *x, integer *ldx, doublereal *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
     snprintf(buffer, 256,"dsbgst inputs: vect %c, uplo %c, n %" FLA_IS ", ka %" FLA_IS ", kb %" FLA_IS ", ldab %" FLA_IS ", ldbb %" FLA_IS ", ldx %" FLA_IS "",*vect, *uplo, *n, *ka, *kb, *ldab, *ldbb, *ldx);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
@@ -175,7 +175,7 @@ int dsbgst_(char *vect, char *uplo, integer *n, integer *ka, integer *kb, double
     doublereal bii;
     integer kbt, nrt, inca;
     extern /* Subroutine */
-    int dger_(integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), drot_(integer *, doublereal *, integer *, doublereal * , integer *, doublereal *, doublereal *), dscal_(integer *, doublereal *, doublereal *, integer *);
+    int dger_(integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), drot_(integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *), dscal_(integer *, doublereal *, doublereal *, integer *);
     extern logical lsame_(char *, char *);
     logical upper, wantx;
     extern /* Subroutine */
@@ -991,14 +991,14 @@ L10:
             {
                 /* generate rotations in 2nd set to annihilate elements */
                 /* which have been created outside the band */
-                dlargv_(&nr, &ab[ka1 + (j2 - *ka) * ab_dim1], &inca, &work[j2] , &ka1, &work[*n + j2], &ka1);
+                dlargv_(&nr, &ab[ka1 + (j2 - *ka) * ab_dim1], &inca, &work[j2], &ka1, &work[*n + j2], &ka1);
                 /* apply rotations in 2nd set from the left */
                 i__4 = *ka - 1;
                 for (l = 1;
                         l <= i__4;
                         ++l)
                 {
-                    dlartv_(&nr, &ab[l + 1 + (j2 - l) * ab_dim1], &inca, &ab[ l + 2 + (j2 - l) * ab_dim1], &inca, &work[*n + j2] , &work[j2], &ka1);
+                    dlartv_(&nr, &ab[l + 1 + (j2 - l) * ab_dim1], &inca, &ab[ l + 2 + (j2 - l) * ab_dim1], &inca, &work[*n + j2], &work[j2], &ka1);
                     /* L410: */
                 }
                 /* apply rotations in 2nd set from both sides to diagonal */
@@ -1640,7 +1640,7 @@ L490:
                 }
                 /* apply rotations in 1st set from both sides to diagonal */
                 /* blocks */
-                dlar2v_(&nr, &ab[j1 * ab_dim1 + 1], &ab[(j1 - 1) * ab_dim1 + 1], &ab[(j1 - 1) * ab_dim1 + 2], &inca, &work[*n + j1] , &work[j1], &ka1);
+                dlar2v_(&nr, &ab[j1 * ab_dim1 + 1], &ab[(j1 - 1) * ab_dim1 + 1], &ab[(j1 - 1) * ab_dim1 + 2], &inca, &work[*n + j1], &work[j1], &ka1);
             }
             /* start applying rotations in 1st set from the left */
             i__1 = *kb - k + 1;
@@ -1652,7 +1652,7 @@ L490:
                 j1t = j2 - (nrt - 1) * ka1;
                 if (nrt > 0)
                 {
-                    dlartv_(&nrt, &ab[ka1 - l + 1 + (j1t - ka1 + l) * ab_dim1] , &inca, &ab[ka1 - l + (j1t - ka1 + l) * ab_dim1], &inca, &work[*n + j1t], &work[j1t], &ka1);
+                    dlartv_(&nrt, &ab[ka1 - l + 1 + (j1t - ka1 + l) * ab_dim1], &inca, &ab[ka1 - l + (j1t - ka1 + l) * ab_dim1], &inca, &work[*n + j1t], &work[j1t], &ka1);
                 }
                 /* L820: */
             }
@@ -1782,7 +1782,7 @@ L490:
                 j1t = j2 - (nrt - 1) * ka1;
                 if (nrt > 0)
                 {
-                    dlartv_(&nrt, &ab[ka1 - l + 1 + (j1t - ka1 + l) * ab_dim1] , &inca, &ab[ka1 - l + (j1t - ka1 + l) * ab_dim1], &inca, &work[*n + m - *kb + j1t], &work[m - *kb + j1t], &ka1);
+                    dlartv_(&nrt, &ab[ka1 - l + 1 + (j1t - ka1 + l) * ab_dim1], &inca, &ab[ka1 - l + (j1t - ka1 + l) * ab_dim1], &inca, &work[*n + m - *kb + j1t], &work[m - *kb + j1t], &ka1);
                 }
                 /* L900: */
             }
@@ -1819,7 +1819,7 @@ L490:
                 j1t = j2 - (nrt - 1) * ka1;
                 if (nrt > 0)
                 {
-                    dlartv_(&nrt, &ab[ka1 - l + 1 + (j1t - ka1 + l) * ab_dim1] , &inca, &ab[ka1 - l + (j1t - ka1 + l) * ab_dim1], &inca, &work[*n + j1t], &work[j1t], &ka1);
+                    dlartv_(&nrt, &ab[ka1 - l + 1 + (j1t - ka1 + l) * ab_dim1], &inca, &ab[ka1 - l + (j1t - ka1 + l) * ab_dim1], &inca, &work[*n + j1t], &work[j1t], &ka1);
                 }
                 /* L930: */
             }

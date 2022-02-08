@@ -274,7 +274,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
     logical accum;
     integer ndcol, incol, krcol, nbmps;
     extern /* Subroutine */
-    int zgemm_(char *, char *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), ztrmm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer * , doublecomplex *, integer *), dlabad_(doublereal *, doublereal *), zlaqr1_(integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, doublecomplex *);
+    int zgemm_(char *, char *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *), ztrmm_(char *, char *, char *, char *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), dlabad_(doublereal *, doublereal *), zlaqr1_(integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, doublecomplex *);
     extern doublereal dlamch_(char *);
     doublereal safmin, safmax;
     extern /* Subroutine */
@@ -501,7 +501,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         i__6 = k + k * h_dim1;
                         i__7 = k + 1 + (k + 1) * h_dim1;
                         i__8 = k + 2 + (k + 2) * h_dim1;
-                        if ((d__1 = z__1.r, f2c_dabs(d__1)) + (d__2 = d_imag(&z__1) , f2c_dabs(d__2)) + ((d__3 = z__4.r, f2c_dabs(d__3)) + ( d__4 = d_imag(&z__4), f2c_dabs(d__4))) > ulp * (( d__5 = h__[i__6].r, f2c_dabs(d__5)) + (d__6 = d_imag(&h__[k + k * h_dim1]), f2c_dabs(d__6)) + (( d__7 = h__[i__7].r, f2c_dabs(d__7)) + (d__8 = d_imag(&h__[k + 1 + (k + 1) * h_dim1]), f2c_dabs( d__8))) + ((d__9 = h__[i__8].r, f2c_dabs(d__9)) + ( d__10 = d_imag(&h__[k + 2 + (k + 2) * h_dim1]) , f2c_dabs(d__10)))))
+                        if ((d__1 = z__1.r, f2c_dabs(d__1)) + (d__2 = d_imag(&z__1), f2c_dabs(d__2)) + ((d__3 = z__4.r, f2c_dabs(d__3)) + ( d__4 = d_imag(&z__4), f2c_dabs(d__4))) > ulp * (( d__5 = h__[i__6].r, f2c_dabs(d__5)) + (d__6 = d_imag(&h__[k + k * h_dim1]), f2c_dabs(d__6)) + (( d__7 = h__[i__7].r, f2c_dabs(d__7)) + (d__8 = d_imag(&h__[k + 1 + (k + 1) * h_dim1]), f2c_dabs( d__8))) + ((d__9 = h__[i__8].r, f2c_dabs(d__9)) + ( d__10 = d_imag(&h__[k + 2 + (k + 2) * h_dim1]), f2c_dabs(d__10)))))
                         {
                             /* ==== Starting a new bulge here would */
                             /* . create non-negligible fill. Use */
@@ -1307,11 +1307,11 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                     zlacpy_("ALL", &knz, &jlen, &h__[incol + 1 + j2 + jcol * h_dim1], ldh, &wh[kzs + 1 + wh_dim1], ldwh);
                     /* ==== Multiply by U21**H ==== */
                     zlaset_("ALL", &kzs, &jlen, &c_b1, &c_b1, &wh[wh_offset], ldwh);
-                    ztrmm_("L", "U", "C", "N", &knz, &jlen, &c_b2, &u[j2 + 1 + (kzs + 1) * u_dim1], ldu, &wh[kzs + 1 + wh_dim1] , ldwh);
+                    ztrmm_("L", "U", "C", "N", &knz, &jlen, &c_b2, &u[j2 + 1 + (kzs + 1) * u_dim1], ldu, &wh[kzs + 1 + wh_dim1], ldwh);
                     /* ==== Multiply top of H by U11**H ==== */
                     zgemm_("C", "N", &i2, &jlen, &j2, &c_b2, &u[u_offset], ldu, &h__[incol + 1 + jcol * h_dim1], ldh, &c_b2, &wh[wh_offset], ldwh);
                     /* ==== Copy top of H to bottom of WH ==== */
-                    zlacpy_("ALL", &j2, &jlen, &h__[incol + 1 + jcol * h_dim1] , ldh, &wh[i2 + 1 + wh_dim1], ldwh);
+                    zlacpy_("ALL", &j2, &jlen, &h__[incol + 1 + jcol * h_dim1], ldh, &wh[i2 + 1 + wh_dim1], ldwh);
                     /* ==== Multiply by U21**H ==== */
                     ztrmm_("L", "L", "C", "N", &j2, &jlen, &c_b2, &u[(i2 + 1) * u_dim1 + 1], ldu, &wh[i2 + 1 + wh_dim1], ldwh);
                     /* ==== Multiply by U22 ==== */
@@ -1345,7 +1345,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                     zlacpy_("ALL", &jlen, &j2, &h__[jrow + (incol + 1) * h_dim1], ldh, &wv[(i2 + 1) * wv_dim1 + 1], ldwv);
                     /* ==== Multiply by U21 ==== */
                     i__5 = i4 - i2;
-                    ztrmm_("R", "L", "N", "N", &jlen, &i__5, &c_b2, &u[(i2 + 1) * u_dim1 + 1], ldu, &wv[(i2 + 1) * wv_dim1 + 1] , ldwv);
+                    ztrmm_("R", "L", "N", "N", &jlen, &i__5, &c_b2, &u[(i2 + 1) * u_dim1 + 1], ldu, &wv[(i2 + 1) * wv_dim1 + 1], ldwv);
                     /* ==== Multiply by U22 ==== */
                     i__5 = i4 - i2;
                     i__7 = j4 - j2;

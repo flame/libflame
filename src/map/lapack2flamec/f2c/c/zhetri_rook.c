@@ -202,7 +202,7 @@ int zhetri_rook_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer
         xerbla_("ZHETRI_ROOK", &i__1);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
-        }
+    }
     /* Quick return if possible */
     if (*n == 0)
     {
@@ -350,7 +350,7 @@ L30: /* If K > N, exit from loop. */
                 i__1 = k + 1 + (k + 1) * a_dim1;
                 i__2 = k + 1 + (k + 1) * a_dim1;
                 i__3 = k - 1;
-                zdotc_f2c_(&z__2, &i__3, &work[1], &c__1, &a[(k + 1) * a_dim1 + 1] , &c__1);
+                zdotc_f2c_(&z__2, &i__3, &work[1], &c__1, &a[(k + 1) * a_dim1 + 1], &c__1);
                 d__1 = z__2.r;
                 z__1.r = a[i__2].r - d__1;
                 z__1.i = a[i__2].i; // , expr subst

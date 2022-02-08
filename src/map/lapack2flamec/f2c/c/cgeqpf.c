@@ -142,11 +142,11 @@ v(i+1:m) is stored on exit in A(i+1:m,i). */
 int cgeqpf_(integer *m, integer *n, complex *a, integer *lda, integer *jpvt, complex *tau, complex *work, real *rwork, integer * info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgeqpf inputs: m %lld, n %lld, lda %lld, jpvt %lld",*m, *n, *lda, *jpvt);
-#else 
+#else
     snprintf(buffer, 256,"cgeqpf inputs: m %d, n %d, lda %d, jpvt %d",*m, *n, *lda, *jpvt);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -165,7 +165,7 @@ int cgeqpf_(integer *m, integer *n, complex *a, integer *lda, integer *jpvt, com
     integer pvt;
     real temp, temp2, tol3z;
     extern /* Subroutine */
-    int clarf_(char *, integer *, integer *, complex * , integer *, complex *, complex *, integer *, complex *), cswap_(integer *, complex *, integer *, complex *, integer *);
+    int clarf_(char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *), cswap_(integer *, complex *, integer *, complex *, integer *);
     integer itemp;
     extern /* Subroutine */
     int cgeqr2_(integer *, integer *, complex *, integer *, complex *, complex *, integer *);
@@ -264,7 +264,7 @@ int cgeqpf_(integer *m, integer *n, complex *a, integer *lda, integer *jpvt, com
         if (ma < *n)
         {
             i__1 = *n - ma;
-            cunm2r_("Left", "Conjugate transpose", m, &i__1, &ma, &a[a_offset] , lda, &tau[1], &a[(ma + 1) * a_dim1 + 1], lda, &work[1], info);
+            cunm2r_("Left", "Conjugate transpose", m, &i__1, &ma, &a[a_offset], lda, &tau[1], &a[(ma + 1) * a_dim1 + 1], lda, &work[1], info);
         }
     }
     if (itemp < mn)
@@ -350,7 +350,7 @@ int cgeqpf_(integer *m, integer *n, complex *a, integer *lda, integer *jpvt, com
                         if (*m - i__ > 0)
                         {
                             i__3 = *m - i__;
-                            rwork[j] = scnrm2_(&i__3, &a[i__ + 1 + j * a_dim1] , &c__1);
+                            rwork[j] = scnrm2_(&i__3, &a[i__ + 1 + j * a_dim1], &c__1);
                             rwork[*n + j] = rwork[j];
                         }
                         else

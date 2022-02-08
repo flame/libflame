@@ -418,7 +418,7 @@ int stbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                                 i__ <= i__4;
                                 ++i__)
                         {
-                            work[i__] += (r__1 = ab[i__ + 1 - k + k * ab_dim1] , f2c_abs(r__1)) * xk;
+                            work[i__] += (r__1 = ab[i__ + 1 - k + k * ab_dim1], f2c_abs(r__1)) * xk;
                             /* L70: */
                         }
                         /* L80: */
@@ -440,7 +440,7 @@ int stbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                                 i__ <= i__4;
                                 ++i__)
                         {
-                            work[i__] += (r__1 = ab[i__ + 1 - k + k * ab_dim1] , f2c_abs(r__1)) * xk;
+                            work[i__] += (r__1 = ab[i__ + 1 - k + k * ab_dim1], f2c_abs(r__1)) * xk;
                             /* L90: */
                         }
                         work[k] += xk;

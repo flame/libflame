@@ -175,11 +175,11 @@ static integer c__1 = 1;
 int claqps_(integer *m, integer *n, integer *offset, integer *nb, integer *kb, complex *a, integer *lda, integer *jpvt, complex * tau, real *vn1, real *vn2, complex *auxv, complex *f, integer *ldf)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"claqps inputs: m %lld, n %lld, offset %lld, nb %lld, lda %lld, jpvt %lld, ldf %lld",*m, *n, *offset, *nb, *lda, *jpvt, *ldf);
-#else 
+#else
     snprintf(buffer, 256,"claqps inputs: m %d, n %d, offset %d, nb %d, lda %d, jpvt %d, ldf %d",*m, *n, *offset, *nb, *lda, *jpvt, *ldf);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -345,7 +345,7 @@ L10:
             i__3 = k;
             q__1.r = -tau[i__3].r;
             q__1.i = -tau[i__3].i; // , expr subst
-            cgemv_("Conjugate transpose", &i__1, &i__2, &q__1, &a[rk + a_dim1] , lda, &a[rk + k * a_dim1], &c__1, &c_b1, &auxv[1], &c__1);
+            cgemv_("Conjugate transpose", &i__1, &i__2, &q__1, &a[rk + a_dim1], lda, &a[rk + k * a_dim1], &c__1, &c_b1, &auxv[1], &c__1);
             i__1 = k - 1;
             cgemv_("No transpose", n, &i__1, &c_b2, &f[f_dim1 + 1], ldf, & auxv[1], &c__1, &c_b2, &f[k * f_dim1 + 1], &c__1);
         }

@@ -184,11 +184,11 @@ the corresponding */
 int clarzt_(char *direct, char *storev, integer *n, integer * k, complex *v, integer *ldv, complex *tau, complex *t, integer *ldt)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-#if FLA_ENABLE_ILP64 
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+#if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clarzt inputs: direct %c, storev %c, n %lld, k %lld, ldv %lld, ldt %lld",*direct, *storev, *n, *k, *ldv, *ldt);
-#else 
+#else
     snprintf(buffer, 256,"clarzt inputs: direct %c, storev %c, n %d, k %d, ldv %d, ldt %d",*direct, *storev, *n, *k, *ldv, *ldt);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
@@ -199,7 +199,7 @@ int clarzt_(char *direct, char *storev, integer *n, integer * k, complex *v, int
     /* Local variables */
     integer i__, j, info;
     extern /* Subroutine */
-    int cgemv_(char *, integer *, integer *, complex * , complex *, integer *, complex *, integer *, complex *, complex * , integer *);
+    int cgemv_(char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *);
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
     int ctrmv_(char *, char *, char *, integer *, complex *, integer *, complex *, integer *), clacgv_(integer *, complex *, integer *), xerbla_(char *, integer *);
@@ -281,7 +281,7 @@ int clarzt_(char *direct, char *storev, integer *n, integer * k, complex *v, int
                 clacgv_(n, &v[i__ + v_dim1], ldv);
                 /* T(i+1:k,i) = T(i+1:k,i+1:k) * T(i+1:k,i) */
                 i__1 = *k - i__;
-                ctrmv_("Lower", "No transpose", "Non-unit", &i__1, &t[i__ + 1 + (i__ + 1) * t_dim1], ldt, &t[i__ + 1 + i__ * t_dim1] , &c__1);
+                ctrmv_("Lower", "No transpose", "Non-unit", &i__1, &t[i__ + 1 + (i__ + 1) * t_dim1], ldt, &t[i__ + 1 + i__ * t_dim1], &c__1);
             }
             i__1 = i__ + i__ * t_dim1;
             i__2 = i__;
