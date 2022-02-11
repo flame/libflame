@@ -47,3 +47,9 @@ kd 10 15
 lwork_hetrd_hb2st 10000 -1
 lhous 80 -1
 lwork_hbtrd_he2hb 10000 -1
+norm 1 I
+lwork_lansy 30 40
+m 20 40
+lwork_lange 20 40
+lda_lange 20 40
+lwork_geqp3 61 -1

@@ -7,3 +7,8 @@ ldb   10 30
 nrhs 5 15
 ldaf 20 40
 ldx 10 30
+m 10 30
+lda_getrf 10 30
+trans N T
+norm O I
+lwork 40 -1

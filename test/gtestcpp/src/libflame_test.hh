@@ -1,5 +1,5 @@
 /******************************************************************************
-* Copyright (C) 2021, Advanced Micro Devices, Inc. All rights reserved.
+* Copyright (C) 2021-2022, Advanced Micro Devices, Inc. All rights reserved.
 *******************************************************************************/
 
 /*! @file libflame_test.hh
@@ -608,4 +608,312 @@ void print_array(char *arrayname, T *array, integer arraysize)
   }
 }
 
+/*! @brief  getrf_internal() function template calls C and CPP based 
+      GETRF APIs with valid test values and returns the outout buffers
+      and info.
+			T can be float, double, scomplex, dcomplex.
+ * @details
+ * \b Purpose:
+    \verbatim
+	  getrf_internal is function template for getrf() functions.
+	  T can be float, double, scomplex, dcomplex.
+	  
+	  getrf_internal() function template calls C and CPP based GETRF APIs with
+	  valid test values and returns the outout buffers and info.
+    abuff, ipivbuff, arefbuff, ipivrefbuff, info_cpp, info_ref will be
+    updated as output.
+    if abuff, ipivbuff buffers are NULL, then respective CPP
+    function call is not performed.
+    if arefbuff, ipivrefbuff buffers are NULL, then respective C
+    function call is not performed.
+    NOTE: It is caller's responsibility to free the buffers after the function
+    call.
+    \endverbatim
+	
+ * @params[in] m
+          M is INTEGER
+          The number of rows of the matrix A.  M >= 0.
+ * @params[in] n
+          N is INTEGER
+          The number of columns of the matrix A.  N >= 0.
+ * @params[in] abuff
+          A is REAL array, dimension (LDA,N)
+          On entry, the M-by-N matrix to be factored.
+          On exit, the factors L and U from the factorization
+          A = P*L*U; the unit diagonal elements of L are not stored.
+ * @params[in] lda
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA >= max(1,M).
+ * @params[in] ipivbuff
+          IPIV is INTEGER array, dimension (min(M,N))
+          The pivot indices; for 1 <= i <= min(M,N), row i of the
+          matrix was interchanged with row IPIV(i).
+ * @params[in] arefbuff
+          arefbuff is REAL array, dimension (LDA,N)
+          arefbuff is similar to abuff & used for reference C function.
+ * @params[in] ipivrefbuff
+          ipivrefbuff is INTEGER array, dimension (min(M,N))
+          ipivrefbuff is similar to ipivbuff & used for reference C function.
+ * @params[in] info_cpp
+          info_cpp is integer to get INFO returned by CPP function.
+ * @params[in] info_ref
+          info_ref is integer to get INFO returned by reference C function.
+
+ * @return VOID
+           Nothing.
+ * */
+template<typename T>
+void getrf_internal(integer m, integer n, T* abuff,
+        integer lda, integer* ipivbuff, T* arefbuff,
+        integer* ipivrefbuff, integer* info_cpp,
+        integer* info_ref)
+{
+  typedef int (*fptr_NL_LAPACK_getrf)(integer* m, integer* n, T* a,
+                  integer* lda, integer* ipiv, integer* info);
+  fptr_NL_LAPACK_getrf getrf_ref = NULL;
+  
+  PRINTF("%s() Entry...\n", __FUNCTION__);
+  if ((m <= 0) || \
+      (n <= 0) || \
+      (lda <= 0) || \
+      (info_cpp == NULL) || \
+      (info_ref == NULL)) {
+    PRINTF("Please pass the valid inputs/buffers. Returning from function.\n");
+    return;
+  }
+  
+  if (((abuff == NULL) && (arefbuff == NULL)) ||
+      ((ipivbuff == NULL) && (ipivrefbuff == NULL))) {
+    PRINTF("Please pass the valid buffers. Returning from function.\n");
+    return;
+  }
+  
+  // Print input values other than arrays.
+  #if (defined(PRINT_INPUT_VALUES) && (PRINT_INPUT_VALUES == 1))
+    PRINTF("\nPrinting all Input values other than array contents...\n");
+    PRINTF("m = %d\n", m);
+    PRINTF("n = %d\n", n);
+    PRINTF("lda = %d\n", lda);
+    PRINTF("Size of A array (lda*n) = %d\n", lda * n);
+    PRINTF("Size of IPIV array (min(m,n)) = %d\n", min(m, n));
+  #endif
+  
+  #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1))
+  // Array to store array name to print.
+  char arrayname[20] = "";
+  integer arraysize = sizeof(arrayname);
+  #endif
+  
+  #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1) && \
+      defined(PRINT_INPUT_ARRAYS) && (PRINT_INPUT_ARRAYS == 1))
+    // Print all input arrays if PRINT_INPUT_ARRAYS macro is enabled
+    PRINTF("Printing all Input arrays contents...\n");
+    
+    // Prints A array contents
+    strncpy(arrayname, "A input", arraysize);
+    print_array<T>(arrayname, abuff, lda * n);
+    strncpy(arrayname, "A ref input", arraysize);
+    print_array<T>(arrayname, arefbuff, lda * n);
+    
+    // Prints IPIV array contents
+    strncpy(arrayname, "IPIV input", arraysize);
+    print_array<integer>(arrayname, ipivbuff, min(m, n));
+    strncpy(arrayname, "IPIV ref input", arraysize);
+    print_array<integer>(arrayname, ipivrefbuff, min(m, n));
+  #endif
+  
+  // Call CPP function of GETRF()
+  if ((abuff != NULL) && (ipivbuff != NULL)) {
+    libflame::getrf<T>(&m, &n, abuff, &lda, ipivbuff, info_cpp);
+  }
+  
+  // Call C function only if input reference buffers are not NULL.
+  if ((arefbuff != NULL) && (ipivrefbuff != NULL)) {
+    // Call C function of GETRF()
+    if (typeid(T) == typeid(float)) {
+      getrf_ref = (fptr_NL_LAPACK_getrf)dlsym(lapackModule, "sgetrf_");
+    } else if (typeid(T) == typeid(double)) {
+      getrf_ref = (fptr_NL_LAPACK_getrf)dlsym(lapackModule, "dgetrf_");
+    } else if (typeid(T) == typeid(scomplex)) {
+      getrf_ref = (fptr_NL_LAPACK_getrf)dlsym(lapackModule, "cgetrf_");
+    } else if (typeid(T) == typeid(dcomplex)) {
+      getrf_ref = (fptr_NL_LAPACK_getrf)dlsym(lapackModule, "zgetrf_");
+    } else {
+      PRINTF("Invalid typename is passed to %s() function template.\n",
+             __FUNCTION__);
+    }
+    
+    if (getrf_ref == NULL) {
+      PRINTF("Could not get the symbol. Returning...\n");
+      return;
+    }
+    
+    getrf_ref(&m, &n, arefbuff, &lda, ipivrefbuff, info_ref);
+  }
+  
+  #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1) && \
+      defined(PRINT_OUTPUT_ARRAYS) && (PRINT_OUTPUT_ARRAYS == 1))
+    // Print all output arrays if PRINT_OUTPUT_ARRAYS macro is enabled
+    PRINTF("\nPrinting all output arrays contents...\n");
+    
+    // Prints A array contents
+    strncpy(arrayname, "A output", arraysize);
+    print_array<T>(arrayname, abuff, lda * n);
+    strncpy(arrayname, "A ref output", arraysize);
+    print_array<T>(arrayname, arefbuff, lda * n);
+    
+    // Prints IPIV array contents
+    strncpy(arrayname, "IPIV output", arraysize);
+    print_array<integer>(arrayname, ipivbuff, min(m, n));
+    strncpy(arrayname, "IPIV ref output", arraysize);
+    print_array<integer>(arrayname, ipivrefbuff, min(m, n));
+  #endif
+  PRINTF("%s() Exit...\n", __FUNCTION__);
+}
+
+/*! @brief  potrf_internal() function template calls C and CPP based 
+      POTRF APIs with valid test values and returns the outout buffers
+      and info.
+			T can be float, double, scomplex, dcomplex.
+ * @details
+ * \b Purpose:
+    \verbatim
+	  potrf_internal is function template for potrf() functions.
+	  T can be float, double, scomplex, dcomplex.
+	  
+	  potrf_internal() function template calls C and CPP based POTRF APIs with
+	  valid test values and returns the outout buffers and info.
+    abuff, arefbuff, info_cpp, info_ref will be updated as output.
+    If abuff buffer is NULL, then respective CPP function call
+    is not performed.
+    If arefbuff buffers is NULL, then respective C function call
+    is not performed.
+    NOTE: It is caller's responsibility to free the buffers after the function
+    call.
+    \endverbatim
+	
+ * @params[in] uplo
+          UPLO is CHARACTER*1
+          = 'U':  Upper triangle of A is stored;
+          = 'L':  Lower triangle of A is stored.
+ * @params[in] n
+          N is INTEGER
+          The number of columns of the matrix A.  N >= 0.
+ * @params[in] abuff
+          A is REAL array, dimension (LDA,N)
+          On entry, the symmetric matrix A.  If UPLO = 'U', the leading
+          N-by-N upper triangular part of A contains the upper
+          triangular part of the matrix A, and the strictly lower
+          triangular part of A is not referenced.  If UPLO = 'L', the
+          leading N-by-N lower triangular part of A contains the lower
+          triangular part of the matrix A, and the strictly upper
+          triangular part of A is not referenced.
+
+          On exit, if INFO = 0, the factor U or L from the Cholesky
+          factorization A = U**T*U or A = L*L**T.
+ * @params[in] lda
+          LDA is INTEGER
+          The leading dimension of the array A.  LDA >= max(1,N).
+ * @params[in] arefbuff
+          arefbuff is REAL array, dimension (LDA,N)
+          arefbuff is similar to abuff & used for reference C function.
+ * @params[in] info_cpp
+          info_cpp is integer to get INFO returned by CPP function.
+ * @params[in] info_ref
+          info_ref is integer to get INFO returned by reference C function.
+
+ * @return VOID
+           Nothing.
+ * */
+template<typename T>
+void potrf_internal(char uplo, integer n, T* abuff, integer lda,
+        T* arefbuff, integer* info_cpp, integer* info_ref)
+{
+  typedef integer (*fptr_NL_LAPACK_potrf)(char* uplo,
+                      integer* n, T* a, integer* lda, integer* info);
+  fptr_NL_LAPACK_potrf potrf_ref = NULL;
+  
+  PRINTF("%s() Entry...\n", __FUNCTION__);
+  if ((n <= 0) || \
+      (lda <= 0) || \
+      (info_cpp == NULL) || \
+      (info_ref == NULL)) {
+    PRINTF("Please pass the valid inputs/buffers. Returning from function.\n");
+    return;
+  }
+  
+  if ((abuff == NULL) && (arefbuff == NULL)) {
+    PRINTF("Please pass the valid buffers. Returning from function.\n");
+    return;
+  }
+  
+  // Print input values other than arrays.
+  #if (defined(PRINT_INPUT_VALUES) && (PRINT_INPUT_VALUES == 1))
+    PRINTF("\nPrinting all Input values other than array contents...\n");
+    PRINTF("uplo = %c\n", uplo);
+    PRINTF("n = %d\n", n);
+    PRINTF("lda = %d\n", lda);
+    PRINTF("Size of A array (lda*n) = %d\n", lda * n);
+  #endif
+  
+  #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1))
+  // Array to store array name to print.
+  char arrayname[20] = "";
+  integer arraysize = sizeof(arrayname);
+  #endif
+  
+  #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1) && \
+      defined(PRINT_INPUT_ARRAYS) && (PRINT_INPUT_ARRAYS == 1))
+    // Print all input arrays if PRINT_INPUT_ARRAYS macro is enabled
+    PRINTF("Printing all Input arrays contents...\n");
+    
+    // Prints A array contents
+    strncpy(arrayname, "A input", arraysize);
+    print_array<T>(arrayname, abuff, lda * n);
+    strncpy(arrayname, "A ref input", arraysize);
+    print_array<T>(arrayname, arefbuff, lda * n);
+  #endif
+  
+  // Call CPP function of POTRF()
+  if (abuff != NULL) {
+    libflame::potrf<T>(&uplo, &n, abuff, &lda, info_cpp);
+  }
+  
+  // Call C function only if input reference buffer is not NULL.
+  if (arefbuff != NULL) {
+    // Call C function of POTRF()
+    if (typeid(T) == typeid(float)) {
+      potrf_ref = (fptr_NL_LAPACK_potrf)dlsym(lapackModule, "spotrf_");
+    } else if (typeid(T) == typeid(double)) {
+      potrf_ref = (fptr_NL_LAPACK_potrf)dlsym(lapackModule, "dpotrf_");
+    } else if (typeid(T) == typeid(scomplex)) {
+      potrf_ref = (fptr_NL_LAPACK_potrf)dlsym(lapackModule, "cpotrf_");
+    } else if (typeid(T) == typeid(dcomplex)) {
+      potrf_ref = (fptr_NL_LAPACK_potrf)dlsym(lapackModule, "zpotrf_");
+    } else {
+      PRINTF("Invalid typename is passed to %s() function template.\n",
+             __FUNCTION__);
+    }
+    
+    if (potrf_ref == NULL) {
+      PRINTF("Could not get the symbol. Returning...\n");
+      return;
+    }
+    
+    potrf_ref(&uplo, &n, arefbuff, &lda, info_ref);
+  }
+  
+  #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1) && \
+      defined(PRINT_OUTPUT_ARRAYS) && (PRINT_OUTPUT_ARRAYS == 1))
+    // Print all output arrays if PRINT_OUTPUT_ARRAYS macro is enabled
+    PRINTF("\nPrinting all output arrays contents...\n");
+    
+    // Prints A array contents
+    strncpy(arrayname, "A output", arraysize);
+    print_array<T>(arrayname, abuff, lda * n);
+    strncpy(arrayname, "A ref output", arraysize);
+    print_array<T>(arrayname, arefbuff, lda * n);
+  #endif
+  PRINTF("%s() Exit...\n", __FUNCTION__);
+}
 #endif        //  #ifndef LIBFLAME_TEST_HH

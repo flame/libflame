@@ -53,7 +53,7 @@ void libfla_test_chol_impl( int         impl,
 void libfla_test_chol_cntl_create( unsigned int var,
                                    dim_t        b_alg_flat );
 void libfla_test_chol_cntl_free( void );
-void FLA_POTRF( char* uplo,
+void FLA_POTRF( char uplo,
                 integer n,
                 FLA_Obj A_save,
                 FLA_Obj A,
@@ -370,7 +370,7 @@ void libfla_test_chol_impl( int impl,
  *  * FLA_POTRF calls LAPACK interface 
  *  Cholesky Factorization - potrf 
  *    * */
-void FLA_POTRF( char* uplo,
+void FLA_POTRF( char uplo,
                 integer n,
                 FLA_Obj A_save,
                 FLA_Obj A,

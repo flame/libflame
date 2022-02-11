@@ -1,5 +1,5 @@
 /******************************************************************************
-* Copyright (C) 2021, Advanced Micro Devices, Inc. All rights reserved.
+* Copyright (C) 2021-2022, Advanced Micro Devices, Inc. All rights reserved.
 *******************************************************************************/
 
 /*! @file main.cc
@@ -304,6 +304,37 @@ void Read_EIG_params(const char *file_name)
     fscanf(fp, "%d", &eig_paramslist[index].lwork_hbtrd_he2hb);
   }
   
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%s", str);
+    eig_paramslist[index].norm = *str;
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lwork_lansy);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].m);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lwork_lange);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lda_lange);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lwork_geqp3);
+  }
+  
   fclose(fp);
 }
 
@@ -382,6 +413,33 @@ void Read_Lin_solver_params (const char *file_name)
   fscanf(fp, "%s", &line[0]);
   for (index = 0; index < NUM_SUB_TESTS; index++) {
     fscanf(fp, "%d", &lin_solver_paramslist[index].ldx);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_solver_paramslist[index].m);
+  }
+
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_solver_paramslist[index].lda_getrf);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%s", str);
+    lin_solver_paramslist[index].trans = *str;
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%s", str);
+    lin_solver_paramslist[index].norm = *str;
+  }
+
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &lin_solver_paramslist[index].lwork);
   }
   
   fclose(fp);
@@ -545,7 +603,7 @@ void closelibs(void) {
     Returns the result as integer.
  * */
 int main(int argc, char **argv) 
-{  
+{
   // Read eigen parameters from config file.
   Read_EIG_params("config/EIG_PARAMS.dat");
   

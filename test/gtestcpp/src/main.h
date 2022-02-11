@@ -1,5 +1,5 @@
 /******************************************************************************
-* Copyright (C) 2021, Advanced Micro Devices, Inc. All rights reserved.
+* Copyright (C) 2021-2022, Advanced Micro Devices, Inc. All rights reserved.
 *******************************************************************************/
 
 /*! @file main.h
@@ -359,6 +359,37 @@ typedef struct EIG_paramlist_t {
                                   where FACTOPTNB is the blocking used by the QR or LQ
                                   algorithm, usually FACTOPTNB=128 is a good choice otherwise
                                   putting LWORK=-1 will provide the size of WORK.*/
+  // Added for lansy()
+  char norm; /* NORM is CHARACTER*1
+                Specifies whether the 1-norm condition number or the
+                infinity-norm condition number is required:
+                CLANSY = ( max(abs(A(i,j))), NORM = 'M' or 'm'
+                   (
+                   ( norm1(A),         NORM = '1', 'O' or 'o'
+                   (
+                   ( normI(A),         NORM = 'I' or 'i'
+                   (
+                   ( normF(A),         NORM = 'F', 'f', 'E' or 'e'*/
+  integer lwork_lansy; /* LWORK >= N when NORM = 'I' or '1' or 'O';otherwise,
+                          WORK is not referenced.*/
+  // Added for lange()
+  integer m; /* M is INTEGER
+                The number of rows of the matrix A.  M >= 0.  When M = 0,
+                ZLANGE is set to zero.*/
+  integer lwork_lange; /* LWORK >= M when NORM = 'I'; otherwise, WORK is not
+                          referenced.*/
+  integer lda_lange; /* LDA is INTEGER
+                        The leading dimension of the array A.  LDA >= max(M,1).*/
+  // Added for geqp3()
+  integer lwork_geqp3; /* LWORK is INTEGER
+                          The dimension of the array WORK. LWORK >= 3*N+1.
+                          For optimal performance LWORK >= 2*N+( N+1 )*NB, where NB
+                          is the optimal blocksize.
+
+                          If LWORK = -1, then a workspace query is assumed; the routine
+                          only calculates the optimal size of the WORK array, returns
+                          this value as the first entry of the WORK array, and no error
+                          message related to LWORK is issued by XERBLA. */
 } EIG_paramlist;
 
 /* structure to hold Linear solver parameters */
@@ -386,7 +417,33 @@ typedef struct Lin_solver_paramlist_t {
                     The leading dimension of the array AF.  LDAF >= max(1,N).*/
   integer ldx; /* LDX is INTEGER
                   The leading dimension of the array X.  LDX >= max(1,N).*/
-  
+  // Added for getrf()
+  integer m;   /* M is INTEGER
+                  The number of rows of the matrix A.  M >= 0.*/
+  integer lda_getrf; /* LDA is INTEGER
+                        The leading dimension of the array A.  LDA >= max(1,M).*/
+  // Added for getrs()
+  char trans;  /* TRANS is CHARACTER*1
+                  Specifies the form of the system of equations:
+                  = 'N':  A * X = B  (No transpose)
+                  = 'T':  A**T* X = B  (Transpose)
+                  = 'C':  A**T* X = B  (Conjugate transpose = Transpose)*/
+  // Added for gecon()
+  char norm; /* NORM is CHARACTER*1
+                Specifies whether the 1-norm condition number or the
+                infinity-norm condition number is required:
+                = '1' or 'O':  1-norm;
+                = 'I':         Infinity-norm.*/
+  // Added for getri()
+  integer lwork; /* LWORK is INTEGER
+                    The dimension of the array WORK.  LWORK >= max(1,N).
+                    For optimal performance LWORK >= N*NB, where NB is
+                    the optimal blocksize returned by ILAENV.
+
+                    If LWORK = -1, then a workspace query is assumed; the routine
+                    only calculates the optimal size of the WORK array, returns
+                    this value as the first entry of the WORK array, and no error
+                    message related to LWORK is issued by XERBLA.*/
 } Lin_solver_paramlist;
 
 /* structure to hold Linear driver parameters */
@@ -548,7 +605,7 @@ void closelibs(void);
 #define SRAND_SEED_VALUE 1
 
 // Macro to enable status/error messages of test APIs.
-#define PRINT_MSGS 0
+#define PRINT_MSGS 1
 
 #if PRINT_MSGS 
 #define PRINTF(...) printf(__VA_ARGS__)
@@ -561,7 +618,7 @@ void closelibs(void);
    1 - enables the print of array contents.
    Note: This macro need to be enabled along with PRINT_INPUT_ARRAYS or
    PRINT_OUTPUT_ARRAYS macros to print the array contents.*/
-#define PRINT_ARRAYS 0
+#define PRINT_ARRAYS 1
 
 /* Macro to enable print of contents of input arrays.
    0 - disables the print of input array contents.
@@ -580,7 +637,7 @@ void closelibs(void);
 /* Macro to print input values other than array contents.
    0 - disables the print of input values.
    1 - enables the print of input values.*/
-#define PRINT_INPUT_VALUES 0
+#define PRINT_INPUT_VALUES 1
 
 /* Macro to enable print of all contents of each array.
    0 - considers arrays of ARRAY_PRINT_SIZE size for PRINT_ARRAYS.

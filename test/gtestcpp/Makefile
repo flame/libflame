@@ -1,5 +1,5 @@
 ###############################################################################
-# Copyright (C) 2021, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2021-2022, Advanced Micro Devices, Inc. All rights reserved.
 ###############################################################################
 
 #
@@ -95,7 +95,17 @@ libflame_hetf2_rook.x \
 libflame_hetrd.x \
 libflame_hetrd_2stage.x \
 libflame_hetrd_hb2st.x \
-libflame_hetrd_he2hb.x
+libflame_hetrd_he2hb.x \
+libflame_getrf.x \
+libflame_getrs.x \
+libflame_gecon.x \
+libflame_getri.x \
+libflame_potrf.x \
+libflame_potrs.x \
+libflame_pocon.x \
+libflame_lansy.x \
+libflame_lange.x \
+libflame_geqp3.x
 
 # --- General build definitions ------------------------------------------------
 #
