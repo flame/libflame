@@ -6,8 +6,11 @@ LAPACK_TEST_DIR=lapack-3.10.0
 BLAS_LIB=libblis-mt.a
 BLAS_LIB_PATH= 
 LAPACK_LIB=libflame.a
-LAPACK_LIB_PATH= 
+LAPACK_LIB_PATH=
+DTL_LIB=libaocldtl.a
+DTL_LIB_PATH=
 ILP64=0
+DTL=0
 
 for ARG in "$@"
 do
@@ -18,9 +21,12 @@ do
          BLAS_LIB)           BLAS_LIB=${DATA} ;;
          LAPACK_LIB)         LAPACK_LIB=${DATA} ;;     
          BLAS_LIB_PATH)      BLAS_LIB_PATH=${DATA} ;;
-         LAPACK_LIB_PATH)    LAPACK_LIB_PATH=${DATA} ;;     
+         LAPACK_LIB_PATH)    LAPACK_LIB_PATH=${DATA} ;; 
+         DTL_LIB_PATH)       DTL_LIB_PATH=${DATA} ;; 
+         DTL_LIB)            DTL_LIB=${DATA} ;;
          LAPACK_TEST_DIR)    LAPACK_TEST_DIR=${DATA} ;;     
-         ILP64)              ILP64=${DATA} ;;     
+         ILP64)              ILP64=${DATA} ;;   
+         DTL)                DTL=${DATA} ;;  
          *)   
    esac    
 done
@@ -49,12 +55,15 @@ then
 	echo "[] indicates optional argument"
 	echo 
 	echo "Example: $ sh run-netlib-test.sh BLAS_LIB_PATH=\"/home/user/blis/lib\" LAPACK_LIB_PATH=\"/home/user/libflame/lib\" BLAS_LIB=\"libblis.a\" LAPACK_LIB=\"libflame.a\""
-        echo
-        echo "BLAS_LIB : blas library to use. Default=libblist-mt.a"
+  	echo
+  	echo "BLAS_LIB : blas library to use. Default=libblist-mt.a"
 	echo "LAPACK_LIB : lapac library to use. Default=libflame.a"
+  	echo "DTL_LIB : DTL library binary to be used. Default=libaocldtl.a" 
+  	echo "DTL : Enable(1) or disable(0) DTL. Default=0"
 	echo "ILP64 : LP64 or ILP64 mode. Default=0(Use LP64)"
 	echo "BLAS_LIB_PATH : path of blas library chosen in BLAS_LIB"
 	echo "LAPACK_LIB_PATH : path to lapack library chosen in LAPACK_LIB"
+  	echo "DTL_LIB_PATH : path to DTL library chosen in DTL_LIB (if DTL is enabled)"
 	echo "LAPACK_TEST_DIR : netlib lapack test directory name. Default=lapack-3.10.0"
 	echo
 	exit 1
@@ -74,6 +83,11 @@ cd libflame_netlib
 cp $BLAS_LIB_PATH/$BLAS_LIB .
 cp $LAPACK_LIB_PATH/$LAPACK_LIB .
 
+if [[ $DTL != "0" ]]
+then
+  cp $DTL_LIB_PATH/$DTL_LIB .
+fi
+
 if [[ $LAPACK_LIB != "liblapack.a" ]]
 then
    ln -s $LAPACK_LIB liblapack.a
@@ -86,12 +100,18 @@ fi
 
 ulimit -s unlimited
 
-if [[ $ILP64 = "0" ]]
+FORTRAN_FLAGS="gfortran -fopenmp"
+TESTLAPACKLIB="$PWD/liblapack.a -lpthread"
+
+if [[ $ILP64 = "1" ]]
 then
-#LP64 mode
-OMP_NUM_THREADS=1 make FC="gfortran -fopenmp" LDFLAGS="-lpthread -fopenmp" -j
-else
-#ILP64 mode
-OMP_NUM_THREADS=1 make FC="gfortran -fopenmp -fdefault-integer-8" LDFLAGS="-lpthread -fopenmp" -j
+	FORTRAN_FLAGS="gfortran -fopenmp -fdefault-integer-8"
 fi
+
+if [[ $DTL = "1" ]]
+then
+	TESTLAPACKLIB="$PWD/liblapack.a $PWD/libaocldtl.a -lpthread"
+fi
+
+OMP_NUM_THREADS=1 make FC="$FORTRAN_FLAGS" LDFLAGS="-lpthread -fopenmp" LAPACKLIB="$TESTLAPACKLIB" -j
 
