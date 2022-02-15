@@ -54,14 +54,13 @@ extern void DTL_Trace(
   lapack_spotf2( uplo, n, buff_A, ldim_A,  info );                                           \
   else                                                                                       \
   lapack_spotrf( uplo, n, buff_A, ldim_A,  info );                                           \
-  return 0;
 
 #define LAPACK_potrf_body_d(prefix)                                                          \
   if( *n < FLA_POTRF_DOUBLE_SMALL )                                                          \
   lapack_dpotf2( uplo, n, buff_A, ldim_A,  info );                                           \
   else                                                                                       \
   lapack_dpotrf( uplo, n, buff_A, ldim_A,  info );                                           \
-  return 0;
+
 #endif
 
 #define LAPACK_potrf_body(prefix)                                                            \
@@ -85,27 +84,39 @@ extern void DTL_Trace(
   if ( e_val != FLA_SUCCESS ) *info = e_val + 1;                                             \
   else                        *info = 0;                                                     \
                                                                                              \
-  return 0;
-
 
 
 LAPACK_potrf(s)
 {
+    int fla_error = 0;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("spotrf inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS " ", *uplo, *n, *ldim_A);
+
     {
-        LAPACK_RETURN_CHECK( spotrf_check( uplo, n,
+        LAPACK_RETURN_CHECK_VAR1( spotrf_check( uplo, n,
                                            buff_A, ldim_A,
-                                           info ) )
+                                           info ), fla_error )
     }
-#if FLA_AMD_OPT
-    {    
-        LAPACK_potrf_body_s(s)
-    }
-#else
+    if(fla_error == 0)
     {
-        LAPACK_potrf_body(s)
+        #if FLA_AMD_OPT
+            {   
+                LAPACK_potrf_body_s(s);
+            }
+        #else
+            {
+                LAPACK_potrf_body(s)
+            }
+        #endif 
     }
-#endif
+    else if ((fla_error == LAPACK_QUERY_RETURN) || (fla_error == LAPACK_QUICK_RETURN))
+    {
+         fla_error = 0;
+    }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
+
 LAPACK_potrf(d)
 {
     {
@@ -122,6 +133,7 @@ LAPACK_potrf(d)
         LAPACK_potrf_body(d)
     }
 #endif
+    return 0;
 }
 LAPACK_potrf(c)
 {
@@ -133,6 +145,7 @@ LAPACK_potrf(c)
     {
         LAPACK_potrf_body(c)
     }
+    return 0;
 }
 LAPACK_potrf(z)
 {
@@ -144,6 +157,7 @@ LAPACK_potrf(z)
     {
         LAPACK_potrf_body(z)
     }
+    return 0;
 }
 
 
@@ -170,7 +184,7 @@ LAPACK_potf2(s)
         LAPACK_potrf_body(s)
     }
 #endif
-
+    return 0;
 }
 LAPACK_potf2(d)
 {
@@ -188,7 +202,7 @@ LAPACK_potf2(d)
         LAPACK_potrf_body(d)
     }
 #endif
-
+    return 0;
 }
 LAPACK_potf2(c)
 {
@@ -200,6 +214,7 @@ LAPACK_potf2(c)
     {
         LAPACK_potrf_body(c)
     }
+    return 0;
 }
 LAPACK_potf2(z)
 {
@@ -211,5 +226,6 @@ LAPACK_potf2(z)
     {
         LAPACK_potrf_body(z)
     }
+    return 0;
 }
 #endif

@@ -39,6 +39,70 @@
 #define FLA_IS "d"
 #endif
 
+/*Increases visibility of FLA_clock()*/
+double FLA_Clock();
+void get_time_unit(char * , double *);
+
+#if AOCL_DTL_LOG_ENABLE
+	#define BUFF_SIZE 256
+	#define BUFFER buffer
+	#define AOCL_DTL_SNPRINTF(...) snprintf(BUFFER,BUFF_SIZE,__VA_ARGS__)
+
+#else
+	#define AOCL_DTL_SNPRINTF(...)
+
+#endif
+
+/**
+ * AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5); and DTL Log params
+ */
+#if AOCL_DTL_LOG_ENABLE & AOCL_DTL_TRACE_ENABLE
+	#define AOCL_DTL_TRACE_LOG_INIT 						\
+		AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);		\
+		double api_start_time = 0.0;      					\
+		char buffer[256],unit[3]=" s";    					\
+		double api_duration;              					\
+		api_start_time = FLA_Clock();
+
+	#define AOCL_DTL_TRACE_LOG_EXIT    						\
+		api_duration = FLA_Clock()-api_start_time;      	\
+		get_time_unit(unit, &api_duration);					\
+		snprintf(buffer+strlen(buffer), 					\
+			sizeof(buffer) - strlen(buffer),				\
+			"time: %06.2f%s ",api_duration,unit);			\
+		AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);   	\
+		AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+	
+	
+
+#elif AOCL_DTL_LOG_ENABLE
+	#define AOCL_DTL_TRACE_LOG_INIT 						\
+		double api_start_time = 0.0;    					\
+		char buffer[256],unit[3]=" s";  					\
+		double api_duration;            					\
+		api_start_time = FLA_Clock();
+
+	#define AOCL_DTL_TRACE_LOG_EXIT    						\
+		api_duration = FLA_Clock()-api_start_time;      	\
+		get_time_unit(unit,  &api_duration);				\
+		snprintf(buffer+strlen(buffer), 					\
+				sizeof(buffer) - strlen(buffer),			\
+				"time: %06.2f%s ", api_duration,unit);		\
+		AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);   
+
+#elif AOCL_DTL_TRACE_ENABLE
+	#define AOCL_DTL_TRACE_LOG_INIT 						\
+		AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+
+	#define AOCL_DTL_TRACE_LOG_EXIT  						\
+		AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+
+#else
+	#define AOCL_DTL_TRACE_LOG_INIT 
+	#define AOCL_DTL_TRACE_LOG_EXIT
+
+#endif
+
 // LDLT Factorization for packed matrices uses different threshold to choose
 // between blocked /  unblocked variants and also the blocksize for the blocked
 // variant. The thresholds and blocksizes re defined here

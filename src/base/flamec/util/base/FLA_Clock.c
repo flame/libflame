@@ -22,6 +22,31 @@ double FLA_Clock()
   return FLA_Clock_helper();
 }
 
+/**
+ * Assign nano , micro or milli scale for given time
+ * changes buff to ms->milli, us->micro or ns->nano 
+ * 
+ */
+void get_time_unit(char * scale , double * time)
+{
+  if(*time >= 1)
+    return ;
+  if ((*time < 1) && (*time > 0.001))
+  {
+    scale[0]='m';
+    *time *= 1000;
+  }
+  else if ((*time <0.001) && (*time > 0.000001))
+  {
+    scale[0]='u';
+    *time *= 1000000;
+  }
+  else if ((*time < 0.000001))
+  {
+    scale[0]='n';
+    *time *= 1000000000;
+  }
+}
 // --- Begin non-Windows build definitions -------------------------------------
 #ifndef FLA_ENABLE_WINDOWS_BUILD
 
