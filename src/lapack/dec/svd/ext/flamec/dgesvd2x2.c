@@ -75,7 +75,7 @@
   //U calculation
    tempu[0] = (s[0] != 0) ? (a[0] * tempvt[0] + a[1] * tempvt[2]) / s[0] : 1;
    tempu[1] = (s[0] != 0) ? (a[*lda] * tempvt[0] + a[*lda+1] * tempvt[2]) / s[0] : 0;
-   tempu[2] = (s[1] != 0) ? (a[0] * tempvt[1] + a[1] * tempvt[3]) / s[1] : -tempu[2];
+   tempu[2] = (s[1] != 0) ? (a[0] * tempvt[1] + a[1] * tempvt[3]) / s[1] : -tempu[1];
    tempu[3] = (s[1] != 0) ? (a[*lda] * tempvt[1] + a[*lda+1] * tempvt[3]) / s[1] : tempu[0];
 
    if (*jobvt!='N') {
