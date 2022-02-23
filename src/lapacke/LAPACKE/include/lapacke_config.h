@@ -28,7 +28,6 @@
 ******************************************************************************
 * Contents: Native C interface to LAPACK
 * Author: Intel Corporation
-* Generated May, 2011
 *****************************************************************************/
 
 #ifndef _LAPACKE_CONFIG_H_
@@ -69,7 +68,7 @@ extern "C" {
 #if defined(LAPACK_ILP64)
 #define lapack_int              int64_t
 #else
-#define lapack_int              int
+#define lapack_int              int32_t
 #endif
 #endif
 

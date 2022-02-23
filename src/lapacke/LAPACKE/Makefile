@@ -28,7 +28,6 @@
 ##############################################################################
 # Contents: Native C interface to LAPACK
 # Author: Intel Corporation
-# September, 2010
 ##############################################################################
 # Top-level makefile for LAPACKE.
 #
@@ -63,6 +62,7 @@ clean:
 	$(MAKE) -C src clean
 	$(MAKE) -C utils clean
 	$(MAKE) -C example clean
+	rm -f include/lapacke_mangling.h
 cleanobj:
 	$(MAKE) -C src cleanobj
 	$(MAKE) -C utils cleanobj

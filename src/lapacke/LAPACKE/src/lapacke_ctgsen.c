@@ -28,7 +28,6 @@
 *****************************************************************************
 * Contents: Native high-level C interface to LAPACK function ctgsen
 * Author: Intel Corporation
-* Generated November 2015
 *****************************************************************************/
 
 #include "lapacke_utils.h"
@@ -84,7 +83,7 @@ lapack_int LAPACKE_ctgsen( int matrix_layout, lapack_int ijob,
     if( info != 0 ) {
         goto exit_level_0;
     }
-    liwork = (lapack_int)iwork_query;
+    liwork = iwork_query;
     lwork = LAPACK_C2INT( work_query );
     /* Allocate memory for work arrays */
     if( ijob != 0 ) {

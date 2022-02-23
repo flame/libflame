@@ -1,6 +1,6 @@
-##Copyright (C) 2020, Advanced Micro Devices, Inc.## 
+##Copyright (C) 2020, Advanced Micro Devices, Inc.##
 if(INCLUDE_LAPACKE)
-target_sources("${PROJECT_NAME}" 
+target_sources("${PROJECT_NAME}"
      PRIVATE
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cbbcsd.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cbbcsd_work.c
@@ -116,6 +116,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cgetrs.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cgetrs_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cgetsls.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cgetsls_work.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cgetsqrhrt.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cgetsqrhrt_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cggbak.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cggbak_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cggbal.c
@@ -588,6 +590,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cungrq.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cungrq_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cungtr.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cungtr_work.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cungtsqr_row.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cungtsqr_row_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cunmbr.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cunmbr_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_cunmhr.c
@@ -728,6 +732,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dgetrs.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dgetrs_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dgetsls.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dgetsls_work.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dgetsqrhrt.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dgetsqrhrt_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dggbak.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dggbak_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dggbal.c
@@ -850,6 +856,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dorgrq.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dorgrq_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dorgtr.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dorgtr_work.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dorgtsqr_row.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dorgtsqr_row_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dormbr.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dormbr_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dormhr.c
@@ -1294,6 +1302,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sgetrs.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sgetrs_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sgetsls.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sgetsls_work.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sgetsqrhrt.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sgetsqrhrt_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sggbak.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sggbak_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sggbal.c
@@ -1416,6 +1426,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sorgrq.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sorgrq_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sorgtr.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sorgtr_work.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sorgtsqr_row.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sorgtsqr_row_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sormbr.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sormbr_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sormhr.c
@@ -1852,6 +1864,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zgetrs.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zgetrs_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zgetsls.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zgetsls_work.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zgetsqrhrt.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zgetsqrhrt_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zggbak.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zggbak_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zggbal.c
@@ -2324,6 +2338,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zungrq.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zungrq_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zungtr.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zungtr_work.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zungtsqr_row.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zungtsqr_row_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zunmbr.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zunmbr_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zunmhr.c
@@ -2487,6 +2503,8 @@ lapacke_cgetrs.c
 lapacke_cgetrs_work.c
 lapacke_cgetsls.c
 lapacke_cgetsls_work.c
+lapacke_cgetsqrhrt.c
+lapacke_cgetsqrhrt_work.c
 lapacke_cggbak.c
 lapacke_cggbak_work.c
 lapacke_cggbal.c
@@ -2959,6 +2977,8 @@ lapacke_cungrq.c
 lapacke_cungrq_work.c
 lapacke_cungtr.c
 lapacke_cungtr_work.c
+lapacke_cungtsqr_row.c
+lapacke_cungtsqr_row_work.c
 lapacke_cunmbr.c
 lapacke_cunmbr_work.c
 lapacke_cunmhr.c
@@ -3101,6 +3121,8 @@ lapacke_dgetrs.c
 lapacke_dgetrs_work.c
 lapacke_dgetsls.c
 lapacke_dgetsls_work.c
+lapacke_dgetsqrhrt.c
+lapacke_dgetsqrhrt_work.c
 lapacke_dggbak.c
 lapacke_dggbak_work.c
 lapacke_dggbal.c
@@ -3223,6 +3245,8 @@ lapacke_dorgrq.c
 lapacke_dorgrq_work.c
 lapacke_dorgtr.c
 lapacke_dorgtr_work.c
+lapacke_dorgtsqr_row.c
+lapacke_dorgtsqr_row_work.c
 lapacke_dormbr.c
 lapacke_dormbr_work.c
 lapacke_dormhr.c
@@ -3672,6 +3696,8 @@ lapacke_sgetrs.c
 lapacke_sgetrs_work.c
 lapacke_sgetsls.c
 lapacke_sgetsls_work.c
+lapacke_sgetsqrhrt.c
+lapacke_sgetsqrhrt_work.c
 lapacke_sggbak.c
 lapacke_sggbak_work.c
 lapacke_sggbal.c
@@ -3794,6 +3820,8 @@ lapacke_sorgrq.c
 lapacke_sorgrq_work.c
 lapacke_sorgtr.c
 lapacke_sorgtr_work.c
+lapacke_sorgtsqr_row.c
+lapacke_sorgtsqr_row_work.c
 lapacke_sormbr.c
 lapacke_sormbr_work.c
 lapacke_sormhr.c
@@ -4232,6 +4260,8 @@ lapacke_zgetrs.c
 lapacke_zgetrs_work.c
 lapacke_zgetsls.c
 lapacke_zgetsls_work.c
+lapacke_zgetsqrhrt.c
+lapacke_zgetsqrhrt_work.c
 lapacke_zggbak.c
 lapacke_zggbak_work.c
 lapacke_zggbal.c
@@ -4704,6 +4734,8 @@ lapacke_zungrq.c
 lapacke_zungrq_work.c
 lapacke_zungtr.c
 lapacke_zungtr_work.c
+lapacke_zungtsqr_row.c
+lapacke_zungtsqr_row_work.c
 lapacke_zunmbr.c
 lapacke_zunmbr_work.c
 lapacke_zunmhr.c

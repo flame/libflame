@@ -28,7 +28,6 @@
 *****************************************************************************
 * Contents: Native middle-level C interface to LAPACK function cheevd_2stage
 * Author: Intel Corporation
-* Generated December 2016
 *****************************************************************************/
 
 #include "lapacke_utils.h"
@@ -79,7 +78,11 @@ lapack_int LAPACKE_cheevd_2stage_work( int matrix_layout, char jobz, char uplo,
             info = info - 1;
         }
         /* Transpose output matrices */
-        LAPACKE_che_trans( LAPACK_COL_MAJOR, uplo, n, a_t, lda_t, a, lda );
+        if ( jobz == 'V' || jobz == 'v' ) {
+            LAPACKE_cge_trans( LAPACK_COL_MAJOR, n, n, a_t, lda_t, a, lda );
+        } else {
+            LAPACKE_che_trans( LAPACK_COL_MAJOR, uplo, n, a_t, lda_t, a, lda ); 
+        }
         /* Release memory and exit */
         LAPACKE_free( a_t );
 exit_level_0:

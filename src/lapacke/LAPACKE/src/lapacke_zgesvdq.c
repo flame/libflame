@@ -28,7 +28,6 @@
 *****************************************************************************
 * Contents: Native high-level C interface to LAPACK function zgesvdq
 * Author: Intel Corporation
-* Generated November 2018
 *****************************************************************************/
 
 #include "lapacke_utils.h"
@@ -70,12 +69,8 @@ lapack_int LAPACKE_zgesvdq( int matrix_layout, char joba, char jobp,
     if( info != 0 ) {
         goto exit_level_0;
     }
-    liwork = (lapack_int)iwork_query;
-#ifdef _WIN32
-    lcwork = (lapack_int)lapack_complex_double_real(cwork_query);
-#else
-    lcwork = (lapack_int)cwork_query;
-#endif
+    liwork = iwork_query;
+    lcwork = LAPACK_Z2INT(cwork_query);
     lrwork = (lapack_int)rwork_query;
     /* Allocate memory for work arrays */
     iwork = (lapack_int*)LAPACKE_malloc( sizeof(lapack_int) * liwork );
