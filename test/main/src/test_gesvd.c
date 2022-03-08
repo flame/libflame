@@ -28,23 +28,23 @@ static test_thresh_t thresh = { 50, 20,   // warn, pass for s
 								50, 20 }; // warn, pass for z
 
 // Local prototypes.
-void fla_test_gesvd_experiment(test_params_t params, integer datatype, integer p_cur, integer pci,
+void fla_test_gesvd_experiment(test_params_t *params, integer datatype, integer p_cur, integer pci,
 									integer n_repeats, double* perf, double* t, double* residual);
 void GESVD_run(int jobu, int jobv, integer m_A, integer n_A, void *A, void *s, void *U, void *V, integer datatype, integer n_repeats, double* time_min_);
 void GESVD_solve(integer m_A, integer n_A, void *A, void *A_test, void *s_test, void *U_test, void *V_test, integer datatype, double* residual);
 inline void GESVD_API(integer datatype, char* jobu, char* jobv, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, void* rwork, integer* info);
 void Param_map_svd_type( int svd_type, void* lapack_svd_type );
 
-void fla_test_gesvd(test_params_t params)
+void fla_test_gesvd(test_params_t *params)
 {
 	fla_test_output_info("--- %s ---\n", op_str);
 	fla_test_output_info("\n");
 	fla_test_op_driver(front_str, lapack_str, NUM_PARAM_COMBOS, pc_str, NUM_MATRIX_ARGS,
-							params, thresh, fla_test_gesvd_experiment);
+							params, thresh, SVD, fla_test_gesvd_experiment);
 }
 
 
-void fla_test_gesvd_experiment(test_params_t params,
+void fla_test_gesvd_experiment(test_params_t *params,
 	integer  datatype,
 	integer  p_cur,
 	integer pci,

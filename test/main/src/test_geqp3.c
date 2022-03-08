@@ -22,23 +22,23 @@ static test_thresh_t thresh = { 50, 20,   // warn, pass for s
 
 
 // Local prototypes.
-void fla_test_geqp3_experiment(test_params_t params, integer datatype, integer  p_cur, integer  pci, integer  n_repeats,
+void fla_test_geqp3_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  pci, integer  n_repeats,
 									double* perf, double* t,double* residual);
 void GEQP3_run(integer m_A, integer n_A, void *A, void *j, void *T, integer datatype, integer n_repeats, double* time_min_);
 inline void GEQP3_API(integer datatype, integer* m, integer* n, void* a, integer* lda, integer* jpvt, void* tau, void* work, void* rwork, integer* lwork, integer* info);
 void GEQP3_solve(integer m_A, integer n_A, void *A, void *A_test, void *j_test, void *T_test, integer datatype, double* residual);
 
 
-void fla_test_geqp3(test_params_t params)
+void fla_test_geqp3(test_params_t *params)
 {
 	fla_test_output_info("--- %s ---\n", op_str);
 	fla_test_output_info("\n");
 	fla_test_op_driver(front_str, lapack_str, NUM_PARAM_COMBOS, pc_str, NUM_MATRIX_ARGS,
-							params, thresh, fla_test_geqp3_experiment);
+							params, thresh, LIN, fla_test_geqp3_experiment);
 }
 
 
-void fla_test_geqp3_experiment(test_params_t params,
+void fla_test_geqp3_experiment(test_params_t *params,
 	int  datatype,
 	integer  p_cur,
 	integer  pci,

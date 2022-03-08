@@ -1,3 +1,6 @@
+5             Number of repeats per experiment
+sdcz          Datatype(s) to test
+-----------------------------------------------------------------------------------
 1   gesvd   Singular value decomposition                  (0 = disable; 1 = enable)
 1   geqp3   QR factorization with column pivoting         (0 = disable; 1 = enable)
 1   gerqf   RQ factorisation                              (0 = disable; 1 = enable)

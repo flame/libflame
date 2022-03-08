@@ -7,10 +7,10 @@
 
 
 // Test API function declaration
-void fla_test_gesvd(test_params_t params);
-void fla_test_geqp3(test_params_t params);
-void fla_test_gerqf(test_params_t params);
-void fla_test_gerq2(test_params_t params);
+void fla_test_gesvd(test_params_t *params);
+void fla_test_geqp3(test_params_t *params);
+void fla_test_gerqf(test_params_t *params);
+void fla_test_gerq2(test_params_t *params);
 
 
 // Add test api function call entry below

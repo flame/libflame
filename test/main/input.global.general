@@ -1,6 +1,0 @@
-5             Number of repeats per experiment
-sdcz          Datatype(s) to test
-100           Problem size: first to test
-500           Problem size: maximum to test
-100           Problem size: increment between experiments
-10            Size of sub-matrix to be factorized for incomplete factorizations ( '-2'-> Test for possible valid sizes, '-1' -> Test for Random value  (or) Given valid value )

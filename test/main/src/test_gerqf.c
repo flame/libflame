@@ -21,25 +21,25 @@ static test_thresh_t thresh = { 50, 20,   // warn, pass for s
 								50, 20 }; // warn, pass for z
 
 // Local prototypes.
-void fla_test_gerqf_experiment(test_params_t params, integer  datatype, integer  p_cur, integer pci,
+void fla_test_gerqf_experiment(test_params_t *params, integer  datatype, integer  p_cur, integer pci,
 									integer n_repeats, double* perf, double* t, double* residual);
 void GERQF_run(integer m_A, integer n_A, void *A, void *T, integer datatype, integer n_repeats, double* time_min_);
 inline void GERQF_API(integer datatype, integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *lwork, integer *info);
 void GERQF_solve(integer m_A, integer n_A, void *A, void *A_test, void *T_test, integer datatype, double* residual);
 
 
-void fla_test_gerqf(test_params_t params)
+void fla_test_gerqf(test_params_t *params)
 {
 
 	fla_test_output_info("--- %s ---\n", op_str);
 	fla_test_output_info("\n");
 	fla_test_op_driver(front_str, lapack_str, NUM_PARAM_COMBOS, pc_str, NUM_MATRIX_ARGS,
-							params, thresh, fla_test_gerqf_experiment);
+							params, thresh, LIN, fla_test_gerqf_experiment);
 
 }
 
 
-void fla_test_gerqf_experiment(test_params_t params,
+void fla_test_gerqf_experiment(test_params_t *params,
 	integer  datatype,
 	integer  p_cur,
 	integer pci,

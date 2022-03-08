@@ -1,0 +1,41 @@
+Mode 1  // Enter:- 0: discrete, 1: Combinational, 2: Range with step increments of Matrix sizes
+Num_Ranges 4
+MRange_start 10 100 1000 2000
+MRange_end   20 300 1600 300
+MRange_step_size 10 100 200 1000
+NRange_start 5 120 1400 2500
+NRange_end   100 1000 2000 5000
+NRange_step_size 15 130 250 1600
+Num_Tests 4
+howmny A B S B
+initv  N U N U
+job_seqr E S E S
+eigsrc  Q N Q N
+side L R L R
+job  E V B B
+howmny_trsna  A S A A
+job_trsen N E V B
+compq V V V N
+trana_real N T N T
+trana_complex N T C T
+tranb_real N T T N
+tranb_complex N T T C
+isgn 1 -1 -1 1
+gghrd_threshold 10.0 10.0 10.0 10.0
+ggbal_threshold 10.0 10.0 10.0 10.0
+GNSEP_threshold 5.0 10.0 20.0 30.0
+compq_hgeqz N I V I
+compz_hgeqz N I V I
+side_tgevc L R B B
+jobvsl N V V V
+jobvsr V N V V
+sort_gges N N N N
+sense_ggsex N N N N
+balance_ggevx N P S B
+sense_ggevx N E V B
+sort_gees N N N N
+wantz 0 1 1 1
+wantq 1 0 1 1
+ijob 0 1 2 3
+unmhr_trans N C N C
+
