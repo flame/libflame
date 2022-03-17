@@ -2,6 +2,11 @@
 	Copyright (c) 2022 Advanced Micro Devices, Inc.  All rights reserved.
 */
 
+// global variables
+extern float s_zero, s_one, s_n_one;
+extern double d_zero, d_one, d_n_one;
+extern scomplex c_zero, c_one, c_n_one;
+extern dcomplex z_zero, z_one, z_n_one;
 
 #define DRAND()  ( ( double ) rand() / ( ( double ) RAND_MAX / 2.0F ) ) - 1.0F;
 #define SRAND()  ( float ) ( ( double ) rand() / ( ( double ) RAND_MAX / 2.0F ) ) - 1.0F;
@@ -10,50 +15,25 @@
 
 #define max( x, y ) ( (x) > (y) ? (x) : (y) )
 
+/* vector functions*/
+void create_vector(integer datatype, void **A, integer M);
+void create_realtype_vector(integer datatype, void **A, integer M);
+void free_vector(void *A);
+void rand_vector(integer datatype, void *A, integer M, integer LDA);
+void copy_vector(integer datatype, integer M, void *A, integer LDA, void *B, integer LDB);
+void copy_realtype_vector(integer datatype, integer M, void *A, integer LDA, void *B, integer LDB);
+
 /* matrix functions*/
-void create_matrix(integer datatype, integer m, integer n, void **A);
-void create_realtype_matrix(integer datatype, integer m, integer n, void **A);
+void create_matrix(integer datatype, void **A, integer M, integer N);
+void create_realtype_matrix(integer datatype, void **A, integer M, integer N);
+void* get_m_ptr(integer datatype, void *A, integer M, integer N, integer LDA);
 void free_matrix(void *A);
-
-/* Initialize matrix with random values */
-void rand_matrix(integer datatype, integer m, integer n, void *A);
-void rand_matrix_s( float *A, integer M, integer N, integer LDA );
-void rand_matrix_d( double *A, integer M, integer N, integer LDA );
-void rand_matrix_c( scomplex *A, integer M, integer N, integer LDA );
-void rand_matrix_z( dcomplex *A, integer M, integer N, integer LDA );
-
-/* Initialize symmetric matrix with random values */
-void rand_sym_matrix_s( float *A, integer M, integer N, integer LDA );
-void rand_sym_matrix_d( double *A, integer M, integer N, integer LDA );
-void rand_sym_matrix_c( scomplex *A, integer M, integer N, integer LDA );
-void rand_sym_matrix_z( dcomplex *A, integer M, integer N, integer LDA );
-
-/* Copy a matrix */
-void copy_matrix(integer datatype, integer m, integer n, void *A, void *B);
-void copy_realtype_matrix(integer datatype, integer m, integer n, void *A, void *B);
-void copy_matrix_i( integer *A, integer *B, integer M, integer N, integer LDA, integer LDB );
-void copy_matrix_s( float *A, float *B, integer M, integer N, integer LDA, integer LDB );
-void copy_matrix_d( double *A, double *B, integer M, integer N, integer LDA, integer LDB );
-void copy_matrix_c( scomplex *A, scomplex *B, integer M, integer N, integer LDA, integer LDB );
-void copy_matrix_z( dcomplex *A, dcomplex *B, integer M, integer N, integer LDA, integer LDB );
-
-/* Pack a symmetric matrix in column first order */
-void pack_matrix_lt_s( float *A, float *B, integer N, integer LDA );
-void pack_matrix_lt_d( double *A, double *B, integer N, integer LDA );
-void pack_matrix_lt_c( scomplex *A, scomplex *B, integer N, integer LDA );
-void pack_matrix_lt_z( dcomplex *A, dcomplex *B, integer N, integer LDA );
-
-/* Initialize a matrix with zeros */
-void reset_matrix_s( float *A, integer M, integer N, integer LDA );
-void reset_matrix_d( double *A, integer M, integer N, integer LDA );
-void reset_matrix_c( scomplex *A, integer M, integer N, integer LDA );
-void reset_matrix_z( dcomplex *A, integer M, integer N, integer LDA );
-
-/* Set a matrix to identity */
-void set_identity_s( float *A, integer M, integer N, integer LDA );
-void set_identity_d( double *A, integer M, integer N, integer LDA );
-void set_identity_c( scomplex *A, integer M, integer N, integer LDA );
-void set_identity_z( dcomplex *A, integer M, integer N, integer LDA );
+void rand_matrix(integer datatype, void *A, integer M, integer N, integer LDA);
+void rand_sym_matrix(integer datatype, void *A, integer M, integer N, integer LDA);
+void copy_matrix(integer datatype, char *uplo, integer M, integer N, void *A, integer LDA, void *B, integer LDB);
+void copy_realtype_matrix(integer datatype, char *uplo, integer M, integer N, void *A, integer LDA, void *B, integer LDB);
+void reset_matrix(integer datatype, integer M, integer N, void *A, integer LDA);
+void set_identity_matrix(integer datatype, integer M, integer N, void *A, integer LDA);
 
 /* Division of complex types */
 void c_div_t(scomplex *cp, scomplex *ap, scomplex *bp);

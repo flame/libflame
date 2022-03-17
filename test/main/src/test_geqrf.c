@@ -11,40 +11,39 @@
 
 
 // Local prototypes.
-void fla_test_gerqf_experiment(test_params_t *params, integer  datatype, integer  p_cur, integer  q_cur, integer pci,
-									integer n_repeats, double* perf, double* t, double* residual);
-void prepare_gerqf_run(integer m_A, integer n_A, void *A, void *T, integer datatype, integer n_repeats, double* time_min_);
-inline void invoke_gerqf(integer datatype, integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *lwork, integer *info);
-void validate_gerqf(integer m_A, integer n_A, void *A, void *A_test, void *T_test, integer datatype, double* residual);
+void fla_test_geqrf_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats,
+									double* perf, double* t,double* residual);
+void prepare_geqrf_run(integer m_A, integer n_A, void *A, void *T, integer datatype, integer n_repeats, double* time_min_);
+inline void invoke_geqrf(integer datatype, integer* m, integer* n, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
+void validate_geqrf(integer m_A, integer n_A, void *A, void *A_test, void *T_test, integer datatype, double* residual);
 
 
-void fla_test_gerqf(test_params_t *params)
+
+void fla_test_geqrf(test_params_t *params)
 {
 	char* op_str = "RQ factorization";
-	char* front_str = "GERQF";
+	char* front_str = "GEQRF";
 	char* lapack_str = "LAPACK";
-	char* pc_str[NUM_PARAM_COMBOS] = { "" };
+	char* pc_str[NUM_PARAM_COMBOS] = { ""};
 
 	fla_test_output_info("--- %s ---\n", op_str);
 	fla_test_output_info("\n");
 	fla_test_op_driver(front_str, lapack_str, NUM_PARAM_COMBOS, pc_str, NUM_MATRIX_ARGS,
-							params, LIN, fla_test_gerqf_experiment);
-
+							params, LIN, fla_test_geqrf_experiment);
 }
 
-
-void fla_test_gerqf_experiment(test_params_t *params,
-	integer  datatype,
+void fla_test_geqrf_experiment(test_params_t *params,
+	int  datatype,
 	integer  p_cur,
 	integer  q_cur,
-	integer pci,
-	integer n_repeats,
+	integer  pci,
+	integer  n_repeats,
 	double* perf,
 	double* t,
 	double* residual)
 {
 	integer m, n, cs_A;
-	void *A, *A_test, *T;
+	void *A = NULL, *A_test = NULL, *T = NULL;
 	double time_min = 1e9;
 
 	// Get input matrix dimensions.
@@ -63,9 +62,9 @@ void fla_test_gerqf_experiment(test_params_t *params,
 	create_matrix(datatype, &A_test, m, n);
 	copy_matrix(datatype, "full", m, n, A, cs_A, A_test, cs_A);
 
-	prepare_gerqf_run(m, n, A_test, T, datatype, n_repeats, &time_min);
+	prepare_geqrf_run(m, n, A_test, T, datatype, n_repeats, &time_min);
 
-	// Execution time
+	// execution time
 	*t = time_min;
 
 	// performance computation
@@ -77,8 +76,8 @@ void fla_test_gerqf_experiment(test_params_t *params,
 	if(datatype == COMPLEX || datatype == DOUBLE_COMPLEX)
 		*perf *= 4.0;
 
-	// Output validation
-	validate_gerqf(m, n, A, A_test, T, datatype, residual);
+	// output validation
+	validate_geqrf(m, n, A, A_test, T, datatype, residual);
 
 	// Free up the buffers
 	free_matrix(A);
@@ -87,8 +86,7 @@ void fla_test_gerqf_experiment(test_params_t *params,
 }
 
 
-void prepare_gerqf_run(integer m_A,
-	integer n_A,
+void prepare_geqrf_run(integer m_A, integer n_A,
 	void *A,
 	void *T,
 	integer datatype,
@@ -96,7 +94,7 @@ void prepare_gerqf_run(integer m_A,
 	double* time_min_)
 {
 	integer cs_A, min_A, i;
-	void *A_save, *T_test, *work;
+	void *A_save = NULL, *T_test = NULL, *work = NULL;
 	integer lwork = -1, info = 0;
 	double time_min = 1e9, exe_time;
 
@@ -112,8 +110,8 @@ void prepare_gerqf_run(integer m_A,
 	   and ideal workspace size based on internal block size.*/
 	create_vector(datatype, &work, 1);
 
-	// call to  gerqf API
-	invoke_gerqf(datatype, &m_A, &n_A, NULL, &cs_A, NULL, work, &lwork, &info);
+	// call to  geqrf API
+	invoke_geqrf(datatype, &m_A, &n_A, NULL, &cs_A, NULL, work, &lwork, &info);
 
 	// Get work size
 	lwork = get_work_value( datatype, work );
@@ -131,13 +129,13 @@ void prepare_gerqf_run(integer m_A,
 		// T_test vector will hold the scalar factors of the elementary reflectors.
 		create_vector(datatype, &T_test, min_A);
 
-		// create work buffer
+		// Create work buffer
 		create_matrix(datatype, &work, lwork, 1);
 
 		exe_time = fla_test_clock();
 
 		// Call to  gerqf API
-		invoke_gerqf(datatype, &m_A, &n_A, A, &cs_A, T_test, work, &lwork, &info);
+		invoke_geqrf(datatype, &m_A, &n_A, A, &cs_A, T_test, work, &lwork, &info);
 
 		exe_time = fla_test_clock() - exe_time;
 
@@ -158,75 +156,71 @@ void prepare_gerqf_run(integer m_A,
 }
 
 
-
-inline void invoke_gerqf(integer datatype, integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *lwork, integer *info)
+inline void invoke_geqrf(integer datatype, integer* m, integer* n, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info)
 {
 	switch(datatype)
 	{
 		case FLOAT:
 		{
-			sgerqf_(m, n, a, lda, tau, work, lwork, info);
+			sgeqrf_(m, n, a, lda, tau, work, lwork, info);
 			break;
 		}
+		
 		case DOUBLE:
 		{
-			dgerqf_(m, n, a, lda, tau, work, lwork, info);
+			dgeqrf_(m, n, a, lda, tau, work, lwork, info);
 			break;
 		}
+
 		case COMPLEX:
 		{
-			cgerqf_(m, n, a, lda, tau, work, lwork, info);
+			cgeqrf_(m, n, a, lda, tau, work, lwork, info);
 			break;
 		}
+
 		case DOUBLE_COMPLEX:
 		{
-			zgerqf_(m, n, a, lda, tau, work, lwork, info);
+			zgeqrf_(m, n, a, lda, tau, work, lwork, info);
 			break;
 		}
 	}
 }
 
 
-void validate_gerqf(integer m_A,
+void validate_geqrf(integer m_A,
 	integer n_A,
 	void *A,
 	void *A_test,
 	void *T_test,
-	integer datatype,
+	int datatype,
 	double* residual)
 {
-	void *R, *Q, *I, *work;
-	integer cs_A, min_A, diff_A;
+	void *Q = NULL, *R = NULL, *I = NULL, *work = NULL;
+	integer cs_A, min_A;
 	integer lwork = -1, tinfo;
 
 	cs_A = m_A;
 	min_A = min(m_A, n_A);
 
-	if(m_A <= n_A)
-		diff_A = n_A - m_A;
-	else
-		diff_A = m_A - n_A;
-
-	// Create R and Q matrices.
+	// Create Q and R matrices.
+	create_matrix(datatype, &Q, m_A, m_A);
 	create_matrix(datatype, &R, m_A, n_A);
-	create_matrix(datatype, &Q, n_A, n_A);
+	reset_matrix(datatype, m_A, m_A, Q, m_A);
 	reset_matrix(datatype, m_A, n_A, R, cs_A);
-	reset_matrix(datatype, n_A, n_A, Q, n_A);
 
 	// Create Identity matrix to validate orthogonal property of matrix Q
-	create_matrix(datatype, &I, n_A, n_A);
+	create_matrix(datatype, &I, m_A, m_A);
 
 	// Extract R matrix and elementary reflectors from the input/output matrix parameter A_test.
 	if(m_A <= n_A)
 	{
-		copy_matrix(datatype, "Upper", m_A, m_A, get_m_ptr(datatype, A_test, 0, diff_A, m_A), m_A, get_m_ptr(datatype, R, 0, diff_A, m_A), m_A);
-		copy_matrix(datatype, "full", m_A, n_A, A_test, m_A, get_m_ptr(datatype, Q, diff_A, 0, n_A), n_A);
+		copy_matrix(datatype, "full", m_A, m_A, A_test, m_A, Q, m_A);
+		copy_matrix(datatype, "Upper", m_A, n_A, A_test, m_A, R, m_A);
 	}
 	else
 	{
-		copy_matrix(datatype, "full", diff_A, n_A, A_test, m_A, R, m_A);
-		copy_matrix(datatype, "Upper", n_A, n_A, get_m_ptr(datatype, A_test, diff_A, 0, m_A), m_A, get_m_ptr(datatype, R, diff_A, 0, m_A), m_A);
-		copy_matrix(datatype, "full", n_A, n_A, get_m_ptr(datatype, A_test, diff_A, 0, m_A), m_A, Q, n_A);
+		copy_matrix(datatype, "full", m_A, n_A, get_m_ptr(datatype, A_test, 1, 0, m_A), m_A, get_m_ptr(datatype, Q, 1, 0, m_A), m_A);
+		copy_matrix(datatype, "Upper", n_A, n_A, A_test, m_A, R, m_A);
 	}
 
 	switch( datatype )
@@ -238,31 +232,30 @@ void validate_gerqf(integer m_A,
 
 			/* sorgrq api generates the Q martrix using the elementary reflectors and scalar 
 			   factor values*/
-			sorgrq_(&n_A, &n_A, &min_A, NULL, &n_A, NULL, &twork, &lwork, &tinfo);
+			sorgqr_(&m_A, &m_A, &min_A, NULL, &m_A, NULL, &twork, &lwork, &tinfo);
 
 			lwork = twork;
 			create_vector(datatype,  &work, lwork);
 
-			sorgrq_(&n_A, &n_A, &min_A, Q, &n_A, T_test, work, &lwork, &tinfo);
+			sorgqr_(&m_A, &m_A, &min_A, Q, &m_A, T_test, work, &lwork, &tinfo);
 
 			/* Test 1
-			   compute norm(R - Q'*A) / (N * norm(A) * EPS)*/
-			sgemm_("N", "T", &m_A, &n_A, &n_A, &s_n_one, A, &m_A, Q, &n_A, &s_one, R, &m_A);
+			   compute norm(R - Q'*A) / (V * norm(A) * EPS)*/
+			sgemm_("T", "N", &m_A, &n_A, &m_A, &s_n_one, Q, &m_A, A, &m_A, &s_one, R, &m_A);
 			
 			norm_A = slange_("1", &m_A, &n_A, A, &m_A, work);
 			norm = slange_("1", &m_A, &n_A, R, &m_A, work);
 
-			// Get machine precision
 			eps = slamch_("P");
 
 			resid1 = norm/(eps * norm_A * (float)n_A);
 
 			/* Test 2
 			   compute norm(I - Q*Q') / (N * EPS)*/
-			slaset_("full", &n_A, &n_A, &s_zero, &s_one, I, &n_A);
-			sgemm_("N", "T", &n_A, &n_A, &n_A, &s_n_one, Q, &n_A, Q, &n_A, &s_one, I, &n_A);
+			slaset_("full", &m_A, &m_A, &s_zero, &s_one, I, &m_A);
+			sgemm_("N", "T", &m_A, &m_A, &m_A, &s_n_one, Q, &m_A, Q, &m_A, &s_one, I, &m_A);
 
-			norm = slange_("1", &n_A, &n_A, I, &n_A, work);
+			norm = slange_("1", &m_A, &m_A, I, &m_A, work);
 			resid2 = norm/(eps * (float)n_A);
 
 			*residual = (double)max(resid1, resid2);
@@ -275,16 +268,16 @@ void validate_gerqf(integer m_A,
 
 			/* dorgrq api generates the Q martrix using the elementary reflectors and scalar 
 			   factor values*/
-			dorgrq_(&n_A, &n_A, &min_A, NULL, &n_A, NULL, &twork, &lwork, &tinfo);
+			dorgqr_(&m_A, &m_A, &min_A, NULL, &m_A, NULL, &twork, &lwork, &tinfo);
 
 			lwork = twork;
 			create_vector(datatype,  &work, lwork);
 
-			dorgrq_(&n_A, &n_A, &min_A, Q, &n_A, T_test, work, &lwork, &tinfo);
+			dorgqr_(&m_A, &m_A, &min_A, Q, &m_A, T_test, work, &lwork, &tinfo);
 
 			/* Test 1
 			   compute norm(R - Q'*A) / (V * norm(A) * EPS)*/
-			dgemm_("N", "T", &m_A, &n_A, &n_A, &d_n_one, A, &m_A, Q, &n_A, &d_one, R, &m_A);
+			dgemm_("T", "N", &m_A, &n_A, &m_A, &d_n_one, Q, &m_A, A, &m_A, &d_one, R, &m_A);
 			
 			norm_A = dlange_("1", &m_A, &n_A, A, &m_A, work);
 			norm = dlange_("1", &m_A, &n_A, R, &m_A, work);
@@ -292,13 +285,13 @@ void validate_gerqf(integer m_A,
 			eps = dlamch_("P");
 
 			resid1 = norm/(eps * norm_A * (double)n_A);
-			
+
 			/* Test 2
 			   compute norm(I - Q*Q') / (N * EPS)*/
-			dlaset_("full", &n_A, &n_A, &d_zero, &d_one, I, &n_A);
-			dgemm_("N", "T", &n_A, &n_A, &n_A, &d_n_one, Q, &n_A, Q, &n_A, &d_one, I, &n_A);
+			dlaset_("full", &m_A, &m_A, &d_zero, &d_one, I, &m_A);
+			dgemm_("N", "T", &m_A, &m_A, &m_A, &d_n_one, Q, &m_A, Q, &m_A, &d_one, I, &m_A);
 
-			norm = dlange_("1", &n_A, &n_A, I, &n_A, work);
+			norm = dlange_("1", &m_A, &m_A, I, &m_A, work);
 			resid2 = norm/(eps * (double)n_A);
 
 			*residual = (double)max(resid1, resid2);
@@ -309,18 +302,19 @@ void validate_gerqf(integer m_A,
 			scomplex twork;
 			float norm, norm_A, eps, resid1, resid2;
 
-			/* dorgrq api generates the Q martrix using the elementary reflectors and scalar 
+			/* corgrq api generates the Q martrix using the elementary reflectors and scalar 
 			   factor values*/
-			cungrq_(&n_A, &n_A, &min_A, NULL, &n_A, NULL, &twork, &lwork, &tinfo);
+			cungqr_(&m_A, &m_A, &min_A, NULL, &m_A, NULL, &twork, &lwork, &tinfo);
 
 			lwork = twork.real;
 			create_vector(datatype,  &work, lwork);
 
-			cungrq_(&n_A, &n_A, &min_A, Q, &n_A, T_test, work, &lwork, &tinfo);
-			
+			cungqr_(&m_A, &m_A, &min_A, Q, &m_A, T_test, work, &lwork, &tinfo);
+
 			/* Test 1
 			   compute norm(R - Q'*A) / (V * norm(A) * EPS)*/
-			cgemm_("N", "C", &m_A, &n_A, &n_A, &c_n_one, A, &m_A, Q, &n_A, &c_one, R, &m_A);
+			cgemm_("C", "N", &m_A, &n_A, &m_A, &c_n_one, Q, &m_A, A, &m_A, &c_one, R, &m_A);
+			
 			norm_A = clange_("1", &m_A, &n_A, A, &m_A, work);
 			norm = clange_("1", &m_A, &n_A, R, &m_A, work);
 
@@ -330,10 +324,10 @@ void validate_gerqf(integer m_A,
 
 			/* Test 2
 			   compute norm(I - Q*Q') / (N * EPS)*/
-			claset_("full", &n_A, &n_A, &c_zero, &c_one, I, &n_A);
-			cgemm_("N", "C", &n_A, &n_A, &n_A, &c_n_one, Q, &n_A, Q, &n_A, &c_one, I, &n_A);
+			claset_("full", &m_A, &m_A, &c_zero, &c_one, I, &m_A);
+			cgemm_("N", "C", &m_A, &m_A, &m_A, &c_n_one, Q, &m_A, Q, &m_A, &c_one, I, &m_A);
 
-			norm = clange_("1", &n_A, &n_A, I, &n_A, work);
+			norm = clange_("1", &m_A, &m_A, I, &m_A, work);
 			resid2 = norm/(eps * (float)n_A);
 
 			*residual = (double)max(resid1, resid2);
@@ -344,18 +338,19 @@ void validate_gerqf(integer m_A,
 			dcomplex twork;
 			double norm, norm_A, eps, resid1, resid2;
 
-			/* dorgrq api generates the Q martrix using the elementary reflectors and scalar 
+			/* zorgrq api generates the Q martrix using the elementary reflectors and scalar 
 			   factor values*/
-			zungrq_(&n_A, &n_A, &min_A, NULL, &n_A, NULL, &twork, &lwork, &tinfo);
+			zungqr_(&m_A, &m_A, &min_A, NULL, &m_A, NULL, &twork, &lwork, &tinfo);
 
 			lwork = twork.real;
-			create_vector(datatype,  &work, lwork);
+			create_vector(datatype, &work, lwork);
 
-			zungrq_(&n_A, &n_A, &min_A, Q, &n_A, T_test, work, &lwork, &tinfo);
-			
+			zungqr_(&m_A, &m_A, &min_A, Q, &m_A, T_test, work, &lwork, &tinfo);
+
 			/* Test 1
 			   compute norm(R - Q'*A) / (V * norm(A) * EPS)*/
-			zgemm_("N", "C", &m_A, &n_A, &n_A, &z_n_one, A, &m_A, Q, &n_A, &z_one, R, &m_A);
+			zgemm_("C", "N", &m_A, &n_A, &m_A, &z_n_one, Q, &m_A, A, &m_A, &z_one, R, &m_A);
+			
 			norm_A = zlange_("1", &m_A, &n_A, A, &m_A, work);
 			norm = zlange_("1", &m_A, &n_A, R, &m_A, work);
 
@@ -365,17 +360,19 @@ void validate_gerqf(integer m_A,
 
 			/* Test 2
 			   compute norm(I - Q*Q') / (N * EPS)*/
-			zlaset_("full", &n_A, &n_A, &z_zero, &z_one, I, &n_A);
-			zgemm_("N", "C", &n_A, &n_A, &n_A, &z_n_one, Q, &n_A, Q, &n_A, &z_one, I, &n_A);
+			zlaset_("full", &m_A, &m_A, &z_zero, &z_one, I, &m_A);
+			zgemm_("N", "C", &m_A, &m_A, &m_A, &z_n_one, Q, &m_A, Q, &m_A, &z_one, I, &m_A);
 
-			norm = zlange_("1", &n_A, &n_A, I, &n_A, work);
+			norm = zlange_("1", &m_A, &m_A, I, &m_A, work);
 			resid2 = norm/(eps * (double)n_A);
 
 			*residual = (double)max(resid1, resid2);
+
 			break;
 		}
 	}
 
+	
 	// Free up buffers
 	free_matrix( R );
 	free_matrix( Q );
