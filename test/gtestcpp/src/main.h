@@ -29,7 +29,7 @@ extern char NETLIB_BLAS_LIB[60];
 
 extern void *blasModule, *lapackModule;
 
-/* structure to hold eigen parameters */
+/* Structure to hold Symmetric eigen parameters */
 typedef struct EIG_paramlist_t {
   char jobz;  /* JOBZ is CHARACTER*1
                   = 'N':  Compute eigenvalues only;
@@ -390,6 +390,54 @@ typedef struct EIG_paramlist_t {
                           only calculates the optimal size of the WORK array, returns
                           this value as the first entry of the WORK array, and no error
                           message related to LWORK is issued by XERBLA. */
+  // Added for geqrf()
+  integer lwork_geqrf; /* LWORK is INTEGER
+                          The dimension of the array WORK.  LWORK >= max(1,N).
+                          For optimum performance LWORK >= N*NB, where NB is
+                          the optimal blocksize.
+
+                          If LWORK = -1, then a workspace query is assumed; the routine
+                          only calculates the optimal size of the WORK array, returns
+                          this value as the first entry of the WORK array, and no error
+                          message related to LWORK is issued by XERBLA.*/
+  // Added for orgqr()
+  integer k; /* K is INTEGER
+                The number of elementary reflectors whose product defines the
+                matrix Q. N >= K >= 0.*/
+  // Added for syev()
+  integer lwork_syev;  /* LWORK is INTEGER
+                          The length of the array WORK.  LWORK >= max(1,3*N-1).
+                          For optimal efficiency, LWORK >= (NB+2)*N,
+                          where NB is the blocksize for DSYTRD returned by ILAENV.
+
+                          If LWORK = -1, then a workspace query is assumed; the routine
+                          only calculates the optimal size of the WORK array, returns
+                          this value as the first entry of the WORK array, and no error
+                          message related to LWORK is issued by XERBLA.*/
+  // Added for syevd()
+  integer lwork_syevd; /* LWORK is INTEGER
+                          The dimension of the array WORK.
+                          If N <= 1,               LWORK must be at least 1.
+                          If JOBZ = 'N' and N > 1, LWORK must be at least 2*N+1.
+                          If JOBZ = 'V' and N > 1, LWORK must be at least
+                                                                1 + 6*N + 2*N**2.
+
+                          If LWORK = -1, then a workspace query is assumed; the routine
+                          only calculates the optimal sizes of the WORK and IWORK
+                          arrays, returns these values as the first entries of the WORK
+                          and IWORK arrays, and no error message related to LWORK or
+                          LIWORK is issued by XERBLA.*/
+  integer liwork_syevd;  /* LIWORK is INTEGER
+                            The dimension of the array IWORK.
+                            If N <= 1,                LIWORK must be at least 1.
+                            If JOBZ  = 'N' and N > 1, LIWORK must be at least 1.
+                            If JOBZ  = 'V' and N > 1, LIWORK must be at least 3 + 5*N.
+
+                            If LIWORK = -1, then a workspace query is assumed; the
+                            routine only calculates the optimal sizes of the WORK and
+                            IWORK arrays, returns these values as the first entries of
+                            the WORK and IWORK arrays, and no error message related to
+                            LWORK or LIWORK is issued by XERBLA.*/
 } EIG_paramlist;
 
 /* structure to hold Linear solver parameters */
@@ -605,7 +653,7 @@ void closelibs(void);
 #define SRAND_SEED_VALUE 1
 
 // Macro to enable status/error messages of test APIs.
-#define PRINT_MSGS 1
+#define PRINT_MSGS 0
 
 #if PRINT_MSGS 
 #define PRINTF(...) printf(__VA_ARGS__)
@@ -618,7 +666,7 @@ void closelibs(void);
    1 - enables the print of array contents.
    Note: This macro need to be enabled along with PRINT_INPUT_ARRAYS or
    PRINT_OUTPUT_ARRAYS macros to print the array contents.*/
-#define PRINT_ARRAYS 1
+#define PRINT_ARRAYS 0
 
 /* Macro to enable print of contents of input arrays.
    0 - disables the print of input array contents.
@@ -637,7 +685,7 @@ void closelibs(void);
 /* Macro to print input values other than array contents.
    0 - disables the print of input values.
    1 - enables the print of input values.*/
-#define PRINT_INPUT_VALUES 1
+#define PRINT_INPUT_VALUES 0
 
 /* Macro to enable print of all contents of each array.
    0 - considers arrays of ARRAY_PRINT_SIZE size for PRINT_ARRAYS.
@@ -658,5 +706,8 @@ void closelibs(void);
 
 // Threshold value from glm.in for Generalized linear driver APIs
 #define LIN_DRVR_THRESHOLD 20.0
+
+// FLOPS per unit for performance calculation
+#define FLOPS_PER_UNIT_PERF      1e9
 
 #endif // MAIN_H

@@ -546,7 +546,6 @@ inline integer orgqr(integer* m, integer* n, integer* k, double* a, integer* lda
 {
   return dorgqr_(m, n, k, a, lda, tau, work, lwork, info);
 }
-
 // --- generates an M-by-N complex matrix Q with orthonormal columns ---
 inline integer ungqr(integer* m, integer* n, integer* k, scomplex* a, integer* lda, scomplex* tau, scomplex* work, integer* lwork, integer* info)
 {

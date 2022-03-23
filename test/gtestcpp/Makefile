@@ -56,7 +56,8 @@ LIBBLAS        := $(LIBBLAS_PATH)/libblis-mt.a
 LIBLAPACK      :=
 
 all: libflame
-libflame: 
+
+libflame: libflame_geqrf.x 
 #libflame_hbev.x \
 #libflame_hbev_2stage.x \
 #libflame_hbevd.x \

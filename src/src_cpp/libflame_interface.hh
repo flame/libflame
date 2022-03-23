@@ -6066,13 +6066,14 @@ integer lag2c(integer*m, integer* n, dcomplex* a, integer*lda, scomplex* sa, int
 
 * @return T Template based return value of the function.
  * */
-float slamch(char* cmach, integer cmach_len)
+template < typename T >
+T lamch(char* cmach)
 {
-  return fla_slamch(cmach, cmach_len);
-}
-double dlamch(char* cmach, integer cmach_len)
-{
-  return fla_dlamch(cmach, cmach_len);
+  if (typeid(T) == typeid(float)) {
+    return slamch_(cmach);
+  } else {
+    return dlamch_(cmach);
+  }
 }
 
 /*! @brief LAPY2 returns sqrt(x2+y2)
@@ -31599,6 +31600,11 @@ template< typename T >
 integer trevc(char* side, char* howmny, logical* select, integer* n,  T* t, integer* ldt, T* vl, integer* ldvl, T* vr, integer* ldvr, integer* mm, integer* m, T* work, integer* info)
 {
   return trevc(side, howmny, select, n,  t, ldt, vl, ldvl, vr, ldvr, mm, m, work, info);
+}
+template< typename T, typename Ta >
+integer trevc(char* side, char* howmny, logical* select, integer* n,  T* t, integer* ldt, T* vl, integer* ldvl, T* vr, integer* ldvr, integer* mm, integer* m, T* work, Ta* rwork, integer* info)
+{
+  return trevc(side, howmny, select, n,  t, ldt, vl, ldvl, vr, ldvr, mm, m, work, rwork, info);
 }
 
 /*! @brief TREXC reorders the real Schur factorization of a real matrix A = Q*T*Q**T

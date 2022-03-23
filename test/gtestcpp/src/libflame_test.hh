@@ -11,17 +11,366 @@
 #define LIBFLAME_TEST_HH
 
 #include "libflame_interface.hh"
+#include "libflame_utils_interface.hh"
+#include <sys/time.h>
+#include <time.h>
 
 #ifndef FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
 #define FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
 #endif
 
+// Global variables.
+double ref_time_sec = 0.0;
+float s_zero = 0, s_one = 1, s_n_one = -1;
+double d_zero = 0, d_one = 1, d_n_one = -1;
+scomplex c_zero = {0,0}, c_one = {1,0}, c_n_one = {-1,0};
+dcomplex z_zero = {0,0}, z_one = {1,0}, z_n_one = {-1,0};
+void *n_one = NULL, *one = NULL, *zero = NULL;
+
+#define DRAND()  ( ( double ) rand() / ( ( double ) RAND_MAX / 2.0F ) ) - 1.0F;
+#define SRAND()  ( float ) ( ( double ) rand() / ( ( double ) RAND_MAX / 2.0F ) ) - 1.0F;
+
+template <typename T>
+void alpha_beta_init()
+{
+  if (typeid(T) == typeid(float)) {
+    n_one = &s_n_one;
+    one = &s_one;
+    zero = &s_zero;
+  } else if (typeid(T) == typeid(double)) {
+    n_one = &d_n_one;
+    one = &d_one;
+    zero = &d_zero;
+  } else if (typeid(T) == typeid(scomplex)) {
+    n_one = &c_n_one;
+    one = &c_one;
+    zero = &c_zero;
+  } else if (typeid(T) == typeid(dcomplex)) {
+    n_one = &z_n_one;
+    one = &z_one;
+    zero = &z_zero;
+  }
+}
+
+/* create vector of given datatype*/
+template <typename T>
+void create_vector(T **A, integer M)
+{
+  *A = (T *)malloc(M * sizeof(T));
+
+  if (*A == NULL) {
+    fprintf( stderr, "malloc() returned NULL pointer\n");
+    abort();
+  }
+}
+
+template <typename T>
+void create_realtype_vector(T **A, integer M)
+{
+  *A = NULL;
+
+  if((typeid(T) == typeid(float)) || (typeid(T) == typeid(scomplex))) {
+    *A = (float *)malloc(M * sizeof(float));
+  } else {
+    *A = (double *)malloc(M * sizeof(double));
+  }
+  if (*A == NULL) {
+    fprintf( stderr, "malloc() returned NULL pointer\n");
+    abort();
+  }
+}
+
+/* free vector */
+void free_vector(void *A)
+{
+  if(A) {
+    free(A);
+  }
+}
+
+/* Initialize vector with random values */
+template <typename T>
+void rand_vector(T *A, integer M, integer LDA)
+{
+  integer i;
+
+  if (typeid(T) == typeid(float)) {
+    for (i = 0; i < M; i++) {
+      ((float *)A)[i * LDA] = SRAND();
+    }
+  } else if (typeid(T) == typeid(double)) {
+    for (i = 0; i < M; i++) {
+      ((double *)A)[i * LDA] = SRAND();
+    }
+  } else if (typeid(T) == typeid(scomplex)) {
+    for (i = 0; i < M; i++) {
+      ((scomplex *)A)[i * LDA].real = SRAND();
+      ((scomplex *)A)[i * LDA].imag = SRAND();
+    }
+  } else if (typeid(T) == typeid(dcomplex)) {
+    for (i = 0; i < M; i++) {
+      ((dcomplex *)A)[i * LDA].real = SRAND();
+      ((dcomplex *)A)[i * LDA].imag = SRAND();
+    }
+  }
+}
+
+/* Copy a vector */
+template <typename T>
+void copy_vector(integer M, T *A, integer LDA, T *B, integer LDB)
+{
+  if (typeid(T) == typeid(integer)) {
+    integer i;
+
+    for (i = 0; i < M; i++) {
+      ((T *)B)[ i * LDB ] = ((T *)A)[ i * LDA ];
+    }
+  } else {
+    libflame_utils::copy<T>(&M, A, &LDA, B, &LDB);
+  }
+}
+
+template <typename T>
+void copy_realtype_vector(integer M, T *A, integer LDA, T *B, integer LDB)
+{
+  if((typeid(T) == typeid(float)) || (typeid(T) == typeid(scomplex))) {
+    libflame_utils::copy<float>(&M, A, &LDA, B, &LDB);
+  } else {
+    libflame_utils::copy<double>(&M, A, &LDA, B, &LDB);
+  }
+}
+
+/* create matrix of given datatype*/
+template <typename T>
+void create_matrix(T **A, integer M, integer N)
+{
+  *A = (T *)malloc(M * N * sizeof(T));
+  if (*A == NULL) {
+    fprintf (stderr, "malloc() returned NULL pointer\n");
+    abort();
+  }
+}
+
+template <typename T>
+void create_realtype_matrix(T **A, integer M, integer N)
+{
+  *A = NULL;
+
+  if ((typeid(T) == typeid(float)) || (typeid(T) == typeid(scomplex))) {
+    *A = (float *)malloc(M * N * sizeof(float));
+  } else {
+    *A = (double *)malloc(M * N * sizeof(double));
+  }
+
+  if (*A == NULL) {
+    fprintf (stderr, "malloc() returned NULL pointer\n");
+    abort();
+  }
+}
+
+template <typename T>
+T* get_m_ptr(T *A, integer M, integer N, integer LDA)
+{
+  T *mat = ((T *)A) + M + N * LDA;
+  return mat;
+}
+
+/* free matrix */
+void free_matrix(void *A)
+{
+  if (A) {
+    free(A);
+  }
+}
+
+template <typename T>
+void rand_matrix_sd(T *A, integer M, integer N, integer LDA)
+{
+  integer i, j;
+  for (i = 0; i < N; i++) {
+    for (j = 0; j < M; j++) {
+      ((T *)A)[i * LDA + j] = SRAND();
+    }
+  }
+}
+
+template <typename T>
+void rand_matrix_cz(T *A, integer M, integer N, integer LDA)
+{
+  integer i, j;
+  for(i = 0; i < N; i++) {
+    for(j = 0; j < M; j++) {
+      ((T *)A)[i * LDA + j].real = SRAND();
+      ((T *)A)[i * LDA + j].imag = SRAND();
+    }
+  }
+}
+
+/* Initialize matrix with random values */
+template <typename T>
+void rand_matrix(T *A, integer M, integer N, integer LDA)
+{
+  if (typeid(T) == typeid(float)) {
+    rand_matrix_sd<float>((float *)A, M, N, LDA);
+  } else if (typeid(T) == typeid(double)) {
+    rand_matrix_sd<double>((double *)A, M, N, LDA);
+  } else if (typeid(T) == typeid(scomplex)) {
+    rand_matrix_cz<scomplex>((scomplex *)A, M, N, LDA);
+  } else if (typeid(T) == typeid(dcomplex)) {
+    rand_matrix_cz<dcomplex>((dcomplex *)A, M, N, LDA);
+  }
+}
+
+/* Initialize symmetric matrix with random values */
+template <typename T>
+void rand_sym_matrix(T *A, integer M, integer N, integer LDA)
+{
+  integer i, j;
+
+  if (typeid(T) == typeid(float)) {
+    for (i = 0; i < N; i++ ) {
+      for (j = i; j < M; j++) {
+        ((T *)A)[i * LDA + j] = SRAND();
+        ((T *)A)[j * LDA + i] = ((T *)A)[i * LDA + j];
+      }
+    }
+  } else if (typeid(T) == typeid(double)) {
+    for (i = 0; i < N; i++) {
+      for (j = i; j < M; j++) {
+        ((T *)A)[i * LDA + j] = SRAND();
+        ((T *)A)[j * LDA + i] = ((T *)A)[i * LDA + j];
+      }
+    }
+  }
+  else if ((typeid(T) == typeid(scomplex)) || 
+          (typeid(T) == typeid(dcomplex))) {
+    for (i = 0; i < N; i++) {
+      for (j = i; j < M; j++) {
+        ((T *)A)[i * LDA + j].real = SRAND();
+        ((T *)A)[i * LDA + j].imag = SRAND();
+      }
+    }
+
+    for (i = 0; i < N; i++) {
+      for (j = i; j < M; j++) {
+        ((T *)A)[j * LDA + i].real = ((T *)A)[i * LDA + j].real;
+        ((T *)A)[j * LDA + i].imag = ((T *)A)[i * LDA + j].imag;
+      }
+    }
+  }
+}
+
+/* Copy a matrix */
+template <typename T>
+void copy_matrix(char *uplo, integer M, integer N, T *A, integer LDA, 
+                 T *B, integer LDB)
+{
+  if (typeid(T) == typeid(integer)) {
+    integer i, j;
+
+    for (i = 0; i < N; i++ ) {
+      for (j = 0; j < M; j++) {
+        ((integer *)B)[ i * LDB + j ] = ((integer *)A)[ i * LDA + j ];
+      }
+    }
+  }
+  else {
+    libflame::lacpy<T>(uplo, &M, &N, A, &LDA, B, &LDB);
+  }
+}
+
+template <typename T>
+void copy_realtype_matrix(char *uplo, integer M, integer N, T *A, integer LDA,
+                          T *B, integer LDB)
+{
+  if ((typeid(T) == typeid(float)) || (typeid(T) == typeid(scomplex))) {
+    slacpy_(uplo, &M, &N, A, &LDA, B, &LDB);
+  } else {
+    dlacpy_(uplo, &M, &N, A, &LDA, B, &LDB);
+  }
+}
+
+/* Initialize a matrix with zeros */
+template <typename T>
+void reset_matrix(integer M, integer N, T *A, integer LDA)
+{
+  integer i, j;
+
+  if (typeid(T) == typeid(integer)) {
+    for (i = 0; i < N; i++ ) {
+      for (j = 0; j < M; j++) {
+        ((integer *)A)[ i * LDA + j ] = 0.f;
+      }
+    }
+  } else {
+    alpha_beta_init<T>();
+    libflame::laset<T>("A", &M, &N, (T *)zero, (T *)zero, A, &LDA);
+  }
+}
+
+/* Set a matrix to identity */
+template <typename T>
+void set_identity_matrix(integer M, integer N, T *A, integer LDA)
+{
+  alpha_beta_init<T>();
+  libflame::laset<T>("A", &M, &N, (T *)zero, (T *)one, A, &LDA);
+}
+
+void z_div_t(dcomplex *cp, dcomplex *ap, dcomplex *bp)
+{
+  dcomplex a = *ap;
+  dcomplex b = *bp;
+  double temp;
+
+  temp = b.real * b.real + b.imag * b.imag;
+  if (!temp) {
+    fprintf (stderr, "z_div_t : temp is zero. Abort\n");
+    abort();
+  }
+
+  cp->real = (a.real * b.real + a.imag * b.imag) / temp;
+  cp->imag = (a.imag * b.real - a.real * b.imag) / temp;
+}
+
+
+/* Division of complex types */
+void c_div_t(scomplex *cp, scomplex *ap, scomplex *bp)
+{
+  scomplex a = *ap;
+  scomplex b = *bp;
+  float temp;
+
+  temp = b.real * b.real + b.imag * b.imag;
+  if (!temp) {
+    fprintf (stderr, "z_div_t : temp is zero. Abort\n");
+    abort();
+  }
+
+  cp->real = (a.real * b.real + a.imag * b.imag) / temp;
+  cp->imag = (a.imag * b.real - a.real * b.imag) / temp;
+}
+
+/* work value calculation */
+template <typename T>
+integer get_work_value(T *work)
+{
+  if (!work) {
+    return 0;
+  }
+
+  if ((typeid(T) == typeid(float)) || (typeid(T) == typeid(scomplex))) {
+    return (integer) (*(float*)work);
+  } else {
+    return (integer) (*(double*)work);
+  }
+}
+
 /*! @brief computeDiff is function template to compare contents of 2 buffers.
-			T can be float, double.
+      T can be float, double.
  * @details
  * \b Purpose:
     \verbatim
-	  computeDiff is function template to compare contents of 2 buffers.
+    computeDiff is function template to compare contents of 2 buffers.
     T can be float, double.
     \endverbatim
  * @param[in] size
@@ -54,7 +403,7 @@ double computeDiff(int size, T *Out, T *Out_ref)
  * @details
  * \b Purpose:
     \verbatim
-	  computeErrorComplex is function template to compare contents of 2 buffers.
+    computeErrorComplex is function template to compare contents of 2 buffers.
     T can be scomplex, dcomplex.
     \endverbatim
  * @param[in] size
@@ -83,11 +432,11 @@ double computeErrorComplex(int size, T *Out, T *Out_ref)
 }
 
 /*! @brief computeError is function template to compare contents of 2 buffers.
-			T can be float, double, scomplex, dcomplex.
+      T can be float, double, scomplex, dcomplex.
  * @details
  * \b Purpose:
     \verbatim
-	  computeError is function template to compare contents of 2 buffers.
+    computeError is function template to compare contents of 2 buffers.
     T can be float, double, scomplex, dcomplex.
     \endverbatim
  * @param[in] n
@@ -611,15 +960,15 @@ void print_array(char *arrayname, T *array, integer arraysize)
 /*! @brief  getrf_internal() function template calls C and CPP based 
       GETRF APIs with valid test values and returns the outout buffers
       and info.
-			T can be float, double, scomplex, dcomplex.
+      T can be float, double, scomplex, dcomplex.
  * @details
  * \b Purpose:
     \verbatim
-	  getrf_internal is function template for getrf() functions.
-	  T can be float, double, scomplex, dcomplex.
-	  
-	  getrf_internal() function template calls C and CPP based GETRF APIs with
-	  valid test values and returns the outout buffers and info.
+    getrf_internal is function template for getrf() functions.
+    T can be float, double, scomplex, dcomplex.
+    
+    getrf_internal() function template calls C and CPP based GETRF APIs with
+    valid test values and returns the outout buffers and info.
     abuff, ipivbuff, arefbuff, ipivrefbuff, info_cpp, info_ref will be
     updated as output.
     if abuff, ipivbuff buffers are NULL, then respective CPP
@@ -629,7 +978,7 @@ void print_array(char *arrayname, T *array, integer arraysize)
     NOTE: It is caller's responsibility to free the buffers after the function
     call.
     \endverbatim
-	
+  
  * @params[in] m
           M is INTEGER
           The number of rows of the matrix A.  M >= 0.
@@ -654,9 +1003,9 @@ void print_array(char *arrayname, T *array, integer arraysize)
  * @params[in] ipivrefbuff
           ipivrefbuff is INTEGER array, dimension (min(M,N))
           ipivrefbuff is similar to ipivbuff & used for reference C function.
- * @params[in] info_cpp
+ * @params[out] info_cpp
           info_cpp is integer to get INFO returned by CPP function.
- * @params[in] info_ref
+ * @params[out] info_ref
           info_ref is integer to get INFO returned by reference C function.
 
  * @return VOID
@@ -774,15 +1123,15 @@ void getrf_internal(integer m, integer n, T* abuff,
 /*! @brief  potrf_internal() function template calls C and CPP based 
       POTRF APIs with valid test values and returns the outout buffers
       and info.
-			T can be float, double, scomplex, dcomplex.
+      T can be float, double, scomplex, dcomplex.
  * @details
  * \b Purpose:
     \verbatim
-	  potrf_internal is function template for potrf() functions.
-	  T can be float, double, scomplex, dcomplex.
-	  
-	  potrf_internal() function template calls C and CPP based POTRF APIs with
-	  valid test values and returns the outout buffers and info.
+    potrf_internal is function template for potrf() functions.
+    T can be float, double, scomplex, dcomplex.
+    
+    potrf_internal() function template calls C and CPP based POTRF APIs with
+    valid test values and returns the outout buffers and info.
     abuff, arefbuff, info_cpp, info_ref will be updated as output.
     If abuff buffer is NULL, then respective CPP function call
     is not performed.
@@ -791,7 +1140,7 @@ void getrf_internal(integer m, integer n, T* abuff,
     NOTE: It is caller's responsibility to free the buffers after the function
     call.
     \endverbatim
-	
+  
  * @params[in] uplo
           UPLO is CHARACTER*1
           = 'U':  Upper triangle of A is stored;
@@ -817,9 +1166,9 @@ void getrf_internal(integer m, integer n, T* abuff,
  * @params[in] arefbuff
           arefbuff is REAL array, dimension (LDA,N)
           arefbuff is similar to abuff & used for reference C function.
- * @params[in] info_cpp
+ * @params[out] info_cpp
           info_cpp is integer to get INFO returned by CPP function.
- * @params[in] info_ref
+ * @params[out] info_ref
           info_ref is integer to get INFO returned by reference C function.
 
  * @return VOID
@@ -915,5 +1264,26 @@ void potrf_internal(char uplo, integer n, T* abuff, integer lda,
     print_array<T>(arrayname, arefbuff, lda * n);
   #endif
   PRINTF("%s() Exit...\n", __FUNCTION__);
+}
+
+/* This function is used to clock the execution time of APIs*/
+double fla_test_clock()
+{
+  double the_time, norm_sec;
+  struct timespec ts;
+
+  PRINTF("%s() Entry...\n", __FUNCTION__);
+  clock_gettime(CLOCK_MONOTONIC, &ts);
+
+  if (ref_time_sec == 0.0) {
+    ref_time_sec = (double) ts.tv_sec;
+  }
+
+  norm_sec = (double) ts.tv_sec - ref_time_sec;
+
+  the_time = norm_sec + ts.tv_nsec * 1.0e-9;
+  PRINTF("the_time=%lf\n", the_time);
+  PRINTF("%s() Exit...\n", __FUNCTION__);
+  return the_time;
 }
 #endif        //  #ifndef LIBFLAME_TEST_HH

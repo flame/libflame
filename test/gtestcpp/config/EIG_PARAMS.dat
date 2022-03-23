@@ -53,3 +53,8 @@ m 20 40
 lwork_lange 20 40
 lda_lange 20 40
 lwork_geqp3 61 -1
+lwork_geqrf 20 -1
+k 20 40
+lwork_syev 60 -1
+lwork_syevd 50 -1
+liwork_syevd 20 -1

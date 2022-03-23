@@ -335,6 +335,31 @@ void Read_EIG_params(const char *file_name)
     fscanf(fp, "%d", &eig_paramslist[index].lwork_geqp3);
   }
   
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lwork_geqrf);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].k);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lwork_syev);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].lwork_syevd);
+  }
+  
+  fscanf(fp, "%s", &line[0]);
+  for (index = 0; index < NUM_SUB_TESTS; index++) {
+    fscanf(fp, "%d", &eig_paramslist[index].liwork_syevd);
+  }
+  
   fclose(fp);
 }
 
