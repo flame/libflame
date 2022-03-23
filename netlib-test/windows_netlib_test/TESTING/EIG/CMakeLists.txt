@@ -99,7 +99,7 @@ set(ZEIGTST zchkee.f
 macro(add_eig_executable name)
   add_executable(${name} ${ARGN})
   if(ENABLE_WINDOWS_BUILD)
-  target_link_libraries(${name} tmglib lapacke "${PROJECT_NAME}")
+  target_link_libraries(${name} tmglib "${PROJECT_NAME}")
   else()
   target_link_libraries(${name} tmglib ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES})
   endif()

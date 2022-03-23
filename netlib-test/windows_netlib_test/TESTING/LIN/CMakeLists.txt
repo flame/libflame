@@ -240,7 +240,7 @@ set(ZLINTSTRFP zchkrfp.f zdrvrfp.f zdrvrf1.f zdrvrf2.f zdrvrf3.f zdrvrf4.f zerrr
 macro(add_lin_executable name)
   add_executable(${name} ${ARGN})
 if(ENABLE_WINDOWS_BUILD)
-  target_link_libraries(${name} tmglib lapacke "${PROJECT_NAME}")
+  target_link_libraries(${name} tmglib "${PROJECT_NAME}")
 else()
   target_link_libraries(${name} tmglib ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES})
 endif()

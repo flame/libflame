@@ -49,7 +49,7 @@ list(REMOVE_DUPLICATES SOURCES)
 
 add_library(tmglib ${SOURCES})
 if(ENABLE_WINDOWS_BUILD)
-target_link_libraries(tmglib lapacke "${PROJECT_NAME}")
+target_link_libraries(tmglib "${PROJECT_NAME}")
 else()
 target_link_libraries(tmglib ${LAPACK_LIBRARIES} ${BLAS_LIBRARIES})
 lapack_install_library(tmglib)
