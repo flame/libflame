@@ -1,13 +1,14 @@
 Mode 1  // Enter:- 0: discrete, 1: Combinational, 2: Range with step increments of Matrix sizes
-Num_Ranges 4
+Num_Tests 4
 MRange_start 10 100 1000 2000
 MRange_end   20 300 1600 300
 MRange_step_size 10 100 200 1000
 NRange_start 5 120 1400 2500
 NRange_end   100 1000 2000 5000
 NRange_step_size 15 130 250 1600
-Num_Tests 4
-Matrix_Layout 101 101 102 102
+Repeats 5 4 3 2
+DataTypes s d c z
+Matrix_Layout 101 102 101 102
 jobu  U N U N
 jobv  V N V N
 jobq  Q N Q N

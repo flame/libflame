@@ -53,10 +53,10 @@
 
 #define NUM_SUB_TESTS (4)
 
-#if defined(_WIN32) && defined(ENABLE_ILP64)
-#define FS "ld"
+#if defined(ENABLE_ILP64)
+#define FT_IS "ld"
 #else
-#define FS "d"
+#define FT_IS "d"
 #endif
 
 // Datatype
@@ -79,7 +79,7 @@ typedef int64_t integer;
 typedef uint64_t uinteger;
 #else
 typedef int integer;
-typedef unsigned long uinteger;
+typedef unsigned int  uinteger;
 #endif
 
 typedef struct scomplex
@@ -103,6 +103,10 @@ typedef struct Lin_solver_paramlist_t
 	integer n_range_end;
 	integer n_range_step_size;
 	integer num_tests;
+	integer num_repeats;
+	integer num_data_types;
+	integer data_types[MAX_NUM_DATATYPES];
+	char data_types_char[MAX_NUM_DATATYPES];
 	integer matrix_layout;
 	char Uplo;
 	char transr; // Must be 'N' or 'T' or 'C'.
@@ -143,6 +147,10 @@ typedef struct EIG_paramlist_t
 	integer n_range_end;
 	integer n_range_step_size;
 	integer num_tests;
+	integer num_repeats;
+	integer num_data_types;
+	integer data_types[MAX_NUM_DATATYPES];
+	char data_types_char[MAX_NUM_DATATYPES];
 	integer matrix_layout;
 	char trans; // Must be 'N' or 'T' or 'C'.
 	char uplo; // Must be 'U' or 'L'
@@ -186,7 +194,12 @@ typedef struct EIG_Non_symmetric_paramlist_t
 	integer n_range_start;
 	integer n_range_end;
 	integer n_range_step_size;
+	integer num_repeats;
 	integer num_tests;
+	integer num_data_types;
+	integer data_types[MAX_NUM_DATATYPES];
+	char data_types_char[MAX_NUM_DATATYPES];
+	integer matrix_layout;
 	integer n;  // The order of A; the number of rows in B
 	char howmny; // Must be 'A' or 'B' or 'S'.
 	char initv; // Must be 'N' or 'U'.
@@ -241,7 +254,11 @@ typedef struct SVD_paramlist_t
 	integer n_range_start;
 	integer n_range_end;
 	integer n_range_step_size;
+	integer num_repeats;
 	integer num_tests;
+	integer num_data_types;
+	integer data_types[MAX_NUM_DATATYPES];
+	char data_types_char[MAX_NUM_DATATYPES];
 	integer matrix_layout; //  storage layout LAPACK_ROW_MAJOR or LAPACK_COL_MAJOR
 	char jobu; // Must be 'U' or 'N'.
 	char jobv; // Must be 'V' or 'N'.
@@ -294,8 +311,8 @@ typedef struct
 {
 	integer       n_repeats;
 	integer       n_datatypes;
-	char          datatype_char[ MAX_NUM_DATATYPES + 1 ];
-	integer       datatype[ MAX_NUM_DATATYPES + 1 ];
+	char          *datatype_char;
+	integer       *datatype;
 	integer       p_first;
 	integer       p_max;
 	integer       p_inc;
@@ -373,10 +390,10 @@ void fla_test_op_driver( char*            func_str,
 
 void fla_test_build_function_string( char*        func_base_str,
 										char*        impl_var_str,
-										unsigned int n_pc,
+										integer n_pc,
 										char*        pc_str,
 										char*        func_str );
-void fill_string_with_n_spaces( char* str, unsigned int n_spaces );
+void fill_string_with_n_spaces( char* str, integer n_spaces );
 void fla_test_sleep( void );
 void fla_test_abort( void );
 double fla_test_clock(void);

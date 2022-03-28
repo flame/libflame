@@ -33,7 +33,7 @@ void fla_test_geqrf(test_params_t *params)
 }
 
 void fla_test_geqrf_experiment(test_params_t *params,
-	int  datatype,
+	integer  datatype,
 	integer  p_cur,
 	integer  q_cur,
 	integer  pci,
@@ -192,7 +192,7 @@ void validate_geqrf(integer m_A,
 	void *A,
 	void *A_test,
 	void *T_test,
-	int datatype,
+	integer datatype,
 	double* residual)
 {
 	void *Q = NULL, *R = NULL, *I = NULL, *work = NULL;
