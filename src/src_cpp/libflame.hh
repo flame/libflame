@@ -1,5 +1,5 @@
 /******************************************************************************
-* Copyright (C) 2021, Advanced Micro Devices, Inc. All rights reserved.
+* Copyright (C) 2021-2022, Advanced Micro Devices, Inc. All rights reserved.
 *******************************************************************************/
 
 /*! @file libflame.hh
@@ -9325,5 +9325,144 @@ inline integer getrfnpi(integer *m, integer *n, integer*nfact, dcomplex *a, inte
   return zgetrfnpi_(m, n, nfact, a, lda, info);
 }
 
-} //namespace libflame
+// NB2-sized column blocked QR-factorization
+inline integer getsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, float *a, integer *lda, float *t, integer * ldt, float *work, integer *lwork, integer *info)
+{
+  return sgetsqrhrt_(m, n, mb1, nb1, nb2, a, lda, t, ldt, work, lwork, info);
+}
+inline integer getsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, double *a, integer *lda, double * t, integer *ldt, double *work, integer *lwork, integer *info)
+{
+  return dgetsqrhrt_(m, n, mb1, nb1, nb2, a, lda, t, ldt, work, lwork, info);
+}
+inline integer getsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, scomplex *a, integer *lda, scomplex *t, integer *ldt, scomplex *work, integer *lwork, integer *info)
+{
+  return cgetsqrhrt_(m, n, mb1, nb1, nb2, a, lda, t, ldt, work, lwork, info);
+}
+inline integer getsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, dcomplex *a, integer *lda, dcomplex *t, integer *ldt, dcomplex *work, integer *lwork, integer *info)
+{
+  return zgetsqrhrt_(m, n, mb1, nb1, nb2, a, lda, t, ldt, work, lwork, info);
+}
+
+/* LAQZ0 computes the eigenvalues of a real matrix pair (H,T),
+   where H is an upper Hessenberg matrix and T is upper triangular,
+   using the double-shift QZ method.*/
+inline integer slaqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, float *a, integer *lda, float *b, integer *ldb, float *alphar, float *alphai, float *beta, float *q, integer *ldq, float *z, integer *ldz, float *work, integer *lwork, integer *rec, integer *info)
+{
+  return slaqz0_(wants, wantq, wantz, n, ilo, ihi, a, lda, b, ldb, alphar, alphai, beta, q, ldq, z, ldz, work, lwork, rec, info);
+}
+inline integer laqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, double *a, integer *lda, double *b, integer *ldb, double *alphar, double *alphai, double *beta, double *q, integer *ldq, double *z, integer *ldz, double *work, integer *lwork, integer *rec, integer *info)
+{
+  return dlaqz0_(wants, wantq, wantz, n, ilo, ihi, a, lda, b, ldb, alphar, alphai, beta, q, ldq, z, ldz, work, lwork, rec, info);
+}
+inline integer laqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *alpha, scomplex *beta, scomplex *q, integer *ldq, scomplex *z, integer *ldz, scomplex *work, integer *lwork, float * rwork, integer *rec, integer *info)
+{
+  return claqz0_(wants, wantq, wantz, n, ilo, ihi, a, lda,b, ldb, alpha, beta, q, ldq, z, ldz, work, lwork, rwork, rec, info);
+}
+inline integer laqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *alpha, dcomplex * beta, dcomplex *q, integer *ldq, dcomplex *z, integer * ldz, dcomplex *work, integer *lwork, double *rwork, integer * rec, integer *info)
+{
+  return zlaqz0_(wants, wantq, wantz, n, ilo, ihi, a, lda,b, ldb, alpha, beta, q, ldq, z, ldz, work, lwork, rwork, rec, info);
+}
+
+/* Given a 3-by-3 matrix pencil (A,B), LAQZ1 sets v to a
+   scalar multiple of the first column of the product.*/
+inline integer laqz1(float *a, integer *lda, float *b, integer *ldb, float *sr1, float *sr2, float *si, float *beta1, float *beta2, float *v)
+{
+  return slaqz1_(a, lda, b, ldb, sr1, sr2, si, beta1, beta2, v);
+}
+inline integer laqz1(double *a, integer *lda, double *b, integer *ldb, double *sr1, double *sr2, double *si, double *beta1, double *beta2, double *v)
+{
+  return dlaqz1_(a, lda, b, ldb, sr1, sr2, si, beta1, beta2, v);
+}
+inline integer laqz1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, scomplex *a, integer *lda, scomplex *b, integer *ldb, integer *nq, integer *qstart, scomplex *q, integer *ldq, integer *nz, integer *zstart, scomplex *z, integer * ldz)
+{
+  return claqz1_(ilq, ilz, k, istartm, istopm, ihi, a, lda, b, ldb, nq, qstart, q, ldq, nz, zstart, z, ldz);
+}
+inline integer laqz1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, dcomplex *a, integer * lda, dcomplex *b, integer *ldb, integer *nq, integer *qstart, dcomplex *q, integer *ldq, integer *nz, integer *zstart, dcomplex *z, integer *ldz)
+{
+  return zlaqz1_(ilq, ilz, k, istartm, istopm, ihi, a, lda, b, ldb, nq, qstart, q, ldq, nz, zstart, z, ldz);
+}
+
+// LAQZ2 chases a 2x2 shift bulge in a matrix pencil down a single position.
+inline integer laqz2(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, float *a, integer *lda, float * b, integer *ldb, integer *nq, integer *qstart, float *q, integer *ldq, integer *nz, integer *zstart, float *z, integer *ldz)
+{
+  return slaqz2_(ilq, ilz, k, istartm, istopm, ihi, a, lda, b, ldb, nq, qstart, q, ldq, nz, zstart, z, ldz);
+}
+inline integer laqz2(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, double *a, integer *lda, double *b, integer *ldb, integer *nq, integer *qstart, double *q, integer *ldq, integer *nz, integer *zstart, double *z, integer *ldz)
+{
+  return dlaqz2_(ilq, ilz, k, istartm, istopm, ihi, a, lda, b, ldb, nq, qstart, q, ldq, nz, zstart, z, ldz);
+}
+inline integer laqz2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *q, integer *ldq, scomplex *z, integer *ldz, integer *ns, integer *nd, scomplex *alpha, scomplex *beta, scomplex *qc, integer *ldqc, scomplex *zc, integer *ldzc, scomplex *work, integer *lwork, float *rwork, integer *rec, integer * info)
+{
+  return claqz2_(ilschur, ilq, ilz, n, ilo, ihi, nw, a, lda, b, ldb, q, ldq, z, ldz, ns, nd, alpha, beta, qc, ldqc, zc, ldzc, work, lwork, rwork, rec, info);
+}
+inline integer laqz2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *q, integer *ldq, dcomplex *z, integer *ldz, integer *ns, integer * nd, dcomplex *alpha, dcomplex *beta, dcomplex *qc, integer *ldqc, dcomplex *zc, integer *ldzc, dcomplex *work, integer *lwork, double *rwork, integer *rec, integer *info)
+{
+  return zlaqz2_(ilschur, ilq, ilz, n, ilo, ihi, nw, a, lda, b, ldb, q, ldq, z, ldz, ns, nd, alpha, beta, qc, ldqc, zc, ldzc, work, lwork, rwork, rec, info);
+}
+
+// LAQZ3 performs AED
+inline integer laqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, float *a, integer *lda, float *b, integer *ldb, float *q, integer *ldq, float *z, integer *ldz, integer *ns, integer *nd, float *alphar, float *alphai, float *beta, float *qc, integer *ldqc, float *zc, integer *ldzc, float * work, integer *lwork, integer *rec, integer *info)
+{
+  return slaqz3_(ilschur, ilq, ilz, n, ilo, ihi, nw, a, lda, b, ldb, q, ldq, z, ldz, ns, nd, alphar, alphai, beta, qc, ldqc, zc, ldzc, work, lwork, rec, info);
+}
+inline integer laqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, double *a, integer *lda, double *b, integer *ldb, double *q, integer * ldq, double *z, integer *ldz, integer *ns, integer *nd, double *alphar, double *alphai, double *beta, double * qc, integer *ldqc, double *zc, integer *ldzc, double *work, integer *lwork, integer *rec, integer *info)
+{
+  return dlaqz3_(ilschur, ilq, ilz, n, ilo, ihi, nw, a, lda, b, ldb, q, ldq, z, ldz, ns, nd, alphar, alphai, beta, qc, ldqc, zc, ldzc, work, lwork, rec, info);
+}
+inline integer laqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired, scomplex *alpha, scomplex *beta, scomplex *a, integer * lda, scomplex *b, integer *ldb, scomplex *q, integer *ldq, scomplex *z, integer *ldz, scomplex *qc, integer *ldqc, scomplex *zc, integer *ldzc, scomplex *work, integer *lwork, integer *info)
+{
+  return claqz3_(ilschur, ilq, ilz, n, ilo, ihi, nshifts, nblock_desired, alpha, beta, a, lda, b, ldb, q, ldq, z, ldz, qc, ldqc, zc, ldzc, work, lwork, info);
+}
+inline integer laqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired, dcomplex *alpha, dcomplex *beta, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *q, integer *ldq, dcomplex *z, integer *ldz, dcomplex *qc, integer *ldqc, dcomplex *zc, integer *ldzc, dcomplex *work, integer *lwork, integer *info)
+{
+  return zlaqz3_(ilschur, ilq, ilz, n, ilo, ihi, nshifts, nblock_desired, alpha, beta, a, lda, b, ldb, q, ldq, z, ldz, qc, ldqc, zc, ldzc, work, lwork, info);
+}
+
+// LAQZ4 Executes a single multishift QZ sweep
+inline integer laqz4(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired, float *sr, float *si, float *ss, float *a, integer *lda, float *b, integer *ldb, float *q, integer *ldq, float *z, integer * ldz, float *qc, integer *ldqc, float *zc, integer *ldzc, float *work, integer *lwork, integer *info)
+{
+  return slaqz4_(ilschur, ilq, ilz, n, ilo, ihi, nshifts, nblock_desired, sr, si, ss, a, lda, b, ldb, q, ldq, z, ldz, qc, ldqc, zc, ldzc, work, lwork, info);
+}
+inline integer laqz4(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired, double *sr, double *si, double *ss, double *a, integer *lda, double *b, integer *ldb, double * q, integer *ldq, double *z, integer *ldz, double *qc, integer *ldqc, double *zc, integer *ldzc, double *work, integer *lwork, integer *info)
+{
+  return dlaqz4_(ilschur, ilq, ilz, n, ilo, ihi, nshifts, nblock_desired, sr, si, ss, a, lda, b, ldb, q, ldq, z, ldz, qc, ldqc, zc, ldzc, work, lwork, info);
+}
+
+// LARFB_GETT applies a real Householder block reflector H from the left to a real (K+M)-by-N  "triangular-pentagonal" matrix
+inline integer larfb_gett(char *ident, integer *m, integer *n, integer *k, float *t, integer *ldt, float *a, integer *lda, float *b, integer *ldb, float *work, integer *ldwork)
+{
+  return slarfb_gett_(ident, m, n, k, t, ldt, a, lda, b, ldb, work, ldwork);
+}
+inline integer larfb_gett(char *ident, integer *m, integer *n, integer *k, double *t, integer *ldt, double *a, integer *lda, double *b, integer *ldb, double *work, integer *ldwork)
+{
+  return dlarfb_gett_(ident, m, n, k, t, ldt, a, lda, b, ldb, work, ldwork);
+}
+inline integer larfb_gett(char *ident, integer *m, integer *n, integer *k, scomplex *t, integer *ldt, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *work, integer *ldwork)
+{
+  return clarfb_gett_(ident, m, n, k, t, ldt, a, lda, b, ldb, work, ldwork);
+}
+inline integer larfb_gett(char *ident, integer *m, integer *n, integer *k, dcomplex *t, integer *ldt, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *work, integer * ldwork)
+{
+  return zlarfb_gett_(ident, m, n, k, t, ldt, a, lda, b, ldb, work, ldwork);
+}
+
+// ORGTSQR_ROW generates an M-by-N real matrix Q_out with orthonormal columns from the output of LATSQR.
+inline integer gtsqr_row(integer *m, integer *n, integer *mb, integer *nb, float *a, integer *lda, float *t, integer *ldt, float *work, integer *lwork, integer *info)
+{
+  return sorgtsqr_row_(m, n, mb, nb, a, lda, t, ldt, work, lwork, info);
+}
+inline integer gtsqr_row(integer *m, integer *n, integer *mb, integer *nb, double *a, integer *lda, double *t, integer *ldt, double *work, integer *lwork, integer *info)
+{
+  return dorgtsqr_row_(m, n, mb, nb, a, lda, t, ldt, work, lwork, info);
+}
+inline integer gtsqr_row(integer *m, integer *n, integer *mb, integer *nb, scomplex *a, integer *lda, scomplex *t, integer *ldt, scomplex *work, integer *lwork, integer *info)
+{
+  return cungtsqr_row_(m, n, mb, nb, a, lda, t, ldt, work, lwork, info);
+}
+inline integer gtsqr_row(integer *m, integer *n, integer *mb, integer *nb, dcomplex *a, integer *lda, dcomplex *t, integer *ldt, dcomplex *work, integer *lwork, integer *info)
+{
+  return zungtsqr_row_(m, n, mb, nb, a, lda, t, ldt, work, lwork, info);
+}
+
+} // namespace libflame
 #endif  //  #ifndef LIBFLAME_HH

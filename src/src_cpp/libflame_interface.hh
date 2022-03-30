@@ -1,5 +1,5 @@
 /******************************************************************************
-* Copyright (C) 2021, Advanced Micro Devices, Inc. All rights reserved.
+* Copyright (C) 2021-2022, Advanced Micro Devices, Inc. All rights reserved.
 *******************************************************************************/
 
 /*! @file libflame_interface.hh
@@ -58221,6 +58221,839 @@ template< typename T >
 integer getrfnpi(integer *m, integer *n, integer *nfact, T *a, integer *lda, integer *info)
 {
   return getrfnpi(m, n, nfact, a, lda, info);
+}
+
+/*! @brief Computes a NB2-sized column blocked QR-factorization.
+
+ * @details
+ * \b Purpose:
+    \verbatim
+    The routine computes a NB2-sized column blocked QR-factorization of a
+    complex M-by-N matrix A with M >= N,
+
+    A = Q * R.
+
+    The routine uses internally a NB1-sized column blocked and MB1-sized
+    row blocked TSQR-factorization and perfors the reconstruction
+    of the Householder vectors from the TSQR output. The routine also
+    converts the R_tsqr factor from the TSQR-factorization output into
+    the R factor that corresponds to the Householder QR-factorization,
+
+      A = Q_tsqr * R_tsqr = Q * R.
+
+    The output Q and R factors are stored in the same format as in CGEQRT
+    (Q is in blocked compact WY-representation). See the documentation
+    of CGEQRT for more details on the format.
+    \endverbatim
+
+ * @param[in] m
+          M is INTEGER \n
+          The number of rows of the matrix A.  M >= 0. \n
+ * @param[in] n
+          N is INTEGER \n
+          The number of columns of the matrix A. M >= N >= 0. \n
+ * @param[in] mb1
+          MB1 is INTEGER \n
+          The row block size to be used in the blocked TSQR. \n
+          MB1 > N. \n
+ * @param[in, out] nb1
+          NB1 is INTEGER \n
+          The column block size to be used in the blocked TSQR. \n
+          N >= NB1 >= 1. \n
+ * @param[in, out] nb2
+          NB2 is INTEGER \n
+          The block size to be used in the blocked QR that is \n
+          output. NB2 >= 1. \n
+ * @param[in, out] a
+          A is REAL/DOUBLE/COMPLEX/COMPLEX*16 array, dimension (LDA,N) \n
+
+          On entry: an M-by-N matrix A.\n
+
+          On exit:\n
+           a) the elements on and above the diagonal
+              of the array contain the N-by-N upper-triangular
+              matrix R corresponding to the Householder QR; \n
+           b) the elements below the diagonal represent Q by
+              the columns of blocked V (compact WY-representation). \n
+ * @param[in] lda
+          LDA is INTEGER \n
+          The leading dimension of the array A.  LDA >= max(1,M). \n
+ * @param[in, out] t
+          T is REAL/DOUBLE/COMPLEX/COMPLEX*16 array, dimension (LDT,N)) \n
+          The upper triangular block reflectors stored in compact form
+          as a sequence of upper triangular blocks. \n
+ * @param[in] ldt
+          LDT is INTEGER \n
+          The leading dimension of the array T.  LDT >= NB2. \n
+ * @param[out]	work	
+          WORK is REAL/DOUBLE/COMPLEX/COMPLEX*16 array, dimension (N,NRHS) \n
+          This array is used to hold the residual vectors. \n
+ * @param[out]	lwork	
+          The dimension of the array WORK.\n
+          LWORK >= MAX( LWT + LW1, MAX( LWT+N*N+LW2, LWT+N*N+N ) ), \n
+          where \n
+             NUM_ALL_ROW_BLOCKS = CEIL((M-N)/(MB1-N)), \n
+             NB1LOCAL = MIN(NB1,N). \n
+             LWT = NUM_ALL_ROW_BLOCKS * N * NB1LOCAL, \n
+             LW1 = NB1LOCAL * N, \n
+             LW2 = NB1LOCAL * MAX( NB1LOCAL, ( N - NB1LOCAL ) ), \n
+          If LWORK = -1, then a workspace query is assumed. \n
+          The routine only calculates the optimal size of the WORK
+          array, returns this value as the first entry of the WORK
+          array, and no error message related to LWORK is issued
+          by XERBLA. \n
+ * @param[in] info
+          INFO is INTEGER \n
+          = 0:  successful exit \n
+          < 0:  if INFO = -i, the i-th argument had an illegal value \n
+
+ * @return INTEGER Return value of the function.
+ * */
+template< typename T >
+integer getsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, T *a, integer *lda, T *t, integer *ldt, T *work, integer *lwork, integer *info)
+{
+  return getsqrhrt(m, n, mb1, nb1, nb2, a, lda, t, ldt, work, lwork, info);
+}
+
+/*! @brief  Computes the eigenvalues of a real matrix pair (H,T),
+            where H is an upper Hessenberg matrix and T is upper triangular,
+            using the double-shift QZ method.
+
+ * @details
+ * \b Purpose:
+    \verbatim
+    LAQZ0 computes the eigenvalues of a real matrix pair (H,T),
+    where H is an upper Hessenberg matrix and T is upper triangular,
+    using the double-shift QZ method.
+    Matrix pairs of this type are produced by the reduction to
+    generalized upper Hessenberg form of a real matrix pair (A,B):
+
+      A = Q1*H*Z1**T,  B = Q1*T*Z1**T,
+
+    as computed by SGGHRD.
+
+    If JOB='S', then the Hessenberg-triangular pair (H,T) is
+    also reduced to generalized Schur form,
+
+      H = Q*S*Z**T,  T = Q*P*Z**T,
+
+    where Q and Z are orthogonal matrices, P is an upper triangular
+    matrix, and S is a quasi-triangular matrix with 1-by-1 and 2-by-2
+    diagonal blocks.
+
+    The 1-by-1 blocks correspond to real eigenvalues of the matrix pair
+    (H,T) and the 2-by-2 blocks correspond to complex conjugate pairs of
+    eigenvalues.
+
+    Additionally, the 2-by-2 upper triangular diagonal blocks of P
+    corresponding to 2-by-2 blocks of S are reduced to positive diagonal
+    form, i.e., if S(j+1,j) is non-zero, then P(j+1,j) = P(j,j+1) = 0,
+    P(j,j) > 0, and P(j+1,j+1) > 0.
+
+    Optionally, the orthogonal matrix Q from the generalized Schur
+    factorization may be postmultiplied into an input matrix Q1, and the
+    orthogonal matrix Z may be postmultiplied into an input matrix Z1.
+    If Q1 and Z1 are the orthogonal matrices from SGGHRD that reduced
+    the matrix pair (A,B) to generalized upper Hessenberg form, then the
+    output matrices Q1*Q and Z1*Z are the orthogonal factors from the
+    generalized Schur factorization of (A,B):
+
+      A = (Q1*Q)*S*(Z1*Z)**T,  B = (Q1*Q)*P*(Z1*Z)**T.
+
+    To avoid overflow, eigenvalues of the matrix pair (H,T) (equivalently,
+    of (A,B)) are computed as a pair of values (alpha,beta), where alpha is
+    complex and beta real.
+    If beta is nonzero, lambda = alpha / beta is an eigenvalue of the
+    generalized nonsymmetric eigenvalue problem (GNEP)
+      A*x = lambda*B*x
+    and if alpha is nonzero, mu = beta / alpha is an eigenvalue of the
+    alternate form of the GNEP
+      mu*A*y = B*y.
+    Real eigenvalues can be read directly from the generalized Schur
+    form:
+     alpha = S(i,i), beta = P(i,i).
+
+    Ref: C.B. Moler & G.W. Stewart, "An Algorithm for Generalized Matrix
+        Eigenvalue Problems", SIAM J. Numer. Anal., 10(1973),
+        pp. 241--256.
+
+    Ref: B. Kagstrom, D. Kressner, "Multishift Variants of the QZ
+        Algorithm with Aggressive Early Deflation", SIAM J. Numer.
+        Anal., 29(2006), pp. 199--227.
+
+    Ref: T. Steel, D. Camps, K. Meerbergen, R. Vandebril "A multishift,
+        multipole rational QZ method with agressive early deflation"
+    \endverbatim
+
+ * @param[in] WANTS
+          WANTS is CHARACTER*1 \n
+          = 'E': Compute eigenvalues only; \n
+          = 'S': Compute eigenvalues and the Schur form. \n
+ * @param[in] WANTQ
+          WANTQ is CHARACTER*1 \n
+          = 'N': Left Schur vectors (Q) are not computed; \n
+          = 'I': Q is initialized to the unit matrix and the matrix Q
+                 of left Schur vectors of (A,B) is returned; \n
+          = 'V': Q must contain an orthogonal matrix Q1 on entry and
+                 the product Q1*Q is returned. \n
+ * @param[in] WANTZ
+          WANTZ is CHARACTER*1 \n
+          = 'N': Right Schur vectors (Z) are not computed; \n
+          = 'I': Z is initialized to the unit matrix and the matrix Z
+                 of right Schur vectors of (A,B) is returned; \n
+          = 'V': Z must contain an orthogonal matrix Z1 on entry and
+                 the product Z1*Z is returned. \n
+ * @param[in] N
+          N is INTEGER \n
+          The order of the matrices A, B, Q, and Z.  N >= 0. \n
+ * @param[in] ILO
+          ILO is INTEGER \n
+ * @param[in] IHI
+          IHI is INTEGER \n
+          ILO and IHI mark the rows and columns of A which are in
+          Hessenberg form.  It is assumed that A is already upper
+          triangular in rows and columns 1:ILO-1 and IHI+1:N. \n
+          If N > 0, 1 <= ILO <= IHI <= N; if N = 0, ILO=1 and IHI=0. \n
+ * @param[in, out] A
+          A is REAL array, dimension (LDA, N) \n
+          On entry, the N-by-N upper Hessenberg matrix A. \n
+          On exit, if JOB = 'S', A contains the upper quasi-triangular
+          matrix S from the generalized Schur factorization. \n
+          If JOB = 'E', the diagonal blocks of A match those of S, but
+          the rest of A is unspecified. \n
+ * @param[in] LDA
+          LDA is INTEGER \n
+          The leading dimension of the array A.  LDA >= max( 1, N ). \n
+ * @param[in, out] B
+          B is REAL array, dimension (LDB, N) \n
+          On entry, the N-by-N upper triangular matrix B. \n
+          On exit, if JOB = 'S', B contains the upper triangular
+          matrix P from the generalized Schur factorization; \n
+          2-by-2 diagonal blocks of P corresponding to 2-by-2 blocks of S
+          are reduced to positive diagonal form, i.e., if A(j+1,j) is
+          non-zero, then B(j+1,j) = B(j,j+1) = 0, B(j,j) > 0, and
+          B(j+1,j+1) > 0. \n
+          If JOB = 'E', the diagonal blocks of B match those of P, but
+          the rest of B is unspecified. \n
+ * @param[in]	LDB	
+          LDB is INTEGER \n
+          The leading dimension of the array B.  LDB >= max( 1, N ). \n
+ * @param[out]	ALPHAR	
+          ALPHAR is REAL array, dimension (N) \n
+          The real parts of each scalar alpha defining an eigenvalue
+          of GNEP. \n
+ * @param[out]	ALPHAI
+          ALPHAI is REAL array, dimension (N) \n
+          The imaginary parts of each scalar alpha defining an
+          eigenvalue of GNEP. \n
+          If ALPHAI(j) is zero, then the j-th eigenvalue is real; if
+          positive, then the j-th and (j+1)-st eigenvalues are a
+          complex conjugate pair, with ALPHAI(j+1) = -ALPHAI(j). \n
+ * @param[out]	BETA
+          BETA is REAL array, dimension (N) \n
+          The scalars beta that define the eigenvalues of GNEP. \n
+          Together, the quantities alpha = (ALPHAR(j),ALPHAI(j)) and
+          beta = BETA(j) represent the j-th eigenvalue of the matrix
+          pair (A,B), in one of the forms lambda = alpha/beta or
+          mu = beta/alpha.  Since either lambda or mu may overflow,
+          they should not, in general, be computed. \n
+ * @param[in, out] Q
+          Q is REAL array, dimension (LDQ, N) \n
+          On entry, if COMPQ = 'V', the orthogonal matrix Q1 used in
+          the reduction of (A,B) to generalized Hessenberg form. \n
+          On exit, if COMPQ = 'I', the orthogonal matrix of left Schur
+          vectors of (A,B), and if COMPQ = 'V', the orthogonal matrix
+          of left Schur vectors of (A,B). \n
+          Not referenced if COMPQ = 'N'. \n
+ * @param[in] LDQ
+          LDQ is INTEGER \n
+          The leading dimension of the array Q.  LDQ >= 1. \n
+          If COMPQ='V' or 'I', then LDQ >= N. \n
+ * @param[in, out] Z
+          Z is REAL array, dimension (LDZ, N) \n
+          On entry, if COMPZ = 'V', the orthogonal matrix Z1 used in
+          the reduction of (A,B) to generalized Hessenberg form. \n
+          On exit, if COMPZ = 'I', the orthogonal matrix of
+          right Schur vectors of (H,T), and if COMPZ = 'V', the
+          orthogonal matrix of right Schur vectors of (A,B). \n
+          Not referenced if COMPZ = 'N'. \n
+ * @param[in] LDZ
+          LDZ is INTEGER \n
+          The leading dimension of the array Z.  LDZ >= 1. \n
+          If COMPZ='V' or 'I', then LDZ >= N. \n
+ * @param[out]	WORK
+          WORK is REAL array, dimension (MAX(1,LWORK)) \n
+          On exit, if INFO >= 0, WORK(1) returns the optimal LWORK. \n
+ * @param[in] LWORK
+          LWORK is INTEGER \n
+          The dimension of the array WORK.  LWORK >= max(1,N). \n
+
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the WORK array, and no error
+          message related to LWORK is issued by XERBLA. \n
+ * @param[in] REC
+          REC is INTEGER \n
+          REC indicates the current recursion level. Should be set
+          to 0 on first call. \n
+ * @param[in] INFO
+          INFO is INTEGER \n
+          = 0:  successful exit \n
+          < 0:  if INFO = -i, the i-th argument had an illegal value \n
+
+ * @return INTEGER Return value of the function.
+ * */
+template < typename T >
+integer laqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, T *a, integer *lda, T *b, integer *ldb, T *alphar, T *alphai, T *beta, T *q, integer *ldq, T *z, integer *ldz, T *work, integer *lwork, integer *rec, integer *info)
+{
+  return laqz0(wants, wantq, wantz, n, ilo, ihi, a, lda, b, ldb, alphar, alphai, beta, q, ldq, z, ldz, work, lwork, rec, info);
+}
+template < typename T, typename Ta >
+integer laqz0(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, T *a, integer *lda, T *b, integer *ldb, T *alpha, T *beta, T *q, integer *ldq, T *z, integer *ldz, T *work, integer *lwork, Ta * rwork, integer *rec, integer *info)
+{
+  return laqz0(wants, wantq, wantz, n, ilo, ihi, a, lda, b, ldb, alpha, beta, q, ldq, z, ldz, work, lwork, rwork, rec, info);
+}
+
+/*! @brief Given a 3-by-3 matrix pencil (A,B), LAQZ1 sets v to a
+           scalar multiple of the first column of the product.
+
+ * @details
+ * \b Purpose:
+    \verbatim
+    Given a 3-by-3 matrix pencil (A,B), LAQZ1 sets v to a
+      scalar multiple of the first column of the product
+
+      (*)  K = (A - (beta2*sr2 - i*si)*B)*B^(-1)*(beta1*A - (sr2 + i*si2)*B)*B^(-1).
+
+      It is assumed that either
+
+              1) sr1 = sr2
+          or
+              2) si = 0.
+
+      This is useful for starting double implicit shift bulges
+      in the QZ algorithm.
+    \endverbatim
+
+ * @param[in] A
+          A is REAL array, dimension (LDA,N) \n
+          The 3-by-3 matrix A in (*). \n
+ * @param[in] LDA
+          LDA is INTEGER \n
+          The leading dimension of A as declared in
+          the calling procedure. \n
+ * @param[in] B
+          B is REAL array, dimension (LDB,N) \n
+          The 3-by-3 matrix B in (*). \n
+ * @param[in] LDB
+          LDB is INTEGER \n
+          The leading dimension of B as declared in
+          the calling procedure. \n
+ * @param[in] SR1
+          SR1 is REAL \n
+ * @param[in] SR2
+          SR2 is REAL \n
+ * @param[in] SI
+          SI is REAL \n
+ * @param[in] BETA1
+          BETA1 is REAL \n
+ * @param[in] BETA2
+          BETA2 is REAL \n
+ * @param[out] V
+          V is REAL array, dimension (N) \n
+          A scalar multiple of the first column of the
+          matrix K in (*). \n
+
+ * @return INTEGER Return value of the function.
+ * */
+template < typename T >
+integer laqz1(T *a, integer *lda, T *b, integer *ldb, T *sr1, T *sr2, T *si, T *beta1, T *beta2, T *v)
+{
+  return laqz1(a, lda, b, ldb, sr1, sr2, si, beta1, beta2, v);
+}
+template < typename T >
+integer laqz1(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, T *a, integer *lda, T *b, integer *ldb, integer *nq, integer *qstart, T *q, integer *ldq, integer *nz, integer *zstart, T *z, integer * ldz)
+{
+  return laqz1(ilq, ilz, k, istartm, istopm, ihi, a, lda, b, ldb, nq, qstart, q, ldq, nz, zstart, z, ldz);
+}
+
+/*! @brief LAQZ2 chases a 2x2 shift bulge in a matrix pencil down a single position.
+
+ * @details
+ * \b Purpose:
+    \verbatim
+    LAQZ2 chases a 2x2 shift bulge in a matrix pencil down a single position
+    \endverbatim
+
+ * @param[in] ILQ
+          ILQ is LOGICAL \n
+          Determines whether or not to update the matrix Q \n
+ * @param[in] ILZ
+          ILZ is LOGICAL \n
+          Determines whether or not to update the matrix Z \n
+ * @param[in] K
+          K is INTEGER \n
+          Index indicating the position of the bulge. \n
+          On entry, the bulge is located in
+          (A(k+1:k+2,k:k+1),B(k+1:k+2,k:k+1)). \n
+          On exit, the bulge is located in
+          (A(k+2:k+3,k+1:k+2),B(k+2:k+3,k+1:k+2)). \n
+ * @param[in] ISTARTM
+          ISTARTM is INTEGER \n
+ * @param[in] ISTOPM
+          ISTOPM is INTEGER \n
+          Updates to (A,B) are restricted to
+          (istartm:k+3,k:istopm). It is assumed
+          without checking that istartm <= k+1 and
+          k+2 <= istopm \n
+ * @param[in] IHI
+          IHI is INTEGER \n
+ * @param[in, out] A
+          A is REAL array, dimension (LDA,N) \n
+ * @param[in] LDA
+          LDA is INTEGER \n
+          The leading dimension of A as declared in
+          the calling procedure. \n
+ * @param[in, out] B
+          B is REAL array, dimension (LDB,N) \n
+ * @param[in] LDB
+          LDB is INTEGER \n
+          The leading dimension of B as declared in
+          the calling procedure. \n
+ * @param[in] NQ
+          NQ is INTEGER \n
+          The order of the matrix Q \n
+ * @param[in] QSTART
+          QSTART is INTEGER \n
+          Start index of the matrix Q. Rotations are applied
+          To columns k+2-qStart:k+4-qStart of Q. \n
+ * @param[in, out] Q
+          Q is REAL array, dimension (LDQ,NQ) \n
+ * @param[in] LDQ
+          LDQ is INTEGER \n
+          The leading dimension of Q as declared in
+          the calling procedure. \n
+ * @param[in] NZ
+          NZ is INTEGER \n
+          The order of the matrix Z \n
+ * @param[in] ZSTART
+          ZSTART is INTEGER \n
+          Start index of the matrix Z. Rotations are applied
+          To columns k+1-qStart:k+3-qStart of Z. \n
+ * @param[in, out] Z
+          Z is REAL array, dimension (LDZ,NZ) \n
+ * @param[in] LDZ
+          LDZ is INTEGER \n
+          The leading dimension of Q as declared in
+          the calling procedure. \n
+
+ * @return INTEGER Return value of the function.
+ * */
+template < typename T >
+integer laqz2(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, T *a, integer *lda, T *b, integer *ldb, integer *nq, integer *qstart, T *q, integer *ldq, integer *nz, integer *zstart, T *z, integer *ldz)
+{
+  return laqz2(ilq, ilz, k, istartm, istopm, ihi, a, lda, b, ldb, nq, qstart, q, ldq, nz, zstart, z, ldz);
+}
+template < typename T, typename Ta >
+integer laqz2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, T *a, integer *lda, T *b, integer *ldb, T *q, integer *ldq, T *z, integer *ldz, integer *ns, integer *nd, T *alpha, T *beta, T *qc, integer *ldqc, T *zc, integer *ldzc, T *work, integer *lwork, float *rwork, integer *rec, integer * info)
+{
+  return laqz2(ilschur, ilq, ilz, n, ilo, ihi, nw, a, lda, b, ldb, q, ldq, z, ldz, ns, nd, alpha, beta, qc, ldqc, zc, ldzc, work, lwork, rwork, rec, info);
+}
+
+/*! @brief LAQZ3 performs AED
+
+ * @details
+ * \b Purpose:
+    \verbatim
+    LAQZ3 performs AED
+    \endverbatim
+
+ * @param[in] ILSCHUR
+          ILSCHUR is LOGICAL \n
+          Determines whether or not to update the full Schur form \n
+ * @param[in] ILQ
+          ILQ is LOGICAL \n
+          Determines whether or not to update the matrix Q \n
+ * @param[in] ILZ
+          ILZ is LOGICAL \n
+          Determines whether or not to update the matrix Z \n
+ * @param[in] N
+          N is INTEGER \n
+          The order of the matrices A, B, Q, and Z.  N >= 0. \n
+ * @param[in] ILO
+          ILO is INTEGER \n
+ * @param[in] IHI
+          IHI is INTEGER \n
+          ILO and IHI mark the rows and columns of (A,B) which
+          are to be normalized \n
+ * @param[in] NW
+          NW is INTEGER \n
+          The desired size of the deflation window. \n
+ * @param[in, out] A
+          A is REAL array, dimension (LDA, N) \n
+ * @param[in] LDA
+          LDA is INTEGER \n
+          The leading dimension of the array A.  LDA >= max( 1, N ). \n
+ * @param[in, out] B
+          B is REAL array, dimension (LDB,N) \n
+ * @param[in] LDB
+          LDB is INTEGER \n
+          The leading dimension of the array B.  LDB >= max( 1, N ). \n
+ * @param[in, out] Q
+          Q is REAL array, dimension (LDQ,N) \n
+ * @param[in] LDQ
+          LDQ is INTEGER \n
+ * @param[in, out] Z
+          Z is REAL array, dimension (LDZ,N) \n
+ * @param[in] LDZ
+          LDZ is INTEGER \n
+ * @param[out] NS
+          NS is INTEGER \n
+          The number of unconverged eigenvalues available to
+          use as shifts. \n
+ * @param[out] ND
+          ND is INTEGER \n
+          The number of converged eigenvalues found. \n
+ * @param[out] ALPHAR
+          ALPHAR is REAL array, dimension (N) \n
+          The real parts of each scalar alpha defining an eigenvalue
+          of GNEP. \n
+ * @param[out] ALPHAI
+          ALPHAI is REAL array, dimension (N) \n
+          The imaginary parts of each scalar alpha defining an
+          eigenvalue of GNEP. \n
+          If ALPHAI(j) is zero, then the j-th eigenvalue is real; if
+          positive, then the j-th and (j+1)-st eigenvalues are a
+          complex conjugate pair, with ALPHAI(j+1) = -ALPHAI(j). \n
+ * @param[out] BETA
+          BETA is REAL array, dimension (N) \n
+          The scalars beta that define the eigenvalues of GNEP. \n
+          Together, the quantities alpha = (ALPHAR(j),ALPHAI(j)) and
+          beta = BETA(j) represent the j-th eigenvalue of the matrix
+          pair (A,B), in one of the forms lambda = alpha/beta or
+          mu = beta/alpha.  Since either lambda or mu may overflow,
+          they should not, in general, be computed. \n
+ * @param[in, out] QC
+          QC is REAL array, dimension (LDQC, NW) \n
+ * @param[in] LDQC
+          LDQC is INTEGER \n
+ * @param[in, out] ZC
+          ZC is REAL array, dimension (LDZC, NW) \n
+ * @param[in] LDZ
+          LDZ is INTEGER \n
+ * @param[out] WORK
+          WORK is REAL array, dimension (MAX(1,LWORK)) \n
+          On exit, if INFO >= 0, WORK(1) returns the optimal LWORK. \n
+ * @param[in] LWORK
+          LWORK is INTEGER \n
+          The dimension of the array WORK.  LWORK >= max(1,N). \n
+ \n
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the WORK array, and no error
+          message related to LWORK is issued by XERBLA. \n
+ * @param[in] REC
+          REC is INTEGER \n
+          REC indicates the current recursion level. Should be set
+          to 0 on first call. \n
+ * @param[out] INFO
+          INFO is INTEGER \n
+          = 0: successful exit \n
+          < 0: if INFO = -i, the i-th argument had an illegal value \n
+
+ * @return INTEGER Return value of the function.
+ * */
+template < typename T >
+integer laqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, T *a, integer *lda, T *b, integer *ldb, T *q, integer * ldq, T *z, integer *ldz, integer *ns, integer *nd, T *alphar, T *alphai, T *beta, T * qc, integer *ldqc, T *zc, integer *ldzc, T *work, integer *lwork, integer *rec, integer *info)
+{
+  return laqz3(ilschur, ilq, ilz, n, ilo, ihi, nw, a, lda, b, ldb, q, ldq, z, ldz, ns, nd, alphar, alphai, beta, qc, ldqc, zc, ldzc, work, lwork, rec, info);
+}
+template < typename T >
+integer laqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired, T *alpha, T *beta, T *a, integer * lda, T *b, integer *ldb, T *q, integer *ldq, T *z, integer *ldz, T *qc, integer *ldqc, T *zc, integer *ldzc, T *work, integer *lwork, integer *info)
+{
+  return laqz3(ilschur, ilq, ilz, n, ilo, ihi, nshifts, nblock_desired, alpha, beta, a, lda, b, ldb, q, ldq, z, ldz, qc, ldqc, zc, ldzc, work, lwork, info);
+}
+
+/*! @brief LAQZ4 Executes a single multishift QZ sweep
+
+ * @details
+ * \b Purpose:
+    \verbatim
+    LAQZ4 Executes a single multishift QZ sweep
+    \endverbatim
+
+ * @param[in] ILSCHUR
+          ILSCHUR is LOGICAL \n
+          Determines whether or not to update the full Schur form \n
+ * @param[in] ILQ
+          ILQ is LOGICAL \n
+          Determines whether or not to update the matrix Q \n
+ * @param[in] ILZ
+          ILZ is LOGICAL \n
+          Determines whether or not to update the matrix Z \n
+ * @param[in] N
+          N is INTEGER \n
+          The order of the matrices A, B, Q, and Z.  N >= 0. \n
+ * @param[in] ILO
+          ILO is INTEGER \n
+ * @param[in] IHI
+          IHI is INTEGER \n
+ * @param[in] NSHIFTS
+          NSHIFTS is INTEGER \n
+          The desired number of shifts to use \n
+ * @param[in] NBLOCK_DESIRED
+          NBLOCK_DESIRED is INTEGER \n
+          The desired size of the computational windows \n
+ * @param[in] SR
+          SR is REAL array. SR contains
+          the real parts of the shifts to use. \n
+ * @param[in] SI
+          SI is REAL array. SI contains
+          the imaginary parts of the shifts to use. \n
+ * @param[in] SS
+          SS is REAL array. SS contains
+          the scale of the shifts to use. \n
+ * @param[in, out] A
+          A is REAL array, dimension (LDA, N) \n
+ * @param[in] LDA
+          LDA is INTEGER \n
+          The leading dimension of the array A.  LDA >= max( 1, N ). \n
+ * @param[in, out] B
+          B is REAL array, dimension (LDB,N) \n
+ * @param[in] LDB
+          LDB is INTEGER \n
+          The leading dimension of the array B.  LDB >= max( 1, N ). \n
+ * @param[in, out] Q
+          Q is REAL array, dimension (LDQ,N) \n
+ * @param[in] LDQ
+          LDQ is INTEGER \n
+ * @param[in, out] Z
+          Z is REAL array, dimension (LDZ,N) \n
+ * @param[in] LDZ
+          LDZ is INTEGER \n
+ * @param[in, out] QC
+          QC is REAL array, dimension (LDQC, NBLOCK_DESIRED) \n
+ * @param[in] LDQC
+          LDQC is INTEGER \n
+ * @param[in, out] ZC
+          ZC is REAL array, dimension (LDZC, NBLOCK_DESIRED) \n
+ * @param[in] LDZC
+          LDZC is INTEGER \n
+ * @param[out] WORK
+          WORK is REAL array, dimension (MAX(1,LWORK)) \n
+          On exit, if INFO >= 0, WORK(1) returns the optimal LWORK. \n
+ * @param[in] LWORK
+          LWORK is INTEGER \n
+          The dimension of the array WORK.  LWORK >= max(1,N). \n
+ \n
+          If LWORK = -1, then a workspace query is assumed; the routine
+          only calculates the optimal size of the WORK array, returns
+          this value as the first entry of the WORK array, and no error
+          message related to LWORK is issued by XERBLA. \n
+ * @param[out] INFO
+          INFO is INTEGER \n
+          = 0: successful exit \n
+          < 0: if INFO = -i, the i-th argument had an illegal value \n
+
+ * @return INTEGER Return value of the function.
+ * */
+template < typename T >
+inline integer laqz4(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired, T *sr, T *si, T *ss, T *a, integer *lda, T *b, integer *ldb, T *q, integer *ldq, T *z, integer * ldz, T *qc, integer *ldqc, T *zc, integer *ldzc, T *work, integer *lwork, integer *info)
+{
+  return laqz4(ilschur, ilq, ilz, n, ilo, ihi, nshifts, nblock_desired, sr, si, ss, a, lda, b, ldb, q, ldq, z, ldz, qc, ldqc, zc, ldzc, work, lwork, info);
+}
+
+/*! @brief LARFB_GETT applies a real Householder block reflector H from the
+    left to a real (K+M)-by-N  "triangular-pentagonal" matrix.
+
+ * @details
+ * \b Purpose:
+    \verbatim
+    LARFB_GETT applies a real Householder block reflector H from the
+    left to a real (K+M)-by-N  "triangular-pentagonal" matrix
+    composed of two block matrices: an upper trapezoidal K-by-N matrix A
+    stored in the array A, and a rectangular M-by-(N-K) matrix B, stored
+    in the array B. The block reflector H is stored in a compact
+    WY-representation, where the elementary reflectors are in the
+    arrays A, B and T. See Further Details section.
+    \endverbatim
+
+ * @param[in] IDENT
+          IDENT is CHARACTER*1 \n
+          If IDENT = not 'I', or not 'i', then V1 is unit
+             lower-triangular and stored in the left K-by-K block of
+             the input matrix A, \n
+          If IDENT = 'I' or 'i', then  V1 is an identity matrix and
+             not stored. \n
+          See Further Details section. \n
+ * @param[in] M
+          M is INTEGER \n
+          The number of rows of the matrix B.
+          M >= 0. \n
+ * @param[in] N
+          N is INTEGER \n
+          The number of columns of the matrices A and B.
+          N >= 0. \n
+ * @param[in] K
+          K is INTEGER \n
+          The number or rows of the matrix A. \n
+          K is also order of the matrix T, i.e. the number of
+          elementary reflectors whose product defines the block
+          reflector. 0 <= K <= N. \n
+ * @param[in] T
+          T is REAL array, dimension (LDT,K) \n
+          The upper-triangular K-by-K matrix T in the representation
+          of the block reflector. \n
+ * @param[in] LDT
+          LDT is INTEGER \n
+          The leading dimension of the array T. LDT >= K. \n
+ * @param[in, out] A
+          A is REAL array, dimension (LDA,N) \n
+ \n
+          On entry: \n
+           a) In the K-by-N upper-trapezoidal part A: input matrix A. \n
+           b) In the columns below the diagonal: columns of V1
+              (ones are not stored on the diagonal). \n
+ \n
+          On exit: \n
+            A is overwritten by rectangular K-by-N product H*A. \n
+ \n
+          See Further Details section. \n
+ * @param[in] LDA
+          LDA is INTEGER \n
+          The leading dimension of the array A. LDA >= max(1,K). \n
+ * @param[in, out] B
+          B is REAL array, dimension (LDB,N) \n
+ \n
+          On entry: \n
+            a) In the M-by-(N-K) right block: input matrix B. \n
+            b) In the M-by-N left block: columns of V2. \n
+ \n
+          On exit: \n
+            B is overwritten by rectangular M-by-N product H*B. \n
+ \n
+          See Further Details section. \n
+ * @param[in] LDB
+          LDB is INTEGER \n
+          The leading dimension of the array B. LDB >= max(1,M). \n
+ * @param[out] WORK
+          WORK is REAL array, \n
+          dimension (LDWORK,max(K,N-K)) \n
+ * @param[in] LDWORK
+          LDWORK is INTEGER \n
+          The leading dimension of the array WORK. LDWORK>=max(1,K). \n
+
+ * @return INTEGER Return value of the function.
+ * */
+template < typename T >
+inline integer larfb_gett(char *ident, integer *m, integer *n, integer *k, T *t, integer *ldt, T *a, integer *lda, T *b, integer *ldb, T *work, integer *ldwork)
+{
+  return larfb_gett(ident, m, n, k, t, ldt, a, lda, b, ldb, work, ldwork);
+}
+
+/*! @brief ORGTSQR_ROW generates an M-by-N real matrix Q_out with
+           orthonormal columns from the output of LATSQR.
+
+ * @details
+ * \b Purpose:
+    \verbatim
+    ORGTSQR_ROW generates an M-by-N real matrix Q_out with
+    orthonormal columns from the output of LATSQR. These N orthonormal
+    columns are the first N columns of a product of complex unitary
+    matrices Q(k)_in of order M, which are returned by SLATSQR in
+    a special format.
+
+        Q_out = first_N_columns_of( Q(1)_in * Q(2)_in * ... * Q(k)_in ).
+
+    The input matrices Q(k)_in are stored in row and column blocks in A.
+    See the documentation of SLATSQR for more details on the format of
+    Q(k)_in, where each Q(k)_in is represented by block Householder
+    transformations. This routine calls an auxiliary routine SLARFB_GETT,
+    where the computation is performed on each individual block. The
+    algorithm first sweeps NB-sized column blocks from the right to left
+    starting in the bottom row block and continues to the top row block
+    (hence _ROW in the routine name). This sweep is in reverse order of
+    the order in which SLATSQR generates the output blocks.
+    \endverbatim
+
+ * @param[in] M
+          M is INTEGER \n
+          The number of rows of the matrix A.  M >= 0. \n
+ * @param[in] N
+          N is INTEGER \n
+          The number of columns of the matrix A. M >= N >= 0. \n
+ * @param[in] MB
+          MB is INTEGER \n
+          The row block size used by SLATSQR to return
+          arrays A and T. MB > N.
+          (Note that if MB > M, then M is used instead of MB
+          as the row block size). \n
+ * @param[in] NB
+          NB is INTEGER \n
+          The column block size used by SLATSQR to return
+          arrays A and T. NB >= 1. \n
+          (Note that if NB > N, then N is used instead of NB
+          as the column block size). \n
+ * @param[in, out] A
+          A is REAL array, dimension (LDA,N) \n
+ \n
+          On entry: \n
+ \n
+             The elements on and above the diagonal are not used as
+             input. The elements below the diagonal represent the unit
+             lower-trapezoidal blocked matrix V computed by SLATSQR
+             that defines the input matrices Q_in(k) (ones on the
+             diagonal are not stored). See SLATSQR for more details.
+ \n
+          On exit: \n
+ \n
+             The array A contains an M-by-N orthonormal matrix Q_out,
+             i.e the columns of A are orthogonal unit vectors. \n
+ * @param[in] LDA
+          LDA is INTEGER \n
+          The leading dimension of the array A. LDA >= max(1,M). \n
+ * @param[in] T
+          T is REAL array,
+          dimension (LDT, N * NIRB) \n
+          where NIRB = Number_of_input_row_blocks
+                     = MAX( 1, CEIL((M-N)/(MB-N)) ) \n
+          Let NICB = Number_of_input_col_blocks \n
+                   = CEIL(N/NB) \n
+ \n
+          The upper-triangular block reflectors used to define the
+          input matrices Q_in(k), k=(1:NIRB*NICB). The block
+          reflectors are stored in compact form in NIRB block
+          reflector sequences. Each of the NIRB block reflector
+          sequences is stored in a larger NB-by-N column block of T
+          and consists of NICB smaller NB-by-NB upper-triangular
+          column blocks. See SLATSQR for more details on the format
+          of T. \n
+ * @param[in] LDT
+          LDT is INTEGER \n
+          The leading dimension of the array T. LDT >= max(1,min(NB,N)). \n
+ * @param[out] WORK
+          (workspace) REAL array, dimension (MAX(1,LWORK)) \n
+          On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
+ * @param[in] LWORK
+          The dimension of the array WORK. \n
+          LWORK >= NBLOCAL * MAX(NBLOCAL,(N-NBLOCAL)),
+          where NBLOCAL=MIN(NB,N). \n
+          If LWORK = -1, then a workspace query is assumed. \n
+          The routine only calculates the optimal size of the WORK
+          array, returns this value as the first entry of the WORK
+          array, and no error message related to LWORK is issued
+          by XERBLA. \n
+ * @param[out] INFO
+          INFO is INTEGER \n
+          = 0:  successful exit \n
+          < 0:  if INFO = -i, the i-th argument had an illegal value \n
+
+ * @return INTEGER Return value of the function.
+ * */
+template < typename T >
+inline integer gtsqr_row(integer *m, integer *n, integer *mb, integer *nb, T *a, integer *lda, T *t, integer *ldt, T *work, integer *lwork, integer *info)
+{
+  return gtsqr_row(m, n, mb, nb, a, lda, t, ldt, work, lwork, info);
 }
 
 }  // namespace libflame
