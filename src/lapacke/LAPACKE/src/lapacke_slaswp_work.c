@@ -40,9 +40,6 @@ lapack_int LAPACKE_slaswp_work( int matrix_layout, lapack_int n, float* a,
     if( matrix_layout == LAPACK_COL_MAJOR ) {
         /* Call LAPACK function and adjust info */
         LAPACK_slaswp( &n, a, &lda, &k1, &k2, ipiv, &incx );
-        if( info < 0 ) {
-            info = info - 1;
-        }
     } else if( matrix_layout == LAPACK_ROW_MAJOR ) {
         lapack_int lda_t = MAX(1,k2);
         lapack_int i;

@@ -46,9 +46,6 @@ lapack_int LAPACKE_ztprfb_work( int matrix_layout, char side, char trans,
         /* Call LAPACK function and adjust info */
         LAPACK_ztprfb( &side, &trans, &direct, &storev, &m, &n, &k, &l, v, &ldv,
                        t, &ldt, a, &lda, b, &ldb, work, &ldwork );
-        if( info < 0 ) {
-            info = info - 1;
-        }
     } else if( matrix_layout == LAPACK_ROW_MAJOR ) {
         lapack_int lda_t = MAX(1,k);
         lapack_int ldb_t = MAX(1,m);

@@ -174,9 +174,9 @@ lapack_int LAPACKE_cgejsv( int matrix_layout, char joba, char jobu, char jobv,
         istat[i] = iwork[i];
     }
     /* Release memory and exit */
-    LAPACKE_free( cwork );
-exit_level_2:
     LAPACKE_free( rwork );
+exit_level_2:
+    LAPACKE_free( cwork );
 exit_level_1:
     LAPACKE_free( iwork );
 exit_level_0:

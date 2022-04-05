@@ -42,9 +42,6 @@ lapack_int LAPACKE_csyr_work( int matrix_layout, char uplo, lapack_int n,
     if( matrix_layout == LAPACK_COL_MAJOR ) {
         /* Call LAPACK function and adjust info */
         LAPACK_csyr( &uplo, &n, &alpha, x, &incx, a, &lda );
-        if( info < 0 ) {
-            info = info - 1;
-        }
     } else if( matrix_layout == LAPACK_ROW_MAJOR ) {
         lapack_int lda_t = MAX(1,n);
         lapack_complex_float* a_t = NULL;

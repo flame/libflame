@@ -42,9 +42,6 @@ lapack_int LAPACKE_clarfx_work( int matrix_layout, char side, lapack_int m,
     if( matrix_layout == LAPACK_COL_MAJOR ) {
         /* Call LAPACK function and adjust info */
         LAPACK_clarfx( &side, &m, &n, v, &tau, c, &ldc, work );
-        if( info < 0 ) {
-            info = info - 1;
-        }
     } else if( matrix_layout == LAPACK_ROW_MAJOR ) {
         lapack_int ldc_t = MAX(1,m);
         lapack_complex_float* c_t = NULL;

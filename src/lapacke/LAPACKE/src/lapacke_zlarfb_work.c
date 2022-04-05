@@ -48,9 +48,6 @@ lapack_int LAPACKE_zlarfb_work( int matrix_layout, char side, char trans,
         /* Call LAPACK function and adjust info */
         LAPACK_zlarfb( &side, &trans, &direct, &storev, &m, &n, &k, v, &ldv, t,
                        &ldt, c, &ldc, work, &ldwork );
-        if( info < 0 ) {
-            info = info - 1;
-        }
     } else if( matrix_layout == LAPACK_ROW_MAJOR ) {
         nrows_v = ( LAPACKE_lsame( storev, 'c' ) &&
                              LAPACKE_lsame( side, 'l' ) ) ? m :
@@ -110,7 +107,10 @@ lapack_int LAPACKE_zlarfb_work( int matrix_layout, char side, char trans,
                    LAPACKE_lsame( direct, 'b' ) ) {
             if( k > nrows_v ) {
                 LAPACKE_xerbla( "LAPACKE_zlarfb_work", -8 );
-                return -8;
+                LAPACKE_free( v_t );
+		LAPACKE_free( t_t );
+		LAPACKE_free( c_t );
+		return -8;
             }
             LAPACKE_ztr_trans( matrix_layout, 'u', 'u', k, &v[(nrows_v-k)*ldv],
                                ldv, &v_t[nrows_v-k], ldv_t );
@@ -125,7 +125,10 @@ lapack_int LAPACKE_zlarfb_work( int matrix_layout, char side, char trans,
                    LAPACKE_lsame( direct, 'b' ) ) {
             if( k > ncols_v ) {
                 LAPACKE_xerbla( "LAPACKE_zlarfb_work", -8 );
-                return -8;
+                LAPACKE_free( v_t );
+                LAPACKE_free( t_t );
+                LAPACKE_free( c_t );
+		return -8;
             }
             LAPACKE_ztr_trans( matrix_layout, 'l', 'u', k, &v[ncols_v-k], ldv,
                                &v_t[(ncols_v-k)*ldv_t], ldv_t );

@@ -45,9 +45,6 @@ lapack_int LAPACKE_chfrk_work( int matrix_layout, char transr, char uplo,
         /* Call LAPACK function and adjust info */
         LAPACK_chfrk( &transr, &uplo, &trans, &n, &k, &alpha, a, &lda, &beta,
                       c );
-        if( info < 0 ) {
-            info = info - 1;
-        }
     } else if( matrix_layout == LAPACK_ROW_MAJOR ) {
         na = LAPACKE_lsame( trans, 'n' ) ? n : k;
         ka = LAPACKE_lsame( trans, 'n' ) ? k : n;

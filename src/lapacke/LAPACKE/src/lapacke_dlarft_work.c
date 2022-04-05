@@ -44,9 +44,6 @@ lapack_int LAPACKE_dlarft_work( int matrix_layout, char direct, char storev,
     if( matrix_layout == LAPACK_COL_MAJOR ) {
         /* Call LAPACK function and adjust info */
         LAPACK_dlarft( &direct, &storev, &n, &k, v, &ldv, tau, t, &ldt );
-        if( info < 0 ) {
-            info = info - 1;
-        }
     } else if( matrix_layout == LAPACK_ROW_MAJOR ) {
         nrows_v = LAPACKE_lsame( storev, 'c' ) ? n :
                              ( LAPACKE_lsame( storev, 'r' ) ? k : 1);

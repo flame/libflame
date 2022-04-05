@@ -41,9 +41,6 @@ double LAPACKE_dlansy_work( int matrix_layout, char norm, char uplo,
     if( matrix_layout == LAPACK_COL_MAJOR ) {
         /* Call LAPACK function and adjust info */
         res = LAPACK_dlansy( &norm, &uplo, &n, a, &lda, work );
-        if( info < 0 ) {
-            info = info - 1;
-        }
     } else if( matrix_layout == LAPACK_ROW_MAJOR ) {
         lapack_int lda_t = MAX(1,n);
         double* a_t = NULL;

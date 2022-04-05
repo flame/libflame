@@ -41,9 +41,6 @@ lapack_int LAPACKE_zlapmt_work( int matrix_layout, lapack_logical forwrd,
     if( matrix_layout == LAPACK_COL_MAJOR ) {
         /* Call LAPACK function and adjust info */
         LAPACK_zlapmt( &forwrd, &m, &n, x, &ldx, k );
-        if( info < 0 ) {
-            info = info - 1;
-        }
     } else if( matrix_layout == LAPACK_ROW_MAJOR ) {
         lapack_int ldx_t = MAX(1,m);
         lapack_complex_double* x_t = NULL;

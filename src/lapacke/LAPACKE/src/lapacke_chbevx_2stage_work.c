@@ -108,7 +108,12 @@ lapack_int LAPACKE_chbevx_2stage_work( int matrix_layout, char jobz, char range,
              LAPACK_chbevx_2stage( &jobz, &range, &uplo, &n, &kd, ab_t, &ldab_t, q_t,
                        &ldq_t, &vl, &vu, &il, &iu, &abstol, m, w, z_t, &ldz_t,
                        work, &lwork, rwork, iwork, ifail, &info );
-            return (info < 0) ? (info - 1) : info;
+             LAPACKE_free( ab_t );
+	     if( LAPACKE_lsame( jobz, 'v' ) ) {
+	     	LAPACKE_free( q_t );
+	     	LAPACKE_free( z_t );
+	     }
+	     return (info < 0) ? (info - 1) : info;
         }
         /* Transpose input matrices */
         LAPACKE_chb_trans( matrix_layout, uplo, n, kd, ab, ldab, ab_t, ldab_t );

@@ -43,9 +43,6 @@ lapack_int LAPACKE_ctfsm_work( int matrix_layout, char transr, char side,
         /* Call LAPACK function and adjust info */
         LAPACK_ctfsm( &transr, &side, &uplo, &trans, &diag, &m, &n, &alpha, a,
                       b, &ldb );
-        if( info < 0 ) {
-            info = info - 1;
-        }
     } else if( matrix_layout == LAPACK_ROW_MAJOR ) {
         lapack_int ldb_t = MAX(1,m);
         lapack_complex_float* b_t = NULL;

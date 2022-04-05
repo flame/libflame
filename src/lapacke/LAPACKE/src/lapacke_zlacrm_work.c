@@ -68,18 +68,18 @@ lapack_int LAPACKE_zlacrm_work(int matrix_layout, lapack_int m, lapack_int n,
         /* Allocate memory for temporary array(s) */
         a_t = (lapack_complex_double*)
             LAPACKE_malloc(sizeof(lapack_complex_double) * lda_t * MAX(1,n));
-        b_t = (double*)
-            LAPACKE_malloc(sizeof(double) * ldb_t * MAX(1,n));
-        c_t = (lapack_complex_double*)
-            LAPACKE_malloc((sizeof(lapack_complex_double) * ldc_t * MAX(1,n)));
         if (a_t == NULL) {
             info = LAPACK_TRANSPOSE_MEMORY_ERROR;
             goto exit_level_0;
         }
+	b_t = (double*)
+            LAPACKE_malloc(sizeof(double) * ldb_t * MAX(1,n));
         if (b_t == NULL) {
             info = LAPACK_TRANSPOSE_MEMORY_ERROR;
             goto exit_level_1;
         }
+	c_t = (lapack_complex_double*)
+            LAPACKE_malloc((sizeof(lapack_complex_double) * ldc_t * MAX(1,n)));
         if (c_t == NULL) {
             info = LAPACK_TRANSPOSE_MEMORY_ERROR;
             goto exit_level_2;
