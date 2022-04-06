@@ -75,13 +75,6 @@ void sspffrt2_fla(real *ap, integer *n, integer * ncolm, real *work, real *work2
     integer i__1, k, kc;
     integer c__1 = 1;
     real r1;
-    
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256, "sspffrt2 inputs: n %" FLA_IS ", ncolm %" FLA_IS "", *n, *ncolm);
-	  AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
 
     --ap;
     /* Factorize A as L*D*L**T using the lower triangle of A */
@@ -104,7 +97,6 @@ void sspffrt2_fla(real *ap, integer *n, integer * ncolm, real *work, real *work2
        ap[kc] = r1;
        kc = kc + *n - k + 1;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return;
 }
 /* sspffrt2_fla */

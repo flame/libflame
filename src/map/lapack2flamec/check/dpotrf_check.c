@@ -5,11 +5,6 @@ int dpotrf_check(char *uplo, integer *n, double *a, integer * lda, integer *info
 {
     /* System generated locals */
     integer a_dim1, a_offset, i__1;    
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "dpotrf inputs: uplo %c, n %d, lda %d\n", *uplo, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
     /* Local variables */
     logical upper;
 

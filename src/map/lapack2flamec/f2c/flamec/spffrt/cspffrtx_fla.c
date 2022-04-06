@@ -81,13 +81,6 @@ void  cspffrtx_fla(complex *ap, integer *n, integer *ncolm, complex *work, compl
         1.,0.
     };
     integer c__1 = 1;
-    
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256, "cspffrtx inputs: n %" FLA_IS ", ncolm %" FLA_IS "", *n, *ncolm);
-	  AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
 
     --ap;
     /* Factorize A as L*D*L**T using the lower triangle of A */
@@ -111,7 +104,6 @@ void  cspffrtx_fla(complex *ap, integer *n, integer *ncolm, complex *work, compl
 
         kc = kc + *n - k + 1;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return;
 }
 /* cspffrtx_fla */

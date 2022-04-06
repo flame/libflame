@@ -5,12 +5,6 @@ int zgebd2_check(integer *m, integer *n, dcomplex *a, integer *lda, doublereal *
 {
     /* System generated locals */
     integer a_dim1, a_offset, i__1;
-    
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "zgebd2 inputs: m %d, n %d, lda %d\n", *m, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
 
     /* Parameter adjustments */
     a_dim1 = *lda;

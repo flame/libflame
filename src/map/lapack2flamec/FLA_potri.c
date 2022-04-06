@@ -53,51 +53,83 @@
                                                                 \
   FLA_Finalize_safe( init_result );                             \
                                                                 \
-  return 0;
+
 
 LAPACK_potri(s)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("spotri inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( spotri_check( uplo, n,
+        LAPACK_RETURN_CHECK_VAR1( spotri_check( uplo, n,
                                            buff_A, ldim_A,
-                                           info ) )
+                                           info ),fla_error )
     }
+    if(fla_error==LAPACK_SUCCESS)
     {
         LAPACK_potri_body(s)
+         /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_potri(d)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dpotri inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( dpotri_check( uplo, n,
+        LAPACK_RETURN_CHECK_VAR1( dpotri_check( uplo, n,
                                            buff_A, ldim_A,
-                                           info ) )
+                                           info ), fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_potri_body(d)
+         /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_potri(c)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cpotri inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( cpotri_check( uplo, n,
+        LAPACK_RETURN_CHECK_VAR1( cpotri_check( uplo, n,
                                            buff_A, ldim_A,
-                                           info ) )
+                                           info ), fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_potri_body(c)
+         /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_potri(z)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zpotri inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( zpotri_check( uplo, n,
+        LAPACK_RETURN_CHECK_VAR1( zpotri_check( uplo, n,
                                            buff_A, ldim_A,
-                                           info ) )
+                                           info ), fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_potri_body(z)
+         /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 
 #endif

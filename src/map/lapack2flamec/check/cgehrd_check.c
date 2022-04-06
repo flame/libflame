@@ -13,11 +13,6 @@ int cgehrd_check(integer *n, integer *ilo, integer *ihi, scomplex * a, integer *
     integer lwkopt;
     logical lquery;
 
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "cgehrd inputs: n %d, ilo %d, ihi %d, lda %d\n", *n, *ilo, *ihi, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
 
     /* Parameter adjustments */
     a_dim1 = *lda;

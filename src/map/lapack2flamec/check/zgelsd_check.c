@@ -21,12 +21,6 @@ int zgelsd_check(integer *m, integer *n, integer *nrhs, dcomplex *a, integer *ld
     logical lquery;
     integer smlsiz;
 
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "zgelsd inputs: m %d, n %d, nrhs %d, lda %d, ldb %d, rank %d\n", *m, *n, *nrhs, *lda, *ldb, *rank);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
-
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

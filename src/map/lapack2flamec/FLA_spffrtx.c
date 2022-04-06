@@ -26,52 +26,85 @@
 #define LAPACK_spffrtx_body(prefix)                                      \
            prefix ## spffrtx_fla( buff_AP,                               \
                                   n, ncolm,                              \
-                                  work, work2);
+                                  work, work2);                          \
+
 
 
 LAPACK_spffrtx(s)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("sspffrtx inputs: n %" FLA_IS ", ncolm %" FLA_IS "", *n, *ncolm);
     {
-        LAPACK_RETURN_CHECK( sspffrtx_check( buff_AP,
+        LAPACK_RETURN_CHECK_VAR1( sspffrtx_check( buff_AP,
                                              n, ncolm,
-                                             work, work2 ) )
+                                             work, work2 ),fla_error )
     }
+    if(fla_error==LAPACK_SUCCESS)
     {
         LAPACK_spffrtx_body(s)
+        /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_spffrtx(d)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dspffrtx inputs: n %" FLA_IS ", ncolm %" FLA_IS "", *n, *ncolm);
     {
-        LAPACK_RETURN_CHECK( dspffrtx_check( buff_AP,
+        LAPACK_RETURN_CHECK_VAR1( dspffrtx_check( buff_AP,
                                              n, ncolm,
-                                             work, work2 ) )
+                                             work, work2 ),fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_spffrtx_body(d)
+        /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_spffrtx(c)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cspffrtx inputs: n %" FLA_IS ", ncolm %" FLA_IS "", *n, *ncolm);
     {
-        LAPACK_RETURN_CHECK( cspffrtx_check( buff_AP,
+        LAPACK_RETURN_CHECK_VAR1( cspffrtx_check( buff_AP,
                                              n, ncolm,
-                                             work, work2 ) )
+                                             work, work2 ),fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_spffrtx_body(c)
+        /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_spffrtx(z)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zspffrtx inputs: n %" FLA_IS ", ncolm %" FLA_IS "", *n, *ncolm);
     {
-        LAPACK_RETURN_CHECK( zspffrtx_check( buff_AP,
+        LAPACK_RETURN_CHECK_VAR1( zspffrtx_check( buff_AP,
                                              n, ncolm,
-                                             work, work2 ) )
+                                             work, work2 ),fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_spffrtx_body(z)
+        /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
  
 #endif

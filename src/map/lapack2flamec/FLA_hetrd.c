@@ -126,8 +126,7 @@
                                                                         \
   *info = 0;                                                            \
                                                                         \
-  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                          \
-  return 0;
+
 
 
 // Original lapack implementation for upper triangular versions.
@@ -145,63 +144,84 @@ extern int zhetrd_fla(char *uplo, integer *n, doublecomplex *a, integer *lda, do
 
 LAPACK_hetrd(s,sy)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("hetrd-ssytrd inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *m, *ldim_A);
     {
         if ( *uplo == 'U' || *uplo == 'u' )
         {
-            ssytrd_fla( uplo, m,
-                        buff_A, ldim_A,
-                        buff_d, buff_e,
-                        buff_t,
-                        buff_w, lwork,
-                        info );
+            ssytrd_fla(uplo, m,
+                       buff_A, ldim_A,
+                       buff_d, buff_e,
+                       buff_t,
+                       buff_w, lwork,
+                       info);
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
     {
-        LAPACK_RETURN_CHECK( ssytrd_check( uplo, m,
+        LAPACK_RETURN_CHECK_VAR1( ssytrd_check( uplo, m,
                                            buff_A, ldim_A,
                                            buff_d, buff_e,
                                            buff_t,
                                            buff_w, lwork,
-                                           info ) )
+                                           info ),fla_error )
     }
+    if(fla_error==LAPACK_SUCCESS)
     {
         LAPACK_hetrd_body(s)
+         /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_hetrd(d,sy)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("hetrd-dsytrd inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *m, *ldim_A);
     {
          
     #if !FLA_AMD_OPT
       if ( *uplo == 'U' || *uplo == 'u' )
     #endif
       {
-         dsytrd_fla( uplo, m,
+          dsytrd_fla(uplo, m,
                      buff_A, ldim_A,
                      buff_d, buff_e,
                      buff_t,
                      buff_w, lwork,
-                     info );
-         return 0;
+                     info);
+          AOCL_DTL_TRACE_LOG_EXIT
+          return 0;
       }
     }
     {
-        LAPACK_RETURN_CHECK( dsytrd_check( uplo, m,
+        LAPACK_RETURN_CHECK_VAR1( dsytrd_check( uplo, m,
                                            buff_A, ldim_A,
                                            buff_d, buff_e,
                                            buff_t,
                                            buff_w, lwork,
-                                           info ) )
+                                           info ),fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_hetrd_body(d)
+     /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
 LAPACK_hetrd(c,he)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("chetrd inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *m, *ldim_A);
     {
         if ( *uplo == 'U' || *uplo == 'u' )
         {
@@ -211,23 +231,32 @@ LAPACK_hetrd(c,he)
                         (complex*)buff_t,
                         (complex*)buff_w, lwork,
                         info );
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
     {
-        LAPACK_RETURN_CHECK( chetrd_check( uplo, m,
+        LAPACK_RETURN_CHECK_VAR1( chetrd_check( uplo, m,
                                            buff_A, ldim_A,
                                            buff_d, buff_e,
                                            buff_t,
                                            buff_w, lwork,
-                                           info ) )
+                                           info ),fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_hetrd_body(c)
+     /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_hetrd(z,he)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhetrd inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *m, *ldim_A);
     {
         if ( *uplo == 'U' || *uplo == 'u' )
         {
@@ -237,20 +266,26 @@ LAPACK_hetrd(z,he)
                         (doublecomplex*)buff_t,
                         (doublecomplex*)buff_w, lwork,
                         info );
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
     {
-        LAPACK_RETURN_CHECK( zhetrd_check( uplo, m,
+        LAPACK_RETURN_CHECK_VAR1( zhetrd_check( uplo, m,
                                            buff_A, ldim_A,
                                            buff_d, buff_e,
                                            buff_t,
                                            buff_w, lwork,
-                                           info ) )
+                                           info ),fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_hetrd_body(z)
+     /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 #endif
 
@@ -265,6 +300,9 @@ LAPACK_hetrd(z,he)
 
 LAPACK_hetd2(s,sy)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("hetd2-ssytd2 inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *m, *ldim_A);
     {
         if ( *uplo == 'U' || *uplo == 'u' )
         {
@@ -273,22 +311,31 @@ LAPACK_hetd2(s,sy)
                         buff_d, buff_e,
                         buff_t,
                         info );
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
     {
-        LAPACK_RETURN_CHECK( ssytd2_check( uplo, m,
+        LAPACK_RETURN_CHECK_VAR1( ssytd2_check( uplo, m,
                                            buff_A, ldim_A,
                                            buff_d, buff_e,
                                            buff_t,
-                                           info ) )
+                                           info ),fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_hetrd_body(s)
+    /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_hetd2(d,sy)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("hetd2-dsytd2 inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *m, *ldim_A);
     {
         if ( *uplo == 'U' || *uplo == 'u' )
         {
@@ -297,24 +344,33 @@ LAPACK_hetd2(d,sy)
                         buff_d, buff_e,
                         buff_t,
                         info );
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
     {
-        LAPACK_RETURN_CHECK( dsytd2_check( uplo, m,
+        LAPACK_RETURN_CHECK_VAR1( dsytd2_check( uplo, m,
                                            buff_A, ldim_A,
                                            buff_d, buff_e,
                                            buff_t,
-                                           info ) )
+                                           info ),fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_hetrd_body(d)
+     /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
 LAPACK_hetd2(c,he)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("chetd2 inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *m, *ldim_A);
     {
         if ( *uplo == 'U' || *uplo == 'u' )
         {
@@ -323,22 +379,31 @@ LAPACK_hetd2(c,he)
                         (real*)buff_d, (real*)buff_e,
                         (complex*)buff_t,
                         info );
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
     {
-        LAPACK_RETURN_CHECK( chetd2_check( uplo, m,
+        LAPACK_RETURN_CHECK_VAR1( chetd2_check( uplo, m,
                                            buff_A, ldim_A,
                                            buff_d, buff_e,
                                            buff_t,
-                                           info ) )
+                                           info ),fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_hetrd_body(c)
+     /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_hetd2(z,he)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhetd2 inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *m, *ldim_A);
     {
         if ( *uplo == 'U' || *uplo == 'u' )
         {
@@ -347,19 +412,25 @@ LAPACK_hetd2(z,he)
                         (doublereal*)buff_d, (doublereal*)buff_e,
                         (doublecomplex*)buff_t,
                         info );
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
     {
-        LAPACK_RETURN_CHECK( zhetd2_check( uplo, m,
+        LAPACK_RETURN_CHECK_VAR1( zhetd2_check( uplo, m,
                                            buff_A, ldim_A,
                                            buff_d, buff_e,
                                            buff_t,
-                                           info ) )
+                                           info ) ,fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_hetrd_body(z)
+     /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 #endif
 

@@ -13,12 +13,6 @@ int dgeqp3_check(integer *m, integer *n, double *a, integer * lda, integer *jpvt
     integer lwkopt;
     logical lquery;
 
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "dgeqp3 inputs: m %d, n %d, lda %d, jpvt %d\n", *m, *n, *lda, *jpvt);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
-
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

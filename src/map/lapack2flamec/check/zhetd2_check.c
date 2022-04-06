@@ -7,11 +7,6 @@ int zhetd2_check(char *uplo, integer *n, dcomplex *a, integer *lda, double *d__,
     integer a_dim1, a_offset, i__1;
     logical upper;
 
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "zhetd2 inputs: uplo %c, n %d, lda %d\n", *uplo, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

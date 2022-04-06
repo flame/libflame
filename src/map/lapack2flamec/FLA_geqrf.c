@@ -52,7 +52,6 @@ extern void DTL_Trace(
                               integer* info )
 
 #define LAPACK_geqrf_body(prefix)                               \
-  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5); 		        \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   FLA_Obj      A, t, T;                                         \
   integer      min_m_n  = min( *m, *n );                        \
@@ -81,45 +80,62 @@ extern void DTL_Trace(
                                                                         \
   *info = 0;                                                            \
                                                                         \
-  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  	\
-  return 0;
+
 
 LAPACK_geqrf(s)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("sgeqrf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
 #if !FLA_AMD_OPT
     {
-        LAPACK_RETURN_CHECK( sgeqrf_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( sgeqrf_check( m, n,
                                            buff_A, ldim_A,
                                            buff_t,
                                            buff_w, lwork,
-                                           info ) )
+                                           info ),fla_error )
     }
+    if(fla_error==LAPACK_SUCCESS)
     {
         LAPACK_geqrf_body(s)
+       /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 #else
     {
       sgeqrf_fla(m, n, buff_A, ldim_A, buff_t, buff_w, lwork, info);
+      AOCL_DTL_TRACE_LOG_EXIT
       return 0;
     }
 #endif
 }
 LAPACK_geqrf(d)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgeqrf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
 #if !FLA_AMD_OPT
     {
-        LAPACK_RETURN_CHECK( dgeqrf_check( m, n,
-                                           buff_A, ldim_A,
-                                           buff_t,
-                                           buff_w, lwork,
-                                           info ) )
+        LAPACK_RETURN_CHECK_VAR1(dgeqrf_check(m, n,
+                                              buff_A, ldim_A,
+                                              buff_t,
+                                              buff_w, lwork,
+                                              info),fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_geqrf_body(d)
+       /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 #else
     {
       dgeqrf_fla(m, n, buff_A, ldim_A, buff_t, buff_w, lwork, info);
+      AOCL_DTL_TRACE_LOG_EXIT
       return 0;
     }
 #endif
@@ -128,29 +144,45 @@ LAPACK_geqrf(d)
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
 LAPACK_geqrf(c)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cgeqrf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( cgeqrf_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( cgeqrf_check( m, n,
                                            buff_A, ldim_A,
                                            buff_t,
                                            buff_w, lwork,
-                                           info ) )
+                                           info ),fla_error )
     }
+    if(fla_error==LAPACK_SUCCESS)
     {
         LAPACK_geqrf_body(c)
+       /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_geqrf(z)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgeqrf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( zgeqrf_check( m, n,
-                                           buff_A, ldim_A,
-                                           buff_t,
-                                           buff_w, lwork,
-                                           info ) )
+        LAPACK_RETURN_CHECK_VAR1(zgeqrf_check(m, n,
+                                              buff_A, ldim_A,
+                                              buff_t,
+                                              buff_w, lwork,
+                                              info), fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_geqrf_body(z)
+       /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 #endif
 
@@ -164,57 +196,91 @@ LAPACK_geqrf(z)
 
 LAPACK_geqr2(s)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("sgeqr2 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( sgeqr2_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( sgeqr2_check( m, n,
                                            buff_A, ldim_A,
                                            buff_t,
                                            buff_w,
-                                           info ) )
+                                           info ),fla_error )
     }
+    if(fla_error==LAPACK_SUCCESS)
     {
         LAPACK_geqrf_body(s)
+       /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_geqr2(d)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgeqr2 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( dgeqr2_check( m, n,
-                                           buff_A, ldim_A,
-                                           buff_t,
-                                           buff_w,
-                                           info ) )
+        LAPACK_RETURN_CHECK_VAR1(dgeqr2_check(m, n,
+                                              buff_A, ldim_A,
+                                              buff_t,
+                                              buff_w,
+                                              info),
+                                 fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_geqrf_body(d)
+       /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
 LAPACK_geqr2(c)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cgeqr2 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( cgeqr2_check( m, n,
-                                           buff_A, ldim_A,
-                                           buff_t,
-                                           buff_w,
-                                           info ) )
+        LAPACK_RETURN_CHECK_VAR1(cgeqr2_check(m, n,
+                                              buff_A, ldim_A,
+                                              buff_t,
+                                              buff_w,
+                                              info),
+                                 fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_geqrf_body(c)
+       /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_geqr2(z)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgeqr2 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( zgeqr2_check( m, n,
-                                           buff_A, ldim_A,
-                                           buff_t,
-                                           buff_w,
-                                           info ) )
+        LAPACK_RETURN_CHECK_VAR1(zgeqr2_check(m, n,
+                                              buff_A, ldim_A,
+                                              buff_t,
+                                              buff_w,
+                                              info),fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_geqrf_body(z)
+       /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 #endif
 
@@ -228,17 +294,25 @@ LAPACK_geqr2(z)
                                integer* info )
 LAPACK_geqrfp(s)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("sgeqrfp inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
 #if !FLA_AMD_OPT
     {
-        LAPACK_RETURN_CHECK( sgeqrfp_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( sgeqrfp_check( m, n,
                                             buff_A, ldim_A,
                                             buff_t,
                                             buff_w, lwork,
-                                            info ) )
+                                            info ), fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_geqrf_body(s)
+       /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 #else
     {
       sgeqrfp_fla( m, n,
@@ -246,23 +320,32 @@ LAPACK_geqrfp(s)
                    buff_t,
                    buff_w, lwork,
                    info );
+      AOCL_DTL_TRACE_LOG_EXIT
       return 0;
     }
 #endif
 }
 LAPACK_geqrfp(d)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgeqrfp inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
 #if !FLA_AMD_OPT
     {
-        LAPACK_RETURN_CHECK( dgeqrfp_check( m, n,
-                                            buff_A, ldim_A,
-                                            buff_t,
-                                            buff_w, lwork,
-                                            info ) )
+        LAPACK_RETURN_CHECK_VAR1(dgeqrfp_check(m, n,
+                                               buff_A, ldim_A,
+                                               buff_t,
+                                               buff_w, lwork,
+                                               info), fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_geqrf_body(d)
+       /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 #else
     {
       dgeqrfp_fla( m, n,
@@ -270,6 +353,7 @@ LAPACK_geqrfp(d)
                    buff_t,
                    buff_w, lwork,
                    info );
+      AOCL_DTL_TRACE_LOG_EXIT
       return 0;
     }
 #endif
@@ -278,29 +362,45 @@ LAPACK_geqrfp(d)
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
 LAPACK_geqrfp(c)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cgeqrfp inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( cgeqrfp_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( cgeqrfp_check( m, n,
                                             buff_A, ldim_A,
                                             buff_t,
                                             buff_w, lwork,
-                                            info ) )
+                                            info ), fla_error )
     }
+    if(fla_error==LAPACK_SUCCESS)
     {
         LAPACK_geqrf_body(c)
+       /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_geqrfp(z)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgeqrfp inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( zgeqrfp_check( m, n,
-                                            buff_A, ldim_A,
-                                            buff_t,
-                                            buff_w, lwork,
-                                            info ) )
+        LAPACK_RETURN_CHECK_VAR1(zgeqrfp_check(m, n,
+                                               buff_A, ldim_A,
+                                               buff_t,
+                                               buff_w, lwork,
+                                               info), fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_geqrf_body(z)
+       /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 #endif
 
@@ -314,17 +414,25 @@ LAPACK_geqrfp(z)
 
 LAPACK_geqr2p(s)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("sgeqr2p inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
 #if !FLA_AMD_OPT
     {
-        LAPACK_RETURN_CHECK( sgeqr2p_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( sgeqr2p_check( m, n,
                                             buff_A, ldim_A,
                                             buff_t,
                                             buff_w,
-                                            info ) )
+                                            info ), fla_error )
     }
+    if(fla_error==LAPACK_SUCCESS)
     {
         LAPACK_geqrf_body(s)
+      /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 #else
     {
         sgeqr2p_fla( m, n,
@@ -332,30 +440,41 @@ LAPACK_geqr2p(s)
                      buff_t,
                      buff_w,
                      info );
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
 #endif
 }
 LAPACK_geqr2p(d)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgeqr2p inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
 #if !FLA_AMD_OPT
     {
-        LAPACK_RETURN_CHECK( dgeqr2p_check( m, n,
-                                            buff_A, ldim_A,
-                                            buff_t,
-                                            buff_w,
-                                            info ) )
+        LAPACK_RETURN_CHECK_VAR1(dgeqr2p_check(m, n,
+                                               buff_A, ldim_A,
+                                               buff_t,
+                                               buff_w,
+                                               info),
+                                 fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_geqrf_body(d)
+       /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 #else
     {
-        dgeqr2p_fla( m, n,
-                     buff_A, ldim_A,
-                     buff_t,
-                     buff_w,
-                     info );
+        dgeqr2p_fla(m, n,
+                    buff_A, ldim_A,
+                    buff_t,
+                    buff_w,
+                    info);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
 #endif
@@ -364,29 +483,45 @@ LAPACK_geqr2p(d)
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
 LAPACK_geqr2p(c)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cgeqr2p inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( cgeqr2p_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( cgeqr2p_check( m, n,
                                             buff_A, ldim_A,
                                             buff_t,
                                             buff_w,
-                                            info ) )
+                                            info ),fla_error )
     }
+    if(fla_error==LAPACK_SUCCESS)
     {
         LAPACK_geqrf_body(c)
+       /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_geqr2p(z)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgeqr2p inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( zgeqr2p_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( zgeqr2p_check( m, n,
                                             buff_A, ldim_A,
                                             buff_t,
                                             buff_w,
-                                            info ) )
+                                            info ),fla_error )
     }
+    if(fla_error==LAPACK_SUCCESS)
     {
         LAPACK_geqrf_body(z)
+        /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 #endif
 

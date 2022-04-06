@@ -63,7 +63,6 @@ extern int dormbr_fla(char *vect, char *side, char *trans, integer *m, integer *
                                     integer *info )
 
 #define LAPACK_ormbr_body(prefix)                                       \
-  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);                \
   FLA_Side     side_fla;                                                \
   FLA_Trans    trans_fla;                                               \
@@ -221,24 +220,34 @@ extern int dormbr_fla(char *vect, char *side, char *trans, integer *m, integer *
                                                                         \
   *info = 0;                                                            \
                                                                         \
-  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                          \
-  return 0;
+
 
 LAPACK_ormbr(s, orm)
 {
-    {
-        LAPACK_RETURN_CHECK( sormbr_check( vect, side, trans,
-                                           m, n, k,
-                                           buff_A, ldim_A,
-                                           buff_t,
-                                           buff_C, ldim_C,
-                                           buff_w, lwork,
-                                           info ) )
-    }
-    {
+  int fla_error = LAPACK_SUCCESS;
+  AOCL_DTL_TRACE_LOG_INIT
+  AOCL_DTL_SNPRINTF("sormbr inputs: vect %c, side %c, trans %c, m " FLA_IS ", n " FLA_IS ", k " FLA_IS ", lda " FLA_IS ", ldc " FLA_IS "", *vect, *side, *trans, *m, *n, *k, *ldim_A, *ldim_C);
+  {
+      LAPACK_RETURN_CHECK_VAR1(sormbr_check(vect, side, trans,
+                                       m, n, k,
+                                       buff_A, ldim_A,
+                                       buff_t,
+                                       buff_C, ldim_C,
+                                       buff_w, lwork,
+                                       info),fla_error)
+  }
+  {
 #if !FLA_AMD_OPT
+      if(fla_error==LAPACK_SUCCESS)
+      {
         LAPACK_ormbr_body(s)
+        /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
+      }
+      AOCL_DTL_TRACE_LOG_EXIT
+      return fla_error;
 #else
+      {
         sormbr_fla( vect, side, trans,
                     m, n, k,
                     buff_A, ldim_A,
@@ -246,24 +255,36 @@ LAPACK_ormbr(s, orm)
                     buff_C, ldim_C,
                     buff_w, lwork,
                     info);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
+      }
 #endif
     }
 }
 LAPACK_ormbr(d, orm)
 {
-    {
-        LAPACK_RETURN_CHECK( dormbr_check( vect, side, trans,
-                                           m, n, k,
-                                           buff_A, ldim_A,
-                                           buff_t,
-                                           buff_C, ldim_C,
-                                           buff_w, lwork,
-                                           info ) )
-    }
-    {
+  int fla_error = LAPACK_SUCCESS;
+  AOCL_DTL_TRACE_LOG_INIT
+  AOCL_DTL_SNPRINTF("dormbr inputs: vect %c, side %c, trans %c, m " FLA_IS ", n " FLA_IS ", k " FLA_IS ", lda " FLA_IS ", ldc " FLA_IS "", *vect, *side, *trans, *m, *n, *k, *ldim_A, *ldim_C);
+  {
+    LAPACK_RETURN_CHECK_VAR1(dormbr_check(vect, side, trans,
+                                          m, n, k,
+                                          buff_A, ldim_A,
+                                          buff_t,
+                                          buff_C, ldim_C,
+                                          buff_w, lwork,
+                                          info),fla_error)
+  } 
+  {
 #if !FLA_AMD_OPT
+      if (fla_error == LAPACK_SUCCESS)
+      {
         LAPACK_ormbr_body(d)
+        /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
+      }
+      AOCL_DTL_TRACE_LOG_EXIT
+      return fla_error;
 #else
         *info = 0;
         dormbr_fla( vect, side, trans,
@@ -273,41 +294,59 @@ LAPACK_ormbr(d, orm)
                     buff_C, ldim_C,
                     buff_w, lwork,
                     info);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
 #endif
-    }
+  }
 }
 
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
 LAPACK_ormbr(c, unm)
 {
-    {
-        LAPACK_RETURN_CHECK( cunmbr_check( vect, side, trans,
-                                           m, n, k,
-                                           buff_A, ldim_A,
-                                           buff_t,
-                                           buff_C, ldim_C,
-                                           buff_w, lwork,
-                                           info ) )
+  int fla_error = LAPACK_SUCCESS;
+  AOCL_DTL_TRACE_LOG_INIT
+  AOCL_DTL_SNPRINTF("cunmbr inputs: vect %c, side %c, trans %c, m " FLA_IS ", n " FLA_IS ", k " FLA_IS ", lda " FLA_IS ", ldc " FLA_IS "", *vect, *side, *trans, *m, *n, *k, *ldim_A, *ldim_C);
+  {
+    LAPACK_RETURN_CHECK_VAR1(cunmbr_check(vect, side, trans,
+                                          m, n, k,
+                                          buff_A, ldim_A,
+                                          buff_t,
+                                          buff_C, ldim_C,
+                                          buff_w, lwork,
+                                          info),
+                             fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
-        LAPACK_ormbr_body(c)
+      LAPACK_ormbr_body(c)
+      /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_ormbr(z, unm)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zunmbr inputs: vect %c, side %c, trans %c, m " FLA_IS ", n " FLA_IS ", k " FLA_IS ", lda " FLA_IS ", ldc " FLA_IS "", *vect, *side, *trans, *m, *n, *k, *ldim_A, *ldim_C);
     {
-        LAPACK_RETURN_CHECK( zunmbr_check( vect, side, trans,
+        LAPACK_RETURN_CHECK_VAR1( zunmbr_check( vect, side, trans,
                                            m, n, k,
                                            buff_A, ldim_A,
                                            buff_t,
                                            buff_C, ldim_C,
                                            buff_w, lwork,
-                                           info ) )
+                                           info ),fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
-        LAPACK_ormbr_body(z)
+      LAPACK_ormbr_body(z)
+      /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 #endif
 

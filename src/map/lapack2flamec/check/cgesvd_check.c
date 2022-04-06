@@ -24,11 +24,7 @@ int cgesvd_check(char *jobu, char *jobvt, integer *m, integer *n, scomplex *a, i
     integer minwrk, maxwrk;
     logical lquery, wntuas, wntvas;
     integer lwork_cungbr_p__, lwork_cungbr_q__, lwork_cunglq_m__, lwork_cunglq_n__, lwork_cungqr_m__, lwork_cungqr_n__;
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "cgesvd inputs: jobu %c, jobvt %c, m %d, n %d, lda %d, ldu %d, ldvt %d\n", *jobu, *jobvt, *m, *n, *lda, *ldu, *ldvt);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

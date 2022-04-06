@@ -10,12 +10,6 @@ int cunm2r_check(char *side, char *trans, integer *m, integer *n, integer *k, sc
     integer nq;
     logical left;
     logical notran;
-    
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "cunm2r inputs: side %c, trans %c, m %d, n %d, k %d, lda %d, ldc %d\n", *side, *trans, *m, *n, *k, *lda, *ldc);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
 
     /* Parameter adjustments */
     a_dim1 = *lda;

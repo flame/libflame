@@ -11,11 +11,7 @@ int sgeqrf_check(integer *m, integer *n, float *a, integer *lda, float *tau, flo
     integer k, nb;
     integer lwkopt;
     logical lquery;
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "sgeqrf inputs: m %d, n %d, lda %d\n", *m, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

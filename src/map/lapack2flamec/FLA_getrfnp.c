@@ -65,53 +65,83 @@ extern void DTL_Trace(
                                                                 \
   if ( e_val != FLA_SUCCESS ) *info = e_val + 1;                \
   else                        *info = 0;                        \
-                                                                \
-  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  \
-  return 0;
+
 
 LAPACK_getrfnp(s)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("sgetrfnp inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( sgetrfnp_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( sgetrfnp_check( m, n,
                                            buff_A, ldim_A,
-                                           info ) )
+                                           info ), fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_getrfnp_body(s)
+         /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT                                       
+    return fla_error;
 }
 LAPACK_getrfnp(d)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgetrfnp inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( dgetrfnp_check( m, n,
-                                           buff_A, ldim_A,
-                                           info ) )
+        LAPACK_RETURN_CHECK_VAR1(dgetrfnp_check(m, n,
+                                                buff_A, ldim_A,
+                                                info),fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_getrfnp_body(d)
+         /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_getrfnp(c)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cgetrfnp inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     {
         LAPACK_RETURN_CHECK( cgetrfnp_check( m, n,
                                            buff_A, ldim_A,
                                            info ) )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_getrfnp_body(c)
+         /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_getrfnp(z)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgetrfnp inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( zgetrfnp_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( zgetrfnp_check( m, n,
                                            buff_A, ldim_A,
-                                           info ) )
+                                           info ), fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_getrfnp_body(z)
+         /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 
 

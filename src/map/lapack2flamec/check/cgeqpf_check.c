@@ -4,11 +4,7 @@ int cgeqpf_check(integer *m, integer *n, scomplex *a, integer *lda, integer *jpv
 {
     /* System generated locals */
     integer a_dim1, a_offset, i__1;
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "cgeqpf inputs: m %d, n %d, lda %d, jpvt %d\n", *m, *n, *lda, *jpvt);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

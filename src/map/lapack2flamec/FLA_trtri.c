@@ -65,53 +65,86 @@
   *info = 0;                                                            \
   AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  	      \
                                                                         \
-  return 0;
+
 
 LAPACK_trtri(s)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("strtri inputs: uplo %c, diag %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *diag, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( strtri_check( uplo, diag, n,
+        LAPACK_RETURN_CHECK_VAR1( strtri_check( uplo, diag, n,
                                            buff_A, ldim_A,
-                                           info ) )
+                                           info ),fla_error )
     }
+    if(fla_error==LAPACK_SUCCESS)
     {
         LAPACK_trtri_body(s)
+        /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_trtri(d)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dtrtri inputs: uplo %c, diag %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *diag, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( dtrtri_check( uplo, diag, n,
-                                           buff_A, ldim_A,
-                                           info ) )
+        LAPACK_RETURN_CHECK_VAR1(dtrtri_check(uplo, diag, n,
+                                              buff_A, ldim_A,
+                                              info),
+                                 fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_trtri_body(d)
+        /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_trtri(c)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ctrtri inputs: uplo %c, diag %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *diag, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( ctrtri_check( uplo, diag, n,
-                                           buff_A, ldim_A,
-                                           info ) )
+        LAPACK_RETURN_CHECK_VAR1(ctrtri_check(uplo, diag, n,
+                                              buff_A, ldim_A,
+                                              info),
+                                 fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_trtri_body(c)
+        /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_trtri(z)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztrtri inputs: uplo %c, diag %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *diag, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( ztrtri_check( uplo, diag, n,
+        LAPACK_RETURN_CHECK_VAR1( ztrtri_check( uplo, diag, n,
                                            buff_A, ldim_A,
-                                           info ) )
+                                           info ) ,fla_error )
     }
+    if(fla_error==LAPACK_SUCCESS)
     {
         LAPACK_trtri_body(z)
+        /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
-
 
 #define LAPACK_trti2(prefix)                                    \
   int F77_ ## prefix ## trti2( char* uplo,                      \
@@ -123,48 +156,82 @@ LAPACK_trtri(z)
 
 LAPACK_trti2(s)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("strti2 inputs: uplo %c, diag %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *diag, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( strti2_check( uplo, diag, n,
+        LAPACK_RETURN_CHECK_VAR1( strti2_check( uplo, diag, n,
                                            buff_A, ldim_A,
-                                           info ) )
+                                           info ) ,fla_error )
     }
+    if(fla_error==LAPACK_SUCCESS)
     {
         LAPACK_trtri_body(s)
+        /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_trti2(d)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dtrti2 inputs: uplo %c, diag %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *diag, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( dtrti2_check( uplo, diag, n,
-                                           buff_A, ldim_A,
-                                           info ) )
+        LAPACK_RETURN_CHECK_VAR1(dtrti2_check(uplo, diag, n,
+                                              buff_A, ldim_A,
+                                              info),
+                                 fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_trtri_body(d)
+        /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_trti2(c)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ctrti2 inputs: uplo %c, diag %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *diag, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( ctrti2_check( uplo, diag, n,
-                                           buff_A, ldim_A,
-                                           info ) )
+        LAPACK_RETURN_CHECK_VAR1(ctrti2_check(uplo, diag, n,
+                                              buff_A, ldim_A,
+                                              info),
+                                 fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_trtri_body(c)
+        /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_trti2(z)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztrti2 inputs: uplo %c, diag %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *diag, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( ztrti2_check( uplo, diag, n,
-                                           buff_A, ldim_A,
-                                           info ) )
+        LAPACK_RETURN_CHECK_VAR1(ztrti2_check(uplo, diag, n,
+                                              buff_A, ldim_A,
+                                              info),
+                                 fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_trtri_body(z)
+        /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
-
 
 #endif

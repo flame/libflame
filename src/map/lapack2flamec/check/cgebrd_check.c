@@ -16,12 +16,6 @@ int cgebrd_check(integer *m, integer *n, scomplex *a, integer *lda, real *d__, r
     integer lwkopt;
     logical lquery;
 
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "cgebrd inputs: m %d, n %d, lda %d\n", *m, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
-
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

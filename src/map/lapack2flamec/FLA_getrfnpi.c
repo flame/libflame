@@ -56,7 +56,6 @@ extern void DTL_Trace(
                                   integer* info )
 
 #define LAPACK_getrfnpi_body(prefix)                                                           \
-  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                                                \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);                                       \
   FLA_Error e_val ;                                                                            \
                                                                                                \
@@ -90,56 +89,86 @@ extern void DTL_Trace(
   }                                                                                                                                              \
   if ( e_val != FLA_SUCCESS ) *info = e_val + 1;                                                                                                 \
   else                        *info = 0;                                                                                                         \
-  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                                                                                                   \
-                                                                                                                                                 \
-  return 0;
+
 
 
 
 
 LAPACK_getrfnpi(s)
 {
+    int fla_error=LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("sgetrfnpi inputs: m %" FLA_IS ", n %" FLA_IS ", nfact %" FLA_IS ", lda %" FLA_IS "", *m, *n, *nfact, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( sgetrfnpi_check( m, n, nfact,
+        LAPACK_RETURN_CHECK_VAR1( sgetrfnpi_check( m, n, nfact,
                                               buff_A, ldim_A,
-                                              info ) )
+                                              info ),fla_error )
     }
+    if(fla_error==LAPACK_SUCCESS)
     {
         LAPACK_getrfnpi_body(s)
+    /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_getrfnpi(d)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgetrfnpi inputs: m %" FLA_IS ", n %" FLA_IS ", nfact %" FLA_IS ", lda %" FLA_IS "", *m, *n, *nfact, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( dgetrfnpi_check( m, n, nfact,
+        LAPACK_RETURN_CHECK_VAR1( dgetrfnpi_check( m, n, nfact,
                                               buff_A, ldim_A,
-                                              info ) )
+                                              info ),fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_getrfnpi_body(d)
+         /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_getrfnpi(c)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cgetrfnpi inputs: m %" FLA_IS ", n %" FLA_IS ", nfact %" FLA_IS ", lda %" FLA_IS "", *m, *n, *nfact, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( cgetrfnpi_check( m, n, nfact,
+        LAPACK_RETURN_CHECK_VAR1( cgetrfnpi_check( m, n, nfact,
                                               buff_A, ldim_A,
-                                              info ) )
+                                              info ),fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_getrfnpi_body(c)
+         /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_getrfnpi(z)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgetrfnpi inputs: m %" FLA_IS ", n %" FLA_IS ", nfact %" FLA_IS ", lda %" FLA_IS "", *m, *n, *nfact, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( zgetrfnpi_check( m, n, nfact,
+        LAPACK_RETURN_CHECK_VAR1( zgetrfnpi_check( m, n, nfact,
                                               buff_A, ldim_A,
-                                              info ) )
+                                              info ),fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_getrfnpi_body(z)
+         /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 
 

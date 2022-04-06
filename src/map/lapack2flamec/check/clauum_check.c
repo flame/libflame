@@ -7,12 +7,6 @@ int clauum_check(char *uplo, integer *n, scomplex *a, integer *lda, integer *inf
     integer a_dim1, a_offset, i__1;
     /* Local variables */
     logical upper;
-    
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "clauum inputs: uplo %c, n %d, lda %d\n", *uplo, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
 
     /* Parameter adjustments */
     a_dim1 = *lda;

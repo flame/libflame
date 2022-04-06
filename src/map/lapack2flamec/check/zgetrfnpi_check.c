@@ -9,11 +9,6 @@ int zgetrfnpi_check(integer *m, integer *n, integer *nfact, dcomplex *a, integer
 {
     /* System generated locals */
     integer a_dim1, a_offset, i__1;
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "zgetrfnpi inputs: m %d, n %d, nfact %d, lda %d\n", *m, *n, *nfact, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

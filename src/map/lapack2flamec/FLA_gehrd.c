@@ -31,7 +31,6 @@
                                integer* info )
 
 #define LAPACK_gehrd_body(prefix)                               \
-  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                 \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   dim_t        m_t      = ( *m - 1 );                           \
   FLA_Obj      A, t, T;                                         \
@@ -58,67 +57,95 @@
   FLA_Finalize_safe( init_result );                             \
                                                                 \
   *info = 0;                                                    \
-                                                                \
-  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                  \
-  return 0;
 
 
 LAPACK_gehrd(s)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("sgehrd inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS "", *m, *ilo, *ihi, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( sgehrd_check( m,
+        LAPACK_RETURN_CHECK_VAR1( sgehrd_check( m,
                                            ilo, ihi,
                                            buff_A, ldim_A,
                                            buff_t,
                                            buff_w, lwork,
-                                           info ) )
+                                           info ), fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_gehrd_body(s)
+        fla_error=0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_gehrd(d)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgehrd inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS "", *m, *ilo, *ihi, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( dgehrd_check( m,
+        LAPACK_RETURN_CHECK_VAR1( dgehrd_check( m,
                                            ilo, ihi,
                                            buff_A, ldim_A,
                                            buff_t,
                                            buff_w, lwork,
-                                           info ) )
+                                           info ),fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_gehrd_body(d)
+             /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
 LAPACK_gehrd(c)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cgehrd inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS "", *m, *ilo, *ihi, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( cgehrd_check( m,
-                                           ilo, ihi,
-                                           buff_A, ldim_A,
-                                           buff_t,
-                                           buff_w, lwork,
-                                           info ) )
+        LAPACK_RETURN_CHECK_VAR1(cgehrd_check(m,
+                                              ilo, ihi,
+                                              buff_A, ldim_A,
+                                              buff_t,
+                                              buff_w, lwork,
+                                              info), fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_gehrd_body(c)
+         /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_gehrd(z)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgehrd inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS "", *m, *ilo, *ihi, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( zgehrd_check( m,
-                                           ilo, ihi,
-                                           buff_A, ldim_A,
-                                           buff_t,
-                                           buff_w, lwork,
-                                           info ) )
+        LAPACK_RETURN_CHECK_VAR1(zgehrd_check(m,
+                                              ilo, ihi,
+                                              buff_A, ldim_A,
+                                              buff_t,
+                                              buff_w, lwork,
+                                              info), fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_gehrd_body(z)
+         /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 #endif
 
@@ -133,61 +160,93 @@ LAPACK_gehrd(z)
 
 LAPACK_gehd2(s)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("sgehd2 inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS "", *m, *ilo, *ihi, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( sgehd2_check( m,
+        LAPACK_RETURN_CHECK_VAR1( sgehd2_check( m,
                                            ilo, ihi,
                                            buff_A, ldim_A,
                                            buff_t,
                                            buff_w,
                                            info ) )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_gehrd_body(s)
+         /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_gehd2(d)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgehd2 inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS "", *m, *ilo, *ihi, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( dgehd2_check( m,
-                                           ilo, ihi,
-                                           buff_A, ldim_A,
-                                           buff_t,
-                                           buff_w,
-                                           info ) )
+        LAPACK_RETURN_CHECK_VAR1(dgehd2_check(m,
+                                              ilo, ihi,
+                                              buff_A, ldim_A,
+                                              buff_t,
+                                              buff_w,
+                                              info))
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_gehrd_body(d)
+         /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
 LAPACK_gehd2(c)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cgehd2 inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS "", *m, *ilo, *ihi, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( cgehd2_check( m,
-                                           ilo, ihi,
-                                           buff_A, ldim_A,
-                                           buff_t,
-                                           buff_w,
-                                           info ) )
+        LAPACK_RETURN_CHECK_VAR1(cgehd2_check(m,
+                                              ilo, ihi,
+                                              buff_A, ldim_A,
+                                              buff_t,
+                                              buff_w,
+                                              info))
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_gehrd_body(c)
+         /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_gehd2(z)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgehd2 inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS "", *m, *ilo, *ihi, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( zgehd2_check( m,
-                                           ilo, ihi,
-                                           buff_A, ldim_A,
-                                           buff_t,
-                                           buff_w,
-                                           info ) )
+        LAPACK_RETURN_CHECK_VAR1(zgehd2_check(m,
+                                              ilo, ihi,
+                                              buff_A, ldim_A,
+                                              buff_t,
+                                              buff_w,
+                                              info))
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_gehrd_body(z)
+        /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 #endif
 

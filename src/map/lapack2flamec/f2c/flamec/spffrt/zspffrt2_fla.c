@@ -86,13 +86,6 @@ extern void DTL_Trace(
     *  */
 void  zspffrt2_fla( doublecomplex *ap, integer *n, integer *ncolm, doublecomplex *work, doublecomplex *work2 )
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256, "zspffrt2 inputs: n %" FLA_IS ", ncolm %" FLA_IS "", *n, *ncolm);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
-
     /* ncolm as fraction of n */
     integer ncolm_pc = (integer) ( ( *ncolm * 100 ) / *n );
     if( ( *n > ( FLA_SPFFRT2__NTHRESH1 - 1 ) ) && ( ncolm_pc >= FLA_SPFFRT2__NCOLFRAC_THRESH3 ) )
@@ -110,8 +103,6 @@ void  zspffrt2_fla( doublecomplex *ap, integer *n, integer *ncolm, doublecomplex
         /* zspr based implementation for small problem sizes */
         zspffrt2_fla_def( ap, n, ncolm, work );
     }
-
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return;
 }
 

@@ -48,7 +48,6 @@
 
 // buff_t shoud not include any zero. if it has one, that is the right dimension to go.
 #define LAPACK_orgbr_body(prefix)                                       \
-  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \
   FLA_Datatype datatype   = PREFIX2FLAME_DATATYPE(prefix);              \
   FLA_Obj      A, ATL, ATR, ABL, ABR, A1, A2, Ah, T, TL, TR, t;         \
   FLA_Error    init_result;                                             \
@@ -166,66 +165,97 @@
   FLA_Finalize_safe( init_result );                                     \
                                                                         \
   *info = 0;                                                            \
-                                                                        \
-  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                          \
-  return 0;
+
+
 
 LAPACK_orgbr(s, org)
 {
+  int fla_error = LAPACK_SUCCESS;
+  AOCL_DTL_TRACE_LOG_INIT
+  AOCL_DTL_SNPRINTF("sorgbr inputs: vect %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS "", *vect, *m, *n, *k, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( sorgbr_check( vect,
-                                           m, n, k,
-                                           buff_A, ldim_A,
-                                           buff_t,
-                                           buff_w, lwork,
-                                           info ) )
+      LAPACK_RETURN_CHECK_VAR1(sorgbr_check(vect,
+                                       m, n, k,
+                                       buff_A, ldim_A,
+                                       buff_t,
+                                       buff_w, lwork,
+                                       info), fla_error)
     }
+    if(fla_error==LAPACK_SUCCESS)
     {
-        LAPACK_orgbr_body(s)
+    LAPACK_orgbr_body(s)
+    /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_orgbr(d, org)
 {
-    {
-        LAPACK_RETURN_CHECK( dorgbr_check( vect,
-                                           m, n, k,
-                                           buff_A, ldim_A,
-                                           buff_t,
-                                           buff_w, lwork,
-                                           info ) )
-    }
-    {
-        LAPACK_orgbr_body(d)
-    }
+  int fla_error = LAPACK_SUCCESS;
+  AOCL_DTL_TRACE_LOG_INIT
+  AOCL_DTL_SNPRINTF("dorgbr inputs: vect %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS "", *vect, *m, *n, *k, *ldim_A);
+  {
+      LAPACK_RETURN_CHECK_VAR1(dorgbr_check(vect,
+                                       m, n, k,
+                                       buff_A, ldim_A,
+                                       buff_t,
+                                       buff_w, lwork,
+                                       info),fla_error)
+  }
+  if (fla_error == LAPACK_SUCCESS)
+  {
+    LAPACK_orgbr_body(d)
+    /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
+  }
+  AOCL_DTL_TRACE_LOG_EXIT
+  return fla_error;
 }
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
 LAPACK_orgbr(c, ung)
 {
-    {
-        LAPACK_RETURN_CHECK( cungbr_check( vect,
-                                           m, n, k,
-                                           buff_A, ldim_A,
-                                           buff_t,
-                                           buff_w, lwork,
-                                           info ) )
-    }
-    {
-        LAPACK_orgbr_body(c)
-    }
+  int fla_error = LAPACK_SUCCESS;
+  AOCL_DTL_TRACE_LOG_INIT
+  AOCL_DTL_SNPRINTF("cungbr inputs: vect %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS "", *vect, *m, *n, *k, *ldim_A);
+  {
+      LAPACK_RETURN_CHECK_VAR1(cungbr_check(vect,
+                                       m, n, k,
+                                       buff_A, ldim_A,
+                                       buff_t,
+                                       buff_w, lwork,
+                                       info),fla_error)
+  }
+  if (fla_error == LAPACK_SUCCESS)
+  {
+    LAPACK_orgbr_body(c)
+    /** fla_error set to 0 on LAPACK_SUCCESS */
+    fla_error = 0;
+  }
+  AOCL_DTL_TRACE_LOG_EXIT
+  return fla_error;
 }
 LAPACK_orgbr(z, ung)
 {
-    {
-        LAPACK_RETURN_CHECK( zungbr_check( vect,
-                                           m, n, k,
-                                           buff_A, ldim_A,
-                                           buff_t,
-                                           buff_w, lwork,
-                                           info ) )
-    }
-    {
-        LAPACK_orgbr_body(z)
-    }
+  int fla_error = LAPACK_SUCCESS;
+  AOCL_DTL_TRACE_LOG_INIT
+  AOCL_DTL_SNPRINTF("zungbr inputs: vect %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS "", *vect, *m, *n, *k, *ldim_A);
+  {
+    LAPACK_RETURN_CHECK_VAR1(zungbr_check(vect,
+                                      m, n, k,
+                                      buff_A, ldim_A,
+                                      buff_t,
+                                      buff_w, lwork,
+                                      info), fla_error)
+  }
+  if (fla_error == LAPACK_SUCCESS)
+  {
+    LAPACK_orgbr_body(z)
+        /** fla_error set to 0 on LAPACK_SUCCESS */
+        fla_error = 0;
+  }
+  AOCL_DTL_TRACE_LOG_EXIT
+  return fla_error;
 }
 #endif
 

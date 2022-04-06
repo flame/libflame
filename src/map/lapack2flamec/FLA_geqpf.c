@@ -46,7 +46,6 @@
 // This does not perform pre-ordering when jpiv include non-zero pivots.
 //
 #define LAPACK_geqpf_body(prefix)                                       \
-  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);                \
   FLA_Obj      A, t, T, w, p, jpiv;                                     \
   dim_t        min_m_n  = min( *m, *n );                                \
@@ -95,43 +94,56 @@
                                                                         \
   *info = 0;                                                            \
                                                                         \
-  AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);                          \
-  return 0;
+
 
 
 LAPACK_geqpf(s)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("sgeqpf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", jpvt %" FLA_IS "", *m, *n, *ldim_A, *buff_p);
     {
         for ( int i=0; i<*n; ++i) buff_p[i] = (i+1);
     }
     {
-        LAPACK_RETURN_CHECK( sgeqpf_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( sgeqpf_check( m, n,
                                            buff_A, ldim_A,
                                            buff_p,
                                            buff_t,
                                            buff_w,
-                                           info ) )
+                                           info ),fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_geqpf_body(s)
+            fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_geqpf(d)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgeqpf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", jpvt %" FLA_IS "", *m, *n, *ldim_A, *buff_p);
     {
         for ( int i=0; i<*n; ++i) buff_p[i] = (i+1);
     }
     {
-        LAPACK_RETURN_CHECK( dgeqpf_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( dgeqpf_check( m, n,
                                            buff_A, ldim_A,
                                            buff_p,
                                            buff_t,
                                            buff_w,
-                                           info ) )
+                                           info ), fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_geqpf_body(d)
+            fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 
 #define LAPACK_geqpf_complex(prefix)                                    \
@@ -147,39 +159,53 @@ LAPACK_geqpf(d)
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
 LAPACK_geqpf_complex(c)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cgeqpf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", jpvt %" FLA_IS "", *m, *n, *ldim_A, *buff_p);
     {
         for ( int i=0; i<*n; ++i) buff_p[i] = (i+1);
     }
     {
-        LAPACK_RETURN_CHECK( cgeqpf_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( cgeqpf_check( m, n,
                                            buff_A, ldim_A,
                                            buff_p,
                                            buff_t,
                                            buff_w,
                                            buff_r,
-                                           info ) )
+                                           info ), fla_error )
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_geqpf_body(c)
+            fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_geqpf_complex(z)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgeqpf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", jpvt %" FLA_IS "", *m, *n, *ldim_A, *buff_p);
     {
         for ( int i=0; i<*n; ++i) buff_p[i] = (i+1);
     }
     {
-        LAPACK_RETURN_CHECK( zgeqpf_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( zgeqpf_check( m, n,
                                            buff_A, ldim_A,
                                            buff_p,
                                            buff_t,
                                            buff_w,
                                            buff_r,
-                                           info ) )
+                                           info ), fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_geqpf_body(z)
+            fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 #endif
 
@@ -194,25 +220,33 @@ LAPACK_geqpf_complex(z)
                                integer* info )
 LAPACK_geqp3(s)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("sgeqp3 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", jpvt %" FLA_IS "", *m, *n, *ldim_A, *buff_p);
 #if !FLA_AMD_OPT
-    {
-        LAPACK_RETURN_CHECK( sgeqp3_check( m, n,
-                                           buff_A, ldim_A,
-                                           buff_p,
-                                           buff_t,
-                                           buff_w, lwork,
-                                           info ) )
-    }
+        {
+            LAPACK_RETURN_CHECK_VAR1(sgeqp3_check(m, n,
+                                             buff_A, ldim_A,
+                                             buff_p,
+                                             buff_t,
+                                             buff_w, lwork,
+                                             info), fla_error)
+        }
     {
         for (int i = 0; i < *n; ++i) buff_p[i] = (i + 1);
         if( *m == 0 || *n == 0 )
         {
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
+    if(fla_error==LAPACK_SUCCESS)
     {
         LAPACK_geqpf_body(s)
+            fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 #else
     {
         sgeqp3_fla( m, n,
@@ -221,32 +255,41 @@ LAPACK_geqp3(s)
                     buff_t,
                     buff_w, lwork,
                     info ) ;
-	return 0;
+        AOCL_DTL_TRACE_LOG_EXIT
+        return 0;
     }
 #endif
 }
 
 LAPACK_geqp3(d)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgeqp3 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", jpvt %" FLA_IS "", *m, *n, *ldim_A, *buff_p);
 #if !FLA_AMD_OPT
     {
-        LAPACK_RETURN_CHECK( dgeqp3_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( dgeqp3_check( m, n,
                                            buff_A, ldim_A,
                                            buff_p,
                                            buff_t,
                                            buff_w, lwork,
-                                           info ) )
+                                           info ),fla_error )
     }
     {
         for (int i = 0; i < *n; ++i) buff_p[i] = (i + 1);
         if( *m == 0 || *n == 0 )
         {
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
+    if(fla_error==LAPACK_SUCCESS)
     {
         LAPACK_geqpf_body(d)
+            fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 #else
     {
         dgeqp3_fla( m, n,
@@ -255,7 +298,8 @@ LAPACK_geqp3(d)
                     buff_t,
                     buff_w, lwork,
                     info ) ;
-	return 0;
+        AOCL_DTL_TRACE_LOG_EXIT
+        return 0;
     }
 #endif
 }
@@ -275,39 +319,53 @@ LAPACK_geqp3(d)
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
 LAPACK_geqp3_complex(c)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cgeqp3 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", jpvt %" FLA_IS "", *m, *n, *lda, *jpvt);
     {
         for ( int i=0; i<*n; ++i) buff_p[i] = (i+1);
     }
     {
-        LAPACK_RETURN_CHECK( cgeqp3_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( cgeqp3_check( m, n,
                                            buff_A, ldim_A,
                                            buff_p,
                                            buff_t,
                                            buff_w, lwork,
                                            buff_r,
-                                           info ) )
+                                           info ),fla_error )
     }
+    if(fla_error==LAPACK_SUCCESS)
     {
         LAPACK_geqpf_body(c)
+            fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 LAPACK_geqp3_complex(z)
 {
+    int fla_error = LAPACK_SUCCESS;
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgeqp3 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", jpvt %" FLA_IS "", *m, *n, *lda, *jpvt);
     {
         for ( int i=0; i<*n; ++i) buff_p[i] = (i+1);
     }
     {
-        LAPACK_RETURN_CHECK( zgeqp3_check( m, n,
-                                           buff_A, ldim_A,
-                                           buff_p,
-                                           buff_t,
-                                           buff_w, lwork,
-                                           buff_r,
-                                           info ) )
+        LAPACK_RETURN_CHECK_VAR1(zgeqp3_check(m, n,
+                                              buff_A, ldim_A,
+                                              buff_p,
+                                              buff_t,
+                                              buff_w, lwork,
+                                              buff_r,
+                                              info),fla_error)
     }
+    if (fla_error == LAPACK_SUCCESS)
     {
         LAPACK_geqpf_body(z)
+            fla_error = 0;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
 }
 #endif
 

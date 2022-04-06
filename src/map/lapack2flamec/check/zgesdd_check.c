@@ -15,11 +15,7 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
     integer mnthr1, mnthr2;
     integer minwrk, maxwrk;
     logical wntqas; 
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "zgesdd inputs: jobz %c, m %d, n %d, lda %d, ldu %d, ldvt %d\n", *jobz, *m, *n, *lda, *ldu, *ldvt);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

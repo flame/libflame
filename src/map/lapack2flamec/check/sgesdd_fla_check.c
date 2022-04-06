@@ -25,11 +25,7 @@ int sgesdd_fla_check(char *jobu, char *jobvt, integer *m, integer *n, float *a, 
     integer minwrk, maxwrk;
     logical lquery, wntuas, wntvas;
     integer lwork_sorgbr_p__, lwork_sorgbr_q__, lwork_sorglq_m__, lwork_sorglq_n__, lwork_sorgqr_m__, lwork_sorgqr_n__;
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "sgesdd inputs: jobu %c, m %d, n %d, lda %d, ldu %d, ldvt %d\n", *jobu, *m, *n, *lda, *ldu, *ldvt);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;

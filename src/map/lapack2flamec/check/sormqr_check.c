@@ -15,12 +15,6 @@ int sormqr_check(char *side, char *trans, integer *m, integer *n, integer *k, fl
     logical notran;
     integer lwkopt;
     logical lquery;
-    
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "sormqr inputs: side %c, trans %c, m %d, n %d, k %d, lda %d, ldc %d\n", *side, *trans, *m, *n, *k, *lda, *ldc);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
 
     /* Parameter adjustments */
     a_dim1 = *lda;

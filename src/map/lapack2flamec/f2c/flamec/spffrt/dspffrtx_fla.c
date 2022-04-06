@@ -77,13 +77,6 @@ void dspffrtx_fla(doublereal *ap, integer *n, integer * ncolm, doublereal *work,
     doublereal r1;
     integer c__1 = 1;
 
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256, "dspffrtx inputs: n %" FLA_IS ", ncolm %" FLA_IS "", *n, *ncolm);
-	  AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
-
     --ap;
     /* Factorize A as L*D*L**T using the lower triangle of A */
     /* K is the main loop index, increasing from 1 to ncolm in steps of 1 */
@@ -105,7 +98,6 @@ void dspffrtx_fla(doublereal *ap, integer *n, integer * ncolm, doublereal *work,
 
        kc = kc + *n - k + 1;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return;
 }
 /* dspffrtx_fla */

@@ -13,12 +13,6 @@ int sorgtr_check(char *uplo, integer *n, float *a, integer *lda, float *tau, flo
     logical lquery;
     integer lwkopt;
 
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "sorgtr inputs: uplo %c, n %d, lda %d\n", *uplo, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
-
     /* Parameter adjustments */
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;
