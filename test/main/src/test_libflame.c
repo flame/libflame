@@ -23,7 +23,7 @@ double ref_time_sec = 0.0;
 
 #define CHECK_LINE_SKIP() \
         eol = fgetc(fp); \
-        if(eol == '\n'){ \
+        if((eol == '\r') || (eol == '\n')){ \
             num_ranges = ( (i+1) < num_ranges)? (i+1):num_ranges; \
             break; \
         } \
@@ -168,7 +168,7 @@ void fla_test_read_next_line( char* buffer, FILE* input_stream )
 void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
     {
     FILE *fp;
-    integer i, j, read_bytes;
+    integer i, j;
     char line[20];
     char *str;
     char eol;
@@ -261,7 +261,7 @@ void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
             else if ( *str == 'z' ) params->lin_solver_paramslist[j].data_types[i]= DOUBLE_COMPLEX;
         }
         eol = fgetc(fp);
-        if(eol == '\n'){
+        if((eol == '\r') || (eol == '\n')){
             ndata_types = ( (i+1) < ndata_types)? (i+1):ndata_types;
             break;
         }
@@ -523,7 +523,7 @@ void fla_test_read_sym_eig_params( const char *file_name , test_params_t* params
             else if ( *str == 'z' ) params->eig_sym_paramslist[j].data_types[i]= DOUBLE_COMPLEX;
         }
         eol = fgetc(fp);
-        if(eol == '\n'){
+        if((eol == '\r') || (eol == '\n')){
             ndata_types = ( (i+1) < ndata_types)? (i+1):ndata_types;
             break;
         }
@@ -818,7 +818,7 @@ void fla_test_read_non_sym_eig_params( const char *file_name , test_params_t* pa
             else if ( *str == 'z' ) params->eig_non_sym_paramslist[j].data_types[i]= DOUBLE_COMPLEX;
         }
         eol = fgetc(fp);
-        if(eol == '\n'){
+        if((eol == '\r') || (eol == '\n')){
             ndata_types = ( (i+1) < ndata_types)? (i+1):ndata_types;
             break;
         }
@@ -1152,7 +1152,7 @@ void fla_test_read_svd_params ( const char *file_name, test_params_t* params )
             else if ( *str == 'z' ) params->svd_paramslist[j].data_types[i]= DOUBLE_COMPLEX;
         }
         eol = fgetc(fp);
-        if(eol == '\n'){
+        if((eol == '\r') || (eol == '\n')){
             ndata_types = ( (i+1) < ndata_types)? (i+1):ndata_types;
             break;
         }
@@ -1455,7 +1455,7 @@ void fla_test_output_error( char* message, ... )
 void fla_test_parse_message( FILE* output_stream, char* message, va_list args )
 {
     integer           c, cf;
-    char          format_spec[8];
+    char          format_spec[20];
     uinteger  the_uint;
     integer           the_int;
     double        the_double;
@@ -1615,8 +1615,8 @@ void fla_test_op_driver( char*            func_str,
     integer      n_spaces;
 
 
-    fla_test_output_info( "%7sAPI%23s DATA_TYPE%9s SIZE%9s FLOPS%8s TIME%8s ERROR%9s STATUS\n", "", "", "", "", "", "", "" );
-    fla_test_output_info( "%6s=====%22s===========%8s======%8s=======%7s======%7s=======%8s========\n", "", "", "", "", "", "", "" );
+    fla_test_output_info( "%7sAPI%23s DATA_TYPE%9s SIZE%9s FLOPS%9s TIME%9s ERROR%9s STATUS\n", "", "", "", "", "", "", "" );
+    fla_test_output_info( "%6s=====%22s===========%8s======%8s=======%7s========%6s==========%6s========\n", "", "", "", "", "", "", "" );
     switch (api_type)
     {
         case LIN:
@@ -1730,7 +1730,7 @@ void fla_test_op_driver( char*            func_str,
 
                 fla_test_get_time_unit(scale , &time);
 
-                fla_test_output_info( "   %s%s  %c  %14"FT_IS" x %-8"FT_IS" %-10.3lf  %6.2lf %-6s  %-7.2le   %9s\n",
+                fla_test_output_info( "   %s%s  %c  %14"FT_IS" x %-9"FT_IS" %-10.3lf  %6.2lf %-7s  %-7.2le   %10s\n",
                                                 func_param_str, blank_str,
                                                 datatype_char,
                                                 p_cur, q_cur, perf, time, residual, scale, pass_str );
@@ -1796,6 +1796,15 @@ void fla_test_abort( void )
 /* This function is used to clock the execution time of APIs*/
 double fla_test_clock()
 {
+#ifdef _WIN32
+    LARGE_INTEGER clock_freq = {0};
+    LARGE_INTEGER clock_val;
+
+    QueryPerformanceFrequency( &clock_freq );
+    QueryPerformanceCounter( &clock_val );
+
+    return ( ( double) clock_val.QuadPart / ( double) clock_freq.QuadPart );
+#else
     double the_time, norm_sec;
     struct timespec ts;
 
@@ -1809,6 +1818,7 @@ double fla_test_clock()
     the_time = norm_sec + ts.tv_nsec * 1.0e-9;
 
     return the_time;
+#endif
 }
 
 

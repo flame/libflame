@@ -56,6 +56,18 @@ extern int dorgqr_(integer* m, integer* n, integer* k, void* a, integer* lda, vo
 extern int cungqr_(integer* m, integer* n, integer* k, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
 extern int zungqr_(integer* m, integer* n, integer* k, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
 
+/* Eigen value and Eigen vectors*/
+extern int sgeevx_(char* balanc, char* jobvl, char* jobvr, char* sense, integer* n, void* a, integer* lda, void* wr, void* wi, void* vl, integer* ldvl, void* vr, integer* ldvr, integer* ilo, integer* ihi, void* scale, void* abnrm, void* rconde, void* rcondv, void* work, integer* lwork, integer* iwork, integer* info);
+extern int dgeevx_(char* balanc, char* jobvl, char* jobvr, char* sense, integer* n, void* a, integer* lda, void* wr, void* wi, void* vl, integer* ldvl, void* vr, integer* ldvr, integer* ilo, integer* ihi, void* scale, void* abnrm, void* rconde, void* rcondv, void* work, integer* lwork, integer* iwork, integer* info);
+extern int cgeevx_(char* balanc, char* jobvl, char* jobvr, char* sense, integer* n, void* a, integer* lda, void* w, void* vl, integer* ldvl, void* vr, integer* ldvr, integer* ilo, integer* ihi, void* scale, void* abnrm, void* rconde, void* rcondv, void* work, integer* lwork, void* rwork, integer* info);
+extern int zgeevx_(char* balanc, char* jobvl, char* jobvr, char* sense, integer* n, void* a, integer* lda, void* w, void* vl, integer* ldvl, void* vr, integer* ldvr, integer* ilo, integer* ihi, void* scale, void* abnrm, void* rconde, void* rcondv, void* work, integer* lwork, void* rwork, integer* info);
+
+/* Singular Value Decomposition */
+extern int sgesdd_(char* jobz, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, integer* iwork, integer* info);
+extern int dgesdd_(char* jobz, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, integer* iwork, integer* info);
+extern int cgesdd_(char* jobz, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, void* rwork, integer* iwork, integer* info);
+extern int zgesdd_(char* jobz, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, void* rwork, integer* iwork, integer* info);
+
 /* QR factorization*/
 extern int sgeqrf_(integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *lwork, integer *info);
 extern int dgeqrf_(integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *lwork, integer *info);
