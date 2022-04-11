@@ -2,16 +2,13 @@
 	Copyright (c) 2022 Advanced Micro Devices, Inc.  All rights reserved.
 */
 
-#include "test_libflame.h"
 #include "test_common.h"
-#include "test_prototype.h"
 
-//global variables
+// Global variables
 float s_zero = 0, s_one = 1, s_n_one = -1;
 double d_zero = 0, d_one = 1, d_n_one = -1;
 scomplex c_zero = {0,0}, c_one = {1,0}, c_n_one = {-1,0};
 dcomplex z_zero = {0,0}, z_one = {1,0}, z_n_one = {-1,0};
-
 
 /* create vector of given datatype*/
 void create_vector(integer datatype, void **A, integer M)
@@ -367,14 +364,7 @@ void rand_sym_matrix(integer datatype, void *A, integer M, integer N, integer LD
 				for( j = i; j < M; j++ )
 				{
 					((float *)A)[i * LDA + j] = SRAND();
-				}
-			}
-
-			for( i = 0; i < N; i++ )
-			{
-				for( j = i; j < M; j++ )
-				{
-					((float *)A)[j * LDA + i] = ((float *)A)[i * LDA + j];
+          ((float *)A)[j * LDA + i] = ((float *)A)[i * LDA + j];
 				}
 			}
 			break;
@@ -386,14 +376,7 @@ void rand_sym_matrix(integer datatype, void *A, integer M, integer N, integer LD
 				for( j = i; j < M; j++ )
 				{
 					((double *)A)[i * LDA + j] = DRAND();
-				}
-			}
-
-			for( i = 0; i < N; i++ )
-			{
-				for( j = i; j < M; j++ )
-				{
-					((double *)A)[j * LDA + i] = ((double *)A)[i * LDA + j];
+          ((double *)A)[j * LDA + i] = ((double *)A)[i * LDA + j];
 				}
 			}
 			break;
@@ -406,14 +389,7 @@ void rand_sym_matrix(integer datatype, void *A, integer M, integer N, integer LD
 				{
 					((scomplex *)A)[i * LDA + j].real = SRAND();
 					((scomplex *)A)[i * LDA + j].imag = SRAND();
-				}
-			}
-
-			for( i = 0; i < N; i++ )
-			{
-				for( j = i; j < M; j++ )
-				{
-					((scomplex *)A)[j * LDA + i].real = ((scomplex *)A)[i * LDA + j].real;
+          ((scomplex *)A)[j * LDA + i].real = ((scomplex *)A)[i * LDA + j].real;
 					((scomplex *)A)[j * LDA + i].imag = ((scomplex *)A)[i * LDA + j].imag;
 				}
 			}
@@ -427,14 +403,7 @@ void rand_sym_matrix(integer datatype, void *A, integer M, integer N, integer LD
 				{
 					((dcomplex *)A)[i * LDA + j].real = DRAND();
 					((dcomplex *)A)[i * LDA + j].imag = DRAND();
-				}
-			}
-
-			for( i = 0; i < N; i++ )
-			{
-				for( j = i; j < M; j++ )
-				{
-					((dcomplex *)A)[j * LDA + i].real = ((dcomplex *)A)[i * LDA + j].real;
+          ((dcomplex *)A)[j * LDA + i].real = ((dcomplex *)A)[i * LDA + j].real;
 					((dcomplex *)A)[j * LDA + i].imag = ((dcomplex *)A)[i * LDA + j].imag;
 				}
 			}

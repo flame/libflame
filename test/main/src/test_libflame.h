@@ -2,8 +2,9 @@
 	Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
 */
 
-#include <stdio.h>
-#include <stdlib.h>
+#ifndef TEST_LIBFLAME_H
+#define TEST_LIBFLAME_H
+
 #include <string.h>
 #include <time.h>
 #include <stdarg.h>
@@ -13,6 +14,7 @@
 #include <inttypes.h>
 #include <sys/time.h>
 
+#include <test_common.h>
 
 #define OPERATIONS_FILENAME                "input.global.operations"
 #define LINEAR_PARAMETERS_FILENAME         "Config/LIN_SLVR.dat"
@@ -59,38 +61,11 @@
 #define FT_IS "d"
 #endif
 
-// Datatype
-#define FLOAT             100
-#define DOUBLE            101
-#define COMPLEX           102
-#define DOUBLE_COMPLEX    103
-#define INTEGER           104
-#define CONSTANT          105
-
 // API categories
 #define LIN            (1)
 #define EIG_SYM        (2)
 #define EIG_NSYM       (3)
 #define SVD            (4)
-
-
-#if defined(ENABLE_ILP64)
-typedef int64_t integer;
-typedef uint64_t uinteger;
-#else
-typedef int integer;
-typedef unsigned int  uinteger;
-#endif
-
-typedef struct scomplex
-{
-	float real, imag;
-} scomplex;
-
-typedef struct dcomplex
-{
-	double real, imag;
-} dcomplex;
 
 typedef struct Lin_solver_paramlist_t
 {
@@ -398,3 +373,5 @@ void fla_test_sleep( void );
 void fla_test_abort( void );
 double fla_test_clock(void);
 void fla_test_get_time_unit(char * scale , double * time);
+
+#endif // TEST_LIBFLAME_H

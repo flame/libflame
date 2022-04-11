@@ -1,6 +1,42 @@
-/*
-	Copyright (c) 2022 Advanced Micro Devices, Inc.  All rights reserved.
-*/
+/******************************************************************************
+* Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+*******************************************************************************/
+
+/*! @file test_common.h
+ *  @brief Defines function declarations to use in APIs of test suite.
+ *  */
+
+#ifndef TEST_COMMON_H
+#define TEST_COMMON_H
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#ifndef DATATYPES
+#define DATATYPES
+
+#if defined(ENABLE_ILP64)
+typedef int64_t integer;
+typedef uint64_t uinteger;
+#else
+typedef int integer;
+typedef unsigned int  uinteger;
+#endif
+
+typedef struct scomplex
+{
+	float real, imag;
+} scomplex;
+
+typedef struct dcomplex
+{
+	double real, imag;
+} dcomplex;
+
+#endif  // DATATYPES
+
+#include "test_prototype.h"
+#include "test_linear_solvers.h"
 
 // global variables
 extern float s_zero, s_one, s_n_one;
@@ -14,6 +50,14 @@ extern dcomplex z_zero, z_one, z_n_one;
 #define min( x, y ) ( (x) < (y) ? (x) : (y) )
 
 #define max( x, y ) ( (x) > (y) ? (x) : (y) )
+
+// Datatype
+#define FLOAT             100
+#define DOUBLE            101
+#define COMPLEX           102
+#define DOUBLE_COMPLEX    103
+#define INTEGER           104
+#define CONSTANT          105
 
 /* vector functions*/
 void create_vector(integer datatype, void **A, integer M);
@@ -49,3 +93,5 @@ void scalv( integer datatype, integer n, void* x, integer incx, void* y, integer
 
 /* set Transpose based on uplo */
 void set_transpose(integer datatype, char *uplo, char *trans_A, char *trans_B);
+
+#endif // TEST_COMMON_H

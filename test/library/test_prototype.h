@@ -2,6 +2,8 @@
 	Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
 */
 
+#ifndef TEST_PROTOTYPE_H
+#define TEST_PROTOTYPE_H
 
 /* --------BLAS APIs -------- */
 
@@ -96,3 +98,4 @@ extern int dpotrf_(char* uplo, integer* n, void* a, integer* lda, integer* info)
 extern int cpotrf_(char* uplo, integer* n, void* a, integer* lda, integer* info);
 extern int zpotrf_(char* uplo, integer* n, void* a, integer* lda, integer* info);
 
+#endif  // TEST_PROTOTYPE_H
