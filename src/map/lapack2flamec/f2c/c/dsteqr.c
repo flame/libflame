@@ -194,6 +194,16 @@ int dsteqr_(char *compz, integer *n, doublereal *d__, doublereal *e, doublereal 
     /* .. Intrinsic Functions .. */
     /* .. */
 
+    /* .. Executable Statements .. */
+    /* Test the input parameters. */
+    /* Parameter adjustments */
+    --d__;
+    --e;
+    z_dim1 = *ldz;
+    z_offset = 1 + z_dim1;
+    z__ -= z_offset;
+    --work;
+
     /* Function Body */
     *info = 0;
     if (lsame_(compz, "N"))
@@ -255,15 +265,19 @@ int dsteqr_(char *compz, integer *n, doublereal *d__, doublereal *e, doublereal 
         liwork = -1;
         integer N = *n, i;
         integer LDZ = *ldz;
-        for( i = 0;
-               i < N;
+
+        /* Setting the lower triangular part of z__ to 0 */
+        dlaset_("L", n, n, &c_b9, &c_b9, &z__[z_offset], ldz);
+
+        for( i = 1;
+               i <= N;
                  i++)
         {
             z__[i * LDZ + i] = d__[i];
         }
 
-        for( i = 0;
-               i < N-1;
+        for( i = 1;
+               i <= N-1;
                    i++)
         {
             /* Sub-diagonal */
@@ -272,12 +286,12 @@ int dsteqr_(char *compz, integer *n, doublereal *d__, doublereal *e, doublereal 
             z__[i * LDZ + i + 1] = e[i];
         }
 
-        dsteqr_helper_("V", "L", &N, z__, &LDZ, d__,  &wkopt,  &lwork, &iwkopt, &liwork, &info);
+        dsteqr_helper_("V", "L", &N, &z__[z_offset], &LDZ, &d__[1],  &wkopt,  &lwork, &iwkopt, &liwork, &info);
         lwork = (integer)wkopt;
         worker = (doublereal*)malloc( lwork*sizeof(doublereal) );
         liwork = iwkopt;
         iwork =  (integer*)malloc( liwork*sizeof(integer) );
-        dsteqr_helper_("V", "L", &N, z__, &LDZ, d__,  worker,&lwork, iwork, &liwork, &info);
+        dsteqr_helper_("V", "L", &N, &z__[z_offset], &LDZ, &d__[1],  worker,&lwork, iwork, &liwork, &info);
         free(worker);
         free(iwork);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
@@ -285,15 +299,6 @@ int dsteqr_(char *compz, integer *n, doublereal *d__, doublereal *e, doublereal 
   }
 else
   {
-        /* .. Executable Statements .. */
-        /* Test the input parameters. */
-        /* Parameter adjustments */
-        --d__;
-        --e;
-        z_dim1 = *ldz;
-        z_offset = 1 + z_dim1;
-        z__ -= z_offset;
-        --work;
         /* Determine the unit roundoff and over/underflow thresholds. */
         eps = dlamch_("E");
         /* Computing 2nd power */
