@@ -258,6 +258,7 @@ IBLOCK(i)=1 if eigenvalue */
 /* > he might be trading in precision when he decreases MINRGP. */
 /* > =-3: Problem in SLARRB when refining a single eigenvalue */
 /* > after the Rayleigh correction was rejected. */
+/* > =-4: M value exceeds N */
 /* > = 5: The Rayleigh Quotient Iteration failed to converge to */
 /* > full accuracy in MAXITR steps. */
 /* > \endverbatim */
@@ -384,10 +385,14 @@ int slarrv_(integer *n, real *vl, real *vu, real *d__, real * l, real *pivmin, i
     /* Function Body */
     *info = 0;
     /* Quick return if possible */
-    if (*n <= 0)
+    if ((*n <= 0) || (*m <= 0) || (*m > *n))
     {
-        return 0;
+       if (*m > *n)
+           *info = -4;
+
+       return 0;
     }
+
     /* The first N entries of WORK are reserved for the eigenvalues */
     indld = *n + 1;
     indlld = (*n << 1) + 1;
