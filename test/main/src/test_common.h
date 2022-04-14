@@ -30,6 +30,7 @@ void* get_m_ptr(integer datatype, void *A, integer M, integer N, integer LDA);
 void free_matrix(void *A);
 void rand_matrix(integer datatype, void *A, integer M, integer N, integer LDA);
 void rand_sym_matrix(integer datatype, void *A, integer M, integer N, integer LDA);
+void rand_spd_matrix(integer datatype, char *uplo, void **A, integer m,integer lda);
 void copy_matrix(integer datatype, char *uplo, integer M, integer N, void *A, integer LDA, void *B, integer LDB);
 void copy_realtype_matrix(integer datatype, char *uplo, integer M, integer N, void *A, integer LDA, void *B, integer LDB);
 void reset_matrix(integer datatype, integer M, integer N, void *A, integer LDA);
@@ -45,3 +46,6 @@ integer get_work_value( integer datatype, void *work );
 /* Diagonal Scaling*/
 void diagmv( integer datatype, integer m, integer n, void* x, integer incx, void* a, integer a_rs, integer a_cs );
 void scalv( integer datatype, integer n, void* x, integer incx, void* y, integer incy );
+
+/* set Transpose based on uplo */
+void set_transpose(integer datatype, char *uplo, char *trans_A, char *trans_B);

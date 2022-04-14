@@ -25,6 +25,10 @@ extern int dgemm_(char *transa, char *transb, integer *m, integer * n, integer *
 extern int cgemm_(char *transa, char *transb, integer *m, integer * n, integer *k, void *alpha, void *a, integer *lda, void *b, integer * ldb, void *beta, void *c__, integer *ldc);
 extern int zgemm_(char *transa, char *transb, integer *m, integer * n, integer *k, void *alpha, void *a, integer *lda, void *b, integer * ldb, void *beta, void *c__, integer *ldc);
 
+extern int spotrs_(char* uplo, integer* n, integer* nrhs, void* a, integer* lda, void* b, integer* ldb, integer* info);
+extern int dpotrs_(char* uplo, integer* n, integer* nrhs, void* a, integer* lda, void* b, integer* ldb, integer* info);
+extern int cpotrs_(char* uplo, integer* n, integer* nrhs, void* a, integer* lda, void* b, integer* ldb, integer* info);
+extern int zpotrs_(char* uplo, integer* n, integer* nrhs, void* a, integer* lda, void* b, integer* ldb, integer* info);
 
 /* --------LAPACK APIs ---------*/
 
@@ -85,3 +89,10 @@ extern int sgerq2_(integer *m, integer *n, void *a, integer *lda, void *tau, voi
 extern int dgerq2_(integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *info);
 extern int cgerq2_(integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *info);
 extern int zgerq2_(integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *info);
+
+/* Cholesky factorization APIS*/
+extern int spotrf_(char* uplo, integer* n, void* a, integer* lda, integer* info);
+extern int dpotrf_(char* uplo, integer* n, void* a, integer* lda, integer* info);
+extern int cpotrf_(char* uplo, integer* n, void* a, integer* lda, integer* info);
+extern int zpotrf_(char* uplo, integer* n, void* a, integer* lda, integer* info);
+

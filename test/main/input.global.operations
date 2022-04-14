@@ -1,3 +1,4 @@
 1   geqrf   QR factorization                              (0 = disable; 1 = enable)
 1   gerqf   RQ factorisation                              (0 = disable; 1 = enable)
 1   gerq2   RQ factorisation with unblocked algorithm     (0 = disable; 1 = enable)
+1   potrf   Cholesky factorisation                        (0 = disable; 1 = enable)
