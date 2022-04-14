@@ -88,16 +88,16 @@ extern void DTL_Trace(
 
 LAPACK_potrf(s)
 {
-    int fla_error = 0;
+    int fla_error = LAPACK_SUCCESS;
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("spotrf inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS " ", *uplo, *n, *ldim_A);
+    AOCL_DTL_SNPRINTF("spotrf inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *n, *ldim_A);
 
     {
         LAPACK_RETURN_CHECK_VAR1( spotrf_check( uplo, n,
                                            buff_A, ldim_A,
                                            info ), fla_error )
     }
-    if(fla_error == 0)
+    if (fla_error == LAPACK_SUCCESS)
     {
         #if FLA_AMD_OPT
             {   
@@ -107,11 +107,8 @@ LAPACK_potrf(s)
             {
                 LAPACK_potrf_body(s)
             }
-        #endif 
-    }
-    else if ((fla_error == LAPACK_QUERY_RETURN) || (fla_error == LAPACK_QUICK_RETURN))
-    {
-         fla_error = 0;
+        #endif
+        fla_error=0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;

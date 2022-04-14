@@ -69,7 +69,7 @@ void get_time_unit(char * , double *);
 		get_time_unit(unit, &api_duration);					\
 		snprintf(buffer+strlen(buffer), 					\
 			sizeof(buffer) - strlen(buffer),				\
-			"time: %06.2f%s ",api_duration,unit);			\
+			" time: %06.2f%s ",api_duration,unit);			\
 		AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);   	\
 		AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
 	
@@ -87,7 +87,7 @@ void get_time_unit(char * , double *);
 		get_time_unit(unit,  &api_duration);				\
 		snprintf(buffer+strlen(buffer), 					\
 				sizeof(buffer) - strlen(buffer),			\
-				"time: %06.2f%s ", api_duration,unit);		\
+				" time: %06.2f%s ", api_duration,unit);		\
 		AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);   
 
 #elif AOCL_DTL_TRACE_ENABLE
