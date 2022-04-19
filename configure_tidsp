@@ -641,6 +641,7 @@ fla_c_openmp_flags
 fla_enable_blas3_front_end_cntl_trees
 fla_enable_f2c_dotc
 fla_enable_void_return_complex
+fla_enable_amd_opt
 fla_enable_external_lapack_interfaces
 fla_enable_external_lapack_for_subproblems
 fla_enable_lapack2flame
@@ -772,6 +773,7 @@ enable_portable_timer
 enable_windows_build
 enable_scc
 enable_tidsp
+enable_amd_opt
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1598,6 +1600,7 @@ Optional Features:
   --enable-tidsp          Enable code required for libflame to run under Texas
                           Instruments' DSP. Note that this option is
                           experimental. (Disabled by default.)
+  --enable-amd-opt        Enable code to take AMD optimized path by enabling the FLA_AMD_OPT macro. (Disabled by default.)
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -6347,6 +6350,41 @@ $as_echo_n "checking whether user requested enabling F2C calling format for comp
 	else
             as_fn_error "Reached unreachable branch in FLA_CHECK_ENABLE_F2C_DOTC!" "$LINENO" 5
 	fi
+
+       { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested enabling AMD optimized path" >&5
+			$as_echo_n "checking whether user requested enabling AMD optimized path... " >&6; }
+
+
+# Check whether --enable-amd-opt was given.
+if test "${enable_amd_aocc_flags+set}" != set; then :
+  if test "${enable_amd_opt+set}" = set; then :
+      enableval=$enable_amd_opt;
+      if test "$enableval" = "no" ; then
+        fla_enable_amd_opt=no
+
+      elif test "$enableval" = "yes" ; then
+        fla_enable_amd_opt=yes
+
+      else
+        as_fn_error "Reached unreachable branch in FLA_CHECK_ENABLE_AMD_OPT!" "$LINENO" 5
+      fi
+  else
+      fla_enable_amd_opt=no
+  fi
+
+  if   test "$fla_enable_amd_opt" = "yes" ; then
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+        $as_echo "yes" >&6; }
+        $as_echo "#define FLA_ENABLE_AMD_OPT 1" >>confdefs.h
+
+  elif test "$fla_enable_amd_opt" = "no" ; then
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+        $as_echo "no" >&6; }
+
+  else
+      as_fn_error "Reached unreachable branch in FLA_CHECK_ENABLE_AMD_OPT!" "$LINENO" 5
+  fi
+fi
 
 
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested enabling void return for functions that by default return complex type as per LAPACK standard" >&5

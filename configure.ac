@@ -457,6 +457,9 @@ dnl Observe whether we should build code that provides f2c caling convention for
 dnl complex dotc/dotu function.
 FLA_CHECK_ENABLE_F2C_DOTC
 
+dnl Observe whether we're going to enable AMD optimized path
+FLA_CHECK_ENABLE_AMD_OPT
+
 dnl Observe whether we should build code that enables void return for functions 
 dnl that by default return complex type as per LAPACK standard.
 FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION
