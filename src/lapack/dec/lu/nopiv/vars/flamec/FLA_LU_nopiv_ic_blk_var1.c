@@ -45,6 +45,7 @@ FLA_Error FLA_LU_nopiv_ic_blk_var1( integer m_A, integer n_A,FLA_Obj A, scomplex
       }
     }
     FLA_LU_nopiv_ic_unblk_var1(m_A,n_A,buff_A,e_val,rs_A,cs_A);            //restore original matrix and use unblocked variant 1 to recover last valid state$
+    FLA_free(copy_A);
     return e_val;
   }
 

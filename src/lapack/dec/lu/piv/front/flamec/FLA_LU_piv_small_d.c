@@ -272,5 +272,6 @@ integer FLA_LU_piv_small_d_var2( integer *m, integer *n,
 /* L20: */
 	}
 #undef a_ref
+	return *info;
 }
 
