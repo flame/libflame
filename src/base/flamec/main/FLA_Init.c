@@ -233,5 +233,5 @@ void FLA_Finalize_constants()
 
 char*     FLA_Get_AOCL_Version( void )
 {
-   return  "AOCL libFLAME 3.1.2, supports LAPACK 3.10.0";
+   return  "AOCL-libFLAME 3.1.2, supports LAPACK 3.10.0";
 }
