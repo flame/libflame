@@ -273,3 +273,7 @@ endif()
 if(BUILD_COMPLEX AND BUILD_COMPLEX16)
   add_lin_executable(xlintstzc ${ZCLINTST})
 endif()
+
+if(ENABLE_ILP64)
+add_definitions("-DInt=__int64" "-DFLA_ENABLE_ILP64" "-DUInt=unsigned __int64" "-i8")
+endif()
