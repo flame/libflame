@@ -129,9 +129,7 @@ void potrf_test(int ip)
       print_array<T>(arrayname, arefbuff, lda * n);
     #endif
     
-    double diff = 0.0;
-    // TODO: Yet to finalize and do verification changes.
-    //diff = computeError<T>(lda, n, abuff, arefbuff);
+    double diff = computeError<T>(lda, n, abuff, arefbuff);
     PRINTF("diff: %lf\n", diff);
     EXPECT_NEAR(0.0, diff, SYM_EIGEN_THRESHOLD);
   } else {

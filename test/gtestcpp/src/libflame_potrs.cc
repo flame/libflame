@@ -188,9 +188,7 @@ void potrs_test(int ip)
       print_array<T>(arrayname, brefbuff, ldb * nrhs);
     #endif
     
-    double diff = 0.0;
-    // TODO: Yet to finalize and do verification changes.
-    //diff = computeError<T>(ldb, nrhs, brefbuff, bbuff);
+    double diff = computeError<T>(ldb, nrhs, brefbuff, bbuff);
     PRINTF("diff: %lf\n", diff);
     EXPECT_NEAR(0.0, abs(diff), LIN_DRVR_THRESHOLD);
   } else {

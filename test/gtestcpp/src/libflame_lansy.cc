@@ -180,12 +180,10 @@ void lansy_test(int ip)
       print_array<T>(arrayname, workrefbuff, max(1, lwork));
     }
   #endif
-  double diff = 0.0;
-  // TODO: Yet to finalize and do verification changes.
-  /*diff = computeError<T>(1, 1, &value, &valueref);
+  double diff = computeError<T>(1, 1, &value, &valueref);
   if ((workbuff != NULL) && (workrefbuff != NULL)) {
     diff += computeError<T>(1, max(1, lwork), workbuff, workrefbuff);
-  }*/
+  }
   PRINTF("diff: %lf\n", diff);
   EXPECT_NEAR(0.0, diff, SYM_EIGEN_THRESHOLD);
   
@@ -368,12 +366,10 @@ void lansy_test_cmplx(int ip)
     }
   #endif
   
-  double diff = 0.0;
-  // TODO: Yet to finalize and do verification changes.
-  /*diff = computeError<Ta>(1, 1, &value, &valueref);
+  double diff = computeError<Ta>(1, 1, &value, &valueref);
   if ((workbuff != NULL) && (workrefbuff != NULL)) {
     diff += computeError<Ta>(1, max(1, lwork), workbuff, workrefbuff);
-  }*/
+  }
   PRINTF("diff: %lf\n", diff);
   EXPECT_NEAR(0.0, diff, SYM_EIGEN_THRESHOLD);
   

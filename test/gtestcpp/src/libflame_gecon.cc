@@ -205,11 +205,9 @@ void gecon_test(int ip) {
       strncpy(arrayname, "IWORK ref output", arraysize);
       print_array<integer>(arrayname, iworkrefbuff, n);
     #endif
-    double diff = 0.0;
-    // TODO: Yet to finalize and do verification changes.
-    /*diff = computeError<T>(1, 1, &rcond, &rcondref);
+    double diff = computeError<T>(1, 1, &rcond, &rcondref);
     diff += computeError<T>(4, n, workbuff, workrefbuff);
-    diff += computeError<integer>(1, n, iworkbuff, iworkrefbuff);*/
+    diff += computeError<integer>(1, n, iworkbuff, iworkrefbuff);
     PRINTF("diff: %lf\n", diff);
     EXPECT_NEAR(0.0, diff, LIN_SLVR_THRESHOLD);
   } else {
@@ -416,11 +414,9 @@ void gecon_test_cmplx(int ip)
       strncpy(arrayname, "RWORK ref output", arraysize);
       print_array<Ta>(arrayname, rworkrefbuff, 2 * n);
     #endif
-    double diff = 0.0;
-    // TODO: Yet to finalize and do verification changes.
-    /*diff = computeError<Ta>(1, 1, &rcond, &rcondref);
+    double diff = computeError<Ta>(1, 1, &rcond, &rcondref);
     diff += computeError<T>(2, n, workbuff, workrefbuff);
-    diff += computeError<Ta>(2, n, rworkbuff, rworkrefbuff);*/
+    diff += computeError<Ta>(2, n, rworkbuff, rworkrefbuff);
     PRINTF("diff: %lf\n", diff);
     EXPECT_NEAR(0.0, diff, LIN_SLVR_THRESHOLD);
   } else {

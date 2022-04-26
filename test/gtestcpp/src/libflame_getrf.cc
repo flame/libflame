@@ -85,10 +85,8 @@ void getrf_test(int ip)
   
   // Calculate the differences of buffers.
   if ((info_cpp >= 0) && (info_ref >= 0)) {
-    double diff = 0.0;
-    // TODO: Yet to finalize and do verification changes.
-    /*diff = computeError<T>(lda, n, abuff, arefbuff);
-    diff += computeError<integer>(1, min(m, n), ipivbuff, ipivrefbuff);*/
+    double diff = computeError<T>(lda, n, abuff, arefbuff);
+    diff += computeError<integer>(1, min(m, n), ipivbuff, ipivrefbuff);
     PRINTF("diff: %lf\n", diff);
     EXPECT_NEAR(0.0, diff, LIN_SLVR_THRESHOLD);
   } else {

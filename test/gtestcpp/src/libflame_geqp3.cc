@@ -222,12 +222,10 @@ void geqp3_test(int ip)
   #endif
   
   if ((info_cpp == 0) && (info_ref == 0)) {
-    double diff = 0.0;
-    // TODO: Yet to finalize and do verification changes.
-    /*diff = computeError<T>(lda, n, arefbuff, abuff);
+    double diff = computeError<T>(lda, n, arefbuff, abuff);
     diff += computeError<integer>(1, n, jpvtrefbuff, jpvtbuff);
     diff += computeError<T>(1, min(m, n), taurefbuff, taubuff);
-    diff += computeError<T>(1, max(1, lwork_size), workbuff, workrefbuff);*/
+    diff += computeError<T>(1, max(1, lwork_size), workbuff, workrefbuff);
     
     PRINTF("diff: %lf\n", diff);
     EXPECT_NEAR(0.0, diff, SYM_EIGEN_THRESHOLD);
@@ -475,13 +473,11 @@ void geqp3_test_cmplx(int ip)
   #endif
   
   if ((info_cpp == 0) && (info_ref == 0)) {
-    double diff = 0.0;
-    // TODO: Yet to finalize and do verification changes.
-    /*diff = computeError<T>(lda, n, arefbuff, abuff);
+    double diff = computeError<T>(lda, n, arefbuff, abuff);
     diff += computeError<integer>(1, n, jpvtrefbuff, jpvtbuff);
     diff += computeError<T>(1, min(m, n), taurefbuff, taubuff);
     diff += computeError<T>(1, max(1, lwork_size), workbuff, workrefbuff);
-    diff += computeError<Ta>(1, 2*n, rworkbuff, rworkrefbuff);*/
+    diff += computeError<Ta>(1, 2*n, rworkbuff, rworkrefbuff);
     
     PRINTF("diff: %lf\n", diff);
     EXPECT_NEAR(0.0, diff, SYM_EIGEN_THRESHOLD);

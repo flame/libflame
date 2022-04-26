@@ -225,10 +225,8 @@ void getri_test(int ip) {
       strncpy(arrayname, "WORK ref output", arraysize);
       print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
     #endif
-    double diff = 0.0;
-    // TODO: Yet to finalize and do verification changes.
-    /*diff = computeError<T>(lda, n, abuff, arefbuff);
-    diff += computeError<T>(1, max(1, lwork_size), workbuff, workrefbuff);*/
+    double diff = computeError<T>(lda, n, abuff, arefbuff);
+    diff += computeError<T>(1, max(1, lwork_size), workbuff, workrefbuff);
     PRINTF("diff: %lf\n", diff);
     EXPECT_NEAR(0.0, diff, LIN_SLVR_THRESHOLD);
   } else {

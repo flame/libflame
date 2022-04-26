@@ -214,9 +214,7 @@ void getrs_test(int ip)
       print_array<T>(arrayname, brefbuff, ldb * nrhs);
     #endif
   
-    double diff = 0.0;
-    // TODO: Yet to finalize and do verification changes.
-    //diff = computeError<T>(ldb, nrhs, bbuff, brefbuff);
+    double diff = computeError<T>(ldb, nrhs, bbuff, brefbuff);
     PRINTF("diff: %lf\n", diff);
     EXPECT_NEAR(0.0, diff, LIN_SLVR_THRESHOLD);
   } else {
