@@ -49,4 +49,29 @@ void validate_getri(integer m_A,
 	integer* IPIV,
 	integer datatype,
 	double* residual);
+
+void validate_potrs(char *uplo,
+	integer m,
+	void *A,
+	void *A_test,
+	integer datatype,
+	void *x,
+	void *b,
+	double* residual);
+
+void validate_orgqr(integer m,
+	integer n,
+	void *A,
+	void* Q,
+	void *R,
+	void* work,
+	integer datatype,
+	double* residual);
+
+void validate_potrf(char *uplo,
+	integer m,
+	void *A,
+	void *A_test,
+	integer datatype,
+	double* residual);
 #endif // TEST_LINEAR_SOLVERS_H

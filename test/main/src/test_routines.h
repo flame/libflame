@@ -3,7 +3,7 @@
 */
 
 // Update test api count
-#define test_api_count 8
+#define test_api_count 10
 
 
 // Test API function declaration
@@ -15,10 +15,14 @@ void fla_test_gerq2(test_params_t *params);
 void fla_test_potrf(test_params_t *params);
 void fla_test_getrf(test_params_t *params);
 void fla_test_getri(test_params_t *params);
+void fla_test_orgqr(test_params_t *params);
+void fla_test_potrs(test_params_t *params);
 
 // Add test api function call entry below
 OPERATIONS API_test_functions[] =
 {
+	{"orgqr"               , fla_test_orgqr},
+	{"potrs"               , fla_test_potrs},
 	{"geevx"               , fla_test_geevx},
 	{"gesdd"               , fla_test_gesdd},
 	{"potrf"               , fla_test_potrf},
