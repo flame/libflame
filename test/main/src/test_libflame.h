@@ -7,14 +7,18 @@
 
 #include <string.h>
 #include <time.h>
+#ifdef _WIN32
+#include <Windows.h>
+#endif
 #include <stdarg.h>
 #include <math.h>
-#include <unistd.h>
 #include <stdint.h>
 #include <inttypes.h>
+#ifndef _WIN32
+#include <unistd.h>
 #include <sys/time.h>
-
-#include <test_common.h>
+#endif
+#include "test_common.h"
 
 #define OPERATIONS_FILENAME                "input.global.operations"
 #define LINEAR_PARAMETERS_FILENAME         "Config/LIN_SLVR.dat"

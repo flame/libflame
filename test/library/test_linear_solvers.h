@@ -34,4 +34,19 @@ void validate_gerqf(integer m_A,
 	integer datatype,
 	double* residual);
 
+void validate_getrf(integer m_A,
+	integer n_A,
+	void* A,
+	void* A_test,
+	integer* IPIV,
+	integer datatype,
+	double* residual);
+
+void validate_getri(integer m_A,
+	integer n_A,
+	void* A,
+	void* A_inv,
+	integer* IPIV,
+	integer datatype,
+	double* residual);
 #endif // TEST_LINEAR_SOLVERS_H

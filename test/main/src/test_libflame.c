@@ -1733,7 +1733,7 @@ void fla_test_op_driver( char*            func_str,
                 fla_test_output_info( "   %s%s  %c  %14"FT_IS" x %-9"FT_IS" %-10.3lf  %6.2lf %-7s  %-7.2le   %10s\n",
                                                 func_param_str, blank_str,
                                                 datatype_char,
-                                                p_cur, q_cur, perf, time, residual, scale, pass_str );
+                                                p_cur, q_cur, perf, time, scale, residual, pass_str );
                 }
             }
         }

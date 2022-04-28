@@ -5,6 +5,7 @@
 #include "test_common.h"
 
 // Global variables
+integer i_zero = 0, i_one = 1, i_n_one = -1;
 float s_zero = 0, s_one = 1, s_n_one = -1;
 double d_zero = 0, d_one = 1, d_n_one = -1;
 scomplex c_zero = {0,0}, c_one = {1,0}, c_n_one = {-1,0};

@@ -39,6 +39,7 @@ typedef struct dcomplex
 #include "test_linear_solvers.h"
 
 // global variables
+extern integer i_zero , i_one , i_n_one;
 extern float s_zero, s_one, s_n_one;
 extern double d_zero, d_one, d_n_one;
 extern scomplex c_zero, c_one, c_n_one;

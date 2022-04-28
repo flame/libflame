@@ -2,3 +2,5 @@
 1   gerqf   RQ factorisation                              (0 = disable; 1 = enable)
 1   gerq2   RQ factorisation with unblocked algorithm     (0 = disable; 1 = enable)
 1   potrf   Cholesky factorisation                        (0 = disable; 1 = enable)
+1   getrf   LU factorization                              (0 = disable; 1 = enable)
+1   getri   LU factorization with inverse                 (0 = disable; 1 = enable)

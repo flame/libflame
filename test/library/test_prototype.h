@@ -5,7 +5,14 @@
 #ifndef TEST_PROTOTYPE_H
 #define TEST_PROTOTYPE_H
 
+/* These functions are API invoking functions used in other API test codes */
+extern void invoke_getrf(integer datatype, integer* m, integer* n, void* a, integer* lda, integer* ipiv, integer* info);
 /* --------BLAS APIs -------- */
+
+extern int saxpy_(integer *n, void *a, void *x, integer *incx, void *y, integer *incy);
+extern int daxpy_(integer *n, void *a, void *x, integer *incx, void *y, integer *incy);
+extern int caxpy_(integer *n, void *a, void *x, integer *incx, void *y, integer *incy);
+extern int zaxpy_(integer *n, void *a, void *x, integer *incx, void *y, integer *incy);
 
 extern float snrm2_(integer *n, void *x, integer *incx);
 extern double dnrm2_(integer *n, void *x, integer *incx);
@@ -36,6 +43,12 @@ extern int zpotrs_(char* uplo, integer* n, integer* nrhs, void* a, integer* lda,
 
 extern float slamch_(char *);
 extern double dlamch_(char *);
+
+extern int claswp_(integer* n, scomplex* a, integer* lda, integer* k1, integer* k2, integer* ipiv, integer* incx);
+extern int dlaswp_(integer* n, double* a, integer* lda, integer* k1, integer* k2, integer* ipiv, integer* incx);
+extern int slaswp_(integer* n, float* a, integer* lda, integer* k1, integer* k2, integer* ipiv, integer* incx);
+extern int zlaswp_(integer* n, dcomplex* a, integer* lda, integer* k1, integer* k2, integer* ipiv, integer* incx);
+
 
 extern float slange_(char* norm, integer* m, integer* n, void* a, integer* lda, void* work);
 extern double dlange_(char* norm, integer* m, integer* n, void* a, integer* lda, void* work);
@@ -97,5 +110,17 @@ extern int spotrf_(char* uplo, integer* n, void* a, integer* lda, integer* info)
 extern int dpotrf_(char* uplo, integer* n, void* a, integer* lda, integer* info);
 extern int cpotrf_(char* uplo, integer* n, void* a, integer* lda, integer* info);
 extern int zpotrf_(char* uplo, integer* n, void* a, integer* lda, integer* info);
+
+/* LU factorization of a general m by n matrix */
+extern int dgetrf_(integer* m, integer* n, void* a, integer* lda, integer* ipiv, integer* info);
+extern int sgetrf_(integer* m, integer* n, void* a, integer* lda, integer* ipiv, integer* info);
+extern int cgetrf_(integer* m, integer* n, void* a, integer* lda, integer* ipiv, integer* info);
+extern int zgetrf_(integer* m, integer* n, void* a, integer* lda, integer* ipiv, integer* info);
+
+/* LU factorization of a general m by n matrix */
+extern int dgetri_(integer* n, void* a, integer* lda, integer* ipiv, void *work, integer *lwork, integer* info);
+extern int sgetri_(integer* n, void* a, integer* lda, integer* ipiv, void* work, integer* lwork, integer* info);
+extern int cgetri_(integer* n, void* a, integer* lda, integer* ipiv, void* work, integer* lwork, integer* info);
+extern int zgetri_(integer* n, void* a, integer* lda, integer* ipiv, void* work, integer* lwork, integer* info);
 
 #endif  // TEST_PROTOTYPE_H
