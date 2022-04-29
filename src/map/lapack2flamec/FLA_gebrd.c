@@ -189,7 +189,7 @@ LAPACK_gebrd(c)
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("cgebrd inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( cgebrd_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( cgebrd_check( m, n,
                                            buff_A, ldim_A,
                                            buff_d, buff_e,
                                            buff_tu, buff_tv,

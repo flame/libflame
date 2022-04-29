@@ -140,7 +140,7 @@ LAPACK_gelqf(z)
     {
         LAPACK_gelqf_body(z)
        /** fla_error set to 0 on LAPACK_SUCCESS */
-        fla_error = 0;;
+        fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;

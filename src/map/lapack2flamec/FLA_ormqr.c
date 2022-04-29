@@ -109,7 +109,7 @@ LAPACK_ormqr(s, orm)
                                            buff_t,
                                            buff_B, ldim_B,
                                            buff_w, lwork,
-                                           info ) )
+                                           info ),fla_error )
     }
     if(fla_error==LAPACK_SUCCESS)
     {

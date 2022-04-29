@@ -111,9 +111,9 @@ LAPACK_getrfnp(c)
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("cgetrfnp inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( cgetrfnp_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( cgetrfnp_check( m, n,
                                            buff_A, ldim_A,
-                                           info ) )
+                                           info ),fla_error )
     }
     if (fla_error == LAPACK_SUCCESS)
     {

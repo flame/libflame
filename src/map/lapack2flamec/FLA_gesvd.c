@@ -237,7 +237,7 @@ LAPACK_gesvd_complex(z)
                                            buff_Vh, ldim_Vh,
                                            buff_w, lwork,
                                            buff_r,
-                                           info ) )
+                                           info ),fla_error )
     }
     if (fla_error == LAPACK_SUCCESS)
     {

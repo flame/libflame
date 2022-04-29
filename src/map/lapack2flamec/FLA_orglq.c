@@ -182,11 +182,11 @@ LAPACK_orgl2(s, org)
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sorgl2 inputs: m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS "", *m, *n, *k, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( sorgl2_check( m, n, k,
+        LAPACK_RETURN_CHECK_VAR1( sorgl2_check( m, n, k,
                                            buff_A, ldim_A,
                                            buff_t,
                                            buff_w,
-                                           info ) )
+                                           info ),fla_error )
     }
     if (fla_error == LAPACK_SUCCESS)
     {

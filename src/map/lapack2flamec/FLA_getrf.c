@@ -307,10 +307,10 @@ LAPACK_getf2(s)
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sgetf2 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
     {
-        LAPACK_RETURN_CHECK( sgetf2_check( m, n,
+        LAPACK_RETURN_CHECK_VAR1( sgetf2_check( m, n,
                                            buff_A, ldim_A,
                                            buff_p,
-                                           info ) )
+                                           info ),fla_error )
     }
     if(fla_error==LAPACK_SUCCESS)
     {
