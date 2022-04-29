@@ -4,6 +4,7 @@
 static integer c__1 = 1;
 static doublereal c_b13 = 1.;
 static doublereal c_b16 = -1.;
+        
 /* > \brief \b DGETRF2 */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -106,6 +107,7 @@ for 1 <= i <= min(M,N), row i of the */
 /* > \ingroup doubleGEcomputational */
 /* ===================================================================== */
 /* Subroutine */
+
 int dgetrf2_(integer *m, integer *n, doublereal *a, integer * lda, integer *ipiv, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
@@ -130,6 +132,7 @@ int dgetrf2_(integer *m, integer *n, doublereal *a, integer * lda, integer *ipiv
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
     int xerbla_(char *, integer *), dlaswp_( integer *, doublereal *, integer *, integer *, integer *, integer *, integer *);
+
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -152,6 +155,9 @@ int dgetrf2_(integer *m, integer *n, doublereal *a, integer * lda, integer *ipiv
     /* .. Executable Statements .. */
     /* Test the input parameters */
     /* Parameter adjustments */
+   #if AOCL_FLA_PROGRESS_H
+       AOCL_FLA_PROGRESS_VAR;
+   #endif
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;
     a -= a_offset;
@@ -243,7 +249,24 @@ int dgetrf2_(integer *m, integer *n, doublereal *a, integer * lda, integer *ipiv
         /* [ A11 ] */
         /* Factor [ --- ] */
         /* [ A21 ] */
-        dgetrf2_(m, &n1, &a[a_offset], lda, &ipiv[1], &iinfo);
+	#if AOCL_FLA_PROGRESS_H
+        if(step_count == 0 || step_count==size ){
+            size=min(*m,*n);
+            step_count =1;
+        }
+        if(!aocl_fla_progress_ptr)
+            aocl_fla_progress_ptr=aocl_fla_progress;
+        if(aocl_fla_progress_ptr)
+        {
+	        ++step_count;
+            if((step_count%8)==0 || step_count==size)
+	        {
+                AOCL_FLA_PROGRESS_FUNC_PTR("DGETRF",6,&step_count,&thread_id,&total_threads);
+            }
+               
+        }
+    #endif
+	dgetrf2_(m, &n1, &a[a_offset], lda, &ipiv[1], &iinfo);
         if (*info == 0 && iinfo > 0)
         {
             *info = iinfo;

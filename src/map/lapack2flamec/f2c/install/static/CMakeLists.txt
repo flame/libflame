@@ -15,4 +15,5 @@ ${CMAKE_CURRENT_SOURCE_DIR}/second.c
 ${CMAKE_CURRENT_SOURCE_DIR}/slamch.c
 ${CMAKE_CURRENT_SOURCE_DIR}/xerbla.c
 ${CMAKE_CURRENT_SOURCE_DIR}/xerbla_array.c
-	)
+${CMAKE_CURRENT_SOURCE_DIR}/aocl_set_progress.c
+)

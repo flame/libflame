@@ -17,8 +17,10 @@
 #include <math.h>
 #include <complex.h>
 #undef complex
+#include "FLA_macro_defs.h"
 #include "aocldtl.h"
 #include "FLA_config.h"
+#include "FLA_progress.h"
 
 #ifndef F2C_INCLUDE
 #define F2C_INCLUDE
