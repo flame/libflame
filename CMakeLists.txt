@@ -18,6 +18,7 @@ set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 
 
 #enabling the configuration options
+option (ENABLE_AMD_OPT "Enable AMD optimized path" ON)
 option (ENABLE_ILP64 "Enable ILP64" OFF)
 option (ENABLE_UPPERCASE "Enable uppercase API's" OFF)
 option (ENABLE_WRAPPER "Enable wrapper code" ON)
@@ -228,6 +229,11 @@ endif()
 
 if(ENABLE_ILP64)
 add_definitions(-DFLA_ENABLE_ILP64)
+endif()
+
+if(ENABLE_AMD_OPT)
+set(FLA_ENABLE_AMD_OPT TRUE)
+add_definitions(-DFLA_ENABLE_AMD_OPT)
 endif()
 
 #generates the FLA_config.h header file
