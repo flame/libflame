@@ -2,6 +2,7 @@
 #define _LAPACKE_EXAMPLE_HELPER_
 
 #include <math.h>
+#include <complex.h>
 
 #define FLOAT_DIFF_THRESHOLD (10.0f)
 #define DOUBLE_DIFF_THRESHOLD (10.0)
