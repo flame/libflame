@@ -4,7 +4,7 @@
 #define INPUT_BUFFER_SIZE  256
 #define COMMENT_CHAR       '#'
 
-#if defined(ENABLE_ILP64)
+#if defined(FLA_ENABLE_ILP64)
 #define FS "llu"
 #else
 #define FS "lu"
