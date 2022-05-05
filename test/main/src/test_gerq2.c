@@ -11,7 +11,7 @@
 void fla_test_gerq2_experiment(test_params_t *params, integer  datatype, integer  p_cur, integer  q_cur, integer  pci,
 									integer  n_repeats, double* perf, double* t, double* residual);
 void prepare_gerq2_run(integer m_A, integer n_A, void *A, void *T, integer datatype, integer n_repeats, double* time_min_);
-inline void invoke_gerq2(integer datatype, integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *info);
+void invoke_gerq2(integer datatype, integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *info);
 
 void fla_test_gerq2(test_params_t *params)
 {
@@ -133,7 +133,7 @@ void prepare_gerq2_run(integer m_A, integer n_A,
 }
 
 
-inline void invoke_gerq2(integer datatype, integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *info)
+void invoke_gerq2(integer datatype, integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *info)
 {
 	switch(datatype)
 	{
@@ -142,7 +142,7 @@ inline void invoke_gerq2(integer datatype, integer *m, integer *n, void *a, inte
 			sgerq2_(m, n, a, lda, tau, work, info);
 			break;
 		}
-		
+
 		case DOUBLE:
 		{
 			dgerq2_(m, n, a, lda, tau, work, info);

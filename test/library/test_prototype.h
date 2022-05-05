@@ -7,6 +7,8 @@
 
 /* These functions are API invoking functions used in other API test codes */
 extern void invoke_getrf(integer datatype, integer* m, integer* n, void* a, integer* lda, integer* ipiv, integer* info);
+extern void invoke_potrf(char* uplo, integer datatype, integer* m, void* a, integer* lda, integer* info);
+extern void invoke_geqrf(integer datatype, integer* m, integer* n, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
 /* --------BLAS APIs -------- */
 
 extern int saxpy_(integer *n, void *a, void *x, integer *incx, void *y, integer *incy);

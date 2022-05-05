@@ -12,7 +12,6 @@
 /* Local prototypes.*/
 void fla_test_potrf_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats,double* perf, double* time_min, double* residual);
 void prepare_potrf_run(char* uplo, integer m, void *A, integer datatype, integer n_repeats, double* time_min_);
-inline void invoke_potrf(char* uplo, integer datatype, integer* m, void* a, integer* lda, integer* info);
 
 void fla_test_potrf(test_params_t *params)
 {
@@ -99,7 +98,7 @@ void prepare_potrf_run(char* uplo, integer m,
 	free_matrix(A_save);
 }
 
-inline void invoke_potrf(char* uplo, integer datatype, integer* m, void* a, integer* lda, integer* info)
+void invoke_potrf(char* uplo, integer datatype, integer* m, void* a, integer* lda, integer* info)
 {
 	switch(datatype)
 	{

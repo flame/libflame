@@ -14,7 +14,6 @@
 void fla_test_orgqr_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats, double* perf, double* t,double* residual);
 void prepare_orgqr_run(integer m, integer n, void *A, void *T, void* work, integer *lwork, integer datatype, integer n_repeats, double* time_min_);
 void invoke_orgqr(integer datatype, integer* m, integer* n, integer *min_A, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
-void invoke_geqrf(integer datatype, integer* m, integer* n, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
 
 void fla_test_orgqr(test_params_t *params)
 {
@@ -201,33 +200,6 @@ void invoke_orgqr(integer datatype, integer* m, integer* n, integer *min_A, void
 		case DOUBLE_COMPLEX:
 		{
 			zungqr_(m, m, min_A, a, m, tau, work, lwork, info);
-			break;
-		}
-	}
-}
-
-void invoke_geqrf(integer datatype, integer* m, integer* n, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info)
-{
-	switch(datatype)
-	{
-		case FLOAT:
-		{
-			sgeqrf_(m, n, a, lda, tau, work, lwork, info);
-			break;
-		}
-		case DOUBLE:
-		{
-			dgeqrf_(m, n, a, lda, tau, work, lwork, info);
-			break;
-		}
-		case COMPLEX:
-		{
-			cgeqrf_(m, n, a, lda, tau, work, lwork, info);
-			break;
-		}
-		case DOUBLE_COMPLEX:
-		{
-			zgeqrf_(m, n, a, lda, tau, work, lwork, info);
 			break;
 		}
 	}

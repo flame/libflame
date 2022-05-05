@@ -14,7 +14,6 @@
 void fla_test_potrs_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats,double* perf, double* time_min,double* residual);
 void prepare_potrs_run(char* uplo, integer m, void *A, integer datatype, void *b, integer n_repeats, double* time_min_);
 void invoke_potrs(char* uplo, integer datatype, integer* m, void* A, integer* lda, integer *nrhs, void* b, integer* info);
-void invoke_potrf(integer datatype, char *uplo, void *A, integer *m, integer *lda);
 
 void fla_test_potrs(test_params_t *params)
 {
@@ -39,7 +38,7 @@ void fla_test_potrs_experiment(test_params_t *params,
 	double* time_min,
 	double* residual)
 {
-	integer m;
+	integer m, info = 0;
 	void *A = NULL, *A_test = NULL;
 	void *b = NULL, *x = NULL;
 	void *b_test = NULL;
@@ -65,7 +64,7 @@ void fla_test_potrs_experiment(test_params_t *params,
 	copy_matrix(datatype, "full", m, m, A, m, A_test, m);
 
 	/* cholesky factorisation of A as input to potrs */
-	invoke_potrf(datatype, &uplo, A_test, &m, &m);
+	invoke_potrf(&uplo, datatype, &m, A_test, &m, &info);
 
 	/* Generate random vector b */
 	rand_vector(datatype, b, m, 1);
@@ -152,34 +151,3 @@ void invoke_potrs(char* uplo, integer datatype,
 		}
 	}
 }
-
-void invoke_potrf(integer datatype, char *uplo, void *a, integer *m, integer *lda)
-{
-	integer info = 0;
-
-	switch(datatype)
-	{
-		case FLOAT:
-		{
-			spotrf_(uplo, m, a, lda, &info);
-			break;
-		}
-		case DOUBLE:
-		{
-			dpotrf_(uplo, m, a, lda, &info);
-			break;
-		}
-		case COMPLEX:
-		{
-			cpotrf_(uplo, m, a, lda, &info);
-			break;
-		}
-		case DOUBLE_COMPLEX:
-		{
-			zpotrf_(uplo, m, a, lda, &info);
-			break;
-		}
-	}
-}
-
-
