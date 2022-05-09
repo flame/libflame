@@ -97,7 +97,7 @@ LAPACK_gehrd(d)
     {
         LAPACK_gehrd_body(d)
              /** fla_error set to 0 on LAPACK_SUCCESS */
-        fla_error = 0;;
+        fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
@@ -120,7 +120,7 @@ LAPACK_gehrd(c)
     {
         LAPACK_gehrd_body(c)
          /** fla_error set to 0 on LAPACK_SUCCESS */
-        fla_error = 0;;
+        fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
@@ -142,7 +142,7 @@ LAPACK_gehrd(z)
     {
         LAPACK_gehrd_body(z)
          /** fla_error set to 0 on LAPACK_SUCCESS */
-        fla_error = 0;;
+        fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
@@ -175,7 +175,7 @@ LAPACK_gehd2(s)
     {
         LAPACK_gehrd_body(s)
          /** fla_error set to 0 on LAPACK_SUCCESS */
-        fla_error = 0;;
+        fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
@@ -197,7 +197,7 @@ LAPACK_gehd2(d)
     {
         LAPACK_gehrd_body(d)
          /** fla_error set to 0 on LAPACK_SUCCESS */
-        fla_error = 0;;
+        fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
@@ -221,7 +221,7 @@ LAPACK_gehd2(c)
     {
         LAPACK_gehrd_body(c)
          /** fla_error set to 0 on LAPACK_SUCCESS */
-        fla_error = 0;;
+        fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
@@ -243,7 +243,7 @@ LAPACK_gehd2(z)
     {
         LAPACK_gehrd_body(z)
         /** fla_error set to 0 on LAPACK_SUCCESS */
-        fla_error = 0;;
+        fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;

@@ -230,7 +230,7 @@ LAPACK_potf2(d)
     {
 #if FLA_AMD_OPT
         {
-            LAPACK_potrf_body_s(d)
+            LAPACK_potrf_body_d(d)
         }
 #else
         {

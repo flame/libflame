@@ -75,7 +75,7 @@ LAPACK_gelqf(s)
     {
         LAPACK_gelqf_body(s)
         /** fla_error set to 0 on LAPACK_SUCCESS */
-        fla_error = 0;;
+        fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
@@ -96,7 +96,7 @@ LAPACK_gelqf(d)
     {
         LAPACK_gelqf_body(d)
         /** fla_error set to 0 on LAPACK_SUCCESS */
-        fla_error = 0;;
+        fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
@@ -119,7 +119,7 @@ LAPACK_gelqf(c)
     {
         LAPACK_gelqf_body(c)
         /** fla_error set to 0 on LAPACK_SUCCESS */
-        fla_error = 0;;
+        fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
@@ -170,7 +170,7 @@ LAPACK_gelq2(s)
     {
         LAPACK_gelqf_body(s)
       /** fla_error set to 0 on LAPACK_SUCCESS */
-        fla_error = 0;;
+        fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
@@ -191,7 +191,7 @@ LAPACK_gelq2(d)
     {
         LAPACK_gelqf_body(d)
       /** fla_error set to 0 on LAPACK_SUCCESS */
-        fla_error = 0;;
+        fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
@@ -215,7 +215,7 @@ LAPACK_gelq2(c)
     {
         LAPACK_gelqf_body(c)
       /** fla_error set to 0 on LAPACK_SUCCESS */
-        fla_error = 0;;
+        fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;

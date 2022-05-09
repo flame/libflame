@@ -91,7 +91,7 @@ LAPACK_gelsd_real(s)
     {
         LAPACK_gelsd_real_body(s)
        /** fla_error set to 0 on LAPACK_SUCCESS */
-        fla_error = 0;;
+        fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
@@ -114,7 +114,7 @@ LAPACK_gelsd_real(d)
     {
         LAPACK_gelsd_real_body(d)
       /** fla_error set to 0 on LAPACK_SUCCESS */
-        fla_error = 0;;
+        fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
@@ -140,7 +140,7 @@ LAPACK_gelsd_real(d)
                            buff_B, ldim_B,                              \
                            buff_s, rcond, rank,                         \
                            buff_w, lwork, buff_r, info);                \
-  fla_error=0;
+
 
 #ifdef FLA_LAPACK2FLAME_SUPPORT_COMPLEX
 LAPACK_gelsd_complex(c)
@@ -184,7 +184,7 @@ LAPACK_gelsd_complex(z)
     {
         LAPACK_gelsd_complex_body(z)
              /** fla_error set to 0 on LAPACK_SUCCESS */
-        fla_error = 0;;
+        fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
