@@ -17,6 +17,8 @@
 
 #ifdef FLA_ENABLE_LAPACK2FLAME 
 
+#define FLA_AMD_SVD2_OPT 1
+
 #include "FLA_lapack2flame_util_defs.h"
 #include "FLA_lapack2flame_return_defs.h"
 #include "FLA_lapack2flame_prototypes.h"
@@ -63,7 +65,7 @@
 
 
 #define LAPACK_gesvd_body_d(prefix)                                                                                \
-  if(*m==2 && *n==2)  {                     \
+  if(FLA_AMD_SVD2_OPT && *m==2 && *n==2)  {                     \
   dgesvd2x2( jobu, jobv, m, n, buff_A, ldim_A, buff_s, buff_U, ldim_U,buff_Vh , ldim_Vh, buff_w, lwork,info );} \
   else {                                                                                \
   lapack_dgesvd ( jobu, jobv, m, n, buff_A, ldim_A, buff_s, buff_U, ldim_U,buff_Vh , ldim_Vh, buff_w, lwork,info );}   \

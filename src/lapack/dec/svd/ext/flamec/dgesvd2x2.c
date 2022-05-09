@@ -78,25 +78,21 @@
    tempu[2] = (s[1] != 0) ? (a[0] * tempvt[1] + a[1] * tempvt[3]) / s[1] : -tempu[1];
    tempu[3] = (s[1] != 0) ? (a[*lda] * tempvt[1] + a[*lda+1] * tempvt[3]) / s[1] : tempu[0];
 
-   if (*jobvt!='N') {
+   if (*jobvt == 'A' || *jobvt == 'S') {
        vt[0] = tempvt[0], vt[1] = tempvt[1], vt[*ldvt] = tempvt[2], vt[*ldvt+1] = tempvt[3];
    }
    // U calculation (to be read as column major)
       //assignment for U matrix 
-   if (*jobu!='N') {  
+   if (*jobu == 'A' || *jobu == 'S') {  
        u[0] = tempu[0], u[1] = tempu[1], u[*ldu] = tempu[2], u[*ldu + 1] = tempu[3];
    }
    //Output A matrix contains sigma in its diagonal and rest values as 0 ( exception when jobu or jobv is O then A is overwritten)
    a[0] = s[0], a[1]=0, a[*lda] = 0, a[*lda + 1] = s[1];
    //handling the case when either jobu or jobvt is O	
    if (*jobu == 'O') {
-       a[0] = u[0], a[1]= u[1], a[*lda] = u[*ldu], a[*lda + 1] = u[*ldu + 1];
-      //U is reset		
-       u[0] = 0, u[1] = 0, u[*ldu] = 0, u[*ldu + 1] = 0;
+       a[0] = tempu[0], a[1]= tempu[1], a[*lda] = tempu[*ldu], a[*lda + 1] = tempu[*ldu + 1];
    } else if (*jobvt == 'O') {  
-       a[0]= vt[0], a[1] = vt[1], a[*lda] = vt[*ldvt], a[*lda + 1] = vt[*ldvt + 1];
-      //VT is reset
-       vt[0] = 0, vt[1] = 0, vt[*ldvt] = 0, vt[*ldvt + 1] = 0;
+       a[0]= tempvt[0], a[1] = tempvt[1], a[*lda] = tempvt[*ldvt], a[*lda + 1] = tempvt[*ldvt + 1];
    }
    return 0;
 }
