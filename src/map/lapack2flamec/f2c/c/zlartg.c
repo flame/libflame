@@ -98,7 +98,6 @@ int zlartg_(doublecomplex *f, doublecomplex *g, doublereal * cs, doublecomplex *
     doublecomplex z__1, z__2, z__3;
     /* Builtin functions */
     double log(doublereal), pow_di(doublereal *, integer *), d_imag( doublecomplex *), z_abs(doublecomplex *), sqrt(doublereal);
-    void d_cnjg(doublecomplex *, doublecomplex *);
     /* Local variables */
     doublereal d__;
     integer i__;
@@ -311,9 +310,8 @@ L20:
         z__1.r = d__1;
         z__1.i = d__2; // , expr subst
         sn->r = z__1.r, sn->i = z__1.i;
-        d_cnjg(&z__2, &gs);
-        z__1.r = sn->r * z__2.r - sn->i * z__2.i;
-        z__1.i = sn->r * z__2.i + sn->i * z__2.r; // , expr subst
+        z__1.r = sn->r * gs.r + sn->i * gs.i;
+        z__1.i = sn->i * gs.r - sn->r * gs.i; // , expr subst
         sn->r = z__1.r, sn->i = z__1.i;
         if (count != 0)
         {

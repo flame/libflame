@@ -58,6 +58,16 @@ option (ENABLE_F2C_DOTC "Enable invoking Complex datatype BLAS functions DOTC an
 option (ENABLE_VOID_RETURN_COMPLEX_FUNCTION "Enable 'void' return instead of complex return type for libFLAME functions such as cladiv/zladiv that by default have complex return type" OFF)
 
 set (ENABLE_WINDOWS_BUILD "Enables windows build" ON)
+SET(ENABLE_SIMD_FLAGS "AVX2" CACHE STRING "Set compiler SIMD flags")
+SET_PROPERTY(CACHE ENABLE_SIMD_FLAGS PROPERTY STRINGS none SSE2 AVX AVX2)
+
+if(${ENABLE_SIMD_FLAGS} MATCHES "AVX2")
+   add_definitions(/arch:AVX2)
+elseif(${ENABLE_SIMD_FLAGS} MATCHES "AVX")
+   add_definitions(/arch:AVX)
+elseif(${ENABLE_SIMD_FLAGS} MATCHES "SSE2")
+   add_definitions(/arch:SSE2)
+endif()
 
 if(ENABLE_UPPERCASE)
 add_definitions(-DBLIS1_ENABLE_UPPERCASE_F77)
