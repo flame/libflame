@@ -1,6 +1,10 @@
 /* zhgeqz.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
+
+#define QZ_OPT
+#define QZ_MAX_SWEEPS 32
+
 static doublecomplex c_b1 =
 {
     0.,0.
@@ -13,6 +17,7 @@ static doublecomplex c_b2 =
 ;
 static integer c__1 = 1;
 static integer c__2 = 2;
+
 /* > \brief \b ZHGEQZ */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -287,24 +292,28 @@ the routine */
 /* > */
 /* ===================================================================== */
 /* Subroutine */
+void apply_grots_q(integer num_swps, integer *rots_per_swp, integer *rcol, doublereal **rots_sptr, doublecomplex *q, integer n, integer ldq);
+void apply_grots_z(integer num_swps, integer *rots_per_swp, integer *rcol, doublereal **rots_sptr, doublecomplex *z, integer n, integer ldz,
+                   integer num_scal, integer *scol, doublecomplex *scalv);
+extern int zrot_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublecomplex *);
+extern int zscal_(integer *, doublecomplex *, doublecomplex *, integer *);
+
 int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integer *ihi, doublecomplex *h__, integer *ldh, doublecomplex *t, integer *ldt, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * info)
 {
     /* System generated locals */
-    integer h_dim1, h_offset, q_dim1, q_offset, t_dim1, t_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5, i__6;
+    integer h_dim1, h_offset, q_dim1, q_offset, t_dim1, t_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal d__1, d__2, d__3, d__4, d__5, d__6, d__7, d__8;
     doublecomplex z__1, z__2, z__3, z__4, z__5, z__6, z__7;
     /* Builtin functions */
-    double z_abs(doublecomplex *);
-    void d_cnjg(doublecomplex *, doublecomplex *);
-    double d_imag(doublecomplex *);
+    doublereal z_abs(doublecomplex *);
+    doublereal d_imag(doublecomplex *);
     void z_div(doublecomplex *, doublecomplex *, doublecomplex *), z_sqrt( doublecomplex *, doublecomplex *), pow_zi(doublecomplex *, doublecomplex *, integer *);
     /* Local variables */
     doublereal c__;
     integer j;
     doublecomplex s, x, y;
-    integer jc, in;
+    integer in;
     doublecomplex u12;
-    integer jr;
     doublecomplex ad11, ad12, ad21, ad22;
     integer jch;
     logical ilq, ilz;
@@ -320,8 +329,6 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     doublereal anorm, bnorm;
     integer maxit;
     doublecomplex shift;
-    extern /* Subroutine */
-    int zscal_(integer *, doublecomplex *, doublecomplex *, integer *);
     doublereal tempr;
     doublecomplex ctemp2, ctemp3;
     logical ilazr2;
@@ -347,6 +354,44 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     int zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *);
     integer istart;
     logical lquery;
+
+#ifdef QZ_OPT
+    integer max_swps = QZ_MAX_SWEEPS;
+    integer num_swps, num_qrots, num_zrots;
+    integer umem_sz;
+
+    integer blk_enable = 0;
+
+    integer *qrots_per_swp, *qcols;
+    doublereal **qrots_st_ptr, *qrots, *qrots_ptr;
+
+    integer *zrots_per_swp, *zcols;
+    doublereal **zrots_st_ptr, *zrots, *zrots_ptr;
+
+    integer *scal_cols;
+    doublecomplex *scal_ptr;
+
+    char *umem, *uptr;
+
+    integer qidx, zidx, sidx;
+
+    num_swps = num_qrots = num_zrots = 0;
+    umem_sz = 0;
+
+    qidx = zidx = sidx = 0;
+
+    qrots_per_swp = NULL;
+    qcols = zcols = NULL;
+    qrots_st_ptr = zrots_st_ptr = NULL;
+    qrots = zrots = NULL;
+    qrots_ptr = zrots_ptr = NULL;
+    qrots_per_swp = zrots_per_swp = NULL;
+
+    scal_cols = NULL;
+    scal_ptr = NULL;
+#else
+    doublecomplex sc;
+#endif
     /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -549,9 +594,8 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
             i__2 = j + j * t_dim1;
             z__2.r = t[i__2].r / absb;
             z__2.i = t[i__2].i / absb; // , expr subst
-            d_cnjg(&z__1, &z__2);
-            signbc.r = z__1.r;
-            signbc.i = z__1.i; // , expr subst
+            signbc.r = z__2.r;
+            signbc.i =-z__2.i; // , expr subst
             i__2 = j + j * t_dim1;
             t[i__2].r = absb;
             t[i__2].i = 0.; // , expr subst
@@ -619,6 +663,88 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     eshift.i = 0.; // , expr subst
     maxit = (*ihi - *ilo + 1) * 30;
     i__1 = maxit;
+#ifdef QZ_OPT
+    /* compute and allocate memory requirement for optimal computations of Q & Z */
+    blk_enable = (ilq | ilz);
+    if (blk_enable)
+    {
+        umem_sz = 0;
+        if (ilq)
+        {
+            /* Memory requirement for Q computation:
+             *
+             * max_swps * sizeof(integer) - Array for number of rotations per sweep
+             * max_swps * sizeof(integer) - Starting column for rotations
+             * max_swps * sizeof(doublereal *) - Pointer array for starting locations of Q rotations
+             * max_swps * *n * 3 * sizeof(doublereal) - Array of Q rotations for each sweep ((c, sr, si)[])
+             *
+             * */
+            umem_sz += max_swps * (2 * sizeof(integer) + sizeof(doublereal *) + *n * 3 * sizeof(doublereal));
+        }
+        if (ilz)
+        {
+            /* Memory requirement for Z computation:
+             *
+             * max_swps * sizeof(integer) - Array for number of rotations per sweep
+             * max_swps * sizeof(integer) - Starting column for rotations
+             * max_swps * sizeof(doublereal *) - Pointer array for starting locations of Z rotations
+             * max_swps * *n * 3 * sizeof(doublereal) - Array of Z rotations for each sweep ((c, sr, si)[])
+             *
+             * Memory for Z Scaling:
+             *
+             * *n * sizeof(integer) - Array of indices for ZSCAL of Z
+             * *n * sizeof(doublecomplex) - Array of scale factors
+             * */
+            umem_sz += max_swps * (2 * sizeof(integer) + sizeof(doublereal *) + *n * 3 * sizeof(doublereal));
+            umem_sz += *n * (sizeof(integer) + sizeof(doublecomplex));
+        }
+
+        /* Allocate the memory */
+        umem = (char *) malloc(umem_sz);
+        uptr = umem;
+
+        /* Distribute the memory allocated */
+        if (ilq)
+        {
+            qrots_per_swp = (integer *) uptr;
+            uptr += max_swps * sizeof(integer);
+
+            qcols = (integer *) uptr;
+            uptr += max_swps * sizeof(integer);
+
+            qrots_st_ptr = (doublereal **) uptr;
+            uptr += max_swps * sizeof(doublereal *);
+
+            qrots = (doublereal *) uptr;
+            uptr += max_swps * *n * 3 * sizeof(doublereal);
+
+            qrots_ptr = qrots;
+        }
+        if (ilz)
+        {
+            zrots_per_swp = (integer *) uptr;
+            uptr += max_swps * sizeof(integer);
+
+            zcols = (integer *) uptr;
+            uptr += max_swps * sizeof(integer);
+
+            zrots_st_ptr = (doublereal **) uptr;
+            uptr += max_swps * sizeof(doublereal *);
+
+            zrots = (doublereal *) uptr;
+            uptr += max_swps * *n * 3 * sizeof(doublereal);
+
+            scal_cols = (integer *) uptr;
+            uptr += *n * sizeof(integer);
+
+            scal_ptr = (doublecomplex *) uptr;
+            uptr += *n * sizeof(doublecomplex);
+
+            zrots_ptr = zrots;
+        }
+        sidx = qidx = zidx = 0;
+    }
+#endif
     for (jiter = 1;
             jiter <= i__1;
             ++jiter)
@@ -626,6 +752,21 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
         /* Check for too many iterations. */
         if (jiter > maxit)
         {
+#ifdef QZ_OPT
+            if (ilq)
+            {
+                apply_grots_q(qidx, qrots_per_swp, qcols, qrots_st_ptr, q, *n, q_dim1);
+                qidx = 0;
+                qrots_ptr = qrots;
+            }
+            if (ilz)
+            {
+                apply_grots_z(zidx, zrots_per_swp, zcols, zrots_st_ptr, z__, *n, z_dim1, sidx, scal_cols, scal_ptr);
+                zidx = sidx = 0;
+                zrots_ptr = zrots;
+            }
+            num_swps = 0;
+#endif
             goto L180;
         }
         /* Split the matrix if possible. */
@@ -658,6 +799,21 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
         d__2 = ulp * (z_abs(&t[ilast - 1 + ilast * t_dim1]) + z_abs(&t[ilast - 1 + (ilast - 1) * t_dim1])); // , expr subst
         if (z_abs(&t[ilast + ilast * t_dim1]) <= max(d__1,d__2))
         {
+#ifdef QZ_OPT
+            if (ilq)
+            {
+                apply_grots_q(qidx, qrots_per_swp, qcols, qrots_st_ptr, q, *n, q_dim1);
+                qidx = 0;
+                qrots_ptr = qrots;
+            }
+            if (ilz)
+            {
+                apply_grots_z(zidx, zrots_per_swp, zcols, zrots_st_ptr, z__, *n, z_dim1, sidx, scal_cols, scal_ptr);
+                zidx = sidx = 0;
+                zrots_ptr = zrots;
+            }
+            num_swps = 0;
+#endif
             i__2 = ilast + ilast * t_dim1;
             t[i__2].r = 0.;
             t[i__2].i = 0.; // , expr subst
@@ -720,6 +876,21 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                         ilazr2 = TRUE_;
                     }
                 }
+#ifdef QZ_OPT
+                if (ilq)
+                {
+                    apply_grots_q(qidx, qrots_per_swp, qcols, qrots_st_ptr, q, *n, q_dim1);
+                    qidx = 0;
+                    qrots_ptr = qrots;
+                }
+                if (ilz)
+                {
+                    apply_grots_z(zidx, zrots_per_swp, zcols, zrots_st_ptr, z__, *n, z_dim1, sidx, scal_cols, scal_ptr);
+                    zidx = sidx = 0;
+                    zrots_ptr = zrots;
+                }
+                num_swps = 0;
+#endif
                 /* If both tests pass (1 & 2), i.e., the leading diagonal */
                 /* element of B in the block is zero, split a 1x1 block off */
                 /* at the top. (I.e., at the J-th row/column) The leading */
@@ -745,7 +916,8 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                         zrot_(&i__4, &t[jch + (jch + 1) * t_dim1], ldt, &t[ jch + 1 + (jch + 1) * t_dim1], ldt, &c__, &s);
                         if (ilq)
                         {
-                            d_cnjg(&z__1, &s);
+                            z__1.r = s.r;
+                            z__1.i =-s.i;
                             zrot_(n, &q[jch * q_dim1 + 1], &c__1, &q[(jch + 1) * q_dim1 + 1], &c__1, &c__, &z__1);
                         }
                         if (ilazr2)
@@ -803,7 +975,8 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                         zrot_(&i__4, &h__[jch + (jch - 1) * h_dim1], ldh, & h__[jch + 1 + (jch - 1) * h_dim1], ldh, &c__, &s);
                         if (ilq)
                         {
-                            d_cnjg(&z__1, &s);
+                            z__1.r = s.r;
+                            z__1.i =-s.i;
                             zrot_(n, &q[jch * q_dim1 + 1], &c__1, &q[(jch + 1) * q_dim1 + 1], &c__1, &c__, &z__1);
                         }
                         i__4 = jch + 1 + jch * h_dim1;
@@ -864,9 +1037,8 @@ L60:
             i__2 = ilast + ilast * t_dim1;
             z__2.r = t[i__2].r / absb;
             z__2.i = t[i__2].i / absb; // , expr subst
-            d_cnjg(&z__1, &z__2);
-            signbc.r = z__1.r;
-            signbc.i = z__1.i; // , expr subst
+            signbc.r = z__2.r;
+            signbc.i =-z__2.i; // , expr subst
             i__2 = ilast + ilast * t_dim1;
             t[i__2].r = absb;
             t[i__2].i = 0.; // , expr subst
@@ -881,10 +1053,20 @@ L60:
             {
                 zscal_(&c__1, &signbc, &h__[ilast + ilast * h_dim1], &c__1);
             }
+#ifdef QZ_OPT
+            if (ilz)
+            {
+                scal_cols[sidx] = ilast;
+                scal_ptr[sidx].r = signbc.r;
+                scal_ptr[sidx].i = signbc.i;
+                sidx++;
+            }
+#else
             if (ilz)
             {
                 zscal_(n, &signbc, &z__[ilast * z_dim1 + 1], &c__1);
             }
+#endif
         }
         else
         {
@@ -1147,6 +1329,43 @@ L90: /* Do an implicit-shift QZ sweep. */
         ctemp2.r = z__1.r;
         ctemp2.i = z__1.i; // , expr subst
         zlartg_(&ctemp, &ctemp2, &c__, &s, &ctemp3);
+#ifdef QZ_OPT
+        if (blk_enable)
+        {
+            if (num_swps == max_swps)
+            {
+                if (ilq)
+                {
+                    apply_grots_q(qidx, qrots_per_swp, qcols, qrots_st_ptr, q, *n, q_dim1);
+                    qidx = 0;
+                    qrots_ptr = qrots;
+                }
+                if (ilz)
+                {
+                    apply_grots_z(zidx, zrots_per_swp, zcols, zrots_st_ptr, z__, *n, z_dim1, sidx, scal_cols, scal_ptr);
+                    zidx = sidx = 0;
+                    zrots_ptr = zrots;
+                }
+                num_swps = 0;
+            }
+
+            if (ilq)
+            {
+                num_qrots = 0;
+                qcols[qidx] = istart;
+                qrots_st_ptr[qidx] = qrots_ptr;
+            }
+
+            if (ilz)
+            {
+                num_zrots = 0;
+                zcols[zidx] = istart;
+                zrots_st_ptr[zidx] = zrots_ptr;
+            }
+
+            num_swps++;
+        }
+#endif
         /* Sweep */
         i__2 = ilast - 1;
         for (j = istart;
@@ -1163,103 +1382,30 @@ L90: /* Do an implicit-shift QZ sweep. */
                 h__[i__3].r = 0.;
                 h__[i__3].i = 0.; // , expr subst
             }
-            i__3 = ilastm;
-            for (jc = j;
-                    jc <= i__3;
-                    ++jc)
+            i__3 = ilastm - j + 1;
+            if (i__3 >= 0)
             {
-                i__4 = j + jc * h_dim1;
-                z__2.r = c__ * h__[i__4].r;
-                z__2.i = c__ * h__[i__4].i; // , expr subst
-                i__5 = j + 1 + jc * h_dim1;
-                z__3.r = s.r * h__[i__5].r - s.i * h__[i__5].i;
-                z__3.i = s.r * h__[i__5].i + s.i * h__[i__5].r; // , expr subst
-                z__1.r = z__2.r + z__3.r;
-                z__1.i = z__2.i + z__3.i; // , expr subst
-                ctemp.r = z__1.r;
-                ctemp.i = z__1.i; // , expr subst
-                i__4 = j + 1 + jc * h_dim1;
-                d_cnjg(&z__4, &s);
-                z__3.r = -z__4.r;
-                z__3.i = -z__4.i; // , expr subst
-                i__5 = j + jc * h_dim1;
-                z__2.r = z__3.r * h__[i__5].r - z__3.i * h__[i__5].i;
-                z__2.i = z__3.r * h__[i__5].i + z__3.i * h__[i__5].r; // , expr subst
-                i__6 = j + 1 + jc * h_dim1;
-                z__5.r = c__ * h__[i__6].r;
-                z__5.i = c__ * h__[i__6].i; // , expr subst
-                z__1.r = z__2.r + z__5.r;
-                z__1.i = z__2.i + z__5.i; // , expr subst
-                h__[i__4].r = z__1.r;
-                h__[i__4].i = z__1.i; // , expr subst
-                i__4 = j + jc * h_dim1;
-                h__[i__4].r = ctemp.r;
-                h__[i__4].i = ctemp.i; // , expr subst
-                i__4 = j + jc * t_dim1;
-                z__2.r = c__ * t[i__4].r;
-                z__2.i = c__ * t[i__4].i; // , expr subst
-                i__5 = j + 1 + jc * t_dim1;
-                z__3.r = s.r * t[i__5].r - s.i * t[i__5].i;
-                z__3.i = s.r * t[ i__5].i + s.i * t[i__5].r; // , expr subst
-                z__1.r = z__2.r + z__3.r;
-                z__1.i = z__2.i + z__3.i; // , expr subst
-                ctemp2.r = z__1.r;
-                ctemp2.i = z__1.i; // , expr subst
-                i__4 = j + 1 + jc * t_dim1;
-                d_cnjg(&z__4, &s);
-                z__3.r = -z__4.r;
-                z__3.i = -z__4.i; // , expr subst
-                i__5 = j + jc * t_dim1;
-                z__2.r = z__3.r * t[i__5].r - z__3.i * t[i__5].i;
-                z__2.i = z__3.r * t[i__5].i + z__3.i * t[i__5].r; // , expr subst
-                i__6 = j + 1 + jc * t_dim1;
-                z__5.r = c__ * t[i__6].r;
-                z__5.i = c__ * t[i__6].i; // , expr subst
-                z__1.r = z__2.r + z__5.r;
-                z__1.i = z__2.i + z__5.i; // , expr subst
-                t[i__4].r = z__1.r;
-                t[i__4].i = z__1.i; // , expr subst
-                i__4 = j + jc * t_dim1;
-                t[i__4].r = ctemp2.r;
-                t[i__4].i = ctemp2.i; // , expr subst
-                /* L100: */
+                i__4 = j     + j * h_dim1;
+                i__5 = j + 1 + j * h_dim1;
+                zrot_(&i__3, &h__[i__4], &h_dim1, &h__[i__5], &h_dim1, &c__, &s);
+                i__4 = j     + j * t_dim1;
+                i__5 = j + 1 + j * t_dim1;
+                zrot_(&i__3, &t[i__4], &t_dim1, &t[i__5], &t_dim1, &c__, &s);
             }
             if (ilq)
             {
-                i__3 = *n;
-                for (jr = 1;
-                        jr <= i__3;
-                        ++jr)
-                {
-                    i__4 = jr + j * q_dim1;
-                    z__2.r = c__ * q[i__4].r;
-                    z__2.i = c__ * q[i__4].i; // , expr subst
-                    d_cnjg(&z__4, &s);
-                    i__5 = jr + (j + 1) * q_dim1;
-                    z__3.r = z__4.r * q[i__5].r - z__4.i * q[i__5].i;
-                    z__3.i = z__4.r * q[i__5].i + z__4.i * q[i__5].r; // , expr subst
-                    z__1.r = z__2.r + z__3.r;
-                    z__1.i = z__2.i + z__3.i; // , expr subst
-                    ctemp.r = z__1.r;
-                    ctemp.i = z__1.i; // , expr subst
-                    i__4 = jr + (j + 1) * q_dim1;
-                    z__3.r = -s.r;
-                    z__3.i = -s.i; // , expr subst
-                    i__5 = jr + j * q_dim1;
-                    z__2.r = z__3.r * q[i__5].r - z__3.i * q[i__5].i;
-                    z__2.i = z__3.r * q[i__5].i + z__3.i * q[i__5].r; // , expr subst
-                    i__6 = jr + (j + 1) * q_dim1;
-                    z__4.r = c__ * q[i__6].r;
-                    z__4.i = c__ * q[i__6].i; // , expr subst
-                    z__1.r = z__2.r + z__4.r;
-                    z__1.i = z__2.i + z__4.i; // , expr subst
-                    q[i__4].r = z__1.r;
-                    q[i__4].i = z__1.i; // , expr subst
-                    i__4 = jr + j * q_dim1;
-                    q[i__4].r = ctemp.r;
-                    q[i__4].i = ctemp.i; // , expr subst
-                    /* L110: */
-                }
+#ifdef QZ_OPT
+                num_qrots++;
+                *qrots_ptr++ = c__;
+                *qrots_ptr++ = s.r;
+                *qrots_ptr++ =-s.i;
+#else
+                i__4 = 1 + (j    ) * q_dim1;
+                i__5 = 1 + (j + 1) * q_dim1;
+                sc.r = s.r;
+                sc.i =-s.i;
+                zrot_(n, &q[i__4], &c__1, &q[i__5], &c__1, &c__, &sc);
+#endif
             }
             i__3 = j + 1 + (j + 1) * t_dim1;
             ctemp.r = t[i__3].r;
@@ -1269,114 +1415,49 @@ L90: /* Do an implicit-shift QZ sweep. */
             t[i__3].r = 0.;
             t[i__3].i = 0.; // , expr subst
             /* Computing MIN */
-            i__4 = j + 2;
-            i__3 = min(i__4,ilast);
-            for (jr = ifrstm;
-                    jr <= i__3;
-                    ++jr)
+            i__3 = min(j + 2, ilast) - ifrstm + 1;
+            if (i__3 >=0)
             {
-                i__4 = jr + (j + 1) * h_dim1;
-                z__2.r = c__ * h__[i__4].r;
-                z__2.i = c__ * h__[i__4].i; // , expr subst
-                i__5 = jr + j * h_dim1;
-                z__3.r = s.r * h__[i__5].r - s.i * h__[i__5].i;
-                z__3.i = s.r * h__[i__5].i + s.i * h__[i__5].r; // , expr subst
-                z__1.r = z__2.r + z__3.r;
-                z__1.i = z__2.i + z__3.i; // , expr subst
-                ctemp.r = z__1.r;
-                ctemp.i = z__1.i; // , expr subst
-                i__4 = jr + j * h_dim1;
-                d_cnjg(&z__4, &s);
-                z__3.r = -z__4.r;
-                z__3.i = -z__4.i; // , expr subst
-                i__5 = jr + (j + 1) * h_dim1;
-                z__2.r = z__3.r * h__[i__5].r - z__3.i * h__[i__5].i;
-                z__2.i = z__3.r * h__[i__5].i + z__3.i * h__[i__5].r; // , expr subst
-                i__6 = jr + j * h_dim1;
-                z__5.r = c__ * h__[i__6].r;
-                z__5.i = c__ * h__[i__6].i; // , expr subst
-                z__1.r = z__2.r + z__5.r;
-                z__1.i = z__2.i + z__5.i; // , expr subst
-                h__[i__4].r = z__1.r;
-                h__[i__4].i = z__1.i; // , expr subst
-                i__4 = jr + (j + 1) * h_dim1;
-                h__[i__4].r = ctemp.r;
-                h__[i__4].i = ctemp.i; // , expr subst
-                /* L120: */
+                i__4 = ifrstm + (j + 1) * h_dim1;
+                i__5 = ifrstm + (j    ) * h_dim1;
+                zrot_(&i__3, &h__[i__4], &c__1, &h__[i__5], &c__1, &c__, &s);
             }
-            i__3 = j;
-            for (jr = ifrstm;
-                    jr <= i__3;
-                    ++jr)
+            i__3 = j - ifrstm + 1;
+            if (i__3 >=0)
             {
-                i__4 = jr + (j + 1) * t_dim1;
-                z__2.r = c__ * t[i__4].r;
-                z__2.i = c__ * t[i__4].i; // , expr subst
-                i__5 = jr + j * t_dim1;
-                z__3.r = s.r * t[i__5].r - s.i * t[i__5].i;
-                z__3.i = s.r * t[ i__5].i + s.i * t[i__5].r; // , expr subst
-                z__1.r = z__2.r + z__3.r;
-                z__1.i = z__2.i + z__3.i; // , expr subst
-                ctemp.r = z__1.r;
-                ctemp.i = z__1.i; // , expr subst
-                i__4 = jr + j * t_dim1;
-                d_cnjg(&z__4, &s);
-                z__3.r = -z__4.r;
-                z__3.i = -z__4.i; // , expr subst
-                i__5 = jr + (j + 1) * t_dim1;
-                z__2.r = z__3.r * t[i__5].r - z__3.i * t[i__5].i;
-                z__2.i = z__3.r * t[i__5].i + z__3.i * t[i__5].r; // , expr subst
-                i__6 = jr + j * t_dim1;
-                z__5.r = c__ * t[i__6].r;
-                z__5.i = c__ * t[i__6].i; // , expr subst
-                z__1.r = z__2.r + z__5.r;
-                z__1.i = z__2.i + z__5.i; // , expr subst
-                t[i__4].r = z__1.r;
-                t[i__4].i = z__1.i; // , expr subst
-                i__4 = jr + (j + 1) * t_dim1;
-                t[i__4].r = ctemp.r;
-                t[i__4].i = ctemp.i; // , expr subst
-                /* L130: */
+                i__4 = ifrstm + (j + 1) * t_dim1;
+                i__5 = ifrstm + (j    ) * t_dim1;
+                zrot_(&i__3, &t[i__4], &c__1, &t[i__5], &c__1, &c__, &s);
             }
             if (ilz)
             {
-                i__3 = *n;
-                for (jr = 1;
-                        jr <= i__3;
-                        ++jr)
-                {
-                    i__4 = jr + (j + 1) * z_dim1;
-                    z__2.r = c__ * z__[i__4].r;
-                    z__2.i = c__ * z__[i__4].i; // , expr subst
-                    i__5 = jr + j * z_dim1;
-                    z__3.r = s.r * z__[i__5].r - s.i * z__[i__5].i;
-                    z__3.i = s.r * z__[i__5].i + s.i * z__[i__5].r; // , expr subst
-                    z__1.r = z__2.r + z__3.r;
-                    z__1.i = z__2.i + z__3.i; // , expr subst
-                    ctemp.r = z__1.r;
-                    ctemp.i = z__1.i; // , expr subst
-                    i__4 = jr + j * z_dim1;
-                    d_cnjg(&z__4, &s);
-                    z__3.r = -z__4.r;
-                    z__3.i = -z__4.i; // , expr subst
-                    i__5 = jr + (j + 1) * z_dim1;
-                    z__2.r = z__3.r * z__[i__5].r - z__3.i * z__[i__5].i;
-                    z__2.i = z__3.r * z__[i__5].i + z__3.i * z__[i__5] .r; // , expr subst
-                    i__6 = jr + j * z_dim1;
-                    z__5.r = c__ * z__[i__6].r;
-                    z__5.i = c__ * z__[i__6].i; // , expr subst
-                    z__1.r = z__2.r + z__5.r;
-                    z__1.i = z__2.i + z__5.i; // , expr subst
-                    z__[i__4].r = z__1.r;
-                    z__[i__4].i = z__1.i; // , expr subst
-                    i__4 = jr + (j + 1) * z_dim1;
-                    z__[i__4].r = ctemp.r;
-                    z__[i__4].i = ctemp.i; // , expr subst
-                    /* L140: */
-                }
+#ifdef QZ_OPT
+                num_zrots++;
+                *zrots_ptr++ = c__;
+                *zrots_ptr++ = s.r;
+                *zrots_ptr++ = s.i;
+#else
+                i__4 = 1 + (j + 1) * z_dim1;
+                i__5 = 1 + (j    ) * z_dim1;
+                zrot_(n, &z__[i__4], &c__1, &z__[i__5], &c__1, &c__, &s);
+#endif
             }
             /* L150: */
         }
+
+#ifdef QZ_OPT
+        if (ilq)
+        {
+            qrots_per_swp[qidx] = num_qrots;
+            qidx++;
+        }
+
+        if (ilz)
+        {
+            zrots_per_swp[zidx] = num_zrots;
+            zidx++;
+        }
+#endif
 L160: /* L170: */
         ;
     }
@@ -1386,6 +1467,25 @@ L180:
     goto L210;
     /* Successful completion of all QZ steps */
 L190: /* Set Eigenvalues 1:ILO-1 */
+#ifdef QZ_OPT
+    if (ilq)
+    {
+        apply_grots_q(qidx, qrots_per_swp, qcols, qrots_st_ptr, q, *n, q_dim1);
+        qidx = 0;
+        qrots_ptr = qrots;
+    }
+    if (ilz)
+    {
+        apply_grots_z(zidx, zrots_per_swp, zcols, zrots_st_ptr, z__, *n, z_dim1, sidx, scal_cols, scal_ptr);
+        zidx = sidx = 0;
+        zrots_ptr = zrots;
+    }
+    num_swps = 0;
+    if (blk_enable)
+    {
+        free(umem);
+    }
+#endif
     i__1 = *ilo - 1;
     for (j = 1;
             j <= i__1;
@@ -1397,9 +1497,8 @@ L190: /* Set Eigenvalues 1:ILO-1 */
             i__2 = j + j * t_dim1;
             z__2.r = t[i__2].r / absb;
             z__2.i = t[i__2].i / absb; // , expr subst
-            d_cnjg(&z__1, &z__2);
-            signbc.r = z__1.r;
-            signbc.i = z__1.i; // , expr subst
+            signbc.r = z__2.r;
+            signbc.i =-z__2.i; // , expr subst
             i__2 = j + j * t_dim1;
             t[i__2].r = absb;
             t[i__2].i = 0.; // , expr subst
@@ -1447,3 +1546,65 @@ L210:
 }
 /* zhgeqz_ */
 
+#ifdef QZ_OPT
+void apply_grots_q(integer num_swps, integer *rots_per_swp, integer *rcol, doublereal **rots_sptr, doublecomplex *q, integer n, integer ldq)
+{
+    integer swp, col, rot;
+    integer i, j;
+    doublereal c;
+    doublecomplex s;
+    doublereal *crot;
+
+    for (swp = 0; swp < num_swps; swp++)
+    {
+        col = rcol[swp];
+        crot = rots_sptr[swp];
+        for (rot = 0; rot < rots_per_swp[swp]; rot++, col++)
+        {
+            i = 1 + (col    ) * ldq;
+            j = 1 + (col + 1) * ldq;
+
+            c   = *crot++;
+            s.r = *crot++;
+            s.i = *crot++;
+
+            zrot_(&n, &q[i], &c__1, &q[j], &c__1, &c, &s);
+        }
+    }
+    return;
+}
+
+void apply_grots_z(integer num_swps, integer *rots_per_swp, integer *rcol, doublereal **rots_sptr, doublecomplex *z, integer n, integer ldz,
+                   integer num_scal, integer *scol, doublecomplex *scalv)
+{
+    integer swp, col, rot;
+    integer i, j;
+    doublereal c;
+    doublecomplex s;
+    doublereal *crot;
+
+    for (swp = 0; swp < num_swps; swp++)
+    {
+        col = rcol[swp];
+        crot = rots_sptr[swp];
+        for (rot = 0; rot < rots_per_swp[swp]; rot++, col++)
+        {
+            i = 1 + (col    ) * ldz;
+            j = 1 + (col + 1) * ldz;
+
+            c   = *crot++;
+            s.r = *crot++;
+            s.i = *crot++;
+
+            zrot_(&n, &z[j], &c__1, &z[i], &c__1, &c, &s);
+        }
+    }
+
+    for (i = 0; i < num_scal; i++)
+    {
+        j = 1 + *scol++ * ldz;
+        zscal_(&n, &scalv[i], &z[j], &c__1);
+    }
+    return;
+}
+#endif
