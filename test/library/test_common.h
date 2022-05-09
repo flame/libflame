@@ -16,7 +16,7 @@
 #ifndef DATATYPES
 #define DATATYPES
 
-#if defined(ENABLE_ILP64)
+#if defined(FLA_ENABLE_ILP64)
 typedef int64_t integer;
 typedef uint64_t uinteger;
 #else

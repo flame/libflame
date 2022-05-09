@@ -59,8 +59,12 @@
 
 #define NUM_SUB_TESTS (4)
 
-#if defined(ENABLE_ILP64)
+#if defined(FLA_ENABLE_ILP64)
+#ifdef _WIN32
+#define FT_IS "lld"
+#else
 #define FT_IS "ld"
+#endif
 #else
 #define FT_IS "d"
 #endif

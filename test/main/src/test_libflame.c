@@ -36,7 +36,7 @@ int  main( int argc, char** argv )
 
     ilaver_(&vers_major, &vers_minor, &vers_patch);
 
-    printf(" LibFlame version: %"FT_IS".%"FT_IS".%"FT_IS" \n", vers_major, vers_minor, vers_patch);
+    printf(" LAPACK version: %"FT_IS".%"FT_IS".%"FT_IS" \n", vers_major, vers_minor, vers_patch);
 
     // Initialize some strings.
     fla_test_init_strings();

@@ -15,7 +15,7 @@ LDFLAGS        := -lm -lpthread -fopenmp
 # --- BLAS library -------------------------------------------------------------
 #
 # A BLAS library must be given in order to run the libflame test suite.
-LIBBLAS        := 
+LIBBLAS        :=
 
 #
 # --- LIBFLAME library ---------------------------------------------------------
@@ -27,7 +27,7 @@ LIBFLAME       := $(LIB_PATH)/libflame.a
 # --- ILP64 --------------------------------------------------------------------
 #
 ILP64      := 
-ILP64FLAG := ENABLE_ILP64=$(ILP64)
+ILP64FLAG := FLA_ENABLE_ILP64=$(ILP64)
 
 #
 # --- General build definitions ------------------------------------------------
