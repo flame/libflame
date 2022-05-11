@@ -233,6 +233,7 @@ LAPACK_orm2r(s, orm)
     int fla_error = LAPACK_SUCCESS;
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sorm2r inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS "", *side, *trans, *m, *n, *k, *ldim_A, *ldim_B);
+#if !FLA_AMD_OPT 
     {
         LAPACK_RETURN_CHECK_VAR1( sorm2r_check( side, trans,
                                            m, n, k,
@@ -250,6 +251,19 @@ LAPACK_orm2r(s, orm)
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
+#else
+    {
+        sorm2r_fla( side, trans,
+                    m, n, k,
+                    buff_A, ldim_A,
+                    buff_t,
+                    buff_B, ldim_B,
+                    buff_w,
+                    info );
+        AOCL_DTL_TRACE_LOG_EXIT
+        return 0;
+    }
+#endif
 }
 
 LAPACK_orm2r(d, orm)

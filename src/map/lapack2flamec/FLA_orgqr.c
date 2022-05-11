@@ -204,6 +204,7 @@ LAPACK_org2r(s, org)
     int fla_error = LAPACK_SUCCESS;
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sorg2r inputs: m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS "", *m, *n, *k, *ldim_A);
+#if !FLA_AMD_OPT    
     {
         LAPACK_RETURN_CHECK_VAR1( sorg2r_check( m, n, k,
                                            buff_A, ldim_A,
@@ -218,8 +219,20 @@ LAPACK_org2r(s, org)
         fla_error = 0;
     }
     AOCL_DTL_TRACE_LOG_EXIT
-    return fla_error;
+    return fla_error;   
+#else 
+    {
+        sorg2r_fla( m, n, k,
+                    buff_A, ldim_A,
+                    buff_t,
+                    buff_w,
+                    info );
+        AOCL_DTL_TRACE_LOG_EXIT
+        return 0;
+    }
+#endif
 }
+
 LAPACK_org2r(d, org)
 {
     int fla_error = LAPACK_SUCCESS;
