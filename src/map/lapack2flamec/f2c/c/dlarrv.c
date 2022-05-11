@@ -258,6 +258,7 @@
  /* > he might be trading in precision when he decreases MINRGP. */
  /* > =-3: Problem in DLARRB when refining a single eigenvalue */
  /* > after the Rayleigh correction was rejected. */
+ /* > =-4: M value exceeds N */
  /* > = 5: The Rayleigh Quotient Iteration failed to converge to */
  /* > full accuracy in MAXITR steps. */
  /* > \endverbatim */
@@ -388,8 +389,12 @@
  /* Function Body */
  *info = 0;
  /* Quick return if possible */
- if (*n <= 0) {
- return 0;
+ if ((*n <= 0) || (*m <= 0) || (*m > *n))
+ {
+    if (*m > *n)
+      *info = -4;
+
+    return 0;
  }
  /* The first N entries of WORK are reserved for the eigenvalues */
  indld = *n + 1;
