@@ -13,7 +13,7 @@
 	integer *info)
 {
    int i__2;       
-   double AAT[4], ATA[4], tempu[4], tempvt[4], phi, cphi, sphi, theta, ctheta, stheta, s11, s22, temp, susum, sudiff, s1, s2;    
+   double AAT[4], ATA[4], tempu[4], tempvt[4], t1, t2, t3, t4, s0, s1, temp;    
    *info = 0;
  #if AOCL_DTL_LOG_ENABLE
    char buffer[256];
@@ -61,11 +61,19 @@
    a[1] = a[*lda];
    a[*lda] = temp;
 
+   t1 = (a[0] + a[*lda + 1]) / 2.0;
+   t2 = (a[0] - a[*lda + 1]) / 2.0;
+   t3 = (a[1] + a[*lda]) / 2.0;
+   t4 = (a[1] - a[*lda]) / 2.0;
+
+   s0 = sqrt((t1 * t1) + (t4 * t4));
+   s1 = sqrt((t2 * t2) + (t3 * t3));
 
    //S calculation
-   s[0] = (sqrt(pow(a[0] - a[*lda+1], 2) + pow(a[1] + a[*lda], 2)) + sqrt(pow(a[0] + a[*lda+1], 2) + pow(a[1] - a[*lda], 2))) / 2;
-   s[1] = fabs(s[0] - sqrt(pow(a[0] - a[*lda+1], 2) + pow(a[1] + a[*lda], 2)));  
-   
+   s[0] = s0 + s1;
+   s1 = s0 - s1;
+   s[1] = (s1 == 0.0)? s0 : s1;
+
   //V calculation
    tempvt[2] = (s[0] > s[1]) ? sin((atan2(2 * (a[0] * a[1] + a[*lda] * a[*lda+1]), a[0] * a[0] - a[1] * a[1] + a[*lda] * a[*lda] - a[*lda+1] * a[*lda+1])) / 2) : 0;   // atan2 =0 will never occur as in that case s[0]=s[1]
    tempvt[0] = sqrt(1 - tempvt[2] * tempvt[2]);
