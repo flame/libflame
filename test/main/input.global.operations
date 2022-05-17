@@ -6,4 +6,4 @@
 1   getri   LU factorization with inverse                 (0 = disable; 1 = enable)
 1   potrs   Cholesky factorisation                        (0 = disable; 1 = enable)
 1   orgqr   QR factorisation                              (0 = disable; 1 = enable)
-
+1   gesdd   Singular Value Decomposition                  (0 = disable; 1 = enable)

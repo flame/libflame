@@ -2,7 +2,7 @@
     Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
 */
 
-#include "test_libflame.h"
+#include "test_lapack.h"
 #include "test_routines.h"
 
 

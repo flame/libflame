@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 // Update test api count
@@ -21,14 +21,14 @@ void fla_test_potrs(test_params_t *params);
 // Add test api function call entry below
 OPERATIONS API_test_functions[] =
 {
-	{"orgqr"               , fla_test_orgqr},
-	{"potrs"               , fla_test_potrs},
-	{"geevx"               , fla_test_geevx},
-	{"gesdd"               , fla_test_gesdd},
-	{"potrf"               , fla_test_potrf},
-	{"geqrf"               , fla_test_geqrf},
-	{"gerqf"               , fla_test_gerqf},
-	{"gerq2"               , fla_test_gerq2},
-	{"getrf"               , fla_test_getrf},
-	{"getri"               , fla_test_getri}
+    {"orgqr"               , fla_test_orgqr},
+    {"potrs"               , fla_test_potrs},
+    {"geevx"               , fla_test_geevx},
+    {"gesdd"               , fla_test_gesdd},
+    {"potrf"               , fla_test_potrf},
+    {"geqrf"               , fla_test_geqrf},
+    {"gerqf"               , fla_test_gerqf},
+    {"gerq2"               , fla_test_gerq2},
+    {"getrf"               , fla_test_getrf},
+    {"getri"               , fla_test_getri}
 };

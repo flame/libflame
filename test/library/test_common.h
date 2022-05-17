@@ -26,12 +26,12 @@ typedef unsigned int  uinteger;
 
 typedef struct scomplex
 {
-	float real, imag;
+    float real, imag;
 } scomplex;
 
 typedef struct dcomplex
 {
-	double real, imag;
+    double real, imag;
 } dcomplex;
 
 #endif  // DATATYPES
@@ -95,5 +95,8 @@ void scalv( integer datatype, integer n, void* x, integer incx, void* y, integer
 
 /* set Transpose based on uplo */
 void set_transpose(integer datatype, char *uplo, char *trans_A, char *trans_B);
+
+/* Create diagonal matrix by copying elements from vector to matrix */
+void diagonalize_vector(integer datatype, void* s, void* sigma, integer m, integer n, integer LDA);
 
 #endif // TEST_COMMON_H

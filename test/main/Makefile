@@ -43,7 +43,7 @@ ifeq ($(ILP64),1)
 	CPPFLAGS	+= -D$(ILP64FLAG)
 endif
 
-FNAME          := libflame
+FNAME          := lapack
 
 TEST_LIBRARY_OBJS := $(patsubst $(TEST_LIBRARY_SRC_PATH)/%.c, \
                              $(TEST_LIBRARY_OBJ_PATH)/%.o, \

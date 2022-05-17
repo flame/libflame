@@ -14,7 +14,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/test_gerqf.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_geevx.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_gesdd.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_potrf.c
-${CMAKE_CURRENT_SOURCE_DIR}/test_libflame.c
-${CMAKE_CURRENT_SOURCE_DIR}/test_libflame.h
+${CMAKE_CURRENT_SOURCE_DIR}/test_lapack.c
+${CMAKE_CURRENT_SOURCE_DIR}/test_lapack.h
 ${CMAKE_CURRENT_SOURCE_DIR}/test_routines.h
 )
