@@ -22,7 +22,7 @@
 void fla_test_gesdd_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci,
 									integer n_repeats, double* perf, double* t, double* residual);
 void prepare_gesdd_run(char *jobz, integer m_A, integer n_A, void *A, void *s, void *U, void *V, integer datatype, integer n_repeats, double* time_min_);
-inline void invoke_gesdd(integer datatype, char* jobz, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, void* rwork, integer* iwork, integer* info);
+void invoke_gesdd(integer datatype, char* jobz, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, void* rwork, integer* iwork, integer* info);
 
 
 void fla_test_gesdd(test_params_t *params)
@@ -195,7 +195,7 @@ void prepare_gesdd_run(char *jobz,
 }
 
 
-inline void invoke_gesdd(integer datatype, char* jobz, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, void* rwork, integer* iwork, integer* info)
+void invoke_gesdd(integer datatype, char* jobz, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, void* rwork, integer* iwork, integer* info)
 {
 	switch(datatype)
 	{

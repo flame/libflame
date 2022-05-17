@@ -11,7 +11,7 @@
 void fla_test_getrf_experiment(test_params_t *params, integer  datatype, integer  p_cur, integer  q_cur, integer pci,
 									integer n_repeats, double* perf, double* t, double* residual);
 void prepare_getrf_run(integer m_A, integer n_A, void *A, integer* ipiv, integer datatype, integer n_repeats, double* time_min_);
-inline void invoke_getrf(integer datatype, integer *m, integer *n, void *a, integer *lda, integer *ipiv, integer *info);
+void invoke_getrf(integer datatype, integer *m, integer *n, void *a, integer *lda, integer *ipiv, integer *info);
 
 void fla_test_getrf(test_params_t *params)
 {
@@ -130,7 +130,7 @@ void prepare_getrf_run(integer m_A,
  *  GETRF_API calls LAPACK interface of
  *  Singular value decomposition - gesvd
  *  */
-inline void invoke_getrf(integer datatype, integer *m, integer *n, void *a, integer *lda, integer *ipiv, integer *info)
+void invoke_getrf(integer datatype, integer *m, integer *n, void *a, integer *lda, integer *ipiv, integer *info)
 {
 	switch(datatype)
 	{

@@ -17,7 +17,7 @@ void fla_test_geevx_experiment(test_params_t *params, integer datatype, integer 
 void prepare_geevx_run(char *balanc, char *jobvl, char *jobvr, char * sense, integer n, void *a, void *wr, void *wi, void *w,
 							void *vl, integer ldvl, void *vr, integer ldvr, integer *ilo, integer * ihi, void *scale, void *abnrm, void *rconde,
 							void *rcondv, integer datatype, integer n_repeats, double* time_min_);
-inline void invoke_geevx(integer datatype, char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, void *a, integer *lda, void *wr, void *wi, void *w,
+void invoke_geevx(integer datatype, char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, void *a, integer *lda, void *wr, void *wi, void *w,
 							void *vl, integer *ldvl, void *vr, integer *ldvr, integer *ilo, integer *ihi, void *scale, void *abnrm, void *rconde, void *rcondv,
 							void* work, integer* lwork, void* rwork, integer* iwork, integer* info);
 
@@ -240,7 +240,7 @@ void prepare_geevx_run(char *balanc, char *jobvl, char *jobvr, char * sense,
 }
 
 
-inline void invoke_geevx(integer datatype, char *balanc, char *jobvl, char *jobvr, char *sense,
+void invoke_geevx(integer datatype, char *balanc, char *jobvl, char *jobvr, char *sense,
 							integer *n, void *a, integer *lda, void *wr, void *wi, void *w,
 							void *vl, integer *ldvl, void *vr, integer *ldvr, integer *ilo, integer *ihi,
 							void *scale, void *abnrm, void *rconde, void *rcondv,
