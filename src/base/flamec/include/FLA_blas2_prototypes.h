@@ -78,9 +78,10 @@ FLA_Error FLA_Trsv_external_gpu( FLA_Uplo uplo, FLA_Trans transa, FLA_Diag diag,
 
 
 // --- hip wrapper prototypes --------------------------------------------------
-
+#ifdef FLA_ENABLE_HIP
 FLA_Error FLA_Gemv_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Obj alpha, FLA_Obj A, void* A_gpu, FLA_Obj x, void* x_gpu, FLA_Obj beta, FLA_Obj y, void* y_gpu );
 FLA_Error FLA_Trsv_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Trans transa, FLA_Diag diag, FLA_Obj A, void* A_gpu, FLA_Obj x, void* x_gpu );
+#endif
 
 // --- check routine prototypes ------------------------------------------------
 

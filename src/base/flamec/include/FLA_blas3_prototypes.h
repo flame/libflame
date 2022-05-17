@@ -155,7 +155,7 @@ FLA_Error FLA_Trsm_external_gpu( FLA_Side side, FLA_Uplo uplo, FLA_Trans trans, 
 
 
 // --- hip wrapper prototypes --------------------------------------------------
-
+#ifdef FLA_ENABLE_HIP
 FLA_Error FLA_Gemm_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Trans transb, FLA_Obj alpha, FLA_Obj A, void* A_gpu, FLA_Obj B, void* B_gpu, FLA_Obj beta, FLA_Obj C, void* C_gpu );
 FLA_Error FLA_Hemm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, void* A_gpu, FLA_Obj B, void* B_gpu, FLA_Obj beta, FLA_Obj C, void* C_gpu );
 FLA_Error FLA_Herk_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Trans trans, FLA_Obj alpha, FLA_Obj A, void* A_gpu, FLA_Obj beta, FLA_Obj C, void* C_gpu );
@@ -165,6 +165,7 @@ FLA_Error FLA_Syrk_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Trans
 FLA_Error FLA_Syr2k_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Trans trans, FLA_Obj alpha, FLA_Obj A, void* A_gpu, FLA_Obj B, void* B_gpu, FLA_Obj beta, FLA_Obj C, void* C_gpu );
 FLA_Error FLA_Trmm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo uplo, FLA_Trans trans, FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, void* A_gpu, FLA_Obj B, void* B_gpu );
 FLA_Error FLA_Trsm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo uplo, FLA_Trans trans, FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, void* A_gpu, FLA_Obj B, void* B_gpu );
+#endif
 
 // --- check routine prototypes ------------------------------------------------
 
