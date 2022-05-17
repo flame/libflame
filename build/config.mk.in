@@ -126,6 +126,11 @@ endif
 CFLAGS       := $(strip $(CDBGFLAGS) $(COPTFLAGS) $(CVECFLAGS) $(CWARNFLAGS) $(CMISCFLAGS) $(CPPROCFLAGS))
 CFLAGS_NOOPT := $(strip $(CDBGFLAGS) $(CWARNFLAGS) $(CMISCFLAGS) $(CPPROCFLAGS))
 
+ifeq (@fla_enable_hip@, yes)
+CFLAGS       := -D__HIP_PLATFORM_AMD__=1 -I/opt/rocm/include $(CFLAGS)
+CFLAGS_NOOPT := -D__HIP_PLATFORM_AMD__=1 -I/opt/rocm/include $(CFLAGS_NOOPT)
+endif
+
 # If the user provided his own CFLAGS, allow them to override our own.
 # *** Notice that wo do not also modify the 'no optimization' set of flags.
 #     We do this to avoid potential numerical disruption of routines such
@@ -158,7 +163,9 @@ else
 LDFLAGS      := @fla_c_prof_flags@ @LDFLAGS@ @FLIBS@
 endif
 endif
-
+ifeq (@fla_enable_hip@, yes)
+LDFLAGS      := -L/opt/rocm/lib -lrocblas -lamdhip64 $(LDFLAGS)
+endif
 
 
 # end of ifndef CONFIG_MK_INCLUDED conditional block

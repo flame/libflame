@@ -8,6 +8,10 @@
 
 */
 
+#ifdef FLA_ENABLE_HIP
+#include <rocblas.h>
+#endif
+
 // --- top-level wrapper prototypes --------------------------------------------
 
 FLA_Error FLA_Gemv( FLA_Trans transa, FLA_Obj alpha, FLA_Obj A, FLA_Obj x, FLA_Obj beta, FLA_Obj y );
@@ -72,6 +76,11 @@ FLA_Error FLA_Trsvsx_external( FLA_Uplo uplo, FLA_Trans transa, FLA_Diag diag, F
 FLA_Error FLA_Gemv_external_gpu( FLA_Trans transa, FLA_Obj alpha, FLA_Obj A, void* A_gpu, FLA_Obj x, void* x_gpu, FLA_Obj beta, FLA_Obj y, void* y_gpu );
 FLA_Error FLA_Trsv_external_gpu( FLA_Uplo uplo, FLA_Trans transa, FLA_Diag diag, FLA_Obj A, void* A_gpu, FLA_Obj x, void* x_gpu );
 
+
+// --- hip wrapper prototypes --------------------------------------------------
+
+FLA_Error FLA_Gemv_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Obj alpha, FLA_Obj A, void* A_gpu, FLA_Obj x, void* x_gpu, FLA_Obj beta, FLA_Obj y, void* y_gpu );
+FLA_Error FLA_Trsv_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Trans transa, FLA_Diag diag, FLA_Obj A, void* A_gpu, FLA_Obj x, void* x_gpu );
 
 // --- check routine prototypes ------------------------------------------------
 

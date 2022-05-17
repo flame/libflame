@@ -466,9 +466,15 @@ FLA_CHECK_ENABLE_SUPERMATRIX
 dnl Observe the GPU extension switch.
 FLA_CHECK_ENABLE_GPU
 
+dnl Observe the HIP extension switch.
+FLA_CHECK_ENABLE_HIP
+
 dnl Make sure the user did not request a weird combination of parallelization
 dnl options.
 FLA_REQUIRE_SUPERMATRIX_ENABLED
+
+dnl Make sure the user did not request both GPU and HIP options.
+FLA_REQUIRE_NOT_HIP_AND_GPU_ENABLED
 
 dnl Observe the vector intrinsics switch and type.
 FLA_CHECK_ENABLE_VECTOR_INTRINSICS

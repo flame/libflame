@@ -8,6 +8,10 @@
 
 */
 
+#ifdef FLA_ENABLE_HIP
+#include <rocblas.h>
+#endif
+
 // --- top-level wrapper prototypes --------------------------------------------
 
 FLA_Error FLA_Asum( FLA_Obj x, FLA_Obj asum_x );
@@ -99,6 +103,13 @@ FLA_Error FLA_Copy_external_gpu( FLA_Obj A, void* A_gpu, FLA_Obj B, void* B_gpu 
 FLA_Error FLA_Scal_external_gpu( FLA_Obj alpha, FLA_Obj A, void* A_gpu );
 FLA_Error FLA_Scalr_external_gpu( FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, void* A_gpu );
 
+
+// --- hip wrapper prototypes --------------------------------------------------
+
+FLA_Error FLA_Axpy_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A, void* A_gpu, FLA_Obj B, void* B_gpu );
+FLA_Error FLA_Copy_external_hip( rocblas_handle handle, FLA_Obj A, void* A_gpu, FLA_Obj B, void* B_gpu );
+FLA_Error FLA_Scal_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A, void* A_gpu );
+FLA_Error FLA_Scalr_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, void* A_gpu );
 
 // --- check routine prototypes ------------------------------------------------
 
