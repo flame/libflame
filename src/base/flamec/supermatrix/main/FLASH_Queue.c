@@ -255,6 +255,10 @@ void FLASH_Queue_init( void )
    FLASH_Queue_init_gpu();
 #endif
 
+#ifdef FLA_ENABLE_HIP
+   FLASH_Queue_init_hip();
+#endif
+
    return;
 }
 
@@ -275,6 +279,10 @@ void FLASH_Queue_finalize( void )
 
 #ifdef FLA_ENABLE_GPU
    FLASH_Queue_finalize_gpu();
+#endif
+
+#ifdef FLA_ENABLE_HIP
+   FLASH_Queue_finalize_hip();
 #endif
 
    return;
@@ -626,6 +634,7 @@ void FLASH_Queue_push( void* func,
                        void* cntl,
                        char* name,
                        FLA_Bool enabled_gpu,
+                       FLA_Bool enabled_hip,
                        int n_int_args,
                        int n_fla_args,
                        int n_input_args,
@@ -644,7 +653,7 @@ void FLASH_Queue_push( void* func,
 
    // Allocate a new FLA_Task and populate its fields with appropriate values.
    t = FLASH_Task_alloc( func, cntl, name, enabled_gpu,
-                         n_int_args, n_fla_args,
+                         enabled_hip, n_int_args, n_fla_args,
                          n_input_args, n_output_args );
    
    // Initialize variable argument environment. In case you're wondering, the
@@ -957,6 +966,7 @@ FLASH_Task* FLASH_Task_alloc( void *func,
                               void *cntl,
                               char *name,
                               FLA_Bool enabled_gpu,
+                              FLA_Bool enabled_hip,
                               int n_int_args,
                               int n_fla_args,
                               int n_input_args,
@@ -997,6 +1007,7 @@ FLASH_Task* FLASH_Task_alloc( void *func,
    t->cntl          = cntl;
    t->name          = name;
    t->enabled_gpu   = enabled_gpu;
+   t->enabled_hip   = enabled_hip;
    t->n_int_args    = n_int_args;
    t->n_fla_args    = n_fla_args;
    t->n_input_args  = n_input_args;

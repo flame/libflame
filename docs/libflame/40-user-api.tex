@@ -5873,9 +5873,97 @@ An unsigned integer representing the number of blocks maintained by each GPU.
 }
 \end{flaspec}
 
+% --- FLASH_Queue_enable_hip() -------------------------------------------------
 
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLASH_Queue_enable_hip( void );
+\end{verbatim}
+\index{SuperMatrix functions!\flashqueueenablegpuns}
+\purpose{
+Enable run-time support for HIP accelerator execution.
+When enabled, SuperMatrix tasks that are HIP-supported are executed on HIP
+devices, while all other tasks are run on the CPU.
+}
+\rvalue{
+\flasuccess if SuperMatrix is enabled and a parallel region has not yet
+begun;
+\flafailure otherwise.
+}
+\end{flaspec}
 
+% --- FLASH_Queue_disable_hip() ------------------------------------------------
 
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLASH_Queue_disable_hip( void );
+\end{verbatim}
+\index{SuperMatrix functions!\flashqueuedisablegpuns}
+\purpose{
+Disable run-time support for HIP accelerator execution.
+When disabled, all SuperMatrix tasks are run on the CPU.
+}
+\rvalue{
+\flasuccess if a parallel region has not yet begun;
+\flafailure otherwise.
+}
+\end{flaspec}
+
+% --- FLASH_Queue_get_enabled_hip() --------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Bool FLASH_Queue_get_enabled_hip( void );
+\end{verbatim}
+\index{SuperMatrix functions!\flashqueuegetenabledgpuns}
+\purpose{
+Query whether HIP accelerator execution is currently enabled.
+}
+\notes{
+If SuperMatrix is currently disabled, the function returns \false regardless
+of whether HIP accelerator execution was previously enabled.
+}
+\rvalue{
+\true if SuperMatrix and HIP execution are both enabled;
+\false if SuperMatrix is disabled, or if SuperMatrix is enabled but HIP
+execution is disabled.
+}
+\end{flaspec}
+
+% --- FLASH_Queue_set_hip_num_blocks() -----------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLASH_Queue_set_hip_num_blocks( dim_t n_blocks );
+\end{verbatim}
+\index{SuperMatrix functions!\flashqueuesetgpunumblocksns}
+\purpose{
+Set the number of storage blocks maintained by each HIP device.
+}
+\notes{
+If the user encounters a run-time error reporting that an attempt to allocate
+memory on a HIP device failed, it may be necessary to set \nblocks
+to a lower value.
+}
+\begin{params}
+\parameter{\dimt}{n\_blocks}{An unsigned integer representing the number of blocks maintained by each HIP device.}
+\end{params}
+\end{flaspec}
+
+% --- FLASH_Queue_get_hip_num_blocks() -----------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+dim_t FLASH_Queue_get_hip_num_blocks( void );
+\end{verbatim}
+\index{SuperMatrix functions!\flashqueuegetgpunumblocksns}
+\purpose{
+Query the number of storage blocks maintained by each HIP device.
+}
+\rvalue{
+An unsigned integer representing the number of blocks maintained by each HIP device.
+}
+\end{flaspec}
 
 
 

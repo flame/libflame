@@ -65,13 +65,13 @@ void           FLASH_Queue_reset( void );
 FLASH_Task*    FLASH_Queue_get_head_task( void );
 FLASH_Task*    FLASH_Queue_get_tail_task( void );
 void           FLASH_Queue_push( void *func, void *cntl, char *name,
-                                 FLA_Bool enabled_gpu,
+                                 FLA_Bool enabled_gpu, FLA_Bool enabled_hip,
                                  int n_int_args, int n_fla_args,
                                  int n_input_args, int n_output_args, ... );
 void           FLASH_Queue_push_input( FLA_Obj obj, FLASH_Task* t );
 void           FLASH_Queue_push_output( FLA_Obj obj, FLASH_Task* t );
 FLASH_Task*    FLASH_Task_alloc( void *func, void *cntl, char *name,
-                                 FLA_Bool enabled_gpu,
+                                 FLA_Bool enabled_gpu, FLA_Bool enabled_hip,
                                  int n_int_args, int n_fla_args,
                                  int n_input_args, int n_output_args );
 void           FLASH_Task_free( FLASH_Task *t );
@@ -99,6 +99,19 @@ void           FLASH_Queue_mark_gpu( FLASH_Task *t, void *arg );
 void           FLASH_Queue_invalidate_block_gpu( FLA_Obj obj, int thread, void *arg );
 void           FLASH_Queue_flush_block_gpu( FLA_Obj obj, int thread, void *arg );
 void           FLASH_Queue_flush_gpu( int thread, void *arg );
+#endif
+#ifdef FLA_ENABLE_HIP
+void           FLASH_Queue_create_hip( int thread, void *arg );
+void           FLASH_Queue_destroy_hip( int thread, void *arg );
+FLA_Bool       FLASH_Queue_exec_hip( FLASH_Task *t, void *arg );
+FLA_Bool       FLASH_Queue_check_hip( FLASH_Task *t, void *arg );
+FLA_Bool       FLASH_Queue_check_block_hip( FLA_Obj obj, int thread, void *arg );
+void           FLASH_Queue_update_hip( FLASH_Task *t, void **input_arg, void **output_arg, void *arg );
+void           FLASH_Queue_update_block_hip( FLA_Obj obj, void **buffer_gpu, int thread, void *arg );
+void           FLASH_Queue_mark_hip( FLASH_Task *t, void *arg );
+void           FLASH_Queue_invalidate_block_hip( FLA_Obj obj, int thread, void *arg );
+void           FLASH_Queue_flush_block_hip( FLA_Obj obj, int thread, void *arg );
+void           FLASH_Queue_flush_hip( int thread, void *arg );
 #endif
 void           FLASH_Queue_exec_parallel( void *arg );
 void*          FLASH_Queue_exec_parallel_function( void *arg );

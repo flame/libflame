@@ -41,6 +41,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "LU   ", \
                           FALSE, \
+                          FALSE, \
                           0, 0, 0, 2, \
                           A, p )
 
@@ -48,6 +49,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_Apply_pivots_macro_task, \
                           (void *) cntl, \
                           "Pivot", \
+                          FALSE, \
                           FALSE, \
                           2, 0, 1, 1, \
                           side, trans, \
@@ -58,6 +60,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "LU   ", \
                           FALSE, \
+                          FALSE, \
                           0, 1, 0, 1, \
                           p, A )
 
@@ -65,6 +68,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_LU_piv_copy_task, \
                           (void *) cntl, \
                           "LU   ", \
+                          FALSE, \
                           FALSE, \
                           0, 1, 0, 2, \
                           p, A, U )
@@ -74,6 +78,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Trsm ", \
                           FALSE, \
+                          FALSE, \
                           0, 1, 1, 1, \
                           p, A, C )
 
@@ -81,6 +86,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_SA_LU_task, \
                           (void *) cntl, \
                           "SA_LU", \
+                          FALSE, \
                           FALSE, \
                           1, 2, 0, 2, \
                           nb_alg, \
@@ -91,6 +97,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "SA_FS", \
                           FALSE, \
+                          FALSE, \
                           1, 2, 1, 2, \
                           nb_alg, \
                           L, p, D, E, C )
@@ -100,6 +107,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "LU   ", \
                           FALSE, \
+                          FALSE, \
                           0, 0, 0, 1, \
                           A )
 
@@ -107,6 +115,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_Trinv_task, \
                           (void *) cntl, \
                           "Trinv", \
+                          FALSE, \
                           FALSE, \
                           2, 0, 0, 1, \
                           uplo, diag, \
@@ -117,6 +126,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Ttmm ", \
                           FALSE, \
+                          FALSE, \
                           1, 0, 0, 1, \
                           uplo, \
                           A )
@@ -126,6 +136,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Chol ", \
                           FALSE, \
+                          FALSE, \
                           1, 0, 0, 1, \
                           uplo, \
                           A )
@@ -134,6 +145,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_Sylv_task, \
                           (void *) cntl, \
                           "Sylv ", \
+                          FALSE, \
                           FALSE, \
                           2, 2, 2, 1, \
                           transA, transB, \
@@ -145,6 +157,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Lyap ", \
                           FALSE, \
+                          FALSE, \
                           1, 2, 1, 1, \
                           trans, \
                           isgn, scale, \
@@ -155,6 +168,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "QR   ", \
                           FALSE, \
+                          FALSE, \
                           0, 0, 0, 2, \
                           A, T )
 
@@ -162,6 +176,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_QR_UT_task, \
                           (void *) cntl, \
                           "QR   ", \
+                          FALSE, \
                           FALSE, \
                           0, 1, 0, 1, \
                           T, A )
@@ -171,6 +186,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "QR   ", \
                           FALSE, \
+                          FALSE, \
                           0, 1, 0, 2, \
                           T, A, U )
 
@@ -178,6 +194,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_QR2_UT_task, \
                           (void *) cntl, \
                           "QR2  ", \
+                          FALSE, \
                           FALSE, \
                           0, 1, 0, 2, \
                           T, D, B )
@@ -187,6 +204,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "LQ   ", \
                           FALSE, \
+                          FALSE, \
                           0, 0, 0, 2, \
                           A, T )
 
@@ -195,6 +213,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "CAQR2", \
                           FALSE, \
+                          FALSE, \
                           0, 1, 0, 2, \
                           T, D, B )
 
@@ -202,6 +221,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_Apply_Q_UT_task, \
                           (void *) cntl, \
                           "ApQ  ", \
+                          FALSE, \
                           FALSE, \
                           4, 1, 1, 2, \
                           side, trans, direct, storev, \
@@ -212,6 +232,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "ApQ2 ", \
                           FALSE, \
+                          FALSE, \
                           4, 1, 1, 3, \
                           side, trans, direct, storev, \
                           T, D, E, C, W )
@@ -220,6 +241,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_Apply_CAQ2_UT_task, \
                           (void *) cntl, \
                           "ApCQ2", \
+                          FALSE, \
                           FALSE, \
                           4, 1, 1, 3, \
                           side, trans, direct, storev, \
@@ -230,6 +252,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "UD   ", \
                           FALSE, \
+                          FALSE, \
                           0, 0, 0, 4, \
                           R, C, D, T )
 
@@ -237,6 +260,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_Apply_QUD_UT_task, \
                           (void *) cntl, \
                           "ApQUD", \
+                          FALSE, \
                           FALSE, \
                           4, 0, 3, 4, \
                           side, trans, direct, storev, \
@@ -246,6 +270,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_Eig_gest_task, \
                           (void *) cntl, \
                           "Eig  ", \
+                          FALSE, \
                           FALSE, \
                           2, 0, 1, 2, \
                           inv, uplo, \
@@ -258,6 +283,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Gemm ", \
                           TRUE, \
+                          TRUE, \
                           2, 2, 2, 1, \
                           transA, transB, \
                           alpha, beta, \
@@ -267,6 +293,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_Hemm_task, \
                           (void *) cntl, \
                           "Hemm ", \
+                          TRUE, \
                           TRUE, \
                           2, 2, 2, 1, \
                           side, uplo, \
@@ -278,6 +305,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Herk ", \
                           TRUE, \
+                          TRUE, \
                           2, 2, 1, 1, \
                           uplo, transA, \
                           alpha, beta, \
@@ -287,6 +315,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_Her2k_task, \
                           (void *) cntl, \
                           "Her2k", \
+                          TRUE, \
                           TRUE, \
                           2, 2, 2, 1, \
                           uplo, transA, \
@@ -298,6 +327,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Symm ", \
                           TRUE, \
+                          TRUE, \
                           2, 2, 2, 1, \
                           side, uplo, \
                           alpha, beta, \
@@ -307,6 +337,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_Syrk_task, \
                           (void *) cntl, \
                           "Syrk ", \
+                          TRUE, \
                           TRUE, \
                           2, 2, 1, 1, \
                           uplo, transA, \
@@ -318,6 +349,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Syr2k", \
                           TRUE, \
+                          TRUE, \
                           2, 2, 2, 1, \
                           uplo, transA, \
                           alpha, beta, \
@@ -328,6 +360,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Trmm ", \
                           TRUE, \
+                          TRUE, \
                           4, 1, 1, 1, \
                           side, uplo, trans, diag, \
                           alpha, \
@@ -337,6 +370,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_Trsm_task, \
                           (void *) cntl, \
                           "Trsm ", \
+                          TRUE, \
                           TRUE, \
                           4, 1, 1, 1, \
                           side, uplo, trans, diag, \
@@ -350,6 +384,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Gemv ", \
                           TRUE, \
+                          TRUE, \
                           1, 2, 2, 1, \
                           trans, \
                           alpha, beta, \
@@ -359,6 +394,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_Trsv_task, \
                           (void *) cntl, \
                           "Trsv ", \
+                          TRUE, \
                           TRUE, \
                           3, 0, 1, 1, \
                           uplo, trans, diag, \
@@ -371,6 +407,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Axpy ", \
                           TRUE, \
+                          TRUE, \
                           0, 1, 1, 1, \
                           alpha, \
                           A, B )
@@ -379,6 +416,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_Axpyt_task, \
                           (void *) cntl, \
                           "Axpyt", \
+                          FALSE, \
                           FALSE, \
                           1, 1, 1, 1, \
                           trans, \
@@ -390,6 +428,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Copy ", \
                           TRUE, \
+                          TRUE, \
                           0, 0, 1, 1, \
                           A, B )
 
@@ -397,6 +436,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_Copyt_task, \
                           (void *) cntl, \
                           "Copyt", \
+                          FALSE, \
                           FALSE, \
                           1, 0, 1, 1, \
                           trans, \
@@ -407,6 +447,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Copyt", \
                           FALSE, \
+                          FALSE, \
                           1, 0, 1, 1, \
                           uplo, \
                           A, B )
@@ -416,6 +457,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Scal ", \
                           TRUE, \
+                          TRUE, \
                           0, 1, 0, 1, \
                           alpha, \
                           A )
@@ -424,6 +466,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_Scalr_task, \
                           (void *) cntl, \
                           "Scalr", \
+                          TRUE, \
                           TRUE, \
                           1, 1, 0, 1, \
                           uplo, \
@@ -437,6 +480,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Buff ", \
                           FALSE, \
+                          FALSE, \
                           2, 0, 0, 1, \
                           rs, cs, \
                           A )
@@ -445,6 +489,7 @@ also to create a macro for when it is not below to return an error code.
         FLASH_Queue_push( (void *) FLA_Obj_free_buffer_task, \
                           (void *) cntl, \
                           "Free ", \
+                          FALSE, \
                           FALSE, \
                           0, 0, 0, 1, \
                           A )
