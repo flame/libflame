@@ -154,8 +154,6 @@ int cgehd2_(integer *n, integer *ilo, integer *ihi, complex * a, integer *lda, c
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     complex q__1;
-    /* Builtin functions */
-    void r_cnjg(complex *, complex *);
     /* Local variables */
     integer i__;
     complex alpha;
@@ -233,7 +231,8 @@ int cgehd2_(integer *n, integer *ilo, integer *ihi, complex * a, integer *lda, c
         /* Apply H(i)**H to A(i+1:ihi,i+1:n) from the left */
         i__2 = *ihi - i__;
         i__3 = *n - i__;
-        r_cnjg(&q__1, &tau[i__]);
+        q__1.r =  tau[i__].r;
+        q__1.i = -tau[i__].i;
         clarf_("Left", &i__2, &i__3, &a[i__ + 1 + i__ * a_dim1], &c__1, &q__1, &a[i__ + 1 + (i__ + 1) * a_dim1], lda, &work[1]);
         i__2 = i__ + 1 + i__ * a_dim1;
         a[i__2].r = alpha.r;

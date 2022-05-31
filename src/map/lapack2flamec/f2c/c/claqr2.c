@@ -284,9 +284,6 @@ int claqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
     integer h_dim1, h_offset, t_dim1, t_offset, v_dim1, v_offset, wv_dim1, wv_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4;
     real r__1, r__2, r__3, r__4, r__5, r__6;
     complex q__1, q__2;
-    /* Builtin functions */
-    double r_imag(complex *);
-    void r_cnjg(complex *, complex *);
     /* Local variables */
     integer i__, j;
     complex s;
@@ -440,8 +437,8 @@ int claqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
         /* Computing MAX */
         i__1 = kwtop + kwtop * h_dim1;
         r__5 = smlnum;
-        r__6 = ulp * ((r__1 = h__[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&h__[kwtop + kwtop * h_dim1]), f2c_abs(r__2))); // , expr subst
-        if ((r__3 = s.r, f2c_abs(r__3)) + (r__4 = r_imag(&s), f2c_abs(r__4)) <= max( r__5,r__6))
+        r__6 = ulp * ((r__1 = h__[i__1].r, f2c_abs(r__1)) + (r__2 = h__[i__1].i, f2c_abs(r__2))); // , expr subst
+        if ((r__3 = s.r, f2c_abs(r__3)) + (r__4 = s.i, f2c_abs(r__4)) <= max( r__5,r__6))
         {
             *ns = 0;
             *nd = 1;
@@ -479,16 +476,16 @@ int claqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
     {
         /* ==== Small spike tip deflation test ==== */
         i__2 = *ns + *ns * t_dim1;
-        foo = (r__1 = t[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&t[*ns + *ns * t_dim1]), f2c_abs(r__2));
+        foo = (r__1 = t[i__2].r, f2c_abs(r__1)) + (r__2 = t[i__2].i, f2c_abs(r__2));
         if (foo == 0.f)
         {
-            foo = (r__1 = s.r, f2c_abs(r__1)) + (r__2 = r_imag(&s), f2c_abs(r__2));
+            foo = (r__1 = s.r, f2c_abs(r__1)) + (r__2 = s.i, f2c_abs(r__2));
         }
         i__2 = *ns * v_dim1 + 1;
         /* Computing MAX */
         r__5 = smlnum;
         r__6 = ulp * foo; // , expr subst
-        if (((r__1 = s.r, f2c_abs(r__1)) + (r__2 = r_imag(&s), f2c_abs(r__2))) * (( r__3 = v[i__2].r, f2c_abs(r__3)) + (r__4 = r_imag(&v[*ns * v_dim1 + 1]), f2c_abs(r__4))) <= max(r__5,r__6))
+        if (((r__1 = s.r, f2c_abs(r__1)) + (r__2 = s.i, f2c_abs(r__2))) * (( r__3 = v[i__2].r, f2c_abs(r__3)) + (r__4 = v[i__2].i, f2c_abs(r__4))) <= max(r__5,r__6))
         {
             /* ==== One more converged eigenvalue ==== */
             --(*ns);
@@ -526,7 +523,7 @@ int claqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
             {
                 i__3 = j + j * t_dim1;
                 i__4 = ifst + ifst * t_dim1;
-                if ((r__1 = t[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&t[j + j * t_dim1]), f2c_abs(r__2)) > (r__3 = t[i__4].r, f2c_abs(r__3)) + (r__4 = r_imag(&t[ifst + ifst * t_dim1]), f2c_abs(r__4)) )
+                if ((r__1 = t[i__3].r, f2c_abs(r__1)) + (r__2 = t[i__3].i, f2c_abs(r__2)) > (r__3 = t[i__4].r, f2c_abs(r__3)) + (r__4 = t[i__4].i, f2c_abs(r__4)) )
                 {
                     ifst = j;
                 }
@@ -564,7 +561,8 @@ int claqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
                     ++i__)
             {
                 i__2 = i__;
-                r_cnjg(&q__1, &work[i__]);
+                q__1.r = work[i__].r;
+                q__1.i = -work[i__].i;
                 work[i__2].r = q__1.r;
                 work[i__2].i = q__1.i; // , expr subst
                 /* L50: */
@@ -577,7 +575,8 @@ int claqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
             i__1 = jw - 2;
             i__2 = jw - 2;
             claset_("L", &i__1, &i__2, &c_b1, &c_b1, &t[t_dim1 + 3], ldt);
-            r_cnjg(&q__1, &tau);
+            q__1.r = tau.r;
+            q__1.i = -tau.i;
             clarf_("L", ns, &jw, &work[1], &c__1, &q__1, &t[t_offset], ldt, & work[jw + 1]);
             clarf_("R", ns, ns, &work[1], &c__1, &tau, &t[t_offset], ldt, & work[jw + 1]);
             clarf_("R", &jw, ns, &work[1], &c__1, &tau, &v[v_offset], ldv, & work[jw + 1]);
@@ -588,7 +587,8 @@ int claqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
         if (kwtop > 1)
         {
             i__1 = kwtop + (kwtop - 1) * h_dim1;
-            r_cnjg(&q__2, &v[v_dim1 + 1]);
+            q__2.r = v[v_dim1 + 1].r;
+            q__2.i = -v[v_dim1 + 1].i;
             q__1.r = s.r * q__2.r - s.i * q__2.i;
             q__1.i = s.r * q__2.i + s.i * q__2.r; // , expr subst
             h__[i__1].r = q__1.r;
