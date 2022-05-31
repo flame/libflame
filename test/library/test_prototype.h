@@ -125,4 +125,10 @@ extern int sgetri_(integer* n, void* a, integer* lda, integer* ipiv, void* work,
 extern int cgetri_(integer* n, void* a, integer* lda, integer* ipiv, void* work, integer* lwork, integer* info);
 extern int zgetri_(integer* n, void* a, integer* lda, integer* ipiv, void* work, integer* lwork, integer* info);
 
+/* LU factorization of a general m by n matrix */
+extern int dgetrs_(char* trans, integer* n, integer* nrhs, void* a, integer* lda, integer* ipiv, void* b, integer* ldb, integer* info);
+extern int sgetrs_(char* trans, integer* n, integer* nrhs, void* a, integer* lda, integer* ipiv, void* b, integer* ldb, integer* info);
+extern int cgetrs_(char* trans, integer* n, integer* nrhs, void* a, integer* lda, integer* ipiv, void* b, integer* ldb, integer* info);
+extern int zgetrs_(char* trans, integer* n, integer* nrhs, void* a, integer* lda, integer* ipiv, void* b, integer* ldb, integer* info);
+
 #endif  // TEST_PROTOTYPE_H
