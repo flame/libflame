@@ -206,8 +206,6 @@ int clarfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
     /* System generated locals */
     integer c_dim1, c_offset, t_dim1, t_offset, v_dim1, v_offset, work_dim1, work_offset, i__1, i__2, i__3, i__4, i__5;
     complex q__1, q__2;
-    /* Builtin functions */
-    void r_cnjg(complex *, complex *);
     /* Local variables */
     integer i__, j;
     extern /* Subroutine */
@@ -309,18 +307,21 @@ int clarfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
                 ctrmm_("Right", "Lower", "Conjugate transpose", "Unit", n, k, &c_b1, &v[v_offset], ldv, &work[work_offset], ldwork);
                 /* C1 := C1 - W**H */
                 i__1 = *k;
+                integer jw_;
                 for (j = 1;
                         j <= i__1;
                         ++j)
                 {
                     i__2 = *n;
+                    jw_ = j * work_dim1;
                     for (i__ = 1;
                             i__ <= i__2;
                             ++i__)
                     {
                         i__3 = j + i__ * c_dim1;
                         i__4 = j + i__ * c_dim1;
-                        r_cnjg(&q__2, &work[i__ + j * work_dim1]);
+                        q__2.r =  work[i__ + jw_].r;
+                        q__2.i = -work[i__ + jw_].i;
                         q__1.r = c__[i__4].r - q__2.r;
                         q__1.i = c__[i__4].i - q__2.i; // , expr subst
                         c__[i__3].r = q__1.r;
@@ -431,18 +432,21 @@ int clarfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
                 ctrmm_("Right", "Upper", "Conjugate transpose", "Unit", n, k, &c_b1, &v[*m - *k + 1 + v_dim1], ldv, &work[ work_offset], ldwork);
                 /* C2 := C2 - W**H */
                 i__1 = *k;
+                integer jw_;
                 for (j = 1;
                         j <= i__1;
                         ++j)
                 {
                     i__2 = *n;
+                    jw_ =  j * work_dim1;
                     for (i__ = 1;
                             i__ <= i__2;
                             ++i__)
                     {
                         i__3 = *m - *k + j + i__ * c_dim1;
                         i__4 = *m - *k + j + i__ * c_dim1;
-                        r_cnjg(&q__2, &work[i__ + j * work_dim1]);
+                        q__2.r = work[i__ + jw_].r;
+                        q__2.i = -work[i__ + jw_].i;
                         q__1.r = c__[i__4].r - q__2.r;
                         q__1.i = c__[i__4].i - q__2.i; // , expr subst
                         c__[i__3].r = q__1.r;
@@ -555,18 +559,21 @@ int clarfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
                 ctrmm_("Right", "Upper", "No transpose", "Unit", n, k, &c_b1, &v[v_offset], ldv, &work[work_offset], ldwork);
                 /* C1 := C1 - W**H */
                 i__1 = *k;
+                integer jw_;
                 for (j = 1;
                         j <= i__1;
                         ++j)
                 {
                     i__2 = *n;
+                    jw_ =  j * work_dim1;
                     for (i__ = 1;
                             i__ <= i__2;
                             ++i__)
                     {
                         i__3 = j + i__ * c_dim1;
                         i__4 = j + i__ * c_dim1;
-                        r_cnjg(&q__2, &work[i__ + j * work_dim1]);
+                        q__2.r = work[i__ + jw_].r;
+                        q__2.i = -work[i__ + jw_].i;
                         q__1.r = c__[i__4].r - q__2.r;
                         q__1.i = c__[i__4].i - q__2.i; // , expr subst
                         c__[i__3].r = q__1.r;
@@ -676,18 +683,21 @@ int clarfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
                 ctrmm_("Right", "Lower", "No transpose", "Unit", n, k, &c_b1, &v[(*m - *k + 1) * v_dim1 + 1], ldv, &work[ work_offset], ldwork);
                 /* C2 := C2 - W**H */
                 i__1 = *k;
+                integer jw_;
                 for (j = 1;
                         j <= i__1;
                         ++j)
                 {
                     i__2 = *n;
+                    jw_ = j * work_dim1;
                     for (i__ = 1;
                             i__ <= i__2;
                             ++i__)
                     {
                         i__3 = *m - *k + j + i__ * c_dim1;
                         i__4 = *m - *k + j + i__ * c_dim1;
-                        r_cnjg(&q__2, &work[i__ + j * work_dim1]);
+                        q__2.r = work[i__ + jw_].r;
+                        q__2.i = -work[i__ + jw_].i;
                         q__1.r = c__[i__4].r - q__2.r;
                         q__1.i = c__[i__4].i - q__2.i; // , expr subst
                         c__[i__3].r = q__1.r;

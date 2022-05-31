@@ -248,9 +248,6 @@ int clatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, comp
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
     real r__1, r__2, r__3, r__4;
     complex q__1, q__2, q__3, q__4;
-    /* Builtin functions */
-    double r_imag(complex *);
-    void r_cnjg(complex *, complex *);
     /* Local variables */
     integer i__, j;
     real xj, rec, tjj;
@@ -424,7 +421,7 @@ int clatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, comp
         /* Computing MAX */
         i__2 = j;
         r__3 = xmax;
-        r__4 = (r__1 = x[i__2].r / 2.f, f2c_abs(r__1)) + (r__2 = r_imag(&x[j]) / 2.f, f2c_abs(r__2)); // , expr subst
+        r__4 = (r__1 = x[i__2].r / 2.f, f2c_abs(r__1)) + (r__2 = x[j].i / 2.f, f2c_abs(r__2)); // , expr subst
         xmax = max(r__3,r__4);
         /* L30: */
     }
@@ -472,7 +469,7 @@ int clatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, comp
                 i__3 = j + j * a_dim1;
                 tjjs.r = a[i__3].r;
                 tjjs.i = a[i__3].i; // , expr subst
-                tjj = (r__1 = tjjs.r, f2c_abs(r__1)) + (r__2 = r_imag(&tjjs), f2c_abs( r__2));
+                tjj = (r__1 = tjjs.r, f2c_abs(r__1)) + (r__2 = tjjs.i, f2c_abs( r__2));
                 if (tjj >= smlnum)
                 {
                     /* M(j) = G(j-1) / f2c_abs(A(j,j)) */
@@ -578,7 +575,7 @@ L60:
                 i__3 = j + j * a_dim1;
                 tjjs.r = a[i__3].r;
                 tjjs.i = a[i__3].i; // , expr subst
-                tjj = (r__1 = tjjs.r, f2c_abs(r__1)) + (r__2 = r_imag(&tjjs), f2c_abs( r__2));
+                tjj = (r__1 = tjjs.r, f2c_abs(r__1)) + (r__2 = tjjs.i, f2c_abs( r__2));
                 if (tjj >= smlnum)
                 {
                     /* M(j) = M(j-1)*( 1 + CNORM(j) ) / f2c_abs(A(j,j)) */
@@ -658,7 +655,7 @@ L90:
             {
                 /* Compute x(j) = b(j) / A(j,j), scaling x if necessary. */
                 i__3 = j;
-                xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[j]), f2c_abs(r__2));
+                xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = x[j].i, f2c_abs(r__2));
                 if (nounit)
                 {
                     i__3 = j + j * a_dim1;
@@ -676,7 +673,7 @@ L90:
                         goto L105;
                     }
                 }
-                tjj = (r__1 = tjjs.r, f2c_abs(r__1)) + (r__2 = r_imag(&tjjs), f2c_abs( r__2));
+                tjj = (r__1 = tjjs.r, f2c_abs(r__1)) + (r__2 = tjjs.i, f2c_abs( r__2));
                 if (tjj > smlnum)
                 {
                     /* f2c_abs(A(j,j)) > SMLNUM: */
@@ -696,7 +693,7 @@ L90:
                     x[i__3].r = q__1.r;
                     x[i__3].i = q__1.i; // , expr subst
                     i__3 = j;
-                    xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[j]), f2c_abs(r__2));
+                    xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = x[j].i, f2c_abs(r__2));
                 }
                 else if (tjj > 0.f)
                 {
@@ -721,7 +718,7 @@ L90:
                     x[i__3].r = q__1.r;
                     x[i__3].i = q__1.i; // , expr subst
                     i__3 = j;
-                    xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[j]), f2c_abs(r__2));
+                    xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = x[j].i, f2c_abs(r__2));
                 }
                 else
                 {
@@ -779,7 +776,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                         i__3 = j - 1;
                         i__ = icamax_(&i__3, &x[1], &c__1);
                         i__3 = i__;
-                        xmax = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag( &x[i__]), f2c_abs(r__2));
+                        xmax = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = x[i__].i, f2c_abs(r__2));
                     }
                 }
                 else
@@ -798,7 +795,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                         i__3 = *n - j;
                         i__ = j + icamax_(&i__3, &x[j + 1], &c__1);
                         i__3 = i__;
-                        xmax = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag( &x[i__]), f2c_abs(r__2));
+                        xmax = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = x[i__].i, f2c_abs(r__2));
                     }
                 }
                 /* L110: */
@@ -816,7 +813,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                 /* Compute x(j) = b(j) - sum A(k,j)*x(k). */
                 /* k<>j */
                 i__3 = j;
-                xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[j]), f2c_abs(r__2));
+                xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = x[j].i, f2c_abs(r__2));
                 uscal.r = tscal;
                 uscal.i = 0.f; // , expr subst
                 rec = 1.f / max(xmax,1.f);
@@ -837,7 +834,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                         tjjs.r = tscal;
                         tjjs.i = 0.f; // , expr subst
                     }
-                    tjj = (r__1 = tjjs.r, f2c_abs(r__1)) + (r__2 = r_imag(&tjjs), f2c_abs(r__2));
+                    tjj = (r__1 = tjjs.r, f2c_abs(r__1)) + (r__2 = tjjs.i, f2c_abs(r__2));
                     if (tjj > 1.f)
                     {
                         /* Divide by A(j,j) when scaling x if A(j,j) > 1. */
@@ -934,7 +931,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                     x[i__3].r = q__1.r;
                     x[i__3].i = q__1.i; // , expr subst
                     i__3 = j;
-                    xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[j]), f2c_abs(r__2));
+                    xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = x[j].i, f2c_abs(r__2));
                     if (nounit)
                     {
                         i__3 = j + j * a_dim1;
@@ -953,7 +950,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                         }
                     }
                     /* Compute x(j) = x(j) / A(j,j), scaling if necessary. */
-                    tjj = (r__1 = tjjs.r, f2c_abs(r__1)) + (r__2 = r_imag(&tjjs), f2c_abs(r__2));
+                    tjj = (r__1 = tjjs.r, f2c_abs(r__1)) + (r__2 = tjjs.i, f2c_abs(r__2));
                     if (tjj > smlnum)
                     {
                         /* f2c_abs(A(j,j)) > SMLNUM: */
@@ -1026,7 +1023,7 @@ L145:
                 /* Computing MAX */
                 i__3 = j;
                 r__3 = xmax;
-                r__4 = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[j]), f2c_abs(r__2)); // , expr subst
+                r__4 = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = x[j].i, f2c_abs(r__2)); // , expr subst
                 xmax = max(r__3,r__4);
                 /* L150: */
             }
@@ -1043,7 +1040,7 @@ L145:
                 /* Compute x(j) = b(j) - sum A(k,j)*x(k). */
                 /* k<>j */
                 i__3 = j;
-                xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[j]), f2c_abs(r__2));
+                xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = x[j].i, f2c_abs(r__2));
                 uscal.r = tscal;
                 uscal.i = 0.f; // , expr subst
                 rec = 1.f / max(xmax,1.f);
@@ -1053,7 +1050,8 @@ L145:
                     rec *= .5f;
                     if (nounit)
                     {
-                        r_cnjg(&q__2, &a[j + j * a_dim1]);
+                        q__2.r = a[j + j * a_dim1].r;
+                        q__2.i = -a[j + j * a_dim1].i;
                         q__1.r = tscal * q__2.r;
                         q__1.i = tscal * q__2.i; // , expr subst
                         tjjs.r = q__1.r;
@@ -1064,7 +1062,7 @@ L145:
                         tjjs.r = tscal;
                         tjjs.i = 0.f; // , expr subst
                     }
-                    tjj = (r__1 = tjjs.r, f2c_abs(r__1)) + (r__2 = r_imag(&tjjs), f2c_abs(r__2));
+                    tjj = (r__1 = tjjs.r, f2c_abs(r__1)) + (r__2 = tjjs.i, f2c_abs(r__2));
                     if (tjj > 1.f)
                     {
                         /* Divide by A(j,j) when scaling x if A(j,j) > 1. */
@@ -1114,7 +1112,8 @@ L145:
                                 i__ <= i__3;
                                 ++i__)
                         {
-                            r_cnjg(&q__4, &a[i__ + j * a_dim1]);
+                            q__4.r = a[i__ + j * a_dim1].r;
+                            q__4.i = -a[i__ + j * a_dim1].i;
                             q__3.r = q__4.r * uscal.r - q__4.i * uscal.i;
                             q__3.i = q__4.r * uscal.i + q__4.i * uscal.r; // , expr subst
                             i__4 = i__;
@@ -1134,7 +1133,8 @@ L145:
                                 i__ <= i__3;
                                 ++i__)
                         {
-                            r_cnjg(&q__4, &a[i__ + j * a_dim1]);
+                            q__4.r = a[i__ + j * a_dim1].r;
+                            q__4.i = -a[i__ + j * a_dim1].i;
                             q__3.r = q__4.r * uscal.r - q__4.i * uscal.i;
                             q__3.i = q__4.r * uscal.i + q__4.i * uscal.r; // , expr subst
                             i__4 = i__;
@@ -1161,10 +1161,11 @@ L145:
                     x[i__3].r = q__1.r;
                     x[i__3].i = q__1.i; // , expr subst
                     i__3 = j;
-                    xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[j]), f2c_abs(r__2));
+                    xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = x[j].i, f2c_abs(r__2));
                     if (nounit)
                     {
-                        r_cnjg(&q__2, &a[j + j * a_dim1]);
+                        q__2.r = a[j + j * a_dim1].r;
+                        q__2.i = -a[j + j * a_dim1].i;
                         q__1.r = tscal * q__2.r;
                         q__1.i = tscal * q__2.i; // , expr subst
                         tjjs.r = q__1.r;
@@ -1180,7 +1181,7 @@ L145:
                         }
                     }
                     /* Compute x(j) = x(j) / A(j,j), scaling if necessary. */
-                    tjj = (r__1 = tjjs.r, f2c_abs(r__1)) + (r__2 = r_imag(&tjjs), f2c_abs(r__2));
+                    tjj = (r__1 = tjjs.r, f2c_abs(r__1)) + (r__2 = tjjs.i, f2c_abs(r__2));
                     if (tjj > smlnum)
                     {
                         /* f2c_abs(A(j,j)) > SMLNUM: */
@@ -1253,7 +1254,7 @@ L185:
                 /* Computing MAX */
                 i__3 = j;
                 r__3 = xmax;
-                r__4 = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[j]), f2c_abs(r__2)); // , expr subst
+                r__4 = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = x[j].i, f2c_abs(r__2)); // , expr subst
                 xmax = max(r__3,r__4);
                 /* L190: */
             }

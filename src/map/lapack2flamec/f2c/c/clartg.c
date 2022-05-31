@@ -98,7 +98,6 @@ int clartg_(complex *f, complex *g, real *cs, complex *sn, complex *r__)
     complex q__1, q__2, q__3;
     /* Builtin functions */
     double log(doublereal), pow_ri(real *, integer *), r_imag(complex *), c_abs(complex *), sqrt(doublereal);
-    void r_cnjg(complex *, complex *);
     /* Local variables */
     real d__;
     integer i__;
@@ -142,10 +141,10 @@ int clartg_(complex *f, complex *g, real *cs, complex *sn, complex *r__)
     /* Computing MAX */
     /* Computing MAX */
     r__7 = (r__1 = f->r, f2c_abs(r__1));
-    r__8 = (r__2 = r_imag(f), f2c_abs(r__2)); // , expr subst
+    r__8 = (r__2 = f->i, f2c_abs(r__2)); // , expr subst
     /* Computing MAX */
     r__9 = (r__3 = g->r, f2c_abs(r__3));
-    r__10 = (r__4 = r_imag(g), f2c_abs(r__4)); // , expr subst
+    r__10 = (r__4 = g->i, f2c_abs(r__4)); // , expr subst
     r__5 = max(r__7,r__8);
     r__6 = max(r__9,r__10); // , expr subst
     scale = max(r__5,r__6);
@@ -202,12 +201,12 @@ L20:
     /* Computing 2nd power */
     r__1 = fs.r;
     /* Computing 2nd power */
-    r__2 = r_imag(&fs);
+    r__2 = fs.i;
     f2 = r__1 * r__1 + r__2 * r__2;
     /* Computing 2nd power */
     r__1 = gs.r;
     /* Computing 2nd power */
-    r__2 = r_imag(&gs);
+    r__2 = gs.i;
     g2 = r__1 * r__1 + r__2 * r__2;
     if (f2 <= max(g2,1.f) * safmin)
     {
@@ -216,15 +215,15 @@ L20:
         {
             *cs = 0.f;
             r__2 = g->r;
-            r__3 = r_imag(g);
+            r__3 = g->i;
             r__1 = slapy2_(&r__2, &r__3);
             r__->r = r__1, r__->i = 0.f;
             /* Do complex/real division explicitly with two real divisions */
             r__1 = gs.r;
-            r__2 = r_imag(&gs);
+            r__2 = gs.i;
             d__ = slapy2_(&r__1, &r__2);
             r__1 = gs.r / d__;
-            r__2 = -r_imag(&gs) / d__;
+            r__2 = -gs.i / d__;
             q__1.r = r__1;
             q__1.i = r__2; // , expr subst
             sn->r = q__1.r, sn->i = q__1.i;
@@ -232,7 +231,7 @@ L20:
             return 0;
         }
         r__1 = fs.r;
-        r__2 = r_imag(&fs);
+        r__2 = fs.i;
         f2s = slapy2_(&r__1, &r__2);
         /* G2 and G2S are accurate */
         /* G2 is at least SAFMIN, and G2S is at least SAFMN2 */
@@ -249,14 +248,14 @@ L20:
         /* Do complex/real division explicitly with 2 real divisions */
         /* Computing MAX */
         r__3 = (r__1 = f->r, f2c_abs(r__1));
-        r__4 = (r__2 = r_imag(f), f2c_abs(r__2)); // , expr subst
+        r__4 = (r__2 = f->i, f2c_abs(r__2)); // , expr subst
         if (max(r__3,r__4) > 1.f)
         {
             r__1 = f->r;
-            r__2 = r_imag(f);
+            r__2 = f->i;
             d__ = slapy2_(&r__1, &r__2);
             r__1 = f->r / d__;
-            r__2 = r_imag(f) / d__;
+            r__2 = f->i / d__;
             q__1.r = r__1;
             q__1.i = r__2; // , expr subst
             ff.r = q__1.r;
@@ -265,7 +264,7 @@ L20:
         else
         {
             dr = safmx2 * f->r;
-            di = safmx2 * r_imag(f);
+            di = safmx2 * f->i;
             d__ = slapy2_(&dr, &di);
             r__1 = dr / d__;
             r__2 = di / d__;
@@ -275,7 +274,7 @@ L20:
             ff.i = q__1.i; // , expr subst
         }
         r__1 = gs.r / g2s;
-        r__2 = -r_imag(&gs) / g2s;
+        r__2 = -gs.i / g2s;
         q__2.r = r__1;
         q__2.i = r__2; // , expr subst
         q__1.r = ff.r * q__2.r - ff.i * q__2.i;
@@ -297,7 +296,7 @@ L20:
         f2s = sqrt(g2 / f2 + 1.f);
         /* Do the F2S(real)*FS(complex) multiply with two real multiplies */
         r__1 = f2s * fs.r;
-        r__2 = f2s * r_imag(&fs);
+        r__2 = f2s * fs.i;
         q__1.r = r__1;
         q__1.i = r__2; // , expr subst
         r__->r = q__1.r, r__->i = q__1.i;
@@ -305,11 +304,12 @@ L20:
         d__ = f2 + g2;
         /* Do complex/real division explicitly with two real divisions */
         r__1 = r__->r / d__;
-        r__2 = r_imag(r__) / d__;
+        r__2 = r__->i / d__;
         q__1.r = r__1;
         q__1.i = r__2; // , expr subst
         sn->r = q__1.r, sn->i = q__1.i;
-        r_cnjg(&q__2, &gs);
+        q__2.r = gs.r;
+        q__2.i = -gs.i;
         q__1.r = sn->r * q__2.r - sn->i * q__2.i;
         q__1.i = sn->r * q__2.i + sn->i * q__2.r; // , expr subst
         sn->r = q__1.r, sn->i = q__1.i;

@@ -1,4 +1,4 @@
-/* ../netlib/claqr4.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* claqr4.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__13 = 13;
@@ -77,7 +77,7 @@ static integer c__3 = 3;
 /* > \param[in] N */
 /* > \verbatim */
 /* > N is INTEGER */
-/* > The order of the matrix H. N .GE. 0. */
+/* > The order of the matrix H. N >= 0. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] ILO */
@@ -89,12 +89,12 @@ static integer c__3 = 3;
 /* > \verbatim */
 /* > IHI is INTEGER */
 /* > It is assumed that H is already upper triangular in rows */
-/* > and columns 1:ILO-1 and IHI+1:N and, if ILO.GT.1, */
+/* > and columns 1:ILO-1 and IHI+1:N and, if ILO > 1, */
 /* > H(ILO,ILO-1) is zero. ILO and IHI are normally set by a */
 /* > previous call to CGEBAL, and then passed to CGEHRD when the */
 /* > matrix output by CGEBAL is reduced to Hessenberg form. */
 /* > Otherwise, ILO and IHI should be set to 1 and N, */
-/* > respectively. If N.GT.0, then 1.LE.ILO.LE.IHI.LE.N. */
+/* > respectively. If N > 0, then 1 <= ILO <= IHI <= N. */
 /* > If N = 0, then ILO = 1 and IHI = 0. */
 /* > \endverbatim */
 /* > */
@@ -106,17 +106,17 @@ static integer c__3 = 3;
 /* > contains the upper triangular matrix T from the Schur */
 /* > decomposition (the Schur form). If INFO = 0 and WANT is */
 /* > .FALSE., then the contents of H are unspecified on exit. */
-/* > (The output value of H when INFO.GT.0 is given under the */
+/* > (The output value of H when INFO > 0 is given under the */
 /* > description of INFO below.) */
 /* > */
-/* > This subroutine may explicitly set H(i,j) = 0 for i.GT.j and */
+/* > This subroutine may explicitly set H(i,j) = 0 for i > j and */
 /* > j = 1, 2, ... ILO-1 or j = IHI+1, IHI+2, ... N. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDH */
 /* > \verbatim */
 /* > LDH is INTEGER */
-/* > The leading dimension of the array H. LDH .GE. max(1,N). */
+/* > The leading dimension of the array H. LDH >= max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] W */
@@ -138,8 +138,8 @@ static integer c__3 = 3;
 /* > IHIZ is INTEGER */
 /* > Specify the rows of Z to which transformations must be */
 /* > applied if WANTZ is .TRUE.. */
-/* > 1 .LE. ILOZ .LE. ILO;
-IHI .LE. IHIZ .LE. N. */
+/* > 1 <= ILOZ <= ILO;
+IHI <= IHIZ <= N. */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] Z */
@@ -149,7 +149,7 @@ IHI .LE. IHIZ .LE. N. */
 /* > If WANTZ is .TRUE., then Z(ILO:IHI,ILOZ:IHIZ) is */
 /* > replaced by Z(ILO:IHI,ILOZ:IHIZ)*U where U is the */
 /* > orthogonal Schur factor of H(ILO:IHI,ILO:IHI). */
-/* > (The output value of Z when INFO.GT.0 is given under */
+/* > (The output value of Z when INFO > 0 is given under */
 /* > the description of INFO below.) */
 /* > \endverbatim */
 /* > */
@@ -157,7 +157,7 @@ IHI .LE. IHIZ .LE. N. */
 /* > \verbatim */
 /* > LDZ is INTEGER */
 /* > The leading dimension of the array Z. if WANTZ is .TRUE. */
-/* > then LDZ.GE.MAX(1,IHIZ). Otherwize, LDZ.GE.1. */
+/* > then LDZ >= MAX(1,IHIZ). Otherwise, LDZ >= 1. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -170,7 +170,7 @@ IHI .LE. IHIZ .LE. N. */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK .GE. max(1,N) */
+/* > The dimension of the array WORK. LWORK >= max(1,N) */
 /* > is sufficient, but LWORK typically as large as 6*N may */
 /* > be required for optimal performance. A workspace query */
 /* > to determine the optimal workspace size is recommended. */
@@ -185,21 +185,20 @@ IHI .LE. IHIZ .LE. N. */
 /* > */
 /* > \param[out] INFO */
 /* > \verbatim */
-/* > \verbatim */
 /* > INFO is INTEGER */
 /* > = 0: successful exit */
-/* > .GT. 0: if INFO = i, CLAQR4 failed to compute all of */
+/* > > 0: if INFO = i, CLAQR4 failed to compute all of */
 /* > the eigenvalues. Elements 1:ilo-1 and i+1:n of WR */
 /* > and WI contain those eigenvalues which have been */
 /* > successfully computed. (Failures are rare.) */
 /* > */
-/* > If INFO .GT. 0 and WANT is .FALSE., then on exit, */
+/* > If INFO > 0 and WANT is .FALSE., then on exit, */
 /* > the remaining unconverged eigenvalues are the eigen- */
 /* > values of the upper Hessenberg matrix rows and */
 /* > columns ILO through INFO of the final, output */
 /* > value of H. */
 /* > */
-/* > If INFO .GT. 0 and WANTT is .TRUE., then on exit */
+/* > If INFO > 0 and WANTT is .TRUE., then on exit */
 /* > */
 /* > (*) (initial value of H)*U = U*(final value of H) */
 /* > */
@@ -207,7 +206,7 @@ IHI .LE. IHIZ .LE. N. */
 /* > value of H is upper Hessenberg and triangular in */
 /* > rows and columns INFO+1 through IHI. */
 /* > */
-/* > If INFO .GT. 0 and WANTZ is .TRUE., then on exit */
+/* > If INFO > 0 and WANTZ is .TRUE., then on exit */
 /* > */
 /* > (final value of Z(ILO:IHI,ILOZ:IHIZ) */
 /* > = (initial value of Z(ILO:IHI,ILOZ:IHIZ)*U */
@@ -215,7 +214,7 @@ IHI .LE. IHIZ .LE. N. */
 /* > where U is the unitary matrix in (*) (regard- */
 /* > less of the value of WANTT.) */
 /* > */
-/* > If INFO .GT. 0 and WANTZ is .FALSE., then Z is not */
+/* > If INFO > 0 and WANTZ is .FALSE., then Z is not */
 /* > accessed. */
 /* > \endverbatim */
 /* Authors: */
@@ -224,7 +223,6 @@ IHI .LE. IHIZ .LE. N. */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date September 2012 */
 /* > \ingroup complexOTHERauxiliary */
 /* > \par Contributors: */
 /* ================== */
@@ -262,7 +260,6 @@ int claqr4_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     real r__1, r__2, r__3, r__4, r__5, r__6, r__7, r__8;
     complex q__1, q__2, q__3, q__4, q__5;
     /* Builtin functions */
-    double r_imag(complex *);
     void c_sqrt(complex *, complex *);
     /* Local variables */
     integer i__, k;
@@ -287,10 +284,9 @@ int claqr4_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     integer nwupbd;
     logical sorted;
     integer lwkopt;
-    /* -- LAPACK auxiliary routine (version 3.4.2) -- */
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* September 2012 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -343,7 +339,7 @@ int claqr4_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
-    if (*n <= 11)
+    if (*n <= 15)
     {
         /* ==== Tiny matrices must use CLAHQR. ==== */
         lwkopt = 1;
@@ -376,10 +372,10 @@ int claqr4_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
             *(unsigned char *)&jbcmpz[1] = 'N';
         }
         /* ==== NWR = recommended deflation window size. At this */
-        /* . point, N .GT. NTINY = 11, so there is enough */
+        /* . point, N .GT. NTINY = 15, so there is enough */
         /* . subdiagonal workspace for NWR.GE.2 as required. */
         /* . (In fact, there is enough subdiagonal space for */
-        /* . NWR.GE.3.) ==== */
+        /* . NWR.GE.4.) ==== */
         nwr = ilaenv_(&c__13, "CLAQR4", jbcmpz, n, ilo, ihi, lwork);
         nwr = max(2,nwr);
         /* Computing MIN */
@@ -388,12 +384,12 @@ int claqr4_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
         i__1 = min(i__1,i__2); // ; expr subst
         nwr = min(i__1,nwr);
         /* ==== NSR = recommended number of simultaneous shifts. */
-        /* . At this point N .GT. NTINY = 11, so there is at */
+        /* . At this point N .GT. NTINY = 15, so there is at */
         /* . enough subdiagonal workspace for NSR to be even */
         /* . and greater than or equal to two as required. ==== */
         nsr = ilaenv_(&c__15, "CLAQR4", jbcmpz, n, ilo, ihi, lwork);
         /* Computing MIN */
-        i__1 = nsr, i__2 = (*n + 6) / 9;
+        i__1 = nsr, i__2 = (*n - 3) / 6;
         i__1 = min(i__1,i__2);
         i__2 = *ihi - *ilo; // ; expr subst
         nsr = min(i__1,i__2);
@@ -423,7 +419,7 @@ int claqr4_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
         }
         /* ==== CLAHQR/CLAQR0 crossover point ==== */
         nmin = ilaenv_(&c__12, "CLAQR4", jbcmpz, n, ilo, ihi, lwork);
-        nmin = max(11,nmin);
+        nmin = max(15,nmin);
         /* ==== Nibble crossover point ==== */
         nibble = ilaenv_(&c__14, "CLAQR4", jbcmpz, n, ilo, ihi, lwork);
         nibble = max(0,nibble);
@@ -442,7 +438,7 @@ int claqr4_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
         /* ==== NSMAX = the Largest number of simultaneous shifts */
         /* . for which there is sufficient workspace. ==== */
         /* Computing MIN */
-        i__1 = (*n + 6) / 9;
+        i__1 = (*n - 3) / 6;
         i__2 = (*lwork << 1) / 3; // , expr subst
         nsmax = min(i__1,i__2);
         nsmax -= nsmax % 2;
@@ -521,7 +517,7 @@ L20:
                     kwtop = kbot - nw + 1;
                     i__2 = kwtop + (kwtop - 1) * h_dim1;
                     i__3 = kwtop - 1 + (kwtop - 2) * h_dim1;
-                    if ((r__1 = h__[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&h__[ kwtop + (kwtop - 1) * h_dim1]), f2c_abs(r__2)) > ( r__3 = h__[i__3].r, f2c_abs(r__3)) + (r__4 = r_imag(& h__[kwtop - 1 + (kwtop - 2) * h_dim1]), f2c_abs(r__4)) )
+                    if ((r__1 = h__[i__2].r, f2c_abs(r__1)) + (r__2 = h__[i__2].i, f2c_abs(r__2)) > ( r__3 = h__[i__3].r, f2c_abs(r__3)) + (r__4 = h__[i__3].i, f2c_abs(r__4)) )
                     {
                         ++nw;
                     }
@@ -596,7 +592,7 @@ L20:
                         i__3 = i__;
                         i__4 = i__ + i__ * h_dim1;
                         i__5 = i__ + (i__ - 1) * h_dim1;
-                        r__3 = ((r__1 = h__[i__5].r, f2c_abs(r__1)) + (r__2 = r_imag(&h__[i__ + (i__ - 1) * h_dim1]), f2c_abs( r__2))) * .75f;
+                        r__3 = ((r__1 = h__[i__5].r, f2c_abs(r__1)) + (r__2 = h__[i__5].i, f2c_abs( r__2))) * .75f;
                         q__1.r = h__[i__4].r + r__3;
                         q__1.i = h__[i__4].i; // , expr subst
                         w[i__3].r = q__1.r;
@@ -612,7 +608,7 @@ L20:
                 {
                     /* ==== Got NS/2 or fewer shifts? Use CLAHQR */
                     /* . on a trailing principal submatrix to */
-                    /* . get more. (Since NS.LE.NSMAX.LE.(N+6)/9, */
+                    /* . get more. (Since NS.LE.NSMAX.LE.(N-3)/6, */
                     /* . there is enough space below the subdiagonal */
                     /* . to fit an NS-by-NS scratch array.) ==== */
                     if (kbot - ks + 1 <= ns / 2)
@@ -634,7 +630,7 @@ L20:
                             i__3 = kbot + (kbot - 1) * h_dim1;
                             i__4 = kbot - 1 + kbot * h_dim1;
                             i__5 = kbot + kbot * h_dim1;
-                            s = (r__1 = h__[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&h__[kbot - 1 + (kbot - 1) * h_dim1]), f2c_abs(r__2)) + ((r__3 = h__[i__3] .r, f2c_abs(r__3)) + (r__4 = r_imag(&h__[kbot + (kbot - 1) * h_dim1]), f2c_abs(r__4))) + (( r__5 = h__[i__4].r, f2c_abs(r__5)) + (r__6 = r_imag(&h__[kbot - 1 + kbot * h_dim1]), f2c_abs(r__6))) + ((r__7 = h__[i__5].r, f2c_abs( r__7)) + (r__8 = r_imag(&h__[kbot + kbot * h_dim1]), f2c_abs(r__8)));
+                            s = (r__1 = h__[i__2].r, f2c_abs(r__1)) + (r__2 = h__[i__2].i, f2c_abs(r__2)) + ((r__3 = h__[i__3] .r, f2c_abs(r__3)) + (r__4 = h__[i__3].i, f2c_abs(r__4))) + (( r__5 = h__[i__4].r, f2c_abs(r__5)) + (r__6 = h__[i__4].i, f2c_abs(r__6))) + ((r__7 = h__[i__5].r, f2c_abs( r__7)) + (r__8 = h__[i__5].i, f2c_abs(r__8)));
                             i__2 = kbot - 1 + (kbot - 1) * h_dim1;
                             q__1.r = h__[i__2].r / s;
                             q__1.i = h__[i__2].i / s; // , expr subst
@@ -714,21 +710,16 @@ L20:
                                     i__ <= i__3;
                                     ++i__)
                             {
-                                i__4 = i__;
                                 i__5 = i__ + 1;
-                                if ((r__1 = w[i__4].r, f2c_abs(r__1)) + (r__2 = r_imag(&w[i__]), f2c_abs(r__2)) < (r__3 = w[i__5].r, f2c_abs(r__3)) + (r__4 = r_imag(&w[i__ + 1]), f2c_abs(r__4)))
+                                if ((r__1 = w[i__].r, f2c_abs(r__1)) + (r__2 = w[i__].i, f2c_abs(r__2)) < (r__3 = w[i__5].r, f2c_abs(r__3)) + (r__4 = w[i__5].i, f2c_abs(r__4)))
                                 {
                                     sorted = FALSE_;
-                                    i__4 = i__;
-                                    swap.r = w[i__4].r;
-                                    swap.i = w[i__4].i; // , expr subst
-                                    i__4 = i__;
-                                    i__5 = i__ + 1;
-                                    w[i__4].r = w[i__5].r;
-                                    w[i__4].i = w[i__5] .i; // , expr subst
-                                    i__4 = i__ + 1;
-                                    w[i__4].r = swap.r;
-                                    w[i__4].i = swap.i; // , expr subst
+                                    swap.r = w[i__].r;
+                                    swap.i = w[i__].i; // , expr subst
+                                    w[i__].r = w[i__5].r;
+                                    w[i__].i = w[i__5] .i; // , expr subst
+                                    w[i__5].r = swap.r;
+                                    w[i__5].i = swap.i; // , expr subst
                                 }
                                 /* L40: */
                             }
@@ -749,27 +740,22 @@ L60:
                     q__1.r = q__2.r;
                     q__1.i = q__2.i; // , expr subst
                     i__4 = kbot - 1;
-                    i__5 = kbot + kbot * h_dim1;
-                    q__4.r = w[i__4].r - h__[i__5].r;
-                    q__4.i = w[i__4].i - h__[i__5].i; // , expr subst
+                    q__4.r = w[i__4].r - h__[i__3].r;
+                    q__4.i = w[i__4].i - h__[i__3].i; // , expr subst
                     q__3.r = q__4.r;
                     q__3.i = q__4.i; // , expr subst
-                    if ((r__1 = q__1.r, f2c_abs(r__1)) + (r__2 = r_imag(&q__1), f2c_abs(r__2)) < (r__3 = q__3.r, f2c_abs(r__3)) + (r__4 = r_imag(&q__3), f2c_abs(r__4)))
+                    if ((r__1 = q__1.r, f2c_abs(r__1)) + (r__2 = q__1.i, f2c_abs(r__2)) < (r__3 = q__3.r, f2c_abs(r__3)) + (r__4 = q__3.i, f2c_abs(r__4)))
                     {
-                        i__2 = kbot - 1;
-                        i__3 = kbot;
-                        w[i__2].r = w[i__3].r;
-                        w[i__2].i = w[i__3].i; // , expr subst
+                        w[i__4].r = w[i__2].r;
+                        w[i__4].i = w[i__2].i; // , expr subst
                     }
                     else
                     {
-                        i__2 = kbot;
-                        i__3 = kbot - 1;
-                        w[i__2].r = w[i__3].r;
-                        w[i__2].i = w[i__3].i; // , expr subst
+                        w[i__2].r = w[i__4].r;
+                        w[i__2].i = w[i__4].i; // , expr subst
                     }
                 }
-                /* ==== Use up to NS of the the smallest magnatiude */
+                /* ==== Use up to NS of the the smallest magnitude */
                 /* . shifts. If there aren't NS shifts available, */
                 /* . then use them all, possibly dropping one to */
                 /* . make the number of shifts even. ==== */
@@ -789,7 +775,7 @@ L60:
                 /* . - and an at-least-KDU-but-more-is-better-by-KDU */
                 /* . (NVE-by-KDU) vertical work WV arrow along */
                 /* . the left-hand-edge. ==== */
-                kdu = ns * 3 - 3;
+                kdu = ns << 1;
                 ku = *n - kdu + 1;
                 kwh = kdu + 1;
                 nho = *n - kdu - 3 - (kdu + 1) + 1;

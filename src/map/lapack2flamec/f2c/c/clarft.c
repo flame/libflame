@@ -174,8 +174,6 @@ int clarft_(char *direct, char *storev, integer *n, integer * k, complex *v, int
     /* System generated locals */
     integer t_dim1, t_offset, v_dim1, v_offset, i__1, i__2, i__3, i__4, i__5;
     complex q__1, q__2, q__3;
-    /* Builtin functions */
-    void r_cnjg(complex *, complex *);
     /* Local variables */
     integer i__, j, prevlastv;
     extern /* Subroutine */
@@ -266,7 +264,8 @@ int clarft_(char *direct, char *storev, integer *n, integer * k, complex *v, int
                         i__4 = i__;
                         q__2.r = -tau[i__4].r;
                         q__2.i = -tau[i__4].i; // , expr subst
-                        r_cnjg(&q__3, &v[i__ + j * v_dim1]);
+                        q__3.r = v[i__ + j * v_dim1].r;
+                        q__3.i = -v[i__ + j * v_dim1].i;
                         q__1.r = q__2.r * q__3.r - q__2.i * q__3.i;
                         q__1.i = q__2.r * q__3.i + q__2.i * q__3.r; // , expr subst
                         t[i__3].r = q__1.r;
@@ -386,7 +385,8 @@ int clarft_(char *direct, char *storev, integer *n, integer * k, complex *v, int
                             i__3 = i__;
                             q__2.r = -tau[i__3].r;
                             q__2.i = -tau[i__3].i; // , expr subst
-                            r_cnjg(&q__3, &v[*n - *k + i__ + j * v_dim1]);
+                            q__3.r = v[*n - *k + i__ + j * v_dim1].r;
+                            q__3.i = -v[*n - *k + i__ + j * v_dim1].i;
                             q__1.r = q__2.r * q__3.r - q__2.i * q__3.i;
                             q__1.i = q__2.r * q__3.i + q__2.i * q__3.r; // , expr subst
                             t[i__2].r = q__1.r;

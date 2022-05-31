@@ -303,8 +303,7 @@ int cgeevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, co
     real r__1, r__2;
     complex q__1, q__2;
     /* Builtin functions */
-    double sqrt(doublereal), r_imag(complex *);
-    void r_cnjg(complex *, complex *);
+    double sqrt(doublereal);
     /* Local variables */
     integer i__, k;
     char job[1];
@@ -687,25 +686,25 @@ int cgeevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, co
                 /* Computing 2nd power */
                 r__1 = vl[i__3].r;
                 /* Computing 2nd power */
-                r__2 = r_imag(&vl[k + i__ * vl_dim1]);
+                r__2 = vl[i__3].i;
                 rwork[k] = r__1 * r__1 + r__2 * r__2;
                 /* L10: */
             }
             k = isamax_(n, &rwork[1], &c__1);
-            r_cnjg(&q__2, &vl[k + i__ * vl_dim1]);
+            i__3 = k + i__ * vl_dim1;
+            q__2.r = vl[i__3].r;
+            q__2.i = -vl[i__3].i;
             r__1 = sqrt(rwork[k]);
             q__1.r = q__2.r / r__1;
             q__1.i = q__2.i / r__1; // , expr subst
             tmp.r = q__1.r;
             tmp.i = q__1.i; // , expr subst
             cscal_(n, &tmp, &vl[i__ * vl_dim1 + 1], &c__1);
-            i__2 = k + i__ * vl_dim1;
-            i__3 = k + i__ * vl_dim1;
             r__1 = vl[i__3].r;
             q__1.r = r__1;
             q__1.i = 0.f; // , expr subst
-            vl[i__2].r = q__1.r;
-            vl[i__2].i = q__1.i; // , expr subst
+            vl[i__3].r = q__1.r;
+            vl[i__3].i = q__1.i; // , expr subst
             /* L20: */
         }
     }
@@ -730,25 +729,25 @@ int cgeevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, co
                 /* Computing 2nd power */
                 r__1 = vr[i__3].r;
                 /* Computing 2nd power */
-                r__2 = r_imag(&vr[k + i__ * vr_dim1]);
+                r__2 = vr[i__3].i;
                 rwork[k] = r__1 * r__1 + r__2 * r__2;
                 /* L30: */
             }
             k = isamax_(n, &rwork[1], &c__1);
-            r_cnjg(&q__2, &vr[k + i__ * vr_dim1]);
+            i__3 = k + i__ * vr_dim1;
+            q__2.r = vr[i__3].r;
+            q__2.i = -vr[i__3].i;
             r__1 = sqrt(rwork[k]);
             q__1.r = q__2.r / r__1;
             q__1.i = q__2.i / r__1; // , expr subst
             tmp.r = q__1.r;
             tmp.i = q__1.i; // , expr subst
             cscal_(n, &tmp, &vr[i__ * vr_dim1 + 1], &c__1);
-            i__2 = k + i__ * vr_dim1;
-            i__3 = k + i__ * vr_dim1;
             r__1 = vr[i__3].r;
             q__1.r = r__1;
             q__1.i = 0.f; // , expr subst
-            vr[i__2].r = q__1.r;
-            vr[i__2].i = q__1.i; // , expr subst
+            vr[i__3].r = q__1.r;
+            vr[i__3].i = q__1.i; // , expr subst
             /* L40: */
         }
     }
@@ -781,4 +780,3 @@ L50:
     /* End of CGEEVX */
 }
 /* cgeevx_ */
-

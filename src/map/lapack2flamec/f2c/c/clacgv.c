@@ -75,8 +75,6 @@ int clacgv_(integer *n, complex *x, integer *incx)
     /* System generated locals */
     integer i__1, i__2;
     complex q__1;
-    /* Builtin functions */
-    void r_cnjg(complex *, complex *);
     /* Local variables */
     integer i__, ioff;
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
@@ -103,10 +101,10 @@ int clacgv_(integer *n, complex *x, integer *incx)
                 i__ <= i__1;
                 ++i__)
         {
-            i__2 = i__;
-            r_cnjg(&q__1, &x[i__]);
-            x[i__2].r = q__1.r;
-            x[i__2].i = q__1.i; // , expr subst
+            q__1.r = x[i__].r;
+            q__1.i = -x[i__].i;
+            x[i__].r = q__1.r;
+            x[i__].i = q__1.i; // , expr subst
             /* L10: */
         }
     }
@@ -122,10 +120,10 @@ int clacgv_(integer *n, complex *x, integer *incx)
                 i__ <= i__1;
                 ++i__)
         {
-            i__2 = ioff;
-            r_cnjg(&q__1, &x[ioff]);
-            x[i__2].r = q__1.r;
-            x[i__2].i = q__1.i; // , expr subst
+            q__1.r = x[ioff].r;
+            q__1.i = -x[ioff].i;
+            x[ioff].r = q__1.r;
+            x[ioff].i = q__1.i; // , expr subst
             ioff += *incx;
             /* L20: */
         }

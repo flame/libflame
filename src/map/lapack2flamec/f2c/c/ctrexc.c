@@ -131,8 +131,6 @@ int ctrexc_(char *compq, integer *n, complex *t, integer * ldt, complex *q, inte
     /* System generated locals */
     integer q_dim1, q_offset, t_dim1, t_offset, i__1, i__2, i__3;
     complex q__1;
-    /* Builtin functions */
-    void r_cnjg(complex *, complex *);
     /* Local variables */
     integer k, m1, m2, m3;
     real cs;
@@ -247,7 +245,8 @@ int ctrexc_(char *compq, integer *n, complex *t, integer * ldt, complex *q, inte
             crot_(&i__3, &t[k + (k + 2) * t_dim1], ldt, &t[k + 1 + (k + 2) * t_dim1], ldt, &cs, &sn);
         }
         i__3 = k - 1;
-        r_cnjg(&q__1, &sn);
+        q__1.r = sn.r;
+        q__1.i = -sn.i;
         crot_(&i__3, &t[k * t_dim1 + 1], &c__1, &t[(k + 1) * t_dim1 + 1], & c__1, &cs, &q__1);
         i__3 = k + k * t_dim1;
         t[i__3].r = t22.r;
@@ -258,7 +257,6 @@ int ctrexc_(char *compq, integer *n, complex *t, integer * ldt, complex *q, inte
         if (wantq)
         {
             /* Accumulate transformation in the matrix Q. */
-            r_cnjg(&q__1, &sn);
             crot_(n, &q[k * q_dim1 + 1], &c__1, &q[(k + 1) * q_dim1 + 1], & c__1, &cs, &q__1);
         }
         /* L10: */

@@ -109,8 +109,6 @@ int claqr1_(integer *n, complex *h__, integer *ldh, complex * s1, complex *s2, c
     integer h_dim1, h_offset, i__1, i__2, i__3, i__4;
     real r__1, r__2, r__3, r__4, r__5, r__6;
     complex q__1, q__2, q__3, q__4, q__5, q__6, q__7, q__8;
-    /* Builtin functions */
-    double r_imag(complex *);
     /* Local variables */
     real s;
     complex h21s, h31s;
@@ -154,7 +152,7 @@ int claqr1_(integer *n, complex *h__, integer *ldh, complex * s1, complex *s2, c
         q__1.r = q__2.r;
         q__1.i = q__2.i; // , expr subst
         i__2 = h_dim1 + 2;
-        s = (r__1 = q__1.r, f2c_abs(r__1)) + (r__2 = r_imag(&q__1), f2c_abs(r__2)) + ( (r__3 = h__[i__2].r, f2c_abs(r__3)) + (r__4 = r_imag(&h__[h_dim1 + 2]), f2c_abs(r__4)));
+        s = (r__1 = q__1.r, f2c_abs(r__1)) + (r__2 = q__1.i, f2c_abs(r__2)) + ( (r__3 = h__[i__2].r, f2c_abs(r__3)) + (r__4 = h__[i__2].i, f2c_abs(r__4)));
         if (s == 0.f)
         {
             v[1].r = 0.f;
@@ -164,20 +162,17 @@ int claqr1_(integer *n, complex *h__, integer *ldh, complex * s1, complex *s2, c
         }
         else
         {
-            i__1 = h_dim1 + 2;
-            q__1.r = h__[i__1].r / s;
-            q__1.i = h__[i__1].i / s; // , expr subst
+            q__1.r = h__[i__2].r / s;
+            q__1.i = h__[i__2].i / s; // , expr subst
             h21s.r = q__1.r;
             h21s.i = q__1.i; // , expr subst
-            i__1 = (h_dim1 << 1) + 1;
-            q__2.r = h21s.r * h__[i__1].r - h21s.i * h__[i__1].i;
-            q__2.i = h21s.r * h__[i__1].i + h21s.i * h__[i__1].r; // , expr subst
-            i__2 = h_dim1 + 1;
-            q__4.r = h__[i__2].r - s1->r;
-            q__4.i = h__[i__2].i - s1->i; // , expr subst
-            i__3 = h_dim1 + 1;
-            q__6.r = h__[i__3].r - s2->r;
-            q__6.i = h__[i__3].i - s2->i; // , expr subst
+            i__2 = (h_dim1 << 1) + 1;
+            q__2.r = h21s.r * h__[i__2].r - h21s.i * h__[i__2].i;
+            q__2.i = h21s.r * h__[i__2].i + h21s.i * h__[i__2].r; // , expr subst
+            q__4.r = h__[i__1].r - s1->r;
+            q__4.i = h__[i__1].i - s1->i; // , expr subst
+            q__6.r = h__[i__1].r - s2->r;
+            q__6.i = h__[i__1].i - s2->i; // , expr subst
             q__5.r = q__6.r / s;
             q__5.i = q__6.i / s; // , expr subst
             q__3.r = q__4.r * q__5.r - q__4.i * q__5.i;
@@ -186,7 +181,6 @@ int claqr1_(integer *n, complex *h__, integer *ldh, complex * s1, complex *s2, c
             q__1.i = q__2.i + q__3.i; // , expr subst
             v[1].r = q__1.r;
             v[1].i = q__1.i; // , expr subst
-            i__1 = h_dim1 + 1;
             i__2 = (h_dim1 << 1) + 2;
             q__4.r = h__[i__1].r + h__[i__2].r;
             q__4.i = h__[i__1].i + h__[ i__2].i; // , expr subst
@@ -209,7 +203,7 @@ int claqr1_(integer *n, complex *h__, integer *ldh, complex * s1, complex *s2, c
         q__1.i = q__2.i; // , expr subst
         i__2 = h_dim1 + 2;
         i__3 = h_dim1 + 3;
-        s = (r__1 = q__1.r, f2c_abs(r__1)) + (r__2 = r_imag(&q__1), f2c_abs(r__2)) + ( (r__3 = h__[i__2].r, f2c_abs(r__3)) + (r__4 = r_imag(&h__[h_dim1 + 2]), f2c_abs(r__4))) + ((r__5 = h__[i__3].r, f2c_abs(r__5)) + (r__6 = r_imag(&h__[h_dim1 + 3]), f2c_abs(r__6)));
+        s = (r__1 = q__1.r, f2c_abs(r__1)) + (r__2 = q__1.i, f2c_abs(r__2)) + ( (r__3 = h__[i__2].r, f2c_abs(r__3)) + (r__4 = h__[i__2].i, f2c_abs(r__4))) + ((r__5 = h__[i__3].r, f2c_abs(r__5)) + (r__6 = h__[i__3].i, f2c_abs(r__6)));
         if (s == 0.f)
         {
             v[1].r = 0.f;
@@ -221,22 +215,18 @@ int claqr1_(integer *n, complex *h__, integer *ldh, complex * s1, complex *s2, c
         }
         else
         {
-            i__1 = h_dim1 + 2;
-            q__1.r = h__[i__1].r / s;
-            q__1.i = h__[i__1].i / s; // , expr subst
+            q__1.r = h__[i__2].r / s;
+            q__1.i = h__[i__2].i / s; // , expr subst
             h21s.r = q__1.r;
             h21s.i = q__1.i; // , expr subst
-            i__1 = h_dim1 + 3;
-            q__1.r = h__[i__1].r / s;
-            q__1.i = h__[i__1].i / s; // , expr subst
+            q__1.r = h__[i__3].r / s;
+            q__1.i = h__[i__3].i / s; // , expr subst
             h31s.r = q__1.r;
             h31s.i = q__1.i; // , expr subst
-            i__1 = h_dim1 + 1;
             q__4.r = h__[i__1].r - s1->r;
             q__4.i = h__[i__1].i - s1->i; // , expr subst
-            i__2 = h_dim1 + 1;
-            q__6.r = h__[i__2].r - s2->r;
-            q__6.i = h__[i__2].i - s2->i; // , expr subst
+            q__6.r = h__[i__1].r - s2->r;
+            q__6.i = h__[i__1].i - s2->i; // , expr subst
             q__5.r = q__6.r / s;
             q__5.i = q__6.i / s; // , expr subst
             q__3.r = q__4.r * q__5.r - q__4.i * q__5.i;
@@ -253,7 +243,6 @@ int claqr1_(integer *n, complex *h__, integer *ldh, complex * s1, complex *s2, c
             q__1.i = q__2.i + q__8.i; // , expr subst
             v[1].r = q__1.r;
             v[1].i = q__1.i; // , expr subst
-            i__1 = h_dim1 + 1;
             i__2 = (h_dim1 << 1) + 2;
             q__5.r = h__[i__1].r + h__[i__2].r;
             q__5.i = h__[i__1].i + h__[ i__2].i; // , expr subst

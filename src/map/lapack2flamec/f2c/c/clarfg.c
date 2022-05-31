@@ -115,7 +115,7 @@ int clarfg_(integer *n, complex *alpha, complex *x, integer * incx, complex *tau
     real r__1, r__2;
     complex q__1, q__2;
     /* Builtin functions */
-    double r_imag(complex *), r_sign(real *, real *);
+    double r_sign(real *, real *);
     /* Local variables */
     integer j, knt;
     real beta;
@@ -161,7 +161,7 @@ int clarfg_(integer *n, complex *alpha, complex *x, integer * incx, complex *tau
     i__1 = *n - 1;
     xnorm = scnrm2_(&i__1, &x[1], incx);
     alphr = alpha->r;
-    alphi = r_imag(alpha);
+    alphi = alpha->i;
     if (xnorm == 0.f && alphi == 0.f)
     {
         /* H = I */
