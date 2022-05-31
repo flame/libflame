@@ -17,7 +17,7 @@
 
 #ifdef FLA_ENABLE_LAPACK2FLAME 
 
-#define FLA_AMD_SVD2_OPT 1
+#define FLA_AMD_SVD2_OPT 0
 
 #include "FLA_lapack2flame_util_defs.h"
 #include "FLA_lapack2flame_return_defs.h"
