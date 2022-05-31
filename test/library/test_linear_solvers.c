@@ -604,15 +604,22 @@ void validate_getrf(integer m_A,
 
     /* System generated locals */
     integer m_n_vector, min_A;
-    void *L, *U, *T, *work;
-    
+    void *L, *U, *T, *work, *B, *B_test;
+    integer nrhs=1, info;
+
     m_n_vector = m_A * n_A;
     min_A = min(m_A, n_A);
+    create_vector(datatype, &B, m_A);
+    create_vector(datatype, &B_test, m_A);
     create_matrix(datatype, &L, m_A, m_A);
     create_matrix(datatype, &U, m_A, n_A);
     reset_matrix(datatype, m_A, n_A, U, m_A);
     create_matrix(datatype, &T, m_A, n_A);
     create_vector(datatype, &work, 2 * m_A);
+
+    rand_vector(datatype, B, m_A, 1);
+    copy_vector(datatype, m_A, B, 1, B_test, 1);
+
     /* Lower triangular matrix should be sqare matrix m x m */
     /* For m==i OR  m < n OR m > n -->  A(mxn) = L(mxm) * U(mxn) */
     copy_matrix(datatype, "Lower", m_A, m_A, A_test, m_A, L, m_A);
@@ -623,12 +630,28 @@ void validate_getrf(integer m_A,
     {
     case FLOAT:
     {
-        float norm, norm_A, eps;
+        float norm, norm_A, norm_B, eps, resid1, resid2;
+        eps = slamch_("Epsilon");
+        /* Test 1 */
+        if (m_A == n_A)
+        {
+            norm_B = snrm2_(&m_A, B, &i_one);
+            /* Compute X by passing A and B */
+            sgetrs_("N", &m_A, &nrhs, A_test, &m_A, IPIV, B_test, &m_A, &info);
+            /* Compute AX-B */
+            sgemv_("N", &m_A, &m_A, &s_one, A, &m_A, B_test, &i_one, &s_n_one, B, &i_one);
+            norm = snrm2_(&m_A, B, &i_one);
+            resid1 = norm / (float)m_A / norm_B / eps;
+        }
+        else
+        {
+            resid1 = 0.0;
+        }
+        /* Test 2 */
 
         /* Unity diagonal elements to Lower triangular matrix */
         slaset_("U", &m_A, &m_A, &s_zero, &s_one, L, &m_A);
         norm_A = slange_("1", &m_A, &n_A, A, &m_A, work);
-        eps = slamch_("Epsilon");
         /* T = L * U  */
         sgemm_("N", "N", &m_A, &n_A, &m_A, &s_one, L, &m_A, U, &m_A, &s_zero, T, &m_A);
         /*  Row interchanges based on IPIV values */
@@ -638,17 +661,34 @@ void validate_getrf(integer m_A,
         /* Compute norm( L*U - A ) / ( N * norm(A) * EPS ) */
         norm = slange_("1", &m_A, &n_A, T, &m_A, work);
 
-        *residual = norm / (float)n_A / norm_A / eps;
+        resid2 = norm / (float)n_A / norm_A / eps;
+        *residual = (float)max(resid1, resid2);
     }
 
     case DOUBLE:
     {
-        double norm, norm_A, eps;
+        double norm, norm_A, norm_B, eps, resid1, resid2;
 
+        eps = slamch_("Epsilon");
+        /* Test 1 */
+        if (m_A == n_A)
+        {
+            norm_B = dnrm2_(&m_A, B, &i_one);
+            /* Compute X by passing A and B */
+            dgetrs_("N", &m_A, &nrhs, A_test, &m_A, IPIV, B_test, &m_A, &info);
+            /* Compute AX-B */
+            dgemv_("N", &m_A, &m_A, &d_one, A, &m_A, B_test, &i_one, &d_n_one, B, &i_one);
+            norm = dnrm2_(&m_A, B, &i_one);
+            resid1 = norm / (double)m_A / norm_B / eps;
+        }
+        else
+        {
+            resid1 = 0.0;
+        }
+        /* Test 2 */
         /* Unity diagonal elements to Lower triangular matrix */
         dlaset_("U",&m_A, &m_A, &d_zero, &d_one, L, &m_A);
         norm_A = dlange_("1", &m_A, &n_A, A, &m_A, work);
-        eps = dlamch_("Epsilon");
         /* T = L * U  */
         dgemm_("N", "N", &m_A, &n_A, &m_A, &d_one, L, &m_A, U, &m_A, &d_zero, T, &m_A);
         /*  Row interchanges based on IPIV values*/
@@ -658,19 +698,37 @@ void validate_getrf(integer m_A,
         /* Compute norm( L*U - A ) / ( N * norm(A) * EPS ) */
         norm = dlange_("1", &m_A, &n_A, T, &m_A, work);
 
-        *residual = norm / (double)n_A / norm_A / eps;
+        resid2 = norm / (double)n_A / norm_A / eps;
+        *residual = (double)max(resid1, resid2);
 
         break;
     }
     case COMPLEX:
     {
-        float norm, norm_A, eps;
+        float norm, norm_A, norm_B, eps, resid1, resid2;
+
+        eps = slamch_("Epsilon");
+        /* Test 1 */
+        if (m_A == n_A)
+        {
+            norm_B = snrm2_(&m_A, B, &i_one);
+            /* Compute X by passing A and B */
+            cgetrs_("N", &m_A, &nrhs, A_test, &m_A, IPIV, B_test, &m_A, &info);
+            /* Compute AX-B */
+            cgemv_("N", &m_A, &m_A, &c_one, A, &m_A, B_test, &i_one, &c_n_one, B, &i_one);
+            norm = snrm2_(&m_A, B, &i_one);
+            resid1 = norm / (float)m_A / norm_B / eps;
+        }
+        else
+        {
+            resid1 = 0.0;
+        }
+        /* Test 2 */
 
         /* Unity diagonal elements to Lower triangular matrix */
         claset_("U", &m_A, &m_A, &c_zero, &c_one, L, &m_A);
 
         norm_A = clange_("1", &m_A, &n_A, A, &m_A, work);
-        eps = slamch_("Epsilon");
         /* T = L * U  */
         cgemm_("N", "N", &m_A, &n_A, &m_A, &c_one, L, &m_A, U, &m_A, &c_zero, T, &m_A);
         /*  Row interchanges based on IPIV values*/
@@ -680,17 +738,35 @@ void validate_getrf(integer m_A,
         /* Compute norm( L*U - A ) / ( N * norm(A) * EPS ) */
         norm = clange_("1", &m_A, &n_A, T, &m_A, work);
 
-        *residual = norm / (float)n_A / norm_A /eps;
+        resid2 = norm / (float)n_A / norm_A / eps;
+        *residual = (float)max(resid1, resid2);
     }
     case DOUBLE_COMPLEX:
     {
-        double norm, norm_A, eps;
+        double norm, norm_A, norm_B, eps, resid1, resid2;
+
+        eps = slamch_("Epsilon");
+        /* Test 1 */
+        if (m_A == n_A)
+        {
+            norm_B = dnrm2_(&m_A, B, &i_one);
+            /* Compute X by passing A and B */
+            zgetrs_("N", &m_A, &nrhs, A_test, &m_A, IPIV, B_test, &m_A, &info);
+            /* Compute AX-B */
+            zgemv_("N", &m_A, &m_A, &z_one, A, &m_A, B_test, &i_one, &z_n_one, B, &i_one);
+            norm = dnrm2_(&m_A, B, &i_one);
+            resid1 = norm / (double)m_A / norm_B / eps;
+        }
+        else
+        {
+            resid1 = 0.0;
+        }
+        /* Test 2 */
 
         /* Unity diagonal elements to Lower triangular matrix */
         zlaset_("U", &m_A, &m_A, &z_zero, &z_one, L, &m_A);
 
         norm_A = zlange_("1", &m_A, &n_A, A, &m_A, work);
-        eps = dlamch_("Epsilon");
         /* T = L * U  */
         zgemm_("N", "N", &m_A, &n_A, &m_A, &z_one, L, &m_A, U, &m_A, &z_zero, T, &m_A);
         /*  Row interchanges based on IPIV values*/
@@ -700,7 +776,8 @@ void validate_getrf(integer m_A,
         /* Compute norm( L*U - A ) / ( N * norm(A) * EPS ) */
         norm = zlange_("1", &m_A, &n_A, T, &m_A, work);
 
-        *residual = norm / (double)n_A / norm_A / eps;
+        resid2 = norm / (double)n_A / norm_A / eps;
+        *residual = (double)max(resid1, resid2);
     }
     }
 
@@ -709,6 +786,9 @@ void validate_getrf(integer m_A,
     free_matrix(U);
     free_matrix(T);
     free_vector(work);
+    free_vector(B);
+    free_vector(B_test);
+
 }
 
 void validate_getri(integer m_A,
@@ -1202,6 +1282,89 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer dataty
     free_matrix( A_save );
     free_matrix( buff_A );
     free_matrix( buff_B );
+}
+
+
+void validate_getrs(integer m,
+    integer n,
+    void* A,
+    void* B,
+    void* X,
+    integer datatype,
+    double* residual)
+{
+
+    switch (datatype)
+    {
+    case FLOAT:
+    {
+        float norm_b, norm, eps, resid;
+
+        /* Test 1 */
+        norm_b = snrm2_(&m, B, &i_one);
+        eps = slamch_("P");
+
+        /* Compute Ax-b */
+        sgemv_("N", &m, &m, &s_one, A, &m, X, &i_one, &s_n_one, B, &i_one);
+        norm = snrm2_(&m, B, &i_one);
+
+        resid = norm / (eps * norm_b * (float)m);
+
+        *residual = (double)resid;
+        break;
+    }
+    case DOUBLE:
+    {
+        double norm_b, norm, eps, resid;
+
+        /* Test 1 */
+        norm_b = dnrm2_(&m, B, &i_one);
+        eps = dlamch_("P");
+
+        /* Compute Ax-b */
+        dgemv_("N", &m, &m, &d_one, A, &m, X, &i_one, &d_n_one, B, &i_one);
+        norm = dnrm2_(&m, B, &i_one);
+
+        resid = norm / (eps * norm_b * (double)m);
+
+        *residual = (double)resid;
+        break;
+    }
+    case COMPLEX:
+    {
+        float norm_b, norm, eps, resid;
+
+        /* Test 1 */
+        norm_b = scnrm2_(&m, B, &i_one);
+        eps = slamch_("P");
+
+        /* Compute Ax-b */
+        cgemv_("N", &m, &m, &c_one, A, &m, X, &i_one, &c_n_one, B, &i_one);
+        norm = scnrm2_(&m, B, &i_one);
+
+        resid = norm / (eps * norm_b * (float)m);
+
+        *residual = (double)resid;
+        break;
+    }
+    case DOUBLE_COMPLEX:
+    {
+        double norm_b, norm, eps, resid;
+
+        /* Test 1 */
+        norm_b = dznrm2_(&m, B, &i_one);
+        eps = dlamch_("P");
+
+        /* Compute Ax-b */
+        zgemv_("N", &m, &m, &z_one, A, &m, X, &i_one, &z_n_one, B, &i_one);
+        norm = dznrm2_(&m, B, &i_one);
+
+        resid = norm / (eps * norm_b * (double)m);
+
+        *residual = (double)resid;
+        break;
+    }
+    }
 }
 
 void validate_gesdd(char *jobz, integer m, integer n, void* A, void* A_test, void* s, void* U, void* V, integer datatype, double *residual)
