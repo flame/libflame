@@ -38,7 +38,6 @@
                                     integer* info)
 
 #define LAPACK_orglq_body(prefix)                                       \
-  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);                         \
   FLA_Datatype datatype   = PREFIX2FLAME_DATATYPE(prefix);              \
   FLA_Obj      A, AT, AB, t, T;                                         \
   FLA_Error    init_result;                                             \

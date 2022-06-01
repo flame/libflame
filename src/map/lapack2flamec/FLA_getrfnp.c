@@ -45,7 +45,6 @@ extern void DTL_Trace(
                                integer* info )
 
 #define LAPACK_getrfnp_body(prefix)                               \
-  AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5); 		\
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   FLA_Obj      A;                                            \
   FLA_Error    e_val;                                           \
