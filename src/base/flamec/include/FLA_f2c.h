@@ -41,13 +41,14 @@
 #define FLA_IS "d"
 #endif
 
-/*Increases visibility of FLA_clock()*/
-double FLA_Clock();
-void get_time_unit(char * , double *);
-
 #if AOCL_DTL_LOG_ENABLE
+	/*Increases visibility of FLA_clock()*/
+	double FLA_Clock();
+	void get_time_unit(char * , double *);
+
 	#define BUFF_SIZE 256
 	#define BUFFER buffer
+	/*Variable Argument macro for snprintf*/
 	#define AOCL_DTL_SNPRINTF(...) snprintf(BUFFER,BUFF_SIZE,__VA_ARGS__)
 
 #else
@@ -56,11 +57,25 @@ void get_time_unit(char * , double *);
 #endif
 
 /**
- * AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5); and DTL Log params
+ * AOCL_DTL_TRACE_ENTRY_INDENT & AOCL_DTL_TRACE_EXIT_INDENT for assigning 
+ * dynamic trace levels based on order of API calls
+ */
+#if AOCL_DTL_TRACE_ENABLE
+	extern TLS_CLASS_SPEC int AOCL_TRACE_COUNTER;
+	#define AOCL_DTL_TRACE_ENTRY_INDENT AOCL_DTL_TRACE_ENTRY(AOCL_TRACE_COUNTER++);
+	#define AOCL_DTL_TRACE_EXIT_INDENT 	AOCL_DTL_TRACE_EXIT(--AOCL_TRACE_COUNTER);
+#else
+	#define AOCL_DTL_TRACE_ENTRY_INDENT 
+	#define AOCL_DTL_TRACE_EXIT_INDENT
+#endif
+
+
+/**
+ * Macros for DTL Tracing with Indentation and Logging inputs with time
  */
 #if AOCL_DTL_LOG_ENABLE & AOCL_DTL_TRACE_ENABLE
 	#define AOCL_DTL_TRACE_LOG_INIT 						\
-		AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);		\
+		AOCL_DTL_TRACE_ENTRY_INDENT							\
 		double api_start_time = 0.0;      					\
 		char buffer[256],unit[3]=" s";    					\
 		double api_duration;              					\
@@ -72,8 +87,8 @@ void get_time_unit(char * , double *);
 		snprintf(buffer+strlen(buffer), 					\
 			sizeof(buffer) - strlen(buffer),				\
 			" time: %06.2f%s ",api_duration,unit);			\
-		AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);   	\
-		AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+		AOCL_DTL_LOG(AOCL_DTL_LEVEL_INFO, buffer);   	\
+		AOCL_DTL_TRACE_EXIT_INDENT
 	
 	
 
@@ -90,14 +105,14 @@ void get_time_unit(char * , double *);
 		snprintf(buffer+strlen(buffer), 					\
 				sizeof(buffer) - strlen(buffer),			\
 				" time: %06.2f%s ", api_duration,unit);		\
-		AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);   
+		AOCL_DTL_LOG(AOCL_DTL_LEVEL_INFO, buffer);   
 
 #elif AOCL_DTL_TRACE_ENABLE
 	#define AOCL_DTL_TRACE_LOG_INIT 						\
-		AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+		AOCL_DTL_TRACE_ENTRY_INDENT
 
 	#define AOCL_DTL_TRACE_LOG_EXIT  						\
-		AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+		AOCL_DTL_TRACE_EXIT_INDENT
 
 #else
 	#define AOCL_DTL_TRACE_LOG_INIT 
