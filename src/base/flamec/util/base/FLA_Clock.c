@@ -47,6 +47,15 @@ void get_time_unit(char * scale , double * time)
     *time *= 1000000000;
   }
 }
+
+/*===================================================================
+* AOCL_TRACE_COUNTER:   This variable will be used to dynamically
+                        increase or decrease trace levels
+                        based on the order of calls
+*==================================================================*/
+#if AOCL_DTL_TRACE_ENABLE
+TLS_CLASS_SPEC int AOCL_TRACE_COUNTER = AOCL_DTL_LEVEL_TRACE_1;
+#endif
 // --- Begin non-Windows build definitions -------------------------------------
 #ifndef FLA_ENABLE_WINDOWS_BUILD
 
