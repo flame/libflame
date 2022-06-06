@@ -205,6 +205,9 @@ struct FLASH_Task_s
   // GPU enabled task
   FLA_Bool      enabled_gpu;
 
+  // HIP enabled task
+  FLA_Bool      enabled_hip;
+
   // Integer arguments
   int           n_int_args;
   int*          int_arg;

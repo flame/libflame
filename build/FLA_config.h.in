@@ -50,6 +50,9 @@
 /* Determines whether GPU-specific blocks of code should be compiled. */
 #undef FLA_ENABLE_GPU
 
+/* Determines whether HIP-specific blocks of code should be compiled. */
+#undef FLA_ENABLE_HIP
+
 /* Determines whether to enable internal runtime consistency checks of
    function parameters and return values. */
 #undef FLA_ENABLE_INTERNAL_ERROR_CHECKING
