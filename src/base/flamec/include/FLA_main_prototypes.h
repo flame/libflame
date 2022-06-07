@@ -8,6 +8,10 @@
 
 */
 
+#ifdef FLA_ENABLE_HIP
+#include <rocblas.h>
+#endif
+
 // -----------------------------------------------------------------------------
 
 fla_blocksize_t* FLA_Blocksize_create( dim_t b_s, dim_t b_d, dim_t b_c, dim_t b_z );
@@ -341,6 +345,13 @@ void          FLA_Param_map_flame_to_netlib_storev( FLA_Store storev, void* lapa
 void          FLA_Param_map_flame_to_netlib_evd_type( FLA_Evd_type evd_type, void* lapack_evd_type );
 void          FLA_Param_map_flame_to_netlib_svd_type( FLA_Svd_type svd_type, void* lapack_svd_type );
 void          FLA_Param_map_flame_to_netlib_machval( FLA_Machval machval, void* blas_machval );
+
+#ifdef FLA_ENABLE_HIP
+rocblas_operation FLA_Param_map_flame_to_rocblas_trans( FLA_Trans trans );
+rocblas_fill      FLA_Param_map_flame_to_rocblas_uplo( FLA_Uplo uplo );
+rocblas_side      FLA_Param_map_flame_to_rocblas_side( FLA_Side side );
+rocblas_diagonal  FLA_Param_map_flame_to_rocblas_diag( FLA_Diag diag );
+#endif
 
 void          FLA_Param_map_flame_to_blis_trans( FLA_Trans trans, trans1_t* blis_trans );
 void          FLA_Param_map_flame_to_blis_conj( FLA_Conj conj, conj1_t* blis_conj );

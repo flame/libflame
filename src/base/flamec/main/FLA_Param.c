@@ -9,6 +9,9 @@
 */
 
 #include "FLAME.h"
+#ifdef FLA_ENABLE_HIP
+#include <rocblas.h>
+#endif
 
 // --- FLAME to BLAS/LAPACK mappings -------------------------------------------
 
@@ -44,6 +47,28 @@ void FLA_Param_map_flame_to_netlib_trans( FLA_Trans trans, void* blas_trans )
 	}
 }
 
+#ifdef FLA_ENABLE_HIP
+rocblas_operation FLA_Param_map_flame_to_rocblas_trans( FLA_Trans trans)
+{
+	if ( trans == FLA_NO_TRANSPOSE )
+	{
+		return rocblas_operation_none;
+	} else if ( trans == FLA_TRANSPOSE )
+	{
+		return rocblas_operation_transpose;
+	}
+	else if ( trans == FLA_CONJ_TRANSPOSE )
+	{
+		return rocblas_operation_conjugate_transpose;
+	}
+	else
+	{
+		FLA_Check_error_code( FLA_INVALID_TRANS );
+		return rocblas_operation_none; // to silence warning
+	}
+}
+#endif
+
 void FLA_Param_map_flame_to_netlib_uplo( FLA_Uplo uplo, void* blas_uplo )
 {
 	if ( uplo == FLA_LOWER_TRIANGULAR )
@@ -67,6 +92,25 @@ void FLA_Param_map_flame_to_netlib_uplo( FLA_Uplo uplo, void* blas_uplo )
 		FLA_Check_error_code( FLA_INVALID_UPLO );
 	}
 }
+
+#ifdef FLA_ENABLE_HIP
+rocblas_fill FLA_Param_map_flame_to_rocblas_uplo( FLA_Uplo uplo )
+{
+	if ( uplo == FLA_LOWER_TRIANGULAR )
+	{
+		return rocblas_fill_lower;
+	}
+	else if ( uplo == FLA_UPPER_TRIANGULAR )
+	{
+		return rocblas_fill_upper;
+	}
+	else
+	{
+		FLA_Check_error_code( FLA_INVALID_UPLO );
+		return rocblas_fill_lower; // to silence warning
+	}
+}
+#endif
 
 void FLA_Param_map_flame_to_netlib_side( FLA_Side side, void* blas_side )
 {
@@ -92,6 +136,25 @@ void FLA_Param_map_flame_to_netlib_side( FLA_Side side, void* blas_side )
 	}
 }
 
+#ifdef FLA_ENABLE_HIP
+rocblas_side FLA_Param_map_flame_to_rocblas_side( FLA_Side side )
+{
+	if ( side == FLA_LEFT )
+	{
+		return rocblas_side_left;
+	}
+	else if ( side == FLA_RIGHT )
+	{
+		return rocblas_side_right;
+	}
+	else
+	{
+		FLA_Check_error_code( FLA_INVALID_SIDE );
+		return rocblas_side_left; // to silence warning
+	}
+}
+#endif
+
 void FLA_Param_map_flame_to_netlib_diag( FLA_Diag diag, void* blas_diag )
 {
 	if ( diag == FLA_NONUNIT_DIAG )
@@ -115,6 +178,25 @@ void FLA_Param_map_flame_to_netlib_diag( FLA_Diag diag, void* blas_diag )
 		FLA_Check_error_code( FLA_INVALID_DIAG );
 	}
 }
+
+#ifdef FLA_ENABLE_HIP
+rocblas_diagonal FLA_Param_map_flame_to_rocblas_diag( FLA_Diag diag )
+{
+	if ( diag == FLA_NONUNIT_DIAG )
+	{
+		return rocblas_diagonal_non_unit;
+	}
+	else if ( diag == FLA_UNIT_DIAG )
+	{
+		return rocblas_diagonal_unit;
+	}
+	else
+	{
+		FLA_Check_error_code( FLA_INVALID_DIAG );
+		return rocblas_diagonal_non_unit; // to silence warning
+	}
+}
+#endif
 
 void FLA_Param_map_flame_to_netlib_direct( FLA_Direct direct, void* lapack_direct )
 {
