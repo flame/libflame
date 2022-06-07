@@ -662,6 +662,7 @@ fla_enable_memory_alignment
 fla_vector_intrinsic_type
 fla_enable_vector_intrinsics
 fla_c_sse_flags
+fla_enable_hip
 fla_enable_gpu
 fla_enable_supermatrix
 fla_multithreading_model
@@ -779,6 +780,7 @@ enable_blas3_front_end_cntl_trees
 enable_multithreading
 enable_supermatrix
 enable_gpu
+enable_hip
 enable_vector_intrinsics
 enable_memory_alignment
 enable_ldim_alignment
@@ -1526,6 +1528,10 @@ Optional Features:
                           and parallel execution system. (Disabled by
                           default.)
   --enable-gpu            Enable code that takes advantage of GPUs when
+                          performing certain computations. If enabled,
+                          SuperMatrix must also be enabled. Note that this
+                          option is experimental. (Disabled by default.)
+  --enable-hip            Enable code that takes advantage of HIPs when
                           performing certain computations. If enabled,
                           SuperMatrix must also be enabled. Note that this
                           option is experimental. (Disabled by default.)
@@ -6688,6 +6694,58 @@ $as_echo "no" >&6; }
 
 
 
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested HIP extensions" >&5
+$as_echo_n "checking whether user requested HIP extensions... " >&6; }
+
+				# Check whether --enable-hip was given.
+if test "${enable_hip+set}" = set; then :
+  enableval=$enable_hip;
+				if test "$enableval" = "no" ; then
+
+						fla_enable_hip=no
+
+		elif test "$enableval" = "yes" ; then
+
+						fla_enable_hip=yes
+		else
+
+												as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_HIP!" "$LINENO" 5
+		fi
+
+else
+
+						fla_enable_hip=no
+
+
+fi
+
+
+		if   test "$fla_enable_hip" = "yes" ; then
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+
+$as_echo "#define FLA_ENABLE_HIP 1" >>confdefs.h
+
+
+	elif test "$fla_enable_hip" = "no" ; then
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+	else
+
+				as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_HIP!" "$LINENO" 5
+
+	fi
+
+
+
+
+
+
+
 
 
 
@@ -6696,6 +6754,24 @@ $as_echo "no" >&6; }
 		if test "$fla_enable_gpu" = "yes" ; then
 		if test "$fla_enable_supermatrix" = "no" ; then
 			as_fn_error 1 "Configuring libflame to enable GPU support without also enabling SuperMatrix is not allowed. GPU utilization requires that SuperMatrix be enabled. Please adjust your configure options accordingly and then re-run configure." "$LINENO" 5
+		fi
+	fi
+
+		if test "$fla_enable_hip" = "yes" ; then
+		if test "$fla_enable_supermatrix" = "no" ; then
+			as_fn_error 1 "Configuring libflame to enable HIP support without also enabling SuperMatrix is not allowed. HIP utilization requires that SuperMatrix be enabled. Please adjust your configure options accordingly and then re-run configure." "$LINENO" 5
+		fi
+	fi
+
+
+
+
+
+
+
+		if test "$fla_enable_gpu" = "yes" ; then
+		if test "$fla_enable_hip" = "yes" ; then
+			as_fn_error 1 "Configuring libflame to enable GPU and HIP support is not allowed. Please adjust your configure options accordingly and then re-run configure." "$LINENO" 5
 		fi
 	fi
 
