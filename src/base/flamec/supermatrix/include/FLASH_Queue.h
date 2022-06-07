@@ -16,6 +16,7 @@
 #include "FLASH_Queue_macro_defs.h"
 
 #include "FLASH_Queue_gpu.h"
+#include "FLASH_Queue_hip.h"
 
 
 #endif // FLASH_QUEUE_H
