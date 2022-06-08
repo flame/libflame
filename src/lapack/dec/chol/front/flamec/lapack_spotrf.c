@@ -68,7 +68,13 @@ static real c_b14 = 1.f;
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;
     a -= a_offset;
+    #if AOCL_FLA_PROGRESS_H
+        AOCL_FLA_PROGRESS_VAR;
+	step_count=0;
+	if(!aocl_fla_progress_ptr)
+            aocl_fla_progress_ptr=aocl_fla_progress;
 
+    #endif
     /* Function Body */
     *info = 0;
     upper = lsame_(uplo, "U");
@@ -102,7 +108,6 @@ static real c_b14 = 1.f;
     } else {
 
 /*        Use blocked code. */
-
 	if (upper) {
 
 /*           Compute the Cholesky factorization A = U'*U. */
@@ -118,6 +123,12 @@ static real c_b14 = 1.f;
 		i__3 = nb, i__4 = *n - j + 1;
 		jb = min(i__3,i__4);
 		i__3 = j - 1;
+		#if AOCL_FLA_PROGRESS_H
+		    if(aocl_fla_progress_ptr){
+                	step_count+=jb;
+                	AOCL_FLA_PROGRESS_FUNC_PTR("SPOTRF",6,&step_count,&thread_id,&total_threads);
+            	    }
+        	#endif 
 		ssyrk_("Upper", "Transpose", &jb, &i__3, &c_b13, &a[j *
 			a_dim1 + 1], lda, &c_b14, &a[j + j * a_dim1], lda);
 		lapack_spotf2("Upper", &jb, &a[j + j * a_dim1], lda, info);
@@ -157,6 +168,12 @@ static real c_b14 = 1.f;
 		i__3 = nb, i__4 = *n - j + 1;
 		jb = min(i__3,i__4);
 		i__3 = j - 1;
+		#if AOCL_FLA_PROGRESS_H
+		    if(aocl_fla_progress_ptr){
+                	step_count+=jb;
+                	AOCL_FLA_PROGRESS_FUNC_PTR("SPOTRF",6,&step_count,&thread_id,&total_threads);
+                    }
+                #endif
 		ssyrk_("Lower", "No transpose", &jb, &i__3, &c_b13, &a[j +
 			a_dim1], lda, &c_b14, &a[j + j * a_dim1], lda);
 		lapack_spotf2("Lower", &jb, &a[j + j * a_dim1], lda, info);

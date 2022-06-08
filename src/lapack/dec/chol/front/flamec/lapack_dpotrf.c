@@ -7,12 +7,10 @@
 #include "FLAME.h"
 
 /* Table of constant values */
-
 static integer c__1 = 1;
 static integer c_n1 = -1;
 static doublereal c_b13 = -1.;
 static doublereal c_b14 = 1.;
-
 /* Subroutine */ int lapack_dpotrf(char *uplo, integer *n, doublereal *a, integer *
 	lda, integer *info)
 {
@@ -72,7 +70,12 @@ static doublereal c_b14 = 1.;
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;
     a -= a_offset;
-
+    #if AOCL_FLA_PROGRESS_H
+        AOCL_FLA_PROGRESS_VAR;
+	step_count =0;
+	if(!aocl_fla_progress_ptr)
+            aocl_fla_progress_ptr=aocl_fla_progress;
+    #endif
     /* Function Body */
     *info = 0;
     upper = lsame_(uplo, "U");
@@ -104,15 +107,14 @@ static doublereal c_b14 = 1.;
 
 	lapack_dpotf2(uplo, n, &a[a_offset], lda, info);
     } else {
-
 /*        Use blocked code. */
-
 	if (upper) {
 
 /*           Compute the Cholesky factorization A = U'*U. */
 
 	    i__1 = *n;
 	    i__2 = nb;
+		
 	    for (j = 1; i__2 < 0 ? j >= i__1 : j <= i__1; j += i__2) {
 
 /*              Update and factorize the current diagonal block and test */
@@ -122,6 +124,12 @@ static doublereal c_b14 = 1.;
 		i__3 = nb, i__4 = *n - j + 1;
 		jb = min(i__3,i__4);
 		i__3 = j - 1;
+		#if AOCL_FLA_PROGRESS_H
+		    if(aocl_fla_progress_ptr){
+                       step_count+=jb;
+                       AOCL_FLA_PROGRESS_FUNC_PTR("DPOTRF",6,&step_count,&thread_id,&total_threads);
+                    }
+                #endif     
 		dsyrk_("Upper", "Transpose", &jb, &i__3, &c_b13, &a[j *
 			a_dim1 + 1], lda, &c_b14, &a[j + j * a_dim1], lda);
 	        lapack_dpotf2("Upper", &jb, &a[j + j * a_dim1], lda, info);
@@ -144,9 +152,8 @@ static doublereal c_b14 = 1.;
 			    + jb) * a_dim1], lda);
 		}
 /* L10: */
-	    }
-
-	} else {
+            }
+	   } else {
 
 /*           Compute the Cholesky factorization A = L*L'. */
 
@@ -161,6 +168,13 @@ static doublereal c_b14 = 1.;
 		i__3 = nb, i__4 = *n - j + 1;
 		jb = min(i__3,i__4);
 		i__3 = j - 1;
+		#if AOCL_FLA_PROGRESS_H
+		   if(aocl_fla_progress_ptr){
+                      step_count+=jb;
+                      AOCL_FLA_PROGRESS_FUNC_PTR("DPOTRF",6,&step_count,&thread_id,&total_threads);
+                   }
+                #endif
+
 		dsyrk_("Lower", "No transpose", &jb, &i__3, &c_b13, &a[j +
 			a_dim1], lda, &c_b14, &a[j + j * a_dim1], lda);
 		lapack_dpotf2("Lower", &jb, &a[j + j * a_dim1], lda, info);
