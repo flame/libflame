@@ -593,16 +593,41 @@ void c_div_t(scomplex *cp, scomplex *ap, scomplex *bp)
 /* work value calculation */
 integer get_work_value( integer datatype, void *work )
 {
+    integer value;
 
     if(!work)
         return 0;
 
-    if( datatype == FLOAT || datatype == COMPLEX )
-        return (integer) (*(float*)work);
-    else
-        return (integer) (*(double*)work);
+    switch(datatype)
+    {
+        case INTEGER:
+        {
+            value = (*(integer*)work);
+            break;
+	}
+        case FLOAT:
+        {
+            value = (integer) (*(float*)work);
+	    break;
+	}
+        case DOUBLE:
+        {
+            value = (integer) (*(double*)work);
+	    break;
+	}
+        case COMPLEX:
+        {
+	    value = (integer) (((scomplex *)work)->real);
+	    break;
+	}
+        case DOUBLE_COMPLEX:
+        {
+	    value = (integer) (((dcomplex *)work)->real);
+	    break;
+	}
+    }
+    return value;
 }
-
 
 void diagmv( integer datatype, integer m, integer n, void* x, integer incx, void* a, integer a_rs, integer a_cs )
 {
@@ -735,78 +760,78 @@ void scalv( integer datatype, integer n, void* x, integer incx, void* y, integer
 
 void set_transpose(integer datatype, char *uplo, char *trans_A, char *trans_B)
 {
-        if(*uplo == 'L')
-        {
-                *trans_A = 'N';
-                *trans_B = 'C';
-        }
-        else
-        {
-                *trans_A = 'C';
-                *trans_B = 'N';
-        }
+    if(*uplo == 'L')
+    {
+        *trans_A = 'N';
+        *trans_B = 'C';
+    }
+    else
+    {
+	*trans_A = 'C';
+        *trans_B = 'N';
+    }
 }
 
 void rand_spd_matrix(integer datatype, char *uplo, void **A, integer m,integer lda)
 {
-        void *sample = NULL;
-        void *buff_A = NULL, *buff_B = NULL;
-        void *I = NULL;
-        char trans_A, trans_B;
+    void *sample = NULL;
+    void *buff_A = NULL, *buff_B = NULL;
+    void *I = NULL;
+    char trans_A, trans_B;
 
-        create_matrix(datatype, &sample, m, m);
-        create_matrix(datatype, &buff_A, m, m);
-        create_matrix(datatype, &buff_B, m, m);
+    create_matrix(datatype, &sample, m, m);
+    create_matrix(datatype, &buff_A, m, m);
+    create_matrix(datatype, &buff_B, m, m);
 
-        reset_matrix(datatype, m, m, buff_A, m);
-        reset_matrix(datatype, m, m, buff_B, m);
+    reset_matrix(datatype, m, m, buff_A, m);
+    reset_matrix(datatype, m, m, buff_B, m);
 
-        create_matrix(datatype, &I, m, m);
-        set_identity_matrix(datatype, m, m, I, m);
+    create_matrix(datatype, &I, m, m);
+    set_identity_matrix(datatype, m, m, I, m);
 
-        /* Generate random symmetric matrix */
-        rand_sym_matrix(datatype, sample, m, m, lda);
+    /* Generate random symmetric matrix */
+    rand_sym_matrix(datatype, sample, m, m, lda);
 
-        /* Based on uplo set the transpose flag */
-        set_transpose(datatype, uplo, &trans_A, &trans_B);
+    /* Based on uplo set the transpose flag */
+    set_transpose(datatype, uplo, &trans_A, &trans_B);
 
-        copy_matrix(datatype, uplo, m, m, sample, m, buff_A, lda);
-        copy_matrix(datatype, uplo, m, m, sample, m, buff_B, lda);
+    copy_matrix(datatype, uplo, m, m, sample, m, buff_A, lda);
+    copy_matrix(datatype, uplo, m, m, sample, m, buff_B, lda);
 
-        switch(datatype)
+    switch(datatype)
+    {
+        case FLOAT:
         {
-                case FLOAT:
-                {
-                        float beta = m;
-                        sgemm_(&trans_A, &trans_B, &m, &m, &m, &s_one, buff_A, &m, buff_B, &m, &beta, I, &m);
-                        break;
-                }
-                case DOUBLE:
-                {
-                        double beta = m;
-                        dgemm_(&trans_A, &trans_B, &m, &m, &m, &d_one, buff_A, &m, buff_B, &m, &beta, I, &m);
-                        break;
-                }
-                case COMPLEX:
-                {
-                        scomplex beta = {m,0};
-                        cgemm_(&trans_A, &trans_B, &m, &m, &m, &c_one, buff_A, &m, buff_B, &m, &beta, I, &m);
-                        break;
-                }
-                case DOUBLE_COMPLEX:
-                {
-                        dcomplex beta = {m,0};
-                        zgemm_(&trans_A, &trans_B, &m, &m, &m, &z_one, buff_A, &m, buff_B, &m, &beta, I, &m);
-                        break;
-                }
+            float beta = m;
+            sgemm_(&trans_A, &trans_B, &m, &m, &m, &s_one, buff_A, &m, buff_B, &m, &beta, I, &m);
+            break;
         }
-        copy_matrix(datatype, "full", m, m, I, m, *A, lda);
+        case DOUBLE:
+        {
+            double beta = m;
+            dgemm_(&trans_A, &trans_B, &m, &m, &m, &d_one, buff_A, &m, buff_B, &m, &beta, I, &m);
+            break;
+        }
+        case COMPLEX:
+        {
+            scomplex beta = {m,0};
+            cgemm_(&trans_A, &trans_B, &m, &m, &m, &c_one, buff_A, &m, buff_B, &m, &beta, I, &m);
+            break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+             dcomplex beta = {m,0};
+             zgemm_(&trans_A, &trans_B, &m, &m, &m, &z_one, buff_A, &m, buff_B, &m, &beta, I, &m);
+             break;
+        }
+    }
+    copy_matrix(datatype, "full", m, m, I, m, *A, lda);
 
-        /* free buffers */
-        free_matrix(sample);
-        free_matrix(buff_A);
-        free_matrix(buff_B);
-        free_matrix(I);
+    /* free buffers */
+    free_matrix(sample);
+    free_matrix(buff_A);
+    free_matrix(buff_B);
+    free_matrix(I);
 
     return;
 }
@@ -857,5 +882,37 @@ void diagonalize_vector(integer datatype, void* s, void* sigma, integer m, integ
             break;
         }
     }
+    return;
+}
+
+/* Generate random Hermitian matrix */
+void rand_hermitian_matrix(integer datatype, integer n, void** A, integer lda)
+{
+    void *B = NULL, *Herm = NULL;
+
+    create_matrix(datatype, &B, n, n);
+    create_matrix(datatype, &Herm, n, n);
+
+    reset_matrix(datatype, n, n, B, n);
+    reset_matrix(datatype, n, n, Herm, n);
+
+    rand_matrix(datatype, B, n, n, n);
+
+    switch(datatype)
+    {
+        case COMPLEX:
+        {
+            cgemm_("N", "C", &n, &n, &n, &c_one, B, &n, B, &n, &c_zero, Herm, &n);
+            break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+            zgemm_("N", "C", &n, &n, &n, &z_one, B, &n, B, &n, &z_zero, Herm, &n);
+            break;
+        }
+    }
+    copy_matrix(datatype, "full", n, n, Herm, lda, *A, lda);
+    free_matrix(B);
+    free_matrix(Herm);
     return;
 }

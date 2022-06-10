@@ -4,6 +4,7 @@
 
 target_sources(test_libFLAME_main
      PRIVATE
+${CMAKE_CURRENT_SOURCE_DIR}/test_syevd.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_orgqr.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_potrs.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_getrf.c
