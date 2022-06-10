@@ -64,8 +64,8 @@ int main(int argc, char *argv[])
   fprintf( stdout, "%c %d\n", '%', n_repeats );
 
   fprintf( stdout, "%c enter FLASH blocksize: ", '%' );
-  scanf( "%u", &b_flash );
-  fprintf( stdout, "%c %u\n", '%', b_flash );
+  scanf( "%lu", &b_flash );
+  fprintf( stdout, "%c %lu\n", '%', b_flash );
 
   fprintf( stdout, "%c enter problem size first, last, inc: ", '%' );
   scanf( "%d%d%d", &p_first, &p_last, &p_inc );

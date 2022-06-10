@@ -59,8 +59,8 @@ int main(int argc, char *argv[])
 
 
   fprintf( stdout, "%c number of repeats: ", '%' );
-  scanf( "%d", &n_repeats );
-  fprintf( stdout, "%c %d\n", '%', n_repeats );
+  scanf( "%lu", &n_repeats );
+  fprintf( stdout, "%c %lu\n", '%', n_repeats );
 
   fprintf( stdout, "%c enter FLASH blocksize: ", '%' );
   scanf( "%d", &nb_alg );

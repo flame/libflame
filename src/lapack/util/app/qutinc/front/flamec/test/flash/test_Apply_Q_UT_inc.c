@@ -65,8 +65,8 @@ int main(int argc, char *argv[])
   fprintf( stdout, "%c %d\n", '%', n_repeats );
 
   fprintf( stdout, "%c enter algorithmic blocksize: ", '%' );
-  scanf( "%u", &nb_alg );
-  fprintf( stdout, "%c %u\n", '%', nb_alg );
+  scanf( "%lu", &nb_alg );
+  fprintf( stdout, "%c %lu\n", '%', nb_alg );
 
   fprintf( stdout, "%c enter FLASH blocksize: ", '%' );
   scanf( "%u", &nb_flash );
