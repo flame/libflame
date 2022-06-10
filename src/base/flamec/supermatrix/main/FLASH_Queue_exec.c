@@ -403,11 +403,11 @@ void FLASH_Queue_exec( void )
 
    // Initialize tasks with critical information.
    FLASH_Queue_init_tasks( ( void* ) &args );
-   
+
    // Display verbose output before free all tasks. 
    if ( FLASH_Queue_get_verbose_output() )
       FLASH_Queue_verbose_output();
-   
+
    // Start timing the parallel execution.
    dtime = FLA_Clock();
 
@@ -2278,6 +2278,165 @@ void FLASH_Queue_destroy_hip( int thread, void *arg )
    return;
 }
 
+FLA_Bool FLASH_Queue_exec_hip( FLASH_Task *t, void *arg )
+/*----------------------------------------------------------------------------
+
+   FLASH_Queue_exec_hip
+
+----------------------------------------------------------------------------*/
+{
+   void** input_arg;
+   void** output_arg;
+
+   if ( t == NULL )
+      return TRUE;
+
+   // If not using a HIP device, then execute on CPU.
+   if ( !FLASH_Queue_get_enabled_hip() )
+   {
+      FLASH_Queue_exec_task( t );
+
+      return TRUE;
+   }
+
+   // Check if all the operands are ready and up to date.
+   if ( !FLASH_Queue_check_hip( t, arg ) )
+   {
+      FLASH_Queue_vars* args = ( FLASH_Queue_vars* ) arg;
+      int queue = t->queue;
+      t->hit = FALSE;
+
+#ifdef FLA_ENABLE_MULTITHREADING
+      FLA_Lock_acquire( &(args->run_lock[queue]) ); // R ***
+#endif
+      // Reenqueue the task if the blocks are not all flushed.
+      FLASH_Queue_wait_enqueue( t, arg );
+
+#ifdef FLA_ENABLE_MULTITHREADING
+      FLA_Lock_release( &(args->run_lock[queue]) ); // R ***
+#endif
+
+      return FALSE;
+   }
+
+   // If HIP is enabled, but the task is not supported for HIP execution.
+   if ( !t->enabled_hip )
+   {
+      int i, j, k;
+      int thread        = t->thread;
+      int n_input_args  = t->n_input_args;
+      int n_output_args = t->n_output_args;
+      int n_threads     = FLASH_Queue_get_num_threads();
+      FLA_Bool duplicate;
+      FLA_Obj  obj;
+
+      printf("DEBUG: Task not HIP enabled!\n");
+
+      // Check the blocks on each HIP device.
+      for ( k = 0; k < n_threads; k++ )
+      {
+         // Check the input and output arguments on the HIP devices.
+         for ( i = 0; i < n_input_args + n_output_args; i++ )
+         {
+            // Check for duplicate blocks.
+            duplicate = FALSE;
+
+            // Find the correct input or output argument.
+            if ( i < n_input_args )
+            {
+               obj = t->input_arg[i];
+
+               for ( j = 0; j < n_output_args && !duplicate; j++ )
+               {
+                  if ( obj.base == t->output_arg[j].base )
+                     duplicate = TRUE;
+               }
+
+               for ( j = 0; j < i && !duplicate; j++ )
+               {
+                  if ( obj.base == t->input_arg[j].base )
+                     duplicate = TRUE;
+               }
+            }
+            else
+            {
+               obj = t->output_arg[i - n_input_args];
+
+               for ( j = 0; j < i - n_input_args && !duplicate; j++ )
+               {
+                  if ( obj.base == t->output_arg[j].base )
+                     duplicate = TRUE;
+               }
+            }
+
+            // If the block has not been processed before.
+            if ( !duplicate )
+            {
+               // Macroblock is used.
+               if ( FLA_Obj_elemtype( obj ) == FLA_MATRIX )
+               {
+                  dim_t    jj, kk;
+                  dim_t    m    = FLA_Obj_length( obj );
+                  dim_t    n    = FLA_Obj_width( obj );
+                  dim_t    cs   = FLA_Obj_col_stride( obj );
+                  FLA_Obj* buf  = FLASH_OBJ_PTR_AT( obj );
+
+                  // Clear each block in macroblock.
+                  for ( jj = 0; jj < n; jj++ )
+                  {
+                     for ( kk = 0; kk < m; kk++ )
+                     {
+                        obj = *( buf + jj * cs + kk );
+
+                        // Flush the block to main memory if it is on the HIP device.
+                        if ( k == thread )
+                           FLASH_Queue_flush_block_hip( obj, k, arg );
+
+                        // Invalidate output block on all HIP devices.
+                        if ( i >= n_input_args )
+                           FLASH_Queue_invalidate_block_hip( obj, k, arg );
+                     }
+                  }
+               }
+               else
+               {
+                  // Flush the block to main memory if it is on the HIP device.
+                  if ( k == thread )
+                     FLASH_Queue_flush_block_hip( obj, k, arg );
+
+                  // Invalidate output block on all HIP devices.
+                  if ( i >= n_input_args )
+                     FLASH_Queue_invalidate_block_hip( obj, k, arg );
+               }
+            }
+         }
+      }
+
+      // Execute the task on CPU instead of HIP device.
+      FLASH_Queue_exec_task( t );
+
+      return TRUE;
+   }
+
+   // Gather the pointers for the data on the HIP device.
+   input_arg = ( void** ) FLA_malloc( t->n_input_args * sizeof( void* ) );
+   output_arg = ( void** ) FLA_malloc( t->n_output_args * sizeof( void* ) );
+
+   // Bring all the blocks to the HIP device.
+   FLASH_Queue_update_hip( t, input_arg, output_arg, arg );
+
+   // Execute the task on the HIP device.
+   FLASH_Queue_exec_task_hip( t, input_arg, output_arg );
+
+   // Mark all the output blocks as dirty.
+   FLASH_Queue_mark_hip( t, arg );
+
+   // Free memory.
+   FLA_free( input_arg );
+   FLA_free( output_arg );
+
+   return TRUE;
+}
 
 FLA_Bool FLASH_Queue_check_hip( FLASH_Task *t, void *arg )
 /*----------------------------------------------------------------------------
