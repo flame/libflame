@@ -93,4 +93,13 @@ void validate_gesdd(char *jobz,
     void* V,
     integer datatype,
     double* residual);
+
+void validate_syevd(char* jobz,
+    char* uplo,
+    integer n,
+    void* A,
+    void* A_test,
+    void* w,
+    integer datatype,
+    double* residual);
 #endif // TEST_LINEAR_SOLVERS_H

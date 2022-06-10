@@ -131,4 +131,9 @@ extern int sgetrs_(char* trans, integer* n, integer* nrhs, void* a, integer* lda
 extern int cgetrs_(char* trans, integer* n, integer* nrhs, void* a, integer* lda, integer* ipiv, void* b, integer* ldb, integer* info);
 extern int zgetrs_(char* trans, integer* n, integer* nrhs, void* a, integer* lda, integer* ipiv, void* b, integer* ldb, integer* info);
 
+/* Computation of Eigen Values and Eigen Vectors */
+extern int ssyevd_(char* jobz, char* uplo, integer* n, void* a, integer* lda, void* w, void* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
+extern int dsyevd_(char* jobz, char* uplo, integer* n, void* a, integer* lda, void* w, void* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
+extern int cheevd_(char* jobz, char* uplo, integer* n, void* a, integer* lda, void* w, void* work, integer* lwork, void* rwork, integer* lrwork, integer* iwork, integer* liwork, integer* info);
+extern int zheevd_(char* jobz, char* uplo, integer* n, void* a, integer* lda, void* w, void* work, integer* lwork, void* rwork, integer* lrwork, integer* iwork, integer* liwork, integer* info);
 #endif  // TEST_PROTOTYPE_H

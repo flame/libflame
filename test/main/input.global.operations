@@ -8,3 +8,4 @@
 1   potrs   Linear Solve using Cholesky                  (0 = disable; 1 = enable)
 1   orgqr   QR factorisation                              (0 = disable; 1 = enable)
 1   gesdd   Singular Value Decomposition                  (0 = disable; 1 = enable)
+1   syevd   Eigen Decomposition                           (0 = disable; 1 = enable)

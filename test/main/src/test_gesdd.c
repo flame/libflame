@@ -44,7 +44,9 @@ void fla_test_gesdd_experiment(test_params_t *params,
     void *A = NULL, *U = NULL, *V = NULL, *s = NULL, *A_test = NULL;
 
     /* Get input matrix dimensions.*/
-    jobz = params->svd_paramslist[pci].jobu_gesvd; 
+    jobz = params->svd_paramslist[pci].jobu_gesvd;
+    *residual = params->svd_paramslist[pci].svd_threshold;
+
     if(jobz == 'S' || jobz == 'O')
     {
         m = p_cur;
@@ -195,7 +197,6 @@ void prepare_gesdd_run(char *jobz,
 
     free(A_save);
 }
-
 
 void invoke_gesdd(integer datatype, char* jobz, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, void* rwork, integer* iwork, integer* info)
 {
