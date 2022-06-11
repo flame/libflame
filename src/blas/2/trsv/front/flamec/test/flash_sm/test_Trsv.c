@@ -30,7 +30,6 @@ int main(int argc, char *argv[])
   int 
     datatype,
     precision,
-    nb_alg,
     n_threads,
     m_input,
     m,
@@ -41,7 +40,9 @@ int main(int argc, char *argv[])
     i,
     n_param_combos = N_PARAM_COMBOS;
   int one = 1;
-  
+ 
+  dim_t nb_alg;
+ 
   char *colors = "brkgmcbrkgmcbrkgmc";
   char *ticks  = "o+*xso+*xso+*xso+*xs";
   char m_dim_desc[14];

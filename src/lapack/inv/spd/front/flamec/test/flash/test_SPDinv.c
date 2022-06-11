@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
 {
   int 
     datatype,
-    nb_alg,
     m_input,
     m,
     p_first, p_last, p_inc,
@@ -36,7 +35,9 @@ int main(int argc, char *argv[])
     param_combo,
     i,
     n_param_combos = N_PARAM_COMBOS;
-  
+ 
+  dim_t nb_alg;
+ 
   char *colors = "brkgmcbrkg";
   char *ticks  = "o+*xso+*xs";
   char m_dim_desc[14];

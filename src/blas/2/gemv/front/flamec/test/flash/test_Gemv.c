@@ -29,7 +29,6 @@ int main(int argc, char *argv[])
   int 
     datatype,
     precision,
-    nb_alg,
     m_input, n_input,
     m, n,
     p_first, p_last, p_inc,
@@ -39,6 +38,8 @@ int main(int argc, char *argv[])
     i,
     n_param_combos = N_PARAM_COMBOS;
   int one = 1;
+
+  dim_t nb_alg;
   
   char *colors = "brkgmcbrkgmcbrkgmc";
   char *ticks  = "o+*xso+*xso+*xso+*xs";

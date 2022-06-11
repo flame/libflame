@@ -77,8 +77,8 @@ int main(int argc, char *argv[])
   fprintf( stdout, "%c %d %d\n", '%', m_input, n_input );
 
   fprintf( stdout, "%c enter the number of SuperMatrix threads: ", '%' );
-  scanf( "%u", &n_threads );
-  fprintf( stdout, "%c %u\n", '%', n_threads );
+  scanf( "%lu", &n_threads );
+  fprintf( stdout, "%c %lu\n", '%', n_threads );
 
 
   fprintf( stdout, "\nclear all;\n\n" );

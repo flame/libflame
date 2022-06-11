@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
 {
   int 
     datatype,
-    nb_alg,
     n_threads,
     m_input, n_input,
     m, n,
@@ -37,6 +36,8 @@ int main(int argc, char *argv[])
     param_combo,
     i, j,
     n_param_combos = N_PARAM_COMBOS;
+
+  dim_t nb_alg;
 
   int sign;
   
