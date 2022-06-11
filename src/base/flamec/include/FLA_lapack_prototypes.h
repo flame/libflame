@@ -196,6 +196,16 @@ FLA_Error FLA_Bsvdd_external( FLA_Uplo uplo, FLA_Obj d, FLA_Obj e, FLA_Obj U, FL
 FLA_Error FLA_Svd_external( FLA_Svd_type jobu, FLA_Svd_type jobv, FLA_Obj A, FLA_Obj s, FLA_Obj U, FLA_Obj V );
 FLA_Error FLA_Svdd_external( FLA_Svd_type jobz, FLA_Obj A, FLA_Obj s, FLA_Obj U, FLA_Obj V );
 
+// --- external HIP prototypes -------------------------------------------------
+#ifdef FLA_ENABLE_HIP
+FLA_Error FLA_Chol_blk_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip );
+FLA_Error FLA_Chol_l_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
+FLA_Error FLA_Chol_u_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
+FLA_Error FLA_Chol_unb_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip );
+FLA_Error FLA_Chol_l_unb_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
+FLA_Error FLA_Chol_u_unb_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
+#endif
+
 // --- check routine prototypes ------------------------------------------------
 
 FLA_Error FLA_Chol_check( FLA_Uplo uplo, FLA_Obj A );
