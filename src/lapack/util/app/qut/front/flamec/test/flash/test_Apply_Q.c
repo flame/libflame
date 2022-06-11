@@ -29,7 +29,7 @@ int main(int argc, char *argv[])
   int 
     datatype,
     precision,
-    nb_alg, bm, bn,
+    bm, bn,
     m_input, n_input,
     m, n,
     p_first, p_last, p_inc,
@@ -38,7 +38,9 @@ int main(int argc, char *argv[])
     param_combo,
     i,
     n_param_combos = N_PARAM_COMBOS;
-  
+ 
+  dim_t nb_alg;
+ 
   char *colors = "brkgmcbrkgmcbrkgmc";
   char *ticks  = "o+*xso+*xso+*xso+*xs";
   char m_dim_desc[14];
@@ -64,8 +66,8 @@ int main(int argc, char *argv[])
   fprintf( stdout, "%c %d\n", '%', n_repeats );
 
   fprintf( stdout, "%c enter FLASH blocksize: ", '%' );
-  scanf( "%d", &nb_alg );
-  fprintf( stdout, "%c %d\n", '%', nb_alg );
+  scanf( "%lu", &nb_alg );
+  fprintf( stdout, "%c %lu\n", '%', nb_alg );
 
   fprintf( stdout, "%c enter problem size first, last, inc: ", '%' );
   scanf( "%d%d%d", &p_first, &p_last, &p_inc );

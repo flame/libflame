@@ -59,12 +59,12 @@ int main(int argc, char *argv[])
   fprintf( stdout, "%c %d\n", '%', n_repeats );
 
   fprintf( stdout, "%c enter algorithmic blocksize:", '%' );
-  scanf( "%u", &b_alg );
-  fprintf( stdout, "%c %u\n", '%', b_alg );
+  scanf( "%lu", &b_alg );
+  fprintf( stdout, "%c %lu\n", '%', b_alg );
 
   fprintf( stdout, "%c enter FLASH blocksize: ", '%' );
-  scanf( "%u", &b_flash );
-  fprintf( stdout, "%c %u\n", '%', b_flash );
+  scanf( "%lu", &b_flash );
+  fprintf( stdout, "%c %lu\n", '%', b_flash );
 
   fprintf( stdout, "%c enter problem size first, last, inc:", '%' );
   scanf( "%d%d%d", &p_first, &p_last, &p_inc );
@@ -83,8 +83,8 @@ int main(int argc, char *argv[])
   fprintf( stdout, "%c %d\n", '%', n_rhs_input );
 
   fprintf( stdout, "%c enter the number of SuperMatrix threads: ", '%' );
-  scanf( "%u", &n_threads );
-  fprintf( stdout, "%c %u\n", '%', n_threads );
+  scanf( "%lu", &n_threads );
+  fprintf( stdout, "%c %lu\n", '%', n_threads );
 
 
   fprintf( stdout, "\nclear all;\n\n" );

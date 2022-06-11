@@ -27,7 +27,6 @@ int main(int argc, char *argv[])
 {
   int 
     datatype,
-    nb_alg,
     m_input, n_input,
     m, n,
     p_first, p_last, p_inc,
@@ -36,6 +35,8 @@ int main(int argc, char *argv[])
     param_combo,
     i, j,
     n_param_combos = N_PARAM_COMBOS;
+
+  dim_t nb_alg;
 
   int sign;
   
@@ -65,8 +66,8 @@ int main(int argc, char *argv[])
   fprintf( stdout, "%c %d\n", '%', n_repeats );
 
   fprintf( stdout, "%c enter FLASH blocksize: ", '%' );
-  scanf( "%d", &nb_alg );
-  fprintf( stdout, "%c %d\n", '%', nb_alg );
+  scanf( "%lu", &nb_alg );
+  fprintf( stdout, "%c %lu\n", '%', nb_alg );
 
   fprintf( stdout, "%c enter problem size first, last, inc: ", '%' );
   scanf( "%d%d%d", &p_first, &p_last, &p_inc );
