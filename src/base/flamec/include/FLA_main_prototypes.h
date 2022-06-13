@@ -180,7 +180,9 @@ FLA_Bool      FLA_Memory_leak_counter_set( FLA_Bool new_status );
 
 void*         FLA_malloc( size_t size );
 void*         FLA_realloc( void* old_ptr, size_t size );
+void*         FLA_buff_malloc( size_t size );
 void          FLA_free( void *ptr );
+void          FLA_buff_free( void *ptr );
  
 
 

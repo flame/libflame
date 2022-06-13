@@ -107,7 +107,7 @@ FLA_Error FLA_Obj_create_ext( FLA_Datatype datatype, FLA_Elemtype elemtype, dim_
 #ifdef FLA_ENABLE_SCC
   obj->base->buffer = ( FLA_Obj_elemtype( *obj ) == FLA_MATRIX ? FLA_malloc( buffer_size ) : FLA_shmalloc( buffer_size ) );
 #else
-  obj->base->buffer = FLA_malloc( buffer_size );
+  obj->base->buffer = FLA_buff_malloc( buffer_size );
 #endif
   obj->base->buffer_info = 0;
 
@@ -569,7 +569,7 @@ FLA_Error FLA_Obj_create_buffer( dim_t rs, dim_t cs, FLA_Obj *obj )
 #ifdef FLA_ENABLE_SCC
   obj->base->buffer = ( FLA_Obj_elemtype( *obj ) == FLA_MATRIX ? FLA_malloc( buffer_size ) : FLA_shmalloc( buffer_size ) );
 #else
-  obj->base->buffer = FLA_malloc( buffer_size );
+  obj->base->buffer = FLA_buff_malloc( buffer_size );
 #endif
   obj->base->buffer_info = 0;
 
@@ -596,7 +596,7 @@ FLA_Error FLA_Obj_free( FLA_Obj *obj )
     ( FLA_Obj_elemtype( *obj ) == FLA_MATRIX ? FLA_free( obj->base->buffer ) : FLA_shfree( obj->base->buffer ) );
 #else
     //printf( "freeing buff %p\n", obj->base->buffer ); fflush( stdout );
-    FLA_free( obj->base->buffer );
+    FLA_buff_free( obj->base->buffer );
 #endif
     //printf( "freeing base %p\n", obj->base ); fflush( stdout );
     FLA_free( ( void * ) obj->base );
@@ -637,7 +637,7 @@ FLA_Error FLA_Obj_free_buffer( FLA_Obj *obj )
 #ifdef FLA_ENABLE_SCC
   ( FLA_Obj_elemtype( *obj ) == FLA_MATRIX ? FLA_free( obj->base->buffer ) : FLA_shfree( obj->base->buffer ) );
 #else
-  FLA_free( obj->base->buffer );
+  FLA_buff_free( obj->base->buffer );
 #endif
   obj->base->buffer = NULL;
 
