@@ -81,6 +81,9 @@
     a_offset = 1 + a_dim1 * 1;
     a -= a_offset;
     --ipiv;
+    #if AOCL_FLA_PROGRESS_H
+        AOCL_FLA_PROGRESS_VAR;
+    #endif
 
     /* Function Body */
     *info = 0;
@@ -110,10 +113,24 @@
 
 /*        Use unblocked code. */
 
+	        #if AOCL_FLA_PROGRESS_H
+                	if(!aocl_fla_progress_ptr)
+                        	aocl_fla_progress_ptr=aocl_fla_progress;
+
+                    	if(aocl_fla_progress_ptr){
+                        	step_count= min(*m,*n);
+                        	AOCL_FLA_PROGRESS_FUNC_PTR("CGETRF",6,&step_count,&thread_id,&total_threads);
+                    	}
+         	#endif
+
 	lapack_cgetf2(m, n, &a[a_offset], lda, &ipiv[1], info);
     } else {
 
 /*        Use blocked code. */
+	#if AOCL_FLA_PROGRESS_H
+                step_count =0;
+        #endif
+
 
 	i__1 = min(*m,*n);
 	i__2 = nb;
@@ -121,6 +138,17 @@
 /* Computing MIN */
 	    i__3 = min(*m,*n) - j + 1;
 	    jb = min(i__3,nb);
+
+	    #if AOCL_FLA_PROGRESS_H
+                if(!aocl_fla_progress_ptr)
+                        aocl_fla_progress_ptr=aocl_fla_progress;
+
+                    if(aocl_fla_progress_ptr){
+                        step_count+=jb;
+                        AOCL_FLA_PROGRESS_FUNC_PTR("CGETRF",6,&step_count,&thread_id,&total_threads);
+                    }
+            #endif
+
 
 /*           Factor diagonal and subdiagonal blocks and test for exact
              singularity. */
