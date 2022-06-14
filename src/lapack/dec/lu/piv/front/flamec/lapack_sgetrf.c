@@ -86,6 +86,10 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
     a_offset = 1 + a_dim1;
     a -= a_offset;
     --ipiv;
+    #if AOCL_FLA_PROGRESS_H
+        AOCL_FLA_PROGRESS_VAR;
+    #endif
+
 
     /* Function Body */
     *info = 0;
@@ -114,11 +118,24 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
     if (nb <= 1 || nb >= min(*m,*n)) {
 
 /*        Use unblocked code. */
+        #if AOCL_FLA_PROGRESS_H
+                if(!aocl_fla_progress_ptr)
+                        aocl_fla_progress_ptr=aocl_fla_progress;
+
+                    if(aocl_fla_progress_ptr){
+                        step_count= min(*m,*n);
+                        AOCL_FLA_PROGRESS_FUNC_PTR("SGETRF",6,&step_count,&thread_id,&total_threads);
+                    }
+         #endif
 
 	lapack_sgetf2(m, n, &a[a_offset], lda, &ipiv[1], info);
     } else {
 
 /*        Use blocked code. */
+	#if AOCL_FLA_PROGRESS_H
+                    step_count =0;
+        #endif
+
 
 	i__1 = min(*m,*n);
 	i__2 = nb;
@@ -128,6 +145,16 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
 	    jb = min(i__3,nb);
 
 /*           Update current block. */
+	    #if AOCL_FLA_PROGRESS_H
+                if(!aocl_fla_progress_ptr)
+                        aocl_fla_progress_ptr=aocl_fla_progress;
+
+                    if(aocl_fla_progress_ptr){
+                	step_count+=jb;
+                	AOCL_FLA_PROGRESS_FUNC_PTR("SGETRF",6,&step_count,&thread_id,&total_threads);
+                    }
+  	    #endif
+
 
 	    i__3 = *m - j + 1;
 	    i__4 = j - 1;
@@ -140,7 +167,6 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
 
 	    i__3 = *m - j + 1;
 	    sgetrf2_(&i__3, &jb, &a[j + j * a_dim1], lda, &ipiv[j], &iinfo);
-
 /*           Adjust INFO and the pivot indices. */
 
 	    if (*info == 0 && iinfo > 0) {

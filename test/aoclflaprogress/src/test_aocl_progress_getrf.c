@@ -1,5 +1,8 @@
 #include "test_aocl_progress.h"
-
+#define TEST_SGETRF
+#define TEST_DGETRF
+#define TEST_CGETRF
+#define TEST_ZGETRF
 #define PROCESS_ENABLE
 #ifdef PROCESS_ENABLE
 #define BUFLEN 16
@@ -57,27 +60,131 @@ int main()
 	sscanf( buffer, "%"FS"", &n);
     
     lda = m;
+
+	#ifdef TEST_SGETRF
+    A = (float *)malloc(m*n*sizeof(float));
+    ipiv = (integer *)malloc(m*sizeof(integer));
+    /* Initialization of input Buffers */
+    printf("Testing SGETRF API values are m = %"FS" ,n=%"FS",lda=%"FS"  \n",m,n,lda);
+	fla_test_init_buffer_rand_s( A,m,n,lda);
+    #ifdef SET_PROCESS_ENABLE
+      	aocl_fla_set_progress(test_progress);
+    #endif 
+	sgetrf_(&m,&n,A,&lda,ipiv,&info);
+	free(A);
+	free(ipiv);
+	#endif
+	#ifdef TEST_DGETRF
     A = (double *)malloc(m*n*sizeof(double));
     ipiv = (integer *)malloc(m*sizeof(integer));
     /* Initialization of input Buffers */
-    fla_test_init_buffer_rand( A, m*n );
-    printf("in main m = %"FS" ,n=%"FS",lda=%"FS"  \n",m,n,lda);
+    printf("Testing DGETRF API values are m = %"FS" ,n=%"FS",lda=%"FS"  \n",m,n,lda);
+	fla_test_init_buffer_rand_d( A,m,n,lda);
     #ifdef SET_PROCESS_ENABLE
       	aocl_fla_set_progress(test_progress);
     #endif 
 	dgetrf_(&m,&n,A,&lda,ipiv,&info);
+	free(A);
+	free(ipiv);
+	#endif
+
+    #ifdef TEST_CGETRF
+    A = (scomplex *)malloc(m*n*sizeof(scomplex));
+    ipiv = (integer *)malloc(m*sizeof(integer));
+    /* Initialization of input Buffers */
+    printf("Testing CGETRF API values are m = %"FS" ,n=%"FS",lda=%"FS"  \n",m,n,lda);
+	fla_test_init_buffer_rand_c( A,m,n,lda);
+    #ifdef SET_PROCESS_ENABLE
+      	aocl_fla_set_progress(test_progress);
+    #endif 
+	cgetrf_(&m,&n,A,&lda,ipiv,&info);
+	free(A);
+	free(ipiv);
+	#endif
+	#ifdef TEST_ZGETRF
+    A = (dcomplex *)malloc(m*n*sizeof(dcomplex));
+    ipiv = (integer *)malloc(m*sizeof(integer));
+    /* Initialization of input Buffers */
+    printf("Testing ZGETRF API values are m = %"FS" ,n=%"FS",lda=%"FS"  \n",m,n,lda);
+	fla_test_init_buffer_rand_z( A,m,n,lda);
+    #ifdef SET_PROCESS_ENABLE
+      	aocl_fla_set_progress(test_progress);
+    #endif 
+	zgetrf_(&m,&n,A,&lda,ipiv,&info);
+	free(A);
+	free(ipiv);
+	#endif
 
     return 0;
 
 }
 
-void  fla_test_init_buffer_rand( double *buf1, integer size)
+void  fla_test_init_buffer_rand_d( double *buf1, integer M,integer N,integer LDA)
 {
-   integer j;
-    for( j = 0; j < size; j++ ) {
-       buf1[j] = ((double) rand()) / ((double) RAND_MAX) - 0.5;
-    }
+   int i, j;
+
+   for( i = 0; i < N; i++ )
+   {
+      for( j = 0; j < M; j++ )
+      {
+         buf1[i * LDA + j] = DRAND();
+      }
+   }
+
+   return;
+
 }
+
+void  fla_test_init_buffer_rand_z( dcomplex *buf1, integer M,integer N,integer LDA)
+{
+   
+   int i, j;
+
+   for( i = 0; i < N; i++ )
+   {
+      for( j = 0; j < M; j++ )
+      {
+         buf1[i * LDA + j].real = DRAND();
+         buf1[i * LDA + j].imag = DRAND();
+      }
+   }
+
+   return;
+}
+
+void  fla_test_init_buffer_rand_s( float *buf1, integer M,integer N,integer LDA)
+{
+   int i, j;
+
+   for( i = 0; i < N; i++ )
+   {
+      for( j = 0; j < M; j++ )
+      {
+         buf1[i * LDA + j] = SRAND();
+      }
+   }
+
+   return;
+
+}
+
+void  fla_test_init_buffer_rand_c( scomplex *buf1, integer M,integer N,integer LDA)
+{
+   
+   int i, j;
+
+   for( i = 0; i < N; i++ )
+   {
+      for( j = 0; j < M; j++ )
+      {
+         buf1[i * LDA + j].real = SRAND();
+         buf1[i * LDA + j].imag = SRAND();
+      }
+   }
+
+   return;
+}
+
 
 void fla_test_read_next_line( char* buffer, FILE* input_stream )
 {

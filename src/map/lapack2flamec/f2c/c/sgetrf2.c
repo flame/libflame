@@ -148,6 +148,9 @@ int sgetrf2_(integer *m, integer *n, real *a, integer *lda, integer *ipiv, integ
     /* .. Executable Statements .. */
     /* Test the input parameters */
     /* Parameter adjustments */
+    #if AOCL_FLA_PROGRESS_H 
+       	AOCL_FLA_PROGRESS_VAR;
+    #endif
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;
     a -= a_offset;
@@ -236,6 +239,29 @@ int sgetrf2_(integer *m, integer *n, real *a, integer *lda, integer *ipiv, integ
         /* [ A11 ] */
         /* Factor [ --- ] */
         /* [ A21 ] */
+        #if AOCL_FLA_PROGRESS_H 
+		if(!aocl_fla_progress_ptr)
+                	aocl_fla_progress_ptr=aocl_fla_progress;
+            	if(aocl_fla_progress_ptr)
+            	{
+			if(step_count == 0 || step_count==size ){
+                                        size=min(*m,*n);
+                                        step_count =1;
+                         }
+
+	            	if(!(step_count == 1 &&(*m < FLA_GETRF_SMALL &&  *n < FLA_GETRF_SMALL)))
+ 		        {
+
+
+				++step_count;
+                		if((step_count%8)==0 || step_count==size)
+	            		{
+                    			AOCL_FLA_PROGRESS_FUNC_PTR("SGETRF2",7,&step_count,&thread_id,&total_threads);
+                		}
+                        }
+            	}
+		
+	#endif
         sgetrf2_(m, &n1, &a[a_offset], lda, &ipiv[1], &iinfo);
         if (*info == 0 && iinfo > 0)
         {
