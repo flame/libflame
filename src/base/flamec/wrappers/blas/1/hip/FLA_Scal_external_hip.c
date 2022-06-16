@@ -36,7 +36,7 @@ FLA_Error FLA_Scal_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A
 
   m_A      = FLA_Obj_length( A );
   n_A      = FLA_Obj_width( A );
-  ldim_A   = FLA_Obj_length( A );
+  ldim_A   = FLA_Obj_col_stride( A );
   inc_A    = 1;
 
   switch ( datatype ){

@@ -197,14 +197,22 @@ FLA_Error FLASH_Queue_write_hip( FLA_Obj obj, void* buffer_hip )
    // Write the contents of a block in main memory to HIP.
    hipStream_t stream;
    rocblas_get_stream( handle, &stream );
-   rocblas_set_matrix_async( FLA_Obj_length( obj ),
-                             FLA_Obj_width( obj ),
-                             FLA_Obj_datatype_size( FLA_Obj_datatype( obj ) ),
-                             FLA_Obj_buffer_at_view( obj ),
-                             FLA_Obj_col_stride( obj ),
-                             buffer_hip,
-                             FLA_Obj_length( obj ),
-                             stream );
+   const size_t count = FLA_Obj_elem_size( obj )
+                          * FLA_Obj_col_stride( obj )
+                          * FLA_Obj_width( obj );
+   const hipError_t err = hipMemcpyAsync( buffer_hip,
+                                          FLA_Obj_buffer_at_view( obj ),
+                                          count,
+                                          hipMemcpyHostToDevice,
+                                          stream );
+
+   if ( err != hipSuccess )
+   {
+     fprintf( stderr,
+              "Failure to write block to HIP device. Size=%ld, err=%d\n",
+              count, err );
+     return FLA_FAILURE;
+   }
 
    return FLA_SUCCESS;
 }
@@ -218,13 +226,21 @@ FLA_Error FLASH_Queue_read_hip( FLA_Obj obj, void* buffer_hip )
 ----------------------------------------------------------------------------*/
 {
    // Read the memory of a block on HIP to main memory.
-   rocblas_get_matrix( FLA_Obj_length( obj ),
-                       FLA_Obj_width( obj ),
-                       FLA_Obj_datatype_size( FLA_Obj_datatype( obj ) ),
-                       buffer_hip,
-                       FLA_Obj_length( obj ),
-                       FLA_Obj_buffer_at_view( obj ),
-                       FLA_Obj_col_stride( obj ) );
+   const size_t count = FLA_Obj_elem_size( obj )
+                          * FLA_Obj_col_stride( obj )
+                          * FLA_Obj_width( obj );
+   const hipError_t err = hipMemcpy( FLA_Obj_buffer_at_view( obj ),
+                                     buffer_hip,
+                                     count,
+                                     hipMemcpyDeviceToHost );
+
+   if ( err != hipSuccess )
+   {
+     fprintf( stderr,
+              "Failure to read block from HIP device. Size=%ld, err=%d\n",
+              count, err );
+     return FLA_FAILURE;
+   }
 
    return FLA_SUCCESS;
 }

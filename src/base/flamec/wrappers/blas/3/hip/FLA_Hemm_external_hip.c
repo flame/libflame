@@ -30,13 +30,13 @@ FLA_Error FLA_Hemm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo 
 
   datatype = FLA_Obj_datatype( A );
 
-  ldim_A   = FLA_Obj_length( A );
+  ldim_A   = FLA_Obj_col_stride( A );
 
-  ldim_B   = FLA_Obj_length( B );
+  ldim_B   = FLA_Obj_col_stride( B );
 
   m_C      = FLA_Obj_length( C );
   n_C      = FLA_Obj_width( C );
-  ldim_C   = FLA_Obj_length( C );
+  ldim_C   = FLA_Obj_col_stride( C );
 
   rocblas_side blas_side = FLA_Param_map_flame_to_rocblas_side( side );
   rocblas_fill blas_uplo = FLA_Param_map_flame_to_rocblas_uplo( uplo );

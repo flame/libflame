@@ -52,7 +52,7 @@ FLA_Error FLA_Trinv_blk_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_
   datatype = FLA_Obj_datatype( A );
 
   n_A      = FLA_Obj_width( A );
-  ldim_A   = FLA_Obj_length( A );
+  ldim_A   = FLA_Obj_col_stride( A );
 
   rocblas_fill blas_uplo = FLA_Param_map_flame_to_rocblas_uplo( uplo );
   rocblas_diagonal blas_diag = FLA_Param_map_flame_to_rocblas_diag( diag );

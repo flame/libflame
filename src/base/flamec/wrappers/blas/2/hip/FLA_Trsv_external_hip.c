@@ -30,7 +30,7 @@ FLA_Error FLA_Trsv_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Trans
   datatype = FLA_Obj_datatype( A );
 
   m_A      = FLA_Obj_length( A );
-  ldim_A   = FLA_Obj_length( A );
+  ldim_A   = FLA_Obj_col_stride( A );
 
   inc_x    = 1;
 

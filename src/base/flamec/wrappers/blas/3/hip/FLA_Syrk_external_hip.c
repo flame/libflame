@@ -33,10 +33,10 @@ FLA_Error FLA_Syrk_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Trans
 
   m_A      = FLA_Obj_length( A );
   n_A      = FLA_Obj_width( A );
-  ldim_A   = FLA_Obj_length( A );
+  ldim_A   = FLA_Obj_col_stride( A );
 
   m_C      = FLA_Obj_length( C );
-  ldim_C   = FLA_Obj_length( C );
+  ldim_C   = FLA_Obj_col_stride( C );
 
   if ( trans == FLA_NO_TRANSPOSE || trans == FLA_CONJ_NO_TRANSPOSE )
     k_A = n_A;

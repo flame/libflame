@@ -40,13 +40,13 @@ FLA_Error FLA_Gemm_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Tr
 
   m_A      = FLA_Obj_length( A );
   n_A      = FLA_Obj_width( A );
-  ldim_A   = FLA_Obj_length( A );
+  ldim_A   = FLA_Obj_col_stride( A );
 
-  ldim_B   = FLA_Obj_length( B );
+  ldim_B   = FLA_Obj_col_stride( B );
 
   m_C      = FLA_Obj_length( C );
   n_C      = FLA_Obj_width( C );
-  ldim_C   = FLA_Obj_length( C );
+  ldim_C   = FLA_Obj_col_stride( C );
 
   if ( transa == FLA_NO_TRANSPOSE || transa == FLA_CONJ_NO_TRANSPOSE )
     k_AB = n_A;

@@ -29,11 +29,11 @@ FLA_Error FLA_Trmm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo 
 
   datatype = FLA_Obj_datatype( A );
 
-  ldim_A   = FLA_Obj_length( A );
+  ldim_A   = FLA_Obj_col_stride( A );
 
   m_B      = FLA_Obj_length( B );
   n_B      = FLA_Obj_width( B );
-  ldim_B   = FLA_Obj_length( B );
+  ldim_B   = FLA_Obj_col_stride( B );
 
   rocblas_operation blas_trans = FLA_Param_map_flame_to_rocblas_trans( trans, FLA_Obj_is_real( A ) );
   rocblas_side blas_side = FLA_Param_map_flame_to_rocblas_side( side );

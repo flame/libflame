@@ -34,12 +34,12 @@ FLA_Error FLA_Syr2k_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Tran
 
   m_A      = FLA_Obj_length( A );
   n_A      = FLA_Obj_width( A );
-  ldim_A   = FLA_Obj_length( A );
+  ldim_A   = FLA_Obj_col_stride( A );
 
-  ldim_B   = FLA_Obj_length( B );
+  ldim_B   = FLA_Obj_col_stride( B );
 
   m_C      = FLA_Obj_length( C );
-  ldim_C   = FLA_Obj_length( C );
+  ldim_C   = FLA_Obj_col_stride( C );
 
   if ( trans == FLA_NO_TRANSPOSE || trans == FLA_CONJ_NO_TRANSPOSE )
     k_AB = n_A;

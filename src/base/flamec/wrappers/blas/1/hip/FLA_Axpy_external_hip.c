@@ -25,12 +25,12 @@ FLA_Error FLA_Axpy_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A
 
   FLA_Datatype datatype = FLA_Obj_datatype( A );
 
-  rocblas_stride ldim_A = FLA_Obj_length( A );
+  rocblas_stride ldim_A = FLA_Obj_col_stride( A );
   rocblas_int inc_A     = 1;
 
   rocblas_int m_B       = FLA_Obj_length( B );
   rocblas_int n_B       = FLA_Obj_width( B );
-  rocblas_stride ldim_B = FLA_Obj_length( B );
+  rocblas_stride ldim_B = FLA_Obj_col_stride( B );
   rocblas_int inc_B     = 1;
 
   switch ( datatype ){
