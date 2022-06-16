@@ -231,12 +231,8 @@ if RANGE = 'V', the exact value of */
 /* Subroutine */
 int dbdsvdx_(char *uplo, char *jobz, char *range, integer *n, doublereal *d__, doublereal *e, doublereal *vl, doublereal *vu, integer *il, integer *iu, integer *ns, doublereal *s, doublereal *z__, integer *ldz, doublereal *work, integer *iwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dbdsvdx inputs: uplo %c, jobz %c, range %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", ldz %" FLA_IS "",*uplo, *jobz, *range, *n, *il, *iu, *ldz);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dbdsvdx inputs: uplo %c, jobz %c, range %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", ldz %" FLA_IS "",*uplo, *jobz, *range, *n, *il, *iu, *ldz);
     /* System generated locals */
     integer z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal d__1, d__2, d__3, d__4;
@@ -380,14 +376,14 @@ int dbdsvdx_(char *uplo, char *jobz, char *range, integer *n, doublereal *d__, d
     {
         i__1 = -(*info);
         xerbla_("DBDSVDX", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible (N.LE.1) */
     *ns = 0;
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -410,7 +406,7 @@ int dbdsvdx_(char *uplo, char *jobz, char *range, integer *n, doublereal *d__, d
             z__[z_dim1 + 1] = d_sign(&c_b10, &d__[1]);
             z__[z_dim1 + 2] = 1.;
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     abstol = dlamch_("Safe Minimum") * 2;
@@ -529,7 +525,7 @@ L2:
         dstevx_("N", "V", &i__1, &work[idtgk], &work[ietgk], &vltgk, &vutgk, & iltgk, &iltgk, &abstol, ns, &s[1], &z__[z_offset], ldz, &work[ itemp], &iwork[iiwork], &iwork[iifail], info);
         if (*ns == 0)
         {
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         else
@@ -731,7 +727,7 @@ L2:
                     if (*info != 0)
                     {
                         /* Exit with the error code from DSTEVX. */
-                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                        AOCL_DTL_TRACE_LOG_EXIT
                         return 0;
                     }
                     /* EMIN = ABS( MAXVAL( S( ISBEG:ISBEG+NSL-1 ) ) ) */
@@ -790,7 +786,7 @@ L2:
                             if (nrmu == 0.)
                             {
                                 *info = (*n << 1) + 1;
-                                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                                AOCL_DTL_TRACE_LOG_EXIT
                                 return 0;
                             }
                             d__1 = 1. / nrmu;
@@ -822,7 +818,7 @@ L2:
                             if (nrmv == 0.)
                             {
                                 *info = (*n << 1) + 1;
-                                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                                AOCL_DTL_TRACE_LOG_EXIT
                                 return 0;
                             }
                             d__1 = -1. / nrmv;
@@ -1013,7 +1009,7 @@ L2:
             }
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DBDSVDX */
 }

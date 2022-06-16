@@ -200,12 +200,8 @@ static doublereal c_b29 = 0.;
 /* Subroutine */
 int dbdsdc_(char *uplo, char *compq, integer *n, doublereal * d__, doublereal *e, doublereal *u, integer *ldu, doublereal *vt, integer *ldvt, doublereal *q, integer *iq, doublereal *work, integer * iwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dbdsdc inputs: uplo %c, compq %c, n %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS "",*uplo, *compq, *n, *ldu, *ldvt);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dbdsdc inputs: uplo %c, compq %c, n %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS "",*uplo, *compq, *n, *ldu, *ldvt);
     /* System generated locals */
     integer u_dim1, u_offset, vt_dim1, vt_offset, i__1, i__2;
     doublereal d__1;
@@ -326,13 +322,13 @@ int dbdsdc_(char *uplo, char *compq, integer *n, doublereal * d__, doublereal *e
     {
         i__1 = -(*info);
         xerbla_("DBDSDC", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     smlsiz = ilaenv_(&c__9, "DBDSDC", " ", &c__0, &c__0, &c__0, &c__0);
@@ -349,7 +345,7 @@ int dbdsdc_(char *uplo, char *compq, integer *n, doublereal * d__, doublereal *e
             vt[vt_dim1 + 1] = 1.;
         }
         d__[1] = f2c_abs(d__[1]);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     nm1 = *n - 1;
@@ -430,7 +426,7 @@ int dbdsdc_(char *uplo, char *compq, integer *n, doublereal * d__, doublereal *e
     orgnrm = dlanst_("M", n, &d__[1], &e[1]);
     if (orgnrm == 0.)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     dlascl_("G", &c__0, &c__0, &orgnrm, &c_b15, n, &c__1, &d__[1], n, &ierr);
@@ -514,7 +510,7 @@ int dbdsdc_(char *uplo, char *compq, integer *n, doublereal * d__, doublereal *e
             }
             if (*info != 0)
             {
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             start = i__ + 1;
@@ -582,7 +578,7 @@ L40: /* Use Selection Sort to minimize swaps of singular vectors */
     {
         dlasr_("L", "V", "B", n, n, &work[1], &work[*n], &u[u_offset], ldu);
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DBDSDC */
 }
