@@ -17,26 +17,21 @@
 
 FLA_Error FLA_Axpy_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A, void* A_hip, FLA_Obj B, void* B_hip )
 {
-  FLA_Datatype datatype;
-  int          m_B, n_B;
-  int          ldim_A, inc_A;
-  int          ldim_B, inc_B;
-  int          i;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING ) 
     FLA_Axpy_check( alpha, A, B );
 
   if ( FLA_Obj_has_zero_dim( A ) ) return FLA_SUCCESS;
 
-  datatype = FLA_Obj_datatype( A );
+  FLA_Datatype datatype = FLA_Obj_datatype( A );
 
-  ldim_A   = FLA_Obj_length( A );
-  inc_A    = 1;
+  rocblas_stride ldim_A = FLA_Obj_length( A );
+  rocblas_int inc_A     = 1;
 
-  m_B      = FLA_Obj_length( B );
-  n_B      = FLA_Obj_width( B );
-  ldim_B   = FLA_Obj_length( B );
-  inc_B    = 1;
+  rocblas_int m_B       = FLA_Obj_length( B );
+  rocblas_int n_B       = FLA_Obj_width( B );
+  rocblas_stride ldim_B = FLA_Obj_length( B );
+  rocblas_int inc_B     = 1;
 
   switch ( datatype ){
 
@@ -46,12 +41,23 @@ FLA_Error FLA_Axpy_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A
     float* buff_A_hip = ( float* ) A_hip;
     float* buff_B_hip = ( float* ) B_hip;
 
-    for ( i = 0; i < n_B; i++ )
-      rocblas_saxpy( handle,
-                     m_B,
-                     buff_alpha,
-                     buff_A_hip + i * ldim_A, inc_A,
-                     buff_B_hip + i * ldim_B, inc_B );
+    rocblas_status err = rocblas_saxpy_strided_batched( handle,
+                                   m_B,
+                                   buff_alpha,
+                                   buff_A_hip,
+                                   inc_A,
+                                   ldim_A,
+                                   buff_B_hip,
+                                   inc_B,
+                                   ldim_B,
+                                   n_B );
+
+    if ( err != rocblas_status_success )
+    {
+      fprintf( stderr, "Failure in rocblas_saxpy_strided_batched: %d",
+               err );
+      return FLA_FAILURE;
+    }
 
     break;
   }
@@ -62,12 +68,23 @@ FLA_Error FLA_Axpy_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A
     double* buff_A_hip = ( double* ) A_hip;
     double* buff_B_hip = ( double* ) B_hip;
 
-    for ( i = 0; i < n_B; i++ )
-      rocblas_daxpy( handle,
-                     m_B,
-                     buff_alpha,
-                     buff_A_hip + i * ldim_A, inc_A,
-                     buff_B_hip + i * ldim_B, inc_B );
+    rocblas_status err = rocblas_daxpy_strided_batched( handle,
+                                   m_B,
+                                   buff_alpha,
+                                   buff_A_hip,
+                                   inc_A,
+                                   ldim_A,
+                                   buff_B_hip,
+                                   inc_B,
+                                   ldim_B,
+                                   n_B );
+
+    if ( err != rocblas_status_success )
+    {
+      fprintf( stderr, "Failure in rocblas_daxpy_strided_batched: %d",
+               err );
+      return FLA_FAILURE;
+    }
 
     break;
   }
@@ -78,12 +95,23 @@ FLA_Error FLA_Axpy_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A
     rocblas_float_complex* buff_A_hip = ( rocblas_float_complex* ) A_hip;
     rocblas_float_complex* buff_B_hip = ( rocblas_float_complex* ) B_hip;
 
-    for ( i = 0; i < n_B; i++ )
-      rocblas_caxpy( handle,
-                     m_B,
-                     buff_alpha,
-                     buff_A_hip + i * ldim_A, inc_A,
-                     buff_B_hip + i * ldim_B, inc_B );
+    rocblas_status err = rocblas_caxpy_strided_batched( handle,
+                                   m_B,
+                                   buff_alpha,
+                                   buff_A_hip,
+                                   inc_A,
+                                   ldim_A,
+                                   buff_B_hip,
+                                   inc_B,
+                                   ldim_B,
+                                   n_B );
+
+    if ( err != rocblas_status_success )
+    {
+      fprintf( stderr, "Failure in rocblas_caxpy_strided_batched: %d",
+               err );
+      return FLA_FAILURE;
+    }
 
     break;
   }
@@ -94,12 +122,23 @@ FLA_Error FLA_Axpy_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A
     rocblas_double_complex* buff_A_hip = ( rocblas_double_complex* ) A_hip;
     rocblas_double_complex* buff_B_hip = ( rocblas_double_complex* ) B_hip;
 
-    for ( i = 0; i < n_B; i++ )
-      rocblas_zaxpy( handle,
-                     m_B,
-                     buff_alpha,
-                     buff_A_hip + i * ldim_A, inc_A,
-                     buff_B_hip + i * ldim_B, inc_B );
+    rocblas_status err = rocblas_zaxpy_strided_batched( handle,
+                                   m_B,
+                                   buff_alpha,
+                                   buff_A_hip,
+                                   inc_A,
+                                   ldim_A,
+                                   buff_B_hip,
+                                   inc_B,
+                                   ldim_B,
+                                   n_B );
+
+    if ( err != rocblas_status_success )
+    {
+      fprintf( stderr, "Failure in rocblas_zaxpy_strided_batched: %d",
+               err );
+      return FLA_FAILURE;
+    }
 
     break;
   }
