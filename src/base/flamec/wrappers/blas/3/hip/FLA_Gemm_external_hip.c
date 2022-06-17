@@ -53,8 +53,8 @@ FLA_Error FLA_Gemm_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Tr
   else
     k_AB = m_A;
 
-  rocblas_operation blas_transa = FLA_Param_map_flame_to_rocblas_trans( transa );
-  rocblas_operation blas_transb = FLA_Param_map_flame_to_rocblas_trans( transb );
+  rocblas_operation blas_transa = FLA_Param_map_flame_to_rocblas_trans( transa, FLA_Obj_is_real( A ) );
+  rocblas_operation blas_transb = FLA_Param_map_flame_to_rocblas_trans( transb, FLA_Obj_is_real( B ) );
 
 
   switch( datatype ){

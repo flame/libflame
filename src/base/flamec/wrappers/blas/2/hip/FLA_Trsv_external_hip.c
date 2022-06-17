@@ -35,7 +35,7 @@ FLA_Error FLA_Trsv_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Trans
   inc_x    = 1;
 
   rocblas_fill blas_uplo = FLA_Param_map_flame_to_rocblas_uplo( uplo );
-  rocblas_operation blas_trans = FLA_Param_map_flame_to_rocblas_trans( trans );
+  rocblas_operation blas_trans = FLA_Param_map_flame_to_rocblas_trans( trans, FLA_Obj_is_real( A ) );
   rocblas_diagonal blas_diag = FLA_Param_map_flame_to_rocblas_diag( diag );
 
 

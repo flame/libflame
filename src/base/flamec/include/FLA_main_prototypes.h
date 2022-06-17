@@ -347,7 +347,7 @@ void          FLA_Param_map_flame_to_netlib_svd_type( FLA_Svd_type svd_type, voi
 void          FLA_Param_map_flame_to_netlib_machval( FLA_Machval machval, void* blas_machval );
 
 #ifdef FLA_ENABLE_HIP
-rocblas_operation FLA_Param_map_flame_to_rocblas_trans( FLA_Trans trans );
+rocblas_operation FLA_Param_map_flame_to_rocblas_trans( FLA_Trans trans, FLA_Bool is_real );
 rocblas_fill      FLA_Param_map_flame_to_rocblas_uplo( FLA_Uplo uplo );
 rocblas_side      FLA_Param_map_flame_to_rocblas_side( FLA_Side side );
 rocblas_diagonal  FLA_Param_map_flame_to_rocblas_diag( FLA_Diag diag );
