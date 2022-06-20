@@ -13,94 +13,47 @@
 
 #ifdef FLA_ENABLE_HIP
 
+#include "hip/hip_runtime_api.h"
 #include "rocblas.h"
 
 FLA_Error FLA_Copy_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj B, void* B_hip )
 {
-  FLA_Datatype datatype;
-  int          m_B, n_B;
-  int          ldim_A, inc_A;
-  int          ldim_B, inc_B;
-  int          i;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING ) 
     FLA_Copy_check( A, B );
 
   if ( FLA_Obj_has_zero_dim( A ) ) return FLA_SUCCESS;
 
-  // It is important that we get the datatype of B and not A, since A could
-  // be an FLA_CONSTANT.
-  datatype = FLA_Obj_datatype( B );
+  dim_t elem_size = FLA_Obj_elem_size( B );
+  dim_t ldim_A    = FLA_Obj_length( A );
 
-  ldim_A   = FLA_Obj_length( A );
-  inc_A    = 1;
+  dim_t m_B       = FLA_Obj_length( B );
+  dim_t n_B       = FLA_Obj_width( B );
+  dim_t ldim_B    = FLA_Obj_length( B );
 
-  m_B      = FLA_Obj_length( B );
-  n_B      = FLA_Obj_width( B );
-  ldim_B   = FLA_Obj_length( B );
-  inc_B    = 1;
+  size_t dpitch   = elem_size * ldim_B;
+  size_t spitch   = elem_size * ldim_A;
+  size_t width    = elem_size * m_B;
+  size_t height   = n_B;
 
-  switch ( datatype ){
+  hipStream_t stream;
+  rocblas_get_stream( handle, &stream );
+  // hipMemcpy2D assumes row-major layout
+  hipError_t err = hipMemcpy2DAsync( B_hip,
+                                     dpitch,
+                                     A_hip,
+                                     spitch,
+                                     width,
+                                     height,
+                                     hipMemcpyDeviceToDevice,
+                                     stream );
 
-  case FLA_INT:
-  case FLA_FLOAT:
+  if ( err != hipSuccess )
   {
-    float* buff_A_hip = ( float* ) A_hip;
-    float* buff_B_hip = ( float* ) B_hip;
-
-    for ( i = 0; i < n_B; i++ )
-      rocblas_scopy( handle,
-                     m_B,
-                     buff_A_hip + i * ldim_A, inc_A,
-                     buff_B_hip + i * ldim_B, inc_B );
-
-    break;
+    fprintf( stderr, "Failure to memcpy D2D in HIP: %d\n", err);
+    return FLA_FAILURE;
   }
 
-  case FLA_DOUBLE:
-  {
-    double* buff_A_hip = ( double* ) A_hip;
-    double* buff_B_hip = ( double* ) B_hip;
-
-    for ( i = 0; i < n_B; i++ )
-      rocblas_dcopy( handle,
-                     m_B,
-                     buff_A_hip + i * ldim_A, inc_A,
-                     buff_B_hip + i * ldim_B, inc_B );
-
-    break;
-  }
-
-  case FLA_COMPLEX:
-  {
-    rocblas_float_complex* buff_A_hip = ( rocblas_float_complex* ) A_hip;
-    rocblas_float_complex* buff_B_hip = ( rocblas_float_complex* ) B_hip;
-
-    for ( i = 0; i < n_B; i++ )
-      rocblas_ccopy( handle,
-                     m_B,
-                     buff_A_hip + i * ldim_A, inc_A,
-                     buff_B_hip + i * ldim_B, inc_B );
-
-    break;
-  }
-
-  case FLA_DOUBLE_COMPLEX:
-  {
-    rocblas_double_complex* buff_A_hip = ( rocblas_double_complex* ) A_hip;
-    rocblas_double_complex* buff_B_hip = ( rocblas_double_complex* ) B_hip;
-
-    for ( i = 0; i < n_B; i++ )
-      rocblas_zcopy( handle,
-                     m_B,
-                     buff_A_hip + i * ldim_A, inc_A,
-                     buff_B_hip + i * ldim_B, inc_B );
-
-    break;
-  }
-
-  }
-  
   return FLA_SUCCESS;
 }
 
