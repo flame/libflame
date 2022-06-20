@@ -238,6 +238,9 @@ void FLASH_Queue_exec_task_hip( FLASH_Task* t,
 {
    // Define local function pointer types.
 
+   // LAPACK
+   typedef FLA_Error(*flash_chol_hip_p)(rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip, fla_chol_t* cntl);
+
    // Level-3 BLAS
    typedef FLA_Error(*flash_gemm_hip_p)(rocblas_handle handle, FLA_Trans transa, FLA_Trans transb, FLA_Obj alpha, FLA_Obj A, void* A_hip, FLA_Obj B, void* B_hip, FLA_Obj beta, FLA_Obj C, void* C_hip);
    typedef FLA_Error(*flash_hemm_hip_p)(rocblas_handle handle, FLA_Side side, FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, void* A_hip, FLA_Obj B, void* B_hip, FLA_Obj beta, FLA_Obj C, void* C_hip);
@@ -265,8 +268,21 @@ void FLASH_Queue_exec_task_hip( FLASH_Task* t,
 
    // Now "switch" between the various possible task functions.
 
+   // FLA_Chol
+   if ( t-> func == (void*) FLA_Chol_task )
+   {
+      flash_chol_hip_p func;
+      func = (flash_chol_hip_p) FLA_Chol_blk_external_hip;
+
+      func(
+                            handle,
+            ( FLA_Uplo    ) t->int_arg[0],
+                            t->output_arg[0],
+                            output_arg[0],
+            ( fla_chol_t* ) t->cntl );
+   }
    // FLA_Gemm
-   if ( t->func == (void *) FLA_Gemm_task )
+   else if ( t->func == (void *) FLA_Gemm_task )
    {
       flash_gemm_hip_p func;
       func = (flash_gemm_hip_p) FLA_Gemm_external_hip;

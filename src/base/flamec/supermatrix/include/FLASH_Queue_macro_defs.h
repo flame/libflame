@@ -136,7 +136,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Chol ", \
                           FALSE, \
-                          FALSE, \
+                          TRUE, \
                           1, 0, 0, 1, \
                           uplo, \
                           A )
