@@ -59,6 +59,16 @@ FLA_Error FLA_Trinv_blk_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_
   rocblas_int* info;
   hipMalloc( (void**) &info, sizeof( rocblas_int ) );
 
+  void* A_mat = NULL;
+  if ( FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+  {
+    A_mat = FLA_Obj_buffer_at_view( A );
+  }
+  else
+  {
+    A_mat = A_hip;
+  }
+
   switch( datatype ){
 
   case FLA_FLOAT:
@@ -67,7 +77,7 @@ FLA_Error FLA_Trinv_blk_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_
                       blas_uplo,
                       blas_diag,
                       n_A,
-                      ( float * ) A_hip, ldim_A,
+                      ( float * ) A_mat, ldim_A,
                       info );
     
     break;
@@ -79,7 +89,7 @@ FLA_Error FLA_Trinv_blk_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_
                       blas_uplo,
                       blas_diag,
                       n_A,
-                      ( double * ) A_hip, ldim_A,
+                      ( double * ) A_mat, ldim_A,
                       info );
 
     break;
@@ -91,7 +101,7 @@ FLA_Error FLA_Trinv_blk_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_
                       blas_uplo,
                       blas_diag,
                       n_A,
-                      ( rocblas_float_complex * ) A_hip, ldim_A,
+                      ( rocblas_float_complex * ) A_mat, ldim_A,
                       info );
 
     break;
@@ -103,7 +113,7 @@ FLA_Error FLA_Trinv_blk_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_
                       blas_uplo,
                       blas_diag,
                       n_A,
-                      ( rocblas_double_complex * ) A_hip, ldim_A,
+                      ( rocblas_double_complex * ) A_mat, ldim_A,
                       info );
 
     break;

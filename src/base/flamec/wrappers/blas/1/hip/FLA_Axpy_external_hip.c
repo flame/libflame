@@ -33,13 +33,26 @@ FLA_Error FLA_Axpy_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A
   rocblas_stride ldim_B = FLA_Obj_col_stride( B );
   rocblas_int inc_B     = 1;
 
+  void* A_mat = NULL;
+  void* B_mat = NULL;
+  if ( FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+  {
+    A_mat = FLA_Obj_buffer_at_view( A );
+    B_mat = FLA_Obj_buffer_at_view( B );
+  }
+  else
+  {
+    A_mat = A_hip;
+    B_mat = B_hip;
+  }
+
   switch ( datatype ){
 
   case FLA_FLOAT:
   {
     float* buff_alpha = ( float* ) FLA_FLOAT_PTR( alpha );
-    float* buff_A_hip = ( float* ) A_hip;
-    float* buff_B_hip = ( float* ) B_hip;
+    float* buff_A_hip = ( float* ) A_mat;
+    float* buff_B_hip = ( float* ) B_mat;
 
     rocblas_status err = rocblas_saxpy_strided_batched( handle,
                                    m_B,
@@ -65,8 +78,8 @@ FLA_Error FLA_Axpy_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A
   case FLA_DOUBLE:
   {
     double* buff_alpha = ( double* ) FLA_DOUBLE_PTR( alpha );
-    double* buff_A_hip = ( double* ) A_hip;
-    double* buff_B_hip = ( double* ) B_hip;
+    double* buff_A_hip = ( double* ) A_mat;
+    double* buff_B_hip = ( double* ) B_mat;
 
     rocblas_status err = rocblas_daxpy_strided_batched( handle,
                                    m_B,
@@ -92,8 +105,8 @@ FLA_Error FLA_Axpy_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A
   case FLA_COMPLEX:
   {
     rocblas_float_complex* buff_alpha = ( rocblas_float_complex* ) FLA_COMPLEX_PTR( alpha );
-    rocblas_float_complex* buff_A_hip = ( rocblas_float_complex* ) A_hip;
-    rocblas_float_complex* buff_B_hip = ( rocblas_float_complex* ) B_hip;
+    rocblas_float_complex* buff_A_hip = ( rocblas_float_complex* ) A_mat;
+    rocblas_float_complex* buff_B_hip = ( rocblas_float_complex* ) B_mat;
 
     rocblas_status err = rocblas_caxpy_strided_batched( handle,
                                    m_B,
@@ -119,8 +132,8 @@ FLA_Error FLA_Axpy_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A
   case FLA_DOUBLE_COMPLEX:
   {
     rocblas_double_complex* buff_alpha = ( rocblas_double_complex* ) FLA_DOUBLE_COMPLEX_PTR( alpha );
-    rocblas_double_complex* buff_A_hip = ( rocblas_double_complex* ) A_hip;
-    rocblas_double_complex* buff_B_hip = ( rocblas_double_complex* ) B_hip;
+    rocblas_double_complex* buff_A_hip = ( rocblas_double_complex* ) A_mat;
+    rocblas_double_complex* buff_B_hip = ( rocblas_double_complex* ) B_mat;
 
     rocblas_status err = rocblas_zaxpy_strided_batched( handle,
                                    m_B,

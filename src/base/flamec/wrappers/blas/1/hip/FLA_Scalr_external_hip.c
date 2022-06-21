@@ -39,6 +39,16 @@ FLA_Error FLA_Scalr_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj 
   ldim_A   = FLA_Obj_col_stride( A );
   inc_A    = 1;
 
+  void* A_mat = NULL;
+  if ( FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+  {
+    A_mat = FLA_Obj_buffer_at_view( A );
+  }
+  else
+  {
+    A_mat = A_hip;
+  }
+
   if ( uplo == FLA_LOWER_TRIANGULAR ){
 
   switch ( datatype ){
@@ -46,7 +56,7 @@ FLA_Error FLA_Scalr_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj 
   case FLA_FLOAT:
   {
     float* buff_alpha = ( float* ) FLA_FLOAT_PTR( alpha );
-    float* buff_A_hip = ( float* ) A_hip;
+    float* buff_A_hip = ( float* ) A_mat;
 
     for ( i = 0; i < min( n_A, m_A ); i++ )
       rocblas_sscal( handle,
@@ -60,7 +70,7 @@ FLA_Error FLA_Scalr_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj 
   case FLA_DOUBLE:
   {
     double* buff_alpha = ( double* ) FLA_DOUBLE_PTR( alpha );
-    double* buff_A_hip = ( double* ) A_hip;
+    double* buff_A_hip = ( double* ) A_mat;
 
     for ( i = 0; i < min( n_A, m_A ); i++ )
       rocblas_dscal( handle,
@@ -74,7 +84,7 @@ FLA_Error FLA_Scalr_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj 
   case FLA_COMPLEX:
   {
     rocblas_float_complex* buff_alpha = ( rocblas_float_complex* ) FLA_COMPLEX_PTR( alpha );
-    rocblas_float_complex* buff_A_hip = ( rocblas_float_complex* ) A_hip;
+    rocblas_float_complex* buff_A_hip = ( rocblas_float_complex* ) A_mat;
 
     for ( i = 0; i < min( n_A, m_A ); i++ )
       rocblas_cscal( handle,
@@ -88,7 +98,7 @@ FLA_Error FLA_Scalr_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj 
   case FLA_DOUBLE_COMPLEX:
   {
     rocblas_double_complex* buff_alpha = ( rocblas_double_complex* ) FLA_DOUBLE_COMPLEX_PTR( alpha );
-    rocblas_double_complex* buff_A_hip = ( rocblas_double_complex* ) A_hip;
+    rocblas_double_complex* buff_A_hip = ( rocblas_double_complex* ) A_mat;
 
     for ( i = 0; i < min( n_A, m_A ); i++ )
       rocblas_zscal( handle,
@@ -110,7 +120,7 @@ FLA_Error FLA_Scalr_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj 
   case FLA_FLOAT:
   {
     float* buff_alpha = ( float* ) FLA_FLOAT_PTR( alpha );
-    float* buff_A_hip = ( float* ) A_hip;
+    float* buff_A_hip = ( float* ) A_mat;
 
     for ( i = 0; i < n_A; i++ )
       rocblas_sscal( handle,
@@ -124,7 +134,7 @@ FLA_Error FLA_Scalr_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj 
   case FLA_DOUBLE:
   {
     double* buff_alpha = ( double* ) FLA_DOUBLE_PTR( alpha );
-    double* buff_A_hip = ( double* ) A_hip;
+    double* buff_A_hip = ( double* ) A_mat;
 
     for ( i = 0; i < n_A; i++ )
       rocblas_dscal( handle,
@@ -138,7 +148,7 @@ FLA_Error FLA_Scalr_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj 
   case FLA_COMPLEX:
   {
     rocblas_float_complex* buff_alpha = ( rocblas_float_complex* ) FLA_COMPLEX_PTR( alpha );
-    rocblas_float_complex* buff_A_hip = ( rocblas_float_complex* ) A_hip;
+    rocblas_float_complex* buff_A_hip = ( rocblas_float_complex* ) A_mat;
 
     for ( i = 0; i < n_A; i++ )
       rocblas_cscal( handle,
@@ -152,7 +162,7 @@ FLA_Error FLA_Scalr_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj 
   case FLA_DOUBLE_COMPLEX:
   {
     rocblas_double_complex* buff_alpha = ( rocblas_double_complex* ) FLA_DOUBLE_COMPLEX_PTR( alpha );
-    rocblas_double_complex* buff_A_hip = ( rocblas_double_complex* ) A_hip;
+    rocblas_double_complex* buff_A_hip = ( rocblas_double_complex* ) A_mat;
 
     for ( i = 0; i < n_A; i++ )
       rocblas_zscal( handle,

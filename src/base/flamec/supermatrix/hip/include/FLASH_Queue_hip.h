@@ -25,6 +25,10 @@ FLA_Bool       FLASH_Queue_get_enabled_hip( void );
 
 // --- helper functions -------------------------------------------------------
 
+FLA_Error      FLASH_Queue_enable_malloc_managed_hip( void );
+FLA_Error      FLASH_Queue_disable_malloc_managed_hip( void );
+FLA_Bool       FLASH_Queue_get_malloc_managed_enabled_hip( void );
+
 void           FLASH_Queue_set_hip_num_blocks( dim_t n_blocks );
 dim_t          FLASH_Queue_get_hip_num_blocks( void );
 

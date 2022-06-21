@@ -39,6 +39,21 @@ FLA_Error FLA_Gemv_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Ob
 
   rocblas_operation blas_transa = FLA_Param_map_flame_to_rocblas_trans( transa, FLA_Obj_is_real( A ) );
 
+  void* A_mat = NULL;
+  void* x_vec = NULL;
+  void* y_vec = NULL;
+  if ( FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+  {
+    A_mat = FLA_Obj_buffer_at_view( A );
+    x_vec = FLA_Obj_buffer_at_view( x );
+    y_vec = FLA_Obj_buffer_at_view( y );
+  }
+  else
+  {
+    A_mat = A_hip;
+    x_vec = x_hip;
+    y_vec = y_hip;
+  }
 
   switch( datatype ){
   
@@ -52,10 +67,10 @@ FLA_Error FLA_Gemv_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Ob
                    m_A,
                    n_A, 
                    buff_alpha,                   
-                   ( float * ) A_hip, ldim_A,
-                   ( float * ) x_hip, inc_x,
+                   ( float * ) A_mat, ldim_A,
+                   ( float * ) x_vec, inc_x,
                    buff_beta,
-                   ( float * ) y_hip, inc_y );
+                   ( float * ) y_vec, inc_y );
 
     break;
   }
@@ -70,10 +85,10 @@ FLA_Error FLA_Gemv_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Ob
                    m_A,
                    n_A, 
                    buff_alpha,                   
-                   ( double * ) A_hip, ldim_A,
-                   ( double * ) x_hip, inc_x,
+                   ( double * ) A_mat, ldim_A,
+                   ( double * ) x_vec, inc_x,
                    buff_beta,
-                   ( double * ) y_hip, inc_y );
+                   ( double * ) y_vec, inc_y );
 
     break;
   }
@@ -88,10 +103,10 @@ FLA_Error FLA_Gemv_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Ob
                    m_A,
                    n_A, 
                    buff_alpha,                   
-                   ( rocblas_float_complex * ) A_hip, ldim_A,
-                   ( rocblas_float_complex * ) x_hip, inc_x,
+                   ( rocblas_float_complex * ) A_mat, ldim_A,
+                   ( rocblas_float_complex * ) x_vec, inc_x,
                    buff_beta,
-                   ( rocblas_float_complex * ) y_hip, inc_y );
+                   ( rocblas_float_complex * ) y_vec, inc_y );
 
     break;
   }
@@ -106,10 +121,10 @@ FLA_Error FLA_Gemv_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Ob
                    m_A,
                    n_A, 
                    buff_alpha,                   
-                   ( rocblas_double_complex * ) A_hip, ldim_A,
-                   ( rocblas_double_complex * ) x_hip, inc_x,
+                   ( rocblas_double_complex * ) A_mat, ldim_A,
+                   ( rocblas_double_complex * ) x_vec, inc_x,
                    buff_beta,
-                   ( rocblas_double_complex * ) y_hip, inc_y );
+                   ( rocblas_double_complex * ) y_vec, inc_y );
 
     break;
   }
