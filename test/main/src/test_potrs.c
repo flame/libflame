@@ -6,9 +6,6 @@
 #include "test_common.h"
 #include "test_prototype.h"
 
-#define NUM_PARAM_COMBOS 2
-#define NUM_MATRIX_ARGS  1
-
 
 // Local prototypes.
 void fla_test_potrs_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats,double* perf, double* time_min,double* residual);
@@ -19,13 +16,10 @@ void fla_test_potrs(test_params_t *params)
 {
     char* op_str = "Cholesky factorization";
     char* front_str = "POTRS";
-    char* lapack_str = "LAPACK";
-    char* pc_str[NUM_PARAM_COMBOS] = {"U","L"};
 
     fla_test_output_info("--- %s ---\n", op_str);
     fla_test_output_info("\n");
-    fla_test_op_driver(front_str, lapack_str, NUM_PARAM_COMBOS, pc_str, NUM_MATRIX_ARGS,
-                            params, LIN, fla_test_potrs_experiment);
+    fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_potrs_experiment);
 }
 
 void fla_test_potrs_experiment(test_params_t *params,

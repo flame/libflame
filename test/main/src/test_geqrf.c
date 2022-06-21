@@ -4,9 +4,6 @@
 
 #include "test_lapack.h"
 
-#define NUM_PARAM_COMBOS 1
-#define NUM_MATRIX_ARGS  1
-
 // Local prototypes.
 void fla_test_geqrf_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats,
                                     double* perf, double* t,double* residual);
@@ -16,13 +13,11 @@ void fla_test_geqrf(test_params_t *params)
 {
     char* op_str = "RQ factorization";
     char* front_str = "GEQRF";
-    char* lapack_str = "LAPACK";
-    char* pc_str[NUM_PARAM_COMBOS] = { ""};
 
     fla_test_output_info("--- %s ---\n", op_str);
     fla_test_output_info("\n");
-    fla_test_op_driver(front_str, lapack_str, NUM_PARAM_COMBOS, pc_str, NUM_MATRIX_ARGS,
-                            params, LIN, fla_test_geqrf_experiment);
+    fla_test_op_driver(front_str, RECT_INPUT, params, LIN, fla_test_geqrf_experiment);
+
 }
 
 void fla_test_geqrf_experiment(test_params_t *params,
