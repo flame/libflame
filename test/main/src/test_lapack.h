@@ -31,7 +31,7 @@
 #define INPUT_BUFFER_SIZE        256
 #define MAX_DT_STRING_LENGTH     32
 #define MAX_STOR_STRING_LENGTH   32
-#define MAX_FUNC_STRING_LENGTH   32
+#define MAX_FUNC_STRING_LENGTH   20
 #define MAX_NUM_STORAGE          4
 #define MAX_NUM_DATATYPES        4
 #define FLOPS_PER_UNIT_PERF      1e9
@@ -41,21 +41,13 @@
 #define DISABLE                  0
 #define ENABLE                   1
 
-#define MAX_PASS_STRING_LENGTH   32
-#define TEST_FAIL_STRING     "FAILURE"
-#define TEST_WARN_STRING     "MARGINAL PASS"
-#define TEST_PASS_STRING     "PASS"
+#define RECT_INPUT              0
+#define SQUARE_INPUT            1
 
-#define TEST_LAPACK    1
+#define MAX_PASS_STRING_LENGTH   32
 
 #define NUM_STORAGE_CHARS        3
 #define STORAGE_SCHEME_CHARS     "crg"
-
-#define ON_FAILURE_IGNORE_CHAR   'i'
-#define ON_FAILURE_SLEEP_CHAR    's'
-#define ON_FAILURE_ABORT_CHAR    'a'
-
-#define SECONDS_TO_SLEEP         5
 
 #define NUM_SUB_TESTS (4)
 
@@ -355,30 +347,23 @@ void fla_test_read_svd_params ( const char* input_filename, test_params_t* param
 void fla_test_lapack_suite( char* input_filename, test_params_t *params );
 
 void fla_test_op_driver( char*            func_str,
-                            char*         impl_var_str,
-                            integer       n_pc,
-                            char**        pc_str,
-                            integer       n_matrices,
-                            test_params_t *params,
-                            integer       api_type,
-                            void (*f_exp) (test_params_t *, // params
-                                            integer,        // datatype
-                                            integer,        // p_cur
-                                            integer,        // q_cur
-                                            integer,        // pci (param combo counter)
-                                            integer,        // n_repeats
-                                            double*,        // perf
-                                            double*,        // time
-                                            double* ) );    // residual
+                         integer       square_inp,
+                         test_params_t *params,
+                         integer       api_type,
+                         void (*f_exp) (test_params_t *, // params
+                                        integer,        // datatype
+                                        integer,        // p_cur
+                                        integer,        // q_cur
+                                        integer,        // pci (param combo counter)
+                                        integer,        // n_repeats
+                                        double*,        // perf
+                                        double*,        // time
+                                        double* ) );    // residual
 
 void fla_test_build_function_string( char*        func_base_str,
                                         char*        impl_var_str,
-                                        integer n_pc,
-                                        char*        pc_str,
                                         char*        func_str );
 void fill_string_with_n_spaces( char* str, integer n_spaces );
-void fla_test_sleep( void );
-void fla_test_abort( void );
 double fla_test_clock(void);
 void fla_test_get_time_unit(char * scale , double * time);
 

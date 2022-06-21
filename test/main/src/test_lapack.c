@@ -1576,20 +1576,17 @@ void fla_test_init_strings( void )
 {
     sprintf( fla_test_pass_string, "PASS" );
     sprintf( fla_test_warn_string, "MARGINAL" );
-    sprintf( fla_test_fail_string, "FAILURE" );
+    sprintf( fla_test_fail_string, "FAIL" );
     sprintf( fla_test_storage_format_string, "Row(r) and General(g) storage format is not supported by External LAPACK interface" );
     sprintf( fla_test_stor_chars, STORAGE_SCHEME_CHARS );
 }
 
 
-void fla_test_op_driver( char*            func_str,
-                            char*         impl_var_str,
-                            integer       n_pc,
-                            char**        pc_str,
-                            integer       n_matrices,
-                            test_params_t *params,
-                            integer       api_type,
-                            void (*f_exp) (test_params_t *,  // params
+void fla_test_op_driver( char*         func_str,
+                         integer       sqr_inp,
+                         test_params_t *params,
+                         integer       api_type,
+                         void (*f_exp) (test_params_t *,  // params
                                            integer,          // datatype
                                            integer,          // p_cur
                                            integer,          // q_cur
@@ -1604,19 +1601,19 @@ void fla_test_op_driver( char*            func_str,
     integer num_ranges, range_loop_counter;
     integer p_first, p_max, p_inc;
     integer q_first, q_max, q_inc;
-    integer dt, p_cur, q_cur, pci;
-    char         datatype_char;
-    integer      datatype;
-    double       perf, time, thresh, residual;
-    char*        pass_str;
-    char         blank_str[32];
-    char         func_param_str[64];
-    char         scale[3] = "";
-    integer      n_spaces;
+    integer dt, p_cur, q_cur;
+    char    datatype_char;
+    integer datatype;
+    double  perf, time, thresh, residual;
+    char*   pass_str;
+    char    blank_str[32];
+    char    func_param_str[64];
+    char    scale[3] = "";
+    integer n_spaces;
 
 
-    fla_test_output_info( "%7sAPI%23s DATA_TYPE%9s SIZE%9s FLOPS%9s TIME%9s ERROR%9s STATUS\n", "", "", "", "", "", "", "" );
-    fla_test_output_info( "%6s=====%22s===========%8s======%8s=======%7s========%6s==========%6s========\n", "", "", "", "", "", "", "" );
+    fla_test_output_info( "%2sAPI%13s DATA_TYPE%6s SIZE%9s FLOPS%9s TIME%9s ERROR%9s STATUS\n", "", "", "", "", "", "", "" );
+    fla_test_output_info( "%1s=====%12s===========%4s========%7s=======%7s========%6s==========%6s========\n", "", "", "", "", "", "", "" );
     switch (api_type)
     {
         case LIN:
@@ -1701,62 +1698,57 @@ void fla_test_op_driver( char*            func_str,
                 n_repeats             = params->svd_paramslist[range_loop_counter].num_repeats;
                 n_datatypes           = params->svd_paramslist[range_loop_counter].num_data_types;
                 break;
+            default:
+                return;
         }
 
-
-
-        // Loop over the requested datatypes.
+        /* Loop over the requested datatypes. */
         for ( dt = 0; dt < n_datatypes; ++dt )
         {
-                datatype              = params->datatype[dt];
-                datatype_char         = params->datatype_char[dt];
+            datatype              = params->datatype[dt];
+            datatype_char         = params->datatype_char[dt];
 
-            // Loop over the requested problem sizes.
+            /* Loop over the requested problem sizes */
             for ( p_cur = p_first, q_cur = q_first; (p_cur <= p_max && q_cur <= q_max); p_cur += p_inc, q_cur += q_inc )
             {
-                // Loop over the operation's parameter combinations.
-                for ( pci = 0; pci < n_pc; ++pci )
-                {
-                    f_exp( params, datatype, p_cur, q_cur, pci, n_repeats, &perf, &time, &residual );
+                f_exp( params, datatype, p_cur, q_cur, range_loop_counter, n_repeats, &perf, &time, &residual );
 
-                    pass_str = fla_test_get_string_for_result( residual, datatype, thresh );
+                pass_str = fla_test_get_string_for_result( residual, datatype, thresh );
 
-                    // Output the results. Use different formats depending on
-                    // whether the results are from a front-end or variant.
-                    fla_test_build_function_string( func_str, impl_var_str, n_pc, pc_str[pci], func_param_str );
+                fla_test_build_function_string( func_str, NULL, func_param_str ); 
 
-                    n_spaces = MAX_FUNC_STRING_LENGTH - strlen( func_param_str );
-                    fill_string_with_n_spaces( blank_str, n_spaces );
+                n_spaces = MAX_FUNC_STRING_LENGTH - strlen( func_param_str );
+                fill_string_with_n_spaces( blank_str, n_spaces );
 
                 fla_test_get_time_unit(scale , &time);
 
-                fla_test_output_info( "   %s%s  %c  %14"FT_IS" x %-9"FT_IS" %-10.3lf  %6.2lf %-7s  %-7.2le   %10s\n",
-                                                func_param_str, blank_str,
-                                                datatype_char,
-                                                p_cur, q_cur, perf, time, scale, residual, pass_str );
+                if ( sqr_inp == SQUARE_INPUT )
+                {
+                    fla_test_output_info(" %s%s  %c  %10"FT_IS" x %-9"FT_IS" %-10.2lf  %6.2lf %-7s  %-7.2le   %10s\n",
+                                         func_param_str, blank_str,
+                                         datatype_char,
+                                         p_cur, p_cur, perf, time, scale, residual, pass_str );
+                }
+                else
+                {
+                    fla_test_output_info(" %s%s  %c  %10"FT_IS" x %-9"FT_IS" %-10.2lf  %6.2lf %-7s  %-7.2le   %10s\n",
+                                         func_param_str, blank_str,
+                                         datatype_char,
+                                         p_cur, q_cur, perf, time, scale, residual, pass_str );
                 }
             }
         }
 
         fla_test_output_info( "\n" );
-
-}
+    }
 }
 
 
 void fla_test_build_function_string( char*        func_base_str,
                                         char*     impl_var_str,
-                                        integer   n_pc,
-                                        char*     pc_str,
                                         char*     func_str )
 {
-
     sprintf( func_str, "%s", func_base_str );
-
-    sprintf( &func_str[strlen(func_str)], "_%s", impl_var_str );
-
-    if ( n_pc > 1 )
-        sprintf( &func_str[strlen(func_str)], ":%s", pc_str );
 }
 
 
@@ -1766,30 +1758,6 @@ void fill_string_with_n_spaces( char* str, integer n_spaces )
 
     for ( i = 0; i < n_spaces; ++i )
         sprintf( &str[i], " " );
-}
-
-
-void fla_test_sleep( void )
-{
-    integer i;
-
-    fla_test_output_info( "Resuming in " );
-    for ( i = SECONDS_TO_SLEEP; i > 0; --i )
-    {
-        fla_test_output_info( "%d ", i );
-#ifdef _WIN32
-        Sleep(1);
-#else
-        sleep(1);
-#endif
-    }
-    fla_test_output_info( "\n" );
-}
-
-
-void fla_test_abort( void )
-{
-    abort();
 }
 
 

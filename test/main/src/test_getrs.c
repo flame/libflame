@@ -4,9 +4,6 @@
 
 #include "test_lapack.h"
 
-#define NUM_PARAM_COMBOS 1
-#define NUM_MATRIX_ARGS  1
-
 /* Local prototypes */
 void fla_test_getrs_experiment(test_params_t *params, integer  datatype, integer  p_cur, integer  q_cur, integer pci,
                                     integer n_repeats, double* perf, double* t, double* residual);
@@ -17,13 +14,10 @@ void fla_test_getrs(test_params_t *params)
 {
     char* op_str = "LU factorization";
     char* front_str = "GETRS";
-    char* lapack_str = "LAPACK";
-    char* pc_str[NUM_PARAM_COMBOS] = { "" };
 
     fla_test_output_info("--- %s ---\n", op_str);
     fla_test_output_info("\n");
-    fla_test_op_driver(front_str, lapack_str, NUM_PARAM_COMBOS, pc_str, NUM_MATRIX_ARGS,
-                            params, LIN, fla_test_getrs_experiment);
+    fla_test_op_driver(front_str, RECT_INPUT, params, LIN, fla_test_getrs_experiment);
 
 }
 
@@ -73,7 +67,7 @@ void fla_test_getrs_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* output validation */
-    validate_getrs(m, m, A, B_save, X, datatype, residual);
+    validate_getrs(&TRANS, m, m, A, B_save, X, datatype, residual);
 
     /* Free up the buffers */
     free_matrix(A);
@@ -95,7 +89,7 @@ void prepare_getrs_run(char *TRANS,
     integer n_repeats,
     double* time_min_)
 {
-    integer cs_A, lwork;
+    integer cs_A;
     integer i;
     void *A_save, *B_test;
     integer info = 0, nrhs=1;
@@ -110,7 +104,6 @@ void prepare_getrs_run(char *TRANS,
 
     for (i = 0; i < n_repeats; ++i)
     {
-
         /* Copy original input data */
         copy_matrix(datatype, "full", m_A, m_A, A, cs_A, A_save, cs_A);
         copy_vector(datatype, m_A, B, 1, B_test, 1);
@@ -151,7 +144,7 @@ void invoke_getrs(integer datatype, char* trans, integer *n, integer *nrhs, void
             sgetrs_(trans, n, nrhs, a, lda, ipiv, b, ldb, info);
             break;
         }
-        
+
         case DOUBLE:
         {
             dgetrs_(trans, n, nrhs, a, lda, ipiv, b, ldb, info);

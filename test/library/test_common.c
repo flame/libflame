@@ -604,27 +604,32 @@ integer get_work_value( integer datatype, void *work )
         {
             value = (*(integer*)work);
             break;
-	}
+        }
         case FLOAT:
         {
             value = (integer) (*(float*)work);
-	    break;
-	}
+            break;
+        }
         case DOUBLE:
         {
             value = (integer) (*(double*)work);
-	    break;
-	}
+            break;
+        }
         case COMPLEX:
         {
-	    value = (integer) (((scomplex *)work)->real);
-	    break;
-	}
+            value = (integer) (((scomplex *)work)->real);
+            break;
+        }
         case DOUBLE_COMPLEX:
         {
-	    value = (integer) (((dcomplex *)work)->real);
-	    break;
-	}
+            value = (integer) (((dcomplex *)work)->real);
+            break;
+        }
+        default:
+        {
+            value = 0;
+            break;
+        }
     }
     return value;
 }

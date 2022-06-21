@@ -75,17 +75,29 @@ void validate_potrf(char *uplo,
     integer datatype,
     double* residual);
 
-void validate_getrs(integer m,
-	integer n,
-	void* A,
-	void* B,
-	void* X,
-	integer datatype,
-	double* residual);
+void validate_getrs(char *trans,
+    integer m,
+    integer n,
+    void* A,
+    void* B,
+    void* X,
+    integer datatype,
+    double* residual);
 
 void validate_gesdd(char *jobz,
     integer m,
-        integer n,
+    integer n,
+    void* A,
+    void* A_test,
+    void* s,
+    void* U,
+    void* V,
+    integer datatype,
+    double* residual);
+
+void validate_gesvd(char *jobu, char *jobvt,
+    integer m,
+    integer n,
     void* A,
     void* A_test,
     void* s,

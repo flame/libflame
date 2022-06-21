@@ -7,31 +7,24 @@
 #include "test_common.h"
 #include "test_prototype.h"
 
-#define NUM_PARAM_COMBOS 1
-#define NUM_MATRIX_ARGS  1
-
-
 // Local prototypes.
 void fla_test_geevx_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci,
                                     integer n_repeats, double* perf, double* t, double* residual);
 void prepare_geevx_run(char *balanc, char *jobvl, char *jobvr, char * sense, integer n, void *a, void *wr, void *wi, void *w,
-							void *vl, integer ldvl, void *vr, integer ldvr, integer *ilo, integer * ihi, void *scale, void *abnrm, void *rconde,
-							void *rcondv, integer datatype, integer n_repeats, double* time_min_);
+                            void *vl, integer ldvl, void *vr, integer ldvr, integer *ilo, integer * ihi, void *scale, void *abnrm, void *rconde,
+                            void *rcondv, integer datatype, integer n_repeats, double* time_min_);
 void invoke_geevx(integer datatype, char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, void *a, integer *lda, void *wr, void *wi, void *w,
-							void *vl, integer *ldvl, void *vr, integer *ldvr, integer *ilo, integer *ihi, void *scale, void *abnrm, void *rconde, void *rcondv,
-							void* work, integer* lwork, void* rwork, integer* iwork, integer* info);
+                            void *vl, integer *ldvl, void *vr, integer *ldvr, integer *ilo, integer *ihi, void *scale, void *abnrm, void *rconde, void *rcondv,
+                            void* work, integer* lwork, void* rwork, integer* iwork, integer* info);
 
 void fla_test_geevx(test_params_t *params)
 {
     char* op_str = "Eigen value and Eigen vectors";
     char* front_str = "GEEVX";
-    char* lapack_str = "LAPACK";
-    char* pc_str[NUM_PARAM_COMBOS] = { "" };
 
     fla_test_output_info("--- %s ---\n", op_str);
     fla_test_output_info("\n");
-    fla_test_op_driver(front_str, lapack_str, NUM_PARAM_COMBOS, pc_str, NUM_MATRIX_ARGS,
-                            params, EIG_SYM, fla_test_geevx_experiment);
+    fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_SYM, fla_test_geevx_experiment);
 }
 
 
@@ -240,10 +233,10 @@ void prepare_geevx_run(char *balanc, char *jobvl, char *jobvr, char * sense,
 
 
 void invoke_geevx(integer datatype, char *balanc, char *jobvl, char *jobvr, char *sense,
-							integer *n, void *a, integer *lda, void *wr, void *wi, void *w,
-							void *vl, integer *ldvl, void *vr, integer *ldvr, integer *ilo, integer *ihi,
-							void *scale, void *abnrm, void *rconde, void *rcondv,
-							void* work, integer* lwork, void* rwork, integer* iwork, integer* info)
+                            integer *n, void *a, integer *lda, void *wr, void *wi, void *w,
+                            void *vl, integer *ldvl, void *vr, integer *ldvr, integer *ilo, integer *ihi,
+                            void *scale, void *abnrm, void *rconde, void *rcondv,
+                            void* work, integer* lwork, void* rwork, integer* iwork, integer* info)
 {
     switch(datatype)
     {

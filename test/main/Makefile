@@ -24,23 +24,35 @@ LIB_PATH       := ../../lib/x86_64-unknown-linux-gnu/
 LIBFLAME       := $(LIB_PATH)/libflame.a
 
 #
-# --- ILP64 --------------------------------------------------------------------
+# --- Uncomment the four lines below and set MKLROOT & LDFLAGS -----------------
+#     appropriately to link to MKL libs
 #
-ILP64      := 
+#LIBFLAME       :=
+#LIBBLAS        :=
+#MKLROOT        :=
+#LDFLAGS        := -Wl,--start-group ${MKLROOT}/intel64/libmkl_intel_lp64.a \
+                   ${MKLROOT}/intel64/libmkl_sequential.a \
+                   ${MKLROOT}/intel64/libmkl_core.a -Wl,--end-group \
+                   -lpthread -lm -fopenmp -ldl
+
+#
+# --- ILP64 --- Set to 1 to enable ILP64 ---------------------------------------
+#
+ILP64     := 0
 ILP64FLAG := FLA_ENABLE_ILP64=$(ILP64)
 
 #
 # --- General build definitions ------------------------------------------------
 #
 TEST_SRC_PATH  := src
-TEST_OBJ_PATH  := obj
+TEST_OBJ_PATH  := src
 TEST_LIBRARY_SRC_PATH := ../library
-TEST_LIBRARY_OBJ_PATH := ../library/obj
+TEST_LIBRARY_OBJ_PATH := ../library
 
 CFLAGS         += -I$(TEST_SRC_PATH) -I$(TEST_LIBRARY_SRC_PATH)
 
 ifeq ($(ILP64),1)
-	CPPFLAGS	+= -D$(ILP64FLAG)
+    CPPFLAGS    += -D$(ILP64FLAG)
 endif
 
 FNAME          := lapack
@@ -64,7 +76,8 @@ $(TEST_OBJ_PATH)/%.o: $(TEST_SRC_PATH)/%.c
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 test_$(FNAME): $(TEST_LIBRARY_OBJS) $(TEST_OBJS)
-	$(LINKER) $(TEST_LIBRARY_OBJS) $(TEST_OBJS) $(LIBFLAME) $(LIBBLAS) $(LDFLAGS) -o $(TEST_BIN)
+	$(LINKER) $(TEST_LIBRARY_OBJS) $(TEST_OBJS) $(LIBFLAME) $(LIBBLAS) \
+	$(LDFLAGS) -o $(TEST_BIN)
 
 clean:
 	$(RM_F) $(TEST_LIBRARY_OBJS) $(TEST_OBJS) $(TEST_BIN)
