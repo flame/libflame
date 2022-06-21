@@ -38,12 +38,12 @@ FLA_Error FLA_Herk_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Trans
   m_C      = FLA_Obj_length( C );
   ldim_C   = FLA_Obj_length( C );
 
-  if ( trans == FLA_NO_TRANSPOSE )
+  if ( trans == FLA_NO_TRANSPOSE || trans == FLA_CONJ_NO_TRANSPOSE )
     k_A = n_A;
   else
     k_A = m_A;
 
-  rocblas_operation blas_trans = FLA_Param_map_flame_to_rocblas_trans( trans );
+  rocblas_operation blas_trans = FLA_Param_map_flame_to_rocblas_trans( trans, FLA_Obj_is_real( A ) );
   rocblas_fill blas_uplo = FLA_Param_map_flame_to_rocblas_uplo( uplo );
 
 

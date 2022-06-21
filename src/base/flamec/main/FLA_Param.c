@@ -48,24 +48,39 @@ void FLA_Param_map_flame_to_netlib_trans( FLA_Trans trans, void* blas_trans )
 }
 
 #ifdef FLA_ENABLE_HIP
-rocblas_operation FLA_Param_map_flame_to_rocblas_trans( FLA_Trans trans)
+rocblas_operation FLA_Param_map_flame_to_rocblas_trans( FLA_Trans trans, FLA_Bool is_real )
 {
-	if ( trans == FLA_NO_TRANSPOSE )
-	{
-		return rocblas_operation_none;
-	} else if ( trans == FLA_TRANSPOSE )
-	{
-		return rocblas_operation_transpose;
-	}
-	else if ( trans == FLA_CONJ_TRANSPOSE )
-	{
-		return rocblas_operation_conjugate_transpose;
-	}
-	else
-	{
-		FLA_Check_error_code( FLA_INVALID_TRANS );
-		return rocblas_operation_none; // to silence warning
-	}
+        if ( trans == FLA_NO_TRANSPOSE )
+        {
+                return rocblas_operation_none;
+        } else if ( trans == FLA_TRANSPOSE )
+        {
+                return rocblas_operation_transpose;
+        }
+        else if ( trans == FLA_CONJ_TRANSPOSE && is_real)
+        {
+                return rocblas_operation_transpose;
+        }
+        else if ( trans == FLA_CONJ_NO_TRANSPOSE && is_real )
+        {
+                return rocblas_operation_none;
+        }
+        else if ( trans == FLA_CONJ_TRANSPOSE && !is_real)
+        {
+                return rocblas_operation_conjugate_transpose;
+        }
+        else if ( trans == FLA_CONJ_NO_TRANSPOSE && !is_real)
+        {
+                // not supported by rocBLAS
+                fprintf( stderr, "FLA_CONJ_NO_TRANSPOSE not supported by rocBLAS.\n" );
+                FLA_Check_error_code( FLA_INVALID_TRANS );
+                return rocblas_operation_none; // to silence warning
+        }
+        else
+        {
+                FLA_Check_error_code( FLA_INVALID_TRANS );
+                return rocblas_operation_none; // to silence warning
+        }
 }
 #endif
 
