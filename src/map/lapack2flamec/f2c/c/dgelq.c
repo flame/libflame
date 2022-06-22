@@ -169,12 +169,8 @@ static integer c__2 = 2;
 /* Subroutine */
 int dgelq_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t, integer *tsize, doublereal *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dgelq inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", tsize %" FLA_IS ", lwork %" FLA_IS "",*m, *n, *lda, *tsize, *lwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgelq inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", tsize %" FLA_IS ", lwork %" FLA_IS "",*m, *n, *lda, *tsize, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     /* Local variables */
@@ -351,18 +347,18 @@ int dgelq_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t, 
     {
         i__1 = -(*info);
         xerbla_("DGELQ", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (min(*m,*n) == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* The LQ Decomposition */
@@ -378,7 +374,7 @@ int dgelq_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t, 
     i__1 = 1;
     i__2 = mb * *m; // , expr subst
     work[1] = (doublereal) max(i__1,i__2);
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DGELQ */
 }

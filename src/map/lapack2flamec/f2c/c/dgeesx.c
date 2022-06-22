@@ -286,12 +286,8 @@ if */
 /* Subroutine */
 int dgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doublereal *a, integer *lda, integer *sdim, doublereal *wr, doublereal *wi, doublereal *vs, integer *ldvs, doublereal *rconde, doublereal *rcondv, doublereal *work, integer * lwork, integer *iwork, integer *liwork, logical *bwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dgeesx inputs: jobvs %c, sort %c, sense %c, n %" FLA_IS ", lda %" FLA_IS ", ldvs %" FLA_IS ", lwork %" FLA_IS "",*jobvs, *sort, *sense, *n, *lda, *ldvs, *lwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgeesx inputs: jobvs %c, sort %c, sense %c, n %" FLA_IS ", lda %" FLA_IS ", ldvs %" FLA_IS ", lwork %" FLA_IS "",*jobvs, *sort, *sense, *n, *lda, *ldvs, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, vs_dim1, vs_offset, i__1, i__2, i__3;
     /* Builtin functions */
@@ -471,19 +467,19 @@ int dgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doub
     {
         i__1 = -(*info);
         xerbla_("DGEESX", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
         *sdim = 0;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants */
@@ -745,7 +741,7 @@ L20:
     {
         iwork[1] = 1;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DGEESX */
 }
