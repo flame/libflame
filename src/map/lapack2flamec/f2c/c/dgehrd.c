@@ -167,12 +167,8 @@ v(i+2:ihi) is stored on */
 /* Subroutine */
 int dgehrd_(integer *n, integer *ilo, integer *ihi, doublereal *a, integer *lda, doublereal *tau, doublereal *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dgehrd inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "",*n, *ilo, *ihi, *lda, *lwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgehrd inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "",*n, *ilo, *ihi, *lda, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
@@ -251,12 +247,12 @@ int dgehrd_(integer *n, integer *ilo, integer *ihi, doublereal *a, integer *lda,
     {
         i__1 = -(*info);
         xerbla_("DGEHRD", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Set elements 1:ILO-1 and IHI:N-1 of TAU to zero */
@@ -281,7 +277,7 @@ int dgehrd_(integer *n, integer *ilo, integer *ihi, doublereal *a, integer *lda,
     if (nh <= 1)
     {
         work[1] = 1.;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Determine the block size */
@@ -376,7 +372,7 @@ int dgehrd_(integer *n, integer *ilo, integer *ihi, doublereal *a, integer *lda,
     /* Use unblocked code to reduce the rest of the matrix */
     dgehd2_(n, &i__, ihi, &a[a_offset], lda, &tau[1], &work[1], &iinfo);
     work[1] = (doublereal) lwkopt;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DGEHRD */
 }
