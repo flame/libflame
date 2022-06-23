@@ -106,12 +106,8 @@ for 1 <= j <= N, column j of the */
 /* Subroutine */
 int dgesc2_(integer *n, doublereal *a, integer *lda, doublereal *rhs, integer *ipiv, integer *jpiv, doublereal *scale)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dgesc2 inputs: n %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS ", jpiv %" FLA_IS "",*n, *lda, *ipiv, *jpiv);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgesc2 inputs: n %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS ", jpiv %" FLA_IS "",*n, *lda, *ipiv, *jpiv);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     doublereal d__1, d__2;
@@ -207,7 +203,7 @@ int dgesc2_(integer *n, doublereal *a, integer *lda, doublereal *rhs, integer *i
     /* Apply permutations JPIV to the solution (RHS) */
     i__1 = *n - 1;
     dlaswp_(&c__1, &rhs[1], lda, &c__1, &i__1, &jpiv[1], &c_n1);
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DGESC2 */
 }

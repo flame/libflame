@@ -422,12 +422,8 @@ the routine */
 /* Subroutine */
 int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer *m, integer *n, doublereal *a, integer *lda, doublereal *s, doublereal *u, integer *ldu, doublereal *v, integer * ldv, integer *numrank, integer *iwork, integer *liwork, doublereal * work, integer *lwork, doublereal *rwork, integer *lrwork, integer * info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dgesvdq inputs: joba %c, jobp %c, jobr %c, jobu %c, jobv %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldv %" FLA_IS ", lwork %" FLA_IS ", lrwork %" FLA_IS "",*joba, *jobp, *jobr, *jobu, *jobv, *m, *n, *lda, *ldu, *ldv, *lwork, *lrwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgesvdq inputs: joba %c, jobp %c, jobr %c, jobu %c, jobv %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldv %" FLA_IS ", lwork %" FLA_IS ", lrwork %" FLA_IS "",*joba, *jobp, *jobr, *jobu, *jobv, *m, *n, *lda, *ldu, *ldv, *lwork, *lrwork);
     /* System generated locals */
     integer a_dim1, a_offset, u_dim1, u_offset, v_dim1, v_offset, i__1, i__2;
     doublereal d__1, d__2, d__3;
@@ -929,7 +925,7 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
     {
         i__1 = -(*info);
         xerbla_("DGESVDQ", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
@@ -939,14 +935,14 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
         work[1] = (doublereal) optwrk;
         work[2] = (doublereal) minwrk;
         rwork[1] = (doublereal) rminwrk;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if the matrix is void. */
     if (*m == 0 || *n == 0)
     {
         /* .. all output is void. */
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     big = dlamch_("O");
@@ -972,7 +968,7 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
                 *info = -8;
                 i__2 = -(*info);
                 xerbla_("DGESVDQ", &i__2);
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             /* L1904: */
@@ -1039,7 +1035,7 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
                 rwork[1] = -1.;
             }
             rwork[2] = -1.;
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         if (rwork[1] > big / sqrt((doublereal) (*m)))
@@ -1065,7 +1061,7 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
             *info = -8;
             i__1 = -(*info);
             xerbla_("DGESVDQ", &i__1);
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         if (rtmp > big / sqrt((doublereal) (*m)))
@@ -1951,7 +1947,7 @@ L4002: /* .. if numerical rank deficiency is detected, the truncated */
     /* exact zeros in DGESVD() applied to the (possibly truncated) */
     /* full row rank triangular (trapezoidal) factor of A. */
     *numrank = nr;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DGESVDQ */
 }
