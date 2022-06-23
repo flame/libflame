@@ -26,18 +26,7 @@ AC_DEFUN([FLA_REQUIRE_PYTHON],
 		dnl list in \$fla_python_list.
 		if test "$PYTHON" = "no" || test "$PYTHON" = "" ; then
 			
-			for pyt in $fla_python_list ; do
-
-				AC_CHECK_PROG([PYTHON],$pyt,$pyt,[no])
-
-				if test "$PYTHON" = "no" ; then
-					dnl python interpreter $pyt not found. Continue searching
-					dnl the list.
-					continue;
-				else
-					break;
-				fi
-			done
+			AC_CHECK_PROGS([PYTHON],$fla_python_list,[no])
 
 			if test "$PYTHON" = "no" ; then
 				AC_MSG_ERROR([Could not locate any of the following python interpreters: $fla_requested_python $fla_python_list. Cannot continue without a python interpreter.],[1])
