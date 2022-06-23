@@ -275,6 +275,12 @@ FLA_CHECK_WITH_RANLIB
 dnl Require ranlib.
 FLA_REQUIRE_RANLIB
 
+dnl Check for python interpreter.
+FLA_CHECK_WITH_PYTHON
+
+dnl Require a python interpeter.
+FLA_REQUIRE_PYTHON
+
 dnl Check for install.
 AC_PROG_INSTALL
 
