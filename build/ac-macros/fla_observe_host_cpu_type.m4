@@ -70,6 +70,10 @@ AC_DEFUN([FLA_OBSERVE_HOST_CPU_TYPE],
 		;;
 	esac
 	
+	dnl As far as we know, every CPU type uses the same names for their python
+	dnl interpreters.
+	fla_python_list="python python3 python2"
+
 	dnl Substitute the cpu type into the autoconf output files
 	AC_SUBST(fla_host_cpu)
 

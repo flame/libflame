@@ -32,6 +32,7 @@ echo "C compiler...................................... : @CC@"
 echo "C compiler vendor............................... : @CC_VENDOR@"
 echo "Library archiver................................ : @AR@"
 echo "Library archive indexer......................... : @RANLIB@"
+echo "Python interpreter.............................. : @PYTHON@"
 
 echo ""
 echo "Enable Windows build (experimental)............. : @fla_enable_windows_build@"
