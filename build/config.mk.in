@@ -152,6 +152,11 @@ ARFLAGS          := cr
 AR_OBJ_LIST_FILE := ar_obj_list
 
 
+# --- Determine the python interpreter ---
+
+PYTHON       := @PYTHON@
+
+
 # --- Determine the linker and related flags ---
 LINKER       := $(CC)
 ifeq (@fla_multithreading_model@, pthreads)
