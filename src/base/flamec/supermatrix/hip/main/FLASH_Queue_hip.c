@@ -335,6 +335,8 @@ void FLASH_Queue_exec_task_hip( FLASH_Task* t,
    typedef FLA_Error(*flash_chol_hip_p)(rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip );
    typedef FLA_Error(*flash_trinv_hip_p)(rocblas_handle handle, FLA_Uplo uplo, FLA_Diag diag, FLA_Obj A, void* A_hip );
    typedef FLA_Error(*flash_eig_gest_hip_p)(rocblas_handle handle, FLA_Inv inv, FLA_Uplo uplo, FLA_Obj A, void* A_hip, FLA_Obj Y, void* Y_hip, FLA_Obj B, void* B_hip );
+   typedef FLA_Error(*flash_lu_piv_hip_p)(rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj p );
+   typedef FLA_Error(*flash_lu_piv_copy_hip_p)(rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj p, FLA_Obj U, void* U_hip );
 
    // Level-3 BLAS
    typedef FLA_Error(*flash_gemm_hip_p)(rocblas_handle handle, FLA_Trans transa, FLA_Trans transb, FLA_Obj alpha, FLA_Obj A, void* A_hip, FLA_Obj B, void* B_hip, FLA_Obj beta, FLA_Obj C, void* C_hip);
@@ -403,6 +405,30 @@ void FLASH_Queue_exec_task_hip( FLASH_Task* t,
                                 output_arg[0],
                                 t->input_arg[0],
                                 input_arg[0] );
+   }
+   // FLA_LU_piv
+   else if ( t->func == (void *) FLA_LU_piv_task )
+   {
+      flash_lu_piv_hip_p func;
+      func = (flash_lu_piv_hip_p) FLA_LU_piv_blk_external_hip;
+
+      func(               handle,
+                          t->output_arg[0],
+                          output_arg[0],
+                          t->fla_arg[0] );
+   }
+   // FLA_LU_piv_copy
+   else if ( t->func == (void *) FLA_LU_piv_copy_task )
+   {
+      flash_lu_piv_copy_hip_p func;
+      func = (flash_lu_piv_copy_hip_p) FLA_LU_piv_copy_external_hip;
+
+      func(               handle,
+                          t->output_arg[0],
+                          output_arg[0],
+                          t->fla_arg[0],
+                          t->output_arg[1],
+                          output_arg[1] );
    }
    // FLA_Gemm
    else if ( t->func == (void *) FLA_Gemm_task )

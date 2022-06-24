@@ -60,7 +60,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "LU   ", \
                           FALSE, \
-                          FALSE, \
+                          TRUE, \
                           0, 1, 0, 1, \
                           p, A )
 
@@ -69,7 +69,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "LU   ", \
                           FALSE, \
-                          FALSE, \
+                          TRUE, \
                           0, 1, 0, 2, \
                           p, A, U )
 

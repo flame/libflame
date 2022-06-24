@@ -210,6 +210,9 @@ FLA_Error FLA_Trinv_ln_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hi
 FLA_Error FLA_Trinv_lu_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
 FLA_Error FLA_Trinv_un_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
 FLA_Error FLA_Trinv_uu_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
+
+FLA_Error FLA_LU_piv_blk_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj p );
+FLA_Error FLA_LU_piv_copy_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj p, FLA_Obj U, void* U_hip );
 #endif
 
 // --- check routine prototypes ------------------------------------------------
