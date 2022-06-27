@@ -9,6 +9,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/test_gesvd.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_orgqr.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_potrs.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_getrf.c
+${CMAKE_CURRENT_SOURCE_DIR}/test_geqp3.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_getri.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_getrs.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_geqrf.c

@@ -100,7 +100,7 @@ typedef struct Lin_solver_paramlist_t
     char fact;  // Must be 'F', 'N', or 'E'.
     char equed; // Must be 'N', 'R'. 'C', 'B'
     char symm; // if symmetric 'S' or Hermitian 'H'
-    float solver_threhold;// threshold to verify PASS/FAIL criteria
+    float solver_threshold;// threshold to verify PASS/FAIL criteria
     char equed_porfsx; // Must be 'N', 'Y'.
     integer  n_err_bnds_porfsx;
     integer  nparams_porfsx;

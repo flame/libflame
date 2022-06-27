@@ -54,17 +54,18 @@ extern dcomplex z_zero, z_one, z_n_one;
 #define max( x, y ) ( (x) > (y) ? (x) : (y) )
 
 // Datatype
-#define FLOAT             100
-#define DOUBLE            101
-#define COMPLEX           102
-#define DOUBLE_COMPLEX    103
-#define INTEGER           104
-#define CONSTANT          105
+#define CONSTANT          101
+#define INTEGER           102
+#define FLOAT             103
+#define DOUBLE            104
+#define COMPLEX           105
+#define DOUBLE_COMPLEX    106
 
 /* vector functions*/
 void create_vector(integer datatype, void **A, integer M);
 void create_realtype_vector(integer datatype, void **A, integer M);
 void free_vector(void *A);
+void reset_vector(integer datatype, void *A, integer M, integer incA);
 void rand_vector(integer datatype, void *A, integer M, integer LDA);
 void copy_vector(integer datatype, integer M, void *A, integer LDA, void *B, integer LDB);
 void copy_realtype_vector(integer datatype, integer M, void *A, integer LDA, void *B, integer LDB);
