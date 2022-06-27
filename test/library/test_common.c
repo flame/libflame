@@ -86,6 +86,60 @@ void free_vector(void *A)
     free(A);
 }
 
+/* initialize to zero */
+void reset_vector(integer datatype, void *A, integer M, integer incA)
+{
+    integer i;
+
+    switch( datatype )
+    {
+        case INTEGER:
+        {
+            for( i = 0; i < M; i++ )
+            {
+                ((integer *)A)[i * incA] = 0;
+            }
+            break;
+        }
+        case FLOAT:
+        {
+            for( i = 0; i < M; i++ )
+            {
+                ((float *)A)[i * incA] = 0.f;
+            }
+            break;
+        }
+        case DOUBLE:
+        {
+            for( i = 0; i < M; i++ )
+            {
+                ((double *)A)[i * incA] = 0.;
+            }
+            break;
+        }
+        case COMPLEX:
+        {
+            for( i = 0; i < M; i++ )
+            {
+                ((scomplex *)A)[i * incA].real = 0.f;
+                ((scomplex *)A)[i * incA].imag = 0.f;
+            }
+            break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+            for( i = 0; i < M; i++ )
+            {
+                ((dcomplex *)A)[i * incA].real = 0.;
+                ((dcomplex *)A)[i * incA].imag = 0.;
+            }
+            break;
+        }
+    }
+
+    return;
+}
+
 /* Initialize vector with random values */
 void rand_vector(integer datatype, void *A, integer M, integer LDA)
 {

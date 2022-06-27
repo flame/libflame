@@ -109,7 +109,7 @@ void fla_test_output_op_struct( char* op_str, integer op )
 }
 
 
-/* This functiom extract enable option and API name from operation file*/
+/* This functiom extract enable option and API name from operation file */
 integer fla_test_read_tests_for_op( FILE* input_stream, integer* op, char* buffer )
 {
     char temp[ INPUT_BUFFER_SIZE ];
@@ -120,7 +120,7 @@ integer fla_test_read_tests_for_op( FILE* input_stream, integer* op, char* buffe
         // Read the next line into a temporary buffer and check success.
         if ( fgets( temp, INPUT_BUFFER_SIZE-1, input_stream ) == NULL )
             return 0;
-        }
+    }
     // We continue to read lines into buffer until the line is neither
     // commented nor blank.
     while ( temp[0] == COMMENT_CHAR || temp[0] == '\n' ||
@@ -166,7 +166,7 @@ void fla_test_read_next_line( char* buffer, FILE* input_stream )
    from the config settings file 'LIN_SLVR.dat' and saves in the
    'lin_solver_paramslist' structure array   */
 void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
-    {
+{
     FILE *fp;
     integer i, j;
     char line[20];
@@ -375,7 +375,7 @@ void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
 
     fscanf(fp, "%s", &line[0]);
     for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%f", &(params->lin_solver_paramslist[i].solver_threhold) );
+        fscanf(fp, "%f", &(params->lin_solver_paramslist[i].solver_threshold) );
         CHECK_LINE_SKIP ();
     }
 
@@ -424,7 +424,7 @@ void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
     }
     fclose(fp);
 
-    }
+}
 
 
 /* This function reads parameters needed for Eigen APIs
@@ -1649,7 +1649,7 @@ void fla_test_op_driver( char*         func_str,
                 q_first               = params->lin_solver_paramslist[range_loop_counter].n_range_start;
                 q_max                 = params->lin_solver_paramslist[range_loop_counter].n_range_end;
                 q_inc                 = params->lin_solver_paramslist[range_loop_counter].n_range_step_size;
-                thresh                = params->lin_solver_paramslist[range_loop_counter].solver_threhold;
+                thresh                = params->lin_solver_paramslist[range_loop_counter].solver_threshold;
                 params->datatype      = params->lin_solver_paramslist[range_loop_counter].data_types;
                 params->datatype_char = params->lin_solver_paramslist[range_loop_counter].data_types_char;
                 n_repeats             = params->lin_solver_paramslist[range_loop_counter].num_repeats;

@@ -94,7 +94,7 @@ extern int dgesvd_(char* jobu, char *jobvt, integer* m, integer* n, void* a, int
 extern int cgesvd_(char* jobu, char* jobvt, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, integer* rwork, integer* info);
 extern int zgesvd_(char* jobu, char* jobvt, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, integer* rwork, integer* info);
 
-/* QR factorization*/
+/* QR factorization */
 extern int sgeqrf_(integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *lwork, integer *info);
 extern int dgeqrf_(integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *lwork, integer *info);
 extern int cgeqrf_(integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *lwork, integer *info);
@@ -111,6 +111,12 @@ extern int sgerq2_(integer *m, integer *n, void *a, integer *lda, void *tau, voi
 extern int dgerq2_(integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *info);
 extern int cgerq2_(integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *info);
 extern int zgerq2_(integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *info);
+
+/* QR factorization with column pivoting */
+extern int sgeqp3_(integer *m, integer *n, void *a, integer *lda, integer *jpvt, void *tau, void *work, integer *lwork, integer *info);
+extern int dgeqp3_(integer *m, integer *n, void *a, integer *lda, integer *jpvt, void *tau, void *work, integer *lwork, integer *info);
+extern int cgeqp3_(integer *m, integer *n, void *a, integer *lda, integer *jpvt, void *tau, void *work, integer *lwork, void *rwork, integer *info);
+extern int zgeqp3_(integer *m, integer *n, void *a, integer *lda, integer *jpvt, void *tau, void *work, integer *lwork, void *rwork, integer *info);
 
 /* Cholesky factorization APIS*/
 extern int spotrf_(char* uplo, integer* n, void* a, integer* lda, integer* info);

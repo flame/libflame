@@ -3,7 +3,7 @@
 */
 
 /* Update test api count */
-#define test_api_count 15
+#define test_api_count 16
 
 
 /* Test API function declaration */
@@ -12,6 +12,7 @@ void fla_test_gesdd(test_params_t *params);
 void fla_test_geqrf(test_params_t *params);
 void fla_test_gerqf(test_params_t *params);
 void fla_test_gerq2(test_params_t *params);
+void fla_test_geqp3(test_params_t *params);
 void fla_test_potrf(test_params_t *params);
 void fla_test_getrf(test_params_t *params);
 void fla_test_getri(test_params_t *params);
@@ -34,6 +35,7 @@ OPERATIONS API_test_functions[] =
     {"geqrf"               , fla_test_geqrf},
     {"gerqf"               , fla_test_gerqf},
     {"gerq2"               , fla_test_gerq2},
+    {"geqp3"               , fla_test_geqp3},
     {"getrf"               , fla_test_getrf},
     {"getri"               , fla_test_getri},
     {"getrs"               , fla_test_getrs},
