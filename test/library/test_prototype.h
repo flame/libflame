@@ -141,4 +141,15 @@ extern int ssyevd_(char* jobz, char* uplo, integer* n, void* a, integer* lda, vo
 extern int dsyevd_(char* jobz, char* uplo, integer* n, void* a, integer* lda, void* w, void* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
 extern int cheevd_(char* jobz, char* uplo, integer* n, void* a, integer* lda, void* w, void* work, integer* lwork, void* rwork, integer* lrwork, integer* iwork, integer* liwork, integer* info);
 extern int zheevd_(char* jobz, char* uplo, integer* n, void* a, integer* lda, void* w, void* work, integer* lwork, void* rwork, integer* lrwork, integer* iwork, integer* liwork, integer* info);
+/* Computation of Eigen Values and Eigen Vectors */
+extern int sggevx_(char* balanc, char* jobvl, char* jobvr, char* sense, integer* n, void* a, integer* lda, void* b, integer* ldb, void* alphar, void* alphai, void* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, integer* ilo, integer* ihi, void* lscale, void* rscale, void* abnrm, void* bbnrm, void* rconde, void* rcondv, void* work, integer* lwork, integer* iwork, integer* bwork, integer* info);
+extern int dggevx_(char* balanc, char* jobvl, char* jobvr, char* sense, integer* n, void* a, integer* lda, void* b, integer* ldb, void* alphar, void* alphai, void* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, integer* ilo, integer* ihi, void* lscale, void* rscale, void* abnrm, void* bbnrm, void* rconde, void* rcondv, void* work, integer* lwork, integer* iwork, integer* bwork, integer* info);
+extern int cggevx_(char* balanc, char* jobvl, char* jobvr, char* sense, integer* n, void* a, integer* lda, void* b, integer* ldb, void* alpha, void* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, integer* ilo, integer* ihi, void* lscale, void* rscale, void* abnrm, void* bbnrm, void* rconde, void* rcondv, void* work, integer* lwork, void* rwork, integer* iwork, integer* bwork, integer* info);
+extern int zggevx_(char* balanc, char* jobvl, char* jobvr, char* sense, integer* n, void* a, integer* lda, void* b, integer* ldb, void* alpha, void* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, integer* ilo, integer* ihi, void* lscale, void* rscale, void* abnrm, void* bbnrm, void* rconde, void* rcondv, void* work, integer* lwork, void* rwork, integer* iwork, integer* bwork, integer* info);
+
+extern int sgesv_(integer* n, integer* nrhs, void* a, integer* lda, integer* ipiv, void* b, integer* ldb, integer* info);
+extern int dgesv_(integer* n, integer* nrhs, void* a, integer* lda, integer* ipiv, void* b, integer* ldb, integer* info);
+extern int cgesv_(integer* n, integer* nrhs, void* a, integer* lda, integer* ipiv, void* b, integer* ldb, integer* info);
+extern int zgesv_(integer* n, integer* nrhs, void* a, integer* lda, integer* ipiv, void* b, integer* ldb, integer* info);
+
 #endif  // TEST_PROTOTYPE_H

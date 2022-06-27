@@ -15,6 +15,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/test_geqrf.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_gerq2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_gerqf.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_geevx.c
+${CMAKE_CURRENT_SOURCE_DIR}/test_gesv.c
+${CMAKE_CURRENT_SOURCE_DIR}/test_ggevx.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_gesdd.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_potrf.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_lapack.c
