@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_DEBUG],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([debug],
-	              AC_HELP_STRING([--enable-debug],[Use the appropriate debug flag (usually -g) when compiling C and Fortran source code. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-debug],[Use the appropriate debug flag (usually -g) when compiling C and Fortran source code. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

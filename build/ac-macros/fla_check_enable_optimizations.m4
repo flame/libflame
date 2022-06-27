@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_OPTIMIZATIONS],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([optimizations],
-	              AC_HELP_STRING([--enable-optimizations],[Employ traditional compiler optimizations when compiling C and Fortran source code. (Enabled by default.)]),
+	              AS_HELP_STRING([--enable-optimizations],[Employ traditional compiler optimizations when compiling C and Fortran source code. (Enabled by default.)]),
 	[
 		
 		dnl If any form of the option is given, handle each case.

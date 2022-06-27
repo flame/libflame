@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_AUTODETECT_F77_NAME_MANGLING],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([autodetect-f77-name-mangling],
-	              AC_HELP_STRING([--enable-autodetect-f77-name-mangling],[Enable automatic detection of the (name-mangling) necessary to invoke Fortran routines from C, and C-compiled routines from Fortran. Disabling this option causes a pre-defined default to be used, which may not work in some environments. You may need to disable this option, along with autodetection of Fortran linker flags, if the environment's Fortran compiler is missing or broken. (Enabled by default.)]),
+	              AS_HELP_STRING([--enable-autodetect-f77-name-mangling],[Enable automatic detection of the (name-mangling) necessary to invoke Fortran routines from C, and C-compiled routines from Fortran. Disabling this option causes a pre-defined default to be used, which may not work in some environments. You may need to disable this option, along with autodetection of Fortran linker flags, if the environment's Fortran compiler is missing or broken. (Enabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

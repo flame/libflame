@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_TIDSP],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([tidsp],
-	              AC_HELP_STRING([--enable-tidsp],[Enable code required for libflame to run under Texas Instruments' DSP. Note that this option is experimental. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-tidsp],[Enable code required for libflame to run under Texas Instruments' DSP. Note that this option is experimental. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

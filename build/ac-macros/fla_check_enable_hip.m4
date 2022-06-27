@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_HIP],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([hip],
-	              AC_HELP_STRING([--enable-hip],[Enable code that takes advantage of HIPs when performing certain computations. If enabled, SuperMatrix must also be enabled. Note that this option is experimental. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-hip],[Enable code that takes advantage of HIPs when performing certain computations. If enabled, SuperMatrix must also be enabled. Note that this option is experimental. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

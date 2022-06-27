@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_MEMORY_LEAK_COUNTER],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([memory-leak-counter],
-	              AC_HELP_STRING([--enable-memory-leak-counter],[Enable code that keeps track of the balance between calls to FLA_malloc() and FLA_free(). If enabled, the counter value is output to standard error upon calling FLA_Finalize(). Note that this option determines the default status, which may be changed at runtime. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-memory-leak-counter],[Enable code that keeps track of the balance between calls to FLA_malloc() and FLA_free(). If enabled, the counter value is output to standard error upon calling FLA_Finalize(). Note that this option determines the default status, which may be changed at runtime. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

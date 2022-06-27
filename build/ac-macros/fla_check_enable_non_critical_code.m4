@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_NON_CRITICAL_CODE],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([non-critical-code],
-	              AC_HELP_STRING([--enable-non-critical-code],[Enable code that provides non-critical functionality. This code has been identified as unnecessary when total library size is of concern. (Enabled by default.)]),
+	              AS_HELP_STRING([--enable-non-critical-code],[Enable code that provides non-critical functionality. This code has been identified as unnecessary when total library size is of concern. (Enabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

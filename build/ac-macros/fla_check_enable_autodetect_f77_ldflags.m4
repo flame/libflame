@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_AUTODETECT_F77_LDFLAGS],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([autodetect-f77-ldflags],
-	              AC_HELP_STRING([--enable-autodetect-f77-ldflags],[Enable automatic detection of any linker flags that may be needed to link against Fortran code. These flags are useful to know about when, for example, linking libflame to a BLAS library that was compiled with the system's Fortran compiler. You may need to disable this option, along with autodetection of Fortran name-mangling, if the environment's Fortran compiler is missing or broken. (Enabled by default.)]),
+	              AS_HELP_STRING([--enable-autodetect-f77-ldflags],[Enable automatic detection of any linker flags that may be needed to link against Fortran code. These flags are useful to know about when, for example, linking libflame to a BLAS library that was compiled with the system's Fortran compiler. You may need to disable this option, along with autodetection of Fortran name-mangling, if the environment's Fortran compiler is missing or broken. (Enabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

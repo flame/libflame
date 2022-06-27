@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_BLAS3_FRONT_END_CNTL_TREES],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([blas3-front-end-cntl-trees],
-	              AC_HELP_STRING([--enable-blas3-front-end-cntl-trees],[Enable code that uses control trees to select a reasonable variant and blocksize when level-3 BLAS front-ends are invoked. When disabled, the front-ends invoke their corresponding external implementations. Note that control trees are always used for LAPACK-like operations. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-blas3-front-end-cntl-trees],[Enable code that uses control trees to select a reasonable variant and blocksize when level-3 BLAS front-ends are invoked. When disabled, the front-ends invoke their corresponding external implementations. Note that control trees are always used for LAPACK-like operations. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

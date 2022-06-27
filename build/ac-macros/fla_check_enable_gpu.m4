@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_GPU],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([gpu],
-	              AC_HELP_STRING([--enable-gpu],[Enable code that takes advantage of GPUs when performing certain computations. If enabled, SuperMatrix must also be enabled. Note that this option is experimental. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-gpu],[Enable code that takes advantage of GPUs when performing certain computations. If enabled, SuperMatrix must also be enabled. Note that this option is experimental. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

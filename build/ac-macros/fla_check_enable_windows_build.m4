@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_WINDOWS_BUILD],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([windows-build],
-	              AC_HELP_STRING([--enable-windows-build],[Enable code that is needed for a Windows-friendly build of libflame. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-windows-build],[Enable code that is needed for a Windows-friendly build of libflame. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

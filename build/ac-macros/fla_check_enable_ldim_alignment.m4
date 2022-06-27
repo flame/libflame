@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_LDIM_ALIGNMENT],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([ldim-alignment],
-	              AC_HELP_STRING([--enable-ldim-alignment],[If memory alignment is requested, enable code that will increase, if necessary, the leading dimension of libflame objects so that each matrix column begins at an aligned address. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-ldim-alignment],[If memory alignment is requested, enable code that will increase, if necessary, the leading dimension of libflame objects so that each matrix column begins at an aligned address. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

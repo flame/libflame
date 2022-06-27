@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_GOTO_INTERFACES],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([goto-interfaces],
-	              AC_HELP_STRING([--enable-goto-interfaces],[Enable code that interfaces with internal/low-level functionality within GotoBLAS, such as those symbols that may be queried for architecture-dependent blocksize values. When this option is disabled, reasonable static values are used instead. Note that in order to use libflame with a BLAS library other than GotoBLAS, the user must disable this option. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-goto-interfaces],[Enable code that interfaces with internal/low-level functionality within GotoBLAS, such as those symbols that may be queried for architecture-dependent blocksize values. When this option is disabled, reasonable static values are used instead. Note that in order to use libflame with a BLAS library other than GotoBLAS, the user must disable this option. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

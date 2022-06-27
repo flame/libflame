@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_BUILTIN_BLAS],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([builtin-blas],
-	              AC_HELP_STRING([--enable-builtin-blas],[Enable code that provides a built-in implementation of the BLAS. Note that some routines may not be optimized yet. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-builtin-blas],[Enable code that provides a built-in implementation of the BLAS. Note that some routines may not be optimized yet. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

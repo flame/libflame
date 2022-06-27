@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_SCC],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([scc],
-	              AC_HELP_STRING([--enable-scc],[Enable code that takes advantage of the SCC multicore architecture. When using this option, enabling SuperMatrix is recommended, though not strictly required. Note that this option is experimental. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-scc],[Enable code that takes advantage of the SCC multicore architecture. When using this option, enabling SuperMatrix is recommended, though not strictly required. Note that this option is experimental. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

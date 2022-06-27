@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_WITH_CC],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_WITH([cc],
-	            AC_HELP_STRING([--with-cc=cc],[Search for and use a C compiler named <cc>. If <cc> is not found, then use the first compiler found from the default search list for the detected build architecture.]),
+	            AS_HELP_STRING([--with-cc=cc],[Search for and use a C compiler named <cc>. If <cc> is not found, then use the first compiler found from the default search list for the detected build architecture.]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$withval" = "no" ; then

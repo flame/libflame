@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_EXTERNAL_LAPACK_INTERFACES],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([external-lapack-interfaces],
-	              AC_HELP_STRING([--enable-external-lapack-interfaces],[Enable code that allows the user to interface with an external LAPACK implementation via object-based FLAME-like functions. Note that if this option is enabled, an LAPACK library will be required at link-time. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-external-lapack-interfaces],[Enable code that allows the user to interface with an external LAPACK implementation via object-based FLAME-like functions. Note that if this option is enabled, an LAPACK library will be required at link-time. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

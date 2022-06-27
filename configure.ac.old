@@ -20,12 +20,20 @@ dnl ----------------------------------------------------------------------------
 
 dnl Initialize autoconf. The arguments here are autoconf macros defined to
 dnl their appropriate values elsewhere in the build directory.
-AC_INIT
-AC_CONFIG_SRCDIR([libflame])
+dnl AC_INIT([libflame],
+dnl         [r]m4_esyscmd_s([cat version]),
+dnl         [flame@cs.utexas.edu],
+dnl         [libflame],
+dnl         [http://www.cs.utexas.edu/users/flame/])
+AC_INIT([libflame],
+        [],
+        [flame@cs.utexas.edu],
+        [libflame],
+        [http://www.cs.utexas.edu/users/flame/])
 
 dnl Check for a good autoconf version. We need to do more research into the
 dnl functionality provided by various versions of autoconf.
-AC_PREREQ([2.15])
+AC_PREREQ(2.15)
 
 dnl Copyright notice for autoconf-generated configure script.
 AC_COPYRIGHT([[Copyright 2014 The University of Texas at Austin
@@ -339,6 +347,8 @@ dnl ----------------------------------------------------------------------------
 dnl Checks for header files.
 dnl ----------------------------------------------------------------------------
 
+AC_HEADER_STDC
+
 dnl Itanium architectures seem to need this header, at least when compiling with
 dnl Intel compilers.
 AC_CHECK_HEADERS([ia64intrin.h])
@@ -354,7 +364,6 @@ dnl macro TIME_WITH_SYS_TIME. On some older systems, sys/time.h includes time.h,
 dnl but time.h is not protected against multiple inclusions, so programs should
 dnl not explicitly include both files.
 AC_HEADER_TIME
-
 
 
 

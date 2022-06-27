@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_WITH_PYTHON],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_WITH([python],
-	            AC_HELP_STRING([--with-python=python],[Search for and use a python interpreter named <python>. If <python> is not found, then use the first interpreter found from the default search list.]),
+	            AS_HELP_STRING([--with-python=python],[Search for and use a python interpreter named <python>. If <python> is not found, then use the first interpreter found from the default search list.]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$withval" = "no" ; then

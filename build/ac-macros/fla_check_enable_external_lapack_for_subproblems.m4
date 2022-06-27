@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_EXTERNAL_LAPACK_FOR_SUBPROBLEMS],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([external-lapack-for-subproblems],
-	              AC_HELP_STRING([--enable-external-lapack-for-subproblems],[Enable code that causes most of the computationally-intensive functions within libflame to compute their smallest subproblems by invoking a corresponding (usually unblocked) LAPACK routine. Note that if this option is enabled, lapack2flame MUST be disabled. Also, if this option is enabled, then external-lapack-interfaces MUST also be enabled. Enabling this option is useful when a libflame user wishes to leverage an optimized external implementation of LAPACK to speed up the b-by-b subproblems that arise within libflame's blocked algorithms and algorithms-by-blocks. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-external-lapack-for-subproblems],[Enable code that causes most of the computationally-intensive functions within libflame to compute their smallest subproblems by invoking a corresponding (usually unblocked) LAPACK routine. Note that if this option is enabled, lapack2flame MUST be disabled. Also, if this option is enabled, then external-lapack-interfaces MUST also be enabled. Enabling this option is useful when a libflame user wishes to leverage an optimized external implementation of LAPACK to speed up the b-by-b subproblems that arise within libflame's blocked algorithms and algorithms-by-blocks. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

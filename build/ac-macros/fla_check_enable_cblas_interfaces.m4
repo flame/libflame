@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_CBLAS_INTERFACES],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([cblas-interfaces],
-	              AC_HELP_STRING([--enable-cblas-interfaces],[Enable code that interfaces libflame's external wrapper routines to the BLAS via the CBLAS rather than the traditional Fortran-77 API. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-cblas-interfaces],[Enable code that interfaces libflame's external wrapper routines to the BLAS via the CBLAS rather than the traditional Fortran-77 API. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

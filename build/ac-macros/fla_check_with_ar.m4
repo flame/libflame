@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_WITH_AR],
     dnl --disable-<option>. If so, then run the first snippet of code;
     dnl otherwise, run the second code block.
 	AC_ARG_WITH([ar],
-	            AC_HELP_STRING([--with-ar=ar],[ Search for and use a library archiver named <ar>. If <ar> is not found, then use the first library archiver found from the default search list for the detected build architecture. Note: the library archiver search list usually consists only of "ar".]),
+	            AS_HELP_STRING([--with-ar=ar],[ Search for and use a library archiver named <ar>. If <ar> is not found, then use the first library archiver found from the default search list for the detected build architecture. Note: the library archiver search list usually consists only of "ar".]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$withval" = "no" ; then

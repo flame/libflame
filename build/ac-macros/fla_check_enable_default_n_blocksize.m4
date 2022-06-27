@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_DEFAULT_N_BLOCKSIZE],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([default_n_blocksize],
-	              AC_HELP_STRING([--enable-default-n-blocksize=nb],[Enable user-defined blocksizes in the m, k and n dimensions. These options may be used to define the blocksizes that will be returned from blocksize query functions when libgoto interfaces are disabled. Note that they have no effect when libgoto interfaces are enabled. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-default-n-blocksize=nb],[Enable user-defined blocksizes in the m, k and n dimensions. These options may be used to define the blocksizes that will be returned from blocksize query functions when libgoto interfaces are disabled. Note that they have no effect when libgoto interfaces are enabled. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" || test "$enableval" = "0" ; then

@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_PROFILING],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([profiling],
-	              AC_HELP_STRING([--enable-profiling],[Use the appropriate profiling flag (usually -pg) when compiling C source code. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-profiling],[Use the appropriate profiling flag (usually -pg) when compiling C source code. (Disabled by default.)]),
 	[
 		
 		dnl If any form of the option is given, handle each case.

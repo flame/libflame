@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_WITH_RANLIB],
     dnl --disable-<option>. If so, then run the first snippet of code;
     dnl otherwise, run the second code block.
 	AC_ARG_WITH([ranlib],
-	            AC_HELP_STRING([--with-ranlib=ranlib],[ Search for and use a library archive indexer named <ranlib>. If <ranlib> is not found, then use the first library archive indexer found from the default search list for the detected build architecture. Note: the library archive indexer search list usually consists only of "ranlib".]),
+	            AS_HELP_STRING([--with-ranlib=ranlib],[ Search for and use a library archive indexer named <ranlib>. If <ranlib> is not found, then use the first library archive indexer found from the default search list for the detected build architecture. Note: the library archive indexer search list usually consists only of "ranlib".]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$withval" = "no" ; then

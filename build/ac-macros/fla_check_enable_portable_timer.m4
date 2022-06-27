@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_PORTABLE_TIMER],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([portable-timer],
-	              AC_HELP_STRING([--enable-portable-timer],[Define the FLA_Clock() timer function using clock_gettime(). If that function is not available, then getttimeofday() is used. If neither function is available, FLA_Clock() is will return a static value. (By default, a portable timer is used (if it exists).)]),
+	              AS_HELP_STRING([--enable-portable-timer],[Define the FLA_Clock() timer function using clock_gettime(). If that function is not available, then getttimeofday() is used. If neither function is available, FLA_Clock() is will return a static value. (By default, a portable timer is used (if it exists).)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_STATIC_BUILD],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([static-build],
-	              AC_HELP_STRING([--enable-static-build],[Enable static library generation. (Enabled by default.)]),
+	              AS_HELP_STRING([--enable-static-build],[Enable static library generation. (Enabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

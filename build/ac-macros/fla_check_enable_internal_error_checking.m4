@@ -11,7 +11,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_INTERNAL_ERROR_CHECKING],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([internal-error-checking],
-	              AC_HELP_STRING([--enable-internal-error-checking=level],[Enable various internal runtime checks of function parameters and object properties to prevent functions from executing with unexpected values. Note that this option determines the default level, which may be changed at runtime. Valid values for level are "full", "minimal", and "none". (Enabled by default to "full".)]),
+	              AS_HELP_STRING([--enable-internal-error-checking=level],[Enable various internal runtime checks of function parameters and object properties to prevent functions from executing with unexpected values. Note that this option determines the default level, which may be changed at runtime. Valid values for level are "full", "minimal", and "none". (Enabled by default to "full".)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "full" ; then

@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_VERBOSE_MAKE_OUTPUT],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([verbose-make-output],
-	              AC_HELP_STRING([--enable-verbose-make-output],[Enable verbose output as make compiles source files and archives them into libraries. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-verbose-make-output],[Enable verbose output as make compiles source files and archives them into libraries. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

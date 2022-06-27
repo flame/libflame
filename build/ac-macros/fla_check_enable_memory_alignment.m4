@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_MEMORY_ALIGNMENT],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([memory-alignment],
-	              AC_HELP_STRING([--enable-memory-alignment=N],[Enable code that aligns dynamically allocated memory regions at N-byte boundaries. Note: N must be a power of two and multiple of sizeof(void*), which is usually 4 on 32-bit architectures and 8 on 64-bit architectures. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-memory-alignment=N],[Enable code that aligns dynamically allocated memory regions at N-byte boundaries. Note: N must be a power of two and multiple of sizeof(void*), which is usually 4 on 32-bit architectures and 8 on 64-bit architectures. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "yes" || test "$enableval" = "0" ; then

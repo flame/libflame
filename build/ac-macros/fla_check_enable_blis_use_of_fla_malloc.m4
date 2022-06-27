@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_BLIS1_USE_OF_FLA_MALLOC],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([blis-use-of-fla-malloc],
-	              AC_HELP_STRING([--enable-blis-use-of-fla-malloc],[Enable code that defines bl1_malloc() in terms of FLA_malloc(). One benefit of this is that BLIS memory allocations can be tracked, along with other libflame memory allocations, if the memory leak counter is enabled. A second benefit is that BLIS memory allocations can be aligned to boundaries if libflame memory alignment is enabled. Note this option may only be set at configure-time. (Enabled by default.)]),
+	              AS_HELP_STRING([--enable-blis-use-of-fla-malloc],[Enable code that defines bl1_malloc() in terms of FLA_malloc(). One benefit of this is that BLIS memory allocations can be tracked, along with other libflame memory allocations, if the memory leak counter is enabled. A second benefit is that BLIS memory allocations can be aligned to boundaries if libflame memory alignment is enabled. Note this option may only be set at configure-time. (Enabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

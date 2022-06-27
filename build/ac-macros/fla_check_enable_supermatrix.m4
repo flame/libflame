@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_SUPERMATRIX],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([supermatrix],
-	              AC_HELP_STRING([--enable-supermatrix],[Enable Ernie Chan's dependency-aware task scheduling and parallel execution system. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-supermatrix],[Enable Ernie Chan's dependency-aware task scheduling and parallel execution system. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then
