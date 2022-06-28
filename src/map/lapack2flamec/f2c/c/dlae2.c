@@ -91,7 +91,7 @@ higher precision or correctly rounded or */
 /* Subroutine */
 int dlae2_(doublereal *a, doublereal *b, doublereal *c__, doublereal *rt1, doublereal *rt2)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_ENTRY_INDENT
     /* System generated locals */
     doublereal d__1;
     /* Builtin functions */
@@ -167,7 +167,7 @@ int dlae2_(doublereal *a, doublereal *b, doublereal *c__, doublereal *rt1, doubl
         *rt1 = rt * .5;
         *rt2 = rt * -.5;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT_INDENT
     return 0;
     /* End of DLAE2 */
 }

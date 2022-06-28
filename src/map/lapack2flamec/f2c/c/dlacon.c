@@ -105,12 +105,8 @@ static doublereal c_b11 = 1.;
 /* Subroutine */
 int dlacon_(integer *n, doublereal *v, doublereal *x, integer *isgn, doublereal *est, integer *kase)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlacon inputs: n %" FLA_IS ", kase %" FLA_IS "",*n, *kase);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlacon inputs: n %" FLA_IS ", kase %" FLA_IS "",*n, *kase);
     /* System generated locals */
     integer i__1;
     doublereal d__1;
@@ -166,7 +162,7 @@ int dlacon_(integer *n, doublereal *v, doublereal *x, integer *isgn, doublereal 
         }
         *kase = 1;
         jump = 1;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     switch (jump)
@@ -204,7 +200,7 @@ L20:
     }
     *kase = 2;
     jump = 2;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* ................ ENTRY (JUMP = 2) */
     /* FIRST ITERATION. X HAS BEEN OVERWRITTEN BY TRANSPOSE(A)*X. */
@@ -224,7 +220,7 @@ L50:
     x[j] = 1.;
     *kase = 1;
     jump = 3;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* ................ ENTRY (JUMP = 3) */
     /* X HAS BEEN OVERWRITTEN BY A*X. */
@@ -262,7 +258,7 @@ L90: /* TEST FOR CYCLING. */
     }
     *kase = 2;
     jump = 4;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* ................ ENTRY (JUMP = 4) */
     /* X HAS BEEN OVERWRITTEN BY TRANSPOSE(A)*X. */
@@ -288,7 +284,7 @@ L120:
     }
     *kase = 1;
     jump = 5;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* ................ ENTRY (JUMP = 5) */
     /* X HAS BEEN OVERWRITTEN BY A*X. */
@@ -301,7 +297,7 @@ L140:
     }
 L150:
     *kase = 0;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLACON */
 }
