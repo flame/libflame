@@ -143,12 +143,8 @@
 /* Subroutine */
 int dorbdb5_(integer *m1, integer *m2, integer *n, doublereal *x1, integer *incx1, doublereal *x2, integer *incx2, doublereal *q1, integer *ldq1, doublereal *q2, integer *ldq2, doublereal *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dorbdb5 inputs: m1 %" FLA_IS ", m2 %" FLA_IS ", n %" FLA_IS ", incx1 %" FLA_IS ", incx2 %" FLA_IS ", ldq1 %" FLA_IS ", ldq2 %" FLA_IS ", lwork %" FLA_IS "",*m1, *m2, *n, *incx1, *incx2, *ldq1, *ldq2, *lwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dorbdb5 inputs: m1 %" FLA_IS ", m2 %" FLA_IS ", n %" FLA_IS ", incx1 %" FLA_IS ", incx2 %" FLA_IS ", ldq1 %" FLA_IS ", ldq2 %" FLA_IS ", lwork %" FLA_IS "",*m1, *m2, *n, *incx1, *incx2, *ldq1, *ldq2, *lwork);
     /* System generated locals */
     integer q1_dim1, q1_offset, q2_dim1, q2_offset, i__1, i__2;
     /* Local variables */
@@ -225,7 +221,7 @@ int dorbdb5_(integer *m1, integer *m2, integer *n, doublereal *x1, integer *incx
     {
         i__1 = -(*info);
         xerbla_("DORBDB5", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Project X onto the orthogonal complement of Q */
@@ -233,7 +229,7 @@ int dorbdb5_(integer *m1, integer *m2, integer *n, doublereal *x1, integer *incx
     /* If the projection is nonzero, then return */
     if (dnrm2_(m1, &x1[1], incx1) != 0. || dnrm2_(m2, &x2[1], incx2) != 0.)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Project each standard basis vector e_1,...,e_M1 in turn, stopping */
@@ -261,7 +257,7 @@ int dorbdb5_(integer *m1, integer *m2, integer *n, doublereal *x1, integer *incx
         dorbdb6_(m1, m2, n, &x1[1], incx1, &x2[1], incx2, &q1[q1_offset], ldq1, &q2[q2_offset], ldq2, &work[1], lwork, &childinfo);
         if (dnrm2_(m1, &x1[1], incx1) != 0. || dnrm2_(m2, &x2[1], incx2) != 0.)
         {
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
@@ -290,11 +286,11 @@ int dorbdb5_(integer *m1, integer *m2, integer *n, doublereal *x1, integer *incx
         dorbdb6_(m1, m2, n, &x1[1], incx1, &x2[1], incx2, &q1[q1_offset], ldq1, &q2[q2_offset], ldq2, &work[1], lwork, &childinfo);
         if (dnrm2_(m1, &x1[1], incx1) != 0. || dnrm2_(m2, &x2[1], incx2) != 0.)
         {
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DORBDB5 */
 }
