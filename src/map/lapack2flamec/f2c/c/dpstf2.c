@@ -133,12 +133,8 @@ static doublereal c_b18 = 1.;
 /* Subroutine */
 int dpstf2_(char *uplo, integer *n, doublereal *a, integer * lda, integer *piv, integer *rank, doublereal *tol, doublereal *work, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dpstf2 inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*uplo, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dpstf2 inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*uplo, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     doublereal d__1;
@@ -210,13 +206,13 @@ int dpstf2_(char *uplo, integer *n, doublereal *a, integer * lda, integer *piv, 
     {
         i__1 = -(*info);
         xerbla_("DPSTF2", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize PIV */
@@ -419,7 +415,7 @@ L160: /* Rank is number of steps completed. Set INFO = 1 to signal */
     /* that the factorization cannot be used to solve a system. */
     *rank = j - 1;
     *info = 1;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
 L170:
     return 0;
     /* End of DPSTF2 */
