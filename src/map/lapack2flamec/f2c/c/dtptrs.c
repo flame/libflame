@@ -123,12 +123,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int dtptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doublereal *ap, doublereal *b, integer *ldb, integer * info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-    snprintf(buffer, 256,"dtptrs inputs: uplo %c, trans %c, diag %c, n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS "",*uplo, *trans, *diag, *n, *nrhs, *ldb);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dtptrs inputs: uplo %c, trans %c, diag %c, n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS "",*uplo, *trans, *diag, *n, *nrhs, *ldb);
     /* System generated locals */
     integer b_dim1, b_offset, i__1;
     /* Local variables */
@@ -196,13 +192,13 @@ int dtptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
     {
         i__1 = -(*info);
         xerbla_("DTPTRS", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Check for singularity. */
@@ -218,7 +214,7 @@ int dtptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
             {
                 if (ap[jc + *info - 1] == 0.)
                 {
-                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 jc += *info;
@@ -235,7 +231,7 @@ int dtptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
             {
                 if (ap[jc] == 0.)
                 {
-                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 jc = jc + *n - *info + 1;
@@ -253,7 +249,7 @@ int dtptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
         dtpsv_(uplo, trans, diag, n, &ap[1], &b[j * b_dim1 + 1], &c__1);
         /* L30: */
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DTPTRS */
 }

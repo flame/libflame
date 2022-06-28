@@ -167,12 +167,8 @@ that is, */
 /* Subroutine */
 int dtpqrt2_(integer *m, integer *n, integer *l, doublereal * a, integer *lda, doublereal *b, integer *ldb, doublereal *t, integer * ldt, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dtpqrt2 inputs: m %" FLA_IS ", n %" FLA_IS ", l %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldt %" FLA_IS "",*m, *n, *l, *lda, *ldb, *ldt);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dtpqrt2 inputs: m %" FLA_IS ", n %" FLA_IS ", l %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldt %" FLA_IS "",*m, *n, *l, *lda, *ldb, *ldt);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, t_dim1, t_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -241,13 +237,13 @@ int dtpqrt2_(integer *m, integer *n, integer *l, doublereal * a, integer *lda, d
     {
         i__1 = -(*info);
         xerbla_("DTPQRT2", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0 || *m == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     i__1 = *n;
@@ -331,7 +327,7 @@ int dtpqrt2_(integer *m, integer *n, integer *l, doublereal * a, integer *lda, d
         t[i__ + t_dim1] = 0.;
     }
     /* End of DTPQRT2 */
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* dtpqrt2_ */
