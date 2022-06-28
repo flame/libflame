@@ -114,12 +114,8 @@ the matrix is singular and its */
 /* Subroutine */
 int dsytri2x_(char *uplo, integer *n, doublereal *a, integer *lda, integer *ipiv, doublereal *work, integer *nb, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dsytri2x inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS ", nb %" FLA_IS "",*uplo, *n, *lda, *ipiv, *nb);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dsytri2x inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS ", nb %" FLA_IS "",*uplo, *n, *lda, *ipiv, *nb);
     /* System generated locals */
     integer a_dim1, a_offset, work_dim1, work_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -193,12 +189,12 @@ int dsytri2x_(char *uplo, integer *n, doublereal *a, integer *lda, integer *ipiv
     {
         i__1 = -(*info);
         xerbla_("DSYTRI2X", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Convert A */
@@ -214,7 +210,7 @@ int dsytri2x_(char *uplo, integer *n, doublereal *a, integer *lda, integer *ipiv
         {
             if (ipiv[*info] > 0 && a[*info + *info * a_dim1] == 0.)
             {
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
         }
@@ -229,7 +225,7 @@ int dsytri2x_(char *uplo, integer *n, doublereal *a, integer *lda, integer *ipiv
         {
             if (ipiv[*info] > 0 && a[*info + *info * a_dim1] == 0.)
             {
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
         }
@@ -753,7 +749,7 @@ int dsytri2x_(char *uplo, integer *n, doublereal *a, integer *lda, integer *ipiv
             --i__;
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DSYTRI2X */
 }
