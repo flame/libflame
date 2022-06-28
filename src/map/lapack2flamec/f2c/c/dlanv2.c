@@ -117,7 +117,7 @@ static doublereal c_b3 = 1.;
 /* Subroutine */
 int dlanv2_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doublereal *rt1r, doublereal *rt1i, doublereal *rt2r, doublereal *rt2i, doublereal *cs, doublereal *sn)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_ENTRY_INDENT
     /* System generated locals */
     doublereal d__1, d__2;
     /* Builtin functions */
@@ -265,7 +265,7 @@ int dlanv2_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doub
         *rt1i = sqrt((f2c_abs(*b))) * sqrt((f2c_abs(*c__)));
         *rt2i = -(*rt1i);
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT_INDENT
     return 0;
     /* End of DLANV2 */
 }
