@@ -306,12 +306,8 @@ if EQUED = 'Y', */
 /* Subroutine */
 int dppsvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublereal *ap, doublereal *afp, char *equed, doublereal *s, doublereal *b, integer *ldb, doublereal *x, integer *ldx, doublereal * rcond, doublereal *ferr, doublereal *berr, doublereal *work, integer * iwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dppsvx inputs: fact %c, uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", equed %c, ldb %" FLA_IS ", ldx %" FLA_IS "",*fact, *uplo, *n, *nrhs, *equed, *ldb, *ldx);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dppsvx inputs: fact %c, uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", equed %c, ldb %" FLA_IS ", ldx %" FLA_IS "",*fact, *uplo, *n, *nrhs, *equed, *ldb, *ldx);
     /* System generated locals */
     integer b_dim1, b_offset, x_dim1, x_offset, i__1, i__2;
     doublereal d__1, d__2;
@@ -457,7 +453,7 @@ int dppsvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublereal *ap, 
     {
         i__1 = -(*info);
         xerbla_("DPPSVX", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (equil)
@@ -500,7 +496,7 @@ int dppsvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublereal *ap, 
         if (*info > 0)
         {
             *rcond = 0.;
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
@@ -547,7 +543,7 @@ int dppsvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublereal *ap, 
     {
         *info = *n + 1;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DPPSVX */
 }

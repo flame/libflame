@@ -102,12 +102,8 @@ int drscl_(integer *n, doublereal *sa, doublereal *sx, integer *incx)
     /* Quick return if possible */
     /* Parameter adjustments */
 
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "drscl inputs: n %d, incx %d\n", *n, *incx);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("drscl inputs: n %d, incx %d\n", *n, *incx);
 
     --sx;
     /* Function Body */
@@ -151,7 +147,7 @@ L10:
     {
         goto L10;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DRSCL */
 }

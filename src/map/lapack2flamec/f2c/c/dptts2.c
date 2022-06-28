@@ -90,12 +90,8 @@
 /* Subroutine */
 int dptts2_(integer *n, integer *nrhs, doublereal *d__, doublereal *e, doublereal *b, integer *ldb)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dptts2 inputs: n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS "",*n, *nrhs, *ldb);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dptts2 inputs: n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS "",*n, *nrhs, *ldb);
     /* System generated locals */
     integer b_dim1, b_offset, i__1, i__2;
     doublereal d__1;
@@ -132,7 +128,7 @@ int dptts2_(integer *n, integer *nrhs, doublereal *d__, doublereal *e, doublerea
             d__1 = 1. / d__[1];
             dscal_(nrhs, &d__1, &b[b_offset], ldb);
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Solve A * X = B using the factorization A = L*D*L**T, */
@@ -162,7 +158,7 @@ int dptts2_(integer *n, integer *nrhs, doublereal *d__, doublereal *e, doublerea
         }
         /* L30: */
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DPTTS2 */
 }
