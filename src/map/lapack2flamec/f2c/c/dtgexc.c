@@ -215,12 +215,8 @@ A Direct Method for Reordering Eigenvalues in the */
 /* Subroutine */
 int dtgexc_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal * q, integer *ldq, doublereal *z__, integer *ldz, integer *ifst, integer *ilst, doublereal *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-    snprintf(buffer, 256,"dtgexc inputs: n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", ifst %" FLA_IS ", ilst %" FLA_IS ", lwork %" FLA_IS "",*n, *lda, *ldb, *ldq, *ldz, *ifst, *ilst, *lwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dtgexc inputs: n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", ifst %" FLA_IS ", ilst %" FLA_IS ", lwork %" FLA_IS "",*n, *lda, *ldb, *ldq, *ldz, *ifst, *ilst, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1;
     /* Local variables */
@@ -313,18 +309,18 @@ int dtgexc_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
     {
         i__1 = -(*info);
         xerbla_("DTGEXC", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n <= 1)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Determine the first row of the specified block and find out */
@@ -363,7 +359,7 @@ int dtgexc_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
     }
     if (*ifst == *ilst)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*ifst < *ilst)
@@ -394,7 +390,7 @@ L10: /* Swap with next one below. */
             if (*info != 0)
             {
                 *ilst = here;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             here += nbnext;
@@ -424,7 +420,7 @@ L10: /* Swap with next one below. */
             if (*info != 0)
             {
                 *ilst = here;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             if (nbnext == 1)
@@ -434,7 +430,7 @@ L10: /* Swap with next one below. */
                 if (*info != 0)
                 {
                     *ilst = here;
-                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 ++here;
@@ -453,7 +449,7 @@ L10: /* Swap with next one below. */
                     if (*info != 0)
                     {
                         *ilst = here;
-                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                        AOCL_DTL_TRACE_LOG_EXIT
                         return 0;
                     }
                     here += 2;
@@ -465,7 +461,7 @@ L10: /* Swap with next one below. */
                     if (*info != 0)
                     {
                         *ilst = here;
-                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                        AOCL_DTL_TRACE_LOG_EXIT
                         return 0;
                     }
                     ++here;
@@ -473,7 +469,7 @@ L10: /* Swap with next one below. */
                     if (*info != 0)
                     {
                         *ilst = here;
-                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                        AOCL_DTL_TRACE_LOG_EXIT
                         return 0;
                     }
                     ++here;
@@ -505,7 +501,7 @@ L20: /* Swap with next one below. */
             if (*info != 0)
             {
                 *ilst = here;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             here -= nbnext;
@@ -535,7 +531,7 @@ L20: /* Swap with next one below. */
             if (*info != 0)
             {
                 *ilst = here;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             if (nbnext == 1)
@@ -545,7 +541,7 @@ L20: /* Swap with next one below. */
                 if (*info != 0)
                 {
                     *ilst = here;
-                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 --here;
@@ -565,7 +561,7 @@ L20: /* Swap with next one below. */
                     if (*info != 0)
                     {
                         *ilst = here;
-                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                        AOCL_DTL_TRACE_LOG_EXIT
                         return 0;
                     }
                     here += -2;
@@ -577,7 +573,7 @@ L20: /* Swap with next one below. */
                     if (*info != 0)
                     {
                         *ilst = here;
-                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                        AOCL_DTL_TRACE_LOG_EXIT
                         return 0;
                     }
                     --here;
@@ -585,7 +581,7 @@ L20: /* Swap with next one below. */
                     if (*info != 0)
                     {
                         *ilst = here;
-                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                        AOCL_DTL_TRACE_LOG_EXIT
                         return 0;
                     }
                     --here;
@@ -599,7 +595,7 @@ L20: /* Swap with next one below. */
     }
     *ilst = here;
     work[1] = (doublereal) lwmin;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DTGEXC */
 }
