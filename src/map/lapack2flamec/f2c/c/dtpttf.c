@@ -177,12 +177,8 @@
 /* Subroutine */
 int dtpttf_(char *transr, char *uplo, integer *n, doublereal *ap, doublereal *arf, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-    snprintf(buffer, 256,"dtpttf inputs: transr %c, uplo %c, n %" FLA_IS "",*transr, *uplo, *n);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dtpttf inputs: transr %c, uplo %c, n %" FLA_IS "",*transr, *uplo, *n);
     /* System generated locals */
     integer i__1, i__2, i__3;
     /* Local variables */
@@ -232,13 +228,13 @@ int dtpttf_(char *transr, char *uplo, integer *n, doublereal *ap, doublereal *ar
     {
         i__1 = -(*info);
         xerbla_("DTPTTF", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -251,7 +247,7 @@ int dtpttf_(char *transr, char *uplo, integer *n, doublereal *ap, doublereal *ar
         {
             arf[0] = ap[0];
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Size of array ARF(0:NT-1) */
@@ -607,7 +603,7 @@ int dtpttf_(char *transr, char *uplo, integer *n, doublereal *ap, doublereal *ar
             }
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DTPTTF */
 }
