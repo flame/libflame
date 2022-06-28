@@ -283,12 +283,8 @@ IPIV(i) = i indicates */
 /* Subroutine */
 int dgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, doublereal *dl, doublereal *d__, doublereal *du, doublereal * dlf, doublereal *df, doublereal *duf, doublereal *du2, integer *ipiv, doublereal *b, integer *ldb, doublereal *x, integer *ldx, doublereal * rcond, doublereal *ferr, doublereal *berr, doublereal *work, integer * iwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dgtsvx inputs: fact %c, trans %c, n %" FLA_IS ", nrhs %" FLA_IS ", ipiv %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*fact, *trans, *n, *nrhs, *ipiv, *ldb, *ldx);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgtsvx inputs: fact %c, trans %c, n %" FLA_IS ", nrhs %" FLA_IS ", ipiv %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*fact, *trans, *n, *nrhs, *ipiv, *ldb, *ldx);
     /* System generated locals */
     integer b_dim1, b_offset, x_dim1, x_offset, i__1;
     /* Local variables */
@@ -375,7 +371,7 @@ int dgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, doublereal *dl,
     {
         i__1 = -(*info);
         xerbla_("DGTSVX", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (nofact)
@@ -394,7 +390,7 @@ int dgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, doublereal *dl,
         if (*info > 0)
         {
             *rcond = 0.;
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
@@ -421,7 +417,7 @@ int dgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, doublereal *dl,
     {
         *info = *n + 1;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DGTSVX */
 }

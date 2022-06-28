@@ -208,12 +208,8 @@ static doublereal c_b42 = 1.;
 /* Subroutine */
 int dgsvj0_(char *jobv, integer *m, integer *n, doublereal * a, integer *lda, doublereal *d__, doublereal *sva, integer *mv, doublereal *v, integer *ldv, doublereal *eps, doublereal *sfmin, doublereal *tol, integer *nsweep, doublereal *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dgsvj0 inputs: jobv %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", mv %" FLA_IS ", ldv %" FLA_IS ", nsweep %" FLA_IS ", lwork %" FLA_IS "",*jobv, *m, *n, *lda, *mv, *ldv, *nsweep, *lwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgsvj0 inputs: jobv %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", mv %" FLA_IS ", ldv %" FLA_IS ", nsweep %" FLA_IS ", lwork %" FLA_IS "",*jobv, *m, *n, *lda, *mv, *ldv, *nsweep, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, v_dim1, v_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     doublereal d__1, d__2;
@@ -338,7 +334,7 @@ int dgsvj0_(char *jobv, integer *m, integer *n, doublereal * a, integer *lda, do
     {
         i__1 = -(*info);
         xerbla_("DGSVJ0", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (rsvec)
@@ -1187,7 +1183,7 @@ L1995: /* Sort the vector D. */
         }
         /* L5991: */
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* .. */
     /* .. END OF DGSVJ0 */
