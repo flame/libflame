@@ -154,12 +154,8 @@
 /* Subroutine */
 int dsfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, doublereal *alpha, doublereal *a, integer *lda, doublereal *beta, doublereal *c__)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dsfrk inputs: transr %c, uplo %c, trans %c, n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS "",*transr, *uplo, *trans, *n, *k, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dsfrk inputs: transr %c, uplo %c, trans %c, n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS "",*transr, *uplo, *trans, *n, *k, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1;
     /* Local variables */
@@ -241,7 +237,7 @@ int dsfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, double
     {
         i__1 = -info;
         xerbla_("DSFRK ", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible. */
@@ -249,7 +245,7 @@ int dsfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, double
     /* done (it is in DSYRK for example) and left in the general case. */
     if (*n == 0 || (*alpha == 0. || *k == 0) && *beta == 1.)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*alpha == 0. && *beta == 0.)
@@ -261,7 +257,7 @@ int dsfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, double
         {
             c__[j] = 0.;
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* C is N-by-N. */
@@ -466,7 +462,7 @@ int dsfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, double
             }
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DSFRK */
 }

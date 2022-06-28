@@ -156,12 +156,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int dspgv_(integer *itype, char *jobz, char *uplo, integer * n, doublereal *ap, doublereal *bp, doublereal *w, doublereal *z__, integer *ldz, doublereal *work, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dspgv inputs: itype %" FLA_IS ", jobz %c, uplo %c, n %" FLA_IS ", ldz %" FLA_IS "",*itype, *jobz, *uplo, *n, *ldz);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dspgv inputs: itype %" FLA_IS ", jobz %c, uplo %c, n %" FLA_IS ", ldz %" FLA_IS "",*itype, *jobz, *uplo, *n, *ldz);
     /* System generated locals */
     integer z_dim1, z_offset, i__1;
     /* Local variables */
@@ -229,13 +225,13 @@ int dspgv_(integer *itype, char *jobz, char *uplo, integer * n, doublereal *ap, 
     {
         i__1 = -(*info);
         xerbla_("DSPGV ", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Form a Cholesky factorization of B. */
@@ -243,7 +239,7 @@ int dspgv_(integer *itype, char *jobz, char *uplo, integer * n, doublereal *ap, 
     if (*info != 0)
     {
         *info = *n + *info;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Transform problem to standard eigenvalue problem and solve. */
@@ -302,7 +298,7 @@ int dspgv_(integer *itype, char *jobz, char *uplo, integer * n, doublereal *ap, 
             }
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DSPGV */
 }
