@@ -190,12 +190,8 @@
 /* Subroutine */
 int dsyconvf_rook_(char *uplo, char *way, integer *n, doublereal *a, integer *lda, doublereal *e, integer *ipiv, integer * info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dsyconvf_rook inputs: uplo %c, way %c, n %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS "",*uplo, *way, *n, *lda, *ipiv);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dsyconvf_rook inputs: uplo %c, way %c, n %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS "",*uplo, *way, *n, *lda, *ipiv);
     /* System generated locals */
     integer a_dim1, a_offset, i__1;
     /* Local variables */
@@ -253,13 +249,13 @@ int dsyconvf_rook_(char *uplo, char *way, integer *n, doublereal *a, integer *ld
     {
         i__1 = -(*info);
         xerbla_("DSYCONVF_ROOK", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (upper)
@@ -530,7 +526,7 @@ int dsyconvf_rook_(char *uplo, char *way, integer *n, doublereal *a, integer *ld
         }
         /* End A is LOWER */
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DSYCONVF_ROOK */
 }

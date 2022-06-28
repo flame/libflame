@@ -168,12 +168,8 @@ int dsyev_(char *jobz, char *uplo, integer *n, doublereal *a, integer *lda, doub
     integer lwkopt;
     logical lquery;
 
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "dsyev inputs: jobz %c, uplo %c, n %d, lda %d\n", *jobz, *uplo, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dsyev inputs: jobz %c, uplo %c, n %d, lda %d\n", *jobz, *uplo, *n, *lda);
 
     /* -- LAPACK driver routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -243,15 +239,18 @@ int dsyev_(char *jobz, char *uplo, integer *n, doublereal *a, integer *lda, doub
     {
         i__1 = -(*info);
         xerbla_("DSYEV ", &i__1);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -262,6 +261,7 @@ int dsyev_(char *jobz, char *uplo, integer *n, doublereal *a, integer *lda, doub
         {
             a[a_dim1 + 1] = 1.;
         }
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants. */
@@ -321,7 +321,7 @@ int dsyev_(char *jobz, char *uplo, integer *n, doublereal *a, integer *lda, doub
     }
     /* Set WORK(1) to optimal workspace size. */
     work[1] = (doublereal) lwkopt;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DSYEV */
 }
