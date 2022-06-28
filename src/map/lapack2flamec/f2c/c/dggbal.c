@@ -171,12 +171,8 @@ and second, applying a diagonal similarity */
 /* Subroutine */
 int dggbal_(char *job, integer *n, doublereal *a, integer * lda, doublereal *b, integer *ldb, integer *ilo, integer *ihi, doublereal *lscale, doublereal *rscale, doublereal *work, integer * info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dggbal inputs: job %c, n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*job, *n, *lda, *ldb);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dggbal inputs: job %c, n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*job, *n, *lda, *ldb);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3;
     doublereal d__1, d__2, d__3;
@@ -266,7 +262,7 @@ int dggbal_(char *job, integer *n, doublereal *a, integer * lda, doublereal *b, 
     {
         i__1 = -(*info);
         xerbla_("DGGBAL", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -274,7 +270,7 @@ int dggbal_(char *job, integer *n, doublereal *a, integer * lda, doublereal *b, 
     {
         *ilo = 1;
         *ihi = *n;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -283,7 +279,7 @@ int dggbal_(char *job, integer *n, doublereal *a, integer * lda, doublereal *b, 
         *ihi = *n;
         lscale[1] = 1.;
         rscale[1] = 1.;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (lsame_(job, "N"))
@@ -299,7 +295,7 @@ int dggbal_(char *job, integer *n, doublereal *a, integer * lda, doublereal *b, 
             rscale[i__] = 1.;
             /* L10: */
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     k = 1;
@@ -447,12 +443,12 @@ L190:
             rscale[i__] = 1.;
             /* L195: */
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*ilo == *ihi)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Balance the submatrix in rows ILO to IHI. */
@@ -725,7 +721,7 @@ L350:
         dscal_(ihi, &rscale[j], &b[j * b_dim1 + 1], &c__1);
         /* L380: */
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DGGBAL */
 }
