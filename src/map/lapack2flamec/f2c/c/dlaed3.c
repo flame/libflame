@@ -176,12 +176,8 @@ static doublereal c_b23 = 0.;
 /* Subroutine */
 int dlaed3_(integer *k, integer *n, integer *n1, doublereal * d__, doublereal *q, integer *ldq, doublereal *rho, doublereal *dlamda, doublereal *q2, integer *indx, integer *ctot, doublereal *w, doublereal *s, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlaed3 inputs: k %" FLA_IS ", n %" FLA_IS ", n1 %" FLA_IS ", ldq %" FLA_IS ", indx %" FLA_IS ", ctot %" FLA_IS "",*k, *n, *n1, *ldq, *indx, *ctot);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlaed3 inputs: k %" FLA_IS ", n %" FLA_IS ", n1 %" FLA_IS ", ldq %" FLA_IS ", indx %" FLA_IS ", ctot %" FLA_IS "",*k, *n, *n1, *ldq, *indx, *ctot);
     /* System generated locals */
     integer q_dim1, q_offset, i__1, i__2;
     doublereal d__1;
@@ -246,13 +242,13 @@ int dlaed3_(integer *k, integer *n, integer *n1, doublereal * d__, doublereal *q
     {
         i__1 = -(*info);
         xerbla_("DLAED3", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*k == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Modify values DLAMDA(i) to make sure all DLAMDA(i)-DLAMDA(j) can */
@@ -402,7 +398,7 @@ L110:
         dlaset_("A", n1, k, &c_b23, &c_b23, &q[q_dim1 + 1], ldq);
     }
 L120:
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLAED3 */
 }

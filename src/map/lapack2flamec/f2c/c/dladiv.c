@@ -79,7 +79,7 @@
 /* Subroutine */
 int dladiv_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doublereal *p, doublereal *q)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_ENTRY_INDENT
     /* System generated locals */
     doublereal d__1, d__2;
     /* Local variables */
@@ -156,7 +156,7 @@ int dladiv_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doub
     }
     *p *= s;
     *q *= s;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT_INDENT
     return 0;
     /* End of DLADIV */
 }
@@ -165,7 +165,7 @@ int dladiv_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doub
 /* Subroutine */
 int dladiv1_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doublereal *p, doublereal *q)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_ENTRY_INDENT
     doublereal r__, t;
     extern doublereal dladiv2_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
     /* -- LAPACK auxiliary routine (version 3.7.0) -- */
@@ -186,7 +186,7 @@ int dladiv1_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, dou
     *p = dladiv2_(a, b, c__, d__, &r__, &t);
     *a = -(*a);
     *q = dladiv2_(b, a, c__, d__, &r__, &t);
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT_INDENT
     return 0;
     /* End of DLADIV1 */
 }
@@ -194,7 +194,7 @@ int dladiv1_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, dou
 /* > \ingroup doubleOTHERauxiliary */
 doublereal dladiv2_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doublereal *r__, doublereal *t)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_ENTRY_INDENT
     /* System generated locals */
     doublereal ret_val;
     /* Local variables */
@@ -226,7 +226,7 @@ doublereal dladiv2_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d
     {
         ret_val = (*a + *d__ * (*b / *c__)) * *t;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT_INDENT
     return ret_val;
     /* End of DLADIV12 */
 }

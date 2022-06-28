@@ -136,12 +136,8 @@ the blocks are not swapped and T and Q are */
 /* Subroutine */
 int dlaexc_(logical *wantq, integer *n, doublereal *t, integer *ldt, doublereal *q, integer *ldq, integer *j1, integer *n1, integer *n2, doublereal *work, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlaexc inputs: n %" FLA_IS ", ldt %" FLA_IS ", ldq %" FLA_IS ", j1 %" FLA_IS ", n1 %" FLA_IS ", n2 %" FLA_IS "",*n, *ldt, *ldq, *j1, *n1, *n2);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlaexc inputs: n %" FLA_IS ", ldt %" FLA_IS ", ldq %" FLA_IS ", j1 %" FLA_IS ", n1 %" FLA_IS ", n2 %" FLA_IS "",*n, *ldt, *ldq, *j1, *n1, *n2);
     /* System generated locals */
     integer q_dim1, q_offset, t_dim1, t_offset, i__1;
     doublereal d__1, d__2, d__3;
@@ -201,12 +197,12 @@ int dlaexc_(logical *wantq, integer *n, doublereal *t, integer *ldt, doublereal 
     /* Quick return if possible */
     if (*n == 0 || *n1 == 0 || *n2 == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*j1 + *n1 > *n)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     j2 = *j1 + 1;
@@ -413,12 +409,12 @@ L40:
             }
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* Exit with INFO = 1 if swap was rejected. */
 L50:
     *info = 1;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLAEXC */
 }
