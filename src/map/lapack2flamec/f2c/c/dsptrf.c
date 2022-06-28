@@ -150,12 +150,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int dsptrf_(char *uplo, integer *n, doublereal *ap, integer * ipiv, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-    snprintf(buffer, 256,"dsptrf inputs: uplo %c, n %" FLA_IS "",*uplo, *n);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dsptrf inputs: uplo %c, n %" FLA_IS "",*uplo, *n);
     /* System generated locals */
     integer i__1, i__2;
     doublereal d__1, d__2, d__3;
@@ -223,7 +219,7 @@ int dsptrf_(char *uplo, integer *n, doublereal *ap, integer * ipiv, integer *inf
     {
         i__1 = -(*info);
         xerbla_("DSPTRF", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize ALPHA for use in choosing pivot block size. */
@@ -627,7 +623,7 @@ L60:
         goto L60;
     }
 L110:
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DSPTRF */
 }
