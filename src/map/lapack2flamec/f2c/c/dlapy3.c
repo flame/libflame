@@ -55,7 +55,7 @@
 /* ===================================================================== */
 doublereal dlapy3_(doublereal *x, doublereal *y, doublereal *z__)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_ENTRY_INDENT
     /* System generated locals */
     doublereal ret_val, d__1, d__2, d__3;
     /* Builtin functions */
@@ -99,7 +99,7 @@ doublereal dlapy3_(doublereal *x, doublereal *y, doublereal *z__)
         d__3 = zabs / w;
         ret_val = w * sqrt(d__1 * d__1 + d__2 * d__2 + d__3 * d__3);
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT_INDENT
     return ret_val;
     /* End of DLAPY3 */
 }

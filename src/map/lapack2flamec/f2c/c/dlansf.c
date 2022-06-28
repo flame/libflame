@@ -201,12 +201,8 @@ otherwise, */
 /* ===================================================================== */
 doublereal dlansf_(char *norm, char *transr, char *uplo, integer *n, doublereal *a, doublereal *work)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlansf inputs: norm %c, transr %c, uplo %c, n %" FLA_IS "",*norm, *transr, *uplo, *n);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlansf inputs: norm %c, transr %c, uplo %c, n %" FLA_IS "",*norm, *transr, *uplo, *n);
     /* System generated locals */
     integer i__1, i__2;
     doublereal ret_val, d__1;
@@ -247,13 +243,13 @@ doublereal dlansf_(char *norm, char *transr, char *uplo, integer *n, doublereal 
     if (*n == 0)
     {
         ret_val = 0.;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return ret_val;
     }
     else if (*n == 1)
     {
         ret_val = f2c_abs(a[0]);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return ret_val;
     }
     /* set noe = 1 if n is odd. if n is even set noe=0 */
@@ -1395,7 +1391,7 @@ L10:
         value = scale * sqrt(s);
     }
     ret_val = value;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return ret_val;
     /* End of DLANSF */
 }
