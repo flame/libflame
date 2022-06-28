@@ -128,12 +128,8 @@
 /* Subroutine */
 int dlaqsb_(char *uplo, integer *n, integer *kd, doublereal * ab, integer *ldab, doublereal *s, doublereal *scond, doublereal *amax, char *equed)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlaqsb inputs: uplo %c, n %" FLA_IS ", kd %" FLA_IS ", ldab %" FLA_IS "",*uplo, *n, *kd, *ldab);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlaqsb inputs: uplo %c, n %" FLA_IS ", kd %" FLA_IS ", ldab %" FLA_IS "",*uplo, *n, *kd, *ldab);
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
@@ -170,7 +166,7 @@ int dlaqsb_(char *uplo, integer *n, integer *kd, doublereal * ab, integer *ldab,
     if (*n <= 0)
     {
         *(unsigned char *)equed = 'N';
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize LARGE and SMALL. */
@@ -232,7 +228,7 @@ int dlaqsb_(char *uplo, integer *n, integer *kd, doublereal * ab, integer *ldab,
         }
         *(unsigned char *)equed = 'Y';
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLAQSB */
 }
