@@ -383,12 +383,8 @@ static doublereal c_b21 = -1.;
 /* Subroutine */
 int dlarfb_gett_(char *ident, integer *m, integer *n, integer *k, doublereal *t, integer *ldt, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *work, integer *ldwork)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlarfb_gett inputs: ident %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", ldt %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldwork %" FLA_IS "",*ident, *m, *n, *k, *ldt, *lda, *ldb, *ldwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlarfb_gett inputs: ident %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", ldt %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldwork %" FLA_IS "",*ident, *m, *n, *k, *ldt, *lda, *ldb, *ldwork);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, t_dim1, t_offset, work_dim1, work_offset, i__1, i__2;
     /* Local variables */
@@ -433,7 +429,7 @@ int dlarfb_gett_(char *ident, integer *m, integer *n, integer *k, doublereal *t,
     /* Function Body */
     if (*m < 0 || *n <= 0 || *k == 0 || *k > *n)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     lnotident = ! lsame_(ident, "I");
@@ -593,7 +589,7 @@ int dlarfb_gett_(char *ident, integer *m, integer *n, integer *k, doublereal *t,
             a[i__ + j * a_dim1] -= work[i__ + j * work_dim1];
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLARFB_GETT */
 }

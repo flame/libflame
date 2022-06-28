@@ -179,12 +179,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int dlarrf_(integer *n, doublereal *d__, doublereal *l, doublereal *ld, integer *clstrt, integer *clend, doublereal *w, doublereal *wgap, doublereal *werr, doublereal *spdiam, doublereal * clgapl, doublereal *clgapr, doublereal *pivmin, doublereal *sigma, doublereal *dplus, doublereal *lplus, doublereal *work, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlarrf inputs: n %" FLA_IS ", clstrt %" FLA_IS ", clend %" FLA_IS "",*n, *clstrt, *clend);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlarrf inputs: n %" FLA_IS ", clstrt %" FLA_IS ", clend %" FLA_IS "",*n, *clstrt, *clend);
     /* System generated locals */
     integer i__1;
     doublereal d__1, d__2, d__3;
@@ -244,7 +240,7 @@ int dlarrf_(integer *n, doublereal *d__, doublereal *l, doublereal *ld, integer 
     /* Quick return if possible */
     if (*n <= 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     fact = 2.;
@@ -538,7 +534,7 @@ L50:
         else
         {
             *info = 1;
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
@@ -553,7 +549,7 @@ L100:
         i__1 = *n - 1;
         dcopy_(&i__1, &work[*n + 1], &c__1, &lplus[1], &c__1);
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLARRF */
 }

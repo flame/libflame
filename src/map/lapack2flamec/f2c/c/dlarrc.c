@@ -123,12 +123,8 @@
 /* Subroutine */
 int dlarrc_(char *jobt, integer *n, doublereal *vl, doublereal *vu, doublereal *d__, doublereal *e, doublereal *pivmin, integer *eigcnt, integer *lcnt, integer *rcnt, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlarrc inputs: jobt %c, n %" FLA_IS "",*jobt, *n);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlarrc inputs: jobt %c, n %" FLA_IS "",*jobt, *n);
     /* System generated locals */
     integer i__1;
     doublereal d__1;
@@ -162,7 +158,7 @@ int dlarrc_(char *jobt, integer *n, doublereal *vl, doublereal *vu, doublereal *
     /* Quick return if possible */
     if (*n <= 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     *lcnt = 0;
@@ -256,7 +252,7 @@ int dlarrc_(char *jobt, integer *n, doublereal *vl, doublereal *vu, doublereal *
         }
     }
     *eigcnt = *rcnt - *lcnt;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* end of DLARRC */
 }

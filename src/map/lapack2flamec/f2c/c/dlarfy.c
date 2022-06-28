@@ -101,12 +101,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int dlarfy_(char *uplo, integer *n, doublereal *v, integer * incv, doublereal *tau, doublereal *c__, integer *ldc, doublereal * work)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlarfy inputs: uplo %c, n %" FLA_IS ", incv %" FLA_IS ", ldc %" FLA_IS "",*uplo, *n, *incv, *ldc);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlarfy inputs: uplo %c, n %" FLA_IS ", incv %" FLA_IS ", ldc %" FLA_IS "",*uplo, *n, *incv, *ldc);
     /* System generated locals */
     integer c_dim1, c_offset;
     doublereal d__1;
@@ -144,7 +140,7 @@ int dlarfy_(char *uplo, integer *n, doublereal *v, integer * incv, doublereal *t
     /* Function Body */
     if (*tau == 0.)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Form w:= C * v */
@@ -154,7 +150,7 @@ int dlarfy_(char *uplo, integer *n, doublereal *v, integer * incv, doublereal *t
     /* C := C - v * w' - w * v' */
     d__1 = -(*tau);
     dsyr2_(uplo, n, &d__1, &v[1], incv, &work[1], &c__1, &c__[c_offset], ldc);
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLARFY */
 }
