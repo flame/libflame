@@ -166,12 +166,8 @@ static const integer c__0 = 0;
 /* Subroutine */
 int dlasy2_(logical *ltranl, logical *ltranr, integer *isgn, integer *n1, integer *n2, doublereal *tl, integer *ldtl, doublereal * tr, integer *ldtr, doublereal *b, integer *ldb, doublereal *scale, doublereal *x, integer *ldx, doublereal *xnorm, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlasy2 inputs: isgn %" FLA_IS ", n1 %" FLA_IS ", n2 %" FLA_IS ", ldtl %" FLA_IS ", ldtr %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*isgn, *n1, *n2, *ldtl, *ldtr, *ldb, *ldx);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlasy2 inputs: isgn %" FLA_IS ", n1 %" FLA_IS ", n2 %" FLA_IS ", ldtl %" FLA_IS ", ldtr %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*isgn, *n1, *n2, *ldtl, *ldtr, *ldb, *ldx);
     /* Initialized data */
     static const integer locu12[4] =
     {
@@ -262,7 +258,7 @@ int dlasy2_(logical *ltranl, logical *ltranr, integer *isgn, integer *n1, intege
     /* Quick return if possible */
     if (*n1 == 0 || *n2 == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Set constants to control overflow */
@@ -299,7 +295,7 @@ L10:
     }
     x[x_dim1 + 1] = b[b_dim1 + 1] * *scale / tau1;
     *xnorm = (d__1 = x[x_dim1 + 1], f2c_abs(d__1));
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* 1 by 2: */
     /* TL11*[X11 X12] + ISGN*[X11 X12]*op[TR11 TR12] = [B11 B12] */
@@ -411,7 +407,7 @@ L40: /* Solve 2 by 2 system using complete pivoting. */
         d__4 = (d__2 = x[x_dim1 + 2], f2c_abs(d__2));  // , expr subst
         *xnorm = max(d__3,d__4);
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* 2 by 2: */
     /* op[TL11 TL12]*[X11 X12] +ISGN* [X11 X12]*op[TR11 TR12] = [B11 B12] */
@@ -581,7 +577,7 @@ L50: /* Computing MAX */
     d__1 = f2c_abs(tmp[0]) + f2c_abs(tmp[2]);
     d__2 = f2c_abs(tmp[1]) + f2c_abs(tmp[3]); // , expr subst
     *xnorm = max(d__1,d__2);
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLASY2 */
 }

@@ -138,12 +138,8 @@
 /* Subroutine */
 int dlasq4_(integer *i0, integer *n0, doublereal *z__, integer *pp, integer *n0in, doublereal *dmin__, doublereal *dmin1, doublereal *dmin2, doublereal *dn, doublereal *dn1, doublereal *dn2, doublereal *tau, integer *ttype, doublereal *g)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlasq4 inputs: i0 %" FLA_IS ", n0 %" FLA_IS ", pp %" FLA_IS ", n0in %" FLA_IS "",*i0, *n0, *pp, *n0in);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlasq4 inputs: i0 %" FLA_IS ", n0 %" FLA_IS ", pp %" FLA_IS ", n0in %" FLA_IS "",*i0, *n0, *pp, *n0in);
     /* System generated locals */
     integer i__1;
     doublereal d__1, d__2;
@@ -178,7 +174,7 @@ int dlasq4_(integer *i0, integer *n0, doublereal *z__, integer *pp, integer *n0i
     {
         *tau = -(*dmin__);
         *ttype = -1;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     nn = (*n0 << 2) + *pp;
@@ -242,7 +238,7 @@ int dlasq4_(integer *i0, integer *n0, doublereal *z__, integer *pp, integer *n0i
                     a2 = 0.;
                     if (z__[nn - 5] > z__[nn - 7])
                     {
-                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                        AOCL_DTL_TRACE_LOG_EXIT
                         return 0;
                     }
                     b2 = z__[nn - 5] / z__[nn - 7];
@@ -254,13 +250,13 @@ int dlasq4_(integer *i0, integer *n0, doublereal *z__, integer *pp, integer *n0i
                     gam = *dn1;
                     if (z__[np - 4] > z__[np - 2])
                     {
-                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                        AOCL_DTL_TRACE_LOG_EXIT
                         return 0;
                     }
                     a2 = z__[np - 4] / z__[np - 2];
                     if (z__[nn - 9] > z__[nn - 11])
                     {
-                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                        AOCL_DTL_TRACE_LOG_EXIT
                         return 0;
                     }
                     b2 = z__[nn - 9] / z__[nn - 11];
@@ -280,7 +276,7 @@ int dlasq4_(integer *i0, integer *n0, doublereal *z__, integer *pp, integer *n0i
                     b1 = b2;
                     if (z__[i4] > z__[i4 - 2])
                     {
-                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                        AOCL_DTL_TRACE_LOG_EXIT
                         return 0;
                     }
                     b2 *= z__[i4] / z__[i4 - 2];
@@ -312,7 +308,7 @@ L20:
             gam = *dn2;
             if (z__[np - 8] > b2 || z__[np - 4] > b1)
             {
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             a2 = z__[np - 8] / b2 * (z__[np - 4] / b1 + 1.);
@@ -333,7 +329,7 @@ L20:
                     b1 = b2;
                     if (z__[i4] > z__[i4 - 2])
                     {
-                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                        AOCL_DTL_TRACE_LOG_EXIT
                         return 0;
                     }
                     b2 *= z__[i4] / z__[i4 - 2];
@@ -381,7 +377,7 @@ L40:
             s = *dmin1 * .333;
             if (z__[nn - 5] > z__[nn - 7])
             {
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             b1 = z__[nn - 5] / z__[nn - 7];
@@ -398,7 +394,7 @@ L40:
                 a2 = b1;
                 if (z__[i4] > z__[i4 - 2])
                 {
-                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 b1 *= z__[i4] / z__[i4 - 2];
@@ -452,7 +448,7 @@ L60:
             s = *dmin2 * .333;
             if (z__[nn - 5] > z__[nn - 7])
             {
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             b1 = z__[nn - 5] / z__[nn - 7];
@@ -468,7 +464,7 @@ L60:
             {
                 if (z__[i4] > z__[i4 - 2])
                 {
-                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 b1 *= z__[i4] / z__[i4 - 2];
@@ -513,7 +509,7 @@ L80:
         *ttype = -12;
     }
     *tau = s;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLASQ4 */
 }

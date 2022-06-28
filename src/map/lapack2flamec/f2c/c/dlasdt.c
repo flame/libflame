@@ -93,12 +93,8 @@
 /* Subroutine */
 int dlasdt_(integer *n, integer *lvl, integer *nd, integer * inode, integer *ndiml, integer *ndimr, integer *msub)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlasdt inputs: n %" FLA_IS ", msub %" FLA_IS "",*n, *msub);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlasdt inputs: n %" FLA_IS ", msub %" FLA_IS "",*n, *msub);
     /* System generated locals */
     integer i__1, i__2;
     /* Builtin functions */
@@ -166,7 +162,7 @@ int dlasdt_(integer *n, integer *lvl, integer *nd, integer * inode, integer *ndi
         /* L20: */
     }
     *nd = (llst << 1) - 1;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLASDT */
 }

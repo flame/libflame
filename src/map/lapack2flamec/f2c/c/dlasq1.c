@@ -100,12 +100,8 @@ static integer c__0 = 0;
 /* Subroutine */
 int dlasq1_(integer *n, doublereal *d__, doublereal *e, doublereal *work, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlasq1 inputs: n %" FLA_IS "",*n);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlasq1 inputs: n %" FLA_IS "",*n);
     /* System generated locals */
     integer i__1, i__2;
     doublereal d__1, d__2, d__3;
@@ -161,18 +157,18 @@ int dlasq1_(integer *n, doublereal *d__, doublereal *e, doublereal *work, intege
         *info = -1;
         i__1 = -(*info);
         xerbla_("DLASQ1", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*n == 1)
     {
         d__[1] = f2c_abs(d__[1]);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*n == 2)
@@ -180,7 +176,7 @@ int dlasq1_(integer *n, doublereal *d__, doublereal *e, doublereal *work, intege
         dlas2_(&d__[1], &e[1], &d__[2], &sigmn, &sigmx);
         d__[1] = sigmx;
         d__[2] = sigmn;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Estimate the largest singular value. */
@@ -202,7 +198,7 @@ int dlasq1_(integer *n, doublereal *d__, doublereal *e, doublereal *work, intege
     if (sigmx == 0.)
     {
         dlasrt_("D", n, &d__[1], &iinfo);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     i__1 = *n;
@@ -267,7 +263,7 @@ int dlasq1_(integer *n, doublereal *d__, doublereal *e, doublereal *work, intege
         dlascl_("G", &c__0, &c__0, &scale, &sigmx, n, &c__1, &d__[1], n, & iinfo);
         dlascl_("G", &c__0, &c__0, &scale, &sigmx, n, &c__1, &e[1], n, &iinfo);
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLASQ1 */
 }
