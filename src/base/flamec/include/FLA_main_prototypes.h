@@ -332,6 +332,12 @@ FLA_Error     FLA_Obj_has_nan_check( FLA_Obj A );
 
 // -----------------------------------------------------------------------------
 
+
+void          FLA_Thread_get_subrange( int thread_ID, int num_threads, integer range, integer *sub_range, integer *index );
+
+
+// ------------------------------------------------------------------------------
+
 void          FLA_Param_map_flame_to_netlib_trans( FLA_Trans trans, void* blas_trans );
 void          FLA_Param_map_flame_to_netlib_uplo( FLA_Uplo uplo, void* blas_uplo );
 void          FLA_Param_map_flame_to_netlib_side( FLA_Uplo side, void* blas_side );

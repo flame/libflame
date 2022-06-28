@@ -173,7 +173,7 @@ doublereal dlange_(char *norm, integer *m, integer *n, doublereal *a, integer *l
                     ++i__)
             {
                 temp = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
-                if (value < temp || disnan_(&temp))
+                if (value < temp || temp != temp)
                 {
                     value = temp;
                 }
@@ -200,7 +200,7 @@ doublereal dlange_(char *norm, integer *m, integer *n, doublereal *a, integer *l
                 sum += (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
                 /* L30: */
             }
-            if (value < sum || disnan_(&sum))
+            if (value < sum || sum != sum)
             {
                 value = sum;
             }
@@ -240,7 +240,7 @@ doublereal dlange_(char *norm, integer *m, integer *n, doublereal *a, integer *l
                 ++i__)
         {
             temp = work[i__];
-            if (value < temp || disnan_(&temp))
+            if (value < temp || temp != temp)
             {
                 value = temp;
             }
