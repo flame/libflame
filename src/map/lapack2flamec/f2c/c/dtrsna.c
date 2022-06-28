@@ -264,12 +264,8 @@ v**T denotes the transpose of v, and norm(u) */
 /* Subroutine */
 int dtrsna_(char *job, char *howmny, logical *select, integer *n, doublereal *t, integer *ldt, doublereal *vl, integer * ldvl, doublereal *vr, integer *ldvr, doublereal *s, doublereal *sep, integer *mm, integer *m, doublereal *work, integer *ldwork, integer * iwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dtrsna inputs: job %c, howmny %c, n %" FLA_IS ", ldt %" FLA_IS ", ldvl %" FLA_IS ", ldvr %" FLA_IS ", mm %" FLA_IS ", ldwork %" FLA_IS "",*job, *howmny, *n, *ldt, *ldvl, *ldvr, *mm, *ldwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dtrsna inputs: job %c, howmny %c, n %" FLA_IS ", ldt %" FLA_IS ", ldvl %" FLA_IS ", ldvr %" FLA_IS ", mm %" FLA_IS ", ldwork %" FLA_IS "",*job, *howmny, *n, *ldt, *ldvl, *ldvr, *mm, *ldwork);
     /* System generated locals */
     integer t_dim1, t_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, work_dim1, work_offset, i__1, i__2;
     doublereal d__1, d__2;
@@ -446,13 +442,13 @@ int dtrsna_(char *job, char *howmny, logical *select, integer *n, doublereal *t,
     {
         i__1 = -(*info);
         xerbla_("DTRSNA", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -461,7 +457,7 @@ int dtrsna_(char *job, char *howmny, logical *select, integer *n, doublereal *t,
         {
             if (! select[1])
             {
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
         }
@@ -473,7 +469,7 @@ int dtrsna_(char *job, char *howmny, logical *select, integer *n, doublereal *t,
         {
             sep[1] = (d__1 = t[t_dim1 + 1], f2c_abs(d__1));
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants */
@@ -683,7 +679,7 @@ L50:
 L60:
         ;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DTRSNA */
 }
