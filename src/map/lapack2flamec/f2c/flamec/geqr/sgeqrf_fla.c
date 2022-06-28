@@ -177,6 +177,10 @@
  a_dim1 = *lda;
  a_offset = 1 + a_dim1 * 1;
  a -= a_offset;
+ #if AOCL_FLA_PROGRESS_H
+        AOCL_FLA_PROGRESS_VAR;
+ #endif
+
  --tau;
  --work;
  /* Function Body */
@@ -214,6 +218,12 @@
  nbmin = 2;
  nx = 0;
  iws = *n;
+
+ #if AOCL_FLA_PROGRESS_H
+        step_count =0;
+        if(!aocl_fla_progress_ptr)
+              aocl_fla_progress_ptr=aocl_fla_progress;
+ #endif
  if (nb > 1 && nb < k) {
  /* Determine when to cross over from blocked to unblocked code. */
  /* Computing MAX */
@@ -246,6 +256,16 @@
  /* Compute the QR factorization of the current block */
  /* A(i:m,i:i+ib-1) */
  i__3 = *m - i__ + 1;
+
+  #if AOCL_FLA_PROGRESS_H
+
+        if(aocl_fla_progress_ptr){
+                step_count+=ib;
+                AOCL_FLA_PROGRESS_FUNC_PTR("SGEQRF",6,&step_count,&thread_id,&total_threads);
+         }
+
+  #endif
+
  sgeqr2_fla(&i__3, &ib, &a[i__ + i__ * a_dim1], lda, &tau[i__], &work[ 1], &iinfo);
  if (i__ + ib <= *n) {
  /* Form the triangular factor of the block reflector */
@@ -267,6 +287,16 @@
  if (i__ <= k) {
  i__2 = *m - i__ + 1;
  i__1 = *n - i__ + 1;
+
+  #if AOCL_FLA_PROGRESS_H
+
+         if(aocl_fla_progress_ptr){
+                  step_count=k;
+                   AOCL_FLA_PROGRESS_FUNC_PTR("SGEQRF",6,&step_count,&thread_id,&total_threads);
+          }
+
+  #endif
+
  sgeqr2_fla(&i__2, &i__1, &a[i__ + i__ * a_dim1], lda, &tau[i__], &work[1] , &iinfo);
  }
  work[1] = (real) iws;
