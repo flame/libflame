@@ -103,12 +103,8 @@
 /* Subroutine */
 int dlaswp_(integer *n, doublereal *a, integer *lda, integer *k1, integer *k2, integer *ipiv, integer *incx)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlaswp inputs: n %" FLA_IS ", lda %" FLA_IS ", k1 %" FLA_IS ", k2 %" FLA_IS ", ipiv %" FLA_IS ", incx %" FLA_IS "",*n, *lda, *k1, *k2, *ipiv, *incx);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlaswp inputs: n %" FLA_IS ", lda %" FLA_IS ", k1 %" FLA_IS ", k2 %" FLA_IS ", ipiv %" FLA_IS ", incx %" FLA_IS "",*n, *lda, *k1, *k2, *ipiv, *incx);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
@@ -150,7 +146,7 @@ int dlaswp_(integer *n, doublereal *a, integer *lda, integer *k1, integer *k2, i
     }
     else
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     n32 = *n / 32 << 5;
@@ -216,7 +212,7 @@ int dlaswp_(integer *n, doublereal *a, integer *lda, integer *k1, integer *k2, i
             /* L50: */
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLASWP */
 }

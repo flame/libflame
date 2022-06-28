@@ -106,12 +106,8 @@
 /* Subroutine */
 int dlasq6_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *dmin__, doublereal *dmin1, doublereal *dmin2, doublereal *dn, doublereal *dnm1, doublereal *dnm2)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlasq6 inputs: i0 %" FLA_IS ", n0 %" FLA_IS ", pp %" FLA_IS "",*i0, *n0, *pp);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlasq6 inputs: i0 %" FLA_IS ", n0 %" FLA_IS ", pp %" FLA_IS "",*i0, *n0, *pp);
     /* System generated locals */
     integer i__1;
     doublereal d__1, d__2;
@@ -144,7 +140,7 @@ int dlasq6_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
     /* Function Body */
     if (*n0 - *i0 - 1 <= 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     safmin = dlamch_("Safe minimum");
@@ -270,7 +266,7 @@ int dlasq6_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
     *dmin__ = min(*dmin__,*dn);
     z__[j4 + 2] = *dn;
     z__[(*n0 << 2) - *pp] = emin;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLASQ6 */
 }
