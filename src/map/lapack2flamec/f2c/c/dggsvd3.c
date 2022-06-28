@@ -344,12 +344,8 @@ the routine */
 /* Subroutine */
 int dggsvd3_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer *p, integer *k, integer *l, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *alpha, doublereal *beta, doublereal *u, integer *ldu, doublereal *v, integer *ldv, doublereal *q, integer *ldq, doublereal *work, integer *lwork, integer *iwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dggsvd3 inputs: jobu %c, jobv %c, jobq %c, m %" FLA_IS ", n %" FLA_IS ", p %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldu %" FLA_IS ", ldv %" FLA_IS ", ldq %" FLA_IS ", lwork %" FLA_IS "",*jobu, *jobv, *jobq, *m, *n, *p, *lda, *ldb, *ldu, *ldv, *ldq, *lwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dggsvd3 inputs: jobu %c, jobv %c, jobq %c, m %" FLA_IS ", n %" FLA_IS ", p %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldu %" FLA_IS ", ldv %" FLA_IS ", ldq %" FLA_IS ", lwork %" FLA_IS "",*jobu, *jobv, *jobq, *m, *n, *p, *lda, *ldb, *ldu, *ldv, *ldq, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, u_dim1, u_offset, v_dim1, v_offset, i__1, i__2;
     /* Local variables */
@@ -484,12 +480,12 @@ int dggsvd3_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer
     {
         i__1 = -(*info);
         xerbla_("DGGSVD3", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Compute the Frobenius norm of matrices A and B */
@@ -547,7 +543,7 @@ int dggsvd3_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer
         /* L20: */
     }
     work[1] = (doublereal) lwkopt;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DGGSVD3 */
 }
