@@ -241,12 +241,8 @@ the routine */
 /* Subroutine */
 int dsyevx_(char *jobz, char *range, char *uplo, integer *n, doublereal *a, integer *lda, doublereal *vl, doublereal *vu, integer * il, integer *iu, doublereal *abstol, integer *m, doublereal *w, doublereal *z__, integer *ldz, doublereal *work, integer *lwork, integer *iwork, integer *ifail, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dsyevx inputs: jobz %c, range %c, uplo %c, n %" FLA_IS ", lda %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", ldz %" FLA_IS ", lwork %" FLA_IS "",*jobz, *range, *uplo, *n, *lda, *il, *iu, *ldz, *lwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dsyevx inputs: jobz %c, range %c, uplo %c, n %" FLA_IS ", lda %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", ldz %" FLA_IS ", lwork %" FLA_IS "",*jobz, *range, *uplo, *n, *lda, *il, *iu, *ldz, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, z_dim1, z_offset, i__1, i__2;
     doublereal d__1, d__2;
@@ -415,19 +411,19 @@ int dsyevx_(char *jobz, char *range, char *uplo, integer *n, doublereal *a, inte
     {
         i__1 = -(*info);
         xerbla_("DSYEVX", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     *m = 0;
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -449,7 +445,7 @@ int dsyevx_(char *jobz, char *range, char *uplo, integer *n, doublereal *a, inte
         {
             z__[z_dim1 + 1] = 1.;
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants. */
@@ -650,7 +646,7 @@ L40:
     }
     /* Set WORK(1) to optimal workspace size. */
     work[1] = (doublereal) lwkopt;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DSYEVX */
 }
