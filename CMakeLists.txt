@@ -7,6 +7,8 @@ project(AOCL-LibFLAME-Win)
 SET(CMAKE_EXT_BLIS_LIBRARY_DEPENDENCY_PATH "${CMAKE_SOURCE_DIR}/bin/Release" CACHE STRING "AOCL-BLIS library path name")
 SET(EXT_BLIS_LIBNAME "AOCL-LibBlis-Win-MT-dll.lib" CACHE STRING "AOCL-BLIS library name")
 
+#gccopenmp
+SET(OpenMP_libomp_LIBRARY "C:/Program Files/LLVM/lib/libomp.lib" CACHE STRING "openmp library path")
 #Logic to create AOCL-libFLAME library name according to the linking AOCL-BLIS library name.
 string(REPLACE "LibBlis" "LibFlame" PROJECT_NAME ${EXT_BLIS_LIBNAME})
 string(REPLACE ".lib" "" PROJECT_NAME ${PROJECT_NAME})
@@ -36,7 +38,7 @@ option (ENABLE_PORTABLE_TIMER "Uses portable timer" ON)
 option (ENABLE_INTERNAL_ERROR_CHECKING "Enable internal checking levels" ON)
 set (ERROR_CHECKING_LEVEL 2) #1-Minimal error cheking 2-full error cheking 3-no error cheking
 option (ENABLE_MEMLK_CNTR "Enable memory leak counter" OFF)
-#option (ENABLE_MULTITHREADING "Enables multithreading" OFF)
+option (ENABLE_MULTITHREADING "Enables multithreading" OFF)
 #option (ENABLE_OPENMP "Enables Threading model as Openmp" OFF)
 option (ENABLE_SUPER_MATRIX "Enable super matrix" OFF)
 option (ENABLE_CBLAS_INTERFACES "Enable cblas interfaces" OFF)
@@ -67,6 +69,10 @@ elseif(${ENABLE_SIMD_FLAGS} MATCHES "AVX")
    add_definitions(/arch:AVX)
 elseif(${ENABLE_SIMD_FLAGS} MATCHES "SSE2")
    add_definitions(/arch:SSE2)
+endif()
+
+if(ENABLE_MULTITHREADING)
+    set (ENABLE_OPENMP TRUE)
 endif()
 
 if(ENABLE_UPPERCASE)
@@ -158,6 +164,9 @@ if (ENABLE_MULTITHREADING)
             if (OPENMP_FOUND)
                 set (MULTITHREADING_MODEL 1)
                 set (FLA_MULTITHREADING_MODEL TRUE)
+				set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
+				set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
+				set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
             else ()
                 message (FATAL_ERROR "Openmp Not Found")
             endif ()
@@ -588,6 +597,9 @@ if (BUILD_SHARED_LIBS)
                  ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLA_f2c.h
                  ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLAME.h
                  )
+	if(ENABLE_OPENMP)
+		target_link_libraries(${PROJECT_NAME}  OpenMP::OpenMP_CXX)
+	endif ()
 	target_compile_definitions("${PROJECT_NAME}" PUBLIC -DLIBFLAME_IS_BUILDING_LIBRARY)
 	target_compile_definitions("${PROJECT_NAME}" PUBLIC -DLIBFLAME_ENABLE_SHARED)
 else ()
@@ -595,6 +607,9 @@ else ()
                  ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLA_f2c.h
                  ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLAME.h
                  )
+	if(ENABLE_OPENMP)
+        	set_target_properties("${PROJECT_NAME}" PROPERTIES STATIC_LIBRARY_OPTIONS "${OpenMP_libomp_LIBRARY}")
+	endif ()
 endif ()
 # TODO : enable this flag to build source supplied blas library
 # link externally build blis library
