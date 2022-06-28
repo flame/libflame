@@ -164,12 +164,8 @@
 /* Subroutine */
 int dla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublereal *a, integer *lda, doublereal *x, integer *incx, doublereal *beta, doublereal *y, integer *incy)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dla_syamv inputs: uplo %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", incx %" FLA_IS ", incy %" FLA_IS "",*uplo, *n, *lda, *incx, *incy);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dla_syamv inputs: uplo %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", incx %" FLA_IS ", incy %" FLA_IS "",*uplo, *n, *lda, *incx, *incy);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     doublereal d__1;
@@ -236,13 +232,13 @@ int dla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublereal *a, inte
     if (info != 0)
     {
         xerbla_("DLA_SYAMV", &info);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible. */
     if (*n == 0 || *alpha == 0. && *beta == 1.)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Set up the start points in X and Y. */
@@ -479,7 +475,7 @@ int dla_syamv_(integer *uplo, integer *n, doublereal *alpha, doublereal *a, inte
             }
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLA_SYAMV */
 }

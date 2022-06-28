@@ -109,12 +109,8 @@
 /* ===================================================================== */
 doublereal dla_syrpvgrw_(char *uplo, integer *n, integer *info, doublereal * a, integer *lda, doublereal *af, integer *ldaf, integer *ipiv, doublereal *work)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dla_syrpvgrw inputs: uplo %c, n %" FLA_IS ", info %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", ipiv %" FLA_IS "",*uplo, *n, *lda, *ldaf, *ipiv);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dla_syrpvgrw inputs: uplo %c, n %" FLA_IS ", info %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", ipiv %" FLA_IS "",*uplo, *n, *lda, *ldaf, *ipiv);
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, i__1, i__2;
     doublereal ret_val, d__1, d__2, d__3;
@@ -428,7 +424,7 @@ doublereal dla_syrpvgrw_(char *uplo, integer *n, integer *info, doublereal * a, 
         }
     }
     ret_val = rpvgrw;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return ret_val;
 }
 /* dla_syrpvgrw__ */
