@@ -165,12 +165,8 @@ IBLOCK(i)=1 if eigenvalue W(i) belongs to */
 /* Subroutine */
 int dstein_(integer *n, doublereal *d__, doublereal *e, integer *m, doublereal *w, integer *iblock, integer *isplit, doublereal *z__, integer *ldz, doublereal *work, integer *iwork, integer *ifail, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dstein inputs: n %" FLA_IS ", m %" FLA_IS ", iblock %" FLA_IS ", isplit %" FLA_IS ", ldz %" FLA_IS "",*n, *m, *iblock, *isplit, *ldz);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dstein inputs: n %" FLA_IS ", m %" FLA_IS ", iblock %" FLA_IS ", isplit %" FLA_IS ", ldz %" FLA_IS "",*n, *m, *iblock, *isplit, *ldz);
     /* System generated locals */
     integer z_dim1, z_offset, i__1, i__2, i__3;
     doublereal d__1, d__2, d__3, d__4, d__5;
@@ -286,19 +282,19 @@ L30:
     {
         i__1 = -(*info);
         xerbla_("DSTEIN", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0 || *m == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*n == 1)
     {
         z__[z_dim1 + 1] = 1.;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants. */
@@ -498,7 +494,7 @@ L120:
 L160:
         ;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DSTEIN */
 }

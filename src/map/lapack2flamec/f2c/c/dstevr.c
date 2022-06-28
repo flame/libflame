@@ -302,12 +302,8 @@ the */
 /* Subroutine */
 int dstevr_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e, doublereal *vl, doublereal *vu, integer *il, integer *iu, doublereal *abstol, integer *m, doublereal *w, doublereal *z__, integer *ldz, integer *isuppz, doublereal *work, integer *lwork, integer *iwork, integer *liwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dstevr inputs: jobz %c, range %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", ldz %" FLA_IS ", lwork %" FLA_IS ", liwork %" FLA_IS "",*jobz, *range, *n, *il, *iu, *ldz, *lwork, *liwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dstevr inputs: jobz %c, range %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", ldz %" FLA_IS ", lwork %" FLA_IS ", liwork %" FLA_IS "",*jobz, *range, *n, *il, *iu, *ldz, *lwork, *liwork);
     /* System generated locals */
     integer z_dim1, z_offset, i__1, i__2;
     doublereal d__1, d__2;
@@ -455,19 +451,19 @@ int dstevr_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e
     {
         i__1 = -(*info);
         xerbla_("DSTEVR", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     *m = 0;
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -489,7 +485,7 @@ int dstevr_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e
         {
             z__[z_dim1 + 1] = 1.;
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants. */
@@ -656,7 +652,7 @@ L10:
     /* IF (wantz .and. INDEIG ) Z( 1,1) = Z(1,1) / 1.002 + .002 */
     work[1] = (doublereal) lwmin;
     iwork[1] = liwmin;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DSTEVR */
 }
