@@ -181,12 +181,8 @@
 /* Subroutine */
 int dlarrb_(integer *n, doublereal *d__, doublereal *lld, integer *ifirst, integer *ilast, doublereal *rtol1, doublereal *rtol2, integer *offset, doublereal *w, doublereal *wgap, doublereal *werr, doublereal *work, integer *iwork, doublereal *pivmin, doublereal * spdiam, integer *twist, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlarrb inputs: n %" FLA_IS ", ifirst %" FLA_IS ", ilast %" FLA_IS ", offset %" FLA_IS ", twist %" FLA_IS "",*n, *ifirst, *ilast, *offset, *twist);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlarrb inputs: n %" FLA_IS ", ifirst %" FLA_IS ", ilast %" FLA_IS ", offset %" FLA_IS ", twist %" FLA_IS "",*n, *ifirst, *ilast, *offset, *twist);
     /* System generated locals */
     integer i__1;
     doublereal d__1, d__2;
@@ -232,7 +228,7 @@ int dlarrb_(integer *n, doublereal *d__, doublereal *lld, integer *ifirst, integ
     /* Quick return if possible */
     if (*n <= 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     maxitr = (integer) ((log(*spdiam + *pivmin) - log(*pivmin)) / log(2.)) + 2;
@@ -435,7 +431,7 @@ L100:
         wgap[ii - 1] = max(d__1,d__2);
         /* L111: */
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLARRB */
 }

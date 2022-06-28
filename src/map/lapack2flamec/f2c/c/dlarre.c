@@ -296,12 +296,8 @@ IBLOCK(i)=1 if eigenvalue */
 /* Subroutine */
 int dlarre_(char *range, integer *n, doublereal *vl, doublereal *vu, integer *il, integer *iu, doublereal *d__, doublereal *e, doublereal *e2, doublereal *rtol1, doublereal *rtol2, doublereal * spltol, integer *nsplit, integer *isplit, integer *m, doublereal *w, doublereal *werr, doublereal *wgap, integer *iblock, integer *indexw, doublereal *gers, doublereal *pivmin, doublereal *work, integer * iwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlarre inputs: range %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS "",*range, *n, *il, *iu);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlarre inputs: range %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS "",*range, *n, *il, *iu);
     /* System generated locals */
     integer i__1, i__2;
     doublereal d__1, d__2, d__3;
@@ -391,7 +387,7 @@ int dlarre_(char *range, integer *n, doublereal *vl, doublereal *vu, integer *il
     /* Quick return if possible */
     if (*n <= 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Decode RANGE */
@@ -431,7 +427,7 @@ int dlarre_(char *range, integer *n, doublereal *vl, doublereal *vu, integer *il
         }
         /* store the shift for the initial RRR, which is zero in this case */
         e[1] = 0.;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* General case: tridiagonal matrix of order > 1 */
@@ -504,7 +500,7 @@ int dlarre_(char *range, integer *n, doublereal *vl, doublereal *vu, integer *il
         if (iinfo != 0)
         {
             *info = -1;
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         /* Make sure that the entries M+1 to N in W, WERR, IBLOCK, INDEXW are 0 */
@@ -636,7 +632,7 @@ L21:
             if (iinfo != 0)
             {
                 *info = -1;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             /* Computing MAX */
@@ -647,7 +643,7 @@ L21:
             if (iinfo != 0)
             {
                 *info = -1;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             /* Computing MIN */
@@ -893,7 +889,7 @@ L21:
         /* if the program reaches this point, no base representation could be */
         /* found in MAXTRY iterations. */
         *info = 2;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
 L83: /* At this point, we have found an initial base representation */
         /* T - SIGMA I = L D L^T with not too much element growth. */
@@ -967,7 +963,7 @@ L83: /* At this point, we have found an initial base representation */
             if (iinfo != 0)
             {
                 *info = -4;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             /* DLARRB computes all gaps correctly except for the last one */
@@ -1021,7 +1017,7 @@ L83: /* At this point, we have found an initial base representation */
                 /* and should be changed. The index is in IWORK(1) and the */
                 /* gap is in WORK(N+1) */
                 *info = -5;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             else
@@ -1035,7 +1031,7 @@ L83: /* At this point, we have found an initial base representation */
                     if (work[i__] < 0.)
                     {
                         *info = -6;
-                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                        AOCL_DTL_TRACE_LOG_EXIT
                         return 0;
                     }
                     /* L149: */
@@ -1101,7 +1097,7 @@ L83: /* At this point, we have found an initial base representation */
 L170:
         ;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* end of DLARRE */
 }

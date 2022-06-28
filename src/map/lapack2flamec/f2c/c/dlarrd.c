@@ -323,12 +323,8 @@ these eigenvalues are flagged by a */
 /* Subroutine */
 int dlarrd_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu, integer *il, integer *iu, doublereal *gers, doublereal *reltol, doublereal *d__, doublereal *e, doublereal *e2, doublereal *pivmin, integer *nsplit, integer *isplit, integer *m, doublereal *w, doublereal *werr, doublereal *wl, doublereal *wu, integer *iblock, integer *indexw, doublereal *work, integer *iwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlarrd inputs: range %c, order %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", nsplit %" FLA_IS ", isplit %" FLA_IS "",*range, *order, *n, *il, *iu, *nsplit, *isplit);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlarrd inputs: range %c, order %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", nsplit %" FLA_IS ", isplit %" FLA_IS "",*range, *order, *n, *il, *iu, *nsplit, *isplit);
     /* System generated locals */
     integer i__1, i__2, i__3;
     doublereal d__1, d__2;
@@ -398,7 +394,7 @@ int dlarrd_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
     /* Quick return if possible */
     if (*n <= 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Decode RANGE */
@@ -448,7 +444,7 @@ int dlarrd_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
     }
     if (*info != 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize error flags */
@@ -459,7 +455,7 @@ int dlarrd_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
     *m = 0;
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Simplification: */
@@ -483,7 +479,7 @@ int dlarrd_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
             iblock[1] = 1;
             indexw[1] = 1;
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* NB is the minimum vector length for vector bisection, or 0 */
@@ -553,7 +549,7 @@ int dlarrd_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
         if (iinfo != 0)
         {
             *info = iinfo;
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         /* On exit, output intervals may not be ordered by ascending negcount */
@@ -580,7 +576,7 @@ int dlarrd_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
         if (nwl < 0 || nwl >= *n || nwu < 1 || nwu > *n)
         {
             *info = 4;
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
@@ -735,7 +731,7 @@ int dlarrd_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
             if (iinfo != 0)
             {
                 *info = iinfo;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             nwl += iwork[1];
@@ -747,7 +743,7 @@ int dlarrd_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
             if (iinfo != 0)
             {
                 *info = iinfo;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             /* Copy eigenvalues into W and IBLOCK */
@@ -996,7 +992,7 @@ L70:
     {
         *info += 2;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLARRD */
 }
