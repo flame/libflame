@@ -143,12 +143,8 @@ T may have been partially */
 /* Subroutine */
 int dtrexc_(char *compq, integer *n, doublereal *t, integer * ldt, doublereal *q, integer *ldq, integer *ifst, integer *ilst, doublereal *work, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dtrexc inputs: compq %c, n %" FLA_IS ", ldt %" FLA_IS ", ldq %" FLA_IS ", ifst %" FLA_IS ", ilst %" FLA_IS "",*compq, *n, *ldt, *ldq, *ifst, *ilst);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dtrexc inputs: compq %c, n %" FLA_IS ", ldt %" FLA_IS ", ldq %" FLA_IS ", ifst %" FLA_IS ", ilst %" FLA_IS "",*compq, *n, *ldt, *ldq, *ifst, *ilst);
     /* System generated locals */
     integer q_dim1, q_offset, t_dim1, t_offset, i__1;
     /* Local variables */
@@ -218,13 +214,13 @@ int dtrexc_(char *compq, integer *n, doublereal *t, integer * ldt, doublereal *q
     {
         i__1 = -(*info);
         xerbla_("DTREXC", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n <= 1)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Determine the first row of specified block */
@@ -263,7 +259,7 @@ int dtrexc_(char *compq, integer *n, doublereal *t, integer * ldt, doublereal *q
     }
     if (*ifst == *ilst)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*ifst < *ilst)
@@ -294,7 +290,7 @@ L10: /* Swap block with next one below */
             if (*info != 0)
             {
                 *ilst = here;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             here += nbnext;
@@ -324,7 +320,7 @@ L10: /* Swap block with next one below */
             if (*info != 0)
             {
                 *ilst = here;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             if (nbnext == 1)
@@ -347,7 +343,7 @@ L10: /* Swap block with next one below */
                     if (*info != 0)
                     {
                         *ilst = here;
-                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                        AOCL_DTL_TRACE_LOG_EXIT
                         return 0;
                     }
                     here += 2;
@@ -387,7 +383,7 @@ L20: /* Swap block with next one above */
             if (*info != 0)
             {
                 *ilst = here;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             here -= nbnext;
@@ -417,7 +413,7 @@ L20: /* Swap block with next one above */
             if (*info != 0)
             {
                 *ilst = here;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             if (nbnext == 1)
@@ -441,7 +437,7 @@ L20: /* Swap block with next one above */
                     if (*info != 0)
                     {
                         *ilst = here;
-                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                        AOCL_DTL_TRACE_LOG_EXIT
                         return 0;
                     }
                     here += -2;
@@ -462,7 +458,7 @@ L20: /* Swap block with next one above */
         }
     }
     *ilst = here;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DTREXC */
 }
