@@ -111,12 +111,8 @@ the matrix is */
 /* Subroutine */
 int dgetri_(integer *n, doublereal *a, integer *lda, integer *ipiv, doublereal *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dgetri inputs: n %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS ", lwork %" FLA_IS "",*n, *lda, *ipiv, *lwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgetri inputs: n %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS ", lwork %" FLA_IS "",*n, *lda, *ipiv, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -181,18 +177,18 @@ int dgetri_(integer *n, doublereal *a, integer *lda, integer *ipiv, doublereal *
     {
         i__1 = -(*info);
         xerbla_("DGETRI", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Form inv(U). If INFO > 0 from DTRTRI, then U is singular, */
@@ -200,7 +196,7 @@ int dgetri_(integer *n, doublereal *a, integer *lda, integer *ipiv, doublereal *
     dtrtri_("Upper", "Non-unit", n, &a[a_offset], lda, info);
     if (*info > 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     nbmin = 2;
@@ -304,7 +300,7 @@ int dgetri_(integer *n, doublereal *a, integer *lda, integer *ipiv, doublereal *
         /* L60: */
     }
     work[1] = (doublereal) iws;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DGETRI */
 }

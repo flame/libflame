@@ -335,12 +335,8 @@ kappa(A*D), where kappa(.) is the */
 /* Subroutine */
 int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublereal *a, integer *lda, doublereal *sva, integer *mv, doublereal *v, integer *ldv, doublereal *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dgesvj inputs: joba %c, jobu %c, jobv %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", mv %" FLA_IS ", ldv %" FLA_IS ", lwork %" FLA_IS "",*joba, *jobu, *jobv, *m, *n, *lda, *mv, *ldv, *lwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dgesvj inputs: joba %c, jobu %c, jobv %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", mv %" FLA_IS ", ldv %" FLA_IS ", lwork %" FLA_IS "",*joba, *jobu, *jobv, *m, *n, *lda, *mv, *ldv, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, v_dim1, v_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal d__1, d__2;
@@ -502,13 +498,13 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
     {
         i__1 = -(*info);
         xerbla_("DGESVJ", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* #:) Quick return for void matrix */
     if (*m == 0 || *n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Set numerical parameters */
@@ -553,7 +549,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
         *info = -4;
         i__1 = -(*info);
         xerbla_("DGESVJ", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize the right singular vector matrix. */
@@ -595,7 +591,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
                 *info = -6;
                 i__2 = -(*info);
                 xerbla_("DGESVJ", &i__2);
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             aaqq = sqrt(aaqq);
@@ -639,7 +635,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
                 *info = -6;
                 i__2 = -(*info);
                 xerbla_("DGESVJ", &i__2);
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             aaqq = sqrt(aaqq);
@@ -683,7 +679,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
                 *info = -6;
                 i__2 = -(*info);
                 xerbla_("DGESVJ", &i__2);
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             aaqq = sqrt(aaqq);
@@ -751,7 +747,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
         work[4] = 0.;
         work[5] = 0.;
         work[6] = 0.;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* #:) Quick return for one-column matrix */
@@ -774,7 +770,7 @@ int dgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublere
         work[4] = 0.;
         work[5] = 0.;
         work[6] = 0.;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Protect small singular values from underflow, and try to */
@@ -1832,7 +1828,7 @@ L1995: /* Sort the singular values and find how many are above */
     work[6] = mxsinj;
     /* MXSINJ is the largest absolute value of the sines of Jacobi angles */
     /* in the last sweep */
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* .. */
     /* .. END OF DGESVJ */
