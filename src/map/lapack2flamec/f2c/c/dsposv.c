@@ -191,12 +191,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int dsposv_(char *uplo, integer *n, integer *nrhs, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal * x, integer *ldx, doublereal *work, real *swork, integer *iter, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dsposv inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ldb, *ldx);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dsposv inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ldb, *ldx);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, work_dim1, work_offset, x_dim1, x_offset, i__1;
     doublereal d__1;
@@ -283,13 +279,13 @@ int dsposv_(char *uplo, integer *n, integer *nrhs, doublereal *a, integer *lda, 
     {
         i__1 = -(*info);
         xerbla_("DSPOSV", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if (N.EQ.0). */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Skip single precision iterative refinement if a priori slower */
@@ -353,7 +349,7 @@ int dsposv_(char *uplo, integer *n, integer *nrhs, doublereal *a, integer *lda, 
     /* If we are here, the NRHS normwise backward errors satisfy the */
     /* stopping criterion. We are good to exit. */
     *iter = 0;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 L10:
     for (iiter = 1;
@@ -400,7 +396,7 @@ L10:
         /* If we are here, the NRHS normwise backward errors satisfy the */
         /* stopping criterion, we are good to exit. */
         *iter = iiter;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
 L20: /* L30: */
         ;
@@ -415,12 +411,12 @@ L40: /* Single-precision iterative refinement failed to converge to a */
     dpotrf_(uplo, n, &a[a_offset], lda, info);
     if (*info != 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     dlacpy_("All", n, nrhs, &b[b_offset], ldb, &x[x_offset], ldx);
     dpotrs_(uplo, n, nrhs, &a[a_offset], lda, &x[x_offset], ldx, info);
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DSPOSV. */
 }
