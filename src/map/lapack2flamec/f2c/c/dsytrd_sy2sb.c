@@ -242,12 +242,8 @@ v(i+kd+2:n) is stored on exit in */
 /* Subroutine */
 int dsytrd_sy2sb_(char *uplo, integer *n, integer *kd, doublereal *a, integer *lda, doublereal *ab, integer *ldab, doublereal *tau, doublereal *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dsytrd_sy2sb inputs: uplo %c, n %" FLA_IS ", kd %" FLA_IS ", lda %" FLA_IS ", ldab %" FLA_IS ", lwork %" FLA_IS "",*uplo, *n, *kd, *lda, *ldab, *lwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dsytrd_sy2sb inputs: uplo %c, n %" FLA_IS ", kd %" FLA_IS ", lda %" FLA_IS ", ldab %" FLA_IS ", lwork %" FLA_IS "",*uplo, *n, *kd, *lda, *ldab, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5;
     /* Local variables */
@@ -337,13 +333,13 @@ int dsytrd_sy2sb_(char *uplo, integer *n, integer *kd, doublereal *a, integer *l
     {
         i__1 = -(*info);
         xerbla_("DSYTRD_SY2SB", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
         work[1] = (doublereal) lwmin;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -380,7 +376,7 @@ int dsytrd_sy2sb_(char *uplo, integer *n, integer *kd, doublereal *a, integer *l
             }
         }
         work[1] = 1.;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Determine the pointer position for the workspace */
@@ -527,7 +523,7 @@ int dsytrd_sy2sb_(char *uplo, integer *n, integer *kd, doublereal *a, integer *l
         }
     }
     work[1] = (doublereal) lwmin;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DSYTRD_SY2SB */
 }

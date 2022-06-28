@@ -501,12 +501,8 @@ defaults */
 /* Subroutine */
 int dsysvxx_(char *fact, char *uplo, integer *n, integer * nrhs, doublereal *a, integer *lda, doublereal *af, integer *ldaf, integer *ipiv, char *equed, doublereal *s, doublereal *b, integer * ldb, doublereal *x, integer *ldx, doublereal *rcond, doublereal * rpvgrw, doublereal *berr, integer *n_err_bnds__, doublereal * err_bnds_norm__, doublereal *err_bnds_comp__, integer *nparams, doublereal *params, doublereal *work, integer *iwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dsysvxx inputs: fact %c, uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", ipiv %" FLA_IS ", equed %c, ldb %" FLA_IS ", ldx %" FLA_IS ", n_err_bnds__ %" FLA_IS ", nparams %" FLA_IS "",*fact, *uplo, *n, *nrhs, *lda, *ldaf, *ipiv, *equed, *ldb, *ldx, *n_err_bnds__, *nparams);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dsysvxx inputs: fact %c, uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", ipiv %" FLA_IS ", equed %c, ldb %" FLA_IS ", ldx %" FLA_IS ", n_err_bnds__ %" FLA_IS ", nparams %" FLA_IS "",*fact, *uplo, *n, *nrhs, *lda, *ldaf, *ipiv, *equed, *ldb, *ldx, *n_err_bnds__, *nparams);
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, b_dim1, b_offset, x_dim1, x_offset, err_bnds_norm_dim1, err_bnds_norm_offset, err_bnds_comp_dim1, err_bnds_comp_offset, i__1;
     doublereal d__1, d__2;
@@ -671,7 +667,7 @@ int dsysvxx_(char *fact, char *uplo, integer *n, integer * nrhs, doublereal *a, 
     {
         i__1 = -(*info);
         xerbla_("DSYSVXX", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (equil)
@@ -706,7 +702,7 @@ int dsysvxx_(char *fact, char *uplo, integer *n, integer * nrhs, doublereal *a, 
             {
                 *rpvgrw = dla_syrpvgrw_(uplo, n, info, &a[a_offset], lda, & af[af_offset], ldaf, &ipiv[1], &work[1]);
             }
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
@@ -726,7 +722,7 @@ int dsysvxx_(char *fact, char *uplo, integer *n, integer * nrhs, doublereal *a, 
     {
         dlascl2_(n, nrhs, &s[1], &x[x_offset], ldx);
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DSYSVXX */
 }
