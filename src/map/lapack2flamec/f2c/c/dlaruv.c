@@ -84,12 +84,8 @@ the array */
 /* Subroutine */
 int dlaruv_(integer *iseed, integer *n, doublereal *x)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlaruv inputs: iseed %" FLA_IS ", n %" FLA_IS "",*iseed, *n);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlaruv inputs: iseed %" FLA_IS ", n %" FLA_IS "",*iseed, *n);
     /* Initialized data */
     static const integer mm[512] /* was [128][4] */
     =
@@ -171,7 +167,7 @@ L20: /* Multiply the seed by i-th power of the multiplier modulo 2**48 */
     iseed[2] = it2;
     iseed[3] = it3;
     iseed[4] = it4;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLARUV */
 }

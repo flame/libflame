@@ -282,12 +282,8 @@ IBLOCK(i)=1 if eigenvalue */
 /* Subroutine */
 int dlarrv_(integer *n, doublereal *vl, doublereal *vu, doublereal *d__, doublereal *l, doublereal *pivmin, integer *isplit, integer *m, integer *dol, integer *dou, doublereal *minrgp, doublereal *rtol1, doublereal *rtol2, doublereal *w, doublereal *werr, doublereal *wgap, integer *iblock, integer *indexw, doublereal *gers, doublereal *z__, integer *ldz, integer *isuppz, doublereal *work, integer *iwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlarrv inputs: n %" FLA_IS ", isplit %" FLA_IS ", m %" FLA_IS ", dol %" FLA_IS ", dou %" FLA_IS ", iblock %" FLA_IS ", indexw %" FLA_IS ", ldz %" FLA_IS "",*n, *isplit, *m, *dol, *dou, *iblock, *indexw, *ldz);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlarrv inputs: n %" FLA_IS ", isplit %" FLA_IS ", m %" FLA_IS ", dol %" FLA_IS ", dou %" FLA_IS ", iblock %" FLA_IS ", indexw %" FLA_IS ", ldz %" FLA_IS "",*n, *isplit, *m, *dol, *dou, *iblock, *indexw, *ldz);
     /* System generated locals */
     integer z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal d__1, d__2;
@@ -401,7 +397,7 @@ int dlarrv_(integer *n, doublereal *vl, doublereal *vu, doublereal *d__, doubler
 	if (*m > *n)
 	   *info = -4;
 
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* The first N entries of WORK are reserved for the eigenvalues */
@@ -578,7 +574,7 @@ L40:
             if (ndepth > *m)
             {
                 *info = -2;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             /* breadth first processing of the current level of the representation */
@@ -672,7 +668,7 @@ L40:
                     if (iinfo != 0)
                     {
                         *info = -1;
-                        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                        AOCL_DTL_TRACE_LOG_EXIT
                         return 0;
                     }
                     /* We also recompute the extremal gaps. W holds all eigenvalues */
@@ -853,7 +849,7 @@ L40:
                         else
                         {
                             *info = -2;
-                            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                            AOCL_DTL_TRACE_LOG_EXIT
                             return 0;
                         }
                     }
@@ -967,7 +963,7 @@ L120: /* Check if bisection should be used to refine eigenvalue */
                             if (iinfo != 0)
                             {
                                 *info = -3;
-                                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                                AOCL_DTL_TRACE_LOG_EXIT
                                 return 0;
                             }
                             lambda = work[windex];
@@ -1075,7 +1071,7 @@ L120: /* Check if bisection should be used to refine eigenvalue */
                             else
                             {
                                 *info = 5;
-                                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                                AOCL_DTL_TRACE_LOG_EXIT
                                 return 0;
                             }
                         }
@@ -1170,7 +1166,7 @@ L140:
 L170:
         ;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLARRV */
 }

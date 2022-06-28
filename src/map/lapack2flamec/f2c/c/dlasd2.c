@@ -264,12 +264,8 @@ and entries in the second half */
 /* Subroutine */
 int dlasd2_(integer *nl, integer *nr, integer *sqre, integer *k, doublereal *d__, doublereal *z__, doublereal *alpha, doublereal * beta, doublereal *u, integer *ldu, doublereal *vt, integer *ldvt, doublereal *dsigma, doublereal *u2, integer *ldu2, doublereal *vt2, integer *ldvt2, integer *idxp, integer *idx, integer *idxc, integer * idxq, integer *coltyp, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlasd2 inputs: nl %" FLA_IS ", nr %" FLA_IS ", sqre %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS ", ldu2 %" FLA_IS ", ldvt2 %" FLA_IS ", idxq %" FLA_IS "",*nl, *nr, *sqre, *ldu, *ldvt, *ldu2, *ldvt2, *idxq);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlasd2 inputs: nl %" FLA_IS ", nr %" FLA_IS ", sqre %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS ", ldu2 %" FLA_IS ", ldvt2 %" FLA_IS ", idxq %" FLA_IS "",*nl, *nr, *sqre, *ldu, *ldvt, *ldu2, *ldvt2, *idxq);
     /* System generated locals */
     integer u_dim1, u_offset, u2_dim1, u2_offset, vt_dim1, vt_offset, vt2_dim1, vt2_offset, i__1;
     doublereal d__1, d__2;
@@ -372,7 +368,7 @@ int dlasd2_(integer *nl, integer *nr, integer *sqre, integer *k, doublereal *d__
     {
         i__1 = -(*info);
         xerbla_("DLASD2", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     nlp1 = *nl + 1;
@@ -717,7 +713,7 @@ L120: /* Count up the total number of the various types of columns, then */
         coltyp[j] = ctot[j - 1];
         /* L190: */
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLASD2 */
 }
