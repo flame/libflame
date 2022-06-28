@@ -261,12 +261,8 @@ the */
 /* Subroutine */
 int dlals0_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *nrhs, doublereal *b, integer *ldb, doublereal *bx, integer *ldbx, integer *perm, integer *givptr, integer *givcol, integer *ldgcol, doublereal *givnum, integer *ldgnum, doublereal * poles, doublereal *difl, doublereal *difr, doublereal *z__, integer * k, doublereal *c__, doublereal *s, doublereal *work, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlals0 inputs: icompq %" FLA_IS ", nl %" FLA_IS ", nr %" FLA_IS ", sqre %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS ", ldbx %" FLA_IS ", givptr %" FLA_IS ", givcol %" FLA_IS ", ldgcol %" FLA_IS ", ldgnum %" FLA_IS ", k %" FLA_IS "",*icompq, *nl, *nr, *sqre, *nrhs, *ldb, *ldbx, *givptr, *givcol, *ldgcol, *ldgnum, *k);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlals0 inputs: icompq %" FLA_IS ", nl %" FLA_IS ", nr %" FLA_IS ", sqre %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS ", ldbx %" FLA_IS ", givptr %" FLA_IS ", givcol %" FLA_IS ", ldgcol %" FLA_IS ", ldgnum %" FLA_IS ", k %" FLA_IS "",*icompq, *nl, *nr, *sqre, *nrhs, *ldb, *ldbx, *givptr, *givcol, *ldgcol, *ldgnum, *k);
     /* System generated locals */
     integer givcol_dim1, givcol_offset, b_dim1, b_offset, bx_dim1, bx_offset, difr_dim1, difr_offset, givnum_dim1, givnum_offset, poles_dim1, poles_offset, i__1, i__2;
     doublereal d__1;
@@ -382,7 +378,7 @@ int dlals0_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *n
     {
         i__1 = -(*info);
         xerbla_("DLALS0", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     m = n + *sqre;
@@ -583,7 +579,7 @@ int dlals0_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *n
             /* L100: */
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLALS0 */
 }

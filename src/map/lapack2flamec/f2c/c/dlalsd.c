@@ -171,12 +171,8 @@ in this case a minimum norm solution is returned. */
 /* Subroutine */
 int dlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *d__, doublereal *e, doublereal *b, integer *ldb, doublereal *rcond, integer *rank, doublereal *work, integer *iwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlalsd inputs: uplo %c, smlsiz %" FLA_IS ", n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS ", rank %" FLA_IS "",*uplo, *smlsiz, *n, *nrhs, *ldb, *rank);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlalsd inputs: uplo %c, smlsiz %" FLA_IS ", n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS ", rank %" FLA_IS "",*uplo, *smlsiz, *n, *nrhs, *ldb, *rank);
     /* System generated locals */
     integer b_dim1, b_offset, i__1, i__2;
     doublereal d__1;
@@ -261,7 +257,7 @@ int dlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
     {
         i__1 = -(*info);
         xerbla_("DLALSD", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     eps = dlamch_("Epsilon");
@@ -278,7 +274,7 @@ int dlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
     /* Quick return if possible. */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*n == 1)
@@ -293,7 +289,7 @@ int dlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
             dlascl_("G", &c__0, &c__0, &d__[1], &c_b11, &c__1, nrhs, &b[ b_offset], ldb, info);
             d__[1] = f2c_dabs(d__[1]);
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Rotate the matrix if it is lower bidiagonal. */
@@ -346,7 +342,7 @@ int dlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
     if (orgnrm == 0.)
     {
         dlaset_("A", n, nrhs, &c_b6, &c_b6, &b[b_offset], ldb);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     dlascl_("G", &c__0, &c__0, &orgnrm, &c_b11, n, &c__1, &d__[1], n, info);
@@ -360,7 +356,7 @@ int dlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
         dlasdq_("U", &c__0, n, n, &c__0, nrhs, &d__[1], &e[1], &work[1], n, & work[1], n, &b[b_offset], ldb, &work[nwork], info);
         if (*info != 0)
         {
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         tol = rcnd * (d__1 = d__[idamax_(n, &d__[1], &c__1)], f2c_dabs(d__1));
@@ -386,7 +382,7 @@ int dlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
         dlascl_("G", &c__0, &c__0, &c_b11, &orgnrm, n, &c__1, &d__[1], n, info);
         dlasrt_("D", n, &d__[1], info);
         dlascl_("G", &c__0, &c__0, &orgnrm, &c_b11, n, nrhs, &b[b_offset], ldb, info);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Book-keeping and setting up some constants. */
@@ -474,7 +470,7 @@ int dlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
                 dlasdq_("U", &c__0, &nsize, &nsize, &c__0, nrhs, &d__[st], &e[ st], &work[vt + st1], n, &work[nwork], n, &b[st + b_dim1], ldb, &work[nwork], info);
                 if (*info != 0)
                 {
-                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 dlacpy_("A", &nsize, nrhs, &b[st + b_dim1], ldb, &work[bx + st1], n);
@@ -485,14 +481,14 @@ int dlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
                 dlasda_(&icmpq1, smlsiz, &nsize, &sqre, &d__[st], &e[st], & work[u + st1], n, &work[vt + st1], &iwork[k + st1], & work[difl + st1], &work[difr + st1], &work[z__ + st1], &work[poles + st1], &iwork[givptr + st1], &iwork[ givcol + st1], n, &iwork[perm + st1], &work[givnum + st1], &work[c__ + st1], &work[s + st1], &work[nwork], &iwork[iwk], info);
                 if (*info != 0)
                 {
-                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 bxst = bx + st1;
                 dlalsa_(&icmpq2, smlsiz, &nsize, nrhs, &b[st + b_dim1], ldb, & work[bxst], n, &work[u + st1], n, &work[vt + st1], & iwork[k + st1], &work[difl + st1], &work[difr + st1], &work[z__ + st1], &work[poles + st1], &iwork[givptr + st1], &iwork[givcol + st1], n, &iwork[perm + st1], & work[givnum + st1], &work[c__ + st1], &work[s + st1], &work[nwork], &iwork[iwk], info);
                 if (*info != 0)
                 {
-                    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
             }
@@ -545,7 +541,7 @@ int dlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
             dlalsa_(&icmpq2, smlsiz, &nsize, nrhs, &work[bxst], n, &b[st + b_dim1], ldb, &work[u + st1], n, &work[vt + st1], &iwork[ k + st1], &work[difl + st1], &work[difr + st1], &work[z__ + st1], &work[poles + st1], &iwork[givptr + st1], &iwork[ givcol + st1], n, &iwork[perm + st1], &work[givnum + st1], &work[c__ + st1], &work[s + st1], &work[nwork], &iwork[ iwk], info);
             if (*info != 0)
             {
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
         }
@@ -555,7 +551,7 @@ int dlalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, doublereal *
     dlascl_("G", &c__0, &c__0, &c_b11, &orgnrm, n, &c__1, &d__[1], n, info);
     dlasrt_("D", n, &d__[1], info);
     dlascl_("G", &c__0, &c__0, &orgnrm, &c_b11, n, nrhs, &b[b_offset], ldb, info);
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLALSD */
 }
