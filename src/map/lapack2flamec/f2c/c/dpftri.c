@@ -185,12 +185,8 @@ k=N/2. IF TRANSR = 'T' then RFP is */
 /* Subroutine */
 int dpftri_(char *transr, char *uplo, integer *n, doublereal *a, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dpftri inputs: transr %c, uplo %c, n %" FLA_IS "",*transr, *uplo, *n);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dpftri inputs: transr %c, uplo %c, n %" FLA_IS "",*transr, *uplo, *n);
     /* System generated locals */
     integer i__1, i__2;
     /* Local variables */
@@ -244,20 +240,20 @@ int dpftri_(char *transr, char *uplo, integer *n, doublereal *a, integer *info)
     {
         i__1 = -(*info);
         xerbla_("DPFTRI", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Invert the triangular Cholesky factor U or L. */
     dtftri_(transr, uplo, "N", n, a, info);
     if (*info > 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* If N is odd, set NISODD = .TRUE. */
@@ -400,7 +396,7 @@ int dpftri_(char *transr, char *uplo, integer *n, doublereal *a, integer *info)
             }
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DPFTRI */
 }

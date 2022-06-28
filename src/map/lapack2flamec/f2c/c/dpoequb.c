@@ -100,12 +100,8 @@
 /* Subroutine */
 int dpoequb_(integer *n, doublereal *a, integer *lda, doublereal *s, doublereal *scond, doublereal *amax, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dpoequb inputs: n %" FLA_IS ", lda %" FLA_IS "",*n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dpoequb inputs: n %" FLA_IS ", lda %" FLA_IS "",*n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     doublereal d__1, d__2;
@@ -158,7 +154,7 @@ int dpoequb_(integer *n, doublereal *a, integer *lda, doublereal *s, doublereal 
     {
         i__1 = -(*info);
         xerbla_("DPOEQUB", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible. */
@@ -166,7 +162,7 @@ int dpoequb_(integer *n, doublereal *a, integer *lda, doublereal *s, doublereal 
     {
         *scond = 1.;
         *amax = 0.;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     base = dlamch_("B");
@@ -202,7 +198,7 @@ int dpoequb_(integer *n, doublereal *a, integer *lda, doublereal *s, doublereal 
             if (s[i__] <= 0.)
             {
                 *info = i__;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             /* L20: */
@@ -224,7 +220,7 @@ int dpoequb_(integer *n, doublereal *a, integer *lda, doublereal *s, doublereal 
         /* Compute SCOND = min(S(I)) / max(S(I)). */
         *scond = sqrt(smin) / sqrt(*amax);
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DPOEQUB */
 }
