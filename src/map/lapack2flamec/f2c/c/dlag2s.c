@@ -97,12 +97,8 @@ if */
 /* Subroutine */
 int dlag2s_(integer *m, integer *n, doublereal *a, integer * lda, real *sa, integer *ldsa, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlag2s inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldsa %" FLA_IS "",*m, *n, *lda, *ldsa);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlag2s inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldsa %" FLA_IS "",*m, *n, *lda, *ldsa);
     /* System generated locals */
     integer sa_dim1, sa_offset, a_dim1, a_offset, i__1, i__2;
     /* Local variables */
@@ -154,7 +150,7 @@ int dlag2s_(integer *m, integer *n, doublereal *a, integer * lda, real *sa, inte
     }
     *info = 0;
 L30:
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLAG2S */
 }

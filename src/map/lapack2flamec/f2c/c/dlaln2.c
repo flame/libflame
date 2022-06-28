@@ -205,12 +205,8 @@
 /* Subroutine */
 int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doublereal *ca, doublereal *a, integer *lda, doublereal *d1, doublereal *d2, doublereal *b, integer *ldb, doublereal *wr, doublereal *wi, doublereal *x, integer *ldx, doublereal *scale, doublereal *xnorm, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlaln2 inputs: na %" FLA_IS ", nw %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*na, *nw, *lda, *ldb, *ldx);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlaln2 inputs: na %" FLA_IS ", nw %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*na, *nw, *lda, *ldb, *ldx);
     /* Initialized data */
     logical zswap[4] =
     {
@@ -404,7 +400,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
                 x[x_dim1 + 2] = temp * b[b_dim1 + 2];
                 *xnorm = temp * bnorm;
                 *info = 1;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             /* Gaussian elimination with complete pivoting. */
@@ -514,7 +510,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
                 x[(x_dim1 << 1) + 2] = temp * b[(b_dim1 << 1) + 2];
                 *xnorm = temp * bnorm;
                 *info = 1;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             /* Gaussian elimination with complete pivoting. */
@@ -640,7 +636,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
             }
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLALN2 */
 }

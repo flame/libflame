@@ -197,12 +197,8 @@ the routine */
 /* Subroutine */
 int dlamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, integer *mb, integer *nb, doublereal *a, integer *lda, doublereal *t, integer *ldt, doublereal *c__, integer *ldc, doublereal *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlamtsqr inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", mb %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS ", ldc %" FLA_IS ", lwork %" FLA_IS "",*side, *trans, *m, *n, *k, *mb, *nb, *lda, *ldt, *ldc, *lwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlamtsqr inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", mb %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS ", ldc %" FLA_IS ", lwork %" FLA_IS "",*side, *trans, *m, *n, *k, *mb, *nb, *lda, *ldt, *ldc, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, c_dim1, c_offset, t_dim1, t_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -303,12 +299,12 @@ int dlamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     {
         i__1 = -(*info);
         xerbla_("DLAMTSQR", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -316,7 +312,7 @@ int dlamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     i__1 = min(*m,*n);
     if (min(i__1,*k) == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Computing MAX */
@@ -324,7 +320,7 @@ int dlamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     if (*mb <= *k || *mb >= max(i__1,*k))
     {
         dgemqrt_(side, trans, m, n, k, nb, &a[a_offset], lda, &t[t_offset], ldt, &c__[c_offset], ldc, &work[1], info);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (left && notran)
@@ -432,7 +428,7 @@ int dlamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
         }
     }
     work[1] = (doublereal) lw;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLAMTSQR */
 }

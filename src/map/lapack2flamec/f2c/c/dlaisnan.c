@@ -61,7 +61,7 @@
 /* ===================================================================== */
 logical dlaisnan_(doublereal *din1, doublereal *din2)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_ENTRY_INDENT
     /* System generated locals */
     logical ret_val;
     /* -- LAPACK auxiliary routine (version 3.7.1) -- */
@@ -73,7 +73,7 @@ logical dlaisnan_(doublereal *din1, doublereal *din2)
     /* ===================================================================== */
     /* .. Executable Statements .. */
     ret_val = *din1 != *din2;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT_INDENT
     return ret_val;
 }
 /* dlaisnan_ */

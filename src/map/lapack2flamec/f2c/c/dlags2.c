@@ -139,7 +139,7 @@
 /* Subroutine */
 int dlags2_(logical *upper, doublereal *a1, doublereal *a2, doublereal *a3, doublereal *b1, doublereal *b2, doublereal *b3, doublereal *csu, doublereal *snu, doublereal *csv, doublereal *snv, doublereal *csq, doublereal *snq)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_ENTRY_INDENT
     /* System generated locals */
     doublereal d__1;
     /* Local variables */
@@ -318,7 +318,7 @@ int dlags2_(logical *upper, doublereal *a1, doublereal *a2, doublereal *a3, doub
             *snv = csl;
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT_INDENT
     return 0;
     /* End of DLAGS2 */
 }
