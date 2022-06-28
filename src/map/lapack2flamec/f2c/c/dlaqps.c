@@ -166,12 +166,8 @@ static doublereal c_b16 = 0.;
 /* Subroutine */
 int dlaqps_(integer *m, integer *n, integer *offset, integer *nb, integer *kb, doublereal *a, integer *lda, integer *jpvt, doublereal *tau, doublereal *vn1, doublereal *vn2, doublereal *auxv, doublereal *f, integer *ldf)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlaqps inputs: m %" FLA_IS ", n %" FLA_IS ", offset %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", jpvt %" FLA_IS ", ldf %" FLA_IS "",*m, *n, *offset, *nb, *lda, *jpvt, *ldf);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlaqps inputs: m %" FLA_IS ", n %" FLA_IS ", offset %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", jpvt %" FLA_IS ", ldf %" FLA_IS "",*m, *n, *offset, *nb, *lda, *jpvt, *ldf);
     /* System generated locals */
     integer a_dim1, a_offset, f_dim1, f_offset, i__1, i__2;
     doublereal d__1, d__2;
@@ -376,7 +372,7 @@ L40:
         lsticc = itemp;
         goto L40;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLAQPS */
 }

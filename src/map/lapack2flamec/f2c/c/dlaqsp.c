@@ -113,12 +113,8 @@
 /* Subroutine */
 int dlaqsp_(char *uplo, integer *n, doublereal *ap, doublereal *s, doublereal *scond, doublereal *amax, char *equed)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlaqsp inputs: uplo %c, n %" FLA_IS "",*uplo, *n);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlaqsp inputs: uplo %c, n %" FLA_IS "",*uplo, *n);
     /* System generated locals */
     integer i__1, i__2;
     /* Local variables */
@@ -151,7 +147,7 @@ int dlaqsp_(char *uplo, integer *n, doublereal *ap, doublereal *s, doublereal *s
     if (*n <= 0)
     {
         *(unsigned char *)equed = 'N';
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize LARGE and SMALL. */
@@ -211,7 +207,7 @@ int dlaqsp_(char *uplo, integer *n, doublereal *ap, doublereal *s, doublereal *s
         }
         *(unsigned char *)equed = 'Y';
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLAQSP */
 }
