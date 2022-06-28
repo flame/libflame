@@ -104,12 +104,8 @@
 /* Subroutine */
 int dlasd5_(integer *i__, doublereal *d__, doublereal *z__, doublereal *delta, doublereal *rho, doublereal *dsigma, doublereal * work)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dlasd5 inputs: i__ %" FLA_IS "",*i__);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlasd5 inputs: i__ %" FLA_IS "",*i__);
     /* System generated locals */
     doublereal d__1;
     /* Builtin functions */
@@ -214,7 +210,7 @@ int dlasd5_(integer *i__, doublereal *d__, doublereal *z__, doublereal *delta, d
         /* DELTA( 1 ) = DELTA( 1 ) / TEMP */
         /* DELTA( 2 ) = DELTA( 2 ) / TEMP */
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLASD5 */
 }
