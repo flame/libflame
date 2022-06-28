@@ -385,12 +385,8 @@ i+1}
 /* Subroutine */
 int dla_porfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *nrhs, doublereal *a, integer *lda, doublereal * af, integer *ldaf, logical *colequ, doublereal *c__, doublereal *b, integer *ldb, doublereal *y, integer *ldy, doublereal *berr_out__, integer *n_norms__, doublereal *err_bnds_norm__, doublereal * err_bnds_comp__, doublereal *res, doublereal *ayb, doublereal *dy, doublereal *y_tail__, doublereal *rcond, integer *ithresh, doublereal *rthresh, doublereal *dz_ub__, logical *ignore_cwise__, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dla_porfsx_extended inputs: prec_type__ %" FLA_IS ", uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", ldb %" FLA_IS ", ldy %" FLA_IS ", n_norms__ %" FLA_IS ", ithresh %" FLA_IS "",*prec_type__, *uplo, *n, *nrhs, *lda, *ldaf, *ldb, *ldy, *n_norms__, *ithresh);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dla_porfsx_extended inputs: prec_type__ %" FLA_IS ", uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", ldb %" FLA_IS ", ldy %" FLA_IS ", n_norms__ %" FLA_IS ", ithresh %" FLA_IS "",*prec_type__, *uplo, *n, *nrhs, *lda, *ldaf, *ldb, *ldy, *n_norms__, *ithresh);
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, b_dim1, b_offset, y_dim1, y_offset, err_bnds_norm_dim1, err_bnds_norm_offset, err_bnds_comp_dim1, err_bnds_comp_offset, i__1, i__2, i__3;
     doublereal d__1, d__2;
@@ -475,7 +471,7 @@ int dla_porfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *
     /* Function Body */
     if (*info != 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     eps = dlamch_("Epsilon");
@@ -749,7 +745,7 @@ L666: /* Set final_* when cnt hits ithresh. */
         dla_lin_berr_(n, n, &c__1, &res[1], &ayb[1], &berr_out__[j]);
         /* End of loop for each RHS. */
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* dla_porfsx_extended__ */

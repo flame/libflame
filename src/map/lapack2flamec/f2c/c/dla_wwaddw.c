@@ -69,12 +69,8 @@
 /* Subroutine */
 int dla_wwaddw_(integer *n, doublereal *x, doublereal *y, doublereal *w)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dla_wwaddw inputs: n %" FLA_IS "",*n);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dla_wwaddw inputs: n %" FLA_IS "",*n);
     /* System generated locals */
     integer i__1;
     /* Local variables */
@@ -108,7 +104,7 @@ int dla_wwaddw_(integer *n, doublereal *x, doublereal *y, doublereal *w)
         x[i__] = s;
         /* L10: */
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* dla_wwaddw__ */

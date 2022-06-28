@@ -62,9 +62,7 @@
 /* Subroutine */
 int dlabad_(doublereal *small, doublereal *large)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-    /* Builtin functions */
-    double d_lg10(doublereal *), sqrt(doublereal);
+    AOCL_DTL_TRACE_LOG_INIT
     /* -- LAPACK auxiliary routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -82,7 +80,7 @@ int dlabad_(doublereal *small, doublereal *large)
         *small = sqrt(*small);
         *large = sqrt(*large);
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLABAD */
 }

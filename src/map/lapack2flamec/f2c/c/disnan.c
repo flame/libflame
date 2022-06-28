@@ -46,7 +46,7 @@
 /* ===================================================================== */
 logical disnan_(doublereal *din)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_ENTRY_INDENT
     /* System generated locals */
     logical ret_val;
     /* Local variables */
@@ -62,7 +62,7 @@ logical disnan_(doublereal *din)
     /* .. */
     /* .. Executable Statements .. */
     ret_val = dlaisnan_(din, din);
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT_INDENT
     return ret_val;
 }
 /* disnan_ */

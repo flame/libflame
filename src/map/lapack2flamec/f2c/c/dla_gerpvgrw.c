@@ -86,12 +86,8 @@
 /* ===================================================================== */
 doublereal dla_gerpvgrw_(integer *n, integer *ncols, doublereal *a, integer * lda, doublereal *af, integer *ldaf)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"dla_gerpvgrw inputs: n %" FLA_IS ", ncols %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS "",*n, *ncols, *lda, *ldaf);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dla_gerpvgrw inputs: n %" FLA_IS ", ncols %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS "",*n, *ncols, *lda, *ldaf);
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, i__1, i__2;
     doublereal ret_val, d__1, d__2;
@@ -154,7 +150,7 @@ doublereal dla_gerpvgrw_(integer *n, integer *ncols, doublereal *a, integer * ld
         }
     }
     ret_val = rpvgrw;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return ret_val;
 }
 /* dla_gerpvgrw__ */
