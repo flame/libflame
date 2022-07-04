@@ -36,7 +36,7 @@ void fla_test_gesv_experiment(test_params_t *params,
     void* IPIV;
     void *A, *A_save, *B, *B_save, *X;
     double time_min = 1e9;
-    *residual = params->lin_solver_paramslist[pci].solver_threhold;
+    *residual = params->lin_solver_paramslist[pci].solver_threshold;
     /* Determine the dimensions*/
     n = q_cur;
     cs_A = n;
