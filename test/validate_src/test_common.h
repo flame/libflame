@@ -37,7 +37,7 @@ typedef struct dcomplex
 #endif  // DATATYPES
 
 #include "test_prototype.h"
-#include "test_linear_solvers.h"
+#include "validate_common.h"
 
 // global variables
 extern integer i_zero , i_one , i_n_one;

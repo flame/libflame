@@ -7,7 +7,7 @@
 
 CC             := gcc
 LINKER         := $(CC)
-RM_F           := rm -f
+RM_RF          := rm -rf
 CFLAGS         := -g -O2 -Wall -Wno-comment
 LDFLAGS        := -lm -lpthread -fopenmp
 
@@ -45,11 +45,11 @@ ILP64FLAG := FLA_ENABLE_ILP64=$(ILP64)
 # --- General build definitions ------------------------------------------------
 #
 TEST_SRC_PATH  := src
-TEST_OBJ_PATH  := src
-TEST_LIBRARY_SRC_PATH := ../library
-TEST_LIBRARY_OBJ_PATH := ../library
+TEST_OBJ_PATH  := src/obj
+TEST_VALIDATE_SRC_PATH := ../validate_src
+TEST_VALIDATE_OBJ_PATH := ../validate_src/obj
 
-CFLAGS         += -I$(TEST_SRC_PATH) -I$(TEST_LIBRARY_SRC_PATH)
+CFLAGS         += -I$(TEST_SRC_PATH) -I$(TEST_VALIDATE_SRC_PATH)
 
 ifeq ($(ILP64),1)
     CPPFLAGS    += -D$(ILP64FLAG)
@@ -57,9 +57,9 @@ endif
 
 FNAME          := lapack
 
-TEST_LIBRARY_OBJS := $(patsubst $(TEST_LIBRARY_SRC_PATH)/%.c, \
-                             $(TEST_LIBRARY_OBJ_PATH)/%.o, \
-                             $(wildcard $(TEST_LIBRARY_SRC_PATH)/*.c))
+TEST_VALIDATE_OBJS := $(patsubst $(TEST_VALIDATE_SRC_PATH)/%.c, \
+                             $(TEST_VALIDATE_OBJ_PATH)/%.o, \
+                             $(wildcard $(TEST_VALIDATE_SRC_PATH)/*.c))
 
 TEST_OBJS      := $(patsubst $(TEST_SRC_PATH)/%.c, \
                              $(TEST_OBJ_PATH)/%.o, \
@@ -67,17 +67,17 @@ TEST_OBJS      := $(patsubst $(TEST_SRC_PATH)/%.c, \
 
 TEST_BIN       := test_$(FNAME).x
 
-$(TEST_LIBRARY_OBJ_PATH)/%.o: $(TEST_LIBRARY_SRC_PATH)/%.c
-	mkdir -p $(TEST_LIBRARY_OBJ_PATH)
+$(TEST_VALIDATE_OBJ_PATH)/%.o: $(TEST_VALIDATE_SRC_PATH)/%.c
+	mkdir -p $(TEST_VALIDATE_OBJ_PATH)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 $(TEST_OBJ_PATH)/%.o: $(TEST_SRC_PATH)/%.c
 	mkdir -p $(TEST_OBJ_PATH)
 	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
-test_$(FNAME): $(TEST_LIBRARY_OBJS) $(TEST_OBJS)
-	$(LINKER) $(TEST_LIBRARY_OBJS) $(TEST_OBJS) $(LIBFLAME) $(LIBBLAS) \
+test_$(FNAME): $(TEST_VALIDATE_OBJS) $(TEST_OBJS)
+	$(LINKER) $(TEST_VALIDATE_OBJS) $(TEST_OBJS) $(LIBFLAME) $(LIBBLAS) \
 	$(LDFLAGS) -o $(TEST_BIN)
 
 clean:
-	$(RM_F) $(TEST_LIBRARY_OBJS) $(TEST_OBJS) $(TEST_BIN)
+	$(RM_RF) $(TEST_VALIDATE_OBJ_PATH) $(TEST_OBJ_PATH) $(TEST_BIN)
