@@ -470,6 +470,9 @@ dnl Make sure the user did not request a weird combination of parallelization
 dnl options.
 FLA_REQUIRE_SUPERMATRIX_ENABLED
 
+dnl Make sure the user enabled multithreading if HIP is enabled.
+FLA_REQUIRE_MULTITHREADING_ENABLED
+
 dnl Make sure the user did not request both GPU and HIP options.
 FLA_REQUIRE_NOT_HIP_AND_GPU_ENABLED
 
