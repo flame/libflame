@@ -179,7 +179,7 @@ FLA_Error FLA_Apply_Q_blk_external_hip( rocblas_handle handle, FLA_Side side, FL
                         k_t,
                         buff_A, cs_A,
                         buff_t,
-                       buff_B, cs_B );
+                        buff_B, cs_B );
 
     break;
   }
