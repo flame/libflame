@@ -225,6 +225,7 @@ FLA_Error FLA_Bidiag_form_U_external_hip( rocblas_handle handle, FLA_Obj A, void
 FLA_Error FLA_Bidiag_form_V_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
 FLA_Error FLA_Bsvd_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj d, void* d_hip, FLA_Obj e, void* e_hip, FLA_Obj U, void* U_hip, FLA_Obj V, void* V_hip );
 FLA_Error FLA_Hevdd_external_hip( rocblas_handle handle, FLA_Evd_type jobz, FLA_Uplo uplo, FLA_Obj A, void* A_hip, FLA_Obj e, void* e_hip );
+FLA_Error FLA_Hevd_external_hip( rocblas_handle handle, FLA_Evd_type jobz, FLA_Uplo uplo, FLA_Obj A, void* A_hip, FLA_Obj e, void* e_hip );
 #endif
 
 // --- check routine prototypes ------------------------------------------------
