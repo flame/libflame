@@ -17,7 +17,7 @@
 #include "rocblas.h"
 #include "rocsolver.h"
 
-FLA_Error FLA_Bidiag_blk_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj tu, void* tu_hip, FLA_Obj tv, void* tv_hip )
+FLA_Error FLA_Bidiag_unb_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj tu, void* tu_hip, FLA_Obj tv, void* tv_hip )
 {
   int          info = 0;
   FLA_Datatype datatype;
@@ -66,7 +66,7 @@ FLA_Error FLA_Bidiag_blk_external_hip( rocblas_handle handle, FLA_Obj A, void* A
     float* buff_tu   = ( float * ) tu_scals;
     float* buff_tv   = ( float * ) tv_scals;
 
-    rocsolver_sgebrd( handle,
+    rocsolver_sgebd2( handle,
                       m_A,
                       n_A,
                       buff_A, cs_A,
@@ -84,7 +84,7 @@ FLA_Error FLA_Bidiag_blk_external_hip( rocblas_handle handle, FLA_Obj A, void* A
     double* buff_tu   = ( double * ) tu_scals;
     double* buff_tv   = ( double * ) FLA_DOUBLE_PTR( tv );
 
-    rocsolver_dgebrd( handle,
+    rocsolver_dgebd2( handle,
                       m_A,
                       n_A,
                       buff_A, cs_A,
@@ -102,7 +102,7 @@ FLA_Error FLA_Bidiag_blk_external_hip( rocblas_handle handle, FLA_Obj A, void* A
     rocblas_float_complex* buff_tu   = ( rocblas_float_complex * ) FLA_COMPLEX_PTR( tu );
     rocblas_float_complex* buff_tv   = ( rocblas_float_complex * ) FLA_COMPLEX_PTR( tv );
 
-    rocsolver_cgebrd( handle,
+    rocsolver_cgebd2( handle,
                       m_A,
                       n_A,
                       buff_A, cs_A,
@@ -120,7 +120,7 @@ FLA_Error FLA_Bidiag_blk_external_hip( rocblas_handle handle, FLA_Obj A, void* A
     rocblas_double_complex* buff_tu   = ( rocblas_double_complex * ) FLA_DOUBLE_COMPLEX_PTR( tu );
     rocblas_double_complex* buff_tv   = ( rocblas_double_complex * ) FLA_DOUBLE_COMPLEX_PTR( tv );
 
-    rocsolver_zgebrd( handle,
+    rocsolver_zgebd2( handle,
                       m_A,
                       n_A,
                       buff_A, cs_A,
@@ -140,9 +140,9 @@ FLA_Error FLA_Bidiag_blk_external_hip( rocblas_handle handle, FLA_Obj A, void* A
   return info;
 }
 
-FLA_Error FLA_Bidiag_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj tu, void* tu_hip, FLA_Obj tv, void* tv_hip )
+FLA_Error FLA_Bidiag_unb_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj tu, void* tu_hip, FLA_Obj tv, void* tv_hip )
 {
-  return FLA_Bidiag_blk_external_hip( handle, A, A_hip, tu, tu_hip, tv, tv_hip );
+  return FLA_Bidiag_unb_external_hip( handle, A, A_hip, tu, tu_hip, tv, tv_hip );
 }
 
 #endif
