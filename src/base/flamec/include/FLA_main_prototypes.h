@@ -10,6 +10,7 @@
 
 #ifdef FLA_ENABLE_HIP
 #include <rocblas.h>
+#include <rocsolver.h>
 #endif
 
 // -----------------------------------------------------------------------------
@@ -353,6 +354,7 @@ rocblas_operation FLA_Param_map_flame_to_rocblas_trans( FLA_Trans trans, FLA_Boo
 rocblas_fill      FLA_Param_map_flame_to_rocblas_uplo( FLA_Uplo uplo );
 rocblas_side      FLA_Param_map_flame_to_rocblas_side( FLA_Side side );
 rocblas_diagonal  FLA_Param_map_flame_to_rocblas_diag( FLA_Diag diag );
+rocblas_evect     FLA_Param_map_flame_to_rocblas_evd_type( FLA_Evd_type evd_type );
 #endif
 
 void          FLA_Param_map_flame_to_blis_trans( FLA_Trans trans, trans1_t* blis_trans );

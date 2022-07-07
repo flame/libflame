@@ -11,6 +11,7 @@
 #include "FLAME.h"
 #ifdef FLA_ENABLE_HIP
 #include <rocblas.h>
+#include <rocsolver.h>
 #endif
 
 // --- FLAME to BLAS/LAPACK mappings -------------------------------------------
@@ -264,6 +265,28 @@ void FLA_Param_map_flame_to_netlib_evd_type( FLA_Evd_type evd_type, void* lapack
 		FLA_Check_error_code( FLA_INVALID_EVD_TYPE );
 	}
 }
+
+#ifdef FLA_ENABLE_HIP
+rocblas_evect FLA_Param_map_flame_to_rocblas_evd_type( FLA_Evd_type evd_type )
+{
+        if ( evd_type == FLA_EVD_WITHOUT_VECTORS )
+        {
+                return rocblas_evect_none;
+        }
+        else if ( evd_type == FLA_EVD_WITH_VECTORS )
+        {
+                return rocblas_evect_original;
+        }
+        else if ( evd_type == FLA_EVD_OF_TRIDIAG_WITH_VECTORS )
+        {
+                return rocblas_evect_tridiagonal;
+        }
+        else
+        {
+                FLA_Check_error_code( FLA_INVALID_EVD_TYPE );
+        }
+}
+#endif
 
 void FLA_Param_map_flame_to_netlib_svd_type( FLA_Svd_type svd_type, void* lapack_svd_type )
 {
