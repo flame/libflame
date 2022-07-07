@@ -51,7 +51,7 @@ extern void DTL_Trace(
                                integer* buff_p,                                        \
                                integer* info )
 
-#ifndef FLA_ENABLE_MULTITHREADING
+#ifndef FLA_ENABLE_SUPERMATRIX
 
 #if FLA_AMD_OPT /* FLA_AMD_OPT */
 
@@ -161,7 +161,7 @@ extern void DTL_Trace(
   if ( e_val != FLA_SUCCESS ) *info = e_val + 1;                                       \
   else if( skip != TRUE )       *info = 0;
 
-#else /* FLA_ENABLE_MULTITHREADING */
+#else /* FLA_ENABLE_SUPERMATRIX */
 
 #define LAPACK_getrf_body_d LAPACK_getrf_body
 
@@ -208,7 +208,7 @@ extern void DTL_Trace(
   if ( e_val != FLA_SUCCESS ) *info = e_val + 1;                \
   else                        *info = 0;
 
-#endif /* FLA_ENABLE_MULTITHREADING */
+#endif /* FLA_ENABLE_SUPERMATRIX */
 
 LAPACK_getrf(s)
 {
