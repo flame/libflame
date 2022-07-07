@@ -228,6 +228,8 @@ FLA_Error FLA_Hevdd_external_hip( rocblas_handle handle, FLA_Evd_type jobz, FLA_
 FLA_Error FLA_Hevd_external_hip( rocblas_handle handle, FLA_Evd_type jobz, FLA_Uplo uplo, FLA_Obj A, void* A_hip, FLA_Obj e, void* e_hip );
 FLA_Error FLA_LQ_blk_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
 FLA_Error FLA_LQ_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
+FLA_Error FLA_LQ_unb_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
+FLA_Error FLA_LQ_unb_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
 #endif
 
 // --- check routine prototypes ------------------------------------------------
