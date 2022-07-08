@@ -230,6 +230,7 @@ FLA_Error FLA_LQ_blk_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip
 FLA_Error FLA_LQ_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
 FLA_Error FLA_LQ_unb_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
 FLA_Error FLA_LQ_unb_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
+FLA_Error FLA_QR_form_Q_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
 #endif
 
 // --- check routine prototypes ------------------------------------------------
