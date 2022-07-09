@@ -312,6 +312,33 @@ void FLA_Param_map_flame_to_netlib_svd_type( FLA_Svd_type svd_type, void* lapack
 	}
 }
 
+#ifdef FLA_ENABLE_HIP
+rocblas_svect     FLA_Param_map_flame_to_rocblas_svd_type( FLA_Svd_type svd_type )
+{
+        if      ( svd_type == FLA_SVD_VECTORS_ALL )
+        {
+                return rocblas_svect_all;
+        }
+        else if ( svd_type == FLA_SVD_VECTORS_MIN_COPY )
+        {
+                return rocblas_svect_singular;
+        }
+        else if ( svd_type == FLA_SVD_VECTORS_MIN_OVERWRITE )
+        {
+                return rocblas_svect_overwrite;
+        }
+        else if ( svd_type == FLA_SVD_VECTORS_NONE )
+        {
+                return rocblas_svect_none;
+        }
+        else
+        {
+                FLA_Check_error_code( FLA_INVALID_SVD_TYPE );
+        }
+}
+
+#endif
+
 void FLA_Param_map_flame_to_netlib_machval( FLA_Machval machval, void* blas_machval )
 {
 	if      ( machval == FLA_MACH_EPS )
