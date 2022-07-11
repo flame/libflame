@@ -243,6 +243,7 @@ void FLASH_Queue_exec_task_hip( FLASH_Task* t,
 
    // LAPACK
    typedef FLA_Error(*flash_chol_hip_p)(rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip, fla_chol_t* cntl);
+   typedef FLA_Error(*flash_trinv_hip_p)(rocblas_handle handle, FLA_Uplo uplo, FLA_Diag diag, FLA_Obj A, void* A_hip, fla_chol_t* cntl);
 
    // Level-3 BLAS
    typedef FLA_Error(*flash_gemm_hip_p)(rocblas_handle handle, FLA_Trans transa, FLA_Trans transb, FLA_Obj alpha, FLA_Obj A, void* A_hip, FLA_Obj B, void* B_hip, FLA_Obj beta, FLA_Obj C, void* C_hip);
@@ -280,6 +281,20 @@ void FLASH_Queue_exec_task_hip( FLASH_Task* t,
       func(
                             handle,
             ( FLA_Uplo    ) t->int_arg[0],
+                            t->output_arg[0],
+                            output_arg[0],
+            ( fla_chol_t* ) t->cntl );
+   }
+   // FLA_Trinv
+   else if ( t-> func == (void*) FLA_Trinv_task )
+   {
+      flash_trinv_hip_p func;
+      func = (flash_trinv_hip_p) FLA_Trinv_blk_external_hip;
+
+      func(
+                            handle,
+            ( FLA_Uplo    ) t->int_arg[0],
+            ( FLA_Diag    ) t->int_arg[1],
                             t->output_arg[0],
                             output_arg[0],
             ( fla_chol_t* ) t->cntl );

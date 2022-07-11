@@ -116,7 +116,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Trinv", \
                           FALSE, \
-                          FALSE, \
+                          TRUE, \
                           2, 0, 0, 1, \
                           uplo, diag, \
                           A )
