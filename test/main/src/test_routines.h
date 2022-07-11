@@ -3,10 +3,11 @@
 */
 
 /* Update test api count */
-#define test_api_count 16
+#define test_api_count 17
 
 
 /* Test API function declaration */
+void fla_test_geev(test_params_t *params);
 void fla_test_geevx(test_params_t *params);
 void fla_test_gesdd(test_params_t *params);
 void fla_test_geqrf(test_params_t *params);
@@ -29,6 +30,7 @@ OPERATIONS API_test_functions[] =
 {
     {"orgqr"               , fla_test_orgqr},
     {"potrs"               , fla_test_potrs},
+    {"geev"                , fla_test_geev},
     {"geevx"               , fla_test_geevx},
     {"gesdd"               , fla_test_gesdd},
     {"potrf"               , fla_test_potrf},
