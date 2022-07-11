@@ -237,6 +237,8 @@ FLA_Error FLA_Svd_external_hip( rocblas_handle handle, FLA_Svd_type jobu, FLA_Sv
 FLA_Error FLA_Tevdd_external_hip( rocblas_handle handle, FLA_Evd_type jobz, FLA_Obj d, void* d_hip, FLA_Obj e, void* e_hip, FLA_Obj A, void* A_hip );
 FLA_Error FLA_Tevd_external_hip( rocblas_handle handle, FLA_Evd_type jobz, FLA_Obj d, void* d_hip, FLA_Obj e, void* e_hip, FLA_Obj A, void* A_hip );
 FLA_Error FLA_Tridiag_apply_Q_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo uplo, FLA_Trans trans, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip, FLA_Obj B, void* B_hip );
+FLA_Error FLA_Tridiag_blk_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* a_hip, FLA_Obj t, void* t_hip );
+FLA_Error FLA_Tridiag_blk_ext_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* a_hip, FLA_Obj t, void* t_hip );
 #endif
 
 // --- check routine prototypes ------------------------------------------------
