@@ -975,3 +975,63 @@ void rand_hermitian_matrix(integer datatype, integer n, void** A, integer lda)
     free_matrix(Herm);
     return;
 }
+
+/* block diagonal matrix is required for computing eigen decomposition of non symmetric matrix. 
+   W is a block diagonal matrix, with a 1x1 block for each
+   real eigenvalue and a 2x2 block for each complex conjugate
+   pair.then the 2 x 2 block corresponding to the pair will be:
+
+              (  wr  wi  )
+              ( -wi  wr  )
+*/
+void create_block_diagonal_matrix(integer datatype,void* wr, void* wi, void* lambda, integer m, integer n, integer lda)
+{
+    integer i,j;
+
+    switch(datatype)
+    {
+        case FLOAT:
+        {
+            for(i=0;i<m;i++)
+            {
+                j = i;
+                if( ((float*)wi)[i] != 0.f)
+                {
+                    ((float*)lambda)[i * lda + j] = ((float*)wr)[i];
+                    ((float*)lambda)[i * lda + (j + 1)] = -((float*)wi)[i];
+                    i++;
+                    j++;
+                    ((float*)lambda)[i * lda + j] = ((float*)wr)[i];
+                    ((float*)lambda)[i * lda + (j - 1)] = -((float*)wi)[i];
+                }
+                else
+                {
+                    ((float*)lambda)[i * lda + j] = ((float*)wr)[i];
+                }
+            }
+        break;
+        }
+        case DOUBLE:
+        {
+            for(i=0;i<m;i++)
+            {
+                j = i;
+                if( ((double*)wi)[i] != 0.)
+                {
+                    ((double*)lambda)[i * lda + j] = ((double*)wr)[i];
+                    ((double*)lambda)[i * lda + (j + 1)] = -((double*)wi)[i];
+                    i++;
+                    j++;
+                    ((double*)lambda)[i * lda + j] = ((double*)wr)[i];
+                    ((double*)lambda)[i * lda + (j - 1)] = -((double*)wi)[i];
+                }
+                else
+                {
+                    ((double*)lambda)[i * lda + j] = ((double*)wr)[i];
+                }
+            }
+        break;
+        }
+    }
+}
+

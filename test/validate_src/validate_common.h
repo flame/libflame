@@ -115,4 +115,36 @@ void validate_syevd(char* jobz,
     integer datatype,
     double* residual);
 
-#endif // VALIDATE_COMMON_H
+void validate_geevx(char* jobvl,
+    char* jobvr,
+    char* sense,
+    char* balanc,
+    integer m,
+    void* A,
+    void* A_test,
+    void* VL,
+    void* VR,
+    void* w,
+    void* wr,
+    void* wi,
+    void* scale,
+    void* abnrm,
+    void* rconde,
+    void* rcondv,
+    integer datatype,
+    double* residual);
+
+void validate_geev(char* jobvl,
+    char* jobvr,
+    integer m,
+    void* A,
+    void* A_test,
+    void* VL,
+    void* VR,
+    void* w,
+    void* wr,
+    void* wi,
+    integer datatype,
+    double* residual);
+
+#endif // TEST_LINEAR_SOLVERS_H

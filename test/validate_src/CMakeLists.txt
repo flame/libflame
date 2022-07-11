@@ -17,4 +17,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/validate_orgqr.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_potrf.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_potrs.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_syevd.c
+${CMAKE_CURRENT_SOURCE_DIR}/validate_geevx.c
+${CMAKE_CURRENT_SOURCE_DIR}/validate_geev.c
 )
