@@ -655,7 +655,7 @@ void FLASH_Obj_free( FLA_Obj* H )
 #ifdef FLA_ENABLE_SCC
 		FLA_shfree( buffer_H );
 #else
-		FLA_free( buffer_H );
+		FLA_buff_free( buffer_H );
 #endif
 
 		// All that remains now is to free the interior of the matrix hierarchy.

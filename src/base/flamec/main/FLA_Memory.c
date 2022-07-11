@@ -9,6 +9,9 @@
 */
 
 #include "FLAME.h"
+#ifdef FLA_ENABLE_HIP
+#include "hip/hip_runtime_api.h"
+#endif
 
 static int      fla_mem_leak_counter;
 static FLA_Bool fla_mem_leak_counter_status;
@@ -240,6 +243,34 @@ void* FLA_realloc( void* old_ptr, size_t size )
 
 /* ***************************************************************************
 
+   FLA_buff_malloc()
+
+ *************************************************************************** */
+
+void* FLA_buff_malloc( size_t size )
+{
+#ifdef FLA_ENABLE_HIP
+  if ( FLASH_Queue_get_enabled_hip( ) )
+  {
+    // use hipHostMalloc to allocate buffers that are device accessible and
+    // page locked - only if HIP is enabled and we anticipate needing data in
+    // these buffers on device
+    void* ptr = NULL;
+    hipError_t err = hipHostMalloc( &ptr, size, hipHostMallocDefault );
+    if ( err != hipSuccess )
+    {
+      fprintf( stderr, "libflame: failure to allocate %ld bytes through hipHostMalloc\n",
+        size );
+      fflush( stderr );
+    }
+    return ptr;
+  }
+#endif
+  return FLA_malloc ( size );
+}
+
+/* ***************************************************************************
+
    FLA_free()
 
  *************************************************************************** */
@@ -268,5 +299,31 @@ void FLA_free( void* ptr )
 #endif
     }
   }
+}
+
+/* ***************************************************************************
+
+   FLA_buff_free()
+
+ *************************************************************************** */
+
+void FLA_buff_free( void* ptr )
+{
+
+  if ( ptr == NULL ) return;
+
+#ifdef FLA_ENABLE_HIP
+  if ( FLASH_Queue_get_enabled_hip( ) )
+  {
+    hipError_t err = hipHostFree( ptr );
+    if ( err != hipSuccess )
+    {
+      fprintf( stderr, "libflame: failure to free through hipHostFree\n" );
+      fflush( stderr );
+    }
+    return;
+  }
+#endif
+  FLA_free( ptr );  
 }
 

@@ -195,13 +195,16 @@ FLA_Error FLASH_Queue_write_hip( FLA_Obj obj, void* buffer_hip )
 ----------------------------------------------------------------------------*/
 {
    // Write the contents of a block in main memory to HIP.
-   rocblas_set_matrix( FLA_Obj_length( obj ),
-                       FLA_Obj_width( obj ),
-                       FLA_Obj_datatype_size( FLA_Obj_datatype( obj ) ),
-                       FLA_Obj_buffer_at_view( obj ), 
-                       FLA_Obj_col_stride( obj ),
-                       buffer_hip,
-                       FLA_Obj_length( obj ) );
+   hipStream_t stream;
+   rocblas_get_stream( handle, &stream );
+   rocblas_set_matrix_async( FLA_Obj_length( obj ),
+                             FLA_Obj_width( obj ),
+                             FLA_Obj_datatype_size( FLA_Obj_datatype( obj ) ),
+                             FLA_Obj_buffer_at_view( obj ),
+                             FLA_Obj_col_stride( obj ),
+                             buffer_hip,
+                             FLA_Obj_length( obj ),
+                             stream );
 
    return FLA_SUCCESS;
 }
