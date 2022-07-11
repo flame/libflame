@@ -240,6 +240,8 @@ FLA_Error FLA_Tridiag_apply_Q_external_hip( rocblas_handle handle, FLA_Side side
 FLA_Error FLA_Tridiag_blk_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* a_hip, FLA_Obj t, void* t_hip );
 FLA_Error FLA_Tridiag_blk_ext_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* a_hip, FLA_Obj t, void* t_hip );
 FLA_Error FLA_Tridiag_form_Q_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
+FLA_Error FLA_Tridiag_unb_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
+FLA_Error FLA_Tridiag_unb_ext_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
 #endif
 
 // --- check routine prototypes ------------------------------------------------
