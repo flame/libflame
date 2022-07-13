@@ -19,6 +19,7 @@
 
 
 static FLA_Bool flash_queue_enabled_hip  = FALSE;
+static FLA_Bool flash_malloc_managed_hip = FALSE;
 static dim_t    flash_queue_hip_n_blocks = 128;
 static rocblas_handle handle;
 
@@ -106,6 +107,59 @@ FLA_Bool FLASH_Queue_get_enabled_hip( void )
       return FALSE;
 }
 
+FLA_Error FLASH_Queue_enable_malloc_managed_hip( void )
+/*---------------------------------------------------------------------------
+
+   FLASH_Queue_enable_malloc_managed_hip
+
+----------------------------------------------------------------------------*/
+{
+   if ( FLASH_Queue_stack_depth() == 0 && FLASH_Queue_get_enabled() )
+   {
+      // Enable if not begin parallel region yet and SuperMatrix is enabled.
+      flash_malloc_managed_hip = TRUE;
+      return FLA_SUCCESS;
+   }
+   else
+   {
+      // Cannot change status during parallel region.
+      return FLA_FAILURE;
+   }
+}
+
+FLA_Error FLASH_Queue_disable_malloc_managed_hip( void )
+/*---------------------------------------------------------------------------
+
+   FLASH_Queue_disable_malloc_managed_hip
+
+----------------------------------------------------------------------------*/
+{
+   if ( FLASH_Queue_stack_depth() == 0 && FLASH_Queue_get_enabled() )
+   {
+      // Enable if not begin parallel region yet and SuperMatrix is enabled.
+      flash_malloc_managed_hip = FALSE;
+      return FLA_SUCCESS;
+   }
+   else
+   {
+      // Cannot change status during parallel region.
+      return FLA_FAILURE;
+   }
+}
+
+FLA_Bool FLASH_Queue_get_malloc_managed_enabled_hip( void )
+/*---------------------------------------------------------------------------
+
+   FLASH_Queue_get_malloc_managed_enabled_hip
+
+----------------------------------------------------------------------------*/
+{
+   // Return if SuperMatrix is enabled, but always false if not.
+   if ( FLASH_Queue_get_enabled() )
+      return flash_malloc_managed_hip;
+   else
+      return FALSE;
+}
 
 void FLASH_Queue_set_hip_num_blocks( dim_t n_blocks )
 /*----------------------------------------------------------------------------
@@ -194,6 +248,10 @@ FLA_Error FLASH_Queue_write_hip( FLA_Obj obj, void* buffer_hip )
 
 ----------------------------------------------------------------------------*/
 {
+   if ( flash_malloc_managed_hip )
+   {
+     return FLA_SUCCESS; // HMM will take care of getting the memory over
+   }
    // Write the contents of a block in main memory to HIP.
    hipStream_t stream;
    rocblas_get_stream( handle, &stream );
@@ -225,6 +283,22 @@ FLA_Error FLASH_Queue_read_hip( FLA_Obj obj, void* buffer_hip )
 
 ----------------------------------------------------------------------------*/
 {
+   if ( flash_malloc_managed_hip )
+   {
+     // inject a stream sync on the rocBLAS stream to ensure completion
+     hipStream_t stream;
+     rocblas_get_stream( handle, &stream );
+     hipError_t err = hipStreamSynchronize( stream );
+     if ( err != hipSuccess )
+     {
+       fprintf( stderr,
+                "Failure to synchronize on HIP stream. err=%d\n",
+                err );
+       return FLA_FAILURE;
+     }
+     return FLA_SUCCESS;
+   }
+
    // Read the memory of a block on HIP to main memory.
    const size_t count = FLA_Obj_elem_size( obj )
                           * FLA_Obj_col_stride( obj )
@@ -258,8 +332,9 @@ void FLASH_Queue_exec_task_hip( FLASH_Task* t,
    // Define local function pointer types.
 
    // LAPACK
-   typedef FLA_Error(*flash_chol_hip_p)(rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip, fla_chol_t* cntl);
-   typedef FLA_Error(*flash_trinv_hip_p)(rocblas_handle handle, FLA_Uplo uplo, FLA_Diag diag, FLA_Obj A, void* A_hip, fla_chol_t* cntl);
+   typedef FLA_Error(*flash_chol_hip_p)(rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip );
+   typedef FLA_Error(*flash_trinv_hip_p)(rocblas_handle handle, FLA_Uplo uplo, FLA_Diag diag, FLA_Obj A, void* A_hip );
+   typedef FLA_Error(*flash_eig_gest_hip_p)(rocblas_handle handle, FLA_Inv inv, FLA_Uplo uplo, FLA_Obj A, void* A_hip, FLA_Obj Y, void* Y_hip, FLA_Obj B, void* B_hip );
 
    // Level-3 BLAS
    typedef FLA_Error(*flash_gemm_hip_p)(rocblas_handle handle, FLA_Trans transa, FLA_Trans transb, FLA_Obj alpha, FLA_Obj A, void* A_hip, FLA_Obj B, void* B_hip, FLA_Obj beta, FLA_Obj C, void* C_hip);
@@ -298,8 +373,7 @@ void FLASH_Queue_exec_task_hip( FLASH_Task* t,
                             handle,
             ( FLA_Uplo    ) t->int_arg[0],
                             t->output_arg[0],
-                            output_arg[0],
-            ( fla_chol_t* ) t->cntl );
+                            output_arg[0] );
    }
    // FLA_Trinv
    else if ( t-> func == (void*) FLA_Trinv_task )
@@ -312,8 +386,23 @@ void FLASH_Queue_exec_task_hip( FLASH_Task* t,
             ( FLA_Uplo    ) t->int_arg[0],
             ( FLA_Diag    ) t->int_arg[1],
                             t->output_arg[0],
-                            output_arg[0],
-            ( fla_chol_t* ) t->cntl );
+                            output_arg[0] );
+   }
+   // FLA_Eig_gest
+   else if ( t->func == (void *) FLA_Eig_gest_task )
+   {
+      flash_eig_gest_hip_p func;
+      func = (flash_eig_gest_hip_p) t->func;
+
+      func(                     handle,
+            ( FLA_Inv         ) t->int_arg[0],
+            ( FLA_Uplo        ) t->int_arg[1],
+                                t->output_arg[1],
+                                output_arg[1],
+                                t->output_arg[0],
+                                output_arg[0],
+                                t->input_arg[0],
+                                input_arg[0] );
    }
    // FLA_Gemm
    else if ( t->func == (void *) FLA_Gemm_task )

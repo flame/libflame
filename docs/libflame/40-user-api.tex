@@ -5930,6 +5930,63 @@ execution is disabled.
 }
 \end{flaspec}
 
+% --- FLASH_Queue_enable_malloc_managed_hip() ----------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLASH_Queue_enable_malloc_managed_hip( void );
+\end{verbatim}
+\index{SuperMatrix functions!\flashqueueenablegpuns}
+\purpose{
+Enable allocation of buffers as managed memory. They will be used directly
+from HIP-enabled SuperMatrix tasks.
+}
+\rvalue{
+\flasuccess if SuperMatrix is enabled and a parallel region has not yet
+begun;
+\flafailure otherwise.
+}
+\end{flaspec}
+
+% --- FLASH_Queue_disable_malloc_managed_hip() ---------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Error FLASH_Queue_disable_malloc_managed_hip( void );
+\end{verbatim}
+\index{SuperMatrix functions!\flashqueueenablegpuns}
+\purpose{
+Disable allocation of buffers as managed memory. They will be used directly
+from HIP-enabled SuperMatrix tasks.
+}
+\rvalue{
+\flasuccess if SuperMatrix is enabled and a parallel region has not yet
+begun;
+\flafailure otherwise.
+}
+\end{flaspec}
+
+% --- FLASH_Queue_get_malloc_managed_enabled_hip -------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+FLA_Bool FLASH_Queue_get_malloc_managed_enabled_hip( void );
+\end{verbatim}
+\index{SuperMatrix functions!\flashqueuegetenabledgpuns}
+\purpose{
+Query whether managed memory for buffers is currently enabled.
+}
+\notes{
+If SuperMatrix is currently disabled, the function returns \false regardless
+of whether use of managed memory was previously enabled.
+}
+\rvalue{
+\true if SuperMatrix and managed memory are both enabled;
+\false if SuperMatrix is disabled, or if SuperMatrix is enabled but managed
+memory is disabled.
+}
+\end{flaspec}
+
 % --- FLASH_Queue_set_hip_num_blocks() -----------------------------------------
 
 \begin{flaspec}

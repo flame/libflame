@@ -36,12 +36,25 @@ FLA_Error FLA_Copy_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, 
   size_t width    = elem_size * m_B;
   size_t height   = n_B;
 
+  void* A_mat = NULL;
+  void* B_mat = NULL;
+  if ( FLASH_Queue_get_malloc_managed_enabled_hip() )
+  {
+    A_mat = FLA_Obj_buffer_at_view( A );
+    B_mat = FLA_Obj_buffer_at_view( B );
+  }
+  else
+  {
+    A_mat = A_hip;
+    B_mat = B_hip;
+  }
+
   hipStream_t stream;
   rocblas_get_stream( handle, &stream );
   // hipMemcpy2D assumes row-major layout
-  hipError_t err = hipMemcpy2DAsync( B_hip,
+  hipError_t err = hipMemcpy2DAsync( B_mat,
                                      dpitch,
-                                     A_hip,
+                                     A_mat,
                                      spitch,
                                      width,
                                      height,

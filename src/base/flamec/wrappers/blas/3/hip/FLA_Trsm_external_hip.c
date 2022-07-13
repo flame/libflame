@@ -40,6 +40,18 @@ FLA_Error FLA_Trsm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo 
   rocblas_fill blas_uplo = FLA_Param_map_flame_to_rocblas_uplo( uplo );
   rocblas_diagonal blas_diag = FLA_Param_map_flame_to_rocblas_diag( diag );
 
+  void* A_mat = NULL;
+  void* B_mat = NULL;
+  if ( FLASH_Queue_get_malloc_managed_enabled_hip() )
+  {
+    A_mat = FLA_Obj_buffer_at_view( A );
+    B_mat = FLA_Obj_buffer_at_view( B );
+  }
+  else
+  {
+    A_mat = A_hip;
+    B_mat = B_hip;
+  }
 
   switch( datatype ){
 
@@ -55,8 +67,8 @@ FLA_Error FLA_Trsm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo 
                    m_B,
                    n_B,
                    buff_alpha,
-                   ( float * ) A_hip, ldim_A,
-                   ( float * ) B_hip, ldim_B );
+                   ( float * ) A_mat, ldim_A,
+                   ( float * ) B_mat, ldim_B );
     
     break;
   }
@@ -73,8 +85,8 @@ FLA_Error FLA_Trsm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo 
                  m_B,
                  n_B,
                  buff_alpha,
-                 ( double * ) A_hip, ldim_A,
-                 ( double * ) B_hip, ldim_B );
+                 ( double * ) A_mat, ldim_A,
+                 ( double * ) B_mat, ldim_B );
 
     break;
   }
@@ -91,8 +103,8 @@ FLA_Error FLA_Trsm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo 
                    m_B,
                    n_B,
                    buff_alpha,
-                   ( rocblas_float_complex * ) A_hip, ldim_A,
-                   ( rocblas_float_complex * ) B_hip, ldim_B );
+                   ( rocblas_float_complex * ) A_mat, ldim_A,
+                   ( rocblas_float_complex * ) B_mat, ldim_B );
 
     break;
   }
@@ -109,8 +121,8 @@ FLA_Error FLA_Trsm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo 
                    m_B,
                    n_B,
                    buff_alpha,
-                   ( rocblas_double_complex * ) A_hip, ldim_A,
-                   ( rocblas_double_complex * ) B_hip, ldim_B );
+                   ( rocblas_double_complex * ) A_mat, ldim_A,
+                   ( rocblas_double_complex * ) B_mat, ldim_B );
 
     break;
   }

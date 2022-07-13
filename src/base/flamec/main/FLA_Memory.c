@@ -252,6 +252,19 @@ void* FLA_buff_malloc( size_t size )
 #ifdef FLA_ENABLE_HIP
   if ( FLASH_Queue_get_enabled_hip( ) )
   {
+    if ( FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+    {
+      // use hipMallocManaged to allocate buffers that are managed by HMM
+      void* ptr = NULL;
+      hipError_t err = hipMallocManaged( &ptr, size, hipMemAttachGlobal );
+      if ( err != hipSuccess )
+      {
+        fprintf( stderr, "libflame: failure to allocate %ld bytes through hipMallocManaged\n",
+          size );
+        fflush( stderr );
+      }
+      return ptr;
+    }
     // use hipHostMalloc to allocate buffers that are device accessible and
     // page locked - only if HIP is enabled and we anticipate needing data in
     // these buffers on device
@@ -315,6 +328,16 @@ void FLA_buff_free( void* ptr )
 #ifdef FLA_ENABLE_HIP
   if ( FLASH_Queue_get_enabled_hip( ) )
   {
+    if ( FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+    {
+      hipError_t err = hipFree( ptr );
+      if ( err != hipSuccess )
+      {
+        fprintf( stderr, "libflame: failure to free through hipFree\n" );
+        fflush( stderr );
+      }
+      return;
+    }
     hipError_t err = hipHostFree( ptr );
     if ( err != hipSuccess )
     {
