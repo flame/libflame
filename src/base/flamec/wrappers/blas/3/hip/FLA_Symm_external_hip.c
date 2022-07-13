@@ -44,7 +44,7 @@ FLA_Error FLA_Symm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo 
   void* A_mat = NULL;
   void* B_mat = NULL;
   void* C_mat = NULL;
-  if ( FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+  if ( FLASH_Queue_get_malloc_managed_enabled_hip() )
   {
     A_mat = FLA_Obj_buffer_at_view( A );
     B_mat = FLA_Obj_buffer_at_view( B );

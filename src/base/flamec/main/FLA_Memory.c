@@ -256,7 +256,7 @@ void* FLA_buff_malloc( size_t size )
     {
       // use hipMallocManaged to allocate buffers that are managed by HMM
       void* ptr = NULL;
-      hipError_t err = hipMallocManaged(&ptr, size, hipMemAttachGlobal);
+      hipError_t err = hipMallocManaged( &ptr, size, hipMemAttachGlobal );
       if ( err != hipSuccess )
       {
         fprintf( stderr, "libflame: failure to allocate %ld bytes through hipMallocManaged\n",

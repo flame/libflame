@@ -40,7 +40,7 @@ FLA_Error FLA_Scalr_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj 
   inc_A    = 1;
 
   void* A_mat = NULL;
-  if ( FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+  if ( FLASH_Queue_get_malloc_managed_enabled_hip() )
   {
     A_mat = FLA_Obj_buffer_at_view( A );
   }

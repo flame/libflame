@@ -42,7 +42,7 @@ FLA_Error FLA_Gemv_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Ob
   void* A_mat = NULL;
   void* x_vec = NULL;
   void* y_vec = NULL;
-  if ( FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+  if ( FLASH_Queue_get_malloc_managed_enabled_hip() )
   {
     A_mat = FLA_Obj_buffer_at_view( A );
     x_vec = FLA_Obj_buffer_at_view( x );
