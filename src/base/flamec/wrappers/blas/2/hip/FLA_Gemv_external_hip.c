@@ -32,7 +32,7 @@ FLA_Error FLA_Gemv_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Ob
 
   m_A      = FLA_Obj_length( A );
   n_A      = FLA_Obj_width( A );
-  ldim_A   = FLA_Obj_length( A );
+  ldim_A   = FLA_Obj_col_stride( A );
 
   inc_x    = 1;
   inc_y    = 1;

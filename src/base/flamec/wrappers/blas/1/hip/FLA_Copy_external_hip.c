@@ -25,11 +25,11 @@ FLA_Error FLA_Copy_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, 
   if ( FLA_Obj_has_zero_dim( A ) ) return FLA_SUCCESS;
 
   dim_t elem_size = FLA_Obj_elem_size( B );
-  dim_t ldim_A    = FLA_Obj_length( A );
+  dim_t ldim_A    = FLA_Obj_col_stride( A );
 
   dim_t m_B       = FLA_Obj_length( B );
   dim_t n_B       = FLA_Obj_width( B );
-  dim_t ldim_B    = FLA_Obj_length( B );
+  dim_t ldim_B    = FLA_Obj_col_stride( B );
 
   size_t dpitch   = elem_size * ldim_B;
   size_t spitch   = elem_size * ldim_A;
