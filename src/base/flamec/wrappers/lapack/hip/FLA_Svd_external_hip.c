@@ -57,7 +57,7 @@ FLA_Error FLA_Svd_external_hip( rocblas_handle handle, FLA_Svd_type jobu, FLA_Sv
   void* s_vec = NULL;
   void* U_mat = NULL;
   void* V_mat = NULL;
-  if ( FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+  if ( FLASH_Queue_get_malloc_managed_enabled_hip() )
   {
     A_mat = FLA_Obj_buffer_at_view( A );
     s_vec = FLA_Obj_buffer_at_view( s );

@@ -44,7 +44,7 @@ FLA_Error FLA_Bidiag_unb_external_hip( rocblas_handle handle, FLA_Obj A, void* A
   void* A_mat = NULL;
   void* tu_scals = NULL;
   void* tv_scals = NULL;
-  if ( FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+  if ( FLASH_Queue_get_malloc_managed_enabled_hip() )
   {
     A_mat = FLA_Obj_buffer_at_view( A );
     tu_scals = FLA_Obj_buffer_at_view( tu );

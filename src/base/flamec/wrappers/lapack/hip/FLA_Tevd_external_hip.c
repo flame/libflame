@@ -46,7 +46,7 @@ FLA_Error FLA_Tevd_external_hip( rocblas_handle handle, FLA_Evd_type jobz, FLA_O
   void* d_vec = NULL;
   void* e_vec = NULL;
   void* A_mat = NULL;
-  if ( FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+  if ( FLASH_Queue_get_malloc_managed_enabled_hip() )
   {
     d_vec = FLA_Obj_buffer_at_view( d );
     e_vec = FLA_Obj_buffer_at_view( e );

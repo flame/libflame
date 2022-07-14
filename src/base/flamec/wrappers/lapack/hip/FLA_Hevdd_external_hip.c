@@ -40,12 +40,25 @@ FLA_Error FLA_Hevdd_external_hip( rocblas_handle handle, FLA_Evd_type jobz, FLA_
   void* buff_work;
   hipMalloc( &buff_work, n_A * FLA_Obj_datatype_size ( FLA_Obj_datatype( A ) ) );
 
+  void* A_mat = NULL;
+  void* e_vec = NULL;
+  if ( FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+  {
+    A_mat = FLA_Obj_buffer_at_view( A );
+    e_vec = FLA_Obj_buffer_at_view( e );
+  }
+  else
+  {
+    A_mat = A_hip;
+    e_vec = e_hip;
+  }
+
   switch( datatype ) {
 
     case FLA_FLOAT:
     {
-      float* buff_A     = ( float* ) FLA_FLOAT_PTR( A );
-      float* buff_e     = ( float* ) FLA_FLOAT_PTR( e );
+      float* buff_A     = ( float* ) A_mat;
+      float* buff_e     = ( float* ) e_vec;
 
       rocsolver_ssyevd( handle,
                         blas_jobz,
@@ -61,8 +74,8 @@ FLA_Error FLA_Hevdd_external_hip( rocblas_handle handle, FLA_Evd_type jobz, FLA_
 
     case FLA_DOUBLE:
     {
-      double* buff_A     = ( double* ) FLA_DOUBLE_PTR( A );
-      double* buff_e     = ( double* ) FLA_DOUBLE_PTR( e );
+      double* buff_A     = ( double* ) A_mat;
+      double* buff_e     = ( double* ) e_vec;
   
       rocsolver_dsyevd( handle,
                         blas_jobz,
@@ -78,8 +91,8 @@ FLA_Error FLA_Hevdd_external_hip( rocblas_handle handle, FLA_Evd_type jobz, FLA_
   
     case FLA_COMPLEX:
     {
-      rocblas_float_complex* buff_A     = ( rocblas_float_complex* ) FLA_COMPLEX_PTR( A );
-      float*    buff_e     = ( float*    ) FLA_FLOAT_PTR( e );
+      rocblas_float_complex* buff_A     = ( rocblas_float_complex* ) A_mat;
+      float*    buff_e     = ( float*    ) e_vec;
   
       rocsolver_cheevd( handle,
                         blas_jobz,
@@ -95,8 +108,8 @@ FLA_Error FLA_Hevdd_external_hip( rocblas_handle handle, FLA_Evd_type jobz, FLA_
   
     case FLA_DOUBLE_COMPLEX:
     {
-      rocblas_double_complex* buff_A     = ( rocblas_double_complex* ) FLA_DOUBLE_COMPLEX_PTR( A );
-      double*   buff_e     = ( double*   ) FLA_DOUBLE_PTR( e );
+      rocblas_double_complex* buff_A     = ( rocblas_double_complex* ) A_mat;
+      double*   buff_e     = ( double*   ) e_vec;
   
       rocsolver_zheevd( handle,
                         blas_jobz,

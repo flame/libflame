@@ -40,7 +40,7 @@ FLA_Error FLA_Bidiag_form_V_external_hip( rocblas_handle handle, FLA_Obj A, void
 
   void* A_vecs = NULL;
   void* t_scals = NULL;
-  if ( FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+  if ( FLASH_Queue_get_malloc_managed_enabled_hip() )
   {
     A_vecs = FLA_Obj_buffer_at_view( A );
     t_scals = FLA_Obj_buffer_at_view( t );

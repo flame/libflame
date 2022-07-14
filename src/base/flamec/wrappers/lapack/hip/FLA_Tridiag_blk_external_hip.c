@@ -41,7 +41,7 @@ FLA_Error FLA_Tridiag_blk_external_hip( rocblas_handle handle, FLA_Uplo uplo, FL
 
   void* A_mat = NULL;
   void* t_vec = NULL;
-  if ( FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+  if ( FLASH_Queue_get_malloc_managed_enabled_hip() )
   {
     A_mat = FLA_Obj_buffer_at_view( A );
     t_vec = FLA_Obj_buffer_at_view( t );

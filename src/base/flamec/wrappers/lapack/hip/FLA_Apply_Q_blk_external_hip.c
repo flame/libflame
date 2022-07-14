@@ -49,7 +49,7 @@ FLA_Error FLA_Apply_Q_blk_external_hip( rocblas_handle handle, FLA_Side side, FL
   void* A_vecs = NULL;
   void* t_scals = NULL;
   void* B_mat = NULL;
-  if ( FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+  if ( FLASH_Queue_get_malloc_managed_enabled_hip() )
   {
     A_vecs = FLA_Obj_buffer_at_view( A );
     t_scals = FLA_Obj_buffer_at_view( t );
