@@ -16,7 +16,7 @@ void validate_gerqf(integer m_A,
     integer datatype,
     double* residual)
 {
-    void *R, *Q, *Ibuff, *work;
+    void *R, *Q, *work;
     integer cs_A, min_A, diff_A;
     integer lwork = -1, tinfo;
 
@@ -33,9 +33,6 @@ void validate_gerqf(integer m_A,
     create_matrix(datatype, &Q, n_A, n_A);
     reset_matrix(datatype, m_A, n_A, R, cs_A);
     reset_matrix(datatype, n_A, n_A, Q, n_A);
-
-    // Create Identity matrix to validate orthogonal property of matrix Q
-    create_matrix(datatype, &Ibuff, n_A, n_A);
 
     // Extract R matrix and elementary reflectors from the input/output matrix parameter A_test.
     if(m_A <= n_A)
@@ -77,16 +74,13 @@ void validate_gerqf(integer m_A,
             eps = slamch_("P");
 
             resid1 = norm/(eps * norm_A * (float)n_A);
-
+ 
             /* Test 2
                compute norm(I - Q*Q') / (N * EPS)*/
-            slaset_("full", &n_A, &n_A, &s_zero, &s_one, Ibuff, &n_A);
-            sgemm_("N", "T", &n_A, &n_A, &n_A, &s_n_one, Q, &n_A, Q, &n_A, &s_one, Ibuff, &n_A);
-
-            norm = slange_("1", &n_A, &n_A, Ibuff, &n_A, work);
-            resid2 = norm/(eps * (float)n_A);
+            resid2 = (float)check_orthogonality(datatype, Q, n_A, n_A);
 
             *residual = (double)max(resid1, resid2);
+
             break;
         }
         case DOUBLE:
@@ -104,7 +98,7 @@ void validate_gerqf(integer m_A,
             dorgrq_(&n_A, &n_A, &min_A, Q, &n_A, T_test, work, &lwork, &tinfo);
 
             /* Test 1
-               compute norm(R - Q'*A) / (V * norm(A) * EPS)*/
+               compute norm(R - Q'*A) / (N * norm(A) * EPS)*/
             dgemm_("N", "T", &m_A, &n_A, &n_A, &d_n_one, A, &m_A, Q, &n_A, &d_one, R, &m_A);
 
             norm_A = dlange_("1", &m_A, &n_A, A, &m_A, work);
@@ -116,11 +110,7 @@ void validate_gerqf(integer m_A,
 
             /* Test 2
                compute norm(I - Q*Q') / (N * EPS)*/
-            dlaset_("full", &n_A, &n_A, &d_zero, &d_one, Ibuff, &n_A);
-            dgemm_("N", "T", &n_A, &n_A, &n_A, &d_n_one, Q, &n_A, Q, &n_A, &d_one, Ibuff, &n_A);
-
-            norm = dlange_("1", &n_A, &n_A, Ibuff, &n_A, work);
-            resid2 = norm/(eps * (double)n_A);
+            resid2 = (float)check_orthogonality(datatype, Q, n_A, n_A);
 
             *residual = (double)max(resid1, resid2);
             break;
@@ -151,11 +141,7 @@ void validate_gerqf(integer m_A,
 
             /* Test 2
                compute norm(I - Q*Q') / (N * EPS)*/
-            claset_("full", &n_A, &n_A, &c_zero, &c_one, Ibuff, &n_A);
-            cgemm_("N", "C", &n_A, &n_A, &n_A, &c_n_one, Q, &n_A, Q, &n_A, &c_one, Ibuff, &n_A);
-
-            norm = clange_("1", &n_A, &n_A, Ibuff, &n_A, work);
-            resid2 = norm/(eps * (float)n_A);
+            resid2 = (float)check_orthogonality(datatype, Q, n_A, n_A);
 
             *residual = (double)max(resid1, resid2);
             break;
@@ -186,11 +172,7 @@ void validate_gerqf(integer m_A,
 
             /* Test 2
                compute norm(I - Q*Q') / (N * EPS)*/
-            zlaset_("full", &n_A, &n_A, &z_zero, &z_one, Ibuff, &n_A);
-            zgemm_("N", "C", &n_A, &n_A, &n_A, &z_n_one, Q, &n_A, Q, &n_A, &z_one, Ibuff, &n_A);
-
-            norm = zlange_("1", &n_A, &n_A, Ibuff, &n_A, work);
-            resid2 = norm/(eps * (double)n_A);
+            resid2 = check_orthogonality(datatype, Q, n_A, n_A);
 
             *residual = (double)max(resid1, resid2);
             break;
@@ -200,6 +182,5 @@ void validate_gerqf(integer m_A,
     // Free up buffers
     free_matrix( R );
     free_matrix( Q );
-    free_matrix( Ibuff );
     free_vector( work );
 }

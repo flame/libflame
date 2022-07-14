@@ -84,6 +84,10 @@ void copy_matrix(integer datatype, char *uplo, integer M, integer N, void *A, in
 void copy_realtype_matrix(integer datatype, char *uplo, integer M, integer N, void *A, integer LDA, void *B, integer LDB);
 void reset_matrix(integer datatype, integer M, integer N, void *A, integer LDA);
 void set_identity_matrix(integer datatype, integer M, integer N, void *A, integer LDA);
+void copy_submatrix(integer datatype, void* A, integer m_A, integer n_A, void *B, integer m_B, integer n_B, integer srow, integer scol);
+/* orthgonality property of matrix */
+double check_orthogonality(integer datatype, void *A, integer m, integer n);
+
 
 /* Division of complex types */
 void c_div_t(scomplex *cp, scomplex *ap, scomplex *bp);

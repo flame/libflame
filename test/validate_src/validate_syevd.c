@@ -10,8 +10,7 @@
 
 void validate_syevd(char* jobz, char* uplo, integer n, void* A, void* A_test, void* w, integer datatype, double* residual)
 {
-    void *lambda = NULL, *zlambda = NULL;
-    void *I = NULL, *Z = NULL;
+    void *lambda = NULL, *zlambda = NULL, *Z = NULL;
     void *work = NULL;
 
     create_matrix(datatype, &lambda, n, n);
@@ -20,9 +19,6 @@ void validate_syevd(char* jobz, char* uplo, integer n, void* A, void* A_test, vo
 
     reset_matrix(datatype, n, n, zlambda, n);
     reset_matrix(datatype, n, n, Z, n);
-
-    create_matrix(datatype, &I, n, n);
-    reset_matrix(datatype, n, n, I, n);
 
     copy_matrix(datatype, "full", n, n, A_test, n, Z, n);
 
@@ -44,11 +40,9 @@ void validate_syevd(char* jobz, char* uplo, integer n, void* A, void* A_test, vo
             resid1 = norm/(eps * norm_A * (float)n);
 
             /* Test 2
-               compute norm(I - Z*Z') / (N * EPS)*/
-            slaset_("full", &n, &n, &s_zero, &s_one, I, &n);
-            sgemm_("N", "T", &n, &n, &n, &s_one, Z, &n, Z, &n, &s_n_one, I, &n);
-            norm = slange_("1", &n, &n, I, &n, work);
-            resid2 = norm/(eps * (float)n);
+               compute norm(I - Z'*Z) / (N * EPS)*/
+            resid2 = (float)check_orthogonality(datatype, Z, n, n);
+
             *residual = (double)max(resid1, resid2);
             break;
         }
@@ -67,11 +61,9 @@ void validate_syevd(char* jobz, char* uplo, integer n, void* A, void* A_test, vo
             resid1 = norm/(eps * norm_A * (float)n);
 
             /* Test 2
-               compute norm(I - Z*Z') / (N * EPS)*/
-            dlaset_("full", &n, &n, &d_zero, &d_one, I, &n);
-            dgemm_("N", "T", &n, &n, &n, &d_one, Z, &n, Z, &n, &d_n_one, I, &n);
-            norm = dlange_("1", &n, &n, I, &n, work);
-            resid2 = norm/(eps * (float)n);
+               compute norm(I - Z'*Z) / (N * EPS)*/
+            resid2 = check_orthogonality(datatype, Z, n, n);
+
             *residual = (double)max(resid1, resid2);
             break;
         }
@@ -90,11 +82,9 @@ void validate_syevd(char* jobz, char* uplo, integer n, void* A, void* A_test, vo
             resid1 = norm/(eps * norm_A * (float)n);
 
             /* Test 2
-               compute norm(I - Z*Z') / (N * EPS)*/
-            claset_("full", &n, &n, &c_zero, &c_one, I, &n);
-            cgemm_("N", "C", &n, &n, &n, &c_one, Z, &n, Z, &n, &c_n_one, I, &n);
-            norm = clange_("1", &n, &n, I, &n, work);
-            resid2 = norm/(eps * (float)n);
+               compute norm(I - Z'*Z) / (N * EPS)*/
+            resid2 = (float)check_orthogonality(datatype, Z, n, n);
+
             *residual = (double)max(resid1, resid2);
             break;
         }
@@ -113,17 +103,14 @@ void validate_syevd(char* jobz, char* uplo, integer n, void* A, void* A_test, vo
             resid1 = norm/(eps * norm_A * (float)n);
 
             /* Test 2
-               compute norm(I - Z*Z') / (N * EPS)*/
-            zlaset_("full", &n, &n, &z_zero, &z_one, I, &n);
-            zgemm_("N", "C", &n, &n, &n, &z_one, Z, &n, Z, &n, &z_n_one, I, &n);
-            norm = zlange_("1", &n, &n, I, &n, work);
-            resid2 = norm/(eps * (float)n);
+               compute norm(I - Z'*Z) / (N * EPS)*/
+            resid2 = check_orthogonality(datatype, Z, n, n);
+
             *residual = (double)max(resid1, resid2);
             break;
         }
     }
     free_matrix(lambda);
     free_matrix(zlambda);
-    free_matrix(I);
     free_matrix(Z);
 }

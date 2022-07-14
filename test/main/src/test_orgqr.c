@@ -34,93 +34,98 @@ void fla_test_orgqr_experiment(test_params_t *params,
     integer m, n, cs_A;
     void *A = NULL, *A_test = NULL, *T_test = NULL;
     void *work = NULL, *work_test = NULL;
-    void *Q = NULL, *Q_test = NULL, *R = NULL;
+    void *Q = NULL, *R = NULL, *R_test = NULL;
     integer lwork = -1, info = 0;
 
     /* Get input matrix dimensions.*/
     m = p_cur;
     n = q_cur;
     cs_A = m;
+    *time_min = 0.;
+    *perf = 0.;
+    *residual = params->lin_solver_paramslist[pci].solver_threshold;
 
-    /* Create input matrix parameters */
-    create_matrix(datatype, &A, m, n);
-
-    /* create tau vector */
-    create_vector(datatype, &T_test, min(m,n));
-
-    /* Initialize input matrix A with random numbers */
-    rand_matrix(datatype, A, m, n, cs_A);
-
-    /* Make a copy of input matrix A. This is required to validate the API functionality.*/
-    create_matrix(datatype, &A_test, m, n);
-    copy_matrix(datatype, "full", m, n, A, cs_A, A_test, cs_A);
-
-    /* create Q matrix to check orthogonality */
-    create_matrix(datatype, &Q, m, n);
-    create_matrix(datatype, &R, m, n);
-        reset_matrix(datatype, m, m, Q, m);
-        reset_matrix(datatype, m, n, R, cs_A);
-
-    create_matrix(datatype, &Q_test, m, n);
-
-    /* Make a workspace query the first time. This will provide us with
-       and ideal workspace size based on internal block size.*/
-    create_vector(datatype, &work, 1);
-
-    /* call to  geqrf API */
-    invoke_geqrf(datatype, &m, &n, NULL, &cs_A, NULL, work, &lwork, &info);
-
-    /* Get work size */
-    lwork = get_work_value( datatype, work );
-
-    /* Output buffers will be freshly allocated for each iterations, free up 
-       the current output buffers.*/ 
-    free_vector(work);
-
-    /* create work buffer */
-    create_matrix(datatype, &work, lwork, 1);
-
-    /* QR Factorisation on matrix A to generate Q and R */
-    invoke_geqrf(datatype, &m, &n, A_test, &cs_A, T_test, work, &lwork, &info);
-
-        /* Extract Q and R matrix elementary reflectors from the input/output matrix parameter A_test.*/
-    if(m <= n)
+    if(m >= n)
     {
-        copy_matrix(datatype, "Upper", m, n, A_test, m, R, m);
-        copy_matrix(datatype, "full", m, m, A_test, m, Q, m);
+        /* Create input matrix parameters */
+        create_matrix(datatype, &A, m, n);
+
+        /* create tau vector */
+        create_vector(datatype, &T_test, min(m,n));
+
+        /* Initialize input matrix A with random numbers */
+        rand_matrix(datatype, A, m, n, cs_A);
+
+        /* Make a copy of input matrix A. This is required to validate the API functionality.*/
+        create_matrix(datatype, &A_test, m, n);
+        copy_matrix(datatype, "full", m, n, A, cs_A, A_test, cs_A);
+
+        /* create Q matrix to check orthogonality */
+        create_matrix(datatype, &Q, m, n);
+        reset_matrix(datatype, m, n, Q, m);
+ 
+        /* Make a workspace query the first time. This will provide us with
+           and ideal workspace size based on internal block size.*/
+        create_vector(datatype, &work, 1);
+
+        /* call to  geqrf API */
+        invoke_geqrf(datatype, &m, &n, NULL, &cs_A, NULL, work, &lwork, &info);
+
+        /* Get work size */
+        lwork = get_work_value( datatype, work );
+
+        /* Output buffers will be freshly allocated for each iterations, free up
+           the current output buffers.*/
+        free_vector(work);
+
+        /* create work buffer */
+        create_matrix(datatype, &work, lwork, 1);
+        create_vector(datatype, &work_test, lwork);
+
+        /* QR Factorisation on matrix A to generate Q and R */
+        invoke_geqrf(datatype, &m, &n, A_test, &cs_A, T_test, work, &lwork, &info);
+
+        if(m == n)
+        {
+            create_matrix(datatype, &R, m, n);
+            reset_matrix(datatype, m, n, R, cs_A);
+            copy_matrix(datatype, "Upper", m, n, A_test, m, R, m);
+        }
+        else
+        {
+            create_matrix(datatype, &R, n, n);
+            create_matrix(datatype, &R_test, n, n);
+            reset_matrix(datatype, n, n, R, n);
+            reset_matrix(datatype, n, n, R_test, n);
+            copy_submatrix(datatype, A_test, m, n, R_test, n, n, 0, 0);
+            copy_matrix(datatype, "Upper", n, n, R_test, n, R, n);
+        } 
+        copy_matrix(datatype, "full", m, n, A_test, m, Q, m);
+
+        /*invoke orgqr API */
+        prepare_orgqr_run(m, n, Q, T_test, work_test, &lwork, datatype, n_repeats, time_min);
+
+        /* performance computation
+           (2/3)*n2*(3m - n) */
+        *perf = (double)((2.0 * m * n * n) - (( 2.0 / 3.0 ) * n * n * n )) / *time_min / FLOPS_PER_UNIT_PERF;
+        if(datatype == COMPLEX || datatype == DOUBLE_COMPLEX)
+            *perf *= 4.0;
+
+        /* output validation */
+        validate_orgqr(m, n, A, Q, R, work_test, datatype, residual);
+
+        /* Free up the buffers */
+        free_matrix(A);
+        free_matrix(A_test);
+        free_matrix(work);
+        free_vector(work_test);
+        free_vector(T_test);
+        free_matrix(Q);
+        free_matrix(R);
+        if(m > n)
+            free_matrix(R_test);
     }
-    else
-    {
-        copy_matrix(datatype, "Upper", n, n, A_test, m, R, m);
-        copy_matrix(datatype, "full", m, n, get_m_ptr(datatype, A_test, 1, 0, m), m, get_m_ptr(datatype, Q, 1, 0, m), m);
-    }
-    copy_matrix(datatype, "full", m, m, Q, m, Q_test, m);
-    create_vector(datatype,  &work_test, lwork);
-
-    /*invoke orgqr API */
-    prepare_orgqr_run(m, n, Q_test, T_test, work_test, &lwork, datatype, n_repeats, time_min);
-    copy_matrix(datatype, "full", m, m, Q_test, m, Q, m);
-
-    // performance computation
-    // (2/3)*n2*(3m - n)
-    *perf = (double)((2.0 * m * n * n) - (( 2.0 / 3.0 ) * n * n * n )) / *time_min / FLOPS_PER_UNIT_PERF;
-    if(datatype == COMPLEX || datatype == DOUBLE_COMPLEX)
-        *perf *= 4.0;
-
-    /* output validation */
-    validate_orgqr(m, n, A, Q, R, work_test, datatype, residual);
-
-    /* Free up the buffers */
-    free_matrix(A);
-    free_matrix(A_test);
-    free_matrix(work);
-    free_vector(work_test);
-    free_vector(T_test);
-    free_matrix(Q);
-    free_matrix(Q_test);
-    free_matrix(R);
 }
-
 
 void prepare_orgqr_run(integer m, integer n,
     void* A,
@@ -131,13 +136,12 @@ void prepare_orgqr_run(integer m, integer n,
     integer n_repeats,
     double* time_min_)
 {
-    integer cs_A, min_A, i;
+    integer cs_A, i;
     void *A_save = NULL;
     integer info = 0;
     double time_min = 1e9, exe_time;
 
     cs_A = m;
-    min_A = min(m, n);
 
     /* Make a copy of the input matrix A. Same input values will be passed in
        each itertaion.*/
@@ -153,7 +157,7 @@ void prepare_orgqr_run(integer m, integer n,
         exe_time = fla_test_clock();
 
         /* Call to  orgqr API */
-        invoke_orgqr(datatype, &m, &n, &min_A, A, &cs_A, T, work, lwork, &info);
+        invoke_orgqr(datatype, &m, &n, &n, A, &cs_A, T, work, lwork, &info);
 
         exe_time = fla_test_clock() - exe_time;
 
@@ -174,25 +178,25 @@ void invoke_orgqr(integer datatype, integer* m, integer* n, integer *min_A, void
     {
         case FLOAT:
         {
-            sorgqr_(m, m, min_A, a, m, tau, work, lwork, info);
+            sorgqr_(m, n, n, a, m, tau, work, lwork, info);
             break;
         }
 
         case DOUBLE:
         {
-            dorgqr_(m, m, min_A, a, m, tau, work, lwork, info);
+            dorgqr_(m, n, n, a, m, tau, work, lwork, info);
             break;
         }
 
         case COMPLEX:
         {
-            cungqr_(m, m, min_A, a, m, tau, work, lwork, info);
+            cungqr_(m, n, n, a, m, tau, work, lwork, info);
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            zungqr_(m, m, min_A, a, m, tau, work, lwork, info);
+            zungqr_(m, n, n, a, m, tau, work, lwork, info);
             break;
         }
     }

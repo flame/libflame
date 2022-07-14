@@ -10,11 +10,11 @@ void fla_test_geqp3_experiment(test_params_t *params, integer datatype, integer 
 void prepare_geqp3_run(integer m_A, integer n_A, void *A, integer *jpvt, void *T, integer datatype,
                        integer n_repeats, double* time_min_);
 void invoke_geqp3(integer datatype, integer* m, integer* n, void* a, integer* lda, integer *jpvt,
-                  void* tau, void* work, integer* lwork, void *rwork, integer* info);
+                  void* tau, void* work, integer* lwork, void* rwork, integer* info);
 
 void fla_test_geqp3(test_params_t *params)
 {
-    char* op_str = "QR factorization";
+    char* op_str = "QR factorization with column pivoting";
     char* front_str = "GEQP3";
 
     fla_test_output_info("--- %s ---\n", op_str);
@@ -74,7 +74,8 @@ void fla_test_geqp3_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* output validation */
-    // TODO
+    validate_geqp3(m, n, A, A_test, jpvt, T, datatype, residual);
+
 
     /* Free up the buffers */
     free_matrix(A);
