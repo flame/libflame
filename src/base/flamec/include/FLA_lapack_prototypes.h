@@ -198,22 +198,6 @@ FLA_Error FLA_Svdd_external( FLA_Svd_type jobz, FLA_Obj A, FLA_Obj s, FLA_Obj U,
 
 // --- external HIP prototypes -------------------------------------------------
 #ifdef FLA_ENABLE_HIP
-FLA_Error FLA_Chol_blk_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip );
-FLA_Error FLA_Chol_l_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
-FLA_Error FLA_Chol_u_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
-FLA_Error FLA_Chol_unb_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip );
-FLA_Error FLA_Chol_l_unb_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
-FLA_Error FLA_Chol_u_unb_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
-
-FLA_Error FLA_Trinv_blk_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Diag diag, FLA_Obj A, void* A_hip );
-FLA_Error FLA_Trinv_ln_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
-FLA_Error FLA_Trinv_lu_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
-FLA_Error FLA_Trinv_un_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
-FLA_Error FLA_Trinv_uu_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
-
-FLA_Error FLA_LU_piv_blk_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj p );
-FLA_Error FLA_LU_piv_copy_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj p, FLA_Obj U, void* U_hip );
-
 FLA_Error FLA_Apply_Q_blk_external_hip( rocblas_handle handle, FLA_Side side, FLA_Trans trans, FLA_Store storev, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip, FLA_Obj B, void* B_hip );
 FLA_Error FLA_Bidiag_apply_U_external_hip( rocblas_handle handle, FLA_Side side, FLA_Trans trans, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip, FLA_Obj B, void* B_hip );
 FLA_Error FLA_Bidiag_apply_V_external_hip( rocblas_handle handle, FLA_Side side, FLA_Trans trans, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip, FLA_Obj B, void* B_hip );
@@ -224,8 +208,16 @@ FLA_Error FLA_Bidiag_unb_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip,
 FLA_Error FLA_Bidiag_form_U_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
 FLA_Error FLA_Bidiag_form_V_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
 FLA_Error FLA_Bsvd_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj d, void* d_hip, FLA_Obj e, void* e_hip, FLA_Obj U, void* U_hip, FLA_Obj V, void* V_hip );
+FLA_Error FLA_Chol_blk_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip );
+FLA_Error FLA_Chol_l_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
+FLA_Error FLA_Chol_u_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
+FLA_Error FLA_Chol_unb_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip );
+FLA_Error FLA_Chol_l_unb_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
+FLA_Error FLA_Chol_u_unb_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
 FLA_Error FLA_Hevdd_external_hip( rocblas_handle handle, FLA_Evd_type jobz, FLA_Uplo uplo, FLA_Obj A, void* A_hip, FLA_Obj e, void* e_hip );
 FLA_Error FLA_Hevd_external_hip( rocblas_handle handle, FLA_Evd_type jobz, FLA_Uplo uplo, FLA_Obj A, void* A_hip, FLA_Obj e, void* e_hip );
+FLA_Error FLA_LU_piv_blk_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj p );
+FLA_Error FLA_LU_piv_copy_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj p, FLA_Obj U, void* U_hip );
 FLA_Error FLA_LQ_blk_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
 FLA_Error FLA_LQ_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
 FLA_Error FLA_LQ_unb_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
@@ -242,6 +234,11 @@ FLA_Error FLA_Tridiag_blk_ext_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj
 FLA_Error FLA_Tridiag_form_Q_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
 FLA_Error FLA_Tridiag_unb_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
 FLA_Error FLA_Tridiag_unb_ext_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip );
+FLA_Error FLA_Trinv_blk_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Diag diag, FLA_Obj A, void* A_hip );
+FLA_Error FLA_Trinv_ln_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
+FLA_Error FLA_Trinv_lu_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
+FLA_Error FLA_Trinv_un_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
+FLA_Error FLA_Trinv_uu_blk_ext_hip( rocblas_handle handle, FLA_Obj A, void* A_hip );
 #endif
 
 // --- check routine prototypes ------------------------------------------------
