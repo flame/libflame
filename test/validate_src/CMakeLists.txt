@@ -19,4 +19,5 @@ ${CMAKE_CURRENT_SOURCE_DIR}/validate_potrs.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_syevd.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_geevx.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_geev.c
+${CMAKE_CURRENT_SOURCE_DIR}/validate_geqp3.c
 )

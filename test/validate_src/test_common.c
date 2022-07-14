@@ -1035,3 +1035,131 @@ void create_block_diagonal_matrix(integer datatype,void* wr, void* wi, void* lam
     }
 }
 
+double check_orthogonality(integer datatype, void *A, integer m, integer n)
+{
+    void *I = NULL, *work = NULL;
+    double resid = 0.;
+    integer k;
+
+    /* Create Identity matrix to validate orthogonal property of matrix A*/
+    if(m <= n)
+    {
+        create_matrix(datatype, &I, m, m);
+        k = m;
+    }
+    else
+    {
+        create_matrix(datatype, &I, n, n);
+	k = n;
+    }
+    switch(datatype)
+    {
+        case FLOAT:
+        {
+            float eps, norm;
+            eps = slamch_("P");
+
+            slaset_("full", &k, &k, &s_zero, &s_one, I, &k);
+            sgemm_("T", "N", &k, &k, &m, &s_one, A, &m, A, &m, &s_n_one, I, &k);
+            norm = slange_("1", &k, &k, I, &k, work);
+            resid = (double)(norm / (eps * (float)k));
+            break;
+        }
+        case DOUBLE:
+        {
+            double eps, norm;
+            eps = dlamch_("P");
+
+            dlaset_("full", &k, &k, &d_zero, &d_one, I, &k);
+            dgemm_("T", "N", &k, &k, &m, &d_one, A, &m, A, &m, &d_n_one, I, &k);
+            norm = dlange_("1", &k, &k, I, &k, work);
+            resid = (double)(norm / (eps * (float)k));
+            break;
+        }
+        case COMPLEX:
+        {
+            float eps, norm;
+            eps = slamch_("P");
+
+            claset_("full", &k, &k, &c_zero, &c_one, I, &k);
+            cgemm_("C", "N", &k, &k, &m, &c_one, A, &m, A, &m, &c_n_one, I, &k);
+            norm = clange_("1", &k, &k, I, &k, work);
+            resid = (double)(norm / (eps * (float)k));
+            break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+            double eps, norm;
+            eps = dlamch_("P");
+
+            zlaset_("full", &k, &k, &z_zero, &z_one, I, &k);
+            zgemm_("C", "N", &k, &k, &m, &z_one, A, &m, A, &m, &z_n_one, I, &k);
+            norm = zlange_("1", &k, &k, I, &k, work);
+            resid = (double)(norm / (eps * (float)k));
+            break;
+        }
+    }
+    free_matrix(I);
+    return resid;
+}
+
+/* copy submatrix from a matrix
+ * A - original matirx with size m_A, n_A
+ * B - submatrix of A with size m_B, n_B
+ * srow, scol - start location of the original matrix from where the value has to be copied */
+
+void copy_submatrix(integer datatype, void *A, integer m_A, integer n_A, void *B, integer m_B, integer n_B, integer srow, integer scol)
+{
+    integer i, j, lda, ldb;
+
+    lda = m_A;
+    ldb = m_B;
+
+    switch(datatype)
+    {
+        case FLOAT:
+        {
+           float *float_A, *float_B;
+           for(i = scol, j = 0; j < n_B; i++, j++)
+           {
+               float_A = ((float*)A + (i * lda + srow));
+               float_B = ((float*)B + (j * ldb));
+               copy_vector(datatype, m_B, float_A, 1, float_B, 1); 
+           }
+           break;
+        }
+        case DOUBLE:
+        {
+           double *double_A, *double_B;
+           for(i = scol, j = 0; j < n_B; i++, j++)
+           {
+               double_A = ((double*)A + (i * lda + srow));
+               double_B = ((double*)B + (j * ldb));
+               copy_vector(datatype, m_B, double_A, 1, double_B, 1);
+           }
+           break;
+        }
+        case COMPLEX:
+        {
+           scomplex *scomplex_A, *scomplex_B;
+           for(i = scol, j = 0; j < n_B; i++, j++)
+           {
+               scomplex_A = ((scomplex*)A + (i * lda + srow));
+               scomplex_B = ((scomplex*)B + (j * ldb));
+               copy_vector(datatype, m_B, scomplex_A, 1, scomplex_B, 1); 
+           }
+           break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+           dcomplex *dcomplex_A, *dcomplex_B;
+           for(i = scol, j = 0; j < m_B; i++, j++)
+           {
+               dcomplex_A = ((dcomplex*)A + (i * lda + srow));
+               dcomplex_B = ((dcomplex*)B + (j * ldb));
+               copy_vector(datatype, m_B, dcomplex_A, 1, dcomplex_B, 1); 
+           }
+           break;
+        }
+    }
+}

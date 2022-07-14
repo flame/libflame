@@ -163,4 +163,9 @@ extern int dgesv_(integer* n, integer* nrhs, void* a, integer* lda, integer* ipi
 extern int cgesv_(integer* n, integer* nrhs, void* a, integer* lda, integer* ipiv, void* b, integer* ldb, integer* info);
 extern int zgesv_(integer* n, integer* nrhs, void* a, integer* lda, integer* ipiv, void* b, integer* ldb, integer* info);
 
+extern int slapmt_(integer* forwrd, integer* m, integer* n, void* x, integer* ldx, integer* k);
+extern int dlapmt_(integer* forwrd, integer* m, integer* n, void* x, integer* ldx, integer* k);
+extern int clapmt_(integer* forwrd, integer* m, integer* n, void* x, integer* ldx, integer* k);
+extern int zlapmt_(integer* forwrd, integer* m, integer* n, void* x, integer* ldx, integer* k);
+
 #endif  // TEST_PROTOTYPE_H

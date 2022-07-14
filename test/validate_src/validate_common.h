@@ -147,4 +147,13 @@ void validate_geev(char* jobvl,
     integer datatype,
     double* residual);
 
-#endif // TEST_LINEAR_SOLVERS_H
+void validate_geqp3(integer m_A,
+    integer n_A,
+    void *A,
+    void *A_test,
+    integer *jpvt,
+    void *T_test,
+    integer datatype,
+    double* residual);
+
+#endif // VALIDATE_COMMON_H
