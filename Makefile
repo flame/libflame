@@ -567,7 +567,7 @@ ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 ifeq ($(OS_NAME),Darwin)
 	$(LINKER) $(SOFLAGS) -o $@ -Wl,-force_load,$(LIBFLAME_A) $(LDFLAGS)
 else
-	$(LINKER) $(SOFLAGS) -o $@ -Wl,--whole-archive,$(LIBFLAME_A),--no-whole-archive $(LDFLAGS)
+	$(LINKER) $(SOFLAGS) -o $@ -Wl,--whole-archive $(LIBFLAME_A) -Wl,--no-whole-archive $(LDFLAGS)
 endif
 else
 #	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
@@ -581,7 +581,7 @@ ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
 ifeq ($(OS_NAME),Darwin)
 	@$(LINKER) $(SOFLAGS) -o $@ -Wl,-force_load,$(LIBFLAME_A) $(LDFLAGS)
 else
-	@$(LINKER) $(SOFLAGS) -o $@ -Wl,--whole-archive,$(LIBFLAME_A),--no-whole-archive $(LDFLAGS)
+	@$(LINKER) $(SOFLAGS) -o $@ -Wl,--whole-archive $(LIBFLAME_A) -Wl,--no-whole-archive $(LDFLAGS)
 endif
 else
 #	NOTE: Can't use $^ automatic variable as long as $(AR_OBJ_LIST_FILE) is in
