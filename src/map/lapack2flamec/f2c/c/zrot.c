@@ -1,7 +1,16 @@
 /* ../netlib/zrot.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
+
+/*
+    Copyright (c) 2022 Advanced Micro Devices, Inc.  All rights reserved.
+    Jul 18, 2021
+*/
+
 #include "FLA_f2c.h" /* > \brief \b ZROT applies a plane rotation with real cosine and complex sine to a pair of complex vectors. */
 #include "immintrin.h"
+
+#define FLA_ENABLE_AVX2_OPT 1
+
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
 /* http://www.netlib.org/lapack/explore-html/ */
@@ -90,6 +99,7 @@
 /* > \ingroup complex16OTHERauxiliary */
 /* ===================================================================== */
 /* Subroutine */
+#if FLA_ENABLE_AVX2_OPT 
 int zrot_(integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, integer *incy, doublereal *c__, doublecomplex *s)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
@@ -277,7 +287,6 @@ L20:
 
     for ( ; i__ <= i__1; ++i__)
     {
-        i__ = i__1;
         z__2.r = lc * cx[i__].r;
         z__2.i = lc * cx[i__].i; // , expr subst
         z__3.r = sr * cy[i__].r - si * cy[i__].i;
@@ -298,4 +307,139 @@ L20:
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
+#else /* FLA_ENABLE_AVX2_OPT  */
+int zrot_(integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, integer *incy, doublereal *c__, doublecomplex *s)
+{
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE
+    char buffer[256];
+    snprintf(buffer, 256,"zrot inputs: n %d, incx %d, incy %d",*n, *incx, *incy);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
+    /* System generated locals */
+    integer i__1;
+    doublecomplex z__1, z__2, z__3;
+    /* Local variables */
+    integer i__, ix, iy;
+    doublereal lc, sr, si;
+    /* -- LAPACK auxiliary routine (version 3.4.2) -- */
+    /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
+    /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
+    /* September 2012 */
+    /* .. Scalar Arguments .. */
+    /* .. */
+    /* .. Array Arguments .. */
+    /* .. */
+    /* ===================================================================== */
+    /* .. Local Scalars .. */
+    /* .. */
+    /* .. Intrinsic Functions .. */
+    /* .. */
+    /* .. Executable Statements .. */
+    /* Parameter adjustments */
+    --cy;
+    --cx;
+    /* Function Body */
+
+    if (*n <= 0)
+    {
+        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        return 0;
+    }
+    lc  = *c__;
+    sr = s->r;
+    si = s->i;
+
+    if (*incx == 1 && *incy == 1)
+    {
+        goto L20;
+    }
+    /* Code for unequal increments or equal increments not equal to 1 */
+    ix = 1;
+    iy = 1;
+    if (*incx < 0)
+    {
+        ix = (-(*n) + 1) * *incx + 1;
+    }
+    if (*incy < 0)
+    {
+        iy = (-(*n) + 1) * *incy + 1;
+    }
+
+    i__1 = *n;
+    if (*incx != *incy)
+    {
+        for (i__ = 1; i__ <= i__1; ++i__)
+        {
+            z__2.r = lc * cx[ix].r;
+            z__2.i = lc * cx[ix].i; // , expr subst
+            z__3.r = sr * cy[iy].r - si * cy[iy].i;
+            z__3.i = sr * cy[iy].i + si * cy[iy].r; // , expr subst
+            z__1.r = z__2.r + z__3.r;
+            z__1.i = z__2.i + z__3.i; // , expr subst
+
+            z__2.r = lc * cy[iy].r;
+            z__2.i = lc * cy[iy].i; // , expr subst
+            z__3.r = sr * cx[ix].r + si * cx[ix].i;
+            z__3.i = sr * cx[ix].i - si * cx[ix].r; // , expr subst
+
+            cy[iy].r = z__2.r - z__3.r;
+            cy[iy].i = z__2.i - z__3.i; // , expr subst
+            cx[ix].r = z__1.r;
+            cx[ix].i = z__1.i; // , expr subst
+            ix += *incx;
+            iy += *incy;
+        }
+    }
+    else
+    {
+        for ( i__ = 1; i__ <= i__1; ++i__)
+        {
+            z__2.r = lc * cx[ix].r;
+            z__2.i = lc * cx[ix].i; // , expr subst
+            z__3.r = sr * cy[ix].r - si * cy[ix].i;
+            z__3.i = sr * cy[ix].i + si * cy[ix].r; // , expr subst
+            z__1.r = z__2.r + z__3.r;
+            z__1.i = z__2.i + z__3.i; // , expr subst
+
+            z__2.r = lc * cy[ix].r;
+            z__2.i = lc * cy[ix].i; // , expr subst
+            z__3.r = sr * cx[ix].r + si * cx[ix].i;
+            z__3.i = sr * cx[ix].i - si * cx[ix].r; // , expr subst
+
+            cy[ix].r = z__2.r - z__3.r;
+            cy[ix].i = z__2.i - z__3.i; // , expr subst
+            cx[ix].r = z__1.r;
+            cx[ix].i = z__1.i; // , expr subst
+            ix += *incx;
+        }
+    }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    return 0;
+    /* Code for both increments equal to 1 */
+L20:
+    i__1 = *n;
+    for (i__ = 1; i__ <= i__1; ++i__)
+    {
+        z__2.r = lc * cx[i__].r;
+        z__2.i = lc * cx[i__].i; // , expr subst
+        z__3.r = sr * cy[i__].r - si * cy[i__].i;
+        z__3.i = sr * cy[i__].i + si * cy[i__].r; // , expr subst
+        z__1.r = z__2.r + z__3.r;
+        z__1.i = z__2.i + z__3.i; // , expr subst
+
+        z__2.r = lc * cy[i__].r;
+        z__2.i = lc * cy[i__].i; // , expr subst
+        z__3.r = sr * cx[i__].r + si * cx[i__].i;
+        z__3.i = sr * cx[i__].i - si * cx[i__].r; // , expr subst
+
+        cy[i__].r = z__2.r - z__3.r;
+        cy[i__].i = z__2.i - z__3.i; // , expr subst
+        cx[i__].r = z__1.r;
+        cx[i__].i = z__1.i; // , expr subst
+    }
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    return 0;
+}
+#endif /* FLA_ENABLE_AVX2_OPT  */
 /* zrot_ */
