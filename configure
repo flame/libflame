@@ -655,6 +655,7 @@ fla_c_debug_flags
 fla_enable_compiler_warnings
 fla_c_warning_flags
 fla_enable_compiler_optimizations
+fla_compiler_optimization_flags
 fla_c_opt_flags
 fla_enable_ldim_alignment
 fla_memory_alignment_boundary
@@ -7220,6 +7221,10 @@ if test "${enable_optimizations+set}" = set; then :
 		elif test "$enableval" = "yes" ; then
 
 						fla_enable_compiler_optimizations=yes
+						fla_compiler_optimization_flags=""
+		elif test "$enableval" != "" ; then
+						fla_enable_compiler_optimizations=yes
+						fla_compiler_optimization_flags=$enableval
 		else
 
 												as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_OPTIMIZATIONS!" "$LINENO" 5
@@ -7255,7 +7260,9 @@ $as_echo "no" >&6; }
 $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} optimization flags... " >&6; }
 
 	if test "$fla_enable_compiler_optimizations" == "yes" ; then
-
+		if test "$fla_compiler_optimization_flags" != "" ; then
+			fla_c_opt_flags=$fla_compiler_optimization_flags
+		else
 				case ${CC_VENDOR} in
 						gcc)
 				fla_c_opt_flags='-mtune=native -mavx2 -mfma -O3'
@@ -7284,7 +7291,8 @@ $as_echo_n "checking for (guessing) appropriate ${CC_VENDOR} optimization flags.
 						*)
 				fla_c_opt_flags=''
 			;;
-		esac
+			esac
+		fi
 	else
 
 				case ${CC_VENDOR} in
