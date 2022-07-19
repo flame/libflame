@@ -1478,7 +1478,7 @@ Optional Features:
   --enable-dynamic-build  Enable dynamic/shared library generation. (Disabled
                           by default.)
   --enable-ilp64          Enable ILP64 make int, long and pointer are 64 bit 
-                          lenth. (Enabled by default.)
+                          lenth. (Disabled by default.)
   --enable-max-arg-list-hack
                           Enable makefile code that archives object files from
                           a flat object directory, thus decreasing the
