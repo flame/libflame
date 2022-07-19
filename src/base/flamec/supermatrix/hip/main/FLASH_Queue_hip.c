@@ -21,7 +21,7 @@
 static FLA_Bool flash_queue_enabled_hip  = FALSE;
 static FLA_Bool flash_malloc_managed_hip = FALSE;
 static dim_t    flash_queue_hip_n_blocks = 128;
-static rocblas_handle handle;
+static rocblas_handle* handles;
 
 void FLASH_Queue_init_hip( void )
 /*----------------------------------------------------------------------------
@@ -30,9 +30,30 @@ void FLASH_Queue_init_hip( void )
 
 ----------------------------------------------------------------------------*/
 {
-   // XXX TODO it would be preferable to have one handle per device with a
-   // dedicated stream
-   rocblas_create_handle( &handle );
+
+   int device_count;
+   hipError_t err = hipGetDeviceCount( &device_count );
+   if ( err != hipSuccess )
+   {
+     fprintf( stderr, "Failure to get device count: %d\n", err);
+     return;
+   }
+
+   err = hipHostMalloc( (void**) &handles,
+                        sizeof( rocblas_handle ) * device_count,
+                        hipHostMallocDefault );
+   if (err != hipSuccess )
+   {
+     fprintf( stderr, "Failure to malloc rocBLAS handles: %d\n", err);
+     return;
+   }
+   for ( int i  = 0; i < device_count; i++ )
+   {
+      // initialize a rocBLAS handle
+      //hipSetDevice( i );
+      rocblas_create_handle( &(handles[i]) );
+      hipSetDevice( i );
+   }
 
    return;
 }
@@ -45,7 +66,20 @@ void FLASH_Queue_finalize_hip( void )
 
 ----------------------------------------------------------------------------*/
 {
-   rocblas_destroy_handle( handle );
+
+   int device_count;
+   hipError_t err = hipGetDeviceCount( &device_count );
+   if ( err != hipSuccess )
+   {
+     fprintf( stderr, "Failure to get device count: %d\n", err);
+     return;
+   }
+
+   for ( int i  = 0; i < device_count; i++ )
+   {
+      // destroy rocBLAS handle
+      rocblas_destroy_handle( handles[i] );
+   }
 
    return;
 }
@@ -253,8 +287,8 @@ FLA_Error FLASH_Queue_write_hip( FLA_Obj obj, void* buffer_hip )
      return FLA_SUCCESS; // HMM will take care of getting the memory over
    }
    // Write the contents of a block in main memory to HIP.
-   hipStream_t stream;
-   rocblas_get_stream( handle, &stream );
+   //hipStream_t stream;
+   //rocblas_get_stream( handle, &stream );
    const size_t count = FLA_Obj_elem_size( obj )
                           * FLA_Obj_col_stride( obj )
                           * FLA_Obj_width( obj );
@@ -262,7 +296,8 @@ FLA_Error FLASH_Queue_write_hip( FLA_Obj obj, void* buffer_hip )
                                           FLA_Obj_buffer_at_view( obj ),
                                           count,
                                           hipMemcpyHostToDevice,
-                                          stream );
+                                          //stream );
+					  (hipStream_t) 0 );
 
    if ( err != hipSuccess )
    {
@@ -276,19 +311,22 @@ FLA_Error FLASH_Queue_write_hip( FLA_Obj obj, void* buffer_hip )
 }
 
 
-FLA_Error FLASH_Queue_read_hip( FLA_Obj obj, void* buffer_hip )
+//FLA_Error FLASH_Queue_read_hip( FLA_Obj obj, void* buffer_hip )
+FLA_Error FLASH_Queue_read_hip( int thread, FLA_Obj obj, void* buffer_hip )
 /*----------------------------------------------------------------------------
 
    FLASH_Queue_read_hip
 
 ----------------------------------------------------------------------------*/
 {
+   hipSetDevice( thread );
    if ( flash_malloc_managed_hip )
    {
      // inject a stream sync on the rocBLAS stream to ensure completion
-     hipStream_t stream;
-     rocblas_get_stream( handle, &stream );
-     hipError_t err = hipStreamSynchronize( stream );
+     //hipStream_t stream;
+     //rocblas_get_stream( handle, &stream );
+     //hipError_t err = hipStreamSynchronize( stream );
+     hipError_t err = hipStreamSynchronize( (hipStream_t) 0 );
      if ( err != hipSuccess )
      {
        fprintf( stderr,
@@ -364,7 +402,8 @@ void FLASH_Queue_exec_task_hip( FLASH_Task* t,
       return;
 
    // Now "switch" between the various possible task functions.
-
+   FLASH_Queue_bind_hip( t->thread );
+   rocblas_handle handle = handles[t->thread];
    // FLA_Chol
    if ( t-> func == (void*) FLA_Chol_task )
    {
