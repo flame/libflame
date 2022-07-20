@@ -25,6 +25,8 @@ FLA_Bool       FLASH_Queue_get_enabled_hip( void );
 
 // --- helper functions -------------------------------------------------------
 
+FLA_Error      FLASH_Queue_available_devices_hip( int* device_count );
+
 FLA_Error      FLASH_Queue_enable_malloc_managed_hip( void );
 FLA_Error      FLASH_Queue_disable_malloc_managed_hip( void );
 FLA_Bool       FLASH_Queue_get_malloc_managed_enabled_hip( void );

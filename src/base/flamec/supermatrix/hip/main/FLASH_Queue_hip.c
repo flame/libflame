@@ -84,6 +84,25 @@ void FLASH_Queue_finalize_hip( void )
 }
 
 
+FLA_Error FLASH_Queue_available_devices_hip( int* device_count )
+/*----------------------------------------------------------------------------
+
+   FLASH_Queue_available_devices_hip
+
+----------------------------------------------------------------------------*/
+{
+
+   hipError_t err = hipGetDeviceCount( device_count );
+   if ( err != hipSuccess )
+   {
+     fprintf( stderr, "Failure to get device count: %d\n", err);
+     return FLA_FAILURE;
+   }
+
+   return FLA_SUCCESS;
+}
+
+
 FLA_Error FLASH_Queue_enable_hip( void )
 /*----------------------------------------------------------------------------
 

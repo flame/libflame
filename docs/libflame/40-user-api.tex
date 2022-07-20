@@ -5607,6 +5607,10 @@ parallel.
 }
 \notes{
 This routine does not immediately cause SuperMatrix to spawn any threads.
+
+If HIP is enabled, the choice for number of threads corresponds to the
+number of HIP devices to be used. It must therefore not be larger than the
+number of available devices in the system.
 }
 \begin{params}
 \parameter{\uint}{n\_threads}{An unsigned integer representing the number of threads to be requested upon parallel execution.}
