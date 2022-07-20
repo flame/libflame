@@ -50,9 +50,8 @@ void FLASH_Queue_init_hip( void )
    for ( int i  = 0; i < device_count; i++ )
    {
       // initialize a rocBLAS handle
-      //hipSetDevice( i );
-      rocblas_create_handle( &(handles[i]) );
       hipSetDevice( i );
+      rocblas_create_handle( &(handles[i]) );
    }
 
    return;
