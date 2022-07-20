@@ -223,6 +223,7 @@ int ssyevd_(char *jobz, char *uplo, integer *n, real *a, integer *lda, real *w, 
     integer llwork;
     real smlnum;
     logical lquery;
+    extern real sroundup_lwork(integer *);
     extern /* Subroutine */
     int sormtr_(char *, char *, char *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *), ssytrd_(char *, integer *, real *, integer *, real *, real *, real *, real *, integer *, integer *);
     /* -- LAPACK driver routine (version 3.7.0) -- */
@@ -303,7 +304,7 @@ int ssyevd_(char *jobz, char *uplo, integer *n, real *a, integer *lda, real *w, 
             lopt = max(i__1,i__2);
             liopt = liwmin;
         }
-        work[1] = (real) lopt;
+        work[1] = sroundup_lwork(&lopt);
         iwork[1] = liopt;
         if (*lwork < lwmin && ! lquery)
         {
@@ -394,11 +395,10 @@ int ssyevd_(char *jobz, char *uplo, integer *n, real *a, integer *lda, real *w, 
         r__1 = 1.f / sigma;
         sscal_(n, &r__1, &w[1], &c__1);
     }
-    work[1] = (real) lopt;
+    work[1] = sroundup_lwork(&lopt);
     iwork[1] = liopt;
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of SSYEVD */
 }
 /* ssyevd_ */
-
