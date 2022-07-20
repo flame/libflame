@@ -16,4 +16,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/slamch.c
 ${CMAKE_CURRENT_SOURCE_DIR}/xerbla.c
 ${CMAKE_CURRENT_SOURCE_DIR}/xerbla_array.c
 ${CMAKE_CURRENT_SOURCE_DIR}/aocl_set_progress.c
+${CMAKE_CURRENT_SOURCE_DIR}/droundup_lwork.c
+${CMAKE_CURRENT_SOURCE_DIR}/sroundup_lwork.c
 )

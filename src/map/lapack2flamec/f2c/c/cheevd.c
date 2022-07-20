@@ -255,6 +255,7 @@ int cheevd_(char *jobz, char *uplo, integer *n, complex *a, integer *lda, real *
     int cunmtr_(char *, char *, char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, integer *, integer *);
     integer llwork;
     real smlnum;
+    extern real sroundup_lwork(integer *);
     logical lquery;
     /* -- LAPACK driver routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -340,9 +341,9 @@ int cheevd_(char *jobz, char *uplo, integer *n, complex *a, integer *lda, real *
             lropt = lrwmin;
             liopt = liwmin;
         }
-        work[1].r = (real) lopt;
+        work[1].r = sroundup_lwork(&lopt);
         work[1].i = 0.f; // , expr subst
-        rwork[1] = (real) lropt;
+        rwork[1] = sroundup_lwork(&lropt);
         iwork[1] = liopt;
         if (*lwork < lwmin && ! lquery)
         {
@@ -451,9 +452,9 @@ int cheevd_(char *jobz, char *uplo, integer *n, complex *a, integer *lda, real *
         r__1 = 1.f / sigma;
         sscal_(&imax, &r__1, &w[1], &c__1);
     }
-    work[1].r = (real) lopt;
+    work[1].r = sroundup_lwork(&lopt);
     work[1].i = 0.f; // , expr subst
-    rwork[1] = (real) lropt;
+    rwork[1] = sroundup_lwork(&lropt);
     iwork[1] = liopt;
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
