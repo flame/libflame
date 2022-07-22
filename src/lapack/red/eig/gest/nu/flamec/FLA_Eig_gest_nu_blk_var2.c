@@ -22,10 +22,9 @@ FLA_Error FLA_Eig_gest_nu_blk_var2( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_ges
           BBL,   BBR,      B10, B11, B12,
                            B20, B21, B22;
 
-  FLA_Obj YL,    YR,       Y10, Y11, Y12;
-
-  FLA_Obj Y12_t,
-          Y12_b;
+  FLA_Obj YTL,   YTR,      Y00, Y01, Y02,
+          YBL,   YBR,      Y10, Y11, Y12,
+                           Y20, Y21, Y22;
 
   dim_t b;
 
@@ -35,7 +34,8 @@ FLA_Error FLA_Eig_gest_nu_blk_var2( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_ges
   FLA_Part_2x2( B,    &BTL, &BTR,
                       &BBL, &BBR,     0, 0, FLA_TL );
 
-  FLA_Part_1x2( Y,    &YL,  &YR,      0, FLA_LEFT );
+  FLA_Part_2x2( Y,    &YTL, &YTR,
+                      &YBL, &YBR,     0, 0, FLA_TL );
 
   while ( FLA_Obj_length( ATL ) < FLA_Obj_length( A ) ){
 
@@ -53,13 +53,13 @@ FLA_Error FLA_Eig_gest_nu_blk_var2( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_ges
                            BBL, /**/ BBR,       &B20, /**/ &B21, &B22,
                            b, b, FLA_BR );
 
-    FLA_Repart_1x2_to_1x3( YL,  /**/ YR,        &Y10, /**/ &Y11, &Y12,
-                           b, FLA_RIGHT );
+    FLA_Repart_2x2_to_3x3( YTL, /**/ YTR,       &Y00, /**/ &Y01, &Y02,
+                        /* ************* */   /* ******************** */
+                                                &Y10, /**/ &Y11, &Y12,
+                           YBL, /**/ YBR,       &Y20, /**/ &Y21, &Y22,
+                           b, b, FLA_BR );
 
     /*------------------------------------------------------------*/
-
-    FLA_Part_2x1( Y12,    &Y12_t,
-                          &Y12_b,    b, FLA_TOP );
 
     // A01 = A01 * triu( B11 )';
     FLA_Trmm_internal( FLA_RIGHT, FLA_UPPER_TRIANGULAR,
@@ -75,7 +75,7 @@ FLA_Error FLA_Eig_gest_nu_blk_var2( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_ges
 
     // Y12 = B12 * A22;
     FLA_Hemm_internal( FLA_RIGHT, FLA_UPPER_TRIANGULAR,
-                       FLA_ONE, A22, B12, FLA_ZERO, Y12_t,
+                       FLA_ONE, A22, B12, FLA_ZERO, Y12,
                        FLA_Cntl_sub_hemm( cntl ) );
 
     // A12 = triu( B11 ) * A12;
@@ -85,7 +85,7 @@ FLA_Error FLA_Eig_gest_nu_blk_var2( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_ges
                        FLA_Cntl_sub_trmm2( cntl ) );
 
     // A12 = A12 + 1/2 * Y12;
-    FLA_Axpy_internal( FLA_ONE_HALF, Y12_t, A12,
+    FLA_Axpy_internal( FLA_ONE_HALF, Y12, A12,
                        FLA_Cntl_sub_axpy1( cntl ) );
 
     // A11 = triu( B11 ) * A11 * triu( B11 )';
@@ -99,7 +99,7 @@ FLA_Error FLA_Eig_gest_nu_blk_var2( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_ges
                         FLA_Cntl_sub_her2k( cntl ) );
 
     // A12 = A12 + 1/2 * Y12;
-    FLA_Axpy_internal( FLA_ONE_HALF, Y12_t, A12,
+    FLA_Axpy_internal( FLA_ONE_HALF, Y12, A12,
                        FLA_Cntl_sub_axpy2( cntl ) );
 
     /*------------------------------------------------------------*/
@@ -116,8 +116,11 @@ FLA_Error FLA_Eig_gest_nu_blk_var2( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_ges
                               &BBL, /**/ &BBR,       B20, B21, /**/ B22,
                               FLA_TL );
 
-    FLA_Cont_with_1x3_to_1x2( &YL,  /**/ &YR,        Y10, Y11, /**/ Y12,
-                              FLA_LEFT );
+    FLA_Cont_with_3x3_to_2x2( &YTL, /**/ &YTR,       Y00, Y01, /**/ Y02,
+                                                     Y10, Y11, /**/ Y12,
+                            /* ************** */  /* ****************** */
+                              &YBL, /**/ &YBR,       Y20, Y21, /**/ Y22,
+                              FLA_TL );
   }
 
   return FLA_SUCCESS;
