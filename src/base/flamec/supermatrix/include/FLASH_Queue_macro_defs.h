@@ -271,7 +271,7 @@ also to create a macro for when it is not below to return an error code.
                           (void *) cntl, \
                           "Eig  ", \
                           FALSE, \
-                          FALSE, \
+                          TRUE, \
                           2, 0, 1, 2, \
                           inv, uplo, \
                           B, Y, A )
