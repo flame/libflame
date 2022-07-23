@@ -2238,9 +2238,13 @@ void FLASH_Queue_create_hip( int thread, void *arg )
    // Bind thread to a HIP device
    FLASH_Queue_bind_hip( thread );
 
-   // Allocate the memory on the HIP device for all the blocks a priori.
-   for ( i = 0; i < hip_n_blocks; i++ )
-      FLASH_Queue_alloc_hip( block_size, datatype, &(args->hip[thread * hip_n_blocks + i].buffer_hip) );
+   // Allocate the static block cache on device if managed memory is not used
+   if ( ! FLASH_Queue_get_malloc_managed_enabled_hip() )
+   {
+      // Allocate the memory on the HIP device for all the blocks a priori.
+      for ( i = 0; i < hip_n_blocks; i++ )
+         FLASH_Queue_alloc_hip( block_size, datatype, &(args->hip[thread * hip_n_blocks + i].buffer_hip) );
+   }
 
    return;
 }
@@ -2272,7 +2276,8 @@ void FLASH_Queue_destroy_hip( int thread, void *arg )
          FLASH_Queue_read_hip( hip_obj.obj, hip_obj.buffer_hip );
 
       // Free the memory on the HIP for all the blocks.
-      FLASH_Queue_free_hip( hip_obj.buffer_hip );
+      if ( ! FLASH_Queue_get_malloc_managed_enabled_hip() )
+         FLASH_Queue_free_hip( hip_obj.buffer_hip );
    }
 
    return;
