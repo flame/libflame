@@ -22,11 +22,9 @@ FLA_Error FLA_Eig_gest_il_blk_var5( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_ges
           BBL,   BBR,      B10, B11, B12,
                            B20, B21, B22;
 
-  FLA_Obj YT,              Y01,
-          YB,              Y11,
-                           Y21;
-
-  FLA_Obj Y21_l, Y21_r;
+  FLA_Obj YTL,   YTR,      Y00, Y01, Y02,
+          YBL,   YBR,      Y10, Y11, Y12,
+                           Y20, Y21, Y22;
 
   dim_t b;
 
@@ -36,8 +34,8 @@ FLA_Error FLA_Eig_gest_il_blk_var5( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_ges
   FLA_Part_2x2( B,    &BTL, &BTR,
                       &BBL, &BBR,     0, 0, FLA_TL );
 
-  FLA_Part_2x1( Y,    &YT, 
-                      &YB,            0, FLA_TOP );
+  FLA_Part_2x2( Y,    &YTL, &YTR,
+                      &YBL, &YBR,     0, 0, FLA_TL );
 
   while ( FLA_Obj_length( ATL ) < FLA_Obj_length( A ) ){
 
@@ -55,14 +53,13 @@ FLA_Error FLA_Eig_gest_il_blk_var5( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_ges
                            BBL, /**/ BBR,       &B20, /**/ &B21, &B22,
                            b, b, FLA_BR );
 
-    FLA_Repart_2x1_to_3x1( YT,                  &Y01, 
-                        /* ** */              /* *** */
-                                                &Y11, 
-                           YB,                  &Y21,        b, FLA_BOTTOM );
+    FLA_Repart_2x2_to_3x3( YTL, /**/ YTR,       &Y00, /**/ &Y01, &Y02,
+                        /* ************* */   /* ******************** */
+                                                &Y10, /**/ &Y11, &Y12,
+                           YBL, /**/ YBR,       &Y20, /**/ &Y21, &Y22,
+                           b, b, FLA_BR );
 
     /*------------------------------------------------------------*/
-
-    FLA_Part_1x2( Y21,    &Y21_l, &Y21_r,    b, FLA_LEFT );
 
     // A11 = inv( tril( B11 ) ) * A11 * inv( tril( B11 )' );
     FLA_Eig_gest_internal( FLA_INVERSE, FLA_LOWER_TRIANGULAR,
@@ -71,7 +68,7 @@ FLA_Error FLA_Eig_gest_il_blk_var5( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_ges
 
     // Y21 = B21 * A11;
     FLA_Hemm_internal( FLA_RIGHT, FLA_LOWER_TRIANGULAR,
-                       FLA_ONE, A11, B21, FLA_ZERO, Y21_l,
+                       FLA_ONE, A11, B21, FLA_ZERO, Y21,
                        FLA_Cntl_sub_hemm( cntl ) );
 
     // A21 = A21 * inv( tril( B11 )' );
@@ -81,7 +78,7 @@ FLA_Error FLA_Eig_gest_il_blk_var5( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_ges
                        FLA_Cntl_sub_trsm1( cntl ) );
 
     // A21 = A21 - 1/2 * Y21;
-    FLA_Axpy_internal( FLA_MINUS_ONE_HALF, Y21_l, A21,
+    FLA_Axpy_internal( FLA_MINUS_ONE_HALF, Y21, A21,
                        FLA_Cntl_sub_axpy1( cntl ) );
 
     // A22 = A22 - A21 * B21' - B21 * A21';
@@ -90,7 +87,7 @@ FLA_Error FLA_Eig_gest_il_blk_var5( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_ges
                         FLA_Cntl_sub_her2k( cntl ) );
 
     // A21 = A21 - 1/2 * Y21;
-    FLA_Axpy_internal( FLA_MINUS_ONE_HALF, Y21_l, A21,
+    FLA_Axpy_internal( FLA_MINUS_ONE_HALF, Y21, A21,
                        FLA_Cntl_sub_axpy2( cntl ) );
 
     // A21 = inv( tril( B22 ) ) * A21;
@@ -113,10 +110,11 @@ FLA_Error FLA_Eig_gest_il_blk_var5( FLA_Obj A, FLA_Obj Y, FLA_Obj B, fla_eig_ges
                               &BBL, /**/ &BBR,       B20, B21, /**/ B22,
                               FLA_TL );
 
-    FLA_Cont_with_3x1_to_2x1( &YT,                   Y01, 
-                                                     Y11, 
-                            /* ** */              /* *** */
-                              &YB,                   Y21,     FLA_TOP );
+    FLA_Cont_with_3x3_to_2x2( &YTL, /**/ &YTR,       Y00, Y01, /**/ Y02,
+                                                     Y10, Y11, /**/ Y12,
+                            /* ************** */  /* ****************** */
+                              &YBL, /**/ &YBR,       Y20, Y21, /**/ Y22,
+                              FLA_TL );
   }
 
   return FLA_SUCCESS;
