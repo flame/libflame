@@ -25,6 +25,8 @@ FLA_Bool       FLASH_Queue_get_enabled_hip( void );
 
 // --- helper functions -------------------------------------------------------
 
+FLA_Error      FLASH_Queue_available_devices_hip( int* device_count );
+
 FLA_Error      FLASH_Queue_enable_malloc_managed_hip( void );
 FLA_Error      FLASH_Queue_disable_malloc_managed_hip( void );
 FLA_Bool       FLASH_Queue_get_malloc_managed_enabled_hip( void );
@@ -36,7 +38,7 @@ FLA_Error      FLASH_Queue_bind_hip( int thread );
 FLA_Error      FLASH_Queue_alloc_hip( dim_t size, FLA_Datatype datatype, void** buffer_hip );
 FLA_Error      FLASH_Queue_free_hip( void* buffer_hip );
 FLA_Error      FLASH_Queue_write_hip( FLA_Obj obj, void* buffer_hip );
-FLA_Error      FLASH_Queue_read_hip( FLA_Obj obj, void* buffer_hip );
+FLA_Error      FLASH_Queue_read_hip( int thread, FLA_Obj obj, void* buffer_hip );
 
 void           FLASH_Queue_exec_task_hip( FLASH_Task* t, void** input_arg, void** output_arg );
 

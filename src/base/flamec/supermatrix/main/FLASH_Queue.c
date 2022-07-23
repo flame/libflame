@@ -216,6 +216,23 @@ void FLASH_Queue_set_num_threads( unsigned int n_threads )
 
 #endif
 
+#ifdef FLA_ENABLE_HIP
+   // check number of devices to ensure number of threads specified is <= it
+   if ( FLASH_Queue_get_enabled_hip() )
+   {
+      int no_devices = 0;
+      e_val = FLASH_Queue_available_devices_hip( &no_devices );
+      FLA_Check_error_code( e_val );
+      if ( no_devices > n_threads )
+      {
+         fprintf( stderr, "Requesting %d threads but only %d HIP devices available.\n",
+                  n_threads,
+                  no_devices );
+         FLA_Check_error_code( FLA_FAILURE );
+      }
+   }
+#endif
+
    return;
 }
 

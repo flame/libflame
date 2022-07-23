@@ -2273,8 +2273,7 @@ void FLASH_Queue_destroy_hip( int thread, void *arg )
 
       // Flush the blocks that are dirty.
       if ( hip_obj.obj.base != NULL && !hip_obj.clean )
-         FLASH_Queue_read_hip( hip_obj.obj, hip_obj.buffer_hip );
-
+         FLASH_Queue_read_hip( thread, hip_obj.obj, hip_obj.buffer_hip );
       // Free the memory on the HIP for all the blocks.
       if ( ! FLASH_Queue_get_malloc_managed_enabled_hip() )
          FLASH_Queue_free_hip( hip_obj.buffer_hip );
@@ -2762,8 +2761,7 @@ void FLASH_Queue_update_block_hip( FLA_Obj obj,
    // Evict and flush the LRU dirty block.
    if ( evict )
    {
-      FLASH_Queue_read_hip( evict_obj.obj, evict_obj.buffer_hip );
-
+      FLASH_Queue_read_hip( thread, evict_obj.obj, evict_obj.buffer_hip );
 #ifdef FLA_ENABLE_MULTITHREADING
       FLA_Lock_acquire( &(args->hip_lock[thread]) ); // G ***
 #endif
@@ -2931,7 +2929,7 @@ void FLASH_Queue_flush_block_hip( FLA_Obj obj, int thread, void *arg )
       return;
 
    // Flush the block outside the critical section.
-   FLASH_Queue_read_hip( hip_obj.obj, hip_obj.buffer_hip );
+   FLASH_Queue_read_hip( thread, hip_obj.obj, hip_obj.buffer_hip );
 
 #ifdef FLA_ENABLE_MULTITHREADING
    FLA_Lock_acquire( &(args->hip_lock[thread]) ); // G ***
@@ -3004,7 +3002,7 @@ void FLASH_Queue_flush_hip( int thread, void *arg )
    for ( i = 0; i < n_transfer; i++ )
    {
       hip_obj = args->hip_log[thread * hip_n_blocks + i];
-      FLASH_Queue_read_hip( hip_obj.obj, hip_obj.buffer_hip );
+      FLASH_Queue_read_hip( thread, hip_obj.obj, hip_obj.buffer_hip );
    }
 
 #ifdef FLA_ENABLE_MULTITHREADING
