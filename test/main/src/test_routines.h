@@ -3,7 +3,7 @@
 */
 
 /* Update test api count */
-#define test_api_count 17
+#define test_api_count 18
 
 
 /* Test API function declaration */
@@ -24,6 +24,7 @@ void fla_test_syevd(test_params_t *params);
 void fla_test_gesvd(test_params_t *params);
 void fla_test_ggevx(test_params_t *params);
 void fla_test_gesv(test_params_t* params);
+void fla_test_ggev(test_params_t *params);
 
 /* Add test api function call entry below */
 OPERATIONS API_test_functions[] =
@@ -44,5 +45,6 @@ OPERATIONS API_test_functions[] =
     {"syevd"               , fla_test_syevd},
     {"gesvd"               , fla_test_gesvd},
     {"ggevx"               , fla_test_ggevx},
-    {"gesv"                , fla_test_gesv}
+    {"gesv"                , fla_test_gesv},
+    {"ggev"                , fla_test_ggev}
 };

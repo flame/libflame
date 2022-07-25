@@ -106,4 +106,7 @@ void set_transpose(integer datatype, char *uplo, char *trans_A, char *trans_B);
 /* Create diagonal matrix by copying elements from vector to matrix */
 void diagonalize_vector(integer datatype, void* s, void* sigma, integer m, integer n, integer LDA);
 
+/* To calculate matrix multiplication with real and complex datatypes */
+void scgemv(char TRANS, integer real_alpha, integer m, integer n, scomplex* alpha, float* a, integer lda, scomplex* v, integer incv, float beta, scomplex* c, integer inc);
+
 #endif // TEST_COMMON_H

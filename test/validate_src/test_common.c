@@ -1163,3 +1163,68 @@ void copy_submatrix(integer datatype, void *A, integer m_A, integer n_A, void *B
         }
     }
 }
+
+void scgemv(char TRANS, integer real_alpha, integer m, integer n, scomplex* alpha, float* a, integer lda, scomplex* v, integer incv, float beta, scomplex* c, integer inc)
+{
+    integer i, j;
+    float real, imag;
+    float rl, ig;
+    float alphar;
+    void *A = NULL;
+
+    create_matrix(FLOAT, &A, n, n);
+
+    if (TRANS == 'T')
+    {
+        /* Transpose of a matrix A */
+        for (i = 0; i < n; i++)
+        {
+            for (j = 0; j < n; j++)
+            {
+                ((float*)A)[i * lda + j] = a[i + j * lda];
+            }
+        }
+    }
+    else
+    {
+        copy_matrix(FLOAT, "full", n, n, a, n, A, n);
+    }
+
+    if (real_alpha)
+    {
+        alphar = alpha->real;
+        for (i = 0; i < m; i++)
+        {
+            real = 0;
+            imag = 0;
+            for (j = 0; j < n; j++)
+            {
+                real = real + ((float*)A)[i + j * lda] * v[j * incv].real;
+                imag = imag + ((float*)A)[i + j * lda] * v[j * incv].imag;
+            }
+            c[i * inc].real = alphar * real + beta * c[i * inc].real;
+            c[i * inc].imag = alphar * imag + beta * c[i * inc].imag;
+        }
+    }
+    else
+    {
+        for (i = 0; i < m; i++)
+        {
+            real = 0;
+            imag = 0;
+            for (j = 0; j < n; j++)
+            {
+                real = real + ((float*)A)[i + j * lda] * v[j * incv].real;
+                imag = imag + ((float*)A)[i + j * lda] * v[j * incv].imag;
+            }
+
+            rl = alpha->real * real - alpha->imag * imag;
+            ig = alpha->real * imag + alpha->imag * real;
+
+            c[i * inc].real = rl + beta * c[i * inc].real;
+            c[i * inc].imag = ig + beta * c[i * inc].imag;
+        }
+    }
+
+    free_matrix(A);
+}

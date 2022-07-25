@@ -10,82 +10,91 @@
 
 void validate_getrs(char *trans,
     integer m,
-    integer n,
+    integer nrhs,
     void* A,
     void* B,
     void* X,
     integer datatype,
     double* residual)
 {
+    void* work = NULL;
+    integer ldx, ldb;
+
+    ldx = m;
+    ldb = m;
+    /* Creating work buffer */
+    create_vector(datatype, &work, 2 * m);
+
     switch (datatype)
     {
-        case FLOAT:
-        {
-            float norm_b, norm, eps, resid;
-
-            /* Test 1 */
-            norm_b = snrm2_(&m, B, &i_one);
-            eps = slamch_("P");
-
-            /* Compute Ax-b */
-            sgemv_(trans, &m, &m, &s_one, A, &m, X, &i_one, &s_n_one, B, &i_one);
-            norm = snrm2_(&m, B, &i_one);
-
-            resid = norm / (eps * norm_b * (float)m);
-
-            *residual = (double)resid;
-            break;
-        }
-        case DOUBLE:
-        {
-            double norm_b, norm, eps, resid;
-
-            /* Test 1 */
-            norm_b = dnrm2_(&m, B, &i_one);
-            eps = dlamch_("P");
-
-            /* Compute Ax-b */
-            dgemv_(trans, &m, &m, &d_one, A, &m, X, &i_one, &d_n_one, B, &i_one);
-            norm = dnrm2_(&m, B, &i_one);
-
-            resid = norm / (eps * norm_b * (double)m);
-
-            *residual = (double)resid;
-            break;
-        }
-        case COMPLEX:
-        {
-            float norm_b, norm, eps, resid;
-
-            /* Test 1 */
-            norm_b = scnrm2_(&m, B, &i_one);
-            eps = slamch_("P");
-
-            /* Compute Ax-b */
-            cgemv_(trans, &m, &m, &c_one, A, &m, X, &i_one, &c_n_one, B, &i_one);
-            norm = scnrm2_(&m, B, &i_one);
-
-            resid = norm / (eps * norm_b * (float)m);
-
-            *residual = (double)resid;
-            break;
-        }
-        case DOUBLE_COMPLEX:
-        {
-            double norm_b, norm, eps, resid;
-
-            /* Test 1 */
-            norm_b = dznrm2_(&m, B, &i_one);
-            eps = dlamch_("P");
-
-            /* Compute Ax-b */
-            zgemv_(trans, &m, &m, &z_one, A, &m, X, &i_one, &z_n_one, B, &i_one);
-            norm = dznrm2_(&m, B, &i_one);
-
-            resid = norm / (eps * norm_b * (double)m);
-
-            *residual = (double)resid;
-            break;
-        }
+         case FLOAT:
+         {
+             float norm_b, norm, eps, resid;
+         
+             /* Test 1 */
+             norm_b = slange_("1", &m, &nrhs, B, &nrhs, work);
+             eps = slamch_("P");
+         
+             /* Compute AX-B */
+             sgemm_(trans, "N", &m, &nrhs, &m, &s_one, A, &m, X, &ldx, &s_n_one, B, &ldb);
+             norm = slange_("1", &m, &nrhs, B, &nrhs, work);
+         
+             resid = norm / (eps * norm_b * (float)m);
+         
+             *residual = (double)resid;
+             break;
+         }
+         case DOUBLE:
+         {
+             double norm_b, norm, eps, resid;
+         
+             /* Test 1 */
+             norm_b = dlange_("1", &m, &nrhs, B, &nrhs, work);
+             eps = dlamch_("P");
+         
+             /* Compute AX-B */
+             dgemm_(trans, "N", &m, &nrhs, &m, &d_one, A, &m, X, &ldx, &d_n_one, B, &ldb);
+             norm = dlange_("1", &m, &nrhs, B, &nrhs, work);
+         
+             resid = norm / (eps * norm_b * (double)m);
+         
+             *residual = (double)resid;
+             break;
+         }
+         case COMPLEX:
+         {
+             float norm_b, norm, eps, resid;
+         
+             /* Test 1 */
+             norm_b = clange_("1", &m, &nrhs, B, &nrhs, work);
+             eps = slamch_("P");
+         
+             /* Compute AX-B */
+             cgemm_(trans, "N", &m, &nrhs, &m, &c_one, A, &m, X, &ldx, &c_n_one, B, &ldb);
+             norm = clange_("1", &m, &nrhs, B, &nrhs, work);
+         
+             resid = norm / (eps * norm_b * (float)m);
+         
+             *residual = (double)resid;
+             break;
+         }
+         case DOUBLE_COMPLEX:
+         {
+             double norm_b, norm, eps, resid;
+         
+             /* Test 1 */
+             norm_b = zlange_("1", &m, &nrhs, B, &nrhs, work);
+             eps = dlamch_("P");
+         
+             /* Compute AX-B */
+             zgemm_(trans, "N", &m, &nrhs, &m, &z_one, A, &m, X, &ldx, &z_n_one, B, &ldb);
+             norm = zlange_("1", &m, &nrhs, B, &nrhs, work);
+         
+             resid = norm / (eps * norm_b * (double)m);
+         
+             *residual = (double)resid;
+             break;
+         }
     }
+    free_vector(work);
 }
