@@ -9,6 +9,9 @@
 extern void invoke_getrf(integer datatype, integer* m, integer* n, void* a, integer* lda, integer* ipiv, integer* info);
 extern void invoke_potrf(char* uplo, integer datatype, integer* m, void* a, integer* lda, integer* info);
 extern void invoke_geqrf(integer datatype, integer* m, integer* n, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
+/*symmetric tridiagonal matrix creation using sytrd API */
+extern void invoke_sytrd(integer datatype, char* uplo, char compz, integer n, void *A, integer lda, void *D, void *E, integer info);
+
 /* --------BLAS APIs -------- */
 
 extern int saxpy_(integer *n, void *a, void *x, integer *incx, void *y, integer *incy);
@@ -175,5 +178,23 @@ extern int dggev_(char* jobvl, char* jobvr, integer* n, void* a, integer* lda, v
 extern int sggev_(char* jobvl, char* jobvr, integer* n, void* a, integer* lda, void* b, integer* ldb, void* alphar, void* alphai, void* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, void* work, integer* lwork, integer* info);
 extern int cggev_(char* jobvl, char* jobvr, integer* n, void* a, integer* lda, void* b, integer* ldb, void* alpha, void* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, void* work, integer* lwork, void* rwork, integer* info);
 extern int zggev_(char* jobvl, char* jobvr, integer* n, void* a, integer* lda, void* b, integer* ldb, void* alpha, void* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, void* work, integer* lwork, void* rwork, integer* info);
+
+extern int sorgtr_(char* uplo, integer* m, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
+extern int dorgtr_(char* uplo, integer* m, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
+extern int cungtr_(char* uplo, integer* m, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
+extern int zungtr_(char* uplo, integer* m, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
+
+extern int ssteqr_(char* compz, integer* n, void* d, void* e, void* z, integer* ldz, void* work, integer* info);
+extern int dsteqr_(char* compz, integer* n, void* d, void* e, void* z, integer* ldz, void* work, integer* info);
+extern int csteqr_(char* compz, integer* n, void* d, void* e, void* z, integer* ldz, void* work, integer* info);
+extern int zsteqr_(char* compz, integer* n, void* d, void* e, void* z, integer* ldz, void* work, integer* info);
+
+extern int sstevd_(char* jobz, integer* n, void* d, void* e, void* z, integer* ldz, void* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
+extern int dstevd_(char* jobz, integer* n, void* d, void* e, void* z, integer* ldz, void* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
+
+extern int ssytrd_(char* uplo, integer* n, void* a, integer* lda, void* d, void* e, void* tau, void* work, integer* lwork, integer* info);
+extern int dsytrd_(char* uplo, integer* n, void* a, integer* lda, void* d, void* e, void* tau, void* work, integer* lwork, integer* info);
+extern int chetrd_(char* uplo, integer* n, void* a, integer* lda, void* d, void* e, void* tau, void* work, integer* lwork, integer* info);
+extern int zhetrd_(char* uplo, integer* n, void* a, integer* lda, void* d, void* e, void* tau, void* work, integer* lwork, integer* info);
 
 #endif  // TEST_PROTOTYPE_H

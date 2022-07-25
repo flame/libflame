@@ -1228,3 +1228,271 @@ void scgemv(char TRANS, integer real_alpha, integer m, integer n, scomplex* alph
 
     free_matrix(A);
 }
+
+/* Get realtype of given datatype.*/
+integer get_realtype(integer datatype)
+{
+    if(datatype == FLOAT || datatype == COMPLEX)
+    {
+        return FLOAT;
+    }
+    else if(datatype == DOUBLE || datatype == DOUBLE_COMPLEX)
+    {
+        return DOUBLE;
+    }
+    else
+    {
+        fprintf( stderr, "Invalid datatype is passed.\n");
+        return -1;
+    }
+}
+
+/* Initialize symmetric tridiagonal matrix with random values.
+   Initializes random values only for diagonal and off diagonal elements.*/
+void rand_sym_tridiag_matrix(integer datatype, void *A, integer M, integer N, integer LDA)
+{
+    integer i, j;
+
+    reset_matrix(datatype, M, N, A, LDA);
+
+    switch( datatype )
+    {
+        case FLOAT:
+        {
+            for( i = 0; i < N; i++)
+            {
+                for( j = i; j <= i+1; j++ )
+                {
+                    if(j < N)
+                    {
+                        ((float *)A)[i * LDA + j] = SRAND();
+                        ((float *)A)[j * LDA + i] = ((float *)A)[i * LDA + j];
+                    }
+                }
+            }
+            break;
+        }
+        case DOUBLE:
+        {
+            for( i = 0; i < N; i++ )
+            {
+                for( j = i; j <= i+1; j++ )
+                {
+                    if(j < N)
+                    {
+                        ((double *)A)[i * LDA + j] = DRAND();
+                        ((double *)A)[j * LDA + i] = ((double *)A)[i * LDA + j];
+                    }
+                }
+            }
+            break;
+        }
+        case COMPLEX:
+        {
+            for( i = 0; i < N; i++ )
+            {
+                for( j = i; j <= i+1; j++ )
+                {
+                    if(j < N)
+                    {
+                        ((scomplex *)A)[i * LDA + j].real = SRAND();
+                        ((scomplex *)A)[i * LDA + j].imag = SRAND();
+                        ((scomplex *)A)[j * LDA + i].real = ((scomplex *)A)[i * LDA + j].real;
+                        ((scomplex *)A)[j * LDA + i].imag = ((scomplex *)A)[i * LDA + j].imag;
+                    }
+                }
+            }
+            break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+            for( i = 0; i < N; i++ )
+            {
+                for( j = i; j <= i+1; j++ )
+                {
+                    if(j < N)
+                    {
+                        ((dcomplex *)A)[i * LDA + j].real = DRAND();
+                        ((dcomplex *)A)[i * LDA + j].imag = DRAND();
+                        ((dcomplex *)A)[j * LDA + i].real = ((dcomplex *)A)[i * LDA + j].real;
+                        ((dcomplex *)A)[j * LDA + i].imag = ((dcomplex *)A)[i * LDA + j].imag;
+                    }
+                }
+            }
+            break;
+        }
+    }
+}
+
+/* Get diagonal elements of matrix A into Diag vector. */
+void get_diagonal(integer datatype, void *A, integer m, integer n, integer lda, void *Diag)
+{
+    integer i, j;
+    switch( datatype )
+    {
+        case FLOAT:
+        {
+            for( i = 0, j = 0; i < m; i++, j++)
+            {
+                ((float *)Diag)[i] = ((float *)A)[i * lda + j];
+            }
+            break;
+        }
+        case DOUBLE:
+        {
+            for( i = 0, j = 0; i < m; i++, j++)
+            {
+                ((double *)Diag)[i] = ((double *)A)[i * lda + j];
+            }
+            break;
+        }
+        case COMPLEX:
+        {
+            for( i = 0, j = 0; i < m; i++, j++)
+            {
+                ((scomplex *)Diag)[i].real = ((scomplex *)A)[i * lda + j].real;
+                ((scomplex *)Diag)[i].imag = ((scomplex *)A)[i * lda + j].imag;
+            }
+            break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+            for( i = 0, j = 0; i < m; i++, j++)
+            {
+                ((dcomplex *)Diag)[i].real = ((dcomplex *)A)[i * lda + j].real;
+                ((dcomplex *)Diag)[i].imag = ((dcomplex *)A)[i * lda + j].imag;
+            }
+            break;
+        }
+    }
+}
+
+/* Get subdiagonal elements of matrix A into Subdiag vector.*/
+void get_subdiagonal(integer datatype, void *A, integer m, integer n, integer lda, void *Subdiag)
+{
+    integer i, j;
+    switch( datatype )
+    {
+        case FLOAT:
+        {
+            for( i = 1, j = 0; i < m; i++, j++)
+            {
+                ((float *)Subdiag)[j] = ((float *)A)[i * lda + j];
+            }
+            break;
+        }
+        case DOUBLE:
+        {
+            for( i = 1, j = 0; i < m; i++, j++)
+            {
+                ((double *)Subdiag)[j] = ((double *)A)[i * lda + j];
+            }
+            break;
+        }
+        case COMPLEX:
+        {
+            for( i = 1, j = 0; i < m; i++, j++)
+            {
+                ((scomplex *)Subdiag)[j].real = ((scomplex *)A)[i * lda + j].real;
+                ((scomplex *)Subdiag)[j].imag = ((scomplex *)A)[i * lda + j].imag;
+            }
+            break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+            for( i = 1, j = 0; i < m; i++, j++)
+            {
+                ((dcomplex *)Subdiag)[j].real = ((dcomplex *)A)[i * lda + j].real;
+                ((dcomplex *)Subdiag)[j].imag = ((dcomplex *)A)[i * lda + j].imag;
+            }
+            break;
+        }
+    }
+}
+
+void copy_sym_tridiag_matrix(integer datatype, void *D, void *E, integer M, integer N, void *B, integer LDA)
+{
+    integer i, j;
+
+    reset_matrix(datatype, M, N, B, LDA);
+
+    switch( datatype )
+    {
+        case FLOAT:
+        {
+            for( i = 0; i < N; i++)
+            {
+                for( j = i; j <= i+1 && j < N; j++ )
+                {
+                    if(j == i)
+                    {
+                        ((float *)B)[i * LDA + j] = ((float *)D)[i];
+                    }
+                    else
+                    {
+                        ((float *)B)[i * LDA + j] = ((float *)E)[i];
+                        ((float *)B)[j * LDA + i] = ((float *)E)[i];
+                    }
+                }
+            }
+            break;
+        }
+        case DOUBLE:
+        {
+            for( i = 0; i < N; i++ )
+            {
+                for( j = i; j <= i+1 && j < N; j++ )
+                {
+                    if(j == i)
+                    {
+                        ((double *)B)[i * LDA + j] = ((double *)D)[i];
+                    }
+                    else
+                    {
+                        ((double *)B)[i * LDA + j] = ((double *)E)[i];
+                        ((double *)B)[j * LDA + i] = ((double *)E)[i];
+                    }
+                }
+            }
+            break;
+        }
+        case COMPLEX:
+        {
+            for( i = 0; i < N; i++ )
+            {
+                for( j = i; j <= i+1 && j < N; j++ )
+                {
+                    if(j == i)
+                    {
+                        ((scomplex *)B)[i * LDA + j].real = ((float *)D)[i];
+                    }
+                    else
+                    {
+                        ((scomplex *)B)[i * LDA + j].real = ((float *)E)[i];
+                        ((scomplex *)B)[j * LDA + i].real = ((float *)E)[i];
+                    }
+                }
+            }
+            break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+            for( i = 0; i < N; i++ )
+            {
+                for( j = i; j <= i+1 && j < N; j++ )
+                {
+                    if(j == i)
+                    {
+                        ((dcomplex *)B)[i * LDA + j].real = ((double *)D)[i];
+                    }
+                    else
+                    {
+                        ((dcomplex *)B)[i * LDA + j].real = ((double *)E)[i];
+                        ((dcomplex *)B)[j * LDA + i].real = ((double *)E)[i];
+                    }
+                }
+            }
+            break;
+        }
+    }
+}
