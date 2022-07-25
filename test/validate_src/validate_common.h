@@ -107,7 +107,6 @@ void validate_potrs(char *uplo,
     double* residual);
 
 void validate_syevd(char* jobz,
-    char* uplo,
     integer n,
     void* A,
     void* A_test,
@@ -197,4 +196,5 @@ void validate_ggevx(char* balanc,
     integer ldvr,
     integer datatype, 
     double *residual);
+
 #endif // VALIDATE_COMMON_H

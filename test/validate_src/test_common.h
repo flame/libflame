@@ -73,6 +73,7 @@ void copy_realtype_vector(integer datatype, integer M, void *A, integer LDA, voi
 /* matrix functions*/
 void create_matrix(integer datatype, void **A, integer M, integer N);
 void create_realtype_matrix(integer datatype, void **A, integer M, integer N);
+integer get_realtype(integer datatype);
 void create_block_diagonal_matrix(integer datatype,void* wr, void* wi, void* lambda, integer m, integer n, integer lda);
 void* get_m_ptr(integer datatype, void *A, integer M, integer N, integer LDA);
 void free_matrix(void *A);
@@ -87,7 +88,11 @@ void set_identity_matrix(integer datatype, integer M, integer N, void *A, intege
 void copy_submatrix(integer datatype, void* A, integer m_A, integer n_A, void *B, integer m_B, integer n_B, integer srow, integer scol);
 /* orthgonality property of matrix */
 double check_orthogonality(integer datatype, void *A, integer m, integer n);
-
+void copy_submatrix(integer datatype, void *A, integer m_A, integer n_A, void *B, integer m_B, integer n_B, integer srow, integer scol);
+void rand_sym_tridiag_matrix(integer datatype, void *A, integer M, integer N, integer LDA);
+void get_diagonal(integer datatype, void *A, integer m, integer n, integer lda, void *Diag);
+void get_subdiagonal(integer datatype, void *A, integer m, integer n, integer lda, void *Subdiag);
+void copy_sym_tridiag_matrix(integer datatype, void *D, void *E, integer M, integer N, void *B, integer LDA);
 
 /* Division of complex types */
 void c_div_t(scomplex *cp, scomplex *ap, scomplex *bp);

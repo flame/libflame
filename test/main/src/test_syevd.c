@@ -71,8 +71,7 @@ void fla_test_syevd_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* output validation */
-    if( jobz == 'V')
-        validate_syevd(&jobz, &uplo, n, A, A_test, w, datatype, residual);
+    validate_syevd(&jobz, n, A, A_test, w, datatype, residual);
 
     /* Free up the buffers */
     free_matrix(A);
