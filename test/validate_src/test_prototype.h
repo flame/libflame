@@ -1,5 +1,5 @@
 /*
-	Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #ifndef TEST_PROTOTYPE_H
@@ -40,6 +40,8 @@ extern int spotrs_(char* uplo, integer* n, integer* nrhs, void* a, integer* lda,
 extern int dpotrs_(char* uplo, integer* n, integer* nrhs, void* a, integer* lda, void* b, integer* ldb, integer* info);
 extern int cpotrs_(char* uplo, integer* n, integer* nrhs, void* a, integer* lda, void* b, integer* ldb, integer* info);
 extern int zpotrs_(char* uplo, integer* n, integer* nrhs, void* a, integer* lda, void* b, integer* ldb, integer* info);
+
+extern void dzgemm_(char* transa, char* transb, integer* m, integer* n, integer* k, void* alpha, void* a, integer* lda, void* b, integer* ldb, void* beta, void* c, integer* ldc);
 
 /* --------LAPACK APIs ---------*/
 
@@ -167,5 +169,11 @@ extern int slapmt_(integer* forwrd, integer* m, integer* n, void* x, integer* ld
 extern int dlapmt_(integer* forwrd, integer* m, integer* n, void* x, integer* ldx, integer* k);
 extern int clapmt_(integer* forwrd, integer* m, integer* n, void* x, integer* ldx, integer* k);
 extern int zlapmt_(integer* forwrd, integer* m, integer* n, void* x, integer* ldx, integer* k);
+
+/* Computation of Eigen Values and Eigen Vectors */
+extern int dggev_(char* jobvl, char* jobvr, integer* n, void* a, integer* lda, void* b, integer* ldb, void* alphar, void* alphai, void* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, void* work, integer* lwork, integer* info);
+extern int sggev_(char* jobvl, char* jobvr, integer* n, void* a, integer* lda, void* b, integer* ldb, void* alphar, void* alphai, void* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, void* work, integer* lwork, integer* info);
+extern int cggev_(char* jobvl, char* jobvr, integer* n, void* a, integer* lda, void* b, integer* ldb, void* alpha, void* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, void* work, integer* lwork, void* rwork, integer* info);
+extern int zggev_(char* jobvl, char* jobvr, integer* n, void* a, integer* lda, void* b, integer* ldb, void* alpha, void* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, void* work, integer* lwork, void* rwork, integer* info);
 
 #endif  // TEST_PROTOTYPE_H

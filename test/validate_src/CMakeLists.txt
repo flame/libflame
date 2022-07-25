@@ -20,4 +20,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/validate_syevd.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_geevx.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_geev.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_geqp3.c
+${CMAKE_CURRENT_SOURCE_DIR}/validate_gesv.c
+${CMAKE_CURRENT_SOURCE_DIR}/validate_ggev.c
+${CMAKE_CURRENT_SOURCE_DIR}/validate_ggevx.c
 )
+

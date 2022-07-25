@@ -15,3 +15,5 @@
 1   geevx   Eigen Decomposition                           (0 = disable; 1 = enable)
 1   geev    Eigen Decomposition                           (0 = disable; 1 = enable)
 1   geqp3   QR factorization with column pivoting         (0 = disable; 1 = enable)
+1   ggev    Eigen Values and Vectors                      (0 = disable; 1 = enable)
+
