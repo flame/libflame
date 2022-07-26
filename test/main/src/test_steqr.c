@@ -69,7 +69,7 @@ void fla_test_steqr_experiment(test_params_t *params,
     create_matrix(datatype, &Z_test, n, n);
     reset_matrix(datatype, n, n, Z_test, ldz);
 
-    invoke_sytrd(datatype, &uplo, compz, n, Q, lda, D, E, info);
+    invoke_sytrd(datatype, &uplo, compz, n, Q, lda, D, E, &info);
     /*form tridiagonal matrix Z by copying from matrix*/
     copy_sym_tridiag_matrix(datatype, D, E, n, n, Z, ldz);
 

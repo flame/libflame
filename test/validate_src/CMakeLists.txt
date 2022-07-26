@@ -23,5 +23,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/validate_geqp3.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_gesv.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_ggev.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_ggevx.c
+${CMAKE_CURRENT_SOURCE_DIR}/validate_stedc.c
 )
 

@@ -18,4 +18,4 @@
 1   ggev    Eigen Values and Vectors                      (0 = disable; 1 = enable)
 1   steqr   Eigen Decomposition                           (0 = disable; 1 = enable)
 1   stevd   Eigen Decomposition                           (0 = disable; 1 = enable)
-
+1   stedc   Eigenvalue/vectors using divide and conquer   (0 = disable; 1 = enable)

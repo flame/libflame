@@ -3,8 +3,7 @@
 */
 
 /* Update test api count */
-#define test_api_count 20
-
+#define test_api_count 21
 
 /* Test API function declaration */
 void fla_test_steqr(test_params_t *params);
@@ -27,6 +26,7 @@ void fla_test_gesvd(test_params_t *params);
 void fla_test_ggevx(test_params_t *params);
 void fla_test_gesv(test_params_t* params);
 void fla_test_ggev(test_params_t *params);
+void fla_test_stedc(test_params_t *params);
 
 /* Add test api function call entry below */
 OPERATIONS API_test_functions[] =
@@ -50,5 +50,6 @@ OPERATIONS API_test_functions[] =
     {"gesv"                , fla_test_gesv},
     {"ggev"                , fla_test_ggev},
     {"steqr"               , fla_test_steqr},
-    {"stevd"               , fla_test_stevd}
+    {"stevd"               , fla_test_stevd},
+    {"stedc"               , fla_test_stedc}
 };

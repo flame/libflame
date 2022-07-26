@@ -1693,9 +1693,9 @@ void fla_test_op_driver( char*         func_str,
                 p_first               = params->eig_sym_paramslist[range_loop_counter].m_range_start;
                 p_max                 = params->eig_sym_paramslist[range_loop_counter].m_range_end;
                 p_inc                 = params->eig_sym_paramslist[range_loop_counter].m_range_step_size;
-                q_first               = params->eig_sym_paramslist[range_loop_counter].n_range_start;
-                q_max                 = params->eig_sym_paramslist[range_loop_counter].n_range_end;
-                q_inc                 = params->eig_sym_paramslist[range_loop_counter].n_range_step_size;
+                q_first               = p_first;
+                q_max                 = p_max;
+                q_inc                 = p_inc;
                 thresh                = params->eig_sym_paramslist[range_loop_counter].threshold_value;
                 params->datatype      = params->eig_sym_paramslist[range_loop_counter].data_types;
                 params->datatype_char = params->eig_sym_paramslist[range_loop_counter].data_types_char;
