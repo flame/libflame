@@ -9,8 +9,8 @@
 extern void invoke_getrf(integer datatype, integer* m, integer* n, void* a, integer* lda, integer* ipiv, integer* info);
 extern void invoke_potrf(char* uplo, integer datatype, integer* m, void* a, integer* lda, integer* info);
 extern void invoke_geqrf(integer datatype, integer* m, integer* n, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
-/*symmetric tridiagonal matrix creation using sytrd API */
-extern void invoke_sytrd(integer datatype, char* uplo, char compz, integer n, void *A, integer lda, void *D, void *E, integer info);
+/* Generates Orthogonal matrix from ORGTR() after SYTRD() call. */
+extern void invoke_sytrd(integer datatype, char *uplo, char compz, integer n, void *A, integer lda, void *D, void *E, integer *info);
 
 /* --------BLAS APIs -------- */
 
@@ -179,6 +179,7 @@ extern int sggev_(char* jobvl, char* jobvr, integer* n, void* a, integer* lda, v
 extern int cggev_(char* jobvl, char* jobvr, integer* n, void* a, integer* lda, void* b, integer* ldb, void* alpha, void* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, void* work, integer* lwork, void* rwork, integer* info);
 extern int zggev_(char* jobvl, char* jobvr, integer* n, void* a, integer* lda, void* b, integer* ldb, void* alpha, void* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, void* work, integer* lwork, void* rwork, integer* info);
 
+/* Generates a real orthogonal matrix Q which is defined as the product of n-1 elementary reflectors of order N.*/
 extern int sorgtr_(char* uplo, integer* m, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
 extern int dorgtr_(char* uplo, integer* m, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
 extern int cungtr_(char* uplo, integer* m, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
@@ -192,9 +193,17 @@ extern int zsteqr_(char* compz, integer* n, void* d, void* e, void* z, integer* 
 extern int sstevd_(char* jobz, integer* n, void* d, void* e, void* z, integer* ldz, void* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
 extern int dstevd_(char* jobz, integer* n, void* d, void* e, void* z, integer* ldz, void* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
 
+/* Reduces real symmetric matrix A to real symmetric tridiagonal form T
+   by an orthogonal similarity transformation*/
 extern int ssytrd_(char* uplo, integer* n, void* a, integer* lda, void* d, void* e, void* tau, void* work, integer* lwork, integer* info);
 extern int dsytrd_(char* uplo, integer* n, void* a, integer* lda, void* d, void* e, void* tau, void* work, integer* lwork, integer* info);
 extern int chetrd_(char* uplo, integer* n, void* a, integer* lda, void* d, void* e, void* tau, void* work, integer* lwork, integer* info);
 extern int zhetrd_(char* uplo, integer* n, void* a, integer* lda, void* d, void* e, void* tau, void* work, integer* lwork, integer* info);
+
+/* Computation of Eigen Values and Eigen Vectors */
+extern int sstedc_(char* compz, integer* n, void* d, void* e, void* z, integer* ldz, void* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
+extern int dstedc_(char* compz, integer* n, void* d, void* e, void* z, integer* ldz, void* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
+extern int cstedc_(char* compz, integer* n, void* d, void* e, void* z, integer* ldz, void* work, integer* lwork, void* rwork, integer* lrwork, integer* iwork, integer* liwork, integer* info);
+extern int zstedc_(char* compz, integer* n, void* d, void* e, void* z, integer* ldz, void* work, integer* lwork, void* rwork, integer* lrwork, integer* iwork, integer* liwork, integer* info);
 
 #endif  // TEST_PROTOTYPE_H

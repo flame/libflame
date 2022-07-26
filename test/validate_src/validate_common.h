@@ -197,4 +197,15 @@ void validate_ggevx(char* balanc,
     integer datatype, 
     double *residual);
 
+/* This function will validate STEDC() output eigenvectors and orthogonal
+   matrices only if compz != N, as output will not be generated 
+   if compz = N.*/
+void validate_stedc(char compz,
+    integer n,
+    void* D_test,
+    void* A,
+    void* A_test,
+    integer datatype,
+    double* residual);
+
 #endif // VALIDATE_COMMON_H

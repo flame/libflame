@@ -895,6 +895,7 @@ void rand_spd_matrix(integer datatype, char *uplo, void **A, integer m,integer l
     return;
 }
 
+/* Create diagonal matrix by copying elements from vector to matrix */
 void diagonalize_vector(integer datatype, void* s, void* sigma, integer m, integer n, integer LDA)
 {
     integer incr, i, j, min_m_n;
@@ -1229,7 +1230,7 @@ void scgemv(char TRANS, integer real_alpha, integer m, integer n, scomplex* alph
     free_matrix(A);
 }
 
-/* Get realtype of given datatype.*/
+/* Get realtype of given datatype. */
 integer get_realtype(integer datatype)
 {
     if(datatype == FLOAT || datatype == COMPLEX)
