@@ -28,6 +28,34 @@ double ref_time_sec = 0.0;
             break; \
         } \
 
+#if PROCESS_ENABLE
+#define BUFLEN 16
+int aocl_fla_progress(char* api,integer lenapi,integer *progress,integer *current_thread,integer *total_threads)
+{
+  char buf[BUFLEN];
+  if( lenapi >= BUFLEN ) lenapi = BUFLEN-1;
+  strncpy( buf, api, lenapi );
+  buf[lenapi] = '\0';
+  printf( "In AOCL FLA  Progress thread  %"FT_IS", at API  %s, progress  %"FT_IS" total threads= %"FT_IS"\n", *current_thread, buf, *progress,*total_threads );
+  return 0;
+
+}
+#endif
+
+#if SET_PROCESS_ENABLE
+#define BUFLEN 16
+int test_progress(char* api,integer lenapi,integer *progress,integer *current_thread,integer *total_threads)
+{
+  char buf[BUFLEN];
+  if( lenapi >= BUFLEN ) lenapi = BUFLEN-1;
+  strncpy( buf, api, lenapi );
+  buf[lenapi] = '\0';
+  printf( "In AOCL Progress thread  %"FT_IS", at API  %s, progress  %"FT_IS" total threads= %"FT_IS"\n", *current_thread, buf, *progress,*total_threads );
+  return 0;
+
+}
+#endif
+
 
 int  main( int argc, char** argv )
 {
@@ -53,6 +81,10 @@ int  main( int argc, char** argv )
 
     /*Read SVD parameters from config file */
     fla_test_read_svd_params ( SVD_PARAMETERS_FILENAME, &params  );
+    
+    #if SET_PROCESS_ENABLE
+        aocl_fla_set_progress(test_progress);
+    #endif
 
     // Test the LAPACK-level operations.
     fla_test_lapack_suite( OPERATIONS_FILENAME, &params );

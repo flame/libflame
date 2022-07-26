@@ -67,6 +67,14 @@
 #define EIG_NSYM       (3)
 #define SVD            (4)
 
+//For testing AOCL_PROGRESS pass  1
+#define SET_PROCESS_ENABLE       0
+#define PROCESS_ENABLE           0
+
+#if SET_PROCESS_ENABLE
+int test_progress(char* api,integer lenapi,integer *progress,integer *current_thread,integer *total_threads);
+#endif
+
 typedef struct Lin_solver_paramlist_t
 {
     integer mode; // Any one of these:- 0: discrete, 1: Combinational, 2:Range with steps of increment of Matrix sizes
