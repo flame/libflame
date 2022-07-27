@@ -7,9 +7,9 @@
 */
 
 #include "FLA_f2c.h" /* > \brief \b ZROT applies a plane rotation with real cosine and complex sine to a pair of complex vectors. */
+#ifdef FLA_ENABLE_AMD_OPT
 #include "immintrin.h"
-
-#define FLA_ENABLE_AVX2_OPT 1
+#endif
 
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -99,7 +99,7 @@
 /* > \ingroup complex16OTHERauxiliary */
 /* ===================================================================== */
 /* Subroutine */
-#if FLA_ENABLE_AVX2_OPT 
+#ifdef FLA_ENABLE_AMD_OPT
 int zrot_(integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, integer *incy, doublereal *c__, doublecomplex *s)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
@@ -113,11 +113,14 @@ int zrot_(integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, integ
     doublecomplex z__1, z__2, z__3;
     /* Local variables */
     integer i__, ix, iy;
-    doublereal lc, sr, si;
+    doublereal lc, sr, si, msi;
 
-    __m256d cmm, srmm, simm;
-    __m256d xmm, ymm, sxmm, symm;
-    __m256d oxmm, oymm;
+    __m256d cmm, srmm, simm, sinm;
+    __m256d sirmm, srimm, msirmm, msrimm;
+    __m256d xmm0, ymm0, xmm1, ymm1;
+    __m256d xrmm0, yrmm0, ximm0, yimm0;
+    __m256d xrmm1, yrmm1, ximm1, yimm1;
+    __m256d oxm0, oym0, oxm1, oym1;
     __m128d hxmm0, hxmm1, hymm0, hymm1;
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -144,12 +147,19 @@ int zrot_(integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, integ
         return 0;
     }
     lc  = *c__;
-    sr = s->r;
-    si = s->i;
+    sr  = s->r;
+    si  = s->i;
+    msi = -si;
 
     cmm  = _mm256_broadcast_sd((double const *) &lc);
     srmm = _mm256_broadcast_sd((double const *) &sr);
     simm = _mm256_broadcast_sd((double const *) &si);
+    sinm = _mm256_broadcast_sd((double const *) &msi);
+
+    sirmm = _mm256_shuffle_pd(srmm, simm, 0xA);
+    srimm = _mm256_shuffle_pd(simm, srmm, 0x5);
+    msirmm = _mm256_shuffle_pd(srmm, sinm, 0xA);
+    msrimm = _mm256_shuffle_pd(sinm, srmm, 0x5);
 
     if (*incx == 1 && *incy == 1)
     {
@@ -197,34 +207,36 @@ int zrot_(integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, integ
         for (i__ = 1; i__ <= (i__1 - 1); i__ += 2)
         {
             /* load complex inputs from x & y */
-            xmm   = _mm256_loadu_pd((double const *) &cx[ix]);
+            xmm0   = _mm256_loadu_pd((double const *) &cx[ix]);
             hxmm1 = _mm_loadu_pd((double const *) &cx[ix + *incx]);
-            ymm   = _mm256_loadu_pd((double const *) &cy[ix]);
+            ymm0   = _mm256_loadu_pd((double const *) &cy[ix]);
             hymm1 = _mm_loadu_pd((double const *) &cy[ix + *incx]);
 
             /* pack the inputs into 256-bit registers */
-            xmm = _mm256_insertf128_pd(xmm, hxmm1, 0x1);
-            ymm = _mm256_insertf128_pd(ymm, hymm1, 0x1);
+            xmm0 = _mm256_insertf128_pd(xmm0, hxmm1, 0x1);
+            ymm0 = _mm256_insertf128_pd(ymm0, hymm1, 0x1);
 
             /* shuffle the loaded inputs */
-            sxmm = _mm256_permute_pd(xmm, 0x5);
-            symm = _mm256_permute_pd(ymm, 0x5);
+            xrmm0 = _mm256_movedup_pd(xmm0);
+            ximm0 = _mm256_unpackhi_pd(xmm0, xmm0);
+            yrmm0 = _mm256_movedup_pd(ymm0);
+            yimm0 = _mm256_unpackhi_pd(ymm0, ymm0);
 
             /* compute x outputs */
-            oxmm = _mm256_mul_pd(simm, symm);
-            oxmm = _mm256_fmaddsub_pd(srmm, ymm, oxmm);
-            oxmm = _mm256_fmadd_pd(cmm, xmm, oxmm);
+            oxm0 = _mm256_mul_pd(srimm, yimm0);
+            oxm0 = _mm256_fmaddsub_pd(sirmm, yrmm0, oxm0);
+            oxm0 = _mm256_fmadd_pd(cmm, xmm0, oxm0);
 
             /* compute y outputs */
-            oymm = _mm256_mul_pd(simm, sxmm);
-            oymm = _mm256_fmsubadd_pd(srmm, xmm, oymm);
-            oymm = _mm256_fmsub_pd(cmm, ymm, oymm);
+            oym0 = _mm256_mul_pd(msrimm, ximm0);
+            oym0 = _mm256_fmaddsub_pd(msirmm, xrmm0, oym0);
+            oym0 = _mm256_fmsub_pd(cmm, ymm0, oym0);
 
             /* extract the results */
-            hxmm0 = _mm256_extractf128_pd(oxmm, 0x0);
-            hxmm1 = _mm256_extractf128_pd(oxmm, 0x1);
-            hymm0 = _mm256_extractf128_pd(oymm, 0x0);
-            hymm1 = _mm256_extractf128_pd(oymm, 0x1);
+            hxmm0 = _mm256_extractf128_pd(oxm0, 0x0);
+            hxmm1 = _mm256_extractf128_pd(oxm0, 0x1);
+            hymm0 = _mm256_extractf128_pd(oym0, 0x0);
+            hymm1 = _mm256_extractf128_pd(oym0, 0x1);
 
             /* store the results */
             _mm_storeu_pd((double *) &cx[ix], hxmm0);
@@ -260,29 +272,48 @@ int zrot_(integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, integ
     /* Code for both increments equal to 1 */
 L20:
     i__1 = *n;
-    for (i__ = 1; i__ <= (i__1 - 1); i__ += 2)
+    for (i__ = 1; i__ <= (i__1 - 3); i__ += 4)
     {
         /* load complex inputs from x & y */
-        xmm = _mm256_loadu_pd((double const *) &cx[i__]);
-        ymm = _mm256_loadu_pd((double const *) &cy[i__]);
+        xmm0 = _mm256_loadu_pd((double const *) &cx[i__]);
+        ymm0 = _mm256_loadu_pd((double const *) &cy[i__]);
+        xmm1 = _mm256_loadu_pd((double const *) &cx[i__ + 2]);
+        ymm1 = _mm256_loadu_pd((double const *) &cy[i__ + 2]);
 
         /* shuffle the loaded inputs */
-        sxmm = _mm256_permute_pd(xmm, 0x5);
-        symm = _mm256_permute_pd(ymm, 0x5);
+        xrmm0 = _mm256_movedup_pd(xmm0);
+        ximm0 = _mm256_unpackhi_pd(xmm0, xmm0);
+        yrmm0 = _mm256_movedup_pd(ymm0);
+        yimm0 = _mm256_unpackhi_pd(ymm0, ymm0);
+
+        xrmm1 = _mm256_movedup_pd(xmm1);
+        ximm1 = _mm256_unpackhi_pd(xmm1, xmm1);
+        yrmm1 = _mm256_movedup_pd(ymm1);
+        yimm1 = _mm256_unpackhi_pd(ymm1, ymm1);
 
         /* compute x outputs */
-        oxmm = _mm256_mul_pd(simm, symm);
-        oxmm = _mm256_fmaddsub_pd(srmm, ymm, oxmm);
-        oxmm = _mm256_fmadd_pd(cmm, xmm, oxmm);
+        oxm0 = _mm256_mul_pd(srimm, yimm0);
+        oxm0 = _mm256_fmaddsub_pd(sirmm, yrmm0, oxm0);
+        oxm0 = _mm256_fmadd_pd(cmm, xmm0, oxm0);
+
+        oxm1 = _mm256_mul_pd(srimm, yimm1);
+        oxm1 = _mm256_fmaddsub_pd(sirmm, yrmm1, oxm1);
+        oxm1 = _mm256_fmadd_pd(cmm, xmm1, oxm1);
 
         /* compute y outputs */
-        oymm = _mm256_mul_pd(simm, sxmm);
-        oymm = _mm256_fmsubadd_pd(srmm, xmm, oymm);
-        oymm = _mm256_fmsub_pd(cmm, ymm, oymm);
+        oym0 = _mm256_mul_pd(msrimm, ximm0);
+        oym0 = _mm256_fmaddsub_pd(msirmm, xrmm0, oym0);
+        oym0 = _mm256_fmsub_pd(cmm, ymm0, oym0);
+
+        oym1 = _mm256_mul_pd(msrimm, ximm1);
+        oym1 = _mm256_fmaddsub_pd(msirmm, xrmm1, oym1);
+        oym1 = _mm256_fmsub_pd(cmm, ymm1, oym1);
 
         /* store the results */
-        _mm256_storeu_pd((double *) &cx[i__], oxmm);
-        _mm256_storeu_pd((double *) &cy[i__], oymm);
+        _mm256_storeu_pd((double *) &cx[i__], oxm0);
+        _mm256_storeu_pd((double *) &cy[i__], oym0);
+        _mm256_storeu_pd((double *) &cx[i__ + 2], oxm1);
+        _mm256_storeu_pd((double *) &cy[i__ + 2], oym1);
     }
 
     for ( ; i__ <= i__1; ++i__)
@@ -307,7 +338,7 @@ L20:
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
-#else /* FLA_ENABLE_AVX2_OPT  */
+#else /* FLA_ENABLE_AMD_OPT */
 int zrot_(integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, integer *incy, doublereal *c__, doublecomplex *s)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
@@ -441,5 +472,5 @@ L20:
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
 }
-#endif /* FLA_ENABLE_AVX2_OPT  */
+#endif /* FLA_ENABLE_AMD_OPT */
 /* zrot_ */
