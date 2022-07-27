@@ -73,8 +73,10 @@ static doublereal c_b14 = 1.;
     #if AOCL_FLA_PROGRESS_H
         AOCL_FLA_PROGRESS_VAR;
 	step_count =0;
+      #ifndef FLA_ENABLE_WINDOWS_BUILD
 	if(!aocl_fla_progress_ptr)
             aocl_fla_progress_ptr=aocl_fla_progress;
+      #endif
     #endif
     /* Function Body */
     *info = 0;

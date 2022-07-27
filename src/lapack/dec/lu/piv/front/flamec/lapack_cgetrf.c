@@ -114,9 +114,11 @@
 /*        Use unblocked code. */
 
 	        #if AOCL_FLA_PROGRESS_H
+
+	            #ifndef FLA_ENABLE_WINDOWS_BUILD
                 	if(!aocl_fla_progress_ptr)
                         	aocl_fla_progress_ptr=aocl_fla_progress;
-
+                    #endif
                     	if(aocl_fla_progress_ptr){
                         	step_count= min(*m,*n);
                         	AOCL_FLA_PROGRESS_FUNC_PTR("CGETRF",6,&step_count,&thread_id,&total_threads);
@@ -140,9 +142,11 @@
 	    jb = min(i__3,nb);
 
 	    #if AOCL_FLA_PROGRESS_H
-                if(!aocl_fla_progress_ptr)
-                        aocl_fla_progress_ptr=aocl_fla_progress;
 
+		#ifndef FLA_ENABLE_WINDOWS_BUILD
+	    	    if(!aocl_fla_progress_ptr)
+                        aocl_fla_progress_ptr=aocl_fla_progress;
+                #endif
                     if(aocl_fla_progress_ptr){
                         step_count+=jb;
                         AOCL_FLA_PROGRESS_FUNC_PTR("CGETRF",6,&step_count,&thread_id,&total_threads);

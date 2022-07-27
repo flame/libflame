@@ -250,8 +250,10 @@ int dgetrf2_(integer *m, integer *n, doublereal *a, integer * lda, integer *ipiv
             size=min(*m,*n);
             step_count =1;
         }
-        if(!aocl_fla_progress_ptr)
-            aocl_fla_progress_ptr=aocl_fla_progress;
+	#ifndef FLA_ENABLE_WINDOWS_BUILD
+		if(!aocl_fla_progress_ptr)
+            		aocl_fla_progress_ptr=aocl_fla_progress;
+	#endif
         if(aocl_fla_progress_ptr)
         {
 	        ++step_count;
@@ -261,7 +263,7 @@ int dgetrf2_(integer *m, integer *n, doublereal *a, integer * lda, integer *ipiv
             }
                
         }
-    #endif
+        #endif
 	dgetrf2_(m, &n1, &a[a_offset], lda, &ipiv[1], &iinfo);
         if (*info == 0 && iinfo > 0)
         {

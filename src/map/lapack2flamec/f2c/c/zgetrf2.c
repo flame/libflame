@@ -256,8 +256,10 @@ int zgetrf2_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *ip
         /* Factor [ --- ] */
         /* [ A21 ] */
 	#if AOCL_FLA_PROGRESS_H
+	    #ifndef FLA_ENABLE_WINDOWS_BUILD
                 if(!aocl_fla_progress_ptr)
                         aocl_fla_progress_ptr=aocl_fla_progress;
+	    #endif
                 if(aocl_fla_progress_ptr)
                 {
                         if(step_count == 0 || step_count==size ){

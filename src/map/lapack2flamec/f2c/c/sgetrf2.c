@@ -240,8 +240,10 @@ int sgetrf2_(integer *m, integer *n, real *a, integer *lda, integer *ipiv, integ
         /* Factor [ --- ] */
         /* [ A21 ] */
         #if AOCL_FLA_PROGRESS_H 
-		if(!aocl_fla_progress_ptr)
+	     #ifndef FLA_ENABLE_WINDOWS_BUILD	
+	        if(!aocl_fla_progress_ptr)
                 	aocl_fla_progress_ptr=aocl_fla_progress;
+	     #endif
             	if(aocl_fla_progress_ptr)
             	{
 			if(step_count == 0 || step_count==size ){

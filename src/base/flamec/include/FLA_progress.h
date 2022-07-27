@@ -39,6 +39,7 @@ integer *total_threads
 
 void aocl_fla_set_progress(aocl_fla_progress_callback func);
 extern aocl_fla_progress_callback aocl_fla_progress_ptr;
+#ifndef FLA_ENABLE_WINDOWS_BUILD  
 __attribute__((weak))
 int aocl_fla_progress(
 char* api,
@@ -47,7 +48,7 @@ integer *progress,
 integer *current_thread,
 integer *total_threads
 );
-
+#endif
 // Macro to send update using api name
 #define AOCL_FLA_PROGRESS_FUNC_PTR(api,lenapi,progress,tid,nt) \
          if((*aocl_fla_progress_ptr) (api,lenapi, progress, tid, nt)){\
@@ -59,8 +60,8 @@ integer *total_threads
         static TLS_CLASS_SPEC integer step_count=0;\
         static TLS_CLASS_SPEC integer size=0;\
         static TLS_CLASS_SPEC integer thread_id = 0;\
-        static TLS_CLASS_SPEC integer total_threads = 0;\
-        if(aocl_fla_progress_ptr || aocl_fla_progress)\
+        static TLS_CLASS_SPEC integer total_threads = 1;\
+        if(aocl_fla_progress_ptr)\
         {\
         /* Current implementation returns threadid as 0 and total_threads as 1*/ \
         /* even if invoked from multithreaded application. */ \

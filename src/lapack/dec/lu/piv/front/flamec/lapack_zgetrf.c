@@ -112,8 +112,11 @@
 
 /*        Use unblocked code. */
                 #if AOCL_FLA_PROGRESS_H
-                        if(!aocl_fla_progress_ptr)
+
+                    #ifndef FLA_ENABLE_WINDOWS_BUILD
+	    		if(!aocl_fla_progress_ptr)
                                 aocl_fla_progress_ptr=aocl_fla_progress;
+		    #endif
 
                         if(aocl_fla_progress_ptr){
                                 step_count= min(*m,*n);
@@ -139,8 +142,10 @@
 
 
             #if AOCL_FLA_PROGRESS_H
-                if(!aocl_fla_progress_ptr)
+		#ifndef FLA_ENABLE_WINDOWS_BUILD
+	    	    if(!aocl_fla_progress_ptr)
                         aocl_fla_progress_ptr=aocl_fla_progress;
+		#endif
 
                     if(aocl_fla_progress_ptr){
                         step_count+=jb;
