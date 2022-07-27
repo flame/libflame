@@ -119,9 +119,11 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
 
 /*        Use unblocked code. */
         #if AOCL_FLA_PROGRESS_H
+
+	    #ifndef FLA_ENABLE_WINDOWS_BUILD
                 if(!aocl_fla_progress_ptr)
                         aocl_fla_progress_ptr=aocl_fla_progress;
-
+            #endif
                     if(aocl_fla_progress_ptr){
                         step_count= min(*m,*n);
                         AOCL_FLA_PROGRESS_FUNC_PTR("SGETRF",6,&step_count,&thread_id,&total_threads);
@@ -146,9 +148,11 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
 
 /*           Update current block. */
 	    #if AOCL_FLA_PROGRESS_H
+
+	      #ifndef FLA_ENABLE_WINDOWS_BUILD
                 if(!aocl_fla_progress_ptr)
                         aocl_fla_progress_ptr=aocl_fla_progress;
-
+              #endif
                     if(aocl_fla_progress_ptr){
                 	step_count+=jb;
                 	AOCL_FLA_PROGRESS_FUNC_PTR("SGETRF",6,&step_count,&thread_id,&total_threads);

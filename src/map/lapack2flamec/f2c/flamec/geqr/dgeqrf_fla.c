@@ -221,8 +221,10 @@
  iws = *n;
  #if AOCL_FLA_PROGRESS_H
         step_count =0;
+     #ifndef FLA_ENABLE_WINDOWS_BUILD
 	if(!aocl_fla_progress_ptr)
               aocl_fla_progress_ptr=aocl_fla_progress;
+     #endif
  #endif
 
  if (nb > 1 && nb < k) {
