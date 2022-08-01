@@ -1,4 +1,4 @@
-/* ../netlib/v3.9.0/sgemlqt.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* sgemlqt.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* > \brief \b SGEMLQT */
 /* Definition: */
@@ -28,7 +28,7 @@
 /* > */
 /* > Q = H(1) H(2) . . . H(K) = I - V T V**T */
 /* > */
-/* > generated using the compact WY representation as returned by DGELQT. */
+/* > generated using the compact WY representation as returned by SGELQT. */
 /* > */
 /* > Q is of order M if SIDE = 'L' and of order N if SIDE = 'R'. */
 /* > \endverbatim */
@@ -77,7 +77,7 @@
 /* > MB is INTEGER */
 /* > The block size used for the storage of T. K >= MB >= 1. */
 /* > This must be the same value of MB used to generate T */
-/* > in DGELQT. */
+/* > in SGELQT. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] V */
@@ -87,7 +87,7 @@
 /* > (LDV,N) if SIDE = 'R' */
 /* > The i-th row must contain the vector which defines the */
 /* > elementary reflector H(i), for i = 1,2,...,k, as returned by */
-/* > DGELQT in the first K rows of its array argument A. */
+/* > SGELQT in the first K rows of its array argument A. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDV */
@@ -100,7 +100,7 @@
 /* > \verbatim */
 /* > T is REAL array, dimension (LDT,K) */
 /* > The upper triangular factors of the block reflectors */
-/* > as returned by DGELQT, stored as a MB-by-K matrix. */
+/* > as returned by SGELQT, stored as a MB-by-K matrix. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDT */
@@ -140,16 +140,17 @@
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date November 2017 */
 /* > \ingroup doubleGEcomputational */
 /* ===================================================================== */
 /* Subroutine */
 int sgemlqt_(char *side, char *trans, integer *m, integer *n, integer *k, integer *mb, real *v, integer *ldv, real *t, integer * ldt, real *c__, integer *ldc, real *work, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("sgemlqt inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", mb %" FLA_IS ", ldv %" FLA_IS ", ldt %" FLA_IS ", ldc %" FLA_IS "",*side, *trans, *m, *n, *k, *mb, *ldv, *ldt, *ldc);
     /* System generated locals */
     integer v_dim1, v_offset, c_dim1, c_offset, t_dim1, t_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
-    integer i__, ib, kf;
+    integer i__, q, ib, kf;
     logical left, tran;
     extern logical lsame_(char *, char *);
     logical right;
@@ -157,10 +158,9 @@ int sgemlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     int slarfb_(char *, char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
     logical notran;
     integer ldwork;
-    /* -- LAPACK computational routine (version 3.8.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* November 2017 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -197,10 +197,12 @@ int sgemlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     if (left)
     {
         ldwork = max(1,*n);
+        q = *m;
     }
     else if (right)
     {
         ldwork = max(1,*m);
+        q = *n;
     }
     if (! left && ! right)
     {
@@ -218,7 +220,7 @@ int sgemlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     {
         *info = -4;
     }
-    else if (*k < 0)
+    else if (*k < 0 || *k > q)
     {
         *info = -5;
     }
@@ -242,11 +244,13 @@ int sgemlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     {
         i__1 = -(*info);
         xerbla_("SGEMLQT", &i__1);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* .. Quick return if possible .. */
     if (*m == 0 || *n == 0 || *k == 0)
     {
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (left && notran)
@@ -313,6 +317,7 @@ int sgemlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
             slarfb_("R", "T", "F", "R", m, &i__2, &ib, &v[i__ + i__ * v_dim1], ldv, &t[i__ * t_dim1 + 1], ldt, &c__[i__ * c_dim1 + 1], ldc, &work[1], &ldwork);
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of SGEMLQT */
 }

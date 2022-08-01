@@ -1,4 +1,4 @@
-/* ../netlib/v3.9.0/dlamtsqr.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* dlamtsqr.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__0 = 0;
@@ -56,15 +56,14 @@ static integer c__0 = 0;
 /* > \param[in] N */
 /* > \verbatim */
 /* > N is INTEGER */
-/* > The number of columns of the matrix C. M >= N >= 0. */
+/* > The number of columns of the matrix C. N >= 0. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] K */
 /* > \verbatim */
 /* > K is INTEGER */
 /* > The number of elementary reflectors whose product defines */
-/* > the matrix Q. */
-/* > N >= K >= 0;
+/* > the matrix Q. M >= K >= 0;
 */
 /* > */
 /* > \endverbatim */
@@ -199,10 +198,11 @@ int dlamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dlamtsqr inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", mb %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS ", ldc %" FLA_IS ", lwork %" FLA_IS "",*side, *trans, *m, *n, *k, *mb, *nb, *lda, *ldt, *ldc, *lwork);
+
     /* System generated locals */
     integer a_dim1, a_offset, c_dim1, c_offset, t_dim1, t_offset, i__1, i__2, i__3;
     /* Local variables */
-    integer i__, ii, kk, lw, ctr;
+    integer i__, q, ii, kk, lw, ctr;
     logical left, tran;
     extern logical lsame_(char *, char *);
     logical right;
@@ -211,10 +211,9 @@ int dlamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     logical notran, lquery;
     extern /* Subroutine */
     int dgemqrt_(char *, char *, integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dtpmqrt_(char *, char *, integer *, integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *);
-    /* -- LAPACK computational routine (version 3.7.1) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* June 2017 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -248,10 +247,12 @@ int dlamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     if (left)
     {
         lw = *n * *nb;
+        q = *m;
     }
     else
     {
         lw = *mb * *nb;
+        q = *n;
     }
     *info = 0;
     if (! left && ! right)
@@ -262,7 +263,7 @@ int dlamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     {
         *info = -2;
     }
-    else if (*m < 0)
+    else if (*m < *k)
     {
         *info = -3;
     }
@@ -274,7 +275,11 @@ int dlamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     {
         *info = -5;
     }
-    else if (*lda < max(1,*k))
+    else if (*k < *nb || *nb < 1)
+    {
+        *info = -7;
+    }
+    else if (*lda < max(1,q))
     {
         *info = -9;
     }

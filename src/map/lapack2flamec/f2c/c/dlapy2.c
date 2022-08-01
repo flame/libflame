@@ -1,4 +1,4 @@
-/* ../netlib/dlapy2.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* dlapy2.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* > \brief \b DLAPY2 returns sqrt(x2+y2). */
 /* =========== DOCUMENTATION =========== */
@@ -25,7 +25,7 @@
 /* > \verbatim */
 /* > */
 /* > DLAPY2 returns sqrt(x**2+y**2), taking care not to cause unnecessary */
-/* > overflow. */
+/* > overflow and unnecessary underflow. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -45,7 +45,6 @@
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date June 2017 */
 /* > \ingroup OTHERauxiliary */
 /* ===================================================================== */
 doublereal dlapy2_(doublereal *x, doublereal *y)
@@ -58,11 +57,11 @@ doublereal dlapy2_(doublereal *x, doublereal *y)
     /* Local variables */
     logical x_is_nan__, y_is_nan__;
     doublereal w, z__, xabs, yabs;
-    extern logical disnan_(doublereal *);
-    /* -- LAPACK auxiliary routine (version 3.7.1) -- */
+    extern doublereal dlamch_(char *);
+    doublereal hugeval;
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* June 2017 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* ===================================================================== */
@@ -72,11 +71,13 @@ doublereal dlapy2_(doublereal *x, doublereal *y)
     /* .. */
     /* .. External Functions .. */
     /* .. */
+    /* .. External Subroutines .. */
+    /* .. */
     /* .. Intrinsic Functions .. */
     /* .. */
     /* .. Executable Statements .. */
-    x_is_nan__ = disnan_(x);
-    y_is_nan__ = disnan_(y);
+    x_is_nan__ = (x != x);
+    y_is_nan__ = (y != y);
     if (x_is_nan__)
     {
         ret_val = *x;
@@ -85,13 +86,14 @@ doublereal dlapy2_(doublereal *x, doublereal *y)
     {
         ret_val = *y;
     }
+    hugeval = dlamch_("Overflow");
     if (! (x_is_nan__ || y_is_nan__))
     {
         xabs = f2c_abs(*x);
         yabs = f2c_abs(*y);
         w = max(xabs,yabs);
         z__ = min(xabs,yabs);
-        if (z__ == 0.)
+        if (z__ == 0. || w > hugeval)
         {
             ret_val = w;
         }

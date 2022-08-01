@@ -1,4 +1,4 @@
-/* ../netlib/dgerqf.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* dgerqf.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -87,7 +87,8 @@ static integer c__2 = 2;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,M). */
+/* > The dimension of the array WORK. */
+/* > LWORK >= 1, if MIN(M,N) = 0, and LWORK >= M, otherwise. */
 /* > For optimum performance LWORK >= M*NB, where NB is */
 /* > the optimal blocksize. */
 /* > */
@@ -110,7 +111,6 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date November 2011 */
 /* > \ingroup doubleGEcomputational */
 /* > \par Further Details: */
 /* ===================== */
@@ -146,10 +146,9 @@ int dgerqf_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *ta
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ldwork, lwkopt;
     logical lquery;
-    /* -- LAPACK computational routine (version 3.4.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* November 2011 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -199,9 +198,12 @@ int dgerqf_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *ta
             lwkopt = *m * nb;
         }
         work[1] = (doublereal) lwkopt;
-        if (*lwork < max(1,*m) && ! lquery)
+        if (! lquery)
         {
-            *info = -7;
+            if (*lwork <= 0 || *n > 0 && *lwork < max(1,*m))
+            {
+                *info = -7;
+            }
         }
     }
     if (*info != 0)

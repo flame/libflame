@@ -1,4 +1,4 @@
-/* ../netlib/zgeqrf.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* zgeqrf.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -33,7 +33,18 @@ static integer c__2 = 2;
 /* > \verbatim */
 /* > */
 /* > ZGEQRF computes a QR factorization of a complex M-by-N matrix A: */
-/* > A = Q * R. */
+/* > */
+/* > A = Q * ( R ), */
+/* > ( 0 ) */
+/* > */
+/* > where: */
+/* > */
+/* > Q is a M-by-M orthogonal matrix;
+*/
+/* > R is an upper-triangular N-by-N matrix;
+*/
+/* > 0 is a (M-N)-by-N zero matrix, if M > N. */
+/* > */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -84,7 +95,8 @@ the elements below the diagonal, */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,N). */
+/* > The dimension of the array WORK. */
+/* > LWORK >= 1, if MIN(M,N) = 0, and LWORK >= N, otherwise. */
 /* > For optimum performance LWORK >= N*NB, where NB is */
 /* > the optimal blocksize. */
 /* > */
@@ -107,7 +119,6 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date November 2011 */
 /* > \ingroup complex16GEcomputational */
 /* > \par Further Details: */
 /* ===================== */
@@ -148,10 +159,9 @@ int zgeqrf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     int zlarft_(char *, char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *);
     integer lwkopt;
     logical lquery;
-    /* -- LAPACK computational routine (version 3.4.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* November 2011 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -174,11 +184,9 @@ int zgeqrf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     --tau;
     --work;
     /* Function Body */
+    k = min(*m,*n);
     *info = 0;
     nb = ilaenv_(&c__1, "ZGEQRF", " ", m, n, &c_n1, &c_n1);
-    lwkopt = *n * nb;
-    work[1].r = (doublereal) lwkopt;
-    work[1].i = 0.; // , expr subst
     lquery = *lwork == -1;
     if (*m < 0)
     {
@@ -192,9 +200,12 @@ int zgeqrf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     {
         *info = -4;
     }
-    else if (*lwork < max(1,*n) && ! lquery)
+    else if (! lquery)
     {
-        *info = -7;
+        if (*lwork <= 0 || *m > 0 && *lwork < max(1,*n))
+        {
+            *info = -7;
+        }
     }
     if (*info != 0)
     {
@@ -205,11 +216,20 @@ int zgeqrf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     }
     else if (lquery)
     {
+        if (k == 0)
+        {
+            lwkopt = 1;
+        }
+        else
+        {
+            lwkopt = *n * nb;
+        }
+        work[1].r = (doublereal) lwkopt;
+        work[1].i = 0.; // , expr subst
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
-    k = min(*m,*n);
     if (k == 0)
     {
         work[1].r = 1.;

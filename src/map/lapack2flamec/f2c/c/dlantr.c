@@ -1,4 +1,4 @@
-/* ../netlib/dlantr.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* dlantr.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -39,7 +39,7 @@ static integer c__1 = 1;
 /* > \return DLANTR */
 /* > \verbatim */
 /* > */
-/* > DLANTR = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
+/* > DLANTR = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -50,7 +50,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -125,34 +125,29 @@ otherwise, WORK is not */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup doubleOTHERauxiliary */
 /* ===================================================================== */
 doublereal dlantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, doublereal *a, integer *lda, doublereal *work)
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dlantr inputs: norm %c, uplo %c, diag %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "",*norm, *uplo, *diag, *m, *n, *lda);
+
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
     doublereal ret_val, d__1;
     /* Builtin functions */
     double sqrt(doublereal);
     /* Local variables */
-    extern /* Subroutine */
-    int dcombssq_(doublereal *, doublereal *);
     integer i__, j;
-    doublereal sum, ssq[2];
+    doublereal sum, scale;
     logical udiag;
     extern logical lsame_(char *, char *);
     doublereal value;
-    extern logical disnan_(doublereal *);
     extern /* Subroutine */
     int dlassq_(integer *, doublereal *, integer *, doublereal *, doublereal *);
-    doublereal colssq[2];
-    /* -- LAPACK auxiliary routine (version 3.7.0) -- */
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -162,11 +157,9 @@ doublereal dlantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, d
     /* .. */
     /* .. Local Scalars .. */
     /* .. */
-    /* .. Local Arrays .. */
+    /* .. External Subroutines .. */
     /* .. */
     /* .. External Functions .. */
-    /* .. */
-    /* .. External Subroutines .. */
     /* .. */
     /* .. Intrinsic Functions .. */
     /* .. */
@@ -183,7 +176,7 @@ doublereal dlantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, d
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(f2c_abs(A(i,j))). */
+        /* Find max(abs(A(i,j))). */
         if (lsame_(diag, "U"))
         {
             value = 1.;
@@ -203,7 +196,7 @@ doublereal dlantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, d
                             ++i__)
                     {
                         sum = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
-                        if (value < sum || disnan_(&sum))
+                        if (value < sum ||  sum != sum)
                         {
                             value = sum;
                         }
@@ -225,7 +218,7 @@ doublereal dlantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, d
                             ++i__)
                     {
                         sum = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
-                        if (value < sum || disnan_(&sum))
+                        if (value < sum ||  sum != sum)
                         {
                             value = sum;
                         }
@@ -251,7 +244,7 @@ doublereal dlantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, d
                             ++i__)
                     {
                         sum = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
-                        if (value < sum || disnan_(&sum))
+                        if (value < sum ||  sum != sum)
                         {
                             value = sum;
                         }
@@ -273,7 +266,7 @@ doublereal dlantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, d
                             ++i__)
                     {
                         sum = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
-                        if (value < sum || disnan_(&sum))
+                        if (value < sum ||  sum != sum)
                         {
                             value = sum;
                         }
@@ -320,7 +313,7 @@ doublereal dlantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, d
                         /* L100: */
                     }
                 }
-                if (value < sum || disnan_(&sum))
+                if (value < sum ||  sum != sum)
                 {
                     value = sum;
                 }
@@ -358,7 +351,7 @@ doublereal dlantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, d
                         /* L130: */
                     }
                 }
-                if (value < sum || disnan_(&sum))
+                if (value < sum ||  sum != sum)
                 {
                     value = sum;
                 }
@@ -431,7 +424,7 @@ doublereal dlantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, d
         {
             if (lsame_(diag, "U"))
             {
-                i__1 = *n;
+                i__1 = min(*m,*n);
                 for (i__ = 1;
                         i__ <= i__1;
                         ++i__)
@@ -497,7 +490,7 @@ doublereal dlantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, d
                 ++i__)
         {
             sum = work[i__];
-            if (value < sum || disnan_(&sum))
+            if (value < sum ||  sum != sum)
             {
                 value = sum;
             }
@@ -507,45 +500,36 @@ doublereal dlantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, d
     else if (lsame_(norm, "F") || lsame_(norm, "E"))
     {
         /* Find normF(A). */
-        /* SSQ(1) is scale */
-        /* SSQ(2) is sum-of-squares */
-        /* For better accuracy, sum each column separately. */
         if (lsame_(uplo, "U"))
         {
             if (lsame_(diag, "U"))
             {
-                ssq[0] = 1.;
-                ssq[1] = (doublereal) min(*m,*n);
+                scale = 1.;
+                sum = (doublereal) min(*m,*n);
                 i__1 = *n;
                 for (j = 2;
                         j <= i__1;
                         ++j)
                 {
-                    colssq[0] = 0.;
-                    colssq[1] = 1.;
                     /* Computing MIN */
                     i__3 = *m;
                     i__4 = j - 1; // , expr subst
                     i__2 = min(i__3,i__4);
-                    dlassq_(&i__2, &a[j * a_dim1 + 1], &c__1, colssq, &colssq[ 1]);
-                    dcombssq_(ssq, colssq);
+                    dlassq_(&i__2, &a[j * a_dim1 + 1], &c__1, &scale, &sum);
                     /* L290: */
                 }
             }
             else
             {
-                ssq[0] = 0.;
-                ssq[1] = 1.;
+                scale = 0.;
+                sum = 1.;
                 i__1 = *n;
                 for (j = 1;
                         j <= i__1;
                         ++j)
                 {
-                    colssq[0] = 0.;
-                    colssq[1] = 1.;
                     i__2 = min(*m,j);
-                    dlassq_(&i__2, &a[j * a_dim1 + 1], &c__1, colssq, &colssq[ 1]);
-                    dcombssq_(ssq, colssq);
+                    dlassq_(&i__2, &a[j * a_dim1 + 1], &c__1, &scale, &sum);
                     /* L300: */
                 }
             }
@@ -554,43 +538,37 @@ doublereal dlantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, d
         {
             if (lsame_(diag, "U"))
             {
-                ssq[0] = 1.;
-                ssq[1] = (doublereal) min(*m,*n);
+                scale = 1.;
+                sum = (doublereal) min(*m,*n);
                 i__1 = *n;
                 for (j = 1;
                         j <= i__1;
                         ++j)
                 {
-                    colssq[0] = 0.;
-                    colssq[1] = 1.;
                     i__2 = *m - j;
                     /* Computing MIN */
                     i__3 = *m;
                     i__4 = j + 1; // , expr subst
-                    dlassq_(&i__2, &a[min(i__3,i__4) + j * a_dim1], &c__1, colssq, &colssq[1]);
-                    dcombssq_(ssq, colssq);
+                    dlassq_(&i__2, &a[min(i__3,i__4) + j * a_dim1], &c__1, & scale, &sum);
                     /* L310: */
                 }
             }
             else
             {
-                ssq[0] = 0.;
-                ssq[1] = 1.;
+                scale = 0.;
+                sum = 1.;
                 i__1 = *n;
                 for (j = 1;
                         j <= i__1;
                         ++j)
                 {
-                    colssq[0] = 0.;
-                    colssq[1] = 1.;
                     i__2 = *m - j + 1;
-                    dlassq_(&i__2, &a[j + j * a_dim1], &c__1, colssq, &colssq[ 1]);
-                    dcombssq_(ssq, colssq);
+                    dlassq_(&i__2, &a[j + j * a_dim1], &c__1, &scale, &sum);
                     /* L320: */
                 }
             }
         }
-        value = ssq[0] * sqrt(ssq[1]);
+        value = scale * sqrt(sum);
     }
     ret_val = value;
     AOCL_DTL_TRACE_LOG_EXIT

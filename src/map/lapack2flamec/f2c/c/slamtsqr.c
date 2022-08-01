@@ -1,4 +1,4 @@
-/* ../netlib/v3.9.0/slamtsqr.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* slamtsqr.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__0 = 0;
@@ -27,7 +27,7 @@ static integer c__0 = 0;
 /* > TRANS = 'T': Q**T * C C * Q**T */
 /* > where Q is a real orthogonal matrix defined as the product */
 /* > of blocked elementary reflectors computed by tall skinny */
-/* > QR factorization (DLATSQR) */
+/* > QR factorization (SLATSQR) */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -56,15 +56,14 @@ static integer c__0 = 0;
 /* > \param[in] N */
 /* > \verbatim */
 /* > N is INTEGER */
-/* > The number of columns of the matrix C. M >= N >= 0. */
+/* > The number of columns of the matrix C. N >= 0. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] K */
 /* > \verbatim */
 /* > K is INTEGER */
 /* > The number of elementary reflectors whose product defines */
-/* > the matrix Q. */
-/* > N >= K >= 0;
+/* > the matrix Q. M >= K >= 0;
 */
 /* > */
 /* > \endverbatim */
@@ -73,7 +72,7 @@ static integer c__0 = 0;
 /* > \verbatim */
 /* > MB is INTEGER */
 /* > The block size to be used in the blocked QR. */
-/* > MB > N. (must be the same as DLATSQR) */
+/* > MB > N. (must be the same as SLATSQR) */
 /* > \endverbatim */
 /* > */
 /* > \param[in] NB */
@@ -88,7 +87,7 @@ static integer c__0 = 0;
 /* > A is REAL array, dimension (LDA,K) */
 /* > The i-th column must contain the vector which defines the */
 /* > blockedelementary reflector H(i), for i = 1,2,...,k, as */
-/* > returned by DLATSQR in the first k columns of */
+/* > returned by SLATSQR in the first k columns of */
 /* > its array argument A. */
 /* > \endverbatim */
 /* > */
@@ -197,16 +196,12 @@ the routine */
 /* Subroutine */
 int slamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, integer *mb, integer *nb, real *a, integer *lda, real * t, integer *ldt, real *c__, integer *ldc, real *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"slamtsqr inputs: side %c, trans %c, m %d, n %d, k %d, mb %d, nb %d, lda %d, ldt %d, ldc %d",*side, *trans, *m, *n, *k, *mb, *nb, *lda, *ldt, *ldc);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("slamtsqr inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", mb %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS ", ldc %" FLA_IS ", lwork %" FLA_IS "",*side, *trans, *m, *n, *k, *mb, *nb, *lda, *ldt, *ldc, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, c_dim1, c_offset, t_dim1, t_offset, i__1, i__2, i__3;
     /* Local variables */
-    integer i__, ii, kk, lw, ctr;
+    integer i__, q, ii, kk, lw, ctr;
     logical left, tran;
     extern logical lsame_(char *, char *);
     logical right;
@@ -215,10 +210,9 @@ int slamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     logical notran, lquery;
     extern /* Subroutine */
     int sgemqrt_(char *, char *, integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *), stpmqrt_(char *, char *, integer *, integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *);
-    /* -- LAPACK computational routine (version 3.7.1) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* June 2017 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -252,10 +246,12 @@ int slamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     if (left)
     {
         lw = *n * *nb;
+        q = *m;
     }
     else
     {
         lw = *mb * *nb;
+        q = *n;
     }
     *info = 0;
     if (! left && ! right)
@@ -266,7 +262,7 @@ int slamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     {
         *info = -2;
     }
-    else if (*m < 0)
+    else if (*m < *k)
     {
         *info = -3;
     }
@@ -278,7 +274,11 @@ int slamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     {
         *info = -5;
     }
-    else if (*lda < max(1,*k))
+    else if (*k < *nb || *nb < 1)
+    {
+        *info = -7;
+    }
+    else if (*lda < max(1,q))
     {
         *info = -9;
     }
@@ -303,12 +303,12 @@ int slamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     {
         i__1 = -(*info);
         xerbla_("SLAMTSQR", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -316,7 +316,7 @@ int slamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     i__1 = min(*m,*n);
     if (min(i__1,*k) == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Computing MAX */
@@ -324,7 +324,7 @@ int slamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     if (*mb <= *k || *mb >= max(i__1,*k))
     {
         sgemqrt_(side, trans, m, n, k, nb, &a[a_offset], lda, &t[t_offset], ldt, &c__[c_offset], ldc, &work[1], info);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (left && notran)
@@ -432,9 +432,8 @@ int slamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
         }
     }
     work[1] = (real) lw;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of SLAMTSQR */
 }
 /* slamtsqr_ */
-

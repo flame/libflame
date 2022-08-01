@@ -1,4 +1,4 @@
-/* ../netlib/v3.9.0/cgemlqt.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* cgemlqt.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* > \brief \b CGEMLQT */
 /* Definition: */
@@ -17,13 +17,13 @@
 /* > */
 /* > \verbatim */
 /* > */
-/* > CGEMLQT overwrites the general real M-by-N matrix C with */
+/* > CGEMLQT overwrites the general complex M-by-N matrix C with */
 /* > */
 /* > SIDE = 'L' SIDE = 'R' */
 /* > TRANS = 'N': Q C C Q */
 /* > TRANS = 'C': Q**H C C Q**H */
 /* > */
-/* > where Q is a complex orthogonal matrix defined as the product of K */
+/* > where Q is a complex unitary matrix defined as the product of K */
 /* > elementary reflectors: */
 /* > */
 /* > Q = H(1) H(2) . . . H(K) = I - V T V**H */
@@ -47,7 +47,7 @@
 /* > TRANS is CHARACTER*1 */
 /* > = 'N': No transpose, apply Q;
 */
-/* > = 'C': Transpose, apply Q**H. */
+/* > = 'C': Conjugate transpose, apply Q**H. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] M */
@@ -77,7 +77,7 @@
 /* > MB is INTEGER */
 /* > The block size used for the storage of T. K >= MB >= 1. */
 /* > This must be the same value of MB used to generate T */
-/* > in DGELQT. */
+/* > in CGELQT. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] V */
@@ -87,7 +87,7 @@
 /* > (LDV,N) if SIDE = 'R' */
 /* > The i-th row must contain the vector which defines the */
 /* > elementary reflector H(i), for i = 1,2,...,k, as returned by */
-/* > DGELQT in the first K rows of its array argument A. */
+/* > CGELQT in the first K rows of its array argument A. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDV */
@@ -100,7 +100,7 @@
 /* > \verbatim */
 /* > T is COMPLEX array, dimension (LDT,K) */
 /* > The upper triangular factors of the block reflectors */
-/* > as returned by DGELQT, stored as a MB-by-K matrix. */
+/* > as returned by CGELQT, stored as a MB-by-K matrix. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDT */
@@ -140,7 +140,6 @@
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date November 2017 */
 /* > \ingroup doubleGEcomputational */
 /* ===================================================================== */
 /* Subroutine */
@@ -159,7 +158,7 @@ int cgemlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     /* System generated locals */
     integer v_dim1, v_offset, c_dim1, c_offset, t_dim1, t_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
-    integer i__, ib, kf;
+    integer i__, q, ib, kf;
     logical left, tran;
     extern logical lsame_(char *, char *);
     logical right;
@@ -167,10 +166,9 @@ int cgemlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     int clarfb_(char *, char *, char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *), xerbla_(char *, integer *);
     logical notran;
     integer ldwork;
-    /* -- LAPACK computational routine (version 3.8.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* November 2017 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -207,10 +205,12 @@ int cgemlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     if (left)
     {
         ldwork = max(1,*n);
+        q = *m;
     }
     else if (right)
     {
         ldwork = max(1,*m);
+        q = *n;
     }
     if (! left && ! right)
     {
@@ -228,7 +228,7 @@ int cgemlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     {
         *info = -4;
     }
-    else if (*k < 0)
+    else if (*k < 0 || *k > q)
     {
         *info = -5;
     }
@@ -252,13 +252,13 @@ int cgemlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     {
         i__1 = -(*info);
         xerbla_("CGEMLQT", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* .. Quick return if possible .. */
     if (*m == 0 || *n == 0 || *k == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (left && notran)

@@ -1,4 +1,4 @@
-/* ../netlib/v3.9.0/zlatsqr.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* zlatsqr.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__0 = 0;
@@ -27,8 +27,8 @@ static integer c__0 = 0;
 /* > where: */
 /* > */
 /* > Q is a M-by-M orthogonal matrix, stored on exit in an implicit */
-/* > form in the elements below the digonal of the array A and in */
-/* > the elemenst of the array T;
+/* > form in the elements below the diagonal of the array A and in */
+/* > the elements of the array T;
 */
 /* > */
 /* > R is an upper-triangular N-by-N matrix, stored on exit in */
@@ -162,9 +162,9 @@ the routine */
 int zlatsqr_(integer *m, integer *n, integer *mb, integer * nb, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, doublecomplex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zlatsqr inputs: m %d, n %d, mb %d, nb %d, lda %d, ldt %d",*m, *n, *mb, *nb, *lda, *ldt);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zlatsqr inputs: m %" FLA_IS ", n %" FLA_IS ", mb %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS "",*m, *n, *mb, *nb, *lda, *ldt);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */
@@ -176,10 +176,9 @@ int zlatsqr_(integer *m, integer *n, integer *mb, integer * nb, doublecomplex *a
     logical lquery;
     extern /* Subroutine */
     int ztpqrt_(integer *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
-    /* -- LAPACK computational routine (version 3.9.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd. -- */
-    /* November 2019 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -213,7 +212,7 @@ int zlatsqr_(integer *m, integer *n, integer *mb, integer * nb, doublecomplex *a
     {
         *info = -2;
     }
-    else if (*mb <= *n)
+    else if (*mb < 1)
     {
         *info = -3;
     }
@@ -223,7 +222,7 @@ int zlatsqr_(integer *m, integer *n, integer *mb, integer * nb, doublecomplex *a
     }
     else if (*lda < max(1,*m))
     {
-        *info = -5;
+        *info = -6;
     }
     else if (*ldt < *nb)
     {
@@ -243,25 +242,25 @@ int zlatsqr_(integer *m, integer *n, integer *mb, integer * nb, doublecomplex *a
     {
         i__1 = -(*info);
         xerbla_("ZLATSQR", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (min(*m,*n) == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* The QR Decomposition */
     if (*mb <= *n || *mb >= *m)
     {
         zgeqrt_(m, n, nb, &a[a_offset], lda, &t[t_offset], ldt, &work[1], info);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     kk = (*m - *n) % (*mb - *n);
@@ -293,4 +292,3 @@ int zlatsqr_(integer *m, integer *n, integer *mb, integer * nb, doublecomplex *a
     /* End of ZLATSQR */
 }
 /* zlatsqr_ */
-
