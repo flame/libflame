@@ -1,4 +1,4 @@
-/* ../netlib/cgeqrf.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* cgeqrf.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -33,7 +33,18 @@ static integer c__2 = 2;
 /* > \verbatim */
 /* > */
 /* > CGEQRF computes a QR factorization of a complex M-by-N matrix A: */
-/* > A = Q * R. */
+/* > */
+/* > A = Q * ( R ), */
+/* > ( 0 ) */
+/* > */
+/* > where: */
+/* > */
+/* > Q is a M-by-M orthogonal matrix;
+*/
+/* > R is an upper-triangular N-by-N matrix;
+*/
+/* > 0 is a (M-N)-by-N zero matrix, if M > N. */
+/* > */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -84,7 +95,8 @@ the elements below the diagonal, */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,N). */
+/* > The dimension of the array WORK. */
+/* > LWORK >= 1, if MIN(M,N) = 0, and LWORK >= N, otherwise. */
 /* > For optimum performance LWORK >= N*NB, where NB is */
 /* > the optimal blocksize. */
 /* > */
@@ -107,7 +119,6 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date November 2011 */
 /* > \ingroup complexGEcomputational */
 /* > \par Further Details: */
 /* ===================== */
@@ -151,10 +162,9 @@ int cgeqrf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ldwork, lwkopt;
     logical lquery;
-    /* -- LAPACK computational routine (version 3.4.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* November 2011 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -177,11 +187,9 @@ int cgeqrf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
     --tau;
     --work;
     /* Function Body */
+    k = min(*m,*n);
     *info = 0;
     nb = ilaenv_(&c__1, "CGEQRF", " ", m, n, &c_n1, &c_n1);
-    lwkopt = *n * nb;
-    work[1].r = (real) lwkopt;
-    work[1].i = 0.f; // , expr subst
     lquery = *lwork == -1;
     if (*m < 0)
     {
@@ -195,29 +203,41 @@ int cgeqrf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
     {
         *info = -4;
     }
-    else if (*lwork < max(1,*n) && ! lquery)
+    else if (! lquery)
     {
-        *info = -7;
+        if (*lwork <= 0 || *m > 0 && *lwork < max(1,*n))
+        {
+            *info = -7;
+        }
     }
     if (*info != 0)
     {
         i__1 = -(*info);
         xerbla_("CGEQRF", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        if (k == 0)
+        {
+            lwkopt = 1;
+        }
+        else
+        {
+            lwkopt = *n * nb;
+        }
+        work[1].r = (real) lwkopt;
+        work[1].i = 0.f; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
-    k = min(*m,*n);
     if (k == 0)
     {
         work[1].r = 1.f;
         work[1].i = 0.f; // , expr subst
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     nbmin = 2;

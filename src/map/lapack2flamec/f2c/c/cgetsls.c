@@ -1,4 +1,4 @@
-/* ../netlib/v3.9.0/cgetsls.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* cgetsls.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static complex c_b1 =
@@ -161,7 +161,6 @@ the least squares solution could not be */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date June 2017 */
 /* > \ingroup complexGEsolve */
 /* ===================================================================== */
 /* Subroutine */
@@ -183,7 +182,7 @@ int cgetsls_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, in
     /* Local variables */
     integer i__, j;
     complex tq[5];
-    integer lw1, lw2, mnk;
+    integer lw1, lw2;
     real dum[1];
     integer lwm, lwo;
     real anrm, bnrm;
@@ -194,7 +193,7 @@ int cgetsls_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, in
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
     int cgeqr_(integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *);
-    integer minmn, maxmn;
+    integer maxmn;
     complex workq[1];
     extern /* Subroutine */
     int slabad_(real *, real *);
@@ -210,10 +209,9 @@ int cgetsls_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, in
     logical lquery;
     extern /* Subroutine */
     int ctrtrs_(char *, char *, char *, integer *, integer *, complex *, integer *, complex *, integer *, integer *);
-    /* -- LAPACK driver routine (version 3.7.1) -- */
+    /* -- LAPACK driver routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* June 2017 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -241,9 +239,7 @@ int cgetsls_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, in
     --work;
     /* Function Body */
     *info = 0;
-    minmn = min(*m,*n);
     maxmn = max(*m,*n);
-    mnk = max(minmn,*nrhs);
     tran = lsame_(trans, "C");
     lquery = *lwork == -1 || *lwork == -2;
     if (! (lsame_(trans, "N") || lsame_(trans, "C")))
@@ -277,7 +273,7 @@ int cgetsls_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, in
     }
     if (*info == 0)
     {
-        /* Determine the block size and minimum LWORK */
+        /* Determine the optimum and minimum LWORK */
         if (*m >= *n)
         {
             cgeqr_(m, n, &a[a_offset], lda, tq, &c_n1, workq, &c_n1, &info2);
@@ -312,7 +308,7 @@ int cgetsls_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, in
             cgelq_(m, n, &a[a_offset], lda, tq, &c_n2, workq, &c_n2, &info2);
             tszm = (integer) tq[0].r;
             lwm = (integer) workq[0].r;
-            cgemlq_("L", trans, n, nrhs, m, &a[a_offset], lda, tq, &tszo, &b[ b_offset], ldb, workq, &c_n1, &info2);
+            cgemlq_("L", trans, n, nrhs, m, &a[a_offset], lda, tq, &tszm, &b[ b_offset], ldb, workq, &c_n1, &info2);
             /* Computing MAX */
             i__1 = lwm;
             i__2 = (integer) workq[0].r; // , expr subst
@@ -324,32 +320,26 @@ int cgetsls_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, in
         {
             *info = -10;
         }
+        r__1 = (real) wsizeo;
+        work[1].r = r__1;
+        work[1].i = 0.f; // , expr subst
     }
     if (*info != 0)
     {
         i__1 = -(*info);
         xerbla_("CGETSLS", &i__1);
-        r__1 = (real) wsizeo;
-        work[1].r = r__1;
-        work[1].i = 0.f; // , expr subst
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (lquery)
     {
-        if (*lwork == -1)
-        {
-            r__1 = (real) wsizeo;
-            work[1].r = r__1;
-            work[1].i = 0.f; // , expr subst
-        }
         if (*lwork == -2)
         {
             r__1 = (real) wsizem;
             work[1].r = r__1;
             work[1].i = 0.f; // , expr subst
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*lwork < wsizeo)
@@ -369,7 +359,7 @@ int cgetsls_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, in
     {
         i__1 = max(*m,*n);
         claset_("FULL", &i__1, nrhs, &c_b1, &c_b1, &b[b_offset], ldb);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine parameters */
@@ -429,7 +419,7 @@ int cgetsls_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, in
             ctrtrs_("U", "N", "N", n, nrhs, &a[a_offset], lda, &b[b_offset], ldb, info);
             if (*info > 0)
             {
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             scllen = *n;
@@ -441,7 +431,7 @@ int cgetsls_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, in
             ctrtrs_("U", "C", "N", n, nrhs, &a[a_offset], lda, &b[b_offset], ldb, info);
             if (*info > 0)
             {
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* B(N+1:M,1:NRHS) = CZERO */
@@ -479,7 +469,7 @@ int cgetsls_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, in
             ctrtrs_("L", "N", "N", m, nrhs, &a[a_offset], lda, &b[b_offset], ldb, info);
             if (*info > 0)
             {
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* B(M+1:N,1:NRHS) = 0 */
@@ -515,7 +505,7 @@ int cgetsls_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, in
             ctrtrs_("L", "C", "N", m, nrhs, &a[a_offset], lda, &b[b_offset], ldb, info);
             if (*info > 0)
             {
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             scllen = *m;
@@ -544,6 +534,6 @@ L50:
     work[1].i = 0.f; // , expr subst
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
-    /* End of ZGETSLS */
+    /* End of CGETSLS */
 }
 /* cgetsls_ */

@@ -1,4 +1,4 @@
-/* ../netlib/clanhs.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* clanhs.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -39,7 +39,7 @@ static integer c__1 = 1;
 /* > \return CLANHS */
 /* > \verbatim */
 /* > */
-/* > CLANHS = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
+/* > CLANHS = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -50,7 +50,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -95,7 +95,6 @@ otherwise, WORK is not */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup complexOTHERauxiliary */
 /* ===================================================================== */
 real clanhs_(char *norm, integer *n, complex *a, integer *lda, real *work)
@@ -116,20 +115,16 @@ real clanhs_(char *norm, integer *n, complex *a, integer *lda, real *work)
     /* Builtin functions */
     double c_abs(complex *), sqrt(doublereal);
     /* Local variables */
-    extern /* Subroutine */
-    int scombssq_(real *, real *);
     integer i__, j;
-    real sum, ssq[2];
+    real sum, scale;
     extern logical lsame_(char *, char *);
     real value;
     extern /* Subroutine */
     int classq_(integer *, complex *, integer *, real *, real *);
     extern logical sisnan_(real *);
-    real colssq[2];
-    /* -- LAPACK auxiliary routine (version 3.7.0) -- */
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -138,8 +133,6 @@ real clanhs_(char *norm, integer *n, complex *a, integer *lda, real *work)
     /* .. Parameters .. */
     /* .. */
     /* .. Local Scalars .. */
-    /* .. */
-    /* .. Local Arrays .. */
     /* .. */
     /* .. External Functions .. */
     /* .. */
@@ -160,7 +153,7 @@ real clanhs_(char *norm, integer *n, complex *a, integer *lda, real *work)
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(f2c_abs(A(i,j))). */
+        /* Find max(abs(A(i,j))). */
         value = 0.f;
         i__1 = *n;
         for (j = 1;
@@ -259,27 +252,21 @@ real clanhs_(char *norm, integer *n, complex *a, integer *lda, real *work)
     else if (lsame_(norm, "F") || lsame_(norm, "E"))
     {
         /* Find normF(A). */
-        /* SSQ(1) is scale */
-        /* SSQ(2) is sum-of-squares */
-        /* For better accuracy, sum each column separately. */
-        ssq[0] = 0.f;
-        ssq[1] = 1.f;
+        scale = 0.f;
+        sum = 1.f;
         i__1 = *n;
         for (j = 1;
                 j <= i__1;
                 ++j)
         {
-            colssq[0] = 0.f;
-            colssq[1] = 1.f;
             /* Computing MIN */
             i__3 = *n;
             i__4 = j + 1; // , expr subst
             i__2 = min(i__3,i__4);
-            classq_(&i__2, &a[j * a_dim1 + 1], &c__1, colssq, &colssq[1]);
-            scombssq_(ssq, colssq);
+            classq_(&i__2, &a[j * a_dim1 + 1], &c__1, &scale, &sum);
             /* L90: */
         }
-        value = ssq[0] * sqrt(ssq[1]);
+        value = scale * sqrt(sum);
     }
     ret_val = value;
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
@@ -287,4 +274,3 @@ real clanhs_(char *norm, integer *n, complex *a, integer *lda, real *work)
     /* End of CLANHS */
 }
 /* clanhs_ */
-

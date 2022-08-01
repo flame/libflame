@@ -1,4 +1,4 @@
-/* ../netlib/v3.9.0/clamtsqr.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* clamtsqr.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__0 = 0;
@@ -25,7 +25,7 @@ static integer c__0 = 0;
 /* > SIDE = 'L' SIDE = 'R' */
 /* > TRANS = 'N': Q * C C * Q */
 /* > TRANS = 'C': Q**H * C C * Q**H */
-/* > where Q is a real orthogonal matrix defined as the product */
+/* > where Q is a complex unitary matrix defined as the product */
 /* > of blocked elementary reflectors computed by tall skinny */
 /* > QR factorization (CLATSQR) */
 /* > \endverbatim */
@@ -56,15 +56,14 @@ static integer c__0 = 0;
 /* > \param[in] N */
 /* > \verbatim */
 /* > N is INTEGER */
-/* > The number of columns of the matrix C. M >= N >= 0. */
+/* > The number of columns of the matrix C. N >= 0. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] K */
 /* > \verbatim */
 /* > K is INTEGER */
 /* > The number of elementary reflectors whose product defines */
-/* > the matrix Q. */
-/* > N >= K >= 0;
+/* > the matrix Q. M >= K >= 0;
 */
 /* > */
 /* > \endverbatim */
@@ -73,7 +72,7 @@ static integer c__0 = 0;
 /* > \verbatim */
 /* > MB is INTEGER */
 /* > The block size to be used in the blocked QR. */
-/* > MB > N. (must be the same as DLATSQR) */
+/* > MB > N. (must be the same as CLATSQR) */
 /* > \endverbatim */
 /* > */
 /* > \param[in] NB */
@@ -88,7 +87,7 @@ static integer c__0 = 0;
 /* > A is COMPLEX array, dimension (LDA,K) */
 /* > The i-th column must contain the vector which defines the */
 /* > blockedelementary reflector H(i), for i = 1,2,...,k, as */
-/* > returned by DLATSQR in the first k columns of */
+/* > returned by CLATSQR in the first k columns of */
 /* > its array argument A. */
 /* > \endverbatim */
 /* > */
@@ -165,8 +164,8 @@ the routine */
 /* ===================== */
 /* > */
 /* > \verbatim */
-/* > Tall-Skinny QR (TSQR) performs QR by a sequence of orthogonal transformations, */
-/* > representing Q as a product of other orthogonal matrices */
+/* > Tall-Skinny QR (TSQR) performs QR by a sequence of unitary transformations, */
+/* > representing Q as a product of other unitary matrices */
 /* > Q = Q(1) * Q(2) * . . . * Q(k) */
 /* > where each Q(i) zeros out subdiagonal entries of a block of MB rows of A: */
 /* > Q(1) zeros out the subdiagonal entries of rows 1:MB of A */
@@ -210,7 +209,7 @@ int clamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     /* System generated locals */
     integer a_dim1, a_offset, c_dim1, c_offset, t_dim1, t_offset, i__1, i__2, i__3;
     /* Local variables */
-    integer i__, ii, kk, lw, ctr;
+    integer i__, q, ii, kk, lw, ctr;
     logical left, tran;
     extern logical lsame_(char *, char *);
     logical right;
@@ -219,10 +218,9 @@ int clamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     logical notran, lquery;
     extern /* Subroutine */
     int cgemqrt_(char *, char *, integer *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *), ctpmqrt_(char *, char *, integer *, integer *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *);
-    /* -- LAPACK computational routine (version 3.7.1) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* June 2017 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -256,10 +254,12 @@ int clamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     if (left)
     {
         lw = *n * *nb;
+        q = *m;
     }
     else
     {
         lw = *m * *nb;
+        q = *n;
     }
     *info = 0;
     if (! left && ! right)
@@ -270,7 +270,7 @@ int clamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     {
         *info = -2;
     }
-    else if (*m < 0)
+    else if (*m < *k)
     {
         *info = -3;
     }
@@ -282,7 +282,11 @@ int clamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     {
         *info = -5;
     }
-    else if (*lda < max(1,*k))
+    else if (*k < *nb || *nb < 1)
+    {
+        *info = -7;
+    }
+    else if (*lda < max(1,q))
     {
         *info = -9;
     }
@@ -308,12 +312,12 @@ int clamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     {
         i__1 = -(*info);
         xerbla_("CLAMTSQR", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -321,7 +325,7 @@ int clamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     i__1 = min(*m,*n);
     if (min(i__1,*k) == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Computing MAX */
@@ -329,7 +333,7 @@ int clamtsqr_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     if (*mb <= *k || *mb >= max(i__1,*k))
     {
         cgemqrt_(side, trans, m, n, k, nb, &a[a_offset], lda, &t[t_offset], ldt, &c__[c_offset], ldc, &work[1], info);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (left && notran)

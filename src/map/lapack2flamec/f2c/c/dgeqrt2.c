@@ -1,4 +1,4 @@
-/* ../netlib/dgeqrt2.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* dgeqrt2.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -92,7 +92,6 @@ the elements below the diagonal are not used. */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup doubleGEcomputational */
 /* > \par Further Details: */
 /* ===================== */
@@ -133,10 +132,9 @@ int dgeqrt2_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t
     doublereal alpha;
     extern /* Subroutine */
     int dgemv_(char *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dtrmv_(char *, char *, char *, integer *, doublereal *, integer *, doublereal *, integer *), dlarfg_(integer *, doublereal *, doublereal *, integer *, doublereal *), xerbla_(char *, integer *);
-    /* -- LAPACK computational routine (version 3.7.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -159,13 +157,13 @@ int dgeqrt2_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t
     t -= t_offset;
     /* Function Body */
     *info = 0;
-    if (*m < 0)
-    {
-        *info = -1;
-    }
-    else if (*n < 0)
+    if (*n < 0)
     {
         *info = -2;
+    }
+    else if (*m < *n)
+    {
+        *info = -1;
     }
     else if (*lda < max(1,*m))
     {

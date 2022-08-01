@@ -1,4 +1,4 @@
-/* ../netlib/v3.9.0/zlamswlq.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* zlamswlq.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__0 = 0;
@@ -19,13 +19,13 @@ static integer c__0 = 0;
 /* > */
 /* > \verbatim */
 /* > */
-/* > ZLAMQRTS overwrites the general real M-by-N matrix C with */
+/* > ZLAMSWLQ overwrites the general complex M-by-N matrix C with */
 /* > */
 /* > */
 /* > SIDE = 'L' SIDE = 'R' */
 /* > TRANS = 'N': Q * C C * Q */
 /* > TRANS = 'C': Q**H * C C * Q**H */
-/* > where Q is a real orthogonal matrix defined as the product of blocked */
+/* > where Q is a complex unitary matrix defined as the product of blocked */
 /* > elementary reflectors computed by short wide LQ */
 /* > factorization (ZLASWLQ) */
 /* > \endverbatim */
@@ -56,7 +56,7 @@ static integer c__0 = 0;
 /* > \param[in] N */
 /* > \verbatim */
 /* > N is INTEGER */
-/* > The number of columns of the matrix C. N >= M. */
+/* > The number of columns of the matrix C. N >= 0. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] K */
@@ -71,23 +71,15 @@ static integer c__0 = 0;
 /* > \param[in] MB */
 /* > \verbatim */
 /* > MB is INTEGER */
-/* > The row block size to be used in the blocked QR. */
+/* > The row block size to be used in the blocked LQ. */
 /* > M >= MB >= 1 */
 /* > \endverbatim */
 /* > */
 /* > \param[in] NB */
 /* > \verbatim */
 /* > NB is INTEGER */
-/* > The column block size to be used in the blocked QR. */
+/* > The column block size to be used in the blocked LQ. */
 /* > NB > M. */
-/* > \endverbatim */
-/* > */
-/* > \param[in] NB */
-/* > \verbatim */
-/* > NB is INTEGER */
-/* > The block size to be used in the blocked QR. */
-/* > MB > M. */
-/* > */
 /* > \endverbatim */
 /* > */
 /* > \param[in] A */
@@ -103,10 +95,7 @@ static integer c__0 = 0;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. */
-/* > If SIDE = 'L', LDA >= max(1,M);
-*/
-/* > if SIDE = 'R', LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= MAX(1,K). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] T */
@@ -172,8 +161,8 @@ the routine */
 /* ===================== */
 /* > */
 /* > \verbatim */
-/* > Short-Wide LQ (SWLQ) performs LQ by a sequence of orthogonal transformations, */
-/* > representing Q as a product of other orthogonal matrices */
+/* > Short-Wide LQ (SWLQ) performs LQ by a sequence of unitary transformations, */
+/* > representing Q as a product of other unitary matrices */
 /* > Q = Q(1) * Q(2) * . . . * Q(k) */
 /* > where each Q(i) zeros out upper diagonal entries of a block of NB rows of A: */
 /* > Q(1) zeros out the upper diagonal entries of rows 1:NB of A */
@@ -190,7 +179,7 @@ the routine */
 /* > stored in columns [(i-1)*(NB-M)+M+1:i*(NB-M)+M] of A, and by upper triangular */
 /* > block reflectors, stored in array T(1:LDT,(i-1)*M+1:i*M). */
 /* > The last Q(k) may use fewer rows. */
-/* > For more information see Further Details in TPQRT. */
+/* > For more information see Further Details in TPLQT. */
 /* > */
 /* > For more details of the overall algorithm, see the description of */
 /* > Sequential TSQR in Section 2.2 of [1]. */
@@ -205,9 +194,9 @@ the routine */
 int zlamswlq_(char *side, char *trans, integer *m, integer * n, integer *k, integer *mb, integer *nb, doublecomplex *a, integer * lda, doublecomplex *t, integer *ldt, doublecomplex *c__, integer *ldc, doublecomplex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zlamswlq inputs: side %c, trans %c, m %d, n %d, k %d, mb %d, nb %d, lda %d, ldt %d, ldc %d",*side, *trans, *m, *n, *k, *mb, *nb, *lda, *ldt, *ldc);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zlamswlq inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", mb %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS ", ldc %" FLA_IS "",*side, *trans, *m, *n, *k, *mb, *nb, *lda, *ldt, *ldc);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */
@@ -222,10 +211,9 @@ int zlamswlq_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     logical notran, lquery;
     extern /* Subroutine */
     int zgemlqt_(char *, char *, integer *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *), ztpmlqt_(char *, char *, integer *, integer *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
-    /* -- LAPACK computational routine (version 3.7.1) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* June 2017 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -273,7 +261,11 @@ int zlamswlq_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     {
         *info = -2;
     }
-    else if (*m < 0)
+    else if (*k < 0)
+    {
+        *info = -5;
+    }
+    else if (*m < *k)
     {
         *info = -3;
     }
@@ -281,9 +273,9 @@ int zlamswlq_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     {
         *info = -4;
     }
-    else if (*k < 0)
+    else if (*k < *mb || *mb < 1)
     {
-        *info = -5;
+        *info = -6;
     }
     else if (*lda < max(1,*k))
     {
@@ -307,14 +299,14 @@ int zlamswlq_(char *side, char *trans, integer *m, integer * n, integer *k, inte
         xerbla_("ZLAMSWLQ", &i__1);
         work[1].r = (doublereal) lw;
         work[1].i = 0.; // , expr subst
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
         work[1].r = (doublereal) lw;
         work[1].i = 0.; // , expr subst
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
@@ -322,7 +314,7 @@ int zlamswlq_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     i__1 = min(*m,*n);
     if (min(i__1,*k) == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Computing MAX */
@@ -330,7 +322,7 @@ int zlamswlq_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     if (*nb <= *k || *nb >= max(i__1,*k))
     {
         zgemlqt_(side, trans, m, n, k, mb, &a[a_offset], lda, &t[t_offset], ldt, &c__[c_offset], ldc, &work[1], info);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (left && tran)
@@ -444,4 +436,3 @@ int zlamswlq_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     /* End of ZLAMSWLQ */
 }
 /* zlamswlq_ */
-

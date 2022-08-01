@@ -1,4 +1,4 @@
-/* ../netlib/v3.9.0/dlamswlq.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* dlamswlq.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__0 = 0;
@@ -19,7 +19,7 @@ static integer c__0 = 0;
 /* > */
 /* > \verbatim */
 /* > */
-/* > DLAMQRTS overwrites the general real M-by-N matrix C with */
+/* > DLAMSWLQ overwrites the general real M-by-N matrix C with */
 /* > */
 /* > */
 /* > SIDE = 'L' SIDE = 'R' */
@@ -56,7 +56,7 @@ static integer c__0 = 0;
 /* > \param[in] N */
 /* > \verbatim */
 /* > N is INTEGER */
-/* > The number of columns of the matrix C. N >= M. */
+/* > The number of columns of the matrix C. N >= 0. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] K */
@@ -71,23 +71,15 @@ static integer c__0 = 0;
 /* > \param[in] MB */
 /* > \verbatim */
 /* > MB is INTEGER */
-/* > The row block size to be used in the blocked QR. */
+/* > The row block size to be used in the blocked LQ. */
 /* > M >= MB >= 1 */
 /* > \endverbatim */
 /* > */
 /* > \param[in] NB */
 /* > \verbatim */
 /* > NB is INTEGER */
-/* > The column block size to be used in the blocked QR. */
+/* > The column block size to be used in the blocked LQ. */
 /* > NB > M. */
-/* > \endverbatim */
-/* > */
-/* > \param[in] NB */
-/* > \verbatim */
-/* > NB is INTEGER */
-/* > The block size to be used in the blocked QR. */
-/* > MB > M. */
-/* > */
 /* > \endverbatim */
 /* > */
 /* > \param[in] A */
@@ -103,10 +95,7 @@ static integer c__0 = 0;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. */
-/* > If SIDE = 'L', LDA >= max(1,M);
-*/
-/* > if SIDE = 'R', LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= max(1,K). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] T */
@@ -190,7 +179,7 @@ the routine */
 /* > stored in columns [(i-1)*(NB-M)+M+1:i*(NB-M)+M] of A, and by upper triangular */
 /* > block reflectors, stored in array T(1:LDT,(i-1)*M+1:i*M). */
 /* > The last Q(k) may use fewer rows. */
-/* > For more information see Further Details in TPQRT. */
+/* > For more information see Further Details in TPLQT. */
 /* > */
 /* > For more details of the overall algorithm, see the description of */
 /* > Sequential TSQR in Section 2.2 of [1]. */
@@ -218,10 +207,9 @@ int dlamswlq_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     logical notran, lquery;
     extern /* Subroutine */
     int dgemlqt_(char *, char *, integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *), dtpmlqt_(char *, char *, integer *, integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *);
-    /* -- LAPACK computational routine (version 3.7.1) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* June 2017 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -269,7 +257,11 @@ int dlamswlq_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     {
         *info = -2;
     }
-    else if (*m < 0)
+    else if (*k < 0)
+    {
+        *info = -5;
+    }
+    else if (*m < *k)
     {
         *info = -3;
     }
@@ -277,9 +269,9 @@ int dlamswlq_(char *side, char *trans, integer *m, integer * n, integer *k, inte
     {
         *info = -4;
     }
-    else if (*k < 0)
+    else if (*k < *mb || *mb < 1)
     {
-        *info = -5;
+        *info = -6;
     }
     else if (*lda < max(1,*k))
     {

@@ -1,4 +1,4 @@
-/* ../netlib/zgesdd.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* zgesdd.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static doublecomplex c_b1 =
@@ -223,9 +223,10 @@ see comments inside code. */
 /* > \param[out] INFO */
 /* > \verbatim */
 /* > INFO is INTEGER */
-/* > = 0: successful exit. */
 /* > < 0: if INFO = -i, the i-th argument had an illegal value. */
+/* > = -4: if A had a NAN entry. */
 /* > > 0: The updating process of DBDSDC did not converge. */
+/* > = 0: successful exit. */
 /* > \endverbatim */
 /* Authors: */
 /* ======== */
@@ -233,7 +234,6 @@ see comments inside code. */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date June 2016 */
 /* > \ingroup complex16GEsing */
 /* > \par Contributors: */
 /* ================== */
@@ -245,8 +245,15 @@ see comments inside code. */
 /* Subroutine */
 int zgesdd_(char *jobz, integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *s, doublecomplex *u, integer *ldu, doublecomplex *vt, integer *ldvt, doublecomplex *work, integer *lwork, doublereal *rwork, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zgesdd inputs: jobz %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS "",*jobz, *m, *n, *lda, *ldu, *ldvt);
+    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
+#endif
     /* System generated locals */
     integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1, i__2, i__3;
+    doublereal d__1;
     /* Builtin functions */
     double sqrt(doublereal);
     /* Local variables */
@@ -272,7 +279,10 @@ int zgesdd_(char *jobz, integer *m, integer *n, doublecomplex *a, integer *lda, 
     int dbdsdc_(char *, char *, integer *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
     extern doublereal dlamch_(char *);
     extern /* Subroutine */
-    int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *), xerbla_(char *, integer *), zgebrd_(integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, integer *);
+    int dlascl_(char *, integer *, integer *, doublereal *, doublereal *, integer *, integer *, doublereal *, integer *, integer *);
+    extern logical disnan_(doublereal *);
+    extern /* Subroutine */
+    int xerbla_(char *, integer *), zgebrd_( integer *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, integer *);
     doublereal bignum;
     extern doublereal zlange_(char *, integer *, integer *, doublecomplex *, integer *, doublereal *);
     extern /* Subroutine */
@@ -292,10 +302,10 @@ int zgesdd_(char *jobz, integer *m, integer *n, doublecomplex *a, integer *lda, 
     integer nrwork;
     extern /* Subroutine */
     int zungqr_(integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, integer *);
-    /* -- LAPACK driver routine (version 3.7.0) -- */
+    extern doublereal droundup_lwork(integer *);
+    /* -- LAPACK driver routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* June 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -797,7 +807,8 @@ int zgesdd_(char *jobz, integer *m, integer *n, doublecomplex *a, integer *lda, 
     }
     if (*info == 0)
     {
-        work[1].r = (doublereal) maxwrk;
+        d__1 = droundup_lwork(&maxwrk);
+        work[1].r = d__1;
         work[1].i = 0.; // , expr subst
         if (*lwork < minwrk && ! lquery)
         {
@@ -808,15 +819,18 @@ int zgesdd_(char *jobz, integer *m, integer *n, doublecomplex *a, integer *lda, 
     {
         i__1 = -(*info);
         xerbla_("ZGESDD", &i__1);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0)
     {
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine constants */
@@ -825,6 +839,12 @@ int zgesdd_(char *jobz, integer *m, integer *n, doublecomplex *a, integer *lda, 
     bignum = 1. / smlnum;
     /* Scale A if max element outside range [SMLNUM,BIGNUM] */
     anrm = zlange_("M", m, n, &a[a_offset], lda, dum);
+    if (disnan_(&anrm))
+    {
+        *info = -4;
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        return 0;
+    }
     iscl = 0;
     if (anrm > 0. && anrm < smlnum)
     {
@@ -2083,8 +2103,10 @@ int zgesdd_(char *jobz, integer *m, integer *n, doublecomplex *a, integer *lda, 
         }
     }
     /* Return optimal workspace in WORK(1) */
-    work[1].r = (doublereal) maxwrk;
+    d__1 = droundup_lwork(&maxwrk);
+    work[1].r = d__1;
     work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of ZGESDD */
 }

@@ -1,4 +1,4 @@
-/* ../netlib/cgeqrt2.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* cgeqrt2.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static complex c_b1 =
@@ -100,7 +100,6 @@ the elements below the diagonal are not used. */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup complexGEcomputational */
 /* > \par Further Details: */
 /* ===================== */
@@ -152,10 +151,9 @@ int cgeqrt2_(integer *m, integer *n, complex *a, integer * lda, complex *t, inte
     complex alpha;
     extern /* Subroutine */
     int cgemv_(char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *), ctrmv_(char *, char *, char *, integer *, complex *, integer *, complex *, integer *), clarfg_(integer *, complex *, complex *, integer *, complex *), xerbla_(char *, integer *);
-    /* -- LAPACK computational routine (version 3.7.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -178,13 +176,13 @@ int cgeqrt2_(integer *m, integer *n, complex *a, integer * lda, complex *t, inte
     t -= t_offset;
     /* Function Body */
     *info = 0;
-    if (*m < 0)
-    {
-        *info = -1;
-    }
-    else if (*n < 0)
+    if (*n < 0)
     {
         *info = -2;
+    }
+    else if (*m < *n)
+    {
+        *info = -1;
     }
     else if (*lda < max(1,*m))
     {
@@ -198,7 +196,7 @@ int cgeqrt2_(integer *m, integer *n, complex *a, integer * lda, complex *t, inte
     {
         i__1 = -(*info);
         xerbla_("CGEQRT2", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     k = min(*m,*n);

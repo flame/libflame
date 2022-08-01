@@ -403,7 +403,6 @@ int clarrv_(integer *n, real *vl, real *vu, real *d__, real * l, real *pivmin, i
     {
 	if (*m > *n) 
            *info = -4;
-
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

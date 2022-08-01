@@ -1,4 +1,4 @@
-/* ../netlib/slanhs.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* slanhs.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -38,7 +38,7 @@ static integer c__1 = 1;
 /* > \return SLANHS */
 /* > \verbatim */
 /* > */
-/* > SLANHS = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
+/* > SLANHS = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -49,7 +49,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -94,37 +94,27 @@ otherwise, WORK is not */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup realOTHERauxiliary */
 /* ===================================================================== */
 real slanhs_(char *norm, integer *n, real *a, integer *lda, real *work)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"slanhs inputs: norm %c, n %d, lda %d",*norm, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("slanhs inputs: norm %c, n %" FLA_IS ", lda %" FLA_IS "",*norm, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
     real ret_val, r__1;
     /* Builtin functions */
     double sqrt(doublereal);
     /* Local variables */
-    extern /* Subroutine */
-    int scombssq_(real *, real *);
     integer i__, j;
-    real sum, ssq[2];
+    real sum, scale;
     extern logical lsame_(char *, char *);
     real value;
-    extern logical sisnan_(real *);
-    real colssq[2];
     extern /* Subroutine */
     int slassq_(integer *, real *, integer *, real *, real *);
-    /* -- LAPACK auxiliary routine (version 3.7.0) -- */
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -134,11 +124,9 @@ real slanhs_(char *norm, integer *n, real *a, integer *lda, real *work)
     /* .. */
     /* .. Local Scalars .. */
     /* .. */
-    /* .. Local Arrays .. */
+    /* .. External Subroutines .. */
     /* .. */
     /* .. External Functions .. */
-    /* .. */
-    /* .. External Subroutines .. */
     /* .. */
     /* .. Intrinsic Functions .. */
     /* .. */
@@ -155,7 +143,7 @@ real slanhs_(char *norm, integer *n, real *a, integer *lda, real *work)
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(f2c_abs(A(i,j))). */
+        /* Find max(abs(A(i,j))). */
         value = 0.f;
         i__1 = *n;
         for (j = 1;
@@ -171,7 +159,7 @@ real slanhs_(char *norm, integer *n, real *a, integer *lda, real *work)
                     ++i__)
             {
                 sum = (r__1 = a[i__ + j * a_dim1], f2c_abs(r__1));
-                if (value < sum || sisnan_(&sum))
+                if (value < sum || sum != sum)
                 {
                     value = sum;
                 }
@@ -201,7 +189,7 @@ real slanhs_(char *norm, integer *n, real *a, integer *lda, real *work)
                 sum += (r__1 = a[i__ + j * a_dim1], f2c_abs(r__1));
                 /* L30: */
             }
-            if (value < sum || sisnan_(&sum))
+            if (value < sum || sum != sum)
             {
                 value = sum;
             }
@@ -244,7 +232,7 @@ real slanhs_(char *norm, integer *n, real *a, integer *lda, real *work)
                 ++i__)
         {
             sum = work[i__];
-            if (value < sum || sisnan_(&sum))
+            if (value < sum || sum != sum)
             {
                 value = sum;
             }
@@ -254,32 +242,25 @@ real slanhs_(char *norm, integer *n, real *a, integer *lda, real *work)
     else if (lsame_(norm, "F") || lsame_(norm, "E"))
     {
         /* Find normF(A). */
-        /* SSQ(1) is scale */
-        /* SSQ(2) is sum-of-squares */
-        /* For better accuracy, sum each column separately. */
-        ssq[0] = 0.f;
-        ssq[1] = 1.f;
+        scale = 0.f;
+        sum = 1.f;
         i__1 = *n;
         for (j = 1;
                 j <= i__1;
                 ++j)
         {
-            colssq[0] = 0.f;
-            colssq[1] = 1.f;
             /* Computing MIN */
             i__3 = *n;
             i__4 = j + 1; // , expr subst
             i__2 = min(i__3,i__4);
-            slassq_(&i__2, &a[j * a_dim1 + 1], &c__1, colssq, &colssq[1]);
-            scombssq_(ssq, colssq);
+            slassq_(&i__2, &a[j * a_dim1 + 1], &c__1, &scale, &sum);
             /* L90: */
         }
-        value = ssq[0] * sqrt(ssq[1]);
+        value = scale * sqrt(sum);
     }
     ret_val = value;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return ret_val;
     /* End of SLANHS */
 }
 /* slanhs_ */
-

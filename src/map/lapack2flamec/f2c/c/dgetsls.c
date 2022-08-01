@@ -1,4 +1,4 @@
-/* ../netlib/v3.9.0/dgetsls.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* dgetsls.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c_n1 = -1;
@@ -157,7 +157,6 @@ the least squares solution could not be */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date June 2017 */
 /* > \ingroup doubleGEsolve */
 /* ===================================================================== */
 /* Subroutine */
@@ -170,7 +169,7 @@ int dgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a,
     /* Local variables */
     integer i__, j;
     doublereal tq[5];
-    integer lw1, lw2, mnk, lwm, lwo;
+    integer lw1, lw2, lwm, lwo;
     doublereal anrm, bnrm;
     logical tran;
     integer brow, tszm, tszo, info2, iascl, ibscl;
@@ -179,7 +178,7 @@ int dgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a,
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
     int dgeqr_(integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
-    integer minmn, maxmn;
+    integer maxmn;
     doublereal workq[1];
     extern /* Subroutine */
     int dlabad_(doublereal *, doublereal *);
@@ -192,10 +191,9 @@ int dgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a,
     logical lquery;
     extern /* Subroutine */
     int dtrtrs_(char *, char *, char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, integer *);
-    /* -- LAPACK driver routine (version 3.7.1) -- */
+    /* -- LAPACK driver routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* June 2017 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -223,9 +221,7 @@ int dgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a,
     --work;
     /* Function Body */
     *info = 0;
-    minmn = min(*m,*n);
     maxmn = max(*m,*n);
-    mnk = max(minmn,*nrhs);
     tran = lsame_(trans, "T");
     lquery = *lwork == -1 || *lwork == -2;
     if (! (lsame_(trans, "N") || lsame_(trans, "T")))
@@ -259,7 +255,7 @@ int dgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a,
     }
     if (*info == 0)
     {
-        /* Determine the block size and minimum LWORK */
+        /* Determine the optimum and minimum LWORK */
         if (*m >= *n)
         {
             dgeqr_(m, n, &a[a_offset], lda, tq, &c_n1, workq, &c_n1, &info2);
@@ -294,7 +290,7 @@ int dgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a,
             dgelq_(m, n, &a[a_offset], lda, tq, &c_n2, workq, &c_n2, &info2);
             tszm = (integer) tq[0];
             lwm = (integer) workq[0];
-            dgemlq_("L", trans, n, nrhs, m, &a[a_offset], lda, tq, &tszo, &b[ b_offset], ldb, workq, &c_n1, &info2);
+            dgemlq_("L", trans, n, nrhs, m, &a[a_offset], lda, tq, &tszm, &b[ b_offset], ldb, workq, &c_n1, &info2);
             /* Computing MAX */
             i__1 = lwm;
             i__2 = (integer) workq[0]; // , expr subst
@@ -306,24 +302,20 @@ int dgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a,
         {
             *info = -10;
         }
+        work[1] = (doublereal) wsizeo;
     }
     if (*info != 0)
     {
         i__1 = -(*info);
         xerbla_("DGETSLS", &i__1);
-        work[1] = (doublereal) wsizeo;
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (lquery)
     {
-        if (*lwork == -1)
-        {
-            work[1] = (real) wsizeo;
-        }
         if (*lwork == -2)
         {
-            work[1] = (real) wsizem;
+            work[1] = (doublereal) wsizem;
         }
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;

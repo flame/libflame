@@ -1,4 +1,4 @@
-/* ../netlib/zlanhb.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* zlanhb.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -40,7 +40,7 @@ static integer c__1 = 1;
 /* > \return ZLANHB */
 /* > \verbatim */
 /* > */
-/* > ZLANHB = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
+/* > ZLANHB = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -51,7 +51,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -117,15 +117,14 @@ otherwise, */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup complex16OTHERauxiliary */
 /* ===================================================================== */
 doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex *ab, integer *ldab, doublereal *work)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zlanhb inputs: norm %c, uplo %c, n %d, k %d, ldab %d",*norm, *uplo, *n, *k, *ldab);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zlanhb inputs: norm %c, uplo %c, n %" FLA_IS ", k %" FLA_IS ", ldab %" FLA_IS "",*norm, *uplo, *n, *k, *ldab);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */
@@ -134,20 +133,16 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
     /* Builtin functions */
     double z_abs(doublecomplex *), sqrt(doublereal);
     /* Local variables */
-    extern /* Subroutine */
-    int dcombssq_(doublereal *, doublereal *);
     integer i__, j, l;
-    doublereal sum, ssq[2], absa;
+    doublereal sum, absa, scale;
     extern logical lsame_(char *, char *);
     doublereal value;
     extern logical disnan_(doublereal *);
-    doublereal colssq[2];
     extern /* Subroutine */
     int zlassq_(integer *, doublecomplex *, integer *, doublereal *, doublereal *);
-    /* -- LAPACK auxiliary routine (version 3.7.0) -- */
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -156,8 +151,6 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
     /* .. Parameters .. */
     /* .. */
     /* .. Local Scalars .. */
-    /* .. */
-    /* .. Local Arrays .. */
     /* .. */
     /* .. External Functions .. */
     /* .. */
@@ -178,7 +171,7 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(f2c_abs(A(i,j))). */
+        /* Find max(abs(A(i,j))). */
         value = 0.;
         if (lsame_(uplo, "U"))
         {
@@ -327,12 +320,8 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
     else if (lsame_(norm, "F") || lsame_(norm, "E"))
     {
         /* Find normF(A). */
-        /* SSQ(1) is scale */
-        /* SSQ(2) is sum-of-squares */
-        /* For better accuracy, sum each column separately. */
-        ssq[0] = 0.;
-        ssq[1] = 1.;
-        /* Sum off-diagonals */
+        scale = 0.;
+        sum = 1.;
         if (*k > 0)
         {
             if (lsame_(uplo, "U"))
@@ -342,15 +331,12 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
                         j <= i__1;
                         ++j)
                 {
-                    colssq[0] = 0.;
-                    colssq[1] = 1.;
                     /* Computing MIN */
                     i__3 = j - 1;
                     i__4 = min(i__3,*k);
                     /* Computing MAX */
                     i__2 = *k + 2 - j;
-                    zlassq_(&i__4, &ab[max(i__2,1) + j * ab_dim1], &c__1, colssq, &colssq[1]);
-                    dcombssq_(ssq, colssq);
+                    zlassq_(&i__4, &ab[max(i__2,1) + j * ab_dim1], &c__1, & scale, &sum);
                     /* L110: */
                 }
                 l = *k + 1;
@@ -362,26 +348,20 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
                         j <= i__1;
                         ++j)
                 {
-                    colssq[0] = 0.;
-                    colssq[1] = 1.;
                     /* Computing MIN */
                     i__3 = *n - j;
                     i__4 = min(i__3,*k);
-                    zlassq_(&i__4, &ab[j * ab_dim1 + 2], &c__1, colssq, & colssq[1]);
-                    dcombssq_(ssq, colssq);
+                    zlassq_(&i__4, &ab[j * ab_dim1 + 2], &c__1, &scale, &sum);
                     /* L120: */
                 }
                 l = 1;
             }
-            ssq[1] *= 2;
+            sum *= 2;
         }
         else
         {
             l = 1;
         }
-        /* Sum diagonal */
-        colssq[0] = 0.;
-        colssq[1] = 1.;
         i__1 = *n;
         for (j = 1;
                 j <= i__1;
@@ -392,24 +372,23 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
             {
                 i__4 = l + j * ab_dim1;
                 absa = (d__1 = ab[i__4].r, f2c_abs(d__1));
-                if (colssq[0] < absa)
+                if (scale < absa)
                 {
                     /* Computing 2nd power */
-                    d__1 = colssq[0] / absa;
-                    colssq[1] = colssq[1] * (d__1 * d__1) + 1.;
-                    colssq[0] = absa;
+                    d__1 = scale / absa;
+                    sum = sum * (d__1 * d__1) + 1.;
+                    scale = absa;
                 }
                 else
                 {
                     /* Computing 2nd power */
-                    d__1 = absa / colssq[0];
-                    colssq[1] += d__1 * d__1;
+                    d__1 = absa / scale;
+                    sum += d__1 * d__1;
                 }
             }
             /* L130: */
         }
-        dcombssq_(ssq, colssq);
-        value = ssq[0] * sqrt(ssq[1]);
+        value = scale * sqrt(sum);
     }
     ret_val = value;
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
@@ -417,4 +396,3 @@ doublereal zlanhb_(char *norm, char *uplo, integer *n, integer *k, doublecomplex
     /* End of ZLANHB */
 }
 /* zlanhb_ */
-

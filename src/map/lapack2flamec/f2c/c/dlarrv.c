@@ -396,7 +396,6 @@ int dlarrv_(integer *n, doublereal *vl, doublereal *vu, doublereal *d__, doubler
     {
 	if (*m > *n)
 	   *info = -4;
-
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

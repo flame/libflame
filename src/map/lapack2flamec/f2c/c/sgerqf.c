@@ -1,4 +1,4 @@
-/* ../netlib/sgerqf.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* sgerqf.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -87,7 +87,8 @@ static integer c__2 = 2;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,M). */
+/* > The dimension of the array WORK. */
+/* > LWORK >= 1, if MIN(M,N) = 0, and LWORK >= M, otherwise. */
 /* > For optimum performance LWORK >= M*NB, where NB is */
 /* > the optimal blocksize. */
 /* > */
@@ -110,7 +111,6 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date November 2011 */
 /* > \ingroup realGEcomputational */
 /* > \par Further Details: */
 /* ===================== */
@@ -135,6 +135,8 @@ v(1:n-k+i-1) is stored on exit in */
 /* Subroutine */
 int sgerqf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("sgerqf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "",*m, *n, *lda, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
@@ -146,10 +148,9 @@ int sgerqf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
     int slarft_(char *, char *, integer *, integer *, real *, integer *, real *, real *, integer *);
     integer ldwork, lwkopt;
     logical lquery;
-    /* -- LAPACK computational routine (version 3.4.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* November 2011 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -186,10 +187,6 @@ int sgerqf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
     {
         *info = -4;
     }
-    else if (*lwork < max(1,*m) && ! lquery)
-    {
-        *info = -7;
-    }
     if (*info == 0)
     {
         k = min(*m,*n);
@@ -201,27 +198,32 @@ int sgerqf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
         {
             nb = ilaenv_(&c__1, "SGERQF", " ", m, n, &c_n1, &c_n1);
             lwkopt = *m * nb;
-            work[1] = (real) lwkopt;
         }
         work[1] = (real) lwkopt;
-        if (*lwork < max(1,*m) && ! lquery)
+        if (! lquery)
         {
-            *info = -7;
+            if (*lwork <= 0 || *n > 0 && *lwork < max(1,*m))
+            {
+                *info = -7;
+            }
         }
     }
     if (*info != 0)
     {
         i__1 = -(*info);
         xerbla_("SGERQF", &i__1);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (k == 0)
     {
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     nbmin = 2;
@@ -300,6 +302,7 @@ int sgerqf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
         sgerq2_(&mu, &nu, &a[a_offset], lda, &tau[1], &work[1], &iinfo);
     }
     work[1] = (real) iws;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of SGERQF */
 }

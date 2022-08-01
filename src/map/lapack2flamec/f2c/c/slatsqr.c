@@ -1,4 +1,4 @@
-/* ../netlib/v3.9.0/slatsqr.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* slatsqr.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__0 = 0;
@@ -27,8 +27,8 @@ static integer c__0 = 0;
 /* > where: */
 /* > */
 /* > Q is a M-by-M orthogonal matrix, stored on exit in an implicit */
-/* > form in the elements below the digonal of the array A and in */
-/* > the elemenst of the array T;
+/* > form in the elements below the diagonal of the array A and in */
+/* > the elements of the array T;
 */
 /* > */
 /* > R is an upper-triangular N-by-N matrix, stored on exit in */
@@ -161,6 +161,8 @@ the routine */
 /* Subroutine */
 int slatsqr_(integer *m, integer *n, integer *mb, integer * nb, real *a, integer *lda, real *t, integer *ldt, real *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("slatsqr inputs: m %" FLA_IS ", n %" FLA_IS ", mb %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS ", lwork %" FLA_IS "",*m, *n, *mb, *nb, *lda, *ldt, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, t_dim1, t_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -170,10 +172,9 @@ int slatsqr_(integer *m, integer *n, integer *mb, integer * nb, real *a, integer
     logical lquery;
     extern /* Subroutine */
     int stpqrt_(integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *);
-    /* -- LAPACK computational routine (version 3.9.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd. -- */
-    /* November 2019 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -207,7 +208,7 @@ int slatsqr_(integer *m, integer *n, integer *mb, integer * nb, real *a, integer
     {
         *info = -2;
     }
-    else if (*mb <= *n)
+    else if (*mb < 1)
     {
         *info = -3;
     }
@@ -217,7 +218,7 @@ int slatsqr_(integer *m, integer *n, integer *mb, integer * nb, real *a, integer
     }
     else if (*lda < max(1,*m))
     {
-        *info = -5;
+        *info = -6;
     }
     else if (*ldt < *nb)
     {
@@ -235,21 +236,25 @@ int slatsqr_(integer *m, integer *n, integer *mb, integer * nb, real *a, integer
     {
         i__1 = -(*info);
         xerbla_("SLATSQR", &i__1);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (min(*m,*n) == 0)
     {
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* The QR Decomposition */
     if (*mb <= *n || *mb >= *m)
     {
         sgeqrt_(m, n, nb, &a[a_offset], lda, &t[t_offset], ldt, &work[1], info);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     kk = (*m - *n) % (*mb - *n);
@@ -274,6 +279,7 @@ int slatsqr_(integer *m, integer *n, integer *mb, integer * nb, real *a, integer
         stpqrt_(&kk, n, &c__0, nb, &a[a_dim1 + 1], lda, &a[ii + a_dim1], lda, &t[(ctr * *n + 1) * t_dim1 + 1], ldt, &work[1], info);
     }
     work[1] = (real) (*n * *nb);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of SLATSQR */
 }

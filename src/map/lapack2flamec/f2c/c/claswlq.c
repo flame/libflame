@@ -1,4 +1,4 @@
-/* ../netlib/v3.9.0/claswlq.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* claswlq.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__0 = 0;
@@ -26,10 +26,10 @@ static integer c__0 = 0;
 /* > where: */
 /* > */
 /* > Q is a n-by-N orthogonal matrix, stored on exit in an implicit */
-/* > form in the elements above the digonal of the array A and in */
-/* > the elemenst of the array T;
+/* > form in the elements above the diagonal of the array A and in */
+/* > the elements of the array T;
 */
-/* > L is an lower-triangular M-by-M matrix stored on exit in */
+/* > L is a lower-triangular M-by-M matrix stored on exit in */
 /* > the elements on and below the diagonal of the array A. */
 /* > 0 is a M-by-(N-M) zero matrix, if M < N, and is not stored. */
 /* > */
@@ -58,7 +58,7 @@ static integer c__0 = 0;
 /* > \verbatim */
 /* > NB is INTEGER */
 /* > The column block size to be used in the blocked QR. */
-/* > NB > M. */
+/* > NB > 0. */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] A */
@@ -176,10 +176,9 @@ int claswlq_(integer *m, integer *n, integer *mb, integer * nb, complex *a, inte
     extern /* Subroutine */
     int xerbla_(char *, integer *), cgelqt_( integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *), ctplqt_(integer *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *);
     logical lquery;
-    /* -- LAPACK computational routine (version 3.9.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd. -- */
-    /* June 2017 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -219,13 +218,13 @@ int claswlq_(integer *m, integer *n, integer *mb, integer * nb, complex *a, inte
     {
         *info = -3;
     }
-    else if (*nb <= *m)
+    else if (*nb <= 0)
     {
         *info = -4;
     }
     else if (*lda < max(1,*m))
     {
-        *info = -5;
+        *info = -6;
     }
     else if (*ldt < *mb)
     {
@@ -245,25 +244,25 @@ int claswlq_(integer *m, integer *n, integer *mb, integer * nb, complex *a, inte
     {
         i__1 = -(*info);
         xerbla_("CLASWLQ", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Quick return if possible */
     if (min(*m,*n) == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* The LQ Decomposition */
     if (*m >= *n || *nb <= *m || *nb >= *n)
     {
         cgelqt_(m, n, mb, &a[a_offset], lda, &t[t_offset], ldt, &work[1], info);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     kk = (*n - *m) % (*nb - *m);

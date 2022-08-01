@@ -394,7 +394,6 @@ int zlarrv_(integer *n, doublereal *vl, doublereal *vu, doublereal *d__, doubler
     {
     	if (*m > *n)
 	    *info = -4;
-
         return 0;
     }
     /* The first N entries of WORK are reserved for the eigenvalues */

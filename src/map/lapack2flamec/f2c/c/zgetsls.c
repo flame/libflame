@@ -1,4 +1,4 @@
-/* ../netlib/v3.9.0/zgetsls.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* zgetsls.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static doublecomplex c_b1 =
@@ -161,33 +161,31 @@ the least squares solution could not be */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date June 2017 */
 /* > \ingroup complex16GEsolve */
 /* ===================================================================== */
 /* Subroutine */
 int zgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zgetsls inputs: trans %c, m %d, n %d, nrhs %d, lda %d, ldb %d",*trans, *m, *n, *nrhs, *lda, *ldb);
+#if AOCL_DTL_LOG_ENABLE 
+    char buffer[256]; 
+    snprintf(buffer, 256,"zgetsls inputs: trans %c, m %" FLA_IS ", n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*trans, *m, *n, *nrhs, *lda, *ldb);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3;
-    real r__1;
     doublereal d__1;
     /* Local variables */
     integer i__, j;
     doublecomplex tq[5];
-    integer lw1, lw2, mnk;
+    integer lw1, lw2;
     doublereal dum[1];
     integer lwm, lwo;
     doublereal anrm, bnrm;
     logical tran;
     integer brow, tszm, tszo, info2, iascl, ibscl;
     extern logical lsame_(char *, char *);
-    integer minmn, maxmn;
+    integer maxmn;
     extern /* Subroutine */
     int zgelq_(integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *), zgeqr_(integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *);
     doublecomplex workq[1];
@@ -206,10 +204,9 @@ int zgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex 
     logical lquery;
     extern /* Subroutine */
     int ztrtrs_(char *, char *, char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *);
-    /* -- LAPACK driver routine (version 3.7.1) -- */
+    /* -- LAPACK driver routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* June 2017 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -237,9 +234,7 @@ int zgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex 
     --work;
     /* Function Body */
     *info = 0;
-    minmn = min(*m,*n);
     maxmn = max(*m,*n);
-    mnk = max(minmn,*nrhs);
     tran = lsame_(trans, "C");
     lquery = *lwork == -1 || *lwork == -2;
     if (! (lsame_(trans, "N") || lsame_(trans, "C")))
@@ -273,7 +268,7 @@ int zgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex 
     }
     if (*info == 0)
     {
-        /* Determine the block size and minimum LWORK */
+        /* Determine the optimum and minimum LWORK */
         if (*m >= *n)
         {
             zgeqr_(m, n, &a[a_offset], lda, tq, &c_n1, workq, &c_n1, &info2);
@@ -308,7 +303,7 @@ int zgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex 
             zgelq_(m, n, &a[a_offset], lda, tq, &c_n2, workq, &c_n2, &info2);
             tszm = (integer) tq[0].r;
             lwm = (integer) workq[0].r;
-            zgemlq_("L", trans, n, nrhs, m, &a[a_offset], lda, tq, &tszo, &b[ b_offset], ldb, workq, &c_n1, &info2);
+            zgemlq_("L", trans, n, nrhs, m, &a[a_offset], lda, tq, &tszm, &b[ b_offset], ldb, workq, &c_n1, &info2);
             /* Computing MAX */
             i__1 = lwm;
             i__2 = (integer) workq[0].r; // , expr subst
@@ -320,32 +315,26 @@ int zgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex 
         {
             *info = -10;
         }
+        d__1 = (doublereal) wsizeo;
+        work[1].r = d__1;
+        work[1].i = 0.; // , expr subst
     }
     if (*info != 0)
     {
         i__1 = -(*info);
         xerbla_("ZGETSLS", &i__1);
-        d__1 = (doublereal) wsizeo;
-        work[1].r = d__1;
-        work[1].i = 0.; // , expr subst
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (lquery)
     {
-        if (*lwork == -1)
-        {
-            r__1 = (real) wsizeo;
-            work[1].r = r__1;
-            work[1].i = 0.f; // , expr subst
-        }
         if (*lwork == -2)
         {
-            r__1 = (real) wsizem;
-            work[1].r = r__1;
-            work[1].i = 0.f; // , expr subst
+            d__1 = (doublereal) wsizem;
+            work[1].r = d__1;
+            work[1].i = 0.; // , expr subst
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     if (*lwork < wsizeo)
@@ -365,7 +354,7 @@ int zgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex 
     {
         i__1 = max(*m,*n);
         zlaset_("FULL", &i__1, nrhs, &c_b1, &c_b1, &b[b_offset], ldb);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Get machine parameters */
@@ -425,7 +414,7 @@ int zgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex 
             ztrtrs_("U", "N", "N", n, nrhs, &a[a_offset], lda, &b[b_offset], ldb, info);
             if (*info > 0)
             {
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             scllen = *n;
@@ -437,7 +426,7 @@ int zgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex 
             ztrtrs_("U", "C", "N", n, nrhs, &a[a_offset], lda, &b[b_offset], ldb, info);
             if (*info > 0)
             {
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* B(N+1:M,1:NRHS) = CZERO */
@@ -475,7 +464,7 @@ int zgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex 
             ztrtrs_("L", "N", "N", m, nrhs, &a[a_offset], lda, &b[b_offset], ldb, info);
             if (*info > 0)
             {
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             /* B(M+1:N,1:NRHS) = 0 */
@@ -511,7 +500,7 @@ int zgetsls_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex 
             ztrtrs_("L", "C", "N", m, nrhs, &a[a_offset], lda, &b[b_offset], ldb, info);
             if (*info > 0)
             {
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
                 return 0;
             }
             scllen = *m;
@@ -543,4 +532,3 @@ L50:
     /* End of ZGETSLS */
 }
 /* zgetsls_ */
-
