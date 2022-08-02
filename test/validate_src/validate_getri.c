@@ -41,6 +41,7 @@ void validate_getri(integer m_A,
             norm = slange_("1", &m_A, &m_A, I, &m_A, work);
             /* Compute norm(I - A'*A) / (N * norm(A) * norm(AINV) * EPS)*/
             *residual = (norm * res) / eps / (double)n_A;
+            break;
         }
 
         case DOUBLE:
@@ -59,7 +60,6 @@ void validate_getri(integer m_A,
             norm = dlange_("1", &m_A, &m_A, I, &m_A, work);
             /* Compute norm(I - A'*A) / (N * norm(A) * norm(AINV) * EPS)*/
             *residual = (norm * res) / eps / (double)n_A;
-
             break;
         }
         case COMPLEX:
@@ -78,6 +78,7 @@ void validate_getri(integer m_A,
             norm = clange_("1", &m_A, &m_A, I, &m_A, work);
             /* Compute norm(I - A'*A) / (N * norm(A) * norm(AINV) * EPS)*/
             *residual = (norm * res) / eps / (double)n_A;
+            break;
         }
         case DOUBLE_COMPLEX:
         {
@@ -95,6 +96,7 @@ void validate_getri(integer m_A,
             norm = zlange_("1", &m_A, &m_A, I, &m_A, work);
             /* Compute norm(I - A'*A) / (N * norm(A) * norm(AINV) * EPS)*/
             *residual = (norm * res) / eps / (double)n_A;
+            break;
         }
     }
 

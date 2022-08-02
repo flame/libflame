@@ -77,6 +77,7 @@ void validate_getrf(integer m_A,
 
             resid2 = norm / (float)n_A / norm_A / eps;
             *residual = (float)max(resid1, resid2);
+            break;
         }
 
         case DOUBLE:
@@ -114,7 +115,6 @@ void validate_getrf(integer m_A,
 
             resid2 = norm / (double)n_A / norm_A / eps;
             *residual = (double)max(resid1, resid2);
-
             break;
         }
         case COMPLEX:
@@ -154,6 +154,7 @@ void validate_getrf(integer m_A,
 
             resid2 = norm / (float)n_A / norm_A / eps;
             *residual = (float)max(resid1, resid2);
+            break;
         }
         case DOUBLE_COMPLEX:
         {
@@ -192,6 +193,7 @@ void validate_getrf(integer m_A,
 
             resid2 = norm / (double)n_A / norm_A / eps;
             *residual = (double)max(resid1, resid2);
+            break;
         }
     }
 
