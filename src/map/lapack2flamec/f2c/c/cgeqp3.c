@@ -157,11 +157,7 @@ int cgeqp3_(integer *m, integer *n, complex *a, integer *lda, integer *jpvt, com
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
-#if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cgeqp3 inputs: m %lld, n %lld, lda %lld, jpvt %lld, lwork %lld",*m, *n, *lda, *jpvt, *lwork);
-#else
-    snprintf(buffer, 256,"cgeqp3 inputs: m %d, n %d, lda %d, jpvt %d, lwork %d",*m, *n, *lda, *jpvt, *lwork);
-#endif
+    snprintf(buffer, 256,"cgeqp3 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "",*m, *n, *lda, *lwork);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */

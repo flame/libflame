@@ -8,7 +8,7 @@ int zgeqpf_check(integer *m, integer *n, dcomplex *a, integer *lda, integer *jpv
 
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
-    sprintf(buffer, "zgeqpf inputs: m %d, n %d, lda %d, jpvt %d\n", *m, *n, *lda, *jpvt);
+    sprintf(buffer, "zgeqpf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "\n", *m, *n, *lda);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
 
