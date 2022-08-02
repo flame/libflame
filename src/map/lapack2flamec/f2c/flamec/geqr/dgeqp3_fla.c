@@ -190,7 +190,7 @@ int dgeqp3_fla(integer *m, integer *n, doublereal *a, integer * lda, integer *jp
     /* Parameter adjustments */
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
-    sprintf(buffer, "dgeqp3 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", jpvt %" FLA_IS "\n", *m, *n, *lda, *jpvt);
+    sprintf(buffer, "dgeqp3 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "\n", *m, *n, *lda);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
 
