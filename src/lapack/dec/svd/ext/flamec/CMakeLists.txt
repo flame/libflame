@@ -8,6 +8,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dgebrd.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dgebd2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dgelqf.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dgelq2.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_dgesdd.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dgesvd.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dorg2r.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dorgbr.c
