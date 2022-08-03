@@ -330,12 +330,6 @@ FLA_Error     FLA_Submatrix_at_check( FLA_Datatype datatype, void* buffer, dim_t
 FLA_Error     FLA_Obj_has_nan_check( FLA_Obj A );
 
 
-// -----------------------------------------------------------------------------
-
-
-void          FLA_Thread_get_subrange( int thread_ID, int num_threads, integer range, integer *sub_range, integer *index );
-
-
 // ------------------------------------------------------------------------------
 
 void          FLA_Param_map_flame_to_netlib_trans( FLA_Trans trans, void* blas_trans );
