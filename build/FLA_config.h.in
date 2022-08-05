@@ -57,6 +57,9 @@
 /* Determines whether to enable AMD optimized path. */
 #undef FLA_ENABLE_AMD_OPT
 
+/* Set libFLAME version */
+#undef FLA_LIBFLAME_VERSION
+
 /* Determines whether to enable void return for functions that by default 
  * return complex type as per LAPACK standard */
 #undef FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION

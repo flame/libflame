@@ -38,6 +38,9 @@ const TLS_CLASS_SPEC double   dzero = 0.0;
 const TLS_CLASS_SPEC scomplex czero = { 0.0f, 0.0f };
 const TLS_CLASS_SPEC dcomplex zzero = { 0.0 , 0.0  };
 
+#define VERSION_MAKE_STR(x) _VERSION_MAKE_STR(x)
+#define _VERSION_MAKE_STR(x) #x
+
 /* *************************************************************************
 
    FLA_Init()
@@ -233,5 +236,35 @@ void FLA_Finalize_constants()
 
 char*     FLA_Get_AOCL_Version( void )
 {
-   return  "AOCL-libFLAME 3.2.1, supports LAPACK 3.10.0";
+     char lfmainversion[] = "AOCL-libFLAME ";
+     char *lfversion = (char*)malloc(1000);
+     char lapackversion[] = ", supports LAPACK 3.10.0";
+     int length, i;
+
+     length = 0;
+     for (i = 0; lfmainversion[length] != '\0'; ++i, ++length) 
+     {
+	 lfversion[length] = lfmainversion[i];
+     }
+
+#ifdef FLA_LIBFLAME_VERSION
+#ifdef FLA_ENABLE_WINDOWS_BUILD
+     char configlfversion[] = VERSION_MAKE_STR(FLA_LIBFLAME_VERSION); //Quotions in CMake are a problem. Hence strinifying
+#else
+     char configlfversion[] = FLA_LIBFLAME_VERSION;
+#endif
+     for (i = 0; configlfversion[i] != '\0'; ++i, ++length) 
+     {
+	 lfversion[length] = configlfversion[i];
+     }
+#endif
+
+     for (i = 0; lapackversion[i] != '\0'; ++i, ++length) 
+     {
+	 lfversion[length] = lapackversion[i];
+     }
+
+     lfversion[length] = '\0';
+
+     return lfversion;
 }

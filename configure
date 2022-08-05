@@ -813,6 +813,7 @@ enable_windows_build
 enable_scc
 enable_tidsp
 enable_amd_opt
+enable_set_lib_version
 '
       ac_precious_vars='build_alias
 host_alias
@@ -1662,6 +1663,8 @@ Optional Features:
                           Instruments' DSP. Note that this option is
                           experimental. (Disabled by default.)
   --enable-amd-opt        Enable code to take AMD optimized path. (Disabled by default.)
+  --enable-set-lib-version       
+                          Set library version
 
 Optional Packages:
   --with-PACKAGE[=ARG]    use PACKAGE [ARG=yes]
@@ -6487,6 +6490,30 @@ if test "${enable_amd_aocc_flags+set}" != set; then :
       as_fn_error "Reached unreachable branch in FLA_CHECK_ENABLE_AMD_OPT!" "$LINENO" 5
   fi
 fi
+
+
+{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested setting libFLAME version" >&5
+			$as_echo_n "checking whether user requested setting libFLAME version... " >&6; }
+
+# Check whether --enable-set-lib-version was given.
+if test "${enable_set_lib_version+set}" = set; then :
+      enableval=$enable_set_lib_version;
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+        $as_echo "yes" >&6; }
+        $as_echo "#define FLA_LIBFLAME_VERSION \"$enableval\"" >>confdefs.h
+else
+      { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+        $as_echo "no" >&6; }
+#if version and build number not passed explicitly, set the version by reading so_version file and
+# build version as current date in mmddyyy format 
+      get_date_str=$(date +"%m%d%Y")
+      so_version_file="so_version"
+      so_version_minorbuild=$(cat ${so_version_file} | sed -n "2p")
+      so_version_major=$(cat ${so_version_file} | sed -n "1p")
+      $as_echo "#define FLA_LIBFLAME_VERSION \"${so_version_major}.${so_version_minorbuild} Build # ${get_date_str}\"" >>confdefs.h
+
+fi
+
 
 
        { $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested enabling void return for functions that by default return complex type as per LAPACK standard" >&5
