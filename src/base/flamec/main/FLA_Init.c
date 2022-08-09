@@ -38,6 +38,13 @@ const TLS_CLASS_SPEC double   dzero = 0.0;
 const TLS_CLASS_SPEC scomplex czero = { 0.0f, 0.0f };
 const TLS_CLASS_SPEC dcomplex zzero = { 0.0 , 0.0  };
 
+struct _LF_VERSION
+{
+	char version[1000];
+	int once;
+};
+typedef struct _LF_VERSION LF_VERSION;
+
 #define VERSION_MAKE_STR(x) _VERSION_MAKE_STR(x)
 #define _VERSION_MAKE_STR(x) #x
 
@@ -236,8 +243,14 @@ void FLA_Finalize_constants()
 
 char*     FLA_Get_AOCL_Version( void )
 {
+     static TLS_CLASS_SPEC LF_VERSION lflibversion;
+     if (lflibversion.once)
+     {
+	    return lflibversion.version;
+     }
+
      char lfmainversion[] = "AOCL-libFLAME ";
-     char *lfversion = (char*)malloc(1000);
+     char* lfversion = lflibversion.version;
      char lapackversion[] = ", supports LAPACK 3.10.0";
      int length, i;
 
@@ -266,5 +279,7 @@ char*     FLA_Get_AOCL_Version( void )
 
      lfversion[length] = '\0';
 
-     return lfversion;
+     lflibversion.once = 1;
+
+     return lflibversion.version;
 }
