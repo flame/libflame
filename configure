@@ -6506,11 +6506,11 @@ else
         $as_echo "no" >&6; }
 #if version and build number not passed explicitly, set the version by reading so_version file and
 # build version as current date in mmddyyy format 
-      get_date_str=$(date +"%m%d%Y")
+      get_date_str=$(date +"%Y%m%d")
       so_version_file="so_version"
       so_version_minorbuild=$(cat ${so_version_file} | sed -n "2p")
       so_version_major=$(cat ${so_version_file} | sed -n "1p")
-      $as_echo "#define FLA_LIBFLAME_VERSION \"${so_version_major}.${so_version_minorbuild} Build # ${get_date_str}\"" >>confdefs.h
+      $as_echo "#define FLA_LIBFLAME_VERSION \"${so_version_major}.${so_version_minorbuild} Build ${get_date_str}\"" >>confdefs.h
 
 fi
 
