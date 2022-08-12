@@ -585,6 +585,8 @@ drmac@math.hr */
 /* Subroutine */
 int zgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jobp, integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *sva, doublecomplex *u, integer *ldu, doublecomplex *v, integer *ldv, doublecomplex *cwork, integer *lwork, doublereal *rwork, integer *lrwork, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgejsv inputs: joba %c, jobu %c, jobv %c, jobr %c, jobt %c, jobp %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldv %" FLA_IS "",*joba, *jobu, *jobv, *jobr, *jobt, *jobp, *m, *n, *lda, *ldu, *ldv);
     /* System generated locals */
     integer a_dim1, a_offset, u_dim1, u_offset, v_dim1, v_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7, i__8, i__9, i__10, i__11;
     doublereal d__1, d__2, d__3;
@@ -1301,6 +1303,7 @@ int zgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
         /* #:( */
         i__1 = -(*info);
         xerbla_("ZGEJSV", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
@@ -1311,6 +1314,7 @@ int zgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
         cwork[2].i = 0.; // , expr subst
         rwork[1] = (doublereal) minrwrk;
         iwork[1] = max(4,miniwrk);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return for void matrix (Y3K safe) */
@@ -1331,6 +1335,7 @@ int zgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
         {
             rwork[j1] = 0.;
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Determine whether the matrix U should be M x N or M x M */
@@ -1369,6 +1374,7 @@ int zgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             *info = -9;
             i__2 = -(*info);
             xerbla_("ZGEJSV", &i__2);
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         aaqq = sqrt(aaqq);
@@ -1445,6 +1451,7 @@ int zgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
         iwork[2] = 0;
         iwork[3] = 0;
         iwork[4] = -1;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Issue warning if denormalized column norms detected. Override the */
@@ -1522,6 +1529,7 @@ int zgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             rwork[6] = 0.;
             rwork[7] = 0.;
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     transp = FALSE_;
@@ -3260,6 +3268,7 @@ L3302:
     {
         iwork[4] = -1;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* .. */
     /* .. END OF ZGEJSV */

@@ -194,6 +194,8 @@ elements 1:ILO-1 and i+1:N of W */
 /* Subroutine */
 int zgees_(char *jobvs, char *sort, L_fp select, integer *n, doublecomplex *a, integer *lda, integer *sdim, doublecomplex *w, doublecomplex *vs, integer *ldvs, doublecomplex *work, integer *lwork, doublereal *rwork, logical *bwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgees inputs: jobvs %c, sort %c, n %" FLA_IS ", lda %" FLA_IS ", sdim %" FLA_IS ", ldvs %" FLA_IS "",*jobvs, *sort, *n, *lda, *sdim, *ldvs);
     /* System generated locals */
     integer a_dim1, a_offset, vs_dim1, vs_offset, i__1, i__2;
     /* Builtin functions */
@@ -337,16 +339,19 @@ int zgees_(char *jobvs, char *sort, L_fp select, integer *n, doublecomplex *a, i
     {
         i__1 = -(*info);
         xerbla_("ZGEES ", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
         *sdim = 0;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants */
@@ -443,6 +448,7 @@ int zgees_(char *jobvs, char *sort, L_fp select, integer *n, doublecomplex *a, i
     }
     work[1].r = (doublereal) maxwrk;
     work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGEES */
 }

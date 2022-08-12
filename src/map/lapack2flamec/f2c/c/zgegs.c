@@ -228,6 +228,8 @@ the routine */
 /* Subroutine */
 int zgegs_(char *jobvsl, char *jobvsr, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *alpha, doublecomplex *beta, doublecomplex *vsl, integer *ldvsl, doublecomplex *vsr, integer *ldvsr, doublecomplex * work, integer *lwork, doublereal *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgegs inputs: jobvsl %c, jobvsr %c, n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldvsl %" FLA_IS ", ldvsr %" FLA_IS "",*jobvsl, *jobvsr, *n, *lda, *ldb, *ldvsl, *ldvsr);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, vsl_dim1, vsl_offset, vsr_dim1, vsr_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -392,15 +394,18 @@ int zgegs_(char *jobvsl, char *jobvsr, integer *n, doublecomplex *a, integer *ld
     {
         i__1 = -(*info);
         xerbla_("ZGEGS ", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants */
@@ -427,6 +432,7 @@ int zgegs_(char *jobvsl, char *jobvsr, integer *n, doublecomplex *a, integer *ld
         if (iinfo != 0)
         {
             *info = *n + 9;
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
@@ -449,6 +455,7 @@ int zgegs_(char *jobvsl, char *jobvsr, integer *n, doublecomplex *a, integer *ld
         if (iinfo != 0)
         {
             *info = *n + 9;
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
@@ -585,12 +592,14 @@ int zgegs_(char *jobvsl, char *jobvsr, integer *n, doublecomplex *a, integer *ld
         if (iinfo != 0)
         {
             *info = *n + 9;
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         zlascl_("G", &c_n1, &c_n1, &anrmto, &anrm, n, &c__1, &alpha[1], n, & iinfo);
         if (iinfo != 0)
         {
             *info = *n + 9;
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
@@ -600,18 +609,21 @@ int zgegs_(char *jobvsl, char *jobvsr, integer *n, doublecomplex *a, integer *ld
         if (iinfo != 0)
         {
             *info = *n + 9;
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         zlascl_("G", &c_n1, &c_n1, &bnrmto, &bnrm, n, &c__1, &beta[1], n, & iinfo);
         if (iinfo != 0)
         {
             *info = *n + 9;
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
 L10:
     work[1].r = (doublereal) lwkopt;
     work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGEGS */
 }
