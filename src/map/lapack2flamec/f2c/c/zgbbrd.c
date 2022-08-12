@@ -198,6 +198,8 @@ LDC >= 1 if NCC = 0. */
 /* Subroutine */
 int zgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integer *ku, doublecomplex *ab, integer *ldab, doublereal *d__, doublereal *e, doublecomplex *q, integer *ldq, doublecomplex *pt, integer *ldpt, doublecomplex *c__, integer *ldc, doublecomplex *work, doublereal *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgbbrd inputs: vect %c, m %" FLA_IS ", n %" FLA_IS ", ncc %" FLA_IS ", kl %" FLA_IS ", ku %" FLA_IS ", ldab %" FLA_IS ", ldq %" FLA_IS ", ldpt %" FLA_IS ", ldc %" FLA_IS "",*vect, *m, *n, *ncc, *kl, *ku, *ldab, *ldq, *ldpt, *ldc);
     /* System generated locals */
     integer ab_dim1, ab_offset, c_dim1, c_offset, pt_dim1, pt_offset, q_dim1, q_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7;
     doublecomplex z__1, z__2, z__3;
@@ -316,6 +318,7 @@ int zgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
     {
         i__1 = -(*info);
         xerbla_("ZGBBRD", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize Q and P**H to the unit matrix, if needed */
@@ -330,6 +333,7 @@ int zgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
     /* Quick return if possible. */
     if (*m == 0 || *n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     minmn = min(*m,*n);
@@ -768,6 +772,7 @@ int zgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
         }
         /* L120: */
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGBBRD */
 }

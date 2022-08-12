@@ -156,6 +156,8 @@ and second, applying a diagonal similarity transformation */
 /* Subroutine */
 int zgebal_(char *job, integer *n, doublecomplex *a, integer *lda, integer *ilo, integer *ihi, doublereal *scale, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgebal inputs: job %c, n %" FLA_IS ", lda %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS "",*job, *n, *lda, *ilo, *ihi);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     doublereal d__1, d__2;
@@ -218,6 +220,7 @@ int zgebal_(char *job, integer *n, doublecomplex *a, integer *lda, integer *ilo,
     {
         i__1 = -(*info);
         xerbla_("ZGEBAL", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     k = 1;
@@ -388,6 +391,7 @@ L160: /* Computing MAX */
             *info = -3;
             i__2 = -(*info);
             xerbla_("ZGEBAL", &i__2);
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         f *= 2.;
@@ -449,6 +453,7 @@ L200:
 L210:
     *ilo = k;
     *ihi = l;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGEBAL */
 }
