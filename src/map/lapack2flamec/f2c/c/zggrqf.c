@@ -210,6 +210,8 @@ v(i+1:p) is stored on exit in B(i+1:p,i), */
 /* Subroutine */
 int zggrqf_(integer *m, integer *p, integer *n, doublecomplex *a, integer *lda, doublecomplex *taua, doublecomplex *b, integer *ldb, doublecomplex *taub, doublecomplex *work, integer * lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zggrqf inputs: m %" FLA_IS ", p %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*m, *p, *n, *lda, *ldb);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -300,10 +302,12 @@ int zggrqf_(integer *m, integer *p, integer *n, doublecomplex *a, integer *lda, 
     {
         i__1 = -(*info);
         xerbla_("ZGGRQF", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* RQ factorization of M-by-N matrix A: A = R*Q */
@@ -327,6 +331,7 @@ int zggrqf_(integer *m, integer *p, integer *n, doublecomplex *a, integer *lda, 
     i__1 = max(i__2,i__3);
     work[1].r = (doublereal) i__1;
     work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGGRQF */
 }

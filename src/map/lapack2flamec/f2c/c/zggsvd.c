@@ -329,6 +329,8 @@ LDQ >= 1 otherwise. */
 /* Subroutine */
 int zggsvd_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer *p, integer *k, integer *l, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublereal *alpha, doublereal *beta, doublecomplex *u, integer *ldu, doublecomplex *v, integer *ldv, doublecomplex *q, integer *ldq, doublecomplex *work, doublereal *rwork, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zggsvd inputs: jobu %c, jobv %c, jobq %c, m %" FLA_IS ", n %" FLA_IS ", p %" FLA_IS ", k %" FLA_IS ", l %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldu %" FLA_IS ", ldv %" FLA_IS ", ldq %" FLA_IS "",*jobu, *jobv, *jobq, *m, *n, *p, *k, *l, *lda, *ldb, *ldu, *ldv, *ldq);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, u_dim1, u_offset, v_dim1, v_offset, i__1, i__2;
     /* Local variables */
@@ -443,6 +445,7 @@ int zggsvd_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer 
     {
         i__1 = -(*info);
         xerbla_("ZGGSVD", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Compute the Frobenius norm of matrices A and B */
@@ -497,6 +500,7 @@ int zggsvd_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer 
         }
         /* L20: */
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGGSVD */
 }

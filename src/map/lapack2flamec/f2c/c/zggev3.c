@@ -220,6 +220,8 @@ the routine */
 /* Subroutine */
 int zggev3_(char *jobvl, char *jobvr, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *alpha, doublecomplex *beta, doublecomplex *vl, integer *ldvl, doublecomplex *vr, integer *ldvr, doublecomplex *work, integer *lwork, doublereal *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zggev3 inputs: jobvl %c, jobvr %c, n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldvl %" FLA_IS ", ldvr %" FLA_IS "",*jobvl, *jobvr, *n, *lda, *ldb, *ldvl, *ldvr);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__2, i__3, i__4;
     doublereal d__1, d__2, d__3, d__4;
@@ -436,15 +438,18 @@ int zggev3_(char *jobvl, char *jobvr, integer *n, doublecomplex *a, integer *lda
     {
         i__1 = -(*info);
         xerbla_("ZGGEV3 ", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants */
@@ -695,6 +700,7 @@ L70:
     z__1.i = 0.; // , expr subst
     work[1].r = z__1.r;
     work[1].i = z__1.i; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGGEV3 */
 }

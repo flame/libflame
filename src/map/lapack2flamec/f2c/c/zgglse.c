@@ -178,6 +178,8 @@ the least squares solution could not */
 /* Subroutine */
 int zgglse_(integer *m, integer *n, integer *p, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, doublecomplex *d__, doublecomplex *x, doublecomplex *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgglse inputs: m %" FLA_IS ", n %" FLA_IS ", p %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*m, *n, *p, *lda, *ldb);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
     doublecomplex z__1;
@@ -280,15 +282,18 @@ int zgglse_(integer *m, integer *n, integer *p, doublecomplex *a, integer *lda, 
     {
         i__1 = -(*info);
         xerbla_("ZGGLSE", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Compute the GRQ factorization of matrices B and A: */
@@ -318,6 +323,7 @@ int zgglse_(integer *m, integer *n, integer *p, doublecomplex *a, integer *lda, 
         if (*info > 0)
         {
             *info = 1;
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         /* Put the solution in X */
@@ -337,6 +343,7 @@ int zgglse_(integer *m, integer *n, integer *p, doublecomplex *a, integer *lda, 
         if (*info > 0)
         {
             *info = 2;
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         /* Put the solutions in X */
@@ -376,6 +383,7 @@ int zgglse_(integer *m, integer *n, integer *p, doublecomplex *a, integer *lda, 
     i__1 = *p + mn + max(i__2,i__3);
     work[1].r = (doublereal) i__1;
     work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGGLSE */
 }
