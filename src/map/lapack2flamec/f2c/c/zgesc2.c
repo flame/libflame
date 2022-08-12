@@ -112,6 +112,8 @@ for 1 <= j <= N, column j of the */
 /* Subroutine */
 int zgesc2_(integer *n, doublecomplex *a, integer *lda, doublecomplex *rhs, integer *ipiv, integer *jpiv, doublereal *scale)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgesc2 inputs: n %" FLA_IS ", lda %" FLA_IS "",*n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     doublereal d__1;
@@ -243,6 +245,7 @@ int zgesc2_(integer *n, doublecomplex *a, integer *lda, doublecomplex *rhs, inte
     /* Apply permutations JPIV to the solution (RHS) */
     i__1 = *n - 1;
     zlaswp_(&c__1, &rhs[1], lda, &c__1, &i__1, &jpiv[1], &c_n1);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGESC2 */
 }

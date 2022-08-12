@@ -108,6 +108,8 @@ for 1 <= j <= N, column j of the */
 /* Subroutine */
 int zgetc2_(integer *n, doublecomplex *a, integer *lda, integer *ipiv, integer *jpiv, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgetc2 inputs: n %" FLA_IS ", lda %" FLA_IS "",*n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     doublereal d__1;
@@ -155,6 +157,7 @@ int zgetc2_(integer *n, doublecomplex *a, integer *lda, integer *ipiv, integer *
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Set constants to control overflow */
@@ -176,6 +179,7 @@ int zgetc2_(integer *n, doublecomplex *a, integer *lda, integer *ipiv, integer *
             a[i__1].r = z__1.r;
             a[i__1].i = z__1.i; // , expr subst
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Factorize A using complete pivoting. */
@@ -263,6 +267,7 @@ int zgetc2_(integer *n, doublecomplex *a, integer *lda, integer *ipiv, integer *
     /* Set last pivots to N */
     ipiv[*n] = *n;
     jpiv[*n] = *n;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGETC2 */
 }
