@@ -141,6 +141,8 @@ v(i+2:ihi) is stored on */
 /* Subroutine */
 int zgehd2_(integer *n, integer *ilo, integer *ihi, doublecomplex *a, integer *lda, doublecomplex *tau, doublecomplex * work, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgehd2 inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS "",*n, *ilo, *ihi, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     doublecomplex z__1;
@@ -198,6 +200,7 @@ int zgehd2_(integer *n, integer *ilo, integer *ihi, doublecomplex *a, integer *l
     {
         i__1 = -(*info);
         xerbla_("ZGEHD2", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     i__1 = *ihi - 1;
@@ -229,6 +232,7 @@ int zgehd2_(integer *n, integer *ilo, integer *ihi, doublecomplex *a, integer *l
         a[i__2].i = alpha.i; // , expr subst
         /* L10: */
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGEHD2 */
 }

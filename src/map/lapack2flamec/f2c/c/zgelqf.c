@@ -131,12 +131,9 @@ conjg(v(i+1:n)) is stored on exit in */
 /* Subroutine */
 int zgelqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *tau, doublecomplex *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zgelqf inputs: m %d, n %d, lda %d",*m, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgelqf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "",*m, *n, *lda);
+
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
@@ -203,12 +200,12 @@ int zgelqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     {
         i__1 = -(*info);
         xerbla_("ZGELQF", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -217,7 +214,7 @@ int zgelqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     {
         work[1].r = 1.;
         work[1].i = 0.; // , expr subst
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     nbmin = 2;
@@ -290,7 +287,7 @@ int zgelqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     }
     work[1].r = (doublereal) iws;
     work[1].i = 0.; // , expr subst
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGELQF */
 }
