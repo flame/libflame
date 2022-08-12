@@ -18,7 +18,7 @@
 #include "rocblas.h"
 
 
-static FLA_Bool flash_queue_enabled_hip  = FALSE;
+static FLA_Bool flash_queue_enabled_hip  = TRUE;
 static FLA_Bool flash_malloc_managed_hip = FALSE;
 static dim_t    flash_queue_hip_n_blocks = 128;
 static rocblas_handle* handles;

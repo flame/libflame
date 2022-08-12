@@ -99,9 +99,9 @@ int main(int argc, char *argv[])
 
 
   //datatype = FLA_FLOAT;
-  //datatype = FLA_DOUBLE;
+  datatype = FLA_DOUBLE;
   //datatype = FLA_COMPLEX;
-  datatype = FLA_DOUBLE_COMPLEX;
+  //datatype = FLA_DOUBLE_COMPLEX;
 
   FLASH_Queue_set_num_threads( n_threads );
 
