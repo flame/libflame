@@ -172,6 +172,8 @@ and second, applying a diagonal similarity */
 /* Subroutine */
 int zggbal_(char *job, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, integer *ilo, integer *ihi, doublereal *lscale, doublereal *rscale, doublereal *work, integer * info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zggbal inputs: job %c, n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS "",*job, *n, *lda, *ldb, *ilo, *ihi);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
     doublereal d__1, d__2, d__3;
@@ -266,6 +268,7 @@ int zggbal_(char *job, integer *n, doublecomplex *a, integer *lda, doublecomplex
     {
         i__1 = -(*info);
         xerbla_("ZGGBAL", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -273,6 +276,7 @@ int zggbal_(char *job, integer *n, doublecomplex *a, integer *lda, doublecomplex
     {
         *ilo = 1;
         *ihi = *n;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -281,6 +285,7 @@ int zggbal_(char *job, integer *n, doublecomplex *a, integer *lda, doublecomplex
         *ihi = *n;
         lscale[1] = 1.;
         rscale[1] = 1.;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (lsame_(job, "N"))
@@ -296,6 +301,7 @@ int zggbal_(char *job, integer *n, doublecomplex *a, integer *lda, doublecomplex
             rscale[i__] = 1.;
             /* L10: */
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     k = 1;
@@ -451,10 +457,12 @@ L190:
             rscale[i__] = 1.;
             /* L195: */
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*ilo == *ihi)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Balance the submatrix in rows ILO to IHI. */
@@ -735,6 +743,7 @@ L350:
         zdscal_(ihi, &rscale[j], &b[j * b_dim1 + 1], &c__1);
         /* L380: */
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGGBAL */
 }

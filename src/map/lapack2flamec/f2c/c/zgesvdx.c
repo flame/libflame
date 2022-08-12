@@ -278,6 +278,8 @@ the routine */
 /* Subroutine */
 int zgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, doublecomplex *a, integer *lda, doublereal *vl, doublereal *vu, integer *il, integer *iu, integer *ns, doublereal *s, doublecomplex *u, integer *ldu, doublecomplex *vt, integer *ldvt, doublecomplex *work, integer *lwork, doublereal *rwork, integer * iwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgesvdx inputs: jobu %c, jobvt %c, range %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", ns %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS "",*jobu, *jobvt, *range, *m, *n, *lda, *il, *iu, *ns, *ldu, *ldvt);
     /* System generated locals */
     address a__1[2];
     integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1[2], i__2, i__3, i__4, i__5;
@@ -545,15 +547,18 @@ int zgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, doub
     {
         i__2 = -(*info);
         xerbla_("ZGESVDX", &i__2);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Set singular values indices accord to RANGE='A'. */
@@ -983,6 +988,7 @@ int zgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, doub
     z__1.i = 0.; // , expr subst
     work[1].r = z__1.r;
     work[1].i = z__1.i; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGESVDX */
 }

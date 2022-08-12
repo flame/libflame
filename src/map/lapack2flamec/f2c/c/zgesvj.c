@@ -362,6 +362,8 @@ kappa(A*D), where kappa(.) is the */
 /* Subroutine */
 int zgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *sva, integer * mv, doublecomplex *v, integer *ldv, doublecomplex *cwork, integer * lwork, doublereal *rwork, integer *lrwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgesvj inputs: joba %c, jobu %c, jobv %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", mv %" FLA_IS ", ldv %" FLA_IS "",*joba, *jobu, *jobv, *m, *n, *lda, *mv, *ldv);
     /* System generated locals */
     integer a_dim1, a_offset, v_dim1, v_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     doublereal d__1, d__2;
@@ -529,6 +531,7 @@ int zgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doubleco
     {
         i__1 = -(*info);
         xerbla_("ZGESVJ", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
@@ -537,11 +540,13 @@ int zgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doubleco
         cwork[1].r = (doublereal) i__1;
         cwork[1].i = 0.; // , expr subst
         rwork[1] = (doublereal) max(*n,6);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* #:) Quick return for void matrix */
     if (*m == 0 || *n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Set numerical parameters */
@@ -586,6 +591,7 @@ int zgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doubleco
         *info = -4;
         i__1 = -(*info);
         xerbla_("ZGESVJ", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize the right singular vector matrix. */
@@ -627,6 +633,7 @@ int zgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doubleco
                 *info = -6;
                 i__2 = -(*info);
                 xerbla_("ZGESVJ", &i__2);
+    AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             aaqq = sqrt(aaqq);
@@ -670,6 +677,7 @@ int zgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doubleco
                 *info = -6;
                 i__2 = -(*info);
                 xerbla_("ZGESVJ", &i__2);
+    AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             aaqq = sqrt(aaqq);
@@ -713,6 +721,7 @@ int zgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doubleco
                 *info = -6;
                 i__2 = -(*info);
                 xerbla_("ZGESVJ", &i__2);
+    AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             aaqq = sqrt(aaqq);
@@ -780,6 +789,7 @@ int zgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doubleco
         rwork[4] = 0.;
         rwork[5] = 0.;
         rwork[6] = 0.;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* #:) Quick return for one-column matrix */
@@ -802,6 +812,7 @@ int zgesvj_(char *joba, char *jobu, char *jobv, integer *m, integer *n, doubleco
         rwork[4] = 0.;
         rwork[5] = 0.;
         rwork[6] = 0.;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Protect small singular values from underflow, and try to */
@@ -1782,6 +1793,7 @@ L1995: /* Sort the singular values and find how many are above */
     rwork[6] = mxsinj;
     /* MXSINJ is the largest absolute value of the sines of Jacobi angles */
     /* in the last sweep */
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* .. */
     /* .. END OF ZGESVJ */

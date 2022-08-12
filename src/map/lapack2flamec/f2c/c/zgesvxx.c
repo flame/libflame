@@ -538,6 +538,8 @@ defaults */
 /* Subroutine */
 int zgesvxx_(char *fact, char *trans, integer *n, integer * nrhs, doublecomplex *a, integer *lda, doublecomplex *af, integer * ldaf, integer *ipiv, char *equed, doublereal *r__, doublereal *c__, doublecomplex *b, integer *ldb, doublecomplex *x, integer *ldx, doublereal *rcond, doublereal *rpvgrw, doublereal *berr, integer * n_err_bnds__, doublereal *err_bnds_norm__, doublereal * err_bnds_comp__, integer *nparams, doublereal *params, doublecomplex * work, doublereal *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgesvxx inputs: fact %c, trans %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", equed %c, ldb %" FLA_IS ", ldx %" FLA_IS ", n_err_bnds__ %" FLA_IS ", nparams %" FLA_IS "",*fact, *trans, *n, *nrhs, *lda, *ldaf, *equed, *ldb, *ldx, *n_err_bnds__, *nparams);
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, b_dim1, b_offset, x_dim1, x_offset, err_bnds_norm_dim1, err_bnds_norm_offset, err_bnds_comp_dim1, err_bnds_comp_offset, i__1;
     doublereal d__1, d__2;
@@ -747,6 +749,7 @@ int zgesvxx_(char *fact, char *trans, integer *n, integer * nrhs, doublecomplex 
     {
         i__1 = -(*info);
         xerbla_("ZGESVXX", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (equil)
@@ -809,6 +812,7 @@ int zgesvxx_(char *fact, char *trans, integer *n, integer * nrhs, doublecomplex 
             /* Compute the reciprocal pivot growth factor of the */
             /* leading rank-deficient INFO columns of A. */
             *rpvgrw = zla_gerpvgrw_(n, info, &a[a_offset], lda, &af[ af_offset], ldaf);
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
@@ -829,6 +833,7 @@ int zgesvxx_(char *fact, char *trans, integer *n, integer * nrhs, doublecomplex 
     {
         zlascl2_(n, nrhs, &r__[1], &x[x_offset], ldx);
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGESVXX */
 }

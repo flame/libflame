@@ -233,12 +233,9 @@ the routine */
 /* Subroutine */
 int zgesvd_(char *jobu, char *jobvt, integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *s, doublecomplex *u, integer *ldu, doublecomplex *vt, integer *ldvt, doublecomplex *work, integer *lwork, doublereal *rwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zgesvd inputs: jobu %c, jobvt %c, m %d, n %d, lda %d, ldu %d, ldvt %d",*jobu, *jobvt, *m, *n, *lda, *ldu, *ldvt);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgesvd inputs: jobu %c, jobvt %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS "",*jobu, *jobvt, *m, *n, *lda, *ldu, *ldvt);
+
     /* System generated locals */
     address a__1[2];
     integer a_dim1, a_offset, u_dim1, u_offset, vt_dim1, vt_offset, i__1[2], i__2, i__3, i__4;
@@ -896,18 +893,18 @@ int zgesvd_(char *jobu, char *jobvt, integer *m, integer *n, doublecomplex *a, i
     {
         i__2 = -(*info);
         xerbla_("ZGESVD", &i__2);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants */
@@ -3326,7 +3323,7 @@ int zgesvd_(char *jobu, char *jobvt, integer *m, integer *n, doublecomplex *a, i
     /* Return optimal workspace in WORK(1) */
     work[1].r = (doublereal) maxwrk;
     work[1].i = 0.; // , expr subst
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGESVD */
 }
