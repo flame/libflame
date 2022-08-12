@@ -141,6 +141,8 @@ v(i+1:m) is stored on exit in A(i+1:m,i). */
 /* Subroutine */
 int zgeqpf_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *jpvt, doublecomplex *tau, doublecomplex *work, doublereal *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgeqpf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "",*m, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     doublereal d__1, d__2;
@@ -210,6 +212,7 @@ int zgeqpf_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *jpv
     {
         i__1 = -(*info);
         xerbla_("ZGEQPF", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     mn = min(*m,*n);
@@ -355,6 +358,7 @@ int zgeqpf_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *jpv
             /* L40: */
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGEQPF */
 }

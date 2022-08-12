@@ -129,12 +129,8 @@ the elements below the diagonal are not used. */
 /* Subroutine */
 int zgeqrt2_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zgeqrt2 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS "",*m, *n, *lda, *ldt);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgeqrt2 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS "",*m, *n, *lda, *ldt);
     /* System generated locals */
     integer a_dim1, a_offset, t_dim1, t_offset, i__1, i__2, i__3;
     doublecomplex z__1, z__2;
@@ -191,7 +187,7 @@ int zgeqrt2_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecompl
     {
         i__1 = -(*info);
         xerbla_("ZGEQRT2", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     k = min(*m,*n);
@@ -268,7 +264,7 @@ int zgeqrt2_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecompl
         t[i__2].i = 0.; // , expr subst
     }
     /* End of ZGEQRT2 */
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zgeqrt2_ */

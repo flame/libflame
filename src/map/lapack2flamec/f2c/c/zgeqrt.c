@@ -130,12 +130,8 @@ the elements below the diagonal */
 /* Subroutine */
 int zgeqrt_(integer *m, integer *n, integer *nb, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, doublecomplex *work, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zgeqrt inputs: m %" FLA_IS ", n %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS "",*m, *n, *nb, *lda, *ldt);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgeqrt inputs: m %" FLA_IS ", n %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS "",*m, *n, *nb, *lda, *ldt);
     /* System generated locals */
     integer a_dim1, a_offset, t_dim1, t_offset, i__1, i__2, i__3, i__4, i__5;
     /* Local variables */
@@ -192,14 +188,14 @@ int zgeqrt_(integer *m, integer *n, integer *nb, doublecomplex *a, integer *lda,
     {
         i__1 = -(*info);
         xerbla_("ZGEQRT", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     k = min(*m,*n);
     if (k == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Blocked loop of length K */
@@ -232,7 +228,7 @@ int zgeqrt_(integer *m, integer *n, integer *nb, doublecomplex *a, integer *lda,
             zlarfb_("L", "C", "F", "C", &i__3, &i__4, &ib, &a[i__ + i__ * a_dim1], lda, &t[i__ * t_dim1 + 1], ldt, &a[i__ + (i__ + ib) * a_dim1], lda, &work[1], &i__5);
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGEQRT */
 }

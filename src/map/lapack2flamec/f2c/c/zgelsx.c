@@ -187,6 +187,8 @@ only the remaining */
 /* Subroutine */
 int zgelsx_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, integer *jpvt, doublereal *rcond, integer *rank, doublecomplex *work, doublereal *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgelsx inputs: m %" FLA_IS ", n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", rank %" FLA_IS "",*m, *n, *nrhs, *lda, *ldb, *rank);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3;
     doublecomplex z__1;
@@ -276,6 +278,7 @@ int zgelsx_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     {
         i__1 = -(*info);
         xerbla_("ZGELSX", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -284,6 +287,7 @@ int zgelsx_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     if (min(i__1,*nrhs) == 0)
     {
         *rank = 0;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine parameters */
@@ -519,6 +523,7 @@ L70:
         zlascl_("G", &c__0, &c__0, &bignum, &bnrm, n, nrhs, &b[b_offset], ldb, info);
     }
 L100:
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGELSX */
 }
