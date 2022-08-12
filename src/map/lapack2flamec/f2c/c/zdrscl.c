@@ -103,18 +103,15 @@ int zdrscl_(integer *n, doublereal *sa, doublecomplex *sx, integer *incx)
     /* .. Executable Statements .. */
     /* Quick return if possible */
     /* Logging and tracing code */
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "zdrscl inputs: n %d, incx %d \n", *n, *incx);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF( "zdrscl inputs: n %" FLA_IS ", incx %" FLA_IS " \n", *n, *incx);
+
     /* Parameter adjustments */
     --sx;
     /* Function Body */
     if (*n <= 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine parameters */
@@ -153,7 +150,7 @@ L10:
     {
         goto L10;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZDRSCL */
 }

@@ -209,6 +209,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int zcposv_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *x, integer *ldx, doublecomplex *work, complex *swork, doublereal *rwork, integer *iter, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zcposv inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS ", iter %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ldb, *ldx, *iter);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, work_dim1, work_offset, x_dim1, x_offset, i__1, i__2;
     doublereal d__1, d__2;
@@ -299,11 +301,13 @@ int zcposv_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     {
         i__1 = -(*info);
         xerbla_("ZCPOSV", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if (N.EQ.0). */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Skip single precision iterative refinement if a priori slower */
@@ -369,6 +373,7 @@ int zcposv_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     /* If we are here, the NRHS normwise backward errors satisfy the */
     /* stopping criterion. We are good to exit. */
     *iter = 0;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 L10:
     for (iiter = 1;
@@ -417,6 +422,7 @@ L10:
         /* If we are here, the NRHS normwise backward errors satisfy the */
         /* stopping criterion, we are good to exit. */
         *iter = iiter;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
 L20: /* L30: */
         ;
@@ -431,10 +437,12 @@ L40: /* Single-precision iterative refinement failed to converge to a */
     zpotrf_(uplo, n, &a[a_offset], lda, info);
     if (*info != 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     zlacpy_("All", n, nrhs, &b[b_offset], ldb, &x[x_offset], ldx);
     zpotrs_(uplo, n, nrhs, &a[a_offset], lda, &x[x_offset], ldx, info);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZCPOSV. */
 }
