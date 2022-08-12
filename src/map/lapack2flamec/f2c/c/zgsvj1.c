@@ -226,6 +226,8 @@ static doublereal c_b18 = 1.;
 /* Subroutine */
 int zgsvj1_(char *jobv, integer *m, integer *n, integer *n1, doublecomplex *a, integer *lda, doublecomplex *d__, doublereal *sva, integer *mv, doublecomplex *v, integer *ldv, doublereal *eps, doublereal *sfmin, doublereal *tol, integer *nsweep, doublecomplex * work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgsvj1 inputs: jobv %c, m %" FLA_IS ", n %" FLA_IS ", n1 %" FLA_IS ", lda %" FLA_IS ", mv %" FLA_IS ", ldv %" FLA_IS ", nsweep %" FLA_IS "",*jobv, *m, *n, *n1, *lda, *mv, *ldv, *nsweep);
     /* System generated locals */
     integer a_dim1, a_offset, v_dim1, v_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7;
     doublereal d__1, d__2;
@@ -358,6 +360,7 @@ int zgsvj1_(char *jobv, integer *m, integer *n, integer *n1, doublecomplex *a, i
     {
         i__1 = -(*info);
         xerbla_("ZGSVJ1", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (rsvec)
@@ -834,6 +837,7 @@ L1995: /* Sort the vector SVA() of column norms. */
         }
         /* L5991: */
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* .. */
     /* .. END OF ZGSVJ1 */
