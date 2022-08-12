@@ -132,12 +132,8 @@ v(i+1:m) is stored on exit in A(i+1:m,i), */
 /* Subroutine */
 int zgeqrfp_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *tau, doublecomplex *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zgeqrfp inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "",*m, *n, *lda, *lwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgeqrfp inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "",*m, *n, *lda, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
@@ -206,12 +202,12 @@ int zgeqrfp_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecompl
     {
         i__1 = -(*info);
         xerbla_("ZGEQRFP", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -220,7 +216,7 @@ int zgeqrfp_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecompl
     {
         work[1].r = 1.;
         work[1].i = 0.; // , expr subst
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     nbmin = 2;
@@ -293,7 +289,7 @@ int zgeqrfp_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecompl
     }
     work[1].r = (doublereal) iws;
     work[1].i = 0.; // , expr subst
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGEQRFP */
 }
