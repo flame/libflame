@@ -178,6 +178,10 @@ int dgbtf2_(integer *m, integer *n, integer *kl, integer *ku, doublereal *ab, in
     ab_offset = 1 + ab_dim1;
     ab -= ab_offset;
     --ipiv;
+    #if AOCL_FLA_PROGRESS_H
+        AOCL_FLA_PROGRESS_VAR;
+    #endif
+
     /* Function Body */
     kv = *ku + *kl;
     /* Test the input parameters. */
@@ -215,6 +219,14 @@ int dgbtf2_(integer *m, integer *n, integer *kl, integer *ku, doublereal *ab, in
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
+    #if AOCL_FLA_PROGRESS_H
+        step_count =0;
+     #ifndef FLA_ENABLE_WINDOWS_BUILD
+        if(!aocl_fla_progress_ptr)
+              aocl_fla_progress_ptr=aocl_fla_progress;
+     #endif
+    #endif
+
     /* Gaussian elimination with partial pivoting */
     /* Set fill-in elements in columns KU+2 to KV to zero. */
     i__1 = min(kv,*n);
@@ -240,6 +252,15 @@ int dgbtf2_(integer *m, integer *n, integer *kl, integer *ku, doublereal *ab, in
             j <= i__1;
             ++j)
     {
+     	#if AOCL_FLA_PROGRESS_H
+            if(aocl_fla_progress_ptr){
+                if(j%32==0 || j==i__1){
+                        step_count=j;
+                        AOCL_FLA_PROGRESS_FUNC_PTR("DGBTF2",6,&step_count,&thread_id,&total_threads);
+                }
+            }
+        #endif
+
         /* Set fill-in elements in column J+KV to zero. */
         if (j + kv <= *n)
         {
