@@ -52,7 +52,7 @@ INC_PATH        := $(INCLUDE_DIR)/$(HOST)/
 # the libflame test suite. Modify these definitions if needed.
 LIBBLAS_PATH   := $(INSTALL_LIBDIR)
 #LIBBLAS        := $(LIBBLAS_PATH)/libblas.a
-LIBBLAS        := /lib/x86_64-linux-gnu/libopenblas.a
+LIBBLAS        := $(LIBBLAS_PATH)/libopenblas.a
 #LIBBLAS        := $(HOME)/blis/lib/libblis.a
 
 # LAPACK implementation path. These values only matter if libflame was
@@ -90,7 +90,7 @@ $(TEST_OBJ_PATH)/%.o: $(TEST_SRC_PATH)/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 test_$(FNAME): $(TEST_OBJS)
-	$(LINKER) $(TEST_OBJS) $(LIBFLAME) $(LIBBLAS) $(LDFLAGS) -lpthread -o $(TEST_BIN)
+	$(LINKER) $(TEST_OBJS) $(LIBFLAME) $(LIBLAPACK) $(LIBBLAS) $(LDFLAGS) -o $(TEST_BIN)
 
 clean:
 	$(RM_F) $(TEST_OBJS) $(TEST_BIN)
