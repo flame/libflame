@@ -13,6 +13,7 @@
 
 #ifdef FLA_ENABLE_HIP
 
+#include <hip/hip_runtime.h>
 #include "rocblas.h"
 
 FLA_Error FLA_Syr2k_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Trans trans, FLA_Obj alpha, FLA_Obj A, void* A_hip, FLA_Obj B, void* B_hip, FLA_Obj beta, FLA_Obj C, void* C_hip )
@@ -46,9 +47,6 @@ FLA_Error FLA_Syr2k_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Tran
   else
     k_AB = m_A;
 
-  rocblas_operation blas_trans = FLA_Param_map_flame_to_rocblas_trans( trans, FLA_Obj_is_real( A ) );
-  rocblas_fill blas_uplo = FLA_Param_map_flame_to_rocblas_uplo( uplo );
-
   void* A_mat = NULL;
   void* B_mat = NULL;
   void* C_mat = NULL;
@@ -64,6 +62,26 @@ FLA_Error FLA_Syr2k_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Tran
     B_mat = B_hip;
     C_mat = C_hip;
   }
+
+  FLA_Trans trans_a_corr = trans;
+  FLA_Bool conj_no_trans_a = FALSE;
+
+  void* A_mat_corr = NULL;
+  if ( FLA_Obj_is_complex( A ) && trans == FLA_CONJ_NO_TRANSPOSE )
+  {
+    // must correct by copying to temporary buffer and conjugating there
+    trans_a_corr = FLA_NO_TRANSPOSE;
+    conj_no_trans_a = TRUE;
+
+    dim_t elem_size = FLA_Obj_elem_size( A );
+    size_t count = elem_size * ldim_A * n_A;
+    hipMalloc( &A_mat_corr, count );
+    FLA_Copyconj_tri_external_hip( handle, uplo, A, A_hip, A_mat_corr );
+    A_mat = A_mat_corr;
+  }
+
+  rocblas_operation blas_trans = FLA_Param_map_flame_to_rocblas_trans( trans_a_corr, FLA_Obj_is_real( A ) );
+  rocblas_fill blas_uplo = FLA_Param_map_flame_to_rocblas_uplo( uplo );
 
   switch( datatype ){
 
@@ -144,7 +162,12 @@ FLA_Error FLA_Syr2k_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Tran
   }
 
   }
-  
+
+  if( conj_no_trans_a )
+  {
+    hipFree( A_mat_corr );
+  }
+
   return FLA_SUCCESS;
 }
 

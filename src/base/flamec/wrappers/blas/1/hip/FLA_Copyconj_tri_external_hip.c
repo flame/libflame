@@ -76,7 +76,7 @@ FLA_Error FLA_Copyconj_tri_external_hip( rocblas_handle handle, FLA_Uplo uplo, F
         for ( int j = 0; j < min( n_A, m_A ); j++)
         {
           dim_t n_elem = n_elem_max - j;
-          dim_t offset = j * ldim_A + j  + 1; // plus one for the imaginary part
+          dim_t offset = 2 * ( j * ldim_A + j )  + 1; // plus one for the imaginary part
           rocblas_sscal( handle,         
                          n_elem,
                          &buff_alpha,
@@ -94,7 +94,7 @@ FLA_Error FLA_Copyconj_tri_external_hip( rocblas_handle handle, FLA_Uplo uplo, F
         for ( int j = 0; j < min( n_A, m_A); j++)
         {
           dim_t n_elem = n_elem_max - j;
-          dim_t offset = j * ldim_A + j + 1; // plus one for the imaginary part
+          dim_t offset = 2 * ( j * ldim_A + j ) + 1; // plus one for the imaginary part
           rocblas_dscal( handle,     
                          n_elem,
                          &buff_alpha,
@@ -120,7 +120,7 @@ FLA_Error FLA_Copyconj_tri_external_hip( rocblas_handle handle, FLA_Uplo uplo, F
 	for ( int j = 0; j < n_A; j++)
         {
           dim_t n_elem = min( j + 1, n_elem_max );
-	  dim_t offset = j * ldim_A + 1; // plus one for the imaginary part
+	  dim_t offset = 2 * ( j * ldim_A ) + 1; // plus one for the imaginary part
 	  rocblas_sscal( handle,
                          n_elem,
                          &buff_alpha,
@@ -138,7 +138,7 @@ FLA_Error FLA_Copyconj_tri_external_hip( rocblas_handle handle, FLA_Uplo uplo, F
         for ( int j = 0; j < n_A; j++)
         {
           dim_t n_elem = min( j + 1, n_elem_max );
-          dim_t offset = j * ldim_A + 1; // plus one for the imaginary part
+          dim_t offset = 2 * ( j * ldim_A ) + 1; // plus one for the imaginary part
           rocblas_dscal( handle,         
                          n_elem,
                          &buff_alpha,
