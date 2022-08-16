@@ -37,7 +37,8 @@ The table below explains various parameters
 parameters           |        Purpose
 ---------------------------------------------------------------------
 api                  |   Name of the API which is currently running
-lapi	             |   Linear progress made in current thread so far
+lapi                 |   Length of API/Operation string
+progress	     |   Linear progress made in current thread so far
 current_thread	     |   Current thread id
 total_threads	     |   Total number of threads used to performance the operation
 
@@ -103,6 +104,4 @@ In AOCL Progress thread  0, at API  DGETRF, progress 160 total threads= 1
 
 Limitations And Caveats:
 
-    On windows with shared lib aocl_fla_progress not supported need to register 
-    user-defined function with libflame like aocl_fla_set_progress(test_progress); 
-
+    On Windows,aocl_fla_progress is not supported. Use Callback registration method.
