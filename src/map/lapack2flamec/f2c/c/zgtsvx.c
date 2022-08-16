@@ -284,12 +284,9 @@ IPIV(i) = i indicates */
 /* Subroutine */
 int zgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, doublecomplex *dl, doublecomplex *d__, doublecomplex *du, doublecomplex *dlf, doublecomplex *df, doublecomplex *duf, doublecomplex *du2, integer *ipiv, doublecomplex *b, integer *ldb, doublecomplex *x, integer *ldx, doublereal *rcond, doublereal *ferr, doublereal *berr, doublecomplex *work, doublereal *rwork, integer * info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zgtsvx inputs: fact %c, trans %c, n %d, nrhs %d, ldb %d, ldx %d",*fact, *trans, *n, *nrhs, *ldb, *ldx);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgtsvx inputs: fact %c, trans %c, n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*fact, *trans, *n, *nrhs, *ldb, *ldx);
+
     /* System generated locals */
     integer b_dim1, b_offset, x_dim1, x_offset, i__1;
     /* Local variables */
@@ -377,7 +374,7 @@ int zgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, doublecomplex *
     {
         i__1 = -(*info);
         xerbla_("ZGTSVX", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (nofact)
@@ -396,7 +393,7 @@ int zgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, doublecomplex *
         if (*info > 0)
         {
             *rcond = 0.;
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+            AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
@@ -423,7 +420,7 @@ int zgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, doublecomplex *
     {
         *info = *n + 1;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGTSVX */
 }

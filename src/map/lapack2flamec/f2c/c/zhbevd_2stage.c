@@ -268,6 +268,8 @@ i */
 /* Subroutine */
 int zhbevd_2stage_(char *jobz, char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *ldab, doublereal *w, doublecomplex *z__, integer *ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer *lrwork, integer *iwork, integer *liwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhbevd_2stage inputs: jobz %c, uplo %c, n %" FLA_IS ", kd %" FLA_IS ", ldab %" FLA_IS ", ldz %" FLA_IS "", *jobz, *uplo, *n, *kd, *ldab, *ldz);
     /* System generated locals */
     integer ab_dim1, ab_offset, z_dim1, z_offset, i__1, i__2;
     doublereal d__1;
@@ -427,15 +429,18 @@ int zhbevd_2stage_(char *jobz, char *uplo, integer *n, integer *kd, doublecomple
     {
         i__1 = -(*info);
         xerbla_("ZHBEVD_2STAGE", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -448,6 +453,7 @@ int zhbevd_2stage_(char *jobz, char *uplo, integer *n, integer *kd, doublecomple
             z__[i__1].r = 1.;
             z__[i__1].i = 0.; // , expr subst
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants. */
@@ -520,6 +526,7 @@ int zhbevd_2stage_(char *jobz, char *uplo, integer *n, integer *kd, doublecomple
     work[1].i = 0.; // , expr subst
     rwork[1] = (doublereal) lrwmin;
     iwork[1] = liwmin;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHBEVD_2STAGE */
 }

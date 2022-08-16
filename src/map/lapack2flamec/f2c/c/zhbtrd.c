@@ -172,6 +172,8 @@ if VECT = 'N' or 'V', then Q need not be set. */
 /* Subroutine */
 int zhbtrd_(char *vect, char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *ldab, doublereal *d__, doublereal *e, doublecomplex *q, integer *ldq, doublecomplex *work, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhbtrd inputs: vect %c, uplo %c, n %" FLA_IS ", kd %" FLA_IS ", ldab %" FLA_IS ", ldq %" FLA_IS "",*vect, *uplo, *n, *kd, *ldab, *ldq);
     /* System generated locals */
     integer ab_dim1, ab_offset, q_dim1, q_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     doublereal d__1;
@@ -266,11 +268,13 @@ int zhbtrd_(char *vect, char *uplo, integer *n, integer *kd, doublecomplex *ab, 
     {
         i__1 = -(*info);
         xerbla_("ZHBTRD", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize Q to the unit matrix, if needed */
@@ -872,6 +876,7 @@ int zhbtrd_(char *vect, char *uplo, integer *n, integer *kd, doublecomplex *ab, 
             /* L240: */
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHBTRD */
 }
