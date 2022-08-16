@@ -1,9 +1,13 @@
 #include "test_aocl_progress.h"
-#define TEST_SGETRF
-#define TEST_DGETRF
-#define TEST_CGETRF
-#define TEST_ZGETRF
-#define PROCESS_ENABLE
+//#define TEST_SGETRF
+//#define TEST_DGETRF
+//#define TEST_CGETRF
+//#define TEST_ZGETRF
+#define TEST_SGBTRF
+#define TEST_DGBTRF
+#define TEST_CGBTRF
+#define TEST_ZGBTRF
+//#define PROCESS_ENABLE
 #ifdef PROCESS_ENABLE
 #define BUFLEN 16
 int aocl_fla_progress(char* api,integer lenapi,integer *progress,integer *current_thread,integer *total_threads)
@@ -35,7 +39,7 @@ char buf[BUFLEN];
 
 int main()
 {
-    integer  m, n,lda,info;
+    integer  m, n,lda,kl,ku,loop_count,info;
     void *A;
     void  *ipiv;
     FILE* input_stream;
@@ -58,64 +62,133 @@ int main()
 	// Read the n
 	fla_test_read_next_line( buffer, input_stream );
 	sscanf( buffer, "%"FS"", &n);
-    
-    lda = m;
+
+        lda = m;
+
+	// Read the kl
+        fla_test_read_next_line( buffer, input_stream );
+        sscanf( buffer, "%"FS"", &kl);
+
+        // Read the ku
+        fla_test_read_next_line( buffer, input_stream );
+        sscanf( buffer, "%"FS"", &ku);
+
+        // Read the loop_count
+        fla_test_read_next_line( buffer, input_stream );
+        sscanf( buffer, "%"FS"", &loop_count);
+
+	#ifdef SET_PROCESS_ENABLE
+                aocl_fla_set_progress(test_progress);
+        #endif
+
+
+     	#ifdef TEST_SGBTRF
+    	for(integer i =0;i<loop_count;++i){
+    		A = (float *)malloc(m*n*sizeof(float));
+    		ipiv = (integer *)malloc(m*sizeof(integer));
+    		/* Initialization of input Buffers */
+    		printf("Testing SGBTRF API values are m = %"FS" ,n=%"FS",lda=%"FS"  \n",m,n,lda);
+        	fla_test_init_buffer_rand_s( A,m,n,lda);
+        	sgbtrf_(&m,&n,&kl,&ku,A,&lda,ipiv,&info);
+        	free(A);
+        	free(ipiv);
+    	}
+        #endif
+
+        #ifdef TEST_DGBTRF
+ 	for(integer i =0;i<loop_count;++i){
+        	A = (double *)malloc(m*n*sizeof(double));
+    		ipiv = (integer *)malloc(m*sizeof(integer));
+    		/* Initialization of input Buffers */
+    		printf("Testing DGBTRF API values are m = %"FS" ,n=%"FS",lda=%"FS"  \n",m,n,lda);
+        	fla_test_init_buffer_rand_d( A,m,n,lda);
+       		dgbtrf_(&m,&n,&kl,&ku,A,&lda,ipiv,&info);
+        	free(A);
+        	free(ipiv);
+	}
+        #endif
+
+    	#ifdef TEST_CGBTRF
+	for(integer i =0;i<loop_count;++i){
+    		A = (scomplex *)malloc(m*n*sizeof(scomplex));
+    		ipiv = (integer *)malloc(m*sizeof(integer));
+    		/* Initialization of input Buffers */
+    		printf("Testing CGBTRF API values are m = %"FS" ,n=%"FS",lda=%"FS"  \n",m,n,lda);
+        	fla_test_init_buffer_rand_c( A,m,n,lda);
+        	cgbtrf_(&m,&n,&kl,&ku,A,&lda,ipiv,&info);
+        	free(A);
+        	free(ipiv);
+	}
+        #endif
+
+	#ifdef TEST_ZGBTRF
+        for(integer i =0;i<loop_count;++i){
+                A = (dcomplex *)malloc(m*n*sizeof(dcomplex));
+                ipiv = (integer *)malloc(m*sizeof(integer));
+                /* Initialization of input Buffers */
+                printf("Testing ZGBTRF API values are m = %"FS" ,n=%"FS",lda=%"FS"  \n",m,n,lda);
+                fla_test_init_buffer_rand_z( A,m,n,lda);
+                zgbtrf_(&m,&n,&kl,&ku,A,&lda,ipiv,&info);
+                free(A);
+                free(ipiv);
+        }
+        #endif
+
+
 
 	#ifdef TEST_SGETRF
-    A = (float *)malloc(m*n*sizeof(float));
-    ipiv = (integer *)malloc(m*sizeof(integer));
-    /* Initialization of input Buffers */
-    printf("Testing SGETRF API values are m = %"FS" ,n=%"FS",lda=%"FS"  \n",m,n,lda);
-	fla_test_init_buffer_rand_s( A,m,n,lda);
-    #ifdef SET_PROCESS_ENABLE
-      	aocl_fla_set_progress(test_progress);
-    #endif 
-	sgetrf_(&m,&n,A,&lda,ipiv,&info);
-	free(A);
-	free(ipiv);
+	for(integer i =0;i<loop_count;++i){
+		A = (float *)malloc(m*n*sizeof(float));
+    		ipiv = (integer *)malloc(m*sizeof(integer));
+    		/* Initialization of input Buffers */
+    		printf("Testing SGETRF API values are m = %"FS" ,n=%"FS",lda=%"FS"  \n",m,n,lda);
+		fla_test_init_buffer_rand_s( A,m,n,lda);
+		sgetrf_(&m,&n,A,&lda,ipiv,&info);
+		free(A);
+		free(ipiv);
+	}
 	#endif
+
 	#ifdef TEST_DGETRF
-    A = (double *)malloc(m*n*sizeof(double));
-    ipiv = (integer *)malloc(m*sizeof(integer));
-    /* Initialization of input Buffers */
-    printf("Testing DGETRF API values are m = %"FS" ,n=%"FS",lda=%"FS"  \n",m,n,lda);
-	fla_test_init_buffer_rand_d( A,m,n,lda);
-    #ifdef SET_PROCESS_ENABLE
-      	aocl_fla_set_progress(test_progress);
-    #endif 
-	dgetrf_(&m,&n,A,&lda,ipiv,&info);
-	free(A);
-	free(ipiv);
-	#endif
+        for(integer i =0;i<loop_count;++i){
+                A = (double *)malloc(m*n*sizeof(double));
+                ipiv = (integer *)malloc(m*sizeof(integer));
+                /* Initialization of input Buffers */
+                printf("Testing DGETRF API values are m = %"FS" ,n=%"FS",lda=%"FS"  \n",m,n,lda);
+                fla_test_init_buffer_rand_d( A,m,n,lda);
+                dgetrf_(&m,&n,A,&lda,ipiv,&info);
+                free(A);
+                free(ipiv);
+        }
+        #endif
 
-    #ifdef TEST_CGETRF
-    A = (scomplex *)malloc(m*n*sizeof(scomplex));
-    ipiv = (integer *)malloc(m*sizeof(integer));
-    /* Initialization of input Buffers */
-    printf("Testing CGETRF API values are m = %"FS" ,n=%"FS",lda=%"FS"  \n",m,n,lda);
-	fla_test_init_buffer_rand_c( A,m,n,lda);
-    #ifdef SET_PROCESS_ENABLE
-      	aocl_fla_set_progress(test_progress);
-    #endif 
-	cgetrf_(&m,&n,A,&lda,ipiv,&info);
-	free(A);
-	free(ipiv);
-	#endif
+	#ifdef TEST_CGETRF
+        for(integer i =0;i<loop_count;++i){
+                A = (scomplex *)malloc(m*n*sizeof(scomplex));
+		ipiv = (integer *)malloc(m*sizeof(integer));
+                /* Initialization of input Buffers */
+                printf("Testing CGETRF API values are m = %"FS" ,n=%"FS",lda=%"FS"  \n",m,n,lda);
+                fla_test_init_buffer_rand_c( A,m,n,lda);
+                cgetrf_(&m,&n,A,&lda,ipiv,&info);
+                free(A);
+                free(ipiv);
+        }
+        #endif
+
 	#ifdef TEST_ZGETRF
-    A = (dcomplex *)malloc(m*n*sizeof(dcomplex));
-    ipiv = (integer *)malloc(m*sizeof(integer));
-    /* Initialization of input Buffers */
-    printf("Testing ZGETRF API values are m = %"FS" ,n=%"FS",lda=%"FS"  \n",m,n,lda);
-	fla_test_init_buffer_rand_z( A,m,n,lda);
-    #ifdef SET_PROCESS_ENABLE
-      	aocl_fla_set_progress(test_progress);
-    #endif 
-	zgetrf_(&m,&n,A,&lda,ipiv,&info);
-	free(A);
-	free(ipiv);
-	#endif
+        for(integer i =0;i<loop_count;++i){
+                A = (dcomplex *)malloc(m*n*sizeof(dcomplex));
+                ipiv = (integer *)malloc(m*sizeof(integer));
+                /* Initialization of input Buffers */
+                printf("Testing ZGETRF API values are m = %"FS" ,n=%"FS",lda=%"FS"  \n",m,n,lda);
+                fla_test_init_buffer_rand_z( A,m,n,lda);
+                zgetrf_(&m,&n,A,&lda,ipiv,&info);
+                free(A);
+                free(ipiv);
+        }
+        #endif
 
-    return 0;
+    	return 0;
 
 }
 
