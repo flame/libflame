@@ -175,6 +175,8 @@
 /* Subroutine */
 int zhbgv_(char *jobz, char *uplo, integer *n, integer *ka, integer *kb, doublecomplex *ab, integer *ldab, doublecomplex *bb, integer *ldbb, doublereal *w, doublecomplex *z__, integer *ldz, doublecomplex *work, doublereal *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhbgv inputs: jobz %c, uplo %c, n %" FLA_IS ", ka %" FLA_IS ", kb %" FLA_IS ", ldab %" FLA_IS ", ldbb %" FLA_IS ", ldz %" FLA_IS "",*jobz, *uplo, *n, *ka, *kb, *ldab, *ldbb, *ldz);
     /* System generated locals */
     integer ab_dim1, ab_offset, bb_dim1, bb_offset, z_dim1, z_offset, i__1;
     /* Local variables */
@@ -258,11 +260,13 @@ int zhbgv_(char *jobz, char *uplo, integer *n, integer *ka, integer *kb, doublec
     {
         i__1 = -(*info);
         xerbla_("ZHBGV ", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Form a split Cholesky factorization of B. */
@@ -270,6 +274,7 @@ int zhbgv_(char *jobz, char *uplo, integer *n, integer *ka, integer *kb, doublec
     if (*info != 0)
     {
         *info = *n + *info;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Transform problem to standard eigenvalue problem. */
@@ -295,6 +300,7 @@ int zhbgv_(char *jobz, char *uplo, integer *n, integer *ka, integer *kb, doublec
     {
         zsteqr_(jobz, n, &w[1], &rwork[inde], &z__[z_offset], ldz, &rwork[ indwrk], info);
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHBGV */
 }

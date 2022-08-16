@@ -112,12 +112,9 @@
 /* Subroutine */
 int zgtsv_(integer *n, integer *nrhs, doublecomplex *dl, doublecomplex *d__, doublecomplex *du, doublecomplex *b, integer *ldb, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zgtsv inputs: n %d, nrhs %d, ldb %d",*n, *nrhs, *ldb);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgtsv inputs: n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS "",*n, *nrhs, *ldb);
+
     /* System generated locals */
     integer b_dim1, b_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7;
     doublereal d__1, d__2, d__3, d__4;
@@ -177,12 +174,12 @@ int zgtsv_(integer *n, integer *nrhs, doublecomplex *dl, doublecomplex *d__, dou
     {
         i__1 = -(*info);
         xerbla_("ZGTSV ", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     i__1 = *n - 1;
@@ -201,7 +198,7 @@ int zgtsv_(integer *n, integer *nrhs, doublecomplex *dl, doublecomplex *d__, dou
                 a unique */
                 /* solution can not be found. */
                 *info = k;
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
         }
@@ -316,7 +313,7 @@ int zgtsv_(integer *n, integer *nrhs, doublecomplex *dl, doublecomplex *d__, dou
     if (d__[i__1].r == 0. && d__[i__1].i == 0.)
     {
         *info = *n;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Back solve with the matrix U from the factorization. */
@@ -368,7 +365,7 @@ int zgtsv_(integer *n, integer *nrhs, doublecomplex *dl, doublecomplex *d__, dou
         }
         /* L50: */
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZGTSV */
 }

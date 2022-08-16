@@ -168,6 +168,8 @@ LDX >= 1 otherwise. */
 /* Subroutine */
 int zhbgst_(char *vect, char *uplo, integer *n, integer *ka, integer *kb, doublecomplex *ab, integer *ldab, doublecomplex *bb, integer *ldbb, doublecomplex *x, integer *ldx, doublecomplex *work, doublereal *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhbgst inputs: vect %c, uplo %c, n %" FLA_IS ", ka %" FLA_IS ", kb %" FLA_IS ", ldab %" FLA_IS ", ldbb %" FLA_IS ", ldx %" FLA_IS "",*vect, *uplo, *n, *ka, *kb, *ldab, *ldbb, *ldx);
     /* System generated locals */
     integer ab_dim1, ab_offset, bb_dim1, bb_offset, x_dim1, x_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7, i__8;
     doublereal d__1;
@@ -273,11 +275,13 @@ int zhbgst_(char *vect, char *uplo, integer *n, integer *ka, integer *kb, double
     {
         i__1 = -(*info);
         xerbla_("ZHBGST", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     inca = *ldab * ka1;
@@ -1387,6 +1391,7 @@ L490:
             i0 = m + 1;
             if (*ka == 0)
             {
+    AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             goto L490;
@@ -1397,6 +1402,7 @@ L490:
         i__ -= *ka;
         if (i__ < 2)
         {
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }

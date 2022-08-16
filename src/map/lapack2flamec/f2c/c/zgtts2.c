@@ -118,12 +118,9 @@ IPIV(i) = i indicates a row interchange was not */
 /* Subroutine */
 int zgtts2_(integer *itrans, integer *n, integer *nrhs, doublecomplex *dl, doublecomplex *d__, doublecomplex *du, doublecomplex *du2, integer *ipiv, doublecomplex *b, integer *ldb)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zgtts2 inputs: itrans %d, n %d, nrhs %d, ldb %d",*itrans, *n, *nrhs, *ldb);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zgtts2 inputs: itrans %" FLA_IS ", n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS "",*itrans, *n, *nrhs, *ldb);
+
     /* System generated locals */
     integer b_dim1, b_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7, i__8;
     doublecomplex z__1, z__2, z__3, z__4, z__5, z__6, z__7, z__8;
@@ -159,7 +156,7 @@ int zgtts2_(integer *itrans, integer *n, integer *nrhs, doublecomplex *dl, doubl
     /* Function Body */
     if (*n == 0 || *nrhs == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*itrans == 0)
@@ -725,7 +722,7 @@ L130: /* Solve U**H * x = b. */
         }
     }
     /* End of ZGTTS2 */
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zgtts2_ */

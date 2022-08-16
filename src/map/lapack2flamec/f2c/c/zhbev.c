@@ -146,6 +146,8 @@ i */
 /* Subroutine */
 int zhbev_(char *jobz, char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *ldab, doublereal *w, doublecomplex *z__, integer *ldz, doublecomplex *work, doublereal *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhbev inputs: jobz %c, uplo %c, n %" FLA_IS ", kd %" FLA_IS ", ldab %" FLA_IS ", ldz %" FLA_IS "",*jobz, *uplo, *n, *kd, *ldab, *ldz);
     /* System generated locals */
     integer ab_dim1, ab_offset, z_dim1, z_offset, i__1;
     doublereal d__1;
@@ -239,11 +241,13 @@ int zhbev_(char *jobz, char *uplo, integer *n, integer *kd, doublecomplex *ab, i
     {
         i__1 = -(*info);
         xerbla_("ZHBEV ", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -264,6 +268,7 @@ int zhbev_(char *jobz, char *uplo, integer *n, integer *kd, doublecomplex *ab, i
             z__[i__1].r = 1.;
             z__[i__1].i = 0.; // , expr subst
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants. */
@@ -324,6 +329,7 @@ int zhbev_(char *jobz, char *uplo, integer *n, integer *kd, doublecomplex *ab, i
         d__1 = 1. / sigma;
         dscal_(&imax, &d__1, &w[1], &c__1);
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHBEV */
 }
