@@ -302,6 +302,8 @@ extern int zscal_(integer *, doublecomplex *, doublecomplex *, integer *);
 
 int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integer *ihi, doublecomplex *h__, integer *ldh, doublecomplex *t, integer *ldt, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhgeqz inputs: job %c, compq %c, compz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", ldh %" FLA_IS ", ldt %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS "", *job, *compq, *compz, *n, *ilo, *ihi, *ldh, *ldt, *ldq, *ldz);
     /* System generated locals */
     integer h_dim1, h_offset, q_dim1, q_offset, t_dim1, t_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal d__1, d__2, d__3, d__4, d__5, d__6, d__7, d__8;
@@ -560,10 +562,12 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     {
         i__1 = -(*info);
         xerbla_("ZHGEQZ", &i__1);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -572,6 +576,7 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     {
         work[1].r = 1.;
         work[1].i = 0.; // , expr subst
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize Q and Z */
@@ -1854,6 +1859,7 @@ L210:
     z__1.i = 0.; // , expr subst
     work[1].r = z__1.r;
     work[1].i = z__1.i; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHGEQZ */
 }
