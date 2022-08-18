@@ -3,7 +3,11 @@
 */
 
 #include "FLAME.h"
+
+#ifdef FLA_ENABLE_MULTITHREADING
+
 #include <omp.h>
+
 
 /* To determine the sub partition range of current thread */
 void FLA_Thread_get_subrange
@@ -61,3 +65,5 @@ void FLA_Thread_optimum( API_ID  family, int *actual_num_threads)
 
     return;
 }
+
+#endif

@@ -1,6 +1,7 @@
 /* ../netlib/clabrd.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
+
 static complex c_b1 =
 {
     0.f,0.f
@@ -229,11 +230,12 @@ int clabrd_(integer *m, integer *n, integer *nb, complex *a, integer *lda, real 
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */
-    integer a_dim1, a_offset, x_dim1, x_offset, y_dim1, y_offset, i__1, i__2, i__3;
+    integer a_dim1, a_offset, x_dim1, x_offset, y_dim1, y_offset, i__1, i__2, i__3, i__4, i__5;
     complex q__1;
     /* Local variables */
     integer i__;
     complex alpha;
+    int thread_id, actual_num_threads;
     extern /* Subroutine */
     int cscal_(integer *, complex *, complex *, integer *), cgemv_(char *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *), clarfg_(integer *, complex *, complex *, integer *, complex *), clacgv_(integer *, complex *, integer *);
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
@@ -269,6 +271,12 @@ int clabrd_(integer *m, integer *n, integer *nb, complex *a, integer *lda, real 
     y_dim1 = *ldy;
     y_offset = 1 + y_dim1;
     y -= y_offset;
+
+#ifdef FLA_ENABLE_MULTITHREADING
+    /* Get optimum thread number for CLABRD*/
+    FLA_Thread_optimum( FLA_LABRD, &actual_num_threads);
+#endif
+
     /* Function Body */
     if (*m <= 0 || *n <= 0)
     {
@@ -279,241 +287,318 @@ int clabrd_(integer *m, integer *n, integer *nb, complex *a, integer *lda, real 
     {
         /* Reduce to upper bidiagonal form */
         i__1 = *nb;
-        for (i__ = 1;
-                i__ <= i__1;
-                ++i__)
+#ifdef FLA_ENABLE_MULTITHREADING
+        #pragma omp parallel num_threads(actual_num_threads) private(i__, i__2, i__3, i__4, i__5, thread_id)
         {
-            /* Update A(i:m,i) */
-            i__2 = i__ - 1;
-            clacgv_(&i__2, &y[i__ + y_dim1], ldy);
-            i__2 = *m - i__ + 1;
-            i__3 = i__ - 1;
-            q__1.r = -1.f;
-            q__1.i = -0.f; // , expr subst
-            cgemv_("No transpose", &i__2, &i__3, &q__1, &a[i__ + a_dim1], lda, &y[i__ + y_dim1], ldy, &c_b2, &a[i__ + i__ * a_dim1], & c__1);
-            i__2 = i__ - 1;
-            clacgv_(&i__2, &y[i__ + y_dim1], ldy);
-            i__2 = *m - i__ + 1;
-            i__3 = i__ - 1;
-            q__1.r = -1.f;
-            q__1.i = -0.f; // , expr subst
-            cgemv_("No transpose", &i__2, &i__3, &q__1, &x[i__ + x_dim1], ldx, &a[i__ * a_dim1 + 1], &c__1, &c_b2, &a[i__ + i__ * a_dim1], &c__1);
-            /* Generate reflection Q(i) to annihilate A(i+1:m,i) */
-            i__2 = i__ + i__ * a_dim1;
-            alpha.r = a[i__2].r;
-            alpha.i = a[i__2].i; // , expr subst
-            i__2 = *m - i__ + 1;
-            /* Computing MIN */
-            i__3 = i__ + 1;
-            clarfg_(&i__2, &alpha, &a[min(i__3,*m) + i__ * a_dim1], &c__1, & tauq[i__]);
-            i__2 = i__;
-            d__[i__2] = alpha.r;
-            if (i__ < *n)
+            thread_id = omp_get_thread_num();
+#else
+        {
+            thread_id = 0;
+#endif
+            for (i__ = 1;
+                    i__ <= i__1;
+                    ++i__)
             {
-                i__2 = i__ + i__ * a_dim1;
-                a[i__2].r = 1.f;
-                a[i__2].i = 0.f; // , expr subst
-                /* Compute Y(i+1:n,i) */
-                i__2 = *m - i__ + 1;
-                i__3 = *n - i__;
-                cgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &a[i__ + ( i__ + 1) * a_dim1], lda, &a[i__ + i__ * a_dim1], & c__1, &c_b1, &y[i__ + 1 + i__ * y_dim1], &c__1);
-                i__2 = *m - i__ + 1;
-                i__3 = i__ - 1;
-                cgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &a[i__ + a_dim1], lda, &a[i__ + i__ * a_dim1], &c__1, &c_b1, & y[i__ * y_dim1 + 1], &c__1);
-                i__2 = *n - i__;
-                i__3 = i__ - 1;
-                q__1.r = -1.f;
-                q__1.i = -0.f; // , expr subst
-                cgemv_("No transpose", &i__2, &i__3, &q__1, &y[i__ + 1 + y_dim1], ldy, &y[i__ * y_dim1 + 1], &c__1, &c_b2, &y[ i__ + 1 + i__ * y_dim1], &c__1);
-                i__2 = *m - i__ + 1;
-                i__3 = i__ - 1;
-                cgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &x[i__ + x_dim1], ldx, &a[i__ + i__ * a_dim1], &c__1, &c_b1, & y[i__ * y_dim1 + 1], &c__1);
-                i__2 = i__ - 1;
-                i__3 = *n - i__;
-                q__1.r = -1.f;
-                q__1.i = -0.f; // , expr subst
-                cgemv_("Conjugate transpose", &i__2, &i__3, &q__1, &a[(i__ + 1) * a_dim1 + 1], lda, &y[i__ * y_dim1 + 1], &c__1, & c_b2, &y[i__ + 1 + i__ * y_dim1], &c__1);
-                i__2 = *n - i__;
-                cscal_(&i__2, &tauq[i__], &y[i__ + 1 + i__ * y_dim1], &c__1);
-                /* Update A(i,i+1:n) */
-                i__2 = *n - i__;
-                clacgv_(&i__2, &a[i__ + (i__ + 1) * a_dim1], lda);
-                clacgv_(&i__, &a[i__ + a_dim1], lda);
-                i__2 = *n - i__;
-                q__1.r = -1.f;
-                q__1.i = -0.f; // , expr subst
-                cgemv_("No transpose", &i__2, &i__, &q__1, &y[i__ + 1 + y_dim1], ldy, &a[i__ + a_dim1], lda, &c_b2, &a[i__ + ( i__ + 1) * a_dim1], lda);
-                clacgv_(&i__, &a[i__ + a_dim1], lda);
-                i__2 = i__ - 1;
-                clacgv_(&i__2, &x[i__ + x_dim1], ldx);
-                i__2 = i__ - 1;
-                i__3 = *n - i__;
-                q__1.r = -1.f;
-                q__1.i = -0.f; // , expr subst
-                cgemv_("Conjugate transpose", &i__2, &i__3, &q__1, &a[(i__ + 1) * a_dim1 + 1], lda, &x[i__ + x_dim1], ldx, &c_b2, & a[i__ + (i__ + 1) * a_dim1], lda);
-                i__2 = i__ - 1;
-                clacgv_(&i__2, &x[i__ + x_dim1], ldx);
-                /* Generate reflection P(i) to annihilate A(i,i+2:n) */
-                i__2 = i__ + (i__ + 1) * a_dim1;
-                alpha.r = a[i__2].r;
-                alpha.i = a[i__2].i; // , expr subst
-                i__2 = *n - i__;
-                /* Computing MIN */
-                i__3 = i__ + 2;
-                clarfg_(&i__2, &alpha, &a[i__ + min(i__3,*n) * a_dim1], lda, & taup[i__]);
-                i__2 = i__;
-                e[i__2] = alpha.r;
-                i__2 = i__ + (i__ + 1) * a_dim1;
-                a[i__2].r = 1.f;
-                a[i__2].i = 0.f; // , expr subst
-                /* Compute X(i+1:m,i) */
-                i__2 = *m - i__;
-                i__3 = *n - i__;
-                cgemv_("No transpose", &i__2, &i__3, &c_b2, &a[i__ + 1 + (i__ + 1) * a_dim1], lda, &a[i__ + (i__ + 1) * a_dim1], lda, &c_b1, &x[i__ + 1 + i__ * x_dim1], &c__1);
-                i__2 = *n - i__;
-                cgemv_("Conjugate transpose", &i__2, &i__, &c_b2, &y[i__ + 1 + y_dim1], ldy, &a[i__ + (i__ + 1) * a_dim1], lda, & c_b1, &x[i__ * x_dim1 + 1], &c__1);
-                i__2 = *m - i__;
-                q__1.r = -1.f;
-                q__1.i = -0.f; // , expr subst
-                cgemv_("No transpose", &i__2, &i__, &q__1, &a[i__ + 1 + a_dim1], lda, &x[i__ * x_dim1 + 1], &c__1, &c_b2, &x[ i__ + 1 + i__ * x_dim1], &c__1);
-                i__2 = i__ - 1;
-                i__3 = *n - i__;
-                cgemv_("No transpose", &i__2, &i__3, &c_b2, &a[(i__ + 1) * a_dim1 + 1], lda, &a[i__ + (i__ + 1) * a_dim1], lda, & c_b1, &x[i__ * x_dim1 + 1], &c__1);
-                i__2 = *m - i__;
-                i__3 = i__ - 1;
-                q__1.r = -1.f;
-                q__1.i = -0.f; // , expr subst
-                cgemv_("No transpose", &i__2, &i__3, &q__1, &x[i__ + 1 + x_dim1], ldx, &x[i__ * x_dim1 + 1], &c__1, &c_b2, &x[ i__ + 1 + i__ * x_dim1], &c__1);
-                i__2 = *m - i__;
-                cscal_(&i__2, &taup[i__], &x[i__ + 1 + i__ * x_dim1], &c__1);
-                i__2 = *n - i__;
-                clacgv_(&i__2, &a[i__ + (i__ + 1) * a_dim1], lda);
+                if(thread_id == 0)
+                {
+                    /* Update A(i:m,i) */
+                    i__2 = i__ - 1;
+                    clacgv_(&i__2, &y[i__ + y_dim1], ldy);
+                    i__2 = *m - i__ + 1;
+                    i__3 = i__ - 1;
+                    q__1.r = -1.f;
+                    q__1.i = -0.f; // , expr subst
+                    cgemv_("No transpose", &i__2, &i__3, &q__1, &a[i__ + a_dim1], lda, &y[i__ + y_dim1], ldy, &c_b2, &a[i__ + i__ * a_dim1], & c__1);
+                    i__2 = i__ - 1;
+                    clacgv_(&i__2, &y[i__ + y_dim1], ldy);
+                    i__2 = *m - i__ + 1;
+                    i__3 = i__ - 1;
+                    q__1.r = -1.f;
+                    q__1.i = -0.f; // , expr subst
+                    cgemv_("No transpose", &i__2, &i__3, &q__1, &x[i__ + x_dim1], ldx, &a[i__ * a_dim1 + 1], &c__1, &c_b2, &a[i__ + i__ * a_dim1], &c__1);
+                    /* Generate reflection Q(i) to annihilate A(i+1:m,i) */
+                    i__2 = i__ + i__ * a_dim1;
+                    alpha.r = a[i__2].r;
+                    alpha.i = a[i__2].i; // , expr subst
+                    i__2 = *m - i__ + 1;
+                    /* Computing MIN */
+                    i__3 = i__ + 1;
+                    clarfg_(&i__2, &alpha, &a[min(i__3,*m) + i__ * a_dim1], &c__1, & tauq[i__]);
+                    i__2 = i__;
+                    d__[i__2] = alpha.r;
+                }
+                if (i__ < *n)
+                {
+                    if(thread_id == 0)
+                    {
+                        i__2 = i__ + i__ * a_dim1;
+                        a[i__2].r = 1.f;
+                        a[i__2].i = 0.f; // , expr subst
+                    }
+                    /* Compute Y(i+1:n,i) */
+                    i__2 = *m - i__ + 1;
+                    i__3 = *n - i__;
+#ifdef FLA_ENABLE_MULTITHREADING
+                    /* Determine the sub partition range of current thread */
+                    FLA_Thread_get_subrange(thread_id, actual_num_threads, i__3, &i__4, &i__5);
+                    #pragma omp barrier
+                    cgemv_("Conjugate transpose", &i__2, &i__4, &c_b2, &a[i__ + ( i__5 + i__ + 1) * a_dim1], lda, &a[i__ + i__ * a_dim1], & c__1, &c_b1, &y[ i__5 + i__ + 1 + i__ * y_dim1], &c__1);
+                    #pragma omp barrier
+#else
+                    cgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &a[i__ + ( i__ + 1) * a_dim1], lda, &a[i__ + i__ * a_dim1], & c__1, &c_b1, &y[i__ + 1 + i__ * y_dim1], &c__1);
+#endif
+                    if(thread_id == 0)
+                    {
+                        i__2 = *m - i__ + 1;
+                        i__3 = i__ - 1;
+                        cgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &a[i__ + a_dim1], lda, &a[i__ + i__ * a_dim1], &c__1, &c_b1, & y[i__ * y_dim1 + 1], &c__1);
+                        i__2 = *n - i__;
+                        i__3 = i__ - 1;
+                        q__1.r = -1.f;
+                        q__1.i = -0.f; // , expr subst
+                        cgemv_("No transpose", &i__2, &i__3, &q__1, &y[i__ + 1 + y_dim1], ldy, &y[i__ * y_dim1 + 1], &c__1, &c_b2, &y[ i__ + 1 + i__ * y_dim1], &c__1);
+                        i__2 = *m - i__ + 1;
+                        i__3 = i__ - 1;
+                        cgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &x[i__ + x_dim1], ldx, &a[i__ + i__ * a_dim1], &c__1, &c_b1, & y[i__ * y_dim1 + 1], &c__1);
+                        i__2 = i__ - 1;
+                        i__3 = *n - i__;
+                        q__1.r = -1.f;
+                        q__1.i = -0.f; // , expr subst
+                        cgemv_("Conjugate transpose", &i__2, &i__3, &q__1, &a[(i__ + 1) * a_dim1 + 1], lda, &y[i__ * y_dim1 + 1], &c__1, & c_b2, &y[i__ + 1 + i__ * y_dim1], &c__1);
+                        i__2 = *n - i__;
+                        cscal_(&i__2, &tauq[i__], &y[i__ + 1 + i__ * y_dim1], &c__1);
+                        /* Update A(i,i+1:n) */
+                        i__2 = *n - i__;
+                        clacgv_(&i__2, &a[i__ + (i__ + 1) * a_dim1], lda);
+                        clacgv_(&i__, &a[i__ + a_dim1], lda);
+                        i__2 = *n - i__;
+                        q__1.r = -1.f;
+                        q__1.i = -0.f; // , expr subst
+                        cgemv_("No transpose", &i__2, &i__, &q__1, &y[i__ + 1 + y_dim1], ldy, &a[i__ + a_dim1], lda, &c_b2, &a[i__ + ( i__ + 1) * a_dim1], lda);
+                        clacgv_(&i__, &a[i__ + a_dim1], lda);
+                        i__2 = i__ - 1;
+                        clacgv_(&i__2, &x[i__ + x_dim1], ldx);
+                        i__2 = i__ - 1;
+                        i__3 = *n - i__;
+                        q__1.r = -1.f;
+                        q__1.i = -0.f; // , expr subst
+                        cgemv_("Conjugate transpose", &i__2, &i__3, &q__1, &a[(i__ + 1) * a_dim1 + 1], lda, &x[i__ + x_dim1], ldx, &c_b2, & a[i__ + (i__ + 1) * a_dim1], lda);
+                        i__2 = i__ - 1;
+                        clacgv_(&i__2, &x[i__ + x_dim1], ldx);
+                        /* Generate reflection P(i) to annihilate A(i,i+2:n) */
+                        i__2 = i__ + (i__ + 1) * a_dim1;
+                        alpha.r = a[i__2].r;
+                        alpha.i = a[i__2].i; // , expr subst
+                        i__2 = *n - i__;
+                        /* Computing MIN */
+                        i__3 = i__ + 2;
+                        clarfg_(&i__2, &alpha, &a[i__ + min(i__3,*n) * a_dim1], lda, & taup[i__]);
+                        i__2 = i__;
+                        e[i__2] = alpha.r;
+                        i__2 = i__ + (i__ + 1) * a_dim1;
+                        a[i__2].r = 1.f;
+                        a[i__2].i = 0.f; // , expr subst
+                    }
+                    /* Compute X(i+1:m,i) */
+                    i__2 = *m - i__;
+                    i__3 = *n - i__;
+#ifdef FLA_ENABLE_MULTITHREADING
+                    /* Determine the sub partition range of current thread */
+                    FLA_Thread_get_subrange(thread_id, actual_num_threads, i__2, &i__4, &i__5);
+                    #pragma omp barrier
+                    cgemv_("No transpose", &i__4, &i__3, &c_b2, &a[ i__5 + i__ + 1 + (i__ + 1) * a_dim1], lda, &a[i__ + (i__ + 1) * a_dim1], lda, &c_b1, &x[ i__5 + i__ + 1 + i__ * x_dim1], &c__1);
+                    #pragma omp barrier
+#else
+                    cgemv_("No transpose", &i__2, &i__3, &c_b2, &a[i__ + 1 + (i__ + 1) * a_dim1], lda, &a[i__ + (i__ + 1) * a_dim1], lda, &c_b1, &x[i__ + 1 + i__ * x_dim1], &c__1);
+#endif
+                    if(thread_id == 0)
+                    {
+                        i__2 = *n - i__;
+                        cgemv_("Conjugate transpose", &i__2, &i__, &c_b2, &y[i__ + 1 + y_dim1], ldy, &a[i__ + (i__ + 1) * a_dim1], lda, & c_b1, &x[i__ * x_dim1 + 1], &c__1);
+                        i__2 = *m - i__;
+                        q__1.r = -1.f;
+                        q__1.i = -0.f; // , expr subst
+                        cgemv_("No transpose", &i__2, &i__, &q__1, &a[i__ + 1 + a_dim1], lda, &x[i__ * x_dim1 + 1], &c__1, &c_b2, &x[ i__ + 1 + i__ * x_dim1], &c__1);
+                        i__2 = i__ - 1;
+                        i__3 = *n - i__;
+                        cgemv_("No transpose", &i__2, &i__3, &c_b2, &a[(i__ + 1) * a_dim1 + 1], lda, &a[i__ + (i__ + 1) * a_dim1], lda, & c_b1, &x[i__ * x_dim1 + 1], &c__1);
+                        i__2 = *m - i__;
+                        i__3 = i__ - 1;
+                        q__1.r = -1.f;
+                        q__1.i = -0.f; // , expr subst
+                        cgemv_("No transpose", &i__2, &i__3, &q__1, &x[i__ + 1 + x_dim1], ldx, &x[i__ * x_dim1 + 1], &c__1, &c_b2, &x[ i__ + 1 + i__ * x_dim1], &c__1);
+                        i__2 = *m - i__;
+                        cscal_(&i__2, &taup[i__], &x[i__ + 1 + i__ * x_dim1], &c__1);
+                        i__2 = *n - i__;
+                        clacgv_(&i__2, &a[i__ + (i__ + 1) * a_dim1], lda);
+                    }
+                }
+                /* L10: */
             }
-            /* L10: */
         }
     }
     else
     {
         /* Reduce to lower bidiagonal form */
         i__1 = *nb;
-        for (i__ = 1;
-                i__ <= i__1;
-                ++i__)
+#ifdef FLA_ENABLE_MULTITHREADING
+        #pragma omp parallel num_threads(actual_num_threads) private(i__, i__2, i__3, i__4, i__5, thread_id)
         {
-            /* Update A(i,i:n) */
-            i__2 = *n - i__ + 1;
-            clacgv_(&i__2, &a[i__ + i__ * a_dim1], lda);
-            i__2 = i__ - 1;
-            clacgv_(&i__2, &a[i__ + a_dim1], lda);
-            i__2 = *n - i__ + 1;
-            i__3 = i__ - 1;
-            q__1.r = -1.f;
-            q__1.i = -0.f; // , expr subst
-            cgemv_("No transpose", &i__2, &i__3, &q__1, &y[i__ + y_dim1], ldy, &a[i__ + a_dim1], lda, &c_b2, &a[i__ + i__ * a_dim1], lda);
-            i__2 = i__ - 1;
-            clacgv_(&i__2, &a[i__ + a_dim1], lda);
-            i__2 = i__ - 1;
-            clacgv_(&i__2, &x[i__ + x_dim1], ldx);
-            i__2 = i__ - 1;
-            i__3 = *n - i__ + 1;
-            q__1.r = -1.f;
-            q__1.i = -0.f; // , expr subst
-            cgemv_("Conjugate transpose", &i__2, &i__3, &q__1, &a[i__ * a_dim1 + 1], lda, &x[i__ + x_dim1], ldx, &c_b2, &a[i__ + i__ * a_dim1], lda);
-            i__2 = i__ - 1;
-            clacgv_(&i__2, &x[i__ + x_dim1], ldx);
-            /* Generate reflection P(i) to annihilate A(i,i+1:n) */
-            i__2 = i__ + i__ * a_dim1;
-            alpha.r = a[i__2].r;
-            alpha.i = a[i__2].i; // , expr subst
-            i__2 = *n - i__ + 1;
-            /* Computing MIN */
-            i__3 = i__ + 1;
-            clarfg_(&i__2, &alpha, &a[i__ + min(i__3,*n) * a_dim1], lda, & taup[i__]);
-            i__2 = i__;
-            d__[i__2] = alpha.r;
-            if (i__ < *m)
+            thread_id = omp_get_thread_num();
+#else
+        {
+            thread_id = 0;
+#endif
+            for (i__ = 1;
+                    i__ <= i__1;
+                    ++i__)
             {
-                i__2 = i__ + i__ * a_dim1;
-                a[i__2].r = 1.f;
-                a[i__2].i = 0.f; // , expr subst
-                /* Compute X(i+1:m,i) */
-                i__2 = *m - i__;
-                i__3 = *n - i__ + 1;
-                cgemv_("No transpose", &i__2, &i__3, &c_b2, &a[i__ + 1 + i__ * a_dim1], lda, &a[i__ + i__ * a_dim1], lda, &c_b1, &x[ i__ + 1 + i__ * x_dim1], &c__1);
-                i__2 = *n - i__ + 1;
-                i__3 = i__ - 1;
-                cgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &y[i__ + y_dim1], ldy, &a[i__ + i__ * a_dim1], lda, &c_b1, &x[ i__ * x_dim1 + 1], &c__1);
-                i__2 = *m - i__;
-                i__3 = i__ - 1;
-                q__1.r = -1.f;
-                q__1.i = -0.f; // , expr subst
-                cgemv_("No transpose", &i__2, &i__3, &q__1, &a[i__ + 1 + a_dim1], lda, &x[i__ * x_dim1 + 1], &c__1, &c_b2, &x[ i__ + 1 + i__ * x_dim1], &c__1);
-                i__2 = i__ - 1;
-                i__3 = *n - i__ + 1;
-                cgemv_("No transpose", &i__2, &i__3, &c_b2, &a[i__ * a_dim1 + 1], lda, &a[i__ + i__ * a_dim1], lda, &c_b1, &x[i__ * x_dim1 + 1], &c__1);
-                i__2 = *m - i__;
-                i__3 = i__ - 1;
-                q__1.r = -1.f;
-                q__1.i = -0.f; // , expr subst
-                cgemv_("No transpose", &i__2, &i__3, &q__1, &x[i__ + 1 + x_dim1], ldx, &x[i__ * x_dim1 + 1], &c__1, &c_b2, &x[ i__ + 1 + i__ * x_dim1], &c__1);
-                i__2 = *m - i__;
-                cscal_(&i__2, &taup[i__], &x[i__ + 1 + i__ * x_dim1], &c__1);
-                i__2 = *n - i__ + 1;
-                clacgv_(&i__2, &a[i__ + i__ * a_dim1], lda);
-                /* Update A(i+1:m,i) */
-                i__2 = i__ - 1;
-                clacgv_(&i__2, &y[i__ + y_dim1], ldy);
-                i__2 = *m - i__;
-                i__3 = i__ - 1;
-                q__1.r = -1.f;
-                q__1.i = -0.f; // , expr subst
-                cgemv_("No transpose", &i__2, &i__3, &q__1, &a[i__ + 1 + a_dim1], lda, &y[i__ + y_dim1], ldy, &c_b2, &a[i__ + 1 + i__ * a_dim1], &c__1);
-                i__2 = i__ - 1;
-                clacgv_(&i__2, &y[i__ + y_dim1], ldy);
-                i__2 = *m - i__;
-                q__1.r = -1.f;
-                q__1.i = -0.f; // , expr subst
-                cgemv_("No transpose", &i__2, &i__, &q__1, &x[i__ + 1 + x_dim1], ldx, &a[i__ * a_dim1 + 1], &c__1, &c_b2, &a[ i__ + 1 + i__ * a_dim1], &c__1);
-                /* Generate reflection Q(i) to annihilate A(i+2:m,i) */
-                i__2 = i__ + 1 + i__ * a_dim1;
-                alpha.r = a[i__2].r;
-                alpha.i = a[i__2].i; // , expr subst
-                i__2 = *m - i__;
-                /* Computing MIN */
-                i__3 = i__ + 2;
-                clarfg_(&i__2, &alpha, &a[min(i__3,*m) + i__ * a_dim1], &c__1, &tauq[i__]);
-                i__2 = i__;
-                e[i__2] = alpha.r;
-                i__2 = i__ + 1 + i__ * a_dim1;
-                a[i__2].r = 1.f;
-                a[i__2].i = 0.f; // , expr subst
-                /* Compute Y(i+1:n,i) */
-                i__2 = *m - i__;
-                i__3 = *n - i__;
-                cgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &a[i__ + 1 + (i__ + 1) * a_dim1], lda, &a[i__ + 1 + i__ * a_dim1], &c__1, &c_b1, &y[i__ + 1 + i__ * y_dim1], &c__1);
-                i__2 = *m - i__;
-                i__3 = i__ - 1;
-                cgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &a[i__ + 1 + a_dim1], lda, &a[i__ + 1 + i__ * a_dim1], &c__1, & c_b1, &y[i__ * y_dim1 + 1], &c__1);
-                i__2 = *n - i__;
-                i__3 = i__ - 1;
-                q__1.r = -1.f;
-                q__1.i = -0.f; // , expr subst
-                cgemv_("No transpose", &i__2, &i__3, &q__1, &y[i__ + 1 + y_dim1], ldy, &y[i__ * y_dim1 + 1], &c__1, &c_b2, &y[ i__ + 1 + i__ * y_dim1], &c__1);
-                i__2 = *m - i__;
-                cgemv_("Conjugate transpose", &i__2, &i__, &c_b2, &x[i__ + 1 + x_dim1], ldx, &a[i__ + 1 + i__ * a_dim1], &c__1, & c_b1, &y[i__ * y_dim1 + 1], &c__1);
-                i__2 = *n - i__;
-                q__1.r = -1.f;
-                q__1.i = -0.f; // , expr subst
-                cgemv_("Conjugate transpose", &i__, &i__2, &q__1, &a[(i__ + 1) * a_dim1 + 1], lda, &y[i__ * y_dim1 + 1], &c__1, & c_b2, &y[i__ + 1 + i__ * y_dim1], &c__1);
-                i__2 = *n - i__;
-                cscal_(&i__2, &tauq[i__], &y[i__ + 1 + i__ * y_dim1], &c__1);
+                if(thread_id == 0)
+                {
+                    /* Update A(i,i:n) */
+                    i__2 = *n - i__ + 1;
+                    clacgv_(&i__2, &a[i__ + i__ * a_dim1], lda);
+                    i__2 = i__ - 1;
+                    clacgv_(&i__2, &a[i__ + a_dim1], lda);
+                    i__2 = *n - i__ + 1;
+                    i__3 = i__ - 1;
+                    q__1.r = -1.f;
+                    q__1.i = -0.f; // , expr subst
+                    cgemv_("No transpose", &i__2, &i__3, &q__1, &y[i__ + y_dim1], ldy, &a[i__ + a_dim1], lda, &c_b2, &a[i__ + i__ * a_dim1], lda);
+                    i__2 = i__ - 1;
+                    clacgv_(&i__2, &a[i__ + a_dim1], lda);
+                    i__2 = i__ - 1;
+                    clacgv_(&i__2, &x[i__ + x_dim1], ldx);
+                    i__2 = i__ - 1;
+                    i__3 = *n - i__ + 1;
+                    q__1.r = -1.f;
+                    q__1.i = -0.f; // , expr subst
+                    cgemv_("Conjugate transpose", &i__2, &i__3, &q__1, &a[i__ * a_dim1 + 1], lda, &x[i__ + x_dim1], ldx, &c_b2, &a[i__ + i__ * a_dim1], lda);
+                    i__2 = i__ - 1;
+                    clacgv_(&i__2, &x[i__ + x_dim1], ldx);
+                    /* Generate reflection P(i) to annihilate A(i,i+1:n) */
+                    i__2 = i__ + i__ * a_dim1;
+                    alpha.r = a[i__2].r;
+                    alpha.i = a[i__2].i; // , expr subst
+                    i__2 = *n - i__ + 1;
+                    /* Computing MIN */
+                    i__3 = i__ + 1;
+                    clarfg_(&i__2, &alpha, &a[i__ + min(i__3,*n) * a_dim1], lda, & taup[i__]);
+                    i__2 = i__;
+                    d__[i__2] = alpha.r;
+                }
+                if (i__ < *m)
+                {
+                    if(thread_id == 0)
+                    {
+                        i__2 = i__ + i__ * a_dim1;
+                        a[i__2].r = 1.f;
+                        a[i__2].i = 0.f; // , expr subst
+                    }
+                    /* Compute X(i+1:m,i) */
+                    i__2 = *m - i__;
+                    i__3 = *n - i__ + 1;
+#ifdef FLA_ENABLE_MULTITHREADING
+                    /* Determine the sub partition range of current thread */
+                    FLA_Thread_get_subrange(thread_id, actual_num_threads, i__2, &i__4, &i__5);
+                    #pragma omp barrier
+                    cgemv_("No transpose", &i__4, &i__3, &c_b2, &a[i__5 + i__ + 1 + i__ * a_dim1], lda, &a[i__ + i__ * a_dim1], lda, &c_b1, &x[ i__5 + i__ + 1 + i__ * x_dim1], &c__1);
+                    #pragma omp barrier
+#else
+                    cgemv_("No transpose", &i__2, &i__3, &c_b2, &a[i__ + 1 + i__ * a_dim1], lda, &a[i__ + i__ * a_dim1], lda, &c_b1, &x[ i__ + 1 + i__ * x_dim1], &c__1);
+#endif
+                    if(thread_id == 0)
+                    {
+                        i__2 = *n - i__ + 1;
+                        i__3 = i__ - 1;
+                        cgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &y[i__ + y_dim1], ldy, &a[i__ + i__ * a_dim1], lda, &c_b1, &x[ i__ * x_dim1 + 1], &c__1);
+                        i__2 = *m - i__;
+                        i__3 = i__ - 1;
+                        q__1.r = -1.f;
+                        q__1.i = -0.f; // , expr subst
+                        cgemv_("No transpose", &i__2, &i__3, &q__1, &a[i__ + 1 + a_dim1], lda, &x[i__ * x_dim1 + 1], &c__1, &c_b2, &x[ i__ + 1 + i__ * x_dim1], &c__1);
+                        i__2 = i__ - 1;
+                        i__3 = *n - i__ + 1;
+                        cgemv_("No transpose", &i__2, &i__3, &c_b2, &a[i__ * a_dim1 + 1], lda, &a[i__ + i__ * a_dim1], lda, &c_b1, &x[i__ * x_dim1 + 1], &c__1);
+                        i__2 = *m - i__;
+                        i__3 = i__ - 1;
+                        q__1.r = -1.f;
+                        q__1.i = -0.f; // , expr subst
+                        cgemv_("No transpose", &i__2, &i__3, &q__1, &x[i__ + 1 + x_dim1], ldx, &x[i__ * x_dim1 + 1], &c__1, &c_b2, &x[ i__ + 1 + i__ * x_dim1], &c__1);
+                        i__2 = *m - i__;
+                        cscal_(&i__2, &taup[i__], &x[i__ + 1 + i__ * x_dim1], &c__1);
+                        i__2 = *n - i__ + 1;
+                        clacgv_(&i__2, &a[i__ + i__ * a_dim1], lda);
+                        /* Update A(i+1:m,i) */
+                        i__2 = i__ - 1;
+                        clacgv_(&i__2, &y[i__ + y_dim1], ldy);
+                        i__2 = *m - i__;
+                        i__3 = i__ - 1;
+                        q__1.r = -1.f;
+                        q__1.i = -0.f; // , expr subst
+                        cgemv_("No transpose", &i__2, &i__3, &q__1, &a[i__ + 1 + a_dim1], lda, &y[i__ + y_dim1], ldy, &c_b2, &a[i__ + 1 + i__ * a_dim1], &c__1);
+                        i__2 = i__ - 1;
+                        clacgv_(&i__2, &y[i__ + y_dim1], ldy);
+                        i__2 = *m - i__;
+                        q__1.r = -1.f;
+                        q__1.i = -0.f; // , expr subst
+                        cgemv_("No transpose", &i__2, &i__, &q__1, &x[i__ + 1 + x_dim1], ldx, &a[i__ * a_dim1 + 1], &c__1, &c_b2, &a[ i__ + 1 + i__ * a_dim1], &c__1);
+                        /* Generate reflection Q(i) to annihilate A(i+2:m,i) */
+                        i__2 = i__ + 1 + i__ * a_dim1;
+                        alpha.r = a[i__2].r;
+                        alpha.i = a[i__2].i; // , expr subst
+                        i__2 = *m - i__;
+                        /* Computing MIN */
+                        i__3 = i__ + 2;
+                        clarfg_(&i__2, &alpha, &a[min(i__3,*m) + i__ * a_dim1], &c__1, &tauq[i__]);
+                        i__2 = i__;
+                        e[i__2] = alpha.r;
+                        i__2 = i__ + 1 + i__ * a_dim1;
+                        a[i__2].r = 1.f;
+                        a[i__2].i = 0.f; // , expr subst
+                    }
+                    /* Compute Y(i+1:n,i) */
+                    i__2 = *m - i__;
+                    i__3 = *n - i__;
+#ifdef FLA_ENABLE_MULTITHREADING
+                    /* Determine the sub partition range of current thread */
+                    FLA_Thread_get_subrange(thread_id, actual_num_threads, i__3, &i__4, &i__5);
+                    #pragma omp barrier
+                    cgemv_("Conjugate transpose", &i__2, &i__4, &c_b2, &a[i__ + 1 + (i__5 + i__ + 1) * a_dim1], lda, &a[i__ + 1 + i__ * a_dim1], &c__1, &c_b1, &y[i__5 + i__ + 1 + i__ * y_dim1], &c__1);
+                    #pragma omp barrier
+#else
+                    cgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &a[i__ + 1 + (i__ + 1) * a_dim1], lda, &a[i__ + 1 + i__ * a_dim1], &c__1, &c_b1, &y[i__ + 1 + i__ * y_dim1], &c__1);
+#endif
+                    if(thread_id == 0)
+                    {
+                        i__2 = *m - i__;
+                        i__3 = i__ - 1;
+                        cgemv_("Conjugate transpose", &i__2, &i__3, &c_b2, &a[i__ + 1 + a_dim1], lda, &a[i__ + 1 + i__ * a_dim1], &c__1, & c_b1, &y[i__ * y_dim1 + 1], &c__1);
+                        i__2 = *n - i__;
+                        i__3 = i__ - 1;
+                        q__1.r = -1.f;
+                        q__1.i = -0.f; // , expr subst
+                        cgemv_("No transpose", &i__2, &i__3, &q__1, &y[i__ + 1 + y_dim1], ldy, &y[i__ * y_dim1 + 1], &c__1, &c_b2, &y[ i__ + 1 + i__ * y_dim1], &c__1);
+                        i__2 = *m - i__;
+                        cgemv_("Conjugate transpose", &i__2, &i__, &c_b2, &x[i__ + 1 + x_dim1], ldx, &a[i__ + 1 + i__ * a_dim1], &c__1, & c_b1, &y[i__ * y_dim1 + 1], &c__1);
+                        i__2 = *n - i__;
+                        q__1.r = -1.f;
+                        q__1.i = -0.f; // , expr subst
+                        cgemv_("Conjugate transpose", &i__, &i__2, &q__1, &a[(i__ + 1) * a_dim1 + 1], lda, &y[i__ * y_dim1 + 1], &c__1, & c_b2, &y[i__ + 1 + i__ * y_dim1], &c__1);
+                        i__2 = *n - i__;
+                        cscal_(&i__2, &tauq[i__], &y[i__ + 1 + i__ * y_dim1], &c__1);
+                    }
+                }
+                else
+                {
+                    if(thread_id == 0)
+                    {
+                        i__2 = *n - i__ + 1;
+                        clacgv_(&i__2, &a[i__ + i__ * a_dim1], lda);
+                    }
+                }
+                /* L20: */
             }
-            else
-            {
-                i__2 = *n - i__ + 1;
-                clacgv_(&i__2, &a[i__ + i__ * a_dim1], lda);
-            }
-            /* L20: */
         }
     }
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
