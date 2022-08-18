@@ -405,6 +405,7 @@ void FLASH_Queue_exec_task_hip( FLASH_Task* t,
    // Level-1 BLAS
    typedef FLA_Error(*flash_axpy_hip_p)(rocblas_handle handle, FLA_Obj alpha, FLA_Obj A, void* A_hip, FLA_Obj B, void* B_hip);
    typedef FLA_Error(*flash_copy_hip_p)(rocblas_handle handle, FLA_Obj A, void* A_hip, FLA_Obj B, void* B_hip);
+   typedef FLA_Error(*flash_copyr_hip_p)(rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip, FLA_Obj B, void* B_hip);
    typedef FLA_Error(*flash_scal_hip_p)(rocblas_handle handle, FLA_Obj alpha, FLA_Obj A, void* A_hip);
    typedef FLA_Error(*flash_scalr_hip_p)(rocblas_handle handle, FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, void* A_hip);
 
@@ -690,6 +691,19 @@ void FLASH_Queue_exec_task_hip( FLASH_Task* t,
                             input_arg[0],
                             t->output_arg[0],
                             output_arg[0] );
+   }
+   // FLA_Copyr
+   else if ( t->func == (void *) FLA_Copyr_task )
+   {
+      flash_copyr_hip_p func;
+      func = (flash_copyr_hip_p) FLA_Copyr_external_hip;
+
+      func(                  handle,
+            ( FLA_Uplo     ) t->int_arg[0],
+                             t->input_arg[0],
+                             input_arg[0],
+                             t->output_arg[0],
+                             output_arg[0] );
    }
    // FLA_Scal
    else if ( t->func == (void *) FLA_Scal_task )

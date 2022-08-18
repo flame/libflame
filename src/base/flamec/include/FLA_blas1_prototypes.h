@@ -108,6 +108,7 @@ FLA_Error FLA_Scalr_external_gpu( FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, void*
 #ifdef FLA_ENABLE_HIP
 FLA_Error FLA_Axpy_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A, void* A_gpu, FLA_Obj B, void* B_gpu );
 FLA_Error FLA_Copy_external_hip( rocblas_handle handle, FLA_Obj A, void* A_gpu, FLA_Obj B, void* B_gpu );
+FLA_Error FLA_Copyr_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip, FLA_Obj B, void* B_hip );
 FLA_Error FLA_Scal_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A, void* A_gpu );
 FLA_Error FLA_Scalr_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, void* A_gpu );
 #endif
