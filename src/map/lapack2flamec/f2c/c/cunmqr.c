@@ -1,6 +1,7 @@
 /* ../netlib/cunmqr.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
+
 static integer c__1 = 1;
 static integer c_n1 = -1;
 static integer c__2 = 2;
@@ -190,6 +191,8 @@ int cunmqr_(char *side, char *trans, integer *m, integer *n, integer *k, complex
     logical notran;
     integer ldwork, lwkopt;
     logical lquery;
+    int thread_id, actual_num_threads;
+    integer index, mi_sub, ni_sub;
     /* -- LAPACK computational routine (version 3.7.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -345,33 +348,69 @@ int cunmqr_(char *side, char *trans, integer *m, integer *n, integer *k, complex
         }
         i__1 = i2;
         i__2 = i3;
-        for (i__ = i1;
-                i__2 < 0 ? i__ >= i__1 : i__ <= i__1;
-                i__ += i__2)
+
+#ifdef FLA_ENABLE_MULTITHREADING
+        /* Get optimum thread number for DORMLQ*/
+        FLA_Thread_optimum( FLA_ORMQR, &actual_num_threads);
+        #pragma omp parallel num_threads(actual_num_threads) private(i__, thread_id, mi_sub, ni_sub, index)
         {
-            /* Computing MIN */
-            i__4 = nb;
-            i__5 = *k - i__ + 1; // , expr subst
-            ib = min(i__4,i__5);
-            /* Form the triangular factor of the block reflector */
-            /* H = H(i) H(i+1) . . . H(i+ib-1) */
-            i__4 = nq - i__ + 1;
-            clarft_("Forward", "Columnwise", &i__4, &ib, &a[i__ + i__ * a_dim1], lda, &tau[i__], &work[iwt], &c__65);
-            if (left)
+            thread_id = omp_get_thread_num();
+#else
+        {
+#endif
+            for (i__ = i1;
+                    i__2 < 0 ? i__ >= i__1 : i__ <= i__1;
+                    i__ += i__2)
             {
-                /* H or H**H is applied to C(i:m,1:n) */
-                mi = *m - i__ + 1;
-                ic = i__;
+                /* Computing MIN */
+#ifdef FLA_ENABLE_MULTITHREADING
+                /* Compute triangular factor of the block reflector in a single thread */
+                #pragma omp single
+#endif
+                {
+                    i__4 = nb;
+                    i__5 = *k - i__ + 1; // , expr subst
+                    ib = min(i__4,i__5);
+                    /* Form the triangular factor of the block reflector */
+                    /* H = H(i) H(i+1) . . . H(i+ib-1) */
+                    i__4 = nq - i__ + 1;
+                    clarft_("Forward", "Columnwise", &i__4, &ib, &a[i__ + i__ * a_dim1], lda, &tau[i__], &work[iwt], &c__65);
+                }
+
+                if (left)
+                {
+                    /* H or H**H is applied to C(i:m,1:n) */
+                    mi = *m - i__ + 1;
+                    ic = i__;
+#ifdef FLA_ENABLE_MULTITHREADING
+                    /* Determine the sub partition range of current thread */
+                    FLA_Thread_get_subrange(thread_id, actual_num_threads, ni, &ni_sub, &index);
+                    mi_sub = mi;
+#endif
+                }
+                else
+                {
+                    /* H or H**H is applied to C(1:m,i:n) */
+                    ni = *n - i__ + 1;
+                    jc = i__;
+#ifdef FLA_ENABLE_MULTITHREADING
+                    /* Determine the sub partition range of current thread */
+                    FLA_Thread_get_subrange(thread_id, actual_num_threads, mi, &mi_sub, &index);
+                    ni_sub = ni;
+#endif
+                }
+                /* Apply H or H**H */
+#ifdef FLA_ENABLE_MULTITHREADING
+                if(left)
+                    clarfb_(side, trans, "Forward", "Columnwise", &mi_sub, &ni_sub, &ib, &a[ i__ + i__ * a_dim1], lda, &work[iwt], &c__65, &c__[ic + (index + jc ) * c_dim1], ldc, &work[1 + index], &ldwork);
+                else
+                    clarfb_(side, trans, "Forward", "Columnwise", &mi_sub, &ni_sub, &ib, &a[ i__ + i__ * a_dim1], lda, &work[iwt], &c__65, &c__[index + ic + jc * c_dim1], ldc, &work[1 + index], &ldwork);
+                #pragma omp barrier
+#else
+                clarfb_(side, trans, "Forward", "Columnwise", &mi, &ni, &ib, &a[ i__ + i__ * a_dim1], lda, &work[iwt], &c__65, &c__[ic + jc * c_dim1], ldc, &work[1], &ldwork);
+#endif
+                /* L10: */
             }
-            else
-            {
-                /* H or H**H is applied to C(1:m,i:n) */
-                ni = *n - i__ + 1;
-                jc = i__;
-            }
-            /* Apply H or H**H */
-            clarfb_(side, trans, "Forward", "Columnwise", &mi, &ni, &ib, &a[ i__ + i__ * a_dim1], lda, &work[iwt], &c__65, &c__[ic + jc * c_dim1], ldc, &work[1], &ldwork);
-            /* L10: */
         }
     }
     work[1].r = (real) lwkopt;

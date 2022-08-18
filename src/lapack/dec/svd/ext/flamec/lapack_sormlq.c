@@ -1,51 +1,52 @@
-/* ../netlib/zunmlq.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
- on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
+/* ../netlib/sormlq.f -- translated by f2c (version 20000121). You must link the resulting object file with the libraries: -lf2c -lm (in that order) */
+#include "FLAME.h"
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
 static integer c_n1 = -1;
 static integer c__2 = 2;
 static integer c__65 = 65;
-/* > \brief \b ZUNMLQ */
+/* > \brief \b SORMLQ */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
 /* http://www.netlib.org/lapack/explore-html/ */
 /* > \htmlonly */
-/* > Download ZUNMLQ + dependencies */
-/* > <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/zunmlq. f"> */
+/* > Download SORMLQ + dependencies */
+/* > <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/sormlq. f"> */
 /* > [TGZ]</a> */
-/* > <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/zunmlq. f"> */
+/* > <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/sormlq. f"> */
 /* > [ZIP]</a> */
-/* > <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/zunmlq. f"> */
+/* > <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/sormlq. f"> */
 /* > [TXT]</a> */
 /* > \endhtmlonly */
 /* Definition: */
 /* =========== */
-/* SUBROUTINE ZUNMLQ( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC, */
+/* SUBROUTINE SORMLQ( SIDE, TRANS, M, N, K, A, LDA, TAU, C, LDC, */
 /* WORK, LWORK, INFO ) */
 /* .. Scalar Arguments .. */
 /* CHARACTER SIDE, TRANS */
 /* INTEGER INFO, K, LDA, LDC, LWORK, M, N */
 /* .. */
 /* .. Array Arguments .. */
-/* COMPLEX*16 A( LDA, * ), C( LDC, * ), TAU( * ), WORK( * ) */
+/* REAL A( LDA, * ), C( LDC, * ), TAU( * ), */
+/* $ WORK( * ) */
 /* .. */
 /* > \par Purpose: */
 /* ============= */
 /* > */
 /* > \verbatim */
 /* > */
-/* > ZUNMLQ overwrites the general complex M-by-N matrix C with */
+/* > SORMLQ overwrites the general real M-by-N matrix C with */
 /* > */
 /* > SIDE = 'L' SIDE = 'R' */
 /* > TRANS = 'N': Q * C C * Q */
-/* > TRANS = 'C': Q**H * C C * Q**H */
+/* > TRANS = 'T': Q**T * C C * Q**T */
 /* > */
-/* > where Q is a complex unitary matrix defined as the product of k */
+/* > where Q is a real orthogonal matrix defined as the product of k */
 /* > elementary reflectors */
 /* > */
-/* > Q = H(k)**H . . . H(2)**H H(1)**H */
+/* > Q = H(k) . . . H(2) H(1) */
 /* > */
-/* > as returned by ZGELQF. Q is of order M if SIDE = 'L' and of order N */
+/* > as returned by SGELQF. Q is of order M if SIDE = 'L' and of order N */
 /* > if SIDE = 'R'. */
 /* > \endverbatim */
 /* Arguments: */
@@ -53,9 +54,9 @@ static integer c__65 = 65;
 /* > \param[in] SIDE */
 /* > \verbatim */
 /* > SIDE is CHARACTER*1 */
-/* > = 'L': apply Q or Q**H from the Left;
+/* > = 'L': apply Q or Q**T from the Left;
 */
-/* > = 'R': apply Q or Q**H from the Right. */
+/* > = 'R': apply Q or Q**T from the Right. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] TRANS */
@@ -63,7 +64,7 @@ static integer c__65 = 65;
 /* > TRANS is CHARACTER*1 */
 /* > = 'N': No transpose, apply Q;
 */
-/* > = 'C': Conjugate transpose, apply Q**H. */
+/* > = 'T': Transpose, apply Q**T. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] M */
@@ -90,12 +91,12 @@ static integer c__65 = 65;
 /* > */
 /* > \param[in] A */
 /* > \verbatim */
-/* > A is COMPLEX*16 array, dimension */
+/* > A is REAL array, dimension */
 /* > (LDA,M) if SIDE = 'L', */
 /* > (LDA,N) if SIDE = 'R' */
 /* > The i-th row must contain the vector which defines the */
 /* > elementary reflector H(i), for i = 1,2,...,k, as returned by */
-/* > ZGELQF in the first k rows of its array argument A. */
+/* > SGELQF in the first k rows of its array argument A. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDA */
@@ -106,16 +107,16 @@ static integer c__65 = 65;
 /* > */
 /* > \param[in] TAU */
 /* > \verbatim */
-/* > TAU is COMPLEX*16 array, dimension (K) */
+/* > TAU is REAL array, dimension (K) */
 /* > TAU(i) must contain the scalar factor of the elementary */
-/* > reflector H(i), as returned by ZGELQF. */
+/* > reflector H(i), as returned by SGELQF. */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] C */
 /* > \verbatim */
-/* > C is COMPLEX*16 array, dimension (LDC,N) */
+/* > C is REAL array, dimension (LDC,N) */
 /* > On entry, the M-by-N matrix C. */
-/* > On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q. */
+/* > On exit, C is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDC */
@@ -126,7 +127,7 @@ static integer c__65 = 65;
 /* > */
 /* > \param[out] WORK */
 /* > \verbatim */
-/* > WORK is COMPLEX*16 array, dimension (MAX(1,LWORK)) */
+/* > WORK is REAL array, dimension (MAX(1,LWORK)) */
 /* > On exit, if INFO = 0, WORK(1) returns the optimal LWORK. */
 /* > \endverbatim */
 /* > */
@@ -158,11 +159,10 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
-/* > \ingroup complex16OTHERcomputational */
+/* > \ingroup realOTHERcomputational */
 /* ===================================================================== */
 /* Subroutine */
-int zunmlq_(char *side, char *trans, integer *m, integer *n, integer *k, doublecomplex *a, integer *lda, doublecomplex *tau, doublecomplex *c__, integer *ldc, doublecomplex *work, integer *lwork, integer *info)
+int lapack_sormlq(char *side, char *trans, integer *m, integer *n, integer *k, real *a, integer *lda, real *tau, real *c__, integer *ldc, real *work, integer *lwork, integer *info)
 {
     /* System generated locals */
     address a__1[2];
@@ -172,28 +172,29 @@ int zunmlq_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
     /* Subroutine */
 
     /* Local variables */
-    integer i__, i1, i2, i3, ib, ic, jc, nb, mi, ni, nq, nw, iwt;
     logical left;
+    integer i__;
     extern logical lsame_(char *, char *);
-    integer nbmin, iinfo;
+    integer nbmin, iinfo, i1, i2, i3, ib, ic, jc;
     extern /* Subroutine */
-    int zunml2_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *), xerbla_(char *, integer *);
+    int lapack_sorml2(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *);
+    integer nb, mi, ni, nq, nw;
+    extern /* Subroutine */
+    int slarfb_(char *, char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *), xerbla_(char *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
-    int zlarfb_(char *, char *, char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *);
+    int slarft_(char *, char *, integer *, integer *, real *, integer *, real *, real *, integer *);
     logical notran;
     integer ldwork;
-    extern /* Subroutine */
-    int zlarft_(char *, char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *);
     char transt[1];
     integer lwkopt;
     logical lquery;
+    integer iwt;
     int thread_id, actual_num_threads;
     integer index, mi_sub, ni_sub;
-    /* -- LAPACK computational routine (version 3.7.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -213,11 +214,11 @@ int zunmlq_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
     /* Test the input arguments */
     /* Parameter adjustments */
     a_dim1 = *lda;
-    a_offset = 1 + a_dim1;
+    a_offset = 1 + a_dim1 * 1;
     a -= a_offset;
     --tau;
     c_dim1 = *ldc;
-    c_offset = 1 + c_dim1;
+    c_offset = 1 + c_dim1 * 1;
     c__ -= c_offset;
     --work;
     /* Function Body */
@@ -229,18 +230,18 @@ int zunmlq_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
     if (left)
     {
         nq = *m;
-        nw = *n;
+        nw = max(1,*n);
     }
     else
     {
         nq = *n;
-        nw = *m;
+        nw = max(1,*m);
     }
     if (! left && ! lsame_(side, "R"))
     {
         *info = -1;
     }
-    else if (! notran && ! lsame_(trans, "C"))
+    else if (! notran && ! lsame_(trans, "T"))
     {
         *info = -2;
     }
@@ -264,7 +265,7 @@ int zunmlq_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
     {
         *info = -10;
     }
-    else if (*lwork < max(1,nw) && ! lquery)
+    else if (*lwork < nw && ! lquery)
     {
         *info = -12;
     }
@@ -273,16 +274,15 @@ int zunmlq_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
         /* Compute the workspace requirements */
         /* Computing MIN */
         i__1 = 64;
-        i__2 = ilaenv_(&c__1, "ZUNMLQ", ch__1, m, n, k, &c_n1); // , expr subst
+        i__2 = ilaenv_(&c__1, "SORMLQ", ch__1, m, n, k, &c_n1); // , expr subst
         nb = min(i__1,i__2);
-        lwkopt = max(1,nw) * nb + 4160;
-        work[1].r = (doublereal) lwkopt;
-        work[1].i = 0.; // , expr subst
+        lwkopt = nw * nb + 4160;
+        work[1] = (real) lwkopt;
     }
     if (*info != 0)
     {
         i__1 = -(*info);
-        xerbla_("ZUNMLQ", &i__1);
+        xerbla_("SORMLQ", &i__1);
         return 0;
     }
     else if (lquery)
@@ -292,27 +292,26 @@ int zunmlq_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
     /* Quick return if possible */
     if (*m == 0 || *n == 0 || *k == 0)
     {
-        work[1].r = 1.;
-        work[1].i = 0.; // , expr subst
+        work[1] = 1.f;
         return 0;
     }
     nbmin = 2;
     ldwork = nw;
     if (nb > 1 && nb < *k)
     {
-        if (*lwork < nw * nb + 4160)
+        if (*lwork < lwkopt)
         {
             nb = (*lwork - 4160) / ldwork;
             /* Computing MAX */
             i__1 = 2;
-            i__2 = ilaenv_(&c__2, "ZUNMLQ", ch__1, m, n, k, &c_n1); // , expr subst
+            i__2 = ilaenv_(&c__2, "SORMLQ", ch__1, m, n, k, &c_n1); // , expr subst
             nbmin = max(i__1,i__2);
         }
     }
     if (nb < nbmin || nb >= *k)
     {
         /* Use unblocked code */
-        zunml2_(side, trans, m, n, k, &a[a_offset], lda, &tau[1], &c__[ c_offset], ldc, &work[1], &iinfo);
+        lapack_sorml2(side, trans, m, n, k, &a[a_offset], lda, &tau[1], &c__[ c_offset], ldc, &work[1], &iinfo);
     }
     else
     {
@@ -342,7 +341,7 @@ int zunmlq_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
         }
         if (notran)
         {
-            *(unsigned char *)transt = 'C';
+            *(unsigned char *)transt = 'T';
         }
         else
         {
@@ -376,11 +375,11 @@ int zunmlq_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
                     /* Form the triangular factor of the block reflector */
                     /* H = H(i) H(i+1) . . . H(i+ib-1) */
                     i__4 = nq - i__ + 1;
-                    zlarft_("Forward", "Rowwise", &i__4, &ib, &a[i__ + i__ * a_dim1], lda, &tau[i__], &work[iwt], &c__65);
+                    slarft_("Forward", "Rowwise", &i__4, &ib, &a[i__ + i__ * a_dim1], lda, &tau[i__], &work[iwt], &c__65);
                 }
                 if (left)
                 {
-                    /* H or H**H is applied to C(i:m,1:n) */
+                    /* H or H**T is applied to C(i:m,1:n) */
                     mi = *m - i__ + 1;
                     ic = i__;
 #ifdef FLA_ENABLE_MULTITHREADING
@@ -391,7 +390,7 @@ int zunmlq_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
                 }
                 else
                 {
-                    /* H or H**H is applied to C(1:m,i:n) */
+                    /* H or H**T is applied to C(1:m,i:n) */
                     ni = *n - i__ + 1;
                     jc = i__;
 #ifdef FLA_ENABLE_MULTITHREADING
@@ -400,23 +399,23 @@ int zunmlq_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
                     ni_sub = ni;
 #endif
                 }
-                /* Apply H or H**H */
+
+                /* Apply H or H**T */
 #ifdef FLA_ENABLE_MULTITHREADING
                 if(left)
-                    zlarfb_(side, transt, "Forward", "Rowwise", &mi_sub, &ni_sub, &ib, &a[i__ + i__ * a_dim1], lda, &work[iwt], &c__65, &c__[ic + (index + jc) * c_dim1], ldc, &work[1 + index], &ldwork);
+                    slarfb_(side, transt, "Forward", "Rowwise", &mi_sub, &ni_sub, &ib, &a[i__ + i__ * a_dim1], lda, &work[iwt], &c__65, &c__[ic + (index + jc) * c_dim1], ldc, &work[1 + index], &ldwork);
                 else
-                    zlarfb_(side, transt, "Forward", "Rowwise", &mi_sub, &ni_sub, &ib, &a[i__ + i__ * a_dim1], lda, &work[iwt], &c__65, &c__[index + ic + jc * c_dim1], ldc, &work[1 + index], &ldwork);
+                    slarfb_(side, transt, "Forward", "Rowwise", &mi_sub, &ni_sub, &ib, &a[i__ + i__ * a_dim1], lda, &work[iwt], &c__65, &c__[index + ic + jc * c_dim1], ldc, &work[1 + index], &ldwork);
                 #pragma omp barrier
 #else
-                    zlarfb_(side, transt, "Forward", "Rowwise", &mi, &ni, &ib, &a[i__ + i__ * a_dim1], lda, &work[iwt], &c__65, &c__[ic + jc * c_dim1], ldc, &work[1], &ldwork);
+                slarfb_(side, transt, "Forward", "Rowwise", &mi, &ni, &ib, &a[i__ + i__ * a_dim1], lda, &work[iwt], &c__65, &c__[ic + jc * c_dim1], ldc, &work[1], &ldwork);
 #endif
                 /* L10: */
             }
         }
     }
-    work[1].r = (doublereal) lwkopt;
-    work[1].i = 0.; // , expr subst
+    work[1] = (real) lwkopt;
     return 0;
-    /* End of ZUNMLQ */
+    /* End of SORMLQ */
 }
-/* zunmlq_ */
+/* lapack_sormlq */

@@ -20,6 +20,14 @@ ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dormlq.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dorml2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dormqr.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_dorm2r.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sgesdd.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sgebrd.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sgebd2.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sormbr.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sormlq.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sorml2.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sormqr.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sorm2r.c
 ${CMAKE_CURRENT_SOURCE_DIR}/dgesvd2x2.c
 
 	)
