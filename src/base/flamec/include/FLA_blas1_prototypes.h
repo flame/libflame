@@ -111,6 +111,7 @@ FLA_Error FLA_Copy_external_hip( rocblas_handle handle, FLA_Obj A, void* A_gpu, 
 FLA_Error FLA_Scal_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A, void* A_gpu );
 FLA_Error FLA_Scalr_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, void* A_gpu );
 
+FLA_Error FLA_Copyconj_tri_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Obj A, void* A_hip, void* B_mat );
 FLA_Error FLA_Copyconj_general_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, void* B_mat );
 #endif
 

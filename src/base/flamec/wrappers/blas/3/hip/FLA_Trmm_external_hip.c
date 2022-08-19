@@ -13,11 +13,13 @@
 
 #ifdef FLA_ENABLE_HIP
 
+#include <hip/hip_runtime.h>
 #include "rocblas.h"
 
 FLA_Error FLA_Trmm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo uplo, FLA_Trans trans, FLA_Diag diag, FLA_Obj alpha, FLA_Obj A, void* A_hip, FLA_Obj B, void* B_hip )
 {
   FLA_Datatype datatype;
+  int          n_A;
   int          m_B, n_B;
   int          ldim_A;
   int          ldim_B;
@@ -30,15 +32,11 @@ FLA_Error FLA_Trmm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo 
   datatype = FLA_Obj_datatype( A );
 
   ldim_A   = FLA_Obj_col_stride( A );
+  n_A      = FLA_Obj_width( A );
 
   m_B      = FLA_Obj_length( B );
   n_B      = FLA_Obj_width( B );
   ldim_B   = FLA_Obj_col_stride( B );
-
-  rocblas_operation blas_trans = FLA_Param_map_flame_to_rocblas_trans( trans, FLA_Obj_is_real( A ) );
-  rocblas_side blas_side = FLA_Param_map_flame_to_rocblas_side( side );
-  rocblas_fill blas_uplo = FLA_Param_map_flame_to_rocblas_uplo( uplo );
-  rocblas_diagonal blas_diag = FLA_Param_map_flame_to_rocblas_diag( diag );
 
   void* A_mat = NULL;
   void* B_mat = NULL;
@@ -52,6 +50,28 @@ FLA_Error FLA_Trmm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo 
     A_mat = A_hip;
     B_mat = B_hip;
   }
+
+  FLA_Trans trans_a_corr = trans;
+  FLA_Bool conj_no_trans_a = FALSE;
+
+  void* A_mat_corr = NULL;
+  if ( FLA_Obj_is_complex( A ) && trans == FLA_CONJ_NO_TRANSPOSE )
+  {
+    // must correct by copying to temporary buffer and conjugating there
+    trans_a_corr = FLA_NO_TRANSPOSE;
+    conj_no_trans_a = TRUE;
+
+    dim_t elem_size = FLA_Obj_elem_size( A );
+    size_t count = elem_size * ldim_A * n_A;
+    hipMalloc( &A_mat_corr, count );
+    FLA_Copyconj_tri_external_hip( handle, uplo, A, A_hip, A_mat_corr );
+    A_mat = A_mat_corr;
+  }
+
+  rocblas_operation blas_trans = FLA_Param_map_flame_to_rocblas_trans( trans_a_corr, FLA_Obj_is_real( A ) );
+  rocblas_side blas_side = FLA_Param_map_flame_to_rocblas_side( side );
+  rocblas_fill blas_uplo = FLA_Param_map_flame_to_rocblas_uplo( uplo );
+  rocblas_diagonal blas_diag = FLA_Param_map_flame_to_rocblas_diag( diag );
 
   switch( datatype ){
 
@@ -127,6 +147,11 @@ FLA_Error FLA_Trmm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo 
     break;
   }
 
+  }
+
+  if( conj_no_trans_a )
+  {
+    hipFree( A_mat_corr );
   }
 
   return FLA_SUCCESS;
