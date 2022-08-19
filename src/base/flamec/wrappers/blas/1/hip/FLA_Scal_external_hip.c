@@ -20,7 +20,6 @@ FLA_Error FLA_Scal_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A
   FLA_Datatype datatype;
   int          m_A, n_A;
   int          ldim_A, inc_A;
-  int          i;
 
   if ( FLA_Check_error_level() == FLA_FULL_ERROR_CHECKING )
     FLA_Scal_check( alpha, A );
@@ -56,11 +55,13 @@ FLA_Error FLA_Scal_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A
     float* buff_alpha = ( float* ) FLA_FLOAT_PTR( alpha );
     float* buff_A_hip = ( float* ) A_mat;
 
-    for ( i = 0; i < n_A; i++ )
-      rocblas_sscal( handle,
-                     m_A,
-                     buff_alpha,
-                     buff_A_hip + i * ldim_A, inc_A );
+    rocblas_sscal_strided_batched( handle,
+                                   m_A,
+                                   buff_alpha,
+                                   buff_A_hip,
+                                   inc_A,
+                                   ldim_A,
+                                   n_A );
 
     break;
   }
@@ -70,11 +71,13 @@ FLA_Error FLA_Scal_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A
     double* buff_alpha = ( double* ) FLA_DOUBLE_PTR( alpha );
     double* buff_A_hip = ( double* ) A_mat;
 
-    for ( i = 0; i < n_A; i++ )
-      rocblas_dscal( handle,
-                     m_A,
-                     buff_alpha,
-                     buff_A_hip + i * ldim_A, inc_A );
+    rocblas_dscal_strided_batched( handle,
+                                   m_A,
+                                   buff_alpha,
+                                   buff_A_hip,
+                                   inc_A,
+                                   ldim_A,
+                                   n_A );
 
     break;
   }
@@ -84,11 +87,13 @@ FLA_Error FLA_Scal_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A
     rocblas_float_complex* buff_alpha = ( rocblas_float_complex* ) FLA_COMPLEX_PTR( alpha );
     rocblas_float_complex* buff_A_hip = ( rocblas_float_complex* ) A_mat;
 
-    for ( i = 0; i < n_A; i++ )
-      rocblas_cscal( handle,
-                     m_A,
-                     buff_alpha,
-                     buff_A_hip + i * ldim_A, inc_A );
+    rocblas_cscal_strided_batched( handle,
+                                   m_A,
+                                   buff_alpha,
+                                   buff_A_hip,
+                                   inc_A,
+                                   ldim_A,
+                                   n_A );
 
     break;
   }
@@ -98,11 +103,13 @@ FLA_Error FLA_Scal_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A
     rocblas_double_complex* buff_alpha = ( rocblas_double_complex* ) FLA_DOUBLE_COMPLEX_PTR( alpha );
     rocblas_double_complex* buff_A_hip = ( rocblas_double_complex* ) A_mat;
 
-    for ( i = 0; i < n_A; i++ )
-      rocblas_zscal( handle,
-                     m_A,
-                     buff_alpha,
-                     buff_A_hip + i * ldim_A, inc_A );
+    rocblas_zscal_strided_batched( handle,
+                                   m_A,
+                                   buff_alpha,
+                                   buff_A_hip,
+                                   inc_A,
+                                   ldim_A,
+                                   n_A );
 
     break;
   }

@@ -2334,7 +2334,7 @@ FLA_Bool FLASH_Queue_exec_hip( FLASH_Task *t, void *arg )
       FLA_Bool duplicate;
       FLA_Obj  obj;
 
-      printf("DEBUG: Task not HIP enabled!\n");
+      printf("DEBUG: Task not HIP enabled! Name: %s\n", t->name);
 
       // Check the blocks on each HIP device.
       for ( k = 0; k < n_threads; k++ )

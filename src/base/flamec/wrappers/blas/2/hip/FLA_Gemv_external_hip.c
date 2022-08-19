@@ -13,6 +13,7 @@
 
 #ifdef FLA_ENABLE_HIP
 
+#include <hip/hip_runtime.h>
 #include "rocblas.h"
 
 FLA_Error FLA_Gemv_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Obj alpha, FLA_Obj A, void* A_hip, FLA_Obj x, void* x_hip, FLA_Obj beta, FLA_Obj y, void* y_hip )
@@ -37,8 +38,6 @@ FLA_Error FLA_Gemv_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Ob
   inc_x    = 1;
   inc_y    = 1;
 
-  rocblas_operation blas_transa = FLA_Param_map_flame_to_rocblas_trans( transa, FLA_Obj_is_real( A ) );
-
   void* A_mat = NULL;
   void* x_vec = NULL;
   void* y_vec = NULL;
@@ -54,6 +53,25 @@ FLA_Error FLA_Gemv_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Ob
     x_vec = x_hip;
     y_vec = y_hip;
   }
+
+  FLA_Trans trans_a_corr = transa;
+  FLA_Bool conj_no_trans_a = FALSE;
+
+  void* A_mat_corr = NULL;
+  if ( FLA_Obj_is_complex( A ) && transa == FLA_CONJ_NO_TRANSPOSE )
+  {
+    // must correct by copying to temporary buffer and conjugating there
+    trans_a_corr = FLA_NO_TRANSPOSE;
+    conj_no_trans_a = TRUE;
+
+    dim_t elem_size = FLA_Obj_elem_size( A );
+    size_t count = elem_size * ldim_A * n_A;
+    hipMalloc( &A_mat_corr, count );
+    FLA_Copyconj_general_external_hip( handle, A, A_hip, A_mat_corr );
+    A_mat = A_mat_corr;
+  }
+
+  rocblas_operation blas_transa = FLA_Param_map_flame_to_rocblas_trans( trans_a_corr, FLA_Obj_is_real( A ) );
 
   switch( datatype ){
   
@@ -130,7 +148,12 @@ FLA_Error FLA_Gemv_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Ob
   }
 
   }
-  
+
+  if( conj_no_trans_a )
+  {
+    hipFree( A_mat_corr );
+  }
+
   return FLA_SUCCESS;
 }
 
