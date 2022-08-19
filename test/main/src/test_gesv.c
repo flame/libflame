@@ -34,29 +34,27 @@ void fla_test_gesv_experiment(test_params_t *params,
 {
     integer n, cs_A, NRHS;
     void* IPIV;
-    void *A, *A_save, *B, *B_save, *X;
+    void *A, *A_save, *B, *B_save;
     double time_min = 1e9;
     *residual = params->lin_solver_paramslist[pci].solver_threshold;
     NRHS = params->lin_solver_paramslist[pci].nrhs;
     /* Determine the dimensions*/
-    n = q_cur;
+    n = p_cur;
     cs_A = n;
     /* Create the matrices for the current operation*/
     create_matrix(datatype, &A, n, n);
+    create_matrix(datatype, &A_save, n, n);
     create_vector(INTEGER, &IPIV, n);
     create_matrix(datatype, &B, n, NRHS);
-    create_matrix(datatype, &B_save, n, n);
-    create_matrix(datatype, &X, n, NRHS);
+    create_matrix(datatype, &B_save, n, NRHS);
     /* Initialize the test matrices*/
     rand_matrix(datatype, A, n, n, cs_A);
     rand_matrix(datatype, B, n, NRHS, cs_A);
     /* Save the original matrix*/
-    create_matrix(datatype, &A_save, n, n);
     copy_matrix(datatype, "full", n, n, A, cs_A, A_save, cs_A);
     copy_matrix(datatype, "full", n, NRHS, B, cs_A, B_save, cs_A);
     /* call to API */
-    prepare_gesv_run(n, NRHS, A_save, B, IPIV, datatype, n_repeats, &time_min);
-    copy_matrix(datatype, "full", n, NRHS, B, cs_A, X, cs_A);
+    prepare_gesv_run(n, NRHS, A_save, B_save, IPIV, datatype, n_repeats, &time_min);
     /* execution time */
     *t = time_min;
 
@@ -67,14 +65,13 @@ void fla_test_gesv_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* output validation */
-    validate_gesv(n, NRHS, A, B_save, X, datatype, residual);
+    validate_gesv(n, NRHS, A, B, B_save, datatype, residual);
 
     /* Free up the buffers */
     free_matrix(A);
     free_matrix(A_save);
     free_vector(IPIV);
     free_matrix(B);
-    free_matrix(X);
     free_matrix(B_save);
 }
 
@@ -97,7 +94,6 @@ void prepare_gesv_run(integer n_A,
     cs_A = n_A;
     /* Save the original matrix */
     create_matrix(datatype, &A_test, n_A, n_A);
-    copy_matrix(datatype, "full", n_A, n_A, A, cs_A, A_test, cs_A);
     create_matrix(datatype, &B_test, n_A, nrhs);
 
 

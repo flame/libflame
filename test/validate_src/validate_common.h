@@ -74,7 +74,7 @@ void validate_getri(integer m_A,
 
 void validate_getrs(char *trans,
     integer m,
-    integer n,
+    integer nrhs,
     void* A,
     void* B,
     void* X,
