@@ -20,6 +20,7 @@
 FLA_Error FLA_Bidiag_apply_V_external_hip( rocblas_handle handle, FLA_Side side, FLA_Trans trans, FLA_Obj A, void* A_hip, FLA_Obj t, void* t_hip, FLA_Obj B, void* B_hip )
 {
   FLA_Datatype datatype;
+  dim_t        n_A;
   dim_t        m_B, n_B;
   dim_t        cs_A;
   dim_t        cs_B;
@@ -34,7 +35,7 @@ FLA_Error FLA_Bidiag_apply_V_external_hip( rocblas_handle handle, FLA_Side side,
   datatype = FLA_Obj_datatype( A );
 
   // m_A      = FLA_Obj_length( A );
-  // n_A      = FLA_Obj_width( A );
+  n_A      = FLA_Obj_width( A );
   cs_A     = FLA_Obj_col_stride( A );
 
   m_B      = FLA_Obj_length( B );
@@ -46,9 +47,6 @@ FLA_Error FLA_Bidiag_apply_V_external_hip( rocblas_handle handle, FLA_Side side,
 
   if ( FLA_Obj_is_real( A ) && trans == FLA_CONJ_TRANSPOSE )
     trans = FLA_TRANSPOSE;
-
-  rocblas_side blas_side = FLA_Param_map_flame_to_rocblas_side( side );
-  rocblas_operation blas_trans = FLA_Param_map_flame_to_rocblas_trans( trans, FLA_Obj_is_real( A ) );
 
   void* A_vecs = NULL;
   void* t_scals = NULL;
@@ -66,6 +64,25 @@ FLA_Error FLA_Bidiag_apply_V_external_hip( rocblas_handle handle, FLA_Side side,
     B_mat = B_hip;
   }
 
+  FLA_Trans trans_a_corr = trans;
+  FLA_Bool conj_no_trans_a = FALSE;
+
+  void* A_mat_corr = NULL;
+  if ( FLA_Obj_is_complex( A ) && trans == FLA_CONJ_NO_TRANSPOSE )
+  {
+    // must correct by copying to temporary buffer and conjugating there
+    trans_a_corr = FLA_NO_TRANSPOSE;
+    conj_no_trans_a = TRUE;
+
+    dim_t elem_size = FLA_Obj_elem_size( A );
+    size_t count = elem_size * cs_A * n_A;
+    hipMalloc( &A_mat_corr, count );
+    FLA_Copyconj_general_external_hip( handle, A, A_hip, A_mat_corr );
+    A_vecs = A_mat_corr;
+  }
+
+  rocblas_side blas_side = FLA_Param_map_flame_to_rocblas_side( side );
+  rocblas_operation blas_trans = FLA_Param_map_flame_to_rocblas_trans( trans_a_corr, FLA_Obj_is_real( A ) );
 
   switch( datatype ){
 
@@ -149,6 +166,11 @@ FLA_Error FLA_Bidiag_apply_V_external_hip( rocblas_handle handle, FLA_Side side,
     break;
   }
 
+  }
+
+  if( conj_no_trans_a )
+  {
+    hipFree( A_mat_corr );
   }
 
   return FLA_SUCCESS;
