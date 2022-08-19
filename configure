@@ -6461,7 +6461,7 @@ fi
 			$as_echo_n "checking whether user requested enabling AMD optimized path... " >&6; }
 
 # Check whether --enable-amd-opt was given.
-if test "${enable_amd_aocc_flags+set}" != set; then :
+if test "${enable_amd_flags+set}" != set && test "${enable_amd_aocc_flags+set}" != set; then :
   if test "${enable_amd_opt+set}" = set; then :
       enableval=$enable_amd_opt;
       if test "$enableval" = "no" ; then
@@ -6614,13 +6614,159 @@ $as_echo "no" >&6; }
 
 
 
+
+
+
+
+
+
+		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested GPU extensions" >&5
+$as_echo_n "checking whether user requested GPU extensions... " >&6; }
+
+				# Check whether --enable-gpu was given.
+if test "${enable_gpu+set}" = set; then :
+  enableval=$enable_gpu;
+				if test "$enableval" = "no" ; then
+
+						fla_enable_gpu=no
+
+		elif test "$enableval" = "yes" ; then
+
+						fla_enable_gpu=yes
+		else
+
+												as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_GPU!" "$LINENO" 5
+		fi
+
+else
+
+						fla_enable_gpu=no
+
+
+fi
+
+
+		if   test "$fla_enable_gpu" = "yes" ; then
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+$as_echo "yes" >&6; }
+
+
+$as_echo "#define FLA_ENABLE_GPU 1" >>confdefs.h
+
+
+	elif test "$fla_enable_gpu" = "no" ; then
+
+				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+$as_echo "no" >&6; }
+
+	else
+
+				as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_GPU!" "$LINENO" 5
+
+	fi
+
+
 		fla_enable_multithreading=no
 	fla_multithreading_model=none
+# Changes so that --enable-amd-flags encapsulates various other flags
+# Check whether --enable-amd-flags was given.
+
+if test "${enable_amd_flags+set}" = set; then :
+  enableval=$enable_amd_flags;
+        if test "$enableval" = "no" ; then
+            fla_enable_amd_flags=no
+    
+        elif test "$enableval" = "yes" ; then
+            fla_enable_blas_ext_gemmt=yes
+            fla_enable_lapack2flame=yes
+            fla_enable_external_lapack_interfaces=yes
+            fla_enable_dynamic_build=yes
+            fla_enable_max_arg_list_hack=yes
+            fla_enable_amd_flags=yes
+            fla_enable_amd_opt=yes
+	    fla_enable_multithreading=yes
+	    fla_multithreading_model=openmp
+    
+        else 
+            as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_ENABLE_AMD_FLAGS!" "$LINENO" 5
+        fi
+
+else
+  fla_enable_amd_flags=no
+fi
+
+if   test "$fla_enable_amd_flags" = "yes" ; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+    $as_echo "yes" >&6; }
+    $as_echo "#define FLA_ENABLE_BLAS_EXT_GEMMT 1" >>confdefs.h
+    $as_echo "#define FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES 1" >>confdefs.h
+    $as_echo "#define FLA_ENABLE_LAPACK2FLAME 1" >>confdefs.h
+    $as_echo "#define FLA_ENABLE_AMD_FLAGS 1" >>confdefs.h
+    $as_echo "#define FLA_ENABLE_AMD_OPT 1" >>confdefs.h
+
+elif test "$fla_enable_amd_flags" = "no" ; then
+	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+    $as_echo "no" >&6; }
+
+else
+	as_fn_error $? "Reached unreachable branch in FLA_ENABLE_AMD_FLAGS!" "$LINENO" 5
+fi
+
+# Changes so that --enable-amd-aocc-flags encapsulates various other flags
+# Check whether --enable-amd-aocc-flags was given.
+
+if test "${enable_amd_aocc_flags+set}" = set; then :
+  enableval=$enable_amd_aocc_flags;
+        if test "$enableval" = "no" ; then
+          fla_enable_amd_aocc_flags=no
+    
+        elif test "$enableval" = "yes" ; then
+          fla_enable_blas_ext_gemmt=yes
+          fla_enable_lapack2flame=yes
+          fla_enable_external_lapack_interfaces=yes
+          fla_enable_dynamic_build=yes
+          fla_enable_max_arg_list_hack=yes
+          fla_enable_f2c_dotc=yes
+          fla_enable_void_return_complex=yes
+          fla_enable_amd_aocc_flags=yes
+          fla_enable_amd_opt=yes
+	  fla_enable_multithreading=yes
+	  fla_multithreading_model=openmp
+    
+        else 
+          as_fn_error $? "Reached. unreachable branch in FLA_CHECK_ENABLE_ENABLE_AMD_AOCC_FLAGS!" "$LINENO" 5
+        fi
+
+else
+  fla_enable_amd_aocc_flags=no
+fi
+
+if test "$fla_enable_amd_aocc_flags" = "yes" ; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+    $as_echo "yes" >&6; }
+    $as_echo "#define FLA_ENABLE_BLAS_EXT_GEMMT 1" >>confdefs.h
+    $as_echo "#define FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES 1" >>confdefs.h
+    $as_echo "#define FLA_ENABLE_LAPACK2FLAME 1" >>confdefs.h
+    $as_echo "#define FLA_ENABLE_F2C_DOTC 1" >>confdefs.h
+    $as_echo "#define FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION 1" >>confdefs.h
+    $as_echo "#define FLA_ENABLE_AMD_AOCC_FLAGS 1" >>confdefs.h
+    $as_echo "#define FLA_ENABLE_AMD_OPT 1" >>confdefs.h
+
+elif test "$fla_enable_amd_aocc_flags" = "no" ; then
+  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
+    $as_echo "no" >&6; }
+
+else
+	as_fn_error $? "Reached.. unreachable branch in FLA_ENABLE_AMD_AOCC_FLAGS!" "$LINENO" 5
+fi
+
 
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested support for multithreading" >&5
 $as_echo_n "checking whether user requested support for multithreading... " >&6; }
 
 				# Check whether --enable-multithreading was given.
+if test "${enable_amd_flags+set}" != set && test "${enable_amd_aocc_flags+set}" != set; then :
 if test "${enable_multithreading+set}" = set; then :
   enableval=$enable_multithreading;
 				if test "$enableval" = "openmp" ; then
@@ -6649,6 +6795,7 @@ else
 		fla_multithreading_model=none
 
 
+fi
 fi
 
 
@@ -6758,7 +6905,6 @@ _ACEOF
 
 
 
-
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested SuperMatrix functionality" >&5
 $as_echo_n "checking whether user requested SuperMatrix functionality... " >&6; }
 
@@ -6805,147 +6951,8 @@ $as_echo "no" >&6; }
 
 	fi
 
-
-
-
-
-
-		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested GPU extensions" >&5
-$as_echo_n "checking whether user requested GPU extensions... " >&6; }
-
-				# Check whether --enable-gpu was given.
-if test "${enable_gpu+set}" = set; then :
-  enableval=$enable_gpu;
-				if test "$enableval" = "no" ; then
-
-						fla_enable_gpu=no
-
-		elif test "$enableval" = "yes" ; then
-
-						fla_enable_gpu=yes
-		else
-
-												as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_GPU!" "$LINENO" 5
-		fi
-
-else
-
-						fla_enable_gpu=no
-
-
-fi
-
-
-		if   test "$fla_enable_gpu" = "yes" ; then
-
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-$as_echo "yes" >&6; }
-
-
-$as_echo "#define FLA_ENABLE_GPU 1" >>confdefs.h
-
-
-	elif test "$fla_enable_gpu" = "no" ; then
-
-				{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-$as_echo "no" >&6; }
-
-	else
-
-				as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_GPU!" "$LINENO" 5
-
-	fi
-
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested enabling gemmt based optimizations" >&5
     $as_echo_n "checking whether user requested enabling gemmt based optimizations... " >&6; }
-
-# Changes so that --enable-amd-flags encapsulates various other flags
-# Check whether --enable-amd-flags was given.
-
-if test "${enable_amd_flags+set}" = set; then :
-  enableval=$enable_amd_flags;
-        if test "$enableval" = "no" ; then
-            fla_enable_amd_flags=no
-    
-        elif test "$enableval" = "yes" ; then
-            fla_enable_blas_ext_gemmt=yes
-            fla_enable_lapack2flame=yes
-            fla_enable_external_lapack_interfaces=yes
-            fla_enable_dynamic_build=yes
-            fla_enable_max_arg_list_hack=yes
-            fla_enable_amd_flags=yes
-            fla_enable_amd_opt=yes
-    
-        else 
-            as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_ENABLE_AMD_FLAGS!" "$LINENO" 5
-        fi
-
-else
-  fla_enable_amd_flags=no
-fi
-
-if   test "$fla_enable_amd_flags" = "yes" ; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-    $as_echo "yes" >&6; }
-    $as_echo "#define FLA_ENABLE_BLAS_EXT_GEMMT 1" >>confdefs.h
-    $as_echo "#define FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES 1" >>confdefs.h
-    $as_echo "#define FLA_ENABLE_LAPACK2FLAME 1" >>confdefs.h
-    $as_echo "#define FLA_ENABLE_AMD_FLAGS 1" >>confdefs.h
-    $as_echo "#define FLA_ENABLE_AMD_OPT 1" >>confdefs.h
-
-elif test "$fla_enable_amd_flags" = "no" ; then
-	{ $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-    $as_echo "no" >&6; }
-
-else
-	as_fn_error $? "Reached unreachable branch in FLA_ENABLE_AMD_FLAGS!" "$LINENO" 5
-fi
-
-# Changes so that --enable-amd-aocc-flags encapsulates various other flags
-# Check whether --enable-amd-aocc-flags was given.
-
-if test "${enable_amd_aocc_flags+set}" = set; then :
-  enableval=$enable_amd_aocc_flags;
-        if test "$enableval" = "no" ; then
-          fla_enable_amd_aocc_flags=no
-    
-        elif test "$enableval" = "yes" ; then
-          fla_enable_blas_ext_gemmt=yes
-          fla_enable_lapack2flame=yes
-          fla_enable_external_lapack_interfaces=yes
-          fla_enable_dynamic_build=yes
-          fla_enable_max_arg_list_hack=yes
-          fla_enable_f2c_dotc=yes
-          fla_enable_void_return_complex=yes
-          fla_enable_amd_aocc_flags=yes
-          fla_enable_amd_opt=yes
-    
-        else 
-          as_fn_error $? "Reached. unreachable branch in FLA_CHECK_ENABLE_ENABLE_AMD_AOCC_FLAGS!" "$LINENO" 5
-        fi
-
-else
-  fla_enable_amd_aocc_flags=no
-fi
-
-if test "$fla_enable_amd_aocc_flags" = "yes" ; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: yes" >&5
-    $as_echo "yes" >&6; }
-    $as_echo "#define FLA_ENABLE_BLAS_EXT_GEMMT 1" >>confdefs.h
-    $as_echo "#define FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES 1" >>confdefs.h
-    $as_echo "#define FLA_ENABLE_LAPACK2FLAME 1" >>confdefs.h
-    $as_echo "#define FLA_ENABLE_F2C_DOTC 1" >>confdefs.h
-    $as_echo "#define FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION 1" >>confdefs.h
-    $as_echo "#define FLA_ENABLE_AMD_AOCC_FLAGS 1" >>confdefs.h
-    $as_echo "#define FLA_ENABLE_AMD_OPT 1" >>confdefs.h
-
-elif test "$fla_enable_amd_aocc_flags" = "no" ; then
-  { $as_echo "$as_me:${as_lineno-$LINENO}: result: no" >&5
-    $as_echo "no" >&6; }
-
-else
-	as_fn_error $? "Reached.. unreachable branch in FLA_ENABLE_AMD_AOCC_FLAGS!" "$LINENO" 5
-fi
 
 # Check whether --enable-blas-ext-gemmt was given.
 if test "${enable_amd_flags+set}" != set && test "${enable_amd_aocc_flags+set}" != set; then :
