@@ -21,8 +21,6 @@ void validate_gesv(integer n,
 
     ldx = n;
     ldb = n;
-    /* Creating work buffer */
-    create_vector(datatype, &work, 2*n);
 
     switch (datatype)
     {
@@ -31,7 +29,7 @@ void validate_gesv(integer n,
             float norm_b, norm, eps, resid;
         
             /* Test 1 */
-            norm_b = slange_("1", &n, &nrhs, B, &nrhs, work);
+            norm_b = slange_("1", &n, &nrhs, B, &ldb, work);
             eps = slamch_("P");
 
             /* Compute AX-B */ 
@@ -48,7 +46,7 @@ void validate_gesv(integer n,
             double norm_b, norm, eps, resid;
         
             /* Test 1 */
-            norm_b = dlange_("1", &n, &nrhs, B, &nrhs, work);
+            norm_b = dlange_("1", &n, &nrhs, B, &ldb, work);
             eps = dlamch_("P");
         
             /* Compute AX-B */ 
@@ -65,7 +63,7 @@ void validate_gesv(integer n,
             float norm_b, norm, eps, resid;
         
             /* Test 1 */
-            norm_b = clange_("1", &n, &nrhs, B, &nrhs, work);
+            norm_b = clange_("1", &n, &nrhs, B, &ldb, work);
             eps = slamch_("P");
 
             /* Compute AX-B */ 
@@ -82,7 +80,7 @@ void validate_gesv(integer n,
             double norm_b, norm, eps, resid;
         
             /* Test 1 */
-            norm_b = zlange_("1", &n, &nrhs, B, &nrhs, work);
+            norm_b = zlange_("1", &n, &nrhs, B, &ldb, work);
             eps = dlamch_("P");
 
             /* Compute AX-B */ 
@@ -95,7 +93,5 @@ void validate_gesv(integer n,
             break;
         }
     }
-
-    free_vector(work);
 }
 

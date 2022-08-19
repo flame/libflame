@@ -17,7 +17,7 @@ void fla_test_getrs(test_params_t *params)
 
     fla_test_output_info("--- %s ---\n", op_str);
     fla_test_output_info("\n");
-    fla_test_op_driver(front_str, RECT_INPUT, params, LIN, fla_test_getrs_experiment);
+    fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_getrs_experiment);
 
 }
 
@@ -32,7 +32,7 @@ void fla_test_getrs_experiment(test_params_t *params,
     double* t,
     double* residual)
 {
-    integer m, cs_A, NRHS;
+    integer n, cs_A, NRHS;
     void* IPIV;
     void *A, *A_test, *B, *B_save, *X;
     double time_min = 1e9;
@@ -41,35 +41,35 @@ void fla_test_getrs_experiment(test_params_t *params,
     NRHS = params->lin_solver_paramslist[pci].nrhs;
 
     /* Determine the dimensions*/
-    m = p_cur;
-    cs_A = m;
+    n = p_cur;
+    cs_A = n;
     /* Create the matrices for the current operation*/
-    create_matrix(datatype, &A, m, m);
-    create_vector(INTEGER, &IPIV, m);
-    create_matrix(datatype, &B, m, NRHS);
-    create_matrix(datatype, &B_save, m, NRHS);
-    create_matrix(datatype, &X, m, NRHS);
+    create_matrix(datatype, &A, n, n);
+    create_vector(INTEGER, &IPIV, n);
+    create_matrix(datatype, &B, n, NRHS);
+    create_matrix(datatype, &B_save, n, NRHS);
+    create_matrix(datatype, &X, n, NRHS);
     /* Initialize the test matrices*/
-    rand_matrix(datatype, A, m, m, cs_A);
-    rand_matrix(datatype, B, m, NRHS, cs_A);
+    rand_matrix(datatype, A, n, n, cs_A);
+    rand_matrix(datatype, B, n, NRHS, cs_A);
     /* Save the original matrix*/
-    create_matrix(datatype, &A_test, m, m);
-    copy_matrix(datatype, "full", m, m, A, cs_A, A_test, cs_A);
-    copy_matrix(datatype, "full", m, NRHS, B, cs_A, B_save, cs_A);
+    create_matrix(datatype, &A_test, n, n);
+    copy_matrix(datatype, "full", n, n, A, cs_A, A_test, cs_A);
+    copy_matrix(datatype, "full", n, NRHS, B, cs_A, B_save, cs_A);
     /* call to API */
-    prepare_getrs_run(&TRANS, m, NRHS, A_test, B, IPIV, datatype, n_repeats, &time_min);
-    copy_matrix(datatype, "full", m, NRHS, B, cs_A, X, cs_A);
+    prepare_getrs_run(&TRANS, n, NRHS, A_test, B, IPIV, datatype, n_repeats, &time_min);
+    copy_matrix(datatype, "full", n, NRHS, B, cs_A, X, cs_A);
     /* execution time */
     *t = time_min;
 
     /* performance computation */
     /* 2mn^2 - (2/3)n^3 flops */
-    *perf = (double)((2.0 * m * m * m) - ((2.0 / 3.0) * m * m * m)) / time_min / FLOPS_PER_UNIT_PERF;
+    *perf = (double)((2.0 * n * n * n) - ((2.0 / 3.0) * n * n * n)) / time_min / FLOPS_PER_UNIT_PERF;
     if (datatype == COMPLEX || datatype == DOUBLE_COMPLEX)
         *perf *= 4.0;
 
     /* output validation */
-    validate_getrs(&TRANS, m, NRHS, A, B_save, X, datatype, residual);
+    validate_getrs(&TRANS, n, NRHS, A, B_save, X, datatype, residual);
 
     /* Free up the buffers */
     free_matrix(A);
@@ -82,7 +82,7 @@ void fla_test_getrs_experiment(test_params_t *params,
 
 
 void prepare_getrs_run(char *TRANS,
-    integer m_A,
+    integer n_A,
     integer nrhs,
     void* A,
     void* B,
@@ -98,35 +98,36 @@ void prepare_getrs_run(char *TRANS,
     double time_min = 1e9, exe_time;
 
     /* Get column stride */
-    cs_A = m_A;
+    cs_A = n_A;
     /* Save the original matrix */
-    create_matrix(datatype, &A_save, m_A, m_A);
-    copy_matrix(datatype, "full", m_A, m_A, A, cs_A, A_save, cs_A);
-    create_matrix(datatype, &B_test, m_A, nrhs);
+    create_matrix(datatype, &A_save, n_A, n_A);
+    copy_matrix(datatype, "full", n_A, n_A, A, cs_A, A_save, cs_A);
+    create_matrix(datatype, &B_test, n_A, nrhs);
 
 
     for (i = 0; i < n_repeats; ++i)
     {
         /* Copy original input data */
-        copy_matrix(datatype, "full", m_A, m_A, A, cs_A, A_save, cs_A);
-        copy_matrix(datatype, "full", m_A, nrhs, B, cs_A, B_test, cs_A);
+        copy_matrix(datatype, "full", n_A, n_A, A, cs_A, A_save, cs_A);
+        copy_matrix(datatype, "full", n_A, nrhs, B, cs_A, B_test, cs_A);
 
         exe_time = fla_test_clock();
 
         /*  call to API getrf to get AFACT */
-        invoke_getrf(datatype, &m_A, &m_A, A_save, &cs_A, IPIV, &info);
+        invoke_getrf(datatype, &n_A, &n_A, A_save, &cs_A, IPIV, &info);
         /*  call  getrs API with AFACT */
-        invoke_getrs(datatype, TRANS, &m_A, &nrhs, A_save, &m_A, IPIV, B_test, &m_A, &info);
+        invoke_getrs(datatype, TRANS, &n_A, &nrhs, A_save, &n_A, IPIV, B_test, &n_A, &info);
 
         exe_time = fla_test_clock() - exe_time;
 
         /* Get the best execution time */
         time_min = min(time_min, exe_time);
-        /*  Save the final result to B matrix*/
-        copy_matrix(datatype, "full", m_A, nrhs, B_test, cs_A, B, cs_A);
+
     }
 
     *time_min_ = time_min;
+    /*  Save the final result to B matrix*/
+    copy_matrix(datatype, "full", n_A, nrhs, B_test, cs_A, B, cs_A);
 
     free_matrix(A_save);
     free_vector(B_test);
