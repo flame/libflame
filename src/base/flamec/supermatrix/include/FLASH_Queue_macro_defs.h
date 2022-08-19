@@ -445,9 +445,9 @@ also to create a macro for when it is not below to return an error code.
 #define ENQUEUE_FLASH_Copyr( uplo, A, B, cntl ) \
         FLASH_Queue_push( (void *) FLA_Copyr_task, \
                           (void *) cntl, \
-                          "Copyt", \
+                          "Copyr", \
                           FALSE, \
-                          FALSE, \
+                          TRUE, \
                           1, 0, 1, 1, \
                           uplo, \
                           A, B )
