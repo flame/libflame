@@ -101,7 +101,7 @@ fi
 ulimit -s unlimited
 
 FORTRAN_FLAGS="gfortran -fopenmp"
-TESTLAPACKLIB="$PWD/liblapack.a -lpthread"
+TESTLAPACKLIB="$PWD/liblapack.a"
 
 if [[ $ILP64 = "1" ]]
 then
