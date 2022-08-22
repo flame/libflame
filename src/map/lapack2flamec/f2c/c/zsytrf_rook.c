@@ -200,6 +200,8 @@ the routine */
 /* Subroutine */
 int zsytrf_rook_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *ipiv, doublecomplex *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zsytrf_rook inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "", *uplo, *n, *lda, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     /* Local variables */
@@ -274,10 +276,12 @@ int zsytrf_rook_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer
     {
         i__1 = -(*info);
         xerbla_("ZSYTRF_ROOK", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     nbmin = 2;
@@ -394,6 +398,7 @@ L20: /* If K > N, exit from loop */
 L40:
     work[1].r = (doublereal) lwkopt;
     work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZSYTRF_ROOK */
 }

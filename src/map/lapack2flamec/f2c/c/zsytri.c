@@ -117,6 +117,8 @@ the matrix is singular and its */
 /* Subroutine */
 int zsytri_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *ipiv, doublecomplex *work, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zsytri inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*uplo, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     doublecomplex z__1, z__2, z__3;
@@ -183,11 +185,13 @@ int zsytri_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *ipi
     {
         i__1 = -(*info);
         xerbla_("ZSYTRI", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Check that the diagonal matrix D is nonsingular. */
@@ -201,6 +205,7 @@ int zsytri_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *ipi
             i__1 = *info + *info * a_dim1;
             if (ipiv[*info] > 0 && (a[i__1].r == 0. && a[i__1].i == 0.))
             {
+    AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             /* L10: */
@@ -217,6 +222,7 @@ int zsytri_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *ipi
             i__2 = *info + *info * a_dim1;
             if (ipiv[*info] > 0 && (a[i__2].r == 0. && a[i__2].i == 0.))
             {
+    AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             /* L20: */
@@ -540,6 +546,7 @@ L50: /* If K < 1, exit from loop. */
 L60:
         ;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZSYTRI */
 }

@@ -187,6 +187,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int zsytf2_rook_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *ipiv, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zsytf2_rook inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "", *uplo, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
     doublereal d__1, d__2;
@@ -268,6 +270,7 @@ int zsytf2_rook_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer
     {
         i__1 = -(*info);
         xerbla_("ZSYTF2_ROOK", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize ALPHA for use in choosing pivot block size. */
@@ -952,6 +955,7 @@ L42: /* Begin pivot search loop body */
         goto L40;
     }
 L70:
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZSYTF2_ROOK */
 }

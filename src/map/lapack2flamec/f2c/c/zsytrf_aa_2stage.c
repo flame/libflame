@@ -164,6 +164,8 @@ the */
 /* Subroutine */
 int zsytrf_aa_2stage_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecomplex *tb, integer *ltb, integer *ipiv, integer *ipiv2, doublecomplex *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zsytrf_aa_2stage inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", ltb %" FLA_IS ", lwork %" FLA_IS "", *uplo, *n, *lda, *ltb, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
     doublecomplex z__1;
@@ -239,6 +241,7 @@ int zsytrf_aa_2stage_(char *uplo, integer *n, doublecomplex *a, integer *lda, do
     {
         i__1 = -(*info);
         xerbla_("ZSYTRF_AA_2STAGE", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Answer the query */
@@ -260,11 +263,13 @@ int zsytrf_aa_2stage_(char *uplo, integer *n, doublecomplex *a, integer *lda, do
     }
     if (tquery || wquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Determine the number of the block size */
@@ -744,6 +749,7 @@ int zsytrf_aa_2stage_(char *uplo, integer *n, doublecomplex *a, integer *lda, do
     }
     /* Factor the band matrix */
     zgbtrf_(n, n, &nb, &nb, &tb[1], &ldtb, &ipiv2[1], info);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZSYTRF_AA_2STAGE */
 }

@@ -130,6 +130,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int zsytrs_rook_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *lda, integer *ipiv, doublecomplex *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zsytrs_rook inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "", *uplo, *n, *nrhs, *lda, *ldb);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2;
     doublecomplex z__1, z__2, z__3;
@@ -202,11 +204,13 @@ int zsytrs_rook_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, intege
     {
         i__1 = -(*info);
         xerbla_("ZSYTRS_ROOK", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0 || *nrhs == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (upper)
@@ -550,6 +554,7 @@ L90: /* If K < 1, exit from loop. */
 L100:
         ;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZSYTRS_ROOK */
 }

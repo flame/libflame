@@ -162,6 +162,8 @@ the matrix is singular and its */
 /* Subroutine */
 int zsytri_3x_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecomplex *e, integer *ipiv, doublecomplex *work, integer *nb, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zsytri_3x inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", nb %" FLA_IS "", *uplo, *n, *lda, *nb);
     /* System generated locals */
     integer a_dim1, a_offset, work_dim1, work_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     doublecomplex z__1, z__2, z__3;
@@ -240,10 +242,12 @@ int zsytri_3x_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecom
     {
         i__1 = -(*info);
         xerbla_("ZSYTRI_3X", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Workspace got Non-diag elements of D */
@@ -268,6 +272,7 @@ int zsytri_3x_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecom
             i__1 = *info + *info * a_dim1;
             if (ipiv[*info] > 0 && (a[i__1].r == 0. && a[i__1].i == 0.))
             {
+    AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
         }
@@ -283,6 +288,7 @@ int zsytri_3x_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecom
             i__2 = *info + *info * a_dim1;
             if (ipiv[*info] > 0 && (a[i__2].r == 0. && a[i__2].i == 0.))
             {
+    AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
         }
@@ -1034,6 +1040,7 @@ int zsytri_3x_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecom
             }
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZSYTRI_3X */
 }

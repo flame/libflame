@@ -165,6 +165,8 @@ the matrix is singular and its */
 /* Subroutine */
 int zsytri_3_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecomplex *e, integer *ipiv, doublecomplex *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zsytri_3 inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "", *uplo, *n, *lda, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     /* Local variables */
@@ -234,22 +236,26 @@ int zsytri_3_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecomp
     {
         i__1 = -(*info);
         xerbla_("ZSYTRI_3", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
         work[1].r = (doublereal) lwkopt;
         work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     zsytri_3x_(uplo, n, &a[a_offset], lda, &e[1], &ipiv[1], &work[1], &nb, info);
     work[1].r = (doublereal) lwkopt;
     work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZSYTRI_3 */
 }
