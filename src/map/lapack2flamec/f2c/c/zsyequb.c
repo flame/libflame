@@ -123,6 +123,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int zsyequb_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublereal *s, doublereal *scond, doublereal *amax, doublecomplex *work, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zsyequb inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*uplo, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal d__1, d__2, d__3, d__4;
@@ -194,6 +196,7 @@ int zsyequb_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublereal 
     {
         i__1 = -(*info);
         xerbla_("ZSYEQUB", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     up = lsame_(uplo, "U");
@@ -202,6 +205,7 @@ int zsyequb_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublereal 
     if (*n == 0)
     {
         *scond = 1.;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     i__1 = *n;
@@ -467,6 +471,7 @@ int zsyequb_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublereal 
             if (d__ <= 0.)
             {
                 *info = -1;
+    AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             si = c0 * -2 / (c1 + sqrt(d__));
@@ -581,6 +586,7 @@ L999:
         smax = max(d__1,d__2);
     }
     *scond = max(smin,smlnum) / min(smax,bignum);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zsyequb_ */
