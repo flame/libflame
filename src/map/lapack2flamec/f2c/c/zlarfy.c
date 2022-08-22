@@ -109,6 +109,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int zlarfy_(char *uplo, integer *n, doublecomplex *v, integer *incv, doublecomplex *tau, doublecomplex *c__, integer *ldc, doublecomplex *work)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlarfy inputs: uplo %c, n %" FLA_IS ", incv %" FLA_IS ", ldc %" FLA_IS "",*uplo, *n, *incv, *ldc);
     /* System generated locals */
     integer c_dim1, c_offset;
     doublecomplex z__1, z__2, z__3, z__4;
@@ -147,6 +149,7 @@ int zlarfy_(char *uplo, integer *n, doublecomplex *v, integer *incv, doublecompl
     /* Function Body */
     if (tau->r == 0. && tau->i == 0.)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Form w:= C * v */
@@ -165,6 +168,7 @@ int zlarfy_(char *uplo, integer *n, doublecomplex *v, integer *incv, doublecompl
     z__1.r = -tau->r;
     z__1.i = -tau->i; // , expr subst
     zher2_(uplo, n, &z__1, &v[1], incv, &work[1], &c__1, &c__[c_offset], ldc);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLARFY */
 }

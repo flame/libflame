@@ -98,12 +98,9 @@ static doublecomplex c_b5 =
 /* Subroutine */
 int zlarfgp_(integer *n, doublecomplex *alpha, doublecomplex *x, integer *incx, doublecomplex *tau)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zlarfgp inputs: n %d, incx %d",*n, *incx);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlarfgp inputs: n %" FLA_IS ", incx %" FLA_IS "",*n, *incx);
+
     /* System generated locals */
     integer i__1, i__2;
     doublereal d__1, d__2;
@@ -151,7 +148,7 @@ int zlarfgp_(integer *n, doublecomplex *alpha, doublecomplex *x, integer *incx, 
     if (*n <= 0)
     {
         tau->r = 0., tau->i = 0.;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     i__1 = *n - 1;
@@ -342,7 +339,7 @@ L10:
         }
         alpha->r = beta, alpha->i = 0.;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLARFGP */
 }

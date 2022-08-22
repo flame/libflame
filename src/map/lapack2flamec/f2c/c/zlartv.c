@@ -95,6 +95,8 @@
 /* Subroutine */
 int zlartv_(integer *n, doublecomplex *x, integer *incx, doublecomplex *y, integer *incy, doublereal *c__, doublecomplex *s, integer *incc)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlartv inputs: n %" FLA_IS ", incx %" FLA_IS ", incy %" FLA_IS ", incc %" FLA_IS "",*n, *incx, *incy, *incc);
     /* System generated locals */
     integer i__1, i__2, i__3, i__4;
     doublecomplex z__1, z__2, z__3, z__4;
@@ -164,6 +166,7 @@ int zlartv_(integer *n, doublecomplex *x, integer *incx, doublecomplex *y, integ
         ic += *incc;
         /* L10: */
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLARTV */
 }

@@ -79,6 +79,8 @@
 /* Subroutine */
 int zlarscl2_(integer *m, integer *n, doublereal *d__, doublecomplex *x, integer *ldx)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlarscl2 inputs: m %" FLA_IS ", n %" FLA_IS ", ldx %" FLA_IS "",*m, *n, *ldx);
     /* System generated locals */
     integer x_dim1, x_offset, i__1, i__2, i__3, i__4, i__5;
     doublecomplex z__1;
@@ -121,6 +123,7 @@ int zlarscl2_(integer *m, integer *n, doublereal *d__, doublecomplex *x, integer
             x[i__3].i = z__1.i; // , expr subst
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zlarscl2_ */

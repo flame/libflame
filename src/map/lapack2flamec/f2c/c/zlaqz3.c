@@ -204,6 +204,8 @@ the routine */
 /* Subroutine */
 int zlaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, doublecomplex *alpha, doublecomplex *beta, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, doublecomplex *qc, integer *ldqc, doublecomplex *zc, integer *ldzc, doublecomplex *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlaqz3 inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", nshifts %" FLA_IS ", nblock_desired__ %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", ldqc %" FLA_IS ", ldzc %" FLA_IS "",*n, *ilo, *ihi, *nshifts, *nblock_desired__, *lda, *ldb, *ldq, *ldz, *ldqc, *ldzc);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, qc_dim1, qc_offset, zc_dim1, zc_offset, i__1, i__2, i__3, i__4, i__5;
     doublecomplex z__1, z__2, z__3;
@@ -271,6 +273,7 @@ int zlaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
         i__1 = *n * *nblock_desired__;
         work[1].r = (doublereal) i__1;
         work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*lwork < *n * *nblock_desired__)
@@ -281,6 +284,7 @@ int zlaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     {
         i__1 = -(*info);
         xerbla_("ZLAQZ3", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Executable statements */
@@ -290,6 +294,7 @@ int zlaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     dlabad_(&safmin, &safmax);
     if (*ilo >= *ihi)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*ilschur)
@@ -549,6 +554,7 @@ int zlaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
         i__1 = ns + 1;
         zlacpy_("ALL", n, &i__1, &work[1], n, &z__[(*ihi - ns) * z_dim1 + 1], ldz);
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zlaqz3_ */

@@ -107,6 +107,8 @@ B is M by N and complex;
 /* Subroutine */
 int zlarcm_(integer *m, integer *n, doublereal *a, integer * lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublereal *rwork)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlarcm inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldc %" FLA_IS "",*m, *n, *lda, *ldb, *ldc);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, c_dim1, c_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal d__1;
@@ -150,6 +152,7 @@ int zlarcm_(integer *m, integer *n, doublereal *a, integer * lda, doublecomplex 
     /* Function Body */
     if (*m == 0 || *n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     i__1 = *n;
@@ -226,6 +229,7 @@ int zlarcm_(integer *m, integer *n, doublereal *a, integer * lda, doublecomplex 
         }
         /* L80: */
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLARCM */
 }
