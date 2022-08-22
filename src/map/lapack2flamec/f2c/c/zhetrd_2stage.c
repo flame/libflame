@@ -221,6 +221,8 @@ the routine */
 /* Subroutine */
 int zhetrd_2stage_(char *vect, char *uplo, integer *n, doublecomplex *a, integer *lda, doublereal *d__, doublereal *e, doublecomplex *tau, doublecomplex *hous2, integer *lhous2, doublecomplex *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhetrd inputs: vect %c, uplo %c, n %" FLA_IS ", lda %" FLA_IS ", lhous2 %" FLA_IS "",*vect, *uplo, *n, *lda, *lhous2);
     /* System generated locals */
     integer a_dim1, a_offset, i__1;
     /* Local variables */
@@ -311,10 +313,12 @@ int zhetrd_2stage_(char *vect, char *uplo, integer *n, doublecomplex *a, integer
     {
         i__1 = -(*info);
         xerbla_("ZHETRD_2STAGE", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -322,6 +326,7 @@ int zhetrd_2stage_(char *vect, char *uplo, integer *n, doublecomplex *a, integer
     {
         work[1].r = 1.;
         work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Determine pointer position */
@@ -334,6 +339,7 @@ int zhetrd_2stage_(char *vect, char *uplo, integer *n, doublecomplex *a, integer
     {
         i__1 = -(*info);
         xerbla_("ZHETRD_HE2HB", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     zhetrd_hb2st_("Y", vect, uplo, n, &kd, &work[abpos], &ldab, &d__[1], &e[ 1], &hous2[1], lhous2, &work[wpos], &lwrk, info);
@@ -341,12 +347,14 @@ int zhetrd_2stage_(char *vect, char *uplo, integer *n, doublecomplex *a, integer
     {
         i__1 = -(*info);
         xerbla_("ZHETRD_HB2ST", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     hous2[1].r = (doublereal) lhmin;
     hous2[1].i = 0.; // , expr subst
     work[1].r = (doublereal) lwmin;
     work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHETRD_2STAGE */
 }

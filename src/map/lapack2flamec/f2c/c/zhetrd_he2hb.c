@@ -249,6 +249,8 @@ v(i+kd+2:n) is stored on exit in */
 /* Subroutine */
 int zhetrd_he2hb_(char *uplo, integer *n, integer *kd, doublecomplex *a, integer *lda, doublecomplex *ab, integer *ldab, doublecomplex *tau, doublecomplex *work, integer *lwork, integer * info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhetrd_he2hb inputs: uplo %c, n %" FLA_IS ", kd %" FLA_IS ", lda %" FLA_IS ", ldab %" FLA_IS "", *uplo, *n, *kd, *lda, *ldab);
     /* System generated locals */
     integer a_dim1, a_offset, ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5;
     doublecomplex z__1;
@@ -335,12 +337,14 @@ int zhetrd_he2hb_(char *uplo, integer *n, integer *kd, doublecomplex *a, integer
     {
         i__1 = -(*info);
         xerbla_("ZHETRD_HE2HB", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
         work[1].r = (doublereal) lwmin;
         work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -378,6 +382,7 @@ int zhetrd_he2hb_(char *uplo, integer *n, integer *kd, doublecomplex *a, integer
         }
         work[1].r = 1.;
         work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Determine the pointer position for the workspace */
@@ -533,6 +538,7 @@ int zhetrd_he2hb_(char *uplo, integer *n, integer *kd, doublecomplex *a, integer
     }
     work[1].r = (doublereal) lwmin;
     work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHETRD_HE2HB */
 }

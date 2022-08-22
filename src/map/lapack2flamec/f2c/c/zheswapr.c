@@ -94,12 +94,9 @@ if UPLO = 'L' the lower triangular part of the */
 /* Subroutine */
 int zheswapr_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *i1, integer *i2)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zheswapr inputs: uplo %c, n %d, lda %d, i1 %d, i2 %d",*uplo, *n, *lda, *i1, *i2);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zheswapr inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", i1 %" FLA_IS ", i2 %" FLA_IS "",*uplo, *n, *lda, *i1, *i2);
+
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     doublecomplex z__1;
@@ -255,7 +252,7 @@ int zheswapr_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *i
             a[i__2].i = tmp.i; // , expr subst
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zheswapr_ */
