@@ -206,6 +206,8 @@ v(i+1:n) is stored on exit in A(i+1:n,i), */
 /* Subroutine */
 int zlatrd_(char *uplo, integer *n, integer *nb, doublecomplex *a, integer *lda, doublereal *e, doublecomplex *tau, doublecomplex *w, integer *ldw)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlatrd inputs: uplo %c, n %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldw %" FLA_IS "",*uplo, *n, *nb, *lda, *ldw);
     /* System generated locals */
     integer a_dim1, a_offset, w_dim1, w_offset, i__1, i__2, i__3;
     doublereal d__1;
@@ -253,6 +255,7 @@ int zlatrd_(char *uplo, integer *n, integer *nb, doublecomplex *a, integer *lda,
     /* Function Body */
     if (*n <= 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (lsame_(uplo, "U"))
@@ -440,6 +443,7 @@ int zlatrd_(char *uplo, integer *n, integer *nb, doublecomplex *a, integer *lda,
             /* L20: */
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLATRD */
 }

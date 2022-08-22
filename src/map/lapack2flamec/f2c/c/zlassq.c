@@ -94,12 +94,8 @@
 /* Subroutine */
 int zlassq_(integer *n, doublecomplex *x, integer *incx, doublereal *scl, doublereal *sumsq)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-    snprintf(buffer, 256,"zlassq inputs: n %" FLA_IS ", incx %" FLA_IS "",*n, *incx);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlassq inputs: n %" FLA_IS ", incx %" FLA_IS ", scl %lf, sumsq %lf", *n, *incx, *scl, *sumsq);
     /* System generated locals */
     integer i__1, i__2;
     doublereal r__1, r__2;
@@ -133,7 +129,7 @@ int zlassq_(integer *n, doublecomplex *x, integer *incx, doublereal *scl, double
     /* .. */
     /* Quick return if possible */
     if (disnan_(scl) || disnan_(sumsq)) {
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*sumsq == 0.) {
@@ -144,7 +140,7 @@ int zlassq_(integer *n, doublecomplex *x, integer *incx, doublereal *scl, double
         *sumsq = 0.;
     }
     if (*n <= 0) {
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Compute the sum of squares in 3 accumulators: */
@@ -268,7 +264,7 @@ int zlassq_(integer *n, doublecomplex *x, integer *incx, doublereal *scl, double
         *scl = 1.;
         *sumsq = amed;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zlassq_ */

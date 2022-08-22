@@ -164,6 +164,8 @@ for 1 <= j <= N, column j of the */
 /* Subroutine */
 int zlatdf_(integer *ijob, integer *n, doublecomplex *z__, integer *ldz, doublecomplex *rhs, doublereal *rdsum, doublereal * rdscal, integer *ipiv, integer *jpiv)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlatdf inputs: ijob %" FLA_IS ", n %" FLA_IS ", ldz %" FLA_IS ", rdsum %lf, rdscal %lf",*ijob, *n, *ldz, *rdsum, *rdscal);
     /* System generated locals */
     integer z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5;
     doublecomplex z__1, z__2, z__3;
@@ -378,6 +380,7 @@ int zlatdf_(integer *ijob, integer *n, doublecomplex *z__, integer *ldz, doublec
         zlaswp_(&c__1, &rhs[1], ldz, &c__1, &i__1, &jpiv[1], &c_n1);
         /* Compute the sum of squares */
         zlassq_(n, &rhs[1], &c__1, rdscal, rdsum);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* ENTRY IJOB = 2 */
@@ -406,6 +409,7 @@ int zlatdf_(integer *ijob, integer *n, doublecomplex *z__, integer *ldz, doublec
     }
     /* Compute the sum of squares */
     zlassq_(n, &rhs[1], &c__1, rdscal, rdsum);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLATDF */
 }

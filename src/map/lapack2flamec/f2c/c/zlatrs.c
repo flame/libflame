@@ -234,12 +234,9 @@ b(i), i=1,..,n}
 /* Subroutine */
 int zlatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, doublecomplex *a, integer *lda, doublecomplex *x, doublereal *scale, doublereal *cnorm, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zlatrs inputs: uplo %c, trans %c, diag %c, normin %c, n %d, lda %d",*uplo, *trans, *diag, *normin, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlatrs inputs: uplo %c, trans %c, diag %c, normin %c, n %" FLA_IS ", lda %" FLA_IS "",*uplo, *trans, *diag, *normin, *n, *lda);
+
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal d__1, d__2, d__3, d__4;
@@ -347,13 +344,13 @@ int zlatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
     {
         i__1 = -(*info);
         xerbla_("ZLATRS", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Determine machine dependent parameters to control overflow. */
@@ -1260,7 +1257,7 @@ L210:
         d__1 = 1. / tscal;
         dscal_(n, &d__1, &cnorm[1], &c__1);
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLATRS */
 }

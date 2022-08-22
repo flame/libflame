@@ -188,12 +188,9 @@
 /* Subroutine */
 int zlasr_(char *side, char *pivot, char *direct, integer *m, integer *n, doublereal *c__, doublereal *s, doublecomplex *a, integer *lda)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zlasr inputs: side %c, pivot %c, direct %c, m %d, n %d, lda %d",*side, *pivot, *direct, *m, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlasr inputs: side %c, pivot %c, direct %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "",*side, *pivot, *direct, *m, *n, *lda);
+
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
     doublecomplex z__1, z__2, z__3;
@@ -260,13 +257,13 @@ int zlasr_(char *side, char *pivot, char *direct, integer *m, integer *n, double
     if (info != 0)
     {
         xerbla_("ZLASR ", &info);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (lsame_(side, "L"))
@@ -829,7 +826,7 @@ int zlasr_(char *side, char *pivot, char *direct, integer *m, integer *n, double
             }
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLASR */
 }
