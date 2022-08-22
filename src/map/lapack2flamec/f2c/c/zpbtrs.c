@@ -113,12 +113,9 @@ static integer c__1 = 1;
 /* Subroutine */
 int zpbtrs_(char *uplo, integer *n, integer *kd, integer * nrhs, doublecomplex *ab, integer *ldab, doublecomplex *b, integer * ldb, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zpbtrs inputs: uplo %c, n %d, kd %d, nrhs %d, ldab %d, ldb %d",*uplo, *n, *kd, *nrhs, *ldab, *ldb);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zpbtrs inputs: uplo %c, n %" FLA_IS ", kd %" FLA_IS ", nrhs %" FLA_IS ", ldab %" FLA_IS ", ldb %" FLA_IS "",*uplo, *n, *kd, *nrhs, *ldab, *ldb);
+
     /* System generated locals */
     integer ab_dim1, ab_offset, b_dim1, b_offset, i__1;
     /* Local variables */
@@ -184,13 +181,13 @@ int zpbtrs_(char *uplo, integer *n, integer *kd, integer * nrhs, doublecomplex *
     {
         i__1 = -(*info);
         xerbla_("ZPBTRS", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0 || *nrhs == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (upper)
@@ -223,7 +220,7 @@ int zpbtrs_(char *uplo, integer *n, integer *kd, integer * nrhs, doublecomplex *
             /* L20: */
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZPBTRS */
 }

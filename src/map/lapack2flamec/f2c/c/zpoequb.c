@@ -101,6 +101,8 @@
 /* Subroutine */
 int zpoequb_(integer *n, doublecomplex *a, integer *lda, doublereal *s, doublereal *scond, doublereal *amax, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zpoequb inputs: n %" FLA_IS ", lda %" FLA_IS "",*n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     doublereal d__1, d__2;
@@ -153,6 +155,7 @@ int zpoequb_(integer *n, doublecomplex *a, integer *lda, doublereal *s, doublere
     {
         i__1 = -(*info);
         xerbla_("ZPOEQUB", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible. */
@@ -160,6 +163,7 @@ int zpoequb_(integer *n, doublecomplex *a, integer *lda, doublereal *s, doublere
     {
         *scond = 1.;
         *amax = 0.;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     base = dlamch_("B");
@@ -198,6 +202,7 @@ int zpoequb_(integer *n, doublecomplex *a, integer *lda, doublereal *s, doublere
             if (s[i__] <= 0.)
             {
                 *info = i__;
+    AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             /* L20: */
@@ -219,6 +224,7 @@ int zpoequb_(integer *n, doublecomplex *a, integer *lda, doublereal *s, doublere
         /* Compute SCOND = min(S(I)) / max(S(I)). */
         *scond = sqrt(smin) / sqrt(*amax);
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZPOEQUB */
 }

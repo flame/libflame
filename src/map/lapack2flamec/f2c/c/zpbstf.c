@@ -149,6 +149,8 @@ the diagonal elements of S are real. */
 /* Subroutine */
 int zpbstf_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *ldab, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zpbstf inputs: uplo %c, n %" FLA_IS ", kd %" FLA_IS ", ldab %" FLA_IS "",*uplo, *n, *kd, *ldab);
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2, i__3;
     doublereal d__1;
@@ -212,11 +214,13 @@ int zpbstf_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
     {
         i__1 = -(*info);
         xerbla_("ZPBSTF", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Computing MAX */
@@ -363,9 +367,11 @@ int zpbstf_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
             /* L40: */
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 L50:
     *info = j;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZPBSTF */
 }

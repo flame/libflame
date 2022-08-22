@@ -124,12 +124,9 @@ static integer c__1 = 1;
 /* Subroutine */
 int zpbcon_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *ldab, doublereal *anorm, doublereal * rcond, doublecomplex *work, doublereal *rwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zpbcon inputs: uplo %c, n %d, kd %d, ldab %d",*uplo, *n, *kd, *ldab);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zpbcon inputs: uplo %c, n %" FLA_IS ", kd %" FLA_IS ", ldab %" FLA_IS "",*uplo, *n, *kd, *ldab);
+
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1;
     doublereal d__1, d__2;
@@ -213,7 +210,7 @@ int zpbcon_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
     {
         i__1 = -(*info);
         xerbla_("ZPBCON", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -221,12 +218,12 @@ int zpbcon_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
     if (*n == 0)
     {
         *rcond = 1.;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*anorm == 0.)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     smlnum = dlamch_("Safe minimum");
@@ -273,7 +270,7 @@ L10:
         *rcond = 1. / ainvnm / *anorm;
     }
 L20:
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZPBCON */
 }
