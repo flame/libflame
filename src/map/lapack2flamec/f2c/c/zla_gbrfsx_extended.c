@@ -415,6 +415,8 @@ i+1}
 /* Subroutine */
 int zla_gbrfsx_extended_(integer *prec_type__, integer * trans_type__, integer *n, integer *kl, integer *ku, integer *nrhs, doublecomplex *ab, integer *ldab, doublecomplex *afb, integer *ldafb, integer *ipiv, logical *colequ, doublereal *c__, doublecomplex *b, integer *ldb, doublecomplex *y, integer *ldy, doublereal *berr_out__, integer *n_norms__, doublereal *err_bnds_norm__, doublereal * err_bnds_comp__, doublecomplex *res, doublereal *ayb, doublecomplex * dy, doublecomplex *y_tail__, doublereal *rcond, integer *ithresh, doublereal *rthresh, doublereal *dz_ub__, logical *ignore_cwise__, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zla_gbrfsx_extended inputs: prec_type__ %" FLA_IS ", trans_type__ %" FLA_IS ", n %" FLA_IS ", kl %" FLA_IS ", ku %" FLA_IS ", nrhs %" FLA_IS ", ldab %" FLA_IS ", ldafb %" FLA_IS ",ldb %" FLA_IS ", ldy %" FLA_IS ", n_norms__ %" FLA_IS ", rcond %lf, ithresh %" FLA_IS ", rthresh %lf, dz_ub__ %lf, ignore_cwise__ %" FLA_IS "", *prec_type__, *trans_type__, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ldb, *ldy, *n_norms__, *rcond, *ithresh, *rthresh, *dz_ub__, *ignore_cwise__);
     /* System generated locals */
     integer ab_dim1, ab_offset, afb_dim1, afb_offset, b_dim1, b_offset, y_dim1, y_offset, err_bnds_norm_dim1, err_bnds_norm_offset, err_bnds_comp_dim1, err_bnds_comp_offset, i__1, i__2, i__3, i__4;
     doublereal d__1, d__2;
@@ -504,6 +506,7 @@ int zla_gbrfsx_extended_(integer *prec_type__, integer * trans_type__, integer *
     /* Function Body */
     if (*info != 0)
     {
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     chla_transtype_(ch__1, trans_type__);
@@ -793,6 +796,7 @@ L666: /* Set final_* when cnt hits ithresh. */
         zla_lin_berr_(n, n, &c__1, &res[1], &ayb[1], &berr_out__[j]);
         /* End of loop for each RHS. */
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zla_gbrfsx_extended__ */
