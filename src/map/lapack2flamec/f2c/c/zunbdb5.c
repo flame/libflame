@@ -142,7 +142,9 @@
 /* ===================================================================== */
 /* Subroutine */
 int zunbdb5_(integer *m1, integer *m2, integer *n, doublecomplex *x1, integer *incx1, doublecomplex *x2, integer *incx2, doublecomplex *q1, integer *ldq1, doublecomplex *q2, integer *ldq2, doublecomplex *work, integer *lwork, integer *info)
-{
+{   
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zunbdb5 inputs: m1 %" FLA_IS ", m2 %" FLA_IS ", n %" FLA_IS ", incx1 %" FLA_IS ", incx2 %" FLA_IS ", ldq1 %" FLA_IS ", ldq2 %" FLA_IS ", lwork %" FLA_IS "", *m1, *m2, *n, *incx1, *incx2, *ldq1, *ldq2, *lwork);
     /* System generated locals */
     integer q1_dim1, q1_offset, q2_dim1, q2_offset, i__1, i__2, i__3;
     doublereal d__1, d__2;
@@ -220,6 +222,7 @@ int zunbdb5_(integer *m1, integer *m2, integer *n, doublecomplex *x1, integer *i
     {
         i__1 = -(*info);
         xerbla_("ZUNBDB5", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Project X onto the orthogonal complement of Q */
@@ -229,6 +232,7 @@ int zunbdb5_(integer *m1, integer *m2, integer *n, doublecomplex *x1, integer *i
     d__2 = dznrm2_(m2, &x2[1], incx2);
     if (d__1 != 0. || d__2 != 0.)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Project each standard basis vector e_1,...,e_M1 in turn, stopping */
@@ -264,6 +268,7 @@ int zunbdb5_(integer *m1, integer *m2, integer *n, doublecomplex *x1, integer *i
         d__2 = dznrm2_(m2, &x2[1], incx2);
         if (d__1 != 0. || d__2 != 0.)
         {
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
@@ -300,9 +305,11 @@ int zunbdb5_(integer *m1, integer *m2, integer *n, doublecomplex *x1, integer *i
         d__2 = dznrm2_(m2, &x2[1], incx2);
         if (d__1 != 0. || d__2 != 0.)
         {
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZUNBDB5 */
 }

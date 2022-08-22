@@ -175,6 +175,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int zungtsqr_(integer *m, integer *n, integer *mb, integer * nb, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, doublecomplex *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zungtsqr inputs: m %" FLA_IS ", n %" FLA_IS ", mb %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS ", lwork %" FLA_IS "", *m, *n, *mb, *nb, *lda, *ldt, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, t_dim1, t_offset, i__1, i__2;
     doublecomplex z__1;
@@ -277,6 +279,7 @@ int zungtsqr_(integer *m, integer *n, integer *mb, integer * nb, doublecomplex *
     {
         i__1 = -(*info);
         xerbla_("ZUNGTSQR", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
@@ -285,6 +288,7 @@ int zungtsqr_(integer *m, integer *n, integer *mb, integer * nb, doublecomplex *
         z__1.i = 0.; // , expr subst
         work[1].r = z__1.r;
         work[1].i = z__1.i; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -294,6 +298,7 @@ int zungtsqr_(integer *m, integer *n, integer *mb, integer * nb, doublecomplex *
         z__1.i = 0.; // , expr subst
         work[1].r = z__1.r;
         work[1].i = z__1.i; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* (1) Form explicitly the tall-skinny M-by-N left submatrix Q1_in */
@@ -324,6 +329,7 @@ int zungtsqr_(integer *m, integer *n, integer *mb, integer * nb, doublecomplex *
     z__1.i = 0.; // , expr subst
     work[1].r = z__1.r;
     work[1].i = z__1.i; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZUNGTSQR */
 }
