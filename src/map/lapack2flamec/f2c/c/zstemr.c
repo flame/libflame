@@ -337,6 +337,8 @@ the */
 /* Subroutine */
 int zstemr_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e, doublereal *vl, doublereal *vu, integer *il, integer *iu, integer *m, doublereal *w, doublecomplex *z__, integer * ldz, integer *nzc, integer *isuppz, logical *tryrac, doublereal *work, integer *lwork, integer *iwork, integer *liwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zstemr inputs: jobz %c, range %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", m %" FLA_IS ", ldz %" FLA_IS ", nzc %" FLA_IS ", lwork " FLA_IS ", liwork " FLA_IS "", *jobz, *range, *n, *il, *iu, *m, *ldz, *nzc, *lwork, *liwork);
     /* System generated locals */
     integer z_dim1, z_offset, i__1, i__2;
     doublereal d__1, d__2;
@@ -551,16 +553,19 @@ int zstemr_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e
     {
         i__1 = -(*info);
         xerbla_("ZSTEMR", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery || zquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Handle N = 0, 1, and 2 cases immediately */
     *m = 0;
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -586,6 +591,7 @@ int zstemr_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e
             isuppz[1] = 1;
             isuppz[2] = 1;
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 2)
@@ -777,6 +783,7 @@ int zstemr_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e
         if (iinfo != 0)
         {
             *info = f2c_abs(iinfo) + 10;
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         /* Note that if RANGE .NE. 'V', DLARRE computes bounds on the desired */
@@ -790,6 +797,7 @@ int zstemr_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e
             if (iinfo != 0)
             {
                 *info = f2c_abs(iinfo) + 20;
+    AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
         }
@@ -867,6 +875,7 @@ L39:
             if (iinfo != 0)
             {
                 *info = 3;
+    AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
         }
@@ -912,6 +921,7 @@ L39:
     }
     work[1] = (doublereal) lwmin;
     iwork[1] = liwmin;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZSTEMR */
 }

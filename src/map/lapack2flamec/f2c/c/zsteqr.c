@@ -137,6 +137,8 @@ on exit, D */
 /* Subroutine */
 int zsteqr_(char *compz, integer *n, doublereal *d__, doublereal *e, doublecomplex *z__, integer *ldz, doublereal *work, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zsteqr inputs: compz %c, n %" FLA_IS ", ldz %" FLA_IS "",*compz, *n, *ldz);
     /* System generated locals */
     integer z_dim1, z_offset, i__1, i__2;
     doublereal d__1, d__2;
@@ -239,11 +241,13 @@ int zsteqr_(char *compz, integer *n, doublereal *d__, doublereal *e, doublecompl
     {
         i__1 = -(*info);
         xerbla_("ZSTEQR", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -254,6 +258,7 @@ int zsteqr_(char *compz, integer *n, doublereal *d__, doublereal *e, doublecompl
             z__[i__1].r = 1.;
             z__[i__1].i = 0.; // , expr subst
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Determine the unit roundoff and over/underflow thresholds. */
@@ -613,6 +618,7 @@ L140:
             }
             /* L150: */
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     goto L10;
@@ -655,6 +661,7 @@ L160:
             /* L180: */
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZSTEQR */
 }
