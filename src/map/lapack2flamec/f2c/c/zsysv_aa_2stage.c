@@ -178,12 +178,8 @@ the */
 /* Subroutine */
 int zsysv_aa_2stage_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *tb, integer *ltb, integer *ipiv, integer *ipiv2, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zsysv_aa_2stage inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ltb %" FLA_IS ", ldb %" FLA_IS ", lwork %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ltb, *ldb, *lwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zsysv_aa_2stage inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ltb %" FLA_IS ", ldb %" FLA_IS ", lwork %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ltb, *ldb, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */
@@ -267,12 +263,12 @@ int zsysv_aa_2stage_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, in
     {
         i__1 = -(*info);
         xerbla_("ZSYSV_AA_2STAGE", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (wquery || tquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Compute the factorization A = U**T*T*U or A = L*T*L**T. */
@@ -285,7 +281,7 @@ int zsysv_aa_2stage_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, in
     work[1].r = (doublereal) lwkopt;
     work[1].i = 0.; // , expr subst
     /* End of ZSYSV_AA_2STAGE */
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zsysv_aa_2stage__ */

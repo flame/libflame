@@ -201,12 +201,9 @@
 /* Subroutine */
 int zsyconvf_(char *uplo, char *way, integer *n, doublecomplex *a, integer *lda, doublecomplex *e, integer *ipiv, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zsyconvf inputs: uplo %c, way %c, n %d, lda %d",*uplo, *way, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zsyconvf inputs: uplo %c, way %c, n %" FLA_IS ", lda %" FLA_IS "",*uplo, *way, *n, *lda);
+
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     /* Local variables */
@@ -262,13 +259,13 @@ int zsyconvf_(char *uplo, char *way, integer *n, doublecomplex *a, integer *lda,
     {
         i__1 = -(*info);
         xerbla_("ZSYCONVF", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (upper)
@@ -558,7 +555,7 @@ int zsyconvf_(char *uplo, char *way, integer *n, doublecomplex *a, integer *lda,
         }
         /* End A is LOWER */
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZSYCONVF */
 }

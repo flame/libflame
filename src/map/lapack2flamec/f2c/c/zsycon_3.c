@@ -157,12 +157,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int zsycon_3_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecomplex *e, integer *ipiv, doublereal *anorm, doublereal *rcond, doublecomplex *work, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zsycon_3 inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*uplo, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zsycon_3 inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*uplo, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     /* Local variables */
@@ -228,7 +224,7 @@ int zsycon_3_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecomp
     {
         i__1 = -(*info);
         xerbla_("ZSYCON_3", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -236,12 +232,12 @@ int zsycon_3_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecomp
     if (*n == 0)
     {
         *rcond = 1.;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*anorm <= 0.)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Check that the diagonal matrix D is nonsingular. */
@@ -255,7 +251,7 @@ int zsycon_3_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecomp
             i__1 = i__ + i__ * a_dim1;
             if (ipiv[i__] > 0 && (a[i__1].r == 0. && a[i__1].i == 0.))
             {
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
         }
@@ -271,7 +267,7 @@ int zsycon_3_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecomp
             i__2 = i__ + i__ * a_dim1;
             if (ipiv[i__] > 0 && (a[i__2].r == 0. && a[i__2].i == 0.))
             {
-                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
         }
@@ -291,7 +287,7 @@ L30:
     {
         *rcond = 1. / ainvnm / *anorm;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZSYCON_3 */
 }
