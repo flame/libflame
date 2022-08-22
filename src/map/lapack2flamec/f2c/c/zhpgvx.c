@@ -275,6 +275,8 @@ if RANGE = 'V', the exact value of M */
 /* Subroutine */
 int zhpgvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, doublecomplex *ap, doublecomplex *bp, doublereal * vl, doublereal *vu, integer *il, integer *iu, doublereal *abstol, integer *m, doublereal *w, doublecomplex *z__, integer *ldz, doublecomplex *work, doublereal *rwork, integer *iwork, integer * ifail, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhpgvx inputs: itype %" FLA_IS ", jobz %c, range %c, uplo %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", m %" FLA_IS ", ldz %" FLA_IS "",*itype, *jobz, *range, *uplo, *n, *il, *iu, *m, *ldz);
     /* System generated locals */
     integer z_dim1, z_offset, i__1;
     /* Local variables */
@@ -376,11 +378,13 @@ int zhpgvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, do
     {
         i__1 = -(*info);
         xerbla_("ZHPGVX", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Form a Cholesky factorization of B. */
@@ -388,6 +392,7 @@ int zhpgvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, do
     if (*info != 0)
     {
         *info = *n + *info;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Transform problem to standard eigenvalue problem and solve. */
@@ -445,6 +450,7 @@ int zhpgvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, do
             }
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHPGVX */
 }

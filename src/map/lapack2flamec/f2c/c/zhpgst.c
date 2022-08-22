@@ -111,6 +111,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int zhpgst_(integer *itype, char *uplo, integer *n, doublecomplex *ap, doublecomplex *bp, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhpgst inputs: itype %" FLA_IS ", uplo %c, n %" FLA_IS "",*itype, *uplo, *n);
     /* System generated locals */
     integer i__1, i__2, i__3, i__4;
     doublereal d__1, d__2;
@@ -174,6 +176,7 @@ int zhpgst_(integer *itype, char *uplo, integer *n, doublecomplex *ap, doublecom
     {
         i__1 = -(*info);
         xerbla_("ZHPGST", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*itype == 1)
@@ -341,6 +344,7 @@ int zhpgst_(integer *itype, char *uplo, integer *n, doublecomplex *ap, doublecom
             }
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHPGST */
 }

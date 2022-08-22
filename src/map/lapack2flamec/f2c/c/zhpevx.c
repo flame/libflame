@@ -228,6 +228,8 @@ if RANGE = 'V', the exact value of M */
 /* Subroutine */
 int zhpevx_(char *jobz, char *range, char *uplo, integer *n, doublecomplex *ap, doublereal *vl, doublereal *vu, integer *il, integer *iu, doublereal *abstol, integer *m, doublereal *w, doublecomplex *z__, integer *ldz, doublecomplex *work, doublereal * rwork, integer *iwork, integer *ifail, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhpevx inputs: jobz %c, range %c, uplo %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", m %" FLA_IS ", ldz %" FLA_IS "",*jobz, *range, *uplo, *n, *il, *iu, *m, *ldz);
     /* System generated locals */
     integer z_dim1, z_offset, i__1, i__2;
     doublereal d__1, d__2;
@@ -354,12 +356,14 @@ int zhpevx_(char *jobz, char *range, char *uplo, integer *n, doublecomplex *ap, 
     {
         i__1 = -(*info);
         xerbla_("ZHPEVX", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     *m = 0;
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -383,6 +387,7 @@ int zhpevx_(char *jobz, char *range, char *uplo, integer *n, doublecomplex *ap, 
             z__[i__1].r = 1.;
             z__[i__1].i = 0.; // , expr subst
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants. */
@@ -563,6 +568,7 @@ L20:
             /* L40: */
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHPEVX */
 }

@@ -156,6 +156,8 @@
 /* Subroutine */
 int zhfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, doublereal *alpha, doublecomplex *a, integer *lda, doublereal *beta, doublecomplex *c__)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhfrk inputs: transr %c, uplo %c, trans %c, n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS "",*transr, *uplo, *trans, *n, *k, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     doublecomplex z__1;
@@ -239,6 +241,7 @@ int zhfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, double
     {
         i__1 = -info;
         xerbla_("ZHFRK ", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible. */
@@ -246,6 +249,7 @@ int zhfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, double
     /* done (it is in ZHERK for example) and left in the general case. */
     if (*n == 0 || (*alpha == 0. || *k == 0) && *beta == 1.)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*alpha == 0. && *beta == 0.)
@@ -259,6 +263,7 @@ int zhfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, double
             c__[i__2].r = 0.;
             c__[i__2].i = 0.; // , expr subst
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     z__1.r = *alpha;
@@ -471,6 +476,7 @@ int zhfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, double
             }
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHFRK */
 }
