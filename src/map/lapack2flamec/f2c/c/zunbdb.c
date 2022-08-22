@@ -284,6 +284,8 @@ the routine */
 /* Subroutine */
 int zunbdb_(char *trans, char *signs, integer *m, integer *p, integer *q, doublecomplex *x11, integer *ldx11, doublecomplex *x12, integer *ldx12, doublecomplex *x21, integer *ldx21, doublecomplex * x22, integer *ldx22, doublereal *theta, doublereal *phi, doublecomplex *taup1, doublecomplex *taup2, doublecomplex *tauq1, doublecomplex *tauq2, doublecomplex *work, integer *lwork, integer * info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zunbdb inputs: trans %c, signs %c, m %" FLA_IS ", p %" FLA_IS ", q %" FLA_IS ", ldx11 %" FLA_IS ", ldx12 %" FLA_IS ", ldx21 %" FLA_IS ", ldx22 %" FLA_IS "",*trans, *signs, *m, *p, *q, *ldx11, *ldx12, *ldx21, *ldx22);
     /* System generated locals */
     integer x11_dim1, x11_offset, x12_dim1, x12_offset, x21_dim1, x21_offset, x22_dim1, x22_offset, i__1, i__2, i__3;
     doublereal d__1;
@@ -447,10 +449,12 @@ int zunbdb_(char *trans, char *signs, integer *m, integer *p, integer *q, double
     {
         i__1 = -(*info);
         xerbla_("xORBDB", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Handle column-major and row-major separately */
@@ -923,6 +927,7 @@ int zunbdb_(char *trans, char *signs, integer *m, integer *p, integer *q, double
             }
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZUNBDB */
 }

@@ -149,6 +149,8 @@ perturbed */
 /* Subroutine */
 int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublereal *scale, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztrsyl inputs: trana %c, tranb %c, isgn %" FLA_IS ", m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldc %" FLA_IS "",*trana, *tranb, *isgn, *m, *n, *lda, *ldb, *ldc);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, c_dim1, c_offset, i__1, i__2, i__3, i__4;
     doublereal d__1, d__2;
@@ -255,12 +257,14 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
     {
         i__1 = -(*info);
         xerbla_("ZTRSYL", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     *scale = 1.;
     if (*m == 0 || *n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Set constants to control overflow */
@@ -650,6 +654,7 @@ int ztrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dou
             /* L120: */
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTRSYL */
 }

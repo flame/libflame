@@ -198,6 +198,8 @@
 /* Subroutine */
 int ztpttf_(char *transr, char *uplo, integer *n, doublecomplex *ap, doublecomplex *arf, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztpttf inputs: transr %c, uplo %c, n %" FLA_IS "",*transr, *uplo, *n);
     /* System generated locals */
     integer i__1, i__2, i__3, i__4;
     doublecomplex z__1;
@@ -250,11 +252,13 @@ int ztpttf_(char *transr, char *uplo, integer *n, doublecomplex *ap, doublecompl
     {
         i__1 = -(*info);
         xerbla_("ZTPTTF", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -270,6 +274,7 @@ int ztpttf_(char *transr, char *uplo, integer *n, doublecomplex *ap, doublecompl
             arf[0].r = z__1.r;
             arf[0].i = z__1.i; // , expr subst
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Size of array ARF(0:NT-1) */
@@ -694,6 +699,7 @@ int ztpttf_(char *transr, char *uplo, integer *n, doublecomplex *ap, doublecompl
             }
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTPTTF */
 }

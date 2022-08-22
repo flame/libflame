@@ -135,6 +135,8 @@ static doublecomplex c_b2 =
 /* Subroutine */
 int ztrtrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztrtrs inputs: uplo %c, trans %c, diag %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*uplo, *trans, *diag, *n, *nrhs, *lda, *ldb);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2;
     /* Local variables */
@@ -205,11 +207,13 @@ int ztrtrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
     {
         i__1 = -(*info);
         xerbla_("ZTRTRS", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Check for singularity. */
@@ -223,6 +227,7 @@ int ztrtrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
             i__2 = *info + *info * a_dim1;
             if (a[i__2].r == 0. && a[i__2].i == 0.)
             {
+    AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             /* L10: */
@@ -231,6 +236,7 @@ int ztrtrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
     *info = 0;
     /* Solve A * x = b, A**T * x = b, or A**H * x = b. */
     ztrsm_("Left", uplo, trans, diag, n, nrhs, &c_b2, &a[a_offset], lda, &b[ b_offset], ldb);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTRTRS */
 }

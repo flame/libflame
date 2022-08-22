@@ -118,6 +118,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int ztrexc_(char *compq, integer *n, doublecomplex *t, integer *ldt, doublecomplex *q, integer *ldq, integer *ifst, integer * ilst, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztrexc inputs: compq %c, n %" FLA_IS ", ldt %" FLA_IS ", ldq %" FLA_IS ", ifst %" FLA_IS ", ilst %" FLA_IS "",*compq, *n, *ldt, *ldq, *ifst, *ilst);
     /* System generated locals */
     integer q_dim1, q_offset, t_dim1, t_offset, i__1, i__2, i__3;
     doublecomplex z__1;
@@ -190,11 +192,13 @@ int ztrexc_(char *compq, integer *n, doublecomplex *t, integer *ldt, doublecompl
     {
         i__1 = -(*info);
         xerbla_("ZTREXC", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n <= 1 || *ifst == *ilst)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*ifst < *ilst)
@@ -251,6 +255,7 @@ int ztrexc_(char *compq, integer *n, doublecomplex *t, integer *ldt, doublecompl
         }
         /* L10: */
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTREXC */
 }
