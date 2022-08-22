@@ -147,6 +147,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int zlatzm_(char *side, integer *m, integer *n, doublecomplex *v, integer *incv, doublecomplex *tau, doublecomplex * c1, doublecomplex *c2, integer *ldc, doublecomplex *work)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlatzm inputs: side %c, m %" FLA_IS ", n %" FLA_IS ", incv %" FLA_IS ", ldc %" FLA_IS "",*side, *m, *n, *incv, *ldc);
     /* System generated locals */
     integer c1_dim1, c1_offset, c2_dim1, c2_offset, i__1;
     doublecomplex z__1;
@@ -184,6 +186,7 @@ int zlatzm_(char *side, integer *m, integer *n, doublecomplex *v, integer *incv,
     /* Function Body */
     if (min(*m,*n) == 0 || tau->r == 0. && tau->i == 0.)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (lsame_(side, "L"))
@@ -219,6 +222,7 @@ int zlatzm_(char *side, integer *m, integer *n, doublecomplex *v, integer *incv,
         z__1.i = -tau->i; // , expr subst
         zgerc_(m, &i__1, &z__1, &work[1], &c__1, &v[1], incv, &c2[c2_offset], ldc);
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLATZM */
 }
