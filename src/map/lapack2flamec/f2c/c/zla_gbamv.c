@@ -173,6 +173,8 @@
 /* Subroutine */
 int zla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku, doublereal *alpha, doublecomplex *ab, integer *ldab, doublecomplex *x, integer *incx, doublereal *beta, doublereal *y, integer *incy)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zla_gbamv inputs: trans %" FLA_IS ", m %" FLA_IS ", n %" FLA_IS ", kl %" FLA_IS ", ku %" FLA_IS ", ldab %" FLA_IS ", incx %" FLA_IS ", incy %" FLA_IS "", *trans, *m, *n, *kl, *ku, *ldab, *incx, *incy);
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4;
     doublereal d__1, d__2;
@@ -257,11 +259,13 @@ int zla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
     if (info != 0)
     {
         xerbla_("ZLA_GBAMV ", &info);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible. */
     if (*m == 0 || *n == 0 || *alpha == 0. && *beta == 1.)
     {
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Set LENX and LENY, the lengths of the vectors x and y, and set */
@@ -501,6 +505,7 @@ int zla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
             }
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLA_GBAMV */
 }

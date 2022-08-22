@@ -151,6 +151,8 @@ v(i+2:n) is stored on exit in AP, */
 /* Subroutine */
 int zhptrd_(char *uplo, integer *n, doublecomplex *ap, doublereal *d__, doublereal *e, doublecomplex *tau, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhptrd inputs: uplo %c, n %" FLA_IS "",*uplo, *n);
     /* System generated locals */
     integer i__1, i__2, i__3;
     doublereal d__1;
@@ -208,11 +210,13 @@ int zhptrd_(char *uplo, integer *n, doublecomplex *ap, doublereal *d__, doublere
     {
         i__1 = -(*info);
         xerbla_("ZHPTRD", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n <= 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (upper)
@@ -346,6 +350,7 @@ int zhptrd_(char *uplo, integer *n, doublecomplex *ap, doublereal *d__, doublere
         i__2 = ii;
         d__[i__1] = ap[i__2].r;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHPTRD */
 }

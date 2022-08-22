@@ -300,6 +300,8 @@ static integer c__49 = 49;
 /* Subroutine */
 int zhseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, doublecomplex *h__, integer *ldh, doublecomplex *w, doublecomplex *z__, integer *ldz, doublecomplex *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhseqr inputs: job %c, compz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", ldh %" FLA_IS ", ldz %" FLA_IS ", lwork %" FLA_IS "",*job, *compz, *n, *ilo, *ihi, *ldh, *ldz, *lwork);
     /* System generated locals */
     integer h_dim1, h_offset, z_dim1, z_offset, i__1, i__2;
     doublereal d__1, d__2, d__3;
@@ -411,12 +413,14 @@ int zhseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, doub
         /* ==== Quick return in case of invalid argument. ==== */
         i__1 = -(*info);
         xerbla_("ZHSEQR", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*n == 0)
     {
         /* ==== Quick return in case N = 0;
         nothing to do. ==== */
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
@@ -433,6 +437,7 @@ int zhseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, doub
         z__1.i = 0.; // , expr subst
         work[1].r = z__1.r;
         work[1].i = z__1.i; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else
@@ -462,6 +467,7 @@ int zhseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, doub
             i__2 = *ilo + *ilo * h_dim1;
             w[i__1].r = h__[i__2].r;
             w[i__1].i = h__[i__2].i; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         /* ==== ZLAHQR/ZLAQR0 crossover point ==== */
@@ -527,6 +533,7 @@ int zhseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, doub
         work[1].i = z__1.i; // , expr subst
     }
     /* ==== End of ZHSEQR ==== */
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zhseqr_ */

@@ -149,6 +149,8 @@ row i of the matrix was interchanged */
 /* ===================================================================== */
 doublereal zla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, doublecomplex *ab, integer *ldab, doublecomplex *afb, integer *ldafb, integer *ipiv, doublereal *c__, logical *capply, integer *info, doublecomplex *work, doublereal *rwork)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zla_gbrcond_c inputs: trans %c, n %" FLA_IS ", kl %" FLA_IS ", ku %" FLA_IS ", ldab %" FLA_IS ", ldafb %" FLA_IS ", capply %" FLA_IS "", *trans, *n, *kl, *ku, *ldab, *ldafb, *capply);
     /* System generated locals */
     integer ab_dim1, ab_offset, afb_dim1, afb_offset, i__1, i__2, i__3, i__4;
     doublereal ret_val, d__1, d__2;
@@ -234,6 +236,7 @@ doublereal zla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, dou
     {
         i__1 = -(*info);
         xerbla_("ZLA_GBRCOND_C", &i__1);
+        AOCL_DTL_TRACE_LOG_EXIT
         return ret_val;
     }
     /* Compute norm of op(A)*op2(C). */
@@ -328,10 +331,12 @@ doublereal zla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, dou
     if (*n == 0)
     {
         ret_val = 1.;
+        AOCL_DTL_TRACE_LOG_EXIT
         return ret_val;
     }
     else if (anorm == 0.)
     {
+        AOCL_DTL_TRACE_LOG_EXIT
         return ret_val;
     }
     /* Estimate the norm of inv(op(A)). */
@@ -432,6 +437,7 @@ L10:
     {
         ret_val = 1. / ainvnm;
     }
-    return ret_val;
+        AOCL_DTL_TRACE_LOG_EXIT
+        return ret_val;
 }
 /* zla_gbrcond_c__ */

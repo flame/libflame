@@ -246,6 +246,8 @@ here the magnitude of a complex number */
 /* Subroutine */
 int zhsein_(char *side, char *eigsrc, char *initv, logical * select, integer *n, doublecomplex *h__, integer *ldh, doublecomplex * w, doublecomplex *vl, integer *ldvl, doublecomplex *vr, integer *ldvr, integer *mm, integer *m, doublecomplex *work, doublereal *rwork, integer *ifaill, integer *ifailr, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhsein inputs: side %c, eigsrc %c, initv %c, n %" FLA_IS ", ldh %" FLA_IS ", ldvl %" FLA_IS ", ldvr %" FLA_IS ", mm %" FLA_IS "",*side, *eigsrc, *initv, *n, *ldh, *ldvl, *ldvr, *mm);
     /* System generated locals */
     integer h_dim1, h_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__2, i__3;
     doublereal d__1, d__2;
@@ -368,11 +370,13 @@ int zhsein_(char *side, char *eigsrc, char *initv, logical * select, integer *n,
     {
         i__1 = -(*info);
         xerbla_("ZHSEIN", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible. */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Set machine-dependent constants. */
@@ -451,6 +455,7 @@ L50:
                 if (disnan_(&hnorm))
                 {
                     *info = -6;
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 else if (hnorm > 0.)
@@ -545,6 +550,7 @@ L60:
         }
         /* L100: */
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHSEIN */
 }
