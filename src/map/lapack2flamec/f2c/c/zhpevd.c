@@ -197,6 +197,8 @@ i */
 /* Subroutine */
 int zhpevd_(char *jobz, char *uplo, integer *n, doublecomplex *ap, doublereal *w, doublecomplex *z__, integer *ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * lrwork, integer *iwork, integer *liwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhpevd inputs: jobz %c, uplo %c, n %" FLA_IS ", ldz %" FLA_IS "",*jobz, *uplo, *n, *ldz);
     /* System generated locals */
     integer z_dim1, z_offset, i__1;
     doublereal d__1;
@@ -329,15 +331,18 @@ int zhpevd_(char *jobz, char *uplo, integer *n, doublecomplex *ap, doublereal *w
     {
         i__1 = -(*info);
         xerbla_("ZHPEVD", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -349,6 +354,7 @@ int zhpevd_(char *jobz, char *uplo, integer *n, doublecomplex *ap, doublereal *w
             z__[i__1].r = 1.;
             z__[i__1].i = 0.; // , expr subst
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants. */
@@ -413,6 +419,7 @@ int zhpevd_(char *jobz, char *uplo, integer *n, doublecomplex *ap, doublereal *w
     work[1].i = 0.; // , expr subst
     rwork[1] = (doublereal) lrwmin;
     iwork[1] = liwmin;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHPEVD */
 }

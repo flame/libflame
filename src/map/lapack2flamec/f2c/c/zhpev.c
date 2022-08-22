@@ -131,6 +131,8 @@ i */
 /* Subroutine */
 int zhpev_(char *jobz, char *uplo, integer *n, doublecomplex *ap, doublereal *w, doublecomplex *z__, integer *ldz, doublecomplex * work, doublereal *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhpev inputs: jobz %c, uplo %c, n %" FLA_IS ", ldz %" FLA_IS "",*jobz, *uplo, *n, *ldz);
     /* System generated locals */
     integer z_dim1, z_offset, i__1;
     doublereal d__1;
@@ -214,11 +216,13 @@ int zhpev_(char *jobz, char *uplo, integer *n, doublecomplex *ap, doublereal *w,
     {
         i__1 = -(*info);
         xerbla_("ZHPEV ", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -231,6 +235,7 @@ int zhpev_(char *jobz, char *uplo, integer *n, doublecomplex *ap, doublereal *w,
             z__[i__1].r = 1.;
             z__[i__1].i = 0.; // , expr subst
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants. */
@@ -289,6 +294,7 @@ int zhpev_(char *jobz, char *uplo, integer *n, doublecomplex *ap, doublereal *w,
         d__1 = 1. / sigma;
         dscal_(&imax, &d__1, &w[1], &c__1);
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHPEV */
 }

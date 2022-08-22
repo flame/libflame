@@ -229,6 +229,8 @@ the */
 /* Subroutine */
 int zhpgvd_(integer *itype, char *jobz, char *uplo, integer * n, doublecomplex *ap, doublecomplex *bp, doublereal *w, doublecomplex *z__, integer *ldz, doublecomplex *work, integer *lwork, doublereal * rwork, integer *lrwork, integer *iwork, integer *liwork, integer * info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhpgvd inputs: itype %" FLA_IS ", jobz %c, uplo %c, n %" FLA_IS ", ldz %" FLA_IS "",*itype, *jobz, *uplo, *n, *ldz);
     /* System generated locals */
     integer z_dim1, z_offset, i__1;
     doublereal d__1, d__2;
@@ -349,15 +351,18 @@ int zhpgvd_(integer *itype, char *jobz, char *uplo, integer * n, doublecomplex *
     {
         i__1 = -(*info);
         xerbla_("ZHPGVD", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Form a Cholesky factorization of B. */
@@ -365,6 +370,7 @@ int zhpgvd_(integer *itype, char *jobz, char *uplo, integer * n, doublecomplex *
     if (*info != 0)
     {
         *info = *n + *info;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Transform problem to standard eigenvalue problem and solve. */
@@ -438,6 +444,7 @@ int zhpgvd_(integer *itype, char *jobz, char *uplo, integer * n, doublecomplex *
     work[1].i = 0.; // , expr subst
     rwork[1] = (doublereal) lrwmin;
     iwork[1] = liwmin;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHPGVD */
 }
