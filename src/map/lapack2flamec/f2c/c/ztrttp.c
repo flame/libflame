@@ -94,6 +94,8 @@
 /* Subroutine */
 int ztrttp_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecomplex *ap, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztrttp inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*uplo, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
@@ -145,6 +147,7 @@ int ztrttp_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecomple
     {
         i__1 = -(*info);
         xerbla_("ZTRTTP", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (lower)
@@ -189,6 +192,7 @@ int ztrttp_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecomple
             }
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTRTTP */
 }

@@ -133,6 +133,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int ztzrqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *tau, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztzrqf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "",*m, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     doublecomplex z__1, z__2;
@@ -185,11 +187,13 @@ int ztzrqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     {
         i__1 = -(*info);
         xerbla_("ZTZRQF", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Perform the factorization. */
     if (*m == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*m == *n)
@@ -265,6 +269,7 @@ int ztzrqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
             /* L20: */
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTZRQF */
 }

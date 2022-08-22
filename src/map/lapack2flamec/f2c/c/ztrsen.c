@@ -262,6 +262,8 @@ the routine */
 /* Subroutine */
 int ztrsen_(char *job, char *compq, logical *select, integer *n, doublecomplex *t, integer *ldt, doublecomplex *q, integer *ldq, doublecomplex *w, integer *m, doublereal *s, doublereal *sep, doublecomplex *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztrsen inputs: job %c, compq %c, n %" FLA_IS ", ldt %" FLA_IS ", ldq %" FLA_IS ", m %" FLA_IS "",*job, *compq, *n, *ldt, *ldq, *m);
     /* System generated locals */
     integer q_dim1, q_offset, t_dim1, t_offset, i__1, i__2, i__3;
     /* Builtin functions */
@@ -391,10 +393,12 @@ int ztrsen_(char *job, char *compq, logical *select, integer *n, doublecomplex *
     {
         i__1 = -(*info);
         xerbla_("ZTRSEN", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -483,6 +487,7 @@ L40: /* Copy reordered eigenvalues to W. */
     }
     work[1].r = (doublereal) lwmin;
     work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTRSEN */
 }

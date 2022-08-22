@@ -244,6 +244,8 @@ v**H denotes the conjugate transpose of v, and norm(u) */
 /* Subroutine */
 int ztrsna_(char *job, char *howmny, logical *select, integer *n, doublecomplex *t, integer *ldt, doublecomplex *vl, integer *ldvl, doublecomplex *vr, integer *ldvr, doublereal *s, doublereal *sep, integer *mm, integer *m, doublecomplex *work, integer *ldwork, doublereal *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztrsna inputs: job %c, howmny %c, n %" FLA_IS ", ldt %" FLA_IS ", ldvl %" FLA_IS ", ldvr %" FLA_IS ", mm %" FLA_IS ", m %" FLA_IS "",*job, *howmny, *n, *ldt, *ldvl, *ldvr, *mm, *m);
     /* System generated locals */
     integer t_dim1, t_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, work_dim1, work_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal d__1, d__2;
@@ -388,11 +390,13 @@ int ztrsna_(char *job, char *howmny, logical *select, integer *n, doublecomplex 
     {
         i__1 = -(*info);
         xerbla_("ZTRSNA", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -401,6 +405,7 @@ int ztrsna_(char *job, char *howmny, logical *select, integer *n, doublecomplex 
         {
             if (! select[1])
             {
+    AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
         }
@@ -412,6 +417,7 @@ int ztrsna_(char *job, char *howmny, logical *select, integer *n, doublecomplex 
         {
             sep[1] = z_abs(&t[t_dim1 + 1]);
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants */
@@ -513,6 +519,7 @@ L40:
 L50:
         ;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTRSNA */
 }

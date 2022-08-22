@@ -115,6 +115,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int ztptri_(char *uplo, char *diag, integer *n, doublecomplex *ap, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztptri inputs: uplo %c, diag %c, n %" FLA_IS "",*uplo, *diag, *n);
     /* System generated locals */
     integer i__1, i__2;
     doublecomplex z__1;
@@ -172,6 +174,7 @@ int ztptri_(char *uplo, char *diag, integer *n, doublecomplex *ap, integer *info
     {
         i__1 = -(*info);
         xerbla_("ZTPTRI", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Check for singularity if non-unit. */
@@ -189,6 +192,7 @@ int ztptri_(char *uplo, char *diag, integer *n, doublecomplex *ap, integer *info
                 i__2 = jj;
                 if (ap[i__2].r == 0. && ap[i__2].i == 0.)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 /* L10: */
@@ -205,6 +209,7 @@ int ztptri_(char *uplo, char *diag, integer *n, doublecomplex *ap, integer *info
                 i__2 = jj;
                 if (ap[i__2].r == 0. && ap[i__2].i == 0.)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 jj = jj + *n - *info + 1;
@@ -290,6 +295,7 @@ int ztptri_(char *uplo, char *diag, integer *n, doublecomplex *ap, integer *info
             /* L40: */
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTPTRI */
 }

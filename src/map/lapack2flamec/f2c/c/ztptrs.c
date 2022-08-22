@@ -123,6 +123,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int ztptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doublecomplex *ap, doublecomplex *b, integer *ldb, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztptrs inputs: uplo %c, trans %c, diag %c, n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS "",*uplo, *trans, *diag, *n, *nrhs, *ldb);
     /* System generated locals */
     integer b_dim1, b_offset, i__1, i__2;
     /* Local variables */
@@ -190,11 +192,13 @@ int ztptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
     {
         i__1 = -(*info);
         xerbla_("ZTPTRS", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Check for singularity. */
@@ -211,6 +215,7 @@ int ztptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
                 i__2 = jc + *info - 1;
                 if (ap[i__2].r == 0. && ap[i__2].i == 0.)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 jc += *info;
@@ -228,6 +233,7 @@ int ztptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
                 i__2 = jc;
                 if (ap[i__2].r == 0. && ap[i__2].i == 0.)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 jc = jc + *n - *info + 1;
@@ -245,6 +251,7 @@ int ztptrs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
         ztpsv_(uplo, trans, diag, n, &ap[1], &b[j * b_dim1 + 1], &c__1);
         /* L30: */
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTPTRS */
 }

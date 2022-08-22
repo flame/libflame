@@ -260,6 +260,8 @@ if SIDE = 'R', A is of size M-by-K, */
 /* Subroutine */
 int ztprfb_(char *side, char *trans, char *direct, char * storev, integer *m, integer *n, integer *k, integer *l, doublecomplex *v, integer *ldv, doublecomplex *t, integer *ldt, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer *ldwork)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztprfb inputs: side %c, trans %c, direct %c, storev %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", l %" FLA_IS ", ldv %" FLA_IS ", ldt %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*side, *trans, *direct, *storev, *m, *n, *k, *l, *ldv, *ldt, *lda, *ldb);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, t_dim1, t_offset, v_dim1, v_offset, work_dim1, work_offset, i__1, i__2, i__3, i__4, i__5;
     doublecomplex z__1;
@@ -312,6 +314,7 @@ int ztprfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
     /* Function Body */
     if (*m <= 0 || *n <= 0 || *k <= 0 || *l < 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (lsame_(storev, "C"))
@@ -1175,6 +1178,7 @@ int ztprfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
             }
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTPRFB */
 }

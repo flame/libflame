@@ -173,6 +173,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int ztrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *x, integer *ldx, doublereal *ferr, doublereal *berr, doublecomplex *work, doublereal *rwork, integer * info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztrrfs inputs: uplo %c, trans %c, diag %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*uplo, *trans, *diag, *n, *nrhs, *lda, *ldb, *ldx);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, x_dim1, x_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal d__1, d__2, d__3, d__4;
@@ -281,6 +283,7 @@ int ztrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
     {
         i__1 = -(*info);
         xerbla_("ZTRRFS", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -295,6 +298,7 @@ int ztrrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, doub
             berr[j] = 0.;
             /* L10: */
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (notran)
@@ -661,6 +665,7 @@ L210:
         }
         /* L250: */
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTRRFS */
 }
