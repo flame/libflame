@@ -109,6 +109,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int zlarfx_(char *side, integer *m, integer *n, doublecomplex *v, doublecomplex *tau, doublecomplex *c__, integer * ldc, doublecomplex *work)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlarfx inputs: side %c, m %" FLA_IS ", n %" FLA_IS ", ldc %" FLA_IS "",*side, *m, *n, *ldc);
     /* System generated locals */
     integer c_dim1, c_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7, i__8, i__9, i__10, i__11;
     doublecomplex z__1, z__2, z__3, z__4, z__5, z__6, z__7, z__8, z__9, z__10, z__11, z__12, z__13, z__14, z__15, z__16, z__17, z__18, z__19;
@@ -149,6 +151,7 @@ int zlarfx_(char *side, integer *m, integer *n, doublecomplex *v, doublecomplex 
     /* Function Body */
     if (tau->r == 0. && tau->i == 0.)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (lsame_(side, "L"))
@@ -2636,6 +2639,7 @@ L390: /* Special code for 10 x 10 Householder */
         goto L410;
     }
 L410:
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLARFX */
 }

@@ -110,6 +110,8 @@
 /* Subroutine */
 int zlargv_(integer *n, doublecomplex *x, integer *incx, doublecomplex *y, integer *incy, doublereal *c__, integer *incc)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlargv inputs: n %" FLA_IS ", incx %" FLA_IS ", incy %" FLA_IS ", incc %" FLA_IS "",*n, *incx, *incy, *incc);
     /* System generated locals */
     integer i__1, i__2;
     doublereal d__1, d__2, d__3, d__4, d__5, d__6, d__7, d__8, d__9, d__10;
@@ -422,6 +424,7 @@ L50:
         ix += *incx;
         /* L60: */
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLARGV */
 }

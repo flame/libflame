@@ -101,6 +101,8 @@ the elements of y are assumed to be real. */
 /* Subroutine */
 int zlar2v_(integer *n, doublecomplex *x, doublecomplex *y, doublecomplex *z__, integer *incx, doublereal *c__, doublecomplex *s, integer *incc)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlar2v inputs: n %" FLA_IS ", incx %" FLA_IS ", incc %" FLA_IS "",*n, *incx, *incc);
     /* System generated locals */
     integer i__1, i__2;
     doublereal d__1;
@@ -208,6 +210,7 @@ int zlar2v_(integer *n, doublecomplex *x, doublecomplex *y, doublecomplex *z__, 
         ic += *incc;
         /* L10: */
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLAR2V */
 }

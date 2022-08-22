@@ -386,6 +386,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int zlarfb_gett_(char *ident, integer *m, integer *n, integer *k, doublecomplex *t, integer *ldt, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer * ldwork)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlarfb_gett inputs: ident %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", ldt %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "", *ident, *m, *n, *k, *ldt, *lda, *ldb);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, t_dim1, t_offset, work_dim1, work_offset, i__1, i__2, i__3, i__4, i__5;
     doublecomplex z__1;
@@ -429,6 +431,7 @@ int zlarfb_gett_(char *ident, integer *m, integer *n, integer *k, doublecomplex 
     /* Function Body */
     if (*m < 0 || *n <= 0 || *k == 0 || *k > *n)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     lnotident = ! lsame_(ident, "I");
@@ -611,6 +614,7 @@ int zlarfb_gett_(char *ident, integer *m, integer *n, integer *k, doublecomplex 
             a[i__3].i = z__1.i; // , expr subst
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLARFB_GETT */
 }

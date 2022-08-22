@@ -232,6 +232,8 @@ the routine */
 /* Subroutine */
 int zlaqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, integer *ns, integer * nd, doublecomplex *alpha, doublecomplex *beta, doublecomplex *qc, integer *ldqc, doublecomplex *zc, integer *ldzc, doublecomplex *work, integer *lwork, doublereal *rwork, integer *rec, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlaqz2 inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", nw %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", ldqc %" FLA_IS ", ldzc %" FLA_IS ", rec %" FLA_IS "",*n, *ilo, *ihi, *nw, *lda, *ldb, *ldq, *ldz, *ldqc, *ldzc, *rec);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, qc_dim1, qc_offset, zc_dim1, zc_offset, i__1, i__2, i__3, i__4;
     doublereal d__1, d__2;
@@ -333,6 +335,7 @@ int zlaqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
         /* workspace query, quick return */
         work[1].r = (doublereal) lworkreq;
         work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*lwork < lworkreq)
@@ -343,6 +346,7 @@ int zlaqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     {
         i__1 = -(*info);
         xerbla_("ZLAQZ2", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants */
@@ -403,6 +407,7 @@ int zlaqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
         /* Computing 2nd power */
         i__1 = jw;
         zlacpy_("ALL", &jw, &jw, &work[i__1 * i__1 + 1], &jw, &b[kwtop + kwtop * b_dim1], ldb);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Deflation detection loop */
@@ -573,6 +578,7 @@ int zlaqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
         zgemm_("N", "N", n, &jw, &jw, &c_b2, &z__[kwtop * z_dim1 + 1], ldz, & zc[zc_offset], ldzc, &c_b1, &work[1], n) ;
         zlacpy_("ALL", n, &jw, &work[1], n, &z__[kwtop * z_dim1 + 1], ldz);
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zlaqz2_ */
