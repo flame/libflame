@@ -95,6 +95,8 @@
 /* Subroutine */
 int zlaqr1_(integer *n, doublecomplex *h__, integer *ldh, doublecomplex *s1, doublecomplex *s2, doublecomplex *v)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlaqr1 inputs: n %" FLA_IS ", ldh %" FLA_IS "",*n, *ldh);
     /* System generated locals */
     integer h_dim1, h_offset, i__1, i__2, i__3, i__4;
     doublereal d__1, d__2, d__3, d__4, d__5, d__6;
@@ -133,6 +135,7 @@ int zlaqr1_(integer *n, doublecomplex *h__, integer *ldh, doublecomplex *s1, dou
     /* Function Body */
     if (*n != 2 && *n != 3)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 2)
@@ -278,6 +281,7 @@ int zlaqr1_(integer *n, doublecomplex *h__, integer *ldh, doublecomplex *s1, dou
             v[3].i = z__1.i; // , expr subst
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zlaqr1_ */

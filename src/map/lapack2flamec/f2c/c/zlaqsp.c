@@ -114,6 +114,8 @@
 /* Subroutine */
 int zlaqsp_(char *uplo, integer *n, doublecomplex *ap, doublereal *s, doublereal *scond, doublereal *amax, char *equed)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlaqsp inputs: uplo %c, n %" FLA_IS "",*uplo, *n);
     /* System generated locals */
     integer i__1, i__2, i__3, i__4;
     doublereal d__1;
@@ -148,6 +150,7 @@ int zlaqsp_(char *uplo, integer *n, doublecomplex *ap, doublereal *s, doublereal
     if (*n <= 0)
     {
         *(unsigned char *)equed = 'N';
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize LARGE and SMALL. */
@@ -219,6 +222,7 @@ int zlaqsp_(char *uplo, integer *n, doublecomplex *ap, doublereal *s, doublereal
         }
         *(unsigned char *)equed = 'Y';
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLAQSP */
 }

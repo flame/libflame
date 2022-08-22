@@ -269,6 +269,8 @@ ZLAQR3 */
 /* Subroutine */
 int zlaqr3_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *kbot, integer *nw, doublecomplex *h__, integer *ldh, integer *iloz, integer *ihiz, doublecomplex *z__, integer *ldz, integer *ns, integer *nd, doublecomplex *sh, doublecomplex *v, integer *ldv, integer *nh, doublecomplex *t, integer *ldt, integer *nv, doublecomplex *wv, integer *ldwv, doublecomplex *work, integer *lwork)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlaqr3 inputs: n %" FLA_IS ", ktop %" FLA_IS ", kbot %" FLA_IS ", nw %" FLA_IS ", ldh %" FLA_IS ", iloz %" FLA_IS ", ihiz %" FLA_IS ", ldz %" FLA_IS ", ldv %" FLA_IS ", nh %" FLA_IS ", ldt %" FLA_IS ", nv %" FLA_IS ", ldwv %" FLA_IS "",*n, *ktop, *kbot, *nw, *ldh, *iloz, *ihiz, *ldz, *ldv, *nh, *ldt, *nv, *ldwv);
     /* System generated locals */
     integer h_dim1, h_offset, t_dim1, t_offset, v_dim1, v_offset, wv_dim1, wv_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4;
     doublereal d__1, d__2, d__3, d__4, d__5, d__6;
@@ -386,6 +388,7 @@ int zlaqr3_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
         z__1.i = 0.; // , expr subst
         work[1].r = z__1.r;
         work[1].i = z__1.i; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* ==== Nothing to do ... */
@@ -396,11 +399,13 @@ int zlaqr3_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
     work[1].i = 0.; // , expr subst
     if (*ktop > *kbot)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* ... nor for an empty deflation window. ==== */
     if (*nw < 1)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* ==== Machine constants ==== */
@@ -452,6 +457,7 @@ int zlaqr3_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
         }
         work[1].r = 1.;
         work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* ==== Convert to spike-triangular form. (In case of a */
@@ -686,6 +692,7 @@ int zlaqr3_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
     work[1].r = z__1.r;
     work[1].i = z__1.i; // , expr subst
     /* ==== End of ZLAQR3 ==== */
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zlaqr3_ */
