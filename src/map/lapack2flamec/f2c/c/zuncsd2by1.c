@@ -246,6 +246,8 @@ the routine */
 /* Subroutine */
 int zuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, integer *q, doublecomplex *x11, integer * ldx11, doublecomplex *x21, integer *ldx21, doublereal *theta, doublecomplex *u1, integer *ldu1, doublecomplex *u2, integer *ldu2, doublecomplex *v1t, integer *ldv1t, doublecomplex *work, integer * lwork, doublereal *rwork, integer *lrwork, integer *iwork, integer * info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zuncsd2by1 inputs: jobu1 %c, jobu2 %c, jobv1t %c, m %" FLA_IS ", p %" FLA_IS ", q %" FLA_IS ", ldx11 %" FLA_IS ", ldx21 %" FLA_IS ", ldu1 %" FLA_IS ", ldu2 %" FLA_IS ", ldv1t %" FLA_IS ", lwork %" FLA_IS ", lrwork %" FLA_IS "", *jobu1, *jobu2, *jobv1t, *m, *p, *q, *ldx11, *ldx21, *ldu1, *ldu2, *ldv1t, *lwork, *lrwork);
     /* System generated locals */
     integer u1_dim1, u1_offset, u2_dim1, u2_offset, v1t_dim1, v1t_offset, x11_dim1, x11_offset, x21_dim1, x21_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -644,10 +646,12 @@ int zuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
     {
         i__1 = -(*info);
         xerbla_("ZUNCSD2BY1", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     lorgqr = *lwork - iorgqr + 1;
@@ -956,6 +960,7 @@ int zuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             }
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZUNCSD2BY1 */
 }

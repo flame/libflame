@@ -207,6 +207,8 @@ the routine */
 /* Subroutine */
 int zunbdb4_(integer *m, integer *p, integer *q, doublecomplex *x11, integer *ldx11, doublecomplex *x21, integer * ldx21, doublereal *theta, doublereal *phi, doublecomplex *taup1, doublecomplex *taup2, doublecomplex *tauq1, doublecomplex *phantom, doublecomplex *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zunbdb4 inputs: m %" FLA_IS ", p %" FLA_IS ", q %" FLA_IS ", ldx11 %" FLA_IS ", ldx21 %" FLA_IS ", lwork %" FLA_IS "", *m, *p, *q, *ldx11, *ldx21, *lwork);
     /* System generated locals */
     integer x11_dim1, x11_offset, x21_dim1, x21_offset, i__1, i__2, i__3, i__4;
     doublereal d__1, d__2;
@@ -322,10 +324,12 @@ int zunbdb4_(integer *m, integer *p, integer *q, doublecomplex *x11, integer *ld
     {
         i__1 = -(*info);
         xerbla_("ZUNBDB4", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Reduce columns 1, ..., M-Q of X11 and X21 */
@@ -468,6 +472,7 @@ int zunbdb4_(integer *m, integer *p, integer *q, doublecomplex *x11, integer *ld
         i__2 = *q - i__ + 1;
         zlacgv_(&i__2, &x21[*m - *q + i__ - *p + i__ * x21_dim1], ldx21);
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZUNBDB4 */
 }
