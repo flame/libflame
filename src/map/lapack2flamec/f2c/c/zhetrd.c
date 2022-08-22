@@ -191,6 +191,8 @@ v(i+2:n) is stored on exit in A(i+2:n,i), */
 /* Subroutine */
 int zhetrd_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublereal *d__, doublereal *e, doublecomplex *tau, doublecomplex *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhetrd inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*uplo, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
     doublecomplex z__1;
@@ -267,10 +269,12 @@ int zhetrd_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublereal *
     {
         i__1 = -(*info);
         xerbla_("ZHETRD", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -278,6 +282,7 @@ int zhetrd_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublereal *
     {
         work[1].r = 1.;
         work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     nx = *n;
@@ -406,6 +411,7 @@ int zhetrd_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublereal *
     }
     work[1].r = (doublereal) lwkopt;
     work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHETRD */
 }
