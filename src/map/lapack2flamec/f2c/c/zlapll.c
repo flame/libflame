@@ -88,6 +88,8 @@
 /* Subroutine */
 int zlapll_(integer *n, doublecomplex *x, integer *incx, doublecomplex *y, integer *incy, doublereal *ssmin)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlapll inputs: n %" FLA_IS ", incx %" FLA_IS ", incy %" FLA_IS "", *n, *incx, *incy);
     /* System generated locals */
     integer i__1;
     doublereal d__1, d__2, d__3;
@@ -132,6 +134,7 @@ int zlapll_(integer *n, doublecomplex *x, integer *incx, doublecomplex *y, integ
     if (*n <= 1)
     {
         *ssmin = 0.;
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Compute the QR factorization of the N-by-2 matrix ( X Y ) */
@@ -161,6 +164,7 @@ int zlapll_(integer *n, doublecomplex *x, integer *incx, doublecomplex *y, integ
     d__2 = z_abs(&a12);
     d__3 = z_abs(&a22);
     dlas2_(&d__1, &d__2, &d__3, ssmin, &ssmax);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLAPLL */
 }

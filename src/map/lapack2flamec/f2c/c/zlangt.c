@@ -95,12 +95,9 @@ static integer c__1 = 1;
 /* ===================================================================== */
 doublereal zlangt_(char *norm, integer *n, doublecomplex *dl, doublecomplex * d__, doublecomplex *du)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zlangt inputs: norm %c, n %d",*norm, *n);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlangt inputs: norm %c, n %" FLA_IS "",*norm, *n);
+
     /* System generated locals */
     integer i__1;
     doublereal ret_val, d__1;
@@ -244,7 +241,7 @@ doublereal zlangt_(char *norm, integer *n, doublecomplex *dl, doublecomplex * d_
         anorm = scale * sqrt(sum);
     }
     ret_val = anorm;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return ret_val;
     /* End of ZLANGT */
 }
