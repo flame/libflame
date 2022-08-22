@@ -185,6 +185,8 @@ Computing Eigenspaces with Specified */
 /* Subroutine */
 int ztgex2_(logical *wantq, logical *wantz, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, integer *j1, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztgex2 inputs: n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", j1 %" FLA_IS "",*n, *lda, *ldb, *ldq, *ldz, *j1);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2, i__3;
     doublereal d__1;
@@ -256,6 +258,7 @@ int ztgex2_(logical *wantq, logical *wantz, integer *n, doublecomplex *a, intege
     /* Quick return if possible */
     if (*n <= 1)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     m = 2;
@@ -426,10 +429,12 @@ int ztgex2_(logical *wantq, logical *wantz, integer *n, doublecomplex *a, intege
         zrot_(n, &q[*j1 * q_dim1 + 1], &c__1, &q[(*j1 + 1) * q_dim1 + 1], & c__1, &cq, &z__1);
     }
     /* Exit with INFO = 0 if swap was successfully performed. */
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* Exit with INFO = 1 if swap was rejected. */
 L20:
     *info = 1;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTGEX2 */
 }

@@ -178,6 +178,8 @@ that is, */
 /* Subroutine */
 int ztpqrt_(integer *m, integer *n, integer *l, integer *nb, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *t, integer *ldt, doublecomplex *work, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztpqrt inputs: m %" FLA_IS ", n %" FLA_IS ", l %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldt %" FLA_IS "",*m, *n, *l, *nb, *lda, *ldb, *ldt);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, t_dim1, t_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -245,11 +247,13 @@ int ztpqrt_(integer *m, integer *n, integer *l, integer *nb, doublecomplex *a, i
     {
         i__1 = -(*info);
         xerbla_("ZTPQRT", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     i__1 = *n;
@@ -281,6 +285,7 @@ int ztpqrt_(integer *m, integer *n, integer *l, integer *nb, doublecomplex *a, i
             ztprfb_("L", "C", "F", "C", &mb, &i__3, &ib, &lb, &b[i__ * b_dim1 + 1], ldb, &t[i__ * t_dim1 + 1], ldt, &a[i__ + (i__ + ib) * a_dim1], lda, &b[(i__ + ib) * b_dim1 + 1], ldb, &work[1], &ib);
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTPQRT */
 }

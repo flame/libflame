@@ -193,6 +193,8 @@ Computing Eigenspaces with Specified */
 /* Subroutine */
 int ztgexc_(logical *wantq, logical *wantz, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, integer *ifst, integer *ilst, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztgexc inputs: n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", ifst %" FLA_IS ", ilst %" FLA_IS "",*n, *lda, *ldb, *ldq, *ldz, *ifst, *ilst);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1;
     /* Local variables */
@@ -263,15 +265,18 @@ int ztgexc_(logical *wantq, logical *wantz, integer *n, doublecomplex *a, intege
     {
         i__1 = -(*info);
         xerbla_("ZTGEXC", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n <= 1)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*ifst == *ilst)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*ifst < *ilst)
@@ -282,6 +287,7 @@ L10: /* Swap with next one below */
         if (*info != 0)
         {
             *ilst = here;
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         ++here;
@@ -299,6 +305,7 @@ L20: /* Swap with next one above */
         if (*info != 0)
         {
             *ilst = here;
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         --here;
@@ -309,6 +316,7 @@ L20: /* Swap with next one above */
         ++here;
     }
     *ilst = here;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTGEXC */
 }

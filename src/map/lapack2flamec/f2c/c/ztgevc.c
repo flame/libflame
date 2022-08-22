@@ -225,6 +225,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex *s, integer *lds, doublecomplex *p, integer *ldp, doublecomplex *vl, integer *ldvl, doublecomplex *vr, integer * ldvr, integer *mm, integer *m, doublecomplex *work, doublereal *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztgevc inputs: side %c, howmny %c, n %" FLA_IS ", lds %" FLA_IS ", ldp %" FLA_IS ", ldvl %" FLA_IS ", ldvr %" FLA_IS ", mm %" FLA_IS ", m %" FLA_IS "",*side, *howmny, *n, *lds, *ldp, *ldvl, *ldvr, *mm, *m);
     /* System generated locals */
     integer p_dim1, p_offset, s_dim1, s_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal d__1, d__2, d__3, d__4, d__5, d__6;
@@ -383,6 +385,7 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
     {
         i__1 = -(*info);
         xerbla_("ZTGEVC", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Count the number of eigenvectors */
@@ -438,12 +441,14 @@ int ztgevc_(char *side, char *howmny, logical *select, integer *n, doublecomplex
     {
         i__1 = -(*info);
         xerbla_("ZTGEVC", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     *m = im;
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Machine Constants */
@@ -1153,6 +1158,7 @@ L250:
             ;
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTGEVC */
 }

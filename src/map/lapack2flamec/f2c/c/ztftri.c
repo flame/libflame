@@ -222,6 +222,8 @@ If UPLO = 'L' the RFP A contains the nt */
 /* Subroutine */
 int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztftri inputs: transr %c, uplo %c, diag %c, n %" FLA_IS "",*transr, *uplo, *diag, *n);
     /* System generated locals */
     integer i__1, i__2;
     doublecomplex z__1;
@@ -279,11 +281,13 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
     {
         i__1 = -(*info);
         xerbla_("ZTFTRI", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* If N is odd, set NISODD = .TRUE. */
@@ -323,6 +327,7 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
                 ztrtri_("L", diag, &n1, a, n, info);
                 if (*info > 0)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 z__1.r = -1.;
@@ -335,6 +340,7 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
                 }
                 if (*info > 0)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 ztrmm_("L", "U", "C", diag, &n2, &n1, &c_b1, &a[*n], n, &a[n1], n);
@@ -347,6 +353,7 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
                 ztrtri_("L", diag, &n1, &a[n2], n, info) ;
                 if (*info > 0)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 z__1.r = -1.;
@@ -359,6 +366,7 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
                 }
                 if (*info > 0)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 ztrmm_("R", "U", "N", diag, &n1, &n2, &c_b1, &a[n1], n, a, n);
@@ -374,6 +382,7 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
                 ztrtri_("U", diag, &n1, a, &n1, info);
                 if (*info > 0)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 z__1.r = -1.;
@@ -386,6 +395,7 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
                 }
                 if (*info > 0)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 ztrmm_("R", "L", "C", diag, &n1, &n2, &c_b1, &a[1], &n1, &a[ n1 * n1], &n1);
@@ -397,6 +407,7 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
                 ztrtri_("U", diag, &n1, &a[n2 * n2], &n2, info);
                 if (*info > 0)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 z__1.r = -1.;
@@ -409,6 +420,7 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
                 }
                 if (*info > 0)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 ztrmm_("L", "L", "N", diag, &n2, &n1, &c_b1, &a[n1 * n2], &n2, a, &n2);
@@ -430,6 +442,7 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
                 ztrtri_("L", diag, &k, &a[1], &i__1, info);
                 if (*info > 0)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 z__1.r = -1.;
@@ -445,6 +458,7 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
                 }
                 if (*info > 0)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 i__1 = *n + 1;
@@ -460,6 +474,7 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
                 ztrtri_("L", diag, &k, &a[k + 1], &i__1, info);
                 if (*info > 0)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 z__1.r = -1.;
@@ -475,6 +490,7 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
                 }
                 if (*info > 0)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 i__1 = *n + 1;
@@ -494,6 +510,7 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
                 ztrtri_("U", diag, &k, &a[k], &k, info);
                 if (*info > 0)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 z__1.r = -1.;
@@ -506,6 +523,7 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
                 }
                 if (*info > 0)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 ztrmm_("R", "L", "C", diag, &k, &k, &c_b1, a, &k, &a[k * (k + 1)], &k);
@@ -519,6 +537,7 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
                 ztrtri_("U", diag, &k, &a[k * (k + 1)], &k, info);
                 if (*info > 0)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 z__1.r = -1.;
@@ -531,12 +550,14 @@ int ztftri_(char *transr, char *uplo, char *diag, integer *n, doublecomplex *a, 
                 }
                 if (*info > 0)
                 {
+    AOCL_DTL_TRACE_LOG_EXIT
                     return 0;
                 }
                 ztrmm_("L", "L", "N", diag, &k, &k, &c_b1, &a[k * k], &k, a, & k);
             }
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTFTRI */
 }

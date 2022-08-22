@@ -207,6 +207,8 @@
 /* Subroutine */
 int ztfttr_(char *transr, char *uplo, integer *n, doublecomplex *arf, doublecomplex *a, integer *lda, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztfttr inputs: transr %c, uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*transr, *uplo, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
     doublecomplex z__1;
@@ -269,6 +271,7 @@ int ztfttr_(char *transr, char *uplo, integer *n, doublecomplex *arf, doublecomp
     {
         i__1 = -(*info);
         xerbla_("ZTFTTR", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -288,6 +291,7 @@ int ztfttr_(char *transr, char *uplo, integer *n, doublecomplex *arf, doublecomp
                 a[0].i = z__1.i; // , expr subst
             }
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Size of array ARF(1:2,0:nt-1) */
@@ -729,6 +733,7 @@ int ztfttr_(char *transr, char *uplo, integer *n, doublecomplex *arf, doublecomp
             }
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTFTTR */
 }

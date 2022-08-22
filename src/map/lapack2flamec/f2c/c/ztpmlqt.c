@@ -210,6 +210,8 @@ V2 is lower trapezoidal, consisting of the first L */
 /* Subroutine */
 int ztpmlqt_(char *side, char *trans, integer *m, integer *n, integer *k, integer *l, integer *mb, doublecomplex *v, integer *ldv, doublecomplex *t, integer *ldt, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztpmlqt inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", l %" FLA_IS ", mb %" FLA_IS ", ldv %" FLA_IS ", ldt %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*side, *trans, *m, *n, *k, *l, *mb, *ldv, *ldt, *lda, *ldb);
     /* System generated locals */
     integer v_dim1, v_offset, a_dim1, a_offset, b_dim1, b_offset, t_dim1, t_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
@@ -318,11 +320,13 @@ int ztpmlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     {
         i__1 = -(*info);
         xerbla_("ZTPMLQT", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* .. Quick return if possible .. */
     if (*m == 0 || *n == 0 || *k == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (left && notran)
@@ -429,6 +433,7 @@ int ztpmlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
             ztprfb_("R", "C", "F", "R", m, &nb, &ib, &lb, &v[i__ + v_dim1], ldv, &t[i__ * t_dim1 + 1], ldt, &a[i__ * a_dim1 + 1], lda, &b[b_offset], ldb, &work[1], m);
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTPMLQT */
 }

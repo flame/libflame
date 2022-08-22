@@ -301,6 +301,8 @@ the routine */
 /* Subroutine */
 int ztgsyl_(char *trans, integer *ijob, integer *m, integer * n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublecomplex *d__, integer *ldd, doublecomplex *e, integer *lde, doublecomplex *f, integer *ldf, doublereal *scale, doublereal *dif, doublecomplex *work, integer * lwork, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztgsyl inputs: trans %c, ijob %" FLA_IS ", m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldc %" FLA_IS ", ldd %" FLA_IS ", lde %" FLA_IS ", ldf %" FLA_IS "",*trans, *ijob, *m, *n, *lda, *ldb, *ldc, *ldd, *lde, *ldf);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, c_dim1, c_offset, d_dim1, d_offset, e_dim1, e_offset, f_dim1, f_offset, i__1, i__2, i__3, i__4;
     doublecomplex z__1;
@@ -452,10 +454,12 @@ int ztgsyl_(char *trans, integer *ijob, integer *m, integer * n, doublecomplex *
     {
         i__1 = -(*info);
         xerbla_("ZTGSYL", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -469,6 +473,7 @@ int ztgsyl_(char *trans, integer *ijob, integer *m, integer * n, doublecomplex *
                 *dif = 0.;
             }
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Determine optimal block sizes MB and NB */
@@ -533,6 +538,7 @@ int ztgsyl_(char *trans, integer *ijob, integer *m, integer * n, doublecomplex *
             }
             /* L30: */
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Determine block structure of A */
@@ -838,6 +844,7 @@ L70:
     }
     work[1].r = (doublereal) lwmin;
     work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTGSYL */
 }
