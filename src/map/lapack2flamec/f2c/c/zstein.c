@@ -173,6 +173,8 @@ IBLOCK(i)=1 if eigenvalue W(i) belongs to */
 /* Subroutine */
 int zstein_(integer *n, doublereal *d__, doublereal *e, integer *m, doublereal *w, integer *iblock, integer *isplit, doublecomplex *z__, integer *ldz, doublereal *work, integer *iwork, integer *ifail, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zstein inputs: n %" FLA_IS ", m %" FLA_IS ", ldz %" FLA_IS "", *n, *m, *ldz);
     /* System generated locals */
     integer z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal d__1, d__2, d__3, d__4, d__5;
@@ -287,11 +289,13 @@ L30:
     {
         i__1 = -(*info);
         xerbla_("ZSTEIN", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0 || *m == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*n == 1)
@@ -299,6 +303,7 @@ L30:
         i__1 = z_dim1 + 1;
         z__[i__1].r = 1.;
         z__[i__1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants. */
@@ -522,6 +527,7 @@ L140:
 L180:
         ;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZSTEIN */
 }

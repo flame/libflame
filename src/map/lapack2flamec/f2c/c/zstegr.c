@@ -245,6 +245,8 @@ the */
 /* Subroutine */
 int zstegr_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e, doublereal *vl, doublereal *vu, integer *il, integer *iu, doublereal *abstol, integer *m, doublereal *w, doublecomplex *z__, integer *ldz, integer *isuppz, doublereal *work, integer *lwork, integer *iwork, integer *liwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zstegr inputs: jobz %c, range %c, n %" FLA_IS ", il %" FLA_IS ", iu %" FLA_IS ", m %" FLA_IS ", ldz %" FLA_IS "",*jobz, *range, *n, *il, *iu, *m, *ldz);
     /* System generated locals */
     integer z_dim1, z_offset;
     /* Local variables */
@@ -280,6 +282,7 @@ int zstegr_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e
     tryrac = FALSE_;
     zstemr_(jobz, range, n, &d__[1], &e[1], vl, vu, il, iu, m, &w[1], &z__[ z_offset], ldz, n, &isuppz[1], &tryrac, &work[1], lwork, &iwork[1], liwork, info);
     /* End of ZSTEGR */
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zstegr_ */
