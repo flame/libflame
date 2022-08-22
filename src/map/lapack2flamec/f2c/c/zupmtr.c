@@ -143,6 +143,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int zupmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, doublecomplex *ap, doublecomplex *tau, doublecomplex *c__, integer *ldc, doublecomplex *work, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zupmtr inputs: side %c, uplo %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", ldc %" FLA_IS "",*side, *uplo, *trans, *m, *n, *ldc);
     /* System generated locals */
     integer c_dim1, c_offset, i__1, i__2, i__3;
     doublecomplex z__1;
@@ -230,11 +232,13 @@ int zupmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, doublec
     {
         i__1 = -(*info);
         xerbla_("ZUPMTR", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (upper)
@@ -393,6 +397,7 @@ int zupmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, doublec
             /* L20: */
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZUPMTR */
 }
