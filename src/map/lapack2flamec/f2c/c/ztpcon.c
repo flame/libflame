@@ -123,6 +123,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int ztpcon_(char *norm, char *uplo, char *diag, integer *n, doublecomplex *ap, doublereal *rcond, doublecomplex *work, doublereal *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztpcon inputs: norm %c, uplo %c, diag %c, n %" FLA_IS "",*norm, *uplo, *diag, *n);
     /* System generated locals */
     integer i__1;
     doublereal d__1, d__2;
@@ -208,12 +210,14 @@ int ztpcon_(char *norm, char *uplo, char *diag, integer *n, doublecomplex *ap, d
     {
         i__1 = -(*info);
         xerbla_("ZTPCON", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
         *rcond = 1.;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     *rcond = 0.;
@@ -271,6 +275,7 @@ L10:
         }
     }
 L20:
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTPCON */
 }

@@ -294,6 +294,8 @@ K=N/2. If */
 /* Subroutine */
 int ztfsm_(char *transr, char *side, char *uplo, char *trans, char *diag, integer *m, integer *n, doublecomplex *alpha, doublecomplex *a, doublecomplex *b, integer *ldb)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztfsm inputs: transr %c, side %c, uplo %c, trans %c, diag %c, m %" FLA_IS ", n %" FLA_IS ", ldb %" FLA_IS "",*transr, *side, *uplo, *trans, *diag, *m, *n, *ldb);
     /* System generated locals */
     integer b_dim1, b_offset, i__1, i__2, i__3;
     doublecomplex z__1;
@@ -375,11 +377,13 @@ int ztfsm_(char *transr, char *side, char *uplo, char *trans, char *diag, intege
     {
         i__1 = -info;
         xerbla_("ZTFSM ", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return when ( (N.EQ.0).OR.(M.EQ.0) ) */
     if (*m == 0 || *n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return when ALPHA.EQ.(0D+0,0D+0) */
@@ -402,6 +406,7 @@ int ztfsm_(char *transr, char *side, char *uplo, char *trans, char *diag, intege
             }
             /* L20: */
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (lside)
@@ -940,6 +945,7 @@ int ztfsm_(char *transr, char *side, char *uplo, char *trans, char *diag, intege
             }
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTFSM */
 }

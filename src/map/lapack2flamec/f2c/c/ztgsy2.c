@@ -247,6 +247,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int ztgsy2_(char *trans, integer *ijob, integer *m, integer * n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublecomplex *d__, integer *ldd, doublecomplex *e, integer *lde, doublecomplex *f, integer *ldf, doublereal *scale, doublereal *rdsum, doublereal *rdscal, integer * info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztgsy2 inputs: trans %c, ijob %" FLA_IS ", m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldc %" FLA_IS ", ldd %" FLA_IS ", lde %" FLA_IS ", ldf %" FLA_IS "",*trans, *ijob, *m, *n, *lda, *ldb, *ldc, *ldd, *lde, *ldf);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, c_dim1, c_offset, d_dim1, d_offset, e_dim1, e_offset, f_dim1, f_offset, i__1, i__2, i__3, i__4;
     doublecomplex z__1, z__2, z__3, z__4, z__5, z__6;
@@ -361,6 +363,7 @@ int ztgsy2_(char *trans, integer *ijob, integer *m, integer * n, doublecomplex *
     {
         i__1 = -(*info);
         xerbla_("ZTGSY2", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (notran)
@@ -587,6 +590,7 @@ int ztgsy2_(char *trans, integer *ijob, integer *m, integer * n, doublecomplex *
             /* L80: */
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTGSY2 */
 }

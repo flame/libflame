@@ -430,6 +430,8 @@ Computing Eigenspaces with Specified */
 /* Subroutine */
 int ztgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, integer *m, doublereal *pl, doublereal *pr, doublereal *dif, doublecomplex *work, integer *lwork, integer *iwork, integer *liwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ztgsen inputs: ijob %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", m %" FLA_IS "",*ijob, *n, *lda, *ldb, *ldq, *ldz, *m);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2, i__3;
     doublecomplex z__1, z__2;
@@ -533,6 +535,7 @@ int ztgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, inte
     {
         i__1 = -(*info);
         xerbla_("ZTGSEN", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     ierr = 0;
@@ -618,10 +621,12 @@ int ztgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, inte
     {
         i__1 = -(*info);
         xerbla_("ZTGSEN", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible. */
@@ -854,6 +859,7 @@ L70:
     work[1].r = (doublereal) lwmin;
     work[1].i = 0.; // , expr subst
     iwork[1] = liwmin;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZTGSEN */
 }
