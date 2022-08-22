@@ -136,6 +136,8 @@ i */
 /* Subroutine */
 int zheev_(char *jobz, char *uplo, integer *n, doublecomplex *a, integer *lda, doublereal *w, doublecomplex *work, integer *lwork, doublereal *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zheev inputs: jobz %c, uplo %c, n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "",*jobz, *uplo, *n, *lda, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     doublereal d__1;
@@ -244,15 +246,18 @@ int zheev_(char *jobz, char *uplo, integer *n, doublecomplex *a, integer *lda, d
     {
         i__1 = -(*info);
         xerbla_("ZHEEV ", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -267,6 +272,7 @@ int zheev_(char *jobz, char *uplo, integer *n, doublecomplex *a, integer *lda, d
             a[i__1].r = 1.;
             a[i__1].i = 0.; // , expr subst
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants. */
@@ -328,6 +334,7 @@ int zheev_(char *jobz, char *uplo, integer *n, doublecomplex *a, integer *lda, d
     /* Set WORK(1) to optimal complex workspace size. */
     work[1].r = (doublereal) lwkopt;
     work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHEEV */
 }
