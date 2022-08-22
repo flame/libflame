@@ -183,6 +183,8 @@ v(i+k+1:n) is stored on exit in */
 /* Subroutine */
 int zlahr2_(integer *n, integer *k, integer *nb, doublecomplex *a, integer *lda, doublecomplex *tau, doublecomplex *t, integer *ldt, doublecomplex *y, integer *ldy)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlahr2 inputs: n %" FLA_IS ", k %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS ", ldy %" FLA_IS "",*n, *k, *nb, *lda, *ldt, *ldy);
     /* System generated locals */
     integer a_dim1, a_offset, t_dim1, t_offset, y_dim1, y_offset, i__1, i__2, i__3;
     doublecomplex z__1;
@@ -224,6 +226,7 @@ int zlahr2_(integer *n, integer *k, integer *nb, doublecomplex *a, integer *lda,
     /* Function Body */
     if (*n <= 1)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     i__1 = *nb;
@@ -330,6 +333,7 @@ int zlahr2_(integer *n, integer *k, integer *nb, doublecomplex *a, integer *lda,
         zgemm_("NO TRANSPOSE", "NO TRANSPOSE", k, nb, &i__1, &c_b2, &a[(*nb + 2) * a_dim1 + 1], lda, &a[*k + 1 + *nb + a_dim1], lda, &c_b2, &y[y_offset], ldy);
     }
     ztrmm_("RIGHT", "Upper", "NO TRANSPOSE", "NON-UNIT", k, nb, &c_b2, &t[ t_offset], ldt, &y[y_offset], ldy);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLAHR2 */
 }

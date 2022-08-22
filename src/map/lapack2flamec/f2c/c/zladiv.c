@@ -53,7 +53,7 @@
 #ifdef FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION
 VOID zladiv_(doublecomplex * ret_val, doublecomplex *x, doublecomplex *y)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_ENTRY_INDENT
     /* System generated locals */
     doublereal d__1, d__2, d__3, d__4;
     doublecomplex z__1;
@@ -85,14 +85,14 @@ VOID zladiv_(doublecomplex * ret_val, doublecomplex *x, doublecomplex *y)
     z__1.r = zr;
     z__1.i = zi; // , expr subst
     ret_val->r = z__1.r, ret_val->i = z__1.i;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT_INDENT
     return ;
     /* End of ZLADIV */
 }
 #else
 doublecomplex zladiv_(doublecomplex *x, doublecomplex *y)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_ENTRY_INDENT
     /* System generated locals */
     doublereal d__1, d__2, d__3, d__4;
     doublecomplex z__1;
@@ -124,7 +124,7 @@ doublecomplex zladiv_(doublecomplex *x, doublecomplex *y)
     z__1.r = zr;
     z__1.i = zi; // , expr subst
     //ret_val->r = z__1.r, ret_val->i = z__1.i;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT_INDENT
     return z__1;
     /* End of ZLADIV */
 }

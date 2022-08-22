@@ -145,6 +145,7 @@
 /* Subroutine */
 int zlags2_(logical *upper, doublereal *a1, doublecomplex * a2, doublereal *a3, doublereal *b1, doublecomplex *b2, doublereal *b3, doublereal *csu, doublecomplex *snu, doublereal *csv, doublecomplex * snv, doublereal *csq, doublecomplex *snq)
 {
+    AOCL_DTL_TRACE_ENTRY_INDENT
     /* System generated locals */
     doublereal d__1, d__2, d__3, d__4, d__5, d__6, d__7, d__8;
     doublecomplex z__1, z__2, z__3, z__4, z__5;
@@ -553,6 +554,7 @@ int zlags2_(logical *upper, doublereal *a1, doublecomplex * a2, doublereal *a3, 
             snv->r = z__1.r, snv->i = z__1.i;
         }
     }
+    AOCL_DTL_TRACE_EXIT_INDENT
     return 0;
     /* End of ZLAGS2 */
 }

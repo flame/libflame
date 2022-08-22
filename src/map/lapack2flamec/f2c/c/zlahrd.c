@@ -171,6 +171,8 @@ v(i+k+1:n) is stored on exit in */
 /* Subroutine */
 int zlahrd_(integer *n, integer *k, integer *nb, doublecomplex *a, integer *lda, doublecomplex *tau, doublecomplex *t, integer *ldt, doublecomplex *y, integer *ldy)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlahrd inputs: n %" FLA_IS ", k %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS ", ldy %" FLA_IS "",*n, *k, *nb, *lda, *ldt, *ldy);
     /* System generated locals */
     integer a_dim1, a_offset, t_dim1, t_offset, y_dim1, y_offset, i__1, i__2, i__3;
     doublecomplex z__1;
@@ -212,6 +214,7 @@ int zlahrd_(integer *n, integer *k, integer *nb, doublecomplex *a, integer *lda,
     /* Function Body */
     if (*n <= 1)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     i__1 = *nb;
@@ -305,6 +308,7 @@ int zlahrd_(integer *n, integer *k, integer *nb, doublecomplex *a, integer *lda,
     i__1 = *k + *nb + *nb * a_dim1;
     a[i__1].r = ei.r;
     a[i__1].i = ei.i; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLAHRD */
 }

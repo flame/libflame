@@ -111,6 +111,7 @@ static integer c__2 = 2;
 /* Subroutine */
 int zlaesy_(doublecomplex *a, doublecomplex *b, doublecomplex *c__, doublecomplex *rt1, doublecomplex *rt2, doublecomplex *evscal, doublecomplex *cs1, doublecomplex *sn1)
 {
+    AOCL_DTL_TRACE_ENTRY_INDENT
     /* System generated locals */
     doublereal d__1, d__2;
     doublecomplex z__1, z__2, z__3, z__4, z__5, z__6, z__7;
@@ -260,6 +261,7 @@ int zlaesy_(doublecomplex *a, doublecomplex *b, doublecomplex *c__, doublecomple
             evscal->r = 0., evscal->i = 0.;
         }
     }
+    AOCL_DTL_TRACE_EXIT_INDENT
     return 0;
     /* End of ZLAESY */
 }

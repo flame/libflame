@@ -93,6 +93,8 @@
 /* Subroutine */
 int zlacrt_(integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, integer *incy, doublecomplex *c__, doublecomplex * s)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlacrt inputs: n %" FLA_IS ", incx %" FLA_IS ", incy %" FLA_IS "",*n, *incx, *incy);
     /* System generated locals */
     integer i__1, i__2, i__3, i__4;
     doublecomplex z__1, z__2, z__3;
@@ -117,6 +119,7 @@ int zlacrt_(integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, int
     /* Function Body */
     if (*n <= 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*incx == 1 && *incy == 1)
@@ -167,6 +170,7 @@ int zlacrt_(integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, int
         iy += *incy;
         /* L10: */
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* Code for both increments equal to 1 */
 L20:
@@ -201,6 +205,7 @@ L20:
         cx[i__2].i = ctemp.i; // , expr subst
         /* L30: */
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zlacrt_ */

@@ -191,6 +191,8 @@ elements i+1:ihi of W contain */
 /* Subroutine */
 int zlahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *ihi, doublecomplex *h__, integer *ldh, doublecomplex *w, integer *iloz, integer *ihiz, doublecomplex *z__, integer *ldz, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlahqr inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", ldh %" FLA_IS ", iloz %" FLA_IS ", ihiz %" FLA_IS ", ldz %" FLA_IS "",*n, *ilo, *ihi, *ldh, *iloz, *ihiz, *ldz);
     /* System generated locals */
     integer h_dim1, h_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal d__1, d__2, d__3, d__4, d__5, d__6;
@@ -273,6 +275,7 @@ int zlahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*ilo == *ihi)
@@ -281,6 +284,7 @@ int zlahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
         i__2 = *ilo + *ilo * h_dim1;
         w[i__1].r = h__[i__2].r;
         w[i__1].i = h__[i__2].i; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* ==== clear out the trash ==== */
@@ -873,6 +877,7 @@ L70: /* Single-shift QR step */
     }
     /* Failure to converge in remaining number of iterations */
     *info = i__;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 L140: /* H(I,I-1) is negligible: one eigenvalue has converged. */
     i__1 = i__;
@@ -883,6 +888,7 @@ L140: /* H(I,I-1) is negligible: one eigenvalue has converged. */
     i__ = l - 1;
     goto L30;
 L150:
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLAHQR */
 }

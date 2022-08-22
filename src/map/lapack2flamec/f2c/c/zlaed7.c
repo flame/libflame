@@ -238,6 +238,8 @@ static integer c_n1 = -1;
 /* Subroutine */
 int zlaed7_(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, integer *curlvl, integer *curpbm, doublereal *d__, doublecomplex *q, integer *ldq, doublereal *rho, integer *indxq, doublereal *qstore, integer *qptr, integer *prmptr, integer *perm, integer *givptr, integer *givcol, doublereal *givnum, doublecomplex * work, doublereal *rwork, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlaed7 inputs: n %" FLA_IS ", cutpnt %" FLA_IS ", qsiz %" FLA_IS ", tlvls %" FLA_IS ", curlvl %" FLA_IS ", curpbm %" FLA_IS ", ldq %" FLA_IS "",*n, *cutpnt, *qsiz, *tlvls, *curlvl, *curpbm, *ldq);
     /* System generated locals */
     integer q_dim1, q_offset, i__1, i__2;
     /* Builtin functions */
@@ -308,11 +310,13 @@ int zlaed7_(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, integer 
     {
         i__1 = -(*info);
         xerbla_("ZLAED7", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* The following values are for bookkeeping purposes only. They are */
@@ -363,6 +367,7 @@ int zlaed7_(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, integer 
         qptr[curr + 1] = qptr[curr] + i__1 * i__1;
         if (*info != 0)
         {
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         /* Prepare the INDXQ sorting premutation. */
@@ -382,6 +387,7 @@ int zlaed7_(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, integer 
             /* L20: */
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLAED7 */
 }

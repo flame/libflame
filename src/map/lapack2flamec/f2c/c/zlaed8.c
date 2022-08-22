@@ -217,6 +217,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int zlaed8_(integer *k, integer *n, integer *qsiz, doublecomplex *q, integer *ldq, doublereal *d__, doublereal *rho, integer *cutpnt, doublereal *z__, doublereal *dlamda, doublecomplex * q2, integer *ldq2, doublereal *w, integer *indxp, integer *indx, integer *indxq, integer *perm, integer *givptr, integer *givcol, doublereal *givnum, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlaed8 inputs: k %" FLA_IS ", n %" FLA_IS ", qsiz %" FLA_IS ", ldq %" FLA_IS ", cutpnt %" FLA_IS ", ldq2 %" FLA_IS "",*k, *n, *qsiz, *ldq, *cutpnt, *ldq2);
     /* System generated locals */
     integer q_dim1, q_offset, q2_dim1, q2_offset, i__1;
     doublereal d__1;
@@ -299,6 +301,7 @@ int zlaed8_(integer *k, integer *n, integer *qsiz, doublecomplex *q, integer *ld
     {
         i__1 = -(*info);
         xerbla_("ZLAED8", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Need to initialize GIVPTR to O here in case of quick exit */
@@ -309,6 +312,7 @@ int zlaed8_(integer *k, integer *n, integer *qsiz, doublecomplex *q, integer *ld
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     n1 = *cutpnt;
@@ -381,6 +385,7 @@ int zlaed8_(integer *k, integer *n, integer *qsiz, doublecomplex *q, integer *ld
             /* L50: */
         }
         zlacpy_("A", qsiz, n, &q2[q2_dim1 + 1], ldq2, &q[q_dim1 + 1], ldq);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* If there are multiple eigenvalues then the problem deflates. Here */
@@ -512,6 +517,7 @@ L100: /* Sort the eigenvalues and corresponding eigenvectors into DLAMDA */
         i__1 = *n - *k;
         zlacpy_("A", qsiz, &i__1, &q2[(*k + 1) * q2_dim1 + 1], ldq2, &q[(*k + 1) * q_dim1 + 1], ldq);
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLAED8 */
 }

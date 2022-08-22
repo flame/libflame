@@ -96,6 +96,8 @@ if */
 /* Subroutine */
 int zlag2c_(integer *m, integer *n, doublecomplex *a, integer *lda, complex *sa, integer *ldsa, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlag2c inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldsa %" FLA_IS "",*m, *n, *lda, *ldsa);
     /* System generated locals */
     integer sa_dim1, sa_offset, a_dim1, a_offset, i__1, i__2, i__3, i__4;
     /* Builtin functions */
@@ -156,6 +158,7 @@ int zlag2c_(integer *m, integer *n, doublecomplex *a, integer *lda, complex *sa,
     }
     *info = 0;
 L30:
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLAG2C */
 }

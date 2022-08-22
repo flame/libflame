@@ -110,6 +110,7 @@ higher precision or correctly rounded or */
 /* Subroutine */
 int zlaev2_(doublecomplex *a, doublecomplex *b, doublecomplex *c__, doublereal *rt1, doublereal *rt2, doublereal *cs1, doublecomplex *sn1)
 {
+    AOCL_DTL_TRACE_ENTRY_INDENT
     /* System generated locals */
     doublereal d__1, d__2, d__3;
     doublecomplex z__1, z__2;
@@ -158,6 +159,7 @@ int zlaev2_(doublecomplex *a, doublecomplex *b, doublecomplex *c__, doublereal *
     z__1.r = t * w.r;
     z__1.i = t * w.i; // , expr subst
     sn1->r = z__1.r, sn1->i = z__1.i;
+    AOCL_DTL_TRACE_EXIT_INDENT
     return 0;
     /* End of ZLAEV2 */
 }
