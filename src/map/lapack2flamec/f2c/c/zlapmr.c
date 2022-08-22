@@ -92,6 +92,8 @@
 /* Subroutine */
 int zlapmr_(logical *forwrd, integer *m, integer *n, doublecomplex *x, integer *ldx, integer *k)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlapmr inputs: m %" FLA_IS ", n %" FLA_IS ", ldx %" FLA_IS ", k %" FLA_IS "",*m, *n, *ldx, *k);
     /* System generated locals */
     integer x_dim1, x_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
@@ -117,6 +119,7 @@ int zlapmr_(logical *forwrd, integer *m, integer *n, doublecomplex *x, integer *
     /* Function Body */
     if (*m <= 1)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     i__1 = *m;
@@ -215,6 +218,7 @@ L80: /* L90: */
             ;
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLAPMT */
 }

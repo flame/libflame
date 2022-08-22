@@ -157,6 +157,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int zlaqz1_(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, doublecomplex *a, integer * lda, doublecomplex *b, integer *ldb, integer *nq, integer *qstart, doublecomplex *q, integer *ldq, integer *nz, integer *zstart, doublecomplex *z__, integer *ldz)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlaqz1 inputs: k %" FLA_IS ", istartm %" FLA_IS ", istopm %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", nq %" FLA_IS ", qstart %" FLA_IS ", ldq %" FLA_IS ", nz %" FLA_IS ", zstart %" FLA_IS ", ldz %" FLA_IS "",*k, *istartm, *istopm, *ihi, *lda, *ldb, *nq, *qstart, *ldq, *nz, *zstart, *ldz);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1;
     doublecomplex z__1;
@@ -242,6 +244,7 @@ int zlaqz1_(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *
         }
     }
     /* End of ZLAQZ1 */
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zlaqz1_ */

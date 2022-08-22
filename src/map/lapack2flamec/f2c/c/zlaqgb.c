@@ -146,6 +146,8 @@
 /* Subroutine */
 int zlaqgb_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab, integer *ldab, doublereal *r__, doublereal *c__, doublereal *rowcnd, doublereal *colcnd, doublereal *amax, char *equed)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlaqgb inputs: m %" FLA_IS ", n %" FLA_IS ", kl %" FLA_IS ", ku %" FLA_IS ", ldab %" FLA_IS "",*m, *n, *kl, *ku, *ldab);
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4, i__5, i__6;
     doublereal d__1;
@@ -183,6 +185,7 @@ int zlaqgb_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
     if (*m <= 0 || *n <= 0)
     {
         *(unsigned char *)equed = 'N';
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize LARGE and SMALL. */
@@ -294,6 +297,7 @@ int zlaqgb_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
         }
         *(unsigned char *)equed = 'B';
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLAQGB */
 }

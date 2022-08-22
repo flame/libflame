@@ -294,6 +294,8 @@ the routine */
 /* Subroutine */
 int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * rec, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlaqz0 inputs: wants %c, wantq %c, wantz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", rec %" FLA_IS "",*wants, *wantq, *wantz, *n, *ilo, *ihi, *lda, *ldb, *ldq, *ldz, *rec);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal d__1, d__2;
@@ -470,6 +472,7 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     {
         i__1 = -(*info);
         xerbla_("ZLAQZ0", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -477,6 +480,7 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     {
         work[1].r = 1.;
         work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get the parameters */
@@ -509,6 +513,7 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     if (*n < nmin || *rec >= 2)
     {
         zhgeqz_(wants, wantq, wantz, n, ilo, ihi, &a[a_offset], lda, &b[ b_offset], ldb, &alpha[1], &beta[1], &q[q_offset], ldq, &z__[ z_offset], ldz, &work[1], lwork, &rwork[1], info);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Find out required workspace */
@@ -532,6 +537,7 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
         d__1 = (doublereal) lworkreq;
         work[1].r = d__1;
         work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*lwork < lworkreq)
@@ -541,6 +547,7 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     if (*info != 0)
     {
         xerbla_("ZLAQZ0", info);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize Q and Z */
@@ -826,6 +833,7 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
 L80:
     zhgeqz_(wants, wantq, wantz, n, ilo, ihi, &a[a_offset], lda, &b[b_offset], ldb, &alpha[1], &beta[1], &q[q_offset], ldq, &z__[z_offset], ldz, &work[1], lwork, &rwork[1], &norm_info__);
     *info = norm_info__;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zlaqz0_ */

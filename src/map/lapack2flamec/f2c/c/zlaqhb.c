@@ -129,6 +129,8 @@
 /* Subroutine */
 int zlaqhb_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *ldab, doublereal *s, doublereal *scond, doublereal *amax, char *equed)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlaqhb inputs: uplo %c, n %" FLA_IS ", kd %" FLA_IS ", ldab %" FLA_IS "",*uplo, *n, *kd, *ldab);
     /* System generated locals */
     integer ab_dim1, ab_offset, i__1, i__2, i__3, i__4;
     doublereal d__1;
@@ -167,6 +169,7 @@ int zlaqhb_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
     if (*n <= 0)
     {
         *(unsigned char *)equed = 'N';
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize LARGE and SMALL. */
@@ -250,6 +253,7 @@ int zlaqhb_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
         }
         *(unsigned char *)equed = 'Y';
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLAQHB */
 }

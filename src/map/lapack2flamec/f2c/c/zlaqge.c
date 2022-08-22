@@ -129,6 +129,8 @@
 /* Subroutine */
 int zlaqge_(integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *r__, doublereal *c__, doublereal *rowcnd, doublereal *colcnd, doublereal *amax, char *equed)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlaqge inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "",*m, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal d__1;
@@ -164,6 +166,7 @@ int zlaqge_(integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *
     if (*m <= 0 || *n <= 0)
     {
         *(unsigned char *)equed = 'N';
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize LARGE and SMALL. */
@@ -257,6 +260,7 @@ int zlaqge_(integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *
         }
         *(unsigned char *)equed = 'B';
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLAQGE */
 }

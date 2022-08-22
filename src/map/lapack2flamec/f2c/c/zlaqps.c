@@ -173,6 +173,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int zlaqps_(integer *m, integer *n, integer *offset, integer *nb, integer *kb, doublecomplex *a, integer *lda, integer *jpvt, doublecomplex *tau, doublereal *vn1, doublereal *vn2, doublecomplex * auxv, doublecomplex *f, integer *ldf)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlaqps inputs: m %" FLA_IS ", n %" FLA_IS ", offset %" FLA_IS ", nb %" FLA_IS ", kb %" FLA_IS ", lda %" FLA_IS ", ldf %" FLA_IS "",*m, *n, *offset, *nb, *kb, *lda, *ldf);
     /* System generated locals */
     integer a_dim1, a_offset, f_dim1, f_offset, i__1, i__2, i__3;
     doublereal d__1, d__2;
@@ -415,6 +417,7 @@ L60:
         lsticc = itemp;
         goto L60;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLAQPS */
 }
