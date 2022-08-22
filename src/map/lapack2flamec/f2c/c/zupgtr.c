@@ -103,6 +103,8 @@
 /* Subroutine */
 int zupgtr_(char *uplo, integer *n, doublecomplex *ap, doublecomplex *tau, doublecomplex *q, integer *ldq, doublecomplex * work, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zupgtr inputs: uplo %c, n %" FLA_IS ", ldq %" FLA_IS "",*uplo, *n, *ldq);
     /* System generated locals */
     integer q_dim1, q_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
@@ -159,11 +161,13 @@ int zupgtr_(char *uplo, integer *n, doublecomplex *ap, doublecomplex *tau, doubl
     {
         i__1 = -(*info);
         xerbla_("ZUPGTR", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (upper)
@@ -267,6 +271,7 @@ int zupgtr_(char *uplo, integer *n, doublecomplex *ap, doublecomplex *tau, doubl
             zung2r_(&i__1, &i__2, &i__3, &q[(q_dim1 << 1) + 2], ldq, &tau[1], &work[1], &iinfo);
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZUPGTR */
 }

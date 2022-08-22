@@ -150,6 +150,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int zunm2l_(char *side, char *trans, integer *m, integer *n, integer *k, doublecomplex *a, integer *lda, doublecomplex *tau, doublecomplex *c__, integer *ldc, doublecomplex *work, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zunm2l inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS "",*side, *trans, *m, *n, *k, *lda, *ldc);
     /* System generated locals */
     integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3;
     doublecomplex z__1;
@@ -239,11 +241,13 @@ int zunm2l_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
     {
         i__1 = -(*info);
         xerbla_("ZUNM2L", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0 || *k == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (left && notran || ! left && ! notran)
@@ -307,6 +311,7 @@ int zunm2l_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
         a[i__3].i = aii.i; // , expr subst
         /* L10: */
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZUNM2L */
 }

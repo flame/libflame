@@ -164,6 +164,8 @@ the routine */
 /* Subroutine */
 int zunmrq_(char *side, char *trans, integer *m, integer *n, integer *k, doublecomplex *a, integer *lda, doublecomplex *tau, doublecomplex *c__, integer *ldc, doublecomplex *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zunmrq inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS ", lwork %" FLA_IS "", *side, *trans, *m, *n, *k, *lda, *ldc, *lwork);
     /* System generated locals */
     address a__1[2];
     integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3[2], i__4, i__5;
@@ -288,15 +290,18 @@ int zunmrq_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
     {
         i__1 = -(*info);
         xerbla_("ZUNMRQ", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     nbmin = 2;
@@ -380,6 +385,7 @@ int zunmrq_(char *side, char *trans, integer *m, integer *n, integer *k, doublec
     }
     work[1].r = (doublereal) lwkopt;
     work[1].i = 0.; // , expr subst
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZUNMRQ */
 }
