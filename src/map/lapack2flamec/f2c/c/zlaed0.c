@@ -137,6 +137,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int zlaed0_(integer *qsiz, integer *n, doublereal *d__, doublereal *e, doublecomplex *q, integer *ldq, doublecomplex *qstore, integer *ldqs, doublereal *rwork, integer *iwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlaed0 inputs: qsiz %" FLA_IS ", n %" FLA_IS ", ldq %" FLA_IS ", ldqs %" FLA_IS "",*qsiz, *n, *ldq, *ldqs);
     /* System generated locals */
     integer q_dim1, q_offset, qstore_dim1, qstore_offset, i__1, i__2;
     doublereal d__1;
@@ -221,11 +223,13 @@ int zlaed0_(integer *qsiz, integer *n, doublereal *d__, doublereal *e, doublecom
     {
         i__1 = -(*info);
         xerbla_("ZLAED0", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     smlsiz = ilaenv_(&c__9, "ZLAED0", " ", &c__0, &c__0, &c__0, &c__0);
@@ -333,6 +337,7 @@ L10:
         if (*info > 0)
         {
             *info = submat * (*n + 1) + submat + matsiz - 1;
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         k = 1;
@@ -383,6 +388,7 @@ L80:
             if (*info > 0)
             {
                 *info = submat * (*n + 1) + submat + matsiz - 1;
+    AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             iwork[i__ / 2 + 1] = iwork[i__ + 2];
@@ -406,6 +412,7 @@ L80:
         /* L100: */
     }
     dcopy_(n, &rwork[1], &c__1, &d__[1], &c__1);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLAED0 */
 }
