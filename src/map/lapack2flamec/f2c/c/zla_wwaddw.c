@@ -69,6 +69,8 @@
 /* Subroutine */
 int zla_wwaddw_(integer *n, doublecomplex *x, doublecomplex *y, doublecomplex *w)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zla_wwaddw inputs: n %" FLA_IS "", *n);
     /* System generated locals */
     integer i__1, i__2, i__3, i__4, i__5;
     doublecomplex z__1, z__2, z__3;
@@ -126,6 +128,7 @@ int zla_wwaddw_(integer *n, doublecomplex *x, doublecomplex *y, doublecomplex *w
         x[i__2].i = s.i; // , expr subst
         /* L10: */
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zla_wwaddw__ */

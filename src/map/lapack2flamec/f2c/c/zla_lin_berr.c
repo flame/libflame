@@ -89,6 +89,8 @@
 /* Subroutine */
 int zla_lin_berr_(integer *n, integer *nz, integer *nrhs, doublecomplex *res, doublereal *ayb, doublereal *berr)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zla_lin_berr inputs: n %" FLA_IS ", nz %" FLA_IS ", nrhs %" FLA_IS "", *n, *nz, *nrhs);
     /* System generated locals */
     integer ayb_dim1, ayb_offset, res_dim1, res_offset, i__1, i__2, i__3, i__4;
     doublereal d__1, d__2, d__3;
@@ -164,6 +166,7 @@ int zla_lin_berr_(integer *n, integer *nz, integer *nrhs, doublecomplex *res, do
             /* the true residual also must be exactly 0.0. */
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* zla_lin_berr__ */

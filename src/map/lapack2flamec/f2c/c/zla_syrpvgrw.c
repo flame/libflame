@@ -110,6 +110,8 @@
 /* ===================================================================== */
 doublereal zla_syrpvgrw_(char *uplo, integer *n, integer *info, doublecomplex *a, integer *lda, doublecomplex *af, integer *ldaf, integer *ipiv, doublereal *work)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zla_syrpvgrw inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS "", *uplo, *n, *lda, *ldaf);
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, i__1, i__2, i__3;
     doublereal ret_val, d__1, d__2, d__3, d__4;
@@ -441,6 +443,7 @@ doublereal zla_syrpvgrw_(char *uplo, integer *n, integer *info, doublecomplex *a
         }
     }
     ret_val = rpvgrw;
+    AOCL_DTL_TRACE_LOG_EXIT
     return ret_val;
 }
 /* zla_syrpvgrw__ */

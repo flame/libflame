@@ -93,6 +93,8 @@ if UPLO = 'L', only the lower trapezium is */
 /* Subroutine */
 int zlacp2_(char *uplo, integer *m, integer *n, doublereal * a, integer *lda, doublecomplex *b, integer *ldb)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlacp2 inputs: uplo %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*uplo, *m, *n, *lda, *ldb);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
     /* Local variables */
@@ -185,6 +187,7 @@ int zlacp2_(char *uplo, integer *m, integer *n, doublereal * a, integer *lda, do
             /* L60: */
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLACP2 */
 }
