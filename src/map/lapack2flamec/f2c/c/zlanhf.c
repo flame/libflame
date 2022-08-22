@@ -239,6 +239,8 @@ otherwise, */
 /* ===================================================================== */
 doublereal zlanhf_(char *norm, char *transr, char *uplo, integer *n, doublecomplex *a, doublereal *work)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlanhf inputs: norm %c, transr %c, uplo %c, n %" FLA_IS "",*norm, *transr, *uplo, *n);
     /* System generated locals */
     integer i__1, i__2;
     doublereal ret_val, d__1;
@@ -279,11 +281,13 @@ doublereal zlanhf_(char *norm, char *transr, char *uplo, integer *n, doublecompl
     if (*n == 0)
     {
         ret_val = 0.;
+        AOCL_DTL_TRACE_LOG_EXIT
         return ret_val;
     }
     else if (*n == 1)
     {
         ret_val = (d__1 = a[0].r, f2c_abs(d__1));
+        AOCL_DTL_TRACE_LOG_EXIT
         return ret_val;
     }
     /* set noe = 1 if n is odd. if n is even set noe=0 */
@@ -2529,6 +2533,7 @@ L10:
         value = scale * sqrt(s);
     }
     ret_val = value;
+    AOCL_DTL_TRACE_LOG_EXIT
     return ret_val;
     /* End of ZLANHF */
 }

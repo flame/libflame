@@ -104,12 +104,8 @@ otherwise, WORK is not */
 /* ===================================================================== */
 doublereal zlange_(char *norm, integer *m, integer *n, doublecomplex *a, integer *lda, doublereal *work)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE 
-    char buffer[256]; 
-    snprintf(buffer, 256,"zlange inputs: norm %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "",*norm, *m, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlange inputs: norm %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "",*norm, *m, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     doublereal ret_val;
@@ -257,7 +253,7 @@ doublereal zlange_(char *norm, integer *m, integer *n, doublecomplex *a, integer
         value = scale * sqrt(sum);
     }
     ret_val = value;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return ret_val;
     /* End of ZLANGE */
 }
