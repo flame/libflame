@@ -104,6 +104,8 @@ static doublereal c_b12 = 1.;
 /* Subroutine */
 int zpotrf2_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zpotrf2 inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*uplo, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1;
     doublereal d__1;
@@ -166,11 +168,13 @@ int zpotrf2_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *in
     {
         i__1 = -(*info);
         xerbla_("ZPOTRF2", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* N=1 case */
@@ -182,6 +186,7 @@ int zpotrf2_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *in
         if (ajj <= 0. || disnan_(&ajj))
         {
             *info = 1;
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         /* Factor */
@@ -200,6 +205,7 @@ int zpotrf2_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *in
         if (iinfo != 0)
         {
             *info = iinfo;
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         /* Compute the Cholesky factorization A = U**H*U */
@@ -213,6 +219,7 @@ int zpotrf2_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *in
             if (iinfo != 0)
             {
                 *info = iinfo + n1;
+    AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
             /* Compute the Cholesky factorization A = L*L**H */
@@ -227,10 +234,12 @@ int zpotrf2_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *in
             if (iinfo != 0)
             {
                 *info = iinfo + n1;
+    AOCL_DTL_TRACE_LOG_EXIT
                 return 0;
             }
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZPOTRF2 */
 }

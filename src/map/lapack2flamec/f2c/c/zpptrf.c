@@ -112,12 +112,9 @@ static doublereal c_b16 = -1.;
 /* Subroutine */
 int zpptrf_(char *uplo, integer *n, doublecomplex *ap, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zpptrf inputs: uplo %c, n %d",*uplo, *n);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zpptrf inputs: uplo %c, n %" FLA_IS "",*uplo, *n);
+
     /* System generated locals */
     integer i__1, i__2, i__3;
     doublereal d__1;
@@ -173,13 +170,13 @@ int zpptrf_(char *uplo, integer *n, doublecomplex *ap, integer *info)
     {
         i__1 = -(*info);
         xerbla_("ZPPTRF", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (upper)
@@ -262,7 +259,7 @@ int zpptrf_(char *uplo, integer *n, doublecomplex *ap, integer *info)
 L30:
     *info = j;
 L40:
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZPPTRF */
 }
