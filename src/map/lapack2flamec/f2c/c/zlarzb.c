@@ -179,12 +179,9 @@ if STOREV = 'R', LDV >= K. */
 /* Subroutine */
 int zlarzb_(char *side, char *trans, char *direct, char * storev, integer *m, integer *n, integer *k, integer *l, doublecomplex *v, integer *ldv, doublecomplex *t, integer *ldt, doublecomplex *c__, integer *ldc, doublecomplex *work, integer *ldwork)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zlarzb inputs: side %c, trans %c, direct %c, storev %c, m %d, n %d, k %d, l %d, ldv %d, ldt %d, ldc %d",*side, *trans, *direct, *storev, *m, *n, *k, *l, *ldv, *ldt, *ldc);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlarzb inputs: side %c, trans %c, direct %c, storev %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", l %" FLA_IS ", ldv %" FLA_IS ", ldt %" FLA_IS ", ldc %" FLA_IS ", ldwork % " FLA_IS "",*side, *trans, *direct, *storev, *m, *n, *k, *l, *ldv, *ldt, *ldc, *ldwork);
+
     /* System generated locals */
     integer c_dim1, c_offset, t_dim1, t_offset, v_dim1, v_offset, work_dim1, work_offset, i__1, i__2, i__3, i__4, i__5;
     doublecomplex z__1;
@@ -229,7 +226,7 @@ int zlarzb_(char *side, char *trans, char *direct, char * storev, integer *m, in
     /* Function Body */
     if (*m <= 0 || *n <= 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Check for currently supported options */
@@ -246,7 +243,7 @@ int zlarzb_(char *side, char *trans, char *direct, char * storev, integer *m, in
     {
         i__1 = -info;
         xerbla_("ZLARZB", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (lsame_(trans, "N"))
@@ -394,7 +391,7 @@ int zlarzb_(char *side, char *trans, char *direct, char * storev, integer *m, in
             /* L100: */
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLARZB */
 }

@@ -149,12 +149,8 @@ static doublecomplex c_b19 =
 /* Subroutine */
 int zlasyf_aa_(char *uplo, integer *j1, integer *m, integer *nb, doublecomplex *a, integer *lda, integer *ipiv, doublecomplex * h__, integer *ldh, doublecomplex *work)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zlasyf_aa inputs: uplo %c, j1 %" FLA_IS ", m %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldh %" FLA_IS "",*uplo, *j1, *m, *nb, *lda, *ldh);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlasyf_aa inputs: uplo %c, j1 %" FLA_IS ", m %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldh %" FLA_IS "",*uplo, *j1, *m, *nb, *lda, *ldh);
     /* System generated locals */
     integer a_dim1, a_offset, h_dim1, h_offset, i__1, i__2;
     doublecomplex z__1;
@@ -522,7 +518,7 @@ L30:
 L40:
         ;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLASYF_AA */
 }

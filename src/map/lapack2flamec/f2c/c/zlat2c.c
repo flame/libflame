@@ -101,12 +101,9 @@ if INFO>0, the content of */
 /* Subroutine */
 int zlat2c_(char *uplo, integer *n, doublecomplex *a, integer *lda, complex *sa, integer *ldsa, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zlat2c inputs: uplo %c, n %d, lda %d, ldsa %d",*uplo, *n, *lda, *ldsa);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zlat2c inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", ldsa %" FLA_IS "",*uplo, *n, *lda, *ldsa);
+
     /* System generated locals */
     integer sa_dim1, sa_offset, a_dim1, a_offset, i__1, i__2, i__3, i__4;
     /* Builtin functions */
@@ -200,7 +197,7 @@ int zlat2c_(char *uplo, integer *n, doublecomplex *a, integer *lda, complex *sa,
         }
     }
 L50:
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZLAT2C */
 }
