@@ -148,6 +148,8 @@ static integer c__1 = 1;
 /* Subroutine */
 int zpteqr_(char *compz, integer *n, doublereal *d__, doublereal *e, doublecomplex *z__, integer *ldz, doublereal *work, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zpteqr inputs: compz %c, n %" FLA_IS ", ldz %" FLA_IS "",*compz, *n, *ldz);
     /* System generated locals */
     integer z_dim1, z_offset, i__1;
     /* Builtin functions */
@@ -229,11 +231,13 @@ int zpteqr_(char *compz, integer *n, doublereal *d__, doublereal *e, doublecompl
     {
         i__1 = -(*info);
         xerbla_("ZPTEQR", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -244,6 +248,7 @@ int zpteqr_(char *compz, integer *n, doublereal *d__, doublereal *e, doublecompl
             z__[i__1].r = 1.;
             z__[i__1].i = 0.; // , expr subst
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (icompz == 2)
@@ -254,6 +259,7 @@ int zpteqr_(char *compz, integer *n, doublereal *d__, doublereal *e, doublecompl
     dpttrf_(n, &d__[1], &e[1], info);
     if (*info != 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     i__1 = *n;
@@ -299,6 +305,7 @@ int zpteqr_(char *compz, integer *n, doublereal *d__, doublereal *e, doublecompl
     {
         *info = *n + *info;
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZPTEQR */
 }

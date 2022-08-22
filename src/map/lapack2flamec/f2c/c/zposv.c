@@ -119,12 +119,9 @@
 /* Subroutine */
 int zposv_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zposv inputs: uplo %c, n %d, nrhs %d, lda %d, ldb %d",*uplo, *n, *nrhs, *lda, *ldb);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zposv inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ldb);
+
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */
@@ -181,7 +178,7 @@ int zposv_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *lda
     {
         i__1 = -(*info);
         xerbla_("ZPOSV ", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Compute the Cholesky factorization A = U**H *U or A = L*L**H. */
@@ -191,7 +188,7 @@ int zposv_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *lda
         /* Solve the system A*X = B, overwriting B with X. */
         zpotrs_(uplo, n, nrhs, &a[a_offset], lda, &b[b_offset], ldb, info);
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZPOSV */
 }

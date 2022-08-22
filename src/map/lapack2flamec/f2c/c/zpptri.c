@@ -86,12 +86,9 @@ static integer c__1 = 1;
 /* Subroutine */
 int zpptri_(char *uplo, integer *n, doublecomplex *ap, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"zpptri inputs: uplo %c, n %d",*uplo, *n);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zpptri inputs: uplo %c, n %" FLA_IS "",*uplo, *n);
+
     /* System generated locals */
     integer i__1, i__2, i__3;
     doublereal d__1;
@@ -146,20 +143,20 @@ int zpptri_(char *uplo, integer *n, doublecomplex *ap, integer *info)
     {
         i__1 = -(*info);
         xerbla_("ZPPTRI", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Invert the triangular Cholesky factor U or L. */
     ztptri_(uplo, "Non-unit", n, &ap[1], info);
     if (*info > 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (upper)
@@ -209,7 +206,7 @@ int zpptri_(char *uplo, integer *n, doublecomplex *ap, integer *info)
             /* L20: */
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZPPTRI */
 }

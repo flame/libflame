@@ -389,6 +389,8 @@ defaults */
 /* Subroutine */
 int zporfsx_(char *uplo, char *equed, integer *n, integer * nrhs, doublecomplex *a, integer *lda, doublecomplex *af, integer * ldaf, doublereal *s, doublecomplex *b, integer *ldb, doublecomplex *x, integer *ldx, doublereal *rcond, doublereal *berr, integer * n_err_bnds__, doublereal *err_bnds_norm__, doublereal * err_bnds_comp__, integer *nparams, doublereal *params, doublecomplex * work, doublereal *rwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zporfsx inputs: uplo %c, equed %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS ", n_err_bnds__ %" FLA_IS ", nparams %" FLA_IS "",*uplo, *equed, *n, *nrhs, *lda, *ldaf, *ldb, *ldx, *n_err_bnds__, *nparams);
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, b_dim1, b_offset, x_dim1, x_offset, err_bnds_norm_dim1, err_bnds_norm_offset, err_bnds_comp_dim1, err_bnds_comp_offset, i__1;
     doublereal d__1, d__2;
@@ -560,6 +562,7 @@ int zporfsx_(char *uplo, char *equed, integer *n, integer * nrhs, doublecomplex 
     {
         i__1 = -(*info);
         xerbla_("ZPORFSX", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible. */
@@ -588,6 +591,7 @@ int zporfsx_(char *uplo, char *equed, integer *n, integer * nrhs, doublecomplex 
                 err_bnds_comp__[j + err_bnds_comp_dim1 * 3] = 1.;
             }
         }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Default to failure. */
@@ -722,6 +726,7 @@ int zporfsx_(char *uplo, char *equed, integer *n, integer * nrhs, doublecomplex 
             }
         }
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZPORFSX */
 }
