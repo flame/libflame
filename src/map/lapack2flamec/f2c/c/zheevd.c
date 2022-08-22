@@ -203,6 +203,8 @@ i off-diagonal elements of an intermediate */
 /* Subroutine */
 int zheevd_(char *jobz, char *uplo, integer *n, doublecomplex *a, integer *lda, doublereal *w, doublecomplex *work, integer *lwork, doublereal *rwork, integer *lrwork, integer *iwork, integer *liwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zheevd inputs: jobz %c, uplo %c, n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS ", lrwork %" FLA_IS ", liwork %" FLA_IS "", *jobz, *uplo, *n, *lda, *lwork, *lrwork, *liwork);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     doublereal d__1;
@@ -348,15 +350,18 @@ int zheevd_(char *jobz, char *uplo, integer *n, doublecomplex *a, integer *lda, 
     {
         i__1 = -(*info);
         xerbla_("ZHEEVD", &i__1);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -369,6 +374,7 @@ int zheevd_(char *jobz, char *uplo, integer *n, doublecomplex *a, integer *lda, 
             a[i__1].r = 1.;
             a[i__1].i = 0.; // , expr subst
         }
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants. */
@@ -438,6 +444,7 @@ int zheevd_(char *jobz, char *uplo, integer *n, doublecomplex *a, integer *lda, 
     work[1].i = 0.; // , expr subst
     rwork[1] = (doublereal) lropt;
     iwork[1] = liopt;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHEEVD */
 }
