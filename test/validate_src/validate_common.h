@@ -73,7 +73,7 @@ void validate_getri(integer m_A,
     double* residual);
 
 void validate_getrs(char *trans,
-    integer m,
+    integer n,
     integer nrhs,
     void* A,
     void* B,
@@ -97,13 +97,12 @@ void validate_potrf(char *uplo,
     integer datatype,
     double* residual);
 
-void validate_potrs(char *uplo,
-    integer m,
+void validate_potrs(integer n,
+    integer nrhs,
     void *A,
-    void *A_test,
+    void *X,
+    void *B,
     integer datatype,
-    void *x,
-    void *b,
     double* residual);
 
 void validate_syevd(char* jobz,
