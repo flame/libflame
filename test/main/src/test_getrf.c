@@ -7,7 +7,7 @@
 /* Local prototypes */
 void fla_test_getrf_experiment(test_params_t *params, integer  datatype, integer  p_cur, integer  q_cur, integer pci,
                                     integer n_repeats, double* perf, double* t, double* residual);
-void prepare_getrf_run(integer m_A, integer n_A, void *A, integer* ipiv, integer datatype, integer n_repeats, double* time_min_);
+void prepare_getrf_run(integer m_A, integer n_A, void *A, integer cs_A, integer* ipiv, integer datatype, integer n_repeats, double* time_min_);
 void invoke_getrf(integer datatype, integer *m, integer *n, void *a, integer *lda, integer *ipiv, integer *info);
 
 void fla_test_getrf(test_params_t *params)
@@ -18,9 +18,7 @@ void fla_test_getrf(test_params_t *params)
     fla_test_output_info("--- %s ---\n", op_str);
     fla_test_output_info("\n");
     fla_test_op_driver(front_str, RECT_INPUT, params, LIN, fla_test_getrf_experiment);
-
 }
-
 
 void fla_test_getrf_experiment(test_params_t *params,
     integer  datatype,
@@ -37,24 +35,24 @@ void fla_test_getrf_experiment(test_params_t *params,
     void *A, *A_test;
     double time_min = 1e9;
 
-
     /* Determine the dimensions*/
     m = p_cur;
     n = q_cur;
-    cs_A = m;
+    cs_A = params->lin_solver_paramslist[pci].lda;
+    
     /* Create the matrices for the current operation*/
-    create_matrix(datatype, &A, m, n);
-
+    create_matrix(datatype, &A, cs_A, n);
     create_vector(INTEGER, &IPIV, min(m, n));
+    
     /* Initialize the test matrices*/
     rand_matrix(datatype, A, m, n, cs_A);
 
     /* Save the original matrix*/
-    create_matrix(datatype, &A_test, m, n);
+    create_matrix(datatype, &A_test, cs_A, n);
     copy_matrix(datatype, "full", m, n, A, cs_A, A_test, cs_A);
 
     /* call to API */
-    prepare_getrf_run(m, n, A_test, IPIV, datatype, n_repeats, &time_min);
+    prepare_getrf_run(m, n, A_test, cs_A, IPIV, datatype, n_repeats, &time_min);
 
     /* execution time */
     *t = time_min;
@@ -66,7 +64,7 @@ void fla_test_getrf_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* output validation */
-    validate_getrf(m, n, A, A_test, IPIV, datatype, residual);
+    validate_getrf(m, n, A, A_test, cs_A, IPIV, datatype, residual);
 
     /* Free up the buffers */
     free_matrix(A);
@@ -74,25 +72,22 @@ void fla_test_getrf_experiment(test_params_t *params,
     free_vector(IPIV);
 }
 
-
 void prepare_getrf_run(integer m_A,
     integer n_A,
     void* A,
+    integer cs_A,
     integer* IPIV,
     integer datatype,
     integer n_repeats,
     double* time_min_)
 {
-    integer cs_A;
     integer i;
     void *A_save;
     integer info = 0;
     double time_min = 1e9, exe_time;
 
-    /* Get column stride */
-    cs_A = m_A;
     /* Save the original matrix */
-    create_matrix(datatype, &A_save, m_A, n_A);
+    create_matrix(datatype, &A_save, cs_A, n_A);
     copy_matrix(datatype, "full", m_A, n_A, A, cs_A, A_save, cs_A);
 
     for (i = 0; i < n_repeats; ++i)
@@ -118,7 +113,6 @@ void prepare_getrf_run(integer m_A,
     free_matrix(A_save);
 
 }
-
 
 /*
  *  GETRF_API calls LAPACK interface of
@@ -153,4 +147,3 @@ void invoke_getrf(integer datatype, integer *m, integer *n, void *a, integer *ld
         }
     }
 }
-
