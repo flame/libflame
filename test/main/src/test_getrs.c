@@ -32,7 +32,7 @@ void fla_test_getrs_experiment(test_params_t *params,
     double* t,
     double* residual)
 {
-    integer n, cs_A, NRHS;
+    integer n, cs_A, NRHS, info = 0;
     void* IPIV;
     void *A, *A_test, *B, *B_save, *X;
     double time_min = 1e9;
@@ -49,13 +49,17 @@ void fla_test_getrs_experiment(test_params_t *params,
     create_matrix(datatype, &B, n, NRHS);
     create_matrix(datatype, &B_save, n, NRHS);
     create_matrix(datatype, &X, n, NRHS);
+    create_matrix(datatype, &A_test, n, n);
     /* Initialize the test matrices*/
     rand_matrix(datatype, A, n, n, cs_A);
     rand_matrix(datatype, B, n, NRHS, cs_A);
     /* Save the original matrix*/
-    create_matrix(datatype, &A_test, n, n);
+
     copy_matrix(datatype, "full", n, n, A, cs_A, A_test, cs_A);
     copy_matrix(datatype, "full", n, NRHS, B, cs_A, B_save, cs_A);
+
+    /*  call to API getrf to get AFACT */
+    invoke_getrf(datatype, &n, &n, A_test, &cs_A, IPIV, &info);
     /* call to API */
     prepare_getrs_run(&TRANS, n, NRHS, A_test, B, IPIV, datatype, n_repeats, &time_min);
     copy_matrix(datatype, "full", n, NRHS, B, cs_A, X, cs_A);
@@ -113,8 +117,6 @@ void prepare_getrs_run(char *TRANS,
 
         exe_time = fla_test_clock();
 
-        /*  call to API getrf to get AFACT */
-        invoke_getrf(datatype, &n_A, &n_A, A_save, &cs_A, IPIV, &info);
         /*  call  getrs API with AFACT */
         invoke_getrs(datatype, TRANS, &n_A, &nrhs, A_save, &n_A, IPIV, B_test, &n_A, &info);
 
