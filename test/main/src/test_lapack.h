@@ -67,11 +67,11 @@
 #define EIG_NSYM       (3)
 #define SVD            (4)
 
-//For testing AOCL_PROGRESS pass  1
-#define SET_PROCESS_ENABLE       0
-#define PROCESS_ENABLE           0
+//pass 1 to test  standard AOCL_FLA_PROGRESS fucntion,
+//pass 2 to test  register callback function
+#define AOCL_FLA_SET_PROGRESS_ENABLE   0
 
-#if SET_PROCESS_ENABLE
+#if AOCL_FLA_SET_PROGRESS_ENABLE == 2
 int test_progress(char* api,integer lenapi,integer *progress,integer *current_thread,integer *total_threads);
 #endif
 

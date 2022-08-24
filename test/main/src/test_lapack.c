@@ -28,7 +28,7 @@ double ref_time_sec = 0.0;
             break; \
         } \
 
-#if PROCESS_ENABLE
+#if AOCL_FLA_SET_PROGRESS_ENABLE == 1
 #define BUFLEN 16
 int aocl_fla_progress(char* api,integer lenapi,integer *progress,integer *current_thread,integer *total_threads)
 {
@@ -42,7 +42,7 @@ int aocl_fla_progress(char* api,integer lenapi,integer *progress,integer *curren
 }
 #endif
 
-#if SET_PROCESS_ENABLE
+#if AOCL_FLA_SET_PROGRESS_ENABLE == 2
 #define BUFLEN 16
 int test_progress(char* api,integer lenapi,integer *progress,integer *current_thread,integer *total_threads)
 {
@@ -82,7 +82,7 @@ int  main( int argc, char** argv )
     /*Read SVD parameters from config file */
     fla_test_read_svd_params ( SVD_PARAMETERS_FILENAME, &params  );
     
-    #if SET_PROCESS_ENABLE
+    #if AOCL_FLA_SET_PROGRESS_ENABLE == 2
         aocl_fla_set_progress(test_progress);
     #endif
 
