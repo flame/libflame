@@ -15,6 +15,11 @@ char fla_test_storage_format_string[ 200 ];
 char fla_test_stor_chars[ NUM_STORAGE_CHARS + 1 ];
 double ref_time_sec = 0.0;
 
+integer total_tests;
+integer total_failed_tests;
+integer tests_passed[4];
+integer tests_failed[4];
+
 #define SKIP_EXTRA_LINE_READ() \
         eol = fgetc(fp); \
         if(eol != '\n') \
@@ -97,9 +102,16 @@ int  main( int argc, char** argv )
 void fla_test_lapack_suite( char* input_filename, test_params_t *params )
 {
     char buffer[ INPUT_BUFFER_SIZE ];
-    integer i, op;
+    integer check_flag;
+    integer i, op, test_api_count;
     FILE* input_stream;
 
+    total_tests = 0;
+    total_failed_tests = 0;
+    tests_passed[0] = tests_passed[1] = tests_passed[2] = tests_passed[3] = 0;
+    tests_failed[0] = tests_failed[1] = tests_failed[2] = tests_failed[3] = 0;
+
+    test_api_count = sizeof(API_test_functions) / sizeof(API_test_functions[0]);
 
     fla_test_output_info( "\n" );
     fla_test_output_info( "--- LAPACK-level operation tests ---------------------\n" );
@@ -115,10 +127,14 @@ void fla_test_lapack_suite( char* input_filename, test_params_t *params )
         fla_test_output_error( "Failed to open input file %s. Check existence and permissions.\n", input_filename );
     }
 
+    // Check for '2' option in input config
+    check_flag = fla_test_check_run_only(input_stream, &op,  buffer);
+
     while(fla_test_read_tests_for_op( input_stream, &op, buffer))
     {
-        if(op)
+        if(op == check_flag)
         {
+            // Check if the specified API is supported in test suite
             for( i=0; i < test_api_count; i++)
             {
                 if(!strcmp(API_test_functions[i].ops, buffer))
@@ -132,6 +148,17 @@ void fla_test_lapack_suite( char* input_filename, test_params_t *params )
     }
 
     fclose( input_stream );
+
+    fla_test_output_info("\n\nResults Summary:\n\n");
+    fla_test_output_info("%2sDATATYPE%13s No. of Tests%6s Passed%9s Failed\n", "", "", "", "");
+    fla_test_output_info( "===================================================================\n" );
+    fla_test_output_info("%2sFLOAT%15s %8d%8s %8d%12s %d\n", "", "", tests_passed[0] + tests_failed[0], "", tests_passed[0], "", tests_failed[0]);
+    fla_test_output_info("%2sFLOAT%15s %8d%8s %8d%12s %d\n", "", "", tests_passed[1] + tests_failed[1], "", tests_passed[1], "", tests_failed[1]);
+    fla_test_output_info("%2sFLOAT%15s %8d%8s %8d%12s %d\n", "", "", tests_passed[2] + tests_failed[2], "", tests_passed[2], "", tests_failed[2]);
+    fla_test_output_info("%2sFLOAT%15s %8d%8s %8d%12s %d\n", "", "", tests_passed[3] + tests_failed[3], "", tests_passed[3], "", tests_failed[3]);
+
+    if(total_failed_tests > 0)
+        printf("\n\nThere are failed tests, Please look at output log for more details\n");
 }
 
 
@@ -140,6 +167,19 @@ void fla_test_output_op_struct( char* op_str, integer op )
     fla_test_output_info( "%s LAPACK  %"FT_IS"\n", op_str, op );
 }
 
+/* THis function checks if operations file specified any run only option */
+integer fla_test_check_run_only( FILE* input_stream, integer* op, char* buffer)
+{
+    integer run_only_flag = 1;
+    while(fla_test_read_tests_for_op( input_stream, op, buffer))
+    {
+        run_only_flag = max(run_only_flag, *op);
+    }
+
+    fseek( input_stream, 0, SEEK_SET );
+
+    return run_only_flag;
+}
 
 /* This functiom extract enable option and API name from operation file */
 integer fla_test_read_tests_for_op( FILE* input_stream, integer* op, char* buffer )
@@ -157,7 +197,6 @@ integer fla_test_read_tests_for_op( FILE* input_stream, integer* op, char* buffe
     // commented nor blank.
     while ( temp[0] == COMMENT_CHAR || temp[0] == '\n' ||
             temp[0] == ' '          || temp[0] == '\t' );
-
 
     // Save the string in temp, up to first white space character, into buffer.
     sscanf( temp, "%"FT_IS" %s", op, buffer );
@@ -1686,7 +1725,6 @@ void fla_test_op_driver( char*         func_str,
                 params->datatype_char = params->lin_solver_paramslist[range_loop_counter].data_types_char;
                 n_repeats             = params->lin_solver_paramslist[range_loop_counter].num_repeats;
                 n_datatypes           = params->lin_solver_paramslist[range_loop_counter].num_data_types;
-
                 break;
 
             case EIG_SYM:
@@ -1768,6 +1806,11 @@ void fla_test_op_driver( char*         func_str,
                                          datatype_char,
                                          p_cur, q_cur, perf, time, scale, residual, pass_str );
                 }
+
+                total_tests++;
+                tests_passed[datatype - FLOAT] += (pass_str[0] == 'P');
+                tests_failed[datatype - FLOAT] += (pass_str[0] == 'F');
+                total_failed_tests += (pass_str[0] == 'F');
             }
         }
 

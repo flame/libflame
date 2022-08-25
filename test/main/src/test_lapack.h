@@ -338,6 +338,7 @@ void fla_test_output_info( char* message, ... );
 void fla_test_output_error( char* message, ... );
 void fla_test_parse_message( FILE* output_stream, char* message, va_list args );
 void fla_test_read_next_line( char* buffer, FILE* input_stream );
+integer fla_test_check_run_only( FILE* input_stream, integer* op, char* buffer);
 integer fla_test_read_tests_for_op( FILE* input_stream, integer* op, char* buffer );
 
 /*Read Linear API parameters from config file */

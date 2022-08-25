@@ -2,9 +2,6 @@
     Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
 */
 
-/* Update test api count */
-#define test_api_count 21
-
 /* Test API function declaration */
 void fla_test_steqr(test_params_t *params);
 void fla_test_stevd(test_params_t *params);
