@@ -2,10 +2,11 @@
     Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
 */
 
-#ifdef FLA_ENABLE_MULTITHREADING
+#ifdef FLA_OPENMP_MULTITHREADING
 
 #ifndef API_ID_DEFINED
 #define API_ID_DEFINED
+
 /* API ID */
 typedef enum
 {

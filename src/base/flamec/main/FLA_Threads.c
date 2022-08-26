@@ -4,7 +4,7 @@
 
 #include "FLAME.h"
 
-#ifdef FLA_ENABLE_MULTITHREADING
+#ifdef FLA_OPENMP_MULTITHREADING
 
 #include <omp.h>
 
