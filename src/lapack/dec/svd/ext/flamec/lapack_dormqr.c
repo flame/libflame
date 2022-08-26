@@ -313,7 +313,7 @@ int lapack_dormqr(char *side, char *trans, integer *m, integer *n, integer *k, d
         i__1 = i2;
         i__2 = i3;
 
-#ifdef FLA_ENABLE_MULTITHREADING
+#ifdef FLA_OPENMP_MULTITHREADING
         /* Get optimum thread number for DORMQR*/
         FLA_Thread_optimum( FLA_ORMQR, &actual_num_threads);
         #pragma omp parallel num_threads(actual_num_threads) private(i__, thread_id, mi_sub, ni_sub, index)
@@ -327,7 +327,7 @@ int lapack_dormqr(char *side, char *trans, integer *m, integer *n, integer *k, d
                     i__ += i__2) {
 
                 /* Computing MIN */
-#ifdef FLA_ENABLE_MULTITHREADING
+#ifdef FLA_OPENMP_MULTITHREADING
                 /* Compute triangular factor of the block reflector in a single thread */
                 #pragma omp single
 #endif
@@ -345,7 +345,7 @@ int lapack_dormqr(char *side, char *trans, integer *m, integer *n, integer *k, d
                     /* H or H**T is applied to C(i:m,1:n) */
                     mi = *m - i__ + 1;
                     ic = i__;
-#ifdef FLA_ENABLE_MULTITHREADING
+#ifdef FLA_OPENMP_MULTITHREADING
                     /* Determine the sub partition range of current thread */
                     FLA_Thread_get_subrange(thread_id, actual_num_threads, ni, &ni_sub, &index);
                     mi_sub = mi;
@@ -355,7 +355,7 @@ int lapack_dormqr(char *side, char *trans, integer *m, integer *n, integer *k, d
                     /* H or H**T is applied to C(1:m,i:n) */
                     ni = *n - i__ + 1;
                     jc = i__;
-#ifdef FLA_ENABLE_MULTITHREADING
+#ifdef FLA_OPENMP_MULTITHREADING
                     /* Determine the sub partition range of current thread */
                     FLA_Thread_get_subrange(thread_id, actual_num_threads, mi, &mi_sub, &index);
                     ni_sub = ni;
@@ -363,7 +363,7 @@ int lapack_dormqr(char *side, char *trans, integer *m, integer *n, integer *k, d
                 }
 
                 /* Apply H or H**T */
-#ifdef FLA_ENABLE_MULTITHREADING
+#ifdef FLA_OPENMP_MULTITHREADING
                 if(left)
                     dlarfb_(side, trans, "Forward", "Columnwise", &mi_sub, &ni_sub, &ib, &a[ i__ + i__ * a_dim1], lda, &work[iwt], &c__65, &c__[ic + (index + jc) * c_dim1], ldc, &work[1 + index], &ldwork);
                 else

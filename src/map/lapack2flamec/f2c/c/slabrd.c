@@ -250,7 +250,7 @@ int slabrd_(integer *m, integer *n, integer *nb, real *a, integer *lda, real *d_
     y_offset = 1 + y_dim1;
     y -= y_offset;
 
-#ifdef FLA_ENABLE_MULTITHREADING
+#ifdef FLA_OPENMP_MULTITHREADING
     /* Get optimum thread number for DLABRD*/
     FLA_Thread_optimum( FLA_LABRD, &actual_num_threads);
 #endif
@@ -264,7 +264,7 @@ int slabrd_(integer *m, integer *n, integer *nb, real *a, integer *lda, real *d_
     {
         /* Reduce to upper bidiagonal form */
         i__1 = *nb;
-#ifdef FLA_ENABLE_MULTITHREADING
+#ifdef FLA_OPENMP_MULTITHREADING
         #pragma omp parallel num_threads(actual_num_threads) private(i__, i__2, i__3, i__4, i__5, thread_id)
         {
             thread_id = omp_get_thread_num();
@@ -301,7 +301,7 @@ int slabrd_(integer *m, integer *n, integer *nb, real *a, integer *lda, real *d_
                     /* Compute Y(i+1:n,i) */
                     i__2 = *m - i__ + 1;
                     i__3 = *n - i__;
-#ifdef FLA_ENABLE_MULTITHREADING
+#ifdef FLA_OPENMP_MULTITHREADING
                     /* Divide column wise equally among each threads */ 
                     FLA_Thread_get_subrange(thread_id, actual_num_threads, i__3, &i__4, &i__5);
                     #pragma omp barrier
@@ -343,7 +343,7 @@ int slabrd_(integer *m, integer *n, integer *nb, real *a, integer *lda, real *d_
                     /* Compute X(i+1:m,i) */
                     i__2 = *m - i__;
                     i__3 = *n - i__;
-#ifdef FLA_ENABLE_MULTITHREADING
+#ifdef FLA_OPENMP_MULTITHREADING
                     /* Divide row wise equally among each threads */ 
                     FLA_Thread_get_subrange(thread_id, actual_num_threads, i__2, &i__4, &i__5);
                     #pragma omp barrier
@@ -376,7 +376,7 @@ int slabrd_(integer *m, integer *n, integer *nb, real *a, integer *lda, real *d_
     {
         /* Reduce to lower bidiagonal form */
         i__1 = *nb;
-#ifdef FLA_ENABLE_MULTITHREADING
+#ifdef FLA_OPENMP_MULTITHREADING
         #pragma omp parallel num_threads(actual_num_threads) private(i__, i__2, i__3, i__4, i__5, thread_id)
         {
             thread_id = omp_get_thread_num();
@@ -413,7 +413,7 @@ int slabrd_(integer *m, integer *n, integer *nb, real *a, integer *lda, real *d_
                     /* Compute X(i+1:m,i) */
                     i__2 = *m - i__;
                     i__3 = *n - i__ + 1;
-#ifdef FLA_ENABLE_MULTITHREADING
+#ifdef FLA_OPENMP_MULTITHREADING
                     /* Divide row wise equally among each threads */ 
                     FLA_Thread_get_subrange(thread_id, actual_num_threads, i__2, &i__4, &i__5);
                     #pragma omp barrier
@@ -455,7 +455,7 @@ int slabrd_(integer *m, integer *n, integer *nb, real *a, integer *lda, real *d_
                     /* Compute Y(i+1:n,i) */
                     i__2 = *m - i__;
                     i__3 = *n - i__;
-#ifdef FLA_ENABLE_MULTITHREADING
+#ifdef FLA_OPENMP_MULTITHREADING
                     /* Divide column wise equally among each threads */ 
                     FLA_Thread_get_subrange(thread_id, actual_num_threads, i__3, &i__4, &i__5);
                     #pragma omp barrier
