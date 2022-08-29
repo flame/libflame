@@ -30,16 +30,15 @@
 
 // --- Macro to enable/disable Thread Local Storage (TLS) for global variables -
 #if defined(WINDOWS_FLA_SHARED_BUILD) && defined(WINDOWS_FLA_TEST)
-#define ENABLE_THREAD_LOCAL_STORAGE 0
-#define LIBFLAME_IMPORT __declspec(dllimport)
+ #define ENABLE_THREAD_LOCAL_STORAGE 0
+ #define LIBFLAME_IMPORT __declspec(dllimport)
 #else
-#if !defined FLA_ENABLE_MULTITHREADING && !defined FLA_ENABLE_SUPERMATRIX
-#define ENABLE_THREAD_LOCAL_STORAGE 1
-#define LIBFLAME_IMPORT
-#else
-#define ENABLE_THREAD_LOCAL_STORAGE 0
-#define LIBFLAME_IMPORT
-#endif
+ #if defined(FLA_ENABLE_AMD_OPT) && defined(FLA_ENABLE_MULTITHREADING) && !defined FLA_ENABLE_SUPERMATRIX
+   #define ENABLE_THREAD_LOCAL_STORAGE 1
+ #else
+   #define ENABLE_THREAD_LOCAL_STORAGE 0
+ #endif
+ #define LIBFLAME_IMPORT
 #endif
 
 #if ENABLE_THREAD_LOCAL_STORAGE
