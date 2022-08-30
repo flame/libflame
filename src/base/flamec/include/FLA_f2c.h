@@ -17,9 +17,9 @@
 #include <math.h>
 #include <complex.h>
 #undef complex
+#include "FLA_config.h"
 #include "FLA_macro_defs.h"
 #include "aocldtl.h"
-#include "FLA_config.h"
 #include "FLA_progress.h"
 #include "FLA_Threads.h"
 
