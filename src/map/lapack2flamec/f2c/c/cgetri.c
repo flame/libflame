@@ -118,9 +118,9 @@ int cgetri_(integer *n, complex *a, integer *lda, integer * ipiv, complex *work,
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cgetri inputs: n %lld, lda %lld, ipiv %lld, lwork %lld",*n, *lda, *ipiv, *lwork);
+    snprintf(buffer, 256,"cgetri inputs: n %lld, lda %lld, lwork %lld",*n, *lda, *lwork);
 #else
-    snprintf(buffer, 256,"cgetri inputs: n %d, lda %d, ipiv %d, lwork %d",*n, *lda, *ipiv, *lwork);
+    snprintf(buffer, 256,"cgetri inputs: n %d, lda %d, lwork %d",*n, *lda, *lwork);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

@@ -179,9 +179,9 @@ int chprfs_(char *uplo, integer *n, integer *nrhs, complex * ap, complex *afp, i
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"chprfs inputs: uplo %c, n %lld, nrhs %lld, ipiv %lld, ldb %lld, ldx %lld",*uplo, *n, *nrhs, *ipiv, *ldb, *ldx);
+    snprintf(buffer, 256,"chprfs inputs: uplo %c, n %lld, nrhs %lld, ldb %lld, ldx %lld",*uplo, *n, *nrhs, *ldb, *ldx);
 #else
-    snprintf(buffer, 256,"chprfs inputs: uplo %c, n %d, nrhs %d, ipiv %d, ldb %d, ldx %d",*uplo, *n, *nrhs, *ipiv, *ldb, *ldx);
+    snprintf(buffer, 256,"chprfs inputs: uplo %c, n %d, nrhs %d, ldb %d, ldx %d",*uplo, *n, *nrhs, *ldb, *ldx);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

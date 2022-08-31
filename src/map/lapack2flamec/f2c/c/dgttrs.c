@@ -131,7 +131,7 @@ IPIV(i) = i indicates a row interchange was not */
 int dgttrs_(char *trans, integer *n, integer *nrhs, doublereal *dl, doublereal *d__, doublereal *du, doublereal *du2, integer *ipiv, doublereal *b, integer *ldb, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dgttrs inputs: trans %c, n %" FLA_IS ", nrhs %" FLA_IS ", ipiv %" FLA_IS ", ldb %" FLA_IS "",*trans, *n, *nrhs, *ipiv, *ldb);
+    AOCL_DTL_SNPRINTF("dgttrs inputs: trans %c, n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS "",*trans, *n, *nrhs, *ldb);
     /* System generated locals */
     integer b_dim1, b_offset, i__1, i__2, i__3;
     /* Local variables */

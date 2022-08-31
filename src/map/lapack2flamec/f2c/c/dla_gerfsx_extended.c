@@ -392,7 +392,7 @@ i+1}
 int dla_gerfsx_extended_(integer *prec_type__, integer * trans_type__, integer *n, integer *nrhs, doublereal *a, integer *lda, doublereal *af, integer *ldaf, integer *ipiv, logical *colequ, doublereal *c__, doublereal *b, integer *ldb, doublereal *y, integer * ldy, doublereal *berr_out__, integer *n_norms__, doublereal *errs_n__, doublereal *errs_c__, doublereal *res, doublereal *ayb, doublereal * dy, doublereal *y_tail__, doublereal *rcond, integer *ithresh, doublereal *rthresh, doublereal *dz_ub__, logical *ignore_cwise__, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dla_gerfsx_extended inputs: prec_type__ %" FLA_IS ", trans_type__ %" FLA_IS ", n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", ipiv %" FLA_IS ", ldb %" FLA_IS ", ldy %" FLA_IS ", n_norms__ %" FLA_IS ", ithresh %" FLA_IS "",*prec_type__, *trans_type__, *n, *nrhs, *lda, *ldaf, *ipiv, *ldb, *ldy, *n_norms__, *ithresh);
+    AOCL_DTL_SNPRINTF("dla_gerfsx_extended inputs: prec_type__ %" FLA_IS ", trans_type__ %" FLA_IS ", n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", ldb %" FLA_IS ", ldy %" FLA_IS ", n_norms__ %" FLA_IS ", ithresh %" FLA_IS "",*prec_type__, *trans_type__, *n, *nrhs, *lda, *ldaf, *ldb, *ldy, *n_norms__, *ithresh);
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, b_dim1, b_offset, y_dim1, y_offset, errs_n_dim1, errs_n_offset, errs_c_dim1, errs_c_offset, i__1, i__2, i__3;
     doublereal d__1, d__2;

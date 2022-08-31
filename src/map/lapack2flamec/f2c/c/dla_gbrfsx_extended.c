@@ -409,7 +409,7 @@ i+1}
 int dla_gbrfsx_extended_(integer *prec_type__, integer * trans_type__, integer *n, integer *kl, integer *ku, integer *nrhs, doublereal *ab, integer *ldab, doublereal *afb, integer *ldafb, integer *ipiv, logical *colequ, doublereal *c__, doublereal *b, integer *ldb, doublereal *y, integer *ldy, doublereal *berr_out__, integer *n_norms__, doublereal *err_bnds_norm__, doublereal * err_bnds_comp__, doublereal *res, doublereal *ayb, doublereal *dy, doublereal *y_tail__, doublereal *rcond, integer *ithresh, doublereal *rthresh, doublereal *dz_ub__, logical *ignore_cwise__, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dla_gbrfsx_extended inputs: prec_type__ %" FLA_IS ", trans_type__ %" FLA_IS ", n %" FLA_IS ", kl %" FLA_IS ", ku %" FLA_IS ", nrhs %" FLA_IS ", ldab %" FLA_IS ", ldafb %" FLA_IS ", ipiv %" FLA_IS ", ldb %" FLA_IS ", ldy %" FLA_IS ", n_norms__ %" FLA_IS ", ithresh %" FLA_IS "",*prec_type__, *trans_type__, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ipiv, *ldb, *ldy, *n_norms__, *ithresh);
+    AOCL_DTL_SNPRINTF("dla_gbrfsx_extended inputs: prec_type__ %" FLA_IS ", trans_type__ %" FLA_IS ", n %" FLA_IS ", kl %" FLA_IS ", ku %" FLA_IS ", nrhs %" FLA_IS ", ldab %" FLA_IS ", ldafb %" FLA_IS ", ldb %" FLA_IS ", ldy %" FLA_IS ", n_norms__ %" FLA_IS ", ithresh %" FLA_IS "",*prec_type__, *trans_type__, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ldb, *ldy, *n_norms__, *ithresh);
     /* System generated locals */
     integer ab_dim1, ab_offset, afb_dim1, afb_offset, b_dim1, b_offset, y_dim1, y_offset, err_bnds_norm_dim1, err_bnds_norm_offset, err_bnds_comp_dim1, err_bnds_comp_offset, i__1, i__2, i__3;
     doublereal d__1, d__2;

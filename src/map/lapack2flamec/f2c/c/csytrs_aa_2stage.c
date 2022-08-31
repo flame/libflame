@@ -140,9 +140,9 @@ int csytrs_aa_2stage_(char *uplo, integer *n, integer *nrhs, complex *a, integer
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"csytrs_aa_2stage inputs: uplo %c, n %lld, nrhs %lld, lda %lld, ltb %lld, ipiv %lld, ipiv2 %lld, ldb %lld",*uplo, *n, *nrhs, *lda, *ltb, *ipiv, *ipiv2, *ldb);
+    snprintf(buffer, 256,"csytrs_aa_2stage inputs: uplo %c, n %lld, nrhs %lld, lda %lld, ltb %lld, ldb %lld",*uplo, *n, *nrhs, *lda, *ltb, *ldb);
 #else
-    snprintf(buffer, 256,"csytrs_aa_2stage inputs: uplo %c, n %d, nrhs %d, lda %d, ltb %d, ipiv %d, ipiv2 %d, ldb %d",*uplo, *n, *nrhs, *lda, *ltb, *ipiv, *ipiv2, *ldb);
+    snprintf(buffer, 256,"csytrs_aa_2stage inputs: uplo %c, n %d, nrhs %d, lda %d, ltb %d, ldb %d",*uplo, *n, *nrhs, *lda, *ltb, *ldb);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

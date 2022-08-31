@@ -201,7 +201,7 @@ the routine */
 int dgelsy_(integer *m, integer *n, integer *nrhs, doublereal *a, integer *lda, doublereal *b, integer *ldb, integer * jpvt, doublereal *rcond, integer *rank, doublereal *work, integer * lwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dgelsy inputs: m %" FLA_IS ", n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", jpvt %" FLA_IS "",*m, *n, *nrhs, *lda, *ldb, *jpvt);
+    AOCL_DTL_SNPRINTF("dgelsy inputs: m %" FLA_IS ", n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*m, *n, *nrhs, *lda, *ldb);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2;
     doublereal d__1, d__2;

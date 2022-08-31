@@ -115,7 +115,7 @@ for 1<=i<=N, row i of the */
 int dgetrs_(char *trans, integer *n, integer *nrhs, doublereal *a, integer *lda, integer *ipiv, doublereal *b, integer * ldb, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dgetrs inputs: trans %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS ", ldb %" FLA_IS "",*trans, *n, *nrhs, *lda, *ipiv, *ldb);
+    AOCL_DTL_SNPRINTF("dgetrs inputs: trans %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*trans, *n, *nrhs, *lda, *ldb);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */

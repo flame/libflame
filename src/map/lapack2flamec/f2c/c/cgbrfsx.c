@@ -442,9 +442,9 @@ int cgbrfsx_(char *trans, char *equed, integer *n, integer * kl, integer *ku, in
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cgbrfsx inputs: trans %c, equed %c, n %lld, kl %lld, ku %lld, nrhs %lld, ldab %lld, ldafb %lld, ipiv %lld, ldb %lld, ldx %lld, n_err_bnds__ %lld, nparams %lld",*trans, *equed, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ipiv, *ldb, *ldx, *n_err_bnds__, *nparams);
+    snprintf(buffer, 256,"cgbrfsx inputs: trans %c, equed %c, n %lld, kl %lld, ku %lld, nrhs %lld, ldab %lld, ldafb %lld, ldb %lld, ldx %lld, n_err_bnds__ %lld, nparams %lld",*trans, *equed, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ldb, *ldx, *n_err_bnds__, *nparams);
 #else
-    snprintf(buffer, 256,"cgbrfsx inputs: trans %c, equed %c n %d, kl %d, ku %d, nrhs %d, ldab %d, ldafb %d, ipiv %d ldb %d, ldx %d, n_err_bnds__ %d, nparams %d",*trans, *equed, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ipiv, *ldb, *ldx, *n_err_bnds__, *nparams);
+    snprintf(buffer, 256,"cgbrfsx inputs: trans %c, equed %c n %d, kl %d, ku %d, nrhs %d, ldab %d, ldafb %d ldb %d, ldx %d, n_err_bnds__ %d, nparams %d",*trans, *equed, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ldb, *ldx, *n_err_bnds__, *nparams);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

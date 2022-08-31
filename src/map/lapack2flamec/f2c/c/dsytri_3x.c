@@ -155,7 +155,7 @@ the matrix is singular and its */
 int dsytri_3x_(char *uplo, integer *n, doublereal *a, integer *lda, doublereal *e, integer *ipiv, doublereal *work, integer *nb, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dsytri_3x inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS ", nb %" FLA_IS "",*uplo, *n, *lda, *ipiv, *nb);
+    AOCL_DTL_SNPRINTF("dsytri_3x inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", nb %" FLA_IS "",*uplo, *n, *lda, *nb);
     /* System generated locals */
     integer a_dim1, a_offset, work_dim1, work_offset, i__1, i__2, i__3;
     /* Local variables */

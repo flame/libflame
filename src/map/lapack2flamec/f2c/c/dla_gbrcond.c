@@ -159,7 +159,7 @@ row i of the matrix was interchanged */
 doublereal dla_gbrcond_(char *trans, integer *n, integer *kl, integer *ku, doublereal *ab, integer *ldab, doublereal *afb, integer *ldafb, integer *ipiv, integer *cmode, doublereal *c__, integer *info, doublereal *work, integer *iwork)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dla_gbrcond inputs: trans %c, n %" FLA_IS ", kl %" FLA_IS ", ku %" FLA_IS ", ldab %" FLA_IS ", ldafb %" FLA_IS ", ipiv %" FLA_IS ", cmode %" FLA_IS ", work %" FLA_IS ", iwork %" FLA_IS "",*trans, *n, *kl, *ku, *ldab, *ldafb, *ipiv, *cmode, *work, *iwork);
+    AOCL_DTL_SNPRINTF("dla_gbrcond inputs: trans %c, n %" FLA_IS ", kl %" FLA_IS ", ku %" FLA_IS ", ldab %" FLA_IS ", ldafb %" FLA_IS ", cmode %" FLA_IS ", work %" FLA_IS ", iwork %" FLA_IS "",*trans, *n, *kl, *ku, *ldab, *ldafb, *cmode, *work, *iwork);
     /* System generated locals */
     integer ab_dim1, ab_offset, afb_dim1, afb_offset, i__1, i__2, i__3, i__4;
     doublereal ret_val, d__1;

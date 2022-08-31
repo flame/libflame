@@ -286,7 +286,7 @@ int sgtsvx_(char *fact, char *trans, integer *n, integer * nrhs, real *dl, real 
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
-    snprintf(buffer, 256,"sgtsvx inputs: fact %c, trans %c, n %d, nrhs %d, ipiv %d, ldb %d, ldx %d",*fact, *trans, *n, *nrhs, *ipiv, *ldb, *ldx);
+    snprintf(buffer, 256,"sgtsvx inputs: fact %c, trans %c, n %d, nrhs %d, ldb %d, ldx %d",*fact, *trans, *n, *nrhs, *ldb, *ldx);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */

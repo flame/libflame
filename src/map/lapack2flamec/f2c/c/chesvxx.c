@@ -509,9 +509,9 @@ int chesvxx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *a, int
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"chesvxx inputs: fact %c, uplo %c, n %lld, nrhs %lld, lda %lld, ldaf %lld, ipiv %lld, equed %c, ldb %lld, ldx %lld, n_err_bnds__ %lld, nparams %lld",*fact, *uplo, *n, *nrhs, *lda, *ldaf, *ipiv, *equed, *ldb, *ldx, *n_err_bnds__, *nparams);
+    snprintf(buffer, 256,"chesvxx inputs: fact %c, uplo %c, n %lld, nrhs %lld, lda %lld, ldaf %lld, equed %c, ldb %lld, ldx %lld, n_err_bnds__ %lld, nparams %lld",*fact, *uplo, *n, *nrhs, *lda, *ldaf, *equed, *ldb, *ldx, *n_err_bnds__, *nparams);
 #else
-    snprintf(buffer, 256,"chesvxx inputs: fact %c, uplo %c, n %d, nrhs %d, lda %d, ldaf %d, ipiv %d, equed %c, ldb %d, ldx %d, n_err_bnds__ %d, nparams %d",*fact, *uplo, *n, *nrhs, *lda, *ldaf, *ipiv, *equed, *ldb, *ldx, *n_err_bnds__, *nparams);
+    snprintf(buffer, 256,"chesvxx inputs: fact %c, uplo %c, n %d, nrhs %d, lda %d, ldaf %d, equed %c, ldb %d, ldx %d, n_err_bnds__ %d, nparams %d",*fact, *uplo, *n, *nrhs, *lda, *ldaf, *equed, *ldb, *ldx, *n_err_bnds__, *nparams);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

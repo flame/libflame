@@ -146,9 +146,9 @@ real cla_gbrcond_x_(char *trans, integer *n, integer *kl, integer *ku, complex *
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cla_gbrcond_x inputs: trans %c, n %lld, kl %lld, ku %lld, ldab %lld, ldafb %lld, ipiv %lld",*trans, *n, *kl, *ku, *ldab, *ldafb, *ipiv);
+    snprintf(buffer, 256,"cla_gbrcond_x inputs: trans %c, n %lld, kl %lld, ku %lld, ldab %lld, ldafb %lld",*trans, *n, *kl, *ku, *ldab, *ldafb);
 #else
-    snprintf(buffer, 256,"cla_gbrcond_x inputs: trans %c, n %d, kl %d, ku %d, ldab %d, ldafb %d, ipiv %d",*trans, *n, *kl, *ku, *ldab, *ldafb, *ipiv);
+    snprintf(buffer, 256,"cla_gbrcond_x inputs: trans %c, n %d, kl %d, ku %d, ldab %d, ldafb %d",*trans, *n, *kl, *ku, *ldab, *ldafb);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

@@ -131,7 +131,7 @@ for 1 <= i <= N, row i of the matrix was */
 int dgbtrs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, doublereal *ab, integer *ldab, integer *ipiv, doublereal *b, integer *ldb, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dgbtrs inputs: trans %c, n %" FLA_IS ", kl %" FLA_IS ", ku %" FLA_IS ", nrhs %" FLA_IS ", ldab %" FLA_IS ", ipiv %" FLA_IS ", ldb %" FLA_IS "",*trans, *n, *kl, *ku, *nrhs, *ldab, *ipiv, *ldb);
+    AOCL_DTL_SNPRINTF("dgbtrs inputs: trans %c, n %" FLA_IS ", kl %" FLA_IS ", ku %" FLA_IS ", nrhs %" FLA_IS ", ldab %" FLA_IS ", ldb %" FLA_IS "",*trans, *n, *kl, *ku, *nrhs, *ldab, *ldb);
     /* System generated locals */
     integer ab_dim1, ab_offset, b_dim1, b_offset, i__1, i__2, i__3;
     /* Local variables */

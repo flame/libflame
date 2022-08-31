@@ -205,9 +205,9 @@ int csyconvf_(char *uplo, char *way, integer *n, complex *a, integer *lda, compl
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"csyconvf inputs: uplo %c, way %c, n %lld, lda %lld, ipiv %lld",*uplo, *way, *n, *lda, *ipiv);
+    snprintf(buffer, 256,"csyconvf inputs: uplo %c, way %c, n %lld, lda %lld",*uplo, *way, *n, *lda);
 #else
-    snprintf(buffer, 256,"csyconvf inputs: uplo %c, way %c, n %d, lda %d, ipiv %d",*uplo, *way, *n, *lda, *ipiv);
+    snprintf(buffer, 256,"csyconvf inputs: uplo %c, way %c, n %d, lda %d",*uplo, *way, *n, *lda);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

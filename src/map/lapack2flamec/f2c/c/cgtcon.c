@@ -137,9 +137,9 @@ int cgtcon_(char *norm, integer *n, complex *dl, complex * d__, complex *du, com
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cgtcon inputs: norm %c, n %lld, ipiv %lld",*norm, *n, *ipiv);
+    snprintf(buffer, 256,"cgtcon inputs: norm %c, n %lld",*norm, *n);
 #else
-    snprintf(buffer, 256,"cgtcon inputs: norm %c, n %d, ipiv %d",*norm, *n, *ipiv);
+    snprintf(buffer, 256,"cgtcon inputs: norm %c, n %d",*norm, *n);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

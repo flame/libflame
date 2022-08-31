@@ -114,9 +114,9 @@ real cla_herpvgrw_(char *uplo, integer *n, integer *info, complex *a, integer *l
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cla_herpvgrw inputs: uplo %c, n %lld, lda %lld, ldaf %lld, ipiv %lld",*uplo, *n, *lda, *ldaf, *ipiv);
+    snprintf(buffer, 256,"cla_herpvgrw inputs: uplo %c, n %lld, lda %lld, ldaf %lld",*uplo, *n, *lda, *ldaf);
 #else
-    snprintf(buffer, 256,"cla_herpvgrw inputs: uplo %c, n %d, lda %d, ldaf %d, ipiv %d",*uplo, *n, *lda, *ldaf, *ipiv);
+    snprintf(buffer, 256,"cla_herpvgrw inputs: uplo %c, n %d, lda %d, ldaf %d",*uplo, *n, *lda, *ldaf);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

@@ -130,9 +130,9 @@ int chetrs_aa_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, 
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"chetrs_aa inputs: uplo %c, n %lld, nrhs %lld, lda %lld, ipiv %lld, ldb %lld, lwork %lld",*uplo, *n, *nrhs, *lda, *ipiv, *ldb, *lwork);
+    snprintf(buffer, 256,"chetrs_aa inputs: uplo %c, n %lld, nrhs %lld, lda %lld, ldb %lld, lwork %lld",*uplo, *n, *nrhs, *lda, *ldb, *lwork);
 #else
-    snprintf(buffer, 256,"chetrs_aa inputs: uplo %c, n %d, nrhs %d, lda %d, ipiv %d, ldb %d, lwork %d",*uplo, *n, *nrhs, *lda, *ipiv, *ldb, *lwork);
+    snprintf(buffer, 256,"chetrs_aa inputs: uplo %c, n %d, nrhs %d, lda %d, ldb %d, lwork %d",*uplo, *n, *nrhs, *lda, *ldb, *lwork);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

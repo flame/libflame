@@ -125,7 +125,7 @@ int ssytrs_aa_(char *uplo, integer *n, integer *nrhs, real * a, integer *lda, in
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
-    snprintf(buffer, 256,"ssytrs_aa inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS ", ldb %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ipiv, *ldb);
+    snprintf(buffer, 256,"ssytrs_aa inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ldb);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */

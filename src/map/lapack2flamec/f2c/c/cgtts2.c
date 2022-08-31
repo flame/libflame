@@ -122,9 +122,9 @@ int cgtts2_(integer *itrans, integer *n, integer *nrhs, complex *dl, complex *d_
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cgtts2 inputs: itrans %lld, n %lld, nrhs %lld, ipiv %lld, ldb %lld",*itrans, *n, *nrhs, *ipiv, *ldb);
+    snprintf(buffer, 256,"cgtts2 inputs: itrans %lld, n %lld, nrhs %lld, ldb %lld",*itrans, *n, *nrhs, *ldb);
 #else
-    snprintf(buffer, 256,"cgtts2 inputs: itrans %d, n %d, nrhs %d, ipiv %d, ldb %d",*itrans, *n, *nrhs, *ipiv, *ldb);
+    snprintf(buffer, 256,"cgtts2 inputs: itrans %d, n %d, nrhs %d, ldb %d",*itrans, *n, *nrhs, *ldb);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

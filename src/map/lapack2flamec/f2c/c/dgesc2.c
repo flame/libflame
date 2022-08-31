@@ -107,7 +107,7 @@ for 1 <= j <= N, column j of the */
 int dgesc2_(integer *n, doublereal *a, integer *lda, doublereal *rhs, integer *ipiv, integer *jpiv, doublereal *scale)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dgesc2 inputs: n %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS ", jpiv %" FLA_IS "",*n, *lda, *ipiv, *jpiv);
+    AOCL_DTL_SNPRINTF("dgesc2 inputs: n %" FLA_IS ", lda %" FLA_IS "",*n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     doublereal d__1, d__2;

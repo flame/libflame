@@ -106,7 +106,7 @@ int zsyconv_(char *uplo, char *way, integer *n, doublecomplex *a, integer *lda, 
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
-    snprintf(buffer, 256,"zsyconv inputs: uplo %c, way %c, n %d, lda %d, ipiv %d",*uplo, *way, *n, *lda, *ipiv);
+    snprintf(buffer, 256,"zsyconv inputs: uplo %c, way %c, n %d, lda %d",*uplo, *way, *n, *lda);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */

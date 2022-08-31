@@ -203,7 +203,7 @@ the unit diagonal elements of L are not stored. */
 int zcgesv_(integer *n, integer *nrhs, doublecomplex *a, integer *lda, integer *ipiv, doublecomplex *b, integer *ldb, doublecomplex *x, integer *ldx, doublecomplex *work, complex *swork, doublereal *rwork, integer *iter, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("zcgesv inputs: n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS ", iter %" FLA_IS "",*n, *nrhs, *lda, *ipiv, *ldb, *ldx, *iter);
+    AOCL_DTL_SNPRINTF("zcgesv inputs: n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS ", iter %" FLA_IS "",*n, *nrhs, *lda, *ldb, *ldx, *iter);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, work_dim1, work_offset, x_dim1, x_offset, i__1, i__2;
     doublereal d__1, d__2;

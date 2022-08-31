@@ -121,7 +121,7 @@ static integer c__1 = 1;
 int dsycon_(char *uplo, integer *n, doublereal *a, integer * lda, integer *ipiv, doublereal *anorm, doublereal *rcond, doublereal * work, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dsycon inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS "",*uplo, *n, *lda, *ipiv);
+    AOCL_DTL_SNPRINTF("dsycon inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*uplo, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1;
     /* Local variables */

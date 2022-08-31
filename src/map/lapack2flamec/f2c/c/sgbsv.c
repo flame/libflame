@@ -156,7 +156,7 @@ int sgbsv_(integer *n, integer *kl, integer *ku, integer * nrhs, real *ab, integ
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
-    snprintf(buffer, 256,"sgbsv inputs: n %d, kl %d, ku %d, nrhs %d, ldab %d, ipiv %d, ldb %d",*n, *kl, *ku, *nrhs, *ldab, *ipiv, *ldb);
+    snprintf(buffer, 256,"sgbsv inputs: n %d, kl %d, ku %d, nrhs %d, ldab %d, ldb %d",*n, *kl, *ku, *nrhs, *ldab, *ldb);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */

@@ -112,7 +112,7 @@ the matrix is */
 int dgetri_(integer *n, doublereal *a, integer *lda, integer *ipiv, doublereal *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dgetri inputs: n %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS ", lwork %" FLA_IS "",*n, *lda, *ipiv, *lwork);
+    AOCL_DTL_SNPRINTF("dgetri inputs: n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "",*n, *lda, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     /* Local variables */

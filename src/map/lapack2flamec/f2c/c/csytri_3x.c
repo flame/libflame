@@ -166,9 +166,9 @@ int csytri_3x_(char *uplo, integer *n, complex *a, integer * lda, complex *e, in
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"csytri_3x inputs: uplo %c, n %lld, lda %lld, ipiv %lld, nb %lld",*uplo, *n, *lda, *ipiv, *nb);
+    snprintf(buffer, 256,"csytri_3x inputs: uplo %c, n %lld, lda %lld, nb %lld",*uplo, *n, *lda, *nb);
 #else
-    snprintf(buffer, 256,"csytri_3x inputs: uplo %c, n %d, lda %d, ipiv %d, nb %d",*uplo, *n, *lda, *ipiv, *nb);
+    snprintf(buffer, 256,"csytri_3x inputs: uplo %c, n %d, lda %d, nb %d",*uplo, *n, *lda, *nb);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

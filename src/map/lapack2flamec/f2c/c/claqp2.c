@@ -141,9 +141,9 @@ int claqp2_(integer *m, integer *n, integer *offset, complex *a, integer *lda, i
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"claqp2 inputs: m %lld, n %lld, offset %lld, lda %lld, jpvt %lld",*m, *n, *offset, *lda, *jpvt);
+    snprintf(buffer, 256,"claqp2 inputs: m %lld, n %lld, offset %lld, lda %lld",*m, *n, *offset, *lda);
 #else
-    snprintf(buffer, 256,"claqp2 inputs: m %d, n %d, offset %d, lda %d, jpvt %d",*m, *n, *offset, *lda, *jpvt);
+    snprintf(buffer, 256,"claqp2 inputs: m %d, n %d, offset %d, lda %d",*m, *n, *offset, *lda);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

@@ -174,7 +174,7 @@ int ssprfs_(char *uplo, integer *n, integer *nrhs, real *ap, real *afp, integer 
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
-    snprintf(buffer, 256,"ssprfs inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", ipiv %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*uplo, *n, *nrhs, *ipiv, *ldb, *ldx);
+    snprintf(buffer, 256,"ssprfs inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*uplo, *n, *nrhs, *ldb, *ldx);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */

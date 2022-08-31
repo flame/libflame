@@ -114,7 +114,7 @@ static doublereal c_b19 = 1.;
 int dsytrs_(char *uplo, integer *n, integer *nrhs, doublereal *a, integer *lda, integer *ipiv, doublereal *b, integer * ldb, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dsytrs inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS ", ldb %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ipiv, *ldb);
+    AOCL_DTL_SNPRINTF("dsytrs inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ldb);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     doublereal d__1;

@@ -439,7 +439,7 @@ defaults */
 int zgbrfsx_(char *trans, char *equed, integer *n, integer * kl, integer *ku, integer *nrhs, doublecomplex *ab, integer *ldab, doublecomplex *afb, integer *ldafb, integer *ipiv, doublereal *r__, doublereal *c__, doublecomplex *b, integer *ldb, doublecomplex *x, integer *ldx, doublereal *rcond, doublereal *berr, integer * n_err_bnds__, doublereal *err_bnds_norm__, doublereal * err_bnds_comp__, integer *nparams, doublereal *params, doublecomplex * work, doublereal *rwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("zgbrfsx inputs: trans %c, equed %c, n %" FLA_IS ", kl %" FLA_IS ", ku %" FLA_IS ", nrhs %" FLA_IS ", ldab %" FLA_IS ", ldafb %" FLA_IS ", ipiv %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS ", n_err_bnds__ %" FLA_IS ", nparams %" FLA_IS "",*trans, *equed, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ipiv, *ldb, *ldx, *n_err_bnds__, *nparams);
+    AOCL_DTL_SNPRINTF("zgbrfsx inputs: trans %c, equed %c, n %" FLA_IS ", kl %" FLA_IS ", ku %" FLA_IS ", nrhs %" FLA_IS ", ldab %" FLA_IS ", ldafb %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS ", n_err_bnds__ %" FLA_IS ", nparams %" FLA_IS "",*trans, *equed, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ldb, *ldx, *n_err_bnds__, *nparams);
     /* System generated locals */
     integer ab_dim1, ab_offset, afb_dim1, afb_offset, b_dim1, b_offset, x_dim1, x_offset, err_bnds_norm_dim1, err_bnds_norm_offset, err_bnds_comp_dim1, err_bnds_comp_offset, i__1;
     doublereal d__1, d__2;
