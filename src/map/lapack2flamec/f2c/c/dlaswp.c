@@ -104,7 +104,7 @@
 int dlaswp_(integer *n, doublereal *a, integer *lda, integer *k1, integer *k2, integer *ipiv, integer *incx)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dlaswp inputs: n %" FLA_IS ", lda %" FLA_IS ", k1 %" FLA_IS ", k2 %" FLA_IS ", ipiv %" FLA_IS ", incx %" FLA_IS "",*n, *lda, *k1, *k2, *ipiv, *incx);
+    AOCL_DTL_SNPRINTF("dlaswp inputs: n %" FLA_IS ", lda %" FLA_IS ", k1 %" FLA_IS ", k2 %" FLA_IS ", incx %" FLA_IS "",*n, *lda, *k1, *k2, *incx);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4;
     /* Local variables */

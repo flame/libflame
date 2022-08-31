@@ -116,9 +116,9 @@ int cgesc2_(integer *n, complex *a, integer *lda, complex * rhs, integer *ipiv, 
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cgesc2 inputs: n %lld, lda %lld, ipiv %lld, jpiv %lld",*n, *lda, *ipiv, *jpiv);
+    snprintf(buffer, 256,"cgesc2 inputs: n %lld, lda %lld",*n, *lda);
 #else
-    snprintf(buffer, 256,"cgesc2 inputs: n %d, lda %d, ipiv %d, jpiv %d",*n, *lda, *ipiv, *jpiv);
+    snprintf(buffer, 256,"cgesc2 inputs: n %d, lda %d",*n, *lda);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

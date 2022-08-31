@@ -137,7 +137,7 @@ static integer c__1 = 1;
 doublereal dla_syrcond_(char *uplo, integer *n, doublereal *a, integer *lda, doublereal *af, integer *ldaf, integer *ipiv, integer *cmode, doublereal *c__, integer *info, doublereal *work, integer *iwork)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dla_syrcond inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", ipiv %" FLA_IS ", cmode %" FLA_IS "",*uplo, *n, *lda, *ldaf, *ipiv, *cmode);
+    AOCL_DTL_SNPRINTF("dla_syrcond inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", cmode %" FLA_IS "",*uplo, *n, *lda, *ldaf, *cmode);
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, i__1, i__2;
     doublereal ret_val, d__1;

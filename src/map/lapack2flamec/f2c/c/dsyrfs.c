@@ -183,7 +183,7 @@ static doublereal c_b14 = 1.;
 int dsyrfs_(char *uplo, integer *n, integer *nrhs, doublereal *a, integer *lda, doublereal *af, integer *ldaf, integer * ipiv, doublereal *b, integer *ldb, doublereal *x, integer *ldx, doublereal *ferr, doublereal *berr, doublereal *work, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dsyrfs inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", ipiv %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ldaf, *ipiv, *ldb, *ldx);
+    AOCL_DTL_SNPRINTF("dsyrfs inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ldaf, *ldb, *ldx);
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, b_dim1, b_offset, x_dim1, x_offset, i__1, i__2, i__3;
     doublereal d__1, d__2, d__3;

@@ -107,9 +107,9 @@ int claswp_(integer *n, complex *a, integer *lda, integer * k1, integer *k2, int
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"claswp inputs: n %lld, lda %lld, k1 %lld, k2 %lld, ipiv %lld, incx %lld",*n, *lda, *k1, *k2, *ipiv, *incx);
+    snprintf(buffer, 256,"claswp inputs: n %lld, lda %lld, k1 %lld, k2 %lld, incx %lld",*n, *lda, *k1, *k2, *incx);
 #else
-    snprintf(buffer, 256,"claswp inputs: n %d, lda %d, k1 %d, k2 %d, ipiv %d, incx %d",*n, *lda, *k1, *k2, *ipiv, *incx);
+    snprintf(buffer, 256,"claswp inputs: n %d, lda %d, k1 %d, k2 %d, incx %d",*n, *lda, *k1, *k2, *incx);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

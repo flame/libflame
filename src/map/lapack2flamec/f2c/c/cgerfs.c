@@ -184,9 +184,9 @@ int cgerfs_(char *trans, integer *n, integer *nrhs, complex * a, integer *lda, c
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cgerfs inputs: trans %c, n %lld, nrhs %lld, lda %lld, ldaf %lld, ipiv %lld, ldb %lld, ldx %lld",*trans, *n, *nrhs, *lda, *ldaf, *ipiv, *ldb, *ldx);
+    snprintf(buffer, 256,"cgerfs inputs: trans %c, n %lld, nrhs %lld, lda %lld, ldaf %lld, ldb %lld, ldx %lld",*trans, *n, *nrhs, *lda, *ldaf, *ldb, *ldx);
 #else
-    snprintf(buffer, 256,"cgerfs inputs: trans %c, n %d, nrhs %d, lda %d, ldaf %d, ipiv %d, ldb %d, ldx %d",*trans, *n, *nrhs, *lda, *ldaf, *ipiv, *ldb, *ldx);
+    snprintf(buffer, 256,"cgerfs inputs: trans %c, n %d, nrhs %d, lda %d, ldaf %d, ldb %d, ldx %d",*trans, *n, *nrhs, *lda, *ldaf, *ldb, *ldx);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

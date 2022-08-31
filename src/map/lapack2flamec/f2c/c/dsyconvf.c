@@ -199,7 +199,7 @@
 int dsyconvf_(char *uplo, char *way, integer *n, doublereal * a, integer *lda, doublereal *e, integer *ipiv, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dsyconvf inputs: uplo %c, way %c, n %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS "",*uplo, *way, *n, *lda, *ipiv);
+    AOCL_DTL_SNPRINTF("dsyconvf inputs: uplo %c, way %c, n %" FLA_IS ", lda %" FLA_IS "",*uplo, *way, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1;
     /* Local variables */

@@ -268,7 +268,7 @@ static integer c__1 = 1;
 int dspsvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublereal *ap, doublereal *afp, integer *ipiv, doublereal *b, integer *ldb, doublereal *x, integer *ldx, doublereal *rcond, doublereal *ferr, doublereal *berr, doublereal *work, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dspsvx inputs: fact %c, uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", ipiv %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*fact, *uplo, *n, *nrhs, *ipiv, *ldb, *ldx);
+    AOCL_DTL_SNPRINTF("dspsvx inputs: fact %c, uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS "",*fact, *uplo, *n, *nrhs, *ldb, *ldx);
     /* System generated locals */
     integer b_dim1, b_offset, x_dim1, x_offset, i__1;
     /* Local variables */

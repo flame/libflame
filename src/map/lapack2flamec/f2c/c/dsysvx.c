@@ -275,7 +275,7 @@ the routine */
 int dsysvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublereal *a, integer *lda, doublereal *af, integer *ldaf, integer *ipiv, doublereal *b, integer *ldb, doublereal *x, integer * ldx, doublereal *rcond, doublereal *ferr, doublereal *berr, doublereal *work, integer *lwork, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dsysvx inputs: fact %c, uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", ipiv %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS ", lwork %" FLA_IS "",*fact, *uplo, *n, *nrhs, *lda, *ldaf, *ipiv, *ldb, *ldx, *lwork);
+    AOCL_DTL_SNPRINTF("dsysvx inputs: fact %c, uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldaf %" FLA_IS ", ldb %" FLA_IS ", ldx %" FLA_IS ", lwork %" FLA_IS "",*fact, *uplo, *n, *nrhs, *lda, *ldaf, *ldb, *ldx, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, af_dim1, af_offset, b_dim1, b_offset, x_dim1, x_offset, i__1, i__2;
     /* Local variables */

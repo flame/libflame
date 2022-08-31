@@ -116,7 +116,7 @@ static integer c__1 = 1;
 int dspcon_(char *uplo, integer *n, doublereal *ap, integer * ipiv, doublereal *anorm, doublereal *rcond, doublereal *work, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dspcon inputs: uplo %c, n %" FLA_IS ", ipiv %" FLA_IS "",*uplo, *n, *ipiv);
+    AOCL_DTL_SNPRINTF("dspcon inputs: uplo %c, n %" FLA_IS "",*uplo, *n);
     /* System generated locals */
     integer i__1;
     /* Local variables */

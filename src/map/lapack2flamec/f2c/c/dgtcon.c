@@ -139,7 +139,7 @@ IPIV(i) = i indicates a row interchange was not */
 int dgtcon_(char *norm, integer *n, doublereal *dl, doublereal *d__, doublereal *du, doublereal *du2, integer *ipiv, doublereal *anorm, doublereal *rcond, doublereal *work, integer * iwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dgtcon inputs: norm %c, n %" FLA_IS ", ipiv %" FLA_IS "",*norm, *n, *ipiv);
+    AOCL_DTL_SNPRINTF("dgtcon inputs: norm %c, n %" FLA_IS "",*norm, *n);
     /* System generated locals */
     integer i__1;
     /* Local variables */

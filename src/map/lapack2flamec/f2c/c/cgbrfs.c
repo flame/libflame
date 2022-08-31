@@ -203,9 +203,9 @@ int cgbrfs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, c
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cgbrfs inputs: trans %c, n %lld, kl %lld, ku %lld, nrhs %lld, ldab %lld, ldafb %lld, ipiv %lld, ldb %lld, ldx %lld",*trans, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ipiv, *ldb, *ldx);
+    snprintf(buffer, 256,"cgbrfs inputs: trans %c, n %lld, kl %lld, ku %lld, nrhs %lld, ldab %lld, ldafb %lld, ldb %lld, ldx %lld",*trans, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ldb, *ldx);
 #else
-    snprintf(buffer, 256,"cgbrfs inputs: trans %c, n %d, kl %d, ku %d, nrhs %d, ldab %d, ldafb %d, ipiv %d, ldb %d, ldx %d",*trans, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ipiv, *ldb, *ldx);
+    snprintf(buffer, 256,"cgbrfs inputs: trans %c, n %d, kl %d, ku %d, nrhs %d, ldab %d, ldafb %d, ldb %d, ldx %d",*trans, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ldb, *ldx);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

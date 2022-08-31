@@ -565,9 +565,9 @@ int cgbsvxx_(char *fact, char *trans, integer *n, integer * kl, integer *ku, int
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cgbsvxx inputs: fact %c, trans %c, n %lld, kl %lld, ku %lld, nrhs %lld, ldab %lld, ldafb %lld, ipiv %lld, equed %c, ldb %lld, ldx %lld, n_err_bnds__ %lld, nparams %lld",*fact, *trans, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ipiv, *equed, *ldb, *ldx, *n_err_bnds__, *nparams);
+    snprintf(buffer, 256,"cgbsvxx inputs: fact %c, trans %c, n %lld, kl %lld, ku %lld, nrhs %lld, ldab %lld, ldafb %lld, equed %c, ldb %lld, ldx %lld, n_err_bnds__ %lld, nparams %lld",*fact, *trans, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *equed, *ldb, *ldx, *n_err_bnds__, *nparams);
 #else
-    snprintf(buffer, 256,"cgbsvxx inputs: fact %c, trans %c, n %d, kl %d, ku %d, nrhs %d, ldab %d, ldafb %d, ipiv %d, equed %c, ldb %d, ldx %d, n_err_bnds__ %d, nparams %d",*fact, *trans, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *ipiv, *equed, *ldb, *ldx, *n_err_bnds__, *nparams);
+    snprintf(buffer, 256,"cgbsvxx inputs: fact %c, trans %c, n %d, kl %d, ku %d, nrhs %d, ldab %d, ldafb %d, equed %c, ldb %d, ldx %d, n_err_bnds__ %d, nparams %d",*fact, *trans, *n, *kl, *ku, *nrhs, *ldab, *ldafb, *equed, *ldb, *ldx, *n_err_bnds__, *nparams);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

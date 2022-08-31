@@ -168,9 +168,9 @@ int clatdf_(integer *ijob, integer *n, complex *z__, integer *ldz, complex *rhs,
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"clatdf inputs: ijob %lld, n %lld, ldz %lld, ipiv %lld, jpiv %lld",*ijob, *n, *ldz, *ipiv, *jpiv);
+    snprintf(buffer, 256,"clatdf inputs: ijob %lld, n %lld, ldz %lld",*ijob, *n, *ldz);
 #else
-    snprintf(buffer, 256,"clatdf inputs: ijob %d, n %d, ldz %d, ipiv %d, jpiv %d",*ijob, *n, *ldz, *ipiv, *jpiv);
+    snprintf(buffer, 256,"clatdf inputs: ijob %d, n %d, ldz %d",*ijob, *n, *ldz);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

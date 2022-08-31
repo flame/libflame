@@ -109,7 +109,7 @@ static doublereal c_b19 = 1.;
 int dsptrs_(char *uplo, integer *n, integer *nrhs, doublereal *ap, integer *ipiv, doublereal *b, integer *ldb, integer * info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dsptrs inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", ipiv %" FLA_IS ", ldb %" FLA_IS "",*uplo, *n, *nrhs, *ipiv, *ldb);
+    AOCL_DTL_SNPRINTF("dsptrs inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", ldb %" FLA_IS "",*uplo, *n, *nrhs, *ldb);
     /* System generated locals */
     integer b_dim1, b_offset, i__1;
     doublereal d__1;

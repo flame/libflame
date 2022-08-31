@@ -123,7 +123,7 @@ the matrix is singular and its */
 int dsytri2_(char *uplo, integer *n, doublereal *a, integer * lda, integer *ipiv, doublereal *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dsytri2 inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS ", lwork %" FLA_IS "",*uplo, *n, *lda, *ipiv, *lwork);
+    AOCL_DTL_SNPRINTF("dsytri2 inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "",*uplo, *n, *lda, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, i__1;
     /* Local variables */

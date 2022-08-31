@@ -133,7 +133,7 @@ static integer c_n1 = -1;
 int dsytrs_aa_2stage_(char *uplo, integer *n, integer *nrhs, doublereal *a, integer *lda, doublereal *tb, integer *ltb, integer * ipiv, integer *ipiv2, doublereal *b, integer *ldb, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dsytrs_aa_2stage inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ltb %" FLA_IS ", ipiv %" FLA_IS ", ipiv2 %" FLA_IS ", ldb %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ltb, *ipiv, *ipiv2, *ldb);
+    AOCL_DTL_SNPRINTF("dsytrs_aa_2stage inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ltb %" FLA_IS ", ldb %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ltb, *ldb);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */

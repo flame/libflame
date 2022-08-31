@@ -126,9 +126,9 @@ int csytri2_(char *uplo, integer *n, complex *a, integer * lda, integer *ipiv, c
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"csytri2 inputs: uplo %c, n %lld, lda %lld, ipiv %lld, lwork %lld",*uplo, *n, *lda, *ipiv, *lwork);
+    snprintf(buffer, 256,"csytri2 inputs: uplo %c, n %lld, lda %lld, lwork %lld",*uplo, *n, *lda, *lwork);
 #else
-    snprintf(buffer, 256,"csytri2 inputs: uplo %c, n %d, lda %d, ipiv %d, lwork %d",*uplo, *n, *lda, *ipiv, *lwork);
+    snprintf(buffer, 256,"csytri2 inputs: uplo %c, n %d, lda %d, lwork %d",*uplo, *n, *lda, *lwork);
 #endif
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif

@@ -106,7 +106,7 @@ int zlaswp_(integer *n, doublecomplex *a, integer *lda, integer *k1, integer *k2
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
-    snprintf(buffer, 256,"zlaswp inputs: n %d, lda %d, k1 %d, k2 %d, incx %d, ipiv %d",*n, *lda, *k1, *k2, *incx, *ipiv);
+    snprintf(buffer, 256,"zlaswp inputs: n %d, lda %d, k1 %d, k2 %d, incx %d",*n, *lda, *k1, *k2, *incx);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
 #endif
     /* System generated locals */
