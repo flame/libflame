@@ -396,6 +396,6 @@
 
 // --- OpenMP Thread macro defination ------------------------------------------
 
-#ifdef FLA_ENABLE_MULTITHREADING && FLA_MULTITHREADING_MODEL == FLA_OPENMP
+#if defined(FLA_ENABLE_MULTITHREADING) && FLA_MULTITHREADING_MODEL == FLA_OPENMP
 #define FLA_OPENMP_MULTITHREADING
 #endif
