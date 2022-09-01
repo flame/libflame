@@ -28,6 +28,15 @@ ${CMAKE_CURRENT_SOURCE_DIR}/lapack_sormlq.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_sorml2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_sormqr.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapack_sorm2r.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sbdsqr.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sgelq2.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sgelqf.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sgesvd.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sorg2r.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sorgbr.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sorgl2.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sorglq.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapack_sorgqr.c
 ${CMAKE_CURRENT_SOURCE_DIR}/dgesvd2x2.c
 
 	)
