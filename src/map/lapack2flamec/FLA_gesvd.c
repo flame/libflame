@@ -143,24 +143,34 @@ LAPACK_gesvd_real(s)
   int fla_error = LAPACK_SUCCESS;
   AOCL_DTL_TRACE_LOG_INIT
   AOCL_DTL_SNPRINTF("sgesvd inputs: jobu %c, jobvt %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS "", *jobu, *jobv, *m, *n, *ldim_A, *ldim_U, *ldim_Vh);
-  {
-      LAPACK_RETURN_CHECK_VAR1(sgesvd_check(jobu, jobv,
-                                       m, n,
-                                       buff_A, ldim_A,
-                                       buff_s,
-                                       buff_U, ldim_U,
-                                       buff_Vh, ldim_Vh,
-                                       buff_w, lwork,
-                                       info),fla_error)
-  }
-  if(fla_error == LAPACK_SUCCESS)
-  {
-    LAPACK_gesvd_body(s)
-        /** fla_error set to e_val on LAPACK_SUCCESS */
-        fla_error = e_val;
-  }
-  AOCL_DTL_TRACE_LOG_EXIT
-  return fla_error;
+#if FLA_AMD_OPT
+    {
+      lapack_sgesvd ( jobu, jobv, m, n, buff_A, ldim_A, buff_s, buff_U, ldim_U,buff_Vh , ldim_Vh, buff_w, lwork,info );
+      /** fla_error set to *info on LAPACK_SUCCESS */
+      fla_error = *info;
+    }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
+#else
+    {
+        LAPACK_RETURN_CHECK_VAR1(sgesvd_check(jobu, jobv,
+                                        m, n,
+                                        buff_A, ldim_A,
+                                        buff_s,
+                                        buff_U, ldim_U,
+                                        buff_Vh, ldim_Vh,
+                                        buff_w, lwork,
+                                        info),fla_error)
+    }
+    if(fla_error == LAPACK_SUCCESS)
+    {
+      LAPACK_gesvd_body(s)
+          /** fla_error set to e_val on LAPACK_SUCCESS */
+          fla_error = e_val;
+    }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
+#endif
 }
 
 LAPACK_gesvd_real(d)
