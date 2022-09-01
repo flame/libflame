@@ -6765,8 +6765,7 @@ fi
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: checking whether user requested support for multithreading" >&5
 $as_echo_n "checking whether user requested support for multithreading... " >&6; }
 
-				# Check whether --enable-multithreading was given.
-if test "${enable_amd_flags+set}" != set && test "${enable_amd_aocc_flags+set}" != set; then :
+# Check whether --enable-multithreading was given.
 if test "${enable_multithreading+set}" = set; then :
   enableval=$enable_multithreading;
 				if test "$enableval" = "openmp" ; then
@@ -6789,13 +6788,12 @@ if test "${enable_multithreading+set}" = set; then :
 						as_fn_error $? "Invalid option to --enable-multithreading. Valid options are \"openmp\", \"pthreads\", and \"no\"." "$LINENO" 5
 		fi
 
-else
+elif test "${enable_amd_flags+set}" != set && test "${enable_amd_aocc_flags+set}" != set; then :
 
-						fla_enable_multithreading=no
+		fla_enable_multithreading=no
 		fla_multithreading_model=none
 
 
-fi
 fi
 
 
