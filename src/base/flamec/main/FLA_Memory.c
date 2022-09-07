@@ -13,7 +13,7 @@
 static TLS_CLASS_SPEC integer      fla_mem_leak_counter;
 static TLS_CLASS_SPEC FLA_Bool fla_mem_leak_counter_status;
 #ifdef FLA_ENABLE_MULTITHREADING
-static FLA_Lock fla_mem_leak_counter_lock;
+static TLS_CLASS_SPEC FLA_Lock fla_mem_leak_counter_lock;
 #endif
 
 

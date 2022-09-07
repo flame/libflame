@@ -18,10 +18,10 @@
 // Determines whether the LAPACK compatibility layer is included in libflame.
 // NOTE: If lapack2flame is enabled, external-lapack-for-subproblems MUST
 // be disabled!
+#cmakedefine FLA_ENABLE_LAPACK2FLAME
+
 // Determines whether ILP64 enabled. 
 #cmakedefine  FLA_ENABLE_ILP64
-
-#cmakedefine FLA_ENABLE_LAPACK2FLAME
 
 // Determines whether to enable external LAPACK for small subproblems.
 // NOTE: If external-lapack-for-subproblems is enabled, (a) lapack2flame MUST
@@ -145,6 +145,15 @@
 
 // Determines whether GPU-specific blocks of code should be compiled.
 #cmakedefine FLA_ENABLE_GPU
+
+// Determines AMD optimized code path selection
+#cmakedefine FLA_ENABLE_AMD_OPT
+
+// Determines OpenMP multithreading for AMD optimized code path 
+#cmakedefine FLA_OPENMP_MULTITHREADING
+
+// Determins BLAS Extension API, GEMMT usage in libFLAME APIs
+#cmakedefine FLA_ENABLE_BLAS_EXT_GEMMT
 
 //#define FLA_PORTABLE_TIMER_IS_CLOCK_GETTIME 1
 //#define FLA_VECTOR_INTRINSIC_TYPE 0

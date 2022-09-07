@@ -131,6 +131,9 @@
 /* Encodes the type of multithreading chosen at configure-time. */
 #undef FLA_MULTITHREADING_MODEL
 
+/* Sets OpenMP multithreading used by AMD optimized code path. */
+#undef FLA_OPENMP_MULTITHREADING
+
 /* Determines whether clock_gettime() was present on the system (via time.h).
    */
 #undef FLA_PORTABLE_TIMER_IS_CLOCK_GETTIME

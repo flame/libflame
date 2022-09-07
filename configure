@@ -6667,7 +6667,7 @@ $as_echo "no" >&6; }
 	fi
 
 
-		fla_enable_multithreading=no
+	fla_enable_multithreading=no
 	fla_multithreading_model=none
 # Changes so that --enable-amd-flags encapsulates various other flags
 # Check whether --enable-amd-flags was given.
@@ -6686,7 +6686,7 @@ if test "${enable_amd_flags+set}" = set; then :
             fla_enable_amd_flags=yes
             fla_enable_amd_opt=yes
 	    fla_enable_multithreading=yes
-	    fla_multithreading_model=openmp
+	    fla_multithreading_model=amdopt
     
         else 
             as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_ENABLE_AMD_FLAGS!" "$LINENO" 5
@@ -6732,7 +6732,7 @@ if test "${enable_amd_aocc_flags+set}" = set; then :
           fla_enable_amd_aocc_flags=yes
           fla_enable_amd_opt=yes
 	  fla_enable_multithreading=yes
-	  fla_multithreading_model=openmp
+	  fla_multithreading_model=amdopt
     
         else 
           as_fn_error $? "Reached. unreachable branch in FLA_CHECK_ENABLE_ENABLE_AMD_AOCC_FLAGS!" "$LINENO" 5
@@ -6768,19 +6768,24 @@ $as_echo_n "checking whether user requested support for multithreading... " >&6;
 # Check whether --enable-multithreading was given.
 if test "${enable_multithreading+set}" = set; then :
   enableval=$enable_multithreading;
-				if test "$enableval" = "openmp" ; then
+		if test "$enableval" = "amdopt"; then
+		
+			fla_enable_multithreading=yes
+			fla_multithreading_model=amdopt
+			
+		elif test "$enableval" = "openmp"; then
 
-						fla_enable_multithreading=yes
+			fla_enable_multithreading=yes
 			fla_multithreading_model=openmp
 
 		elif test "$enableval" = "pthreads" ; then
 
-						fla_enable_multithreading=yes
+			fla_enable_multithreading=yes
 			fla_multithreading_model=pthreads
 
 		elif test "$enableval" = "no" ; then
 
-						fla_enable_multithreading=no
+			fla_enable_multithreading=no
 			fla_multithreading_model=none
 
 		else
@@ -6807,11 +6812,13 @@ $as_echo_n "checking user-requested multithreading model... " >&6; }
 		{ $as_echo "$as_me:${as_lineno-$LINENO}: result: $fla_multithreading_model" >&5
 $as_echo "$fla_multithreading_model" >&6; }
 
+				if test "$fla_multithreading_model" = "amdopt" ; then
+                                              $as_echo "#define FLA_OPENMP_MULTITHREADING 1" >>confdefs.h
+				else
+					      $as_echo "#define FLA_ENABLE_MULTITHREADING 1" >>confdefs.h
+				fi
 
-$as_echo "#define FLA_ENABLE_MULTITHREADING 1" >>confdefs.h
-
-
-				if test "$fla_multithreading_model" = "openmp" ; then
+				if test "$fla_multithreading_model" = "openmp" || test "$fla_multithreading_model" = "amdopt"; then
 
 						fla_model_val=1
 
