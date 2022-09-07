@@ -394,8 +394,3 @@
 #define FLA_NEGATE( a ) \
         ( a.base == FLA_ONE.base ? FLA_MINUS_ONE : FLA_ONE )
 
-// --- OpenMP Thread macro defination ------------------------------------------
-
-#if defined(FLA_ENABLE_MULTITHREADING) && FLA_MULTITHREADING_MODEL == FLA_OPENMP
-#define FLA_OPENMP_MULTITHREADING
-#endif

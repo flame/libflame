@@ -14,6 +14,12 @@ AC_DEFUN([FLA_CHECK_ENABLE_MULTITHREADING],
 	              AC_HELP_STRING([--enable-multithreading=model],[Enable multithreading support. Valid values for model are "pthreads" and "openmp". Multithreading must be enabled to access SMP parallelized implementations. If enabled, use the environment variable FLA_NUM_THREADS to specify the number of threads to parallelize computations for LAPACK interfaces (FLA external interfaces). (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
+		if test "$enableval" = "amdopt" ; then
+			
+			dnl Enable with OpenMP support.
+			fla_enable_multithreading=yes
+			fla_multithreading_model=amdopt
+
 		if test "$enableval" = "openmp" ; then
 			
 			dnl Enable with OpenMP support.
@@ -61,7 +67,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_MULTITHREADING],
 		          [Determines whether thread-specific blocks of code should be compiled.])
 
 		dnl Now we set flags and whatnot related to each multithreading model.
-		if test "$fla_multithreading_model" = "openmp" ; then
+		if test "$fla_multithreading_model" = "openmp" || test "$fla_multithreading_model" = "amdopt"; then
 		
 			dnl Encode the C prepropcessor value for OpenMP.
 			fla_model_val=1
