@@ -33,7 +33,7 @@
  #define ENABLE_THREAD_LOCAL_STORAGE 0
  #define LIBFLAME_IMPORT __declspec(dllimport)
 #else
- #if defined(FLA_ENABLE_AMD_OPT) && defined(FLA_ENABLE_MULTITHREADING) && !defined FLA_ENABLE_SUPERMATRIX
+ #if defined(FLA_ENABLE_AMD_OPT) && !defined FLA_ENABLE_SUPERMATRIX
    #define ENABLE_THREAD_LOCAL_STORAGE 1
  #else
    #define ENABLE_THREAD_LOCAL_STORAGE 0
