@@ -118,6 +118,12 @@ int zrot_(integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, integ
     __m256d xrmm0, yrmm0, ximm0, yimm0;
     __m256d xrmm1, yrmm1, ximm1, yimm1;
     __m256d oxm0, oym0, oxm1, oym1;
+
+    __m128d cm, srm, sim, sin;
+    __m128d sirm, srim, msirm, msrim;
+    __m128d xmm, ymm;
+    __m128d xrmm, yrmm, ximm, yimm;
+    __m128d oxm, oym;
     __m128d hxmm0, hxmm1, hymm0, hymm1;
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
@@ -153,10 +159,21 @@ int zrot_(integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, integ
     simm = _mm256_broadcast_sd((double const *) &si);
     sinm = _mm256_broadcast_sd((double const *) &msi);
 
-    sirmm = _mm256_shuffle_pd(srmm, simm, 0xA);
-    srimm = _mm256_shuffle_pd(simm, srmm, 0x5);
-    msirmm = _mm256_shuffle_pd(srmm, sinm, 0xA);
-    msrimm = _mm256_shuffle_pd(sinm, srmm, 0x5);
+    sirmm = _mm256_shuffle_pd(srmm, simm, 0xA);  
+    srimm = _mm256_shuffle_pd(simm, srmm, 0x5);  
+    msirmm = _mm256_shuffle_pd(srmm, sinm, 0xA); 
+    msrimm = _mm256_shuffle_pd(sinm, srmm, 0x5); 
+
+    cm  = _mm_loaddup_pd ((double const *) &lc);
+    srm = _mm_loaddup_pd ((double const *) &sr);
+    sim = _mm_loaddup_pd ((double const *) &si);
+    sin = _mm_loaddup_pd ((double const *) &msi);
+
+    sirm = _mm_shuffle_pd(srm, sim, 0x2); 
+    srim = _mm_shuffle_pd(sim, srm, 0x1);
+    msirm = _mm_shuffle_pd(srm, sin, 0x2);
+    msrim = _mm_shuffle_pd(sin, srm, 0x1);
+
 
     if (*incx == 1 && *incy == 1)
     {
@@ -245,22 +262,30 @@ int zrot_(integer *n, doublecomplex *cx, integer *incx, doublecomplex *cy, integ
         }
         for ( ; i__ <= i__1; ++i__)
         {
-            z__2.r = lc * cx[ix].r;
-            z__2.i = lc * cx[ix].i; // , expr subst
-            z__3.r = sr * cy[ix].r - si * cy[ix].i;
-            z__3.i = sr * cy[ix].i + si * cy[ix].r; // , expr subst
-            z__1.r = z__2.r + z__3.r;
-            z__1.i = z__2.i + z__3.i; // , expr subst
+            /* load complex inputs from x & y */
+            xmm  = _mm_loadu_pd((double const *) &cx[ix]);
+            ymm  = _mm_loadu_pd((double const *) &cy[ix]);
 
-            z__2.r = lc * cy[ix].r;
-            z__2.i = lc * cy[ix].i; // , expr subst
-            z__3.r = sr * cx[ix].r + si * cx[ix].i;
-            z__3.i = sr * cx[ix].i - si * cx[ix].r; // , expr subst
+            /* shuffle the loaded inputs */
+            xrmm = _mm_movedup_pd(xmm);
+            ximm = _mm_unpackhi_pd(xmm, xmm);
+            yrmm = _mm_movedup_pd(ymm);
+            yimm = _mm_unpackhi_pd(ymm, ymm);   
 
-            cy[ix].r = z__2.r - z__3.r;
-            cy[ix].i = z__2.i - z__3.i; // , expr subst
-            cx[ix].r = z__1.r;
-            cx[ix].i = z__1.i; // , expr subst
+            /* compute x outputs */
+            oxm = _mm_mul_pd(srim, yimm);
+            oxm = _mm_fmaddsub_pd(sirm, yrmm, oxm);
+            oxm = _mm_fmadd_pd(cm, xmm, oxm);
+
+            /* compute y outputs */
+            oym = _mm_mul_pd(msrim, ximm);
+            oym = _mm_fmaddsub_pd(msirm, xrmm, oym);
+            oym = _mm_fmsub_pd(cm, ymm, oym);
+
+            /* store the results */
+            _mm_storeu_pd((double *) &cx[ix], oxm);
+            _mm_storeu_pd((double *) &cy[ix], oym);
+
             ix += *incx;
         }
     }
@@ -315,23 +340,31 @@ L20:
 
     for ( ; i__ <= i__1; ++i__)
     {
-        z__2.r = lc * cx[i__].r;
-        z__2.i = lc * cx[i__].i; // , expr subst
-        z__3.r = sr * cy[i__].r - si * cy[i__].i;
-        z__3.i = sr * cy[i__].i + si * cy[i__].r; // , expr subst
-        z__1.r = z__2.r + z__3.r;
-        z__1.i = z__2.i + z__3.i; // , expr subst
+        /* load complex inputs from x & y */
+        xmm  = _mm_loadu_pd((double const *) &cx[i__]);
+        ymm  = _mm_loadu_pd((double const *) &cy[i__]);
 
-        z__2.r = lc * cy[i__].r;
-        z__2.i = lc * cy[i__].i; // , expr subst
-        z__3.r = sr * cx[i__].r + si * cx[i__].i;
-        z__3.i = sr * cx[i__].i - si * cx[i__].r; // , expr subst
+        /* shuffle the loaded inputs */
+        xrmm = _mm_movedup_pd(xmm);
+        ximm = _mm_unpackhi_pd(xmm, xmm);
+        yrmm = _mm_movedup_pd(ymm);
+        yimm = _mm_unpackhi_pd(ymm, ymm);   
 
-        cy[i__].r = z__2.r - z__3.r;
-        cy[i__].i = z__2.i - z__3.i; // , expr subst
-        cx[i__].r = z__1.r;
-        cx[i__].i = z__1.i; // , expr subst
+        /* compute x outputs */
+        oxm = _mm_mul_pd(srim, yimm);
+        oxm = _mm_fmaddsub_pd(sirm, yrmm, oxm);
+        oxm = _mm_fmadd_pd(cm, xmm, oxm);
+
+        /* compute y outputs */
+        oym = _mm_mul_pd(msrim, ximm);
+        oym = _mm_fmaddsub_pd(msirm, xrmm, oym);
+        oym = _mm_fmsub_pd(cm, ymm, oym);
+
+        /* store the results */
+        _mm_storeu_pd((double *) &cx[i__], oxm);
+        _mm_storeu_pd((double *) &cy[i__], oym);
     }
+
     AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
