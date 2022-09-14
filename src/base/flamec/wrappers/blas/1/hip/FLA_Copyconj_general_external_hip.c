@@ -14,7 +14,7 @@
 #ifdef FLA_ENABLE_HIP
 
 #include <hip/hip_runtime.h>
-#include "rocblas.h"
+#include "rocblas/rocblas.h"
 
 FLA_Error FLA_Copyconj_general_external_hip( rocblas_handle handle, FLA_Obj A, void* A_hip, void* B_mat )
 {

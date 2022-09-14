@@ -13,7 +13,7 @@
 
 #ifdef FLA_ENABLE_HIP
 
-#include "rocblas.h"
+#include "rocblas/rocblas.h"
 
 FLA_Error FLA_Hemm_external_hip( rocblas_handle handle, FLA_Side side, FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, void* A_hip, FLA_Obj B, void* B_hip, FLA_Obj beta, FLA_Obj C, void* C_hip )
 {

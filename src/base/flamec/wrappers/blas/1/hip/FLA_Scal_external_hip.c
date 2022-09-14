@@ -13,7 +13,7 @@
 
 #ifdef FLA_ENABLE_HIP
 
-#include "rocblas.h"
+#include "rocblas/rocblas.h"
 
 FLA_Error FLA_Scal_external_hip( rocblas_handle handle, FLA_Obj alpha, FLA_Obj A, void* A_hip )
 {

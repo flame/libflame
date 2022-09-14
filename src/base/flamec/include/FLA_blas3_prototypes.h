@@ -9,7 +9,7 @@
 */
 
 #ifdef FLA_ENABLE_HIP
-#include <rocblas.h>
+#include <rocblas/rocblas.h>
 #endif
 
 // --- top-level wrapper prototypes --------------------------------------------
