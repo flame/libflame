@@ -153,9 +153,9 @@ void fla_test_lapack_suite( char* input_filename, test_params_t *params )
     fla_test_output_info("%2sDATATYPE%13s No. of Tests%6s Passed%9s Failed\n", "", "", "", "");
     fla_test_output_info( "===================================================================\n" );
     fla_test_output_info("%2sFLOAT%15s %8d%8s %8d%12s %d\n", "", "", tests_passed[0] + tests_failed[0], "", tests_passed[0], "", tests_failed[0]);
-    fla_test_output_info("%2sFLOAT%15s %8d%8s %8d%12s %d\n", "", "", tests_passed[1] + tests_failed[1], "", tests_passed[1], "", tests_failed[1]);
-    fla_test_output_info("%2sFLOAT%15s %8d%8s %8d%12s %d\n", "", "", tests_passed[2] + tests_failed[2], "", tests_passed[2], "", tests_failed[2]);
-    fla_test_output_info("%2sFLOAT%15s %8d%8s %8d%12s %d\n", "", "", tests_passed[3] + tests_failed[3], "", tests_passed[3], "", tests_failed[3]);
+    fla_test_output_info("%2sDOUBLE%14s %8d%8s %8d%12s %d\n", "", "", tests_passed[1] + tests_failed[1], "", tests_passed[1], "", tests_failed[1]);
+    fla_test_output_info("%2sCOMPLEX%13s %8d%8s %8d%12s %d\n", "", "", tests_passed[2] + tests_failed[2], "", tests_passed[2], "", tests_failed[2]);
+    fla_test_output_info("%2sDOUBLE COMPLEX%6s %8d%8s %8d%12s %d\n", "", "", tests_passed[3] + tests_failed[3], "", tests_passed[3], "", tests_failed[3]);
 
     if(total_failed_tests > 0)
         printf("\n\nThere are failed tests, Please look at output log for more details\n");
