@@ -9,7 +9,8 @@ CC             := gcc
 LINKER         := $(CC)
 RM_RF          := rm -rf
 CFLAGS         := -g -O2 -Wall -Wno-comment
-LDFLAGS        := -lm -lpthread -fopenmp
+OMP_LIB        := -fopenmp
+LDFLAGS        := -lm -lpthread $(OMP_LIB)
 
 #
 # --- BLAS library -------------------------------------------------------------

@@ -7,7 +7,7 @@ libFLAME test suite usage guidelines
 This wiki explains how to use the test suite included with libFLAME.
 
 The test suite directory has the following contents,
-   1. Config - This folder contains config files to control the input combinations to
+   1. config - This folder contains config files to control the input combinations to
       test different set of APIs. See ReadMe under this folder for more information.
    2. input.global.operations - This file controls the list of APIs to be tested.
    3. Makefile - Controls how the test suite executable is compiled and linked.
@@ -69,7 +69,7 @@ the corresponding API flag. Below is a representative example of the default con
 
 ## Running tests
 
-Once `input.general.operations` and Config files have been tailored to your liking,
+Once `input.general.operations` and config files have been tailored to your liking,
 simply run the test suit executable:
 
 ```
