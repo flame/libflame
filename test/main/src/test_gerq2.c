@@ -10,7 +10,7 @@ void fla_test_gerq2_experiment(test_params_t *params, integer  datatype, integer
 void prepare_gerq2_run(integer m_A, integer n_A, void *A, void *T, integer datatype, integer n_repeats, double* time_min_);
 void invoke_gerq2(integer datatype, integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *info);
 
-void fla_test_gerq2(test_params_t *params)
+void fla_test_gerq2(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "RQ factorization with unblocked algorithm";
     char* front_str = "GERQ2";

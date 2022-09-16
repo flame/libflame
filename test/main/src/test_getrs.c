@@ -10,7 +10,7 @@ void fla_test_getrs_experiment(test_params_t *params, integer  datatype, integer
 void prepare_getrs_run(char *trans, integer m_A, integer n_A, void *A, void *B, integer* ipiv, integer datatype, integer n_repeats, double* time_min_);
 void invoke_getrs(integer datatype, char *trans, integer *nrhs, integer *n, void *a, integer *lda, integer *ipiv, void *b, integer *ldb, integer *info);
 
-void fla_test_getrs(test_params_t *params)
+void fla_test_getrs(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "LU factorization";
     char* front_str = "GETRS";

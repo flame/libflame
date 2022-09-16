@@ -14,7 +14,7 @@ void invoke_ggev(integer datatype, char* jobvl, char* jobvr, integer* n, void* a
     integer* alphai, integer* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, void* work, integer* lwork, void* rwork, integer* info);
 
 
-void fla_test_ggev(test_params_t *params)
+void fla_test_ggev(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Computing Eigen value and Eigen vectors";
     char* front_str = "GGEV";

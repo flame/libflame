@@ -11,7 +11,7 @@ void fla_test_orgqr_experiment(test_params_t *params, integer datatype, integer 
 void prepare_orgqr_run(integer m, integer n, void *A, void *T, void* work, integer *lwork, integer datatype, integer n_repeats, double* time_min_);
 void invoke_orgqr(integer datatype, integer* m, integer* n, integer *min_A, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
 
-void fla_test_orgqr(test_params_t *params)
+void fla_test_orgqr(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "QR factorization";
     char* front_str = "ORGQR";

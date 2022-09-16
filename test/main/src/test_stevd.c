@@ -12,7 +12,7 @@ integer n_repeats, double* perf, double* t, double* residual);
 void prepare_stevd_run(char* jobz, integer n, void* Z, void* D, void* E, integer datatype, integer n_repeats, double* time_min_);
 void invoke_stevd(integer datatype, char* jobz, integer* n, void* z, integer* ldz, void* d, void* e, void* work, integer* lwork, void* iwork, integer* liwork, integer* info);
 
-void fla_test_stevd(test_params_t *params)
+void fla_test_stevd(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Eigen Decomposition of symmetrix tridiagonal matrix";
     char* front_str = "STEVD";

@@ -9,7 +9,7 @@ void fla_test_potrs_experiment(test_params_t *params, integer datatype, integer 
 void prepare_potrs_run(char* uplo, integer m, integer nrhs, void *A, integer datatype, void *b, integer n_repeats, double* time_min_);
 void invoke_potrs(char* uplo, integer datatype, integer* m, void* A, integer* lda, integer *nrhs, void* b, integer* info);
 
-void fla_test_potrs(test_params_t *params)
+void fla_test_potrs(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Cholesky factorization";
     char* front_str = "POTRS";

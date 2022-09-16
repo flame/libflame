@@ -12,7 +12,7 @@ void prepare_geqp3_run(integer m_A, integer n_A, void *A, integer *jpvt, void *T
 void invoke_geqp3(integer datatype, integer* m, integer* n, void* a, integer* lda, integer *jpvt,
                   void* tau, void* work, integer* lwork, void* rwork, integer* info);
 
-void fla_test_geqp3(test_params_t *params)
+void fla_test_geqp3(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "QR factorization with column pivoting";
     char* front_str = "GEQP3";
