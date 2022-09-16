@@ -14,7 +14,7 @@ void prepare_geev_run(char *jobvl, char *jobvr, integer n, void *a, void *wr, vo
 void invoke_geev(integer datatype, char *jobvl, char *jobvr, integer *n, void *a, integer *lda, void *wr, void *wi, void *w, void *vl, integer *ldvl, void *vr, integer *ldvr, void* work, integer* lwork, void* rwork, integer* info);
 
 
-void fla_test_geev(test_params_t *params)
+void fla_test_geev(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Eigen Decomposition of non symmetric matrix";
     char* front_str = "GEEV";

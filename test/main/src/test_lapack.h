@@ -44,6 +44,9 @@
 #define RECT_INPUT              0
 #define SQUARE_INPUT            1
 
+#define CLI_NORM_THRESH         30.0
+#define CLI_DECIMAL_BASE        10
+
 #define MAX_PASS_STRING_LENGTH   32
 
 #define NUM_STORAGE_CHARS        3
@@ -177,6 +180,10 @@ typedef struct EIG_Non_symmetric_paramlist_t
     integer n_range_start;
     integer n_range_end;
     integer n_range_step_size;
+    integer lda;
+    integer ldb;
+    integer ldvl;
+    integer ldvr;
     integer num_repeats;
     integer num_tests;
     integer num_data_types;
@@ -323,7 +330,7 @@ typedef struct
 typedef struct
 {
     char *ops;
-    void (*fp)(test_params_t *);
+    void (*fp)(integer argc, char** argv, test_params_t *);
 }OPERATIONS;
 
 // external declaration
@@ -332,7 +339,7 @@ extern integer ilaver_(integer *vers_major__, integer *vers_minor__, integer *ve
 // Prototypes.
 char* fla_test_get_string_for_result( double residual, integer datatype, double thresh );
 void fla_test_init_strings( void );
-void fla_test_parse_command_line( integer argc, char** argv );
+void fla_test_execute_cli_api( integer argc, char** argv, test_params_t *params );
 void fla_test_output_op_struct( char* op_str, integer op );
 void fla_test_output_info( char* message, ... );
 void fla_test_output_error( char* message, ... );
@@ -368,7 +375,16 @@ void fla_test_op_driver( char*            func_str,
                                         double*,        // perf
                                         double*,        // time
                                         double* ) );    // residual
-
+void fla_test_print_status(char* func_str,
+                           char datatype_char,
+                           integer sqr_inp,
+                           integer p_cur,
+                           integer q_cur,
+                           double residual,
+                           double thresh,
+                           double time,
+                           double perf);
+void fla_test_print_summary();
 void fla_test_build_function_string( char*        func_base_str,
                                         char*        impl_var_str,
                                         char*        func_str );

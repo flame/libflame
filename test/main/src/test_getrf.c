@@ -10,7 +10,7 @@ void fla_test_getrf_experiment(test_params_t *params, integer  datatype, integer
 void prepare_getrf_run(integer m_A, integer n_A, void *A, integer cs_A, integer* ipiv, integer datatype, integer n_repeats, double* time_min_);
 void invoke_getrf(integer datatype, integer *m, integer *n, void *a, integer *lda, integer *ipiv, integer *info);
 
-void fla_test_getrf(test_params_t *params)
+void fla_test_getrf(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "LU factorization";
     char* front_str = "GETRF";

@@ -19,7 +19,7 @@ void invoke_geevx(integer datatype, char *balanc, char *jobvl, char *jobvr, char
 		  integer* info);
 
 
-void fla_test_geevx(test_params_t *params)
+void fla_test_geevx(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Eigen Decomposition of non symmetric matrix";
     char* front_str = "GEEVX";

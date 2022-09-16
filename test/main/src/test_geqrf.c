@@ -9,7 +9,7 @@ void fla_test_geqrf_experiment(test_params_t *params, integer datatype, integer 
                                     double* perf, double* t,double* residual);
 void prepare_geqrf_run(integer m_A, integer n_A, void *A, void *T, integer datatype, integer n_repeats, double* time_min_);
 
-void fla_test_geqrf(test_params_t *params)
+void fla_test_geqrf(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "RQ factorization";
     char* front_str = "GEQRF";

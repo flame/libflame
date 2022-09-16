@@ -3,27 +3,27 @@
 */
 
 /* Test API function declaration */
-void fla_test_steqr(test_params_t *params);
-void fla_test_stevd(test_params_t *params);
-void fla_test_geev(test_params_t *params);
-void fla_test_geevx(test_params_t *params);
-void fla_test_gesdd(test_params_t *params);
-void fla_test_geqrf(test_params_t *params);
-void fla_test_gerqf(test_params_t *params);
-void fla_test_gerq2(test_params_t *params);
-void fla_test_geqp3(test_params_t *params);
-void fla_test_potrf(test_params_t *params);
-void fla_test_getrf(test_params_t *params);
-void fla_test_getri(test_params_t *params);
-void fla_test_orgqr(test_params_t *params);
-void fla_test_potrs(test_params_t *params);
-void fla_test_getrs(test_params_t* params);
-void fla_test_syevd(test_params_t *params);
-void fla_test_gesvd(test_params_t *params);
-void fla_test_ggevx(test_params_t *params);
-void fla_test_gesv(test_params_t* params);
-void fla_test_ggev(test_params_t *params);
-void fla_test_stedc(test_params_t *params);
+void fla_test_steqr(integer argc, char ** argv, test_params_t *params);
+void fla_test_stevd(integer argc, char ** argv, test_params_t *params);
+void fla_test_geev(integer argc, char ** argv, test_params_t *params);
+void fla_test_geevx(integer argc, char ** argv, test_params_t *params);
+void fla_test_gesdd(integer argc, char ** argv, test_params_t *params);
+void fla_test_geqrf(integer argc, char ** argv, test_params_t *params);
+void fla_test_gerqf(integer argc, char ** argv, test_params_t *params);
+void fla_test_gerq2(integer argc, char ** argv, test_params_t *params);
+void fla_test_geqp3(integer argc, char ** argv, test_params_t *params);
+void fla_test_potrf(integer argc, char ** argv, test_params_t *params);
+void fla_test_getrf(integer argc, char ** argv, test_params_t *params);
+void fla_test_getri(integer argc, char ** argv, test_params_t *params);
+void fla_test_orgqr(integer argc, char ** argv, test_params_t *params);
+void fla_test_potrs(integer argc, char ** argv, test_params_t *params);
+void fla_test_getrs(integer argc, char ** argv, test_params_t* params);
+void fla_test_syevd(integer argc, char ** argv, test_params_t *params);
+void fla_test_gesvd(integer argc, char ** argv, test_params_t *params);
+void fla_test_ggevx(integer argc, char ** argv, test_params_t *params);
+void fla_test_gesv(integer argc, char ** argv, test_params_t* params);
+void fla_test_ggev(integer argc, char ** argv, test_params_t *params);
+void fla_test_stedc(integer argc, char ** argv, test_params_t *params);
 
 /* Add test api function call entry below */
 OPERATIONS API_test_functions[] =

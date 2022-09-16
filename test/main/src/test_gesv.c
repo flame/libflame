@@ -10,7 +10,7 @@ void fla_test_gesv_experiment(test_params_t *params, integer  datatype, integer 
 void prepare_gesv_run(integer n_A, integer nrhs, void *A, void *B, integer* ipiv, integer datatype, integer n_repeats, double* time_min_);
 void invoke_gesv(integer datatype, integer *nrhs, integer *n, void *a, integer *lda, integer *ipiv, void *b, integer *ldb, integer *info);
 
-void fla_test_gesv(test_params_t *params)
+void fla_test_gesv(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Linear Solve using LU";
     char* front_str = "GESV";

@@ -60,6 +60,7 @@ extern dcomplex z_zero, z_one, z_n_one;
 #define DOUBLE            104
 #define COMPLEX           105
 #define DOUBLE_COMPLEX    106
+#define INVALID_TYPE     -106
 
 /* vector functions*/
 void create_vector(integer datatype, void **A, integer M);
@@ -73,6 +74,7 @@ void copy_realtype_vector(integer datatype, integer M, void *A, integer LDA, voi
 /* matrix functions*/
 void create_matrix(integer datatype, void **A, integer M, integer N);
 void create_realtype_matrix(integer datatype, void **A, integer M, integer N);
+integer get_datatype(char stype);
 integer get_realtype(integer datatype);
 void create_block_diagonal_matrix(integer datatype,void* wr, void* wi, void* lambda, integer m, integer n, integer lda);
 void* get_m_ptr(integer datatype, void *A, integer M, integer N, integer LDA);

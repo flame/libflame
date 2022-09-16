@@ -10,7 +10,7 @@ void fla_test_getri_experiment(test_params_t *params, integer  datatype, integer
 void prepare_getri_run(integer m_A, integer n_A, void *A, integer* ipiv, integer datatype, integer n_repeats, double* time_min_);
 void invoke_getri(integer datatype, integer *n, void *a, integer *lda, integer *ipiv, void *work, integer *lwork, integer *info);
 
-void fla_test_getri(test_params_t *params)
+void fla_test_getri(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Inverse through LU factorization";
     char* front_str = "GETRI";

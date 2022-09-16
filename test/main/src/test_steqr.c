@@ -12,14 +12,87 @@ integer n_repeats, double* perf, double* t, double* residual);
 void prepare_steqr_run(char* compz, integer n, void* Z, void* D, void* E, integer datatype, integer n_repeats, double* time_min_);
 void invoke_steqr(integer datatype, char* compz, integer* n, void* z, integer* ldz, void* d, void* e, void* work, integer* info);
 
-void fla_test_steqr(test_params_t *params)
+void fla_test_steqr(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Eigen Decomposition of symmetrix tridiagonal matrix";
     char* front_str = "STEQR";
+    integer tests_not_run = 1, invalid_dtype = 0;
 
-    fla_test_output_info("--- %s ---\n", op_str);
-    fla_test_output_info("\n");
-    fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_SYM, fla_test_steqr_experiment);
+    if(argc == 1)
+    {
+        /* Test with parameters from config */
+        fla_test_output_info("--- %s ---\n", op_str);
+        fla_test_output_info("\n");
+        fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_SYM, fla_test_steqr_experiment);
+        tests_not_run = 0;
+    }
+    else if(argc == 7)
+    {
+        /* Test with parameters from commandline */
+        integer i, num_types, N;
+        integer datatype, n_repeats;
+        double perf, time_min, residual;
+        char stype, type_flag[4] = {0};
+        char *endptr;
+
+        /* Parse the arguments */
+        num_types = strlen(argv[2]);
+        params->eig_sym_paramslist[0].compz = argv[3][0];
+        N = strtoimax(argv[4], &endptr, CLI_DECIMAL_BASE);
+        params->eig_sym_paramslist[0].lda = strtoimax(argv[5], &endptr, CLI_DECIMAL_BASE);
+        n_repeats = strtoimax(argv[6], &endptr, CLI_DECIMAL_BASE);
+
+        if(n_repeats > 0)
+        {
+            params->eig_sym_paramslist[0].threshold_value = CLI_NORM_THRESH;
+            params->eig_sym_paramslist[0].uplo = 'L';
+
+            for(i = 0; i < num_types; i++)
+            {
+                stype = argv[2][i];
+                datatype = get_datatype(stype);
+
+                /* Check for invalide dataype */
+                if(datatype == INVALID_TYPE)
+                {
+                    invalid_dtype = 1;
+                    continue;
+                }
+
+                /* Check for duplicate datatype presence */
+                if(type_flag[datatype - FLOAT] == 1)
+                    continue;
+                type_flag[datatype - FLOAT] = 1;
+
+                /* Call the test code */
+                fla_test_steqr_experiment(params, datatype,
+                                          N, N,
+                                          0,
+                                          n_repeats,
+                                          &perf, &time_min, &residual);
+                /* Print the results */
+                fla_test_print_status(front_str,
+                                      stype,
+                                      SQUARE_INPUT,
+                                      N, N,
+                                      residual, params->eig_sym_paramslist[0].threshold_value,
+                                      time_min, perf);
+                tests_not_run = 0;
+            }
+        }
+    }
+
+    /* Print error messages */
+    if(tests_not_run)
+    {
+        printf("Invalid arguments for STEQR\n");
+        printf("Usage: ./<EXE> steqr <precisions - sdcz> <COMPZ> <N> <LDZ> <repeats>\n");
+    }
+    else if(invalid_dtype)
+    {
+        printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n");
+    }
+    return;
 }
 
 void fla_test_steqr_experiment(test_params_t *params,
@@ -43,7 +116,7 @@ void fla_test_steqr_experiment(test_params_t *params,
     uplo = params->eig_sym_paramslist[pci].uplo;
 
     n = p_cur;
-    ldz = max(1,n);
+    ldz = params->eig_sym_paramslist[pci].lda;
     lda = max(1,n);
 
     /* Create input matrix parameters */

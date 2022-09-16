@@ -10,7 +10,7 @@ void fla_test_gerqf_experiment(test_params_t *params, integer  datatype, integer
 void prepare_gerqf_run(integer m_A, integer n_A, void *A, void *T, integer datatype, integer n_repeats, double* time_min_);
 void invoke_gerqf(integer datatype, integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *lwork, integer *info);
 
-void fla_test_gerqf(test_params_t *params)
+void fla_test_gerqf(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "RQ factorization";
     char* front_str = "GERQF";

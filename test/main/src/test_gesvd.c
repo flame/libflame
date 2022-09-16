@@ -12,7 +12,7 @@ void fla_test_gesvd_experiment(test_params_t *params, integer datatype, integer 
 void prepare_gesvd_run(char *jobu, char *jobvt, integer m_A, integer n_A, void *A, void *s, void *U, void *V, integer datatype, integer n_repeats, double* time_min_);
 void invoke_gesvd(integer datatype, char* jobu, char *jobvt, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, void* rwork, integer* iwork, integer* info);
 
-void fla_test_gesvd(test_params_t *params)
+void fla_test_gesvd(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Singular value decomposition";
     char* front_str = "GESVD";

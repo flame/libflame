@@ -13,7 +13,7 @@ void invoke_stedc(integer datatype, char* compz, integer* n, void* D, void* E, v
                   integer* ldz, void* work, integer* lwork, void* rwork,
                   integer* lrwork, integer* iwork, integer* liwork, integer *info);
 
-void fla_test_stedc(test_params_t *params)
+void fla_test_stedc(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Eigenvalues/eigenvectors of symmetric tridiagonal matrix";
     char* front_str = "STEDC";

@@ -1173,7 +1173,7 @@ void scgemv(char TRANS, integer real_alpha, integer m, integer n, scomplex* alph
     float alphar;
     void *A = NULL;
 
-    create_matrix(FLOAT, &A, n, n);
+    create_matrix(FLOAT, &A, lda, n);
 
     if (TRANS == 'T')
     {
@@ -1228,6 +1228,19 @@ void scgemv(char TRANS, integer real_alpha, integer m, integer n, scomplex* alph
     }
 
     free_matrix(A);
+}
+
+/* Get datatype from string. */
+integer get_datatype(char stype)
+{
+    integer datatype;
+    if      ( stype == 's' || stype == 'S' ) datatype = FLOAT;
+    else if ( stype == 'd' || stype == 'D' ) datatype = DOUBLE;
+    else if ( stype == 'c' || stype == 'C' ) datatype = COMPLEX;
+    else if ( stype == 'z' || stype == 'Z' ) datatype = DOUBLE_COMPLEX;
+    else datatype = INVALID_TYPE;
+
+    return datatype;
 }
 
 /* Get realtype of given datatype. */

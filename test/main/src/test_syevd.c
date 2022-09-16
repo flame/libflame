@@ -12,7 +12,7 @@ integer n_repeats, double* perf, double* t, double* residual);
 void prepare_syevd_run(char* jobz, char* uplo, integer n, void* A, void* w, integer datatype, integer n_repeats, double* time_min_);
 void invoke_syevd(integer datatype, char* jobz, char* uplo, integer* n, void* a, integer* lda, void* w, void* work, integer* lwork, void* rwork, integer* lrwork, void* iwork, integer* liwork, integer* info);
 
-void fla_test_syevd(test_params_t *params)
+void fla_test_syevd(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Eigen Decomposition";
     char* front_str = "SYEVD";

@@ -2,6 +2,7 @@
     Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
 */
 
+#include "ctype.h"
 #include "test_lapack.h"
 #include "test_routines.h"
 
@@ -71,28 +72,36 @@ int  main( int argc, char** argv )
 
     printf(" LAPACK version: %"FT_IS".%"FT_IS".%"FT_IS" \n", vers_major, vers_minor, vers_patch);
 
-    // Initialize some strings.
+    /* Initialize some strings. */
     fla_test_init_strings();
 
-    // Parse the command line parameters.
-    fla_test_parse_command_line( argc, argv );
+    /* Check for Command line requests */
+    if ( argc > 1 )
+    {
+        fla_test_execute_cli_api(argc, argv, &params);
+    }
+    else
+    {
+        /* Copy the binary name to a global string so we can use it later. */
+        strncpy( fla_test_binary_name, argv[0], MAX_BINARY_NAME_LENGTH );
 
-    /*Read Linear API parameters from config file */
-    fla_test_read_linear_param( LINEAR_PARAMETERS_FILENAME, &params );
+        /* Read Linear API parameters from config file */
+        fla_test_read_linear_param( LINEAR_PARAMETERS_FILENAME, &params );
 
-    /*Read eigen parameters from config file */
-    fla_test_read_sym_eig_params( SYM_EIG_PARAMETERS_FILENAME, &params );
-    fla_test_read_non_sym_eig_params( NON_SYM_EIG_PARAMETERS_FILENAME, &params );
+        /* Read eigen parameters from config file */
+        fla_test_read_sym_eig_params( SYM_EIG_PARAMETERS_FILENAME, &params );
+        fla_test_read_non_sym_eig_params( NON_SYM_EIG_PARAMETERS_FILENAME, &params );
 
-    /*Read SVD parameters from config file */
-    fla_test_read_svd_params ( SVD_PARAMETERS_FILENAME, &params  );
-    
-    #if AOCL_FLA_SET_PROGRESS_ENABLE == 2
-        aocl_fla_set_progress(test_progress);
-    #endif
+        /* Read SVD parameters from config file */
+        fla_test_read_svd_params ( SVD_PARAMETERS_FILENAME, &params  );
 
-    // Test the LAPACK-level operations.
-    fla_test_lapack_suite( OPERATIONS_FILENAME, &params );
+        #if AOCL_FLA_SET_PROGRESS_ENABLE == 2
+            aocl_fla_set_progress(test_progress);
+        #endif
+
+        /* Test the LAPACK-level operations. */
+        fla_test_lapack_suite( OPERATIONS_FILENAME, &params );
+    }
 
     return 0;
 }
@@ -130,7 +139,7 @@ void fla_test_lapack_suite( char* input_filename, test_params_t *params )
     // Check for '2' option in input config
     check_flag = fla_test_check_run_only(input_stream, &op,  buffer);
 
-    while(fla_test_read_tests_for_op( input_stream, &op, buffer))
+    while(fla_test_read_tests_for_op(input_stream, &op, buffer))
     {
         if(op == check_flag)
         {
@@ -139,7 +148,7 @@ void fla_test_lapack_suite( char* input_filename, test_params_t *params )
             {
                 if(!strcmp(API_test_functions[i].ops, buffer))
                 {
-                    API_test_functions[i].fp(params);
+                    API_test_functions[i].fp(1, NULL, params);
                 }
             }
 
@@ -148,7 +157,11 @@ void fla_test_lapack_suite( char* input_filename, test_params_t *params )
     }
 
     fclose( input_stream );
+    fla_test_print_summary();
+}
 
+void fla_test_print_summary()
+{
     fla_test_output_info("\n\nResults Summary:\n\n");
     fla_test_output_info("%2sDATATYPE%13s No. of Tests%6s Passed%9s Failed\n", "", "", "", "");
     fla_test_output_info( "===================================================================\n" );
@@ -158,7 +171,7 @@ void fla_test_lapack_suite( char* input_filename, test_params_t *params )
     fla_test_output_info("%2sDOUBLE COMPLEX%6s %8d%8s %8d%12s %d\n", "", "", tests_passed[3] + tests_failed[3], "", tests_passed[3], "", tests_failed[3]);
 
     if(total_failed_tests > 0)
-        printf("\n\nThere are failed tests, Please look at output log for more details\n");
+        printf("\n\nThere are failed tests, Please look at output log for more details\n\n");
 }
 
 
@@ -256,7 +269,6 @@ void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
 
     /* Read the mode */
     fscanf(fp, "%s", &line[0]);
-
     fscanf(fp, "%"FT_IS"", &mode);
     fscanf(fp, "%*[^\n]\n");
 
@@ -271,7 +283,6 @@ void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
     }
 
     fscanf(fp, "%s", &line[0]); // Range_start
-
     for (i=0; i < NUM_SUB_TESTS; i++){
         fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].m_range_start) );
         CHECK_LINE_SKIP ();
@@ -308,17 +319,35 @@ void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
         CHECK_LINE_SKIP ();
     }
 
+    fscanf(fp, "%s", &line[0]); // leading dimension for A
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].lda) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // leading dimension for B
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].ldb) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // leading dimension LDAB
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].ldab) );
+        CHECK_LINE_SKIP ();
+    }
+
     for (i=0; i<NUM_SUB_TESTS; i++){
         params->lin_solver_paramslist[i].num_ranges = num_ranges;
     }
 
-    fscanf(fp, "%s", &line[0]); // numer of repeats
+    fscanf(fp, "%s", &line[0]); // Numer of repeats
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].num_repeats) );
     }
 
     ndata_types = NUM_SUB_TESTS;
-    fscanf(fp, "%s", &line[0]);
+    fscanf(fp, "%s", &line[0]); // Datatypes
     str = &line[0];
     for( i = 0; i < NUM_SUB_TESTS; i++ )
     {
@@ -326,10 +355,7 @@ void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
         for( j = 0; j < NUM_SUB_TESTS; j++ )
         {
             params->lin_solver_paramslist[j].data_types_char[i] = *str;
-            if      ( *str == 's' ) params->lin_solver_paramslist[j].data_types[i] = FLOAT;
-            else if ( *str == 'd' ) params->lin_solver_paramslist[j].data_types[i] = DOUBLE;
-            else if ( *str == 'c' ) params->lin_solver_paramslist[j].data_types[i] = COMPLEX;
-            else if ( *str == 'z' ) params->lin_solver_paramslist[j].data_types[i]= DOUBLE_COMPLEX;
+            params->lin_solver_paramslist[j].data_types[i] = get_datatype(*str);
         }
         eol = fgetc(fp);
         if((eol == '\r') || (eol == '\n')){
@@ -341,7 +367,7 @@ void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
         params->lin_solver_paramslist[i].num_data_types = ndata_types;
     }
 
-    fscanf(fp, "%s", &line[0]);
+    fscanf(fp, "%s", &line[0]); // Matrix Layout (row or col major)
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].matrix_layout) );
         CHECK_LINE_SKIP ();
@@ -377,24 +403,6 @@ void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
     fscanf(fp, "%s", &line[0]);
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].nrhs) );
-        CHECK_LINE_SKIP ();
-    }
-
-    fscanf(fp, "%s", &line[0]);
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].lda) );
-        CHECK_LINE_SKIP ();
-    }
-
-    fscanf(fp, "%s", &line[0]);
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].ldb) );
-        CHECK_LINE_SKIP ();
-    }
-
-    fscanf(fp, "%s", &line[0]);
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].ldab) );
         CHECK_LINE_SKIP ();
     }
 
@@ -588,10 +596,7 @@ void fla_test_read_sym_eig_params( const char *file_name , test_params_t* params
         for( j = 0; j < NUM_SUB_TESTS; j++ )
         {
             params->eig_sym_paramslist[j].data_types_char[i] = *str;
-            if      ( *str == 's' ) params->eig_sym_paramslist[j].data_types[i] = FLOAT;
-            else if ( *str == 'd' ) params->eig_sym_paramslist[j].data_types[i] = DOUBLE;
-            else if ( *str == 'c' ) params->eig_sym_paramslist[j].data_types[i] = COMPLEX;
-            else if ( *str == 'z' ) params->eig_sym_paramslist[j].data_types[i]= DOUBLE_COMPLEX;
+            params->eig_sym_paramslist[j].data_types[i] = get_datatype(*str);
         }
         eol = fgetc(fp);
         if((eol == '\r') || (eol == '\n')){
@@ -870,6 +875,30 @@ void fla_test_read_non_sym_eig_params( const char *file_name , test_params_t* pa
         params->eig_non_sym_paramslist[i].num_ranges = num_ranges;
     }
 
+    fscanf(fp, "%s", &line[0]);
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->eig_non_sym_paramslist[i].lda) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]);
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->eig_non_sym_paramslist[i].ldb) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]);
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->eig_non_sym_paramslist[i].ldvl) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]);
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->eig_non_sym_paramslist[i].ldvr) );
+        CHECK_LINE_SKIP ();
+    }
+
     fscanf(fp, "%s", &line[0]); // number of repeats
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%"FT_IS"", &(params->eig_non_sym_paramslist[i].num_repeats) );
@@ -883,10 +912,7 @@ void fla_test_read_non_sym_eig_params( const char *file_name , test_params_t* pa
         for( j = 0; j < NUM_SUB_TESTS; j++ )
         {
             params->eig_non_sym_paramslist[j].data_types_char[i] = *str;
-            if      ( *str == 's' ) params->eig_non_sym_paramslist[j].data_types[i] = FLOAT;
-            else if ( *str == 'd' ) params->eig_non_sym_paramslist[j].data_types[i] = DOUBLE;
-            else if ( *str == 'c' ) params->eig_non_sym_paramslist[j].data_types[i] = COMPLEX;
-            else if ( *str == 'z' ) params->eig_non_sym_paramslist[j].data_types[i]= DOUBLE_COMPLEX;
+            params->eig_non_sym_paramslist[j].data_types[i] = get_datatype(*str);
         }
         eol = fgetc(fp);
         if((eol == '\r') || (eol == '\n')){
@@ -1217,10 +1243,7 @@ void fla_test_read_svd_params ( const char *file_name, test_params_t* params )
         for( j = 0; j < NUM_SUB_TESTS; j++ )
         {
             params->svd_paramslist[j].data_types_char[i] = *str;
-            if      ( *str == 's' ) params->svd_paramslist[j].data_types[i] = FLOAT;
-            else if ( *str == 'd' ) params->svd_paramslist[j].data_types[i] = DOUBLE;
-            else if ( *str == 'c' ) params->svd_paramslist[j].data_types[i] = COMPLEX;
-            else if ( *str == 'z' ) params->svd_paramslist[j].data_types[i]= DOUBLE_COMPLEX;
+            params->svd_paramslist[j].data_types[i] = get_datatype(*str);
         }
         eol = fgetc(fp);
         if((eol == '\r') || (eol == '\n')){
@@ -1602,15 +1625,32 @@ void fla_test_parse_message( FILE* output_stream, char* message, va_list args )
 }
 
 
-void fla_test_parse_command_line( integer argc, char** argv )
+void fla_test_execute_cli_api( integer argc, char** argv, test_params_t *params )
 {
-    if ( argc > 1 )
+    integer i, test_api_count;
+    char s_name[MAX_FUNC_STRING_LENGTH];
+
+    test_api_count = sizeof(API_test_functions) / sizeof(API_test_functions[0]);
+    fla_test_output_info( "%2sAPI%13s DATA_TYPE%6s SIZE%9s FLOPS%9s TIME%9s ERROR%9s STATUS\n", "", "", "", "", "", "", "" );
+    fla_test_output_info( "%1s=====%12s===========%4s========%7s=======%7s========%6s==========%6s========\n", "", "", "", "", "", "", "" );
+
+    /* Check if the specified API is supported in test suite */
+    strcpy(s_name, argv[1]);
+    for( i = 0; i < strlen(s_name); i++)
     {
-        fprintf( stderr, "Too many command line arguments.\n" );
-        exit(1);
+        s_name[i] = tolower(s_name[i]);
     }
-    // Copy the binary name to a global string so we can use it later.
-    strncpy( fla_test_binary_name, argv[0], MAX_BINARY_NAME_LENGTH );
+    for( i = 0; i < test_api_count; i++)
+    {
+        if(!strcmp(API_test_functions[i].ops, s_name))
+        {
+            API_test_functions[i].fp(argc, argv, params);
+            break;
+        }
+    }
+
+    if(total_tests == 0)
+        printf("\nNo test was run, give valid arguments\n");
 }
 
 
@@ -1667,7 +1707,7 @@ void fla_test_op_driver( char*         func_str,
                                            double*,          //time
                                            double* ) )       // residual
 {
-    integer n_datatypes        = params->n_datatypes;
+    integer n_datatypes = params->n_datatypes;
     integer n_repeats;
     integer num_ranges, range_loop_counter;
     integer p_first, p_max, p_inc;
@@ -1676,11 +1716,6 @@ void fla_test_op_driver( char*         func_str,
     char    datatype_char;
     integer datatype;
     double  perf, time, thresh, residual;
-    char*   pass_str;
-    char    blank_str[32];
-    char    func_param_str[64];
-    char    scale[3] = "";
-    integer n_spaces;
 
 
     fla_test_output_info( "%2sAPI%13s DATA_TYPE%6s SIZE%9s FLOPS%9s TIME%9s ERROR%9s STATUS\n", "", "", "", "", "", "", "" );
@@ -1782,40 +1817,61 @@ void fla_test_op_driver( char*         func_str,
             for ( p_cur = p_first, q_cur = q_first; (p_cur <= p_max && q_cur <= q_max); p_cur += p_inc, q_cur += q_inc )
             {
                 f_exp( params, datatype, p_cur, q_cur, range_loop_counter, n_repeats, &perf, &time, &residual );
+                fla_test_print_status(func_str, datatype_char, sqr_inp, p_cur, q_cur, residual, thresh, time, perf);
 
-                pass_str = fla_test_get_string_for_result( residual, datatype, thresh );
-
-                fla_test_build_function_string( func_str, NULL, func_param_str ); 
-
-                n_spaces = MAX_FUNC_STRING_LENGTH - strlen( func_param_str );
-                fill_string_with_n_spaces( blank_str, n_spaces );
-
-                fla_test_get_time_unit(scale , &time);
-
-                if ( sqr_inp == SQUARE_INPUT )
-                {
-                    fla_test_output_info(" %s%s  %c  %10"FT_IS" x %-9"FT_IS" %-10.2lf  %6.2lf %-7s  %-7.2le   %10s\n",
-                                         func_param_str, blank_str,
-                                         datatype_char,
-                                         p_cur, p_cur, perf, time, scale, residual, pass_str );
-                }
-                else
-                {
-                    fla_test_output_info(" %s%s  %c  %10"FT_IS" x %-9"FT_IS" %-10.2lf  %6.2lf %-7s  %-7.2le   %10s\n",
-                                         func_param_str, blank_str,
-                                         datatype_char,
-                                         p_cur, q_cur, perf, time, scale, residual, pass_str );
-                }
-
-                total_tests++;
-                tests_passed[datatype - FLOAT] += (pass_str[0] == 'P');
-                tests_failed[datatype - FLOAT] += (pass_str[0] == 'F');
-                total_failed_tests += (pass_str[0] == 'F');
             }
         }
 
         fla_test_output_info( "\n" );
     }
+}
+
+void fla_test_print_status(char* func_str,
+                           char datatype_char,
+                           integer sqr_inp,
+                           integer p_cur,
+                           integer q_cur,
+                           double residual,
+                           double thresh,
+                           double time,
+                           double perf)
+{
+    char func_param_str[64];
+    char blank_str[32];
+    char scale[3] = "";
+    integer n_spaces, datatype;
+    char*   pass_str;
+
+    datatype = get_datatype(datatype_char);
+
+    pass_str = fla_test_get_string_for_result( residual, datatype, thresh );
+
+    fla_test_build_function_string( func_str, NULL, func_param_str ); 
+
+    n_spaces = MAX_FUNC_STRING_LENGTH - strlen( func_param_str );
+    fill_string_with_n_spaces( blank_str, n_spaces );
+
+    fla_test_get_time_unit(scale , &time);
+
+    if ( sqr_inp == SQUARE_INPUT )
+    {
+        fla_test_output_info(" %s%s  %c  %10"FT_IS" x %-9"FT_IS" %-10.2lf  %6.2lf %-7s  %-7.2le   %10s\n",
+                             func_param_str, blank_str,
+                             datatype_char,
+                             p_cur, p_cur, perf, time, scale, residual, pass_str );
+    }
+    else
+    {
+        fla_test_output_info(" %s%s  %c  %10"FT_IS" x %-9"FT_IS" %-10.2lf  %6.2lf %-7s  %-7.2le   %10s\n",
+                             func_param_str, blank_str,
+                             datatype_char,
+                             p_cur, q_cur, perf, time, scale, residual, pass_str );
+    }
+
+    total_tests++;
+    tests_passed[datatype - FLOAT] += (pass_str[0] == 'P');
+    tests_failed[datatype - FLOAT] += (pass_str[0] == 'F');
+    total_failed_tests += (pass_str[0] == 'F');
 }
 
 
