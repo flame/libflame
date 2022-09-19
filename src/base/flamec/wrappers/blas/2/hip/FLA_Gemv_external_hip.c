@@ -14,7 +14,7 @@
 #ifdef FLA_ENABLE_HIP
 
 #include <hip/hip_runtime.h>
-#include "rocblas.h"
+#include "rocblas/rocblas.h"
 
 FLA_Error FLA_Gemv_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Obj alpha, FLA_Obj A, void* A_hip, FLA_Obj x, void* x_hip, FLA_Obj beta, FLA_Obj y, void* y_hip )
 {

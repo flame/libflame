@@ -15,7 +15,7 @@
 #ifdef FLA_ENABLE_HIP
 
 #include "hip/hip_runtime.h"
-#include "rocblas.h"
+#include "rocblas/rocblas.h"
 
 
 static FLA_Bool flash_queue_enabled_hip  = FALSE;

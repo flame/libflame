@@ -14,8 +14,8 @@
 #ifdef FLA_ENABLE_HIP
 
 #include "hip/hip_runtime_api.h"
-#include "rocblas.h"
-#include "rocsolver.h"
+#include "rocblas/rocblas.h"
+#include "rocsolver/rocsolver.h"
 
 FLA_Error FLA_Hevd_external_hip( rocblas_handle handle, FLA_Evd_type jobz, FLA_Uplo uplo, FLA_Obj A, void* A_hip, FLA_Obj e, void* e_hip )
 {

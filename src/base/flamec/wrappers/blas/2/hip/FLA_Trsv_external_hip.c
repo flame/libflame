@@ -14,7 +14,7 @@
 #ifdef FLA_ENABLE_HIP
 
 #include <hip/hip_runtime.h>
-#include "rocblas.h"
+#include "rocblas/rocblas.h"
 
 FLA_Error FLA_Trsv_external_hip( rocblas_handle handle, FLA_Uplo uplo, FLA_Trans trans, FLA_Diag diag, FLA_Obj A, void* A_hip, FLA_Obj x, void* x_hip ) 
 {

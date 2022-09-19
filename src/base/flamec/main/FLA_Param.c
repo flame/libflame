@@ -10,8 +10,8 @@
 
 #include "FLAME.h"
 #ifdef FLA_ENABLE_HIP
-#include <rocblas.h>
-#include <rocsolver.h>
+#include <rocblas/rocblas.h>
+#include <rocsolver/rocsolver.h>
 #endif
 
 // --- FLAME to BLAS/LAPACK mappings -------------------------------------------
