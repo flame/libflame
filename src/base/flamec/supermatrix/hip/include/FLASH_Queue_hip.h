@@ -39,6 +39,9 @@ FLA_Error      FLASH_Queue_alloc_hip( dim_t size, FLA_Datatype datatype, void** 
 FLA_Error      FLASH_Queue_free_hip( void* buffer_hip );
 FLA_Error      FLASH_Queue_write_hip( FLA_Obj obj, void* buffer_hip );
 FLA_Error      FLASH_Queue_read_hip( int thread, FLA_Obj obj, void* buffer_hip );
+FLA_Error      FLASH_Queue_read_async_hip( int thread, FLA_Obj obj, void* buffer_hip );
+FLA_Error      FLASH_Queue_sync_device_hip( int device );
+FLA_Error      FLASH_Queue_sync_hip( );
 
 void           FLASH_Queue_exec_task_hip( FLASH_Task* t, void** input_arg, void** output_arg );
 

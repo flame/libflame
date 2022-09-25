@@ -49,9 +49,7 @@ void FLASH_Queue_init_hip( void )
    }
    for ( int i  = 0; i < device_count; i++ )
    {
-      // initialize a rocBLAS handle
-      hipSetDevice( i );
-      rocblas_create_handle( &(handles[i]) );
+      handles[i] = NULL;
    }
 
    return;
@@ -77,8 +75,11 @@ void FLASH_Queue_finalize_hip( void )
    for ( int i  = 0; i < device_count; i++ )
    {
       // destroy rocBLAS handle
-      rocblas_destroy_handle( handles[i] );
+      if ( handles[i] != NULL )
+         rocblas_destroy_handle( handles[i] );
    }
+
+   hipHostFree( handles );
 
    return;
 }
@@ -247,10 +248,13 @@ FLA_Error FLASH_Queue_bind_hip( int thread )
 
 ----------------------------------------------------------------------------*/
 {
+
    // Bind a HIP device to this thread.
-   // XXX TODO it is unclear if this works as intended for a mGPU case
-   // (see note about rocblas_handle && stream per device above)
    hipSetDevice( thread );
+
+   // initialize its rocBLAS handle
+   if ( handles[thread] == NULL )
+      rocblas_create_handle( &(handles[thread]) );
 
    return FLA_SUCCESS;
 }
@@ -273,7 +277,12 @@ FLA_Error FLASH_Queue_alloc_hip( dim_t size,
 
    // Check to see if the allocation was successful.
    if ( status != hipSuccess )
+   {
+      int device;
+      hipGetDevice( &device );
+      fprintf(stderr, "Error err=%d on device=%d\n", status, device);
       FLA_Check_error_code( FLA_MALLOC_GPU_RETURNED_NULL_POINTER );
+   }
 
    return FLA_SUCCESS;
 }
@@ -333,7 +342,6 @@ FLA_Error FLASH_Queue_read_hip( int thread, FLA_Obj obj, void* buffer_hip )
 
 ----------------------------------------------------------------------------*/
 {
-   hipSetDevice( thread );
    if ( flash_malloc_managed_hip )
    {
      // inject a stream sync on the rocBLAS stream to ensure completion
@@ -349,6 +357,7 @@ FLA_Error FLASH_Queue_read_hip( int thread, FLA_Obj obj, void* buffer_hip )
    }
 
    // Read the memory of a block on HIP to main memory.
+   hipSetDevice( thread );
    const size_t count = FLA_Obj_elem_size( obj )
                           * FLA_Obj_col_stride( obj )
                           * FLA_Obj_width( obj );
@@ -362,6 +371,80 @@ FLA_Error FLASH_Queue_read_hip( int thread, FLA_Obj obj, void* buffer_hip )
      fprintf( stderr,
               "Failure to read block from HIP device. Size=%ld, err=%d\n",
               count, err );
+     return FLA_FAILURE;
+   }
+
+   return FLA_SUCCESS;
+}
+
+FLA_Error FLASH_Queue_read_async_hip( int thread, FLA_Obj obj, void* buffer_hip )
+/*----------------------------------------------------------------------------
+
+   FLASH_Queue_read_async_hip
+
+----------------------------------------------------------------------------*/
+{
+   if ( flash_malloc_managed_hip )
+   {
+     return FLA_SUCCESS;
+   }
+
+   // Read the memory of a block on HIP to main memory.
+   hipSetDevice( thread );
+   const size_t count = FLA_Obj_elem_size( obj )
+                          * FLA_Obj_col_stride( obj )
+                          * FLA_Obj_width( obj );
+   const hipError_t err = hipMemcpyAsync( FLA_Obj_buffer_at_view( obj ),
+                                          buffer_hip,
+                                          count,
+                                          hipMemcpyDeviceToHost,
+                                          (hipStream_t) 0 );
+
+   if ( err != hipSuccess )
+   {
+     fprintf( stderr,
+              "Failure to async read block from HIP device. Size=%ld, err=%d\n",
+              count, err );
+     return FLA_FAILURE;
+   }
+
+   return FLA_SUCCESS;
+}
+
+FLA_Error FLASH_Queue_sync_device_hip( int device )
+/*----------------------------------------------------------------------------
+
+   FLASH_Queue_sync_device_hip
+
+----------------------------------------------------------------------------*/
+{
+   hipSetDevice( device );
+   const hipError_t err = hipDeviceSynchronize( );
+   if ( err != hipSuccess )
+   {
+     fprintf( stderr,
+              "Failure to sync HIP device. Device=%d, err=%d\n",
+              device, err );
+     return FLA_FAILURE;
+   }
+
+   return FLA_SUCCESS;
+}
+
+
+FLA_Error FLASH_Queue_sync_hip( )
+/*----------------------------------------------------------------------------
+
+   FLASH_Queue_sync_hip
+
+----------------------------------------------------------------------------*/
+{
+   const hipError_t err = hipStreamSynchronize( (hipStream_t) 0 );
+   if ( err != hipSuccess )
+   {
+     fprintf( stderr,
+              "Failure to sync HIP null stream. Err=%d\n",
+              err );
      return FLA_FAILURE;
    }
 
@@ -414,7 +497,7 @@ void FLASH_Queue_exec_task_hip( FLASH_Task* t,
       return;
 
    // Now "switch" between the various possible task functions.
-   FLASH_Queue_bind_hip( t->thread );
+   hipSetDevice( t->thread );
    rocblas_handle handle = handles[t->thread];
    // FLA_Chol
    if ( t-> func == (void*) FLA_Chol_task )
