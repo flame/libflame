@@ -3007,7 +3007,7 @@ void FLASH_Queue_flush_hip( int thread, void *arg )
       hip_obj = args->hip_log[thread * hip_n_blocks];
       FLASH_Queue_read_hip( thread, hip_obj.obj, hip_obj.buffer_hip );
    }
-   else if ( n_transfer == 2 && FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+   else if ( n_transfer == 2 && !FLASH_Queue_get_malloc_managed_enabled_hip( ) )
    {
       // two sync memcpys are faster typically than two async plus device sync
       hip_obj = args->hip_log[thread * hip_n_blocks];
