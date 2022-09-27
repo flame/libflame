@@ -729,22 +729,37 @@ else
 endif
 endif
 
-cleanlib:
+cleanlib: cleanhack
 ifeq ($(IS_CONFIGURED),yes)
 ifeq ($(ENABLE_VERBOSE),yes)
 	- $(FIND) $(BASE_OBJ_PATH) -name "*.o" | $(XARGS) $(RM_F)
-	- $(RM_F) $(LIBBLIS_A_PATH)
-	- $(RM_F) $(LIBBLIS_SO_PATH)
+	- $(RM_F) $(LIBFLAME_A_PATH)
+	- $(RM_F) $(LIBFLAME_SO_PATH)
 else
 	@echo "Removing object files from $(BASE_OBJ_PATH)"
 	@$(FIND) $(BASE_OBJ_PATH) -name "*.o" | $(XARGS) $(RM_F)
 	@echo "Removing libraries from $(BASE_LIB_PATH)"
-	@$(RM_F) $(LIBBLIS_A_PATH)
-	@$(RM_F) $(LIBBLIS_SO_PATH)
+	@$(RM_F) $(LIBFLAME_A_PATH)
+	@$(RM_F) $(LIBFLAME_SO_PATH)
 endif
 endif
 
-distclean: cleanmk cleanh cleanlib
+cleanhack:
+ifeq ($(IS_CONFIGURED),yes)
+ifeq ($(ENABLE_VERBOSE),yes)
+ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
+	- $(RM_F) $(LIBFLAME_A)
+endif
+else
+ifeq ($(FLA_ENABLE_MAX_ARG_LIST_HACK),yes)
+	@echo "Removing temporary $(LIBFLAME_A) archive"
+	@$(RM_F) $(LIBFLAME_A)
+endif
+endif
+endif
+
+
+distclean: cleanmk cleanh cleanlib cleanhack
 ifeq ($(IS_CONFIGURED),yes)
 ifeq ($(ENABLE_VERBOSE),yes)
 	- $(RM_F) $(AR_OBJ_LIST_FILE)
