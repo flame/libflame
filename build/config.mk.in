@@ -95,6 +95,8 @@ RANLIB     := @RANLIB@
 INSTALL    := @INSTALL@
 MAIL       := mail
 EMPTY_FILE := /dev/null
+SORT       := sort
+UNIQ       := uniq -u
 
 
 
