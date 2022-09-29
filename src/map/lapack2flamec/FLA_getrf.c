@@ -70,6 +70,20 @@ extern void DTL_Trace(
     dgetrf2_( m, n, buff_A, ldim_A, buff_p, info);                                     \
   }
 
+#define LAPACK_getrf_body_z(prefix)                                                    \
+  if( *m <= FLA_ZGETRF_SMALL_THRESH0 && *n <= FLA_ZGETRF_SMALL_THRESH0 )               \
+  {                                                                                    \
+    FLA_LU_piv_small_z_var0( m, n, buff_A, ldim_A, buff_p, info );                     \
+  }                                                                                    \
+  else if( *m < FLA_ZGETRF_SMALL_THRESH1 && *n < FLA_ZGETRF_SMALL_THRESH1 )            \
+  {                                                                                    \
+    lapack_zgetrf( m, n, buff_A, ldim_A, buff_p, info);                                \
+  }                                                                                    \
+  else                                                                                 \
+  {                                                                                    \
+    zgetrf2_( m, n, buff_A, ldim_A, buff_p, info);                                     \
+  }
+
 #else /* FLA_AMD_OPT */
 
 /* Original FLA path */
@@ -164,6 +178,7 @@ extern void DTL_Trace(
 #else /* FLA_ENABLE_SUPERMATRIX */
 
 #define LAPACK_getrf_body_d LAPACK_getrf_body
+#define LAPACK_getrf_body_z LAPACK_getrf_body
 
 // Note that p should be set zero.
 #define LAPACK_getrf_body(prefix)                               \
@@ -285,7 +300,7 @@ LAPACK_getrf(z)
     }
     if (fla_error == LAPACK_SUCCESS)
     {
-        LAPACK_getrf_body(z)
+        LAPACK_getrf_body_z(z)
         /** fla_error set to 0 on LAPACK_SUCCESS */
         fla_error = 0;
     }
