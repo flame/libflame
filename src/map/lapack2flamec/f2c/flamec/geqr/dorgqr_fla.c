@@ -160,9 +160,26 @@ int dorgqr_fla(integer *m, integer *n, integer *k, doublereal * a, integer *lda,
     --work;
     /* Function Body */
     *info = 0;
+#ifdef FLA_ENABLE_AMD_OPT
+    /* precomputed workspace size */
+    if(*n == 1){
+        work[1] = 32;
+    }
+    else if(*n <= 6)
+    {
+        work[1] = 192;
+    }
+    else
+    {
+        nb = ilaenv_(&c__1, "DORGQR", " ", m, n, k, &c_n1);
+        lwkopt = max(1,*n) * nb;
+        work[1] = (doublereal) lwkopt;
+    }
+#else
     nb = ilaenv_(&c__1, "DORGQR", " ", m, n, k, &c_n1);
     lwkopt = max(1,*n) * nb;
     work[1] = (doublereal) lwkopt;
+#endif
     lquery = *lwork == -1;
     if (*m < 0)
     {
@@ -202,7 +219,7 @@ int dorgqr_fla(integer *m, integer *n, integer *k, doublereal * a, integer *lda,
     }
     nbmin = 2;
     nx = 0;
-    iws = *n;
+    iws = *n;  
     if (nb > 1 && nb < *k)
     {
         /* Determine when to cross over from blocked to unblocked code. */

@@ -123,6 +123,10 @@ int dlarf_(char *side, integer *m, integer *n, doublereal *v, integer *incv, dou
     doublereal d__1;
     /* Local variables */
     integer i__;
+#ifdef FLA_ENABLE_AMD_OPT
+    doublereal temp;
+    integer i__1, j;
+#endif
     logical applyleft;
     extern /* Subroutine */
     int dger_(integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *);
@@ -208,10 +212,52 @@ int dlarf_(char *side, integer *m, integer *n, doublereal *v, integer *incv, dou
             dgemv_("Transpose", &lastv, &lastc, &c_b4, &c__[c_offset], ldc, & v[1], incv, &c_b5, &work[1], &c__1);
             /* C(1:lastv,1:lastc) := C(...) - v(1:lastv,1) * w(1:lastc,1)**T */
             d__1 = -(*tau);
+
+#ifdef FLA_ENABLE_AMD_OPT
+            /* Inline DGER for small size */
+            if(lastc <= FLA_DGER_INLINE_SMALL)
+            {
+                if (*incv == 1)
+                {
+                    for (j = 1; j <= lastc; ++j)
+                    {
+                        if (work[j] != 0.)
+                        {
+                            temp = d__1 * work[j];
+                            for (i__ = 1; i__ <= lastv; ++i__)
+                            {
+                                c__[i__ + j * *ldc] += v[i__] * temp;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    for (j = 1; j <= lastc; ++j)
+                    {
+                        if (work[j] != 0.)
+                        {
+                            i__1 = 1;
+                            temp = d__1 * work[j];
+                            for (i__ = 1; i__ <= lastv; ++i__)
+                            {
+                                c__[i__ + j * *ldc] += v[i__1] * temp;
+                                i__1 += *incv;
+                            }
+                        }
+                    }
+                }            
+            }
+            else
+            {
+                dger_(&lastv, &lastc, &d__1, &v[1], incv, &work[1], &c__1, &c__[ c_offset], ldc);
+            }
+#else
             dger_(&lastv, &lastc, &d__1, &v[1], incv, &work[1], &c__1, &c__[ c_offset], ldc);
+#endif
         }
     }
-    else
+    else    
     {
         /* Form C * H */
         if (lastv > 0)

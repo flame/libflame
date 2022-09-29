@@ -262,6 +262,10 @@
 #define FLA_NFACT_PERCENT      (0.51)
 #define FLA_FULL_DGER_CONSTANT (200)
 
+// ORGQR , threshold numbers to chose paths for performance
+#define FLA_DGER_INLINE_SMALL   (8)
+#define FLA_DSCAL_INLINE_SMALL  (10)
+
 // --- Error-related macro definitions -----------------------------------------
 
 // Useful when determining the relative index base of the error codes.
