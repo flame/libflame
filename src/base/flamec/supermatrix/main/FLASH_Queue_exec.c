@@ -2266,6 +2266,10 @@ void FLASH_Queue_destroy_hip( int thread, void *arg )
    if ( !FLASH_Queue_get_enabled_hip() )
       return;
 
+   // Exit if managed memory is used
+   if ( FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+      return;
+
    // Examine every block left on the HIP device.
    for ( i = 0; i < hip_n_blocks; i++ )
    {
@@ -2273,10 +2277,9 @@ void FLASH_Queue_destroy_hip( int thread, void *arg )
 
       // Flush the blocks that are dirty.
       if ( hip_obj.obj.base != NULL && !hip_obj.clean )
-         FLASH_Queue_read_hip( thread, hip_obj.obj, hip_obj.buffer_hip );
+         FLASH_Queue_read_async_hip( thread, hip_obj.obj, hip_obj.buffer_hip );
       // Free the memory on the HIP for all the blocks.
-      if ( ! FLASH_Queue_get_malloc_managed_enabled_hip() )
-         FLASH_Queue_free_hip( hip_obj.buffer_hip );
+      FLASH_Queue_free_hip( hip_obj.buffer_hip );
    }
 
    return;
@@ -2998,11 +3001,28 @@ void FLASH_Queue_flush_hip( int thread, void *arg )
    if ( n_transfer == 0 )
       return;
 
-   // Flush the block outside the critical section.
-   for ( i = 0; i < n_transfer; i++ )
+   // Flush the block(s) outside the critical section.
+   if ( n_transfer == 1 )
    {
-      hip_obj = args->hip_log[thread * hip_n_blocks + i];
+      hip_obj = args->hip_log[thread * hip_n_blocks];
       FLASH_Queue_read_hip( thread, hip_obj.obj, hip_obj.buffer_hip );
+   }
+   else if ( n_transfer == 2 && !FLASH_Queue_get_malloc_managed_enabled_hip( ) )
+   {
+      // two sync memcpys are faster typically than two async plus device sync
+      hip_obj = args->hip_log[thread * hip_n_blocks];
+      FLASH_Queue_read_hip( thread, hip_obj.obj, hip_obj.buffer_hip );
+      hip_obj = args->hip_log[thread * hip_n_blocks + 1];
+      FLASH_Queue_read_hip( thread, hip_obj.obj, hip_obj.buffer_hip );
+   }
+   else
+   {
+      for ( i = 0; i < n_transfer; i++ )
+      {
+         hip_obj = args->hip_log[thread * hip_n_blocks + i];
+         FLASH_Queue_read_async_hip( thread, hip_obj.obj, hip_obj.buffer_hip );
+      }
+      FLASH_Queue_sync_device_hip( thread );
    }
 
 #ifdef FLA_ENABLE_MULTITHREADING
@@ -3318,6 +3338,7 @@ void* FLASH_Queue_exec_parallel_function( void* arg )
 #ifdef FLA_ENABLE_HIP
    // Destroy and flush contents of accelerators back to main memory.
    FLASH_Queue_destroy_hip( i, ( void* ) args );
+   FLASH_Queue_sync_hip( );
 #endif
    
 #if FLA_MULTITHREADING_MODEL == FLA_PTHREADS
