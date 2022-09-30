@@ -35,28 +35,18 @@ integer tests_failed[4];
         } \
 
 #if AOCL_FLA_SET_PROGRESS_ENABLE == 1
-#define BUFLEN 16
-int aocl_fla_progress(char* api,integer lenapi,integer *progress,integer *current_thread,integer *total_threads)
+int aocl_fla_progress(const char* const api,const integer lenapi,const  integer* const progress,const integer* const current_thread,const integer* const total_threads)
 {
-  char buf[BUFLEN];
-  if( lenapi >= BUFLEN ) lenapi = BUFLEN-1;
-  strncpy( buf, api, lenapi );
-  buf[lenapi] = '\0';
-  printf( "In AOCL FLA  Progress thread  %"FT_IS", at API  %s, progress  %"FT_IS" total threads= %"FT_IS"\n", *current_thread, buf, *progress,*total_threads );
+  printf( "In AOCL FLA  Progress thread  %"FT_IS", at API  %s, progress  %"FT_IS" total threads= %"FT_IS"\n", *current_thread, api, *progress,*total_threads );
   return 0;
 
 }
 #endif
 
 #if AOCL_FLA_SET_PROGRESS_ENABLE == 2
-#define BUFLEN 16
-int test_progress(char* api,integer lenapi,integer *progress,integer *current_thread,integer *total_threads)
+int test_progress(const char* const api,const integer lenapi,const integer* const progress,const integer* const current_thread,const integer* const total_threads)
 {
-  char buf[BUFLEN];
-  if( lenapi >= BUFLEN ) lenapi = BUFLEN-1;
-  strncpy( buf, api, lenapi );
-  buf[lenapi] = '\0';
-  printf( "In AOCL Progress thread  %"FT_IS", at API  %s, progress  %"FT_IS" total threads= %"FT_IS"\n", *current_thread, buf, *progress,*total_threads );
+  printf( "In AOCL Progress thread  %"FT_IS", at API  %s, progress %"FT_IS" total threads= %"FT_IS" \n", *current_thread, api, *progress,*total_threads );
   return 0;
 
 }

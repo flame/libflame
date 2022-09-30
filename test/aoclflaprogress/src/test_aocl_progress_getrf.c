@@ -7,16 +7,13 @@
 #define TEST_DGBTRF
 #define TEST_CGBTRF
 #define TEST_ZGBTRF
-//#define PROCESS_ENABLE
+
+#define PROCESS_ENABLE
 #ifdef PROCESS_ENABLE
-#define BUFLEN 16
-int aocl_fla_progress(char* api,integer lenapi,integer *progress,integer *current_thread,integer *total_threads)
+
+int aocl_fla_progress(const char* const api,const integer lenapi,const  integer* const progress,const integer* const current_thread,const integer* const total_threads)
 {
-  char buf[BUFLEN];
-  if( lenapi >= BUFLEN ) lenapi = BUFLEN-1;
-  strncpy( buf, api, lenapi );
-  buf[lenapi] = '\0';
-  printf( "In AOCL FLA  Progress thread  %"FS", at API  %s, progress  %"FS" total threads= %"FS"\n", *current_thread, buf, *progress,*total_threads );
+  printf( "In AOCL FLA  Progress thread  %"FS", at API  %s, progress  %"FS" total threads= %"FS"\n", *current_thread, api, *progress,*total_threads );
   return 0;
 
 }
@@ -24,14 +21,10 @@ int aocl_fla_progress(char* api,integer lenapi,integer *progress,integer *curren
 // uncomment to enable AOCL_FLA_SET_Progress Printing
 #define SET_PROCESS_ENABLE
 #ifdef SET_PROCESS_ENABLE
-#define BUFLEN 16
-int test_progress(char* api,integer lenapi,integer *progress,integer *current_thread,integer *total_threads)
+
+int test_progress(const char* const api,const integer lenapi,const integer * const progress,const integer *const current_thread,const integer *const total_threads)
 {
-char buf[BUFLEN];
-  if( lenapi >= BUFLEN ) lenapi = BUFLEN-1;
-  strncpy( buf, api, lenapi );
-  buf[lenapi] = '\0';
-  printf( "In AOCL Progress thread  %"FS", at API  %s, progress %"FS" total threads= %"FS" \n", *current_thread, buf, *progress,*total_threads );
+  printf( "In AOCL Progress thread  %"FS", at API  %s, progress %"FS" total threads= %"FS" \n", *current_thread, api, *progress,*total_threads );
   return 0;
 
 }

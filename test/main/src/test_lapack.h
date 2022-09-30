@@ -75,7 +75,7 @@
 #define AOCL_FLA_SET_PROGRESS_ENABLE   0
 
 #if AOCL_FLA_SET_PROGRESS_ENABLE == 2
-int test_progress(char* api,integer lenapi,integer *progress,integer *current_thread,integer *total_threads);
+int test_progress(const char* const api,const integer lenapi,const integer* const progress,const integer* const current_thread,const integer* const total_threads);
 #endif
 
 typedef struct Lin_solver_paramlist_t
