@@ -30,11 +30,11 @@ typedef unsigned long int uinteger;
 
 #define AOCL_FLA_PROGRESS_H 1
 typedef int (*aocl_fla_progress_callback)(
-char* api,
-integer lenapi,
-integer *progress,
-integer *current_thread,
-integer *total_threads
+const char* const api,
+const integer lenapi,
+const integer* const progress,
+const integer* const current_thread,
+const integer* const total_threads
 );
 
 void aocl_fla_set_progress(aocl_fla_progress_callback func);
@@ -42,11 +42,11 @@ extern aocl_fla_progress_callback aocl_fla_progress_ptr;
 #ifndef FLA_ENABLE_WINDOWS_BUILD  
 __attribute__((weak))
 int aocl_fla_progress(
-char* api,
-integer lenapi,
-integer *progress,
-integer *current_thread,
-integer *total_threads
+const char* const api,
+const integer lenapi,
+const integer* const progress,
+const integer* const current_thread,
+const integer* const total_threads
 );
 #endif
 // Macro to send update using api name
