@@ -31,6 +31,10 @@ AC_DEFUN([FLA_SET_C_OPENMP_FLAGS],
 		*xlc*)
 			fla_c_openmp_flags='-qsmp=omp'
 		;;
+		dnl Anything ending in 'cc', including craycc.
+		*cc)
+			fla_c_openmp_flags='-fopenmp'
+		;;
 		dnl for all other C compilers.
 		*)
 			fla_c_openmp_flags='unknown'

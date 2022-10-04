@@ -3888,7 +3888,7 @@ ac_compiler_gnu=$ac_cv_c_compiler_gnu
 
 
 
-		CC_VENDOR=$(echo "$CC" | egrep -o 'icc|gcc|clang|emcc|pnacl|IBM' | { read first rest ; echo $first ; })
+		CC_VENDOR=$(echo "$CC" | egrep -o 'icc|gcc|clang|emcc|pnacl|IBM|cc|craycc' | { read first rest ; echo $first ; })
 
 	if test "${CC_VENDOR}" = "" ; then
 		as_fn_error $? "configure can't determine the compiler vendor for $CC. Please submit a bug report to the FLAME developers." "$LINENO" 5
@@ -6797,6 +6797,9 @@ printf %s "checking for (guessing) OpenMP flags for ${CC_VENDOR}... " >&6; }
 		;;
 				*xlc*)
 			fla_c_openmp_flags='-qsmp=omp'
+		;;
+				*cc)
+			fla_c_openmp_flags='-fopenmp'
 		;;
 				*)
 			fla_c_openmp_flags='unknown'
