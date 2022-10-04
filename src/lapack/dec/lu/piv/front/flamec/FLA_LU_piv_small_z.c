@@ -20,10 +20,14 @@ integer FLA_LU_piv_small_z_var0( integer *m, integer *n,
 {
     integer mi, ni;
     integer i, j, i_1, i_2, i_3;
-    doublereal p_val, max_val, t_val, z_val, temp;
+    doublereal max_val, t_val, z_val;
     doublecomplex *acur, *apiv, *asrc;
+    doublecomplex z__1;
     integer p_idx;
     integer min_m_n = min(*m, *n);
+#ifndef _WIN32
+    double _Complex pinv;
+#endif
 
     for( i = 0; i < min_m_n; i++ )
     {
@@ -50,10 +54,10 @@ integer FLA_LU_piv_small_z_var0( integer *m, integer *n,
         ipiv[i] = p_idx + 1;
 
         /* Swap rows and calculate a column of L */
-        if( max_val != 0.0 )
+        if( apiv[*lda * i].r != 0. || apiv[*lda * i].i != 0. )
         {
             /* Swap entire rows */
-            if( p_idx != i)
+            if( p_idx != i )
             {
                 for( i_1 = 0; i_1 < *n ; i_1++ )
                 {
@@ -67,23 +71,31 @@ integer FLA_LU_piv_small_z_var0( integer *m, integer *n,
                  }
             }
 
-            /* Calculate scalefactors (L)  & update trailing matrix */
-            p_val = (*acur).r;
-            z_val = (*acur).i;
+            /* Calculate scalefactors (L) & update trailing matrix */
+#ifdef _WIN32
+            z__1.r =  acur->r / ((acur->r * acur->r) + (acur->i * acur->i));
+            z__1.i = -acur->i / ((acur->r * acur->r) + (acur->i * acur->i));
+#else
+            pinv = 1.0 / (acur->r + I*acur->i);
+            z__1.r = creal(pinv);
+            z__1.i = cimag(pinv);
+#endif
             for( i_1 = 1; i_1 < mi; i_1++ )
             {
                 t_val = acur[i_1].r;
-                temp = p_val * p_val + z_val * z_val;
-                acur[i_1].r = (acur[i_1].r * p_val + acur[i_1].i * z_val ) / temp;
-                acur[i_1].i = (acur[i_1].i * p_val - t_val * z_val ) / temp;
+                acur[i_1].r = (t_val * z__1.r - acur[i_1].i * z__1.i);
+                acur[i_1].i = (t_val * z__1.i + acur[i_1].i * z__1.r);
+
+                t_val = acur[i_1].r;
+                z_val = acur[i_1].i;
 
                 for( j = 1; j < ni; j++ )
                 {
                     i_2 = i_1 + j * *lda;
                     i_3 = j * *lda;
 
-                    acur[i_2].r = acur[i_2].r - acur[i_1].r * acur[i_3].r + acur[i_1].i * acur[i_3].i;
-                    acur[i_2].i = acur[i_2].i - acur[i_1].r * acur[i_3].i - acur[i_1].i * acur[i_3].r;
+                    acur[i_2].r = acur[i_2].r - t_val * acur[i_3].r + z_val * acur[i_3].i;
+                    acur[i_2].i = acur[i_2].i - t_val * acur[i_3].i - z_val * acur[i_3].r;
                 }
             }
         }
