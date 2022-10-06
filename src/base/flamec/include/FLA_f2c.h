@@ -36,7 +36,7 @@
 #endif
 
 //DTL purpose
-#if FLA_ENABLE_ILP64
+#ifdef FLA_ENABLE_ILP64
 #define FLA_IS "lld"
 #else
 #define FLA_IS "d"
