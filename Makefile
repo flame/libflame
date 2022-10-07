@@ -215,6 +215,10 @@ MK_LIBS_SYML              := $(strip $(MK_LIBS_SYML))
 # Set the path to the subdirectory of the include installation directory.
 MK_INCL_DIR_INST          := $(INSTALL_INCDIR)
 
+PC_DIR_INST               := $(INSTALL_LIBDIR)/pkgconfig
+PC_IN_FILE                := libflame.pc.in
+PC_OUT_FILE               := libflame.pc
+
 
 
 #
@@ -412,7 +416,7 @@ all: libs
 
 libs: libflame
 
-install: libs install-libs install-lib-symlinks install-headers
+install: libs install-libs install-lib-symlinks install-headers $(PC_DIR_INST)
 
 uninstall: uninstall-libs uninstall-lib-symlinks uninstall-headers
 
@@ -715,6 +719,21 @@ else
 	@$(MV) $(@F) $(INSTALL_LIBDIR)/
 endif
 
+$(PC_DIR_INST): $(PC_IN_FILE)
+	$(MKDIR) $(@)
+ifeq ($(ENABLE_VERBOSE),no)
+	@echo "Installing $(PC_OUT_FILE) into $(@)/"
+endif
+	$(shell cat "$(PC_IN_FILE)" \
+	| sed -e "s#@PACKAGE_VERSION@#$(VERSION)#g" \
+	| sed -e "s#@prefix@#$(prefix)#g" \
+	| sed -e "s#@exec_prefix@#$(exec_prefix)#g" \
+	| sed -e "s#@libdir@#$(libdir)#g" \
+	| sed -e "s#@includedir@#$(includedir)#g" \
+	| sed -e "s#@LDFLAGS@#$(LDFLAGS)#g" \
+	> "$(PC_OUT_FILE)" )
+	$(INSTALL) -m 0644 $(PC_OUT_FILE) $(@)
+
 
 # --- Clean rules ---
 
@@ -785,6 +804,7 @@ ifeq ($(ENABLE_VERBOSE),yes)
 	- $(RM_RF) $(OBJ_DIR)
 	- $(RM_RF) $(LIB_DIR)
 	- $(RM_RF) $(INC_DIR)
+	- $(RM_RF) $(PC_OUT_FILE)
 	- $(RM_RF) config.log
 	- $(RM_RF) aclocal.m4
 	- $(RM_RF) autom4te.cache
@@ -796,6 +816,8 @@ else
 	@$(RM_F) $(AR_OBJ_LIST_FILE)
 	@echo "Removing $(CONFIG_DIR)"
 	@$(RM_RF) $(CONFIG_DIR)
+	@echo "Removing $(PC_OUT_FILE)"
+	@$(RM_F) $(PC_OUT_FILE)
 	@echo "Removing $(OBJ_DIR)"
 	@$(RM_RF) $(OBJ_DIR)
 	@echo "Removing $(LIB_DIR)"
