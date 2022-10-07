@@ -22,11 +22,14 @@ integer FLA_LU_piv_small_z_var0( integer *m, integer *n,
     integer i, j, i_1, i_2, i_3;
     doublereal max_val, t_val, z_val;
     doublecomplex *acur, *apiv, *asrc;
-    doublecomplex z__1;
     integer p_idx;
     integer min_m_n = min(*m, *n);
 #ifndef _WIN32
+    doublecomplex z__1;
     double _Complex pinv;
+#else
+    doublereal piv_r, piv_i;
+    doublereal pinv;
 #endif
 
     for( i = 0; i < min_m_n; i++ )
@@ -61,31 +64,38 @@ integer FLA_LU_piv_small_z_var0( integer *m, integer *n,
             {
                 for( i_1 = 0; i_1 < *n ; i_1++ )
                 {
-                        i_2 = i_1 * *lda;
-                        t_val = apiv[i_2].r;
-                        z_val = apiv[i_2].i;
-                        apiv[i_2].r = asrc[i_2].r;
-                        apiv[i_2].i = asrc[i_2].i;
-                        asrc[i_2].r = t_val;
-                        asrc[i_2].i = z_val;
+                    i_2 = i_1 * *lda;
+                    t_val = apiv[i_2].r;
+                    z_val = apiv[i_2].i;
+                    apiv[i_2].r = asrc[i_2].r;
+                    apiv[i_2].i = asrc[i_2].i;
+                    asrc[i_2].r = t_val;
+                    asrc[i_2].i = z_val;
                  }
             }
 
             /* Calculate scalefactors (L) & update trailing matrix */
-#ifdef _WIN32
-            z__1.r =  acur->r / ((acur->r * acur->r) + (acur->i * acur->i));
-            z__1.i = -acur->i / ((acur->r * acur->r) + (acur->i * acur->i));
-#else
-            pinv = 1.0 / (acur->r + I*acur->i);
+
+#ifndef _WIN32
+            pinv = 1.0 / ((*acur).r + I * (*acur).i);
             z__1.r = creal(pinv);
             z__1.i = cimag(pinv);
+#else
+            piv_r = (*acur).r;
+            piv_i = (*acur).i;
+            pinv = piv_r * piv_r + piv_i * piv_i;
 #endif
+
             for( i_1 = 1; i_1 < mi; i_1++ )
             {
                 t_val = acur[i_1].r;
+#ifndef _WIN32
                 acur[i_1].r = (t_val * z__1.r - acur[i_1].i * z__1.i);
                 acur[i_1].i = (t_val * z__1.i + acur[i_1].i * z__1.r);
-
+#else
+                acur[i_1].r = (acur[i_1].i * piv_i + t_val * piv_r) / pinv;
+                acur[i_1].i = (acur[i_1].i * piv_r - t_val * piv_i) / pinv;
+#endif
                 t_val = acur[i_1].r;
                 z_val = acur[i_1].i;
 

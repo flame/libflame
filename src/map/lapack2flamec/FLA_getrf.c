@@ -86,6 +86,8 @@ extern void DTL_Trace(
 
 #else /* FLA_AMD_OPT */
 
+#define LAPACK_getrf_body_z LAPACK_getrf_body
+
 /* Original FLA path */
 #define LAPACK_getrf_body_d(prefix)                                                    \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);                               \
