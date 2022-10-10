@@ -76,6 +76,8 @@ int test_progress(char* api,integer lenapi,integer *progress,integer *current_th
 Register the callback with:
 aocl_fla_set_progress(test_progress);
 
+/* NOTE- Application must avoid updating 'lenapi' value and ensure it is within the string length of the API name. */
+
 This will results in output in following format (output truncated):
 
 /libflame/test/aoclflaprogress$ ./test_libFLAME_aocl.x
