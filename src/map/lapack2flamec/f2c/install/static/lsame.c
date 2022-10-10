@@ -14,7 +14,7 @@
 #include "FLA_f2c.h"
 #include "stdio.h"
 
-#ifdef FLA_ENABLE_LAPACK2FLAME
+#if defined(FLA_ENABLE_LAPACK2FLAME) || ! defined(FLA_ENABLE_BUILTIN_BLAS)
 logical lsame_(char *ca, char *cb)
 {
     /* System generated locals */
