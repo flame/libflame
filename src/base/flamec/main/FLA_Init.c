@@ -251,7 +251,7 @@ char*     FLA_Get_AOCL_Version( void )
 
      char lfmainversion[] = "AOCL-libFLAME ";
      char* lfversion = lflibversion.version;
-     char lapackversion[] = ", supports LAPACK 3.10.0";
+     char lapackversion[] = ", supports LAPACK 3.10.1";
      int length, i;
 
      length = 0;
