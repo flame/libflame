@@ -60,7 +60,7 @@ void validate_getrf(integer m_A,
     integer n_A,
     void* A,
     void* A_test,
-    integer cs_A,
+    integer lda,
     integer* IPIV,
     integer datatype,
     double* residual);

@@ -12,13 +12,14 @@ void validate_getrf(integer m_A,
     integer n_A,
     void* A,
     void* A_test,/*AFACT*/
-    integer cs_A,
+    integer lda,
     integer* IPIV,
     integer datatype,
     double* residual)
 {
     /* System generated locals */
     integer m_n_vector, min_A;
+    integer m_L, n_L, m_U, n_U, k;
     void *L, *U, *T, *work, *B, *B_test, *A_save;
     integer nrhs=1, info;
 
@@ -26,9 +27,21 @@ void validate_getrf(integer m_A,
     min_A = min(m_A, n_A);
     create_vector(datatype, &B, m_A);
     create_vector(datatype, &B_test, m_A);
-    create_matrix(datatype, &L, m_A, m_A);
-    create_matrix(datatype, &U, m_A, n_A);
-    reset_matrix(datatype, m_A, n_A, U, m_A);
+    if (m_A > n_A)
+    {
+        m_L = m_A;
+        n_L = m_U = n_U = n_A;
+        k = n_A;
+    }
+    else
+    {
+        m_L = n_L = m_U = m_A;
+        n_U = n_A;
+        k = m_A;
+    }
+    create_matrix(datatype, &L, m_L, n_L);
+    create_matrix(datatype, &U, m_U, n_U);
+    reset_matrix(datatype, m_U, n_U, U, m_U);
     create_matrix(datatype, &T, m_A, n_A);
     create_vector(datatype, &work, 2 * m_A);
 
@@ -37,12 +50,12 @@ void validate_getrf(integer m_A,
 
     /* Lower triangular matrix should be sqare matrix m x m */
     /* For m==i OR  m < n OR m > n -->  A(mxn) = L(mxm) * U(mxn) */
-    copy_matrix(datatype, "Lower", m_A, m_A, A_test, cs_A, L, m_A);
-    copy_matrix(datatype, "Upper", m_A, n_A, A_test, cs_A, U, m_A);
+    copy_matrix(datatype, "Lower", m_L, n_L, A_test, lda, L, m_L);
+    copy_matrix(datatype, "Upper", m_U, n_U, A_test, lda, U, m_U);
     
     // Create matrix of A(MxN) for subtracting in Test 2 (T-A).
     create_matrix(datatype, &A_save, m_A, n_A);
-    copy_matrix(datatype, "Full", m_A, n_A, A, cs_A, A_save, m_A);
+    copy_matrix(datatype, "Full", m_A, n_A, A, lda, A_save, m_A);
 
     switch (datatype)
     {
@@ -55,9 +68,9 @@ void validate_getrf(integer m_A,
             {
                 norm_B = snrm2_(&m_A, B, &i_one);
                 /* Compute X by passing A and B */
-                sgetrs_("N", &m_A, &nrhs, A_test, &cs_A, IPIV, B_test, &m_A, &info);
+                sgetrs_("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, &info);
                 /* Compute AX-B */
-                sgemv_("N", &m_A, &m_A, &s_one, A, &cs_A, B_test, &i_one, &s_n_one, B, &i_one);
+                sgemv_("N", &m_A, &m_A, &s_one, A, &lda, B_test, &i_one, &s_n_one, B, &i_one);
                 norm = snrm2_(&m_A, B, &i_one);
                 resid1 = norm / (float)m_A / norm_B / eps;
             }
@@ -68,10 +81,10 @@ void validate_getrf(integer m_A,
             
             /* Test 2 */
             /* Unity diagonal elements to Lower triangular matrix */
-            slaset_("U", &m_A, &m_A, &s_zero, &s_one, L, &m_A);
-            norm_A = slange_("1", &m_A, &n_A, A, &cs_A, work);
+            slaset_("U", &m_L, &n_L, &s_zero, &s_one, L, &m_L);
+            norm_A = slange_("1", &m_A, &n_A, A, &lda, work);
             /* T = L * U  */
-            sgemm_("N", "N", &m_A, &n_A, &m_A, &s_one, L, &m_A, U, &m_A, &s_zero, T, &m_A);
+            sgemm_("N", "N", &m_A, &n_A, &k, &s_one, L, &m_L, U, &m_U, &s_zero, T, &m_A);
             /*  Row interchanges based on IPIV values */
             slaswp_(&n_A, T, &m_A, &i_one, &min_A, IPIV, &i_n_one);
             /* T - A --> L*U - A */
@@ -94,9 +107,9 @@ void validate_getrf(integer m_A,
             {
                 norm_B = dnrm2_(&m_A, B, &i_one);
                 /* Compute X by passing A and B */
-                dgetrs_("N", &m_A, &nrhs, A_test, &cs_A, IPIV, B_test, &m_A, &info);
+                dgetrs_("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, &info);
                 /* Compute AX-B */
-                dgemv_("N", &m_A, &m_A, &d_one, A, &cs_A, B_test, &i_one, &d_n_one, B, &i_one);
+                dgemv_("N", &m_A, &m_A, &d_one, A, &lda, B_test, &i_one, &d_n_one, B, &i_one);
                 norm = dnrm2_(&m_A, B, &i_one);
                 resid1 = norm / (double)m_A / norm_B / eps;
             }
@@ -107,10 +120,10 @@ void validate_getrf(integer m_A,
             
             /* Test 2 */
             /* Unity diagonal elements to Lower triangular matrix */
-            dlaset_("U",&m_A, &m_A, &d_zero, &d_one, L, &m_A);
-            norm_A = dlange_("1", &m_A, &n_A, A, &cs_A, work);
+            dlaset_("U",&m_L, &n_L, &d_zero, &d_one, L, &m_L);
+            norm_A = dlange_("1", &m_A, &n_A, A, &lda, work);
             /* T = L * U  */
-            dgemm_("N", "N", &m_A, &n_A, &m_A, &d_one, L, &m_A, U, &m_A, &d_zero, T, &m_A);
+            dgemm_("N", "N", &m_A, &n_A, &k, &d_one, L, &m_L, U, &m_U, &d_zero, T, &m_A);
             /*  Row interchanges based on IPIV values*/
             dlaswp_(&n_A, T, &m_A, &i_one, &min_A, IPIV, &i_n_one);
             /* T - A --> L*U - A */
@@ -132,9 +145,9 @@ void validate_getrf(integer m_A,
             {
                 norm_B = snrm2_(&m_A, B, &i_one);
                 /* Compute X by passing A and B */
-                cgetrs_("N", &m_A, &nrhs, A_test, &cs_A, IPIV, B_test, &m_A, &info);
+                cgetrs_("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, &info);
                 /* Compute AX-B */
-                cgemv_("N", &m_A, &m_A, &c_one, A, &cs_A, B_test, &i_one, &c_n_one, B, &i_one);
+                cgemv_("N", &m_A, &m_A, &c_one, A, &lda, B_test, &i_one, &c_n_one, B, &i_one);
                 norm = snrm2_(&m_A, B, &i_one);
                 resid1 = norm / (float)m_A / norm_B / eps;
             }
@@ -145,11 +158,11 @@ void validate_getrf(integer m_A,
             
             /* Test 2 */
             /* Unity diagonal elements to Lower triangular matrix */
-            claset_("U", &m_A, &m_A, &c_zero, &c_one, L, &m_A);
+            claset_("U", &m_L, &n_L, &c_zero, &c_one, L, &m_L);
 
-            norm_A = clange_("1", &m_A, &n_A, A, &cs_A, work);
+            norm_A = clange_("1", &m_A, &n_A, A, &lda, work);
             /* T = L * U  */
-            cgemm_("N", "N", &m_A, &n_A, &m_A, &c_one, L, &m_A, U, &m_A, &c_zero, T, &m_A);
+            cgemm_("N", "N", &m_A, &n_A, &k, &c_one, L, &m_L, U, &m_U, &c_zero, T, &m_A);
             /*  Row interchanges based on IPIV values*/
             claswp_(&n_A, T, &m_A, &i_one, &min_A, IPIV, &i_n_one);
             /* T - A --> L*U - A */
@@ -171,9 +184,9 @@ void validate_getrf(integer m_A,
             {
                 norm_B = dnrm2_(&m_A, B, &i_one);
                 /* Compute X by passing A and B */
-                zgetrs_("N", &m_A, &nrhs, A_test, &cs_A, IPIV, B_test, &m_A, &info);
+                zgetrs_("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, &info);
                 /* Compute AX-B */
-                zgemv_("N", &m_A, &m_A, &z_one, A, &cs_A, B_test, &i_one, &z_n_one, B, &i_one);
+                zgemv_("N", &m_A, &m_A, &z_one, A, &lda, B_test, &i_one, &z_n_one, B, &i_one);
                 norm = dnrm2_(&m_A, B, &i_one);
                 resid1 = norm / (double)m_A / norm_B / eps;
             }
@@ -184,11 +197,11 @@ void validate_getrf(integer m_A,
             
             /* Test 2 */
             /* Unity diagonal elements to Lower triangular matrix */
-            zlaset_("U", &m_A, &m_A, &z_zero, &z_one, L, &m_A);
+            zlaset_("U", &m_L, &n_L, &z_zero, &z_one, L, &m_L);
 
-            norm_A = zlange_("1", &m_A, &n_A, A, &cs_A, work);
+            norm_A = zlange_("1", &m_A, &n_A, A, &lda, work);
             /* T = L * U  */
-            zgemm_("N", "N", &m_A, &n_A, &m_A, &z_one, L, &m_A, U, &m_A, &z_zero, T, &m_A);
+            zgemm_("N", "N", &m_A, &n_A, &k, &z_one, L, &m_L, U, &m_U, &z_zero, T, &m_A);
             /*  Row interchanges based on IPIV values*/
             zlaswp_(&n_A, T, &m_A, &i_one, &min_A, IPIV, &i_n_one);
             /* T - A --> L*U - A */
