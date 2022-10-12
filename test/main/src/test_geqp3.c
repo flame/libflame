@@ -81,6 +81,7 @@ void fla_test_geqp3_experiment(test_params_t *params,
     free_matrix(A);
     free_matrix(A_test);
     free_vector(T);
+    free_vector(jpvt);
 }
 
 
@@ -153,7 +154,7 @@ void prepare_geqp3_run(integer m_A, integer n_A,
         copy_vector(datatype, min_A, T_test, 1, T, 1);
 
         /* Free up the output buffers */
-        free_vector(work);
+        free_matrix(work);
         free_vector(T_test);
     }
 

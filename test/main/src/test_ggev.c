@@ -94,11 +94,15 @@ void fla_test_ggev_experiment(test_params_t *params,
     {
         validate_ggev(&JOBVL, &JOBVR, n, A, B, alpha, alphar, alphai, beta, VL, ldvl, VR, ldvr, datatype, residual);
     }
+    
     /* Free up the buffers */
     free_matrix(A);
     free_matrix(A_test);
     free_matrix(VL);
     free_matrix(VR);
+    free_matrix(B);
+    free_matrix(B_test);
+
     if (datatype == FLOAT || datatype == DOUBLE)
     {
         free_vector(alphar);
