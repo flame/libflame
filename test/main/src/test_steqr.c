@@ -116,7 +116,7 @@ void fla_test_steqr_experiment(test_params_t *params,
     uplo = params->eig_sym_paramslist[pci].uplo;
 
     n = p_cur;
-    ldz = params->eig_sym_paramslist[pci].lda;
+    ldz = max(1,n);
     lda = max(1,n);
 
     /* Create input matrix parameters */
