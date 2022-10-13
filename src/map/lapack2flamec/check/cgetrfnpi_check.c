@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2021 Advanced Micro Devices, Inc. All rights reserved.
+ * Copyright (c) 2021-2022 Advanced Micro Devices, Inc. All rights reserved.
  * */
 
 #include "FLA_lapack2flame_return_defs.h"
