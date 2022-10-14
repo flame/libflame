@@ -125,9 +125,8 @@ int classq_(integer *n, complex *x, integer *incx, real *scl, real *sumsq) {
     integer i__1, i__2;
     real r__1, r__2;
     /* Builtin functions */
-    double pow_ri(real *, integer *), r_imag(complex *), sqrt(doublereal);
+    double pow_ri(real *, integer *), sqrt(doublereal);
     /* Local variables */
-    extern logical sisnan_(real *);
     integer i__;
     real ax;
     integer ix;
@@ -153,7 +152,7 @@ int classq_(integer *n, complex *x, integer *incx, real *scl, real *sumsq) {
     tbig = 4.50359963E+15;
     /* .. */
     /* Quick return if possible */
-    if (sisnan_(scl) || sisnan_(sumsq)) {
+    if (scl != scl || sumsq != sumsq) {
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
@@ -207,7 +206,7 @@ int classq_(integer *n, complex *x, integer *incx, real *scl, real *sumsq) {
             r__1 = ax;
             amed += r__1 * r__1;
         }
-        ax = (r__1 = r_imag(&x[ix]), f2c_abs(r__1));
+        ax = (r__1 = x[ix].i, f2c_abs(r__1));
         if (ax > tbig) {
             /* Computing 2nd power */
             r__1 = ax * sbig;
@@ -253,15 +252,15 @@ int classq_(integer *n, complex *x, integer *incx, real *scl, real *sumsq) {
     /* Combine abig and amed or amed and asml if more than one */
     /* accumulator was used. */
     if (abig > 0.f) {
-        if (amed > 0.f || sisnan_(&amed)) {
-            abig += amed * sbig * sbi;
+        if (amed > 0.f || amed != amed) {
+            abig += amed * sbig * sbig;
         }
         *scl = 1.f / sbig;
         *sumsq = abig;
     }
     else if (asml > 0.f) {
         /* Combine amed and asml if asml > 0. */
-        if (amed > 0.f || sisnan_(&amed)) {
+        if (amed > 0.f || amed != amed) {
             amed = sqrt(amed);
             asml = sqrt(asml) / ssml;
             if (asml > amed) {
