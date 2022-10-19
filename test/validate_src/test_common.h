@@ -100,7 +100,7 @@ void copy_sym_tridiag_matrix(integer datatype, void *D, void *E, integer M, inte
 void c_div_t(scomplex *cp, scomplex *ap, scomplex *bp);
 void z_div_t(dcomplex *cp, dcomplex *ap, dcomplex *bp);
 
-/* work value calculation*/
+/* work value calculation */
 integer get_work_value( integer datatype, void *work );
 
 /* Diagonal Scaling*/
@@ -115,5 +115,10 @@ void diagonalize_vector(integer datatype, void* s, void* sigma, integer m, integ
 
 /* To calculate matrix multiplication with real and complex datatypes */
 void scgemv(char TRANS, integer real_alpha, integer m, integer n, scomplex* alpha, float* a, integer lda, scomplex* v, integer incv, float beta, scomplex* c, integer inc);
+
+/* To find the maximum from the array */
+void get_max(integer datatype, void *arr, void *max_val, int n);
+/* To find the minimum from the array */
+void get_min(integer datatype, void *arr, void *min_val, int n);
 
 #endif // TEST_COMMON_H

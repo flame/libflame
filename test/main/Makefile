@@ -8,15 +8,15 @@
 CC             := gcc
 LINKER         := $(CC)
 RM_RF          := rm -rf
-CFLAGS         := -g -O2 -Wall -Wno-comment
 OMP_LIB        := -fopenmp
+CFLAGS         := -g -O2 -Wall -Wno-comment ${OMP_LIB}
 LDFLAGS        := -lm -lpthread $(OMP_LIB)
 
 #
 # --- BLAS library -------------------------------------------------------------
 #
 # A BLAS library must be given in order to run the libflame test suite.
-LIBBLAS        :=
+LIBBLAS        := 
 
 #
 # --- LIBFLAME library ---------------------------------------------------------

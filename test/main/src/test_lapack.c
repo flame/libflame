@@ -6,8 +6,8 @@
 #include "test_lapack.h"
 #include "test_routines.h"
 
-
 // Global variables.
+int n_threads = 1;
 char fla_test_binary_name[ MAX_BINARY_NAME_LENGTH + 1 ];
 char fla_test_pass_string[ MAX_PASS_STRING_LENGTH + 1 ];
 char fla_test_warn_string[ MAX_PASS_STRING_LENGTH + 1 ];
@@ -74,6 +74,18 @@ int  main( int argc, char** argv )
 
     /* Initialize some strings. */
     fla_test_init_strings();
+
+    /* Check if multithread variable is set or not*/
+    char* str = getenv("FLA_TEST_NUM_THREADS");
+
+    if( str != NULL){
+
+        n_threads = atoi(str);
+
+        if(n_threads < 1){
+            fla_test_output_error("Number of threads should be greater than or equal to 1 \n");
+        }
+    }
 
     /* Check for Command line requests */
     if ( argc > 1 )
@@ -1708,15 +1720,18 @@ void fla_test_op_driver( char*         func_str,
                                            double* ) )       // residual
 {
     integer n_datatypes = params->n_datatypes;
-    integer n_repeats;
+    integer n_repeats, ith;
     integer num_ranges, range_loop_counter;
     integer p_first, p_max, p_inc;
     integer q_first, q_max, q_inc;
     integer dt, p_cur, q_cur;
     char    datatype_char;
     integer datatype;
-    double  perf, time, thresh, residual;
-
+    double thresh;
+    double perf_max_val, time_min_val, residual_max_val;
+    double* perf = (double*)malloc(n_threads*sizeof(double));
+    double* time = (double*)malloc(n_threads*sizeof(double));
+    double* residual = (double*)malloc(n_threads*sizeof(double));
 
     fla_test_output_info( "%2sAPI%13s DATA_TYPE%6s SIZE%9s FLOPS%9s TIME%9s ERROR%9s STATUS\n", "", "", "", "", "", "", "" );
     fla_test_output_info( "%1s=====%12s===========%4s========%7s=======%7s========%6s==========%6s========\n", "", "", "", "", "", "", "" );
@@ -1816,14 +1831,36 @@ void fla_test_op_driver( char*         func_str,
             /* Loop over the requested problem sizes */
             for ( p_cur = p_first, q_cur = q_first; (p_cur <= p_max && q_cur <= q_max); p_cur += p_inc, q_cur += q_inc )
             {
-                f_exp( params, datatype, p_cur, q_cur, range_loop_counter, n_repeats, &perf, &time, &residual );
-                fla_test_print_status(func_str, datatype_char, sqr_inp, p_cur, q_cur, residual, thresh, time, perf);
+                if ( n_threads > 1)
+                {
+#pragma omp parallel num_threads( n_threads )
+#pragma omp for
+                    for ( ith = 0; ith < n_threads; ith++ )
+                    {
+                        f_exp(params, datatype, p_cur, q_cur, range_loop_counter, n_repeats, (perf+ith), (time+ith), (residual+ith));
+                    }
+
+                    get_max(DOUBLE, (void*)residual, (void*)&residual_max_val, n_threads);
+                    get_min(DOUBLE, (void*)time, (void*)&time_min_val, n_threads);
+                    get_max(DOUBLE, (void*)perf, (void*)&perf_max_val, n_threads);
+
+                    fla_test_print_status(func_str, datatype_char, sqr_inp, p_cur, q_cur, residual_max_val, thresh, time_min_val, perf_max_val);
+                }
+                else
+                {
+                    f_exp(params, datatype, p_cur, q_cur, range_loop_counter, n_repeats, perf, time, residual);
+                    fla_test_print_status(func_str, datatype_char, sqr_inp, p_cur, q_cur, *residual, thresh, *time, *perf);
+                }
 
             }
         }
 
         fla_test_output_info( "\n" );
     }
+
+    free(perf);
+    free(residual);
+    free(time);
 }
 
 void fla_test_print_status(char* func_str,

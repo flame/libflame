@@ -1510,3 +1510,233 @@ void copy_sym_tridiag_matrix(integer datatype, void *D, void *E, integer M, inte
         }
     }
 }
+
+/* Get the maximum value from the array */
+void get_max(int datatype, void *arr, void *max_val, int n)
+{
+    int i;
+
+    switch( datatype )
+    {
+        case INTEGER:
+        {
+            int *ptr = arr;
+            int *maxVal = (int *)max_val;
+            int maxlocal = ptr[0];
+
+            for ( i = 1; i < n; i++ )
+            {
+                if ( ptr[i] > maxlocal )
+                {
+                    maxlocal = ptr[i];
+                }
+            }
+
+            *maxVal = maxlocal;
+            break;
+        }
+
+        case FLOAT:
+        {
+            float *ptr = arr;
+            float *maxVal = (float *)max_val;
+            float maxlocal = ptr[0];
+
+            for ( i = 1; i < n; i++ )
+            {
+                if ( ptr[i] > maxlocal )
+                {
+                    maxlocal = ptr[i];
+                }
+            }
+
+            *maxVal = maxlocal;
+            break;
+        }
+
+        case DOUBLE:
+        {
+            double *ptr = arr;
+            double *maxVal = (double *)max_val;
+            double maxlocal = ptr[0];
+
+            for ( i = 1; i < n; i++ )
+            {
+                if ( ptr[i] > maxlocal )
+                {
+                    maxlocal = ptr[i];
+                }
+            }
+
+            *maxVal = maxlocal;
+            break;
+        }
+
+        /* Implementation of complex needs to be relook*/
+        case COMPLEX:
+        {
+            scomplex *ptr = arr;
+            scomplex *maxVal = (scomplex *)max_val;
+            scomplex maxlocal = ptr[0];
+
+            for ( i = 1; i < n; i++ )
+            {
+                if ( ptr[i].real > maxlocal.real )
+                {
+                    maxlocal = ptr[i];
+                }
+                else if ( ptr[i].real == maxlocal.real )
+                {
+                    if ( ptr[i].imag > maxlocal.imag )
+                    {
+                        maxlocal = ptr[i];
+                    }
+                }
+            }
+
+            *maxVal = maxlocal;
+            break;
+        }
+
+        /* Implementation of complex needs to be relook*/
+        case DOUBLE_COMPLEX:
+        {
+            dcomplex *ptr = arr;
+            dcomplex *maxVal = (dcomplex *)max_val;
+            dcomplex maxlocal = ptr[0];
+
+            for ( i = 1; i < n; i++ )
+            {
+                if ( ptr[i].real > maxlocal.real )
+                {
+                    maxlocal = ptr[i];
+                }
+                else if ( ptr[i].real == maxlocal.real )
+                {
+                    if ( ptr[i].imag > maxlocal.imag )
+                    {
+                        maxlocal = ptr[i];
+                    }
+                }
+            }
+
+            *maxVal = maxlocal;
+            break;
+        }
+    }
+}
+
+/* Get the minimum value from the array */
+void get_min(int datatype, void *arr, void *min_val, int n)
+{
+    int i;
+
+    switch( datatype )
+    {
+        case INTEGER:
+        {
+            int *ptr = arr;
+            int *maxVal = (int *)min_val;
+            int maxlocal = ptr[0];
+
+            for ( i = 1; i < n; i++ )
+            {
+                if ( ptr[i] < maxlocal )
+                {
+                    maxlocal = ptr[i];
+                }
+            }
+
+            *maxVal = maxlocal;
+            break;
+        }
+
+        case FLOAT:
+        {
+            float *ptr = arr;
+            float *maxVal = (float *)min_val;
+            float maxlocal = ptr[0];
+
+            for ( i = 1; i < n; i++ )
+            {
+                if ( ptr[i] < maxlocal )
+                {
+                    maxlocal = ptr[i];
+                }
+            }
+
+            *maxVal = maxlocal;
+            break;
+        }
+
+        case DOUBLE:
+        {
+            double *ptr = arr;
+            double *maxVal = (double *)min_val;
+            double maxlocal = ptr[0];
+
+            for ( i = 1; i < n; i++ )
+            {
+                if ( ptr[i] < maxlocal )
+                {
+                    maxlocal = ptr[i];
+                }
+            }
+
+            *maxVal = maxlocal;
+            break;
+        }
+
+        /* Implementation of complex needs to be relook*/
+        case COMPLEX:
+        {
+            scomplex *ptr = arr;
+            scomplex *maxVal = (scomplex *)min_val;
+            scomplex maxlocal = ptr[0];
+
+            for ( i = 1; i < n; i++ )
+            {
+                if ( ptr[i].real < maxlocal.real )
+                {
+                    maxlocal = ptr[i];
+                }
+                else if ( ptr[i].real == maxlocal.real )
+                {
+                    if ( ptr[i].imag < maxlocal.imag )
+                    {
+                        maxlocal = ptr[i];
+                    }
+                }
+            }
+
+            *maxVal = maxlocal;
+            break;
+        }
+
+        /* Implementation of complex needs to be relook*/
+        case DOUBLE_COMPLEX:
+        {
+            dcomplex *ptr = arr;
+            dcomplex *maxVal = (dcomplex *)min_val;
+            dcomplex maxlocal = ptr[0];
+
+            for ( i = 1; i < n; i++ )
+            {
+                if ( ptr[i].real < maxlocal.real )
+                {
+                    maxlocal = ptr[i];
+                }
+                else if ( ptr[i].real == maxlocal.real )
+                {
+                    if ( ptr[i].imag < maxlocal.imag )
+                    {
+                        maxlocal = ptr[i];
+                    }
+                }
+            }
+
+            *maxVal = maxlocal;
+            break;
+        }
+    }
+}
