@@ -14,10 +14,80 @@ void fla_test_getrf(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "LU factorization";
     char* front_str = "GETRF";
+    integer tests_not_run = 1, invalid_dtype = 0;
+    if(argc == 1)
+    {
+        fla_test_output_info("--- %s ---\n", op_str);
+        fla_test_output_info("\n");
+        fla_test_op_driver(front_str, RECT_INPUT, params, LIN, fla_test_getrf_experiment);
+        tests_not_run = 0;
+    }
+    else if(argc == 7)
+    {
+        integer i, num_types, M,N;
+        integer datatype, n_repeats;
+        double perf, time_min, residual;
+        char stype,type_flag[4] = {0};
+        char *endptr;
 
-    fla_test_output_info("--- %s ---\n", op_str);
-    fla_test_output_info("\n");
-    fla_test_op_driver(front_str, RECT_INPUT, params, LIN, fla_test_getrf_experiment);
+        /* Parse the arguments */
+        num_types = strlen(argv[2]);
+        M = strtoimax(argv[3], &endptr, CLI_DECIMAL_BASE);
+        N = strtoimax(argv[4], &endptr, CLI_DECIMAL_BASE);
+        params->lin_solver_paramslist[0].lda = strtoimax(argv[5], &endptr, CLI_DECIMAL_BASE);
+
+        n_repeats = strtoimax(argv[6], &endptr, CLI_DECIMAL_BASE);
+
+        if(n_repeats > 0)
+        {
+            params->lin_solver_paramslist[0].solver_threshold = CLI_NORM_THRESH;
+
+            for(i = 0; i < num_types; i++)
+            {
+                stype = argv[2][i];
+                datatype = get_datatype(stype);
+
+                /* Check for invalide dataype */
+                if(datatype == INVALID_TYPE)
+                {
+                    invalid_dtype = 1;
+                    continue;
+                }
+
+                /* Check for duplicate datatype presence */
+                if(type_flag[datatype - FLOAT] == 1)
+                    continue;
+                type_flag[datatype - FLOAT] = 1;
+
+                /* Call the test code */
+                fla_test_getrf_experiment(params, datatype,
+                                          M, N,
+                                          0,
+                                          n_repeats,
+                                          &perf, &time_min, &residual);
+                /* Print the results */
+                fla_test_print_status(front_str,
+                                      stype,
+                                     RECT_INPUT,
+                                      M, N,
+                                      residual, params->lin_solver_paramslist[0].solver_threshold,
+                                      time_min, perf);
+                tests_not_run = 0;
+            }
+        }
+    }
+
+    /* Print error messages */
+    if(tests_not_run)
+    {
+        printf("\nIllegal arguments for getrf\n");
+        printf("./<EXE> getrf <precisions - sdcz> <M> <N> <LDA> <repeats>\n");
+    }
+    if(invalid_dtype)
+    {
+        printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n\n");
+    }
+    return;
 }
 
 void fla_test_getrf_experiment(test_params_t *params,
@@ -39,11 +109,11 @@ void fla_test_getrf_experiment(test_params_t *params,
     m = p_cur;
     n = q_cur;
     lda = params->lin_solver_paramslist[pci].lda;
-    
+
     /* Create the matrices for the current operation*/
     create_matrix(datatype, &A, lda, n);
     create_vector(INTEGER, &IPIV, min(m, n));
-    
+
     /* Initialize the test matrices*/
     rand_matrix(datatype, A, m, n, lda);
 
@@ -58,8 +128,18 @@ void fla_test_getrf_experiment(test_params_t *params,
     *t = time_min;
 
     /* performance computation */
-    /* 2mn^2 - (2/3)n^3 flops */
-    *perf = (double)((2.0 * m * n * n) - ((2.0 / 3.0) * n * n * n)) / time_min / FLOPS_PER_UNIT_PERF;
+    if(m == n)
+    {
+        *perf = (2.0 / 3.0) * n * n * n;
+    }
+    else if(m > n)
+    {
+        *perf = (1.0 / 3.0) * n * n * (3 * m - n);
+    }
+    else
+    {
+        *perf = (1.0 / 3.0) * m * m * (3 * n - m);
+    }
     if (datatype == COMPLEX || datatype == DOUBLE_COMPLEX)
         *perf *= 4.0;
 
@@ -127,7 +207,7 @@ void invoke_getrf(integer datatype, integer *m, integer *n, void *a, integer *ld
             sgetrf_(m, n, a, lda, ipiv, info);
             break;
         }
-        
+
         case DOUBLE:
         {
             dgetrf_(m, n, a, lda, ipiv, info);
