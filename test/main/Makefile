@@ -16,7 +16,7 @@ LDFLAGS        := -lm -lpthread $(OMP_LIB)
 # --- BLAS library -------------------------------------------------------------
 #
 # A BLAS library must be given in order to run the libflame test suite.
-LIBBLAS        := 
+LIBBLAS        :=
 
 #
 # --- LIBFLAME library ---------------------------------------------------------

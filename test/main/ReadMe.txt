@@ -17,7 +17,6 @@ The test suite directory has (test/main) the following contents,
       completion.
 
 
-
 ## Compiling
 
 Before running the test suite, we must link BLAS and LAPACK library.
@@ -61,9 +60,9 @@ below.
       ### `input.general.operations`
 
       The `input.general.operations` file conatins the list of all the APIs
-	   supported by the test suite. User can enable/disable the testing of a
-	   particular API by setting/resetting the corresponding API flag. Below is
-	   a representative example of the default contents of `input.general.operations`.
+      supported by the test suite. User can enable/disable the testing of a
+      particular API by setting/resetting the corresponding API flag. Below is
+      a representative example of the default contents of `input.general.operations`.
 
          1 geqrf QR factorization (0 = disable; 1 = enable, 2 = run APIs with value 2)
          1 gerqf RQ factorisation (0 = disable; 1 = enable, 2 = run APIs with value 2)
