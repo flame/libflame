@@ -47,8 +47,8 @@ ILP64FLAG := FLA_ENABLE_ILP64=$(ILP64)
 #
 TEST_SRC_PATH  := src
 TEST_OBJ_PATH  := src/obj
-TEST_VALIDATE_SRC_PATH := ../validate_src
-TEST_VALIDATE_OBJ_PATH := ../validate_src/obj
+TEST_VALIDATE_SRC_PATH := validate_src
+TEST_VALIDATE_OBJ_PATH := validate_src/obj
 
 CFLAGS         += -I$(TEST_SRC_PATH) -I$(TEST_VALIDATE_SRC_PATH)
 
