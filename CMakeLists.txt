@@ -680,13 +680,16 @@ endif ()
 link_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 add_definitions(-DEXPMODULE)
 add_subdirectory(src)
+
 if (BUILD_TEST)
-add_subdirectory(test)
+add_subdirectory(test/legacyflame)
 add_subdirectory(test/aoclflaprogress)
 #add_subdirectory(testcpp)
 endif()
 
 if (BUILD_NETLIB_TEST)
 add_subdirectory(netlib-test)
+elseif(NOT BUILD_NETLIB_TEST)
+add_subdirectory(test/main)
 endif()
 
