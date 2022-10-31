@@ -10,15 +10,91 @@ void fla_test_getri_experiment(test_params_t *params, integer  datatype, integer
 void prepare_getri_run(integer m_A, integer n_A, void *A, integer* ipiv, integer datatype, integer n_repeats, double* time_min_);
 void invoke_getri(integer datatype, integer *n, void *a, integer *lda, integer *ipiv, void *work, integer *lwork, integer *info);
 
+/* Flag to indicate lwork availability status
+ * <= 0 - To be calculated
+ * > 0  - Use the value
+ * */
+static integer g_lwork;
 void fla_test_getri(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Inverse through LU factorization";
     char* front_str = "GETRI";
+    integer tests_not_run = 1, invalid_dtype = 0;
 
-    fla_test_output_info("--- %s ---\n", op_str);
-    fla_test_output_info("\n");
-    fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_getri_experiment);
+    if(argc == 1)
+    {
+        g_lwork = -1;
+        fla_test_output_info("--- %s ---\n", op_str);
+        fla_test_output_info("\n");
+        fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_getri_experiment);
+        tests_not_run = 0;
+    }
+    else if(argc == 7)
+    {
+        integer i, num_types,N;
+        integer datatype, n_repeats;
+        double perf, time_min, residual;
+        char stype,type_flag[4] = {0};
+        char *endptr;
 
+        /* Parse the arguments */
+        num_types = strlen(argv[2]);
+        N = strtoimax(argv[3], &endptr, CLI_DECIMAL_BASE);
+        params->lin_solver_paramslist[0].lda = strtoimax(argv[4], &endptr, CLI_DECIMAL_BASE);
+        g_lwork = strtoimax(argv[5], &endptr, CLI_DECIMAL_BASE);
+        
+        n_repeats = strtoimax(argv[6], &endptr, CLI_DECIMAL_BASE);
+
+        if(n_repeats > 0)
+        {
+            params->lin_solver_paramslist[0].solver_threshold = CLI_NORM_THRESH;
+
+            for(i = 0; i < num_types; i++)
+            {
+                stype = argv[2][i];
+                datatype = get_datatype(stype);
+
+                /* Check for invalide dataype */
+                if(datatype == INVALID_TYPE)
+                {
+                    invalid_dtype = 1;
+                    continue;
+                }
+
+                /* Check for duplicate datatype presence */
+                if(type_flag[datatype - FLOAT] == 1)
+                    continue;
+                type_flag[datatype - FLOAT] = 1;
+
+                /* Call the test code */
+                fla_test_getri_experiment(params, datatype,
+                                          N, N,
+                                          0,
+                                          n_repeats,
+                                          &perf, &time_min, &residual);
+                /* Print the results */
+                fla_test_print_status(front_str,
+                                      stype,
+                                     SQUARE_INPUT,
+                                      N, N,
+                                      residual, params->lin_solver_paramslist[0].solver_threshold,
+                                      time_min, perf);
+                tests_not_run = 0;
+            }
+        }
+    }
+
+    /* Print error messages */
+    if(tests_not_run)
+    {
+        printf("\nIllegal arguments for getri\n");
+        printf("./<EXE> getri <precisions - sdcz> <N> <LDA> <LWORK> <repeats>\n");
+    }
+    if(invalid_dtype)
+    {
+        printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n\n");
+    }
+    return;
 }
 
 
@@ -36,7 +112,6 @@ void fla_test_getri_experiment(test_params_t *params,
     void* IPIV;
     void *A, *A_test;
     double time_min = 1e9;
-
 
     /* Determine the dimensions*/
     m = p_cur;
@@ -92,14 +167,26 @@ void prepare_getri_run(integer m_A,
     /* Save the original matrix */
     create_matrix(datatype, &A_save, m_A, n_A);
     copy_matrix(datatype, "full", m_A, n_A, A, cs_A, A_save, cs_A);
-    create_vector(datatype, &work, 1);
+    
+    if(g_lwork <= 0)
+    {
+        lwork = -1;
+        create_vector(datatype, &work, 1);
 
-    // call to  getri API
-    invoke_getri(datatype, &n_A, NULL, &n_A, NULL, work, &lwork, &info);
+        // call to  getri API
+        invoke_getri(datatype, &n_A, NULL, &n_A, NULL, work, &lwork, &info);
 
-    // Get work size
-    lwork = get_work_value(datatype, work);
-    free_vector(work);
+        // Get work size
+        lwork = get_work_value(datatype, work);
+
+        /* Output buffers will be freshly allocated for each iterations, free up 
+        the current output buffers.*/ 
+        free_vector(work);
+    }
+    else
+    {
+        lwork = g_lwork;
+    }
 
     for (i = 0; i < n_repeats; ++i)
     {
@@ -164,4 +251,3 @@ void invoke_getri(integer datatype, integer *n, void *a, integer *lda, integer *
         }
     }
 }
-
