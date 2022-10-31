@@ -11,14 +11,91 @@ void fla_test_orgqr_experiment(test_params_t *params, integer datatype, integer 
 void prepare_orgqr_run(integer m, integer n, void *A, void *T, void* work, integer *lwork, integer datatype, integer n_repeats, double* time_min_);
 void invoke_orgqr(integer datatype, integer* m, integer* n, integer *min_A, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
 
+/* Flag to indicate lwork availability status
+ * <= 0 - To be calculated
+ * > 0  - Use the value
+ * */
+static integer g_lwork;
 void fla_test_orgqr(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "QR factorization";
     char* front_str = "ORGQR";
+    integer tests_not_run = 1, invalid_dtype = 0;
 
-    fla_test_output_info("--- %s ---\n", op_str);
-    fla_test_output_info("\n");
-    fla_test_op_driver(front_str, RECT_INPUT, params, LIN, fla_test_orgqr_experiment);
+    if(argc == 1)
+    {
+        g_lwork = -1;
+        fla_test_output_info("--- %s ---\n", op_str);
+        fla_test_output_info("\n");
+        fla_test_op_driver(front_str, RECT_INPUT, params, LIN, fla_test_orgqr_experiment);
+        tests_not_run = 0;
+    }
+     else if(argc == 7)
+    {
+        integer i, num_types,N,M;
+        integer datatype, n_repeats;
+        double perf, time_min, residual;
+        char stype,type_flag[4] = {0};
+        char *endptr;
+
+        /* Parse the arguments */
+        num_types = strlen(argv[2]);
+        M = strtoimax(argv[3], &endptr, CLI_DECIMAL_BASE);
+        N = strtoimax(argv[4], &endptr, CLI_DECIMAL_BASE);
+        g_lwork = strtoimax(argv[5], &endptr, CLI_DECIMAL_BASE);
+        
+        n_repeats = strtoimax(argv[6], &endptr, CLI_DECIMAL_BASE);
+
+        if(n_repeats > 0)
+        {
+            params->lin_solver_paramslist[0].solver_threshold = CLI_NORM_THRESH;
+
+            for(i = 0; i < num_types; i++)
+            {
+                stype = argv[2][i];
+                datatype = get_datatype(stype);
+
+                /* Check for invalide dataype */
+                if(datatype == INVALID_TYPE)
+                {
+                    invalid_dtype = 1;
+                    continue;
+                }
+
+                /* Check for duplicate datatype presence */
+                if(type_flag[datatype - FLOAT] == 1)
+                    continue;
+                type_flag[datatype - FLOAT] = 1;
+
+                /* Call the test code */
+                fla_test_orgqr_experiment(params, datatype,
+                                          M, N,
+                                          0,
+                                          n_repeats,
+                                          &perf, &time_min, &residual);
+                /* Print the results */
+                fla_test_print_status(front_str,
+                                      stype,
+                                      RECT_INPUT,
+                                      M, N,
+                                      residual, params->lin_solver_paramslist[0].solver_threshold,
+                                      time_min, perf);
+                tests_not_run = 0;
+            }
+        }
+    }
+
+    /* Print error messages */
+    if(tests_not_run)
+    {
+        printf("\nIllegal arguments for orgqr\n");
+        printf("./<EXE> orgqr <precisions - sdcz> <M> <N> <LWORK> <repeats>\n");
+    }
+    if(invalid_dtype)
+    {
+        printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n\n");
+    }
+    return;
 }
 
 void fla_test_orgqr_experiment(test_params_t *params,
@@ -66,17 +143,25 @@ void fla_test_orgqr_experiment(test_params_t *params,
  
         /* Make a workspace query the first time. This will provide us with
            and ideal workspace size based on internal block size.*/
-        create_vector(datatype, &work, 1);
+        if(g_lwork <= 0)
+        {
+            lwork = -1;
+            create_vector(datatype, &work, 1);
 
-        /* call to  geqrf API */
-        invoke_geqrf(datatype, &m, &n, NULL, &cs_A, NULL, work, &lwork, &info);
+            /* call to  geqrf API */
+            invoke_geqrf(datatype, &m, &n, NULL, &cs_A, NULL, work, &lwork, &info);
 
-        /* Get work size */
-        lwork = get_work_value( datatype, work );
+            /* Get work size */
+            lwork = get_work_value(datatype, work);
 
-        /* Output buffers will be freshly allocated for each iterations, free up
-           the current output buffers.*/
-        free_vector(work);
+            /* Output buffers will be freshly allocated for each iterations, free up
+            the current output buffers.*/
+            free_vector(work);
+        }
+        else
+        {
+            lwork = g_lwork;
+        }
 
         /* create work buffer */
         create_matrix(datatype, &work, lwork, 1);

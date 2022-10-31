@@ -13,10 +13,83 @@ void fla_test_potrs(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Cholesky factorization";
     char* front_str = "POTRS";
+    integer tests_not_run = 1, invalid_dtype = 0;
 
-    fla_test_output_info("--- %s ---\n", op_str);
-    fla_test_output_info("\n");
-    fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_potrs_experiment);
+    if(argc == 1)
+    {
+        fla_test_output_info("--- %s ---\n", op_str);
+        fla_test_output_info("\n");
+        fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_potrs_experiment);
+        tests_not_run = 0;
+    }
+    else if(argc == 7)
+    {
+        /* Test with parameters from commandline */
+        integer i, num_types, N;
+        integer datatype, n_repeats;
+        double perf, time_min, residual;
+        char stype, type_flag[4] = {0};
+        char *endptr;
+
+        /* Parse the arguments */
+        num_types = strlen(argv[2]);
+        params->lin_solver_paramslist[0].Uplo = argv[3][0];
+        N = strtoimax(argv[4], &endptr, CLI_DECIMAL_BASE);
+        params->lin_solver_paramslist[0].nrhs = strtoimax(argv[5], &endptr, CLI_DECIMAL_BASE);
+        
+        n_repeats = strtoimax(argv[6], &endptr, CLI_DECIMAL_BASE);
+
+        if(n_repeats > 0)
+        {
+            params->lin_solver_paramslist[0].solver_threshold = CLI_NORM_THRESH;
+
+            for(i = 0; i < num_types; i++)
+            {
+                stype = argv[2][i];
+                datatype = get_datatype(stype);
+
+                /* Check for invalide dataype */
+                if(datatype == INVALID_TYPE)
+                {
+                    invalid_dtype = 1;
+                    continue;
+                }
+
+                /* Check for duplicate datatype presence */
+                if(type_flag[datatype - FLOAT] == 1)
+                    continue;
+                type_flag[datatype - FLOAT] = 1;
+
+                /* Call the test code */
+                fla_test_potrs_experiment(params, datatype,
+                                          N, N,
+                                          0,
+                                          n_repeats,
+                                          &perf, &time_min, &residual);
+                /* Print the results */
+                fla_test_print_status(front_str,
+                                      stype,
+                                      SQUARE_INPUT,
+                                      N, N,
+                                      residual, params->lin_solver_paramslist[0].solver_threshold,
+                                      time_min, perf);
+                tests_not_run = 0;
+            }
+        }
+    }
+
+    /* Print error messages */
+    if(tests_not_run)
+    {
+        printf("\nIllegal arguments for potrs\n");
+        printf("./<EXE> potrs <precisions - sdcz> <UPLO> <N> <NRHS> <repeats>\n");
+    }
+    if(invalid_dtype)
+    {
+        printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n\n");
+    }
+    return;
+
 }
 
 void fla_test_potrs_experiment(test_params_t *params,
