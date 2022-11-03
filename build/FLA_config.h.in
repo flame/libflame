@@ -61,6 +61,10 @@
    */
 #undef FLA_ENABLE_LAPACK2FLAME
 
+/* Determines whether the LAPACK FLASH compatibility layer is included in
+   libflame. */
+#undef FLA_ENABLE_LAPACK2FLASH
+
 /* Determines whether to enable code that will increase FLA_Obj leading
    dimensions to ensure that matrix columns adhere to the alignment specified
    by FLA_MEMORY_ALIGNMENT_BOUNDARY. */

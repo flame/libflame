@@ -439,6 +439,10 @@ dnl Observe whether we're going to build and include the lapack2flame
 dnl compatibility layer.
 FLA_CHECK_ENABLE_LAPACK2FLAME
 
+dnl Observe whether we're going to build and include the lapack2flash
+dnl FLASH compatibility layer.
+FLA_CHECK_ENABLE_LAPACK2FLASH
+
 dnl Observe whether we're going to enable external LAPACK for computing
 dnl subproblems.
 FLA_CHECK_ENABLE_EXTERNAL_LAPACK_FOR_SUBPROBLEMS
