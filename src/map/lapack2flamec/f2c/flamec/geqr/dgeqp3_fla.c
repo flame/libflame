@@ -226,7 +226,11 @@ int dgeqp3_fla(integer *m, integer *n, doublereal *a, integer * lda, integer *jp
         else
         {
             iws = *n * 3 + 1;
+#ifdef FLA_ENABLE_AMD_OPT
+            nb = FLA_DGEQP3_BLOCK_SMALL_THRESH;
+#else
             nb = ilaenv_(&c__1, "DGEQRF", " ", m, n, &c_n1, &c_n1);
+#endif
             lwkopt = (*n << 1) + (*n + 1) * nb;
         }
         work[1] = (doublereal) lwkopt;
@@ -308,7 +312,11 @@ int dgeqp3_fla(integer *m, integer *n, doublereal *a, integer * lda, integer *jp
         sn = *n - nfxd;
         sminmn = minmn - nfxd;
         /* Determine the block size. */
+#ifdef FLA_ENABLE_AMD_OPT
+        nb = FLA_DGEQP3_BLOCK_SMALL_THRESH;
+#else
         nb = ilaenv_(&c__1, "DGEQRF", " ", &sm, &sn, &c_n1, &c_n1);
+#endif
         nbmin = 2;
         nx = 0;
         if (nb > 1 && nb < sminmn)
@@ -316,7 +324,18 @@ int dgeqp3_fla(integer *m, integer *n, doublereal *a, integer * lda, integer *jp
             /* Determine when to cross over from blocked to unblocked code. */
             /* Computing MAX */
             i__1 = 0;
+#ifdef FLA_ENABLE_AMD_OPT
+            if(sn <= 30)
+            {
+                nb = FLA_DGEQP3_BLOCK_SMALL_THRESH;
+            }
+            else
+            {
+                nb  = FLA_DGEQP3_BLOCK_LARGE_THRESH;
+            }
+#else
             i__2 = ilaenv_(&c__3, "DGEQRF", " ", &sm, &sn, &c_n1, & c_n1); // , expr subst
+#endif
             nx = max(i__1,i__2);
             if (nx < sminmn)
             {
