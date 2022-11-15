@@ -12,14 +12,100 @@ integer n_repeats, double* perf, double* t, double* residual);
 void prepare_syevd_run(char* jobz, char* uplo, integer n, void* A, void* w, integer datatype, integer n_repeats, double* time_min_);
 void invoke_syevd(integer datatype, char* jobz, char* uplo, integer* n, void* a, integer* lda, void* w, void* work, integer* lwork, void* rwork, integer* lrwork, void* iwork, integer* liwork, integer* info);
 
+/* Flag to indicate lwork availability status
+ * <= 0 - To be calculated
+ * > 0  - Use the value
+ * */
+static integer g_lwork;
+static integer g_liwork;
+static integer g_lrwork;
 void fla_test_syevd(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Eigen Decomposition";
     char* front_str = "SYEVD";
+    integer tests_not_run = 1, invalid_dtype = 0;
 
-    fla_test_output_info("--- %s ---\n", op_str);
-    fla_test_output_info("\n");
-    fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_SYM, fla_test_syevd_experiment);
+    if(argc == 1)
+    {
+        g_lwork = -1;
+        g_liwork = -1;
+        g_lrwork = -1;
+        fla_test_output_info("--- %s ---\n", op_str);
+        fla_test_output_info("\n");
+        fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_SYM, fla_test_syevd_experiment);
+        tests_not_run = 0;
+    }
+    else if(argc == 11)
+    {
+        integer i, num_types,N;
+        integer datatype, n_repeats;
+        double perf, time_min, residual;
+        char stype,type_flag[4] = {0};
+        char *endptr;
+
+        /* Parse the arguments */
+        num_types = strlen(argv[2]);
+        params->eig_sym_paramslist[0].jobz = argv[3][0];
+        params->eig_sym_paramslist[0].uplo = argv[4][0];
+        N = strtoimax(argv[5], &endptr, CLI_DECIMAL_BASE);
+        params->eig_sym_paramslist[0].lda = strtoimax(argv[6], &endptr, CLI_DECIMAL_BASE);
+        
+        g_lwork = strtoimax(argv[7], &endptr, CLI_DECIMAL_BASE);
+        g_liwork = strtoimax(argv[8], &endptr, CLI_DECIMAL_BASE);
+        g_lrwork = strtoimax(argv[9], &endptr, CLI_DECIMAL_BASE);
+        
+        n_repeats = strtoimax(argv[10], &endptr, CLI_DECIMAL_BASE);
+
+        if(n_repeats > 0)
+        {
+            params->eig_sym_paramslist[0].threshold_value = CLI_NORM_THRESH;
+
+            for(i = 0; i < num_types; i++)
+            {
+                stype = argv[2][i];
+                datatype = get_datatype(stype);
+
+                /* Check for invalide dataype */
+                if(datatype == INVALID_TYPE)
+                {
+                    invalid_dtype = 1;
+                    continue;
+                }
+
+                /* Check for duplicate datatype presence */
+                if(type_flag[datatype - FLOAT] == 1)
+                    continue;
+                type_flag[datatype - FLOAT] = 1;
+
+                /* Call the test code */
+                fla_test_syevd_experiment(params, datatype,
+                                          N, N,
+                                          0,
+                                          n_repeats,
+                                          &perf, &time_min, &residual);
+                /* Print the results */
+                fla_test_print_status(front_str,
+                                      stype,
+                                      SQUARE_INPUT,
+                                      N, N,
+                                      residual, params->eig_sym_paramslist[0].threshold_value,
+                                      time_min, perf);
+                tests_not_run = 0;
+            }
+        }
+    }
+
+    /* Print error messages */
+    if(tests_not_run)
+    {
+        printf("\nIllegal arguments for syevd\n");
+        printf("./<EXE> syevd <precisions - sdcz> <JOBZ> <UPLO> <N> <LDA> <LWORK> <LIWORK> <LRWORK> <repeats>\n");
+    }
+    if(invalid_dtype)
+    {
+        printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n\n");
+    }
+    return;
 }
 
 void fla_test_syevd_experiment(test_params_t *params,
@@ -104,36 +190,37 @@ void prepare_syevd_run(char *jobz,
 
     /* Make a workspace query the first time through. This will provide us with
        and ideal workspace size based on an internal block size.*/
-    lwork = -1;
-    liwork = -1;
 
-    create_vector(datatype, &work, 1);
-    create_vector(INTEGER, &iwork, 1);
-
-    if ( datatype == COMPLEX || datatype == DOUBLE_COMPLEX )
+    if(g_lwork <= 0 || (( datatype == COMPLEX || datatype == DOUBLE_COMPLEX ) && g_lrwork <= 0) || g_liwork <= 0 )
     {
+        lwork = -1;
+        liwork = -1;
         lrwork = -1;
+
+        create_vector(datatype, &work, 1);
+        create_vector(INTEGER, &iwork, 1);
         create_realtype_vector(datatype, &rwork, 1);
+        /* call to  syevd API */
+        invoke_syevd(datatype, jobz, uplo, &n, NULL, &lda, NULL, work, &lwork, rwork, &lrwork, iwork, &liwork, &info);
+
+        /* Get work size */
+        lwork = get_work_value(datatype, work);
+        liwork = get_work_value(INTEGER, iwork);
+        lrwork = get_work_value(datatype, rwork);
+
+        /* Output buffers will be freshly allocated for each iterations, free up
+        the current output buffers.*/
+
+        free_vector(work);
+        free_vector(iwork);
+        free_vector(rwork);
     }
     else
     {
-        rwork = NULL;
+        lwork = g_lwork;
+        liwork = g_liwork;
+        lrwork = g_lrwork;   
     }
-
-    /* call to  gesdd API */
-    invoke_syevd(datatype, jobz, uplo, &n, NULL, &lda, NULL, work, &lwork, rwork, &lrwork, iwork, &liwork, &info);
-
-    /* Get work size */
-    lwork = get_work_value( datatype, work );
-    liwork = get_work_value( INTEGER, iwork );
-    lrwork = get_work_value( datatype, rwork );
-
-    /* Output buffers will be freshly allocated for each iterations, free up
-       the current output buffers.*/
-    free_vector(work);
-    free_vector(iwork);
-    if ( datatype == COMPLEX || datatype == DOUBLE_COMPLEX)
-        free_vector(rwork);
 
     for (i = 0; i < n_repeats; ++i)
     {
