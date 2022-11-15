@@ -1227,6 +1227,24 @@ void fla_test_read_svd_params ( const char *file_name, test_params_t* params )
         CHECK_LINE_SKIP ();
     }
 
+    fscanf(fp, "%s", &line[0]); // lda
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->svd_paramslist[i].lda) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // ldu
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->svd_paramslist[i].ldu) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // ldvt
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->svd_paramslist[i].ldvt) );
+        CHECK_LINE_SKIP ();
+    }
+
     for (i=0; i<NUM_SUB_TESTS; i++){
         params->svd_paramslist[i].num_ranges = num_ranges;
     }

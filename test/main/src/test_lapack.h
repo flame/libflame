@@ -244,6 +244,9 @@ typedef struct SVD_paramlist_t
     integer n_range_start;
     integer n_range_end;
     integer n_range_step_size;
+    integer lda;
+    integer ldu;
+    integer ldvt;
     integer num_repeats;
     integer num_tests;
     integer num_data_types;

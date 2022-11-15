@@ -13,15 +13,96 @@ void prepare_ggev_run(char *jobvl, char *jobvr, integer n, void *a, void *b, voi
 void invoke_ggev(integer datatype, char* jobvl, char* jobvr, integer* n, void* a, integer* lda, void* b, integer* ldb, integer* alpha, integer* alphar,
     integer* alphai, integer* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, void* work, integer* lwork, void* rwork, integer* info);
 
-
+/* Flag to indicate lwork availability status
+ * <= 0 - To be calculated
+ * > 0  - Use the value
+ * */
+static integer g_lwork;
 void fla_test_ggev(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Computing Eigen value and Eigen vectors";
     char* front_str = "GGEV";
+    integer tests_not_run = 1, invalid_dtype = 0;
 
-    fla_test_output_info("--- %s ---\n", op_str);
-    fla_test_output_info("\n");
-    fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_NSYM, fla_test_ggev_experiment);
+    if(argc == 1)
+    {
+        fla_test_output_info("--- %s ---\n", op_str);
+        fla_test_output_info("\n");
+        fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_NSYM, fla_test_ggev_experiment);
+        tests_not_run = 0;
+    }
+    else if(argc == 12)
+    {
+        /* Test with parameters from commandline */
+        integer i, num_types, N;
+        integer datatype, n_repeats;
+        double perf, time_min, residual;
+        char stype, type_flag[4] = {0};
+        char *endptr;
+
+        /* Parse the arguments */
+        num_types = strlen(argv[2]);
+        params->eig_non_sym_paramslist[0].jobvsl = argv[3][0];
+        params->eig_non_sym_paramslist[0].jobvsr = argv[4][0];
+        N = strtoimax(argv[5], &endptr, CLI_DECIMAL_BASE);
+        params->eig_non_sym_paramslist[0].lda = strtoimax(argv[6], &endptr, CLI_DECIMAL_BASE);
+        params->eig_non_sym_paramslist[0].ldb = strtoimax(argv[7], &endptr, CLI_DECIMAL_BASE);
+        params->eig_non_sym_paramslist[0].ldvl = strtoimax(argv[8], &endptr, CLI_DECIMAL_BASE);
+        params->eig_non_sym_paramslist[0].ldvr = strtoimax(argv[9], &endptr, CLI_DECIMAL_BASE);
+
+        g_lwork = strtoimax(argv[10], &endptr, CLI_DECIMAL_BASE);
+        n_repeats = strtoimax(argv[11], &endptr, CLI_DECIMAL_BASE);
+
+        if(n_repeats > 0)
+        {
+            params->eig_non_sym_paramslist[0].GenNonSymEigProblem_threshold = CLI_NORM_THRESH;
+
+            for(i = 0; i < num_types; i++)
+            {
+                stype = argv[2][i];
+                datatype = get_datatype(stype);
+
+                /* Check for invalide dataype */
+                if(datatype == INVALID_TYPE)
+                {
+                    invalid_dtype = 1;
+                    continue;
+                }
+
+                /* Check for duplicate datatype presence */
+                if(type_flag[datatype - FLOAT] == 1)
+                    continue;
+                type_flag[datatype - FLOAT] = 1;
+
+                /* Call the test code */
+                fla_test_ggev_experiment(params, datatype,
+                                          N, N,
+                                          0,
+                                          n_repeats,
+                                          &perf, &time_min, &residual);
+                /* Print the results */
+                fla_test_print_status(front_str,
+                                      stype,
+                                      SQUARE_INPUT,
+                                      N, N,
+                                      residual, params->eig_non_sym_paramslist[0].GenNonSymEigProblem_threshold,
+                                      time_min, perf);
+                tests_not_run = 0;
+            }
+        }
+    }
+
+    /* Print error messages */
+    if(tests_not_run)
+    {
+        printf("\nIllegal arguments for ggev\n");
+        printf("./<EXE> ggev <precisions - sdcz> <jobvl> <jobvr> <N> <LDA> <LDB> <LDVL> <LDVR> <LWORK> <repeats>\n");
+    }
+    if(invalid_dtype)
+    {
+        printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n\n");
+    }
+    return;
 }
 
 
@@ -139,18 +220,25 @@ void prepare_ggev_run(char *jobvl, char *jobvr, integer n_A, void *A,
 
     /* Make a workspace query the first time through. This will provide us with
      and ideal workspace size based on an internal block size. */
-    lwork = -1;
-    create_vector(datatype, &work, 8*n_A);
+    if(g_lwork <= 0)
+    {
+        lwork = -1;
+        create_vector(datatype, &work, 8*n_A);
 
-    /* call to  ggev API to get work query */
-    invoke_ggev(datatype, jobvl, jobvr, &n_A, NULL, &lda, NULL, &ldb, NULL, NULL, NULL, NULL, NULL, &ldvl, NULL, &ldvr, work, &lwork, rwork, &info);
+        /* call to  ggev API to get work query */
+        invoke_ggev(datatype, jobvl, jobvr, &n_A, NULL, &lda, NULL, &ldb, NULL, NULL, NULL, NULL, NULL, &ldvl, NULL, &ldvr, work, &lwork, rwork, &info);
 
-    /* Get work size */
-    lwork = get_work_value( datatype, work);
+        /* Get work size */
+        lwork = get_work_value( datatype, work);
 
-    /* Output buffers will be freshly allocated for each iterations, free up 
-       the current output buffers.*/ 
-    free_vector(work);
+        /* Output buffers will be freshly allocated for each iterations, free up 
+        the current output buffers.*/ 
+        free_vector(work);
+    }
+    else
+    {
+        lwork = g_lwork;
+    }
 
     for (i = 0; i < n_repeats; ++i)
     {
