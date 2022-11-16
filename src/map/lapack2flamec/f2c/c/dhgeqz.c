@@ -326,14 +326,21 @@ int dhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     doublereal u12l, tau, sqi;
     logical ilz;
     doublereal ulp, sqr, szi, szr, ad11l, ad12l, ad21l, ad22l, ad32l, wabs, atol, btol, temp;
-    extern /* Subroutine */
-    int drot_(integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *), dlag2_( doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
+    extern
+    int dlag2_( doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
     doublereal temp2, s1inv, scale;
     extern logical lsame_(char *, char *);
     integer iiter, ilast, jiter;
     doublereal anorm, bnorm;
     integer maxit;
     doublereal tempi, tempr;
+#ifdef FLA_ENABLE_AMD_OPT
+    extern int fla_dhrot3(integer *n, doublereal *a, integer *lda, doublereal *v, doublereal *tau);
+    extern int fla_drot(integer *n, doublereal *dx, integer *incx, doublereal *dy, integer *incy, doublereal *c__, doublereal *s);
+#else
+    extern int drot_(integer *n, doublereal *dx, integer *incx, doublereal *dy, integer *incy, doublereal *c__, doublereal *s);
+#define fla_drot drot_
+#endif
     extern doublereal dlapy2_(doublereal *, doublereal *), dlapy3_(doublereal *, doublereal *, doublereal *);
     extern /* Subroutine */
     int dlasv2_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
@@ -720,12 +727,12 @@ int dhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                         dlartg_(&temp, &h__[jch + 1 + jch * h_dim1], &c__, &s, &h__[jch + jch * h_dim1]);
                         h__[jch + 1 + jch * h_dim1] = 0.;
                         i__4 = ilastm - jch;
-                        drot_(&i__4, &h__[jch + (jch + 1) * h_dim1], ldh, & h__[jch + 1 + (jch + 1) * h_dim1], ldh, &c__, &s);
+                        fla_drot(&i__4, &h__[jch + (jch + 1) * h_dim1], ldh, & h__[jch + 1 + (jch + 1) * h_dim1], ldh, &c__, &s);
                         i__4 = ilastm - jch;
-                        drot_(&i__4, &t[jch + (jch + 1) * t_dim1], ldt, &t[ jch + 1 + (jch + 1) * t_dim1], ldt, &c__, &s);
+                        fla_drot(&i__4, &t[jch + (jch + 1) * t_dim1], ldt, &t[ jch + 1 + (jch + 1) * t_dim1], ldt, &c__, &s);
                         if (ilq)
                         {
-                            drot_(n, &q[jch * q_dim1 + 1], &c__1, &q[(jch + 1) * q_dim1 + 1], &c__1, &c__, &s);
+                            fla_drot(n, &q[jch * q_dim1 + 1], &c__1, &q[(jch + 1) * q_dim1 + 1], &c__1, &c__, &s);
                         }
                         if (ilazr2)
                         {
@@ -764,24 +771,24 @@ int dhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                         if (jch < ilastm - 1)
                         {
                             i__4 = ilastm - jch - 1;
-                            drot_(&i__4, &t[jch + (jch + 2) * t_dim1], ldt, & t[jch + 1 + (jch + 2) * t_dim1], ldt, & c__, &s);
+                            fla_drot(&i__4, &t[jch + (jch + 2) * t_dim1], ldt, & t[jch + 1 + (jch + 2) * t_dim1], ldt, & c__, &s);
                         }
                         i__4 = ilastm - jch + 2;
-                        drot_(&i__4, &h__[jch + (jch - 1) * h_dim1], ldh, & h__[jch + 1 + (jch - 1) * h_dim1], ldh, &c__, &s);
+                        fla_drot(&i__4, &h__[jch + (jch - 1) * h_dim1], ldh, & h__[jch + 1 + (jch - 1) * h_dim1], ldh, &c__, &s);
                         if (ilq)
                         {
-                            drot_(n, &q[jch * q_dim1 + 1], &c__1, &q[(jch + 1) * q_dim1 + 1], &c__1, &c__, &s);
+                            fla_drot(n, &q[jch * q_dim1 + 1], &c__1, &q[(jch + 1) * q_dim1 + 1], &c__1, &c__, &s);
                         }
                         temp = h__[jch + 1 + jch * h_dim1];
                         dlartg_(&temp, &h__[jch + 1 + (jch - 1) * h_dim1], & c__, &s, &h__[jch + 1 + jch * h_dim1]);
                         h__[jch + 1 + (jch - 1) * h_dim1] = 0.;
                         i__4 = jch + 1 - ifrstm;
-                        drot_(&i__4, &h__[ifrstm + jch * h_dim1], &c__1, &h__[ ifrstm + (jch - 1) * h_dim1], &c__1, &c__, &s) ;
+                        fla_drot(&i__4, &h__[ifrstm + jch * h_dim1], &c__1, &h__[ ifrstm + (jch - 1) * h_dim1], &c__1, &c__, &s) ;
                         i__4 = jch - ifrstm;
-                        drot_(&i__4, &t[ifrstm + jch * t_dim1], &c__1, &t[ ifrstm + (jch - 1) * t_dim1], &c__1, &c__, &s) ;
+                        fla_drot(&i__4, &t[ifrstm + jch * t_dim1], &c__1, &t[ ifrstm + (jch - 1) * t_dim1], &c__1, &c__, &s) ;
                         if (ilz)
                         {
-                            drot_(n, &z__[jch * z_dim1 + 1], &c__1, &z__[(jch - 1) * z_dim1 + 1], &c__1, &c__, &s);
+                            fla_drot(n, &z__[jch * z_dim1 + 1], &c__1, &z__[(jch - 1) * z_dim1 + 1], &c__1, &c__, &s);
                         }
                         /* L50: */
                     }
@@ -807,12 +814,12 @@ L70:
         dlartg_(&temp, &h__[ilast + (ilast - 1) * h_dim1], &c__, &s, &h__[ ilast + ilast * h_dim1]);
         h__[ilast + (ilast - 1) * h_dim1] = 0.;
         i__2 = ilast - ifrstm;
-        drot_(&i__2, &h__[ifrstm + ilast * h_dim1], &c__1, &h__[ifrstm + ( ilast - 1) * h_dim1], &c__1, &c__, &s);
+        fla_drot(&i__2, &h__[ifrstm + ilast * h_dim1], &c__1, &h__[ifrstm + ( ilast - 1) * h_dim1], &c__1, &c__, &s);
         i__2 = ilast - ifrstm;
-        drot_(&i__2, &t[ifrstm + ilast * t_dim1], &c__1, &t[ifrstm + (ilast - 1) * t_dim1], &c__1, &c__, &s);
+        fla_drot(&i__2, &t[ifrstm + ilast * t_dim1], &c__1, &t[ifrstm + (ilast - 1) * t_dim1], &c__1, &c__, &s);
         if (ilz)
         {
-            drot_(n, &z__[ilast * z_dim1 + 1], &c__1, &z__[(ilast - 1) * z_dim1 + 1], &c__1, &c__, &s);
+            fla_drot(n, &z__[ilast * z_dim1 + 1], &c__1, &z__[(ilast - 1) * z_dim1 + 1], &c__1, &c__, &s);
         }
         /* H(ILAST,ILAST-1)=0 -- Standardize B, set ALPHAR, ALPHAI, */
         /* and BETA */
@@ -985,6 +992,11 @@ L130: /* Do an implicit single-shift QZ sweep. */
                 dlartg_(&temp, &h__[j + 1 + (j - 1) * h_dim1], &c__, &s, &h__[ j + (j - 1) * h_dim1]);
                 h__[j + 1 + (j - 1) * h_dim1] = 0.;
             }
+#ifdef FLA_ENABLE_AMD_OPT
+            i__3 = ilastm - j + 1;
+            fla_drot(&i__3, &h__[j + j * h_dim1], &h_dim1, &h__[j + 1 + j * h_dim1], &h_dim1, &c__, &s);
+            fla_drot(&i__3,   &t[j + j * t_dim1], &t_dim1,   &t[j + 1 + j * t_dim1], &t_dim1, &c__, &s);
+#else
             i__3 = ilastm;
             for (jc = j;
                     jc <= i__3;
@@ -998,6 +1010,7 @@ L130: /* Do an implicit single-shift QZ sweep. */
                 t[j + jc * t_dim1] = temp2;
                 /* L140: */
             }
+#endif
             if (ilq)
             {
                 i__3 = *n;
@@ -1016,6 +1029,12 @@ L130: /* Do an implicit single-shift QZ sweep. */
             t[j + 1 + j * t_dim1] = 0.;
             /* Computing MIN */
             i__4 = j + 2;
+#ifdef FLA_ENABLE_AMD_OPT
+            i__3 = fla_min(i__4,ilast) - ifrstm + 1;
+            fla_drot(&i__3, &h__[ifrstm + (j + 1) * h_dim1], &c__1, &h__[ifrstm + j * h_dim1], &c__1, &c__, &s);
+            i__3 = j - ifrstm + 1;
+            fla_drot(&i__3, &t[ifrstm + (j + 1) * t_dim1], &c__1, &t[ifrstm + j * t_dim1], &c__1, &c__, &s);
+#else
             i__3 = fla_min(i__4,ilast);
             for (jr = ifrstm;
                     jr <= i__3;
@@ -1036,6 +1055,7 @@ L130: /* Do an implicit single-shift QZ sweep. */
                 t[jr + (j + 1) * t_dim1] = temp;
                 /* L170: */
             }
+#endif
             if (ilz)
             {
                 i__3 = *n;
@@ -1074,26 +1094,26 @@ L200:
                 b22 = -b22;
             }
             i__2 = ilastm + 1 - ifirst;
-            drot_(&i__2, &h__[ilast - 1 + (ilast - 1) * h_dim1], ldh, &h__[ ilast + (ilast - 1) * h_dim1], ldh, &cl, &sl);
+            fla_drot(&i__2, &h__[ilast - 1 + (ilast - 1) * h_dim1], ldh, &h__[ ilast + (ilast - 1) * h_dim1], ldh, &cl, &sl);
             i__2 = ilast + 1 - ifrstm;
-            drot_(&i__2, &h__[ifrstm + (ilast - 1) * h_dim1], &c__1, &h__[ ifrstm + ilast * h_dim1], &c__1, &cr, &sr);
+            fla_drot(&i__2, &h__[ifrstm + (ilast - 1) * h_dim1], &c__1, &h__[ ifrstm + ilast * h_dim1], &c__1, &cr, &sr);
             if (ilast < ilastm)
             {
                 i__2 = ilastm - ilast;
-                drot_(&i__2, &t[ilast - 1 + (ilast + 1) * t_dim1], ldt, &t[ ilast + (ilast + 1) * t_dim1], ldt, &cl, &sl);
+                fla_drot(&i__2, &t[ilast - 1 + (ilast + 1) * t_dim1], ldt, &t[ ilast + (ilast + 1) * t_dim1], ldt, &cl, &sl);
             }
             if (ifrstm < ilast - 1)
             {
                 i__2 = ifirst - ifrstm;
-                drot_(&i__2, &t[ifrstm + (ilast - 1) * t_dim1], &c__1, &t[ ifrstm + ilast * t_dim1], &c__1, &cr, &sr);
+                fla_drot(&i__2, &t[ifrstm + (ilast - 1) * t_dim1], &c__1, &t[ ifrstm + ilast * t_dim1], &c__1, &cr, &sr);
             }
             if (ilq)
             {
-                drot_(n, &q[(ilast - 1) * q_dim1 + 1], &c__1, &q[ilast * q_dim1 + 1], &c__1, &cl, &sl);
+                fla_drot(n, &q[(ilast - 1) * q_dim1 + 1], &c__1, &q[ilast * q_dim1 + 1], &c__1, &cl, &sl);
             }
             if (ilz)
             {
-                drot_(n, &z__[(ilast - 1) * z_dim1 + 1], &c__1, &z__[ilast * z_dim1 + 1], &c__1, &cr, &sr);
+                fla_drot(n, &z__[(ilast - 1) * z_dim1 + 1], &c__1, &z__[ilast * z_dim1 + 1], &c__1, &cr, &sr);
             }
             t[ilast - 1 + (ilast - 1) * t_dim1] = b11;
             t[ilast - 1 + ilast * t_dim1] = 0.;
@@ -1423,6 +1443,11 @@ L250:
                 /* Computing MIN */
                 i__4 = j + 3;
                 i__3 = fla_min(i__4,ilast);
+#ifdef FLA_ENABLE_AMD_OPT
+
+                i__3 = i__3 - ifrstm + 1;
+                fla_dhrot3(&i__3, &h__[ifrstm - 1 + (j - 1) * h_dim1], &h_dim1, v, &tau);
+#else
                 for (jr = ifrstm;
                         jr <= i__3;
                         ++jr)
@@ -1433,7 +1458,13 @@ L250:
                     h__[jr + (j + 2) * h_dim1] -= temp * v[2];
                     /* L260: */
                 }
+#endif
                 i__3 = j + 2;
+#ifdef FLA_ENABLE_AMD_OPT
+
+                i__3 = i__3 - ifrstm + 1;
+                fla_dhrot3(&i__3, &t[ifrstm - 1 + (j - 1) * t_dim1], &t_dim1, v, &tau);
+#else
                 for (jr = ifrstm;
                         jr <= i__3;
                         ++jr)
@@ -1444,6 +1475,7 @@ L250:
                     t[jr + (j + 2) * t_dim1] -= temp * v[2];
                     /* L270: */
                 }
+#endif
                 if (ilz)
                 {
                     i__3 = *n;
@@ -1594,3 +1626,4 @@ L420:
     /* End of DHGEQZ */
 }
 /* dhgeqz_ */
+

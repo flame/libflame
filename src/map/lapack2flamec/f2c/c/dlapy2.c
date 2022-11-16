@@ -58,7 +58,8 @@ doublereal dlapy2_(doublereal *x, doublereal *y)
     logical x_is_nan__, y_is_nan__;
     doublereal w, z__, xabs, yabs;
     extern doublereal dlamch_(char *);
-    doublereal hugeval;
+    static TLS_CLASS_SPEC doublereal hugeval;
+    static TLS_CLASS_SPEC integer r_once = 1;
     /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -76,18 +77,21 @@ doublereal dlapy2_(doublereal *x, doublereal *y)
     /* .. Intrinsic Functions .. */
     /* .. */
     /* .. Executable Statements .. */
-    x_is_nan__ = (x != x);
-    y_is_nan__ = (y != y);
-    if (x_is_nan__)
+    x_is_nan__ = (*x != *x);
+    y_is_nan__ = (*y != *y);
+    if (r_once)
     {
-        ret_val = *x;
+        hugeval = dlamch_("Overflow");
+        r_once = 0;
     }
-    if (y_is_nan__)
+    if (x_is_nan__ || y_is_nan__)
     {
-        ret_val = *y;
+        if (x_is_nan__)
+            return *x;
+        if (y_is_nan__)
+            return *y;
     }
-    hugeval = dlamch_("Overflow");
-    if (! (x_is_nan__ || y_is_nan__))
+    else
     {
         xabs = f2c_abs(*x);
         yabs = f2c_abs(*y);

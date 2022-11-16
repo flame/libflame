@@ -152,7 +152,7 @@ int classq_(integer *n, complex *x, integer *incx, real *scl, real *sumsq) {
     tbig = 4.50359963E+15;
     /* .. */
     /* Quick return if possible */
-    if (scl != scl || sumsq != sumsq) {
+    if (*scl != *scl || *sumsq != *sumsq) {
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }

@@ -118,7 +118,7 @@ int slassq_(integer *n, real *x, integer *incx, real *scl, real *sumsq)
     tbig = 4.50359963E+15;
     /* .. */
     /* Quick return if possible */
-    if (scl != scl || sumsq != sumsq) {
+    if (*scl != *scl || *sumsq != *sumsq) {
         return 0;
     }
     if (*sumsq == 0.f) {

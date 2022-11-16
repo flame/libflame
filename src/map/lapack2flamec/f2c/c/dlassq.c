@@ -141,7 +141,7 @@ int dlassq_(integer *n, doublereal *x, integer *incx, doublereal *scl, doublerea
 
     /* .. */
     /* Quick return if possible */
-    if (scl != scl || sumsq != sumsq) {
+    if (*scl != *scl || *sumsq != *sumsq) {
         return 0;
     }
     if (*sumsq == 0.) {
