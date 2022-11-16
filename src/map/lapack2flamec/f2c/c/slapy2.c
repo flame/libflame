@@ -76,8 +76,8 @@ real slapy2_(real *x, real *y)
     /* .. Intrinsic Functions .. */
     /* .. */
     /* .. Executable Statements .. */
-    x_is_nan__ = (x != x);
-    y_is_nan__ = (y != y);
+    x_is_nan__ = (*x != *x);
+    y_is_nan__ = (*y != *y);
     if (x_is_nan__)
     {
         ret_val = *x;

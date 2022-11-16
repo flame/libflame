@@ -96,9 +96,10 @@ int dlartg_(doublereal *f, doublereal *g, doublereal *cs, doublereal *sn, double
     integer i__;
     doublereal f1, g1, eps, scale;
     integer count;
-    doublereal safmn2, safmx2;
-    extern doublereal dlamch_(char *);
+    static TLS_CLASS_SPEC integer r_once = 1;
+    static TLS_CLASS_SPEC doublereal safmn2, safmx2;
     doublereal safmin;
+    extern doublereal dlamch_(char *);
     /* -- LAPACK auxiliary routine (version 3.4.2) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -123,12 +124,16 @@ int dlartg_(doublereal *f, doublereal *g, doublereal *cs, doublereal *sn, double
     /* .. */
     /* .. Executable Statements .. */
     /* IF( FIRST ) THEN */
-    safmin = dlamch_("S");
-    eps = dlamch_("E");
-    d__1 = dlamch_("B");
-    i__1 = (integer) (log(safmin / eps) / log(dlamch_("B")) / 2.);
-    safmn2 = pow_di(&d__1, &i__1);
-    safmx2 = 1. / safmn2;
+    if (r_once)
+    {
+        safmin = dlamch_("S");
+        eps = dlamch_("E");
+        d__1 = dlamch_("B");
+        i__1 = (integer) (log(safmin / eps) / log(dlamch_("B")) / 2.);
+        safmn2 = pow_di(&d__1, &i__1);
+        safmx2 = 1. / safmn2;
+        r_once = 0;
+    }
     /* FIRST = .FALSE. */
     /* END IF */
     if (*g == 0.)
@@ -151,6 +156,14 @@ int dlartg_(doublereal *f, doublereal *g, doublereal *cs, doublereal *sn, double
         d__1 = f2c_dabs(f1);
         d__2 = f2c_dabs(g1); // , expr subst
         scale = fla_max(d__1,d__2);
+
+        /* Computing 2nd power */
+        d__1 = f1;
+        d__2 = g1;
+        *r__ = sqrt(d__1 * d__1 + d__2 * d__2);
+        *cs = f1 / *r__;
+        *sn = g1 / *r__;
+
         if (scale >= safmx2)
         {
             count = 0;
@@ -168,7 +181,6 @@ L10:
             }
             /* Computing 2nd power */
             d__1 = f1;
-            /* Computing 2nd power */
             d__2 = g1;
             *r__ = sqrt(d__1 * d__1 + d__2 * d__2);
             *cs = f1 / *r__;
@@ -199,7 +211,6 @@ L30:
             }
             /* Computing 2nd power */
             d__1 = f1;
-            /* Computing 2nd power */
             d__2 = g1;
             *r__ = sqrt(d__1 * d__1 + d__2 * d__2);
             *cs = f1 / *r__;
@@ -212,16 +223,6 @@ L30:
                 *r__ *= safmn2;
                 /* L40: */
             }
-        }
-        else
-        {
-            /* Computing 2nd power */
-            d__1 = f1;
-            /* Computing 2nd power */
-            d__2 = g1;
-            *r__ = sqrt(d__1 * d__1 + d__2 * d__2);
-            *cs = f1 / *r__;
-            *sn = g1 / *r__;
         }
         if (f2c_dabs(*f) > f2c_dabs(*g) && *cs < 0.)
         {

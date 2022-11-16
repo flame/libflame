@@ -109,7 +109,8 @@ int dlarfg_(integer *n, doublereal *alpha, doublereal *x, integer *incx, doubler
     int dscal_(integer *, doublereal *, doublereal *, integer *);
     doublereal xnorm;
     extern doublereal dlapy2_(doublereal *, doublereal *), dlamch_(char *);
-    doublereal safmin, rsafmn;
+    static TLS_CLASS_SPEC integer r_once = 1;
+    static TLS_CLASS_SPEC doublereal safmin, rsafmn;
     /* -- LAPACK auxiliary routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -151,13 +152,17 @@ int dlarfg_(integer *n, doublereal *alpha, doublereal *x, integer *incx, doubler
         /* general case */
         d__1 = dlapy2_(alpha, &xnorm);
         beta = -d_sign(&d__1, alpha);
-        safmin = dlamch_("S") / dlamch_("E");
+        if (r_once)
+        {
+            safmin = dlamch_("S") / dlamch_("E");
+            rsafmn = 1. / safmin;
+            r_once = 0;
+        }
         knt = 0;
         if (f2c_abs(beta) < safmin)
         {
             /* XNORM, BETA may be inaccurate;
             scale X and recompute them */
-            rsafmn = 1. / safmin;
 L10:
             ++knt;
             i__1 = *n - 1;

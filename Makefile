@@ -196,6 +196,9 @@ MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_OBJS :=
 MK_FLABLAS_F2C_SRC                    :=
 MK_FLABLAS_F2C_OBJS                   :=
 
+MK_LAPACK_X86_SRC                     :=
+MK_LAPACK_X86_OBJS                    :=
+
 # --- Define install target names for static libraries ---
 
 LIBFLAME_A_INST       := $(INSTALL_LIBDIR)/$(LIBFLAME_A)
@@ -383,6 +386,9 @@ FFLAGS          := $(FFLAGS) $(INCLUDE_PATHS)
 # directory with the base object directory, and also replacing the source file
 # suffix (ie: '.c' or '.f') with '.o'.
 
+MK_LAPACK_X86_OBJS                    := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
+                                                    $(filter %.c, $(MK_LAPACK_X86_SRC)))
+
 MK_FLABLAS_F2C_OBJS                   := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
                                                     $(filter %.c, $(MK_FLABLAS_F2C_SRC)))
 
@@ -418,7 +424,8 @@ MK_ALL_FLAMEC_OBJS        := $(MK_BASE_FLAMEC_OBJS) \
                              $(MK_BLAS_FLAMEC_OBJS) \
                              $(LAPACKE_S_OBJS) \
                              $(LAPACKE_U_OBJS) \
-                             $(MK_LAPACK_FLAMEC_OBJS)
+                             $(MK_LAPACK_FLAMEC_OBJS) \
+                             $(MK_LAPACK_X86_OBJS)
 
 # Prepend the flablas source code files, if requested
 
