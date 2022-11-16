@@ -1,5 +1,5 @@
 @echo OFF
-REM Copyright (C) 2020, Advanced Micro Devices, Inc. All Rights Reserved
+REM Copyright (C) 2020-2023, Advanced Micro Devices, Inc. All Rights Reserved
 
 setlocal EnableDelayedExpansion
 
@@ -27,7 +27,7 @@ if not !ARGS_COUNT! == 2 (
 REM Grab the arguments.
 set netlib_path=%1
 set testdir_new=%2
-
+set lapack_ver=%netlib_path:~7%
 REM Create the local destination directory.
 mkdir %testdir_new%
 
@@ -107,10 +107,10 @@ set ddrvsg_ou=%testdir_new%\TESTING\EIG\ddrvsg.f
 powershell "Get-Content %ddrvsg_in% | ForEach-Object { $_ -replace 'ABSTOL = UNFL + UNFL', 'ABSTOL = 0' } | Set-Content %ddrvsg_ou%"
 
 echo Copying CMAKE files to %testdir_new%
-xcopy /S /Y .\windows_netlib_test %testdir_new%\
+xcopy /S /Y .\windows_netlib_test\%lapack_ver% %testdir_new%\
 
 echo Creating source CMAKE file
-set cmake_in=windows_netlib_test\CMakeLists.example.txt
+set cmake_in=windows_netlib_test\%lapack_ver%\CMakeLists.example.txt
 set cmake_ou=CMakeLists.txt
 
 powershell "Get-Content %cmake_in% | ForEach-Object { $_ -replace 'windows_netlib_test', '%testdir_new%'} | Set-Content %cmake_ou%"
