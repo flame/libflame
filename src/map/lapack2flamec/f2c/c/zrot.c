@@ -3,7 +3,6 @@
 
 /*
     Copyright (c) 2022 Advanced Micro Devices, Inc.  All rights reserved.
-    Jul 18, 2021
 */
 
 #include "FLA_f2c.h" /* > \brief \b ZROT applies a plane rotation with real cosine and complex sine to a pair of complex vectors. */

@@ -8,8 +8,7 @@
 
 */
 /*
-    Copyright (c) 2021 Advanced Micro Devices, Inc.  All rights reserved.
-    Aug 5, 2021
+    Copyright (c) 2021-2022 Advanced Micro Devices, Inc.  All rights reserved.
 */
 
 #include "FLAME.h"
