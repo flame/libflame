@@ -295,7 +295,7 @@ the routine */
 int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * rec, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("zlaqz0 inputs: wants %c, wantq %c, wantz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", rec %" FLA_IS "",*wants, *wantq, *wantz, *n, *ilo, *ihi, *lda, *ldb, *ldq, *ldz, *rec);
+    AOCL_DTL_SNPRINTF("zlaqz0 inputs: wants %c, wantq %c, wantz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", lwork %" FLA_IS ", rec %" FLA_IS "", *wants, *wantq, *wantz, *n, *ilo, *ihi, *lda, *ldb, *ldq, *ldz, *lwork, *rec);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal d__1, d__2;

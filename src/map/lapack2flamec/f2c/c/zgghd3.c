@@ -240,7 +240,7 @@ the routine */
 int zgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *q, integer *ldq, doublecomplex *z__, integer *ldz, doublecomplex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("zgghd3 inputs: compq %c, compz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS "",*compq, *compz, *n, *ilo, *ihi, *lda, *ldb, *ldq, *ldz);
+    AOCL_DTL_SNPRINTF("zgghd3 inputs: compq %c, compz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", lwork " FLA_IS "",*compq, *compz, *n, *ilo, *ihi, *lda, *ldb, *ldq, *ldz, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7, i__8, i__9;
     doublecomplex z__1, z__2, z__3, z__4;

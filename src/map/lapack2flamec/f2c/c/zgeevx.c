@@ -289,7 +289,7 @@ elements 1:ILO-1 and i+1:N of W */
 int zgeevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, doublecomplex *a, integer *lda, doublecomplex *w, doublecomplex *vl, integer *ldvl, doublecomplex *vr, integer *ldvr, integer *ilo, integer *ihi, doublereal *scale, doublereal *abnrm, doublereal *rconde, doublereal *rcondv, doublecomplex *work, integer * lwork, doublereal *rwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("zgeevx inputs: balanc %c, jobvl %c, jobvr %c, sense %c, n %" FLA_IS ", lda %" FLA_IS ", ldvl %" FLA_IS ", ldvr %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS "",*balanc, *jobvl, *jobvr, *sense, *n, *lda, *ldvl, *ldvr, *ilo, *ihi);
+    AOCL_DTL_SNPRINTF("zgeevx inputs: balanc %c, jobvl %c, jobvr %c, sense %c, n %" FLA_IS ", lda %" FLA_IS ", ldvl %" FLA_IS ", ldvr %" FLA_IS "2, lwork %" FLA_IS "",*balanc, *jobvl, *jobvr, *sense, *n, *lda, *ldvl, *ldvr, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__2, i__3;
     doublereal d__1, d__2;
