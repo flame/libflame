@@ -157,7 +157,7 @@ and second, applying a diagonal similarity transformation */
 int zgebal_(char *job, integer *n, doublecomplex *a, integer *lda, integer *ilo, integer *ihi, doublereal *scale, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("zgebal inputs: job %c, n %" FLA_IS ", lda %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS "",*job, *n, *lda, *ilo, *ihi);
+    AOCL_DTL_SNPRINTF("zgebal inputs: job %c, n %" FLA_IS ", lda %" FLA_IS "",*job, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     doublereal d__1, d__2;
