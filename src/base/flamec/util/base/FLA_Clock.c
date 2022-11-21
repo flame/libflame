@@ -77,8 +77,9 @@ double FLA_Clock_helper()
   double the_time;
   the_time = 0.0;
 #else
+  double the_time;
 #ifdef FLA_PORTABLE_TIMER_IS_CLOCK_GETTIME
-  double          the_time, norm_sec;
+  double norm_sec;
   struct timespec tsp;
 
   clock_gettime( CLOCK_REALTIME, &tsp );
@@ -98,8 +99,8 @@ double FLA_Clock_helper()
 
 #else
 #ifdef FLA_PORTABLE_TIMER_IS_GETTIMEOFDAY
-  
-  double         the_time, norm_sec;
+
+      double the_time, norm_sec;
   struct timeval tv;
 
   gettimeofday( &tv, NULL );
@@ -118,8 +119,7 @@ double FLA_Clock_helper()
   the_time = norm_sec + tv.tv_usec * 1.0e-6;
 
 #else //#ifdef FLA_PORTABLE_TIMER_IS_UNKNOWN
-
-  the_time = 0.0;
+      the_time = 0.0;
 
 #endif
 #endif

@@ -42,7 +42,7 @@
 #define FLA_IS "d"
 #endif
 
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
 	/*Increases visibility of FLA_clock()*/
 	double FLA_Clock();
 	void get_time_unit(char * , double *);
@@ -61,7 +61,7 @@
  * AOCL_DTL_TRACE_ENTRY_INDENT & AOCL_DTL_TRACE_EXIT_INDENT for assigning 
  * dynamic trace levels based on order of API calls
  */
-#if AOCL_DTL_TRACE_ENABLE
+#if LF_AOCL_DTL_TRACE_ENABLE
 	extern TLS_CLASS_SPEC int AOCL_TRACE_COUNTER;
 	#define AOCL_DTL_TRACE_ENTRY_INDENT AOCL_DTL_TRACE_ENTRY(AOCL_TRACE_COUNTER++);
 	#define AOCL_DTL_TRACE_EXIT_INDENT 	AOCL_DTL_TRACE_EXIT(--AOCL_TRACE_COUNTER);
@@ -74,7 +74,7 @@
 /**
  * Macros for DTL Tracing with Indentation and Logging inputs with time
  */
-#if AOCL_DTL_LOG_ENABLE & AOCL_DTL_TRACE_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE & LF_AOCL_DTL_TRACE_ENABLE
 	#define AOCL_DTL_TRACE_LOG_INIT 						\
 		AOCL_DTL_TRACE_ENTRY_INDENT							\
 		double api_start_time = 0.0;      					\
@@ -93,7 +93,7 @@
 	
 	
 
-#elif AOCL_DTL_LOG_ENABLE
+#elif LF_AOCL_DTL_LOG_ENABLE
 	#define AOCL_DTL_TRACE_LOG_INIT 						\
 		double api_start_time = 0.0;    					\
 		char buffer[256],unit[3]=" s";  					\
@@ -108,7 +108,7 @@
 				" time: %06.2f%s ", api_duration,unit);		\
 		AOCL_DTL_LOG(AOCL_DTL_LEVEL_INFO, buffer);   
 
-#elif AOCL_DTL_TRACE_ENABLE
+#elif LF_AOCL_DTL_TRACE_ENABLE
 	#define AOCL_DTL_TRACE_LOG_INIT 						\
 		AOCL_DTL_TRACE_ENTRY_INDENT
 
@@ -397,8 +397,10 @@ typedef doublereal E_f;	/* real function with -R not specified */
 #endif
 
 #ifdef FLA_ENABLE_EXTRA_SYMBOLS
+#if (defined(_WIN32) || defined(_WIN64))
 #define lsame_ lsame_lf
 #define xerbla_ xerbla_lf
+#endif
 #endif
 
 #ifndef FLA_ENABLE_EXTRA_SYMBOLS

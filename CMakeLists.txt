@@ -1,27 +1,44 @@
 ##Copyright (C) 2023, Advanced Micro Devices, Inc.##
 
-cmake_minimum_required(VERSION 3.0.0)
+cmake_minimum_required(VERSION 3.11)
 
-project(AOCL-LibFLAME-Win)
-#change the dependency path to blis library path
-SET(CMAKE_EXT_BLIS_LIBRARY_DEPENDENCY_PATH "${CMAKE_SOURCE_DIR}/bin/Release" CACHE STRING "AOCL-BLIS library path name")
-SET(EXT_BLIS_LIBNAME "AOCL-LibBlis-Win-MT-dll.lib" CACHE STRING "AOCL-BLIS library name")
+if(WIN32)
+	project(AOCL-LibFLAME-Win)
+elseif(UNIX)
+	project(flame)
+else()
+	message( FATAL_ERROR "OS Undetected")
+endif()
+
+if(WIN32)
+	SET(CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH "${CMAKE_SOURCE_DIR}/bin/Release" CACHE STRING "AOCL-BLIS library path name")
+	SET(EXT_BLAS_LIBNAME "AOCL-LibBlis-Win-MT-dll.lib" CACHE STRING "AOCL-BLIS library name")
+endif()
+
+message(STATUS "External blas library Path : ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}")
+message(STATUS "External blas library name : ${EXT_BLAS_LIBNAME}")
 
 #gccopenmp
-SET(OpenMP_libomp_LIBRARY "C:/Program Files/LLVM/lib/libomp.lib" CACHE STRING "openmp library path")
-#Logic to create AOCL-libFLAME library name according to the linking AOCL-BLIS library name.
-string(REPLACE "LibBlis" "LibFlame" PROJECT_NAME ${EXT_BLIS_LIBNAME})
-string(REPLACE ".lib" "" PROJECT_NAME ${PROJECT_NAME})
+if(WIN32)
+	SET(OpenMP_libomp_LIBRARY "C:/Program Files/LLVM/lib/libomp.lib" CACHE STRING "openmp library path")
+endif()
+
+message(STATUS "CMAKE_C_COMPILER_ID: ${CMAKE_C_COMPILER_ID}")
+message(STATUS "C compiler version: ${CMAKE_C_COMPILER_VERSION}")
 
 #set the output directory path
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
+# Added for debugging purpose
+set(CMAKE_VERBOSE_MAKEFILE OFF)
 
 
 #enabling the configuration options
 option (ENABLE_AMD_OPT "Enable AMD optimized path" OFF)
-option (ENABLE_AMD_FLAGS "Enable AMD FLAGS internally enables ENABLE_BLAS_EXT_GEMMT, ENABLE_AMD_OPT, ENABLE_BUILTIN_LAPACK2FLAME, ENABLE_EXT_LAPACK_INTERFACE, ENABLE_F2C_DOTC, ENABLE_VOID_RETURN_COMPLEX_FUNCTION, ENABLE_MULTITHREADING" ON)
+option (ENABLE_AMD_COMMON_FLAGS "Enable AMD FLAGS internally enables ENABLE_BLAS_EXT_GEMMT, ENABLE_AMD_OPT, ENABLE_BUILTIN_LAPACK2FLAME, ENABLE_EXT_LAPACK_INTERFACE, ENABLE_MULTITHREADING" ON)
+option (ENABLE_AMD_FLAGS "Enable AMD FLAGS internally enables ENABLE_AMD_COMMON_FLAGS" OFF)
+option (ENABLE_AMD_AOCC_FLAGS "Enable AMD FLAGS internally enables Enable AMD FLAGS internally enables ENABLE_AMD_COMMON_FLAGS, ENABLE_F2C_DOTC, ENABLE_VOID_RETURN_COMPLEX_FUNCTION" OFF)
 option (ENABLE_ILP64 "Enable ILP64" OFF)
 option (ENABLE_UPPERCASE "Enable uppercase API's" OFF)
 option (ENABLE_WRAPPER "Enable wrapper code" ON)
@@ -62,42 +79,136 @@ option (ENABLE_F2C_DOTC "Enable invoking Complex datatype BLAS functions DOTC an
 option (ENABLE_VOID_RETURN_COMPLEX_FUNCTION "Enable 'void' return instead of complex return type for libFLAME functions such as cladiv/zladiv that by default have complex return type" OFF)
 option (ENABLE_SET_LIB_VERSION "Set library version" OFF)
 option (ENABLE_BLAS_EXT_GEMMT "Enable BLAS GEMMT Usage" ON)
+set(ENABLE_AOCL_DTL OFF CACHE STRING "Enable DTL Usage. USE with Option ALL to Enable both Trace and Log, TRACE to enable Trace, and LOG to ENABLE only Input Logging ")
+set_property(CACHE ENABLE_AOCL_DTL PROPERTY STRINGS TRACE_AND_LOG TRACE LOG OFF )
 
-set (ENABLE_WINDOWS_BUILD "Enables windows build" ON)
+message(STATUS "CMAKE_BUILD_TYPE : ${CMAKE_BUILD_TYPE}")
+if(WIN32)
+	set (ENABLE_WINDOWS_BUILD "Enables windows build " ON)
+	message(STATUS "ENABLE_WINDOWS_BUILD : ${ENABLE_WINDOWS_BUILD}")
+endif()
+
 SET(ENABLE_SIMD_FLAGS "AVX2" CACHE STRING "Set compiler SIMD flags")
 SET_PROPERTY(CACHE ENABLE_SIMD_FLAGS PROPERTY STRINGS none SSE2 AVX AVX2)
 
-if(${ENABLE_SIMD_FLAGS} MATCHES "AVX2")
-   add_definitions(/arch:AVX2)
-elseif(${ENABLE_SIMD_FLAGS} MATCHES "AVX")
-   add_definitions(/arch:AVX)
-elseif(${ENABLE_SIMD_FLAGS} MATCHES "SSE2")
-   add_definitions(/arch:SSE2)
+message(STATUS "checking SIMD  ")
+if(WIN32)
+	message(STATUS "checking SIMD Windows : ${ENABLE_SIMD_FLAGS}")
+	if(${ENABLE_SIMD_FLAGS} MATCHES "AVX2")
+	add_definitions(/arch:AVX2)
+	elseif(${ENABLE_SIMD_FLAGS} MATCHES "AVX")
+	add_definitions(/arch:AVX)
+	elseif(${ENABLE_SIMD_FLAGS} MATCHES "SSE2")
+	add_definitions(/arch:SSE2)
+	endif()
+elseif(UNIX)
+	message(STATUS "checking SIMD on linux : ${ENABLE_SIMD_FLAGS}")
+	if(${ENABLE_SIMD_FLAGS} MATCHES "AVX2")
+		set(COMPILER_OPTIMIZATION_FLAGS	"-mtune=native -mavx2 -mfma -O3")
+		set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COMPILER_OPTIMIZATION_FLAGS}")
+	endif()
+else()
+	message(STATUS "OS UNKNOWN CANNOT SET SIMD")
 endif()
 
+#Adding PIC flag and other flags
+if(UNIX)
+	SET(COMPILER_DEBUG_FLAG "-g0")
+	set(GCC_WARNING_FLAGS "-Wall -Wno-comment")
+	set(COMPILER_LANGUAGE_FLAGS "-std=c99 -Wno-unused-function -Wno-parentheses -Wfatal-errors ")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COMPILER_DEBUG_FLAG} ${GCC_WARNING_FLAGS} ${COMPILER_LANGUAGE_FLAGS}")
+endif()
+# Adding missing Macros
+if(UNIX)
+	set(FLA_PORTABLE_TIMER_IS_CLOCK_GETTIME TRUE)
+	set(FLA_VECTOR_INTRINSIC_TYPE TRUE)
+	set(HAVE_ASSERT_H TRUE)
+	set(HAVE_FCNTL_H TRUE)
+	set(HAVE_INTTYPES_H TRUE)
+	set(HAVE_LIBM TRUE)
+	set(HAVE_MATH_H TRUE)
+	set(HAVE_MEMORY_H TRUE)
+	set(HAVE_SIGNAL_H TRUE)
+	set(HAVE_STDINT_H TRUE)
+	set(HAVE_STDLIB_H TRUE)
+	set(HAVE_STRINGS_H TRUE)
+	set(HAVE_STRING_H TRUE)
+	set(HAVE_SYS_STAT_H TRUE)
+	set(HAVE_SYS_TIME_H TRUE)
+	set(HAVE_SYS_TYPES_H TRUE)
+	set(HAVE_UNISTD_H TRUE)
+	set(PROTOTYPES TRUE)
+	set(STDC_HEADERS TRUE)
+	set(TIME_WITH_SYS_TIME TRUE)
+	set(_GNU_SOURCE TRUE)
+	set(__PROTOTYPES TRUE)
+endif()
+
+# ENABLE AOCL Trace , Log and Dump form CMAKE
+if(ENABLE_AOCL_DTL)
+	message(STATUS "ENABLE_AOCL_DTL : ${ENABLE_AOCL_DTL}")
+	if(ENABLE_AOCL_DTL STREQUAL "ALL" OR ENABLE_AOCL_DTL STREQUAL "TRACE_AND_LOG" )
+		set(LF_AOCL_DTL_TRACE_ENABLE 1)
+		set(LF_AOCL_DTL_LOG_ENABLE 1)
+	elseif(ENABLE_AOCL_DTL STREQUAL "TRACE")
+		set(LF_AOCL_DTL_TRACE_ENABLE 1)
+	elseif(ENABLE_AOCL_DTL STREQUAL "LOG")
+		set(LF_AOCL_DTL_LOG_ENABLE 1)
+	else()
+	message(FATAL_ERROR "INVALID PARAM for -DENABLE_AOCL_DTL=${ENABLE_AOCL_DTL} \n PLEASE PASS \n \
+	 1. \"ALL\" to ENABLE TRACE and LOG \n \
+	 2. \"TRACE\" to ENABLE TRACE and \n \
+	 3. \"LOG\" to ENABLE LOG \n \
+	 4. \"OFF\" to Disable trace and log ")
+	endif()
+endif()
 
 if(ENABLE_AMD_FLAGS)
-    if(ENABLE_BLAS_EXT_GEMMT EQUAL ON)
+	set(ENABLE_AMD_COMMON_FLAGS TRUE)
+	if(WIN32)
+	# Since windows uses only enable AMD flags
+		set (ENABLE_F2C_DOTC TRUE)
+		set (ENABLE_VOID_RETURN_COMPLEX_FUNCTION TRUE)
+	endif()
+	message(STATUS "Enabled ENABLE_AMD_FLAGS : ${ENABLE_AMD_FLAGS}")
+endif()
+
+if(ENABLE_AMD_AOCC_FLAGS)
+    set (ENABLE_AMD_COMMON_FLAGS TRUE)
+    set (ENABLE_F2C_DOTC TRUE)
+    set (ENABLE_VOID_RETURN_COMPLEX_FUNCTION TRUE)
+	message(STATUS "Enabled ENABLE_AMD_AOCC_FLAGS : ${ENABLE_AMD_AOCC_FLAGS}")
+endif()
+
+if(ENABLE_AMD_COMMON_FLAGS)
+    if(ENABLE_BLAS_EXT_GEMMT)
     	set (ENABLE_BLAS_EXT_GEMMT TRUE)
     endif ()
     set (ENABLE_AMD_OPT TRUE)
     set (ENABLE_BUILTIN_LAPACK2FLAME TRUE)
-    set (ENABLE_EXT_LAPACK_INTERFACE  TRUE)
-    set (ENABLE_F2C_DOTC TRUE)
-    set (ENABLE_VOID_RETURN_COMPLEX_FUNCTION TRUE)
-    if(ENABLE_MULTITHREADING EQUAL ON)
+    set (ENABLE_EXT_LAPACK_INTERFACE TRUE)
+    if(ENABLE_MULTITHREADING)
     	set (ENABLE_MULTITHREADING TRUE)
     	set (MULTITHREADING_MODEL 1)
-    	set (FLA_MULTITHREADING_MODEL TRUE)
+		set(FLA_MULTITHREADING_MODEL 1)
     endif ()
-    message(STATUS "Enabled ENABLE_AMD_FLAGS : ${ENABLE_AMD_FLAGS} ")
+	message(STATUS "Enabled ENABLE_AMD_COMMON_FLAGS : ${ENABLE_AMD_COMMON_FLAGS}")
 endif()
+
+# STATUS of AMD/AOCC FLAGS
+message(STATUS "Enabled ENABLE_BLAS_EXT_GEMMT : ${ENABLE_BLAS_EXT_GEMMT} ")
+message(STATUS "Enabled ENABLE_AMD_OPT : ${ENABLE_AMD_OPT} ")
+message(STATUS "Enabled ENABLE_BUILTIN_LAPACK2FLAME : ${ENABLE_BUILTIN_LAPACK2FLAME} ")
+message(STATUS "Enabled ENABLE_EXT_LAPACK_INTERFACE : ${ENABLE_EXT_LAPACK_INTERFACE} ")
+message(STATUS "Enabled ENABLE_F2C_DOTC : ${ENABLE_F2C_DOTC} ")
+message(STATUS "Enabled ENABLE_VOID_RETURN_COMPLEX_FUNCTION	: ${ENABLE_VOID_RETURN_COMPLEX_FUNCTION} ")
+message(STATUS "Enabled ENABLE_MULTITHREADING : ${ENABLE_MULTITHREADING} ")
+message(STATUS "Enabled MULTITHREADING_MODEL : ${MULTITHREADING_MODEL} ")
 
 if(ENABLE_MULTITHREADING)
     set (ENABLE_OPENMP TRUE)
-    message(STATUS "Enabled ENABLE_MULTITHREADING : ${ENABLE_MULTITHREADING} ")
 endif()
-
+message(STATUS "Enabled ENABLE_OPENMP : ${ENABLE_OPENMP} ")
 
 if(ENABLE_UPPERCASE)
 add_definitions(-DBLIS1_ENABLE_UPPERCASE_F77)
@@ -107,6 +218,7 @@ add_definitions(-DNOCHANGE)
 endif()
 
 if (ENABLE_WRAPPER)
+set(FLA_ENABLE_EXTRA_SYMBOLS TRUE)
 add_definitions(-DFLA_ENABLE_EXTRA_SYMBOLS)
 else()
    if(ENABLE_UPPERCASE)
@@ -121,7 +233,7 @@ if(ENABLE_XBLAS)
 add_definitions(-DFLA_ENABLE_XBLAS)
 endif()
 if (ENABLE_NON_CRITICAL_CODE)
-    set (FLA_ENABLE_NON_CRITICAL_CODE TRUE)
+	set (FLA_ENABLE_NON_CRITICAL_CODE TRUE)
 endif ()
 
 if(NOT BUILD_SHARED_LIBS)
@@ -137,7 +249,6 @@ if (ENABLE_BLIS1_USE_OF_FLA_MALLOC)
 endif ()
 if (ENABLE_BUILTIN_LAPACK2FLAME)
     set (FLA_ENABLE_LAPACK2FLAME TRUE)
-    message(STATUS "Enabled FLA_ENABLE_LAPACK2FLAME : ${ENABLE_BUILTIN_LAPACK2FLAME} ")
 endif ()
 
 if (ENABLE_EXT_LAPACK_SUBPROBLEMS)
@@ -146,8 +257,8 @@ if (ENABLE_EXT_LAPACK_SUBPROBLEMS)
             external-lapack-for-subproblems with lapack2flame \
             is not allowed")
     elseif (ENABLE_EXT_LAPACK_INTERFACE)
-        set (FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES  TRUE)
-        set (FLA_ENABLE_EXTERNAL_LAPACK_FOR_SUBPROBLEMS TRUE)
+	set(FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES TRUE)
+	set(FLA_ENABLE_EXTERNAL_LAPACK_FOR_SUBPROBLEMS TRUE)
     else ()
         message (FATAL_ERROR "Configuring libflame to enable \
             external-lapack-for-subproblems without \
@@ -156,13 +267,12 @@ if (ENABLE_EXT_LAPACK_SUBPROBLEMS)
 endif ()
 
 if (ENABLE_EXT_LAPACK_INTERFACE)
-    set (FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES  TRUE)
-    message(STATUS "Enabled FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES : ${ENABLE_EXT_LAPACK_INTERFACE} ")
+	set(FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES TRUE)
 endif ()
 
 
 if (ENABLE_BLAS3_FRNTEND_CNTL_TREES)
-    set (FLA_ENABLE_BLAS3_FRONT_END_CNTL_TREES TRUE)
+	set(FLA_ENABLE_BLAS3_FRONT_END_CNTL_TREES TRUE)
 endif ()
 
 if (ENABLE_WINDOWS_BUILD)
@@ -172,7 +282,6 @@ endif ()
 if (ENABLE_PORTABLE_TIMER)
     set (FLA_ENABLE_PORTABLE_TIMER TRUE)
 endif ()
-
 
 if (ENABLE_INTERNAL_ERROR_CHECKING)
     set (FLA_ENABLE_INTERNAL_ERROR_CHECKING TRUE)
@@ -184,14 +293,14 @@ if (ENABLE_MEMLK_CNTR)
 endif ()
 
 if (ENABLE_MULTITHREADING)
-        if (ENABLE_AMD_FLAGS)
+    if (ENABLE_AMD_FLAGS OR ENABLE_AMD_AOCC_FLAGS)
 		set (FLA_OPENMP_MULTITHREADING TRUE)
 		add_definitions(-DFLA_OPENMP_MULTITHREADING)
 		message(STATUS "Enabled FLA_OPENMP_MULTITHREADING : ${FLA_OPENMP_MULTITHREADING} ")
 	else ()
-    		set (FLA_ENABLE_MULTITHREADING TRUE)
+    	set (FLA_ENABLE_MULTITHREADING TRUE)
 		add_definitions(-DFLA_ENABLE_MULTITHREADING)
-		message(STATUS "Enabled FLA_ENABLE_MULTITHREADING : ${ENABLE_MULTITHREADING} ")
+		message(STATUS "Enabled FLA_ENABLE_MULTITHREADING : ${FLA_ENABLE_MULTITHREADING} ")
 	endif ()
 
         if (ENABLE_OPENMP)
@@ -199,7 +308,7 @@ if (ENABLE_MULTITHREADING)
             if (OPENMP_FOUND)
                 set (MULTITHREADING_MODEL 1)
                 set (FLA_MULTITHREADING_MODEL TRUE)
-		add_definitions(-DFLA_MULTITHREADING_MODEL)
+				add_definitions(-DFLA_MULTITHREADING_MODEL)
 				set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${OpenMP_C_FLAGS}")
 				set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${OpenMP_CXX_FLAGS}")
 				set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${OpenMP_EXE_LINKER_FLAGS}")
@@ -211,15 +320,15 @@ if (ENABLE_MULTITHREADING)
 endif ()
 
 if (ENABLE_SUPER_MATRIX)
-    set (FLA_ENABLE_SUPERMATRIX TRUE)
+	set(FLA_ENABLE_SUPERMATRIX TRUE)
 endif ()
 
 if (ENABLE_GOTO_INTERFACES)
-    set (FLA_ENABLE_GOTO_INTERFACES TRUE)
+	set(FLA_ENABLE_GOTO_INTERFACES TRUE)
 endif ()
 
 if (ENABLE_CBLAS_INTERFACES)
-    set(FLA_ENABLE_CBLAS_INTERFACES TRUE)
+	set(FLA_ENABLE_CBLAS_INTERFACES TRUE)
 endif ()
 
 if (ENABLE_DEFAULT_BLKSZ)
@@ -227,7 +336,7 @@ if (ENABLE_DEFAULT_BLKSZ)
         message (FATAL_ERROR "Configuring libflame to enable \
             defaultblocksize with goto interfaces is not allowed")
     endif ()
-    set (FLA_DEFAULT_M_BLOCKSIZE TRUE)
+	set (FLA_DEFAULT_M_BLOCKSIZE TRUE)
     set (FLA_DEFAULT_N_BLOCKSIZE TRUE)
     set (FLA_DEFAULT_K_BLOCKSIZE TRUE)
 endif ()
@@ -265,42 +374,45 @@ if(BUILD_SHARED_LIBS AND ENABLE_WINDOWS_BUILD)
 endif()
 
 if(BUILD_TEST)
-  add_compile_definitions(WINDOWS_FLA_TEST=1)
+	if(WIN32)
+		add_compile_definitions(WINDOWS_FLA_TEST=1)
+	endif()
 endif()
 
 add_definitions(-DLAPACK_COMPLEX_STRUCTURE)
-add_definitions(-DBLIS1_ENABLE_WINDOWS_BUILD)
+
+if(WIN32)
+	add_definitions(-DBLIS1_ENABLE_WINDOWS_BUILD)
+endif()
+
 add_definitions(-DHAVE_LAPACK_CONFIG_H)
 add_definitions(-DFLA_ENABLE_LAPACK2FLAME)
 
 if(ENABLE_BLAS_EXT_GEMMT)
-set(FLA_ENABLE_BLAS_EXT_GEMMT TRUE)
-add_definitions(-DFLA_ENABLE_BLAS_EXT_GEMMT)
-message(STATUS "Enabled FLA_ENABLE_BLAS_EXT_GEMMT : ${ENABLE_BLAS_EXT_GEMMT} ")
+	set(FLA_ENABLE_BLAS_EXT_GEMMT TRUE)
 endif()
 
 if(ENABLE_F2C_DOTC)
-set(FLA_ENABLE_F2C_DOTC TRUE)
-add_definitions(-DFLA_ENABLE_F2C_DOTC)
-message(STATUS "Enabled FLA_ENABLE_F2C_DOTC : ${ENABLE_F2C_DOTC} ")
+	set(FLA_ENABLE_F2C_DOTC TRUE)
+	add_definitions(-DFLA_ENABLE_F2C_DOTC=1)
 endif()
 
 if(ENABLE_VOID_RETURN_COMPLEX_FUNCTION)
-set(FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION TRUE)
-add_definitions(-DFLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION)
-message(STATUS "Enabled FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION : ${ENABLE_VOID_RETURN_COMPLEX_FUNCTION} ")
+	set(FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION TRUE)
+	add_definitions(-DFLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION)
+	message(STATUS "Enabled FLA_ENABLE_VOID_RETURN_COMPLEX_FUNCTION : ${ENABLE_VOID_RETURN_COMPLEX_FUNCTION} ")
 endif()
 
 if(ENABLE_ILP64)
-set(FLA_ENABLE_ILP64 TRUE)
-add_definitions(-DFLA_ENABLE_ILP64)
-message(STATUS "Enabled FLA_ENABLE_ILP64 : ${ENABLE_ILP64} ")
+	set(FLA_ENABLE_ILP64 TRUE)
+	add_definitions(-DFLA_ENABLE_ILP64=1)
+	message(STATUS "Enabled FLA_ENABLE_ILP64 : ${ENABLE_ILP64} ")
 endif()
 
 if(ENABLE_AMD_OPT)
-set(FLA_ENABLE_AMD_OPT TRUE)
-add_definitions(-DFLA_ENABLE_AMD_OPT)
-message(STATUS "Enabled FLA_ENABLE_AMD_OPT : ${ENABLE_AMD_OPT} ")
+	set(FLA_ENABLE_AMD_OPT TRUE)
+	add_definitions(-DFLA_ENABLE_AMD_OPT)
+	message(STATUS "Enabled FLA_ENABLE_AMD_OPT : ${ENABLE_AMD_OPT} ")
 endif()
 
 if(ENABLE_SET_LIB_VERSION)
@@ -310,20 +422,38 @@ else ()
 	file (STRINGS "so_version" VERSION_TEXT)
 	list(GET VERSION_TEXT 0 MAJOR_VERSION)
 	list(GET VERSION_TEXT 1 MINOR_VERSION)
-	set( LIBRARY_VERSION "${MAJOR_VERSION}.${MINOR_VERSION}\tBuild\t${TODAY}")
+	if(UNIX)
+	set(FLA_LIBFLAME_VERSION TRUE)
+	set( LIBRARY_VERSION "\"${MAJOR_VERSION}.${MINOR_VERSION}\tBuild\t${TODAY}\"")
+	elseif(WIN32)
+		set( LIBRARY_VERSION "${MAJOR_VERSION}.${MINOR_VERSION}\tBuild\t${TODAY}")
+	endif()
 	add_definitions(-DFLA_LIBFLAME_VERSION=${LIBRARY_VERSION})
 endif()
-
 #generates the FLA_config.h header file
-configure_file (cmake.config.h.in ${CMAKE_SOURCE_DIR}/windows/build/FLA_config.h @ONLY)
+if(WIN32)
+	configure_file (cmake.config.h.in ${CMAKE_SOURCE_DIR}/windows/build/FLA_config.h @ONLY)
+elseif(UNIX)
+# As per the current build system
+	configure_file(cmake.config.h.in ${CMAKE_SOURCE_DIR}/build/FLA_config.h @ONLY)
+else()
+	message(FATAL_ERROR " OS not found")
+endif()
 
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP")
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W0 ")
+if(WIN32)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP")
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /W0 ")
+endif()
 
 #genreating the monolithic headers
 find_package(PythonLibs 3 REQUIRED)
-
-set (MK_HEADER_DIR_PATHS "${CMAKE_SOURCE_DIR}/windows/build")
+if(WIN32)
+	set (MK_HEADER_DIR_PATHS "${CMAKE_SOURCE_DIR}/windows/build")
+elseif(UNIX)
+	set(MK_HEADER_DIR_PATHS "${CMAKE_SOURCE_DIR}/build")
+else()
+	message(FATAL_ERROR "OS NOT DETECTED")
+endif()
 string (APPEND MK_HEADER_DIR_PATHS
 	" ${CMAKE_SOURCE_DIR}/src/aocl_dtl/"
 	" ${CMAKE_SOURCE_DIR}/src/base/flamec/include/"
@@ -568,6 +698,8 @@ string (APPEND MK_HEADER_DIR_PATHS
 	" ${CMAKE_SOURCE_DIR}/src/lapack/util/app/qutinc/lnfc/flamec/"
 	" ${CMAKE_SOURCE_DIR}/src/lapack/x86/"
 	" ${CMAKE_SOURCE_DIR}/src/lapack/fblas/"
+	" ${CMAKE_SOURCE_DIR}/src/lapack/x86/avx2"
+	" ${CMAKE_SOURCE_DIR}/src/lapack/x86/front"
 	" ${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/example/"
 	" ${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/include/"
 	" ${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/src/"
@@ -584,7 +716,6 @@ set (C_COMMENT "-c")
 set (VERBOSE "-v1")
 set (BASE_INC_PATH "include")
 file(MAKE_DIRECTORY ${BASE_INC_PATH})
-
 # Run python script to generate monolithic header at configuration time
 # this will generate  blis1.h file in windows/include
 set (BLIS1_TARGET_PATH "${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/blis1.h")
@@ -603,6 +734,7 @@ execute_process(
 # this will generate FLA_f2c.h in windows/include
 set (FLAME_TARGET_PATH "${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLA_f2c.h")
 set (FLAME_H_SRC_PATH  "${CMAKE_SOURCE_DIR}/src/base/flamec/include/FLA_f2c.h" )
+
 execute_process(
     COMMAND ${PYTHON_EXE} ${BLIS_FLATTEN_HEADER} "${C_COMMENT}" "${VERBOSE}"
 	"${FLAME_H_SRC_PATH}" "${FLAME_TARGET_PATH}" "${BASE_INC_PATH}" "${MK_HEADER_DIR_PATHS}"
@@ -653,17 +785,25 @@ include_directories(${CMAKE_SOURCE_DIR}/src/lapack/fblas/front)
 include_directories(${CMAKE_SOURCE_DIR}/src/lapack/fblas/src)
 file(GLOB headers ${CMAKE_SOURCE_DIR}/*.h)
 
-
-set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MT ")
+if(MSVC)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MT ")
+endif()
 
 if (BUILD_SHARED_LIBS)
-	set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+	if(WIN32)
+		set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+	endif()
 	add_library("${PROJECT_NAME}" SHARED ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/blis1.h
                  ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLA_f2c.h
                  ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLAME.h
                  )
+	message(STATUS "shared_lib PROJECT_NAME: ${PROJECT_NAME}")
 	if(ENABLE_OPENMP)
-		target_link_libraries(${PROJECT_NAME}  OpenMP::OpenMP_CXX)
+		if(UNIX)
+			set_target_properties("${PROJECT_NAME}" PROPERTIES SHARED_LIBRARY_OPTIONS "${OpenMP_libomp_LIBRARY}")
+		elseif(WIN32)
+			target_link_libraries(${PROJECT_NAME}  OpenMP::OpenMP_CXX)
+		endif()
 	endif ()
 	target_compile_definitions("${PROJECT_NAME}" PUBLIC -DLIBFLAME_IS_BUILDING_LIBRARY)
 	target_compile_definitions("${PROJECT_NAME}" PUBLIC -DLIBFLAME_ENABLE_SHARED)
@@ -673,29 +813,65 @@ else ()
                  ${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}/FLAME.h
                  )
 	if(ENABLE_OPENMP)
-        	set_target_properties("${PROJECT_NAME}" PROPERTIES STATIC_LIBRARY_OPTIONS "${OpenMP_libomp_LIBRARY}")
+		set_target_properties("${PROJECT_NAME}" PROPERTIES STATIC_LIBRARY_OPTIONS "${OpenMP_libomp_LIBRARY}")
 	endif ()
 endif ()
-# TODO : enable this flag to build source supplied blas library
-# link externally build blis library
-if (NOT ENABLE_BUILTIN_BLAS)
-target_link_libraries(${PROJECT_NAME} ${CMAKE_EXT_BLIS_LIBRARY_DEPENDENCY_PATH}/${EXT_BLIS_LIBNAME})
-target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_EXT_BLIS_LIBRARY_DEPENDENCY_PATH})
-endif ()
 
+#Logic to create AOCL-libFLAME library name according to the linking AOCL-BLIS library name.
+if(WIN32)
+	string(REPLACE "LibBlis" "LibFlame" TEMP_VAR ${EXT_BLAS_LIBNAME})
+	string(REPLACE ".lib" "" TEMP_VAR ${TEMP_VAR})
+	set_target_properties(${PROJECT_NAME} PROPERTIES OUTPUT_NAME "${TEMP_VAR}")
+	message(STATUS "Library Name : ${TEMP_VAR}${CMAKE_SHARED_LIBRARY_SUFFIX}")
+endif()
+# TODO : enable this flag to build source supplied blas library
+# link externally built blas library
+if(WIN32)
+	if (NOT ENABLE_BUILTIN_BLAS)
+		target_link_libraries(${PROJECT_NAME} ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}/${EXT_BLAS_LIBNAME})
+		target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH})		
+	endif ()
+endif()
 link_directories(${CMAKE_LIBRARY_OUTPUT_DIRECTORY})
 add_definitions(-DEXPMODULE)
 add_subdirectory(src)
-
 if (BUILD_TEST)
-add_subdirectory(test/legacyflame)
-add_subdirectory(test/aoclflaprogress)
-#add_subdirectory(testcpp)
+# CHECKS if blas library exists 
+	if(NOT EXISTS ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}/${EXT_BLAS_LIBNAME})
+		message(FATAL_ERROR "\n Invalid path to blas Library \n \
+${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}/${EXT_BLAS_LIBNAME} \
+Does not exist.\n Please check the path again")
+	else()
+		target_link_libraries(${PROJECT_NAME} ${CMAKE_EXT_BLAS_LIBRARY_DEPENDENCY_PATH}/${EXT_BLAS_LIBNAME})
+	endif()
+
+	# if user wants to run tests on an external lapack library
+	if((NOT EXT_LAPACK_LIBRARY_PATH) OR (NOT EXT_LAPACK_LIBNAME))
+		set(EXT_LAPACK_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
+		message(STATUS "Missing External lapack library. Using ${CMAKE_LIBRARY_OUTPUT_DIRECTORY}/${EXT_LAPACK_LIBNAME} ")
+	elseif(NOT EXISTS ${EXT_LAPACK_LIBRARY_PATH}/${EXT_LAPACK_LIBNAME})
+		message(FATAL_ERROR "\n Invalid path to lapack Library \n \
+	${EXT_LAPACK_LIBRARY_PATH}/${EXT_LAPACK_LIBNAME} \
+	Does not exist.\n Please check the path again, or avoid passing \n \
+	-DEXT_LAPACK_LIBRARY_PATH and -DEXT_LAPACK_LIBNAME to use libflame")
+	endif()
+	add_subdirectory(test/legacyflame)
+	add_subdirectory(test/aoclflaprogress)
+	add_subdirectory(test/main)
+	#add_subdirectory(testcpp)
 endif()
 
 if (BUILD_NETLIB_TEST)
-add_subdirectory(netlib-test)
-elseif(NOT BUILD_NETLIB_TEST)
-add_subdirectory(test/main)
+	add_subdirectory(netlib-test)
 endif()
+
+if(BUILD_LAPACKE_TEST)
+	add_subdirectory(test/lapacke)
+endif()
+
+# To View Added Definitions and C Flags 
+get_directory_property( DirDefs COMPILE_DEFINITIONS ) 
+message(STATUS "COMPILE_DEFINITIONS : ${DirDefs} " )
+message(STATUS "CMAKE_C_FLAGS : ${CMAKE_C_FLAGS}")
+
 

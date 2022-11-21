@@ -2,7 +2,7 @@
 # Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
 ###############################################################################
 
-target_sources(test_libFLAME_main
+target_sources(${PROJECT_NAME}
      PRIVATE
 ${CMAKE_CURRENT_SOURCE_DIR}/test_common.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_geqrf.c

@@ -1,3 +1,6 @@
+//Determines to enable FLA_ENABLE_EXTRA_SYMBOLS
+#cmakedefine FLA_ENABLE_EXTRA_SYMBOLS    1
+
 #ifdef FLA_ENABLE_EXTRA_SYMBOLS
 #define F77_FUNC(name,NAME) name ## _
 #define F77_FUNC_(name,NAME) name ## _
@@ -7,31 +10,31 @@
 
 // Determines whether to enable various segments of code identified as
 // providing non-critical functionality.
-#cmakedefine FLA_ENABLE_NON_CRITICAL_CODE
+#cmakedefine FLA_ENABLE_NON_CRITICAL_CODE   1
 
 //Determines to enable BuiltinBlas
-#cmakedefine FLA_ENABLE_BUILTIN_BLAS
+#cmakedefine FLA_ENABLE_BUILTIN_BLAS    0
 
 //Enables blis1 use of flamalloc
-#cmakedefine FLA_ENABLE_BLIS1_USE_OF_FLA_MALLOC
+#cmakedefine FLA_ENABLE_BLIS1_USE_OF_FLA_MALLOC 1
 
 // Determines whether the LAPACK compatibility layer is included in libflame.
 // NOTE: If lapack2flame is enabled, external-lapack-for-subproblems MUST
 // be disabled!
-#cmakedefine FLA_ENABLE_LAPACK2FLAME
+#cmakedefine FLA_ENABLE_LAPACK2FLAME    1
 
-// Determines whether ILP64 enabled. 
-#cmakedefine  FLA_ENABLE_ILP64
+// Determines whether ILP64 enabled. only enabled when -DENABLE_ILP64 is passed with cmake
+#cmakedefine  FLA_ENABLE_ILP64  1
 
 // Determines whether to enable external LAPACK for small subproblems.
 // NOTE: If external-lapack-for-subproblems is enabled, (a) lapack2flame MUST
 // be disabled, AND (b) external-lapack-interfaces MUST be enabled.
-#cmakedefine FLA_ENABLE_EXTERNAL_LAPACK_FOR_SUBPROBLEMS
+#cmakedefine FLA_ENABLE_EXTERNAL_LAPACK_FOR_SUBPROBLEMS 1
 
 // Determines whether to enable interfaces to external LAPACK routines.
 // NOTE: If external-lapack-interfaces is enabled, an LAPACK library will be
 // required at link-time.
-#cmakedefine FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES
+#cmakedefine FLA_ENABLE_EXTERNAL_LAPACK_INTERFACES  1
 
 // Determines whether to use control trees to select a reasonable FLAME
 // variant and blocksize when level-3 BLAS front-ends are invoked.
@@ -43,14 +46,14 @@
 
 // Determines whether to define a portable FLA_Clock() in terms of
 // gettimeofday() from time.h.
-#cmakedefine FLA_ENABLE_PORTABLE_TIMER
+#cmakedefine FLA_ENABLE_PORTABLE_TIMER  1
 
 
 // --- Runtime error checking and debugging ------------------------------------
 
 // Determines whether to enable internal runtime consistency checks of
 // function parameters and return values.
-#cmakedefine FLA_ENABLE_INTERNAL_ERROR_CHECKING
+#cmakedefine FLA_ENABLE_INTERNAL_ERROR_CHECKING 1
 
 // Encodes the default level of internal error checking chosen at
 // configure-time.
@@ -147,13 +150,50 @@
 #cmakedefine FLA_ENABLE_GPU
 
 // Determines AMD optimized code path selection
-#cmakedefine FLA_ENABLE_AMD_OPT
+#cmakedefine FLA_ENABLE_AMD_OPT 1
+
+//Detrmines library Version
+#cmakedefine FLA_LIBFLAME_VERSION   @LIBRARY_VERSION@
 
 // Determines OpenMP multithreading for AMD optimized code path 
-#cmakedefine FLA_OPENMP_MULTITHREADING
+#cmakedefine FLA_OPENMP_MULTITHREADING  1
 
 // Determins BLAS Extension API, GEMMT usage in libFLAME APIs
-#cmakedefine FLA_ENABLE_BLAS_EXT_GEMMT
+#cmakedefine FLA_ENABLE_BLAS_EXT_GEMMT  1
+
+// Enables FLA_PORTABLE_TIMER_IS_CLOCK_GETTIME
+#cmakedefine FLA_PORTABLE_TIMER_IS_CLOCK_GETTIME  1
 
 //#define FLA_PORTABLE_TIMER_IS_CLOCK_GETTIME 1
-//#define FLA_VECTOR_INTRINSIC_TYPE 0
+#cmakedefine FLA_VECTOR_INTRINSIC_TYPE 0
+
+// #define other missing macros
+#cmakedefine HAVE_ASSERT_H 1
+#cmakedefine HAVE_FCNTL_H 1
+#cmakedefine HAVE_INTTYPES_H 1
+#cmakedefine HAVE_LIBM 1
+#cmakedefine HAVE_MATH_H 1
+#cmakedefine HAVE_MEMORY_H 1
+#cmakedefine HAVE_SIGNAL_H 1
+#cmakedefine HAVE_STDINT_H 1
+#cmakedefine HAVE_STDLIB_H 1
+#cmakedefine HAVE_STRINGS_H 1
+#cmakedefine HAVE_STRING_H 1
+#cmakedefine HAVE_SYS_STAT_H 1
+#cmakedefine HAVE_SYS_TIME_H 1
+#cmakedefine HAVE_SYS_TYPES_H 1
+#cmakedefine HAVE_UNISTD_H 1
+
+#cmakedefine PROTOTYPES 1
+#cmakedefine STDC_HEADERS 1
+#cmakedefine TIME_WITH_SYS_TIME 1
+#cmakedefine _GNU_SOURCE 1
+#cmakedefine __PROTOTYPES 1
+
+/* Macro for tracing the log If the user wants to enable tracing he has to 
+   enable this macro by making it to 1 else 0 */
+#cmakedefine LF_AOCL_DTL_TRACE_ENABLE       @LF_AOCL_DTL_TRACE_ENABLE@
+
+/* Macro for logging the logs If the user wants to enable loging information he
+   has to enable this macro by making it to 1 else 0 */
+#cmakedefine LF_AOCL_DTL_LOG_ENABLE         @LF_AOCL_DTL_TRACE_ENABLE@
