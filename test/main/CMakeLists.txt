@@ -1,26 +1,42 @@
 ###############################################################################
 # Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 ###############################################################################
-cmake_minimum_required(VERSION 3.0)
-project(test_libFLAME_main)
+if(WIN32)
+    project(test_libFLAME_main)
+elseif(UNIX)
+    project(test_lapack.x)
+endif()
+message(STATUS "TEST EXE NAME ${PROJECT_NAME}")
 
 option (ENABLE_ILP64 "Enable ILP64" OFF)
 
 option (ENABLE_MEM_UNALIGNED "Allocate unaligned memory" OFF)
-set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
-set (CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
-set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 
-set(OpenMP_libomp_LIBRARY "C:/Program Files/LLVM/lib/libomp.lib" CACHE STRING "openmp library path")
-set(TEST_BLIS_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}" CACHE STRING "AOCL-BLIS library path name")
-set(TEST_LIBFLAME_LIBRARY_PATH "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}" CACHE STRING "AOCL-LIBFLAME library path name")
-set(TEST_BLIS_LIBNAME "AOCL-LibBlis-Win-MT-dll.lib" CACHE STRING "AOCL-BLIS library name")
-set(TEST_LIBFLAME_LIBNAME "AOCL-LibFlame-Win-MT-dll.lib" CACHE STRING "AOCL-LIBFLAME library name")
+set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin") 
+if(WIN32)
+    set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
+elseif(UNIX)
+    set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}")
+endif()
+
+if(WIN32)
+    set(OpenMP_libomp_LIBRARY "C:/Program Files/LLVM/lib/libomp.lib" CACHE STRING "openmp library path")
+    set(TEST_FLAGS "${OpenMP_libomp_LIBRARY}")
+elseif(UNIX)
+    set(OpenMP_libomp_LIBRARY "-fopenmp" CACHE STRING "openmp library path")
+    set(Test_C_Flags "-g -O2 -Wall -Wno-comment" CACHE STRING "C Flags")
+    set(Test_LD_Flags "-lm -lpthread" CACHE STRING "LD FLags")
+    set(TEST_FLAGS "${OpenMP_libomp_LIBRARY} ${Test_C_Flags} ${Test_LD_Flags}")
+message(STATUS "${TEST_FLAGS}")
+else()
+message(STATUS "Openmp: OS NOT found")
+endif()
 
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 
 if(ENABLE_ILP64)
-add_definitions(-DFLA_ENABLE_ILP64)
+    add_definitions(-DFLA_ENABLE_ILP64)
 endif()
 
 #
@@ -32,7 +48,6 @@ endif()
 #     NOTE: LAPACK default is lowercase with underscore
 #
 set(API_CALL_CONVENTION "default" CACHE STRING "API calling convention")
-message(API_CALL_CONVENTION: ${API_CALL_CONVENTION})
 
 #
 # -- API_CALLING_CONVENTION set to "upper" enables uppercase w/o underscore ----
@@ -54,17 +69,18 @@ if (${API_CALL_CONVENTION} MATCHES "lower")
 endif()
 
 if(ENABLE_MEM_UNALIGNED)
-add_definitions(-DFLA_MEM_UNALIGNED)
+    add_definitions(-DFLA_MEM_UNALIGNED)
 endif()
 
-link_directories("${TEST_BLIS_LIBRARY_PATH}" "${TEST_LIBFLAME_LIBRARY_PATH}")
+add_executable("${PROJECT_NAME}" "")
 
-add_executable(test_libFLAME_main "")
 message("${CMAKE_BUILD_TYPE}")
-target_link_libraries(test_libFLAME_main debug "${OpenMP_libomp_LIBRARY}" "${TEST_BLIS_LIBNAME}" "${TEST_LIBFLAME_LIBNAME}")
-target_link_libraries(test_libFLAME_main optimized "${OpenMP_libomp_LIBRARY}" "${TEST_BLIS_LIBNAME}" "${TEST_LIBFLAME_LIBNAME}")
 
-target_include_directories(test_libFLAME_main PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
-target_include_directories(test_libFLAME_main PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/validate_src)
+target_link_libraries("${PROJECT_NAME}" debug "${TEST_FLAGS}" "${CMAKE_PROJECT_NAME}")
+target_link_libraries("${PROJECT_NAME}" optimized "${TEST_FLAGS}" "${CMAKE_PROJECT_NAME}")
+
+target_include_directories("${PROJECT_NAME}" PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
+target_include_directories("${PROJECT_NAME}" PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/validate_src)
+
 add_subdirectory(src)
 add_subdirectory(validate_src)

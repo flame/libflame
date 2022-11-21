@@ -23,6 +23,9 @@
 *.so.*
 # test executables
 *.x
+# log and trace files
+P*_log.txt
+P*_trace.txt
 
 # -- build system files --
 
