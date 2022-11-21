@@ -24,6 +24,7 @@ void invoke_ggevx(integer datatype, char* balanc, char* jobvl, char* jobvr, char
  * > 0  - Use the value
  * */
 static integer g_lwork;
+FILE* g_ext_fptr = NULL;
 
 void fla_test_ggevx(integer argc, char ** argv, test_params_t *params)
 {
@@ -40,7 +41,17 @@ void fla_test_ggevx(integer argc, char ** argv, test_params_t *params)
         fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_NSYM, fla_test_ggevx_experiment);
         tests_not_run = 0;
     }
-    else if(argc == 14)
+    if(argc == 15)
+    {
+        /* Read matrix input data from a file */
+        g_ext_fptr = fopen(argv[14], "r");
+        if (g_ext_fptr == NULL)
+        {
+            printf("\n Invalid input file argument \n");
+            return;
+        }
+    }
+    if(argc >= 14 && argc <= 15)
     {
         /* Test with parameters from commandline */
         integer i, num_types, N;
@@ -112,6 +123,11 @@ void fla_test_ggevx(integer argc, char ** argv, test_params_t *params)
     {
         printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n\n");
     }
+    if (g_ext_fptr != NULL)
+    {
+        fclose(g_ext_fptr);
+    }
+
     return;
 }
 
@@ -151,7 +167,7 @@ void fla_test_ggevx_experiment(test_params_t *params,
     create_matrix(datatype, &VR, ldvr, n);
     create_vector(datatype, &beta, n);
 
-    if (datatype == FLOAT || datatype == DOUBLE)
+    if(datatype == FLOAT || datatype == DOUBLE)
     {
         create_vector(datatype, &alphar, n);
         create_vector(datatype, &alphai, n);
@@ -169,10 +185,17 @@ void fla_test_ggevx_experiment(test_params_t *params,
     create_realtype_vector(datatype, &bbnrm, 1);
 
 
-    /* Initialize input matrix A with random numbers */
-    rand_matrix(datatype, A, n, n, lda);
-    rand_matrix(datatype, B, n, n, ldb);
-
+    if(g_ext_fptr != NULL)
+    {
+        init_matrix_from_file(datatype, A, n, n, lda, g_ext_fptr);
+        init_matrix_from_file(datatype, B, n, n, lda, g_ext_fptr);
+    }
+    else
+    {
+        /* Initialize input matrix A with random numbers */
+        rand_matrix(datatype, A, n, n, lda);
+        rand_matrix(datatype, B, n, n, ldb);
+    }
     /* Make a copy of input matrix A. This is required to validate the API functionality */
     create_matrix(datatype, &A_test, n, n);
     create_matrix(datatype, &B_test, n, n);
@@ -192,7 +215,7 @@ void fla_test_ggevx_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* output validation */
-    if (JOBVL == 'V' || JOBVR == 'V')
+    if(JOBVL == 'V' || JOBVR == 'V')
     {
         validate_ggevx(&BALANC, &JOBVL, &JOBVR, &SENSE, n, A_test, n, B_test, n, alpha, alphar, alphai, beta, VL, ldvl, VR, ldvr, datatype, residual);
     }
@@ -204,7 +227,7 @@ void fla_test_ggevx_experiment(test_params_t *params,
     free_matrix(B_test);
     free_matrix(VL);
     free_matrix(VR);
-    if (datatype == FLOAT || datatype == DOUBLE)
+    if(datatype == FLOAT || datatype == DOUBLE)
     {
         free_vector(alphar);
         free_vector(alphai);
@@ -246,7 +269,7 @@ void prepare_ggevx_run(char* balanc, char* jobvl, char* jobvr, char* sense, inte
     {
         create_vector(INTEGER, &iwork, 6 + n_A);
     }
-    if (*sense != 'N')
+    if(*sense != 'N')
     {
         create_vector(INTEGER, &bwork, n_A);
     }
@@ -276,7 +299,7 @@ void prepare_ggevx_run(char* balanc, char* jobvl, char* jobvr, char* sense, inte
     create_realtype_vector(datatype, &rwork, 8 * n_A);
 
 
-    for (i = 0; i < n_repeats; ++i)
+    for(i = 0; i < n_repeats; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers for each iteration */
         copy_matrix(datatype, "full", n_A, n_A, A_save, n_A, A, lda);
@@ -302,11 +325,11 @@ void prepare_ggevx_run(char* balanc, char* jobvl, char* jobvr, char* sense, inte
 
     free_matrix(A_save);
     free_matrix(B_save);
-    if (*sense != 'E')
+    if(*sense != 'E')
     {
         free_vector(iwork);
     }
-    if (*sense != 'N')
+    if(*sense != 'N')
     {
         free_vector(bwork);
     }

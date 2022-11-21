@@ -1740,3 +1740,136 @@ void get_min(integer datatype, void *arr, void *min_val, integer n)
         }
     }
 }
+/* Reading matrix input data from a file */
+void init_matrix_from_file(integer datatype, void* A, integer m, integer n, integer lda, FILE* fptr)
+{
+    int i, j;
+
+    switch (datatype)
+    {
+        case FLOAT:
+        {
+            float num;
+
+            for (i = 0; i < m; i++)
+            {
+                for (j = 0; j < n; j++)
+                {
+                    fscanf(fptr, "%f", &num);
+                    ((float*)A)[i * lda + j] = num;
+                }
+            }
+            break;
+        }
+
+        case DOUBLE:
+        {
+            double num;
+
+            for (i = 0; i < m; i++)
+            {
+                for (j = 0; j < n; j++)
+                {
+                    fscanf(fptr, "%lf", &num);
+                    ((double*)A)[i * lda + j] = num;
+                }
+            }
+            break;
+        }
+
+        case COMPLEX:
+        {
+            float num;
+
+            for (i = 0; i < m; i++)
+            {
+                for (j = 0; j < n; j++)
+                {
+                    fscanf(fptr, "%f", &num);
+                    ((scomplex*)A)[i * lda + j].real = num;
+                    fscanf(fptr, "%f", &num);
+                    ((scomplex*)A)[i * lda + j].imag = num;
+
+                }
+            }
+            break;
+        }
+
+        case DOUBLE_COMPLEX:
+        {
+            double num;
+
+            for (i = 0; i < m; i++)
+            {
+                for (j = 0; j < n; j++)
+                {
+                    fscanf(fptr, "%lf", &num);
+                    ((dcomplex*)A)[i * lda + j].real = num;
+                    fscanf(fptr, "%lf", &num);
+                    ((dcomplex*)A)[i * lda + j].imag = num;
+                }
+            }
+            break;
+        }
+    }
+}
+/* Reading vector input data from a file */
+void init_vector_from_file(integer datatype, void* A, integer m, integer inc, FILE* fptr)
+{
+    int i, j;
+
+    switch (datatype)
+    {
+        case FLOAT:
+        {
+            float num;
+
+            for (i = 0; i < m; i++)
+            {
+                fscanf(fptr, "%f", &num);
+                ((float*)A)[i * inc] = num;
+            }
+            break;
+        }
+
+        case DOUBLE:
+        {
+            double num;
+
+            for (i = 0; i < m; i++)
+            {
+                fscanf(fptr, "%lf", &num);
+                ((double*)A)[i * inc] = num;
+            }
+            break;
+        }
+
+        case COMPLEX:
+        {
+            float num;
+
+            for (i = 0; i < m; i++)
+            {
+                 fscanf(fptr, "%f", &num);
+                 ((scomplex*)A)[i * inc].real = num;
+                 fscanf(fptr, "%f", &num);
+                 ((scomplex*)A)[i * inc].imag = num;
+            }
+            break;
+        }
+
+        case DOUBLE_COMPLEX:
+        {
+            double num;
+
+            for (i = 0; i < m; i++)
+            {
+                fscanf(fptr, "%lf", &num);
+                ((dcomplex*)A)[i * inc].real = num;
+                fscanf(fptr, "%lf", &num);
+                ((dcomplex*)A)[i * inc].imag = num;
+            }
+            break;
+        }
+    }
+}
