@@ -123,5 +123,9 @@ void scgemv(char TRANS, integer real_alpha, integer m, integer n, scomplex* alph
 void get_max(integer datatype, void *arr, void *max_val, integer n);
 /* To find the minimum from the array */
 void get_min(integer datatype, void *arr, void *min_val, integer n);
+/* Reading matrix input data from a file */
+void init_matrix_from_file(integer datatype, void* A,integer m, integer n, integer lda, FILE* fptr);
+/* Reading vector input data from a file */
+void init_vector_from_file(integer datatype, void* A, integer m, integer inc, FILE* fptr);
 
 #endif // TEST_COMMON_H
