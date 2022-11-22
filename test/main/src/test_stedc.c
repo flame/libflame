@@ -13,14 +13,99 @@ void invoke_stedc(integer datatype, char* compz, integer* n, void* D, void* E, v
                   integer* ldz, void* work, integer* lwork, void* rwork,
                   integer* lrwork, integer* iwork, integer* liwork, integer *info);
 
+/* Flag to indicate lwork availability status
+ * <= 0 - To be calculated
+ * > 0  - Use the value
+ * */
+static integer g_lwork;
+static integer g_liwork;
+static integer g_lrwork;
 void fla_test_stedc(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Eigenvalues/eigenvectors of symmetric tridiagonal matrix";
     char* front_str = "STEDC";
+    integer tests_not_run = 1, invalid_dtype = 0;
 
-    fla_test_output_info("--- %s ---\n", op_str);
-    fla_test_output_info("\n");
-    fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_SYM, fla_test_stedc_experiment);
+    if(argc == 1)
+    {
+        g_lwork = -1;
+        g_liwork = -1;
+        g_lrwork = -1;
+        fla_test_output_info("--- %s ---\n", op_str);
+        fla_test_output_info("\n");
+        fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_SYM, fla_test_stedc_experiment);
+        tests_not_run = 0;
+    }
+    else if(argc == 10)
+    {
+        /* Test with parameters from commandline */
+        integer i, num_types, N;
+        integer datatype, n_repeats;
+        double perf, time_min, residual;
+        char stype, type_flag[4] = {0};
+        char *endptr;
+
+        /* Parse the arguments */
+        num_types = strlen(argv[2]);
+        params->eig_sym_paramslist[0].compz = argv[3][0];
+        N = strtoimax(argv[4], &endptr, CLI_DECIMAL_BASE);
+        params->eig_sym_paramslist[0].lda = strtoimax(argv[5], &endptr, CLI_DECIMAL_BASE);
+
+        g_lwork = strtoimax(argv[6], &endptr, CLI_DECIMAL_BASE);
+        g_liwork = strtoimax(argv[7], &endptr, CLI_DECIMAL_BASE);
+        g_lrwork = strtoimax(argv[8], &endptr, CLI_DECIMAL_BASE);
+        n_repeats = strtoimax(argv[9], &endptr, CLI_DECIMAL_BASE);
+
+        if(n_repeats > 0)
+        {
+            params->eig_sym_paramslist[0].threshold_value = CLI_NORM_THRESH;
+
+            for(i = 0; i < num_types; i++)
+            {
+                stype = argv[2][i];
+                datatype = get_datatype(stype);
+
+                /* Check for invalide dataype */
+                if(datatype == INVALID_TYPE)
+                {
+                    invalid_dtype = 1;
+                    continue;
+                }
+
+                /* Check for duplicate datatype presence */
+                if(type_flag[datatype - FLOAT] == 1)
+                    continue;
+                type_flag[datatype - FLOAT] = 1;
+
+                /* Call the test code */
+                fla_test_stedc_experiment(params, datatype,
+                                          N, N,
+                                          0,
+                                          n_repeats,
+                                          &perf, &time_min, &residual);
+                /* Print the results */
+                fla_test_print_status(front_str,
+                                      stype,
+                                      SQUARE_INPUT,
+                                      N, N,
+                                      residual, params->eig_sym_paramslist[0].threshold_value,
+                                      time_min, perf);
+                tests_not_run = 0;
+            }
+        }
+    }
+
+    /* Print error messages */
+    if(tests_not_run)
+    {
+        printf("Invalid arguments for stedc\n");
+        printf("Usage: ./<EXE> stedc <precisions - sdcz> <COMPZ> <N> <LDZ> <LWORk> <LIWORK> <LRWORK> <repeats>\n");
+    }
+    else if(invalid_dtype)
+    {
+        printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n");
+    }
+    return;
 }
 
 void fla_test_stedc_experiment(test_params_t *params,
@@ -64,17 +149,15 @@ void fla_test_stedc_experiment(test_params_t *params,
     }
     create_matrix(datatype, &Z_input, n, n);
     copy_matrix(datatype, "full", n, n, A, n, Z_input, n);
-    
+
     /* Call SYTRD(), ORGTR() to get tridiagonal/orthogonal matrix when compz = V. */
     if (compz == 'V') {
         /* Initialize parameter needed for SYTRD() call. */
-        uplo = params->eig_sym_paramslist[pci].uplo;
-        
+        uplo = 'U';
         /* Call SYTRD() orthogonal matrix and tridiagonal elements.
            invoke_sytrd() internally calls ORGTR() to get orthogonal matrix.*/
         invoke_sytrd(datatype, &uplo, compz, n, A, n, D, E, &info);
         if (info != 0) {
-            fla_test_output_error("Invalid Info returned by SYTRD(): %d. Exiting...\n", info);
             free_matrix(A);
             free_vector(D);
             free_vector(E);
@@ -144,40 +227,51 @@ void prepare_stedc_run(char* compz, integer n, void* D, void* E, void* Z,
     copy_vector(realtype, n, D, 1, D_save, 1);
     create_vector(realtype, &E_save, n-1);
     copy_vector(realtype, n-1, E, 1, E_save, 1);
-    /* Make a workspace query the first time. This will provide us with
-       and ideal workspace size based on internal block size.*/
-    create_vector(datatype, &work, 1);
-    create_vector(realtype, &rwork, 1);
-    create_vector(INTEGER, &iwork, 1);
-    lwork = -1;
-    liwork = -1;
-    lrwork = -1;
-    /* Call to STEDC() API to get work buffers size. */
-    invoke_stedc(datatype, compz, &n, D, E_test, Z, &ldz, work, &lwork, rwork, &lrwork, iwork, &liwork, &info);
-
-    /* Get work buffers size. */
-    if (info == 0) {
-        lwork = get_work_value(datatype, work);
-        lrwork = get_work_value(datatype, rwork);
-        liwork = get_work_value(INTEGER, iwork);
-        free_vector(work);
-        free_vector(rwork);
-        free_vector(iwork);
-    } else {
-        fla_test_output_error( "Invalid Info returned by STEDC(): %d. Exiting...\n", info);
-        free_vector(work);
-        free_vector(rwork);
-        free_vector(iwork);
-        return;
-    }
     
+    /* Call to STEDC() API to get work buffers size. */
+    if(g_lwork <= 0 || g_liwork <= 0 || ((datatype == COMPLEX || datatype == DOUBLE_COMPLEX) && g_lrwork <= 0))
+    {
+        /* Make a workspace query the first time. This will provide us with
+        and ideal workspace size based on internal block size.*/
+        create_vector(datatype, &work, 1);
+        create_vector(realtype, &rwork, 1);
+        create_vector(INTEGER, &iwork, 1);
+        lwork = -1;
+        liwork = -1;
+        lrwork = -1;
+        invoke_stedc(datatype, compz, &n, D, E_test, Z, &ldz, work, &lwork, rwork, &lrwork, iwork, &liwork, &info);
+
+        /* Get work buffers size. */
+        if (info == 0) 
+        {
+            lwork = get_work_value(datatype, work );
+            liwork = get_work_value(INTEGER, iwork );
+            lrwork = get_work_value(realtype, rwork );      
+            free_vector(work);
+            free_vector(rwork);
+            free_vector(iwork);
+        } 
+        else 
+        {
+            free_vector(work);
+            free_vector(rwork);
+            free_vector(iwork);
+            return;
+        }
+    }
+    else
+    {   
+        lwork = g_lwork;
+        liwork = g_liwork;
+        lrwork = g_lrwork;
+    }
     create_vector(datatype, &work, lwork);
     if ((datatype == COMPLEX) || (datatype == DOUBLE_COMPLEX)) {
         create_vector(realtype, &rwork, lrwork);
     }
     create_vector(INTEGER, &iwork, liwork);
     create_vector(realtype, &E_test, n-1);
-    
+
     for (index = 0; index < n_repeats; ++index)
     {
         /* Restore input matrices and allocate memory to output buffers
