@@ -307,6 +307,9 @@ BLIS1_H_FLAT  := $(BASE_INC_PATH)/$(BLIS1_H)
 FLAF2C_H      := FLA_f2c.h
 FLAF2C_H_FLAT := $(BASE_INC_PATH)/$(FLAF2C_H)
 
+CPUFEATURES_H      := cpu_features.h
+CPUFEATURES_H_FLAT := $(BASE_INC_PATH)/$(CPUFEATURES_H)
+
 #Define path of CPP Template header files
 CPP_TEMPLATE_H_PATH := ./$(SRC_DIR)/src_cpp
 
@@ -511,6 +514,17 @@ else
 	@echo "Generated monolithic $@"
 endif
 
+# Consolidated cpu_features.h header creation
+$(CPUFEATURES_H_FLAT): $(MK_HEADER_FILES) $(FLAME_H_FLAT) $(BLIS1_H_FLAT) $(FLAF2C_H_FLAT)
+ifeq ($(ENABLE_VERBOSE),yes)
+	$(FLATTEN_H) -c -v1 $(CPUFEATURES_H_SRC_PATH) $@ $(BASE_INC_PATH) "$(MK_HEADER_DIR_PATHS)"
+else
+	@echo -n "Generating monolithic $(@)"
+	@$(FLATTEN_H) -c -v1 $(CPUFEATURES_H_SRC_PATH) $@ $(BASE_INC_PATH) "$(MK_HEADER_DIR_PATHS)"
+	@echo "Generated monolithic $@"
+endif
+
+# Consolidated FLA_f2c.h header creation
 
 # --- Special source code / object code rules ---
 

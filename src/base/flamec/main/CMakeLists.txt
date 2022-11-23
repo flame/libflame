@@ -1,9 +1,10 @@
-##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+##Copyright (C) 2020-2022, Advanced Micro Devices, Inc.##
 target_sources("${PROJECT_NAME}" 
      PRIVATE
 ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Axpy_to.c
 ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Blocksize.c
 ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Check.c
+${CMAKE_CURRENT_SOURCE_DIR}/FLA_Context.c
 ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Copy_to.c
 ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Error.c
 ${CMAKE_CURRENT_SOURCE_DIR}/FLA_Init.c
