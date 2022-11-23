@@ -155,10 +155,10 @@ void fla_test_ggevx_experiment(test_params_t *params,
     *residual = params->eig_non_sym_paramslist[pci].GenNonSymEigProblem_threshold;
     /* Get input matrix dimensions */
     n = p_cur;
-    lda = n;
-    ldb = n;
-    ldvl = n;
-    ldvr = n;
+    lda = params->eig_non_sym_paramslist[pci].lda;
+    ldvl = params->eig_non_sym_paramslist[pci].ldvl;
+    ldvr = params->eig_non_sym_paramslist[pci].ldvr;
+    ldb = params->eig_non_sym_paramslist[pci].ldb;
 
     /* Create input matrix parameters */
     create_matrix(datatype, &A, lda, n);
@@ -189,7 +189,7 @@ void fla_test_ggevx_experiment(test_params_t *params,
     {
         /* Initialize input matrix with custom data */
         init_matrix_from_file(datatype, A, n, n, lda, g_ext_fptr);
-        init_matrix_from_file(datatype, B, n, n, lda, g_ext_fptr);
+        init_matrix_from_file(datatype, B, n, n, ldb, g_ext_fptr);
     }
     else
     {
@@ -198,10 +198,10 @@ void fla_test_ggevx_experiment(test_params_t *params,
         rand_matrix(datatype, B, n, n, ldb);
     }
     /* Make a copy of input matrix A. This is required to validate the API functionality */
-    create_matrix(datatype, &A_test, n, n);
-    create_matrix(datatype, &B_test, n, n);
-    copy_matrix(datatype, "full", n, n, A, lda, A_test, n);
-    copy_matrix(datatype, "full", n, n, B, ldb, B_test, n);
+    create_matrix(datatype, &A_test, lda, n);
+    create_matrix(datatype, &B_test, ldb, n);
+    copy_matrix(datatype, "full", n, n, A, lda, A_test, lda);
+    copy_matrix(datatype, "full", n, n, B, ldb, B_test, ldb);
 
     prepare_ggevx_run(&BALANC, &JOBVL, &JOBVR, &SENSE, n, A, lda, B, ldb, alpha, alphar, alphai, beta, VL, ldvl, VR, ldvr,
                         &ilo, &ihi, lscale, rscale, abnrm, bbnrm, rconde, rcondv, datatype, n_repeats, &time_min);
@@ -218,7 +218,7 @@ void fla_test_ggevx_experiment(test_params_t *params,
     /* output validation */
     if(JOBVL == 'V' || JOBVR == 'V')
     {
-        validate_ggevx(&BALANC, &JOBVL, &JOBVR, &SENSE, n, A_test, n, B_test, n, alpha, alphar, alphai, beta, VL, ldvl, VR, ldvr, datatype, residual);
+        validate_ggevx(&BALANC, &JOBVL, &JOBVR, &SENSE, n, A_test, lda, B_test, ldb, alpha, alphar, alphai, beta, VL, ldvl, VR, ldvr, datatype, residual);
     }
 
     /* Free up the buffers */
@@ -303,8 +303,8 @@ void prepare_ggevx_run(char* balanc, char* jobvl, char* jobvr, char* sense, inte
     for(i = 0; i < n_repeats; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers for each iteration */
-        copy_matrix(datatype, "full", n_A, n_A, A_save, n_A, A, lda);
-        copy_matrix(datatype, "full", n_A, n_A, B_save, n_A, B, ldb);
+        copy_matrix(datatype, "full", n_A, n_A, A_save, lda, A, lda);
+        copy_matrix(datatype, "full", n_A, n_A, B_save, ldb, B, ldb);
         create_vector(datatype, &work, lwork);
 
         exe_time = fla_test_clock();

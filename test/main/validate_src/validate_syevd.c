@@ -43,7 +43,7 @@ void validate_syevd(char* jobz, integer n, void* A, void* A_test, void* w, integ
 
                 /* Test 2
                    compute norm(I - Z'*Z) / (N * EPS)*/
-                resid2 = (float)check_orthogonality(datatype, Z, n, n);
+                resid2 = (float)check_orthogonality(datatype, Z, n, n, n);
 
                 *residual = (double)max(resid1, resid2);
                 break;
@@ -64,7 +64,7 @@ void validate_syevd(char* jobz, integer n, void* A, void* A_test, void* w, integ
 
                 /* Test 2
                    compute norm(I - Z'*Z) / (N * EPS)*/
-                resid2 = check_orthogonality(datatype, Z, n, n);
+                resid2 = check_orthogonality(datatype, Z, n, n, n);
 
                 *residual = (double)max(resid1, resid2);
                 break;
@@ -85,7 +85,7 @@ void validate_syevd(char* jobz, integer n, void* A, void* A_test, void* w, integ
 
                 /* Test 2
                    compute norm(I - Z'*Z) / (N * EPS)*/
-                resid2 = (float)check_orthogonality(datatype, Z, n, n);
+                resid2 = (float)check_orthogonality(datatype, Z, n, n, n);
 
                 *residual = (double)max(resid1, resid2);
                 break;
@@ -106,7 +106,7 @@ void validate_syevd(char* jobz, integer n, void* A, void* A_test, void* w, integ
 
                 /* Test 2
                    compute norm(I - Z'*Z) / (N * EPS)*/
-                resid2 = check_orthogonality(datatype, Z, n, n);
+                resid2 = check_orthogonality(datatype, Z, n, n, n);
 
                 *residual = (double)max(resid1, resid2);
                 break;

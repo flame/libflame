@@ -8,7 +8,7 @@
 
 /* Local prototypes */
 void fla_test_ggev_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci, integer n_repeats, double* perf, double* t, double* residual);
-void prepare_ggev_run(char *jobvl, char *jobvr, integer n, void *a, void *b, void* alpha, void * alphar, void * alphai, void *beta,	void *vl, integer ldvl, 
+void prepare_ggev_run(char *jobvl, char *jobvr, integer n, void *a, integer lda, void *b, integer ldb, void* alpha, void * alphar, void * alphai, void *beta,	void *vl, integer ldvl, 
                       void *vr, integer ldvr,	integer datatype, integer n_repeats, double* time_min_);
 void invoke_ggev(integer datatype, char* jobvl, char* jobvr, integer* n, void* a, integer* lda, void* b, integer* ldb, integer* alpha, integer* alphar,
     integer* alphai, integer* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, void* work, integer* lwork, void* rwork, integer* info);
@@ -116,7 +116,7 @@ void fla_test_ggev_experiment(test_params_t *params,
     double   *t,
     double   *residual)
 {
-    integer m, n, cs_A,ldvl, ldvr;
+    integer m, lda, ldvl, ldvr, ldb;
     void *A = NULL, *B = NULL, *VL = NULL, *VR = NULL;
     void * alpha = NULL, *alphar=NULL, *alphai=NULL, *beta, *A_test , *B_test;
     double time_min = 1e9;
@@ -128,54 +128,54 @@ void fla_test_ggev_experiment(test_params_t *params,
 
     /* Get input matrix dimensions */
     m = p_cur;
-    n = q_cur;
-    cs_A = n;
-    ldvl = n;
-    ldvr = n;
+
+    lda = params->eig_non_sym_paramslist[pci].lda;
+    ldb = params->eig_non_sym_paramslist[pci].ldb;
+    ldvl = params->eig_non_sym_paramslist[pci].ldvl;
+    ldvr = params->eig_non_sym_paramslist[pci].ldvr;
 
     /* Create input matrix parameters */
-    create_matrix(datatype, &A, n, n);
-    create_matrix(datatype, &B, n, n);
-    create_matrix(datatype, &VL, ldvl, n);
-    create_matrix(datatype, &VR, ldvr, n);
+    create_matrix(datatype, &A, lda, m);
+    create_matrix(datatype, &B, ldb, m);
+    create_matrix(datatype, &VL, ldvl, m);
+    create_matrix(datatype, &VR, ldvr, m);
     if (datatype == FLOAT || datatype == DOUBLE)
     {
-        create_vector(datatype, &alphar, n);
-        create_vector(datatype, &alphai, n);
+        create_vector(datatype, &alphar, m);
+        create_vector(datatype, &alphai, m);
     }
     else
     {
-        create_vector(datatype, &alpha, n);
+        create_vector(datatype, &alpha, m);
     }
-    create_vector(datatype, &beta, n);
+    create_vector(datatype, &beta, m);
 
     /* Initialize input matrix A with random numbers */
-    rand_matrix(datatype, A, n, n, cs_A);
-    rand_matrix(datatype, B, n, n, cs_A);
+    rand_matrix(datatype, A, m, m, lda);
+    rand_matrix(datatype, B, m, m, ldb);
 
     /* Make a copy of input matrix A. This is required to validate the API functionality */
-    create_matrix(datatype, &A_test, n, n);
-    create_matrix(datatype, &B_test, n, n);
-    copy_matrix(datatype, "full", n, n, A, cs_A, A_test, cs_A);
-    copy_matrix(datatype, "full", n, n, B, cs_A, B_test, cs_A);
+    create_matrix(datatype, &A_test, lda, m);
+    create_matrix(datatype, &B_test, ldb, m);
+    copy_matrix(datatype, "full", m, m, A, lda, A_test, lda);
+    copy_matrix(datatype, "full", m, m, B, ldb, B_test, ldb);
 
-    prepare_ggev_run(&JOBVL,&JOBVR, n, A_test, B_test, alpha, alphar, alphai, beta,  VL, ldvl, VR, ldvr, datatype, n_repeats, &time_min);
+    prepare_ggev_run(&JOBVL,&JOBVR, m, A_test, lda, B_test, ldb, alpha, alphar, alphai, beta,  VL, ldvl, VR, ldvr, datatype, n_repeats, &time_min);
 
     /* execution time */
     *t = time_min;
 
     /* performance computation */
-    /* 2mn^2 - (2/3)n^3 flops */
-    *perf = (double)((2.0 * m * n * n) - ((2.0 / 3.0) * n * n * n)) / time_min / FLOPS_PER_UNIT_PERF;
+    /* 2m^3 - (2/3)m^3 flops */
+    *perf = (double)((2.0 * m * m * m) - ((2.0 / 3.0) * m * m * m)) / time_min / FLOPS_PER_UNIT_PERF;
     if (datatype == COMPLEX || datatype == DOUBLE_COMPLEX)
         *perf *= 4.0;
 
     /* output validation */
     if (JOBVL == 'V' && JOBVR == 'V')
     {
-        validate_ggev(&JOBVL, &JOBVR, n, A, B, alpha, alphar, alphai, beta, VL, ldvl, VR, ldvr, datatype, residual);
+        validate_ggev(&JOBVL, &JOBVR, m, A, lda, B, ldb, alpha, alphar, alphai, beta, VL, ldvl, VR, ldvr, datatype, residual);
     }
-    
     /* Free up the buffers */
     free_matrix(A);
     free_matrix(A_test);
@@ -183,7 +183,6 @@ void fla_test_ggev_experiment(test_params_t *params,
     free_matrix(VR);
     free_matrix(B);
     free_matrix(B_test);
-
     if (datatype == FLOAT || datatype == DOUBLE)
     {
         free_vector(alphar);
@@ -198,25 +197,22 @@ void fla_test_ggev_experiment(test_params_t *params,
 
 }
 
-void prepare_ggev_run(char *jobvl, char *jobvr, integer n_A, void *A,
-                        void *B, void* alpha, void * alphar, void * alphai, void* beta,
+void prepare_ggev_run(char *jobvl, char *jobvr, integer n_A, void *A, integer lda,
+                        void *B, integer ldb, void* alpha, void * alphar, void * alphai, void* beta,
                         void *VL, integer ldvl, void *VR, integer ldvr,
                         integer datatype, integer n_repeats, double* time_min_)
 {
     void *A_save = NULL, *B_save = NULL , *work = NULL, * rwork = NULL;
-    integer i, lda, ldb;
+    integer i;
     integer lwork, info = 0;
     double time_min = 1e9, exe_time;
 
-    lda = n_A;
-    ldb = n_A;
-
     /* Make a copy of the input matrix A. Same input values will be passed in
        each itertaion.*/
-    create_matrix(datatype, &A_save, n_A, n_A);
-    copy_matrix(datatype, "full", n_A, n_A, A, n_A, A_save, n_A);
-    create_matrix(datatype, &B_save, n_A, n_A);
-    copy_matrix(datatype, "full", n_A, n_A, B, n_A, B_save, n_A);
+    create_matrix(datatype, &A_save, lda, n_A);
+    copy_matrix(datatype, "full", n_A, n_A, A, lda, A_save, lda);
+    create_matrix(datatype, &B_save, ldb, n_A);
+    copy_matrix(datatype, "full", n_A, n_A, B, ldb, B_save, ldb);
 
     /* Make a workspace query the first time through. This will provide us with
      and ideal workspace size based on an internal block size. */
@@ -243,8 +239,8 @@ void prepare_ggev_run(char *jobvl, char *jobvr, integer n_A, void *A,
     for (i = 0; i < n_repeats; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers for each iteration */
-        copy_matrix(datatype, "full", n_A, n_A, A_save, n_A, A, n_A);
-        copy_matrix(datatype, "full", n_A, n_A, B_save, n_A, B, n_A);
+        copy_matrix(datatype, "full", n_A, n_A, A_save, lda, A, lda);
+        copy_matrix(datatype, "full", n_A, n_A, B_save, ldb, B, ldb);
         create_vector(datatype, &work, lwork);
         if (datatype == COMPLEX || datatype == DOUBLE_COMPLEX)
         {
@@ -270,8 +266,8 @@ void prepare_ggev_run(char *jobvl, char *jobvr, integer n_A, void *A,
     }
 
     *time_min_ = time_min;
-    copy_matrix(datatype, "full", n_A, n_A, A_save, n_A, A, n_A);
-    copy_matrix(datatype, "full", n_A, n_A, B_save, n_A, B, n_A);
+    copy_matrix(datatype, "full", n_A, n_A, A_save, lda, A, lda);
+    copy_matrix(datatype, "full", n_A, n_A, B_save, ldb, B, ldb);
 
     free(A_save);
     free(B_save);

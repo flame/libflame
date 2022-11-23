@@ -48,3 +48,6 @@ vu 0.5  3.0  4.9  0.8
 joba_gesvdq A H M E
 jobu_gesvdq A S R N
 jobv_gesvdq A V R N
+lda 20 300 1400 3000
+ldu 20 300 1400 3000
+ldvt 20 380 1400 3000

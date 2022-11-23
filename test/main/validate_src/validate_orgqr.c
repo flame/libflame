@@ -11,6 +11,7 @@
 void validate_orgqr(integer m,
     integer n,
     void *A,
+    integer lda,
     void* Q,
     void *R,
     void* work,
@@ -34,14 +35,14 @@ void validate_orgqr(integer m,
             /* Test 1
                compute norm(R - Q'*A) / (N * norm(A) * EPS)*/
             norm_A = slange_("1", &k, &k, R, &k, work);
-            sgemm_("T", "N", &k, &k, &m, &s_n_one, Q, &m, A, &m, &s_one, R, &k);
+            sgemm_("T", "N", &k, &k, &m, &s_n_one, Q, &m, A, &lda, &s_one, R, &k);
 
             norm = slange_("1", &k, &k, R, &k, work);
             resid1 = norm/(eps * norm_A * (float)k);
 
             /* Test 2
                compute norm(I - Q*Q') / (N * EPS)*/
-            resid2 = (float)check_orthogonality(datatype, Q, m, k);
+            resid2 = (float)check_orthogonality(datatype, Q, m, k, m);
 
             *residual = (double)max(resid1, resid2);
             break;
@@ -54,14 +55,14 @@ void validate_orgqr(integer m,
             /* Test 1
                compute norm(R - Q'*A) / (N * norm(A) * EPS)*/
             norm_A = dlange_("1", &k, &k, R, &k, work);
-            dgemm_("T", "N", &k, &k, &m, &d_n_one, Q, &m, A, &m, &d_one, R, &k);
+            dgemm_("T", "N", &k, &k, &m, &d_n_one, Q, &m, A, &lda, &d_one, R, &k);
 
             norm = dlange_("1", &k, &k, R, &k, work);
             resid1 = norm/(eps * norm_A * (double)k);
 
             /* Test 2
                compute norm(I - Q*Q') / (N * EPS)*/
-            resid2 = check_orthogonality(datatype, Q, m, k);
+            resid2 = check_orthogonality(datatype, Q, m, k, m);
    
             *residual = (double)max(resid1, resid2);
             break;
@@ -74,14 +75,14 @@ void validate_orgqr(integer m,
             /* Test 1
                compute norm(R - Q'*A) / (N * norm(A) * EPS)*/
             norm_A = clange_("1", &k, &k, R, &k, work);
-            cgemm_("C", "N", &k, &k, &m, &c_n_one, Q, &m, A, &m, &c_one, R, &k);
+            cgemm_("C", "N", &k, &k, &m, &c_n_one, Q, &m, A, &lda, &c_one, R, &k);
 
             norm = clange_("1", &k, &k, R, &k, work);
-            resid1 = norm/(eps * norm_A * (float)k);
+            resid1 = norm/(eps * norm_A * (double)k);
 
             /* Test 2
                compute norm(I - Q*Q') / (N * EPS)*/
-            resid2 = (float)check_orthogonality(datatype, Q, m, k);
+            resid2 = (float)check_orthogonality(datatype, Q, m, k, m);
 
             *residual = (double)max(resid1, resid2);
             break;
@@ -94,14 +95,14 @@ void validate_orgqr(integer m,
             /* Test 1
                compute norm(R - Q'*A) / (N * norm(A) * EPS)*/
             norm_A = zlange_("1", &k, &k, R, &k, work);
-            zgemm_("C", "N", &k, &k, &m, &z_n_one, Q, &m, A, &m, &z_one, R, &k);
+            zgemm_("C", "N", &k, &k, &m, &z_n_one, Q, &m, A, &lda, &z_one, R, &k);
 
             norm = zlange_("1", &k, &k, R, &k, work);
             resid1 = norm/(eps * norm_A * (double)k);
 
             /* Test 2
                compute norm(I - Q*Q') / (N * EPS)*/
-            resid2 = check_orthogonality(datatype, Q, m, k);
+            resid2 = check_orthogonality(datatype, Q, m, k, m);
 
             *residual = (double)max(resid1, resid2);
             break;

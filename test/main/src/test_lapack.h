@@ -244,9 +244,9 @@ typedef struct SVD_paramlist_t
     integer n_range_start;
     integer n_range_end;
     integer n_range_step_size;
-    integer lda;
-    integer ldu;
-    integer ldvt;
+    integer lda; // Leading dimension of Array A. LDA >= max(1, n)
+    integer ldu; // The leading dimension of the array U.  LDU >= 1; if JOBZ = 'S' or 'A' or JOBZ = 'O' and M < N, LDU >= M.
+    integer ldvt; // The leading dimension of the array VT.  LDVT >= 1; if JOBZ = 'A' or JOBZ = 'O' and M >= N, LDVT >= N;if JOBZ = 'S', LDVT >= min(M,N).
     integer num_repeats;
     integer num_tests;
     integer num_data_types;
