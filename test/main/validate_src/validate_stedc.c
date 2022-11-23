@@ -45,8 +45,7 @@ void validate_stedc(char compz, integer n, void* D_test, void* Z_input, void* Z,
             resid1 = norm/(eps * norm_A * (float)n);
             /* Test 2 - Check for orthogonality of matrix.
                compute norm(I - Z*Z') / (N * EPS)*/
-            resid2 = (float)check_orthogonality(datatype, Z, n, n);
-            
+            resid2 = (float)check_orthogonality(datatype, Z, n, n, n);
             *residual = (double)max(resid1, resid2);
             break;
         }
@@ -65,7 +64,7 @@ void validate_stedc(char compz, integer n, void* D_test, void* Z_input, void* Z,
             resid1 = norm/(eps * norm_A * (float)n);
             /* Test 2 - Check for orthogonality of matrix.
                compute norm(I - Z*Z') / (N * EPS)*/
-            resid2 = check_orthogonality(datatype, Z, n, n);
+            resid2 = check_orthogonality(datatype, Z, n, n, n);
             *residual = (double)max(resid1, resid2);
             break;
         }
@@ -84,7 +83,7 @@ void validate_stedc(char compz, integer n, void* D_test, void* Z_input, void* Z,
             resid1 = norm/(eps * norm_A * (float)n);
             /* Test 2 - Check for orthogonality of matrix.
                compute norm(I - Z*Z') / (N * EPS)*/
-            resid2 = (float)check_orthogonality(datatype, Z, n, n);
+            resid2 = (float)check_orthogonality(datatype, Z, n, n, n);
             *residual = (double)max(resid1, resid2);
             break;
         }
@@ -104,7 +103,7 @@ void validate_stedc(char compz, integer n, void* D_test, void* Z_input, void* Z,
 
             /* Test 2 - Check for orthogonality of matrix.
                compute norm(I - Z*Z') / (N * EPS)*/
-            resid2 = check_orthogonality(datatype, Z, n, n);
+            resid2 = check_orthogonality(datatype, Z, n, n, n);
             *residual = (double)max(resid1, resid2);
             break;
         }

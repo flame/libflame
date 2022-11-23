@@ -7,7 +7,7 @@
 // Local prototypes.
 void fla_test_gerq2_experiment(test_params_t *params, integer  datatype, integer  p_cur, integer  q_cur, integer  pci,
                                     integer  n_repeats, double* perf, double* t, double* residual);
-void prepare_gerq2_run(integer m_A, integer n_A, void *A, void *T, integer datatype, integer n_repeats, double* time_min_);
+void prepare_gerq2_run(integer m_A, integer n_A, void *A, integer lda, void *T, integer datatype, integer n_repeats, double* time_min_);
 void invoke_gerq2(integer datatype, integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *info);
 static FILE* g_ext_fptr = NULL;
 
@@ -117,36 +117,35 @@ void fla_test_gerq2_experiment(test_params_t *params,
     double* t,
     double* residual)
 {
-    integer m, n, cs_A;
+    integer m, n, lda;
     void *A = NULL, *A_test = NULL, *T = NULL;
     double time_min = 1e9;
 
     // Get input matrix dimensions.
     m = p_cur;
     n = q_cur;
-    cs_A = m;
+    lda = params->lin_solver_paramslist[pci].lda;
 
     // Create input matrix parameters
-    create_matrix(datatype, &A, m, n);
+    create_matrix(datatype, &A, lda, n);
     create_vector(datatype, &T, min(m,n));
 
     if (g_ext_fptr != NULL)
     {
         /* Initialize input matrix with custom data */
-        init_matrix_from_file(datatype, A, m, n, cs_A, g_ext_fptr);
+        init_matrix_from_file(datatype, A, m, n, lda, g_ext_fptr);
     }
     else
     {
         /* Initialize input matrix with random numbers */
-        rand_matrix(datatype, A, m, n, cs_A);
+        rand_matrix(datatype, A, m, n, lda);
     }
 
-
     // Make a copy of input matrix A. This is required to validate the API functionality.
-    create_matrix(datatype, &A_test, m, n);
-    copy_matrix(datatype, "full", m, n, A, cs_A, A_test, cs_A);
+    create_matrix(datatype, &A_test, lda, n);
+    copy_matrix(datatype, "full", m, n, A, lda, A_test, lda);
 
-    prepare_gerq2_run(m, n, A_test, T, datatype, n_repeats, &time_min);
+    prepare_gerq2_run(m, n, A_test, lda, T, datatype, n_repeats, &time_min);
 
     // execution time
     *t = time_min;
@@ -161,7 +160,7 @@ void fla_test_gerq2_experiment(test_params_t *params,
         *perf *= 4.0;
 
     // output validation
-    validate_gerq2(m, n, A, A_test, T, datatype, residual);
+    validate_gerq2(m, n, A, A_test, lda, T, datatype, residual);
 
     // Free up buffers
     free_matrix(A);
@@ -172,36 +171,36 @@ void fla_test_gerq2_experiment(test_params_t *params,
 
 void prepare_gerq2_run(integer m_A, integer n_A,
     void *A,
+    integer lda,
     void *T,
     integer datatype,
     integer n_repeats,
     double* time_min_)
 {
-    integer cs_A, min_A, i;
+    integer min_A, i;
     void *A_save = NULL, *T_test = NULL, *work = NULL;
     integer info = 0;
     double time_min = 1e9, exe_time;
 
-    cs_A = m_A;
     min_A = min(m_A, n_A);
 
     /* Make a copy of the input matrix A. Same input values will be passed in
        each itertaion.*/
-    create_matrix(datatype, &A_save, m_A, n_A);
-    copy_matrix(datatype, "full", m_A, n_A, A, cs_A, A_save, cs_A);
+    create_matrix(datatype, &A_save, lda, n_A);
+    copy_matrix(datatype, "full", m_A, n_A, A, lda, A_save, lda);
 
     for (i = 0; i < n_repeats; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers
            for each iteration*/
-        copy_matrix(datatype, "full", m_A, n_A, A_save, cs_A, A, cs_A);
+        copy_matrix(datatype, "full", m_A, n_A, A_save, lda, A, lda);
         create_vector(datatype, &T_test, min_A);
-        create_vector(datatype, &work, cs_A);
+        create_vector(datatype, &work, m_A);
 
         exe_time = fla_test_clock();
 
         // call to gerq2 API
-        invoke_gerq2(datatype, &m_A, &n_A, A, &cs_A, T_test, work, &info);
+        invoke_gerq2(datatype, &m_A, &n_A, A, &lda, T_test, work, &info);
 
         exe_time = fla_test_clock() - exe_time;
 

@@ -305,7 +305,7 @@ void validate_ggevx(char* balanc, char* jobvl, char* jobvr, char* sense, integer
             void *Y = NULL;
             scomplex alphar_t;
             eps = slamch_("P");
-            norm_A = clange_("1", &n, &n, A, &n, work);
+            norm_A = clange_("1", &n, &n, A, &lda, work);
             /* Test 1 */
             /* Validation for 'V' 'V' combination */
             create_vector(datatype, &VRTemp, n);
@@ -366,7 +366,7 @@ void validate_ggevx(char* balanc, char* jobvl, char* jobvr, char* sense, integer
             void *Y = NULL;
             dcomplex alphar_t;
             eps = dlamch_("P");
-            norm_A = zlange_("1", &n, &n, A, &n, work);
+            norm_A = zlange_("1", &n, &n, A, &lda, work);
             /* Test 1 */
             /* Validation for 'V' 'V' combination */
             create_vector(datatype, &VRTemp, n);

@@ -8,7 +8,7 @@
 
 /* Local prototypes.*/
 void fla_test_orgqr_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats, double* perf, double* t,double* residual);
-void prepare_orgqr_run(integer m, integer n, void *A, void *T, void* work, integer *lwork, integer datatype, integer n_repeats, double* time_min_);
+void prepare_orgqr_run(integer m, integer n, void *A, integer lda, void *T, void* work, integer *lwork, integer datatype, integer n_repeats, double* time_min_);
 void invoke_orgqr(integer datatype, integer* m, integer* n, integer *min_A, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
 
 /* Flag to indicate lwork availability status
@@ -124,7 +124,7 @@ void fla_test_orgqr_experiment(test_params_t *params,
     double* time_min,
     double* residual)
 {
-    integer m, n, cs_A;
+    integer m, n, lda;
     void *A = NULL, *A_test = NULL, *T_test = NULL;
     void *work = NULL, *work_test = NULL;
     void *Q = NULL, *R = NULL, *R_test = NULL;
@@ -133,7 +133,7 @@ void fla_test_orgqr_experiment(test_params_t *params,
     /* Get input matrix dimensions.*/
     m = p_cur;
     n = q_cur;
-    cs_A = m;
+    lda = params->lin_solver_paramslist[pci].lda;
     *time_min = 0.;
     *perf = 0.;
     *residual = params->lin_solver_paramslist[pci].solver_threshold;
@@ -141,7 +141,7 @@ void fla_test_orgqr_experiment(test_params_t *params,
     if(m >= n)
     {
         /* Create input matrix parameters */
-        create_matrix(datatype, &A, m, n);
+        create_matrix(datatype, &A, lda, n);
 
         /* create tau vector */
         create_vector(datatype, &T_test, min(m,n));
@@ -149,17 +149,17 @@ void fla_test_orgqr_experiment(test_params_t *params,
         if (g_ext_fptr != NULL)
         {
             /* Initialize input matrix with custom data */
-            init_matrix_from_file(datatype, A, m, n, cs_A, g_ext_fptr);
+            init_matrix_from_file(datatype, A, m, n, lda, g_ext_fptr);
         }
         else
         {
             /* Initialize input matrix with random numbers */
-            rand_matrix(datatype, A, m, n, cs_A);
+            rand_matrix(datatype, A, m, n, lda);
         }
 
         /* Make a copy of input matrix A. This is required to validate the API functionality.*/
-        create_matrix(datatype, &A_test, m, n);
-        copy_matrix(datatype, "full", m, n, A, cs_A, A_test, cs_A);
+        create_matrix(datatype, &A_test, lda, n);
+        copy_matrix(datatype, "full", m, n, A, lda, A_test, lda);
 
         /* create Q matrix to check orthogonality */
         create_matrix(datatype, &Q, m, n);
@@ -173,7 +173,7 @@ void fla_test_orgqr_experiment(test_params_t *params,
             create_vector(datatype, &work, 1);
 
             /* call to  geqrf API */
-            invoke_geqrf(datatype, &m, &n, NULL, &cs_A, NULL, work, &lwork, &info);
+            invoke_geqrf(datatype, &m, &n, NULL, &lda, NULL, work, &lwork, &info);
 
             /* Get work size */
             lwork = get_work_value(datatype, work);
@@ -192,13 +192,13 @@ void fla_test_orgqr_experiment(test_params_t *params,
         create_vector(datatype, &work_test, lwork);
 
         /* QR Factorisation on matrix A to generate Q and R */
-        invoke_geqrf(datatype, &m, &n, A_test, &cs_A, T_test, work, &lwork, &info);
+        invoke_geqrf(datatype, &m, &n, A_test, &lda, T_test, work, &lwork, &info);
 
         if(m == n)
         {
             create_matrix(datatype, &R, m, n);
-            reset_matrix(datatype, m, n, R, cs_A);
-            copy_matrix(datatype, "Upper", m, n, A_test, m, R, m);
+            reset_matrix(datatype, m, n, R, m);
+            copy_matrix(datatype, "Upper", m, n, A_test, lda, R, m);
         }
         else
         {
@@ -209,10 +209,10 @@ void fla_test_orgqr_experiment(test_params_t *params,
             copy_submatrix(datatype, A_test, m, n, R_test, n, n, 0, 0);
             copy_matrix(datatype, "Upper", n, n, R_test, n, R, n);
         } 
-        copy_matrix(datatype, "full", m, n, A_test, m, Q, m);
+        copy_matrix(datatype, "full", m, n, A_test, lda, Q, m);
 
         /*invoke orgqr API */
-        prepare_orgqr_run(m, n, Q, T_test, work_test, &lwork, datatype, n_repeats, time_min);
+        prepare_orgqr_run(m, n, Q, lda, T_test, work_test, &lwork, datatype, n_repeats, time_min);
 
         /* performance computation
            (2/3)*n2*(3m - n) */
@@ -221,7 +221,7 @@ void fla_test_orgqr_experiment(test_params_t *params,
             *perf *= 4.0;
 
         /* output validation */
-        validate_orgqr(m, n, A, Q, R, work_test, datatype, residual);
+        validate_orgqr(m, n, A, lda, Q, R, work_test, datatype, residual);
 
         /* Free up the buffers */
         free_matrix(A);
@@ -238,6 +238,7 @@ void fla_test_orgqr_experiment(test_params_t *params,
 
 void prepare_orgqr_run(integer m, integer n,
     void* A,
+    integer lda,
     void* T,
     void* work,
     integer *lwork,
@@ -245,28 +246,26 @@ void prepare_orgqr_run(integer m, integer n,
     integer n_repeats,
     double* time_min_)
 {
-    integer cs_A, i;
+    integer i;
     void *A_save = NULL;
     integer info = 0;
     double time_min = 1e9, exe_time;
 
-    cs_A = m;
-
     /* Make a copy of the input matrix A. Same input values will be passed in
        each itertaion.*/
-    create_matrix(datatype, &A_save, m, n);
-    copy_matrix(datatype, "full", m, n, A, cs_A, A_save, cs_A);
+    create_matrix(datatype, &A_save, lda, n);
+    copy_matrix(datatype, "full", m, n, A, lda, A_save, lda);
 
     for (i = 0; i < n_repeats; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers
            for each iteration*/
-        copy_matrix(datatype, "full", m, n, A_save, cs_A, A, cs_A);
+        copy_matrix(datatype, "full", m, n, A_save, lda, A, lda);
 
         exe_time = fla_test_clock();
 
         /* Call to  orgqr API */
-        invoke_orgqr(datatype, &m, &n, &n, A, &cs_A, T, work, lwork, &info);
+        invoke_orgqr(datatype, &m, &n, &n, A, &lda, T, work, lwork, &info);
 
         exe_time = fla_test_clock() - exe_time;
 
@@ -287,25 +286,25 @@ void invoke_orgqr(integer datatype, integer* m, integer* n, integer *min_A, void
     {
         case FLOAT:
         {
-            sorgqr_(m, n, n, a, m, tau, work, lwork, info);
+            sorgqr_(m, n, n, a, lda, tau, work, lwork, info);
             break;
         }
 
         case DOUBLE:
         {
-            dorgqr_(m, n, n, a, m, tau, work, lwork, info);
+            dorgqr_(m, n, n, a, lda, tau, work, lwork, info);
             break;
         }
 
         case COMPLEX:
         {
-            cungqr_(m, n, n, a, m, tau, work, lwork, info);
+            cungqr_(m, n, n, a, lda, tau, work, lwork, info);
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            zungqr_(m, n, n, a, m, tau, work, lwork, info);
+            zungqr_(m, n, n, a, lda, tau, work, lwork, info);
             break;
         }
     }

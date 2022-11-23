@@ -948,35 +948,28 @@ void diagonalize_vector(integer datatype, void* s, void* sigma, integer m, integ
 /* Generate random Hermitian matrix */
 void rand_hermitian_matrix(integer datatype, integer n, void** A, integer lda)
 {
-    void *B = NULL, *Herm = NULL;
+    void *B = NULL;
 
     create_matrix(datatype, &B, n, n);
-    create_matrix(datatype, &Herm, n, n);
-
     reset_matrix(datatype, n, n, B, n);
-    reset_matrix(datatype, n, n, Herm, n);
-
     rand_matrix(datatype, B, n, n, n);
 
     switch(datatype)
     {
         case COMPLEX:
         {
-            cgemm_("N", "C", &n, &n, &n, &c_one, B, &n, B, &n, &c_zero, Herm, &n);
+            cgemm_("N", "C", &n, &n, &n, &c_one, B, &n, B, &n, &c_zero, *A, &lda);
             break;
         }
         case DOUBLE_COMPLEX:
         {
-            zgemm_("N", "C", &n, &n, &n, &z_one, B, &n, B, &n, &z_zero, Herm, &n);
+            zgemm_("N", "C", &n, &n, &n, &z_one, B, &n, B, &n, &z_zero, *A, &lda);
             break;
         }
     }
-    copy_matrix(datatype, "full", n, n, Herm, lda, *A, lda);
     free_matrix(B);
-    free_matrix(Herm);
     return;
 }
-
 /* block diagonal matrix is required for computing eigen decomposition of non symmetric matrix. 
    W is a block diagonal matrix, with a 1x1 block for each
    real eigenvalue and a 2x2 block for each complex conjugate
@@ -1036,7 +1029,7 @@ void create_block_diagonal_matrix(integer datatype,void* wr, void* wi, void* lam
     }
 }
 
-double check_orthogonality(integer datatype, void *A, integer m, integer n)
+double check_orthogonality(integer datatype, void *A, integer m, integer n, integer lda)
 {
     void *I = NULL, *work = NULL;
     double resid = 0.;
@@ -1061,7 +1054,7 @@ double check_orthogonality(integer datatype, void *A, integer m, integer n)
             eps = slamch_("P");
 
             slaset_("full", &k, &k, &s_zero, &s_one, I, &k);
-            sgemm_("T", "N", &k, &k, &m, &s_one, A, &m, A, &m, &s_n_one, I, &k);
+            sgemm_("T", "N", &k, &k, &m, &s_one, A, &lda, A, &lda, &s_n_one, I, &k);
             norm = slange_("1", &k, &k, I, &k, work);
             resid = (double)(norm / (eps * (float)k));
             break;
@@ -1072,7 +1065,7 @@ double check_orthogonality(integer datatype, void *A, integer m, integer n)
             eps = dlamch_("P");
 
             dlaset_("full", &k, &k, &d_zero, &d_one, I, &k);
-            dgemm_("T", "N", &k, &k, &m, &d_one, A, &m, A, &m, &d_n_one, I, &k);
+            dgemm_("T", "N", &k, &k, &m, &d_one, A, &lda, A, &lda, &d_n_one, I, &k);
             norm = dlange_("1", &k, &k, I, &k, work);
             resid = (double)(norm / (eps * (float)k));
             break;
@@ -1083,7 +1076,7 @@ double check_orthogonality(integer datatype, void *A, integer m, integer n)
             eps = slamch_("P");
 
             claset_("full", &k, &k, &c_zero, &c_one, I, &k);
-            cgemm_("C", "N", &k, &k, &m, &c_one, A, &m, A, &m, &c_n_one, I, &k);
+            cgemm_("C", "N", &k, &k, &m, &c_one, A, &lda, A, &lda, &c_n_one, I, &k);
             norm = clange_("1", &k, &k, I, &k, work);
             resid = (double)(norm / (eps * (float)k));
             break;
@@ -1094,7 +1087,7 @@ double check_orthogonality(integer datatype, void *A, integer m, integer n)
             eps = dlamch_("P");
 
             zlaset_("full", &k, &k, &z_zero, &z_one, I, &k);
-            zgemm_("C", "N", &k, &k, &m, &z_one, A, &m, A, &m, &z_n_one, I, &k);
+            zgemm_("C", "N", &k, &k, &m, &z_one, A, &lda, A, &lda, &z_n_one, I, &k);
             norm = zlange_("1", &k, &k, I, &k, work);
             resid = (double)(norm / (eps * (float)k));
             break;
@@ -1188,7 +1181,7 @@ void scgemv(char TRANS, integer real_alpha, integer m, integer n, scomplex* alph
     }
     else
     {
-        copy_matrix(FLOAT, "full", n, n, a, n, A, n);
+        copy_matrix(FLOAT, "full", n, n, a, lda, A, lda);
     }
 
     if (real_alpha)
@@ -1816,7 +1809,7 @@ void init_matrix_from_file(integer datatype, void* A, integer m, integer n, inte
 /* Reading vector input data from a file */
 void init_vector_from_file(integer datatype, void* A, integer m, integer inc, FILE* fptr)
 {
-    int i, j;
+    int i;
 
     switch (datatype)
     {

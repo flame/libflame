@@ -9,7 +9,7 @@
 
 /* Local prototypes */
 void fla_test_gesvd_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci, integer n_repeats, double* perf, double* t, double* residual);
-void prepare_gesvd_run(char *jobu, char *jobvt, integer m_A, integer n_A, void *A, void *s, void *U, void *V, integer datatype, integer n_repeats, double* time_min_);
+void prepare_gesvd_run(char *jobu, char *jobvt, integer m_A, integer n_A, void *A, integer lda, void *s, void *U, integer ldu, void *V, integer ldvt, integer datatype, integer n_repeats, double* time_min_);
 void invoke_gesvd(integer datatype, char* jobu, char *jobvt, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, void* rwork, integer* iwork, integer* info);
 
 /* Flag to indicate lwork availability status
@@ -116,7 +116,7 @@ void fla_test_gesvd_experiment(test_params_t *params,
     double *time_min,
     double* residual)
 {
-    integer m, n, cs_A;
+    integer m, n, lda, ldu, ldvt;
     char jobu, jobvt;
     void *A = NULL, *U = NULL, *V = NULL, *s = NULL, *A_test = NULL;
     *residual = params->svd_paramslist[pci].svd_threshold;
@@ -136,22 +136,24 @@ void fla_test_gesvd_experiment(test_params_t *params,
            n = q_cur;
     }
 
-    cs_A = m;
+    lda = params->svd_paramslist[pci].lda;
+    ldu = params->svd_paramslist[pci].ldu;
+    ldvt = params->svd_paramslist[pci].ldvt;
 
     /* Create input matrix parameters. */
-    create_matrix(datatype, &A, m, n);
-    create_matrix(datatype, &U, m, m);
-    create_matrix(datatype, &V, n, n);
+    create_matrix(datatype, &A, lda, n);
+    create_matrix(datatype, &U, ldu, m);
+    create_matrix(datatype, &V, ldvt, n);
     create_realtype_vector(datatype, &s, min(m, n));
 
     /* Initialize input matrix A with random numbers. */
-    rand_matrix(datatype, A, m, n, cs_A);
+    rand_matrix(datatype, A, m, n, lda);
 
     /* Make a copy of input matrix A. This is required to validate the API functionality. */
-    create_matrix(datatype, &A_test, m, n);
-    copy_matrix(datatype, "full", m, n, A, cs_A, A_test, cs_A);
+    create_matrix(datatype, &A_test, lda, n);
+    copy_matrix(datatype, "full", m, n, A, lda, A_test, lda);
 
-    prepare_gesvd_run(&jobu, &jobvt, m, n, A_test, s, U, V, datatype, n_repeats, time_min);
+    prepare_gesvd_run(&jobu, &jobvt, m, n, A_test, lda, s, U, ldu, V, ldvt, datatype, n_repeats, time_min);
 
     /* Performance Computation
      * Singular values only, 4mn^2 - 4n^3/3 flops
@@ -176,7 +178,7 @@ void fla_test_gesvd_experiment(test_params_t *params,
 
     /* output validation */
     if(jobu == 'A' && jobvt == 'A')
-           validate_gesvd(&jobu, &jobvt, m, n, A, A_test, s, U, V, datatype, residual); 
+           validate_gesvd(&jobu, &jobvt, m, n, A, A_test, lda, s, U, ldu, V, ldvt, datatype, residual); 
 
     /* Free up the buffers */
     free_matrix(A);
@@ -191,14 +193,16 @@ void fla_test_gesvd_experiment(test_params_t *params,
 void prepare_gesvd_run(char *jobu, char *jobvt,
     integer m_A, integer n_A,
     void *A,
+    integer lda,
     void *s,
     void *U,
+    integer ldu,
     void *V,
+    integer ldvt,
     integer datatype,
     integer n_repeats,
     double* time_min_)
 {
-    integer cs_A, cs_U, cs_V;
     integer min_m_n, max_m_n;
     void *A_save, *s_test;
     void *work, *iwork, *rwork;
@@ -208,17 +212,13 @@ void prepare_gesvd_run(char *jobu, char *jobvt,
     integer info = 0;
     double time_min = 1e9, exe_time;
 
-
-    cs_A = m_A;
-    cs_U = m_A;
-    cs_V = n_A;
     min_m_n = min(m_A, n_A);
     max_m_n = max(m_A, n_A);
 
     /* Make a copy of the input matrix A. Same input values will be passed in
        each itertaion.*/
-    create_matrix(datatype, &A_save, m_A, n_A);
-    copy_matrix(datatype, "full", m_A, n_A, A, m_A, A_save, m_A);
+    create_matrix(datatype, &A_save, lda, n_A);
+    copy_matrix(datatype, "full", m_A, n_A, A, lda, A_save, lda);
 
     /* Get rwork and iwork array size since it is not depedent on internal blocks*/
     lrwork = max( (5 * min_m_n * min_m_n + 5 * min_m_n) , ( 2 * max_m_n * min_m_n + 2 * min_m_n * min_m_n + min_m_n));
@@ -232,7 +232,7 @@ void prepare_gesvd_run(char *jobu, char *jobvt,
         create_vector(datatype, &work, 1);
 
         /* call gesvd API */
-        invoke_gesvd(datatype, jobu, jobvt, &m_A, &n_A, NULL, &cs_A, NULL, NULL, &cs_U, NULL, &cs_V, work, &lwork, NULL, NULL, &info);
+        invoke_gesvd(datatype, jobu, jobvt, &m_A, &n_A, NULL, &lda, NULL, NULL, &ldu, NULL, &ldvt, work, &lwork, NULL, NULL, &info);
 
         /* Get the work size */
         lwork = get_work_value( datatype, work );
@@ -250,10 +250,10 @@ void prepare_gesvd_run(char *jobu, char *jobvt,
     {
         /* Restore input matrix A value and allocate memory to output buffers
            for each iteration*/
-        copy_matrix(datatype, "full", m_A, n_A, A_save, m_A, A, m_A);
+        copy_matrix(datatype, "full", m_A, n_A, A_save, lda, A, lda);
 
-        create_matrix(datatype, &U_test, m_A, m_A);
-        create_matrix(datatype, &V_test, n_A, n_A);
+        create_matrix(datatype, &U_test, ldu, m_A);
+        create_matrix(datatype, &V_test, ldvt, n_A);
         create_realtype_vector(datatype, &s_test, min_m_n);
         create_vector(datatype, &work, lwork);
         create_vector(INTEGER, &iwork, liwork);
@@ -267,7 +267,7 @@ void prepare_gesvd_run(char *jobu, char *jobvt,
         exe_time = fla_test_clock();
 
         /* call to API */
-        invoke_gesvd(datatype, jobu, jobvt, &m_A, &n_A, A, &cs_A, s_test, U_test, &cs_U, V_test, &cs_V, work, &lwork, rwork, iwork, &info);
+        invoke_gesvd(datatype, jobu, jobvt, &m_A, &n_A, A, &lda, s_test, U_test, &ldu, V_test, &ldvt, work, &lwork, rwork, iwork, &info);
 
         exe_time = fla_test_clock() - exe_time;
 
@@ -275,8 +275,8 @@ void prepare_gesvd_run(char *jobu, char *jobvt,
         time_min = min(time_min, exe_time);
 
         /* Make a copy of the output buffers. This is required to validate the API functionality. */
-        copy_matrix(datatype, "full", m_A, m_A, U_test, m_A, U, m_A);
-        copy_matrix(datatype, "full", n_A, n_A, V_test, n_A, V, n_A);
+        copy_matrix(datatype, "full", m_A, m_A, U_test, ldu, U, ldu);
+        copy_matrix(datatype, "full", n_A, n_A, V_test, ldvt, V, ldvt);
         copy_realtype_vector(datatype, min_m_n, s_test, 1, s, 1);
 
         /* Free up the output buffers */

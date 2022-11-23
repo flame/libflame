@@ -12,33 +12,33 @@ void validate_geqrf(integer m_A,
     integer n_A,
     void *A,
     void *A_test,
+    integer lda,
     void *T_test,
     integer datatype,
     double* residual)
 {
     void *Q = NULL, *R = NULL, *work = NULL;
-    integer cs_A, min_A;
+    integer min_A;
     integer lwork = -1, tinfo;
 
-    cs_A = m_A;
     min_A = min(m_A, n_A);
 
     // Create Q and R matrices.
     create_matrix(datatype, &Q, m_A, m_A);
     create_matrix(datatype, &R, m_A, n_A);
     reset_matrix(datatype, m_A, m_A, Q, m_A);
-    reset_matrix(datatype, m_A, n_A, R, cs_A);
+    reset_matrix(datatype, m_A, n_A, R, m_A);
 
     // Extract R matrix and elementary reflectors from the input/output matrix parameter A_test.
     if(m_A <= n_A)
     {
-        copy_matrix(datatype, "full", m_A, m_A, A_test, m_A, Q, m_A);
-        copy_matrix(datatype, "Upper", m_A, n_A, A_test, m_A, R, m_A);
+        copy_matrix(datatype, "full", m_A, m_A, A_test, lda, Q, m_A);
+        copy_matrix(datatype, "Upper", m_A, n_A, A_test, lda, R, m_A);
     }
     else
     {
-        copy_matrix(datatype, "full", m_A, n_A, get_m_ptr(datatype, A_test, 1, 0, m_A), m_A, get_m_ptr(datatype, Q, 1, 0, m_A), m_A);
-        copy_matrix(datatype, "Upper", n_A, n_A, A_test, m_A, R, m_A);
+        copy_matrix(datatype, "full", m_A, n_A, get_m_ptr(datatype, A_test, 1, 0, lda), lda, get_m_ptr(datatype, Q, 1, 0, m_A), m_A);
+        copy_matrix(datatype, "Upper", n_A, n_A, A_test, lda, R, m_A);
     }
 
     switch( datatype )
@@ -52,16 +52,16 @@ void validate_geqrf(integer m_A,
                factor values*/
             sorgqr_(&m_A, &m_A, &min_A, NULL, &m_A, NULL, &twork, &lwork, &tinfo);
 
-            lwork = (integer)twork;
+            lwork = twork;
             create_vector(datatype,  &work, lwork);
 
             sorgqr_(&m_A, &m_A, &min_A, Q, &m_A, T_test, work, &lwork, &tinfo);
 
             /* Test 1
                compute norm(R - Q'*A) / (V * norm(A) * EPS)*/
-            sgemm_("T", "N", &m_A, &n_A, &m_A, &s_n_one, Q, &m_A, A, &m_A, &s_one, R, &m_A);
+            sgemm_("T", "N", &m_A, &n_A, &m_A, &s_n_one, Q, &m_A, A, &lda, &s_one, R, &m_A);
 
-            norm_A = slange_("1", &m_A, &n_A, A, &m_A, work);
+            norm_A = slange_("1", &m_A, &n_A, A, &lda, work);
             norm = slange_("1", &m_A, &n_A, R, &m_A, work);
 
             eps = slamch_("P");
@@ -70,7 +70,7 @@ void validate_geqrf(integer m_A,
 
             /* Test 2
                compute norm(I - Q*Q') / (N * EPS)*/
-            resid2 = (float)check_orthogonality(datatype, Q, m_A, m_A);
+            resid2 = (float)check_orthogonality(datatype, Q, m_A, m_A, m_A);
 
             *residual = (double)max(resid1, resid2);
             break;
@@ -84,16 +84,16 @@ void validate_geqrf(integer m_A,
                factor values*/
             dorgqr_(&m_A, &m_A, &min_A, NULL, &m_A, NULL, &twork, &lwork, &tinfo);
 
-            lwork = (integer)twork;
+            lwork = twork;
             create_vector(datatype,  &work, lwork);
 
             dorgqr_(&m_A, &m_A, &min_A, Q, &m_A, T_test, work, &lwork, &tinfo);
 
             /* Test 1
                compute norm(R - Q'*A) / (V * norm(A) * EPS)*/
-            dgemm_("T", "N", &m_A, &n_A, &m_A, &d_n_one, Q, &m_A, A, &m_A, &d_one, R, &m_A);
+            dgemm_("T", "N", &m_A, &n_A, &m_A, &d_n_one, Q, &m_A, A, &lda, &d_one, R, &m_A);
 
-            norm_A = dlange_("1", &m_A, &n_A, A, &m_A, work);
+            norm_A = dlange_("1", &m_A, &n_A, A, &lda, work);
             norm = dlange_("1", &m_A, &n_A, R, &m_A, work);
 
             eps = dlamch_("P");
@@ -102,7 +102,7 @@ void validate_geqrf(integer m_A,
 
             /* Test 2
                compute norm(I - Q*Q') / (N * EPS)*/
-            resid2 = check_orthogonality(datatype, Q, m_A, m_A);
+            resid2 = check_orthogonality(datatype, Q, m_A, m_A, m_A);
 
             *residual = (double)max(resid1, resid2);
             break;
@@ -116,16 +116,16 @@ void validate_geqrf(integer m_A,
                factor values*/
             cungqr_(&m_A, &m_A, &min_A, NULL, &m_A, NULL, &twork, &lwork, &tinfo);
 
-            lwork = (integer)twork.real;
+            lwork = twork.real;
             create_vector(datatype,  &work, lwork);
 
             cungqr_(&m_A, &m_A, &min_A, Q, &m_A, T_test, work, &lwork, &tinfo);
 
             /* Test 1
                compute norm(R - Q'*A) / (V * norm(A) * EPS)*/
-            cgemm_("C", "N", &m_A, &n_A, &m_A, &c_n_one, Q, &m_A, A, &m_A, &c_one, R, &m_A);
+            cgemm_("C", "N", &m_A, &n_A, &m_A, &c_n_one, Q, &m_A, A, &lda, &c_one, R, &m_A);
 
-            norm_A = clange_("1", &m_A, &n_A, A, &m_A, work);
+            norm_A = clange_("1", &m_A, &n_A, A, &lda, work);
             norm = clange_("1", &m_A, &n_A, R, &m_A, work);
 
             eps = slamch_("P");
@@ -134,7 +134,7 @@ void validate_geqrf(integer m_A,
 
             /* Test 2
                compute norm(I - Q*Q') / (N * EPS)*/
-            resid2 = (float)check_orthogonality(datatype, Q, m_A, m_A);
+            resid2 = (float)check_orthogonality(datatype, Q, m_A, m_A, m_A);
 
             *residual = (double)max(resid1, resid2);
             break;
@@ -148,16 +148,16 @@ void validate_geqrf(integer m_A,
                factor values*/
             zungqr_(&m_A, &m_A, &min_A, NULL, &m_A, NULL, &twork, &lwork, &tinfo);
 
-            lwork = (integer)twork.real;
+            lwork = twork.real;
             create_vector(datatype, &work, lwork);
 
             zungqr_(&m_A, &m_A, &min_A, Q, &m_A, T_test, work, &lwork, &tinfo);
 
             /* Test 1
                compute norm(R - Q'*A) / (V * norm(A) * EPS)*/
-            zgemm_("C", "N", &m_A, &n_A, &m_A, &z_n_one, Q, &m_A, A, &m_A, &z_one, R, &m_A);
+            zgemm_("C", "N", &m_A, &n_A, &m_A, &z_n_one, Q, &m_A, A, &lda, &z_one, R, &m_A);
 
-            norm_A = zlange_("1", &m_A, &n_A, A, &m_A, work);
+            norm_A = zlange_("1", &m_A, &n_A, A, &lda, work);
             norm = zlange_("1", &m_A, &n_A, R, &m_A, work);
 
             eps = dlamch_("P");
@@ -166,7 +166,7 @@ void validate_geqrf(integer m_A,
 
             /* Test 2
                compute norm(I - Q*Q') / (N * EPS)*/
-            resid2 = check_orthogonality(datatype, Q, m_A, m_A);
+            resid2 = check_orthogonality(datatype, Q, m_A, m_A, m_A);
 
             *residual = (double)max(resid1, resid2);
             break;

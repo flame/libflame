@@ -7,7 +7,7 @@
 /* Local prototypes */
 void fla_test_geqp3_experiment(test_params_t *params, integer datatype, integer p_cur, integer q_cur,
                                integer pci, integer n_repeats, double* perf, double* t,double* residual);
-void prepare_geqp3_run(integer m_A, integer n_A, void *A, integer *jpvt, void *T, integer datatype,
+void prepare_geqp3_run(integer m_A, integer n_A, void *A, integer lda, integer *jpvt, void *T, integer datatype,
                        integer n_repeats, double* time_min_);
 void invoke_geqp3(integer datatype, integer* m, integer* n, void* a, integer* lda, integer *jpvt,
                   void* tau, void* work, integer* lwork, void* rwork, integer* info);
@@ -33,7 +33,7 @@ void fla_test_geqp3_experiment(test_params_t *params,
                                double* t,
                                double* residual)
 {
-    integer m, n, cs_A;
+    integer m, n, lda;
     void *A = NULL, *A_test = NULL, *T = NULL;
     integer *jpvt;
     double time_min = 1e9;
@@ -42,23 +42,23 @@ void fla_test_geqp3_experiment(test_params_t *params,
     /* Get input matrix dimensions */
     m = p_cur;
     n = q_cur;
-    cs_A = m;
+    lda = params->lin_solver_paramslist[pci].lda;
 
     /* Create input matrix parameters */
-    create_matrix(datatype, &A, m, n);
+    create_matrix(datatype, &A, lda, n);
     create_vector(datatype, &T, min(m,n));
 
     /* Initialize input matrix A with random numbers */
-    rand_matrix(datatype, A, m, n, cs_A);
+    rand_matrix(datatype, A, m, n, lda);
 
     /* Make a copy of input matrix A,required for validation. */
-    create_matrix(datatype, &A_test, m, n);
-    copy_matrix(datatype, "full", m, n, A, cs_A, A_test, cs_A);
+    create_matrix(datatype, &A_test, lda, n);
+    copy_matrix(datatype, "full", m, n, A, lda, A_test, lda);
 
     /* Create pivot array */
     create_vector(INTEGER, (void **) &jpvt, n);
 
-    prepare_geqp3_run(m, n, A_test, jpvt, T, datatype, n_repeats, &time_min);
+    prepare_geqp3_run(m, n, A_test, lda, jpvt, T, datatype, n_repeats, &time_min);
 
     /* execution time */
     *t = time_min;
@@ -74,7 +74,7 @@ void fla_test_geqp3_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* output validation */
-    validate_geqp3(m, n, A, A_test, jpvt, T, datatype, residual);
+    validate_geqp3(m, n, A, A_test, lda, jpvt, T, datatype, residual);
 
 
     /* Free up the buffers */
@@ -87,25 +87,25 @@ void fla_test_geqp3_experiment(test_params_t *params,
 
 void prepare_geqp3_run(integer m_A, integer n_A,
     void *A,
+    integer lda,
     integer *jpvt,
     void *T,
     integer datatype,
     integer n_repeats,
     double* time_min_)
 {
-    integer cs_A, min_A, i;
+    integer min_A, i;
     void *A_save = NULL, *T_test = NULL, *work = NULL;
     void *rwork;
     integer lwork = -1, info = 0;
     double time_min = 1e9, exe_time;
 
-    cs_A = m_A;
     min_A = min(m_A, n_A);
 
     /* Make a copy of the input matrix A. Same input values will be passed in
        each itertaion. */
-    create_matrix(datatype, &A_save, m_A, n_A);
-    copy_matrix(datatype, "full", m_A, n_A, A, cs_A, A_save, cs_A);
+    create_matrix(datatype, &A_save, lda, n_A);
+    copy_matrix(datatype, "full", m_A, n_A, A, lda, A_save, lda);
 
     /* Make a workspace query the first time. This will provide us with
        and ideal workspace size based on internal block size. */
@@ -116,7 +116,7 @@ void prepare_geqp3_run(integer m_A, integer n_A,
         create_realtype_vector(datatype, &rwork, 2 * n_A);
 
     /* call to  geqp3 API */
-    invoke_geqp3(datatype, &m_A, &n_A, NULL, &cs_A, NULL, NULL, work, &lwork, rwork, &info);
+    invoke_geqp3(datatype, &m_A, &n_A, NULL, &lda, NULL, NULL, work, &lwork, rwork, &info);
 
     /* Get work size */
     lwork = get_work_value( datatype, work );
@@ -129,7 +129,7 @@ void prepare_geqp3_run(integer m_A, integer n_A,
     {
         /* Restore input matrix A value and allocate memory to output buffers
            for each iteration */
-        copy_matrix(datatype, "full", m_A, n_A, A_save, cs_A, A, cs_A);
+        copy_matrix(datatype, "full", m_A, n_A, A_save, lda, A, lda);
 
         /* Reset pivot buffer */
         reset_vector(INTEGER, jpvt, n_A, 1);
@@ -143,7 +143,7 @@ void prepare_geqp3_run(integer m_A, integer n_A,
         exe_time = fla_test_clock();
 
         /* Call to  gerqf API */
-        invoke_geqp3(datatype, &m_A, &n_A, A, &cs_A, jpvt, T_test, work, &lwork, rwork, &info);
+        invoke_geqp3(datatype, &m_A, &n_A, A, &lda, jpvt, T_test, work, &lwork, rwork, &info);
 
         exe_time = fla_test_clock() - exe_time;
 
@@ -154,7 +154,7 @@ void prepare_geqp3_run(integer m_A, integer n_A,
         copy_vector(datatype, min_A, T_test, 1, T, 1);
 
         /* Free up the output buffers */
-        free_matrix(work);
+        free_vector(work);
         free_vector(T_test);
     }
 

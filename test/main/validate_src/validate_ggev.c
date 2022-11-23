@@ -8,12 +8,10 @@
 
 #include "test_common.h"
 
-void validate_ggev(char* jobvl, char* jobvr, integer n, void* A, void* B, void* alpha, void* alphar, void* alphai, void* beta, void* VL, integer ldvl, void* VR, integer ldvr, integer datatype, double *residual)
+void validate_ggev(char* jobvl, char* jobvr, integer n, void* A, integer lda, void* B, integer ldb, void* alpha, void* alphar, void* alphai, void* beta, void* VL, integer ldvl, void* VR, integer ldvr, integer datatype, double *residual)
 {
     integer i, j;
     void *work = NULL;
-    integer lda, ldb;
-    lda = ldb = n;
 
     switch (datatype)
     {
@@ -26,7 +24,7 @@ void validate_ggev(char* jobvl, char* jobvr, integer n, void* A, void* B, void* 
             create_vector(datatype, &Y, n);
             create_vector(COMPLEX, &YC, n);
             eps = slamch_("P");
-            norm_A = slange_("1", &n, &n, A, &n, work);
+            norm_A = slange_("1", &n, &n, A, &lda, work);
             /* Test 1 */
             /* Validation for 'V' 'V' combination */
             if (*jobvr == 'V')
@@ -47,7 +45,7 @@ void validate_ggev(char* jobvl, char* jobvr, integer n, void* A, void* B, void* 
                         alphac.real = ((float*)beta)[i];
                         alphac.imag = 0;
                         /* beta * A * VR */
-                        scgemv('N',0, n, n, &alphac, A, ldb, VRC, i_one, s_zero, YC, i_one);
+                        scgemv('N',0, n, n, &alphac, A, lda, VRC, i_one, s_zero, YC, i_one);
                         alphac.real = ((float*)alphar)[i];
                         alphac.imag = ((float*)alphai)[i];
                         /* alpha*B*vr(i) - beta*a*vr(i) */
@@ -63,7 +61,7 @@ void validate_ggev(char* jobvl, char* jobvr, integer n, void* A, void* B, void* 
                             ((scomplex*)VRC)[j].imag = -((float*)VR)[(i + 1) * ldvr + j];
                         }
                         /* beta * A * VR */
-                        scgemv('N', 0, n, n, &alphac, A, ldb, VRC, i_one, s_zero, YC, i_one);
+                        scgemv('N', 0, n, n, &alphac, A, lda, VRC, i_one, s_zero, YC, i_one);
                         alphac.real = ((float*)alphar)[i + 1];
                         alphac.imag = ((float*)alphai)[i + 1];
                         /* alpha*B*vr(i) - beta*a*vr(i) */
@@ -76,7 +74,7 @@ void validate_ggev(char* jobvl, char* jobvr, integer n, void* A, void* B, void* 
                         reset_matrix(FLOAT, n, 1, Y, lda);
                         for (j = 0; j < n; j++)
                         {
-                            ((float*)VRTemp)[j] = ((float*)VR)[i * ldvl + j];
+                            ((float*)VRTemp)[j] = ((float*)VR)[i * ldvr + j];
                         }
                         /* beta*A*vr(i) */
                         alphar_t = ((float*)beta)[i];
@@ -109,7 +107,7 @@ void validate_ggev(char* jobvl, char* jobvr, integer n, void* A, void* B, void* 
                         }
                         reset_matrix(COMPLEX, n, 1, YC, lda);
                         /* beta * A * VL */
-                        scgemv('T',0, n, n, &alphac, A, ldb, VLC, i_one, s_zero, YC, i_one);
+                        scgemv('T',0, n, n, &alphac, A, lda, VLC, i_one, s_zero, YC, i_one);
                         alphac.real = ((float*)alphar)[i];
                         alphac.imag = -((float*)alphai)[i];
                         /* alpha*B*vr(i) - beta*a*vr(i) */
@@ -125,7 +123,7 @@ void validate_ggev(char* jobvl, char* jobvr, integer n, void* A, void* B, void* 
                             ((scomplex*)VLC)[j].imag = -((float*)VL)[(i + 1) * ldvl + j];
                         }
                         /* beta * A * VR */
-                        scgemv('T', 0, n, n, &alphac, A, ldb, VLC, i_one, s_zero, YC, i_one);
+                        scgemv('T', 0, n, n, &alphac, A, lda, VLC, i_one, s_zero, YC, i_one);
                         alphac.real = ((float*)alphar)[i + 1];
                         alphac.imag = -((float*)alphai)[i + 1];
                         /* alpha*B*vr(i) - beta*a*vr(i) */
@@ -167,7 +165,7 @@ void validate_ggev(char* jobvl, char* jobvr, integer n, void* A, void* B, void* 
             create_vector(datatype, &Y, n);
             create_vector(DOUBLE_COMPLEX, &YC, n);
             eps = dlamch_("P");
-            norm_A = dlange_("1", &n, &n, A, &n, work);
+            norm_A = dlange_("1", &n, &n, A, &lda, work);
             /* Test 1 */
             /* Validation for 'V' 'V' combination */
             if (*jobvr == 'V')
@@ -307,7 +305,7 @@ void validate_ggev(char* jobvl, char* jobvr, integer n, void* A, void* B, void* 
             void *Y = NULL;
             scomplex alphar_t;
             eps = slamch_("P");
-            norm_A = clange_("1", &n, &n, A, &n, work);
+            norm_A = clange_("1", &n, &n, A, &lda, work);
             /* Test 1 */
             /* Validation for 'V' 'V' combination */
             create_vector(datatype, &VRTemp, n);
@@ -368,7 +366,7 @@ void validate_ggev(char* jobvl, char* jobvr, integer n, void* A, void* B, void* 
             void *Y = NULL;
             dcomplex alphar_t;
             eps = dlamch_("P");
-            norm_A = zlange_("1", &n, &n, A, &n, work);
+            norm_A = zlange_("1", &n, &n, A, &lda, work);
             /* Test 1 */
             /* Validation for 'V' 'V' combination */
             create_vector(datatype, &VRTemp, n);
