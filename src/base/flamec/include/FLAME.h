@@ -6,6 +6,7 @@
     BSD license, which can be found in the LICENSE file at the top-level
     directory, or at http://opensource.org/licenses/BSD-3-Clause
 
+*   Copyright (c) 2019-2022 Advanced Micro Devices, Inc.
 */
 
 #ifndef FLAME_H
@@ -46,6 +47,12 @@ extern "C" {
     #define BLIS1_FROM_LIBFLAME
   #endif
   #include "blis1.h"
+
+  // Include CPU architecture related declarations 
+  #include "cpu_features.h"
+  
+  //Include context declarations
+  #include "FLA_Context.h"
 
   // Include f2c definitions.
   #include "FLA_f2c.h"
