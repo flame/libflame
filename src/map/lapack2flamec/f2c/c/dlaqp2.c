@@ -203,30 +203,7 @@ int dlaqp2_(integer *m, integer *n, integer *offset, doublereal *a, integer *lda
         offpi = *offset + i__;
         /* Determine ith pivot column and swap if necessary. */
         i__2 = *n - i__ + 1;
-#ifdef FLA_ENABLE_AMD_OPT
-        /* Inline IDAMAX for small sizes (<= 128) */
-        integer idmax = 1;
-        if(i__2 >= c__1 && i__2 <= FLA_IDAMAX_INLINE_SMALL_THRESH)
-        {
-            doublereal dmax = f2c_abs(vn1[i__]);
-            for(integer i = i__ + 1; i<= i__2; i++ )
-            {
-                temp = f2c_abs(vn1[i]);
-                if(temp > dmax)
-                {
-                    dmax = temp;
-                    idmax = i;
-                }
-            }
-            pvt = i__ - 1 + idmax;
-        }
-        else
-        {
-            pvt = i__ - 1 + idamax_(&i__2, &vn1[i__], &c__1);
-        }
-#else
         pvt = i__ - 1 + idamax_(&i__2, &vn1[i__], &c__1);
-#endif
         if (pvt != i__)
         {
             dswap_(m, &a[pvt * a_dim1 + 1], &c__1, &a[i__ * a_dim1 + 1], & c__1);

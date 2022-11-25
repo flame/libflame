@@ -1,8 +1,6 @@
 /* ../netlib/dlarfg.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* > \brief \b DLARFG generates an elementary reflector (Householder matrix). */
-#include "immintrin.h"
-static integer c__1 = 1;
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
 /* http://www.netlib.org/lapack/explore-html/ */
@@ -179,50 +177,7 @@ L10:
         *tau = (beta - *alpha) / beta;
         i__1 = *n - 1;
         d__1 = 1. / (*alpha - beta);
-#ifdef FLA_ENABLE_AMD_OPT
-        /* Inline DSCAL for small sizes (<= 128) */
-        if(*incx == c__1 && i__1 >= c__1 && i__1 <= FLA_DSCAL_INLINE_SMALL)
-        {
-            integer i;
-            /* Load scaling factor */
-            __m256d alphav = _mm256_set1_pd(d__1);
-            for (i = 1; i <= (i__1 - 3); i += 4)
-            {
-                /* Load the input values */
-                __m256d x0v = _mm256_loadu_pd((double const *) &x[i]);
-                /* perform alpha * x  */
-                x0v = _mm256_mul_pd( alphav, x0v );
-                /* Store the output */
-                _mm256_storeu_pd((double *) &x[i], x0v);
-            }
-            /* Remainder iterations */
-            if((i__1-i) >= 2)
-            {
-                for ( ; i <= (i__1-1); i += 2 )
-                {
-                    x[i] *= d__1;
-                    x[i+1] *= d__1;
-                }
-                for ( ; i <= i__1; ++i )
-                {
-                    x[i] *= d__1;
-                }
-            }
-            else
-            {
-                for ( ; i <= i__1; ++i )
-                {
-                    x[i] *= d__1;
-                }
-            }
-        }
-        else
-        {
-           dscal_(&i__1, &d__1, &x[1], incx);
-        }
-#else
         dscal_(&i__1, &d__1, &x[1], incx);
-#endif
         /* If ALPHA is subnormal, it may lose relative accuracy */
         i__1 = knt;
         for (j = 1;
