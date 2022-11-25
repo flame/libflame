@@ -15,6 +15,8 @@ void invoke_getri(integer datatype, integer *n, void *a, integer *lda, integer *
  * > 0  - Use the value
  * */
 static integer g_lwork;
+static FILE* g_ext_fptr = NULL;
+
 void fla_test_getri(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Inverse through LU factorization";
@@ -29,7 +31,17 @@ void fla_test_getri(integer argc, char ** argv, test_params_t *params)
         fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_getri_experiment);
         tests_not_run = 0;
     }
-    else if(argc == 7)
+    if(argc == 8)
+    {
+        /* Read matrix input data from a file */
+        g_ext_fptr = fopen(argv[7], "r");
+        if (g_ext_fptr == NULL)
+        {
+            printf("\n Invalid input file argument \n");
+            return;
+        }
+    }
+    if(argc >= 7 && argc <= 8)
     {
         integer i, num_types,N;
         integer datatype, n_repeats;
@@ -94,6 +106,11 @@ void fla_test_getri(integer argc, char ** argv, test_params_t *params)
     {
         printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n\n");
     }
+    if (g_ext_fptr != NULL)
+    {
+        fclose(g_ext_fptr);
+    }
+
     return;
 }
 
@@ -120,7 +137,16 @@ void fla_test_getri_experiment(test_params_t *params,
     create_matrix(datatype, &A, m, m);
     create_vector(INTEGER, &IPIV, m);
     /* Initialize the test matrices*/
-    rand_matrix(datatype, A, m, m, cs_A);
+    if (g_ext_fptr != NULL)
+    {
+        /* Initialize input matrix with custom data */
+        init_matrix_from_file(datatype, A, m, m, cs_A, g_ext_fptr);
+    }
+    else
+    {
+        /* Initialize input matrix with random numbers */
+        rand_matrix(datatype, A, m, m, cs_A);
+    }
 
     /* Save the original matrix*/
     create_matrix(datatype, &A_test, m, m);

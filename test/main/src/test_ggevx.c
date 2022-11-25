@@ -24,7 +24,7 @@ void invoke_ggevx(integer datatype, char* balanc, char* jobvl, char* jobvr, char
  * > 0  - Use the value
  * */
 static integer g_lwork;
-FILE* g_ext_fptr = NULL;
+static FILE* g_ext_fptr = NULL;
 
 void fla_test_ggevx(integer argc, char ** argv, test_params_t *params)
 {
@@ -187,12 +187,13 @@ void fla_test_ggevx_experiment(test_params_t *params,
 
     if(g_ext_fptr != NULL)
     {
+        /* Initialize input matrix with custom data */
         init_matrix_from_file(datatype, A, n, n, lda, g_ext_fptr);
         init_matrix_from_file(datatype, B, n, n, lda, g_ext_fptr);
     }
     else
     {
-        /* Initialize input matrix A with random numbers */
+        /* Initialize input matrix with random numbers */
         rand_matrix(datatype, A, n, n, lda);
         rand_matrix(datatype, B, n, n, ldb);
     }

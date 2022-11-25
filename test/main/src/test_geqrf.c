@@ -14,6 +14,8 @@ void prepare_geqrf_run(integer m_A, integer n_A, void *A, void *T, integer datat
  * > 0  - Use the value
  * */
 static integer g_lwork;
+static FILE* g_ext_fptr = NULL;
+
 void fla_test_geqrf(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "RQ factorization";
@@ -28,7 +30,17 @@ void fla_test_geqrf(integer argc, char ** argv, test_params_t *params)
         fla_test_op_driver(front_str, RECT_INPUT, params, LIN, fla_test_geqrf_experiment);
         tests_not_run = 0;
     }
-    else if(argc == 8)
+    if(argc == 9)
+    {
+        /* Read matrix input data from a file */
+        g_ext_fptr = fopen(argv[8], "r");
+        if (g_ext_fptr == NULL)
+        {
+            printf("\n Invalid input file argument \n");
+            return;
+        }
+    }
+    if(argc >= 8 && argc <= 9)
     {
         integer i, num_types, M,N;
         integer datatype, n_repeats;
@@ -94,6 +106,11 @@ void fla_test_geqrf(integer argc, char ** argv, test_params_t *params)
     {
         printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n\n");
     }
+    if (g_ext_fptr != NULL)
+    {
+        fclose(g_ext_fptr);
+    }
+
     return;
 }
 
@@ -120,8 +137,16 @@ void fla_test_geqrf_experiment(test_params_t *params,
     create_matrix(datatype, &A, m, n);
     create_vector(datatype, &T, min(m,n));
 
-    // Initialize input matrix A with random numbers
-    rand_matrix(datatype, A, m, n, cs_A);
+    if (g_ext_fptr != NULL)
+    {
+        /* Initialize input matrix with custom data */
+        init_matrix_from_file(datatype, A, m, n, cs_A, g_ext_fptr);
+    }
+    else
+    {
+        /* Initialize input matrix with random numbers */
+        rand_matrix(datatype, A, m, n, cs_A);
+    }
 
     // Make a copy of input matrix A. This is required to validate the API functionality.
     create_matrix(datatype, &A_test, m, n);

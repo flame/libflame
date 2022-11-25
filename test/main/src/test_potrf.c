@@ -9,6 +9,7 @@
 /* Local prototypes.*/
 void fla_test_potrf_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats,double* perf, double* time_min, double* residual);
 void prepare_potrf_run(char* uplo, integer m, void *A, integer datatype, integer n_repeats, double* time_min_);
+static FILE* g_ext_fptr = NULL;
 
 void fla_test_potrf(integer argc, char ** argv, test_params_t *params)
 {
@@ -22,7 +23,17 @@ void fla_test_potrf(integer argc, char ** argv, test_params_t *params)
         fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_potrf_experiment);
         tests_not_run = 0;
     }
-    else if(argc == 7)
+    if (argc == 8)
+    {
+        /* Read matrix input data from a file */
+        g_ext_fptr = fopen(argv[7], "r");
+        if (g_ext_fptr == NULL)
+        {
+            printf("\n Invalid input file argument \n");
+            return;
+        }
+    }
+    if (argc >= 7 && argc <= 8)
     {
         integer i, num_types,N;
         integer datatype, n_repeats;
@@ -87,6 +98,10 @@ void fla_test_potrf(integer argc, char ** argv, test_params_t *params)
     {
         printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n\n");
     }
+    if (g_ext_fptr != NULL)
+    {
+        fclose(g_ext_fptr);
+    }
     return;
 }
 
@@ -110,8 +125,16 @@ void fla_test_potrf_experiment(test_params_t *params,
     /* Create input matrix parameters */
     create_matrix(datatype, &A, m, m);
 
-    /* Initialize input symmetric positive definite matrix A */
-    rand_spd_matrix(datatype, &uplo, &A, m, m);
+    if (g_ext_fptr != NULL)
+    {
+        /* Initialize input matrix with custom data */
+        init_matrix_from_file(datatype, A, m, m, m, g_ext_fptr);
+    }
+    else
+    {
+        /* Initialize input matrix with random numbers */
+        rand_spd_matrix(datatype, &uplo, &A, m, m);
+    }
 
     /* Make a copy of input matrix A. This is required to validate the API functionality */
     create_matrix(datatype, &A_test, m, m);
