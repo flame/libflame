@@ -8,6 +8,7 @@
 void fla_test_potrs_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats,double* perf, double* time_min,double* residual);
 void prepare_potrs_run(char* uplo, integer m, integer nrhs, void *A, integer datatype, void *b, integer n_repeats, double* time_min_);
 void invoke_potrs(char* uplo, integer datatype, integer* m, void* A, integer* lda, integer *nrhs, void* b, integer* info);
+static FILE* g_ext_fptr = NULL;
 
 void fla_test_potrs(integer argc, char ** argv, test_params_t *params)
 {
@@ -22,7 +23,17 @@ void fla_test_potrs(integer argc, char ** argv, test_params_t *params)
         fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_potrs_experiment);
         tests_not_run = 0;
     }
-    else if(argc == 7)
+    if (argc == 8)
+    {
+        /* Read matrix input data from a file */
+        g_ext_fptr = fopen(argv[7], "r");
+        if (g_ext_fptr == NULL)
+        {
+            printf("\n Invalid input file argument \n");
+            return;
+        }
+    }
+    if (argc >= 7 && argc <= 8)
     {
         /* Test with parameters from commandline */
         integer i, num_types, N;
@@ -88,6 +99,10 @@ void fla_test_potrs(integer argc, char ** argv, test_params_t *params)
     {
         printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n\n");
     }
+    if (g_ext_fptr != NULL)
+    {
+        fclose(g_ext_fptr);
+    }
     return;
 
 }
@@ -122,13 +137,23 @@ void fla_test_potrs_experiment(test_params_t *params,
 
     /* Initialize input symmetric positive definite matrix A */
     reset_matrix(datatype, n, n, A, n);
-    rand_spd_matrix(datatype, &uplo, &A, n, n);
+    if (g_ext_fptr != NULL)
+    {
+        /* Initialize input matrix with custom data */
+        init_matrix_from_file(datatype, A, n, n, n, g_ext_fptr);
+        init_matrix_from_file(datatype, B, n, nrhs, n, g_ext_fptr);
+    }
+    else
+    {
+        /* Initialize input matrix with random numbers */
+        rand_spd_matrix(datatype, &uplo, &A, n, n);
+        rand_matrix(datatype, B, n, nrhs, n);
+    }
     copy_matrix(datatype, "full", n, n, A, n, A_test, n);
     /* cholesky factorisation of A as input to potrs */
     invoke_potrf(&uplo, datatype, &n, A, &n, &info);
 
-    /* Generate random matrix B */
-    rand_matrix(datatype, B, n, nrhs, n);
+
     copy_matrix(datatype, "full", n, nrhs, B, n, B_test, n);
 
     /* Invoke potrs API to find x using Ax-b */

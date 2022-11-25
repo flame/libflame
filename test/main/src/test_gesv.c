@@ -9,6 +9,7 @@ void fla_test_gesv_experiment(test_params_t *params, integer  datatype, integer 
                                     integer n_repeats, double* perf, double* t, double* residual);
 void prepare_gesv_run(integer n_A, integer nrhs, void *A, void *B, integer* ipiv, integer datatype, integer n_repeats, double* time_min_);
 void invoke_gesv(integer datatype, integer *nrhs, integer *n, void *a, integer *lda, integer *ipiv, void *b, integer *ldb, integer *info);
+static FILE* g_ext_fptr = NULL;
 
 void fla_test_gesv(integer argc, char ** argv, test_params_t *params)
 {
@@ -23,7 +24,17 @@ void fla_test_gesv(integer argc, char ** argv, test_params_t *params)
         fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_gesv_experiment);
         tests_not_run = 0;
     }
-    else if(argc == 8)
+    if (argc == 9)
+    {
+        /* Read matrix input data from a file */
+        g_ext_fptr = fopen(argv[8], "r");
+        if (g_ext_fptr == NULL)
+        {
+            printf("\n Invalid input file argument \n");
+            return;
+        }
+    }
+    if (argc >= 8 && argc <= 9)
     {
         /* Test with parameters from commandline */
         integer i, num_types, N;
@@ -90,6 +101,11 @@ void fla_test_gesv(integer argc, char ** argv, test_params_t *params)
     {
         printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n\n");
     }
+    if (g_ext_fptr != NULL)
+    {
+        fclose(g_ext_fptr);
+    }
+
     return;
 }
 
@@ -120,8 +136,18 @@ void fla_test_gesv_experiment(test_params_t *params,
     create_matrix(datatype, &B, n, NRHS);
     create_matrix(datatype, &B_save, n, NRHS);
     /* Initialize the test matrices*/
-    rand_matrix(datatype, A, n, n, cs_A);
-    rand_matrix(datatype, B, n, NRHS, cs_A);
+    if (g_ext_fptr != NULL)
+    {
+        /* Initialize input matrix with custom data */
+        init_matrix_from_file(datatype, A, n, n, cs_A, g_ext_fptr);
+        init_matrix_from_file(datatype, B, n, NRHS, cs_A, g_ext_fptr);
+    }
+    else
+    {
+        /* Initialize input matrix with random numbers */
+        rand_matrix(datatype, A, n, n, cs_A);
+        rand_matrix(datatype, B, n, NRHS, cs_A);
+    }
     /* Save the original matrix*/
     copy_matrix(datatype, "full", n, n, A, cs_A, A_save, cs_A);
     copy_matrix(datatype, "full", n, NRHS, B, cs_A, B_save, cs_A);

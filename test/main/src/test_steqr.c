@@ -11,6 +11,7 @@ void fla_test_steqr_experiment(test_params_t *params, integer datatype, integer 
 integer n_repeats, double* perf, double* t, double* residual);
 void prepare_steqr_run(char* compz, integer n, void* Z, void* D, void* E, integer datatype, integer n_repeats, double* time_min_);
 void invoke_steqr(integer datatype, char* compz, integer* n, void* z, integer* ldz, void* d, void* e, void* work, integer* info);
+static FILE* g_ext_fptr = NULL;
 
 void fla_test_steqr(integer argc, char ** argv, test_params_t *params)
 {
@@ -26,7 +27,17 @@ void fla_test_steqr(integer argc, char ** argv, test_params_t *params)
         fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_SYM, fla_test_steqr_experiment);
         tests_not_run = 0;
     }
-    else if(argc == 7)
+    if (argc == 8)
+    {
+        /* Read matrix input data from a file */
+        g_ext_fptr = fopen(argv[7], "r");
+        if (g_ext_fptr == NULL)
+        {
+            printf("\n Invalid input file argument \n");
+            return;
+        }
+    }
+    if (argc >= 7 && argc <= 8)
     {
         /* Test with parameters from commandline */
         integer i, num_types, N;
@@ -92,6 +103,10 @@ void fla_test_steqr(integer argc, char ** argv, test_params_t *params)
     {
         printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n");
     }
+    if (g_ext_fptr != NULL)
+    {
+        fclose(g_ext_fptr);
+    }
     return;
 }
 
@@ -131,11 +146,23 @@ void fla_test_steqr_experiment(test_params_t *params,
     create_vector(get_realtype(datatype), &D, n);
     create_vector(get_realtype(datatype), &E, n-1);
 
-    /* input matrix Z with random symmetric numbers and D,E matrix with diagonal and subdiagonal values */
-    if(datatype == FLOAT || datatype == DOUBLE)
-        rand_sym_matrix(datatype, A, n, n, lda);
+    if (g_ext_fptr != NULL)
+    {
+        /* Initialize input matrix with custom data */
+        init_matrix_from_file(datatype, A, n, n, lda, g_ext_fptr);
+    }
     else
-        rand_hermitian_matrix(datatype, n, &A, lda);
+    {
+        /* input matrix Z with random symmetric numbers and D,E matrix with diagonal and subdiagonal values */
+        if (datatype == FLOAT || datatype == DOUBLE)
+        {
+            rand_sym_matrix(datatype, A, n, n, lda);
+        }
+        else
+        {
+            rand_hermitian_matrix(datatype, n, &A, lda);
+        }
+    }
 
     copy_matrix(datatype, "full", n, n, A, lda, Q, ldz);
     /* Make a copy of input matrix Z. This is required to validate the API functionality.*/

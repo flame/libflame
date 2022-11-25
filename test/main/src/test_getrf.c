@@ -9,6 +9,7 @@ void fla_test_getrf_experiment(test_params_t *params, integer  datatype, integer
                                     integer n_repeats, double* perf, double* t, double* residual);
 void prepare_getrf_run(integer m_A, integer n_A, void *A, integer lda, integer* ipiv, integer datatype, integer n_repeats, double* time_min_);
 void invoke_getrf(integer datatype, integer *m, integer *n, void *a, integer *lda, integer *ipiv, integer *info);
+static FILE* g_ext_fptr = NULL;
 
 void fla_test_getrf(integer argc, char ** argv, test_params_t *params)
 {
@@ -22,7 +23,17 @@ void fla_test_getrf(integer argc, char ** argv, test_params_t *params)
         fla_test_op_driver(front_str, RECT_INPUT, params, LIN, fla_test_getrf_experiment);
         tests_not_run = 0;
     }
-    else if(argc == 7)
+    if (argc == 8)
+    {
+        /* Read matrix input data from a file */
+        g_ext_fptr = fopen(argv[7], "r");
+        if (g_ext_fptr == NULL)
+        {
+            printf("\n Invalid input file argument \n");
+            return;
+        }
+    }
+    if (argc >= 7 && argc <= 8)
     {
         integer i, num_types, M,N;
         integer datatype, n_repeats;
@@ -87,6 +98,11 @@ void fla_test_getrf(integer argc, char ** argv, test_params_t *params)
     {
         printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n\n");
     }
+    if (g_ext_fptr != NULL)
+    {
+        fclose(g_ext_fptr);
+    }
+
     return;
 }
 
@@ -115,7 +131,16 @@ void fla_test_getrf_experiment(test_params_t *params,
     create_vector(INTEGER, &IPIV, min(m, n));
 
     /* Initialize the test matrices*/
-    rand_matrix(datatype, A, m, n, lda);
+    if (g_ext_fptr != NULL)
+    {
+        /* Initialize input matrix with custom data */
+        init_matrix_from_file(datatype, A, m, n, lda, g_ext_fptr);
+    }
+    else
+    {
+        /* Initialize input matrix with random numbers */
+        rand_matrix(datatype, A, m, n, lda);
+    }
 
     /* Save the original matrix*/
     create_matrix(datatype, &A_test, lda, n);

@@ -10,6 +10,8 @@ void fla_test_getrs_experiment(test_params_t *params, integer  datatype, integer
 void prepare_getrs_run(char *trans, integer m_A, integer n_A, void *A, void *B, integer* ipiv, integer datatype, integer n_repeats, double* time_min_);
 void invoke_getrs(integer datatype, char *trans, integer *nrhs, integer *n, void *a, integer *lda, integer *ipiv, void *b, integer *ldb, integer *info);
 
+static FILE* g_ext_fptr = NULL;
+
 void fla_test_getrs(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "LU factorization";
@@ -23,7 +25,17 @@ void fla_test_getrs(integer argc, char ** argv, test_params_t *params)
         fla_test_op_driver(front_str, SQUARE_INPUT, params, LIN, fla_test_getrs_experiment);
         tests_not_run = 0;
     }
-    else if(argc == 9)
+    if(argc == 10)
+    {
+        /* Read matrix input data from a file */
+        g_ext_fptr = fopen(argv[9], "r");
+        if (g_ext_fptr == NULL)
+        {
+            printf("\n Invalid input file argument \n");
+            return;
+        }
+    }
+    if(argc >= 9 && argc <= 10)
     {
         /* Test with parameters from commandline */
         integer i, num_types, N;
@@ -91,6 +103,10 @@ void fla_test_getrs(integer argc, char ** argv, test_params_t *params)
     {
         printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n\n");
     }
+    if (g_ext_fptr != NULL)
+    {
+        fclose(g_ext_fptr);
+    }
     return;
 
 }
@@ -125,8 +141,18 @@ void fla_test_getrs_experiment(test_params_t *params,
     create_matrix(datatype, &X, n, NRHS);
     create_matrix(datatype, &A_test, n, n);
     /* Initialize the test matrices*/
-    rand_matrix(datatype, A, n, n, cs_A);
-    rand_matrix(datatype, B, n, NRHS, cs_A);
+    if (g_ext_fptr != NULL)
+    {
+        /* Initialize input matrix with custom data */
+        init_matrix_from_file(datatype, A, n, n, cs_A, g_ext_fptr);
+        init_matrix_from_file(datatype, B, n, NRHS, cs_A, g_ext_fptr);
+    }
+    else
+    {
+        /* Initialize input matrix with random numbers */
+        rand_matrix(datatype, A, n, n, cs_A);
+        rand_matrix(datatype, B, n, NRHS, cs_A);
+    }
     /* Save the original matrix*/
 
     copy_matrix(datatype, "full", n, n, A, cs_A, A_test, cs_A);
