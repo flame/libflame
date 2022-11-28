@@ -35,6 +35,18 @@ int spotri_check(char *uplo, integer *n, float *a, integer *lda, integer *info)
     {
         return LAPACK_QUICK_RETURN;
     }
+    /* Check for singularity */
+    i__1 = *n;
+    for (*info = 1;
+            *info <= i__1;
+            ++(*info))
+    {
+        if (a[*info + *info * a_dim1] == 0.f)
+        {
+            return LAPACK_FAILURE;
+        }
+    }
+    *info = 0;
     return LAPACK_SUCCESS;
 }
 
