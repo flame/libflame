@@ -3,7 +3,7 @@
 int cpotri_check(char *uplo, integer *n, scomplex *a, integer *lda, integer *info)
 {
     /* System generated locals */
-    integer a_dim1, a_offset, i__1;
+    integer a_dim1, a_offset, i__1, i__2;
 
     /* Parameter adjustments */
     a_dim1 = *lda;
@@ -34,5 +34,18 @@ int cpotri_check(char *uplo, integer *n, scomplex *a, integer *lda, integer *inf
     {
         return LAPACK_QUICK_RETURN;
     }
+    /* Check for singularity */
+    i__1 = *n;
+    for (*info = 1;
+            *info <= i__1;
+            ++(*info))
+    {
+        i__2 = *info + *info * a_dim1;
+        if (a[i__2].real == 0.f && a[i__2].imag == 0.f)
+        {
+            return LAPACK_FAILURE;
+        }
+    }
+    *info = 0;
     return LAPACK_SUCCESS;
 }
