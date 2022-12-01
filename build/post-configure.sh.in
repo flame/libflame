@@ -49,6 +49,7 @@ echo "Enable built-in BLAS implementation............. : @fla_enable_builtin_bla
 
 echo ""
 echo "Enable lapack2flame............................. : @fla_enable_lapack2flame@"
+echo "Enable lapack2flash (experimental).............. : @fla_enable_lapack2flash@"
 echo "Enable external LAPACK for subproblems.......... : @fla_enable_external_lapack_for_subproblems@"
 echo "Enable external LAPACK interfaces............... : @fla_enable_external_lapack_interfaces@"
 

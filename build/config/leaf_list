@@ -3,5 +3,6 @@ flatex:tex
 matlab:m
 openflame:c
 lapack2flamec:c
+lapack2flash:c
 f2c:c
 install:c

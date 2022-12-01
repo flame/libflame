@@ -1,0 +1,54 @@
+
+lapack2flash
+============
+
+This directory includes lapack2flash layer which provides backward compatibility
+to FORTRAN LAPACK interface using FLASH. The entire LAPACK source files are converted to C
+files using code translator F2C pointed to in the lapack2flame directory.
+However, libf2c is not required when libflame is linked.
+
+Directory structure
+-------------------
+
+lapack2flash
+  - check               :: Symbolic link to the directory in lapack2flamec/
+  - f2c                 :: Symbolic link to the directory in lapack2flamec/
+
+  + FLASH_*.c           :: LAPACK interfaces that redirect functionality to libflame using FLASH calls.
+
+
+How to use
+----------
+
+configuration:
+
+  Modify the default run-conf/run-configure.sh with the following changes
+
+  ./configure \
+            --enable-lapack2flash \
+            --enable-supermatrix \
+            --enable-multithreading=pthreads \
+
+Note that supermatrix is required for lapack2flash
+
+LAPACK test suite
+-----------------
+
+Follow lapack2flame's test procedures.
+
+FLAPACK interface structure
+---------------------------
+
+lapack2flash uses the same structure as lapack2flame. Operations are
+replaced with their FLASH equivalents. Doing so optionally allows for GPU acceleration
+when configured correctly. Set functions allow for setting number of threads, 
+depth (only a depth of 1 is currently supported), and blocksize. See below for
+supported interfaces. If an interface is not FLASH supported, it is simply using
+the lapack2flame call. 
+
+Using FLASH:
+FLASH_potrf
+FLASH_potri
+FLASH_trsyl
+FLASH_trtri
+FLASH_lauum

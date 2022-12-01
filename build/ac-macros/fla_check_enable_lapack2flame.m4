@@ -7,7 +7,7 @@ AC_DEFUN([FLA_CHECK_ENABLE_LAPACK2FLAME],
 	dnl --disable-<option>. If so, then run the first snippet of code;
 	dnl otherwise, run the second code block.
 	AC_ARG_ENABLE([lapack2flame],
-	              AS_HELP_STRING([--enable-lapack2flame],[Compile and build into libflame a compatibility layer that maps LAPACK invocations to their corresponding FLAME/C implementations. Note that erroneous input parameters are reported according to libflame conventions, NOT LAPACK conventions. That is, if libflame error checking is disabled, no error checking is performed, and if erroneous input parameters are detected, the library aborts. Also, if this option is enabled, then external-lapack-for-subproblems MUST be disabled. (Disabled by default.)]),
+	              AS_HELP_STRING([--enable-lapack2flame],[Compile and build into libflame a compatibility layer that maps LAPACK invocations to their corresponding FLAME/C implementations. Note that erroneous input parameters are reported according to libflame conventions, NOT LAPACK conventions. That is, if libflame error checking is disabled, no error checking is performed, and if erroneous input parameters are detected, the library aborts. Also, if this option is enabled, then external-lapack-for-subproblems and lapack2flash MUST be disabled. (Disabled by default.)]),
 	[
 		dnl If any form of the option is given, handle each case.
 		if test "$enableval" = "no" ; then

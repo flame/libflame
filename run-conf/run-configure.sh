@@ -41,6 +41,7 @@ ${configure_path} \
             --enable-non-critical-code \
             --disable-builtin-blas \
             --disable-lapack2flame \
+            --disable-lapack2flash \
             --disable-external-lapack-for-subproblems \
             --enable-external-lapack-interfaces \
             --disable-blas3-front-end-cntl-trees \

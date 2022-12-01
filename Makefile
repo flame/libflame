@@ -175,6 +175,18 @@ MK_MAP_LAPACK2FLAMEC_F2C_FLAMEC_OBJS  :=
 MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_SRC  :=
 MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_OBJS :=
 
+MK_MAP_LAPACK2FLASH_SRC               :=
+MK_MAP_LAPACK2FLASH_OBJS              :=
+
+MK_MAP_LAPACK2FLASH_F2C_SRC           :=
+MK_MAP_LAPACK2FLASH_F2C_OBJS          :=
+
+MK_MAP_LAPACK2FLASH_F2C_FLAMEC_SRC    :=
+MK_MAP_LAPACK2FLASH_F2C_FLAMEC_OBJS   :=
+
+MK_MAP_LAPACK2FLASH_F2C_INSTALL_SRC   :=
+MK_MAP_LAPACK2FLASH_F2C_INSTALL_OBJS  :=
+
 MK_FLABLAS_F2C_SRC                    :=
 MK_FLABLAS_F2C_OBJS                   :=
 
@@ -332,6 +344,15 @@ L2F_HEADER_DIR_PATHS := $(dir $(foreach frag_path, $(L2F_FRAG_DIR_PATHS), \
 INCLUDE_PATHS   += $(strip $(patsubst %, -I%, $(L2F_HEADER_DIR_PATHS)))
 endif
 
+# When lapack2flash is enabled, we need to add a -I option for the directory
+# in which the lapack2flash headers reside.
+ifeq ($(FLA_ENABLE_LAPACK2FLASH),yes)
+L2FLASH_FRAG_DIR_PATHS   := $(filter $(DIST_PATH)/src/map/lapack2flash%,$(FRAGMENT_DIR_PATHS))
+L2FLASH_HEADER_DIR_PATHS := $(dir $(foreach frag_path, $(L2FLASH_FRAG_DIR_PATHS), \
+                                       $(firstword $(wildcard $(frag_path)/*.h))))
+INCLUDE_PATHS   += $(strip $(patsubst %, -I%, $(L2FLASH_HEADER_DIR_PATHS)))
+endif
+
 # Add the include flags determined above to various compiler flags variables.
 CFLAGS          := $(CFLAGS) $(INCLUDE_PATHS)
 CFLAGS_NOOPT    := $(CFLAGS_NOOPT) $(INCLUDE_PATHS)
@@ -372,6 +393,18 @@ MK_MAP_LAPACK2FLAMEC_F2C_FLAMEC_OBJS  := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_
 MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_OBJS := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
                                                     $(filter %.c, $(MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_SRC)))
 
+MK_MAP_LAPACK2FLASH_OBJS              := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
+                                                    $(filter %.c, $(MK_MAP_LAPACK2FLASH_SRC)))
+
+MK_MAP_LAPACK2FLASH_F2C_OBJS          := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
+                                                    $(filter %.c, $(MK_MAP_LAPACK2FLASH_F2C_SRC)))
+
+MK_MAP_LAPACK2FLASH_F2C_FLAMEC_OBJS   := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
+                                                    $(filter %.c, $(MK_MAP_LAPACK2FLASH_F2C_FLAMEC_SRC)))
+
+MK_MAP_LAPACK2FLASH_F2C_INSTALL_OBJS  := $(patsubst $(SRC_PATH)/%.c, $(BASE_OBJ_PATH)/%.o, \
+                                                    $(filter %.c, $(MK_MAP_LAPACK2FLASH_F2C_INSTALL_SRC)))
+
 # Combine the base, blas, and lapack libraries.
 MK_ALL_FLAMEC_OBJS        := $(MK_BASE_FLAMEC_OBJS) \
                              $(MK_BLAS_FLAMEC_OBJS) \
@@ -388,10 +421,22 @@ MK_ALL_FLAMEC_OBJS        := $(MK_MAP_LAPACK2FLAMEC_OBJS) \
                              $(MK_ALL_FLAMEC_OBJS)
 endif
 
+ifeq ($(FLA_ENABLE_LAPACK2FLASH),yes)
+MK_ALL_FLAMEC_OBJS        := $(MK_MAP_LAPACK2FLASH_OBJS) \
+                             $(MK_MAP_LAPACK2FLASH_F2C_OBJS) \
+                             $(MK_MAP_LAPACK2FLASH_F2C_FLAMEC_OBJS) \
+                             $(MK_MAP_LAPACK2FLASH_F2C_INSTALL_OBJS) \
+                             $(MK_ALL_FLAMEC_OBJS)
+endif
+
 # BLAS
 ifeq ($(FLA_ENABLE_BUILTIN_BLAS),yes)
 ifeq ($(FLA_ENABLE_LAPACK2FLAME),no)
 MK_FLABLAS_F2C_OBJS       := $(MK_MAP_LAPACK2FLAMEC_F2C_INSTALL_OBJS) \
+                             $(MK_FLABLAS_F2C_OBJS)
+endif
+ifeq ($(FLA_ENABLE_LAPACK2FLASH),no)
+MK_FLABLAS_F2C_OBJS       := $(MK_MAP_LAPACK2FLASH_F2C_INSTALL_OBJS) \
                              $(MK_FLABLAS_F2C_OBJS)
 endif
 MK_ALL_FLAMEC_OBJS        := $(MK_FLABLAS_F2C_OBJS) \
