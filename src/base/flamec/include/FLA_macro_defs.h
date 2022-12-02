@@ -264,8 +264,13 @@
 #define FLA_FULL_DGER_CONSTANT (200)
 
 // ORGQR , threshold numbers to chose paths for performance
-#define FLA_DGER_INLINE_SMALL   (8)
-#define FLA_DSCAL_INLINE_SMALL  (10)
+#define FLA_DGER_INLINE_SMALL_THRESH0   (6)
+#define FLA_DGER_INLINE_SMALL_THRESH1   (32)
+#define FLA_DSCAL_INLINE_SMALL          (32)
+
+// GEQP3 , threshold numbers to chose paths for performance
+#define FLA_IDAMAX_INLINE_SMALL_THRESH   (128)
+#define FLA_DGEQP3_BLOCK_SMALL_THRESH    (32)
 
 // --- Error-related macro definitions -----------------------------------------
 
