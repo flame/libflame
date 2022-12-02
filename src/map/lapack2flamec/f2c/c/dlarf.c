@@ -212,12 +212,11 @@ int dlarf_(char *side, integer *m, integer *n, doublereal *v, integer *incv, dou
             dgemv_("Transpose", &lastv, &lastc, &c_b4, &c__[c_offset], ldc, & v[1], incv, &c_b5, &work[1], &c__1);
             /* C(1:lastv,1:lastc) := C(...) - v(1:lastv,1) * w(1:lastc,1)**T */
             d__1 = -(*tau);
-
 #ifdef FLA_ENABLE_AMD_OPT
             /* Inline DGER for small size */
-            if(lastc <= FLA_DGER_INLINE_SMALL)
+            if(lastc <= FLA_DGER_INLINE_SMALL_THRESH0 && lastv <= FLA_DGER_INLINE_SMALL_THRESH1)
             {
-                if (*incv == 1)
+                if (*incv == c__1)
                 {
                     for (j = 1; j <= lastc; ++j)
                     {
