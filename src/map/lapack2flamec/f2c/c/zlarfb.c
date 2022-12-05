@@ -1,3 +1,6 @@
+/*
+    Copyright (c) 2019-2023 Advanced Micro Devices, Inc.
+*/
 /* ../netlib/zlarfb.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
@@ -199,8 +202,6 @@ int zlarfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
     /* System generated locals */
     integer c_dim1, c_offset, t_dim1, t_offset, v_dim1, v_offset, work_dim1, work_offset, i__1, i__2, i__3, i__4, i__5;
     doublecomplex z__1, z__2;
-    /* Builtin functions */
-    void d_cnjg(doublecomplex *, doublecomplex *);
     /* Local variables */
     integer i__, j;
     extern logical lsame_(char *, char *);
@@ -311,7 +312,8 @@ int zlarfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
                     {
                         i__3 = j + i__ * c_dim1;
                         i__4 = j + i__ * c_dim1;
-                        d_cnjg(&z__2, &work[i__ + j * work_dim1]);
+                        z__2.r = work[i__ + j * work_dim1].r;
+                        z__2.i = -work[i__ + j * work_dim1].i;
                         z__1.r = c__[i__4].r - z__2.r;
                         z__1.i = c__[i__4].i - z__2.i; // , expr subst
                         c__[i__3].r = z__1.r;
@@ -433,7 +435,8 @@ int zlarfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
                     {
                         i__3 = *m - *k + j + i__ * c_dim1;
                         i__4 = *m - *k + j + i__ * c_dim1;
-                        d_cnjg(&z__2, &work[i__ + j * work_dim1]);
+                        z__2.r = work[i__ + j * work_dim1].r;
+                        z__2.i = -work[i__ + j * work_dim1].i;
                         z__1.r = c__[i__4].r - z__2.r;
                         z__1.i = c__[i__4].i - z__2.i; // , expr subst
                         c__[i__3].r = z__1.r;
@@ -557,7 +560,8 @@ int zlarfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
                     {
                         i__3 = j + i__ * c_dim1;
                         i__4 = j + i__ * c_dim1;
-                        d_cnjg(&z__2, &work[i__ + j * work_dim1]);
+                        z__2.r = work[i__ + j * work_dim1].r;
+                        z__2.i = -work[i__ + j * work_dim1].i;
                         z__1.r = c__[i__4].r - z__2.r;
                         z__1.i = c__[i__4].i - z__2.i; // , expr subst
                         c__[i__3].r = z__1.r;
@@ -678,7 +682,8 @@ int zlarfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
                     {
                         i__3 = *m - *k + j + i__ * c_dim1;
                         i__4 = *m - *k + j + i__ * c_dim1;
-                        d_cnjg(&z__2, &work[i__ + j * work_dim1]);
+                        z__2.r = work[i__ + j * work_dim1].r;
+                        z__2.i = -work[i__ + j * work_dim1].i;
                         z__1.r = c__[i__4].r - z__2.r;
                         z__1.i = c__[i__4].i - z__2.i; // , expr subst
                         c__[i__3].r = z__1.r;

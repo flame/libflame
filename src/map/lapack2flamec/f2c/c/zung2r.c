@@ -1,3 +1,6 @@
+/*
+    Copyright (c) 2019-2023 Advanced Micro Devices, Inc.
+*/
 /* ../netlib/zung2r.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
@@ -113,6 +116,7 @@ int zung2r_(integer *m, integer *n, integer *k, doublecomplex *a, integer *lda, 
     integer i__, j, l;
     extern /* Subroutine */
     int zscal_(integer *, doublecomplex *, doublecomplex *, integer *), zlarf_(char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *), xerbla_(char *, integer *);
+    extern int fla_zscal(integer *, doublecomplex *, doublecomplex *, integer *);
     /* -- LAPACK computational routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -210,7 +214,19 @@ int zung2r_(integer *m, integer *n, integer *k, doublecomplex *a, integer *lda, 
             i__2 = i__;
             z__1.r = -tau[i__2].r;
             z__1.i = -tau[i__2].i; // , expr subst
+#ifdef FLA_ENABLE_AMD_OPT
+            if(i__1 <= FLA_ZSCAL_INLINE_SMALL)
+            {
+                /* use avx2 implementation of ZSCAL */
+                fla_zscal(&i__1, &z__1, &a[i__ + 1 + i__ * a_dim1], &c__1);
+            }
+            else
+            {
+                zscal_(&i__1, &z__1, &a[i__ + 1 + i__ * a_dim1], &c__1);
+            }
+#else
             zscal_(&i__1, &z__1, &a[i__ + 1 + i__ * a_dim1], &c__1);
+#endif
         }
         i__1 = i__ + i__ * a_dim1;
         i__2 = i__;

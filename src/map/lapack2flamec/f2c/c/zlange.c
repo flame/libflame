@@ -1,3 +1,6 @@
+/*
+    Copyright (c) 2019-2023 Advanced Micro Devices, Inc.
+*/
 /* zlange.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
@@ -116,7 +119,6 @@ doublereal zlange_(char *norm, integer *m, integer *n, doublecomplex *a, integer
     doublereal sum, temp, scale;
     extern logical lsame_(char *, char *);
     doublereal value;
-    extern logical disnan_(doublereal *);
     extern /* Subroutine */
     int zlassq_(integer *, doublecomplex *, integer *, doublereal *, doublereal *);
     /* -- LAPACK auxiliary routine -- */
@@ -163,7 +165,7 @@ doublereal zlange_(char *norm, integer *m, integer *n, doublecomplex *a, integer
                     ++i__)
             {
                 temp = z_abs(&a[i__ + j * a_dim1]);
-                if (value < temp || disnan_(&temp))
+                if (value < temp || temp != temp)
                 {
                     value = temp;
                 }
@@ -190,7 +192,7 @@ doublereal zlange_(char *norm, integer *m, integer *n, doublecomplex *a, integer
                 sum += z_abs(&a[i__ + j * a_dim1]);
                 /* L30: */
             }
-            if (value < sum || disnan_(&sum))
+            if (value < sum || sum != sum)
             {
                 value = sum;
             }
@@ -230,7 +232,7 @@ doublereal zlange_(char *norm, integer *m, integer *n, doublecomplex *a, integer
                 ++i__)
         {
             temp = work[i__];
-            if (value < temp || disnan_(&temp))
+            if (value < temp || temp != temp)
             {
                 value = temp;
             }

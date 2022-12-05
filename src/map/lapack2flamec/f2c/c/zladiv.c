@@ -1,3 +1,6 @@
+/*
+    Copyright (c) 2019-2023 Advanced Micro Devices, Inc.
+*/
 /* ../netlib/zladiv.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* > \brief \b ZLADIV performs complex division in real arithmetic, avoiding unnecessary overflow. */
@@ -57,8 +60,6 @@ VOID zladiv_(doublecomplex * ret_val, doublecomplex *x, doublecomplex *y)
     /* System generated locals */
     doublereal d__1, d__2, d__3, d__4;
     doublecomplex z__1;
-    /* Builtin functions */
-    double d_imag(doublecomplex *);
     /* Local variables */
     doublereal zi, zr;
     extern /* Subroutine */
@@ -78,9 +79,9 @@ VOID zladiv_(doublecomplex * ret_val, doublecomplex *x, doublecomplex *y)
     /* .. */
     /* .. Executable Statements .. */
     d__1 = x->r;
-    d__2 = d_imag(x);
+    d__2 = x->i;
     d__3 = y->r;
-    d__4 = d_imag(y);
+    d__4 = y->i;
     dladiv_(&d__1, &d__2, &d__3, &d__4, &zr, &zi);
     z__1.r = zr;
     z__1.i = zi; // , expr subst
@@ -96,8 +97,6 @@ doublecomplex zladiv_(doublecomplex *x, doublecomplex *y)
     /* System generated locals */
     doublereal d__1, d__2, d__3, d__4;
     doublecomplex z__1;
-    /* Builtin functions */
-    double d_imag(doublecomplex *);
     /* Local variables */
     doublereal zi, zr;
     extern /* Subroutine */
@@ -117,9 +116,9 @@ doublecomplex zladiv_(doublecomplex *x, doublecomplex *y)
     /* .. */
     /* .. Executable Statements .. */
     d__1 = x->r;
-    d__2 = d_imag(x);
+    d__2 = x->i;
     d__3 = y->r;
-    d__4 = d_imag(y);
+    d__4 = y->i;
     dladiv_(&d__1, &d__2, &d__3, &d__4, &zr, &zi);
     z__1.r = zr;
     z__1.i = zi; // , expr subst
