@@ -1,3 +1,6 @@
+/*
+    Copyright (c) 2019-2023 Advanced Micro Devices, Inc.
+*/
 /* ../netlib/zlarfg.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
@@ -108,12 +111,10 @@ int zlarfg_(integer *n, doublecomplex *alpha, doublecomplex * x, integer *incx, 
     doublereal d__1, d__2;
     doublecomplex z__1, z__2;
     /* Builtin functions */
-    double d_imag(doublecomplex *), d_sign(doublereal *, doublereal *);
+    double d_sign(doublereal *, doublereal *);
     /* Local variables */
     integer j, knt;
     doublereal beta, alphi, alphr;
-    extern /* Subroutine */
-    int zscal_(integer *, doublecomplex *, doublecomplex *, integer *);
     doublereal xnorm;
     extern doublereal dlapy3_(doublereal *, doublereal *, doublereal *), dznrm2_(integer *, doublecomplex *, integer *), dlamch_(char *);
     doublereal safmin;
@@ -122,6 +123,8 @@ int zlarfg_(integer *n, doublecomplex *alpha, doublecomplex * x, integer *incx, 
     doublereal rsafmn;
     extern /* Double Complex */
     VOID zladiv_(doublecomplex *, doublecomplex *, doublecomplex *);
+    extern int zscal_(integer *, doublecomplex *, doublecomplex *, integer *);
+    extern int fla_zscal(integer *, doublecomplex *, doublecomplex *, integer *);
     /* -- LAPACK auxiliary routine (version 3.8.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
@@ -154,7 +157,7 @@ int zlarfg_(integer *n, doublecomplex *alpha, doublecomplex * x, integer *incx, 
     i__1 = *n - 1;
     xnorm = dznrm2_(&i__1, &x[1], incx);
     alphr = alpha->r;
-    alphi = d_imag(alpha);
+    alphi = alpha->i;
     if (xnorm == 0. && alphi == 0.)
     {
         /* H = I */
@@ -202,7 +205,19 @@ L10:
         zladiv_f2c_(&z__1, &c_b5, &z__2);
         alpha->r = z__1.r, alpha->i = z__1.i;
         i__1 = *n - 1;
+#ifdef FLA_ENABLE_AMD_OPT
+        if(*incx == 1 && i__1 <= FLA_ZSCAL_INLINE_SMALL)
+        {
+            /* use avx2 implementation of ZSCAL */
+            fla_zscal(&i__1, alpha, &x[1], incx);
+        }
+        else
+        {
+            zscal_(&i__1, alpha, &x[1], incx);
+        }
+#else
         zscal_(&i__1, alpha, &x[1], incx);
+#endif
         /* If ALPHA is subnormal, it may lose relative accuracy */
         i__1 = knt;
         for (j = 1;

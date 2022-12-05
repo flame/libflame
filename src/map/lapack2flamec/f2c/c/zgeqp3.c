@@ -1,3 +1,6 @@
+/*
+    Copyright (c) 2019-2023 Advanced Micro Devices, Inc.
+*/
 /* ../netlib/zgeqp3.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
@@ -232,7 +235,11 @@ int zgeqp3_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *jpv
         else
         {
             iws = *n + 1;
+#ifdef FLA_ENABLE_AMD_OPT
+            nb = FLA_ZGEQP3_BLOCK_SMALL_THRESH;
+#else
             nb = ilaenv_(&c__1, "ZGEQRF", " ", m, n, &c_n1, &c_n1);
+#endif
             lwkopt = (*n + 1) * nb;
         }
         z__1.r = (doublereal) lwkopt;
@@ -318,7 +325,11 @@ int zgeqp3_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *jpv
         sn = *n - nfxd;
         sminmn = minmn - nfxd;
         /* Determine the block size. */
+#ifdef FLA_ENABLE_AMD_OPT
+        nb = FLA_ZGEQP3_BLOCK_SMALL_THRESH;
+#else
         nb = ilaenv_(&c__1, "ZGEQRF", " ", &sm, &sn, &c_n1, &c_n1);
+#endif
         nbmin = 2;
         nx = 0;
         if (nb > 1 && nb < sminmn)
