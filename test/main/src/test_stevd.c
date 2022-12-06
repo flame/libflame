@@ -18,6 +18,8 @@ void invoke_stevd(integer datatype, char* jobz, integer* n, void* z, integer* ld
  * */
 static integer g_lwork;
 static integer g_liwork;
+static FILE* g_ext_fptr = NULL;
+
 void fla_test_stevd(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Eigen Decomposition of symmetrix tridiagonal matrix";
@@ -33,7 +35,17 @@ void fla_test_stevd(integer argc, char ** argv, test_params_t *params)
         fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_SYM, fla_test_stevd_experiment);
         tests_not_run = 0;
     }
-    else if(argc == 9)
+    if(argc == 10)
+    {
+        /* Read matrix input data from a file */
+        g_ext_fptr = fopen(argv[9], "r");
+        if (g_ext_fptr == NULL)
+        {
+            printf("\n Invalid input file argument \n");
+            return;
+        }
+    }
+    if(argc >= 9 && argc <= 10)
     {
         /* Test with parameters from commandline */
         integer i, num_types, N;
@@ -101,6 +113,10 @@ void fla_test_stevd(integer argc, char ** argv, test_params_t *params)
     {
         printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n");
     }
+    if(g_ext_fptr != NULL)
+    {
+        fclose(g_ext_fptr);
+    }
     return;
 }
 
@@ -135,8 +151,17 @@ void fla_test_stevd_experiment(test_params_t *params,
         create_vector(datatype, &D, n);
         create_vector(datatype, &E, n-1);
 
-        /* input matrix Z with random symmetric numbers and D,E matrix with diagonal and subdiagonal values */
-        rand_sym_tridiag_matrix(datatype, Z, n, n, ldz);
+        if (g_ext_fptr != NULL)
+        {
+            /* Initialize input matrix with custom data */
+            init_matrix_from_file(datatype, Z, n, n, ldz, g_ext_fptr);
+        }
+        else
+        {
+            /* input matrix Z with random symmetric numbers and D,E matrix with diagonal and subdiagonal values */
+            rand_sym_tridiag_matrix(datatype, Z, n, n, ldz);
+        }
+
         get_diagonal(datatype, Z, n, n, ldz, D);
         get_subdiagonal(datatype, Z, n, n, ldz, E);
 

@@ -20,6 +20,8 @@ void invoke_stedc(integer datatype, char* compz, integer* n, void* D, void* E, v
 static integer g_lwork;
 static integer g_liwork;
 static integer g_lrwork;
+static FILE* g_ext_fptr = NULL;
+
 void fla_test_stedc(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Eigenvalues/eigenvectors of symmetric tridiagonal matrix";
@@ -36,7 +38,17 @@ void fla_test_stedc(integer argc, char ** argv, test_params_t *params)
         fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_SYM, fla_test_stedc_experiment);
         tests_not_run = 0;
     }
-    else if(argc == 10)
+    if(argc == 11)
+    {
+        /* Read matrix input data from a file */
+        g_ext_fptr = fopen(argv[10], "r");
+        if (g_ext_fptr == NULL)
+        {
+            printf("\n Invalid input file argument \n");
+            return;
+        }
+    }
+    if(argc >= 10 && argc <= 11)
     {
         /* Test with parameters from commandline */
         integer i, num_types, N;
@@ -105,6 +117,10 @@ void fla_test_stedc(integer argc, char ** argv, test_params_t *params)
     {
         printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n");
     }
+    if(g_ext_fptr != NULL)
+    {
+        fclose(g_ext_fptr);
+    }
     return;
 }
 
@@ -135,19 +151,44 @@ void fla_test_stedc_experiment(test_params_t *params,
     realtype = get_realtype(datatype);
     create_vector(realtype, &D, n);
     create_vector(realtype, &E, n-1);
-    
-    /* Create random symmetric/hermitian matrix if compz = V. */
-    if (compz == 'V') {
-        if ((datatype == FLOAT) || (datatype == DOUBLE)) {
-            rand_sym_matrix(datatype, A, n, n, lda);
-        } else {
-            rand_hermitian_matrix(datatype, n, &A, lda);
+ 
+        if (g_ext_fptr != NULL)
+        {
+            /* Initialize input matrix with custom data */
+
+            if (compz == 'V')
+            {
+                init_matrix_from_file(datatype, A, n, n, lda, g_ext_fptr);
+            }
+            else
+            { 
+                init_vector_from_file(datatype, D, n, 1, g_ext_fptr);
+                init_vector_from_file(datatype, E, n, 1, g_ext_fptr);
+                copy_sym_tridiag_matrix(datatype, D, E, n, n, A, lda);
+            }
         }
-    } else { /* Create tridiagonal matrix using random Diagonal, subdiagonal elements if compz != V. */
-        rand_vector(realtype, D, n, 1);
-        rand_vector(realtype, E, n-1, 1);
-        copy_sym_tridiag_matrix(datatype, D, E, n, n, A, lda);
-    }
+        else
+        {
+            /* Create random symmetric/hermitian matrix if compz = V. */
+            if (compz == 'V')
+            {
+                if ((datatype == FLOAT) || (datatype == DOUBLE))
+                {
+                    rand_sym_matrix(datatype, A, n, n, lda);
+                }
+                else
+                {
+                    rand_hermitian_matrix(datatype, n, &A, lda);
+                }
+            }
+            else
+            { /* Create tridiagonal matrix using random Diagonal, subdiagonal elements if compz != V. */
+                rand_vector(realtype, D, n, 1);
+                rand_vector(realtype, E, n - 1, 1);
+                copy_sym_tridiag_matrix(datatype, D, E, n, n, A, lda);
+            }
+        } 
+
     ldz = lda;
     create_matrix(datatype, &Z_input, ldz, n);
     copy_matrix(datatype, "full", n, n, A, lda, Z_input, ldz);
