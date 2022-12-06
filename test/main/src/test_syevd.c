@@ -19,6 +19,8 @@ void invoke_syevd(integer datatype, char* jobz, char* uplo, integer* n, void* a,
 static integer g_lwork;
 static integer g_liwork;
 static integer g_lrwork;
+static FILE* g_ext_fptr = NULL;
+
 void fla_test_syevd(integer argc, char ** argv, test_params_t *params)
 {
     char* op_str = "Eigen Decomposition";
@@ -35,7 +37,17 @@ void fla_test_syevd(integer argc, char ** argv, test_params_t *params)
         fla_test_op_driver(front_str, SQUARE_INPUT, params, EIG_SYM, fla_test_syevd_experiment);
         tests_not_run = 0;
     }
-    else if(argc == 11)
+    if (argc == 12)
+    {
+        /* Read matrix input data from a file */
+        g_ext_fptr = fopen(argv[11], "r");
+        if (g_ext_fptr == NULL)
+        {
+            printf("\n Invalid input file argument \n");
+            return;
+        }
+    }
+    if (argc >= 11 && argc <= 12)
     {
         integer i, num_types,N;
         integer datatype, n_repeats;
@@ -105,6 +117,10 @@ void fla_test_syevd(integer argc, char ** argv, test_params_t *params)
     {
         printf("\nInvalid datatypes specified, choose valid datatypes from 'sdcz'\n\n");
     }
+    if (g_ext_fptr != NULL)
+    {
+        fclose(g_ext_fptr);
+    }
     return;
 }
 
@@ -133,13 +149,19 @@ void fla_test_syevd_experiment(test_params_t *params,
     /* Create input matrix parameters */
     create_matrix(datatype, &A, lda, n);
     create_realtype_vector(datatype, &w, n);
-
-    /* input matrix A with random symmetric numbers or complex hermitian matrix */
-    if(datatype == FLOAT || datatype == DOUBLE)
-        rand_sym_matrix(datatype, A, n, n, lda);
+    if (g_ext_fptr != NULL)
+    {
+        /* Initialize input matrix with custom data */
+        init_matrix_from_file(datatype, A, n, n, lda, g_ext_fptr);
+    }
     else
-        rand_hermitian_matrix(datatype, n, &A, lda);
-
+    {
+        /* input matrix A with random symmetric numbers or complex hermitian matrix */
+        if (datatype == FLOAT || datatype == DOUBLE)
+            rand_sym_matrix(datatype, A, n, n, lda);
+        else
+            rand_hermitian_matrix(datatype, n, &A, lda);
+    }
     /* Make a copy of input matrix A. This is required to validate the API functionality.*/
     create_matrix(datatype, &A_test, lda, n);
     copy_matrix(datatype, "full", n, n, A, lda, A_test, lda);
