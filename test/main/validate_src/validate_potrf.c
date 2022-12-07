@@ -8,7 +8,7 @@
 
 #include "test_common.h"
 
-void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer datatype, double* residual)
+void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, integer datatype, double* residual)
 {
     void *b = NULL, *x = NULL;
     void *x_test = NULL, *b_test = NULL;
@@ -27,7 +27,7 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer dataty
     reset_matrix(datatype, m, m, buff_A, m);
     reset_matrix(datatype, m, m, buff_B, m);
 
-    create_matrix(datatype, &A_save, m, m);
+    create_matrix(datatype, &A_save, lda, m);
 
     /* Create vector to compute Ax-b */
     create_vector(datatype, &b, m);
@@ -39,9 +39,9 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer dataty
     rand_vector(datatype, b, m, 1);
 
     /* Copy lower or upper triangular matrix based on uplo to buff_A, buff_B */
-    copy_matrix(datatype, uplo, m, m, A_test, m, buff_A, m);
-    copy_matrix(datatype, uplo, m, m, A_test, m, buff_B, m);
-    copy_matrix(datatype, "full", m, m, A, m, A_save, m);
+    copy_matrix(datatype, uplo, m, m, A_test, lda, buff_A, m);
+    copy_matrix(datatype, uplo, m, m, A_test, lda, buff_B, m);
+    copy_matrix(datatype, "full", m, m, A, lda, A_save, lda);
 
     copy_vector(datatype, m, b, 1, b_test, 1);
 
@@ -56,26 +56,26 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer dataty
             float norm_A;
 
             /* Test 1 */
-            norm_A = slange_("1", &m, &m, A, &m, work);
+            norm_A = slange_("1", &m, &m, A, &lda, work);
 
             /* Compute LL'-A */
-            sgemm_(&trans_A, &trans_B, &m, &m, &m, &s_one, buff_A, &m, buff_B, &m, &s_n_one, A, &m);
+            sgemm_(&trans_A, &trans_B, &m, &m, &m, &s_one, buff_A, &m, buff_B, &m, &s_n_one, A, &lda);
 
-            norm = slange_("1", &m, &m, A, &m, work);
+            norm = slange_("1", &m, &m, A, &lda, work);
             eps = slamch_("P");
 
             resid1 = norm/(eps * norm_A * (float)m);
 
             /* Test 2 */
-            copy_matrix(datatype, "full", m, m, A_save, m, A, m);
+            copy_matrix(datatype, "full", m, m, A_save, lda, A, lda);
             norm_b = snrm2_(&m, b, &incx);
 
             /* Find x to compute Ax-b */
-            spotrs_(uplo, &m, &nrhs, A_test, &m, b_test, &m, &info);
+            spotrs_(uplo, &m, &nrhs, A_test, &lda, b_test, &m, &info);
             copy_vector(datatype, m, b_test, 1, x,  1);
 
             /* Compute Ax-b */
-            sgemv_("N", &m, &m, &s_one, A, &m, x, &incx, &s_n_one, b, &incy);
+            sgemv_("N", &m, &m, &s_one, A, &lda, x, &incx, &s_n_one, b, &incy);
             norm = snrm2_(&m, b, &incx);
 
             resid2 = norm/(eps * norm_b * (float)m);
@@ -89,26 +89,26 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer dataty
             double norm_A;
 
             /* Test 1 */
-            norm_A = dlange_("1", &m, &m, A, &m, work);
+            norm_A = dlange_("1", &m, &m, A, &lda, work);
 
             /* compute L*L'-A */
-            dgemm_(&trans_A, &trans_B, &m, &m, &m, &d_one, buff_A, &m, buff_B, &m, &d_n_one, A, &m);
+            dgemm_(&trans_A, &trans_B, &m, &m, &m, &d_one, buff_A, &m, buff_B, &m, &d_n_one, A, &lda);
 
-            norm = dlange_("1", &m, &m, A, &m, work);
+            norm = dlange_("1", &m, &m, A, &lda, work);
             eps = dlamch_("P");
 
             resid1 = norm/(eps * norm_A * (double)m);
 
             /* Test 2 */
-            copy_matrix(datatype, "full", m, m, A_save, m, A, m);
+            copy_matrix(datatype, "full", m, m, A_save, lda, A, lda);
             norm_b = dnrm2_(&m, b, &incx);
 
             /*Compute Ax-b Linear equations and find x */
-            dpotrs_(uplo, &m, &nrhs, A_test, &m, b_test, &m, &info);
+            dpotrs_(uplo, &m, &nrhs, A_test, &lda, b_test, &m, &info);
             copy_vector(datatype, m, b_test, 1, x,  1);
 
             /* Compute Ax-b */
-            dgemv_("N", &m, &m, &d_one, A, &m, x, &incx, &d_n_one, b, &incy);
+            dgemv_("N", &m, &m, &d_one, A, &lda, x, &incx, &d_n_one, b, &incy);
             norm = dnrm2_(&m, b, &incx);
 
             resid2 = norm/(eps * norm_b * (double)m);
@@ -122,26 +122,26 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer dataty
             float norm_A;
 
             /* Test 1 */
-            norm_A = clange_("1", &m, &m, A, &m, work);
+            norm_A = clange_("1", &m, &m, A, &lda, work);
 
             /* compute L*L'-A */
-            cgemm_(&trans_A, &trans_B, &m, &m, &m, &c_one, buff_A, &m, buff_B, &m, &c_n_one, A, &m);
+            cgemm_(&trans_A, &trans_B, &m, &m, &m, &c_one, buff_A, &m, buff_B, &m, &c_n_one, A, &lda);
 
-            norm = clange_("1", &m, &m, A, &m, work);
+            norm = clange_("1", &m, &m, A, &lda, work);
             eps = slamch_("P");
 
             resid1 = norm/(eps * norm_A * (float)m);
 
             /* Test 2 */
-            copy_matrix(datatype, "full", m, m, A_save, m, A, m);
+            copy_matrix(datatype, "full", m, m, A_save, lda, A, lda);
             norm_b = scnrm2_(&m, b, &incx);
 
             /*Find x to compute Ax-b */
-            cpotrs_(uplo, &m, &nrhs, A_test, &m, b_test, &m, &info);
+            cpotrs_(uplo, &m, &nrhs, A_test, &lda, b_test, &m, &info);
             copy_vector(datatype, m, b_test, 1, x,  1);
 
             /* Compute Ax-b */
-            cgemv_("N", &m, &m, &c_one, A, &m, x, &incx, &c_n_one, b, &incy);
+            cgemv_("N", &m, &m, &c_one, A, &lda, x, &incx, &c_n_one, b, &incy);
             norm = scnrm2_(&m, b, &incx);
 
             resid2 = norm/(eps * norm_b * (float)m);
@@ -155,26 +155,26 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer dataty
             double norm_A;
 
             /* Test 1 */
-            norm_A = zlange_("1", &m, &m, A, &m, work);
+            norm_A = zlange_("1", &m, &m, A, &lda, work);
 
             /* compute L*L'-A */
-            zgemm_(&trans_A, &trans_B, &m, &m, &m, &z_one, buff_A, &m, buff_B, &m, &z_n_one, A, &m);
+            zgemm_(&trans_A, &trans_B, &m, &m, &m, &z_one, buff_A, &m, buff_B, &m, &z_n_one, A, &lda);
 
-            norm = zlange_("1", &m, &m, A, &m, work);
+            norm = zlange_("1", &m, &m, A, &lda, work);
             eps = dlamch_("P");
 
             resid1 = norm/(eps * norm_A * (double)m);
 
             /* Test 2 */
-            copy_matrix(datatype, "full", m, m, A_save, m, A, m);
+            copy_matrix(datatype, "full", m, m, A_save, lda, A, lda);
             norm_b = dznrm2_(&m, b, &incx);
 
             /* Find x to compute Ax-b */
-            zpotrs_(uplo, &m, &nrhs, A_test, &m, b_test, &m, &info);
+            zpotrs_(uplo, &m, &nrhs, A_test, &lda, b_test, &m, &info);
             copy_vector(datatype, m, b_test, 1, x,  1);
 
             /* Compute Ax-b */
-            zgemv_("N", &m, &m, &z_one, A, &m, x, &incx, &z_n_one, b, &incy);
+            zgemv_("N", &m, &m, &z_one, A, &lda, x, &incx, &z_n_one, b, &incy);
 
             norm = dznrm2_(&m, b, &incx);
             eps = dlamch_("P");

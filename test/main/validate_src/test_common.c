@@ -838,15 +838,15 @@ void rand_spd_matrix(integer datatype, char *uplo, void **A, integer m,integer l
     void *I = NULL;
     char trans_A, trans_B;
 
-    create_matrix(datatype, &sample, m, m);
-    create_matrix(datatype, &buff_A, m, m);
-    create_matrix(datatype, &buff_B, m, m);
+    create_matrix(datatype, &sample, lda, m);
+    create_matrix(datatype, &buff_A, lda, m);
+    create_matrix(datatype, &buff_B, lda, m);
 
-    reset_matrix(datatype, m, m, buff_A, m);
-    reset_matrix(datatype, m, m, buff_B, m);
+    reset_matrix(datatype, m, m, buff_A, lda);
+    reset_matrix(datatype, m, m, buff_B, lda);
 
-    create_matrix(datatype, &I, m, m);
-    set_identity_matrix(datatype, m, m, I, m);
+    create_matrix(datatype, &I, lda, m);
+    set_identity_matrix(datatype, m, m, I, lda);
 
     /* Generate random symmetric matrix */
     rand_sym_matrix(datatype, sample, m, m, lda);
@@ -854,37 +854,37 @@ void rand_spd_matrix(integer datatype, char *uplo, void **A, integer m,integer l
     /* Based on uplo set the transpose flag */
     set_transpose(datatype, uplo, &trans_A, &trans_B);
 
-    copy_matrix(datatype, uplo, m, m, sample, m, buff_A, lda);
-    copy_matrix(datatype, uplo, m, m, sample, m, buff_B, lda);
+    copy_matrix(datatype, uplo, m, m, sample, lda, buff_A, lda);
+    copy_matrix(datatype, uplo, m, m, sample, lda, buff_B, lda);
 
     switch(datatype)
     {
         case FLOAT:
         {
-            float beta = (float)m;
-            sgemm_(&trans_A, &trans_B, &m, &m, &m, &s_one, buff_A, &m, buff_B, &m, &beta, I, &m);
+            float beta = m;
+            sgemm_(&trans_A, &trans_B, &m, &m, &m, &s_one, buff_A, &lda, buff_B, &lda, &beta, I, &lda);
             break;
         }
         case DOUBLE:
         {
             double beta = m;
-            dgemm_(&trans_A, &trans_B, &m, &m, &m, &d_one, buff_A, &m, buff_B, &m, &beta, I, &m);
+            dgemm_(&trans_A, &trans_B, &m, &m, &m, &d_one, buff_A, &lda, buff_B, &lda, &beta, I, &lda);
             break;
         }
         case COMPLEX:
         {
-            scomplex beta = {(float)m,0.0};
-            cgemm_(&trans_A, &trans_B, &m, &m, &m, &c_one, buff_A, &m, buff_B, &m, &beta, I, &m);
+            scomplex beta = {m,0};
+            cgemm_(&trans_A, &trans_B, &m, &m, &m, &c_one, buff_A, &lda, buff_B, &lda, &beta, I, &lda);
             break;
         }
         case DOUBLE_COMPLEX:
         {
              dcomplex beta = {m,0};
-             zgemm_(&trans_A, &trans_B, &m, &m, &m, &z_one, buff_A, &m, buff_B, &m, &beta, I, &m);
+             zgemm_(&trans_A, &trans_B, &m, &m, &m, &z_one, buff_A, &lda, buff_B, &lda, &beta, I, &lda);
              break;
         }
     }
-    copy_matrix(datatype, "full", m, m, I, m, *A, lda);
+    copy_matrix(datatype, "full", m, m, I, lda, *A, lda);
 
     /* free buffers */
     free_matrix(sample);
