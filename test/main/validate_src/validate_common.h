@@ -108,14 +108,17 @@ void validate_potrf(char *uplo,
     integer m,
     void *A,
     void *A_test,
+    integer lda,
     integer datatype,
     double* residual);
 
 void validate_potrs(integer n,
     integer nrhs,
     void *A,
+    integer lda,
     void *X,
     void *B,
+    integer ldb,
     integer datatype,
     double* residual);
 

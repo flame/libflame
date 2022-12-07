@@ -6,8 +6,8 @@
 
 // Local prototypes.
 void fla_test_potrs_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats,double* perf, double* time_min,double* residual);
-void prepare_potrs_run(char* uplo, integer m, integer nrhs, void *A, integer datatype, void *b, integer n_repeats, double* time_min_);
-void invoke_potrs(char* uplo, integer datatype, integer* m, void* A, integer* lda, integer *nrhs, void* b, integer* info);
+void prepare_potrs_run(char* uplo, integer m, integer nrhs, void *A, integer lda, integer datatype, void *b, integer ldb, integer n_repeats, double* time_min_);
+void invoke_potrs(char* uplo, integer datatype, integer* m, void* A, integer* lda, integer *nrhs, void* b, integer* ldb, integer* info);
 static FILE* g_ext_fptr = NULL;
 
 void fla_test_potrs(integer argc, char ** argv, test_params_t *params)
@@ -117,7 +117,7 @@ void fla_test_potrs_experiment(test_params_t *params,
     double* t,
     double* residual)
 {
-    integer n, info = 0, nrhs;
+    integer n, info = 0, nrhs, lda, ldb;
     void *A = NULL, *A_test = NULL;
     void *B = NULL, *X = NULL;
     void *B_test = NULL;
@@ -126,39 +126,40 @@ void fla_test_potrs_experiment(test_params_t *params,
     nrhs = params->lin_solver_paramslist[pci].nrhs;
     *residual = params->lin_solver_paramslist[pci].solver_threshold;
     /* Get input matrix dimensions. */
-    n = p_cur;
-
+    n= p_cur;
+    lda = params->lin_solver_paramslist[pci].lda;
+    ldb = params->lin_solver_paramslist[pci].ldb;
     /* Create input matrix parameters */
-    create_matrix(datatype, &A, n, n);
-    create_matrix(datatype, &A_test, n, n);
-    create_matrix(datatype, &B, n, nrhs);
+    create_matrix(datatype, &A, lda, n);
+    create_matrix(datatype, &A_test, lda, n);
+    create_matrix(datatype, &B, ldb, nrhs);
     create_matrix(datatype, &X, n, nrhs);
-    create_matrix(datatype, &B_test, n, nrhs);
+    create_matrix(datatype, &B_test, ldb, nrhs);
 
     /* Initialize input symmetric positive definite matrix A */
-    reset_matrix(datatype, n, n, A, n);
+    reset_matrix(datatype, n, n, A, lda);
     if (g_ext_fptr != NULL)
     {
         /* Initialize input matrix with custom data */
-        init_matrix_from_file(datatype, A, n, n, n, g_ext_fptr);
-        init_matrix_from_file(datatype, B, n, nrhs, n, g_ext_fptr);
+        init_matrix_from_file(datatype, A, n, n, lda, g_ext_fptr);
+        init_matrix_from_file(datatype, B, n, nrhs, ldb, g_ext_fptr);
     }
     else
     {
         /* Initialize input matrix with random numbers */
-        rand_spd_matrix(datatype, &uplo, &A, n, n);
-        rand_matrix(datatype, B, n, nrhs, n);
+        rand_spd_matrix(datatype, &uplo, &A, n, lda);
+        rand_matrix(datatype, B, n, nrhs, ldb);
     }
-    copy_matrix(datatype, "full", n, n, A, n, A_test, n);
+    copy_matrix(datatype, "full", n, n, A, lda, A_test, lda);
     /* cholesky factorisation of A as input to potrs */
-    invoke_potrf(&uplo, datatype, &n, A, &n, &info);
+    invoke_potrf(&uplo, datatype, &n, A, &lda, &info);
 
 
-    copy_matrix(datatype, "full", n, nrhs, B, n, B_test, n);
+    copy_matrix(datatype, "full", n, nrhs, B, ldb, B_test, ldb);
 
     /* Invoke potrs API to find x using Ax-b */
-    prepare_potrs_run(&uplo, n, nrhs, A, datatype, B_test, n_repeats, &time_min);
-    copy_matrix(datatype, "full", n, nrhs, B_test, n, X, n);
+    prepare_potrs_run(&uplo, n, nrhs, A, lda, datatype, B_test, ldb, n_repeats, &time_min);
+    copy_matrix(datatype, "full", n, nrhs, B_test, ldb, X, n);
     /* execution time */
     *t = time_min;
     /* Compute the performance of the best experiment repeat. */
@@ -168,7 +169,7 @@ void fla_test_potrs_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* Validate potrs call by computing Ax-b */
-    validate_potrs(n, nrhs, A_test, X, B, datatype, residual);
+    validate_potrs(n, nrhs, A_test, lda, X, B, ldb, datatype, residual);
 
     free_matrix(A);
     free_matrix(A_test);
@@ -182,8 +183,10 @@ void prepare_potrs_run(char* uplo,
     integer n,
     integer nrhs,
     void *A,
+    integer lda,
     integer datatype,
     void *B,
+    integer ldb,
     integer n_repeats,
     double* time_min_)
 {
@@ -193,22 +196,22 @@ void prepare_potrs_run(char* uplo,
 
     /* Make a copy of the input matrix A. Same input values will be passed in
        each itertaion.*/
-    create_matrix(datatype, &A_save, n, n);
-    create_matrix(datatype, &B_test, n, nrhs);
+    create_matrix(datatype, &A_save, lda, n);
+    create_matrix(datatype, &B_test, ldb, nrhs);
 
     for (i = 0; i < n_repeats; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers
         for each iteration */
-        copy_matrix(datatype, "full", n, n, A, n, A_save, n);
-        copy_matrix(datatype, "full", n, nrhs, B, n, B_test, n);
+        copy_matrix(datatype, "full", n, n, A, lda, A_save, lda);
+        copy_matrix(datatype, "full", n, nrhs, B, ldb, B_test, ldb);
         exe_time = fla_test_clock();
-        invoke_potrs(uplo, datatype, &n, A_save, &n, &nrhs, B_test, &info);
+        invoke_potrs(uplo, datatype, &n, A_save, &lda, &nrhs, B_test, &ldb, &info);
         exe_time = fla_test_clock() - exe_time;
         /* Get the best execution time */
         time_min = min(time_min, exe_time);
     }
-    copy_matrix(datatype, "full", n, nrhs, B_test, n, B, n);
+    copy_matrix(datatype, "full", n, nrhs, B_test, ldb, B, ldb);
     *time_min_ = time_min;
     free_matrix(A_save);
     free_vector(B_test);
@@ -220,28 +223,29 @@ void invoke_potrs(char* uplo, integer datatype,
     integer* lda,
     integer *nrhs,
     void* B,
+    integer* ldb,
     integer* info)
 {
     switch(datatype)
     {
         case FLOAT:
         {
-            spotrs_(uplo, n, nrhs, A, n, B, n, info);
+            spotrs_(uplo, n, nrhs, A, lda, B, ldb, info);
             break;
         }
         case DOUBLE:
         {
-            dpotrs_(uplo, n, nrhs, A, n, B, n, info);
+            dpotrs_(uplo, n, nrhs, A, lda, B, ldb, info);
             break;
         }
         case COMPLEX:
         {
-            cpotrs_(uplo, n, nrhs, A, n, B, n, info);
+            cpotrs_(uplo, n, nrhs, A, lda, B, ldb, info);
             break;
         }
         case DOUBLE_COMPLEX:
         {
-            zpotrs_(uplo, n, nrhs, A, n, B, n, info);
+            zpotrs_(uplo, n, nrhs, A, lda, B, ldb, info);
             break;
         }
     }
