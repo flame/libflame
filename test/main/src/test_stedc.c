@@ -118,7 +118,7 @@ void fla_test_stedc_experiment(test_params_t *params,
     double* t,
     double* residual)
 {
-    integer n, info = -1, realtype;
+    integer n, info = -1, realtype, lda, ldz;
     void *D = NULL, *D_test = NULL, *E = NULL, *E_test = NULL, *Z_test = NULL;
     void *Z_input = NULL, *A = NULL;
     double time_min = 1e9;
@@ -129,7 +129,8 @@ void fla_test_stedc_experiment(test_params_t *params,
     
     /* Initialize parameter needed for STEDC() call. */
     compz = params->eig_sym_paramslist[pci].compz;
-    create_matrix(datatype, &A, n, n);
+    lda = params->eig_sym_paramslist[pci].lda;
+    create_matrix(datatype, &A, lda, n);
     
     realtype = get_realtype(datatype);
     create_vector(realtype, &D, n);
@@ -138,25 +139,26 @@ void fla_test_stedc_experiment(test_params_t *params,
     /* Create random symmetric/hermitian matrix if compz = V. */
     if (compz == 'V') {
         if ((datatype == FLOAT) || (datatype == DOUBLE)) {
-            rand_sym_matrix(datatype, A, n, n, n);
+            rand_sym_matrix(datatype, A, n, n, lda);
         } else {
-            rand_hermitian_matrix(datatype, n, &A, n);
+            rand_hermitian_matrix(datatype, n, &A, lda);
         }
     } else { /* Create tridiagonal matrix using random Diagonal, subdiagonal elements if compz != V. */
         rand_vector(realtype, D, n, 1);
         rand_vector(realtype, E, n-1, 1);
-        copy_sym_tridiag_matrix(datatype, D, E, n, n, A, n);
+        copy_sym_tridiag_matrix(datatype, D, E, n, n, A, lda);
     }
-    create_matrix(datatype, &Z_input, n, n);
-    copy_matrix(datatype, "full", n, n, A, n, Z_input, n);
-
+    ldz = lda;
+    create_matrix(datatype, &Z_input, ldz, n);
+    copy_matrix(datatype, "full", n, n, A, lda, Z_input, ldz);
+    
     /* Call SYTRD(), ORGTR() to get tridiagonal/orthogonal matrix when compz = V. */
     if (compz == 'V') {
         /* Initialize parameter needed for SYTRD() call. */
         uplo = 'U';
         /* Call SYTRD() orthogonal matrix and tridiagonal elements.
            invoke_sytrd() internally calls ORGTR() to get orthogonal matrix.*/
-        invoke_sytrd(datatype, &uplo, compz, n, A, n, D, E, &info);
+        invoke_sytrd(datatype, &uplo, compz, n, A, lda, D, E, &info);
         if (info != 0) {
             free_matrix(A);
             free_vector(D);
@@ -166,16 +168,16 @@ void fla_test_stedc_experiment(test_params_t *params,
         }
     }
     /* Make a copy of input matrices. This is required to validate the API functionality. */
-    create_matrix(datatype, &Z_test, n, n);
+    create_matrix(datatype, &Z_test, ldz, n);
     if (compz == 'V') {
-        copy_matrix(datatype, "full", n, n, A, n, Z_test, n);
+        copy_matrix(datatype, "full", n, n, A, lda, Z_test, ldz);
     }
     create_vector(realtype, &D_test, n);
     copy_vector(realtype, n, D, 1, D_test, 1);
     create_vector(realtype, &E_test, n-1);
     copy_vector(realtype, n-1, E, 1, E_test, 1);
 
-    prepare_stedc_run(&compz, n, D_test, E_test, Z_test, n, datatype, n_repeats, &time_min);
+    prepare_stedc_run(&compz, n, D_test, E_test, Z_test, ldz, datatype, n_repeats, &time_min);
     
     /* Execution time. */
     *t = time_min;
@@ -193,7 +195,7 @@ void fla_test_stedc_experiment(test_params_t *params,
 
     /* Output validation. */
     if (compz != 'N') {
-        validate_stedc(compz, n, D_test, Z_input, Z_test, datatype, residual);
+        validate_stedc(compz, n, D_test, Z_input, Z_test, ldz, datatype, residual);
     } else {
         *residual = 0.0;
     }
@@ -220,7 +222,7 @@ void prepare_stedc_run(char* compz, integer n, void* D, void* E, void* Z,
        each itertaion.*/
     if (*compz == 'V') {
         create_matrix(datatype, &Z_save, ldz, n);
-        copy_matrix(datatype, "full", ldz, n, Z, ldz, Z_save, ldz);
+        copy_matrix(datatype, "full", n, n, Z, ldz, Z_save, ldz);
     }
     realtype = get_realtype(datatype);
     create_vector(realtype, &D_save, n);
@@ -277,7 +279,7 @@ void prepare_stedc_run(char* compz, integer n, void* D, void* E, void* Z,
         /* Restore input matrices and allocate memory to output buffers
            for each iteration. */
         if (*compz == 'V') {
-            copy_matrix(datatype, "full", ldz, n, Z_save, ldz, Z, ldz);
+            copy_matrix(datatype, "full", n, n, Z_save, ldz, Z, ldz);
         }
         copy_vector(realtype, n, D_save, 1, D, 1);
         copy_vector(realtype, n-1, E_save, 1, E_test, 1);
