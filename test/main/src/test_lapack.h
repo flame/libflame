@@ -149,6 +149,7 @@ typedef struct EIG_paramlist_t
     integer nrhs; // number of rhight hand sides
     integer lda; //  leading dimension of the array a
     integer ldb; //  leading dimension of the array b
+    integer ldz;
     integer nb;  //  leading dimension of the array ab
     integer ldt; // number of subdiagonals
     integer k;
@@ -180,10 +181,10 @@ typedef struct EIG_Non_symmetric_paramlist_t
     integer n_range_start;
     integer n_range_end;
     integer n_range_step_size;
-    integer lda;
-    integer ldb;
-    integer ldvl;
-    integer ldvr;
+    integer lda; // The leading dimension of A. LDA >= max(1,N).
+    integer ldb; // The leading dimension of B.  LDB >= max(1,N).
+    integer ldvl; // The leading dimension of the matrix VL. LDVL >= 1, and if JOBVL = 'V', LDVL >= N.
+    integer ldvr; // The leading dimension of the matrix VR. LDVR >= 1, and if JOBVR = 'V', LDVR >= N.
     integer num_repeats;
     integer num_tests;
     integer num_data_types;

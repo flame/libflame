@@ -9,7 +9,7 @@
 /* Local prototypes.*/
 void fla_test_stevd_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci,
 integer n_repeats, double* perf, double* t, double* residual);
-void prepare_stevd_run(char* jobz, integer n, void* Z, void* D, void* E, integer datatype, integer n_repeats, double* time_min_);
+void prepare_stevd_run(char* jobz, integer n, void* Z, integer ldz, void* D, void* E, integer datatype, integer n_repeats, double* time_min_);
 void invoke_stevd(integer datatype, char* jobz, integer* n, void* z, integer* ldz, void* d, void* e, void* work, integer* lwork, void* iwork, integer* liwork, integer* info);
 
 /* Flag to indicate lwork availability status
@@ -122,15 +122,15 @@ void fla_test_stevd_experiment(test_params_t *params,
 
     /* Get input matrix dimensions.*/
     jobz = params->eig_sym_paramslist[pci].jobz;
+    ldz = params->eig_sym_paramslist[pci].ldz;
     *residual = params->eig_sym_paramslist[pci].threshold_value;
 
     if(datatype == FLOAT || datatype == DOUBLE)
     {
         n = p_cur;
-        ldz = max(1,n);
 
         /* Create input matrix parameters */
-        create_matrix(datatype, &Z, n, n);
+        create_matrix(datatype, &Z, ldz, n);
         reset_matrix(datatype, n, n, Z, ldz);
         create_vector(datatype, &D, n);
         create_vector(datatype, &E, n-1);
@@ -141,14 +141,14 @@ void fla_test_stevd_experiment(test_params_t *params,
         get_subdiagonal(datatype, Z, n, n, ldz, E);
 
         /* Make a copy of input matrix A. This is required to validate the API functionality.*/
-        create_matrix(datatype, &Z_test, n, n);
+        create_matrix(datatype, &Z_test, ldz, n);
         reset_matrix(datatype, n, n, Z_test, ldz);
         create_vector(datatype, &D_test, n);
         create_vector(datatype, &E_test, n-1);
         copy_vector(datatype, n, D, 1, D_test, 1);
         copy_vector(datatype, n-1, E, 1, E_test, 1);
 
-        prepare_stevd_run(&jobz, n, Z_test, D_test, E_test, datatype, n_repeats, time_min);
+        prepare_stevd_run(&jobz, n, Z_test, ldz, D_test, E_test, datatype, n_repeats, time_min);
 
         /* performance computation
            6 * n^3 + n^2 flops for eigen vectors
@@ -159,7 +159,7 @@ void fla_test_stevd_experiment(test_params_t *params,
             *perf = (double)(6.0 * n * n) / *time_min / FLOPS_PER_UNIT_PERF;
 
         /* output validation */
-        validate_syevd(&jobz, n, Z, Z_test, D_test, datatype, residual);
+        validate_syevd(&jobz, n, Z, Z_test, ldz, D_test, datatype, residual);
 
         /* Free up the buffers */
         free_matrix(Z);
@@ -174,24 +174,22 @@ void fla_test_stevd_experiment(test_params_t *params,
 void prepare_stevd_run(char *jobz,
                        integer n,
                        void *Z,
+                       integer ldz,
                        void *D,
                        void *E,
                        integer datatype,
                        integer n_repeats,
                        double* time_min_)
 {
-    integer ldz;
     void *Z_save, *D_save, *E_save, *work, *iwork;
     integer lwork, liwork;
     integer i;
     integer info = 0;
     double time_min = 1e9, exe_time;
 
-    ldz = max(1,n);
-
     /* Make a copy of the input matrix A. Same input values will be passed in
        each itertaion.*/
-    create_matrix(datatype, &Z_save, n, n);
+    create_matrix(datatype, &Z_save, ldz, n);
     create_vector(datatype, &D_save, n);
     create_vector(datatype, &E_save, n-1);
 

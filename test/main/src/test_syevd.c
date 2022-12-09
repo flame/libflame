@@ -9,7 +9,7 @@
 /* Local prototypes.*/
 void fla_test_syevd_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci,
 integer n_repeats, double* perf, double* t, double* residual);
-void prepare_syevd_run(char* jobz, char* uplo, integer n, void* A, void* w, integer datatype, integer n_repeats, double* time_min_);
+void prepare_syevd_run(char* jobz, char* uplo, integer n, void* A, integer lda, void* w, integer datatype, integer n_repeats, double* time_min_);
 void invoke_syevd(integer datatype, char* jobz, char* uplo, integer* n, void* a, integer* lda, void* w, void* work, integer* lwork, void* rwork, integer* lrwork, void* iwork, integer* liwork, integer* info);
 
 /* Flag to indicate lwork availability status
@@ -128,10 +128,10 @@ void fla_test_syevd_experiment(test_params_t *params,
     *residual = params->eig_sym_paramslist[pci].threshold_value;
 
     n = p_cur;
-    lda = max(1,n);
+    lda = params->eig_sym_paramslist[pci].lda;
 
     /* Create input matrix parameters */
-    create_matrix(datatype, &A, n, n);
+    create_matrix(datatype, &A, lda, n);
     create_realtype_vector(datatype, &w, n);
 
     /* input matrix A with random symmetric numbers or complex hermitian matrix */
@@ -141,10 +141,10 @@ void fla_test_syevd_experiment(test_params_t *params,
         rand_hermitian_matrix(datatype, n, &A, lda);
 
     /* Make a copy of input matrix A. This is required to validate the API functionality.*/
-    create_matrix(datatype, &A_test, n, n);
+    create_matrix(datatype, &A_test, lda, n);
     copy_matrix(datatype, "full", n, n, A, lda, A_test, lda);
 
-    prepare_syevd_run(&jobz, &uplo, n, A_test, w, datatype, n_repeats, time_min);
+    prepare_syevd_run(&jobz, &uplo, n, A_test, lda, w, datatype, n_repeats, time_min);
 
     /* performance computation
        (8/3)n^3 flops for eigen vectors
@@ -157,7 +157,7 @@ void fla_test_syevd_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* output validation */
-    validate_syevd(&jobz, n, A, A_test, w, datatype, residual);
+    validate_syevd(&jobz, n, A, A_test, lda, w, datatype, residual);
 
     /* Free up the buffers */
     free_matrix(A);
@@ -169,23 +169,21 @@ void prepare_syevd_run(char *jobz,
                        char *uplo,
                        integer n,
                        void *A,
+                       integer lda,
                        void *w,
                        integer datatype,
                        integer n_repeats,
                        double* time_min_)
 {
-    integer lda;
     void *A_save, *w_test, *work, *iwork, *rwork=NULL;
     integer lwork, liwork, lrwork;
     integer i;
     integer info = 0;
     double time_min = 1e9, exe_time;
 
-    lda = max(1,n);
-
     /* Make a copy of the input matrix A. Same input values will be passed in
        each itertaion.*/
-    create_matrix(datatype, &A_save, n, n);
+    create_matrix(datatype, &A_save, lda, n);
     copy_matrix(datatype, "full", n, n, A, lda, A_save, lda);
 
     /* Make a workspace query the first time through. This will provide us with

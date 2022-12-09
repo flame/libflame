@@ -686,6 +686,12 @@ void fla_test_read_sym_eig_params( const char *file_name , test_params_t* params
 
     fscanf(fp, "%s", &line[0]);
     for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].ldz) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]);
+    for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].nb) );
         CHECK_LINE_SKIP ();
     }
