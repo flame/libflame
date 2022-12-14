@@ -404,6 +404,20 @@ typedef doublereal E_f;	/* real function with -R not specified */
 #ifndef FLA_ENABLE_EXTRA_SYMBOLS
 #if (defined(_WIN32) || defined(_WIN64))
 #ifdef UPPER
+#define  cgelst_   CGELST
+#define  clatrs3_  CLATRS3
+#define  ctrsyl3_  CTRSYL3
+#define  dlarmm_   DLARMM
+#define  dgelst_   DGELST
+#define  dlatrs3_  DLATRS3
+#define  dtrsyl3_  DTRSYL3
+#define  slarmm_   SLARMM
+#define  sgelst_   SGELST
+#define  slatrs3_  SLATRS3
+#define  strsyl3_  STRSYL3
+#define  zgelst_   ZGELST
+#define  zlatrs3_  ZLATRS3
+#define  ztrsyl3_  ZTRSYL3
 #define  cgetsqrhrt_  CGETSQRHRT
 #define  claqz0_  CLAQZ0
 #define  claqz1_  CLAQZ1
@@ -2577,6 +2591,20 @@ typedef doublereal E_f;	/* real function with -R not specified */
 #define cgetrfnpi_               CGETRFNPI
 #define zgetrfnpi_               ZGETRFNPI
 #else
+#define  cgelst_   cgelst
+#define  clatrs3_  clatrs3
+#define  ctrsyl3_  ctrsyl3
+#define  dlarmm_   dlarmm
+#define  dgelst_   dgelst
+#define  dlatrs3_  dlatrs3
+#define  dtrsyl3_  dtrsyl3
+#define  slarmm_   slarmm
+#define  sgelst_   sgelst
+#define  slatrs3_  slatrs3
+#define  strsyl3_  strsyl3
+#define  zgelst_   zgelst
+#define  zlatrs3_  zlatrs3
+#define  ztrsyl3_  ztrsyl3
 #define  cgetsqrhrt_  cgetsqrhrt
 #define  claqz0_  claqz0
 #define  claqz1_  claqz1
