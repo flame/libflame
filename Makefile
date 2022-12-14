@@ -53,17 +53,18 @@ endif
 
 # --- Important directories for source code and build products ---
 
-SRC_DIR         := src
-CONFIG_DIR      := config
-OBJ_DIR         := obj
-LIB_DIR         := lib
-INC_DIR         := include
-LAPACKE_DIR     := lapacke
-AOCLDTL_DIR     := aocl_dtl
-LAPACKE_SRC_DIR := LAPACKE/src
-LAPACKE_UTIL_DIR:= LAPACKE/utils
-TEST_DIR        := test/legacyflame
-CPP_TEST_DIR    := testcpp
+SRC_DIR             := src
+CONFIG_DIR          := config
+OBJ_DIR             := obj
+LIB_DIR             := lib
+INC_DIR             := include
+LAPACKE_DIR         := lapacke
+AOCLDTL_DIR         := aocl_dtl
+LAPACKE_SRC_DIR     := LAPACKE/src
+LAPACKE_UTIL_DIR    := LAPACKE/utils
+TEST_DIR            := test/legacyflame
+TEST_DIR_MAIN_TEST  := test/main
+CPP_TEST_DIR        := testcpp
 LAPACKE_S_SRC_PATH  := $(SRC_DIR)/$(LAPACKE_DIR)/$(LAPACKE_SRC_DIR)
 LAPACKE_U_SRC_PATH  := $(SRC_DIR)/$(LAPACKE_DIR)/$(LAPACKE_UTIL_DIR)
 
@@ -743,18 +744,55 @@ endif
 
 test-run: test-bin
 ifeq ($(ENABLE_VERBOSE),yes)
-	cd $(TEST_DIR) && $(TEST_WRAPPER) ./$(TEST_BIN) > $(TEST_OUT_FILE)
+	cd $(TEST_DIR) && $(TEST_WRAPPER) ./$(TEST_BIN) 2>&1 | tee $(TEST_OUT_FILE)
 else
-	@echo "Running $(TEST_BIN) with output redirected to '$(TEST_OUT_FILE)'"
+	@echo "Running $(TEST_BIN) with output redirected to '$(TEST_DIR)/$(TEST_OUT_FILE)'"
 	@echo "Please wait for tests to complete..."
-	@cd $(TEST_DIR) && $(TEST_WRAPPER) ./$(TEST_BIN) > $(TEST_OUT_FILE)
+	@cd $(TEST_DIR) && $(TEST_WRAPPER) ./$(TEST_BIN) 2>&1 | tee $(TEST_OUT_FILE)
 endif
 
-checklibflame:test-run
+
+# Test suite rules
+FNAME                    := lapack
+TEST_BIN_MAIN_TEST       := test_$(FNAME).x
+
+# The location of the script that checks the BLIS testsuite output.
+CHECK_PATH_MAIN_TEST     := $(DIST_PATH)/$(TEST_DIR_MAIN_TEST)/$(TEST_CHECK)
+
+test-bin-main-test: check-env $(TEST_BIN_MAIN_TEST)
+
+TEST_OUT_FILE_MAIN_TEST  := output.test
+
+# Exporting ILP64 to Main Test Suite
+ifeq ($(FLA_ENABLE_ILP64),yes)
+        ILP64  := 1
+endif
+export ILP64
+
+# Check the results of the LIBLFLAME tests.
+$(TEST_BIN_MAIN_TEST):
+ifeq ($(ENABLE_VERBOSE),yes)
+	$(MAKE) -C $(TEST_DIR_MAIN_TEST)
+else	
+	@$(MAKE) -C $(TEST_DIR_MAIN_TEST)
+endif
+
+test-run-main-test: test-bin-main-test
+ifeq ($(ENABLE_VERBOSE),yes)
+	cd $(TEST_DIR_MAIN_TEST) && $(TEST_WRAPPER) ./$(TEST_BIN_MAIN_TEST) 2>&1 | tee $(TEST_OUT_FILE_MAIN_TEST)
+else
+	@echo "Running $(TEST_BIN_MAIN_TEST) with output redirected to '$(TEST_DIR_MAIN_TEST)/$(TEST_OUT_FILE_MAIN_TEST)'"
+	@echo "Please wait for tests to complete..."
+	@cd $(TEST_DIR_MAIN_TEST) && $(TEST_WRAPPER) ./$(TEST_BIN_MAIN_TEST) 2>&1 | tee $(TEST_OUT_FILE_MAIN_TEST)
+endif
+
+checklibflame:test-run test-run-main-test
 ifeq ($(ENABLE_VERBOSE),yes)
 	-sh $(TEST_CHECK_PATH) $(TEST_DIR)/$(TEST_OUT_FILE)
+	-sh $(CHECK_PATH_MAIN_TEST) $(TEST_DIR_MAIN_TEST)/$(TEST_OUT_FILE_MAIN_TEST)
 else
 	-@sh $(TEST_CHECK_PATH) $(TEST_DIR)/$(TEST_OUT_FILE)
+	-@sh $(CHECK_PATH_MAIN_TEST) $(TEST_DIR_MAIN_TEST)/$(TEST_OUT_FILE_MAIN_TEST)
 endif
 
 

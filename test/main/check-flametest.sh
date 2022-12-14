@@ -38,9 +38,9 @@ ansi_red="\033[0;31m"       #prints the message on console in red
 ansi_green="\033[0;32m"     #prints the message on console in green
 ansi_normal="\033[0m"
 
-passmsg="All libFLAME legacy tests passed!"
-failmsg0="Some libFLAME legacy tests have failed."
-failmsg1="Please see test/legacyflame/output.test for details!"
+passmsg="All libFLAME main test-suite tests passed!"
+failmsg0="Some libFLAME main test-suite tests have failed."
+failmsg1="Please see test/main/output.test for details!"
 
 grep -q FAILURE $1
 
