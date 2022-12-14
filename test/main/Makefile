@@ -9,6 +9,7 @@ CC             := gcc
 LINKER         := $(CC)
 RM_RF          := rm -rf
 OMP_LIB        := -fopenmp
+CPPFLAGS       := 
 CFLAGS         := -g -O2 -Wall -Wno-comment ${OMP_LIB}
 LDFLAGS        := -lm -lpthread $(OMP_LIB)
 
@@ -39,8 +40,9 @@ LIBFLAME       := $(LIB_PATH)/libflame.a
 #
 # --- ILP64 --- Set to 1 to enable ILP64 ---------------------------------------
 #
-ILP64     := 0
-ILP64FLAG := FLA_ENABLE_ILP64=$(ILP64)
+ifeq ($(ILP64),1)
+	CPPFLAGS   += -DFLA_ENABLE_ILP64=1
+endif
 
 #
 # --- General build definitions ------------------------------------------------
@@ -51,10 +53,6 @@ TEST_VALIDATE_SRC_PATH := validate_src
 TEST_VALIDATE_OBJ_PATH := validate_src/obj
 
 CFLAGS         += -I$(TEST_SRC_PATH) -I$(TEST_VALIDATE_SRC_PATH)
-
-ifeq ($(ILP64),1)
-    CPPFLAGS    += -D$(ILP64FLAG)
-endif
 
 FNAME          := lapack
 
