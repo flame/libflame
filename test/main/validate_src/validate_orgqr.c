@@ -16,9 +16,11 @@ void validate_orgqr(integer m,
     void *R,
     void* work,
     integer datatype,
-    double* residual)
+    double* residual,
+    integer* info)
 {
     integer k;
+    *info = 0;
 
     if( m == n)
         k = m;

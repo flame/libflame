@@ -9,7 +9,7 @@
 /* Local prototypes.*/
 void fla_test_syevd_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci,
 integer n_repeats, double* perf, double* t, double* residual);
-void prepare_syevd_run(char* jobz, char* uplo, integer n, void* A, integer lda, void* w, integer datatype, integer n_repeats, double* time_min_);
+void prepare_syevd_run(char* jobz, char* uplo, integer n, void* A, integer lda, void* w, integer datatype, integer n_repeats, double* time_min_, integer* info);
 void invoke_syevd(integer datatype, char* jobz, char* uplo, integer* n, void* a, integer* lda, void* w, void* work, integer* lwork, void* rwork, integer* lrwork, void* iwork, integer* liwork, integer* info);
 
 /* Flag to indicate lwork availability status
@@ -134,7 +134,7 @@ void fla_test_syevd_experiment(test_params_t *params,
                                double *time_min,
                                double* residual)
 {
-    integer n, lda;
+    integer n, lda, info = 0, vinfo = 0;
     char jobz, uplo;
     void *A = NULL, *w = NULL, *A_test = NULL;
 
@@ -145,6 +145,12 @@ void fla_test_syevd_experiment(test_params_t *params,
 
     n = p_cur;
     lda = params->eig_sym_paramslist[pci].lda;
+
+    if(lda < n)
+    {
+        *residual = DBL_MIN;
+        return;
+    }
 
     /* Create input matrix parameters */
     create_matrix(datatype, &A, lda, n);
@@ -166,7 +172,7 @@ void fla_test_syevd_experiment(test_params_t *params,
     create_matrix(datatype, &A_test, lda, n);
     copy_matrix(datatype, "full", n, n, A, lda, A_test, lda);
 
-    prepare_syevd_run(&jobz, &uplo, n, A_test, lda, w, datatype, n_repeats, time_min);
+    prepare_syevd_run(&jobz, &uplo, n, A_test, lda, w, datatype, n_repeats, time_min, &info);
 
     /* performance computation
        (8/3)n^3 flops for eigen vectors
@@ -179,8 +185,13 @@ void fla_test_syevd_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* output validation */
-    validate_syevd(&jobz, n, A, A_test, lda, w, datatype, residual);
+    if (info == 0)
+        validate_syevd(&jobz, n, A, A_test, lda, w, datatype, residual, &vinfo);
 
+    /* Assigning bigger value to residual as execution fails */
+    if (info < 0 || vinfo < 0)
+        *residual = DBL_MAX;
+        
     /* Free up the buffers */
     free_matrix(A);
     free_matrix(A_test);
@@ -195,12 +206,12 @@ void prepare_syevd_run(char *jobz,
                        void *w,
                        integer datatype,
                        integer n_repeats,
-                       double* time_min_)
+                       double* time_min_,
+                       integer* info)
 {
     void *A_save, *w_test, *work, *iwork, *rwork=NULL;
     integer lwork, liwork, lrwork;
     integer i;
-    integer info = 0;
     double time_min = 1e9, exe_time;
 
     /* Make a copy of the input matrix A. Same input values will be passed in
@@ -221,19 +232,26 @@ void prepare_syevd_run(char *jobz,
         create_vector(INTEGER, &iwork, 1);
         create_realtype_vector(datatype, &rwork, 1);
         /* call to  syevd API */
-        invoke_syevd(datatype, jobz, uplo, &n, NULL, &lda, NULL, work, &lwork, rwork, &lrwork, iwork, &liwork, &info);
+        invoke_syevd(datatype, jobz, uplo, &n, NULL, &lda, NULL, work, &lwork, rwork, &lrwork, iwork, &liwork, info);
 
         /* Get work size */
-        lwork = get_work_value(datatype, work);
-        liwork = get_work_value(INTEGER, iwork);
-        lrwork = get_work_value(datatype, rwork);
-
-        /* Output buffers will be freshly allocated for each iterations, free up
-        the current output buffers.*/
-
-        free_vector(work);
-        free_vector(iwork);
-        free_vector(rwork);
+        if(*info == 0)
+        {
+            lwork = get_work_value(datatype, work);
+            liwork = get_work_value(INTEGER, iwork);
+            lrwork = get_work_value(datatype, rwork);
+            free_vector(work);
+            free_vector(iwork);
+            free_vector(rwork);
+        }
+        else
+        {
+            free_vector(work);
+            free_vector(iwork);
+            free_vector(rwork);
+            free_matrix(A_save);
+            return;
+        }
     }
     else
     {
@@ -242,7 +260,7 @@ void prepare_syevd_run(char *jobz,
         lrwork = g_lrwork;   
     }
 
-    for (i = 0; i < n_repeats; ++i)
+    for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers
            for each iteration*/
@@ -260,7 +278,7 @@ void prepare_syevd_run(char *jobz,
         exe_time = fla_test_clock();
 
         /* call to API */
-        invoke_syevd(datatype, jobz, uplo, &n, A, &lda, w_test, work, &lwork, rwork, &lrwork, iwork, &liwork, &info);
+        invoke_syevd(datatype, jobz, uplo, &n, A, &lda, w_test, work, &lwork, rwork, &lrwork, iwork, &liwork, info);
 
         exe_time = fla_test_clock() - exe_time;
 

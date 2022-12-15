@@ -8,16 +8,16 @@
 
 #include "test_common.h"
 
-void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, integer datatype, double* residual)
+void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, integer datatype, double* residual, integer* info)
 {
     void *b = NULL, *x = NULL;
     void *x_test = NULL, *b_test = NULL;
     void *work = NULL;
     void *A_save = NULL;
     void *buff_A = NULL, *buff_B = NULL;
-    integer info;
     integer nrhs = 1, incx = 1, incy = 1;
     char trans_A, trans_B;
+    *info = 0;
 
     /* Create Matrix buff_A and buff_B for computing LL'*/
     create_matrix(datatype, &buff_A, m, m);
@@ -71,7 +71,10 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, i
             norm_b = snrm2_(&m, b, &incx);
 
             /* Find x to compute Ax-b */
-            spotrs_(uplo, &m, &nrhs, A_test, &lda, b_test, &m, &info);
+            spotrs_(uplo, &m, &nrhs, A_test, &lda, b_test, &m, info);
+            if(*info < 0)
+                break;
+
             copy_vector(datatype, m, b_test, 1, x,  1);
 
             /* Compute Ax-b */
@@ -104,7 +107,10 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, i
             norm_b = dnrm2_(&m, b, &incx);
 
             /*Compute Ax-b Linear equations and find x */
-            dpotrs_(uplo, &m, &nrhs, A_test, &lda, b_test, &m, &info);
+            dpotrs_(uplo, &m, &nrhs, A_test, &lda, b_test, &m, info);
+            if(*info < 0)
+                break;
+
             copy_vector(datatype, m, b_test, 1, x,  1);
 
             /* Compute Ax-b */
@@ -137,7 +143,10 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, i
             norm_b = scnrm2_(&m, b, &incx);
 
             /*Find x to compute Ax-b */
-            cpotrs_(uplo, &m, &nrhs, A_test, &lda, b_test, &m, &info);
+            cpotrs_(uplo, &m, &nrhs, A_test, &lda, b_test, &m, info);
+            if(*info < 0)
+                break;
+            
             copy_vector(datatype, m, b_test, 1, x,  1);
 
             /* Compute Ax-b */
@@ -170,7 +179,10 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, i
             norm_b = dznrm2_(&m, b, &incx);
 
             /* Find x to compute Ax-b */
-            zpotrs_(uplo, &m, &nrhs, A_test, &lda, b_test, &m, &info);
+            zpotrs_(uplo, &m, &nrhs, A_test, &lda, b_test, &m, info);
+            if(*info < 0)
+                break;
+
             copy_vector(datatype, m, b_test, 1, x,  1);
 
             /* Compute Ax-b */

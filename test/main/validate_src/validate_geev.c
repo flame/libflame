@@ -21,10 +21,12 @@ void validate_geev(char* jobvl, char* jobvr,
     void* wr,
     void* wi,
     integer datatype,
-    double* residual)
+    double* residual,
+    integer* info)
 {
     void *work = NULL;
     void *lambda = NULL, *Vlambda = NULL;
+    *info = 0;
 
     create_matrix(datatype, &lambda, m, m);
     create_matrix(datatype, &Vlambda, m, m);

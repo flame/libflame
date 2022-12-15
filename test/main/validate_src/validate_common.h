@@ -17,7 +17,8 @@ void validate_geqrf(integer m_A,
     integer lda,
     void *T_test,
     integer datatype,
-    double* residual);
+    double* residual,
+    integer *info);
 
 void validate_gerq2(integer m_A,
     integer n_A,
@@ -26,7 +27,8 @@ void validate_gerq2(integer m_A,
     integer lda,
     void *T_test,
     integer datatype,
-    double* residual);
+    double* residual,
+    integer *info);
 
 void validate_gerqf(integer m_A,
     integer n_A,
@@ -35,7 +37,8 @@ void validate_gerqf(integer m_A,
     integer lda,
     void *T_test,
     integer datatype,
-    double* residual);
+    double* residual,
+    integer *info);
 
 void validate_gesdd(char *jobz,
     integer m,
@@ -49,7 +52,8 @@ void validate_gesdd(char *jobz,
     void* V,
     integer ldvt,
     integer datatype,
-    double* residual);
+    double* residual,
+    integer *info);
 
 void validate_gesvd(char *jobu, char *jobvt,
     integer m,
@@ -63,7 +67,8 @@ void validate_gesvd(char *jobu, char *jobvt,
     void* V,
     integer ldvt,
     integer datatype,
-    double* residual);
+    double* residual,
+    integer *info);
 
 void validate_getrf(integer m_A,
     integer n_A,
@@ -72,7 +77,8 @@ void validate_getrf(integer m_A,
     integer lda,
     integer* IPIV,
     integer datatype,
-    double* residual);
+    double* residual,
+    integer *info);
 
 void validate_getri(integer m_A,
     integer n_A,
@@ -81,7 +87,8 @@ void validate_getri(integer m_A,
     integer lda,
     integer* IPIV,
     integer datatype,
-    double* residual);
+    double* residual,
+    integer *info);
 
 void validate_getrs(char *trans,
     integer n,
@@ -92,7 +99,8 @@ void validate_getrs(char *trans,
     integer ldb,
     void* X,
     integer datatype,
-    double* residual);
+    double* residual,
+    integer *info);
 
 void validate_orgqr(integer m,
     integer n,
@@ -102,7 +110,8 @@ void validate_orgqr(integer m,
     void *R,
     void* work,
     integer datatype,
-    double* residual);
+    double* residual,
+    integer *info);
 
 void validate_potrf(char *uplo,
     integer m,
@@ -110,7 +119,8 @@ void validate_potrf(char *uplo,
     void *A_test,
     integer lda,
     integer datatype,
-    double* residual);
+    double* residual,
+    integer *info);
 
 void validate_potrs(integer n,
     integer nrhs,
@@ -120,7 +130,8 @@ void validate_potrs(integer n,
     void *B,
     integer ldb,
     integer datatype,
-    double* residual);
+    double* residual,
+    integer *info);
 
 void validate_syevd(char* jobz,
     integer n,
@@ -129,7 +140,8 @@ void validate_syevd(char* jobz,
     integer lda,
     void* w,
     integer datatype,
-    double* residual);
+    double* residual,
+    integer *info);
 
 void validate_geevx(char* jobvl,
     char* jobvr,
@@ -151,7 +163,8 @@ void validate_geevx(char* jobvl,
     void* rconde,
     void* rcondv,
     integer datatype,
-    double* residual);
+    double* residual,
+    integer *info);
 
 void validate_geev(char* jobvl,
     char* jobvr,
@@ -167,7 +180,8 @@ void validate_geev(char* jobvl,
     void* wr,
     void* wi,
     integer datatype,
-    double* residual);
+    double* residual,
+    integer *info);
 
 void validate_geqp3(integer m_A,
     integer n_A,
@@ -177,7 +191,8 @@ void validate_geqp3(integer m_A,
     integer *jpvt,
     void *T_test,
     integer datatype,
-    double* residual);
+    double* residual,
+    integer *info);
 
 void validate_gesv(integer n,
     integer nrhs,
@@ -187,7 +202,8 @@ void validate_gesv(integer n,
     integer ldb,
     void* X,
     integer datatype,
-    double* residual);
+    double* residual,
+    integer *info);
 
 void validate_ggev(char* jobvl,
     char* jobvr, 
@@ -205,7 +221,8 @@ void validate_ggev(char* jobvl,
     void* VR, 
     integer ldvr,
     integer datatype, 
-    double *residual);
+    double *residual,
+    integer *info);
 
 void validate_ggevx(char* balanc,
     char* jobvl,
@@ -225,7 +242,8 @@ void validate_ggevx(char* balanc,
     void* VR, 
     integer ldvr,
     integer datatype, 
-    double *residual);
+    double *residual,
+    integer *info);
 
 /* This function will validate STEDC() output eigenvectors and orthogonal
    matrices only if compz != N, as output will not be generated 
@@ -237,6 +255,7 @@ void validate_stedc(char compz,
     void* Z,
     integer ldz,
     integer datatype,
-    double* residual);
+    double* residual,
+    integer *info);
 
 #endif // VALIDATE_COMMON_H

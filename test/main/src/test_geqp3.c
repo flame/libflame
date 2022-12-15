@@ -8,7 +8,7 @@
 void fla_test_geqp3_experiment(test_params_t *params, integer datatype, integer p_cur, integer q_cur,
                                integer pci, integer n_repeats, double* perf, double* t,double* residual);
 void prepare_geqp3_run(integer m_A, integer n_A, void *A, integer lda, integer *jpvt, void *T, integer datatype,
-                       integer n_repeats, double* time_min_);
+                       integer n_repeats, double* time_min_, integer* info);
 void invoke_geqp3(integer datatype, integer* m, integer* n, void* a, integer* lda, integer *jpvt,
                   void* tau, void* work, integer* lwork, void* rwork, integer* info);
 
@@ -128,6 +128,7 @@ void fla_test_geqp3_experiment(test_params_t *params,
                                double* residual)
 {
     integer m, n, lda;
+    integer info = 0, vinfo = 0;
     void *A = NULL, *A_test = NULL, *T = NULL;
     integer *jpvt;
     double time_min = 1e9;
@@ -137,6 +138,12 @@ void fla_test_geqp3_experiment(test_params_t *params,
     m = p_cur;
     n = q_cur;
     lda = params->lin_solver_paramslist[pci].lda;
+
+    if(lda < m)
+    {
+        *residual = DBL_MIN;
+        return;
+    }
 
     /* Create input matrix parameters */
     create_matrix(datatype, &A, lda, n);
@@ -161,7 +168,7 @@ void fla_test_geqp3_experiment(test_params_t *params,
     /* Create pivot array */
     create_vector(INTEGER, (void **) &jpvt, n);
 
-    prepare_geqp3_run(m, n, A_test, lda, jpvt, T, datatype, n_repeats, &time_min);
+    prepare_geqp3_run(m, n, A_test, lda, jpvt, T, datatype, n_repeats, &time_min, &info);
 
     /* execution time */
     *t = time_min;
@@ -177,7 +184,12 @@ void fla_test_geqp3_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* output validation */
-    validate_geqp3(m, n, A, A_test, lda, jpvt, T, datatype, residual);
+    if (info == 0)
+        validate_geqp3(m, n, A, A_test, lda, jpvt, T, datatype, residual, &vinfo);
+        
+    /* Assigning bigger value to residual as execution fails */
+    if (info < 0 || vinfo < 0)
+        *residual = DBL_MAX;
 
 
     /* Free up the buffers */
@@ -195,12 +207,13 @@ void prepare_geqp3_run(integer m_A, integer n_A,
     void *T,
     integer datatype,
     integer n_repeats,
-    double* time_min_)
+    double* time_min_,
+    integer* info)
 {
     integer min_A, i;
     void *A_save = NULL, *T_test = NULL, *work = NULL;
     void *rwork;
-    integer lwork = -1, info = 0;
+    integer lwork = -1;
     double time_min = 1e9, exe_time;
 
     min_A = fla_min(m_A, n_A);
@@ -218,7 +231,13 @@ void prepare_geqp3_run(integer m_A, integer n_A,
         create_vector(datatype, &work, 1);
 
         /* call to  geqp3 API */
-        invoke_geqp3(datatype, &m_A, &n_A, NULL, &lda, NULL, NULL, work, &lwork, rwork, &info);
+        invoke_geqp3(datatype, &m_A, &n_A, NULL, &lda, NULL, NULL, work, &lwork, rwork, info);
+        if(*info < 0)
+        {
+            free_matrix(A_save);
+            free_vector(work);
+            return;
+        }
 
         /* Get work size */
         lwork = get_work_value( datatype, work );
@@ -236,7 +255,7 @@ void prepare_geqp3_run(integer m_A, integer n_A,
     if (datatype >= COMPLEX)
         create_realtype_vector(datatype, &rwork, 2 * n_A);
 
-    for (i = 0; i < n_repeats; ++i)
+    for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers
            for each iteration */
@@ -254,7 +273,7 @@ void prepare_geqp3_run(integer m_A, integer n_A,
         exe_time = fla_test_clock();
 
         /* Call to  gerqf API */
-        invoke_geqp3(datatype, &m_A, &n_A, A, &lda, jpvt, T_test, work, &lwork, rwork, &info);
+        invoke_geqp3(datatype, &m_A, &n_A, A, &lda, jpvt, T_test, work, &lwork, rwork, info);
 
         exe_time = fla_test_clock() - exe_time;
 

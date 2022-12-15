@@ -9,7 +9,7 @@
 /* Local prototypes */
 void fla_test_ggev_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci, integer n_repeats, double* perf, double* t, double* residual);
 void prepare_ggev_run(char *jobvl, char *jobvr, integer n, void *a, integer lda, void *b, integer ldb, void* alpha, void * alphar, void * alphai, void *beta,	void *vl, integer ldvl, 
-                      void *vr, integer ldvr,	integer datatype, integer n_repeats, double* time_min_);
+                      void *vr, integer ldvr,	integer datatype, integer n_repeats, double* time_min_, integer* info);
 void invoke_ggev(integer datatype, char* jobvl, char* jobvr, integer* n, void* a, integer* lda, void* b, integer* ldb, integer* alpha, integer* alphar,
     integer* alphai, integer* beta, void* vl, integer* ldvl, void* vr, integer* ldvr, void* work, integer* lwork, void* rwork, integer* info);
 
@@ -133,6 +133,7 @@ void fla_test_ggev_experiment(test_params_t *params,
     double   *residual)
 {
     integer m, lda, ldvl, ldvr, ldb;
+    integer info = 0, vinfo = 0;
     void *A = NULL, *B = NULL, *VL = NULL, *VR = NULL;
     void * alpha = NULL, *alphar=NULL, *alphai=NULL, *beta, *A_test , *B_test;
     double time_min = 1e9;
@@ -149,6 +150,12 @@ void fla_test_ggev_experiment(test_params_t *params,
     ldb = params->eig_non_sym_paramslist[pci].ldb;
     ldvl = params->eig_non_sym_paramslist[pci].ldvl;
     ldvr = params->eig_non_sym_paramslist[pci].ldvr;
+
+    if(lda < m || ldb < m || ldvl < m || ldvr < m)
+    {
+        *residual = DBL_MIN;
+        return;
+    }
 
     /* Create input matrix parameters */
     create_matrix(datatype, &A, lda, m);
@@ -185,7 +192,7 @@ void fla_test_ggev_experiment(test_params_t *params,
     copy_matrix(datatype, "full", m, m, A, lda, A_test, lda);
     copy_matrix(datatype, "full", m, m, B, ldb, B_test, ldb);
 
-    prepare_ggev_run(&JOBVL,&JOBVR, m, A_test, lda, B_test, ldb, alpha, alphar, alphai, beta,  VL, ldvl, VR, ldvr, datatype, n_repeats, &time_min);
+    prepare_ggev_run(&JOBVL,&JOBVR, m, A_test, lda, B_test, ldb, alpha, alphar, alphai, beta,  VL, ldvl, VR, ldvr, datatype, n_repeats, &time_min, &info);
 
     /* execution time */
     *t = time_min;
@@ -197,10 +204,13 @@ void fla_test_ggev_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* output validation */
-    if (JOBVL == 'V' && JOBVR == 'V')
-    {
-        validate_ggev(&JOBVL, &JOBVR, m, A, lda, B, ldb, alpha, alphar, alphai, beta, VL, ldvl, VR, ldvr, datatype, residual);
-    }
+    if ((JOBVL == 'V' && JOBVR == 'V') && info == 0)
+        validate_ggev(&JOBVL, &JOBVR, m, A, lda, B, ldb, alpha, alphar, alphai, beta, VL, ldvl, VR, ldvr, datatype, residual, &vinfo);
+    
+    /* Assigning bigger value to residual as execution fails */
+    if(info < 0 || vinfo < 0)
+        *residual = DBL_MAX;
+
     /* Free up the buffers */
     free_matrix(A);
     free_matrix(A_test);
@@ -225,11 +235,11 @@ void fla_test_ggev_experiment(test_params_t *params,
 void prepare_ggev_run(char *jobvl, char *jobvr, integer n_A, void *A, integer lda,
                         void *B, integer ldb, void* alpha, void * alphar, void * alphai, void* beta,
                         void *VL, integer ldvl, void *VR, integer ldvr,
-                        integer datatype, integer n_repeats, double* time_min_)
+                        integer datatype, integer n_repeats, double* time_min_, integer* info)
 {
     void *A_save = NULL, *B_save = NULL , *work = NULL, * rwork = NULL;
     integer i;
-    integer lwork, info = 0;
+    integer lwork;
     double time_min = 1e9, exe_time;
 
     /* Make a copy of the input matrix A. Same input values will be passed in
@@ -247,7 +257,14 @@ void prepare_ggev_run(char *jobvl, char *jobvr, integer n_A, void *A, integer ld
         create_vector(datatype, &work, 8*n_A);
 
         /* call to  ggev API to get work query */
-        invoke_ggev(datatype, jobvl, jobvr, &n_A, NULL, &lda, NULL, &ldb, NULL, NULL, NULL, NULL, NULL, &ldvl, NULL, &ldvr, work, &lwork, rwork, &info);
+        invoke_ggev(datatype, jobvl, jobvr, &n_A, NULL, &lda, NULL, &ldb, NULL, NULL, NULL, NULL, NULL, &ldvl, NULL, &ldvr, work, &lwork, rwork, info);
+        if(*info < 0)
+        {
+            free_matrix(A_save);
+            free_matrix(B_save);
+            free_vector(work);
+            return;
+        }
 
         /* Get work size */
         lwork = get_work_value( datatype, work);
@@ -261,7 +278,7 @@ void prepare_ggev_run(char *jobvl, char *jobvr, integer n_A, void *A, integer ld
         lwork = g_lwork;
     }
 
-    for (i = 0; i < n_repeats; ++i)
+    for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers for each iteration */
         copy_matrix(datatype, "full", n_A, n_A, A_save, lda, A, lda);
@@ -275,7 +292,7 @@ void prepare_ggev_run(char *jobvl, char *jobvr, integer n_A, void *A, integer ld
 
         /* call to API */
 
-        invoke_ggev(datatype, jobvl, jobvr, &n_A, A, &lda, B, &ldb, alpha, alphar, alphai, beta, VL, &ldvl, VR, &ldvr, work, &lwork, rwork , &info);
+        invoke_ggev(datatype, jobvl, jobvr, &n_A, A, &lda, B, &ldb, alpha, alphar, alphai, beta, VL, &ldvl, VR, &ldvr, work, &lwork, rwork , info);
         
         exe_time = fla_test_clock() - exe_time;
 

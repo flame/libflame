@@ -12,7 +12,7 @@ void fla_test_geevx_experiment(test_params_t *params, integer datatype, integer 
                                     integer n_repeats, double* perf, double* t, double* residual);
 void prepare_geevx_run(char *balanc, char *jobvl, char *jobvr, char * sense, integer n, void *a, integer lda, void *wr, void *wi, void *w,
                        void *vl, integer ldvl, void *vr, integer ldvr, integer *ilo, integer * ihi, void *scale, void *abnrm,
-		       void *rconde, void *rcondv, integer datatype, integer n_repeats, double* time_min_);
+		       void *rconde, void *rcondv, integer datatype, integer n_repeats, double* time_min_, integer* info);
 void invoke_geevx(integer datatype, char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, void *a, integer *lda,
                   void *wr, void *wi, void *w, void *vl, integer *ldvl, void *vr, integer *ldvr, integer *ilo, integer *ihi,
                   void *scale, void *abnrm, void *rconde, void *rcondv, void* work, integer* lwork, void* rwork, integer* iwork,
@@ -138,6 +138,7 @@ void fla_test_geevx_experiment(test_params_t *params,
     double* residual)
 {
     integer m, lda, ldvl, ldvr;
+    integer info = 0, vinfo = 0;
     integer ilo, ihi;
     void *A = NULL, *wr = NULL, *wi = NULL, *w = NULL, *VL = NULL, *VR = NULL;
     void *scale = NULL, *abnrm = NULL, *rconde = NULL, *rcondv = NULL;
@@ -149,6 +150,12 @@ void fla_test_geevx_experiment(test_params_t *params,
     lda = params->eig_non_sym_paramslist[pci].lda;
     ldvl = params->eig_non_sym_paramslist[pci].ldvl;
     ldvr = params->eig_non_sym_paramslist[pci].ldvr;
+
+    if(lda < m || ldvl < m || ldvr < m)
+    {
+        *residual = DBL_MIN;
+        return;
+    }
 
     *residual =  params->eig_non_sym_paramslist[pci].GenNonSymEigProblem_threshold;
     balanc = params->eig_non_sym_paramslist[pci].balance_ggevx;
@@ -196,7 +203,7 @@ void fla_test_geevx_experiment(test_params_t *params,
     copy_matrix(datatype, "full", m, m, A, lda, A_test, lda);
 
     prepare_geevx_run(&balanc, &jobvl, &jobvr, &sense, m, A_test, lda, wr, wi, w,  VL, ldvl, VR, ldvr,
-                      &ilo, &ihi, scale, abnrm, rconde , rcondv, datatype, n_repeats, time_min);
+                      &ilo, &ihi, scale, abnrm, rconde , rcondv, datatype, n_repeats, time_min, &info);
 
     /* performance computation
        4/3 m^3 flops if job = 'N'
@@ -209,8 +216,13 @@ void fla_test_geevx_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* output validation */
-    validate_geevx(&jobvl, &jobvr, &sense, &balanc, m, A, A_test, lda, VL, ldvl, VR, ldvr, w, wr, wi, scale,
-                   abnrm, rconde, rcondv, datatype, residual);
+    if (info == 0)
+        validate_geevx(&jobvl, &jobvr, &sense, &balanc, m, A, A_test, lda, VL, ldvl, VR, ldvr, w, wr, wi, scale,
+                   abnrm, rconde, rcondv, datatype, residual, &vinfo);
+
+    /* Assigning bigger value to residual as execution fails */
+    if(info < 0 || vinfo < 0)
+        *residual = DBL_MAX;
 
     /* Free up the buffers */
     free_matrix(A);
@@ -239,12 +251,11 @@ void prepare_geevx_run(char *balanc, char *jobvl, char *jobvr, char * sense,
                         void *VL, integer ldvl, void *VR, integer ldvr,
                         integer *ilo, integer *ihi, void *scale, void *abnrm,
                         void *rconde, void *rcondv,
-                        integer datatype, integer n_repeats, double* time_min_)
+                        integer datatype, integer n_repeats, double* time_min_, integer* info)
 {
     void *A_save = NULL, *rwork = NULL, *iwork = NULL, *work = NULL;
     integer lwork, liwork, lrwork;
     integer i;
-    integer info = 0;
     double time_min = 1e9, exe_time;
 
     /* Make a copy of the input matrix A. Same input values will be passed in
@@ -270,7 +281,13 @@ void prepare_geevx_run(char *balanc, char *jobvl, char *jobvr, char * sense,
         /* call to  geevx API */
         invoke_geevx(datatype, balanc, jobvl, jobvr, sense, &m_A, NULL, &lda,
                     NULL, NULL, NULL, NULL, &ldvl, NULL, &ldvr,
-                    ilo, ihi, NULL, NULL, NULL, NULL, work, &lwork, rwork, NULL, &info);
+                    ilo, ihi, NULL, NULL, NULL, NULL, work, &lwork, rwork, NULL, info);
+        if(*info < 0)
+        {
+            free_matrix(A_save);
+            free_vector(work);
+            return;
+        }
 
         /* Get work size */
         lwork = get_work_value( datatype, work );
@@ -289,7 +306,7 @@ void prepare_geevx_run(char *balanc, char *jobvl, char *jobvr, char * sense,
         free_vector(rwork);
     }
 
-    for (i = 0; i < n_repeats; ++i)
+    for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers
            for each iteration*/
@@ -309,7 +326,7 @@ void prepare_geevx_run(char *balanc, char *jobvl, char *jobvr, char * sense,
 
         /* call to geevx API */
         invoke_geevx(datatype, balanc, jobvl, jobvr, sense, &m_A, A, &lda, wr, wi, w, VL, &ldvl, VR, &ldvr,
-                     ilo, ihi, scale, abnrm, rconde, rcondv, work, &lwork, rwork, iwork, &info);
+                     ilo, ihi, scale, abnrm, rconde, rcondv, work, &lwork, rwork, iwork, info);
  
         exe_time = fla_test_clock() - exe_time;
 

@@ -7,7 +7,7 @@
 // Local prototypes.
 void fla_test_gerqf_experiment(test_params_t *params, integer  datatype, integer  p_cur, integer  q_cur, integer pci,
                                     integer n_repeats, double* perf, double* t, double* residual);
-void prepare_gerqf_run(integer m_A, integer n_A, void *A, integer lda, void *T, integer datatype, integer n_repeats, double* time_min_);
+void prepare_gerqf_run(integer m_A, integer n_A, void *A, integer lda, void *T, integer datatype, integer n_repeats, double* time_min_, integer *info);
 void invoke_gerqf(integer datatype, integer *m, integer *n, void *a, integer *lda, void *tau, void *work, integer *lwork, integer *info);
 
 /* Flag to indicate lwork availability status
@@ -126,6 +126,7 @@ void fla_test_gerqf_experiment(test_params_t *params,
     double* residual)
 {
     integer m, n, lda;
+    integer info = 0, vinfo = 0;
     void *A, *A_test, *T;
     double time_min = 1e9;
 
@@ -133,6 +134,12 @@ void fla_test_gerqf_experiment(test_params_t *params,
     m = p_cur;
     n = q_cur;
     lda = params->lin_solver_paramslist[pci].lda;
+
+    if(lda < m)
+    {
+        *residual = DBL_MIN;
+        return;
+    }
 
     // Create input matrix parameters
     create_matrix(datatype, &A, lda, n);
@@ -153,7 +160,7 @@ void fla_test_gerqf_experiment(test_params_t *params,
     create_matrix(datatype, &A_test, lda, n);
     copy_matrix(datatype, "full", m, n, A, lda, A_test, lda);
 
-    prepare_gerqf_run(m, n, A_test, lda, T, datatype, n_repeats, &time_min);
+    prepare_gerqf_run(m, n, A_test, lda, T, datatype, n_repeats, &time_min, &info);
 
     // Execution time
     *t = time_min;
@@ -168,7 +175,12 @@ void fla_test_gerqf_experiment(test_params_t *params,
         *perf *= 4.0;
 
     // Output validation
-    validate_gerqf(m, n, A, A_test, lda, T, datatype, residual);
+    if (info == 0 )
+        validate_gerqf(m, n, A, A_test, lda, T, datatype, residual, &vinfo);
+
+    /* Assigning bigger value to residual as execution fails */
+    if (info < 0 || vinfo < 0)
+        *residual = DBL_MAX;
 
     // Free up the buffers
     free_matrix(A);
@@ -184,11 +196,12 @@ void prepare_gerqf_run(integer m_A,
     void *T,
     integer datatype,
     integer n_repeats,
-    double* time_min_)
+    double* time_min_,
+    integer* info)
 {
     integer min_A, i;
     void *A_save, *T_test, *work;
-    integer lwork = -1, info = 0;
+    integer lwork = -1;
     double time_min = 1e9, exe_time;
 
     min_A = fla_min(m_A, n_A);
@@ -206,7 +219,13 @@ void prepare_gerqf_run(integer m_A,
         create_vector(datatype, &work, 1);
 
         // call to  gerqf API
-        invoke_gerqf(datatype, &m_A, &n_A, NULL, &lda, NULL, work, &lwork, &info);
+        invoke_gerqf(datatype, &m_A, &n_A, NULL, &lda, NULL, work, &lwork, info);
+        if(*info < 0)
+        {
+            free_vector(work);
+            free_matrix(A_save);
+            return;
+        }
 
         // Get work size
         lwork = get_work_value( datatype, work );
@@ -220,7 +239,7 @@ void prepare_gerqf_run(integer m_A,
         lwork = g_lwork;
     }
 
-    for (i = 0; i < n_repeats; ++i)
+    for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers
            for each iteration*/
@@ -235,7 +254,7 @@ void prepare_gerqf_run(integer m_A,
         exe_time = fla_test_clock();
 
         // Call to  gerqf API
-        invoke_gerqf(datatype, &m_A, &n_A, A, &lda, T_test, work, &lwork, &info);
+        invoke_gerqf(datatype, &m_A, &n_A, A, &lda, T_test, work, &lwork, info);
 
         exe_time = fla_test_clock() - exe_time;
 

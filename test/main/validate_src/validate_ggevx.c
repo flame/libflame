@@ -8,10 +8,11 @@
 
 #include "test_common.h"
 
-void validate_ggevx(char* balanc, char* jobvl, char* jobvr, char* sense, integer n, void* A, integer lda, void* B, integer ldb, void* alpha, void* alphar, void* alphai, void* beta, void* VL, integer ldvl, void* VR, integer ldvr, integer datatype, double *residual)
+void validate_ggevx(char* balanc, char* jobvl, char* jobvr, char* sense, integer n, void* A, integer lda, void* B, integer ldb, void* alpha, void* alphar, void* alphai, void* beta, void* VL, integer ldvl, void* VR, integer ldvr, integer datatype, double *residual, integer* info)
 {
     integer i, j;
     void *work = NULL;
+    *info = 0;
 
     switch (datatype)
     {

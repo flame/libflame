@@ -10,7 +10,7 @@
 /* Local prototypes.*/
 void fla_test_geev_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci,
                                     integer n_repeats, double* perf, double* t, double* residual);
-void prepare_geev_run(char *jobvl, char *jobvr, integer n, void *a, integer lda, void *wr, void *wi, void *w, void *vl, integer ldvl, void *vr, integer ldvr, integer datatype, integer n_repeats, double* time_min_);
+void prepare_geev_run(char *jobvl, char *jobvr, integer n, void *a, integer lda, void *wr, void *wi, void *w, void *vl, integer ldvl, void *vr, integer ldvr, integer datatype, integer n_repeats, double* time_min_, integer* info);
 void invoke_geev(integer datatype, char *jobvl, char *jobvr, integer *n, void *a, integer *lda, void *wr, void *wi, void *w, void *vl, integer *ldvl, void *vr, integer *ldvr, void* work, integer* lwork, void* rwork, integer* info);
 
 /* Flag to indicate lwork availability status
@@ -132,6 +132,7 @@ void fla_test_geev_experiment(test_params_t *params,
     double* residual)
 {
     integer n, lda, ldvl, ldvr;
+    integer info = 0, vinfo = 0;
     void *A = NULL, *wr = NULL, *wi = NULL, *w = NULL, *VL = NULL, *VR = NULL;
     void *A_test = NULL;
     char jobvl, jobvr;
@@ -141,6 +142,12 @@ void fla_test_geev_experiment(test_params_t *params,
     lda = params->eig_non_sym_paramslist[pci].lda;
     ldvl = params->eig_non_sym_paramslist[pci].ldvl;
     ldvr = params->eig_non_sym_paramslist[pci].ldvr;
+
+    if(lda < n || ldvl < n || ldvr < n)
+    {
+        *residual = DBL_MIN;
+        return;
+    }
 
     *residual =  params->eig_non_sym_paramslist[pci].GenNonSymEigProblem_threshold;
     jobvl = params->eig_non_sym_paramslist[pci].jobvsl;
@@ -175,7 +182,7 @@ void fla_test_geev_experiment(test_params_t *params,
     create_matrix(datatype, &A_test, lda, n);
     copy_matrix(datatype, "full", n, n, A, lda, A_test, lda);
 
-    prepare_geev_run(&jobvl, &jobvr, n, A_test, lda, wr, wi, w,  VL, ldvl, VR, ldvr, datatype, n_repeats, time_min);
+    prepare_geev_run(&jobvl, &jobvr, n, A_test, lda, wr, wi, w,  VL, ldvl, VR, ldvr, datatype, n_repeats, time_min, &info);
 
     /* performance computation
        4/3 n^3 flops if job = 'N'
@@ -189,7 +196,12 @@ void fla_test_geev_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* output validation */
-    validate_geev(&jobvl, &jobvr, n, A, A_test, lda, VL, ldvl, VR, ldvr, w, wr, wi, datatype, residual);
+    if (info == 0)
+        validate_geev(&jobvl, &jobvr, n, A, A_test, lda, VL, ldvl, VR, ldvr, w, wr, wi, datatype, residual, &vinfo);
+
+    /* Assigning bigger value to residual as execution fails */
+    if (info < 0 || vinfo < 0)
+        *residual = DBL_MAX;
 
     /* Free up the buffers */
     free_matrix(A);
@@ -211,12 +223,11 @@ void fla_test_geev_experiment(test_params_t *params,
 void prepare_geev_run(char *jobvl, char *jobvr, integer m_A, void *A, integer lda,
                         void *wr, void *wi, void *w,
                         void *VL, integer ldvl, void *VR, integer ldvr,
-                        integer datatype, integer n_repeats, double* time_min_)
+                        integer datatype, integer n_repeats, double* time_min_, integer* info)
 {
     void *A_save = NULL, *rwork = NULL, *work = NULL;
     integer lwork, lrwork;
     integer i;
-    integer info = 0;
     double time_min = 1e9, exe_time;
 
 
@@ -242,7 +253,13 @@ void prepare_geev_run(char *jobvl, char *jobvr, integer m_A, void *A, integer ld
  
         /* call to  geev API */
         invoke_geev(datatype, jobvl, jobvr, &m_A, NULL, &lda, NULL, NULL, NULL,
-                    NULL, &ldvl, NULL, &ldvr, work, &lwork, rwork, &info);
+                    NULL, &ldvl, NULL, &ldvr, work, &lwork, rwork, info);
+        if (*info < 0)
+        {
+            free_matrix(A_save);
+            free_vector(work);
+            return;
+        }
 
         /* Get work size */
         lwork = get_work_value( datatype, work );
@@ -260,7 +277,7 @@ void prepare_geev_run(char *jobvl, char *jobvr, integer m_A, void *A, integer ld
         free_vector(rwork);
     }
 
-    for (i = 0; i < n_repeats; ++i)
+    for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers
            for each iteration*/
@@ -275,7 +292,7 @@ void prepare_geev_run(char *jobvl, char *jobvr, integer m_A, void *A, integer ld
 
         /* call to geev API */
         invoke_geev(datatype, jobvl, jobvr, &m_A, A, &lda, wr, wi, w,
-                    VL, &ldvl, VR, &ldvr, work, &lwork, rwork, &info);
+                    VL, &ldvl, VR, &ldvr, work, &lwork, rwork, info);
 
         exe_time = fla_test_clock() - exe_time;
 

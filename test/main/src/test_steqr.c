@@ -9,7 +9,7 @@
 /* Local prototypes.*/
 void fla_test_steqr_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci,
 integer n_repeats, double* perf, double* t, double* residual);
-void prepare_steqr_run(char* compz, integer n, void* Z, integer ldz, void* D, void* E, integer datatype, integer n_repeats, double* time_min_);
+void prepare_steqr_run(char* compz, integer n, void* Z, integer ldz, void* D, void* E, integer datatype, integer n_repeats, double* time_min_, integer* info);
 void invoke_steqr(integer datatype, char* compz, integer* n, void* z, integer* ldz, void* d, void* e, void* work, integer* info);
 static FILE* g_ext_fptr = NULL;
 
@@ -120,7 +120,7 @@ void fla_test_steqr_experiment(test_params_t *params,
                                double *time_min,
                                double* residual)
 {
-    integer n, ldz, lda, info = 0;
+    integer n, ldz, lda, info = 0, vinfo = 0;
     char compz, uplo;
     void *Z = NULL, *Z_test = NULL, *A = NULL, *Q = NULL;
     void *D = NULL, *D_test = NULL, *E = NULL, *E_test = NULL;
@@ -133,6 +133,12 @@ void fla_test_steqr_experiment(test_params_t *params,
     n = p_cur;
     ldz = params->eig_sym_paramslist[pci].ldz;
     lda = ldz;
+
+    if(ldz < n || lda < n)
+    {
+        *residual = DBL_MIN;
+        return;
+    }
 
     /* Create input matrix parameters */
     create_matrix(datatype, &Z, ldz, n);
@@ -170,6 +176,17 @@ void fla_test_steqr_experiment(test_params_t *params,
     reset_matrix(datatype, n, n, Z_test, ldz);
 
     invoke_sytrd(datatype, &uplo, compz, n, Q, lda, D, E, &info);
+    if(info < 0)
+    {
+        *residual = DBL_MAX;
+        free_matrix(Z_test);
+        free_matrix(A);
+        free_matrix(Z);
+        free_matrix(Q);
+        free_vector(D);
+        free_vector(E);
+        return;
+    }
     /*form tridiagonal matrix Z by copying from matrix*/
     copy_sym_tridiag_matrix(datatype, D, E, n, n, Z, ldz);
 
@@ -185,7 +202,7 @@ void fla_test_steqr_experiment(test_params_t *params,
     copy_vector(get_realtype(datatype), n, D, 1, D_test, 1);
     copy_vector(get_realtype(datatype), n-1, E, 1, E_test, 1);
 
-    prepare_steqr_run(&compz, n, Z_test, ldz, D_test, E_test, datatype, n_repeats, time_min);
+    prepare_steqr_run(&compz, n, Z_test, ldz, D_test, E_test, datatype, n_repeats, time_min, &info);
 
     /* performance computation
        24 n^2 flops for eigen vectors of Z, compz = 'N'
@@ -200,7 +217,11 @@ void fla_test_steqr_experiment(test_params_t *params,
         *perf = (double)(14.0 * n * n * n) / *time_min / FLOPS_PER_UNIT_PERF;
 
     /* output validation */
-    validate_syevd(&compz, n, Z, Z_test, ldz, D_test, datatype, residual);
+    if (info == 0)
+        validate_syevd(&compz, n, Z, Z_test, ldz, D_test, datatype, residual, &vinfo);
+    
+    if (info < 0 || vinfo < 0)
+        *residual = DBL_MAX;
 
     /* Free up the buffers */
     free_matrix(Z);
@@ -221,10 +242,11 @@ void prepare_steqr_run(char *compz,
                        void *E,
                        integer datatype,
                        integer n_repeats,
-                       double* time_min_)
+                       double* time_min_,
+                       integer* info)
 {
     void *Z_save = NULL, *D_save = NULL, *E_save = NULL, *work = NULL;
-    integer i, info = 0;
+    integer i;
     double time_min = 1e9, exe_time;
 
     /* Make a copy of the input matrix A. Same input values will be passed in
@@ -237,7 +259,7 @@ void prepare_steqr_run(char *compz,
     copy_vector(get_realtype(datatype), n, D, 1, D_save, 1);
     copy_vector(get_realtype(datatype), n-1, E, 1, E_save, 1);
 
-    for (i = 0; i < n_repeats; ++i)
+    for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers
            for each iteration*/
@@ -249,7 +271,7 @@ void prepare_steqr_run(char *compz,
         exe_time = fla_test_clock();
 
         /* call to API */
-        invoke_steqr(datatype, compz, &n, Z, &ldz, D, E, work, &info);
+        invoke_steqr(datatype, compz, &n, Z, &ldz, D, E, work, info);
 
         exe_time = fla_test_clock() - exe_time;
 

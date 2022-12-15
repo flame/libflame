@@ -16,11 +16,12 @@ void validate_potrs(integer n,
     void *B,
     integer ldb,
     integer datatype,
-    double* residual)
+    double* residual,
+    integer* info)
 {
     void* work = NULL;
     integer ldx;
-
+    *info = 0;
     ldx = n;
 
     switch(datatype)

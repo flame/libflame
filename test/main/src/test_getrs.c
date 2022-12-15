@@ -7,7 +7,7 @@
 /* Local prototypes */
 void fla_test_getrs_experiment(test_params_t *params, integer  datatype, integer  p_cur, integer  q_cur, integer pci,
                                     integer n_repeats, double* perf, double* t, double* residual);
-void prepare_getrs_run(char *trans, integer m_A, integer n_A, void *A, integer lda, void *B, integer ldb, integer* ipiv, integer datatype, integer n_repeats, double* time_min_);
+void prepare_getrs_run(char *trans, integer m_A, integer n_A, void *A, integer lda, void *B, integer ldb, integer* ipiv, integer datatype, integer n_repeats, double* time_min_, integer *info);
 void invoke_getrs(integer datatype, char *trans, integer *nrhs, integer *n, void *a, integer *lda, integer *ipiv, void *b, integer *ldb, integer *info);
 
 static FILE* g_ext_fptr = NULL;
@@ -122,7 +122,8 @@ void fla_test_getrs_experiment(test_params_t *params,
     double* t,
     double* residual)
 {
-    integer n, lda, ldb, NRHS, info = 0;
+    integer n, lda, ldb, NRHS;
+    integer info = 0, vinfo = 0;
     void* IPIV;
     void *A, *A_test, *B, *B_save, *X;
     double time_min = 1e9;
@@ -134,6 +135,13 @@ void fla_test_getrs_experiment(test_params_t *params,
     n = p_cur;
     lda = params->lin_solver_paramslist[pci].lda;
     ldb = params->lin_solver_paramslist[pci].ldb;
+
+    if(lda < n || ldb < n)
+    {
+        *residual = DBL_MIN;
+        return;
+    }
+
     /* Create the matrices for the current operation*/
     create_matrix(datatype, &A, lda, n);
     create_vector(INTEGER, &IPIV, n);
@@ -162,8 +170,19 @@ void fla_test_getrs_experiment(test_params_t *params,
 
     /*  call to API getrf to get AFACT */
     invoke_getrf(datatype, &n, &n, A_test, &lda, IPIV, &info);
+    if(info < 0)
+    {
+        *residual = DBL_MAX;
+        free_matrix(A);
+        free_matrix(A_test);
+        free_vector(IPIV);
+        free_matrix(B);
+        free_matrix(X);
+        free_matrix(B_save);
+        return;
+    }
     /* call to API */
-    prepare_getrs_run(&TRANS, n, NRHS, A_test, lda, B, ldb, IPIV, datatype, n_repeats, &time_min);
+    prepare_getrs_run(&TRANS, n, NRHS, A_test, lda, B, ldb, IPIV, datatype, n_repeats, &time_min, &info);
     copy_matrix(datatype, "full", n, NRHS, B, ldb, X, n);
     /* execution time */
     *t = time_min;
@@ -175,8 +194,13 @@ void fla_test_getrs_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* output validation */
-    validate_getrs(&TRANS, n, NRHS, A, lda, B_save, ldb, X, datatype, residual);
+    if(info == 0)
+        validate_getrs(&TRANS, n, NRHS, A, lda, B_save, ldb, X, datatype, residual, &vinfo);
 
+    /* Assigning bigger value to residual as execution fails */
+    if(info < 0 || vinfo < 0)
+        *residual = DBL_MAX;
+        
     /* Free up the buffers */
     free_matrix(A);
     free_matrix(A_test);
@@ -197,11 +221,11 @@ void prepare_getrs_run(char *TRANS,
     integer* IPIV,
     integer datatype,
     integer n_repeats,
-    double* time_min_)
+    double* time_min_,
+    integer* info)
 {
     integer i;
     void *A_save, *B_test;
-    integer info = 0;
     double time_min = 1e9, exe_time;
 
     /* Save the original matrix */
@@ -210,7 +234,7 @@ void prepare_getrs_run(char *TRANS,
     create_matrix(datatype, &B_test, ldb, nrhs);
 
 
-    for (i = 0; i < n_repeats; ++i)
+    for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Copy original input data */
         copy_matrix(datatype, "full", n_A, n_A, A, lda, A_save, lda);
@@ -219,7 +243,7 @@ void prepare_getrs_run(char *TRANS,
         exe_time = fla_test_clock();
 
         /*  call  getrs API with AFACT */
-        invoke_getrs(datatype, TRANS, &n_A, &nrhs, A_save, &lda, IPIV, B_test, &ldb, &info);
+        invoke_getrs(datatype, TRANS, &n_A, &nrhs, A_save, &lda, IPIV, B_test, &ldb, info);
 
         exe_time = fla_test_clock() - exe_time;
 
