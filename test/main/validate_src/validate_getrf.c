@@ -15,13 +15,15 @@ void validate_getrf(integer m_A,
     integer lda,
     integer* IPIV,
     integer datatype,
-    double* residual)
+    double* residual,
+    integer* info)
 {
     /* System generated locals */
     integer m_n_vector, min_A;
     integer m_L, n_L, m_U, n_U, k;
     void *L, *U, *T, *work, *B, *B_test, *A_save;
-    integer nrhs=1, info;
+    integer nrhs=1;
+    *info = 0;
 
     m_n_vector = m_A * n_A;
     min_A = fla_min(m_A, n_A);
@@ -68,7 +70,9 @@ void validate_getrf(integer m_A,
             {
                 norm_B = snrm2_(&m_A, B, &i_one);
                 /* Compute X by passing A and B */
-                sgetrs_("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, &info);
+                sgetrs_("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, info);
+                if(*info < 0)
+                    break;
                 /* Compute AX-B */
                 sgemv_("N", &m_A, &m_A, &s_one, A, &lda, B_test, &i_one, &s_n_one, B, &i_one);
                 norm = snrm2_(&m_A, B, &i_one);
@@ -107,7 +111,9 @@ void validate_getrf(integer m_A,
             {
                 norm_B = dnrm2_(&m_A, B, &i_one);
                 /* Compute X by passing A and B */
-                dgetrs_("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, &info);
+                dgetrs_("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, info);
+                if(*info < 0)
+                    break;
                 /* Compute AX-B */
                 dgemv_("N", &m_A, &m_A, &d_one, A, &lda, B_test, &i_one, &d_n_one, B, &i_one);
                 norm = dnrm2_(&m_A, B, &i_one);
@@ -145,7 +151,9 @@ void validate_getrf(integer m_A,
             {
                 norm_B = snrm2_(&m_A, B, &i_one);
                 /* Compute X by passing A and B */
-                cgetrs_("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, &info);
+                cgetrs_("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, info);
+                if(*info < 0)
+                    break;
                 /* Compute AX-B */
                 cgemv_("N", &m_A, &m_A, &c_one, A, &lda, B_test, &i_one, &c_n_one, B, &i_one);
                 norm = snrm2_(&m_A, B, &i_one);
@@ -184,7 +192,9 @@ void validate_getrf(integer m_A,
             {
                 norm_B = dnrm2_(&m_A, B, &i_one);
                 /* Compute X by passing A and B */
-                zgetrs_("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, &info);
+                zgetrs_("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, info);
+                if(*info < 0)
+                    break;
                 /* Compute AX-B */
                 zgemv_("N", &m_A, &m_A, &z_one, A, &lda, B_test, &i_one, &z_n_one, B, &i_one);
                 norm = dnrm2_(&m_A, B, &i_one);

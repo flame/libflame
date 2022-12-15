@@ -17,11 +17,12 @@ void validate_getrs(char *trans,
     integer ldb,
     void* X,
     integer datatype,
-    double* residual)
+    double* residual,
+    integer* info)
 {
     void* work = NULL;
     integer ldx;
-
+    *info = 0;
     ldx = n;
 
     switch (datatype)

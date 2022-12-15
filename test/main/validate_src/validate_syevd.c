@@ -8,8 +8,9 @@
 
 #include "test_common.h"
 
-void validate_syevd(char* jobz, integer n, void* A, void* A_test, integer lda, void* w, integer datatype, double* residual)
+void validate_syevd(char* jobz, integer n, void* A, void* A_test, integer lda, void* w, integer datatype, double* residual, integer* info)
 {
+    *info = 0;
     if(*jobz != 'N')
     {
         void *lambda = NULL, *zlambda = NULL, *Z = NULL;

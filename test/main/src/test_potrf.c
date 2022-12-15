@@ -8,7 +8,7 @@
 
 /* Local prototypes.*/
 void fla_test_potrf_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats,double* perf, double* time_min, double* residual);
-void prepare_potrf_run(char* uplo, integer m, void *A, integer lda, integer datatype, integer n_repeats, double* time_min_);
+void prepare_potrf_run(char* uplo, integer m, void *A, integer lda, integer datatype, integer n_repeats, double* time_min_, integer *info);
 static FILE* g_ext_fptr = NULL;
 
 void fla_test_potrf(integer argc, char ** argv, test_params_t *params)
@@ -116,12 +116,19 @@ void fla_test_potrf_experiment(test_params_t *params,
     double* residual)
 {
     integer m, lda;
+    integer info = 0, vinfo = 0;
     void *A = NULL, *A_test = NULL;
     char uplo = params->lin_solver_paramslist[pci].Uplo;
 
     /* Get input matrix dimensions */
     m = p_cur;
     lda = params->lin_solver_paramslist[pci].lda;
+
+    if(lda < m)
+    {
+        *residual = DBL_MIN;
+        return;
+    }
 
     /* Create input matrix parameters */
     create_matrix(datatype, &A, lda, m);
@@ -141,7 +148,7 @@ void fla_test_potrf_experiment(test_params_t *params,
     create_matrix(datatype, &A_test, lda, m);
     copy_matrix(datatype, "full", m, m, A, lda, A_test, lda);
 
-    prepare_potrf_run(&uplo, m, A_test, lda, datatype, n_repeats, time_min);
+    prepare_potrf_run(&uplo, m, A_test, lda, datatype, n_repeats, time_min, &info);
 
     /* Compute the performance of the best experiment repeat */
     /* (1/3)m^3 for real and (4/3)m^3 for complex*/
@@ -149,7 +156,12 @@ void fla_test_potrf_experiment(test_params_t *params,
     if(datatype == COMPLEX || datatype == DOUBLE_COMPLEX)
         *perf *= 4.0;
 
-    validate_potrf(&uplo, m, A, A_test, lda, datatype, residual);
+    if(info == 0)
+        validate_potrf(&uplo, m, A, A_test, lda, datatype, residual, &vinfo);
+
+    /* Assigning bigger value to residual as execution fails */
+    if (info < 0 || vinfo < 0)
+        *residual = DBL_MAX;
 
     free_matrix(A);
     free_matrix(A_test);
@@ -160,24 +172,25 @@ void prepare_potrf_run(char* uplo, integer m,
     integer lda,
     integer datatype,
     integer n_repeats,
-    double* time_min_)
+    double* time_min_,
+    integer* info)
 {
     void *A_save = NULL;
     double time_min = 1e9, exe_time;
-    integer i, info = 0;
+    integer i;
 
     /* Make a copy of the input matrix A. Same input values will be passed in
        each itertaion.*/
     create_matrix(datatype, &A_save, lda, m);
     copy_matrix(datatype, "full", m, m, A, lda, A_save, lda);
 
-    for (i = 0; i < n_repeats; ++i)
+    for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers
         for each iteration */
         copy_matrix(datatype, "full", m, m, A_save, lda, A, lda);
         exe_time = fla_test_clock();
-        invoke_potrf(uplo, datatype, &m, A, &lda, &info);
+        invoke_potrf(uplo, datatype, &m, A, &lda, info);
         exe_time = fla_test_clock() - exe_time;
         /* Get the best execution time */
         time_min = fla_min(time_min, exe_time);

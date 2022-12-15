@@ -6,7 +6,7 @@
 
 // Local prototypes.
 void fla_test_potrs_experiment(test_params_t *params, integer datatype, integer  p_cur, integer  q_cur, integer  pci, integer  n_repeats,double* perf, double* time_min,double* residual);
-void prepare_potrs_run(char* uplo, integer m, integer nrhs, void *A, integer lda, integer datatype, void *b, integer ldb, integer n_repeats, double* time_min_);
+void prepare_potrs_run(char* uplo, integer m, integer nrhs, void *A, integer lda, integer datatype, void *b, integer ldb, integer n_repeats, double* time_min_, integer *info);
 void invoke_potrs(char* uplo, integer datatype, integer* m, void* A, integer* lda, integer *nrhs, void* b, integer* ldb, integer* info);
 static FILE* g_ext_fptr = NULL;
 
@@ -117,7 +117,7 @@ void fla_test_potrs_experiment(test_params_t *params,
     double* t,
     double* residual)
 {
-    integer n, info = 0, nrhs, lda, ldb;
+    integer n, info = 0, nrhs, lda, ldb, vinfo = 0;
     void *A = NULL, *A_test = NULL;
     void *B = NULL, *X = NULL;
     void *B_test = NULL;
@@ -129,6 +129,13 @@ void fla_test_potrs_experiment(test_params_t *params,
     n= p_cur;
     lda = params->lin_solver_paramslist[pci].lda;
     ldb = params->lin_solver_paramslist[pci].ldb;
+
+    if(lda < n || ldb < n)
+    {
+        *residual = DBL_MIN;
+        return;
+    }
+
     /* Create input matrix parameters */
     create_matrix(datatype, &A, lda, n);
     create_matrix(datatype, &A_test, lda, n);
@@ -153,12 +160,20 @@ void fla_test_potrs_experiment(test_params_t *params,
     copy_matrix(datatype, "full", n, n, A, lda, A_test, lda);
     /* cholesky factorisation of A as input to potrs */
     invoke_potrf(&uplo, datatype, &n, A, &lda, &info);
-
-
+    if(info < 0)
+    {
+        *residual = DBL_MAX;
+        free_matrix(A);
+        free_matrix(A_test);
+        free_matrix(B_test);
+        free_matrix(B);
+        free_matrix(X);    
+        return;
+    }
     copy_matrix(datatype, "full", n, nrhs, B, ldb, B_test, ldb);
 
     /* Invoke potrs API to find x using Ax-b */
-    prepare_potrs_run(&uplo, n, nrhs, A, lda, datatype, B_test, ldb, n_repeats, &time_min);
+    prepare_potrs_run(&uplo, n, nrhs, A, lda, datatype, B_test, ldb, n_repeats, &time_min, &info);
     copy_matrix(datatype, "full", n, nrhs, B_test, ldb, X, n);
     /* execution time */
     *t = time_min;
@@ -169,8 +184,13 @@ void fla_test_potrs_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* Validate potrs call by computing Ax-b */
-    validate_potrs(n, nrhs, A_test, lda, X, B, ldb, datatype, residual);
+    if(info == 0)
+        validate_potrs(n, nrhs, A_test, lda, X, B, ldb, datatype, residual, &vinfo);
 
+    /* Assigning bigger value to residual as execution fails */
+    if (info < 0 || vinfo < 0)
+        *residual = DBL_MAX;
+        
     free_matrix(A);
     free_matrix(A_test);
     free_matrix(B_test);
@@ -188,25 +208,26 @@ void prepare_potrs_run(char* uplo,
     void *B,
     integer ldb,
     integer n_repeats,
-    double* time_min_)
+    double* time_min_,
+    integer* info)
 {
     void *A_save = NULL, *B_test = NULL;
     double time_min = 1e9, exe_time;
-    integer i, info = 0;
+    integer i;
 
     /* Make a copy of the input matrix A. Same input values will be passed in
        each itertaion.*/
     create_matrix(datatype, &A_save, lda, n);
     create_matrix(datatype, &B_test, ldb, nrhs);
 
-    for (i = 0; i < n_repeats; ++i)
+    for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers
         for each iteration */
         copy_matrix(datatype, "full", n, n, A, lda, A_save, lda);
         copy_matrix(datatype, "full", n, nrhs, B, ldb, B_test, ldb);
         exe_time = fla_test_clock();
-        invoke_potrs(uplo, datatype, &n, A_save, &lda, &nrhs, B_test, &ldb, &info);
+        invoke_potrs(uplo, datatype, &n, A_save, &lda, &nrhs, B_test, &ldb, info);
         exe_time = fla_test_clock() - exe_time;
         /* Get the best execution time */
         time_min = fla_min(time_min, exe_time);

@@ -7,7 +7,7 @@
 /* Local prototypes */
 void fla_test_getri_experiment(test_params_t *params, integer  datatype, integer  p_cur, integer  q_cur, integer pci,
                                     integer n_repeats, double* perf, double* t, double* residual);
-void prepare_getri_run(integer m_A, integer n_A, void *A, integer lda, integer* ipiv, integer datatype, integer n_repeats, double* time_min_);
+void prepare_getri_run(integer m_A, integer n_A, void *A, integer lda, integer* ipiv, integer datatype, integer n_repeats, double* time_min_, integer *info);
 void invoke_getri(integer datatype, integer *n, void *a, integer *lda, integer *ipiv, void *work, integer *lwork, integer *info);
 
 /* Flag to indicate lwork availability status
@@ -125,7 +125,7 @@ void fla_test_getri_experiment(test_params_t *params,
     double* t,
     double* residual)
 {
-    integer n, lda;
+    integer n, lda, info = 0, vinfo = 0;
     void* IPIV;
     void *A, *A_test;
     double time_min = 1e9;
@@ -134,6 +134,13 @@ void fla_test_getri_experiment(test_params_t *params,
     /* Determine the dimensions*/
     n = p_cur;
     lda = params->lin_solver_paramslist[pci].lda;
+
+    if(lda < n)
+    {
+        *residual = DBL_MIN;
+        return;
+    }
+
     /* Create the matrices for the current operation*/
     create_matrix(datatype, &A, lda, n);
     create_vector(INTEGER, &IPIV, n);
@@ -154,7 +161,7 @@ void fla_test_getri_experiment(test_params_t *params,
     copy_matrix(datatype, "full", n, n, A, lda, A_test, lda);
 
     /* call to API */
-    prepare_getri_run(n, n, A_test, lda, IPIV, datatype, n_repeats, &time_min);
+    prepare_getri_run(n, n, A_test, lda, IPIV, datatype, n_repeats, &time_min, &info);
 
     /* execution time */
     *t = time_min;
@@ -166,7 +173,12 @@ void fla_test_getri_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* output validation */
-    validate_getri(n, n, A, A_test, lda, IPIV, datatype, residual);
+    if (info == 0)
+        validate_getri(n, n, A, A_test, lda, IPIV, datatype, residual, &vinfo);
+
+    /* Assigning bigger value to residual as execution fails */
+    if(info < 0 || vinfo < 0)
+        *residual = DBL_MAX;
 
     /* Free up the buffers */
     free_matrix(A);
@@ -182,12 +194,12 @@ void prepare_getri_run(integer m_A,
     integer* IPIV,
     integer datatype,
     integer n_repeats,
-    double* time_min_)
+    double* time_min_,
+    integer* info)
 {
     integer lwork;
     integer i;
     void *A_save, *work;
-    integer info = 0;
     double time_min = 1e9, exe_time;
     lwork = i_n_one;
 
@@ -200,7 +212,13 @@ void prepare_getri_run(integer m_A,
         create_vector(datatype, &work, 1);
 
         // call to  getri API
-        invoke_getri(datatype, &n_A, NULL, &lda, NULL, work, &lwork, &info);
+        invoke_getri(datatype, &n_A, NULL, &lda, NULL, work, &lwork, info);
+        if(*info < 0)
+        {
+            free_matrix(A_save);
+            free_vector(work);
+            return;
+        }
 
         // Get work size
         lwork = get_work_value(datatype, work);
@@ -214,7 +232,7 @@ void prepare_getri_run(integer m_A,
         lwork = g_lwork;
     }
 
-    for (i = 0; i < n_repeats; ++i)
+    for (i = 0; i < n_repeats && *info == 0; ++i)
     {
 
         /* Copy original input data */
@@ -224,9 +242,15 @@ void prepare_getri_run(integer m_A,
         exe_time = fla_test_clock();
 
         /*  call to API getrf to get AFACT */
-        invoke_getrf(datatype, &m_A, &n_A, A_save, &lda, IPIV, &info);
+        invoke_getrf(datatype, &m_A, &n_A, A_save, &lda, IPIV, info);
+        if(*info < 0)
+        {
+            free_matrix(work);
+            free_matrix(A_save);
+            return;
+        }
         /*  call  getri API with AFACT to get A INV */
-        invoke_getri(datatype, &n_A, A_save, &lda, IPIV, work, &lwork, &info);
+        invoke_getri(datatype, &n_A, A_save, &lda, IPIV, work, &lwork, info);
 
         exe_time = fla_test_clock() - exe_time;
 

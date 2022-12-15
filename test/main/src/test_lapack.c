@@ -12,14 +12,18 @@ char fla_test_binary_name[ MAX_BINARY_NAME_LENGTH + 1 ];
 char fla_test_pass_string[ MAX_PASS_STRING_LENGTH + 1 ];
 char fla_test_warn_string[ MAX_PASS_STRING_LENGTH + 1 ];
 char fla_test_fail_string[ MAX_PASS_STRING_LENGTH + 1 ];
+char fla_test_incomplete_string [ MAX_PASS_STRING_LENGTH + 1];
+char fla_test_invalid_string [ MAX_PASS_STRING_LENGTH + 1];
 char fla_test_storage_format_string[ 200 ];
 char fla_test_stor_chars[ NUM_STORAGE_CHARS + 1 ];
 double ref_time_sec = 0.0;
 
 integer total_tests;
 integer total_failed_tests;
+integer total_incomplete_tests;
 integer tests_passed[4];
 integer tests_failed[4];
+integer tests_incomplete[4];
 
 #define SKIP_EXTRA_LINE_READ() \
         eol = fgetc(fp); \
@@ -119,8 +123,10 @@ void fla_test_lapack_suite( char* input_filename, test_params_t *params )
 
     total_tests = 0;
     total_failed_tests = 0;
+    total_incomplete_tests = 0;
     tests_passed[0] = tests_passed[1] = tests_passed[2] = tests_passed[3] = 0;
     tests_failed[0] = tests_failed[1] = tests_failed[2] = tests_failed[3] = 0;
+    tests_incomplete[0] = tests_incomplete[1] = tests_incomplete[2] = tests_incomplete[3] = 0;
 
     test_api_count = sizeof(API_test_functions) / sizeof(API_test_functions[0]);
     test_group_count = sizeof(API_test_group) / sizeof(API_test_group[0]);
@@ -189,15 +195,18 @@ void fla_test_lapack_suite( char* input_filename, test_params_t *params )
 void fla_test_print_summary()
 {
     fla_test_output_info("\n\nResults Summary:\n\n");
-    fla_test_output_info("%2sDATATYPE%13s No. of Tests%6s Passed%9s Failed\n", "", "", "", "");
-    fla_test_output_info( "===================================================================\n" );
-    fla_test_output_info("%2sFLOAT%15s %8d%8s %8d%12s %d\n", "", "", tests_passed[0] + tests_failed[0], "", tests_passed[0], "", tests_failed[0]);
-    fla_test_output_info("%2sDOUBLE%14s %8d%8s %8d%12s %d\n", "", "", tests_passed[1] + tests_failed[1], "", tests_passed[1], "", tests_failed[1]);
-    fla_test_output_info("%2sCOMPLEX%13s %8d%8s %8d%12s %d\n", "", "", tests_passed[2] + tests_failed[2], "", tests_passed[2], "", tests_failed[2]);
-    fla_test_output_info("%2sDOUBLE COMPLEX%6s %8d%8s %8d%12s %d\n", "", "", tests_passed[3] + tests_failed[3], "", tests_passed[3], "", tests_failed[3]);
+    fla_test_output_info("%2sDATATYPE%13s No. of Tests%6s Passed%9s Failed%9s Incomplete\n", "", "", "", "", "");
+    fla_test_output_info( "=====================================================================================\n" );
+    fla_test_output_info("%2sFLOAT%15s %8d%8s %8d%6s %8d%15s %d\n", "", "", tests_passed[0] + tests_failed[0] + tests_incomplete[0], "", tests_passed[0], "", tests_failed[0], "", tests_incomplete[0]);
+    fla_test_output_info("%2sDOUBLE%14s %8d%8s %8d%6s %8d%15s %d\n", "", "", tests_passed[1] + tests_failed[1]  + tests_incomplete[0], "", tests_passed[1], "", tests_failed[1], "", tests_incomplete[1]);
+    fla_test_output_info("%2sCOMPLEX%13s %8d%8s %8d%6s %8d%15s %d\n", "", "", tests_passed[2] + tests_failed[2]  + tests_incomplete[0], "", tests_passed[2], "", tests_failed[2], "", tests_incomplete[2]);
+    fla_test_output_info("%2sDOUBLE COMPLEX%6s %8d%8s %8d%6s %8d%15s %d\n", "", "", tests_passed[3] + tests_failed[3]  + tests_incomplete[0], "", tests_passed[3], "", tests_failed[3], "", tests_incomplete[3]);
 
     if(total_failed_tests > 0)
         printf("\n\nThere are failed tests, Please look at output log for more details\n\n");
+    
+    if(total_incomplete_tests > 0)
+        printf("\n\nThere are some incomplete tests, Please look at the parameters passed to the API\n\n");
 }
 
 
@@ -1224,24 +1233,6 @@ void fla_test_read_svd_params ( const char *file_name, test_params_t* params )
         CHECK_LINE_SKIP ();
     }
 
-    fscanf(fp, "%s", &line[0]); // lda
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%"FT_IS"", &(params->svd_paramslist[i].lda) );
-        CHECK_LINE_SKIP ();
-    }
-
-    fscanf(fp, "%s", &line[0]); // ldu
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%"FT_IS"", &(params->svd_paramslist[i].ldu) );
-        CHECK_LINE_SKIP ();
-    }
-
-    fscanf(fp, "%s", &line[0]); // ldvt
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%"FT_IS"", &(params->svd_paramslist[i].ldvt) );
-        CHECK_LINE_SKIP ();
-    }
-
     for (i=0; i<NUM_SUB_TESTS; i++){
         params->svd_paramslist[i].num_ranges = num_ranges;
     }
@@ -1695,23 +1686,31 @@ char* fla_test_get_string_for_result( double residual, integer datatype, double 
 
     if ( datatype == FLOAT )
     {
-        if      ( residual > thresh ) r_val = fla_test_fail_string;
-        else                          r_val = fla_test_pass_string;
+        if      ( residual == DBL_MAX )   r_val = fla_test_incomplete_string;
+        else if ( residual == DBL_MIN )   r_val = fla_test_invalid_string;
+        else if ( residual > thresh )     r_val = fla_test_fail_string;
+        else                              r_val = fla_test_pass_string;
     }
     else if ( datatype == DOUBLE )
     {
-        if      ( residual > thresh ) r_val = fla_test_fail_string;
-        else                          r_val = fla_test_pass_string;
+        if      ( residual == DBL_MAX )   r_val = fla_test_incomplete_string;
+        else if ( residual == DBL_MIN )   r_val = fla_test_invalid_string;
+        else if ( residual > thresh )     r_val = fla_test_fail_string;
+        else                              r_val = fla_test_pass_string;
     }
     else if ( datatype == COMPLEX )
     {
-        if      ( residual > thresh ) r_val = fla_test_fail_string;
-        else                          r_val = fla_test_pass_string;
+        if      ( residual == DBL_MAX )   r_val = fla_test_incomplete_string;
+        else if ( residual == DBL_MIN )   r_val = fla_test_invalid_string;
+        else if ( residual > thresh )     r_val = fla_test_fail_string;
+        else                              r_val = fla_test_pass_string;
     }
     else
     {
-        if      ( residual > thresh ) r_val = fla_test_fail_string;
-        else                          r_val = fla_test_pass_string;
+        if      ( residual == DBL_MAX )   r_val = fla_test_incomplete_string;
+        else if ( residual == DBL_MIN )   r_val = fla_test_invalid_string;
+        else if ( residual > thresh )     r_val = fla_test_fail_string;
+        else                              r_val = fla_test_pass_string;
     }
 
     return r_val;
@@ -1723,6 +1722,8 @@ void fla_test_init_strings( void )
     sprintf( fla_test_pass_string, "PASS" );
     sprintf( fla_test_warn_string, "MARGINAL" );
     sprintf( fla_test_fail_string, "FAIL" );
+    sprintf( fla_test_incomplete_string, "INCOMPLETE" );
+    sprintf( fla_test_invalid_string, "INVALID_LDA" );
     sprintf( fla_test_storage_format_string, "Row(r) and General(g) storage format is not supported by External LAPACK interface" );
     sprintf( fla_test_stor_chars, STORAGE_SCHEME_CHARS );
 }
@@ -1915,23 +1916,37 @@ void fla_test_print_status(char* func_str,
 
     if ( sqr_inp == SQUARE_INPUT )
     {
-        fla_test_output_info(" %s%s  %c  %10"FT_IS" x %-9"FT_IS" %-10.2lf  %6.2lf %-7s  %-7.2le   %10s\n",
-                             func_param_str, blank_str,
-                             datatype_char,
-                             p_cur, p_cur, perf, time, scale, residual, pass_str );
+        if (pass_str[0] == 'P' || pass_str[0] == 'F')
+            fla_test_output_info(" %s%s  %c  %10"FT_IS" x %-9"FT_IS" %-10.2lf  %6.2lf %-7s  %-7.2le   %10s\n",
+                                func_param_str, blank_str,
+                                datatype_char,
+                                p_cur, p_cur, perf, time, scale, residual, pass_str );
+        else
+           fla_test_output_info(" %s%s  %c  %10"FT_IS" x %-9"FT_IS" %-10.2lf  %6.2lf %-7s  %-7.2le   %12s\n",
+                                func_param_str, blank_str,
+                                datatype_char,
+                                p_cur, p_cur, perf, time, scale, residual, pass_str ); 
     }
     else
     {
-        fla_test_output_info(" %s%s  %c  %10"FT_IS" x %-9"FT_IS" %-10.2lf  %6.2lf %-7s  %-7.2le   %10s\n",
-                             func_param_str, blank_str,
-                             datatype_char,
-                             p_cur, q_cur, perf, time, scale, residual, pass_str );
+        if (pass_str[0] == 'P' || pass_str[0] == 'F')
+            fla_test_output_info(" %s%s  %c  %10"FT_IS" x %-9"FT_IS" %-10.2lf  %6.2lf %-7s  %-7.2le   %10s\n",
+                                func_param_str, blank_str,
+                                datatype_char,
+                                p_cur, q_cur, perf, time, scale, residual, pass_str );
+        else
+            fla_test_output_info(" %s%s  %c  %10"FT_IS" x %-9"FT_IS" %-10.2lf  %6.2lf %-7s  %-7.2le   %12s\n",
+                                func_param_str, blank_str,
+                                datatype_char,
+                                p_cur, q_cur, perf, time, scale, residual, pass_str );
     }
 
     total_tests++;
     tests_passed[datatype - FLOAT] += (pass_str[0] == 'P');
     tests_failed[datatype - FLOAT] += (pass_str[0] == 'F');
+    tests_incomplete[datatype - FLOAT] += (pass_str[0] == 'I');
     total_failed_tests += (pass_str[0] == 'F');
+    total_incomplete_tests += (pass_str[0] == 'I');
 }
 
 

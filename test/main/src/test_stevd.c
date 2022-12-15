@@ -9,7 +9,7 @@
 /* Local prototypes.*/
 void fla_test_stevd_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci,
 integer n_repeats, double* perf, double* t, double* residual);
-void prepare_stevd_run(char* jobz, integer n, void* Z, integer ldz, void* D, void* E, integer datatype, integer n_repeats, double* time_min_);
+void prepare_stevd_run(char* jobz, integer n, void* Z, integer ldz, void* D, void* E, integer datatype, integer n_repeats, double* time_min_, integer* info);
 void invoke_stevd(integer datatype, char* jobz, integer* n, void* z, integer* ldz, void* d, void* e, void* work, integer* lwork, void* iwork, integer* liwork, integer* info);
 
 /* Flag to indicate lwork availability status
@@ -131,6 +131,7 @@ void fla_test_stevd_experiment(test_params_t *params,
                                double* residual)
 {
     integer n, ldz;
+    integer info = 0, vinfo = 0;
     char jobz;
     void *Z = NULL, *Z_test = NULL;
     void *D = NULL, *D_test = NULL;
@@ -144,6 +145,11 @@ void fla_test_stevd_experiment(test_params_t *params,
     if(datatype == FLOAT || datatype == DOUBLE)
     {
         n = p_cur;
+        if(ldz < n)
+        {
+            *residual = DBL_MIN;
+            return;
+        }
 
         /* Create input matrix parameters */
         create_matrix(datatype, &Z, ldz, n);
@@ -173,7 +179,7 @@ void fla_test_stevd_experiment(test_params_t *params,
         copy_vector(datatype, n, D, 1, D_test, 1);
         copy_vector(datatype, n-1, E, 1, E_test, 1);
 
-        prepare_stevd_run(&jobz, n, Z_test, ldz, D_test, E_test, datatype, n_repeats, time_min);
+        prepare_stevd_run(&jobz, n, Z_test, ldz, D_test, E_test, datatype, n_repeats, time_min, &info);
 
         /* performance computation
            6 * n^3 + n^2 flops for eigen vectors
@@ -184,7 +190,12 @@ void fla_test_stevd_experiment(test_params_t *params,
             *perf = (double)(6.0 * n * n) / *time_min / FLOPS_PER_UNIT_PERF;
 
         /* output validation */
-        validate_syevd(&jobz, n, Z, Z_test, ldz, D_test, datatype, residual);
+        if (info == 0)
+            validate_syevd(&jobz, n, Z, Z_test, ldz, D_test, datatype, residual, &vinfo);
+        
+        /* Assigning bigger value to residual as execution fails */
+        if (info < 0 || vinfo < 0)
+            *residual = DBL_MAX;
 
         /* Free up the buffers */
         free_matrix(Z);
@@ -204,12 +215,12 @@ void prepare_stevd_run(char *jobz,
                        void *E,
                        integer datatype,
                        integer n_repeats,
-                       double* time_min_)
+                       double* time_min_,
+                       integer* info)
 {
     void *Z_save, *D_save, *E_save, *work, *iwork;
     integer lwork, liwork;
     integer i;
-    integer info = 0;
     double time_min = 1e9, exe_time;
 
     /* Make a copy of the input matrix A. Same input values will be passed in
@@ -231,7 +242,16 @@ void prepare_stevd_run(char *jobz,
         create_vector(INTEGER, &iwork, 1);
         create_vector(datatype, &work, 1);
         /* call to  stevd API */
-        invoke_stevd(datatype, jobz, &n, NULL, &ldz, NULL, NULL, work, &lwork, iwork, &liwork, &info);
+        invoke_stevd(datatype, jobz, &n, NULL, &ldz, NULL, NULL, work, &lwork, iwork, &liwork, info);
+        if(*info < 0)
+        {
+            free_matrix(Z_save);
+            free_vector(D_save);
+            free_vector(E_save);
+            free_vector(iwork);
+            free_vector(work);
+            return;
+        }
 
         /* Get work size */
         lwork = get_work_value(datatype, work );
@@ -247,7 +267,7 @@ void prepare_stevd_run(char *jobz,
         liwork = g_liwork;
     }
 
-    for (i = 0; i < n_repeats; ++i)
+    for (i = 0; i < n_repeats && *info == 0; ++i)
     {
         /* Restore input matrix A value and allocate memory to output buffers
            for each iteration*/
@@ -260,7 +280,7 @@ void prepare_stevd_run(char *jobz,
 
         exe_time = fla_test_clock();
         /* call to API */
-        invoke_stevd(datatype, jobz, &n, Z, &ldz, D, E, work, &lwork, iwork, &liwork, &info);
+        invoke_stevd(datatype, jobz, &n, Z, &ldz, D, E, work, &lwork, iwork, &liwork, info);
         exe_time = fla_test_clock() - exe_time;
 
         /* Get the best execution time */

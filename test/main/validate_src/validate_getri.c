@@ -15,10 +15,12 @@ void validate_getri(integer m_A,
     integer lda,
     integer* IPIV,
     integer datatype,
-    double* residual)
+    double* residual,
+    integer* info)
 {
     /* System generated locals */
     void *I, * work;
+    *info = 0;
     
     /* Create Identity matrix */
     create_matrix(datatype, &I, n_A, n_A);

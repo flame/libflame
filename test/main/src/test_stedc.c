@@ -8,7 +8,7 @@
 void fla_test_stedc_experiment(test_params_t *params, integer  datatype, integer  p_cur, integer  q_cur, integer  pci,
                                     integer  n_repeats, double* perf, double* t, double* residual);
 void prepare_stedc_run(char* compz, integer n, void* D, void* E, void* Z,
-                      integer ldz, integer datatype, integer n_repeats, double* time_min_);
+                      integer ldz, integer datatype, integer n_repeats, double* time_min_, integer* info);
 void invoke_stedc(integer datatype, char* compz, integer* n, void* D, void* E, void* Z,
                   integer* ldz, void* work, integer* lwork, void* rwork,
                   integer* lrwork, integer* iwork, integer* liwork, integer *info);
@@ -134,7 +134,7 @@ void fla_test_stedc_experiment(test_params_t *params,
     double* t,
     double* residual)
 {
-    integer n, info = -1, realtype, lda, ldz;
+    integer n, info = 0, realtype, lda, ldz, vinfo = 0;
     void *D = NULL, *D_test = NULL, *E = NULL, *E_test = NULL, *Z_test = NULL;
     void *Z_input = NULL, *A = NULL;
     double time_min = 1e9;
@@ -146,6 +146,13 @@ void fla_test_stedc_experiment(test_params_t *params,
     /* Initialize parameter needed for STEDC() call. */
     compz = params->eig_sym_paramslist[pci].compz;
     lda = params->eig_sym_paramslist[pci].lda;
+
+    if(lda < n)
+    {
+        *residual = DBL_MIN;
+        return;
+    }
+
     create_matrix(datatype, &A, lda, n);
     
     realtype = get_realtype(datatype);
@@ -205,6 +212,7 @@ void fla_test_stedc_experiment(test_params_t *params,
             free_vector(D);
             free_vector(E);
             free_matrix(Z_input);
+            *residual = DBL_MAX;
             return;
         }
     }
@@ -218,7 +226,7 @@ void fla_test_stedc_experiment(test_params_t *params,
     create_vector(realtype, &E_test, n-1);
     copy_vector(realtype, n-1, E, 1, E_test, 1);
 
-    prepare_stedc_run(&compz, n, D_test, E_test, Z_test, ldz, datatype, n_repeats, &time_min);
+    prepare_stedc_run(&compz, n, D_test, E_test, Z_test, ldz, datatype, n_repeats, &time_min, &info);
     
     /* Execution time. */
     *t = time_min;
@@ -235,11 +243,14 @@ void fla_test_stedc_experiment(test_params_t *params,
     }
 
     /* Output validation. */
-    if (compz != 'N') {
-        validate_stedc(compz, n, D_test, Z_input, Z_test, ldz, datatype, residual);
-    } else {
+    if (compz != 'N' && info == 0)
+        validate_stedc(compz, n, D_test, Z_input, Z_test, ldz, datatype, residual, &vinfo);
+    else
         *residual = 0.0;
-    }
+
+    /* Assigning bigger value to residual as execution fails */
+    if(info < 0 || vinfo < 0)
+        *residual = DBL_MAX;
 
     /* Free up buffers. */
     free_matrix(Z_input);
@@ -252,9 +263,9 @@ void fla_test_stedc_experiment(test_params_t *params,
 }
 
 void prepare_stedc_run(char* compz, integer n, void* D, void* E, void* Z,
-                      integer ldz, integer datatype, integer n_repeats, double* time_min_)
+                      integer ldz, integer datatype, integer n_repeats, double* time_min_, integer* info)
 {
-    integer index, info = 0, lwork, liwork, lrwork, realtype;
+    integer index, lwork, liwork, lrwork, realtype;
     void *D_save = NULL, *E_save = NULL, *E_test = NULL, *Z_save = NULL;
     void *work = NULL, *iwork = NULL, *rwork = NULL;
     double time_min = 1e9, exe_time;
@@ -282,19 +293,19 @@ void prepare_stedc_run(char* compz, integer n, void* D, void* E, void* Z,
         lwork = -1;
         liwork = -1;
         lrwork = -1;
-        invoke_stedc(datatype, compz, &n, D, E_test, Z, &ldz, work, &lwork, rwork, &lrwork, iwork, &liwork, &info);
+        invoke_stedc(datatype, compz, &n, D, E_test, Z, &ldz, work, &lwork, rwork, &lrwork, iwork, &liwork, info);
 
         /* Get work buffers size. */
-        if (info == 0) 
+        if (*info == 0)
         {
             lwork = get_work_value(datatype, work );
             liwork = get_work_value(INTEGER, iwork );
-            lrwork = get_work_value(realtype, rwork );      
+            lrwork = get_work_value(realtype, rwork );
             free_vector(work);
             free_vector(rwork);
             free_vector(iwork);
-        } 
-        else 
+        }
+        else
         {
             free_vector(work);
             free_vector(rwork);
@@ -315,7 +326,7 @@ void prepare_stedc_run(char* compz, integer n, void* D, void* E, void* Z,
     create_vector(INTEGER, &iwork, liwork);
     create_vector(realtype, &E_test, n-1);
 
-    for (index = 0; index < n_repeats; ++index)
+    for (index = 0; index < n_repeats && *info == 0; ++index)
     {
         /* Restore input matrices and allocate memory to output buffers
            for each iteration. */
@@ -333,7 +344,7 @@ void prepare_stedc_run(char* compz, integer n, void* D, void* E, void* Z,
         exe_time = fla_test_clock();
 
         /* Call to STEDC() API. */
-        invoke_stedc(datatype, compz, &n, D, E_test, Z, &ldz, work, &lwork, rwork, &lrwork, iwork, &liwork, &info);
+        invoke_stedc(datatype, compz, &n, D, E_test, Z, &ldz, work, &lwork, rwork, &lrwork, iwork, &liwork, info);
 
         exe_time = fla_test_clock() - exe_time;
 

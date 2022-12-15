@@ -15,11 +15,13 @@ void validate_geqrf(integer m_A,
     integer lda,
     void *T_test,
     integer datatype,
-    double* residual)
+    double* residual,
+    integer* info)
 {
     void *Q = NULL, *R = NULL, *work = NULL;
     integer min_A;
-    integer lwork = -1, tinfo;
+    integer lwork = -1;
+    *info = 0;
 
     min_A = fla_min(m_A, n_A);
 
@@ -50,13 +52,17 @@ void validate_geqrf(integer m_A,
 
             /* sorgrq api generates the Q martrix using the elementary reflectors and scalar 
                factor values*/
-            sorgqr_(&m_A, &m_A, &min_A, NULL, &m_A, NULL, &twork, &lwork, &tinfo);
-
+            sorgqr_(&m_A, &m_A, &min_A, NULL, &m_A, NULL, &twork, &lwork, info);
+            if (*info < 0)
+               break;
+            
             lwork = twork;
             create_vector(datatype,  &work, lwork);
 
-            sorgqr_(&m_A, &m_A, &min_A, Q, &m_A, T_test, work, &lwork, &tinfo);
-
+            sorgqr_(&m_A, &m_A, &min_A, Q, &m_A, T_test, work, &lwork, info);
+            if(*info < 0)
+               break;
+            
             /* Test 1
                compute norm(R - Q'*A) / (V * norm(A) * EPS)*/
             sgemm_("T", "N", &m_A, &n_A, &m_A, &s_n_one, Q, &m_A, A, &lda, &s_one, R, &m_A);
@@ -82,13 +88,17 @@ void validate_geqrf(integer m_A,
 
             /* dorgrq api generates the Q martrix using the elementary reflectors and scalar 
                factor values*/
-            dorgqr_(&m_A, &m_A, &min_A, NULL, &m_A, NULL, &twork, &lwork, &tinfo);
-
+            dorgqr_(&m_A, &m_A, &min_A, NULL, &m_A, NULL, &twork, &lwork, info);
+            if(*info < 0)
+               break;
+            
             lwork = twork;
             create_vector(datatype,  &work, lwork);
 
-            dorgqr_(&m_A, &m_A, &min_A, Q, &m_A, T_test, work, &lwork, &tinfo);
-
+            dorgqr_(&m_A, &m_A, &min_A, Q, &m_A, T_test, work, &lwork, info);
+            if(*info < 0)
+               break;
+            
             /* Test 1
                compute norm(R - Q'*A) / (V * norm(A) * EPS)*/
             dgemm_("T", "N", &m_A, &n_A, &m_A, &d_n_one, Q, &m_A, A, &lda, &d_one, R, &m_A);
@@ -114,13 +124,17 @@ void validate_geqrf(integer m_A,
 
             /* corgrq api generates the Q martrix using the elementary reflectors and scalar 
                factor values*/
-            cungqr_(&m_A, &m_A, &min_A, NULL, &m_A, NULL, &twork, &lwork, &tinfo);
-
+            cungqr_(&m_A, &m_A, &min_A, NULL, &m_A, NULL, &twork, &lwork, info);
+            if(*info < 0)
+               break;
+            
             lwork = twork.real;
             create_vector(datatype,  &work, lwork);
 
-            cungqr_(&m_A, &m_A, &min_A, Q, &m_A, T_test, work, &lwork, &tinfo);
-
+            cungqr_(&m_A, &m_A, &min_A, Q, &m_A, T_test, work, &lwork, info);
+            if(*info < 0)
+               break;
+            
             /* Test 1
                compute norm(R - Q'*A) / (V * norm(A) * EPS)*/
             cgemm_("C", "N", &m_A, &n_A, &m_A, &c_n_one, Q, &m_A, A, &lda, &c_one, R, &m_A);
@@ -146,13 +160,17 @@ void validate_geqrf(integer m_A,
 
             /* zorgrq api generates the Q martrix using the elementary reflectors and scalar 
                factor values*/
-            zungqr_(&m_A, &m_A, &min_A, NULL, &m_A, NULL, &twork, &lwork, &tinfo);
-
+            zungqr_(&m_A, &m_A, &min_A, NULL, &m_A, NULL, &twork, &lwork, info);
+            if(*info < 0)
+               break;
+            
             lwork = twork.real;
             create_vector(datatype, &work, lwork);
 
-            zungqr_(&m_A, &m_A, &min_A, Q, &m_A, T_test, work, &lwork, &tinfo);
-
+            zungqr_(&m_A, &m_A, &min_A, Q, &m_A, T_test, work, &lwork, info);
+            if(*info < 0)
+               break;
+            
             /* Test 1
                compute norm(R - Q'*A) / (V * norm(A) * EPS)*/
             zgemm_("C", "N", &m_A, &n_A, &m_A, &z_n_one, Q, &m_A, A, &lda, &z_one, R, &m_A);

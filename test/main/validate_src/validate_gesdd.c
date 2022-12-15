@@ -8,10 +8,11 @@
 
 #include "test_common.h"
 
-void validate_gesdd(char *jobz, integer m, integer n, void* A, void* A_test, integer lda, void* s, void* U, integer ldu, void* V, integer ldvt, integer datatype, double *residual)
+void validate_gesdd(char *jobz, integer m, integer n, void* A, void* A_test, integer lda, void* s, void* U, integer ldu, void* V, integer ldvt, integer datatype, double *residual, integer* info)
 {
     void *sigma = NULL, *Usigma = NULL;
     void *work = NULL;
+    *info = 0;
 
     create_matrix(datatype, &sigma, m, n);
     create_matrix(datatype, &Usigma, m, n);

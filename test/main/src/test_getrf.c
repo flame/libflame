@@ -7,7 +7,7 @@
 /* Local prototypes */
 void fla_test_getrf_experiment(test_params_t *params, integer  datatype, integer  p_cur, integer  q_cur, integer pci,
                                     integer n_repeats, double* perf, double* t, double* residual);
-void prepare_getrf_run(integer m_A, integer n_A, void *A, integer lda, integer* ipiv, integer datatype, integer n_repeats, double* time_min_);
+void prepare_getrf_run(integer m_A, integer n_A, void *A, integer lda, integer* ipiv, integer datatype, integer n_repeats, double* time_min_, integer *info);
 void invoke_getrf(integer datatype, integer *m, integer *n, void *a, integer *lda, integer *ipiv, integer *info);
 static FILE* g_ext_fptr = NULL;
 
@@ -117,6 +117,7 @@ void fla_test_getrf_experiment(test_params_t *params,
     double* residual)
 {
     integer m, n, lda;
+    integer info = 0, vinfo = 0;
     void* IPIV;
     void *A, *A_test;
     double time_min = 1e9;
@@ -125,6 +126,12 @@ void fla_test_getrf_experiment(test_params_t *params,
     m = p_cur;
     n = q_cur;
     lda = params->lin_solver_paramslist[pci].lda;
+
+    if(lda < m)
+    {
+        *residual = DBL_MIN;
+        return;
+    }
 
     /* Create the matrices for the current operation*/
     create_matrix(datatype, &A, lda, n);
@@ -147,7 +154,7 @@ void fla_test_getrf_experiment(test_params_t *params,
     copy_matrix(datatype, "full", m, n, A, lda, A_test, lda);
 
     /* call to API */
-    prepare_getrf_run(m, n, A_test, lda, IPIV, datatype, n_repeats, &time_min);
+    prepare_getrf_run(m, n, A_test, lda, IPIV, datatype, n_repeats, &time_min, &info);
 
     /* execution time */
     *t = time_min;
@@ -169,7 +176,12 @@ void fla_test_getrf_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* output validation */
-    validate_getrf(m, n, A, A_test, lda, IPIV, datatype, residual);
+    if (info == 0)
+       validate_getrf(m, n, A, A_test, lda, IPIV, datatype, residual, &vinfo);
+
+    /* Assigning bigger value to residual as execution fails */
+    if (info < 0 || vinfo < 0)
+        *residual = DBL_MAX;
 
     /* Free up the buffers */
     free_matrix(A);
@@ -184,18 +196,18 @@ void prepare_getrf_run(integer m_A,
     integer* IPIV,
     integer datatype,
     integer n_repeats,
-    double* time_min_)
+    double* time_min_,
+    integer* info)
 {
     integer i;
     void *A_save;
-    integer info = 0;
     double time_min = 1e9, exe_time;
 
     /* Save the original matrix */
     create_matrix(datatype, &A_save, lda, n_A);
     copy_matrix(datatype, "full", m_A, n_A, A, lda, A_save, lda);
 
-    for (i = 0; i < n_repeats; ++i)
+    for (i = 0; i < n_repeats && *info == 0; ++i)
     {
 
         /* Copy original input data */
@@ -204,7 +216,7 @@ void prepare_getrf_run(integer m_A,
         exe_time = fla_test_clock();
 
         /*  call to API */
-        invoke_getrf(datatype, &m_A, &n_A, A_save, &lda, IPIV, &info);
+        invoke_getrf(datatype, &m_A, &n_A, A_save, &lda, IPIV, info);
 
         exe_time = fla_test_clock() - exe_time;
 

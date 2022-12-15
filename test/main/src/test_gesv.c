@@ -7,7 +7,7 @@
 /* Local prototypes */
 void fla_test_gesv_experiment(test_params_t *params, integer  datatype, integer  p_cur, integer  q_cur, integer pci,
                                     integer n_repeats, double* perf, double* t, double* residual);
-void prepare_gesv_run(integer n_A, integer nrhs, void *A, integer lda, void *B, integer ldb, integer* ipiv, integer datatype, integer n_repeats, double* time_min_);
+void prepare_gesv_run(integer n_A, integer nrhs, void *A, integer lda, void *B, integer ldb, integer* ipiv, integer datatype, integer n_repeats, double* time_min_, integer* info);
 void invoke_gesv(integer datatype, integer *nrhs, integer *n, void *a, integer *lda, integer *ipiv, void *b, integer *ldb, integer *info);
 static FILE* g_ext_fptr = NULL;
 
@@ -121,6 +121,7 @@ void fla_test_gesv_experiment(test_params_t *params,
     double* residual)
 {
     integer n, lda, ldb, NRHS;
+    integer info = 0, vinfo = 0;
     void* IPIV;
     void *A, *A_save, *B, *B_save;
     double time_min = 1e9;
@@ -130,6 +131,12 @@ void fla_test_gesv_experiment(test_params_t *params,
     n = p_cur;
     lda = params->lin_solver_paramslist[pci].lda;
     ldb = params->lin_solver_paramslist[pci].ldb;
+    
+    if(lda < n || ldb < n)
+    {
+        *residual = DBL_MIN;
+        return;
+    }
     
     /* Create the matrices for the current operation*/
     create_matrix(datatype, &A, lda, n);
@@ -154,7 +161,7 @@ void fla_test_gesv_experiment(test_params_t *params,
     copy_matrix(datatype, "full", n, n, A, lda, A_save, lda);
     copy_matrix(datatype, "full", n, NRHS, B, ldb, B_save, ldb);
     /* call to API */
-    prepare_gesv_run(n, NRHS, A_save, lda, B_save, ldb, IPIV, datatype, n_repeats, &time_min);
+    prepare_gesv_run(n, NRHS, A_save, lda, B_save, ldb, IPIV, datatype, n_repeats, &time_min, &info);
     /* execution time */
     *t = time_min;
 
@@ -165,7 +172,12 @@ void fla_test_gesv_experiment(test_params_t *params,
         *perf *= 4.0;
 
     /* output validation */
-    validate_gesv(n, NRHS, A, lda, B, ldb, B_save, datatype, residual);
+    if(info == 0)
+        validate_gesv(n, NRHS, A, lda, B, ldb, B_save, datatype, residual, &vinfo);
+
+    /* Assigning bigger value to residual as execution fails */
+    if (info < 0 || vinfo < 0)
+        *residual = DBL_MAX;
 
     /* Free up the buffers */
     free_matrix(A);
@@ -185,11 +197,11 @@ void prepare_gesv_run(integer n_A,
     integer* IPIV,
     integer datatype,
     integer n_repeats,
-    double* time_min_)
+    double* time_min_,
+    integer* info)
 {
     integer i;
     void *A_test, *B_test;
-    integer info = 0;
     double time_min = 1e9, exe_time;
 
     /* Save the original matrix */
@@ -197,7 +209,7 @@ void prepare_gesv_run(integer n_A,
     create_matrix(datatype, &B_test, ldb, nrhs);
 
 
-    for (i = 0; i < n_repeats; ++i)
+    for (i = 0; i < n_repeats && *info == 0; ++i)
     {
 
         /* Copy original input data */
@@ -207,7 +219,7 @@ void prepare_gesv_run(integer n_A,
         exe_time = fla_test_clock();
 
         /*  call  gesv API  */
-        invoke_gesv(datatype, &n_A, &nrhs, A_test, &lda, IPIV, B_test, &ldb, &info);
+        invoke_gesv(datatype, &n_A, &nrhs, A_test, &lda, IPIV, B_test, &ldb, info);
 
         exe_time = fla_test_clock() - exe_time;
 

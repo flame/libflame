@@ -11,11 +11,12 @@
 /* This function will validate STEDC() output eigenvectors and orthogonal
    matrices only if compz != N, as output will not be generated 
    if compz = N.*/
-void validate_stedc(char compz, integer n, void* D_test, void* Z_input, void* Z, integer ldz, integer datatype, double* residual)
+void validate_stedc(char compz, integer n, void* D_test, void* Z_input, void* Z, integer ldz, integer datatype, double* residual, integer* info)
 {
     void *lambda = NULL, *zlambda = NULL;
     void *I = NULL;
     void *work = NULL;
+    *info = 0;
 
     if (compz == 'N') {
         *residual = 0.0;
