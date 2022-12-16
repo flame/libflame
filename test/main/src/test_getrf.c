@@ -155,15 +155,15 @@ void fla_test_getrf_experiment(test_params_t *params,
     /* performance computation */
     if(m == n)
     {
-        *perf = (2.0 / 3.0) * n * n * n;
+        *perf = (2.0 / 3.0) * n * n * n / time_min / FLOPS_PER_UNIT_PERF;
     }
     else if(m > n)
     {
-        *perf = (1.0 / 3.0) * n * n * (3 * m - n);
+        *perf = (1.0 / 3.0) * n * n * (3 * m - n) / time_min / FLOPS_PER_UNIT_PERF;
     }
     else
     {
-        *perf = (1.0 / 3.0) * m * m * (3 * n - m);
+        *perf = (1.0 / 3.0) * m * m * (3 * n - m) / time_min / FLOPS_PER_UNIT_PERF;
     }
     if (datatype == COMPLEX || datatype == DOUBLE_COMPLEX)
         *perf *= 4.0;
