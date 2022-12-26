@@ -114,7 +114,7 @@ void fla_test_lapack_suite( char* input_filename, test_params_t *params )
 {
     char buffer[ INPUT_BUFFER_SIZE ];
     integer check_flag;
-    integer i, op, test_api_count;
+    integer i, j, op, test_api_count, g_id, test_group_count;
     FILE* input_stream;
 
     total_tests = 0;
@@ -123,6 +123,7 @@ void fla_test_lapack_suite( char* input_filename, test_params_t *params )
     tests_failed[0] = tests_failed[1] = tests_failed[2] = tests_failed[3] = 0;
 
     test_api_count = sizeof(API_test_functions) / sizeof(API_test_functions[0]);
+    test_group_count = sizeof(API_test_group) / sizeof(API_test_group[0]);
 
     fla_test_output_info( "\n" );
     fla_test_output_info( "--- LAPACK-level operation tests ---------------------\n" );
@@ -138,26 +139,49 @@ void fla_test_lapack_suite( char* input_filename, test_params_t *params )
         fla_test_output_error( "Failed to open input file %s. Check existence and permissions.\n", input_filename );
     }
 
-    // Check for '2' option in input config
+    // Check for '2' option in input config and 3 for group testing
     check_flag = fla_test_check_run_only(input_stream, &op,  buffer);
 
-    while(fla_test_read_tests_for_op(input_stream, &op, buffer))
+    if(check_flag == 3)
     {
-        if(op == check_flag)
+        for(i =0; i < test_group_count; i++)
         {
-            // Check if the specified API is supported in test suite
-            for( i=0; i < test_api_count; i++)
+            fla_test_read_tests_for_op( input_stream, &op, buffer);
+            if(op == 1)
             {
-                if(!strcmp(API_test_functions[i].ops, buffer))
+                g_id = fla_test_get_group_id(buffer);
+                if(g_id >= 0)
                 {
-                    API_test_functions[i].fp(1, NULL, params);
+                    for( j = 0; j < test_api_count; j++)
+                    {
+                        if(API_test_functions[j].type == g_id)
+                        {
+                            API_test_functions[j].fp(1, NULL, params);
+                        }
+                    }
                 }
             }
-
-            op = 0;
         }
     }
+    else
+    {
+        while(fla_test_read_tests_for_op(input_stream, &op, buffer))
+        {
+            if(op == check_flag)
+            {
+                // Check if the specified API is supported in test suite
+                for( i=0; i < test_api_count; i++)
+                {
+                    if(!strcmp(API_test_functions[i].ops, buffer))
+                    {
+                        API_test_functions[i].fp(1, NULL, params);
+                    }
+                }
 
+                op = 0;
+            }
+        }
+    }
     fclose( input_stream );
     fla_test_print_summary();
 }
@@ -185,7 +209,21 @@ void fla_test_output_op_struct( char* op_str, integer op )
 /* THis function checks if operations file specified any run only option */
 integer fla_test_check_run_only( FILE* input_stream, integer* op, char* buffer)
 {
-    integer run_only_flag = 1;
+    integer run_only_flag = 1, i;
+    integer test_group_count = sizeof(API_test_group) / sizeof(API_test_group[0]);
+
+    /*checks if operations file specified any sub-group of API is enable*/
+    for(i = 0; i < test_group_count; i++)
+    {
+        fla_test_read_tests_for_op( input_stream, op, buffer);
+        if((*op) == 1 )
+        {
+                run_only_flag = 3;
+                fseek( input_stream, 0, SEEK_SET );
+                return run_only_flag;
+        }
+    }
+
     while(fla_test_read_tests_for_op( input_stream, op, buffer))
     {
         run_only_flag = fla_max(run_only_flag, *op);
@@ -194,6 +232,21 @@ integer fla_test_check_run_only( FILE* input_stream, integer* op, char* buffer)
     fseek( input_stream, 0, SEEK_SET );
 
     return run_only_flag;
+}
+
+/* This function reads group_id for given group name*/
+integer fla_test_get_group_id(char *buffer)
+{
+    integer i;
+    integer test_group_count = sizeof(API_test_group) / sizeof(API_test_group[0]);
+
+    for(i = 0; i < test_group_count; i++)
+    {
+        if(!strcmp(buffer, API_test_group[i]))
+            return i;
+    }
+
+    return -1;
 }
 
 /* This functiom extract enable option and API name from operation file */

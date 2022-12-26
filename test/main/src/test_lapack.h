@@ -333,6 +333,7 @@ typedef struct
 
 typedef struct
 {
+    integer type;/* 0 for LIN, 1 for EIG, 2 for SVD */
     char *ops;
     void (*fp)(integer argc, char** argv, test_params_t *);
 }OPERATIONS;
@@ -395,5 +396,6 @@ void fla_test_build_function_string( char*        func_base_str,
 void fill_string_with_n_spaces( char* str, integer n_spaces );
 double fla_test_clock(void);
 void fla_test_get_time_unit(char * scale , double * time);
+integer fla_test_get_group_id(char *buffer);
 
 #endif // TEST_LAPACK_H
