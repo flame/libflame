@@ -59,7 +59,7 @@ below.
 
       ### `input.general.operations`
 
-      The `input.general.operations` file conatins the list of all the APIs
+      The `input.general.operations` file contains the list of all the APIs
       supported by the test suite. User can enable/disable the testing of a
       particular API by setting/resetting the corresponding API flag. Below is
       a representative example of the default contents of `input.general.operations`.
@@ -67,6 +67,21 @@ below.
          1 geqrf QR factorization (0 = disable; 1 = enable, 2 = run APIs with value 2)
          1 gerqf RQ factorisation (0 = disable; 1 = enable, 2 = run APIs with value 2)
          1 getrf LU factorization (0 = disable; 1 = enable, 2 = run APIs with value 2)
+
+   ## Selecting Subgroup of APIs for testing
+
+      ### `input.general.operations`
+
+      The `input.general.operations` file also contains the list of all sub-groups of APIs
+      like all LIN,EIG etc. User can enable/disable the testing of a particular sub-group of
+      API's by setting/resetting the corresponding group's flag.
+      Below is a representative example of the default contents of `input.general.operations`.
+
+         1   LIN     for testing all LIN API's                     (0 = disable; 1 = enable)
+         1   EIG     for testing all Eigen API's                   (0 = disable; 1 = enable)
+         1   SVD     for testing all SVD API's                     (0 = disable; 1 = enable)
+
+         Note: If any sub-group is enabled then individual API test will not execute.
 
 
    ## Running tests
