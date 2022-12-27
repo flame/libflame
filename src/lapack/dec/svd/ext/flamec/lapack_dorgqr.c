@@ -75,7 +75,7 @@
  /* > \param[in] LDA */
  /* > \verbatim */
  /* > LDA is INTEGER */
- /* > The first dimension of the array A. LDA >= max(1,M). */
+ /* > The first dimension of the array A. LDA >= fla_max(1,M). */
  /* > \endverbatim */
  /* > */
  /* > \param[in] TAU */
@@ -94,7 +94,7 @@
  /* > \param[in] LWORK */
  /* > \verbatim */
  /* > LWORK is INTEGER */
- /* > The dimension of the array WORK. LWORK >= max(1,N). */
+ /* > The dimension of the array WORK. LWORK >= fla_max(1,N). */
  /* > For optimum performance LWORK >= N*NB, where NB is the */
  /* > optimal blocksize. */
  /* > */
@@ -159,7 +159,7 @@
  /* Function Body */
  *info = 0;
  nb = ilaenv_(&c__1, "DORGQR", " ", m, n, k, &c_n1);
- lwkopt = max(1,*n) * nb;
+ lwkopt = fla_max(1,*n) * nb;
  work[1] = (doublereal) lwkopt;
  lquery = *lwork == -1;
  if (*m < 0) {
@@ -171,10 +171,10 @@
  else if (*k < 0 || *k > *n) {
  *info = -3;
  }
- else if (*lda < max(1,*m)) {
+ else if (*lda < fla_max(1,*m)) {
  *info = -5;
  }
- else if (*lwork < max(1,*n) && ! lquery) {
+ else if (*lwork < fla_max(1,*n) && ! lquery) {
  *info = -8;
  }
  if (*info != 0) {
@@ -197,7 +197,7 @@
  /* Determine when to cross over from blocked to unblocked code. */
  /* Computing MAX */
  i__1 = 0; i__2 = ilaenv_(&c__3, "DORGQR", " ", m, n, k, &c_n1); // , expr subst  
- nx = max(i__1,i__2);
+ nx = fla_max(i__1,i__2);
  if (nx < *k) {
  /* Determine if workspace is large enough for blocked code. */
  ldwork = *n;
@@ -208,7 +208,7 @@
  nb = *lwork / ldwork;
  /* Computing MAX */
  i__1 = 2; i__2 = ilaenv_(&c__2, "DORGQR", " ", m, n, k, &c_n1); // , expr subst  
- nbmin = max(i__1,i__2);
+ nbmin = fla_max(i__1,i__2);
  }
  }
  }
@@ -218,7 +218,7 @@
  ki = (*k - nx - 1) / nb * nb;
  /* Computing MIN */
  i__1 = *k; i__2 = ki + nb; // , expr subst  
- kk = min(i__1,i__2);
+ kk = fla_min(i__1,i__2);
  /* Set A(1:kk,kk+1:n) to zero. */
  i__1 = *n;
  for (j = kk + 1;
@@ -252,7 +252,7 @@
  i__ += i__1) {
  /* Computing MIN */
  i__2 = nb; i__3 = *k - i__ + 1; // , expr subst  
- ib = min(i__2,i__3);
+ ib = fla_min(i__2,i__3);
  if (i__ + ib <= *n) {
  /* Form the triangular factor of the block reflector */
  /* H = H(i) H(i+1) . . . H(i+ib-1) */

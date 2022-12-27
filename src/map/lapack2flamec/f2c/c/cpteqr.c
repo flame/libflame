@@ -114,7 +114,7 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > LDZ is INTEGER */
 /* > The leading dimension of the array Z. LDZ >= 1, and if */
-/* > COMPZ = 'V' or 'I', LDZ >= max(1,N). */
+/* > COMPZ = 'V' or 'I', LDZ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -231,7 +231,7 @@ int cpteqr_(char *compz, integer *n, real *d__, real *e, complex *z__, integer *
     {
         *info = -2;
     }
-    else if (*ldz < 1 || icompz > 0 && *ldz < max(1,*n))
+    else if (*ldz < 1 || icompz > 0 && *ldz < fla_max(1,*n))
     {
         *info = -6;
     }

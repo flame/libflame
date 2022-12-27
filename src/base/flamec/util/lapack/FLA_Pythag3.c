@@ -84,12 +84,12 @@ FLA_Error FLA_Pythag3_ops( float*    chi,
 	xabs = fabsf( *chi );
 	yabs = fabsf( *psi );
 	zabs = fabsf( *zeta );
-	w    = max( xabs, max( yabs, zabs ) );
+	w    = fla_max( xabs, fla_max( yabs, zabs ) );
 
 	if ( w == zero )
 	{
 		// From netlib dlapy3:
-		// W can be zero for max(0,nan,0). Adding all three entries
+		// W can be zero for fla_max(0,nan,0). Adding all three entries
 		// together will make sure NaN will not disappear.
 		*rho = xabs + yabs + zabs;
 	}
@@ -125,12 +125,12 @@ FLA_Error FLA_Pythag3_opd( double*   chi,
 	xabs = fabs( *chi );
 	yabs = fabs( *psi );
 	zabs = fabs( *zeta );
-	w    = max( xabs, max( yabs, zabs ) );
+	w    = fla_max( xabs, fla_max( yabs, zabs ) );
 
 	if ( w == zero )
 	{
 		// From netlib dlapy3:
-		// W can be zero for max(0,nan,0). Adding all three entries
+		// W can be zero for fla_max(0,nan,0). Adding all three entries
 		// together will make sure NaN will not disappear.
 		*rho = xabs + yabs + zabs;
 	}

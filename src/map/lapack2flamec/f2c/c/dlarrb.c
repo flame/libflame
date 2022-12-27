@@ -261,7 +261,7 @@ int dlarrb_(integer *n, doublereal *d__, doublereal *lld, integer *ifirst, integ
         right = w[ii] + werr[ii];
         lgap = rgap;
         rgap = wgap[ii];
-        gap = min(lgap,rgap);
+        gap = fla_min(lgap,rgap);
         /* Make sure that [LEFT,RIGHT] contains the desired eigenvalue */
         /* Compute negcount from dstqds facto L+D+L+^T = L D L^T - LEFT */
         /* Do while( NEGCNT(LEFT).GT.I-1 ) */
@@ -289,11 +289,11 @@ L50:
         /* Computing MAX */
         d__1 = f2c_abs(left);
         d__2 = f2c_abs(right); // , expr subst
-        tmp = max(d__1,d__2);
+        tmp = fla_max(d__1,d__2);
         /* Computing MAX */
         d__1 = *rtol1 * gap;
         d__2 = *rtol2 * tmp; // , expr subst
-        cvrgd = max(d__1,d__2);
+        cvrgd = fla_max(d__1,d__2);
         if (width <= cvrgd || width <= mnwdth)
         {
             /* This interval has already converged and does not need refinement. */
@@ -343,7 +343,7 @@ L80:
         {
             lgap = wgap[ii - 1];
         }
-        gap = min(lgap,rgap);
+        gap = fla_min(lgap,rgap);
         next = iwork[k - 1];
         left = work[k - 1];
         right = work[k];
@@ -353,11 +353,11 @@ L80:
         /* Computing MAX */
         d__1 = f2c_abs(left);
         d__2 = f2c_abs(right); // , expr subst
-        tmp = max(d__1,d__2);
+        tmp = fla_max(d__1,d__2);
         /* Computing MAX */
         d__1 = *rtol1 * gap;
         d__2 = *rtol2 * tmp; // , expr subst
-        cvrgd = max(d__1,d__2);
+        cvrgd = fla_max(d__1,d__2);
         if (width <= cvrgd || width <= mnwdth || iter == maxitr)
         {
             /* reduce number of unconverged intervals */
@@ -428,7 +428,7 @@ L100:
         /* Computing MAX */
         d__1 = 0.;
         d__2 = w[ii] - werr[ii] - w[ii - 1] - werr[ii - 1]; // , expr subst
-        wgap[ii - 1] = max(d__1,d__2);
+        wgap[ii - 1] = fla_max(d__1,d__2);
         /* L111: */
     }
     AOCL_DTL_TRACE_LOG_EXIT

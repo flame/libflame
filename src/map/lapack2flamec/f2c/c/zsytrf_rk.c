@@ -90,7 +90,7 @@ static integer c__2 = 2;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] E */
@@ -307,7 +307,7 @@ int zsytrf_rk_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecom
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }
@@ -344,11 +344,11 @@ int zsytrf_rk_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecom
         {
             /* Computing MAX */
             i__1 = *lwork / ldwork;
-            nb = max(i__1,1);
+            nb = fla_max(i__1,1);
             /* Computing MAX */
             i__1 = 2;
             i__2 = ilaenv_(&c__2, "ZSYTRF_RK", uplo, n, &c_n1, & c_n1, &c_n1); // , expr subst
-            nbmin = max(i__1,i__2);
+            nbmin = fla_max(i__1,i__2);
         }
     }
     else

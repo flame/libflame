@@ -91,7 +91,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] E */
@@ -218,7 +218,7 @@ int ssytri_3_(char *uplo, integer *n, real *a, integer *lda, real *e, integer *i
     /* Computing MAX */
     i__1 = 1;
     i__2 = ilaenv_(&c__1, "SSYTRI_3", uplo, n, &c_n1, &c_n1, &c_n1); // , expr subst
-    nb = max(i__1,i__2);
+    nb = fla_max(i__1,i__2);
     lwkopt = (*n + nb + 1) * (nb + 3);
     if (! upper && ! lsame_(uplo, "L"))
     {
@@ -228,7 +228,7 @@ int ssytri_3_(char *uplo, integer *n, real *a, integer *lda, real *e, integer *i
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }

@@ -411,7 +411,7 @@ int slasd6_(integer *icompq, integer *nl, integer *nr, integer *sqre, real *d__,
     /* Computing MAX */
     r__1 = f2c_abs(*alpha);
     r__2 = f2c_abs(*beta); // , expr subst
-    orgnrm = max(r__1,r__2);
+    orgnrm = fla_max(r__1,r__2);
     d__[*nl + 1] = 0.f;
     i__1 = n;
     for (i__ = 1;

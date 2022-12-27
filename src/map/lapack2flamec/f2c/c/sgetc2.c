@@ -60,7 +60,7 @@ the unit diagonal elements of L are not stored. */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] IPIV */
@@ -201,7 +201,7 @@ int sgetc2_(integer *n, real *a, integer *lda, integer *ipiv, integer *jpiv, int
         {
             /* Computing MAX */
             r__1 = eps * xmax;
-            smin = max(r__1,smlnum);
+            smin = fla_max(r__1,smlnum);
         }
         /* Swap rows */
         if (ipv != i__)

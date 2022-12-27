@@ -263,16 +263,16 @@ int dlarrf_(integer *n, doublereal *d__, doublereal *l, doublereal *ld, integer 
     /* Compute the average gap length of the cluster */
     clwdth = (d__1 = w[*clend] - w[*clstrt], f2c_abs(d__1)) + werr[*clend] + werr[ *clstrt];
     avgap = clwdth / (doublereal) (*clend - *clstrt);
-    mingap = min(*clgapl,*clgapr);
+    mingap = fla_min(*clgapl,*clgapr);
     /* Initial values for shifts to both ends of cluster */
     /* Computing MIN */
     d__1 = w[*clstrt];
     d__2 = w[*clend]; // , expr subst
-    lsigma = min(d__1,d__2) - werr[*clstrt];
+    lsigma = fla_min(d__1,d__2) - werr[*clstrt];
     /* Computing MAX */
     d__1 = w[*clstrt];
     d__2 = w[*clend]; // , expr subst
-    rsigma = max(d__1,d__2) + werr[*clend];
+    rsigma = fla_max(d__1,d__2) + werr[*clend];
     /* Use a small fudge to make sure that we really shift to the outside */
     lsigma -= f2c_abs(lsigma) * 4. * eps;
     rsigma += f2c_abs(rsigma) * 4. * eps;
@@ -282,11 +282,11 @@ int dlarrf_(integer *n, doublereal *d__, doublereal *l, doublereal *ld, integer 
     /* Computing MAX */
     d__1 = avgap;
     d__2 = wgap[*clstrt]; // , expr subst
-    ldelta = max(d__1,d__2) / fact;
+    ldelta = fla_max(d__1,d__2) / fact;
     /* Computing MAX */
     d__1 = avgap;
     d__2 = wgap[*clend - 1]; // , expr subst
-    rdelta = max(d__1,d__2) / fact;
+    rdelta = fla_max(d__1,d__2) / fact;
     /* Initialize the record of the best representation found */
     s = dlamch_("S");
     smlgrowth = 1. / s;
@@ -300,8 +300,8 @@ L5:
     sawnan1 = FALSE_;
     sawnan2 = FALSE_;
     /* Ensure that we do not back off too much of the initial shifts */
-    ldelta = min(ldmax,ldelta);
-    rdelta = min(rdmax,rdelta);
+    ldelta = fla_min(ldmax,ldelta);
+    rdelta = fla_min(rdmax,rdelta);
     /* Compute the element growth when shifting to both ends of the cluster */
     /* accept the shift if there is no element growth at one of the two ends */
     /* Left end */
@@ -333,7 +333,7 @@ L5:
         /* Computing MAX */
         d__2 = max1;
         d__3 = (d__1 = dplus[i__ + 1], f2c_abs(d__1)); // , expr subst
-        max1 = max(d__2,d__3);
+        max1 = fla_max(d__2,d__3);
         /* L6: */
     }
     sawnan1 = sawnan1 || disnan_(&max1);
@@ -372,7 +372,7 @@ L5:
         /* Computing MAX */
         d__2 = max2;
         d__3 = (d__1 = work[i__ + 1], f2c_abs(d__1)); // , expr subst
-        max2 = max(d__2,d__3);
+        max2 = fla_max(d__2,d__3);
         /* L7: */
     }
     sawnan2 = sawnan2 || disnan_(&max2);
@@ -418,7 +418,7 @@ L5:
     /* we may still accept the representation, if it passes a */
     /* refined test for RRR. This test supposes that no NaN occurred. */
     /* Moreover, we use the refined RRR test only for isolated clusters. */
-    if (clwdth < mingap / 128. && min(max1,max2) < fail2 && ! sawnan1 && ! sawnan2)
+    if (clwdth < mingap / 128. && fla_min(max1,max2) < fail2 && ! sawnan1 && ! sawnan2)
     {
         dorrr1 = TRUE_;
     }
@@ -454,7 +454,7 @@ L5:
                 /* Computing MAX */
                 d__2 = tmp;
                 d__3 = (d__1 = dplus[i__] * prod, f2c_abs(d__1)); // , expr subst
-                tmp = max(d__2,d__3);
+                tmp = fla_max(d__2,d__3);
                 /* L15: */
             }
             rrr1 = tmp / (*spdiam * sqrt(znm2));
@@ -490,7 +490,7 @@ L5:
                 /* Computing MAX */
                 d__2 = tmp;
                 d__3 = (d__1 = work[i__] * prod, f2c_abs(d__1)); // , expr subst
-                tmp = max(d__2,d__3);
+                tmp = fla_max(d__2,d__3);
                 /* L16: */
             }
             rrr2 = tmp / (*spdiam * sqrt(znm2));
@@ -510,11 +510,11 @@ L50:
         /* Computing MAX */
         d__1 = lsigma - ldelta;
         d__2 = lsigma - ldmax; // , expr subst
-        lsigma = max(d__1,d__2);
+        lsigma = fla_max(d__1,d__2);
         /* Computing MIN */
         d__1 = rsigma + rdelta;
         d__2 = rsigma + rdmax; // , expr subst
-        rsigma = min(d__1,d__2);
+        rsigma = fla_min(d__1,d__2);
         ldelta *= 2.;
         rdelta *= 2.;
         ++ktry;

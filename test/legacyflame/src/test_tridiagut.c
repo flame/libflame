@@ -196,7 +196,7 @@ void libfla_test_tridiagut_experiment( test_params_t params,
 		libfla_test_tridiagut_impl( impl, uplo, A, T );
 		
 		time = FLA_Clock() - time;
-		time_min = min( time_min, time );
+		time_min = fla_min( time_min, time );
 	}
 
 	// Free the control trees if we're testing the variants.

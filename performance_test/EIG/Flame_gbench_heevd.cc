@@ -181,14 +181,14 @@ BENCHMARK_TEMPLATE_DEFINE_F(heevd_test, cheevd,lapack_complex_float,float )(benc
     data->lrwork = (int)rwork_query;
     if(data->jobz == 'N')
     {
-        data->liwork=max(1,data->liwork);
-        data->lwork=max((data->n)+1,data->lwork);
-        data->lrwork = max(data->n,data->lrwork);
+        data->liwork=fla_max(1,data->liwork);
+        data->lwork=fla_max((data->n)+1,data->lwork);
+        data->lrwork = fla_max(data->n,data->lrwork);
     }
     else{
-        data->liwork=max(3+(5*(data->n)),data->liwork);
-        data->lwork=max((2*(data->n))+((data->n)^2),data->lwork);
-        data->lrwork=max(1+(5*(data->n))+(2*((data->n)^2)),data->lrwork);
+        data->liwork=fla_max(3+(5*(data->n)),data->liwork);
+        data->lwork=fla_max((2*(data->n))+((data->n)^2),data->lwork);
+        data->lrwork=fla_max(1+(5*(data->n))+(2*((data->n)^2)),data->lrwork);
     }
     /* Allocate memory for work arrays */
     data->iwork = (int*)malloc( sizeof(int) * (data->liwork) );
@@ -233,14 +233,14 @@ BENCHMARK_TEMPLATE_DEFINE_F(heevd_test, zheevd,lapack_complex_double,double )(be
     data->lrwork = (int)rwork_query;
     if(data->jobz == 'N')
     {
-        data->liwork=max(1,data->liwork);
-        data->lwork=max((data->n)+1,data->lwork);
-        data->lrwork = max(data->n,data->lrwork);
+        data->liwork=fla_max(1,data->liwork);
+        data->lwork=fla_max((data->n)+1,data->lwork);
+        data->lrwork = fla_max(data->n,data->lrwork);
     }
     else{
-        data->liwork=max(3+(5*(data->n)),data->liwork);
-        data->lwork=max((2*(data->n))+((data->n)^2),data->lwork);
-        data->lrwork=max(1+(5*(data->n))+(2*((data->n)^2)),data->lrwork);
+        data->liwork=fla_max(3+(5*(data->n)),data->liwork);
+        data->lwork=fla_max((2*(data->n))+((data->n)^2),data->lwork);
+        data->lrwork=fla_max(1+(5*(data->n))+(2*((data->n)^2)),data->lrwork);
     }
     /* Allocate memory for work arrays */
     data->iwork = (int*)malloc( sizeof(int) * (data->liwork) );

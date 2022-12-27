@@ -157,7 +157,7 @@ void time_Chol_u(
     }
 
     *dtime = FLA_Clock() - *dtime;
-    dtime_save = min( *dtime, dtime_save );
+    dtime_save = fla_min( *dtime, dtime_save );
   }
 
   FLA_Cntl_obj_free( cntl_chol_var );

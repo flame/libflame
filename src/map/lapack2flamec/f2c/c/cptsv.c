@@ -78,7 +78,7 @@
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -149,7 +149,7 @@ int cptsv_(integer *n, integer *nrhs, real *d__, complex *e, complex *b, integer
     {
         *info = -2;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -6;
     }

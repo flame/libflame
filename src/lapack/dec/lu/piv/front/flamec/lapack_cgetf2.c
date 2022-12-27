@@ -39,10 +39,10 @@
             A = P*L*U; the unit diagonal elements of L are not stored.
 
     LDA     (input) INTEGER
-            The leading dimension of the array A.  LDA >= max(1,M).
+            The leading dimension of the array A.  LDA >= fla_max(1,M).
 
-    IPIV    (output) INTEGER array, dimension (min(M,N))
-            The pivot indices; for 1 <= i <= min(M,N), row i of the
+    IPIV    (output) INTEGER array, dimension (fla_min(M,N))
+            The pivot indices; for 1 <= i <= fla_min(M,N), row i of the
             matrix was interchanged with row IPIV(i).
 
     INFO    (output) INTEGER
@@ -87,7 +87,7 @@
 	*info = -1;
     } else if (*n < 0) {
 	*info = -2;
-    } else if (*lda < max(1,*m)) {
+    } else if (*lda < fla_max(1,*m)) {
 	*info = -4;
     }
     if (*info != 0) {
@@ -102,7 +102,7 @@
 	return 0;
     }
 
-    i__1 = min(*m,*n);
+    i__1 = fla_min(*m,*n);
     for (j = 1; j <= i__1; ++j) {
 
 /*        Find pivot and test for singularity. */
@@ -132,7 +132,7 @@
 	    *info = j;
 	}
 
-	if (j < min(*m,*n)) {
+	if (j < fla_min(*m,*n)) {
 
 /*           Update trailing submatrix. */
 

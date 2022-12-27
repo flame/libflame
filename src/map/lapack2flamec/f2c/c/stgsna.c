@@ -102,7 +102,7 @@ static integer c__3 = 3;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] B */
@@ -114,7 +114,7 @@ static integer c__3 = 3;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] VL */
@@ -204,7 +204,7 @@ for each selected real */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,N). */
 /* > If JOB = 'V' or 'B' LWORK >= 2*N*(N+2)+16. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -310,7 +310,7 @@ the routine */
 /* > */
 /* > Then the reciprocal condition number DIF(i) is bounded by */
 /* > */
-/* > min( d1, max( 1, |real(s11)/real(s22)| )*d2 ) */
+/* > fla_min( d1, fla_max( 1, |real(s11)/real(s22)| )*d2 ) */
 /* > */
 /* > where, d1 = Difl((s11, t11), (s22, t22)) = sigma-min(Z1), where */
 /* > Z1 is the complex 2-by-2 matrix */
@@ -490,11 +490,11 @@ int stgsna_(char *job, char *howmny, logical *select, integer *n, real *a, integ
     {
         *info = -4;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -6;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -8;
     }
@@ -728,7 +728,7 @@ int stgsna_(char *job, char *howmny, logical *select, integer *n, real *a, integ
                 /* Computing MIN */
                 r__1 = sqrt(root1);
                 r__2 = sqrt(root2); // , expr subst
-                cond = min(r__1,r__2);
+                cond = fla_min(r__1,r__2);
             }
             /* Copy the matrix (A, B) to the array WORK and swap the */
             /* diagonal block beginning at A(k,k) to the (1,1) position. */
@@ -769,8 +769,8 @@ int stgsna_(char *job, char *howmny, logical *select, integer *n, real *a, integ
                     if (pair)
                     {
                         /* Computing MIN */
-                        r__1 = max(1.f,alprqt) * dif[ks];
-                        dif[ks] = min(r__1,cond);
+                        r__1 = fla_max(1.f,alprqt) * dif[ks];
+                        dif[ks] = fla_min(r__1,cond);
                     }
                 }
             }

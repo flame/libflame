@@ -115,7 +115,7 @@ static integer c_n1 = -1;
 /* > \param[in] A */
 /* > \verbatim */
 /* > A is COMPLEX array, dimension */
-/* > (LDA,min(nq,K)) if VECT = 'Q' */
+/* > (LDA,fla_min(nq,K)) if VECT = 'Q' */
 /* > (LDA,nq) if VECT = 'P' */
 /* > The vectors which define the elementary reflectors H(i) and */
 /* > G(i), whose products determine the matrices Q and P, as */
@@ -126,14 +126,14 @@ static integer c_n1 = -1;
 /* > \verbatim */
 /* > LDA is INTEGER */
 /* > The leading dimension of the array A. */
-/* > If VECT = 'Q', LDA >= max(1,nq);
+/* > If VECT = 'Q', LDA >= fla_max(1,nq);
 */
-/* > if VECT = 'P', LDA >= max(1,min(nq,K)). */
+/* > if VECT = 'P', LDA >= fla_max(1,fla_min(nq,K)). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] TAU */
 /* > \verbatim */
-/* > TAU is COMPLEX array, dimension (min(nq,K)) */
+/* > TAU is COMPLEX array, dimension (fla_min(nq,K)) */
 /* > TAU(i) must contain the scalar factor of the elementary */
 /* > reflector H(i) or G(i) which determines Q or P, as returned */
 /* > by CGEBRD in the array argument TAUQ or TAUP. */
@@ -150,7 +150,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDC */
 /* > \verbatim */
 /* > LDC is INTEGER */
-/* > The leading dimension of the array C. LDC >= max(1,M). */
+/* > The leading dimension of the array C. LDC >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -163,13 +163,13 @@ static integer c_n1 = -1;
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The dimension of the array WORK. */
-/* > If SIDE = 'L', LWORK >= max(1,N);
+/* > If SIDE = 'L', LWORK >= fla_max(1,N);
 */
-/* > if SIDE = 'R', LWORK >= max(1,M);
+/* > if SIDE = 'R', LWORK >= fla_max(1,M);
 */
 /* > if N = 0 or M = 0, LWORK >= 1. */
-/* > For optimum performance LWORK >= max(1,N*NB) if SIDE = 'L', */
-/* > and LWORK >= max(1,M*NB) if SIDE = 'R', where NB is the */
+/* > For optimum performance LWORK >= fla_max(1,N*NB) if SIDE = 'L', */
+/* > and LWORK >= fla_max(1,M*NB) if SIDE = 'R', where NB is the */
 /* > optimal blocksize. (NB = 0 if M = 0 or N = 0.) */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -303,16 +303,16 @@ int cunmbr_(char *vect, char *side, char *trans, integer *m, integer *n, integer
     {
         /* Computing MAX */
         i__1 = 1;
-        i__2 = min(nq,*k); // , expr subst
-        if (applyq && *lda < max(1,nq) || ! applyq && *lda < max(i__1,i__2))
+        i__2 = fla_min(nq,*k); // , expr subst
+        if (applyq && *lda < fla_max(1,nq) || ! applyq && *lda < fla_max(i__1,i__2))
         {
             *info = -8;
         }
-        else if (*ldc < max(1,*m))
+        else if (*ldc < fla_max(1,*m))
         {
             *info = -11;
         }
-        else if (*lwork < max(1,nw) && ! lquery)
+        else if (*lwork < fla_max(1,nw) && ! lquery)
         {
             *info = -13;
         }
@@ -354,7 +354,7 @@ int cunmbr_(char *vect, char *side, char *trans, integer *m, integer *n, integer
             /* Computing MAX */
             i__1 = 1;
             i__2 = nw * nb; // , expr subst
-            lwkopt = max(i__1,i__2);
+            lwkopt = fla_max(i__1,i__2);
         }
         else
         {

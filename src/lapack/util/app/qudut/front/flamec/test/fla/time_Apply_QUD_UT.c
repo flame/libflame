@@ -53,7 +53,7 @@ void time_Apply_QUD_UT(
                       D, bD );
 
     *dtime = FLA_Clock() - *dtime;
-    dtime_old = min( *dtime, dtime_old );
+    dtime_old = fla_min( *dtime, dtime_old );
 
   }
 

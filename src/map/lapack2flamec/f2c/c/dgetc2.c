@@ -60,7 +60,7 @@ the unit diagonal elements of L are not stored. */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] IPIV */
@@ -205,7 +205,7 @@ int dgetc2_(integer *n, doublereal *a, integer *lda, integer *ipiv, integer *jpi
         {
             /* Computing MAX */
             d__1 = eps * xmax;
-            smin = max(d__1,smlnum);
+            smin = fla_max(d__1,smlnum);
         }
         /* Swap rows */
         if (ipv != i__)

@@ -51,7 +51,7 @@ FLA_Error FLA_Apply_CAQ2_UT_lhfc_blk_var1( FLA_Obj D, FLA_Obj T, FLA_Obj W1, FLA
 
   while ( FLA_Obj_width( DBR ) > 0 ){
 
-    b = min( b_alg, FLA_Obj_width( DBR ) );
+    b = fla_min( b_alg, FLA_Obj_width( DBR ) );
 
     FLA_Repart_2x2_to_3x3( DTL, /**/ DTR,       &D00, /**/ &D01, &D02,
                         /* ************* */   /* ******************** */

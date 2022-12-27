@@ -170,7 +170,7 @@ int dlaic1_(integer *job, integer *j, doublereal *x, doublereal *sest, doublerea
         /* special cases */
         if (*sest == 0.)
         {
-            s1 = max(absgam,absalp);
+            s1 = fla_max(absgam,absalp);
             if (s1 == 0.)
             {
                 *s = 0.;
@@ -193,7 +193,7 @@ int dlaic1_(integer *job, integer *j, doublereal *x, doublereal *sest, doublerea
         {
             *s = 1.;
             *c__ = 0.;
-            tmp = max(absest,absalp);
+            tmp = fla_max(absest,absalp);
             s1 = absest / tmp;
             s2 = absalp / tmp;
             *sestpr = tmp * sqrt(s1 * s1 + s2 * s2);
@@ -274,7 +274,7 @@ int dlaic1_(integer *job, integer *j, doublereal *x, doublereal *sest, doublerea
         if (*sest == 0.)
         {
             *sestpr = 0.;
-            if (max(absgam,absalp) == 0.)
+            if (fla_max(absgam,absalp) == 0.)
             {
                 sine = 1.;
                 cosine = 0.;
@@ -287,7 +287,7 @@ int dlaic1_(integer *job, integer *j, doublereal *x, doublereal *sest, doublerea
             /* Computing MAX */
             d__1 = f2c_dabs(sine);
             d__2 = f2c_dabs(cosine); // , expr subst
-            s1 = max(d__1,d__2);
+            s1 = fla_max(d__1,d__2);
             *s = sine / s1;
             *c__ = cosine / s1;
             tmp = sqrt(*s * *s + *c__ * *c__);
@@ -354,7 +354,7 @@ int dlaic1_(integer *job, integer *j, doublereal *x, doublereal *sest, doublerea
             /* Computing MAX */
             d__3 = zeta1 * zeta1 + 1. + (d__1 = zeta1 * zeta2, f2c_dabs(d__1));
             d__4 = (d__2 = zeta1 * zeta2, f2c_dabs(d__2)) + zeta2 * zeta2; // , expr subst
-            norma = max(d__3,d__4);
+            norma = fla_max(d__3,d__4);
             /* See if root is closer to zero or to ONE */
             test = (zeta1 - zeta2) * 2. * (zeta1 + zeta2) + 1.;
             if (test >= 0.)

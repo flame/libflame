@@ -75,7 +75,7 @@ each */
 /* > \param[in] LDT */
 /* > \verbatim */
 /* > LDT is INTEGER */
-/* > The leading dimension of the array T. LDT >= max(1,N). */
+/* > The leading dimension of the array T. LDT >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] Q */
@@ -91,7 +91,7 @@ each */
 /* > \verbatim */
 /* > LDQ is INTEGER */
 /* > The leading dimension of the array Q. LDQ >= 1, and if */
-/* > COMPQ = 'V', LDQ >= max(1,N). */
+/* > COMPQ = 'V', LDQ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] IFST */
@@ -194,11 +194,11 @@ int dtrexc_(char *compq, integer *n, doublereal *t, integer * ldt, doublereal *q
     {
         *info = -2;
     }
-    else if (*ldt < max(1,*n))
+    else if (*ldt < fla_max(1,*n))
     {
         *info = -4;
     }
-    else if (*ldq < 1 || wantq && *ldq < max(1,*n))
+    else if (*ldq < 1 || wantq && *ldq < fla_max(1,*n))
     {
         *info = -6;
     }

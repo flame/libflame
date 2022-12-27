@@ -87,7 +87,7 @@ static integer c__0 = 0;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -100,7 +100,7 @@ static integer c__0 = 0;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] Q */
@@ -325,13 +325,13 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
     /* Computing MAX */
     i__1 = *n * m;
     i__2 = m * m << 1; // , expr subst
-    if (*lwork < max(i__1,i__2))
+    if (*lwork < fla_max(i__1,i__2))
     {
         *info = -16;
         /* Computing MAX */
         i__1 = *n * m;
         i__2 = m * m << 1; // , expr subst
-        work[1] = (real) max(i__1,i__2);
+        work[1] = (real) fla_max(i__1,i__2);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
@@ -363,7 +363,7 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
     /* Jim Demmel and Guillaume Revy. See forum post 1783. */
     /* Computing MAX */
     r__1 = eps * 20.f * dnorm;
-    thresh = max(r__1,smlnum);
+    thresh = fla_max(r__1,smlnum);
     if (m == 2)
     {
         /* CASE 1: Swap 1-by-1 and 1-by-1 blocks. */

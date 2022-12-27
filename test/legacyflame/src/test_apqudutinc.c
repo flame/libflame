@@ -190,7 +190,7 @@ void libfla_test_apqudutinc_experiment( test_params_t params,
 		                             D, bD );
 		
 		time = FLA_Clock() - time;
-		time_min = min( time_min, time );
+		time_min = fla_min( time_min, time );
 	}
 
 	// Solve for the solutions of our two systems.

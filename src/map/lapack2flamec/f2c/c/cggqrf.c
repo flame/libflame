@@ -85,23 +85,23 @@ static integer c_n1 = -1;
 /* > A is COMPLEX array, dimension (LDA,M) */
 /* > On entry, the N-by-M matrix A. */
 /* > On exit, the elements on and above the diagonal of the array */
-/* > contain the min(N,M)-by-M upper trapezoidal matrix R (R is */
+/* > contain the fla_min(N,M)-by-M upper trapezoidal matrix R (R is */
 /* > upper triangular if N >= M);
 the elements below the diagonal, */
 /* > with the array TAUA, represent the unitary matrix Q as a */
-/* > product of min(N,M) elementary reflectors (see Further */
+/* > product of fla_min(N,M) elementary reflectors (see Further */
 /* > Details). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] TAUA */
 /* > \verbatim */
-/* > TAUA is COMPLEX array, dimension (min(N,M)) */
+/* > TAUA is COMPLEX array, dimension (fla_min(N,M)) */
 /* > The scalar factors of the elementary reflectors which */
 /* > represent the unitary matrix Q (see Further Details). */
 /* > \endverbatim */
@@ -124,12 +124,12 @@ the remaining */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] TAUB */
 /* > \verbatim */
-/* > TAUB is COMPLEX array, dimension (min(N,P)) */
+/* > TAUB is COMPLEX array, dimension (fla_min(N,P)) */
 /* > The scalar factors of the elementary reflectors which */
 /* > represent the unitary matrix Z (see Further Details). */
 /* > \endverbatim */
@@ -143,8 +143,8 @@ the remaining */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,N,M,P). */
-/* > For optimum performance LWORK >= max(N,M,P)*max(NB1,NB2,NB3), */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,N,M,P). */
+/* > For optimum performance LWORK >= fla_max(N,M,P)*fla_max(NB1,NB2,NB3), */
 /* > where NB1 is the optimal blocksize for the QR factorization */
 /* > of an N-by-M matrix, NB2 is the optimal blocksize for the */
 /* > RQ factorization of an N-by-P matrix, and NB3 is the optimal */
@@ -178,7 +178,7 @@ the routine */
 /* > */
 /* > The matrix Q is represented as a product of elementary reflectors */
 /* > */
-/* > Q = H(1) H(2) . . . H(k), where k = min(n,m). */
+/* > Q = H(1) H(2) . . . H(k), where k = fla_min(n,m). */
 /* > */
 /* > Each H(i) has the form */
 /* > */
@@ -193,7 +193,7 @@ v(i+1:n) is stored on exit in A(i+1:n,i), */
 /* > */
 /* > The matrix Z is represented as a product of elementary reflectors */
 /* > */
-/* > Z = H(1) H(2) . . . H(k), where k = min(n,p). */
+/* > Z = H(1) H(2) . . . H(k), where k = fla_min(n,p). */
 /* > */
 /* > Each H(i) has the form */
 /* > */
@@ -267,11 +267,11 @@ int cggqrf_(integer *n, integer *m, integer *p, complex *a, integer *lda, comple
     nb2 = ilaenv_(&c__1, "CGERQF", " ", n, p, &c_n1, &c_n1);
     nb3 = ilaenv_(&c__1, "CUNMQR", " ", n, m, p, &c_n1);
     /* Computing MAX */
-    i__1 = max(nb1,nb2);
-    nb = max(i__1,nb3);
+    i__1 = fla_max(nb1,nb2);
+    nb = fla_max(i__1,nb3);
     /* Computing MAX */
-    i__1 = max(*n,*m);
-    lwkopt = max(i__1,*p) * nb;
+    i__1 = fla_max(*n,*m);
+    lwkopt = fla_max(i__1,*p) * nb;
     work[1].r = (real) lwkopt;
     work[1].i = 0.f; // , expr subst
     lquery = *lwork == -1;
@@ -287,20 +287,20 @@ int cggqrf_(integer *n, integer *m, integer *p, complex *a, integer *lda, comple
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -8;
     }
     else /* if(complicated condition) */
     {
         /* Computing MAX */
-        i__1 = max(1,*n);
-        i__1 = max(i__1,*m); // , expr subst
-        if (*lwork < max(i__1,*p) && ! lquery)
+        i__1 = fla_max(1,*n);
+        i__1 = fla_max(i__1,*m); // , expr subst
+        if (*lwork < fla_max(i__1,*p) && ! lquery)
         {
             *info = -11;
         }
@@ -321,18 +321,18 @@ int cggqrf_(integer *n, integer *m, integer *p, complex *a, integer *lda, comple
     cgeqrf_(n, m, &a[a_offset], lda, &taua[1], &work[1], lwork, info);
     lopt = work[1].r;
     /* Update B := Q**H*B. */
-    i__1 = min(*n,*m);
+    i__1 = fla_min(*n,*m);
     cunmqr_("Left", "Conjugate Transpose", n, p, &i__1, &a[a_offset], lda, & taua[1], &b[b_offset], ldb, &work[1], lwork, info);
     /* Computing MAX */
     i__1 = lopt;
     i__2 = (integer) work[1].r; // , expr subst
-    lopt = max(i__1,i__2);
+    lopt = fla_max(i__1,i__2);
     /* RQ factorization of N-by-P matrix B: B = T*Z. */
     cgerqf_(n, p, &b[b_offset], ldb, &taub[1], &work[1], lwork, info);
     /* Computing MAX */
     i__2 = lopt;
     i__3 = (integer) work[1].r; // , expr subst
-    i__1 = max(i__2,i__3);
+    i__1 = fla_max(i__2,i__3);
     work[1].r = (real) i__1;
     work[1].i = 0.f; // , expr subst
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);

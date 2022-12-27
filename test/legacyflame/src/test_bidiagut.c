@@ -172,7 +172,7 @@ void libfla_test_bidiagut_experiment( test_params_t params,
 */
 
 	// Compute the minimum dimension of A.
-	min_m_n = min( m, n );
+	min_m_n = fla_min( m, n );
 
 	// Create the matrices for the current operation.
 	libfla_test_obj_create( datatype, FLA_NO_TRANSPOSE, sc_str[0], m, n, &A );
@@ -224,7 +224,7 @@ void libfla_test_bidiagut_experiment( test_params_t params,
 		libfla_test_bidiagut_impl( impl, A, TU, TV );
 		
 		time = FLA_Clock() - time;
-		time_min = min( time_min, time );
+		time_min = fla_min( time_min, time );
 	}
 
 	// Free the control trees if we're testing the variants.

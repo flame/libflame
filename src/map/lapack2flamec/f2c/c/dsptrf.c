@@ -254,7 +254,7 @@ L10:
         {
             colmax = 0.;
         }
-        if (max(absakk,colmax) == 0.)
+        if (fla_max(absakk,colmax) == 0.)
         {
             /* Column K is zero: set INFO and continue */
             if (*info == 0)
@@ -296,7 +296,7 @@ L10:
                     /* Computing MAX */
                     d__2 = rowmax;
                     d__3 = (d__1 = ap[kpc + jmax - 1], f2c_dabs( d__1)); // , expr subst
-                    rowmax = max(d__2,d__3);
+                    rowmax = fla_max(d__2,d__3);
                 }
                 if (absakk >= alpha * colmax * (colmax / rowmax))
                 {
@@ -448,7 +448,7 @@ L60:
         {
             colmax = 0.;
         }
-        if (max(absakk,colmax) == 0.)
+        if (fla_max(absakk,colmax) == 0.)
         {
             /* Column K is zero: set INFO and continue */
             if (*info == 0)
@@ -491,7 +491,7 @@ L60:
                     /* Computing MAX */
                     d__2 = rowmax;
                     d__3 = (d__1 = ap[kpc + jmax - imax], f2c_dabs( d__1)); // , expr subst
-                    rowmax = max(d__2,d__3);
+                    rowmax = fla_max(d__2,d__3);
                 }
                 if (absakk >= alpha * colmax * (colmax / rowmax))
                 {

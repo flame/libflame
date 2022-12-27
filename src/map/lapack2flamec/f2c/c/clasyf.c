@@ -102,7 +102,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] IPIV */
@@ -139,7 +139,7 @@ static integer c__1 = 1;
 /* > \param[in] LDW */
 /* > \verbatim */
 /* > LDW is INTEGER */
-/* > The leading dimension of the array W. LDW >= max(1,N). */
+/* > The leading dimension of the array W. LDW >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -281,7 +281,7 @@ L10:
         {
             colmax = 0.f;
         }
-        if (max(absakk,colmax) == 0.f)
+        if (fla_max(absakk,colmax) == 0.f)
         {
             /* Column K is zero or underflow: set INFO and continue */
             if (*info == 0)
@@ -324,7 +324,7 @@ L10:
                     i__1 = jmax + (kw - 1) * w_dim1;
                     r__3 = rowmax;
                     r__4 = (r__1 = w[i__1].r, f2c_abs(r__1)) + ( r__2 = r_imag(&w[jmax + (kw - 1) * w_dim1]), f2c_abs( r__2)); // , expr subst
-                    rowmax = max(r__3,r__4);
+                    rowmax = fla_max(r__3,r__4);
                 }
                 if (absakk >= alpha * colmax * (colmax / rowmax))
                 {
@@ -528,7 +528,7 @@ L30: /* Update the upper triangle of A11 (= A(1:k,1:k)) as */
             /* Computing MIN */
             i__2 = *nb;
             i__3 = k - j + 1; // , expr subst
-            jb = min(i__2,i__3);
+            jb = fla_min(i__2,i__3);
             /* Update the upper triangle of the diagonal block */
             i__2 = j + jb - 1;
             for (jj = j;
@@ -618,7 +618,7 @@ L70: /* Exit from loop */
         {
             colmax = 0.f;
         }
-        if (max(absakk,colmax) == 0.f)
+        if (fla_max(absakk,colmax) == 0.f)
         {
             /* Column K is zero or underflow: set INFO and continue */
             if (*info == 0)
@@ -660,7 +660,7 @@ L70: /* Exit from loop */
                     i__1 = jmax + (k + 1) * w_dim1;
                     r__3 = rowmax;
                     r__4 = (r__1 = w[i__1].r, f2c_abs(r__1)) + ( r__2 = r_imag(&w[jmax + (k + 1) * w_dim1]), f2c_abs( r__2)); // , expr subst
-                    rowmax = max(r__3,r__4);
+                    rowmax = fla_max(r__3,r__4);
                 }
                 if (absakk >= alpha * colmax * (colmax / rowmax))
                 {
@@ -867,7 +867,7 @@ L90: /* Update the lower triangle of A22 (= A(k:n,k:n)) as */
             /* Computing MIN */
             i__3 = *nb;
             i__4 = *n - j + 1; // , expr subst
-            jb = min(i__3,i__4);
+            jb = fla_min(i__3,i__4);
             /* Update the lower triangle of the diagonal block */
             i__3 = j + jb - 1;
             for (jj = j;

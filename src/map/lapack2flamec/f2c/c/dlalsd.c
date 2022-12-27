@@ -107,7 +107,7 @@ in this case a minimum norm solution is returned. */
 /* > \verbatim */
 /* > LDB is INTEGER */
 /* > The leading dimension of B in the calling subprogram. */
-/* > LDB must be at least max(1,N). */
+/* > LDB must be at least fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] RCOND */
@@ -135,7 +135,7 @@ in this case a minimum norm solution is returned. */
 /* > \verbatim */
 /* > WORK is DOUBLE PRECISION array, dimension at least */
 /* > (9*N + 2*N*SMLSIZ + 8*N*NLVL + N*NRHS + (SMLSIZ+1)**2), */
-/* > where NLVL = max(0, INT(log_2 (N/(SMLSIZ+1))) + 1). */
+/* > where NLVL = fla_max(0, INT(log_2 (N/(SMLSIZ+1))) + 1). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] IWORK */

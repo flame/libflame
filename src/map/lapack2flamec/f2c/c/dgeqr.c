@@ -53,7 +53,7 @@ static integer c__2 = 2;
 /* > A is DOUBLE PRECISION array, dimension (LDA,N) */
 /* > On entry, the M-by-N matrix A. */
 /* > On exit, the elements on and above the diagonal of the array */
-/* > contain the min(M,N)-by-N upper trapezoidal matrix R */
+/* > contain the fla_min(M,N)-by-N upper trapezoidal matrix R */
 /* > (R is upper triangular if M >= N);
 */
 /* > the elements below the diagonal are used to store part of the */
@@ -63,7 +63,7 @@ static integer c__2 = 2;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] T */
@@ -233,7 +233,7 @@ int dgeqr_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t, 
         }
     }
     /* Determine the block size */
-    if (min(*m,*n) > 0)
+    if (fla_min(*m,*n) > 0)
     {
         mb = ilaenv_(&c__1, "DGEQR ", " ", m, n, &c__1, &c_n1);
         nb = ilaenv_(&c__1, "DGEQR ", " ", m, n, &c__2, &c_n1);
@@ -247,7 +247,7 @@ int dgeqr_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t, 
     {
         mb = *m;
     }
-    if (nb > min(*m,*n) || nb < 1)
+    if (nb > fla_min(*m,*n) || nb < 1)
     {
         nb = 1;
     }
@@ -272,12 +272,12 @@ int dgeqr_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t, 
     /* Computing MAX */
     i__1 = 1;
     i__2 = nb * *n * nblcks + 5; // , expr subst
-    if ((*tsize < max(i__1,i__2) || *lwork < nb * *n) && *lwork >= *n && * tsize >= mintsz && ! lquery)
+    if ((*tsize < fla_max(i__1,i__2) || *lwork < nb * *n) && *lwork >= *n && * tsize >= mintsz && ! lquery)
     {
         /* Computing MAX */
         i__1 = 1;
         i__2 = nb * *n * nblcks + 5; // , expr subst
-        if (*tsize < max(i__1,i__2))
+        if (*tsize < fla_max(i__1,i__2))
         {
             lminws = TRUE_;
             nb = 1;
@@ -297,7 +297,7 @@ int dgeqr_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t, 
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
@@ -306,7 +306,7 @@ int dgeqr_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t, 
         /* Computing MAX */
         i__1 = 1;
         i__2 = nb * *n * nblcks + 5; // , expr subst
-        if (*tsize < max(i__1,i__2) && ! lquery && ! lminws)
+        if (*tsize < fla_max(i__1,i__2) && ! lquery && ! lminws)
         {
             *info = -6;
         }
@@ -315,7 +315,7 @@ int dgeqr_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t, 
             /* Computing MAX */
             i__1 = 1;
             i__2 = *n * nb; // , expr subst
-            if (*lwork < max(i__1,i__2) && ! lquery && ! lminws)
+            if (*lwork < fla_max(i__1,i__2) && ! lquery && ! lminws)
             {
                 *info = -8;
             }
@@ -335,14 +335,14 @@ int dgeqr_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t, 
         t[3] = (doublereal) nb;
         if (minw)
         {
-            work[1] = (doublereal) max(1,*n);
+            work[1] = (doublereal) fla_max(1,*n);
         }
         else
         {
             /* Computing MAX */
             i__1 = 1;
             i__2 = nb * *n; // , expr subst
-            work[1] = (doublereal) max(i__1,i__2);
+            work[1] = (doublereal) fla_max(i__1,i__2);
         }
     }
     if (*info != 0)
@@ -358,7 +358,7 @@ int dgeqr_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t, 
         return 0;
     }
     /* Quick return if possible */
-    if (min(*m,*n) == 0)
+    if (fla_min(*m,*n) == 0)
     {
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
@@ -375,7 +375,7 @@ int dgeqr_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *t, 
     /* Computing MAX */
     i__1 = 1;
     i__2 = nb * *n; // , expr subst
-    work[1] = (doublereal) max(i__1,i__2);
+    work[1] = (doublereal) fla_max(i__1,i__2);
     AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DGEQR */

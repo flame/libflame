@@ -229,7 +229,7 @@ void libfla_test_lu_nopiv_experiment( test_params_t params,
 		  libfla_test_lu_nopiv_impl( impl, A_test );
 		
 		  time = FLA_Clock() - time;
-		  time_min = min( time_min, time );
+		  time_min = fla_min( time_min, time );
 		}
 	}
 	// Perform a linear solve with the result.
@@ -404,7 +404,7 @@ void FLA_GETRFNP( integer m,
 			   sgetrfnp_(&m, &n, buff_A, &lda, &info);
 
 			   time = FLA_Clock() - time;
-			   time_min = min( time_min, time );
+			   time_min = fla_min( time_min, time );
 			}
 			break;
 		}
@@ -420,7 +420,7 @@ void FLA_GETRFNP( integer m,
 			   dgetrfnp_(&m, &n, buff_A, &lda, &info);
 
 			   time = FLA_Clock() - time;
-			   time_min = min( time_min, time );
+			   time_min = fla_min( time_min, time );
 			}
 			break;
 		}
@@ -436,7 +436,7 @@ void FLA_GETRFNP( integer m,
 			   cgetrfnp_(&m, &n, buff_A, &lda, &info);
 
 			   time = FLA_Clock() - time;
-			   time_min = min( time_min, time );
+			   time_min = fla_min( time_min, time );
 			}
 			break;
 		}
@@ -452,7 +452,7 @@ void FLA_GETRFNP( integer m,
 			   zgetrfnp_(&m, &n, buff_A, &lda, &info);
 
 			   time = FLA_Clock() - time;
-			   time_min = min( time_min, time );
+			   time_min = fla_min( time_min, time );
 			}
 			break;
 		}

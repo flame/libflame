@@ -182,8 +182,8 @@ int slag2_(real *a, integer *lda, real *b, integer *ldb, real *safmin, real *sca
     /* Computing MAX */
     r__5 = (r__1 = a[a_dim1 + 1], f2c_abs(r__1)) + (r__2 = a[a_dim1 + 2], f2c_abs( r__2));
     r__6 = (r__3 = a[(a_dim1 << 1) + 1], f2c_abs(r__3)) + (r__4 = a[(a_dim1 << 1) + 2], f2c_abs(r__4));
-    r__5 = max(r__5,r__6); // ; expr subst
-    anorm = max(r__5,*safmin);
+    r__5 = fla_max(r__5,r__6); // ; expr subst
+    anorm = fla_max(r__5,*safmin);
     ascale = 1.f / anorm;
     a11 = ascale * a[a_dim1 + 1];
     a21 = ascale * a[a_dim1 + 2];
@@ -194,10 +194,10 @@ int slag2_(real *a, integer *lda, real *b, integer *ldb, real *safmin, real *sca
     b12 = b[(b_dim1 << 1) + 1];
     b22 = b[(b_dim1 << 1) + 2];
     /* Computing MAX */
-    r__1 = f2c_abs(b11), r__2 = f2c_abs(b12), r__1 = max(r__1,r__2);
+    r__1 = f2c_abs(b11), r__2 = f2c_abs(b12), r__1 = fla_max(r__1,r__2);
     r__2 = f2c_abs(b22);
-    r__1 = max(r__1,r__2); // ; expr subst
-    bmin = rtmin * max(r__1,rtmin);
+    r__1 = fla_max(r__1,r__2); // ; expr subst
+    bmin = rtmin * fla_max(r__1,rtmin);
     if (f2c_abs(b11) < bmin)
     {
         b11 = r_sign(&bmin, &b11);
@@ -210,12 +210,12 @@ int slag2_(real *a, integer *lda, real *b, integer *ldb, real *safmin, real *sca
     /* Computing MAX */
     r__1 = f2c_abs(b11);
     r__2 = f2c_abs(b12) + f2c_abs(b22);
-    r__1 = max(r__1,r__2); // ; expr subst
-    bnorm = max(r__1,*safmin);
+    r__1 = fla_max(r__1,r__2); // ; expr subst
+    bnorm = fla_max(r__1,*safmin);
     /* Computing MAX */
     r__1 = f2c_abs(b11);
     r__2 = f2c_abs(b22); // , expr subst
-    bsize = max(r__1,r__2);
+    bsize = fla_max(r__1,r__2);
     bscale = 1.f / bsize;
     b11 *= bscale;
     b12 *= bscale;
@@ -285,7 +285,7 @@ int slag2_(real *a, integer *lda, real *b, integer *ldb, real *safmin, real *sca
         wsmall = shift + diff;
         /* Computing MAX */
         r__1 = f2c_abs(wsmall);
-        if (f2c_abs(wbig) * .5f > max(r__1,*safmin))
+        if (f2c_abs(wbig) * .5f > fla_max(r__1,*safmin))
         {
             wdet = (a11 * a22 - a12 * a21) * (binv11 * binv22);
             wsmall = wdet / wbig;
@@ -294,13 +294,13 @@ int slag2_(real *a, integer *lda, real *b, integer *ldb, real *safmin, real *sca
         /* for WR1. */
         if (pp > abi22)
         {
-            *wr1 = min(wbig,wsmall);
-            *wr2 = max(wbig,wsmall);
+            *wr1 = fla_min(wbig,wsmall);
+            *wr2 = fla_max(wbig,wsmall);
         }
         else
         {
-            *wr1 = max(wbig,wsmall);
-            *wr2 = min(wbig,wsmall);
+            *wr1 = fla_max(wbig,wsmall);
+            *wr2 = fla_min(wbig,wsmall);
         }
         *wi = 0.f;
     }
@@ -320,16 +320,16 @@ int slag2_(real *a, integer *lda, real *b, integer *ldb, real *safmin, real *sca
     /* C3, with C2, */
     /* implement the condition that s A - w B must never overflow. */
     /* C4 implements the condition s should not underflow. */
-    /* C5 implements the condition max(s,|w|) should be at least 2. */
-    c1 = bsize * (*safmin * max(1.f,ascale));
-    c2 = *safmin * max(1.f,bnorm);
+    /* C5 implements the condition fla_max(s,|w|) should be at least 2. */
+    c1 = bsize * (*safmin * fla_max(1.f,ascale));
+    c2 = *safmin * fla_max(1.f,bnorm);
     c3 = bsize * *safmin;
     if (ascale <= 1.f && bsize <= 1.f)
     {
         /* Computing MIN */
         r__1 = 1.f;
         r__2 = ascale / *safmin * bsize; // , expr subst
-        c4 = min(r__1,r__2);
+        c4 = fla_min(r__1,r__2);
     }
     else
     {
@@ -340,7 +340,7 @@ int slag2_(real *a, integer *lda, real *b, integer *ldb, real *safmin, real *sca
         /* Computing MIN */
         r__1 = 1.f;
         r__2 = ascale * bsize; // , expr subst
-        c5 = min(r__1,r__2);
+        c5 = fla_min(r__1,r__2);
     }
     else
     {
@@ -351,21 +351,21 @@ int slag2_(real *a, integer *lda, real *b, integer *ldb, real *safmin, real *sca
     /* Computing MAX */
     /* Computing MIN */
     r__3 = c4;
-    r__4 = max(wabs,c5) * .5f; // , expr subst
-    r__1 = max(*safmin,c1), r__2 = (wabs * c2 + c3) * 1.0000100000000001f;
-    r__1 = max(r__1,r__2);
-    r__2 = min(r__3,r__4); // ; expr subst
-    wsize = max(r__1,r__2);
+    r__4 = fla_max(wabs,c5) * .5f; // , expr subst
+    r__1 = fla_max(*safmin,c1), r__2 = (wabs * c2 + c3) * 1.0000100000000001f;
+    r__1 = fla_max(r__1,r__2);
+    r__2 = fla_min(r__3,r__4); // ; expr subst
+    wsize = fla_max(r__1,r__2);
     if (wsize != 1.f)
     {
         wscale = 1.f / wsize;
         if (wsize > 1.f)
         {
-            *scale1 = max(ascale,bsize) * wscale * min(ascale,bsize);
+            *scale1 = fla_max(ascale,bsize) * wscale * fla_min(ascale,bsize);
         }
         else
         {
-            *scale1 = min(ascale,bsize) * wscale * max(ascale,bsize);
+            *scale1 = fla_min(ascale,bsize) * wscale * fla_max(ascale,bsize);
         }
         *wr1 *= wscale;
         if (*wi != 0.f)
@@ -388,21 +388,21 @@ int slag2_(real *a, integer *lda, real *b, integer *ldb, real *safmin, real *sca
         /* Computing MAX */
         r__5 = f2c_abs(*wr2);
         r__3 = c4;
-        r__4 = max(r__5,c5) * .5f; // , expr subst
-        r__1 = max(*safmin,c1), r__2 = (f2c_abs(*wr2) * c2 + c3) * 1.0000100000000001f;
-        r__1 = max(r__1,r__2);
-        r__2 = min(r__3, r__4); // ; expr subst
-        wsize = max(r__1,r__2);
+        r__4 = fla_max(r__5,c5) * .5f; // , expr subst
+        r__1 = fla_max(*safmin,c1), r__2 = (f2c_abs(*wr2) * c2 + c3) * 1.0000100000000001f;
+        r__1 = fla_max(r__1,r__2);
+        r__2 = fla_min(r__3, r__4); // ; expr subst
+        wsize = fla_max(r__1,r__2);
         if (wsize != 1.f)
         {
             wscale = 1.f / wsize;
             if (wsize > 1.f)
             {
-                *scale2 = max(ascale,bsize) * wscale * min(ascale,bsize);
+                *scale2 = fla_max(ascale,bsize) * wscale * fla_min(ascale,bsize);
             }
             else
             {
-                *scale2 = min(ascale,bsize) * wscale * max(ascale,bsize);
+                *scale2 = fla_min(ascale,bsize) * wscale * fla_max(ascale,bsize);
             }
             *wr2 *= wscale;
         }

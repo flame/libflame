@@ -29,7 +29,7 @@ FLA_Error FLA_Tridiag_UT_l_blf_var2( FLA_Obj A, FLA_Obj T )
 
   while ( FLA_Obj_length( ATL ) < FLA_Obj_length( A ) )
   {
-    b = min( FLA_Obj_length( ABR ), b_alg );
+    b = fla_min( FLA_Obj_length( ABR ), b_alg );
 
     FLA_Repart_2x2_to_3x3( ATL, /**/ ATR,       &A00, /**/ &A01, &A02,
                         /* ************* */   /* ******************** */

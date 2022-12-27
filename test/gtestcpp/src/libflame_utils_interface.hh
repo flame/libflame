@@ -78,8 +78,8 @@ namespace libflame_utils {
            LDA is INTEGER
            On entry, LDA specifies the first dimension of A as declared
            in the calling (sub) program. When  TRANSA = 'N' or 'n' then
-           LDA must be at least  max( 1, m ), otherwise  LDA must be at
-           least  max( 1, k ).
+           LDA must be at least  fla_max( 1, m ), otherwise  LDA must be at
+           least  fla_max( 1, k ).
  * @param[in] b
            B is REAL array, dimension ( LDB, kb ), where kb is
            n  when  TRANSB = 'N' or 'n',  and is  k  otherwise.
@@ -91,8 +91,8 @@ namespace libflame_utils {
            LDB is INTEGER
            On entry, LDB specifies the first dimension of B as declared
            in the calling (sub) program. When  TRANSB = 'N' or 'n' then
-           LDB must be at least  max( 1, k ), otherwise  LDB must be at
-           least  max( 1, n ).
+           LDB must be at least  fla_max( 1, k ), otherwise  LDB must be at
+           least  fla_max( 1, n ).
  * @param[in] beta
            BETA is REAL
            On entry,  BETA  specifies the scalar  beta.  When  BETA  is
@@ -108,7 +108,7 @@ namespace libflame_utils {
            LDC is INTEGER
            On entry, LDC specifies the first dimension of C as declared
            in  the  calling  (sub)  program.   LDC  must  be  at  least
-           max( 1, m ).
+           fla_max( 1, m ).
  
  * @return void Nothing.
  * */

@@ -31,7 +31,7 @@ void gesdd_test()
 {
   int m = 64;
   int n = 64;
-  int min_m_n = min(m, n);
+  int min_m_n = fla_min(m, n);
   srand (time(NULL));
 
   FLA_Init( );
@@ -107,7 +107,7 @@ void gesdd_test()
 {
   int m = 64;
   int n = 64;
-  int min_m_n = min(m, n);
+  int min_m_n = fla_min(m, n);
   srand (time(NULL));
 
   FLA_Init( );

@@ -148,7 +148,7 @@ static integer c__1 = 1;
 /* > LDU is INTEGER */
 /* > On entry, LDU specifies the leading dimension of U as */
 /* > declared in the calling (sub) program. LDU must be at */
-/* > least max( 1, NRU ) . */
+/* > least fla_max( 1, NRU ) . */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] C */
@@ -286,15 +286,15 @@ int dlasdq_(char *uplo, integer *sqre, integer *n, integer * ncvt, integer *nru,
     {
         *info = -6;
     }
-    else if (*ncvt == 0 && *ldvt < 1 || *ncvt > 0 && *ldvt < max(1,*n))
+    else if (*ncvt == 0 && *ldvt < 1 || *ncvt > 0 && *ldvt < fla_max(1,*n))
     {
         *info = -10;
     }
-    else if (*ldu < max(1,*nru))
+    else if (*ldu < fla_max(1,*nru))
     {
         *info = -12;
     }
-    else if (*ncc == 0 && *ldc < 1 || *ncc > 0 && *ldc < max(1,*n))
+    else if (*ncc == 0 && *ldc < 1 || *ncc > 0 && *ldc < fla_max(1,*n))
     {
         *info = -14;
     }

@@ -158,7 +158,7 @@ and computes a reciprocal condition number for */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of A. LDA >= max(1,N). */
+/* > The leading dimension of A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -172,7 +172,7 @@ and computes a reciprocal condition number for */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of B. LDB >= max(1,N). */
+/* > The leading dimension of B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] SDIM */
@@ -512,11 +512,11 @@ int cggesx_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, char *sense, in
     {
         *info = -6;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -8;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -10;
     }
@@ -543,13 +543,13 @@ int cggesx_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, char *sense, in
             /* Computing MAX */
             i__1 = maxwrk;
             i__2 = *n * (ilaenv_(&c__1, "CUNMQR", " ", n, & c__1, n, &c_n1) + 1); // , expr subst
-            maxwrk = max(i__1,i__2);
+            maxwrk = fla_max(i__1,i__2);
             if (ilvsl)
             {
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n * (ilaenv_(&c__1, "CUNGQR", " ", n, & c__1, n, &c_n1) + 1); // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
             }
             lwrk = maxwrk;
             if (ijob >= 1)
@@ -557,7 +557,7 @@ int cggesx_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, char *sense, in
                 /* Computing MAX */
                 i__1 = lwrk;
                 i__2 = *n * *n / 2; // , expr subst
-                lwrk = max(i__1,i__2);
+                lwrk = fla_max(i__1,i__2);
             }
         }
         else
@@ -742,7 +742,7 @@ int cggesx_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, char *sense, in
             /* Computing MAX */
             i__1 = maxwrk;
             i__2 = (*sdim << 1) * (*n - *sdim); // , expr subst
-            maxwrk = max(i__1,i__2);
+            maxwrk = fla_max(i__1,i__2);
         }
         if (ierr == -21)
         {

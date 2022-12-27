@@ -142,7 +142,7 @@
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] AF */
@@ -169,7 +169,7 @@
 /* > \param[in] LDAF */
 /* > \verbatim */
 /* > LDAF is INTEGER */
-/* > The leading dimension of the array AF. LDAF >= max(1,N). */
+/* > The leading dimension of the array AF. LDAF >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] EQUED */
@@ -207,7 +207,7 @@ if EQUED = 'Y', */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] X */
@@ -222,7 +222,7 @@ if EQUED = 'Y', */
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(1,N). */
+/* > The leading dimension of the array X. LDX >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RCOND */
@@ -400,11 +400,11 @@ int cposvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *a, inte
     {
         *info = -4;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -6;
     }
-    else if (*ldaf < max(1,*n))
+    else if (*ldaf < fla_max(1,*n))
     {
         *info = -8;
     }
@@ -426,11 +426,11 @@ int cposvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *a, inte
                 /* Computing MIN */
                 r__1 = smin;
                 r__2 = s[j]; // , expr subst
-                smin = min(r__1,r__2);
+                smin = fla_min(r__1,r__2);
                 /* Computing MAX */
                 r__1 = smax;
                 r__2 = s[j]; // , expr subst
-                smax = max(r__1,r__2);
+                smax = fla_max(r__1,r__2);
                 /* L10: */
             }
             if (smin <= 0.f)
@@ -439,7 +439,7 @@ int cposvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *a, inte
             }
             else if (*n > 0)
             {
-                scond = max(smin,smlnum) / min(smax,bignum);
+                scond = fla_max(smin,smlnum) / fla_min(smax,bignum);
             }
             else
             {
@@ -448,11 +448,11 @@ int cposvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *a, inte
         }
         if (*info == 0)
         {
-            if (*ldb < max(1,*n))
+            if (*ldb < fla_max(1,*n))
             {
                 *info = -12;
             }
-            else if (*ldx < max(1,*n))
+            else if (*ldx < fla_max(1,*n))
             {
                 *info = -14;
             }

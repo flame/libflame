@@ -33,7 +33,7 @@ int ssytrd_check(char *uplo, integer *n, float *a, integer *lda, float *d__, flo
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }

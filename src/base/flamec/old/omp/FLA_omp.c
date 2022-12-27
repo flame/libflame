@@ -71,9 +71,9 @@ int FLA_omp_compute_stage_width( FLA_Obj A )
 	if( n_stages == 1 )
 		stage_width = FLA_Obj_width(A);
 	else if( FLA_Obj_width(A) % n_stages == 0 )
-		stage_width = max( FLA_Obj_width(A)/n_stages, 1 );
+		stage_width = fla_max( FLA_Obj_width(A)/n_stages, 1 );
 	else
-		stage_width = max( FLA_Obj_width(A)/n_stages + 1, 1 );
+		stage_width = fla_max( FLA_Obj_width(A)/n_stages + 1, 1 );
 	
 	return stage_width;
 }

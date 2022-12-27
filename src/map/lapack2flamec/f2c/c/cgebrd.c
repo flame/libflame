@@ -88,19 +88,19 @@ the */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] D */
 /* > \verbatim */
-/* > D is REAL array, dimension (min(M,N)) */
+/* > D is REAL array, dimension (fla_min(M,N)) */
 /* > The diagonal elements of the bidiagonal matrix B: */
 /* > D(i) = A(i,i). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] E */
 /* > \verbatim */
-/* > E is REAL array, dimension (min(M,N)-1) */
+/* > E is REAL array, dimension (fla_min(M,N)-1) */
 /* > The off-diagonal elements of the bidiagonal matrix B: */
 /* > if m >= n, E(i) = A(i,i+1) for i = 1,2,...,n-1;
 */
@@ -109,14 +109,14 @@ the */
 /* > */
 /* > \param[out] TAUQ */
 /* > \verbatim */
-/* > TAUQ is COMPLEX array, dimension (min(M,N)) */
+/* > TAUQ is COMPLEX array, dimension (fla_min(M,N)) */
 /* > The scalar factors of the elementary reflectors which */
 /* > represent the unitary matrix Q. See Further Details. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] TAUP */
 /* > \verbatim */
-/* > TAUP is COMPLEX array, dimension (min(M,N)) */
+/* > TAUP is COMPLEX array, dimension (fla_min(M,N)) */
 /* > The scalar factors of the elementary reflectors which */
 /* > represent the unitary matrix P. See Further Details. */
 /* > \endverbatim */
@@ -130,7 +130,7 @@ the */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The length of the array WORK. LWORK >= max(1,M,N). */
+/* > The length of the array WORK. LWORK >= fla_max(1,M,N). */
 /* > For optimum performance LWORK >= (M+N)*NB, where NB */
 /* > is the optimal blocksize. */
 /* > */
@@ -274,7 +274,7 @@ int cgebrd_(integer *m, integer *n, complex *a, integer *lda, real *d__, real *e
     /* Computing MAX */
     i__1 = 1;
     i__2 = ilaenv_(&c__1, "CGEBRD", " ", m, n, &c_n1, &c_n1); // , expr subst
-    nb = max(i__1,i__2);
+    nb = fla_max(i__1,i__2);
     lwkopt = (*m + *n) * nb;
     r__1 = (real) lwkopt;
     work[1].r = r__1;
@@ -288,15 +288,15 @@ int cgebrd_(integer *m, integer *n, complex *a, integer *lda, real *d__, real *e
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
     else /* if(complicated condition) */
     {
         /* Computing MAX */
-        i__1 = max(1,*m);
-        if (*lwork < max(i__1,*n) && ! lquery)
+        i__1 = fla_max(1,*m);
+        if (*lwork < fla_max(i__1,*n) && ! lquery)
         {
             *info = -10;
         }
@@ -314,7 +314,7 @@ int cgebrd_(integer *m, integer *n, complex *a, integer *lda, real *d__, real *e
         return 0;
     }
     /* Quick return if possible */
-    minmn = min(*m,*n);
+    minmn = fla_min(*m,*n);
     if (minmn == 0)
     {
         work[1].r = 1.f;
@@ -322,7 +322,7 @@ int cgebrd_(integer *m, integer *n, complex *a, integer *lda, real *d__, real *e
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
-    ws = max(*m,*n);
+    ws = fla_max(*m,*n);
     ldwrkx = *m;
     ldwrky = *n;
     if (nb > 1 && nb < minmn)
@@ -331,7 +331,7 @@ int cgebrd_(integer *m, integer *n, complex *a, integer *lda, real *d__, real *e
         /* Computing MAX */
         i__1 = nb;
         i__2 = ilaenv_(&c__3, "CGEBRD", " ", m, n, &c_n1, &c_n1); // , expr subst
-        nx = max(i__1,i__2);
+        nx = fla_max(i__1,i__2);
         /* Determine when to switch from blocked to unblocked code. */
         if (nx < minmn)
         {

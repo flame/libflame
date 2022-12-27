@@ -89,8 +89,8 @@
 *  LDA    - INTEGER.
 *           On entry, LDA specifies the first dimension of A as declared
 *           in the calling (sub) program.  When  SIDE = 'L' or 'l'  then
-*           LDA must be at least  max( 1, m ), otherwise  LDA must be at
-*           least  max( 1, n ).
+*           LDA must be at least  fla_max( 1, m ), otherwise  LDA must be at
+*           least  fla_max( 1, n ).
 *           Unchanged on exit.
 *
 *  B      - REAL             array of DIMENSION ( LDB, n ).
@@ -101,7 +101,7 @@
 *  LDB    - INTEGER.
 *           On entry, LDB specifies the first dimension of B as declared
 *           in  the  calling  (sub)  program.   LDB  must  be  at  least
-*           max( 1, m ).
+*           fla_max( 1, m ).
 *           Unchanged on exit.
 *
 *  BETA   - REAL            .
@@ -119,7 +119,7 @@
 *  LDC    - INTEGER.
 *           On entry, LDC specifies the first dimension of C as declared
 *           in  the  calling  (sub)  program.   LDC  must  be  at  least
-*           max( 1, m ).
+*           fla_max( 1, m ).
 *           Unchanged on exit.
 *
 *

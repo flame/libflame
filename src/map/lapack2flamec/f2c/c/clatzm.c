@@ -126,7 +126,7 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > LDC is INTEGER */
 /* > The leading dimension of the arrays C1 and C2. */
-/* > LDC >= max(1,M). */
+/* > LDC >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -194,7 +194,7 @@ int clatzm_(char *side, integer *m, integer *n, complex *v, integer *incv, compl
     c1 -= c1_offset;
     --work;
     /* Function Body */
-    if (min(*m,*n) == 0 || tau->r == 0.f && tau->i == 0.f)
+    if (fla_min(*m,*n) == 0 || tau->r == 0.f && tau->i == 0.f)
     {
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;

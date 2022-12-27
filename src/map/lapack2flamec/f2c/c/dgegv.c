@@ -108,7 +108,7 @@ static doublereal c_b38 = 0.;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of A. LDA >= max(1,N). */
+/* > The leading dimension of A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -126,7 +126,7 @@ static doublereal c_b38 = 0.;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of B. LDB >= max(1,N). */
+/* > The leading dimension of B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ALPHAR */
@@ -220,7 +220,7 @@ if positive, then the j-th and */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,8*N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,8*N). */
 /* > For good performance, LWORK must generally be larger. */
 /* > To compute the optimal value of LWORK, call ILAENV to get */
 /* > blocksizes (for DGEQRF, DORMQR, and DORGQR.) Then compute: */
@@ -424,7 +424,7 @@ int dgegv_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
     /* Test the input arguments */
     /* Computing MAX */
     i__1 = *n << 3;
-    lwkmin = max(i__1,1);
+    lwkmin = fla_max(i__1,1);
     lwkopt = lwkmin;
     work[1] = (doublereal) lwkopt;
     lquery = *lwork == -1;
@@ -441,11 +441,11 @@ int dgegv_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -7;
     }
@@ -467,12 +467,12 @@ int dgegv_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
         nb2 = ilaenv_(&c__1, "DORMQR", " ", n, n, n, &c_n1);
         nb3 = ilaenv_(&c__1, "DORGQR", " ", n, n, n, &c_n1);
         /* Computing MAX */
-        i__1 = max(nb1,nb2);
-        nb = max(i__1,nb3);
+        i__1 = fla_max(nb1,nb2);
+        nb = fla_max(i__1,nb3);
         /* Computing MAX */
         i__1 = *n * 6;
         i__2 = *n * (nb + 1); // , expr subst
-        lopt = (*n << 1) + max(i__1,i__2);
+        lopt = (*n << 1) + fla_max(i__1,i__2);
         work[1] = (doublereal) lopt;
     }
     if (*info != 0)
@@ -576,7 +576,7 @@ int dgegv_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
         /* Computing MAX */
         i__1 = lwkopt;
         i__2 = (integer) work[iwork] + iwork - 1; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
     }
     if (iinfo != 0)
     {
@@ -590,7 +590,7 @@ int dgegv_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
         /* Computing MAX */
         i__1 = lwkopt;
         i__2 = (integer) work[iwork] + iwork - 1; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
     }
     if (iinfo != 0)
     {
@@ -610,7 +610,7 @@ int dgegv_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
             /* Computing MAX */
             i__1 = lwkopt;
             i__2 = (integer) work[iwork] + iwork - 1; // , expr subst
-            lwkopt = max(i__1,i__2);
+            lwkopt = fla_max(i__1,i__2);
         }
         if (iinfo != 0)
         {
@@ -656,7 +656,7 @@ int dgegv_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
         /* Computing MAX */
         i__1 = lwkopt;
         i__2 = (integer) work[iwork] + iwork - 1; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
     }
     if (iinfo != 0)
     {
@@ -727,7 +727,7 @@ int dgegv_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
                         /* Computing MAX */
                         d__2 = temp;
                         d__3 = (d__1 = vl[jr + jc * vl_dim1], f2c_dabs(d__1)); // , expr subst
-                        temp = max(d__2,d__3);
+                        temp = fla_max(d__2,d__3);
                         /* L10: */
                     }
                 }
@@ -741,7 +741,7 @@ int dgegv_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
                         /* Computing MAX */
                         d__3 = temp;
                         d__4 = (d__1 = vl[jr + jc * vl_dim1], f2c_dabs(d__1)) + (d__2 = vl[jr + (jc + 1) * vl_dim1], f2c_dabs(d__2)); // , expr subst
-                        temp = max(d__3,d__4);
+                        temp = fla_max(d__3,d__4);
                         /* L20: */
                     }
                 }
@@ -805,7 +805,7 @@ L50:
                         /* Computing MAX */
                         d__2 = temp;
                         d__3 = (d__1 = vr[jr + jc * vr_dim1], f2c_dabs(d__1)); // , expr subst
-                        temp = max(d__2,d__3);
+                        temp = fla_max(d__2,d__3);
                         /* L60: */
                     }
                 }
@@ -819,7 +819,7 @@ L50:
                         /* Computing MAX */
                         d__3 = temp;
                         d__4 = (d__1 = vr[jr + jc * vr_dim1], f2c_dabs(d__1)) + (d__2 = vr[jr + (jc + 1) * vr_dim1], f2c_dabs(d__2)); // , expr subst
-                        temp = max(d__3,d__4);
+                        temp = fla_max(d__3,d__4);
                         /* L70: */
                     }
                 }
@@ -878,15 +878,15 @@ L100:
         /* Check for significant underflow in ALPHAI */
         /* Computing MAX */
         d__1 = safmin, d__2 = eps * absar;
-        d__1 = max(d__1,d__2);
+        d__1 = fla_max(d__1,d__2);
         d__2 = eps * absb; // ; expr subst
-        if (f2c_dabs(salfai) < safmin && absai >= max(d__1,d__2))
+        if (f2c_dabs(salfai) < safmin && absai >= fla_max(d__1,d__2))
         {
             ilimit = TRUE_;
             /* Computing MAX */
             d__1 = onepls * safmin;
             d__2 = anrm2 * absai; // , expr subst
-            scale = onepls * safmin / anrm1 / max(d__1,d__2);
+            scale = onepls * safmin / anrm1 / fla_max(d__1,d__2);
         }
         else if (salfai == 0.)
         {
@@ -904,9 +904,9 @@ L100:
         /* Check for significant underflow in ALPHAR */
         /* Computing MAX */
         d__1 = safmin, d__2 = eps * absai;
-        d__1 = max(d__1,d__2);
+        d__1 = fla_max(d__1,d__2);
         d__2 = eps * absb; // ; expr subst
-        if (f2c_dabs(salfar) < safmin && absar >= max(d__1,d__2))
+        if (f2c_dabs(salfar) < safmin && absar >= fla_max(d__1,d__2))
         {
             ilimit = TRUE_;
             /* Computing MAX */
@@ -914,15 +914,15 @@ L100:
             d__3 = onepls * safmin;
             d__4 = anrm2 * absar; // , expr subst
             d__1 = scale;
-            d__2 = onepls * safmin / anrm1 / max(d__3,d__4); // , expr subst
-            scale = max(d__1,d__2);
+            d__2 = onepls * safmin / anrm1 / fla_max(d__3,d__4); // , expr subst
+            scale = fla_max(d__1,d__2);
         }
         /* Check for significant underflow in BETA */
         /* Computing MAX */
         d__1 = safmin, d__2 = eps * absar;
-        d__1 = max(d__1,d__2);
+        d__1 = fla_max(d__1,d__2);
         d__2 = eps * absai; // ; expr subst
-        if (f2c_dabs(sbeta) < safmin && absb >= max(d__1,d__2))
+        if (f2c_dabs(sbeta) < safmin && absb >= fla_max(d__1,d__2))
         {
             ilimit = TRUE_;
             /* Computing MAX */
@@ -930,17 +930,17 @@ L100:
             d__3 = onepls * safmin;
             d__4 = bnrm2 * absb; // , expr subst
             d__1 = scale;
-            d__2 = onepls * safmin / bnrm1 / max(d__3,d__4); // , expr subst
-            scale = max(d__1,d__2);
+            d__2 = onepls * safmin / bnrm1 / fla_max(d__3,d__4); // , expr subst
+            scale = fla_max(d__1,d__2);
         }
         /* Check for possible overflow when limiting scaling */
         if (ilimit)
         {
             /* Computing MAX */
             d__1 = f2c_dabs(salfar), d__2 = f2c_dabs(salfai);
-            d__1 = max(d__1,d__2);
+            d__1 = fla_max(d__1,d__2);
             d__2 = f2c_dabs(sbeta); // ; expr subst
-            temp = scale * safmin * max(d__1,d__2);
+            temp = scale * safmin * fla_max(d__1,d__2);
             if (temp > 1.)
             {
                 scale /= temp;

@@ -38,7 +38,7 @@ static integer c__1 = 1;
 /* > \return DLANHS */
 /* > \verbatim */
 /* > */
-/* > DLANHS = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > DLANHS = ( fla_max(abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -49,7 +49,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that fla_max(abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -78,7 +78,7 @@ the part of A below the */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(N,1). */
+/* > The leading dimension of the array A. LDA >= fla_max(N,1). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -144,7 +144,7 @@ doublereal dlanhs_(char *norm, integer *n, doublereal *a, integer *lda, doublere
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
+        /* Find fla_max(abs(A(i,j))). */
         value = 0.;
         i__1 = *n;
         for (j = 1;
@@ -154,7 +154,7 @@ doublereal dlanhs_(char *norm, integer *n, doublereal *a, integer *lda, doublere
             /* Computing MIN */
             i__3 = *n;
             i__4 = j + 1; // , expr subst
-            i__2 = min(i__3,i__4);
+            i__2 = fla_min(i__3,i__4);
             for (i__ = 1;
                     i__ <= i__2;
                     ++i__)
@@ -182,7 +182,7 @@ doublereal dlanhs_(char *norm, integer *n, doublereal *a, integer *lda, doublere
             /* Computing MIN */
             i__3 = *n;
             i__4 = j + 1; // , expr subst
-            i__2 = min(i__3,i__4);
+            i__2 = fla_min(i__3,i__4);
             for (i__ = 1;
                     i__ <= i__2;
                     ++i__)
@@ -216,7 +216,7 @@ doublereal dlanhs_(char *norm, integer *n, doublereal *a, integer *lda, doublere
             /* Computing MIN */
             i__3 = *n;
             i__4 = j + 1; // , expr subst
-            i__2 = min(i__3,i__4);
+            i__2 = fla_min(i__3,i__4);
             for (i__ = 1;
                     i__ <= i__2;
                     ++i__)
@@ -253,7 +253,7 @@ doublereal dlanhs_(char *norm, integer *n, doublereal *a, integer *lda, doublere
             /* Computing MIN */
             i__3 = *n;
             i__4 = j + 1; // , expr subst
-            i__2 = min(i__3,i__4);
+            i__2 = fla_min(i__3,i__4);
             dlassq_(&i__2, &a[j * a_dim1 + 1], &c__1, &scale, &sum);
             /* L90: */
         }

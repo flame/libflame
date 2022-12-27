@@ -130,7 +130,7 @@ the elements below the diagonal */
 /* > \param[in] LDW */
 /* > \verbatim */
 /* > LDW is INTEGER */
-/* > The leading dimension of the array W. LDW >= max(1,N). */
+/* > The leading dimension of the array W. LDW >= fla_max(1,N). */
 /* > \endverbatim */
 /* Authors: */
 /* ======== */
@@ -322,7 +322,7 @@ int dlatrd_(char *uplo, integer *n, integer *nb, doublereal * a, integer *lda, d
                 i__2 = *n - i__;
                 /* Computing MIN */
                 i__3 = i__ + 2;
-                dlarfg_(&i__2, &a[i__ + 1 + i__ * a_dim1], &a[min(i__3,*n) + i__ * a_dim1], &c__1, &tau[i__]);
+                dlarfg_(&i__2, &a[i__ + 1 + i__ * a_dim1], &a[fla_min(i__3,*n) + i__ * a_dim1], &c__1, &tau[i__]);
                 e[i__] = a[i__ + 1 + i__ * a_dim1];
                 a[i__ + 1 + i__ * a_dim1] = 1.;
                 /* Compute W(i+1:n,i) */

@@ -58,7 +58,7 @@ int sger_(integer *m, integer *n, real *alpha, real *x, integer *incx, real *y, 
     /* LDA - INTEGER. */
     /* On entry, LDA specifies the first dimension of A as declared */
     /* in the calling (sub) program. LDA must be at least */
-    /* max( 1, m ). */
+    /* fla_max( 1, m ). */
     /* Unchanged on exit. */
     /* Level 2 Blas routine. */
     /* -- Written on 22-October-1986. */
@@ -97,7 +97,7 @@ int sger_(integer *m, integer *n, real *alpha, real *x, integer *incx, real *y, 
     {
         info = 7;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         info = 9;
     }

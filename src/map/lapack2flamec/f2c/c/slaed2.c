@@ -61,7 +61,7 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > N1 is INTEGER */
 /* > The location of the last eigenvalue in the leading sub-matrix. */
-/* > min(1,N) <= N1 <= N/2. */
+/* > fla_min(1,N) <= N1 <= N/2. */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] D */
@@ -86,7 +86,7 @@ static integer c__1 = 1;
 /* > \param[in] LDQ */
 /* > \verbatim */
 /* > LDQ is INTEGER */
-/* > The leading dimension of the array Q. LDQ >= max(1,N). */
+/* > The leading dimension of the array Q. LDQ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] INDXQ */
@@ -268,7 +268,7 @@ int slaed2_(integer *k, integer *n, integer *n1, real *d__, real *q, integer *ld
     {
         *info = -2;
     }
-    else if (*ldq < max(1,*n))
+    else if (*ldq < fla_max(1,*n))
     {
         *info = -6;
     }
@@ -277,7 +277,7 @@ int slaed2_(integer *k, integer *n, integer *n1, real *d__, real *q, integer *ld
         /* Computing MIN */
         i__1 = 1;
         i__2 = *n / 2; // , expr subst
-        if (min(i__1,i__2) > *n1 || *n / 2 < *n1)
+        if (fla_min(i__1,i__2) > *n1 || *n / 2 < *n1)
         {
             *info = -3;
         }
@@ -339,7 +339,7 @@ int slaed2_(integer *k, integer *n, integer *n1, real *d__, real *q, integer *ld
     /* Computing MAX */
     r__3 = (r__1 = d__[jmax], f2c_abs(r__1));
     r__4 = (r__2 = z__[imax], f2c_abs(r__2)) ; // , expr subst
-    tol = eps * 8.f * max(r__3,r__4);
+    tol = eps * 8.f * fla_max(r__3,r__4);
     /* If the rank-1 modifier is small enough, no more needs to be done */
     /* except to reorganize Q so that its columns correspond with the */
     /* elements in D. */

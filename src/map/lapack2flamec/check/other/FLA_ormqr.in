@@ -15,9 +15,9 @@
   else if (*m < 0)                                        *info = -3;   \
   else if (*n < 0)                                        *info = -4;   \
   else if (*k < 0 || *k > _nq)                            *info = -5;   \
-  else if (*ldim_A < max(1,_nq))                          *info = -7;   \
-  else if (*ldim_B < max(1,*m))                           *info = -10;  \
-  else if (*lwork < max(1,_nw) && ! _lquery)              *info = -12;
+  else if (*ldim_A < fla_max(1,_nq))                          *info = -7;   \
+  else if (*ldim_B < fla_max(1,*m))                           *info = -10;  \
+  else if (*lwork < fla_max(1,_nw) && ! _lquery)              *info = -12;
 
 #define LAPACK_ormqr_op_unblocked(prefix)                               \
   int _nb, _nw=1, _nq, _lquery = 0;                                     \
@@ -30,8 +30,8 @@
   else if (*m < 0)                                        *info = -3;   \
   else if (*n < 0)                                        *info = -4;   \
   else if (*k < 0 || *k > _nq)                            *info = -5;   \
-  else if (*ldim_A < max(1,_nq))                           *info = -7;   \
-  else if (*ldim_B < max(1,*m))                           *info = -10;
+  else if (*ldim_A < fla_max(1,_nq))                           *info = -7;   \
+  else if (*ldim_B < fla_max(1,*m))                           *info = -10;
 
 #define LAPACK_ormqr_op_quickreturn(prefix)             \
   if (*m == 0 || *n == 0 || *k == 0) {                  \
@@ -48,8 +48,8 @@
     xerbla_(#srname, &e_val);                                           \
     return 0;                                                           \
   } else if (_lquery) {                                                 \
-    _nb = min(64, ilaenv_(&_i1, #srname, " ", m, n, k, &_i2));          \
-    PREFIX2FLAME_SET_REAL(prefix, &buff_w[0], (max(1,_nw) * _nb));      \
+    _nb = fla_min(64, ilaenv_(&_i1, #srname, " ", m, n, k, &_i2));          \
+    PREFIX2FLAME_SET_REAL(prefix, &buff_w[0], (fla_max(1,_nw) * _nb));      \
     return 0;                                                           \
   }                                                                     \
   LAPACK_ormqr_op_quickreturn(prefix)

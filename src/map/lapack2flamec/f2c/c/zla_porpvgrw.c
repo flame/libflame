@@ -63,7 +63,7 @@
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] AF */
@@ -76,7 +76,7 @@
 /* > \param[in] LDAF */
 /* > \verbatim */
 /* > LDAF is INTEGER */
-/* > The leading dimension of the array AF. LDAF >= max(1,N). */
+/* > The leading dimension of the array AF. LDAF >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -165,7 +165,7 @@ doublereal zla_porpvgrw_(char *uplo, integer *ncols, doublecomplex *a, integer *
                 i__3 = i__ + j * a_dim1;
                 d__3 = (d__1 = a[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&a[i__ + j * a_dim1]), f2c_abs(d__2));
                 d__4 = work[*ncols + j]; // , expr subst
-                work[*ncols + j] = max(d__3,d__4);
+                work[*ncols + j] = fla_max(d__3,d__4);
             }
         }
     }
@@ -185,7 +185,7 @@ doublereal zla_porpvgrw_(char *uplo, integer *ncols, doublecomplex *a, integer *
                 i__3 = i__ + j * a_dim1;
                 d__3 = (d__1 = a[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&a[i__ + j * a_dim1]), f2c_abs(d__2));
                 d__4 = work[*ncols + j]; // , expr subst
-                work[*ncols + j] = max(d__3,d__4);
+                work[*ncols + j] = fla_max(d__3,d__4);
             }
         }
     }
@@ -207,7 +207,7 @@ doublereal zla_porpvgrw_(char *uplo, integer *ncols, doublecomplex *a, integer *
                 i__3 = i__ + j * af_dim1;
                 d__3 = (d__1 = af[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&af[ i__ + j * af_dim1]), f2c_abs(d__2));
                 d__4 = work[j]; // , expr subst
-                work[j] = max(d__3,d__4);
+                work[j] = fla_max(d__3,d__4);
             }
         }
     }
@@ -227,7 +227,7 @@ doublereal zla_porpvgrw_(char *uplo, integer *ncols, doublecomplex *a, integer *
                 i__3 = i__ + j * af_dim1;
                 d__3 = (d__1 = af[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&af[ i__ + j * af_dim1]), f2c_abs(d__2));
                 d__4 = work[j]; // , expr subst
-                work[j] = max(d__3,d__4);
+                work[j] = fla_max(d__3,d__4);
             }
         }
     }
@@ -250,7 +250,7 @@ doublereal zla_porpvgrw_(char *uplo, integer *ncols, doublecomplex *a, integer *
             {
                 /* Computing MIN */
                 d__1 = amax / umax;
-                rpvgrw = min(d__1,rpvgrw);
+                rpvgrw = fla_min(d__1,rpvgrw);
             }
         }
     }
@@ -267,7 +267,7 @@ doublereal zla_porpvgrw_(char *uplo, integer *ncols, doublecomplex *a, integer *
             {
                 /* Computing MIN */
                 d__1 = amax / umax;
-                rpvgrw = min(d__1,rpvgrw);
+                rpvgrw = fla_min(d__1,rpvgrw);
             }
         }
     }

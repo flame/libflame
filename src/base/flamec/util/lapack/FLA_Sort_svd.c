@@ -155,7 +155,7 @@ FLA_Error FLA_Sort_svd_f_opd( integer       m_U,
                               double*   U, integer rs_U, integer cs_U,
                               double*   V, integer rs_V, integer cs_V )
 {
-	integer    min_m_n = min( m_U, n_V );
+	integer    min_m_n = fla_min( m_U, n_V );
 	integer    i, ii, j, k;
 	double p;
 
@@ -197,7 +197,7 @@ FLA_Error FLA_Sort_svd_b_opd( integer       m_U,
                               double*   U, integer rs_U, integer cs_U,
                               double*   V, integer rs_V, integer cs_V )
 {
-	integer    min_m_n = min( m_U, n_V );
+	integer    min_m_n = fla_min( m_U, n_V );
 	integer    i, ii, j, k;
 	double p;
 
@@ -257,7 +257,7 @@ FLA_Error FLA_Sort_svd_f_opz( integer       m_U,
                               dcomplex* U, integer rs_U, integer cs_U,
                               dcomplex* V, integer rs_V, integer cs_V )
 {
-	integer    min_m_n = min( m_U, n_V );
+	integer    min_m_n = fla_min( m_U, n_V );
 	integer    i, ii, j, k;
 	double p;
 
@@ -299,7 +299,7 @@ FLA_Error FLA_Sort_svd_b_opz( integer       m_U,
                               dcomplex* U, integer rs_U, integer cs_U,
                               dcomplex* V, integer rs_V, integer cs_V )
 {
-	integer    min_m_n = min( m_U, n_V );
+	integer    min_m_n = fla_min( m_U, n_V );
 	integer    i, ii, j, k;
 	double p;
 

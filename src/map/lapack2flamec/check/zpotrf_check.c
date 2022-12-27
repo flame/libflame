@@ -23,7 +23,7 @@ int zpotrf_check(char *uplo, integer *n, dcomplex *a, integer *lda, integer *inf
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }

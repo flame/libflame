@@ -116,7 +116,7 @@ dim_t FLASH_QR_UT_inc_determine_alg_blocksize( FLA_Obj A )
 
 	// Scale the storage blocksize by a pre-defined scalar to arrive at a
 	// reasonable algorithmic blocksize, but make sure it's at least 1.
-	b_alg = ( dim_t ) max( ( double ) b_flash * FLA_QR_INNER_TO_OUTER_B_RATIO, 1 );
+	b_alg = ( dim_t ) fla_max( ( double ) b_flash * FLA_QR_INNER_TO_OUTER_B_RATIO, 1 );
 
 	return b_alg;
 }

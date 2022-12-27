@@ -51,7 +51,7 @@ FLA_Error FLA_Tevd_external( FLA_Evd_type jobz, FLA_Obj d, FLA_Obj e, FLA_Obj A 
   inc_e    = FLA_Obj_vector_inc( e_use );
 
   // Allocate thw work array up front.
-  lwork   = max( 1.0, 2.0 * n_A - 2 );
+  lwork   = fla_max( 1.0, 2.0 * n_A - 2 );
   FLA_Obj_create( dt_real, lwork, 1, 0, 0, &work );
 
   FLA_Param_map_flame_to_netlib_evd_type( jobz, &blas_jobz );

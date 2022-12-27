@@ -39,7 +39,7 @@
 /* > */
 /* > SLAMCH( 'E' ) * ( ANORM / SEP( I ) ) */
 /* > */
-/* > where ANORM = 2-norm(A) = max( f2c_abs( D(j) ) ). SEP(I) is not allowed */
+/* > where ANORM = 2-norm(A) = fla_max( f2c_abs( D(j) ) ). SEP(I) is not allowed */
 /* > to be smaller than SLAMCH( 'E' )*ANORM in order to limit the size of */
 /* > the error bound. */
 /* > */
@@ -76,7 +76,7 @@
 /* > \param[in] D */
 /* > \verbatim */
 /* > D is REAL array, dimension (M) if JOB = 'E' */
-/* > dimension (min(M,N)) if JOB = 'L' or 'R' */
+/* > dimension (fla_min(M,N)) if JOB = 'L' or 'R' */
 /* > The eigenvalues (if JOB = 'E') or singular values (if JOB = */
 /* > 'L' or 'R') of the matrix, in either increasing or decreasing */
 /* > order. If singular values, they must be non-negative. */
@@ -85,7 +85,7 @@
 /* > \param[out] SEP */
 /* > \verbatim */
 /* > SEP is REAL array, dimension (M) if JOB = 'E' */
-/* > dimension (min(M,N)) if JOB = 'L' or 'R' */
+/* > dimension (fla_min(M,N)) if JOB = 'L' or 'R' */
 /* > The reciprocal condition numbers of the vectors. */
 /* > \endverbatim */
 /* > */
@@ -159,7 +159,7 @@ int sdisna_(char *job, integer *m, integer *n, real *d__, real *sep, integer *in
     }
     else if (sing)
     {
-        k = min(*m,*n);
+        k = fla_min(*m,*n);
     }
     if (! eigen && ! sing)
     {
@@ -234,7 +234,7 @@ int sdisna_(char *job, integer *m, integer *n, real *d__, real *sep, integer *in
                 ++i__)
         {
             newgap = (r__1 = d__[i__ + 1] - d__[i__], f2c_abs(r__1));
-            sep[i__] = min(oldgap,newgap);
+            sep[i__] = fla_min(oldgap,newgap);
             oldgap = newgap;
             /* L20: */
         }
@@ -246,14 +246,14 @@ int sdisna_(char *job, integer *m, integer *n, real *d__, real *sep, integer *in
         {
             if (incr)
             {
-                sep[1] = min(sep[1],d__[1]);
+                sep[1] = fla_min(sep[1],d__[1]);
             }
             if (decr)
             {
                 /* Computing MIN */
                 r__1 = sep[k];
                 r__2 = d__[k]; // , expr subst
-                sep[k] = min(r__1,r__2);
+                sep[k] = fla_min(r__1,r__2);
             }
         }
     }
@@ -264,7 +264,7 @@ int sdisna_(char *job, integer *m, integer *n, real *d__, real *sep, integer *in
     /* Computing MAX */
     r__2 = f2c_abs(d__[1]);
     r__3 = (r__1 = d__[k], f2c_abs(r__1)); // , expr subst
-    anorm = max(r__2,r__3);
+    anorm = fla_max(r__2,r__3);
     if (anorm == 0.f)
     {
         thresh = eps;
@@ -273,7 +273,7 @@ int sdisna_(char *job, integer *m, integer *n, real *d__, real *sep, integer *in
     {
         /* Computing MAX */
         r__1 = eps * anorm;
-        thresh = max(r__1,safmin);
+        thresh = fla_max(r__1,safmin);
     }
     i__1 = k;
     for (i__ = 1;
@@ -282,7 +282,7 @@ int sdisna_(char *job, integer *m, integer *n, real *d__, real *sep, integer *in
     {
         /* Computing MAX */
         r__1 = sep[i__];
-        sep[i__] = max(r__1,thresh);
+        sep[i__] = fla_max(r__1,thresh);
         /* L30: */
     }
     return 0;

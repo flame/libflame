@@ -170,14 +170,14 @@ int dlanv2_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doub
         /* Computing MAX */
         d__1 = f2c_abs(*b);
         d__2 = f2c_abs(*c__); // , expr subst
-        bcmax = max(d__1,d__2);
+        bcmax = fla_max(d__1,d__2);
         /* Computing MIN */
         d__1 = f2c_abs(*b);
         d__2 = f2c_abs(*c__); // , expr subst
-        bcmis = min(d__1,d__2) * d_sign(&c_b3, b) * d_sign(&c_b3, c__);
+        bcmis = fla_min(d__1,d__2) * d_sign(&c_b3, b) * d_sign(&c_b3, c__);
         /* Computing MAX */
         d__1 = f2c_abs(p);
-        scale = max(d__1,bcmax);
+        scale = fla_max(d__1,bcmax);
         z__ = p / scale * p + bcmax / scale * bcmis;
         /* If Z is of the order of the machine accuracy, postpone the */
         /* decision on the nature of eigenvalues */

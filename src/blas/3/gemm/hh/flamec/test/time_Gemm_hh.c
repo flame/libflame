@@ -162,7 +162,7 @@ void time_Gemm_hh(
     }
 	
     *dtime = FLA_Clock() - *dtime;
-    dtime_old = min( *dtime, dtime_old );
+    dtime_old = fla_min( *dtime, dtime_old );
   }
 
   FLA_Cntl_obj_free( cntl_gemm_var );

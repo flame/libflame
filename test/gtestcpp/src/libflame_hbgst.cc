@@ -126,10 +126,10 @@ void hbgst_test(int ip)
   
   /* LDX is INTEGER
           The leading dimension of the array X.
-          LDX >= max(1,N) if VECT = 'V'; LDX >= 1 otherwise.*/
+          LDX >= fla_max(1,N) if VECT = 'V'; LDX >= 1 otherwise.*/
   integer ldx = eig_paramslist[ip].ldx;
-  if (ldx < max(1, n)) {
-    PRINTF("ldx < max(1, n) but it should be: LDX >= max(1,N). Please " \
+  if (ldx < fla_max(1, n)) {
+    PRINTF("ldx < fla_max(1, n) but it should be: LDX >= fla_max(1,N). Please " \
            "correct the input data.\n");
   }
   if ((vect == 'V') && (ldx < 1)) {

@@ -51,7 +51,7 @@ void time_QR(
   fla_qrut_t*      cntl_qrut_var1;
   fla_qrut_t*      cntl_qrut_var2;
 
-  nb_alg_sm         = max( nb_alg/4, 1 );
+  nb_alg_sm         = fla_max( nb_alg/4, 1 );
 
   bp_la             = FLA_Blocksize_create( nb_alg, nb_alg, nb_alg, nb_alg );
   bp_sm             = FLA_Blocksize_create( nb_alg_sm, nb_alg_sm, nb_alg_sm, nb_alg_sm );
@@ -149,7 +149,7 @@ void time_QR(
     }
 
     *dtime = FLA_Clock() - *dtime;
-    dtime_old = min( *dtime, dtime_old );
+    dtime_old = fla_min( *dtime, dtime_old );
 
   }
 

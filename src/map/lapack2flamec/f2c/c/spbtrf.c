@@ -72,9 +72,9 @@ static integer c__33 = 33;
 /* > matrix A, stored in the first KD+1 rows of the array. The */
 /* > j-th column of A is stored in the j-th column of the array AB */
 /* > as follows: */
-/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j;
+/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(n,j+kd). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(n,j+kd). */
 /* > */
 /* > On exit, if INFO = 0, the triangular factor U or L from the */
 /* > Cholesky factorization A = U**T*U or A = L*L**T of the band */
@@ -214,7 +214,7 @@ int spbtrf_(char *uplo, integer *n, integer *kd, real *ab, integer *ldab, intege
     nb = ilaenv_(&c__1, "SPBTRF", uplo, n, kd, &c_n1, &c_n1);
     /* The block size must not exceed the semi-bandwidth KD, and must not */
     /* exceed the limit set by the size of the local array WORK. */
-    nb = min(nb,32);
+    nb = fla_min(nb,32);
     if (nb <= 1 || nb > *kd)
     {
         /* Use unblocked code */
@@ -254,7 +254,7 @@ int spbtrf_(char *uplo, integer *n, integer *kd, real *ab, integer *ldab, intege
                 /* Computing MIN */
                 i__3 = nb;
                 i__4 = *n - i__ + 1; // , expr subst
-                ib = min(i__3,i__4);
+                ib = fla_min(i__3,i__4);
                 /* Factorize the diagonal block */
                 i__3 = *ldab - 1;
                 spotf2_(uplo, &ib, &ab[*kd + 1 + i__ * ab_dim1], &i__3, &ii);
@@ -279,11 +279,11 @@ int spbtrf_(char *uplo, integer *n, integer *kd, real *ab, integer *ldab, intege
                     /* Computing MIN */
                     i__3 = *kd - ib;
                     i__4 = *n - i__ - ib + 1; // , expr subst
-                    i2 = min(i__3,i__4);
+                    i2 = fla_min(i__3,i__4);
                     /* Computing MIN */
                     i__3 = ib;
                     i__4 = *n - i__ - *kd + 1; // , expr subst
-                    i3 = min(i__3,i__4);
+                    i3 = fla_min(i__3,i__4);
                     if (i2 > 0)
                     {
                         /* Update A12 */
@@ -378,7 +378,7 @@ int spbtrf_(char *uplo, integer *n, integer *kd, real *ab, integer *ldab, intege
                 /* Computing MIN */
                 i__3 = nb;
                 i__4 = *n - i__ + 1; // , expr subst
-                ib = min(i__3,i__4);
+                ib = fla_min(i__3,i__4);
                 /* Factorize the diagonal block */
                 i__3 = *ldab - 1;
                 spotf2_(uplo, &ib, &ab[i__ * ab_dim1 + 1], &i__3, &ii);
@@ -403,11 +403,11 @@ int spbtrf_(char *uplo, integer *n, integer *kd, real *ab, integer *ldab, intege
                     /* Computing MIN */
                     i__3 = *kd - ib;
                     i__4 = *n - i__ - ib + 1; // , expr subst
-                    i2 = min(i__3,i__4);
+                    i2 = fla_min(i__3,i__4);
                     /* Computing MIN */
                     i__3 = ib;
                     i__4 = *n - i__ - *kd + 1; // , expr subst
-                    i3 = min(i__3,i__4);
+                    i3 = fla_min(i__3,i__4);
                     if (i2 > 0)
                     {
                         /* Update A21 */
@@ -427,7 +427,7 @@ int spbtrf_(char *uplo, integer *n, integer *kd, real *ab, integer *ldab, intege
                                 jj <= i__3;
                                 ++jj)
                         {
-                            i__4 = min(jj,i3);
+                            i__4 = fla_min(jj,i3);
                             for (ii = 1;
                                     ii <= i__4;
                                     ++ii)
@@ -456,7 +456,7 @@ int spbtrf_(char *uplo, integer *n, integer *kd, real *ab, integer *ldab, intege
                                 jj <= i__3;
                                 ++jj)
                         {
-                            i__4 = min(jj,i3);
+                            i__4 = fla_min(jj,i3);
                             for (ii = 1;
                                     ii <= i__4;
                                     ++ii)

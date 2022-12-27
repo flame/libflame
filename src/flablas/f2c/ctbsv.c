@@ -212,7 +212,7 @@ int ctbsv_(char *uplo, char *trans, char *diag, integer *n, integer *k, complex 
                         temp.r = x[i__1].r, temp.i = x[i__1].i;
                         /* Computing MAX */
                         i__2 = 1, i__3 = j - *k;
-                        i__1 = max(i__2,i__3);
+                        i__1 = fla_max(i__2,i__3);
                         for (i__ = j - 1;
                                 i__ >= i__1;
                                 --i__)
@@ -253,7 +253,7 @@ int ctbsv_(char *uplo, char *trans, char *diag, integer *n, integer *k, complex 
                         temp.r = x[i__1].r, temp.i = x[i__1].i;
                         /* Computing MAX */
                         i__2 = 1, i__3 = j - *k;
-                        i__1 = max(i__2,i__3);
+                        i__1 = fla_max(i__2,i__3);
                         for (i__ = j - 1;
                                 i__ >= i__1;
                                 --i__)
@@ -296,7 +296,7 @@ int ctbsv_(char *uplo, char *trans, char *diag, integer *n, integer *k, complex 
                         temp.r = x[i__2].r, temp.i = x[i__2].i;
                         /* Computing MIN */
                         i__3 = *n, i__4 = j + *k;
-                        i__2 = min(i__3,i__4);
+                        i__2 = fla_min(i__3,i__4);
                         for (i__ = j + 1;
                                 i__ <= i__2;
                                 ++i__)
@@ -337,7 +337,7 @@ int ctbsv_(char *uplo, char *trans, char *diag, integer *n, integer *k, complex 
                         temp.r = x[i__2].r, temp.i = x[i__2].i;
                         /* Computing MIN */
                         i__3 = *n, i__4 = j + *k;
-                        i__2 = min(i__3,i__4);
+                        i__2 = fla_min(i__3,i__4);
                         for (i__ = j + 1;
                                 i__ <= i__2;
                                 ++i__)
@@ -379,7 +379,7 @@ int ctbsv_(char *uplo, char *trans, char *diag, integer *n, integer *k, complex 
                         /* Computing MAX */
                         i__2 = 1, i__3 = j - *k;
                         i__4 = j - 1;
-                        for (i__ = max(i__2,i__3);
+                        for (i__ = fla_max(i__2,i__3);
                                 i__ <= i__4;
                                 ++i__)
                         {
@@ -401,7 +401,7 @@ int ctbsv_(char *uplo, char *trans, char *diag, integer *n, integer *k, complex 
                         /* Computing MAX */
                         i__4 = 1, i__2 = j - *k;
                         i__3 = j - 1;
-                        for (i__ = max(i__4,i__2);
+                        for (i__ = fla_max(i__4,i__2);
                                 i__ <= i__3;
                                 ++i__)
                         {
@@ -441,7 +441,7 @@ int ctbsv_(char *uplo, char *trans, char *diag, integer *n, integer *k, complex 
                         /* Computing MAX */
                         i__3 = 1, i__4 = j - *k;
                         i__2 = j - 1;
-                        for (i__ = max(i__3,i__4);
+                        for (i__ = fla_max(i__3,i__4);
                                 i__ <= i__2;
                                 ++i__)
                         {
@@ -464,7 +464,7 @@ int ctbsv_(char *uplo, char *trans, char *diag, integer *n, integer *k, complex 
                         /* Computing MAX */
                         i__2 = 1, i__3 = j - *k;
                         i__4 = j - 1;
-                        for (i__ = max(i__2,i__3);
+                        for (i__ = fla_max(i__2,i__3);
                                 i__ <= i__4;
                                 ++i__)
                         {
@@ -510,7 +510,7 @@ int ctbsv_(char *uplo, char *trans, char *diag, integer *n, integer *k, complex 
                         /* Computing MIN */
                         i__1 = *n, i__4 = j + *k;
                         i__2 = j + 1;
-                        for (i__ = min(i__1,i__4);
+                        for (i__ = fla_min(i__1,i__4);
                                 i__ >= i__2;
                                 --i__)
                         {
@@ -532,7 +532,7 @@ int ctbsv_(char *uplo, char *trans, char *diag, integer *n, integer *k, complex 
                         /* Computing MIN */
                         i__2 = *n, i__1 = j + *k;
                         i__4 = j + 1;
-                        for (i__ = min(i__2,i__1);
+                        for (i__ = fla_min(i__2,i__1);
                                 i__ >= i__4;
                                 --i__)
                         {
@@ -572,7 +572,7 @@ int ctbsv_(char *uplo, char *trans, char *diag, integer *n, integer *k, complex 
                         /* Computing MIN */
                         i__4 = *n, i__2 = j + *k;
                         i__1 = j + 1;
-                        for (i__ = min(i__4,i__2);
+                        for (i__ = fla_min(i__4,i__2);
                                 i__ >= i__1;
                                 --i__)
                         {
@@ -595,7 +595,7 @@ int ctbsv_(char *uplo, char *trans, char *diag, integer *n, integer *k, complex 
                         /* Computing MIN */
                         i__1 = *n, i__4 = j + *k;
                         i__2 = j + 1;
-                        for (i__ = min(i__1,i__4);
+                        for (i__ = fla_min(i__1,i__4);
                                 i__ >= i__2;
                                 --i__)
                         {

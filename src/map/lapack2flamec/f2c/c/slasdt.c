@@ -129,7 +129,7 @@ int slasdt_(integer *n, integer *lvl, integer *nd, integer * inode, integer *ndi
     --ndiml;
     --inode;
     /* Function Body */
-    maxn = max(1,*n);
+    maxn = fla_max(1,*n);
     temp = log((real) maxn / (real) (*msub + 1)) / log(2.f);
     *lvl = (integer) temp + 1;
     i__ = *n / 2;

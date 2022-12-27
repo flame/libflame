@@ -110,11 +110,11 @@ int sladiv_(real *a, real *b, real *c__, real *d__, real *p, real *q)
     /* Computing MAX */
     r__1 = f2c_abs(*a);
     r__2 = f2c_abs(*b); // , expr subst
-    ab = max(r__1,r__2);
+    ab = fla_max(r__1,r__2);
     /* Computing MAX */
     r__1 = f2c_abs(*c__);
     r__2 = f2c_abs(*d__); // , expr subst
-    cd = max(r__1,r__2);
+    cd = fla_max(r__1,r__2);
     s = 1.f;
     ov = slamch_("Overflow threshold");
     un = slamch_("Safe minimum");

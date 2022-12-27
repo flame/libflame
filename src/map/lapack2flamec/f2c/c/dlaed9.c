@@ -80,7 +80,7 @@ static integer c__1 = 1;
 /* > \param[in] LDQ */
 /* > \verbatim */
 /* > LDQ is INTEGER */
-/* > The leading dimension of the array Q. LDQ >= max( 1, N ). */
+/* > The leading dimension of the array Q. LDQ >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] RHO */
@@ -117,7 +117,7 @@ static integer c__1 = 1;
 /* > \param[in] LDS */
 /* > \verbatim */
 /* > LDS is INTEGER */
-/* > The leading dimension of S. LDS >= max( 1, K ). */
+/* > The leading dimension of S. LDS >= fla_max( 1, K ). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -195,11 +195,11 @@ int dlaed9_(integer *k, integer *kstart, integer *kstop, integer *n, doublereal 
     {
         *info = -1;
     }
-    else if (*kstart < 1 || *kstart > max(1,*k))
+    else if (*kstart < 1 || *kstart > fla_max(1,*k))
     {
         *info = -2;
     }
-    else if (max(1,*kstop) < *kstart || *kstop > max(1,*k))
+    else if (fla_max(1,*kstop) < *kstart || *kstop > fla_max(1,*k))
     {
         *info = -3;
     }
@@ -207,11 +207,11 @@ int dlaed9_(integer *k, integer *kstart, integer *kstop, integer *n, doublereal 
     {
         *info = -4;
     }
-    else if (*ldq < max(1,*k))
+    else if (*ldq < fla_max(1,*k))
     {
         *info = -7;
     }
-    else if (*lds < max(1,*k))
+    else if (*lds < fla_max(1,*k))
     {
         *info = -12;
     }

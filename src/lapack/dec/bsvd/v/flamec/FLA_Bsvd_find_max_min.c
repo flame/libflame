@@ -84,11 +84,11 @@ FLA_Error FLA_Bsvd_find_max_min_ops( integer       m_A,
         float abs_ei = fabsf( buff_e[ i*inc_e ] );
 
         // Track the minimum element.
-        smin_cand = min( smin_cand, abs_di );
+        smin_cand = fla_min( smin_cand, abs_di );
 
         // Track the maximum element.
-        smax_cand = max( smax_cand, abs_di );
-        smax_cand = max( smax_cand, abs_ei );
+        smax_cand = fla_max( smax_cand, abs_di );
+        smax_cand = fla_max( smax_cand, abs_ei );
     }
 
     // Save the results of the search.
@@ -119,11 +119,11 @@ FLA_Error FLA_Bsvd_find_max_min_opd( integer       m_A,
         double abs_ei = fabs( buff_e[ i*inc_e ] );
 
         // Track the minimum element.
-        smin_cand = min( smin_cand, abs_di );
+        smin_cand = fla_min( smin_cand, abs_di );
 
         // Track the maximum element.
-        smax_cand = max( smax_cand, abs_di );
-        smax_cand = max( smax_cand, abs_ei );
+        smax_cand = fla_max( smax_cand, abs_di );
+        smax_cand = fla_max( smax_cand, abs_ei );
     }
 
     // Save the results of the search.

@@ -102,9 +102,9 @@ static doublereal c_b36 = .5;
 /* > The upper or lower triangular band matrix A, stored in the */
 /* > first KD+1 rows of the array. The j-th column of A is stored */
 /* > in the j-th column of the array AB as follows: */
-/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j;
+/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(n,j+kd). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(n,j+kd). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDAB */
@@ -201,7 +201,7 @@ x(i), i=1,...,n}
 /* > */
 /* > Since |x(j)| <= M(j), we use the Level 2 BLAS routine ZTBSV if the */
 /* > reciprocal of the largest M(j), j=1,..,n, is larger than */
-/* > max(underflow, 1/overflow). */
+/* > fla_max(underflow, 1/overflow). */
 /* > */
 /* > The bound on x(j) is also used to determine when a step in the */
 /* > columnwise method can be performed without fear of overflow. If */
@@ -232,7 +232,7 @@ b(i), i=1,..,n}
 /* > 1<=i<=j */
 /* > */
 /* > and we can safely call ZTBSV if 1/M(n) and 1/G(n) are both greater */
-/* > than max(underflow, 1/overflow). */
+/* > than fla_max(underflow, 1/overflow). */
 /* > \endverbatim */
 /* > */
 /* ===================================================================== */
@@ -384,7 +384,7 @@ int zlatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, inte
                 /* Computing MIN */
                 i__2 = *kd;
                 i__3 = j - 1; // , expr subst
-                jlen = min(i__2,i__3);
+                jlen = fla_min(i__2,i__3);
                 cnorm[j] = dzasum_(&jlen, &ab[*kd + 1 - jlen + j * ab_dim1], & c__1);
                 /* L10: */
             }
@@ -400,7 +400,7 @@ int zlatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, inte
                 /* Computing MIN */
                 i__2 = *kd;
                 i__3 = *n - j; // , expr subst
-                jlen = min(i__2,i__3);
+                jlen = fla_min(i__2,i__3);
                 if (jlen > 0)
                 {
                     cnorm[j] = dzasum_(&jlen, &ab[j * ab_dim1 + 2], &c__1);
@@ -438,7 +438,7 @@ int zlatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, inte
         i__2 = j;
         d__3 = xmax;
         d__4 = (d__1 = x[i__2].r / 2., f2c_abs(d__1)) + (d__2 = d_imag(&x[j]) / 2., f2c_abs(d__2)); // , expr subst
-        xmax = max(d__3,d__4);
+        xmax = fla_max(d__3,d__4);
         /* L30: */
     }
     xbnd = xmax;
@@ -471,7 +471,7 @@ int zlatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, inte
             /* Initially, G(0) = max{
             x(i), i=1,...,n}
             . */
-            grow = .5 / max(xbnd,smlnum);
+            grow = .5 / fla_max(xbnd,smlnum);
             xbnd = grow;
             i__1 = jlast;
             i__2 = jinc;
@@ -493,8 +493,8 @@ int zlatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, inte
                     /* M(j) = G(j-1) / f2c_abs(A(j,j)) */
                     /* Computing MIN */
                     d__1 = xbnd;
-                    d__2 = min(1.,tjj) * grow; // , expr subst
-                    xbnd = min(d__1,d__2);
+                    d__2 = fla_min(1.,tjj) * grow; // , expr subst
+                    xbnd = fla_min(d__1,d__2);
                 }
                 else
                 {
@@ -523,8 +523,8 @@ int zlatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, inte
             . */
             /* Computing MIN */
             d__1 = 1.;
-            d__2 = .5 / max(xbnd,smlnum); // , expr subst
-            grow = min(d__1,d__2);
+            d__2 = .5 / fla_max(xbnd,smlnum); // , expr subst
+            grow = fla_min(d__1,d__2);
             i__2 = jlast;
             i__1 = jinc;
             for (j = jfirst;
@@ -573,7 +573,7 @@ L60:
             /* Initially, M(0) = max{
             x(i), i=1,...,n}
             . */
-            grow = .5 / max(xbnd,smlnum);
+            grow = .5 / fla_max(xbnd,smlnum);
             xbnd = grow;
             i__1 = jlast;
             i__2 = jinc;
@@ -586,12 +586,12 @@ L60:
                 {
                     goto L90;
                 }
-                /* G(j) = max( G(j-1), M(j-1)*( 1 + CNORM(j) ) ) */
+                /* G(j) = fla_max( G(j-1), M(j-1)*( 1 + CNORM(j) ) ) */
                 xj = cnorm[j] + 1.;
                 /* Computing MIN */
                 d__1 = grow;
                 d__2 = xbnd / xj; // , expr subst
-                grow = min(d__1,d__2);
+                grow = fla_min(d__1,d__2);
                 i__3 = maind + j * ab_dim1;
                 tjjs.r = ab[i__3].r;
                 tjjs.i = ab[i__3].i; // , expr subst
@@ -611,7 +611,7 @@ L60:
                 }
                 /* L70: */
             }
-            grow = min(grow,xbnd);
+            grow = fla_min(grow,xbnd);
         }
         else
         {
@@ -621,8 +621,8 @@ L60:
             . */
             /* Computing MIN */
             d__1 = 1.;
-            d__2 = .5 / max(xbnd,smlnum); // , expr subst
-            grow = min(d__1,d__2);
+            d__2 = .5 / fla_max(xbnd,smlnum); // , expr subst
+            grow = fla_min(d__1,d__2);
             i__2 = jlast;
             i__1 = jinc;
             for (j = jfirst;
@@ -785,12 +785,12 @@ L110: /* Scale x if necessary to avoid overflow when adding a */
                     if (j > 1)
                     {
                         /* Compute the update */
-                        /* x(max(1,j-kd):j-1) := x(max(1,j-kd):j-1) - */
-                        /* x(j)* A(max(1,j-kd):j-1,j) */
+                        /* x(fla_max(1,j-kd):j-1) := x(fla_max(1,j-kd):j-1) - */
+                        /* x(j)* A(fla_max(1,j-kd):j-1,j) */
                         /* Computing MIN */
                         i__3 = *kd;
                         i__4 = j - 1; // , expr subst
-                        jlen = min(i__3,i__4);
+                        jlen = fla_min(i__3,i__4);
                         i__3 = j;
                         z__2.r = -x[i__3].r;
                         z__2.i = -x[i__3].i; // , expr subst
@@ -806,12 +806,12 @@ L110: /* Scale x if necessary to avoid overflow when adding a */
                 else if (j < *n)
                 {
                     /* Compute the update */
-                    /* x(j+1:min(j+kd,n)) := x(j+1:min(j+kd,n)) - */
-                    /* x(j) * A(j+1:min(j+kd,n),j) */
+                    /* x(j+1:fla_min(j+kd,n)) := x(j+1:fla_min(j+kd,n)) - */
+                    /* x(j) * A(j+1:fla_min(j+kd,n),j) */
                     /* Computing MIN */
                     i__3 = *kd;
                     i__4 = *n - j; // , expr subst
-                    jlen = min(i__3,i__4);
+                    jlen = fla_min(i__3,i__4);
                     if (jlen > 0)
                     {
                         i__3 = j;
@@ -844,7 +844,7 @@ L110: /* Scale x if necessary to avoid overflow when adding a */
                 xj = (d__1 = x[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&x[j]), f2c_abs(d__2));
                 uscal.r = tscal;
                 uscal.i = 0.; // , expr subst
-                rec = 1. / max(xmax,1.);
+                rec = 1. / fla_max(xmax,1.);
                 if (cnorm[j] > (bignum - xj) * rec)
                 {
                     /* If x(j) could overflow, scale x by 1/(2*XMAX). */
@@ -869,7 +869,7 @@ L110: /* Scale x if necessary to avoid overflow when adding a */
                         /* Computing MIN */
                         d__1 = 1.;
                         d__2 = rec * tjj; // , expr subst
-                        rec = min(d__1,d__2);
+                        rec = fla_min(d__1,d__2);
                         zladiv_f2c_(&z__1, &uscal, &tjjs);
                         uscal.r = z__1.r;
                         uscal.i = z__1.i; // , expr subst
@@ -892,7 +892,7 @@ L110: /* Scale x if necessary to avoid overflow when adding a */
                         /* Computing MIN */
                         i__3 = *kd;
                         i__4 = j - 1; // , expr subst
-                        jlen = min(i__3,i__4);
+                        jlen = fla_min(i__3,i__4);
                         zdotu_f2c_(&z__1, &jlen, &ab[*kd + 1 - jlen + j * ab_dim1], &c__1, &x[j - jlen], &c__1);
                         csumj.r = z__1.r;
                         csumj.i = z__1.i; // , expr subst
@@ -902,7 +902,7 @@ L110: /* Scale x if necessary to avoid overflow when adding a */
                         /* Computing MIN */
                         i__3 = *kd;
                         i__4 = *n - j; // , expr subst
-                        jlen = min(i__3,i__4);
+                        jlen = fla_min(i__3,i__4);
                         if (jlen > 1)
                         {
                             zdotu_f2c_(&z__1, &jlen, &ab[j * ab_dim1 + 2], &c__1, &x[j + 1], &c__1);
@@ -919,7 +919,7 @@ L110: /* Scale x if necessary to avoid overflow when adding a */
                         /* Computing MIN */
                         i__3 = *kd;
                         i__4 = j - 1; // , expr subst
-                        jlen = min(i__3,i__4);
+                        jlen = fla_min(i__3,i__4);
                         i__3 = jlen;
                         for (i__ = 1;
                                 i__ <= i__3;
@@ -943,7 +943,7 @@ L110: /* Scale x if necessary to avoid overflow when adding a */
                         /* Computing MIN */
                         i__3 = *kd;
                         i__4 = *n - j; // , expr subst
-                        jlen = min(i__3,i__4);
+                        jlen = fla_min(i__3,i__4);
                         i__3 = jlen;
                         for (i__ = 1;
                                 i__ <= i__3;
@@ -1069,7 +1069,7 @@ L160:
                 i__3 = j;
                 d__3 = xmax;
                 d__4 = (d__1 = x[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&x[j]), f2c_abs(d__2)); // , expr subst
-                xmax = max(d__3,d__4);
+                xmax = fla_max(d__3,d__4);
                 /* L170: */
             }
         }
@@ -1088,7 +1088,7 @@ L160:
                 xj = (d__1 = x[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&x[j]), f2c_abs(d__2));
                 uscal.r = tscal;
                 uscal.i = 0.; // , expr subst
-                rec = 1. / max(xmax,1.);
+                rec = 1. / fla_max(xmax,1.);
                 if (cnorm[j] > (bignum - xj) * rec)
                 {
                     /* If x(j) could overflow, scale x by 1/(2*XMAX). */
@@ -1113,7 +1113,7 @@ L160:
                         /* Computing MIN */
                         d__1 = 1.;
                         d__2 = rec * tjj; // , expr subst
-                        rec = min(d__1,d__2);
+                        rec = fla_min(d__1,d__2);
                         zladiv_f2c_(&z__1, &uscal, &tjjs);
                         uscal.r = z__1.r;
                         uscal.i = z__1.i; // , expr subst
@@ -1136,7 +1136,7 @@ L160:
                         /* Computing MIN */
                         i__3 = *kd;
                         i__4 = j - 1; // , expr subst
-                        jlen = min(i__3,i__4);
+                        jlen = fla_min(i__3,i__4);
                         zdotc_f2c_(&z__1, &jlen, &ab[*kd + 1 - jlen + j * ab_dim1], &c__1, &x[j - jlen], &c__1);
                         csumj.r = z__1.r;
                         csumj.i = z__1.i; // , expr subst
@@ -1146,7 +1146,7 @@ L160:
                         /* Computing MIN */
                         i__3 = *kd;
                         i__4 = *n - j; // , expr subst
-                        jlen = min(i__3,i__4);
+                        jlen = fla_min(i__3,i__4);
                         if (jlen > 1)
                         {
                             zdotc_f2c_(&z__1, &jlen, &ab[j * ab_dim1 + 2], &c__1, &x[j + 1], &c__1);
@@ -1163,7 +1163,7 @@ L160:
                         /* Computing MIN */
                         i__3 = *kd;
                         i__4 = j - 1; // , expr subst
-                        jlen = min(i__3,i__4);
+                        jlen = fla_min(i__3,i__4);
                         i__3 = jlen;
                         for (i__ = 1;
                                 i__ <= i__3;
@@ -1187,7 +1187,7 @@ L160:
                         /* Computing MIN */
                         i__3 = *kd;
                         i__4 = *n - j; // , expr subst
-                        jlen = min(i__3,i__4);
+                        jlen = fla_min(i__3,i__4);
                         i__3 = jlen;
                         for (i__ = 1;
                                 i__ <= i__3;
@@ -1313,7 +1313,7 @@ L210:
                 i__3 = j;
                 d__3 = xmax;
                 d__4 = (d__1 = x[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&x[j]), f2c_abs(d__2)); // , expr subst
-                xmax = max(d__3,d__4);
+                xmax = fla_max(d__3,d__4);
                 /* L220: */
             }
         }

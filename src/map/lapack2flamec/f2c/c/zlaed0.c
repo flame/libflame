@@ -81,7 +81,7 @@ static integer c__1 = 1;
 /* > \param[in] LDQ */
 /* > \verbatim */
 /* > LDQ is INTEGER */
-/* > The leading dimension of the array Q. LDQ >= max(1,N). */
+/* > The leading dimension of the array Q. LDQ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] IWORK */
@@ -113,7 +113,7 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > LDQS is INTEGER */
 /* > The leading dimension of the array QSTORE. */
-/* > LDQS >= max(1,N). */
+/* > LDQS >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -203,7 +203,7 @@ int zlaed0_(integer *qsiz, integer *n, doublereal *d__, doublereal *e, doublecom
     /* INFO = -1 */
     /* ELSE IF( ( ICOMPQ .EQ. 1 ) .AND. ( QSIZ .LT. MAX( 0, N ) ) ) */
     /* $ THEN */
-    if (*qsiz < max(0,*n))
+    if (*qsiz < fla_max(0,*n))
     {
         *info = -1;
     }
@@ -211,11 +211,11 @@ int zlaed0_(integer *qsiz, integer *n, doublereal *d__, doublereal *e, doublecom
     {
         *info = -2;
     }
-    else if (*ldq < max(1,*n))
+    else if (*ldq < fla_max(1,*n))
     {
         *info = -6;
     }
-    else if (*ldqs < max(1,*n))
+    else if (*ldqs < fla_max(1,*n))
     {
         *info = -8;
     }

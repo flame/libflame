@@ -80,7 +80,7 @@ static real c_b18 = 1.f;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] W */
@@ -98,7 +98,7 @@ static real c_b18 = 1.f;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The length of the array WORK. LWORK >= max(1,2*N-1). */
+/* > The length of the array WORK. LWORK >= fla_max(1,2*N-1). */
 /* > For optimal efficiency, LWORK >= (NB+1)*N, */
 /* > where NB is the blocksize for CHETRD returned by ILAENV. */
 /* > */
@@ -111,7 +111,7 @@ the routine */
 /* > */
 /* > \param[out] RWORK */
 /* > \verbatim */
-/* > RWORK is REAL array, dimension (max(1, 3*N-2)) */
+/* > RWORK is REAL array, dimension (fla_max(1, 3*N-2)) */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -227,7 +227,7 @@ int cheev_(char *jobz, char *uplo, integer *n, complex *a, integer *lda, real *w
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
@@ -237,13 +237,13 @@ int cheev_(char *jobz, char *uplo, integer *n, complex *a, integer *lda, real *w
         /* Computing MAX */
         i__1 = 1;
         i__2 = (nb + 1) * *n; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
         work[1].r = (real) lwkopt;
         work[1].i = 0.f; // , expr subst
         /* Computing MAX */
         i__1 = 1;
         i__2 = (*n << 1) - 1; // , expr subst
-        if (*lwork < max(i__1,i__2) && ! lquery)
+        if (*lwork < fla_max(i__1,i__2) && ! lquery)
         {
             *info = -8;
         }

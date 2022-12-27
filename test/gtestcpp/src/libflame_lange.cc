@@ -50,7 +50,7 @@ void lange_test(int ip)
   /* NORM is CHARACTER*1
           Specifies whether the 1-norm condition number or the
           infinity-norm condition number is required:
-          CLANSY = ( max(abs(A(i,j))), NORM = 'M' or 'm'
+          CLANSY = ( fla_max(abs(A(i,j))), NORM = 'M' or 'm'
              (
              ( norm1(A),         NORM = '1', 'O' or 'o'
              (
@@ -78,10 +78,10 @@ void lange_test(int ip)
   }
   
   /* LDA is INTEGER
-          The leading dimension of the array A.  LDA >= max(M,1).*/
+          The leading dimension of the array A.  LDA >= fla_max(M,1).*/
   integer lda = eig_paramslist[ip].lda_lange;
-  if (lda < max(m, 1)) {
-    PRINTF("lda < max(m, 1) but it should be: LDA >= max(M,1). Please " \
+  if (lda < fla_max(m, 1)) {
+    PRINTF("lda < fla_max(m, 1) but it should be: LDA >= fla_max(M,1). Please " \
            "correct the input data.\n");
   }
   
@@ -97,7 +97,7 @@ void lange_test(int ip)
   T *workbuff = NULL, *workrefbuff = NULL;
   if (norm == 'I') {
     if (lwork >= m) {
-      allocate_init_buffer(workbuff, workrefbuff, max(1, lwork), 0);
+      allocate_init_buffer(workbuff, workrefbuff, fla_max(1, lwork), 0);
     } else {
       PRINTF("lwork < m but it should be: lwork >= m. Please " \
              "correct the input data.\n");
@@ -113,7 +113,7 @@ void lange_test(int ip)
     PRINTF("lda = %d\n", lda);
     PRINTF("Size of A array (lda*n) = %d\n", lda * n);
     PRINTF("lwork = %d\n", lwork);
-    PRINTF("Size of WORK array (MAX(1,LWORK)) = %d\n", max(1, lwork));
+    PRINTF("Size of WORK array (MAX(1,LWORK)) = %d\n", fla_max(1, lwork));
   #endif
   
   #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1))
@@ -136,9 +136,9 @@ void lange_test(int ip)
     if ((workbuff != NULL) && (workrefbuff != NULL)) {
       // Prints WORK array contents
       strncpy(arrayname, "WORK input", arraysize);
-      print_array<T>(arrayname, workbuff, max(1, lwork));
+      print_array<T>(arrayname, workbuff, fla_max(1, lwork));
       strncpy(arrayname, "WORK ref input", arraysize);
-      print_array<T>(arrayname, workrefbuff, max(1, lwork));
+      print_array<T>(arrayname, workrefbuff, fla_max(1, lwork));
     }
   #endif
   
@@ -173,15 +173,15 @@ void lange_test(int ip)
     if ((workbuff != NULL) && (workrefbuff != NULL)) {
       // Prints WORK array contents
       strncpy(arrayname, "WORK output", arraysize);
-      print_array<T>(arrayname, workbuff, max(1, lwork));
+      print_array<T>(arrayname, workbuff, fla_max(1, lwork));
       strncpy(arrayname, "WORK ref output", arraysize);
-      print_array<T>(arrayname, workrefbuff, max(1, lwork));
+      print_array<T>(arrayname, workrefbuff, fla_max(1, lwork));
     }
   #endif
   
   double diff = computeError<T>(1, 1, &value, &valueref);
   if ((workbuff != NULL) && (workrefbuff != NULL)) {
-    diff = computeError<T>(1, max(1, lwork), workbuff, workrefbuff);
+    diff = computeError<T>(1, fla_max(1, lwork), workbuff, workrefbuff);
   }
   PRINTF("diff: %lf\n", diff);
   EXPECT_NEAR(0.0, diff, SYM_EIGEN_THRESHOLD);
@@ -235,7 +235,7 @@ void lange_test_cmplx(int ip)
   /* NORM is CHARACTER*1
           Specifies whether the 1-norm condition number or the
           infinity-norm condition number is required:
-          CLANSY = ( max(abs(A(i,j))), NORM = 'M' or 'm'
+          CLANSY = ( fla_max(abs(A(i,j))), NORM = 'M' or 'm'
              (
              ( norm1(A),         NORM = '1', 'O' or 'o'
              (
@@ -263,10 +263,10 @@ void lange_test_cmplx(int ip)
   }
   
   /* LDA is INTEGER
-          The leading dimension of the array A.  LDA >= max(M,1).*/
+          The leading dimension of the array A.  LDA >= fla_max(M,1).*/
   integer lda = eig_paramslist[ip].lda_lange;
-  if (lda < max(m, 1)) {
-    PRINTF("lda < max(m, 1) but it should be: LDA >= max(M,1). Please " \
+  if (lda < fla_max(m, 1)) {
+    PRINTF("lda < fla_max(m, 1) but it should be: LDA >= fla_max(M,1). Please " \
            "correct the input data.\n");
   }
   
@@ -282,7 +282,7 @@ void lange_test_cmplx(int ip)
   Ta *workbuff = NULL, *workrefbuff = NULL;
   if (norm == 'I') {
     if (lwork >= m) {
-      allocate_init_buffer(workbuff, workrefbuff, max(1, lwork), 0);
+      allocate_init_buffer(workbuff, workrefbuff, fla_max(1, lwork), 0);
     } else {
       PRINTF("lwork < m but it should be: lwork >= m. Please " \
              "correct the input data.\n");
@@ -298,7 +298,7 @@ void lange_test_cmplx(int ip)
     PRINTF("lda = %d\n", lda);
     PRINTF("Size of A array (lda*n) = %d\n", lda * n);
     PRINTF("lwork = %d\n", lwork);
-    PRINTF("Size of WORK array (MAX(1,LWORK)) = %d\n", max(1, lwork));
+    PRINTF("Size of WORK array (MAX(1,LWORK)) = %d\n", fla_max(1, lwork));
   #endif
   
   #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1))
@@ -320,9 +320,9 @@ void lange_test_cmplx(int ip)
     if ((workbuff != NULL) && (workrefbuff != NULL)) {
       // Prints WORK array contents
       strncpy(arrayname, "WORK input", arraysize);
-      print_array<Ta>(arrayname, workbuff, max(1, lwork));
+      print_array<Ta>(arrayname, workbuff, fla_max(1, lwork));
       strncpy(arrayname, "WORK ref input", arraysize);
-      print_array<Ta>(arrayname, workrefbuff, max(1, lwork));
+      print_array<Ta>(arrayname, workrefbuff, fla_max(1, lwork));
     }
   #endif
   
@@ -358,15 +358,15 @@ void lange_test_cmplx(int ip)
     if ((workbuff != NULL) && (workrefbuff != NULL)) {
       // Prints WORK array contents
       strncpy(arrayname, "WORK output", arraysize);
-      print_array<Ta>(arrayname, workbuff, max(1, lwork));
+      print_array<Ta>(arrayname, workbuff, fla_max(1, lwork));
       strncpy(arrayname, "WORK ref output", arraysize);
-      print_array<Ta>(arrayname, workrefbuff, max(1, lwork));
+      print_array<Ta>(arrayname, workrefbuff, fla_max(1, lwork));
     }
   #endif
   
   double diff = computeError<Ta>(1, 1, &value, &valueref);
   if ((workbuff != NULL) && (workrefbuff != NULL)) {
-    diff = computeError<Ta>(1, max(1, lwork), workbuff, workrefbuff);
+    diff = computeError<Ta>(1, fla_max(1, lwork), workbuff, workrefbuff);
   }
   PRINTF("diff: %lf\n", diff);
   EXPECT_NEAR(0.0, diff, SYM_EIGEN_THRESHOLD);

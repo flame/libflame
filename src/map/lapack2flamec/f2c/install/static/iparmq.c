@@ -248,7 +248,7 @@
  /* Computing MAX */
  r__1 = log((real) nh) / log(2.f);
  i__1 = 10; i__2 = nh / i_nint(&r__1); // , expr subst  
- ns = max(i__1,i__2);
+ ns = fla_max(i__1,i__2);
  }
  if (nh >= 590) {
  ns = 64;
@@ -261,7 +261,7 @@
  }
  /* Computing MAX */
  i__1 = 2; i__2 = ns - ns % 2; // , expr subst  
- ns = max(i__1,i__2);
+ ns = fla_max(i__1,i__2);
  }
  if (*ispec == 12) {
  /* ===== Matrices of order smaller than NMIN get sent */

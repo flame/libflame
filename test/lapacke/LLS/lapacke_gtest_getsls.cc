@@ -55,7 +55,7 @@ getsls_float_parameters:: getsls_float_parameters (int matrix_layout_i,char tran
 	
 	if (matrix_layout == LAPACK_COL_MAJOR){
 		lda = m;
-		ldb = max(m,n);
+		ldb = fla_max(m,n);
 		bufsize = lda*n;
 		bufsize_b = ldb*nrhs;
 	}else if (matrix_layout == LAPACK_ROW_MAJOR) {
@@ -219,7 +219,7 @@ getsls_double_parameters:: getsls_double_parameters (int matrix_layout_i,char tr
 	
 	if (matrix_layout == LAPACK_COL_MAJOR){
 		lda = m;
-		ldb = max(m,n);
+		ldb = fla_max(m,n);
 		bufsize = lda*n;
 		bufsize_b = ldb*nrhs;
 	}else if (matrix_layout == LAPACK_ROW_MAJOR) {
@@ -385,7 +385,7 @@ getsls_scomplex_parameters:: getsls_scomplex_parameters (int matrix_layout_i, ch
 	
 	if (matrix_layout == LAPACK_COL_MAJOR){
 		lda = m;
-		ldb = max(m,n);
+		ldb = fla_max(m,n);
 		bufsize = lda*n;
 		bufsize_b = ldb*nrhs;
 	}else if (matrix_layout == LAPACK_ROW_MAJOR) {
@@ -547,7 +547,7 @@ getsls_dcomplex_parameters:: getsls_dcomplex_parameters (int matrix_layout_i, ch
 	
 	if (matrix_layout == LAPACK_COL_MAJOR){
 		lda = m;
-		ldb = max(m,n);
+		ldb = fla_max(m,n);
 		bufsize = lda*n;
 		bufsize_b = ldb*nrhs;
 	}else if (matrix_layout == LAPACK_ROW_MAJOR) {

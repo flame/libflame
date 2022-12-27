@@ -64,7 +64,7 @@ static integer c__1 = 1;
 /* > \param[in] P */
 /* > \verbatim */
 /* > P is INTEGER */
-/* > The number of rows in X11. 0 <= P <= M. M-P <= min(P,Q,M-Q). */
+/* > The number of rows in X11. 0 <= P <= M. M-P <= fla_min(P,Q,M-Q). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] Q */
@@ -276,7 +276,7 @@ int cunbdb3_(integer *m, integer *p, integer *q, complex * x11, integer *ldx11, 
     {
         *info = -3;
     }
-    else if (*ldx11 < max(1,*p))
+    else if (*ldx11 < fla_max(1,*p))
     {
         *info = -5;
     }
@@ -285,7 +285,7 @@ int cunbdb3_(integer *m, integer *p, integer *q, complex * x11, integer *ldx11, 
         /* Computing MAX */
         i__1 = 1;
         i__2 = *m - *p; // , expr subst
-        if (*ldx21 < max(i__1,i__2))
+        if (*ldx21 < fla_max(i__1,i__2))
         {
             *info = -7;
         }
@@ -296,15 +296,15 @@ int cunbdb3_(integer *m, integer *p, integer *q, complex * x11, integer *ldx11, 
         ilarf = 2;
         /* Computing MAX */
         i__1 = *p, i__2 = *m - *p - 1;
-        i__1 = max(i__1,i__2);
+        i__1 = fla_max(i__1,i__2);
         i__2 = *q - 1; // ; expr subst
-        llarf = max(i__1,i__2);
+        llarf = fla_max(i__1,i__2);
         iorbdb5 = 2;
         lorbdb5 = *q - 1;
         /* Computing MAX */
         i__1 = ilarf + llarf - 1;
         i__2 = iorbdb5 + lorbdb5 - 1; // , expr subst
-        lworkopt = max(i__1,i__2);
+        lworkopt = fla_max(i__1,i__2);
         lworkmin = lworkopt;
         work[1].r = (real) lworkopt;
         work[1].i = 0.f; // , expr subst

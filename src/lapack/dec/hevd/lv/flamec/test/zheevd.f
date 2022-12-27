@@ -26,7 +26,7 @@
 *          diagonal, is destroyed.
 *
 *  LDA     (input) INTEGER
-*          The leading dimension of the array A.  LDA >= max(1,N).
+*          The leading dimension of the array A.  LDA >= fla_max(1,N).
 *
 *  W       (output) DOUBLE PRECISION array, dimension (N)
 *          If INFO = 0, the eigenvalues in ascending order.

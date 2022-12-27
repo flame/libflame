@@ -74,7 +74,7 @@ static integer c__2 = 2;
 /* > ZLAHQR works primarily with the Hessenberg submatrix in rows */
 /* > and columns ILO to IHI, but applies transformations to all of */
 /* > H if WANTT is .TRUE.. */
-/* > 1 <= ILO <= max(1,IHI);
+/* > 1 <= ILO <= fla_max(1,IHI);
 IHI <= N. */
 /* > \endverbatim */
 /* > */
@@ -92,7 +92,7 @@ IHI <= N. */
 /* > \param[in] LDH */
 /* > \verbatim */
 /* > LDH is INTEGER */
-/* > The leading dimension of the array H. LDH >= max(1,N). */
+/* > The leading dimension of the array H. LDH >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] W */
@@ -132,7 +132,7 @@ transformations are applied only to */
 /* > \param[in] LDZ */
 /* > \verbatim */
 /* > LDZ is INTEGER */
-/* > The leading dimension of the array Z. LDZ >= max(1,N). */
+/* > The leading dimension of the array Z. LDZ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -350,7 +350,7 @@ int zlahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
             /* Computing MIN */
             i__3 = jhi;
             i__4 = i__ + 1; // , expr subst
-            i__2 = min(i__3,i__4) - jlo + 1;
+            i__2 = fla_min(i__3,i__4) - jlo + 1;
             d_cnjg(&z__1, &sc);
             zscal_(&i__2, &z__1, &h__[jlo + i__ * h_dim1], &c__1);
             if (*wantz)
@@ -379,7 +379,7 @@ int zlahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
         i2 = *n;
     }
     /* ITMAX is the total number of QR iterations allowed. */
-    itmax = max(10,nh) * 30;
+    itmax = fla_max(10,nh) * 30;
     /* The main loop begins here. I is the loop index and decreases from */
     /* IHI to ILO in steps of 1. Each iteration of the loop works */
     /* with the active submatrix in rows and columns L to I. */
@@ -439,13 +439,13 @@ L30:
                 i__4 = k - 1 + k * h_dim1;
                 d__5 = (d__1 = h__[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[ k + (k - 1) * h_dim1]), f2c_abs(d__2));
                 d__6 = (d__3 = h__[i__4].r, f2c_abs(d__3)) + (d__4 = d_imag(&h__[k - 1 + k * h_dim1]), f2c_abs(d__4)); // , expr subst
-                ab = max(d__5,d__6);
+                ab = fla_max(d__5,d__6);
                 /* Computing MIN */
                 i__3 = k + (k - 1) * h_dim1;
                 i__4 = k - 1 + k * h_dim1;
                 d__5 = (d__1 = h__[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[ k + (k - 1) * h_dim1]), f2c_abs(d__2));
                 d__6 = (d__3 = h__[i__4].r, f2c_abs(d__3)) + (d__4 = d_imag(&h__[k - 1 + k * h_dim1]), f2c_abs(d__4)); // , expr subst
-                ba = min(d__5,d__6);
+                ba = fla_min(d__5,d__6);
                 i__3 = k - 1 + (k - 1) * h_dim1;
                 i__4 = k + k * h_dim1;
                 z__2.r = h__[i__3].r - h__[i__4].r;
@@ -456,7 +456,7 @@ L30:
                 i__5 = k + k * h_dim1;
                 d__5 = (d__1 = h__[i__5].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[ k + k * h_dim1]), f2c_abs(d__2));
                 d__6 = (d__3 = z__1.r, f2c_abs(d__3)) + (d__4 = d_imag(&z__1), f2c_abs(d__4)); // , expr subst
-                aa = max(d__5,d__6);
+                aa = fla_max(d__5,d__6);
                 i__3 = k - 1 + (k - 1) * h_dim1;
                 i__4 = k + k * h_dim1;
                 z__2.r = h__[i__3].r - h__[i__4].r;
@@ -467,12 +467,12 @@ L30:
                 i__5 = k + k * h_dim1;
                 d__5 = (d__1 = h__[i__5].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[ k + k * h_dim1]), f2c_abs(d__2));
                 d__6 = (d__3 = z__1.r, f2c_abs(d__3)) + (d__4 = d_imag(&z__1), f2c_abs(d__4)); // , expr subst
-                bb = min(d__5,d__6);
+                bb = fla_min(d__5,d__6);
                 s = aa + ab;
                 /* Computing MAX */
                 d__1 = smlnum;
                 d__2 = ulp * (bb * (aa / s)); // , expr subst
-                if (ba * (ab / s) <= max(d__1,d__2))
+                if (ba * (ab / s) <= fla_max(d__1,d__2))
                 {
                     goto L50;
                 }
@@ -549,7 +549,7 @@ L50:
                 /* Computing MAX */
                 d__3 = s;
                 d__4 = (d__1 = x.r, f2c_abs(d__1)) + (d__2 = d_imag(&x), f2c_abs(d__2)); // , expr subst
-                s = max(d__3,d__4);
+                s = fla_max(d__3,d__4);
                 z__5.r = x.r / s;
                 z__5.i = x.i / s; // , expr subst
                 pow_zi(&z__4, &z__5, &c__2);
@@ -718,10 +718,10 @@ L70: /* Single-shift QR step */
                 /* L80: */
             }
             /* Apply G from the right to transform the columns of the */
-            /* matrix in rows I1 to min(K+2,I). */
+            /* matrix in rows I1 to fla_min(K+2,I). */
             /* Computing MIN */
             i__4 = k + 2;
-            i__3 = min(i__4,i__);
+            i__3 = fla_min(i__4,i__);
             for (j = i1;
                     j <= i__3;
                     ++j)

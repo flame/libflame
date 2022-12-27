@@ -69,7 +69,7 @@
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The first dimension of the array A. LDA >= max(1,M). */
+/* > The first dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] TAU */
@@ -150,7 +150,7 @@ int dorgr2_(integer *m, integer *n, integer *k, doublereal * a, integer *lda, do
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }

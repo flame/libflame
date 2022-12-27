@@ -81,7 +81,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WR */
@@ -152,7 +152,7 @@ if */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,3*N), and */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,3*N), and */
 /* > if JOBVL = 'V' or JOBVR = 'V', LWORK >= 4*N. For good */
 /* > performance, LWORK must generally be larger. */
 /* > */
@@ -289,7 +289,7 @@ int dgeev_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
@@ -326,24 +326,24 @@ int dgeev_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = (*n << 1) + (*n - 1) * ilaenv_(&c__1, "DORGHR", " ", n, &c__1, n, &c_n1); // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 dhseqr_("S", "V", n, &c__1, n, &a[a_offset], lda, &wr[1], &wi[ 1], &vl[vl_offset], ldvl, &work[1], &c_n1, info);
                 hswork = (integer) work[1];
                 /* Computing MAX */
                 i__1 = maxwrk, i__2 = *n + 1;
-                i__1 = max(i__1,i__2);
+                i__1 = fla_max(i__1,i__2);
                 i__2 = * n + hswork; // ; expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 dtrevc3_("L", "B", select, n, &a[a_offset], lda, &vl[ vl_offset], ldvl, &vr[vr_offset], ldvr, n, &nout, & work[1], &c_n1, &ierr);
                 lwork_trevc__ = (integer) work[1];
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + lwork_trevc__; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n << 2; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
             }
             else if (wantvr)
             {
@@ -351,24 +351,24 @@ int dgeev_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = (*n << 1) + (*n - 1) * ilaenv_(&c__1, "DORGHR", " ", n, &c__1, n, &c_n1); // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 dhseqr_("S", "V", n, &c__1, n, &a[a_offset], lda, &wr[1], &wi[ 1], &vr[vr_offset], ldvr, &work[1], &c_n1, info);
                 hswork = (integer) work[1];
                 /* Computing MAX */
                 i__1 = maxwrk, i__2 = *n + 1;
-                i__1 = max(i__1,i__2);
+                i__1 = fla_max(i__1,i__2);
                 i__2 = * n + hswork; // ; expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 dtrevc3_("R", "B", select, n, &a[a_offset], lda, &vl[ vl_offset], ldvl, &vr[vr_offset], ldvr, n, &nout, & work[1], &c_n1, &ierr);
                 lwork_trevc__ = (integer) work[1];
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + lwork_trevc__; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n << 2; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
             }
             else
             {
@@ -377,11 +377,11 @@ int dgeev_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
                 hswork = (integer) work[1];
                 /* Computing MAX */
                 i__1 = maxwrk, i__2 = *n + 1;
-                i__1 = max(i__1,i__2);
+                i__1 = fla_max(i__1,i__2);
                 i__2 = * n + hswork; // ; expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
             }
-            maxwrk = max(maxwrk,minwrk);
+            maxwrk = fla_max(maxwrk,minwrk);
         }
         work[1] = (doublereal) maxwrk;
         if (*lwork < minwrk && ! lquery)
@@ -593,12 +593,12 @@ L50:
         i__1 = *n - *info;
         /* Computing MAX */
         i__3 = *n - *info;
-        i__2 = max(i__3,1);
+        i__2 = fla_max(i__3,1);
         dlascl_("G", &c__0, &c__0, &cscale, &anrm, &i__1, &c__1, &wr[*info + 1], &i__2, &ierr);
         i__1 = *n - *info;
         /* Computing MAX */
         i__3 = *n - *info;
-        i__2 = max(i__3,1);
+        i__2 = fla_max(i__3,1);
         dlascl_("G", &c__0, &c__0, &cscale, &anrm, &i__1, &c__1, &wi[*info + 1], &i__2, &ierr);
         if (*info > 0)
         {

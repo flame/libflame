@@ -86,7 +86,7 @@ static integer c__1 = 1;
 /* > \param[in] LDT */
 /* > \verbatim */
 /* > LDT is INTEGER */
-/* > The leading dimension of the array T. LDT >= max(1,N). */
+/* > The leading dimension of the array T. LDT >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] VL */
@@ -366,7 +366,7 @@ int ztrsna_(char *job, char *howmny, logical *select, integer *n, doublecomplex 
     {
         *info = -4;
     }
-    else if (*ldt < max(1,*n))
+    else if (*ldt < fla_max(1,*n))
     {
         *info = -6;
     }
@@ -512,7 +512,7 @@ L30:
                 }
                 goto L30;
             }
-            sep[ks] = 1. / max(est,smlnum);
+            sep[ks] = 1. / fla_max(est,smlnum);
         }
 L40:
         ++ks;

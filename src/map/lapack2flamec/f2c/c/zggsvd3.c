@@ -183,7 +183,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -197,7 +197,7 @@ static integer c__1 = 1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,P). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,P). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ALPHA */
@@ -235,7 +235,7 @@ static integer c__1 = 1;
 /* > \param[in] LDU */
 /* > \verbatim */
 /* > LDU is INTEGER */
-/* > The leading dimension of the array U. LDU >= max(1,M) if */
+/* > The leading dimension of the array U. LDU >= fla_max(1,M) if */
 /* > JOBU = 'U';
 LDU >= 1 otherwise. */
 /* > \endverbatim */
@@ -250,7 +250,7 @@ LDU >= 1 otherwise. */
 /* > \param[in] LDV */
 /* > \verbatim */
 /* > LDV is INTEGER */
-/* > The leading dimension of the array V. LDV >= max(1,P) if */
+/* > The leading dimension of the array V. LDV >= fla_max(1,P) if */
 /* > JOBV = 'V';
 LDV >= 1 otherwise. */
 /* > \endverbatim */
@@ -265,7 +265,7 @@ LDV >= 1 otherwise. */
 /* > \param[in] LDQ */
 /* > \verbatim */
 /* > LDQ is INTEGER */
-/* > The leading dimension of the array Q. LDQ >= max(1,N) if */
+/* > The leading dimension of the array Q. LDQ >= fla_max(1,N) if */
 /* > JOBQ = 'Q';
 LDQ >= 1 otherwise. */
 /* > \endverbatim */
@@ -298,7 +298,7 @@ the routine */
 /* > IWORK is INTEGER array, dimension (N) */
 /* > On exit, IWORK stores the sorting information. More */
 /* > precisely, the following loop will sort ALPHA */
-/* > for I = K+1, min(M,K+L) */
+/* > for I = K+1, fla_min(M,K+L) */
 /* > swap ALPHA(I) and ALPHA(IWORK(I)) */
 /* > endfor */
 /* > such that ALPHA(1) >= ALPHA(2) >= ... >= ALPHA(N). */
@@ -448,11 +448,11 @@ int zggsvd3_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer
     {
         *info = -6;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -10;
     }
-    else if (*ldb < max(1,*p))
+    else if (*ldb < fla_max(1,*p))
     {
         *info = -12;
     }
@@ -479,8 +479,8 @@ int zggsvd3_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer
         lwkopt = *n + (integer) work[1].r;
         /* Computing MAX */
         i__1 = *n << 1;
-        lwkopt = max(i__1,lwkopt);
-        lwkopt = max(1,lwkopt);
+        lwkopt = fla_max(i__1,lwkopt);
+        lwkopt = fla_max(1,lwkopt);
         z__1.r = (doublereal) lwkopt;
         z__1.i = 0.; // , expr subst
         work[1].r = z__1.r;
@@ -505,8 +505,8 @@ int zggsvd3_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer
     /* the effective numerical rank of the matrices A and B. */
     ulp = dlamch_("Precision");
     unfl = dlamch_("Safe Minimum");
-    tola = max(*m,*n) * max(anorm,unfl) * ulp;
-    tolb = max(*p,*n) * max(bnorm,unfl) * ulp;
+    tola = fla_max(*m,*n) * fla_max(anorm,unfl) * ulp;
+    tolb = fla_max(*p,*n) * fla_max(bnorm,unfl) * ulp;
     i__1 = *lwork - *n;
     zggsvp3_(jobu, jobv, jobq, m, p, n, &a[a_offset], lda, &b[b_offset], ldb, &tola, &tolb, k, l, &u[u_offset], ldu, &v[v_offset], ldv, &q[ q_offset], ldq, &iwork[1], &rwork[1], &work[1], &work[*n + 1], & i__1, info);
     /* Compute the GSVD of two upper "triangular" matrices */
@@ -517,7 +517,7 @@ int zggsvd3_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer
     /* Computing MIN */
     i__1 = *l;
     i__2 = *m - *k; // , expr subst
-    ibnd = min(i__1,i__2);
+    ibnd = fla_min(i__1,i__2);
     i__1 = ibnd;
     for (i__ = 1;
             i__ <= i__1;

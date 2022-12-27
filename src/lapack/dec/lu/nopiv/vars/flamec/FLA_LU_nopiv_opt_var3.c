@@ -84,7 +84,7 @@ FLA_Error FLA_LU_nopiv_ops_var3( integer m_A,
 {
   float*    buff_1  = FLA_FLOAT_PTR( FLA_ONE );
   float*    buff_m1 = FLA_FLOAT_PTR( FLA_MINUS_ONE );
-  integer       min_m_n = min( m_A, n_A );
+  integer       min_m_n = fla_min( m_A, n_A );
   integer       i;
 
   for ( i = 0; i < min_m_n; ++i )
@@ -169,7 +169,7 @@ FLA_Error FLA_LU_nopiv_opd_var3( integer m_A,
 {
   double*   buff_1  = FLA_DOUBLE_PTR( FLA_ONE );
   double*   buff_m1 = FLA_DOUBLE_PTR( FLA_MINUS_ONE );
-  integer       min_m_n = min( m_A, n_A );
+  integer       min_m_n = fla_min( m_A, n_A );
   integer       i;
 
   for ( i = 0; i < min_m_n; ++i )
@@ -254,7 +254,7 @@ FLA_Error FLA_LU_nopiv_opc_var3( integer m_A,
 {
   scomplex* buff_1  = FLA_COMPLEX_PTR( FLA_ONE );
   scomplex* buff_m1 = FLA_COMPLEX_PTR( FLA_MINUS_ONE );
-  integer       min_m_n = min( m_A, n_A );
+  integer       min_m_n = fla_min( m_A, n_A );
   integer       i;
 
   for ( i = 0; i < min_m_n; ++i )
@@ -339,7 +339,7 @@ FLA_Error FLA_LU_nopiv_opz_var3( integer m_A,
 {
   dcomplex* buff_1  = FLA_DOUBLE_COMPLEX_PTR( FLA_ONE );
   dcomplex* buff_m1 = FLA_DOUBLE_COMPLEX_PTR( FLA_MINUS_ONE );
-  integer       min_m_n = min( m_A, n_A );
+  integer       min_m_n = fla_min( m_A, n_A );
   integer       i;
 
   for ( i = 0; i < min_m_n; ++i )

@@ -107,7 +107,7 @@ FLA_Error FLA_Bsvd_find_converged_ops( integer       m_A,
 
         // Update mu and sminl.
         mu     = fabsf( *delta2 ) * ( mu / ( mu + fabsf( *epsilon1 ) ) );
-        *sminl = min( *sminl, mu );
+        *sminl = fla_min( *sminl, mu );
     }
 
     // Return with no convergence found.
@@ -162,7 +162,7 @@ FLA_Error FLA_Bsvd_find_converged_opd( integer       m_A,
 
         // Update mu and sminl.
         mu     = fabs( *delta2 ) * ( mu / ( mu + fabs( *epsilon1 ) ) );
-        *sminl = min( *sminl, mu );
+        *sminl = fla_min( *sminl, mu );
     }
 
     // Return with no convergence found.

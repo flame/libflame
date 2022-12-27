@@ -221,7 +221,7 @@ int ztpcon_(char *norm, char *uplo, char *diag, integer *n, doublecomplex *ap, d
         return 0;
     }
     *rcond = 0.;
-    smlnum = dlamch_("Safe minimum") * (doublereal) max(1,*n);
+    smlnum = dlamch_("Safe minimum") * (doublereal) fla_max(1,*n);
     /* Compute the norm of the triangular matrix A. */
     anorm = zlantp_(norm, uplo, diag, n, &ap[1], &rwork[1]);
     /* Continue only if ANORM > 0. */

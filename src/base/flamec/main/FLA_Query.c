@@ -152,14 +152,14 @@ dim_t FLA_Obj_vector_inc( FLA_Obj obj )
 
 dim_t FLA_Obj_min_dim( FLA_Obj obj )
 {
-  return min( obj.m, obj.n );
+  return fla_min( obj.m, obj.n );
 }
 
 
 
 dim_t FLA_Obj_max_dim( FLA_Obj obj )
 {
-  return max( obj.m, obj.n );
+  return fla_max( obj.m, obj.n );
 }
 
 

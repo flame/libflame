@@ -49,7 +49,7 @@
 /* > A is COMPLEX array, dimension (LDA,N) */
 /* > On entry, the m by n matrix A. */
 /* > On exit, the elements on and below the diagonal of the array */
-/* > contain the m by min(m,n) lower trapezoidal matrix L (L is */
+/* > contain the m by fla_min(m,n) lower trapezoidal matrix L (L is */
 /* > lower triangular if m <= n);
 the elements above the diagonal, */
 /* > with the array TAU, represent the unitary matrix Q as a */
@@ -59,12 +59,12 @@ the elements above the diagonal, */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] TAU */
 /* > \verbatim */
-/* > TAU is COMPLEX array, dimension (min(M,N)) */
+/* > TAU is COMPLEX array, dimension (fla_min(M,N)) */
 /* > The scalar factors of the elementary reflectors (see Further */
 /* > Details). */
 /* > \endverbatim */
@@ -95,7 +95,7 @@ the elements above the diagonal, */
 /* > */
 /* > The matrix Q is represented as a product of elementary reflectors */
 /* > */
-/* > Q = H(k)**H . . . H(2)**H H(1)**H, where k = min(m,n). */
+/* > Q = H(k)**H . . . H(2)**H H(1)**H, where k = fla_min(m,n). */
 /* > */
 /* > Each H(i) has the form */
 /* > */
@@ -163,7 +163,7 @@ int cgelq2_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
@@ -174,7 +174,7 @@ int cgelq2_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
-    k = min(*m,*n);
+    k = fla_min(*m,*n);
     i__1 = k;
     for (i__ = 1;
             i__ <= i__1;
@@ -189,7 +189,7 @@ int cgelq2_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
         i__2 = *n - i__ + 1;
         /* Computing MIN */
         i__3 = i__ + 1;
-        clarfg_(&i__2, &alpha, &a[i__ + min(i__3,*n) * a_dim1], lda, &tau[i__] );
+        clarfg_(&i__2, &alpha, &a[i__ + fla_min(i__3,*n) * a_dim1], lda, &tau[i__] );
         if (i__ < *m)
         {
             /* Apply H(i) to A(i+1:m,i:n) from the right */

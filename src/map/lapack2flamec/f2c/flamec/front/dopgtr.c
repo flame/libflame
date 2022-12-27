@@ -77,7 +77,7 @@
 /* > \param[in] LDQ */
 /* > \verbatim */
 /* > LDQ is INTEGER */
-/* > The leading dimension of the array Q. LDQ >= max(1,N). */
+/* > The leading dimension of the array Q. LDQ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -151,7 +151,7 @@ int dopgtr_(char *uplo, integer *n, doublereal *ap, doublereal *tau, doublereal 
     {
         *info = -2;
     }
-    else if (*ldq < max(1,*n))
+    else if (*ldq < fla_max(1,*n))
     {
         *info = -6;
     }

@@ -118,7 +118,7 @@ A23 is L-by-L upper triangular if M-K-L >= 0, */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -132,7 +132,7 @@ A23 is L-by-L upper triangular if M-K-L >= 0, */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,P). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,P). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] TOLA */
@@ -177,7 +177,7 @@ A23 is L-by-L upper triangular if M-K-L >= 0, */
 /* > \param[in] LDU */
 /* > \verbatim */
 /* > LDU is INTEGER */
-/* > The leading dimension of the array U. LDU >= max(1,M) if */
+/* > The leading dimension of the array U. LDU >= fla_max(1,M) if */
 /* > JOBU = 'U';
 LDU >= 1 otherwise. */
 /* > \endverbatim */
@@ -192,7 +192,7 @@ LDU >= 1 otherwise. */
 /* > \param[in] LDV */
 /* > \verbatim */
 /* > LDV is INTEGER */
-/* > The leading dimension of the array V. LDV >= max(1,P) if */
+/* > The leading dimension of the array V. LDV >= fla_max(1,P) if */
 /* > JOBV = 'V';
 LDV >= 1 otherwise. */
 /* > \endverbatim */
@@ -207,7 +207,7 @@ LDV >= 1 otherwise. */
 /* > \param[in] LDQ */
 /* > \verbatim */
 /* > LDQ is INTEGER */
-/* > The leading dimension of the array Q. LDQ >= max(1,N) if */
+/* > The leading dimension of the array Q. LDQ >= fla_max(1,N) if */
 /* > JOBQ = 'Q';
 LDQ >= 1 otherwise. */
 /* > \endverbatim */
@@ -224,7 +224,7 @@ LDQ >= 1 otherwise. */
 /* > */
 /* > \param[out] WORK */
 /* > \verbatim */
-/* > WORK is DOUBLE PRECISION array, dimension (max(3*N,M,P)) */
+/* > WORK is DOUBLE PRECISION array, dimension (fla_max(3*N,M,P)) */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -334,11 +334,11 @@ int dggsvp_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     {
         *info = -6;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -8;
     }
-    else if (*ldb < max(1,*p))
+    else if (*ldb < fla_max(1,*p))
     {
         *info = -10;
     }
@@ -376,7 +376,7 @@ int dggsvp_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     dlapmt_(&forwrd, m, n, &a[a_offset], lda, &iwork[1]);
     /* Determine the effective rank of matrix B. */
     *l = 0;
-    i__1 = min(*p,*n);
+    i__1 = fla_min(*p,*n);
     for (i__ = 1;
             i__ <= i__1;
             ++i__)
@@ -396,7 +396,7 @@ int dggsvp_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
             i__1 = *p - 1;
             dlacpy_("Lower", &i__1, n, &b[b_dim1 + 2], ldb, &v[v_dim1 + 2], ldv);
         }
-        i__1 = min(*p,*n);
+        i__1 = fla_min(*p,*n);
         dorg2r_(p, p, &i__1, &v[v_offset], ldv, &tau[1], &work[1], info);
     }
     /* Clean up B */
@@ -476,7 +476,7 @@ int dggsvp_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     /* Computing MIN */
     i__2 = *m;
     i__3 = *n - *l; // , expr subst
-    i__1 = min(i__2,i__3);
+    i__1 = fla_min(i__2,i__3);
     for (i__ = 1;
             i__ <= i__1;
             ++i__)
@@ -491,7 +491,7 @@ int dggsvp_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     /* Computing MIN */
     i__2 = *m;
     i__3 = *n - *l; // , expr subst
-    i__1 = min(i__2,i__3);
+    i__1 = fla_min(i__2,i__3);
     dorm2r_("Left", "Transpose", m, l, &i__1, &a[a_offset], lda, &tau[1], &a[( *n - *l + 1) * a_dim1 + 1], lda, &work[1], info);
     if (wantu)
     {
@@ -506,7 +506,7 @@ int dggsvp_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
         /* Computing MIN */
         i__2 = *m;
         i__3 = *n - *l; // , expr subst
-        i__1 = min(i__2,i__3);
+        i__1 = fla_min(i__2,i__3);
         dorg2r_(m, m, &i__1, &u[u_offset], ldu, &tau[1], &work[1], info);
     }
     if (wantq)
@@ -579,7 +579,7 @@ int dggsvp_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
             i__1 = *m - *k;
             /* Computing MIN */
             i__3 = *m - *k;
-            i__2 = min(i__3,*l);
+            i__2 = fla_min(i__3,*l);
             dorm2r_("Right", "No transpose", m, &i__1, &i__2, &a[*k + 1 + (*n - *l + 1) * a_dim1], lda, &tau[1], &u[(*k + 1) * u_dim1 + 1], ldu, &work[1], info);
         }
         /* Clean up */

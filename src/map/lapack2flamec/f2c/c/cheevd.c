@@ -89,7 +89,7 @@ static real c_b18 = 1.f;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] W */
@@ -303,7 +303,7 @@ int cheevd_(char *jobz, char *uplo, integer *n, complex *a, integer *lda, real *
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
@@ -337,7 +337,7 @@ int cheevd_(char *jobz, char *uplo, integer *n, complex *a, integer *lda, real *
             /* Computing MAX */
             i__1 = lwmin;
             i__2 = *n + ilaenv_(&c__1, "CHETRD", uplo, n, &c_n1, &c_n1, &c_n1); // , expr subst
-            lopt = max(i__1,i__2);
+            lopt = fla_max(i__1,i__2);
             lropt = lrwmin;
             liopt = liwmin;
         }

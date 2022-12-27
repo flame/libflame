@@ -115,7 +115,7 @@ int main(int argc, char *argv[])
     if( m < 0 ) m = p * f2c_abs(m_input);
     if( n < 0 ) n = p * f2c_abs(n_input);
 
-    min_m_n = min( m, n );
+    min_m_n = fla_min( m, n );
 
     for ( variant = 0; variant < n_variants; variant++ ){
       

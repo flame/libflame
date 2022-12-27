@@ -79,7 +79,7 @@ static doublereal c_b24 = 1.;
 /* > \param[in] LDZ */
 /* > \verbatim */
 /* > LDZ is INTEGER */
-/* > The leading dimension of the array Z. LDA >= max(1, N). */
+/* > The leading dimension of the array Z. LDA >= fla_max(1, N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] RHS */

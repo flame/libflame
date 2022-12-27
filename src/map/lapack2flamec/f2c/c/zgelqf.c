@@ -54,7 +54,7 @@ static integer c__2 = 2;
 /* > A is COMPLEX*16 array, dimension (LDA,N) */
 /* > On entry, the M-by-N matrix A. */
 /* > On exit, the elements on and below the diagonal of the array */
-/* > contain the m-by-min(m,n) lower trapezoidal matrix L (L is */
+/* > contain the m-by-fla_min(m,n) lower trapezoidal matrix L (L is */
 /* > lower triangular if m <= n);
 the elements above the diagonal, */
 /* > with the array TAU, represent the unitary matrix Q as a */
@@ -64,12 +64,12 @@ the elements above the diagonal, */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] TAU */
 /* > \verbatim */
-/* > TAU is COMPLEX*16 array, dimension (min(M,N)) */
+/* > TAU is COMPLEX*16 array, dimension (fla_min(M,N)) */
 /* > The scalar factors of the elementary reflectors (see Further */
 /* > Details). */
 /* > \endverbatim */
@@ -83,7 +83,7 @@ the elements above the diagonal, */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,M). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,M). */
 /* > For optimum performance LWORK >= M*NB, where NB is the */
 /* > optimal blocksize. */
 /* > */
@@ -115,7 +115,7 @@ the routine */
 /* > */
 /* > The matrix Q is represented as a product of elementary reflectors */
 /* > */
-/* > Q = H(k)**H . . . H(2)**H H(1)**H, where k = min(m,n). */
+/* > Q = H(k)**H . . . H(2)**H H(1)**H, where k = fla_min(m,n). */
 /* > */
 /* > Each H(i) has the form */
 /* > */
@@ -188,11 +188,11 @@ int zgelqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
-    else if (*lwork < max(1,*m) && ! lquery)
+    else if (*lwork < fla_max(1,*m) && ! lquery)
     {
         *info = -7;
     }
@@ -209,7 +209,7 @@ int zgelqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
         return 0;
     }
     /* Quick return if possible */
-    k = min(*m,*n);
+    k = fla_min(*m,*n);
     if (k == 0)
     {
         work[1].r = 1.;
@@ -226,7 +226,7 @@ int zgelqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
         /* Computing MAX */
         i__1 = 0;
         i__2 = ilaenv_(&c__3, "ZGELQF", " ", m, n, &c_n1, &c_n1); // , expr subst
-        nx = max(i__1,i__2);
+        nx = fla_max(i__1,i__2);
         if (nx < k)
         {
             /* Determine if workspace is large enough for blocked code. */
@@ -240,7 +240,7 @@ int zgelqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
                 /* Computing MAX */
                 i__1 = 2;
                 i__2 = ilaenv_(&c__2, "ZGELQF", " ", m, n, &c_n1, & c_n1); // , expr subst
-                nbmin = max(i__1,i__2);
+                nbmin = fla_max(i__1,i__2);
             }
         }
     }
@@ -255,7 +255,7 @@ int zgelqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
         {
             /* Computing MIN */
             i__3 = k - i__ + 1;
-            ib = min(i__3,nb);
+            ib = fla_min(i__3,nb);
             /* Compute the LQ factorization of the current block */
             /* A(i:i+ib-1,i:n) */
             i__3 = *n - i__ + 1;

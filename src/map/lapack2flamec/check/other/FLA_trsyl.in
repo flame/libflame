@@ -15,9 +15,9 @@
   else if (*sgn != 1 && *sgn != -1)         *info = -3;                 \
   else if (*m < 0)                          *info = -4;                 \
   else if (*n < 0)                          *info = -5;                 \
-  else if (*ldim_A < max(1,*m))             *info = -7;                 \
-  else if (*ldim_B < max(1,*n))             *info = -9;                 \
-  else if (*ldim_C < max(1,*m))             *info = -11;                \
+  else if (*ldim_A < fla_max(1,*m))             *info = -7;                 \
+  else if (*ldim_B < fla_max(1,*n))             *info = -9;                 \
+  else if (*ldim_C < fla_max(1,*m))             *info = -11;                \
                                                                         \
   if (*info != 0) {                                                     \
     e_val = -(*info);                                                   \

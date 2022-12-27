@@ -102,7 +102,7 @@ static logical c_true = TRUE_;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max( 1, N ). */
+/* > The leading dimension of the array A. LDA >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -113,7 +113,7 @@ static logical c_true = TRUE_;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max( 1, N ). */
+/* > The leading dimension of the array B. LDB >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] Q */
@@ -196,7 +196,7 @@ static logical c_true = TRUE_;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,N). */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
 the routine */
@@ -307,7 +307,7 @@ int claqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     /* Computing MIN */
     i__1 = *nw;
     i__2 = *ihi - *ilo + 1; // , expr subst
-    jw = min(i__1,i__2);
+    jw = fla_min(i__1,i__2);
     kwtop = *ihi - jw + 1;
     if (kwtop == *ilo)
     {
@@ -332,9 +332,9 @@ int claqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     /* Computing 2nd power */
     i__3 = *nw;
     i__1 = lworkreq, i__2 = *n * *nw;
-    i__1 = max(i__1,i__2);
+    i__1 = fla_max(i__1,i__2);
     i__2 = (i__3 * i__3 << 1) + *n; // ; expr subst
-    lworkreq = max(i__1,i__2);
+    lworkreq = fla_max(i__1,i__2);
     if (*lwork == -1)
     {
         /* workspace query, quick return */
@@ -374,7 +374,7 @@ int claqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
         /* Computing MAX */
         r__1 = smlnum;
         r__2 = ulp * c_abs(&a[kwtop + kwtop * a_dim1]); // , expr subst
-        if (c_abs(&s) <= max(r__1,r__2))
+        if (c_abs(&s) <= fla_max(r__1,r__2))
         {
             *ns = 0;
             *nd = 1;
@@ -435,7 +435,7 @@ int claqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
             q__1.i = s.r * qc[ i__1].i + s.i * qc[i__1].r; // , expr subst
             /* Computing MAX */
             r__1 = ulp * tempr;
-            if (c_abs(&q__1) <= max(r__1,smlnum))
+            if (c_abs(&q__1) <= fla_max(r__1,smlnum))
             {
                 /* Deflatable */
                 --kwbot;
@@ -506,7 +506,7 @@ int claqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
             /* Computing MAX */
             i__2 = kwtop;
             i__3 = k - 1; // , expr subst
-            k2 = max(i__2,i__3);
+            k2 = fla_max(i__2,i__3);
             i__2 = *ihi - k2 + 1;
             crot_(&i__2, &a[k + k2 * a_dim1], lda, &a[k + 1 + k2 * a_dim1], lda, &c1, &s1);
             i__2 = *ihi - (k - 1) + 1;

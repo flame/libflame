@@ -20,7 +20,7 @@ function [ B_out ] = FLA_Trmm_llt_blk_var1( A, B, nb_alg )
 
   while ( size( ATL, 1 ) < size( A, 1 ) )
 
-    b = min( size( ABR, 1 ), nb_alg );
+    b = fla_min( size( ABR, 1 ), nb_alg );
 
     [ A00, A01, A02, ...
       A10, A11, A12, ...

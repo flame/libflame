@@ -88,7 +88,7 @@
 /* > LDA is INTEGER */
 /* > On entry, LDA specifies the first dimension of A as declared */
 /* > in the calling (sub) program. LDA must be at least */
-/* > max( 1, N ). */
+/* > fla_max( 1, N ). */
 /* > Unchanged on exit. */
 /* > \endverbatim */
 /* > */
@@ -194,7 +194,7 @@ int zsymv_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *a, integ
     {
         info = 2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         info = 5;
     }

@@ -47,7 +47,7 @@ FLA_Error FLA_Bsvd_external( FLA_Uplo uplo, FLA_Obj d, FLA_Obj e, FLA_Obj U, FLA
   inc_d    = FLA_Obj_vector_inc( d );
   inc_e    = FLA_Obj_vector_inc( e );
 
-  lrwork   = max( 1, 4 * min_m_n - 4 );
+  lrwork   = fla_max( 1, 4 * min_m_n - 4 );
   FLA_Obj_create( dt_real, lrwork, 1, 0, 0, &rwork );
 
   FLA_Param_map_flame_to_netlib_uplo( uplo, &blas_uplo );

@@ -139,7 +139,7 @@ void libfla_test_caqrutinc_experiment( test_params_t params,
 		libfla_test_caqrutinc_impl( impl, p, A_test, ATW_test, R_test, RTW_test );
 		
 		time = FLA_Clock() - time;
-		time_min = min( time_min, time );
+		time_min = fla_min( time_min, time );
 	}
 
 	// Perform a linear solve with the result.

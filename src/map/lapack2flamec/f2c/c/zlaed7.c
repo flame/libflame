@@ -82,7 +82,7 @@ static integer c_n1 = -1;
 /* > \verbatim */
 /* > CUTPNT is INTEGER */
 /* > Contains the location of the last eigenvalue in the leading */
-/* > sub-matrix. min(1,N) <= CUTPNT <= N. */
+/* > sub-matrix. fla_min(1,N) <= CUTPNT <= N. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] QSIZ */
@@ -130,7 +130,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDQ */
 /* > \verbatim */
 /* > LDQ is INTEGER */
-/* > The leading dimension of the array Q. LDQ >= max(1,N). */
+/* > The leading dimension of the array Q. LDQ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] RHO */
@@ -294,7 +294,7 @@ int zlaed7_(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, integer 
     {
         *info = -1;
     }
-    else if (min(1,*n) > *cutpnt || *n < *cutpnt)
+    else if (fla_min(1,*n) > *cutpnt || *n < *cutpnt)
     {
         *info = -2;
     }
@@ -302,7 +302,7 @@ int zlaed7_(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, integer 
     {
         *info = -3;
     }
-    else if (*ldq < max(1,*n))
+    else if (*ldq < fla_max(1,*n))
     {
         *info = -9;
     }

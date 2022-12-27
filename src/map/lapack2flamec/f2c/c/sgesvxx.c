@@ -171,7 +171,7 @@ see the definitions of the FACT and EQUED options. */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] AF */
@@ -195,7 +195,7 @@ see the definitions of the FACT and EQUED options. */
 /* > \param[in] LDAF */
 /* > \verbatim */
 /* > LDAF is INTEGER */
-/* > The leading dimension of the array AF. LDAF >= max(1,N). */
+/* > The leading dimension of the array AF. LDAF >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] IPIV */
@@ -289,7 +289,7 @@ if EQUED = 'N' or 'R', C */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] X */
@@ -305,7 +305,7 @@ if EQUED = 'N' or 'R', C */
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(1,N). */
+/* > The leading dimension of the array X. LDX >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RCOND */
@@ -654,11 +654,11 @@ int sgesvxx_(char *fact, char *trans, integer *n, integer * nrhs, real *a, integ
     {
         *info = -4;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -6;
     }
-    else if (*ldaf < max(1,*n))
+    else if (*ldaf < fla_max(1,*n))
     {
         *info = -8;
     }
@@ -680,11 +680,11 @@ int sgesvxx_(char *fact, char *trans, integer *n, integer * nrhs, real *a, integ
                 /* Computing MIN */
                 r__1 = rcmin;
                 r__2 = r__[j]; // , expr subst
-                rcmin = min(r__1,r__2);
+                rcmin = fla_min(r__1,r__2);
                 /* Computing MAX */
                 r__1 = rcmax;
                 r__2 = r__[j]; // , expr subst
-                rcmax = max(r__1,r__2);
+                rcmax = fla_max(r__1,r__2);
                 /* L10: */
             }
             if (rcmin <= 0.f)
@@ -693,7 +693,7 @@ int sgesvxx_(char *fact, char *trans, integer *n, integer * nrhs, real *a, integ
             }
             else if (*n > 0)
             {
-                rowcnd = max(rcmin,smlnum) / min(rcmax,bignum);
+                rowcnd = fla_max(rcmin,smlnum) / fla_min(rcmax,bignum);
             }
             else
             {
@@ -712,11 +712,11 @@ int sgesvxx_(char *fact, char *trans, integer *n, integer * nrhs, real *a, integ
                 /* Computing MIN */
                 r__1 = rcmin;
                 r__2 = c__[j]; // , expr subst
-                rcmin = min(r__1,r__2);
+                rcmin = fla_min(r__1,r__2);
                 /* Computing MAX */
                 r__1 = rcmax;
                 r__2 = c__[j]; // , expr subst
-                rcmax = max(r__1,r__2);
+                rcmax = fla_max(r__1,r__2);
                 /* L20: */
             }
             if (rcmin <= 0.f)
@@ -725,7 +725,7 @@ int sgesvxx_(char *fact, char *trans, integer *n, integer * nrhs, real *a, integ
             }
             else if (*n > 0)
             {
-                colcnd = max(rcmin,smlnum) / min(rcmax,bignum);
+                colcnd = fla_max(rcmin,smlnum) / fla_min(rcmax,bignum);
             }
             else
             {
@@ -734,11 +734,11 @@ int sgesvxx_(char *fact, char *trans, integer *n, integer * nrhs, real *a, integ
         }
         if (*info == 0)
         {
-            if (*ldb < max(1,*n))
+            if (*ldb < fla_max(1,*n))
             {
                 *info = -14;
             }
-            else if (*ldx < max(1,*n))
+            else if (*ldx < fla_max(1,*n))
             {
                 *info = -16;
             }

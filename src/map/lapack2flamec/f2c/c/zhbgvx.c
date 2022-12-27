@@ -110,9 +110,9 @@ static integer c__1 = 1;
 /* > matrix A, stored in the first ka+1 rows of the array. The */
 /* > j-th column of A is stored in the j-th column of the array AB */
 /* > as follows: */
-/* > if UPLO = 'U', AB(ka+1+i-j,j) = A(i,j) for max(1,j-ka)<=i<=j;
+/* > if UPLO = 'U', AB(ka+1+i-j,j) = A(i,j) for fla_max(1,j-ka)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(n,j+ka). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(n,j+ka). */
 /* > */
 /* > On exit, the contents of AB are destroyed. */
 /* > \endverbatim */
@@ -130,9 +130,9 @@ static integer c__1 = 1;
 /* > matrix B, stored in the first kb+1 rows of the array. The */
 /* > j-th column of B is stored in the j-th column of the array BB */
 /* > as follows: */
-/* > if UPLO = 'U', BB(kb+1+i-j,j) = B(i,j) for max(1,j-kb)<=i<=j;
+/* > if UPLO = 'U', BB(kb+1+i-j,j) = B(i,j) for fla_max(1,j-kb)<=i<=j;
 */
-/* > if UPLO = 'L', BB(1+i-j,j) = B(i,j) for j<=i<=min(n,j+kb). */
+/* > if UPLO = 'L', BB(1+i-j,j) = B(i,j) for j<=i<=fla_min(n,j+kb). */
 /* > */
 /* > On exit, the factor S from the split Cholesky factorization */
 /* > B = S**H*S, as returned by ZPBSTF. */
@@ -157,7 +157,7 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > LDQ is INTEGER */
 /* > The leading dimension of the array Q. If JOBZ = 'N', */
-/* > LDQ >= 1. If JOBZ = 'V', LDQ >= max(1,N). */
+/* > LDQ >= 1. If JOBZ = 'V', LDQ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] VL */
@@ -198,7 +198,7 @@ IL = 1 and IU = 0 if N = 0. */
 /* > when it is determined to lie in an interval [a,b] */
 /* > of width less than or equal to */
 /* > */
-/* > ABSTOL + EPS * max( |a|,|b| ) , */
+/* > ABSTOL + EPS * fla_max( |a|,|b| ) , */
 /* > */
 /* > where EPS is the machine precision. If ABSTOL is less than */
 /* > or equal to zero, then EPS*|T| will be used in its place, */
@@ -421,11 +421,11 @@ int zhbgvx_(char *jobz, char *range, char *uplo, integer *n, integer *ka, intege
         }
         else if (indeig)
         {
-            if (*il < 1 || *il > max(1,*n))
+            if (*il < 1 || *il > fla_max(1,*n))
             {
                 *info = -15;
             }
-            else if (*iu < min(*n,*il) || *iu > *n)
+            else if (*iu < fla_min(*n,*il) || *iu > *n)
             {
                 *info = -16;
             }

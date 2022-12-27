@@ -52,7 +52,7 @@ static integer c__2 = 2;
 /* > A is REAL array, dimension (LDA,N) */
 /* > On entry, the M-by-N matrix A. */
 /* > On exit, the elements on and below the diagonal of the array */
-/* > contain the M-by-min(M,N) lower trapezoidal matrix L */
+/* > contain the M-by-fla_min(M,N) lower trapezoidal matrix L */
 /* > (L is lower triangular if M <= N);
 */
 /* > the elements above the diagonal are used to store part of the */
@@ -62,7 +62,7 @@ static integer c__2 = 2;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] T */
@@ -229,7 +229,7 @@ int sgelq_(integer *m, integer *n, real *a, integer *lda, real *t, integer *tsiz
         }
     }
     /* Determine the block size */
-    if (min(*m,*n) > 0)
+    if (fla_min(*m,*n) > 0)
     {
         mb = ilaenv_(&c__1, "SGELQ ", " ", m, n, &c__1, &c_n1);
         nb = ilaenv_(&c__1, "SGELQ ", " ", m, n, &c__2, &c_n1);
@@ -239,7 +239,7 @@ int sgelq_(integer *m, integer *n, real *a, integer *lda, real *t, integer *tsiz
         mb = 1;
         nb = *n;
     }
-    if (mb > min(*m,*n) || mb < 1)
+    if (mb > fla_min(*m,*n) || mb < 1)
     {
         mb = 1;
     }
@@ -268,12 +268,12 @@ int sgelq_(integer *m, integer *n, real *a, integer *lda, real *t, integer *tsiz
     /* Computing MAX */
     i__1 = 1;
     i__2 = mb * *m * nblcks + 5; // , expr subst
-    if ((*tsize < max(i__1,i__2) || *lwork < mb * *m) && *lwork >= *m && * tsize >= mintsz && ! lquery)
+    if ((*tsize < fla_max(i__1,i__2) || *lwork < mb * *m) && *lwork >= *m && * tsize >= mintsz && ! lquery)
     {
         /* Computing MAX */
         i__1 = 1;
         i__2 = mb * *m * nblcks + 5; // , expr subst
-        if (*tsize < max(i__1,i__2))
+        if (*tsize < fla_max(i__1,i__2))
         {
             lminws = TRUE_;
             mb = 1;
@@ -293,7 +293,7 @@ int sgelq_(integer *m, integer *n, real *a, integer *lda, real *t, integer *tsiz
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
@@ -302,7 +302,7 @@ int sgelq_(integer *m, integer *n, real *a, integer *lda, real *t, integer *tsiz
         /* Computing MAX */
         i__1 = 1;
         i__2 = mb * *m * nblcks + 5; // , expr subst
-        if (*tsize < max(i__1,i__2) && ! lquery && ! lminws)
+        if (*tsize < fla_max(i__1,i__2) && ! lquery && ! lminws)
         {
             *info = -6;
         }
@@ -311,7 +311,7 @@ int sgelq_(integer *m, integer *n, real *a, integer *lda, real *t, integer *tsiz
             /* Computing MAX */
             i__1 = 1;
             i__2 = *m * mb; // , expr subst
-            if (*lwork < max(i__1,i__2) && ! lquery && ! lminws)
+            if (*lwork < fla_max(i__1,i__2) && ! lquery && ! lminws)
             {
                 *info = -8;
             }
@@ -331,14 +331,14 @@ int sgelq_(integer *m, integer *n, real *a, integer *lda, real *t, integer *tsiz
         t[3] = (real) nb;
         if (minw)
         {
-            work[1] = (real) max(1,*n);
+            work[1] = (real) fla_max(1,*n);
         }
         else
         {
             /* Computing MAX */
             i__1 = 1;
             i__2 = mb * *m; // , expr subst
-            work[1] = (real) max(i__1,i__2);
+            work[1] = (real) fla_max(i__1,i__2);
         }
     }
     if (*info != 0)
@@ -352,7 +352,7 @@ int sgelq_(integer *m, integer *n, real *a, integer *lda, real *t, integer *tsiz
         return 0;
     }
     /* Quick return if possible */
-    if (min(*m,*n) == 0)
+    if (fla_min(*m,*n) == 0)
     {
         return 0;
     }
@@ -368,7 +368,7 @@ int sgelq_(integer *m, integer *n, real *a, integer *lda, real *t, integer *tsiz
     /* Computing MAX */
     i__1 = 1;
     i__2 = mb * *m; // , expr subst
-    work[1] = (real) max(i__1,i__2);
+    work[1] = (real) fla_max(i__1,i__2);
     return 0;
     /* End of SGELQ */
 }

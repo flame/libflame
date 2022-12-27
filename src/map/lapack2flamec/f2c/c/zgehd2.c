@@ -54,7 +54,7 @@ static integer c__1 = 1;
 /* > set by a previous call to ZGEBAL;
 otherwise they should be */
 /* > set to 1 and N respectively. See Further Details. */
-/* > 1 <= ILO <= IHI <= max(1,N). */
+/* > 1 <= ILO <= IHI <= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] A */
@@ -71,7 +71,7 @@ otherwise they should be */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] TAU */
@@ -184,15 +184,15 @@ int zgehd2_(integer *n, integer *ilo, integer *ihi, doublecomplex *a, integer *l
     {
         *info = -1;
     }
-    else if (*ilo < 1 || *ilo > max(1,*n))
+    else if (*ilo < 1 || *ilo > fla_max(1,*n))
     {
         *info = -2;
     }
-    else if (*ihi < min(*ilo,*n) || *ihi > *n)
+    else if (*ihi < fla_min(*ilo,*n) || *ihi > *n)
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
@@ -215,7 +215,7 @@ int zgehd2_(integer *n, integer *ilo, integer *ihi, doublecomplex *a, integer *l
         i__2 = *ihi - i__;
         /* Computing MIN */
         i__3 = i__ + 2;
-        zlarfg_(&i__2, &alpha, &a[min(i__3,*n) + i__ * a_dim1], &c__1, &tau[ i__]);
+        zlarfg_(&i__2, &alpha, &a[fla_min(i__3,*n) + i__ * a_dim1], &c__1, &tau[ i__]);
         i__2 = i__ + 1 + i__ * a_dim1;
         a[i__2].r = 1.;
         a[i__2].i = 0.; // , expr subst

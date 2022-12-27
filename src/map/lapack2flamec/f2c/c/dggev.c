@@ -94,7 +94,7 @@ static doublereal c_b37 = 1.;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of A. LDA >= max(1,N). */
+/* > The leading dimension of A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -107,7 +107,7 @@ static doublereal c_b37 = 1.;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of B. LDB >= max(1,N). */
+/* > The leading dimension of B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ALPHAR */
@@ -189,7 +189,7 @@ if positive, then the j-th and */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,8*N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,8*N). */
 /* > For good performance, LWORK must generally be larger. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -351,11 +351,11 @@ int dggev_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -7;
     }
@@ -379,21 +379,21 @@ int dggev_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n << 3; // , expr subst
-        minwrk = max(i__1,i__2);
+        minwrk = fla_max(i__1,i__2);
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n * (ilaenv_(&c__1, "DGEQRF", " ", n, &c__1, n, & c__0) + 7); // , expr subst
-        maxwrk = max(i__1,i__2);
+        maxwrk = fla_max(i__1,i__2);
         /* Computing MAX */
         i__1 = maxwrk;
         i__2 = *n * (ilaenv_(&c__1, "DORMQR", " ", n, &c__1, n, &c__0) + 7); // , expr subst
-        maxwrk = max(i__1,i__2);
+        maxwrk = fla_max(i__1,i__2);
         if (ilvl)
         {
             /* Computing MAX */
             i__1 = maxwrk;
             i__2 = *n * (ilaenv_(&c__1, "DORGQR", " ", n, & c__1, n, &c_n1) + 7); // , expr subst
-            maxwrk = max(i__1,i__2);
+            maxwrk = fla_max(i__1,i__2);
         }
         work[1] = (doublereal) maxwrk;
         if (*lwork < minwrk && ! lquery)
@@ -595,7 +595,7 @@ int dggev_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
                         /* Computing MAX */
                         d__2 = temp;
                         d__3 = (d__1 = vl[jr + jc * vl_dim1], f2c_dabs(d__1)); // , expr subst
-                        temp = max(d__2,d__3);
+                        temp = fla_max(d__2,d__3);
                         /* L10: */
                     }
                 }
@@ -609,7 +609,7 @@ int dggev_(char *jobvl, char *jobvr, integer *n, doublereal * a, integer *lda, d
                         /* Computing MAX */
                         d__3 = temp;
                         d__4 = (d__1 = vl[jr + jc * vl_dim1], f2c_dabs(d__1)) + (d__2 = vl[jr + (jc + 1) * vl_dim1], f2c_dabs(d__2)); // , expr subst
-                        temp = max(d__3,d__4);
+                        temp = fla_max(d__3,d__4);
                         /* L20: */
                     }
                 }
@@ -668,7 +668,7 @@ L50:
                         /* Computing MAX */
                         d__2 = temp;
                         d__3 = (d__1 = vr[jr + jc * vr_dim1], f2c_dabs(d__1)); // , expr subst
-                        temp = max(d__2,d__3);
+                        temp = fla_max(d__2,d__3);
                         /* L60: */
                     }
                 }
@@ -682,7 +682,7 @@ L50:
                         /* Computing MAX */
                         d__3 = temp;
                         d__4 = (d__1 = vr[jr + jc * vr_dim1], f2c_dabs(d__1)) + (d__2 = vr[jr + (jc + 1) * vr_dim1], f2c_dabs(d__2)); // , expr subst
-                        temp = max(d__3,d__4);
+                        temp = fla_max(d__3,d__4);
                         /* L70: */
                     }
                 }

@@ -64,9 +64,9 @@
 /* > matrix A, stored in the first KD+1 rows of the array. The */
 /* > j-th column of A is stored in the j-th column of the array AB */
 /* > as follows: */
-/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j;
+/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(n,j+kd). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(n,j+kd). */
 /* > */
 /* > On exit, if INFO = 0, the triangular factor U or L from the */
 /* > Cholesky factorization A = U**H *U or A = L*L**H of the band */
@@ -196,7 +196,7 @@ int zlaqhb_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
                 i__2 = 1;
                 i__3 = j - *kd; // , expr subst
                 i__4 = j - 1;
-                for (i__ = max(i__2,i__3);
+                for (i__ = fla_max(i__2,i__3);
                         i__ <= i__4;
                         ++i__)
                 {
@@ -234,7 +234,7 @@ int zlaqhb_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
                 /* Computing MIN */
                 i__2 = *n;
                 i__3 = j + *kd; // , expr subst
-                i__4 = min(i__2,i__3);
+                i__4 = fla_min(i__2,i__3);
                 for (i__ = j + 1;
                         i__ <= i__4;
                         ++i__)

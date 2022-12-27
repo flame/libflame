@@ -91,8 +91,8 @@ doublereal dlapy2_(doublereal *x, doublereal *y)
     {
         xabs = f2c_abs(*x);
         yabs = f2c_abs(*y);
-        w = max(xabs,yabs);
-        z__ = min(xabs,yabs);
+        w = fla_max(xabs,yabs);
+        z__ = fla_min(xabs,yabs);
         if (z__ == 0. || w > hugeval)
         {
             ret_val = w;

@@ -95,7 +95,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] SDIM */
@@ -138,7 +138,7 @@ if */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,2*N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,2*N). */
 /* > For good performance, LWORK must generally be larger. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -284,7 +284,7 @@ int zgees_(char *jobvs, char *sort, L_fp select, integer *n, doublecomplex *a, i
     {
         *info = -4;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -6;
     }
@@ -317,15 +317,15 @@ int zgees_(char *jobvs, char *sort, L_fp select, integer *n, doublecomplex *a, i
             hswork = (integer) work[1].r;
             if (! wantvs)
             {
-                maxwrk = max(maxwrk,hswork);
+                maxwrk = fla_max(maxwrk,hswork);
             }
             else
             {
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + (*n - 1) * ilaenv_(&c__1, "ZUNGHR", " ", n, &c__1, n, &c_n1); // , expr subst
-                maxwrk = max(i__1,i__2);
-                maxwrk = max(maxwrk,hswork);
+                maxwrk = fla_max(i__1,i__2);
+                maxwrk = fla_max(maxwrk,hswork);
             }
         }
         work[1].r = (doublereal) maxwrk;

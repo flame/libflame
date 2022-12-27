@@ -503,13 +503,13 @@ int dbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     d__3 = 100.;
     d__4 = pow_dd(&eps, &c_b10); // , expr subst
     d__1 = 10.;
-    d__2 = min(d__3,d__4); // , expr subst
-    tolmul = max(d__1,d__2);
+    d__2 = fla_min(d__3,d__4); // , expr subst
+    tolmul = fla_max(d__1,d__2);
     tol = tolmul * eps;
     /* Computing MAX */
     d__1 = tol;
     d__2 = *q * 6 * *q * unfl; // , expr subst
-    thresh = max(d__1,d__2);
+    thresh = fla_max(d__1,d__2);
     /* Test for negligible sines or cosines */
     i__1 = *q;
     for (i__ = 1;

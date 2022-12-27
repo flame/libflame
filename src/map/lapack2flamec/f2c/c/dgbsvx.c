@@ -144,7 +144,7 @@ static integer c__1 = 1;
 /* > On entry, the matrix A in band storage, in rows 1 to KL+KU+1. */
 /* > The j-th column of A is stored in the j-th column of the */
 /* > array AB as follows: */
-/* > AB(KU+1+i-j,j) = A(i,j) for max(1,j-KU)<=i<=min(N,j+kl) */
+/* > AB(KU+1+i-j,j) = A(i,j) for fla_max(1,j-KU)<=i<=fla_min(N,j+kl) */
 /* > */
 /* > If FACT = 'F' and EQUED is not 'N', then A must have been */
 /* > equilibrated by the scaling factors in R and/or C. AB is not */
@@ -264,7 +264,7 @@ if EQUED = 'N' or 'R', C */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] X */
@@ -281,7 +281,7 @@ if EQUED = 'N' or 'R', C */
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(1,N). */
+/* > The leading dimension of the array X. LDX >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RCOND */
@@ -507,11 +507,11 @@ int dgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
                 /* Computing MIN */
                 d__1 = rcmin;
                 d__2 = r__[j]; // , expr subst
-                rcmin = min(d__1,d__2);
+                rcmin = fla_min(d__1,d__2);
                 /* Computing MAX */
                 d__1 = rcmax;
                 d__2 = r__[j]; // , expr subst
-                rcmax = max(d__1,d__2);
+                rcmax = fla_max(d__1,d__2);
                 /* L10: */
             }
             if (rcmin <= 0.)
@@ -520,7 +520,7 @@ int dgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
             }
             else if (*n > 0)
             {
-                rowcnd = max(rcmin,smlnum) / min(rcmax,bignum);
+                rowcnd = fla_max(rcmin,smlnum) / fla_min(rcmax,bignum);
             }
             else
             {
@@ -539,11 +539,11 @@ int dgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
                 /* Computing MIN */
                 d__1 = rcmin;
                 d__2 = c__[j]; // , expr subst
-                rcmin = min(d__1,d__2);
+                rcmin = fla_min(d__1,d__2);
                 /* Computing MAX */
                 d__1 = rcmax;
                 d__2 = c__[j]; // , expr subst
-                rcmax = max(d__1,d__2);
+                rcmax = fla_max(d__1,d__2);
                 /* L20: */
             }
             if (rcmin <= 0.)
@@ -552,7 +552,7 @@ int dgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
             }
             else if (*n > 0)
             {
-                colcnd = max(rcmin,smlnum) / min(rcmax,bignum);
+                colcnd = fla_max(rcmin,smlnum) / fla_min(rcmax,bignum);
             }
             else
             {
@@ -561,11 +561,11 @@ int dgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
         }
         if (*info == 0)
         {
-            if (*ldb < max(1,*n))
+            if (*ldb < fla_max(1,*n))
             {
                 *info = -16;
             }
-            else if (*ldx < max(1,*n))
+            else if (*ldx < fla_max(1,*n))
             {
                 *info = -18;
             }
@@ -640,10 +640,10 @@ int dgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
         {
             /* Computing MAX */
             i__2 = j - *ku;
-            j1 = max(i__2,1);
+            j1 = fla_max(i__2,1);
             /* Computing MIN */
             i__2 = j + *kl;
-            j2 = min(i__2,*n);
+            j2 = fla_min(i__2,*n);
             i__2 = j2 - j1 + 1;
             dcopy_(&i__2, &ab[*ku + 1 - j + j1 + j * ab_dim1], &c__1, &afb[* kl + *ku + 1 - j + j1 + j * afb_dim1], &c__1);
             /* L70: */
@@ -665,15 +665,15 @@ int dgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
                 /* Computing MIN */
                 i__4 = *n + *ku + 1 - j;
                 i__5 = *kl + *ku + 1; // , expr subst
-                i__3 = min(i__4,i__5);
-                for (i__ = max(i__2,1);
+                i__3 = fla_min(i__4,i__5);
+                for (i__ = fla_max(i__2,1);
                         i__ <= i__3;
                         ++i__)
                 {
                     /* Computing MAX */
                     d__2 = anorm;
                     d__3 = (d__1 = ab[i__ + j * ab_dim1], f2c_dabs( d__1)); // , expr subst
-                    anorm = max(d__2,d__3);
+                    anorm = fla_max(d__2,d__3);
                     /* L80: */
                 }
                 /* L90: */
@@ -681,11 +681,11 @@ int dgbsvx_(char *fact, char *trans, integer *n, integer *kl, integer *ku, integ
             /* Computing MIN */
             i__3 = *info - 1;
             i__2 = *kl + *ku; // , expr subst
-            i__1 = min(i__3,i__2);
+            i__1 = fla_min(i__3,i__2);
             /* Computing MAX */
             i__4 = 1;
             i__5 = *kl + *ku + 2 - *info; // , expr subst
-            rpvgrw = dlantb_("M", "U", "N", info, &i__1, &afb[max(i__4,i__5) + afb_dim1], ldafb, &work[1]);
+            rpvgrw = dlantb_("M", "U", "N", info, &i__1, &afb[fla_max(i__4,i__5) + afb_dim1], ldafb, &work[1]);
             if (rpvgrw == 0.)
             {
                 rpvgrw = 1.;

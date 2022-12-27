@@ -104,7 +104,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] E */
@@ -144,7 +144,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -158,7 +158,7 @@ static integer c_n1 = -1;
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The length of WORK. LWORK >= 1. For best performance */
-/* > of factorization stage LWORK >= max(1,N*NB), where NB is */
+/* > of factorization stage LWORK >= fla_max(1,N*NB), where NB is */
 /* > the optimal blocksize for DSYTRF_RK. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -280,11 +280,11 @@ int ssysv_rk_(char *uplo, integer *n, integer *nrhs, real * a, integer *lda, rea
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -9;
     }

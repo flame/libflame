@@ -31,7 +31,7 @@ FLA_Error REF_Axpy_sync_pipeline( FLA_Obj alpha, FLA_Obj X, FLA_Obj B )
 
   for( j = 0; j < x_n; j += nb_alg )
   {
-    b = min( x_n-j, nb_alg );
+    b = fla_min( x_n-j, nb_alg );
 
     /*------------------------------------------------------------*/
 

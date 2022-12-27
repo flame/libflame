@@ -67,8 +67,8 @@ int csyrk_(char *uplo, char *trans, integer *n, integer *k, complex *alpha, comp
     /* LDA - INTEGER. */
     /* On entry, LDA specifies the first dimension of A as declared */
     /* in the calling (sub) program. When TRANS = 'N' or 'n' */
-    /* then LDA must be at least max( 1, n ), otherwise LDA must */
-    /* be at least max( 1, k ). */
+    /* then LDA must be at least fla_max( 1, n ), otherwise LDA must */
+    /* be at least fla_max( 1, k ). */
     /* Unchanged on exit. */
     /* BETA - COMPLEX . */
     /* On entry, BETA specifies the scalar beta. */
@@ -89,7 +89,7 @@ int csyrk_(char *uplo, char *trans, integer *n, integer *k, complex *alpha, comp
     /* LDC - INTEGER. */
     /* On entry, LDC specifies the first dimension of C as declared */
     /* in the calling (sub) program. LDC must be at least */
-    /* max( 1, n ). */
+    /* fla_max( 1, n ). */
     /* Unchanged on exit. */
     /* Level 3 Blas routine. */
     /* -- Written on 8-February-1989. */
@@ -139,11 +139,11 @@ int csyrk_(char *uplo, char *trans, integer *n, integer *k, complex *alpha, comp
     {
         info = 4;
     }
-    else if (*lda < max(1,nrowa))
+    else if (*lda < fla_max(1,nrowa))
     {
         info = 7;
     }
-    else if (*ldc < max(1,*n))
+    else if (*ldc < fla_max(1,*n))
     {
         info = 10;
     }

@@ -74,7 +74,7 @@ static integer c__2 = 2;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The first dimension of the array A. LDA >= max(1,M). */
+/* > The first dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] TAU */
@@ -93,7 +93,7 @@ static integer c__2 = 2;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,N). */
 /* > For optimum performance LWORK >= N*NB, where NB is the */
 /* > optimal blocksize. */
 /* > */
@@ -166,7 +166,7 @@ int zungqr_fla(integer *m, integer *n, integer *k, doublecomplex *a, integer *ld
     /* Function Body */
     *info = 0;
     nb = ilaenv_(&c__1, "ZUNGQR", " ", m, n, k, &c_n1);
-    lwkopt = max(1,*n) * nb;
+    lwkopt = fla_max(1,*n) * nb;
     work[1].r = (doublereal) lwkopt;
     work[1].i = 0.; // , expr subst
     lquery = *lwork == -1;
@@ -182,11 +182,11 @@ int zungqr_fla(integer *m, integer *n, integer *k, doublecomplex *a, integer *ld
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }
-    else if (*lwork < max(1,*n) && ! lquery)
+    else if (*lwork < fla_max(1,*n) && ! lquery)
     {
         *info = -8;
     }
@@ -216,7 +216,7 @@ int zungqr_fla(integer *m, integer *n, integer *k, doublecomplex *a, integer *ld
         /* Computing MAX */
         i__1 = 0;
         i__2 = ilaenv_(&c__3, "ZUNGQR", " ", m, n, k, &c_n1); // , expr subst
-        nx = max(i__1,i__2);
+        nx = fla_max(i__1,i__2);
         if (nx < *k)
         {
             /* Determine if workspace is large enough for blocked code. */
@@ -230,7 +230,7 @@ int zungqr_fla(integer *m, integer *n, integer *k, doublecomplex *a, integer *ld
                 /* Computing MAX */
                 i__1 = 2;
                 i__2 = ilaenv_(&c__2, "ZUNGQR", " ", m, n, k, &c_n1); // , expr subst
-                nbmin = max(i__1,i__2);
+                nbmin = fla_max(i__1,i__2);
             }
         }
     }
@@ -242,7 +242,7 @@ int zungqr_fla(integer *m, integer *n, integer *k, doublecomplex *a, integer *ld
         /* Computing MIN */
         i__1 = *k;
         i__2 = ki + nb; // , expr subst
-        kk = min(i__1,i__2);
+        kk = fla_min(i__1,i__2);
         /* Set A(1:kk,kk+1:n) to zero. */
         i__1 = *n;
         for (j = kk + 1;
@@ -285,7 +285,7 @@ int zungqr_fla(integer *m, integer *n, integer *k, doublecomplex *a, integer *ld
             /* Computing MIN */
             i__2 = nb;
             i__3 = *k - i__ + 1; // , expr subst
-            ib = min(i__2,i__3);
+            ib = fla_min(i__2,i__3);
             if (i__ + ib <= *n)
             {
                 /* Form the triangular factor of the block reflector */

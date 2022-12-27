@@ -45,7 +45,7 @@ FLA_Error FLA_SA_FS_blk( FLA_Obj L,
 
   while ( FLA_Obj_length( LT ) < FLA_Obj_length( L ) )
   {
-    b = min( FLA_Obj_length( LB ), nb_alg );
+    b = fla_min( FLA_Obj_length( LB ), nb_alg );
 
     FLA_Repart_2x1_to_3x1( LT,                &L0, 
                         /* ** */            /* ** */

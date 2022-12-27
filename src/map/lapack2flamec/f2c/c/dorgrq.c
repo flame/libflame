@@ -74,7 +74,7 @@ static integer c__2 = 2;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The first dimension of the array A. LDA >= max(1,M). */
+/* > The first dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] TAU */
@@ -93,7 +93,7 @@ static integer c__2 = 2;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,M). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,M). */
 /* > For optimum performance LWORK >= M*NB, where NB is the */
 /* > optimal blocksize. */
 /* > */
@@ -175,7 +175,7 @@ int dorgrq_(integer *m, integer *n, integer *k, doublereal * a, integer *lda, do
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }
@@ -191,7 +191,7 @@ int dorgrq_(integer *m, integer *n, integer *k, doublereal * a, integer *lda, do
             lwkopt = *m * nb;
         }
         work[1] = (doublereal) lwkopt;
-        if (*lwork < max(1,*m) && ! lquery)
+        if (*lwork < fla_max(1,*m) && ! lquery)
         {
             *info = -8;
         }
@@ -223,7 +223,7 @@ int dorgrq_(integer *m, integer *n, integer *k, doublereal * a, integer *lda, do
         /* Computing MAX */
         i__1 = 0;
         i__2 = ilaenv_(&c__3, "DORGRQ", " ", m, n, k, &c_n1); // , expr subst
-        nx = max(i__1,i__2);
+        nx = fla_max(i__1,i__2);
         if (nx < *k)
         {
             /* Determine if workspace is large enough for blocked code. */
@@ -237,7 +237,7 @@ int dorgrq_(integer *m, integer *n, integer *k, doublereal * a, integer *lda, do
                 /* Computing MAX */
                 i__1 = 2;
                 i__2 = ilaenv_(&c__2, "DORGRQ", " ", m, n, k, &c_n1); // , expr subst
-                nbmin = max(i__1,i__2);
+                nbmin = fla_max(i__1,i__2);
             }
         }
     }
@@ -248,7 +248,7 @@ int dorgrq_(integer *m, integer *n, integer *k, doublereal * a, integer *lda, do
         /* Computing MIN */
         i__1 = *k;
         i__2 = (*k - nx + nb - 1) / nb * nb; // , expr subst
-        kk = min(i__1,i__2);
+        kk = fla_min(i__1,i__2);
         /* Set A(1:m-kk,n-kk+1:n) to zero. */
         i__1 = *n;
         for (j = *n - kk + 1;
@@ -287,7 +287,7 @@ int dorgrq_(integer *m, integer *n, integer *k, doublereal * a, integer *lda, do
             /* Computing MIN */
             i__3 = nb;
             i__4 = *k - i__ + 1; // , expr subst
-            ib = min(i__3,i__4);
+            ib = fla_min(i__3,i__4);
             ii = *m - *k + i__;
             if (ii > 1)
             {

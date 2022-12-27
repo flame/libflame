@@ -16,7 +16,7 @@ function [ X ] = Symm_ll_blk_var10( alpha, A, B, C, nb )
   [ CL, CR ] = FLA_Part_1x2( C, 0, 'FLA_RIGHT' );
 
   while( size( CR, 2 ) ~= size( C, 2 ) )
-     b = min( size( CL, 2 ), nb );
+     b = fla_min( size( CL, 2 ), nb );
 
     [ C0, C1, C2 ] = FLA_Repart_1x2_to_1x3( CL, CR,
 					    b, 'FLA_LEFT' );

@@ -30,7 +30,7 @@ int cgebrd_check(integer *m, integer *n, scomplex *a, integer *lda, real *d__, r
     /* Computing MAX */
     i__1 = 1;
     i__2 = ilaenv_(&c__1, "CGEBRD", " ", m, n, &c_n1, &c_n1); // , expr subst
-    nb = max(i__1,i__2);
+    nb = fla_max(i__1,i__2);
     lwkopt = (*m + *n) * nb;
     r__1 = (real) lwkopt;
     work[1].real = r__1;
@@ -44,15 +44,15 @@ int cgebrd_check(integer *m, integer *n, scomplex *a, integer *lda, real *d__, r
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
     else /* if(complicated condition) */
     {
         /* Computing MAX */
-        i__1 = max(1,*m);
-        if (*lwork < max(i__1,*n) && ! lquery)
+        i__1 = fla_max(1,*m);
+        if (*lwork < fla_max(i__1,*n) && ! lquery)
         {
             *info = -10;
         }
@@ -68,7 +68,7 @@ int cgebrd_check(integer *m, integer *n, scomplex *a, integer *lda, real *d__, r
         return LAPACK_QUERY_RETURN;
     }
     /* Quick return if possible */
-    minmn = min(*m,*n);
+    minmn = fla_min(*m,*n);
     if (minmn == 0)
     {
         work[1].real = 1.f;

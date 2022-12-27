@@ -69,7 +69,7 @@ geqpf_float_parameters:: geqpf_float_parameters (int matrix_layout_i, lapack_int
 	/*Memory allocation */
 	lapacke_gtest_alloc_float_buffer_pair(&A, &Aref, bufsize);
 	lapacke_gtest_alloc_int_buffer_pair(&jpvt, &jpvtref, jpvt_size);
-	lapacke_gtest_alloc_float_buffer_pair(&tau, &tauref, (min(m,n)*sizeof(float)));	
+	lapacke_gtest_alloc_float_buffer_pair(&tau, &tauref, (fla_min(m,n)*sizeof(float)));	
 	if ((A==NULL) || (Aref==NULL) || \
 		(tau==NULL) || (tauref==NULL) || \
 		(jpvt == NULL)|| (jpvtref == NULL)){
@@ -82,7 +82,7 @@ geqpf_float_parameters:: geqpf_float_parameters (int matrix_layout_i, lapack_int
 	lapacke_gtest_init_int_buffer_pair_rand( jpvt, jpvtref, jpvt_size);
 
 	/*initialize output matrix by 0 */
-	for(i=0;i<(min(m,n));i++) {
+	for(i=0;i<(fla_min(m,n));i++) {
 		tau[i] = 0;
 		tauref[i] = tau[i];
 	}
@@ -234,7 +234,7 @@ geqpf_double_parameters:: geqpf_double_parameters (int matrix_layout_i, lapack_i
 	/*Memory allocation */
 	lapacke_gtest_alloc_double_buffer_pair(&A, &Aref, bufsize);
 	lapacke_gtest_alloc_int_buffer_pair(&jpvt, &jpvtref, jpvt_size);
-	lapacke_gtest_alloc_double_buffer_pair(&tau, &tauref, (min(m,n)*sizeof(double)));	
+	lapacke_gtest_alloc_double_buffer_pair(&tau, &tauref, (fla_min(m,n)*sizeof(double)));	
 	if ((A==NULL) || (Aref==NULL) || \
 		(tau==NULL) || (tauref==NULL) || \
 		(jpvt == NULL)|| (jpvtref == NULL)){
@@ -246,7 +246,7 @@ geqpf_double_parameters:: geqpf_double_parameters (int matrix_layout_i, lapack_i
 	lapacke_gtest_init_double_buffer_pair_rand( A, Aref, bufsize);
 	lapacke_gtest_init_int_buffer_pair_rand( jpvt, jpvtref, jpvt_size);
 	/*initialize output matrix by 0 */
-	for(i=0;i<(min(m,n));i++) {
+	for(i=0;i<(fla_min(m,n));i++) {
 		tau[i] = 0;
 		tauref[i] = tau[i];
 	}

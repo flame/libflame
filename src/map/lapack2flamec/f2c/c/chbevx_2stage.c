@@ -110,9 +110,9 @@ static integer c__1 = 1;
 /* > matrix A, stored in the first KD+1 rows of the array. The */
 /* > j-th column of A is stored in the j-th column of the array AB */
 /* > as follows: */
-/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j;
+/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(n,j+kd). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(n,j+kd). */
 /* > */
 /* > On exit, AB is overwritten by values generated during the */
 /* > reduction to tridiagonal form. */
@@ -136,7 +136,7 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > LDQ is INTEGER */
 /* > The leading dimension of the array Q. If JOBZ = 'V', then */
-/* > LDQ >= max(1,N). */
+/* > LDQ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] VL */
@@ -183,7 +183,7 @@ IL = 1 and IU = 0 if N = 0. */
 /* > when it is determined to lie in an interval [a,b] */
 /* > of width less than or equal to */
 /* > */
-/* > ABSTOL + EPS * max( |a|,|b| ) , */
+/* > ABSTOL + EPS * fla_max( |a|,|b| ) , */
 /* > */
 /* > where EPS is the machine precision. If ABSTOL is less than */
 /* > or equal to zero, then EPS*|T| will be used in its place, */
@@ -217,7 +217,7 @@ IL = 1 and IU = 0 if N = 0. */
 /* > */
 /* > \param[out] Z */
 /* > \verbatim */
-/* > Z is COMPLEX array, dimension (LDZ, max(1,M)) */
+/* > Z is COMPLEX array, dimension (LDZ, fla_max(1,M)) */
 /* > If JOBZ = 'V', then if INFO = 0, the first M columns of Z */
 /* > contain the orthonormal eigenvectors of the matrix A */
 /* > corresponding to the selected eigenvalues, with the i-th */
@@ -226,7 +226,7 @@ IL = 1 and IU = 0 if N = 0. */
 /* > contains the latest approximation to the eigenvector, and the */
 /* > index of the eigenvector is returned in IFAIL. */
 /* > If JOBZ = 'N', then Z is not referenced. */
-/* > Note: the user must ensure that at least max(1,M) columns are */
+/* > Note: the user must ensure that at least fla_max(1,M) columns are */
 /* > supplied in the array Z;
 if RANGE = 'V', the exact value of M */
 /* > is not known in advance and an upper bound must be used. */
@@ -236,7 +236,7 @@ if RANGE = 'V', the exact value of M */
 /* > \verbatim */
 /* > LDZ is INTEGER */
 /* > The leading dimension of the array Z. LDZ >= 1, and if */
-/* > JOBZ = 'V', LDZ >= max(1,N). */
+/* > JOBZ = 'V', LDZ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -474,7 +474,7 @@ int chbevx_2stage_(char *jobz, char *range, char *uplo, integer *n, integer *kd,
     {
         *info = -7;
     }
-    else if (wantz && *ldq < max(1,*n))
+    else if (wantz && *ldq < fla_max(1,*n))
     {
         *info = -9;
     }
@@ -489,11 +489,11 @@ int chbevx_2stage_(char *jobz, char *range, char *uplo, integer *n, integer *kd,
         }
         else if (indeig)
         {
-            if (*il < 1 || *il > max(1,*n))
+            if (*il < 1 || *il > fla_max(1,*n))
             {
                 *info = -12;
             }
-            else if (*iu < min(*n,*il) || *iu > *n)
+            else if (*iu < fla_min(*n,*il) || *iu > *n)
             {
                 *info = -13;
             }
@@ -592,7 +592,7 @@ int chbevx_2stage_(char *jobz, char *range, char *uplo, integer *n, integer *kd,
     /* Computing MIN */
     r__1 = sqrt(bignum);
     r__2 = 1.f / sqrt(sqrt(safmin)); // , expr subst
-    rmax = min(r__1,r__2);
+    rmax = fla_min(r__1,r__2);
     /* Scale matrix to allowable range, if necessary. */
     iscale = 0;
     abstll = *abstol;

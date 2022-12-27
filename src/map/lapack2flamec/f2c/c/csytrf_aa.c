@@ -88,7 +88,7 @@ static complex c_b19 =
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] IPIV */
@@ -205,7 +205,7 @@ int csytrf_aa_(char *uplo, integer *n, complex *a, integer * lda, integer *ipiv,
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }
@@ -214,7 +214,7 @@ int csytrf_aa_(char *uplo, integer *n, complex *a, integer * lda, integer *ipiv,
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n << 1; // , expr subst
-        if (*lwork < max(i__1,i__2) && ! lquery)
+        if (*lwork < fla_max(i__1,i__2) && ! lquery)
         {
             *info = -7;
         }
@@ -280,17 +280,17 @@ L10:
         j1 = j + 1;
         /* Computing MIN */
         i__1 = *n - j1 + 1;
-        jb = min(i__1,nb);
-        k1 = max(1,j) - j;
+        jb = fla_min(i__1,nb);
+        k1 = fla_max(1,j) - j;
         /* Panel factorization */
         i__1 = 2 - k1;
         i__2 = *n - j;
-        clasyf_aa_(uplo, &i__1, &i__2, &jb, &a[max(1,j) + (j + 1) * a_dim1], lda, &ipiv[j + 1], &work[1], n, &work[*n * nb + 1]) ;
+        clasyf_aa_(uplo, &i__1, &i__2, &jb, &a[fla_max(1,j) + (j + 1) * a_dim1], lda, &ipiv[j + 1], &work[1], n, &work[*n * nb + 1]) ;
         /* Adjust IPIV and apply it back (J-th step picks (J+1)-th pivot) */
         /* Computing MIN */
         i__2 = *n;
         i__3 = j + jb + 1; // , expr subst
-        i__1 = min(i__2,i__3);
+        i__1 = fla_min(i__2,i__3);
         for (j2 = j + 2;
                 j2 <= i__1;
                 ++j2)
@@ -346,7 +346,7 @@ L10:
                     /* Computing MIN */
                     i__3 = nb;
                     i__4 = *n - j2 + 1; // , expr subst
-                    nj = min(i__3,i__4);
+                    nj = fla_min(i__3,i__4);
                     /* Update (J2, J2) diagonal block with CGEMV */
                     j3 = j2;
                     for (mj = nj - 1;
@@ -400,17 +400,17 @@ L11:
         j1 = j + 1;
         /* Computing MIN */
         i__2 = *n - j1 + 1;
-        jb = min(i__2,nb);
-        k1 = max(1,j) - j;
+        jb = fla_min(i__2,nb);
+        k1 = fla_max(1,j) - j;
         /* Panel factorization */
         i__2 = 2 - k1;
         i__1 = *n - j;
-        clasyf_aa_(uplo, &i__2, &i__1, &jb, &a[j + 1 + max(1,j) * a_dim1], lda, &ipiv[j + 1], &work[1], n, &work[*n * nb + 1]) ;
+        clasyf_aa_(uplo, &i__2, &i__1, &jb, &a[j + 1 + fla_max(1,j) * a_dim1], lda, &ipiv[j + 1], &work[1], n, &work[*n * nb + 1]) ;
         /* Adjust IPIV and apply it back (J-th step picks (J+1)-th pivot) */
         /* Computing MIN */
         i__1 = *n;
         i__3 = j + jb + 1; // , expr subst
-        i__2 = min(i__1,i__3);
+        i__2 = fla_min(i__1,i__3);
         for (j2 = j + 2;
                 j2 <= i__2;
                 ++j2)
@@ -466,7 +466,7 @@ L11:
                     /* Computing MIN */
                     i__3 = nb;
                     i__4 = *n - j2 + 1; // , expr subst
-                    nj = min(i__3,i__4);
+                    nj = fla_min(i__3,i__4);
                     /* Update (J2, J2) diagonal block with CGEMV */
                     j3 = j2;
                     for (mj = nj - 1;

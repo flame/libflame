@@ -119,7 +119,7 @@ e_{
 /* > */
 /* > \param[in] E */
 /* > \verbatim */
-/* > E is REAL array, dimension (max(1,N-1)) */
+/* > E is REAL array, dimension (fla_max(1,N-1)) */
 /* > The (n-1) superdiagonal elements of the bidiagonal matrix */
 /* > B in elements 1 to N-1. */
 /* > \endverbatim */
@@ -145,7 +145,7 @@ e_{
 /* > IL is INTEGER */
 /* > If RANGE='I', the index of the */
 /* > smallest singular value to be returned. */
-/* > 1 <= IL <= IU <= min(M,N), if min(M,N) > 0. */
+/* > 1 <= IL <= IU <= fla_min(M,N), if fla_min(M,N) > 0. */
 /* > Not referenced if RANGE = 'A' or 'V'. */
 /* > \endverbatim */
 /* > */
@@ -154,7 +154,7 @@ e_{
 /* > IU is INTEGER */
 /* > If RANGE='I', the index of the */
 /* > largest singular value to be returned. */
-/* > 1 <= IL <= IU <= min(M,N), if min(M,N) > 0. */
+/* > 1 <= IL <= IU <= fla_min(M,N), if fla_min(M,N) > 0. */
 /* > Not referenced if RANGE = 'A' or 'V'. */
 /* > \endverbatim */
 /* > */
@@ -192,7 +192,7 @@ if RANGE = 'V', the exact value of */
 /* > \verbatim */
 /* > LDZ is INTEGER */
 /* > The leading dimension of the array Z. LDZ >= 1, and if */
-/* > JOBZ = 'V', LDZ >= max(2,N*2). */
+/* > JOBZ = 'V', LDZ >= fla_max(2,N*2). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -357,11 +357,11 @@ int sbdsvdx_(char *uplo, char *jobz, char *range, integer *n, real *d__, real *e
         }
         else if (indsv)
         {
-            if (*il < 1 || *il > max(1,*n))
+            if (*il < 1 || *il > fla_max(1,*n))
             {
                 *info = -9;
             }
-            else if (*iu < min(*n,*il) || *iu > *n)
+            else if (*iu < fla_min(*n,*il) || *iu > *n)
             {
                 *info = -10;
             }
@@ -423,8 +423,8 @@ int sbdsvdx_(char *uplo, char *jobz, char *range, integer *n, real *d__, real *e
     r__3 = 100.f;
     r__4 = pow_dd(&d__1, &c_b14); // , expr subst
     r__1 = 10.f;
-    r__2 = min(r__3,r__4); // , expr subst
-    tol = max(r__1,r__2) * eps;
+    r__2 = fla_min(r__3,r__4); // , expr subst
+    tol = fla_max(r__1,r__2) * eps;
     /* Compute approximate maximum, minimum singular values. */
     i__ = isamax_(n, &d__[1], &c__1);
     smax = (r__1 = d__[i__], f2c_abs(r__1));
@@ -433,7 +433,7 @@ int sbdsvdx_(char *uplo, char *jobz, char *range, integer *n, real *d__, real *e
     /* Computing MAX */
     r__2 = smax;
     r__3 = (r__1 = e[i__], f2c_abs(r__1)); // , expr subst
-    smax = max(r__2,r__3);
+    smax = fla_max(r__2,r__3);
     /* Compute threshold for neglecting D's and E's. */
     smin = f2c_dabs(d__[1]);
     if (smin != 0.f)
@@ -445,7 +445,7 @@ int sbdsvdx_(char *uplo, char *jobz, char *range, integer *n, real *d__, real *e
                 ++i__)
         {
             mu = (r__2 = d__[i__], f2c_abs(r__2)) * (mu / (mu + (r__1 = e[i__ - 1], f2c_abs(r__1))));
-            smin = min(smin,mu);
+            smin = fla_min(smin,mu);
             if (smin == 0.f)
             {
                 goto L2;
@@ -574,7 +574,7 @@ L2:
         i__1 = *n << 1;
         sstevx_("N", "I", &i__1, &work[idtgk], &work[ietgk], &vutgk, &vutgk, & iutgk, &iutgk, &abstol, ns, &s[1], &z__[z_offset], ldz, &work[ itemp], &iwork[iiwork], &iwork[iifail], info);
         vutgk = s[1] + smax * 2.f * ulp * *n;
-        vutgk = min(vutgk,0.f);
+        vutgk = fla_min(vutgk,0.f);
         /* If VLTGK=VUTGK, SSTEVX returns an error message, */
         /* so if needed we change VUTGK slightly. */
         if (vltgk == vutgk)
@@ -738,7 +738,7 @@ L2:
                         /* Computing MAX */
                         r__1 = d1;
                         r__2 = s[j1 - 1 + isbeg]; // , expr subst
-                        d1 = max(r__1,r__2);
+                        d1 = fla_max(r__1,r__2);
                     }
                     emin = f2c_dabs(d1);
                     if (nsl > 0 && wantz)
@@ -778,7 +778,7 @@ L2:
                         /* Computing MIN */
                         i__4 = nsl - 1;
                         i__5 = nru - 1; // , expr subst
-                        i__3 = min(i__4,i__5);
+                        i__3 = fla_min(i__4,i__5);
                         for (i__ = 0;
                                 i__ <= i__3;
                                 ++i__)
@@ -809,7 +809,7 @@ L2:
                         /* Computing MIN */
                         i__4 = nsl - 1;
                         i__5 = nrv - 1; // , expr subst
-                        i__3 = min(i__4,i__5);
+                        i__3 = fla_min(i__4,i__5);
                         for (i__ = 0;
                                 i__ <= i__3;
                                 ++i__)
@@ -859,7 +859,7 @@ L2:
                         }
                     }
                     /* ** WANTZ **! */
-                    nsl = min(nsl,nru);
+                    nsl = fla_min(nsl,nru);
                     sveq0 = FALSE_;
                     /* Absolute values of the eigenvalues of TGK. */
                     i__3 = nsl - 1;

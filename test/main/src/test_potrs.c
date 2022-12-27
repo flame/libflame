@@ -209,7 +209,7 @@ void prepare_potrs_run(char* uplo,
         invoke_potrs(uplo, datatype, &n, A_save, &lda, &nrhs, B_test, &ldb, &info);
         exe_time = fla_test_clock() - exe_time;
         /* Get the best execution time */
-        time_min = min(time_min, exe_time);
+        time_min = fla_min(time_min, exe_time);
     }
     copy_matrix(datatype, "full", n, nrhs, B_test, ldb, B, ldb);
     *time_min_ = time_min;

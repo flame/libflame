@@ -434,11 +434,11 @@ int dlarrd_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
             *info = -5;
         }
     }
-    else if (irange == 3 && (*il < 1 || *il > max(1,*n)))
+    else if (irange == 3 && (*il < 1 || *il > fla_max(1,*n)))
     {
         *info = -6;
     }
-    else if (irange == 3 && (*iu < min(*n,*il) || *iu > *n))
+    else if (irange == 3 && (*iu < fla_min(*n,*il) || *iu > *n))
     {
         *info = -7;
     }
@@ -500,25 +500,25 @@ int dlarrd_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
         /* Computing MIN */
         d__1 = gl;
         d__2 = gers[(i__ << 1) - 1]; // , expr subst
-        gl = min(d__1,d__2);
+        gl = fla_min(d__1,d__2);
         /* Computing MAX */
         d__1 = gu;
         d__2 = gers[i__ * 2]; // , expr subst
-        gu = max(d__1,d__2);
+        gu = fla_max(d__1,d__2);
         /* L5: */
     }
     /* Compute global Gerschgorin bounds and spectral diameter */
     /* Computing MAX */
     d__1 = f2c_abs(gl);
     d__2 = f2c_abs(gu); // , expr subst
-    tnorm = max(d__1,d__2);
+    tnorm = fla_max(d__1,d__2);
     gl = gl - tnorm * 2. * eps * *n - *pivmin * 4.;
     gu = gu + tnorm * 2. * eps * *n + *pivmin * 4.;
     /* [JAN/28/2009] remove the line below since SPDIAM variable not use */
     /* SPDIAM = GU - GL */
     /* Input arguments for DLAEBZ: */
     /* The relative tolerance. An interval (a,b] lies within */
-    /* "relative tolerance" if b-a < RELTOL*max(|a|,|b|), */
+    /* "relative tolerance" if b-a < RELTOL*fla_max(|a|,|b|), */
     rtoli = *reltol;
     /* Set the absolute tolerance for interval convergence to zero to force */
     /* interval convergence based on relative size of the interval. */
@@ -692,11 +692,11 @@ int dlarrd_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
                 /* Computing MIN */
                 d__1 = gl;
                 d__2 = gers[(j << 1) - 1]; // , expr subst
-                gl = min(d__1,d__2);
+                gl = fla_min(d__1,d__2);
                 /* Computing MAX */
                 d__1 = gu;
                 d__2 = gers[j * 2]; // , expr subst
-                gu = max(d__1,d__2);
+                gu = fla_max(d__1,d__2);
                 /* L40: */
             }
             /* [JAN/28/2009] */
@@ -717,8 +717,8 @@ int dlarrd_(char *range, char *order, integer *n, doublereal *vl, doublereal *vu
                     goto L70;
                 }
                 /* refine search interval if possible, only range (WL,WU] matters */
-                gl = max(gl,*wl);
-                gu = min(gu,*wu);
+                gl = fla_max(gl,*wl);
+                gu = fla_min(gu,*wu);
                 if (gl >= gu)
                 {
                     goto L70;

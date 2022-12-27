@@ -32,7 +32,7 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
     --iwork;
     /* Function Body */
     *info = 0;
-    minmn = min(*m,*n);
+    minmn = fla_min(*m,*n);
     mnthr1 = (integer) (minmn * 17. / 9.);
     mnthr2 = (integer) (minmn * 5. / 3.);
     wntqa = lsame_(jobz, "A");
@@ -54,7 +54,7 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }
@@ -93,7 +93,7 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*n << 1) + (*n << 1) * ilaenv_(& c__1, "ZGEBRD", " ", n, n, &c_n1, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     minwrk = *n * 3;
                 }
                 else if (wntqo)
@@ -103,19 +103,19 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n + *n * ilaenv_(&c__1, "ZUNGQR", " ", m, n, n, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = (*n << 1) + (*n << 1) * ilaenv_(& c__1, "ZGEBRD", " ", n, n, &c_n1, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = (*n << 1) + *n * ilaenv_(&c__1, "ZUNMBR", "QLN", n, n, n, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = (*n << 1) + *n * ilaenv_(&c__1, "ZUNMBR", "PRC", n, n, n, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     maxwrk = *m * *n + *n * *n + wrkbl;
                     minwrk = (*n << 1) * *n + *n * 3;
                 }
@@ -126,19 +126,19 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n + *n * ilaenv_(&c__1, "ZUNGQR", " ", m, n, n, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = (*n << 1) + (*n << 1) * ilaenv_(& c__1, "ZGEBRD", " ", n, n, &c_n1, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = (*n << 1) + *n * ilaenv_(&c__1, "ZUNMBR", "QLN", n, n, n, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = (*n << 1) + *n * ilaenv_(&c__1, "ZUNMBR", "PRC", n, n, n, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     maxwrk = *n * *n + wrkbl;
                     minwrk = *n * *n + *n * 3;
                 }
@@ -149,19 +149,19 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n + *m * ilaenv_(&c__1, "ZUNGQR", " ", m, m, n, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = (*n << 1) + (*n << 1) * ilaenv_(& c__1, "ZGEBRD", " ", n, n, &c_n1, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = (*n << 1) + *n * ilaenv_(&c__1, "ZUNMBR", "QLN", n, n, n, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = (*n << 1) + *n * ilaenv_(&c__1, "ZUNMBR", "PRC", n, n, n, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     maxwrk = *n * *n + wrkbl;
                     minwrk = *n * *n + (*n << 1) + *m;
                 }
@@ -176,11 +176,11 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*n << 1) + *n * ilaenv_(&c__1, "ZUNGBR", "P", n, n, n, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*n << 1) + *n * ilaenv_(&c__1, "ZUNGBR", "Q", m, n, n, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     maxwrk += *m * *n;
                     minwrk += *n * *n;
                 }
@@ -189,22 +189,22 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*n << 1) + *n * ilaenv_(&c__1, "ZUNGBR", "P", n, n, n, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*n << 1) + *n * ilaenv_(&c__1, "ZUNGBR", "Q", m, n, n, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                 }
                 else if (wntqa)
                 {
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*n << 1) + *n * ilaenv_(&c__1, "ZUNGBR", "P", n, n, n, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*n << 1) + *m * ilaenv_(&c__1, "ZUNGBR", "Q", m, m, n, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                 }
             }
             else
@@ -217,11 +217,11 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*n << 1) + *n * ilaenv_(&c__1, "ZUNMBR", "PRC", n, n, n, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*n << 1) + *n * ilaenv_(&c__1, "ZUNMBR", "QLN", m, n, n, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     maxwrk += *m * *n;
                     minwrk += *n * *n;
                 }
@@ -230,22 +230,22 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*n << 1) + *n * ilaenv_(&c__1, "ZUNMBR", "PRC", n, n, n, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*n << 1) + *n * ilaenv_(&c__1, "ZUNMBR", "QLN", m, n, n, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                 }
                 else if (wntqa)
                 {
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*n << 1) + *n * ilaenv_(&c__1, "ZUNGBR", "PRC", n, n, n, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*n << 1) + *m * ilaenv_(&c__1, "ZUNGBR", "QLN", m, m, n, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                 }
             }
         }
@@ -267,7 +267,7 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*m << 1) + (*m << 1) * ilaenv_(& c__1, "ZGEBRD", " ", m, m, &c_n1, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     minwrk = *m * 3;
                 }
                 else if (wntqo)
@@ -277,19 +277,19 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m + *m * ilaenv_(&c__1, "ZUNGLQ", " ", m, n, m, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = (*m << 1) + (*m << 1) * ilaenv_(& c__1, "ZGEBRD", " ", m, m, &c_n1, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = (*m << 1) + *m * ilaenv_(&c__1, "ZUNMBR", "PRC", m, m, m, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = (*m << 1) + *m * ilaenv_(&c__1, "ZUNMBR", "QLN", m, m, m, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     maxwrk = *m * *n + *m * *m + wrkbl;
                     minwrk = (*m << 1) * *m + *m * 3;
                 }
@@ -300,19 +300,19 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m + *m * ilaenv_(&c__1, "ZUNGLQ", " ", m, n, m, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = (*m << 1) + (*m << 1) * ilaenv_(& c__1, "ZGEBRD", " ", m, m, &c_n1, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = (*m << 1) + *m * ilaenv_(&c__1, "ZUNMBR", "PRC", m, m, m, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = (*m << 1) + *m * ilaenv_(&c__1, "ZUNMBR", "QLN", m, m, m, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     maxwrk = *m * *m + wrkbl;
                     minwrk = *m * *m + *m * 3;
                 }
@@ -323,19 +323,19 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m + *n * ilaenv_(&c__1, "ZUNGLQ", " ", n, n, m, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = (*m << 1) + (*m << 1) * ilaenv_(& c__1, "ZGEBRD", " ", m, m, &c_n1, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = (*m << 1) + *m * ilaenv_(&c__1, "ZUNMBR", "PRC", m, m, m, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = (*m << 1) + *m * ilaenv_(&c__1, "ZUNMBR", "QLN", m, m, m, &c_n1); // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     maxwrk = *m * *m + wrkbl;
                     minwrk = *m * *m + (*m << 1) + *n;
                 }
@@ -350,11 +350,11 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*m << 1) + *m * ilaenv_(&c__1, "ZUNGBR", "P", m, n, m, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*m << 1) + *m * ilaenv_(&c__1, "ZUNGBR", "Q", m, m, n, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     maxwrk += *m * *n;
                     minwrk += *m * *m;
                 }
@@ -363,22 +363,22 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*m << 1) + *m * ilaenv_(&c__1, "ZUNGBR", "P", m, n, m, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*m << 1) + *m * ilaenv_(&c__1, "ZUNGBR", "Q", m, m, n, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                 }
                 else if (wntqa)
                 {
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*m << 1) + *n * ilaenv_(&c__1, "ZUNGBR", "P", n, n, m, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*m << 1) + *m * ilaenv_(&c__1, "ZUNGBR", "Q", m, m, n, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                 }
             }
             else
@@ -391,11 +391,11 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*m << 1) + *m * ilaenv_(&c__1, "ZUNMBR", "PRC", m, n, m, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*m << 1) + *m * ilaenv_(&c__1, "ZUNMBR", "QLN", m, m, n, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     maxwrk += *m * *n;
                     minwrk += *m * *m;
                 }
@@ -404,26 +404,26 @@ int zgesdd_check(char *jobz, integer *m, integer *n, dcomplex *a, integer *lda, 
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*m << 1) + *m * ilaenv_(&c__1, "ZUNGBR", "PRC", m, n, m, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*m << 1) + *m * ilaenv_(&c__1, "ZUNGBR", "QLN", m, m, n, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                 }
                 else if (wntqa)
                 {
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*m << 1) + *n * ilaenv_(&c__1, "ZUNGBR", "PRC", n, n, m, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*m << 1) + *m * ilaenv_(&c__1, "ZUNGBR", "QLN", m, m, n, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                 }
             }
         }
-        maxwrk = max(maxwrk,minwrk);
+        maxwrk = fla_max(maxwrk,minwrk);
     }
     if (*info == 0)
     {

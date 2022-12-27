@@ -118,9 +118,9 @@ FLA_Error FLA_Apply_G_rf_bld_var3( int       k_G,
 
 	for ( i = 0; i < m_A; i += b )
 	{
-		int m_ahead = max( 0, m_A - i );
+		int m_ahead = fla_max( 0, m_A - i );
 
-		b       = min( b_alg, m_ahead );
+		b       = fla_min( b_alg, m_ahead );
 
 		double*   A1 = buff_A + (0  )*cs_A + (i  )*rs_A;
 
@@ -170,9 +170,9 @@ FLA_Error FLA_Apply_G_rf_blz_var3( int       k_G,
 
 	for ( i = 0; i < m_A; i += b )
 	{
-		int m_ahead = max( 0, m_A - i );
+		int m_ahead = fla_max( 0, m_A - i );
 
-		b       = min( b_alg, m_ahead );
+		b       = fla_min( b_alg, m_ahead );
 
 		dcomplex* A1 = buff_A + (0  )*cs_A + (i  )*rs_A;
 

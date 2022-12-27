@@ -62,7 +62,7 @@
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -76,7 +76,7 @@
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,M). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] T */
@@ -219,7 +219,7 @@ int ctplqt_(integer *m, integer *n, integer *l, integer *mb, complex *a, integer
     {
         *info = -2;
     }
-    else if (*l < 0 || *l > min(*m,*n) && min(*m,*n) >= 0)
+    else if (*l < 0 || *l > fla_min(*m,*n) && fla_min(*m,*n) >= 0)
     {
         *info = -3;
     }
@@ -227,11 +227,11 @@ int ctplqt_(integer *m, integer *n, integer *l, integer *mb, complex *a, integer
     {
         *info = -4;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -6;
     }
-    else if (*ldb < max(1,*m))
+    else if (*ldb < fla_max(1,*m))
     {
         *info = -8;
     }
@@ -261,10 +261,10 @@ int ctplqt_(integer *m, integer *n, integer *l, integer *mb, complex *a, integer
         /* Compute the QR factorization of the current block */
         /* Computing MIN */
         i__3 = *m - i__ + 1;
-        ib = min(i__3,*mb);
+        ib = fla_min(i__3,*mb);
         /* Computing MIN */
         i__3 = *n - *l + i__ + ib - 1;
-        nb = min(i__3,*n);
+        nb = fla_min(i__3,*n);
         if (i__ >= *l)
         {
             lb = 0;

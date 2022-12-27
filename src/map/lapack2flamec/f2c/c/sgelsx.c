@@ -99,7 +99,7 @@ they are stored as the columns of the */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -115,7 +115,7 @@ they are stored as the columns of the */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,M,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,M,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] JPVT */
@@ -152,7 +152,7 @@ only the remaining */
 /* > \param[out] WORK */
 /* > \verbatim */
 /* > WORK is REAL array, dimension */
-/* > (max( min(M,N)+3*N, 2*min(M,N)+NRHS )), */
+/* > (fla_max( fla_min(M,N)+3*N, 2*fla_min(M,N)+NRHS )), */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -223,7 +223,7 @@ int sgelsx_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     --jpvt;
     --work;
     /* Function Body */
-    mn = min(*m,*n);
+    mn = fla_min(*m,*n);
     ismin = mn + 1;
     ismax = (mn << 1) + 1;
     /* Test the input arguments. */
@@ -240,15 +240,15 @@ int sgelsx_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }
     else /* if(complicated condition) */
     {
         /* Computing MAX */
-        i__1 = max(1,*m);
-        if (*ldb < max(i__1,*n))
+        i__1 = fla_max(1,*m);
+        if (*ldb < fla_max(i__1,*n))
         {
             *info = -7;
         }
@@ -261,8 +261,8 @@ int sgelsx_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     }
     /* Quick return if possible */
     /* Computing MIN */
-    i__1 = min(*m,*n);
-    if (min(i__1,*nrhs) == 0)
+    i__1 = fla_min(*m,*n);
+    if (fla_min(i__1,*nrhs) == 0)
     {
         *rank = 0;
         return 0;
@@ -289,7 +289,7 @@ int sgelsx_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     else if (anrm == 0.f)
     {
         /* Matrix all zero. Return zero solution. */
-        i__1 = max(*m,*n);
+        i__1 = fla_max(*m,*n);
         slaset_("F", &i__1, nrhs, &c_b13, &c_b13, &b[b_offset], ldb);
         *rank = 0;
         goto L100;
@@ -321,7 +321,7 @@ int sgelsx_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     if ((r__1 = a[a_dim1 + 1], f2c_abs(r__1)) == 0.f)
     {
         *rank = 0;
-        i__1 = max(*m,*n);
+        i__1 = fla_max(*m,*n);
         slaset_("F", &i__1, nrhs, &c_b13, &c_b13, &b[b_offset], ldb);
         goto L100;
     }

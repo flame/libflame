@@ -47,11 +47,11 @@ static real c_b109 = 0.f;
 /* > A = U * SIGMA * transpose(V) */
 /* > */
 /* > where SIGMA is an M-by-N matrix which is zero except for its */
-/* > min(m,n) diagonal elements, U is an M-by-M orthogonal matrix, and */
+/* > fla_min(m,n) diagonal elements, U is an M-by-M orthogonal matrix, and */
 /* > V is an N-by-N orthogonal matrix. The diagonal elements of SIGMA */
 /* > are the singular values of A;
 they are real and non-negative, and */
-/* > are returned in descending order. The first min(m,n) columns of */
+/* > are returned in descending order. The first fla_min(m,n) columns of */
 /* > U and V are the left and right singular vectors of A. */
 /* > */
 /* > SGESVDX uses an eigenvalue problem for obtaining the SVD, which */
@@ -66,7 +66,7 @@ they are real and non-negative, and */
 /* > \verbatim */
 /* > JOBU is CHARACTER*1 */
 /* > Specifies options for computing all or part of the matrix U: */
-/* > = 'V': the first min(m,n) columns of U (the left singular */
+/* > = 'V': the first fla_min(m,n) columns of U (the left singular */
 /* > vectors) or as specified by RANGE are returned in */
 /* > the array U;
 */
@@ -79,7 +79,7 @@ they are real and non-negative, and */
 /* > JOBVT is CHARACTER*1 */
 /* > Specifies options for computing all or part of the matrix */
 /* > V**T: */
-/* > = 'V': the first min(m,n) rows of V**T (the right singular */
+/* > = 'V': the first fla_min(m,n) rows of V**T (the right singular */
 /* > vectors) or as specified by RANGE are returned in */
 /* > the array VT;
 */
@@ -118,7 +118,7 @@ they are real and non-negative, and */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] VL */
@@ -142,7 +142,7 @@ they are real and non-negative, and */
 /* > IL is INTEGER */
 /* > If RANGE='I', the index of the */
 /* > smallest singular value to be returned. */
-/* > 1 <= IL <= IU <= min(M,N), if min(M,N) > 0. */
+/* > 1 <= IL <= IU <= fla_min(M,N), if fla_min(M,N) > 0. */
 /* > Not referenced if RANGE = 'A' or 'V'. */
 /* > \endverbatim */
 /* > */
@@ -151,7 +151,7 @@ they are real and non-negative, and */
 /* > IU is INTEGER */
 /* > If RANGE='I', the index of the */
 /* > largest singular value to be returned. */
-/* > 1 <= IL <= IU <= min(M,N), if min(M,N) > 0. */
+/* > 1 <= IL <= IU <= fla_min(M,N), if fla_min(M,N) > 0. */
 /* > Not referenced if RANGE = 'A' or 'V'. */
 /* > \endverbatim */
 /* > */
@@ -159,14 +159,14 @@ they are real and non-negative, and */
 /* > \verbatim */
 /* > NS is INTEGER */
 /* > The total number of singular values found, */
-/* > 0 <= NS <= min(M,N). */
-/* > If RANGE = 'A', NS = min(M,N);
+/* > 0 <= NS <= fla_min(M,N). */
+/* > If RANGE = 'A', NS = fla_min(M,N);
 if RANGE = 'I', NS = IU-IL+1. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] S */
 /* > \verbatim */
-/* > S is REAL array, dimension (min(M,N)) */
+/* > S is REAL array, dimension (fla_min(M,N)) */
 /* > The singular values of A, sorted so that S(i) >= S(i+1). */
 /* > \endverbatim */
 /* > */
@@ -353,7 +353,7 @@ int sgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, real
     *info = 0;
     abstol = slamch_("S") * 2;
     lquery = *lwork == -1;
-    minmn = min(*m,*n);
+    minmn = fla_min(*m,*n);
     wantu = lsame_(jobu, "V");
     wantvt = lsame_(jobvt, "V");
     if (wantu || wantvt)
@@ -407,11 +407,11 @@ int sgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, real
         }
         else if (inds)
         {
-            if (*il < 1 || *il > max(1,minmn))
+            if (*il < 1 || *il > fla_max(1,minmn))
             {
                 *info = -10;
             }
-            else if (*iu < min(minmn,*il) || *iu > minmn)
+            else if (*iu < fla_min(minmn,*il) || *iu > minmn)
             {
                 *info = -11;
             }
@@ -460,20 +460,20 @@ int sgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, real
                     /* Computing MAX */
                     i__2 = maxwrk;
                     i__3 = *n * (*n + 5) + (*n << 1) * ilaenv_( &c__1, "SGEBRD", " ", n, n, &c_n1, &c_n1); // , expr subst
-                    maxwrk = max(i__2,i__3);
+                    maxwrk = fla_max(i__2,i__3);
                     if (wantu)
                     {
                         /* Computing MAX */
                         i__2 = maxwrk;
                         i__3 = *n * (*n * 3 + 6) + *n * ilaenv_(&c__1, "SORMQR", " ", n, n, &c_n1, & c_n1); // , expr subst
-                        maxwrk = max(i__2,i__3);
+                        maxwrk = fla_max(i__2,i__3);
                     }
                     if (wantvt)
                     {
                         /* Computing MAX */
                         i__2 = maxwrk;
                         i__3 = *n * (*n * 3 + 6) + *n * ilaenv_(&c__1, "SORMLQ", " ", n, n, &c_n1, & c_n1); // , expr subst
-                        maxwrk = max(i__2,i__3);
+                        maxwrk = fla_max(i__2,i__3);
                     }
                     minwrk = *n * (*n * 3 + 20);
                 }
@@ -486,19 +486,19 @@ int sgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, real
                         /* Computing MAX */
                         i__2 = maxwrk;
                         i__3 = *n * ((*n << 1) + 5) + *n * ilaenv_(&c__1, "SORMQR", " ", n, n, &c_n1, & c_n1); // , expr subst
-                        maxwrk = max(i__2,i__3);
+                        maxwrk = fla_max(i__2,i__3);
                     }
                     if (wantvt)
                     {
                         /* Computing MAX */
                         i__2 = maxwrk;
                         i__3 = *n * ((*n << 1) + 5) + *n * ilaenv_(&c__1, "SORMLQ", " ", n, n, &c_n1, & c_n1); // , expr subst
-                        maxwrk = max(i__2,i__3);
+                        maxwrk = fla_max(i__2,i__3);
                     }
                     /* Computing MAX */
                     i__2 = *n * ((*n << 1) + 19);
                     i__3 = (*n << 2) + *m; // , expr subst
-                    minwrk = max(i__2,i__3);
+                    minwrk = fla_max(i__2,i__3);
                 }
             }
             else
@@ -511,20 +511,20 @@ int sgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, real
                     /* Computing MAX */
                     i__2 = maxwrk;
                     i__3 = *m * (*m + 5) + (*m << 1) * ilaenv_( &c__1, "SGEBRD", " ", m, m, &c_n1, &c_n1); // , expr subst
-                    maxwrk = max(i__2,i__3);
+                    maxwrk = fla_max(i__2,i__3);
                     if (wantu)
                     {
                         /* Computing MAX */
                         i__2 = maxwrk;
                         i__3 = *m * (*m * 3 + 6) + *m * ilaenv_(&c__1, "SORMQR", " ", m, m, &c_n1, & c_n1); // , expr subst
-                        maxwrk = max(i__2,i__3);
+                        maxwrk = fla_max(i__2,i__3);
                     }
                     if (wantvt)
                     {
                         /* Computing MAX */
                         i__2 = maxwrk;
                         i__3 = *m * (*m * 3 + 6) + *m * ilaenv_(&c__1, "SORMLQ", " ", m, m, &c_n1, & c_n1); // , expr subst
-                        maxwrk = max(i__2,i__3);
+                        maxwrk = fla_max(i__2,i__3);
                     }
                     minwrk = *m * (*m * 3 + 20);
                 }
@@ -537,23 +537,23 @@ int sgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, real
                         /* Computing MAX */
                         i__2 = maxwrk;
                         i__3 = *m * ((*m << 1) + 5) + *m * ilaenv_(&c__1, "SORMQR", " ", m, m, &c_n1, & c_n1); // , expr subst
-                        maxwrk = max(i__2,i__3);
+                        maxwrk = fla_max(i__2,i__3);
                     }
                     if (wantvt)
                     {
                         /* Computing MAX */
                         i__2 = maxwrk;
                         i__3 = *m * ((*m << 1) + 5) + *m * ilaenv_(&c__1, "SORMLQ", " ", m, m, &c_n1, & c_n1); // , expr subst
-                        maxwrk = max(i__2,i__3);
+                        maxwrk = fla_max(i__2,i__3);
                     }
                     /* Computing MAX */
                     i__2 = *m * ((*m << 1) + 19);
                     i__3 = (*m << 2) + *n; // , expr subst
-                    minwrk = max(i__2,i__3);
+                    minwrk = fla_max(i__2,i__3);
                 }
             }
         }
-        maxwrk = max(maxwrk,minwrk);
+        maxwrk = fla_max(maxwrk,minwrk);
         work[1] = (real) maxwrk;
         if (*lwork < minwrk && ! lquery)
         {
@@ -580,7 +580,7 @@ int sgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, real
     {
         *(unsigned char *)rngtgk = 'I';
         iltgk = 1;
-        iutgk = min(*m,*n);
+        iutgk = fla_min(*m,*n);
     }
     else if (inds)
     {

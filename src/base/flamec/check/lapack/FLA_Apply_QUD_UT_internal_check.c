@@ -45,7 +45,7 @@ FLA_Error FLA_Apply_QUD_UT_internal_check( FLA_Side side, FLA_Trans trans, FLA_D
 			e_val = FLA_Check_object_width_equals( T, FLA_Obj_width( U ) );
 			FLA_Check_error_code( e_val );
 
-			e_val = FLA_Check_object_length_equals( T, max( FLA_Obj_length( U ),
+			e_val = FLA_Check_object_length_equals( T, fla_max( FLA_Obj_length( U ),
 			                                                FLA_Obj_length( V ) ) );
 			FLA_Check_error_code( e_val );
 

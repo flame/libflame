@@ -138,7 +138,7 @@ void libfla_test_apcaqutinc_experiment( test_params_t params,
 	else               n = p_cur;
 
 	// Compute the minimum dimension.
-	min_m_n = min( m, n );
+	min_m_n = fla_min( m, n );
 
 	// Choose the size of B based on the storev parameter.
 	if ( storev == FLA_COLUMNWISE ) k = m;
@@ -185,7 +185,7 @@ void libfla_test_apcaqutinc_experiment( test_params_t params,
 		                             A_test, ATW_test, R_test, RTW_test, W_test, B_test );
 		
 		time = FLA_Clock() - time;
-		time_min = min( time_min, time );
+		time_min = fla_min( time_min, time );
 	}
 
 	// Multiply by its conjugate-transpose to get what should be (near) identity

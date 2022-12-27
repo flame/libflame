@@ -117,7 +117,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the matrix A. LDA >= max(1, M). */
+/* > The leading dimension of the matrix A. LDA >= fla_max(1, M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] B */
@@ -129,7 +129,7 @@ static integer c__1 = 1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the matrix B. LDB >= max(1, N). */
+/* > The leading dimension of the matrix B. LDB >= fla_max(1, N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] C */
@@ -144,7 +144,7 @@ static integer c__1 = 1;
 /* > \param[in] LDC */
 /* > \verbatim */
 /* > LDC is INTEGER */
-/* > The leading dimension of the matrix C. LDC >= max(1, M). */
+/* > The leading dimension of the matrix C. LDC >= fla_max(1, M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] D */
@@ -156,7 +156,7 @@ static integer c__1 = 1;
 /* > \param[in] LDD */
 /* > \verbatim */
 /* > LDD is INTEGER */
-/* > The leading dimension of the matrix D. LDD >= max(1, M). */
+/* > The leading dimension of the matrix D. LDD >= fla_max(1, M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] E */
@@ -168,7 +168,7 @@ static integer c__1 = 1;
 /* > \param[in] LDE */
 /* > \verbatim */
 /* > LDE is INTEGER */
-/* > The leading dimension of the matrix E. LDE >= max(1, N). */
+/* > The leading dimension of the matrix E. LDE >= fla_max(1, N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] F */
@@ -183,7 +183,7 @@ static integer c__1 = 1;
 /* > \param[in] LDF */
 /* > \verbatim */
 /* > LDF is INTEGER */
-/* > The leading dimension of the matrix F. LDF >= max(1, M). */
+/* > The leading dimension of the matrix F. LDF >= fla_max(1, M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] SCALE */
@@ -334,27 +334,27 @@ int ztgsy2_(char *trans, integer *ijob, integer *m, integer * n, doublecomplex *
         {
             *info = -4;
         }
-        else if (*lda < max(1,*m))
+        else if (*lda < fla_max(1,*m))
         {
             *info = -6;
         }
-        else if (*ldb < max(1,*n))
+        else if (*ldb < fla_max(1,*n))
         {
             *info = -8;
         }
-        else if (*ldc < max(1,*m))
+        else if (*ldc < fla_max(1,*m))
         {
             *info = -10;
         }
-        else if (*ldd < max(1,*m))
+        else if (*ldd < fla_max(1,*m))
         {
             *info = -12;
         }
-        else if (*lde < max(1,*n))
+        else if (*lde < fla_max(1,*n))
         {
             *info = -14;
         }
-        else if (*ldf < max(1,*m))
+        else if (*ldf < fla_max(1,*m))
         {
             *info = -16;
         }

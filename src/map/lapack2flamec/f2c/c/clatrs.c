@@ -196,7 +196,7 @@ x(i), i=1,...,n}
 /* > */
 /* > Since |x(j)| <= M(j), we use the Level 2 BLAS routine CTRSV if the */
 /* > reciprocal of the largest M(j), j=1,..,n, is larger than */
-/* > max(underflow, 1/overflow). */
+/* > fla_max(underflow, 1/overflow). */
 /* > */
 /* > The bound on x(j) is also used to determine when a step in the */
 /* > columnwise method can be performed without fear of overflow. If */
@@ -227,7 +227,7 @@ b(i), i=1,..,n}
 /* > 1<=i<=j */
 /* > */
 /* > and we can safely call CTRSV if 1/M(n) and 1/G(n) are both greater */
-/* > than max(underflow, 1/overflow). */
+/* > than fla_max(underflow, 1/overflow). */
 /* > \endverbatim */
 /* > */
 /* ===================================================================== */
@@ -342,7 +342,7 @@ int clatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, comp
     {
         *info = -5;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -7;
     }
@@ -422,7 +422,7 @@ int clatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, comp
         i__2 = j;
         r__3 = xmax;
         r__4 = (r__1 = x[i__2].r / 2.f, f2c_abs(r__1)) + (r__2 = x[j].i / 2.f, f2c_abs(r__2)); // , expr subst
-        xmax = max(r__3,r__4);
+        xmax = fla_max(r__3,r__4);
         /* L30: */
     }
     xbnd = xmax;
@@ -453,7 +453,7 @@ int clatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, comp
             /* Initially, G(0) = max{
             x(i), i=1,...,n}
             . */
-            grow = .5f / max(xbnd,smlnum);
+            grow = .5f / fla_max(xbnd,smlnum);
             xbnd = grow;
             i__1 = jlast;
             i__2 = jinc;
@@ -475,8 +475,8 @@ int clatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, comp
                     /* M(j) = G(j-1) / f2c_abs(A(j,j)) */
                     /* Computing MIN */
                     r__1 = xbnd;
-                    r__2 = min(1.f,tjj) * grow; // , expr subst
-                    xbnd = min(r__1,r__2);
+                    r__2 = fla_min(1.f,tjj) * grow; // , expr subst
+                    xbnd = fla_min(r__1,r__2);
                 }
                 else
                 {
@@ -505,8 +505,8 @@ int clatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, comp
             . */
             /* Computing MIN */
             r__1 = 1.f;
-            r__2 = .5f / max(xbnd,smlnum); // , expr subst
-            grow = min(r__1,r__2);
+            r__2 = .5f / fla_max(xbnd,smlnum); // , expr subst
+            grow = fla_min(r__1,r__2);
             i__2 = jlast;
             i__1 = jinc;
             for (j = jfirst;
@@ -553,7 +553,7 @@ L60:
             /* Initially, M(0) = max{
             x(i), i=1,...,n}
             . */
-            grow = .5f / max(xbnd,smlnum);
+            grow = .5f / fla_max(xbnd,smlnum);
             xbnd = grow;
             i__1 = jlast;
             i__2 = jinc;
@@ -566,12 +566,12 @@ L60:
                 {
                     goto L90;
                 }
-                /* G(j) = max( G(j-1), M(j-1)*( 1 + CNORM(j) ) ) */
+                /* G(j) = fla_max( G(j-1), M(j-1)*( 1 + CNORM(j) ) ) */
                 xj = cnorm[j] + 1.f;
                 /* Computing MIN */
                 r__1 = grow;
                 r__2 = xbnd / xj; // , expr subst
-                grow = min(r__1,r__2);
+                grow = fla_min(r__1,r__2);
                 i__3 = j + j * a_dim1;
                 tjjs.r = a[i__3].r;
                 tjjs.i = a[i__3].i; // , expr subst
@@ -591,7 +591,7 @@ L60:
                 }
                 /* L70: */
             }
-            grow = min(grow,xbnd);
+            grow = fla_min(grow,xbnd);
         }
         else
         {
@@ -601,8 +601,8 @@ L60:
             . */
             /* Computing MIN */
             r__1 = 1.f;
-            r__2 = .5f / max(xbnd,smlnum); // , expr subst
-            grow = min(r__1,r__2);
+            r__2 = .5f / fla_max(xbnd,smlnum); // , expr subst
+            grow = fla_min(r__1,r__2);
             i__2 = jlast;
             i__1 = jinc;
             for (j = jfirst;
@@ -816,7 +816,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                 xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = x[j].i, f2c_abs(r__2));
                 uscal.r = tscal;
                 uscal.i = 0.f; // , expr subst
-                rec = 1.f / max(xmax,1.f);
+                rec = 1.f / fla_max(xmax,1.f);
                 if (cnorm[j] > (bignum - xj) * rec)
                 {
                     /* If x(j) could overflow, scale x by 1/(2*XMAX). */
@@ -841,7 +841,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                         /* Computing MIN */
                         r__1 = 1.f;
                         r__2 = rec * tjj; // , expr subst
-                        rec = min(r__1,r__2);
+                        rec = fla_min(r__1,r__2);
                         cladiv_f2c_(&q__1, &uscal, &tjjs);
                         uscal.r = q__1.r;
                         uscal.i = q__1.i; // , expr subst
@@ -1024,7 +1024,7 @@ L145:
                 i__3 = j;
                 r__3 = xmax;
                 r__4 = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = x[j].i, f2c_abs(r__2)); // , expr subst
-                xmax = max(r__3,r__4);
+                xmax = fla_max(r__3,r__4);
                 /* L150: */
             }
         }
@@ -1043,7 +1043,7 @@ L145:
                 xj = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = x[j].i, f2c_abs(r__2));
                 uscal.r = tscal;
                 uscal.i = 0.f; // , expr subst
-                rec = 1.f / max(xmax,1.f);
+                rec = 1.f / fla_max(xmax,1.f);
                 if (cnorm[j] > (bignum - xj) * rec)
                 {
                     /* If x(j) could overflow, scale x by 1/(2*XMAX). */
@@ -1069,7 +1069,7 @@ L145:
                         /* Computing MIN */
                         r__1 = 1.f;
                         r__2 = rec * tjj; // , expr subst
-                        rec = min(r__1,r__2);
+                        rec = fla_min(r__1,r__2);
                         cladiv_f2c_(&q__1, &uscal, &tjjs);
                         uscal.r = q__1.r;
                         uscal.i = q__1.i; // , expr subst
@@ -1255,7 +1255,7 @@ L185:
                 i__3 = j;
                 r__3 = xmax;
                 r__4 = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = x[j].i, f2c_abs(r__2)); // , expr subst
-                xmax = max(r__3,r__4);
+                xmax = fla_max(r__3,r__4);
                 /* L190: */
             }
         }

@@ -193,8 +193,8 @@ FLA_Error FLA_Apply_G_rf_asd_var5b( integer       k_G,
 			is_ident12 = ( gamma12 == one && sigma12 == zero );
 			is_ident23 = ( gamma23 == one && sigma23 == zero );
 
-			//m_app = min( i_k + 4 + 2*j - iTL, m_A );
-			m_app = min( m_base + 2*j, m_A );
+			//m_app = fla_min( i_k + 4 + 2*j - iTL, m_A );
+			m_app = fla_min( m_base + 2*j, m_A );
 
 			if      ( !is_ident12 && is_ident23 )
 			{
@@ -255,8 +255,8 @@ FLA_Error FLA_Apply_G_rf_asd_var5b( integer       k_G,
 			is_ident23 = ( gamma23 == one && sigma23 == zero );
 
 //printf( "%03d %03d %03d: m_app m_left %d %d %d\n", j, k, g, m_app, m_app % 2, m_app / 2 );
-			//m_app = min( i_k + 4 + 2*j - iTL, m_A );
-			m_app = min( m_base + 2*j, m_A );
+			//m_app = fla_min( i_k + 4 + 2*j - iTL, m_A );
+			m_app = fla_min( m_base + 2*j, m_A );
 
 			if      ( !is_ident12 && is_ident23 )
 			{
@@ -338,8 +338,8 @@ FLA_Error FLA_Apply_G_rf_asd_var5b( integer       k_G,
 			gamma23 = g23->real;
 			sigma23 = g23->imag;
 
-			//m_app = min( i_k + 4 + 2*j - iTL, m_A );
-			//m_app = min( m_base + 2*j, m_A );
+			//m_app = fla_min( i_k + 4 + 2*j - iTL, m_A );
+			//m_app = fla_min( m_base + 2*j, m_A );
 			m_app = m_A;
 
 			is_ident12 = ( gamma12 == one && sigma12 == zero );

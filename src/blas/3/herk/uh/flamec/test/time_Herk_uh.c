@@ -164,7 +164,7 @@ void time_Herk_uh(
       dtime_old = FLA_Clock() - *dtime;
     else{
       *dtime = FLA_Clock() - *dtime;
-      dtime_old = min( *dtime, dtime_old );
+      dtime_old = fla_min( *dtime, dtime_old );
     }
   }
 

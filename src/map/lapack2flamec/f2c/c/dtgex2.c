@@ -87,7 +87,7 @@ static integer c__0 = 0;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -100,7 +100,7 @@ static integer c__0 = 0;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] Q */
@@ -316,16 +316,16 @@ int dtgex2_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
     m = *n1 + *n2;
     /* Computing MAX */
     i__1 = 1, i__2 = *n * m;
-    i__1 = max(i__1,i__2);
+    i__1 = fla_max(i__1,i__2);
     i__2 = m * m << 1; // ; expr subst
-    if (*lwork < max(i__1,i__2))
+    if (*lwork < fla_max(i__1,i__2))
     {
         *info = -16;
         /* Computing MAX */
         i__1 = 1, i__2 = *n * m;
-        i__1 = max(i__1,i__2);
+        i__1 = fla_max(i__1,i__2);
         i__2 = m * m << 1; // ; expr subst
-        work[1] = (doublereal) max(i__1,i__2);
+        work[1] = (doublereal) fla_max(i__1,i__2);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -357,7 +357,7 @@ int dtgex2_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
     /* Jim Demmel and Guillaume Revy. See forum post 1783. */
     /* Computing MAX */
     d__1 = eps * 20. * dnorm;
-    thresh = max(d__1,smlnum);
+    thresh = fla_max(d__1,smlnum);
     if (m == 2)
     {
         /* CASE 1: Swap 1-by-1 and 1-by-1 blocks. */

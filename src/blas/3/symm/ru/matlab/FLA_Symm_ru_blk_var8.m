@@ -22,7 +22,7 @@ function [ C_out ] = FLA_Symm_ru_blk_var8( A, B, C, nb_alg )
 
   while ( size( ABR, 1 ) < size( A, 1 ) )
 
-    b = min( size( ATL, 1 ), nb_alg );
+    b = fla_min( size( ATL, 1 ), nb_alg );
 
     [ A00, A01, A02, ...
       A10, A11, A12, ...

@@ -334,7 +334,7 @@ integer iparam2stage_(integer *ispec, char *name__, char *opts, integer *ni, int
             /* Computing MAX */
             i__1 = 1;
             i__2 = *ni << 2; // , expr subst
-            lhous = max(i__1,i__2);
+            lhous = fla_max(i__1,i__2);
         }
         else
         {
@@ -342,7 +342,7 @@ integer iparam2stage_(integer *ispec, char *name__, char *opts, integer *ni, int
             /* Computing MAX */
             i__1 = 1;
             i__2 = *ni << 2; // , expr subst
-            lhous = max(i__1,i__2) + *ibi;
+            lhous = fla_max(i__1,i__2) + *ibi;
         }
         if (lhous >= 0)
         {
@@ -362,11 +362,11 @@ integer iparam2stage_(integer *ispec, char *name__, char *opts, integer *ni, int
         /* TRD_stage 1: = LT + LW + LS1 + LS2 */
         /* = LDT*KD + N*KD + N*MAX(KD,FACTOPTNB) + LDS2*KD */
         /* where LDT=LDS2=KD */
-        /* = N*KD + N*max(KD,FACTOPTNB) + 2*KD*KD */
+        /* = N*KD + N*fla_max(KD,FACTOPTNB) + 2*KD*KD */
         /* TRD_stage 2: = (2NB+1)*N + KD*NTHREADS */
-        /* TRD_both : = max(stage1,stage2) + AB ( AB=(KD+1)*N ) */
-        /* = N*KD + N*max(KD+1,FACTOPTNB) */
-        /* + max(2*KD*KD, KD*NTHREADS) */
+        /* TRD_both : = fla_max(stage1,stage2) + AB ( AB=(KD+1)*N ) */
+        /* = N*KD + N*fla_max(KD+1,FACTOPTNB) */
+        /* + fla_max(2*KD*KD, KD*NTHREADS) */
         /* + (KD+1)*N */
         lwork = -1;
         *(unsigned char *)subnam = *(unsigned char *)prec;
@@ -375,7 +375,7 @@ integer iparam2stage_(integer *ispec, char *name__, char *opts, integer *ni, int
         s_copy(subnam + 1, "GELQF", (ftnlen) 5, (ftnlen) 5);
         lqoptnb = ilaenv_(&c__1, subnam, " ", nbi, ni, &c_n1, &c_n1);
         /* Could be QR or LQ for TRD and the max for BRD */
-        factoptnb = max(qroptnb,lqoptnb);
+        factoptnb = fla_max(qroptnb,lqoptnb);
         if (s_cmp(algo, "TRD", (ftnlen) 3, (ftnlen) 3) == 0)
         {
             if (s_cmp(stag, "2STAG", (ftnlen) 5, (ftnlen) 5) == 0)
@@ -385,11 +385,11 @@ integer iparam2stage_(integer *ispec, char *name__, char *opts, integer *ni, int
                 /* Computing MAX */
                 i__2 = (*nbi << 1) * *nbi;
                 i__3 = *nbi * nthreads; // , expr subst
-                lwork = *ni * *nbi + *ni * max(i__1,factoptnb) + max(i__2, i__3) + (*nbi + 1) * *ni;
+                lwork = *ni * *nbi + *ni * fla_max(i__1,factoptnb) + fla_max(i__2, i__3) + (*nbi + 1) * *ni;
             }
             else if (s_cmp(stag, "HE2HB", (ftnlen) 5, (ftnlen) 5) == 0 || s_cmp(stag, "SY2SB", (ftnlen) 5, (ftnlen) 5) == 0)
             {
-                lwork = *ni * *nbi + *ni * max(*nbi,factoptnb) + (*nbi << 1) * *nbi;
+                lwork = *ni * *nbi + *ni * fla_max(*nbi,factoptnb) + (*nbi << 1) * *nbi;
             }
             else if (s_cmp(stag, "HB2ST", (ftnlen) 5, (ftnlen) 5) == 0 || s_cmp(stag, "SB2ST", (ftnlen) 5, (ftnlen) 5) == 0)
             {
@@ -405,18 +405,18 @@ integer iparam2stage_(integer *ispec, char *name__, char *opts, integer *ni, int
                 /* Computing MAX */
                 i__2 = (*nbi << 1) * *nbi;
                 i__3 = *nbi * nthreads; // , expr subst
-                lwork = (*ni << 1) * *nbi + *ni * max(i__1,factoptnb) + max( i__2,i__3) + (*nbi + 1) * *ni;
+                lwork = (*ni << 1) * *nbi + *ni * fla_max(i__1,factoptnb) + fla_max( i__2,i__3) + (*nbi + 1) * *ni;
             }
             else if (s_cmp(stag, "GE2GB", (ftnlen) 5, (ftnlen) 5) == 0)
             {
-                lwork = *ni * *nbi + *ni * max(*nbi,factoptnb) + (*nbi << 1) * *nbi;
+                lwork = *ni * *nbi + *ni * fla_max(*nbi,factoptnb) + (*nbi << 1) * *nbi;
             }
             else if (s_cmp(stag, "GB2BD", (ftnlen) 5, (ftnlen) 5) == 0)
             {
                 lwork = (*nbi * 3 + 1) * *ni + *nbi * nthreads;
             }
         }
-        lwork = max(1,lwork);
+        lwork = fla_max(1,lwork);
         if (lwork > 0)
         {
             ret_val = lwork;

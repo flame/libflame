@@ -15,7 +15,7 @@ function [ B_out ] = FLA_Trmm_lun_blk_var3( A, B, nb_alg )
 
   while ( size( BL, 2 ) < size( B, 2 ) )
 
-    b = min( size( BR, 2 ), nb_alg );
+    b = fla_min( size( BR, 2 ), nb_alg );
 
     [ B0, B1, B2 ]= FLA_Repart_1x2_to_1x3( BL, BR, ...
                                          b, 'FLA_RIGHT' );

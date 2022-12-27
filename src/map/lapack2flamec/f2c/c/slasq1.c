@@ -189,7 +189,7 @@ int slasq1_(integer *n, real *d__, real *e, real *work, integer *info)
         /* Computing MAX */
         r__2 = sigmx;
         r__3 = (r__1 = e[i__], f2c_abs(r__1)); // , expr subst
-        sigmx = max(r__2,r__3);
+        sigmx = fla_max(r__2,r__3);
         /* L10: */
     }
     d__[*n] = (r__1 = d__[*n], f2c_abs(r__1));
@@ -208,7 +208,7 @@ int slasq1_(integer *n, real *d__, real *e, real *work, integer *info)
         /* Computing MAX */
         r__1 = sigmx;
         r__2 = d__[i__]; // , expr subst
-        sigmx = max(r__1,r__2);
+        sigmx = fla_max(r__1,r__2);
         /* L20: */
     }
     /* Copy D and E into WORK (in the Z format) and scale (squaring the */

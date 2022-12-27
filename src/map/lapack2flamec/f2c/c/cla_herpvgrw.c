@@ -72,7 +72,7 @@
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] AF */
@@ -85,7 +85,7 @@
 /* > \param[in] LDAF */
 /* > \verbatim */
 /* > LDAF is INTEGER */
-/* > The leading dimension of the array AF. LDAF >= max(1,N). */
+/* > The leading dimension of the array AF. LDAF >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] IPIV */
@@ -205,12 +205,12 @@ real cla_herpvgrw_(char *uplo, integer *n, integer *info, complex *a, integer *l
                 i__3 = i__ + j * a_dim1;
                 r__3 = (r__1 = a[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]), f2c_abs(r__2));
                 r__4 = work[*n + i__]; // , expr subst
-                work[*n + i__] = max(r__3,r__4);
+                work[*n + i__] = fla_max(r__3,r__4);
                 /* Computing MAX */
                 i__3 = i__ + j * a_dim1;
                 r__3 = (r__1 = a[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]), f2c_abs(r__2));
                 r__4 = work[*n + j]; // , expr subst
-                work[*n + j] = max(r__3,r__4);
+                work[*n + j] = fla_max(r__3,r__4);
             }
         }
     }
@@ -230,12 +230,12 @@ real cla_herpvgrw_(char *uplo, integer *n, integer *info, complex *a, integer *l
                 i__3 = i__ + j * a_dim1;
                 r__3 = (r__1 = a[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]), f2c_abs(r__2));
                 r__4 = work[*n + i__]; // , expr subst
-                work[*n + i__] = max(r__3,r__4);
+                work[*n + i__] = fla_max(r__3,r__4);
                 /* Computing MAX */
                 i__3 = i__ + j * a_dim1;
                 r__3 = (r__1 = a[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]), f2c_abs(r__2));
                 r__4 = work[*n + j]; // , expr subst
-                work[*n + j] = max(r__3,r__4);
+                work[*n + j] = fla_max(r__3,r__4);
             }
         }
     }
@@ -268,7 +268,7 @@ real cla_herpvgrw_(char *uplo, integer *n, integer *info, complex *a, integer *l
                     i__2 = i__ + k * af_dim1;
                     r__3 = (r__1 = af[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(& af[i__ + k * af_dim1]), f2c_abs(r__2));
                     r__4 = work[k] ; // , expr subst
-                    work[k] = max(r__3,r__4);
+                    work[k] = fla_max(r__3,r__4);
                 }
                 --k;
             }
@@ -288,18 +288,18 @@ real cla_herpvgrw_(char *uplo, integer *n, integer *info, complex *a, integer *l
                     i__2 = i__ + k * af_dim1;
                     r__3 = (r__1 = af[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(& af[i__ + k * af_dim1]), f2c_abs(r__2));
                     r__4 = work[k] ; // , expr subst
-                    work[k] = max(r__3,r__4);
+                    work[k] = fla_max(r__3,r__4);
                     /* Computing MAX */
                     i__2 = i__ + (k - 1) * af_dim1;
                     r__3 = (r__1 = af[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(& af[i__ + (k - 1) * af_dim1]), f2c_abs(r__2));
                     r__4 = work[k - 1]; // , expr subst
-                    work[k - 1] = max(r__3,r__4);
+                    work[k - 1] = fla_max(r__3,r__4);
                 }
                 /* Computing MAX */
                 i__1 = k + k * af_dim1;
                 r__3 = (r__1 = af[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&af[k + k * af_dim1]), f2c_abs(r__2));
                 r__4 = work[k]; // , expr subst
-                work[k] = max(r__3,r__4);
+                work[k] = fla_max(r__3,r__4);
                 k += -2;
             }
         }
@@ -351,7 +351,7 @@ real cla_herpvgrw_(char *uplo, integer *n, integer *info, complex *a, integer *l
                     i__2 = i__ + k * af_dim1;
                     r__3 = (r__1 = af[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(& af[i__ + k * af_dim1]), f2c_abs(r__2));
                     r__4 = work[k] ; // , expr subst
-                    work[k] = max(r__3,r__4);
+                    work[k] = fla_max(r__3,r__4);
                 }
                 ++k;
             }
@@ -371,18 +371,18 @@ real cla_herpvgrw_(char *uplo, integer *n, integer *info, complex *a, integer *l
                     i__2 = i__ + k * af_dim1;
                     r__3 = (r__1 = af[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(& af[i__ + k * af_dim1]), f2c_abs(r__2));
                     r__4 = work[k] ; // , expr subst
-                    work[k] = max(r__3,r__4);
+                    work[k] = fla_max(r__3,r__4);
                     /* Computing MAX */
                     i__2 = i__ + (k + 1) * af_dim1;
                     r__3 = (r__1 = af[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(& af[i__ + (k + 1) * af_dim1]), f2c_abs(r__2));
                     r__4 = work[k + 1]; // , expr subst
-                    work[k + 1] = max(r__3,r__4);
+                    work[k + 1] = fla_max(r__3,r__4);
                 }
                 /* Computing MAX */
                 i__1 = k + k * af_dim1;
                 r__3 = (r__1 = af[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&af[k + k * af_dim1]), f2c_abs(r__2));
                 r__4 = work[k]; // , expr subst
-                work[k] = max(r__3,r__4);
+                work[k] = fla_max(r__3,r__4);
                 k += 2;
             }
         }
@@ -429,7 +429,7 @@ real cla_herpvgrw_(char *uplo, integer *n, integer *info, complex *a, integer *l
             {
                 /* Computing MIN */
                 r__1 = amax / umax;
-                rpvgrw = min(r__1,rpvgrw);
+                rpvgrw = fla_min(r__1,rpvgrw);
             }
         }
     }
@@ -446,7 +446,7 @@ real cla_herpvgrw_(char *uplo, integer *n, integer *info, complex *a, integer *l
             {
                 /* Computing MIN */
                 r__1 = amax / umax;
-                rpvgrw = min(r__1,rpvgrw);
+                rpvgrw = fla_min(r__1,rpvgrw);
             }
         }
     }

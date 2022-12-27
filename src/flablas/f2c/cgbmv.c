@@ -292,8 +292,8 @@ int cgbmv_(char *trans, integer *m, integer *n, integer *kl, integer *ku, comple
                     i__2 = 1, i__3 = j - *ku;
                     /* Computing MIN */
                     i__5 = *m, i__6 = j + *kl;
-                    i__4 = min(i__5,i__6);
-                    for (i__ = max(i__2,i__3);
+                    i__4 = fla_min(i__5,i__6);
+                    for (i__ = fla_max(i__2,i__3);
                             i__ <= i__4;
                             ++i__)
                     {
@@ -329,8 +329,8 @@ int cgbmv_(char *trans, integer *m, integer *n, integer *kl, integer *ku, comple
                     i__4 = 1, i__2 = j - *ku;
                     /* Computing MIN */
                     i__5 = *m, i__6 = j + *kl;
-                    i__3 = min(i__5,i__6);
-                    for (i__ = max(i__4,i__2);
+                    i__3 = fla_min(i__5,i__6);
+                    for (i__ = fla_max(i__4,i__2);
                             i__ <= i__3;
                             ++i__)
                     {
@@ -372,8 +372,8 @@ int cgbmv_(char *trans, integer *m, integer *n, integer *kl, integer *ku, comple
                     i__3 = 1, i__4 = j - *ku;
                     /* Computing MIN */
                     i__5 = *m, i__6 = j + *kl;
-                    i__2 = min(i__5,i__6);
-                    for (i__ = max(i__3,i__4);
+                    i__2 = fla_min(i__5,i__6);
+                    for (i__ = fla_max(i__3,i__4);
                             i__ <= i__2;
                             ++i__)
                     {
@@ -391,8 +391,8 @@ int cgbmv_(char *trans, integer *m, integer *n, integer *kl, integer *ku, comple
                     i__2 = 1, i__3 = j - *ku;
                     /* Computing MIN */
                     i__5 = *m, i__6 = j + *kl;
-                    i__4 = min(i__5,i__6);
-                    for (i__ = max(i__2,i__3);
+                    i__4 = fla_min(i__5,i__6);
+                    for (i__ = fla_max(i__2,i__3);
                             i__ <= i__4;
                             ++i__)
                     {
@@ -429,8 +429,8 @@ int cgbmv_(char *trans, integer *m, integer *n, integer *kl, integer *ku, comple
                     i__4 = 1, i__2 = j - *ku;
                     /* Computing MIN */
                     i__5 = *m, i__6 = j + *kl;
-                    i__3 = min(i__5,i__6);
-                    for (i__ = max(i__4,i__2);
+                    i__3 = fla_min(i__5,i__6);
+                    for (i__ = fla_max(i__4,i__2);
                             i__ <= i__3;
                             ++i__)
                     {
@@ -449,8 +449,8 @@ int cgbmv_(char *trans, integer *m, integer *n, integer *kl, integer *ku, comple
                     i__3 = 1, i__4 = j - *ku;
                     /* Computing MIN */
                     i__5 = *m, i__6 = j + *kl;
-                    i__2 = min(i__5,i__6);
-                    for (i__ = max(i__3,i__4);
+                    i__2 = fla_min(i__5,i__6);
+                    for (i__ = fla_max(i__3,i__4);
                             i__ <= i__2;
                             ++i__)
                     {

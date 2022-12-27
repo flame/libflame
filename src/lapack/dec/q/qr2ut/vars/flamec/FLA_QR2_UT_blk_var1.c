@@ -39,7 +39,7 @@ FLA_Error FLA_QR2_UT_blk_var1( FLA_Obj U,
 
   while ( FLA_Obj_min_dim( UBR ) > 0 ){
 
-    b = min( b_alg, FLA_Obj_min_dim( UBR ) );
+    b = fla_min( b_alg, FLA_Obj_min_dim( UBR ) );
 
     FLA_Repart_2x2_to_3x3( UTL, /**/ UTR,       &U00, /**/ &U01, &U02,
                         /* ************* */   /* ******************** */

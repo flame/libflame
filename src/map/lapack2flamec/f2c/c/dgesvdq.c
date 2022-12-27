@@ -100,7 +100,7 @@ static logical c_false = FALSE_;
 /* > JOBU is CHARACTER*1 */
 /* > = 'A' All M left singular vectors are computed and returned in the */
 /* > matrix U. See the description of U. */
-/* > = 'S' or 'U' N = min(M,N) left singular vectors are computed and returned */
+/* > = 'S' or 'U' N = fla_min(M,N) left singular vectors are computed and returned */
 /* > in the matrix U. See the description of U. */
 /* > = 'R' Numerical rank NUMRANK is determined and only NUMRANK left singular */
 /* > vectors are computed and returned in the matrix U. */
@@ -149,7 +149,7 @@ otherwise it is illegal. */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER. */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] S */
@@ -178,8 +178,8 @@ see the description of LDU. In this case U */
 /* > \verbatim */
 /* > LDU is INTEGER. */
 /* > The leading dimension of the array U. */
-/* > If JOBU = 'A', 'S', 'U', 'R', LDU >= max(1,M). */
-/* > If JOBU = 'F', LDU >= max(1,N). */
+/* > If JOBU = 'A', 'S', 'U', 'R', LDU >= fla_max(1,M). */
+/* > If JOBU = 'F', LDU >= fla_max(1,N). */
 /* > Otherwise, LDU >= 1. */
 /* > \endverbatim */
 /* > */
@@ -199,7 +199,7 @@ see the description of LDU. In this case U */
 /* > \verbatim */
 /* > LDV is INTEGER */
 /* > The leading dimension of the array V. */
-/* > If JOBV = 'A', 'V', 'R', or JOBA = 'E', LDV >= max(1,N). */
+/* > If JOBV = 'A', 'V', 'R', or JOBA = 'E', LDV >= fla_max(1,N). */
 /* > Otherwise, LDV >= 1. */
 /* > \endverbatim */
 /* > */
@@ -216,7 +216,7 @@ see the description of LDU. In this case U */
 /* > */
 /* > \param[out] IWORK */
 /* > \verbatim */
-/* > IWORK is INTEGER array, dimension (max(1, LIWORK)). */
+/* > IWORK is INTEGER array, dimension (fla_max(1, LIWORK)). */
 /* > On exit, IWORK(1:N) contains column pivoting permutation of the */
 /* > rank revealing QR factorization. */
 /* > If JOBP = 'P', IWORK(N+1:N+M-1) contains the indices of the sequence */
@@ -247,7 +247,7 @@ the routine */
 /* > */
 /* > \param[out] WORK */
 /* > \verbatim */
-/* > WORK is DOUBLE PRECISION array, dimension (max(2, LWORK)), used as a workspace. */
+/* > WORK is DOUBLE PRECISION array, dimension (fla_max(2, LWORK)), used as a workspace. */
 /* > On exit, if, on entry, LWORK.NE.-1, WORK(1:N) contains parameters */
 /* > needed to recover the Q factor from the QR factorization computed by */
 /* > DGEQP3. */
@@ -329,7 +329,7 @@ the routine */
 /* > */
 /* > \param[out] RWORK */
 /* > \verbatim */
-/* > RWORK is DOUBLE PRECISION array, dimension (max(1, LRWORK)). */
+/* > RWORK is DOUBLE PRECISION array, dimension (fla_max(1, LRWORK)). */
 /* > On exit, */
 /* > 1. If JOBA = 'E', RWORK(1) contains an estimate of the condition */
 /* > number of column scaled A. If A = C * D where D is diagonal and C */
@@ -523,16 +523,16 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
             /* Computing MAX */
             i__1 = 1;
             i__2 = *n + *m - 1 + *n; // , expr subst
-            iminwrk = max(i__1,i__2);
+            iminwrk = fla_max(i__1,i__2);
         }
         else
         {
             /* Computing MAX */
             i__1 = 1;
             i__2 = *n + *m - 1; // , expr subst
-            iminwrk = max(i__1,i__2);
+            iminwrk = fla_max(i__1,i__2);
         }
-        rminwrk = max(2,*m);
+        rminwrk = fla_max(2,*m);
     }
     else
     {
@@ -541,11 +541,11 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
             /* Computing MAX */
             i__1 = 1;
             i__2 = *n + *n; // , expr subst
-            iminwrk = max(i__1,i__2);
+            iminwrk = fla_max(i__1,i__2);
         }
         else
         {
-            iminwrk = max(1,*n);
+            iminwrk = fla_max(1,*n);
         }
         rminwrk = 2;
     }
@@ -583,7 +583,7 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
     {
         *info = -7;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -9;
     }
@@ -611,18 +611,18 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
         /* .. minimal workspace length for DORMQR to build left singular vectors */
         if (wntus || wntur)
         {
-            lworq = max(*n,1);
+            lworq = fla_max(*n,1);
         }
         else if (wntua)
         {
-            lworq = max(*m,1);
+            lworq = fla_max(*m,1);
         }
         /* .. minimal workspace length for DPOCON of an N x N matrix */
         lwcon = *n * 3;
         /* .. DGESVD of an N x N matrix */
         /* Computing MAX */
         i__1 = *n * 5;
-        lwsvd = max(i__1,1);
+        lwsvd = fla_max(i__1,1);
         if (lquery)
         {
             dgeqp3_(m, n, &a[a_offset], lda, &iwork[1], rdummy, rdummy, &c_n1, &ierr);
@@ -652,14 +652,14 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
             {
                 /* Computing MAX */
                 i__1 = *n + lwqp3;
-                i__1 = max(i__1,lwcon); // , expr subst
-                minwrk = max(i__1,lwsvd);
+                i__1 = fla_max(i__1,lwcon); // , expr subst
+                minwrk = fla_max(i__1,lwsvd);
             }
             else
             {
                 /* Computing MAX */
                 i__1 = *n + lwqp3;
-                minwrk = max(i__1,lwsvd);
+                minwrk = fla_max(i__1,lwsvd);
             }
             if (lquery)
             {
@@ -670,14 +670,14 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
                     /* Computing MAX */
                     i__1 = *n + lwrk_dgeqp3__;
                     i__2 = *n + lwcon;
-                    i__1 = max( i__1,i__2); // ; expr subst
-                    optwrk = max(i__1,lwrk_dgesvd__);
+                    i__1 = fla_max( i__1,i__2); // ; expr subst
+                    optwrk = fla_max(i__1,lwrk_dgesvd__);
                 }
                 else
                 {
                     /* Computing MAX */
                     i__1 = *n + lwrk_dgeqp3__;
-                    optwrk = max(i__1,lwrk_dgesvd__);
+                    optwrk = fla_max(i__1,lwrk_dgesvd__);
                 }
             }
         }
@@ -688,15 +688,15 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
             if (conda)
             {
                 /* Computing MAX */
-                i__1 = max(lwqp3,lwcon);
-                i__1 = max(i__1,lwsvd); // , expr subst
-                minwrk = *n + max(i__1,lworq);
+                i__1 = fla_max(lwqp3,lwcon);
+                i__1 = fla_max(i__1,lwsvd); // , expr subst
+                minwrk = *n + fla_max(i__1,lworq);
             }
             else
             {
                 /* Computing MAX */
-                i__1 = max(lwqp3,lwsvd);
-                minwrk = *n + max(i__1,lworq);
+                i__1 = fla_max(lwqp3,lwsvd);
+                minwrk = *n + fla_max(i__1,lworq);
             }
             if (lquery)
             {
@@ -712,15 +712,15 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
                 if (conda)
                 {
                     /* Computing MAX */
-                    i__1 = max(lwrk_dgeqp3__,lwcon);
-                    i__1 = max(i__1, lwrk_dgesvd__); // , expr subst
-                    optwrk = *n + max(i__1,lwrk_dormqr__);
+                    i__1 = fla_max(lwrk_dgeqp3__,lwcon);
+                    i__1 = fla_max(i__1, lwrk_dgesvd__); // , expr subst
+                    optwrk = *n + fla_max(i__1,lwrk_dormqr__);
                 }
                 else
                 {
                     /* Computing MAX */
-                    i__1 = max(lwrk_dgeqp3__,lwrk_dgesvd__);
-                    optwrk = *n + max(i__1,lwrk_dormqr__);
+                    i__1 = fla_max(lwrk_dgeqp3__,lwrk_dgesvd__);
+                    optwrk = *n + fla_max(i__1,lwrk_dormqr__);
                 }
             }
         }
@@ -731,12 +731,12 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
             if (conda)
             {
                 /* Computing MAX */
-                i__1 = max(lwqp3,lwcon);
-                minwrk = *n + max(i__1,lwsvd);
+                i__1 = fla_max(lwqp3,lwcon);
+                minwrk = *n + fla_max(i__1,lwsvd);
             }
             else
             {
-                minwrk = *n + max(lwqp3,lwsvd);
+                minwrk = *n + fla_max(lwqp3,lwsvd);
             }
             if (lquery)
             {
@@ -752,12 +752,12 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
                 if (conda)
                 {
                     /* Computing MAX */
-                    i__1 = max(lwrk_dgeqp3__,lwcon);
-                    optwrk = *n + max(i__1,lwrk_dgesvd__);
+                    i__1 = fla_max(lwrk_dgeqp3__,lwcon);
+                    optwrk = *n + fla_max(i__1,lwrk_dgesvd__);
                 }
                 else
                 {
-                    optwrk = *n + max(lwrk_dgeqp3__,lwrk_dgesvd__);
+                    optwrk = *n + fla_max(lwrk_dgeqp3__,lwrk_dgesvd__);
                 }
             }
         }
@@ -768,11 +768,11 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
             if (rtrans)
             {
                 /* Computing MAX */
-                i__1 = max(lwqp3,lwsvd);
-                minwrk = max(i__1,lworq);
+                i__1 = fla_max(lwqp3,lwsvd);
+                minwrk = fla_max(i__1,lworq);
                 if (conda)
                 {
-                    minwrk = max(minwrk,lwcon);
+                    minwrk = fla_max(minwrk,lwcon);
                 }
                 minwrk += *n;
                 if (wntva)
@@ -780,33 +780,33 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
                     /* .. minimal workspace length for N x N/2 DGEQRF */
                     /* Computing MAX */
                     i__1 = *n / 2;
-                    lwqrf = max(i__1,1);
+                    lwqrf = fla_max(i__1,1);
                     /* .. minimal workspace lengt for N/2 x N/2 DGESVD */
                     /* Computing MAX */
                     i__1 = *n / 2 * 5;
-                    lwsvd2 = max(i__1,1);
-                    lworq2 = max(*n,1);
+                    lwsvd2 = fla_max(i__1,1);
+                    lworq2 = fla_max(*n,1);
                     /* Computing MAX */
-                    i__1 = lwqp3, i__2 = *n / 2 + lwqrf, i__1 = max(i__1,i__2), i__2 = *n / 2 + lwsvd2, i__1 = max(i__1,i__2);
+                    i__1 = lwqp3, i__2 = *n / 2 + lwqrf, i__1 = fla_max(i__1,i__2), i__2 = *n / 2 + lwsvd2, i__1 = fla_max(i__1,i__2);
                     i__2 = *n / 2 + lworq2;
-                    i__1 = max(i__1,i__2); // ; expr subst
-                    minwrk2 = max(i__1,lworq);
+                    i__1 = fla_max(i__1,i__2); // ; expr subst
+                    minwrk2 = fla_max(i__1,lworq);
                     if (conda)
                     {
-                        minwrk2 = max(minwrk2,lwcon);
+                        minwrk2 = fla_max(minwrk2,lwcon);
                     }
                     minwrk2 = *n + minwrk2;
-                    minwrk = max(minwrk,minwrk2);
+                    minwrk = fla_max(minwrk,minwrk2);
                 }
             }
             else
             {
                 /* Computing MAX */
-                i__1 = max(lwqp3,lwsvd);
-                minwrk = max(i__1,lworq);
+                i__1 = fla_max(lwqp3,lwsvd);
+                minwrk = fla_max(i__1,lworq);
                 if (conda)
                 {
-                    minwrk = max(minwrk,lwcon);
+                    minwrk = fla_max(minwrk,lwcon);
                 }
                 minwrk += *n;
                 if (wntva)
@@ -814,22 +814,22 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
                     /* .. minimal workspace length for N/2 x N DGELQF */
                     /* Computing MAX */
                     i__1 = *n / 2;
-                    lwlqf = max(i__1,1);
+                    lwlqf = fla_max(i__1,1);
                     /* Computing MAX */
                     i__1 = *n / 2 * 5;
-                    lwsvd2 = max(i__1,1);
-                    lworlq = max(*n,1);
+                    lwsvd2 = fla_max(i__1,1);
+                    lworlq = fla_max(*n,1);
                     /* Computing MAX */
-                    i__1 = lwqp3, i__2 = *n / 2 + lwlqf, i__1 = max(i__1,i__2), i__2 = *n / 2 + lwsvd2, i__1 = max(i__1,i__2);
+                    i__1 = lwqp3, i__2 = *n / 2 + lwlqf, i__1 = fla_max(i__1,i__2), i__2 = *n / 2 + lwsvd2, i__1 = fla_max(i__1,i__2);
                     i__2 = *n / 2 + lworlq;
-                    i__1 = max(i__1,i__2); // ; expr subst
-                    minwrk2 = max(i__1,lworq);
+                    i__1 = fla_max(i__1,i__2); // ; expr subst
+                    minwrk2 = fla_max(i__1,lworq);
                     if (conda)
                     {
-                        minwrk2 = max(minwrk2,lwcon);
+                        minwrk2 = fla_max(minwrk2,lwcon);
                     }
                     minwrk2 = *n + minwrk2;
-                    minwrk = max(minwrk,minwrk2);
+                    minwrk = fla_max(minwrk,minwrk2);
                 }
             }
             if (lquery)
@@ -839,11 +839,11 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
                     dgesvd_("O", "A", n, n, &a[a_offset], lda, &s[1], &u[ u_offset], ldu, &v[v_offset], ldv, rdummy, &c_n1, &ierr);
                     lwrk_dgesvd__ = (integer) rdummy[0];
                     /* Computing MAX */
-                    i__1 = max(lwrk_dgeqp3__,lwrk_dgesvd__);
-                    optwrk = max(i__1,lwrk_dormqr__);
+                    i__1 = fla_max(lwrk_dgeqp3__,lwrk_dgesvd__);
+                    optwrk = fla_max(i__1,lwrk_dormqr__);
                     if (conda)
                     {
-                        optwrk = max(optwrk,lwcon);
+                        optwrk = fla_max(optwrk,lwcon);
                     }
                     optwrk = *n + optwrk;
                     if (wntva)
@@ -859,16 +859,16 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
                         dormqr_("R", "C", n, n, &i__1, &u[u_offset], ldu, rdummy, &v[v_offset], ldv, rdummy, &c_n1, & ierr);
                         lwrk_dormqr2__ = (integer) rdummy[0];
                         /* Computing MAX */
-                        i__1 = lwrk_dgeqp3__, i__2 = *n / 2 + lwrk_dgeqrf__, i__1 = max(i__1,i__2), i__2 = *n / 2 + lwrk_dgesvd2__;
-                        i__1 = max(i__1,i__2);
+                        i__1 = lwrk_dgeqp3__, i__2 = *n / 2 + lwrk_dgeqrf__, i__1 = fla_max(i__1,i__2), i__2 = *n / 2 + lwrk_dgesvd2__;
+                        i__1 = fla_max(i__1,i__2);
                         i__2 = *n / 2 + lwrk_dormqr2__; // ; expr subst
-                        optwrk2 = max(i__1,i__2);
+                        optwrk2 = fla_max(i__1,i__2);
                         if (conda)
                         {
-                            optwrk2 = max(optwrk2,lwcon);
+                            optwrk2 = fla_max(optwrk2,lwcon);
                         }
                         optwrk2 = *n + optwrk2;
-                        optwrk = max(optwrk,optwrk2);
+                        optwrk = fla_max(optwrk,optwrk2);
                     }
                 }
                 else
@@ -876,11 +876,11 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
                     dgesvd_("S", "O", n, n, &a[a_offset], lda, &s[1], &u[ u_offset], ldu, &v[v_offset], ldv, rdummy, &c_n1, &ierr);
                     lwrk_dgesvd__ = (integer) rdummy[0];
                     /* Computing MAX */
-                    i__1 = max(lwrk_dgeqp3__,lwrk_dgesvd__);
-                    optwrk = max(i__1,lwrk_dormqr__);
+                    i__1 = fla_max(lwrk_dgeqp3__,lwrk_dgesvd__);
+                    optwrk = fla_max(i__1,lwrk_dormqr__);
                     if (conda)
                     {
-                        optwrk = max(optwrk,lwcon);
+                        optwrk = fla_max(optwrk,lwcon);
                     }
                     optwrk = *n + optwrk;
                     if (wntva)
@@ -896,22 +896,22 @@ int dgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer
                         dormlq_("R", "N", n, n, &i__1, &u[u_offset], ldu, rdummy, &v[v_offset], ldv, rdummy, &c_n1, & ierr);
                         lwrk_dormlq__ = (integer) rdummy[0];
                         /* Computing MAX */
-                        i__1 = lwrk_dgeqp3__, i__2 = *n / 2 + lwrk_dgelqf__, i__1 = max(i__1,i__2), i__2 = *n / 2 + lwrk_dgesvd2__;
-                        i__1 = max(i__1,i__2);
+                        i__1 = lwrk_dgeqp3__, i__2 = *n / 2 + lwrk_dgelqf__, i__1 = fla_max(i__1,i__2), i__2 = *n / 2 + lwrk_dgesvd2__;
+                        i__1 = fla_max(i__1,i__2);
                         i__2 = *n / 2 + lwrk_dormlq__; // ; expr subst
-                        optwrk2 = max(i__1,i__2);
+                        optwrk2 = fla_max(i__1,i__2);
                         if (conda)
                         {
-                            optwrk2 = max(optwrk2,lwcon);
+                            optwrk2 = fla_max(optwrk2,lwcon);
                         }
                         optwrk2 = *n + optwrk2;
-                        optwrk = max(optwrk,optwrk2);
+                        optwrk = fla_max(optwrk,optwrk2);
                     }
                 }
             }
         }
-        minwrk = max(2,minwrk);
-        optwrk = max(2,optwrk);
+        minwrk = fla_max(2,minwrk);
+        optwrk = fla_max(2,optwrk);
         if (*lwork < minwrk && ! lquery)
         {
             *info = -19;
@@ -1219,7 +1219,7 @@ L3502:
             /* .. compute the singular values of R**T = [A](1:NR,1:N)**T */
             /* .. set the lower triangle of [A] to [A](1:NR,1:N)**T and */
             /* the upper triangle of [A] to zero. */
-            i__1 = min(*n,nr);
+            i__1 = fla_min(*n,nr);
             for (p = 1;
                     p <= i__1;
                     ++p)

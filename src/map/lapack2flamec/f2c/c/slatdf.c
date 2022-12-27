@@ -74,7 +74,7 @@ static real c_b37 = -1.f;
 /* > \param[in] LDZ */
 /* > \verbatim */
 /* > LDZ is INTEGER */
-/* > The leading dimension of the array Z. LDA >= max(1, N). */
+/* > The leading dimension of the array Z. LDA >= fla_max(1, N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] RHS */

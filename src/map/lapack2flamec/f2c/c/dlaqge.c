@@ -58,7 +58,7 @@
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(M,1). */
+/* > The leading dimension of the array A. LDA >= fla_max(M,1). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] R */

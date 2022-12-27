@@ -72,7 +72,7 @@ static real c_b17 = 1.f;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] AF */
@@ -85,7 +85,7 @@ static real c_b17 = 1.f;
 /* > \param[in] LDAF */
 /* > \verbatim */
 /* > LDAF is INTEGER */
-/* > The leading dimension of the array AF. LDAF >= max(1,N). */
+/* > The leading dimension of the array AF. LDAF >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] IPIV */
@@ -105,7 +105,7 @@ for 1<=i<=N, row i of the */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] X */
@@ -118,7 +118,7 @@ for 1<=i<=N, row i of the */
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(1,N). */
+/* > The leading dimension of the array X. LDX >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] FERR */
@@ -258,19 +258,19 @@ int sgerfs_(char *trans, integer *n, integer *nrhs, real *a, integer *lda, real 
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*ldaf < max(1,*n))
+    else if (*ldaf < fla_max(1,*n))
     {
         *info = -7;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -10;
     }
-    else if (*ldx < max(1,*n))
+    else if (*ldx < fla_max(1,*n))
     {
         *info = -12;
     }
@@ -322,7 +322,7 @@ L20: /* Loop until stopping criterion is satisfied. */
         scopy_(n, &b[j * b_dim1 + 1], &c__1, &work[*n + 1], &c__1);
         sgemv_(trans, n, n, &c_b15, &a[a_offset], lda, &x[j * x_dim1 + 1], & c__1, &c_b17, &work[*n + 1], &c__1);
         /* Compute componentwise relative backward error from formula */
-        /* max(i) ( f2c_abs(R(i)) / ( f2c_abs(op(A))*f2c_abs(X) + f2c_abs(B) )(i) ) */
+        /* fla_max(i) ( f2c_abs(R(i)) / ( f2c_abs(op(A))*f2c_abs(X) + f2c_abs(B) )(i) ) */
         /* where f2c_abs(Z) is the componentwise absolute value of the matrix */
         /* or vector Z. If the i-th component of the denominator is less */
         /* than SAFE2, then SAFE1 is added to the i-th components of the */
@@ -386,14 +386,14 @@ L20: /* Loop until stopping criterion is satisfied. */
                 /* Computing MAX */
                 r__2 = s;
                 r__3 = (r__1 = work[*n + i__], f2c_abs(r__1)) / work[ i__]; // , expr subst
-                s = max(r__2,r__3);
+                s = fla_max(r__2,r__3);
             }
             else
             {
                 /* Computing MAX */
                 r__2 = s;
                 r__3 = ((r__1 = work[*n + i__], f2c_abs(r__1)) + safe1) / (work[i__] + safe1); // , expr subst
-                s = max(r__2,r__3);
+                s = fla_max(r__2,r__3);
             }
             /* L80: */
         }
@@ -487,7 +487,7 @@ L100:
             /* Computing MAX */
             r__2 = lstres;
             r__3 = (r__1 = x[i__ + j * x_dim1], f2c_abs(r__1)); // , expr subst
-            lstres = max(r__2,r__3);
+            lstres = fla_max(r__2,r__3);
             /* L130: */
         }
         if (lstres != 0.f)

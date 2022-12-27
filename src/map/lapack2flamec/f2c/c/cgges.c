@@ -141,7 +141,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of A. LDA >= max(1,N). */
+/* > The leading dimension of A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -155,7 +155,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of B. LDB >= max(1,N). */
+/* > The leading dimension of B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] SDIM */
@@ -224,7 +224,7 @@ static integer c_n1 = -1;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,2*N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,2*N). */
 /* > For good performance, LWORK must generally be larger. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -418,11 +418,11 @@ int cgges_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, integer *n, comp
     {
         *info = -5;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -7;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -9;
     }
@@ -445,21 +445,21 @@ int cgges_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, integer *n, comp
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n << 1; // , expr subst
-        lwkmin = max(i__1,i__2);
+        lwkmin = fla_max(i__1,i__2);
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n + *n * ilaenv_(&c__1, "CGEQRF", " ", n, &c__1, n, &c__0); // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
         /* Computing MAX */
         i__1 = lwkopt;
         i__2 = *n + *n * ilaenv_(&c__1, "CUNMQR", " ", n, & c__1, n, &c_n1); // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
         if (ilvsl)
         {
             /* Computing MAX */
             i__1 = lwkopt;
             i__2 = *n + *n * ilaenv_(&c__1, "CUNGQR", " ", n, & c__1, n, &c_n1); // , expr subst
-            lwkopt = max(i__1,i__2);
+            lwkopt = fla_max(i__1,i__2);
         }
         work[1].r = (real) lwkopt;
         work[1].i = 0.f; // , expr subst

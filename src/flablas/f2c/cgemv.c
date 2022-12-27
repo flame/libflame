@@ -54,7 +54,7 @@ int cgemv_(char *trans, integer *m, integer *n, complex * alpha, complex *a, int
     /* LDA - INTEGER. */
     /* On entry, LDA specifies the first dimension of A as declared */
     /* in the calling (sub) program. LDA must be at least */
-    /* max( 1, m ). */
+    /* fla_max( 1, m ). */
     /* Unchanged on exit. */
     /* X - COMPLEX array of DIMENSION at least */
     /* ( 1 + ( n - 1 )*f2c_abs( INCX ) ) when TRANS = 'N' or 'n' */
@@ -116,7 +116,7 @@ int cgemv_(char *trans, integer *m, integer *n, complex * alpha, complex *a, int
     {
         info = 3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         info = 6;
     }

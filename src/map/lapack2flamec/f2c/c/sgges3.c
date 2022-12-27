@@ -142,7 +142,7 @@ i.e. if either */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of A. LDA >= max(1,N). */
+/* > The leading dimension of A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -156,7 +156,7 @@ i.e. if either */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of B. LDB >= max(1,N). */
+/* > The leading dimension of B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] SDIM */
@@ -421,11 +421,11 @@ int sgges3_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, integer *n, rea
     {
         *info = -5;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -7;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -9;
     }
@@ -448,37 +448,37 @@ int sgges3_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, integer *n, rea
         /* Computing MAX */
         i__1 = *n * 6 + 16;
         i__2 = *n * 3 + (integer) work[1]; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
         sormqr_("L", "T", n, n, n, &b[b_offset], ldb, &work[1], &a[a_offset], lda, &work[1], &c_n1, &ierr);
         /* Computing MAX */
         i__1 = lwkopt;
         i__2 = *n * 3 + (integer) work[1]; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
         if (ilvsl)
         {
             sorgqr_(n, n, n, &vsl[vsl_offset], ldvsl, &work[1], &work[1], & c_n1, &ierr);
             /* Computing MAX */
             i__1 = lwkopt;
             i__2 = *n * 3 + (integer) work[1]; // , expr subst
-            lwkopt = max(i__1,i__2);
+            lwkopt = fla_max(i__1,i__2);
         }
         sgghd3_(jobvsl, jobvsr, n, &c__1, n, &a[a_offset], lda, &b[b_offset], ldb, &vsl[vsl_offset], ldvsl, &vsr[vsr_offset], ldvsr, &work[ 1], &c_n1, &ierr);
         /* Computing MAX */
         i__1 = lwkopt;
         i__2 = *n * 3 + (integer) work[1]; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
         shgeqz_("S", jobvsl, jobvsr, n, &c__1, n, &a[a_offset], lda, &b[ b_offset], ldb, &alphar[1], &alphai[1], &beta[1], &vsl[ vsl_offset], ldvsl, &vsr[vsr_offset], ldvsr, &work[1], &c_n1, &ierr);
         /* Computing MAX */
         i__1 = lwkopt;
         i__2 = (*n << 1) + (integer) work[1]; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
         if (wantst)
         {
             stgsen_(&c__0, &ilvsl, &ilvsr, &bwork[1], n, &a[a_offset], lda, & b[b_offset], ldb, &alphar[1], &alphai[1], &beta[1], &vsl[ vsl_offset], ldvsl, &vsr[vsr_offset], ldvsr, sdim, &pvsl, &pvsr, dif, &work[1], &c_n1, idum, &c__1, &ierr);
             /* Computing MAX */
             i__1 = lwkopt;
             i__2 = (*n << 1) + (integer) work[1]; // , expr subst
-            lwkopt = max(i__1,i__2);
+            lwkopt = fla_max(i__1,i__2);
         }
         work[1] = (real) lwkopt;
     }

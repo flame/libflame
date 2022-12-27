@@ -190,11 +190,11 @@ int dlasq5_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
                     z__[j4 - 2] = d__ + z__[j4 - 1];
                     temp = z__[j4 + 1] / z__[j4 - 2];
                     d__ = d__ * temp - *tau;
-                    *dmin__ = min(*dmin__,d__);
+                    *dmin__ = fla_min(*dmin__,d__);
                     z__[j4] = z__[j4 - 1] * temp;
                     /* Computing MIN */
                     d__1 = z__[j4];
-                    emin = min(d__1,emin);
+                    emin = fla_min(d__1,emin);
                     /* L10: */
                 }
             }
@@ -208,11 +208,11 @@ int dlasq5_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
                     z__[j4 - 3] = d__ + z__[j4];
                     temp = z__[j4 + 2] / z__[j4 - 3];
                     d__ = d__ * temp - *tau;
-                    *dmin__ = min(*dmin__,d__);
+                    *dmin__ = fla_min(*dmin__,d__);
                     z__[j4 - 1] = z__[j4] * temp;
                     /* Computing MIN */
                     d__1 = z__[j4 - 1];
-                    emin = min(d__1,emin);
+                    emin = fla_min(d__1,emin);
                     /* L20: */
                 }
             }
@@ -224,14 +224,14 @@ int dlasq5_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
             z__[j4 - 2] = *dnm2 + z__[j4p2];
             z__[j4] = z__[j4p2 + 2] * (z__[j4p2] / z__[j4 - 2]);
             *dnm1 = z__[j4p2 + 2] * (*dnm2 / z__[j4 - 2]) - *tau;
-            *dmin__ = min(*dmin__,*dnm1);
+            *dmin__ = fla_min(*dmin__,*dnm1);
             *dmin1 = *dmin__;
             j4 += 4;
             j4p2 = j4 + (*pp << 1) - 1;
             z__[j4 - 2] = *dnm1 + z__[j4p2];
             z__[j4] = z__[j4p2 + 2] * (z__[j4p2] / z__[j4 - 2]);
             *dn = z__[j4p2 + 2] * (*dnm1 / z__[j4 - 2]) - *tau;
-            *dmin__ = min(*dmin__,*dn);
+            *dmin__ = fla_min(*dmin__,*dn);
         }
         else
         {
@@ -254,11 +254,11 @@ int dlasq5_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
                         z__[j4] = z__[j4 + 1] * (z__[j4 - 1] / z__[j4 - 2]);
                         d__ = z__[j4 + 1] * (d__ / z__[j4 - 2]) - *tau;
                     }
-                    *dmin__ = min(*dmin__,d__);
+                    *dmin__ = fla_min(*dmin__,d__);
                     /* Computing MIN */
                     d__1 = emin;
                     d__2 = z__[j4]; // , expr subst
-                    emin = min(d__1,d__2);
+                    emin = fla_min(d__1,d__2);
                     /* L30: */
                 }
             }
@@ -280,11 +280,11 @@ int dlasq5_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
                         z__[j4 - 1] = z__[j4 + 2] * (z__[j4] / z__[j4 - 3]);
                         d__ = z__[j4 + 2] * (d__ / z__[j4 - 3]) - *tau;
                     }
-                    *dmin__ = min(*dmin__,d__);
+                    *dmin__ = fla_min(*dmin__,d__);
                     /* Computing MIN */
                     d__1 = emin;
                     d__2 = z__[j4 - 1]; // , expr subst
-                    emin = min(d__1,d__2);
+                    emin = fla_min(d__1,d__2);
                     /* L40: */
                 }
             }
@@ -304,7 +304,7 @@ int dlasq5_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
                 z__[j4] = z__[j4p2 + 2] * (z__[j4p2] / z__[j4 - 2]);
                 *dnm1 = z__[j4p2 + 2] * (*dnm2 / z__[j4 - 2]) - *tau;
             }
-            *dmin__ = min(*dmin__,*dnm1);
+            *dmin__ = fla_min(*dmin__,*dnm1);
             *dmin1 = *dmin__;
             j4 += 4;
             j4p2 = j4 + (*pp << 1) - 1;
@@ -319,7 +319,7 @@ int dlasq5_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
                 z__[j4] = z__[j4p2 + 2] * (z__[j4p2] / z__[j4 - 2]);
                 *dn = z__[j4p2 + 2] * (*dnm1 / z__[j4 - 2]) - *tau;
             }
-            *dmin__ = min(*dmin__,*dn);
+            *dmin__ = fla_min(*dmin__,*dn);
         }
     }
     else
@@ -347,11 +347,11 @@ int dlasq5_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
                     {
                         d__ = 0.;
                     }
-                    *dmin__ = min(*dmin__,d__);
+                    *dmin__ = fla_min(*dmin__,d__);
                     z__[j4] = z__[j4 - 1] * temp;
                     /* Computing MIN */
                     d__1 = z__[j4];
-                    emin = min(d__1,emin);
+                    emin = fla_min(d__1,emin);
                     /* L50: */
                 }
             }
@@ -369,11 +369,11 @@ int dlasq5_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
                     {
                         d__ = 0.;
                     }
-                    *dmin__ = min(*dmin__,d__);
+                    *dmin__ = fla_min(*dmin__,d__);
                     z__[j4 - 1] = z__[j4] * temp;
                     /* Computing MIN */
                     d__1 = z__[j4 - 1];
-                    emin = min(d__1,emin);
+                    emin = fla_min(d__1,emin);
                     /* L60: */
                 }
             }
@@ -385,14 +385,14 @@ int dlasq5_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
             z__[j4 - 2] = *dnm2 + z__[j4p2];
             z__[j4] = z__[j4p2 + 2] * (z__[j4p2] / z__[j4 - 2]);
             *dnm1 = z__[j4p2 + 2] * (*dnm2 / z__[j4 - 2]) - *tau;
-            *dmin__ = min(*dmin__,*dnm1);
+            *dmin__ = fla_min(*dmin__,*dnm1);
             *dmin1 = *dmin__;
             j4 += 4;
             j4p2 = j4 + (*pp << 1) - 1;
             z__[j4 - 2] = *dnm1 + z__[j4p2];
             z__[j4] = z__[j4p2 + 2] * (z__[j4p2] / z__[j4 - 2]);
             *dn = z__[j4p2 + 2] * (*dnm1 / z__[j4 - 2]) - *tau;
-            *dmin__ = min(*dmin__,*dn);
+            *dmin__ = fla_min(*dmin__,*dn);
         }
         else
         {
@@ -419,11 +419,11 @@ int dlasq5_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
                     {
                         d__ = 0.;
                     }
-                    *dmin__ = min(*dmin__,d__);
+                    *dmin__ = fla_min(*dmin__,d__);
                     /* Computing MIN */
                     d__1 = emin;
                     d__2 = z__[j4]; // , expr subst
-                    emin = min(d__1,d__2);
+                    emin = fla_min(d__1,d__2);
                     /* L70: */
                 }
             }
@@ -449,11 +449,11 @@ int dlasq5_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
                     {
                         d__ = 0.;
                     }
-                    *dmin__ = min(*dmin__,d__);
+                    *dmin__ = fla_min(*dmin__,d__);
                     /* Computing MIN */
                     d__1 = emin;
                     d__2 = z__[j4 - 1]; // , expr subst
-                    emin = min(d__1,d__2);
+                    emin = fla_min(d__1,d__2);
                     /* L80: */
                 }
             }
@@ -473,7 +473,7 @@ int dlasq5_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
                 z__[j4] = z__[j4p2 + 2] * (z__[j4p2] / z__[j4 - 2]);
                 *dnm1 = z__[j4p2 + 2] * (*dnm2 / z__[j4 - 2]) - *tau;
             }
-            *dmin__ = min(*dmin__,*dnm1);
+            *dmin__ = fla_min(*dmin__,*dnm1);
             *dmin1 = *dmin__;
             j4 += 4;
             j4p2 = j4 + (*pp << 1) - 1;
@@ -488,7 +488,7 @@ int dlasq5_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
                 z__[j4] = z__[j4p2 + 2] * (z__[j4p2] / z__[j4 - 2]);
                 *dn = z__[j4p2 + 2] * (*dnm1 / z__[j4 - 2]) - *tau;
             }
-            *dmin__ = min(*dmin__,*dn);
+            *dmin__ = fla_min(*dmin__,*dn);
         }
     }
     z__[j4 + 2] = *dn;

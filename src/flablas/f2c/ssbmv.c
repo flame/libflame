@@ -256,7 +256,7 @@ int ssbmv_(char *uplo, integer *n, integer *k, real *alpha, real *a, integer *ld
                 /* Computing MAX */
                 i__2 = 1, i__3 = j - *k;
                 i__4 = j - 1;
-                for (i__ = max(i__2,i__3);
+                for (i__ = fla_max(i__2,i__3);
                         i__ <= i__4;
                         ++i__)
                 {
@@ -285,7 +285,7 @@ int ssbmv_(char *uplo, integer *n, integer *k, real *alpha, real *a, integer *ld
                 /* Computing MAX */
                 i__4 = 1, i__2 = j - *k;
                 i__3 = j - 1;
-                for (i__ = max(i__4,i__2);
+                for (i__ = fla_max(i__4,i__2);
                         i__ <= i__3;
                         ++i__)
                 {
@@ -323,7 +323,7 @@ int ssbmv_(char *uplo, integer *n, integer *k, real *alpha, real *a, integer *ld
                 l = 1 - j;
                 /* Computing MIN */
                 i__4 = *n, i__2 = j + *k;
-                i__3 = min(i__4,i__2);
+                i__3 = fla_min(i__4,i__2);
                 for (i__ = j + 1;
                         i__ <= i__3;
                         ++i__)
@@ -353,7 +353,7 @@ int ssbmv_(char *uplo, integer *n, integer *k, real *alpha, real *a, integer *ld
                 iy = jy;
                 /* Computing MIN */
                 i__4 = *n, i__2 = j + *k;
-                i__3 = min(i__4,i__2);
+                i__3 = fla_min(i__4,i__2);
                 for (i__ = j + 1;
                         i__ <= i__3;
                         ++i__)

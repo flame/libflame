@@ -96,7 +96,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] T */
@@ -121,16 +121,16 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > LDT is INTEGER */
 /* > The leading dimension of the array T. */
-/* > LDT >= max(1,min(NB,N)). */
+/* > LDT >= fla_max(1,fla_min(NB,N)). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] D */
 /* > \verbatim */
-/* > D is COMPLEX*16 array, dimension min(M,N). */
+/* > D is COMPLEX*16 array, dimension fla_min(M,N). */
 /* > The elements can be only plus or minus one. */
 /* > */
 /* > D(i) is constructed as D(i) = -SIGN(Q_in_i(i,i)), where */
-/* > 1 <= i <= min(M,N), and Q_in_i is Q_in after performing */
+/* > 1 <= i <= fla_min(M,N), and Q_in_i is Q_in after performing */
 /* > i-1 steps of “modified” Gaussian elimination. */
 /* > See Further Details. */
 /* > \endverbatim */
@@ -320,7 +320,7 @@ int zunhr_col_(integer *m, integer *n, integer *nb, doublecomplex *a, integer *l
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }
@@ -328,8 +328,8 @@ int zunhr_col_(integer *m, integer *n, integer *nb, doublecomplex *a, integer *l
     {
         /* Computing MAX */
         i__1 = 1;
-        i__2 = min(*nb,*n); // , expr subst
-        if (*ldt < max(i__1,i__2))
+        i__2 = fla_min(*nb,*n); // , expr subst
+        if (*ldt < fla_max(i__1,i__2))
         {
             *info = -7;
         }
@@ -343,7 +343,7 @@ int zunhr_col_(integer *m, integer *n, integer *nb, doublecomplex *a, integer *l
         return 0;
     }
     /* Quick return if possible */
-    if (min(*m,*n) == 0)
+    if (fla_min(*m,*n) == 0)
     {
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
@@ -379,7 +379,7 @@ int zunhr_col_(integer *m, integer *n, integer *nb, doublecomplex *a, integer *l
         /* (2-0) Determine the column block size JNB. */
         /* Computing MIN */
         i__3 = nplusone - jb;
-        jnb = min(i__3,*nb);
+        jnb = fla_min(i__3,*nb);
         /* (2-1) Copy the upper-triangular part of the current JNB-by-JNB */
         /* diagonal block U(JB) (of the N-by-N matrix U) stored */
         /* in A(JB:JB+JNB-1,JB:JB+JNB-1) into the upper-triangular part */

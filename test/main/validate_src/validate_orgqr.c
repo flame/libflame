@@ -44,7 +44,7 @@ void validate_orgqr(integer m,
                compute norm(I - Q*Q') / (N * EPS)*/
             resid2 = (float)check_orthogonality(datatype, Q, m, k, m);
 
-            *residual = (double)max(resid1, resid2);
+            *residual = (double)fla_max(resid1, resid2);
             break;
         }
         case DOUBLE:
@@ -64,7 +64,7 @@ void validate_orgqr(integer m,
                compute norm(I - Q*Q') / (N * EPS)*/
             resid2 = check_orthogonality(datatype, Q, m, k, m);
    
-            *residual = (double)max(resid1, resid2);
+            *residual = (double)fla_max(resid1, resid2);
             break;
         }
         case COMPLEX:
@@ -84,7 +84,7 @@ void validate_orgqr(integer m,
                compute norm(I - Q*Q') / (N * EPS)*/
             resid2 = (float)check_orthogonality(datatype, Q, m, k, m);
 
-            *residual = (double)max(resid1, resid2);
+            *residual = (double)fla_max(resid1, resid2);
             break;
         }
         case DOUBLE_COMPLEX:
@@ -104,7 +104,7 @@ void validate_orgqr(integer m,
                compute norm(I - Q*Q') / (N * EPS)*/
             resid2 = check_orthogonality(datatype, Q, m, k, m);
 
-            *residual = (double)max(resid1, resid2);
+            *residual = (double)fla_max(resid1, resid2);
             break;
         }
     }

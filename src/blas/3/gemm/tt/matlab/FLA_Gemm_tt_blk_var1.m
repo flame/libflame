@@ -19,7 +19,7 @@ function [ C_out ] = FLA_Gemm_tt_blk_var1( alpha, A, B, C, nb_alg )
 
   while ( size( AL, 2 ) < size( A, 2 ) )
 
-    b = min( size( AR, 2 ), nb_alg );
+    b = fla_min( size( AR, 2 ), nb_alg );
 
     [ A0, A1, A2 ]= FLA_Repart_1x2_to_1x3( AL, AR, ...
                                          b, 'FLA_RIGHT' );

@@ -64,7 +64,7 @@
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] R */
@@ -179,7 +179,7 @@ int sgeequ_(integer *m, integer *n, real *a, integer *lda, real *r__, real *c__,
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
@@ -225,7 +225,7 @@ int sgeequ_(integer *m, integer *n, real *a, integer *lda, real *r__, real *c__,
             /* Computing MAX */
             r__2 = r__[i__];
             r__3 = (r__1 = a[i__ + j * a_dim1], f2c_abs(r__1)); // , expr subst
-            r__[i__] = max(r__2,r__3);
+            r__[i__] = fla_max(r__2,r__3);
             /* L20: */
         }
         /* L30: */
@@ -241,11 +241,11 @@ int sgeequ_(integer *m, integer *n, real *a, integer *lda, real *r__, real *c__,
         /* Computing MAX */
         r__1 = rcmax;
         r__2 = r__[i__]; // , expr subst
-        rcmax = max(r__1,r__2);
+        rcmax = fla_max(r__1,r__2);
         /* Computing MIN */
         r__1 = rcmin;
         r__2 = r__[i__]; // , expr subst
-        rcmin = min(r__1,r__2);
+        rcmin = fla_min(r__1,r__2);
         /* L40: */
     }
     *amax = rcmax;
@@ -277,12 +277,12 @@ int sgeequ_(integer *m, integer *n, real *a, integer *lda, real *r__, real *c__,
             /* Computing MIN */
             /* Computing MAX */
             r__2 = r__[i__];
-            r__1 = max(r__2,smlnum);
-            r__[i__] = 1.f / min(r__1,bignum);
+            r__1 = fla_max(r__2,smlnum);
+            r__[i__] = 1.f / fla_min(r__1,bignum);
             /* L60: */
         }
-        /* Compute ROWCND = min(R(I)) / max(R(I)) */
-        *rowcnd = max(rcmin,smlnum) / min(rcmax,bignum);
+        /* Compute ROWCND = fla_min(R(I)) / fla_max(R(I)) */
+        *rowcnd = fla_max(rcmin,smlnum) / fla_min(rcmax,bignum);
     }
     /* Compute column scale factors */
     i__1 = *n;
@@ -308,7 +308,7 @@ int sgeequ_(integer *m, integer *n, real *a, integer *lda, real *r__, real *c__,
             /* Computing MAX */
             r__2 = c__[j];
             r__3 = (r__1 = a[i__ + j * a_dim1], f2c_abs(r__1)) * r__[i__]; // , expr subst
-            c__[j] = max(r__2,r__3);
+            c__[j] = fla_max(r__2,r__3);
             /* L80: */
         }
         /* L90: */
@@ -324,11 +324,11 @@ int sgeequ_(integer *m, integer *n, real *a, integer *lda, real *r__, real *c__,
         /* Computing MIN */
         r__1 = rcmin;
         r__2 = c__[j]; // , expr subst
-        rcmin = min(r__1,r__2);
+        rcmin = fla_min(r__1,r__2);
         /* Computing MAX */
         r__1 = rcmax;
         r__2 = c__[j]; // , expr subst
-        rcmax = max(r__1,r__2);
+        rcmax = fla_max(r__1,r__2);
         /* L100: */
     }
     if (rcmin == 0.f)
@@ -359,12 +359,12 @@ int sgeequ_(integer *m, integer *n, real *a, integer *lda, real *r__, real *c__,
             /* Computing MIN */
             /* Computing MAX */
             r__2 = c__[j];
-            r__1 = max(r__2,smlnum);
-            c__[j] = 1.f / min(r__1,bignum);
+            r__1 = fla_max(r__2,smlnum);
+            c__[j] = 1.f / fla_min(r__1,bignum);
             /* L120: */
         }
-        /* Compute COLCND = min(C(J)) / max(C(J)) */
-        *colcnd = max(rcmin,smlnum) / min(rcmax,bignum);
+        /* Compute COLCND = fla_min(C(J)) / fla_max(C(J)) */
+        *colcnd = fla_max(rcmin,smlnum) / fla_min(rcmax,bignum);
     }
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;

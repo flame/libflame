@@ -71,9 +71,9 @@ static integer c__1 = 1;
 /* > A = U**H *U or A = L*L**H of the band matrix A, stored in the */
 /* > first KD+1 rows of the array. The j-th column of U or L is */
 /* > stored in the j-th column of the array AB as follows: */
-/* > if UPLO ='U', AB(kd+1+i-j,j) = U(i,j) for max(1,j-kd)<=i<=j;
+/* > if UPLO ='U', AB(kd+1+i-j,j) = U(i,j) for fla_max(1,j-kd)<=i<=j;
 */
-/* > if UPLO ='L', AB(1+i-j,j) = L(i,j) for j<=i<=min(n,j+kd). */
+/* > if UPLO ='L', AB(1+i-j,j) = L(i,j) for j<=i<=fla_min(n,j+kd). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDAB */
@@ -92,7 +92,7 @@ static integer c__1 = 1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -173,7 +173,7 @@ int zpbtrs_(char *uplo, integer *n, integer *kd, integer * nrhs, doublecomplex *
     {
         *info = -6;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -8;
     }

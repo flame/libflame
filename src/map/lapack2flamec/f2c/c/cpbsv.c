@@ -79,9 +79,9 @@
 /* > matrix A, stored in the first KD+1 rows of the array. The */
 /* > j-th column of A is stored in the j-th column of the array AB */
 /* > as follows: */
-/* > if UPLO = 'U', AB(KD+1+i-j,j) = A(i,j) for max(1,j-KD)<=i<=j;
+/* > if UPLO = 'U', AB(KD+1+i-j,j) = A(i,j) for fla_max(1,j-KD)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(N,j+KD). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(N,j+KD). */
 /* > See below for further details. */
 /* > */
 /* > On exit, if INFO = 0, the triangular factor U or L from the */
@@ -105,7 +105,7 @@
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -216,7 +216,7 @@ int cpbsv_(char *uplo, integer *n, integer *kd, integer * nrhs, complex *ab, int
     {
         *info = -6;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -8;
     }

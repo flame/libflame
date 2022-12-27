@@ -106,7 +106,7 @@ geqrt2_float_parameters:: geqrt2_float_parameters (int matrix_layout_i, lapack_i
 	ldt = ldt_i;
 
 	A = (float *)malloc(lda*m*sizeof(float)) ;
-	t = (float *)malloc(ldt*(min(m,n))*sizeof(float)) ;
+	t = (float *)malloc(ldt*(fla_min(m,n))*sizeof(float)) ;
 	if ((A==NULL) || (t==NULL)){
 		printf("error of memory allocation. Exiting ...\n");
 		free(A); free(t);
@@ -115,7 +115,7 @@ geqrt2_float_parameters:: geqrt2_float_parameters (int matrix_layout_i, lapack_i
 
 	/* Allocation of memory for capturing reference o/ps */
 	Aref = (float *)malloc(lda*n*sizeof(float)) ;
-	tref = (float *)malloc(ldt*(min(m,n))*sizeof(float)) ;
+	tref = (float *)malloc(ldt*(fla_min(m,n))*sizeof(float)) ;
 	if ((Aref==NULL) || (t==NULL)){
 		printf("error of memory allocation. Exiting ...\n");
 		free(Aref); free(tref);
@@ -127,7 +127,7 @@ geqrt2_float_parameters:: geqrt2_float_parameters (int matrix_layout_i, lapack_i
 		Aref[i] = A[i];
 	}
 
-	for(i=0;i<(ldt*(min(m,n)));i++) {
+	for(i=0;i<(ldt*(fla_min(m,n)));i++) {
 		t[i] = ((float) rand()) / ((float) RAND_MAX) - 0.5;
 		tref[i] = t[i];
 	}
@@ -165,7 +165,7 @@ geqrt2_double_parameters::geqrt2_double_parameters(int matrix_layout_i, lapack_i
 	ldt = ldt_i;
 
 	A = (double*)malloc(lda * n * sizeof(double));
-	t = (double*)malloc(ldt*(min(m,n))* sizeof(double));
+	t = (double*)malloc(ldt*(fla_min(m,n))* sizeof(double));
 	if ((A == NULL) || (t == NULL)) {
 		printf("error of memory allocation. Exiting ...\n");
 		free(A); free(t);
@@ -174,7 +174,7 @@ geqrt2_double_parameters::geqrt2_double_parameters(int matrix_layout_i, lapack_i
 
 	/* Allocation of memory for capturing reference o/ps */
 	Aref = (double*)malloc(lda * n * sizeof(double));
-	tref = (double*)malloc(ldt*(min(m,n))* sizeof(double));
+	tref = (double*)malloc(ldt*(fla_min(m,n))* sizeof(double));
 	if ((Aref == NULL) || (tref == NULL)) {
 		printf("error of memory allocation. Exiting ...\n");
 		free(Aref); free(tref);
@@ -186,7 +186,7 @@ geqrt2_double_parameters::geqrt2_double_parameters(int matrix_layout_i, lapack_i
 		Aref[i] = A[i];
 	}
 
-	for (i = 0; i < ldt*(min(m,n)); i++) {
+	for (i = 0; i < ldt*(fla_min(m,n)); i++) {
 		t[i] = ((double)rand()) / ((double)RAND_MAX) - 0.5;
 		tref[i] = t[i];
 	}
@@ -224,7 +224,7 @@ geqrt2_complex_parameters::geqrt2_complex_parameters(int matrix_layout_i, lapack
 	ldt = ldt_i;
 
 	A = (lapack_complex_float*)malloc(lda * n * sizeof(lapack_complex_float));
-	t = (lapack_complex_float*)malloc(ldt*(min(m,n)) * sizeof(lapack_complex_float));
+	t = (lapack_complex_float*)malloc(ldt*(fla_min(m,n)) * sizeof(lapack_complex_float));
 	if ((A == NULL) || (t == NULL)) {
 		printf("error of memory allocation. Exiting ...\n");
 		free(A); free(t);
@@ -233,7 +233,7 @@ geqrt2_complex_parameters::geqrt2_complex_parameters(int matrix_layout_i, lapack
 
 	/* Allocation of memory for capturing reference o/ps */
 	Aref = (lapack_complex_float*)malloc(lda * n * sizeof(lapack_complex_float));
-	tref = (lapack_complex_float*)malloc(ldt*(min(m,n)) * sizeof(lapack_complex_float));
+	tref = (lapack_complex_float*)malloc(ldt*(fla_min(m,n)) * sizeof(lapack_complex_float));
 	if ((Aref == NULL) || (tref == NULL)) {
 		printf("error of memory allocation. Exiting ...\n");
 		free(Aref); free(tref);
@@ -245,7 +245,7 @@ geqrt2_complex_parameters::geqrt2_complex_parameters(int matrix_layout_i, lapack
 		Aref[i] = A[i];
 	}
 
-	for (i = 0; i < ldt*(min(m,n)); i++) {
+	for (i = 0; i < ldt*(fla_min(m,n)); i++) {
 		t[i] = ((lapack_complex_float)rand()) / ((lapack_complex_float)RAND_MAX) - 0.5;
 		tref[i] = t[i];
 	}
@@ -282,7 +282,7 @@ geqrt2_complex_double_parameters::geqrt2_complex_double_parameters(int matrix_la
 	ldt = ldt_i;
 
 	A = (lapack_complex_double*)malloc(lda * n * sizeof(lapack_complex_double));
-	t = (lapack_complex_double*)malloc(ldt*(min(m,n)) * sizeof(lapack_complex_double));
+	t = (lapack_complex_double*)malloc(ldt*(fla_min(m,n)) * sizeof(lapack_complex_double));
 	if ((A == NULL) || (t == NULL)) {
 		printf("error of memory allocation. Exiting ...\n");
 		free(A); free(t);
@@ -291,7 +291,7 @@ geqrt2_complex_double_parameters::geqrt2_complex_double_parameters(int matrix_la
 
 	/* Allocation of memory for capturing reference o/ps */
 	Aref = (lapack_complex_double*)malloc(lda * n * sizeof(lapack_complex_double));
-	tref = (lapack_complex_double*)malloc(ldt*(min(m,n)) * sizeof(lapack_complex_double));
+	tref = (lapack_complex_double*)malloc(ldt*(fla_min(m,n)) * sizeof(lapack_complex_double));
 	if ((Aref == NULL) || (tref == NULL)) {
 		printf("error of memory allocation. Exiting ...\n");
 		free(Aref); free(tref);
@@ -303,7 +303,7 @@ geqrt2_complex_double_parameters::geqrt2_complex_double_parameters(int matrix_la
 		Aref[i] = A[i];
 	}
 
-	for (i = 0; i < ldt*(min(m,n)); i++) {
+	for (i = 0; i < ldt*(fla_min(m,n)); i++) {
 		t[i] = ((lapack_complex_double)rand()) / ((lapack_complex_double)RAND_MAX) - 0.5;
 		tref[i] = t[i];
 	}

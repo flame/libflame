@@ -30,7 +30,7 @@ int Gemm_blk_var3( FLA_Obj A, FLA_Obj B, FLA_Obj C, int nb_alg )
 
   while ( FLA_Obj_length( AT ) < FLA_Obj_length( A ) ){
 
-    b = min( FLA_Obj_length( AB ), nb_alg );
+    b = fla_min( FLA_Obj_length( AB ), nb_alg );
 
     FLA_Repart_2x1_to_3x1( AT,                &A0, 
                         /* ** */            /* ** */

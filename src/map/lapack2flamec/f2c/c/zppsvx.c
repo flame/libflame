@@ -196,7 +196,7 @@ if EQUED = 'Y', */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] X */
@@ -211,7 +211,7 @@ if EQUED = 'Y', */
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(1,N). */
+/* > The leading dimension of the array X. LDX >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RCOND */
@@ -416,11 +416,11 @@ int zppsvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublecomplex *a
                 /* Computing MIN */
                 d__1 = smin;
                 d__2 = s[j]; // , expr subst
-                smin = min(d__1,d__2);
+                smin = fla_min(d__1,d__2);
                 /* Computing MAX */
                 d__1 = smax;
                 d__2 = s[j]; // , expr subst
-                smax = max(d__1,d__2);
+                smax = fla_max(d__1,d__2);
                 /* L10: */
             }
             if (smin <= 0.)
@@ -429,7 +429,7 @@ int zppsvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublecomplex *a
             }
             else if (*n > 0)
             {
-                scond = max(smin,smlnum) / min(smax,bignum);
+                scond = fla_max(smin,smlnum) / fla_min(smax,bignum);
             }
             else
             {
@@ -438,11 +438,11 @@ int zppsvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublecomplex *a
         }
         if (*info == 0)
         {
-            if (*ldb < max(1,*n))
+            if (*ldb < fla_max(1,*n))
             {
                 *info = -10;
             }
-            else if (*ldx < max(1,*n))
+            else if (*ldx < fla_max(1,*n))
             {
                 *info = -12;
             }

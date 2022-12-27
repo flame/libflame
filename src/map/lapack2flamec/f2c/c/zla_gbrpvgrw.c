@@ -68,7 +68,7 @@
 /* > On entry, the matrix A in band storage, in rows 1 to KL+KU+1. */
 /* > The j-th column of A is stored in the j-th column of the */
 /* > array AB as follows: */
-/* > AB(KU+1+i-j,j) = A(i,j) for max(1,j-KU)<=i<=min(N,j+kl) */
+/* > AB(KU+1+i-j,j) = A(i,j) for fla_max(1,j-KU)<=i<=fla_min(N,j+kl) */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDAB */
@@ -152,33 +152,33 @@ doublereal zla_gbrpvgrw_(integer *n, integer *kl, integer *ku, integer * ncols, 
         i__2 = j - *ku;
         /* Computing MIN */
         i__4 = j + *kl;
-        i__3 = min(i__4,*n);
-        for (i__ = max(i__2,1);
+        i__3 = fla_min(i__4,*n);
+        for (i__ = fla_max(i__2,1);
                 i__ <= i__3;
                 ++i__)
         {
             /* Computing MAX */
             i__2 = kd + i__ - j + j * ab_dim1;
             d__3 = (d__1 = ab[i__2].r, f2c_dabs(d__1)) + (d__2 = d_imag(&ab[kd + i__ - j + j * ab_dim1]), f2c_dabs(d__2));
-            amax = max(d__3,amax);
+            amax = fla_max(d__3,amax);
         }
         /* Computing MAX */
         i__3 = j - *ku;
         i__2 = j;
-        for (i__ = max(i__3,1);
+        for (i__ = fla_max(i__3,1);
                 i__ <= i__2;
                 ++i__)
         {
             /* Computing MAX */
             i__3 = kd + i__ - j + j * afb_dim1;
             d__3 = (d__1 = afb[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&afb[kd + i__ - j + j * afb_dim1]), f2c_dabs(d__2));
-            umax = max(d__3,umax);
+            umax = fla_max(d__3,umax);
         }
         if (umax != 0.)
         {
             /* Computing MIN */
             d__1 = amax / umax;
-            rpvgrw = min(d__1,rpvgrw);
+            rpvgrw = fla_min(d__1,rpvgrw);
         }
     }
     ret_val = rpvgrw;

@@ -92,9 +92,9 @@ static doublereal c_b13 = 0.;
 /* > matrix A, stored in the first ka+1 rows of the array. The */
 /* > j-th column of A is stored in the j-th column of the array AB */
 /* > as follows: */
-/* > if UPLO = 'U', AB(ka+1+i-j,j) = A(i,j) for max(1,j-ka)<=i<=j;
+/* > if UPLO = 'U', AB(ka+1+i-j,j) = A(i,j) for fla_max(1,j-ka)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(n,j+ka). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(n,j+ka). */
 /* > */
 /* > On exit, the contents of AB are destroyed. */
 /* > \endverbatim */
@@ -112,9 +112,9 @@ static doublereal c_b13 = 0.;
 /* > matrix B, stored in the first kb+1 rows of the array. The */
 /* > j-th column of B is stored in the j-th column of the array BB */
 /* > as follows: */
-/* > if UPLO = 'U', BB(ka+1+i-j,j) = B(i,j) for max(1,j-kb)<=i<=j;
+/* > if UPLO = 'U', BB(ka+1+i-j,j) = B(i,j) for fla_max(1,j-kb)<=i<=j;
 */
-/* > if UPLO = 'L', BB(1+i-j,j) = B(i,j) for j<=i<=min(n,j+kb). */
+/* > if UPLO = 'L', BB(1+i-j,j) = B(i,j) for j<=i<=fla_min(n,j+kb). */
 /* > */
 /* > On exit, the factor S from the split Cholesky factorization */
 /* > B = S**T*S, as returned by DPBSTF. */
@@ -146,7 +146,7 @@ static doublereal c_b13 = 0.;
 /* > \verbatim */
 /* > LDZ is INTEGER */
 /* > The leading dimension of the array Z. LDZ >= 1, and if */
-/* > JOBZ = 'V', LDZ >= max(1,N). */
+/* > JOBZ = 'V', LDZ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */

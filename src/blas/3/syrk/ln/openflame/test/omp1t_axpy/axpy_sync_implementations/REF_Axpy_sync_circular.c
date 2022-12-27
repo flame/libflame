@@ -36,7 +36,7 @@ FLA_Error REF_Axpy_sync_circular( FLA_Obj alpha, FLA_Obj X, FLA_Obj B )
   {
     if( j >= x_n ) j = 0; 
 
-    b = min( x_n-j, nb_alg );
+    b = fla_min( x_n-j, nb_alg );
 
     /*------------------------------------------------------------*/
 

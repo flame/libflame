@@ -77,7 +77,7 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > Q is INTEGER */
 /* > The number of columns in X11 and X21. 0 <= Q <= M and */
-/* > M-Q <= min(P,M-P,Q). */
+/* > M-Q <= fla_min(P,M-P,Q). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] X11 */
@@ -282,7 +282,7 @@ int zunbdb4_(integer *m, integer *p, integer *q, doublecomplex *x11, integer *ld
     {
         *info = -3;
     }
-    else if (*ldx11 < max(1,*p))
+    else if (*ldx11 < fla_max(1,*p))
     {
         *info = -5;
     }
@@ -291,7 +291,7 @@ int zunbdb4_(integer *m, integer *p, integer *q, doublecomplex *x11, integer *ld
         /* Computing MAX */
         i__1 = 1;
         i__2 = *m - *p; // , expr subst
-        if (*ldx21 < max(i__1,i__2))
+        if (*ldx21 < fla_max(i__1,i__2))
         {
             *info = -7;
         }
@@ -302,16 +302,16 @@ int zunbdb4_(integer *m, integer *p, integer *q, doublecomplex *x11, integer *ld
         ilarf = 2;
         /* Computing MAX */
         i__1 = *q - 1, i__2 = *p - 1;
-        i__1 = max(i__1,i__2);
+        i__1 = fla_max(i__1,i__2);
         i__2 = *m - *p - 1; // ; expr subst
-        llarf = max(i__1,i__2);
+        llarf = fla_max(i__1,i__2);
         iorbdb5 = 2;
         lorbdb5 = *q;
         lworkopt = ilarf + llarf - 1;
         /* Computing MAX */
         i__1 = lworkopt;
         i__2 = iorbdb5 + lorbdb5 - 1; // , expr subst
-        lworkopt = max(i__1,i__2);
+        lworkopt = fla_max(i__1,i__2);
         lworkmin = lworkopt;
         work[1].r = (doublereal) lworkopt;
         work[1].i = 0.; // , expr subst

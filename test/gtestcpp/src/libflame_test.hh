@@ -992,16 +992,16 @@ void print_array(char *arrayname, T *array, integer arraysize)
           A = P*L*U; the unit diagonal elements of L are not stored.
  * @params[in] lda
           LDA is INTEGER
-          The leading dimension of the array A.  LDA >= max(1,M).
+          The leading dimension of the array A.  LDA >= fla_max(1,M).
  * @params[in] ipivbuff
-          IPIV is INTEGER array, dimension (min(M,N))
-          The pivot indices; for 1 <= i <= min(M,N), row i of the
+          IPIV is INTEGER array, dimension (fla_min(M,N))
+          The pivot indices; for 1 <= i <= fla_min(M,N), row i of the
           matrix was interchanged with row IPIV(i).
  * @params[in] arefbuff
           arefbuff is REAL array, dimension (LDA,N)
           arefbuff is similar to abuff & used for reference C function.
  * @params[in] ipivrefbuff
-          ipivrefbuff is INTEGER array, dimension (min(M,N))
+          ipivrefbuff is INTEGER array, dimension (fla_min(M,N))
           ipivrefbuff is similar to ipivbuff & used for reference C function.
  * @params[out] info_cpp
           info_cpp is integer to get INFO returned by CPP function.
@@ -1044,7 +1044,7 @@ void getrf_internal(integer m, integer n, T* abuff,
     PRINTF("n = %d\n", n);
     PRINTF("lda = %d\n", lda);
     PRINTF("Size of A array (lda*n) = %d\n", lda * n);
-    PRINTF("Size of IPIV array (min(m,n)) = %d\n", min(m, n));
+    PRINTF("Size of IPIV array (fla_min(m,n)) = %d\n", fla_min(m, n));
   #endif
   
   #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1))
@@ -1066,9 +1066,9 @@ void getrf_internal(integer m, integer n, T* abuff,
     
     // Prints IPIV array contents
     strncpy(arrayname, "IPIV input", arraysize);
-    print_array<integer>(arrayname, ipivbuff, min(m, n));
+    print_array<integer>(arrayname, ipivbuff, fla_min(m, n));
     strncpy(arrayname, "IPIV ref input", arraysize);
-    print_array<integer>(arrayname, ipivrefbuff, min(m, n));
+    print_array<integer>(arrayname, ipivrefbuff, fla_min(m, n));
   #endif
   
   // Call CPP function of GETRF()
@@ -1113,9 +1113,9 @@ void getrf_internal(integer m, integer n, T* abuff,
     
     // Prints IPIV array contents
     strncpy(arrayname, "IPIV output", arraysize);
-    print_array<integer>(arrayname, ipivbuff, min(m, n));
+    print_array<integer>(arrayname, ipivbuff, fla_min(m, n));
     strncpy(arrayname, "IPIV ref output", arraysize);
-    print_array<integer>(arrayname, ipivrefbuff, min(m, n));
+    print_array<integer>(arrayname, ipivrefbuff, fla_min(m, n));
   #endif
   PRINTF("%s() Exit...\n", __FUNCTION__);
 }
@@ -1162,7 +1162,7 @@ void getrf_internal(integer m, integer n, T* abuff,
           factorization A = U**T*U or A = L*L**T.
  * @params[in] lda
           LDA is INTEGER
-          The leading dimension of the array A.  LDA >= max(1,N).
+          The leading dimension of the array A.  LDA >= fla_max(1,N).
  * @params[in] arefbuff
           arefbuff is REAL array, dimension (LDA,N)
           arefbuff is similar to abuff & used for reference C function.

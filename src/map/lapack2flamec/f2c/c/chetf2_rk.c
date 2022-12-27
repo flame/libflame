@@ -87,7 +87,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] E */
@@ -322,7 +322,7 @@ int chetf2_rk_(char *uplo, integer *n, complex *a, integer * lda, complex *e, in
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }
@@ -372,7 +372,7 @@ L10: /* If K < 1, exit from loop */
         {
             colmax = 0.f;
         }
-        if (max(absakk,colmax) == 0.f)
+        if (fla_max(absakk,colmax) == 0.f)
         {
             /* Column K is zero or underflow: set INFO and continue */
             if (*info == 0)
@@ -851,7 +851,7 @@ L40: /* If K > N, exit from loop */
         {
             colmax = 0.f;
         }
-        if (max(absakk,colmax) == 0.f)
+        if (fla_max(absakk,colmax) == 0.f)
         {
             /* Column K is zero or underflow: set INFO and continue */
             if (*info == 0)

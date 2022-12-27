@@ -110,7 +110,7 @@ ILO=1 and IHI=0, if N=0. */
 /* > \param[in] LDV */
 /* > \verbatim */
 /* > LDV is INTEGER */
-/* > The leading dimension of the matrix V. LDV >= max(1,N). */
+/* > The leading dimension of the matrix V. LDV >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -210,7 +210,7 @@ int cggbak_(char *job, char *side, integer *n, integer *ilo, integer *ihi, real 
     {
         *info = -4;
     }
-    else if (*n > 0 && (*ihi < *ilo || *ihi > max(1,*n)))
+    else if (*n > 0 && (*ihi < *ilo || *ihi > fla_max(1,*n)))
     {
         *info = -5;
     }
@@ -222,7 +222,7 @@ int cggbak_(char *job, char *side, integer *n, integer *ilo, integer *ihi, real 
     {
         *info = -8;
     }
-    else if (*ldv < max(1,*n))
+    else if (*ldv < fla_max(1,*n))
     {
         *info = -10;
     }

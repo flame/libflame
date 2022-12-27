@@ -64,7 +64,7 @@ the elements above the diagonal */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] T */
@@ -170,11 +170,11 @@ int dgelqt_(integer *m, integer *n, integer *mb, doublereal * a, integer *lda, d
     {
         *info = -2;
     }
-    else if (*mb < 1 || *mb > min(*m,*n) && min(*m,*n) > 0)
+    else if (*mb < 1 || *mb > fla_min(*m,*n) && fla_min(*m,*n) > 0)
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }
@@ -190,7 +190,7 @@ int dgelqt_(integer *m, integer *n, integer *mb, doublereal * a, integer *lda, d
         return 0;
     }
     /* Quick return if possible */
-    k = min(*m,*n);
+    k = fla_min(*m,*n);
     if (k == 0)
     {
         AOCL_DTL_TRACE_LOG_EXIT
@@ -205,7 +205,7 @@ int dgelqt_(integer *m, integer *n, integer *mb, doublereal * a, integer *lda, d
     {
         /* Computing MIN */
         i__3 = k - i__ + 1;
-        ib = min(i__3,*mb);
+        ib = fla_min(i__3,*mb);
         /* Compute the LQ factorization of the current block A(I:M,I:I+IB-1) */
         i__3 = *n - i__ + 1;
         dgelqt3_(&ib, &i__3, &a[i__ + i__ * a_dim1], lda, &t[i__ * t_dim1 + 1], ldt, &iinfo);

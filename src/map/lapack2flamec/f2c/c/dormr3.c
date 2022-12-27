@@ -107,7 +107,7 @@
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,K). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,K). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] TAU */
@@ -127,7 +127,7 @@
 /* > \param[in] LDC */
 /* > \verbatim */
 /* > LDC is INTEGER */
-/* > The leading dimension of the array C. LDC >= max(1,M). */
+/* > The leading dimension of the array C. LDC >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -241,11 +241,11 @@ int dormr3_(char *side, char *trans, integer *m, integer *n, integer *k, integer
     {
         *info = -6;
     }
-    else if (*lda < max(1,*k))
+    else if (*lda < fla_max(1,*k))
     {
         *info = -8;
     }
-    else if (*ldc < max(1,*m))
+    else if (*ldc < fla_max(1,*m))
     {
         *info = -11;
     }

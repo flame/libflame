@@ -25,10 +25,10 @@
   The SVD is written
       A = U * SIGMA * transpose(V)
   where SIGMA is an M-by-N matrix which is zero except for its
-  min(m,n) diagonal elements, U is an M-by-M orthogonal matrix, and
+  fla_min(m,n) diagonal elements, U is an M-by-M orthogonal matrix, and
   V is an N-by-N orthogonal matrix.  The diagonal elements of SIGMA
   are the singular values of A; they are real and non-negative, and
-  are returned in descending order.  The first min(m,n) columns of
+  are returned in descending order.  The first fla_min(m,n) columns of
   U and V are the left and right singular vectors of A.
 
   Note that the routine returns VT = V**T, not V.

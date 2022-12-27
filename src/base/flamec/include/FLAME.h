@@ -42,6 +42,9 @@ extern "C" {
   #include <float.h>
   #include <signal.h>
 
+  // Include f2c definitions.
+  #include "FLA_f2c.h"
+
   // Include prototypes for BLAS-like interfaces.
   #ifndef BLIS1_FROM_LIBFLAME
     #define BLIS1_FROM_LIBFLAME
@@ -54,11 +57,7 @@ extern "C" {
   //Include context declarations
   #include "FLA_Context.h"
 
-  // Include f2c definitions.
-  #include "FLA_f2c.h"
-
-  // Include general FLAME macro and _PTR macro definitions.
-  #include "FLA_macro_defs.h"
+  // Include _PTR macro definitions.
   #include "FLA_macro_ptr_defs.h"
 
   // Include general FLAME type definitions, including those for FLA_Obj.

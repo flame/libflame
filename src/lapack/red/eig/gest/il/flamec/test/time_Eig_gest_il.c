@@ -218,7 +218,7 @@ void time_Eig_gest_il(
     }
 
     *dtime = FLA_Clock() - *dtime;
-    dtime_save = min( *dtime, dtime_save );
+    dtime_save = fla_min( *dtime, dtime_save );
   }
 
   FLA_Cntl_obj_free( cntl_eig_gest_var );

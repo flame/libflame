@@ -140,7 +140,7 @@ static complex c_b45 =
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1, M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1, M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] B */
@@ -152,7 +152,7 @@ static complex c_b45 =
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1, N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1, N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] C */
@@ -169,7 +169,7 @@ static complex c_b45 =
 /* > \param[in] LDC */
 /* > \verbatim */
 /* > LDC is INTEGER */
-/* > The leading dimension of the array C. LDC >= max(1, M). */
+/* > The leading dimension of the array C. LDC >= fla_max(1, M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] D */
@@ -181,7 +181,7 @@ static complex c_b45 =
 /* > \param[in] LDD */
 /* > \verbatim */
 /* > LDD is INTEGER */
-/* > The leading dimension of the array D. LDD >= max(1, M). */
+/* > The leading dimension of the array D. LDD >= fla_max(1, M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] E */
@@ -193,7 +193,7 @@ static complex c_b45 =
 /* > \param[in] LDE */
 /* > \verbatim */
 /* > LDE is INTEGER */
-/* > The leading dimension of the array E. LDE >= max(1, N). */
+/* > The leading dimension of the array E. LDE >= fla_max(1, N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] F */
@@ -210,7 +210,7 @@ static complex c_b45 =
 /* > \param[in] LDF */
 /* > \verbatim */
 /* > LDF is INTEGER */
-/* > The leading dimension of the array F. LDF >= max(1, M). */
+/* > The leading dimension of the array F. LDF >= fla_max(1, M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] DIF */
@@ -242,7 +242,7 @@ static complex c_b45 =
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The dimension of the array WORK. LWORK > = 1. */
-/* > If IJOB = 1 or 2 and TRANS = 'N', LWORK >= max(1,2*M*N). */
+/* > If IJOB = 1 or 2 and TRANS = 'N', LWORK >= fla_max(1,2*M*N). */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
 the routine */
@@ -403,27 +403,27 @@ int ctgsyl_(char *trans, integer *ijob, integer *m, integer * n, complex *a, int
         {
             *info = -4;
         }
-        else if (*lda < max(1,*m))
+        else if (*lda < fla_max(1,*m))
         {
             *info = -6;
         }
-        else if (*ldb < max(1,*n))
+        else if (*ldb < fla_max(1,*n))
         {
             *info = -8;
         }
-        else if (*ldc < max(1,*m))
+        else if (*ldc < fla_max(1,*m))
         {
             *info = -10;
         }
-        else if (*ldd < max(1,*m))
+        else if (*ldd < fla_max(1,*m))
         {
             *info = -12;
         }
-        else if (*lde < max(1,*n))
+        else if (*lde < fla_max(1,*n))
         {
             *info = -14;
         }
-        else if (*ldf < max(1,*m))
+        else if (*ldf < fla_max(1,*m))
         {
             *info = -16;
         }
@@ -437,7 +437,7 @@ int ctgsyl_(char *trans, integer *ijob, integer *m, integer * n, complex *a, int
                 /* Computing MAX */
                 i__1 = 1;
                 i__2 = (*m << 1) * *n; // , expr subst
-                lwmin = max(i__1,i__2);
+                lwmin = fla_max(i__1,i__2);
             }
             else
             {

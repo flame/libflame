@@ -314,11 +314,11 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
         }
         if (w <= 0.f)
         {
-            dltlb = max(dltlb,tau);
+            dltlb = fla_max(dltlb,tau);
         }
         else
         {
-            dltub = min(dltub,tau);
+            dltub = fla_min(dltub,tau);
         }
         /* Calculate the new step */
         ++niter;
@@ -409,11 +409,11 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             }
             if (w <= 0.f)
             {
-                dltlb = max(dltlb,tau);
+                dltlb = fla_max(dltlb,tau);
             }
             else
             {
-                dltub = min(dltub,tau);
+                dltub = fla_min(dltub,tau);
             }
             /* Calculate the new step */
             c__ = w - delta[*n - 1] * dpsi - delta[*n] * dphi;
@@ -663,11 +663,11 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
         }
         if (w <= 0.f)
         {
-            dltlb = max(dltlb,tau);
+            dltlb = fla_max(dltlb,tau);
         }
         else
         {
-            dltub = min(dltub,tau);
+            dltub = fla_min(dltub,tau);
         }
         /* Calculate the new step */
         ++niter;
@@ -840,11 +840,11 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
             }
             if (w <= 0.f)
             {
-                dltlb = max(dltlb,tau);
+                dltlb = fla_max(dltlb,tau);
             }
             else
             {
-                dltub = min(dltub,tau);
+                dltub = fla_min(dltub,tau);
             }
             /* Calculate the new step */
             if (! swtch3)

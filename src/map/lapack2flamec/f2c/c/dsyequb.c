@@ -65,7 +65,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] S */
@@ -183,7 +183,7 @@ int dsyequb_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *s
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }
@@ -226,24 +226,24 @@ int dsyequb_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *s
                 /* Computing MAX */
                 d__2 = s[i__];
                 d__3 = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1)); // , expr subst
-                s[i__] = max(d__2,d__3);
+                s[i__] = fla_max(d__2,d__3);
                 /* Computing MAX */
                 d__2 = s[j];
                 d__3 = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1)); // , expr subst
-                s[j] = max(d__2,d__3);
+                s[j] = fla_max(d__2,d__3);
                 /* Computing MAX */
                 d__2 = *amax;
                 d__3 = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1)); // , expr subst
-                *amax = max(d__2,d__3);
+                *amax = fla_max(d__2,d__3);
             }
             /* Computing MAX */
             d__2 = s[j];
             d__3 = (d__1 = a[j + j * a_dim1], f2c_abs(d__1)); // , expr subst
-            s[j] = max(d__2,d__3);
+            s[j] = fla_max(d__2,d__3);
             /* Computing MAX */
             d__2 = *amax;
             d__3 = (d__1 = a[j + j * a_dim1], f2c_abs(d__1)); // , expr subst
-            *amax = max(d__2,d__3);
+            *amax = fla_max(d__2,d__3);
         }
     }
     else
@@ -256,11 +256,11 @@ int dsyequb_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *s
             /* Computing MAX */
             d__2 = s[j];
             d__3 = (d__1 = a[j + j * a_dim1], f2c_abs(d__1)); // , expr subst
-            s[j] = max(d__2,d__3);
+            s[j] = fla_max(d__2,d__3);
             /* Computing MAX */
             d__2 = *amax;
             d__3 = (d__1 = a[j + j * a_dim1], f2c_abs(d__1)); // , expr subst
-            *amax = max(d__2,d__3);
+            *amax = fla_max(d__2,d__3);
             i__2 = *n;
             for (i__ = j + 1;
                     i__ <= i__2;
@@ -269,15 +269,15 @@ int dsyequb_(char *uplo, integer *n, doublereal *a, integer * lda, doublereal *s
                 /* Computing MAX */
                 d__2 = s[i__];
                 d__3 = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1)); // , expr subst
-                s[i__] = max(d__2,d__3);
+                s[i__] = fla_max(d__2,d__3);
                 /* Computing MAX */
                 d__2 = s[j];
                 d__3 = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1)); // , expr subst
-                s[j] = max(d__2,d__3);
+                s[j] = fla_max(d__2,d__3);
                 /* Computing MAX */
                 d__2 = *amax;
                 d__3 = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1)); // , expr subst
-                *amax = max(d__2,d__3);
+                *amax = fla_max(d__2,d__3);
             }
         }
     }
@@ -447,13 +447,13 @@ L999:
         /* Computing MIN */
         d__1 = smin;
         d__2 = s[i__]; // , expr subst
-        smin = min(d__1,d__2);
+        smin = fla_min(d__1,d__2);
         /* Computing MAX */
         d__1 = smax;
         d__2 = s[i__]; // , expr subst
-        smax = max(d__1,d__2);
+        smax = fla_max(d__1,d__2);
     }
-    *scond = max(smin,smlnum) / min(smax,bignum);
+    *scond = fla_max(smin,smlnum) / fla_min(smax,bignum);
     AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }

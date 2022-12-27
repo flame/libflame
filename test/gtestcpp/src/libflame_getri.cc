@@ -52,10 +52,10 @@ void getri_test(int ip) {
   }
   
   /* LDA is INTEGER
-          The leading dimension of the array A.  LDA >= max(1,N).*/
+          The leading dimension of the array A.  LDA >= fla_max(1,N).*/
   integer lda = lin_solver_paramslist[ip].lda;
-  if (lda < max(1, n)) {
-    PRINTF("lda < max(1, n) but it should be: LDA >= max(1,N). Please " \
+  if (lda < fla_max(1, n)) {
+    PRINTF("lda < fla_max(1, n) but it should be: LDA >= fla_max(1,N). Please " \
            "correct the input data.\n");
   }
   
@@ -72,7 +72,7 @@ void getri_test(int ip) {
          "to GETRI()\n");
   /* M is INTEGER
           The number of rows of the matrix A.  M >= 0.*/
-  // m is assigned with n as IPIV needs size as (min(m,n) = n).
+  // m is assigned with n as IPIV needs size as (fla_min(m,n) = n).
   integer m = lin_solver_paramslist[ip].n;
   if (m < 0) {
     PRINTF("m should be >= 0. Please correct the input data.\n");
@@ -93,7 +93,7 @@ void getri_test(int ip) {
   }
   
   /* LWORK is INTEGER
-          The dimension of the array WORK.  LWORK >= max(1,N).
+          The dimension of the array WORK.  LWORK >= fla_max(1,N).
           For optimal performance LWORK >= N*NB, where NB is
           the optimal blocksize returned by ILAENV.*/
   integer lwork = lin_solver_paramslist[ip].lwork;
@@ -120,14 +120,14 @@ void getri_test(int ip) {
       lwork_size = worksize;
     }
   }
-  if (lwork_size < max(1, n)) {
-    PRINTF("lwork < max(1, n) but it should be: lwork >= max(1, n)." \
+  if (lwork_size < fla_max(1, n)) {
+    PRINTF("lwork < fla_max(1, n) but it should be: lwork >= fla_max(1, n)." \
            " Please correct the input data.\n");
   }
   
   // WORK is REAL or DOUBLE PRECISION  array, dimension (MAX(1,LWORK))
   T *workbuff = NULL, *workrefbuff = NULL;
-  allocate_init_buffer(workbuff, workrefbuff, max(1, lwork_size), 0);
+  allocate_init_buffer(workbuff, workrefbuff, fla_max(1, lwork_size), 0);
   
   // Print input values other than arrays.
   #if (defined(PRINT_INPUT_VALUES) && (PRINT_INPUT_VALUES == 1))
@@ -137,7 +137,7 @@ void getri_test(int ip) {
     PRINTF("Size of A array (lda*n) = %d\n", lda * n);
     PRINTF("Size of IPIV array (n) = %d\n", n);
     PRINTF("lwork = %d\n", lwork_size);
-    PRINTF("Size of WORK array (max(1, lwork)) = %d\n", max(1, lwork_size));
+    PRINTF("Size of WORK array (max(1, lwork)) = %d\n", fla_max(1, lwork_size));
   #endif
   
   #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1))
@@ -165,9 +165,9 @@ void getri_test(int ip) {
     
     // Prints WORK array contents
     strncpy(arrayname, "WORK input", arraysize);
-    print_array<T>(arrayname, workbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workbuff, fla_max(1, lwork_size));
     strncpy(arrayname, "WORK ref input", arraysize);
-    print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workrefbuff, fla_max(1, lwork_size));
   #endif
   
   info_cpp = -1;
@@ -221,12 +221,12 @@ void getri_test(int ip) {
       
       // Prints WORK array contents
       strncpy(arrayname, "WORK output", arraysize);
-      print_array<T>(arrayname, workbuff, max(1, lwork_size));
+      print_array<T>(arrayname, workbuff, fla_max(1, lwork_size));
       strncpy(arrayname, "WORK ref output", arraysize);
-      print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
+      print_array<T>(arrayname, workrefbuff, fla_max(1, lwork_size));
     #endif
     double diff = computeError<T>(lda, n, abuff, arefbuff);
-    diff += computeError<T>(1, max(1, lwork_size), workbuff, workrefbuff);
+    diff += computeError<T>(1, fla_max(1, lwork_size), workbuff, workrefbuff);
     PRINTF("diff: %lf\n", diff);
     EXPECT_NEAR(0.0, diff, LIN_SLVR_THRESHOLD);
   } else {
@@ -283,10 +283,10 @@ void getri_test_cmplx(int ip) {
   }
   
   /* LDA is INTEGER
-          The leading dimension of the array A.  LDA >= max(1,N).*/
+          The leading dimension of the array A.  LDA >= fla_max(1,N).*/
   integer lda = lin_solver_paramslist[ip].lda;
-  if (lda < max(1, n)) {
-    PRINTF("lda < max(1, n) but it should be: LDA >= max(1,N). Please " \
+  if (lda < fla_max(1, n)) {
+    PRINTF("lda < fla_max(1, n) but it should be: LDA >= fla_max(1,N). Please " \
            "correct the input data.\n");
   }
   
@@ -324,7 +324,7 @@ void getri_test_cmplx(int ip) {
   }
   
   /* LWORK is INTEGER
-          The dimension of the array WORK.  LWORK >= max(1,N).
+          The dimension of the array WORK.  LWORK >= fla_max(1,N).
           For optimal performance LWORK >= N*NB, where NB is
           the optimal blocksize returned by ILAENV.*/
   integer lwork = lin_solver_paramslist[ip].lwork;
@@ -351,14 +351,14 @@ void getri_test_cmplx(int ip) {
       lwork_size = worksize.real;
     }
   }
-  if (lwork_size < max(1, n)) {
-    PRINTF("lwork < max(1, n) but it should be: lwork >= max(1, n)." \
+  if (lwork_size < fla_max(1, n)) {
+    PRINTF("lwork < fla_max(1, n) but it should be: lwork >= fla_max(1, n)." \
            " Please correct the input data.\n");
   }
   
   // WORK is REAL or DOUBLE PRECISION  array, dimension (MAX(1,LWORK))
   T *workbuff = NULL, *workrefbuff = NULL;
-  allocate_init_buffer(workbuff, workrefbuff, max(1, lwork_size), 0);
+  allocate_init_buffer(workbuff, workrefbuff, fla_max(1, lwork_size), 0);
   
   // Print input values other than arrays.
   #if (defined(PRINT_INPUT_VALUES) && (PRINT_INPUT_VALUES == 1))
@@ -368,7 +368,7 @@ void getri_test_cmplx(int ip) {
     PRINTF("Size of A array (lda*n) = %d\n", lda * n);
     PRINTF("Size of IPIV array (n) = %d\n", n);
     PRINTF("lwork = %d\n", lwork_size);
-    PRINTF("Size of WORK array (max(1, lwork)) = %d\n", max(1, lwork_size));
+    PRINTF("Size of WORK array (max(1, lwork)) = %d\n", fla_max(1, lwork_size));
   #endif
   
   #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1))
@@ -396,9 +396,9 @@ void getri_test_cmplx(int ip) {
     
     // Prints WORK array contents
     strncpy(arrayname, "WORK input", arraysize);
-    print_array<T>(arrayname, workbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workbuff, fla_max(1, lwork_size));
     strncpy(arrayname, "WORK ref input", arraysize);
-    print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workrefbuff, fla_max(1, lwork_size));
   #endif
   
   info_cpp = -1;
@@ -448,14 +448,14 @@ void getri_test_cmplx(int ip) {
       
       // Prints WORK array contents
       strncpy(arrayname, "WORK output", arraysize);
-      print_array<T>(arrayname, workbuff, max(1, lwork_size));
+      print_array<T>(arrayname, workbuff, fla_max(1, lwork_size));
       strncpy(arrayname, "WORK ref output", arraysize);
-      print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
+      print_array<T>(arrayname, workrefbuff, fla_max(1, lwork_size));
     #endif
     double diff = 0.0;
     // TODO: Yet to finalize and do verification changes.
     /*diff = computeError<T>(lda, n, abuff, arefbuff);
-    diff += computeError<T>(1, max(1, lwork_size), workbuff, workrefbuff);*/
+    diff += computeError<T>(1, fla_max(1, lwork_size), workbuff, workrefbuff);*/
     PRINTF("diff: %lf\n", diff);
     EXPECT_NEAR(0.0, diff, LIN_SLVR_THRESHOLD);
   } else {

@@ -194,7 +194,7 @@ void libfla_test_uddateut_experiment( test_params_t params,
 		libfla_test_uddateut_impl( impl, R, C, D, T );
 		
 		time = FLA_Clock() - time;
-		time_min = min( time_min, time );
+		time_min = fla_min( time_min, time );
 	}
 
 	// Compute R'R and E'E.

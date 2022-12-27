@@ -167,7 +167,7 @@ void gelsd_test()
   T rcondCPP = 0;
   int rankCPP ;
   int rankC ;
-  int min_m_n = min( m, n ) ;
+  int min_m_n = fla_min( m, n ) ;
   int lda = max(1,m);
   int ldb = max(1,max(m,n));
 
@@ -235,7 +235,7 @@ void gelsd_test()
   Tb rcondCPP = 0;
   int rankCPP ;
   int rankC ;
-  int min_m_n = min( m, n ) ;
+  int min_m_n = fla_min( m, n ) ;
   int lda = max(1,m);
   int ldb = max(1,max(m,n));
 

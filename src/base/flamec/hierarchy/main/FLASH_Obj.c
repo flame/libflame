@@ -374,7 +374,7 @@ FLA_Error FLASH_Obj_create_hierarchy( FLA_Datatype datatype, dim_t m, dim_t n, d
 				// (i,j)th FLA_MATRIX object.
 				if ( FLA_Obj_buffer_at_view( flat_matrix ) != NULL )
 				{
-					b = min( FLA_Obj_width( FR ), next_m * next_n );
+					b = fla_min( FLA_Obj_width( FR ), next_m * next_n );
 					FLA_Repart_1x2_to_1x3( FL,  /**/ FR,        &F0, /**/ &F1, &F2,
 					                       b, FLA_RIGHT );
 				}

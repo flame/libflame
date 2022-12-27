@@ -90,7 +90,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] VL */
@@ -129,7 +129,7 @@ IL = 1 and IU = 0 if N = 0. */
 /* > when it is determined to lie in an interval [a,b] */
 /* > of width less than or equal to */
 /* > */
-/* > ABSTOL + EPS * max( |a|,|b| ) , */
+/* > ABSTOL + EPS * fla_max( |a|,|b| ) , */
 /* > */
 /* > where EPS is the machine precision. If ABSTOL is less than */
 /* > or equal to zero, then EPS*|T| will be used in its place, */
@@ -163,7 +163,7 @@ IL = 1 and IU = 0 if N = 0. */
 /* > */
 /* > \param[out] Z */
 /* > \verbatim */
-/* > Z is COMPLEX*16 array, dimension (LDZ, max(1,M)) */
+/* > Z is COMPLEX*16 array, dimension (LDZ, fla_max(1,M)) */
 /* > If JOBZ = 'V', then if INFO = 0, the first M columns of Z */
 /* > contain the orthonormal eigenvectors of the matrix A */
 /* > corresponding to the selected eigenvalues, with the i-th */
@@ -172,7 +172,7 @@ IL = 1 and IU = 0 if N = 0. */
 /* > contains the latest approximation to the eigenvector, and the */
 /* > index of the eigenvector is returned in IFAIL. */
 /* > If JOBZ = 'N', then Z is not referenced. */
-/* > Note: the user must ensure that at least max(1,M) columns are */
+/* > Note: the user must ensure that at least fla_max(1,M) columns are */
 /* > supplied in the array Z;
 if RANGE = 'V', the exact value of M */
 /* > is not known in advance and an upper bound must be used. */
@@ -182,7 +182,7 @@ if RANGE = 'V', the exact value of M */
 /* > \verbatim */
 /* > LDZ is INTEGER */
 /* > The leading dimension of the array Z. LDZ >= 1, and if */
-/* > JOBZ = 'V', LDZ >= max(1,N). */
+/* > JOBZ = 'V', LDZ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -358,7 +358,7 @@ int zheevx_(char *jobz, char *range, char *uplo, integer *n, doublecomplex *a, i
     {
         *info = -4;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -6;
     }
@@ -373,11 +373,11 @@ int zheevx_(char *jobz, char *range, char *uplo, integer *n, doublecomplex *a, i
         }
         else if (indeig)
         {
-            if (*il < 1 || *il > max(1,*n))
+            if (*il < 1 || *il > fla_max(1,*n))
             {
                 *info = -9;
             }
-            else if (*iu < min(*n,*il) || *iu > *n)
+            else if (*iu < fla_min(*n,*il) || *iu > *n)
             {
                 *info = -10;
             }
@@ -405,11 +405,11 @@ int zheevx_(char *jobz, char *range, char *uplo, integer *n, doublecomplex *a, i
             /* Computing MAX */
             i__1 = nb;
             i__2 = ilaenv_(&c__1, "ZUNMTR", uplo, n, &c_n1, &c_n1, &c_n1); // , expr subst
-            nb = max(i__1,i__2);
+            nb = fla_max(i__1,i__2);
             /* Computing MAX */
             i__1 = 1;
             i__2 = (nb + 1) * *n; // , expr subst
-            lwkopt = max(i__1,i__2);
+            lwkopt = fla_max(i__1,i__2);
             work[1].r = (doublereal) lwkopt;
             work[1].i = 0.; // , expr subst
         }
@@ -474,7 +474,7 @@ int zheevx_(char *jobz, char *range, char *uplo, integer *n, doublecomplex *a, i
     /* Computing MIN */
     d__1 = sqrt(bignum);
     d__2 = 1. / sqrt(sqrt(safmin)); // , expr subst
-    rmax = min(d__1,d__2);
+    rmax = fla_min(d__1,d__2);
     /* Scale matrix to allowable range, if necessary. */
     iscale = 0;
     abstll = *abstol;

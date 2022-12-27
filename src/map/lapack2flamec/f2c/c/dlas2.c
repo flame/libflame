@@ -120,8 +120,8 @@ int dlas2_(doublereal *f, doublereal *g, doublereal *h__, doublereal *ssmin, dou
     fa = f2c_dabs(*f);
     ga = f2c_dabs(*g);
     ha = f2c_dabs(*h__);
-    fhmn = min(fa,ha);
-    fhmx = max(fa,ha);
+    fhmn = fla_min(fa,ha);
+    fhmx = fla_max(fa,ha);
     if (fhmn == 0.)
     {
         *ssmin = 0.;
@@ -132,8 +132,8 @@ int dlas2_(doublereal *f, doublereal *g, doublereal *h__, doublereal *ssmin, dou
         else
         {
             /* Computing 2nd power */
-            d__1 = min(fhmx,ga) / max(fhmx,ga);
-            *ssmax = max(fhmx,ga) * sqrt(d__1 * d__1 + 1.);
+            d__1 = fla_min(fhmx,ga) / fla_max(fhmx,ga);
+            *ssmax = fla_max(fhmx,ga) * sqrt(d__1 * d__1 + 1.);
         }
     }
     else

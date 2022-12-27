@@ -196,7 +196,7 @@ if EQUED = 'Y', */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] X */
@@ -211,7 +211,7 @@ if EQUED = 'Y', */
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(1,N). */
+/* > The leading dimension of the array X. LDX >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RCOND */
@@ -426,11 +426,11 @@ int cppsvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *ap, com
                 /* Computing MIN */
                 r__1 = smin;
                 r__2 = s[j]; // , expr subst
-                smin = min(r__1,r__2);
+                smin = fla_min(r__1,r__2);
                 /* Computing MAX */
                 r__1 = smax;
                 r__2 = s[j]; // , expr subst
-                smax = max(r__1,r__2);
+                smax = fla_max(r__1,r__2);
                 /* L10: */
             }
             if (smin <= 0.f)
@@ -439,7 +439,7 @@ int cppsvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *ap, com
             }
             else if (*n > 0)
             {
-                scond = max(smin,smlnum) / min(smax,bignum);
+                scond = fla_max(smin,smlnum) / fla_min(smax,bignum);
             }
             else
             {
@@ -448,11 +448,11 @@ int cppsvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *ap, com
         }
         if (*info == 0)
         {
-            if (*ldb < max(1,*n))
+            if (*ldb < fla_max(1,*n))
             {
                 *info = -10;
             }
-            else if (*ldx < max(1,*n))
+            else if (*ldx < fla_max(1,*n))
             {
                 *info = -12;
             }

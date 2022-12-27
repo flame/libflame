@@ -110,7 +110,7 @@ static integer c__1 = 1;
 /* > \param[in] LDT */
 /* > \verbatim */
 /* > LDT is INTEGER */
-/* > The leading dimension of the array T. LDT >= max(1,N). */
+/* > The leading dimension of the array T. LDT >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] VL */
@@ -341,7 +341,7 @@ int ctrevc_(char *side, char *howmny, logical *select, integer *n, complex *t, i
     {
         *info = -4;
     }
-    else if (*ldt < max(1,*n))
+    else if (*ldt < fla_max(1,*n))
     {
         *info = -6;
     }
@@ -418,7 +418,7 @@ int ctrevc_(char *side, char *howmny, logical *select, integer *n, complex *t, i
             /* Computing MAX */
             i__1 = ki + ki * t_dim1;
             r__3 = ulp * ((r__1 = t[i__1].r, f2c_abs(r__1)) + (r__2 = r_imag(&t[ ki + ki * t_dim1]), f2c_abs(r__2)));
-            smin = max(r__3,smlnum);
+            smin = fla_max(r__3,smlnum);
             work[1].r = 1.f;
             work[1].i = 0.f; // , expr subst
             /* Form right-hand side. */
@@ -535,7 +535,7 @@ L80:
             /* Computing MAX */
             i__2 = ki + ki * t_dim1;
             r__3 = ulp * ((r__1 = t[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&t[ ki + ki * t_dim1]), f2c_abs(r__2)));
-            smin = max(r__3,smlnum);
+            smin = fla_max(r__3,smlnum);
             i__2 = *n;
             work[i__2].r = 1.f;
             work[i__2].i = 0.f; // , expr subst

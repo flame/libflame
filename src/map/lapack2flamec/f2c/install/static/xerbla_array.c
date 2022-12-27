@@ -151,7 +151,7 @@ array.f"> */
     s_copy(srname, "");
     /* Computing MIN */
     i__2 = *srname_len__, i__3 = i_len(srname, (ftnlen)32);
-    i__1 = min(i__2,i__3);
+    i__1 = fla_min(i__2,i__3);
     for (i__ = 1; i__ <= i__1; ++i__)
     {
         *(unsigned char *)&srname[i__ - 1] = *(unsigned char *)&

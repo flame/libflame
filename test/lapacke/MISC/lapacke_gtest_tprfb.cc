@@ -258,12 +258,12 @@ void stprfb_test::SetUp(){
     
 
     stprfb_obj->inforef_tpqrt = stpqrt( stprfb_obj->matrix_layout, stprfb_obj->m,
-								stprfb_obj->n, min(stprfb_obj->m, stprfb_obj->n), stprfb_obj->n, stprfb_obj->A_tpqrtref,
+								stprfb_obj->n, fla_min(stprfb_obj->m, stprfb_obj->n), stprfb_obj->n, stprfb_obj->A_tpqrtref,
 								stprfb_obj->n, stprfb_obj->b_tpqrtref, stprfb_obj->ldb, stprfb_obj->t_tpqrtref, stprfb_obj->n);
 
     /* Compute libflame's Lapacke o/p  */
     stprfb_obj->info_tpqrt = LAPACKE_stpqrt( stprfb_obj->matrix_layout, stprfb_obj->m, stprfb_obj->n,
-											min(stprfb_obj->m, stprfb_obj->n), stprfb_obj->n, stprfb_obj->A_tpqrt, 
+											fla_min(stprfb_obj->m, stprfb_obj->n), stprfb_obj->n, stprfb_obj->A_tpqrt, 
 											stprfb_obj->n, stprfb_obj->b_tpqrt,	stprfb_obj->ldb, stprfb_obj->t_tpqrt, stprfb_obj->n);
 
     if( stprfb_obj->info_tpqrt < 0 ) {
@@ -559,12 +559,12 @@ void dtprfb_test::SetUp(){
     
 
     dtprfb_obj->inforef_tpqrt = dtpqrt( dtprfb_obj->matrix_layout, dtprfb_obj->m,
-								dtprfb_obj->n, min(dtprfb_obj->m, dtprfb_obj->n), dtprfb_obj->n, dtprfb_obj->A_tpqrtref,
+								dtprfb_obj->n, fla_min(dtprfb_obj->m, dtprfb_obj->n), dtprfb_obj->n, dtprfb_obj->A_tpqrtref,
 								dtprfb_obj->n, dtprfb_obj->b_tpqrtref, dtprfb_obj->ldb, dtprfb_obj->t_tpqrtref, dtprfb_obj->n);
 
     /* Compute libflame's Lapacke o/p  */
     dtprfb_obj->info_tpqrt = LAPACKE_dtpqrt( dtprfb_obj->matrix_layout, dtprfb_obj->m, dtprfb_obj->n,
-											min(dtprfb_obj->m, dtprfb_obj->n), dtprfb_obj->n, dtprfb_obj->A_tpqrt, 
+											fla_min(dtprfb_obj->m, dtprfb_obj->n), dtprfb_obj->n, dtprfb_obj->A_tpqrt, 
 											dtprfb_obj->n, dtprfb_obj->b_tpqrt,	dtprfb_obj->ldb, dtprfb_obj->t_tpqrt, dtprfb_obj->n);
 
     if( dtprfb_obj->info_tpqrt < 0 ) {
@@ -861,12 +861,12 @@ void ctprfb_test::SetUp(){
     
 
     ctprfb_obj->inforef_tpqrt = ctpqrt( ctprfb_obj->matrix_layout, ctprfb_obj->m,
-								ctprfb_obj->n, min(ctprfb_obj->m, ctprfb_obj->n), ctprfb_obj->n, ctprfb_obj->A_tpqrtref,
+								ctprfb_obj->n, fla_min(ctprfb_obj->m, ctprfb_obj->n), ctprfb_obj->n, ctprfb_obj->A_tpqrtref,
 								ctprfb_obj->n, ctprfb_obj->b_tpqrtref, ctprfb_obj->ldb, ctprfb_obj->t_tpqrtref, ctprfb_obj->n);
 
     /* Compute libflame's Lapacke o/p  */
     ctprfb_obj->info_tpqrt = LAPACKE_ctpqrt( ctprfb_obj->matrix_layout, ctprfb_obj->m, ctprfb_obj->n,
-											min(ctprfb_obj->m, ctprfb_obj->n), ctprfb_obj->n, ctprfb_obj->A_tpqrt, 
+											fla_min(ctprfb_obj->m, ctprfb_obj->n), ctprfb_obj->n, ctprfb_obj->A_tpqrt, 
 											ctprfb_obj->n, ctprfb_obj->b_tpqrt,	ctprfb_obj->ldb, ctprfb_obj->t_tpqrt, ctprfb_obj->n);
 
     if( ctprfb_obj->info_tpqrt < 0 ) {
@@ -1162,12 +1162,12 @@ void ztprfb_test::SetUp(){
     
 
     ztprfb_obj->inforef_tpqrt = ztpqrt( ztprfb_obj->matrix_layout, ztprfb_obj->m,
-								ztprfb_obj->n, min(ztprfb_obj->m, ztprfb_obj->n), ztprfb_obj->n, ztprfb_obj->A_tpqrtref,
+								ztprfb_obj->n, fla_min(ztprfb_obj->m, ztprfb_obj->n), ztprfb_obj->n, ztprfb_obj->A_tpqrtref,
 								ztprfb_obj->n, ztprfb_obj->b_tpqrtref, ztprfb_obj->ldb, ztprfb_obj->t_tpqrtref, ztprfb_obj->n);
 
     /* Compute libflame's Lapacke o/p  */
     ztprfb_obj->info_tpqrt = LAPACKE_ztpqrt( ztprfb_obj->matrix_layout, ztprfb_obj->m, ztprfb_obj->n,
-											min(ztprfb_obj->m, ztprfb_obj->n), ztprfb_obj->n, ztprfb_obj->A_tpqrt, 
+											fla_min(ztprfb_obj->m, ztprfb_obj->n), ztprfb_obj->n, ztprfb_obj->A_tpqrt, 
 											ztprfb_obj->n, ztprfb_obj->b_tpqrt,	ztprfb_obj->ldb, ztprfb_obj->t_tpqrt, ztprfb_obj->n);
 
     if( ztprfb_obj->info_tpqrt < 0 ) {

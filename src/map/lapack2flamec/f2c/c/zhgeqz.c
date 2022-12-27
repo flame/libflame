@@ -164,7 +164,7 @@ if N = 0, ILO=1 and IHI=0. */
 /* > \param[in] LDH */
 /* > \verbatim */
 /* > LDH is INTEGER */
-/* > The leading dimension of the array H. LDH >= max( 1, N ). */
+/* > The leading dimension of the array H. LDH >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] T */
@@ -180,7 +180,7 @@ if N = 0, ILO=1 and IHI=0. */
 /* > \param[in] LDT */
 /* > \verbatim */
 /* > LDT is INTEGER */
-/* > The leading dimension of the array T. LDT >= max( 1, N ). */
+/* > The leading dimension of the array T. LDT >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ALPHA */
@@ -250,7 +250,7 @@ if N = 0, ILO=1 and IHI=0. */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,N). */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
 the routine */
@@ -510,7 +510,7 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     }
     /* Check Argument Values */
     *info = 0;
-    i__1 = max(1,*n);
+    i__1 = fla_max(1,*n);
     work[1].r = (doublereal) i__1;
     work[1].i = 0.; // , expr subst
     lquery = *lwork == -1;
@@ -554,7 +554,7 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     {
         *info = -16;
     }
-    else if (*lwork < max(1,*n) && ! lquery)
+    else if (*lwork < fla_max(1,*n) && ! lquery)
     {
         *info = -18;
     }
@@ -597,13 +597,13 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     /* Computing MAX */
     d__1 = safmin;
     d__2 = ulp * anorm; // , expr subst
-    atol = max(d__1,d__2);
+    atol = fla_max(d__1,d__2);
     /* Computing MAX */
     d__1 = safmin;
     d__2 = ulp * bnorm; // , expr subst
-    btol = max(d__1,d__2);
-    ascale = 1. / max(safmin,anorm);
-    bscale = 1. / max(safmin,bnorm);
+    btol = fla_max(d__1,d__2);
+    ascale = 1. / fla_max(safmin,anorm);
+    bscale = 1. / fla_max(safmin,bnorm);
     /* Set Eigenvalues IHI+1:N */
     i__1 = *n;
     for (j = *ihi + 1;
@@ -823,7 +823,7 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
             i__4 = ilast - 1 + (ilast - 1) * h_dim1;
             d__7 = safmin;
             d__8 = ulp * ((d__1 = h__[i__3].r, f2c_abs(d__1)) + ( d__2 = d_imag(&h__[ilast + ilast * h_dim1]), f2c_abs(d__2)) + ((d__3 = h__[i__4].r, f2c_abs(d__3)) + (d__4 = d_imag(&h__[ ilast - 1 + (ilast - 1) * h_dim1]), f2c_abs(d__4)))); // , expr subst
-            if ((d__5 = h__[i__2].r, f2c_abs(d__5)) + (d__6 = d_imag(&h__[ilast + (ilast - 1) * h_dim1]), f2c_abs(d__6)) <= max(d__7,d__8))
+            if ((d__5 = h__[i__2].r, f2c_abs(d__5)) + (d__6 = d_imag(&h__[ilast + (ilast - 1) * h_dim1]), f2c_abs(d__6)) <= fla_max(d__7,d__8))
             {
                 i__2 = ilast + (ilast - 1) * h_dim1;
                 h__[i__2].r = 0.;
@@ -834,7 +834,7 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
         /* Computing MAX */
         d__1 = safmin;
         d__2 = ulp * (z_abs(&t[ilast - 1 + ilast * t_dim1]) + z_abs(&t[ilast - 1 + (ilast - 1) * t_dim1])); // , expr subst
-        if (z_abs(&t[ilast + ilast * t_dim1]) <= max(d__1,d__2))
+        if (z_abs(&t[ilast + ilast * t_dim1]) <= fla_max(d__1,d__2))
         {
 #ifdef FLA_ENABLE_AMD_OPT
             if (enable_opt)
@@ -878,7 +878,7 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                 i__5 = j - 1 + (j - 1) * h_dim1;
                 d__7 = safmin;
                 d__8 = ulp * ((d__1 = h__[i__4].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[j + j * h_dim1]), f2c_abs(d__2)) + ( (d__3 = h__[i__5].r, f2c_abs(d__3)) + (d__4 = d_imag(&h__[ j - 1 + (j - 1) * h_dim1]), f2c_abs(d__4)))); // , expr subst
-                if ((d__5 = h__[i__3].r, f2c_abs(d__5)) + (d__6 = d_imag(&h__[j + (j - 1) * h_dim1]), f2c_abs(d__6)) <= max(d__7,d__8))
+                if ((d__5 = h__[i__3].r, f2c_abs(d__5)) + (d__6 = d_imag(&h__[j + (j - 1) * h_dim1]), f2c_abs(d__6)) <= fla_max(d__7,d__8))
                 {
                     i__3 = j + (j - 1) * h_dim1;
                     h__[i__3].r = 0.;
@@ -899,7 +899,7 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
             /* Computing MAX */
             d__1 = safmin;
             d__2 = ulp * temp; // , expr subst
-            if (z_abs(&t[j + j * t_dim1]) < max(d__1,d__2))
+            if (z_abs(&t[j + j * t_dim1]) < fla_max(d__1,d__2))
             {
                 i__3 = j + j * t_dim1;
                 t[i__3].r = 0.;
@@ -1246,7 +1246,7 @@ L70:
                 /* Computing MAX */
                 d__3 = temp;
                 d__4 = (d__1 = x.r, f2c_abs(d__1)) + (d__2 = d_imag(& x), f2c_abs(d__2)); // , expr subst
-                temp = max(d__3,d__4);
+                temp = fla_max(d__3,d__4);
                 z__5.r = x.r / temp;
                 z__5.i = x.i / temp; // , expr subst
                 pow_zi(&z__4, &z__5, &c__2);
@@ -1342,7 +1342,7 @@ L70:
             temp = (d__1 = ctemp.r, f2c_abs(d__1)) + (d__2 = d_imag(&ctemp), f2c_abs( d__2));
             i__3 = j + 1 + j * h_dim1;
             temp2 = ascale * ((d__1 = h__[i__3].r, f2c_abs(d__1)) + (d__2 = d_imag(&h__[j + 1 + j * h_dim1]), f2c_abs(d__2)));
-            tempr = max(temp,temp2);
+            tempr = fla_max(temp,temp2);
             if (tempr < 1. && tempr != 0.)
             {
                 temp /= tempr;
@@ -1415,7 +1415,7 @@ L90: /* Do an implicit-shift QZ sweep. */
             num_swps++;
         }
 #ifdef FLA_OPENMP_MULTITHREADING
-        num_threads = min(2, num_threads);
+        num_threads = fla_min(2, num_threads);
         #pragma omp parallel num_threads(num_threads) private(j, i__3, i__4, i__5, tid)
         {
             tid = omp_get_thread_num();
@@ -1491,7 +1491,7 @@ L90: /* Do an implicit-shift QZ sweep. */
 #endif
                 if (tid == 0)
                 {
-                    i__3 = min(j + 2, ilast) - ifrstm + 1;
+                    i__3 = fla_min(j + 2, ilast) - ifrstm + 1;
                     if (i__3 >= 0)
                     {
                         i__4 = ifrstm + (j + 1) * h_dim1;
@@ -1664,7 +1664,7 @@ L90: /* Do an implicit-shift QZ sweep. */
             t[i__3].i = 0.; // , expr subst
             /* Computing MIN */
             i__4 = j + 2;
-            i__3 = min(i__4,ilast);
+            i__3 = fla_min(i__4,ilast);
             for (jr = ifrstm;
                     jr <= i__3;
                     ++jr)

@@ -22,7 +22,7 @@ function [ C_out ] = FLA_Syr2k_lt_blk_var5( A, B, C, nb_alg )
 
   while ( size( AR, 2 ) < size( A, 2 ) )
 
-    b = min( size( AL, 2 ), nb_alg );
+    b = fla_min( size( AL, 2 ), nb_alg );
 
     [ A0, A1, A2 ]= FLA_Repart_1x2_to_1x3( AL, AR, ...
                                          b, 'FLA_LEFT' );

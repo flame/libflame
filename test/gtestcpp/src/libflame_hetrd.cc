@@ -67,10 +67,10 @@ void hetrd_test(int ip)
     PRINTF("n < 0 but should be: n >= 0. Please correct the input data.");
   }
   
-  // LDA is INTEGER. The leading dimension of the array A.  LDA >= max(1,N).
+  // LDA is INTEGER. The leading dimension of the array A.  LDA >= fla_max(1,N).
   integer lda = eig_paramslist[ip].lda;
-  if (lda < max(1, n)) {
-    PRINTF("lda < max(1, n) but it should be: LDA >= max(1,N). Please " \
+  if (lda < fla_max(1, n)) {
+    PRINTF("lda < fla_max(1, n) but it should be: LDA >= fla_max(1,N). Please " \
            "correct the input data.\n");
   }
   
@@ -122,7 +122,7 @@ void hetrd_test(int ip)
   
   // WORK is COMPLEX or COMPLEX*16  array, dimension (MAX(1,LWORK))
   T *workbuff = NULL, *workrefbuff = NULL;
-  allocate_init_buffer(workbuff, workrefbuff, max(1, lwork_size), 0);
+  allocate_init_buffer(workbuff, workrefbuff, fla_max(1, lwork_size), 0);
   
   // Print input values other than arrays.
   #if (defined(PRINT_INPUT_VALUES) && (PRINT_INPUT_VALUES == 1))
@@ -135,7 +135,7 @@ void hetrd_test(int ip)
     PRINTF("Size of E array (n-1) = %d\n", n-1);
     PRINTF("Size of TAU array (n-1) = %d\n", n-1);
     PRINTF("lwork = %d\n", lwork_size);
-    PRINTF("Size of WORK array (MAX(1, LWORK)) = %d\n", max(1, lwork_size));
+    PRINTF("Size of WORK array (MAX(1, LWORK)) = %d\n", fla_max(1, lwork_size));
   #endif
   
   #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1))
@@ -175,9 +175,9 @@ void hetrd_test(int ip)
     
     // Prints WORK array contents
     strncpy(arrayname, "WORK input", arraysize);
-    print_array<T>(arrayname, workbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workbuff, fla_max(1, lwork_size));
     strncpy(arrayname, "WORK ref input", arraysize);
-    print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workrefbuff, fla_max(1, lwork_size));
   #endif
   
   // Call CPP function
@@ -236,16 +236,16 @@ void hetrd_test(int ip)
       
       // Prints WORK array contents
       strncpy(arrayname, "WORK output", arraysize);
-      print_array<T>(arrayname, workbuff, max(1, lwork_size));
+      print_array<T>(arrayname, workbuff, fla_max(1, lwork_size));
       strncpy(arrayname, "WORK ref output", arraysize);
-      print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
+      print_array<T>(arrayname, workrefbuff, fla_max(1, lwork_size));
     #endif
   
     double diff = computeError<T>(lda, n, abuff, arefbuff);
     diff += computeError<Ta>(1, n, dbuff, drefbuff);
     diff += computeError<Ta>(1, n-1, ebuff, erefbuff);
     diff += computeError<T>(1, n-1, taubuff, taurefbuff);
-    diff += computeError<T>(1, max(1, lwork_size), workrefbuff, workbuff);
+    diff += computeError<T>(1, fla_max(1, lwork_size), workrefbuff, workbuff);
     PRINTF("diff: %lf\n", diff);
     EXPECT_NEAR(0.0, diff, SYM_EIGEN_THRESHOLD);
   } else {

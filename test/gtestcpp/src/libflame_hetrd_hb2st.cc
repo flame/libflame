@@ -69,7 +69,7 @@ void hetrd_hb2st_test(int ip)
   /* VECT is CHARACTER*1
           = 'N':  No need for the Housholder representation, 
                   in particular for the second stage (Band to
-                  tridiagonal) and thus LHOUS2 is of size max(1, 4*N);
+                  tridiagonal) and thus LHOUS2 is of size fla_max(1, 4*N);
           = 'V':  the Householder representation is needed to 
                   either generate Q1 Q2 or to apply Q1 Q2, 
                   then LHOUS2 is to be queried and computed.

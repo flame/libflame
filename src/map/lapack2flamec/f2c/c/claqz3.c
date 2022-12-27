@@ -115,7 +115,7 @@ static logical c_true = TRUE_;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max( 1, N ). */
+/* > The leading dimension of the array A. LDA >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -126,7 +126,7 @@ static logical c_true = TRUE_;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max( 1, N ). */
+/* > The leading dimension of the array B. LDB >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] Q */
@@ -178,7 +178,7 @@ static logical c_true = TRUE_;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,N). */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
 the routine */
@@ -305,7 +305,7 @@ int claqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     ns = *nshifts;
     /* Computing MAX */
     i__1 = *nblock_desired__ - ns;
-    npos = max(i__1,1);
+    npos = fla_max(i__1,1);
     /* The following block introduces the shifts and chases */
     /* them down one by one just enough to make space for */
     /* the other shifts. The near-the-diagonal block is */
@@ -419,7 +419,7 @@ int claqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     {
         /* Computing MIN */
         i__1 = *ihi - ns - k;
-        np = min(i__1,npos);
+        np = fla_min(i__1,npos);
         /* Size of the near-the-diagonal block */
         nblock = ns + np;
         /* istartb points to the first row we will be updating */

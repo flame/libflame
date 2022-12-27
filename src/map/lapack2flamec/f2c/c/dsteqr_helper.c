@@ -107,7 +107,7 @@ int dsteqr_helper_(char *jobz, char *uplo, integer *n, doublereal * a, integer *
             /* Computing MAX */
             i__1 = lwmin;
             i__2 = (*n << 1) + ilaenv_(&c__1, "DSYEVD", uplo, n, &c_n1, &c_n1, &c_n1); // , expr subst
-            lopt = max(i__1,i__2);
+            lopt = fla_max(i__1,i__2);
             liopt = liwmin;
         }
         work[1] = (doublereal) lopt;

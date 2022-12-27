@@ -102,12 +102,12 @@ static real c_b41 = 1.f;
 /* > \verbatim */
 /* > LDZ is INTEGER */
 /* > The leading dimension of the array Z. LDZ >= 1, and if */
-/* > eigenvectors are desired, then LDZ >= max(1,N). */
+/* > eigenvectors are desired, then LDZ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
 /* > \verbatim */
-/* > WORK is REAL array, dimension (max(1,2*N-2)) */
+/* > WORK is REAL array, dimension (fla_max(1,2*N-2)) */
 /* > If COMPZ = 'N', then WORK is not referenced. */
 /* > \endverbatim */
 /* > */
@@ -246,7 +246,7 @@ int csteqr_(char *compz, integer *n, real *d__, real *e, complex *z__, integer *
     {
         *info = -2;
     }
-    else if (*ldz < 1 || icompz > 0 && *ldz < max(1,*n))
+    else if (*ldz < 1 || icompz > 0 && *ldz < fla_max(1,*n))
     {
         *info = -6;
     }

@@ -69,7 +69,7 @@ static real c_b23 = 0.f;
 /* > \verbatim */
 /* > N1 is INTEGER */
 /* > The location of the last eigenvalue in the leading submatrix. */
-/* > min(1,N) <= N1 <= N/2. */
+/* > fla_min(1,N) <= N1 <= N/2. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] D */
@@ -90,7 +90,7 @@ static real c_b23 = 0.f;
 /* > \param[in] LDQ */
 /* > \verbatim */
 /* > LDQ is INTEGER */
-/* > The leading dimension of the array Q. LDQ >= max(1,N). */
+/* > The leading dimension of the array Q. LDQ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] RHO */
@@ -232,7 +232,7 @@ int slaed3_(integer *k, integer *n, integer *n1, real *d__, real *q, integer *ld
     {
         *info = -2;
     }
-    else if (*ldq < max(1,*n))
+    else if (*ldq < fla_max(1,*n))
     {
         *info = -6;
     }

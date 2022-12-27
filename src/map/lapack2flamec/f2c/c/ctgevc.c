@@ -118,7 +118,7 @@ static integer c__1 = 1;
 /* > \param[in] LDS */
 /* > \verbatim */
 /* > LDS is INTEGER */
-/* > The leading dimension of array S. LDS >= max(1,N). */
+/* > The leading dimension of array S. LDS >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] P */
@@ -132,7 +132,7 @@ static integer c__1 = 1;
 /* > \param[in] LDP */
 /* > \verbatim */
 /* > LDP is INTEGER */
-/* > The leading dimension of array P. LDP >= max(1,N). */
+/* > The leading dimension of array P. LDP >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] VL */
@@ -382,11 +382,11 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
     {
         *info = -4;
     }
-    else if (*lds < max(1,*n))
+    else if (*lds < fla_max(1,*n))
     {
         *info = -6;
     }
-    else if (*ldp < max(1,*n))
+    else if (*ldp < fla_max(1,*n))
     {
         *info = -8;
     }
@@ -499,16 +499,16 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
         i__2 = j + j * s_dim1;
         r__3 = anorm;
         r__4 = rwork[j] + ((r__1 = s[i__2].r, f2c_abs(r__1)) + ( r__2 = r_imag(&s[j + j * s_dim1]), f2c_abs(r__2))); // , expr subst
-        anorm = max(r__3,r__4);
+        anorm = fla_max(r__3,r__4);
         /* Computing MAX */
         i__2 = j + j * p_dim1;
         r__3 = bnorm;
         r__4 = rwork[*n + j] + ((r__1 = p[i__2].r, f2c_abs(r__1)) + (r__2 = r_imag(&p[j + j * p_dim1]), f2c_abs(r__2))); // , expr subst
-        bnorm = max(r__3,r__4);
+        bnorm = fla_max(r__3,r__4);
         /* L40: */
     }
-    ascale = 1.f / max(anorm,safmin);
-    bscale = 1.f / max(bnorm,safmin);
+    ascale = 1.f / fla_max(anorm,safmin);
+    bscale = 1.f / fla_max(bnorm,safmin);
     /* Left eigenvectors */
     if (compl)
     {
@@ -559,8 +559,8 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
                 i__3 = je + je * p_dim1;
                 r__4 = ((r__2 = s[i__2].r, f2c_abs(r__2)) + (r__3 = r_imag(&s[je + je * s_dim1]), f2c_abs(r__3))) * ascale;
                 r__5 = (r__1 = p[i__3].r, f2c_abs(r__1)) * bscale;
-                r__4 = max(r__4,r__5); // ; expr subst
-                temp = 1.f / max(r__4,safmin);
+                r__4 = fla_max(r__4,r__5); // ; expr subst
+                temp = 1.f / fla_max(r__4,safmin);
                 i__2 = je + je * s_dim1;
                 q__2.r = temp * s[i__2].r;
                 q__2.i = temp * s[i__2].i; // , expr subst
@@ -581,25 +581,25 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
                 scale = 1.f;
                 if (lsa)
                 {
-                    scale = small / f2c_abs(sbeta) * min(anorm,big);
+                    scale = small / f2c_abs(sbeta) * fla_min(anorm,big);
                 }
                 if (lsb)
                 {
                     /* Computing MAX */
                     r__3 = scale;
-                    r__4 = small / ((r__1 = salpha.r, f2c_abs(r__1)) + (r__2 = r_imag(&salpha), f2c_abs(r__2))) * min( bnorm,big); // , expr subst
-                    scale = max(r__3,r__4);
+                    r__4 = small / ((r__1 = salpha.r, f2c_abs(r__1)) + (r__2 = r_imag(&salpha), f2c_abs(r__2))) * fla_min( bnorm,big); // , expr subst
+                    scale = fla_max(r__3,r__4);
                 }
                 if (lsa || lsb)
                 {
                     /* Computing MIN */
                     /* Computing MAX */
                     r__5 = 1.f, r__6 = f2c_abs(acoeff);
-                    r__5 = max(r__5,r__6);
+                    r__5 = fla_max(r__5,r__6);
                     r__6 = (r__1 = bcoeff.r, f2c_abs(r__1)) + (r__2 = r_imag(&bcoeff), f2c_abs(r__2)); // ; expr subst
                     r__3 = scale;
-                    r__4 = 1.f / (safmin * max(r__5,r__6)); // , expr subst
-                    scale = min(r__3,r__4);
+                    r__4 = 1.f / (safmin * fla_max(r__5,r__6)); // , expr subst
+                    scale = fla_min(r__3,r__4);
                     if (lsa)
                     {
                         acoeff = ascale * (scale * sbeta);
@@ -644,8 +644,8 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
                 /* Computing MAX */
                 r__1 = ulp * acoefa * anorm;
                 r__2 = ulp * bcoefa * bnorm;
-                r__1 = max(r__1,r__2); // ; expr subst
-                dmin__ = max(r__1,safmin);
+                r__1 = fla_max(r__1,r__2); // ; expr subst
+                dmin__ = fla_max(r__1,safmin);
                 /* H */
                 /* Triangular solve of (a A - b B) y = 0 */
                 /* H */
@@ -769,7 +769,7 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
                     i__3 = j;
                     r__3 = xmax;
                     r__4 = (r__1 = work[i__3].r, f2c_abs(r__1)) + ( r__2 = r_imag(&work[j]), f2c_abs(r__2)); // , expr subst
-                    xmax = max(r__3,r__4);
+                    xmax = fla_max(r__3,r__4);
                     /* L100: */
                 }
                 /* Back transform eigenvector if HOWMNY='B'. */
@@ -796,7 +796,7 @@ int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, i
                     i__3 = (isrc - 1) * *n + jr;
                     r__3 = xmax;
                     r__4 = (r__1 = work[i__3].r, f2c_abs(r__1)) + ( r__2 = r_imag(&work[(isrc - 1) * *n + jr]), f2c_abs( r__2)); // , expr subst
-                    xmax = max(r__3,r__4);
+                    xmax = fla_max(r__3,r__4);
                     /* L110: */
                 }
                 if (xmax > safmin)
@@ -883,8 +883,8 @@ L140:
                 i__2 = je + je * p_dim1;
                 r__4 = ((r__2 = s[i__1].r, f2c_abs(r__2)) + (r__3 = r_imag(&s[je + je * s_dim1]), f2c_abs(r__3))) * ascale;
                 r__5 = (r__1 = p[i__2].r, f2c_abs(r__1)) * bscale;
-                r__4 = max(r__4,r__5); // ; expr subst
-                temp = 1.f / max(r__4,safmin);
+                r__4 = fla_max(r__4,r__5); // ; expr subst
+                temp = 1.f / fla_max(r__4,safmin);
                 i__1 = je + je * s_dim1;
                 q__2.r = temp * s[i__1].r;
                 q__2.i = temp * s[i__1].i; // , expr subst
@@ -905,25 +905,25 @@ L140:
                 scale = 1.f;
                 if (lsa)
                 {
-                    scale = small / f2c_abs(sbeta) * min(anorm,big);
+                    scale = small / f2c_abs(sbeta) * fla_min(anorm,big);
                 }
                 if (lsb)
                 {
                     /* Computing MAX */
                     r__3 = scale;
-                    r__4 = small / ((r__1 = salpha.r, f2c_abs(r__1)) + (r__2 = r_imag(&salpha), f2c_abs(r__2))) * min( bnorm,big); // , expr subst
-                    scale = max(r__3,r__4);
+                    r__4 = small / ((r__1 = salpha.r, f2c_abs(r__1)) + (r__2 = r_imag(&salpha), f2c_abs(r__2))) * fla_min( bnorm,big); // , expr subst
+                    scale = fla_max(r__3,r__4);
                 }
                 if (lsa || lsb)
                 {
                     /* Computing MIN */
                     /* Computing MAX */
                     r__5 = 1.f, r__6 = f2c_abs(acoeff);
-                    r__5 = max(r__5,r__6);
+                    r__5 = fla_max(r__5,r__6);
                     r__6 = (r__1 = bcoeff.r, f2c_abs(r__1)) + (r__2 = r_imag(&bcoeff), f2c_abs(r__2)); // ; expr subst
                     r__3 = scale;
-                    r__4 = 1.f / (safmin * max(r__5,r__6)); // , expr subst
-                    scale = min(r__3,r__4);
+                    r__4 = 1.f / (safmin * fla_max(r__5,r__6)); // , expr subst
+                    scale = fla_min(r__3,r__4);
                     if (lsa)
                     {
                         acoeff = ascale * (scale * sbeta);
@@ -968,8 +968,8 @@ L140:
                 /* Computing MAX */
                 r__1 = ulp * acoefa * anorm;
                 r__2 = ulp * bcoefa * bnorm;
-                r__1 = max(r__1,r__2); // ; expr subst
-                dmin__ = max(r__1,safmin);
+                r__1 = fla_max(r__1,r__2); // ; expr subst
+                dmin__ = fla_max(r__1,safmin);
                 /* Triangular solve of (a A - b B) x = 0 (columnwise) */
                 /* WORK(1:j-1) contains sums w, */
                 /* WORK(j+1:JE) contains x */
@@ -1128,7 +1128,7 @@ L140:
                     i__2 = (isrc - 1) * *n + jr;
                     r__3 = xmax;
                     r__4 = (r__1 = work[i__2].r, f2c_abs(r__1)) + ( r__2 = r_imag(&work[(isrc - 1) * *n + jr]), f2c_abs( r__2)); // , expr subst
-                    xmax = max(r__3,r__4);
+                    xmax = fla_max(r__3,r__4);
                     /* L220: */
                 }
                 if (xmax > safmin)

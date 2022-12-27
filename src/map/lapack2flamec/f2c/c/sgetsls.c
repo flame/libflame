@@ -91,7 +91,7 @@ they are stored as the columns of the */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -224,7 +224,7 @@ int sgetsls_(char *trans, integer *m, integer *n, integer * nrhs, real *a, integ
     --work;
     /* Function Body */
     *info = 0;
-    maxmn = max(*m,*n);
+    maxmn = fla_max(*m,*n);
     tran = lsame_(trans, "T");
     lquery = *lwork == -1 || *lwork == -2;
     if (! (lsame_(trans, "N") || lsame_(trans, "T")))
@@ -243,15 +243,15 @@ int sgetsls_(char *trans, integer *m, integer *n, integer * nrhs, real *a, integ
     {
         *info = -4;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -6;
     }
     else /* if(complicated condition) */
     {
         /* Computing MAX */
-        i__1 = max(1,*m);
-        if (*ldb < max(i__1,*n))
+        i__1 = fla_max(1,*m);
+        if (*ldb < fla_max(i__1,*n))
         {
             *info = -8;
         }
@@ -268,7 +268,7 @@ int sgetsls_(char *trans, integer *m, integer *n, integer * nrhs, real *a, integ
             /* Computing MAX */
             i__1 = lwo;
             i__2 = (integer) workq[0]; // , expr subst
-            lwo = max(i__1,i__2);
+            lwo = fla_max(i__1,i__2);
             sgeqr_(m, n, &a[a_offset], lda, tq, &c_n2, workq, &c_n2, &info2);
             tszm = (integer) tq[0];
             lwm = (integer) workq[0];
@@ -276,7 +276,7 @@ int sgetsls_(char *trans, integer *m, integer *n, integer * nrhs, real *a, integ
             /* Computing MAX */
             i__1 = lwm;
             i__2 = (integer) workq[0]; // , expr subst
-            lwm = max(i__1,i__2);
+            lwm = fla_max(i__1,i__2);
             wsizeo = tszo + lwo;
             wsizem = tszm + lwm;
         }
@@ -289,7 +289,7 @@ int sgetsls_(char *trans, integer *m, integer *n, integer * nrhs, real *a, integ
             /* Computing MAX */
             i__1 = lwo;
             i__2 = (integer) workq[0]; // , expr subst
-            lwo = max(i__1,i__2);
+            lwo = fla_max(i__1,i__2);
             sgelq_(m, n, &a[a_offset], lda, tq, &c_n2, workq, &c_n2, &info2);
             tszm = (integer) tq[0];
             lwm = (integer) workq[0];
@@ -297,7 +297,7 @@ int sgetsls_(char *trans, integer *m, integer *n, integer * nrhs, real *a, integ
             /* Computing MAX */
             i__1 = lwm;
             i__2 = (integer) workq[0]; // , expr subst
-            lwm = max(i__1,i__2);
+            lwm = fla_max(i__1,i__2);
             wsizeo = tszo + lwo;
             wsizem = tszm + lwm;
         }
@@ -335,10 +335,10 @@ int sgetsls_(char *trans, integer *m, integer *n, integer * nrhs, real *a, integ
     }
     /* Quick return if possible */
     /* Computing MIN */
-    i__1 = min(*m,*n);
-    if (min(i__1,*nrhs) == 0)
+    i__1 = fla_min(*m,*n);
+    if (fla_min(i__1,*nrhs) == 0)
     {
-        i__1 = max(*m,*n);
+        i__1 = fla_max(*m,*n);
         slaset_("FULL", &i__1, nrhs, &c_b23, &c_b23, &b[b_offset], ldb);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;

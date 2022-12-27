@@ -54,7 +54,7 @@ the */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] T */
@@ -70,7 +70,7 @@ the elements below the diagonal are not used. */
 /* > \param[in] LDT */
 /* > \verbatim */
 /* > LDT is INTEGER */
-/* > The leading dimension of the array T. LDT >= max(1,N). */
+/* > The leading dimension of the array T. LDT >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -170,11 +170,11 @@ int cgelqt3_(integer *m, integer *n, complex *a, integer * lda, complex *t, inte
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
-    else if (*ldt < max(1,*m))
+    else if (*ldt < fla_max(1,*m))
     {
         *info = -6;
     }
@@ -188,7 +188,7 @@ int cgelqt3_(integer *m, integer *n, complex *a, integer * lda, complex *t, inte
     if (*m == 1)
     {
         /* Compute Householder transform when N=1 */
-        clarfg_(n, &a[a_offset], &a[min(2,*n) * a_dim1 + 1], lda, &t[t_offset] );
+        clarfg_(n, &a[a_offset], &a[fla_min(2,*n) * a_dim1 + 1], lda, &t[t_offset] );
         i__1 = t_dim1 + 1;
         r_cnjg(&q__1, &t[t_dim1 + 1]);
         t[i__1].r = q__1.r;
@@ -201,10 +201,10 @@ int cgelqt3_(integer *m, integer *n, complex *a, integer * lda, complex *t, inte
         m2 = *m - m1;
         /* Computing MIN */
         i__1 = m1 + 1;
-        i1 = min(i__1,*m);
+        i1 = fla_min(i__1,*m);
         /* Computing MIN */
         i__1 = *m + 1;
-        j1 = min(i__1,*n);
+        j1 = fla_min(i__1,*n);
         /* Compute A(1:M1,1:N) <- (Y1,R1,T1), where Q1 = I - Y1 T1 Y1^H */
         cgelqt3_(&m1, n, &a[a_offset], lda, &t[t_offset], ldt, &iinfo);
         /* Compute A(J1:M,1:N) = A(J1:M,1:N) Q1^H [workspace: T(1:N1,J1:N)] */

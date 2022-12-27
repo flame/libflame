@@ -81,7 +81,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -94,7 +94,7 @@ static integer c__1 = 1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] Q */
@@ -292,7 +292,7 @@ int ctgex2_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda
     /* Jim Demmel and Guillaume Revy. See forum post 1783. */
     /* Computing MAX */
     r__1 = eps * 20.f * sa;
-    thresh = max(r__1,smlnum);
+    thresh = fla_max(r__1,smlnum);
     /* Compute unitary QL and RQ that swap 1-by-1 and 1-by-1 blocks */
     /* using Givens rotations and perform the swap tentatively. */
     q__2.r = s[3].r * t[0].r - s[3].i * t[0].i;

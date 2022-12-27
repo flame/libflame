@@ -49,7 +49,7 @@ gbtrf_double_parameters:: gbtrf_double_parameters ( int matrix_layout_i,
 
     /* Memory allocation of the buffers */
     lapacke_gtest_alloc_double_buffer_pair( &ab, &abref, (ldab*max(m,n)));
-    lapacke_gtest_alloc_int_buffer_pair ( &ipiv,&ipivref,max(1,min(m,n)));
+    lapacke_gtest_alloc_int_buffer_pair ( &ipiv,&ipivref,max(1,fla_min(m,n)));
 
     if( (ab==NULL) || (abref==NULL) ||  \
         (ipiv==NULL) || (ipivref==NULL)){
@@ -121,14 +121,14 @@ TEST(gbtrf,dgbtrf1) {
         printf( "The i:%d th argument with Netlib LAPACKE_dgbtrf is wrong\n",
         dgbtrf_obj.inforef );
     }
-    ipiv_diff = computeDiff_i( max(1,min(dgbtrf_obj.m,dgbtrf_obj.n)),
+    ipiv_diff = computeDiff_i( fla_max(1,fla_min(dgbtrf_obj.m,dgbtrf_obj.n)),
                                 dgbtrf_obj.ipiv,dgbtrf_obj.ipivref);
     if( ipiv_diff >0){
         printf("\n warning: pivot computation in dgbtrf1 test case failed \n");
     }
 
     /* Compute Difference in C and CPP buffer */
-    diff =  computeDiff_d( (dgbtrf_obj.ldab * max(dgbtrf_obj.m,dgbtrf_obj.n) ),
+    diff =  computeDiff_d( (dgbtrf_obj.ldab * fla_max(dgbtrf_obj.m,dgbtrf_obj.n) ),
                                              dgbtrf_obj.ab,dgbtrf_obj.abref );
     EXPECT_NEAR(0.0,diff,LAPACKE_GTEST_THRESHOLD);
 }
@@ -174,7 +174,7 @@ gbtrf_float_parameters:: gbtrf_float_parameters ( int matrix_layout_i,
 
     /* Memory allocation of the buffers */
     lapacke_gtest_alloc_float_buffer_pair( &ab, &abref, (ldab*max(m,n)));
-    lapacke_gtest_alloc_int_buffer_pair ( &ipiv,&ipivref,max(1,min(m,n)));
+    lapacke_gtest_alloc_int_buffer_pair ( &ipiv,&ipivref,max(1,fla_min(m,n)));
 
     if( (ab==NULL) || (abref==NULL) ||  \
         (ipiv==NULL) || (ipivref==NULL)){
@@ -247,14 +247,14 @@ TEST(gbtrf,sgbtrf1) {
         printf( "The i:%d th argument with Netlib LAPACKE_sgbtrf is wrong\n",
         sgbtrf_obj.inforef );
     }
-    ipiv_diff = computeDiff_i( max(1,min(sgbtrf_obj.m,sgbtrf_obj.n)),
+    ipiv_diff = computeDiff_i( fla_max(1,fla_min(sgbtrf_obj.m,sgbtrf_obj.n)),
                                 sgbtrf_obj.ipiv,sgbtrf_obj.ipivref);
     if( ipiv_diff >0){
         printf("\n warning: pivot computation in sgbtrf1 test case failed \n");
     }
 
     /* Compute Difference in C and CPP buffer */
-    diff =  computeDiff_s( (sgbtrf_obj.ldab * max(sgbtrf_obj.m,sgbtrf_obj.n) ),
+    diff =  computeDiff_s( (sgbtrf_obj.ldab * fla_max(sgbtrf_obj.m,sgbtrf_obj.n) ),
                                              sgbtrf_obj.ab,sgbtrf_obj.abref );
     EXPECT_NEAR(0.0,diff,LAPACKE_GTEST_THRESHOLD);
 }
@@ -300,7 +300,7 @@ gbtrf_scomplex_parameters:: gbtrf_scomplex_parameters ( int matrix_layout_i,
 
     /* Memory allocation of the buffers */
     lapacke_gtest_alloc_lapack_scomplex_buffer_pair( &ab, &abref, (ldab*max(m,n)));
-    lapacke_gtest_alloc_int_buffer_pair ( &ipiv,&ipivref,max(1,min(m,n)));
+    lapacke_gtest_alloc_int_buffer_pair ( &ipiv,&ipivref,max(1,fla_min(m,n)));
 
     if( (ab==NULL) || (abref==NULL) ||  \
         (ipiv==NULL) || (ipivref==NULL)){
@@ -373,14 +373,14 @@ TEST(gbtrf,cgbtrf1) {
         printf( "The i:%d th argument with Netlib LAPACKE_cgbtrf is wrong\n",
         cgbtrf_obj.inforef );
     }
-    ipiv_diff = computeDiff_i( max(1,min(cgbtrf_obj.m,cgbtrf_obj.n)),
+    ipiv_diff = computeDiff_i( fla_max(1,fla_min(cgbtrf_obj.m,cgbtrf_obj.n)),
                                 cgbtrf_obj.ipiv,cgbtrf_obj.ipivref);
     if( ipiv_diff >0){
         printf("\n warning: pivot computation in cgbtrf1 test case failed \n");
     }
 
     /* Compute Difference in C and CPP buffer */
-    diff =  computeDiff_c( (cgbtrf_obj.ldab * max(cgbtrf_obj.m,cgbtrf_obj.n) ),
+    diff =  computeDiff_c( (cgbtrf_obj.ldab * fla_max(cgbtrf_obj.m,cgbtrf_obj.n) ),
                                              cgbtrf_obj.ab,cgbtrf_obj.abref );
     EXPECT_NEAR(0.0,diff,LAPACKE_GTEST_THRESHOLD);
 }
@@ -654,14 +654,14 @@ TEST(gbtrf,zgbtrf1) {
         printf( "The i:%d th argument with Netlib LAPACKE_zgbtrf is wrong\n",
         zgbtrf_obj.inforef );
     }
-    ipiv_diff = computeDiff_i( max(1,min(zgbtrf_obj.m,zgbtrf_obj.n)),
+    ipiv_diff = computeDiff_i( fla_max(1,fla_min(zgbtrf_obj.m,zgbtrf_obj.n)),
                                 zgbtrf_obj.ipiv,zgbtrf_obj.ipivref);
     if( ipiv_diff >0){
         printf("\n warning: pivot computation in zgbtrf1 test case failed \n");
     }
 
     /* Compute Difference in C and CPP buffer */
-    diff =  computeDiff_z( (zgbtrf_obj.ldab * max(zgbtrf_obj.m,zgbtrf_obj.n) ),
+    diff =  computeDiff_z( (zgbtrf_obj.ldab * fla_max(zgbtrf_obj.m,zgbtrf_obj.n) ),
                                              zgbtrf_obj.ab,zgbtrf_obj.abref );
     EXPECT_NEAR(0.0,diff,LAPACKE_GTEST_THRESHOLD);
 }

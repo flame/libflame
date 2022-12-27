@@ -164,7 +164,7 @@ void time_Syrk_lt(
       dtime_old = FLA_Clock() - *dtime;
     else{
       *dtime = FLA_Clock() - *dtime;
-      dtime_old = min( *dtime, dtime_old );
+      dtime_old = fla_min( *dtime, dtime_old );
     }
   }
 

@@ -80,7 +80,7 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, i
 
             resid2 = norm/(eps * norm_b * (float)m);
 
-            *residual = (double)max(resid1, resid2);
+            *residual = (double)fla_max(resid1, resid2);
             break;
         }
         case DOUBLE:
@@ -113,7 +113,7 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, i
 
             resid2 = norm/(eps * norm_b * (double)m);
 
-            *residual = (double)max(resid1, resid2);
+            *residual = (double)fla_max(resid1, resid2);
             break;
         }
         case COMPLEX:
@@ -146,7 +146,7 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, i
 
             resid2 = norm/(eps * norm_b * (float)m);
 
-            *residual = (double)max(resid1, resid2);
+            *residual = (double)fla_max(resid1, resid2);
             break;
         }
         case DOUBLE_COMPLEX:
@@ -181,7 +181,7 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, i
 
             resid2 = norm/(eps * norm_b * (double)m);
 
-            *residual = (double)max(resid1, resid2);
+            *residual = (double)fla_max(resid1, resid2);
             break;
         }
     }

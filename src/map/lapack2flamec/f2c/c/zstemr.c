@@ -206,13 +206,13 @@ n-1}
 /* > */
 /* > \param[out] Z */
 /* > \verbatim */
-/* > Z is COMPLEX*16 array, dimension (LDZ, max(1,M) ) */
+/* > Z is COMPLEX*16 array, dimension (LDZ, fla_max(1,M) ) */
 /* > If JOBZ = 'V', and if INFO = 0, then the first M columns of Z */
 /* > contain the orthonormal eigenvectors of the matrix T */
 /* > corresponding to the selected eigenvalues, with the i-th */
 /* > column of Z holding the eigenvector associated with W(i). */
 /* > If JOBZ = 'N', then Z is not referenced. */
-/* > Note: the user must ensure that at least max(1,M) columns are */
+/* > Note: the user must ensure that at least fla_max(1,M) columns are */
 /* > supplied in the array Z;
 if RANGE = 'V', the exact value of M */
 /* > is not known in advance and can be computed with a workspace */
@@ -223,14 +223,14 @@ if RANGE = 'V', the exact value of M */
 /* > \verbatim */
 /* > LDZ is INTEGER */
 /* > The leading dimension of the array Z. LDZ >= 1, and if */
-/* > JOBZ = 'V', then LDZ >= max(1,N). */
+/* > JOBZ = 'V', then LDZ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] NZC */
 /* > \verbatim */
 /* > NZC is INTEGER */
 /* > The number of eigenvectors to be held in the array Z. */
-/* > If RANGE = 'A', then NZC >= max(1,N). */
+/* > If RANGE = 'A', then NZC >= fla_max(1,N). */
 /* > If RANGE = 'V', then NZC >= the number of eigenvalues in (VL,VU]. */
 /* > If RANGE = 'I', then NZC >= IU-IL+1. */
 /* > If NZC = -1, then a workspace query is assumed;
@@ -277,8 +277,8 @@ the */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,18*N) */
-/* > if JOBZ = 'V', and LWORK >= max(1,12*N) if JOBZ = 'N'. */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,18*N) */
+/* > if JOBZ = 'V', and LWORK >= fla_max(1,12*N) if JOBZ = 'N'. */
 /* > If LWORK = -1, then a workspace query is assumed;
 the routine */
 /* > only calculates the optimal size of the WORK array, returns */
@@ -295,8 +295,8 @@ the routine */
 /* > \param[in] LIWORK */
 /* > \verbatim */
 /* > LIWORK is INTEGER */
-/* > The dimension of the array IWORK. LIWORK >= max(1,10*N) */
-/* > if the eigenvectors are desired, and LIWORK >= max(1,8*N) */
+/* > The dimension of the array IWORK. LIWORK >= fla_max(1,10*N) */
+/* > if the eigenvectors are desired, and LIWORK >= fla_max(1,8*N) */
 /* > if only the eigenvalues are to be computed. */
 /* > If LIWORK = -1, then a workspace query is assumed;
 the */
@@ -516,7 +516,7 @@ int zstemr_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e
     /* Computing MIN */
     d__1 = sqrt(bignum);
     d__2 = 1. / sqrt(sqrt(safmin)); // , expr subst
-    rmax = min(d__1,d__2);
+    rmax = fla_min(d__1,d__2);
     if (*info == 0)
     {
         work[1] = (doublereal) lwmin;
@@ -777,7 +777,7 @@ int zstemr_(char *jobz, char *range, integer *n, doublereal * d__, doublereal *e
             /* Computing MAX */
             d__1 = sqrt(eps) * .005;
             d__2 = eps * 4.; // , expr subst
-            rtol2 = max(d__1,d__2);
+            rtol2 = fla_max(d__1,d__2);
         }
         dlarre_(range, n, &wl, &wu, &iil, &iiu, &d__[1], &e[1], &work[inde2], &rtol1, &rtol2, &thresh, &nsplit, &iwork[iinspl], m, &w[1], & work[inderr], &work[indgp], &iwork[iindbl], &iwork[iindw], & work[indgrs], &pivmin, &work[indwrk], &iwork[iindwk], &iinfo);
         if (iinfo != 0)

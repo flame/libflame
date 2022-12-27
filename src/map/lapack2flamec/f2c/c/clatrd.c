@@ -107,7 +107,7 @@ the elements below the diagonal */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] E */
@@ -138,7 +138,7 @@ the elements below the diagonal */
 /* > \param[in] LDW */
 /* > \verbatim */
 /* > LDW is INTEGER */
-/* > The leading dimension of the array W. LDW >= max(1,N). */
+/* > The leading dimension of the array W. LDW >= fla_max(1,N). */
 /* > \endverbatim */
 /* Authors: */
 /* ======== */
@@ -409,7 +409,7 @@ int clatrd_(char *uplo, integer *n, integer *nb, complex *a, integer *lda, real 
                 i__2 = *n - i__;
                 /* Computing MIN */
                 i__3 = i__ + 2;
-                clarfg_(&i__2, &alpha, &a[min(i__3,*n) + i__ * a_dim1], &c__1, &tau[i__]);
+                clarfg_(&i__2, &alpha, &a[fla_min(i__3,*n) + i__ * a_dim1], &c__1, &tau[i__]);
                 i__2 = i__;
                 e[i__2] = alpha.r;
                 i__2 = i__ + 1 + i__ * a_dim1;

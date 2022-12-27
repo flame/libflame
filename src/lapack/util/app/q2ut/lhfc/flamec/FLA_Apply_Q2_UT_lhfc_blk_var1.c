@@ -41,7 +41,7 @@ FLA_Error FLA_Apply_Q2_UT_lhfc_blk_var1( FLA_Obj D, FLA_Obj T, FLA_Obj W1, FLA_O
 
   while ( FLA_Obj_width( DL ) < FLA_Obj_width( D ) ){
 
-    b = min( b_alg, FLA_Obj_width( DR ) );
+    b = fla_min( b_alg, FLA_Obj_width( DR ) );
 
     FLA_Repart_1x2_to_1x3( DL,  /**/ DR,        &D0, /**/ &D1, &D2,
                            b, FLA_RIGHT );

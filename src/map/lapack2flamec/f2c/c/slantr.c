@@ -39,7 +39,7 @@ static integer c__1 = 1;
 /* > \return SLANTR */
 /* > \verbatim */
 /* > */
-/* > SLANTR = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > SLANTR = ( fla_max(abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -50,7 +50,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that fla_max(abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -109,7 +109,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(M,1). */
+/* > The leading dimension of the array A. LDA >= fla_max(M,1). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -169,13 +169,13 @@ real slantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, real *a
     a -= a_offset;
     --work;
     /* Function Body */
-    if (min(*m,*n) == 0)
+    if (fla_min(*m,*n) == 0)
     {
         value = 0.f;
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
+        /* Find fla_max(abs(A(i,j))). */
         if (lsame_(diag, "U"))
         {
             value = 1.f;
@@ -189,7 +189,7 @@ real slantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, real *a
                     /* Computing MIN */
                     i__3 = *m;
                     i__4 = j - 1; // , expr subst
-                    i__2 = min(i__3,i__4);
+                    i__2 = fla_min(i__3,i__4);
                     for (i__ = 1;
                             i__ <= i__2;
                             ++i__)
@@ -237,7 +237,7 @@ real slantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, real *a
                         j <= i__1;
                         ++j)
                 {
-                    i__2 = min(*m,j);
+                    i__2 = fla_min(*m,j);
                     for (i__ = 1;
                             i__ <= i__2;
                             ++i__)
@@ -303,7 +303,7 @@ real slantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, real *a
                 else
                 {
                     sum = 0.f;
-                    i__2 = min(*m,j);
+                    i__2 = fla_min(*m,j);
                     for (i__ = 1;
                             i__ <= i__2;
                             ++i__)
@@ -381,7 +381,7 @@ real slantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, real *a
                     /* Computing MIN */
                     i__3 = *m;
                     i__4 = j - 1; // , expr subst
-                    i__2 = min(i__3,i__4);
+                    i__2 = fla_min(i__3,i__4);
                     for (i__ = 1;
                             i__ <= i__2;
                             ++i__)
@@ -407,7 +407,7 @@ real slantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, real *a
                         j <= i__1;
                         ++j)
                 {
-                    i__2 = min(*m,j);
+                    i__2 = fla_min(*m,j);
                     for (i__ = 1;
                             i__ <= i__2;
                             ++i__)
@@ -423,7 +423,7 @@ real slantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, real *a
         {
             if (lsame_(diag, "U"))
             {
-                i__1 = min(*m,*n);
+                i__1 = fla_min(*m,*n);
                 for (i__ = 1;
                         i__ <= i__1;
                         ++i__)
@@ -504,7 +504,7 @@ real slantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, real *a
             if (lsame_(diag, "U"))
             {
                 scale = 1.f;
-                sum = (real) min(*m,*n);
+                sum = (real) fla_min(*m,*n);
                 i__1 = *n;
                 for (j = 2;
                         j <= i__1;
@@ -513,7 +513,7 @@ real slantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, real *a
                     /* Computing MIN */
                     i__3 = *m;
                     i__4 = j - 1; // , expr subst
-                    i__2 = min(i__3,i__4);
+                    i__2 = fla_min(i__3,i__4);
                     slassq_(&i__2, &a[j * a_dim1 + 1], &c__1, &scale, &sum);
                     /* L290: */
                 }
@@ -527,7 +527,7 @@ real slantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, real *a
                         j <= i__1;
                         ++j)
                 {
-                    i__2 = min(*m,j);
+                    i__2 = fla_min(*m,j);
                     slassq_(&i__2, &a[j * a_dim1 + 1], &c__1, &scale, &sum);
                     /* L300: */
                 }
@@ -538,7 +538,7 @@ real slantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, real *a
             if (lsame_(diag, "U"))
             {
                 scale = 1.f;
-                sum = (real) min(*m,*n);
+                sum = (real) fla_min(*m,*n);
                 i__1 = *n;
                 for (j = 1;
                         j <= i__1;
@@ -548,7 +548,7 @@ real slantr_(char *norm, char *uplo, char *diag, integer *m, integer *n, real *a
                     /* Computing MIN */
                     i__3 = *m;
                     i__4 = j + 1; // , expr subst
-                    slassq_(&i__2, &a[min(i__3,i__4) + j * a_dim1], &c__1, & scale, &sum);
+                    slassq_(&i__2, &a[fla_min(i__3,i__4) + j * a_dim1], &c__1, & scale, &sum);
                     /* L310: */
                 }
             }

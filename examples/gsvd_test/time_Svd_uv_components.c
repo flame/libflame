@@ -215,7 +215,7 @@ void time_Svd_uv_components(
     FLA_Norm_frob( eyeV, normV );
     FLA_Obj_extract_real_scalar( normU, &diffU );
     FLA_Obj_extract_real_scalar( normV, &diffV );
-    *diff2 = max( diffU, diffV );
+    *diff2 = fla_max( diffU, diffV );
 
     if ( variant < 1 ) // LAPACK computes and stores V'
     {
@@ -223,9 +223,9 @@ void time_Svd_uv_components(
       FLA_Obj VT,
               VB;
 
-      FLA_Part_1x2( U,   &UL, &UR,   min( m, n ), FLA_LEFT );
+      FLA_Part_1x2( U,   &UL, &UR,   fla_min( m, n ), FLA_LEFT );
       FLA_Part_2x1( V,   &VT,
-                         &VB,        min( m, n ), FLA_TOP );
+                         &VB,        fla_min( m, n ), FLA_TOP );
 
       FLA_Apply_diag_matrix( FLA_RIGHT, FLA_NO_CONJUGATE, s, UL );
       FLA_Gemm( FLA_NO_TRANSPOSE, FLA_NO_TRANSPOSE,
@@ -236,8 +236,8 @@ void time_Svd_uv_components(
       FLA_Obj UL, UR;
       FLA_Obj VL, VR;
 
-      FLA_Part_1x2( U,   &UL, &UR,   min( m, n ), FLA_LEFT );
-      FLA_Part_1x2( V,   &VL, &VR,   min( m, n ), FLA_LEFT );
+      FLA_Part_1x2( U,   &UL, &UR,   fla_min( m, n ), FLA_LEFT );
+      FLA_Part_1x2( V,   &VL, &VR,   fla_min( m, n ), FLA_LEFT );
 
       FLA_Apply_diag_matrix( FLA_RIGHT, FLA_NO_CONJUGATE, s, UL );
       FLA_Gemm( FLA_NO_TRANSPOSE, FLA_CONJ_TRANSPOSE,

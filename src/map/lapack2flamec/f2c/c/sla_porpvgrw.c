@@ -61,7 +61,7 @@
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] AF */
@@ -74,7 +74,7 @@
 /* > \param[in] LDAF */
 /* > \verbatim */
 /* > LDAF is INTEGER */
-/* > The leading dimension of the array AF. LDAF >= max(1,N). */
+/* > The leading dimension of the array AF. LDAF >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -154,7 +154,7 @@ real sla_porpvgrw_(char *uplo, integer *ncols, real *a, integer *lda, real * af,
                 /* Computing MAX */
                 r__2 = (r__1 = a[i__ + j * a_dim1], f2c_abs(r__1));
                 r__3 = work[* ncols + j]; // , expr subst
-                work[*ncols + j] = max(r__2,r__3);
+                work[*ncols + j] = fla_max(r__2,r__3);
             }
         }
     }
@@ -173,7 +173,7 @@ real sla_porpvgrw_(char *uplo, integer *ncols, real *a, integer *lda, real * af,
                 /* Computing MAX */
                 r__2 = (r__1 = a[i__ + j * a_dim1], f2c_abs(r__1));
                 r__3 = work[* ncols + j]; // , expr subst
-                work[*ncols + j] = max(r__2,r__3);
+                work[*ncols + j] = fla_max(r__2,r__3);
             }
         }
     }
@@ -194,7 +194,7 @@ real sla_porpvgrw_(char *uplo, integer *ncols, real *a, integer *lda, real * af,
                 /* Computing MAX */
                 r__2 = (r__1 = af[i__ + j * af_dim1], f2c_abs(r__1));
                 r__3 = work[ j]; // , expr subst
-                work[j] = max(r__2,r__3);
+                work[j] = fla_max(r__2,r__3);
             }
         }
     }
@@ -213,7 +213,7 @@ real sla_porpvgrw_(char *uplo, integer *ncols, real *a, integer *lda, real * af,
                 /* Computing MAX */
                 r__2 = (r__1 = af[i__ + j * af_dim1], f2c_abs(r__1));
                 r__3 = work[ j]; // , expr subst
-                work[j] = max(r__2,r__3);
+                work[j] = fla_max(r__2,r__3);
             }
         }
     }
@@ -236,7 +236,7 @@ real sla_porpvgrw_(char *uplo, integer *ncols, real *a, integer *lda, real * af,
             {
                 /* Computing MIN */
                 r__1 = amax / umax;
-                rpvgrw = min(r__1,rpvgrw);
+                rpvgrw = fla_min(r__1,rpvgrw);
             }
         }
     }
@@ -253,7 +253,7 @@ real sla_porpvgrw_(char *uplo, integer *ncols, real *a, integer *lda, real * af,
             {
                 /* Computing MIN */
                 r__1 = amax / umax;
-                rpvgrw = min(r__1,rpvgrw);
+                rpvgrw = fla_min(r__1,rpvgrw);
             }
         }
     }

@@ -176,7 +176,7 @@ int slarrk_(integer *n, integer *iw, real *gl, real *gu, real *d__, real *e2, re
     /* Computing MAX */
     r__1 = f2c_abs(*gl);
     r__2 = f2c_abs(*gu); // , expr subst
-    tnorm = max(r__1,r__2);
+    tnorm = fla_max(r__1,r__2);
     rtoli = *reltol;
     atoli = *pivmin * 4.f;
     itmax = (integer) ((log(tnorm + *pivmin) - log(*pivmin)) / log(2.f)) + 2;
@@ -189,11 +189,11 @@ L10: /* Check if interval converged or maximum number of iterations reached */
     /* Computing MAX */
     r__1 = f2c_abs(right);
     r__2 = f2c_abs(left); // , expr subst
-    tmp2 = max(r__1,r__2);
+    tmp2 = fla_max(r__1,r__2);
     /* Computing MAX */
-    r__1 = max(atoli,*pivmin);
+    r__1 = fla_max(atoli,*pivmin);
     r__2 = rtoli * tmp2; // , expr subst
-    if (tmp1 < max(r__1,r__2))
+    if (tmp1 < fla_max(r__1,r__2))
     {
         *info = 0;
         goto L30;

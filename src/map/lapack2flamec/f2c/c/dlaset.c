@@ -80,13 +80,13 @@ the strictly upper */
 /* > if UPLO = 'L', A(i,j) = ALPHA, j+1<=i<=m, 1<=j<=n, */
 /* > otherwise, A(i,j) = ALPHA, 1<=i<=m, 1<=j<=n, i.ne.j, */
 /* > */
-/* > and, for all UPLO, A(i,i) = BETA, 1<=i<=min(m,n). */
+/* > and, for all UPLO, A(i,i) = BETA, 1<=i<=fla_min(m,n). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* Authors: */
 /* ======== */
@@ -139,7 +139,7 @@ int dlaset_(char *uplo, integer *m, integer *n, doublereal * alpha, doublereal *
         {
             /* Computing MIN */
             i__3 = j - 1;
-            i__2 = min(i__3,*m);
+            i__2 = fla_min(i__3,*m);
             for (i__ = 1;
                     i__ <= i__2;
                     ++i__)
@@ -154,7 +154,7 @@ int dlaset_(char *uplo, integer *m, integer *n, doublereal * alpha, doublereal *
     {
         /* Set the strictly lower triangular or trapezoidal part of the */
         /* array to ALPHA. */
-        i__1 = min(*m,*n);
+        i__1 = fla_min(*m,*n);
         for (j = 1;
                 j <= i__1;
                 ++j)
@@ -189,8 +189,8 @@ int dlaset_(char *uplo, integer *m, integer *n, doublereal * alpha, doublereal *
             /* L60: */
         }
     }
-    /* Set the first min(M,N) diagonal elements to BETA. */
-    i__1 = min(*m,*n);
+    /* Set the first fla_min(M,N) diagonal elements to BETA. */
+    i__1 = fla_min(*m,*n);
     for (i__ = 1;
             i__ <= i__1;
             ++i__)

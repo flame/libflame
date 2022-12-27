@@ -91,7 +91,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDQ */
 /* > \verbatim */
 /* > LDQ is INTEGER */
-/* > The leading dimension of the array Q. LDQ >= max(1,N). */
+/* > The leading dimension of the array Q. LDQ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] INDXQ */
@@ -114,7 +114,7 @@ static integer c_n1 = -1;
 /* > \verbatim */
 /* > CUTPNT is INTEGER */
 /* > The location of the last eigenvalue in the leading sub-matrix. */
-/* > min(1,N) <= CUTPNT <= N/2. */
+/* > fla_min(1,N) <= CUTPNT <= N/2. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -194,7 +194,7 @@ int slaed1_(integer *n, real *d__, real *q, integer *ldq, integer *indxq, real *
     {
         *info = -1;
     }
-    else if (*ldq < max(1,*n))
+    else if (*ldq < fla_max(1,*n))
     {
         *info = -4;
     }
@@ -203,7 +203,7 @@ int slaed1_(integer *n, real *d__, real *q, integer *ldq, integer *indxq, real *
         /* Computing MIN */
         i__1 = 1;
         i__2 = *n / 2; // , expr subst
-        if (min(i__1,i__2) > *cutpnt || *n / 2 < *cutpnt)
+        if (fla_min(i__1,i__2) > *cutpnt || *n / 2 < *cutpnt)
         {
             *info = -7;
         }

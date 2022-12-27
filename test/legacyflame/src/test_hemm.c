@@ -236,7 +236,7 @@ void libfla_test_hemm_experiment( test_params_t params,
 		libfla_test_hemm_impl( impl, side, uplo, alpha, A_test, B_test, beta, C_test );
 		
 		time = FLA_Clock() - time;
-		time_min = min( time_min, time );
+		time_min = fla_min( time_min, time );
 	}
 
 	// Copy the solution to flat matrix X.

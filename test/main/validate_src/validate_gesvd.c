@@ -42,7 +42,7 @@ void validate_gesvd(char *jobu, char *jobvt, integer m, integer n, void* A, void
                compute norm(I - V*V') / (N * EPS)*/
             resid3 = (float)check_orthogonality(datatype, V, n, n, ldvt);
 
-            *residual = (double)max(resid1, max(resid2, resid3));
+            *residual = (double)fla_max(resid1, fla_max(resid2, resid3));
             break;
         }
 
@@ -67,7 +67,7 @@ void validate_gesvd(char *jobu, char *jobvt, integer m, integer n, void* A, void
                compute norm(I - V*V') / (N * EPS)*/
             resid3 = check_orthogonality(datatype, V, n, n, ldvt);
 
-            *residual = (double)max(resid1, max(resid2, resid3));
+            *residual = (double)fla_max(resid1, fla_max(resid2, resid3));
              break;
         }
 
@@ -92,7 +92,7 @@ void validate_gesvd(char *jobu, char *jobvt, integer m, integer n, void* A, void
                compute norm(I - V*V') / (N * EPS)*/
             resid3 = (float)check_orthogonality(datatype, V, n, n, ldvt);
 
-            *residual = (double)max(resid1, max(resid2, resid3));
+            *residual = (double)fla_max(resid1, fla_max(resid2, resid3));
             break;
         }
 
@@ -117,7 +117,7 @@ void validate_gesvd(char *jobu, char *jobvt, integer m, integer n, void* A, void
                compute norm(I - V*V') / (N * EPS)*/
             resid3 = check_orthogonality(datatype, V, n, n, ldvt);
 
-            *residual = (double)max(resid1, max(resid2, resid3));
+            *residual = (double)fla_max(resid1, fla_max(resid2, resid3));
             break;
         }
     }

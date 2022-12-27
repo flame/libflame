@@ -56,7 +56,7 @@
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] S */
@@ -142,7 +142,7 @@ int dpoequ_(integer *n, doublereal *a, integer *lda, doublereal *s, doublereal *
     {
         *info = -1;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -3;
     }
@@ -174,11 +174,11 @@ int dpoequ_(integer *n, doublereal *a, integer *lda, doublereal *s, doublereal *
         /* Computing MIN */
         d__1 = smin;
         d__2 = s[i__]; // , expr subst
-        smin = min(d__1,d__2);
+        smin = fla_min(d__1,d__2);
         /* Computing MAX */
         d__1 = *amax;
         d__2 = s[i__]; // , expr subst
-        *amax = max(d__1,d__2);
+        *amax = fla_max(d__1,d__2);
         /* L10: */
     }
     if (smin <= 0.)
@@ -210,7 +210,7 @@ int dpoequ_(integer *n, doublereal *a, integer *lda, doublereal *s, doublereal *
             s[i__] = 1. / sqrt(s[i__]);
             /* L30: */
         }
-        /* Compute SCOND = min(S(I)) / max(S(I)) */
+        /* Compute SCOND = fla_min(S(I)) / fla_max(S(I)) */
         *scond = sqrt(smin) / sqrt(*amax);
     }
     AOCL_DTL_TRACE_LOG_EXIT

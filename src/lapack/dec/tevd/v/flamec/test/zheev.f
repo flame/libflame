@@ -17,7 +17,7 @@
 *          diagonal, is destroyed.
 *
 *  LDA     (input) INTEGER
-*          The leading dimension of the array A.  LDA >= max(1,N).
+*          The leading dimension of the array A.  LDA >= fla_max(1,N).
 *
 *  W       (output) DOUBLE PRECISION array, dimension (N)
 *          If INFO = 0, the eigenvalues in ascending order.
@@ -26,7 +26,7 @@
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
-*          The length of the array WORK.  LWORK >= max(1,2*N-1).
+*          The length of the array WORK.  LWORK >= fla_max(1,2*N-1).
 *          For optimal efficiency, LWORK >= (NB+1)*N,
 *          where NB is the blocksize for ZHETRD returned by ILAENV.
 *
@@ -35,7 +35,7 @@
 *          this value as the first entry of the WORK array, and no error
 *          message related to LWORK is issued by XERBLA.
 *
-*  RWORK   (workspace) DOUBLE PRECISION array, dimension (max(1, 3*N-2))
+*  RWORK   (workspace) DOUBLE PRECISION array, dimension (fla_max(1, 3*N-2))
 *
 *  INFO    (output) INTEGER
 *          = 0:  successful exit

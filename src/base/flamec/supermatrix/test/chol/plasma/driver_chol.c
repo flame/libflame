@@ -117,7 +117,7 @@ integer main( integer argc, char *argv[] )
       
       dtime = dtimes[0];
       for ( j = 1; j < n_repeats; j++ )
-         dtime = min( dtime, dtimes[j] );
+         dtime = fla_min( dtime, dtimes[j] );
       flops[i] = 1.0 / 3.0 * size * size * size / dtime / 1e9;
       
       fprintf( fpp, "   %d   %6.3f\n", size, flops[i] );

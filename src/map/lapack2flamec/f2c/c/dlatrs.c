@@ -195,7 +195,7 @@ x(i), i=1,...,n}
 /* > */
 /* > Since |x(j)| <= M(j), we use the Level 2 BLAS routine DTRSV if the */
 /* > reciprocal of the largest M(j), j=1,..,n, is larger than */
-/* > max(underflow, 1/overflow). */
+/* > fla_max(underflow, 1/overflow). */
 /* > */
 /* > The bound on x(j) is also used to determine when a step in the */
 /* > columnwise method can be performed without fear of overflow. If */
@@ -226,7 +226,7 @@ b(i), i=1,..,n}
 /* > 1<=i<=j */
 /* > */
 /* > and we can safely call DTRSV if 1/M(n) and 1/G(n) are both greater */
-/* > than max(underflow, 1/overflow). */
+/* > than fla_max(underflow, 1/overflow). */
 /* > \endverbatim */
 /* > */
 /* ===================================================================== */
@@ -318,7 +318,7 @@ int dlatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
     {
         *info = -5;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -7;
     }
@@ -415,7 +415,7 @@ int dlatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
             /* Initially, G(0) = max{
             x(i), i=1,...,n}
             . */
-            grow = 1. / max(xbnd,smlnum);
+            grow = 1. / fla_max(xbnd,smlnum);
             xbnd = grow;
             i__1 = jlast;
             i__2 = jinc;
@@ -432,8 +432,8 @@ int dlatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
                 tjj = (d__1 = a[j + j * a_dim1], f2c_dabs(d__1));
                 /* Computing MIN */
                 d__1 = xbnd;
-                d__2 = min(1.,tjj) * grow; // , expr subst
-                xbnd = min(d__1,d__2);
+                d__2 = fla_min(1.,tjj) * grow; // , expr subst
+                xbnd = fla_min(d__1,d__2);
                 if (tjj + cnorm[j] >= smlnum)
                 {
                     /* G(j) = G(j-1)*( 1 + CNORM(j) / f2c_dabs(A(j,j)) ) */
@@ -456,8 +456,8 @@ int dlatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
             . */
             /* Computing MIN */
             d__1 = 1.;
-            d__2 = 1. / max(xbnd,smlnum); // , expr subst
-            grow = min(d__1,d__2);
+            d__2 = 1. / fla_max(xbnd,smlnum); // , expr subst
+            grow = fla_min(d__1,d__2);
             i__2 = jlast;
             i__1 = jinc;
             for (j = jfirst;
@@ -504,7 +504,7 @@ L50:
             /* Initially, M(0) = max{
             x(i), i=1,...,n}
             . */
-            grow = 1. / max(xbnd,smlnum);
+            grow = 1. / fla_max(xbnd,smlnum);
             xbnd = grow;
             i__1 = jlast;
             i__2 = jinc;
@@ -517,12 +517,12 @@ L50:
                 {
                     goto L80;
                 }
-                /* G(j) = max( G(j-1), M(j-1)*( 1 + CNORM(j) ) ) */
+                /* G(j) = fla_max( G(j-1), M(j-1)*( 1 + CNORM(j) ) ) */
                 xj = cnorm[j] + 1.;
                 /* Computing MIN */
                 d__1 = grow;
                 d__2 = xbnd / xj; // , expr subst
-                grow = min(d__1,d__2);
+                grow = fla_min(d__1,d__2);
                 /* M(j) = M(j-1)*( 1 + CNORM(j) ) / f2c_dabs(A(j,j)) */
                 tjj = (d__1 = a[j + j * a_dim1], f2c_dabs(d__1));
                 if (xj > tjj)
@@ -531,7 +531,7 @@ L50:
                 }
                 /* L60: */
             }
-            grow = min(grow,xbnd);
+            grow = fla_min(grow,xbnd);
         }
         else
         {
@@ -541,8 +541,8 @@ L50:
             . */
             /* Computing MIN */
             d__1 = 1.;
-            d__2 = 1. / max(xbnd,smlnum); // , expr subst
-            grow = min(d__1,d__2);
+            d__2 = 1. / fla_max(xbnd,smlnum); // , expr subst
+            grow = fla_min(d__1,d__2);
             i__2 = jlast;
             i__1 = jinc;
             for (j = jfirst;
@@ -722,7 +722,7 @@ L100: /* Scale x if necessary to avoid overflow when adding a */
                 /* k<>j */
                 xj = (d__1 = x[j], f2c_dabs(d__1));
                 uscal = tscal;
-                rec = 1. / max(xmax,1.);
+                rec = 1. / fla_max(xmax,1.);
                 if (cnorm[j] > (bignum - xj) * rec)
                 {
                     /* If x(j) could overflow, scale x by 1/(2*XMAX). */
@@ -742,7 +742,7 @@ L100: /* Scale x if necessary to avoid overflow when adding a */
                         /* Computing MIN */
                         d__1 = 1.;
                         d__2 = rec * tjj; // , expr subst
-                        rec = min(d__1,d__2);
+                        rec = fla_min(d__1,d__2);
                         uscal /= tjjs;
                     }
                     if (rec < 1.)
@@ -871,7 +871,7 @@ L150:
                 /* Computing MAX */
                 d__2 = xmax;
                 d__3 = (d__1 = x[j], f2c_dabs(d__1)); // , expr subst
-                xmax = max(d__2,d__3);
+                xmax = fla_max(d__2,d__3);
                 /* L160: */
             }
         }

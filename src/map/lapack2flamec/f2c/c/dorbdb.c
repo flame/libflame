@@ -375,15 +375,15 @@ int dorbdb_(char *trans, char *signs, integer *m, integer *p, integer *q, double
     {
         *info = -5;
     }
-    else if (colmajor && *ldx11 < max(1,*p))
+    else if (colmajor && *ldx11 < fla_max(1,*p))
     {
         *info = -7;
     }
-    else if (! colmajor && *ldx11 < max(1,*q))
+    else if (! colmajor && *ldx11 < fla_max(1,*q))
     {
         *info = -7;
     }
-    else if (colmajor && *ldx12 < max(1,*p))
+    else if (colmajor && *ldx12 < fla_max(1,*p))
     {
         *info = -9;
     }
@@ -392,7 +392,7 @@ int dorbdb_(char *trans, char *signs, integer *m, integer *p, integer *q, double
         /* Computing MAX */
         i__1 = 1;
         i__2 = *m - *q; // , expr subst
-        if (! colmajor && *ldx12 < max(i__1,i__2))
+        if (! colmajor && *ldx12 < fla_max(i__1,i__2))
         {
             *info = -9;
         }
@@ -401,11 +401,11 @@ int dorbdb_(char *trans, char *signs, integer *m, integer *p, integer *q, double
             /* Computing MAX */
             i__1 = 1;
             i__2 = *m - *p; // , expr subst
-            if (colmajor && *ldx21 < max(i__1,i__2))
+            if (colmajor && *ldx21 < fla_max(i__1,i__2))
             {
                 *info = -11;
             }
-            else if (! colmajor && *ldx21 < max(1,*q))
+            else if (! colmajor && *ldx21 < fla_max(1,*q))
             {
                 *info = -11;
             }
@@ -414,7 +414,7 @@ int dorbdb_(char *trans, char *signs, integer *m, integer *p, integer *q, double
                 /* Computing MAX */
                 i__1 = 1;
                 i__2 = *m - *p; // , expr subst
-                if (colmajor && *ldx22 < max(i__1,i__2))
+                if (colmajor && *ldx22 < fla_max(i__1,i__2))
                 {
                     *info = -13;
                 }
@@ -423,7 +423,7 @@ int dorbdb_(char *trans, char *signs, integer *m, integer *p, integer *q, double
                     /* Computing MAX */
                     i__1 = 1;
                     i__2 = *m - *q; // , expr subst
-                    if (! colmajor && *ldx22 < max(i__1,i__2))
+                    if (! colmajor && *ldx22 < fla_max(i__1,i__2))
                     {
                         *info = -13;
                     }

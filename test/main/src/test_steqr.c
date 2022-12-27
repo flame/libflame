@@ -254,7 +254,7 @@ void prepare_steqr_run(char *compz,
         exe_time = fla_test_clock() - exe_time;
 
         /* Get the best execution time */
-        time_min = min(time_min, exe_time);
+        time_min = fla_min(time_min, exe_time);
 
         /* Free up the output buffers */
         free_vector(work);

@@ -31,7 +31,7 @@ FLA_Error FLA_Bidiag_UT_create_T( FLA_Obj A, FLA_Obj* TU, FLA_Obj* TV )
   b_alg = 5;
 
   // Adjust the blocksize with respect to the min-dim of A.
-  b_alg = min( b_alg, k );
+  b_alg = fla_min( b_alg, k );
   
   // Figure out whether TU and TV should be row-major or column-major.
   if ( FLA_Obj_row_stride( A ) == 1 )

@@ -97,7 +97,7 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > LDV is INTEGER */
 /* > The leading dimension of the array V. */
-/* > If STOREV = 'C', LDV >= max(1,N);
+/* > If STOREV = 'C', LDV >= fla_max(1,N);
 if STOREV = 'R', LDV >= K. */
 /* > \endverbatim */
 /* > */

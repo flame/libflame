@@ -223,7 +223,7 @@
 /* > NAB(i,j)=N(AB(i,j)), from a previous call to SLAEBZ with */
 /* > IJOB=1. */
 /* > On output, NAB(i,j) will contain */
-/* > max(na(k),min(nb(k),N(AB(i,j)))), where k is the index of */
+/* > fla_max(na(k),fla_min(nb(k),N(AB(i,j)))), where k is the index of */
 /* > the input interval that the output interval */
 /* > (AB(j,1),AB(j,2)] came from, and na(k) and nb(k) are the */
 /* > the input values of NAB(k,1) and NAB(k,2). */
@@ -440,7 +440,7 @@ int slaebz_(integer *ijob, integer *nitmax, integer *n, integer *mmax, integer *
                     /* Computing MIN */
                     r__1 = work[ji];
                     r__2 = -(*pivmin); // , expr subst
-                    work[ji] = min(r__1,r__2);
+                    work[ji] = fla_min(r__1,r__2);
                 }
                 i__3 = *n;
                 for (j = 2;
@@ -454,7 +454,7 @@ int slaebz_(integer *ijob, integer *nitmax, integer *n, integer *mmax, integer *
                         /* Computing MIN */
                         r__1 = work[ji];
                         r__2 = -(*pivmin); // , expr subst
-                        work[ji] = min(r__1,r__2);
+                        work[ji] = fla_min(r__1,r__2);
                     }
                     /* L50: */
                 }
@@ -475,8 +475,8 @@ int slaebz_(integer *ijob, integer *nitmax, integer *n, integer *mmax, integer *
                     i__5 = nab[ji + nab_dim1];
                     i__6 = iwork[ji]; // , expr subst
                     i__3 = nab[ji + (nab_dim1 << 1)];
-                    i__4 = max(i__5,i__6); // , expr subst
-                    iwork[ji] = min(i__3,i__4);
+                    i__4 = fla_max(i__5,i__6); // , expr subst
+                    iwork[ji] = fla_min(i__3,i__4);
                     /* Update the Queue -- add intervals if both halves */
                     /* contain eigenvalues. */
                     if (iwork[ji] == nab[ji + (nab_dim1 << 1)])
@@ -561,7 +561,7 @@ int slaebz_(integer *ijob, integer *nitmax, integer *n, integer *mmax, integer *
                     /* Computing MIN */
                     r__1 = tmp2;
                     r__2 = -(*pivmin); // , expr subst
-                    tmp2 = min(r__1,r__2);
+                    tmp2 = fla_min(r__1,r__2);
                 }
                 i__3 = *n;
                 for (j = 2;
@@ -575,7 +575,7 @@ int slaebz_(integer *ijob, integer *nitmax, integer *n, integer *mmax, integer *
                         /* Computing MIN */
                         r__1 = tmp2;
                         r__2 = -(*pivmin); // , expr subst
-                        tmp2 = min(r__1,r__2);
+                        tmp2 = fla_min(r__1,r__2);
                     }
                     /* L90: */
                 }
@@ -587,8 +587,8 @@ int slaebz_(integer *ijob, integer *nitmax, integer *n, integer *mmax, integer *
                     /* Computing MAX */
                     i__5 = nab[ji + nab_dim1];
                     i__3 = nab[ji + (nab_dim1 << 1)];
-                    i__4 = max(i__5,itmp1); // , expr subst
-                    itmp1 = min(i__3,i__4);
+                    i__4 = fla_max(i__5,itmp1); // , expr subst
+                    itmp1 = fla_min(i__3,i__4);
                     /* Update the Queue -- add intervals if both halves */
                     /* contain eigenvalues. */
                     if (itmp1 == nab[ji + (nab_dim1 << 1)])
@@ -650,11 +650,11 @@ int slaebz_(integer *ijob, integer *nitmax, integer *n, integer *mmax, integer *
             /* Computing MAX */
             r__3 = (r__1 = ab[ji + (ab_dim1 << 1)], f2c_abs(r__1));
             r__4 = (r__2 = ab[ji + ab_dim1], f2c_abs(r__2)); // , expr subst
-            tmp2 = max(r__3,r__4);
+            tmp2 = fla_max(r__3,r__4);
             /* Computing MAX */
-            r__1 = max(*abstol,*pivmin);
+            r__1 = fla_max(*abstol,*pivmin);
             r__2 = *reltol * tmp2; // , expr subst
-            if (tmp1 < max(r__1,r__2) || nab[ji + nab_dim1] >= nab[ji + ( nab_dim1 << 1)])
+            if (tmp1 < fla_max(r__1,r__2) || nab[ji + nab_dim1] >= nab[ji + ( nab_dim1 << 1)])
             {
                 /* Converged -- Swap with position KFNEW, */
                 /* then increment KFNEW */
@@ -703,7 +703,7 @@ int slaebz_(integer *ijob, integer *nitmax, integer *n, integer *mmax, integer *
     /* Converged */
 L140: /* Computing MAX */
     i__1 = kl + 1 - kf;
-    *info = max(i__1,0);
+    *info = fla_max(i__1,0);
     *mout = kl;
     return 0;
     /* End of SLAEBZ */

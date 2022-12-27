@@ -87,7 +87,7 @@ the elements below the k-th */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] TAU */
@@ -294,7 +294,7 @@ int clahr2_(integer *n, integer *k, integer *nb, complex *a, integer *lda, compl
         i__2 = *n - *k - i__ + 1;
         /* Computing MIN */
         i__3 = *k + i__ + 1;
-        clarfg_(&i__2, &a[*k + i__ + i__ * a_dim1], &a[min(i__3,*n) + i__ * a_dim1], &c__1, &tau[i__]);
+        clarfg_(&i__2, &a[*k + i__ + i__ * a_dim1], &a[fla_min(i__3,*n) + i__ * a_dim1], &c__1, &tau[i__]);
         i__2 = *k + i__ + i__ * a_dim1;
         ei.r = a[i__2].r;
         ei.i = a[i__2].i; // , expr subst

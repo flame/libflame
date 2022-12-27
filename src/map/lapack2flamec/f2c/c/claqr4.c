@@ -116,7 +116,7 @@ static integer c__3 = 3;
 /* > \param[in] LDH */
 /* > \verbatim */
 /* > LDH is INTEGER */
-/* > The leading dimension of the array H. LDH >= max(1,N). */
+/* > The leading dimension of the array H. LDH >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] W */
@@ -170,7 +170,7 @@ IHI <= IHIZ <= N. */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,N) */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,N) */
 /* > is sufficient, but LWORK typically as large as 6*N may */
 /* > be required for optimal performance. A workspace query */
 /* > to determine the optimal workspace size is recommended. */
@@ -377,12 +377,12 @@ int claqr4_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
         /* . (In fact, there is enough subdiagonal space for */
         /* . NWR.GE.4.) ==== */
         nwr = ilaenv_(&c__13, "CLAQR4", jbcmpz, n, ilo, ihi, lwork);
-        nwr = max(2,nwr);
+        nwr = fla_max(2,nwr);
         /* Computing MIN */
         i__1 = *ihi - *ilo + 1;
         i__2 = (*n - 1) / 3;
-        i__1 = min(i__1,i__2); // ; expr subst
-        nwr = min(i__1,nwr);
+        i__1 = fla_min(i__1,i__2); // ; expr subst
+        nwr = fla_min(i__1,nwr);
         /* ==== NSR = recommended number of simultaneous shifts. */
         /* . At this point N .GT. NTINY = 15, so there is at */
         /* . enough subdiagonal workspace for NSR to be even */
@@ -390,13 +390,13 @@ int claqr4_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
         nsr = ilaenv_(&c__15, "CLAQR4", jbcmpz, n, ilo, ihi, lwork);
         /* Computing MIN */
         i__1 = nsr, i__2 = (*n - 3) / 6;
-        i__1 = min(i__1,i__2);
+        i__1 = fla_min(i__1,i__2);
         i__2 = *ihi - *ilo; // ; expr subst
-        nsr = min(i__1,i__2);
+        nsr = fla_min(i__1,i__2);
         /* Computing MAX */
         i__1 = 2;
         i__2 = nsr - nsr % 2; // , expr subst
-        nsr = max(i__1,i__2);
+        nsr = fla_max(i__1,i__2);
         /* ==== Estimate optimal workspace ==== */
         /* ==== Workspace query call to CLAQR2 ==== */
         i__1 = nwr + 1;
@@ -405,7 +405,7 @@ int claqr4_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
         /* Computing MAX */
         i__1 = nsr * 3 / 2;
         i__2 = (integer) work[1].r; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
         /* ==== Quick return in case of workspace query. ==== */
         if (*lwork == -1)
         {
@@ -419,28 +419,28 @@ int claqr4_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
         }
         /* ==== CLAHQR/CLAQR0 crossover point ==== */
         nmin = ilaenv_(&c__12, "CLAQR4", jbcmpz, n, ilo, ihi, lwork);
-        nmin = max(15,nmin);
+        nmin = fla_max(15,nmin);
         /* ==== Nibble crossover point ==== */
         nibble = ilaenv_(&c__14, "CLAQR4", jbcmpz, n, ilo, ihi, lwork);
-        nibble = max(0,nibble);
+        nibble = fla_max(0,nibble);
         /* ==== Accumulate reflections during ttswp? Use block */
         /* . 2-by-2 structure during matrix-matrix multiply? ==== */
         kacc22 = ilaenv_(&c__16, "CLAQR4", jbcmpz, n, ilo, ihi, lwork);
-        kacc22 = max(0,kacc22);
-        kacc22 = min(2,kacc22);
+        kacc22 = fla_max(0,kacc22);
+        kacc22 = fla_min(2,kacc22);
         /* ==== NWMAX = the largest possible deflation window for */
         /* . which there is sufficient workspace. ==== */
         /* Computing MIN */
         i__1 = (*n - 1) / 3;
         i__2 = *lwork / 2; // , expr subst
-        nwmax = min(i__1,i__2);
+        nwmax = fla_min(i__1,i__2);
         nw = nwmax;
         /* ==== NSMAX = the Largest number of simultaneous shifts */
         /* . for which there is sufficient workspace. ==== */
         /* Computing MIN */
         i__1 = (*n - 3) / 6;
         i__2 = (*lwork << 1) / 3; // , expr subst
-        nsmax = min(i__1,i__2);
+        nsmax = fla_min(i__1,i__2);
         nsmax -= nsmax % 2;
         /* ==== NDFL: an iteration count restarted at deflation. ==== */
         ndfl = 1;
@@ -448,7 +448,7 @@ int claqr4_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
         /* Computing MAX */
         i__1 = 10;
         i__2 = *ihi - *ilo + 1; // , expr subst
-        itmax = max(i__1,i__2) * 30;
+        itmax = fla_max(i__1,i__2) * 30;
         /* ==== Last row and column in the active block ==== */
         kbot = *ihi;
         /* ==== Main Loop ==== */
@@ -494,17 +494,17 @@ L20:
             /* . rapidly increase the window to the maximum possible. */
             /* . Then, gradually reduce the window size. ==== */
             nh = kbot - ktop + 1;
-            nwupbd = min(nh,nwmax);
+            nwupbd = fla_min(nh,nwmax);
             if (ndfl < 5)
             {
-                nw = min(nwupbd,nwr);
+                nw = fla_min(nwupbd,nwr);
             }
             else
             {
                 /* Computing MIN */
                 i__2 = nwupbd;
                 i__3 = nw << 1; // , expr subst
-                nw = min(i__2,i__3);
+                nw = fla_min(i__2,i__3);
             }
             if (nw < nwmax)
             {
@@ -562,7 +562,7 @@ L20:
             /* . will deflate without it. Here, the QR sweep is */
             /* . skipped if many eigenvalues have just been deflated */
             /* . or if the remaining active block is small. */
-            if (ld == 0 || ld * 100 <= nw * nibble && kbot - ktop + 1 > min( nmin,nwmax))
+            if (ld == 0 || ld * 100 <= nw * nibble && kbot - ktop + 1 > fla_min( nmin,nwmax))
             {
                 /* ==== NS = nominal number of simultaneous shifts. */
                 /* . This may be lowered (slightly) if CLAQR2 */
@@ -571,9 +571,9 @@ L20:
                 /* Computing MAX */
                 i__4 = 2;
                 i__5 = kbot - ktop; // , expr subst
-                i__2 = min(nsmax,nsr);
-                i__3 = max(i__4,i__5); // , expr subst
-                ns = min(i__2,i__3);
+                i__2 = fla_min(nsmax,nsr);
+                i__3 = fla_max(i__4,i__5); // , expr subst
+                ns = fla_min(i__2,i__3);
                 ns -= ns % 2;
                 /* ==== If there have been no deflations */
                 /* . in a multiple of KEXSH iterations, */
@@ -762,7 +762,7 @@ L60:
                 /* Computing MIN */
                 i__2 = ns;
                 i__3 = kbot - ks + 1; // , expr subst
-                ns = min(i__2,i__3);
+                ns = fla_min(i__2,i__3);
                 ns -= ns % 2;
                 ks = kbot - ns + 1;
                 /* ==== Small-bulge multi-shift QR sweep: */

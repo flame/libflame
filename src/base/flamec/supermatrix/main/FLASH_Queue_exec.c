@@ -260,7 +260,7 @@ void FLASH_Queue_exec( void )
    if ( block_size == 0 )
       size = MIN_CACHE_BLOCKS;
    else
-      size = max( FLASH_Queue_get_cache_size() / block_size, MIN_CACHE_BLOCKS);
+      size = fla_max( FLASH_Queue_get_cache_size() / block_size, MIN_CACHE_BLOCKS);
    args.size = size;
 
    // Allocate memory for cache, prefetch buffer, and waiting queue.
@@ -475,7 +475,7 @@ void FLASH_Queue_init_tasks( void* arg )
       // Take the maximum height of dependent tasks.
       for ( j = 0; j < t->n_dep_args; j++ )
       {
-         height = max( height, d->task->height );
+         height = fla_max( height, d->task->height );
          d = d->next_dep;
       }
 
@@ -511,7 +511,7 @@ void FLASH_Queue_init_tasks( void* arg )
                {
                   obj = *( buf + jj * cs + kk );
 
-                  block_size = max( FLA_Obj_length( obj ) * FLA_Obj_width( obj ), block_size );
+                  block_size = fla_max( FLA_Obj_length( obj ) * FLA_Obj_width( obj ), block_size );
 
                   if ( jj == 0 && FLA_Obj_datatype( obj ) != datatype && FLA_Obj_datatype_size( FLA_Obj_datatype( obj ) ) > datatype_size )
                   {
@@ -523,7 +523,7 @@ void FLASH_Queue_init_tasks( void* arg )
          }
          else // Regular block.
          {
-            block_size = max( FLA_Obj_length( obj ) * FLA_Obj_width( obj ), block_size );
+            block_size = fla_max( FLA_Obj_length( obj ) * FLA_Obj_width( obj ), block_size );
 
             if ( FLA_Obj_datatype( obj ) != datatype && FLA_Obj_datatype_size( FLA_Obj_datatype( obj ) ) > datatype_size )
             {
@@ -2860,7 +2860,7 @@ void FLASH_Queue_init_tasks( void* arg )
       // Take the maximum height of dependent tasks.
       for ( j = 0; j < t->n_dep_args; j++ )
       {
-         height = max( height, d->task->height );
+         height = fla_max( height, d->task->height );
          d = d->next_dep;
       }
 

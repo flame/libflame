@@ -26,7 +26,7 @@ FLA_Error FLA_Bsvd_create_workspace( FLA_Obj d, FLA_Obj *G, FLA_Obj *H )
   // G and H stores the left and right Givens scalars.
   FLA_Datatype dt_comp  = FLA_Obj_datatype_proj_to_complex( d );
   dim_t        m_d      = FLA_Obj_vector_dim( d );
-  dim_t        k_accum  = min( 32, m_d );  
+  dim_t        k_accum  = fla_min( 32, m_d );  
 
   if ( G != NULL ) FLA_Obj_create( dt_comp, m_d-1, k_accum, 0, 0, G );
   if ( H != NULL ) FLA_Obj_create( dt_comp, m_d-1, k_accum, 0, 0, H );

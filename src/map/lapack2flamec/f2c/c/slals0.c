@@ -123,7 +123,7 @@ the */
 /* > \verbatim */
 /* > LDB is INTEGER */
 /* > The leading dimension of B. LDB must be at least */
-/* > max(1,MAX( M, N ) ). */
+/* > fla_max(1,MAX( M, N ) ). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] BX */
@@ -473,7 +473,7 @@ int slals0_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *n
             }
         }
         /* Move the deflated rows of BX to B also. */
-        if (*k < max(m,n))
+        if (*k < fla_max(m,n))
         {
             i__1 = n - *k;
             slacpy_("A", &i__1, nrhs, &bx[*k + 1 + bx_dim1], ldbx, &b[*k + 1 + b_dim1], ldb);
@@ -547,7 +547,7 @@ int slals0_(integer *icompq, integer *nl, integer *nr, integer *sqre, integer *n
             scopy_(nrhs, &b[m + b_dim1], ldb, &bx[m + bx_dim1], ldbx);
             srot_(nrhs, &bx[bx_dim1 + 1], ldbx, &bx[m + bx_dim1], ldbx, c__, s);
         }
-        if (*k < max(m,n))
+        if (*k < fla_max(m,n))
         {
             i__1 = n - *k;
             slacpy_("A", &i__1, nrhs, &b[*k + 1 + b_dim1], ldb, &bx[*k + 1 + bx_dim1], ldbx);

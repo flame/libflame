@@ -78,7 +78,7 @@ ILO=1 and IHI=0, if N=0. */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] TAU */
@@ -98,7 +98,7 @@ ILO=1 and IHI=0, if N=0. */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The length of the array WORK. LWORK >= max(1,N). */
+/* > The length of the array WORK. LWORK >= fla_max(1,N). */
 /* > For good performance, LWORK should generally be larger. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -217,19 +217,19 @@ int dgehrd_(integer *n, integer *ilo, integer *ihi, doublereal *a, integer *lda,
     {
         *info = -1;
     }
-    else if (*ilo < 1 || *ilo > max(1,*n))
+    else if (*ilo < 1 || *ilo > fla_max(1,*n))
     {
         *info = -2;
     }
-    else if (*ihi < min(*ilo,*n) || *ihi > *n)
+    else if (*ihi < fla_min(*ilo,*n) || *ihi > *n)
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*lwork < max(1,*n) && ! lquery)
+    else if (*lwork < fla_max(1,*n) && ! lquery)
     {
         *info = -8;
     }
@@ -239,7 +239,7 @@ int dgehrd_(integer *n, integer *ilo, integer *ihi, doublereal *a, integer *lda,
         /* Computing MIN */
         i__1 = 64;
         i__2 = ilaenv_(&c__1, "DGEHRD", " ", n, ilo, ihi, &c_n1); // , expr subst
-        nb = min(i__1,i__2);
+        nb = fla_min(i__1,i__2);
         lwkopt = *n * nb + 4160;
         work[1] = (doublereal) lwkopt;
     }
@@ -265,7 +265,7 @@ int dgehrd_(integer *n, integer *ilo, integer *ihi, doublereal *a, integer *lda,
         /* L10: */
     }
     i__1 = *n - 1;
-    for (i__ = max(1,*ihi);
+    for (i__ = fla_max(1,*ihi);
             i__ <= i__1;
             ++i__)
     {
@@ -284,7 +284,7 @@ int dgehrd_(integer *n, integer *ilo, integer *ihi, doublereal *a, integer *lda,
     /* Computing MIN */
     i__1 = 64;
     i__2 = ilaenv_(&c__1, "DGEHRD", " ", n, ilo, ihi, &c_n1); // , expr subst
-    nb = min(i__1,i__2);
+    nb = fla_min(i__1,i__2);
     nbmin = 2;
     if (nb > 1 && nb < nh)
     {
@@ -293,7 +293,7 @@ int dgehrd_(integer *n, integer *ilo, integer *ihi, doublereal *a, integer *lda,
         /* Computing MAX */
         i__1 = nb;
         i__2 = ilaenv_(&c__3, "DGEHRD", " ", n, ilo, ihi, &c_n1); // , expr subst
-        nx = max(i__1,i__2);
+        nx = fla_max(i__1,i__2);
         if (nx < nh)
         {
             /* Determine if workspace is large enough for blocked code */
@@ -305,7 +305,7 @@ int dgehrd_(integer *n, integer *ilo, integer *ihi, doublereal *a, integer *lda,
                 /* Computing MAX */
                 i__1 = 2;
                 i__2 = ilaenv_(&c__2, "DGEHRD", " ", n, ilo, ihi, & c_n1); // , expr subst
-                nbmin = max(i__1,i__2);
+                nbmin = fla_max(i__1,i__2);
                 if (*lwork >= *n * nbmin + 4160)
                 {
                     nb = (*lwork - 4160) / *n;
@@ -336,7 +336,7 @@ int dgehrd_(integer *n, integer *ilo, integer *ihi, doublereal *a, integer *lda,
             /* Computing MIN */
             i__3 = nb;
             i__4 = *ihi - i__; // , expr subst
-            ib = min(i__3,i__4);
+            ib = fla_min(i__3,i__4);
             /* Reduce columns i:i+ib-1 to Hessenberg form, returning the */
             /* matrices V and T of the block reflector H = I - V*T*V**T */
             /* which performs the reduction, and also the matrix Y = A*V*T */

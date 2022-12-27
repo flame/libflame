@@ -1,6 +1,6 @@
 *  V is an N-by-N unitary matrix.  The diagonal elements of SIGMA
 *  are the singular values of A; they are real and non-negative, and
-*  are returned in descending order.  The first min(m,n) columns of
+*  are returned in descending order.  The first fla_min(m,n) columns of
 *  U and V are the left and right singular vectors of A.
 *
 *  Note that the routine returns VT = V**H, not V.
@@ -19,8 +19,8 @@
 *          Specifies options for computing all or part of the matrix U:
 *          = 'A':  all M columns of U and all N rows of V**H are
 *                  returned in the arrays U and VT;
-*          = 'S':  the first min(M,N) columns of U and the first
-*                  min(M,N) rows of V**H are returned in the arrays U
+*          = 'S':  the first fla_min(M,N) columns of U and the first
+*                  fla_min(M,N) rows of V**H are returned in the arrays U
 *                  and VT;
 *          = 'O':  If M >= N, the first N columns of U are overwritten
 *                  in the array A and all rows of V**H are returned in
@@ -48,17 +48,17 @@
 *          if JOBZ .ne. 'O', the contents of A are destroyed.
 *
 *  LDA     (input) INTEGER
-*          The leading dimension of the array A.  LDA >= max(1,M).
+*          The leading dimension of the array A.  LDA >= fla_max(1,M).
 *
-*  S       (output) DOUBLE PRECISION array, dimension (min(M,N))
+*  S       (output) DOUBLE PRECISION array, dimension (fla_min(M,N))
 *          The singular values of A, sorted so that S(i) >= S(i+1).
 *
 *  U       (output) COMPLEX*16 array, dimension (LDU,UCOL)
 *          UCOL = M if JOBZ = 'A' or JOBZ = 'O' and M < N;
-*          UCOL = min(M,N) if JOBZ = 'S'.
+*          UCOL = fla_min(M,N) if JOBZ = 'S'.
 *          If JOBZ = 'A' or JOBZ = 'O' and M < N, U contains the M-by-M
 *          unitary matrix U;
-*          if JOBZ = 'S', U contains the first min(M,N) columns of U
+*          if JOBZ = 'S', U contains the first fla_min(M,N) columns of U
 *          (the left singular vectors, stored columnwise);
 *          if JOBZ = 'O' and M >= N, or JOBZ = 'N', U is not referenced.
 *
@@ -69,25 +69,25 @@
 *  VT      (output) COMPLEX*16 array, dimension (LDVT,N)
 *          If JOBZ = 'A' or JOBZ = 'O' and M >= N, VT contains the
 *          N-by-N unitary matrix V**H;
-*          if JOBZ = 'S', VT contains the first min(M,N) rows of
+*          if JOBZ = 'S', VT contains the first fla_min(M,N) rows of
 *          V**H (the right singular vectors, stored rowwise);
 *          if JOBZ = 'O' and M < N, or JOBZ = 'N', VT is not referenced.
 *
 *  LDVT    (input) INTEGER
 *          The leading dimension of the array VT.  LDVT >= 1; if
 *          JOBZ = 'A' or JOBZ = 'O' and M >= N, LDVT >= N;
-*          if JOBZ = 'S', LDVT >= min(M,N).
+*          if JOBZ = 'S', LDVT >= fla_min(M,N).
 *
 *  WORK    (workspace/output) COMPLEX*16 array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
 *          The dimension of the array WORK. LWORK >= 1.
-*          if JOBZ = 'N', LWORK >= 2*min(M,N)+max(M,N).
+*          if JOBZ = 'N', LWORK >= 2*fla_min(M,N)+fla_max(M,N).
 *          if JOBZ = 'O',
-*                LWORK >= 2*min(M,N)*min(M,N)+2*min(M,N)+max(M,N).
+*                LWORK >= 2*fla_min(M,N)*fla_min(M,N)+2*fla_min(M,N)+fla_max(M,N).
 *          if JOBZ = 'S' or 'A',
-*                LWORK >= min(M,N)*min(M,N)+2*min(M,N)+max(M,N).
+*                LWORK >= fla_min(M,N)*fla_min(M,N)+2*fla_min(M,N)+fla_max(M,N).
 *          For good performance, LWORK should generally be larger.
 *
 *          If LWORK = -1, a workspace query is assumed.  The optimal
@@ -95,11 +95,11 @@
 *          and no other work except argument checking is performed.
 *
 *  RWORK   (workspace) DOUBLE PRECISION array, dimension (MAX(1,LRWORK))
-*          If JOBZ = 'N', LRWORK >= 5*min(M,N).
+*          If JOBZ = 'N', LRWORK >= 5*fla_min(M,N).
 *          Otherwise,
-*          LRWORK >= min(M,N)*max(5*min(M,N)+7,2*max(M,N)+2*min(M,N)+1)
+*          LRWORK >= fla_min(M,N)*fla_max(5*fla_min(M,N)+7,2*fla_max(M,N)+2*fla_min(M,N)+1)
 *
-*  IWORK   (workspace) INTEGER array, dimension (8*min(M,N))
+*  IWORK   (workspace) INTEGER array, dimension (8*fla_min(M,N))
 *
 *  INFO    (output) INTEGER
 *          = 0:  successful exit.

@@ -30,7 +30,7 @@ int zgeqpf_check(integer *m, integer *n, dcomplex *a, integer *lda, integer *jpv
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }

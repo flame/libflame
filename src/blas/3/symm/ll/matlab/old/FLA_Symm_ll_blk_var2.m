@@ -24,7 +24,7 @@ function [ X ] = Symm_ll_blk_var2( alpha, A, B, C, nb )
                          0, 'FLA_TOP' );
 
   while( size( CT, 1 ) ~= size( C, 1 ) )
-     b = min( size( CB, 1 ), nb );
+     b = fla_min( size( CB, 1 ), nb );
 
     [ A00, A01, A02,...
       A10, A11, A12,...

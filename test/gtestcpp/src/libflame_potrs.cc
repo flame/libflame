@@ -74,10 +74,10 @@ void potrs_test(int ip)
   }
   
   /* LDA is INTEGER
-          The leading dimension of the array A.  LDA >= max(1,N).*/
+          The leading dimension of the array A.  LDA >= fla_max(1,N).*/
   integer lda = lin_solver_paramslist[ip].lda;
-  if (lda < max(1, n)) {
-    PRINTF("lda < max(1, n) but it should be: LDA >= max(1,N). Please " \
+  if (lda < fla_max(1, n)) {
+    PRINTF("lda < fla_max(1, n) but it should be: LDA >= fla_max(1,N). Please " \
            "correct the input data.\n");
   }
   
@@ -86,10 +86,10 @@ void potrs_test(int ip)
   allocate_init_buffer(abuff, arefbuff, lda * n);
 
   /* LDB is INTEGER
-          The leading dimension of the array B.  LDB >= max(1,N).*/
+          The leading dimension of the array B.  LDB >= fla_max(1,N).*/
   integer ldb = lin_solver_paramslist[ip].ldb;
-  if (ldb < max(1, n)) {
-    PRINTF("ldb < max(1, n) but it should be: LDB >= max(1,N). Please " \
+  if (ldb < fla_max(1, n)) {
+    PRINTF("ldb < fla_max(1, n) but it should be: LDB >= fla_max(1,N). Please " \
            "correct the input data.\n");
   }
   

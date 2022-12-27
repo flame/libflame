@@ -75,7 +75,7 @@ static integer c__65 = 65;
 rows 1 to KL of the array need not be set. */
 /* > The j-th column of A is stored in the j-th column of the */
 /* > array AB as follows: */
-/* > AB(kl+ku+1+i-j,j) = A(i,j) for max(1,j-ku)<=i<=min(m,j+kl) */
+/* > AB(kl+ku+1+i-j,j) = A(i,j) for fla_max(1,j-ku)<=i<=fla_min(m,j+kl) */
 /* > */
 /* > On exit, details of the factorization: U is stored as an */
 /* > upper triangular band matrix with KL+KU superdiagonals in */
@@ -92,9 +92,9 @@ rows 1 to KL of the array need not be set. */
 /* > */
 /* > \param[out] IPIV */
 /* > \verbatim */
-/* > IPIV is INTEGER array, dimension (min(M,N)) */
+/* > IPIV is INTEGER array, dimension (fla_min(M,N)) */
 /* > The pivot indices;
-for 1 <= i <= min(M,N), row i of the */
+for 1 <= i <= fla_min(M,N), row i of the */
 /* > matrix was interchanged with row IPIV(i). */
 /* > \endverbatim */
 /* > */
@@ -256,7 +256,7 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
     nb = ilaenv_(&c__1, "CGBTRF", " ", m, n, kl, ku);
     /* The block size must not exceed the limit set by the size of the */
     /* local arrays WORK13 and WORK31. */
-    nb = min(nb,64);
+    nb = fla_min(nb,64);
     if (nb <= 1 || nb > *kl)
     {
         /* Use unblocked code */
@@ -303,7 +303,7 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
         }
         /* Gaussian elimination with partial pivoting */
         /* Set fill-in elements in columns KU+2 to KV to zero */
-        i__1 = min(kv,*n);
+        i__1 = fla_min(kv,*n);
         for (j = *ku + 2;
                 j <= i__1;
                 ++j)
@@ -323,7 +323,7 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
         /* JU is the index of the last column affected by the current */
         /* stage of the factorization */
         ju = 1;
-        i__1 = min(*m,*n);
+        i__1 = fla_min(*m,*n);
         i__2 = nb;
         for (j = 1;
                 i__2 < 0 ? j >= i__1 : j <= i__1;
@@ -331,8 +331,8 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
         {
             /* Computing MIN */
             i__3 = nb;
-            i__4 = min(*m,*n) - j + 1; // , expr subst
-            jb = min(i__3,i__4);
+            i__4 = fla_min(*m,*n) - j + 1; // , expr subst
+            jb = fla_min(i__3,i__4);
 	    #if AOCL_FLA_PROGRESS_H
                 if(aocl_fla_progress_ptr){
                         step_count+=jb;
@@ -353,11 +353,11 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
             /* Computing MIN */
             i__3 = *kl - jb;
             i__4 = *m - j - jb + 1; // , expr subst
-            i2 = min(i__3,i__4);
+            i2 = fla_min(i__3,i__4);
             /* Computing MIN */
             i__3 = jb;
             i__4 = *m - j - *kl + 1; // , expr subst
-            i3 = min(i__3,i__4);
+            i3 = fla_min(i__3,i__4);
             /* J2 and J3 are computed after JU has been updated. */
             /* Factorize the current block of JB columns */
             i__3 = j + jb - 1;
@@ -384,7 +384,7 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
                 /* Computing MIN */
                 i__4 = *kl;
                 i__5 = *m - jj; // , expr subst
-                km = min(i__4,i__5);
+                km = fla_min(i__4,i__5);
                 i__4 = km + 1;
                 jp = icamax_(&i__4, &ab[kv + 1 + jj * ab_dim1], &c__1);
                 ipiv[jj] = jp + jj - j;
@@ -395,8 +395,8 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
                     /* Computing MIN */
                     i__6 = jj + *ku + jp - 1;
                     i__4 = ju;
-                    i__5 = min(i__6,*n); // , expr subst
-                    ju = max(i__4,i__5);
+                    i__5 = fla_min(i__6,*n); // , expr subst
+                    ju = fla_max(i__4,i__5);
                     if (jp != 1)
                     {
                         /* Apply interchange to columns J to J+JB-1 */
@@ -428,7 +428,7 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
                     /* Computing MIN */
                     i__4 = ju;
                     i__5 = j + jb - 1; // , expr subst
-                    jm = min(i__4,i__5);
+                    jm = fla_min(i__4,i__5);
                     if (jm > jj)
                     {
                         i__4 = jm - jj;
@@ -451,7 +451,7 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
                 /* Copy current column of A31 into the work array WORK31 */
                 /* Computing MIN */
                 i__4 = jj - j + 1;
-                nw = min(i__4,i3);
+                nw = fla_min(i__4,i3);
                 if (nw > 0)
                 {
                     ccopy_(&nw, &ab[kv + *kl + 1 - jj + j + jj * ab_dim1], & c__1, &work31[(jj - j + 1) * 65 - 65], &c__1);
@@ -463,11 +463,11 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
                 /* Apply the row interchanges to the other blocks. */
                 /* Computing MIN */
                 i__3 = ju - j + 1;
-                j2 = min(i__3,kv) - jb;
+                j2 = fla_min(i__3,kv) - jb;
                 /* Computing MAX */
                 i__3 = 0;
                 i__4 = ju - j - kv + 1; // , expr subst
-                j3 = max(i__3,i__4);
+                j3 = fla_max(i__3,i__4);
                 /* Use CLASWP to apply the row interchanges to A12, A22, and */
                 /* A32. */
                 i__3 = *ldab - 1;
@@ -647,7 +647,7 @@ int cgbtrf_(integer *m, integer *n, integer *kl, integer *ku, complex *ab, integ
                 /* Computing MIN */
                 i__4 = i3;
                 i__5 = jj - j + 1; // , expr subst
-                nw = min(i__4,i__5);
+                nw = fla_min(i__4,i__5);
                 if (nw > 0)
                 {
                     ccopy_(&nw, &work31[(jj - j + 1) * 65 - 65], &c__1, &ab[ kv + *kl + 1 - jj + j + jj * ab_dim1], &c__1);

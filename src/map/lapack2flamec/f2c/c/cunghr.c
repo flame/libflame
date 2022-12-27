@@ -71,7 +71,7 @@ ILO=1 and IHI=0, if N=0. */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] TAU */
@@ -171,26 +171,26 @@ int cunghr_(integer *n, integer *ilo, integer *ihi, complex * a, integer *lda, c
     {
         *info = -1;
     }
-    else if (*ilo < 1 || *ilo > max(1,*n))
+    else if (*ilo < 1 || *ilo > fla_max(1,*n))
     {
         *info = -2;
     }
-    else if (*ihi < min(*ilo,*n) || *ihi > *n)
+    else if (*ihi < fla_min(*ilo,*n) || *ihi > *n)
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*lwork < max(1,nh) && ! lquery)
+    else if (*lwork < fla_max(1,nh) && ! lquery)
     {
         *info = -8;
     }
     if (*info == 0)
     {
         nb = ilaenv_(&c__1, "CUNGQR", " ", &nh, &nh, &nh, &c_n1);
-        lwkopt = max(1,nh) * nb;
+        lwkopt = fla_max(1,nh) * nb;
         work[1].r = (real) lwkopt;
         work[1].i = 0.f; // , expr subst
     }

@@ -915,7 +915,7 @@ void getrf_test()
   FLA_Obj aCIOObj, pivCOObj;
   T *aCPPIOBuff, *aCIOBuff ;
   int *pivCPPOBuff, *pivCOBuff ;
-  int min_m_n = min( m, n );
+  int min_m_n = fla_min( m, n );
 
   int datatype = getDatatype<T>();
 
@@ -972,7 +972,7 @@ void getf2_test()
   FLA_Obj aCIOObj, pivCOObj;
   T *aCPPIOBuff, *aCIOBuff ;
   int *pivCPPOBuff, *pivCOBuff ;
-  int min_m_n = min( m, n );
+  int min_m_n = fla_min( m, n );
 
   int datatype = getDatatype<T>();
 
@@ -1040,7 +1040,7 @@ void geqrf_test()
   T *aCPPIOBuff, *aCIOBuff ;
   T *tauCPPOBuff, *tauCOBuff ;
   T *workBuff ;
-  int min_m_n = min( m, n );
+  int min_m_n = fla_min( m, n );
   int datatype = getDatatype<T>();
   int lwork    = n * FLA_Query_blocksize( datatype, FLA_DIMENSION_MIN );
 
@@ -1094,7 +1094,7 @@ void geqr2_test()
   FLA_Obj aCIOObj, tauCOObj;
   T *aCPPIOBuff, *aCIOBuff ;
   T *tauCPPOBuff, *tauCOBuff ;
-  int min_m_n = min( m, n ) ;
+  int min_m_n = fla_min( m, n ) ;
 
   int datatype = getDatatype<T>();
 
@@ -1149,7 +1149,7 @@ void geqpf_test()
   T *aCPPIOBuff, *aCIOBuff, *rworkRefBuff ;
   T *tauCPPOBuff, *tauCOBuff ;
   int *jpvtCPPOBuff, *jpvtCOBuff;
-  int min_m_n = min( m, n ) ;
+  int min_m_n = fla_min( m, n ) ;
 
   tauCPPOBuff =  new T [min_m_n];
   tauCOBuff =  new T [min_m_n];
@@ -1212,7 +1212,7 @@ void geqpf_test()
   Ta *tauCPPOBuff, *tauCOBuff ;
   Tb *rworkRefBuff;
   int *jpvtCPPOBuff, *jpvtCOBuff;
-  int min_m_n = min( m, n ) ;
+  int min_m_n = fla_min( m, n ) ;
 
   tauCPPOBuff =  new Ta [min_m_n];
   tauCOBuff =  new Ta [min_m_n];
@@ -1275,7 +1275,7 @@ void geqp3_test()
   T *aCPPIOBuff, *aCIOBuff, *rworkRefBuff ;
   T *tauCPPOBuff, *tauCOBuff ;
   int *jpvtCPPOBuff, *jpvtCOBuff;
-  int min_m_n = min( m, n ) ;
+  int min_m_n = fla_min( m, n ) ;
 
   tauCPPOBuff =  new T [min_m_n];
   tauCOBuff =  new T [min_m_n];
@@ -1340,7 +1340,7 @@ void geqp3_test()
   Ta *tauCPPOBuff, *tauCOBuff ;
   Tb *rworkRefBuff;
   int *jpvtCPPOBuff, *jpvtCOBuff;
-  int min_m_n = min( m, n ) ;
+  int min_m_n = fla_min( m, n ) ;
 
   tauCPPOBuff =  new Ta [min_m_n];
   tauCOBuff =  new Ta [min_m_n];
@@ -1405,7 +1405,7 @@ void gelqf_test()
   T *aCPPIOBuff, *aCIOBuff ;
   T *tauCPPOBuff, *tauCOBuff ;
   T *workBuff ;
-  int min_m_n = min( m, n ) ;
+  int min_m_n = fla_min( m, n ) ;
 
   int datatype = getDatatype<T>();
   int lwork    = m * FLA_Query_blocksize( datatype, FLA_DIMENSION_MIN );
@@ -1462,7 +1462,7 @@ void gelq2_test()
   FLA_Obj aCIOObj, tauCOObj;
   T *aCPPIOBuff, *aCIOBuff ;
   T *tauCPPOBuff, *tauCOBuff ;
-  int min_m_n = min( m, n ) ;
+  int min_m_n = fla_min( m, n ) ;
   int lda = max(1,m);
 
   int datatype = getDatatype<T>();
@@ -1519,7 +1519,7 @@ void gelsd_test()
   T rcondCPP = 0;
   int rankCPP ;
   int rankC ;
-  int min_m_n = min( m, n ) ;
+  int min_m_n = fla_min( m, n ) ;
   int lda = max(1,m);
   int ldb = max(1,max(m,n));
 
@@ -1583,7 +1583,7 @@ void gelsd_test()
   Tb rcondCPP = 0;
   int rankCPP ;
   int rankC ;
-  int min_m_n = min( m, n ) ;
+  int min_m_n = fla_min( m, n ) ;
   int lda = max(1,m);
   int ldb = max(1,max(m,n));
 
@@ -1649,7 +1649,7 @@ void gelss_test()
   T rcondCPP = 0;
   int rankCPP ;
   int rankC ;
-  int min_m_n = min( m, n ) ;
+  int min_m_n = fla_min( m, n ) ;
   int lda = max(1,m);
   int ldb = max(1,max(m,n));
 
@@ -1713,7 +1713,7 @@ void gelss_test()
   Tb rcondCPP = 0;
   int rankCPP ;
   int rankC ;
-  int min_m_n = min( m, n ) ;
+  int min_m_n = fla_min( m, n ) ;
   int lda = max(1,m);
   int ldb = max(1,max(m,n));
 
@@ -2402,7 +2402,7 @@ void gebrd_test()
 {
   int m = 512;
   int n = 512;
-  int min_m_n = min( m, n );
+  int min_m_n = fla_min( m, n );
   srand (time(NULL));
 
   FLA_Init( );
@@ -2460,7 +2460,7 @@ void gebrd_test()
 {
   int m = 256 ;
   int n = 256 ;
-  int min_m_n = min( m, n );
+  int min_m_n = fla_min( m, n );
   srand (time(NULL));
 
   FLA_Init( );
@@ -2520,7 +2520,7 @@ void gebd2_test()
 {
   int m = 512;
   int n = 512;
-  int min_m_n = min( m, n );
+  int min_m_n = fla_min( m, n );
   srand (time(NULL));
 
   FLA_Init( );
@@ -2578,7 +2578,7 @@ void gebd2_test()
 {
   int m = 256 ;
   int n = 256 ;
-  int min_m_n = min( m, n );
+  int min_m_n = fla_min( m, n );
   srand (time(NULL));
 
   FLA_Init( );
@@ -2992,7 +2992,7 @@ void orgqr_test()
   int m = 64;//512;
   int n = 64;//256;
   int k = 64;//128;
- int min_m_n = min( m, n );
+ int min_m_n = fla_min( m, n );
  srand (time(NULL));
 
  FLA_Init( );
@@ -3042,7 +3042,7 @@ void ungqr_test()
   int m = 512;
   int n = 256;
   int k = 256;
-  int min_m_n = min( m, n );
+  int min_m_n = fla_min( m, n );
   srand (time(NULL));
 
   FLA_Init( );
@@ -3328,7 +3328,7 @@ void orglq_test()
   T *aCPPIOBuff, *aCIOBuff ;
   T *tauCPPOBuff, *tauCOBuff ;
   int datatype = getDatatype<T>();
-  int min_m_n = min(m,n);
+  int min_m_n = fla_min(m,n);
   //Allocate and initialize buffers for C and CPP functions with random values
   allocate_init_buffer(aCPPIOBuff, aCIOBuff, m*n);
   tauCPPOBuff =  new T [min_m_n];
@@ -3378,7 +3378,7 @@ void unglq_test()
   T *aCPPIOBuff, *aCIOBuff ;
   T *tauCPPOBuff, *tauCOBuff ;
   int datatype = getDatatype<T>();
-  int min_m_n = min(m,n);
+  int min_m_n = fla_min(m,n);
 
   //Allocate and initialize buffers for C and CPP functions with random values
   allocate_init_buffer(aCPPIOBuff, aCIOBuff, m*n);
@@ -3885,7 +3885,7 @@ void orgbr_test()
 {
   int m = 512;
   int n = 512;
-  int min_m_n = min( m, n );
+  int min_m_n = fla_min( m, n );
   srand (time(NULL));
 
   FLA_Init( );
@@ -3944,7 +3944,7 @@ void ungbr_test()
 {
   int m = 256 ;
   int n = 256 ;
-  int min_m_n = min( m, n );
+  int min_m_n = fla_min( m, n );
   srand (time(NULL));
 
   FLA_Init( );
@@ -4006,7 +4006,7 @@ void ormbr_test()
 {
   int m = 512;
   int n = 512;
-  int min_m_n = min( m, n );
+  int min_m_n = fla_min( m, n );
   srand (time(NULL));
 
   FLA_Init( );
@@ -4069,7 +4069,7 @@ void unmbr_test()
 {
   int m = 256 ;
   int n = 256 ;
-  int min_m_n = min( m, n );
+  int min_m_n = fla_min( m, n );
   srand (time(NULL));
 
   FLA_Init( );
@@ -5054,7 +5054,7 @@ void gesvd_test()
 {
   int m = 64;
   int n = 64;
-  int min_m_n = min(m, n);
+  int min_m_n = fla_min(m, n);
   srand (time(NULL));
 
   FLA_Init( );
@@ -5128,7 +5128,7 @@ void gesvd_test()
 {
   int m = 512;
   int n = 512;
-  int min_m_n = min(m, n);
+  int min_m_n = fla_min(m, n);
   srand (time(NULL));
 
   FLA_Init( );
@@ -5203,7 +5203,7 @@ void gesdd_test()
 {
   int m = 64;
   int n = 64;
-  int min_m_n = min(m, n);
+  int min_m_n = fla_min(m, n);
   srand (time(NULL));
 
   FLA_Init( );
@@ -5275,7 +5275,7 @@ void gesdd_test()
 {
   int m = 64;
   int n = 64;
-  int min_m_n = min(m, n);
+  int min_m_n = fla_min(m, n);
   srand (time(NULL));
 
   FLA_Init( );

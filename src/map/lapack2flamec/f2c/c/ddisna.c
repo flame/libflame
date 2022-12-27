@@ -39,7 +39,7 @@
 /* > */
 /* > DLAMCH( 'E' ) * ( ANORM / SEP( I ) ) */
 /* > */
-/* > where ANORM = 2-norm(A) = max( f2c_dabs( D(j) ) ). SEP(I) is not allowed */
+/* > where ANORM = 2-norm(A) = fla_max( f2c_dabs( D(j) ) ). SEP(I) is not allowed */
 /* > to be smaller than DLAMCH( 'E' )*ANORM in order to limit the size of */
 /* > the error bound. */
 /* > */
@@ -76,7 +76,7 @@
 /* > \param[in] D */
 /* > \verbatim */
 /* > D is DOUBLE PRECISION array, dimension (M) if JOB = 'E' */
-/* > dimension (min(M,N)) if JOB = 'L' or 'R' */
+/* > dimension (fla_min(M,N)) if JOB = 'L' or 'R' */
 /* > The eigenvalues (if JOB = 'E') or singular values (if JOB = */
 /* > 'L' or 'R') of the matrix, in either increasing or decreasing */
 /* > order. If singular values, they must be non-negative. */
@@ -85,7 +85,7 @@
 /* > \param[out] SEP */
 /* > \verbatim */
 /* > SEP is DOUBLE PRECISION array, dimension (M) if JOB = 'E' */
-/* > dimension (min(M,N)) if JOB = 'L' or 'R' */
+/* > dimension (fla_min(M,N)) if JOB = 'L' or 'R' */
 /* > The reciprocal condition numbers of the vectors. */
 /* > \endverbatim */
 /* > */
@@ -160,7 +160,7 @@ int ddisna_(char *job, integer *m, integer *n, doublereal * d__, doublereal *sep
     }
     else if (sing)
     {
-        k = min(*m,*n);
+        k = fla_min(*m,*n);
     }
     if (! eigen && ! sing)
     {
@@ -237,7 +237,7 @@ int ddisna_(char *job, integer *m, integer *n, doublereal * d__, doublereal *sep
                 ++i__)
         {
             newgap = (d__1 = d__[i__ + 1] - d__[i__], f2c_dabs(d__1));
-            sep[i__] = min(oldgap,newgap);
+            sep[i__] = fla_min(oldgap,newgap);
             oldgap = newgap;
             /* L20: */
         }
@@ -249,14 +249,14 @@ int ddisna_(char *job, integer *m, integer *n, doublereal * d__, doublereal *sep
         {
             if (incr)
             {
-                sep[1] = min(sep[1],d__[1]);
+                sep[1] = fla_min(sep[1],d__[1]);
             }
             if (decr)
             {
                 /* Computing MIN */
                 d__1 = sep[k];
                 d__2 = d__[k]; // , expr subst
-                sep[k] = min(d__1,d__2);
+                sep[k] = fla_min(d__1,d__2);
             }
         }
     }
@@ -267,7 +267,7 @@ int ddisna_(char *job, integer *m, integer *n, doublereal * d__, doublereal *sep
     /* Computing MAX */
     d__2 = f2c_dabs(d__[1]);
     d__3 = (d__1 = d__[k], f2c_dabs(d__1)); // , expr subst
-    anorm = max(d__2,d__3);
+    anorm = fla_max(d__2,d__3);
     if (anorm == 0.)
     {
         thresh = eps;
@@ -276,7 +276,7 @@ int ddisna_(char *job, integer *m, integer *n, doublereal * d__, doublereal *sep
     {
         /* Computing MAX */
         d__1 = eps * anorm;
-        thresh = max(d__1,safmin);
+        thresh = fla_max(d__1,safmin);
     }
     i__1 = k;
     for (i__ = 1;
@@ -285,7 +285,7 @@ int ddisna_(char *job, integer *m, integer *n, doublereal * d__, doublereal *sep
     {
         /* Computing MAX */
         d__1 = sep[i__];
-        sep[i__] = max(d__1,thresh);
+        sep[i__] = fla_max(d__1,thresh);
         /* L30: */
     }
     AOCL_DTL_TRACE_LOG_EXIT

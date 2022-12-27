@@ -109,7 +109,7 @@ ILO=1 and IHI=0, if N=0. */
 /* > \param[in] LDV */
 /* > \verbatim */
 /* > LDV is INTEGER */
-/* > The leading dimension of the matrix V. LDV >= max(1,N). */
+/* > The leading dimension of the matrix V. LDV >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -203,7 +203,7 @@ int dggbak_(char *job, char *side, integer *n, integer *ilo, integer *ihi, doubl
     {
         *info = -4;
     }
-    else if (*n > 0 && (*ihi < *ilo || *ihi > max(1,*n)))
+    else if (*n > 0 && (*ihi < *ilo || *ihi > fla_max(1,*n)))
     {
         *info = -5;
     }
@@ -215,7 +215,7 @@ int dggbak_(char *job, char *side, integer *n, integer *ilo, integer *ihi, doubl
     {
         *info = -8;
     }
-    else if (*ldv < max(1,*n))
+    else if (*ldv < fla_max(1,*n))
     {
         *info = -10;
     }

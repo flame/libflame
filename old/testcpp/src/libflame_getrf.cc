@@ -40,7 +40,7 @@ void getrf_test()
   FLA_Obj aCIOObj, pivCOObj;
   T *aCPPIOBuff, *aCIOBuff ;
   int *pivCPPOBuff, *pivCOBuff ;
-  int min_m_n = min( m, n );
+  int min_m_n = fla_min( m, n );
 
   int datatype = getDatatype<T>();
 

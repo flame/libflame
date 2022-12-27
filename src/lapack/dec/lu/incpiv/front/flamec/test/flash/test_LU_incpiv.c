@@ -124,7 +124,7 @@ int main(int argc, char *argv[])
     if( m < 0 ) m = pp / f2c_abs(m_input);
     if( n < 0 ) n = pp / f2c_abs(n_input);
 
-    min_m_n = min( m, n );
+    min_m_n = fla_min( m, n );
 
     for ( pivot_combo = 0; pivot_combo < n_pivot_combos; pivot_combo++ ){
       

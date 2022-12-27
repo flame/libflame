@@ -104,9 +104,9 @@
 /* > \verbatim */
 /* > LDV is INTEGER */
 /* > The leading dimension of the array V. */
-/* > If SIDE = 'L', LDA >= max(1,M);
+/* > If SIDE = 'L', LDA >= fla_max(1,M);
 */
-/* > if SIDE = 'R', LDA >= max(1,N). */
+/* > if SIDE = 'R', LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] T */
@@ -132,7 +132,7 @@
 /* > \param[in] LDC */
 /* > \verbatim */
 /* > LDC is INTEGER */
-/* > The leading dimension of the array C. LDC >= max(1,M). */
+/* > The leading dimension of the array C. LDC >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -219,12 +219,12 @@ int cgemqrt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     notran = lsame_(trans, "N");
     if (left)
     {
-        ldwork = max(1,*n);
+        ldwork = fla_max(1,*n);
         q = *m;
     }
     else if (right)
     {
-        ldwork = max(1,*m);
+        ldwork = fla_max(1,*m);
         q = *n;
     }
     if (! left && ! right)
@@ -251,7 +251,7 @@ int cgemqrt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     {
         *info = -6;
     }
-    else if (*ldv < max(1,q))
+    else if (*ldv < fla_max(1,q))
     {
         *info = -8;
     }
@@ -259,7 +259,7 @@ int cgemqrt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     {
         *info = -10;
     }
-    else if (*ldc < max(1,*m))
+    else if (*ldc < fla_max(1,*m))
     {
         *info = -12;
     }
@@ -287,7 +287,7 @@ int cgemqrt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
             /* Computing MIN */
             i__3 = *nb;
             i__4 = *k - i__ + 1; // , expr subst
-            ib = min(i__3,i__4);
+            ib = fla_min(i__3,i__4);
             i__3 = *m - i__ + 1;
             clarfb_("L", "C", "F", "C", &i__3, n, &ib, &v[i__ + i__ * v_dim1], ldv, &t[i__ * t_dim1 + 1], ldt, &c__[i__ + c_dim1], ldc, &work[1], &ldwork);
         }
@@ -303,7 +303,7 @@ int cgemqrt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
             /* Computing MIN */
             i__3 = *nb;
             i__4 = *k - i__ + 1; // , expr subst
-            ib = min(i__3,i__4);
+            ib = fla_min(i__3,i__4);
             i__3 = *n - i__ + 1;
             clarfb_("R", "N", "F", "C", m, &i__3, &ib, &v[i__ + i__ * v_dim1], ldv, &t[i__ * t_dim1 + 1], ldt, &c__[i__ * c_dim1 + 1], ldc, &work[1], &ldwork);
         }
@@ -319,7 +319,7 @@ int cgemqrt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
             /* Computing MIN */
             i__2 = *nb;
             i__3 = *k - i__ + 1; // , expr subst
-            ib = min(i__2,i__3);
+            ib = fla_min(i__2,i__3);
             i__2 = *m - i__ + 1;
             clarfb_("L", "N", "F", "C", &i__2, n, &ib, &v[i__ + i__ * v_dim1], ldv, &t[i__ * t_dim1 + 1], ldt, &c__[i__ + c_dim1], ldc, &work[1], &ldwork);
         }
@@ -335,7 +335,7 @@ int cgemqrt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
             /* Computing MIN */
             i__2 = *nb;
             i__3 = *k - i__ + 1; // , expr subst
-            ib = min(i__2,i__3);
+            ib = fla_min(i__2,i__3);
             i__2 = *n - i__ + 1;
             clarfb_("R", "C", "F", "C", m, &i__2, &ib, &v[i__ + i__ * v_dim1], ldv, &t[i__ * t_dim1 + 1], ldt, &c__[i__ * c_dim1 + 1], ldc, &work[1], &ldwork);
         }

@@ -76,8 +76,8 @@
 *  LDA    - INTEGER.
 *           On entry, LDA specifies the first dimension of A as declared
 *           in  the  calling  (sub)  program.   When  TRANS = 'N' or 'n'
-*           then  LDA must be at least  max( 1, n ), otherwise  LDA must
-*           be at least  max( 1, k ).
+*           then  LDA must be at least  fla_max( 1, n ), otherwise  LDA must
+*           be at least  fla_max( 1, k ).
 *           Unchanged on exit.
 *
 *  BETA   - COMPLEX         .
@@ -101,7 +101,7 @@
 *  LDC    - INTEGER.
 *           On entry, LDC specifies the first dimension of C as declared
 *           in  the  calling  (sub)  program.   LDC  must  be  at  least
-*           max( 1, n ).
+*           fla_max( 1, n ).
 *           Unchanged on exit.
 *
 *

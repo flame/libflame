@@ -73,7 +73,7 @@ gemqr_float_parameters:: gemqr_float_parameters (int matrix_layout_i, char side_
 			ldc = m;
 			tsize = m;
 			lda_geqr = m;
-			bufsize_t =  tsize*min(m, n);
+			bufsize_t =  tsize*fla_min(m, n);
 			bufsize_a = lda_geqr*n;
 		}else if (matrix_layout == LAPACK_ROW_MAJOR)
 		{		
@@ -81,7 +81,7 @@ gemqr_float_parameters:: gemqr_float_parameters (int matrix_layout_i, char side_
 			lda = k;
 			tsize = m;
 			lda_geqr =n;
-			bufsize_t = tsize*min(m, n);
+			bufsize_t = tsize*fla_min(m, n);
 			bufsize_a = lda_geqr*m;
 		}else
 		{
@@ -93,7 +93,7 @@ gemqr_float_parameters:: gemqr_float_parameters (int matrix_layout_i, char side_
 		{	ldc = m;
 			lda = k;
 			tsize = m;
-			bufsize_t =  tsize*min(m, n);
+			bufsize_t =  tsize*fla_min(m, n);
 			lda_geqr = m;
 			bufsize_a = lda_geqr*n;
 		}else if (matrix_layout == LAPACK_ROW_MAJOR)
@@ -101,7 +101,7 @@ gemqr_float_parameters:: gemqr_float_parameters (int matrix_layout_i, char side_
 			lda = k;
 			tsize = m;
 			lda_geqr =n;
-			bufsize_t = tsize*min(m, n);
+			bufsize_t = tsize*fla_min(m, n);
 			bufsize_a = lda_geqr*m;
 		}else
 		{
@@ -309,7 +309,7 @@ gemqr_double_parameters:: gemqr_double_parameters (int matrix_layout_i, char sid
 			ldc = m;
 			tsize = m;
 			lda_geqr = m;
-			bufsize_t =  tsize*min(m, n);
+			bufsize_t =  tsize*fla_min(m, n);
 			bufsize_a = lda_geqr*n;
 		}else if (matrix_layout == LAPACK_ROW_MAJOR)
 		{		
@@ -317,7 +317,7 @@ gemqr_double_parameters:: gemqr_double_parameters (int matrix_layout_i, char sid
 			lda = k;
 			tsize = m;
 			lda_geqr =n;
-			bufsize_t = tsize*min(m, n);
+			bufsize_t = tsize*fla_min(m, n);
 			bufsize_a = lda_geqr*m;
 		}else
 		{
@@ -329,7 +329,7 @@ gemqr_double_parameters:: gemqr_double_parameters (int matrix_layout_i, char sid
 		{	ldc = m;
 			lda = k;
 			tsize = m;
-			bufsize_t =  tsize*min(m, n);
+			bufsize_t =  tsize*fla_min(m, n);
 			lda_geqr = m;
 			bufsize_a = lda_geqr*n;
 		}else if (matrix_layout == LAPACK_ROW_MAJOR)
@@ -337,7 +337,7 @@ gemqr_double_parameters:: gemqr_double_parameters (int matrix_layout_i, char sid
 			lda = k;
 			tsize = m;
 			lda_geqr =n;
-			bufsize_t = tsize*min(m, n);
+			bufsize_t = tsize*fla_min(m, n);
 			bufsize_a = lda_geqr*m;
 		}else
 		{
@@ -545,7 +545,7 @@ gemqr_scomplex_parameters:: gemqr_scomplex_parameters (int matrix_layout_i, char
 			ldc = m;
 			tsize = m;
 			lda_geqr = m;
-			bufsize_t =  tsize*min(m, n);
+			bufsize_t =  tsize*fla_min(m, n);
 			bufsize_a = lda_geqr*n;
 		}else if (matrix_layout == LAPACK_ROW_MAJOR)
 		{		
@@ -553,7 +553,7 @@ gemqr_scomplex_parameters:: gemqr_scomplex_parameters (int matrix_layout_i, char
 			lda = k;
 			tsize = m;
 			lda_geqr =n;
-			bufsize_t = tsize*min(m, n);
+			bufsize_t = tsize*fla_min(m, n);
 			bufsize_a = lda_geqr*m;
 		}else
 		{
@@ -565,7 +565,7 @@ gemqr_scomplex_parameters:: gemqr_scomplex_parameters (int matrix_layout_i, char
 		{	ldc = m;
 			lda = k;
 			tsize = m;
-			bufsize_t =  tsize*min(m, n);
+			bufsize_t =  tsize*fla_min(m, n);
 			lda_geqr = m;
 			bufsize_a = lda_geqr*n;
 		}else if (matrix_layout == LAPACK_ROW_MAJOR)
@@ -573,7 +573,7 @@ gemqr_scomplex_parameters:: gemqr_scomplex_parameters (int matrix_layout_i, char
 			lda = k;
 			tsize = m;
 			lda_geqr =n;
-			bufsize_t = tsize*min(m, n);
+			bufsize_t = tsize*fla_min(m, n);
 			bufsize_a = lda_geqr*m;
 		}else
 		{
@@ -781,7 +781,7 @@ gemqr_dcomplex_parameters:: gemqr_dcomplex_parameters (int matrix_layout_i, char
 			ldc = m;
 			tsize = m;
 			lda_geqr = m;
-			bufsize_t =  tsize*min(m, n);
+			bufsize_t =  tsize*fla_min(m, n);
 			bufsize_a = lda_geqr*n;
 		}else if (matrix_layout == LAPACK_ROW_MAJOR)
 		{		
@@ -789,7 +789,7 @@ gemqr_dcomplex_parameters:: gemqr_dcomplex_parameters (int matrix_layout_i, char
 			lda = k;
 			tsize = m;
 			lda_geqr =n;
-			bufsize_t = tsize*min(m, n);
+			bufsize_t = tsize*fla_min(m, n);
 			bufsize_a = lda_geqr*m;
 		}else
 		{
@@ -801,7 +801,7 @@ gemqr_dcomplex_parameters:: gemqr_dcomplex_parameters (int matrix_layout_i, char
 		{	ldc = m;
 			lda = k;
 			tsize = m;
-			bufsize_t =  tsize*min(m, n);
+			bufsize_t =  tsize*fla_min(m, n);
 			lda_geqr = m;
 			bufsize_a = lda_geqr*n;
 		}else if (matrix_layout == LAPACK_ROW_MAJOR)
@@ -809,7 +809,7 @@ gemqr_dcomplex_parameters:: gemqr_dcomplex_parameters (int matrix_layout_i, char
 			lda = k;
 			tsize = m;
 			lda_geqr =n;
-			bufsize_t = tsize*min(m, n);
+			bufsize_t = tsize*fla_min(m, n);
 			bufsize_a = lda_geqr*m;
 		}else
 		{

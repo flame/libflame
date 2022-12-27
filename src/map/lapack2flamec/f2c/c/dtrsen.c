@@ -107,7 +107,7 @@ a complex conjugate pair of eigenvalues must be */
 /* > \param[in] LDT */
 /* > \verbatim */
 /* > LDT is INTEGER */
-/* > The leading dimension of the array T. LDT >= max(1,N). */
+/* > The leading dimension of the array T. LDT >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] Q */
@@ -183,11 +183,11 @@ and if COMPQ = 'V', LDQ >= N. */
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The dimension of the array WORK. */
-/* > If JOB = 'N', LWORK >= max(1,N);
+/* > If JOB = 'N', LWORK >= fla_max(1,N);
 */
-/* > if JOB = 'E', LWORK >= max(1,M*(N-M));
+/* > if JOB = 'E', LWORK >= fla_max(1,M*(N-M));
 */
-/* > if JOB = 'V' or 'B', LWORK >= max(1,2*M*(N-M)). */
+/* > if JOB = 'V' or 'B', LWORK >= fla_max(1,2*M*(N-M)). */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
 the routine */
@@ -208,7 +208,7 @@ the routine */
 /* > The dimension of the array IWORK. */
 /* > If JOB = 'N' or 'E', LIWORK >= 1;
 */
-/* > if JOB = 'V' or 'B', LIWORK >= max(1,M*(N-M)). */
+/* > if JOB = 'V' or 'B', LIWORK >= fla_max(1,M*(N-M)). */
 /* > */
 /* > If LIWORK = -1, then a workspace query is assumed;
 the */
@@ -402,7 +402,7 @@ int dtrsen_(char *job, char *compq, logical *select, integer *n, doublereal *t, 
     {
         *info = -4;
     }
-    else if (*ldt < max(1,*n))
+    else if (*ldt < fla_max(1,*n))
     {
         *info = -6;
     }
@@ -463,17 +463,17 @@ int dtrsen_(char *job, char *compq, logical *select, integer *n, doublereal *t, 
             /* Computing MAX */
             i__1 = 1;
             i__2 = nn << 1; // , expr subst
-            lwmin = max(i__1,i__2);
-            liwmin = max(1,nn);
+            lwmin = fla_max(i__1,i__2);
+            liwmin = fla_max(1,nn);
         }
         else if (lsame_(job, "N"))
         {
-            lwmin = max(1,*n);
+            lwmin = fla_max(1,*n);
             liwmin = 1;
         }
         else if (lsame_(job, "E"))
         {
-            lwmin = max(1,nn);
+            lwmin = fla_max(1,nn);
             liwmin = 1;
         }
         if (*lwork < lwmin && ! lquery)

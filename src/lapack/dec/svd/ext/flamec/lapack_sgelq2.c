@@ -58,7 +58,7 @@
 /* > A is REAL array, dimension (LDA,N) */
 /* > On entry, the m by n matrix A. */
 /* > On exit, the elements on and below the diagonal of the array */
-/* > contain the m by min(m,n) lower trapezoidal matrix L (L is */
+/* > contain the m by fla_min(m,n) lower trapezoidal matrix L (L is */
 /* > lower triangular if m <= n);
 the elements above the diagonal, */
 /* > with the array TAU, represent the orthogonal matrix Q as a */
@@ -68,12 +68,12 @@ the elements above the diagonal, */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] TAU */
 /* > \verbatim */
-/* > TAU is REAL array, dimension (min(M,N)) */
+/* > TAU is REAL array, dimension (fla_min(M,N)) */
 /* > The scalar factors of the elementary reflectors (see Further */
 /* > Details). */
 /* > \endverbatim */
@@ -103,7 +103,7 @@ the elements above the diagonal, */
 /* > */
 /* > The matrix Q is represented as a product of elementary reflectors */
 /* > */
-/* > Q = H(k) . . . H(2) H(1), where k = min(m,n). */
+/* > Q = H(k) . . . H(2) H(1), where k = fla_min(m,n). */
 /* > */
 /* > Each H(i) has the form */
 /* > */
@@ -160,7 +160,7 @@ int lapack_sgelq2(integer *m, integer *n, real *a, integer *lda, real *tau, real
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
@@ -170,7 +170,7 @@ int lapack_sgelq2(integer *m, integer *n, real *a, integer *lda, real *tau, real
         xerbla_("SGELQ2", &i__1);
         return 0;
     }
-    k = min(*m,*n);
+    k = fla_min(*m,*n);
     i__1 = k;
     for (i__ = 1;
             i__ <= i__1;
@@ -180,7 +180,7 @@ int lapack_sgelq2(integer *m, integer *n, real *a, integer *lda, real *tau, real
         i__2 = *n - i__ + 1;
         /* Computing MIN */
         i__3 = i__ + 1;
-        slarfg_(&i__2, &a[i__ + i__ * a_dim1], &a[i__ + min(i__3,*n) * a_dim1], lda, &tau[i__]);
+        slarfg_(&i__2, &a[i__ + i__ * a_dim1], &a[i__ + fla_min(i__3,*n) * a_dim1], lda, &tau[i__]);
         if (i__ < *m)
         {
             /* Apply H(i) to A(i+1:m,i:n) from the right */

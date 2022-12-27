@@ -82,7 +82,7 @@ static integer c__1 = 1;
 /* > \param[in] LDC */
 /* > \verbatim */
 /* > LDC is INTEGER */
-/* > The leading dimension of the array C. LDC >= max( 1, N ). */
+/* > The leading dimension of the array C. LDC >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */

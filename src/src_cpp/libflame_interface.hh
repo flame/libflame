@@ -48,7 +48,7 @@ namespace libflame {
               factorization A = U**T*U or A = L*L**T. \n
     * @param[in] lda
               lda is int*. \n
-              The leading dimension of the matrix a, lda >= max(1,n) \n
+              The leading dimension of the matrix a, lda >= fla_max(1,n) \n
     * @param[out]	INFO	
               INFO is INTEGER \n
               = 0:  successful exit \n
@@ -101,7 +101,7 @@ integer potrf(char* uplo, integer* n, T* a, integer* lda, integer* info)
               factorization A = U**T *U  or A = L*L**T. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the matrix a, lda >= max(1,n) \n
+              The leading dimension of the matrix a, lda >= fla_max(1,n) \n
     * @param[out]	INFO	
               INFO is INTEGER \n
               = 0: successful exit \n
@@ -146,7 +146,7 @@ integer potf2(char* uplo, integer* n, T* a, integer* lda, integer* info)
               A = P*L*U; the unit diagonal elements of L are not stored. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the matrix a, lda >= max(1,m) \n
+              The leading dimension of the matrix a, lda >= fla_max(1,m) \n
     * @param[out] ipiv
               ipiv is integer array, dimension (min(m,n)) \n
               The pivot indices; for 1 <= i <= min(m,n), row i of the
@@ -196,7 +196,7 @@ integer getrf(integer* m, integer* n, T* a, integer* lda, integer* ipiv, integer
               A = P*L*U; the unit diagonal elements of L are not stored. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the matrix a, lda >= max(1,m) \n
+              The leading dimension of the matrix a, lda >= fla_max(1,m) \n
     * @param[out] ipiv
               ipiv is integer array, dimension (min(m,n)) \n
               ipiv is integer array, dimension (min(m,n)) \n
@@ -246,7 +246,7 @@ integer getf2(integer* m, integer* n, T* a, integer* lda, integer* ipiv, integer
               Details). \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the matrix a, lda >= max(1,m) \n
+              The leading dimension of the matrix a, lda >= fla_max(1,m) \n
     * @param[out] tau
               tau is float/double/COMPLEX/COMPLEX*16 array, dimension (min(m,n)) \n
               The scalar factors of the elementary reflectors (see Further
@@ -269,7 +269,7 @@ integer getf2(integer* m, integer* n, T* a, integer* lda, integer* ipiv, integer
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
-              The dimension of the array WORK.  LWORK >= max(1,N).
+              The dimension of the array WORK.  LWORK >= fla_max(1,N).
               For optimum performance LWORK >= N*NB, where NB is
               the optimal blocksize. \n
 
@@ -316,7 +316,7 @@ integer geqrf(integer* m, integer* n, T* a, integer* lda, T* tau, T* work, integ
               product of elementary reflectors (see Further Details). \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the matrix a, lda >= max(1,m) \n
+              The leading dimension of the matrix a, lda >= fla_max(1,m) \n
     * @param[out] tau
               tau is float/double/COMPLEX/COMPLEX*16 array, dimension (min(m,n)) \n
               The scalar factors of the elementary reflectors (see Further
@@ -379,7 +379,7 @@ integer geqr2(integer* m, integer* n, T* a, integer* lda, T* tau, T* work, integ
               min(m,n) elementary reflectors. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the matrix a, lda >= max(1,m) \n
+              The leading dimension of the matrix a, lda >= fla_max(1,m) \n
     * @param[in,out] jpvt
               jpvt is integer array, dimension (n) \n
               On entry, if jpvt(i) .ne. 0, the i-th column of A is permuted
@@ -464,7 +464,7 @@ integer geqpf(integer* m, integer* n, T* a, integer* lda, integer* jpvt, T* tau,
               min(m,n) elementary reflectors. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the matrix a, lda >= max(1,m) \n
+              The leading dimension of the matrix a, lda >= fla_max(1,m) \n
     * @param[in,out] jpvt
               jpvt is integer array, dimension (n) \n
               On entry, if jpvt(J).ne.0, the J-th column of A is permuted
@@ -549,7 +549,7 @@ integer geqp3(integer* m, integer* n, T* a, integer* lda, integer* jpvt, T* tau,
               product of elementary reflectors (see Further Details). \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the matrix a, lda >= max(1,m) \n
+              The leading dimension of the matrix a, lda >= fla_max(1,m) \n
     * @param[out] tau
               tau is float/double/COMPLEX/COMPLEX*16 array, dimension (min(m,n)) \n
               The scalar factors of the elementary reflectors (see Further Details).
@@ -572,7 +572,7 @@ integer geqp3(integer* m, integer* n, T* a, integer* lda, integer* jpvt, T* tau,
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
-              The dimension of the array WORK.  LWORK >= max(1,M).
+              The dimension of the array WORK.  LWORK >= fla_max(1,M).
               For optimum performance LWORK >= M*NB, where NB is the
               optimal blocksize. \n
  \n
@@ -619,7 +619,7 @@ integer gelqf(integer* m, integer* n, T* a, integer* lda, T* tau, T* work, integ
               product of elementary reflectors (see Further Details). \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the matrix a, lda >= max(1,m) \n
+              The leading dimension of the matrix a, lda >= fla_max(1,m) \n
     * @param[out] tau
               tau is float/double/COMPLEX/COMPLEX*16 array, dimension (min(m,n)) \n
               The scalar factors of the elementary reflectors (see Further
@@ -699,7 +699,7 @@ integer gelq2(integer* m, integer* n, T* a, integer* lda, T* tau, T* work, integ
               On exit, A has been destroyed. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the matrix a, lda >= max(1,m) \n
+              The leading dimension of the matrix a, lda >= fla_max(1,m) \n
     * @param[in,out] b
               b is float/double array, dimension (ldb,nrhs) \n
               On entry, the m-by-n matrix. \n
@@ -709,7 +709,7 @@ integer gelq2(integer* m, integer* n, T* a, integer* lda, T* tau, T* work, integ
               by the sum of squares of elements n+1:m in that column. \n
     * @param[in] ldb
               ldb is integer* \n
-              The leading dimension of the matrix b, ldb >= max(1,max(m,n)). \n
+              The leading dimension of the matrix b, ldb >= fla_max(1,max(m,n)). \n
     * @param[out] s
               s is float/double array, dimension (min(m,n)) \n
               The singular values of A in decreasing order.
@@ -759,7 +759,7 @@ integer gelq2(integer* m, integer* n, T* a, integer* lda, T* tau, T* work, integ
               On exit, if INFO = 0, RWORK(1) returns the minimum LRWORK. \n
     * @param[out]	IWORK	
               IWORK is INTEGER array, dimension (MAX(1,LIWORK)) \n
-              LIWORK >= max(1, 3*MINMN*NLVL + 11*MINMN),
+              LIWORK >= fla_max(1, 3*MINMN*NLVL + 11*MINMN),
               where MINMN = MIN( M,N ). \n
               On exit, if INFO = 0, IWORK(1) returns the minimum LIWORK. \n
     * @param[out]	INFO	
@@ -818,7 +818,7 @@ integer gelsd(integer* m, integer* n, integer* nrhs, T* a, integer* lda, T* b, i
               its right singular vectors, stored rowwise. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the matrix a, lda >= max(1,m) \n
+              The leading dimension of the matrix a, lda >= fla_max(1,m) \n
     * @param[in,out] b
               b is float/double array, dimension (ldb,nrhs) \n
               On entry, the m-by-nrhs  right hand side matrix b. \n
@@ -828,7 +828,7 @@ integer gelsd(integer* m, integer* n, integer* nrhs, T* a, integer* lda, T* b, i
               by the sum of squares of elements n+1:m in that column. \n
     * @param[in] ldb
               ldb is integer* \n
-              The leading dimension of the matrix b, ldb >= max(1,max(m,n)). \n
+              The leading dimension of the matrix b, ldb >= fla_max(1,max(m,n)). \n
     * @param[out] s
               s is float/double array, dimension (min(m,n)) \n
               The singular values of A in decreasing order.
@@ -848,7 +848,7 @@ integer gelsd(integer* m, integer* n, integer* nrhs, T* a, integer* lda, T* b, i
     * @param[in]	LWORK	
               LWORK is INTEGER \n
               The dimension of the array WORK. LWORK >= 1, and also: \n
-              LWORK >=  2*min(M,N) + max(M,N,NRHS) \n
+              LWORK >=  2*min(M,N) + fla_max(M,N,NRHS) \n
               For good performance, LWORK should generally be larger. \n
  \n
               If LWORK = -1, then a workspace query is assumed; the routine
@@ -911,7 +911,7 @@ integer gelss(integer* m, integer* n, integer* nrhs, T* a, integer* lda, T* b, i
               the lower triangle of the product L**T * L. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the matrix a, lda >= max(1,n) \n
+              The leading dimension of the matrix a, lda >= fla_max(1,n) \n
     * @param[out]	INFO	
               INFO is INTEGER \n
               = 0: successful exit \n
@@ -958,7 +958,7 @@ integer lauum(char* uplo, integer* n, T* a, integer* lda, integer* info)
               the lower triangle of the product L**T * L. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the matrix a, lda >= max(1,n) \n
+              The leading dimension of the matrix a, lda >= fla_max(1,n) \n
     * @param[out]	INFO	
               INFO is INTEGER \n
               = 0: successful exit \n
@@ -997,7 +997,7 @@ integer lauu2(char* uplo, integer* n, T* a, integer* lda, integer* info)
               inverse of A, overwriting the input factor U or L. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the matrix a, lda >= max(1,n) \n
+              The leading dimension of the matrix a, lda >= fla_max(1,n) \n
     * @param[out]	INFO	
               INFO is INTEGER \n
               = 0:  successful exit \n
@@ -1049,7 +1049,7 @@ integer potri(char* uplo, integer* n, T* buff_A, integer*  ldim_A, integer* info
               the same storage format. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the matrix a, lda >= max(1,n) \n
+              The leading dimension of the matrix a, lda >= fla_max(1,n) \n
     * @param[out]	INFO	
               INFO is INTEGER \n
               = 0: successful exit \n
@@ -1101,7 +1101,7 @@ integer trtri(char* uplo, char* diag, integer* n, T* a, integer* lda, integer* i
               the same storage format. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the matrix a, lda >= max(1,n) \n
+              The leading dimension of the matrix a, lda >= fla_max(1,n) \n
     * @param[out]	INFO	
               INFO is INTEGER \n
               = 0: successful exit \n
@@ -1163,20 +1163,20 @@ integer trti2(char* uplo, char* diag, integer* n, T* a, integer* lda, integer* i
               The upper quasi-triangular matrix a, in Schur canonical form. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a. lda >= max(1,m). \n
+              The leading dimension of the array a. lda >= fla_max(1,m). \n
     * @param[in] b
               b is float/double array, dimension (ldb,n) \n
               The upper quasi-triangular matrix b, in Schur canonical form. \n
     * @param[in] ldb
               ldb is integer* \n
-              The leading dimension of the array b. ldb >= max(1,n). \n
+              The leading dimension of the array b. ldb >= fla_max(1,n). \n
     * @param[in,out] c
               c is float/double array, dimension (ldc,n) \n
               On entry, the m-by-n right hand side matrix c. \n
               On exit, c is overwritten by the solution matrix X. \n
     * @param[in] ldc
               ldc is integer* \n
-              The leading dimension of the array c. ldc >= max(1,m) \n
+              The leading dimension of the array c. ldc >= fla_max(1,m) \n
     * @param[out] scale
               scale is float/double* \n
               The scale factor, scale, set <= 1 to avoid overflow in X \n
@@ -1233,7 +1233,7 @@ integer trsyl(char* transa, char* transb, integer* isgn, integer* m, integer* n,
               reflectors. See Further Details. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,n). \n
+              The leading dimension of the array a.  lda >= fla_max(1,n). \n
     * @param[out] tau
               tau is float/double/COMPLEX/COMPLEX*16 array, dimension (n-1) \n
               The scalar factors of the elementary reflectors (see Further
@@ -1274,7 +1274,7 @@ integer trsyl(char* transa, char* transb, integer* isgn, integer* m, integer* n,
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
-              The length of the array WORK.  LWORK >= max(1,N). \n
+              The length of the array WORK.  LWORK >= fla_max(1,N). \n
               For good performance, LWORK should generally be larger. \n
  \n
               If LWORK = -1, then a workspace query is assumed; the routine
@@ -1315,7 +1315,7 @@ integer gehrd(integer* n, integer* ilo, integer* ihi, T* a, integer* lda, T* tau
               and columns 1:ilo-1 and ihi+1:n. \n
               ilo and ihi are normally set by a previous call to SGEBAL;
               otherwise they should be set to 1 and N respectively. See Further Details. \n
-              1 <= ilo <= ihi <= max(1,n). \n
+              1 <= ilo <= ihi <= fla_max(1,n). \n
     * @param[in,out] a
               a is float/double/COMPLEX/COMPLEX*16 array, dimension (lda,n) \n
               On entry, the n-by-n general matrix to be reduced. \n
@@ -1326,7 +1326,7 @@ integer gehrd(integer* n, integer* ilo, integer* ihi, T* a, integer* lda, T* tau
               reflectors. See Further Details. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,n). \n
+              The leading dimension of the array a.  lda >= fla_max(1,n). \n
     * @param[out] tau
               tau is float/double/COMPLEX/COMPLEX*16 array, dimension (n-1) \n
               The scalar factors of the elementary reflectors (see Further
@@ -1415,7 +1415,7 @@ integer gehd2(integer* n, integer* ilo, integer* ihi, T* a, integer* lda, T* tau
               of elementary reflectors. See Further Details. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,n). \n
+              The leading dimension of the array a.  lda >= fla_max(1,n). \n
     * @param[out] d
               d is float/double array, dimension (n) \n
               The diagonal elements of the tridiagonal matrix T:
@@ -1532,7 +1532,7 @@ integer sytrd(char* uplo, integer* n, T* a, integer* lda, T*  d, T*  e, T* tau, 
               of elementary reflectors. See Further Details. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,n). \n
+              The leading dimension of the array a.  lda >= fla_max(1,n). \n
     * @param[out] d
               d is float/double array, dimension (n) \n
               The diagonal elements of the tridiagonal matrix T:
@@ -1648,7 +1648,7 @@ integer hetrd(char* uplo, integer* n, T* a, integer* lda, Ta*  d, Ta*  e, T* tau
               of elementary reflectors. See Further Details. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,n). \n
+              The leading dimension of the array a.  lda >= fla_max(1,n). \n
     * @param[out] d
               d is float/double array, dimension (n) \n
               The diagonal elements of the tridiagonal matrix T:
@@ -1752,7 +1752,7 @@ integer sytd2(char* uplo, integer* n, T* a, integer* lda, T*  d, T*  e, T* tau, 
               of elementary reflectors. See Further Details. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,n). \n
+              The leading dimension of the array a.  lda >= fla_max(1,n). \n
     * @param[out] d
               d is float/double array, dimension (n) \n
               The diagonal elements of the tridiagonal matrix T:
@@ -1855,7 +1855,7 @@ integer hetd2(char* uplo, integer* n, T* a, integer* lda, Ta*  d, Ta*  e, T* tau
               See Further Details. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,m). \n
+              The leading dimension of the array a.  lda >= fla_max(1,m). \n
     * @param[out] d
               d is float/double array, dimension (min(m,n)) \n
               The diagonal elements of the bidiagonal matrix b:
@@ -1926,7 +1926,7 @@ integer hetd2(char* uplo, integer* n, T* a, integer* lda, Ta*  d, Ta*  e, T* tau
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
-              The length of the array WORK.  LWORK >= max(1,M,N). \n
+              The length of the array WORK.  LWORK >= fla_max(1,M,N). \n
               For optimum performance LWORK >= (M+N)*NB, where NB
               is the optimal blocksize. \n
 
@@ -1990,7 +1990,7 @@ integer gebrd(integer* m, integer* n, T* a, integer* lda, Ta* d, Ta* e, T* tauq,
               See Further Details. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,m). \n
+              The leading dimension of the array a.  lda >= fla_max(1,m). \n
     * @param[out] d
               d is float/double array, dimension (min(m,n)) \n
               The diagonal elements of the bidiagonal matrix b: \n
@@ -2057,7 +2057,7 @@ integer gebrd(integer* m, integer* n, T* a, integer* lda, Ta* d, Ta* e, T* tauq,
                       the vector defining H(i), and ui an element of the vector defining G(i).
               \endverbatim
     * @param[out]	WORK	
-              WORK is COMPLEX array, dimension (max(M,N)) \n
+              WORK is COMPLEX array, dimension (fla_max(M,N)) \n
     * @param[out]	INFO	
               INFO is INTEGER \n
               = 0: successful exit \n
@@ -2118,14 +2118,14 @@ integer gebd2(integer* m, integer* n, T* a, integer* lda, Ta*  d, Ta*  e, T* tau
               same format as a. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,n). \n
+              The leading dimension of the array a.  lda >= fla_max(1,n). \n
     * @param[in] b
               b is float/double array, dimension (ldb,n) \n
               The triangular factor from the Cholesky factorization of b,
               as returned by SPOTRF. \n
     * @param[in] ldb
               ldb is integer* \n
-              The leading dimension of the array b.  ldb >= max(1,n). \n
+              The leading dimension of the array b.  ldb >= fla_max(1,n). \n
     * @param[out]	INFO	
               INFO is INTEGER \n
               = 0:  successful exit \n
@@ -2181,14 +2181,14 @@ integer sygst(integer* itype, char* uplo, integer* n, T* a, integer* lda, T* b, 
               same format as a.
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,n). \n
+              The leading dimension of the array a.  lda >= fla_max(1,n). \n
     * @param[in] b
               b is COMPLEX/COMPLEX*16 array, dimension (ldb,n) \n
               The triangular factor from the Cholesky factorization of b,
               as returned by SPOTRF. \n
     * @param[in] ldb
               ldb is integer* \n
-              The leading dimension of the array b.  ldb >= max(1,n). \n
+              The leading dimension of the array b.  ldb >= fla_max(1,n). \n
     * @param[out]	INFO	
               INFO is INTEGER \n
               = 0:  successful exit \n
@@ -2244,14 +2244,14 @@ integer hegst(integer* itype, char* uplo, integer* n, T* a, integer* lda, T* b, 
               same format as a. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,n). \n
+              The leading dimension of the array a.  lda >= fla_max(1,n). \n
     * @param[in] b
               b is float/double array, dimension (ldb,n) \n
               The triangular factor from the Cholesky factorization of b,
               as returned by SPOTRF. \n
     * @param[in] ldb
               ldb is integer* \n
-              The leading dimension of the array b.  ldb >= max(1,n). \n
+              The leading dimension of the array b.  ldb >= fla_max(1,n). \n
     * @param[out]	INFO	
               INFO is INTEGER \n
               = 0:  successful exit. \n
@@ -2307,14 +2307,14 @@ integer sygs2(integer* itype, char* uplo, integer* n, T* a, integer* lda, T* b, 
               same format as a. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,n). \n
+              The leading dimension of the array a.  lda >= fla_max(1,n). \n
     * @param[in] b
               b is COMPLEX/COMPLEX*16 array, dimension (ldb,n) \n
               The triangular factor from the Cholesky factorization of b,
               as returned by CPOTRF. \n
     * @param[in] ldb
               ldb is integer* \n
-              The leading dimension of the array b.  ldb >= max(1,n). \n
+              The leading dimension of the array b.  ldb >= fla_max(1,n). \n
     * @param[out]	INFO	
               INFO is INTEGER \n
               = 0:  successful exit. \n
@@ -2378,7 +2378,7 @@ integer hegs2(integer* itype, char* uplo, integer* n, T* a, integer* lda, T* b, 
     * @param[in] ldv
               ldv is integer* \n
               The leading dimension of the array V. \n
-              If storev = 'C', ldv >= max(1,n); if storev = 'R', ldv >= k. \n
+              If storev = 'C', ldv >= fla_max(1,n); if storev = 'R', ldv >= k. \n
     * @param[in] tau
               tau is float/double/COMPLEX/COMPLEX*16 array, dimension (k) \n
               tau(i) must contain the scalar factor of the elementary
@@ -2553,7 +2553,7 @@ integer larfgp(integer* n, T* alpha, T* x, integer* incx, T* tau)
               On exit, the m-by-n matrix Q. \n
     * @param[in] lda
               lda is integer* \n
-              The first dimension of the array a. lda >= max(1,m). \n
+              The first dimension of the array a. lda >= fla_max(1,m). \n
     * @param[in] tau
               tau is float/double array, dimension (k) \n
               tau(i) must contain the scalar factor of the elementary
@@ -2563,7 +2563,7 @@ integer larfgp(integer* n, T* alpha, T* x, integer* incx, T* tau)
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
-              The dimension of the array WORK. LWORK >= max(1,N).
+              The dimension of the array WORK. LWORK >= fla_max(1,N).
               For optimum performance LWORK >= N*NB, where NB is the
               optimal blocksize. \n
  \n
@@ -2616,7 +2616,7 @@ integer orgqr(integer* m, integer* n, integer* k, T* a, integer* lda, T* tau, T*
               On exit, the m-by-n matrix Q. \n
     * @param[in] lda
               lda is integer* \n
-              The first dimension of the array a. lda >= max(1,m). \n
+              The first dimension of the array a. lda >= fla_max(1,m). \n
     * @param[in] tau
               tau is COMPLEX/COMPLEX*16 array, dimension (k) \n
               tau(i) must contain the scalar factor of the elementary
@@ -2626,7 +2626,7 @@ integer orgqr(integer* m, integer* n, integer* k, T* a, integer* lda, T* tau, T*
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
-              The dimension of the array WORK. LWORK >= max(1,N).
+              The dimension of the array WORK. LWORK >= fla_max(1,N).
               For optimum performance LWORK >= N*NB, where NB is the
               optimal blocksize. \n
  \n
@@ -2694,8 +2694,8 @@ integer ungqr(integer* m, integer* n, integer* k, T* a, integer* lda, T* tau, T*
     * @param[in] lda
               lda is integer* \n
               The leading dimension of the array a. \n
-              If side = 'L', lda >= max(1,m); \n
-              if side = 'R', lda >= max(1,n). \n
+              If side = 'L', lda >= fla_max(1,m); \n
+              if side = 'R', lda >= fla_max(1,n). \n
     * @param[in] tau
               tau is float/double array, dimension (k) \n
               tau(i) must contain the scalar factor of the elementary
@@ -2706,15 +2706,15 @@ integer ungqr(integer* m, integer* n, integer* k, T* a, integer* lda, T* tau, T*
               On exit, c is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. \n
     * @param[in] ldc
               ldc is integer* \n
-              The leading dimension of the array c. ldc >= max(1,m). \n
+              The leading dimension of the array c. ldc >= fla_max(1,m). \n
     * @param[out]	WORK	
               WORK is REAL array, dimension (MAX(1,LWORK)) \n
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
               The dimension of the array WORK. \n
-              If SIDE = 'L', LWORK >= max(1,N); \n
-              if SIDE = 'R', LWORK >= max(1,M). \n
+              If SIDE = 'L', LWORK >= fla_max(1,N); \n
+              if SIDE = 'R', LWORK >= fla_max(1,M). \n
               For good performance, LWORK should generally be larger. \n
  \n
               If LWORK = -1, then a workspace query is assumed; the routine
@@ -2781,8 +2781,8 @@ integer ormqr(char* side, char* trans, integer* m, integer* n, integer* k, T* a,
     * @param[in] lda
               lda is integer* \n
               The leading dimension of the array a. \n
-              If side = 'L', lda >= max(1,m); \n
-              if side = 'R', lda >= max(1,n). \n
+              If side = 'L', lda >= fla_max(1,m); \n
+              if side = 'R', lda >= fla_max(1,n). \n
     * @param[in] tau
               tau is COMPLEX/COMPLEX*16 array, dimension (k) \n
               tau(i) must contain the scalar factor of the elementary
@@ -2793,15 +2793,15 @@ integer ormqr(char* side, char* trans, integer* m, integer* n, integer* k, T* a,
               On exit, c is overwritten by Q*C or Q**H*C or C*Q**H or C*Q. \n
     * @param[in] ldc
               ldc is integer* \n
-              The leading dimension of the array c. ldc >= max(1,m). \n
+              The leading dimension of the array c. ldc >= fla_max(1,m). \n
     * @param[out]	WORK	
               WORK is COMPLEX array, dimension (MAX(1,LWORK)) \n
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
               The dimension of the array WORK. \n
-              If SIDE = 'L', LWORK >= max(1,N); \n
-              if SIDE = 'R', LWORK >= max(1,M). \n
+              If SIDE = 'L', LWORK >= fla_max(1,N); \n
+              if SIDE = 'R', LWORK >= fla_max(1,M). \n
               For good performance, LWORK should generally be larger. \n
  \n
               If LWORK = -1, then a workspace query is assumed; the routine
@@ -2874,8 +2874,8 @@ integer unmqr(char* side, char* trans, integer* m, integer* n, integer* k, T* a,
     * @param[in] lda
               lda is integer* \n
               The leading dimension of the array a. \n
-              If side = 'L', lda >= max(1,m); \n
-              if side = 'R', lda >= max(1,n). \n
+              If side = 'L', lda >= fla_max(1,m); \n
+              if side = 'R', lda >= fla_max(1,n). \n
     * @param[in] tau
               tau is float/double array, dimension (k) \n
               tau(i) must contain the scalar factor of the elementary
@@ -2886,7 +2886,7 @@ integer unmqr(char* side, char* trans, integer* m, integer* n, integer* k, T* a,
               On exit, c is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. \n
     * @param[in] ldc
               ldc is integer* \n
-              The leading dimension of the array c. ldc >= max(1,m). \n
+              The leading dimension of the array c. ldc >= fla_max(1,m). \n
     * @param[out]	WORK	
               WORK is REAL array, dimension \n
                                        (N) if SIDE = 'L', \n
@@ -2957,8 +2957,8 @@ integer orm2r(char* side, char* trans, integer* m, integer* n, integer* k, T* a,
     * @param[in] lda
               lda is integer* \n
               The leading dimension of the array a. \n
-              If side = 'L', lda >= max(1,m); \n
-              if side = 'R', lda >= max(1,n). \n
+              If side = 'L', lda >= fla_max(1,m); \n
+              if side = 'R', lda >= fla_max(1,n). \n
     * @param[in] tau
               tau is COMPLEX/COMPLEX*16 array, dimension (k) \n
               tau(i) must contain the scalar factor of the elementary
@@ -2969,7 +2969,7 @@ integer orm2r(char* side, char* trans, integer* m, integer* n, integer* k, T* a,
               On exit, c is overwritten by Q*C or Q**H*C or C*Q**H or C*Q. \n
     * @param[in] ldc
               ldc is integer* \n
-              The leading dimension of the array c. ldc >= max(1,m). \n
+              The leading dimension of the array c. ldc >= fla_max(1,m). \n
     * @param[out]	WORK	
               WORK is COMPLEX array, dimension \n
                                        (N) if SIDE = 'L', \n
@@ -3018,7 +3018,7 @@ integer unm2r(char* side, char* trans, integer* m, integer* n, integer* k, T* a,
               On exit, the m-by-n matrix Q. \n
     * @param[in] lda
               lda is integer* \n
-              The first dimension of the array a. lda >= max(1,m). \n
+              The first dimension of the array a. lda >= fla_max(1,m). \n
     * @param[in] tau
               tau is float/double array, dimension (k) \n
               tau(i) must contain the scalar factor of the elementary
@@ -3028,7 +3028,7 @@ integer unm2r(char* side, char* trans, integer* m, integer* n, integer* k, T* a,
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
-              The dimension of the array WORK. LWORK >= max(1,M).
+              The dimension of the array WORK. LWORK >= fla_max(1,M).
               For optimum performance LWORK >= M*NB, where NB is
               the optimal blocksize. \n
  \n
@@ -3080,7 +3080,7 @@ integer orglq(integer* m, integer* n, integer* k, T* a, integer* lda, T* tau, T*
               On exit, the m-by-n matrix Q. \n
     * @param[in] lda
               lda is integer* \n
-              The first dimension of the array a. lda >= max(1,m). \n
+              The first dimension of the array a. lda >= fla_max(1,m). \n
     * @param[in] tau
               tau is COMPLEX/COMPLEX*16 array, dimension (k) \n
               tau(i) must contain the scalar factor of the elementary
@@ -3090,7 +3090,7 @@ integer orglq(integer* m, integer* n, integer* k, T* a, integer* lda, T* tau, T*
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
-              The dimension of the array WORK. LWORK >= max(1,M).
+              The dimension of the array WORK. LWORK >= fla_max(1,M).
               For optimum performance LWORK >= M*NB, where NB is
               the optimal blocksize. \n
  \n
@@ -3158,7 +3158,7 @@ integer unglq(integer* m, integer* n, integer* k, T* a, integer* lda, T* tau, T*
               SGELQF in the first k rows of its array argument a. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a. lda >= max(1,k). \n
+              The leading dimension of the array a. lda >= fla_max(1,k). \n
     * @param[in] tau
               tau is float/double array, dimension (k) \n
               tau(i) must contain the scalar factor of the elementary
@@ -3169,15 +3169,15 @@ integer unglq(integer* m, integer* n, integer* k, T* a, integer* lda, T* tau, T*
               On exit, c is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. \n
     * @param[in] ldc
               ldc is integer* \n
-              The leading dimension of the array c. ldc >= max(1,m). \n
+              The leading dimension of the array c. ldc >= fla_max(1,m). \n
     * @param[out]	WORK	
               WORK is REAL array, dimension (MAX(1,LWORK)) \n
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
               The dimension of the array WORK. \n
-              If SIDE = 'L', LWORK >= max(1,N); \n
-              if SIDE = 'R', LWORK >= max(1,M). \n
+              If SIDE = 'L', LWORK >= fla_max(1,N); \n
+              if SIDE = 'R', LWORK >= fla_max(1,M). \n
               For good performance, LWORK should generally be larger. \n
  \n
               If LWORK = -1, then a workspace query is assumed; the routine
@@ -3244,7 +3244,7 @@ integer ormlq(char* side, char* trans, integer* m, integer* n, integer* k, T* a,
               CGELQF in the first k rows of its array argument a. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a. lda >= max(1,k). \n
+              The leading dimension of the array a. lda >= fla_max(1,k). \n
     * @param[in] tau
               tau is COMPLEX/COMPLEX*16 array, dimension (k) \n
               tau(i) must contain the scalar factor of the elementary
@@ -3255,15 +3255,15 @@ integer ormlq(char* side, char* trans, integer* m, integer* n, integer* k, T* a,
               On exit, c is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. \n
     * @param[in] ldc
               ldc is integer* \n
-              The leading dimension of the array c. ldc >= max(1,m). \n
+              The leading dimension of the array c. ldc >= fla_max(1,m). \n
     * @param[out]	WORK	
               WORK is COMPLEX array, dimension (MAX(1,LWORK)) \n
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
               The dimension of the array WORK. \n
-              If SIDE = 'L', LWORK >= max(1,N); \n
-              if SIDE = 'R', LWORK >= max(1,M). \n
+              If SIDE = 'L', LWORK >= fla_max(1,N); \n
+              if SIDE = 'R', LWORK >= fla_max(1,M). \n
               For good performance, LWORK should generally be larger. \n
  \n
               If LWORK = -1, then a workspace query is assumed; the routine
@@ -3335,7 +3335,7 @@ integer unmlq(char* side, char* trans, integer* m, integer* n, integer* k, T* a,
               a is modified by the routine but restored on exit. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a. lda >= max(1,k). \n
+              The leading dimension of the array a. lda >= fla_max(1,k). \n
     * @param[in] tau
               tau is float/double array, dimension (k) \n
               tau(i) must contain the scalar factor of the elementary
@@ -3346,7 +3346,7 @@ integer unmlq(char* side, char* trans, integer* m, integer* n, integer* k, T* a,
               On exit, c is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. \n
     * @param[in] ldc
               ldc is integer* \n
-              The leading dimension of the array c. ldc >= max(1,m). \n
+              The leading dimension of the array c. ldc >= fla_max(1,m). \n
     * @param[out]	WORK	
               WORK is REAL array, dimension \n
                                        (N) if SIDE = 'L', \n
@@ -3416,7 +3416,7 @@ integer orml2(char* side, char* trans, integer* m, integer* n, integer* k, T* a,
               a is modified by the routine but restored on exit. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a. lda >= max(1,k). \n
+              The leading dimension of the array a. lda >= fla_max(1,k). \n
     * @param[in] tau
               tau is COMPLEX/COMPLEX*16 array, dimension (k) \n
               tau(i) must contain the scalar factor of the elementary
@@ -3427,7 +3427,7 @@ integer orml2(char* side, char* trans, integer* m, integer* n, integer* k, T* a,
               On exit, c is overwritten by Q*C or Q**H*C or C*Q**H or C*Q. \n
     * @param[in] ldc
               ldc is integer* \n
-              The leading dimension of the array c. ldc >= max(1,m). \n
+              The leading dimension of the array c. ldc >= fla_max(1,m). \n
     * @param[out]	WORK	
               WORK is COMPLEX array, dimension \n
                                        (N) if SIDE = 'L', \n
@@ -3474,7 +3474,7 @@ integer unml2(char* side, char* trans, integer* m, integer* n, integer* k, T* a,
               On exit, the m-by-m orthogonal matrix Q. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a. lda >= max(1,m). \n
+              The leading dimension of the array a. lda >= fla_max(1,m). \n
     * @param[in] tau
               tau is float/double array, dimension (m-1) \n
               tau(i) must contain the scalar factor of the elementary
@@ -3484,7 +3484,7 @@ integer unml2(char* side, char* trans, integer* m, integer* n, integer* k, T* a,
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
-              The dimension of the array WORK. LWORK >= max(1,N-1). \n
+              The dimension of the array WORK. LWORK >= fla_max(1,N-1). \n
               For optimum performance LWORK >= (N-1)*NB, where NB is
               the optimal blocksize. \n
  \n
@@ -3534,7 +3534,7 @@ integer orgtr(char* uplo, integer* m, T* a, integer* lda, T* tau, T* work, integ
               On exit, the m-by-m orthogonal matrix Q. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a. lda >= max(1,m). \n
+              The leading dimension of the array a. lda >= fla_max(1,m). \n
     * @param[in] tau
               tau is COMPLEX/COMPLEX*16 array, dimension (m-1) \n
               tau(i) must contain the scalar factor of the elementary
@@ -3613,7 +3613,7 @@ integer ungtr(char* uplo, integer* m, T* a, integer* lda, T* tau, T* work, integ
     * @param[in] lda
               lda is integer* \n
               The leading dimension of the array a. \n
-              lda >= max(1,m) if side = 'L'; lda >= max(1,n) if side = 'R'. \n
+              lda >= fla_max(1,m) if side = 'L'; lda >= fla_max(1,n) if side = 'R'. \n
     * @param[in] tau
               tau is float/double array, dimension \n
               (m-1) if side = 'L' \n
@@ -3626,15 +3626,15 @@ integer ungtr(char* uplo, integer* m, T* a, integer* lda, T* tau, T* work, integ
               On exit, c is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. \n
     * @param[in] ldc
               ldc is integer* \n
-              The leading dimension of the array c. ldc >= max(1,m). \n
+              The leading dimension of the array c. ldc >= fla_max(1,m). \n
     * @param[out]	WORK	
               WORK is REAL array, dimension (MAX(1,LWORK)) \n
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
               The dimension of the array WORK. \n
-              If SIDE = 'L', LWORK >= max(1,N); \n
-              if SIDE = 'R', LWORK >= max(1,M). \n
+              If SIDE = 'L', LWORK >= fla_max(1,N); \n
+              if SIDE = 'R', LWORK >= fla_max(1,M). \n
               For optimum performance LWORK >= N*NB if SIDE = 'L', and
               LWORK >= M*NB if SIDE = 'R', where NB is the optimal
               blocksize. \n
@@ -3704,7 +3704,7 @@ integer ormtr(char* side, char* uplo, char* trans, integer* m, integer* n, T* a,
     * @param[in] lda
               lda is integer* \n
               The leading dimension of the array a. \n
-              lda >= max(1,m) if side = 'L'; lda >= max(1,n) if side = 'R'. \n
+              lda >= fla_max(1,m) if side = 'L'; lda >= fla_max(1,n) if side = 'R'. \n
     * @param[in] tau
               tau is COMPLEX/COMPLEX*16 array, dimension \n
               (m-1) if side = 'L' \n
@@ -3717,15 +3717,15 @@ integer ormtr(char* side, char* uplo, char* trans, integer* m, integer* n, T* a,
               On exit, c is overwritten by Q*C or Q**H*C or C*Q**H or C*Q. \n
     * @param[in] ldc
               ldc is integer* \n
-              The leading dimension of the array c. ldc >= max(1,m). \n
+              The leading dimension of the array c. ldc >= fla_max(1,m). \n
     * @param[out]	WORK	
               WORK is COMPLEX array, dimension (MAX(1,LWORK)) \n
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
               The dimension of the array WORK. \n
-              If SIDE = 'L', LWORK >= max(1,N); \n
-              if SIDE = 'R', LWORK >= max(1,M). \n
+              If SIDE = 'L', LWORK >= fla_max(1,N); \n
+              if SIDE = 'R', LWORK >= fla_max(1,M). \n
               For optimum performance LWORK >= N*NB if SIDE = 'L', and
               LWORK >=M*NB if SIDE = 'R', where NB is the optimal
               blocksize. \n
@@ -3797,7 +3797,7 @@ integer unmtr(char* side, char* uplo, char* trans, integer* m, integer* n, T* a,
               On exit, the m-by-n matrix Q or P**T. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a. lda >= max(1,m). \n
+              The leading dimension of the array a. lda >= fla_max(1,m). \n
     * @param[in] tau
               tau is float/double array, dimension \n
               (min(m,k)) if vect = 'Q' \n
@@ -3810,7 +3810,7 @@ integer unmtr(char* side, char* uplo, char* trans, integer* m, integer* n, T* a,
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
-              The dimension of the array WORK. LWORK >= max(1,min(M,N)).
+              The dimension of the array WORK. LWORK >= fla_max(1,min(M,N)).
               For optimum performance LWORK >= min(M,N)*NB, where NB
               is the optimal blocksize. \n
  \n
@@ -3881,7 +3881,7 @@ integer orgbr(char* vect, integer* m, integer* n, integer* k, T* a, integer* lda
               On exit, the m-by-n matrix Q or P**H. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a. lda >= max(1,m).
+              The leading dimension of the array a. lda >= fla_max(1,m).
     * @param[in] tau
               tau is COMPLEX/COMPLEX*16 array, dimension \n
               (min(m,k)) if vect = 'Q' \n
@@ -3894,7 +3894,7 @@ integer orgbr(char* vect, integer* m, integer* n, integer* k, T* a, integer* lda
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
-              The dimension of the array WORK. LWORK >= max(1,min(M,N)).
+              The dimension of the array WORK. LWORK >= fla_max(1,min(M,N)).
               For optimum performance LWORK >= min(M,N)*NB, where NB
               is the optimal blocksize. \n
  \n
@@ -3981,8 +3981,8 @@ integer ungbr(char* vect, integer* m, integer* n, integer* k, T* a, integer* lda
     * @param[in] lda
               lda is integer* \n
               The leading dimension of the array a. \n
-              If vect = 'Q', lda >= max(1,nq); \n
-              if vect = 'P', lda >= max(1,min(nq,k)). \n
+              If vect = 'Q', lda >= fla_max(1,nq); \n
+              if vect = 'P', lda >= fla_max(1,min(nq,k)). \n
     * @param[in] tau
               tau is float/double array, dimension (min(nq,k)) \n
               tau(i) must contain the scalar factor of the elementary
@@ -3995,15 +3995,15 @@ integer ungbr(char* vect, integer* m, integer* n, integer* k, T* a, integer* lda
               or P*C or P**T*C or C*P or C*P**T. \n
     * @param[in] ldc
               ldc is integer* \n
-              The leading dimension of the array c. ldc >= max(1,m). \n
+              The leading dimension of the array c. ldc >= fla_max(1,m). \n
     * @param[out]	WORK	
               WORK is REAL array, dimension (MAX(1,LWORK)) \n
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
               The dimension of the array WORK. \n
-              If SIDE = 'L', LWORK >= max(1,N); \n
-              if SIDE = 'R', LWORK >= max(1,M). \n
+              If SIDE = 'L', LWORK >= fla_max(1,N); \n
+              if SIDE = 'R', LWORK >= fla_max(1,M). \n
               For optimum performance LWORK >= N*NB if SIDE = 'L', and
               LWORK >= M*NB if SIDE = 'R', where NB is the optimal
               blocksize. \n
@@ -4091,8 +4091,8 @@ integer ormbr(char* vect, char* side, char* trans, integer* m, integer* n, integ
     * @param[in] lda
               lda is integer* \n
               The leading dimension of the array a. \n
-              If vect = 'Q', lda >= max(1,nq); \n
-              if vect = 'P', lda >= max(1,min(nq,k)). \n
+              If vect = 'Q', lda >= fla_max(1,nq); \n
+              if vect = 'P', lda >= fla_max(1,min(nq,k)). \n
     * @param[in] tau
               tau is COMPLEX/COMPLEX*16 array, dimension (min(nq,k)) \n
               tau(i) must contain the scalar factor of the elementary
@@ -4105,18 +4105,18 @@ integer ormbr(char* vect, char* side, char* trans, integer* m, integer* n, integ
               or P*C or P**H*C or C*P or C*P**H. \n
     * @param[in] ldc
               ldc is integer* \n
-              The leading dimension of the array c. ldc >= max(1,m). \n
+              The leading dimension of the array c. ldc >= fla_max(1,m). \n
     * @param[out]	WORK	
               WORK is COMPLEX array, dimension (MAX(1,LWORK)) \n
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
               The dimension of the array WORK. \n
-              If SIDE = 'L', LWORK >= max(1,N); \n
-              if SIDE = 'R', LWORK >= max(1,M); \n
+              If SIDE = 'L', LWORK >= fla_max(1,N); \n
+              if SIDE = 'R', LWORK >= fla_max(1,M); \n
               if N = 0 or M = 0, LWORK >= 1. \n
-              For optimum performance LWORK >= max(1,N*NB) if SIDE = 'L',
-              and LWORK >= max(1,M*NB) if SIDE = 'R', where NB is the
+              For optimum performance LWORK >= fla_max(1,N*NB) if SIDE = 'L',
+              and LWORK >= fla_max(1,M*NB) if SIDE = 'R', where NB is the
               optimal blocksize. (NB = 0 if M = 0 or N = 0.) \n
  \n
               If LWORK = -1, then a workspace query is assumed; the routine
@@ -4181,9 +4181,9 @@ integer unmbr(char* vect, char* side, char* trans, integer* m, integer* n, integ
     * @param[in] ldz
               ldz is integer* \n
               The leading dimension of the array Z.  ldz >= 1, and if
-              eigenvectors are desired, then  ldz >= max(1,n). \n
+              eigenvectors are desired, then  ldz >= fla_max(1,n). \n
     * @param[out]	WORK	
-              WORK is REAL array, dimension (max(1,2*N-2)) \n
+              WORK is REAL array, dimension (fla_max(1,2*N-2)) \n
               If COMPZ = 'N', then WORK is not referenced. \n
     * @param[out]	INFO	
               INFO is INTEGER \n
@@ -4257,7 +4257,7 @@ integer steqr(char* compz, integer* n, Ta* d, Ta* e, T* z, integer* ldz, Ta* wor
     * @param[in] ldz
               ldz is integer* \n
               The leading dimension of the array Z.  ldz >= 1. \n
-              If eigenvectors are desired, then ldz >= max(1,n). \n
+              If eigenvectors are desired, then ldz >= fla_max(1,n). \n
     * @param[out]	WORK	
               WORK is COMPLEX array, dimension (MAX(1,LWORK)) \n
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
@@ -4290,7 +4290,7 @@ integer steqr(char* compz, integer* n, Ta* d, Ta* e, T* z, integer* ldz, Ta* wor
                              1 + 4*N + 2*N**2 . \n
               Note that for COMPZ = 'I' or 'V', then if N is less than or
               equal to the minimum divide size, usually 25, then LRWORK
-              need only be max(1,2*(N-1)). \n
+              need only be fla_max(1,2*(N-1)). \n
  \n
               If LRWORK = -1, then a workspace query is assumed; the
               routine only calculates the optimal sizes of the WORK, RWORK
@@ -4446,24 +4446,24 @@ integer stedc(char* compz, integer* n, Ta* d, Ta* e, T* z, integer* ldz, T* work
               The first M elements contain the selected eigenvalues in
               ascending order. \n
     * @param[out] z
-              z is float/double array, dimension (ldz, max(1,m)) \n
+              z is float/double array, dimension (ldz, fla_max(1,m)) \n
               If jobz = 'V', and if info = 0, then the first M columns of Z
               contain the orthonormal eigenvectors of the matrix T
               corresponding to the selected eigenvalues, with the i-th
               column of Z holding the eigenvector associated with W(i).
               If jobz = 'N', then Z is not referenced. \n
-              Note: the user must ensure that at least max(1,m) columns are
+              Note: the user must ensure that at least fla_max(1,m) columns are
               supplied in the array Z; if range = 'V', the exact value of M
               is not known in advance and can be computed with a workspace
               query by setting nzc = -1, see below. \n
     * @param[in] ldz
               ldz is integer* \n
               The leading dimension of the array Z.  ldz >= 1, and if
-              jobz = 'V', then ldz >= max(1,n). \n
+              jobz = 'V', then ldz >= fla_max(1,n). \n
     * @param[in] nzc
               nzc is integer* \n
               The number of eigenvectors to be held in the array Z. \n
-              If range = 'A', then nzc >= max(1,n). \n
+              If range = 'A', then nzc >= fla_max(1,n). \n
               If range = 'V', then nzc >= the number of eigenvalues in (vl,vu]. \n
               If range = 'I', then nzc >= iu-il+1. \n
               If nzc = -1, then a workspace query is assumed; the
@@ -4497,8 +4497,8 @@ integer stedc(char* compz, integer* n, Ta* d, Ta* e, T* z, integer* ldz, T* work
               (and minimal) LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
-              The dimension of the array WORK. LWORK >= max(1,18*N) \n
-              if JOBZ = 'V', and LWORK >= max(1,12*N) if JOBZ = 'N'. \n
+              The dimension of the array WORK. LWORK >= fla_max(1,18*N) \n
+              if JOBZ = 'V', and LWORK >= fla_max(1,12*N) if JOBZ = 'N'. \n
               If LWORK = -1, then a workspace query is assumed; the routine
               only calculates the optimal size of the WORK array, returns
               this value as the first entry of the WORK array, and no error
@@ -4508,8 +4508,8 @@ integer stedc(char* compz, integer* n, Ta* d, Ta* e, T* z, integer* ldz, T* work
               On exit, if INFO = 0, IWORK(1) returns the optimal LIWORK. \n
     * @param[in]	LIWORK	
               LIWORK is INTEGER \n
-              The dimension of the array IWORK.  LIWORK >= max(1,10*N)
-              if the eigenvectors are desired, and LIWORK >= max(1,8*N)
+              The dimension of the array IWORK.  LIWORK >= fla_max(1,10*N)
+              if the eigenvectors are desired, and LIWORK >= fla_max(1,8*N)
               if only the eigenvalues are to be computed. \n
               If LIWORK = -1, then a workspace query is assumed; the
               routine only calculates the optimal size of the IWORK array,
@@ -4573,7 +4573,7 @@ integer stemr(char* jobz, char* range, integer* n, Ta*  d, Ta*  e, Ta* vl, Ta* v
               diagonal, is destroyed. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,n). \n
+              The leading dimension of the array a.  lda >= fla_max(1,n). \n
     * @param[out] w
               w is float/double array, dimension (n) \n
               If info = 0, the eigenvalues in ascending order. \n
@@ -4582,7 +4582,7 @@ integer stemr(char* jobz, char* range, integer* n, Ta*  d, Ta*  e, Ta* vl, Ta* v
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
-              The length of the array WORK.  LWORK >= max(1,3*N-1). \n
+              The length of the array WORK.  LWORK >= fla_max(1,3*N-1). \n
               For optimal efficiency, LWORK >= (NB+2)*N,
               where NB is the blocksize for DSYTRD returned by ILAENV. \n
 
@@ -4669,7 +4669,7 @@ integer syev(char* jobz, char* uplo, integer* n, T* a, integer* lda, T*  w, T* w
            LDA is INTEGER \n
            On entry, LDA specifies the first dimension of A as declared
            in the calling (sub) program. LDA must be at least
-           max( 1, N).
+           fla_max( 1, N).
            Unchanged on exit. \n
   
  * @return INTEGER Return value of the function.
@@ -4714,7 +4714,7 @@ integer syr(char* uplo, integer* n, T alpha,  T* x, integer* incx, T* a, integer
               diagonal, is destroyed. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,n). \n
+              The leading dimension of the array a.  lda >= fla_max(1,n). \n
     * @param[out] w
               w is float/double array, dimension (n) \n
               If info = 0, the eigenvalues in ascending order. \n
@@ -4723,7 +4723,7 @@ integer syr(char* uplo, integer* n, T alpha,  T* x, integer* incx, T* a, integer
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
-              The length of the array WORK.  LWORK >= max(1,2*N-1). \n
+              The length of the array WORK.  LWORK >= fla_max(1,2*N-1). \n
               For optimal efficiency, LWORK >= (NB+1)*N,
               where NB is the blocksize for CHETRD returned by ILAENV. \n
  \n
@@ -4732,7 +4732,7 @@ integer syr(char* uplo, integer* n, T alpha,  T* x, integer* incx, T* a, integer
               this value as the first entry of the WORK array, and no error
               message related to LWORK is issued by XERBLA. \n
     * @param[out]	RWORK	
-              RWORK is REAL array, dimension (max(1, 3*N-2)) \n
+              RWORK is REAL array, dimension (fla_max(1, 3*N-2)) \n
     * @param[out]	INFO	
               INFO is INTEGER \n
               = 0:  successful exit \n
@@ -4792,7 +4792,7 @@ integer heev(char* jobz, char* uplo, integer* n, T* a, integer* lda, Ta*  w, T* 
               diagonal, is destroyed. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,n). \n
+              The leading dimension of the array a.  lda >= fla_max(1,n). \n
     * @param[out] w
               w is float/double array, dimension (n) \n
               If info = 0, the eigenvalues in ascending order. \n
@@ -4892,7 +4892,7 @@ integer syevd(char* jobz, char* uplo, integer* n, T* a, integer* lda, T*  w, T* 
               diagonal, is destroyed. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,n). \n
+              The leading dimension of the array a.  lda >= fla_max(1,n). \n
     * @param[out] w
               w is float/double array, dimension (n) \n
               If info = 0, the eigenvalues in ascending order. \n
@@ -5052,7 +5052,7 @@ integer heevd(char* jobz, char* uplo, integer* n, T* a, integer* lda, Ta* w, T* 
               destroyed. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,n). \n
+              The leading dimension of the array a.  lda >= fla_max(1,n). \n
     * @param[in] vl
               vl is float/double* \n
               If range='V', the lower bound of the interval to
@@ -5081,7 +5081,7 @@ integer heevd(char* jobz, char* uplo, integer* n, T* a, integer* lda, Ta* w, T* 
               An approximate eigenvalue is accepted as converged
               when it is determined to lie in an interval [a,b]
               of width less than or equal to \n \n
-              abstol + EPS *   max( |a|,|b|) , \n \n
+              abstol + EPS *   fla_max( |a|,|b|) , \n \n
               where EPS is the machine precision.  If abstol is less than
               or equal to zero, then  EPS*|T|  will be used in its place,
               where |T| is the 1-norm of the tridiagonal matrix obtained
@@ -5108,19 +5108,19 @@ integer heevd(char* jobz, char* uplo, integer* n, T* a, integer* lda, Ta* w, T* 
               The first M elements contain the selected eigenvalues in
               ascending order. \n
     * @param[out] z
-              z is COMPLEX/COMPLEX*16 array, dimension (ldz, max(1,m)) \n
+              z is COMPLEX/COMPLEX*16 array, dimension (ldz, fla_max(1,m)) \n
               If jobz = 'V', then if info = 0, the first M columns of Z
               contain the orthonormal eigenvectors of the matrix a
               corresponding to the selected eigenvalues, with the i-th
               column of Z holding the eigenvector associated with W(i). \n
               If jobz = 'N', then Z is not referenced. \n
-              Note: the user must ensure that at least max(1,m) columns are
+              Note: the user must ensure that at least fla_max(1,m) columns are
               supplied in the array Z; if range = 'V', the exact value of M
               is not known in advance and an upper bound must be used. \n
     * @param[in] ldz
               ldz is integer* \n
               The leading dimension of the array Z.  ldz >= 1, and if
-              jobz = 'V', ldz >= max(1,n). \n
+              jobz = 'V', ldz >= fla_max(1,n). \n
     * @param[out] isuppz
               isuppz is integer array, dimension ( 2*max(1,m)) \n
               The support of the eigenvectors in Z, i.e., the indices
@@ -5135,7 +5135,7 @@ integer heevd(char* jobz, char* uplo, integer* n, T* a, integer* lda, Ta* w, T* 
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
-              The length of the array WORK.  LWORK >= max(1,2*N). \n
+              The length of the array WORK.  LWORK >= fla_max(1,2*N). \n
               For optimal efficiency, LWORK >= (NB+1)*N,
               where NB is the max of the blocksize for CHETRD and for
               CUNMTR as returned by ILAENV. \n
@@ -5151,7 +5151,7 @@ integer heevd(char* jobz, char* uplo, integer* n, T* a, integer* lda, Ta* w, T* 
               (and minimal) LRWORK. \n
     * @param[in]	LRWORK	
               LRWORK is INTEGER \n
-              The length of the array RWORK.  LRWORK >= max(1,24*N). \n
+              The length of the array RWORK.  LRWORK >= fla_max(1,24*N). \n
  \n
               If LRWORK = -1, then a workspace query is assumed; the
               routine only calculates the optimal sizes of the WORK, RWORK
@@ -5164,7 +5164,7 @@ integer heevd(char* jobz, char* uplo, integer* n, T* a, integer* lda, Ta* w, T* 
               (and minimal) LIWORK. \n
     * @param[in]	LIWORK	
               LIWORK is INTEGER \n
-              The dimension of the array IWORK.  LIWORK >= max(1,10*N). \n
+              The dimension of the array IWORK.  LIWORK >= fla_max(1,10*N). \n
  \n
               If LIWORK = -1, then a workspace query is assumed; the
               routine only calculates the optimal sizes of the WORK, RWORK
@@ -5278,7 +5278,7 @@ integer heevr(char* jobz, char* range, char* uplo, integer* n, T* a, integer* ld
               destroyed. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,n). \n
+              The leading dimension of the array a.  lda >= fla_max(1,n). \n
     * @param[in] vl
               vl is float/double* \n
               If range='V', the lower bound of the interval to
@@ -5307,7 +5307,7 @@ integer heevr(char* jobz, char* range, char* uplo, integer* n, T* a, integer* ld
               An approximate eigenvalue is accepted as converged
               when it is determined to lie in an interval [a,b]
               of width less than or equal to \n \n
-              abstol + EPS *   max( |a|,|b|) , \n \n
+              abstol + EPS *   fla_max( |a|,|b|) , \n \n
               where EPS is the machine precision.  If abstol is less than
               or equal to zero, then  EPS*|T|  will be used in its place,
               where |T| is the 1-norm of the tridiagonal matrix obtained
@@ -5334,20 +5334,20 @@ integer heevr(char* jobz, char* range, char* uplo, integer* n, T* a, integer* ld
               The first m elements contain the selected eigenvalues in
               ascending order. \n
     * @param[out] z
-              z is float/double array, dimension (ldz, max(1,m)) \n
+              z is float/double array, dimension (ldz, fla_max(1,m)) \n
               If jobz = 'V', then if info = 0, the first M columns of Z
               contain the orthonormal eigenvectors of the matrix a
               corresponding to the selected eigenvalues, with the i-th
               column of Z holding the eigenvector associated with W(i). \n
               If jobz = 'N', then Z is not referenced. \n
-              Note: the user must ensure that at least max(1,m) columns are
+              Note: the user must ensure that at least fla_max(1,m) columns are
               supplied in the array Z; if range = 'V', the exact value of m
               is not known in advance and an upper bound must be used.
               Supplying n columns is always safe. \n
     * @param[in] ldz
               ldz is integer* \n
               The leading dimension of the array Z.  ldz >= 1, and if
-              jobz = 'V', ldz >= max(1,n). \n
+              jobz = 'V', ldz >= fla_max(1,n). \n
     * @param[out] isuppz
               isuppz is integer array, dimension ( 2*max(1,m)) \n
               The support of the eigenvectors in Z, i.e., the indices
@@ -5362,7 +5362,7 @@ integer heevr(char* jobz, char* range, char* uplo, integer* n, T* a, integer* ld
               On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
     * @param[in]	LWORK	
               LWORK is INTEGER \n
-              The dimension of the array WORK.  LWORK >= max(1,26*N).
+              The dimension of the array WORK.  LWORK >= fla_max(1,26*N).
               For optimal efficiency, LWORK >= (NB+6)*N,
               where NB is the max of the blocksize for DSYTRD and DORMTR
               returned by ILAENV. \n
@@ -5376,7 +5376,7 @@ integer heevr(char* jobz, char* range, char* uplo, integer* n, T* a, integer* ld
               On exit, if INFO = 0, IWORK(1) returns the optimal LWORK. \n
     * @param[in]	LIWORK	
               LIWORK is INTEGER \n
-              The dimension of the array IWORK.  LIWORK >= max(1,10*N). \n
+              The dimension of the array IWORK.  LIWORK >= fla_max(1,10*N). \n
  \n
               If LIWORK = -1, then a workspace query is assumed; the
               routine only calculates the optimal size of the IWORK array,
@@ -5467,7 +5467,7 @@ integer syevr(char* jobz, char* range, char* uplo, integer* n, T* a, integer* ld
     * @param[in] ldvt
               ldvt is integer* \n
               The leading dimension of the array vt. \n
-              ldvt >= max(1,n) if ncvt > 0; ldvt >= 1 if ncvt = 0. \n
+              ldvt >= fla_max(1,n) if ncvt > 0; ldvt >= 1 if ncvt = 0. \n
     * @param[in,out] u
               u is float/double array, dimension (ldu, n) \n
               On entry, an nru-by-n matrix U. \n
@@ -5475,7 +5475,7 @@ integer syevr(char* jobz, char* range, char* uplo, integer* n, T* a, integer* ld
               Not referenced if nru = 0. \n
     * @param[in] ldu
               ldu is integer* \n
-              The leading dimension of the array u.  ldu >= max(1,nru). \n
+              The leading dimension of the array u.  ldu >= fla_max(1,nru). \n
     * @param[in,out] c
               c is float/doublearray, dimension (ldc, ncc) \n
               On entry, an n-by-ncc matrix c. \n
@@ -5484,12 +5484,12 @@ integer syevr(char* jobz, char* range, char* uplo, integer* n, T* a, integer* ld
     * @param[in] ldc
               ldc is integer* \n
               The leading dimension of the array c. \n
-              ldc >= max(1,n) if ncc > 0; ldc >=1 if ncc = 0. \n
+              ldc >= fla_max(1,n) if ncc > 0; ldc >=1 if ncc = 0. \n
               * \par
               * \verbatim
                   Internal Parameters:
                   ====================
-                  TOLMUL  T*, default = max(10,min(100,EPS**(-1/8)))
+                  TOLMUL  T*, default = fla_max(10,min(100,EPS**(-1/8)))
                   TOLMUL controls the convergence criterion of the QR loop.
                   If it is positive, TOLMUL*EPS is the desired relative
                   precision in the computed singular values.
@@ -5598,7 +5598,7 @@ integer bdsqr(char* uplo, integer* n, integer* ncvt, integer* nru, integer* ncc,
     * @param[in] ldu
               ldu is integer* \n
               The leading dimension of the array U.  ldu >= 1. \n
-              If singular vectors are desired, then ldu >= max( 1, n ). \n
+              If singular vectors are desired, then ldu >= fla_max( 1, n ). \n
     * @param[out] vt
               vt is float/double array, dimension (ldvt,n) \n
               If  compq = 'I', then: \n
@@ -5608,7 +5608,7 @@ integer bdsqr(char* uplo, integer* n, integer* ncvt, integer* nru, integer* ncc,
     * @param[in] ldvt
               ldvt is integer* \n
               The leading dimension of the array vt.  ldvt >= 1. \n
-              If singular vectors are desired, then ldvt >= max( 1, n ). \n
+              If singular vectors are desired, then ldvt >= fla_max( 1, n ). \n
     * @param[out] q
               q is float/double array, dimension (LDQ) \n
               If  compq = 'P', then: \n
@@ -5714,7 +5714,7 @@ integer bdsdc(char* uplo, char* compq, integer* n, T*  d, T*  e, T*  u, integer*
           D is REAL array, dimension (N) \n
           The n diagonal elements of the bidiagonal matrix B. \n
  * @param[in] E
-          E is REAL array, dimension (max(1,N-1)) \n
+          E is REAL array, dimension (fla_max(1,N-1)) \n
           The (n-1) superdiagonal elements of the bidiagonal matrix
           B in elements 1 to N-1. \n
  * @param[in] VL
@@ -5762,7 +5762,7 @@ integer bdsdc(char* uplo, char* compq, integer* n, T*  d, T*  e, T*  u, integer*
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z. LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(2,N*2). \n
+          JOBZ = 'V', LDZ >= fla_max(2,N*2). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (14*N) \n
  * @param[out]	IWORK	
@@ -5804,7 +5804,7 @@ integer bdsvdx(char* uplo, char* jobz, char* range, integer* n, T* d, T* e, T vl
 
             SLAMCH( 'E') * ( ANORM / SEP( I))
 
-     where ANORM = 2-norm(A) = max( abs( D(j))).  SEP(I) is not allowed
+     where ANORM = 2-norm(A) = fla_max( abs( D(j))).  SEP(I) is not allowed
      to be smaller than SLAMCH( 'E')*ANORM in order to limit the size of
      the error bound.
 
@@ -5875,13 +5875,13 @@ integer disna(char* job, integer* m, integer* n, T* d, T* sep, integer* info)
           On entry, the M-by-N coefficient matrix SA. \n
  * @param[in] LDSA
           LDSA is INTEGER \n
-          The leading dimension of the array SA.  LDSA >= max(1,M). \n
+          The leading dimension of the array SA.  LDSA >= fla_max(1,M). \n
  * @param[out] A
           A is DOUBLE PRECISION array, dimension (LDA,N) \n
           On exit, the M-by-N coefficient matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -5919,14 +5919,14 @@ integer lag2d(integer* m, integer* n, float* sa, integer* ldsa, double* a, integ
           On entry, the M-by-N coefficient matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] SA
           SA is REAL array, dimension (LDSA,N) \n
           On exit, if INFO=0, the M-by-N coefficient matrix SA; if
           INFO>0, the content of SA is unspecified. \n
  * @param[in] LDSA
           LDSA is INTEGER \n
-          The leading dimension of the array SA.  LDSA >= max(1,M). \n
+          The leading dimension of the array SA.  LDSA >= fla_max(1,M). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit. \n
@@ -5966,13 +5966,13 @@ integer lag2s(integer*m, integer* n, double* a, integer* lda, float* sa, integer
           On entry, the M-by-N coefficient matrix SA. \n
  * @param[in] LDSA
           LDSA is INTEGER \n
-          The leading dimension of the array SA.  LDSA >= max(1,M). \n
+          The leading dimension of the array SA.  LDSA >= fla_max(1,M). \n
  * @param[out] A
           A is COMPLEX*16 array, dimension (LDA,N) \n
           On exit, the M-by-N coefficient matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -6009,14 +6009,14 @@ integer lag2z(integer*m, integer* n, scomplex* sa, integer*ldsa, dcomplex* a, in
           On entry, the M-by-N coefficient matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] SA
           SA is COMPLEX array, dimension (LDSA,N) \n
           On exit, if INFO=0, the M-by-N coefficient matrix SA; if
           INFO>0, the content of SA is unspecified. \n
  * @param[in] LDSA
           LDSA is INTEGER \n
-          The leading dimension of the array SA.  LDSA >= max(1,M). \n
+          The leading dimension of the array SA.  LDSA >= fla_max(1,M). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit. \n
@@ -6231,7 +6231,7 @@ T lartgp(T* f, T* g, T* cs, T* sn, T* r)
               are destroyed. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,m). \n
+              The leading dimension of the array a.  lda >= fla_max(1,m). \n
     * @param[out] s
               s is float/double array, dimension (min(m,n)) \n
               The singular values of A, sorted so that S(i) >= S(i+1). \n
@@ -6363,7 +6363,7 @@ integer gesvd(char* jobu, char* jobv, integer* m, integer* n, T* a, integer* lda
               if jobz .ne. 'O', the contents of A are destroyed. \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,m). \n
+              The leading dimension of the array a.  lda >= fla_max(1,m). \n
     * @param[out] s
               s is float/double array, dimension (min(m,n)) \n
               The singular values of A, sorted so that S(i) >= S(i+1). \n
@@ -6402,7 +6402,7 @@ integer gesvd(char* jobu, char* jobv, integer* m, integer* n, T* a, integer* lda
               size for the WORK array is calculated and stored in WORK(1),
               and no other work except argument checking is performed. \n
  \n
-              Let mx = max(M,N) and mn = min(M,N). \n
+              Let mx = fla_max(M,N) and mn = min(M,N). \n
               If JOBZ = 'N', LWORK >= 2*mn + mx. \n
               If JOBZ = 'O', LWORK >= 2*mn*mn + 2*mn + mx. \n
               If JOBZ = 'S', LWORK >=   mn*mn + 3*mn. \n
@@ -6412,10 +6412,10 @@ integer gesvd(char* jobu, char* jobv, integer* m, integer* n, T* a, integer* lda
               a query is recommended. \n
     * @param[out]	RWORK	
               RWORK is REAL array, dimension (MAX(1,LRWORK)) \n
-              Let mx = max(M,N) and mn = min(M,N). \n
+              Let mx = fla_max(M,N) and mn = min(M,N). \n
               If JOBZ = 'N',    LRWORK >= 5*mn (LAPACK <= 3.6 needs 7*mn); \n
               else if mx >> mn, LRWORK >= 5*mn*mn + 5*mn; \n
-              else              LRWORK >= max( 5*mn*mn + 5*mn,
+              else              LRWORK >= fla_max( 5*mn*mn + 5*mn,
                                                2*mx*mn + 2*mn*mn + mn ). \n
     * @param[out]	IWORK	
               IWORK is INTEGER array, dimension (8*min(M,N)) \n
@@ -6522,7 +6522,7 @@ integer laswp(integer* n, T* a, integer* lda, integer* k1, integer* k2, integer*
               and, for all uplo, A(i,i) = beta, 1<=i<=min(m,n). \n
     * @param[in] lda
               lda is integer* \n
-              The leading dimension of the array a.  lda >= max(1,m). \n
+              The leading dimension of the array a.  lda >= fla_max(1,m). \n
     
     * @return INTEGER Return value of the function.
     *  */
@@ -6785,7 +6785,7 @@ integer bbcsd(char* jobu1, char* jobu2, char* jobv1t, char* jobv2t, char* trans,
           On entry, the m-by-n band matrix A, stored in rows 1 to
           KL+KU+1. The j-th column of A is stored in the j-th column of
           the array AB as follows: \n
-          AB(ku+1+i-j,j) = A(i,j) for max(1,j-ku)<=i<=min(m,j+kl).
+          AB(ku+1+i-j,j) = A(i,j) for fla_max(1,j-ku)<=i<=min(m,j+kl).
           On exit, A is overwritten by values generated during the
           reduction. \n
  * @param[in] LDAB
@@ -6804,7 +6804,7 @@ integer bbcsd(char* jobu1, char* jobu2, char* jobv1t, char* jobv2t, char* trans,
  * @param[in] LDQ
           LDQ is INTEGER \n
           The leading dimension of the array Q. \n
-          LDQ >= max(1,M) if VECT = 'Q' or 'B'; LDQ >= 1 otherwise. \n
+          LDQ >= fla_max(1,M) if VECT = 'Q' or 'B'; LDQ >= 1 otherwise. \n
  * @param[out] PT
           PT is REAL array, dimension (LDPT,N) \n
           If VECT = 'P' or 'B', the n-by-n orthogonal matrix P'. \n
@@ -6812,7 +6812,7 @@ integer bbcsd(char* jobu1, char* jobu2, char* jobv1t, char* jobv2t, char* trans,
  * @param[in] LDPT
           LDPT is INTEGER \n
           The leading dimension of the array PT. \n
-          LDPT >= max(1,N) if VECT = 'P' or 'B'; LDPT >= 1 otherwise. \n
+          LDPT >= fla_max(1,N) if VECT = 'P' or 'B'; LDPT >= 1 otherwise. \n
  * @param[in,out] C
           C is REAL array, dimension (LDC,NCC)
           On entry, an m-by-ncc matrix C. \n
@@ -6821,11 +6821,11 @@ integer bbcsd(char* jobu1, char* jobu2, char* jobv1t, char* jobv2t, char* trans,
  * @param[in] LDC
           LDC is INTEGER \n
           The leading dimension of the array C. \n
-          LDC >= max(1,M) if NCC > 0; LDC >= 1 if NCC = 0. \n
+          LDC >= fla_max(1,M) if NCC > 0; LDC >= 1 if NCC = 0. \n
  * @param[out]	WORK	
-          WORK is COMPLEX array, dimension (max(M,N)) \n
+          WORK is COMPLEX array, dimension (fla_max(M,N)) \n
  * @param[out]	RWORK	
-          RWORK is REAL array, dimension (max(M,N)) \n
+          RWORK is REAL array, dimension (fla_max(M,N)) \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit. \n
@@ -6943,7 +6943,7 @@ integer gbcon(char* norm, integer* n, integer* kl, integer* ku,  T* ab, integer*
           The band matrix A, stored in rows 1 to KL+KU+1.  The j-th
           column of A is stored in the j-th column of the array AB as
           follows: \n
-          AB(ku+1+i-j,j) = A(i,j) for max(1,j-ku)<=i<=min(m,j+kl). \n
+          AB(ku+1+i-j,j) = A(i,j) for fla_max(1,j-ku)<=i<=min(m,j+kl). \n
  * @param[in] LDAB
           LDAB is INTEGER \n
           The leading dimension of the array AB.  LDAB >= KL+KU+1. \n
@@ -7032,7 +7032,7 @@ integer gbequ(integer* m, integer* n, integer* kl, integer* ku,  T* ab, integer*
           The band matrix A, stored in rows 1 to KL+KU+1.  The j-th
           column of A is stored in the j-th column of the array AB as
           follows: \n
-          AB(ku+1+i-j,j) = A(i,j) for max(1,j-ku)<=i<=min(m,j+kl). \n
+          AB(ku+1+i-j,j) = A(i,j) for fla_max(1,j-ku)<=i<=min(m,j+kl). \n
  * @param[in] LDAB
           LDAB is INTEGER \n
           The leading dimension of the array AB.  LDAB >= KL+KU+1. \n
@@ -7115,7 +7115,7 @@ integer gbequb(integer* m, integer* n, integer* kl, integer* ku, T* ab, integer*
           The original band matrix A, stored in rows 1 to KL+KU+1. \n
           The j-th column of A is stored in the j-th column of the
           array AB as follows: \n
-          AB(ku+1+i-j,j) = A(i,j) for max(1,j-ku)<=i<=min(n,j+kl). \n
+          AB(ku+1+i-j,j) = A(i,j) for fla_max(1,j-ku)<=i<=min(n,j+kl). \n
  * @param[in] LDAB
           LDAB is INTEGER \n
           The leading dimension of the array AB.  LDAB >= KL+KU+1. \n
@@ -7138,14 +7138,14 @@ integer gbequb(integer* m, integer* n, integer* kl, integer* ku, T* ab, integer*
           The right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] X
           X is REAL array, dimension (LDX,NRHS) \n
           On entry, the solution matrix X, as computed by SGBTRS.
           On exit, the improved solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] FERR
           FERR is REAL array, dimension (NRHS) \n
           The estimated forward error bound for each solution vector
@@ -7228,7 +7228,7 @@ integer gbrfs(char* trans, integer* n, integer* kl, integer* ku, integer* nrhs, 
         The original band matrix A, stored in rows 1 to KL+KU+1. \n
         The j-th column of A is stored in the j-th column of the
         array AB as follows: \n
-        AB(ku+1+i-j,j) = A(i,j) for max(1,j-ku)<=i<=min(n,j+kl). \n
+        AB(ku+1+i-j,j) = A(i,j) for fla_max(1,j-ku)<=i<=min(n,j+kl). \n
  * @param[in] LDAB
         LDAB is INTEGER \n
         The leading dimension of the array AB.  LDAB >= KL+KU+1. \n
@@ -7281,14 +7281,14 @@ integer gbrfs(char* trans, integer* n, integer* kl, integer* ku, integer* nrhs, 
         The right hand side matrix B. \n
  * @param[in] LDB
         LDB is INTEGER \n
-        The leading dimension of the array B.  LDB >= max(1,N). \n
+        The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] X
         X is REAL array, dimension (LDX,NRHS) \n
         On entry, the solution matrix X, as computed by SGETRS. \n
         On exit, the improved solution matrix X. \n
  * @param[in] LDX
         LDX is INTEGER \n
-        The leading dimension of the array X.  LDX >= max(1,N). \n
+        The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
         RCOND is REAL \n
         Reciprocal scaled condition number. This is an estimate of the
@@ -7501,7 +7501,7 @@ integer gbrfsx(char* trans, char* equed, integer* n, integer* kl, integer* ku, i
           2*KL+KU+1; rows 1 to KL of the array need not be set.
           The j-th column of A is stored in the j-th column of the
           array AB as follows: \n
-          AB(KL+KU+1+i-j,j) = A(i,j) for max(1,j-KU)<=i<=min(N,j+KL) \n
+          AB(KL+KU+1+i-j,j) = A(i,j) for fla_max(1,j-KU)<=i<=min(N,j+KL) \n
           On exit, details of the factorization: U is stored as an
           upper triangular band matrix with KL+KU superdiagonals in
           rows 1 to KL+KU+1, and the multipliers used during the
@@ -7520,7 +7520,7 @@ integer gbrfsx(char* trans, char* equed, integer* n, integer* kl, integer* ku, i
           On exit, if INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -7588,7 +7588,7 @@ integer gbsv(integer* n, integer* kl, integer* ku, integer* nrhs, T* ab, integer
           On entry, the matrix A in band storage, in rows 1 to KL+KU+1.
           The j-th column of A is stored in the j-th column of the
           array AB as follows: \n
-          AB(KU+1+i-j,j) = A(i,j) for max(1,j-KU)<=i<=min(N,j+kl) \n
+          AB(KU+1+i-j,j) = A(i,j) for fla_max(1,j-KU)<=i<=min(N,j+kl) \n
  \n
           If FACT = 'F' and EQUED is not 'N', then A must have been
           equilibrated by the scaling factors in R and/or C.  AB is not
@@ -7673,7 +7673,7 @@ integer gbsv(integer* n, integer* kl, integer* ku, integer* nrhs, T* ab, integer
           overwritten by diag(C)*B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] X
           X is REAL array, dimension (LDX,NRHS) \n
           If INFO = 0 or INFO = N+1, the N-by-NRHS solution matrix X
@@ -7684,7 +7684,7 @@ integer gbsv(integer* n, integer* kl, integer* ku, integer* nrhs, T* ab, integer
           and EQUED = 'R' or 'B'. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
           RCOND is REAL \n
           The estimate of the reciprocal condition number of the matrix
@@ -7812,7 +7812,7 @@ integer gbsvx(char* fact, char* trans, integer* n, integer* kl, integer* ku, int
         On entry, the matrix A in band storage, in rows 1 to KL+KU+1.
         The j-th column of A is stored in the j-th column of the
         array AB as follows: \n
-        AB(KU+1+i-j,j) = A(i,j) for max(1,j-KU)<=i<=min(N,j+kl) \n
+        AB(KU+1+i-j,j) = A(i,j) for fla_max(1,j-KU)<=i<=min(N,j+kl) \n
  \n
         If FACT = 'F' and EQUED is not 'N', then AB must have been
         equilibrated by the scaling factors in R and/or C.  AB is not
@@ -7914,7 +7914,7 @@ integer gbsvx(char* fact, char* trans, integer* n, integer* kl, integer* ku, int
           overwritten by diag(C)*B. \n
  * @param[in] LDB
         LDB is INTEGER \n
-        The leading dimension of the array B.  LDB >= max(1,N). \n
+        The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] X
         X is REAL array, dimension (LDX,NRHS) \n
         If INFO = 0, the N-by-NRHS solution matrix X to the original
@@ -7924,7 +7924,7 @@ integer gbsvx(char* fact, char* trans, integer* n, integer* kl, integer* ku, int
         inv(diag(R))*X if TRANS = 'T' or 'C' and EQUED = 'R' or 'B'. \n
  * @param[in] LDX
         LDX is INTEGER \n
-        The leading dimension of the array X.  LDX >= max(1,N). \n
+        The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
         RCOND is REAL \n
         Reciprocal scaled condition number. This is an estimate of the
@@ -8151,7 +8151,7 @@ integer gbsvxx(char* fact, char* trans, integer* n, integer* kl, integer* ku, in
           2*KL+KU+1; rows 1 to KL of the array need not be set.
           The j-th column of A is stored in the j-th column of the
           array AB as follows: \n
-          AB(kl+ku+1+i-j,j) = A(i,j) for max(1,j-ku)<=i<=min(m,j+kl) \n
+          AB(kl+ku+1+i-j,j) = A(i,j) for fla_max(1,j-ku)<=i<=min(m,j+kl) \n
  \n
           On exit, details of the factorization: U is stored as an
           upper triangular band matrix with KL+KU superdiagonals in
@@ -8230,7 +8230,7 @@ integer gbtrf(integer* m, integer* n, integer* kl, integer* ku, T* ab, integer* 
         On exit, the solution matrix X. \n
  * @param[in] LDB
         LDB is INTEGER \n
-        The leading dimension of the array B.  LDB >= max(1,N). \n
+        The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
         INFO is INTEGER \n
         = 0:  successful exit \n
@@ -8291,7 +8291,7 @@ integer gbtrs(char* trans, integer* n, integer* kl, integer* ku, integer* nrhs, 
         On exit, V is overwritten by the transformed eigenvectors. \n
  * @param[in] LDV
         LDV is INTEGER \n
-        The leading dimension of the array V. LDV >= max(1,N). \n
+        The leading dimension of the array V. LDV >= fla_max(1,N). \n
  * @param[out]	INFO	
         INFO is INTEGER \n
         = 0:  successful exit \n
@@ -8345,7 +8345,7 @@ integer gebak(char* job, char* side, integer* n, integer* ilo, integer* ihi,  Ta
           See Further Details. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] ILO
           ILO is INTEGER \n
  * @param[out] IHI
@@ -8418,7 +8418,7 @@ integer gebal(char* job, integer* n, T* a, integer* lda, integer* ilo, integer* 
           to be computed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] R
           R is REAL array, dimension (M) \n
           If INFO = 0 or INFO > M, R contains the row scale factors
@@ -8519,7 +8519,7 @@ integer geequb(integer* m, integer* n,  T* a, integer* lda, Ta* r, Ta* c, Ta* ro
           On exit, A has been overwritten by its real Schur form T. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] SDIM
           SDIM is INTEGER \n
           If SORT = 'N', SDIM = 0. \n
@@ -8551,7 +8551,7 @@ integer geequb(integer* m, integer* n,  T* a, integer* lda, Ta* r, Ta* c, Ta* ro
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK.  LWORK >= max(1,2*N).
+          The dimension of the array WORK.  LWORK >= fla_max(1,2*N).
           For good performance, LWORK must generally be larger. \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
@@ -8666,7 +8666,7 @@ integer gees(char* jobvs, char* sort, void* select, integer* n, T* a, integer* l
           On exit, A is overwritten by its real Schur form T. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] SDIM
           SDIM is INTEGER \n
           If SORT = 'N', SDIM = 0. \n
@@ -8708,11 +8708,11 @@ integer gees(char* jobvs, char* sort, void* select, integer* n, T* a, integer* l
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK.  LWORK >= max(1,2*N). \n
+          The dimension of the array WORK.  LWORK >= fla_max(1,2*N). \n
           Also, if SENSE = 'E' or 'V' or 'B', LWORK >= 2*SDIM*(N-SDIM),
           where SDIM is the number of selected eigenvalues computed by
           this routine.  Note that 2*SDIM*(N-SDIM) <= N*N/2. Note also
-          that an error is only returned if LWORK < max(1,2*N), but if
+          that an error is only returned if LWORK < fla_max(1,2*N), but if
           SENSE = 'E' or 'V' or 'B' this may not be large enough.
           For good performance, LWORK must generally be larger. \n
  \n
@@ -8793,7 +8793,7 @@ integer geesx(char* jobvs, char* sort, void* select, char* sense, integer* n, T*
           On exit, A has been overwritten. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] WR
           WR is REAL array, dimension (N) \n
  * @param[out] WI
@@ -8838,7 +8838,7 @@ integer geesx(char* jobvs, char* sort, void* select, char* sense, integer* n, T*
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK.  LWORK >= max(1,2*N).
+          The dimension of the array WORK.  LWORK >= fla_max(1,2*N).
           For good performance, LWORK must generally be larger. \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
@@ -8952,7 +8952,7 @@ integer geev(char* jobvl, char* jobvr, integer* n, T* a, integer* lda, T* w, T* 
           version of the input matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] WR
           WR is REAL array, dimension (N) \n
  * @param[out] WI
@@ -9028,7 +9028,7 @@ integer geev(char* jobvl, char* jobvr, integer* n, T* a, integer* lda, T* w, T* 
  * @param[in]	LWORK	
           LWORK is INTEGER \n
           The dimension of the array WORK.  If SENSE = 'N' or 'E',
-          LWORK >= max(1,2*N), and if SENSE = 'V' or 'B',
+          LWORK >= fla_max(1,2*N), and if SENSE = 'V' or 'B',
           LWORK >= N*N+2*N. \n
           For good performance, LWORK must generally be larger. \n
  \n
@@ -9197,7 +9197,7 @@ integer geevx(char* balanc, char* jobvl, char* jobvr, char* sense, integer* n, T
           On entry, the M-by-N matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] SVA
           SVA is REAL array, dimension (N) \n
           On exit, \n
@@ -9264,50 +9264,50 @@ integer geevx(char* balanc, char* jobvl, char* jobvr, char* sense, integer* n, T
                is LWORK >= N + (N+1)*NB. Here NB is the optimal
                block size for CGEQP3 and CGEQRF.
                In general, optimal LWORK is computed as
-               LWORK >= max(N+LWORK(CGEQP3),N+LWORK(CGEQRF), LWORK(CGESVJ)). \n
+               LWORK >= fla_max(N+LWORK(CGEQP3),N+LWORK(CGEQRF), LWORK(CGESVJ)). \n
             1.2. .. an estimate of the scaled condition number of A is
                required (JOBA='E', or 'G'). In this case, LWORK the minimal
                requirement is LWORK >= N*N + 2*N.
                ->> For optimal performance (blocked code) the optimal value
-               is LWORK >= max(N+(N+1)*NB, N*N+2*N)=N**2+2*N.
+               is LWORK >= fla_max(N+(N+1)*NB, N*N+2*N)=N**2+2*N.
                In general, the optimal length LWORK is computed as
-               LWORK >= max(N+LWORK(CGEQP3),N+LWORK(CGEQRF), LWORK(CGESVJ),
+               LWORK >= fla_max(N+LWORK(CGEQP3),N+LWORK(CGEQRF), LWORK(CGESVJ),
                             N*N+LWORK(CPOCON)). \n
           2. If SIGMA and the right singular vectors are needed (JOBV = 'V'),
              (JOBU = 'N') \n
             2.1   .. no scaled condition estimate requested (JOBE = 'N'): \n
             -> the minimal requirement is LWORK >= 3*N. \n
             -> For optimal performance, 
-               LWORK >= max(N+(N+1)*NB, 2*N+N*NB)=2*N+N*NB,
+               LWORK >= fla_max(N+(N+1)*NB, 2*N+N*NB)=2*N+N*NB,
                where NB is the optimal block size for CGEQP3, CGEQRF, CGELQ,
                CUNMLQ. In general, the optimal length LWORK is computed as
-               LWORK >= max(N+LWORK(CGEQP3), N+LWORK(CGESVJ),
+               LWORK >= fla_max(N+LWORK(CGEQP3), N+LWORK(CGESVJ),
                        N+LWORK(CGELQF), 2*N+LWORK(CGEQRF), N+LWORK(CUNMLQ)). \n
             2.2 .. an estimate of the scaled condition number of A is
                required (JOBA='E', or 'G'). \n
             -> the minimal requirement is LWORK >= 3*N. \n
             -> For optimal performance, 
-               LWORK >= max(N+(N+1)*NB, 2*N,2*N+N*NB)=2*N+N*NB,
+               LWORK >= fla_max(N+(N+1)*NB, 2*N,2*N+N*NB)=2*N+N*NB,
                where NB is the optimal block size for CGEQP3, CGEQRF, CGELQ,
                CUNMLQ. In general, the optimal length LWORK is computed as
-               LWORK >= max(N+LWORK(CGEQP3), LWORK(CPOCON), N+LWORK(CGESVJ),
+               LWORK >= fla_max(N+LWORK(CGEQP3), LWORK(CPOCON), N+LWORK(CGESVJ),
                        N+LWORK(CGELQF), 2*N+LWORK(CGEQRF), N+LWORK(CUNMLQ)). \n
           3. If SIGMA and the left singular vectors are needed \n
             3.1  .. no scaled condition estimate requested (JOBE = 'N'): \n
             -> the minimal requirement is LWORK >= 3*N. \n
             -> For optimal performance:
-               if JOBU = 'U' :: LWORK >= max(3*N, N+(N+1)*NB, 2*N+N*NB)=2*N+N*NB,
+               if JOBU = 'U' :: LWORK >= fla_max(3*N, N+(N+1)*NB, 2*N+N*NB)=2*N+N*NB,
                where NB is the optimal block size for CGEQP3, CGEQRF, CUNMQR.
                In general, the optimal length LWORK is computed as
-               LWORK >= max(N+LWORK(CGEQP3), 2*N+LWORK(CGEQRF), N+LWORK(CUNMQR)). \n
+               LWORK >= fla_max(N+LWORK(CGEQP3), 2*N+LWORK(CGEQRF), N+LWORK(CUNMQR)). \n
             3.2  .. an estimate of the scaled condition number of A is
                required (JOBA='E', or 'G'). \n
             -> the minimal requirement is LWORK >= 3*N. \n
             -> For optimal performance:
-               if JOBU = 'U' :: LWORK >= max(3*N, N+(N+1)*NB, 2*N+N*NB)=2*N+N*NB,
+               if JOBU = 'U' :: LWORK >= fla_max(3*N, N+(N+1)*NB, 2*N+N*NB)=2*N+N*NB,
                where NB is the optimal block size for CGEQP3, CGEQRF, CUNMQR.
                In general, the optimal length LWORK is computed as \n
-               LWORK >= max(N+LWORK(CGEQP3),N+LWORK(CPOCON), \n
+               LWORK >= fla_max(N+LWORK(CGEQP3),N+LWORK(CPOCON), \n
                         2*N+LWORK(CGEQRF), N+LWORK(CUNMQR)). \n
  \n
           4. If the full SVD is needed: (JOBU = 'U' or JOBU = 'F') and \n
@@ -9367,31 +9367,31 @@ integer geevx(char* balanc, char* jobvl, char* jobvr, char* sense, integer* n, T
           LSAME(JOBU,'N') .AND. LSAME(JOBV,'N')
           then:
           1.1. If LSAME(JOBT,'T') .OR. LSAME(JOBA,'F') .OR. LSAME(JOBA,'G'),
-               then: LRWORK = max( 7, 2 * M ). \n
-          1.2. Otherwise, LRWORK  = max( 7,  N ). \n
+               then: LRWORK = fla_max( 7, 2 * M ). \n
+          1.2. Otherwise, LRWORK  = fla_max( 7,  N ). \n
        2. If singular values with the right singular vectors are requested \n
           i.e. if
           (LSAME(JOBV,'V').OR.LSAME(JOBV,'J')) .AND.
           .NOT.(LSAME(JOBU,'U').OR.LSAME(JOBU,'F'))
           then: \n
           2.1. If LSAME(JOBT,'T') .OR. LSAME(JOBA,'F') .OR. LSAME(JOBA,'G'),
-          then LRWORK = max( 7, 2 * M ). \n
-          2.2. Otherwise, LRWORK  = max( 7,  N ). \n
+          then LRWORK = fla_max( 7, 2 * M ). \n
+          2.2. Otherwise, LRWORK  = fla_max( 7,  N ). \n
        3. If singular values with the left singular vectors are requested, i.e. if
           (LSAME(JOBU,'U').OR.LSAME(JOBU,'F')) .AND.
           .NOT.(LSAME(JOBV,'V').OR.LSAME(JOBV,'J'))
           then: \n
           3.1. If LSAME(JOBT,'T') .OR. LSAME(JOBA,'F') .OR. LSAME(JOBA,'G'),
-          then LRWORK = max( 7, 2 * M ). \n
-          3.2. Otherwise, LRWORK  = max( 7,  N ). \n
+          then LRWORK = fla_max( 7, 2 * M ). \n
+          3.2. Otherwise, LRWORK  = fla_max( 7,  N ). \n
        4. If singular values with both the left and the right singular vectors
           are requested, i.e. if
           (LSAME(JOBU,'U').OR.LSAME(JOBU,'F')) .AND.
           (LSAME(JOBV,'V').OR.LSAME(JOBV,'J'))
           then: \n
           4.1. If LSAME(JOBT,'T') .OR. LSAME(JOBA,'F') .OR. LSAME(JOBA,'G'),
-          then LRWORK = max( 7, 2 * M ). \n
-          4.2. Otherwise, LRWORK  = max( 7, N ). \n
+          then LRWORK = fla_max( 7, 2 * M ). \n
+          4.2. Otherwise, LRWORK  = fla_max( 7, N ). \n
   \n
           If, on entry, LRWORK = -1 or LWORK=-1, a workspace query is assumed and 
           the length of RWORK is returned in RWORK(1).  \n
@@ -9483,7 +9483,7 @@ integer gejsv(char* joba, char* jobu, char* jobv, char* jobr, char* jobt, char* 
           computes row and column scaling to reduce condition number of matrix \n
  * @param[in] LDA/*!
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] T
           T is REAL array, dimension (MAX(5,TSIZE)) \n
           On exit, if INFO = 0, T(1) returns optimal (or either minimal
@@ -9586,7 +9586,7 @@ integer gelq(integer* m, integer* n, T* a, integer* lda, T* t, integer* tsize, T
  * @param[in] LDA
          LDA is INTEGER \n
          Computes row and column scaling to reduce condition number of matrix  \n
-         The leading dimension of the array A.  LDA >= max(1,M). \n
+         The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,NRHS) \n
           On entry, the matrix B of right hand side vectors, stored
@@ -9615,9 +9615,9 @@ integer gelq(integer* m, integer* n, T* a, integer* lda, T* t, integer* tsize, T
  * @param[in]	LWORK	
           LWORK is INTEGER \n
           The dimension of the array WORK.
-          LWORK >= max( 1, MN + max( MN, NRHS ) ). \n
+          LWORK >= fla_max( 1, MN + fla_max( MN, NRHS ) ). \n
           For optimal performance,
-          LWORK >= max( 1, MN + max( MN, NRHS )*NB ).
+          LWORK >= fla_max( 1, MN + fla_max( MN, NRHS )*NB ).
           where MN = min(M,N) and NB is the optimum block size. \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
@@ -9700,7 +9700,7 @@ integer gels(char* trans, integer* m, integer* n, integer* nrhs, T* a, integer* 
           complete orthogonal factorization. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,NRHS) \n
           On entry, the M-by-NRHS right hand side matrix B. \n
@@ -9708,7 +9708,7 @@ integer gels(char* trans, integer* m, integer* n, integer* nrhs, T* a, integer* 
  * @param[in] LDB
           LDB is INTEGER \n
           Computes row and column scaling to reduce condition number of matrix B \n
-          The leading dimension of the array B. LDB >= max(1,M,N). \n
+          The leading dimension of the array B. LDB >= fla_max(1,M,N). \n
  * @param[in,out] JPVT
           JPVT is INTEGER array, dimension (N) \n
           On entry, if JPVT(i) .ne. 0, the i-th column of A is permuted
@@ -9813,7 +9813,7 @@ integer gelsy(integer* m, integer* n, integer* nrhs, T* a, integer* lda, T* b, i
           complete orthogonal factorization. \n
  * @param[in]	LDA	
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[in,out]	B	
           B is REAL array, dimension (LDB,NRHS) \n
           On entry, the M-by-NRHS right hand side matrix B.
@@ -9823,7 +9823,7 @@ integer gelsy(integer* m, integer* n, integer* nrhs, T* a, integer* lda, T* b, i
           squares of elements N+1:M in that column. \n
  * @param[in]	LDB	
           LDB is INTEGER \n
-          The leading dimension of the array B. LDB >= max(1,M,N). \n
+          The leading dimension of the array B. LDB >= fla_max(1,M,N). \n
  * @param[in,out]	JPVT	
           JPVT is INTEGER array, dimension (N) \n
           On entry, if JPVT(i) .ne. 0, the i-th column of A is an
@@ -9847,7 +9847,7 @@ integer gelsy(integer* m, integer* n, integer* nrhs, T* a, integer* lda, T* b, i
           in the complete orthogonal factorization of A. \n
  * @param[out]	WORK	
           WORK is REAL array, dimension \n
-                      (max( min(M,N)+3*N, 2*min(M,N)+NRHS )), \n
+                      (fla_max( min(M,N)+3*N, 2*min(M,N)+NRHS )), \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -9907,7 +9907,7 @@ integer gelsx(integer* m, integer* n, integer* nrhs, T* a, integer* lda, T* b, i
           Part of the data structure to represent Q as returned by DGELQ. \n
   * @para@[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,K). \n
+          The leading dimension of the array A. LDA >= fla_max(1,K). \n
  * @param[in] T
           T is REAL array, dimension (MAX(5,TSIZE)). \n
           Part of the data structure to represent Q as returned by SGELQ. \n
@@ -9920,7 +9920,7 @@ integer gelsx(integer* m, integer* n, integer* nrhs, T* a, integer* lda, T* b, i
           On exit, C is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. \n
  * @param[in] LDC
           LDC is INTEGER \n
-          The leading dimension of the array C. LDC >= max(1,M). \n
+          The leading dimension of the array C. LDC >= fla_max(1,M). \n
  * @param[out]	WORK	
          (workspace) REAL array, dimension (MAX(1,LWORK)) \n
  * @param[in]	LWORK	
@@ -9983,7 +9983,7 @@ integer gemlq(char* side, char* trans, integer* m, integer* n, integer* k,  T* a
           Part of the data structure to represent Q as returned by DGELQ. \n
  * @para@[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,K). \n
+          The leading dimension of the array A. LDA >= fla_max(1,K). \n
  * @param[in] T
           T is REAL array, dimension (MAX(5,TSIZE)). \n
           Part of the data structure to represent Q as returned by SGELQ. \n
@@ -9996,7 +9996,7 @@ integer gemlq(char* side, char* trans, integer* m, integer* n, integer* k,  T* a
           On exit, C is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. \n
  * @param[in] LDC
           LDC is INTEGER \n
-          The leading dimension of the array C. LDC >= max(1,M). \n
+          The leading dimension of the array C. LDC >= fla_max(1,M). \n
  * @param[out]	WORK	
          (workspace) COMPLEX array, dimension (MAX(1,LWORK)) \n
  * @param[in]	LWORK	
@@ -10072,8 +10072,8 @@ integer gemqr(char* side, char* trans, integer* m, integer* n, integer* k,  T* a
  * @param[in] LDV
           LDV is INTEGER \n
           The leading dimension of the array V. \n
-          If SIDE = 'L', L/*!DA >= max(1,M); \n
-          if SIDE = 'R', LDA >= max(1,N). \n
+          If SIDE = 'L', L/*!DA >= fla_max(1,M); \n
+          if SIDE = 'R', LDA >= fla_max(1,N). \n
  * @param[in] T
           T is REAL array, dimension (LDT,K) \n
           The upper triangular factors of the block reflectors
@@ -10087,7 +10087,7 @@ integer gemqr(char* side, char* trans, integer* m, integer* n, integer* k,  T* a
           On exit, C is overwritten by Q C, Q**T C, C Q**T or C Q. \n
  * @param[in] LDC
           LDC is INTEGER \n
-          The leading dimension of the array C. LDC >= max(1,M). \n
+          The leading dimension of the array C. LDC >= fla_max(1,M). \n
  * @param[out]	WORK	
           WORK is COMPLEX array. The dimension of WORK is
            N*NB if SIDE = 'L', or  M*NB if SIDE = 'R'. \n
@@ -10131,7 +10131,7 @@ integer gemqrt(char* side, char* trans, integer* m, integer* n, integer* k, inte
           (see Further Details). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] TAU
           TAU is array, dimension (min(M,N)) \n
  * @param[out]	WORK	
@@ -10139,7 +10139,7 @@ integer gemqrt(char* side, char* trans, integer* m, integer* n, integer* k, inte
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK.  LWORK >= max(1,N).
+          The dimension of the array WORK.  LWORK >= fla_max(1,N).
           For optimum performance LWORK >= N*NB, where NB is
           the optimal blocksize. \n
  \n
@@ -10191,7 +10191,7 @@ integer geqlf(integer* m, integer* n, T* a, integer* lda, T* tau, T* work, integ
           data structure to represent Q. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] T
           T is array, dimension (MAX(5,TSIZE)) \n
           On exit, if INFO = 0, T(1) returns optimal (or either minimal 
@@ -10272,7 +10272,7 @@ integer geqr(integer* m, integer* n, T* a, integer* lda, T* t, integer* tsize, T
           Details). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] TAU
           TAU is array, dimension (min(M,N)) \n
           The scalar factors of the elementary reflectors (see Further
@@ -10282,7 +10282,7 @@ integer geqr(integer* m, integer* n, T* a, integer* lda, T* t, integer* tsize, T
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK.  LWORK >= max(1,N).
+          The dimension of the array WORK.  LWORK >= fla_max(1,N).
           For optimum performance LWORK >= N*NB, where NB is
           the optimal blocksize. \n
  \n
@@ -10330,7 +10330,7 @@ integer geqrfp(integer* m, integer* n, T* a, integer* lda, T* tau, T* work, inte
           are the columns of V. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] T
           T is REAL array, dimension (LDT,MIN(M,N)) \n
           The upper triangular block reflectors stored in compact form
@@ -10377,7 +10377,7 @@ integer geqrt(integer* m, integer* n, integer* nb, T* a, integer* lda, T* t, int
           further details. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] T
           T is REAL array, dimension (LDT,N) \n
           The N-by-N upper triangular factor of the block reflector.
@@ -10386,7 +10386,7 @@ integer geqrt(integer* m, integer* n, integer* nb, T* a, integer* lda, T* t, int
           See below for further details. \n
  * @param[in] LDT
           LDT is INTEGER \n
-          The leading dimension of the array T.  LDT >= max(1,N). \n
+          The leading dimension of the array T.  LDT >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0: successful exit \n
@@ -10423,7 +10423,7 @@ integer geqrt2(integer* m, integer* n, T* a, integer* lda, T* t, integer* ldt, i
           further details. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] T
           T is REAL array, dimension (LDT,N) \n
           The N-by-N upper triangular factor of the block reflector.
@@ -10432,7 +10432,7 @@ integer geqrt2(integer* m, integer* n, T* a, integer* lda, T* t, integer* ldt, i
           See below for further details. \n
  * @param[in] LDT
           LDT is INTEGER \n
-          The leading dimension of the array T.  LDT >= max(1,N). \n
+          The leading dimension of the array T.  LDT >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0: successful exit \n
@@ -10474,14 +10474,14 @@ integer geqrt3(integer* m, integer* n, T* a, integer* lda, T* t, integer* ldt, i
           The original N-by-N matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is REAL array, dimension (LDAF,N) \n
           The factors L and U from the factorization A = P*L*U
           as computed by GETRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           The pivot indices from GETRF; for 1<=i<=N, row i of the
@@ -10491,14 +10491,14 @@ integer geqrt3(integer* m, integer* n, T* a, integer* lda, T* t, integer* ldt, i
           The right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] X
           X is REAL array, dimension (LDX,NRHS) \n
           On entry, the solution matrix X, as computed by GETRS.
           On exit, the improved solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] FERR
           FERR is REAL array, dimension (NRHS) \n
           The estimated forward error bound for each solution vector
@@ -10585,14 +10585,14 @@ integer gerfs(char* trans, integer* n, integer* nrhs,  T* a, integer* lda,  T* a
           The original N-by-N matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is REAL array, dimension (LDAF,N) \n
           The factors L and U from the factorization A = P*L*U
           as computed by GETRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           The pivot indices from GETRF; for 1<=i<=N, row i of the
@@ -10626,14 +10626,14 @@ integer gerfs(char* trans, integer* n, integer* nrhs,  T* a, integer* lda,  T* a
           The right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] X
           X is REAL array, dimension (LDX,NRHS) \n
           On entry, the solution matrix X, as computed by GETRS.
           On exit, the improved solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
           RCOND is REAL \n
           Reciprocal scaled condition number. This is an estimate of the
@@ -10848,7 +10848,7 @@ integer gerfsx(char* trans, char* equed, integer* n, integer* nrhs,  T* a, integ
           reflectors (see Further Details). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] TAU
           TAU is REAL array, dimension (min(M,N)) \n
           The scalar factors of the elementary reflectors (see Further
@@ -10858,7 +10858,7 @@ integer gerfsx(char* trans, char* equed, integer* n, integer* nrhs,  T* a, integ
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK.  LWORK >= max(1,M).
+          The dimension of the array WORK.  LWORK >= fla_max(1,M).
           For optimum performance LWORK >= M*NB, where NB is
           the optimal blocksize. \n
  \n
@@ -10910,7 +10910,7 @@ integer gerqf(integer* m, integer* n, T* a, integer* lda, T* tau, T* work, integ
           A = P*L*U; the unit diagonal elements of L are not stored. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           The pivot indices that define the permutation matrix P;
@@ -10921,7 +10921,7 @@ integer gerqf(integer* m, integer* n, T* a, integer* lda, T* tau, T* work, integ
           On exit, if INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -10995,7 +10995,7 @@ integer gesv(integer* n, integer* nrhs, T* a, integer* lda, integer* ipiv, T* b,
           A = P*L*U; the unit diagonal elements of L are not stored. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           The pivot indices that define the permutation matrix P;
@@ -11008,13 +11008,13 @@ integer gesv(integer* n, integer* nrhs, T* a, integer* lda, integer* ipiv, T* b,
           The N-by-NRHS right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] X
           X is DOUBLE PRECISION array, dimension (LDX,NRHS) \n
           If INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] ITER
           ITER is INTEGER \n
           < 0: iterative refinement has failed, double precision
@@ -11100,7 +11100,7 @@ integer sgesv(integer* n, integer* nrhs, double* a, integer* lda, integer* ipiv,
           A = P*L*U; the unit diagonal elements of L are not stored. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           The pivot indices that define the permutation matrix P;
@@ -11113,13 +11113,13 @@ integer sgesv(integer* n, integer* nrhs, double* a, integer* lda, integer* ipiv,
           The N-by-NRHS right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] X
           X is COMPLEX*16 array, dimension (LDX,NRHS) \n
           If INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] ITER
           ITER is INTEGER \n
           < 0: iterative refinement has failed, COMPLEX*16
@@ -11214,7 +11214,7 @@ integer cgesv(integer* n, integer* nrhs, dcomplex* a, integer* lda, integer* ipi
           the initial pivoted QR factorization of A. See the description of U. \n
  * @param[in] LDA
           LDA is INTEGER. \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] S
           S is REAL array of dimension N. \n
           The singular values of A, ordered so that S(i) >= S(i+1). \n
@@ -11231,8 +11231,8 @@ integer cgesv(integer* n, integer* nrhs, dcomplex* a, integer* lda, integer* ipi
  * @param[in] LDU
           LDU is INTEGER. \n
           The leading dimension of the array U. \n
-          If JOBU = 'A', 'S', 'U', 'R',  LDU >= max(1,M). \n
-          If JOBU = 'F',                 LDU >= max(1,N). \n
+          If JOBU = 'A', 'S', 'U', 'R',  LDU >= fla_max(1,M). \n
+          If JOBU = 'F',                 LDU >= fla_max(1,N). \n
           Otherwise,                     LDU >= 1. \n
  * @param[out] V
           V is REAL array, dimension \n
@@ -11245,7 +11245,7 @@ integer cgesv(integer* n, integer* nrhs, dcomplex* a, integer* lda, integer* ipi
  * @param[in] LDV
           LDV is INTEGER \n
           The leading dimension of the array V. \n
-          If JOBV = 'A', 'V', 'R',  or JOBA = 'E', LDV >= max(1,N).
+          If JOBV = 'A', 'V', 'R',  or JOBA = 'E', LDV >= fla_max(1,N).
           Otherwise,                               LDV >= 1. \n
  * @param[out] NUMRANK
           NUMRANK is INTEGER \n
@@ -11256,7 +11256,7 @@ integer cgesv(integer* n, integer* nrhs, dcomplex* a, integer* lda, integer* ipi
           of GESVD. The final value of NUMRANK might be further reduced if
           some singular values are computed as zeros. \n
  * @param[out]	IWORK	
-          IWORK is INTEGER array, dimension (max(1, LIWORK)). \n
+          IWORK is INTEGER array, dimension (fla_max(1, LIWORK)). \n
           On exit, IWORK(1:N) contains column pivoting permutation of the
           rank revealing QR factorization. \n
           If JOBP = 'P', IWORK(N+1:N+M-1) contains the indices of the sequence
@@ -11276,7 +11276,7 @@ integer cgesv(integer* n, integer* nrhs, dcomplex* a, integer* lda, integer* ipi
           for the CWORK, IWORK, and RWORK arrays, and no error
           message related to LCWORK is issued by XERBLA. \n
  * @param[out]	CWORK	
-          CWORK is COMPLEX array, dimension (max(2, LCWORK)), used as a workspace.
+          CWORK is COMPLEX array, dimension (fla_max(2, LCWORK)), used as a workspace.
           On exit, if, on entry, LCWORK.NE.-1, CWORK(1:N) contains parameters
           needed to recover the Q factor from the QR factorization computed by
           CGEQP3. \n
@@ -11339,7 +11339,7 @@ integer cgesv(integer* n, integer* nrhs, dcomplex* a, integer* lda, integer* ipi
           for the CWORK, IWORK, and RWORK arrays, and no error
           message related to LCWORK is issued by XERBLA. \n
  * @param[out]	RWORK	
-          RWORK is REAL array, dimension (max(1, LRWORK)). \n
+          RWORK is REAL array, dimension (fla_max(1, LRWORK)). \n
           On exit, \n
           1. If JOBA = 'E', RWORK(1) contains an estimate of the condition
           number of column scaled A. If A = C * D where D is diagonal and C
@@ -11443,7 +11443,7 @@ integer gesvdq(char* joba, char* jobp, char* jobr, char* jobu, char* jobv, integ
           On exit, the contents of A are destroyed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[in] VL
           VL is REAL \n
           If RANGE='V', the lower bound of the interval to
@@ -11648,7 +11648,7 @@ integer gesvdx(char* jobu, char* jobvt, char* range, integer* m, integer* n, T* 
                  of iterations (sweeps). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] SVA
           SVA is REAL array, dimension (N) \n
           On exit, \n
@@ -11681,10 +11681,10 @@ integer gesvdx(char* jobu, char* jobvt, char* range, integer* m, integer* n, T* 
  * @param[in] LDV
           LDV is INTEGER \n
           The leading dimension of the array V, LDV >= 1. \n
-          If JOBV = 'V', then LDV >= max(1,N). \n
-          If JOBV = 'A', then LDV >= max(1,MV) . \n
+          If JOBV = 'V', then LDV >= fla_max(1,N). \n
+          If JOBV = 'A', then LDV >= fla_max(1,MV) . \n
  * @param[in,out]	CWORK	
-          CWORK is COMPLEX array, dimension (max(1,LWORK)) \n
+          CWORK is COMPLEX array, dimension (fla_max(1,LWORK)) \n
           Used as workspace. \n
           If on entry LWORK = -1, then a workspace query is assumed and
           no computation is done; CWORK(1) is set to the minial (and optimal)
@@ -11693,7 +11693,7 @@ integer gesvdx(char* jobu, char* jobvt, char* range, integer* m, integer* n, T* 
           LWORK is INTEGER. \n
           Length of CWORK, LWORK >= M+N. \n
  * @param[in,out]	RWORK	
-          RWORK is REAL array, dimension (max(6,LRWORK)) \n
+          RWORK is REAL array, dimension (fla_max(6,LRWORK)) \n
           On entry, \n
           If JOBU = 'C' : \n
           RWORK(1) = CTOL, where CTOL defines the threshold for convergence.
@@ -11798,7 +11798,7 @@ integer gesvj(char* joba, char* jobu, char* jobv, integer* m, integer* n, T* a, 
           EQUED = 'B':  A := diag(R) * A * diag(C). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] AF
           AF is REAL array, dimension (LDAF,N) \n
           If FACT = 'F', then AF is an input argument and on entry
@@ -11816,7 +11816,7 @@ integer gesvj(char* joba, char* jobu, char* jobv, integer* m, integer* n, T* a, 
           the form of the equilibrated matrix). \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in,out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           If FACT = 'F', then IPIV is an input argument and on entry
@@ -11868,7 +11868,7 @@ integer gesvj(char* joba, char* jobu, char* jobv, integer* m, integer* n, T* a, 
           overwritten by diag(C)*B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] X
           X is REAL array, dimension (LDX,NRHS) \n
           If INFO = 0 or INFO = N+1, the N-by-NRHS solution matrix X
@@ -11879,7 +11879,7 @@ integer gesvj(char* joba, char* jobu, char* jobv, integer* m, integer* n, T* a, 
           and EQUED = 'R' or 'B'. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
           RCOND is REAL \n
           The estimate of the reciprocal condition number of the matrix
@@ -12009,7 +12009,7 @@ integer gesvx(char* fact, char* trans, integer* n, integer* nrhs, T* a, integer*
           EQUED = 'B':  A := diag(R) * A * diag(C). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] AF
           AF is REAL array, dimension (LDAF,N) \n
           If FACT = 'F', then AF is an input argument and on entry
@@ -12027,7 +12027,7 @@ integer gesvx(char* fact, char* trans, integer* n, integer* nrhs, T* a, integer*
           the form of the equilibrated matrix). \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in,out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           If FACT = 'F', then IPIV is an input argument and on entry
@@ -12095,7 +12095,7 @@ integer gesvx(char* fact, char* trans, integer* n, integer* nrhs, T* a, integer*
             overwritten by diag(C)*B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] X
           X is REAL array, dimension (LDX,NRHS) \n
           If INFO = 0, the N-by-NRHS solution matrix X to the original
@@ -12105,7 +12105,7 @@ integer gesvx(char* fact, char* trans, integer* n, integer* nrhs, T* a, integer*
           inv(diag(R))*X if TRANS = 'T' or 'C' and EQUED = 'R' or 'B'. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
           RCOND is REAL \n
           Reciprocal scaled condition number. This is an estimate of the
@@ -12342,7 +12342,7 @@ integer gesvxx(char* fact, char* trans, integer* n, integer* nrhs, T* a, integer
           A = P*L*U; the unit diagonal elements of L are not stored. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (min(M,N)) \n
           The pivot indices; for 1 <= i <= min(M,N), row i of the
@@ -12385,7 +12385,7 @@ integer getrf2(integer* m, integer* n, T* a, integer* lda, integer* ipiv, intege
           On exit, if INFO = 0, the inverse of the original matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           The pivot indices from GETRF; for 1<=i<=N, row i of the
@@ -12395,7 +12395,7 @@ integer getrf2(integer* m, integer* n, T* a, integer* lda, integer* ipiv, intege
           On exit, if INFO=0, then WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK.  LWORK >= max(1,N).
+          The dimension of the array WORK.  LWORK >= fla_max(1,N).
           For optimal performance LWORK >= N*NB, where NB is
           the optimal blocksize returned by ILAENV. \n
  \n
@@ -12447,7 +12447,7 @@ integer getri(integer* n, T* a, integer* lda, integer* ipiv, T* work, integer* l
           as computed by GETRF. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           The pivot indices from GETRF; for 1<=i<=N, row i of the
@@ -12458,7 +12458,7 @@ integer getri(integer* n, T* a, integer* lda, integer* ipiv, T* work, integer* l
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -12524,7 +12524,7 @@ integer getrs(char* trans, integer* n, integer* nrhs,  T* a, integer* lda,  inte
            factorization as returned by SGEQR or SGELQ. \n
   * @param[in] LDA
            LDA is INTEGER \n
-           The leading dimension of the array A.  LDA >= max(1,M). \n
+           The leading dimension of the array A.  LDA >= fla_max(1,M). \n
   * @param[in,out] B
            B is REAL array, dimension (LDB,NRHS) \n
            On entry, the matrix B of right hand side vectors, stored
@@ -12623,7 +12623,7 @@ integer getsls(char* trans, integer* m, integer* n, integer* nrhs, T* a, integer
           On exit, V is overwritten by the transformed eigenvectors. \n
  * @param[in] LDV
           LDV is INTEGER \n
-          The leading dimension of the matrix V. LDV >= max(1,N). \n
+          The leading dimension of the matrix V. LDV >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit. \n
@@ -12676,7 +12676,7 @@ integer ggbak(char* job, char* side, integer* n, integer* ilo, integer* ihi,  Ta
           If JOB = 'N', A is not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,N). \n
+          The leading dimension of the array A. LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,N) \n
           On entry, the input matrix B. \n
@@ -12684,7 +12684,7 @@ integer ggbak(char* job, char* side, integer* n, integer* ilo, integer* ihi,  Ta
           If JOB = 'N', B is not referenced. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B. LDB >= max(1,N). \n
+          The leading dimension of the array B. LDB >= fla_max(1,N). \n
  * @param[out] ILO
           ILO is INTEGER \n
  * @param[out] IHI
@@ -12717,7 +12717,7 @@ integer ggbak(char* job, char* side, integer* n, integer* ilo, integer* ihi,  Ta
           then 1 to ILO-1. \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (lwork) \n
-          lwork must be at least max(1,6*N) when JOB = 'S' or 'B', and
+          lwork must be at least fla_max(1,6*N) when JOB = 'S' or 'B', and
           at least 1 when JOB = 'N' or 'P'. \n
  * @param[out]	INFO	
           INFO is INTEGER \n
@@ -12814,7 +12814,7 @@ integer ggbal(char* job, integer* n, T* a, integer* lda, T* b, integer* ldb, int
           form S. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of A.  LDA >= max(1,N). \n
+          The leading dimension of A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB, N) \n
           On entry, the second of the pair of matrices. \n
@@ -12822,7 +12822,7 @@ integer ggbal(char* job, integer* n, T* a, integer* lda, T* b, integer* ldb, int
           form T. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of B.  LDB >= max(1,N). \n
+          The leading dimension of B.  LDB >= fla_max(1,N). \n
  * @param[out] SDIM
           SDIM is INTEGER \n
           If SORT = 'N', SDIM = 0. \n
@@ -12873,7 +12873,7 @@ integer ggbal(char* job, integer* n, T* a, integer* lda, T* b, integer* ldb, int
  * @param[in]	LWORK	
           LWORK is INTEGER \n
           The dimension of the array WORK. \n
-          If N = 0, LWORK >= 1, else LWORK >= max(8*N,6*N+16).
+          If N = 0, LWORK >= 1, else LWORK >= fla_max(8*N,6*N+16).
           For good performance , LWORK must generally be larger. \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
@@ -12989,7 +12989,7 @@ integer gges(char* jobvsl, char* jobvsr, char* sort, void *selctg, integer* n, T
           form S. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of A.  LDA >= max(1,N). \n
+          The leading dimension of A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB, N) \n
           On entry, the second of the pair of matrices.
@@ -12997,7 +12997,7 @@ integer gges(char* jobvsl, char* jobvsr, char* sort, void *selctg, integer* n, T
           form T. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of B.  LDB >= max(1,N). \n
+          The leading dimension of B.  LDB >= fla_max(1,N). \n
  * @param[out] SDIM
           SDIM is INTEGER \n
           If SORT = 'N', SDIM = 0. \n
@@ -13172,7 +13172,7 @@ integer gges3(char* jobvsl, char* jobvsr, char* sort, void *selctg, integer* n, 
           form S. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of A.  LDA >= max(1,N). \n
+          The leading dimension of A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB, N) \n
           On entry, the second of the pair of matrices. \n
@@ -13180,7 +13180,7 @@ integer gges3(char* jobvsl, char* jobvsr, char* sort, void *selctg, integer* n, 
           form T. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of B.  LDB >= max(1,N). \n
+          The leading dimension of B.  LDB >= fla_max(1,N). \n
  * @param[out] SDIM
           SDIM is INTEGER \n
           If SORT = 'N', SDIM = 0. \n
@@ -13244,11 +13244,11 @@ integer gges3(char* jobvsl, char* jobvsr, char* sort, void *selctg, integer* n, 
           LWORK is INTEGER \n
           The dimension of the array WORK. \n
           If N = 0, LWORK >= 1, else if SENSE = 'E', 'V', or 'B',
-          LWORK >= max( 8*N, 6*N+16, 2*SDIM*(N-SDIM) ), else
-          LWORK >= max( 8*N, 6*N+16 ). \n
+          LWORK >= fla_max( 8*N, 6*N+16, 2*SDIM*(N-SDIM) ), else
+          LWORK >= fla_max( 8*N, 6*N+16 ). \n
           Note that 2*SDIM*(N-SDIM) <= N*N/2.
           Note also that an error is only returned if
-          LWORK < max( 8*N, 6*N+16), but if SENSE = 'E' or 'V' or 'B'
+          LWORK < fla_max( 8*N, 6*N+16), but if SENSE = 'E' or 'V' or 'B'
           this may not be large enough. \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
@@ -13342,14 +13342,14 @@ integer ggesx(char* jobvsl, char* jobvsr, char* sort, void *selctg, char* sense,
           On exit, A has been overwritten. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of A.  LDA >= max(1,N). \n
+          The leading dimension of A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB, N) \n
           On entry, the matrix B in the pair (A,B).
           On exit, B has been overwritten. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of B.  LDB >= max(1,N). \n
+          The leading dimension of B.  LDB >= fla_max(1,N). \n
  * @param[out] ALPHAR
           ALPHAR is REAL array, dimension (N) \n
  * @param[out] ALPHAI
@@ -13403,7 +13403,7 @@ integer ggesx(char* jobvsl, char* jobvsr, char* sort, void *selctg, char* sense,
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK.  LWORK >= max(1,8*N).
+          The dimension of the array WORK.  LWORK >= fla_max(1,8*N).
           For good performance, LWORK must generally be larger. \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
@@ -13472,14 +13472,14 @@ integer ggev(char* jobvl, char* jobvr, integer* n, T* a, integer* lda, T* b, int
           On exit, A has been overwritten. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of A.  LDA >= max(1,N). \n
+          The leading dimension of A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB, N) \n
           On entry, the matrix B in the pair (A,B).
           On exit, B has been overwritten. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of B.  LDB >= max(1,N). \n
+          The leading dimension of B.  LDB >= fla_max(1,N). \n
  * @param[out] ALPHAR
           ALPHAR is REAL array, dimension (N) \n
  * @param[out] ALPHAI
@@ -13625,7 +13625,7 @@ integer ggev3(char* jobvl, char* jobvr, integer* n, T* a, integer* lda, T* b, in
           form of the "balanced" versions of the input A and B. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of A.  LDA >= max(1,N). \n
+          The leading dimension of A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB, N) \n
           On entry, the matrix B in the pair (A,B). \n
@@ -13634,7 +13634,7 @@ integer ggev3(char* jobvl, char* jobvr, integer* n, T* a, integer* lda, T* b, in
           form of the "balanced" versions of the input A and B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of B.  LDB >= max(1,N). \n
+          The leading dimension of B.  LDB >= fla_max(1,N). \n
  * @param[out] ALPHAR
           ALPHAR is REAL array, dimension (N) \n
  * @param[out] ALPHAI
@@ -13743,10 +13743,10 @@ integer ggev3(char* jobvl, char* jobvr, integer* n, T* a, integer* lda, T* b, in
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK. LWORK >= max(1,2*N). \n
+          The dimension of the array WORK. LWORK >= fla_max(1,2*N). \n
           If BALANC = 'S' or 'B', or JOBVL = 'V', or JOBVR = 'V',
-          LWORK >= max(1,6*N). \n
-          If SENSE = 'E', LWORK >= max(1,10*N). \n
+          LWORK >= fla_max(1,6*N). \n
+          If SENSE = 'E', LWORK >= fla_max(1,10*N). \n
           If SENSE = 'V' or 'B', LWORK >= 2*N*N+8*N+16. \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
@@ -13823,7 +13823,7 @@ integer ggevx(char* balanc, char* jobvl, char* jobvr, char* sense, integer* n, T
           the M-by-M upper triangular matrix R. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,N). \n
+          The leading dimension of the array A. LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,P) \n
           On entry, the N-by-P matrix B. \n
@@ -13833,7 +13833,7 @@ integer ggevx(char* balanc, char* jobvl, char* jobvr, char* sense, integer* n, T
           contain the N-by-P upper trapezoidal matrix T. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B. LDB >= max(1,N). \n
+          The leading dimension of the array B. LDB >= fla_max(1,N). \n
  * @param[in,out] D
           D is REAL array, dimension (N) \n
           On entry, D is the left hand side of the GLM equation.
@@ -13848,7 +13848,7 @@ integer ggevx(char* balanc, char* jobvl, char* jobvr, char* sense, integer* n, T
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK. LWORK >= max(1,N+M+P).
+          The dimension of the array WORK. LWORK >= fla_max(1,N+M+P).
           For optimum performance, LWORK >= M+min(N,P)+max(N,P)*NB,
           where NB is an upper bound for the optimal blocksizes for
           SGEQRF, SGERQF, SORMQR and SORMRQ. \n
@@ -13952,7 +13952,7 @@ integer ggglm(integer* n, integer* m, integer* p, T* a, integer* lda, T* b, inte
           rest is set to zero. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB, N) \n
           On entry, the N-by-N upper triangular matrix B. \n
@@ -13960,7 +13960,7 @@ integer ggglm(integer* n, integer* m, integer* p, T* a, integer* lda, T* b, inte
           elements below the diagonal are set to zero. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] Q
           Q is REAL array, dimension (LDQ, N) \n
           On entry, if COMPQ = 'V', the orthogonal matrix Q1,
@@ -14080,7 +14080,7 @@ integer gghd3(char* compq, char* compz, integer* n, integer* ilo, integer* ihi, 
           rest is set to zero. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB, N) \n
           On entry, the N-by-N upper triangular matrix B. \n
@@ -14088,7 +14088,7 @@ integer gghd3(char* compq, char* compz, integer* n, integer* ilo, integer* ihi, 
           elements below the diagonal are set to zero. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] Q
           Q is REAL array, dimension (LDQ, N) \n
           On entry, if COMPQ = 'V', the orthogonal matrix Q1,
@@ -14157,7 +14157,7 @@ integer gghrd(char* compq, char* compz, integer* n, integer* ilo, integer* ihi, 
           contain the min(M,N)-by-N upper trapezoidal matrix T. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,M). \n
+          The leading dimension of the array A. LDA >= fla_max(1,M). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,N) \n
           On entry, the P-by-N matrix B. \n
@@ -14165,7 +14165,7 @@ integer gghrd(char* compq, char* compz, integer* n, integer* ilo, integer* ihi, 
           contains the P-by-P upper triangular matrix R. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B. LDB >= max(1,P). \n
+          The leading dimension of the array B. LDB >= fla_max(1,P). \n
  * @param[in,out] C
           C is REAL array, dimension (M) \n
           On entry, C contains the right hand side vector for the
@@ -14186,7 +14186,7 @@ integer gghrd(char* compq, char* compz, integer* n, integer* ilo, integer* ihi, 
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK. LWORK >= max(1,M+N+P). \n
+          The dimension of the array WORK. LWORK >= fla_max(1,M+N+P). \n
           For optimum performance LWORK >= P+min(M,N)+max(M,N)*NB,
           where NB is an upper bound for the optimal blocksizes for
           SGEQRF, SGERQF, SORMQR and SORMRQ. \n
@@ -14263,7 +14263,7 @@ integer gglse(integer* m, integer* n, integer* p, T* a, integer* lda, T* b, inte
           Details). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,N). \n
+          The leading dimension of the array A. LDA >= fla_max(1,N). \n
   * @param[out] TAUA
           TAUA is REAL array, dimension (min(N,M)) \n
           The scalar factors of the elementary reflectors which
@@ -14280,7 +14280,7 @@ integer gglse(integer* m, integer* n, integer* p, T* a, integer* lda, T* b, inte
           Details). \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B. LDB >= max(1,N). \n
+          The leading dimension of the array B. LDB >= fla_max(1,N). \n
  * @param[out] TAUB
           TAUB is REAL array, dimension (min(N,P)) \n
           The scalar factors of the elementary reflectors which
@@ -14290,8 +14290,8 @@ integer gglse(integer* m, integer* n, integer* p, T* a, integer* lda, T* b, inte
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK. LWORK >= max(1,N,M,P).
-          For optimum performance LWORK >= max(N,M,P)*max(NB1,NB2,NB3),
+          The dimension of the array WORK. LWORK >= fla_max(1,N,M,P).
+          For optimum performance LWORK >= fla_max(N,M,P)*max(NB1,NB2,NB3),
           where NB1 is the optimal blocksize for the QR factorization
           of an N-by-M matrix, NB2 is the optimal blocksize for the
           RQ factorization of an N-by-P matrix, and NB3 is the optimal
@@ -14360,7 +14360,7 @@ integer ggqrf(integer* n, integer* m, integer* p, T* a, integer* lda, T* taua, T
           Details). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,M). \n
+          The leading dimension of the array A. LDA >= fla_max(1,M). \n
  * @param[out] TAUA
           TAUA is REAL array, dimension (min(M,N)) \n
           The scalar factors of the elementary reflectors which
@@ -14375,7 +14375,7 @@ integer ggqrf(integer* n, integer* m, integer* p, T* a, integer* lda, T* taua, T
           product of elementary reflectors (see Further Details). \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B. LDB >= max(1,P). \n
+          The leading dimension of the array B. LDB >= fla_max(1,P). \n
  * @param[out] TAUB
           TAUB is REAL array, dimension (min(P,N)) \n
           The scalar factors of the elementary reflectors which
@@ -14385,8 +14385,8 @@ integer ggqrf(integer* n, integer* m, integer* p, T* a, integer* lda, T* taua, T
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK. LWORK >= max(1,N,M,P). \n
-          For optimum performance LWORK >= max(N,M,P)*max(NB1,NB2,NB3),
+          The dimension of the array WORK. LWORK >= fla_max(1,N,M,P). \n
+          For optimum performance LWORK >= fla_max(N,M,P)*max(NB1,NB2,NB3),
           where NB1 is the optimal blocksize for the RQ factorization
           of an M-by-N matrix, NB2 is the optimal blocksize for the
           QR factorization of a P-by-N matrix, and NB3 is the optimal
@@ -14527,7 +14527,7 @@ integer ggrqf(integer* m, integer* p, integer* n, T* a, integer* lda, T* taua, T
           See Purpose for details. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,M). \n
+          The leading dimension of the array A. LDA >= fla_max(1,M). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,N) \n
           On entry, the P-by-N matrix B. \n
@@ -14535,7 +14535,7 @@ integer ggrqf(integer* m, integer* p, integer* n, T* a, integer* lda, T* taua, T
           See Purpose for details. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B. LDB >= max(1,P). \n
+          The leading dimension of the array B. LDB >= fla_max(1,P). \n
  * @param[out] ALPHA
           ALPHA is REAL array, dimension (N) \n
  * @param[out] BETA
@@ -14559,7 +14559,7 @@ integer ggrqf(integer* m, integer* p, integer* n, T* a, integer* lda, T* taua, T
           If JOBU = 'N', U is not referenced. \n
  * @param[in] LDU
           LDU is INTEGER \n
-          The leading dimension of the array U. LDU >= max(1,M) if
+          The leading dimension of the array U. LDU >= fla_max(1,M) if
           JOBU = 'U'; LDU >= 1 otherwise. \n
  * @param[out] V
           V is REAL array, dimension (LDV,P) \n
@@ -14567,7 +14567,7 @@ integer ggrqf(integer* m, integer* p, integer* n, T* a, integer* lda, T* taua, T
           If JOBV = 'N', V is not referenced. \n
  * @param[in] LDV
           LDV is INTEGER \n
-          The leading dimension of the array V. LDV >= max(1,P) if
+          The leading dimension of the array V. LDV >= fla_max(1,P) if
           JOBV = 'V'; LDV >= 1 otherwise. \n
  * @param[out] Q
           Q is REAL array, dimension (LDQ,N) \n
@@ -14575,11 +14575,11 @@ integer ggrqf(integer* m, integer* p, integer* n, T* a, integer* lda, T* taua, T
           If JOBQ = 'N', Q is not referenced. \n
  * @param[in] LDQ
           LDQ is INTEGER \n
-          The leading dimension of the array Q. LDQ >= max(1,N) if
+          The leading dimension of the array Q. LDQ >= fla_max(1,N) if
           JOBQ = 'Q'; LDQ >= 1 otherwise. \n
  * @param[out]	WORK	
           WORK is REAL array,
-                      dimension (max(3*N,M,P)+N) \n
+                      dimension (fla_max(3*N,M,P)+N) \n
  * @param[out]	IWORK	
           IWORK is INTEGER array, dimension (N) \n
           On exit, IWORK stores the sorting information. More
@@ -14724,7 +14724,7 @@ integer ggsvd(char* jobu, char* jobv, char* jobq, integer* m, integer* n, intege
           See Purpose for details. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,M). \n
+          The leading dimension of the array A. LDA >= fla_max(1,M). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,N) \n
           On entry, the P-by-N matrix B. \n
@@ -14732,7 +14732,7 @@ integer ggsvd(char* jobu, char* jobv, char* jobq, integer* m, integer* n, intege
           See Purpose for details. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B. LDB >= max(1,P). \n
+          The leading dimension of the array B. LDB >= fla_max(1,P). \n
  * @param[out] ALPHA
           ALPHA is REAL array, dimension (N) \n
  * @param[out] BETA
@@ -14756,7 +14756,7 @@ integer ggsvd(char* jobu, char* jobv, char* jobq, integer* m, integer* n, intege
           If JOBU = 'N', U is not referenced. \n
  * @param[in] LDU
           LDU is INTEGER \n
-          The leading dimension of the array U. LDU >= max(1,M) if
+          The leading dimension of the array U. LDU >= fla_max(1,M) if
           JOBU = 'U'; LDU >= 1 otherwise. \n
  * @param[out] V
           V is REAL array, dimension (LDV,P) \n
@@ -14764,7 +14764,7 @@ integer ggsvd(char* jobu, char* jobv, char* jobq, integer* m, integer* n, intege
           If JOBV = 'N', V is not referenced. \n
  * @param[in] LDV
           LDV is INTEGER \n
-          The leading dimension of the array V. LDV >= max(1,P) if
+          The leading dimension of the array V. LDV >= fla_max(1,P) if
           JOBV = 'V'; LDV >= 1 otherwise. \n
  * @param[out] Q
           Q is REAL array, dimension (LDQ,N) \n
@@ -14772,7 +14772,7 @@ integer ggsvd(char* jobu, char* jobv, char* jobq, integer* m, integer* n, intege
           If JOBQ = 'N', Q is not referenced. \n
  * @param[in] LDQ
           LDQ is INTEGER \n
-          The leading dimension of the array Q. LDQ >= max(1,N) if
+          The leading dimension of the array Q. LDQ >= fla_max(1,N) if
           JOBQ = 'Q'; LDQ >= 1 otherwise. \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (MAX(1,LWORK)) \n
@@ -14872,7 +14872,7 @@ integer ggsvd3(char* jobu, char* jobv, char* jobq, integer* m, integer* n, integ
           described in the Purpose section. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,M). \n
+          The leading dimension of the array A. LDA >= fla_max(1,M). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,N) \n
           On entry, the P-by-N matrix B. \n
@@ -14880,7 +14880,7 @@ integer ggsvd3(char* jobu, char* jobv, char* jobq, integer* m, integer* n, integ
           the Purpose section. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B. LDB >= max(1,P). \n
+          The leading dimension of the array B. LDB >= fla_max(1,P). \n
  * @param[in] TOLA
           TOLA is REAL \n
  * @param[in] TOLB
@@ -14905,7 +14905,7 @@ integer ggsvd3(char* jobu, char* jobv, char* jobq, integer* m, integer* n, integ
           If JOBU = 'N', U is not referenced. \n
  * @param[in] LDU
           LDU is INTEGER \n
-          The leading dimension of the array U. LDU >= max(1,M) if
+          The leading dimension of the array U. LDU >= fla_max(1,M) if
           JOBU = 'U'; LDU >= 1 otherwise. \n
  * @param[out] V
           V is REAL array, dimension (LDV,P) \n
@@ -14913,7 +14913,7 @@ integer ggsvd3(char* jobu, char* jobv, char* jobq, integer* m, integer* n, integ
           If JOBV = 'N', V is not referenced. \n
  * @param[in] LDV
           LDV is INTEGER \n
-          The leading dimension of the array V. LDV >= max(1,P) if
+          The leading dimension of the array V. LDV >= fla_max(1,P) if
           JOBV = 'V'; LDV >= 1 otherwise. \n
  * @param[out] Q
           Q is REAL array, dimension (LDQ,N) \n
@@ -14921,14 +14921,14 @@ integer ggsvd3(char* jobu, char* jobv, char* jobq, integer* m, integer* n, integ
           If JOBQ = 'N', Q is not referenced. \n
  * @param[in] LDQ
           LDQ is INTEGER \n
-          The leading dimension of the array Q. LDQ >= max(1,N) if
+          The leading dimension of the array Q. LDQ >= fla_max(1,N) if
           JOBQ = 'Q'; LDQ >= 1 otherwise. \n
  * @param[out]	IWORK	
           IWORK is INTEGER array, dimension (N) \n
  * @param[out]	TAU	
           TAU is REAL array, dimension (N) \n
  * @param[out]	WORK	
-          WORK is REAL array, dimension (max(3*N,M,P)) \n
+          WORK is REAL array, dimension (fla_max(3*N,M,P)) \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -15004,7 +15004,7 @@ integer ggsvp(char* jobu, char* jobv, char* jobq, integer* m, integer* p, intege
           described in the Purpose section. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,M). \n
+          The leading dimension of the array A. LDA >= fla_max(1,M). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,N) \n
           On entry, the P-by-N matrix B. \n
@@ -15012,7 +15012,7 @@ integer ggsvp(char* jobu, char* jobv, char* jobq, integer* m, integer* p, intege
           the Purpose section. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B. LDB >= max(1,P). \n
+          The leading dimension of the array B. LDB >= fla_max(1,P). \n
  * @param[in] TOLA
           TOLA is REAL \n
  * @param[in] TOLB
@@ -15037,7 +15037,7 @@ integer ggsvp(char* jobu, char* jobv, char* jobq, integer* m, integer* p, intege
           If JOBU = 'N', U is not referenced. \n
  * @param[in] LDU
           LDU is INTEGER \n
-          The leading dimension of the array U. LDU >= max(1,M) if
+          The leading dimension of the array U. LDU >= fla_max(1,M) if
           JOBU = 'U'; LDU >= 1 otherwise. \n
  * @param[out] V
           V is REAL array, dimension (LDV,P) \n
@@ -15045,7 +15045,7 @@ integer ggsvp(char* jobu, char* jobv, char* jobq, integer* m, integer* p, intege
           If JOBV = 'N', V is not referenced. \n
  * @param[in] LDV
           LDV is INTEGER \n
-          The leading dimension of the array V. LDV >= max(1,P) if
+          The leading dimension of the array V. LDV >= fla_max(1,P) if
           JOBV = 'V'; LDV >= 1 otherwise. \n
  * @param[out] Q
           Q is REAL array, dimension (LDQ,N) \n
@@ -15053,7 +15053,7 @@ integer ggsvp(char* jobu, char* jobv, char* jobq, integer* m, integer* p, intege
           If JOBQ = 'N', Q is not referenced. \n
  * @param[in] LDQ
           LDQ is INTEGER \n
-          The leading dimension of the array Q. LDQ >= max(1,N) if
+          The leading dimension of the array Q. LDQ >= fla_max(1,N) if
           JOBQ = 'Q'; LDQ >= 1 otherwise. \n
  * @param[out]	IWORK	
           IWORK is INTEGER array, dimension (N) \n
@@ -15217,14 +15217,14 @@ integer gtcon(char* norm, integer* n,  T* dl,  T* d,  T* du,  T* du2, integer* i
           The right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] X
           X is REAL array, dimension (LDX,NRHS) \n
           On entry, the solution matrix X, as computed by SGTTRS.
           On exit, the improved solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] FERR
           FERR is REAL array, dimension (NRHS) \n
           The estimated forward error bound for each solution vector
@@ -15309,7 +15309,7 @@ integer gtrfs(char* trans, integer* n, integer* nrhs,  T* dl,  T* d,  T* du,  T*
           On exit, if INFO = 0, the N by NRHS solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0: successful exit \n
@@ -15443,13 +15443,13 @@ integer gtsv(integer* n, integer* nrhs, T* dl, T* d, T* du, T* b, integer* ldb, 
           The N-by-NRHS right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] X
           X is REAL array, dimension (LDX,NRHS) \n
           If INFO = 0 or INFO = N+1, the N-by-NRHS solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
           RCOND is REAL \n
           The estimate of the reciprocal condition number of the matrix
@@ -15620,7 +15620,7 @@ integer gttrf(integer* n, T* dl, T* d, T* du, T* du2, integer* ipiv, integer* in
           On exit, B is overwritten by the solution vectors X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -15715,13 +15715,13 @@ integer lacn2(integer* n, T* v, T* x, Ta* est, integer* kase, integer* isave)
           triangle or trapezoid is accessed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] B
           B is REAL array, dimension (LDB,N) \n
           On exit, B = A in the locations specified by UPLO. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,M). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,M). \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -15740,7 +15740,7 @@ integer lacpy(char* uplo, integer* m, integer* n,  T* a, integer* lda, T* b, int
      the  infinity norm,  or the  element of  largest absolute value  of a
      real matrix A.
      \return LANGE
-         LANGE = ( max(abs(A(i,j))), NORM = 'M' or 'm'
+         LANGE = ( fla_max(abs(A(i,j))), NORM = 'M' or 'm'
                  (
                  ( norm1(A),         NORM = '1', 'O' or 'o'
                  (
@@ -15751,7 +15751,7 @@ integer lacpy(char* uplo, integer* m, integer* n,  T* a, integer* lda, T* b, int
      where  norm1  denotes the  one norm of a matrix (maximum column sum),
      normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
      normF  denotes the  Frobenius norm of a matrix (square root of sum of
-     squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+     squares).  Note that  fla_max(abs(A(i,j)))  is not a consistent matrix norm.
     \endverbatim  
 
  * @param[in] NORM
@@ -15771,7 +15771,7 @@ integer lacpy(char* uplo, integer* m, integer* n,  T* a, integer* lda, T* b, int
           The m by n matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(M,1). \n
+          The leading dimension of the array A.  LDA >= fla_max(M,1). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (MAX(1,LWORK)), \n
           where LWORK >= M when NORM = 'I'; otherwise, WORK is not
@@ -15800,7 +15800,7 @@ Ta lange(char* norm, integer* m, integer* n,  T* a, integer* lda, Ta* work)
      real symmetric matrix A.
 
      \return LANSY
-        LANSY = ( max(abs(A(i,j))), NORM = 'M' or 'm'
+        LANSY = ( fla_max(abs(A(i,j))), NORM = 'M' or 'm'
                  (
                  ( norm1(A),         NORM = '1', 'O' or 'o'
                  (
@@ -15811,7 +15811,7 @@ Ta lange(char* norm, integer* m, integer* n,  T* a, integer* lda, Ta* work)
      where  norm1  denotes the  one norm of a matrix (maximum column sum),
      normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
      normF  denotes the  Frobenius norm of a matrix (square root of sum of
-     squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+     squares).  Note that  fla_max(abs(A(i,j)))  is not a consistent matrix norm.
     \endverbatim 
 
  * @param[in] NORM
@@ -15839,7 +15839,7 @@ Ta lange(char* norm, integer* m, integer* n,  T* a, integer* lda, Ta* work)
           not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(N,1). \n
+          The leading dimension of the array A.  LDA >= fla_max(N,1). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (MAX(1,LWORK)), \n
           where LWORK >= N when NORM = 'I' or '1' or 'O'; otherwise,
@@ -15867,7 +15867,7 @@ Ta lansy(char* norm, char* uplo, integer* n,  T* a, integer* lda, Ta* work)
      the  infinity norm,  or the  element of  largest absolute value  of a
      trapezoidal or triangular matrix A.
      \return LANTR
-        LANTR = ( max(abs(A(i,j))), NORM = 'M' or 'm'
+        LANTR = ( fla_max(abs(A(i,j))), NORM = 'M' or 'm'
                  (
                  ( norm1(A),         NORM = '1', 'O' or 'o'
                  (
@@ -15877,7 +15877,7 @@ Ta lansy(char* norm, char* uplo, integer* n,  T* a, integer* lda, Ta* work)
      where  norm1  denotes the  one norm of a matrix (maximum column sum),
      normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
      normF  denotes the  Frobenius norm of a matrix (square root of sum of
-     squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+     squares).  Note that  fla_max(abs(A(i,j)))  is not a consistent matrix norm.
     \endverbatim 
 
  * @param[in] NORM
@@ -15916,7 +15916,7 @@ Ta lansy(char* norm, char* uplo, integer* n,  T* a, integer* lda, Ta* work)
           referenced and are assumed to be one. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(M,1). \n
+          The leading dimension of the array A.  LDA >= fla_max(M,1). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (MAX(1,LWORK)), \n
           where LWORK >= M when NORM = 'I'; otherwise, WORK is not
@@ -16075,8 +16075,8 @@ integer lapmt(logical* forwrd, integer* m, integer* n, T* x, integer* ldx, integ
  * @param[in] LDV
           LDV is INTEGER \n
           The leading dimension of the array V. \n
-          If STOREV = 'C' and SIDE = 'L', LDV >= max(1,M); \n
-          if STOREV = 'C' and SIDE = 'R', LDV >= max(1,N); \n
+          If STOREV = 'C' and SIDE = 'L', LDV >= fla_max(1,M); \n
+          if STOREV = 'C' and SIDE = 'R', LDV >= fla_max(1,N); \n
           if STOREV = 'R', LDV >= K. \n
  * @param[in] T
           T is REAL array, dimension (LDT,K) \n
@@ -16091,14 +16091,14 @@ integer lapmt(logical* forwrd, integer* m, integer* n, T* x, integer* ldx, integ
           On exit, C is overwritten by H*C or H**T*C or C*H or C*H**T. \n
  * @param[in] LDC
           LDC is INTEGER \n
-          The leading dimension of the array C. LDC >= max(1,M). \n
+          The leading dimension of the array C. LDC >= fla_max(1,M). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (LDWORK,K) \n
  * @param[in]	LDWORK	
           LDWORK is INTEGER \n
           The leading dimension of the array WORK. \n
-          If SIDE = 'L', LDWORK >= max(1,N); \n
-          if SIDE = 'R', LDWORK >= max(1,M). \n
+          If SIDE = 'L', LDWORK >= fla_max(1,N); \n
+          if SIDE = 'R', LDWORK >= fla_max(1,M). \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -16296,7 +16296,7 @@ integer lartgs(T* x, T* y, T* sigma, T* cs, T* sn)
  * @param[in] LDA
           LDA is INTEGER \n
           The leading dimension of the array A. \n
-          If TYPE = 'G', 'L', 'U', 'H', LDA >= max(1,M); \n
+          If TYPE = 'G', 'L', 'U', 'H', LDA >= fla_max(1,M); \n
              TYPE = 'B', LDA >= KL+1; \n
              TYPE = 'Q', LDA >= KU+1; \n
              TYPE = 'Z', LDA >= 2*KL+KU+1. \n
@@ -16368,7 +16368,7 @@ integer lasrt(char* id, integer* n, T* d, integer* info)
      where  x( i) = X( 1 + ( i - 1)*INCX). The value of  sumsq  is
      assumed to be non-negative and  scl  returns the value
 
-        scl = max( scale, abs( x( i))).
+        scl = fla_max( scale, abs( x( i))).
 
      scale and sumsq must be supplied in SCALE and SUMSQ and
      scl and smsq are overwritten on SCALE and SUMSQ respectively.
@@ -16447,7 +16447,7 @@ integer lassq(integer* n, T* x, integer* incx, Ta* scale, Ta* sumsq)
           The N-by-N orthogonal matrix Q. \n
  * @param[in] LDQ
           LDQ is INTEGER \n
-          The leading dimension of the array Q. LDQ >= max(1,N). \n
+          The leading dimension of the array Q. LDQ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (N-1) \n
  * @param[out]	INFO	
@@ -16524,7 +16524,7 @@ integer upgtr(char* uplo, integer* n,  T* ap,  T* tau, T* q, integer* ldq, T *wo
           On exit, C is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. \n
  * @param[in] LDC
           LDC is INTEGER \n
-          The leading dimension of the array C. LDC >= max(1,M). \n
+          The leading dimension of the array C. LDC >= fla_max(1,M). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension \n
                                    (N) if SIDE = 'L' \n
@@ -17018,7 +17018,7 @@ integer uncsd2by1(char* jobu1, char* jobu2, char* jobv1t, integer* m, integer* p
           On exit, the M-by-N matrix Q. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The first dimension of the array A. LDA >= max(1,M). \n
+          The first dimension of the array A. LDA >= fla_max(1,M). \n
  * @param[in] TAU
           TAU is REAL array, dimension (K) \n
           TAU(i) must contain the scalar factor of the elementary
@@ -17028,7 +17028,7 @@ integer uncsd2by1(char* jobu1, char* jobu2, char* jobv1t, integer* m, integer* p
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK. LWORK >= max(1,N).
+          The dimension of the array WORK. LWORK >= fla_max(1,N).
           For optimum performance LWORK >= N*NB, where NB is the
           optimal blocksize. \n
  \n
@@ -17087,7 +17087,7 @@ integer ungql(integer* m, integer* n, integer* k, T* a, integer* lda,  T* tau, T
           On exit, the M-by-N matrix Q. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The first dimension of the array A. LDA >= max(1,M). \n
+          The first dimension of the array A. LDA >= fla_max(1,M). \n
  * @param[in] TAU
           TAU is REAL array, dimension (K) \n
           TAU(i) must contain the scalar factor of the elementary
@@ -17097,7 +17097,7 @@ integer ungql(integer* m, integer* n, integer* k, T* a, integer* lda,  T* tau, T
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK. LWORK >= max(1,M).
+          The dimension of the array WORK. LWORK >= fla_max(1,M).
           For optimum performance LWORK >= M*NB, where NB is the
           optimal blocksize. \n
  \n
@@ -17171,8 +17171,8 @@ integer ungrq(integer* m, integer* n, integer* k, T* a, integer* lda, T* tau, T*
  * @param[in] LDA
           LDA is INTEGER \n
           The leading dimension of the array A. \n
-          If SIDE = 'L', LDA >= max(1,M); \n
-          if SIDE = 'R', LDA >= max(1,N). \n
+          If SIDE = 'L', LDA >= fla_max(1,M); \n
+          if SIDE = 'R', LDA >= fla_max(1,N). \n
  * @param[in] TAU
           TAU is REAL array, dimension (K) \n
           TAU(i) must contain the scalar factor of the elementary
@@ -17183,15 +17183,15 @@ integer ungrq(integer* m, integer* n, integer* k, T* a, integer* lda, T* tau, T*
           On exit, C is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. \n
  * @param[in] LDC
           LDC is INTEGER \n
-          The leading dimension of the array C. LDC >= max(1,M). \n
+          The leading dimension of the array C. LDC >= fla_max(1,M). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
           The dimension of the array WORK. \n
-          If SIDE = 'L', LWORK >= max(1,N); \n
-          if SIDE = 'R', LWORK >= max(1,M). \n
+          If SIDE = 'L', LWORK >= fla_max(1,N); \n
+          if SIDE = 'R', LWORK >= fla_max(1,M). \n
           For good performance, LWORK should generally be larger. \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
@@ -17265,7 +17265,7 @@ integer unmql(char* side, char* trans, integer* m, integer* n, integer* k,  T* a
           SGERQF in the last k rows of its array argument A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,K). \n
+          The leading dimension of the array A. LDA >= fla_max(1,K). \n
  * @param[in] TAU
           TAU is REAL array, dimension (K) \n
           TAU(i) must contain the scalar factor of the elementary
@@ -17276,15 +17276,15 @@ integer unmql(char* side, char* trans, integer* m, integer* n, integer* k,  T* a
           On exit, C is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. \n
  * @param[in] LDC
           LDC is INTEGER \n
-          The leading dimension of the array C. LDC >= max(1,M). \n
+          The leading dimension of the array C. LDC >= fla_max(1,M). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
           The dimension of the array WORK. \n
-          If SIDE = 'L', LWORK >= max(1,N); \n
-          if SIDE = 'R', LWORK >= max(1,M). \n
+          If SIDE = 'L', LWORK >= fla_max(1,N); \n
+          if SIDE = 'R', LWORK >= fla_max(1,M). \n
           For good performance, LWORK should generally be larger. \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
@@ -17367,7 +17367,7 @@ integer unmrq(char* side, char* trans, integer* m, integer* n, integer* k, T* a,
           A is modified by the routine but restored on exit. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,K). \n
+          The leading dimension of the array A. LDA >= fla_max(1,K). \n
  * @param[in] TAU
           TAU is REAL array, dimension (K) \n
           TAU(i) must contain the scalar factor of the elementary
@@ -17378,15 +17378,15 @@ integer unmrq(char* side, char* trans, integer* m, integer* n, integer* k, T* a,
           On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q. \n
  * @param[in] LDC
           LDC is INTEGER \n
-          The leading dimension of the array C. LDC >= max(1,M). \n
+          The leading dimension of the array C. LDC >= fla_max(1,M). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
           The dimension of the array WORK. \n
-          If SIDE = 'L', LWORK >= max(1,N); \n
-          if SIDE = 'R', LWORK >= max(1,M). \n
+          If SIDE = 'L', LWORK >= fla_max(1,N); \n
+          if SIDE = 'R', LWORK >= fla_max(1,M). \n
           For good performance, LWORK should generally be larger. \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
@@ -17441,7 +17441,7 @@ integer unmrz(char* side, char* trans, integer* m, integer* n, integer* k, integ
           On exit, the N-by-N orthogonal matrix Q. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,N). \n
+          The leading dimension of the array A. LDA >= fla_max(1,N). \n
  * @param[in] TAU
           TAU is REAL array, dimension (N-1) \n
           TAU(i) must contain the scalar factor of the elementary
@@ -17529,7 +17529,7 @@ integer unghr(integer* n, integer* ilo, integer* ihi, T* a, integer* lda,  T* ta
  * @param[in] LDA
           LDA is INTEGER \n
           The leading dimension of the array A. \n
-          LDA >= max(1,M) if SIDE = 'L'; LDA >= max(1,N) if SIDE = 'R'. \n
+          LDA >= fla_max(1,M) if SIDE = 'L'; LDA >= fla_max(1,N) if SIDE = 'R'. \n
  * @param[in] TAU
           TAU is REAL array, dimension \n
                                (M-1) if SIDE = 'L' \n
@@ -17542,15 +17542,15 @@ integer unghr(integer* n, integer* ilo, integer* ihi, T* a, integer* lda,  T* ta
           On exit, C is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. \n
  * @param[in] LDC
           LDC is INTEGER \n
-          The leading dimension of the array C. LDC >= max(1,M). \n
+          The leading dimension of the array C. LDC >= fla_max(1,M). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
           The dimension of the array WORK. \n
-          If SIDE = 'L', LWORK >= max(1,N); \n
-          if SIDE = 'R', LWORK >= max(1,M). \n
+          If SIDE = 'L', LWORK >= fla_max(1,N); \n
+          if SIDE = 'R', LWORK >= fla_max(1,M). \n
           For optimum performance LWORK >= N*NB if SIDE = 'L', and
           LWORK >= M*NB if SIDE = 'R', where NB is the optimal
           blocksize. \n
@@ -17607,7 +17607,7 @@ integer unmhr(char* side, char* trans, integer* m, integer* n, integer* ilo, int
           A = U**T*U or A = L*L**T of the band matrix A, stored in the
           first KD+1 rows of the array.  The j-th column of U or L is
           stored in the j-th column of the array AB as follows:
-          if UPLO ='U', AB(kd+1+i-j,j) = U(i,j) for max(1,j-kd)<=i<=j;
+          if UPLO ='U', AB(kd+1+i-j,j) = U(i,j) for fla_max(1,j-kd)<=i<=j;
           if UPLO ='L', AB(1+i-j,j)    = L(i,j) for j<=i<=min(n,j+kd). \n
  * @param[in] LDAB
           LDAB is INTEGER \n
@@ -17673,7 +17673,7 @@ integer pbcon(char* uplo, integer* n, integer* kd,  T* ab, integer* ldab, Ta* an
           The upper or lower triangle of the symmetric band matrix A,
           stored in the first KD+1 rows of the array.  The j-th column
           of A is stored in the j-th column of the array AB as follows: \n
-          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
  * @param[in] LDAB
           LDAB is INTEGER \n
@@ -17741,7 +17741,7 @@ integer pbequ(char* uplo, integer* n, integer* kd,  T* ab, integer* ldab, T* s, 
           The upper or lower triangle of the symmetric band matrix A,
           stored in the first KD+1 rows of the array.  The j-th column
           of A is stored in the j-th column of the array AB as follows: \n
-          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
  * @param[in] LDAB
           LDAB is INTEGER \n
@@ -17759,14 +17759,14 @@ integer pbequ(char* uplo, integer* n, integer* kd,  T* ab, integer* ldab, T* s, 
           The right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] X
           X is REAL array, dimension (LDX,NRHS) \n
           On entry, the solution matrix X, as computed by SPBTRS. \n
           On exit, the improved solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] FERR
           FERR is REAL array, dimension (NRHS) \n
           The estimated forward error bound for each solution vector
@@ -17842,7 +17842,7 @@ integer pbrfs(char* uplo, integer* n, integer* kd, integer* nrhs,  T* ab, intege
           matrix A, stored in the first kd+1 rows of the array. The
           j-th column of A is stored in the j-th column of the array AB
           as follows: \n
-          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
  \n
           On exit, if INFO = 0, the factor S from the split Cholesky
@@ -17907,7 +17907,7 @@ integer pbstf(char* uplo, integer* n, integer* kb, T* bb, integer* ldbb, integer
           matrix A, stored in the first KD+1 rows of the array.  The
           j-th column of A is stored in the j-th column of the array AB
           as follows: \n
-          if UPLO = 'U', AB(KD+1+i-j,j) = A(i,j) for max(1,j-KD)<=i<=j; \n
+          if UPLO = 'U', AB(KD+1+i-j,j) = A(i,j) for fla_max(1,j-KD)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(N,j+KD). \n
           See below for further details. \n
  \n
@@ -17923,7 +17923,7 @@ integer pbstf(char* uplo, integer* n, integer* kb, T* bb, integer* ldbb, integer
           On exit, if INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -18028,7 +18028,7 @@ integer pbsv(char* uplo, integer* n, integer* kd, integer* nrhs, T* ab, integer*
           if FACT = 'F' and EQUED = 'Y', then A must contain the
           equilibrated matrix diag(S)*A*diag(S).  The j-th column of A
           is stored in the j-th column of the array AB as follows: \n
-          if UPLO = 'U', AB(KD+1+i-j,j) = A(i,j) for max(1,j-KD)<=i<=j; \n
+          if UPLO = 'U', AB(KD+1+i-j,j) = A(i,j) for fla_max(1,j-KD)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(N,j+KD). \n
           See below for further details. \n
  \n
@@ -18078,7 +18078,7 @@ integer pbsv(char* uplo, integer* n, integer* kd, integer* nrhs, T* ab, integer*
           B is overwritten by diag(S) * B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] X
           X is REAL array, dimension (LDX,NRHS) \n
           If INFO = 0 or INFO = N+1, the N-by-NRHS solution matrix X to
@@ -18087,7 +18087,7 @@ integer pbsv(char* uplo, integer* n, integer* kd, integer* nrhs, T* ab, integer*
           equilibrated system is inv(diag(S))*X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
           RCOND is REAL \n
           The estimate of the reciprocal condition number of the matrix
@@ -18176,7 +18176,7 @@ integer pbsvx(char* fact, char* uplo, integer* n, integer* kd, integer* nrhs, T*
           matrix A, stored in the first KD+1 rows of the array.  The
           j-th column of A is stored in the j-th column of the array AB
           as follows: \n
-          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
  \n
           On exit, if INFO = 0, the triangular factor U or L from the
@@ -18232,7 +18232,7 @@ integer pbtrf(char* uplo, integer* n, integer* kd, T* ab, integer *ldab, integer
           A = U**T*U or A = L*L**T of the band matrix A, stored in the
           first KD+1 rows of the array.  The j-th column of U or L is
           stored in the j-th column of the array AB as follows: \n
-          if UPLO ='U', AB(kd+1+i-j,j) = U(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO ='U', AB(kd+1+i-j,j) = U(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO ='L', AB(1+i-j,j)    = L(i,j) for j<=i<=min(n,j+kd). \n
  * @param[in] LDAB
           LDAB is INTEGER \n
@@ -18243,7 +18243,7 @@ integer pbtrf(char* uplo, integer* n, integer* kd, T* ab, integer *ldab, integer
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -18404,7 +18404,7 @@ integer pftri(char* transr, char* uplo, integer* n, T* a, integer* info)
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -18444,7 +18444,7 @@ integer pftrs(char* transr, char* uplo, integer* n, integer* nrhs,  T* a, T* b, 
           A = U**T*U or A = L*L**T, as computed by SPOTRF. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] ANORM
           ANORM is REAL \n
           The 1-norm (or infinity-norm) of the symmetric matrix A. \n
@@ -18500,7 +18500,7 @@ integer pocon(char* uplo, integer* n,  T* a, integer* lda, Ta* anorm, Ta* rcond,
           are referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] S
           S is REAL array, dimension (N) \n
           If INFO = 0, S contains the scale factors for A. \n
@@ -18564,7 +18564,7 @@ integer poequ(integer* n,  T* a, integer* lda, Ta* s, Ta* scond, Ta* amax, integ
           are referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] S
           S is REAL array, dimension (N) \n
           If INFO = 0, S contains the scale factors for A. \n
@@ -18630,27 +18630,27 @@ integer poequb(integer* n, T* a, integer* lda, Ta* s, Ta* scond, Ta* amax, integ
           not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is REAL array, dimension (LDAF,N) \n
           The triangular factor U or L from the Cholesky factorization
           A = U**T*U or A = L*L**T, as computed by SPOTRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] B
           B is REAL array, dimension (LDB,NRHS) \n
           The right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] X
           X is REAL array, dimension (LDX,NRHS) \n
           On entry, the solution matrix X, as computed by SPOTRS.
           On exit, the improved solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] FERR
           FERR is REAL array, dimension (NRHS) \n
           The estimated forward error bound for each solution vector
@@ -18738,14 +18738,14 @@ integer porfs(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, T* af, 
            not referenced. \n
   * @param[in] LDA
            LDA is INTEGER \n
-           The leading dimension of the array A.  LDA >= max(1,N). \n
+           The leading dimension of the array A.  LDA >= fla_max(1,N). \n
   * @param[in] AF
            AF is REAL array, dimension (LDAF,N) \n
            The triangular factor U or L from the Cholesky factorization
            A = U**T*U or A = L*L**T, as computed by SPOTRF. \n
   * @param[in] LDAF
            LDAF is INTEGER \n
-           The leading dimension of the array AF.  LDAF >= max(1,N). \n
+           The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
   * @param[in,out] S
            S is REAL array, dimension (N) \n
            The scale factors for A.  If EQUED = 'Y', A is multiplied on
@@ -18764,14 +18764,14 @@ integer porfs(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, T* af, 
            The right hand side matrix B. \n
   * @param[in] LDB
            LDB is INTEGER \n
-           The leading dimension of the array B.  LDB >= max(1,N). \n
+           The leading dimension of the array B.  LDB >= fla_max(1,N). \n
   * @param[in,out] X
            X is REAL array, dimension (LDX,NRHS) \n
            On entry, the solution matrix X, as computed by SGETRS.
            On exit, the improved solution matrix X. \n
   * @param[in] LDX
            LDX is INTEGER \n
-           The leading dimension of the array X.  LDX >= max(1,N). \n
+           The leading dimension of the array X.  LDX >= fla_max(1,N). \n
   * @param[out] RCOND
            RCOND is REAL \n
            Reciprocal scaled condition number. This is an estimate of the
@@ -19002,14 +19002,14 @@ integer porfsx(char* uplo, char* equed, integer* n, integer* nrhs,  T* a, intege
           factorization A = U**T*U or A = L*L**T. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,NRHS) \n
           On entry, the N-by-NRHS right hand side matrix B.
           On exit, if INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -19119,7 +19119,7 @@ integer posv(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, T* b, in
           diag(S)*A*diag(S). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] AF
           AF is REAL array, dimension (LDAF,N) \n
           If FACT = 'F', then AF is an input argument and on entry
@@ -19140,7 +19140,7 @@ integer posv(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, T* b, in
           equilibrated matrix). \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in,out] EQUED
           EQUED is CHARACTER*1 \n
           Specifies the form of equilibration that was done. \n
@@ -19162,7 +19162,7 @@ integer posv(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, T* b, in
           B is overwritten by diag(S) * B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] X
           X is REAL array, dimension (LDX,NRHS) \n
           If INFO = 0 or INFO = N+1, the N-by-NRHS solution matrix X to
@@ -19171,7 +19171,7 @@ integer posv(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, T* b, in
           equilibrated system is inv(diag(S))*X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
           RCOND is REAL \n
           The estimate of the reciprocal condition number of the matrix
@@ -19334,7 +19334,7 @@ integer posvx(char* fact, char* uplo, integer* n, integer* nrhs, T* a, integer* 
           diag(S)*A*diag(S). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] AF
           AF is REAL array, dimension (LDAF,N) \n
           If FACT = 'F', then AF is an input argument and on entry
@@ -19355,7 +19355,7 @@ integer posvx(char* fact, char* uplo, integer* n, integer* nrhs, T* a, integer* 
           equilibrated matrix). \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in,out] EQUED
           EQUED is CHARACTER*1 \n
           Specifies the form of equilibration that was done. \n
@@ -19385,7 +19385,7 @@ integer posvx(char* fact, char* uplo, integer* n, integer* nrhs, T* a, integer* 
           if EQUED = 'Y', B is overwritten by diag(S)*B; \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] X
           X is REAL array, dimension (LDX,NRHS) \n
           If INFO = 0, the N-by-NRHS solution matrix X to the original
@@ -19394,7 +19394,7 @@ integer posvx(char* fact, char* uplo, integer* n, integer* nrhs, T* a, integer* 
           inv(diag(S))*X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
           RCOND is REAL \n
           Reciprocal scaled condition number.  This is an estimate of the
@@ -19638,7 +19638,7 @@ integer posvxx(char* fact, char* uplo, integer* n, integer* nrhs, T* a, integer*
            factorization A = U**T*U or A = L*L**T. \n
   * @param[in] LDA
            LDA is INTEGER \n
-           The leading dimension of the array A.  LDA >= max(1,N). \n
+           The leading dimension of the array A.  LDA >= fla_max(1,N). \n
   * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -19682,14 +19682,14 @@ integer potrf2(char* uplo, integer* n, T* a, integer* lda, integer* info)
           A = U**T*U or A = L*L**T, as computed by SPOTRF. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,NRHS) \n
           On entry, the right hand side matrix B.
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -19863,14 +19863,14 @@ integer ppequ(char* uplo, integer* n,  T* ap, Ta* s, Ta* scond, Ta* amax, intege
           The right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] X
           X is REAL array, dimension (LDX,NRHS) \n
           On entry, the solution matrix X, as computed by SPPTRS.
           On exit, the improved solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] FERR
           FERR is REAL array, dimension (NRHS) \n
           The estimated forward error bound for each solution vector
@@ -19956,7 +19956,7 @@ integer pprfs(char* uplo, integer* n, integer* nrhs,  T* ap,  T* afp,  T* b, int
           On exit, if INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -20102,7 +20102,7 @@ integer ppsv(char* uplo, integer* n, integer* nrhs, T* ap, T* b, integer* ldb, i
           B is overwritten by diag(S) * B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] X
           X is REAL array, dimension (LDX,NRHS) \n
           If INFO = 0 or INFO = N+1, the N-by-NRHS solution matrix X to
@@ -20111,7 +20111,7 @@ integer ppsv(char* uplo, integer* n, integer* nrhs, T* ap, T* b, integer* ldb, i
           equilibrated system is inv(diag(S))*X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
           RCOND is REAL \n
           The estimate of the reciprocal condition number of the matrix
@@ -20295,7 +20295,7 @@ integer pptri(char* uplo, integer* n, T* ap, integer* info)
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -20350,7 +20350,7 @@ integer pptrs(char* uplo, integer* n, integer* nrhs,  T* ap, T* b, integer* ldb,
           factorization as above. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] PIV
           PIV is INTEGER array, dimension (N) \n
           PIV is such that the nonzero entries are P( PIV(K), K) = 1. \n
@@ -20502,7 +20502,7 @@ integer ptcon(integer* n, Ta* d, T* e, Ta* anorm, Ta* rcond, Ta* rwork, integer*
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          COMPZ = 'V' or 'I', LDZ >= max(1,N). \n
+          COMPZ = 'V' or 'I', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (4*N) \n
  * @param[out]	INFO	
@@ -20567,14 +20567,14 @@ integer pteqr(char* compz, integer* n, Ta* d, Ta* e, T* z, integer* ldz, Ta* wor
           The right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] X
           X is REAL array, dimension (LDX,NRHS) \n
           On entry, the solution matrix X, as computed by SPTTRS.
           On exit, the improved solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] FERR
           FERR is REAL array, dimension (NRHS) \n
           The forward error bound for each solution vector
@@ -20648,7 +20648,7 @@ integer ptrfs(char *uplo, integer* n, integer* nrhs, Ta* d, T* e, Ta* df, T* ef,
           On exit, if INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -20752,13 +20752,13 @@ integer ptsv(integer* n, integer* nrhs, Ta* d, T* e, T* b, integer* ldb, integer
           The N-by-NRHS right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] X
           X is REAL array, dimension (LDX,NRHS) \n
           If INFO = 0 of INFO = N+1, the N-by-NRHS solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
           RCOND is REAL \n
           The reciprocal condition number of the matrix A.  If RCOND
@@ -20896,7 +20896,7 @@ integer pttrf(integer* n, Ta* d, T* e, integer* info)
           On exit, the solution vectors, X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N).  \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N).  \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0: successful exit \n
@@ -20948,7 +20948,7 @@ integer pttrs(char *uplo, integer* n, integer* nrhs, Ta* d, T* e, T* b, integer*
           matrix A, stored in the first KD+1 rows of the array.  The
           j-th column of A is stored in the j-th column of the array AB
           as follows: \n
-          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
  \n
           On exit, AB is overwritten by values generated during the
@@ -20972,7 +20972,7 @@ integer pttrs(char *uplo, integer* n, integer* nrhs, Ta* d, T* e, T* b, integer*
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension LWORK \n
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
@@ -21044,7 +21044,7 @@ integer hbev_2stage(char* jobz, char* uplo, integer* n, integer* kd, T* ab, inte
           matrix A, stored in the first KD+1 rows of the array.  The
           j-th column of A is stored in the j-th column of the array AB
           as follows: \n
-          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
  \n
           On exit, AB is overwritten by values generated during the
@@ -21068,9 +21068,9 @@ integer hbev_2stage(char* jobz, char* uplo, integer* n, integer* kd, T* ab, inte
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
-          WORK is REAL array, dimension (max(1,3*N-2)) \n
+          WORK is REAL array, dimension (fla_max(1,3*N-2)) \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -21133,7 +21133,7 @@ integer hbev(char* jobz, char* uplo, integer* n, integer* kd, T* ab, integer* ld
           matrix A, stored in the first KD+1 rows of the array.  The
           j-th column of A is stored in the j-th column of the array AB
           as follows: \n
-          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
  \n
           On exit, AB is overwritten by values generated during the
@@ -21157,7 +21157,7 @@ integer hbev(char* jobz, char* uplo, integer* n, integer* kd, T* ab, integer* ld
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension LWORK \n
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
@@ -21252,7 +21252,7 @@ integer hbevd_2stage(char* jobz, char* uplo, integer* n, integer* kd, T* ab, int
           matrix A, stored in the first KD+1 rows of the array.  The
           j-th column of A is stored in the j-th column of the array AB
           as follows: \n
-          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
  \n
           On exit, AB is overwritten by values generated during the
@@ -21276,7 +21276,7 @@ integer hbevd_2stage(char* jobz, char* uplo, integer* n, integer* kd, T* ab, int
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array,
                                          dimension (LWORK) \n
@@ -21370,7 +21370,7 @@ integer hbevd(char* jobz, char* uplo, integer* n, integer* kd, T* ab, integer* l
           matrix A, stored in the first KD+1 rows of the array.  The
           j-th column of A is stored in the j-th column of the array AB
           as follows: \n
-          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
  \n
           On exit, AB is overwritten by values generated during the
@@ -21390,7 +21390,7 @@ integer hbevd(char* jobz, char* uplo, integer* n, integer* kd, T* ab, integer* l
  * @param[in] LDQ
           LDQ is INTEGER \n
           The leading dimension of the array Q.  If JOBZ = 'V', then
-          LDQ >= max(1,N). \n
+          LDQ >= fla_max(1,N). \n
  * @param[in] VL
           VL is REAL \n
           If RANGE='V', the lower bound of the interval to
@@ -21420,7 +21420,7 @@ integer hbevd(char* jobz, char* uplo, integer* n, integer* kd, T* ab, integer* l
           when it is determined to lie in an interval [a,b]
           of width less than or equal to \n
  \n
-                  ABSTOL + EPS *   max( |a|,|b|) , \n
+                  ABSTOL + EPS *   fla_max( |a|,|b|) , \n
  \n
           where EPS is the machine precision.  If ABSTOL is less than
           or equal to zero, then  EPS*|T|  will be used in its place,
@@ -21445,7 +21445,7 @@ integer hbevd(char* jobz, char* uplo, integer* n, integer* kd, T* ab, integer* l
           The first M elements contain the selected eigenvalues in
           ascending order. \n
  * @param[out] Z
-          Z is REAL array, dimension (LDZ, max(1,M)) \n
+          Z is REAL array, dimension (LDZ, fla_max(1,M)) \n
           If JOBZ = 'V', then if INFO = 0, the first M columns of Z
           contain the orthonormal eigenvectors of the matrix A
           corresponding to the selected eigenvalues, with the i-th
@@ -21454,13 +21454,13 @@ integer hbevd(char* jobz, char* uplo, integer* n, integer* kd, T* ab, integer* l
           contains the latest approximation to the eigenvector, and the
           index of the eigenvector is returned in IFAIL. \n
           If JOBZ = 'N', then Z is not referenced. \n
-          Note: the user must ensure that at least max(1,M) columns are
+          Note: the user must ensure that at least fla_max(1,M) columns are
           supplied in the array Z; if RANGE = 'V', the exact value of M
           is not known in advance and an upper bound must be used. \n
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (LWORK) \n
  * @param[in]	LWORK	
@@ -21546,7 +21546,7 @@ integer hbevx_2stage(char* jobz, char* range, char* uplo, integer* n, integer* k
           matrix A, stored in the first KD+1 rows of the array.  The
           j-th column of A is stored in the j-th column of the array AB
           as follows: \n
-          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
  \n
           On exit, AB is overwritten by values generated during the
@@ -21566,7 +21566,7 @@ integer hbevx_2stage(char* jobz, char* range, char* uplo, integer* n, integer* k
  * @param[in] LDQ
           LDQ is INTEGER \n
           The leading dimension of the array Q.  If JOBZ = 'V', then
-          LDQ >= max(1,N). \n
+          LDQ >= fla_max(1,N). \n
  * @param[in] VL
           VL is REAL \n
           If RANGE='V', the lower bound of the interval to
@@ -21596,7 +21596,7 @@ integer hbevx_2stage(char* jobz, char* range, char* uplo, integer* n, integer* k
           when it is determined to lie in an interval [a,b]
           of width less than or equal to \n
  \n
-                  ABSTOL + EPS *   max( |a|,|b|) , \n
+                  ABSTOL + EPS *   fla_max( |a|,|b|) , \n
  \n
           where EPS is the machine precision.  If ABSTOL is less than
           or equal to zero, then  EPS*|T|  will be used in its place,
@@ -21621,7 +21621,7 @@ integer hbevx_2stage(char* jobz, char* range, char* uplo, integer* n, integer* k
           The first M elements contain the selected eigenvalues in
           ascending order. \n
  * @param[out] Z
-          Z is REAL array, dimension (LDZ, max(1,M)) \n
+          Z is REAL array, dimension (LDZ, fla_max(1,M)) \n
           If JOBZ = 'V', then if INFO = 0, the first M columns of Z
           contain the orthonormal eigenvectors of the matrix A
           corresponding to the selected eigenvalues, with the i-th
@@ -21630,13 +21630,13 @@ integer hbevx_2stage(char* jobz, char* range, char* uplo, integer* n, integer* k
           contains the latest approximation to the eigenvector, and the
           index of the eigenvector is returned in IFAIL. \n
           If JOBZ = 'N', then Z is not referenced. \n
-          Note: the user must ensure that at least max(1,M) columns are
+          Note: the user must ensure that at least fla_max(1,M) columns are
           supplied in the array Z; if RANGE = 'V', the exact value of M
           is not known in advance and an upper bound must be used. \n
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (7*N) \n
  * @param[out]	IWORK	
@@ -21708,7 +21708,7 @@ integer hbevx(char* jobz, char* range, char* uplo, integer* n, integer* kd, T* a
           matrix A, stored in the first ka+1 rows of the array.  The
           j-th column of A is stored in the j-th column of the array AB
           as follows: \n
-          if UPLO = 'U', AB(ka+1+i-j,j) = A(i,j) for max(1,j-ka)<=i<=j; \n
+          if UPLO = 'U', AB(ka+1+i-j,j) = A(i,j) for fla_max(1,j-ka)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+ka). \n
  \n
           On exit, the transformed matrix X**T*A*X, stored in the same
@@ -21731,7 +21731,7 @@ integer hbevx(char* jobz, char* range, char* uplo, integer* n, integer* kd, T* a
  * @param[in] LDX
           LDX is INTEGER \n
           The leading dimension of the array X.
-          LDX >= max(1,N) if VECT = 'V'; LDX >= 1 otherwise. \n
+          LDX >= fla_max(1,N) if VECT = 'V'; LDX >= 1 otherwise. \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (2*N) \n
  * @param[out]	INFO	
@@ -21788,7 +21788,7 @@ integer hbgst(char* vect, char* uplo, integer* n, integer* ka, integer* kb, T* a
           matrix A, stored in the first ka+1 rows of the array.  The
           j-th column of A is stored in the j-th column of the array AB
           as follows: \n
-          if UPLO = 'U', AB(ka+1+i-j,j) = A(i,j) for max(1,j-ka)<=i<=j; \n
+          if UPLO = 'U', AB(ka+1+i-j,j) = A(i,j) for fla_max(1,j-ka)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+ka). \n
  \n
           On exit, the contents of AB are destroyed. \n
@@ -21801,7 +21801,7 @@ integer hbgst(char* vect, char* uplo, integer* n, integer* ka, integer* kb, T* a
           matrix B, stored in the first kb+1 rows of the array.  The
           j-th column of B is stored in the j-th column of the array BB
           as follows: \n
-          if UPLO = 'U', BB(kb+1+i-j,j) = B(i,j) for max(1,j-kb)<=i<=j; \n
+          if UPLO = 'U', BB(kb+1+i-j,j) = B(i,j) for fla_max(1,j-kb)<=i<=j; \n
           if UPLO = 'L', BB(1+i-j,j)    = B(i,j) for j<=i<=min(n,j+kb). \n
  \n
           On exit, the factor S from the split Cholesky factorization
@@ -21895,7 +21895,7 @@ integer hbgv(char* jobz, char* uplo, integer* n, integer* ka, integer* kb, T* ab
           matrix A, stored in the first ka+1 rows of the array.  The
           j-th column of A is stored in the j-th column of the array AB
           as follows: \n
-          if UPLO = 'U', AB(ka+1+i-j,j) = A(i,j) for max(1,j-ka)<=i<=j; \n
+          if UPLO = 'U', AB(ka+1+i-j,j) = A(i,j) for fla_max(1,j-ka)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+ka). \n
  \n
           On exit, the contents of AB are destroyed. \n
@@ -21908,7 +21908,7 @@ integer hbgv(char* jobz, char* uplo, integer* n, integer* ka, integer* kb, T* ab
           matrix B, stored in the first kb+1 rows of the array.  The
           j-th column of B is stored in the j-th column of the array BB
           as follows: \n
-          if UPLO = 'U', BB(ka+1+i-j,j) = B(i,j) for max(1,j-kb)<=i<=j; \n
+          if UPLO = 'U', BB(ka+1+i-j,j) = B(i,j) for fla_max(1,j-kb)<=i<=j; \n
           if UPLO = 'L', BB(1+i-j,j)    = B(i,j) for j<=i<=min(n,j+kb). \n
  \n
           On exit, the factor S from the split Cholesky factorization
@@ -21929,7 +21929,7 @@ integer hbgv(char* jobz, char* uplo, integer* n, integer* ka, integer* kb, T* ab
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
@@ -22029,7 +22029,7 @@ integer hbgvd(char* jobz, char* uplo, integer* n, integer* ka, integer* kb, T* a
           matrix A, stored in the first ka+1 rows of the array.  The
           j-th column of A is stored in the j-th column of the array AB
           as follows: \n
-          if UPLO = 'U', AB(ka+1+i-j,j) = A(i,j) for max(1,j-ka)<=i<=j; \n
+          if UPLO = 'U', AB(ka+1+i-j,j) = A(i,j) for fla_max(1,j-ka)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+ka). \n
  \n
           On exit, the contents of AB are destroyed. \n
@@ -22042,7 +22042,7 @@ integer hbgvd(char* jobz, char* uplo, integer* n, integer* ka, integer* kb, T* a
           matrix B, stored in the first kb+1 rows of the array.  The
           j-th column of B is stored in the j-th column of the array BB
           as follows: \n
-          if UPLO = 'U', BB(ka+1+i-j,j) = B(i,j) for max(1,j-kb)<=i<=j; \n
+          if UPLO = 'U', BB(ka+1+i-j,j) = B(i,j) for fla_max(1,j-kb)<=i<=j; \n
           if UPLO = 'L', BB(1+i-j,j)    = B(i,j) for j<=i<=min(n,j+kb). \n
  \n
           On exit, the factor S from the split Cholesky factorization
@@ -22059,7 +22059,7 @@ integer hbgvd(char* jobz, char* uplo, integer* n, integer* ka, integer* kb, T* a
  * @param[in] LDQ
           LDQ is INTEGER \n
           The leading dimension of the array Q.  If JOBZ = 'N',
-          LDQ >= 1. If JOBZ = 'V', LDQ >= max(1,N). \n
+          LDQ >= 1. If JOBZ = 'V', LDQ >= fla_max(1,N). \n
  * @param[in] VL
           VL is REAL \n
           If RANGE='V', the lower bound of the interval to
@@ -22089,7 +22089,7 @@ integer hbgvd(char* jobz, char* uplo, integer* n, integer* ka, integer* kb, T* a
           when it is determined to lie in an interval [a,b]
           of width less than or equal to \n
  \n
-                  ABSTOL + EPS *   max( |a|,|b|) , \n
+                  ABSTOL + EPS *   fla_max( |a|,|b|) , \n
  \n
           where EPS is the machine precision.  If ABSTOL is less than
           or equal to zero, then  EPS*|T|  will be used in its place,
@@ -22118,7 +22118,7 @@ integer hbgvd(char* jobz, char* uplo, integer* n, integer* ka, integer* kb, T* a
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (7*N) \n
  * @param[out]	IWORK	
@@ -22186,7 +22186,7 @@ integer hbgvx(char* jobz, char* range, char* uplo, integer* n, integer* ka, inte
           matrix A, stored in the first KD+1 rows of the array.  The
           j-th column of A is stored in the j-th column of the array AB
           as follows: \n
-          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
           On exit, the diagonal elements of AB are overwritten by the
           diagonal elements of the tridiagonal matrix T; if KD > 0, the
@@ -22306,8 +22306,8 @@ integer hbtrd(char* vect, char* uplo, integer* n, integer* kd, T* ab, integer* l
            LDA is INTEGER \n
            On entry, LDA specifies the first dimension of A as declared
            in  the  calling  (sub)  program.   When  TRANS = 'N' or 'n'
-           then  LDA must be at least  max( 1, n), otherwise  LDA must
-           be at least  max( 1, k).
+           then  LDA must be at least  fla_max( 1, n), otherwise  LDA must
+           be at least  fla_max( 1, k).
            Unchanged on exit. \n
  * @param[in] BETA
            BETA is REAL \n
@@ -22443,7 +22443,7 @@ integer hpcon(char* uplo, integer* n,  T* ap,  integer* ipiv, Ta* anorm, Ta* rco
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (3*N) \n
  * @param[out]	INFO	
@@ -22521,7 +22521,7 @@ integer hpev(char* jobz, char* uplo, integer* n, T* ap, Ta* w, T* z, integer* ld
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1) returns the required LWORK. \n
@@ -22644,7 +22644,7 @@ integer hpevd(char* jobz, char* uplo, integer* n, T* ap, Ta* w, T* z, integer* l
           when it is determined to lie in an interval [a,b]
           of width less than or equal to \n
  \n
-                  ABSTOL + EPS *   max( |a|,|b|) , \n
+                  ABSTOL + EPS *   fla_max( |a|,|b|) , \n
  \n
           where EPS is the machine precision.  If ABSTOL is less than
           or equal to zero, then  EPS*|T|  will be used in its place,
@@ -22668,7 +22668,7 @@ integer hpevd(char* jobz, char* uplo, integer* n, T* ap, Ta* w, T* z, integer* l
           W is REAL array, dimension (N) \n
           If INFO = 0, the selected eigenvalues in ascending order. \n
  * @param[out] Z
-          Z is REAL array, dimension (LDZ, max(1,M)) \n
+          Z is REAL array, dimension (LDZ, fla_max(1,M)) \n
           If JOBZ = 'V', then if INFO = 0, the first M columns of Z
           contain the orthonormal eigenvectors of the matrix A
           corresponding to the selected eigenvalues, with the i-th
@@ -22677,13 +22677,13 @@ integer hpevd(char* jobz, char* uplo, integer* n, T* ap, Ta* w, T* z, integer* l
           contains the latest approximation to the eigenvector, and the
           index of the eigenvector is returned in IFAIL. \n
           If JOBZ = 'N', then Z is not referenced. \n
-          Note: the user must ensure that at least max(1,M) columns are
+          Note: the user must ensure that at least fla_max(1,M) columns are
           supplied in the array Z; if RANGE = 'V', the exact value of M
           is not known in advance and an upper bound must be used. \n
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (8*N) \n
  * @param[out]	IWORK	
@@ -22838,7 +22838,7 @@ integer hpgst(integer* itype, char* uplo, integer* n, T* ap, T* bp, integer* inf
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (3*N) \n
  * @param[out]	INFO	
@@ -22937,7 +22937,7 @@ integer hpgv(integer* itype, char* jobz, char* uplo, integer* n, T* ap, T* bp, T
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1) returns the required LWORK. \n
@@ -23079,7 +23079,7 @@ integer hpgvd(integer* itype, char* jobz, char* uplo, integer* n, T* ap, T* bp, 
           when it is determined to lie in an interval [a,b]
           of width less than or equal to \n
  \n
-                  ABSTOL + EPS *   max( |a|,|b|) , \n
+                  ABSTOL + EPS *   fla_max( |a|,|b|) , \n
  \n
           where EPS is the machine precision.  If ABSTOL is less than
           or equal to zero, then  EPS*|T|  will be used in its place,
@@ -23100,7 +23100,7 @@ integer hpgvd(integer* itype, char* jobz, char* uplo, integer* n, T* ap, T* bp, 
           On normal exit, the first M elements contain the selected
           eigenvalues in ascending order. \n
  * @param[out] Z
-          Z is REAL array, dimension (LDZ, max(1,M)) \n
+          Z is REAL array, dimension (LDZ, fla_max(1,M)) \n
           If JOBZ = 'N', then Z is not referenced. \n
           If JOBZ = 'V', then if INFO = 0, the first M columns of Z
           contain the orthonormal eigenvectors of the matrix A
@@ -23113,13 +23113,13 @@ integer hpgvd(integer* itype, char* jobz, char* uplo, integer* n, T* ap, T* bp, 
           If an eigenvector fails to converge, then that column of Z
           contains the latest approximation to the eigenvector, and the
           index of the eigenvector is returned in IFAIL.
-          Note: the user must ensure that at least max(1,M) columns are
+          Note: the user must ensure that at least fla_max(1,M) columns are
           supplied in the array Z; if RANGE = 'V', the exact value of M
           is not known in advance and an upper bound must be used. \n
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (8*N) \n
  * @param[out]	IWORK	
@@ -23217,7 +23217,7 @@ integer hpgvx(integer* itype, char* jobz, char* range, char* uplo, integer* n, T
           On exit, if INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -23341,13 +23341,13 @@ integer hpsv(char* uplo, integer* n, integer* nrhs, T* ap, integer* ipiv, T* b, 
           The N-by-NRHS right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] X
           X is REAL array, dimension (LDX,NRHS) \n
           If INFO = 0 or INFO = N+1, the N-by-NRHS solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
           RCOND is REAL \n
           The estimate of the reciprocal condition number of the matrix
@@ -23633,7 +23633,7 @@ integer hptri(char* uplo, integer* n, T* ap,  integer* ipiv, T* work, integer* i
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -23889,20 +23889,20 @@ integer stebz(char* range, char* order, integer* n, T* vl, T* vu, integer* il, i
           The first M elements contain the selected eigenvalues in
           ascending order. \n
  * @param[out] Z
-          Z is REAL array, dimension (LDZ, max(1,M)) \n
+          Z is REAL array, dimension (LDZ, fla_max(1,M)) \n
           If JOBZ = 'V', and if INFO = 0, then the first M columns of Z
           contain the orthonormal eigenvectors of the matrix T
           corresponding to the selected eigenvalues, with the i-th
           column of Z holding the eigenvector associated with W(i). \n
           If JOBZ = 'N', then Z is not referenced. \n
-          Note: the user must ensure that at least max(1,M) columns are
+          Note: the user must ensure that at least fla_max(1,M) columns are
           supplied in the array Z; if RANGE = 'V', the exact value of M
           is not known in advance and an upper bound must be used.
           Supplying N columns is always safe. \n
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', then LDZ >= max(1,N). \n
+          JOBZ = 'V', then LDZ >= fla_max(1,N). \n
  * @param[out] ISUPPZ
           ISUPPZ is INTEGER array, dimension ( 2*max(1,M)) \n
           The support of the eigenvectors in Z, i.e., the indices
@@ -23916,8 +23916,8 @@ integer stebz(char* range, char* order, integer* n, T* vl, T* vu, integer* il, i
           (and minimal) LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK. LWORK >= max(1,18*N)
-          if JOBZ = 'V', and LWORK >= max(1,12*N) if JOBZ = 'N'. \n
+          The dimension of the array WORK. LWORK >= fla_max(1,18*N)
+          if JOBZ = 'V', and LWORK >= fla_max(1,12*N) if JOBZ = 'N'. \n
           If LWORK = -1, then a workspace query is assumed; the routine
           only calculates the optimal size of the WORK array, returns
           this value as the first entry of the WORK array, and no error
@@ -23927,8 +23927,8 @@ integer stebz(char* range, char* order, integer* n, T* vl, T* vu, integer* il, i
           On exit, if INFO = 0, IWORK(1) returns the optimal LIWORK. \n
  * @param[in]	LIWORK	
           LIWORK is INTEGER \n
-          The dimension of the array IWORK.  LIWORK >= max(1,10*N)
-          if the eigenvectors are desired, and LIWORK >= max(1,8*N)
+          The dimension of the array IWORK.  LIWORK >= fla_max(1,10*N)
+          if the eigenvectors are desired, and LIWORK >= fla_max(1,8*N)
           if only the eigenvalues are to be computed. \n
           If LIWORK = -1, then a workspace query is assumed; the
           routine only calculates the optimal size of the IWORK array,
@@ -24013,7 +24013,7 @@ integer stegr(char* jobz, char* range, integer* n, Ta* d, Ta* e, Ta* vl, Ta* vu,
           iterate after MAXITS iterations. \n
  * @param[in] LDZ
           LDZ is INTEGER \n
-          The leading dimension of the array Z.  LDZ >= max(1,N). \n
+          The leading dimension of the array Z.  LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (5*N) \n
  * @param[out]	IWORK	
@@ -24117,9 +24117,9 @@ integer sterf(integer* n, T* d, T* e, integer* info)
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
-          WORK is REAL array, dimension (max(1,2*N-2))
+          WORK is REAL array, dimension (fla_max(1,2*N-2))
           If JOBZ = 'N', WORK is not referenced. \n
  * @param[out]	INFO	
           INFO is INTEGER \n
@@ -24179,7 +24179,7 @@ integer stev(char* jobz, integer* n, T* d, T* e, T* z, integer* ldz, T* work, in
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array,
                                          dimension (LWORK) \n
@@ -24293,7 +24293,7 @@ integer stevd(char* jobz, integer* n, T* d, T* e, T* z, integer* ldz, T* work, i
           On exit, D may be multiplied by a constant factor chosen
           to avoid over/underflow in computing the eigenvalues. \n
  * @param[in,out] E
-          E is REAL array, dimension (max(1,N-1)) \n
+          E is REAL array, dimension (fla_max(1,N-1)) \n
           On entry, the (n-1) subdiagonal elements of the tridiagonal
           matrix A in elements 1 to N-1 of E. \n
           On exit, E may be multiplied by a constant factor chosen
@@ -24327,7 +24327,7 @@ integer stevd(char* jobz, integer* n, T* d, T* e, T* z, integer* ldz, T* work, i
           when it is determined to lie in an interval [a,b]
           of width less than or equal to \n
  \n
-                  ABSTOL + EPS *   max( |a|,|b|) , \n
+                  ABSTOL + EPS *   fla_max( |a|,|b|) , \n
  \n
           where EPS is the machine precision.  If ABSTOL is less than
           or equal to zero, then  EPS*|T|  will be used in its place,
@@ -24357,18 +24357,18 @@ integer stevd(char* jobz, integer* n, T* d, T* e, T* z, integer* ldz, T* work, i
           The first M elements contain the selected eigenvalues in
           ascending order. \n
  * @param[out] Z
-          Z is REAL array, dimension (LDZ, max(1,M)) \n
+          Z is REAL array, dimension (LDZ, fla_max(1,M)) \n
           If JOBZ = 'V', then if INFO = 0, the first M columns of Z
           contain the orthonormal eigenvectors of the matrix A
           corresponding to the selected eigenvalues, with the i-th
           column of Z holding the eigenvector associated with W(i).
-          Note: the user must ensure that at least max(1,M) columns are
+          Note: the user must ensure that at least fla_max(1,M) columns are
           supplied in the array Z; if RANGE = 'V', the exact value of M
           is not known in advance and an upper bound must be used. \n
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out] ISUPPZ
           ISUPPZ is INTEGER array, dimension ( 2*max(1,M)) \n
           The support of the eigenvectors in Z, i.e., the indices
@@ -24447,7 +24447,7 @@ integer stevr(char* jobz, char* range, integer* n, T* d, T* e, T* vl, T* vu, int
           On exit, D may be multiplied by a constant factor chosen
           to avoid over/underflow in computing the eigenvalues. \n
  * @param[in,out] E
-          E is REAL array, dimension (max(1,N-1)) \n
+          E is REAL array, dimension (fla_max(1,N-1)) \n
           On entry, the (n-1) subdiagonal elements of the tridiagonal
           matrix A in elements 1 to N-1 of E. \n
           On exit, E may be multiplied by a constant factor chosen
@@ -24481,7 +24481,7 @@ integer stevr(char* jobz, char* range, integer* n, T* d, T* e, T* vl, T* vu, int
           when it is determined to lie in an interval [a,b]
           of width less than or equal to \n
  \n
-                  ABSTOL + EPS *   max( |a|,|b|) , \n
+                  ABSTOL + EPS *   fla_max( |a|,|b|) , \n
  \n
           where EPS is the machine precision.  If ABSTOL is less
           than or equal to zero, then  EPS*|T|  will be used in
@@ -24506,7 +24506,7 @@ integer stevr(char* jobz, char* range, integer* n, T* d, T* e, T* vl, T* vu, int
           The first M elements contain the selected eigenvalues in
           ascending order. \n
  * @param[out] Z
-          Z is REAL array, dimension (LDZ, max(1,M)) \n
+          Z is REAL array, dimension (LDZ, fla_max(1,M)) \n
           If JOBZ = 'V', then if INFO = 0, the first M columns of Z
           contain the orthonormal eigenvectors of the matrix A
           corresponding to the selected eigenvalues, with the i-th
@@ -24516,13 +24516,13 @@ integer stevr(char* jobz, char* range, integer* n, T* d, T* e, T* vl, T* vu, int
           eigenvector, and the index of the eigenvector is returned
           in IFAIL. \n
           If JOBZ = 'N', then Z is not referenced.
-          Note: the user must ensure that at least max(1,M) columns are
+          Note: the user must ensure that at least fla_max(1,M) columns are
           supplied in the array Z; if RANGE = 'V', the exact value of M
           is not known in advance and an upper bound must be used. \n
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
 * @param[out]	WORK	
           WORK is REAL array, dimension (5*N) \n
 * @param[out]	IWORK	
@@ -24590,7 +24590,7 @@ integer stevx(char* jobz, char* range, integer* n, T* d, T* e, T* vl, T* vu, int
                If UPLO = 'L': factor L in the subdiagonal part of A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] E
           E is REAL array, dimension (N) \n
           On entry, contains the superdiagonal (or subdiagonal)
@@ -24664,7 +24664,7 @@ integer sycon_3(char* uplo, integer* n, T* a, integer* lda, T* e, integer* ipiv,
           obtain the factor U or L as computed by SSYTRF. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -24728,7 +24728,7 @@ integer sycon(char* uplo, integer* n,  T* a, integer* lda,  integer* ipiv, Ta* a
           obtain the factor U or L as computed by SSYTRF. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -24777,7 +24777,7 @@ integer syconv(char* uplo, char* way, integer* n, T* a, integer* lda, integer* i
           computed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,N). \n
+          The leading dimension of the array A. LDA >= fla_max(1,N). \n
  * @param[out] S
           S is REAL array, dimension (N) \n
           If INFO = 0, S contains the scale factors for A. \n
@@ -24848,7 +24848,7 @@ integer syequb(char* uplo, integer* n,  T* a, integer* lda, Ta* s, Ta* scond, Ta
            diagonal, is destroyed. \n
   * @param[in] LDA
            LDA is INTEGER \n
-           The leading dimension of the array A.  LDA >= max(1,N). \n
+           The leading dimension of the array A.  LDA >= fla_max(1,N). \n
   * @param[out] W
            W is REAL array, dimension (N) \n
            If INFO = 0, the eigenvalues in ascending order. \n
@@ -24861,9 +24861,9 @@ integer syequb(char* uplo, integer* n,  T* a, integer* lda, Ta* s, Ta* scond, Ta
           otherwise   \n
           If JOBZ = 'N' and N > 1, LWORK must be queried.
                                    LWORK = MAX(1, dimension) where \n
-                                   dimension = max(stage1,stage2) + (KD+1)*N + 2*N \n
+                                   dimension = fla_max(stage1,stage2) + (KD+1)*N + 2*N \n
                                              = N*KD + N*max(KD+1,FACTOPTNB) 
-                                               + max(2*KD*KD, KD*NTHREADS) 
+                                               + fla_max(2*KD*KD, KD*NTHREADS) 
                                                + (KD+1)*N + 2*N \n
                                    where KD is the blocking size of the reduction,
                                    FACTOPTNB is the blocking used by the QR or LQ
@@ -24936,7 +24936,7 @@ integer syev_2stage(char* jobz, char* uplo, integer* n, T* a, integer* lda, T* w
           diagonal, is destroyed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] W
           W is REAL array, dimension (N) \n
           If INFO = 0, the eigenvalues in ascending order. \n
@@ -24950,9 +24950,9 @@ integer syev_2stage(char* jobz, char* uplo, integer* n, T* a, integer* lda, T* w
           If N <= 1,               LWORK must be at least 1. \n
           If JOBZ = 'N' and N > 1, LWORK must be queried.
                                    LWORK = MAX(1, dimension) where
-                                   dimension = max(stage1,stage2) + (KD+1)*N + 2*N+1
+                                   dimension = fla_max(stage1,stage2) + (KD+1)*N + 2*N+1
                                              = N*KD + N*max(KD+1,FACTOPTNB) 
-                                               + max(2*KD*KD, KD*NTHREADS) 
+                                               + fla_max(2*KD*KD, KD*NTHREADS) 
                                                + (KD+1)*N + 2*N+1
                                    where KD is the blocking size of the reduction,
                                    FACTOPTNB is the blocking used by the QR or LQ
@@ -25099,7 +25099,7 @@ integer syevd_2stage(char* jobz, char* uplo, integer* n, T* a, integer* lda, T* 
           destroyed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] VL
           VL is REAL \n
           If RANGE='V', the lower bound of the interval to
@@ -25129,7 +25129,7 @@ integer syevd_2stage(char* jobz, char* uplo, integer* n, T* a, integer* lda, T* 
           when it is determined to lie in an interval [a,b]
           of width less than or equal to \n
  \n
-                  ABSTOL + EPS *   max( |a|,|b|) , \n
+                  ABSTOL + EPS *   fla_max( |a|,|b|) , \n
  \n
           where EPS is the machine precision.  If ABSTOL is less than
           or equal to zero, then  EPS*|T|  will be used in its place,
@@ -25159,20 +25159,20 @@ integer syevd_2stage(char* jobz, char* uplo, integer* n, T* a, integer* lda, T* 
           The first M elements contain the selected eigenvalues in
           ascending order. \n
  * @param[out] Z
-          Z is REAL array, dimension (LDZ, max(1,M)) \n
+          Z is REAL array, dimension (LDZ, fla_max(1,M)) \n
           If JOBZ = 'V', then if INFO = 0, the first M columns of Z
           contain the orthonormal eigenvectors of the matrix A
           corresponding to the selected eigenvalues, with the i-th
           column of Z holding the eigenvector associated with W(i). \n
           If JOBZ = 'N', then Z is not referenced. \n
-          Note: the user must ensure that at least max(1,M) columns are
+          Note: the user must ensure that at least fla_max(1,M) columns are
           supplied in the array Z; if RANGE = 'V', the exact value of M
           is not known in advance and an upper bound must be used.
           Supplying N columns is always safe. \n
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out] ISUPPZ
           ISUPPZ is INTEGER array, dimension ( 2*max(1,M)) \n
           The support of the eigenvectors in Z, i.e., the indices
@@ -25190,9 +25190,9 @@ integer syevd_2stage(char* jobz, char* uplo, integer* n, T* a, integer* lda, T* 
           The dimension of the array WORK. \n
           If JOBZ = 'N' and N > 1, LWORK must be queried.
                                    LWORK = MAX(1, 26*N, dimension) where
-                                   dimension = max(stage1,stage2) + (KD+1)*N + 5*N
+                                   dimension = fla_max(stage1,stage2) + (KD+1)*N + 5*N
                                              = N*KD + N*max(KD+1,FACTOPTNB) 
-                                               + max(2*KD*KD, KD*NTHREADS) 
+                                               + fla_max(2*KD*KD, KD*NTHREADS) 
                                                + (KD+1)*N + 5*N
                                    where KD is the blocking size of the reduction,
                                    FACTOPTNB is the blocking used by the QR or LQ
@@ -25210,7 +25210,7 @@ integer syevd_2stage(char* jobz, char* uplo, integer* n, T* a, integer* lda, T* 
           On exit, if INFO = 0, IWORK(1) returns the optimal LWORK. \n
  * @param[in]	LIWORK	
           LIWORK is INTEGER \n
-          The dimension of the array IWORK.  LIWORK >= max(1,10*N). \n
+          The dimension of the array IWORK.  LIWORK >= fla_max(1,10*N). \n
  \n
           If LIWORK = -1, then a workspace query is assumed; the
           routine only calculates the optimal size of the IWORK array,
@@ -25272,7 +25272,7 @@ integer syevr_2stage(char* jobz, char* range, char* uplo, integer* n, T* a, inte
           destroyed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] VL
           VL is REAL \n
           If RANGE='V', the lower bound of the interval to
@@ -25302,7 +25302,7 @@ integer syevr_2stage(char* jobz, char* range, char* uplo, integer* n, T* a, inte
           when it is determined to lie in an interval [a,b]
           of width less than or equal to \n
  \n
-                  ABSTOL + EPS *   max( |a|,|b|) , \n
+                  ABSTOL + EPS *   fla_max( |a|,|b|) , \n
  \n
           where EPS is the machine precision.  If ABSTOL is less than
           or equal to zero, then  EPS*|T|  will be used in its place,
@@ -25327,7 +25327,7 @@ integer syevr_2stage(char* jobz, char* range, char* uplo, integer* n, T* a, inte
           On normal exit, the first M elements contain the selected
           eigenvalues in ascending order. \n
  * @param[out] Z
-          Z is REAL array, dimension (LDZ, max(1,M)) \n
+          Z is REAL array, dimension (LDZ, fla_max(1,M)) \n
           If JOBZ = 'V', then if INFO = 0, the first M columns of Z
           contain the orthonormal eigenvectors of the matrix A
           corresponding to the selected eigenvalues, with the i-th
@@ -25336,13 +25336,13 @@ integer syevr_2stage(char* jobz, char* range, char* uplo, integer* n, T* a, inte
           contains the latest approximation to the eigenvector, and the
           index of the eigenvector is returned in IFAIL. \n
           If JOBZ = 'N', then Z is not referenced.
-          Note: the user must ensure that at least max(1,M) columns are
+          Note: the user must ensure that at least fla_max(1,M) columns are
           supplied in the array Z; if RANGE = 'V', the exact value of M
           is not known in advance and an upper bound must be used. \n
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
@@ -25352,9 +25352,9 @@ integer syevr_2stage(char* jobz, char* range, char* uplo, integer* n, T* a, inte
           otherwise   \n
           If JOBZ = 'N' and N > 1, LWORK must be queried.
                                    LWORK = MAX(1, 8*N, dimension) where
-                                   dimension = max(stage1,stage2) + (KD+1)*N + 3*N
+                                   dimension = fla_max(stage1,stage2) + (KD+1)*N + 3*N
                                              = N*KD + N*max(KD+1,FACTOPTNB) 
-                                               + max(2*KD*KD, KD*NTHREADS) 
+                                               + fla_max(2*KD*KD, KD*NTHREADS) 
                                                + (KD+1)*N + 3*N
                                    where KD is the blocking size of the reduction,
                                    FACTOPTNB is the blocking used by the QR or LQ
@@ -25430,7 +25430,7 @@ integer syevx_2stage(char* jobz, char* range, char* uplo, integer* n, T* a, inte
           destroyed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] VL
           VL is REAL \n
           If RANGE='V', the lower bound of the interval to
@@ -25460,7 +25460,7 @@ integer syevx_2stage(char* jobz, char* range, char* uplo, integer* n, T* a, inte
           when it is determined to lie in an interval [a,b]
           of width less than or equal to \n
  \n
-                  ABSTOL + EPS *   max( |a|,|b|) , \n
+                  ABSTOL + EPS *   fla_max( |a|,|b|) , \n
  \n
           where EPS is the machine precision.  If ABSTOL is less than
           or equal to zero, then  EPS*|T|  will be used in its place,
@@ -25485,7 +25485,7 @@ integer syevx_2stage(char* jobz, char* range, char* uplo, integer* n, T* a, inte
           On normal exit, the first M elements contain the selected
           eigenvalues in ascending order. \n
  * @param[out] Z
-          Z is REAL array, dimension (LDZ, max(1,M)) \n
+          Z is REAL array, dimension (LDZ, fla_max(1,M)) \n
           If JOBZ = 'V', then if INFO = 0, the first M columns of Z
           contain the orthonormal eigenvectors of the matrix A
           corresponding to the selected eigenvalues, with the i-th
@@ -25494,13 +25494,13 @@ integer syevx_2stage(char* jobz, char* range, char* uplo, integer* n, T* a, inte
           contains the latest approximation to the eigenvector, and the
           index of the eigenvector is returned in IFAIL. \n
           If JOBZ = 'N', then Z is not referenced. \n
-          Note: the user must ensure that at least max(1,M) columns are
+          Note: the user must ensure that at least fla_max(1,M) columns are
           supplied in the array Z; if RANGE = 'V', the exact value of M
           is not known in advance and an upper bound must be used. \n
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
@@ -25590,7 +25590,7 @@ integer syevx(char* jobz, char* range, char* uplo, integer* n, T* a, integer* ld
           diagonal, is destroyed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB, N) \n
           On entry, the symmetric positive definite matrix B.
@@ -25604,7 +25604,7 @@ integer syevx(char* jobz, char* range, char* uplo, integer* n, T* a, integer* ld
           factorization B = U**T*U or B = L*L**T. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] W
           W is REAL array, dimension (N) \n
           If INFO = 0, the eigenvalues in ascending order. \n
@@ -25617,9 +25617,9 @@ integer syevx(char* jobz, char* range, char* uplo, integer* n, T* a, integer* ld
           otherwise   \n
           If JOBZ = 'N' and N > 1, LWORK must be queried.
                                    LWORK = MAX(1, dimension) where
-                                   dimension = max(stage1,stage2) + (KD+1)*N + 2*N
+                                   dimension = fla_max(stage1,stage2) + (KD+1)*N + 2*N
                                              = N*KD + N*max(KD+1,FACTOPTNB) 
-                                               + max(2*KD*KD, KD*NTHREADS) 
+                                               + fla_max(2*KD*KD, KD*NTHREADS) 
                                                + (KD+1)*N + 2*N
                                    where KD is the blocking size of the reduction,
                                    FACTOPTNB is the blocking used by the QR or LQ
@@ -25700,7 +25700,7 @@ integer sygv_2stage(integer* itype, char* jobz, char* uplo, integer* n, T* a, in
           diagonal, is destroyed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB, N) \n
           On entry, the symmetric positive definite matrix B. \n
@@ -25714,7 +25714,7 @@ integer sygv_2stage(integer* itype, char* jobz, char* uplo, integer* n, T* a, in
           factorization B = U**T*U or B = L*L**T. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] W
           W is REAL array, dimension (N) \n
           If INFO = 0, the eigenvalues in ascending order. \n
@@ -25723,7 +25723,7 @@ integer sygv_2stage(integer* itype, char* jobz, char* uplo, integer* n, T* a, in
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The length of the array WORK.  LWORK >= max(1,3*N-1).
+          The length of the array WORK.  LWORK >= fla_max(1,3*N-1).
           For optimal efficiency, LWORK >= (NB+2)*N,
           where NB is the blocksize for SSYTRD returned by ILAENV. \n
  \n
@@ -25806,7 +25806,7 @@ integer sygv(integer* itype, char* jobz, char* uplo, integer* n, T* a, integer* 
           diagonal, is destroyed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB, N) \n
           On entry, the symmetric matrix B.  If UPLO = 'U', the
@@ -25820,7 +25820,7 @@ integer sygv(integer* itype, char* jobz, char* uplo, integer* n, T* a, integer* 
           factorization B = U**T*U or B = L*L**T. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] W
           W is REAL array, dimension (N) \n
           If INFO = 0, the eigenvalues in ascending order.
@@ -25929,7 +25929,7 @@ integer sygvd(integer* itype, char* jobz, char* uplo, integer* n, T* a, integer*
           destroyed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB, N) \n
           On entry, the symmetric matrix B.  If UPLO = 'U', the
@@ -25943,7 +25943,7 @@ integer sygvd(integer* itype, char* jobz, char* uplo, integer* n, T* a, integer*
           factorization B = U**T*U or B = L*L**T. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in] VL
           VL is REAL \n
           If RANGE='V', the lower bound of the interval to
@@ -25973,7 +25973,7 @@ integer sygvd(integer* itype, char* jobz, char* uplo, integer* n, T* a, integer*
           when it is determined to lie in an interval [a,b]
           of width less than or equal to \n
  \n
-                  ABSTOL + EPS *   max( |a|,|b|) , \n
+                  ABSTOL + EPS *   fla_max( |a|,|b|) , \n
  \n
           where EPS is the machine precision.  If ABSTOL is less than
           or equal to zero, then  EPS*|T|  will be used in its place,
@@ -25996,7 +25996,7 @@ integer sygvd(integer* itype, char* jobz, char* uplo, integer* n, T* a, integer*
           On normal exit, the first M elements contain the selected
           eigenvalues in ascending order. \n
  * @param[out] Z
-          Z is REAL array, dimension (LDZ, max(1,M)) \n
+          Z is REAL array, dimension (LDZ, fla_max(1,M)) \n
           If JOBZ = 'N', then Z is not referenced. \n
           If JOBZ = 'V', then if INFO = 0, the first M columns of Z
           contain the orthonormal eigenvectors of the matrix A
@@ -26009,13 +26009,13 @@ integer sygvd(integer* itype, char* jobz, char* uplo, integer* n, T* a, integer*
           If an eigenvector fails to converge, then that column of Z
           contains the latest approximation to the eigenvector, and the
           index of the eigenvector is returned in IFAIL. \n
-          Note: the user must ensure that at least max(1,M) columns are
+          Note: the user must ensure that at least fla_max(1,M) columns are
           supplied in the array Z; if RANGE = 'V', the exact value of M
           is not known in advance and an upper bound must be used. \n
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out] IFAIL
           IFAIL is INTEGER array, dimension (N) \n
           If JOBZ = 'V', then if INFO = 0, the first M elements of
@@ -26027,7 +26027,7 @@ integer sygvd(integer* itype, char* jobz, char* uplo, integer* n, T* a, integer*
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The length of the array WORK.  LWORK >= max(1,8*N). \n
+          The length of the array WORK.  LWORK >= fla_max(1,8*N). \n
           For optimal efficiency, LWORK >= (NB+3)*N,
           where NB is the blocksize for SSYTRD returned by ILAENV. \n
  \n
@@ -26096,7 +26096,7 @@ integer sygvx(integer* itype, char* jobz, char* range, char* uplo, integer* n, T
           not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is REAL array, dimension (LDAF,N) \n
           The factored form of the matrix A.  AF contains the block
@@ -26105,7 +26105,7 @@ integer sygvx(integer* itype, char* jobz, char* range, char* uplo, integer* n, T
           A = L*D*L**T as computed by SSYTRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -26115,14 +26115,14 @@ integer sygvx(integer* itype, char* jobz, char* range, char* uplo, integer* n, T
           The right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] X
           X is REAL array, dimension (LDX,NRHS) \n
           On entry, the solution matrix X, as computed by SSYTRS.
           On exit, the improved solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] FERR
           FERR is REAL array, dimension (NRHS) \n
           The estimated forward error bound for each solution vector
@@ -26209,7 +26209,7 @@ integer syrfs(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda,  T* af
           triangular part of A is not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is REAL array, dimension (LDAF,N) \n
           The factored form of the matrix A.  AF contains the block
@@ -26218,7 +26218,7 @@ integer syrfs(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda,  T* af
           L*D*L**T as computed by SSYTRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -26241,14 +26241,14 @@ integer syrfs(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda,  T* af
           The right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] X
           X is REAL array, dimension (LDX,NRHS) \n
           On entry, the solution matrix X, as computed by SGETRS.
           On exit, the improved solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
           RCOND is REAL \n
           Reciprocal scaled condition number.  This is an estimate of the
@@ -26483,7 +26483,7 @@ integer syrfsx(char* uplo, char* equed, integer* n, integer* nrhs, T* a, integer
           when UPLO  is 'L' (or 'U'). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] TB
           TB is REAL array, dimension (LTB) \n
           On exit, details of the LU factorization of the band matrix. \n
@@ -26512,7 +26512,7 @@ integer syrfsx(char* uplo, char* equed, integer* n, integer* nrhs, T* a, integer
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL workspace of size LWORK \n
  * @param[in]	LWORK	
@@ -26584,7 +26584,7 @@ integer sysv_aa_2stage(char* uplo, integer* n, integer* nrhs, T* a, integer* lda
           SSYTRF. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           On exit, it contains the details of the interchanges, i.e.,
@@ -26596,7 +26596,7 @@ integer sysv_aa_2stage(char* uplo, integer* n, integer* nrhs, T* a, integer* lda
           On exit, if INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
@@ -26688,7 +26688,7 @@ integer sysv_aa(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, integ
           For more info see the description of DSYTRF_RK routine. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] E
           E is REAL array, dimension (N) \n
           On exit, contains the output computed by the factorization
@@ -26715,7 +26715,7 @@ integer sysv_aa(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, integ
           On exit, if INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension ( MAX(1,LWORK) ). \n
           Work array used in the factorization stage.
@@ -26723,7 +26723,7 @@ integer sysv_aa(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, integ
  * @param[in]	LWORK	
           LWORK is INTEGER \n
           The length of WORK.  LWORK >= 1. For best performance
-          of factorization stage LWORK >= max(1,N*NB), where NB is
+          of factorization stage LWORK >= fla_max(1,N*NB), where NB is
           the optimal blocksize for DSYTRF_RK. \n
  \n
           If LWORK = -1, then a workspace query is assumed;
@@ -26815,7 +26815,7 @@ integer sysv_rk(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, T* e,
           SSYTRF_ROOK. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D,
@@ -26844,14 +26844,14 @@ integer sysv_rk(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, T* e,
           On exit, if INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
           The length of WORK.  LWORK >= 1, and for best performance
-          LWORK >= max(1,N*NB), where NB is the optimal blocksize for
+          LWORK >= fla_max(1,N*NB), where NB is the optimal blocksize for
           SSYTRF_ROOK. \n
  \n
           TRS will be done with Level 2 BLAS \n
@@ -26923,7 +26923,7 @@ integer sysv_rook(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, int
           SSYTRF. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D, as
@@ -26941,7 +26941,7 @@ integer sysv_rook(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, int
           On exit, if INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] WORK
           WORK is REAL array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
@@ -26951,7 +26951,7 @@ integer sysv_rook(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, int
  * @param[in]	LWORK	
           LWORK is INTEGER \n
           The length of WORK.  LWORK >= 1, and for best performance
-          LWORK >= max(1,N*NB), where NB is the optimal blocksize for
+          LWORK >= fla_max(1,N*NB), where NB is the optimal blocksize for
           SSYTRF. \n
           for LWORK < N, TRS will be done with Level BLAS 2 \n
           for LWORK >= N, TRS will be done with Level BLAS 3 \n
@@ -27046,7 +27046,7 @@ integer sysv(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, integer*
           not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] AF
           AF is REAL array, dimension (LDAF,N) \n
           If FACT = 'F', then AF is an input argument and on entry
@@ -27060,7 +27060,7 @@ integer sysv(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, integer*
           A = U*D*U**T or A = L*D*L**T. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in,out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           If FACT = 'F', then IPIV is an input argument and on entry
@@ -27082,13 +27082,13 @@ integer sysv(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, integer*
           The N-by-NRHS right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] X
           X is REAL array, dimension (LDX,NRHS) \n
           If INFO = 0 or INFO = N+1, the N-by-NRHS solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
           RCOND is REAL \n
           The estimate of the reciprocal condition number of the matrix
@@ -27116,8 +27116,8 @@ integer sysv(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, integer*
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The length of WORK.  LWORK >= max(1,3*N), and for best
-          performance, when FACT = 'N', LWORK >= max(1,3*N,N*NB), where
+          The length of WORK.  LWORK >= fla_max(1,3*N), and for best
+          performance, when FACT = 'N', LWORK >= fla_max(1,3*N,N*NB), where
           NB is the optimal blocksize for SSYTRF. \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
@@ -27262,7 +27262,7 @@ integer sysvx(char* fact, char* uplo, integer* n, integer* nrhs,  T* a, integer*
           diag(S)*A*diag(S). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] AF
           AF is REAL array, dimension (LDAF,N) \n
           If FACT = 'F', then AF is an input argument and on entry
@@ -27276,7 +27276,7 @@ integer sysvx(char* fact, char* uplo, integer* n, integer* nrhs,  T* a, integer*
           U*D*U**T or A = L*D*L**T. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in,out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           If FACT = 'F', then IPIV is an input argument and on entry
@@ -27322,7 +27322,7 @@ integer sysvx(char* fact, char* uplo, integer* n, integer* nrhs,  T* a, integer*
           if EQUED = 'Y', B is overwritten by diag(S)*B; \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] X
           X is REAL array, dimension (LDX,NRHS) \n
           If INFO = 0, the N-by-NRHS solution matrix X to the original
@@ -27331,7 +27331,7 @@ integer sysvx(char* fact, char* uplo, integer* n, integer* nrhs,  T* a, integer*
           inv(diag(S))*X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
           RCOND is REAL \n
           Reciprocal scaled condition number.  This is an estimate of the
@@ -27560,7 +27560,7 @@ integer sysvxx(char* fact, char* uplo, integer* n, integer* nrhs, T* a, integer*
           not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] I1
           I1 is INTEGER \n
           Index of the first row to swap \n
@@ -27615,7 +27615,7 @@ integer syswapr(char* uplo, integer* n, T* a, integer* lda, integer* i1, integer
           when UPLO  is 'L' (or 'U'). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] TB
           TB is REAL array, dimension (LTB) \n
           On exit, details of the LU factorization of the band matrix. \n
@@ -27702,7 +27702,7 @@ integer sytrf_aa_2stage(char* uplo, integer* n, T* a, integer* lda, T* tb, integ
           is 'L' (or 'U'). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           On exit, it contains the details of the interchanges, i.e.,
@@ -27783,7 +27783,7 @@ integer sytrf_aa(char* uplo, integer* n, T* a, integer* lda, integer* ipiv, T* w
                If UPLO = 'L': factor L in the subdiagonal part of A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] E
           E is REAL array, dimension (N) \n
           On exit, contains the superdiagonal (or subdiagonal)
@@ -27940,7 +27940,7 @@ integer sytrf_rk(char* uplo, integer* n, T* a, integer* lda, T* e, integer* ipiv
           to obtain the factor U or L (see below for further details). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D. \n
@@ -28030,7 +28030,7 @@ integer sytrf_rook(char* uplo, integer* n, T* a, integer* lda, integer* ipiv, T*
           to obtain the factor U or L (see below for further details). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D.
@@ -28120,7 +28120,7 @@ integer sytrf(char* uplo, integer* n, T* a, integer* lda, integer* ipiv, T* work
              referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] E
           E is REAL array, dimension (N) \n
           On entry, contains the superdiagonal (or subdiagonal)
@@ -28194,7 +28194,7 @@ integer sytri_3(char* uplo, integer* n, T* a, integer* lda,  T* e,  integer* ipi
           not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -28249,7 +28249,7 @@ integer sytri(char* uplo, integer* n, T* a, integer* lda,  integer* ipiv, T* wor
           not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -28313,7 +28313,7 @@ integer sytri2(char* uplo, integer* n, T* a, integer* lda,  integer* ipiv, T* wo
           not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the NNB structure of D
@@ -28377,7 +28377,7 @@ integer sytri2x(char* uplo, integer* n, T* a, integer* lda,  integer* ipiv, floa
                If UPLO = 'L': factor L in the subdiagonal part of A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] E
           E is REAL array, dimension (N) \n
           On entry, contains the superdiagonal (or subdiagonal)
@@ -28399,7 +28399,7 @@ integer sytri2x(char* uplo, integer* n, T* a, integer* lda,  integer* ipiv, floa
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -28441,7 +28441,7 @@ integer sytrs_3(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda,  T* 
           Details of factors computed by SSYTRF_AA_2STAGE. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] TB
           TB is REAL array, dimension (LTB) \n
           Details of factors computed by SSYTRF_AA_2STAGE. \n
@@ -28462,7 +28462,7 @@ integer sytrs_3(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda,  T* 
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -28504,7 +28504,7 @@ integer sytrs_aa_2stage(char* uplo, integer* n, integer* nrhs, T* a, integer* ld
           Details of factors computed by SSYTRF_AA. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges as computed by SSYTRF_AA. \n
@@ -28514,12 +28514,12 @@ integer sytrs_aa_2stage(char* uplo, integer* n, integer* nrhs, T* a, integer* ld
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (MAX(1,LWORK)) \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK. LWORK >= max(1,3*N-2). \n
+          The dimension of the array WORK. LWORK >= fla_max(1,3*N-2). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -28562,7 +28562,7 @@ integer sytrs_aa(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda,  in
           obtain the factor U or L as computed by SSYTRF_ROOK. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -28573,7 +28573,7 @@ integer sytrs_aa(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda,  in
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -28616,7 +28616,7 @@ integer sytrs_rook(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda, i
           obtain the factor U or L as computed by SSYTRF. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -28627,7 +28627,7 @@ integer sytrs_rook(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda, i
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -28675,7 +28675,7 @@ integer sytrs(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda,  integ
           the end. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -28686,7 +28686,7 @@ integer sytrs(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda,  integ
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (N) \n
  * @param[out]	INFO	
@@ -28801,7 +28801,7 @@ integer sytrs2(char* uplo, integer* n, integer* nrhs, T* a, integer* lda,  integ
           the rest of H is unspecified. \n
  * @param[in] LDH
           LDH is INTEGER \n
-          The leading dimension of the array H.  LDH >= max( 1, N). \n
+          The leading dimension of the array H.  LDH >= fla_max( 1, N). \n
  * @param[in,out] T
           T is REAL array, dimension (LDT, N) \n
           On entry, the N-by-N upper triangular matrix T. \n
@@ -28815,7 +28815,7 @@ integer sytrs2(char* uplo, integer* n, integer* nrhs, T* a, integer* lda,  integ
           the rest of T is unspecified. \n
  * @param[in] LDT
           LDT is INTEGER \n
-          The leading dimension of the array T.  LDT >= max( 1, N). \n
+          The leading dimension of the array T.  LDT >= fla_max( 1, N). \n
  * @param[out] ALPHAR
           ALPHAR is REAL array, dimension (N) \n
           The real parts of each scalar alpha defining an eigenvalue
@@ -28864,7 +28864,7 @@ integer sytrs2(char* uplo, integer* n, integer* nrhs, T* a, integer* lda,  integ
           On exit, if INFO >= 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER
-          The dimension of the array WORK.  LWORK >= max(1,N). \n
+          The dimension of the array WORK.  LWORK >= fla_max(1,N). \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
           only calculates the optimal size of the WORK array, returns
@@ -28953,7 +28953,7 @@ integer hgeqz(char* job, char* compq, char* compz, integer* n, integer* ilo, int
           If a NaN is detected in H, the routine will return with INFO=-6. \n
  * @param[in] LDH
           LDH is INTEGER \n
-          The leading dimension of the array H.  LDH >= max(1,N). \n
+          The leading dimension of the array H.  LDH >= fla_max(1,N). \n
  * @param[in,out] WR
           WR is REAL array, dimension (N) \n
  * @param[in] WI
@@ -28981,7 +28981,7 @@ integer hgeqz(char* job, char* compq, char* compz, integer* n, integer* ilo, int
  * @param[in] LDVL
           LDVL is INTEGER \n
           The leading dimension of the array VL. \n
-          LDVL >= max(1,N) if SIDE = 'L' or 'B'; LDVL >= 1 otherwise. \n
+          LDVL >= fla_max(1,N) if SIDE = 'L' or 'B'; LDVL >= 1 otherwise. \n
  * @param[in,out] VR
           VR is REAL array, dimension (LDVR,MM) \n
           On entry, if INITV = 'U' and SIDE = 'R' or 'B', VR must
@@ -28999,7 +28999,7 @@ integer hgeqz(char* job, char* compq, char* compz, integer* n, integer* ilo, int
  * @param[in] LDVR
           LDVR is INTEGER \n
           The leading dimension of the array VR.
-          LDVR >= max(1,N) if SIDE = 'R' or 'B'; LDVR >= 1 otherwise. \n
+          LDVR >= fla_max(1,N) if SIDE = 'R' or 'B'; LDVR >= 1 otherwise. \n
  * @param[in] MM
           MM is INTEGER \n
           The number of columns in the arrays VL and/or VR. MM >= M. \n
@@ -29127,7 +29127,7 @@ integer hsein(char* job, char* eigsrc, char* initv, logical* select, integer* n,
           or j = IHI+1, IHI+2, ... N. \n
  * @param[in] LDH
           LDH is INTEGER \n
-          The leading dimension of the array H. LDH >= max(1,N). \n
+          The leading dimension of the array H. LDH >= fla_max(1,N). \n
  * @param[out] WR
           WR is REAL array, dimension (N) \n
  * @param[out] WI
@@ -29164,7 +29164,7 @@ integer hsein(char* job, char* eigsrc, char* initv, logical* select, integer* n,
           the optimal value for LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK.  LWORK >= max(1,N)
+          The dimension of the array WORK.  LWORK >= fla_max(1,N)
           is sufficient and delivers very good and sometimes
           optimal performance.  However, LWORK as large as 11*N
           may be required for optimal performance.  A workspace
@@ -29270,7 +29270,7 @@ integer hseqr(char* job, char* compz, integer* n, integer* ilo, integer* ihi, T*
           The upper or lower triangular band matrix A, stored in the
           first kd+1 rows of the array. The j-th column of A is stored
           in the j-th column of the array AB as follows: \n
-          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
           If DIAG = 'U', the diagonal elements of A are not referenced
           and are assumed to be 1. \n
@@ -29348,7 +29348,7 @@ integer tbcon(char* norm, char* uplo, char* diag, integer* n, integer* kd,  T* a
           The upper or lower triangular band matrix A, stored in the
           first kd+1 rows of the array. The j-th column of A is stored
           in the j-th column of the array AB as follows: \n
-          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
           If DIAG = 'U', the diagonal elements of A are not referenced
           and are assumed to be 1. \n
@@ -29360,13 +29360,13 @@ integer tbcon(char* norm, char* uplo, char* diag, integer* n, integer* kd,  T* a
           The right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in] X
           X is REAL array, dimension (LDX,NRHS) \n
           The solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] FERR
           FERR is REAL array, dimension (NRHS) \n
           The estimated forward error bound for each solution vector
@@ -29447,7 +29447,7 @@ integer tbrfs(char* uplo, char* trans, char* diag, integer* n, integer* kd, inte
           The upper or lower triangular band matrix A, stored in the
           first kd+1 rows of AB.  The j-th column of A is stored
           in the j-th column of the array AB as follows: \n
-          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
           If DIAG = 'U', the diagonal elements of A are not referenced
           and are assumed to be 1. \n
@@ -29460,7 +29460,7 @@ integer tbrfs(char* uplo, char* trans, char* diag, integer* n, integer* kd, inte
           On exit, if INFO = 0, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -29570,7 +29570,7 @@ integer tbtrs(char* uplo, char* trans, char* diag, integer* n, integer* kd, inte
           LDB is INTEGER \n
           On entry, LDB specifies the first dimension of B as declared
           in  the  calling  (sub)  program.   LDB  must  be  at  least
-          max( 1, m). \n
+          fla_max( 1, m). \n
           Unchanged on exit. \n
 
  * @return INTEGER Return value of the function.
@@ -29720,7 +29720,7 @@ integer tfttp(char* transr, char* uplo, integer* n,  T* arf, T* ap, integer* inf
           triangular part of A is not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -29796,7 +29796,7 @@ integer tfttr(char* transr, char* uplo, integer* n,  T* arf, T* a, integer* lda,
           factorization, as computed by SHGEQZ. \n
  * @param[in] LDS
           LDS is INTEGER \n
-          The leading dimension of array S.  LDS >= max(1,N). \n
+          The leading dimension of array S.  LDS >= fla_max(1,N). \n
  * @param[in] P
           P is REAL array, dimension (LDP,N) \n
           The upper triangular matrix P from a generalized Schur
@@ -29805,7 +29805,7 @@ integer tfttr(char* transr, char* uplo, integer* n,  T* arf, T* a, integer* lda,
           of S must be in positive diagonal form. \n
  * @param[in] LDP
           LDP is INTEGER \n
-          The leading dimension of array P.  LDP >= max(1,N). \n
+          The leading dimension of array P.  LDP >= fla_max(1,N). \n
  * @param[in,out] VL
           VL is REAL array, dimension (LDVL,MM) \n
           On entry, if SIDE = 'L' or 'B' and HOWMNY = 'B', VL must
@@ -29925,7 +29925,7 @@ integer tgevc(char* side, char* howmny,  logical* select, integer* n,  T* s, int
           real Schur canonical form. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,N). \n
+          The leading dimension of the array A. LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,N) \n
           On entry, the matrix B in generalized real Schur canonical
@@ -29934,7 +29934,7 @@ integer tgevc(char* side, char* howmny,  logical* select, integer* n,  T* s, int
           real Schur canonical form (A,B). \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B. LDB >= max(1,N). \n
+          The leading dimension of the array B. LDB >= fla_max(1,N). \n
  * @param[in,out] Q
           Q is REAL array, dimension (LDQ,N) \n
           On entry, if WANTQ = .TRUE., the orthogonal matrix Q.
@@ -30075,7 +30075,7 @@ integer tgexc(logical* wantq, logical* wantz, integer* n, T* a, integer* lda, T*
           On exit, A is overwritten by the reordered matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,N). \n
+          The leading dimension of the array A. LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension(LDB,N) \n
           On entry, the upper triangular matrix B, with (A, B) in
@@ -30083,7 +30083,7 @@ integer tgexc(logical* wantq, logical* wantz, integer* n, T* a, integer* lda, T*
           On exit, B is overwritten by the reordered matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B. LDB >= max(1,N). \n
+          The leading dimension of the array B. LDB >= fla_max(1,N). \n
  * @param[out] ALPHAR
           ALPHAR is REAL array, dimension (N) \n
  * @param[out] ALPHAI
@@ -30330,7 +30330,7 @@ integer tgsen(integer* ijob, logical* wantq, logical* wantz,  logical* select, i
           matrix R or part of R.  See Purpose for details. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,M). \n
+          The leading dimension of the array A. LDA >= fla_max(1,M). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,N) \n
           On entry, the P-by-N matrix B.
@@ -30338,7 +30338,7 @@ integer tgsen(integer* ijob, logical* wantq, logical* wantz,  logical* select, i
           a part of R.  See Purpose for details. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B. LDB >= max(1,P). \n
+          The leading dimension of the array B. LDB >= fla_max(1,P). \n
  * @param[in] TOLA
           TOLA is REAL \n
  * @param[in] TOLB
@@ -30346,8 +30346,8 @@ integer tgsen(integer* ijob, logical* wantq, logical* wantz,  logical* select, i
           TOLA and TOLB are the convergence criteria for the Jacobi-
           Kogbetliantz iteration procedure. Generally, they are the
           same as used in the preprocessing step, say \n
-              TOLA = max(M,N)*norm(A)*MACHEPS, \n
-              TOLB = max(P,N)*norm(B)*MACHEPS. \n
+              TOLA = fla_max(M,N)*norm(A)*MACHEPS, \n
+              TOLB = fla_max(P,N)*norm(B)*MACHEPS. \n
  * @param[out] ALPHA
           ALPHA is REAL array, dimension (N) \n
  * @param[out] BETA
@@ -30375,7 +30375,7 @@ integer tgsen(integer* ijob, logical* wantq, logical* wantz,  logical* select, i
           If JOBU = 'N', U is not referenced. \n
  * @param[in] LDU
           LDU is INTEGER \n
-          The leading dimension of the array U. LDU >= max(1,M) if
+          The leading dimension of the array U. LDU >= fla_max(1,M) if
           JOBU = 'U'; LDU >= 1 otherwise. \n
  * @param[in,out] V
           V is REAL array, dimension (LDV,P) \n
@@ -30387,7 +30387,7 @@ integer tgsen(integer* ijob, logical* wantq, logical* wantz,  logical* select, i
           If JOBV = 'N', V is not referenced. \n
  * @param[in] LDV
           LDV is INTEGER \n
-          The leading dimension of the array V. LDV >= max(1,P) if
+          The leading dimension of the array V. LDV >= fla_max(1,P) if
           JOBV = 'V'; LDV >= 1 otherwise. \n
  * @param[in,out] Q
           Q is REAL array, dimension (LDQ,N) \n
@@ -30399,7 +30399,7 @@ integer tgsen(integer* ijob, logical* wantq, logical* wantz,  logical* select, i
           If JOBQ = 'N', Q is not referenced. \n
  * @param[in] LDQ
           LDQ is INTEGER \n
-          The leading dimension of the array Q. LDQ >= max(1,N) if
+          The leading dimension of the array Q. LDQ >= fla_max(1,N) if
           JOBQ = 'Q'; LDQ >= 1 otherwise. \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (2*N) \n
@@ -30471,13 +30471,13 @@ integer tgsja(char* jobu, char* jobv, char* jobq, integer* m, integer* p, intege
           The upper quasi-triangular matrix A in the pair (A,B). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,N). \n
+          The leading dimension of the array A. LDA >= fla_max(1,N). \n
  * @param[in] B
           B is REAL array, dimension (LDB,N) \n
           The upper triangular matrix B in the pair (A,B). \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B. LDB >= max(1,N). \n
+          The leading dimension of the array B. LDB >= fla_max(1,N). \n
  * @param[in] VL
           VL is REAL array, dimension (LDVL,M) \n
           If JOB = 'E' or 'B', VL must contain left eigenvectors of
@@ -30535,7 +30535,7 @@ integer tgsja(char* jobu, char* jobv, char* jobq, integer* m, integer* p, intege
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK. LWORK >= max(1,N).
+          The dimension of the array WORK. LWORK >= fla_max(1,N).
           If JOB = 'V' or 'B' LWORK >= 2*N*(N+2)+16. \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
@@ -30637,13 +30637,13 @@ integer tgsna(char* job, char* howmny,  logical* select, integer* n,  T* a, inte
           The upper quasi triangular matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1, M). \n
+          The leading dimension of the array A. LDA >= fla_max(1, M). \n
  * @param[in] B
           B is REAL array, dimension (LDB, N) \n
           The upper quasi triangular matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B. LDB >= max(1, N). \n
+          The leading dimension of the array B. LDB >= fla_max(1, N). \n
  * @param[in,out] C
           C is REAL array, dimension (LDC, N) \n
           On entry, C contains the right-hand-side of the first matrix
@@ -30654,19 +30654,19 @@ integer tgsna(char* job, char* howmny,  logical* select, integer* n,  T* a, inte
           Dif-estimate. \n
  * @param[in] LDC
           LDC is INTEGER \n
-          The leading dimension of the array C. LDC >= max(1, M). \n
+          The leading dimension of the array C. LDC >= fla_max(1, M). \n
  * @param[in] D
           D is REAL array, dimension (LDD, M) \n
           The upper triangular matrix D. \n
  * @param[in] LDD
           LDD is INTEGER \n
-          The leading dimension of the array D. LDD >= max(1, M). \n
+          The leading dimension of the array D. LDD >= fla_max(1, M). \n
  * @param[in] E
           E is REAL array, dimension (LDE, N) \n
           The upper triangular matrix E. \n
  * @param[in] LDE
           LDE is INTEGER \n
-          The leading dimension of the array E. LDE >= max(1, N). \n
+          The leading dimension of the array E. LDE >= fla_max(1, N). \n
  * @param[in,out] F
           F is REAL array, dimension (LDF, N) \n
           On entry, F contains the right-hand-side of the second matrix
@@ -30677,7 +30677,7 @@ integer tgsna(char* job, char* howmny,  logical* select, integer* n,  T* a, inte
           Dif-estimate. \n
  * @param[in] LDF
           LDF is INTEGER \n
-          The leading dimension of the array F. LDF >= max(1, M). \n
+          The leading dimension of the array F. LDF >= fla_max(1, M). \n
  * @param[out] DIF
           DIF is REAL \n
           On exit DIF is the reciprocal of a lower bound of the
@@ -30698,7 +30698,7 @@ integer tgsna(char* job, char* howmny,  logical* select, integer* n,  T* a, inte
  * @param[in]	LWORK	
           LWORK is INTEGER \n
           The dimension of the array WORK. LWORK > = 1.
-          If IJOB = 1 or 2 and TRANS = 'N', LWORK >= max(1,2*M*N). \n
+          If IJOB = 1 or 2 and TRANS = 'N', LWORK >= fla_max(1,2*M*N). \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
           only calculates the optimal size of the WORK array, returns
@@ -30836,8 +30836,8 @@ integer tpcon(char* norm, char* uplo, char* diag, integer* n,  T* ap, Ta* rcond,
  * @param[in] LDV
           LDV is INTEGER \n
           The leading dimension of the array V. \n
-          If SIDE = 'L', LDV >= max(1,M); \n
-          if SIDE = 'R', LDV >= max(1,N). \n
+          If SIDE = 'L', LDV >= fla_max(1,M); \n
+          if SIDE = 'R', LDV >= fla_max(1,N). \n
  * @param[in] T
           T is REAL array, dimension (LDT,K) \n
           The upper triangular factors of the block reflectors
@@ -30855,8 +30855,8 @@ integer tpcon(char* norm, char* uplo, char* diag, integer* n,  T* ap, Ta* rcond,
  * @param[in] LDA
           LDA is INTEGER \n
           The leading dimension of the array A \n
-          If SIDE = 'L', LDC >= max(1,K); \n
-          If SIDE = 'R', LDC >= max(1,M). \n
+          If SIDE = 'L', LDC >= fla_max(1,K); \n
+          If SIDE = 'R', LDC >= fla_max(1,M). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,N) \n
           On entry, the M-by-N matrix B. \n
@@ -30865,7 +30865,7 @@ integer tpcon(char* norm, char* uplo, char* diag, integer* n,  T* ap, Ta* rcond,
  * @param[in] LDB
           LDB is INTEGER \n
           The leading dimension of the array B.
-          LDB >= max(1,M). \n
+          LDB >= fla_max(1,M). \n
  * @param[out]	WORK	
           WORK is REAL array. The dimension of WORK is
            N*NB if SIDE = 'L', or  M*NB if SIDE = 'R'. \n
@@ -30916,7 +30916,7 @@ integer tpmqrt(char* side, char* trans, integer* m, integer* n, integer* k, inte
           contain the upper triangular matrix R. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,N) \n
           On entry, the pentagonal M-by-N matrix B.  The first M-L rows
@@ -30924,7 +30924,7 @@ integer tpmqrt(char* side, char* trans, integer* m, integer* n, integer* k, inte
           On exit, B contains the pentagonal matrix V.  See Further Details. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,M). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,M). \n
  * @param[out] T
           T is REAL array, dimension (LDT,N) \n
           The upper triangular block reflectors stored in compact form
@@ -30978,7 +30978,7 @@ integer tpqrt(integer* m, integer* n, integer* l, integer* nb, T* a, integer* ld
           contain the upper triangular matrix R. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,N) \n
           On entry, the pentagonal M-by-N matrix B.  The first M-L rows
@@ -30986,14 +30986,14 @@ integer tpqrt(integer* m, integer* n, integer* l, integer* nb, T* a, integer* ld
           On exit, B contains the pentagonal matrix V.  See Further Details. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,M). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,M). \n
  * @param[out] T
           T is REAL array, dimension (LDT,N) \n
           The N-by-N upper triangular factor T of the block reflector.
           See Further Details. \n
  * @param[in] LDT
           LDT is INTEGER \n
-          The leading dimension of the array T.  LDT >= max(1,N) \n
+          The leading dimension of the array T.  LDT >= fla_max(1,N) \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0: successful exit \n
@@ -31064,8 +31064,8 @@ integer tpqrt2(integer* m, integer* n, integer* l, T* a, integer* lda, T* b, int
  * @param[in] LDV
           LDV is INTEGER \n
           The leading dimension of the array V. \n
-          If STOREV = 'C' and SIDE = 'L', LDV >= max(1,M); \n
-          if STOREV = 'C' and SIDE = 'R', LDV >= max(1,N); \n
+          If STOREV = 'C' and SIDE = 'L', LDV >= fla_max(1,M); \n
+          if STOREV = 'C' and SIDE = 'R', LDV >= fla_max(1,N); \n
           if STOREV = 'R', LDV >= K. \n
  * @param[in] T
           T is REAL array, dimension (LDT,K) \n
@@ -31084,8 +31084,8 @@ integer tpqrt2(integer* m, integer* n, integer* l, T* a, integer* lda, T* b, int
  * @param[in] LDA
           LDA is INTEGER \n
           The leading dimension of the array A. \n
-          If SIDE = 'L', LDA >= max(1,K); \n
-          If SIDE = 'R', LDA >= max(1,M). \n
+          If SIDE = 'L', LDA >= fla_max(1,K); \n
+          If SIDE = 'R', LDA >= fla_max(1,M). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,N) \n
           On entry, the M-by-N matrix B.
@@ -31094,7 +31094,7 @@ integer tpqrt2(integer* m, integer* n, integer* l, T* a, integer* lda, T* b, int
  * @param[in] LDB
           LDB is INTEGER \n
           The leading dimension of the array B.
-          LDB >= max(1,M). \n
+          LDB >= fla_max(1,M). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension \n
           (LDWORK,N) if SIDE = 'L', \n
@@ -31162,13 +31162,13 @@ integer tprfb(char* side, char* trans, char* direct, char* storev, integer* m, i
           The right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in] X
           X is REAL array, dimension (LDX,NRHS) \n
           The solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] FERR
           FERR is REAL array, dimension (NRHS) \n
           The estimated forward error bound for each solution vector
@@ -31299,7 +31299,7 @@ integer tptri(char* uplo, char* diag, integer* n, T* ap, integer* info)
           On exit, if INFO = 0, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -31394,7 +31394,7 @@ integer tpttf(char* transr, char* uplo, integer* n,  T* ap, T* arf, integer* inf
           triangular part of A is not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -31451,7 +31451,7 @@ integer tpttr(char* uplo, integer* n,  T* ap, T* a, integer* lda, integer* info)
           also not referenced and are assumed to be 1. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] RCOND
           RCOND is REAL \n
           The reciprocal of the condition number of the matrix A,
@@ -31536,7 +31536,7 @@ integer trcon(char* norm, char* uplo, char* diag, integer* n,  T* a, integer* ld
           The upper quasi-triangular matrix T in Schur canonical form. \n
  * @param[in] LDT
           LDT is INTEGER \n
-          The leading dimension of the array T. LDT >= max(1,N). \n
+          The leading dimension of the array T. LDT >= fla_max(1,N). \n
  * @param[in,out] VL
           VL is REAL array, dimension (LDVL,MM) \n
           On entry, if SIDE = 'L' or 'B' and HOWMNY = 'B', VL must
@@ -31642,7 +31642,7 @@ integer trevc(char* side, char* howmny, logical* select, integer* n,  T* t, inte
           in Schur canonical form. \n
  * @param[in] LDT
           LDT is INTEGER \n
-          The leading dimension of the array T. LDT >= max(1,N). \n
+          The leading dimension of the array T. LDT >= fla_max(1,N). \n
  * @param[in,out] Q
           Q is REAL array, dimension (LDQ,N) \n
           On entry, if COMPQ = 'V', the matrix Q of Schur vectors.
@@ -31652,7 +31652,7 @@ integer trevc(char* side, char* howmny, logical* select, integer* n,  T* t, inte
  * @param[in] LDQ
           LDQ is INTEGER \n
           The leading dimension of the array Q.  LDQ >= 1, and if
-          COMPQ = 'V', LDQ >= max(1,N). \n
+          COMPQ = 'V', LDQ >= fla_max(1,N). \n
  * @param[in,out] IFST
           IFST is INTEGER \n
  * @param[in,out] ILST
@@ -31736,19 +31736,19 @@ integer trexc(char* compq, integer* n, T* t, integer* ldt, T* q, integer* ldq, i
           also not referenced and are assumed to be 1. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] B
           B is REAL array, dimension (LDB,NRHS) \n
           The right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in] X
           X is REAL array, dimension (LDX,NRHS) \n
           The solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] FERR
           FERR is REAL array, dimension (NRHS) \n
           The estimated forward error bound for each solution vector
@@ -31840,7 +31840,7 @@ integer trrfs(char* uplo, char* trans, char* diag, integer* n, integer* nrhs, T*
           leading diagonal blocks. \n
  * @param[in] LDT
           LDT is INTEGER \n
-          The leading dimension of the array T. LDT >= max(1,N). \n
+          The leading dimension of the array T. LDT >= fla_max(1,N). \n
  * @param[in,out] Q
           Q is REAL array, dimension (LDQ,N) \n
           On entry, if COMPQ = 'V', the matrix Q of Schur vectors. \n
@@ -31887,9 +31887,9 @@ integer trrfs(char* uplo, char* trans, char* diag, integer* n, integer* nrhs, T*
  * @param[in]	LWORK	
           LWORK is INTEGER \n
           The dimension of the array WORK. \n
-          If JOB = 'N', LWORK >= max(1,N); \n
-          if JOB = 'E', LWORK >= max(1,M*(N-M)); \n
-          if JOB = 'V' or 'B', LWORK >= max(1,2*M*(N-M)). \n
+          If JOB = 'N', LWORK >= fla_max(1,N); \n
+          if JOB = 'E', LWORK >= fla_max(1,M*(N-M)); \n
+          if JOB = 'V' or 'B', LWORK >= fla_max(1,2*M*(N-M)). \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
           only calculates the optimal size of the WORK array, returns
@@ -31902,7 +31902,7 @@ integer trrfs(char* uplo, char* trans, char* diag, integer* n, integer* nrhs, T*
           LIWORK is INTEGER \n
           The dimension of the array IWORK. \n
           If JOB = 'N' or 'E', LIWORK >= 1; \n
-          if JOB = 'V' or 'B', LIWORK >= max(1,M*(N-M)). \n
+          if JOB = 'V' or 'B', LIWORK >= fla_max(1,M*(N-M)). \n
  \n
           If LIWORK = -1, then a workspace query is assumed; the
           routine only calculates the optimal size of the IWORK array,
@@ -31977,7 +31977,7 @@ integer trsen(char* job, char* compq,  logical* select, integer* n, T* t, intege
           The upper quasi-triangular matrix T, in Schur canonical form. \n
  * @param[in] LDT
           LDT is INTEGER \n
-          The leading dimension of the array T. LDT >= max(1,N). \n
+          The leading dimension of the array T. LDT >= fla_max(1,N). \n
  * @param[in] VL
           VL is REAL array, dimension (LDVL,M) \n
           If JOB = 'E' or 'B', VL must contain left eigenvectors of T
@@ -32105,14 +32105,14 @@ integer trsna(char* job, char* howmny,  logical* select, integer* n,  T* t, inte
           also not referenced and are assumed to be 1. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,NRHS) \n
           On entry, the right hand side matrix B.
           On exit, if INFO = 0, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -32160,7 +32160,7 @@ integer trtrs(char* uplo, char* trans, char* diag, integer* n, integer* nrhs,  T
           triangular part of A is not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the matrix A. LDA >= max(1,N). \n
+          The leading dimension of the matrix A. LDA >= fla_max(1,N). \n
  * @param[out] ARF
           ARF is REAL array, dimension (NT). \n
           NT=N*(N+1)/2. On exit, the triangular matrix A in RFP format. \n
@@ -32204,7 +32204,7 @@ integer trttf(char* transr, char* uplo, integer* n,  T* a, integer* lda, T* arf,
           triangular part of A is not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] AP
           AP is REAL array, dimension (N*(N+1)/2) \n
           On exit, the upper or lower triangular matrix A, packed
@@ -32257,7 +32257,7 @@ integer trttp(char* uplo, integer* n,  T* a, integer* lda, T* ap, integer* info)
           orthogonal matrix Z as a product of M elementary reflectors. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] TAU
           TAU is REAL array, dimension (M) \n
           The scalar factors of the elementary reflectors. \n
@@ -32266,7 +32266,7 @@ integer trttp(char* uplo, integer* n,  T* a, integer* lda, T* ap, integer* info)
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK.  LWORK >= max(1,M).
+          The dimension of the array WORK.  LWORK >= fla_max(1,M).
           For optimum performance LWORK >= M*NB, where NB is
           the optimal blocksize. \n
  \n
@@ -32332,14 +32332,14 @@ integer tzrzf(integer* m, integer* n, T* a, integer* lda, T* tau, T* work, integ
           The right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] X
           X is REAL array, dimension (LDX,NRHS) \n
           On entry, the solution matrix X, as computed by SSPTRS.
           On exit, the improved solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] FERR
           FERR is REAL array, dimension (NRHS) \n
           The estimated forward error bound for each solution vector
@@ -32518,7 +32518,7 @@ integer hprfs(char* uplo, integer* n, integer* nrhs,  T* ap,  T* afp,  integer* 
            DMAX is REAL \n
            If MODE is neither -6, 0 nor 6, the contents of D, as
            computed according to MODE and COND, will be scaled by
-           DMAX / max(abs(D(i))); thus, the maximum absolute eigen- or
+           DMAX / fla_max(abs(D(i))); thus, the maximum absolute eigen- or
            singular value (which is to say the norm) will be abs(DMAX).
            Note that DMAX need not be positive: if DMAX is negative
            (or zero), D will be scaled by a negative number (or zero).
@@ -32744,13 +32744,13 @@ integer lacgv(integer *n, T* x, integer *incx)
           accessed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] B
           B is COMPLEX array, dimension (LDB,N) \n
           On exit, B = A in the locations specified by UPLO. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,M). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,M). \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -32868,7 +32868,7 @@ integer laghe(integer *n, integer *k, Ta* d, T* a, integer *lda, integer* iseed)
     complex hermitian matrix A.
  * \b Returns LANHE
 
-       CLANHE = ( max(abs(A(i,j))), NORM = 'M' or 'm'
+       CLANHE = ( fla_max(abs(A(i,j))), NORM = 'M' or 'm'
                 (
                 ( norm1(A),         NORM = '1', 'O' or 'o'
                 (
@@ -32879,7 +32879,7 @@ integer laghe(integer *n, integer *k, Ta* d, T* a, integer *lda, integer* iseed)
     where  norm1  denotes the  one norm of a matrix (maximum column sum),
     normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
     normF  denotes the  Frobenius norm of a matrix (square root of sum of
-    squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+    squares).  Note that  fla_max(abs(A(i,j)))  is not a consistent matrix norm.
     \endverbatim 
 
  * @param[in] NORM
@@ -32908,7 +32908,7 @@ integer laghe(integer *n, integer *k, Ta* d, T* a, integer *lda, integer* iseed)
           elements need not be set and are assumed to be zero. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(N,1). \n
+          The leading dimension of the array A.  LDA >= fla_max(N,1). \n
  * @param[out]	WORK	
           WORK is REAL array, dimension (MAX(1,LWORK)), \n
           where LWORK >= N when NORM = 'I' or '1' or 'O'; otherwise,
@@ -33000,7 +33000,7 @@ integer larcm(integer *m, integer *n, Ta* a, integer *lda, T* b, integer *ldb, T
           as computed by SGETRF. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] ANORM
           ANORM is REAL \n
           If NORM = '1' or 'O', the 1-norm of the original matrix A. \n
@@ -33061,7 +33061,7 @@ integer gecon(char* norm, integer* n,  T* a, integer* lda, Ta* anorm, Ta* rcond,
           to be computed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] R
           R is REAL array, dimension (M) \n
           If INFO = 0 or INFO > M, R contains the row scale factors
@@ -33134,7 +33134,7 @@ integer geequ(integer* m, integer* n,  T* a, integer* lda, Ta* r, Ta* c, Ta* row
           obtain the factor U or L as computed by CHETRF. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -33204,7 +33204,7 @@ integer hecon(char* uplo, integer* n,  T* a, integer* lda,  integer* ipiv, Ta* a
                If UPLO = 'L': factor L in the subdiagonal part of A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] E
           E is COMPLEX array, dimension (N) \n
           On entry, contains the superdiagonal (or subdiagonal)
@@ -33270,7 +33270,7 @@ integer hecon_3(char* uplo, integer* n, T* a, integer* lda, T* e, integer* ipiv,
           computed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,N). \n
+          The leading dimension of the array A. LDA >= fla_max(1,N). \n
  * @param[out] S
           S is REAL array, dimension (N) \n
           If INFO = 0, S contains the scale factors for A. \n
@@ -33336,7 +33336,7 @@ integer heequb(char* uplo, integer* n, T* a, integer* lda, Ta* s, Ta* scond, Ta*
           diagonal, is destroyed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] W
           W is REAL array, dimension (N) \n
           If INFO = 0, the eigenvalues in ascending order. \n
@@ -33349,9 +33349,9 @@ integer heequb(char* uplo, integer* n, T* a, integer* lda, Ta* s, Ta* scond, Ta*
           otherwise   \n
           If JOBZ = 'N' and N > 1, LWORK must be queried.
                                    LWORK = MAX(1, dimension) where
-                                   dimension = max(stage1,stage2) + (KD+1)*N + N
+                                   dimension = fla_max(stage1,stage2) + (KD+1)*N + N
                                              = N*KD + N*max(KD+1,FACTOPTNB) 
-                                               + max(2*KD*KD, KD*NTHREADS) 
+                                               + fla_max(2*KD*KD, KD*NTHREADS) 
                                                + (KD+1)*N + N
                                    where KD is the blocking size of the reduction,
                                    FACTOPTNB is the blocking used by the QR or LQ
@@ -33365,7 +33365,7 @@ integer heequb(char* uplo, integer* n, T* a, integer* lda, Ta* s, Ta* scond, Ta*
           this value as the first entry of the WORK array, and no error
           message related to LWORK is issued by XERBLA. \n
  * @param[out]	RWORK	
-          RWORK is REAL array, dimension (max(1, 3*N-2)) \n
+          RWORK is REAL array, dimension (fla_max(1, 3*N-2)) \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -33426,7 +33426,7 @@ integer heev_2stage(char* jobz, char* uplo, integer* n, T* a, integer* lda, Ta* 
           diagonal, is destroyed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] W
           W is REAL array, dimension (N) \n
           If INFO = 0, the eigenvalues in ascending order. \n
@@ -33439,9 +33439,9 @@ integer heev_2stage(char* jobz, char* uplo, integer* n, T* a, integer* lda, Ta* 
           If N <= 1,               LWORK must be at least 1. \n
           If JOBZ = 'N' and N > 1, LWORK must be queried.
                                    LWORK = MAX(1, dimension) where
-                                   dimension = max(stage1,stage2) + (KD+1)*N + N+1
+                                   dimension = fla_max(stage1,stage2) + (KD+1)*N + N+1
                                              = N*KD + N*max(KD+1,FACTOPTNB) 
-                                               + max(2*KD*KD, KD*NTHREADS) 
+                                               + fla_max(2*KD*KD, KD*NTHREADS) 
                                                + (KD+1)*N + N+1
                                    where KD is the blocking size of the reduction,
                                    FACTOPTNB is the blocking used by the QR or LQ
@@ -33604,7 +33604,7 @@ integer heevd_2stage(char* jobz, char* uplo, integer* n, T* a, integer* lda, Ta*
           destroyed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] VL
           VL is REAL \n
           If RANGE='V', the lower bound of the interval to
@@ -33634,7 +33634,7 @@ integer heevd_2stage(char* jobz, char* uplo, integer* n, T* a, integer* lda, Ta*
           when it is determined to lie in an interval [a,b]
           of width less than or equal to \n
  \n
-                  ABSTOL + EPS *   max( |a|,|b|) , \n
+                  ABSTOL + EPS *   fla_max( |a|,|b|) , \n
  \n
           where EPS is the machine precision.  If ABSTOL is less than
           or equal to zero, then  EPS*|T|  will be used in its place,
@@ -33664,19 +33664,19 @@ integer heevd_2stage(char* jobz, char* uplo, integer* n, T* a, integer* lda, Ta*
           The first M elements contain the selected eigenvalues in
           ascending order. \n
  * @param[out] Z
-          Z is COMPLEX array, dimension (LDZ, max(1,M)) \n
+          Z is COMPLEX array, dimension (LDZ, fla_max(1,M)) \n
           If JOBZ = 'V', then if INFO = 0, the first M columns of Z
           contain the orthonormal eigenvectors of the matrix A
           corresponding to the selected eigenvalues, with the i-th
           column of Z holding the eigenvector associated with W(i).
           If JOBZ = 'N', then Z is not referenced. \n
-          Note: the user must ensure that at least max(1,M) columns are
+          Note: the user must ensure that at least fla_max(1,M) columns are
           supplied in the array Z; if RANGE = 'V', the exact value of M
           is not known in advance and an upper bound must be used. \n
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out] ISUPPZ
           ISUPPZ is INTEGER array, dimension ( 2*max(1,M)) \n
           The support of the eigenvectors in Z, i.e., the indices
@@ -33694,9 +33694,9 @@ integer heevd_2stage(char* jobz, char* uplo, integer* n, T* a, integer* lda, Ta*
           The dimension of the array WORK.   \n
           If JOBZ = 'N' and N > 1, LWORK must be queried.
                                    LWORK = MAX(1, 26*N, dimension) where
-                                   dimension = max(stage1,stage2) + (KD+1)*N + N
+                                   dimension = fla_max(stage1,stage2) + (KD+1)*N + N
                                              = N*KD + N*max(KD+1,FACTOPTNB) 
-                                               + max(2*KD*KD, KD*NTHREADS) 
+                                               + fla_max(2*KD*KD, KD*NTHREADS) 
                                                + (KD+1)*N + N
                                    where KD is the blocking size of the reduction,
                                    FACTOPTNB is the blocking used by the QR or LQ
@@ -33716,7 +33716,7 @@ integer heevd_2stage(char* jobz, char* uplo, integer* n, T* a, integer* lda, Ta*
           (and minimal) LRWORK. \n
  * @param[in]	LRWORK	
           LRWORK is INTEGER \n
-          The length of the array RWORK.  LRWORK >= max(1,24*N). \n
+          The length of the array RWORK.  LRWORK >= fla_max(1,24*N). \n
  \n
           If LRWORK = -1, then a workspace query is assumed; the
           routine only calculates the optimal sizes of the WORK, RWORK
@@ -33729,7 +33729,7 @@ integer heevd_2stage(char* jobz, char* uplo, integer* n, T* a, integer* lda, Ta*
           (and minimal) LIWORK. \n
  * @param[in]	LIWORK	
           LIWORK is INTEGER \n
-          The dimension of the array IWORK.  LIWORK >= max(1,10*N). \n
+          The dimension of the array IWORK.  LIWORK >= fla_max(1,10*N). \n
  \n
           If LIWORK = -1, then a workspace query is assumed; the
           routine only calculates the optimal sizes of the WORK, RWORK
@@ -33790,7 +33790,7 @@ integer heevr_2stage(char* jobz, char* range, char* uplo, integer* n, T* a, inte
           destroyed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] VL
           VL is REAL \n
           If RANGE='V', the lower bound of the interval to
@@ -33820,7 +33820,7 @@ integer heevr_2stage(char* jobz, char* range, char* uplo, integer* n, T* a, inte
           when it is determined to lie in an interval [a,b]
           of width less than or equal to \n
  \n
-                  ABSTOL + EPS *   max( |a|,|b|) , \n
+                  ABSTOL + EPS *   fla_max( |a|,|b|) , \n
  \n
           where EPS is the machine precision.  If ABSTOL is less than
           or equal to zero, then  EPS*|T|  will be used in its place,
@@ -33845,7 +33845,7 @@ integer heevr_2stage(char* jobz, char* range, char* uplo, integer* n, T* a, inte
           On normal exit, the first M elements contain the selected
           eigenvalues in ascending order. \n
  * @param[out] Z
-          Z is COMPLEX array, dimension (LDZ, max(1,M)) \n
+          Z is COMPLEX array, dimension (LDZ, fla_max(1,M)) \n
           If JOBZ = 'V', then if INFO = 0, the first M columns of Z
           contain the orthonormal eigenvectors of the matrix A
           corresponding to the selected eigenvalues, with the i-th
@@ -33854,13 +33854,13 @@ integer heevr_2stage(char* jobz, char* range, char* uplo, integer* n, T* a, inte
           contains the latest approximation to the eigenvector, and the
           index of the eigenvector is returned in IFAIL.
           If JOBZ = 'N', then Z is not referenced. \n
-          Note: the user must ensure that at least max(1,M) columns are
+          Note: the user must ensure that at least fla_max(1,M) columns are
           supplied in the array Z; if RANGE = 'V', the exact value of M
           is not known in advance and an upper bound must be used. \n
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is COMPLEX array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
@@ -33942,7 +33942,7 @@ integer heevx(char* jobz, char* range, char* uplo, integer* n, T* a, integer* ld
           destroyed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] VL
           VL is REAL \n
           If RANGE='V', the lower bound of the interval to
@@ -33972,7 +33972,7 @@ integer heevx(char* jobz, char* range, char* uplo, integer* n, T* a, integer* ld
           when it is determined to lie in an interval [a,b]
           of width less than or equal to \n
  \n
-                  ABSTOL + EPS *   max( |a|,|b|) , \n
+                  ABSTOL + EPS *   fla_max( |a|,|b|) , \n
  \n
           where EPS is the machine precision.  If ABSTOL is less than
           or equal to zero, then  EPS*|T|  will be used in its place,
@@ -33997,7 +33997,7 @@ integer heevx(char* jobz, char* range, char* uplo, integer* n, T* a, integer* ld
           On normal exit, the first M elements contain the selected
           eigenvalues in ascending order. \n
  * @param[out] Z
-          Z is COMPLEX array, dimension (LDZ, max(1,M)) \n
+          Z is COMPLEX array, dimension (LDZ, fla_max(1,M)) \n
           If JOBZ = 'V', then if INFO = 0, the first M columns of Z
           contain the orthonormal eigenvectors of the matrix A
           corresponding to the selected eigenvalues, with the i-th
@@ -34006,13 +34006,13 @@ integer heevx(char* jobz, char* range, char* uplo, integer* n, T* a, integer* ld
           contains the latest approximation to the eigenvector, and the
           index of the eigenvector is returned in IFAIL. \n
           If JOBZ = 'N', then Z is not referenced. \n
-          Note: the user must ensure that at least max(1,M) columns are
+          Note: the user must ensure that at least fla_max(1,M) columns are
           supplied in the array Z; if RANGE = 'V', the exact value of M
           is not known in advance and an upper bound must be used. \n
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out] IFAIL
           IFAIL is INTEGER array, dimension (N) \n
           If JOBZ = 'V', then if INFO = 0, the first M elements of
@@ -34028,9 +34028,9 @@ integer heevx(char* jobz, char* range, char* uplo, integer* n, T* a, integer* ld
           otherwise   \n
           If JOBZ = 'N' and N > 1, LWORK must be queried.
                                    LWORK = MAX(1, 8*N, dimension) where
-                                   dimension = max(stage1,stage2) + (KD+1)*N + N
+                                   dimension = fla_max(stage1,stage2) + (KD+1)*N + N
                                              = N*KD + N*max(KD+1,FACTOPTNB) 
-                                               + max(2*KD*KD, KD*NTHREADS) 
+                                               + fla_max(2*KD*KD, KD*NTHREADS) 
                                                + (KD+1)*N + N
                                    where KD is the blocking size of the reduction,
                                    FACTOPTNB is the blocking used by the QR or LQ
@@ -34116,7 +34116,7 @@ integer heevx_2stage(char* jobz, char* range, char* uplo, integer* n, T* a, inte
           diagonal, is destroyed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is COMPLEX array, dimension (LDB, N) \n
           On entry, the Hermitian positive definite matrix B.
@@ -34130,7 +34130,7 @@ integer heevx_2stage(char* jobz, char* range, char* uplo, integer* n, T* a, inte
           factorization B = U**H*U or B = L*L**H. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] W
           W is REAL array, dimension (N) \n
           If INFO = 0, the eigenvalues in ascending order. \n
@@ -34139,7 +34139,7 @@ integer heevx_2stage(char* jobz, char* range, char* uplo, integer* n, T* a, inte
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The length of the array WORK.  LWORK >= max(1,2*N-1).
+          The length of the array WORK.  LWORK >= fla_max(1,2*N-1).
           For optimal efficiency, LWORK >= (NB+1)*N,
           where NB is the blocksize for CHETRD returned by ILAENV. \n
  \n
@@ -34148,7 +34148,7 @@ integer heevx_2stage(char* jobz, char* range, char* uplo, integer* n, T* a, inte
           this value as the first entry of the WORK array, and no error
           message related to LWORK is issued by XERBLA. \n
  * @param[out]	RWORK	
-          RWORK is REAL array, dimension (max(1, 3*N-2)) \n
+          RWORK is REAL array, dimension (fla_max(1, 3*N-2)) \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -34221,7 +34221,7 @@ integer hegv(integer* itype, char* jobz, char* uplo, integer* n, T* a, integer* 
           diagonal, is destroyed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is COMPLEX array, dimension (LDB, N) \n
           On entry, the Hermitian positive definite matrix B.
@@ -34235,7 +34235,7 @@ integer hegv(integer* itype, char* jobz, char* uplo, integer* n, T* a, integer* 
           factorization B = U**H*U or B = L*L**H. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] W
           W is REAL array, dimension (N) \n
           If INFO = 0, the eigenvalues in ascending order. \n
@@ -34248,9 +34248,9 @@ integer hegv(integer* itype, char* jobz, char* uplo, integer* n, T* a, integer* 
           otherwise   \n
           If JOBZ = 'N' and N > 1, LWORK must be queried.
                                    LWORK = MAX(1, dimension) where
-                                   dimension = max(stage1,stage2) + (KD+1)*N + N
+                                   dimension = fla_max(stage1,stage2) + (KD+1)*N + N
                                              = N*KD + N*max(KD+1,FACTOPTNB) 
-                                               + max(2*KD*KD, KD*NTHREADS) 
+                                               + fla_max(2*KD*KD, KD*NTHREADS) 
                                                + (KD+1)*N + N
                                    where KD is the blocking size of the reduction,
                                    FACTOPTNB is the blocking used by the QR or LQ
@@ -34264,7 +34264,7 @@ integer hegv(integer* itype, char* jobz, char* uplo, integer* n, T* a, integer* 
           this value as the first entry of the WORK array, and no error
           message related to LWORK is issued by XERBLA. \n
  * @param[out]	RWORK	
-          RWORK is REAL array, dimension (max(1, 3*N-2)) \n
+          RWORK is REAL array, dimension (fla_max(1, 3*N-2)) \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -34341,7 +34341,7 @@ integer hegv_2stage(integer* itype, char* jobz, char* uplo, integer* n, T* a, in
           diagonal, is destroyed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is COMPLEX array, dimension (LDB, N) \n
           On entry, the Hermitian positive definite matrix B.
@@ -34355,7 +34355,7 @@ integer hegv_2stage(integer* itype, char* jobz, char* uplo, integer* n, T* a, in
           factorization B = U**H*U or B = L*L**H. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] W
           W is REAL array, dimension (N) \n
           If INFO = 0, the eigenvalues in ascending order. \n
@@ -34479,7 +34479,7 @@ integer hegvd(integer* itype, char* jobz, char* uplo, integer* n, T* a, integer*
           destroyed. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is COMPLEX array, dimension (LDB, N) \n
           On entry, the Hermitian matrix B.  If UPLO = 'U', the
@@ -34493,7 +34493,7 @@ integer hegvd(integer* itype, char* jobz, char* uplo, integer* n, T* a, integer*
           factorization B = U**H*U or B = L*L**H. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in] VL
           VL is REAL \n
           If RANGE='V', the lower bound of the interval to
@@ -34523,7 +34523,7 @@ integer hegvd(integer* itype, char* jobz, char* uplo, integer* n, T* a, integer*
           when it is determined to lie in an interval [a,b]
           of width less than or equal to \n
  \n
-                  ABSTOL + EPS *   max( |a|,|b|) , \n
+                  ABSTOL + EPS *   fla_max( |a|,|b|) , \n
  \n
           where EPS is the machine precision.  If ABSTOL is less than
           or equal to zero, then  EPS*|T|  will be used in its place,
@@ -34546,7 +34546,7 @@ integer hegvd(integer* itype, char* jobz, char* uplo, integer* n, T* a, integer*
           The first M elements contain the selected
           eigenvalues in ascending order. \n
  * @param[out] Z
-          Z is COMPLEX array, dimension (LDZ, max(1,M)) \n
+          Z is COMPLEX array, dimension (LDZ, fla_max(1,M)) \n
           If JOBZ = 'N', then Z is not referenced. \n
           If JOBZ = 'V', then if INFO = 0, the first M columns of Z
           contain the orthonormal eigenvectors of the matrix A
@@ -34559,19 +34559,19 @@ integer hegvd(integer* itype, char* jobz, char* uplo, integer* n, T* a, integer*
           If an eigenvector fails to converge, then that column of Z
           contains the latest approximation to the eigenvector, and the
           index of the eigenvector is returned in IFAIL.
-          Note: the user must ensure that at least max(1,M) columns are
+          Note: the user must ensure that at least fla_max(1,M) columns are
           supplied in the array Z; if RANGE = 'V', the exact value of M
           is not known in advance and an upper bound must be used. \n
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is COMPLEX array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The length of the array WORK.  LWORK >= max(1,2*N).
+          The length of the array WORK.  LWORK >= fla_max(1,2*N).
           For optimal efficiency, LWORK >= (NB+1)*N,
           where NB is the blocksize for CHETRD returned by ILAENV.
  \n
@@ -34642,7 +34642,7 @@ integer hegvx(integer* itype, char* jobz, char* range, char* uplo, integer* n, T
           not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is COMPLEX array, dimension (LDAF,N) \n
           The factored form of the matrix A.  AF contains the block
@@ -34651,7 +34651,7 @@ integer hegvx(integer* itype, char* jobz, char* range, char* uplo, integer* n, T
           A = L*D*L**H as computed by CHETRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -34661,14 +34661,14 @@ integer hegvx(integer* itype, char* jobz, char* range, char* uplo, integer* n, T
           The right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] X
           X is COMPLEX array, dimension (LDX,NRHS) \n
           On entry, the solution matrix X, as computed by CHETRS.
           On exit, the improved solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] FERR
           FERR is REAL array, dimension (NRHS) \n
           The estimated forward error bound for each solution vector
@@ -34750,7 +34750,7 @@ integer herfs(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda,  T* af
           triangular part of A is not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is COMPLEX array, dimension (LDAF,N) \n
           The factored form of the matrix A.  AF contains the block
@@ -34759,7 +34759,7 @@ integer herfs(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda,  T* af
           L*D*L**T as computed by SSYTRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -34782,14 +34782,14 @@ integer herfs(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda,  T* af
           The right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] X
           X is COMPLEX array, dimension (LDX,NRHS) \n
           On entry, the solution matrix X, as computed by SGETRS.
           On exit, the improved solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
           RCOND is REAL \n
           Reciprocal scaled condition number.  This is an estimate of the
@@ -35019,7 +35019,7 @@ integer herfsx(char* uplo, char* equed, integer* n, integer* nrhs, T* a, integer
           CHETRF. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D, as
@@ -35037,14 +35037,14 @@ integer herfsx(char* uplo, char* equed, integer* n, integer* nrhs, T* a, integer
           On exit, if INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is COMPLEX array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
           The length of WORK.  LWORK >= 1, and for best performance
-          LWORK >= max(1,N*NB), where NB is the optimal blocksize for
+          LWORK >= fla_max(1,N*NB), where NB is the optimal blocksize for
           CHETRF. \n
           for LWORK < N, TRS will be done with Level BLAS 2 \n
           for LWORK >= N, TRS will be done with Level BLAS 3 \n
@@ -35115,7 +35115,7 @@ integer hesv(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, integer*
           CHETRF. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D, as
@@ -35133,7 +35133,7 @@ integer hesv(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, integer*
           On exit, if INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is COMPLEX array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
@@ -35210,7 +35210,7 @@ integer hesv_aa(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, integ
           when UPLO  is 'L' (or 'U'). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] TB
           TB is COMPLEX array, dimension (LTB) \n
           On exit, details of the LU factorization of the band matrix. \n
@@ -35239,7 +35239,7 @@ integer hesv_aa(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, integ
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is COMPLEX workspace of size LWORK \n
  * @param[in]	LWORK	
@@ -35327,7 +35327,7 @@ integer hesv_aa_2stage(char* uplo, integer* n, integer* nrhs, T* a, integer* lda
           For more info see the description of CHETRF_RK routine. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] E
           E is COMPLEX array, dimension (N) \n
           On exit, contains the output computed by the factorization
@@ -35354,7 +35354,7 @@ integer hesv_aa_2stage(char* uplo, integer* n, integer* nrhs, T* a, integer* lda
           On exit, if INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is COMPLEX array, dimension ( MAX(1,LWORK) ). \n
           Work array used in the factorization stage.
@@ -35362,7 +35362,7 @@ integer hesv_aa_2stage(char* uplo, integer* n, integer* nrhs, T* a, integer* lda
  * @param[in]	LWORK	
           LWORK is INTEGER \n
           The length of WORK.  LWORK >= 1. For best performance
-          of factorization stage LWORK >= max(1,N*NB), where NB is
+          of factorization stage LWORK >= fla_max(1,N*NB), where NB is
           the optimal blocksize for CHETRF_RK. \n
  \n
           If LWORK = -1, then a workspace query is assumed;
@@ -35471,7 +35471,7 @@ integer hesv_rk(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, T* e,
           not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] AF
           AF is COMPLEX array, dimension (LDAF,N) \n
           If FACT = 'F', then AF is an input argument and on entry
@@ -35485,7 +35485,7 @@ integer hesv_rk(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, T* e,
           A = U*D*U**H or A = L*D*L**H. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in,out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           If FACT = 'F', then IPIV is an input argument and on entry
@@ -35507,13 +35507,13 @@ integer hesv_rk(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, T* e,
           The N-by-NRHS right hand side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] X
           X is COMPLEX array, dimension (LDX,NRHS) \n
           If INFO = 0 or INFO = N+1, the N-by-NRHS solution matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
           RCOND is REAL \n
           The estimate of the reciprocal condition number of the matrix
@@ -35541,8 +35541,8 @@ integer hesv_rk(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, T* e,
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The length of WORK.  LWORK >= max(1,2*N), and for best
-          performance, when FACT = 'N', LWORK >= max(1,2*N,N*NB), where
+          The length of WORK.  LWORK >= fla_max(1,2*N), and for best
+          performance, when FACT = 'N', LWORK >= fla_max(1,2*N,N*NB), where
           NB is the optimal blocksize for CHETRF. \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
@@ -35684,7 +35684,7 @@ integer hesvx(char* fact, char* uplo, integer* n, integer* nrhs, T* a, integer* 
           diag(S)*A*diag(S). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] AF
           AF is COMPLEX array, dimension (LDAF,N) \n
           If FACT = 'F', then AF is an input argument and on entry
@@ -35698,7 +35698,7 @@ integer hesvx(char* fact, char* uplo, integer* n, integer* nrhs, T* a, integer* 
           U*D*U**T or A = L*D*L**T. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in,out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           If FACT = 'F', then IPIV is an input argument and on entry
@@ -35744,7 +35744,7 @@ integer hesvx(char* fact, char* uplo, integer* n, integer* nrhs, T* a, integer* 
           if EQUED = 'Y', B is overwritten by diag(S)*B; \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] X
           X is COMPLEX array, dimension (LDX,NRHS) \n
           If INFO = 0, the N-by-NRHS solution matrix X to the original
@@ -35753,7 +35753,7 @@ integer hesvx(char* fact, char* uplo, integer* n, integer* nrhs, T* a, integer* 
           inv(diag(S))*X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out] RCOND
           RCOND is REAL \n
           Reciprocal scaled condition number.  This is an estimate of the
@@ -35977,7 +35977,7 @@ integer hesvxx(char* fact, char* uplo, integer* n, integer* nrhs, T* a, integer*
           not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] I1
           I1 is INTEGER
           Index of the first row to swap \n
@@ -36032,7 +36032,7 @@ integer heswapr(char* uplo, integer* n, T* a, integer* lda, integer* i1, integer
           to obtain the factor U or L (see below for further details). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D.
@@ -36106,7 +36106,7 @@ integer hetrf(char* uplo, integer* n, T* a, integer* lda, integer* ipiv, T* work
           is 'L' (or 'U'). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           On exit, it contains the details of the interchanges, i.e.,
@@ -36176,7 +36176,7 @@ integer hetrf_aa(char* uplo, integer* n, T* a, integer* lda, integer* ipiv, T* w
           when UPLO  is 'L' (or 'U'). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] TB
           TB is COMPLEX array, dimension (LTB) \n
           On exit, details of the LU factorization of the band matrix. \n
@@ -36273,7 +36273,7 @@ integer hetrf_aa_2stage(char* uplo, integer* n, T* a, integer* lda, T* tb, integ
                If UPLO = 'L': factor L in the subdiagonal part of A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] E
           E is COMPLEX array, dimension (N) \n
           On exit, contains the superdiagonal (or subdiagonal)
@@ -36430,7 +36430,7 @@ integer hetrf_rk(char* uplo, integer* n, T* a, integer* lda, T* e, integer* ipiv
           to obtain the factor U or L (see below for further details). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D. \n
@@ -36517,7 +36517,7 @@ integer hetrf_rook(char* uplo, integer* n, T* a, integer* lda, integer* ipiv, T*
           not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -36589,7 +36589,7 @@ integer hetri(char* uplo, integer* n, T* a, integer* lda, integer* ipiv, T* work
              referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] E
           E is COMPLEX array, dimension (N) \n
           On entry, contains the superdiagonal (or subdiagonal)
@@ -36665,7 +36665,7 @@ integer hetri_3(char* uplo, integer* n, T* a, integer* lda,  T* e,  integer* ipi
           not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -36728,7 +36728,7 @@ integer hetri2(char* uplo, integer* n, T* a, integer* lda, integer* ipiv, T* wor
           not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the NNB structure of D
@@ -36782,7 +36782,7 @@ integer hetri2x(char* uplo, integer* n, T* a, integer* lda, integer* ipiv, T* wo
           obtain the factor U or L as computed by CHETRF. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -36793,7 +36793,7 @@ integer hetri2x(char* uplo, integer* n, T* a, integer* lda, integer* ipiv, T* wo
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -36852,7 +36852,7 @@ integer hetrs(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda,  integ
                If UPLO = 'L': factor L in the subdiagonal part of A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] E
           E is COMPLEX array, dimension (N) \n
           On entry, contains the superdiagonal (or subdiagonal)
@@ -36874,7 +36874,7 @@ integer hetrs(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda,  integ
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -36916,7 +36916,7 @@ integer hetrs_3(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, T* e,
           Details of factors computed by CHETRF_AA. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges as computed by CHETRF_AA. \n
@@ -36926,12 +36926,12 @@ integer hetrs_3(char* uplo, integer* n, integer* nrhs, T* a, integer* lda, T* e,
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is COMPLEX array, dimension (MAX(1,LWORK)) \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK. LWORK >= max(1,3*N-2). \n
+          The dimension of the array WORK. LWORK >= fla_max(1,3*N-2). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -36973,7 +36973,7 @@ integer hetrs_aa(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda,  in
           Details of factors computed by CHETRF_AA_2STAGE. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] TB
           TB is COMPLEX array, dimension (LTB) \n
           Details of factors computed by CHETRF_AA_2STAGE. \n
@@ -36994,7 +36994,7 @@ integer hetrs_aa(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda,  in
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -37038,7 +37038,7 @@ integer hetrs_aa_2stage(char* uplo, integer* n, integer* nrhs, T* a, integer* ld
           obtain the factor U or L as computed by CHETRF_ROOK. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -37049,7 +37049,7 @@ integer hetrs_aa_2stage(char* uplo, integer* n, integer* nrhs, T* a, integer* ld
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	INFO	
           INFO is INTEGER \n
           = 0:  successful exit \n
@@ -37092,7 +37092,7 @@ integer hetrs_rook(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda,  
           obtain the factor U or L as computed by CHETRF. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -37103,7 +37103,7 @@ integer hetrs_rook(char* uplo, integer* n, integer* nrhs,  T* a, integer* lda,  
           On exit, the solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is COMPLEX array, dimension (N) \n
  * @param[out]	INFO	
@@ -37203,7 +37203,7 @@ Ta sum1(integer* n, T* cx, integer* incx)
           2*KL+KU+1; rows 1 to KL of the array need not be set.
           The j-th column of A is stored in the j-th column of the
           array AB as follows: \n
-          AB(kl+ku+1+i-j,j) = A(i,j) for max(1,j-ku)<=i<=min(m,j+kl) \n
+          AB(kl+ku+1+i-j,j) = A(i,j) for fla_max(1,j-ku)<=i<=min(m,j+kl) \n
  \n
           On exit, details of the factorization: U is stored as an
           upper triangular band matrix with KL+KU superdiagonals in
@@ -37260,7 +37260,7 @@ integer gbtf2(integer* m, integer* n, integer* kl, integer* ku, T* ab, integer* 
           further details. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] T
           T is REAL array, dimension (LDT,N) \n
           The N-by-N upper triangular factor of the block reflector.
@@ -37269,7 +37269,7 @@ integer gbtf2(integer* m, integer* n, integer* kl, integer* ku, T* ab, integer* 
           See below for further details. \n
  * @param[in] LDT
           LDT is INTEGER \n
-          The leading dimension of the array T.  LDT >= max(1,N). \n
+          The leading dimension of the array T.  LDT >= fla_max(1,N). \n
  * @param[out] INFO
           INFO is INTEGER \n
           = 0: successful exit \n
@@ -37310,7 +37310,7 @@ integer gelqt3(integer *m, integer *n, T *a, integer *lda, T *t, integer *ldt, i
           (see Further Details). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] TAU
           TAU is REAL array, dimension (min(M,N)) \n
           The scalar factors of the elementary reflectors (see Further
@@ -37366,7 +37366,7 @@ integer geql2(integer *m, integer *n, T *a, integer *lda, T *tau, T *work, integ
           product of elementary reflectors (see Further Details). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] TAU
           TAU is REAL array, dimension (min(M,N)) \n
           The scalar factors of the elementary reflectors (see Further
@@ -37413,7 +37413,7 @@ integer geqr2p(integer *m, integer *n, T *a, integer *lda, T *tau, T *work, inte
           Details). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] TAU
           TAU is REAL array, dimension (min(M,N)) \n
           The scalar factors of the elementary reflectors (see Further
@@ -37455,7 +37455,7 @@ integer gerq2(integer *m, integer *n, T *a, integer *lda, T *tau, T *work, integ
           matrix A computed by SGETC2:  A = P * L * U * Q \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1, N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1, N). \n
  * @param[in,out] RHS
           RHS is REAL array, dimension (N). \n
           On entry, the right hand side vector b.
@@ -37527,7 +37527,7 @@ integer gesc2(integer *n, T *a, integer *lda, T *rhs, integer *ipiv, integer *jp
           (See the descriptions of D, TOL and NSWEEP.) \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[in,out] D
           D is REAL array, dimension (N) \n
           The array D accumulates the scaling factors from the fast scaled
@@ -37667,7 +37667,7 @@ integer gsvj0(char *jobv, integer *m, integer *n, T *a, integer *lda, T *d, Ta *
           (See the descriptions of N1, D, TOL and NSWEEP.) \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[in,out] D
           D is REAL array, dimension (N) \n
           The array D accumulates the scaling factors from the fast scaled
@@ -37789,7 +37789,7 @@ integer gsvj1(char *jobv, integer *m, integer *n, integer *n1, T *a, integer *ld
           On exit, B is overwritten by the solution vectors X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -37883,7 +37883,7 @@ integer hb2st_kernels(char *uplo, logical *wantz, integer * ttype, integer *st, 
           obtain the factor U or L as computed by CHETRF_ROOK. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -37966,7 +37966,7 @@ integer hecon_rook(char *uplo, integer *n, T *a, integer *lda, integer *ipiv, Ta
           CHETRF_ROOK. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D. \n
@@ -37998,14 +37998,14 @@ integer hecon_rook(char *uplo, integer *n, T *a, integer *lda, integer *ipiv, Ta
           On exit, if INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out] WORK
           WORK is COMPLEX array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1)   returns the optimal LWORK. \n
  * @param[in] LWORK
           LWORK is INTEGER \n
           The length of WORK.  LWORK >= 1, and for best performance
-          LWORK >= max(1,N*NB), where NB is the optimal blocksize for
+          LWORK >= fla_max(1,N*NB), where NB is the optimal blocksize for
           CHETRF_ROOK. \n
           for LWORK < N, TRS will be done with Level BLAS 2 \n
           for LWORK >= N, TRS will be done with Level BLAS 3 \n
@@ -38071,7 +38071,7 @@ integer hesv_rook(char *uplo, integer *n, integer *nrhs, T *a, integer *lda, int
           to obtain the factor U or L (see below for further details). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D. \n
@@ -38159,7 +38159,7 @@ integer hetf2(char *uplo, integer *n, T *a, integer *lda, integer *ipiv, integer
                If UPLO = 'L': factor L in the subdiagonal part of A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] E
           E is COMPLEX array, dimension (N) \n
           On exit, contains the superdiagonal (or subdiagonal)
@@ -38303,7 +38303,7 @@ integer hetf2_rk(char *uplo, integer *n, T *a, integer *lda, T *e, integer *ipiv
           to obtain the factor U or L (see below for further details). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D. \n
@@ -38356,7 +38356,7 @@ integer hetf2_rook(char *uplo, integer *n, T *a, integer *lda, integer *ipiv, in
           VECT is CHARACTER*1 \n
           = 'N':  No need for the Housholder representation, 
                   in particular for the second stage (Band to
-                  tridiagonal) and thus LHOUS2 is of size max(1, 4*N); \n
+                  tridiagonal) and thus LHOUS2 is of size fla_max(1, 4*N); \n
           = 'V':  the Householder representation is needed to 
                   either generate Q1 Q2 or to apply Q1 Q2, 
                   then LHOUS2 is to be queried and computed.
@@ -38389,7 +38389,7 @@ integer hetf2_rook(char *uplo, integer *n, T *a, integer *lda, integer *ipiv, in
           of elementary reflectors. See Further Details. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] D
           D is REAL array, dimension (N) \n
           The diagonal elements of the tridiagonal matrix T. \n
@@ -38412,7 +38412,7 @@ integer hetf2_rook(char *uplo, integer *n, T *a, integer *lda, integer *ipiv, in
           only calculates the optimal size of the HOUS2 array,   returns
           this value as the first entry of the HOUS2 array, and no error
           message related to LHOUS2 is issued by XERBLA. \n
-          If VECT='N', LHOUS2 = max(1, 4*n); \n
+          If VECT='N', LHOUS2 = fla_max(1, 4*n); \n
           if VECT='V', option not yet available. \n
  * @param[out] WORK
           WORK is COMPLEX array, dimension (LWORK) \n
@@ -38425,9 +38425,9 @@ integer hetf2_rook(char *uplo, integer *n, T *a, integer *lda, integer *ipiv, in
           this value as the first entry of the WORK array, and no error
           message related to LWORK is issued by XERBLA.
           LWORK = MAX(1, dimension) where \n
-          dimension   = max(stage1,stage2) + (KD+1)*N \n
+          dimension   = fla_max(stage1,stage2) + (KD+1)*N \n
                       = N*KD + N*max(KD+1,FACTOPTNB)  \n
-                        + max(2*KD*KD, KD*NTHREADS)  \n
+                        + fla_max(2*KD*KD, KD*NTHREADS)  \n
                         + (KD+1)*N  \n
           where KD is the blocking size of the reduction,
           FACTOPTNB is the blocking used by the QR or LQ
@@ -38470,7 +38470,7 @@ integer hetrd_2stage(char *vect, char *uplo, integer *n, T *a, integer *lda, Ta 
   * @param[in] VECT
            VECT is CHARACTER*1 \n
            = 'N':  No need for the Housholder representation, 
-                   and thus LHOUS is of size max(1, 4*N); \n
+                   and thus LHOUS is of size fla_max(1, 4*N); \n
            = 'V':  the Householder representation is needed to 
                    either generate or to apply Q later on, 
                    then LHOUS is to be queried and computed.
@@ -38492,7 +38492,7 @@ integer hetrd_2stage(char *vect, char *uplo, integer *n, T *a, integer *lda, Ta 
            matrix A, stored in the first KD+1 rows of the array.  The
            j-th column of A is stored in the j-th column of the array AB
            as follows: \n
-           if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+           if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
            if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n \n
            On exit, the diagonal elements of AB are overwritten by the
            diagonal elements of the tridiagonal matrix T; if KD > 0, the
@@ -38597,14 +38597,14 @@ integer hetrd_hb2st(char *stage1, char *vect, char *uplo, integer *n, integer *k
            of elementary reflectors. See Further Details. \n
   * @param[in] LDA
            LDA is INTEGER \n
-           The leading dimension of the array A.  LDA >= max(1,N). \n
+           The leading dimension of the array A.  LDA >= fla_max(1,N). \n
   * @param[out] AB
            AB is COMPLEX array, dimension (LDAB,N) \n
            On exit, the upper or lower triangle of the Hermitian band
            matrix A, stored in the first KD+1 rows of the array.  The
            j-th column of A is stored in the j-th column of the array AB
            as follows: \n
-           if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+           if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
            if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
   * @param[in] LDAB
            LDAB is INTEGER \n
@@ -38690,7 +38690,7 @@ integer hetrd_he2hb(char *uplo, integer *n, integer *kd, T *a, integer *lda, T *
              referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] E
           E is COMPLEX array, dimension (N) \n
           On entry, contains the superdiagonal (or subdiagonal)
@@ -38759,7 +38759,7 @@ integer hetri_3x(char *uplo, integer *n, T *a, integer * lda, T *e, integer *ipi
           not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -38858,7 +38858,7 @@ integer isnan(T *sin)
           matrix A, stored in the first KD+1 rows of the array.  The
           j-th column of A is stored in the j-th column of the array AB
           as follows: \n
-          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
  \n
           On exit, if INFO = 0, the triangular factor U or L from the
@@ -38936,7 +38936,7 @@ integer pbtf2(char *uplo, integer *n, integer *kd, T *ab, integer *ldab, integer
           if the pivot <= TOL. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] WORK
           WORK is REAL array, dimension (2*N) \n
           Work space. \n
@@ -38999,7 +38999,7 @@ integer pstf2(char *uplo, integer *n, T *a, integer *lda, integer *piv, integer 
           On exit, the solution vectors, X. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -39352,7 +39352,7 @@ integer spr(char *uplo, integer *n, T *alpha, T *x, integer *incx, T *ap)
           LDA is INTEGER \n
           On entry, LDA specifies the first dimension of A as declared
           in the calling (sub) program. LDA must be at least
-          max(1, N). \n
+          fla_max(1, N). \n
           Unchanged on exit. \n
  * @param[in] X
           X is COMPLEX array, dimension at least
@@ -39404,7 +39404,7 @@ integer symv(char *uplo, integer *n, T *alpha, T * a, integer *lda, T *x, intege
           VECT is CHARACTER*1 \n
           = 'N':  No need for the Housholder representation, 
                   in particular for the second stage (Band to
-                  tridiagonal) and thus LHOUS2 is of size max(1, 4*N); \n
+                  tridiagonal) and thus LHOUS2 is of size fla_max(1, 4*N); \n
           = 'V':  the Householder representation is needed to 
                   either generate Q1 Q2 or to apply Q1 Q2, 
                   then LHOUS2 is to be queried and computed.
@@ -39437,7 +39437,7 @@ integer symv(char *uplo, integer *n, T *alpha, T * a, integer *lda, T *x, intege
           of elementary reflectors. See Further Details. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] D
           D is REAL array, dimension (N) \n
           The diagonal elements of the tridiagonal matrix T. \n
@@ -39460,7 +39460,7 @@ integer symv(char *uplo, integer *n, T *alpha, T * a, integer *lda, T *x, intege
           only calculates the optimal size of the HOUS2 array, returns
           this value as the first entry of the HOUS2 array, and no error
           message related to LHOUS2 is issued by XERBLA. \n
-          If VECT='N', LHOUS2 = max(1, 4*n); \n
+          If VECT='N', LHOUS2 = fla_max(1, 4*n); \n
           if VECT='V', option not yet available. \n
  * @param[out] WORK
           WORK is REAL array, dimension (LWORK) \n
@@ -39473,9 +39473,9 @@ integer symv(char *uplo, integer *n, T *alpha, T * a, integer *lda, T *x, intege
           this value as the first entry of the WORK array, and no error
           message related to LWORK is issued by XERBLA.
           LWORK = MAX(1, dimension) where \n
-          dimension   = max(stage1,stage2) + (KD+1)*N \n
+          dimension   = fla_max(stage1,stage2) + (KD+1)*N \n
                       = N*KD + N*max(KD+1,FACTOPTNB)  \n
-                        + max(2*KD*KD, KD*NTHREADS)  \n
+                        + fla_max(2*KD*KD, KD*NTHREADS)  \n
                         + (KD+1)*N  \n
           where KD is the blocking size of the reduction,
           FACTOPTNB is the blocking used by the QR or LQ
@@ -39518,7 +39518,7 @@ integer sytrd_2stage(char *vect, char *uplo, integer *n, T *a, integer *lda, T *
   * @param[in] VECT
            VECT is CHARACTER*1 \n
            = 'N':  No need for the Housholder representation, 
-                   and thus LHOUS is of size max(1, 4*N); \n
+                   and thus LHOUS is of size fla_max(1, 4*N); \n
            = 'V':  the Householder representation is needed to 
                    either generate or to apply Q later on, 
                    then LHOUS is to be queried and computed.
@@ -39540,7 +39540,7 @@ integer sytrd_2stage(char *vect, char *uplo, integer *n, T *a, integer *lda, T *
            matrix A, stored in the first KD+1 rows of the array.  The
            j-th column of A is stored in the j-th column of the array AB
            as follows: \n
-           if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+           if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
            if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
            On exit, the diagonal elements of AB are overwritten by the
            diagonal elements of the tridiagonal matrix T; if KD > 0, the
@@ -39645,14 +39645,14 @@ integer sytrd_sb2st(char *stage1, char *vect, char *uplo, integer *n, integer *k
            of elementary reflectors. See Further Details. \n
   * @param[in] LDA
            LDA is INTEGER \n
-           The leading dimension of the array A.  LDA >= max(1,N). \n
+           The leading dimension of the array A.  LDA >= fla_max(1,N). \n
   * @param[out] AB
            AB is REAL array, dimension (LDAB,N) \n
            On exit, the upper or lower triangle of the symmetric band
            matrix A, stored in the first KD+1 rows of the array.  The
            j-th column of A is stored in the j-th column of the array AB
            as follows: \n
-           if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+           if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
            if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
   * @param[in] LDAB
            LDAB is INTEGER \n
@@ -39718,7 +39718,7 @@ integer sytrd_sy2sb(char *uplo, integer *n, integer *kd, T *a, integer *lda, T *
           obtain the factor U or L as computed by SSYTRF_ROOK. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -39835,7 +39835,7 @@ integer sycon_rook(char *uplo, integer *n, T *a, integer * lda, integer *ipiv, T
                in the superdiagonal part of A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] E
           E is REAL array, dimension (N) \n
  \n
@@ -39967,7 +39967,7 @@ integer syconvf(char *uplo, char *way, integer *n, T *a, integer *lda, T *e, int
                in the superdiagonal part of A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in,out] E
           E is REAL array, dimension (N) \n
  \n
@@ -40052,7 +40052,7 @@ integer syconvf_rook(char *uplo, char *way, integer *n, T *a, integer *lda, T *e
           to obtain the factor U or L (see below for further details). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D.
@@ -40140,7 +40140,7 @@ integer sytf2(char *uplo, integer *n, T *a, integer *lda, integer *ipiv, integer
                If UPLO = 'L': factor L in the subdiagonal part of A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] E
           E is REAL array, dimension (N) \n
           On exit, contains the superdiagonal (or subdiagonal)
@@ -40284,7 +40284,7 @@ integer sytf2_rk(char *uplo, integer *n, T *a, integer * lda, T *e, integer *ipi
           to obtain the factor U or L (see below for further details). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D. \n
@@ -40371,7 +40371,7 @@ integer sytf2_rook(char *uplo, integer *n, T *a, integer * lda, integer *ipiv, i
              referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] E
           E is REAL array, dimension (N) \n
           On entry, contains the superdiagonal (or subdiagonal)
@@ -40439,7 +40439,7 @@ integer sytri_3x(char *uplo, integer *n, T *a, integer * lda, T *e, integer *ipi
           not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -40498,14 +40498,14 @@ integer sytri_rook(char *uplo, integer *n, T *a, integer * lda, integer *ipiv, T
           On exit, the updated matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,N). \n
+          The leading dimension of the array A. LDA >= fla_max(1,N). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,N) \n
           On entry, the matrix B in the pair (A, B).
           On exit, the updated matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B. LDB >= max(1,N). \n
+          The leading dimension of the array B. LDB >= fla_max(1,N). \n
  * @param[in,out] Q
           Q is REAL array, dimension (LDQ,N) \n
           On entry, if WANTQ = .TRUE., the orthogonal matrix Q.
@@ -40629,13 +40629,13 @@ integer tgex2(logical *wantq, logical *wantz, integer *n, T *a, integer *lda, T 
           On entry, A contains an upper quasi triangular matrix. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the matrix A. LDA >= max(1, M). \n
+          The leading dimension of the matrix A. LDA >= fla_max(1, M). \n
  * @param[in] B
           B is REAL array, dimension (LDB, N) \n
           On entry, B contains an upper quasi triangular matrix. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the matrix B. LDB >= max(1, N). \n
+          The leading dimension of the matrix B. LDB >= fla_max(1, N). \n
  * @param[in,out] C
           C is REAL array, dimension (LDC, N) \n
           On entry, C contains the right-hand-side of the first matrix
@@ -40644,19 +40644,19 @@ integer tgex2(logical *wantq, logical *wantz, integer *n, T *a, integer *lda, T 
           solution R. \n
  * @param[in] LDC
           LDC is INTEGER \n
-          The leading dimension of the matrix C. LDC >= max(1, M). \n
+          The leading dimension of the matrix C. LDC >= fla_max(1, M). \n
  * @param[in] D
           D is REAL array, dimension (LDD, M) \n
           On entry, D contains an upper triangular matrix. \n
  * @param[in] LDD
           LDD is INTEGER \n
-          The leading dimension of the matrix D. LDD >= max(1, M). \n
+          The leading dimension of the matrix D. LDD >= fla_max(1, M). \n
  * @param[in] E
           E is REAL array, dimension (LDE, N) \n
           On entry, E contains an upper triangular matrix. \n
  * @param[in] LDE
           LDE is INTEGER \n
-          The leading dimension of the matrix E. LDE >= max(1, N). \n
+          The leading dimension of the matrix E. LDE >= fla_max(1, N). \n
  * @param[in,out] F
           F is REAL array, dimension (LDF, N) \n
           On entry, F contains the right-hand-side of the second matrix
@@ -40665,7 +40665,7 @@ integer tgex2(logical *wantq, logical *wantz, integer *n, T *a, integer *lda, T 
           solution L. \n
  * @param[in] LDF
           LDF is INTEGER \n
-          The leading dimension of the matrix F. LDF >= max(1, M). \n
+          The leading dimension of the matrix F. LDF >= fla_max(1, M). \n
  * @param[out] SCALE
           SCALE is REAL \n
           On exit, 0 <= SCALE <= 1. If 0 < SCALE < 1, the solutions
@@ -40752,7 +40752,7 @@ integer tgsy2(char *trans, integer *ijob, integer *m, integer * n, T *a, integer
           contain the lower triangular matrix L. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,N) \n
           On entry, the pentagonal M-by-N matrix B.  The first N-L columns
@@ -40760,7 +40760,7 @@ integer tgsy2(char *trans, integer *ijob, integer *m, integer * n, T *a, integer
           On exit, B contains the pentagonal matrix V.  See Further Details. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,M). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,M). \n
  * @param[out] T
           T is REAL array, dimension (LDT,N) \n
           The lower triangular block reflectors stored in compact form
@@ -40813,7 +40813,7 @@ integer tplqt(integer *m, integer *n, integer *l, integer *mb, T *a, integer *ld
           contain the lower triangular matrix L. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,N) \n
           On entry, the pentagonal M-by-N matrix B.  The first N-L columns
@@ -40821,14 +40821,14 @@ integer tplqt(integer *m, integer *n, integer *l, integer *mb, T *a, integer *ld
           On exit, B contains the pentagonal matrix V.  See Further Details. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,M). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,M). \n
  * @param[out] T
           T is REAL array, dimension (LDT,M) \n
           The N-by-N upper triangular factor T of the block reflector.
           See Further Details. \n
  * @param[in] LDT
           LDT is INTEGER \n
-          The leading dimension of the array T.  LDT >= max(1,M) \n
+          The leading dimension of the array T.  LDT >= fla_max(1,M) \n
  * @param[out] INFO
           INFO is INTEGER \n
           = 0: successful exit \n
@@ -40887,8 +40887,8 @@ integer tplqt2(integer *m, integer *n, integer *l, T *a, integer *lda, T *b, int
  * @param[in] LDV
           LDV is INTEGER \n
           The leading dimension of the array V. \n
-          If SIDE = 'L', LDV >= max(1,M); \n
-          if SIDE = 'R', LDV >= max(1,N). \n
+          If SIDE = 'L', LDV >= fla_max(1,M); \n
+          if SIDE = 'R', LDV >= fla_max(1,N). \n
  * @param[in] T
           T is REAL array, dimension (LDT,K) \n
           The upper triangular factors of the block reflectors
@@ -40906,8 +40906,8 @@ integer tplqt2(integer *m, integer *n, integer *l, T *a, integer *lda, T *b, int
  * @param[in] LDA
           LDA is INTEGER \n
           The leading dimension of the array A. \n
-          If SIDE = 'L', LDC >= max(1,K); \n
-          If SIDE = 'R', LDC >= max(1,M). \n
+          If SIDE = 'L', LDC >= fla_max(1,K); \n
+          If SIDE = 'R', LDC >= fla_max(1,M). \n
  * @param[in,out] B
           B is REAL array, dimension (LDB,N) \n
           On entry, the M-by-N matrix B. \n
@@ -40916,7 +40916,7 @@ integer tplqt2(integer *m, integer *n, integer *l, T *a, integer *lda, T *b, int
  * @param[in] LDB
           LDB is INTEGER \n
           The leading dimension of the array B.
-          LDB >= max(1,M). \n
+          LDB >= fla_max(1,M). \n
  * @param[out] WORK
           WORK is REAL array. The dimension of WORK is
            N*MB if SIDE = 'L', or  M*MB if SIDE = 'R'. \n
@@ -40991,7 +40991,7 @@ integer tpmlqt(char *side, char *trans, integer *m, integer *n, integer *k, inte
           on exit. \n
  * @param[in] LDT
           LDT is INTEGER \n
-          The leading dimension of the array T. LDT >= max(1,N). \n
+          The leading dimension of the array T. LDT >= fla_max(1,N). \n
  * @param[in,out] VL
           VL is COMPLEX array, dimension (LDVL,MM) \n
           On entry, if SIDE = 'L' or 'B' and HOWMNY = 'B', VL must
@@ -41039,7 +41039,7 @@ integer tpmlqt(char *side, char *trans, integer *m, integer *n, integer *k, inte
           WORK is COMPLEX array, dimension (MAX(1,LWORK)) \n
  * @param[in] LWORK
           LWORK is INTEGER \n
-          The dimension of array WORK. LWORK >= max(1,2*N). \n
+          The dimension of array WORK. LWORK >= fla_max(1,2*N). \n
           For optimum performance, LWORK >= N + 2*N*NB, where NB is
           the optimal blocksize. \n
  \n
@@ -41051,7 +41051,7 @@ integer tpmlqt(char *side, char *trans, integer *m, integer *n, integer *k, inte
           RWORK is REAL array, dimension (LRWORK) \n
  * @param[in] LRWORK
           LRWORK is INTEGER \n
-          The dimension of array RWORK. LRWORK >= max(1,N). \n
+          The dimension of array RWORK. LRWORK >= fla_max(1,N). \n
  \n
           If LRWORK = -1, then a workspace query is assumed; the routine
           only calculates the optimal size of the RWORK array,   returns
@@ -41662,7 +41662,7 @@ integer unbdb6(integer *m1, integer *m2, integer *n, T *x1, integer *incx1, T *x
           On exit, the m by n matrix Q. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The first dimension of the array A. LDA >= max(1,M). \n
+          The first dimension of the array A. LDA >= fla_max(1,M). \n
  * @param[in] TAU
           TAU is REAL array, dimension (K) \n
           TAU(i) must contain the scalar factor of the elementary
@@ -41720,7 +41720,7 @@ integer ung2l(integer *m, integer *n, integer *k, T *a, integer *lda, T *tau, T 
           On exit, the m-by-n matrix Q. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The first dimension of the array A. LDA >= max(1,M). \n
+          The first dimension of the array A. LDA >= fla_max(1,M). \n
  * @param[in] TAU
           TAU is REAL array, dimension (K) \n
           TAU(i) must contain the scalar factor of the elementary
@@ -41777,7 +41777,7 @@ integer ung2r(integer *m, integer *n, integer *k, T *a, integer *lda, T *tau, T 
           On exit, the m-by-n matrix Q. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The first dimension of the array A. LDA >= max(1,M). \n
+          The first dimension of the array A. LDA >= fla_max(1,M). \n
  * @param[in] TAU
           TAU is REAL array, dimension (K) \n
           TAU(i) must contain the scalar factor of the elementary
@@ -41835,7 +41835,7 @@ integer ungl2(integer *m, integer *n, integer *k, T *a, integer *lda, T *tau, T 
           On exit, the m by n matrix Q. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The first dimension of the array A. LDA >= max(1,M). \n
+          The first dimension of the array A. LDA >= fla_max(1,M). \n
  * @param[in] TAU
           TAU is REAL array, dimension (K) \n
           TAU(i) must contain the scalar factor of the elementary
@@ -41910,7 +41910,7 @@ integer ungr2(integer *m, integer *n, integer *k, T *a, integer *lda, T *tau, T 
               i.e the columns of A are orthogonal unit vectors. \n
   * @param[in] LDA
            LDA is INTEGER \n
-           The leading dimension of the array A.  LDA >= max(1,M). \n
+           The leading dimension of the array A.  LDA >= fla_max(1,M). \n
   * @param[in] T
            T is REAL array,
            dimension (LDT, N * NIRB) \n
@@ -41929,7 +41929,7 @@ integer ungr2(integer *m, integer *n, integer *k, T *a, integer *lda, T *tau, T 
   * @param[in] LDT
            LDT is INTEGER \n
            The leading dimension of the array T.
-           LDT >= max(1,min(NB1,N)). \n
+           LDT >= fla_max(1,min(NB1,N)). \n
   * @param[out] WORK
            (workspace) REAL array, dimension (MAX(2,LWORK)) \n
            On exit, if INFO = 0, WORK(1)   returns the optimal LWORK. \n
@@ -42012,7 +42012,7 @@ integer ungtsqr(integer *m, integer *n, integer *mb, integer * nb, T *a, integer
               where 0 is a (M-N)-by-(M-N) zero matrix. \n
   * @param[in] LDA
            LDA is INTEGER \n
-           The leading dimension of the array A.  LDA >= max(1,M). \n
+           The leading dimension of the array A.  LDA >= fla_max(1,M). \n
   * @param[out] T
            T is REAL array,
            dimension (LDT, N) \n
@@ -42031,7 +42031,7 @@ integer ungtsqr(integer *m, integer *n, integer *mb, integer * nb, T *a, integer
   * @param[in] LDT
            LDT is INTEGER \n
            The leading dimension of the array T.
-           LDT >= max(1,min(NB,N)). \n
+           LDT >= fla_max(1,min(NB,N)). \n
   * @param[out] D
            D is REAL array, dimension min(M,N). \n
            The elements can be only plus or minus one.
@@ -42111,8 +42111,8 @@ integer unhr_col(integer *m, integer *n, integer *nb, T *a, integer *lda, T *t, 
  * @param[in] LDA
           LDA is INTEGER \n
           The leading dimension of the array A. \n
-          If SIDE = 'L', LDA >= max(1,M); \n
-          if SIDE = 'R', LDA >= max(1,N). \n
+          If SIDE = 'L', LDA >= fla_max(1,M); \n
+          if SIDE = 'R', LDA >= fla_max(1,N). \n
  * @param[in] TAU
           TAU is REAL array, dimension (K) \n
           TAU(i) must contain the scalar factor of the elementary
@@ -42123,7 +42123,7 @@ integer unhr_col(integer *m, integer *n, integer *nb, T *a, integer *lda, T *t, 
           On exit, C is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. \n
  * @param[in] LDC
           LDC is INTEGER \n
-          The leading dimension of the array C. LDC >= max(1,M). \n
+          The leading dimension of the array C. LDC >= fla_max(1,M). \n
  * @param[out] WORK
           WORK is REAL array, dimension \n
                                    (N) if SIDE = 'L', \n
@@ -42197,22 +42197,22 @@ integer unm2l(char *side, char *trans, integer *m, integer *n, integer *k, T *a,
  * @param[in] LDQ
           LDQ is INTEGER \n
           The leading dimension of the array Q. \n
-          LDQ >= max(1,M) if SIDE = 'L'; LDQ >= max(1,N) if SIDE = 'R'. \n
+          LDQ >= fla_max(1,M) if SIDE = 'L'; LDQ >= fla_max(1,N) if SIDE = 'R'. \n
  * @param[in,out] C
           C is REAL array, dimension (LDC,N) \n
           On entry, the M-by-N matrix C. \n
           On exit, C is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. \n
  * @param[in] LDC
           LDC is INTEGER \n
-          The leading dimension of the array C. LDC >= max(1,M). \n
+          The leading dimension of the array C. LDC >= fla_max(1,M). \n
  * @param[out] WORK
           WORK is REAL array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1)   returns the optimal LWORK. \n
  * @param[in] LWORK
           LWORK is INTEGER \n
           The dimension of the array WORK. \n
-          If SIDE = 'L', LWORK >= max(1,N); \n
-          if SIDE = 'R', LWORK >= max(1,M). \n
+          If SIDE = 'L', LWORK >= fla_max(1,N); \n
+          if SIDE = 'R', LWORK >= fla_max(1,M). \n
           For optimum performance LWORK >= M*N. \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
@@ -42291,7 +42291,7 @@ integer unm22(char *side, char *trans, integer *m, integer *n, integer *n1, inte
           A is modified by the routine but restored on exit. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,K). \n
+          The leading dimension of the array A. LDA >= fla_max(1,K). \n
  * @param[in] TAU
           TAU is REAL array, dimension (K) \n
           TAU(i) must contain the scalar factor of the elementary
@@ -42302,7 +42302,7 @@ integer unm22(char *side, char *trans, integer *m, integer *n, integer *n1, inte
           On exit, C is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. \n
  * @param[in] LDC
           LDC is INTEGER \n
-          The leading dimension of the array C. LDC >= max(1,M). \n
+          The leading dimension of the array C. LDC >= fla_max(1,M). \n
  * @param[out] WORK
           WORK is REAL array, dimension \n
                                    (N) if SIDE = 'L', \n
@@ -42384,7 +42384,7 @@ integer unmr2(char *side, char *trans, integer *m, integer *n, integer *k, T *a,
           A is modified by the routine but restored on exit. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,K). \n
+          The leading dimension of the array A. LDA >= fla_max(1,K). \n
  * @param[in] TAU
           TAU is REAL array, dimension (K) \n
           TAU(i) must contain the scalar factor of the elementary
@@ -42395,7 +42395,7 @@ integer unmr2(char *side, char *trans, integer *m, integer *n, integer *k, T *a,
           On exit, C is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. \n
  * @param[in] LDC
           LDC is INTEGER \n
-          The leading dimension of the array C. LDC >= max(1,M). \n
+          The leading dimension of the array C. LDC >= fla_max(1,M). \n
  * @param[out] WORK
           WORK is REAL array, dimension \n
                                    (N) if SIDE = 'L', \n
@@ -42481,7 +42481,7 @@ integer unmr3(char *side, char *trans, integer *m, integer *n, integer *k, integ
           LDAB is INTEGER \n
           On entry, LDA specifies the first dimension of AB as declared
           in the calling (sub) program. LDAB must be at least
-          max(1, m). \n
+          fla_max(1, m). \n
           Unchanged on exit. \n
  * @param[in] X
           X is REAL array, dimension
@@ -42565,7 +42565,7 @@ integer la_gbamv(integer *trans, integer *m, integer *n, integer *kl, integer *k
           On entry, the matrix A in band storage, in rows 1 to KL+KU+1.
           The j-th column of A is stored in the j-th column of the
           array AB as follows: \n
-          AB(KU+1+i-j,j) = A(i,j) for max(1,j-KU)<=i<=min(N,j+kl) \n
+          AB(KU+1+i-j,j) = A(i,j) for fla_max(1,j-KU)<=i<=min(N,j+kl) \n
  * @param[in] LDAB
           LDAB is INTEGER \n
           The leading dimension of the array AB.  LDAB >= KL+KU+1. \n
@@ -42642,7 +42642,7 @@ T la_gbrcond(char *trans, integer *n, integer *kl, integer *ku, T * ab, integer 
           On entry, the matrix A in band storage, in rows 1 to KL+KU+1.
           The j-th column of A is stored in the j-th column of the
           array AB as follows: \n
-          AB(KU+1+i-j,j) = A(i,j) for max(1,j-KU)<=i<=min(N,j+kl) \n
+          AB(KU+1+i-j,j) = A(i,j) for fla_max(1,j-KU)<=i<=min(N,j+kl) \n
  * @param[in] LDAB
           LDAB is INTEGER \n
           The leading dimension of the array AB.  LDAB >= KL+KU+1. \n
@@ -42716,7 +42716,7 @@ Ta la_gbrcond_c(char *trans, integer *n, integer *kl, integer *ku, T *ab, intege
           On entry, the matrix A in band storage, in rows 1 to KL+KU+1.
           The j-th column of A is stored in the j-th column of the
           array AB as follows: \n
-          AB(KU+1+i-j,j) = A(i,j) for max(1,j-KU)<=i<=min(N,j+kl) \n
+          AB(KU+1+i-j,j) = A(i,j) for fla_max(1,j-KU)<=i<=min(N,j+kl) \n
  * @param[in] LDAB
           LDAB is INTEGER \n
           The leading dimension of the array AB.  LDAB >= KL+KU+1. \n
@@ -42809,14 +42809,14 @@ Ta la_gbrcond_x(char *trans, integer *n, integer *kl, integer *ku, T *ab, intege
           On entry, the N-by-N matrix AB. \n
  * @param[in] LDAB
           LDAB is INTEGER \n
-          The leading dimension of the array AB.  LDAB >= max(1,N). \n
+          The leading dimension of the array AB.  LDAB >= fla_max(1,N). \n
  * @param[in] AFB
           AFB is REAL array, dimension (LDAFB,N) \n
           The factors L and U from the factorization
           A = P*L*U as computed by SGBTRF. \n
  * @param[in] LDAFB
           LDAFB is INTEGER \n
-          The leading dimension of the array AF.  LDAFB >= max(1,N). \n
+          The leading dimension of the array AF.  LDAFB >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           The pivot indices from the factorization A = P*L*U
@@ -42842,19 +42842,19 @@ Ta la_gbrcond_x(char *trans, integer *n, integer *kl, integer *ku, T *ab, intege
           The right-hand-side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] Y
           Y is REAL array, dimension (LDY,NRHS) \n
           On entry, the solution matrix X, as computed by SGBTRS.
           On exit, the improved solution matrix Y. \n
  * @param[in] LDY
           LDY is INTEGER \n
-          The leading dimension of the array Y.  LDY >= max(1,N). \n
+          The leading dimension of the array Y.  LDY >= fla_max(1,N). \n
  * @param[out] BERR_OUT
           BERR_OUT is REAL array, dimension (NRHS) \n
           On exit, BERR_OUT(j) contains the componentwise relative backward
           error for right-hand-side j from the formula \n
-             max(i) (abs(RES(i)) / (abs(op(A_s))*abs(Y) + abs(B_s))(i)) \n
+             fla_max(i) (abs(RES(i)) / (abs(op(A_s))*abs(Y) + abs(B_s))(i)) \n
           where abs(Z) is the componentwise absolute value of the matrix
           or vector Z. This is computed by SLA_LIN_BERR. \n
  * @param[in] N_NORMS
@@ -43070,14 +43070,14 @@ integer la_gbrfsx_extended(integer *prec_type, integer * trans_type, integer *n,
           On entry, the N-by-N matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is REAL array, dimension (LDAF,N) \n
           The factors L and U from the factorization
           A = P*L*U as computed by SGETRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           The pivot indices from the factorization A = P*L*U
@@ -43103,19 +43103,19 @@ integer la_gbrfsx_extended(integer *prec_type, integer * trans_type, integer *n,
           The right-hand-side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] Y
           Y is REAL array, dimension (LDY,NRHS) \n
           On entry, the solution matrix X, as computed by SGETRS.
           On exit, the improved solution matrix Y. \n
  * @param[in] LDY
           LDY is INTEGER \n
-          The leading dimension of the array Y.  LDY >= max(1,N). \n
+          The leading dimension of the array Y.  LDY >= fla_max(1,N). \n
  * @param[out] BERR_OUT
           BERR_OUT is REAL array, dimension (NRHS) \n
           On exit, BERR_OUT(j) contains the componentwise relative backward
           error for right-hand-side j from the formula \n
-             max(i) (abs(RES(i)) / (abs(op(A_s))*abs(Y) + abs(B_s))(i)) \n
+             fla_max(i) (abs(RES(i)) / (abs(op(A_s))*abs(Y) + abs(B_s))(i)) \n
           where abs(Z) is the componentwise absolute value of the matrix
           or vector Z. This is computed by SLA_LIN_BERR. \n
  * @param[in] N_NORMS
@@ -43328,14 +43328,14 @@ integer la_gerfsx_extended(integer *prec_type, integer * trans_type, integer *n,
           On entry, the N-by-N matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is REAL array, dimension (LDAF,N) \n
           The triangular factor U or L from the Cholesky factorization
           A = U**T*U or A = L*L**T, as computed by SPOTRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] COLEQU
           COLEQU is LOGICAL \n
           If .TRUE. then column equilibration was done to A before calling
@@ -43356,19 +43356,19 @@ integer la_gerfsx_extended(integer *prec_type, integer * trans_type, integer *n,
           The right-hand-side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] Y
           Y is REAL array, dimension (LDY,NRHS) \n
           On entry, the solution matrix X, as computed by SPOTRS.
           On exit, the improved solution matrix Y. \n
  * @param[in] LDY
           LDY is INTEGER \n
-          The leading dimension of the array Y.  LDY >= max(1,N). \n
+          The leading dimension of the array Y.  LDY >= fla_max(1,N). \n
  * @param[out] BERR_OUT
           BERR_OUT is REAL array, dimension (NRHS) \n
           On exit, BERR_OUT(j) contains the componentwise relative backward
           error for right-hand-side j from the formula \n
-             max(i) (abs(RES(i)) / (abs(op(A_s))*abs(Y) + abs(B_s))(i)) \n
+             fla_max(i) (abs(RES(i)) / (abs(op(A_s))*abs(Y) + abs(B_s))(i)) \n
           where abs(Z) is the componentwise absolute value of the matrix
           or vector Z. This is computed by SLA_LIN_BERR. \n
  * @param[in] N_NORMS
@@ -43581,14 +43581,14 @@ integer la_porfsx_extended(integer *prec_type, char *uplo, integer *n, integer *
           On entry, the N-by-N matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is REAL array, dimension (LDAF,N) \n
           The block diagonal matrix D and the multipliers used to
           obtain the factor U or L as computed by SSYTRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -43613,19 +43613,19 @@ integer la_porfsx_extended(integer *prec_type, char *uplo, integer *n, integer *
           The right-hand-side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] Y
           Y is REAL array, dimension (LDY,NRHS) \n
           On entry, the solution matrix X, as computed by SSYTRS. \n
           On exit, the improved solution matrix Y. \n
  * @param[in] LDY
           LDY is INTEGER \n
-          The leading dimension of the array Y.  LDY >= max(1,N). \n
+          The leading dimension of the array Y.  LDY >= fla_max(1,N). \n
  * @param[out] BERR_OUT
           BERR_OUT is REAL array, dimension (NRHS) \n
           On exit, BERR_OUT(j) contains the componentwise relative backward
           error for right-hand-side j from the formula \n
-             max(i) (abs(RES(i)) / (abs(op(A_s))*abs(Y) + abs(B_s))(i)) \n
+             fla_max(i) (abs(RES(i)) / (abs(op(A_s))*abs(Y) + abs(B_s))(i)) \n
           where abs(Z) is the componentwise absolute value of the matrix
           or vector Z. This is computed by SLA_LIN_BERR. \n
  * @param[in] N_NORMS
@@ -43838,14 +43838,14 @@ integer la_syrfsx_extended(integer *prec_type, char *uplo, integer *n, integer *
           On entry, the N-by-N matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is COMPLEX array, dimension (LDAF,N) \n
           The block diagonal matrix D and the multipliers used to
           obtain the factor U or L as computed by CHETRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -43870,19 +43870,19 @@ integer la_syrfsx_extended(integer *prec_type, char *uplo, integer *n, integer *
           The right-hand-side matrix B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[in,out] Y
           Y is COMPLEX array, dimension (LDY,NRHS) \n
           On entry, the solution matrix X, as computed by CHETRS.
           On exit, the improved solution matrix Y. \n
  * @param[in] LDY
           LDY is INTEGER \n
-          The leading dimension of the array Y.  LDY >= max(1,N). \n
+          The leading dimension of the array Y.  LDY >= fla_max(1,N). \n
  * @param[out] BERR_OUT
           BERR_OUT is REAL array, dimension (NRHS) \n
           On exit, BERR_OUT(j) contains the componentwise relative backward
           error for right-hand-side j from the formula \n
-             max(i) (abs(RES(i)) / (abs(op(A_s))*abs(Y) + abs(B_s))(i)) \n
+             fla_max(i) (abs(RES(i)) / (abs(op(A_s))*abs(Y) + abs(B_s))(i)) \n
           where abs(Z) is the componentwise absolute value of the matrix
           or vector Z. This is computed by CLA_LIN_BERR. \n
  * @param[in] N_NORMS
@@ -44078,7 +44078,7 @@ integer la_herfsx_extended(integer *prec_type, char *uplo, integer *n, integer *
           On entry, the matrix A in band storage, in rows 1 to KL+KU+1.
           The j-th column of A is stored in the j-th column of the
           array AB as follows: \n
-          AB(KU+1+i-j,j) = A(i,j) for max(1,j-KU)<=i<=min(N,j+kl) \n
+          AB(KU+1+i-j,j) = A(i,j) for fla_max(1,j-KU)<=i<=min(N,j+kl) \n
  * @param[in] LDAB
           LDAB is INTEGER \n
           The leading dimension of the array AB.  LDAB >= KL+KU+1. \n
@@ -44164,7 +44164,7 @@ Ta la_gbrpvgrw(integer *n, integer *kl, integer *ku, integer *ncols, T *ab, inte
           LDA is INTEGER \n
           On entry, LDA specifies the first dimension of A as declared
           in the calling (sub) program. LDA must be at least
-          max(1, m). \n
+          fla_max(1, m). \n
           Unchanged on exit. \n
  * @param[in] X
           X is REAL array, dimension
@@ -44243,14 +44243,14 @@ integer la_geamv(integer *trans, integer *m, integer *n, Ta *alpha, T *a, intege
           On entry, the N-by-N matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is REAL array, dimension (LDAF,N) \n
           The factors L and U from the factorization
           A = P*L*U as computed by SGETRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           The pivot indices from the factorization A = P*L*U
@@ -44319,14 +44319,14 @@ Ta la_gercond_c(char *trans, integer *n, T *a, integer *lda, T *af, integer *lda
           On entry, the N-by-N matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is REAL array, dimension (LDAF,N) \n
           The factors L and U from the factorization
           A = P*L*U as computed by SGETRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -44389,7 +44389,7 @@ T la_gerpvgrw(integer *n, integer *ncols, T *a, integer *lda, T * af, integer *l
           LDA is INTEGER \n
           On entry, LDA specifies the first dimension of A as declared
           in the calling (sub) program. LDA must be at least
-          max(1, n). \n
+          fla_max(1, n). \n
           Unchanged on exit. \n
  * @param[in] X
           X is COMPLEX array, dimension
@@ -44449,14 +44449,14 @@ integer la_heamv(integer *uplo, integer *n, Ta *alpha, T *a, integer *lda, T *x,
           On entry, the N-by-N matrix A \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is COMPLEX array, dimension (LDAF,N) \n
           The block diagonal matrix D and the multipliers used to
           obtain the factor U or L as computed by CHETRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -44508,14 +44508,14 @@ Ta la_hercond_c(char *uplo, integer *n, T *a, integer *lda, T *af, integer *ldaf
           On entry, the N-by-N matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is COMPLEX array, dimension (LDAF,N) \n
           The block diagonal matrix D and the multipliers used to
           obtain the factor U or L as computed by CHETRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -44572,14 +44572,14 @@ Ta la_hercond_x(char *uplo, integer *n, T *a, integer *lda, T *af, integer *ldaf
           On entry, the N-by-N matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is COMPLEX array, dimension (LDAF,N) \n
           The block diagonal matrix D and the multipliers used to
           obtain the factor U or L as computed by CHETRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -44602,7 +44602,7 @@ Ta la_herpvgrw(char *uplo, integer *n, integer *info, T *a, integer *lda, T *af,
     \verbatim 
     LA_LIN_BERR computes componentwise relative backward error from
     the formula
-        max(i) (abs(R(i)) / (abs(op(A_s))*abs(Y) + abs(B_s))(i))
+        fla_max(i) (abs(R(i)) / (abs(op(A_s))*abs(Y) + abs(B_s))(i))
     where abs(Z) is the componentwise absolute value of the matrix
     or vector Z.
     \endverbatim 
@@ -44674,14 +44674,14 @@ integer la_lin_berr(integer *n, integer *nz, integer *nrhs, T *res, Ta *ayb, Ta 
           On entry, the N-by-N matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is REAL array, dimension (LDAF,N) \n
           The triangular factor U or L from the Cholesky factorization
           A = U**T*U or A = L*L**T, as computed by SPOTRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] CMODE
           CMODE is INTEGER \n
           Determines op2(C) in the formula op(A) * op2(C) as follows: \n
@@ -44732,14 +44732,14 @@ T la_porcond(char *uplo, integer *n, T *a, integer *lda, T *af, integer *ldaf, i
           On entry, the N-by-N matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is COMPLEX array, dimension (LDAF,N) \n
           The triangular factor U or L from the Cholesky factorization
           A = U**H*U or A = L*L**H, as computed by CPOTRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] X
           X is COMPLEX array, dimension (N) \n
           The vector X in the formula op(A) * diag(X). \n
@@ -44784,14 +44784,14 @@ Ta la_porcond_x(char *uplo, integer *n, T *a, integer *lda, T *af, integer *ldaf
           On entry, the N-by-N matrix A \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is COMPLEX array, dimension (LDAF,N) \n
           The triangular factor U or L from the Cholesky factorization
           A = U**H*U or A = L*L**H, as computed by CPOTRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] C
           C is REAL array, dimension (N) \n
           The vector C in the formula op(A) * inv(diag(C)). \n
@@ -44870,7 +44870,7 @@ Ta la_porcond_c(char *uplo, integer *n, T *a, integer *lda, T *af, integer *ldaf
           LDA is INTEGER \n
           On entry, LDA specifies the first dimension of A as declared
           in the calling (sub) program. LDA must be at least
-          max(1, n). \n
+          fla_max(1, n). \n
           Unchanged on exit. \n
  * @param[in] X
           X is REAL array, dimension
@@ -44938,14 +44938,14 @@ integer la_syamv(integer *uplo, integer *n, Ta *alpha, T *a, integer *lda, T *x,
           On entry, the N-by-N matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is REAL array, dimension (LDAF,N) \n
           The triangular factor U or L from the Cholesky factorization
           A = U**T*U or A = L*L**T, as computed by SPOTRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[out] WORK
           WORK is REAL array, dimension (2*N) \n
 
@@ -44991,14 +44991,14 @@ Ta la_porpvgrw(char *uplo, integer *ncols, T *a, integer *lda, T * af, integer *
           On entry, the N-by-N matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is REAL array, dimension (LDAF,N) \n
           The block diagonal matrix D and the multipliers used to
           obtain the factor U or L as computed by SSYTRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -45053,14 +45053,14 @@ T la_syrcond(char *uplo, integer *n, T *a, integer *lda, T *af, integer *ldaf, i
           On entry, the N-by-N matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is COMPLEX array, dimension (LDAF,N) \n
           The block diagonal matrix D and the multipliers used to
           obtain the factor U or L as computed by CSYTRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -45109,14 +45109,14 @@ Ta la_syrcond_x(char *uplo, integer *n, T *a, integer *lda, T *af, integer *ldaf
           On entry, the N-by-N matrix A \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is COMPLEX array, dimension (LDAF,N) \n
           The block diagonal matrix D and the multipliers used to
           obtain the factor U or L as computed by CSYTRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -45175,14 +45175,14 @@ Ta la_syrcond_c(char *uplo, integer *n, T *a, integer *lda, T *af, integer *ldaf
           On entry, the N-by-N matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in] AF
           AF is REAL array, dimension (LDAF,N) \n
           The block diagonal matrix D and the multipliers used to
           obtain the factor U or L as computed by SSYTRF. \n
  * @param[in] LDAF
           LDAF is INTEGER \n
-          The leading dimension of the array AF.  LDAF >= max(1,N). \n
+          The leading dimension of the array AF.  LDAF >= fla_max(1,N). \n
  * @param[in] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D
@@ -45315,7 +45315,7 @@ integer labad(T *small, T *large)
           See Further Details. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] D
           D is REAL array, dimension (NB) \n
           The diagonal elements of the first NB rows and columns of
@@ -45338,14 +45338,14 @@ integer labad(T *small, T *large)
           of A. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X. LDX >= max(1,M). \n
+          The leading dimension of the array X. LDX >= fla_max(1,M). \n
  * @param[out] Y
           Y is REAL array, dimension (LDY,NB) \n
           The n-by-nb matrix Y required to update the unreduced part
           of A. \n
  * @param[in] LDY
           LDY is INTEGER \n
-          The leading dimension of the array Y. LDY >= max(1,N).  \n
+          The leading dimension of the array Y. LDY >= fla_max(1,N).  \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -45700,7 +45700,7 @@ integer lae2(T *a, T *b, T *c, T *rt1, T *rt2)
              NAB(i,j)=N(AB(i,j)), from a previous call to SLAEBZ with
              IJOB=1. \n
              On output, NAB(i,j) will contain
-             max(na(k),min(nb(k),N(AB(i,j)))), where k is the index of
+             fla_max(na(k),min(nb(k),N(AB(i,j)))), where k is the index of
              the input interval that the output interval
              (AB(j,1),AB(j,2)] came from, and na(k) and nb(k) are the
              the input values of NAB(k,1) and NAB(k,2). \n
@@ -45780,7 +45780,7 @@ integer laebz(integer *ijob, integer *nitmax, integer *n, integer *mmax, integer
  * @param[in] LDQ
           LDQ is INTEGER \n
           The leading dimension of the array Q.  If eigenvectors are
-          desired, then  LDQ >= max(1,N).  In any case, LDQ >= 1. \n
+          desired, then  LDQ >= fla_max(1,N).  In any case, LDQ >= 1. \n
  * @param[out] QSTORE
           QSTORE is REAL array, dimension (LDQS, N) \n
           Referenced only when ICOMPQ = 1.  Used to store parts of
@@ -45789,7 +45789,7 @@ integer laebz(integer *ijob, integer *nitmax, integer *n, integer *mmax, integer
  * @param[in] LDQS
           LDQS is INTEGER \n
           The leading dimension of the array QSTORE.  If ICOMPQ = 1,
-          then  LDQS >= max(1,N).  In any case, LDQS >= 1. \n
+          then  LDQS >= fla_max(1,N).  In any case, LDQS >= 1. \n
  * @param[out] WORK
           WORK is REAL array, \n
           If ICOMPQ = 0 or 1, the dimension of WORK must be at least
@@ -45880,7 +45880,7 @@ integer laed0(integer *qsiz, integer *n, Ta *d, Ta *e, T *q, integer *ldq, T *qs
           On exit, the eigenvectors of the repaired tridiagonal matrix. \n
  * @param[in] LDQ
           LDQ is INTEGER \n
-          The leading dimension of the array Q.  LDQ >= max(1,N). \n
+          The leading dimension of the array Q.  LDQ >= fla_max(1,N). \n
  * @param[in,out] INDXQ
           INDXQ is INTEGER array, dimension (N) \n
           On entry, the permutation which separately sorts the two
@@ -45952,7 +45952,7 @@ integer laed1(integer *n, T *d, T *q, integer *ldq, integer *indxq, T *rho, inte
           (those which were deflated) in its last N-K columns. \n
  * @param[in] LDQ
           LDQ is INTEGER \n
-          The leading dimension of the array Q.  LDQ >= max(1,N). \n
+          The leading dimension of the array Q.  LDQ >= fla_max(1,N). \n
  * @param[in,out] INDXQ
           INDXQ is INTEGER array, dimension (N) \n
           The permutation which separately sorts the two sub-problems
@@ -46067,7 +46067,7 @@ integer laed2(integer *k, integer *n, integer *n1, T *d, T *q, integer *ldq, int
           the updated eigenvectors. \n
  * @param[in] LDQ
           LDQ is INTEGER \n
-          The leading dimension of the array Q.  LDQ >= max(1,N). \n
+          The leading dimension of the array Q.  LDQ >= fla_max(1,N). \n
  * @param[in] RHO
           RHO is REAL \n
           The value of the parameter in the rank one update equation.
@@ -46358,7 +46358,7 @@ integer laed6(integer *kniter, logical *orgati, T *rho, T *d, T *z, T *finit, T 
           On exit, the eigenvectors of the repaired tridiagonal matrix. \n
  * @param[in] LDQ
           LDQ is INTEGER \n
-          The leading dimension of the array Q.  LDQ >= max(1,N). \n
+          The leading dimension of the array Q.  LDQ >= fla_max(1,N). \n
  * @param[out] INDXQ
           INDXQ is INTEGER array, dimension (N) \n
           The permutation which will reintegrate the subproblem just
@@ -46474,7 +46474,7 @@ integer laed7(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, intege
           (those which were deflated) in its last N-K columns. \n
  * @param[in] LDQ
           LDQ is INTEGER \n
-          The leading dimension of the array Q.  LDQ >= max(1,N). \n
+          The leading dimension of the array Q.  LDQ >= fla_max(1,N). \n
  * @param[in] INDXQ
           INDXQ is INTEGER array, dimension (N) \n
           The permutation which separately sorts the two sub-problems
@@ -46511,7 +46511,7 @@ integer laed7(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, intege
           eigenvectors. \n
  * @param[in] LDQ2
           LDQ2 is INTEGER \n
-          The leading dimension of the array Q2.  LDQ2 >= max(1,N). \n
+          The leading dimension of the array Q2.  LDQ2 >= fla_max(1,N). \n
  * @param[out] W
           W is REAL array, dimension (N) \n
           The first k values of the final deflation-altered z-vector and
@@ -46592,7 +46592,7 @@ integer laed8(integer *k, integer *n, integer *qsiz, T * q, integer *ldq, Ta *d,
           Q is REAL array, dimension (LDQ,N) \n
  * @param[in] LDQ
           LDQ is INTEGER \n
-          The leading dimension of the array Q.  LDQ >= max(1, N). \n
+          The leading dimension of the array Q.  LDQ >= fla_max(1, N). \n
  * @param[in] RHO
           RHO is REAL \n
           The value of the parameter in the rank one update equation.
@@ -46614,7 +46614,7 @@ integer laed8(integer *k, integer *n, integer *qsiz, T * q, integer *ldq, Ta *d,
           to update the system. \n
  * @param[in] LDS
           LDS is INTEGER \n
-          The leading dimension of S.  LDS >= max(1, K). \n
+          The leading dimension of S.  LDS >= fla_max(1, K). \n
  * @param[out] INFO
           INFO is INTEGER \n
           = 0:  successful exit. \n
@@ -46732,7 +46732,7 @@ integer laeda(integer *n, integer *tlvls, integer *curlvl, integer *curpbm, inte
           The upper Hessenberg matrix H. \n
  * @param[in] LDH
           LDH is INTEGER \n
-          The leading dimension of the array H.  LDH >= max(1,N). \n
+          The leading dimension of the array H.  LDH >= fla_max(1,N). \n
  * @param[in] WR
           WR is REAL \n
  * @param[in] WI
@@ -46930,7 +46930,7 @@ integer laev2(T *a, T *b, T *c, Ta *rt1, Ta * rt2, Ta *cs1, T *sn1)
           On exit, the updated matrix T, again in Schur canonical form. \n
  * @param[in] LDT
           LDT is INTEGER \n
-          The leading dimension of the array T. LDT >= max(1,N). \n
+          The leading dimension of the array T. LDT >= fla_max(1,N). \n
  * @param[in,out] Q
           Q is REAL array, dimension (LDQ,N) \n
           On entry, if WANTQ is .TRUE., the orthogonal matrix Q.
@@ -47268,7 +47268,7 @@ integer lagtf(integer *n, T *a, T *lambda, T *b, T *c, T *tol, T *d, integer *in
           The N by NRHS matrix X. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(N,1). \n
+          The leading dimension of the array X.  LDX >= fla_max(N,1). \n
  * @param[in] BETA
           BETA is REAL \n
           The scalar beta. BETA must be 0., 1., or -1.; otherwise,
@@ -47280,7 +47280,7 @@ integer lagtf(integer *n, T *a, T *lambda, T *b, T *c, T *tol, T *d, integer *in
           B := alpha * A * X + beta * B. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(N,1).  \n
+          The leading dimension of the array B.  LDB >= fla_max(N,1).  \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -47519,7 +47519,7 @@ integer lagv2(T *a, integer *lda, T *b, integer *ldb, T *alphar, T *alphai, T *b
           On exit, A contains details of the partial factorization. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D.
@@ -47547,7 +47547,7 @@ integer lagv2(T *a, integer *lda, T *b, integer *ldb, T *alphar, T *alphai, T *b
           W is COMPLEX array, dimension (LDW,NB) \n
  * @param[in] LDW
           LDW is INTEGER \n
-          The leading dimension of the array W.  LDW >= max(1,N). \n
+          The leading dimension of the array W.  LDW >= fla_max(1,N). \n
  * @param[out] INFO
           INFO is INTEGER \n
           = 0: successful exit \n
@@ -47611,7 +47611,7 @@ integer lahef(char *uplo, integer *n, integer *nb, integer *kb, T *a, integer *l
           On exit, the leading panel is factorized. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the row and column interchanges,
@@ -47621,7 +47621,7 @@ integer lahef(char *uplo, integer *n, integer *nb, integer *kb, T *a, integer *l
           H is COMPLEX workspace, dimension (LDH,NB). \n
  * @param[in] LDH
           LDH is INTEGER \n
-          The leading dimension of the workspace H. LDH >= max(1,M). \n
+          The leading dimension of the workspace H. LDH >= fla_max(1,M). \n
  * @param[out] WORK
           WORK is COMPLEX workspace, dimension (M). \n
 
@@ -47696,7 +47696,7 @@ integer lahef_aa(char *uplo, integer *j1, integer *m, integer *nb, T *a, integer
                If UPLO = 'L': factor L in the subdiagonal part of A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] E
           E is COMPLEX array, dimension (N) \n
           On exit, contains the superdiagonal (or subdiagonal)
@@ -47773,7 +47773,7 @@ integer lahef_aa(char *uplo, integer *j1, integer *m, integer *nb, T *a, integer
           W is COMPLEX array, dimension (LDW,NB) \n
  * @param[in] LDW
           LDW is INTEGER \n
-          The leading dimension of the array W.  LDW >= max(1,N). \n
+          The leading dimension of the array W.  LDW >= fla_max(1,N). \n
  * @param[out] INFO
           INFO is INTEGER \n
           = 0: successful exit \n
@@ -47858,7 +47858,7 @@ integer lahef_rk(char *uplo, integer *n, integer *nb, integer *kb, T *a, integer
           On exit, A contains details of the partial factorization. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D. \n
@@ -47888,7 +47888,7 @@ integer lahef_rk(char *uplo, integer *n, integer *nb, integer *kb, T *a, integer
           W is COMPLEX array, dimension (LDW,NB) \n
  * @param[in] LDW
           LDW is INTEGER \n
-          The leading dimension of the array W.  LDW >= max(1,N). \n
+          The leading dimension of the array W.  LDW >= fla_max(1,N). \n
  * @param[out] INFO
           INFO is INTEGER \n
           = 0: successful exit \n
@@ -47935,7 +47935,7 @@ integer lahef_rook(char *uplo, integer *n, integer *nb, integer *kb, T *a, integ
           ILO = 1). SLAHQR works primarily with the Hessenberg
           submatrix in rows and columns ILO to IHI, but applies
           transformations to all of H if WANTT is .TRUE.. \n
-          1 <= ILO <= max(1,IHI); IHI <= N. \n
+          1 <= ILO <= fla_max(1,IHI); IHI <= N. \n
  * @param[in,out] H
           H is REAL array, dimension (LDH,N) \n
           On entry, the upper Hessenberg matrix H. \n
@@ -47947,7 +47947,7 @@ integer lahef_rook(char *uplo, integer *n, integer *nb, integer *kb, T *a, integ
           below under the description of INFO. \n
  * @param[in] LDH
           LDH is INTEGER \n
-          The leading dimension of the array H. LDH >= max(1,N). \n
+          The leading dimension of the array H. LDH >= fla_max(1,N). \n
  * @param[out] WR
           WR is REAL array, dimension (N) \n
  * @param[out] WI
@@ -47978,7 +47978,7 @@ integer lahef_rook(char *uplo, integer *n, integer *nb, integer *kb, T *a, integ
           If WANTZ is .FALSE., Z is not referenced. \n
  * @param[in] LDZ
           LDZ is INTEGER \n
-          The leading dimension of the array Z. LDZ >= max(1,N). \n
+          The leading dimension of the array Z. LDZ >= fla_max(1,N). \n
  * @param[out] INFO
           INFO is INTEGER \n
            = 0:   successful exit \n
@@ -48056,7 +48056,7 @@ integer lahqr(logical *wantt, logical *wantz, integer *n, integer *ilo, integer 
           unchanged. See Further Details. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] TAU
           TAU is REAL array, dimension (NB) \n
           The scalar factors of the elementary reflectors. See Further
@@ -48117,7 +48117,7 @@ integer lahr2(integer *n, integer *k, integer *nb, T *a, integer *lda, T *tau, T
            unchanged. See Further Details. \n
   * @param[in] LDA
            LDA is INTEGER \n
-           The leading dimension of the array A.  LDA >= max(1,N). \n
+           The leading dimension of the array A.  LDA >= fla_max(1,N). \n
   * @param[out] TAU
            TAU is REAL array, dimension (NB) \n
            The scalar factors of the elementary reflectors. See Further
@@ -48280,7 +48280,7 @@ logical laisnan(real *sin1, real *sin2)
     perturbed enough to make the smallest singular value roughly SMIN.
     If both singular values are at least SMIN, (ca A - w D) will not be
     perturbed.  In any case, the perturbation will be at most some small
-    multiple of max(SMIN, ulp*norm(ca A - w D)).  The singular values
+    multiple of fla_max(SMIN, ulp*norm(ca A - w D)).  The singular values
     are computed by infinity-norm approximations, and thus will only be
     correct to a factor of 2 or so.
 
@@ -48440,7 +48440,7 @@ integer laln2(logical *ltrans, integer *na, integer *nw, float * smin, float *ca
  * @param[in] LDB
           LDB is INTEGER \n
           The leading dimension of B. LDB must be at least
-          max(1,MAX(M, N)). \n
+          fla_max(1,MAX(M, N)). \n
  * @param[out] BX
           BX is REAL array, dimension (LDBX, NRHS) \n
  * @param[in] LDBX
@@ -48563,7 +48563,7 @@ integer lals0(integer *icompq, integer *nl, integer *nr, integer *sqre, integer 
  * @param[in] LDB
           LDB is INTEGER \n
           The leading dimension of B in the calling subprogram.
-          LDB must be at least max(1,MAX(M, N)). \n
+          LDB must be at least fla_max(1,MAX(M, N)). \n
  * @param[out] BX
           BX is REAL array, dimension (LDBX, NRHS) \n
           On exit, the result of applying the left or right singular
@@ -48711,7 +48711,7 @@ integer lalsa(integer *icompq, integer *smlsiz, integer *n, integer *nrhs, T *b,
  * @param[in] LDB
           LDB is INTEGER \n
           The leading dimension of B in the calling subprogram.
-          LDB must be at least max(1,N). \n
+          LDB must be at least fla_max(1,N). \n
  * @param[in] RCOND
           RCOND is REAL \n
           The singular values of A less than or equal to RCOND times
@@ -48730,7 +48730,7 @@ integer lalsa(integer *icompq, integer *smlsiz, integer *n, integer *nrhs, T *b,
  * @param[out] WORK
           WORK is REAL array, dimension at least \n
           (9*N + 2*N*SMLSIZ + 8*N*NLVL + N*NRHS + (SMLSIZ+1)**2), \n
-          where NLVL = max(0, INT(log_2 (N/(SMLSIZ+1))) + 1). \n
+          where NLVL = fla_max(0, INT(log_2 (N/(SMLSIZ+1))) + 1). \n
  * @param[out] IWORK
           IWORK is INTEGER array, dimension at least
           (3*N*NLVL + 11*N) \n
@@ -48854,8 +48854,8 @@ integer lamrg(integer *n1, integer *n2, T *a, integer * strd1, integer *strd2, i
   * @param[in] LDA
            LDA is INTEGER \n
            The leading dimension of the array A. \n
-           If SIDE = 'L', LDA >= max(1,M); \n
-           if SIDE = 'R', LDA >= max(1,N). \n
+           If SIDE = 'L', LDA >= fla_max(1,M); \n
+           if SIDE = 'R', LDA >= fla_max(1,N). \n
   * @param[in] T
            T is REAL array, dimension \n
            (M * Number of blocks(CEIL(N-K/NB-K)), \n
@@ -48871,14 +48871,14 @@ integer lamrg(integer *n1, integer *n2, T *a, integer * strd1, integer *strd2, i
            On exit, C is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. \n
   * @param[in] LDC
            LDC is INTEGER \n
-           The leading dimension of the array C. LDC >= max(1,M). \n
+           The leading dimension of the array C. LDC >= fla_max(1,M). \n
   * @param[out] WORK
           (workspace) REAL array, dimension (MAX(1,LWORK)) \n
   * @param[in] LWORK
            LWORK is INTEGER \n
            The dimension of the array WORK. \n
-           If SIDE = 'L', LWORK >= max(1,NB) * MB; \n
-           if SIDE = 'R', LWORK >= max(1,M) * MB. \n
+           If SIDE = 'L', LWORK >= fla_max(1,NB) * MB; \n
+           if SIDE = 'R', LWORK >= fla_max(1,M) * MB. \n
            If LWORK = -1, then a workspace query is assumed; the routine
            only calculates the optimal size of the WORK array,   returns
            this value as the first entry of the WORK array, and no error
@@ -48947,8 +48947,8 @@ integer lamswlq(char *side, char *trans, integer *m, integer * n, integer *k, in
   * @param[in] LDA
            LDA is INTEGER \n
            The leading dimension of the array A. \n
-           If SIDE = 'L', LDA >= max(1,M); \n
-           if SIDE = 'R', LDA >= max(1,N). \n
+           If SIDE = 'L', LDA >= fla_max(1,M); \n
+           if SIDE = 'R', LDA >= fla_max(1,N). \n
   * @param[in] T
            T is REAL array, dimension \n
            (N * Number of blocks(CEIL(M-K/MB-K)), \n
@@ -48964,15 +48964,15 @@ integer lamswlq(char *side, char *trans, integer *m, integer * n, integer *k, in
            On exit, C is overwritten by Q*C or Q**T*C or C*Q**T or C*Q. \n
   * @param[in] LDC
            LDC is INTEGER \n
-           The leading dimension of the array C. LDC >= max(1,M). \n
+           The leading dimension of the array C. LDC >= fla_max(1,M). \n
   * @param[out] WORK
           (workspace) REAL array, dimension (MAX(1,LWORK)) \n
   * @param[in] LWORK
            LWORK is INTEGER \n
            The dimension of the array WORK. \n
   \n
-           If SIDE = 'L', LWORK >= max(1,N)*NB; \n
-           if SIDE = 'R', LWORK >= max(1,MB)*NB. \n
+           If SIDE = 'L', LWORK >= fla_max(1,N)*NB; \n
+           if SIDE = 'R', LWORK >= fla_max(1,MB)*NB. \n
            If LWORK = -1, then a workspace query is assumed; the routine
            only calculates the optimal size of the WORK array,   returns
            this value as the first entry of the WORK array, and no error
@@ -49055,7 +49055,7 @@ integer laneg(integer *n, T *d, T *lld, T *sigma, T *pivmin, integer *r__)
     n by n band matrix  A, with kl sub-diagonals and ku super-diagonals.
     
 
-       SLANGB = (max(abs(A(i,j))), NORM = 'M' or 'm'
+       SLANGB = (fla_max(abs(A(i,j))), NORM = 'M' or 'm'
                 (
                 (norm1(A),        NORM = '1', 'O' or 'o'
                 (
@@ -49066,7 +49066,7 @@ integer laneg(integer *n, T *d, T *lld, T *sigma, T *pivmin, integer *r__)
     where  norm1  denotes the  one norm of a matrix (maximum column sum),
     normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
     normF  denotes the  Frobenius norm of a matrix (square root of sum of
-    squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+    squares).  Note that  fla_max(abs(A(i,j)))  is not a consistent matrix norm.
     \endverbatim  
 
  * @param[in] NORM
@@ -49088,7 +49088,7 @@ integer laneg(integer *n, T *d, T *lld, T *sigma, T *pivmin, integer *r__)
           The band matrix A, stored in rows 1 to KL+KU+1.  The j-th
           column of A is stored in the j-th column of the array AB as
           follows: \n
-          AB(ku+1+i-j,j) = A(i,j) for max(1,j-ku)<=i<=min(n,j+kl). \n
+          AB(ku+1+i-j,j) = A(i,j) for fla_max(1,j-ku)<=i<=min(n,j+kl). \n
  * @param[in] LDAB
           LDAB is INTEGER \n
           The leading dimension of the array AB.  LDAB >= KL+KU+1. \n
@@ -49119,7 +49119,7 @@ Ta langb(char *norm, integer *n, integer *kl, integer *ku, T *ab, integer *ldab,
     the  infinity norm, or the  element of  largest absolute value  of a
     real tridiagonal matrix A.
 
-       SLANGT = (max(abs(A(i,j))), NORM = 'M' or 'm'
+       SLANGT = (fla_max(abs(A(i,j))), NORM = 'M' or 'm'
                 (
                 (norm1(A),        NORM = '1', 'O' or 'o'
                 (
@@ -49130,7 +49130,7 @@ Ta langb(char *norm, integer *n, integer *kl, integer *ku, T *ab, integer *ldab,
     where  norm1  denotes the  one norm of a matrix (maximum column sum),
     normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
     normF  denotes the  Frobenius norm of a matrix (square root of sum of
-    squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+    squares).  Note that  fla_max(abs(A(i,j)))  is not a consistent matrix norm.
     \endverbatim 
 
  * @param[in] NORM
@@ -49173,7 +49173,7 @@ Ta langt(char *norm, integer *n, T *dl, T *d, T *du)
     the  infinity norm, or the element of  largest absolute value  of an
     n by n hermitian band matrix A, with k super-diagonals.
 
-       LANHB = (max(abs(A(i,j))), NORM = 'M' or 'm'
+       LANHB = (fla_max(abs(A(i,j))), NORM = 'M' or 'm'
                 (
                 (norm1(A),        NORM = '1', 'O' or 'o'
                 (
@@ -49184,7 +49184,7 @@ Ta langt(char *norm, integer *n, T *dl, T *d, T *du)
     where  norm1  denotes the  one norm of a matrix (maximum column sum),
     normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
     normF  denotes the  Frobenius norm of a matrix (square root of sum of
-    squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+    squares).  Note that  fla_max(abs(A(i,j)))  is not a consistent matrix norm.
     \endverbatim 
 
  * @param[in] NORM
@@ -49210,7 +49210,7 @@ Ta langt(char *norm, integer *n, T *dl, T *d, T *du)
           The upper or lower triangle of the hermitian band matrix A,
           stored in the first K+1 rows of AB.  The j-th column of A is
           stored in the j-th column of the array AB as follows: \n
-          if UPLO = 'U', AB(k+1+i-j,j) = A(i,j) for max(1,j-k)<=i<=j; \n
+          if UPLO = 'U', AB(k+1+i-j,j) = A(i,j) for fla_max(1,j-k)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)   = A(i,j) for j<=i<=min(n,j+k). \n
           Note that the imaginary parts of the diagonal elements need
           not be set and are assumed to be zero. \n
@@ -49239,7 +49239,7 @@ Ta lanhb(char *norm, char *uplo, integer *n, integer *k, T *ab, integer *ldab, T
     the  infinity norm, or the  element of  largest absolute value  of a
     complex Hermitian matrix A in RFP format.
 
-       CLANHF = (max(abs(A(i,j))), NORM = 'M' or 'm'
+       CLANHF = (fla_max(abs(A(i,j))), NORM = 'M' or 'm'
                 (
                 (norm1(A),        NORM = '1', 'O' or 'o'
                 (
@@ -49250,7 +49250,7 @@ Ta lanhb(char *norm, char *uplo, integer *n, integer *k, T *ab, integer *ldab, T
     where  norm1  denotes the  one norm of a matrix (maximum column sum),
     normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
     normF  denotes the  Frobenius norm of a matrix (square root of sum of
-    squares).  Note that  max(abs(A(i,j)))  is not a  matrix norm.
+    squares).  Note that  fla_max(abs(A(i,j)))  is not a  matrix norm.
     \endverbatim 
 
  * @param[in] NORM
@@ -49316,7 +49316,7 @@ Ta lanhf(char *norm, char *transr, char *uplo, integer *n, T *a, Ta *work)
     the  infinity norm, or the  element of  largest absolute value  of a
     complex hermitian matrix A, supplied in packed form.
 
-       CLANHP = (max(abs(A(i,j))), NORM = 'M' or 'm'
+       CLANHP = (fla_max(abs(A(i,j))), NORM = 'M' or 'm'
                 (
                 (norm1(A),        NORM = '1', 'O' or 'o'
                 (
@@ -49327,7 +49327,7 @@ Ta lanhf(char *norm, char *transr, char *uplo, integer *n, T *a, Ta *work)
     where  norm1  denotes the  one norm of a matrix (maximum column sum),
     normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
     normF  denotes the  Frobenius norm of a matrix (square root of sum of
-    squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+    squares).  Note that  fla_max(abs(A(i,j)))  is not a consistent matrix norm.
     \endverbatim  
 
  * @param[in] NORM
@@ -49375,7 +49375,7 @@ Ta lanhp(char *norm, char *uplo, integer *n, T *ap, Ta *work)
     the infinity norm, or the  element of  largest absolute value  of a
     Hessenberg matrix A.
 
-       SLANHS = (max(abs(A(i,j))), NORM = 'M' or 'm'
+       SLANHS = (fla_max(abs(A(i,j))), NORM = 'M' or 'm'
                 (
                 (norm1(A),        NORM = '1', 'O' or 'o'
                 (
@@ -49386,7 +49386,7 @@ Ta lanhp(char *norm, char *uplo, integer *n, T *ap, Ta *work)
     where  norm1  denotes the  one norm of a matrix (maximum column sum),
     normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
     normF  denotes the  Frobenius norm of a matrix (square root of sum of
-    squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+    squares).  Note that  fla_max(abs(A(i,j)))  is not a consistent matrix norm.
     \endverbatim
 
  * @param[in] NORM
@@ -49403,7 +49403,7 @@ Ta lanhp(char *norm, char *uplo, integer *n, T *ap, Ta *work)
           first sub-diagonal is not referenced. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(N,1). \n
+          The leading dimension of the array A.  LDA >= fla_max(N,1). \n
  * @param[out] WORK
           WORK is REAL array, dimension (MAX(1,LWORK)), \n
           where LWORK >= N when NORM = 'I'; otherwise, WORK is not
@@ -49434,7 +49434,7 @@ Ta lanhs(char *norm, integer *n, T *a, integer *lda, Ta *work)
     \  return CLANHT
     
 
-       CLANHT = (max(abs(A(i,j))), NORM = 'M' or 'm'
+       CLANHT = (fla_max(abs(A(i,j))), NORM = 'M' or 'm'
                 (
                 (norm1(A),        NORM = '1', 'O' or 'o'
                 (
@@ -49445,7 +49445,7 @@ Ta lanhs(char *norm, integer *n, T *a, integer *lda, Ta *work)
     where  norm1  denotes the  one norm of a matrix (maximum column sum),
     normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
     normF  denotes the  Frobenius norm of a matrix (square root of sum of
-    squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+    squares).  Note that  fla_max(abs(A(i,j)))  is not a consistent matrix norm.
     \endverbatim
 
  * @param[in] NORM
@@ -49482,7 +49482,7 @@ Ta lanht(char *norm, integer *n, Ta *d, T *e)
 
     \  return SLANSB
 
-       SLANSB = (max(abs(A(i,j))), NORM = 'M' or 'm'
+       SLANSB = (fla_max(abs(A(i,j))), NORM = 'M' or 'm'
                 (
                 (norm1(A),        NORM = '1', 'O' or 'o'
                 (
@@ -49493,7 +49493,7 @@ Ta lanht(char *norm, integer *n, Ta *d, T *e)
     where  norm1  denotes the  one norm of a matrix (maximum column sum),
     normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
     normF  denotes the  Frobenius norm of a matrix (square root of sum of
-    squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+    squares).  Note that  fla_max(abs(A(i,j)))  is not a consistent matrix norm.
     \endverbatim
 
  * @param[in] NORM
@@ -49519,7 +49519,7 @@ Ta lanht(char *norm, integer *n, Ta *d, T *e)
           The upper or lower triangle of the symmetric band matrix A,
           stored in the first K+1 rows of AB.  The j-th column of A is
           stored in the j-th column of the array AB as follows: \n
-          if UPLO = 'U', AB(k+1+i-j,j) = A(i,j) for max(1,j-k)<=i<=j; \n
+          if UPLO = 'U', AB(k+1+i-j,j) = A(i,j) for fla_max(1,j-k)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)   = A(i,j) for j<=i<=min(n,j+k). \n
  * @param[in] LDAB
           LDAB is INTEGER \n
@@ -49548,7 +49548,7 @@ Ta lansb(char *norm, char *uplo, integer *n, integer *k, T *ab, integer *ldab, T
 
     \  return SLANSF
 
-       SLANSF = (max(abs(A(i,j))), NORM = 'M' or 'm'
+       SLANSF = (fla_max(abs(A(i,j))), NORM = 'M' or 'm'
                 (
                 (norm1(A),        NORM = '1', 'O' or 'o'
                 (
@@ -49559,7 +49559,7 @@ Ta lansb(char *norm, char *uplo, integer *n, integer *k, T *ab, integer *ldab, T
     where  norm1  denotes the  one norm of a matrix (maximum column sum),
     normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
     normF  denotes the  Frobenius norm of a matrix (square root of sum of
-    squares).  Note that  max(abs(A(i,j)))  is not a  matrix norm.
+    squares).  Note that  fla_max(abs(A(i,j)))  is not a  matrix norm.
     \endverbatim
 
  * @param[in] NORM
@@ -49612,7 +49612,7 @@ T lansf(char *norm, char *transr, char *uplo, integer *n, T *a, T * work)
     
     \  return SLANSP
 
-       SLANSP = (max(abs(A(i,j))), NORM = 'M' or 'm'
+       SLANSP = (fla_max(abs(A(i,j))), NORM = 'M' or 'm'
                 (
                 (norm1(A),        NORM = '1', 'O' or 'o'
                 (
@@ -49623,7 +49623,7 @@ T lansf(char *norm, char *transr, char *uplo, integer *n, T *a, T * work)
     where  norm1  denotes the  one norm of a matrix (maximum column sum),
     normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
     normF  denotes the  Frobenius norm of a matrix (square root of sum of
-    squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+    squares).  Note that  fla_max(abs(A(i,j)))  is not a consistent matrix norm.
     \endverbatim 
 
  * @param[in] NORM
@@ -49676,7 +49676,7 @@ Ta lansp(char *norm, char *uplo, integer *n, T *ap, Ta *work)
     
     \  return SLANST
 
-       SLANST = (max(abs(A(i,j))), NORM = 'M' or 'm'
+       SLANST = (fla_max(abs(A(i,j))), NORM = 'M' or 'm'
                 (
                 (norm1(A),        NORM = '1', 'O' or 'o'
                 (
@@ -49687,7 +49687,7 @@ Ta lansp(char *norm, char *uplo, integer *n, T *ap, Ta *work)
     where  norm1  denotes the  one norm of a matrix (maximum column sum),
     normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
     normF  denotes the  Frobenius norm of a matrix (square root of sum of
-    squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+    squares).  Note that  fla_max(abs(A(i,j)))  is not a consistent matrix norm.
     \endverbatim 
 
  * @param[in] NORM
@@ -49826,7 +49826,7 @@ integer lanv2(T *a, T *b, T *c, T *d, T * rt1r, T *rt1i, T *rt2r, T *rt2i, T *cs
           A-S=L*U; the unit diagonal elements of L are not stored. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] D
           D is REAL array, dimension min(M,N) \n
           The diagonal elements of the diagonal M-by-N sign matrix S,
@@ -49906,7 +49906,7 @@ integer laorhr_col_getrfnp(integer *m, integer *n, T *a, integer *lda, T *d, int
           A-S=L*U; the unit diagonal elements of L are not stored. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] D
           D is COMPLEX array, dimension min(M,N) \n
           The diagonal elements of the diagonal M-by-N sign matrix S,
@@ -50007,7 +50007,7 @@ integer launhr_col_getrfnp(integer *m, integer *n, T *a, integer *lda, T *d, int
           A-S=L*U; the unit diagonal elements of L are not stored. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] D
           D is REAL array, dimension min(M,N) \n
           The diagonal elements of the diagonal M-by-N sign matrix S,
@@ -50108,7 +50108,7 @@ integer laorhr_col_getrfnp2(integer *m, integer *n, T *a, integer *lda, T *d, in
           A-S=L*U; the unit diagonal elements of L are not stored. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] D
           D is COMPLEX array, dimension min(M,N) \n
           The diagonal elements of the diagonal M-by-N sign matrix S,
@@ -50203,7 +50203,7 @@ integer lapll(integer *n, T *x, integer *incx, T *y, integer *incy, Ta *ssmin)
           On entry, the matrix A in band storage, in rows 1 to KL+KU+1.
           The j-th column of A is stored in the j-th column of the
           array AB as follows:
-          AB(ku+1+i-j,j) = A(i,j) for max(1,j-ku)<=i<=min(m,j+kl)
+          AB(ku+1+i-j,j) = A(i,j) for fla_max(1,j-ku)<=i<=min(m,j+kl)
  \n
           On exit, the equilibrated matrix, in the same storage format
           as A.  See EQUED for the form of the equilibrated matrix. \n
@@ -50273,7 +50273,7 @@ integer laqgb(integer *m, integer *n, integer *kl, integer *ku, T *ab, integer *
           the equilibrated matrix. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(M,1). \n
+          The leading dimension of the array A.  LDA >= fla_max(M,1). \n
  * @param[in] R
           R is REAL array, dimension (M) \n
           The row scale factors for A. \n
@@ -50341,7 +50341,7 @@ integer laqge(integer *m, integer *n, T *a, integer *lda, Ta *r, Ta *c, Ta *rowc
           matrix A, stored in the first KD+1 rows of the array.  The
           j-th column of A is stored in the j-th column of the array AB
           as follows: \n
-          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
  \n
           On exit, if INFO = 0, the triangular factor U or L from the
@@ -50406,7 +50406,7 @@ integer laqhb(char *uplo, integer *n, integer *kd, T *ab, integer *ldab, Ta *s, 
           diag(S) * A * diag(S). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(N,1). \n
+          The leading dimension of the array A.  LDA >= fla_max(N,1). \n
  * @param[in] S
           S is REAL array, dimension (N) \n
           The scale factors for A. \n
@@ -50514,7 +50514,7 @@ integer laqhp(char *uplo, integer *n, T *ap, Ta *s, Ta *scond, Ta *amax, char *e
           accordingly pivoted, but no factorized. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,M). \n
+          The leading dimension of the array A. LDA >= fla_max(1,M). \n
  * @param[in,out] JPVT
           JPVT is INTEGER array, dimension (N) \n
           On entry, if JPVT(i) .ne. 0, the i-th column of A is permuted
@@ -50590,7 +50590,7 @@ integer laqp2(integer *m, integer *n, integer *offset, T *a, integer *lda, integ
           been updated. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,M). \n
+          The leading dimension of the array A. LDA >= fla_max(1,M). \n
  * @param[in,out] JPVT
           JPVT is INTEGER array, dimension (N) \n
           JPVT(I) = K <==> Column K of the full matrix A has been
@@ -50612,7 +50612,7 @@ integer laqp2(integer *m, integer *n, integer *offset, T *a, integer *lda, integ
           Matrix F**T = L*Y**T*A. \n
  * @param[in] LDF
           LDF is INTEGER \n
-          The leading dimension of the array F. LDF >= max(1,N).  \n
+          The leading dimension of the array F. LDF >= fla_max(1,N).  \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -50683,7 +50683,7 @@ integer laqps(integer *m, integer *n, integer *offset, integer *nb, integer *kb,
           j = 1, 2, ... ILO-1 or j = IHI+1, IHI+2, ... N. \n
  * @param[in] LDH
           LDH is INTEGER \n
-          The leading dimension of the array H. LDH >= max(1,N). \n
+          The leading dimension of the array H. LDH >= fla_max(1,N). \n
  * @param[out] WR
           WR is REAL array, dimension (IHI) \n
  * @param[out] WI
@@ -50724,7 +50724,7 @@ integer laqps(integer *m, integer *n, integer *offset, integer *nb, integer *kb,
           the optimal value for LWORK. \n
  * @param[in] LWORK
           LWORK is INTEGER \n
-          The dimension of the array WORK.  LWORK >= max(1,N)
+          The dimension of the array WORK.  LWORK >= fla_max(1,N)
           is sufficient, but LWORK typically as large as 6*N may
           be required for optimal performance.  A workspace query
           to determine the optimal workspace size is recommended.
@@ -51207,7 +51207,7 @@ integer laqr3(logical *wantt, logical *wantz, integer *n, integer *ktop, integer
           j = 1, 2, ... ILO-1 or j = IHI+1, IHI+2, ... N. \n
  * @param[in] LDH
           LDH is INTEGER \n
-          The leading dimension of the array H. LDH >= max(1,N). \n
+          The leading dimension of the array H. LDH >= fla_max(1,N). \n
  * @param[out] WR
           WR is REAL array, dimension (IHI) \n
  * @param[out] WI
@@ -51248,7 +51248,7 @@ integer laqr3(logical *wantt, logical *wantz, integer *n, integer *ktop, integer
           the optimal value for LWORK. \n
  * @param[in] LWORK
           LWORK is INTEGER \n
-          The dimension of the array WORK.  LWORK >= max(1,N)
+          The dimension of the array WORK.  LWORK >= fla_max(1,N)
           is sufficient, but LWORK typically as large as 6*N may
           be required for optimal performance.  A workspace query
           to determine the optimal workspace size is recommended.
@@ -51461,7 +51461,7 @@ integer laqr5(logical *wantt, logical *wantz, integer *kacc22, integer *n, integ
           matrix A, stored in the first KD+1 rows of the array.  The
           j-th column of A is stored in the j-th column of the array AB
           as follows: \n
-          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
  \n
           On exit, if INFO = 0, the triangular factor U or L from the
@@ -51588,7 +51588,7 @@ integer laqsp(char *uplo, integer *n, T *ap, Ta *s, Ta * scond, Ta *amax, char *
           diag(S) * A * diag(S). \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(N,1). \n
+          The leading dimension of the array A.  LDA >= fla_max(N,1). \n
  * @param[in] S
           S is REAL array, dimension (N) \n
           The scale factors for A. \n
@@ -51671,7 +51671,7 @@ integer laqsy(char *uplo, integer *n, T *a, integer *lda, Ta *s, Ta *scond, Ta *
           be 1 by 1. \n
  * @param[in] LDT
           LDT is INTEGER \n
-          The leading dimension of the matrix T. LDT >= max(1,N). \n
+          The leading dimension of the matrix T. LDT >= fla_max(1,N). \n
  * @param[in] B
           B is REAL array, dimension (N) \n
           On entry, B contains the elements to form the matrix
@@ -51923,7 +51923,7 @@ integer lar2v(integer *n, T *x, T *y, T *z, integer *incx, Ta *c, T *s, integer 
           or C * H if SIDE = 'R'. \n
  * @param[in] LDC
           LDC is INTEGER \n
-          The leading dimension of the array C. LDC >= max(1,M). \n
+          The leading dimension of the array C. LDC >= fla_max(1,M). \n
  * @param[out] WORK
           WORK is REAL array, dimension \n
                          (N) if SIDE = 'L' \n
@@ -51980,7 +51980,7 @@ integer larf(char *side, integer *m, integer *n, T *v, integer *incv, T *tau, T 
            On exit, C is overwritten by H * C * H'. \n
   * @param[in] LDC
            LDC is INTEGER \n
-           The leading dimension of the array C.  LDC >= max(1, N). \n
+           The leading dimension of the array C.  LDC >= fla_max(1, N). \n
   * @param[out] WORK
            WORK is REAL array, dimension (N)   \n
 
@@ -52958,17 +52958,17 @@ integer larrr(integer *n, T *d, T *e, integer *info)
           is (GERS(2*i-1), GERS(2*i)). The Gerschgorin intervals should
           be computed from the original UNshifted matrix. \n
  * @param[out] Z
-          Z is REAL array, dimension (LDZ, max(1,M)) \n
+          Z is REAL array, dimension (LDZ, fla_max(1,M)) \n
           If INFO = 0, the first M columns of Z contain the
           orthonormal eigenvectors of the matrix T
           corresponding to the input eigenvalues, with the i-th
           column of Z holding the eigenvector associated with W(i).
-          Note: the user must ensure that at least max(1,M) columns are
+          Note: the user must ensure that at least fla_max(1,M) columns are
           supplied in the array Z. \n
  * @param[in] LDZ
           LDZ is INTEGER \n
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N). \n
+          JOBZ = 'V', LDZ >= fla_max(1,N). \n
  * @param[out] ISUPPZ
           ISUPPZ is INTEGER array, dimension (2*max(1,M)) \n
           The support of the eigenvectors in Z, i.e., the indices
@@ -53243,7 +53243,7 @@ integer laruv(integer *iseed, integer *n, T *x)
           or C * H if SIDE = 'R'. \n
  * @param[in] LDC
           LDC is INTEGER \n
-          The leading dimension of the array C. LDC >= max(1,M). \n
+          The leading dimension of the array C. LDC >= fla_max(1,M). \n
  * @param[out] WORK
           WORK is REAL array, dimension \n
                          (N) if SIDE = 'L' \n
@@ -53323,14 +53323,14 @@ integer larz(char *side, integer *m, integer *n, integer *l, T *v, integer *incv
           On exit, C is overwritten by H*C or H**T*C or C*H or C*H**T. \n
  * @param[in] LDC
           LDC is INTEGER \n
-          The leading dimension of the array C. LDC >= max(1,M). \n
+          The leading dimension of the array C. LDC >= fla_max(1,M). \n
  * @param[out] WORK
           WORK is REAL array, dimension (LDWORK,K) \n
  * @param[in] LDWORK
           LDWORK is INTEGER \n
           The leading dimension of the array WORK. \n
-          If SIDE = 'L', LDWORK >= max(1,N); \n
-          if SIDE = 'R', LDWORK >= max(1,M). \n
+          If SIDE = 'L', LDWORK >= fla_max(1,N); \n
+          if SIDE = 'R', LDWORK >= fla_max(1,M). \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -53393,7 +53393,7 @@ integer larzb(char *side, char *trans, char *direct, char * storev, integer *m, 
  * @param[in] LDV
           LDV is INTEGER \n
           The leading dimension of the array V.
-          If STOREV = 'C', LDV >= max(1,N); if STOREV = 'R', LDV >= K. \n
+          If STOREV = 'C', LDV >= fla_max(1,N); if STOREV = 'R', LDV >= K. \n
  * @param[in] TAU
           TAU is REAL array, dimension (K) \n
           TAU(i) must contain the scalar factor of the elementary
@@ -53641,7 +53641,7 @@ integer lasd0(integer *n, integer *sqre, T *d, T *e, T *u, integer *ldu, T *vt, 
           singular vectors of the bidiagonal matrix. \n
  * @param[in] LDU
           LDU is INTEGER \n
-          The leading dimension of the array U.  LDU >= max(1, N). \n
+          The leading dimension of the array U.  LDU >= fla_max(1, N). \n
  * @param[in,out] VT
           VT is REAL array, dimension (LDVT,M) \n
           where M = N + SQRE. \n
@@ -53652,7 +53652,7 @@ integer lasd0(integer *n, integer *sqre, T *d, T *e, T *u, integer *ldu, T *vt, 
           bidiagonal matrix. \n
  * @param[in] LDVT
           LDVT is INTEGER \n
-          The leading dimension of the array VT.  LDVT >= max(1, M). \n
+          The leading dimension of the array VT.  LDVT >= fla_max(1, M). \n
  * @param[in,out] IDXQ
           IDXQ is INTEGER array, dimension (N) \n
           This contains the permutation which will reintegrate the
@@ -54702,7 +54702,7 @@ integer lasda(integer *icompq, integer *smlsiz, integer *n, integer *sqre, T *d,
           LDU is INTEGER \n
           On entry, LDU  specifies the leading dimension of U as
           declared in the calling (sub) program. LDU must be at
-          least max(1, NRU). \n
+          least fla_max(1, NRU). \n
  * @param[in,out] C
           C is REAL array, dimension (LDC, NCC) \n
           On entry, contains an N-by-NCC matrix which on exit
@@ -55261,7 +55261,7 @@ integer lasq6(integer *i0, integer *n0, T *z, integer *pp, T *dmin, T *dmin1, T 
           SIDE = 'R' or by A*P**T if SIDE = 'L'. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M).  \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M).  \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -55372,7 +55372,7 @@ integer lasv2(T *f, T *g, T *h, T *ssmin, T * ssmax, T *snr, T *csr, T *snl, T *
            of blocked V (see Further Details). \n
   * @param[in] LDA
            LDA is INTEGER \n
-           The leading dimension of the array A.  LDA >= max(1,M). \n
+           The leading dimension of the array A.  LDA >= fla_max(1,M). \n
   * @param[out] T
            T is REAL array,
            dimension (LDT, N * Number_of_row_blocks) \n
@@ -55444,20 +55444,20 @@ integer laswlq(integer *m, integer *n, integer *mb, integer * nb, T *a, integer 
           On entry, TL contains an N1 by N1 matrix. \n
  * @param[in] LDTL
           LDTL is INTEGER \n
-          The leading dimension of the matrix TL. LDTL >= max(1,N1). \n
+          The leading dimension of the matrix TL. LDTL >= fla_max(1,N1). \n
  * @param[in] TR
           TR is REAL array, dimension (LDTR,2) \n
           On entry, TR contains an N2 by N2 matrix. \n
  * @param[in] LDTR
           LDTR is INTEGER \n
-          The leading dimension of the matrix TR. LDTR >= max(1,N2). \n
+          The leading dimension of the matrix TR. LDTR >= fla_max(1,N2). \n
  * @param[in] B
           B is REAL array, dimension (LDB,2) \n
           On entry, the N1 by N2 matrix B contains the right-hand
           side of the equation. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the matrix B. LDB >= max(1,N1). \n
+          The leading dimension of the matrix B. LDB >= fla_max(1,N1). \n
  * @param[out] SCALE
           SCALE is REAL \n
           On exit, SCALE contains the scale factor. SCALE is chosen
@@ -55467,7 +55467,7 @@ integer laswlq(integer *m, integer *n, integer *mb, integer * nb, T *a, integer 
           On exit, X contains the N1 by N2 solution. \n
  * @param[in] LDX
           LDX is INTEGER \n
-          The leading dimension of the matrix X. LDX >= max(1,N1). \n
+          The leading dimension of the matrix X. LDX >= fla_max(1,N1). \n
  * @param[out] XNORM
           XNORM is REAL \n
           On exit, XNORM is the infinity-norm of the solution. \n
@@ -55541,7 +55541,7 @@ integer lasy2(logical *ltranl, logical *ltranr, integer *isgn, integer *n1, inte
           On exit, A contains details of the partial factorization. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D.
@@ -55569,7 +55569,7 @@ integer lasy2(logical *ltranl, logical *ltranr, integer *isgn, integer *n1, inte
           W is REAL array, dimension (LDW,NB) \n
  * @param[in] LDW
           LDW is INTEGER \n
-          The leading dimension of the array W.  LDW >= max(1,N). \n
+          The leading dimension of the array W.  LDW >= fla_max(1,N). \n
  * @param[out] INFO
           INFO is INTEGER \n
           = 0: successful exit \n
@@ -55633,7 +55633,7 @@ integer lasyf(char *uplo, integer *n, integer *nb, integer *kb, T *a, integer *l
            On exit, the leading panel is factorized. \n
   * @param[in] LDA
            LDA is INTEGER \n
-           The leading dimension of the array A.  LDA >= max(1,M). \n
+           The leading dimension of the array A.  LDA >= fla_max(1,M). \n
   * @param[out] IPIV
            IPIV is INTEGER array, dimension (M) \n
            Details of the row and column interchanges,
@@ -55643,7 +55643,7 @@ integer lasyf(char *uplo, integer *n, integer *nb, integer *kb, T *a, integer *l
            H is REAL workspace, dimension (LDH,NB). \n
   * @param[in] LDH
            LDH is INTEGER \n
-           The leading dimension of the workspace H. LDH >= max(1,M). \n
+           The leading dimension of the workspace H. LDH >= fla_max(1,M). \n
   * @param[out] WORK
            WORK is REAL workspace, dimension (M).  \n
 
@@ -55718,7 +55718,7 @@ integer lasyf_aa(char *uplo, integer *j1, integer *m, integer *nb, T *a, integer
                If UPLO = 'L': factor L in the subdiagonal part of A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] E
           E is REAL array, dimension (N) \n
           On exit, contains the superdiagonal (or subdiagonal)
@@ -55795,7 +55795,7 @@ integer lasyf_aa(char *uplo, integer *j1, integer *m, integer *nb, T *a, integer
           W is REAL array, dimension (LDW,NB) \n
  * @param[in] LDW
           LDW is INTEGER \n
-          The leading dimension of the array W.  LDW >= max(1,N). \n
+          The leading dimension of the array W.  LDW >= fla_max(1,N). \n
  * @param[out] INFO
           INFO is INTEGER \n
           = 0: successful exit \n
@@ -55879,7 +55879,7 @@ integer lasyf_rk(char *uplo, integer *n, integer *nb, integer *kb, T *a, integer
           On exit, A contains details of the partial factorization. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] IPIV
           IPIV is INTEGER array, dimension (N) \n
           Details of the interchanges and the block structure of D.
@@ -55909,7 +55909,7 @@ integer lasyf_rk(char *uplo, integer *n, integer *nb, integer *kb, T *a, integer
           W is REAL array, dimension (LDW,NB) \n
  * @param[in] LDW
           LDW is INTEGER \n
-          The leading dimension of the array W.  LDW >= max(1,N). \n
+          The leading dimension of the array W.  LDW >= fla_max(1,N). \n
  * @param[out] INFO
           INFO is INTEGER \n
           = 0: successful exit \n
@@ -55952,7 +55952,7 @@ integer lasyf_rook(char *uplo, integer *n, integer *nb, integer *kb, T *a, integ
           On entry, the N-by-N triangular coefficient matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] SA
           SA is REAL array, dimension (LDSA,N) \n
           Only the UPLO part of SA is referenced.  On exit, if INFO=0,
@@ -55960,7 +55960,7 @@ integer lasyf_rook(char *uplo, integer *n, integer *nb, integer *kb, T *a, integ
           the UPLO part of SA is unspecified. \n
  * @param[in] LDSA
           LDSA is INTEGER \n
-          The leading dimension of the array SA.  LDSA >= max(1,M). \n
+          The leading dimension of the array SA.  LDSA >= fla_max(1,M). \n
  * @param[out] INFO
           INFO is INTEGER \n
           = 0:  successful exit. \n
@@ -56002,7 +56002,7 @@ integer dlat2s(char *uplo, integer *n, double *a, integer * lda, float *sa, inte
           On entry, the N-by-N triangular coefficient matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[out] SA
           SA is COMPLEX array, dimension (LDSA,N) \n
           Only the UPLO part of SA is referenced.  On exit, if INFO=0,
@@ -56010,7 +56010,7 @@ integer dlat2s(char *uplo, integer *n, double *a, integer * lda, float *sa, inte
           the UPLO part of SA is unspecified. \n
  * @param[in] LDSA
           LDSA is INTEGER \n
-          The leading dimension of the array SA.  LDSA >= max(1,M). \n
+          The leading dimension of the array SA.  LDSA >= fla_max(1,M). \n
  * @param[out] INFO
           INFO is INTEGER \n
           = 0:  successful exit. \n
@@ -56078,7 +56078,7 @@ integer zlat2c(char *uplo, integer *n, dcomplex *a, integer *lda, scomplex *sa, 
           The upper or lower triangular band matrix A, stored in the
           first KD+1 rows of the array. The j-th column of A is stored
           in the j-th column of the array AB as follows: \n
-          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j; \n
+          if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)    = A(i,j) for j<=i<=min(n,j+kd). \n
  * @param[in] LDAB
           LDAB is INTEGER \n
@@ -56156,7 +56156,7 @@ integer latbs(char *uplo, char *trans, char *diag, char * normin, integer *n, in
           matrix Z computed by SGETC2:  Z = P * L * U * Q \n
  * @param[in] LDZ
           LDZ is INTEGER \n
-          The leading dimension of the array Z.  LDA >= max(1, N). \n
+          The leading dimension of the array Z.  LDA >= fla_max(1, N). \n
  * @param[in,out] RHS
           RHS is REAL array, dimension N. \n
           On entry, RHS contains contributions from other subsystems.
@@ -56363,7 +56363,7 @@ integer latps(char *uplo, char *trans, char *diag, char * normin, integer *n, T 
           of A. \n
  * @param[in] LDW
           LDW is INTEGER \n
-          The leading dimension of the array W. LDW >= max(1,N).  \n
+          The leading dimension of the array W. LDW >= fla_max(1,N).  \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -56506,7 +56506,7 @@ integer latrs(char *uplo, char *trans, char *diag, char * normin, integer *n, T 
           orthogonal matrix Z as a product of M elementary reflectors. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out] TAU
           TAU is REAL array, dimension (M) \n
           The scalar factors of the elementary reflectors. \n
@@ -56567,7 +56567,7 @@ integer latrz(integer *m, integer *n, integer *l, T *a, integer *lda, T *tau, T 
            of blocked V (see Further Details). \n
   * @param[in] LDA
            LDA is INTEGER \n
-           The leading dimension of the array A.  LDA >= max(1,M). \n
+           The leading dimension of the array A.  LDA >= fla_max(1,M). \n
   * @param[out] T
            T is REAL array,
            dimension (LDT, N * Number_of_row_blocks) \n
@@ -56647,7 +56647,7 @@ integer icmax1(integer *n, scomplex *cx, integer *incx)
           The m by n matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,M). \n
+          The leading dimension of the array A. LDA >= fla_max(1,M). \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -56675,7 +56675,7 @@ integer ilaclc(integer *m, integer *n, scomplex *a, integer *lda)
           The m by n matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,M). \n
+          The leading dimension of the array A. LDA >= fla_max(1,M). \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -56728,7 +56728,7 @@ integer iladiag(char *diag)
           The m by n matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,M).  \n
+          The leading dimension of the array A. LDA >= fla_max(1,M).  \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -56756,7 +56756,7 @@ integer iladlc(integer *m, integer *n, double *a, integer *lda)
           The m by n matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,M).  \n
+          The leading dimension of the array A. LDA >= fla_max(1,M).  \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -56883,7 +56883,7 @@ integer ilaprec(char *prec)
           The m by n matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,M). \n
+          The leading dimension of the array A. LDA >= fla_max(1,M). \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -56911,7 +56911,7 @@ integer ilaslc(integer *m, integer *n, float *a, integer *lda)
           The m by n matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,M). \n 
+          The leading dimension of the array A. LDA >= fla_max(1,M). \n 
 
  * @return INTEGER Return value of the function.
  * */
@@ -57018,7 +57018,7 @@ integer ilaver(integer *vers_major, integer *vers_minor, integer *vers_patch__)
           The m by n matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,M) \n
+          The leading dimension of the array A. LDA >= fla_max(1,M) \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -57048,7 +57048,7 @@ integer ilazlc(integer *m, integer *n, dcomplex *a, integer *lda)
           The m by n matrix A. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,M).  \n
+          The leading dimension of the array A. LDA >= fla_max(1,M).  \n
 
  * @return INTEGER Return value of the function.
  * */
@@ -57153,7 +57153,7 @@ integer izmax1(integer *n, dcomplex *zx, integer *incx)
  * @details
  * \b Purpose:
     \verbatim        
-    SLANTP = ( max(abs(A(i,j))), NORM = 'M' or 'm'
+    SLANTP = ( fla_max(abs(A(i,j))), NORM = 'M' or 'm'
              (
              ( norm1(A),         NORM = '1', 'O' or 'o'
              (
@@ -57164,7 +57164,7 @@ integer izmax1(integer *n, dcomplex *zx, integer *incx)
     where  norm1  denotes the  one norm of a matrix (maximum column sum),
     normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
     normF  denotes the  Frobenius norm of a matrix (square root of sum of
-    squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+    squares).  Note that  fla_max(abs(A(i,j)))  is not a consistent matrix norm.
     \endverbatim 
 
  * @param[in]	NORM	
@@ -57220,7 +57220,7 @@ Ta lantp(char* norm, char* uplo, char* diag, integer* n, T* ap, Ta* work)
  * @details
  * \b Purpose:
     \verbatim        
-    SLANTB = ( max(abs(A(i,j))), NORM = 'M' or 'm'
+    SLANTB = ( fla_max(abs(A(i,j))), NORM = 'M' or 'm'
              (
              ( norm1(A),         NORM = '1', 'O' or 'o'
              (
@@ -57231,7 +57231,7 @@ Ta lantp(char* norm, char* uplo, char* diag, integer* n, T* ap, Ta* work)
     where  norm1  denotes the  one norm of a matrix (maximum column sum),
     normI  denotes the  infinity norm  of a matrix  (maximum row sum) and
     normF  denotes the  Frobenius norm of a matrix (square root of sum of
-    squares).  Note that  max(abs(A(i,j)))  is not a consistent matrix norm.
+    squares).  Note that  fla_max(abs(A(i,j)))  is not a consistent matrix norm.
     \endverbatim 
 
  * @param[in]	NORM	
@@ -57262,7 +57262,7 @@ Ta lantp(char* norm, char* uplo, char* diag, integer* n, T* ap, Ta* work)
           The upper or lower triangular band matrix A, stored in the
           first k+1 rows of AB.  The j-th column of A is stored
           in the j-th column of the array AB as follows: \n
-          if UPLO = 'U', AB(k+1+i-j,j) = A(i,j) for max(1,j-k)<=i<=j; \n
+          if UPLO = 'U', AB(k+1+i-j,j) = A(i,j) for fla_max(1,j-k)<=i<=j; \n
           if UPLO = 'L', AB(1+i-j,j)   = A(i,j) for j<=i<=min(n,j+k). \n
           Note that when DIAG = 'U', the elements of the array AB
           corresponding to the diagonal elements of the matrix A are
@@ -57317,7 +57317,7 @@ Ta lantb(char* norm, char* uplo, char* diag, integer* n, integer* k, T* ab, inte
           are the rows of V. \n
  * @param[in]	LDA	
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[out]	T	
           T is REAL array, dimension (LDT,MIN(M,N)) \n
           The upper triangular block reflectors stored in compact form
@@ -57396,7 +57396,7 @@ integer gelqt(integer* m, integer* n, integer* mb, T* a, integer* lda, T* t, int
           DGELQT in the first K rows of its array argument A. \n
  * @param[in]	LDV	
           LDV is INTEGER \n
-          The leading dimension of the array V. LDV >= max(1,K). \n
+          The leading dimension of the array V. LDV >= fla_max(1,K). \n
  * @param[in]	T	
           T is REAL array, dimension (LDT,K) \n
           The upper triangular factors of the block reflectors
@@ -57410,7 +57410,7 @@ integer gelqt(integer* m, integer* n, integer* mb, T* a, integer* lda, T* t, int
           On exit, C is overwritten by Q C, Q**T C, C Q**T or C Q. \n
  * @param[in]	LDC	
           LDC is INTEGER \n
-          The leading dimension of the array C. LDC >= max(1,M). \n
+          The leading dimension of the array C. LDC >= fla_max(1,M). \n
  * @param[out]	WORK	
           WORK is REAL array. The dimension of \n
           WORK is N*MB if SIDE = 'L', or  M*MB if SIDE = 'R'. \n
@@ -57471,7 +57471,7 @@ integer gemlqt(char* side, char* trans, integer* m, integer* n, integer* k, inte
           generalized real Schur factorization. \n
  * @param[in]	LDA	
           LDA is INTEGER \n
-          The leading dimension of A.  LDA >= max(1,N). \n
+          The leading dimension of A.  LDA >= fla_max(1,N). \n
  * @param[in,out]	B	
           B is REAL array, dimension (LDB, N) \n
           On entry, the matrix B. \n
@@ -57479,7 +57479,7 @@ integer gemlqt(char* side, char* trans, integer* m, integer* n, integer* k, inte
           real Schur factorization. \n
  * @param[in]	LDB	
           LDB is INTEGER \n
-          The leading dimension of B.  LDB >= max(1,N). \n
+          The leading dimension of B.  LDB >= fla_max(1,N). \n
  * @param[out]	ALPHAR	
           ALPHAR is REAL array, dimension (N) \n
           The real parts of each scalar alpha defining an eigenvalue
@@ -57520,7 +57520,7 @@ integer gemlqt(char* side, char* trans, integer* m, integer* n, integer* k, inte
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK.  LWORK >= max(1,4*N).
+          The dimension of the array WORK.  LWORK >= fla_max(1,4*N).
           For good performance, LWORK must generally be larger.
           To compute the optimal value of LWORK, call ILAENV to get
           blocksizes (for SGEQRF, SORMQR, and SORGQR.)  Then compute:
@@ -57625,7 +57625,7 @@ integer gegs(char* jobvsl, char* jobvsr, integer* n, T* a, integer* lda, T* b, i
           SHGEQZ for details. \n
  * @param[in]	LDA	
           LDA is INTEGER \n
-          The leading dimension of A.  LDA >= max(1,N). \n
+          The leading dimension of A.  LDA >= fla_max(1,N). \n
  * @param[in,out]	B	
           B is REAL array, dimension (LDB, N) \n
           On entry, the matrix B. \n
@@ -57637,7 +57637,7 @@ integer gegs(char* jobvsl, char* jobvsr, integer* n, T* a, integer* lda, T* b, i
           A will be correct.  See SGGHRD and SHGEQZ for details. \n
  * @param[in]	LDB	
           LDB is INTEGER \n
-          The leading dimension of B.  LDB >= max(1,N). \n
+          The leading dimension of B.  LDB >= fla_max(1,N). \n
  * @param[out]	ALPHAR	
           ALPHAR is REAL array, dimension (N) \n
           The real parts of each scalar alpha defining an eigenvalue of
@@ -57703,7 +57703,7 @@ integer gegs(char* jobvsl, char* jobvsr, integer* n, T* a, integer* lda, T* b, i
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n
  * @param[in]	LWORK	
           LWORK is INTEGER \n
-          The dimension of the array WORK.  LWORK >= max(1,8*N).
+          The dimension of the array WORK.  LWORK >= fla_max(1,8*N).
           For good performance, LWORK must generally be larger.
           To compute the optimal value of LWORK, call ILAENV to get
           blocksizes (for SGEQRF, SORMQR, and SORGQR.)  Then compute:
@@ -57899,19 +57899,19 @@ integer latzm(char* side, integer* m, integer* n, T* v, integer* incv, T* tau, T
           factorization A = U**T*U or A = L*L**T. \n
  * @param[in]	LDA	
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in]	B	
           B is DOUBLE PRECISION array, dimension (LDB,NRHS) \n
           The N-by-NRHS right hand side matrix B. \n
  * @param[in]	LDB	
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	X	
           X is DOUBLE PRECISION array, dimension (LDX,NRHS) \n
           If INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in]	LDX	
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is DOUBLE PRECISION array, dimension (N,NRHS) \n
           This array is used to hold the residual vectors. \n
@@ -58020,19 +58020,19 @@ integer dsposv(char* uplo, integer* n, integer* nrhs, double* a, integer* lda, d
           factorization A = U**H*U or A = L*L**H. \n
  * @param[in]	LDA	
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,N). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,N). \n
  * @param[in]	B	
           B is COMPLEX*16 array, dimension (LDB,NRHS) \n
           The N-by-NRHS right hand side matrix B. \n
  * @param[in]	LDB	
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max(1,N). \n
+          The leading dimension of the array B.  LDB >= fla_max(1,N). \n
  * @param[out]	X	
           X is COMPLEX*16 array, dimension (LDX,NRHS) \n
           If INFO = 0, the N-by-NRHS solution matrix X. \n
  * @param[in]	LDX	
           LDX is INTEGER \n
-          The leading dimension of the array X.  LDX >= max(1,N). \n
+          The leading dimension of the array X.  LDX >= fla_max(1,N). \n
  * @param[out]	WORK	
           WORK is COMPLEX*16 array, dimension (N,NRHS) \n
           This array is used to hold the residual vectors. \n
@@ -58091,15 +58091,15 @@ integer zcposv(char* uplo, integer* n, integer* nrhs, dcomplex* a, integer* lda,
           The number of columns in A; n≥ 0. \n
  * @param[in, out] a
           A is REAL/DOUBLE/COMPLEX/COMPLEX*16 array \n
-          Array, size at least max(1, lda*n) for column-major layout
-          or max(1, lda*m) for row-major layout. Contains the matrix A.
+          Array, size at least fla_max(1, lda*n) for column-major layout
+          or fla_max(1, lda*m) for row-major layout. Contains the matrix A.
           On exit, Overwritten by L and U. The unit diagonal elements
           of L are not stored. \n
  * @param[in] lda
           LDA is INTEGER \n
           The leading dimension of array a, which must be
-          at least max(1, m) for column-major layout
-          or max(1, n) for row-major layout. \n
+          at least fla_max(1, m) for column-major layout
+          or fla_max(1, n) for row-major layout. \n
  * @param[in] info
           INFO is INTEGER \n
           If info=0, the execution is successful. \n
@@ -58138,7 +58138,7 @@ integer getrfnp(integer* m, integer* n, T* a, integer* lda, integer* info)
 
  * @param[in, out] ap
           AP is REAL array. \n
-          Array, size at least max(1, n(n+1)/2). The array ap contains
+          Array, size at least fla_max(1, n(n+1)/2). The array ap contains
           the lower triangular part of the matrix A in packed 
           storage (see Matrix Storage Schemes for uplo = 'L').
           On exit, Overwritten by the factor L. The first ncolm diagonal
@@ -58210,8 +58210,8 @@ integer spffrtx(T *ap, integer *n, integer * ncolm, T *work, T *work2)
           A also contains the unfactored submatrix. See the application notes section for further details. \n
  * @param[in] lda
           LDA is INTEGER \n
-          The leading dimension of array a. lda≥ max(1, m) \n
-          for column major layout and lda≥ max(1, n) for row major layout. \n
+          The leading dimension of array a. lda≥ fla_max(1, m) \n
+          for column major layout and lda≥ fla_max(1, n) for row major layout. \n
  * @param[in] info
           INFO is INTEGER \n
           If info=0, the execution is successful. \n
@@ -58283,7 +58283,7 @@ integer getrfnpi(integer *m, integer *n, integer *nfact, T *a, integer *lda, int
               the columns of blocked V (compact WY-representation). \n
  * @param[in] lda
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max(1,M). \n
+          The leading dimension of the array A.  LDA >= fla_max(1,M). \n
  * @param[in, out] t
           T is REAL/DOUBLE/COMPLEX/COMPLEX*16 array, dimension (LDT,N)) \n
           The upper triangular block reflectors stored in compact form
@@ -58429,7 +58429,7 @@ integer getsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *n
           the rest of A is unspecified. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max( 1, N ). \n
+          The leading dimension of the array A.  LDA >= fla_max( 1, N ). \n
  * @param[in, out] B
           B is REAL array, dimension (LDB, N) \n
           On entry, the N-by-N upper triangular matrix B. \n
@@ -58443,7 +58443,7 @@ integer getsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *n
           the rest of B is unspecified. \n
  * @param[in]	LDB	
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max( 1, N ). \n
+          The leading dimension of the array B.  LDB >= fla_max( 1, N ). \n
  * @param[out]	ALPHAR	
           ALPHAR is REAL array, dimension (N) \n
           The real parts of each scalar alpha defining an eigenvalue
@@ -58492,7 +58492,7 @@ integer getsqrhrt(integer *m, integer *n, integer *mb1, integer *nb1, integer *n
           On exit, if INFO >= 0, WORK(1) returns the optimal LWORK. \n
  * @param[in] LWORK
           LWORK is INTEGER \n
-          The dimension of the array WORK.  LWORK >= max(1,N). \n
+          The dimension of the array WORK.  LWORK >= fla_max(1,N). \n
 
           If LWORK = -1, then a workspace query is assumed; the routine
           only calculates the optimal size of the WORK array, returns
@@ -58699,12 +58699,12 @@ integer laqz2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer 
           A is REAL array, dimension (LDA, N) \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max( 1, N ). \n
+          The leading dimension of the array A.  LDA >= fla_max( 1, N ). \n
  * @param[in, out] B
           B is REAL array, dimension (LDB,N) \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max( 1, N ). \n
+          The leading dimension of the array B.  LDB >= fla_max( 1, N ). \n
  * @param[in, out] Q
           Q is REAL array, dimension (LDQ,N) \n
  * @param[in] LDQ
@@ -58752,7 +58752,7 @@ integer laqz2(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer 
           On exit, if INFO >= 0, WORK(1) returns the optimal LWORK. \n
  * @param[in] LWORK
           LWORK is INTEGER \n
-          The dimension of the array WORK.  LWORK >= max(1,N). \n
+          The dimension of the array WORK.  LWORK >= fla_max(1,N). \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
           only calculates the optimal size of the WORK array, returns
@@ -58823,12 +58823,12 @@ integer laqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer 
           A is REAL array, dimension (LDA, N) \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A.  LDA >= max( 1, N ). \n
+          The leading dimension of the array A.  LDA >= fla_max( 1, N ). \n
  * @param[in, out] B
           B is REAL array, dimension (LDB,N) \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B.  LDB >= max( 1, N ). \n
+          The leading dimension of the array B.  LDB >= fla_max( 1, N ). \n
  * @param[in, out] Q
           Q is REAL array, dimension (LDQ,N) \n
  * @param[in] LDQ
@@ -58850,7 +58850,7 @@ integer laqz3(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer 
           On exit, if INFO >= 0, WORK(1) returns the optimal LWORK. \n
  * @param[in] LWORK
           LWORK is INTEGER \n
-          The dimension of the array WORK.  LWORK >= max(1,N). \n
+          The dimension of the array WORK.  LWORK >= fla_max(1,N). \n
  \n
           If LWORK = -1, then a workspace query is assumed; the routine
           only calculates the optimal size of the WORK array, returns
@@ -58927,7 +58927,7 @@ inline integer laqz4(logical *ilschur, logical *ilq, logical *ilz, integer *n, i
           See Further Details section. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,K). \n
+          The leading dimension of the array A. LDA >= fla_max(1,K). \n
  * @param[in, out] B
           B is REAL array, dimension (LDB,N) \n
  \n
@@ -58941,7 +58941,7 @@ inline integer laqz4(logical *ilschur, logical *ilq, logical *ilz, integer *n, i
           See Further Details section. \n
  * @param[in] LDB
           LDB is INTEGER \n
-          The leading dimension of the array B. LDB >= max(1,M). \n
+          The leading dimension of the array B. LDB >= fla_max(1,M). \n
  * @param[out] WORK
           WORK is REAL array, \n
           dimension (LDWORK,max(K,N-K)) \n
@@ -59017,7 +59017,7 @@ inline integer larfb_gett(char *ident, integer *m, integer *n, integer *k, T *t,
              i.e the columns of A are orthogonal unit vectors. \n
  * @param[in] LDA
           LDA is INTEGER \n
-          The leading dimension of the array A. LDA >= max(1,M). \n
+          The leading dimension of the array A. LDA >= fla_max(1,M). \n
  * @param[in] T
           T is REAL array,
           dimension (LDT, N * NIRB) \n
@@ -59036,7 +59036,7 @@ inline integer larfb_gett(char *ident, integer *m, integer *n, integer *k, T *t,
           of T. \n
  * @param[in] LDT
           LDT is INTEGER \n
-          The leading dimension of the array T. LDT >= max(1,min(NB,N)). \n
+          The leading dimension of the array T. LDT >= fla_max(1,min(NB,N)). \n
  * @param[out] WORK
           (workspace) REAL array, dimension (MAX(1,LWORK)) \n
           On exit, if INFO = 0, WORK(1) returns the optimal LWORK. \n

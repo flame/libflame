@@ -154,7 +154,7 @@ int FLA_task_determine_absolute_blocksize( int A_size, int A_proc_size, int nb_a
     int A_unproc_size = A_size - A_proc_size;
     int b;
 
-    b = min( A_unproc_size, nb_alg );
+    b = fla_min( A_unproc_size, nb_alg );
 
     return b;
 }

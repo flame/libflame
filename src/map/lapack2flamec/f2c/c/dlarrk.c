@@ -179,7 +179,7 @@ int dlarrk_(integer *n, integer *iw, doublereal *gl, doublereal *gu, doublereal 
     /* Computing MAX */
     d__1 = f2c_abs(*gl);
     d__2 = f2c_abs(*gu); // , expr subst
-    tnorm = max(d__1,d__2);
+    tnorm = fla_max(d__1,d__2);
     rtoli = *reltol;
     atoli = *pivmin * 4.;
     itmax = (integer) ((log(tnorm + *pivmin) - log(*pivmin)) / log(2.)) + 2;
@@ -192,11 +192,11 @@ L10: /* Check if interval converged or maximum number of iterations reached */
     /* Computing MAX */
     d__1 = f2c_abs(right);
     d__2 = f2c_abs(left); // , expr subst
-    tmp2 = max(d__1,d__2);
+    tmp2 = fla_max(d__1,d__2);
     /* Computing MAX */
-    d__1 = max(atoli,*pivmin);
+    d__1 = fla_max(atoli,*pivmin);
     d__2 = rtoli * tmp2; // , expr subst
-    if (tmp1 < max(d__1,d__2))
+    if (tmp1 < fla_max(d__1,d__2))
     {
         *info = 0;
         goto L30;

@@ -54,7 +54,7 @@ ppequ_float_parameters:: ppequ_float_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-    lda = n; // as per API spec, lda≥ max(1, n).
+    lda = n; // as per API spec, lda≥ fla_max(1, n).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n ppequ float:  n: %d lda: %d \n", n, lda);
@@ -216,7 +216,7 @@ ppequ_double_parameters:: ppequ_double_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-    lda = n; // as per API spec, lda≥ max(1, n).
+    lda = n; // as per API spec, lda≥ fla_max(1, n).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n ppequ double:  n: %d lda: %d \n", n, lda);
@@ -376,7 +376,7 @@ ppequ_scomplex_parameters:: ppequ_scomplex_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-    lda = n; // as per API spec, lda≥ max(1, n).
+    lda = n; // as per API spec, lda≥ fla_max(1, n).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n ppequ scomplex:  n: %d lda: %d \n", n, lda);
@@ -537,7 +537,7 @@ ppequ_dcomplex_parameters:: ppequ_dcomplex_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-    lda = n; // as per API spec, lda≥ max(1, n).
+    lda = n; // as per API spec, lda≥ fla_max(1, n).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n ppequ dcomplex:  n: %d lda: %d \n", n, lda);

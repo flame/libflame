@@ -15,6 +15,8 @@
 
 
 // --- Miscellaneous macro definitions -----------------------------------------
+#ifndef FLA_MACRO_DEFS_H
+#define FLA_MACRO_DEFS_H
 
 #undef  NULL
 #define NULL 0
@@ -383,11 +385,19 @@
 
 // --- Common functions implemented as macros ----------------------------------
 
-#undef min
-#define min( x, y ) ( (x) < (y) ? (x) : (y) )
+#define fla_min( x, y )    \
+({                         \
+   __typeof__(x) _x = (x); \
+   __typeof__(y) _y = (y); \
+   _x < _y ? _x : _y;      \
+})
 
-#undef max
-#define max( x, y ) ( (x) > (y) ? (x) : (y) )
+#define fla_max( x, y )    \
+({                         \
+   __typeof__(x) _x = (x); \
+   __typeof__(y) _y = (y); \
+   _x > _y ? _x : _y;      \
+})
 
 #undef signof
 #define signof( a, b ) ( (b) >= 0 ? (a) : -(a) )
@@ -399,4 +409,6 @@
 
 #define FLA_NEGATE( a ) \
         ( a.base == FLA_ONE.base ? FLA_MINUS_ONE : FLA_ONE )
+
+#endif
 

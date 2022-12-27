@@ -67,7 +67,7 @@
 /* > On entry, the matrix A in band storage, in rows 1 to KL+KU+1. */
 /* > The j-th column of A is stored in the j-th column of the */
 /* > array AB as follows: */
-/* > AB(ku+1+i-j,j) = A(i,j) for max(1,j-ku)<=i<=min(m,j+kl) */
+/* > AB(ku+1+i-j,j) = A(i,j) for fla_max(1,j-ku)<=i<=fla_min(m,j+kl) */
 /* > */
 /* > On exit, the equilibrated matrix, in the same storage format */
 /* > as A. See EQUED for the form of the equilibrated matrix. */
@@ -214,8 +214,8 @@ int zlaqgb_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
                 /* Computing MIN */
                 i__5 = *m;
                 i__6 = j + *kl; // , expr subst
-                i__4 = min(i__5,i__6);
-                for (i__ = max(i__2,i__3);
+                i__4 = fla_min(i__5,i__6);
+                for (i__ = fla_max(i__2,i__3);
                         i__ <= i__4;
                         ++i__)
                 {
@@ -246,8 +246,8 @@ int zlaqgb_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
             /* Computing MIN */
             i__5 = *m;
             i__6 = j + *kl; // , expr subst
-            i__3 = min(i__5,i__6);
-            for (i__ = max(i__4,i__2);
+            i__3 = fla_min(i__5,i__6);
+            for (i__ = fla_max(i__4,i__2);
                     i__ <= i__3;
                     ++i__)
             {
@@ -279,8 +279,8 @@ int zlaqgb_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
             /* Computing MIN */
             i__5 = *m;
             i__6 = j + *kl; // , expr subst
-            i__2 = min(i__5,i__6);
-            for (i__ = max(i__3,i__4);
+            i__2 = fla_min(i__5,i__6);
+            for (i__ = fla_max(i__3,i__4);
                     i__ <= i__2;
                     ++i__)
             {

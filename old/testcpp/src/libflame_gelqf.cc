@@ -38,7 +38,7 @@ void gelqf_test()
   FLA_Obj aCIOObj, tauCOObj;
   T *aCPPIOBuff, *aCIOBuff ;
   T *tauCPPOBuff, *tauCOBuff ;
-  int min_m_n = min( m, n ) ;
+  int min_m_n = fla_min( m, n ) ;
 
   int datatype = getDatatype<T>();
 

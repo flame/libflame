@@ -265,7 +265,7 @@ void prepare_syevd_run(char *jobz,
         exe_time = fla_test_clock() - exe_time;
 
         /* Get the best execution time */
-        time_min = min(time_min, exe_time);
+        time_min = fla_min(time_min, exe_time);
 
         /* Make a copy of the output buffers. This is required to validate the API functionality.*/
         copy_realtype_vector(datatype, n, w_test, 1, w, 1);

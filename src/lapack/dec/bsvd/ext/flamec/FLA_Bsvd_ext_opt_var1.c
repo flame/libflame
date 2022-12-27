@@ -273,7 +273,7 @@ FLA_Error FLA_Bsvd_ext_ops_var1( integer       m_d,
 
     // Compute some convergence constants.
     eps    = FLA_Mach_params_ops( FLA_MACH_EPS );
-    tolmul = max( 10.0F, min( 100.0F, powf( eps, -0.125F ) ) );
+    tolmul = fla_max( 10.0F, fla_min( 100.0F, powf( eps, -0.125F ) ) );
     FLA_Bsvd_compute_tol_thresh_ops( m_d,
                                      tolmul,
                                      maxitr,
@@ -394,7 +394,7 @@ FLA_Error FLA_Bsvd_ext_ops_var1( integer       m_d,
 
             // Update the maximum number of iterations performed in the
             // current sweep.
-            n_iter_perf_sweep_max = max( n_iter_perf_sweep_max, n_iter_perf );
+            n_iter_perf_sweep_max = fla_max( n_iter_perf_sweep_max, n_iter_perf );
 
             // Store the most recent value of ijBR in m_G_sweep_max.
             // When the sweep is done, this value will contain the minimum
@@ -528,7 +528,7 @@ FLA_Error FLA_Bsvd_ext_opd_var1( integer       m_d,
 
     // Compute some convergence constants.
     eps    = FLA_Mach_params_opd( FLA_MACH_EPS );
-    tolmul = max( 10.0, min( 100.0, pow( eps, -0.125 ) ) );
+    tolmul = fla_max( 10.0, fla_min( 100.0, pow( eps, -0.125 ) ) );
     FLA_Bsvd_compute_tol_thresh_opd( m_d,
                                      tolmul,
                                      maxitr,
@@ -648,7 +648,7 @@ FLA_Error FLA_Bsvd_ext_opd_var1( integer       m_d,
 
             // Update the maximum number of iterations performed in the
             // current sweep.
-            n_iter_perf_sweep_max = max( n_iter_perf_sweep_max, n_iter_perf );
+            n_iter_perf_sweep_max = fla_max( n_iter_perf_sweep_max, n_iter_perf );
 
             // Store the most recent value of ijBR in m_G_sweep_max.
             // When the sweep is done, this value will contain the minimum
@@ -780,7 +780,7 @@ FLA_Error FLA_Bsvd_ext_opc_var1( integer       m_d,
 
     // Compute some convergence constants.
     eps    = FLA_Mach_params_ops( FLA_MACH_EPS );
-    tolmul = max( 10.0F, min( 100.0F, powf( eps, -0.125F ) ) );
+    tolmul = fla_max( 10.0F, fla_min( 100.0F, powf( eps, -0.125F ) ) );
     FLA_Bsvd_compute_tol_thresh_ops( m_d,
                                      tolmul,
                                      maxitr,
@@ -900,7 +900,7 @@ FLA_Error FLA_Bsvd_ext_opc_var1( integer       m_d,
 
             // Update the maximum number of iterations performed in the
             // current sweep.
-            n_iter_perf_sweep_max = max( n_iter_perf_sweep_max, n_iter_perf );
+            n_iter_perf_sweep_max = fla_max( n_iter_perf_sweep_max, n_iter_perf );
 
             // Store the most recent value of ijBR in m_G_sweep_max.
             // When the sweep is done, this value will contain the minimum
@@ -1031,7 +1031,7 @@ FLA_Error FLA_Bsvd_ext_opz_var1( integer       m_d,
 
     // Compute some convergence constants.
     eps    = FLA_Mach_params_opd( FLA_MACH_EPS );
-    tolmul = max( 10.0, min( 100.0, pow( eps, -0.125 ) ) );
+    tolmul = fla_max( 10.0, fla_min( 100.0, pow( eps, -0.125 ) ) );
     FLA_Bsvd_compute_tol_thresh_opd( m_d,
                                      tolmul,
                                      maxitr,
@@ -1151,7 +1151,7 @@ FLA_Error FLA_Bsvd_ext_opz_var1( integer       m_d,
 
             // Update the maximum number of iterations performed in the
             // current sweep.
-            n_iter_perf_sweep_max = max( n_iter_perf_sweep_max, n_iter_perf );
+            n_iter_perf_sweep_max = fla_max( n_iter_perf_sweep_max, n_iter_perf );
 
             // Store the most recent value of ijBR in m_G_sweep_max.
             // When the sweep is done, this value will contain the minimum

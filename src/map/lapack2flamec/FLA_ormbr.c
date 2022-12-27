@@ -80,7 +80,7 @@ extern int dormbr_fla(char *vect, char *side, char *trans, integer *m, integer *
   if      ( side_fla == FLA_LEFT )     {  nq = *m; /* nw = *n; */ }     \
   else /* ( side_fla == FLA_RIGHT) */  {  nq = *n; /* nw = *m; */ }     \
                                                                         \
-  m_t = min( nq, *k );                                                  \
+  m_t = fla_min( nq, *k );                                                  \
                                                                         \
   if      ( *vect == 'Q' )       { mm = nq; nn = *k; }                  \
   else /* ( *vect == 'P' ) */    { mm = *k; nn = nq; }                  \

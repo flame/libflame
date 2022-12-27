@@ -199,8 +199,8 @@ int slagv2_(real *a, integer *lda, real *b, integer *ldb, real *alphar, real *al
     /* Computing MAX */
     r__5 = (r__1 = a[a_dim1 + 1], f2c_abs(r__1)) + (r__2 = a[a_dim1 + 2], f2c_abs( r__2));
     r__6 = (r__3 = a[(a_dim1 << 1) + 1], f2c_abs(r__3)) + (r__4 = a[(a_dim1 << 1) + 2], f2c_abs(r__4));
-    r__5 = max(r__5,r__6); // ; expr subst
-    anorm = max(r__5,safmin);
+    r__5 = fla_max(r__5,r__6); // ; expr subst
+    anorm = fla_max(r__5,safmin);
     ascale = 1.f / anorm;
     a[a_dim1 + 1] = ascale * a[a_dim1 + 1];
     a[(a_dim1 << 1) + 1] = ascale * a[(a_dim1 << 1) + 1];
@@ -210,8 +210,8 @@ int slagv2_(real *a, integer *lda, real *b, integer *ldb, real *alphar, real *al
     /* Computing MAX */
     r__4 = (r__3 = b[b_dim1 + 1], f2c_abs(r__3));
     r__5 = (r__1 = b[(b_dim1 << 1) + 1], f2c_abs(r__1)) + (r__2 = b[(b_dim1 << 1) + 2], f2c_abs(r__2));
-    r__4 = max(r__4,r__5); // ; expr subst
-    bnorm = max(r__4,safmin);
+    r__4 = fla_max(r__4,r__5); // ; expr subst
+    bnorm = fla_max(r__4,safmin);
     bscale = 1.f / bnorm;
     b[b_dim1 + 1] = bscale * b[b_dim1 + 1];
     b[(b_dim1 << 1) + 1] = bscale * b[(b_dim1 << 1) + 1];
@@ -286,11 +286,11 @@ int slagv2_(real *a, integer *lda, real *b, integer *ldb, real *alphar, real *al
             /* Computing MAX */
             r__5 = (r__1 = a[a_dim1 + 1], f2c_abs(r__1)) + (r__2 = a[(a_dim1 << 1) + 1], f2c_abs(r__2));
             r__6 = (r__3 = a[a_dim1 + 2], f2c_abs(r__3) ) + (r__4 = a[(a_dim1 << 1) + 2], f2c_abs(r__4)); // , expr subst
-            h1 = max(r__5,r__6);
+            h1 = fla_max(r__5,r__6);
             /* Computing MAX */
             r__5 = (r__1 = b[b_dim1 + 1], f2c_abs(r__1)) + (r__2 = b[(b_dim1 << 1) + 1], f2c_abs(r__2));
             r__6 = (r__3 = b[b_dim1 + 2], f2c_abs(r__3) ) + (r__4 = b[(b_dim1 << 1) + 2], f2c_abs(r__4)); // , expr subst
-            h2 = max(r__5,r__6);
+            h2 = fla_max(r__5,r__6);
             if (scale1 * h1 >= f2c_abs(wr1) * h2)
             {
                 /* find left rotation matrix Q to zero out B(2,1) */

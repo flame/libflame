@@ -88,7 +88,7 @@ static doublereal c_b11 = 1.;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] X */
@@ -101,7 +101,7 @@ static doublereal c_b11 = 1.;
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(1,N). */
+/* > The leading dimension of the array X. LDX >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] FERR */
@@ -218,11 +218,11 @@ int dptrfs_(integer *n, integer *nrhs, doublereal *d__, doublereal *e, doublerea
     {
         *info = -2;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -8;
     }
-    else if (*ldx < max(1,*n))
+    else if (*ldx < fla_max(1,*n))
     {
         *info = -10;
     }
@@ -299,7 +299,7 @@ L20: /* Loop until stopping criterion is satisfied. */
             work[*n] = f2c_dabs(bi) + f2c_dabs(cx) + f2c_dabs(dx);
         }
         /* Compute componentwise relative backward error from formula */
-        /* max(i) ( f2c_dabs(R(i)) / ( f2c_dabs(A)*f2c_dabs(X) + f2c_dabs(B) )(i) ) */
+        /* fla_max(i) ( f2c_dabs(R(i)) / ( f2c_dabs(A)*f2c_dabs(X) + f2c_dabs(B) )(i) ) */
         /* where f2c_dabs(Z) is the componentwise absolute value of the matrix */
         /* or vector Z. If the i-th component of the denominator is less */
         /* than SAFE2, then SAFE1 is added to the i-th components of the */
@@ -315,14 +315,14 @@ L20: /* Loop until stopping criterion is satisfied. */
                 /* Computing MAX */
                 d__2 = s;
                 d__3 = (d__1 = work[*n + i__], f2c_dabs(d__1)) / work[ i__]; // , expr subst
-                s = max(d__2,d__3);
+                s = fla_max(d__2,d__3);
             }
             else
             {
                 /* Computing MAX */
                 d__2 = s;
                 d__3 = ((d__1 = work[*n + i__], f2c_dabs(d__1)) + safe1) / (work[i__] + safe1); // , expr subst
-                s = max(d__2,d__3);
+                s = fla_max(d__2,d__3);
             }
             /* L40: */
         }
@@ -396,7 +396,7 @@ L20: /* Loop until stopping criterion is satisfied. */
             work[i__] = work[i__] / df[i__] + work[i__ + 1] * (d__1 = ef[i__], f2c_dabs(d__1));
             /* L70: */
         }
-        /* Compute norm(inv(A)) = max(x(i)), 1<=i<=n. */
+        /* Compute norm(inv(A)) = fla_max(x(i)), 1<=i<=n. */
         ix = idamax_(n, &work[1], &c__1);
         ferr[j] *= (d__1 = work[ix], f2c_dabs(d__1));
         /* Normalize error. */
@@ -409,7 +409,7 @@ L20: /* Loop until stopping criterion is satisfied. */
             /* Computing MAX */
             d__2 = lstres;
             d__3 = (d__1 = x[i__ + j * x_dim1], f2c_dabs(d__1)); // , expr subst
-            lstres = max(d__2,d__3);
+            lstres = fla_max(d__2,d__3);
             /* L80: */
         }
         if (lstres != 0.)

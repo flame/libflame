@@ -674,13 +674,13 @@ dim_t FLASH_Obj_scalar_width( FLA_Obj H )
 
 dim_t FLASH_Obj_scalar_min_dim( FLA_Obj H )
 {
-	return min( FLASH_Obj_scalar_length( H ),
+	return fla_min( FLASH_Obj_scalar_length( H ),
 	            FLASH_Obj_scalar_width( H ) );
 }
 
 dim_t FLASH_Obj_scalar_max_dim( FLA_Obj H )
 {
-	return max( FLASH_Obj_scalar_length( H ),
+	return fla_max( FLASH_Obj_scalar_length( H ),
 	            FLASH_Obj_scalar_width( H ) );
 }
 

@@ -117,7 +117,7 @@ static integer c__49 = 49;
 /* > \param[in] LDH */
 /* > \verbatim */
 /* > LDH is INTEGER */
-/* > The leading dimension of the array H. LDH .GE. max(1,N). */
+/* > The leading dimension of the array H. LDH .GE. fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] W */
@@ -161,7 +161,7 @@ static integer c__49 = 49;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK .GE. max(1,N) */
+/* > The dimension of the array WORK. LWORK .GE. fla_max(1,N) */
 /* > is sufficient and delivers very good and sometimes */
 /* > optimal performance. However, LWORK as large as 11*N */
 /* > may be required for optimal performance. A workspace */
@@ -377,7 +377,7 @@ int chseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, comp
     wantt = lsame_(job, "S");
     initz = lsame_(compz, "I");
     wantz = initz || lsame_(compz, "V");
-    r__1 = (real) max(1,*n);
+    r__1 = (real) fla_max(1,*n);
     q__1.r = r__1;
     q__1.i = 0.f; // , expr subst
     work[1].r = q__1.r;
@@ -396,23 +396,23 @@ int chseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, comp
     {
         *info = -3;
     }
-    else if (*ilo < 1 || *ilo > max(1,*n))
+    else if (*ilo < 1 || *ilo > fla_max(1,*n))
     {
         *info = -4;
     }
-    else if (*ihi < min(*ilo,*n) || *ihi > *n)
+    else if (*ihi < fla_min(*ilo,*n) || *ihi > *n)
     {
         *info = -5;
     }
-    else if (*ldh < max(1,*n))
+    else if (*ldh < fla_max(1,*n))
     {
         *info = -7;
     }
-    else if (*ldz < 1 || wantz && *ldz < max(1,*n))
+    else if (*ldz < 1 || wantz && *ldz < fla_max(1,*n))
     {
         *info = -10;
     }
-    else if (*lwork < max(1,*n) && ! lquery)
+    else if (*lwork < fla_max(1,*n) && ! lquery)
     {
         *info = -12;
     }
@@ -439,8 +439,8 @@ int chseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, comp
         /* . previous LAPACK versions. ==== */
         /* Computing MAX */
         r__2 = work[1].r;
-        r__3 = (real) max(1,*n); // , expr subst
-        r__1 = max(r__2,r__3);
+        r__3 = (real) fla_max(1,*n); // , expr subst
+        r__1 = fla_max(r__2,r__3);
         q__1.r = r__1;
         q__1.i = 0.f; // , expr subst
         work[1].r = q__1.r;
@@ -480,7 +480,7 @@ int chseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, comp
         }
         /* ==== CLAHQR/CLAQR0 crossover point ==== */
         nmin = ilaenv_(&c__12, "CHSEQR", ch__1, n, ilo, ihi, lwork);
-        nmin = max(11,nmin);
+        nmin = fla_max(11,nmin);
         /* ==== CLAQR0 for big matrices;
         CLAHQR for small ones ==== */
         if (*n > nmin)
@@ -532,9 +532,9 @@ int chseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, comp
         /* ==== Ensure reported workspace size is backward-compatible with */
         /* . previous LAPACK versions. ==== */
         /* Computing MAX */
-        r__2 = (real) max(1,*n);
+        r__2 = (real) fla_max(1,*n);
         r__3 = work[1].r; // , expr subst
-        r__1 = max(r__2,r__3);
+        r__1 = fla_max(r__2,r__3);
         q__1.r = r__1;
         q__1.i = 0.f; // , expr subst
         work[1].r = q__1.r;

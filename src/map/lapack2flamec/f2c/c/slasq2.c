@@ -268,15 +268,15 @@ int slasq2_(integer *n, real *z__, integer *info)
         /* Computing MAX */
         r__1 = qmax;
         r__2 = z__[k]; // , expr subst
-        qmax = max(r__1,r__2);
+        qmax = fla_max(r__1,r__2);
         /* Computing MIN */
         r__1 = emin;
         r__2 = z__[k + 1]; // , expr subst
-        emin = min(r__1,r__2);
+        emin = fla_min(r__1,r__2);
         /* Computing MAX */
-        r__1 = max(qmax,zmax);
+        r__1 = fla_max(qmax,zmax);
         r__2 = z__[k + 1]; // , expr subst
-        zmax = max(r__1,r__2);
+        zmax = fla_max(r__1,r__2);
         /* L10: */
     }
     if (z__[(*n << 1) - 1] < 0.f)
@@ -290,8 +290,8 @@ int slasq2_(integer *n, real *z__, integer *info)
     /* Computing MAX */
     r__1 = qmax;
     r__2 = z__[(*n << 1) - 1]; // , expr subst
-    qmax = max(r__1,r__2);
-    zmax = max(qmax,zmax);
+    qmax = fla_max(r__1,r__2);
+    zmax = fla_max(qmax,zmax);
     /* Check for diagonality. */
     if (e == 0.f)
     {
@@ -406,7 +406,7 @@ int slasq2_(integer *n, real *z__, integer *info)
             /* Computing MIN */
             r__1 = emin;
             r__2 = z__[i4 - (pp << 1)]; // , expr subst
-            emin = min(r__1,r__2);
+            emin = fla_min(r__1,r__2);
             /* L60: */
         }
         z__[(n0 << 2) - pp - 2] = d__;
@@ -420,7 +420,7 @@ int slasq2_(integer *n, real *z__, integer *info)
             /* Computing MAX */
             r__1 = qmax;
             r__2 = z__[i4]; // , expr subst
-            qmax = max(r__1,r__2);
+            qmax = fla_max(r__1,r__2);
             /* L70: */
         }
         /* Prepare for the next iteration on K. */
@@ -492,20 +492,20 @@ int slasq2_(integer *n, real *z__, integer *info)
                 /* Computing MIN */
                 r__1 = qmin;
                 r__2 = z__[i4 - 3]; // , expr subst
-                qmin = min(r__1,r__2);
+                qmin = fla_min(r__1,r__2);
                 /* Computing MAX */
                 r__1 = emax;
                 r__2 = z__[i4 - 5]; // , expr subst
-                emax = max(r__1,r__2);
+                emax = fla_max(r__1,r__2);
             }
             /* Computing MAX */
             r__1 = qmax;
             r__2 = z__[i4 - 7] + z__[i4 - 5]; // , expr subst
-            qmax = max(r__1,r__2);
+            qmax = fla_max(r__1,r__2);
             /* Computing MIN */
             r__1 = emin;
             r__2 = z__[i4 - 5]; // , expr subst
-            emin = min(r__1,r__2);
+            emin = fla_min(r__1,r__2);
             /* L90: */
         }
         i4 = 4;
@@ -559,7 +559,7 @@ L100:
         /* Computing MAX */
         r__1 = 0.f;
         r__2 = qmin - sqrt(qmin) * 2.f * sqrt(emax); // , expr subst
-        dmin__ = -max(r__1,r__2);
+        dmin__ = -fla_max(r__1,r__2);
         /* Now I0:N0 is unreduced. */
         /* PP = 0 for ping, PP = 1 for pong. */
         /* PP = 2 indicates that flipping was applied to the Z array and */
@@ -605,15 +605,15 @@ L100:
                             /* Computing MAX */
                             r__1 = qmax;
                             r__2 = z__[i4 + 1]; // , expr subst
-                            qmax = max(r__1,r__2);
+                            qmax = fla_max(r__1,r__2);
                             /* Computing MIN */
                             r__1 = emin;
                             r__2 = z__[i4 - 1]; // , expr subst
-                            emin = min(r__1,r__2);
+                            emin = fla_min(r__1,r__2);
                             /* Computing MIN */
                             r__1 = oldemn;
                             r__2 = z__[i4]; // , expr subst
-                            oldemn = min(r__1,r__2);
+                            oldemn = fla_min(r__1,r__2);
                         }
                         /* L130: */
                     }

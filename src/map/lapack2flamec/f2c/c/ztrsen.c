@@ -91,7 +91,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDT */
 /* > \verbatim */
 /* > LDT is INTEGER */
-/* > The leading dimension of the array T. LDT >= max(1,N). */
+/* > The leading dimension of the array T. LDT >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] Q */
@@ -159,9 +159,9 @@ and if COMPQ = 'V', LDQ >= N. */
 /* > The dimension of the array WORK. */
 /* > If JOB = 'N', LWORK >= 1;
 */
-/* > if JOB = 'E', LWORK = max(1,M*(N-M));
+/* > if JOB = 'E', LWORK = fla_max(1,M*(N-M));
 */
-/* > if JOB = 'V' or 'B', LWORK >= max(1,2*M*(N-M)). */
+/* > if JOB = 'V' or 'B', LWORK >= fla_max(1,2*M*(N-M)). */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
 the routine */
@@ -350,7 +350,7 @@ int ztrsen_(char *job, char *compq, logical *select, integer *n, doublecomplex *
         /* Computing MAX */
         i__1 = 1;
         i__2 = nn << 1; // , expr subst
-        lwmin = max(i__1,i__2);
+        lwmin = fla_max(i__1,i__2);
     }
     else if (lsame_(job, "N"))
     {
@@ -358,7 +358,7 @@ int ztrsen_(char *job, char *compq, logical *select, integer *n, doublecomplex *
     }
     else if (lsame_(job, "E"))
     {
-        lwmin = max(1,nn);
+        lwmin = fla_max(1,nn);
     }
     if (! lsame_(job, "N") && ! wants && ! wantsp)
     {
@@ -372,7 +372,7 @@ int ztrsen_(char *job, char *compq, logical *select, integer *n, doublecomplex *
     {
         *info = -4;
     }
-    else if (*ldt < max(1,*n))
+    else if (*ldt < fla_max(1,*n))
     {
         *info = -6;
     }

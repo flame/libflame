@@ -107,7 +107,7 @@ void orglq_test()
   T *aCPPIOBuff, *aCIOBuff ;
   T *tauCPPOBuff, *tauCOBuff ;
   int datatype = getDatatype<T>();
-  int min_m_n = min(m,n);
+  int min_m_n = fla_min(m,n);
   //Allocate and initialize buffers for C and CPP functions with random values
   allocate_init_buffer(aCPPIOBuff, aCIOBuff, m*n);
   tauCPPOBuff =  new T [min_m_n];

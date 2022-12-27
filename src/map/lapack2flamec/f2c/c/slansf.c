@@ -38,7 +38,7 @@ static integer c__1 = 1;
 /* > \return SLANSF */
 /* > \verbatim */
 /* > */
-/* > SLANSF = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
+/* > SLANSF = ( fla_max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -49,7 +49,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(f2c_abs(A(i,j))) is not a matrix norm. */
+/* > squares). Note that fla_max(f2c_abs(A(i,j))) is not a matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -297,7 +297,7 @@ real slansf_(char *norm, char *transr, char *uplo, integer *n, real *a, real * w
     }
     if (lsame_(norm, "M"))
     {
-        /* Find max(f2c_abs(A(i,j))). */
+        /* Find fla_max(f2c_abs(A(i,j))). */
         k = (*n + 1) / 2;
         value = 0.f;
         if (noe == 1)

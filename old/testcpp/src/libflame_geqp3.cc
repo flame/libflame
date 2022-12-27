@@ -147,7 +147,7 @@ void geqp3_test()
   T *aCPPIOBuff, *aCIOBuff, *rworkRefBuff ;
   T *tauCPPOBuff, *tauCOBuff ;
   int *jpvtCPPOBuff, *jpvtCOBuff;
-  int min_m_n = min( m, n ) ;
+  int min_m_n = fla_min( m, n ) ;
 
   tauCPPOBuff =  new T [min_m_n];
   tauCOBuff =  new T [min_m_n];
@@ -215,7 +215,7 @@ void geqp3_test()
   Ta *tauCPPOBuff, *tauCOBuff ;
   Tb *rworkRefBuff;
   int *jpvtCPPOBuff, *jpvtCOBuff;
-  int min_m_n = min( m, n ) ;
+  int min_m_n = fla_min( m, n ) ;
 
   tauCPPOBuff =  new Ta [min_m_n];
   tauCOBuff =  new Ta [min_m_n];

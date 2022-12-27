@@ -64,7 +64,7 @@ gbequb_float_parameters:: gbequb_float_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-    lda = m; // as per API spec, lda≥ max(1, m).
+    lda = m; // as per API spec, lda≥ fla_max(1, m).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n gbequb float:  m: %d, n: %d lda: %d \n", m, n, lda);
@@ -268,7 +268,7 @@ gbequb_double_parameters:: gbequb_double_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-    lda = m; // as per API spec, lda≥ max(1, m).
+    lda = m; // as per API spec, lda≥ fla_max(1, m).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n gbequb double:  m: %d, n: %d lda: %d \n", m, n, lda);
@@ -469,7 +469,7 @@ gbequb_scomplex_parameters:: gbequb_scomplex_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-    lda = m; // as per API spec, lda≥ max(1, m).
+    lda = m; // as per API spec, lda≥ fla_max(1, m).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n gbequb scomplex:  m: %d, n: %d lda: %d \n", m, n, lda);
@@ -673,7 +673,7 @@ gbequb_dcomplex_parameters:: gbequb_dcomplex_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-    lda = m; // as per API spec, lda≥ max(1, m).
+    lda = m; // as per API spec, lda≥ fla_max(1, m).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n gbequb double:  m: %d, n: %d lda: %d \n", m, n, lda);

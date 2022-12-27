@@ -451,10 +451,10 @@ int dlasd2_(integer *nl, integer *nr, integer *sqre, integer *k, doublereal *d__
     /* Computing MAX */
     d__1 = f2c_dabs(*alpha);
     d__2 = f2c_dabs(*beta); // , expr subst
-    tol = max(d__1,d__2);
+    tol = fla_max(d__1,d__2);
     /* Computing MAX */
     d__2 = (d__1 = d__[n], f2c_dabs(d__1));
-    tol = eps * 8. * max(d__2,tol);
+    tol = eps * 8. * fla_max(d__2,tol);
     /* There are 2 kinds of deflation -- first a value in the z-vector */
     /* is small, second two (or more) singular values are very close */
     /* together (their difference is small). */

@@ -136,7 +136,7 @@ int zlarnv_(integer *idist, integer *iseed, integer *n, doublecomplex *x)
         /* Computing MIN */
         i__2 = 64;
         i__3 = *n - iv + 1; // , expr subst
-        il = min(i__2,i__3);
+        il = fla_min(i__2,i__3);
         /* Call DLARUV to generate 2*IL real numbers from a uniform (0,1) */
         /* distribution (2*IL <= LV) */
         i__2 = il << 1;

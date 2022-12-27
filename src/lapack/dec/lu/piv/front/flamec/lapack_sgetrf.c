@@ -51,10 +51,10 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
 /*          A = P*L*U; the unit diagonal elements of L are not stored. */
 
 /*  LDA     (input) INTEGER */
-/*          The leading dimension of the array A.  LDA >= max(1,M). */
+/*          The leading dimension of the array A.  LDA >= fla_max(1,M). */
 
-/*  IPIV    (output) INTEGER array, dimension (min(M,N)) */
-/*          The pivot indices; for 1 <= i <= min(M,N), row i of the */
+/*  IPIV    (output) INTEGER array, dimension (fla_min(M,N)) */
+/*          The pivot indices; for 1 <= i <= fla_min(M,N), row i of the */
 /*          matrix was interchanged with row IPIV(i). */
 
 /*  INFO    (output) INTEGER */
@@ -97,7 +97,7 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
 	*info = -1;
     } else if (*n < 0) {
 	*info = -2;
-    } else if (*lda < max(1,*m)) {
+    } else if (*lda < fla_max(1,*m)) {
 	*info = -4;
     }
     if (*info != 0) {
@@ -115,7 +115,7 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
 /*     Determine the block size for this environment. */
 
     nb = ilaenv_(&c__1, "SGETRF", " ", m, n, &c_n1, &c_n1);
-    if (nb <= 1 || nb >= min(*m,*n)) {
+    if (nb <= 1 || nb >= fla_min(*m,*n)) {
 
 /*        Use unblocked code. */
         #if AOCL_FLA_PROGRESS_H
@@ -125,7 +125,7 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
                         aocl_fla_progress_ptr=aocl_fla_progress;
             #endif
                     if(aocl_fla_progress_ptr){
-                        step_count= min(*m,*n);
+                        step_count= fla_min(*m,*n);
                         AOCL_FLA_PROGRESS_FUNC_PTR("SGETRF",6,&step_count,&thread_id,&total_threads);
                     }
          #endif
@@ -139,12 +139,12 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
         #endif
 
 
-	i__1 = min(*m,*n);
+	i__1 = fla_min(*m,*n);
 	i__2 = nb;
 	for (j = 1; i__2 < 0 ? j >= i__1 : j <= i__1; j += i__2) {
 /* Computing MIN */
-	    i__3 = min(*m,*n) - j + 1;
-	    jb = min(i__3,nb);
+	    i__3 = fla_min(*m,*n) - j + 1;
+	    jb = fla_min(i__3,nb);
 
 /*           Update current block. */
 	    #if AOCL_FLA_PROGRESS_H
@@ -178,7 +178,7 @@ static TLS_CLASS_SPEC real c_b12 = 1.f;
 	    }
 /* Computing MIN */
 	    i__4 = *m, i__5 = j + jb - 1;
-	    i__3 = min(i__4,i__5);
+	    i__3 = fla_min(i__4,i__5);
 	    for (i__ = j; i__ <= i__3; ++i__) {
 		ipiv[i__] = j - 1 + ipiv[i__];
 /* L10: */

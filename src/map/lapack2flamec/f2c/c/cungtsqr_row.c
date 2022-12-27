@@ -114,7 +114,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] T */
@@ -140,7 +140,7 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > LDT is INTEGER */
 /* > The leading dimension of the array T. */
-/* > LDT >= max(1,min(NB,N)). */
+/* > LDT >= fla_max(1,fla_min(NB,N)). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -251,7 +251,7 @@ int cungtsqr_row_(integer *m, integer *n, integer *mb, integer *nb, complex *a, 
     {
         *info = -4;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -6;
     }
@@ -259,8 +259,8 @@ int cungtsqr_row_(integer *m, integer *n, integer *mb, integer *nb, complex *a, 
     {
         /* Computing MAX */
         i__1 = 1;
-        i__2 = min(*nb,*n); // , expr subst
-        if (*ldt < max(i__1,i__2))
+        i__2 = fla_min(*nb,*n); // , expr subst
+        if (*ldt < fla_max(i__1,i__2))
         {
             *info = -8;
         }
@@ -269,14 +269,14 @@ int cungtsqr_row_(integer *m, integer *n, integer *mb, integer *nb, complex *a, 
             *info = -10;
         }
     }
-    nblocal = min(*nb,*n);
+    nblocal = fla_min(*nb,*n);
     /* Determine the workspace size. */
     if (*info == 0)
     {
         /* Computing MAX */
         i__1 = nblocal;
         i__2 = *n - nblocal; // , expr subst
-        lworkopt = nblocal * max(i__1,i__2);
+        lworkopt = nblocal * fla_max(i__1,i__2);
     }
     /* Handle error in the input parameters and handle the workspace query. */
     if (*info != 0)
@@ -294,7 +294,7 @@ int cungtsqr_row_(integer *m, integer *n, integer *mb, integer *nb, complex *a, 
         return 0;
     }
     /* Quick return if possible */
-    if (min(*m,*n) == 0)
+    if (fla_min(*m,*n) == 0)
     {
         q__1.r = (real) lworkopt;
         q__1.i = 0.f; // , expr subst
@@ -337,7 +337,7 @@ int cungtsqr_row_(integer *m, integer *n, integer *mb, integer *nb, complex *a, 
             /* in the matrix A. */
             /* Computing MIN */
             i__3 = m_plus_one__ - ib;
-            imb = min(i__3,mb2);
+            imb = fla_min(i__3,mb2);
             /* Determine the column index JB_T for the current column block */
             /* in the matrix T. */
             jb_t__ -= *n;
@@ -354,7 +354,7 @@ int cungtsqr_row_(integer *m, integer *n, integer *mb, integer *nb, complex *a, 
                 /* Computing MIN */
                 i__4 = nblocal;
                 i__5 = *n - kb + 1; // , expr subst
-                knb = min(i__4,i__5);
+                knb = fla_min(i__4,i__5);
                 i__4 = *n - kb + 1;
                 clarfb_gett_("I", &imb, &i__4, &knb, &t[(jb_t__ + kb - 1) * t_dim1 + 1], ldt, &a[kb + kb * a_dim1], lda, &a[ib + kb * a_dim1], lda, &work[1], &knb);
             }
@@ -363,7 +363,7 @@ int cungtsqr_row_(integer *m, integer *n, integer *mb, integer *nb, complex *a, 
     /* (2) Top row block of A. */
     /* NOTE: If MB>=M, then we have only one row block of A of size M */
     /* and we work on the entire matrix A. */
-    mb1 = min(*mb,*m);
+    mb1 = fla_min(*mb,*m);
     /* Apply column blocks of H in the top row block from right to left. */
     /* KB is the column index of the current block reflector in */
     /* the matrices T and V. */
@@ -377,7 +377,7 @@ int cungtsqr_row_(integer *m, integer *n, integer *mb, integer *nb, complex *a, 
         /* Computing MIN */
         i__1 = nblocal;
         i__3 = *n - kb + 1; // , expr subst
-        knb = min(i__1,i__3);
+        knb = fla_min(i__1,i__3);
         if (mb1 - kb - knb + 1 == 0)
         {
             /* In SLARFB_GETT parameters, when M=0, then the matrix B */

@@ -33,7 +33,7 @@ FLA_Error FLA_Tridiag_form_Q_external( FLA_Uplo uplo, FLA_Obj A, FLA_Obj t )
 
   FLA_Param_map_flame_to_netlib_uplo( uplo, &blas_uplo );
 
-  lwork  = max( 1, ( m_A - 1 ) ) * FLA_Query_blocksize( datatype, FLA_DIMENSION_MIN );
+  lwork  = fla_max( 1, ( m_A - 1 ) ) * FLA_Query_blocksize( datatype, FLA_DIMENSION_MIN );
 
   FLA_Obj_create( datatype, lwork, 1, 0, 0, &work );
   

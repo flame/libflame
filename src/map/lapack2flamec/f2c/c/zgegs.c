@@ -99,7 +99,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of A. LDA >= max(1,N). */
+/* > The leading dimension of A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -113,7 +113,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of B. LDB >= max(1,N). */
+/* > The leading dimension of B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ALPHA */
@@ -175,7 +175,7 @@ static integer c_n1 = -1;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,2*N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,2*N). */
 /* > For good performance, LWORK must generally be larger. */
 /* > To compute the optimal value of LWORK, call ILAENV to get */
 /* > blocksizes (for ZGEQRF, ZUNMQR, and CUNGQR.) Then compute: */
@@ -340,7 +340,7 @@ int zgegs_(char *jobvsl, char *jobvsr, integer *n, doublecomplex *a, integer *ld
     /* Test the input arguments */
     /* Computing MAX */
     i__1 = *n << 1;
-    lwkmin = max(i__1,1);
+    lwkmin = fla_max(i__1,1);
     lwkopt = lwkmin;
     work[1].r = (doublereal) lwkopt;
     work[1].i = 0.; // , expr subst
@@ -358,11 +358,11 @@ int zgegs_(char *jobvsl, char *jobvsr, integer *n, doublecomplex *a, integer *ld
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -7;
     }
@@ -384,8 +384,8 @@ int zgegs_(char *jobvsl, char *jobvsr, integer *n, doublecomplex *a, integer *ld
         nb2 = ilaenv_(&c__1, "ZUNMQR", " ", n, n, n, &c_n1);
         nb3 = ilaenv_(&c__1, "ZUNGQR", " ", n, n, n, &c_n1);
         /* Computing MAX */
-        i__1 = max(nb1,nb2);
-        nb = max(i__1,nb3);
+        i__1 = fla_max(nb1,nb2);
+        nb = fla_max(i__1,nb3);
         lopt = *n * (nb + 1);
         work[1].r = (doublereal) lopt;
         work[1].i = 0.; // , expr subst
@@ -483,7 +483,7 @@ int zgegs_(char *jobvsl, char *jobvsr, integer *n, doublecomplex *a, integer *ld
         i__3 = iwork;
         i__1 = lwkopt;
         i__2 = (integer) work[i__3].r + iwork - 1; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
     }
     if (iinfo != 0)
     {
@@ -498,7 +498,7 @@ int zgegs_(char *jobvsl, char *jobvsr, integer *n, doublecomplex *a, integer *ld
         i__3 = iwork;
         i__1 = lwkopt;
         i__2 = (integer) work[i__3].r + iwork - 1; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
     }
     if (iinfo != 0)
     {
@@ -519,7 +519,7 @@ int zgegs_(char *jobvsl, char *jobvsr, integer *n, doublecomplex *a, integer *ld
             i__3 = iwork;
             i__1 = lwkopt;
             i__2 = (integer) work[i__3].r + iwork - 1; // , expr subst
-            lwkopt = max(i__1,i__2);
+            lwkopt = fla_max(i__1,i__2);
         }
         if (iinfo != 0)
         {
@@ -548,7 +548,7 @@ int zgegs_(char *jobvsl, char *jobvsr, integer *n, doublecomplex *a, integer *ld
         i__3 = iwork;
         i__1 = lwkopt;
         i__2 = (integer) work[i__3].r + iwork - 1; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
     }
     if (iinfo != 0)
     {

@@ -73,7 +73,7 @@ static integer c__1 = 1;
 /* > ILO = 1). SLAHQR works primarily with the Hessenberg */
 /* > submatrix in rows and columns ILO to IHI, but applies */
 /* > transformations to all of H if WANTT is .TRUE.. */
-/* > 1 <= ILO <= max(1,IHI);
+/* > 1 <= ILO <= fla_max(1,IHI);
 IHI <= N. */
 /* > \endverbatim */
 /* > */
@@ -92,7 +92,7 @@ IHI <= N. */
 /* > \param[in] LDH */
 /* > \verbatim */
 /* > LDH is INTEGER */
-/* > The leading dimension of the array H. LDH >= max(1,N). */
+/* > The leading dimension of the array H. LDH >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WR */
@@ -143,7 +143,7 @@ transformations are applied only to */
 /* > \param[in] LDZ */
 /* > \verbatim */
 /* > LDZ is INTEGER */
-/* > The leading dimension of the array Z. LDZ >= max(1,N). */
+/* > The leading dimension of the array Z. LDZ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -305,7 +305,7 @@ int slahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
         i2 = *n;
     }
     /* ITMAX is the total number of QR iterations allowed. */
-    itmax = max(10,nh) * 30;
+    itmax = fla_max(10,nh) * 30;
     /* The main loop begins here. I is the loop index and decreases from */
     /* IHI to ILO in steps of 1 or 2. Each iteration of the loop works */
     /* with the active submatrix in rows and columns L to I. */
@@ -357,24 +357,24 @@ L20:
                 /* Computing MAX */
                 r__3 = (r__1 = h__[k + (k - 1) * h_dim1], f2c_abs(r__1));
                 r__4 = ( r__2 = h__[k - 1 + k * h_dim1], f2c_abs(r__2)); // , expr subst
-                ab = max(r__3,r__4);
+                ab = fla_max(r__3,r__4);
                 /* Computing MIN */
                 r__3 = (r__1 = h__[k + (k - 1) * h_dim1], f2c_abs(r__1));
                 r__4 = ( r__2 = h__[k - 1 + k * h_dim1], f2c_abs(r__2)); // , expr subst
-                ba = min(r__3,r__4);
+                ba = fla_min(r__3,r__4);
                 /* Computing MAX */
                 r__3 = (r__1 = h__[k + k * h_dim1], f2c_abs(r__1));
                 r__4 = (r__2 = h__[k - 1 + (k - 1) * h_dim1] - h__[k + k * h_dim1], f2c_abs(r__2)); // , expr subst
-                aa = max(r__3,r__4);
+                aa = fla_max(r__3,r__4);
                 /* Computing MIN */
                 r__3 = (r__1 = h__[k + k * h_dim1], f2c_abs(r__1));
                 r__4 = (r__2 = h__[k - 1 + (k - 1) * h_dim1] - h__[k + k * h_dim1], f2c_abs(r__2)); // , expr subst
-                bb = min(r__3,r__4);
+                bb = fla_min(r__3,r__4);
                 s = aa + ab;
                 /* Computing MAX */
                 r__1 = smlnum;
                 r__2 = ulp * (bb * (aa / s)); // , expr subst
-                if (ba * (ab / s) <= max(r__1,r__2))
+                if (ba * (ab / s) <= fla_max(r__1,r__2))
                 {
                     goto L40;
                 }
@@ -518,7 +518,7 @@ L60: /* Double-shift QR step */
             /* Computing MIN */
             i__3 = 3;
             i__4 = i__ - k + 1; // , expr subst
-            nr = min(i__3,i__4);
+            nr = fla_min(i__3,i__4);
             if (k > m)
             {
                 scopy_(&nr, &h__[k + (k - 1) * h_dim1], &c__1, v, &c__1);
@@ -561,10 +561,10 @@ L60: /* Double-shift QR step */
                     /* L70: */
                 }
                 /* Apply G from the right to transform the columns of the */
-                /* matrix in rows I1 to min(K+3,I). */
+                /* matrix in rows I1 to fla_min(K+3,I). */
                 /* Computing MIN */
                 i__4 = k + 3;
-                i__3 = min(i__4,i__);
+                i__3 = fla_min(i__4,i__);
                 for (j = i1;
                         j <= i__3;
                         ++j)
@@ -606,7 +606,7 @@ L60: /* Double-shift QR step */
                     /* L100: */
                 }
                 /* Apply G from the right to transform the columns of the */
-                /* matrix in rows I1 to min(K+3,I). */
+                /* matrix in rows I1 to fla_min(K+3,I). */
                 i__3 = i__;
                 for (j = i1;
                         j <= i__3;

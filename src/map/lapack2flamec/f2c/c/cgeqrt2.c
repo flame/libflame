@@ -69,7 +69,7 @@ the */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] T */
@@ -85,7 +85,7 @@ the elements below the diagonal are not used. */
 /* > \param[in] LDT */
 /* > \verbatim */
 /* > LDT is INTEGER */
-/* > The leading dimension of the array T. LDT >= max(1,N). */
+/* > The leading dimension of the array T. LDT >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -184,11 +184,11 @@ int cgeqrt2_(integer *m, integer *n, complex *a, integer * lda, complex *t, inte
     {
         *info = -1;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
-    else if (*ldt < max(1,*n))
+    else if (*ldt < fla_max(1,*n))
     {
         *info = -6;
     }
@@ -199,7 +199,7 @@ int cgeqrt2_(integer *m, integer *n, complex *a, integer * lda, complex *t, inte
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
-    k = min(*m,*n);
+    k = fla_min(*m,*n);
     i__1 = k;
     for (i__ = 1;
             i__ <= i__1;
@@ -209,7 +209,7 @@ int cgeqrt2_(integer *m, integer *n, complex *a, integer * lda, complex *t, inte
         i__2 = *m - i__ + 1;
         /* Computing MIN */
         i__3 = i__ + 1;
-        clarfg_(&i__2, &a[i__ + i__ * a_dim1], &a[min(i__3,*m) + i__ * a_dim1], &c__1, &t[i__ + t_dim1]);
+        clarfg_(&i__2, &a[i__ + i__ * a_dim1], &a[fla_min(i__3,*m) + i__ * a_dim1], &c__1, &t[i__ + t_dim1]);
         if (i__ < *n)
         {
             /* Apply H(i) to A(I:M,I+1:N) from the left */

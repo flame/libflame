@@ -159,7 +159,7 @@ void fla_test_gesdd_experiment(test_params_t *params,
     create_matrix(datatype, &A, lda, n);
     create_matrix(datatype, &U, ldu, m);
     create_matrix(datatype, &V, ldvt, n);
-    create_realtype_vector(datatype, &s, min(m, n));
+    create_realtype_vector(datatype, &s, fla_min(m, n));
 
     if (g_ext_fptr != NULL)
     {
@@ -221,8 +221,8 @@ void prepare_gesdd_run(char *jobz,
     integer info = 0;
     double time_min = 1e9, exe_time;
 
-    min_m_n = min(m_A, n_A);
-    max_m_n = max(m_A, n_A);
+    min_m_n = fla_min(m_A, n_A);
+    max_m_n = fla_max(m_A, n_A);
 
     /* Make a copy of the input matrix A. Same input values will be passed in
        each itertaion.*/
@@ -230,7 +230,7 @@ void prepare_gesdd_run(char *jobz,
     copy_matrix(datatype, "full", m_A, n_A, A, lda, A_save, lda);
 
     /* Get rwork and iwork array size since it is not depedent on internal blocks*/ 
-    lrwork = max( (5 * min_m_n * min_m_n + 5 * min_m_n) , ( 2 * max_m_n * min_m_n + 2 * min_m_n * min_m_n + min_m_n));
+    lrwork = fla_max( (5 * min_m_n * min_m_n + 5 * min_m_n) , ( 2 * max_m_n * min_m_n + 2 * min_m_n * min_m_n + min_m_n));
     liwork = 8 * min_m_n;
 
     /* Make a workspace query the first time through. This will provide us with
@@ -281,7 +281,7 @@ void prepare_gesdd_run(char *jobz,
         exe_time = fla_test_clock() - exe_time;
 
         /* Get the best execution time */
-        time_min = min(time_min, exe_time);
+        time_min = fla_min(time_min, exe_time);
 
         /* Make a copy of the output buffers. This is required to validate the API functionality.*/
         copy_matrix(datatype, "full", m_A, m_A, U_test, ldu, U, ldu);

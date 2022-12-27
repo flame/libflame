@@ -64,12 +64,12 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] TAU */
 /* > \verbatim */
-/* > TAU is DOUBLE PRECISION array, dimension (min(M,N)) */
+/* > TAU is DOUBLE PRECISION array, dimension (fla_min(M,N)) */
 /* > The scalar factors of the elementary reflectors (see Further */
 /* > Details). */
 /* > \endverbatim */
@@ -100,7 +100,7 @@ static integer c__1 = 1;
 /* > */
 /* > The matrix Q is represented as a product of elementary reflectors */
 /* > */
-/* > Q = H(k) . . . H(2) H(1), where k = min(m,n). */
+/* > Q = H(k) . . . H(2) H(1), where k = fla_min(m,n). */
 /* > */
 /* > Each H(i) has the form */
 /* > */
@@ -160,7 +160,7 @@ int dgeql2_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *ta
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
@@ -171,7 +171,7 @@ int dgeql2_(integer *m, integer *n, doublereal *a, integer * lda, doublereal *ta
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
-    k = min(*m,*n);
+    k = fla_min(*m,*n);
     for (i__ = k;
             i__ >= 1;
             --i__)

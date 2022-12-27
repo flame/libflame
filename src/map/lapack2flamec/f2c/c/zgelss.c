@@ -89,14 +89,14 @@ they are stored as the columns of the */
 /* > \verbatim */
 /* > A is COMPLEX*16 array, dimension (LDA,N) */
 /* > On entry, the M-by-N matrix A. */
-/* > On exit, the first min(m,n) rows of A are overwritten with */
+/* > On exit, the first fla_min(m,n) rows of A are overwritten with */
 /* > its right singular vectors, stored rowwise. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -112,14 +112,14 @@ they are stored as the columns of the */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,M,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,M,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] S */
 /* > \verbatim */
-/* > S is DOUBLE PRECISION array, dimension (min(M,N)) */
+/* > S is DOUBLE PRECISION array, dimension (fla_min(M,N)) */
 /* > The singular values of A in decreasing order. */
-/* > The condition number of A in the 2-norm = S(1)/S(min(m,n)). */
+/* > The condition number of A in the 2-norm = S(1)/S(fla_min(m,n)). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] RCOND */
@@ -147,7 +147,7 @@ they are stored as the columns of the */
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The dimension of the array WORK. LWORK >= 1, and also: */
-/* > LWORK >= 2*min(M,N) + max(M,N,NRHS) */
+/* > LWORK >= 2*fla_min(M,N) + fla_max(M,N,NRHS) */
 /* > For good performance, LWORK should generally be larger. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -159,7 +159,7 @@ the routine */
 /* > */
 /* > \param[out] RWORK */
 /* > \verbatim */
-/* > RWORK is DOUBLE PRECISION array, dimension (5*min(M,N)) */
+/* > RWORK is DOUBLE PRECISION array, dimension (5*fla_min(M,N)) */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -261,8 +261,8 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     --rwork;
     /* Function Body */
     *info = 0;
-    minmn = min(*m,*n);
-    maxmn = max(*m,*n);
+    minmn = fla_min(*m,*n);
+    maxmn = fla_max(*m,*n);
     lquery = *lwork == -1;
     if (*m < 0)
     {
@@ -276,11 +276,11 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,maxmn))
+    else if (*ldb < fla_max(1,maxmn))
     {
         *info = -7;
     }
@@ -313,11 +313,11 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + *n * ilaenv_(&c__1, "ZGEQRF", " ", m, n, &c_n1, &c_n1); // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + *nrhs * ilaenv_(&c__1, "ZUNMQR", "LC", m, nrhs, n, &c_n1); // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
             }
             if (*m >= *n)
             {
@@ -335,24 +335,24 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = (*n << 1) + lwork_zgebrd__; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = (*n << 1) + lwork_zunmbr__; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = (*n << 1) + lwork_zungbr__; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n * *nrhs; // , expr subst
-                maxwrk = max(i__1,i__2);
-                minwrk = (*n << 1) + max(*nrhs,*m);
+                maxwrk = fla_max(i__1,i__2);
+                minwrk = (*n << 1) + fla_max(*nrhs,*m);
             }
             if (*n > *m)
             {
-                minwrk = (*m << 1) + max(*nrhs,*n);
+                minwrk = (*m << 1) + fla_max(*nrhs,*n);
                 if (*n >= mnthr)
                 {
                     /* Path 2a - underdetermined, with many more columns */
@@ -377,33 +377,33 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *m * 3 + *m * *m + lwork_zgebrd__; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *m * 3 + *m * *m + lwork_zunmbr__; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *m * 3 + *m * *m + lwork_zungbr__; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     if (*nrhs > 1)
                     {
                         /* Computing MAX */
                         i__1 = maxwrk;
                         i__2 = *m * *m + *m + *m * *nrhs; // , expr subst
-                        maxwrk = max(i__1,i__2);
+                        maxwrk = fla_max(i__1,i__2);
                     }
                     else
                     {
                         /* Computing MAX */
                         i__1 = maxwrk;
                         i__2 = *m * *m + (*m << 1); // , expr subst
-                        maxwrk = max(i__1,i__2);
+                        maxwrk = fla_max(i__1,i__2);
                     }
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *m + lwork_zunmlq__; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                 }
                 else
                 {
@@ -421,18 +421,18 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*m << 1) + lwork_zunmbr__; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*m << 1) + lwork_zungbr__; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *n * *nrhs; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                 }
             }
-            maxwrk = max(minwrk,maxwrk);
+            maxwrk = fla_max(minwrk,maxwrk);
         }
         work[1].r = (doublereal) maxwrk;
         work[1].i = 0.; // , expr subst
@@ -484,7 +484,7 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     else if (anrm == 0.)
     {
         /* Matrix all zero. Return zero solution. */
-        i__1 = max(*m,*n);
+        i__1 = fla_max(*m,*n);
         zlaset_("F", &i__1, nrhs, &c_b1, &c_b1, &b[b_offset], ldb);
         dlaset_("F", &minmn, &c__1, &c_b59, &c_b59, &s[1], &minmn);
         *rank = 0;
@@ -567,12 +567,12 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
         /* Multiply B by reciprocals of singular values */
         /* Computing MAX */
         d__1 = *rcond * s[1];
-        thr = max(d__1,sfmin);
+        thr = fla_max(d__1,sfmin);
         if (*rcond < 0.)
         {
             /* Computing MAX */
             d__1 = eps * s[1];
-            thr = max(d__1,sfmin);
+            thr = fla_max(d__1,sfmin);
         }
         *rank = 0;
         i__1 = *n;
@@ -610,7 +610,7 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
             {
                 /* Computing MIN */
                 i__3 = *nrhs - i__ + 1;
-                bl = min(i__3,chunk);
+                bl = fla_min(i__3,chunk);
                 zgemm_("C", "N", n, &bl, n, &c_b2, &a[a_offset], lda, &b[i__ * b_dim1 + 1], ldb, &c_b1, &work[1], n);
                 zlacpy_("G", n, &bl, &work[1], n, &b[i__ * b_dim1 + 1], ldb);
                 /* L20: */
@@ -625,18 +625,18 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     else /* if(complicated condition) */
     {
         /* Computing MAX */
-        i__2 = max(*m,*nrhs);
+        i__2 = fla_max(*m,*nrhs);
         i__1 = *n - (*m << 1); // , expr subst
-        if (*n >= mnthr && *lwork >= *m * 3 + *m * *m + max(i__2,i__1))
+        if (*n >= mnthr && *lwork >= *m * 3 + *m * *m + fla_max(i__2,i__1))
         {
             /* Underdetermined case, M much less than N */
             /* Path 2a - underdetermined, with many more columns than rows */
             /* and sufficient workspace for an efficient algorithm */
             ldwork = *m;
             /* Computing MAX */
-            i__2 = max(*m,*nrhs);
+            i__2 = fla_max(*m,*nrhs);
             i__1 = *n - (*m << 1); // , expr subst
-            if (*lwork >= *m * 3 + *m * *lda + max(i__2,i__1))
+            if (*lwork >= *m * 3 + *m * *lda + fla_max(i__2,i__1))
             {
                 ldwork = *lda;
             }
@@ -686,12 +686,12 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
             /* Multiply B by reciprocals of singular values */
             /* Computing MAX */
             d__1 = *rcond * s[1];
-            thr = max(d__1,sfmin);
+            thr = fla_max(d__1,sfmin);
             if (*rcond < 0.)
             {
                 /* Computing MAX */
                 d__1 = eps * s[1];
-                thr = max(d__1,sfmin);
+                thr = fla_max(d__1,sfmin);
             }
             *rank = 0;
             i__2 = *m;
@@ -730,7 +730,7 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
                 {
                     /* Computing MIN */
                     i__3 = *nrhs - i__ + 1;
-                    bl = min(i__3,chunk);
+                    bl = fla_min(i__3,chunk);
                     zgemm_("C", "N", m, &bl, m, &c_b2, &work[il], &ldwork, &b[ i__ * b_dim1 + 1], ldb, &c_b1, &work[iwork], m);
                     zlacpy_("G", m, &bl, &work[iwork], m, &b[i__ * b_dim1 + 1], ldb);
                     /* L40: */
@@ -787,12 +787,12 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
             /* Multiply B by reciprocals of singular values */
             /* Computing MAX */
             d__1 = *rcond * s[1];
-            thr = max(d__1,sfmin);
+            thr = fla_max(d__1,sfmin);
             if (*rcond < 0.)
             {
                 /* Computing MAX */
                 d__1 = eps * s[1];
-                thr = max(d__1,sfmin);
+                thr = fla_max(d__1,sfmin);
             }
             *rank = 0;
             i__1 = *m;
@@ -830,7 +830,7 @@ int zgelss_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
                 {
                     /* Computing MIN */
                     i__3 = *nrhs - i__ + 1;
-                    bl = min(i__3,chunk);
+                    bl = fla_min(i__3,chunk);
                     zgemm_("C", "N", n, &bl, m, &c_b2, &a[a_offset], lda, &b[ i__ * b_dim1 + 1], ldb, &c_b1, &work[1], n);
                     zlacpy_("F", n, &bl, &work[1], n, &b[i__ * b_dim1 + 1], ldb);
                     /* L60: */

@@ -61,7 +61,7 @@ void validate_geev(char* jobvl, char* jobvr,
                 sgemm_("N", "C", &m, &m, &m, &s_one, VL, &ldvl, lambda, &m, &s_n_one, Vlambda, &m);
                 norm = slange_("1", &m, &m, Vlambda, &m, work);
                 resid2 = norm/(eps * norm_A * (float)m);
-                *residual = (double)max(resid1, resid2);
+                *residual = (double)fla_max(resid1, resid2);
             }
             else if(*jobvr == 'V')
             {
@@ -109,7 +109,7 @@ void validate_geev(char* jobvl, char* jobvr,
                 dgemm_("N", "C", &m, &m, &m, &d_one, VL, &ldvl, lambda, &m, &d_n_one, Vlambda, &m);
                 norm = dlange_("1", &m, &m, Vlambda, &m, work);
                 resid2 = norm/(eps * norm_A * (double)m);
-                *residual = (double)max(resid1, resid2);
+                *residual = (double)fla_max(resid1, resid2);
             }
             else if(*jobvr == 'V')
             {
@@ -160,7 +160,7 @@ void validate_geev(char* jobvl, char* jobvr,
                 cgemm_("N", "C", &m, &m, &m, &c_one, VL, &ldvl, lambda, &m, &c_n_one, Vlambda, &m);
                 norm = clange_("1", &m, &m, Vlambda, &m, work);
                 resid2 = norm/(eps * norm_A * (float)m);
-                *residual = (double)max(resid1, resid2);
+                *residual = (double)fla_max(resid1, resid2);
             }
             else if(*jobvr == 'V')
             {
@@ -210,7 +210,7 @@ void validate_geev(char* jobvl, char* jobvr,
                 zgemm_("N", "C", &m, &m, &m, &z_one, VL, &ldvl, lambda, &m, &z_n_one, Vlambda, &m);
                 norm = zlange_("1", &m, &m, Vlambda, &m, work);
                 resid2 = norm/(eps * norm_A * (double)m);
-                *residual = (double)max(resid1, resid2);
+                *residual = (double)fla_max(resid1, resid2);
             }
             else if(*jobvr == 'V')
             {

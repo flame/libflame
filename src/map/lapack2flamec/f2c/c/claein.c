@@ -70,7 +70,7 @@ static integer c__1 = 1;
 /* > \param[in] LDH */
 /* > \verbatim */
 /* > LDH is INTEGER */
-/* > The leading dimension of the array H. LDH >= max(1,N). */
+/* > The leading dimension of the array H. LDH >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] W */
@@ -101,7 +101,7 @@ here */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RWORK */
@@ -217,7 +217,7 @@ int claein_(logical *rightv, logical *noinit, integer *n, complex *h__, integer 
     /* Computing MAX */
     r__1 = 1.f;
     r__2 = *eps3 * rootn; // , expr subst
-    nrmsml = max(r__1,r__2) * *smlnum;
+    nrmsml = fla_max(r__1,r__2) * *smlnum;
     /* Form B = H - W*I (except that the subdiagonal elements are not */
     /* stored). */
     i__1 = *n;
@@ -262,7 +262,7 @@ int claein_(logical *rightv, logical *noinit, integer *n, complex *h__, integer 
     {
         /* Scale supplied initial vector. */
         vnorm = scnrm2_(n, &v[1], &c__1);
-        r__1 = *eps3 * rootn / max(vnorm,nrmsml);
+        r__1 = *eps3 * rootn / fla_max(vnorm,nrmsml);
         csscal_(n, &r__1, &v[1], &c__1);
     }
     if (*rightv)

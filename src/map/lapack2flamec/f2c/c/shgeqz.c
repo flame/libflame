@@ -160,7 +160,7 @@ if N = 0, ILO=1 and IHI=0. */
 /* > \param[in] LDH */
 /* > \verbatim */
 /* > LDH is INTEGER */
-/* > The leading dimension of the array H. LDH >= max( 1, N ). */
+/* > The leading dimension of the array H. LDH >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] T */
@@ -181,7 +181,7 @@ if N = 0, ILO=1 and IHI=0. */
 /* > \param[in] LDT */
 /* > \verbatim */
 /* > LDT is INTEGER */
-/* > The leading dimension of the array T. LDT >= max( 1, N ). */
+/* > The leading dimension of the array T. LDT >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ALPHAR */
@@ -258,7 +258,7 @@ if */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,N). */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
 the routine */
@@ -451,7 +451,7 @@ int shgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     }
     /* Check Argument Values */
     *info = 0;
-    work[1] = (real) max(1,*n);
+    work[1] = (real) fla_max(1,*n);
     lquery = *lwork == -1;
     if (ischur == 0)
     {
@@ -493,7 +493,7 @@ int shgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     {
         *info = -17;
     }
-    else if (*lwork < max(1,*n) && ! lquery)
+    else if (*lwork < fla_max(1,*n) && ! lquery)
     {
         *info = -19;
     }
@@ -532,13 +532,13 @@ int shgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     /* Computing MAX */
     r__1 = safmin;
     r__2 = ulp * anorm; // , expr subst
-    atol = max(r__1,r__2);
+    atol = fla_max(r__1,r__2);
     /* Computing MAX */
     r__1 = safmin;
     r__2 = ulp * bnorm; // , expr subst
-    btol = max(r__1,r__2);
-    ascale = 1.f / max(safmin,anorm);
-    bscale = 1.f / max(safmin,bnorm);
+    btol = fla_max(r__1,r__2);
+    ascale = 1.f / fla_max(safmin,anorm);
+    bscale = 1.f / fla_max(safmin,bnorm);
     /* Set Eigenvalues IHI+1:N */
     i__1 = *n;
     for (j = *ihi + 1;
@@ -631,7 +631,7 @@ int shgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
             /* Computing MAX */
             r__4 = safmin;
             r__5 = ulp * ((r__1 = h__[ilast + ilast * h_dim1], f2c_abs(r__1)) + (r__2 = h__[ilast - 1 + (ilast - 1) * h_dim1], f2c_abs(r__2)));  // , expr subst
-            if ((r__3 = h__[ilast + (ilast - 1) * h_dim1], f2c_abs(r__3)) <= max( r__4,r__5))
+            if ((r__3 = h__[ilast + (ilast - 1) * h_dim1], f2c_abs(r__3)) <= fla_max( r__4,r__5))
             {
                 h__[ilast + (ilast - 1) * h_dim1] = 0.f;
                 goto L80;
@@ -640,7 +640,7 @@ int shgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
         /* Computing MAX */
         r__4 = safmin;
         r__5 = ulp * ((r__1 = t[ilast - 1 + ilast * t_dim1], f2c_abs(r__1)) + (r__2 = t[ilast - 1 + (ilast - 1) * t_dim1], f2c_abs( r__2))); // , expr subst
-        if ((r__3 = t[ilast + ilast * t_dim1], f2c_abs(r__3)) <= max(r__4,r__5))
+        if ((r__3 = t[ilast + ilast * t_dim1], f2c_abs(r__3)) <= fla_max(r__4,r__5))
         {
             t[ilast + ilast * t_dim1] = 0.f;
             goto L70;
@@ -661,7 +661,7 @@ int shgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                 /* Computing MAX */
                 r__4 = safmin;
                 r__5 = ulp * ((r__1 = h__[j + j * h_dim1], f2c_abs( r__1)) + (r__2 = h__[j - 1 + (j - 1) * h_dim1], f2c_abs( r__2))); // , expr subst
-                if ((r__3 = h__[j + (j - 1) * h_dim1], f2c_abs(r__3)) <= max(r__4, r__5))
+                if ((r__3 = h__[j + (j - 1) * h_dim1], f2c_abs(r__3)) <= fla_max(r__4, r__5))
                 {
                     h__[j + (j - 1) * h_dim1] = 0.f;
                     ilazro = TRUE_;
@@ -680,7 +680,7 @@ int shgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
             /* Computing MAX */
             r__2 = safmin;
             r__3 = ulp * temp; // , expr subst
-            if ((r__1 = t[j + j * t_dim1], f2c_abs(r__1)) < max(r__2,r__3))
+            if ((r__1 = t[j + j * t_dim1], f2c_abs(r__1)) < fla_max(r__2,r__3))
             {
                 t[j + j * t_dim1] = 0.f;
                 /* Test 1a: Check for 2 consecutive small subdiagonals in A */
@@ -689,7 +689,7 @@ int shgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                 {
                     temp = (r__1 = h__[j + (j - 1) * h_dim1], f2c_abs(r__1));
                     temp2 = (r__1 = h__[j + j * h_dim1], f2c_abs(r__1));
-                    tempr = max(temp,temp2);
+                    tempr = fla_max(temp,temp2);
                     if (tempr < 1.f && tempr != 0.f)
                     {
                         temp /= tempr;
@@ -912,18 +912,18 @@ L110:
             /* Computing MAX */
             /* Computing MAX */
             r__3 = 1.f, r__4 = f2c_abs(wr);
-            r__3 = max(r__3,r__4);
+            r__3 = fla_max(r__3,r__4);
             r__4 = f2c_abs(wi); // ; expr subst
             r__1 = s1;
-            r__2 = safmin * max(r__3,r__4); // , expr subst
-            temp = max(r__1,r__2);
+            r__2 = safmin * fla_max(r__3,r__4); // , expr subst
+            temp = fla_max(r__1,r__2);
             if (wi != 0.f)
             {
                 goto L200;
             }
         }
         /* Fiddle with shift to avoid overflow */
-        temp = min(ascale,1.f) * (safmax * .5f);
+        temp = fla_min(ascale,1.f) * (safmax * .5f);
         if (s1 > temp)
         {
             scale = temp / s1;
@@ -932,13 +932,13 @@ L110:
         {
             scale = 1.f;
         }
-        temp = min(bscale,1.f) * (safmax * .5f);
+        temp = fla_min(bscale,1.f) * (safmax * .5f);
         if (f2c_abs(wr) > temp)
         {
             /* Computing MIN */
             r__1 = scale;
             r__2 = temp / f2c_abs(wr); // , expr subst
-            scale = min(r__1,r__2);
+            scale = fla_min(r__1,r__2);
         }
         s1 = scale * s1;
         wr = scale * wr;
@@ -951,7 +951,7 @@ L110:
             istart = j;
             temp = (r__1 = s1 * h__[j + (j - 1) * h_dim1], f2c_abs(r__1));
             temp2 = (r__1 = s1 * h__[j + j * h_dim1] - wr * t[j + j * t_dim1], f2c_abs(r__1));
-            tempr = max(temp,temp2);
+            tempr = fla_max(temp,temp2);
             if (tempr < 1.f && tempr != 0.f)
             {
                 temp /= tempr;
@@ -1012,7 +1012,7 @@ L130: /* Do an implicit single-shift QZ sweep. */
             t[j + 1 + j * t_dim1] = 0.f;
             /* Computing MIN */
             i__4 = j + 2;
-            i__3 = min(i__4,ilast);
+            i__3 = fla_min(i__4,ilast);
             for (jr = ifrstm;
                     jr <= i__3;
                     ++jr)
@@ -1326,12 +1326,12 @@ L200:
                 /* Computing MAX */
                 r__3 = (r__1 = t[j + 1 + (j + 1) * t_dim1], f2c_abs(r__1));
                 r__4 = (r__2 = t[j + 1 + (j + 2) * t_dim1], f2c_abs(r__2)); // , expr subst
-                temp = max(r__3,r__4);
+                temp = fla_max(r__3,r__4);
                 /* Computing MAX */
                 r__3 = (r__1 = t[j + 2 + (j + 1) * t_dim1], f2c_abs(r__1));
                 r__4 = (r__2 = t[j + 2 + (j + 2) * t_dim1], f2c_abs(r__2)); // , expr subst
-                temp2 = max(r__3,r__4);
-                if (max(temp,temp2) < safmin)
+                temp2 = fla_max(r__3,r__4);
+                if (fla_max(temp,temp2) < safmin)
                 {
                     scale = 0.f;
                     u1 = 1.f;
@@ -1390,7 +1390,7 @@ L200:
                     /* Computing MIN */
                     r__2 = scale;
                     r__3 = (r__1 = w11 / u1, f2c_abs(r__1)); // , expr subst
-                    scale = min(r__2,r__3);
+                    scale = fla_min(r__2,r__3);
                 }
                 /* Solve */
                 u2 = scale * u2 / w22;
@@ -1418,7 +1418,7 @@ L250:
                 /* Apply transformations from the right. */
                 /* Computing MIN */
                 i__4 = j + 3;
-                i__3 = min(i__4,ilast);
+                i__3 = fla_min(i__4,ilast);
                 for (jr = ifrstm;
                         jr <= i__3;
                         ++jr)

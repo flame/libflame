@@ -901,7 +901,7 @@ void diagonalize_vector(integer datatype, void* s, void* sigma, integer m, integ
     integer incr, i, j, min_m_n;
 
     incr = m + 1;
-    min_m_n = min(m, n);
+    min_m_n = fla_min(m, n);
 
     reset_matrix(datatype, m, n, sigma, m);
 

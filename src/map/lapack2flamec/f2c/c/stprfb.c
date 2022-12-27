@@ -116,9 +116,9 @@ static real c_b27 = -1.f;
 /* > \verbatim */
 /* > LDV is INTEGER */
 /* > The leading dimension of the array V. */
-/* > If STOREV = 'C' and SIDE = 'L', LDV >= max(1,M);
+/* > If STOREV = 'C' and SIDE = 'L', LDV >= fla_max(1,M);
 */
-/* > if STOREV = 'C' and SIDE = 'R', LDV >= max(1,N);
+/* > if STOREV = 'C' and SIDE = 'R', LDV >= fla_max(1,N);
 */
 /* > if STOREV = 'R', LDV >= K. */
 /* > \endverbatim */
@@ -150,9 +150,9 @@ static real c_b27 = -1.f;
 /* > \verbatim */
 /* > LDA is INTEGER */
 /* > The leading dimension of the array A. */
-/* > If SIDE = 'L', LDA >= max(1,K);
+/* > If SIDE = 'L', LDA >= fla_max(1,K);
 */
-/* > If SIDE = 'R', LDA >= max(1,M). */
+/* > If SIDE = 'R', LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -167,7 +167,7 @@ static real c_b27 = -1.f;
 /* > \verbatim */
 /* > LDB is INTEGER */
 /* > The leading dimension of the array B. */
-/* > LDB >= max(1,M). */
+/* > LDB >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -367,10 +367,10 @@ int stprfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
         /* --------------------------------------------------------------------------- */
         /* Computing MIN */
         i__1 = *m - *l + 1;
-        mp = min(i__1,*m);
+        mp = fla_min(i__1,*m);
         /* Computing MIN */
         i__1 = *l + 1;
-        kp = min(i__1,*k);
+        kp = fla_min(i__1,*k);
         i__1 = *n;
         for (j = 1;
                 j <= i__1;
@@ -448,10 +448,10 @@ int stprfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
         /* --------------------------------------------------------------------------- */
         /* Computing MIN */
         i__1 = *n - *l + 1;
-        np = min(i__1,*n);
+        np = fla_min(i__1,*n);
         /* Computing MIN */
         i__1 = *l + 1;
-        kp = min(i__1,*k);
+        kp = fla_min(i__1,*k);
         i__1 = *l;
         for (j = 1;
                 j <= i__1;
@@ -530,10 +530,10 @@ int stprfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
         /* --------------------------------------------------------------------------- */
         /* Computing MIN */
         i__1 = *l + 1;
-        mp = min(i__1,*m);
+        mp = fla_min(i__1,*m);
         /* Computing MIN */
         i__1 = *k - *l + 1;
-        kp = min(i__1,*k);
+        kp = fla_min(i__1,*k);
         i__1 = *n;
         for (j = 1;
                 j <= i__1;
@@ -611,10 +611,10 @@ int stprfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
         /* --------------------------------------------------------------------------- */
         /* Computing MIN */
         i__1 = *l + 1;
-        np = min(i__1,*n);
+        np = fla_min(i__1,*n);
         /* Computing MIN */
         i__1 = *k - *l + 1;
-        kp = min(i__1,*k);
+        kp = fla_min(i__1,*k);
         i__1 = *l;
         for (j = 1;
                 j <= i__1;
@@ -692,10 +692,10 @@ int stprfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
         /* --------------------------------------------------------------------------- */
         /* Computing MIN */
         i__1 = *m - *l + 1;
-        mp = min(i__1,*m);
+        mp = fla_min(i__1,*m);
         /* Computing MIN */
         i__1 = *l + 1;
-        kp = min(i__1,*k);
+        kp = fla_min(i__1,*k);
         i__1 = *n;
         for (j = 1;
                 j <= i__1;
@@ -772,10 +772,10 @@ int stprfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
         /* --------------------------------------------------------------------------- */
         /* Computing MIN */
         i__1 = *n - *l + 1;
-        np = min(i__1,*n);
+        np = fla_min(i__1,*n);
         /* Computing MIN */
         i__1 = *l + 1;
-        kp = min(i__1,*k);
+        kp = fla_min(i__1,*k);
         i__1 = *l;
         for (j = 1;
                 j <= i__1;
@@ -853,10 +853,10 @@ int stprfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
         /* --------------------------------------------------------------------------- */
         /* Computing MIN */
         i__1 = *l + 1;
-        mp = min(i__1,*m);
+        mp = fla_min(i__1,*m);
         /* Computing MIN */
         i__1 = *k - *l + 1;
-        kp = min(i__1,*k);
+        kp = fla_min(i__1,*k);
         i__1 = *n;
         for (j = 1;
                 j <= i__1;
@@ -933,10 +933,10 @@ int stprfb_(char *side, char *trans, char *direct, char * storev, integer *m, in
         /* --------------------------------------------------------------------------- */
         /* Computing MIN */
         i__1 = *l + 1;
-        np = min(i__1,*n);
+        np = fla_min(i__1,*n);
         /* Computing MIN */
         i__1 = *k - *l + 1;
-        kp = min(i__1,*k);
+        kp = fla_min(i__1,*k);
         i__1 = *l;
         for (j = 1;
                 j <= i__1;

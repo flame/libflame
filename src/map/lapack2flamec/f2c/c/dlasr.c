@@ -173,7 +173,7 @@
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* Authors: */
 /* ======== */
@@ -247,7 +247,7 @@ int dlasr_(char *side, char *pivot, char *direct, integer *m, integer *n, double
     {
         info = 5;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         info = 9;
     }

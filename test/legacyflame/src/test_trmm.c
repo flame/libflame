@@ -237,7 +237,7 @@ void libfla_test_trmm_experiment( test_params_t params,
 		libfla_test_trmm_impl( impl, side, uplo, trans, diag, alpha, A_test, B_test );
 		
 		time = FLA_Clock() - time;
-		time_min = min( time_min, time );
+		time_min = fla_min( time_min, time );
 	}
 
 	// Copy the solution to flat matrix X.

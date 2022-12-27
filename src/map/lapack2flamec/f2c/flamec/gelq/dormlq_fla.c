@@ -101,7 +101,7 @@ static integer c__65 = 65;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,K). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,K). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] TAU */
@@ -121,7 +121,7 @@ static integer c__65 = 65;
 /* > \param[in] LDC */
 /* > \verbatim */
 /* > LDC is INTEGER */
-/* > The leading dimension of the array C. LDC >= max(1,M). */
+/* > The leading dimension of the array C. LDC >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -134,9 +134,9 @@ static integer c__65 = 65;
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The dimension of the array WORK. */
-/* > If SIDE = 'L', LWORK >= max(1,N);
+/* > If SIDE = 'L', LWORK >= fla_max(1,N);
 */
-/* > if SIDE = 'R', LWORK >= max(1,M). */
+/* > if SIDE = 'R', LWORK >= fla_max(1,M). */
 /* > For optimum performance LWORK >= N*NB if SIDE = 'L', and */
 /* > LWORK >= M*NB if SIDE = 'R', where NB is the optimal */
 /* > blocksize. */
@@ -256,15 +256,15 @@ int dormlq_fla(char *side, char *trans, integer *m, integer *n, integer *k, doub
     {
         *info = -5;
     }
-    else if (*lda < max(1,*k))
+    else if (*lda < fla_max(1,*k))
     {
         *info = -7;
     }
-    else if (*ldc < max(1,*m))
+    else if (*ldc < fla_max(1,*m))
     {
         *info = -10;
     }
-    else if (*lwork < max(1,nw) && ! lquery)
+    else if (*lwork < fla_max(1,nw) && ! lquery)
     {
         *info = -12;
     }
@@ -275,8 +275,8 @@ int dormlq_fla(char *side, char *trans, integer *m, integer *n, integer *k, doub
         /* Computing MIN */
         i__1 = 64;
         i__2 = ilaenv_(&c__1, "DORMLQ", ch__1, m, n, k, &c_n1); // , expr subst
-        nb = min(i__1,i__2);
-        lwkopt = max(1,nw) * nb;
+        nb = fla_min(i__1,i__2);
+        lwkopt = fla_max(1,nw) * nb;
         work[1] = (doublereal) lwkopt;
     }
     if (*info != 0)
@@ -306,7 +306,7 @@ int dormlq_fla(char *side, char *trans, integer *m, integer *n, integer *k, doub
             /* Computing MAX */
             i__1 = 2;
             i__2 = ilaenv_(&c__2, "DORMLQ", ch__1, m, n, k, &c_n1); // , expr subst
-            nbmin = max(i__1,i__2);
+            nbmin = fla_max(i__1,i__2);
         }
     }
     else
@@ -360,7 +360,7 @@ int dormlq_fla(char *side, char *trans, integer *m, integer *n, integer *k, doub
             /* Computing MIN */
             i__4 = nb;
             i__5 = *k - i__ + 1; // , expr subst
-            ib = min(i__4,i__5);
+            ib = fla_min(i__4,i__5);
             /* Form the triangular factor of the block reflector */
             /* H = H(i) H(i+1) . . . H(i+ib-1) */
             i__4 = nq - i__ + 1;

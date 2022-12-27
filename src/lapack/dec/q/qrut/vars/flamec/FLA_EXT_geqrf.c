@@ -146,7 +146,7 @@ FLA_Error FLA_EXT_sgeqrf( integer  m_A, integer n_A,
                           integer* lwork,
                           integer* info )
 {
-  integer min_m_n = min( m_A, n_A );
+  integer min_m_n = fla_min( m_A, n_A );
   integer i, rs_A = 1;
 
   for ( i = 0; i < min_m_n; ++i )
@@ -327,7 +327,7 @@ FLA_Error FLA_EXT_dgeqrf( integer  m_A, integer n_A,
                           integer* lwork,
                           integer* info )
 {
-  integer min_m_n = min( m_A, n_A );
+  integer min_m_n = fla_min( m_A, n_A );
   integer i, rs_A = 1;
 
   for ( i = 0; i < min_m_n; ++i )

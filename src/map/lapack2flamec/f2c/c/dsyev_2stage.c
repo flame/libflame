@@ -86,7 +86,7 @@ static doublereal c_b27 = 1.;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] W */
@@ -109,9 +109,9 @@ static doublereal c_b27 = 1.;
 /* > otherwise */
 /* > If JOBZ = 'N' and N > 1, LWORK must be queried. */
 /* > LWORK = MAX(1, dimension) where */
-/* > dimension = max(stage1,stage2) + (KD+1)*N + 2*N */
+/* > dimension = fla_max(stage1,stage2) + (KD+1)*N + 2*N */
 /* > = N*KD + N*max(KD+1,FACTOPTNB) */
-/* > + max(2*KD*KD, KD*NTHREADS) */
+/* > + fla_max(2*KD*KD, KD*NTHREADS) */
 /* > + (KD+1)*N + 2*N */
 /* > where KD is the blocking size of the reduction, */
 /* > FACTOPTNB is the blocking used by the QR or LQ */
@@ -268,7 +268,7 @@ int dsyev_2stage_(char *jobz, char *uplo, integer *n, doublereal *a, integer *ld
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }

@@ -57,17 +57,17 @@ static integer c__2 = 2;
 /* > A is COMPLEX*16 array, dimension (LDA,N) */
 /* > On entry, the M-by-N matrix A. */
 /* > On exit, the upper triangle of the array contains the */
-/* > min(M,N)-by-N upper trapezoidal matrix R;
+/* > fla_min(M,N)-by-N upper trapezoidal matrix R;
 the elements below */
 /* > the diagonal, together with the array TAU, represent the */
-/* > unitary matrix Q as a product of min(M,N) elementary */
+/* > unitary matrix Q as a product of fla_min(M,N) elementary */
 /* > reflectors. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] JPVT */
@@ -83,7 +83,7 @@ if JPVT(J)=0, */
 /* > */
 /* > \param[out] TAU */
 /* > \verbatim */
-/* > TAU is COMPLEX*16 array, dimension (min(M,N)) */
+/* > TAU is COMPLEX*16 array, dimension (fla_min(M,N)) */
 /* > The scalar factors of the elementary reflectors. */
 /* > \endverbatim */
 /* > */
@@ -133,7 +133,7 @@ the routine */
 /* > */
 /* > The matrix Q is represented as a product of elementary reflectors */
 /* > */
-/* > Q = H(1) H(2) . . . H(k), where k = min(m,n). */
+/* > Q = H(1) H(2) . . . H(k), where k = fla_min(m,n). */
 /* > */
 /* > Each H(i) has the form */
 /* > */
@@ -217,13 +217,13 @@ int zgeqp3_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *jpv
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
     if (*info == 0)
     {
-        minmn = min(*m,*n);
+        minmn = fla_min(*m,*n);
         if (minmn == 0)
         {
             iws = 1;
@@ -290,13 +290,13 @@ int zgeqp3_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *jpv
     /* remaining columns. */
     if (nfxd > 0)
     {
-        na = min(*m,nfxd);
+        na = fla_min(*m,nfxd);
         /* CC CALL ZGEQR2( M, NA, A, LDA, TAU, WORK, INFO ) */
         zgeqrf_(m, &na, &a[a_offset], lda, &tau[1], &work[1], lwork, info);
         /* Computing MAX */
         i__1 = iws;
         i__2 = (integer) work[1].r; // , expr subst
-        iws = max(i__1,i__2);
+        iws = fla_max(i__1,i__2);
         if (na < *n)
         {
             /* CC CALL ZUNM2R( 'Left', 'Conjugate Transpose', M, N-NA, */
@@ -307,7 +307,7 @@ int zgeqp3_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *jpv
             /* Computing MAX */
             i__1 = iws;
             i__2 = (integer) work[1].r; // , expr subst
-            iws = max(i__1,i__2);
+            iws = fla_max(i__1,i__2);
         }
     }
     /* Factorize free columns */
@@ -327,12 +327,12 @@ int zgeqp3_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *jpv
             /* Computing MAX */
             i__1 = 0;
             i__2 = ilaenv_(&c__3, "ZGEQRF", " ", &sm, &sn, &c_n1, & c_n1); // , expr subst
-            nx = max(i__1,i__2);
+            nx = fla_max(i__1,i__2);
             if (nx < sminmn)
             {
                 /* Determine if workspace is large enough for blocked code. */
                 minws = (sn + 1) * nb;
-                iws = max(iws,minws);
+                iws = fla_max(iws,minws);
                 if (*lwork < minws)
                 {
                     /* Not enough workspace to use optimal NB: Reduce NB and */
@@ -341,7 +341,7 @@ int zgeqp3_(integer *m, integer *n, doublecomplex *a, integer *lda, integer *jpv
                     /* Computing MAX */
                     i__1 = 2;
                     i__2 = ilaenv_(&c__2, "ZGEQRF", " ", &sm, &sn, & c_n1, &c_n1); // , expr subst
-                    nbmin = max(i__1,i__2);
+                    nbmin = fla_max(i__1,i__2);
                 }
             }
         }
@@ -368,7 +368,7 @@ L30:
                 /* Computing MIN */
                 i__1 = nb;
                 i__2 = topbmn - j + 1; // , expr subst
-                jb = min(i__1,i__2);
+                jb = fla_min(i__1,i__2);
                 /* Factorize JB columns among columns J:N. */
                 i__1 = *n - j + 1;
                 i__2 = j - 1;

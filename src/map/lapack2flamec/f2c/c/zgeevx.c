@@ -145,7 +145,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] W */
@@ -248,7 +248,7 @@ if */
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The dimension of the array WORK. If SENSE = 'N' or 'E', */
-/* > LWORK >= max(1,2*N), and if SENSE = 'V' or 'B', */
+/* > LWORK >= fla_max(1,2*N), and if SENSE = 'V' or 'B', */
 /* > LWORK >= N*N+2*N. */
 /* > For good performance, LWORK must generally be larger. */
 /* > */
@@ -407,7 +407,7 @@ int zgeevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, do
     {
         *info = -5;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -7;
     }
@@ -443,14 +443,14 @@ int zgeevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, do
             {
                 ztrevc3_("L", "B", select, n, &a[a_offset], lda, &vl[ vl_offset], ldvl, &vr[vr_offset], ldvr, n, &nout, & work[1], &c_n1, &rwork[1], &c_n1, &ierr);
                 lwork_trevc__ = (integer) work[1].r;
-                maxwrk = max(maxwrk,lwork_trevc__);
+                maxwrk = fla_max(maxwrk,lwork_trevc__);
                 zhseqr_("S", "V", n, &c__1, n, &a[a_offset], lda, &w[1], &vl[ vl_offset], ldvl, &work[1], &c_n1, info);
             }
             else if (wantvr)
             {
                 ztrevc3_("R", "B", select, n, &a[a_offset], lda, &vl[ vl_offset], ldvl, &vr[vr_offset], ldvr, n, &nout, & work[1], &c_n1, &rwork[1], &c_n1, &ierr);
                 lwork_trevc__ = (integer) work[1].r;
-                maxwrk = max(maxwrk,lwork_trevc__);
+                maxwrk = fla_max(maxwrk,lwork_trevc__);
                 zhseqr_("S", "V", n, &c__1, n, &a[a_offset], lda, &w[1], &vr[ vr_offset], ldvr, &work[1], &c_n1, info);
             }
             else
@@ -473,15 +473,15 @@ int zgeevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, do
                     /* Computing MAX */
                     i__1 = minwrk;
                     i__2 = *n * *n + (*n << 1); // , expr subst
-                    minwrk = max(i__1,i__2);
+                    minwrk = fla_max(i__1,i__2);
                 }
-                maxwrk = max(maxwrk,hswork);
+                maxwrk = fla_max(maxwrk,hswork);
                 if (! (wntsnn || wntsne))
                 {
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *n * *n + (*n << 1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                 }
             }
             else
@@ -492,26 +492,26 @@ int zgeevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, do
                     /* Computing MAX */
                     i__1 = minwrk;
                     i__2 = *n * *n + (*n << 1); // , expr subst
-                    minwrk = max(i__1,i__2);
+                    minwrk = fla_max(i__1,i__2);
                 }
-                maxwrk = max(maxwrk,hswork);
+                maxwrk = fla_max(maxwrk,hswork);
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + (*n - 1) * ilaenv_(&c__1, "ZUNGHR", " ", n, &c__1, n, &c_n1); // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 if (! (wntsnn || wntsne))
                 {
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *n * *n + (*n << 1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                 }
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n << 1; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
             }
-            maxwrk = max(maxwrk,minwrk);
+            maxwrk = fla_max(maxwrk,minwrk);
         }
         work[1].r = (doublereal) maxwrk;
         work[1].i = 0.; // , expr subst
@@ -753,7 +753,7 @@ L50:
         i__1 = *n - *info;
         /* Computing MAX */
         i__3 = *n - *info;
-        i__2 = max(i__3,1);
+        i__2 = fla_max(i__3,1);
         zlascl_("G", &c__0, &c__0, &cscale, &anrm, &i__1, &c__1, &w[*info + 1], &i__2, &ierr);
         if (*info == 0)
         {

@@ -230,7 +230,7 @@ void time_Her2k_un(
     }
 
     *dtime = FLA_Clock() - *dtime;
-    dtime_old = min( *dtime, dtime_old );
+    dtime_old = fla_min( *dtime, dtime_old );
   }
 
   FLA_Cntl_obj_free( cntl_her2k_var );

@@ -70,7 +70,7 @@
  /* > rectangular blocks must have dimension at least k by m, */
  /* > where k is given by ILAENV(2,...) and m by ILAENV(5,...) */
  /* > = 6: the crossover point for the SVD (when reducing an m by n */
- /* > matrix to bidiagonal form, if max(m,n)/min(m,n) exceeds */
+ /* > matrix to bidiagonal form, if fla_max(m,n)/fla_min(m,n) exceeds */
  /* > this value, a QR factorization is used first to reduce */
  /* > the matrix to a triangular form.) */
  /* > = 7: the number of processors */
@@ -706,7 +706,7 @@
  ret_val = 2;
  return ret_val;
  L100: /* ISPEC = 6: crossover point for SVD (used by xGELSS and xGESVD) */
- ret_val = (integer) ((real) min(*n1,*n2) * 1.6f);
+ ret_val = (integer) ((real) fla_min(*n1,*n2) * 1.6f);
  return ret_val;
  L110: /* ISPEC = 7: number of processors (not used) */
  ret_val = 1;

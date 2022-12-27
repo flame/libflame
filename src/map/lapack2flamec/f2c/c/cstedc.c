@@ -99,7 +99,7 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > LDZ is INTEGER */
 /* > The leading dimension of the array Z. LDZ >= 1. */
-/* > If eigenvectors are desired, then LDZ >= max(1,N). */
+/* > If eigenvectors are desired, then LDZ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -145,7 +145,7 @@ the routine */
 /* > 1 + 4*N + 2*N**2 . */
 /* > Note that for COMPZ = 'I' or 'V', then if N is less than or */
 /* > equal to the minimum divide size, usually 25, then LRWORK */
-/* > need only be max(1,2*(N-1)). */
+/* > need only be fla_max(1,2*(N-1)). */
 /* > */
 /* > If LRWORK = -1, then a workspace query is assumed;
 the */
@@ -315,7 +315,7 @@ int cstedc_(char *compz, integer *n, real *d__, real *e, complex *z__, integer *
     {
         *info = -2;
     }
-    else if (*ldz < 1 || icompz > 0 && *ldz < max(1,*n))
+    else if (*ldz < 1 || icompz > 0 && *ldz < fla_max(1,*n))
     {
         *info = -6;
     }

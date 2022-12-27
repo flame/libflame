@@ -73,7 +73,7 @@ the elements in block */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] JPVT */
@@ -89,7 +89,7 @@ if JPVT(i) = 0, */
 /* > */
 /* > \param[out] TAU */
 /* > \verbatim */
-/* > TAU is COMPLEX*16 array, dimension (min(M,N)) */
+/* > TAU is COMPLEX*16 array, dimension (fla_min(M,N)) */
 /* > The scalar factors of the elementary reflectors. */
 /* > \endverbatim */
 /* > */
@@ -191,7 +191,7 @@ int zlaqp2_(integer *m, integer *n, integer *offset, doublecomplex *a, integer *
     /* Function Body */
     /* Computing MIN */
     i__1 = *m - *offset;
-    mn = min(i__1,*n);
+    mn = fla_min(i__1,*n);
     tol3z = sqrt(dlamch_("Epsilon"));
     /* Compute factorization. */
     i__1 = mn;
@@ -252,7 +252,7 @@ int zlaqp2_(integer *m, integer *n, integer *offset, doublecomplex *a, integer *
                 /* Computing 2nd power */
                 d__1 = z_abs(&a[offpi + j * a_dim1]) / vn1[j];
                 temp = 1. - d__1 * d__1;
-                temp = max(temp,0.);
+                temp = fla_max(temp,0.);
                 /* Computing 2nd power */
                 d__1 = vn1[j] / vn2[j];
                 temp2 = temp * (d__1 * d__1);

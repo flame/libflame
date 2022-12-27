@@ -54,15 +54,15 @@ int sbdsqr_check(char *uplo, integer *n, integer *ncvt, integer * nru, integer *
     {
         *info = -5;
     }
-    else if (*ncvt == 0 && *ldvt < 1 || *ncvt > 0 && *ldvt < max(1,*n))
+    else if (*ncvt == 0 && *ldvt < 1 || *ncvt > 0 && *ldvt < fla_max(1,*n))
     {
         *info = -9;
     }
-    else if (*ldu < max(1,*nru))
+    else if (*ldu < fla_max(1,*nru))
     {
         *info = -11;
     }
-    else if (*ncc == 0 && *ldc < 1 || *ncc > 0 && *ldc < max(1,*n))
+    else if (*ncc == 0 && *ldc < 1 || *ncc > 0 && *ldc < fla_max(1,*n))
     {
         *info = -13;
     }

@@ -107,7 +107,7 @@ they are stored as the columns of the */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -154,10 +154,10 @@ the residual sum of squares */
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The dimension of the array WORK. */
-/* > LWORK >= max( 1, MN + max( MN, NRHS ) ). */
+/* > LWORK >= fla_max( 1, MN + fla_max( MN, NRHS ) ). */
 /* > For optimal performance, */
-/* > LWORK >= max( 1, MN + max( MN, NRHS )*NB ). */
-/* > where MN = min(M,N) and NB is the optimum block size. */
+/* > LWORK >= fla_max( 1, MN + fla_max( MN, NRHS )*NB ). */
+/* > where MN = fla_min(M,N) and NB is the optimum block size. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
 the routine */
@@ -261,7 +261,7 @@ int cgels_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, inte
     --work;
     /* Function Body */
     *info = 0;
-    mn = min(*m,*n);
+    mn = fla_min(*m,*n);
     lquery = *lwork == -1;
     if (! (lsame_(trans, "N") || lsame_(trans, "C")))
     {
@@ -279,15 +279,15 @@ int cgels_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, inte
     {
         *info = -4;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -6;
     }
     else /* if(complicated condition) */
     {
         /* Computing MAX */
-        i__1 = max(1,*m);
-        if (*ldb < max(i__1,*n))
+        i__1 = fla_max(1,*m);
+        if (*ldb < fla_max(i__1,*n))
         {
             *info = -8;
         }
@@ -295,8 +295,8 @@ int cgels_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, inte
         {
             /* Computing MAX */
             i__1 = 1;
-            i__2 = mn + max(mn,*nrhs); // , expr subst
-            if (*lwork < max(i__1,i__2) && ! lquery)
+            i__2 = mn + fla_max(mn,*nrhs); // , expr subst
+            if (*lwork < fla_max(i__1,i__2) && ! lquery)
             {
                 *info = -10;
             }
@@ -318,14 +318,14 @@ int cgels_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, inte
                 /* Computing MAX */
                 i__1 = nb;
                 i__2 = ilaenv_(&c__1, "CUNMQR", "LN", m, nrhs, n, & c_n1); // , expr subst
-                nb = max(i__1,i__2);
+                nb = fla_max(i__1,i__2);
             }
             else
             {
                 /* Computing MAX */
                 i__1 = nb;
                 i__2 = ilaenv_(&c__1, "CUNMQR", "LC", m, nrhs, n, & c_n1); // , expr subst
-                nb = max(i__1,i__2);
+                nb = fla_max(i__1,i__2);
             }
         }
         else
@@ -336,20 +336,20 @@ int cgels_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, inte
                 /* Computing MAX */
                 i__1 = nb;
                 i__2 = ilaenv_(&c__1, "CUNMLQ", "LC", n, nrhs, m, & c_n1); // , expr subst
-                nb = max(i__1,i__2);
+                nb = fla_max(i__1,i__2);
             }
             else
             {
                 /* Computing MAX */
                 i__1 = nb;
                 i__2 = ilaenv_(&c__1, "CUNMLQ", "LN", n, nrhs, m, & c_n1); // , expr subst
-                nb = max(i__1,i__2);
+                nb = fla_max(i__1,i__2);
             }
         }
         /* Computing MAX */
         i__1 = 1;
-        i__2 = mn + max(mn,*nrhs) * nb; // , expr subst
-        wsize = max(i__1,i__2);
+        i__2 = mn + fla_max(mn,*nrhs) * nb; // , expr subst
+        wsize = fla_max(i__1,i__2);
         r__1 = (real) wsize;
         work[1].r = r__1;
         work[1].i = 0.f; // , expr subst
@@ -368,10 +368,10 @@ int cgels_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, inte
     }
     /* Quick return if possible */
     /* Computing MIN */
-    i__1 = min(*m,*n);
-    if (min(i__1,*nrhs) == 0)
+    i__1 = fla_min(*m,*n);
+    if (fla_min(i__1,*nrhs) == 0)
     {
-        i__1 = max(*m,*n);
+        i__1 = fla_max(*m,*n);
         claset_("Full", &i__1, nrhs, &c_b1, &c_b1, &b[b_offset], ldb);
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
@@ -398,7 +398,7 @@ int cgels_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, inte
     else if (anrm == 0.f)
     {
         /* Matrix all zero. Return zero solution. */
-        i__1 = max(*m,*n);
+        i__1 = fla_max(*m,*n);
         claset_("F", &i__1, nrhs, &c_b1, &c_b1, &b[b_offset], ldb);
         goto L50;
     }

@@ -97,7 +97,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] IPIV */
@@ -138,7 +138,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -151,7 +151,7 @@ static integer c_n1 = -1;
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The length of WORK. LWORK >= 1, and for best performance */
-/* > LWORK >= max(1,N*NB), where NB is the optimal blocksize for */
+/* > LWORK >= fla_max(1,N*NB), where NB is the optimal blocksize for */
 /* > CHETRF_ROOK. */
 /* > for LWORK < N, TRS will be done with Level BLAS 2 */
 /* > for LWORK >= N, TRS will be done with Level BLAS 3 */
@@ -261,11 +261,11 @@ int chesv_rook_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda,
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -8;
     }

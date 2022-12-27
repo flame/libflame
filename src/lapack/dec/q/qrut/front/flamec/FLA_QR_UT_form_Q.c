@@ -129,7 +129,7 @@ FLA_Error FLA_QR_UT_form_Q_blk_var1( FLA_Obj A, FLA_Obj T, FLA_Obj W )
 
     while ( /* FLA_Obj_min_dim( ATL ) > 0 && */ FLA_Obj_width( TL ) > 0 )
     {
-        b = min( b_alg, FLA_Obj_min_dim( ATL ) );
+        b = fla_min( b_alg, FLA_Obj_min_dim( ATL ) );
 
         // Since T was filled from left to right, and since we need to access them
         // in reverse order, we need to handle the case where the last block is
@@ -271,7 +271,7 @@ FLA_Error FLA_QR_UT_form_Q_ops_var1( integer       m_A,
                                      float*    buff_T, integer rs_T, integer cs_T )
 {
     float    one     = bl1_d1();
-    integer      min_m_n = min( m_A, n_A );
+    integer      min_m_n = fla_min( m_A, n_A );
     integer      i;
 
     for ( i = min_m_n - 1; i >= 0; --i )
@@ -321,7 +321,7 @@ FLA_Error FLA_QR_UT_form_Q_opd_var1( integer       m_A,
                                      double*   buff_T, integer rs_T, integer cs_T )
 {
     double   one     = bl1_d1();
-    integer      min_m_n = min( m_A, n_A );
+    integer      min_m_n = fla_min( m_A, n_A );
     integer      i;
 
     for ( i = min_m_n - 1; i >= 0; --i )
@@ -373,7 +373,7 @@ FLA_Error FLA_QR_UT_form_Q_opc_var1( integer       m_A,
 {
     scomplex zero    = bl1_c0();
     scomplex one     = bl1_c1();
-    integer      min_m_n = min( m_A, n_A );
+    integer      min_m_n = fla_min( m_A, n_A );
     integer      i;
 
     for ( i = min_m_n - 1; i >= 0; --i )
@@ -426,7 +426,7 @@ FLA_Error FLA_QR_UT_form_Q_opz_var1( integer       m_A,
 {
     dcomplex zero    = bl1_z0();
     dcomplex one     = bl1_z1();
-    integer      min_m_n = min( m_A, n_A );
+    integer      min_m_n = fla_min( m_A, n_A );
     integer      i;
 
     for ( i = min_m_n - 1; i >= 0; --i )

@@ -121,7 +121,7 @@ and computes a reciprocal condition */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] SDIM */
@@ -179,11 +179,11 @@ and computes a reciprocal condition */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,2*N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,2*N). */
 /* > Also, if SENSE = 'E' or 'V' or 'B', LWORK >= 2*SDIM*(N-SDIM), */
 /* > where SDIM is the number of selected eigenvalues computed by */
 /* > this routine. Note that 2*SDIM*(N-SDIM) <= N*N/2. Note also */
-/* > that an error is only returned if LWORK < max(1,2*N), but if */
+/* > that an error is only returned if LWORK < fla_max(1,2*N), but if */
 /* > SENSE = 'E' or 'V' or 'B' this may not be large enough. */
 /* > For good performance, LWORK must generally be larger. */
 /* > */
@@ -340,7 +340,7 @@ int zgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doub
     {
         *info = -5;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -7;
     }
@@ -376,15 +376,15 @@ int zgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doub
             hswork = (integer) work[1].r;
             if (! wantvs)
             {
-                maxwrk = max(maxwrk,hswork);
+                maxwrk = fla_max(maxwrk,hswork);
             }
             else
             {
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + (*n - 1) * ilaenv_(&c__1, "ZUNGHR", " ", n, &c__1, n, &c_n1); // , expr subst
-                maxwrk = max(i__1,i__2);
-                maxwrk = max(maxwrk,hswork);
+                maxwrk = fla_max(i__1,i__2);
+                maxwrk = fla_max(maxwrk,hswork);
             }
             lwrk = maxwrk;
             if (! wantsn)
@@ -392,7 +392,7 @@ int zgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doub
                 /* Computing MAX */
                 i__1 = lwrk;
                 i__2 = *n * *n / 2; // , expr subst
-                lwrk = max(i__1,i__2);
+                lwrk = fla_max(i__1,i__2);
             }
         }
         work[1].r = (doublereal) lwrk;
@@ -505,7 +505,7 @@ int zgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doub
             /* Computing MAX */
             i__1 = maxwrk;
             i__2 = (*sdim << 1) * (*n - *sdim); // , expr subst
-            maxwrk = max(i__1,i__2);
+            maxwrk = fla_max(i__1,i__2);
         }
         if (icond == -14)
         {

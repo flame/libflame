@@ -101,7 +101,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] T */
@@ -231,7 +231,7 @@ int sgetsqrhrt_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2
     {
         *info = -5;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -7;
     }
@@ -239,8 +239,8 @@ int sgetsqrhrt_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2
     {
         /* Computing MAX */
         i__1 = 1;
-        i__2 = min(*nb2,*n); // , expr subst
-        if (*ldt < max(i__1,i__2))
+        i__2 = fla_min(*nb2,*n); // , expr subst
+        if (*ldt < fla_max(i__1,i__2))
         {
             *info = -9;
         }
@@ -262,11 +262,11 @@ int sgetsqrhrt_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2
             else
             {
                 /* Set block size for column blocks */
-                nb1local = min(*nb1,*n);
+                nb1local = fla_min(*nb1,*n);
                 /* Computing MAX */
                 r__1 = 1.f;
                 r__2 = ceiling_f90_((real) (*m - *n) / (real) (*mb1 - *n)); // , expr subst
-                num_all_row_blocks__ = max(r__1,r__2);
+                num_all_row_blocks__ = fla_max(r__1,r__2);
                 /* Length and leading dimension of WORK array to place */
                 /* T array in TSQR. */
                 lwt = num_all_row_blocks__ * *n * nb1local;
@@ -277,15 +277,15 @@ int sgetsqrhrt_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2
                 /* Computing MAX */
                 i__1 = nb1local;
                 i__2 = *n - nb1local; // , expr subst
-                lw2 = nb1local * max(i__1,i__2);
+                lw2 = nb1local * fla_max(i__1,i__2);
                 /* Computing MAX */
                 /* Computing MAX */
                 i__3 = lwt + *n * *n + lw2;
                 i__4 = lwt + *n * *n + *n; // , expr subst
                 i__1 = lwt + lw1;
-                i__2 = max(i__3,i__4); // , expr subst
-                lworkopt = max(i__1,i__2);
-                if (*lwork < max(1,lworkopt) && ! lquery)
+                i__2 = fla_max(i__3,i__4); // , expr subst
+                lworkopt = fla_max(i__1,i__2);
+                if (*lwork < fla_max(1,lworkopt) && ! lquery)
                 {
                     *info = -11;
                 }
@@ -305,12 +305,12 @@ int sgetsqrhrt_(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2
         return 0;
     }
     /* Quick return if possible */
-    if (min(*m,*n) == 0)
+    if (fla_min(*m,*n) == 0)
     {
         work[1] = (real) lworkopt;
         return 0;
     }
-    nb2local = min(*nb2,*n);
+    nb2local = fla_min(*nb2,*n);
     /* (1) Perform TSQR-factorization of the M-by-N matrix A. */
     slatsqr_(m, n, mb1, &nb1local, &a[a_offset], lda, &work[1], &ldwt, &work[ lwt + 1], &lw1, &iinfo);
     /* (2) Copy the factor R_tsqr stored in the upper-triangular part */

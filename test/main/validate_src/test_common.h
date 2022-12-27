@@ -48,11 +48,20 @@ extern dcomplex z_zero, z_one, z_n_one;
 
 #define DRAND()  ( ( double ) rand() / ( ( double ) RAND_MAX / 2.0F ) ) - 1.0F;
 #define SRAND()  ( float ) ( ( double ) rand() / ( ( double ) RAND_MAX / 2.0F ) ) - 1.0F;
-#undef min
-#undef max
-#define min( x, y ) ( (x) < (y) ? (x) : (y) )
 
-#define max( x, y ) ( (x) > (y) ? (x) : (y) )
+#define fla_min( x, y )    \
+({                         \
+   __typeof__(x) _x = (x); \
+   __typeof__(y) _y = (y); \
+   _x < _y ? _x : _y;      \
+})
+
+#define fla_max( x, y )    \
+({                         \
+   __typeof__(x) _x = (x); \
+   __typeof__(y) _y = (y); \
+   _x > _y ? _x : _y;      \
+})
 
 // Datatype
 #define CONSTANT          101

@@ -61,19 +61,19 @@ static integer c__2 = 2;
 /* > contain the M-by-N upper trapezoidal matrix R;
 */
 /* > the remaining elements, with the array TAU, represent the */
-/* > orthogonal matrix Q as a product of min(m,n) elementary */
+/* > orthogonal matrix Q as a product of fla_min(m,n) elementary */
 /* > reflectors (see Further Details). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] TAU */
 /* > \verbatim */
-/* > TAU is REAL array, dimension (min(M,N)) */
+/* > TAU is REAL array, dimension (fla_min(M,N)) */
 /* > The scalar factors of the elementary reflectors (see Further */
 /* > Details). */
 /* > \endverbatim */
@@ -119,7 +119,7 @@ the routine */
 /* > */
 /* > The matrix Q is represented as a product of elementary reflectors */
 /* > */
-/* > Q = H(1) H(2) . . . H(k), where k = min(m,n). */
+/* > Q = H(1) H(2) . . . H(k), where k = fla_min(m,n). */
 /* > */
 /* > Each H(i) has the form */
 /* > */
@@ -183,13 +183,13 @@ int sgerqf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
     if (*info == 0)
     {
-        k = min(*m,*n);
+        k = fla_min(*m,*n);
         if (k == 0)
         {
             lwkopt = 1;
@@ -202,7 +202,7 @@ int sgerqf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
         work[1] = (real) lwkopt;
         if (! lquery)
         {
-            if (*lwork <= 0 || *n > 0 && *lwork < max(1,*m))
+            if (*lwork <= 0 || *n > 0 && *lwork < fla_max(1,*m))
             {
                 *info = -7;
             }
@@ -235,7 +235,7 @@ int sgerqf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
         /* Computing MAX */
         i__1 = 0;
         i__2 = ilaenv_(&c__3, "SGERQF", " ", m, n, &c_n1, &c_n1); // , expr subst
-        nx = max(i__1,i__2);
+        nx = fla_max(i__1,i__2);
         if (nx < k)
         {
             /* Determine if workspace is large enough for blocked code. */
@@ -249,7 +249,7 @@ int sgerqf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
                 /* Computing MAX */
                 i__1 = 2;
                 i__2 = ilaenv_(&c__2, "SGERQF", " ", m, n, &c_n1, & c_n1); // , expr subst
-                nbmin = max(i__1,i__2);
+                nbmin = fla_max(i__1,i__2);
             }
         }
     }
@@ -261,7 +261,7 @@ int sgerqf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
         /* Computing MIN */
         i__1 = k;
         i__2 = ki + nb; // , expr subst
-        kk = min(i__1,i__2);
+        kk = fla_min(i__1,i__2);
         i__1 = k - kk + 1;
         i__2 = -nb;
         for (i__ = k - kk + ki + 1;
@@ -270,7 +270,7 @@ int sgerqf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
         {
             /* Computing MIN */
             i__3 = k - i__ + 1;
-            ib = min(i__3,nb);
+            ib = fla_min(i__3,nb);
             /* Compute the RQ factorization of the current block */
             /* A(m-k+i:m-k+i+ib-1,1:n-k+i+ib-1) */
             i__3 = *n - k + i__ + ib - 1;

@@ -91,7 +91,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RCOND */
@@ -212,7 +212,7 @@ int strcon_(char *norm, char *uplo, char *diag, integer *n, real *a, integer *ld
     {
         *info = -4;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -6;
     }
@@ -231,7 +231,7 @@ int strcon_(char *norm, char *uplo, char *diag, integer *n, real *a, integer *ld
         return 0;
     }
     *rcond = 0.f;
-    smlnum = slamch_("Safe minimum") * (real) max(1,*n);
+    smlnum = slamch_("Safe minimum") * (real) fla_max(1,*n);
     /* Compute the norm of the triangular matrix A. */
     anorm = slantr_(norm, uplo, diag, n, n, &a[a_offset], lda, &work[1]);
     /* Continue only if ANORM > 0. */

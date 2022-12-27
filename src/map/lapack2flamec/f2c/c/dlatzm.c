@@ -181,7 +181,7 @@ int dlatzm_(char *side, integer *m, integer *n, doublereal * v, integer *incv, d
     c1 -= c1_offset;
     --work;
     /* Function Body */
-    if (min(*m,*n) == 0 || *tau == 0.)
+    if (fla_min(*m,*n) == 0 || *tau == 0.)
     {
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;

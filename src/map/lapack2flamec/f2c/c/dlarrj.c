@@ -228,7 +228,7 @@ int dlarrj_(integer *n, doublereal *d__, doublereal *e2, integer *ifirst, intege
         /* Computing MAX */
         d__1 = f2c_abs(left);
         d__2 = f2c_abs(right); // , expr subst
-        tmp = max(d__1,d__2);
+        tmp = fla_max(d__1,d__2);
         /* The following test prevents the test of converged intervals */
         if (width < *rtol * tmp)
         {
@@ -340,7 +340,7 @@ L80:
         /* Computing MAX */
         d__1 = f2c_abs(left);
         d__2 = f2c_abs(right); // , expr subst
-        tmp = max(d__1,d__2);
+        tmp = fla_max(d__1,d__2);
         if (width < *rtol * tmp || iter == maxitr)
         {
             /* reduce number of unconverged intervals */

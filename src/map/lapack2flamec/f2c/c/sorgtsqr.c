@@ -94,7 +94,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] T */
@@ -119,7 +119,7 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > LDT is INTEGER */
 /* > The leading dimension of the array T. */
-/* > LDT >= max(1,min(NB1,N)). */
+/* > LDT >= fla_max(1,fla_min(NB1,N)). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -229,7 +229,7 @@ int sorgtsqr_(integer *m, integer *n, integer *mb, integer * nb, real *a, intege
     {
         *info = -4;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -6;
     }
@@ -237,8 +237,8 @@ int sorgtsqr_(integer *m, integer *n, integer *mb, integer * nb, real *a, intege
     {
         /* Computing MAX */
         i__1 = 1;
-        i__2 = min(*nb,*n); // , expr subst
-        if (*ldt < max(i__1,i__2))
+        i__2 = fla_min(*nb,*n); // , expr subst
+        if (*ldt < fla_max(i__1,i__2))
         {
             *info = -8;
         }
@@ -254,7 +254,7 @@ int sorgtsqr_(integer *m, integer *n, integer *mb, integer * nb, real *a, intege
             else
             {
                 /* Set block size for column blocks */
-                nblocal = min(*nb,*n);
+                nblocal = fla_min(*nb,*n);
                 /* LWORK = -1, then set the size for the array C(LDC,N) */
                 /* in DLAMTSQR call and set the optimal size of the work array */
                 /* WORK(LWORK) in DLAMTSQR call. */
@@ -262,7 +262,7 @@ int sorgtsqr_(integer *m, integer *n, integer *mb, integer * nb, real *a, intege
                 lc = ldc * *n;
                 lw = *n * nblocal;
                 lworkopt = lc + lw;
-                if (*lwork < max(1,lworkopt) && ! lquery)
+                if (*lwork < fla_max(1,lworkopt) && ! lquery)
                 {
                     *info = -10;
                 }
@@ -284,7 +284,7 @@ int sorgtsqr_(integer *m, integer *n, integer *mb, integer * nb, real *a, intege
         return 0;
     }
     /* Quick return if possible */
-    if (min(*m,*n) == 0)
+    if (fla_min(*m,*n) == 0)
     {
         work[1] = (real) lworkopt;
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);

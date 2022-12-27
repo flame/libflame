@@ -70,7 +70,7 @@ tpqrt2_float_parameters:: tpqrt2_float_parameters (int matrix_layout_i , lapack_
 	}
 	
 	bufsize_t = ldt*n;
-	l = min(m,n);
+	l = fla_min(m,n);
 
 	/*Memory allocation */
 	lapacke_gtest_alloc_float_buffer_pair(&a, &aref, bufsize_t);
@@ -241,7 +241,7 @@ tpqrt2_double_parameters:: tpqrt2_double_parameters (int matrix_layout_i , lapac
 	}
 	
 	bufsize_t = ldt*n;
-	l = min(m,n);
+	l = fla_min(m,n);
 
 	/*Memory allocation */
 	lapacke_gtest_alloc_double_buffer_pair(&a, &aref, bufsize_t);
@@ -412,7 +412,7 @@ tpqrt2_scomplex_parameters:: tpqrt2_scomplex_parameters (int matrix_layout_i , l
 	}
 	
 	bufsize_t = ldt*n;
-	l = min(m,n);
+	l = fla_min(m,n);
 
 	/*Memory allocation */
 	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&a, &aref, bufsize_t);
@@ -583,7 +583,7 @@ tpqrt2_dcomplex_parameters:: tpqrt2_dcomplex_parameters (int matrix_layout_i , l
 	}
 	
 	bufsize_t = ldt*n;
-	l = min(m,n);
+	l = fla_min(m,n);
 	/*Memory allocation */
 	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&a, &aref, bufsize_t);
 	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&t, &tref, bufsize_t);	

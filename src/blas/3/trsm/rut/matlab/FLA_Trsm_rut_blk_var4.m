@@ -16,7 +16,7 @@ function [ B_out ] = FLA_Trsm_rut_blk_var4( A, B, nb_alg )
 
   while ( size( BB, 1 ) < size( B, 1 ) )
 
-    b = min( size( BT, 1 ), nb_alg );
+    b = fla_min( size( BT, 1 ), nb_alg );
 
     [ B0, ...
       B1, ...

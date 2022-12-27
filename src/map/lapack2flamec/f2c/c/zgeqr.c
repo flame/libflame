@@ -53,7 +53,7 @@ static integer c__2 = 2;
 /* > A is COMPLEX*16 array, dimension (LDA,N) */
 /* > On entry, the M-by-N matrix A. */
 /* > On exit, the elements on and above the diagonal of the array */
-/* > contain the min(M,N)-by-N upper trapezoidal matrix R */
+/* > contain the fla_min(M,N)-by-N upper trapezoidal matrix R */
 /* > (R is upper triangular if M >= N);
 */
 /* > the elements below the diagonal are used to store part of the */
@@ -63,7 +63,7 @@ static integer c__2 = 2;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] T */
@@ -234,7 +234,7 @@ int zgeqr_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex
         }
     }
     /* Determine the block size */
-    if (min(*m,*n) > 0)
+    if (fla_min(*m,*n) > 0)
     {
         mb = ilaenv_(&c__1, "ZGEQR ", " ", m, n, &c__1, &c_n1);
         nb = ilaenv_(&c__1, "ZGEQR ", " ", m, n, &c__2, &c_n1);
@@ -248,7 +248,7 @@ int zgeqr_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex
     {
         mb = *m;
     }
-    if (nb > min(*m,*n) || nb < 1)
+    if (nb > fla_min(*m,*n) || nb < 1)
     {
         nb = 1;
     }
@@ -273,12 +273,12 @@ int zgeqr_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex
     /* Computing MAX */
     i__1 = 1;
     i__2 = nb * *n * nblcks + 5; // , expr subst
-    if ((*tsize < max(i__1,i__2) || *lwork < nb * *n) && *lwork >= *n && * tsize >= mintsz && ! lquery)
+    if ((*tsize < fla_max(i__1,i__2) || *lwork < nb * *n) && *lwork >= *n && * tsize >= mintsz && ! lquery)
     {
         /* Computing MAX */
         i__1 = 1;
         i__2 = nb * *n * nblcks + 5; // , expr subst
-        if (*tsize < max(i__1,i__2))
+        if (*tsize < fla_max(i__1,i__2))
         {
             lminws = TRUE_;
             nb = 1;
@@ -298,7 +298,7 @@ int zgeqr_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
@@ -307,7 +307,7 @@ int zgeqr_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex
         /* Computing MAX */
         i__1 = 1;
         i__2 = nb * *n * nblcks + 5; // , expr subst
-        if (*tsize < max(i__1,i__2) && ! lquery && ! lminws)
+        if (*tsize < fla_max(i__1,i__2) && ! lquery && ! lminws)
         {
             *info = -6;
         }
@@ -316,7 +316,7 @@ int zgeqr_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex
             /* Computing MAX */
             i__1 = 1;
             i__2 = *n * nb; // , expr subst
-            if (*lwork < max(i__1,i__2) && ! lquery && ! lminws)
+            if (*lwork < fla_max(i__1,i__2) && ! lquery && ! lminws)
             {
                 *info = -8;
             }
@@ -341,7 +341,7 @@ int zgeqr_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex
         t[3].i = 0.; // , expr subst
         if (minw)
         {
-            i__1 = max(1,*n);
+            i__1 = fla_max(1,*n);
             work[1].r = (doublereal) i__1;
             work[1].i = 0.; // , expr subst
         }
@@ -350,7 +350,7 @@ int zgeqr_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex
             /* Computing MAX */
             i__2 = 1;
             i__3 = nb * *n; // , expr subst
-            i__1 = max(i__2,i__3);
+            i__1 = fla_max(i__2,i__3);
             work[1].r = (doublereal) i__1;
             work[1].i = 0.; // , expr subst
         }
@@ -368,7 +368,7 @@ int zgeqr_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex
         return 0;
     }
     /* Quick return if possible */
-    if (min(*m,*n) == 0)
+    if (fla_min(*m,*n) == 0)
     {
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
@@ -385,7 +385,7 @@ int zgeqr_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex
     /* Computing MAX */
     i__2 = 1;
     i__3 = nb * *n; // , expr subst
-    i__1 = max(i__2,i__3);
+    i__1 = fla_max(i__2,i__3);
     work[1].r = (doublereal) i__1;
     work[1].i = 0.; // , expr subst
     AOCL_DTL_TRACE_LOG_EXIT

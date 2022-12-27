@@ -217,7 +217,7 @@ printf( "FLA_Tevd_iteracc_v_opd_var3:            GB(0,0) i,j: %d %d\n", ijTL + m
 			                                              GB,  rs_G, cs_G,
 			                                              &n_iter_perfBR );
 
-			*n_iter_perf = k_iter + max( n_iter_perfTL, n_iter_perfBR );
+			*n_iter_perf = k_iter + fla_max( n_iter_perfTL, n_iter_perfBR );
 
 #ifdef PRINTF
 printf( "FLA_Tevd_iteracc_v_opd_var3: num deflations: %d = (prev:%d, TL:%d, BR:%d)\n", n_deflations + n_deflationsTL + n_deflationsBR, n_deflations, n_deflationsTL, n_deflationsBR );

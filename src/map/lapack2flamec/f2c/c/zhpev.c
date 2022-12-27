@@ -96,17 +96,17 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > LDZ is INTEGER */
 /* > The leading dimension of the array Z. LDZ >= 1, and if */
-/* > JOBZ = 'V', LDZ >= max(1,N). */
+/* > JOBZ = 'V', LDZ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
 /* > \verbatim */
-/* > WORK is COMPLEX*16 array, dimension (max(1, 2*N-1)) */
+/* > WORK is COMPLEX*16 array, dimension (fla_max(1, 2*N-1)) */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RWORK */
 /* > \verbatim */
-/* > RWORK is DOUBLE PRECISION array, dimension (max(1, 3*N-2)) */
+/* > RWORK is DOUBLE PRECISION array, dimension (fla_max(1, 3*N-2)) */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */

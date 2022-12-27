@@ -78,7 +78,7 @@ static doublereal c_b17 = 1.;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] W */
@@ -96,7 +96,7 @@ static doublereal c_b17 = 1.;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The length of the array WORK. LWORK >= max(1,3*N-1). */
+/* > The length of the array WORK. LWORK >= fla_max(1,3*N-1). */
 /* > For optimal efficiency, LWORK >= (NB+2)*N, */
 /* > where NB is the blocksize for DSYTRD returned by ILAENV. */
 /* > */
@@ -215,7 +215,7 @@ int dsyev_(char *jobz, char *uplo, integer *n, doublereal *a, integer *lda, doub
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
@@ -225,12 +225,12 @@ int dsyev_(char *jobz, char *uplo, integer *n, doublereal *a, integer *lda, doub
         /* Computing MAX */
         i__1 = 1;
         i__2 = (nb + 2) * *n; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
         work[1] = (doublereal) lwkopt;
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n * 3 - 1; // , expr subst
-        if (*lwork < max(i__1,i__2) && ! lquery)
+        if (*lwork < fla_max(i__1,i__2) && ! lquery)
         {
             *info = -8;
         }

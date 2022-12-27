@@ -61,10 +61,10 @@ void getrf_test(int ip)
   }
   
   /* LDA is INTEGER
-          The leading dimension of the array A.  LDA >= max(1,M).*/
+          The leading dimension of the array A.  LDA >= fla_max(1,M).*/
   integer lda = lin_solver_paramslist[ip].lda_getrf;
-  if (lda < max(1, m)) {
-    PRINTF("lda < max(1, m) but it should be: LDA >= max(1,M). Please " \
+  if (lda < fla_max(1, m)) {
+    PRINTF("lda < fla_max(1, m) but it should be: LDA >= fla_max(1,M). Please " \
            "correct the input data.\n");
   }
   
@@ -72,9 +72,9 @@ void getrf_test(int ip)
   T *abuff, *arefbuff;
   allocate_init_buffer(abuff, arefbuff, lda * n);
   
-  // IPIV is INTEGER array, dimension (min(M,N))
+  // IPIV is INTEGER array, dimension (fla_min(M,N))
   integer *ipivbuff, *ipivrefbuff;
-  allocate_init_buffer(ipivbuff, ipivrefbuff, min(m, n));
+  allocate_init_buffer(ipivbuff, ipivrefbuff, fla_min(m, n));
   
   // Call getrf_internal() to get buffers.
   integer info_cpp = -1;
@@ -86,7 +86,7 @@ void getrf_test(int ip)
   // Calculate the differences of buffers.
   if ((info_cpp >= 0) && (info_ref >= 0)) {
     double diff = computeError<T>(lda, n, abuff, arefbuff);
-    diff += computeError<integer>(1, min(m, n), ipivbuff, ipivrefbuff);
+    diff += computeError<integer>(1, fla_min(m, n), ipivbuff, ipivrefbuff);
     PRINTF("diff: %lf\n", diff);
     EXPECT_NEAR(0.0, diff, LIN_SLVR_THRESHOLD);
   } else {

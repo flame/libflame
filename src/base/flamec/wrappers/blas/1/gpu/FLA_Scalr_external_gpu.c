@@ -47,7 +47,7 @@ FLA_Error FLA_Scalr_external_gpu( FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, void*
     float* buff_alpha = ( float* ) FLA_FLOAT_PTR( alpha );
     float* buff_A_gpu = ( float* ) A_gpu;
 
-    for ( i = 0; i < min( n_A, m_A ); i++ )
+    for ( i = 0; i < fla_min( n_A, m_A ); i++ )
       cublasSscal( m_A - i,
                    *buff_alpha,
                    buff_A_gpu + i * ldim_A + i, inc_A );
@@ -60,7 +60,7 @@ FLA_Error FLA_Scalr_external_gpu( FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, void*
     double* buff_alpha = ( double* ) FLA_DOUBLE_PTR( alpha );
     double* buff_A_gpu = ( double* ) A_gpu;
 
-    for ( i = 0; i < min( n_A, m_A ); i++ )
+    for ( i = 0; i < fla_min( n_A, m_A ); i++ )
       cublasDscal( m_A - i,
                    *buff_alpha,
                    buff_A_gpu + i * ldim_A + i, inc_A );
@@ -73,7 +73,7 @@ FLA_Error FLA_Scalr_external_gpu( FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, void*
     cuComplex* buff_alpha = ( cuComplex* ) FLA_COMPLEX_PTR( alpha );
     cuComplex* buff_A_gpu = ( cuComplex* ) A_gpu;
 
-    for ( i = 0; i < min( n_A, m_A ); i++ )
+    for ( i = 0; i < fla_min( n_A, m_A ); i++ )
       cublasCscal( m_A - i,
                    *buff_alpha,
                    buff_A_gpu + i * ldim_A + i, inc_A );
@@ -86,7 +86,7 @@ FLA_Error FLA_Scalr_external_gpu( FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, void*
     cuDoubleComplex* buff_alpha = ( cuDoubleComplex* ) FLA_DOUBLE_COMPLEX_PTR( alpha );
     cuDoubleComplex* buff_A_gpu = ( cuDoubleComplex* ) A_gpu;
 
-    for ( i = 0; i < min( n_A, m_A ); i++ )
+    for ( i = 0; i < fla_min( n_A, m_A ); i++ )
       cublasZscal( m_A - i,
                    *buff_alpha,
                    buff_A_gpu + i * ldim_A + i, inc_A );
@@ -108,7 +108,7 @@ FLA_Error FLA_Scalr_external_gpu( FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, void*
     float* buff_A_gpu = ( float* ) A_gpu;
 
     for ( i = 0; i < n_A; i++ )
-      cublasSscal( min( i + 1, m_A ),
+      cublasSscal( fla_min( i + 1, m_A ),
                    *buff_alpha,
                    buff_A_gpu + i * ldim_A, inc_A );
 
@@ -121,7 +121,7 @@ FLA_Error FLA_Scalr_external_gpu( FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, void*
     double* buff_A_gpu = ( double* ) A_gpu;
 
     for ( i = 0; i < n_A; i++ )
-      cublasDscal( min( i + 1, m_A ),
+      cublasDscal( fla_min( i + 1, m_A ),
                    *buff_alpha,
                    buff_A_gpu + i * ldim_A, inc_A );
 
@@ -134,7 +134,7 @@ FLA_Error FLA_Scalr_external_gpu( FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, void*
     cuComplex* buff_A_gpu = ( cuComplex* ) A_gpu;
 
     for ( i = 0; i < n_A; i++ )
-      cublasCscal( min( i + 1, m_A ),
+      cublasCscal( fla_min( i + 1, m_A ),
                    *buff_alpha,
                    buff_A_gpu + i * ldim_A, inc_A );
 
@@ -147,7 +147,7 @@ FLA_Error FLA_Scalr_external_gpu( FLA_Uplo uplo, FLA_Obj alpha, FLA_Obj A, void*
     cuDoubleComplex* buff_A_gpu = ( cuDoubleComplex* ) A_gpu;
 
     for ( i = 0; i < n_A; i++ )
-      cublasZscal( min( i + 1, m_A ),
+      cublasZscal( fla_min( i + 1, m_A ),
                    *buff_alpha,
                    buff_A_gpu + i * ldim_A, inc_A );
 

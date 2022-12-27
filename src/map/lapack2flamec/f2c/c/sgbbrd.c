@@ -92,7 +92,7 @@ static integer c__1 = 1;
 /* > On entry, the m-by-n band matrix A, stored in rows 1 to */
 /* > KL+KU+1. The j-th column of A is stored in the j-th column of */
 /* > the array AB as follows: */
-/* > AB(ku+1+i-j,j) = A(i,j) for max(1,j-ku)<=i<=min(m,j+kl). */
+/* > AB(ku+1+i-j,j) = A(i,j) for fla_max(1,j-ku)<=i<=fla_min(m,j+kl). */
 /* > On exit, A is overwritten by values generated during the */
 /* > reduction. */
 /* > \endverbatim */
@@ -105,13 +105,13 @@ static integer c__1 = 1;
 /* > */
 /* > \param[out] D */
 /* > \verbatim */
-/* > D is REAL array, dimension (min(M,N)) */
+/* > D is REAL array, dimension (fla_min(M,N)) */
 /* > The diagonal elements of the bidiagonal matrix B. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] E */
 /* > \verbatim */
-/* > E is REAL array, dimension (min(M,N)-1) */
+/* > E is REAL array, dimension (fla_min(M,N)-1) */
 /* > The superdiagonal elements of the bidiagonal matrix B. */
 /* > \endverbatim */
 /* > */
@@ -126,7 +126,7 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > LDQ is INTEGER */
 /* > The leading dimension of the array Q. */
-/* > LDQ >= max(1,M) if VECT = 'Q' or 'B';
+/* > LDQ >= fla_max(1,M) if VECT = 'Q' or 'B';
 LDQ >= 1 otherwise. */
 /* > \endverbatim */
 /* > */
@@ -141,7 +141,7 @@ LDQ >= 1 otherwise. */
 /* > \verbatim */
 /* > LDPT is INTEGER */
 /* > The leading dimension of the array PT. */
-/* > LDPT >= max(1,N) if VECT = 'P' or 'B';
+/* > LDPT >= fla_max(1,N) if VECT = 'P' or 'B';
 LDPT >= 1 otherwise. */
 /* > \endverbatim */
 /* > */
@@ -157,13 +157,13 @@ LDPT >= 1 otherwise. */
 /* > \verbatim */
 /* > LDC is INTEGER */
 /* > The leading dimension of the array C. */
-/* > LDC >= max(1,M) if NCC > 0;
+/* > LDC >= fla_max(1,M) if NCC > 0;
 LDC >= 1 if NCC = 0. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
 /* > \verbatim */
-/* > WORK is REAL array, dimension (2*max(M,N)) */
+/* > WORK is REAL array, dimension (2*fla_max(M,N)) */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -273,15 +273,15 @@ int sgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
     {
         *info = -8;
     }
-    else if (*ldq < 1 || wantq && *ldq < max(1,*m))
+    else if (*ldq < 1 || wantq && *ldq < fla_max(1,*m))
     {
         *info = -12;
     }
-    else if (*ldpt < 1 || wantpt && *ldpt < max(1,*n))
+    else if (*ldpt < 1 || wantpt && *ldpt < fla_max(1,*n))
     {
         *info = -14;
     }
-    else if (*ldc < 1 || wantc && *ldc < max(1,*m))
+    else if (*ldc < 1 || wantc && *ldc < fla_max(1,*m))
     {
         *info = -16;
     }
@@ -305,7 +305,7 @@ int sgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
     {
         return 0;
     }
-    minmn = min(*m,*n);
+    minmn = fla_min(*m,*n);
     if (*kl + *ku > 1)
     {
         /* Reduce to upper bidiagonal form if KU > 0;
@@ -324,15 +324,15 @@ int sgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
         }
         /* Wherever possible, plane rotations are generated and applied in */
         /* vector operations of length NR over the index set J1:J2:KLU1. */
-        /* The sines of the plane rotations are stored in WORK(1:max(m,n)) */
-        /* and the cosines in WORK(max(m,n)+1:2*max(m,n)). */
-        mn = max(*m,*n);
+        /* The sines of the plane rotations are stored in WORK(1:fla_max(m,n)) */
+        /* and the cosines in WORK(fla_max(m,n)+1:2*fla_max(m,n)). */
+        mn = fla_max(*m,*n);
         /* Computing MIN */
         i__1 = *m - 1;
-        klm = min(i__1,*kl);
+        klm = fla_min(i__1,*kl);
         /* Computing MIN */
         i__1 = *n - 1;
-        kun = min(i__1,*ku);
+        kun = fla_min(i__1,*ku);
         kb = klm + kun;
         kb1 = kb + 1;
         inca = kb1 * *ldab;
@@ -393,7 +393,7 @@ int sgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
                             /* Computing MIN */
                             i__4 = *ku + ml - 2;
                             i__5 = *n - i__; // , expr subst
-                            i__3 = min(i__4,i__5);
+                            i__3 = fla_min(i__4,i__5);
                             i__6 = *ldab - 1;
                             i__7 = *ldab - 1;
                             srot_(&i__3, &ab[*ku + ml - 2 + (i__ + 1) * ab_dim1], &i__6, &ab[*ku + ml - 1 + (i__ + 1) * ab_dim1], &i__7, &work[mn + i__ + ml - 1], &work[i__ + ml - 1]);
@@ -483,7 +483,7 @@ int sgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
                         /* Computing MIN */
                         i__3 = *kl + mu - 2;
                         i__5 = *m - i__; // , expr subst
-                        i__4 = min(i__3,i__5);
+                        i__4 = fla_min(i__3,i__5);
                         srot_(&i__4, &ab[*ku - mu + 4 + (i__ + mu - 2) * ab_dim1], &c__1, &ab[*ku - mu + 3 + (i__ + mu - 1) * ab_dim1], &c__1, &work[mn + i__ + mu - 1], &work[i__ + mu - 1]);
                     }
                     ++nr;
@@ -541,7 +541,7 @@ int sgbbrd_(char *vect, integer *m, integer *n, integer *ncc, integer *kl, integ
         /* and off-diagonal elements in E */
         /* Computing MIN */
         i__2 = *m - 1;
-        i__1 = min(i__2,*n);
+        i__1 = fla_min(i__2,*n);
         for (i__ = 1;
                 i__ <= i__1;
                 ++i__)

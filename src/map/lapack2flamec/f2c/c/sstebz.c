@@ -232,7 +232,7 @@ these eigenvalues are flagged by a */
 /* > \verbatim */
 /* > RELFAC REAL, default = 2.0e0 */
 /* > The relative tolerance. An interval (a,b] lies within */
-/* > "relative tolerance" if b-a < RELFAC*ulp*max(|a|,|b|), */
+/* > "relative tolerance" if b-a < RELFAC*ulp*fla_max(|a|,|b|), */
 /* > where "ulp" is the machine precision (distance from 1 to */
 /* > the next larger floating point number.) */
 /* > */
@@ -382,11 +382,11 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
             *info = -5;
         }
     }
-    else if (irange == 3 && (*il < 1 || *il > max(1,*n)))
+    else if (irange == 3 && (*il < 1 || *il > fla_max(1,*n)))
     {
         *info = -6;
     }
-    else if (irange == 3 && (*iu < min(*n,*il) || *iu > *n))
+    else if (irange == 3 && (*iu < fla_min(*n,*il) || *iu > *n))
     {
         *info = -7;
     }
@@ -465,7 +465,7 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
         else
         {
             work[j - 1] = tmp1;
-            pivmin = max(pivmin,tmp1);
+            pivmin = fla_max(pivmin,tmp1);
         }
         /* L10: */
     }
@@ -490,26 +490,26 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
             /* Computing MAX */
             r__1 = gu;
             r__2 = d__[j] + tmp1 + tmp2; // , expr subst
-            gu = max(r__1,r__2);
+            gu = fla_max(r__1,r__2);
             /* Computing MIN */
             r__1 = gl;
             r__2 = d__[j] - tmp1 - tmp2; // , expr subst
-            gl = min(r__1,r__2);
+            gl = fla_min(r__1,r__2);
             tmp1 = tmp2;
             /* L20: */
         }
         /* Computing MAX */
         r__1 = gu;
         r__2 = d__[*n] + tmp1; // , expr subst
-        gu = max(r__1,r__2);
+        gu = fla_max(r__1,r__2);
         /* Computing MIN */
         r__1 = gl;
         r__2 = d__[*n] - tmp1; // , expr subst
-        gl = min(r__1,r__2);
+        gl = fla_min(r__1,r__2);
         /* Computing MAX */
         r__1 = f2c_abs(gl);
         r__2 = f2c_abs(gu); // , expr subst
-        tnorm = max(r__1,r__2);
+        tnorm = fla_max(r__1,r__2);
         gl = gl - tnorm * 2.1f * ulp * *n - pivmin * 4.2000000000000002f;
         gu = gu + tnorm * 2.1f * ulp * *n + pivmin * 2.1f;
         /* Compute Iteration parameters */
@@ -566,7 +566,7 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
         /* Computing MAX */
         r__3 = f2c_abs(d__[1]) + f2c_abs(e[1]);
         r__4 = (r__1 = d__[*n], f2c_abs(r__1)) + ( r__2 = e[*n - 1], f2c_abs(r__2)); // , expr subst
-        tnorm = max(r__3,r__4);
+        tnorm = fla_max(r__3,r__4);
         i__1 = *n - 1;
         for (j = 2;
                 j <= i__1;
@@ -575,7 +575,7 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
             /* Computing MAX */
             r__4 = tnorm;
             r__5 = (r__1 = d__[j], f2c_abs(r__1)) + (r__2 = e[j - 1], f2c_abs(r__2)) + (r__3 = e[j], f2c_abs(r__3));  // , expr subst
-            tnorm = max(r__4,r__5);
+            tnorm = fla_max(r__4,r__5);
             /* L30: */
         }
         if (*abstol <= 0.f)
@@ -649,26 +649,26 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
                 /* Computing MAX */
                 r__1 = gu;
                 r__2 = d__[j] + tmp1 + tmp2; // , expr subst
-                gu = max(r__1,r__2);
+                gu = fla_max(r__1,r__2);
                 /* Computing MIN */
                 r__1 = gl;
                 r__2 = d__[j] - tmp1 - tmp2; // , expr subst
-                gl = min(r__1,r__2);
+                gl = fla_min(r__1,r__2);
                 tmp1 = tmp2;
                 /* L40: */
             }
             /* Computing MAX */
             r__1 = gu;
             r__2 = d__[iend] + tmp1; // , expr subst
-            gu = max(r__1,r__2);
+            gu = fla_max(r__1,r__2);
             /* Computing MIN */
             r__1 = gl;
             r__2 = d__[iend] - tmp1; // , expr subst
-            gl = min(r__1,r__2);
+            gl = fla_min(r__1,r__2);
             /* Computing MAX */
             r__1 = f2c_abs(gl);
             r__2 = f2c_abs(gu); // , expr subst
-            bnorm = max(r__1,r__2);
+            bnorm = fla_max(r__1,r__2);
             gl = gl - bnorm * 2.1f * ulp * in - pivmin * 2.1f;
             gu = gu + bnorm * 2.1f * ulp * in + pivmin * 2.1f;
             /* Compute ATOLI for the current submatrix */
@@ -677,7 +677,7 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
                 /* Computing MAX */
                 r__1 = f2c_abs(gl);
                 r__2 = f2c_abs(gu); // , expr subst
-                atoli = ulp * max(r__1,r__2);
+                atoli = ulp * fla_max(r__1,r__2);
             }
             else
             {
@@ -691,8 +691,8 @@ int sstebz_(char *range, char *order, integer *n, real *vl, real *vu, integer *i
                     nwu += in;
                     goto L70;
                 }
-                gl = max(gl,wl);
-                gu = min(gu,wu);
+                gl = fla_max(gl,wl);
+                gu = fla_min(gu,wu);
                 if (gl >= gu)
                 {
                     goto L70;

@@ -207,7 +207,7 @@ int slasq4_(integer *i0, integer *n0, real *z__, integer *pp, integer *n0in, rea
                     /* Computing MAX */
                     r__1 = *dn - b1 / gap1 * b1;
                     r__2 = *dmin__ * .5f; // , expr subst
-                    s = max(r__1,r__2);
+                    s = fla_max(r__1,r__2);
                     *ttype = -2;
                 }
                 else
@@ -222,12 +222,12 @@ int slasq4_(integer *i0, integer *n0, real *z__, integer *pp, integer *n0in, rea
                         /* Computing MIN */
                         r__1 = s;
                         r__2 = a2 - (b1 + b2); // , expr subst
-                        s = min(r__1,r__2);
+                        s = fla_min(r__1,r__2);
                     }
                     /* Computing MAX */
                     r__1 = s;
                     r__2 = *dmin__ * .333f; // , expr subst
-                    s = max(r__1,r__2);
+                    s = fla_max(r__1,r__2);
                     *ttype = -3;
                 }
             }
@@ -285,7 +285,7 @@ int slasq4_(integer *i0, integer *n0, real *z__, integer *pp, integer *n0in, rea
                     }
                     b2 *= z__[i4] / z__[i4 - 2];
                     a2 += b2;
-                    if (max(b2,b1) * 100.f < a2 || .563f < a2)
+                    if (fla_max(b2,b1) * 100.f < a2 || .563f < a2)
                     {
                         goto L20;
                     }
@@ -338,7 +338,7 @@ L20:
                     }
                     b2 *= z__[i4] / z__[i4 - 2];
                     a2 += b2;
-                    if (max(b2,b1) * 100.f < a2 || .563f < a2)
+                    if (fla_max(b2,b1) * 100.f < a2 || .563f < a2)
                     {
                         goto L40;
                     }
@@ -403,7 +403,7 @@ L40:
                 }
                 b1 *= z__[i4] / z__[i4 - 2];
                 b2 += b1;
-                if (max(b1,a2) * 100.f < b2)
+                if (fla_max(b1,a2) * 100.f < b2)
                 {
                     goto L60;
                 }
@@ -420,14 +420,14 @@ L60:
                 /* Computing MAX */
                 r__1 = s;
                 r__2 = a2 * (1.f - a2 * 1.01f * (b2 / gap2) * b2); // , expr subst
-                s = max(r__1,r__2);
+                s = fla_max(r__1,r__2);
             }
             else
             {
                 /* Computing MAX */
                 r__1 = s;
                 r__2 = a2 * (1.f - b2 * 1.01f); // , expr subst
-                s = max(r__1,r__2);
+                s = fla_max(r__1,r__2);
                 *ttype = -8;
             }
         }
@@ -490,14 +490,14 @@ L80:
                 /* Computing MAX */
                 r__1 = s;
                 r__2 = a2 * (1.f - a2 * 1.01f * (b2 / gap2) * b2); // , expr subst
-                s = max(r__1,r__2);
+                s = fla_max(r__1,r__2);
             }
             else
             {
                 /* Computing MAX */
                 r__1 = s;
                 r__2 = a2 * (1.f - b2 * 1.01f); // , expr subst
-                s = max(r__1,r__2);
+                s = fla_max(r__1,r__2);
             }
         }
         else

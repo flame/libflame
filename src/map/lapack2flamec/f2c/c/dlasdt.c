@@ -125,7 +125,7 @@ int dlasdt_(integer *n, integer *lvl, integer *nd, integer * inode, integer *ndi
     --ndiml;
     --inode;
     /* Function Body */
-    maxn = max(1,*n);
+    maxn = fla_max(1,*n);
     temp = log((doublereal) maxn / (doublereal) (*msub + 1)) / log(2.);
     *lvl = (integer) temp + 1;
     i__ = *n / 2;

@@ -99,7 +99,7 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > LDQ is INTEGER */
 /* > The leading dimension of the array Q. If eigenvectors are */
-/* > desired, then LDQ >= max(1,N). In any case, LDQ >= 1. */
+/* > desired, then LDQ >= fla_max(1,N). In any case, LDQ >= 1. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] QSTORE */
@@ -114,7 +114,7 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > LDQS is INTEGER */
 /* > The leading dimension of the array QSTORE. If ICOMPQ = 1, */
-/* > then LDQS >= max(1,N). In any case, LDQS >= 1. */
+/* > then LDQS >= fla_max(1,N). In any case, LDQS >= 1. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -231,7 +231,7 @@ int slaed0_(integer *icompq, integer *qsiz, integer *n, real *d__, real *e, real
     {
         *info = -1;
     }
-    else if (*icompq == 1 && *qsiz < max(0,*n))
+    else if (*icompq == 1 && *qsiz < fla_max(0,*n))
     {
         *info = -2;
     }
@@ -239,11 +239,11 @@ int slaed0_(integer *icompq, integer *qsiz, integer *n, real *d__, real *e, real
     {
         *info = -3;
     }
-    else if (*ldq < max(1,*n))
+    else if (*ldq < fla_max(1,*n))
     {
         *info = -7;
     }
-    else if (*ldqs < max(1,*n))
+    else if (*ldqs < fla_max(1,*n))
     {
         *info = -9;
     }

@@ -27,16 +27,16 @@
   n
   INTEGER. The number of columns in matrix A; n≥ 0.
   nfact
-  INTEGER. The number of rows and columns to factor; 0 ≤nfact≤ min(m, n). Note that if nfact < min(m, n), incomplete factorization is performed.
+  INTEGER. The number of rows and columns to factor; 0 ≤nfact≤ fla_min(m, n). Note that if nfact < fla_min(m, n), incomplete factorization is performed.
 
    A
    REAL for sgetrfnpi
    DOUBLE PRECISION for dgetrfnpi
    COMPLEX for cgetrfnpi
    DOUBLE COMPLEX for zgetrfnpi
-   Array of size (lda,*). Contains the matrix A. The second dimension of a must be at least max(1, n).
+   Array of size (lda,*). Contains the matrix A. The second dimension of a must be at least fla_max(1, n).
    lda
-   INTEGER. The leading dimension of array a. lda≥ max(1, m).
+   INTEGER. The leading dimension of array a. lda≥ fla_max(1, m).
 
 */
 

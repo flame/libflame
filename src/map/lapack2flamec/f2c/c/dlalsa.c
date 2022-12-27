@@ -95,7 +95,7 @@ and if */
 /* > \verbatim */
 /* > LDB is INTEGER */
 /* > The leading dimension of B in the calling subprogram. */
-/* > LDB must be at least max(1,MAX( M, N ) ). */
+/* > LDB must be at least fla_max(1,MAX( M, N ) ). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] BX */

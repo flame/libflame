@@ -205,7 +205,7 @@ int ztbmv_(char *uplo, char *trans, char *diag, integer *n, integer *k, doubleco
                         /* Computing MAX */
                         i__2 = 1, i__3 = j - *k;
                         i__4 = j - 1;
-                        for (i__ = max(i__2,i__3);
+                        for (i__ = fla_max(i__2,i__3);
                                 i__ <= i__4;
                                 ++i__)
                         {
@@ -247,7 +247,7 @@ int ztbmv_(char *uplo, char *trans, char *diag, integer *n, integer *k, doubleco
                         /* Computing MAX */
                         i__4 = 1, i__2 = j - *k;
                         i__3 = j - 1;
-                        for (i__ = max(i__4,i__2);
+                        for (i__ = fla_max(i__4,i__2);
                                 i__ <= i__3;
                                 ++i__)
                         {
@@ -295,7 +295,7 @@ int ztbmv_(char *uplo, char *trans, char *diag, integer *n, integer *k, doubleco
                         /* Computing MIN */
                         i__1 = *n, i__3 = j + *k;
                         i__4 = j + 1;
-                        for (i__ = min(i__1,i__3);
+                        for (i__ = fla_min(i__1,i__3);
                                 i__ >= i__4;
                                 --i__)
                         {
@@ -337,7 +337,7 @@ int ztbmv_(char *uplo, char *trans, char *diag, integer *n, integer *k, doubleco
                         /* Computing MIN */
                         i__4 = *n, i__1 = j + *k;
                         i__3 = j + 1;
-                        for (i__ = min(i__4,i__1);
+                        for (i__ = fla_min(i__4,i__1);
                                 i__ >= i__3;
                                 --i__)
                         {
@@ -394,7 +394,7 @@ int ztbmv_(char *uplo, char *trans, char *diag, integer *n, integer *k, doubleco
                         }
                         /* Computing MAX */
                         i__4 = 1, i__1 = j - *k;
-                        i__3 = max(i__4,i__1);
+                        i__3 = fla_max(i__4,i__1);
                         for (i__ = j - 1;
                                 i__ >= i__3;
                                 --i__)
@@ -417,7 +417,7 @@ int ztbmv_(char *uplo, char *trans, char *diag, integer *n, integer *k, doubleco
                         }
                         /* Computing MAX */
                         i__4 = 1, i__1 = j - *k;
-                        i__3 = max(i__4,i__1);
+                        i__3 = fla_max(i__4,i__1);
                         for (i__ = j - 1;
                                 i__ >= i__3;
                                 --i__)
@@ -458,7 +458,7 @@ int ztbmv_(char *uplo, char *trans, char *diag, integer *n, integer *k, doubleco
                         }
                         /* Computing MAX */
                         i__4 = 1, i__1 = j - *k;
-                        i__3 = max(i__4,i__1);
+                        i__3 = fla_max(i__4,i__1);
                         for (i__ = j - 1;
                                 i__ >= i__3;
                                 --i__)
@@ -482,7 +482,7 @@ int ztbmv_(char *uplo, char *trans, char *diag, integer *n, integer *k, doubleco
                         }
                         /* Computing MAX */
                         i__4 = 1, i__1 = j - *k;
-                        i__3 = max(i__4,i__1);
+                        i__3 = fla_max(i__4,i__1);
                         for (i__ = j - 1;
                                 i__ >= i__3;
                                 --i__)
@@ -525,7 +525,7 @@ int ztbmv_(char *uplo, char *trans, char *diag, integer *n, integer *k, doubleco
                         }
                         /* Computing MIN */
                         i__1 = *n, i__2 = j + *k;
-                        i__4 = min(i__1,i__2);
+                        i__4 = fla_min(i__1,i__2);
                         for (i__ = j + 1;
                                 i__ <= i__4;
                                 ++i__)
@@ -548,7 +548,7 @@ int ztbmv_(char *uplo, char *trans, char *diag, integer *n, integer *k, doubleco
                         }
                         /* Computing MIN */
                         i__1 = *n, i__2 = j + *k;
-                        i__4 = min(i__1,i__2);
+                        i__4 = fla_min(i__1,i__2);
                         for (i__ = j + 1;
                                 i__ <= i__4;
                                 ++i__)
@@ -589,7 +589,7 @@ int ztbmv_(char *uplo, char *trans, char *diag, integer *n, integer *k, doubleco
                         }
                         /* Computing MIN */
                         i__1 = *n, i__2 = j + *k;
-                        i__4 = min(i__1,i__2);
+                        i__4 = fla_min(i__1,i__2);
                         for (i__ = j + 1;
                                 i__ <= i__4;
                                 ++i__)
@@ -613,7 +613,7 @@ int ztbmv_(char *uplo, char *trans, char *diag, integer *n, integer *k, doubleco
                         }
                         /* Computing MIN */
                         i__1 = *n, i__2 = j + *k;
-                        i__4 = min(i__1,i__2);
+                        i__4 = fla_min(i__1,i__2);
                         for (i__ = j + 1;
                                 i__ <= i__4;
                                 ++i__)

@@ -20,7 +20,7 @@ int cgeqr2_check(integer *m, integer *n, scomplex *a, integer *lda, scomplex *ta
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }

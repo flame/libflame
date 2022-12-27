@@ -169,14 +169,14 @@ int slanv2_(real *a, real *b, real *c__, real *d__, real * rt1r, real *rt1i, rea
         /* Computing MAX */
         r__1 = f2c_abs(*b);
         r__2 = f2c_abs(*c__); // , expr subst
-        bcmax = max(r__1,r__2);
+        bcmax = fla_max(r__1,r__2);
         /* Computing MIN */
         r__1 = f2c_abs(*b);
         r__2 = f2c_abs(*c__); // , expr subst
-        bcmis = min(r__1,r__2) * r_sign(&c_b3, b) * r_sign(&c_b3, c__);
+        bcmis = fla_min(r__1,r__2) * r_sign(&c_b3, b) * r_sign(&c_b3, c__);
         /* Computing MAX */
         r__1 = f2c_abs(p);
-        scale = max(r__1,bcmax);
+        scale = fla_max(r__1,bcmax);
         z__ = p / scale * p + bcmax / scale * bcmis;
         /* If Z is of the order of the machine accuracy, postpone the */
         /* decision on the nature of eigenvalues */

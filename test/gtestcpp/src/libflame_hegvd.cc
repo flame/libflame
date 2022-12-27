@@ -83,10 +83,10 @@ void hegvd_test(int ip)
     PRINTF("n < 0 but it should be: n >= 0. Please correct the input data.\n");
   }
 
-  // LDA is INTEGER. The leading dimension of the array A.  LDA >= max(1,N).
+  // LDA is INTEGER. The leading dimension of the array A.  LDA >= fla_max(1,N).
   integer lda = eig_paramslist[ip].lda;
-  if (lda < max(1, n)) {
-    PRINTF("lda < max(1, n) but it should be: LDA >= max(1,N). Please " \
+  if (lda < fla_max(1, n)) {
+    PRINTF("lda < fla_max(1, n) but it should be: LDA >= fla_max(1,N). Please " \
            "correct the input data.\n");
   }
   
@@ -94,10 +94,10 @@ void hegvd_test(int ip)
   T *abuff, *arefbuff;
   allocate_init_buffer(abuff, arefbuff, lda * n);
   
-  // LDB is INTEGER. The leading dimension of the array B.  LDB >= max(1,N).
+  // LDB is INTEGER. The leading dimension of the array B.  LDB >= fla_max(1,N).
   integer ldb = eig_paramslist[ip].ldb;
-  if (ldb < max(1, n)) {
-    PRINTF("ldb < max(1, n) but it should be: LDB >= max(1,N). Please " \
+  if (ldb < fla_max(1, n)) {
+    PRINTF("ldb < fla_max(1, n) but it should be: LDB >= fla_max(1,N). Please " \
            "correct the input data.\n");
   }
   
@@ -190,7 +190,7 @@ void hegvd_test(int ip)
 
   // WORK is COMPLEX or COMPLEX*16  array, dimension (MAX(1,LWORK))
   T *workbuff = NULL, *workrefbuff = NULL;
-  allocate_init_buffer(workbuff, workrefbuff, max(1, lwork_size), 0);
+  allocate_init_buffer(workbuff, workrefbuff, fla_max(1, lwork_size), 0);
   
   // Check if lrwork = -1 for intializing random buffer size.
   if (lrwork != -1) {
@@ -215,7 +215,7 @@ void hegvd_test(int ip)
   
   // RWORK is REAL or DOUBLE PRECISION array, dimension (LRWORK)
   Ta *rworkbuff = NULL, *rworkrefbuff = NULL;
-  allocate_init_buffer(rworkbuff, rworkrefbuff, max(1, lrwork_size), 0);
+  allocate_init_buffer(rworkbuff, rworkrefbuff, fla_max(1, lrwork_size), 0);
   
   // Check if liwork = -1 for intializing random buffer size.
   if (liwork != -1) {
@@ -238,7 +238,7 @@ void hegvd_test(int ip)
   
   // IWORK is INTEGER array, dimension (MAX(1,LIWORK))
   integer *iworkbuff = NULL, *iworkrefbuff = NULL;
-  allocate_init_buffer(iworkbuff, iworkrefbuff, max(1, liwork_size), 0);
+  allocate_init_buffer(iworkbuff, iworkrefbuff, fla_max(1, liwork_size), 0);
   
   // Print input values other than arrays.
   #if (defined(PRINT_INPUT_VALUES) && (PRINT_INPUT_VALUES == 1))
@@ -252,11 +252,11 @@ void hegvd_test(int ip)
     PRINTF("ldb = %d\n", ldb);
     PRINTF("Size of B array (ldb*n) = %d\n", ldb * n);
     PRINTF("Size of W array (n) = %d\n", n);
-    PRINTF("Size of WORK array (MAX(1, LWORK)) = %d\n", max(1, lwork_size));
+    PRINTF("Size of WORK array (MAX(1, LWORK)) = %d\n", fla_max(1, lwork_size));
     PRINTF("LWORK = %d\n", lwork_size);
-    PRINTF("Size of RWORK array (MAX(1, LRWORK)) = %d\n", max(1, lrwork_size));
+    PRINTF("Size of RWORK array (MAX(1, LRWORK)) = %d\n", fla_max(1, lrwork_size));
     PRINTF("LRWORK = %d\n", lrwork_size);
-    PRINTF("Size of IWORK array (MAX(1, LIWORK)) = %d\n", max(1, liwork_size));
+    PRINTF("Size of IWORK array (MAX(1, LIWORK)) = %d\n", fla_max(1, liwork_size));
     PRINTF("LIWORK = %d\n", liwork_size);
   #endif
 
@@ -291,21 +291,21 @@ void hegvd_test(int ip)
     
     // Prints WORK array contents
     strncpy(arrayname, "WORK input", arraysize);
-    print_array<T>(arrayname, workbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workbuff, fla_max(1, lwork_size));
     strncpy(arrayname, "WORK ref input", arraysize);
-    print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workrefbuff, fla_max(1, lwork_size));
     
     // Prints RWORK array contents
     strncpy(arrayname, "RWORK input", arraysize);
-    print_array<Ta>(arrayname, rworkbuff, max(1, lrwork_size));
+    print_array<Ta>(arrayname, rworkbuff, fla_max(1, lrwork_size));
     strncpy(arrayname, "RWORK ref input", arraysize);
-    print_array<Ta>(arrayname, rworkrefbuff, max(1, lrwork_size));
+    print_array<Ta>(arrayname, rworkrefbuff, fla_max(1, lrwork_size));
     
     // Prints IWORK array contents
     strncpy(arrayname, "IWORK input", arraysize);
-    print_array<integer>(arrayname, iworkbuff, max(1, liwork_size));
+    print_array<integer>(arrayname, iworkbuff, fla_max(1, liwork_size));
     strncpy(arrayname, "IWORK ref input", arraysize);
-    print_array<integer>(arrayname, iworkrefbuff, max(1, liwork_size));
+    print_array<integer>(arrayname, iworkrefbuff, fla_max(1, liwork_size));
   #endif
   
   info_cpp = -1;
@@ -365,30 +365,30 @@ void hegvd_test(int ip)
       
       // Prints WORK array contents
       strncpy(arrayname, "WORK output", arraysize);
-      print_array<T>(arrayname, workbuff, max(1, lwork_size));
+      print_array<T>(arrayname, workbuff, fla_max(1, lwork_size));
       strncpy(arrayname, "WORK ref output", arraysize);
-      print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
+      print_array<T>(arrayname, workrefbuff, fla_max(1, lwork_size));
       
       // Prints RWORK array contents
       strncpy(arrayname, "RWORK output", arraysize);
-      print_array<Ta>(arrayname, rworkbuff, max(1, lrwork_size));
+      print_array<Ta>(arrayname, rworkbuff, fla_max(1, lrwork_size));
       strncpy(arrayname, "RWORK ref output", arraysize);
-      print_array<Ta>(arrayname, rworkrefbuff, max(1, lrwork_size));
+      print_array<Ta>(arrayname, rworkrefbuff, fla_max(1, lrwork_size));
       
       // Prints IWORK array contents
       strncpy(arrayname, "IWORK output", arraysize);
-      print_array<integer>(arrayname, iworkbuff, max(1, liwork_size));
+      print_array<integer>(arrayname, iworkbuff, fla_max(1, liwork_size));
       strncpy(arrayname, "IWORK ref output", arraysize);
-      print_array<integer>(arrayname, iworkrefbuff, max(1, liwork_size));
+      print_array<integer>(arrayname, iworkrefbuff, fla_max(1, liwork_size));
     #endif
     
     double diff = computeError<T>(lda, n, arefbuff, abuff);
     diff += computeError<T>(ldb, n, brefbuff, bbuff);
     diff += computeError<Ta>(1, n, wbuff, wrefbuff);
     diff += computeError<Ta>(1, n, wbuff, wrefbuff);
-    diff += computeError<T>(1, max(1, lwork_size), workbuff, workrefbuff);
-    diff += computeError<Ta>(1, max(1, lrwork_size), rworkbuff, rworkrefbuff);
-    diff += computeError<integer>(1, max(1, liwork_size), iworkbuff,
+    diff += computeError<T>(1, fla_max(1, lwork_size), workbuff, workrefbuff);
+    diff += computeError<Ta>(1, fla_max(1, lrwork_size), rworkbuff, rworkrefbuff);
+    diff += computeError<integer>(1, fla_max(1, liwork_size), iworkbuff,
                                   iworkrefbuff);
     PRINTF("diff: %lf\n", diff);
     EXPECT_NEAR(0.0, abs(diff), SYM_EIGEN_THRESHOLD);

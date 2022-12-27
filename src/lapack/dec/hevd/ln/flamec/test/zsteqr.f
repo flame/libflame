@@ -28,9 +28,9 @@
 *
 *  LDZ     (input) INTEGER
 *          The leading dimension of the array Z.  LDZ >= 1, and if
-*          eigenvectors are desired, then  LDZ >= max(1,N).
+*          eigenvectors are desired, then  LDZ >= fla_max(1,N).
 *
-*  WORK    (workspace) DOUBLE PRECISION array, dimension (max(1,2*N-2))
+*  WORK    (workspace) DOUBLE PRECISION array, dimension (fla_max(1,2*N-2))
 *          If COMPZ = 'N', then WORK is not referenced.
 *
 *  INFO    (output) INTEGER

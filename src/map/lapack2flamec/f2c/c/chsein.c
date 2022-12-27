@@ -109,7 +109,7 @@ thus, if */
 /* > \param[in] LDH */
 /* > \verbatim */
 /* > LDH is INTEGER */
-/* > The leading dimension of the array H. LDH >= max(1,N). */
+/* > The leading dimension of the array H. LDH >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] W */
@@ -140,7 +140,7 @@ the starting vector for each eigenvector */
 /* > \verbatim */
 /* > LDVL is INTEGER */
 /* > The leading dimension of the array VL. */
-/* > LDVL >= max(1,N) if SIDE = 'L' or 'B';
+/* > LDVL >= fla_max(1,N) if SIDE = 'L' or 'B';
 LDVL >= 1 otherwise. */
 /* > \endverbatim */
 /* > */
@@ -163,7 +163,7 @@ the starting vector for each eigenvector */
 /* > \verbatim */
 /* > LDVR is INTEGER */
 /* > The leading dimension of the array VR. */
-/* > LDVR >= max(1,N) if SIDE = 'R' or 'B';
+/* > LDVR >= fla_max(1,N) if SIDE = 'R' or 'B';
 LDVR >= 1 otherwise. */
 /* > \endverbatim */
 /* > */
@@ -359,7 +359,7 @@ int chsein_(char *side, char *eigsrc, char *initv, logical * select, integer *n,
     {
         *info = -5;
     }
-    else if (*ldh < max(1,*n))
+    else if (*ldh < fla_max(1,*n))
     {
         *info = -7;
     }

@@ -233,7 +233,7 @@ void libfla_test_chol_experiment( test_params_t params,
 			libfla_test_chol_impl( impl, uplo, A_test );
 		
 			time = FLA_Clock() - time;
-			time_min = min( time_min, time );
+			time_min = fla_min( time_min, time );
 		}
 	}
 	// Perform a linear solve with the result.
@@ -398,7 +398,7 @@ void FLA_POTRF( char uplo,
                            spotrf_(&uplo, &n, buff_A, &lda, &info);
 
                            time = FLA_Clock() - time;
-                           time_min = min( time_min, time );
+                           time_min = fla_min( time_min, time );
                         }
                         break;
                 }
@@ -414,7 +414,7 @@ void FLA_POTRF( char uplo,
                            dpotrf_(&uplo, &n, buff_A, &lda, &info);
 
                            time = FLA_Clock() - time;
-                           time_min = min( time_min, time );
+                           time_min = fla_min( time_min, time );
                         }
                         break;
                 }
@@ -430,7 +430,7 @@ void FLA_POTRF( char uplo,
                            cpotrf_(&uplo, &n, buff_A, &lda, &info);
 
                            time = FLA_Clock() - time;
-                           time_min = min( time_min, time );
+                           time_min = fla_min( time_min, time );
                         }
                         break;
                 }
@@ -446,7 +446,7 @@ void FLA_POTRF( char uplo,
                            zpotrf_(&uplo, &n, buff_A, &lda, &info);
 
                            time = FLA_Clock() - time;
-                           time_min = min( time_min, time );
+                           time_min = fla_min( time_min, time );
                         }
                         break;
                 }

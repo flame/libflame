@@ -174,11 +174,11 @@ int dlasq6_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
                 z__[j4] = z__[j4 + 1] * (z__[j4 - 1] / z__[j4 - 2]);
                 d__ = z__[j4 + 1] * (d__ / z__[j4 - 2]);
             }
-            *dmin__ = min(*dmin__,d__);
+            *dmin__ = fla_min(*dmin__,d__);
             /* Computing MIN */
             d__1 = emin;
             d__2 = z__[j4]; // , expr subst
-            emin = min(d__1,d__2);
+            emin = fla_min(d__1,d__2);
             /* L10: */
         }
     }
@@ -208,11 +208,11 @@ int dlasq6_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
                 z__[j4 - 1] = z__[j4 + 2] * (z__[j4] / z__[j4 - 3]);
                 d__ = z__[j4 + 2] * (d__ / z__[j4 - 3]);
             }
-            *dmin__ = min(*dmin__,d__);
+            *dmin__ = fla_min(*dmin__,d__);
             /* Computing MIN */
             d__1 = emin;
             d__2 = z__[j4 - 1]; // , expr subst
-            emin = min(d__1,d__2);
+            emin = fla_min(d__1,d__2);
             /* L20: */
         }
     }
@@ -240,7 +240,7 @@ int dlasq6_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
         z__[j4] = z__[j4p2 + 2] * (z__[j4p2] / z__[j4 - 2]);
         *dnm1 = z__[j4p2 + 2] * (*dnm2 / z__[j4 - 2]);
     }
-    *dmin__ = min(*dmin__,*dnm1);
+    *dmin__ = fla_min(*dmin__,*dnm1);
     *dmin1 = *dmin__;
     j4 += 4;
     j4p2 = j4 + (*pp << 1) - 1;
@@ -263,7 +263,7 @@ int dlasq6_(integer *i0, integer *n0, doublereal *z__, integer *pp, doublereal *
         z__[j4] = z__[j4p2 + 2] * (z__[j4p2] / z__[j4 - 2]);
         *dn = z__[j4p2 + 2] * (*dnm1 / z__[j4 - 2]);
     }
-    *dmin__ = min(*dmin__,*dn);
+    *dmin__ = fla_min(*dmin__,*dn);
     z__[j4 + 2] = *dn;
     z__[(*n0 << 2) - *pp] = emin;
     AOCL_DTL_TRACE_LOG_EXIT

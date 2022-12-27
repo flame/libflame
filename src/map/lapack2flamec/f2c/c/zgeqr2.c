@@ -51,7 +51,7 @@ static integer c__1 = 1;
 /* > A is COMPLEX*16 array, dimension (LDA,N) */
 /* > On entry, the m by n matrix A. */
 /* > On exit, the elements on and above the diagonal of the array */
-/* > contain the min(m,n) by n upper trapezoidal matrix R (R is */
+/* > contain the fla_min(m,n) by n upper trapezoidal matrix R (R is */
 /* > upper triangular if m >= n);
 the elements below the diagonal, */
 /* > with the array TAU, represent the unitary matrix Q as a */
@@ -61,12 +61,12 @@ the elements below the diagonal, */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] TAU */
 /* > \verbatim */
-/* > TAU is COMPLEX*16 array, dimension (min(M,N)) */
+/* > TAU is COMPLEX*16 array, dimension (fla_min(M,N)) */
 /* > The scalar factors of the elementary reflectors (see Further */
 /* > Details). */
 /* > \endverbatim */
@@ -97,7 +97,7 @@ the elements below the diagonal, */
 /* > */
 /* > The matrix Q is represented as a product of elementary reflectors */
 /* > */
-/* > Q = H(1) H(2) . . . H(k), where k = min(m,n). */
+/* > Q = H(1) H(2) . . . H(k), where k = fla_min(m,n). */
 /* > */
 /* > Each H(i) has the form */
 /* > */
@@ -160,7 +160,7 @@ int zgeqr2_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
@@ -171,7 +171,7 @@ int zgeqr2_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
-    k = min(*m,*n);
+    k = fla_min(*m,*n);
     i__1 = k;
     for (i__ = 1;
             i__ <= i__1;
@@ -181,7 +181,7 @@ int zgeqr2_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
         i__2 = *m - i__ + 1;
         /* Computing MIN */
         i__3 = i__ + 1;
-        zlarfg_(&i__2, &a[i__ + i__ * a_dim1], &a[min(i__3,*m) + i__ * a_dim1], &c__1, &tau[i__]);
+        zlarfg_(&i__2, &a[i__ + i__ * a_dim1], &a[fla_min(i__3,*m) + i__ * a_dim1], &c__1, &tau[i__]);
         if (i__ < *n)
         {
             /* Apply H(i)**H to A(i:m,i+1:n) from the left */

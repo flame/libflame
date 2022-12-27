@@ -79,14 +79,14 @@ they are stored as the columns of the */
 /* > \verbatim */
 /* > A is REAL array, dimension (LDA,N) */
 /* > On entry, the M-by-N matrix A. */
-/* > On exit, the first min(m,n) rows of A are overwritten with */
+/* > On exit, the first fla_min(m,n) rows of A are overwritten with */
 /* > its right singular vectors, stored rowwise. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -102,14 +102,14 @@ they are stored as the columns of the */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,max(M,N)). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,fla_max(M,N)). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] S */
 /* > \verbatim */
-/* > S is REAL array, dimension (min(M,N)) */
+/* > S is REAL array, dimension (fla_min(M,N)) */
 /* > The singular values of A in decreasing order. */
-/* > The condition number of A in the 2-norm = S(1)/S(min(m,n)). */
+/* > The condition number of A in the 2-norm = S(1)/S(fla_min(m,n)). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] RCOND */
@@ -137,7 +137,7 @@ they are stored as the columns of the */
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The dimension of the array WORK. LWORK >= 1, and also: */
-/* > LWORK >= 3*min(M,N) + max( 2*min(M,N), max(M,N), NRHS ) */
+/* > LWORK >= 3*fla_min(M,N) + fla_max( 2*fla_min(M,N), fla_max(M,N), NRHS ) */
 /* > For good performance, LWORK should generally be larger. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -242,8 +242,8 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     --work;
     /* Function Body */
     *info = 0;
-    minmn = min(*m,*n);
-    maxmn = max(*m,*n);
+    minmn = fla_min(*m,*n);
+    maxmn = fla_max(*m,*n);
     lquery = *lwork == -1;
     if (*m < 0)
     {
@@ -257,11 +257,11 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,maxmn))
+    else if (*ldb < fla_max(1,maxmn))
     {
         *info = -7;
     }
@@ -293,11 +293,11 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + lwork_sgeqrf__; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + lwork_sormqr__; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
             }
             if (*m >= *n)
             {
@@ -306,7 +306,7 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
                 /* Computing MAX */
                 i__1 = 1;
                 i__2 = *n * 5; // , expr subst
-                bdspac = max(i__1,i__2);
+                bdspac = fla_max(i__1,i__2);
                 /* Compute space needed for SGEBRD */
                 sgebrd_(&mm, n, &a[a_offset], lda, &s[1], dum, dum, dum, dum, &c_n1, info);
                 lwork_sgebrd__ = dum[0];
@@ -320,26 +320,26 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n * 3 + lwork_sgebrd__; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n * 3 + lwork_sormbr__; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n * 3 + lwork_sorgbr__; // , expr subst
-                maxwrk = max(i__1,i__2);
-                maxwrk = max(maxwrk,bdspac);
+                maxwrk = fla_max(i__1,i__2);
+                maxwrk = fla_max(maxwrk,bdspac);
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n * *nrhs; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = *n * 3 + mm;
                 i__2 = *n * 3 + *nrhs;
-                i__1 = max(i__1, i__2); // ; expr subst
-                minwrk = max(i__1,bdspac);
-                maxwrk = max(minwrk,maxwrk);
+                i__1 = fla_max(i__1, i__2); // ; expr subst
+                minwrk = fla_max(i__1,bdspac);
+                maxwrk = fla_max(minwrk,maxwrk);
             }
             if (*n > *m)
             {
@@ -347,12 +347,12 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
                 /* Computing MAX */
                 i__1 = 1;
                 i__2 = *m * 5; // , expr subst
-                bdspac = max(i__1,i__2);
+                bdspac = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = *m * 3 + *nrhs;
                 i__2 = *m * 3 + *n;
-                i__1 = max(i__1, i__2); // ; expr subst
-                minwrk = max(i__1,bdspac);
+                i__1 = fla_max(i__1, i__2); // ; expr subst
+                minwrk = fla_max(i__1,bdspac);
                 if (*n >= mnthr)
                 {
                     /* Path 2a - underdetermined, with many more columns */
@@ -374,37 +374,37 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *m * *m + (*m << 2) + lwork_sgebrd__; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *m * *m + (*m << 2) + lwork_sormbr__; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *m * *m + (*m << 2) + lwork_sorgbr__; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *m * *m + *m + bdspac; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     if (*nrhs > 1)
                     {
                         /* Computing MAX */
                         i__1 = maxwrk;
                         i__2 = *m * *m + *m + *m * *nrhs; // , expr subst
-                        maxwrk = max(i__1,i__2);
+                        maxwrk = fla_max(i__1,i__2);
                     }
                     else
                     {
                         /* Computing MAX */
                         i__1 = maxwrk;
                         i__2 = *m * *m + (*m << 1); // , expr subst
-                        maxwrk = max(i__1,i__2);
+                        maxwrk = fla_max(i__1,i__2);
                     }
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *m + lwork_sormlq__; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                 }
                 else
                 {
@@ -422,19 +422,19 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *m * 3 + lwork_sormbr__; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *m * 3 + lwork_sorgbr__; // , expr subst
-                    maxwrk = max(i__1,i__2);
-                    maxwrk = max(maxwrk,bdspac);
+                    maxwrk = fla_max(i__1,i__2);
+                    maxwrk = fla_max(maxwrk,bdspac);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *n * *nrhs; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                 }
             }
-            maxwrk = max(minwrk,maxwrk);
+            maxwrk = fla_max(minwrk,maxwrk);
         }
         work[1] = (real) maxwrk;
         if (*lwork < minwrk && ! lquery)
@@ -482,7 +482,7 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     else if (anrm == 0.f)
     {
         /* Matrix all zero. Return zero solution. */
-        i__1 = max(*m,*n);
+        i__1 = fla_max(*m,*n);
         slaset_("F", &i__1, nrhs, &c_b50, &c_b50, &b[b_offset], ldb);
         slaset_("F", &minmn, &c__1, &c_b50, &c_b50, &s[1], &minmn);
         *rank = 0;
@@ -559,12 +559,12 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
         /* Multiply B by reciprocals of singular values */
         /* Computing MAX */
         r__1 = *rcond * s[1];
-        thr = max(r__1,sfmin);
+        thr = fla_max(r__1,sfmin);
         if (*rcond < 0.f)
         {
             /* Computing MAX */
             r__1 = eps * s[1];
-            thr = max(r__1,sfmin);
+            thr = fla_max(r__1,sfmin);
         }
         *rank = 0;
         i__1 = *n;
@@ -601,7 +601,7 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
             {
                 /* Computing MIN */
                 i__3 = *nrhs - i__ + 1;
-                bl = min(i__3,chunk);
+                bl = fla_min(i__3,chunk);
                 sgemm_("T", "N", n, &bl, n, &c_b83, &a[a_offset], lda, &b[i__ * b_dim1 + 1], ldb, &c_b50, &work[1], n);
                 slacpy_("G", n, &bl, &work[1], n, &b[i__ * b_dim1 + 1], ldb);
                 /* L20: */
@@ -616,22 +616,22 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     else /* if(complicated condition) */
     {
         /* Computing MAX */
-        i__2 = *m, i__1 = (*m << 1) - 4, i__2 = max(i__2,i__1);
-        i__2 = max( i__2,*nrhs);
+        i__2 = *m, i__1 = (*m << 1) - 4, i__2 = fla_max(i__2,i__1);
+        i__2 = fla_max( i__2,*nrhs);
         i__1 = *n - *m * 3; // ; expr subst
-        if (*n >= mnthr && *lwork >= (*m << 2) + *m * *m + max(i__2,i__1))
+        if (*n >= mnthr && *lwork >= (*m << 2) + *m * *m + fla_max(i__2,i__1))
         {
             /* Path 2a - underdetermined, with many more columns than rows */
             /* and sufficient workspace for an efficient algorithm */
             ldwork = *m;
             /* Computing MAX */
             /* Computing MAX */
-            i__3 = *m, i__4 = (*m << 1) - 4, i__3 = max(i__3,i__4);
-            i__3 = max(i__3,*nrhs);
+            i__3 = *m, i__4 = (*m << 1) - 4, i__3 = fla_max(i__3,i__4);
+            i__3 = fla_max(i__3,*nrhs);
             i__4 = *n - *m * 3; // ; expr subst
-            i__2 = (*m << 2) + *m * *lda + max(i__3,i__4);
+            i__2 = (*m << 2) + *m * *lda + fla_max(i__3,i__4);
             i__1 = *m * *lda + *m + *m * *nrhs; // , expr subst
-            if (*lwork >= max(i__2,i__1))
+            if (*lwork >= fla_max(i__2,i__1))
             {
                 ldwork = *lda;
             }
@@ -676,12 +676,12 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
             /* Multiply B by reciprocals of singular values */
             /* Computing MAX */
             r__1 = *rcond * s[1];
-            thr = max(r__1,sfmin);
+            thr = fla_max(r__1,sfmin);
             if (*rcond < 0.f)
             {
                 /* Computing MAX */
                 r__1 = eps * s[1];
-                thr = max(r__1,sfmin);
+                thr = fla_max(r__1,sfmin);
             }
             *rank = 0;
             i__2 = *m;
@@ -719,7 +719,7 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
                 {
                     /* Computing MIN */
                     i__3 = *nrhs - i__ + 1;
-                    bl = min(i__3,chunk);
+                    bl = fla_min(i__3,chunk);
                     sgemm_("T", "N", m, &bl, m, &c_b83, &work[il], &ldwork, & b[i__ * b_dim1 + 1], ldb, &c_b50, &work[iwork], m);
                     slacpy_("G", m, &bl, &work[iwork], m, &b[i__ * b_dim1 + 1], ldb);
                     /* L40: */
@@ -771,12 +771,12 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
             /* Multiply B by reciprocals of singular values */
             /* Computing MAX */
             r__1 = *rcond * s[1];
-            thr = max(r__1,sfmin);
+            thr = fla_max(r__1,sfmin);
             if (*rcond < 0.f)
             {
                 /* Computing MAX */
                 r__1 = eps * s[1];
-                thr = max(r__1,sfmin);
+                thr = fla_max(r__1,sfmin);
             }
             *rank = 0;
             i__1 = *m;
@@ -813,7 +813,7 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
                 {
                     /* Computing MIN */
                     i__3 = *nrhs - i__ + 1;
-                    bl = min(i__3,chunk);
+                    bl = fla_min(i__3,chunk);
                     sgemm_("T", "N", n, &bl, m, &c_b83, &a[a_offset], lda, &b[ i__ * b_dim1 + 1], ldb, &c_b50, &work[1], n);
                     slacpy_("F", n, &bl, &work[1], n, &b[i__ * b_dim1 + 1], ldb);
                     /* L60: */

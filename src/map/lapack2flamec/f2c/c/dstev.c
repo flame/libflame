@@ -78,12 +78,12 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > LDZ is INTEGER */
 /* > The leading dimension of the array Z. LDZ >= 1, and if */
-/* > JOBZ = 'V', LDZ >= max(1,N). */
+/* > JOBZ = 'V', LDZ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
 /* > \verbatim */
-/* > WORK is DOUBLE PRECISION array, dimension (max(1,2*N-2)) */
+/* > WORK is DOUBLE PRECISION array, dimension (fla_max(1,2*N-2)) */
 /* > If JOBZ = 'N', WORK is not referenced. */
 /* > \endverbatim */
 /* > */

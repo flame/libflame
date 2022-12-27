@@ -46,11 +46,11 @@ static real c_b84 = 1.f;
 /* > A = U * SIGMA * transpose(V) */
 /* > */
 /* > where SIGMA is an M-by-N matrix which is zero except for its */
-/* > min(m,n) diagonal elements, U is an M-by-M orthogonal matrix, and */
+/* > fla_min(m,n) diagonal elements, U is an M-by-M orthogonal matrix, and */
 /* > V is an N-by-N orthogonal matrix. The diagonal elements of SIGMA */
 /* > are the singular values of A;
 they are real and non-negative, and */
-/* > are returned in descending order. The first min(m,n) columns of */
+/* > are returned in descending order. The first fla_min(m,n) columns of */
 /* > U and V are the left and right singular vectors of A. */
 /* > */
 /* > Note that the routine returns VT = V**T, not V. */
@@ -71,8 +71,8 @@ they are real and non-negative, and */
 /* > = 'A': all M columns of U and all N rows of V**T are */
 /* > returned in the arrays U and VT;
 */
-/* > = 'S': the first min(M,N) columns of U and the first */
-/* > min(M,N) rows of V**T are returned in the arrays U */
+/* > = 'S': the first fla_min(M,N) columns of U and the first */
+/* > fla_min(M,N) rows of V**T are returned in the arrays U */
 /* > and VT;
 */
 /* > = 'O': If M >= N, the first N columns of U are overwritten */
@@ -116,12 +116,12 @@ they are real and non-negative, and */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] S */
 /* > \verbatim */
-/* > S is REAL array, dimension (min(M,N)) */
+/* > S is REAL array, dimension (fla_min(M,N)) */
 /* > The singular values of A, sorted so that S(i) >= S(i+1). */
 /* > \endverbatim */
 /* > */
@@ -130,11 +130,11 @@ they are real and non-negative, and */
 /* > U is REAL array, dimension (LDU,UCOL) */
 /* > UCOL = M if JOBZ = 'A' or JOBZ = 'O' and M < N;
 */
-/* > UCOL = min(M,N) if JOBZ = 'S'. */
+/* > UCOL = fla_min(M,N) if JOBZ = 'S'. */
 /* > If JOBZ = 'A' or JOBZ = 'O' and M < N, U contains the M-by-M */
 /* > orthogonal matrix U;
 */
-/* > if JOBZ = 'S', U contains the first min(M,N) columns of U */
+/* > if JOBZ = 'S', U contains the first fla_min(M,N) columns of U */
 /* > (the left singular vectors, stored columnwise);
 */
 /* > if JOBZ = 'O' and M >= N, or JOBZ = 'N', U is not referenced. */
@@ -154,7 +154,7 @@ if */
 /* > If JOBZ = 'A' or JOBZ = 'O' and M >= N, VT contains the */
 /* > N-by-N orthogonal matrix V**T;
 */
-/* > if JOBZ = 'S', VT contains the first min(M,N) rows of */
+/* > if JOBZ = 'S', VT contains the first fla_min(M,N) rows of */
 /* > V**T (the right singular vectors, stored rowwise);
 */
 /* > if JOBZ = 'O' and M < N, or JOBZ = 'N', VT is not referenced. */
@@ -167,7 +167,7 @@ if */
 */
 /* > if JOBZ = 'A' or JOBZ = 'O' and M >= N, LDVT >= N;
 */
-/* > if JOBZ = 'S', LDVT >= min(M,N). */
+/* > if JOBZ = 'S', LDVT >= fla_min(M,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -185,9 +185,9 @@ if */
 /* > size for the WORK array is calculated and stored in WORK(1), */
 /* > and no other work except argument checking is performed. */
 /* > */
-/* > Let mx = max(M,N) and mn = min(M,N). */
-/* > If JOBZ = 'N', LWORK >= 3*mn + max( mx, 7*mn ). */
-/* > If JOBZ = 'O', LWORK >= 3*mn + max( mx, 5*mn*mn + 4*mn ). */
+/* > Let mx = fla_max(M,N) and mn = fla_min(M,N). */
+/* > If JOBZ = 'N', LWORK >= 3*mn + fla_max( mx, 7*mn ). */
+/* > If JOBZ = 'O', LWORK >= 3*mn + fla_max( mx, 5*mn*mn + 4*mn ). */
 /* > If JOBZ = 'S', LWORK >= 4*mn*mn + 7*mn. */
 /* > If JOBZ = 'A', LWORK >= 4*mn*mn + 6*mn + mx. */
 /* > These are not tight minimums in all cases;
@@ -199,7 +199,7 @@ see comments inside code. */
 /* > */
 /* > \param[out] IWORK */
 /* > \verbatim */
-/* > IWORK is INTEGER array, dimension (8*min(M,N)) */
+/* > IWORK is INTEGER array, dimension (8*fla_min(M,N)) */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -312,7 +312,7 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
     --iwork;
     /* Function Body */
     *info = 0;
-    minmn = min(*m,*n);
+    minmn = fla_min(*m,*n);
     wntqa = lsame_(jobz, "A");
     wntqs = lsame_(jobz, "S");
     wntqas = wntqa || wntqs;
@@ -331,7 +331,7 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }
@@ -398,11 +398,11 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + lwork_sgebrd_nn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = bdspac + *n; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     minwrk = bdspac + *n;
                 }
                 else if (wntqo)
@@ -412,23 +412,23 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n + lwork_sorgqr_mn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + lwork_sgebrd_nn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + lwork_sormbr_qln_nn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + lwork_sormbr_prt_nn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + bdspac; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     maxwrk = wrkbl + (*n << 1) * *n;
                     minwrk = bdspac + (*n << 1) * *n + *n * 3;
                 }
@@ -439,23 +439,23 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n + lwork_sorgqr_mn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + lwork_sgebrd_nn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + lwork_sormbr_qln_nn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + lwork_sormbr_prt_nn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + bdspac; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     maxwrk = wrkbl + *n * *n;
                     minwrk = bdspac + *n * *n + *n * 3;
                 }
@@ -466,28 +466,28 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n + lwork_sorgqr_mm__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + lwork_sgebrd_nn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + lwork_sormbr_qln_nn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + lwork_sormbr_prt_nn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + bdspac; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     maxwrk = wrkbl + *n * *n;
                     /* Computing MAX */
                     i__1 = *n * 3 + bdspac;
                     i__2 = *n + *m; // , expr subst
-                    minwrk = *n * *n + max(i__1,i__2);
+                    minwrk = *n * *n + fla_max(i__1,i__2);
                 }
             }
             else
@@ -500,8 +500,8 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + bdspac; // , expr subst
-                    maxwrk = max(i__1,i__2);
-                    minwrk = *n * 3 + max(*m,bdspac);
+                    maxwrk = fla_max(i__1,i__2);
+                    minwrk = *n * 3 + fla_max(*m,bdspac);
                 }
                 else if (wntqo)
                 {
@@ -509,20 +509,20 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + lwork_sormbr_prt_nn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + lwork_sormbr_qln_mn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + bdspac; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     maxwrk = wrkbl + *m * *n;
                     /* Computing MAX */
                     i__1 = *m;
                     i__2 = *n * *n + bdspac; // , expr subst
-                    minwrk = *n * 3 + max(i__1,i__2);
+                    minwrk = *n * 3 + fla_max(i__1,i__2);
                 }
                 else if (wntqs)
                 {
@@ -530,16 +530,16 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + lwork_sormbr_qln_mn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + lwork_sormbr_prt_nn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + bdspac; // , expr subst
-                    maxwrk = max(i__1,i__2);
-                    minwrk = *n * 3 + max(*m,bdspac);
+                    maxwrk = fla_max(i__1,i__2);
+                    minwrk = *n * 3 + fla_max(*m,bdspac);
                 }
                 else if (wntqa)
                 {
@@ -547,16 +547,16 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + lwork_sormbr_qln_mm__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + lwork_sormbr_prt_nn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *n * 3 + bdspac; // , expr subst
-                    maxwrk = max(i__1,i__2);
-                    minwrk = *n * 3 + max(*m,bdspac);
+                    maxwrk = fla_max(i__1,i__2);
+                    minwrk = *n * 3 + fla_max(*m,bdspac);
                 }
             }
         }
@@ -603,11 +603,11 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + lwork_sgebrd_mm__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = bdspac + *m; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     minwrk = bdspac + *m;
                 }
                 else if (wntqo)
@@ -617,23 +617,23 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m + lwork_sorglq_mn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + lwork_sgebrd_mm__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + lwork_sormbr_qln_mm__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + lwork_sormbr_prt_mm__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + bdspac; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     maxwrk = wrkbl + (*m << 1) * *m;
                     minwrk = bdspac + (*m << 1) * *m + *m * 3;
                 }
@@ -644,23 +644,23 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m + lwork_sorglq_mn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + lwork_sgebrd_mm__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + lwork_sormbr_qln_mm__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + lwork_sormbr_prt_mm__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + bdspac; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     maxwrk = wrkbl + *m * *m;
                     minwrk = bdspac + *m * *m + *m * 3;
                 }
@@ -671,28 +671,28 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m + lwork_sorglq_nn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + lwork_sgebrd_mm__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + lwork_sormbr_qln_mm__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + lwork_sormbr_prt_mm__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + bdspac; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     maxwrk = wrkbl + *m * *m;
                     /* Computing MAX */
                     i__1 = *m * 3 + bdspac;
                     i__2 = *m + *n; // , expr subst
-                    minwrk = *m * *m + max(i__1,i__2);
+                    minwrk = *m * *m + fla_max(i__1,i__2);
                 }
             }
             else
@@ -705,8 +705,8 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + bdspac; // , expr subst
-                    maxwrk = max(i__1,i__2);
-                    minwrk = *m * 3 + max(*n,bdspac);
+                    maxwrk = fla_max(i__1,i__2);
+                    minwrk = *m * 3 + fla_max(*n,bdspac);
                 }
                 else if (wntqo)
                 {
@@ -714,20 +714,20 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + lwork_sormbr_qln_mm__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + lwork_sormbr_prt_mn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + bdspac; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     maxwrk = wrkbl + *m * *n;
                     /* Computing MAX */
                     i__1 = *n;
                     i__2 = *m * *m + bdspac; // , expr subst
-                    minwrk = *m * 3 + max(i__1,i__2);
+                    minwrk = *m * 3 + fla_max(i__1,i__2);
                 }
                 else if (wntqs)
                 {
@@ -735,16 +735,16 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + lwork_sormbr_qln_mm__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + lwork_sormbr_prt_mn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + bdspac; // , expr subst
-                    maxwrk = max(i__1,i__2);
-                    minwrk = *m * 3 + max(*n,bdspac);
+                    maxwrk = fla_max(i__1,i__2);
+                    minwrk = *m * 3 + fla_max(*n,bdspac);
                 }
                 else if (wntqa)
                 {
@@ -752,20 +752,20 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + lwork_sormbr_qln_mm__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + lwork_sormbr_prt_nn__; // , expr subst
-                    wrkbl = max(i__1,i__2);
+                    wrkbl = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = wrkbl;
                     i__2 = *m * 3 + bdspac; // , expr subst
-                    maxwrk = max(i__1,i__2);
-                    minwrk = *m * 3 + max(*n,bdspac);
+                    maxwrk = fla_max(i__1,i__2);
+                    minwrk = *m * 3 + fla_max(*n,bdspac);
                 }
             }
         }
-        maxwrk = max(maxwrk,minwrk);
+        maxwrk = fla_max(maxwrk,minwrk);
         work[1] = (real)maxwrk;
         if (*lwork < minwrk && ! lquery)
         {
@@ -914,7 +914,7 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                 {
                     /* Computing MIN */
                     i__3 = *m - i__ + 1;
-                    chunk = min(i__3,ldwrkr);
+                    chunk = fla_min(i__3,ldwrkr);
                     sgemm_("N", "N", &chunk, n, n, &c_b84, &a[i__ + a_dim1], lda, &work[iu], n, &c_b63, &work[ir], &ldwrkr);
                     slacpy_("F", &chunk, n, &work[ir], &ldwrkr, &a[i__ + a_dim1], lda);
                     /* L10: */
@@ -1115,7 +1115,7 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                     {
                         /* Computing MIN */
                         i__3 = *m - i__ + 1;
-                        chunk = min(i__3,ldwrkr);
+                        chunk = fla_min(i__3,ldwrkr);
                         sgemm_("N", "N", &chunk, n, n, &c_b84, &a[i__ + a_dim1], lda, &work[iu], &ldwrku, &c_b63, & work[ir], &ldwrkr);
                         slacpy_("F", &chunk, n, &work[ir], &ldwrkr, &a[i__ + a_dim1], lda);
                         /* L20: */
@@ -1275,7 +1275,7 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                 {
                     /* Computing MIN */
                     i__3 = *n - i__ + 1;
-                    blk = min(i__3,chunk);
+                    blk = fla_min(i__3,chunk);
                     sgemm_("N", "N", m, &blk, m, &c_b84, &work[ivt], m, &a[ i__ * a_dim1 + 1], lda, &c_b63, &work[il], & ldwrkl);
                     slacpy_("F", m, &blk, &work[il], &ldwrkl, &a[i__ * a_dim1 + 1], lda);
                     /* L30: */
@@ -1474,7 +1474,7 @@ int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, rea
                     {
                         /* Computing MIN */
                         i__3 = *n - i__ + 1;
-                        blk = min(i__3,chunk);
+                        blk = fla_min(i__3,chunk);
                         sgemm_("N", "N", m, &blk, m, &c_b84, &work[ivt], & ldwkvt, &a[i__ * a_dim1 + 1], lda, &c_b63, & work[il], m);
                         slacpy_("F", m, &blk, &work[il], m, &a[i__ * a_dim1 + 1], lda);
                         /* L40: */

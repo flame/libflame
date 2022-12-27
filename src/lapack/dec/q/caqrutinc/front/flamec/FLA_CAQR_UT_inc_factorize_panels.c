@@ -30,7 +30,7 @@ FLA_Error FLA_CAQR_UT_inc_factorize_panels( dim_t nb_part, FLA_Obj A, FLA_Obj TW
 
   while ( FLA_Obj_length( AB ) > 0 ){
 
-    b = min( nb_part, FLA_Obj_length( AB ) );
+    b = fla_min( nb_part, FLA_Obj_length( AB ) );
 
     FLA_Repart_2x1_to_3x1( AT,                &A0, 
                         /* ** */            /* ** */

@@ -70,8 +70,8 @@ int dsyr2k_(char *uplo, char *trans, integer *n, integer *k, doublereal *alpha, 
     /* LDA - INTEGER. */
     /* On entry, LDA specifies the first dimension of A as declared */
     /* in the calling (sub) program. When TRANS = 'N' or 'n' */
-    /* then LDA must be at least max( 1, n ), otherwise LDA must */
-    /* be at least max( 1, k ). */
+    /* then LDA must be at least fla_max( 1, n ), otherwise LDA must */
+    /* be at least fla_max( 1, k ). */
     /* Unchanged on exit. */
     /* B - DOUBLE PRECISION array of DIMENSION ( LDB, kb ), where kb is */
     /* k when TRANS = 'N' or 'n', and is n otherwise. */
@@ -83,8 +83,8 @@ int dsyr2k_(char *uplo, char *trans, integer *n, integer *k, doublereal *alpha, 
     /* LDB - INTEGER. */
     /* On entry, LDB specifies the first dimension of B as declared */
     /* in the calling (sub) program. When TRANS = 'N' or 'n' */
-    /* then LDB must be at least max( 1, n ), otherwise LDB must */
-    /* be at least max( 1, k ). */
+    /* then LDB must be at least fla_max( 1, n ), otherwise LDB must */
+    /* be at least fla_max( 1, k ). */
     /* Unchanged on exit. */
     /* BETA - DOUBLE PRECISION. */
     /* On entry, BETA specifies the scalar beta. */
@@ -105,7 +105,7 @@ int dsyr2k_(char *uplo, char *trans, integer *n, integer *k, doublereal *alpha, 
     /* LDC - INTEGER. */
     /* On entry, LDC specifies the first dimension of C as declared */
     /* in the calling (sub) program. LDC must be at least */
-    /* max( 1, n ). */
+    /* fla_max( 1, n ). */
     /* Unchanged on exit. */
     /* Level 3 Blas routine. */
     /* -- Written on 8-February-1989. */
@@ -158,15 +158,15 @@ int dsyr2k_(char *uplo, char *trans, integer *n, integer *k, doublereal *alpha, 
     {
         info = 4;
     }
-    else if (*lda < max(1,nrowa))
+    else if (*lda < fla_max(1,nrowa))
     {
         info = 7;
     }
-    else if (*ldb < max(1,nrowa))
+    else if (*ldb < fla_max(1,nrowa))
     {
         info = 9;
     }
-    else if (*ldc < max(1,*n))
+    else if (*ldc < fla_max(1,*n))
     {
         info = 12;
     }

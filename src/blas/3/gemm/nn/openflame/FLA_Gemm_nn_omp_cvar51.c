@@ -41,7 +41,7 @@ FLA_Error FLA_Gemm_nn_omp_var51( FLA_Obj alpha, FLA_Obj A, FLA_Obj B, FLA_Obj C,
   while ( FLA_Obj_width( AL ) < FLA_Obj_width( A ) )
   {
     b_k = FLA_Determine_blocksize( A, AL, FLA_LEFT, FLA_Cntl_blocksize( cntl ) );
-    //b_c = min( FLA_Obj_width( AR ), nb_alg_c );
+    //b_c = fla_min( FLA_Obj_width( AR ), nb_alg_c );
 
     FLA_Repart_1x2_to_1x3( AL,  /**/ AR,        &A0, /**/ &A1, &A2,
                            b_k, FLA_RIGHT );
@@ -62,7 +62,7 @@ FLA_Error FLA_Gemm_nn_omp_var51( FLA_Obj alpha, FLA_Obj A, FLA_Obj B, FLA_Obj C,
     while ( FLA_Obj_length( AT ) < FLA_Obj_length( A ) )
     {
       b_m = FLA_Determine_blocksize( A, AT, FLA_TOP, FLA_Cntl_blocksize( cntl ) );
-      //b_r = min( FLA_Obj_length( AB ), nb_alg_r );
+      //b_r = fla_min( FLA_Obj_length( AB ), nb_alg_r );
 
       // Get the index of the current partition.
       i = FLA_Obj_length( CT ) / b_m;

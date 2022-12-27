@@ -128,7 +128,7 @@ void fla_test_getrf_experiment(test_params_t *params,
 
     /* Create the matrices for the current operation*/
     create_matrix(datatype, &A, lda, n);
-    create_vector(INTEGER, &IPIV, min(m, n));
+    create_vector(INTEGER, &IPIV, fla_min(m, n));
 
     /* Initialize the test matrices*/
     if (g_ext_fptr != NULL)
@@ -209,7 +209,7 @@ void prepare_getrf_run(integer m_A,
         exe_time = fla_test_clock() - exe_time;
 
         /* Get the best execution time */
-        time_min = min(time_min, exe_time);
+        time_min = fla_min(time_min, exe_time);
     }
 
     *time_min_ = time_min;

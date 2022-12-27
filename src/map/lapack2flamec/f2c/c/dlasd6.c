@@ -407,7 +407,7 @@ int dlasd6_(integer *icompq, integer *nl, integer *nr, integer *sqre, doublereal
     /* Computing MAX */
     d__1 = f2c_abs(*alpha);
     d__2 = f2c_abs(*beta); // , expr subst
-    orgnrm = max(d__1,d__2);
+    orgnrm = fla_max(d__1,d__2);
     d__[*nl + 1] = 0.;
     i__1 = n;
     for (i__ = 1;

@@ -69,7 +69,7 @@ static integer c__1 = 1;
 /* > \param[in] LDH */
 /* > \verbatim */
 /* > LDH is INTEGER */
-/* > The leading dimension of the array H. LDH >= max(1,N). */
+/* > The leading dimension of the array H. LDH >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] WR */
@@ -236,7 +236,7 @@ int slaein_(logical *rightv, logical *noinit, integer *n, real *h__, integer *ld
     /* Computing MAX */
     r__1 = 1.f;
     r__2 = *eps3 * rootn; // , expr subst
-    nrmsml = max(r__1,r__2) * *smlnum;
+    nrmsml = fla_max(r__1,r__2) * *smlnum;
     /* Form B = H - (WR,WI)*I (except that the subdiagonal elements and */
     /* the imaginary parts of the diagonal elements are not stored). */
     i__1 = *n;
@@ -274,7 +274,7 @@ int slaein_(logical *rightv, logical *noinit, integer *n, real *h__, integer *ld
         {
             /* Scale supplied initial vector. */
             vnorm = snrm2_(n, &vr[1], &c__1);
-            r__1 = *eps3 * rootn / max(vnorm,nrmsml);
+            r__1 = *eps3 * rootn / fla_max(vnorm,nrmsml);
             sscal_(n, &r__1, &vr[1], &c__1);
         }
         if (*rightv)
@@ -444,7 +444,7 @@ L120: /* Normalize eigenvector. */
             r__1 = snrm2_(n, &vr[1], &c__1);
             r__2 = snrm2_(n, &vi[1], &c__1);
             norm = slapy2_(&r__1, &r__2);
-            rec = *eps3 * rootn / max(norm,nrmsml);
+            rec = *eps3 * rootn / fla_max(norm,nrmsml);
             sscal_(n, &rec, &vr[1], &c__1);
             sscal_(n, &rec, &vi[1], &c__1);
         }
@@ -686,7 +686,7 @@ L120: /* Normalize eigenvector. */
                     sladiv_(&xr, &xi, &b[i__ + i__ * b_dim1], &b[i__ + 1 + i__ * b_dim1], &vr[i__], &vi[i__]);
                     /* Computing MAX */
                     r__3 = (r__1 = vr[i__], f2c_abs(r__1)) + (r__2 = vi[i__], f2c_abs( r__2));
-                    vmax = max(r__3,vmax);
+                    vmax = fla_max(r__3,vmax);
                     vcrit = *bignum / vmax;
                 }
                 else
@@ -742,7 +742,7 @@ L280: /* Normalize eigenvector. */
             /* Computing MAX */
             r__3 = vnorm;
             r__4 = (r__1 = vr[i__], f2c_abs(r__1)) + (r__2 = vi[i__], f2c_abs(r__2));  // , expr subst
-            vnorm = max(r__3,r__4);
+            vnorm = fla_max(r__3,r__4);
             /* L290: */
         }
         r__1 = 1.f / vnorm;

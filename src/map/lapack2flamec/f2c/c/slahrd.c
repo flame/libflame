@@ -80,7 +80,7 @@ the elements below the k-th */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] TAU */
@@ -251,7 +251,7 @@ int slahrd_(integer *n, integer *k, integer *nb, real *a, integer *lda, real *ta
         i__2 = *n - *k - i__ + 1;
         /* Computing MIN */
         i__3 = *k + i__ + 1;
-        slarfg_(&i__2, &a[*k + i__ + i__ * a_dim1], &a[min(i__3,*n) + i__ * a_dim1], &c__1, &tau[i__]);
+        slarfg_(&i__2, &a[*k + i__ + i__ * a_dim1], &a[fla_min(i__3,*n) + i__ * a_dim1], &c__1, &tau[i__]);
         ei = a[*k + i__ + i__ * a_dim1];
         a[*k + i__ + i__ * a_dim1] = 1.f;
         /* Compute Y(1:n,i) */

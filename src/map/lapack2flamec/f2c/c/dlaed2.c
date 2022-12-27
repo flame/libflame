@@ -61,7 +61,7 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > N1 is INTEGER */
 /* > The location of the last eigenvalue in the leading sub-matrix. */
-/* > min(1,N) <= N1 <= N/2. */
+/* > fla_min(1,N) <= N1 <= N/2. */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] D */
@@ -86,7 +86,7 @@ static integer c__1 = 1;
 /* > \param[in] LDQ */
 /* > \verbatim */
 /* > LDQ is INTEGER */
-/* > The leading dimension of the array Q. LDQ >= max(1,N). */
+/* > The leading dimension of the array Q. LDQ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] INDXQ */
@@ -271,7 +271,7 @@ int dlaed2_(integer *k, integer *n, integer *n1, doublereal * d__, doublereal *q
     {
         *info = -2;
     }
-    else if (*ldq < max(1,*n))
+    else if (*ldq < fla_max(1,*n))
     {
         *info = -6;
     }
@@ -280,7 +280,7 @@ int dlaed2_(integer *k, integer *n, integer *n1, doublereal * d__, doublereal *q
         /* Computing MIN */
         i__1 = 1;
         i__2 = *n / 2; // , expr subst
-        if (min(i__1,i__2) > *n1 || *n / 2 < *n1)
+        if (fla_min(i__1,i__2) > *n1 || *n / 2 < *n1)
         {
             *info = -3;
         }
@@ -344,7 +344,7 @@ int dlaed2_(integer *k, integer *n, integer *n1, doublereal * d__, doublereal *q
     /* Computing MAX */
     d__3 = (d__1 = d__[jmax], f2c_abs(d__1));
     d__4 = (d__2 = z__[imax], f2c_abs(d__2)) ; // , expr subst
-    tol = eps * 8. * max(d__3,d__4);
+    tol = eps * 8. * fla_max(d__3,d__4);
     /* If the rank-1 modifier is small enough, no more needs to be done */
     /* except to reorganize Q so that its columns correspond with the */
     /* elements in D. */

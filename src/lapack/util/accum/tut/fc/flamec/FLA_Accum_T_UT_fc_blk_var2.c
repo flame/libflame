@@ -38,7 +38,7 @@ FLA_Error FLA_Accum_T_UT_fc_blk_var2( FLA_Obj A, FLA_Obj t, FLA_Obj T )
 
   while ( FLA_Obj_length( tB ) > 0 ) {
 
-    b = min( FLA_Obj_length( tB ), b_alg );
+    b = fla_min( FLA_Obj_length( tB ), b_alg );
 
     FLA_Repart_2x2_to_3x3( ATL, /**/ ATR,       &A00, /**/ &A01, &A02,
                         /* ************* */   /* ******************** */

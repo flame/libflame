@@ -138,7 +138,7 @@ if STOREV = 'R', LDV >= K. */
 /* > \param[in] LDC */
 /* > \verbatim */
 /* > LDC is INTEGER */
-/* > The leading dimension of the array C. LDC >= max(1,M). */
+/* > The leading dimension of the array C. LDC >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -150,9 +150,9 @@ if STOREV = 'R', LDV >= K. */
 /* > \verbatim */
 /* > LDWORK is INTEGER */
 /* > The leading dimension of the array WORK. */
-/* > If SIDE = 'L', LDWORK >= max(1,N);
+/* > If SIDE = 'L', LDWORK >= fla_max(1,N);
 */
-/* > if SIDE = 'R', LDWORK >= max(1,M). */
+/* > if SIDE = 'R', LDWORK >= fla_max(1,M). */
 /* > \endverbatim */
 /* Authors: */
 /* ======== */

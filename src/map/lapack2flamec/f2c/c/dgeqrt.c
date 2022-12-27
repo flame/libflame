@@ -55,7 +55,7 @@
 /* > A is DOUBLE PRECISION array, dimension (LDA,N) */
 /* > On entry, the M-by-N matrix A. */
 /* > On exit, the elements on and above the diagonal of the array */
-/* > contain the min(M,N)-by-N upper trapezoidal matrix R (R is */
+/* > contain the fla_min(M,N)-by-N upper trapezoidal matrix R (R is */
 /* > upper triangular if M >= N);
 the elements below the diagonal */
 /* > are the columns of V. */
@@ -64,7 +64,7 @@ the elements below the diagonal */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] T */
@@ -172,11 +172,11 @@ int dgeqrt_(integer *m, integer *n, integer *nb, doublereal * a, integer *lda, d
     {
         *info = -2;
     }
-    else if (*nb < 1 || *nb > min(*m,*n) && min(*m,*n) > 0)
+    else if (*nb < 1 || *nb > fla_min(*m,*n) && fla_min(*m,*n) > 0)
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }
@@ -192,7 +192,7 @@ int dgeqrt_(integer *m, integer *n, integer *nb, doublereal * a, integer *lda, d
         return 0;
     }
     /* Quick return if possible */
-    k = min(*m,*n);
+    k = fla_min(*m,*n);
     if (k == 0)
     {
         AOCL_DTL_TRACE_LOG_EXIT
@@ -207,7 +207,7 @@ int dgeqrt_(integer *m, integer *n, integer *nb, doublereal * a, integer *lda, d
     {
         /* Computing MIN */
         i__3 = k - i__ + 1;
-        ib = min(i__3,*nb);
+        ib = fla_min(i__3,*nb);
         /* Compute the QR factorization of the current block A(I:M,I:I+IB-1) */
         if (TRUE_)
         {

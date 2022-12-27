@@ -77,7 +77,7 @@ class gesdd_parameters{
       jobz=jobz_i;
       m = m_i;
       n = n_i; // set test matrix size
-      int mx=max(m,n);
+      int mx=fla_max(m,n);
       lda = mx;
       ldu = mx;
       ldvt = mx; 
@@ -187,15 +187,15 @@ static void CustomArguments(benchmark::internal::Benchmark* b) {
 BENCHMARK_TEMPLATE_DEFINE_F(gesdd_test, sgesdd,float,float )(benchmark::State &state) {
   assert(data.get() != nullptr);
       float work_query=-1;
-      int mx=max(data->m,data->n);
-      int mn=min(data->m,data->n);
+      int mx=fla_max(data->m,data->n);
+      int mn=fla_min(data->m,data->n);
       
     /* Query optimal working array(s) size */
    sgesdd_(&data->jobz,&data->m,&data->n,data->A, &data->lda,data->Se,data->U,&data->ldu,data->Vt,&data->ldvt,
    (float *) &work_query, &data->lwork,data->iwork, &data->info);
 
     data->lwork = (int)work_query;
-    data->lwork=max((2*mn*mn+2*mn+mx),data->lwork);
+    data->lwork=fla_max((2*mn*mn+2*mn+mx),data->lwork);
         
     /* Allocate memory for work arrays */
     data->Work = (float *)malloc( sizeof(float) * (data->lwork));
@@ -226,15 +226,15 @@ BENCHMARK_REGISTER_F(gesdd_test,sgesdd)->Apply(CustomArguments);
 BENCHMARK_TEMPLATE_DEFINE_F(gesdd_test, dgesdd,double,double )(benchmark::State &state) {
   assert(data.get() != nullptr);
       double work_query=-1;
-      int mx=max(data->m,data->n);
-      int mn=min(data->m,data->n);
+      int mx=fla_max(data->m,data->n);
+      int mn=fla_min(data->m,data->n);
       
     /* Query optimal working array(s) size */
    dgesdd_(&data->jobz,&data->m,&data->n,data->A, &data->lda,data->Se,data->U,&data->ldu,data->Vt,&data->ldvt,
    (double *) &work_query, &data->lwork,data->iwork, &data->info);
 
     data->lwork = (int)work_query;
-    data->lwork=max((2*mn*mn+2*mn+mx),data->lwork);
+    data->lwork=fla_max((2*mn*mn+2*mn+mx),data->lwork);
         
     /* Allocate memory for work arrays */
     data->Work = (double *)malloc( sizeof(double) * (data->lwork));
@@ -265,9 +265,9 @@ BENCHMARK_REGISTER_F(gesdd_test,dgesdd)->Apply(CustomArguments);
 BENCHMARK_TEMPLATE_DEFINE_F(gesdd_test, cgesdd,lapack_complex_float,float )(benchmark::State &state) {
   assert(data.get() != nullptr);
       float work_query=-1;
-      int mx=max(data->m,data->n);
-      int mn=min(data->m,data->n);
-      int lrwork= max((5*(mn*mn)+5*mn),((2*mx*mn)+(2*mn*mn)+mn));
+      int mx=fla_max(data->m,data->n);
+      int mn=fla_min(data->m,data->n);
+      int lrwork= fla_max((5*(mn*mn)+5*mn),((2*mx*mn)+(2*mn*mn)+mn));
       data->Rwork = (float *)malloc((lrwork)*sizeof(float)) ;
 
       if ((data->Rwork==NULL)){
@@ -281,7 +281,7 @@ BENCHMARK_TEMPLATE_DEFINE_F(gesdd_test, cgesdd,lapack_complex_float,float )(benc
    (lapack_complex_float *) &work_query, &data->lwork,data->Rwork,data->iwork, &data->info);
 
     data->lwork = (int)work_query;
-    data->lwork=max((2*mn*mn+2*mn+mx),data->lwork);
+    data->lwork=fla_max((2*mn*mn+2*mn+mx),data->lwork);
         
     /* Allocate memory for work arrays */
     data->Work = (lapack_complex_float *)malloc( sizeof(lapack_complex_float) * (data->lwork));
@@ -312,9 +312,9 @@ BENCHMARK_REGISTER_F(gesdd_test,cgesdd)->Apply(CustomArguments);
 BENCHMARK_TEMPLATE_DEFINE_F(gesdd_test, zgesdd,lapack_complex_double,double )(benchmark::State &state) {
   assert(data.get() != nullptr);
       double work_query=-1;
-      int mx=max(data->m,data->n);
-      int mn=min(data->m,data->n);
-      int lrwork= max((5*(mn*mn)+5*mn),((2*mx*mn)+(2*mn*mn)+mn));
+      int mx=fla_max(data->m,data->n);
+      int mn=fla_min(data->m,data->n);
+      int lrwork= fla_max((5*(mn*mn)+5*mn),((2*mx*mn)+(2*mn*mn)+mn));
       data->Rwork = (double *)malloc((lrwork)*sizeof(double)) ;
 
       if ((data->Rwork==NULL)){
@@ -329,7 +329,7 @@ BENCHMARK_TEMPLATE_DEFINE_F(gesdd_test, zgesdd,lapack_complex_double,double )(be
     data->lwork = (int)work_query;
 
     
-    data->lwork=max((2*mn*mn+2*mn+mx),data->lwork);
+    data->lwork=fla_max((2*mn*mn+2*mn+mx),data->lwork);
         
     /* Allocate memory for work arrays */
     data->Work = (lapack_complex_double *)malloc( sizeof(lapack_complex_double) * (data->lwork));

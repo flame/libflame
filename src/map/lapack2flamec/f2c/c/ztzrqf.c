@@ -74,7 +74,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] TAU */
@@ -179,7 +179,7 @@ int ztzrqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
@@ -213,7 +213,7 @@ int ztzrqf_(integer *m, integer *n, doublecomplex *a, integer *lda, doublecomple
     {
         /* Computing MIN */
         i__1 = *m + 1;
-        m1 = min(i__1,*n);
+        m1 = fla_min(i__1,*n);
         for (k = *m;
                 k >= 1;
                 --k)

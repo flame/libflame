@@ -68,9 +68,9 @@
 /* > The upper or lower triangle of the Hermitian band matrix A, */
 /* > stored in the first KD+1 rows of the array. The j-th column */
 /* > of A is stored in the j-th column of the array AB as follows: */
-/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j;
+/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(n,j+kd). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(n,j+kd). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDAB */
@@ -219,11 +219,11 @@ int zpbequ_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
         /* Computing MIN */
         d__1 = smin;
         d__2 = s[i__]; // , expr subst
-        smin = min(d__1,d__2);
+        smin = fla_min(d__1,d__2);
         /* Computing MAX */
         d__1 = *amax;
         d__2 = s[i__]; // , expr subst
-        *amax = max(d__1,d__2);
+        *amax = fla_max(d__1,d__2);
         /* L10: */
     }
     if (smin <= 0.)
@@ -255,7 +255,7 @@ int zpbequ_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
             s[i__] = 1. / sqrt(s[i__]);
             /* L30: */
         }
-        /* Compute SCOND = min(S(I)) / max(S(I)) */
+        /* Compute SCOND = fla_min(S(I)) / fla_max(S(I)) */
         *scond = sqrt(smin) / sqrt(*amax);
     }
     AOCL_DTL_TRACE_LOG_EXIT

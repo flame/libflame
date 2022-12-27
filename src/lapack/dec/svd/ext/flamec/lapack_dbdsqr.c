@@ -132,7 +132,7 @@
  /* > \verbatim */
  /* > LDVT is INTEGER */
  /* > The leading dimension of the array VT. */
- /* > LDVT >= max(1,N) if NCVT > 0;
+ /* > LDVT >= fla_max(1,N) if NCVT > 0;
  LDVT >= 1 if NCVT = 0. */
  /* > \endverbatim */
  /* > */
@@ -147,7 +147,7 @@
  /* > \param[in] LDU */
  /* > \verbatim */
  /* > LDU is INTEGER */
- /* > The leading dimension of the array U. LDU >= max(1,NRU). */
+ /* > The leading dimension of the array U. LDU >= fla_max(1,NRU). */
  /* > \endverbatim */
  /* > */
  /* > \param[in,out] C */
@@ -162,7 +162,7 @@
  /* > \verbatim */
  /* > LDC is INTEGER */
  /* > The leading dimension of the array C. */
- /* > LDC >= max(1,N) if NCC > 0;
+ /* > LDC >= fla_max(1,N) if NCC > 0;
  LDC >=1 if NCC = 0. */
  /* > \endverbatim */
  /* > */
@@ -195,7 +195,7 @@
  /* ========================= */
  /* > */
  /* > \verbatim */
- /* > TOLMUL DOUBLE PRECISION, default = max(10,min(100,EPS**(-1/8))) */
+ /* > TOLMUL DOUBLE PRECISION, default = fla_max(10,fla_min(100,EPS**(-1/8))) */
  /* > TOLMUL controls the convergence criterion of the QR loop. */
  /* > If it is positive, TOLMUL*EPS is the desired relative */
  /* > precision in the computed singular values. */
@@ -328,13 +328,13 @@
  else if (*ncc < 0) {
  *info = -5;
  }
- else if (*ncvt == 0 && *ldvt < 1 || *ncvt > 0 && *ldvt < max(1,*n)) {
+ else if (*ncvt == 0 && *ldvt < 1 || *ncvt > 0 && *ldvt < fla_max(1,*n)) {
  *info = -9;
  }
- else if (*ldu < max(1,*nru)) {
+ else if (*ldu < fla_max(1,*nru)) {
  *info = -11;
  }
- else if (*ncc == 0 && *ldc < 1 || *ncc > 0 && *ldc < max(1,*n)) {
+ else if (*ncc == 0 && *ldc < 1 || *ncc > 0 && *ldc < fla_max(1,*n)) {
  *info = -13;
  }
  if (*info != 0) {
@@ -395,8 +395,8 @@
  /* Computing MAX */
  /* Computing MIN */
  d__3 = 100.; d__4 = pow_dd(&eps, &c_b15); // , expr subst  
- d__1 = 10.; d__2 = min(d__3,d__4); // , expr subst  
- tolmul = max(d__1,d__2);
+ d__1 = 10.; d__2 = fla_min(d__3,d__4); // , expr subst  
+ tolmul = fla_max(d__1,d__2);
  tol = tolmul * eps;
  /* Compute approximate maximum, minimum singular values */
  smax = 0.;
@@ -406,7 +406,7 @@
  ++i__) {
  /* Computing MAX */
  d__2 = smax; d__3 = (d__1 = d__[i__], f2c_abs(d__1)); // , expr subst  
- smax = max(d__2,d__3);
+ smax = fla_max(d__2,d__3);
  /* L20: */
  }
  i__1 = *n - 1;
@@ -415,7 +415,7 @@
  ++i__) {
  /* Computing MAX */
  d__2 = smax; d__3 = (d__1 = e[i__], f2c_abs(d__1)); // , expr subst  
- smax = max(d__2,d__3);
+ smax = fla_max(d__2,d__3);
  /* L30: */
  }
  sminl = 0.;
@@ -431,7 +431,7 @@
  i__ <= i__1;
  ++i__) {
  mu = (d__2 = d__[i__], f2c_abs(d__2)) * (mu / (mu + (d__1 = e[i__ - 1] , f2c_abs(d__1))));
- sminoa = min(sminoa,mu);
+ sminoa = fla_min(sminoa,mu);
  if (sminoa == 0.) {
  goto L50;
  }
@@ -440,13 +440,13 @@
  L50: sminoa /= sqrt((doublereal) (*n));
  /* Computing MAX */
  d__1 = tol * sminoa; d__2 = *n * (*n * unfl) * 6; // , expr subst  
- thresh = max(d__1,d__2);
+ thresh = fla_max(d__1,d__2);
  }
  else {
  /* Absolute accuracy desired */
  /* Computing MAX */
  d__1 = f2c_abs(tol) * smax; d__2 = *n * (*n * unfl) * 6; // , expr subst  
- thresh = max(d__1,d__2);
+ thresh = fla_max(d__1,d__2);
  }
  /* Prepare for main iteration loop for the singular values */
  /* (MAXIT is the maximum number of passes through the inner */
@@ -489,10 +489,10 @@
  if (abse <= thresh) {
  goto L80;
  }
- smin = min(smin,abss);
+ smin = fla_min(smin,abss);
  /* Computing MAX */
- d__1 = max(smax,abss);
- smax = max(d__1,abse);
+ d__1 = fla_max(smax,abss);
+ smax = fla_max(d__1,abse);
  /* L70: */
  }
  ll = 0;
@@ -559,7 +559,7 @@
  goto L60;
  }
  mu = (d__2 = d__[lll + 1], f2c_abs(d__2)) * (mu / (mu + (d__1 = e[ lll], f2c_abs(d__1))));
- sminl = min(sminl,mu);
+ sminl = fla_min(sminl,mu);
  /* L100: */
  }
  }
@@ -585,7 +585,7 @@
  goto L60;
  }
  mu = (d__2 = d__[lll], f2c_abs(d__2)) * (mu / (mu + (d__1 = e[lll] , f2c_abs(d__1))));
- sminl = min(sminl,mu);
+ sminl = fla_min(sminl,mu);
  /* L110: */
  }
  }
@@ -596,7 +596,7 @@
  /* accuracy, and if so set the shift to zero. */
  /* Computing MAX */
  d__1 = eps; d__2 = tol * .01; // , expr subst  
- if (tol >= 0. && *n * tol * (sminl / smax) <= max(d__1,d__2)) {
+ if (tol >= 0. && *n * tol * (sminl / smax) <= fla_max(d__1,d__2)) {
  /* Use a zero shift to avoid loss of relative accuracy */
  shift = 0.;
  }
