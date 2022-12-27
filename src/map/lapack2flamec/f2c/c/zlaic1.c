@@ -182,7 +182,7 @@ int zlaic1_(integer *job, integer *j, doublecomplex *x, doublereal *sest, double
         /* special cases */
         if (*sest == 0.)
         {
-            s1 = max(absgam,absalp);
+            s1 = fla_max(absgam,absalp);
             if (s1 == 0.)
             {
                 s->r = 0., s->i = 0.;
@@ -222,7 +222,7 @@ int zlaic1_(integer *job, integer *j, doublecomplex *x, doublereal *sest, double
         {
             s->r = 1., s->i = 0.;
             c__->r = 0., c__->i = 0.;
-            tmp = max(absest,absalp);
+            tmp = fla_max(absest,absalp);
             s1 = absest / tmp;
             s2 = absalp / tmp;
             *sestpr = tmp * sqrt(s1 * s1 + s2 * s2);
@@ -361,7 +361,7 @@ int zlaic1_(integer *job, integer *j, doublecomplex *x, doublereal *sest, double
         if (*sest == 0.)
         {
             *sestpr = 0.;
-            if (max(absgam,absalp) == 0.)
+            if (fla_max(absgam,absalp) == 0.)
             {
                 sine.r = 1.;
                 sine.i = 0.; // , expr subst
@@ -382,7 +382,7 @@ int zlaic1_(integer *job, integer *j, doublecomplex *x, doublereal *sest, double
             /* Computing MAX */
             d__1 = z_abs(&sine);
             d__2 = z_abs(&cosine); // , expr subst
-            s1 = max(d__1,d__2);
+            s1 = fla_max(d__1,d__2);
             z__1.r = sine.r / s1;
             z__1.i = sine.i / s1; // , expr subst
             s->r = z__1.r, s->i = z__1.i;
@@ -490,7 +490,7 @@ int zlaic1_(integer *job, integer *j, doublecomplex *x, doublereal *sest, double
             /* Computing MAX */
             d__1 = zeta1 * zeta1 + 1. + zeta1 * zeta2;
             d__2 = zeta1 * zeta2 + zeta2 * zeta2; // , expr subst
-            norma = max(d__1,d__2);
+            norma = fla_max(d__1,d__2);
             /* See if root is closer to zero or to ONE */
             test = (zeta1 - zeta2) * 2. * (zeta1 + zeta2) + 1.;
             if (test >= 0.)

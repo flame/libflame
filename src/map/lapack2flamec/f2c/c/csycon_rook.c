@@ -68,7 +68,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] IPIV */
@@ -191,7 +191,7 @@ int csycon_rook_(char *uplo, integer *n, complex *a, integer *lda, integer *ipiv
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }

@@ -25,7 +25,7 @@ int zhetd2_check(char *uplo, integer *n, dcomplex *a, integer *lda, double *d__,
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }

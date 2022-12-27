@@ -65,10 +65,10 @@ void heequb_test(int ip)
   }
   
   /* LDA is INTEGER
-          The leading dimension of the array A.  LDA >= max(1,N).*/
+          The leading dimension of the array A.  LDA >= fla_max(1,N).*/
   integer lda = lin_solver_paramslist[ip].lda;
-  if (lda < max(1, n)) {
-    PRINTF("lda < max(1, n) but it should be: LDA >= max(1,N). Please " \
+  if (lda < fla_max(1, n)) {
+    PRINTF("lda < fla_max(1, n) but it should be: LDA >= fla_max(1,N). Please " \
            "correct the input data.\n");
   }
   

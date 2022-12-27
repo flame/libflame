@@ -95,7 +95,7 @@ static real c_b35 = 1.f;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of A. LDA >= max(1,N). */
+/* > The leading dimension of A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -108,7 +108,7 @@ static real c_b35 = 1.f;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of B. LDB >= max(1,N). */
+/* > The leading dimension of B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ALPHAR */
@@ -352,11 +352,11 @@ int sggev3_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -7;
     }
@@ -373,7 +373,7 @@ int sggev3_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n << 3; // , expr subst
-        if (*lwork < max(i__1,i__2) && ! lquery)
+        if (*lwork < fla_max(i__1,i__2) && ! lquery)
         {
             *info = -16;
         }
@@ -384,31 +384,31 @@ int sggev3_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b
         sgeqrf_(n, n, &b[b_offset], ldb, &work[1], &work[1], &c_n1, &ierr);
         /* Computing MAX */
         i__1 = 1, i__2 = *n << 3;
-        i__1 = max(i__1,i__2);
+        i__1 = fla_max(i__1,i__2);
         i__2 = *n * 3 + ( integer) work[1]; // ; expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
         sormqr_("L", "T", n, n, n, &b[b_offset], ldb, &work[1], &a[a_offset], lda, &work[1], &c_n1, &ierr);
         /* Computing MAX */
         i__1 = lwkopt;
         i__2 = *n * 3 + (integer) work[1]; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
         sgghd3_(jobvl, jobvr, n, &c__1, n, &a[a_offset], lda, &b[b_offset], ldb, &vl[vl_offset], ldvl, &vr[vr_offset], ldvr, &work[1], & c_n1, &ierr);
         /* Computing MAX */
         i__1 = lwkopt;
         i__2 = *n * 3 + (integer) work[1]; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
         if (ilvl)
         {
             sorgqr_(n, n, n, &vl[vl_offset], ldvl, &work[1], &work[1], &c_n1, &ierr);
             /* Computing MAX */
             i__1 = lwkopt;
             i__2 = *n * 3 + (integer) work[1]; // , expr subst
-            lwkopt = max(i__1,i__2);
+            lwkopt = fla_max(i__1,i__2);
             shgeqz_("S", jobvl, jobvr, n, &c__1, n, &a[a_offset], lda, &b[ b_offset], ldb, &alphar[1], &alphai[1], &beta[1], &vl[ vl_offset], ldvl, &vr[vr_offset], ldvr, &work[1], &c_n1, & ierr);
             /* Computing MAX */
             i__1 = lwkopt;
             i__2 = (*n << 1) + (integer) work[1]; // , expr subst
-            lwkopt = max(i__1,i__2);
+            lwkopt = fla_max(i__1,i__2);
         }
         else
         {
@@ -416,7 +416,7 @@ int sggev3_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b
             /* Computing MAX */
             i__1 = lwkopt;
             i__2 = (*n << 1) + (integer) work[1]; // , expr subst
-            lwkopt = max(i__1,i__2);
+            lwkopt = fla_max(i__1,i__2);
         }
         work[1] = (real) lwkopt;
     }
@@ -605,7 +605,7 @@ int sggev3_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b
                         /* Computing MAX */
                         r__2 = temp;
                         r__3 = (r__1 = vl[jr + jc * vl_dim1], f2c_abs(r__1)); // , expr subst
-                        temp = max(r__2,r__3);
+                        temp = fla_max(r__2,r__3);
                         /* L10: */
                     }
                 }
@@ -619,7 +619,7 @@ int sggev3_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b
                         /* Computing MAX */
                         r__3 = temp;
                         r__4 = (r__1 = vl[jr + jc * vl_dim1], f2c_abs(r__1)) + (r__2 = vl[jr + (jc + 1) * vl_dim1], f2c_abs(r__2)); // , expr subst
-                        temp = max(r__3,r__4);
+                        temp = fla_max(r__3,r__4);
                         /* L20: */
                     }
                 }
@@ -678,7 +678,7 @@ L50:
                         /* Computing MAX */
                         r__2 = temp;
                         r__3 = (r__1 = vr[jr + jc * vr_dim1], f2c_abs(r__1)); // , expr subst
-                        temp = max(r__2,r__3);
+                        temp = fla_max(r__2,r__3);
                         /* L60: */
                     }
                 }
@@ -692,7 +692,7 @@ L50:
                         /* Computing MAX */
                         r__3 = temp;
                         r__4 = (r__1 = vr[jr + jc * vr_dim1], f2c_abs(r__1)) + (r__2 = vr[jr + (jc + 1) * vr_dim1], f2c_abs(r__2)); // , expr subst
-                        temp = max(r__3,r__4);
+                        temp = fla_max(r__3,r__4);
                         /* L70: */
                     }
                 }

@@ -43,7 +43,7 @@ static integer c__1 = 1;
 /* > */
 /* > where: */
 /* > S is a m-by-n diagonal sign matrix with the diagonal D, so that */
-/* > D(i) = S(i,i), 1 <= i <= min(M,N). The diagonal D is constructed */
+/* > D(i) = S(i,i), 1 <= i <= fla_min(M,N). The diagonal D is constructed */
 /* > as D(i)=-SIGN(A(i,i)), where A(i,i) is the value after performing */
 /* > i-1 steps of Gaussian elimination. This means that the diagonal */
 /* > element at each step of "modified" Gaussian elimination is at */
@@ -78,7 +78,7 @@ static integer c__1 = 1;
 /* > B = [ -----|----- ] B21 is (m-n1) by n1, */
 /* > [ B21 | B22 ] B12 is n1 by n2, */
 /* > B22 is (m-n1) by n2, */
-/* > with n1 = min(m,n)/2, n2 = n-n1. */
+/* > with n1 = fla_min(m,n)/2, n2 = n-n1. */
 /* > */
 /* > */
 /* > The subroutine calls itself to factor B11, solves for B21, */
@@ -126,14 +126,14 @@ the unit diagonal elements of L are not stored. */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] D */
 /* > \verbatim */
-/* > D is COMPLEX array, dimension min(M,N) */
+/* > D is COMPLEX array, dimension fla_min(M,N) */
 /* > The diagonal elements of the diagonal M-by-N sign matrix S, */
-/* > D(i) = S(i,i), where 1 <= i <= min(M,N). The elements can be */
+/* > D(i) = S(i,i), where 1 <= i <= fla_min(M,N). The elements can be */
 /* > only ( +1.0, 0.0 ) or (-1.0, 0.0 ). */
 /* > \endverbatim */
 /* > */
@@ -234,7 +234,7 @@ int claunhr_col_getrfnp2_(integer *m, integer *n, complex * a, integer *lda, com
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
@@ -246,7 +246,7 @@ int claunhr_col_getrfnp2_(integer *m, integer *n, complex * a, integer *lda, com
         return 0;
     }
     /* Quick return if possible */
-    if (min(*m,*n) == 0)
+    if (fla_min(*m,*n) == 0)
     {
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
@@ -318,7 +318,7 @@ int claunhr_col_getrfnp2_(integer *m, integer *n, complex * a, integer *lda, com
     else
     {
         /* Divide the matrix B into four submatrices */
-        n1 = min(*m,*n) / 2;
+        n1 = fla_min(*m,*n) / 2;
         n2 = *n - n1;
         /* Factor B11, recursive call */
         claunhr_col_getrfnp2_(&n1, &n1, &a[a_offset], lda, &d__[1], &iinfo);

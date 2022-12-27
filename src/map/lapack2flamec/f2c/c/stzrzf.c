@@ -70,7 +70,7 @@ static integer c__2 = 2;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] TAU */
@@ -88,7 +88,7 @@ static integer c__2 = 2;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,M). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,M). */
 /* > For optimum performance LWORK >= M*NB, where NB is */
 /* > the optimal blocksize. */
 /* > */
@@ -204,7 +204,7 @@ int stzrzf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
@@ -220,7 +220,7 @@ int stzrzf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
             /* Determine the block size. */
             nb = ilaenv_(&c__1, "SGERQF", " ", m, n, &c_n1, &c_n1);
             lwkopt = *m * nb;
-            lwkmin = max(1,*m);
+            lwkmin = fla_max(1,*m);
         }
         work[1] = (real) lwkopt;
         if (*lwork < lwkmin && ! lquery)
@@ -268,7 +268,7 @@ int stzrzf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
         /* Computing MAX */
         i__1 = 0;
         i__2 = ilaenv_(&c__3, "SGERQF", " ", m, n, &c_n1, &c_n1); // , expr subst
-        nx = max(i__1,i__2);
+        nx = fla_max(i__1,i__2);
         if (nx < *m)
         {
             /* Determine if workspace is large enough for blocked code. */
@@ -282,7 +282,7 @@ int stzrzf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
                 /* Computing MAX */
                 i__1 = 2;
                 i__2 = ilaenv_(&c__2, "SGERQF", " ", m, n, &c_n1, & c_n1); // , expr subst
-                nbmin = max(i__1,i__2);
+                nbmin = fla_max(i__1,i__2);
             }
         }
     }
@@ -292,12 +292,12 @@ int stzrzf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
         /* The last kk rows are handled by the block method. */
         /* Computing MIN */
         i__1 = *m + 1;
-        m1 = min(i__1,*n);
+        m1 = fla_min(i__1,*n);
         ki = (*m - nx - 1) / nb * nb;
         /* Computing MIN */
         i__1 = *m;
         i__2 = ki + nb; // , expr subst
-        kk = min(i__1,i__2);
+        kk = fla_min(i__1,i__2);
         i__1 = *m - kk + 1;
         i__2 = -nb;
         for (i__ = *m - kk + ki + 1;
@@ -306,7 +306,7 @@ int stzrzf_(integer *m, integer *n, real *a, integer *lda, real *tau, real *work
         {
             /* Computing MIN */
             i__3 = *m - i__ + 1;
-            ib = min(i__3,nb);
+            ib = fla_min(i__3,nb);
             /* Compute the TZ factorization of the current block */
             /* A(i:i+ib-1,i:n) */
             i__3 = *n - i__ + 1;

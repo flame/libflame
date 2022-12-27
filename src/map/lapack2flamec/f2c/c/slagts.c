@@ -118,7 +118,7 @@
 /* > perturbation to be made to very small diagonal elements of U. */
 /* > TOL should normally be chosen as about eps*norm(U), where eps */
 /* > is the relative machine precision, but if TOL is supplied as */
-/* > non-positive, then it is reset to eps*max( f2c_abs( u(i,j) ) ). */
+/* > non-positive, then it is reset to eps*fla_max( f2c_abs( u(i,j) ) ). */
 /* > If JOB .gt. 0 then TOL is not referenced. */
 /* > */
 /* > On exit, TOL is changed as described above, only if TOL is */
@@ -220,9 +220,9 @@ int slagts_(integer *job, integer *n, real *a, real *b, real *c__, real *d__, in
             {
                 /* Computing MAX */
                 r__1 = *tol, r__2 = f2c_abs(a[2]);
-                r__1 = max(r__1,r__2);
+                r__1 = fla_max(r__1,r__2);
                 r__2 = f2c_abs(b[1]); // ; expr subst
-                *tol = max(r__1,r__2);
+                *tol = fla_max(r__1,r__2);
             }
             i__1 = *n;
             for (k = 3;
@@ -230,10 +230,10 @@ int slagts_(integer *job, integer *n, real *a, real *b, real *c__, real *d__, in
                     ++k)
             {
                 /* Computing MAX */
-                r__4 = *tol, r__5 = (r__1 = a[k], f2c_abs(r__1)), r__4 = max(r__4, r__5), r__5 = (r__2 = b[k - 1], f2c_abs(r__2));
-                r__4 = max(r__4,r__5);
+                r__4 = *tol, r__5 = (r__1 = a[k], f2c_abs(r__1)), r__4 = fla_max(r__4, r__5), r__5 = (r__2 = b[k - 1], f2c_abs(r__2));
+                r__4 = fla_max(r__4,r__5);
                 r__5 = (r__3 = d__[k - 2], f2c_abs(r__3)); // ; expr subst
-                *tol = max(r__4,r__5);
+                *tol = fla_max(r__4,r__5);
                 /* L10: */
             }
             *tol *= eps;

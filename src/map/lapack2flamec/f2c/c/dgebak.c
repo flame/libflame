@@ -101,7 +101,7 @@ ILO=1 and IHI=0, if N=0. */
 /* > \param[in] LDV */
 /* > \verbatim */
 /* > LDV is INTEGER */
-/* > The leading dimension of the array V. LDV >= max(1,N). */
+/* > The leading dimension of the array V. LDV >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -181,11 +181,11 @@ int dgebak_(char *job, char *side, integer *n, integer *ilo, integer *ihi, doubl
     {
         *info = -3;
     }
-    else if (*ilo < 1 || *ilo > max(1,*n))
+    else if (*ilo < 1 || *ilo > fla_max(1,*n))
     {
         *info = -4;
     }
-    else if (*ihi < min(*ilo,*n) || *ihi > *n)
+    else if (*ihi < fla_min(*ilo,*n) || *ihi > *n)
     {
         *info = -5;
     }
@@ -193,7 +193,7 @@ int dgebak_(char *job, char *side, integer *n, integer *ilo, integer *ihi, doubl
     {
         *info = -7;
     }
-    else if (*ldv < max(1,*n))
+    else if (*ldv < fla_max(1,*n))
     {
         *info = -9;
     }

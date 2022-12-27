@@ -32,7 +32,7 @@ void orgbr_test()
 {
   int m = 512;
   int n = 512;
-  int min_m_n = min( m, n );
+  int min_m_n = fla_min( m, n );
   srand (time(NULL));
 
   FLA_Init( );

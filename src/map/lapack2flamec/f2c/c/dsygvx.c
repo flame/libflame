@@ -103,7 +103,7 @@ static doublereal c_b19 = 1.;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -123,7 +123,7 @@ static doublereal c_b19 = 1.;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] VL */
@@ -162,7 +162,7 @@ IL = 1 and IU = 0 if N = 0. */
 /* > when it is determined to lie in an interval [a,b] */
 /* > of width less than or equal to */
 /* > */
-/* > ABSTOL + EPS * max( |a|,|b| ) , */
+/* > ABSTOL + EPS * fla_max( |a|,|b| ) , */
 /* > */
 /* > where EPS is the machine precision. If ABSTOL is less than */
 /* > or equal to zero, then EPS*|T| will be used in its place, */
@@ -194,7 +194,7 @@ IL = 1 and IU = 0 if N = 0. */
 /* > */
 /* > \param[out] Z */
 /* > \verbatim */
-/* > Z is DOUBLE PRECISION array, dimension (LDZ, max(1,M)) */
+/* > Z is DOUBLE PRECISION array, dimension (LDZ, fla_max(1,M)) */
 /* > If JOBZ = 'N', then Z is not referenced. */
 /* > If JOBZ = 'V', then if INFO = 0, the first M columns of Z */
 /* > contain the orthonormal eigenvectors of the matrix A */
@@ -208,7 +208,7 @@ IL = 1 and IU = 0 if N = 0. */
 /* > If an eigenvector fails to converge, then that column of Z */
 /* > contains the latest approximation to the eigenvector, and the */
 /* > index of the eigenvector is returned in IFAIL. */
-/* > Note: the user must ensure that at least max(1,M) columns are */
+/* > Note: the user must ensure that at least fla_max(1,M) columns are */
 /* > supplied in the array Z;
 if RANGE = 'V', the exact value of M */
 /* > is not known in advance and an upper bound must be used. */
@@ -218,7 +218,7 @@ if RANGE = 'V', the exact value of M */
 /* > \verbatim */
 /* > LDZ is INTEGER */
 /* > The leading dimension of the array Z. LDZ >= 1, and if */
-/* > JOBZ = 'V', LDZ >= max(1,N). */
+/* > JOBZ = 'V', LDZ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -230,7 +230,7 @@ if RANGE = 'V', the exact value of M */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The length of the array WORK. LWORK >= max(1,8*N). */
+/* > The length of the array WORK. LWORK >= fla_max(1,8*N). */
 /* > For optimal efficiency, LWORK >= (NB+3)*N, */
 /* > where NB is the blocksize for DSYTRD returned by ILAENV. */
 /* > */
@@ -374,11 +374,11 @@ int dsygvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, do
     {
         *info = -5;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -7;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -9;
     }
@@ -393,11 +393,11 @@ int dsygvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, do
         }
         else if (indeig)
         {
-            if (*il < 1 || *il > max(1,*n))
+            if (*il < 1 || *il > fla_max(1,*n))
             {
                 *info = -12;
             }
-            else if (*iu < min(*n,*il) || *iu > *n)
+            else if (*iu < fla_min(*n,*il) || *iu > *n)
             {
                 *info = -13;
             }
@@ -415,12 +415,12 @@ int dsygvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, do
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n << 3; // , expr subst
-        lwkmin = max(i__1,i__2);
+        lwkmin = fla_max(i__1,i__2);
         nb = ilaenv_(&c__1, "DSYTRD", uplo, n, &c_n1, &c_n1, &c_n1);
         /* Computing MAX */
         i__1 = lwkmin;
         i__2 = (nb + 3) * *n; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
         work[1] = (doublereal) lwkopt;
         if (*lwork < lwkmin && ! lquery)
         {

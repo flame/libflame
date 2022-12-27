@@ -171,7 +171,7 @@ K=N/2. If */
 /* > LDB is INTEGER */
 /* > On entry, LDB specifies the first dimension of B as declared */
 /* > in the calling (sub) program. LDB must be at least */
-/* > max( 1, m ). */
+/* > fla_max( 1, m ). */
 /* > Unchanged on exit. */
 /* > \endverbatim */
 /* Authors: */
@@ -378,7 +378,7 @@ int ctfsm_(char *transr, char *side, char *uplo, char *trans, char *diag, intege
     {
         info = -7;
     }
-    else if (*ldb < max(1,*m))
+    else if (*ldb < fla_max(1,*m))
     {
         info = -11;
     }

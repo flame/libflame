@@ -125,7 +125,7 @@ int dlaruv_(integer *iseed, integer *n, doublereal *x)
     i2 = iseed[2];
     i3 = iseed[3];
     i4 = iseed[4];
-    i__1 = min(*n,128);
+    i__1 = fla_min(*n,128);
     for (i__ = 1;
             i__ <= i__1;
             ++i__)

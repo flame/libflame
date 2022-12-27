@@ -26,7 +26,7 @@ int sorg2r_check(integer *m, integer *n, integer *k, float *a, integer *lda, flo
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }

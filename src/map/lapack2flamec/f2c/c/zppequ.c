@@ -192,11 +192,11 @@ int zppequ_(char *uplo, integer *n, doublecomplex *ap, doublereal *s, doublereal
             /* Computing MIN */
             d__1 = smin;
             d__2 = s[i__]; // , expr subst
-            smin = min(d__1,d__2);
+            smin = fla_min(d__1,d__2);
             /* Computing MAX */
             d__1 = *amax;
             d__2 = s[i__]; // , expr subst
-            *amax = max(d__1,d__2);
+            *amax = fla_max(d__1,d__2);
             /* L10: */
         }
     }
@@ -216,11 +216,11 @@ int zppequ_(char *uplo, integer *n, doublecomplex *ap, doublereal *s, doublereal
             /* Computing MIN */
             d__1 = smin;
             d__2 = s[i__]; // , expr subst
-            smin = min(d__1,d__2);
+            smin = fla_min(d__1,d__2);
             /* Computing MAX */
             d__1 = *amax;
             d__2 = s[i__]; // , expr subst
-            *amax = max(d__1,d__2);
+            *amax = fla_max(d__1,d__2);
             /* L20: */
         }
     }
@@ -253,7 +253,7 @@ int zppequ_(char *uplo, integer *n, doublecomplex *ap, doublereal *s, doublereal
             s[i__] = 1. / sqrt(s[i__]);
             /* L40: */
         }
-        /* Compute SCOND = min(S(I)) / max(S(I)) */
+        /* Compute SCOND = fla_min(S(I)) / fla_max(S(I)) */
         *scond = sqrt(smin) / sqrt(*amax);
     }
     AOCL_DTL_TRACE_LOG_EXIT

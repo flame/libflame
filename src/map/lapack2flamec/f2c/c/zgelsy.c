@@ -116,7 +116,7 @@ they are stored as the columns of the */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -129,7 +129,7 @@ they are stored as the columns of the */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,M,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,M,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] JPVT */
@@ -170,7 +170,7 @@ they are stored as the columns of the */
 /* > The dimension of the array WORK. */
 /* > The unblocked strategy requires that: */
 /* > LWORK >= MN + MAX( 2*MN, N+1, MN+NRHS ) */
-/* > where MN = min(M,N). */
+/* > where MN = fla_min(M,N). */
 /* > The block algorithm requires that: */
 /* > LWORK >= MN + MAX( 2*MN, NB*(N+1), MN+MN*NB, MN+NB*NRHS ) */
 /* > where NB is an upper bound on the blocksize returned */
@@ -276,7 +276,7 @@ int zgelsy_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     --work;
     --rwork;
     /* Function Body */
-    mn = min(*m,*n);
+    mn = fla_min(*m,*n);
     ismin = mn + 1;
     ismax = (mn << 1) + 1;
     /* Test the input arguments. */
@@ -286,14 +286,14 @@ int zgelsy_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     nb3 = ilaenv_(&c__1, "ZUNMQR", " ", m, n, nrhs, &c_n1);
     nb4 = ilaenv_(&c__1, "ZUNMRQ", " ", m, n, nrhs, &c_n1);
     /* Computing MAX */
-    i__1 = max(nb1,nb2);
-    i__1 = max(i__1,nb3); // , expr subst
-    nb = max(i__1,nb4);
+    i__1 = fla_max(nb1,nb2);
+    i__1 = fla_max(i__1,nb3); // , expr subst
+    nb = fla_max(i__1,nb4);
     /* Computing MAX */
     i__1 = 1, i__2 = mn + (*n << 1) + nb * (*n + 1);
-    i__1 = max(i__1,i__2);
+    i__1 = fla_max(i__1,i__2);
     i__2 = (mn << 1) + nb * *nrhs; // ; expr subst
-    lwkopt = max(i__1,i__2);
+    lwkopt = fla_max(i__1,i__2);
     z__1.r = (doublereal) lwkopt;
     z__1.i = 0.; // , expr subst
     work[1].r = z__1.r;
@@ -311,15 +311,15 @@ int zgelsy_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }
     else /* if(complicated condition) */
     {
         /* Computing MAX */
-        i__1 = max(1,*m);
-        if (*ldb < max(i__1,*n))
+        i__1 = fla_max(1,*m);
+        if (*ldb < fla_max(i__1,*n))
         {
             *info = -7;
         }
@@ -327,9 +327,9 @@ int zgelsy_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
         {
             /* Computing MAX */
             i__1 = mn << 1, i__2 = *n + 1;
-            i__1 = max(i__1,i__2);
+            i__1 = fla_max(i__1,i__2);
             i__2 = mn + *nrhs; // ; expr subst
-            if (*lwork < mn + max(i__1,i__2) && ! lquery)
+            if (*lwork < mn + fla_max(i__1,i__2) && ! lquery)
             {
                 *info = -12;
             }
@@ -349,8 +349,8 @@ int zgelsy_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     }
     /* Quick return if possible */
     /* Computing MIN */
-    i__1 = min(*m,*n);
-    if (min(i__1,*nrhs) == 0)
+    i__1 = fla_min(*m,*n);
+    if (fla_min(i__1,*nrhs) == 0)
     {
         *rank = 0;
         AOCL_DTL_TRACE_LOG_EXIT
@@ -378,7 +378,7 @@ int zgelsy_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     else if (anrm == 0.)
     {
         /* Matrix all zero. Return zero solution. */
-        i__1 = max(*m,*n);
+        i__1 = fla_max(*m,*n);
         zlaset_("F", &i__1, nrhs, &c_b1, &c_b1, &b[b_offset], ldb);
         *rank = 0;
         goto L70;
@@ -417,7 +417,7 @@ int zgelsy_(integer *m, integer *n, integer *nrhs, doublecomplex *a, integer *ld
     if (z_abs(&a[a_dim1 + 1]) == 0.)
     {
         *rank = 0;
-        i__1 = max(*m,*n);
+        i__1 = fla_max(*m,*n);
         zlaset_("F", &i__1, nrhs, &c_b1, &c_b1, &b[b_offset], ldb);
         goto L70;
     }
@@ -483,7 +483,7 @@ L10:
     i__1 = (mn << 1) + 1;
     d__1 = wsize;
     d__2 = (mn << 1) + work[i__1].r; // , expr subst
-    wsize = max(d__1,d__2);
+    wsize = fla_max(d__1,d__2);
     /* complex workspace: 2*MN+NB*NRHS. */
     /* B(1:RANK,1:NRHS) := inv(T11) * B(1:RANK,1:NRHS) */
     ztrsm_("Left", "Upper", "No transpose", "Non-unit", rank, nrhs, &c_b2, &a[ a_offset], lda, &b[b_offset], ldb);

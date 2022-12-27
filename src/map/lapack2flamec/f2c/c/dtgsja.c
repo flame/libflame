@@ -208,7 +208,7 @@ A23 is L-by-L upper triangular if M-K-L >= 0, */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -222,7 +222,7 @@ A23 is L-by-L upper triangular if M-K-L >= 0, */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,P). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,P). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] TOLA */
@@ -237,8 +237,8 @@ A23 is L-by-L upper triangular if M-K-L >= 0, */
 /* > TOLA and TOLB are the convergence criteria for the Jacobi- */
 /* > Kogbetliantz iteration procedure. Generally, they are the */
 /* > same as used in the preprocessing step, say */
-/* > TOLA = max(M,N)*norm(A)*MAZHEPS, */
-/* > TOLB = max(P,N)*norm(B)*MAZHEPS. */
+/* > TOLA = fla_max(M,N)*norm(A)*MAZHEPS, */
+/* > TOLB = fla_max(P,N)*norm(B)*MAZHEPS. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ALPHA */
@@ -281,7 +281,7 @@ A23 is L-by-L upper triangular if M-K-L >= 0, */
 /* > \param[in] LDU */
 /* > \verbatim */
 /* > LDU is INTEGER */
-/* > The leading dimension of the array U. LDU >= max(1,M) if */
+/* > The leading dimension of the array U. LDU >= fla_max(1,M) if */
 /* > JOBU = 'U';
 LDU >= 1 otherwise. */
 /* > \endverbatim */
@@ -301,7 +301,7 @@ LDU >= 1 otherwise. */
 /* > \param[in] LDV */
 /* > \verbatim */
 /* > LDV is INTEGER */
-/* > The leading dimension of the array V. LDV >= max(1,P) if */
+/* > The leading dimension of the array V. LDV >= fla_max(1,P) if */
 /* > JOBV = 'V';
 LDV >= 1 otherwise. */
 /* > \endverbatim */
@@ -321,7 +321,7 @@ LDV >= 1 otherwise. */
 /* > \param[in] LDQ */
 /* > \verbatim */
 /* > LDQ is INTEGER */
-/* > The leading dimension of the array Q. LDQ >= max(1,N) if */
+/* > The leading dimension of the array Q. LDQ >= fla_max(1,N) if */
 /* > JOBQ = 'Q';
 LDQ >= 1 otherwise. */
 /* > \endverbatim */
@@ -368,7 +368,7 @@ LDQ >= 1 otherwise. */
 /* > \verbatim */
 /* > */
 /* > DTGSJA essentially uses a variant of Kogbetliantz algorithm to reduce */
-/* > min(L,M-K)-by-L triangular (or trapezoidal) matrix A23 and L-by-L */
+/* > fla_min(L,M-K)-by-L triangular (or trapezoidal) matrix A23 and L-by-L */
 /* > matrix B13 to the form: */
 /* > */
 /* > U1**T *A13*Q1 = C1*R1;
@@ -482,11 +482,11 @@ int dtgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     {
         *info = -6;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -10;
     }
-    else if (*ldb < max(1,*p))
+    else if (*ldb < fla_max(1,*p))
     {
         *info = -12;
     }
@@ -580,7 +580,7 @@ int dtgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
                 /* A and B: A*Q and B*Q */
                 /* Computing MIN */
                 i__4 = *k + *l;
-                i__3 = min(i__4,*m);
+                i__3 = fla_min(i__4,*m);
                 drot_(&i__3, &a[(*n - *l + j) * a_dim1 + 1], &c__1, &a[(*n - * l + i__) * a_dim1 + 1], &c__1, &csq, &snq);
                 drot_(l, &b[(*n - *l + j) * b_dim1 + 1], &c__1, &b[(*n - *l + i__) * b_dim1 + 1], &c__1, &csq, &snq);
                 if (upper)
@@ -626,7 +626,7 @@ int dtgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
             /* Computing MIN */
             i__2 = *l;
             i__3 = *m - *k; // , expr subst
-            i__1 = min(i__2,i__3);
+            i__1 = fla_min(i__2,i__3);
             for (i__ = 1;
                     i__ <= i__1;
                     ++i__)
@@ -637,10 +637,10 @@ int dtgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
                 dcopy_(&i__2, &b[i__ + (*n - *l + i__) * b_dim1], ldb, &work[* l + 1], &c__1);
                 i__2 = *l - i__ + 1;
                 dlapll_(&i__2, &work[1], &c__1, &work[*l + 1], &c__1, &ssmin);
-                error = max(error,ssmin);
+                error = fla_max(error,ssmin);
                 /* L30: */
             }
-            if (f2c_dabs(error) <= min(*tola,*tolb))
+            if (f2c_dabs(error) <= fla_min(*tola,*tolb))
             {
                 goto L50;
             }
@@ -666,7 +666,7 @@ L50: /* If ERROR <= MIN(TOLA,TOLB), then the algorithm has converged. */
     /* Computing MIN */
     i__2 = *l;
     i__3 = *m - *k; // , expr subst
-    i__1 = min(i__2,i__3);
+    i__1 = fla_min(i__2,i__3);
     for (i__ = 1;
             i__ <= i__1;
             ++i__)

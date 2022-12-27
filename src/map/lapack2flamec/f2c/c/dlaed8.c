@@ -97,7 +97,7 @@ static integer c__1 = 1;
 /* > \param[in] LDQ */
 /* > \verbatim */
 /* > LDQ is INTEGER */
-/* > The leading dimension of the array Q. LDQ >= max(1,N). */
+/* > The leading dimension of the array Q. LDQ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] INDXQ */
@@ -123,7 +123,7 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > CUTPNT is INTEGER */
 /* > The location of the last eigenvalue in the leading */
-/* > sub-matrix. min(1,N) <= CUTPNT <= N. */
+/* > sub-matrix. fla_min(1,N) <= CUTPNT <= N. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] Z */
@@ -155,7 +155,7 @@ static integer c__1 = 1;
 /* > \param[in] LDQ2 */
 /* > \verbatim */
 /* > LDQ2 is INTEGER */
-/* > The leading dimension of the array Q2. LDQ2 >= max(1,N). */
+/* > The leading dimension of the array Q2. LDQ2 >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] W */
@@ -303,15 +303,15 @@ int dlaed8_(integer *icompq, integer *k, integer *n, integer *qsiz, doublereal *
     {
         *info = -4;
     }
-    else if (*ldq < max(1,*n))
+    else if (*ldq < fla_max(1,*n))
     {
         *info = -7;
     }
-    else if (*cutpnt < min(1,*n) || *cutpnt > *n)
+    else if (*cutpnt < fla_min(1,*n) || *cutpnt > *n)
     {
         *info = -10;
     }
-    else if (*ldq2 < max(1,*n))
+    else if (*ldq2 < fla_max(1,*n))
     {
         *info = -14;
     }

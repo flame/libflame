@@ -335,7 +335,7 @@ printf( "FLA_Tevd_n_opz_var1: m_A11    = %d\n", m_A11 );
 
 			// Update the maximum number of iterations performed in the
 			// current sweep.
-			n_iter_perf_sweep_max = max( n_iter_perf_sweep_max, n_iter_perf );
+			n_iter_perf_sweep_max = fla_max( n_iter_perf_sweep_max, n_iter_perf );
 
 #ifdef PRINTF
 printf( "FLA_Tevd_n_opz_var1: deflations observed       = %d\n", n_deflations );

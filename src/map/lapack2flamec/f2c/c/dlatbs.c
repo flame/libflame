@@ -101,9 +101,9 @@ static doublereal c_b36 = .5;
 /* > The upper or lower triangular band matrix A, stored in the */
 /* > first KD+1 rows of the array. The j-th column of A is stored */
 /* > in the j-th column of the array AB as follows: */
-/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j;
+/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(n,j+kd). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(n,j+kd). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDAB */
@@ -200,7 +200,7 @@ x(i), i=1,...,n}
 /* > */
 /* > Since |x(j)| <= M(j), we use the Level 2 BLAS routine DTBSV if the */
 /* > reciprocal of the largest M(j), j=1,..,n, is larger than */
-/* > max(underflow, 1/overflow). */
+/* > fla_max(underflow, 1/overflow). */
 /* > */
 /* > The bound on x(j) is also used to determine when a step in the */
 /* > columnwise method can be performed without fear of overflow. If */
@@ -231,7 +231,7 @@ b(i), i=1,..,n}
 /* > 1<=i<=j */
 /* > */
 /* > and we can safely call DTBSV if 1/M(n) and 1/G(n) are both greater */
-/* > than max(underflow, 1/overflow). */
+/* > than fla_max(underflow, 1/overflow). */
 /* > \endverbatim */
 /* > */
 /* ===================================================================== */
@@ -361,7 +361,7 @@ int dlatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, inte
                 /* Computing MIN */
                 i__2 = *kd;
                 i__3 = j - 1; // , expr subst
-                jlen = min(i__2,i__3);
+                jlen = fla_min(i__2,i__3);
                 cnorm[j] = dasum_(&jlen, &ab[*kd + 1 - jlen + j * ab_dim1], & c__1);
                 /* L10: */
             }
@@ -377,7 +377,7 @@ int dlatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, inte
                 /* Computing MIN */
                 i__2 = *kd;
                 i__3 = *n - j; // , expr subst
-                jlen = min(i__2,i__3);
+                jlen = fla_min(i__2,i__3);
                 if (jlen > 0)
                 {
                     cnorm[j] = dasum_(&jlen, &ab[j * ab_dim1 + 2], &c__1);
@@ -437,7 +437,7 @@ int dlatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, inte
             /* Initially, G(0) = max{
             x(i), i=1,...,n}
             . */
-            grow = 1. / max(xbnd,smlnum);
+            grow = 1. / fla_max(xbnd,smlnum);
             xbnd = grow;
             i__1 = jlast;
             i__2 = jinc;
@@ -454,8 +454,8 @@ int dlatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, inte
                 tjj = (d__1 = ab[maind + j * ab_dim1], f2c_dabs(d__1));
                 /* Computing MIN */
                 d__1 = xbnd;
-                d__2 = min(1.,tjj) * grow; // , expr subst
-                xbnd = min(d__1,d__2);
+                d__2 = fla_min(1.,tjj) * grow; // , expr subst
+                xbnd = fla_min(d__1,d__2);
                 if (tjj + cnorm[j] >= smlnum)
                 {
                     /* G(j) = G(j-1)*( 1 + CNORM(j) / f2c_dabs(A(j,j)) ) */
@@ -478,8 +478,8 @@ int dlatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, inte
             . */
             /* Computing MIN */
             d__1 = 1.;
-            d__2 = 1. / max(xbnd,smlnum); // , expr subst
-            grow = min(d__1,d__2);
+            d__2 = 1. / fla_max(xbnd,smlnum); // , expr subst
+            grow = fla_min(d__1,d__2);
             i__2 = jlast;
             i__1 = jinc;
             for (j = jfirst;
@@ -528,7 +528,7 @@ L50:
             /* Initially, M(0) = max{
             x(i), i=1,...,n}
             . */
-            grow = 1. / max(xbnd,smlnum);
+            grow = 1. / fla_max(xbnd,smlnum);
             xbnd = grow;
             i__1 = jlast;
             i__2 = jinc;
@@ -541,12 +541,12 @@ L50:
                 {
                     goto L80;
                 }
-                /* G(j) = max( G(j-1), M(j-1)*( 1 + CNORM(j) ) ) */
+                /* G(j) = fla_max( G(j-1), M(j-1)*( 1 + CNORM(j) ) ) */
                 xj = cnorm[j] + 1.;
                 /* Computing MIN */
                 d__1 = grow;
                 d__2 = xbnd / xj; // , expr subst
-                grow = min(d__1,d__2);
+                grow = fla_min(d__1,d__2);
                 /* M(j) = M(j-1)*( 1 + CNORM(j) ) / f2c_dabs(A(j,j)) */
                 tjj = (d__1 = ab[maind + j * ab_dim1], f2c_dabs(d__1));
                 if (xj > tjj)
@@ -555,7 +555,7 @@ L50:
                 }
                 /* L60: */
             }
-            grow = min(grow,xbnd);
+            grow = fla_min(grow,xbnd);
         }
         else
         {
@@ -565,8 +565,8 @@ L50:
             . */
             /* Computing MIN */
             d__1 = 1.;
-            d__2 = 1. / max(xbnd,smlnum); // , expr subst
-            grow = min(d__1,d__2);
+            d__2 = 1. / fla_max(xbnd,smlnum); // , expr subst
+            grow = fla_min(d__1,d__2);
             i__2 = jlast;
             i__1 = jinc;
             for (j = jfirst;
@@ -707,12 +707,12 @@ L100: /* Scale x if necessary to avoid overflow when adding a */
                     if (j > 1)
                     {
                         /* Compute the update */
-                        /* x(max(1,j-kd):j-1) := x(max(1,j-kd):j-1) - */
-                        /* x(j)* A(max(1,j-kd):j-1,j) */
+                        /* x(fla_max(1,j-kd):j-1) := x(fla_max(1,j-kd):j-1) - */
+                        /* x(j)* A(fla_max(1,j-kd):j-1,j) */
                         /* Computing MIN */
                         i__3 = *kd;
                         i__4 = j - 1; // , expr subst
-                        jlen = min(i__3,i__4);
+                        jlen = fla_min(i__3,i__4);
                         d__1 = -x[j] * tscal;
                         daxpy_(&jlen, &d__1, &ab[*kd + 1 - jlen + j * ab_dim1], &c__1, &x[j - jlen], &c__1);
                         i__3 = j - 1;
@@ -723,12 +723,12 @@ L100: /* Scale x if necessary to avoid overflow when adding a */
                 else if (j < *n)
                 {
                     /* Compute the update */
-                    /* x(j+1:min(j+kd,n)) := x(j+1:min(j+kd,n)) - */
-                    /* x(j) * A(j+1:min(j+kd,n),j) */
+                    /* x(j+1:fla_min(j+kd,n)) := x(j+1:fla_min(j+kd,n)) - */
+                    /* x(j) * A(j+1:fla_min(j+kd,n),j) */
                     /* Computing MIN */
                     i__3 = *kd;
                     i__4 = *n - j; // , expr subst
-                    jlen = min(i__3,i__4);
+                    jlen = fla_min(i__3,i__4);
                     if (jlen > 0)
                     {
                         d__1 = -x[j] * tscal;
@@ -754,7 +754,7 @@ L100: /* Scale x if necessary to avoid overflow when adding a */
                 /* k<>j */
                 xj = (d__1 = x[j], f2c_dabs(d__1));
                 uscal = tscal;
-                rec = 1. / max(xmax,1.);
+                rec = 1. / fla_max(xmax,1.);
                 if (cnorm[j] > (bignum - xj) * rec)
                 {
                     /* If x(j) could overflow, scale x by 1/(2*XMAX). */
@@ -774,7 +774,7 @@ L100: /* Scale x if necessary to avoid overflow when adding a */
                         /* Computing MIN */
                         d__1 = 1.;
                         d__2 = rec * tjj; // , expr subst
-                        rec = min(d__1,d__2);
+                        rec = fla_min(d__1,d__2);
                         uscal /= tjjs;
                     }
                     if (rec < 1.)
@@ -794,7 +794,7 @@ L100: /* Scale x if necessary to avoid overflow when adding a */
                         /* Computing MIN */
                         i__3 = *kd;
                         i__4 = j - 1; // , expr subst
-                        jlen = min(i__3,i__4);
+                        jlen = fla_min(i__3,i__4);
                         sumj = ddot_(&jlen, &ab[*kd + 1 - jlen + j * ab_dim1], &c__1, &x[j - jlen], &c__1);
                     }
                     else
@@ -802,7 +802,7 @@ L100: /* Scale x if necessary to avoid overflow when adding a */
                         /* Computing MIN */
                         i__3 = *kd;
                         i__4 = *n - j; // , expr subst
-                        jlen = min(i__3,i__4);
+                        jlen = fla_min(i__3,i__4);
                         if (jlen > 0)
                         {
                             sumj = ddot_(&jlen, &ab[j * ab_dim1 + 2], &c__1, & x[j + 1], &c__1);
@@ -817,7 +817,7 @@ L100: /* Scale x if necessary to avoid overflow when adding a */
                         /* Computing MIN */
                         i__3 = *kd;
                         i__4 = j - 1; // , expr subst
-                        jlen = min(i__3,i__4);
+                        jlen = fla_min(i__3,i__4);
                         i__3 = jlen;
                         for (i__ = 1;
                                 i__ <= i__3;
@@ -832,7 +832,7 @@ L100: /* Scale x if necessary to avoid overflow when adding a */
                         /* Computing MIN */
                         i__3 = *kd;
                         i__4 = *n - j; // , expr subst
-                        jlen = min(i__3,i__4);
+                        jlen = fla_min(i__3,i__4);
                         i__3 = jlen;
                         for (i__ = 1;
                                 i__ <= i__3;
@@ -920,7 +920,7 @@ L150:
                 /* Computing MAX */
                 d__2 = xmax;
                 d__3 = (d__1 = x[j], f2c_dabs(d__1)); // , expr subst
-                xmax = max(d__2,d__3);
+                xmax = fla_max(d__2,d__3);
                 /* L160: */
             }
         }

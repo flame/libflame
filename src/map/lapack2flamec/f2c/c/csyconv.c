@@ -68,7 +68,7 @@
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] IPIV */
@@ -161,7 +161,7 @@ int csyconv_(char *uplo, char *way, integer *n, complex *a, integer *lda, intege
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }

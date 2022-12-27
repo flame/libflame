@@ -86,7 +86,7 @@ void time_Chol(
     }
 
     *dtime = FLA_Clock() - *dtime;
-    dtime_save = min( *dtime, dtime_save );
+    dtime_save = fla_min( *dtime, dtime_save );
   }
 
   if ( param_combo == 0 )

@@ -263,7 +263,7 @@ int dsb2st_kernels_(char *uplo, logical *wantz, integer * ttype, integer *st, in
             j1 = *ed + 1;
             /* Computing MIN */
             i__1 = *ed + *nb;
-            j2 = min(i__1,*n);
+            j2 = fla_min(i__1,*n);
             ln = *ed - *st + 1;
             lm = j2 - j1 + 1;
             if (lm > 0)
@@ -344,7 +344,7 @@ int dsb2st_kernels_(char *uplo, logical *wantz, integer * ttype, integer *st, in
             j1 = *ed + 1;
             /* Computing MIN */
             i__1 = *ed + *nb;
-            j2 = min(i__1,*n);
+            j2 = fla_min(i__1,*n);
             ln = *ed - *st + 1;
             lm = j2 - j1 + 1;
             if (lm > 0)

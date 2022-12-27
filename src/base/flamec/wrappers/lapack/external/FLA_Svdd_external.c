@@ -43,7 +43,7 @@ FLA_Error FLA_Svdd_external( FLA_Svd_type jobz, FLA_Obj A, FLA_Obj s, FLA_Obj U,
 
   cs_V     = FLA_Obj_col_stride( V );
 
-  min_m_n  = min( m_A, n_A );
+  min_m_n  = fla_min( m_A, n_A );
 
   // Allocate the rwork and iwork arrays up front.
   if ( jobz == FLA_SVD_VECTORS_NONE ) lrwork   = 5 * min_m_n;

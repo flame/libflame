@@ -23,7 +23,7 @@ FLA_Error LU_blk_var4( FLA_Obj A, int nb_alg )
 
   while ( FLA_Obj_length( ATL ) < FLA_Obj_length( A ) ){
 
-    b = min( FLA_Obj_length( ABR ), nb_alg );
+    b = fla_min( FLA_Obj_length( ABR ), nb_alg );
 
     FLA_Repart_2x2_to_3x3( ATL, /**/ ATR,       &A00, /**/ &A01, &A02,
                         /* ************* */   /* ******************** */

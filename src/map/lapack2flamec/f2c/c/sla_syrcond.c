@@ -68,7 +68,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] AF */
@@ -81,7 +81,7 @@ static integer c__1 = 1;
 /* > \param[in] LDAF */
 /* > \verbatim */
 /* > LDAF is INTEGER */
-/* > The leading dimension of the array AF. LDAF >= max(1,N). */
+/* > The leading dimension of the array AF. LDAF >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] IPIV */
@@ -193,11 +193,11 @@ real sla_syrcond_(char *uplo, integer *n, real *a, integer *lda, real *af, integ
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }
-    else if (*ldaf < max(1,*n))
+    else if (*ldaf < fla_max(1,*n))
     {
         *info = -6;
     }

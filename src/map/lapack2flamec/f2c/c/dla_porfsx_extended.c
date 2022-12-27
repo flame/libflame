@@ -101,7 +101,7 @@ static doublereal c_b11 = 1.;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] AF */
@@ -114,7 +114,7 @@ static doublereal c_b11 = 1.;
 /* > \param[in] LDAF */
 /* > \verbatim */
 /* > LDAF is INTEGER */
-/* > The leading dimension of the array AF. LDAF >= max(1,N). */
+/* > The leading dimension of the array AF. LDAF >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] COLEQU */
@@ -147,7 +147,7 @@ static doublereal c_b11 = 1.;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] Y */
@@ -161,7 +161,7 @@ static doublereal c_b11 = 1.;
 /* > \param[in] LDY */
 /* > \verbatim */
 /* > LDY is INTEGER */
-/* > The leading dimension of the array Y. LDY >= max(1,N). */
+/* > The leading dimension of the array Y. LDY >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] BERR_OUT */
@@ -169,7 +169,7 @@ static doublereal c_b11 = 1.;
 /* > BERR_OUT is DOUBLE PRECISION array, dimension (NRHS) */
 /* > On exit, BERR_OUT(j) contains the componentwise relative backward */
 /* > error for right-hand-side j from the formula */
-/* > max(i) ( f2c_dabs(RES(i)) / ( f2c_dabs(op(A_s))*f2c_dabs(Y) + f2c_dabs(B_s) )(i) ) */
+/* > fla_max(i) ( f2c_dabs(RES(i)) / ( f2c_dabs(op(A_s))*f2c_dabs(Y) + f2c_dabs(B_s) )(i) ) */
 /* > where f2c_dabs(Z) is the componentwise absolute value of the matrix */
 /* > or vector Z. This is computed by DLA_LIN_BERR. */
 /* > \endverbatim */
@@ -558,29 +558,29 @@ int dla_porfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *
                     /* Computing MAX */
                     d__1 = dz_z__;
                     d__2 = dyk / yk; // , expr subst
-                    dz_z__ = max(d__1,d__2);
+                    dz_z__ = fla_max(d__1,d__2);
                 }
                 else if (dyk != 0.)
                 {
                     dz_z__ = hugeval;
                 }
-                ymin = min(ymin,yk);
-                normy = max(normy,yk);
+                ymin = fla_min(ymin,yk);
+                normy = fla_max(normy,yk);
                 if (*colequ)
                 {
                     /* Computing MAX */
                     d__1 = normx;
                     d__2 = yk * c__[i__]; // , expr subst
-                    normx = max(d__1,d__2);
+                    normx = fla_max(d__1,d__2);
                     /* Computing MAX */
                     d__1 = normdx;
                     d__2 = dyk * c__[i__]; // , expr subst
-                    normdx = max(d__1,d__2);
+                    normdx = fla_max(d__1,d__2);
                 }
                 else
                 {
                     normx = normy;
-                    normdx = max(normdx,dyk);
+                    normdx = fla_max(normdx,dyk);
                 }
             }
             if (normx != 0.)
@@ -726,7 +726,7 @@ L666: /* Set final_* when cnt hits ithresh. */
             err_bnds_comp__[j + (err_bnds_comp_dim1 << 1)] = final_dz_z__ / ( 1 - dzratmax);
         }
         /* Compute componentwise relative backward error from formula */
-        /* max(i) ( f2c_dabs(R(i)) / ( f2c_dabs(op(A_s))*f2c_dabs(Y) + f2c_dabs(B_s) )(i) ) */
+        /* fla_max(i) ( f2c_dabs(R(i)) / ( f2c_dabs(op(A_s))*f2c_dabs(Y) + f2c_dabs(B_s) )(i) ) */
         /* where f2c_dabs(Z) is the componentwise absolute value of the matrix */
         /* or vector Z. */
         /* Compute residual RES = B_s - op(A_s) * Y, */

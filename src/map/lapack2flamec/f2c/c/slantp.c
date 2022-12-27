@@ -38,7 +38,7 @@ static integer c__1 = 1;
 /* > \return SLANTP */
 /* > \verbatim */
 /* > */
-/* > SLANTP = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > SLANTP = ( fla_max(abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -49,7 +49,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that fla_max(abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -158,7 +158,7 @@ real slantp_(char *norm, char *uplo, char *diag, integer *n, real *ap, real * wo
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
+        /* Find fla_max(abs(A(i,j))). */
         k = 1;
         if (lsame_(diag, "U"))
         {

@@ -172,7 +172,7 @@ see the definitions of the FACT and EQUED options. */
 /* > On entry, the matrix A in band storage, in rows 1 to KL+KU+1. */
 /* > The j-th column of A is stored in the j-th column of the */
 /* > array AB as follows: */
-/* > AB(KU+1+i-j,j) = A(i,j) for max(1,j-KU)<=i<=min(N,j+kl) */
+/* > AB(KU+1+i-j,j) = A(i,j) for fla_max(1,j-KU)<=i<=fla_min(N,j+kl) */
 /* > */
 /* > If FACT = 'F' and EQUED is not 'N', then AB must have been */
 /* > equilibrated by the scaling factors in R and/or C. AB is not */
@@ -309,7 +309,7 @@ if EQUED = 'N' or 'R', C */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] X */
@@ -325,7 +325,7 @@ if EQUED = 'N' or 'R', C */
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(1,N). */
+/* > The leading dimension of the array X. LDX >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RCOND */
@@ -710,11 +710,11 @@ int sgbsvxx_(char *fact, char *trans, integer *n, integer * kl, integer *ku, int
                 /* Computing MIN */
                 r__1 = rcmin;
                 r__2 = r__[j]; // , expr subst
-                rcmin = min(r__1,r__2);
+                rcmin = fla_min(r__1,r__2);
                 /* Computing MAX */
                 r__1 = rcmax;
                 r__2 = r__[j]; // , expr subst
-                rcmax = max(r__1,r__2);
+                rcmax = fla_max(r__1,r__2);
                 /* L10: */
             }
             if (rcmin <= 0.f)
@@ -723,7 +723,7 @@ int sgbsvxx_(char *fact, char *trans, integer *n, integer * kl, integer *ku, int
             }
             else if (*n > 0)
             {
-                rowcnd = max(rcmin,smlnum) / min(rcmax,bignum);
+                rowcnd = fla_max(rcmin,smlnum) / fla_min(rcmax,bignum);
             }
             else
             {
@@ -742,11 +742,11 @@ int sgbsvxx_(char *fact, char *trans, integer *n, integer * kl, integer *ku, int
                 /* Computing MIN */
                 r__1 = rcmin;
                 r__2 = c__[j]; // , expr subst
-                rcmin = min(r__1,r__2);
+                rcmin = fla_min(r__1,r__2);
                 /* Computing MAX */
                 r__1 = rcmax;
                 r__2 = c__[j]; // , expr subst
-                rcmax = max(r__1,r__2);
+                rcmax = fla_max(r__1,r__2);
                 /* L20: */
             }
             if (rcmin <= 0.f)
@@ -755,7 +755,7 @@ int sgbsvxx_(char *fact, char *trans, integer *n, integer * kl, integer *ku, int
             }
             else if (*n > 0)
             {
-                colcnd = max(rcmin,smlnum) / min(rcmax,bignum);
+                colcnd = fla_max(rcmin,smlnum) / fla_min(rcmax,bignum);
             }
             else
             {
@@ -764,11 +764,11 @@ int sgbsvxx_(char *fact, char *trans, integer *n, integer * kl, integer *ku, int
         }
         if (*info == 0)
         {
-            if (*ldb < max(1,*n))
+            if (*ldb < fla_max(1,*n))
             {
                 *info = -15;
             }
-            else if (*ldx < max(1,*n))
+            else if (*ldx < fla_max(1,*n))
             {
                 *info = -16;
             }

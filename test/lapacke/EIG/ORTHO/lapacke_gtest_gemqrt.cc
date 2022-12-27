@@ -62,7 +62,7 @@ gemqrt_float_parameters:: gemqrt_float_parameters (int matrix_layout_i, char sid
 	n = n_i;
 	side = side_i;
 	trans = trans_i;
-	nb = min(m,n);
+	nb = fla_min(m,n);
 
 	if (trans == 'C')
 		trans  = 'N' ;
@@ -84,7 +84,7 @@ gemqrt_float_parameters:: gemqrt_float_parameters (int matrix_layout_i, char sid
 			lda_geqrt = m;
 			bufsize_a = lda_geqrt*n;
 			bufsize_v = ldv *k;
-			bufsize_t = ldt*min(m,n);
+			bufsize_t = ldt*fla_min(m,n);
 			bufsize_c = ldc*n;
 		}else if (matrix_layout == LAPACK_ROW_MAJOR)
 		{	
@@ -112,7 +112,7 @@ gemqrt_float_parameters:: gemqrt_float_parameters (int matrix_layout_i, char sid
 			lda_geqrt = m;
 			bufsize_a = lda_geqrt*n;
 			bufsize_v = ldv*n;
-			bufsize_t = ldt*min(m,n);
+			bufsize_t = ldt*fla_min(m,n);
 			bufsize_c = ldc*n;
 		}else if (matrix_layout == LAPACK_ROW_MAJOR)
 		{
@@ -219,12 +219,12 @@ void sgemqrt_test::SetUp(){
     ASSERT_TRUE(sgeqrt != NULL) << "failed to get the Netlib LAPACKE_sgeqrt symbol";    
     
 
-    sgemqrt_obj->inforef_geqrt = sgeqrt( sgemqrt_obj->matrix_layout,sgemqrt_obj->m, sgemqrt_obj->n, min(sgemqrt_obj->m,sgemqrt_obj->n),
-								sgemqrt_obj->Aref, sgemqrt_obj->lda_geqrt, sgemqrt_obj->tref, min(sgemqrt_obj->m,sgemqrt_obj->n));
+    sgemqrt_obj->inforef_geqrt = sgeqrt( sgemqrt_obj->matrix_layout,sgemqrt_obj->m, sgemqrt_obj->n, fla_min(sgemqrt_obj->m,sgemqrt_obj->n),
+								sgemqrt_obj->Aref, sgemqrt_obj->lda_geqrt, sgemqrt_obj->tref, fla_min(sgemqrt_obj->m,sgemqrt_obj->n));
 
     /* Compute libflame's Lapacke o/p  */
-    sgemqrt_obj->info_geqrt = LAPACKE_sgeqrt( sgemqrt_obj->matrix_layout,sgemqrt_obj->m, sgemqrt_obj->n, min(sgemqrt_obj->m,sgemqrt_obj->n),
-											sgemqrt_obj->A, sgemqrt_obj->lda_geqrt, sgemqrt_obj->t, min(sgemqrt_obj->m,sgemqrt_obj->n));
+    sgemqrt_obj->info_geqrt = LAPACKE_sgeqrt( sgemqrt_obj->matrix_layout,sgemqrt_obj->m, sgemqrt_obj->n, fla_min(sgemqrt_obj->m,sgemqrt_obj->n),
+											sgemqrt_obj->A, sgemqrt_obj->lda_geqrt, sgemqrt_obj->t, fla_min(sgemqrt_obj->m,sgemqrt_obj->n));
 										
 										
 
@@ -318,7 +318,7 @@ gemqrt_double_parameters:: gemqrt_double_parameters (int matrix_layout_i, char s
 	n = n_i;
 	side = side_i;
 	trans = trans_i;
-	nb = min(m,n);
+	nb = fla_min(m,n);
 
 	if (trans == 'C')
 		trans  = 'N' ;
@@ -340,7 +340,7 @@ gemqrt_double_parameters:: gemqrt_double_parameters (int matrix_layout_i, char s
 			lda_geqrt = m;
 			bufsize_a = lda_geqrt*n;
 			bufsize_v = ldv *k;
-			bufsize_t = ldt*min(m,n);
+			bufsize_t = ldt*fla_min(m,n);
 			bufsize_c = ldc*n;
 		}else if (matrix_layout == LAPACK_ROW_MAJOR)
 		{	
@@ -368,7 +368,7 @@ gemqrt_double_parameters:: gemqrt_double_parameters (int matrix_layout_i, char s
 			lda_geqrt = m;
 			bufsize_a = lda_geqrt*n;
 			bufsize_v = ldv*n;
-			bufsize_t = ldt*min(m,n);
+			bufsize_t = ldt*fla_min(m,n);
 			bufsize_c = ldc*n;
 		}else if (matrix_layout == LAPACK_ROW_MAJOR)
 		{
@@ -475,12 +475,12 @@ void dgemqrt_test::SetUp(){
     ASSERT_TRUE(dgeqrt != NULL) << "failed to get the Netlib LAPACKE_dgeqrt symbol";    
     
 
-    dgemqrt_obj->inforef_geqrt = dgeqrt( dgemqrt_obj->matrix_layout,dgemqrt_obj->m, dgemqrt_obj->n, min(dgemqrt_obj->m,dgemqrt_obj->n),
-								dgemqrt_obj->Aref, dgemqrt_obj->lda_geqrt, dgemqrt_obj->tref, min(dgemqrt_obj->m,dgemqrt_obj->n));
+    dgemqrt_obj->inforef_geqrt = dgeqrt( dgemqrt_obj->matrix_layout,dgemqrt_obj->m, dgemqrt_obj->n, fla_min(dgemqrt_obj->m,dgemqrt_obj->n),
+								dgemqrt_obj->Aref, dgemqrt_obj->lda_geqrt, dgemqrt_obj->tref, fla_min(dgemqrt_obj->m,dgemqrt_obj->n));
 
     /* Compute libflame's Lapacke o/p  */
-    dgemqrt_obj->info_geqrt = LAPACKE_dgeqrt( dgemqrt_obj->matrix_layout,dgemqrt_obj->m, dgemqrt_obj->n, min(dgemqrt_obj->m,dgemqrt_obj->n),
-											dgemqrt_obj->A, dgemqrt_obj->lda_geqrt, dgemqrt_obj->t, min(dgemqrt_obj->m,dgemqrt_obj->n));
+    dgemqrt_obj->info_geqrt = LAPACKE_dgeqrt( dgemqrt_obj->matrix_layout,dgemqrt_obj->m, dgemqrt_obj->n, fla_min(dgemqrt_obj->m,dgemqrt_obj->n),
+											dgemqrt_obj->A, dgemqrt_obj->lda_geqrt, dgemqrt_obj->t, fla_min(dgemqrt_obj->m,dgemqrt_obj->n));
 										
 										
 
@@ -575,7 +575,7 @@ gemqrt_scomplex_parameters:: gemqrt_scomplex_parameters (int matrix_layout_i, ch
 	n = n_i;
 	side = side_i;
 	trans = trans_i;
-	nb = min(m,n);
+	nb = fla_min(m,n);
 
 	if (trans == 'T')
 		trans  = 'N' ;
@@ -597,7 +597,7 @@ gemqrt_scomplex_parameters:: gemqrt_scomplex_parameters (int matrix_layout_i, ch
 			lda_geqrt = m;
 			bufsize_a = lda_geqrt*n;
 			bufsize_v = ldv *k;
-			bufsize_t = ldt*min(m,n);
+			bufsize_t = ldt*fla_min(m,n);
 			bufsize_c = ldc*n;
 		}else if (matrix_layout == LAPACK_ROW_MAJOR)
 		{	
@@ -625,7 +625,7 @@ gemqrt_scomplex_parameters:: gemqrt_scomplex_parameters (int matrix_layout_i, ch
 			lda_geqrt = m;
 			bufsize_a = lda_geqrt*n;
 			bufsize_v = ldv*n;
-			bufsize_t = ldt*min(m,n);
+			bufsize_t = ldt*fla_min(m,n);
 			bufsize_c = ldc*n;
 		}else if (matrix_layout == LAPACK_ROW_MAJOR)
 		{
@@ -732,12 +732,12 @@ void cgemqrt_test::SetUp(){
     ASSERT_TRUE(cgeqrt != NULL) << "failed to get the Netlib LAPACKE_cgeqrt symbol";    
     
 
-    cgemqrt_obj->inforef_geqrt = cgeqrt( cgemqrt_obj->matrix_layout,cgemqrt_obj->m, cgemqrt_obj->n, min(cgemqrt_obj->m,cgemqrt_obj->n),
-								cgemqrt_obj->Aref, cgemqrt_obj->lda_geqrt, cgemqrt_obj->tref, min(cgemqrt_obj->m,cgemqrt_obj->n));
+    cgemqrt_obj->inforef_geqrt = cgeqrt( cgemqrt_obj->matrix_layout,cgemqrt_obj->m, cgemqrt_obj->n, fla_min(cgemqrt_obj->m,cgemqrt_obj->n),
+								cgemqrt_obj->Aref, cgemqrt_obj->lda_geqrt, cgemqrt_obj->tref, fla_min(cgemqrt_obj->m,cgemqrt_obj->n));
 
     /* Compute libflame's Lapacke o/p  */
-    cgemqrt_obj->info_geqrt = LAPACKE_cgeqrt( cgemqrt_obj->matrix_layout,cgemqrt_obj->m, cgemqrt_obj->n, min(cgemqrt_obj->m,cgemqrt_obj->n),
-											cgemqrt_obj->A, cgemqrt_obj->lda_geqrt, cgemqrt_obj->t, min(cgemqrt_obj->m,cgemqrt_obj->n));
+    cgemqrt_obj->info_geqrt = LAPACKE_cgeqrt( cgemqrt_obj->matrix_layout,cgemqrt_obj->m, cgemqrt_obj->n, fla_min(cgemqrt_obj->m,cgemqrt_obj->n),
+											cgemqrt_obj->A, cgemqrt_obj->lda_geqrt, cgemqrt_obj->t, fla_min(cgemqrt_obj->m,cgemqrt_obj->n));
 										
 										
 
@@ -831,7 +831,7 @@ gemqrt_dcomplex_parameters:: gemqrt_dcomplex_parameters (int matrix_layout_i, ch
 	n = n_i;
 	side = side_i;
 	trans = trans_i;
-	nb = min(m,n);
+	nb = fla_min(m,n);
 
 	if (trans == 'T')
 		trans  = 'N' ;
@@ -853,7 +853,7 @@ gemqrt_dcomplex_parameters:: gemqrt_dcomplex_parameters (int matrix_layout_i, ch
 			lda_geqrt = m;
 			bufsize_a = lda_geqrt*n;
 			bufsize_v = ldv *k;
-			bufsize_t = ldt*min(m,n);
+			bufsize_t = ldt*fla_min(m,n);
 			bufsize_c = ldc*n;
 		}else if (matrix_layout == LAPACK_ROW_MAJOR)
 		{	
@@ -881,7 +881,7 @@ gemqrt_dcomplex_parameters:: gemqrt_dcomplex_parameters (int matrix_layout_i, ch
 			lda_geqrt = m;
 			bufsize_a = lda_geqrt*n;
 			bufsize_v = ldv*n;
-			bufsize_t = ldt*min(m,n);
+			bufsize_t = ldt*fla_min(m,n);
 			bufsize_c = ldc*n;
 		}else if (matrix_layout == LAPACK_ROW_MAJOR)
 		{
@@ -987,12 +987,12 @@ void zgemqrt_test::SetUp(){
     ASSERT_TRUE(zgeqrt != NULL) << "failed to get the Netlib LAPACKE_zgeqrt symbol";    
     
 
-    zgemqrt_obj->inforef_geqrt = zgeqrt( zgemqrt_obj->matrix_layout,zgemqrt_obj->m, zgemqrt_obj->n, min(zgemqrt_obj->m,zgemqrt_obj->n),
-								zgemqrt_obj->Aref, zgemqrt_obj->lda_geqrt, zgemqrt_obj->tref, min(zgemqrt_obj->m,zgemqrt_obj->n));
+    zgemqrt_obj->inforef_geqrt = zgeqrt( zgemqrt_obj->matrix_layout,zgemqrt_obj->m, zgemqrt_obj->n, fla_min(zgemqrt_obj->m,zgemqrt_obj->n),
+								zgemqrt_obj->Aref, zgemqrt_obj->lda_geqrt, zgemqrt_obj->tref, fla_min(zgemqrt_obj->m,zgemqrt_obj->n));
 
     /* Compute libflame's Lapacke o/p  */
-    zgemqrt_obj->info_geqrt = LAPACKE_zgeqrt( zgemqrt_obj->matrix_layout,zgemqrt_obj->m, zgemqrt_obj->n, min(zgemqrt_obj->m,zgemqrt_obj->n),
-											zgemqrt_obj->A, zgemqrt_obj->lda_geqrt, zgemqrt_obj->t, min(zgemqrt_obj->m,zgemqrt_obj->n));
+    zgemqrt_obj->info_geqrt = LAPACKE_zgeqrt( zgemqrt_obj->matrix_layout,zgemqrt_obj->m, zgemqrt_obj->n, fla_min(zgemqrt_obj->m,zgemqrt_obj->n),
+											zgemqrt_obj->A, zgemqrt_obj->lda_geqrt, zgemqrt_obj->t, fla_min(zgemqrt_obj->m,zgemqrt_obj->n));
 										
 										
 

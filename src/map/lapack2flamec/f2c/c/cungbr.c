@@ -75,9 +75,9 @@ static integer c_n1 = -1;
 /* > N is INTEGER */
 /* > The number of columns of the matrix Q or P**H to be returned. */
 /* > N >= 0. */
-/* > If VECT = 'Q', M >= N >= min(M,K);
+/* > If VECT = 'Q', M >= N >= fla_min(M,K);
 */
-/* > if VECT = 'P', N >= M >= min(N,K). */
+/* > if VECT = 'P', N >= M >= fla_min(N,K). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] K */
@@ -107,8 +107,8 @@ static integer c_n1 = -1;
 /* > \param[in] TAU */
 /* > \verbatim */
 /* > TAU is COMPLEX array, dimension */
-/* > (min(M,K)) if VECT = 'Q' */
-/* > (min(N,K)) if VECT = 'P' */
+/* > (fla_min(M,K)) if VECT = 'Q' */
+/* > (fla_min(N,K)) if VECT = 'P' */
 /* > TAU(i) must contain the scalar factor of the elementary */
 /* > reflector H(i) or G(i), which determines Q or P**H, as */
 /* > returned by CGEBRD in its array argument TAUQ or TAUP. */
@@ -123,8 +123,8 @@ static integer c_n1 = -1;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,min(M,N)). */
-/* > For optimum performance LWORK >= min(M,N)*NB, where NB */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,fla_min(M,N)). */
+/* > For optimum performance LWORK >= fla_min(M,N)*NB, where NB */
 /* > is the optimal blocksize. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -203,7 +203,7 @@ int cungbr_(char *vect, integer *m, integer *n, integer *k, complex *a, integer 
     /* Function Body */
     *info = 0;
     wantq = lsame_(vect, "Q");
-    mn = min(*m,*n);
+    mn = fla_min(*m,*n);
     lquery = *lwork == -1;
     if (! wantq && ! lsame_(vect, "P"))
     {
@@ -213,7 +213,7 @@ int cungbr_(char *vect, integer *m, integer *n, integer *k, complex *a, integer 
     {
         *info = -2;
     }
-    else if (*n < 0 || wantq && (*n > *m || *n < min(*m,*k)) || ! wantq && ( *m > *n || *m < min(*n,*k)))
+    else if (*n < 0 || wantq && (*n > *m || *n < fla_min(*m,*k)) || ! wantq && ( *m > *n || *m < fla_min(*n,*k)))
     {
         *info = -3;
     }
@@ -221,11 +221,11 @@ int cungbr_(char *vect, integer *m, integer *n, integer *k, complex *a, integer 
     {
         *info = -4;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -6;
     }
-    else if (*lwork < max(1,mn) && ! lquery)
+    else if (*lwork < fla_max(1,mn) && ! lquery)
     {
         *info = -9;
     }
@@ -268,7 +268,7 @@ int cungbr_(char *vect, integer *m, integer *n, integer *k, complex *a, integer 
             }
         }
         lwkopt = work[1].r;
-        lwkopt = max(lwkopt,mn);
+        lwkopt = fla_max(lwkopt,mn);
     }
     if (*info != 0)
     {

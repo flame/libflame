@@ -32,7 +32,7 @@ void ungqr_test()
   int m = 512;
   int n = 256;
   int k = 256;
-  int min_m_n = min( m, n );
+  int min_m_n = fla_min( m, n );
   srand (time(NULL));
 
   FLA_Init( );

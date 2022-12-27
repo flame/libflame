@@ -98,7 +98,7 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > LDV is INTEGER */
 /* > The leading dimension of the array V. */
-/* > If STOREV = 'C', LDV >= max(1,N);
+/* > If STOREV = 'C', LDV >= fla_max(1,N);
 if STOREV = 'R', LDV >= K. */
 /* > \endverbatim */
 /* > */
@@ -218,7 +218,7 @@ int zlarft_(char *direct, char *storev, integer *n, integer * k, doublecomplex *
                 i__ <= i__1;
                 ++i__)
         {
-            prevlastv = max(prevlastv,i__);
+            prevlastv = fla_max(prevlastv,i__);
             i__2 = i__;
             if (tau[i__2].r == 0. && tau[i__2].i == 0.)
             {
@@ -265,7 +265,7 @@ int zlarft_(char *direct, char *storev, integer *n, integer * k, doublecomplex *
                         t[i__3].r = z__1.r;
                         t[i__3].i = z__1.i; // , expr subst
                     }
-                    j = min(lastv,prevlastv);
+                    j = fla_min(lastv,prevlastv);
                     /* T(1:i-1,i) := - tau(i) * V(i:j,1:i-1)**H * V(i:j,i) */
                     i__2 = j - i__;
                     i__3 = i__ - 1;
@@ -303,7 +303,7 @@ int zlarft_(char *direct, char *storev, integer *n, integer * k, doublecomplex *
                         t[i__3].r = z__1.r;
                         t[i__3].i = z__1.i; // , expr subst
                     }
-                    j = min(lastv,prevlastv);
+                    j = fla_min(lastv,prevlastv);
                     /* T(1:i-1,i) := - tau(i) * V(1:i-1,i:j) * V(i,i:j)**H */
                     i__2 = i__ - 1;
                     i__3 = j - i__;
@@ -321,7 +321,7 @@ int zlarft_(char *direct, char *storev, integer *n, integer * k, doublecomplex *
                 t[i__2].i = tau[i__3].i; // , expr subst
                 if (i__ > 1)
                 {
-                    prevlastv = max(prevlastv,lastv);
+                    prevlastv = fla_max(prevlastv,lastv);
                 }
                 else
                 {
@@ -385,7 +385,7 @@ int zlarft_(char *direct, char *storev, integer *n, integer * k, doublecomplex *
                             t[i__2].r = z__1.r;
                             t[i__2].i = z__1.i; // , expr subst
                         }
-                        j = max(lastv,prevlastv);
+                        j = fla_max(lastv,prevlastv);
                         /* T(i+1:k,i) = -tau(i) * V(j:n-k+i,i+1:k)**H * V(j:n-k+i,i) */
                         i__1 = *n - *k + i__ - j;
                         i__2 = *k - i__;
@@ -423,7 +423,7 @@ int zlarft_(char *direct, char *storev, integer *n, integer * k, doublecomplex *
                             t[i__2].r = z__1.r;
                             t[i__2].i = z__1.i; // , expr subst
                         }
-                        j = max(lastv,prevlastv);
+                        j = fla_max(lastv,prevlastv);
                         /* T(i+1:k,i) = -tau(i) * V(i+1:k,j:n-k+i) * V(i,j:n-k+i)**H */
                         i__1 = *k - i__;
                         i__2 = *n - *k + i__ - j;
@@ -437,7 +437,7 @@ int zlarft_(char *direct, char *storev, integer *n, integer * k, doublecomplex *
                     ztrmv_("Lower", "No transpose", "Non-unit", &i__1, &t[i__ + 1 + (i__ + 1) * t_dim1], ldt, &t[i__ + 1 + i__ * t_dim1], &c__1) ;
                     if (i__ > 1)
                     {
-                        prevlastv = min(prevlastv,lastv);
+                        prevlastv = fla_min(prevlastv,lastv);
                     }
                     else
                     {

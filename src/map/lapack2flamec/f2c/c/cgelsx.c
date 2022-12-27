@@ -108,7 +108,7 @@ they are stored as the columns of the */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -124,7 +124,7 @@ they are stored as the columns of the */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,M,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,M,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] JPVT */
@@ -161,7 +161,7 @@ only the remaining */
 /* > \param[out] WORK */
 /* > \verbatim */
 /* > WORK is COMPLEX array, dimension */
-/* > (min(M,N) + max( N, 2*min(M,N)+NRHS )), */
+/* > (fla_min(M,N) + fla_max( N, 2*fla_min(M,N)+NRHS )), */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RWORK */
@@ -255,7 +255,7 @@ int cgelsx_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
     --work;
     --rwork;
     /* Function Body */
-    mn = min(*m,*n);
+    mn = fla_min(*m,*n);
     ismin = mn + 1;
     ismax = (mn << 1) + 1;
     /* Test the input arguments. */
@@ -272,15 +272,15 @@ int cgelsx_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }
     else /* if(complicated condition) */
     {
         /* Computing MAX */
-        i__1 = max(1,*m);
-        if (*ldb < max(i__1,*n))
+        i__1 = fla_max(1,*m);
+        if (*ldb < fla_max(i__1,*n))
         {
             *info = -7;
         }
@@ -294,8 +294,8 @@ int cgelsx_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
     }
     /* Quick return if possible */
     /* Computing MIN */
-    i__1 = min(*m,*n);
-    if (min(i__1,*nrhs) == 0)
+    i__1 = fla_min(*m,*n);
+    if (fla_min(i__1,*nrhs) == 0)
     {
         *rank = 0;
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
@@ -323,7 +323,7 @@ int cgelsx_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
     else if (anrm == 0.f)
     {
         /* Matrix all zero. Return zero solution. */
-        i__1 = max(*m,*n);
+        i__1 = fla_max(*m,*n);
         claset_("F", &i__1, nrhs, &c_b1, &c_b1, &b[b_offset], ldb);
         *rank = 0;
         goto L100;
@@ -359,7 +359,7 @@ int cgelsx_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
     if (c_abs(&a[a_dim1 + 1]) == 0.f)
     {
         *rank = 0;
-        i__1 = max(*m,*n);
+        i__1 = fla_max(*m,*n);
         claset_("F", &i__1, nrhs, &c_b1, &c_b1, &b[b_offset], ldb);
         goto L100;
     }

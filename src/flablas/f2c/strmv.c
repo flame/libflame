@@ -64,7 +64,7 @@ int strmv_(char *uplo, char *trans, char *diag, integer *n, real *a, integer *ld
     /* LDA - INTEGER. */
     /* On entry, LDA specifies the first dimension of A as declared */
     /* in the calling (sub) program. LDA must be at least */
-    /* max( 1, n ). */
+    /* fla_max( 1, n ). */
     /* Unchanged on exit. */
     /* X - REAL array of dimension at least */
     /* ( 1 + ( n - 1 )*f2c_abs( INCX ) ). */
@@ -112,7 +112,7 @@ int strmv_(char *uplo, char *trans, char *diag, integer *n, real *a, integer *ld
     {
         info = 4;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         info = 6;
     }

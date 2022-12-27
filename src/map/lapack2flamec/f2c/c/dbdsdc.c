@@ -112,7 +112,7 @@ static doublereal c_b29 = 0.;
 /* > \verbatim */
 /* > LDU is INTEGER */
 /* > The leading dimension of the array U. LDU >= 1. */
-/* > If singular vectors are desired, then LDU >= max( 1, N ). */
+/* > If singular vectors are desired, then LDU >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] VT */
@@ -128,7 +128,7 @@ static doublereal c_b29 = 0.;
 /* > \verbatim */
 /* > LDVT is INTEGER */
 /* > The leading dimension of the array VT. LDVT >= 1. */
-/* > If singular vectors are desired, then LDVT >= max( 1, N ). */
+/* > If singular vectors are desired, then LDVT >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] Q */

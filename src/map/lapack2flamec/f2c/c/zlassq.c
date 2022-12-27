@@ -39,7 +39,7 @@
 /* > */
 /* > scale is assumed to be non-negative and scl returns the value */
 /* > */
-/* > scl = max( scale, f2c_dabs( real( x( i ) ) ), f2c_dabs( aimag( x( i ) ) ) ), */
+/* > scl = fla_max( scale, f2c_dabs( real( x( i ) ) ), f2c_dabs( aimag( x( i ) ) ) ), */
 /* > i */
 /* > */
 /* > scale and sumsq must be supplied in SCALE and SUMSQ respectively. */

@@ -136,7 +136,7 @@ U(NL+2:N, NL+2:N) contains the left singular */
 /* > \param[in] LDU */
 /* > \verbatim */
 /* > LDU is INTEGER */
-/* > The leading dimension of the array U. LDU >= max( 1, N ). */
+/* > The leading dimension of the array U. LDU >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] VT */
@@ -154,7 +154,7 @@ VT(NL+2:M, NL+2:M)**T contains */
 /* > \param[in] LDVT */
 /* > \verbatim */
 /* > LDVT is INTEGER */
-/* > The leading dimension of the array VT. LDVT >= max( 1, M ). */
+/* > The leading dimension of the array VT. LDVT >= fla_max( 1, M ). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] IDXQ */
@@ -285,7 +285,7 @@ int dlasd1_(integer *nl, integer *nr, integer *sqre, doublereal *d__, doublereal
     /* Computing MAX */
     d__1 = f2c_dabs(*alpha);
     d__2 = f2c_dabs(*beta); // , expr subst
-    orgnrm = max(d__1,d__2);
+    orgnrm = fla_max(d__1,d__2);
     d__[*nl + 1] = 0.;
     i__1 = n;
     for (i__ = 1;

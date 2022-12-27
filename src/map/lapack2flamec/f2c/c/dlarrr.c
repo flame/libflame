@@ -135,7 +135,7 @@ int dlarrr_(integer *n, doublereal *d__, doublereal *e, integer *info)
     /* Scale the diagonal entries to one and check whether the sum of the */
     /* off-diagonals is less than one */
     /* The sdd relative error bounds have a 1/(1- 2*x) factor in them, */
-    /* x = max(OFFDIG + OFFDIG2), so when x is close to 1/2, no relative */
+    /* x = fla_max(OFFDIG + OFFDIG2), so when x is close to 1/2, no relative */
     /* accuracy is promised. In the notation of the code fragment below, */
     /* 1/(1 - (OFFDIG + OFFDIG2)) is the condition number. */
     /* We don't think it is worth going into "sdd mode" unless the relative */

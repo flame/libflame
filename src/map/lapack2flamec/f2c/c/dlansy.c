@@ -38,7 +38,7 @@ static integer c__1 = 1;
 /* > \return DLANSY */
 /* > \verbatim */
 /* > */
-/* > DLANSY = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > DLANSY = ( fla_max(abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -49,7 +49,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that fla_max(abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -91,7 +91,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(N,1). */
+/* > The leading dimension of the array A. LDA >= fla_max(N,1). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -156,7 +156,7 @@ doublereal dlansy_(char *norm, char *uplo, integer *n, doublereal *a, integer *l
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
+        /* Find fla_max(abs(A(i,j))). */
         value = 0.;
         if (lsame_(uplo, "U"))
         {

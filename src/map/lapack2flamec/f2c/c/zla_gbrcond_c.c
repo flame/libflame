@@ -74,7 +74,7 @@ static integer c__1 = 1;
 /* > On entry, the matrix A in band storage, in rows 1 to KL+KU+1. */
 /* > The j-th column of A is stored in the j-th column of the */
 /* > array AB as follows: */
-/* > AB(KU+1+i-j,j) = A(i,j) for max(1,j-KU)<=i<=min(N,j+kl) */
+/* > AB(KU+1+i-j,j) = A(i,j) for fla_max(1,j-KU)<=i<=fla_min(N,j+kl) */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDAB */
@@ -257,8 +257,8 @@ doublereal zla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, dou
                 i__2 = i__ - *kl;
                 /* Computing MIN */
                 i__4 = i__ + *ku;
-                i__3 = min(i__4,*n);
-                for (j = max(i__2,1);
+                i__3 = fla_min(i__4,*n);
+                for (j = fla_max(i__2,1);
                         j <= i__3;
                         ++j)
                 {
@@ -272,8 +272,8 @@ doublereal zla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, dou
                 i__3 = i__ - *kl;
                 /* Computing MIN */
                 i__4 = i__ + *ku;
-                i__2 = min(i__4,*n);
-                for (j = max(i__3,1);
+                i__2 = fla_min(i__4,*n);
+                for (j = fla_max(i__3,1);
                         j <= i__2;
                         ++j)
                 {
@@ -282,7 +282,7 @@ doublereal zla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, dou
                 }
             }
             rwork[i__] = tmp;
-            anorm = max(anorm,tmp);
+            anorm = fla_max(anorm,tmp);
         }
     }
     else
@@ -299,8 +299,8 @@ doublereal zla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, dou
                 i__2 = i__ - *kl;
                 /* Computing MIN */
                 i__4 = i__ + *ku;
-                i__3 = min(i__4,*n);
-                for (j = max(i__2,1);
+                i__3 = fla_min(i__4,*n);
+                for (j = fla_max(i__2,1);
                         j <= i__3;
                         ++j)
                 {
@@ -314,8 +314,8 @@ doublereal zla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, dou
                 i__3 = i__ - *kl;
                 /* Computing MIN */
                 i__4 = i__ + *ku;
-                i__2 = min(i__4,*n);
-                for (j = max(i__3,1);
+                i__2 = fla_min(i__4,*n);
+                for (j = fla_max(i__3,1);
                         j <= i__2;
                         ++j)
                 {
@@ -324,7 +324,7 @@ doublereal zla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, dou
                 }
             }
             rwork[i__] = tmp;
-            anorm = max(anorm,tmp);
+            anorm = fla_max(anorm,tmp);
         }
     }
     /* Quick return if possible. */

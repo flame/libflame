@@ -109,7 +109,7 @@
 /* > LDAB is INTEGER */
 /* > On entry, LDA specifies the first dimension of AB as declared */
 /* > in the calling (sub) program. LDAB must be at least */
-/* > max( 1, m ). */
+/* > fla_max( 1, m ). */
 /* > Unchanged on exit. */
 /* > \endverbatim */
 /* > */
@@ -327,8 +327,8 @@ int sla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                     i__2 = i__ - *kl;
                     /* Computing MIN */
                     i__4 = i__ + *ku;
-                    i__3 = min(i__4,lenx);
-                    for (j = max(i__2,1);
+                    i__3 = fla_min(i__4,lenx);
+                    for (j = fla_max(i__2,1);
                             j <= i__3;
                             ++j)
                     {
@@ -371,8 +371,8 @@ int sla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                     i__3 = i__ - *kl;
                     /* Computing MIN */
                     i__4 = i__ + *ku;
-                    i__2 = min(i__4,lenx);
-                    for (j = max(i__3,1);
+                    i__2 = fla_min(i__4,lenx);
+                    for (j = fla_max(i__3,1);
                             j <= i__2;
                             ++j)
                     {
@@ -419,8 +419,8 @@ int sla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                     i__2 = i__ - *kl;
                     /* Computing MIN */
                     i__4 = i__ + *ku;
-                    i__3 = min(i__4,lenx);
-                    for (j = max(i__2,1);
+                    i__3 = fla_min(i__4,lenx);
+                    for (j = fla_max(i__2,1);
                             j <= i__3;
                             ++j)
                     {
@@ -465,8 +465,8 @@ int sla_gbamv_(integer *trans, integer *m, integer *n, integer *kl, integer *ku,
                     i__3 = i__ - *kl;
                     /* Computing MIN */
                     i__4 = i__ + *ku;
-                    i__2 = min(i__4,lenx);
-                    for (j = max(i__3,1);
+                    i__2 = fla_min(i__4,lenx);
+                    for (j = fla_max(i__3,1);
                             j <= i__2;
                             ++j)
                     {

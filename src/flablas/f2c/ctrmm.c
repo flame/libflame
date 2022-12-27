@@ -86,8 +86,8 @@ int ctrmm_(char *side, char *uplo, char *transa, char *diag, integer *m, integer
     /* LDA - INTEGER. */
     /* On entry, LDA specifies the first dimension of A as declared */
     /* in the calling (sub) program. When SIDE = 'L' or 'l' then */
-    /* LDA must be at least max( 1, m ), when SIDE = 'R' or 'r' */
-    /* then LDA must be at least max( 1, n ). */
+    /* LDA must be at least fla_max( 1, m ), when SIDE = 'R' or 'r' */
+    /* then LDA must be at least fla_max( 1, n ). */
     /* Unchanged on exit. */
     /* B - COMPLEX array of DIMENSION ( LDB, n ). */
     /* Before entry, the leading m by n part of the array B must */
@@ -96,7 +96,7 @@ int ctrmm_(char *side, char *uplo, char *transa, char *diag, integer *m, integer
     /* LDB - INTEGER. */
     /* On entry, LDB specifies the first dimension of B as declared */
     /* in the calling (sub) program. LDB must be at least */
-    /* max( 1, m ). */
+    /* fla_max( 1, m ). */
     /* Unchanged on exit. */
     /* Level 3 Blas routine. */
     /* -- Written on 8-February-1989. */
@@ -157,11 +157,11 @@ int ctrmm_(char *side, char *uplo, char *transa, char *diag, integer *m, integer
     {
         info = 6;
     }
-    else if (*lda < max(1,nrowa))
+    else if (*lda < fla_max(1,nrowa))
     {
         info = 9;
     }
-    else if (*ldb < max(1,*m))
+    else if (*ldb < fla_max(1,*m))
     {
         info = 11;
     }

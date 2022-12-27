@@ -157,7 +157,7 @@ void libfla_test_lqut_experiment( test_params_t params,
 	else               n = p_cur;
 
 	// Compute the minimum dimension.
-	min_m_n = min( m, n );
+	min_m_n = fla_min( m, n );
 
 	// Create the matrices for the current operation.
 	libfla_test_obj_create( datatype, FLA_NO_TRANSPOSE, sc_str[0], m, n, &A );
@@ -219,7 +219,7 @@ void libfla_test_lqut_experiment( test_params_t params,
 		libfla_test_lqut_impl( impl, A_test, T_test );
 		
 		time = FLA_Clock() - time;
-		time_min = min( time_min, time );
+		time_min = fla_min( time_min, time );
 	}
 
 	// Perform a linear solve with the result.

@@ -109,7 +109,7 @@ static integer c__4 = 4;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -129,7 +129,7 @@ static integer c__4 = 4;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] W */
@@ -152,9 +152,9 @@ static integer c__4 = 4;
 /* > otherwise */
 /* > If JOBZ = 'N' and N > 1, LWORK must be queried. */
 /* > LWORK = MAX(1, dimension) where */
-/* > dimension = max(stage1,stage2) + (KD+1)*N + N */
+/* > dimension = fla_max(stage1,stage2) + (KD+1)*N + N */
 /* > = N*KD + N*max(KD+1,FACTOPTNB) */
-/* > + max(2*KD*KD, KD*NTHREADS) */
+/* > + fla_max(2*KD*KD, KD*NTHREADS) */
 /* > + (KD+1)*N + N */
 /* > where KD is the blocking size of the reduction, */
 /* > FACTOPTNB is the blocking used by the QR or LQ */
@@ -172,7 +172,7 @@ the routine */
 /* > */
 /* > \param[out] RWORK */
 /* > \verbatim */
-/* > RWORK is REAL array, dimension (max(1, 3*N-2)) */
+/* > RWORK is REAL array, dimension (fla_max(1, 3*N-2)) */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -318,11 +318,11 @@ int chegv_2stage_(integer *itype, char *jobz, char *uplo, integer *n, complex *a
     {
         *info = -4;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -6;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -8;
     }

@@ -397,7 +397,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
         /* Computing MIN */
         i__4 = incol + nbmps * 3 - 3;
         i__5 = *kbot - 2; // , expr subst
-        i__3 = min(i__4,i__5);
+        i__3 = fla_min(i__4,i__5);
         for (krcol = incol;
                 krcol <= i__3;
                 ++krcol)
@@ -411,11 +411,11 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
             /* Computing MAX */
             i__4 = 1;
             i__5 = (*ktop - 1 - krcol + 2) / 3 + 1; // , expr subst
-            mtop = max(i__4,i__5);
+            mtop = fla_max(i__4,i__5);
             /* Computing MIN */
             i__4 = nbmps;
             i__5 = (*kbot - krcol) / 3; // , expr subst
-            mbot = min(i__4,i__5);
+            mbot = fla_min(i__4,i__5);
             m22 = mbot + 1;
             bmp22 = mbot < nbmps && krcol + (m22 - 1) * 3 == *kbot - 2;
             /* ==== Generate reflections to chase the chain right */
@@ -585,7 +585,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
             /* ==== Multiply H by reflections from the left ==== */
             if (accum)
             {
-                jbot = min(ndcol,*kbot);
+                jbot = fla_min(ndcol,*kbot);
             }
             else if (*wantt)
             {
@@ -596,14 +596,14 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                 jbot = *kbot;
             }
             i__4 = jbot;
-            for (j = max(*ktop,krcol);
+            for (j = fla_max(*ktop,krcol);
                     j <= i__4;
                     ++j)
             {
                 /* Computing MIN */
                 i__5 = mbot;
                 i__6 = (j - krcol + 2) / 3; // , expr subst
-                mend = min(i__5,i__6);
+                mend = fla_min(i__5,i__6);
                 i__5 = mend;
                 for (m = mtop;
                         m <= i__5;
@@ -662,7 +662,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                 /* Computing MAX */
                 i__4 = k + 1;
                 i__5 = jbot;
-                for (j = max(i__4,*ktop);
+                for (j = fla_max(i__4,*ktop);
                         j <= i__5;
                         ++j)
                 {
@@ -701,7 +701,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
             /* . vigilant deflation check is complete. ==== */
             if (accum)
             {
-                jtop = max(*ktop,incol);
+                jtop = fla_max(*ktop,incol);
             }
             else if (*wantt)
             {
@@ -726,7 +726,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                     /* Computing MIN */
                     i__6 = *kbot;
                     i__7 = k + 3; // , expr subst
-                    i__4 = min(i__6,i__7);
+                    i__4 = fla_min(i__6,i__7);
 
                     v1r = v[m * v_dim1 + 1].r;
                     v1i = v[m * v_dim1 + 1].i;
@@ -803,7 +803,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         v3r = v[m * v_dim1 + 3].r;
                         v3i = v[m * v_dim1 + 3].i;
 
-                        for (j = max(i__4,i__6); j <= i__7; ++j)
+                        for (j = fla_max(i__4,i__6); j <= i__7; ++j)
                         {
                             i__6 = j + (kms + 1) * u_dim1;
                             i__9 = j + (kms + 2) * u_dim1;
@@ -912,7 +912,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                     /* Computing MIN */
                     i__7 = *kbot;
                     i__4 = k + 3; // , expr subst
-                    i__5 = min(i__7,i__4);
+                    i__5 = fla_min(i__7,i__4);
                     for (j = jtop;
                             j <= i__5;
                             ++j)
@@ -953,7 +953,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         i__5 = 1;
                         i__7 = *ktop - incol; // , expr subst
                         i__4 = kdu;
-                        for (j = max(i__5,i__7);
+                        for (j = fla_max(i__5,i__7);
                                 j <= i__4;
                                 ++j)
                         {
@@ -1049,7 +1049,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                 /* Computing MIN */
                 i__5 = *kbot - 1;
                 i__7 = krcol + (m - 1) * 3; // , expr subst
-                k = min(i__5,i__7);
+                k = fla_min(i__5,i__7);
                 /* ==== The following convergence test requires that */
                 /* . the tradition small-compared-to-nearby-diagonals */
                 /* . criterion and the Ahues & Tisseur (LAWN 122, 1997) */
@@ -1101,20 +1101,20 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                     /* Computing MAX */
                     d__3 = smlnum;
                     d__4 = ulp * tst1; // , expr subst
-                    if ((d__1 = h__[i__5].r, f2c_dabs(d__1)) + (d__2 = d_imag(&h__[ k + 1 + k * h_dim1]), f2c_dabs(d__2)) <= max(d__3,d__4) )
+                    if ((d__1 = h__[i__5].r, f2c_dabs(d__1)) + (d__2 = d_imag(&h__[ k + 1 + k * h_dim1]), f2c_dabs(d__2)) <= fla_max(d__3,d__4) )
                     {
                         /* Computing MAX */
                         i__5 = k + 1 + k * h_dim1;
                         i__7 = k + (k + 1) * h_dim1;
                         d__5 = (d__1 = h__[i__5].r, f2c_dabs(d__1)) + (d__2 = d_imag(&h__[k + 1 + k * h_dim1]), f2c_dabs(d__2));
                         d__6 = (d__3 = h__[i__7].r, f2c_dabs(d__3)) + ( d__4 = d_imag(&h__[k + (k + 1) * h_dim1]), f2c_dabs(d__4)); // , expr subst
-                        h12 = max(d__5,d__6);
+                        h12 = fla_max(d__5,d__6);
                         /* Computing MIN */
                         i__5 = k + 1 + k * h_dim1;
                         i__7 = k + (k + 1) * h_dim1;
                         d__5 = (d__1 = h__[i__5].r, f2c_dabs(d__1)) + (d__2 = d_imag(&h__[k + 1 + k * h_dim1]), f2c_dabs(d__2));
                         d__6 = (d__3 = h__[i__7].r, f2c_dabs(d__3)) + ( d__4 = d_imag(&h__[k + (k + 1) * h_dim1]), f2c_dabs(d__4)); // , expr subst
-                        h21 = min(d__5,d__6);
+                        h21 = fla_min(d__5,d__6);
                         i__5 = k + k * h_dim1;
                         i__7 = k + 1 + (k + 1) * h_dim1;
                         z__2.r = h__[i__5].r - h__[i__7].r;
@@ -1125,7 +1125,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         i__6 = k + 1 + (k + 1) * h_dim1;
                         d__5 = (d__1 = h__[i__6].r, f2c_dabs(d__1)) + (d__2 = d_imag(&h__[k + 1 + (k + 1) * h_dim1]), f2c_dabs( d__2));
                         d__6 = (d__3 = z__1.r, f2c_dabs(d__3)) + ( d__4 = d_imag(&z__1), f2c_dabs(d__4)); // , expr subst
-                        h11 = max(d__5,d__6);
+                        h11 = fla_max(d__5,d__6);
                         i__5 = k + k * h_dim1;
                         i__7 = k + 1 + (k + 1) * h_dim1;
                         z__2.r = h__[i__5].r - h__[i__7].r;
@@ -1136,13 +1136,13 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         i__6 = k + 1 + (k + 1) * h_dim1;
                         d__5 = (d__1 = h__[i__6].r, f2c_dabs(d__1)) + (d__2 = d_imag(&h__[k + 1 + (k + 1) * h_dim1]), f2c_dabs( d__2));
                         d__6 = (d__3 = z__1.r, f2c_dabs(d__3)) + ( d__4 = d_imag(&z__1), f2c_dabs(d__4)); // , expr subst
-                        h22 = min(d__5,d__6);
+                        h22 = fla_min(d__5,d__6);
                         scl = h11 + h12;
                         tst2 = h22 * (h11 / scl);
                         /* Computing MAX */
                         d__1 = smlnum;
                         d__2 = ulp * tst2; // , expr subst
-                        if (tst2 == 0. || h21 * (h12 / scl) <= max(d__1,d__2))
+                        if (tst2 == 0. || h21 * (h12 / scl) <= fla_max(d__1,d__2))
                         {
                             i__5 = k + 1 + k * h_dim1;
                             h__[i__5].r = 0.;
@@ -1156,7 +1156,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
             /* Computing MIN */
             i__4 = nbmps;
             i__5 = (*kbot - krcol - 1) / 3; // , expr subst
-            mend = min(i__4,i__5);
+            mend = fla_min(i__4,i__5);
             i__4 = mend;
             for (m = mtop;
                     m <= i__4;
@@ -1227,28 +1227,28 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                 /* Computing MAX */
                 i__3 = 1;
                 i__4 = *ktop - incol; // , expr subst
-                k1 = max(i__3,i__4);
+                k1 = fla_max(i__3,i__4);
                 /* Computing MAX */
                 i__3 = 0;
                 i__4 = ndcol - *kbot; // , expr subst
-                nu = kdu - max(i__3,i__4) - k1 + 1;
+                nu = kdu - fla_max(i__3,i__4) - k1 + 1;
                 /* ==== Horizontal Multiply ==== */
                 i__3 = jbot;
                 i__4 = *nh;
-                for (jcol = min(ndcol,*kbot) + 1;
+                for (jcol = fla_min(ndcol,*kbot) + 1;
                         i__4 < 0 ? jcol >= i__3 : jcol <= i__3;
                         jcol += i__4)
                 {
                     /* Computing MIN */
                     i__5 = *nh;
                     i__7 = jbot - jcol + 1; // , expr subst
-                    jlen = min(i__5,i__7);
+                    jlen = fla_min(i__5,i__7);
                     zgemm_("C", "N", &nu, &jlen, &nu, &c_b2, &u[k1 + k1 * u_dim1], ldu, &h__[incol + k1 + jcol * h_dim1], ldh, &c_b1, &wh[wh_offset], ldwh);
                     zlacpy_("ALL", &nu, &jlen, &wh[wh_offset], ldwh, &h__[ incol + k1 + jcol * h_dim1], ldh);
                     /* L150: */
                 }
                 /* ==== Vertical multiply ==== */
-                i__4 = max(*ktop,incol) - 1;
+                i__4 = fla_max(*ktop,incol) - 1;
                 i__3 = *nv;
                 for (jrow = jtop;
                         i__3 < 0 ? jrow >= i__4 : jrow <= i__4;
@@ -1256,8 +1256,8 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                 {
                     /* Computing MIN */
                     i__5 = *nv;
-                    i__7 = max(*ktop,incol) - jrow; // , expr subst
-                    jlen = min(i__5,i__7);
+                    i__7 = fla_max(*ktop,incol) - jrow; // , expr subst
+                    jlen = fla_min(i__5,i__7);
                     zgemm_("N", "N", &jlen, &nu, &nu, &c_b2, &h__[jrow + ( incol + k1) * h_dim1], ldh, &u[k1 + k1 * u_dim1], ldu, &c_b1, &wv[wv_offset], ldwv);
                     zlacpy_("ALL", &jlen, &nu, &wv[wv_offset], ldwv, &h__[ jrow + (incol + k1) * h_dim1], ldh);
                     /* L160: */
@@ -1274,7 +1274,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         /* Computing MIN */
                         i__5 = *nv;
                         i__7 = *ihiz - jrow + 1; // , expr subst
-                        jlen = min(i__5,i__7);
+                        jlen = fla_min(i__5,i__7);
                         zgemm_("N", "N", &jlen, &nu, &nu, &c_b2, &z__[jrow + ( incol + k1) * z_dim1], ldz, &u[k1 + k1 * u_dim1], ldu, &c_b1, &wv[wv_offset], ldwv);
                         zlacpy_("ALL", &jlen, &nu, &wv[wv_offset], ldwv, &z__[ jrow + (incol + k1) * z_dim1], ldz) ;
                         /* L170: */
@@ -1298,14 +1298,14 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                 /* ==== Horizontal multiply ==== */
                 i__4 = jbot;
                 i__3 = *nh;
-                for (jcol = min(ndcol,*kbot) + 1;
+                for (jcol = fla_min(ndcol,*kbot) + 1;
                         i__3 < 0 ? jcol >= i__4 : jcol <= i__4;
                         jcol += i__3)
                 {
                     /* Computing MIN */
                     i__5 = *nh;
                     i__7 = jbot - jcol + 1; // , expr subst
-                    jlen = min(i__5,i__7);
+                    jlen = fla_min(i__5,i__7);
                     /* ==== Copy bottom of H to top+KZS of scratch ==== */
                     /* (The first KZS rows get multiplied by zero.) ==== */
                     zlacpy_("ALL", &knz, &jlen, &h__[incol + 1 + j2 + jcol * h_dim1], ldh, &wh[kzs + 1 + wh_dim1], ldwh);
@@ -1327,7 +1327,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                     /* L180: */
                 }
                 /* ==== Vertical multiply ==== */
-                i__3 = max(incol,*ktop) - 1;
+                i__3 = fla_max(incol,*ktop) - 1;
                 i__4 = *nv;
                 for (jrow = jtop;
                         i__4 < 0 ? jrow >= i__3 : jrow <= i__3;
@@ -1335,8 +1335,8 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                 {
                     /* Computing MIN */
                     i__5 = *nv;
-                    i__7 = max(incol,*ktop) - jrow; // , expr subst
-                    jlen = min(i__5,i__7);
+                    i__7 = fla_max(incol,*ktop) - jrow; // , expr subst
+                    jlen = fla_min(i__5,i__7);
                     /* ==== Copy right of H to scratch (the first KZS */
                     /* . columns get multiplied by zero) ==== */
                     zlacpy_("ALL", &jlen, &knz, &h__[jrow + (incol + 1 + j2) * h_dim1], ldh, &wv[(kzs + 1) * wv_dim1 + 1], ldwv);
@@ -1370,7 +1370,7 @@ int zlaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         /* Computing MIN */
                         i__5 = *nv;
                         i__7 = *ihiz - jrow + 1; // , expr subst
-                        jlen = min(i__5,i__7);
+                        jlen = fla_min(i__5,i__7);
                         /* ==== Copy right of Z to left of scratch (first */
                         /* . KZS columns get multiplied by zero) ==== */
                         zlacpy_("ALL", &jlen, &knz, &z__[jrow + (incol + 1 + j2) * z_dim1], ldz, &wv[(kzs + 1) * wv_dim1 + 1], ldwv);

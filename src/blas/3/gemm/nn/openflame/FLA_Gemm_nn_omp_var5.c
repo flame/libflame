@@ -31,7 +31,7 @@ FLA_Error FLA_Gemm_nn_omp_var5( FLA_Obj alpha, FLA_Obj A, FLA_Obj B, FLA_Obj C, 
   while ( FLA_Obj_width( AL ) < FLA_Obj_width( A ) ){
 
     b = FLA_Determine_blocksize( A, AL, FLA_LEFT, FLA_Cntl_blocksize( cntl ) );
-    //b = min( FLA_Obj_width( AR ), nb_alg );
+    //b = fla_min( FLA_Obj_width( AR ), nb_alg );
 
     FLA_Repart_1x2_to_1x3( AL,  /**/ AR,        &A0, /**/ &A1, &A2,
                            b, FLA_RIGHT );

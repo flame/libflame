@@ -43,7 +43,7 @@ static integer c_n1 = -1;
 /* > */
 /* > where: */
 /* > S is a m-by-n diagonal sign matrix with the diagonal D, so that */
-/* > D(i) = S(i,i), 1 <= i <= min(M,N). The diagonal D is constructed */
+/* > D(i) = S(i,i), 1 <= i <= fla_min(M,N). The diagonal D is constructed */
 /* > as D(i)=-SIGN(A(i,i)), where A(i,i) is the value after performing */
 /* > i-1 steps of Gaussian elimination. This means that the diagonal */
 /* > element at each step of "modified" Gaussian elimination is */
@@ -105,14 +105,14 @@ the unit diagonal elements of L are not stored. */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] D */
 /* > \verbatim */
-/* > D is COMPLEX array, dimension min(M,N) */
+/* > D is COMPLEX array, dimension fla_min(M,N) */
 /* > The diagonal elements of the diagonal M-by-N sign matrix S, */
-/* > D(i) = S(i,i), where 1 <= i <= min(M,N). The elements can be */
+/* > D(i) = S(i,i), where 1 <= i <= fla_min(M,N). The elements can be */
 /* > only ( +1.0, 0.0 ) or (-1.0, 0.0 ). */
 /* > \endverbatim */
 /* > */
@@ -202,7 +202,7 @@ int claunhr_col_getrfnp_(integer *m, integer *n, complex *a, integer *lda, compl
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
@@ -214,14 +214,14 @@ int claunhr_col_getrfnp_(integer *m, integer *n, complex *a, integer *lda, compl
         return 0;
     }
     /* Quick return if possible */
-    if (min(*m,*n) == 0)
+    if (fla_min(*m,*n) == 0)
     {
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Determine the block size for this environment. */
     nb = ilaenv_(&c__1, "CLAUNHR_COL_GETRFNP", " ", m, n, &c_n1, &c_n1);
-    if (nb <= 1 || nb >= min(*m,*n))
+    if (nb <= 1 || nb >= fla_min(*m,*n))
     {
         /* Use unblocked code. */
         claunhr_col_getrfnp2_(m, n, &a[a_offset], lda, &d__[1], info);
@@ -229,15 +229,15 @@ int claunhr_col_getrfnp_(integer *m, integer *n, complex *a, integer *lda, compl
     else
     {
         /* Use blocked code. */
-        i__1 = min(*m,*n);
+        i__1 = fla_min(*m,*n);
         i__2 = nb;
         for (j = 1;
                 i__2 < 0 ? j >= i__1 : j <= i__1;
                 j += i__2)
         {
             /* Computing MIN */
-            i__3 = min(*m,*n) - j + 1;
-            jb = min(i__3,nb);
+            i__3 = fla_min(*m,*n) - j + 1;
+            jb = fla_min(i__3,nb);
             /* Factor diagonal and subdiagonal blocks. */
             i__3 = *m - j + 1;
             claunhr_col_getrfnp2_(&i__3, &jb, &a[j + j * a_dim1], lda, &d__[ j], &iinfo);

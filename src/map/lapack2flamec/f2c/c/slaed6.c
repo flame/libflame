@@ -214,9 +214,9 @@ int slaed6_(integer *kniter, logical *orgati, real *rho, real *d__, real *z__, r
         }
         /* Computing MAX */
         r__1 = f2c_abs(a), r__2 = f2c_abs(b);
-        r__1 = max(r__1,r__2);
+        r__1 = fla_max(r__1,r__2);
         r__2 = f2c_abs(c__); // ; expr subst
-        temp = max(r__1,r__2);
+        temp = fla_max(r__1,r__2);
         a /= temp;
         b /= temp;
         c__ /= temp;
@@ -275,14 +275,14 @@ int slaed6_(integer *kniter, logical *orgati, real *rho, real *d__, real *z__, r
         /* Computing MIN */
         r__3 = (r__1 = d__[2] - *tau, f2c_abs(r__1));
         r__4 = (r__2 = d__[3] - * tau, f2c_abs(r__2)); // , expr subst
-        temp = min(r__3,r__4);
+        temp = fla_min(r__3,r__4);
     }
     else
     {
         /* Computing MIN */
         r__3 = (r__1 = d__[1] - *tau, f2c_abs(r__1));
         r__4 = (r__2 = d__[2] - * tau, f2c_abs(r__2)); // , expr subst
-        temp = min(r__3,r__4);
+        temp = fla_min(r__3,r__4);
     }
     scale = FALSE_;
     if (temp <= small1)
@@ -382,9 +382,9 @@ int slaed6_(integer *kniter, logical *orgati, real *rho, real *d__, real *z__, r
         c__ = f - (temp1 + temp2) * df + temp1 * temp2 * ddf;
         /* Computing MAX */
         r__1 = f2c_abs(a), r__2 = f2c_abs(b);
-        r__1 = max(r__1,r__2);
+        r__1 = fla_max(r__1,r__2);
         r__2 = f2c_abs(c__); // ; expr subst
-        temp = max(r__1,r__2);
+        temp = fla_max(r__1,r__2);
         a /= temp;
         b /= temp;
         c__ /= temp;

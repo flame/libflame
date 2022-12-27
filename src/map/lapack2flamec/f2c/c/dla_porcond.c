@@ -70,7 +70,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] AF */
@@ -83,7 +83,7 @@ static integer c__1 = 1;
 /* > \param[in] LDAF */
 /* > \verbatim */
 /* > LDAF is INTEGER */
-/* > The leading dimension of the array AF. LDAF >= max(1,N). */
+/* > The leading dimension of the array AF. LDAF >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] CMODE */

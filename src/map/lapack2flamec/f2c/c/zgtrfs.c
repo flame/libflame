@@ -135,7 +135,7 @@ IPIV(i) = i indicates a row interchange was not */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] X */
@@ -148,7 +148,7 @@ IPIV(i) = i indicates a row interchange was not */
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(1,N). */
+/* > The leading dimension of the array X. LDX >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] FERR */
@@ -296,11 +296,11 @@ int zgtrfs_(char *trans, integer *n, integer *nrhs, doublecomplex *dl, doublecom
     {
         *info = -3;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -13;
     }
-    else if (*ldx < max(1,*n))
+    else if (*ldx < fla_max(1,*n))
     {
         *info = -15;
     }
@@ -432,7 +432,7 @@ L20: /* Loop until stopping criterion is satisfied. */
             }
         }
         /* Compute componentwise relative backward error from formula */
-        /* max(i) ( f2c_dabs(R(i)) / ( f2c_dabs(op(A))*f2c_dabs(X) + f2c_dabs(B) )(i) ) */
+        /* fla_max(i) ( f2c_dabs(R(i)) / ( f2c_dabs(op(A))*f2c_dabs(X) + f2c_dabs(B) )(i) ) */
         /* where f2c_dabs(Z) is the componentwise absolute value of the matrix */
         /* or vector Z. If the i-th component of the denominator is less */
         /* than SAFE2, then SAFE1 is added to the i-th components of the */
@@ -449,7 +449,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 i__3 = i__;
                 d__3 = s;
                 d__4 = ((d__1 = work[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&work[i__]), f2c_dabs(d__2))) / rwork[i__]; // , expr subst
-                s = max(d__3,d__4);
+                s = fla_max(d__3,d__4);
             }
             else
             {
@@ -457,7 +457,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 i__3 = i__;
                 d__3 = s;
                 d__4 = ((d__1 = work[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&work[i__]), f2c_dabs(d__2)) + safe1) / (rwork[i__] + safe1); // , expr subst
-                s = max(d__3,d__4);
+                s = fla_max(d__3,d__4);
             }
             /* L50: */
         }
@@ -566,7 +566,7 @@ L70:
             i__3 = i__ + j * x_dim1;
             d__3 = lstres;
             d__4 = (d__1 = x[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&x[i__ + j * x_dim1]), f2c_dabs(d__2)); // , expr subst
-            lstres = max(d__3,d__4);
+            lstres = fla_max(d__3,d__4);
             /* L100: */
         }
         if (lstres != 0.)

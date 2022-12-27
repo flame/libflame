@@ -112,7 +112,7 @@ static logical c_false = FALSE_;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] AF */
@@ -125,7 +125,7 @@ static logical c_false = FALSE_;
 /* > \param[in] LDAF */
 /* > \verbatim */
 /* > LDAF is INTEGER */
-/* > The leading dimension of the array AF. LDAF >= max(1,N). */
+/* > The leading dimension of the array AF. LDAF >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] S */
@@ -154,7 +154,7 @@ otherwise, S is an output argument. If FACT = 'F' and EQUED */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] X */
@@ -167,7 +167,7 @@ otherwise, S is an output argument. If FACT = 'F' and EQUED */
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(1,N). */
+/* > The leading dimension of the array X. LDX >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RCOND */
@@ -547,19 +547,19 @@ int cporfsx_(char *uplo, char *equed, integer *n, integer * nrhs, complex *a, in
     {
         *info = -4;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -6;
     }
-    else if (*ldaf < max(1,*n))
+    else if (*ldaf < fla_max(1,*n))
     {
         *info = -8;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -11;
     }
-    else if (*ldx < max(1,*n))
+    else if (*ldx < fla_max(1,*n))
     {
         *info = -13;
     }
@@ -637,7 +637,7 @@ int cporfsx_(char *uplo, char *equed, integer *n, integer * nrhs, complex *a, in
     /* Computing MAX */
     r__1 = 10.f;
     r__2 = sqrt((real) (*n)); // , expr subst
-    err_lbnd__ = max(r__1,r__2) * slamch_("Epsilon");
+    err_lbnd__ = fla_max(r__1,r__2) * slamch_("Epsilon");
     if (*n_err_bnds__ >= 1 && n_norms__ >= 1)
     {
         /* Compute scaled normwise condition number cond(A*C). */

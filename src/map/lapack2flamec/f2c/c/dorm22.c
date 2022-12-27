@@ -100,8 +100,8 @@ static doublereal c_b10 = 1.;
 /* > \verbatim */
 /* > LDQ is INTEGER */
 /* > The leading dimension of the array Q. */
-/* > LDQ >= max(1,M) if SIDE = 'L';
-LDQ >= max(1,N) if SIDE = 'R'. */
+/* > LDQ >= fla_max(1,M) if SIDE = 'L';
+LDQ >= fla_max(1,N) if SIDE = 'R'. */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] C */
@@ -114,7 +114,7 @@ LDQ >= max(1,N) if SIDE = 'R'. */
 /* > \param[in] LDC */
 /* > \verbatim */
 /* > LDC is INTEGER */
-/* > The leading dimension of the array C. LDC >= max(1,M). */
+/* > The leading dimension of the array C. LDC >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -127,9 +127,9 @@ LDQ >= max(1,N) if SIDE = 'R'. */
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The dimension of the array WORK. */
-/* > If SIDE = 'L', LWORK >= max(1,N);
+/* > If SIDE = 'L', LWORK >= fla_max(1,N);
 */
-/* > if SIDE = 'R', LWORK >= max(1,M). */
+/* > if SIDE = 'R', LWORK >= fla_max(1,M). */
 /* > For optimum performance LWORK >= M*N. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -245,11 +245,11 @@ int dorm22_(char *side, char *trans, integer *m, integer *n, integer *n1, intege
     {
         *info = -6;
     }
-    else if (*ldq < max(1,nq))
+    else if (*ldq < fla_max(1,nq))
     {
         *info = -8;
     }
-    else if (*ldc < max(1,*m))
+    else if (*ldc < fla_max(1,*m))
     {
         *info = -10;
     }
@@ -299,8 +299,8 @@ int dorm22_(char *side, char *trans, integer *m, integer *n, integer *n1, intege
     /* Compute the largest chunk size available from the workspace. */
     /* Computing MAX */
     i__1 = 1;
-    i__2 = min(*lwork,lwkopt) / nq; // , expr subst
-    nb = max(i__1,i__2);
+    i__2 = fla_min(*lwork,lwkopt) / nq; // , expr subst
+    nb = fla_max(i__1,i__2);
     if (left)
     {
         if (notran)
@@ -314,7 +314,7 @@ int dorm22_(char *side, char *trans, integer *m, integer *n, integer *n1, intege
                 /* Computing MIN */
                 i__3 = nb;
                 i__4 = *n - i__ + 1; // , expr subst
-                len = min(i__3,i__4);
+                len = fla_min(i__3,i__4);
                 ldwork = *m;
                 /* Multiply bottom part of C by Q12. */
                 dlacpy_("All", n1, &len, &c__[*n2 + 1 + i__ * c_dim1], ldc, & work[1], &ldwork);
@@ -341,7 +341,7 @@ int dorm22_(char *side, char *trans, integer *m, integer *n, integer *n1, intege
                 /* Computing MIN */
                 i__3 = nb;
                 i__4 = *n - i__ + 1; // , expr subst
-                len = min(i__3,i__4);
+                len = fla_min(i__3,i__4);
                 ldwork = *m;
                 /* Multiply bottom part of C by Q21**T. */
                 dlacpy_("All", n2, &len, &c__[*n1 + 1 + i__ * c_dim1], ldc, & work[1], &ldwork);
@@ -371,7 +371,7 @@ int dorm22_(char *side, char *trans, integer *m, integer *n, integer *n1, intege
                 /* Computing MIN */
                 i__3 = nb;
                 i__4 = *m - i__ + 1; // , expr subst
-                len = min(i__3,i__4);
+                len = fla_min(i__3,i__4);
                 ldwork = len;
                 /* Multiply right part of C by Q21. */
                 dlacpy_("All", &len, n2, &c__[i__ + (*n1 + 1) * c_dim1], ldc, &work[1], &ldwork);
@@ -398,7 +398,7 @@ int dorm22_(char *side, char *trans, integer *m, integer *n, integer *n1, intege
                 /* Computing MIN */
                 i__3 = nb;
                 i__4 = *m - i__ + 1; // , expr subst
-                len = min(i__3,i__4);
+                len = fla_min(i__3,i__4);
                 ldwork = len;
                 /* Multiply right part of C by Q12**T. */
                 dlacpy_("All", &len, n1, &c__[i__ + (*n2 + 1) * c_dim1], ldc, &work[1], &ldwork);

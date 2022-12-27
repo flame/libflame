@@ -128,7 +128,7 @@ void fla_test_gerq2_experiment(test_params_t *params,
 
     // Create input matrix parameters
     create_matrix(datatype, &A, lda, n);
-    create_vector(datatype, &T, min(m,n));
+    create_vector(datatype, &T, fla_min(m,n));
 
     if (g_ext_fptr != NULL)
     {
@@ -182,7 +182,7 @@ void prepare_gerq2_run(integer m_A, integer n_A,
     integer info = 0;
     double time_min = 1e9, exe_time;
 
-    min_A = min(m_A, n_A);
+    min_A = fla_min(m_A, n_A);
 
     /* Make a copy of the input matrix A. Same input values will be passed in
        each itertaion.*/
@@ -205,7 +205,7 @@ void prepare_gerq2_run(integer m_A, integer n_A,
         exe_time = fla_test_clock() - exe_time;
 
         // Get the best execution time
-        time_min = min(time_min, exe_time);
+        time_min = fla_min(time_min, exe_time);
 
         // Make a copy of the output buffers. This is required to validate the API functionality.
         copy_vector(datatype, min_A, T_test, 1, T, 1);

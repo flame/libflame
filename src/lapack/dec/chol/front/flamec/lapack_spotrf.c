@@ -54,7 +54,7 @@ static real c_b14 = 1.f;
 /*          factorization A = U**T*U or A = L*L**T. */
 
 /*  LDA     (input) INTEGER */
-/*          The leading dimension of the array A.  LDA >= max(1,N). */
+/*          The leading dimension of the array A.  LDA >= fla_max(1,N). */
 
 /*  INFO    (output) INTEGER */
 /*          = 0:  successful exit */
@@ -84,7 +84,7 @@ static real c_b14 = 1.f;
 	*info = -1;
     } else if (*n < 0) {
 	*info = -2;
-    } else if (*lda < max(1,*n)) {
+    } else if (*lda < fla_max(1,*n)) {
 	*info = -4;
     }
     if (*info != 0) {
@@ -123,7 +123,7 @@ static real c_b14 = 1.f;
 
 /* Computing MIN */
 		i__3 = nb, i__4 = *n - j + 1;
-		jb = min(i__3,i__4);
+		jb = fla_min(i__3,i__4);
 		i__3 = j - 1;
 		#if AOCL_FLA_PROGRESS_H
 		    if(aocl_fla_progress_ptr){
@@ -168,7 +168,7 @@ static real c_b14 = 1.f;
 
 /* Computing MIN */
 		i__3 = nb, i__4 = *n - j + 1;
-		jb = min(i__3,i__4);
+		jb = fla_min(i__3,i__4);
 		i__3 = j - 1;
 		#if AOCL_FLA_PROGRESS_H
 		    if(aocl_fla_progress_ptr){

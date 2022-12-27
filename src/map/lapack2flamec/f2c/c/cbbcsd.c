@@ -521,13 +521,13 @@ int cbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     r__3 = 100.f;
     r__4 = pow_dd(&d__1, &c_b11); // , expr subst
     r__1 = 10.f;
-    r__2 = min(r__3,r__4); // , expr subst
-    tolmul = max(r__1,r__2);
+    r__2 = fla_min(r__3,r__4); // , expr subst
+    tolmul = fla_max(r__1,r__2);
     tol = tolmul * eps;
     /* Computing MAX */
     r__1 = tol;
     r__2 = *q * 6 * *q * unfl; // , expr subst
-    thresh = max(r__1,r__2);
+    thresh = fla_max(r__1,r__2);
     /* Test for negligible sines or cosines */
     i__1 = *q;
     for (i__ = 1;

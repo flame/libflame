@@ -77,7 +77,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] IPIV */
@@ -258,7 +258,7 @@ int zhetf2_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *ipi
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }
@@ -301,7 +301,7 @@ L10: /* If K < 1, exit from loop */
         {
             colmax = 0.;
         }
-        if (max(absakk,colmax) == 0. || disnan_(&absakk))
+        if (fla_max(absakk,colmax) == 0. || disnan_(&absakk))
         {
             /* Column K is zero or underflow, or contains a NaN: */
             /* set INFO and continue */
@@ -342,7 +342,7 @@ L10: /* If K < 1, exit from loop */
                     i__1 = jmax + imax * a_dim1;
                     d__3 = rowmax;
                     d__4 = (d__1 = a[i__1].r, f2c_dabs(d__1)) + ( d__2 = d_imag(&a[jmax + imax * a_dim1]), f2c_dabs(d__2) ); // , expr subst
-                    rowmax = max(d__3,d__4);
+                    rowmax = fla_max(d__3,d__4);
                 }
                 if (absakk >= alpha * colmax * (colmax / rowmax))
                 {
@@ -597,7 +597,7 @@ L50: /* If K > N, exit from loop */
         {
             colmax = 0.;
         }
-        if (max(absakk,colmax) == 0. || disnan_(&absakk))
+        if (fla_max(absakk,colmax) == 0. || disnan_(&absakk))
         {
             /* Column K is zero or underflow, or contains a NaN: */
             /* set INFO and continue */
@@ -638,7 +638,7 @@ L50: /* If K > N, exit from loop */
                     i__1 = jmax + imax * a_dim1;
                     d__3 = rowmax;
                     d__4 = (d__1 = a[i__1].r, f2c_dabs(d__1)) + ( d__2 = d_imag(&a[jmax + imax * a_dim1]), f2c_dabs(d__2) ); // , expr subst
-                    rowmax = max(d__3,d__4);
+                    rowmax = fla_max(d__3,d__4);
                 }
                 if (absakk >= alpha * colmax * (colmax / rowmax))
                 {

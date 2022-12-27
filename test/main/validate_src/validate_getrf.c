@@ -24,7 +24,7 @@ void validate_getrf(integer m_A,
     integer nrhs=1, info;
 
     m_n_vector = m_A * n_A;
-    min_A = min(m_A, n_A);
+    min_A = fla_min(m_A, n_A);
     create_vector(datatype, &B, m_A);
     create_vector(datatype, &B_test, m_A);
     if (m_A > n_A)
@@ -93,7 +93,7 @@ void validate_getrf(integer m_A,
             norm = slange_("1", &m_A, &n_A, T, &m_A, work);
 
             resid2 = norm / (float)n_A / norm_A / eps;
-            *residual = (float)max(resid1, resid2);
+            *residual = (float)fla_max(resid1, resid2);
             break;
         }
 
@@ -132,7 +132,7 @@ void validate_getrf(integer m_A,
             norm = dlange_("1", &m_A, &n_A, T, &m_A, work);
 
             resid2 = norm / (double)n_A / norm_A / eps;
-            *residual = (double)max(resid1, resid2);
+            *residual = (double)fla_max(resid1, resid2);
             break;
         }
         case COMPLEX:
@@ -171,7 +171,7 @@ void validate_getrf(integer m_A,
             norm = clange_("1", &m_A, &n_A, T, &m_A, work);
 
             resid2 = norm / (float)n_A / norm_A / eps;
-            *residual = (float)max(resid1, resid2);
+            *residual = (float)fla_max(resid1, resid2);
             break;
         }
         case DOUBLE_COMPLEX:
@@ -210,7 +210,7 @@ void validate_getrf(integer m_A,
             norm = zlange_("1", &m_A, &n_A, T, &m_A, work);
 
             resid2 = norm / (double)n_A / norm_A / eps;
-            *residual = (double)max(resid1, resid2);
+            *residual = (double)fla_max(resid1, resid2);
             break;
         }
     }

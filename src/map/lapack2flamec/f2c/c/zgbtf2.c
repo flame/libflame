@@ -74,7 +74,7 @@ static integer c__1 = 1;
 rows 1 to KL of the array need not be set. */
 /* > The j-th column of A is stored in the j-th column of the */
 /* > array AB as follows: */
-/* > AB(kl+ku+1+i-j,j) = A(i,j) for max(1,j-ku)<=i<=min(m,j+kl) */
+/* > AB(kl+ku+1+i-j,j) = A(i,j) for fla_max(1,j-ku)<=i<=fla_min(m,j+kl) */
 /* > */
 /* > On exit, details of the factorization: U is stored as an */
 /* > upper triangular band matrix with KL+KU superdiagonals in */
@@ -91,9 +91,9 @@ rows 1 to KL of the array need not be set. */
 /* > */
 /* > \param[out] IPIV */
 /* > \verbatim */
-/* > IPIV is INTEGER array, dimension (min(M,N)) */
+/* > IPIV is INTEGER array, dimension (fla_min(M,N)) */
 /* > The pivot indices;
-for 1 <= i <= min(M,N), row i of the */
+for 1 <= i <= fla_min(M,N), row i of the */
 /* > matrix was interchanged with row IPIV(i). */
 /* > \endverbatim */
 /* > */
@@ -234,7 +234,7 @@ int zgbtf2_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
 
     /* Gaussian elimination with partial pivoting */
     /* Set fill-in elements in columns KU+2 to KV to zero. */
-    i__1 = min(kv,*n);
+    i__1 = fla_min(kv,*n);
     for (j = *ku + 2;
             j <= i__1;
             ++j)
@@ -254,7 +254,7 @@ int zgbtf2_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
     /* JU is the index of the last column affected by the current stage */
     /* of the factorization. */
     ju = 1;
-    i__1 = min(*m,*n);
+    i__1 = fla_min(*m,*n);
     for (j = 1;
             j <= i__1;
             ++j)
@@ -287,7 +287,7 @@ int zgbtf2_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
         /* Computing MIN */
         i__2 = *kl;
         i__3 = *m - j; // , expr subst
-        km = min(i__2,i__3);
+        km = fla_min(i__2,i__3);
         i__2 = km + 1;
         jp = izamax_(&i__2, &ab[kv + 1 + j * ab_dim1], &c__1);
         ipiv[j] = jp + j - 1;
@@ -298,8 +298,8 @@ int zgbtf2_(integer *m, integer *n, integer *kl, integer *ku, doublecomplex *ab,
             /* Computing MIN */
             i__4 = j + *ku + jp - 1;
             i__2 = ju;
-            i__3 = min(i__4,*n); // , expr subst
-            ju = max(i__2,i__3);
+            i__3 = fla_min(i__4,*n); // , expr subst
+            ju = fla_max(i__2,i__3);
             /* Apply interchange to columns J to JU. */
             if (jp != 1)
             {

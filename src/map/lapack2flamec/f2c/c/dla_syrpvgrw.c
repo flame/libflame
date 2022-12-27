@@ -71,7 +71,7 @@
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] AF */
@@ -84,7 +84,7 @@
 /* > \param[in] LDAF */
 /* > \verbatim */
 /* > LDAF is INTEGER */
-/* > The leading dimension of the array AF. LDAF >= max(1,N). */
+/* > The leading dimension of the array AF. LDAF >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] IPIV */
@@ -189,11 +189,11 @@ doublereal dla_syrpvgrw_(char *uplo, integer *n, integer *info, doublereal * a, 
                 /* Computing MAX */
                 d__2 = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
                 d__3 = work[* n + i__]; // , expr subst
-                work[*n + i__] = max(d__2,d__3);
+                work[*n + i__] = fla_max(d__2,d__3);
                 /* Computing MAX */
                 d__2 = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
                 d__3 = work[* n + j]; // , expr subst
-                work[*n + j] = max(d__2,d__3);
+                work[*n + j] = fla_max(d__2,d__3);
             }
         }
     }
@@ -212,11 +212,11 @@ doublereal dla_syrpvgrw_(char *uplo, integer *n, integer *info, doublereal * a, 
                 /* Computing MAX */
                 d__2 = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
                 d__3 = work[* n + i__]; // , expr subst
-                work[*n + i__] = max(d__2,d__3);
+                work[*n + i__] = fla_max(d__2,d__3);
                 /* Computing MAX */
                 d__2 = (d__1 = a[i__ + j * a_dim1], f2c_abs(d__1));
                 d__3 = work[* n + j]; // , expr subst
-                work[*n + j] = max(d__2,d__3);
+                work[*n + j] = fla_max(d__2,d__3);
             }
         }
     }
@@ -248,7 +248,7 @@ doublereal dla_syrpvgrw_(char *uplo, integer *n, integer *info, doublereal * a, 
                     /* Computing MAX */
                     d__2 = (d__1 = af[i__ + k * af_dim1], f2c_abs(d__1));
                     d__3 = work[k]; // , expr subst
-                    work[k] = max(d__2,d__3);
+                    work[k] = fla_max(d__2,d__3);
                 }
                 --k;
             }
@@ -267,16 +267,16 @@ doublereal dla_syrpvgrw_(char *uplo, integer *n, integer *info, doublereal * a, 
                     /* Computing MAX */
                     d__2 = (d__1 = af[i__ + k * af_dim1], f2c_abs(d__1));
                     d__3 = work[k]; // , expr subst
-                    work[k] = max(d__2,d__3);
+                    work[k] = fla_max(d__2,d__3);
                     /* Computing MAX */
                     d__2 = (d__1 = af[i__ + (k - 1) * af_dim1], f2c_abs(d__1));
                     d__3 = work[k - 1]; // , expr subst
-                    work[k - 1] = max(d__2,d__3);
+                    work[k - 1] = fla_max(d__2,d__3);
                 }
                 /* Computing MAX */
                 d__2 = (d__1 = af[k + k * af_dim1], f2c_abs(d__1));
                 d__3 = work[k] ; // , expr subst
-                work[k] = max(d__2,d__3);
+                work[k] = fla_max(d__2,d__3);
                 k += -2;
             }
         }
@@ -327,7 +327,7 @@ doublereal dla_syrpvgrw_(char *uplo, integer *n, integer *info, doublereal * a, 
                     /* Computing MAX */
                     d__2 = (d__1 = af[i__ + k * af_dim1], f2c_abs(d__1));
                     d__3 = work[k]; // , expr subst
-                    work[k] = max(d__2,d__3);
+                    work[k] = fla_max(d__2,d__3);
                 }
                 ++k;
             }
@@ -346,16 +346,16 @@ doublereal dla_syrpvgrw_(char *uplo, integer *n, integer *info, doublereal * a, 
                     /* Computing MAX */
                     d__2 = (d__1 = af[i__ + k * af_dim1], f2c_abs(d__1));
                     d__3 = work[k]; // , expr subst
-                    work[k] = max(d__2,d__3);
+                    work[k] = fla_max(d__2,d__3);
                     /* Computing MAX */
                     d__2 = (d__1 = af[i__ + (k + 1) * af_dim1], f2c_abs(d__1));
                     d__3 = work[k + 1]; // , expr subst
-                    work[k + 1] = max(d__2,d__3);
+                    work[k + 1] = fla_max(d__2,d__3);
                 }
                 /* Computing MAX */
                 d__2 = (d__1 = af[k + k * af_dim1], f2c_abs(d__1));
                 d__3 = work[k] ; // , expr subst
-                work[k] = max(d__2,d__3);
+                work[k] = fla_max(d__2,d__3);
                 k += 2;
             }
         }
@@ -402,7 +402,7 @@ doublereal dla_syrpvgrw_(char *uplo, integer *n, integer *info, doublereal * a, 
             {
                 /* Computing MIN */
                 d__1 = amax / umax;
-                rpvgrw = min(d__1,rpvgrw);
+                rpvgrw = fla_min(d__1,rpvgrw);
             }
         }
     }
@@ -419,7 +419,7 @@ doublereal dla_syrpvgrw_(char *uplo, integer *n, integer *info, doublereal * a, 
             {
                 /* Computing MIN */
                 d__1 = amax / umax;
-                rpvgrw = min(d__1,rpvgrw);
+                rpvgrw = fla_min(d__1,rpvgrw);
             }
         }
     }

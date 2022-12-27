@@ -151,8 +151,8 @@ BENCHMARK_TEMPLATE_DEFINE_F(geqr_test, dgeqr, double)(benchmark::State &state) {
 
   data->lwork = (int)work_query;
   data->tsize = (int)t_work_query;
-  data->lwork = max(data->n,data->lwork);
-  data->tsize = max((data->n) + 5,data->tsize);
+  data->lwork = fla_max(data->n,data->lwork);
+  data->tsize = fla_max((data->n) + 5,data->tsize);
   data->Work = (double *)malloc( sizeof(double) * (data->lwork));
   data->Tau = (double *)malloc( sizeof(double) * (data->tsize));
 
@@ -185,8 +185,8 @@ BENCHMARK_TEMPLATE_DEFINE_F(geqr_test, sgeqr, float)(benchmark::State &state) {
   
   data->lwork = (int)work_query;
   data->tsize = (int)t_work_query;
-  data->lwork = max(data->n,data->lwork);
-  data->tsize = max((data->n) + 5,data->tsize);
+  data->lwork = fla_max(data->n,data->lwork);
+  data->tsize = fla_max((data->n) + 5,data->tsize);
   data->Work = (float *)malloc( sizeof(float) * (data->lwork));
   data->Tau = (float *)malloc( sizeof(float) * (data->tsize));
   if ((data->Work == NULL) || (data->Tau == NULL) ){
@@ -219,8 +219,8 @@ BENCHMARK_TEMPLATE_DEFINE_F(geqr_test, cgeqr, lapack_complex_float)(benchmark::S
   
   data->lwork = (int)work_query;
   data->tsize = (int)t_work_query;
-  data->lwork = max(data->n,data->lwork);
-  data->tsize = max((data->n) + 5,data->tsize);
+  data->lwork = fla_max(data->n,data->lwork);
+  data->tsize = fla_max((data->n) + 5,data->tsize);
   data->Work = (lapack_complex_float *)malloc( sizeof(lapack_complex_float) * (data->lwork));
   data->Tau = (lapack_complex_float *)malloc( sizeof(lapack_complex_float) * (data->tsize));
   if ((data->Work == NULL) || (data->Tau == NULL) ){
@@ -253,8 +253,8 @@ BENCHMARK_TEMPLATE_DEFINE_F(geqr_test, zgeqr, lapack_complex_double)(benchmark::
   
   data->lwork = (int)work_query;
   data->tsize = (int)t_work_query;
-  data->lwork = max(data->n,data->lwork);
-  data->tsize = max((data->n) + 5,data->tsize);
+  data->lwork = fla_max(data->n,data->lwork);
+  data->tsize = fla_max((data->n) + 5,data->tsize);
   data->Work = (lapack_complex_double *)malloc( sizeof(lapack_complex_double) * (data->lwork));
   data->Tau = (lapack_complex_double *)malloc( sizeof(lapack_complex_double) * (data->tsize));
   if ((data->Work == NULL) || (data->Tau == NULL) ){

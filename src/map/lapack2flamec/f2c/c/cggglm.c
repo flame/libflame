@@ -95,7 +95,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -112,7 +112,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] D */
@@ -143,8 +143,8 @@ static integer c_n1 = -1;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,N+M+P). */
-/* > For optimum performance, LWORK >= M+min(N,P)+max(N,P)*NB, */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,N+M+P). */
+/* > For optimum performance, LWORK >= M+fla_min(N,P)+fla_max(N,P)*NB, */
 /* > where NB is an upper bound for the optimal blocksizes for */
 /* > CGEQRF, CGERQF, CUNMQR and CUNMRQ. */
 /* > */
@@ -243,7 +243,7 @@ int cggglm_(integer *n, integer *m, integer *p, complex *a, integer *lda, comple
     --work;
     /* Function Body */
     *info = 0;
-    np = min(*n,*p);
+    np = fla_min(*n,*p);
     lquery = *lwork == -1;
     if (*n < 0)
     {
@@ -257,11 +257,11 @@ int cggglm_(integer *n, integer *m, integer *p, complex *a, integer *lda, comple
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -7;
     }
@@ -280,11 +280,11 @@ int cggglm_(integer *n, integer *m, integer *p, complex *a, integer *lda, comple
             nb3 = ilaenv_(&c__1, "CUNMQR", " ", n, m, p, &c_n1);
             nb4 = ilaenv_(&c__1, "CUNMRQ", " ", n, m, p, &c_n1);
             /* Computing MAX */
-            i__1 = max(nb1,nb2);
-            i__1 = max(i__1,nb3); // , expr subst
-            nb = max(i__1,nb4);
+            i__1 = fla_max(nb1,nb2);
+            i__1 = fla_max(i__1,nb3); // , expr subst
+            nb = fla_max(i__1,nb4);
             lwkmin = *m + *n + *p;
-            lwkopt = *m + np + max(*n,*p) * nb;
+            lwkopt = *m + np + fla_max(*n,*p) * nb;
         }
         work[1].r = (real) lwkopt;
         work[1].i = 0.f; // , expr subst
@@ -323,14 +323,14 @@ int cggglm_(integer *n, integer *m, integer *p, complex *a, integer *lda, comple
     lopt = work[i__1].r;
     /* Update left-hand-side vector d = Q**H*d = ( d1 ) M */
     /* ( d2 ) N-M */
-    i__1 = max(1,*n);
+    i__1 = fla_max(1,*n);
     i__2 = *lwork - *m - np;
     cunmqr_("Left", "Conjugate transpose", n, &c__1, m, &a[a_offset], lda, & work[1], &d__[1], &i__1, &work[*m + np + 1], &i__2, info);
     /* Computing MAX */
     i__3 = *m + np + 1;
     i__1 = lopt;
     i__2 = (integer) work[i__3].r; // , expr subst
-    lopt = max(i__1,i__2);
+    lopt = fla_max(i__1,i__2);
     /* Solve T22*y2 = d2 for y2 */
     if (*n > *m)
     {
@@ -379,14 +379,14 @@ int cggglm_(integer *n, integer *m, integer *p, complex *a, integer *lda, comple
     /* Computing MAX */
     i__1 = 1;
     i__2 = *n - *p + 1; // , expr subst
-    i__3 = max(1,*p);
+    i__3 = fla_max(1,*p);
     i__4 = *lwork - *m - np;
-    cunmrq_("Left", "Conjugate transpose", p, &c__1, &np, &b[max(i__1,i__2) + b_dim1], ldb, &work[*m + 1], &y[1], &i__3, &work[*m + np + 1], & i__4, info);
+    cunmrq_("Left", "Conjugate transpose", p, &c__1, &np, &b[fla_max(i__1,i__2) + b_dim1], ldb, &work[*m + 1], &y[1], &i__3, &work[*m + np + 1], & i__4, info);
     /* Computing MAX */
     i__4 = *m + np + 1;
     i__2 = lopt;
     i__3 = (integer) work[i__4].r; // , expr subst
-    i__1 = *m + np + max(i__2,i__3);
+    i__1 = *m + np + fla_max(i__2,i__3);
     work[1].r = (real) i__1;
     work[1].i = 0.f; // , expr subst
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);

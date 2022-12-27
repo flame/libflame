@@ -41,7 +41,7 @@ FLA_Error FLA_Apply_Q2_UT_lnfc_blk_var1( FLA_Obj D, FLA_Obj T, FLA_Obj W1, FLA_O
 
   while ( FLA_Obj_width( DR ) < FLA_Obj_width( D ) ){
 
-    b = min( b_alg, FLA_Obj_width( DL ) );
+    b = fla_min( b_alg, FLA_Obj_width( DL ) );
 
     // Since T was filled from left to right, and since we need to access them
     // in reverse order, we need to handle the case where the last block is

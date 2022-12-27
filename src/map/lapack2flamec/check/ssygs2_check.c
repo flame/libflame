@@ -29,11 +29,11 @@ int ssygs2_check(integer *itype, char *uplo, integer *n, float *a, integer *lda,
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -7;
     }

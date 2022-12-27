@@ -109,7 +109,7 @@ IPIV(i) = i indicates a row interchange was not */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -187,7 +187,7 @@ int sgttrs_(char *trans, integer *n, integer *nrhs, real *dl, real *d__, real *d
     {
         *info = -3;
     }
-    else if (*ldb < max(*n,1))
+    else if (*ldb < fla_max(*n,1))
     {
         *info = -10;
     }
@@ -223,7 +223,7 @@ int sgttrs_(char *trans, integer *n, integer *nrhs, real *dl, real *d__, real *d
         /* Computing MAX */
         i__1 = 1;
         i__2 = ilaenv_(&c__1, "SGTTRS", trans, n, nrhs, &c_n1, & c_n1); // , expr subst
-        nb = max(i__1,i__2);
+        nb = fla_max(i__1,i__2);
     }
     if (nb >= *nrhs)
     {
@@ -239,7 +239,7 @@ int sgttrs_(char *trans, integer *n, integer *nrhs, real *dl, real *d__, real *d
         {
             /* Computing MIN */
             i__3 = *nrhs - j + 1;
-            jb = min(i__3,nb);
+            jb = fla_min(i__3,nb);
             sgtts2_(&itrans, n, &jb, &dl[1], &d__[1], &du[1], &du2[1], &ipiv[ 1], &b[j * b_dim1 + 1], ldb);
             /* L10: */
         }

@@ -101,9 +101,9 @@ static integer c__65 = 65;
 /* > \verbatim */
 /* > LDA is INTEGER */
 /* > The leading dimension of the array A. */
-/* > If SIDE = 'L', LDA >= max(1,M);
+/* > If SIDE = 'L', LDA >= fla_max(1,M);
 */
-/* > if SIDE = 'R', LDA >= max(1,N). */
+/* > if SIDE = 'R', LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] TAU */
@@ -123,7 +123,7 @@ static integer c__65 = 65;
 /* > \param[in] LDC */
 /* > \verbatim */
 /* > LDC is INTEGER */
-/* > The leading dimension of the array C. LDC >= max(1,M). */
+/* > The leading dimension of the array C. LDC >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -136,9 +136,9 @@ static integer c__65 = 65;
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The dimension of the array WORK. */
-/* > If SIDE = 'L', LWORK >= max(1,N);
+/* > If SIDE = 'L', LWORK >= fla_max(1,N);
 */
-/* > if SIDE = 'R', LWORK >= max(1,M). */
+/* > if SIDE = 'R', LWORK >= fla_max(1,M). */
 /* > For good performance, LWORK should generally be larger. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -231,12 +231,12 @@ int sormql_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
     if (left)
     {
         nq = *m;
-        nw = max(1,*n);
+        nw = fla_max(1,*n);
     }
     else
     {
         nq = *n;
-        nw = max(1,*m);
+        nw = fla_max(1,*m);
     }
     if (! left && ! lsame_(side, "R"))
     {
@@ -258,11 +258,11 @@ int sormql_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
     {
         *info = -5;
     }
-    else if (*lda < max(1,nq))
+    else if (*lda < fla_max(1,nq))
     {
         *info = -7;
     }
-    else if (*ldc < max(1,*m))
+    else if (*ldc < fla_max(1,*m))
     {
         *info = -10;
     }
@@ -282,7 +282,7 @@ int sormql_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
             /* Computing MIN */
             i__1 = 64;
             i__2 = ilaenv_(&c__1, "SORMQL", ch__1, m, n, k, &c_n1); // , expr subst
-            nb = min(i__1,i__2);
+            nb = fla_min(i__1,i__2);
             lwkopt = nw * nb + 4160;
         }
         work[1] = (real) lwkopt;
@@ -315,7 +315,7 @@ int sormql_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
             /* Computing MAX */
             i__1 = 2;
             i__2 = ilaenv_(&c__2, "SORMQL", ch__1, m, n, k, &c_n1); // , expr subst
-            nbmin = max(i__1,i__2);
+            nbmin = fla_max(i__1,i__2);
         }
     }
     if (nb < nbmin || nb >= *k)
@@ -356,7 +356,7 @@ int sormql_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
             /* Computing MIN */
             i__4 = nb;
             i__5 = *k - i__ + 1; // , expr subst
-            ib = min(i__4,i__5);
+            ib = fla_min(i__4,i__5);
             /* Form the triangular factor of the block reflector */
             /* H = H(i+ib-1) . . . H(i+1) H(i) */
             i__4 = nq - *k + i__ + ib - 1;

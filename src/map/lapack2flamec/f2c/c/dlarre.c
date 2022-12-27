@@ -455,12 +455,12 @@ int dlarre_(char *range, integer *n, doublereal *vl, doublereal *vu, integer *il
         /* Computing MIN */
         d__1 = gl;
         d__2 = gers[(i__ << 1) - 1]; // , expr subst
-        gl = min(d__1,d__2);
+        gl = fla_min(d__1,d__2);
         gers[i__ * 2] = d__[i__] + tmp1;
         /* Computing MAX */
         d__1 = gu;
         d__2 = gers[i__ * 2]; // , expr subst
-        gu = max(d__1,d__2);
+        gu = fla_max(d__1,d__2);
         eold = eabs;
         /* L5: */
     }
@@ -470,7 +470,7 @@ int dlarre_(char *range, integer *n, doublereal *vl, doublereal *vu, integer *il
     d__3 = emax;
     d__1 = 1.;
     d__2 = d__3 * d__3; // , expr subst
-    *pivmin = safmin * max(d__1,d__2);
+    *pivmin = safmin * fla_max(d__1,d__2);
     /* Compute spectral diameter. The Gerschgorin bounds give an */
     /* estimate that is wrong by at most a factor of SQRT(2) */
     spdiam = gu - gl;
@@ -560,10 +560,10 @@ int dlarre_(char *range, integer *n, doublereal *vl, doublereal *vu, integer *il
         {
             /* Computing MIN */
             d__1 = gers[(i__ << 1) - 1];
-            gl = min(d__1,gl);
+            gl = fla_min(d__1,gl);
             /* Computing MAX */
             d__1 = gers[i__ * 2];
-            gu = max(d__1,gu);
+            gu = fla_max(d__1,gu);
             /* L15: */
         }
         spdiam = gu - gl;
@@ -612,13 +612,13 @@ L21:
                     /* Computing MAX */
                     d__1 = 0.;
                     d__2 = w[i__ + 1] - werr[i__ + 1] - (w[i__] + werr[i__]); // , expr subst
-                    wgap[i__] = max(d__1,d__2);
+                    wgap[i__] = fla_max(d__1,d__2);
                     /* L30: */
                 }
                 /* Computing MAX */
                 d__1 = 0.;
                 d__2 = *vu - sigma - (w[wend] + werr[wend]); // , expr subst
-                wgap[wend] = max(d__1,d__2);
+                wgap[wend] = fla_max(d__1,d__2);
                 /* Find local index of the first and last desired evalue. */
                 indl = indexw[wbegin];
                 indu = indexw[wend];
@@ -638,7 +638,7 @@ L21:
             /* Computing MAX */
             d__2 = gl;
             d__3 = tmp - tmp1 - eps * 100. * (d__1 = tmp - tmp1, f2c_abs(d__1)); // , expr subst
-            isleft = max(d__2,d__3);
+            isleft = fla_max(d__2,d__3);
             dlarrk_(&in, &in, &gl, &gu, &d__[ibegin], &e2[ibegin], pivmin, & rtl, &tmp, &tmp1, &iinfo);
             if (iinfo != 0)
             {
@@ -649,7 +649,7 @@ L21:
             /* Computing MIN */
             d__2 = gu;
             d__3 = tmp + tmp1 + eps * 100. * (d__1 = tmp + tmp1, f2c_abs(d__1)); // , expr subst
-            isrght = min(d__2,d__3);
+            isrght = fla_min(d__2,d__3);
             /* Improve the estimate of the spectral diameter */
             spdiam = isrght - isleft;
         }
@@ -660,11 +660,11 @@ L21:
             /* Computing MAX */
             d__2 = gl;
             d__3 = w[wbegin] - werr[wbegin] - eps * 100. * (d__1 = w[wbegin] - werr[wbegin], f2c_abs(d__1)); // , expr subst
-            isleft = max(d__2,d__3);
+            isleft = fla_max(d__2,d__3);
             /* Computing MIN */
             d__2 = gu;
             d__3 = w[wend] + werr[wend] + eps * 100. * (d__1 = w[ wend] + werr[wend], f2c_abs(d__1)); // , expr subst
-            isrght = min(d__2,d__3);
+            isrght = fla_min(d__2,d__3);
         }
         /* Decide whether the base representation for the current block */
         /* L_JBLK D_JBLK L_JBLK^T = T_JBLK - sigma_JBLK I */
@@ -700,9 +700,9 @@ L21:
             }
             else
             {
-                tmp = min(isrght,*vu) - max(isleft,*vl);
-                s1 = max(isleft,*vl) + tmp * .25;
-                s2 = min(isrght,*vu) - tmp * .25;
+                tmp = fla_min(isrght,*vu) - fla_max(isleft,*vl);
+                s1 = fla_max(isleft,*vl) + tmp * .25;
+                s2 = fla_min(isrght,*vu) - tmp * .25;
             }
         }
         /* Compute the negcount at the 1/4 and 3/4 points */
@@ -719,7 +719,7 @@ L21:
         {
             if (irange == 1 && ! forceb)
             {
-                sigma = max(isleft,gl);
+                sigma = fla_max(isleft,gl);
             }
             else if (usedqd)
             {
@@ -731,7 +731,7 @@ L21:
             {
                 /* use approximation of the first desired eigenvalue of the */
                 /* block as shift */
-                sigma = max(isleft,*vl);
+                sigma = fla_max(isleft,*vl);
             }
             sgndef = 1.;
         }
@@ -739,7 +739,7 @@ L21:
         {
             if (irange == 1 && ! forceb)
             {
-                sigma = min(isrght,gu);
+                sigma = fla_min(isrght,gu);
             }
             else if (usedqd)
             {
@@ -751,7 +751,7 @@ L21:
             {
                 /* use approximation of the first desired eigenvalue of the */
                 /* block as shift */
-                sigma = min(isrght,*vu);
+                sigma = fla_min(isrght,*vu);
             }
             sgndef = -1.;
         }
@@ -768,7 +768,7 @@ L21:
             /* Computing MAX */
             d__1 = tau;
             d__2 = eps * 2. * f2c_abs(sigma); // , expr subst
-            tau = max(d__1,d__2);
+            tau = fla_max(d__1,d__2);
         }
         else
         {
@@ -780,21 +780,21 @@ L21:
                 {
                     /* Computing MAX */
                     d__1 = wgap[wbegin];
-                    tau = max(d__1,avgap) * .5;
+                    tau = fla_max(d__1,avgap) * .5;
                     /* Computing MAX */
                     d__1 = tau;
                     d__2 = werr[wbegin]; // , expr subst
-                    tau = max(d__1,d__2);
+                    tau = fla_max(d__1,d__2);
                 }
                 else
                 {
                     /* Computing MAX */
                     d__1 = wgap[wend - 1];
-                    tau = max(d__1,avgap) * .5;
+                    tau = fla_max(d__1,avgap) * .5;
                     /* Computing MAX */
                     d__1 = tau;
                     d__2 = werr[wend]; // , expr subst
-                    tau = max(d__1,d__2);
+                    tau = fla_max(d__1,d__2);
                 }
             }
             else
@@ -826,7 +826,7 @@ L21:
                 /* Computing MAX */
                 d__1 = dmax__;
                 d__2 = f2c_abs(dpivot); // , expr subst
-                dmax__ = max(d__1,d__2);
+                dmax__ = fla_max(d__1,d__2);
                 ++j;
                 /* L70: */
             }
@@ -971,7 +971,7 @@ L83: /* At this point, we have found an initial base representation */
             /* Computing MAX */
             d__1 = 0.;
             d__2 = *vu - sigma - (w[wend] + werr[wend]); // , expr subst
-            wgap[wend] = max(d__1,d__2);
+            wgap[wend] = fla_max(d__1,d__2);
             i__2 = indu;
             for (i__ = indl;
                     i__ <= i__2;
@@ -1083,13 +1083,13 @@ L83: /* At this point, we have found an initial base representation */
                 /* Computing MAX */
                 d__1 = 0.;
                 d__2 = w[i__ + 1] - werr[i__ + 1] - (w[i__] + werr[ i__]); // , expr subst
-                wgap[i__] = max(d__1,d__2);
+                wgap[i__] = fla_max(d__1,d__2);
                 /* L166: */
             }
             /* Computing MAX */
             d__1 = 0.;
             d__2 = *vu - sigma - (w[*m] + werr[*m]); // , expr subst
-            wgap[*m] = max(d__1,d__2);
+            wgap[*m] = fla_max(d__1,d__2);
         }
         /* proceed with next block */
         ibegin = iend + 1;

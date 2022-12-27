@@ -111,7 +111,7 @@ FLA_Error FLA_Bsvd_iteracc_v_ops_var1( integer       m_A,
                                                           HB,  rs_H, cs_H,
                                                           &n_iter_perfBR );
 
-            *n_iter_perf = k_iter + max( n_iter_perfTL, n_iter_perfBR );
+            *n_iter_perf = k_iter + fla_max( n_iter_perfTL, n_iter_perfBR );
 
             return n_deflations + n_deflationsTL + n_deflationsBR;
         }
@@ -300,7 +300,7 @@ FLA_Error FLA_Bsvd_iteracc_v_opd_var1( integer       m_A,
             printf( "FLA_Bsvd_iteracc_v_opd_var1: returning: ijBRr m_BRr: %d %d\n", ijBRr, m_BRr );
 #endif
 
-            *n_iter_perf = k_iter + max( n_iter_perfTL, n_iter_perfBR );
+            *n_iter_perf = k_iter + fla_max( n_iter_perfTL, n_iter_perfBR );
 
             return n_deflations + n_deflationsTL + n_deflationsBR;
         }

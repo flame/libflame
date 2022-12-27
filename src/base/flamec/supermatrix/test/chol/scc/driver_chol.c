@@ -153,7 +153,7 @@ integer RCCE_APP( integer argc, char* argv[] )
       
       dtime = dtimes[0];
       for ( j = 1; j < n_repeats; j++ )
-         dtime = min( dtime, dtimes[j] );
+         dtime = fla_min( dtime, dtimes[j] );
       flops = 1.0 / 3.0 * size * size * size / dtime / 1e9;
       
       if ( rank == 0 ) 

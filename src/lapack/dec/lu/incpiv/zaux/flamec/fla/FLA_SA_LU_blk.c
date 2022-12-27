@@ -44,7 +44,7 @@ FLA_Error FLA_SA_LU_blk( FLA_Obj U,
 
   while ( FLA_Obj_length( UTL ) < FLA_Obj_length( U ) )
   {
-    b = min( FLA_Obj_length( UBR ), nb_alg );
+    b = fla_min( FLA_Obj_length( UBR ), nb_alg );
 
     FLA_Repart_2x2_to_3x3( UTL, /**/ UTR,       &U00, /**/ &U01, &U02,
                         /* ************* */   /* ******************** */

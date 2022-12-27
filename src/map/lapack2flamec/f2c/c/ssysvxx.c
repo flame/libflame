@@ -169,7 +169,7 @@ see the definitions of the FACT and EQUED options. */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] AF */
@@ -189,7 +189,7 @@ see the definitions of the FACT and EQUED options. */
 /* > \param[in] LDAF */
 /* > \verbatim */
 /* > LDAF is INTEGER */
-/* > The leading dimension of the array AF. LDAF >= max(1,N). */
+/* > The leading dimension of the array AF. LDAF >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] IPIV */
@@ -254,7 +254,7 @@ otherwise, S is an output argument. If FACT = 'F' and EQUED */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] X */
@@ -269,7 +269,7 @@ otherwise, S is an output argument. If FACT = 'F' and EQUED */
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(1,N). */
+/* > The leading dimension of the array X. LDX >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RCOND */
@@ -608,11 +608,11 @@ int ssysvxx_(char *fact, char *uplo, integer *n, integer * nrhs, real *a, intege
     {
         *info = -4;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -6;
     }
-    else if (*ldaf < max(1,*n))
+    else if (*ldaf < fla_max(1,*n))
     {
         *info = -8;
     }
@@ -634,11 +634,11 @@ int ssysvxx_(char *fact, char *uplo, integer *n, integer * nrhs, real *a, intege
                 /* Computing MIN */
                 r__1 = smin;
                 r__2 = s[j]; // , expr subst
-                smin = min(r__1,r__2);
+                smin = fla_min(r__1,r__2);
                 /* Computing MAX */
                 r__1 = smax;
                 r__2 = s[j]; // , expr subst
-                smax = max(r__1,r__2);
+                smax = fla_max(r__1,r__2);
                 /* L10: */
             }
             if (smin <= 0.f)
@@ -647,7 +647,7 @@ int ssysvxx_(char *fact, char *uplo, integer *n, integer * nrhs, real *a, intege
             }
             else if (*n > 0)
             {
-                scond = max(smin,smlnum) / min(smax,bignum);
+                scond = fla_max(smin,smlnum) / fla_min(smax,bignum);
             }
             else
             {
@@ -656,11 +656,11 @@ int ssysvxx_(char *fact, char *uplo, integer *n, integer * nrhs, real *a, intege
         }
         if (*info == 0)
         {
-            if (*ldb < max(1,*n))
+            if (*ldb < fla_max(1,*n))
             {
                 *info = -13;
             }
-            else if (*ldx < max(1,*n))
+            else if (*ldx < fla_max(1,*n))
             {
                 *info = -15;
             }
@@ -692,7 +692,7 @@ int ssysvxx_(char *fact, char *uplo, integer *n, integer * nrhs, real *a, intege
     {
         /* Compute the LDL^T or UDU^T factorization of A. */
         slacpy_(uplo, n, n, &a[a_offset], lda, &af[af_offset], ldaf);
-        i__1 = max(1,*n) * 5;
+        i__1 = fla_max(1,*n) * 5;
         ssytrf_(uplo, n, &af[af_offset], ldaf, &ipiv[1], &work[1], &i__1, info);
         /* Return if INFO is non-zero. */
         if (*info > 0)

@@ -41,7 +41,7 @@ FLA_Error FLA_Sort_svd_check( FLA_Direct direct, FLA_Obj s, FLA_Obj U, FLA_Obj V
   //e_val = FLA_Check_square( V );
   //FLA_Check_error_code( e_val );
 
-  e_val = FLA_Check_vector_dim( s, min( FLA_Obj_length( U ), FLA_Obj_length( V ) ) );
+  e_val = FLA_Check_vector_dim( s, fla_min( FLA_Obj_length( U ), FLA_Obj_length( V ) ) );
   FLA_Check_error_code( e_val );
 
   return FLA_SUCCESS;

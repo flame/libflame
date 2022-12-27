@@ -91,7 +91,7 @@ static doublereal c_b17 = 1.;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] W */
@@ -264,7 +264,7 @@ int dsyevd_(char *jobz, char *uplo, integer *n, doublereal * a, integer *lda, do
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
@@ -294,7 +294,7 @@ int dsyevd_(char *jobz, char *uplo, integer *n, doublereal * a, integer *lda, do
             /* Computing MAX */
             i__1 = lwmin;
             i__2 = (*n << 1) + ilaenv_(&c__1, "DSYTRD", uplo, n, &c_n1, &c_n1, &c_n1); // , expr subst
-            lopt = max(i__1,i__2);
+            lopt = fla_max(i__1,i__2);
             liopt = liwmin;
         }
         work[1] = (doublereal) lopt;

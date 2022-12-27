@@ -107,7 +107,7 @@ void time_Eig_gest(
     }
 
     *dtime = FLA_Clock() - *dtime;
-    dtime_save = min( *dtime, dtime_save );
+    dtime_save = fla_min( *dtime, dtime_save );
   }
 
   FLA_Hermitianize( uplo, A );

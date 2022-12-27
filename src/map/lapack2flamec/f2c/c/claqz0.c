@@ -171,7 +171,7 @@ if N = 0, ILO=1 and IHI=0. */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max( 1, N ). */
+/* > The leading dimension of the array A. LDA >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -187,7 +187,7 @@ if N = 0, ILO=1 and IHI=0. */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max( 1, N ). */
+/* > The leading dimension of the array B. LDB >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ALPHA */
@@ -253,7 +253,7 @@ if N = 0, ILO=1 and IHI=0. */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,N). */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
 the routine */
@@ -483,23 +483,23 @@ int claqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     *(unsigned char *)&jbcmpz[2] = *(unsigned char *)wantz;
     nmin = ilaenv_(&c__12, "CLAQZ0", jbcmpz, n, ilo, ihi, lwork);
     nwr = ilaenv_(&c__13, "CLAQZ0", jbcmpz, n, ilo, ihi, lwork);
-    nwr = max(2,nwr);
+    nwr = fla_max(2,nwr);
     /* Computing MIN */
     i__1 = *ihi - *ilo + 1;
     i__2 = (*n - 1) / 3;
-    i__1 = min(i__1,i__2); // ; expr subst
-    nwr = min(i__1,nwr);
+    i__1 = fla_min(i__1,i__2); // ; expr subst
+    nwr = fla_min(i__1,nwr);
     nibble = ilaenv_(&c__14, "CLAQZ0", jbcmpz, n, ilo, ihi, lwork);
     nsr = ilaenv_(&c__15, "CLAQZ0", jbcmpz, n, ilo, ihi, lwork);
     /* Computing MIN */
     i__1 = nsr, i__2 = (*n + 6) / 9;
-    i__1 = min(i__1,i__2);
+    i__1 = fla_min(i__1,i__2);
     i__2 = *ihi - * ilo; // ; expr subst
-    nsr = min(i__1,i__2);
+    nsr = fla_min(i__1,i__2);
     /* Computing MAX */
     i__1 = 2;
     i__2 = nsr - nsr % 2; // , expr subst
-    nsr = max(i__1,i__2);
+    nsr = fla_max(i__1,i__2);
     rcost = ilaenv_(&c__17, "CLAQZ0", jbcmpz, n, ilo, ihi, lwork);
     itemp1 = (integer) (nsr / sqrt((nsr << 1) / ((real) rcost / 100 * *n) + 1) );
     itemp1 = ((itemp1 - 1) / 4 << 2) + 4;
@@ -511,7 +511,7 @@ int claqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     }
     /* Find out required workspace */
     /* Workspace query to CLAQZ2 */
-    nw = max(nwr,nmin);
+    nw = fla_max(nwr,nmin);
     claqz2_(&ilschur, &ilq, &ilz, n, ilo, ihi, &nw, &a[a_offset], lda, &b[ b_offset], ldb, &q[q_offset], ldq, &z__[z_offset], ldz, & n_undeflated__, &n_deflated__, &alpha[1], &beta[1], &work[1], &nw, &work[1], &nw, &work[1], &c_n1, &rwork[1], rec, &aed_info__);
     itemp1 = (integer) work[1].r;
     /* Workspace query to CLAQZ3 */
@@ -524,7 +524,7 @@ int claqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     i__4 = nbr;
     i__1 = itemp1 + (i__3 * i__3 << 1);
     i__2 = itemp2 + (i__4 * i__4 << 1); // , expr subst
-    lworkreq = max(i__1,i__2);
+    lworkreq = fla_max(i__1,i__2);
     if (*lwork == -1)
     {
         r__1 = (real) lworkreq;
@@ -579,7 +579,7 @@ int claqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
         /* Computing MAX */
         r__1 = smlnum;
         r__2 = ulp * (c_abs(&a[istop + istop * a_dim1]) + c_abs(&a[istop - 1 + (istop - 1) * a_dim1])); // , expr subst
-        if (c_abs(&a[istop + (istop - 1) * a_dim1]) <= max(r__1,r__2))
+        if (c_abs(&a[istop + (istop - 1) * a_dim1]) <= fla_max(r__1,r__2))
         {
             i__2 = istop + (istop - 1) * a_dim1;
             a[i__2].r = 0.f;
@@ -593,7 +593,7 @@ int claqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
         /* Computing MAX */
         r__1 = smlnum;
         r__2 = ulp * (c_abs(&a[istart + istart * a_dim1]) + c_abs(&a[istart + 1 + (istart + 1) * a_dim1])); // , expr subst
-        if (c_abs(&a[istart + 1 + istart * a_dim1]) <= max(r__1,r__2))
+        if (c_abs(&a[istart + 1 + istart * a_dim1]) <= fla_max(r__1,r__2))
         {
             i__2 = istart + 1 + istart * a_dim1;
             a[i__2].r = 0.f;
@@ -617,7 +617,7 @@ int claqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
             /* Computing MAX */
             r__1 = smlnum;
             r__2 = ulp * (c_abs(&a[k + k * a_dim1]) + c_abs(&a[ k - 1 + (k - 1) * a_dim1])); // , expr subst
-            if (c_abs(&a[k + (k - 1) * a_dim1]) <= max(r__1,r__2))
+            if (c_abs(&a[k + (k - 1) * a_dim1]) <= fla_max(r__1,r__2))
             {
                 i__3 = k + (k - 1) * a_dim1;
                 a[i__3].r = 0.f;
@@ -654,7 +654,7 @@ int claqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
             /* Computing MAX */
             r__1 = smlnum;
             r__2 = ulp * tempr; // , expr subst
-            if (c_abs(&b[k + k * b_dim1]) < max(r__1,r__2))
+            if (c_abs(&b[k + k * b_dim1]) < fla_max(r__1,r__2))
             {
                 /* A diagonal element of B is negligable, move it */
                 /* to the top and deflate it */
@@ -674,7 +674,7 @@ int claqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
                     crot_(&i__3, &b[istartm + k2 * b_dim1], &c__1, &b[istartm + (k2 - 1) * b_dim1], &c__1, &c1, &s1);
                     /* Computing MIN */
                     i__4 = k2 + 1;
-                    i__3 = min(i__4,istop) - istartm + 1;
+                    i__3 = fla_min(i__4,istop) - istartm + 1;
                     crot_(&i__3, &a[istartm + k2 * a_dim1], &c__1, &a[istartm + (k2 - 1) * a_dim1], &c__1, &c1, &s1);
                     if (ilz)
                     {
@@ -777,8 +777,8 @@ int claqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
         /* Computing MIN */
         i__2 = nshifts;
         i__3 = istop - istart2; // , expr subst
-        ns = min(i__2,i__3);
-        ns = min(ns,n_undeflated__);
+        ns = fla_min(i__2,i__3);
+        ns = fla_min(ns,n_undeflated__);
         shiftpos = istop - n_deflated__ - n_undeflated__ + 1;
         if (ld % 6 == 0)
         {

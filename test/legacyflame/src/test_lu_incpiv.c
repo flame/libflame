@@ -132,7 +132,7 @@ void libfla_test_lu_incpiv_experiment( test_params_t params,
 		libfla_test_lu_incpiv_impl( impl, A_test, p_test, L_test );
 		
 		time = FLA_Clock() - time;
-		time_min = min( time_min, time );
+		time_min = fla_min( time_min, time );
 	}
 
 	// Perform a linear solve with the result.

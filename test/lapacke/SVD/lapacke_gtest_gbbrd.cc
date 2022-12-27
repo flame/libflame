@@ -27,7 +27,7 @@ gbbrd_double_parameters::gbbrd_double_parameters (int matrix_layout_i,
     lapacke_gtest_alloc_double_buffer_pair( &ab, &abref, (ldab*n));
 	lapacke_gtest_alloc_double_buffer_pair( &c,  &cref,  (ldc*ncc));
 	
-	temp = min(m,n);	
+	temp = fla_min(m,n);	
 	lapacke_gtest_alloc_double_buffer_pair( &d, &dref, temp);
 	lapacke_gtest_alloc_double_buffer_pair( &e, &eref, (temp-1));
 	lapacke_gtest_alloc_double_buffer_pair( &q, &qref, (ldq*m));
@@ -40,7 +40,7 @@ gbbrd_double_parameters::gbbrd_double_parameters (int matrix_layout_i,
     c    = (double *)malloc((ldc*ncc)*sizeof(double));
 	cref = (double *)malloc((ldc*ncc)*sizeof(double));
 
-    temp = min(m,n);
+    temp = fla_min(m,n);
     d    = (double *)malloc(temp*sizeof(double));
 	dref = (double *)malloc(temp*sizeof(double));
    
@@ -156,7 +156,7 @@ gbbrd_float_parameters::gbbrd_float_parameters (int matrix_layout_i,
     c    = (float *)malloc((ldc*ncc)*sizeof(float));
 	cref = (float *)malloc((ldc*ncc)*sizeof(float));
 
-    temp = min(m,n);
+    temp = fla_min(m,n);
     d    = (float *)malloc(temp*sizeof(float));
 	dref = (float *)malloc(temp*sizeof(float));
    
@@ -261,7 +261,7 @@ gbbrd_scomplex_parameters::gbbrd_scomplex_parameters (int matrix_layout_i,
     c    = (lapack_complex_float *)malloc((ldc*ncc)*sizeof(lapack_complex_float));
 	cref = (lapack_complex_float *)malloc((ldc*ncc)*sizeof(lapack_complex_float));
 
-    temp = min(m,n);
+    temp = fla_min(m,n);
     d    = (float *)malloc(temp*sizeof(float));
 	dref = (float *)malloc(temp*sizeof(float));
    
@@ -370,7 +370,7 @@ gbbrd_dcomplex_parameters::gbbrd_dcomplex_parameters (int matrix_layout_i,
     c    = (lapack_complex_double *)malloc((ldc*ncc)*sizeof(lapack_complex_double));
 	cref = (lapack_complex_double *)malloc((ldc*ncc)*sizeof(lapack_complex_double));
 
-    temp = min(m,n);
+    temp = fla_min(m,n);
     d    = (double *)malloc(temp*sizeof(double));
 	dref = (double *)malloc(temp*sizeof(double));
    

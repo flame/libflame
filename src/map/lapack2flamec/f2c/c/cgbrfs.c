@@ -86,7 +86,7 @@ static integer c__1 = 1;
 /* > The original band matrix A, stored in rows 1 to KL+KU+1. */
 /* > The j-th column of A is stored in the j-th column of the */
 /* > array AB as follows: */
-/* > AB(ku+1+i-j,j) = A(i,j) for max(1,j-ku)<=i<=min(n,j+kl). */
+/* > AB(ku+1+i-j,j) = A(i,j) for fla_max(1,j-ku)<=i<=fla_min(n,j+kl). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDAB */
@@ -128,7 +128,7 @@ for 1<=i<=N, row i of the */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] X */
@@ -141,7 +141,7 @@ for 1<=i<=N, row i of the */
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(1,N). */
+/* > The leading dimension of the array X. LDX >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] FERR */
@@ -316,11 +316,11 @@ int cgbrfs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, c
     {
         *info = -9;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -12;
     }
-    else if (*ldx < max(1,*n))
+    else if (*ldx < fla_max(1,*n))
     {
         *info = -14;
     }
@@ -360,7 +360,7 @@ int cgbrfs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, c
     /* Computing MIN */
     i__1 = *kl + *ku + 2;
     i__2 = *n + 1; // , expr subst
-    nz = min(i__1,i__2);
+    nz = fla_min(i__1,i__2);
     eps = slamch_("Epsilon");
     safmin = slamch_("Safe minimum");
     safe1 = nz * safmin;
@@ -381,7 +381,7 @@ L20: /* Loop until stopping criterion is satisfied. */
         q__1.i = -0.f; // , expr subst
         cgbmv_(trans, n, n, kl, ku, &q__1, &ab[ab_offset], ldab, &x[j * x_dim1 + 1], &c__1, &c_b1, &work[1], &c__1);
         /* Compute componentwise relative backward error from formula */
-        /* max(i) ( f2c_abs(R(i)) / ( f2c_abs(op(A))*f2c_abs(X) + f2c_abs(B) )(i) ) */
+        /* fla_max(i) ( f2c_abs(R(i)) / ( f2c_abs(op(A))*f2c_abs(X) + f2c_abs(B) )(i) ) */
         /* where f2c_abs(Z) is the componentwise absolute value of the matrix */
         /* or vector Z. If the i-th component of the denominator is less */
         /* than SAFE2, then SAFE1 is added to the i-th components of the */
@@ -412,8 +412,8 @@ L20: /* Loop until stopping criterion is satisfied. */
                 /* Computing MIN */
                 i__6 = *n;
                 i__7 = k + *kl; // , expr subst
-                i__5 = min(i__6,i__7);
-                for (i__ = max(i__3,i__4);
+                i__5 = fla_min(i__6,i__7);
+                for (i__ = fla_max(i__3,i__4);
                         i__ <= i__5;
                         ++i__)
                 {
@@ -439,8 +439,8 @@ L20: /* Loop until stopping criterion is satisfied. */
                 /* Computing MIN */
                 i__6 = *n;
                 i__7 = k + *kl; // , expr subst
-                i__4 = min(i__6,i__7);
-                for (i__ = max(i__5,i__3);
+                i__4 = fla_min(i__6,i__7);
+                for (i__ = fla_max(i__5,i__3);
                         i__ <= i__4;
                         ++i__)
                 {
@@ -465,7 +465,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 i__4 = i__;
                 r__3 = s;
                 r__4 = ((r__1 = work[i__4].r, f2c_abs(r__1)) + (r__2 = r_imag(&work[i__]), f2c_abs(r__2))) / rwork[i__]; // , expr subst
-                s = max(r__3,r__4);
+                s = fla_max(r__3,r__4);
             }
             else
             {
@@ -473,7 +473,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 i__4 = i__;
                 r__3 = s;
                 r__4 = ((r__1 = work[i__4].r, f2c_abs(r__1)) + (r__2 = r_imag(&work[i__]), f2c_abs(r__2)) + safe1) / (rwork[i__] + safe1); // , expr subst
-                s = max(r__3,r__4);
+                s = fla_max(r__3,r__4);
             }
             /* L80: */
         }
@@ -582,7 +582,7 @@ L100:
             i__4 = i__ + j * x_dim1;
             r__3 = lstres;
             r__4 = (r__1 = x[i__4].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[i__ + j * x_dim1]), f2c_abs(r__2)); // , expr subst
-            lstres = max(r__3,r__4);
+            lstres = fla_max(r__3,r__4);
             /* L130: */
         }
         if (lstres != 0.f)

@@ -61,15 +61,15 @@ int dormqr_check(char *side, char *trans, integer *m, integer *n, integer *k, do
     {
         *info = -5;
     }
-    else if (*lda < max(1,nq))
+    else if (*lda < fla_max(1,nq))
     {
         *info = -7;
     }
-    else if (*ldc < max(1,*m))
+    else if (*ldc < fla_max(1,*m))
     {
         *info = -10;
     }
-    else if (*lwork < max(1,nw) && ! lquery)
+    else if (*lwork < fla_max(1,nw) && ! lquery)
     {
         *info = -12;
     }
@@ -80,8 +80,8 @@ int dormqr_check(char *side, char *trans, integer *m, integer *n, integer *k, do
         /* Computing MIN */
         i__1 = 64;
         i__2 = ilaenv_(&c__1, "DORMQR", ch__1, m, n, k, &c_n1); // , expr subst
-        nb = min(i__1,i__2);
-        lwkopt = max(1,nw) * nb;
+        nb = fla_min(i__1,i__2);
+        lwkopt = fla_max(1,nw) * nb;
         work[1] = (double) lwkopt;
     }
     if (*info != 0)

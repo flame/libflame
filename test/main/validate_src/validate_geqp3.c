@@ -21,7 +21,7 @@ void validate_geqp3(integer m_A, integer n_A,
     integer min_A;
     integer lwork = -1, tinfo, TRUE = 1;
 
-    min_A = min(m_A, n_A);
+    min_A = fla_min(m_A, n_A);
 
     // Create Q and R matrices.
     create_matrix(datatype, &Q, m_A, m_A);
@@ -71,7 +71,7 @@ void validate_geqp3(integer m_A, integer n_A,
                compute norm(I - Q*Q') / (N * EPS)*/
             resid2 = (float)check_orthogonality(datatype, Q, m_A, n_A, m_A);
 
-            *residual = (double)max(resid1, resid2);
+            *residual = (double)fla_max(resid1, resid2);
             break;
         }
         case DOUBLE:
@@ -103,7 +103,7 @@ void validate_geqp3(integer m_A, integer n_A,
                compute norm(I - Q*Q') / (N * EPS)*/
             resid2 = check_orthogonality(datatype, Q, m_A, n_A, m_A); 
 
-            *residual = (double)max(resid1, resid2);
+            *residual = (double)fla_max(resid1, resid2);
             break;
         }
         case COMPLEX:
@@ -136,7 +136,7 @@ void validate_geqp3(integer m_A, integer n_A,
                compute norm(I - Q*Q') / (N * EPS)*/
             resid2 = (float)check_orthogonality(datatype, Q, m_A, n_A, m_A); 
 
-            *residual = (double)max(resid1, resid2);
+            *residual = (double)fla_max(resid1, resid2);
             break;
         }
         case DOUBLE_COMPLEX:
@@ -169,7 +169,7 @@ void validate_geqp3(integer m_A, integer n_A,
                compute norm(I - Q*Q') / (N * EPS)*/
             resid2 = check_orthogonality(datatype, Q, m_A, n_A, m_A);  
 
-            *residual = (double)max(resid1, resid2);
+            *residual = (double)fla_max(resid1, resid2);
             break;
         }
     }

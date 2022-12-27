@@ -202,12 +202,12 @@ IBLOCK(i)=1 if eigenvalue */
 /* > */
 /* > \param[out] Z */
 /* > \verbatim */
-/* > Z is COMPLEX*16 array, dimension (LDZ, max(1,M) ) */
+/* > Z is COMPLEX*16 array, dimension (LDZ, fla_max(1,M) ) */
 /* > If INFO = 0, the first M columns of Z contain the */
 /* > orthonormal eigenvectors of the matrix T */
 /* > corresponding to the input eigenvalues, with the i-th */
 /* > column of Z holding the eigenvector associated with W(i). */
-/* > Note: the user must ensure that at least max(1,M) columns are */
+/* > Note: the user must ensure that at least fla_max(1,M) columns are */
 /* > supplied in the array Z. */
 /* > \endverbatim */
 /* > */
@@ -215,12 +215,12 @@ IBLOCK(i)=1 if eigenvalue */
 /* > \verbatim */
 /* > LDZ is INTEGER */
 /* > The leading dimension of the array Z. LDZ >= 1, and if */
-/* > JOBZ = 'V', LDZ >= max(1,N). */
+/* > JOBZ = 'V', LDZ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ISUPPZ */
 /* > \verbatim */
-/* > ISUPPZ is INTEGER array, dimension ( 2*max(1,M) ) */
+/* > ISUPPZ is INTEGER array, dimension ( 2*fla_max(1,M) ) */
 /* > The support of the eigenvectors in Z, i.e., the indices */
 /* > indicating the nonzero elements in Z. The I-th eigenvector */
 /* > is nonzero only in elements ISUPPZ( 2*I-1 ) through */
@@ -510,10 +510,10 @@ L15:
         {
             /* Computing MIN */
             d__1 = gers[(i__ << 1) - 1];
-            gl = min(d__1,gl);
+            gl = fla_min(d__1,gl);
             /* Computing MAX */
             d__1 = gers[i__ * 2];
-            gu = max(d__1,gu);
+            gu = fla_max(d__1,gu);
             /* L20: */
         }
         spdiam = gu - gl;
@@ -697,14 +697,14 @@ L40:
                         /* Computing MAX */
                         d__1 = wgap[wbegin + oldfst - 2];
                         d__2 = w[wbegin + oldfst - 1] - werr[wbegin + oldfst - 1] - w[ wbegin + oldfst - 2] - werr[wbegin + oldfst - 2]; // , expr subst
-                        wgap[wbegin + oldfst - 2] = max(d__1,d__2);
+                        wgap[wbegin + oldfst - 2] = fla_max(d__1,d__2);
                     }
                     if (wbegin + oldlst - 1 < wend)
                     {
                         /* Computing MAX */
                         d__1 = wgap[wbegin + oldlst - 1];
                         d__2 = w[wbegin + oldlst] - werr[wbegin + oldlst] - w[wbegin + oldlst - 1] - werr[wbegin + oldlst - 1]; // , expr subst
-                        wgap[wbegin + oldlst - 1] = max(d__1,d__2);
+                        wgap[wbegin + oldlst - 1] = fla_max(d__1,d__2);
                     }
                     /* Each time the eigenvalues in WORK get refined, we store */
                     /* the newly found approximation with all shifts applied in W */
@@ -786,7 +786,7 @@ L40:
                             /* Computing MAX */
                             d__1 = 0.;
                             d__2 = w[wbegin] - werr[wbegin] - *vl; // , expr subst
-                            lgap = max(d__1,d__2);
+                            lgap = fla_max(d__1,d__2);
                         }
                         else
                         {
@@ -908,10 +908,10 @@ L40:
                         windex = wbegin + k - 1;
                         /* Computing MAX */
                         i__4 = windex - 1;
-                        windmn = max(i__4,1);
+                        windmn = fla_max(i__4,1);
                         /* Computing MIN */
                         i__4 = windex + 1;
-                        windpl = min(i__4,*m);
+                        windpl = fla_min(i__4,*m);
                         lambda = work[windex];
                         ++done;
                         /* Check if eigenvector computation is to be skipped */
@@ -944,7 +944,7 @@ L40:
                             /* Computing MAX */
                             d__1 = f2c_abs(left);
                             d__2 = f2c_abs(right); // , expr subst
-                            lgap = eps * max(d__1,d__2);
+                            lgap = eps * fla_max(d__1,d__2);
                         }
                         else
                         {
@@ -960,13 +960,13 @@ L40:
                             /* Computing MAX */
                             d__1 = f2c_abs(left);
                             d__2 = f2c_abs(right); // , expr subst
-                            rgap = eps * max(d__1,d__2);
+                            rgap = eps * fla_max(d__1,d__2);
                         }
                         else
                         {
                             rgap = wgap[windex];
                         }
-                        gap = min(lgap,rgap);
+                        gap = fla_min(lgap,rgap);
                         if (k == 1 || k == im)
                         {
                             /* The eigenvector support can become wrong */
@@ -1033,11 +1033,11 @@ L120: /* Check if bisection should be used to refine eigenvalue */
                         /* Computing MIN */
                         i__4 = isupmn;
                         i__5 = isuppz[(windex << 1) - 1]; // , expr subst
-                        isupmn = min(i__4,i__5);
+                        isupmn = fla_min(i__4,i__5);
                         /* Computing MAX */
                         i__4 = isupmx;
                         i__5 = isuppz[windex * 2]; // , expr subst
-                        isupmx = max(i__4,i__5);
+                        isupmx = fla_max(i__4,i__5);
                         ++iter;
                         /* sin alpha <= |resid|/gap */
                         /* Note that both the residual and the gap are */
@@ -1188,14 +1188,14 @@ L125: /* Update W */
                                 /* Computing MAX */
                                 d__1 = wgap[windmn];
                                 d__2 = w[windex] - werr[ windex] - w[windmn] - werr[windmn]; // , expr subst
-                                wgap[windmn] = max(d__1,d__2);
+                                wgap[windmn] = fla_max(d__1,d__2);
                             }
                             if (windex < wend)
                             {
                                 /* Computing MAX */
                                 d__1 = savgap;
                                 d__2 = w[windpl] - werr[windpl] - w[windex] - werr[windex]; // , expr subst
-                                wgap[windex] = max(d__1,d__2);
+                                wgap[windex] = fla_max(d__1,d__2);
                             }
                         }
                         ++idone;

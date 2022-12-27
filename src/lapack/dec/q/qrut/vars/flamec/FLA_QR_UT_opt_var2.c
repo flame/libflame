@@ -94,7 +94,7 @@ FLA_Error FLA_QR_UT_ops_var2( integer m_A,
                               float* buff_T, integer rs_T, integer cs_T )
 {
   float* buff_1  = FLA_FLOAT_PTR( FLA_ONE );
-  integer    min_m_n = min( m_A, n_A );
+  integer    min_m_n = fla_min( m_A, n_A );
   integer    i;
 
   for ( i = 0; i < min_m_n; ++i )
@@ -164,7 +164,7 @@ FLA_Error FLA_QR_UT_opd_var2( integer m_A,
                               double* buff_T, integer rs_T, integer cs_T )
 {
   double* buff_1  = FLA_DOUBLE_PTR( FLA_ONE );
-  integer     min_m_n = min( m_A, n_A );
+  integer     min_m_n = fla_min( m_A, n_A );
   integer     i;
 
   for ( i = 0; i < min_m_n; ++i )
@@ -234,7 +234,7 @@ FLA_Error FLA_QR_UT_opc_var2( integer m_A,
                               scomplex* buff_T, integer rs_T, integer cs_T )
 {
   scomplex* buff_1  = FLA_COMPLEX_PTR( FLA_ONE );
-  integer       min_m_n = min( m_A, n_A );
+  integer       min_m_n = fla_min( m_A, n_A );
   integer       i;
 
   for ( i = 0; i < min_m_n; ++i )
@@ -304,7 +304,7 @@ FLA_Error FLA_QR_UT_opz_var2( integer m_A,
                               dcomplex* buff_T, integer rs_T, integer cs_T )
 {
   dcomplex* buff_1  = FLA_DOUBLE_COMPLEX_PTR( FLA_ONE );
-  integer       min_m_n = min( m_A, n_A );
+  integer       min_m_n = fla_min( m_A, n_A );
   integer       i;
 
   for ( i = 0; i < min_m_n; ++i )

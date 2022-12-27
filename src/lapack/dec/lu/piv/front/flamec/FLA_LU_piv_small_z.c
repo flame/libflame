@@ -23,7 +23,7 @@ integer FLA_LU_piv_small_z_var0( integer *m, integer *n,
     doublereal max_val, t_val, z_val;
     doublecomplex *acur, *apiv, *asrc;
     integer p_idx;
-    integer min_m_n = min(*m, *n);
+    integer min_m_n = fla_min(*m, *n);
 #ifndef _WIN32
     doublecomplex z__1;
     double _Complex pinv;

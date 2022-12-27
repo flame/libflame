@@ -67,7 +67,7 @@ static integer c__4 = 4;
 /* > \verbatim */
 /* > VECT is CHARACTER*1 */
 /* > = 'N': No need for the Housholder representation, */
-/* > and thus LHOUS is of size max(1, 4*N);
+/* > and thus LHOUS is of size fla_max(1, 4*N);
 */
 /* > = 'V': the Householder representation is needed to */
 /* > either generate or to apply Q later on, */
@@ -103,9 +103,9 @@ static integer c__4 = 4;
 /* > matrix A, stored in the first KD+1 rows of the array. The */
 /* > j-th column of A is stored in the j-th column of the array AB */
 /* > as follows: */
-/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j;
+/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(n,j+kd). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(n,j+kd). */
 /* > On exit, the diagonal elements of AB are overwritten by the */
 /* > diagonal elements of the tridiagonal matrix T;
 if KD > 0, the */
@@ -597,13 +597,13 @@ int chetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
         /* Computing MIN */
         i__2 = stt + thgrsiz - 1;
         i__3 = *n - 1; // , expr subst
-        thed = min(i__2,i__3);
+        thed = fla_min(i__2,i__3);
         i__2 = *n - 1;
         for (i__ = stt;
                 i__ <= i__2;
                 ++i__)
         {
-            ed = min(i__,thed);
+            ed = fla_min(i__,thed);
             if (stt > ed)
             {
                 break;
@@ -637,14 +637,14 @@ int chetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd,
                         {
                             colpt = myid / 2 * *kd + sweepid;
                             stind = colpt - *kd + 1;
-                            edind = min(colpt,*n);
+                            edind = fla_min(colpt,*n);
                             blklastind = colpt;
                         }
                         else
                         {
                             colpt = (myid + 1) / 2 * *kd + sweepid;
                             stind = colpt - *kd + 1;
-                            edind = min(colpt,*n);
+                            edind = fla_min(colpt,*n);
                             if (stind >= edind - 1 && edind == *n)
                             {
                                 blklastind = *n;

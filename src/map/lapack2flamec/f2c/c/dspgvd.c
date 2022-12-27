@@ -129,7 +129,7 @@ static integer c__1 = 1;
 /* > \verbatim */
 /* > LDZ is INTEGER */
 /* > The leading dimension of the array Z. LDZ >= 1, and if */
-/* > JOBZ = 'V', LDZ >= max(1,N). */
+/* > JOBZ = 'V', LDZ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -344,11 +344,11 @@ int dspgvd_(integer *itype, char *jobz, char *uplo, integer * n, doublereal *ap,
     dspevd_(jobz, uplo, n, &ap[1], &w[1], &z__[z_offset], ldz, &work[1], lwork, &iwork[1], liwork, info);
     /* Computing MAX */
     d__1 = (doublereal) lwmin;
-    lwmin = (integer) max(d__1,work[1]);
+    lwmin = (integer) fla_max(d__1,work[1]);
     /* Computing MAX */
     d__1 = (doublereal) liwmin;
     d__2 = (doublereal) iwork[1]; // , expr subst
-    liwmin = (integer) max(d__1,d__2);
+    liwmin = (integer) fla_max(d__1,d__2);
     if (wantz)
     {
         /* Backtransform eigenvectors to the original problem. */

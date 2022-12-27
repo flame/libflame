@@ -18,15 +18,15 @@ int zgehd2_check(integer *n, integer *ilo, integer *ihi, dcomplex *a, integer *l
     {
         *info = -1;
     }
-    else if (*ilo < 1 || *ilo > max(1,*n))
+    else if (*ilo < 1 || *ilo > fla_max(1,*n))
     {
         *info = -2;
     }
-    else if (*ihi < min(*ilo,*n) || *ihi > *n)
+    else if (*ihi < fla_min(*ilo,*n) || *ihi > *n)
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }

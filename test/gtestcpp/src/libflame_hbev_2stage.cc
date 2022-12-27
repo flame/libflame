@@ -108,14 +108,14 @@ void hbev_2stage_test(int ip)
   
   /* LDZ is INTEGER
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N).*/
+          JOBZ = 'V', LDZ >= fla_max(1,N).*/
   integer ldz = eig_paramslist[ip].ldz;
   if (ldz < 1) {
     PRINTF("ldz < 1 but it should be: ldz >= 1. Please correct the input" \
           " data.\n");
   }
-  if ((jobz == 'V') && (ldz < max(1,n))) {
-    PRINTF("When jobz is V, ldz < max(1,n) but it should be: ldz >= max(1,n)" \
+  if ((jobz == 'V') && (ldz < fla_max(1,n))) {
+    PRINTF("When jobz is V, ldz < fla_max(1,n) but it should be: ldz >= fla_max(1,n)" \
           ". Please correct the input data.\n");
   }
   
@@ -123,9 +123,9 @@ void hbev_2stage_test(int ip)
   T *zbuff = NULL, *zrefbuff = NULL;
   allocate_init_buffer(zbuff, zrefbuff, ldz*n);
   
-  // RWORK is REAL or DOUBLE PRECISION array, dimension max(1,3*N-2)
+  // RWORK is REAL or DOUBLE PRECISION array, dimension fla_max(1,3*N-2)
   Ta *rworkbuff = NULL, *rworkrefbuff = NULL;
-  allocate_init_buffer(rworkbuff, rworkrefbuff, max(1, 3*n-2));
+  allocate_init_buffer(rworkbuff, rworkrefbuff, fla_max(1, 3*n-2));
   
   //  LWORK is INTEGER. The length of the array WORK.
   integer lwork = eig_paramslist[ip].lwork;
@@ -165,7 +165,7 @@ void hbev_2stage_test(int ip)
     PRINTF("Size of Z array (ldz*n) = %d\n", ldz * n);
     PRINTF("Size of WORK array (LWORK) = %d\n", lwork_size);
     PRINTF("LWORK = %d\n", lwork_size);
-    PRINTF("Size of RWORK array (max(1, 3*n-2)) = %d\n", max(1, 3*n-2));
+    PRINTF("Size of RWORK array (max(1, 3*n-2)) = %d\n", fla_max(1, 3*n-2));
   #endif
   
   #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1))
@@ -205,9 +205,9 @@ void hbev_2stage_test(int ip)
     
     // Prints RWORK array contents
     strncpy(arrayname, "RWORK input", arraysize);
-    print_array<Ta>(arrayname, rworkbuff, max(1, 3*n-2));
+    print_array<Ta>(arrayname, rworkbuff, fla_max(1, 3*n-2));
     strncpy(arrayname, "RWORK ref input", arraysize);
-    print_array<Ta>(arrayname, rworkrefbuff, max(1, 3*n-2));
+    print_array<Ta>(arrayname, rworkrefbuff, fla_max(1, 3*n-2));
   #endif
   
   info_cpp = -1;
@@ -274,9 +274,9 @@ void hbev_2stage_test(int ip)
       
       // Prints RWORK array contents
       strncpy(arrayname, "RWORK output", arraysize);
-      print_array<Ta>(arrayname, rworkbuff, max(1, 3*n-2));
+      print_array<Ta>(arrayname, rworkbuff, fla_max(1, 3*n-2));
       strncpy(arrayname, "RWORK ref output", arraysize);
-      print_array<Ta>(arrayname, rworkrefbuff, max(1, 3*n-2));
+      print_array<Ta>(arrayname, rworkrefbuff, fla_max(1, 3*n-2));
     #endif
     
     double diff = computeError<T>(ldab, n, abrefbuff, abbuff);
@@ -287,7 +287,7 @@ void hbev_2stage_test(int ip)
     if (lwork_size != 0) {
       diff += computeError<T>(1, lwork_size, workbuff, workrefbuff);
     }
-    diff += computeError<Ta>(1, max(1, 3*n-2), rworkbuff, rworkrefbuff);
+    diff += computeError<Ta>(1, fla_max(1, 3*n-2), rworkbuff, rworkrefbuff);
     PRINTF("diff: %lf\n", diff);
     EXPECT_NEAR(0.0, diff, SYM_EIGEN_THRESHOLD);
   } else {

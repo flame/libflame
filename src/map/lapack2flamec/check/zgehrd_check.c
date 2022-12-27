@@ -25,7 +25,7 @@ int zgehrd_check(integer *n, integer *ilo, integer *ihi, dcomplex *a, integer *l
     /* Computing MIN */
     i__1 = 64;
     i__2 = ilaenv_(&c__1, "ZGEHRD", " ", n, ilo, ihi, &c_n1); // , expr subst
-    nb = min(i__1,i__2);
+    nb = fla_min(i__1,i__2);
     lwkopt = *n * nb;
     work[1].real = (double) lwkopt;
     work[1].imag = 0.; // , expr subst
@@ -34,19 +34,19 @@ int zgehrd_check(integer *n, integer *ilo, integer *ihi, dcomplex *a, integer *l
     {
         *info = -1;
     }
-    else if (*ilo < 1 || *ilo > max(1,*n))
+    else if (*ilo < 1 || *ilo > fla_max(1,*n))
     {
         *info = -2;
     }
-    else if (*ihi < min(*ilo,*n) || *ihi > *n)
+    else if (*ihi < fla_min(*ilo,*n) || *ihi > *n)
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*lwork < max(1,*n) && ! lquery)
+    else if (*lwork < fla_max(1,*n) && ! lquery)
     {
         *info = -8;
     }
@@ -72,7 +72,7 @@ int zgehrd_check(integer *n, integer *ilo, integer *ihi, dcomplex *a, integer *l
         /* L10: */
     }
     i__1 = *n - 1;
-    for (i__ = max(1,*ihi);
+    for (i__ = fla_max(1,*ihi);
             i__ <= i__1;
             ++i__)
     {

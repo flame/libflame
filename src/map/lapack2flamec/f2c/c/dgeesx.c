@@ -137,7 +137,7 @@ in this */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] SDIM */
@@ -205,12 +205,12 @@ in this */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,3*N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,3*N). */
 /* > Also, if SENSE = 'E' or 'V' or 'B', */
 /* > LWORK >= N+2*SDIM*(N-SDIM), where SDIM is the number of */
 /* > selected eigenvalues computed by this routine. Note that */
 /* > N+2*SDIM*(N-SDIM) <= N+N*N/2. Note also that an error is only */
-/* > returned if LWORK < max(1,3*N), but if SENSE = 'E' or 'V' or */
+/* > returned if LWORK < fla_max(1,3*N), but if SENSE = 'E' or 'V' or */
 /* > 'B' this may not be large enough. */
 /* > For good performance, LWORK must generally be larger. */
 /* > */
@@ -386,7 +386,7 @@ int dgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doub
     {
         *info = -5;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -7;
     }
@@ -426,18 +426,18 @@ int dgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doub
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + hswork; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
             }
             else
             {
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = (*n << 1) + (*n - 1) * ilaenv_(&c__1, "DORGHR", " ", n, &c__1, n, &c_n1); // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + hswork; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
             }
             lwrk = maxwrk;
             if (! wantsn)
@@ -445,7 +445,7 @@ int dgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doub
                 /* Computing MAX */
                 i__1 = lwrk;
                 i__2 = *n + *n * *n / 2; // , expr subst
-                lwrk = max(i__1,i__2);
+                lwrk = fla_max(i__1,i__2);
             }
             if (wantsv || wantsb)
             {
@@ -564,7 +564,7 @@ int dgeesx_(char *jobvs, char *sort, L_fp select, char * sense, integer *n, doub
             /* Computing MAX */
             i__1 = maxwrk;
             i__2 = *n + (*sdim << 1) * (*n - *sdim); // , expr subst
-            maxwrk = max(i__1,i__2);
+            maxwrk = fla_max(i__1,i__2);
         }
         if (icond == -15)
         {
@@ -673,7 +673,7 @@ L20:
         i__1 = *n - ieval;
         /* Computing MAX */
         i__3 = *n - ieval;
-        i__2 = max(i__3,1);
+        i__2 = fla_max(i__3,1);
         dlascl_("G", &c__0, &c__0, &cscale, &anrm, &i__1, &c__1, &wi[ieval + 1], &i__2, &ierr);
     }
     if (wantst && *info == 0)
@@ -735,7 +735,7 @@ L20:
         /* Computing MAX */
         i__1 = 1;
         i__2 = *sdim * (*n - *sdim); // , expr subst
-        iwork[1] = max(i__1,i__2);
+        iwork[1] = fla_max(i__1,i__2);
     }
     else
     {

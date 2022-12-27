@@ -58,7 +58,7 @@
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] AF */
@@ -71,7 +71,7 @@
 /* > \param[in] LDAF */
 /* > \verbatim */
 /* > LDAF is INTEGER */
-/* > The leading dimension of the array AF. LDAF >= max(1,N). */
+/* > The leading dimension of the array AF. LDAF >= fla_max(1,N). */
 /* > \endverbatim */
 /* Authors: */
 /* ======== */
@@ -127,7 +127,7 @@ real sla_gerpvgrw_(integer *n, integer *ncols, real *a, integer *lda, real * af,
         {
             /* Computing MAX */
             r__2 = (r__1 = a[i__ + j * a_dim1], f2c_abs(r__1));
-            amax = max(r__2,amax);
+            amax = fla_max(r__2,amax);
         }
         i__2 = j;
         for (i__ = 1;
@@ -136,13 +136,13 @@ real sla_gerpvgrw_(integer *n, integer *ncols, real *a, integer *lda, real * af,
         {
             /* Computing MAX */
             r__2 = (r__1 = af[i__ + j * af_dim1], f2c_abs(r__1));
-            umax = max(r__2,umax);
+            umax = fla_max(r__2,umax);
         }
         if (umax != 0.f)
         {
             /* Computing MIN */
             r__1 = amax / umax;
-            rpvgrw = min(r__1,rpvgrw);
+            rpvgrw = fla_min(r__1,rpvgrw);
         }
     }
     ret_val = rpvgrw;

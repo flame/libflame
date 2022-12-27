@@ -258,7 +258,7 @@ int slarrb_(integer *n, real *d__, real *lld, integer * ifirst, integer *ilast, 
         right = w[ii] + werr[ii];
         lgap = rgap;
         rgap = wgap[ii];
-        gap = min(lgap,rgap);
+        gap = fla_min(lgap,rgap);
         /* Make sure that [LEFT,RIGHT] contains the desired eigenvalue */
         /* Compute negcount from dstqds facto L+D+L+^T = L D L^T - LEFT */
         /* Do while( NEGCNT(LEFT).GT.I-1 ) */
@@ -286,11 +286,11 @@ L50:
         /* Computing MAX */
         r__1 = f2c_abs(left);
         r__2 = f2c_abs(right); // , expr subst
-        tmp = max(r__1,r__2);
+        tmp = fla_max(r__1,r__2);
         /* Computing MAX */
         r__1 = *rtol1 * gap;
         r__2 = *rtol2 * tmp; // , expr subst
-        cvrgd = max(r__1,r__2);
+        cvrgd = fla_max(r__1,r__2);
         if (width <= cvrgd || width <= mnwdth)
         {
             /* This interval has already converged and does not need refinement. */
@@ -340,7 +340,7 @@ L80:
         {
             lgap = wgap[ii - 1];
         }
-        gap = min(lgap,rgap);
+        gap = fla_min(lgap,rgap);
         next = iwork[k - 1];
         left = work[k - 1];
         right = work[k];
@@ -350,11 +350,11 @@ L80:
         /* Computing MAX */
         r__1 = f2c_abs(left);
         r__2 = f2c_abs(right); // , expr subst
-        tmp = max(r__1,r__2);
+        tmp = fla_max(r__1,r__2);
         /* Computing MAX */
         r__1 = *rtol1 * gap;
         r__2 = *rtol2 * tmp; // , expr subst
-        cvrgd = max(r__1,r__2);
+        cvrgd = fla_max(r__1,r__2);
         if (width <= cvrgd || width <= mnwdth || iter == maxitr)
         {
             /* reduce number of unconverged intervals */
@@ -425,7 +425,7 @@ L100:
         /* Computing MAX */
         r__1 = 0.f;
         r__2 = w[ii] - werr[ii] - w[ii - 1] - werr[ii - 1]; // , expr subst
-        wgap[ii - 1] = max(r__1,r__2);
+        wgap[ii - 1] = fla_max(r__1,r__2);
         /* L111: */
     }
     return 0;

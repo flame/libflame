@@ -30,7 +30,7 @@ void validate_geqrf(integer m_A,
 
   PRINTF("%s() entry\n", __FUNCTION__);
   cs_A = m_A;
-  min_A = min(m_A, n_A);
+  min_A = fla_min(m_A, n_A);
 
   // Create Q and R matrices.
   create_matrix<T>(&Q, m_A, m_A);
@@ -125,7 +125,7 @@ void validate_geqrf(integer m_A,
   resid2 = norm/(eps * n_A);
   PRINTF("resid2: %lf\n", resid2);
 
-  *residual = max(resid1, resid2);
+  *residual = fla_max(resid1, resid2);
 
   // Free up buffers
   free_matrix(R);
@@ -182,10 +182,10 @@ void geqrf_test(int ip)
   }
   
   /* LDA is INTEGER
-          The leading dimension of the array A.  LDA >= max(M,1).*/
+          The leading dimension of the array A.  LDA >= fla_max(M,1).*/
   integer lda = eig_paramslist[ip].lda_lange;
-  if (lda < max(1, m)) {
-    PRINTF("lda < max(1, m) but it should be: LDA >= max(1,M). Please " \
+  if (lda < fla_max(1, m)) {
+    PRINTF("lda < fla_max(1, m) but it should be: LDA >= fla_max(1,M). Please " \
            "correct the input data.\n");
   }
   
@@ -198,13 +198,13 @@ void geqrf_test(int ip)
   copy_matrix<T>("full", m, n, abuff, lda, arefbuff, lda);
   
   /* TAU is REAL or DOUBLE PRECISION or COMPLEX or COMPLEX*16 array,
-      dimension (min(M,N))*/
+      dimension (fla_min(M,N))*/
   T *taubuff;
-  integer tausize = min(m, n);
+  integer tausize = fla_min(m, n);
   create_vector<T>(&taubuff, tausize);
   
   /* LWORK is INTEGER
-          The dimension of the array WORK.  LWORK >= max(1,N).
+          The dimension of the array WORK.  LWORK >= fla_max(1,N).
           For optimum performance LWORK >= N*NB, where NB is
           the optimal blocksize.
 
@@ -245,9 +245,9 @@ void geqrf_test(int ip)
     PRINTF("n = %d\n", n);
     PRINTF("lda = %d\n", lda);
     PRINTF("Size of A array (lda*n) = %d\n", lda * n);
-    PRINTF("Size of TAU array (min(m,n)) = %d\n", min(m, n));
+    PRINTF("Size of TAU array (fla_min(m,n)) = %d\n", fla_min(m, n));
     PRINTF("lwork = %d\n", lwork_size);
-    PRINTF("Size of WORK array (MAX(1,LWORK)) = %d\n", max(1, lwork_size));
+    PRINTF("Size of WORK array (MAX(1,LWORK)) = %d\n", fla_max(1, lwork_size));
   #endif
   
   #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1) && \
@@ -263,11 +263,11 @@ void geqrf_test(int ip)
     
     // Prints TAU array contents
     strncpy(arrayname, "TAU input", arraysize);
-    print_array<T>(arrayname, taubuff, min(m, n));
+    print_array<T>(arrayname, taubuff, fla_min(m, n));
     
     // Prints WORK array contents
     strncpy(arrayname, "WORK input", arraysize);
-    print_array<T>(arrayname, workbuff, max(1, lwork));
+    print_array<T>(arrayname, workbuff, fla_max(1, lwork));
   #endif
 
   // Call C++ function.
@@ -292,11 +292,11 @@ void geqrf_test(int ip)
     
     // Prints TAU array contents
     strncpy(arrayname, "TAU output", arraysize);
-    print_array<T>(arrayname, taubuff, min(m, n));
+    print_array<T>(arrayname, taubuff, fla_min(m, n));
     
     // Prints WORK array contents
     strncpy(arrayname, "WORK output", arraysize);
-    print_array<T>(arrayname, workbuff, max(1, lwork));
+    print_array<T>(arrayname, workbuff, fla_max(1, lwork));
   #endif
     if ((typeid(T) == typeid(float)) || (typeid(T) == typeid(scomplex))) {
       validate_geqrf<T, float>(m, n, arefbuff, abuff, taubuff, &residual);

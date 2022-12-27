@@ -46,11 +46,11 @@
  /* > A = U * SIGMA * transpose(V) */
  /* > */
  /* > where SIGMA is an M-by-N matrix which is zero except for its */
- /* > min(m,n) diagonal elements, U is an M-by-M orthogonal matrix, and */
+ /* > fla_min(m,n) diagonal elements, U is an M-by-M orthogonal matrix, and */
  /* > V is an N-by-N orthogonal matrix. The diagonal elements of SIGMA */
  /* > are the singular values of A;
  they are real and non-negative, and */
- /* > are returned in descending order. The first min(m,n) columns of */
+ /* > are returned in descending order. The first fla_min(m,n) columns of */
  /* > U and V are the left and right singular vectors of A. */
  /* > */
  /* > Note that the routine returns V**T, not V. */
@@ -62,10 +62,10 @@
  /* > JOBU is CHARACTER*1 */
  /* > Specifies options for computing all or part of the matrix U: */
  /* > = 'A': all M columns of U are returned in array U: */
- /* > = 'S': the first min(m,n) columns of U (the left singular */
+ /* > = 'S': the first fla_min(m,n) columns of U (the left singular */
  /* > vectors) are returned in the array U;
  */
- /* > = 'O': the first min(m,n) columns of U (the left singular */
+ /* > = 'O': the first fla_min(m,n) columns of U (the left singular */
  /* > vectors) are overwritten on the array A;
  */
  /* > = 'N': no columns of U (no left singular vectors) are */
@@ -79,10 +79,10 @@
  /* > V**T: */
  /* > = 'A': all N rows of V**T are returned in the array VT;
  */
- /* > = 'S': the first min(m,n) rows of V**T (the right singular */
+ /* > = 'S': the first fla_min(m,n) rows of V**T (the right singular */
  /* > vectors) are returned in the array VT;
  */
- /* > = 'O': the first min(m,n) rows of V**T (the right singular */
+ /* > = 'O': the first fla_min(m,n) rows of V**T (the right singular */
  /* > vectors) are overwritten on the array A;
  */
  /* > = 'N': no rows of V**T (no right singular vectors) are */
@@ -108,11 +108,11 @@
  /* > A is DOUBLE PRECISION array, dimension (LDA,N) */
  /* > On entry, the M-by-N matrix A. */
  /* > On exit, */
- /* > if JOBU = 'O', A is overwritten with the first min(m,n) */
+ /* > if JOBU = 'O', A is overwritten with the first fla_min(m,n) */
  /* > columns of U (the left singular vectors, */
  /* > stored columnwise);
  */
- /* > if JOBVT = 'O', A is overwritten with the first min(m,n) */
+ /* > if JOBVT = 'O', A is overwritten with the first fla_min(m,n) */
  /* > rows of V**T (the right singular vectors, */
  /* > stored rowwise);
  */
@@ -123,22 +123,22 @@
  /* > \param[in] LDA */
  /* > \verbatim */
  /* > LDA is INTEGER */
- /* > The leading dimension of the array A. LDA >= max(1,M). */
+ /* > The leading dimension of the array A. LDA >= fla_max(1,M). */
  /* > \endverbatim */
  /* > */
  /* > \param[out] S */
  /* > \verbatim */
- /* > S is DOUBLE PRECISION array, dimension (min(M,N)) */
+ /* > S is DOUBLE PRECISION array, dimension (fla_min(M,N)) */
  /* > The singular values of A, sorted so that S(i) >= S(i+1). */
  /* > \endverbatim */
  /* > */
  /* > \param[out] U */
  /* > \verbatim */
  /* > U is DOUBLE PRECISION array, dimension (LDU,UCOL) */
- /* > (LDU,M) if JOBU = 'A' or (LDU,min(M,N)) if JOBU = 'S'. */
+ /* > (LDU,M) if JOBU = 'A' or (LDU,fla_min(M,N)) if JOBU = 'S'. */
  /* > If JOBU = 'A', U contains the M-by-M orthogonal matrix U;
  */
- /* > if JOBU = 'S', U contains the first min(m,n) columns of U */
+ /* > if JOBU = 'S', U contains the first fla_min(m,n) columns of U */
  /* > (the left singular vectors, stored columnwise);
  */
  /* > if JOBU = 'N' or 'O', U is not referenced. */
@@ -158,7 +158,7 @@
  /* > If JOBVT = 'A', VT contains the N-by-N orthogonal matrix */
  /* > V**T;
  */
- /* > if JOBVT = 'S', VT contains the first min(m,n) rows of */
+ /* > if JOBVT = 'S', VT contains the first fla_min(m,n) rows of */
  /* > V**T (the right singular vectors, stored rowwise);
  */
  /* > if JOBVT = 'N' or 'O', VT is not referenced. */
@@ -170,7 +170,7 @@
  /* > The leading dimension of the array VT. LDVT >= 1;
  if */
  /* > JOBVT = 'A', LDVT >= N;
- if JOBVT = 'S', LDVT >= min(M,N). */
+ if JOBVT = 'S', LDVT >= fla_min(M,N). */
  /* > \endverbatim */
  /* > */
  /* > \param[out] WORK */
@@ -292,7 +292,7 @@
  --work;
  /* Function Body */
  *info = 0;
- minmn = min(*m,*n);
+ minmn = fla_min(*m,*n);
  wntua = lsame_(jobu, "A");
  wntus = lsame_(jobu, "S");
  wntuas = wntua || wntus;
@@ -316,7 +316,7 @@
  else if (*n < 0) {
  *info = -4;
  }
- else if (*lda < max(1,*m)) {
+ else if (*lda < fla_max(1,*m)) {
  *info = -6;
  }
  else if (*ldu < 1 || wntuas && *ldu < *m) {
@@ -361,36 +361,36 @@
  maxwrk = *n + lwork_dgeqrf;
  /* Computing MAX */
  i__2 = maxwrk; i__3 = *n * 3 + lwork_dgebrd; // , expr subst  
- maxwrk = max(i__2,i__3);
+ maxwrk = fla_max(i__2,i__3);
  if (wntvo || wntvas) {
  /* Computing MAX */
  i__2 = maxwrk; i__3 = *n * 3 + lapack_dorgbrp; // , expr subst  
- maxwrk = max(i__2,i__3);
+ maxwrk = fla_max(i__2,i__3);
  }
- maxwrk = max(maxwrk,bdspac);
+ maxwrk = fla_max(maxwrk,bdspac);
  /* Computing MAX */
  i__2 = *n << 2;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  else if (wntuo && wntvn) {
  /* Path 2 (M much larger than N, JOBU='O', JOBVT='N') */
  wrkbl = *n + lwork_dgeqrf;
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n + lapack_dorgqrn; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lwork_dgebrd; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lapack_dorgbrq; // , expr subst  
- wrkbl = max(i__2,i__3);
- wrkbl = max(wrkbl,bdspac);
+ wrkbl = fla_max(i__2,i__3);
+ wrkbl = fla_max(wrkbl,bdspac);
  /* Computing MAX */
  i__2 = *n * *n + wrkbl; i__3 = *n * *n + *m * *n + *n; // , expr subst  
- maxwrk = max(i__2,i__3);
+ maxwrk = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = *n * 3 + *m;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  else if (wntuo && wntvas) {
  /* Path 3 (M much larger than N, JOBU='O', JOBVT='S' or */
@@ -398,62 +398,62 @@
  wrkbl = *n + lwork_dgeqrf;
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n + lapack_dorgqrn; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lwork_dgebrd; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lapack_dorgbrq; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lapack_dorgbrp; // , expr subst  
- wrkbl = max(i__2,i__3);
- wrkbl = max(wrkbl,bdspac);
+ wrkbl = fla_max(i__2,i__3);
+ wrkbl = fla_max(wrkbl,bdspac);
  /* Computing MAX */
  i__2 = *n * *n + wrkbl; i__3 = *n * *n + *m * *n + *n; // , expr subst  
- maxwrk = max(i__2,i__3);
+ maxwrk = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = *n * 3 + *m;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  else if (wntus && wntvn) {
  /* Path 4 (M much larger than N, JOBU='S', JOBVT='N') */
  wrkbl = *n + lwork_dgeqrf;
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n + lapack_dorgqrn; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lwork_dgebrd; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lapack_dorgbrq; // , expr subst  
- wrkbl = max(i__2,i__3);
- wrkbl = max(wrkbl,bdspac);
+ wrkbl = fla_max(i__2,i__3);
+ wrkbl = fla_max(wrkbl,bdspac);
  maxwrk = *n * *n + wrkbl;
  /* Computing MAX */
  i__2 = *n * 3 + *m;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  else if (wntus && wntvo) {
  /* Path 5 (M much larger than N, JOBU='S', JOBVT='O') */
  wrkbl = *n + lwork_dgeqrf;
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n + lapack_dorgqrn; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lwork_dgebrd; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lapack_dorgbrq; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lapack_dorgbrp; // , expr subst  
- wrkbl = max(i__2,i__3);
- wrkbl = max(wrkbl,bdspac);
+ wrkbl = fla_max(i__2,i__3);
+ wrkbl = fla_max(wrkbl,bdspac);
  maxwrk = (*n << 1) * *n + wrkbl;
  /* Computing MAX */
  i__2 = *n * 3 + *m;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  else if (wntus && wntvas) {
  /* Path 6 (M much larger than N, JOBU='S', JOBVT='S' or */
@@ -461,60 +461,60 @@
  wrkbl = *n + lwork_dgeqrf;
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n + lapack_dorgqrn; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lwork_dgebrd; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lapack_dorgbrq; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lapack_dorgbrp; // , expr subst  
- wrkbl = max(i__2,i__3);
- wrkbl = max(wrkbl,bdspac);
+ wrkbl = fla_max(i__2,i__3);
+ wrkbl = fla_max(wrkbl,bdspac);
  maxwrk = *n * *n + wrkbl;
  /* Computing MAX */
  i__2 = *n * 3 + *m;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  else if (wntua && wntvn) {
  /* Path 7 (M much larger than N, JOBU='A', JOBVT='N') */
  wrkbl = *n + lwork_dgeqrf;
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n + lapack_dorgqrm; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lwork_dgebrd; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lapack_dorgbrq; // , expr subst  
- wrkbl = max(i__2,i__3);
- wrkbl = max(wrkbl,bdspac);
+ wrkbl = fla_max(i__2,i__3);
+ wrkbl = fla_max(wrkbl,bdspac);
  maxwrk = *n * *n + wrkbl;
  /* Computing MAX */
  i__2 = *n * 3 + *m;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  else if (wntua && wntvo) {
  /* Path 8 (M much larger than N, JOBU='A', JOBVT='O') */
  wrkbl = *n + lwork_dgeqrf;
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n + lapack_dorgqrm; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lwork_dgebrd; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lapack_dorgbrq; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lapack_dorgbrp; // , expr subst  
- wrkbl = max(i__2,i__3);
- wrkbl = max(wrkbl,bdspac);
+ wrkbl = fla_max(i__2,i__3);
+ wrkbl = fla_max(wrkbl,bdspac);
  maxwrk = (*n << 1) * *n + wrkbl;
  /* Computing MAX */
  i__2 = *n * 3 + *m;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  else if (wntua && wntvas) {
  /* Path 9 (M much larger than N, JOBU='A', JOBVT='S' or */
@@ -522,21 +522,21 @@
  wrkbl = *n + lwork_dgeqrf;
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n + lapack_dorgqrm; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lwork_dgebrd; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lapack_dorgbrq; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *n * 3 + lapack_dorgbrp; // , expr subst  
- wrkbl = max(i__2,i__3);
- wrkbl = max(wrkbl,bdspac);
+ wrkbl = fla_max(i__2,i__3);
+ wrkbl = fla_max(wrkbl,bdspac);
  maxwrk = *n * *n + wrkbl;
  /* Computing MAX */
  i__2 = *n * 3 + *m;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  }
  else {
@@ -549,24 +549,24 @@
  lapack_dorgbrq = (integer) dum[0];
  /* Computing MAX */
  i__2 = maxwrk; i__3 = *n * 3 + lapack_dorgbrq; // , expr subst  
- maxwrk = max(i__2,i__3);
+ maxwrk = fla_max(i__2,i__3);
  }
  if (wntua) {
  lapack_dorgbr("Q", m, m, n, &a[a_offset], lda, dum, dum, &c_n1, &ierr);
  lapack_dorgbrq = (integer) dum[0];
  /* Computing MAX */
  i__2 = maxwrk; i__3 = *n * 3 + lapack_dorgbrq; // , expr subst  
- maxwrk = max(i__2,i__3);
+ maxwrk = fla_max(i__2,i__3);
  }
  if (! wntvn) {
  /* Computing MAX */
  i__2 = maxwrk; i__3 = *n * 3 + lapack_dorgbrp; // , expr subst  
- maxwrk = max(i__2,i__3);
+ maxwrk = fla_max(i__2,i__3);
  }
- maxwrk = max(maxwrk,bdspac);
+ maxwrk = fla_max(maxwrk,bdspac);
  /* Computing MAX */
  i__2 = *n * 3 + *m;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  }
  else if (minmn > 0) {
@@ -596,36 +596,36 @@
  maxwrk = *m + lwork_dgelqf;
  /* Computing MAX */
  i__2 = maxwrk; i__3 = *m * 3 + lwork_dgebrd; // , expr subst  
- maxwrk = max(i__2,i__3);
+ maxwrk = fla_max(i__2,i__3);
  if (wntuo || wntuas) {
  /* Computing MAX */
  i__2 = maxwrk; i__3 = *m * 3 + lapack_dorgbrq; // , expr subst  
- maxwrk = max(i__2,i__3);
+ maxwrk = fla_max(i__2,i__3);
  }
- maxwrk = max(maxwrk,bdspac);
+ maxwrk = fla_max(maxwrk,bdspac);
  /* Computing MAX */
  i__2 = *m << 2;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  else if (wntvo && wntun) {
  /* Path 2t(N much larger than M, JOBU='N', JOBVT='O') */
  wrkbl = *m + lwork_dgelqf;
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m + lapack_dorglqm; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lwork_dgebrd; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lapack_dorgbrp; // , expr subst  
- wrkbl = max(i__2,i__3);
- wrkbl = max(wrkbl,bdspac);
+ wrkbl = fla_max(i__2,i__3);
+ wrkbl = fla_max(wrkbl,bdspac);
  /* Computing MAX */
  i__2 = *m * *m + wrkbl; i__3 = *m * *m + *m * *n + *m; // , expr subst  
- maxwrk = max(i__2,i__3);
+ maxwrk = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = *m * 3 + *n;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  else if (wntvo && wntuas) {
  /* Path 3t(N much larger than M, JOBU='S' or 'A', */
@@ -633,62 +633,62 @@
  wrkbl = *m + lwork_dgelqf;
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m + lapack_dorglqm; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lwork_dgebrd; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lapack_dorgbrp; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lapack_dorgbrq; // , expr subst  
- wrkbl = max(i__2,i__3);
- wrkbl = max(wrkbl,bdspac);
+ wrkbl = fla_max(i__2,i__3);
+ wrkbl = fla_max(wrkbl,bdspac);
  /* Computing MAX */
  i__2 = *m * *m + wrkbl; i__3 = *m * *m + *m * *n + *m; // , expr subst  
- maxwrk = max(i__2,i__3);
+ maxwrk = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = *m * 3 + *n;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  else if (wntvs && wntun) {
  /* Path 4t(N much larger than M, JOBU='N', JOBVT='S') */
  wrkbl = *m + lwork_dgelqf;
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m + lapack_dorglqm; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lwork_dgebrd; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lapack_dorgbrp; // , expr subst  
- wrkbl = max(i__2,i__3);
- wrkbl = max(wrkbl,bdspac);
+ wrkbl = fla_max(i__2,i__3);
+ wrkbl = fla_max(wrkbl,bdspac);
  maxwrk = *m * *m + wrkbl;
  /* Computing MAX */
  i__2 = *m * 3 + *n;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  else if (wntvs && wntuo) {
  /* Path 5t(N much larger than M, JOBU='O', JOBVT='S') */
  wrkbl = *m + lwork_dgelqf;
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m + lapack_dorglqm; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lwork_dgebrd; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lapack_dorgbrp; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lapack_dorgbrq; // , expr subst  
- wrkbl = max(i__2,i__3);
- wrkbl = max(wrkbl,bdspac);
+ wrkbl = fla_max(i__2,i__3);
+ wrkbl = fla_max(wrkbl,bdspac);
  maxwrk = (*m << 1) * *m + wrkbl;
  /* Computing MAX */
  i__2 = *m * 3 + *n;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  else if (wntvs && wntuas) {
  /* Path 6t(N much larger than M, JOBU='S' or 'A', */
@@ -696,60 +696,60 @@
  wrkbl = *m + lwork_dgelqf;
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m + lapack_dorglqm; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lwork_dgebrd; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lapack_dorgbrp; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lapack_dorgbrq; // , expr subst  
- wrkbl = max(i__2,i__3);
- wrkbl = max(wrkbl,bdspac);
+ wrkbl = fla_max(i__2,i__3);
+ wrkbl = fla_max(wrkbl,bdspac);
  maxwrk = *m * *m + wrkbl;
  /* Computing MAX */
  i__2 = *m * 3 + *n;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  else if (wntva && wntun) {
  /* Path 7t(N much larger than M, JOBU='N', JOBVT='A') */
  wrkbl = *m + lwork_dgelqf;
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m + lapack_dorglqn; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lwork_dgebrd; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lapack_dorgbrp; // , expr subst  
- wrkbl = max(i__2,i__3);
- wrkbl = max(wrkbl,bdspac);
+ wrkbl = fla_max(i__2,i__3);
+ wrkbl = fla_max(wrkbl,bdspac);
  maxwrk = *m * *m + wrkbl;
  /* Computing MAX */
  i__2 = *m * 3 + *n;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  else if (wntva && wntuo) {
  /* Path 8t(N much larger than M, JOBU='O', JOBVT='A') */
  wrkbl = *m + lwork_dgelqf;
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m + lapack_dorglqn; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lwork_dgebrd; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lapack_dorgbrp; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lapack_dorgbrq; // , expr subst  
- wrkbl = max(i__2,i__3);
- wrkbl = max(wrkbl,bdspac);
+ wrkbl = fla_max(i__2,i__3);
+ wrkbl = fla_max(wrkbl,bdspac);
  maxwrk = (*m << 1) * *m + wrkbl;
  /* Computing MAX */
  i__2 = *m * 3 + *n;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  else if (wntva && wntuas) {
  /* Path 9t(N much larger than M, JOBU='S' or 'A', */
@@ -757,21 +757,21 @@
  wrkbl = *m + lwork_dgelqf;
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m + lapack_dorglqn; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lwork_dgebrd; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lapack_dorgbrp; // , expr subst  
- wrkbl = max(i__2,i__3);
+ wrkbl = fla_max(i__2,i__3);
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *m * 3 + lapack_dorgbrq; // , expr subst  
- wrkbl = max(i__2,i__3);
- wrkbl = max(wrkbl,bdspac);
+ wrkbl = fla_max(i__2,i__3);
+ wrkbl = fla_max(wrkbl,bdspac);
  maxwrk = *m * *m + wrkbl;
  /* Computing MAX */
  i__2 = *m * 3 + *n;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  }
  else {
@@ -785,27 +785,27 @@
  lapack_dorgbrp = (integer) dum[0];
  /* Computing MAX */
  i__2 = maxwrk; i__3 = *m * 3 + lapack_dorgbrp; // , expr subst  
- maxwrk = max(i__2,i__3);
+ maxwrk = fla_max(i__2,i__3);
  }
  if (wntva) {
  lapack_dorgbr("P", n, n, m, &a[a_offset], n, dum, dum, &c_n1, & ierr);
  lapack_dorgbrp = (integer) dum[0];
  /* Computing MAX */
  i__2 = maxwrk; i__3 = *m * 3 + lapack_dorgbrp; // , expr subst  
- maxwrk = max(i__2,i__3);
+ maxwrk = fla_max(i__2,i__3);
  }
  if (! wntun) {
  /* Computing MAX */
  i__2 = maxwrk; i__3 = *m * 3 + lapack_dorgbrq; // , expr subst  
- maxwrk = max(i__2,i__3);
+ maxwrk = fla_max(i__2,i__3);
  }
- maxwrk = max(maxwrk,bdspac);
+ maxwrk = fla_max(maxwrk,bdspac);
  /* Computing MAX */
  i__2 = *m * 3 + *n;
- minwrk = max(i__2,bdspac);
+ minwrk = fla_max(i__2,bdspac);
  }
  }
- maxwrk = max(maxwrk,minwrk);
+ maxwrk = fla_max(maxwrk,minwrk);
  work[1] = (doublereal) maxwrk;
  if (*lwork < minwrk && ! lquery) {
  *info = -13;
@@ -890,12 +890,12 @@
  /* no right singular vectors to be computed */
  /* Computing MAX */
  i__2 = *n << 2;
- if (*lwork >= *n * *n + max(i__2,bdspac)) {
+ if (*lwork >= *n * *n + fla_max(i__2,bdspac)) {
  /* Sufficient workspace for a fast algorithm */
  ir = 1;
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *lda * *n + *n; // , expr subst  
- if (*lwork >= max(i__2,i__3) + *lda * *n) {
+ if (*lwork >= fla_max(i__2,i__3) + *lda * *n) {
  /* WORK(IU) is LDA by N, WORK(IR) is LDA by N */
  ldwrku = *lda;
  ldwrkr = *lda;
@@ -904,7 +904,7 @@
  {
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *lda * *n + *n; // , expr subst  
- if (*lwork >= max(i__2,i__3) + *n * *n) {
+ if (*lwork >= fla_max(i__2,i__3) + *n * *n) {
  /* WORK(IU) is LDA by N, WORK(IR) is N by N */
  ldwrku = *lda;
  ldwrkr = *n;
@@ -958,7 +958,7 @@
  i__ += i__3) {
  /* Computing MIN */
  i__4 = *m - i__ + 1;
- chunk = min(i__4,ldwrku);
+ chunk = fla_min(i__4,ldwrku);
  dgemm_("N", "N", &chunk, n, n, &c_b79, &a[i__ + a_dim1], lda, &work[ir], &ldwrkr, &c_b57, & work[iu], &ldwrku);
  dlacpy_("F", &chunk, n, &work[iu], &ldwrku, &a[i__ + a_dim1], lda);
  /* L10: */
@@ -991,12 +991,12 @@
  /* N right singular vectors to be computed in VT */
  /* Computing MAX */
  i__3 = *n << 2;
- if (*lwork >= *n * *n + max(i__3,bdspac)) {
+ if (*lwork >= *n * *n + fla_max(i__3,bdspac)) {
  /* Sufficient workspace for a fast algorithm */
  ir = 1;
  /* Computing MAX */
  i__3 = wrkbl; i__2 = *lda * *n + *n; // , expr subst  
- if (*lwork >= max(i__3,i__2) + *lda * *n) {
+ if (*lwork >= fla_max(i__3,i__2) + *lda * *n) {
  /* WORK(IU) is LDA by N and WORK(IR) is LDA by N */
  ldwrku = *lda;
  ldwrkr = *lda;
@@ -1005,7 +1005,7 @@
  {
  /* Computing MAX */
  i__3 = wrkbl; i__2 = *lda * *n + *n; // , expr subst  
- if (*lwork >= max(i__3,i__2) + *n * *n) {
+ if (*lwork >= fla_max(i__3,i__2) + *n * *n) {
  /* WORK(IU) is LDA by N and WORK(IR) is N by N */
  ldwrku = *lda;
  ldwrkr = *n;
@@ -1067,7 +1067,7 @@
  i__ += i__2) {
  /* Computing MIN */
  i__4 = *m - i__ + 1;
- chunk = min(i__4,ldwrku);
+ chunk = fla_min(i__4,ldwrku);
  dgemm_("N", "N", &chunk, n, n, &c_b79, &a[i__ + a_dim1], lda, &work[ir], &ldwrkr, &c_b57, & work[iu], &ldwrku);
  dlacpy_("F", &chunk, n, &work[iu], &ldwrku, &a[i__ + a_dim1], lda);
  /* L20: */
@@ -1123,7 +1123,7 @@
  /* no right singular vectors to be computed */
  /* Computing MAX */
  i__2 = *n << 2;
- if (*lwork >= *n * *n + max(i__2,bdspac)) {
+ if (*lwork >= *n * *n + fla_max(i__2,bdspac)) {
  /* Sufficient workspace for a fast algorithm */
  ir = 1;
  if (*lwork >= wrkbl + *lda * *n) {
@@ -1215,7 +1215,7 @@
  /* N right singular vectors to be overwritten on A */
  /* Computing MAX */
  i__2 = *n << 2;
- if (*lwork >= (*n << 1) * *n + max(i__2,bdspac)) {
+ if (*lwork >= (*n << 1) * *n + fla_max(i__2,bdspac)) {
  /* Sufficient workspace for a fast algorithm */
  iu = 1;
  if (*lwork >= wrkbl + (*lda << 1) * *n) {
@@ -1335,7 +1335,7 @@
  /* N right singular vectors to be computed in VT */
  /* Computing MAX */
  i__2 = *n << 2;
- if (*lwork >= *n * *n + max(i__2,bdspac)) {
+ if (*lwork >= *n * *n + fla_max(i__2,bdspac)) {
  /* Sufficient workspace for a fast algorithm */
  iu = 1;
  if (*lwork >= wrkbl + *lda * *n) {
@@ -1442,8 +1442,8 @@
  /* M left singular vectors to be computed in U and */
  /* no right singular vectors to be computed */
  /* Computing MAX */
- i__2 = *n + *m; i__3 = *n << 2; i__2 = max(i__2,i__3); // ; expr subst  
- if (*lwork >= *n * *n + max(i__2,bdspac)) {
+ i__2 = *n + *m; i__3 = *n << 2; i__2 = fla_max(i__2,i__3); // ; expr subst  
+ if (*lwork >= *n * *n + fla_max(i__2,bdspac)) {
  /* Sufficient workspace for a fast algorithm */
  ir = 1;
  if (*lwork >= wrkbl + *lda * *n) {
@@ -1538,8 +1538,8 @@
  /* M left singular vectors to be computed in U and */
  /* N right singular vectors to be overwritten on A */
  /* Computing MAX */
- i__2 = *n + *m; i__3 = *n << 2; i__2 = max(i__2,i__3); // ; expr subst  
- if (*lwork >= (*n << 1) * *n + max(i__2,bdspac)) {
+ i__2 = *n + *m; i__3 = *n << 2; i__2 = fla_max(i__2,i__3); // ; expr subst  
+ if (*lwork >= (*n << 1) * *n + fla_max(i__2,bdspac)) {
  /* Sufficient workspace for a fast algorithm */
  iu = 1;
  if (*lwork >= wrkbl + (*lda << 1) * *n) {
@@ -1661,8 +1661,8 @@
  /* M left singular vectors to be computed in U and */
  /* N right singular vectors to be computed in VT */
  /* Computing MAX */
- i__2 = *n + *m; i__3 = *n << 2; i__2 = max(i__2,i__3); // ; expr subst  
- if (*lwork >= *n * *n + max(i__2,bdspac)) {
+ i__2 = *n + *m; i__3 = *n << 2; i__2 = fla_max(i__2,i__3); // ; expr subst  
+ if (*lwork >= *n * *n + fla_max(i__2,bdspac)) {
  /* Sufficient workspace for a fast algorithm */
  iu = 1;
  if (*lwork >= wrkbl + *lda * *n) {
@@ -1903,12 +1903,12 @@
  /* no left singular vectors to be computed */
  /* Computing MAX */
  i__2 = *m << 2;
- if (*lwork >= *m * *m + max(i__2,bdspac)) {
+ if (*lwork >= *m * *m + fla_max(i__2,bdspac)) {
  /* Sufficient workspace for a fast algorithm */
  ir = 1;
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *lda * *n + *m; // , expr subst  
- if (*lwork >= max(i__2,i__3) + *lda * *m) {
+ if (*lwork >= fla_max(i__2,i__3) + *lda * *m) {
  /* WORK(IU) is LDA by N and WORK(IR) is LDA by M */
  ldwrku = *lda;
  chunk = *n;
@@ -1918,7 +1918,7 @@
  {
  /* Computing MAX */
  i__2 = wrkbl; i__3 = *lda * *n + *m; // , expr subst  
- if (*lwork >= max(i__2,i__3) + *m * *m) {
+ if (*lwork >= fla_max(i__2,i__3) + *m * *m) {
  /* WORK(IU) is LDA by N and WORK(IR) is M by M */
  ldwrku = *lda;
  chunk = *n;
@@ -1974,7 +1974,7 @@
  i__ += i__3) {
  /* Computing MIN */
  i__4 = *n - i__ + 1;
- blk = min(i__4,chunk);
+ blk = fla_min(i__4,chunk);
  dgemm_("N", "N", m, &blk, m, &c_b79, &work[ir], & ldwrkr, &a[i__ * a_dim1 + 1], lda, &c_b57, & work[iu], &ldwrku);
  dlacpy_("F", m, &blk, &work[iu], &ldwrku, &a[i__ * a_dim1 + 1], lda);
  /* L30: */
@@ -2007,12 +2007,12 @@
  /* M left singular vectors to be computed in U */
  /* Computing MAX */
  i__3 = *m << 2;
- if (*lwork >= *m * *m + max(i__3,bdspac)) {
+ if (*lwork >= *m * *m + fla_max(i__3,bdspac)) {
  /* Sufficient workspace for a fast algorithm */
  ir = 1;
  /* Computing MAX */
  i__3 = wrkbl; i__2 = *lda * *n + *m; // , expr subst  
- if (*lwork >= max(i__3,i__2) + *lda * *m) {
+ if (*lwork >= fla_max(i__3,i__2) + *lda * *m) {
  /* WORK(IU) is LDA by N and WORK(IR) is LDA by M */
  ldwrku = *lda;
  chunk = *n;
@@ -2022,7 +2022,7 @@
  {
  /* Computing MAX */
  i__3 = wrkbl; i__2 = *lda * *n + *m; // , expr subst  
- if (*lwork >= max(i__3,i__2) + *m * *m) {
+ if (*lwork >= fla_max(i__3,i__2) + *m * *m) {
  /* WORK(IU) is LDA by N and WORK(IR) is M by M */
  ldwrku = *lda;
  chunk = *n;
@@ -2084,7 +2084,7 @@
  i__ += i__2) {
  /* Computing MIN */
  i__4 = *n - i__ + 1;
- blk = min(i__4,chunk);
+ blk = fla_min(i__4,chunk);
  dgemm_("N", "N", m, &blk, m, &c_b79, &work[ir], & ldwrkr, &a[i__ * a_dim1 + 1], lda, &c_b57, & work[iu], &ldwrku);
  dlacpy_("F", m, &blk, &work[iu], &ldwrku, &a[i__ * a_dim1 + 1], lda);
  /* L40: */
@@ -2138,7 +2138,7 @@
  /* no left singular vectors to be computed */
  /* Computing MAX */
  i__2 = *m << 2;
- if (*lwork >= *m * *m + max(i__2,bdspac)) {
+ if (*lwork >= *m * *m + fla_max(i__2,bdspac)) {
  /* Sufficient workspace for a fast algorithm */
  ir = 1;
  if (*lwork >= wrkbl + *lda * *m) {
@@ -2230,7 +2230,7 @@
  /* M left singular vectors to be overwritten on A */
  /* Computing MAX */
  i__2 = *m << 2;
- if (*lwork >= (*m << 1) * *m + max(i__2,bdspac)) {
+ if (*lwork >= (*m << 1) * *m + fla_max(i__2,bdspac)) {
  /* Sufficient workspace for a fast algorithm */
  iu = 1;
  if (*lwork >= wrkbl + (*lda << 1) * *m) {
@@ -2348,7 +2348,7 @@
  /* M left singular vectors to be computed in U */
  /* Computing MAX */
  i__2 = *m << 2;
- if (*lwork >= *m * *m + max(i__2,bdspac)) {
+ if (*lwork >= *m * *m + fla_max(i__2,bdspac)) {
  /* Sufficient workspace for a fast algorithm */
  iu = 1;
  if (*lwork >= wrkbl + *lda * *m) {
@@ -2453,8 +2453,8 @@
  /* N right singular vectors to be computed in VT and */
  /* no left singular vectors to be computed */
  /* Computing MAX */
- i__2 = *n + *m; i__3 = *m << 2; i__2 = max(i__2,i__3); // ; expr subst  
- if (*lwork >= *m * *m + max(i__2,bdspac)) {
+ i__2 = *n + *m; i__3 = *m << 2; i__2 = fla_max(i__2,i__3); // ; expr subst  
+ if (*lwork >= *m * *m + fla_max(i__2,bdspac)) {
  /* Sufficient workspace for a fast algorithm */
  ir = 1;
  if (*lwork >= wrkbl + *lda * *m) {
@@ -2548,8 +2548,8 @@
  /* N right singular vectors to be computed in VT and */
  /* M left singular vectors to be overwritten on A */
  /* Computing MAX */
- i__2 = *n + *m; i__3 = *m << 2; i__2 = max(i__2,i__3); // ; expr subst  
- if (*lwork >= (*m << 1) * *m + max(i__2,bdspac)) {
+ i__2 = *n + *m; i__3 = *m << 2; i__2 = fla_max(i__2,i__3); // ; expr subst  
+ if (*lwork >= (*m << 1) * *m + fla_max(i__2,bdspac)) {
  /* Sufficient workspace for a fast algorithm */
  iu = 1;
  if (*lwork >= wrkbl + (*lda << 1) * *m) {
@@ -2669,8 +2669,8 @@
  /* N right singular vectors to be computed in VT and */
  /* M left singular vectors to be computed in U */
  /* Computing MAX */
- i__2 = *n + *m; i__3 = *m << 2; i__2 = max(i__2,i__3); // ; expr subst  
- if (*lwork >= *m * *m + max(i__2,bdspac)) {
+ i__2 = *n + *m; i__3 = *m << 2; i__2 = fla_max(i__2,i__3); // ; expr subst  
+ if (*lwork >= *m * *m + fla_max(i__2,bdspac)) {
  /* Sufficient workspace for a fast algorithm */
  iu = 1;
  if (*lwork >= wrkbl + *lda * *m) {

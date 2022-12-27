@@ -201,8 +201,8 @@ int dlagv2_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal
     /* Computing MAX */
     d__5 = (d__1 = a[a_dim1 + 1], f2c_dabs(d__1)) + (d__2 = a[a_dim1 + 2], f2c_dabs( d__2));
     d__6 = (d__3 = a[(a_dim1 << 1) + 1], f2c_dabs(d__3)) + (d__4 = a[(a_dim1 << 1) + 2], f2c_dabs(d__4));
-    d__5 = max(d__5,d__6); // ; expr subst
-    anorm = max(d__5,safmin);
+    d__5 = fla_max(d__5,d__6); // ; expr subst
+    anorm = fla_max(d__5,safmin);
     ascale = 1. / anorm;
     a[a_dim1 + 1] = ascale * a[a_dim1 + 1];
     a[(a_dim1 << 1) + 1] = ascale * a[(a_dim1 << 1) + 1];
@@ -212,8 +212,8 @@ int dlagv2_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal
     /* Computing MAX */
     d__4 = (d__3 = b[b_dim1 + 1], f2c_dabs(d__3));
     d__5 = (d__1 = b[(b_dim1 << 1) + 1], f2c_dabs(d__1)) + (d__2 = b[(b_dim1 << 1) + 2], f2c_dabs(d__2));
-    d__4 = max(d__4,d__5); // ; expr subst
-    bnorm = max(d__4,safmin);
+    d__4 = fla_max(d__4,d__5); // ; expr subst
+    bnorm = fla_max(d__4,safmin);
     bscale = 1. / bnorm;
     b[b_dim1 + 1] = bscale * b[b_dim1 + 1];
     b[(b_dim1 << 1) + 1] = bscale * b[(b_dim1 << 1) + 1];
@@ -288,11 +288,11 @@ int dlagv2_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal
             /* Computing MAX */
             d__5 = (d__1 = a[a_dim1 + 1], f2c_dabs(d__1)) + (d__2 = a[(a_dim1 << 1) + 1], f2c_dabs(d__2));
             d__6 = (d__3 = a[a_dim1 + 2], f2c_dabs(d__3) ) + (d__4 = a[(a_dim1 << 1) + 2], f2c_dabs(d__4)); // , expr subst
-            h1 = max(d__5,d__6);
+            h1 = fla_max(d__5,d__6);
             /* Computing MAX */
             d__5 = (d__1 = b[b_dim1 + 1], f2c_dabs(d__1)) + (d__2 = b[(b_dim1 << 1) + 1], f2c_dabs(d__2));
             d__6 = (d__3 = b[b_dim1 + 2], f2c_dabs(d__3) ) + (d__4 = b[(b_dim1 << 1) + 2], f2c_dabs(d__4)); // , expr subst
-            h2 = max(d__5,d__6);
+            h2 = fla_max(d__5,d__6);
             if (scale1 * h1 >= f2c_dabs(wr1) * h2)
             {
                 /* find left rotation matrix Q to zero out B(2,1) */

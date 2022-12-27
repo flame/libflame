@@ -49,7 +49,7 @@ int dgemv_(char *trans, integer *m, integer *n, doublereal * alpha, doublereal *
     /* LDA - INTEGER. */
     /* On entry, LDA specifies the first dimension of A as declared */
     /* in the calling (sub) program. LDA must be at least */
-    /* max( 1, m ). */
+    /* fla_max( 1, m ). */
     /* Unchanged on exit. */
     /* X - DOUBLE PRECISION array of DIMENSION at least */
     /* ( 1 + ( n - 1 )*f2c_abs( INCX ) ) when TRANS = 'N' or 'n' */
@@ -111,7 +111,7 @@ int dgemv_(char *trans, integer *m, integer *n, doublereal * alpha, doublereal *
     {
         info = 3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         info = 6;
     }

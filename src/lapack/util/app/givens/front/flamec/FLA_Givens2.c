@@ -149,7 +149,7 @@ FLA_Error FLA_Givens2_opd( double* chi_1,
 	{
 		f1 = f;
 		g1 = g;
-		scale = max( fabs( f1 ), fabs( g1 ) );
+		scale = fla_max( fabs( f1 ), fabs( g1 ) );
 
 		if ( scale >= safmax2 )
 		{
@@ -159,7 +159,7 @@ FLA_Error FLA_Givens2_opd( double* chi_1,
 				++count;
 				f1 = f1 * safmin2;
 				g1 = g1 * safmin2;
-				scale = max( fabs( f1 ), fabs( g1 ) );
+				scale = fla_max( fabs( f1 ), fabs( g1 ) );
 			}
 			while ( scale >= safmax2 );
 
@@ -178,7 +178,7 @@ FLA_Error FLA_Givens2_opd( double* chi_1,
 				++count;
 				f1 = f1 * safmax2;
 				g1 = g1 * safmax2;
-				scale = max( fabs( f1 ), fabs( g1 ) );
+				scale = fla_max( fabs( f1 ), fabs( g1 ) );
 			}
 			while ( scale <= safmin2 );
 

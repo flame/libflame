@@ -562,7 +562,7 @@ int dlasd4_(integer *n, integer *i__, doublereal *d__, doublereal *z__, doublere
             {
                 /* Computing MIN */
                 d__1 = d__[*i__] * 10.;
-                tau = min(d__1,sgub);
+                tau = fla_min(d__1,sgub);
                 geomavg = TRUE_;
             }
         }
@@ -666,11 +666,11 @@ int dlasd4_(integer *n, integer *i__, doublereal *d__, doublereal *z__, doublere
         }
         if (w <= 0.)
         {
-            sglb = max(sglb,tau);
+            sglb = fla_max(sglb,tau);
         }
         else
         {
-            sgub = min(sgub,tau);
+            sgub = fla_min(sgub,tau);
         }
         /* Calculate the new step */
         ++niter;
@@ -921,11 +921,11 @@ int dlasd4_(integer *n, integer *i__, doublereal *d__, doublereal *z__, doublere
             }
             if (w <= 0.)
             {
-                sglb = max(sglb,tau);
+                sglb = fla_max(sglb,tau);
             }
             else
             {
-                sgub = min(sgub,tau);
+                sgub = fla_min(sgub,tau);
             }
             /* Calculate the new step */
             if (! swtch3)

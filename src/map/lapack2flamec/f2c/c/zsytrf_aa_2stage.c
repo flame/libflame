@@ -89,7 +89,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] TB */
@@ -225,7 +225,7 @@ int zsytrf_aa_2stage_(char *uplo, integer *n, doublecomplex *a, integer *lda, do
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }
@@ -285,7 +285,7 @@ int zsytrf_aa_2stage_(char *uplo, integer *n, doublecomplex *a, integer *lda, do
     /* Determine the number of the block columns */
     nt = (*n + nb - 1) / nb;
     td = nb << 1;
-    kb = min(nb,*n);
+    kb = fla_min(nb,*n);
     /* Initialize vectors/matrices */
     i__1 = kb;
     for (j = 1;
@@ -311,7 +311,7 @@ int zsytrf_aa_2stage_(char *uplo, integer *n, doublecomplex *a, integer *lda, do
             /* Computing MIN */
             i__2 = nb;
             i__3 = *n - j * nb; // , expr subst
-            kb = min(i__2,i__3);
+            kb = fla_min(i__2,i__3);
             i__2 = j - 1;
             for (i__ = 1;
                     i__ <= i__2;
@@ -443,7 +443,7 @@ int zsytrf_aa_2stage_(char *uplo, integer *n, doublecomplex *a, integer *lda, do
                 /* Computing MIN */
                 i__2 = nb;
                 i__3 = *n - (j + 1) * nb; // , expr subst
-                kb = min(i__2,i__3);
+                kb = fla_min(i__2,i__3);
                 i__2 = ldtb - 1;
                 zlaset_("Full", &kb, &nb, &c_b1, &c_b1, &tb[td + nb + 1 + j * nb * ldtb], &i__2);
                 i__2 = ldtb - 1;
@@ -535,7 +535,7 @@ int zsytrf_aa_2stage_(char *uplo, integer *n, doublecomplex *a, integer *lda, do
             /* Computing MIN */
             i__2 = nb;
             i__3 = *n - j * nb; // , expr subst
-            kb = min(i__2,i__3);
+            kb = fla_min(i__2,i__3);
             i__2 = j - 1;
             for (i__ = 1;
                     i__ <= i__2;
@@ -666,7 +666,7 @@ int zsytrf_aa_2stage_(char *uplo, integer *n, doublecomplex *a, integer *lda, do
                 /* Computing MIN */
                 i__2 = nb;
                 i__3 = *n - (j + 1) * nb; // , expr subst
-                kb = min(i__2,i__3);
+                kb = fla_min(i__2,i__3);
                 i__2 = ldtb - 1;
                 zlaset_("Full", &kb, &nb, &c_b1, &c_b1, &tb[td + nb + 1 + j * nb * ldtb], &i__2);
                 i__2 = ldtb - 1;

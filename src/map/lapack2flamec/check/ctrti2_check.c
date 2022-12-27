@@ -29,7 +29,7 @@ int ctrti2_check(char *uplo, char *diag, integer *n, scomplex *a, integer *lda, 
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }

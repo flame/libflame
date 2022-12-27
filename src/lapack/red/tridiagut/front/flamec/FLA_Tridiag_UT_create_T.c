@@ -29,7 +29,7 @@ FLA_Error FLA_Tridiag_UT_create_T( FLA_Obj A, FLA_Obj* T )
   k = FLA_Obj_min_dim( A );
 
   // Adjust the blocksize with respect to the min-dim of A.
-  b_alg = min( b_alg, k );
+  b_alg = fla_min( b_alg, k );
 
   // Figure out whether T should be row-major or column-major.
   if ( FLA_Obj_row_stride( A ) == 1 )

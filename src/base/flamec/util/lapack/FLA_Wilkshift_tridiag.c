@@ -220,8 +220,8 @@ double fla_dlapy2( double x, double y )
 
 	xabs = fabs( x );
 	yabs = fabs( y );
-	w    = max( xabs, yabs );
-	z    = min( xabs, yabs );
+	w    = fla_max( xabs, yabs );
+	z    = fla_min( xabs, yabs );
 
 	if ( z == zero )
 		r = w;

@@ -219,7 +219,7 @@ void libfla_test_lyap_experiment( test_params_t params,
 		libfla_test_lyap_impl( impl, trans, isgn, A_test, C_test, scale );
 		
 		time = FLA_Clock() - time;
-		time_min = min( time_min, time );
+		time_min = fla_min( time_min, time );
 	}
 
 	// Copy the solution to flat matrix X.

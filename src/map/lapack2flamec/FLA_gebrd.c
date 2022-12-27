@@ -42,7 +42,7 @@ extern TLS_CLASS_SPEC fla_bidiagut_t* fla_bidiagut_cntl_plain;
 #define LAPACK_gebrd_body(prefix)                                       \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);                \
   FLA_Datatype dtype_re = PREFIX2FLAME_REALTYPE(prefix);                \
-  dim_t        min_m_n  = min( *m, *n );                                \
+  dim_t        min_m_n  = fla_min( *m, *n );                                \
   dim_t        m_d      = min_m_n;                                      \
   dim_t        m_e      = min_m_n - 1;                                  \
   dim_t        m_t      = min_m_n;                                      \

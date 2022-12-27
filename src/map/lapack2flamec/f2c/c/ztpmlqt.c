@@ -98,9 +98,9 @@
 /* > \verbatim */
 /* > LDV is INTEGER */
 /* > The leading dimension of the array V. */
-/* > If SIDE = 'L', LDV >= max(1,M);
+/* > If SIDE = 'L', LDV >= fla_max(1,M);
 */
-/* > if SIDE = 'R', LDV >= max(1,N). */
+/* > if SIDE = 'R', LDV >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] T */
@@ -130,9 +130,9 @@
 /* > \verbatim */
 /* > LDA is INTEGER */
 /* > The leading dimension of the array A. */
-/* > If SIDE = 'L', LDC >= max(1,K);
+/* > If SIDE = 'L', LDC >= fla_max(1,K);
 */
-/* > If SIDE = 'R', LDC >= max(1,M). */
+/* > If SIDE = 'R', LDC >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -147,7 +147,7 @@
 /* > \verbatim */
 /* > LDB is INTEGER */
 /* > The leading dimension of the array B. */
-/* > LDB >= max(1,M). */
+/* > LDB >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -266,11 +266,11 @@ int ztpmlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     notran = lsame_(trans, "N");
     if (left)
     {
-        ldaq = max(1,*k);
+        ldaq = fla_max(1,*k);
     }
     else if (right)
     {
-        ldaq = max(1,*m);
+        ldaq = fla_max(1,*m);
     }
     if (! left && ! right)
     {
@@ -312,7 +312,7 @@ int ztpmlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
     {
         *info = -13;
     }
-    else if (*ldb < max(1,*m))
+    else if (*ldb < fla_max(1,*m))
     {
         *info = -15;
     }
@@ -340,10 +340,10 @@ int ztpmlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
             /* Computing MIN */
             i__3 = *mb;
             i__4 = *k - i__ + 1; // , expr subst
-            ib = min(i__3,i__4);
+            ib = fla_min(i__3,i__4);
             /* Computing MIN */
             i__3 = *m - *l + i__ + ib - 1;
-            nb = min(i__3,*m);
+            nb = fla_min(i__3,*m);
             if (i__ >= *l)
             {
                 lb = 0;
@@ -366,10 +366,10 @@ int ztpmlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
             /* Computing MIN */
             i__3 = *mb;
             i__4 = *k - i__ + 1; // , expr subst
-            ib = min(i__3,i__4);
+            ib = fla_min(i__3,i__4);
             /* Computing MIN */
             i__3 = *n - *l + i__ + ib - 1;
-            nb = min(i__3,*n);
+            nb = fla_min(i__3,*n);
             if (i__ >= *l)
             {
                 lb = 0;
@@ -392,10 +392,10 @@ int ztpmlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
             /* Computing MIN */
             i__2 = *mb;
             i__3 = *k - i__ + 1; // , expr subst
-            ib = min(i__2,i__3);
+            ib = fla_min(i__2,i__3);
             /* Computing MIN */
             i__2 = *m - *l + i__ + ib - 1;
-            nb = min(i__2,*m);
+            nb = fla_min(i__2,*m);
             if (i__ >= *l)
             {
                 lb = 0;
@@ -418,10 +418,10 @@ int ztpmlqt_(char *side, char *trans, integer *m, integer *n, integer *k, intege
             /* Computing MIN */
             i__2 = *mb;
             i__3 = *k - i__ + 1; // , expr subst
-            ib = min(i__2,i__3);
+            ib = fla_min(i__2,i__3);
             /* Computing MIN */
             i__2 = *n - *l + i__ + ib - 1;
-            nb = min(i__2,*n);
+            nb = fla_min(i__2,*n);
             if (i__ >= *l)
             {
                 lb = 0;

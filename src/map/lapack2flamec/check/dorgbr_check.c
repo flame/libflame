@@ -26,7 +26,7 @@ int dorgbr_check(char *vect, integer *m, integer *n, integer *k, double *a, inte
     /* Function Body */
     *info = 0;
     wantq = lsame_(vect, "Q");
-    mn = min(*m,*n);
+    mn = fla_min(*m,*n);
     lquery = *lwork == -1;
     if (! wantq && ! lsame_(vect, "P"))
     {
@@ -36,7 +36,7 @@ int dorgbr_check(char *vect, integer *m, integer *n, integer *k, double *a, inte
     {
         *info = -2;
     }
-    else if (*n < 0 || wantq && (*n > *m || *n < min(*m,*k)) || ! wantq && ( *m > *n || *m < min(*n,*k)))
+    else if (*n < 0 || wantq && (*n > *m || *n < fla_min(*m,*k)) || ! wantq && ( *m > *n || *m < fla_min(*n,*k)))
     {
         *info = -3;
     }
@@ -44,11 +44,11 @@ int dorgbr_check(char *vect, integer *m, integer *n, integer *k, double *a, inte
     {
         *info = -4;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -6;
     }
-    else if (*lwork < max(1,mn) && ! lquery)
+    else if (*lwork < fla_max(1,mn) && ! lquery)
     {
         *info = -9;
     }
@@ -90,7 +90,7 @@ int dorgbr_check(char *vect, integer *m, integer *n, integer *k, double *a, inte
             }
         }
         lwkopt = (integer) work[1];
-        lwkopt = max(lwkopt,mn);
+        lwkopt = fla_max(lwkopt,mn);
     }
     if (*info != 0)
     {

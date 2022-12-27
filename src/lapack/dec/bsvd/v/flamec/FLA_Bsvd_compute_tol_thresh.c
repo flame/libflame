@@ -116,7 +116,7 @@ FLA_Error FLA_Bsvd_compute_tol_thresh_ops( integer       n_A,
             float* delta2   = buff_d + (i  )*inc_d;
 
             mu   = fabsf( *delta2 ) * ( mu / ( mu + fabsf( *epsilon1 ) ) );
-            smin = min( smin, mu );
+            smin = fla_min( smin, mu );
 
             // Stop early if we encountered a zero.
             if ( smin == zero ) break;
@@ -127,7 +127,7 @@ FLA_Error FLA_Bsvd_compute_tol_thresh_ops( integer       n_A,
     // maximum total number of iterations, the problem size, and the
     // safe minimum.
     smin = smin / sqrtf( ( float ) n_A );
-    *thresh = max( *tol * smin, maxitr * n_A * n_A * unfl );
+    *thresh = fla_max( *tol * smin, maxitr * n_A * n_A * unfl );
 
     return FLA_SUCCESS;
 }
@@ -175,7 +175,7 @@ FLA_Error FLA_Bsvd_compute_tol_thresh_opd( integer       n_A,
             double* delta2   = buff_d + (i  )*inc_d;
 
             mu   = fabs( *delta2 ) * ( mu / ( mu + fabs( *epsilon1 ) ) );
-            smin = min( smin, mu );
+            smin = fla_min( smin, mu );
 
             // Stop early if we encountered a zero.
             if ( smin == zero ) break;
@@ -186,7 +186,7 @@ FLA_Error FLA_Bsvd_compute_tol_thresh_opd( integer       n_A,
     // maximum total number of iterations, the problem size, and the
     // safe minimum.
     smin = smin / sqrt( ( double ) n_A );
-    *thresh = max( *tol * smin, maxitr * n_A * n_A * unfl );
+    *thresh = fla_max( *tol * smin, maxitr * n_A * n_A * unfl );
 
     return FLA_SUCCESS;
 }

@@ -18,7 +18,7 @@ function [ C_out ] = FLA_Gemm_nn_blk_var4( alpha, A, B, C, nb_alg )
 
   while ( size( BR, 2 ) < size( B, 2 ) )
 
-    b = min( size( BL, 2 ), nb_alg );
+    b = fla_min( size( BL, 2 ), nb_alg );
 
     [ B0, B1, B2 ]= FLA_Repart_1x2_to_1x3( BL, BR, ...
                                          b, 'FLA_LEFT' );

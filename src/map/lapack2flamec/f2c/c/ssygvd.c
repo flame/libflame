@@ -101,7 +101,7 @@ static real c_b11 = 1.f;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -121,7 +121,7 @@ static real c_b11 = 1.f;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] W */
@@ -321,11 +321,11 @@ int ssygvd_(integer *itype, char *jobz, char *uplo, integer * n, real *a, intege
     {
         *info = -4;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -6;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -8;
     }
@@ -373,11 +373,11 @@ int ssygvd_(integer *itype, char *jobz, char *uplo, integer * n, real *a, intege
     ssyevd_(jobz, uplo, n, &a[a_offset], lda, &w[1], &work[1], lwork, &iwork[ 1], liwork, info);
     /* Computing MAX */
     r__1 = (real) lopt;
-    lopt = max(r__1,work[1]);
+    lopt = fla_max(r__1,work[1]);
     /* Computing MAX */
     r__1 = (real) liopt;
     r__2 = (real) iwork[1]; // , expr subst
-    liopt = max(r__1,r__2);
+    liopt = fla_max(r__1,r__2);
     if (wantz && *info == 0)
     {
         /* Backtransform eigenvectors to the original problem. */

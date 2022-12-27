@@ -52,7 +52,7 @@ FLA_Error FLASH_UDdate_UT_inc_create_hier_matrices( FLA_Obj R_flat, FLA_Obj C_fl
 	n_T = FLA_Obj_width( *R );
 	m_C = FLA_Obj_length( *C );
 	m_D = FLA_Obj_length( *D );
-	m_T = max( m_C, m_D );
+	m_T = fla_max( m_C, m_D );
 
 	// Create hierarchical matrix T, with element dimensions conformal to the
 	// the larger of C and D, where each block is b_alg-by-b_flash.
@@ -87,7 +87,7 @@ dim_t FLASH_UDdate_UT_inc_determine_alg_blocksize( FLA_Obj R )
 
 	// Scale the storage blocksize by a pre-defined scalar to arrive at a
 	// reasonable algorithmic blocksize, but make sure it's at least 1.
-	b_alg = ( dim_t ) max( ( double ) b_flash * FLA_UDDATE_INNER_TO_OUTER_B_RATIO, 1 );
+	b_alg = ( dim_t ) fla_max( ( double ) b_flash * FLA_UDDATE_INNER_TO_OUTER_B_RATIO, 1 );
 
 	return b_alg;
 }

@@ -149,7 +149,7 @@ integer main( integer argc, char *argv[] )
       
       dtime = dtimes[0];
       for ( j = 1; j < n_repeats; j++ )
-         dtime = min( dtime, dtimes[j] );
+         dtime = fla_min( dtime, dtimes[j] );
       flops[i] = 2.0 / 3.0 * size * size * size / dtime / 1e9;
 
       FLA_Gemv_external( FLA_NO_TRANSPOSE, FLA_ONE, 

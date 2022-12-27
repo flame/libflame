@@ -91,9 +91,9 @@ static integer c__1 = 1;
 /* > The upper or lower triangular band matrix A, stored in the */
 /* > first kd+1 rows of AB. The j-th column of A is stored */
 /* > in the j-th column of the array AB as follows: */
-/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j;
+/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(n,j+kd). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(n,j+kd). */
 /* > If DIAG = 'U', the diagonal elements of A are not referenced */
 /* > and are assumed to be 1. */
 /* > \endverbatim */
@@ -114,7 +114,7 @@ static integer c__1 = 1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -219,7 +219,7 @@ int ctbtrs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
     {
         *info = -8;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -10;
     }

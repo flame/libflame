@@ -203,7 +203,7 @@ int slagtf_(integer *n, real *a, real *lambda, real *b, real *c__, real *tol, re
         return 0;
     }
     eps = slamch_("Epsilon");
-    tl = max(*tol,eps);
+    tl = fla_max(*tol,eps);
     scale1 = f2c_abs(a[1]) + f2c_abs(b[1]);
     i__1 = *n - 1;
     for (k = 1;
@@ -264,7 +264,7 @@ int slagtf_(integer *n, real *a, real *lambda, real *b, real *c__, real *tol, re
                 c__[k] = mult;
             }
         }
-        if (max(piv1,piv2) <= tl && in[*n] == 0)
+        if (fla_max(piv1,piv2) <= tl && in[*n] == 0)
         {
             in[*n] = k;
         }

@@ -210,9 +210,9 @@ int clargv_(integer *n, complex *x, integer *incx, complex * y, integer *incy, r
         /* Computing MAX */
         r__9 = (r__3 = g.r, f2c_abs(r__3));
         r__10 = (r__4 = r_imag(&g), f2c_abs(r__4)) ; // , expr subst
-        r__5 = max(r__7,r__8);
-        r__6 = max(r__9,r__10); // , expr subst
-        scale = max(r__5,r__6);
+        r__5 = fla_max(r__7,r__8);
+        r__6 = fla_max(r__9,r__10); // , expr subst
+        scale = fla_max(r__5,r__6);
         fs.r = f.r;
         fs.i = f.i; // , expr subst
         gs.r = g.r;
@@ -273,7 +273,7 @@ L20:
         /* Computing 2nd power */
         r__2 = r_imag(&gs);
         g2 = r__1 * r__1 + r__2 * r__2;
-        if (f2 <= max(g2,1.f) * safmin)
+        if (f2 <= fla_max(g2,1.f) * safmin)
         {
             /* This is a rare case: F is very small. */
             if (f.r == 0.f && f.i == 0.f)
@@ -316,7 +316,7 @@ L20:
             /* Computing MAX */
             r__3 = (r__1 = f.r, f2c_abs(r__1));
             r__4 = (r__2 = r_imag(&f), f2c_abs( r__2)); // , expr subst
-            if (max(r__3,r__4) > 1.f)
+            if (fla_max(r__3,r__4) > 1.f)
             {
                 r__1 = f.r;
                 r__2 = r_imag(&f);

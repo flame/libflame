@@ -206,7 +206,7 @@ Jacobi rotations */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] SVA */
@@ -319,46 +319,46 @@ Jacobi rotations */
 /* > */
 /* > If only SIGMA is needed ( JOBU = 'N', JOBV = 'N' ) and */
 /* > -> .. no scaled condition estimate required (JOBE = 'N'): */
-/* > LWORK >= max(2*M+N,4*N+1,7). This is the minimal requirement. */
+/* > LWORK >= fla_max(2*M+N,4*N+1,7). This is the minimal requirement. */
 /* > ->> For optimal performance (blocked code) the optimal value */
-/* > is LWORK >= max(2*M+N,3*N+(N+1)*NB,7). Here NB is the optimal */
+/* > is LWORK >= fla_max(2*M+N,3*N+(N+1)*NB,7). Here NB is the optimal */
 /* > block size for DGEQP3 and DGEQRF. */
 /* > In general, optimal LWORK is computed as */
-/* > LWORK >= max(2*M+N,N+LWORK(DGEQP3),N+LWORK(DGEQRF), 7). */
+/* > LWORK >= fla_max(2*M+N,N+LWORK(DGEQP3),N+LWORK(DGEQRF), 7). */
 /* > -> .. an estimate of the scaled condition number of A is */
 /* > required (JOBA='E', 'G'). In this case, LWORK is the maximum */
-/* > of the above and N*N+4*N, i.e. LWORK >= max(2*M+N,N*N+4*N,7). */
+/* > of the above and N*N+4*N, i.e. LWORK >= fla_max(2*M+N,N*N+4*N,7). */
 /* > ->> For optimal performance (blocked code) the optimal value */
-/* > is LWORK >= max(2*M+N,3*N+(N+1)*NB, N*N+4*N, 7). */
+/* > is LWORK >= fla_max(2*M+N,3*N+(N+1)*NB, N*N+4*N, 7). */
 /* > In general, the optimal length LWORK is computed as */
-/* > LWORK >= max(2*M+N,N+LWORK(DGEQP3),N+LWORK(DGEQRF), */
+/* > LWORK >= fla_max(2*M+N,N+LWORK(DGEQP3),N+LWORK(DGEQRF), */
 /* > N+N*N+LWORK(DPOCON),7). */
 /* > */
 /* > If SIGMA and the right singular vectors are needed (JOBV = 'V'), */
-/* > -> the minimal requirement is LWORK >= max(2*M+N,4*N+1,7). */
-/* > -> For optimal performance, LWORK >= max(2*M+N,3*N+(N+1)*NB,7), */
+/* > -> the minimal requirement is LWORK >= fla_max(2*M+N,4*N+1,7). */
+/* > -> For optimal performance, LWORK >= fla_max(2*M+N,3*N+(N+1)*NB,7), */
 /* > where NB is the optimal block size for DGEQP3, DGEQRF, DGELQ, */
 /* > DORMLQ. In general, the optimal length LWORK is computed as */
-/* > LWORK >= max(2*M+N,N+LWORK(DGEQP3), N+LWORK(DPOCON), */
+/* > LWORK >= fla_max(2*M+N,N+LWORK(DGEQP3), N+LWORK(DPOCON), */
 /* > N+LWORK(DGELQ), 2*N+LWORK(DGEQRF), N+LWORK(DORMLQ)). */
 /* > */
 /* > If SIGMA and the left singular vectors are needed */
-/* > -> the minimal requirement is LWORK >= max(2*M+N,4*N+1,7). */
+/* > -> the minimal requirement is LWORK >= fla_max(2*M+N,4*N+1,7). */
 /* > -> For optimal performance: */
-/* > if JOBU = 'U' :: LWORK >= max(2*M+N,3*N+(N+1)*NB,7), */
-/* > if JOBU = 'F' :: LWORK >= max(2*M+N,3*N+(N+1)*NB,N+M*NB,7), */
+/* > if JOBU = 'U' :: LWORK >= fla_max(2*M+N,3*N+(N+1)*NB,7), */
+/* > if JOBU = 'F' :: LWORK >= fla_max(2*M+N,3*N+(N+1)*NB,N+M*NB,7), */
 /* > where NB is the optimal block size for DGEQP3, DGEQRF, DORMQR. */
 /* > In general, the optimal length LWORK is computed as */
-/* > LWORK >= max(2*M+N,N+LWORK(DGEQP3),N+LWORK(DPOCON), */
+/* > LWORK >= fla_max(2*M+N,N+LWORK(DGEQP3),N+LWORK(DPOCON), */
 /* > 2*N+LWORK(DGEQRF), N+LWORK(DORMQR)). */
 /* > Here LWORK(DORMQR) equals N*NB (for JOBU = 'U') or */
 /* > M*NB (for JOBU = 'F'). */
 /* > */
 /* > If the full SVD is needed: (JOBU = 'U' or JOBU = 'F') and */
 /* > -> if JOBV = 'V' */
-/* > the minimal requirement is LWORK >= max(2*M+N,6*N+2*N*N). */
+/* > the minimal requirement is LWORK >= fla_max(2*M+N,6*N+2*N*N). */
 /* > -> if JOBV = 'J' the minimal requirement is */
-/* > LWORK >= max(2*M+N, 4*N+N*N,2*N+N*N+6). */
+/* > LWORK >= fla_max(2*M+N, 4*N+N*N,2*N+N*N+6). */
 /* > -> For optimal performance, LWORK should be additionally */
 /* > larger than N+M*NB, where NB is the optimal block size */
 /* > for DORMQR. */
@@ -625,28 +625,28 @@ int sgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     {
         /* Computing MAX */
         i__1 = 7, i__2 = (*n << 2) + 1;
-        i__1 = max(i__1,i__2);
+        i__1 = fla_max(i__1,i__2);
         i__2 = (*m << 1) + *n; // ; expr subst
         /* Computing MAX */
         i__3 = 7, i__4 = (*n << 2) + *n * *n;
-        i__3 = max(i__3,i__4);
+        i__3 = fla_max(i__3,i__4);
         i__4 = (* m << 1) + *n; // ; expr subst
         /* Computing MAX */
         i__5 = 7, i__6 = (*m << 1) + *n;
-        i__5 = max(i__5,i__6);
+        i__5 = fla_max(i__5,i__6);
         i__6 = (*n << 2) + 1; // ; expr subst
         /* Computing MAX */
         i__7 = 7, i__8 = (*m << 1) + *n;
-        i__7 = max(i__7,i__8);
+        i__7 = fla_max(i__7,i__8);
         i__8 = (*n << 2) + 1; // ; expr subst
         /* Computing MAX */
         i__9 = (*m << 1) + *n;
         i__10 = *n * 6 + (*n << 1) * *n; // , expr subst
         /* Computing MAX */
         i__11 = (*m << 1) + *n, i__12 = (*n << 2) + *n * *n;
-        i__11 = max( i__11,i__12);
+        i__11 = fla_max( i__11,i__12);
         i__12 = (*n << 1) + *n * *n + 6; // ; expr subst
-        if (! (lsvec || rsvec || errest) && *lwork < max(i__1,i__2) || ! ( lsvec || rsvec) && errest && *lwork < max(i__3,i__4) || lsvec && ! rsvec && *lwork < max(i__5,i__6) || rsvec && ! lsvec && * lwork < max(i__7,i__8) || lsvec && rsvec && ! jracc && *lwork < max(i__9,i__10) || lsvec && rsvec && jracc && *lwork < max( i__11,i__12))
+        if (! (lsvec || rsvec || errest) && *lwork < fla_max(i__1,i__2) || ! ( lsvec || rsvec) && errest && *lwork < fla_max(i__3,i__4) || lsvec && ! rsvec && *lwork < fla_max(i__5,i__6) || rsvec && ! lsvec && * lwork < fla_max(i__7,i__8) || lsvec && rsvec && ! jracc && *lwork < fla_max(i__9,i__10) || lsvec && rsvec && jracc && *lwork < fla_max( i__11,i__12))
         {
             *info = -17;
         }
@@ -753,13 +753,13 @@ int sgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
         /* Computing MAX */
         r__1 = aapp;
         r__2 = sva[p]; // , expr subst
-        aapp = max(r__1,r__2);
+        aapp = fla_max(r__1,r__2);
         if (sva[p] != 0.f)
         {
             /* Computing MIN */
             r__1 = aaqq;
             r__2 = sva[p]; // , expr subst
-            aaqq = min(r__1,r__2);
+            aaqq = fla_min(r__1,r__2);
         }
         /* L4781: */
     }
@@ -897,13 +897,13 @@ int sgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
                 /* Computing MAX */
                 r__1 = aatmax;
                 r__2 = work[*n + p]; // , expr subst
-                aatmax = max(r__1,r__2);
+                aatmax = fla_max(r__1,r__2);
                 if (work[*n + p] != 0.f)
                 {
                     /* Computing MIN */
                     r__1 = aatmin;
                     r__2 = work[*n + p]; // , expr subst
-                    aatmin = min(r__1,r__2);
+                    aatmin = fla_min(r__1,r__2);
                 }
                 /* L1950: */
             }
@@ -919,11 +919,11 @@ int sgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
                 /* Computing MAX */
                 r__1 = aatmax;
                 r__2 = work[*m + *n + p]; // , expr subst
-                aatmax = max(r__1,r__2);
+                aatmax = fla_max(r__1,r__2);
                 /* Computing MIN */
                 r__1 = aatmin;
                 r__2 = work[*m + *n + p]; // , expr subst
-                aatmin = min(r__1,r__2);
+                aatmin = fla_min(r__1,r__2);
                 /* L1904: */
             }
         }
@@ -1233,7 +1233,7 @@ L3302:
                 ++p)
         {
             temp1 = (r__1 = a[p + p * a_dim1], f2c_abs(r__1)) / sva[iwork[p]];
-            maxprj = min(maxprj,temp1);
+            maxprj = fla_min(maxprj,temp1);
             /* L3051: */
         }
         /* Computing 2nd power */
@@ -1316,7 +1316,7 @@ L3302:
         /* .. transpose A(1:NR,1:N) */
         /* Computing MIN */
         i__2 = *n - 1;
-        i__1 = min(i__2,nr);
+        i__1 = fla_min(i__2,nr);
         for (p = 1;
                 p <= i__1;
                 ++p)
@@ -1685,7 +1685,7 @@ L3302:
                                 /* Computing MIN */
                                 r__3 = (r__1 = v[p + p * v_dim1], f2c_abs(r__1));
                                 r__4 = (r__2 = v[q + q * v_dim1], f2c_abs( r__2)); // , expr subst
-                                temp1 = xsc * min(r__3,r__4);
+                                temp1 = xsc * fla_min(r__3,r__4);
                                 if ((r__1 = v[q + p * v_dim1], f2c_abs(r__1)) <= temp1)
                                 {
                                     v[q + p * v_dim1] = r_sign(&temp1, &v[q + p * v_dim1]);
@@ -1749,7 +1749,7 @@ L3302:
                                 /* Computing MIN */
                                 r__3 = (r__1 = v[p + p * v_dim1], f2c_abs(r__1));
                                 r__4 = (r__2 = v[q + q * v_dim1], f2c_abs( r__2)); // , expr subst
-                                temp1 = xsc * min(r__3,r__4);
+                                temp1 = xsc * fla_min(r__3,r__4);
                                 if ((r__1 = v[q + p * v_dim1], f2c_abs(r__1)) <= temp1)
                                 {
                                     v[q + p * v_dim1] = r_sign(&temp1, &v[q + p * v_dim1]);
@@ -1776,7 +1776,7 @@ L3302:
                                 /* Computing MIN */
                                 r__3 = (r__1 = v[p + p * v_dim1], f2c_abs(r__1));
                                 r__4 = (r__2 = v[q + q * v_dim1], f2c_abs( r__2)); // , expr subst
-                                temp1 = xsc * min(r__3,r__4);
+                                temp1 = xsc * fla_min(r__3,r__4);
                                 v[p + q * v_dim1] = -r_sign(&temp1, &v[q + p * v_dim1]);
                                 /* L8971: */
                             }
@@ -2265,7 +2265,7 @@ L3302:
                         /* Computing MIN */
                         r__3 = (r__1 = u[p + p * u_dim1], f2c_abs(r__1));
                         r__4 = ( r__2 = u[q + q * u_dim1], f2c_abs(r__2)); // , expr subst
-                        temp1 = xsc * min(r__3,r__4);
+                        temp1 = xsc * fla_min(r__3,r__4);
                         u[p + q * u_dim1] = -r_sign(&temp1, &u[q + p * u_dim1] );
                         /* L9971: */
                     }

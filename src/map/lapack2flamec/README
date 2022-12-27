@@ -152,7 +152,7 @@ LAPACK_geqrf_body(prefix)
                                
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        
   FLA_Obj      A, t, T;                                         
-  int          min_m_n  = min( *m, *n );                        
+  int          min_m_n  = fla_min( *m, *n );                        
   FLA_Error    init_result;                                     
 
   // If libflame is not initialized, it will be initialized.

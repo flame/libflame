@@ -91,8 +91,8 @@ real slapy2_(real *x, real *y)
     {
         xabs = f2c_abs(*x);
         yabs = f2c_abs(*y);
-        w = max(xabs,yabs);
-        z__ = min(xabs,yabs);
+        w = fla_max(xabs,yabs);
+        z__ = fla_min(xabs,yabs);
         if (z__ == 0.f || w > hugeval)
         {
             ret_val = w;

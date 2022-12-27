@@ -80,7 +80,7 @@ static doublereal c_b12 = 1.;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -160,7 +160,7 @@ int zpotrf2_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *in
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }

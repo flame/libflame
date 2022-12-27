@@ -21,7 +21,7 @@ void validate_gerq2(integer m_A,
     integer min_A, diff_A;
     integer lwork = -1, tinfo;
 
-    min_A = min(m_A, n_A);
+    min_A = fla_min(m_A, n_A);
 
     if(m_A <= n_A)
         diff_A = n_A - m_A;
@@ -78,7 +78,7 @@ void validate_gerq2(integer m_A,
                compute norm(I - Q'*Q) / (N * EPS)*/
             resid2 = (float)check_orthogonality(datatype, Q, n_A, n_A, n_A);
 
-            *residual = (double)max(resid1, resid2);
+            *residual = (double)fla_max(resid1, resid2);
             break;
         }
         case DOUBLE:
@@ -111,7 +111,7 @@ void validate_gerq2(integer m_A,
                compute norm(I - Q'*Q) / (N * EPS)*/
             resid2 = check_orthogonality(datatype, Q, n_A, n_A, n_A);
 
-            *residual = (double)max(resid1, resid2);
+            *residual = (double)fla_max(resid1, resid2);
             break;
         }
         case COMPLEX:
@@ -142,7 +142,7 @@ void validate_gerq2(integer m_A,
                compute norm(I - Q'*Q) / (N * EPS)*/
             resid2 = (float)check_orthogonality(datatype, Q, n_A, n_A, n_A);
 
-            *residual = (double)max(resid1, resid2);
+            *residual = (double)fla_max(resid1, resid2);
             break;
         }
         case DOUBLE_COMPLEX:
@@ -173,7 +173,7 @@ void validate_gerq2(integer m_A,
                compute norm(I - Q'*Q) / (N * EPS)*/
             resid2 = check_orthogonality(datatype, Q, n_A, n_A, n_A);
 
-            *residual = (double)max(resid1, resid2);
+            *residual = (double)fla_max(resid1, resid2);
             break;
         }
     }

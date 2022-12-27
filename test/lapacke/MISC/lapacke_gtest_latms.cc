@@ -90,13 +90,13 @@ latms_scomplex_parameters::latms_scomplex_parameters ( int matrix_layout_i, lapa
 		
 	}else if ((pack == 'B') || (pack == 'Q'))
 	{
-		lda = min(kl, (m-1));
+		lda = fla_min(kl, (m-1));
 	}
 	
 	/*buffer sizes */
 	bufsize = lda*n;
 	bufsize_iseed = 4;
-	bufsize_d = min(m,n);
+	bufsize_d = fla_min(m,n);
 	
 	/*Memory allocation */
 	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&a, &aref, bufsize);

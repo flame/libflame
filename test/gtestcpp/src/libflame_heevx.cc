@@ -86,10 +86,10 @@ void heevx_test(int ip)
   }
 
   /* LDA is INTEGER
-          The leading dimension of the array A.  LDA >= max(1,N).*/
+          The leading dimension of the array A.  LDA >= fla_max(1,N).*/
   integer lda = eig_paramslist[ip].lda;
-  if (lda < max(1, n)) {
-    PRINTF("lda < max(1, n) but it should be: lda >= max(1, n). Please " \
+  if (lda < fla_max(1, n)) {
+    PRINTF("lda < fla_max(1, n) but it should be: lda >= fla_max(1, n). Please " \
            "correct the input data.");
   }
   
@@ -157,18 +157,18 @@ void heevx_test(int ip)
   
   /*LDZ is INTEGER
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N).*/
+          JOBZ = 'V', LDZ >= fla_max(1,N).*/
   integer ldz = eig_paramslist[ip].ldz;
   if (ldz < 1) {
     PRINTF("ldz < 1 but it should be: ldz >= 1. Please correct the input" \
           " data.\n");
   }
-  if ((jobz == 'V') && (ldz < max(1, n))) {
-    PRINTF("When jobz is V, ldz < max(1, n) but it should be: ldz >= max(1, n)." \
+  if ((jobz == 'V') && (ldz < fla_max(1, n))) {
+    PRINTF("When jobz is V, ldz < fla_max(1, n) but it should be: ldz >= fla_max(1, n)." \
           "Please correct the input data.\n");
   }
   
-  // Z is COMPLEX array, dimension (LDZ, max(1,M))
+  // Z is COMPLEX array, dimension (LDZ, fla_max(1,M))
   T *zbuff, *zrefbuff;
   allocate_init_buffer(zbuff, zrefbuff, ldz * (max(1, m)), 0);
   
@@ -222,7 +222,7 @@ void heevx_test(int ip)
   
   // WORK is COMPLEX or COMPLEX*16  array, dimension (MAX(1,LWORK))
   T *workbuff = NULL, *workrefbuff = NULL;
-  allocate_init_buffer(workbuff, workrefbuff, max(1, lwork_size), 0);
+  allocate_init_buffer(workbuff, workrefbuff, fla_max(1, lwork_size), 0);
   
   // Print input values other than arrays.
   #if (defined(PRINT_INPUT_VALUES) && (PRINT_INPUT_VALUES == 1))
@@ -241,8 +241,8 @@ void heevx_test(int ip)
     PRINTF("m = %d\n", m);
     PRINTF("Size of W array (n) = %d\n", n);
     PRINTF("ldz = %d\n", ldz);
-    PRINTF("Size of Z array (ldz*max(1,m)) = %d\n", (ldz * max(1, m)));
-    PRINTF("Size of WORK array (MAX(1, LWORK)) = %d\n", max(1, lwork_size));
+    PRINTF("Size of Z array (ldz*max(1,m)) = %d\n", (ldz * fla_max(1, m)));
+    PRINTF("Size of WORK array (MAX(1, LWORK)) = %d\n", fla_max(1, lwork_size));
     PRINTF("LWORK = %d\n", lwork_size);
     PRINTF("Size of RWORK array (7*n) = %d\n", 7 * n);
     PRINTF("Size of IWORK array (5*n) = %d\n", 5 * n);
@@ -274,15 +274,15 @@ void heevx_test(int ip)
     
     // Prints Z array contents
     strncpy(arrayname, "Z input", arraysize);
-    print_array<T>(arrayname, zbuff, (ldz * max(1, m)));
+    print_array<T>(arrayname, zbuff, (ldz * fla_max(1, m)));
     strncpy(arrayname, "Z ref input", arraysize);
-    print_array<T>(arrayname, zrefbuff, (ldz * max(1, m)));
+    print_array<T>(arrayname, zrefbuff, (ldz * fla_max(1, m)));
     
     // Prints WORK array contents
     strncpy(arrayname, "WORK input", arraysize);
-    print_array<T>(arrayname, workbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workbuff, fla_max(1, lwork_size));
     strncpy(arrayname, "WORK ref input", arraysize);
-    print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workrefbuff, fla_max(1, lwork_size));
     
     // Prints RWORK array contents
     strncpy(arrayname, "RWORK input", arraysize);
@@ -351,15 +351,15 @@ void heevx_test(int ip)
       
       // Prints Z array contents
       strncpy(arrayname, "Z output", arraysize);
-      print_array<T>(arrayname, zbuff, (ldz * max(1, m)));
+      print_array<T>(arrayname, zbuff, (ldz * fla_max(1, m)));
       strncpy(arrayname, "Z ref output", arraysize);
-      print_array<T>(arrayname, zrefbuff, (ldz * max(1, m)));
+      print_array<T>(arrayname, zrefbuff, (ldz * fla_max(1, m)));
       
       // Prints WORK array contents
       strncpy(arrayname, "WORK output", arraysize);
-      print_array<T>(arrayname, workbuff, max(1, lwork_size));
+      print_array<T>(arrayname, workbuff, fla_max(1, lwork_size));
       strncpy(arrayname, "WORK ref output", arraysize);
-      print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
+      print_array<T>(arrayname, workrefbuff, fla_max(1, lwork_size));
       
       // Prints RWORK array contents
       strncpy(arrayname, "RWORK output", arraysize);
@@ -382,11 +382,11 @@ void heevx_test(int ip)
     
     double diff = computeError<T>(lda, n, arefbuff, abuff);
     if (jobz == 'V') {
-      diff += computeError<T>(ldz, max(1, m), zrefbuff, zbuff);
+      diff += computeError<T>(ldz, fla_max(1, m), zrefbuff, zbuff);
       diff += computeError<integer>(1, n, ifailref, ifail);
     }
     diff += computeError<Ta>(1, n, wrefbuff, wbuff);
-    diff += computeError<T>(1, max(1, lwork_size), workbuff, workrefbuff);
+    diff += computeError<T>(1, fla_max(1, lwork_size), workbuff, workrefbuff);
     diff += computeError<Ta>(1, 7*n, rworkbuff, rworkrefbuff);
     diff += computeError<integer>(1, 5*n, iworkbuff, iworkrefbuff);
     PRINTF("diff: %lf\n", diff);

@@ -69,7 +69,7 @@ static integer c__1 = 1;
 /* > \param[in] LDH */
 /* > \verbatim */
 /* > LDH is INTEGER */
-/* > The leading dimension of the array H. LDH >= max(1,N). */
+/* > The leading dimension of the array H. LDH >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] WR */
@@ -234,7 +234,7 @@ int dlaein_(logical *rightv, logical *noinit, integer *n, doublereal *h__, integ
     /* Computing MAX */
     d__1 = 1.;
     d__2 = *eps3 * rootn; // , expr subst
-    nrmsml = max(d__1,d__2) * *smlnum;
+    nrmsml = fla_max(d__1,d__2) * *smlnum;
     /* Form B = H - (WR,WI)*I (except that the subdiagonal elements and */
     /* the imaginary parts of the diagonal elements are not stored). */
     i__1 = *n;
@@ -272,7 +272,7 @@ int dlaein_(logical *rightv, logical *noinit, integer *n, doublereal *h__, integ
         {
             /* Scale supplied initial vector. */
             vnorm = dnrm2_(n, &vr[1], &c__1);
-            d__1 = *eps3 * rootn / max(vnorm,nrmsml);
+            d__1 = *eps3 * rootn / fla_max(vnorm,nrmsml);
             dscal_(n, &d__1, &vr[1], &c__1);
         }
         if (*rightv)
@@ -442,7 +442,7 @@ L120: /* Normalize eigenvector. */
             d__1 = dnrm2_(n, &vr[1], &c__1);
             d__2 = dnrm2_(n, &vi[1], &c__1);
             norm = dlapy2_(&d__1, &d__2);
-            rec = *eps3 * rootn / max(norm,nrmsml);
+            rec = *eps3 * rootn / fla_max(norm,nrmsml);
             dscal_(n, &rec, &vr[1], &c__1);
             dscal_(n, &rec, &vi[1], &c__1);
         }
@@ -684,7 +684,7 @@ L120: /* Normalize eigenvector. */
                     dladiv_(&xr, &xi, &b[i__ + i__ * b_dim1], &b[i__ + 1 + i__ * b_dim1], &vr[i__], &vi[i__]);
                     /* Computing MAX */
                     d__3 = (d__1 = vr[i__], f2c_dabs(d__1)) + (d__2 = vi[i__], f2c_dabs( d__2));
-                    vmax = max(d__3,vmax);
+                    vmax = fla_max(d__3,vmax);
                     vcrit = *bignum / vmax;
                 }
                 else
@@ -740,7 +740,7 @@ L280: /* Normalize eigenvector. */
             /* Computing MAX */
             d__3 = vnorm;
             d__4 = (d__1 = vr[i__], f2c_dabs(d__1)) + (d__2 = vi[i__], f2c_dabs(d__2));  // , expr subst
-            vnorm = max(d__3,d__4);
+            vnorm = fla_max(d__3,d__4);
             /* L290: */
         }
         d__1 = 1. / vnorm;

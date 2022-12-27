@@ -38,7 +38,7 @@ static integer c__1 = 1;
 /* > \return CLANGT */
 /* > \verbatim */
 /* > */
-/* > CLANGT = ( max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
+/* > CLANGT = ( fla_max(f2c_abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -49,7 +49,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that fla_max(f2c_abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -149,7 +149,7 @@ real clangt_(char *norm, integer *n, complex *dl, complex *d__, complex *du)
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(f2c_abs(A(i,j))). */
+        /* Find fla_max(f2c_abs(A(i,j))). */
         anorm = c_abs(&d__[*n]);
         i__1 = *n - 1;
         for (i__ = 1;

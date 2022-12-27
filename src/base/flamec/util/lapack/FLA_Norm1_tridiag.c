@@ -84,7 +84,7 @@ FLA_Error FLA_Norm1_tridiag_ops( integer       m_A,
 
 		// Record the maximum of the absolute row/column sums for the
 		// first and last row/columns.
-		nm = max( fabs( d_first ) + fabs( e_first ),
+		nm = fla_max( fabs( d_first ) + fabs( e_first ),
 		          fabs( e_last  ) + fabs( d_last  ) );
 
 		for ( i = 1; i < m_A - 2; ++i )
@@ -95,7 +95,7 @@ FLA_Error FLA_Norm1_tridiag_ops( integer       m_A,
 
 			// Update nm with the absolute row/column sum for the ith
 			// row/column.
-			nm = max( nm, fabs( e0 ) +
+			nm = fla_max( nm, fabs( e0 ) +
 			              fabs( d1 ) +
 			              fabs( e1 ) );
 		}
@@ -131,7 +131,7 @@ FLA_Error FLA_Norm1_tridiag_opd( integer       m_A,
 
 		// Record the maximum of the absolute row/column sums for the
 		// first and last row/columns.
-		nm = max( fabs( d_first ) + fabs( e_first ),
+		nm = fla_max( fabs( d_first ) + fabs( e_first ),
 		          fabs( e_last  ) + fabs( d_last  ) );
 
 		for ( i = 1; i < m_A - 2; ++i )
@@ -142,7 +142,7 @@ FLA_Error FLA_Norm1_tridiag_opd( integer       m_A,
 
 			// Update nm with the absolute row/column sum for the ith
 			// row/column.
-			nm = max( nm, fabs( e0 ) +
+			nm = fla_max( nm, fabs( e0 ) +
 			              fabs( d1 ) +
 			              fabs( e1 ) );
 		}

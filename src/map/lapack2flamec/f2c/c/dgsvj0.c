@@ -85,7 +85,7 @@ static doublereal c_b42 = 1.;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] D */
@@ -363,7 +363,7 @@ int dgsvj0_(char *jobv, integer *m, integer *n, doublereal * a, integer *lda, do
     /* if SGESVJ is used as a computational routine in the preconditioned */
     /* Jacobi SVD algorithm SGESVJ. For sweeps i=1:SWBAND the procedure */
     /* ...... */
-    kbl = min(8,*n);
+    kbl = fla_min(8,*n);
     /* [TP] KBL is a tuning parameter that defines the tile size in the */
     /* tiling of the p-q loops of pivot pairs. In general, an optimal */
     /* value of KBL depends on the matrix dimensions and on the */
@@ -377,7 +377,7 @@ int dgsvj0_(char *jobv, integer *m, integer *n, doublereal * a, integer *lda, do
     i__1 = kbl;
     blskip = i__1 * i__1 + 1;
     /* [TP] BLKSKIP is a tuning parameter that depends on SWBAND and KBL. */
-    rowskip = min(5,kbl);
+    rowskip = fla_min(5,kbl);
     /* [TP] ROWSKIP is a tuning parameter. */
     lkahead = 1;
     /* [TP] LKAHEAD is a tuning parameter. */
@@ -403,7 +403,7 @@ int dgsvj0_(char *jobv, integer *m, integer *n, doublereal * a, integer *lda, do
             /* Computing MIN */
             i__4 = lkahead;
             i__5 = nbl - ibr; // , expr subst
-            i__3 = min(i__4,i__5);
+            i__3 = fla_min(i__4,i__5);
             for (ir1 = 0;
                     ir1 <= i__3;
                     ++ir1)
@@ -412,7 +412,7 @@ int dgsvj0_(char *jobv, integer *m, integer *n, doublereal * a, integer *lda, do
                 /* Computing MIN */
                 i__5 = igl + kbl - 1;
                 i__6 = *n - 1; // , expr subst
-                i__4 = min(i__5,i__6);
+                i__4 = fla_min(i__5,i__6);
                 for (p = igl;
                         p <= i__4;
                         ++p)
@@ -469,7 +469,7 @@ int dgsvj0_(char *jobv, integer *m, integer *n, doublereal * a, integer *lda, do
                         pskipped = 0;
                         /* Computing MIN */
                         i__6 = igl + kbl - 1;
-                        i__5 = min(i__6,*n);
+                        i__5 = fla_min(i__6,*n);
                         for (q = p + 1;
                                 q <= i__5;
                                 ++q)
@@ -509,7 +509,7 @@ int dgsvj0_(char *jobv, integer *m, integer *n, doublereal * a, integer *lda, do
                                 /* Computing MAX */
                                 d__1 = mxaapq;
                                 d__2 = f2c_abs(aapq); // , expr subst
-                                mxaapq = max(d__1,d__2);
+                                mxaapq = fla_max(d__1,d__2);
                                 /* TO rotate or NOT to rotate, THAT is the question ... */
                                 if (f2c_abs(aapq) > *tol)
                                 {
@@ -539,15 +539,15 @@ int dgsvj0_(char *jobv, integer *m, integer *n, doublereal * a, integer *lda, do
                                             /* Computing MAX */
                                             d__1 = 0.;
                                             d__2 = t * apoaq * aapq + 1.; // , expr subst
-                                            sva[q] = aaqq * sqrt((max(d__1, d__2)));
+                                            sva[q] = aaqq * sqrt((fla_max(d__1, d__2)));
                                             /* Computing MAX */
                                             d__1 = 0.;
                                             d__2 = 1. - t * aqoap * aapq; // , expr subst
-                                            aapp *= sqrt((max(d__1,d__2)));
+                                            aapp *= sqrt((fla_max(d__1,d__2)));
                                             /* Computing MAX */
                                             d__1 = mxsinj;
                                             d__2 = f2c_abs(t); // , expr subst
-                                            mxsinj = max(d__1,d__2);
+                                            mxsinj = fla_max(d__1,d__2);
                                         }
                                         else
                                         {
@@ -559,15 +559,15 @@ int dgsvj0_(char *jobv, integer *m, integer *n, doublereal * a, integer *lda, do
                                             /* Computing MAX */
                                             d__1 = mxsinj;
                                             d__2 = f2c_abs(sn); // , expr subst
-                                            mxsinj = max(d__1,d__2);
+                                            mxsinj = fla_max(d__1,d__2);
                                             /* Computing MAX */
                                             d__1 = 0.;
                                             d__2 = t * apoaq * aapq + 1.; // , expr subst
-                                            sva[q] = aaqq * sqrt((max(d__1, d__2)));
+                                            sva[q] = aaqq * sqrt((fla_max(d__1, d__2)));
                                             /* Computing MAX */
                                             d__1 = 0.;
                                             d__2 = 1. - t * aqoap * aapq; // , expr subst
-                                            aapp *= sqrt((max(d__1,d__2)));
+                                            aapp *= sqrt((fla_max(d__1,d__2)));
                                             apoaq = d__[p] / d__[q];
                                             aqoap = d__[q] / d__[p];
                                             if (d__[p] >= 1.)
@@ -669,8 +669,8 @@ int dgsvj0_(char *jobv, integer *m, integer *n, doublereal * a, integer *lda, do
                                         /* Computing MAX */
                                         d__1 = 0.;
                                         d__2 = 1. - aapq * aapq; // , expr subst
-                                        sva[q] = aaqq * sqrt((max(d__1,d__2))) ;
-                                        mxsinj = max(mxsinj,*sfmin);
+                                        sva[q] = aaqq * sqrt((fla_max(d__1,d__2))) ;
+                                        mxsinj = fla_max(mxsinj,*sfmin);
                                     }
                                     /* END IF ROTOK THEN ... ELSE */
                                     /* In the case of cancellation in updating SVA(q), SVA(p) */
@@ -748,7 +748,7 @@ L2103: /* bailed out of q-loop */
                         {
                             /* Computing MIN */
                             i__5 = igl + kbl - 1;
-                            notrot = notrot + min(i__5,*n) - p;
+                            notrot = notrot + fla_min(i__5,*n) - p;
                         }
                     }
                     /* L2001: */
@@ -771,7 +771,7 @@ L2103: /* bailed out of q-loop */
                 ijblsk = 0;
                 /* Computing MIN */
                 i__5 = igl + kbl - 1;
-                i__4 = min(i__5,*n);
+                i__4 = fla_min(i__5,*n);
                 for (p = igl;
                         p <= i__4;
                         ++p)
@@ -782,7 +782,7 @@ L2103: /* bailed out of q-loop */
                         pskipped = 0;
                         /* Computing MIN */
                         i__6 = jgl + kbl - 1;
-                        i__5 = min(i__6,*n);
+                        i__5 = fla_min(i__6,*n);
                         for (q = jgl;
                                 q <= i__5;
                                 ++q)
@@ -838,7 +838,7 @@ L2103: /* bailed out of q-loop */
                                 /* Computing MAX */
                                 d__1 = mxaapq;
                                 d__2 = f2c_abs(aapq); // , expr subst
-                                mxaapq = max(d__1,d__2);
+                                mxaapq = fla_max(d__1,d__2);
                                 /* TO rotate or NOT to rotate, THAT is the question ... */
                                 if (f2c_abs(aapq) > *tol)
                                 {
@@ -868,15 +868,15 @@ L2103: /* bailed out of q-loop */
                                             /* Computing MAX */
                                             d__1 = 0.;
                                             d__2 = t * apoaq * aapq + 1.; // , expr subst
-                                            sva[q] = aaqq * sqrt((max(d__1, d__2)));
+                                            sva[q] = aaqq * sqrt((fla_max(d__1, d__2)));
                                             /* Computing MAX */
                                             d__1 = 0.;
                                             d__2 = 1. - t * aqoap * aapq; // , expr subst
-                                            aapp *= sqrt((max(d__1,d__2)));
+                                            aapp *= sqrt((fla_max(d__1,d__2)));
                                             /* Computing MAX */
                                             d__1 = mxsinj;
                                             d__2 = f2c_abs(t); // , expr subst
-                                            mxsinj = max(d__1,d__2);
+                                            mxsinj = fla_max(d__1,d__2);
                                         }
                                         else
                                         {
@@ -892,15 +892,15 @@ L2103: /* bailed out of q-loop */
                                             /* Computing MAX */
                                             d__1 = mxsinj;
                                             d__2 = f2c_abs(sn); // , expr subst
-                                            mxsinj = max(d__1,d__2);
+                                            mxsinj = fla_max(d__1,d__2);
                                             /* Computing MAX */
                                             d__1 = 0.;
                                             d__2 = t * apoaq * aapq + 1.; // , expr subst
-                                            sva[q] = aaqq * sqrt((max(d__1, d__2)));
+                                            sva[q] = aaqq * sqrt((fla_max(d__1, d__2)));
                                             /* Computing MAX */
                                             d__1 = 0.;
                                             d__2 = 1. - t * aqoap * aapq; // , expr subst
-                                            aapp *= sqrt((max(d__1,d__2)));
+                                            aapp *= sqrt((fla_max(d__1,d__2)));
                                             apoaq = d__[p] / d__[q];
                                             aqoap = d__[q] / d__[p];
                                             if (d__[p] >= 1.)
@@ -1003,8 +1003,8 @@ L2103: /* bailed out of q-loop */
                                             /* Computing MAX */
                                             d__1 = 0.;
                                             d__2 = 1. - aapq * aapq; // , expr subst
-                                            sva[q] = aaqq * sqrt((max(d__1, d__2)));
-                                            mxsinj = max(mxsinj,*sfmin);
+                                            sva[q] = aaqq * sqrt((fla_max(d__1, d__2)));
+                                            mxsinj = fla_max(mxsinj,*sfmin);
                                         }
                                         else
                                         {
@@ -1017,8 +1017,8 @@ L2103: /* bailed out of q-loop */
                                             /* Computing MAX */
                                             d__1 = 0.;
                                             d__2 = 1. - aapq * aapq; // , expr subst
-                                            sva[p] = aapp * sqrt((max(d__1, d__2)));
-                                            mxsinj = max(mxsinj,*sfmin);
+                                            sva[p] = aapp * sqrt((fla_max(d__1, d__2)));
+                                            mxsinj = fla_max(mxsinj,*sfmin);
                                         }
                                     }
                                     /* END IF ROTOK THEN ... ELSE */
@@ -1096,7 +1096,7 @@ L2203:
                         {
                             /* Computing MIN */
                             i__5 = jgl + kbl - 1;
-                            notrot = notrot + min(i__5,*n) - jgl + 1;
+                            notrot = notrot + fla_min(i__5,*n) - jgl + 1;
                         }
                         if (aapp < 0.)
                         {
@@ -1112,7 +1112,7 @@ L2203:
 L2011: /* 2011 bailed out of the jbc-loop */
             /* Computing MIN */
             i__4 = igl + kbl - 1;
-            i__3 = min(i__4,*n);
+            i__3 = fla_min(i__4,*n);
             for (p = igl;
                     p <= i__3;
                     ++p)

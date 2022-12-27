@@ -79,7 +79,7 @@ and second, applying a diagonal similarity */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -93,7 +93,7 @@ and second, applying a diagonal similarity */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ILO */
@@ -141,7 +141,7 @@ and second, applying a diagonal similarity */
 /* > \param[out] WORK */
 /* > \verbatim */
 /* > WORK is DOUBLE PRECISION array, dimension (lwork) */
-/* > lwork must be at least max(1,6*N) when JOB = 'S' or 'B', and */
+/* > lwork must be at least fla_max(1,6*N) when JOB = 'S' or 'B', and */
 /* > at least 1 when JOB = 'N' or 'P'. */
 /* > \endverbatim */
 /* > */
@@ -256,11 +256,11 @@ int zggbal_(char *job, integer *n, doublecomplex *a, integer *lda, doublecomplex
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -6;
     }
@@ -693,15 +693,15 @@ L350:
         /* Computing MAX */
         d__1 = rab;
         d__2 = z_abs(&b[i__ + (irab + *ilo - 1) * b_dim1]); // , expr subst
-        rab = max(d__1,d__2);
+        rab = fla_max(d__1,d__2);
         d__1 = rab + sfmin;
         lrab = (integer) (d_lg10(&d__1) / basl + 1.);
         ir = (integer) (lscale[i__] + d_sign(&c_b72, &lscale[i__]));
         /* Computing MIN */
-        i__2 = max(ir,lsfmin);
-        i__2 = min(i__2,lsfmax);
+        i__2 = fla_max(ir,lsfmin);
+        i__2 = fla_min(i__2,lsfmax);
         i__3 = lsfmax - lrab; // ; expr subst
-        ir = min(i__2,i__3);
+        ir = fla_min(i__2,i__3);
         lscale[i__] = pow_di(&c_b36, &ir);
         icab = izamax_(ihi, &a[i__ * a_dim1 + 1], &c__1);
         cab = z_abs(&a[icab + i__ * a_dim1]);
@@ -709,15 +709,15 @@ L350:
         /* Computing MAX */
         d__1 = cab;
         d__2 = z_abs(&b[icab + i__ * b_dim1]); // , expr subst
-        cab = max(d__1,d__2);
+        cab = fla_max(d__1,d__2);
         d__1 = cab + sfmin;
         lcab = (integer) (d_lg10(&d__1) / basl + 1.);
         jc = (integer) (rscale[i__] + d_sign(&c_b72, &rscale[i__]));
         /* Computing MIN */
-        i__2 = max(jc,lsfmin);
-        i__2 = min(i__2,lsfmax);
+        i__2 = fla_max(jc,lsfmin);
+        i__2 = fla_min(i__2,lsfmax);
         i__3 = lsfmax - lcab; // ; expr subst
-        jc = min(i__2,i__3);
+        jc = fla_min(i__2,i__3);
         rscale[i__] = pow_di(&c_b36, &jc);
         /* L360: */
     }

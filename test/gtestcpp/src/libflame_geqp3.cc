@@ -62,10 +62,10 @@ void geqp3_test(int ip)
   }
   
   /* LDA is INTEGER
-          The leading dimension of the array A.  LDA >= max(M,1).*/
+          The leading dimension of the array A.  LDA >= fla_max(M,1).*/
   integer lda = eig_paramslist[ip].lda_lange;
-  if (lda < max(1, m)) {
-    PRINTF("lda < max(1, m) but it should be: LDA >= max(1,M). Please " \
+  if (lda < fla_max(1, m)) {
+    PRINTF("lda < fla_max(1, m) but it should be: LDA >= fla_max(1,M). Please " \
            "correct the input data.\n");
   }
   
@@ -77,9 +77,9 @@ void geqp3_test(int ip)
   integer *jpvtbuff, *jpvtrefbuff;
   allocate_init_buffer(jpvtbuff, jpvtrefbuff, n);
   
-  // TAU is REAL or DOUBLE PRECISION array, dimension (min(M,N))
+  // TAU is REAL or DOUBLE PRECISION array, dimension (fla_min(M,N))
   T *taubuff, *taurefbuff;
-  allocate_init_buffer(taubuff, taurefbuff, min(m, n), 0);
+  allocate_init_buffer(taubuff, taurefbuff, fla_min(m, n), 0);
   
   /* LWORK is INTEGER
           The dimension of the array WORK. LWORK >= 3*N+1.
@@ -113,7 +113,7 @@ void geqp3_test(int ip)
   
   // WORK is REAL or DOUBLE PRECISION array, dimension (MAX(1,LWORK))
   T *workbuff = NULL, *workrefbuff = NULL;
-  allocate_init_buffer(workbuff, workrefbuff, max(1, lwork_size), 0);
+  allocate_init_buffer(workbuff, workrefbuff, fla_max(1, lwork_size), 0);
  
   // Print input values other than arrays.
   #if (defined(PRINT_INPUT_VALUES) && (PRINT_INPUT_VALUES == 1))
@@ -123,9 +123,9 @@ void geqp3_test(int ip)
     PRINTF("lda = %d\n", lda);
     PRINTF("Size of A array (lda*n) = %d\n", lda * n);
     PRINTF("Size of JPVT array (n) = %d\n", n);
-    PRINTF("Size of TAU array (min(M,N)) = %d\n", min(m, n));
+    PRINTF("Size of TAU array (fla_min(M,N)) = %d\n", fla_min(m, n));
     PRINTF("lwork = %d\n", lwork_size);
-    PRINTF("Size of WORK array (MAX(1,LWORK)) = %d\n", max(1, lwork_size));
+    PRINTF("Size of WORK array (MAX(1,LWORK)) = %d\n", fla_max(1, lwork_size));
   #endif
   
   #if (defined(PRINT_ARRAYS) && (PRINT_ARRAYS == 1))
@@ -153,15 +153,15 @@ void geqp3_test(int ip)
     
     // Prints TAU array contents
     strncpy(arrayname, "TAU input", arraysize);
-    print_array<T>(arrayname, taubuff, min(m, n));
+    print_array<T>(arrayname, taubuff, fla_min(m, n));
     strncpy(arrayname, "TAU ref input", arraysize);
-    print_array<T>(arrayname, taurefbuff, min(m, n));
+    print_array<T>(arrayname, taurefbuff, fla_min(m, n));
     
     // Prints WORK array contents
     strncpy(arrayname, "WORK input", arraysize);
-    print_array<T>(arrayname, workbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workbuff, fla_max(1, lwork_size));
     strncpy(arrayname, "WORK ref input", arraysize);
-    print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workrefbuff, fla_max(1, lwork_size));
   #endif
   
   // Call CPP function
@@ -210,22 +210,22 @@ void geqp3_test(int ip)
     
     // Prints TAU array contents
     strncpy(arrayname, "TAU output", arraysize);
-    print_array<T>(arrayname, taubuff, min(m, n));
+    print_array<T>(arrayname, taubuff, fla_min(m, n));
     strncpy(arrayname, "TAU ref output", arraysize);
-    print_array<T>(arrayname, taurefbuff, min(m, n));
+    print_array<T>(arrayname, taurefbuff, fla_min(m, n));
     
     // Prints WORK array contents
     strncpy(arrayname, "WORK output", arraysize);
-    print_array<T>(arrayname, workbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workbuff, fla_max(1, lwork_size));
     strncpy(arrayname, "WORK ref output", arraysize);
-    print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workrefbuff, fla_max(1, lwork_size));
   #endif
   
   if ((info_cpp == 0) && (info_ref == 0)) {
     double diff = computeError<T>(lda, n, arefbuff, abuff);
     diff += computeError<integer>(1, n, jpvtrefbuff, jpvtbuff);
-    diff += computeError<T>(1, min(m, n), taurefbuff, taubuff);
-    diff += computeError<T>(1, max(1, lwork_size), workbuff, workrefbuff);
+    diff += computeError<T>(1, fla_min(m, n), taurefbuff, taubuff);
+    diff += computeError<T>(1, fla_max(1, lwork_size), workbuff, workrefbuff);
     
     PRINTF("diff: %lf\n", diff);
     EXPECT_NEAR(0.0, diff, SYM_EIGEN_THRESHOLD);
@@ -296,10 +296,10 @@ void geqp3_test_cmplx(int ip)
   }
   
   /* LDA is INTEGER
-          The leading dimension of the array A.  LDA >= max(M,1).*/
+          The leading dimension of the array A.  LDA >= fla_max(M,1).*/
   integer lda = eig_paramslist[ip].lda_lange;
-  if (lda < max(1, m)) {
-    PRINTF("lda < max(1, m) but it should be: LDA >= max(1,M). Please " \
+  if (lda < fla_max(1, m)) {
+    PRINTF("lda < fla_max(1, m) but it should be: LDA >= fla_max(1,M). Please " \
            "correct the input data.\n");
   }
   
@@ -311,9 +311,9 @@ void geqp3_test_cmplx(int ip)
   integer *jpvtbuff, *jpvtrefbuff;
   allocate_init_buffer(jpvtbuff, jpvtrefbuff, n);
   
-  // TAU is REAL or DOUBLE PRECISION array, dimension (min(M,N))
+  // TAU is REAL or DOUBLE PRECISION array, dimension (fla_min(M,N))
   T *taubuff, *taurefbuff;
-  allocate_init_buffer(taubuff, taurefbuff, min(m, n), 0);
+  allocate_init_buffer(taubuff, taurefbuff, fla_min(m, n), 0);
   
   // RWORK is REAL or DOUBLE PRECISION array, dimension (2*N)
   Ta *rworkbuff = NULL, *rworkrefbuff = NULL;
@@ -351,7 +351,7 @@ void geqp3_test_cmplx(int ip)
   
   // WORK is COMPLEX or COMPLEX*16 array, dimension (MAX(1,LWORK))
   T *workbuff = NULL, *workrefbuff = NULL;
-  allocate_init_buffer(workbuff, workrefbuff, max(1, lwork_size), 0);
+  allocate_init_buffer(workbuff, workrefbuff, fla_max(1, lwork_size), 0);
 
   // Print input values other than arrays.
   #if (defined(PRINT_INPUT_VALUES) && (PRINT_INPUT_VALUES == 1))
@@ -361,9 +361,9 @@ void geqp3_test_cmplx(int ip)
     PRINTF("lda = %d\n", lda);
     PRINTF("Size of A array (lda*n) = %d\n", lda * n);
     PRINTF("Size of JPVT array (n) = %d\n", n);
-    PRINTF("Size of TAU array (min(M,N)) = %d\n", min(m, n));
+    PRINTF("Size of TAU array (fla_min(M,N)) = %d\n", fla_min(m, n));
     PRINTF("lwork = %d\n", lwork_size);
-    PRINTF("Size of WORK array (MAX(1,LWORK)) = %d\n", max(1, lwork_size));
+    PRINTF("Size of WORK array (MAX(1,LWORK)) = %d\n", fla_max(1, lwork_size));
     PRINTF("Size of RWORK array (2*n) = %d\n", 2*n);
   #endif
   
@@ -392,15 +392,15 @@ void geqp3_test_cmplx(int ip)
     
     // Prints TAU array contents
     strncpy(arrayname, "TAU input", arraysize);
-    print_array<T>(arrayname, taubuff, min(m, n));
+    print_array<T>(arrayname, taubuff, fla_min(m, n));
     strncpy(arrayname, "TAU ref input", arraysize);
-    print_array<T>(arrayname, taurefbuff, min(m, n));
+    print_array<T>(arrayname, taurefbuff, fla_min(m, n));
     
     // Prints WORK array contents
     strncpy(arrayname, "WORK input", arraysize);
-    print_array<T>(arrayname, workbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workbuff, fla_max(1, lwork_size));
     strncpy(arrayname, "WORK ref input", arraysize);
-    print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workrefbuff, fla_max(1, lwork_size));
     
     // Prints RWORK array contents
     strncpy(arrayname, "RWORK input", arraysize);
@@ -455,15 +455,15 @@ void geqp3_test_cmplx(int ip)
     
     // Prints TAU array contents
     strncpy(arrayname, "TAU output", arraysize);
-    print_array<T>(arrayname, taubuff, min(m, n));
+    print_array<T>(arrayname, taubuff, fla_min(m, n));
     strncpy(arrayname, "TAU ref output", arraysize);
-    print_array<T>(arrayname, taurefbuff, min(m, n));
+    print_array<T>(arrayname, taurefbuff, fla_min(m, n));
     
     // Prints WORK array contents
     strncpy(arrayname, "WORK output", arraysize);
-    print_array<T>(arrayname, workbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workbuff, fla_max(1, lwork_size));
     strncpy(arrayname, "WORK ref output", arraysize);
-    print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workrefbuff, fla_max(1, lwork_size));
     
     // Prints RWORK array contents
     strncpy(arrayname, "RWORK output", arraysize);
@@ -475,8 +475,8 @@ void geqp3_test_cmplx(int ip)
   if ((info_cpp == 0) && (info_ref == 0)) {
     double diff = computeError<T>(lda, n, arefbuff, abuff);
     diff += computeError<integer>(1, n, jpvtrefbuff, jpvtbuff);
-    diff += computeError<T>(1, min(m, n), taurefbuff, taubuff);
-    diff += computeError<T>(1, max(1, lwork_size), workbuff, workrefbuff);
+    diff += computeError<T>(1, fla_min(m, n), taurefbuff, taubuff);
+    diff += computeError<T>(1, fla_max(1, lwork_size), workbuff, workrefbuff);
     diff += computeError<Ta>(1, 2*n, rworkbuff, rworkrefbuff);
     
     PRINTF("diff: %lf\n", diff);

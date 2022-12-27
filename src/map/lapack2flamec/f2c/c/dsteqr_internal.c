@@ -92,12 +92,12 @@ static integer c__2 = 2;
 /* > \verbatim */
 /* > LDZ is INTEGER */
 /* > The leading dimension of the array Z. LDZ >= 1, and if */
-/* > eigenvectors are desired, then LDZ >= max(1,N). */
+/* > eigenvectors are desired, then LDZ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
 /* > \verbatim */
-/* > WORK is DOUBLE PRECISION array, dimension (max(1,2*N-2)) */
+/* > WORK is DOUBLE PRECISION array, dimension (fla_max(1,2*N-2)) */
 /* > If COMPZ = 'N', then WORK is not referenced. */
 /* > \endverbatim */
 /* > */
@@ -225,7 +225,7 @@ int dsteqr_internal_(char *compz, integer *n, doublereal *d__, doublereal *e, do
     {
         *info = -2;
     }
-    else if (*ldz < 1 || icompz > 0 && *ldz < max(1,*n))
+    else if (*ldz < 1 || icompz > 0 && *ldz < fla_max(1,*n))
     {
         *info = -6;
     }

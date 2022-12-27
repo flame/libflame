@@ -67,9 +67,9 @@
 /* > The upper or lower triangle of the symmetric band matrix A, */
 /* > stored in the first KD+1 rows of the array. The j-th column */
 /* > of A is stored in the j-th column of the array AB as follows: */
-/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j;
+/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(n,j+kd). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(n,j+kd). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDAB */
@@ -219,11 +219,11 @@ int spbequ_(char *uplo, integer *n, integer *kd, real *ab, integer *ldab, real *
         /* Computing MIN */
         r__1 = smin;
         r__2 = s[i__]; // , expr subst
-        smin = min(r__1,r__2);
+        smin = fla_min(r__1,r__2);
         /* Computing MAX */
         r__1 = *amax;
         r__2 = s[i__]; // , expr subst
-        *amax = max(r__1,r__2);
+        *amax = fla_max(r__1,r__2);
         /* L10: */
     }
     if (smin <= 0.f)
@@ -255,7 +255,7 @@ int spbequ_(char *uplo, integer *n, integer *kd, real *ab, integer *ldab, real *
             s[i__] = 1.f / sqrt(s[i__]);
             /* L30: */
         }
-        /* Compute SCOND = min(S(I)) / max(S(I)) */
+        /* Compute SCOND = fla_min(S(I)) / fla_max(S(I)) */
         *scond = sqrt(smin) / sqrt(*amax);
     }
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);

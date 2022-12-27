@@ -110,7 +110,7 @@ static real c_b37 = 1.f;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] AF */
@@ -123,7 +123,7 @@ static real c_b37 = 1.f;
 /* > \param[in] LDAF */
 /* > \verbatim */
 /* > LDAF is INTEGER */
-/* > The leading dimension of the array AF. LDAF >= max(1,N). */
+/* > The leading dimension of the array AF. LDAF >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] IPIV */
@@ -163,7 +163,7 @@ static real c_b37 = 1.f;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] Y */
@@ -177,7 +177,7 @@ static real c_b37 = 1.f;
 /* > \param[in] LDY */
 /* > \verbatim */
 /* > LDY is INTEGER */
-/* > The leading dimension of the array Y. LDY >= max(1,N). */
+/* > The leading dimension of the array Y. LDY >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] BERR_OUT */
@@ -185,7 +185,7 @@ static real c_b37 = 1.f;
 /* > BERR_OUT is REAL array, dimension (NRHS) */
 /* > On exit, BERR_OUT(j) contains the componentwise relative backward */
 /* > error for right-hand-side j from the formula */
-/* > max(i) ( f2c_abs(RES(i)) / ( f2c_abs(op(A_s))*f2c_abs(Y) + f2c_abs(B_s) )(i) ) */
+/* > fla_max(i) ( f2c_abs(RES(i)) / ( f2c_abs(op(A_s))*f2c_abs(Y) + f2c_abs(B_s) )(i) ) */
 /* > where f2c_abs(Z) is the componentwise absolute value of the matrix */
 /* > or vector Z. This is computed by CLA_LIN_BERR. */
 /* > \endverbatim */
@@ -519,19 +519,19 @@ int cla_syrfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *
     {
         *info = -4;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -6;
     }
-    else if (*ldaf < max(1,*n))
+    else if (*ldaf < fla_max(1,*n))
     {
         *info = -8;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -13;
     }
-    else if (*ldy < max(1,*n))
+    else if (*ldy < fla_max(1,*n))
     {
         *info = -15;
     }
@@ -630,29 +630,29 @@ int cla_syrfsx_extended_(integer *prec_type__, char *uplo, integer *n, integer *
                     /* Computing MAX */
                     r__1 = dz_z__;
                     r__2 = dyk / yk; // , expr subst
-                    dz_z__ = max(r__1,r__2);
+                    dz_z__ = fla_max(r__1,r__2);
                 }
                 else if (dyk != 0.f)
                 {
                     dz_z__ = hugeval;
                 }
-                ymin = min(ymin,yk);
-                normy = max(normy,yk);
+                ymin = fla_min(ymin,yk);
+                normy = fla_max(normy,yk);
                 if (*colequ)
                 {
                     /* Computing MAX */
                     r__1 = normx;
                     r__2 = yk * c__[i__]; // , expr subst
-                    normx = max(r__1,r__2);
+                    normx = fla_max(r__1,r__2);
                     /* Computing MAX */
                     r__1 = normdx;
                     r__2 = dyk * c__[i__]; // , expr subst
-                    normdx = max(r__1,r__2);
+                    normdx = fla_max(r__1,r__2);
                 }
                 else
                 {
                     normx = normy;
-                    normdx = max(normdx,dyk);
+                    normdx = fla_max(normdx,dyk);
                 }
             }
             if (normx != 0.f)
@@ -800,7 +800,7 @@ L666: /* Set final_* when cnt hits ithresh. */
             err_bnds_comp__[j + (err_bnds_comp_dim1 << 1)] = final_dz_z__ / ( 1 - dzratmax);
         }
         /* Compute componentwise relative backward error from formula */
-        /* max(i) ( f2c_abs(R(i)) / ( f2c_abs(op(A_s))*f2c_abs(Y) + f2c_abs(B_s) )(i) ) */
+        /* fla_max(i) ( f2c_abs(R(i)) / ( f2c_abs(op(A_s))*f2c_abs(Y) + f2c_abs(B_s) )(i) ) */
         /* where f2c_abs(Z) is the componentwise absolute value of the matrix */
         /* or vector Z. */
         /* Compute residual RES = B_s - op(A_s) * Y, */

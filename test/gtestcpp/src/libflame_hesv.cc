@@ -70,10 +70,10 @@ void hesv_test(int ip)
   }
   
   /* LDA is INTEGER
-          The leading dimension of the array A.  LDA >= max(1,N).*/
+          The leading dimension of the array A.  LDA >= fla_max(1,N).*/
   integer lda = lin_driver_paramslist[ip].lda;
-  if (lda < max(1, n)) {
-    PRINTF("lda < max(1, n) but it should be: LDA >= max(1,N). Please " \
+  if (lda < fla_max(1, n)) {
+    PRINTF("lda < fla_max(1, n) but it should be: LDA >= fla_max(1,N). Please " \
            "correct the input data.\n");
   }
   
@@ -86,10 +86,10 @@ void hesv_test(int ip)
   allocate_init_buffer(ipivbuff, ipivrefbuff, n, 0);
   
   /* LDB is INTEGER
-          The leading dimension of the array B.  LDB >= max(1,N).*/
+          The leading dimension of the array B.  LDB >= fla_max(1,N).*/
   integer ldb = lin_driver_paramslist[ip].ldb;
-  if (ldb < max(1, n)) {
-    PRINTF("ldb < max(1, n) but it should be: LDB >= max(1,N). Please " \
+  if (ldb < fla_max(1, n)) {
+    PRINTF("ldb < fla_max(1, n) but it should be: LDB >= fla_max(1,N). Please " \
            "correct the input data.\n");
   }
   
@@ -129,7 +129,7 @@ void hesv_test(int ip)
   
   // WORK is COMPLEX or COMPLEX*16  array, dimension (MAX(1,LWORK))
   T *workbuff = NULL, *workrefbuff = NULL;
-  allocate_init_buffer(workbuff, workrefbuff, max(1, lwork_size), 0);
+  allocate_init_buffer(workbuff, workrefbuff, fla_max(1, lwork_size), 0);
   
   // Print input values other than arrays.
   #if (defined(PRINT_INPUT_VALUES) && (PRINT_INPUT_VALUES == 1))
@@ -142,7 +142,7 @@ void hesv_test(int ip)
     PRINTF("Size of IPIV array (n) = %d\n", n);
     PRINTF("ldb = %d\n", ldb);
     PRINTF("Size of B array (ldb*nrhs) = %d\n", ldb * nrhs);
-    PRINTF("Size of WORK array (MAX(1, LWORK)) = %d\n", max(1, lwork_size));
+    PRINTF("Size of WORK array (MAX(1, LWORK)) = %d\n", fla_max(1, lwork_size));
     PRINTF("lwork = %d\n", lwork_size);
   #endif
 
@@ -177,9 +177,9 @@ void hesv_test(int ip)
     
     // Prints WORK array contents
     strncpy(arrayname, "WORK input", arraysize);
-    print_array<T>(arrayname, workbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workbuff, fla_max(1, lwork_size));
     strncpy(arrayname, "WORK ref input", arraysize);
-    print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
+    print_array<T>(arrayname, workrefbuff, fla_max(1, lwork_size));
   #endif
   
   // Call CPP function
@@ -234,15 +234,15 @@ void hesv_test(int ip)
       
       // Prints WORK array contents
       strncpy(arrayname, "WORK output", arraysize);
-      print_array<T>(arrayname, workbuff, max(1, lwork_size));
+      print_array<T>(arrayname, workbuff, fla_max(1, lwork_size));
       strncpy(arrayname, "WORK ref output", arraysize);
-      print_array<T>(arrayname, workrefbuff, max(1, lwork_size));
+      print_array<T>(arrayname, workrefbuff, fla_max(1, lwork_size));
     #endif
     
     double diff = computeError<T>(lda, n, arefbuff, abuff);
     diff += computeError<integer>(1, n, ipivrefbuff, ipivbuff);
     diff += computeError<T>(ldb, nrhs, brefbuff, bbuff);
-    diff += computeError<T>(1, max(1, lwork_size), workrefbuff, workbuff);
+    diff += computeError<T>(1, fla_max(1, lwork_size), workrefbuff, workbuff);
     PRINTF("diff: %lf\n", diff);
     EXPECT_NEAR(0.0, abs(diff), LIN_DRVR_THRESHOLD);
   } else {

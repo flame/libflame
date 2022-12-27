@@ -74,7 +74,7 @@ static integer c__2 = 2;
 /* > CLAHQR works primarily with the Hessenberg submatrix in rows */
 /* > and columns ILO to IHI, but applies transformations to all of */
 /* > H if WANTT is .TRUE.. */
-/* > 1 <= ILO <= max(1,IHI);
+/* > 1 <= ILO <= fla_max(1,IHI);
 IHI <= N. */
 /* > \endverbatim */
 /* > */
@@ -92,7 +92,7 @@ IHI <= N. */
 /* > \param[in] LDH */
 /* > \verbatim */
 /* > LDH is INTEGER */
-/* > The leading dimension of the array H. LDH >= max(1,N). */
+/* > The leading dimension of the array H. LDH >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] W */
@@ -132,7 +132,7 @@ transformations are applied only to */
 /* > \param[in] LDZ */
 /* > \verbatim */
 /* > LDZ is INTEGER */
-/* > The leading dimension of the array Z. LDZ >= max(1,N). */
+/* > The leading dimension of the array Z. LDZ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -351,7 +351,7 @@ int clahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
             /* Computing MIN */
             i__3 = jhi;
             i__4 = i__ + 1; // , expr subst
-            i__2 = min(i__3,i__4) - jlo + 1;
+            i__2 = fla_min(i__3,i__4) - jlo + 1;
             q__1.r = sc.r;
             q__1.i = -sc.i;
             cscal_(&i__2, &q__1, &h__[jlo + i__ * h_dim1], &c__1);
@@ -380,7 +380,7 @@ int clahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
         i2 = *n;
     }
     /* ITMAX is the total number of QR iterations allowed. */
-    itmax = max(10,nh) * 30;
+    itmax = fla_max(10,nh) * 30;
     /* KDEFL counts the number of iterations since a deflation */
     kdefl = 0;
     /* The main loop begins here. I is the loop index and decreases from */
@@ -441,11 +441,11 @@ L30:
                 i__4 = k - 1 + k * h_dim1;
                 r__5 = (r__1 = h__[i__3].r, f2c_abs(r__1)) + (r__2 = h__[i__3].i, f2c_abs(r__2));
                 r__6 = (r__3 = h__[i__4].r, f2c_abs(r__3)) + (r__4 = h__[i__4].i, f2c_abs(r__4)); // , expr subst
-                ab = max(r__5,r__6);
+                ab = fla_max(r__5,r__6);
                 /* Computing MIN */
                 r__5 = (r__1 = h__[i__3].r, f2c_abs(r__1)) + (r__2 = h__[i__3].i, f2c_abs(r__2));
                 r__6 = (r__3 = h__[i__4].r, f2c_abs(r__3)) + (r__4 = h__[i__4].i, f2c_abs(r__4)); // , expr subst
-                ba = min(r__5,r__6);
+                ba = fla_min(r__5,r__6);
                 i__3 = k - 1 + (k - 1) * h_dim1;
                 i__4 = k + k * h_dim1;
                 q__2.r = h__[i__3].r - h__[i__4].r;
@@ -455,7 +455,7 @@ L30:
                 /* Computing MAX */
                 r__5 = (r__1 = h__[i__4].r, f2c_abs(r__1)) + (r__2 = h__[i__4].i, f2c_abs(r__2));
                 r__6 = (r__3 = q__1.r, f2c_abs(r__3)) + (r__4 = q__1.i, f2c_abs(r__4)); // , expr subst
-                aa = max(r__5,r__6);
+                aa = fla_max(r__5,r__6);
                 q__2.r = h__[i__3].r - h__[i__4].r;
                 q__2.i = h__[i__3].i - h__[i__4].i; // , expr subst
                 q__1.r = q__2.r;
@@ -463,12 +463,12 @@ L30:
                 /* Computing MIN */
                 r__5 = (r__1 = h__[i__4].r, f2c_abs(r__1)) + (r__2 = h__[i__4].i, f2c_abs(r__2));
                 r__6 = (r__3 = q__1.r, f2c_abs(r__3)) + (r__4 = q__1.i, f2c_abs(r__4)); // , expr subst
-                bb = min(r__5,r__6);
+                bb = fla_min(r__5,r__6);
                 s = aa + ab;
                 /* Computing MAX */
                 r__1 = smlnum;
                 r__2 = ulp * (bb * (aa / s)); // , expr subst
-                if (ba * (ab / s) <= max(r__1,r__2))
+                if (ba * (ab / s) <= fla_max(r__1,r__2))
                 {
                     goto L50;
                 }
@@ -546,7 +546,7 @@ L50:
                 /* Computing MAX */
                 r__3 = s;
                 r__4 = (r__1 = x.r, f2c_abs(r__1)) + (r__2 = x.i, f2c_abs(r__2)); // , expr subst
-                s = max(r__3,r__4);
+                s = fla_max(r__3,r__4);
                 q__5.r = x.r / s;
                 q__5.i = x.i / s; // , expr subst
                 pow_ci(&q__4, &q__5, &c__2);
@@ -715,10 +715,10 @@ L70: /* Single-shift QR step */
                 /* L80: */
             }
             /* Apply G from the right to transform the columns of the */
-            /* matrix in rows I1 to min(K+2,I). */
+            /* matrix in rows I1 to fla_min(K+2,I). */
             /* Computing MIN */
             i__4 = k + 2;
-            i__3 = min(i__4,i__);
+            i__3 = fla_min(i__4,i__);
             for (j = i1;
                     j <= i__3;
                     ++j)

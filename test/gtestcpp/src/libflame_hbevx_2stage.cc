@@ -120,11 +120,11 @@ void hbevx_2stage_test(int ip)
   
   /* LDQ is INTEGER
           The leading dimension of the array Q.  If JOBZ = 'V', then
-          LDQ >= max(1,N).*/
+          LDQ >= fla_max(1,N).*/
   integer ldq = eig_paramslist[ip].ldq;
   
-  if ((jobz == 'V') && (ldq < max(1,n))) {
-    PRINTF("When jobz is V, ldz < max(1,n) but it should be: ldz >= max(1,n)" \
+  if ((jobz == 'V') && (ldq < fla_max(1,n))) {
+    PRINTF("When jobz is V, ldz < fla_max(1,n) but it should be: ldz >= fla_max(1,n)" \
           ". Please correct the input data.\n");
   }
   
@@ -203,7 +203,7 @@ void hbevx_2stage_test(int ip)
   
   /*LDZ is INTEGER
           The leading dimension of the array Z.  LDZ >= 1, and if
-          JOBZ = 'V', LDZ >= max(1,N).*/
+          JOBZ = 'V', LDZ >= fla_max(1,N).*/
   integer ldz = eig_paramslist[ip].ldz;
   
   if (ldz < 1) {
@@ -211,12 +211,12 @@ void hbevx_2stage_test(int ip)
           " data.\n");
   }
   
-  if ((jobz == 'V') && (ldz < max(1,n))) {
-    PRINTF("When jobz is V, ldz < max(1,n) but it should be: ldz >= max(1,n)" \
+  if ((jobz == 'V') && (ldz < fla_max(1,n))) {
+    PRINTF("When jobz is V, ldz < fla_max(1,n) but it should be: ldz >= fla_max(1,n)" \
            ". Please correct the input data.\n");
   }
   
-  // Z is COMPLEX or COMPLEX*16 array, dimension (LDZ, max(1,M))
+  // Z is COMPLEX or COMPLEX*16 array, dimension (LDZ, fla_max(1,M))
   T *zbuff = NULL, *zrefbuff = NULL;
   allocate_init_buffer(zbuff, zrefbuff, ldz * (max(1, m)), 0);
   
@@ -287,7 +287,7 @@ void hbevx_2stage_test(int ip)
     PRINTF("m = %d\n", m);
     PRINTF("Size of W array (n) = %d\n", n);
     PRINTF("ldz = %d\n", ldz);
-    PRINTF("Size of Z array (ldz*max(1,m)) = %d\n", (ldz * max(1, m)));
+    PRINTF("Size of Z array (ldz*max(1,m)) = %d\n", (ldz * fla_max(1, m)));
     PRINTF("Size of WORK array (LWORK)) = %d\n", lwork_size);
     PRINTF("LWORK = %d\n", lwork_size);
     PRINTF("Size of RWORK array (7*n) = %d\n", 7*n);
@@ -326,9 +326,9 @@ void hbevx_2stage_test(int ip)
     
     // Prints Z array contents
     strncpy(arrayname, "Z input", arraysize);
-    print_array<T>(arrayname, zbuff, (ldz * max(1, m)));
+    print_array<T>(arrayname, zbuff, (ldz * fla_max(1, m)));
     strncpy(arrayname, "Z ref input", arraysize);
-    print_array<T>(arrayname, zrefbuff, (ldz * max(1, m)));
+    print_array<T>(arrayname, zrefbuff, (ldz * fla_max(1, m)));
     
     // Prints WORK array contents
     strncpy(arrayname, "WORK input", arraysize);
@@ -418,9 +418,9 @@ void hbevx_2stage_test(int ip)
       
       // Prints Z array contents
       strncpy(arrayname, "Z output", arraysize);
-      print_array<T>(arrayname, zbuff, (ldz * max(1, m)));
+      print_array<T>(arrayname, zbuff, (ldz * fla_max(1, m)));
       strncpy(arrayname, "Z ref output", arraysize);
-      print_array<T>(arrayname, zrefbuff, (ldz * max(1, m)));
+      print_array<T>(arrayname, zrefbuff, (ldz * fla_max(1, m)));
       
       // Prints WORK array contents
       strncpy(arrayname, "WORK output", arraysize);
@@ -451,7 +451,7 @@ void hbevx_2stage_test(int ip)
     if (jobz == 'V') {
       diff += computeError<T>(ldq, n, qrefbuff, qbuff);
       diff += computeError<integer>(1, n, ifailref, ifail);
-      diff += computeError<T>(ldz, max(1, mtemp), zrefbuff, zbuff);
+      diff += computeError<T>(ldz, fla_max(1, mtemp), zrefbuff, zbuff);
                   // Using mtemp, because m will be modified by lapacke func.
     }
     diff += computeError<integer>(1, 1, &mref, &m);

@@ -338,7 +338,7 @@ void prepare_stedc_run(char* compz, integer n, void* D, void* E, void* Z,
         exe_time = fla_test_clock() - exe_time;
 
         /* Get the best execution time. */
-        time_min = min(time_min, exe_time);
+        time_min = fla_min(time_min, exe_time);
     }
     *time_min_ = time_min;
 

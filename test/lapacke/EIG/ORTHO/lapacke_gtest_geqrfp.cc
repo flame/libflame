@@ -59,7 +59,7 @@ geqrfp_float_parameters:: geqrfp_float_parameters (int matrix_layout_i, lapack_i
 	
 	/*Memory allocation */
 	lapacke_gtest_alloc_float_buffer_pair(&A, &Aref, bufsize);
-	lapacke_gtest_alloc_float_buffer_pair(&tau, &tauref, (min(m,n)));	
+	lapacke_gtest_alloc_float_buffer_pair(&tau, &tauref, (fla_min(m,n)));	
 	if ((A==NULL) || (Aref==NULL) || \
 		(tau==NULL) || (tauref==NULL)){
 		EXPECT_FALSE( true) << "geqrfp_float_parameters object: malloc error.";
@@ -203,7 +203,7 @@ geqrfp_double_parameters:: geqrfp_double_parameters (int matrix_layout_i, lapack
 	
 	/*Memory allocation */
 	lapacke_gtest_alloc_double_buffer_pair(&A, &Aref, bufsize);
-	lapacke_gtest_alloc_double_buffer_pair(&tau, &tauref, (min(m,n)));	
+	lapacke_gtest_alloc_double_buffer_pair(&tau, &tauref, (fla_min(m,n)));	
 	if ((A==NULL) || (Aref==NULL) || \
 		(tau==NULL) || (tauref==NULL)){
 		EXPECT_FALSE( true) << "geqrfp_double_parameters object: malloc error.";
@@ -344,7 +344,7 @@ geqrfp_scomplex_parameters:: geqrfp_scomplex_parameters (int matrix_layout_i, la
 	
 	/*Memory allocation */
 	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&A, &Aref, bufsize);
-	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&tau, &tauref, (min(m,n)));	
+	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&tau, &tauref, (fla_min(m,n)));	
 	if ((A==NULL) || (Aref==NULL) || \
 		(tau==NULL) || (tauref==NULL)){
 		EXPECT_FALSE( true) << "geqrfp_float_parameters object: malloc error.";
@@ -486,7 +486,7 @@ geqrfp_dcomplex_parameters:: geqrfp_dcomplex_parameters (int matrix_layout_i, la
 	
 	/*Memory allocation */
 	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&A, &Aref, bufsize);
-	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&tau, &tauref, (min(m,n)));	
+	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&tau, &tauref, (fla_min(m,n)));	
 	if ((A==NULL) || (Aref==NULL) || \
 		(tau==NULL) || (tauref==NULL)){
 		EXPECT_FALSE( true) << "geqrfp_float_parameters object: malloc error.";

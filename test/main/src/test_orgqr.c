@@ -144,7 +144,7 @@ void fla_test_orgqr_experiment(test_params_t *params,
         create_matrix(datatype, &A, lda, n);
 
         /* create tau vector */
-        create_vector(datatype, &T_test, min(m,n));
+        create_vector(datatype, &T_test, fla_min(m,n));
 
         if (g_ext_fptr != NULL)
         {
@@ -270,7 +270,7 @@ void prepare_orgqr_run(integer m, integer n,
         exe_time = fla_test_clock() - exe_time;
 
         /* Get the best execution time */
-        time_min = min(time_min, exe_time);
+        time_min = fla_min(time_min, exe_time);
 
     }
 

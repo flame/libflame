@@ -55,17 +55,17 @@ static integer c__1 = 1;
 /* > A is COMPLEX array, dimension (LDA,N) */
 /* > On entry, the M-by-N matrix A. */
 /* > On exit, the upper triangle of the array contains the */
-/* > min(M,N)-by-N upper triangular matrix R;
+/* > fla_min(M,N)-by-N upper triangular matrix R;
 the elements */
 /* > below the diagonal, together with the array TAU, */
 /* > represent the unitary matrix Q as a product of */
-/* > min(m,n) elementary reflectors. */
+/* > fla_min(m,n) elementary reflectors. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] JPVT */
@@ -81,7 +81,7 @@ if JPVT(i) = 0, */
 /* > */
 /* > \param[out] TAU */
 /* > \verbatim */
-/* > TAU is COMPLEX array, dimension (min(M,N)) */
+/* > TAU is COMPLEX array, dimension (fla_min(M,N)) */
 /* > The scalar factors of the elementary reflectors. */
 /* > \endverbatim */
 /* > */
@@ -211,7 +211,7 @@ int cgeqpf_(integer *m, integer *n, complex *a, integer *lda, integer *jpvt, com
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
@@ -222,7 +222,7 @@ int cgeqpf_(integer *m, integer *n, complex *a, integer *lda, integer *jpvt, com
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
-    mn = min(*m,*n);
+    mn = fla_min(*m,*n);
     tol3z = sqrt(slamch_("Epsilon"));
     /* Move initial columns up front */
     itemp = 1;
@@ -255,7 +255,7 @@ int cgeqpf_(integer *m, integer *n, complex *a, integer *lda, integer *jpvt, com
     /* Compute the QR factorization and update remaining columns */
     if (itemp > 0)
     {
-        ma = min(itemp,*m);
+        ma = fla_min(itemp,*m);
         cgeqr2_(m, &ma, &a[a_offset], lda, &tau[1], &work[1], info);
         if (ma < *n)
         {
@@ -302,7 +302,7 @@ int cgeqpf_(integer *m, integer *n, complex *a, integer *lda, integer *jpvt, com
             i__2 = *m - i__ + 1;
             /* Computing MIN */
             i__3 = i__ + 1;
-            clarfg_(&i__2, &aii, &a[min(i__3,*m) + i__ * a_dim1], &c__1, &tau[ i__]);
+            clarfg_(&i__2, &aii, &a[fla_min(i__3,*m) + i__ * a_dim1], &c__1, &tau[ i__]);
             i__2 = i__ + i__ * a_dim1;
             a[i__2].r = aii.r;
             a[i__2].i = aii.i; // , expr subst
@@ -337,7 +337,7 @@ int cgeqpf_(integer *m, integer *n, complex *a, integer *lda, integer *jpvt, com
                     /* Computing MAX */
                     r__1 = 0.f;
                     r__2 = (temp + 1.f) * (1.f - temp); // , expr subst
-                    temp = max(r__1,r__2);
+                    temp = fla_max(r__1,r__2);
                     /* Computing 2nd power */
                     r__1 = rwork[j] / rwork[*n + j];
                     temp2 = temp * (r__1 * r__1);

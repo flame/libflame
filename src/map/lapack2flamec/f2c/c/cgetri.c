@@ -62,7 +62,7 @@ static integer c__2 = 2;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] IPIV */
@@ -82,7 +82,7 @@ for 1<=i<=N, row i of the */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,N). */
 /* > For optimal performance LWORK >= N*NB, where NB is */
 /* > the optimal blocksize returned by ILAENV. */
 /* > */
@@ -180,11 +180,11 @@ int cgetri_(integer *n, complex *a, integer *lda, integer * ipiv, complex *work,
     {
         *info = -1;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -3;
     }
-    else if (*lwork < max(1,*n) && ! lquery)
+    else if (*lwork < fla_max(1,*n) && ! lquery)
     {
         *info = -6;
     }
@@ -220,14 +220,14 @@ int cgetri_(integer *n, complex *a, integer *lda, integer * ipiv, complex *work,
     {
         /* Computing MAX */
         i__1 = ldwork * nb;
-        iws = max(i__1,1);
+        iws = fla_max(i__1,1);
         if (*lwork < iws)
         {
             nb = *lwork / ldwork;
             /* Computing MAX */
             i__1 = 2;
             i__2 = ilaenv_(&c__2, "CGETRI", " ", n, &c_n1, &c_n1, & c_n1); // , expr subst
-            nbmin = max(i__1,i__2);
+            nbmin = fla_max(i__1,i__2);
         }
     }
     else
@@ -280,7 +280,7 @@ int cgetri_(integer *n, complex *a, integer *lda, integer * ipiv, complex *work,
             /* Computing MIN */
             i__2 = nb;
             i__3 = *n - j + 1; // , expr subst
-            jb = min(i__2,i__3);
+            jb = fla_min(i__2,i__3);
             /* Copy current block column of L to WORK and replace with */
             /* zeros. */
             i__2 = j + jb - 1;

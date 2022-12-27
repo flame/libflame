@@ -162,7 +162,7 @@ i.e. if either */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of A. LDA >= max(1,N). */
+/* > The leading dimension of A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -176,7 +176,7 @@ i.e. if either */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of B. LDB >= max(1,N). */
+/* > The leading dimension of B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] SDIM */
@@ -277,11 +277,11 @@ if */
 /* > LWORK is INTEGER */
 /* > The dimension of the array WORK. */
 /* > If N = 0, LWORK >= 1, else if SENSE = 'E', 'V', or 'B', */
-/* > LWORK >= max( 8*N, 6*N+16, 2*SDIM*(N-SDIM) ), else */
-/* > LWORK >= max( 8*N, 6*N+16 ). */
+/* > LWORK >= fla_max( 8*N, 6*N+16, 2*SDIM*(N-SDIM) ), else */
+/* > LWORK >= fla_max( 8*N, 6*N+16 ). */
 /* > Note that 2*SDIM*(N-SDIM) <= N*N/2. */
 /* > Note also that an error is only returned if */
-/* > LWORK < max( 8*N, 6*N+16), but if SENSE = 'E' or 'V' or 'B' */
+/* > LWORK < fla_max( 8*N, 6*N+16), but if SENSE = 'E' or 'V' or 'B' */
 /* > this may not be large enough. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -538,11 +538,11 @@ int sggesx_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, char *sense, in
     {
         *info = -6;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -8;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -10;
     }
@@ -567,18 +567,18 @@ int sggesx_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, char *sense, in
             /* Computing MAX */
             i__1 = *n << 3;
             i__2 = *n * 6 + 16; // , expr subst
-            minwrk = max(i__1,i__2);
+            minwrk = fla_max(i__1,i__2);
             maxwrk = minwrk - *n + *n * ilaenv_(&c__1, "SGEQRF", " ", n, & c__1, n, &c__0);
             /* Computing MAX */
             i__1 = maxwrk;
             i__2 = minwrk - *n + *n * ilaenv_(&c__1, "SORMQR", " ", n, &c__1, n, &c_n1); // , expr subst
-            maxwrk = max(i__1,i__2);
+            maxwrk = fla_max(i__1,i__2);
             if (ilvsl)
             {
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = minwrk - *n + *n * ilaenv_(&c__1, "SOR" "GQR", " ", n, &c__1, n, &c_n1); // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
             }
             lwrk = maxwrk;
             if (ijob >= 1)
@@ -586,7 +586,7 @@ int sggesx_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, char *sense, in
                 /* Computing MAX */
                 i__1 = lwrk;
                 i__2 = *n * *n / 2; // , expr subst
-                lwrk = max(i__1,i__2);
+                lwrk = fla_max(i__1,i__2);
             }
         }
         else
@@ -767,7 +767,7 @@ int sggesx_(char *jobvsl, char *jobvsr, char *sort, L_fp selctg, char *sense, in
             /* Computing MAX */
             i__1 = maxwrk;
             i__2 = (*sdim << 1) * (*n - *sdim); // , expr subst
-            maxwrk = max(i__1,i__2);
+            maxwrk = fla_max(i__1,i__2);
         }
         if (ierr == -22)
         {

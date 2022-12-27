@@ -31,7 +31,7 @@ int dorgtr_check(char *uplo, integer *n, double *a, integer * lda, double *tau, 
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }
@@ -40,7 +40,7 @@ int dorgtr_check(char *uplo, integer *n, double *a, integer * lda, double *tau, 
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n - 1; // , expr subst
-        if (*lwork < max(i__1,i__2) && ! lquery)
+        if (*lwork < fla_max(i__1,i__2) && ! lquery)
         {
             *info = -7;
         }
@@ -64,7 +64,7 @@ int dorgtr_check(char *uplo, integer *n, double *a, integer * lda, double *tau, 
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n - 1; // , expr subst
-        lwkopt = max(i__1,i__2) * nb;
+        lwkopt = fla_max(i__1,i__2) * nb;
         work[1] = (double) lwkopt;
     }
     if (*info != 0)

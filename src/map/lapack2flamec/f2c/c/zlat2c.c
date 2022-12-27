@@ -63,7 +63,7 @@
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] SA */
@@ -78,7 +78,7 @@ if INFO>0, the content of */
 /* > \param[in] LDSA */
 /* > \verbatim */
 /* > LDSA is INTEGER */
-/* > The leading dimension of the array SA. LDSA >= max(1,M). */
+/* > The leading dimension of the array SA. LDSA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */

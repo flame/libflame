@@ -124,8 +124,8 @@
 /* > LDA is INTEGER */
 /* > On entry, LDA specifies the first dimension of A as declared */
 /* > in the calling (sub) program. When TRANS = 'N' or 'n' */
-/* > then LDA must be at least max( 1, n ), otherwise LDA must */
-/* > be at least max( 1, k ). */
+/* > then LDA must be at least fla_max( 1, n ), otherwise LDA must */
+/* > be at least fla_max( 1, k ). */
 /* > Unchanged on exit. */
 /* > \endverbatim */
 /* > */
@@ -232,7 +232,7 @@ int ssfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *
     {
         info = -5;
     }
-    else if (*lda < max(1,nrowa))
+    else if (*lda < fla_max(1,nrowa))
     {
         info = -8;
     }

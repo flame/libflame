@@ -24,11 +24,11 @@ int sgetrfnpi_check(integer *m, integer *n, integer *nfact, float *a, integer * 
     {
         *info = -2;
     }
-    else if ((*nfact < 0) || (*nfact > min(*m,*n)))
+    else if ((*nfact < 0) || (*nfact > fla_min(*m,*n)))
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }

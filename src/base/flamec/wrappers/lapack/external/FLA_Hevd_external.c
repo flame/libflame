@@ -36,7 +36,7 @@ FLA_Error FLA_Hevd_external( FLA_Evd_type jobz, FLA_Uplo uplo, FLA_Obj A, FLA_Ob
 
   // Allocate the rwork array up front since its size is not dependent on
   // internal block sizes.
-  lrwork   = max( 1, 3 * n_A - 2 );
+  lrwork   = fla_max( 1, 3 * n_A - 2 );
   FLA_Obj_create( dt_real, lrwork, 1, 0, 0, &rwork );
 
   FLA_Param_map_flame_to_netlib_evd_type( jobz, &blas_jobz );

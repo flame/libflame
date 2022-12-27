@@ -1,4 +1,4 @@
-*  are returned in descending order.  The first min(m,n) columns of
+*  are returned in descending order.  The first fla_min(m,n) columns of
 *  U and V are the left and right singular vectors of A.
 *
 *  Note that the routine returns V**H, not V.
@@ -9,9 +9,9 @@
 *  JOBU    (input) CHARACTER*1
 *          Specifies options for computing all or part of the matrix U:
 *          = 'A':  all M columns of U are returned in array U:
-*          = 'S':  the first min(m,n) columns of U (the left singular
+*          = 'S':  the first fla_min(m,n) columns of U (the left singular
 *                  vectors) are returned in the array U;
-*          = 'O':  the first min(m,n) columns of U (the left singular
+*          = 'O':  the first fla_min(m,n) columns of U (the left singular
 *                  vectors) are overwritten on the array A;
 *          = 'N':  no columns of U (no left singular vectors) are
 *                  computed.
@@ -20,9 +20,9 @@
 *          Specifies options for computing all or part of the matrix
 *          V**H:
 *          = 'A':  all N rows of V**H are returned in the array VT;
-*          = 'S':  the first min(m,n) rows of V**H (the right singular
+*          = 'S':  the first fla_min(m,n) rows of V**H (the right singular
 *                  vectors) are returned in the array VT;
-*          = 'O':  the first min(m,n) rows of V**H (the right singular
+*          = 'O':  the first fla_min(m,n) rows of V**H (the right singular
 *                  vectors) are overwritten on the array A;
 *          = 'N':  no rows of V**H (no right singular vectors) are
 *                  computed.
@@ -38,25 +38,25 @@
 *  A       (input/output) COMPLEX*16 array, dimension (LDA,N)
 *          On entry, the M-by-N matrix A.
 *          On exit,
-*          if JOBU = 'O',  A is overwritten with the first min(m,n)
+*          if JOBU = 'O',  A is overwritten with the first fla_min(m,n)
 *                          columns of U (the left singular vectors,
 *                          stored columnwise);
-*          if JOBVT = 'O', A is overwritten with the first min(m,n)
+*          if JOBVT = 'O', A is overwritten with the first fla_min(m,n)
 *                          rows of V**H (the right singular vectors,
 *                          stored rowwise);
 *          if JOBU .ne. 'O' and JOBVT .ne. 'O', the contents of A
 *                          are destroyed.
 *
 *  LDA     (input) INTEGER
-*          The leading dimension of the array A.  LDA >= max(1,M).
+*          The leading dimension of the array A.  LDA >= fla_max(1,M).
 *
-*  S       (output) DOUBLE PRECISION array, dimension (min(M,N))
+*  S       (output) DOUBLE PRECISION array, dimension (fla_min(M,N))
 *          The singular values of A, sorted so that S(i) >= S(i+1).
 *
 *  U       (output) COMPLEX*16 array, dimension (LDU,UCOL)
-*          (LDU,M) if JOBU = 'A' or (LDU,min(M,N)) if JOBU = 'S'.
+*          (LDU,M) if JOBU = 'A' or (LDU,fla_min(M,N)) if JOBU = 'S'.
 *          If JOBU = 'A', U contains the M-by-M unitary matrix U;
-*          if JOBU = 'S', U contains the first min(m,n) columns of U
+*          if JOBU = 'S', U contains the first fla_min(m,n) columns of U
 *          (the left singular vectors, stored columnwise);
 *          if JOBU = 'N' or 'O', U is not referenced.
 *
@@ -67,13 +67,13 @@
 *  VT      (output) COMPLEX*16 array, dimension (LDVT,N)
 *          If JOBVT = 'A', VT contains the N-by-N unitary matrix
 *          V**H;
-*          if JOBVT = 'S', VT contains the first min(m,n) rows of
+*          if JOBVT = 'S', VT contains the first fla_min(m,n) rows of
 *          V**H (the right singular vectors, stored rowwise);
 *          if JOBVT = 'N' or 'O', VT is not referenced.
 *
 *  LDVT    (input) INTEGER
 *          The leading dimension of the array VT.  LDVT >= 1; if
-*          JOBVT = 'A', LDVT >= N; if JOBVT = 'S', LDVT >= min(M,N).
+*          JOBVT = 'A', LDVT >= N; if JOBVT = 'S', LDVT >= fla_min(M,N).
 *
 *  WORK    (workspace/output) COMPLEX*16 array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
@@ -88,7 +88,7 @@
 *          this value as the first entry of the WORK array, and no error
 *          message related to LWORK is issued by XERBLA.
 *
-*  RWORK   (workspace) DOUBLE PRECISION array, dimension (5*min(M,N))
+*  RWORK   (workspace) DOUBLE PRECISION array, dimension (5*fla_min(M,N))
 *          On exit, if INFO > 0, RWORK(1:MIN(M,N)-1) contains the
 *          unconverged superdiagonal elements of an upper bidiagonal
 *          matrix B whose diagonal is in S (not necessarily sorted).

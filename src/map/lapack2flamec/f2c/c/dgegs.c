@@ -92,7 +92,7 @@ static doublereal c_b37 = 1.;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of A. LDA >= max(1,N). */
+/* > The leading dimension of A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -106,7 +106,7 @@ static doublereal c_b37 = 1.;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of B. LDB >= max(1,N). */
+/* > The leading dimension of B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ALPHAR */
@@ -175,7 +175,7 @@ if positive, then the j-th and (j+1)-st */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,4*N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,4*N). */
 /* > For good performance, LWORK must generally be larger. */
 /* > To compute the optimal value of LWORK, call ILAENV to get */
 /* > blocksizes (for DGEQRF, DORMQR, and DORGQR.) Then compute: */
@@ -334,7 +334,7 @@ int dgegs_(char *jobvsl, char *jobvsr, integer *n, doublereal *a, integer *lda, 
     /* Test the input arguments */
     /* Computing MAX */
     i__1 = *n << 2;
-    lwkmin = max(i__1,1);
+    lwkmin = fla_max(i__1,1);
     lwkopt = lwkmin;
     work[1] = (doublereal) lwkopt;
     lquery = *lwork == -1;
@@ -351,11 +351,11 @@ int dgegs_(char *jobvsl, char *jobvsr, integer *n, doublereal *a, integer *lda, 
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -7;
     }
@@ -377,8 +377,8 @@ int dgegs_(char *jobvsl, char *jobvsr, integer *n, doublereal *a, integer *lda, 
         nb2 = ilaenv_(&c__1, "DORMQR", " ", n, n, n, &c_n1);
         nb3 = ilaenv_(&c__1, "DORGQR", " ", n, n, n, &c_n1);
         /* Computing MAX */
-        i__1 = max(nb1,nb2);
-        nb = max(i__1,nb3);
+        i__1 = fla_max(nb1,nb2);
+        nb = fla_max(i__1,nb3);
         lopt = (*n << 1) + *n * (nb + 1);
         work[1] = (doublereal) lopt;
     }
@@ -477,7 +477,7 @@ int dgegs_(char *jobvsl, char *jobvsr, integer *n, doublereal *a, integer *lda, 
         /* Computing MAX */
         i__1 = lwkopt;
         i__2 = (integer) work[iwork] + iwork - 1; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
     }
     if (iinfo != 0)
     {
@@ -491,7 +491,7 @@ int dgegs_(char *jobvsl, char *jobvsr, integer *n, doublereal *a, integer *lda, 
         /* Computing MAX */
         i__1 = lwkopt;
         i__2 = (integer) work[iwork] + iwork - 1; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
     }
     if (iinfo != 0)
     {
@@ -511,7 +511,7 @@ int dgegs_(char *jobvsl, char *jobvsr, integer *n, doublereal *a, integer *lda, 
             /* Computing MAX */
             i__1 = lwkopt;
             i__2 = (integer) work[iwork] + iwork - 1; // , expr subst
-            lwkopt = max(i__1,i__2);
+            lwkopt = fla_max(i__1,i__2);
         }
         if (iinfo != 0)
         {
@@ -541,7 +541,7 @@ int dgegs_(char *jobvsl, char *jobvsr, integer *n, doublereal *a, integer *lda, 
         /* Computing MAX */
         i__1 = lwkopt;
         i__2 = (integer) work[iwork] + iwork - 1; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
     }
     if (iinfo != 0)
     {

@@ -134,7 +134,7 @@ int slarnv_(integer *idist, integer *iseed, integer *n, real *x)
         /* Computing MIN */
         i__2 = 64;
         i__3 = *n - iv + 1; // , expr subst
-        il = min(i__2,i__3);
+        il = fla_min(i__2,i__3);
         if (*idist == 3)
         {
             il2 = il << 1;

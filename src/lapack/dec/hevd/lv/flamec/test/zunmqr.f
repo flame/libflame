@@ -31,8 +31,8 @@
 *
 *  LDA     (input) INTEGER
 *          The leading dimension of the array A.
-*          If SIDE = 'L', LDA >= max(1,M);
-*          if SIDE = 'R', LDA >= max(1,N).
+*          If SIDE = 'L', LDA >= fla_max(1,M);
+*          if SIDE = 'R', LDA >= fla_max(1,N).
 *
 *  TAU     (input) COMPLEX*16 array, dimension (K)
 *          TAU(i) must contain the scalar factor of the elementary
@@ -43,15 +43,15 @@
 *          On exit, C is overwritten by Q*C or Q**H*C or C*Q**H or C*Q.
 *
 *  LDC     (input) INTEGER
-*          The leading dimension of the array C. LDC >= max(1,M).
+*          The leading dimension of the array C. LDC >= fla_max(1,M).
 *
 *  WORK    (workspace/output) COMPLEX*16 array, dimension (MAX(1,LWORK))
 *          On exit, if INFO = 0, WORK(1) returns the optimal LWORK.
 *
 *  LWORK   (input) INTEGER
 *          The dimension of the array WORK.
-*          If SIDE = 'L', LWORK >= max(1,N);
-*          if SIDE = 'R', LWORK >= max(1,M).
+*          If SIDE = 'L', LWORK >= fla_max(1,N);
+*          if SIDE = 'R', LWORK >= fla_max(1,M).
 *          For optimum performance LWORK >= N*NB if SIDE = 'L', and
 *          LWORK >= M*NB if SIDE = 'R', where NB is the optimal
 *          blocksize.

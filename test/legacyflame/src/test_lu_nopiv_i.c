@@ -120,7 +120,7 @@ void libfla_test_lu_nopiv_i_experiment( test_params_t params,
         //TODO
 		//for now
 
-        for( int nfact=0; nfact <=(min(m,n)); nfact++ )
+        for( int nfact=0; nfact <=(fla_min(m,n)); nfact++ )
 		{
 
 			 if ( impl == FLA_TEST_FLAT_BLK_EXT )
@@ -139,7 +139,7 @@ void libfla_test_lu_nopiv_i_experiment( test_params_t params,
 */
             if( params.p_nfact == -1 || params.p_nfact == -2 )
 	    {
-            nfact = rand() % min(m,n);
+            nfact = rand() % fla_min(m,n);
         }
             else
 		{
@@ -248,7 +248,7 @@ void FLA_GETRFNPI(  integer m,
 
 			   sgetrfnpi_(&m, &n, &nfact, buff_A, &lda, &info);
 			   time = FLA_Clock() - time;
-			   time_min = min( time_min, time );
+			   time_min = fla_min( time_min, time );
 			}
 			break;
 		}
@@ -263,7 +263,7 @@ void FLA_GETRFNPI(  integer m,
 
 			   dgetrfnpi_(&m, &n, &nfact, buff_A, &lda, &info);
 			   time = FLA_Clock() - time;
-			   time_min = min( time_min, time );
+			   time_min = fla_min( time_min, time );
 			}
 			break;
 		}
@@ -278,7 +278,7 @@ void FLA_GETRFNPI(  integer m,
 
 			   cgetrfnpi_(&m, &n, &nfact,buff_A, &lda, &info);
 			   time = FLA_Clock() - time;
-			   time_min = min( time_min, time );
+			   time_min = fla_min( time_min, time );
 			}
 			break;
 		}
@@ -293,7 +293,7 @@ void FLA_GETRFNPI(  integer m,
 
 			   zgetrfnpi_(&m, &n, &nfact, buff_A, &lda, &info);
 			   time = FLA_Clock() - time;
-			   time_min = min( time_min, time );
+			   time_min = fla_min( time_min, time );
 			}
 			break;
 		}

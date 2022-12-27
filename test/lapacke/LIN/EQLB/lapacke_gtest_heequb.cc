@@ -53,7 +53,7 @@ heequb_scomplex_parameters:: heequb_scomplex_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-    lda = n; // as per API spec, lda≥ max(1, n).
+    lda = n; // as per API spec, lda≥ fla_max(1, n).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n heequb scomplex:  n: %d lda: %d \n", n, lda);
@@ -217,7 +217,7 @@ heequb_dcomplex_parameters:: heequb_dcomplex_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-    lda = n; // as per API spec, lda≥ max(1, n).
+    lda = n; // as per API spec, lda≥ fla_max(1, n).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n heequb dcomplex:  n: %d lda: %d \n", n, lda);

@@ -70,7 +70,7 @@
 *  LDA    - INTEGER.
 *           On entry, LDA specifies the first dimension of A as declared
 *           in the calling (sub) program. LDA must be at least
-*           max( 1, n ).
+*           fla_max( 1, n ).
 *           Unchanged on exit.
 *
 *

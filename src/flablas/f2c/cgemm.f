@@ -81,8 +81,8 @@
 *  LDA    - INTEGER.
 *           On entry, LDA specifies the first dimension of A as declared
 *           in the calling (sub) program. When  TRANSA = 'N' or 'n' then
-*           LDA must be at least  max( 1, m ), otherwise  LDA must be at
-*           least  max( 1, k ).
+*           LDA must be at least  fla_max( 1, m ), otherwise  LDA must be at
+*           least  fla_max( 1, k ).
 *           Unchanged on exit.
 *
 *  B      - COMPLEX          array of DIMENSION ( LDB, kb ), where kb is
@@ -96,8 +96,8 @@
 *  LDB    - INTEGER.
 *           On entry, LDB specifies the first dimension of B as declared
 *           in the calling (sub) program. When  TRANSB = 'N' or 'n' then
-*           LDB must be at least  max( 1, k ), otherwise  LDB must be at
-*           least  max( 1, n ).
+*           LDB must be at least  fla_max( 1, k ), otherwise  LDB must be at
+*           least  fla_max( 1, n ).
 *           Unchanged on exit.
 *
 *  BETA   - COMPLEX         .
@@ -115,7 +115,7 @@
 *  LDC    - INTEGER.
 *           On entry, LDC specifies the first dimension of C as declared
 *           in  the  calling  (sub)  program.   LDC  must  be  at  least
-*           max( 1, m ).
+*           fla_max( 1, m ).
 *           Unchanged on exit.
 *
 *

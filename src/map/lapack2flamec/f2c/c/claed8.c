@@ -80,7 +80,7 @@ static integer c__1 = 1;
 /* > \param[in] LDQ */
 /* > \verbatim */
 /* > LDQ is INTEGER */
-/* > The leading dimension of the array Q. LDQ >= max( 1, N ). */
+/* > The leading dimension of the array Q. LDQ >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] D */
@@ -136,7 +136,7 @@ static integer c__1 = 1;
 /* > \param[in] LDQ2 */
 /* > \verbatim */
 /* > LDQ2 is INTEGER */
-/* > The leading dimension of the array Q2. LDQ2 >= max( 1, N ). */
+/* > The leading dimension of the array Q2. LDQ2 >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] W */
@@ -295,15 +295,15 @@ int claed8_(integer *k, integer *n, integer *qsiz, complex * q, integer *ldq, re
     {
         *info = -3;
     }
-    else if (*ldq < max(1,*n))
+    else if (*ldq < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*cutpnt < min(1,*n) || *cutpnt > *n)
+    else if (*cutpnt < fla_min(1,*n) || *cutpnt > *n)
     {
         *info = -8;
     }
-    else if (*ldq2 < max(1,*n))
+    else if (*ldq2 < fla_max(1,*n))
     {
         *info = -12;
     }

@@ -193,11 +193,11 @@ int sppequ_(char *uplo, integer *n, real *ap, real *s, real * scond, real *amax,
             /* Computing MIN */
             r__1 = smin;
             r__2 = s[i__]; // , expr subst
-            smin = min(r__1,r__2);
+            smin = fla_min(r__1,r__2);
             /* Computing MAX */
             r__1 = *amax;
             r__2 = s[i__]; // , expr subst
-            *amax = max(r__1,r__2);
+            *amax = fla_max(r__1,r__2);
             /* L10: */
         }
     }
@@ -216,11 +216,11 @@ int sppequ_(char *uplo, integer *n, real *ap, real *s, real * scond, real *amax,
             /* Computing MIN */
             r__1 = smin;
             r__2 = s[i__]; // , expr subst
-            smin = min(r__1,r__2);
+            smin = fla_min(r__1,r__2);
             /* Computing MAX */
             r__1 = *amax;
             r__2 = s[i__]; // , expr subst
-            *amax = max(r__1,r__2);
+            *amax = fla_max(r__1,r__2);
             /* L20: */
         }
     }
@@ -253,7 +253,7 @@ int sppequ_(char *uplo, integer *n, real *ap, real *s, real * scond, real *amax,
             s[i__] = 1.f / sqrt(s[i__]);
             /* L40: */
         }
-        /* Compute SCOND = min(S(I)) / max(S(I)) */
+        /* Compute SCOND = fla_min(S(I)) / fla_max(S(I)) */
         *scond = sqrt(smin) / sqrt(*amax);
     }
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);

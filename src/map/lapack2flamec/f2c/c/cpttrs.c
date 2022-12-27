@@ -91,7 +91,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -170,7 +170,7 @@ int cpttrs_(char *uplo, integer *n, integer *nrhs, real *d__, complex *e, comple
     {
         *info = -3;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -7;
     }
@@ -197,7 +197,7 @@ int cpttrs_(char *uplo, integer *n, integer *nrhs, real *d__, complex *e, comple
         /* Computing MAX */
         i__1 = 1;
         i__2 = ilaenv_(&c__1, "CPTTRS", uplo, n, nrhs, &c_n1, &c_n1); // , expr subst
-        nb = max(i__1,i__2);
+        nb = fla_max(i__1,i__2);
     }
     /* Decode UPLO */
     if (upper)
@@ -222,7 +222,7 @@ int cpttrs_(char *uplo, integer *n, integer *nrhs, real *d__, complex *e, comple
         {
             /* Computing MIN */
             i__3 = *nrhs - j + 1;
-            jb = min(i__3,nb);
+            jb = fla_min(i__3,nb);
             cptts2_(&iuplo, n, &jb, &d__[1], &e[1], &b[j * b_dim1 + 1], ldb);
             /* L10: */
         }

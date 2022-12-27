@@ -52,7 +52,7 @@ static integer c__2 = 2;
 /* > A is COMPLEX array, dimension (LDA,N) */
 /* > On entry, the M-by-N matrix A. */
 /* > On exit, the elements on and below the diagonal of the array */
-/* > contain the M-by-min(M,N) lower trapezoidal matrix L */
+/* > contain the M-by-fla_min(M,N) lower trapezoidal matrix L */
 /* > (L is lower triangular if M <= N);
 */
 /* > the elements above the diagonal are used to store part of the */
@@ -62,7 +62,7 @@ static integer c__2 = 2;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] T */
@@ -239,7 +239,7 @@ int cgelq_(integer *m, integer *n, complex *a, integer *lda, complex *t, integer
         }
     }
     /* Determine the block size */
-    if (min(*m,*n) > 0)
+    if (fla_min(*m,*n) > 0)
     {
         mb = ilaenv_(&c__1, "CGELQ ", " ", m, n, &c__1, &c_n1);
         nb = ilaenv_(&c__1, "CGELQ ", " ", m, n, &c__2, &c_n1);
@@ -249,7 +249,7 @@ int cgelq_(integer *m, integer *n, complex *a, integer *lda, complex *t, integer
         mb = 1;
         nb = *n;
     }
-    if (mb > min(*m,*n) || mb < 1)
+    if (mb > fla_min(*m,*n) || mb < 1)
     {
         mb = 1;
     }
@@ -278,12 +278,12 @@ int cgelq_(integer *m, integer *n, complex *a, integer *lda, complex *t, integer
     /* Computing MAX */
     i__1 = 1;
     i__2 = mb * *m * nblcks + 5; // , expr subst
-    if ((*tsize < max(i__1,i__2) || *lwork < mb * *m) && *lwork >= *m && * tsize >= mintsz && ! lquery)
+    if ((*tsize < fla_max(i__1,i__2) || *lwork < mb * *m) && *lwork >= *m && * tsize >= mintsz && ! lquery)
     {
         /* Computing MAX */
         i__1 = 1;
         i__2 = mb * *m * nblcks + 5; // , expr subst
-        if (*tsize < max(i__1,i__2))
+        if (*tsize < fla_max(i__1,i__2))
         {
             lminws = TRUE_;
             mb = 1;
@@ -303,7 +303,7 @@ int cgelq_(integer *m, integer *n, complex *a, integer *lda, complex *t, integer
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
@@ -312,7 +312,7 @@ int cgelq_(integer *m, integer *n, complex *a, integer *lda, complex *t, integer
         /* Computing MAX */
         i__1 = 1;
         i__2 = mb * *m * nblcks + 5; // , expr subst
-        if (*tsize < max(i__1,i__2) && ! lquery && ! lminws)
+        if (*tsize < fla_max(i__1,i__2) && ! lquery && ! lminws)
         {
             *info = -6;
         }
@@ -321,7 +321,7 @@ int cgelq_(integer *m, integer *n, complex *a, integer *lda, complex *t, integer
             /* Computing MAX */
             i__1 = 1;
             i__2 = *m * mb; // , expr subst
-            if (*lwork < max(i__1,i__2) && ! lquery && ! lminws)
+            if (*lwork < fla_max(i__1,i__2) && ! lquery && ! lminws)
             {
                 *info = -8;
             }
@@ -346,7 +346,7 @@ int cgelq_(integer *m, integer *n, complex *a, integer *lda, complex *t, integer
         t[3].i = 0.f; // , expr subst
         if (minw)
         {
-            i__1 = max(1,*n);
+            i__1 = fla_max(1,*n);
             work[1].r = (real) i__1;
             work[1].i = 0.f; // , expr subst
         }
@@ -355,7 +355,7 @@ int cgelq_(integer *m, integer *n, complex *a, integer *lda, complex *t, integer
             /* Computing MAX */
             i__2 = 1;
             i__3 = mb * *m; // , expr subst
-            i__1 = max(i__2,i__3);
+            i__1 = fla_max(i__2,i__3);
             work[1].r = (real) i__1;
             work[1].i = 0.f; // , expr subst
         }
@@ -373,7 +373,7 @@ int cgelq_(integer *m, integer *n, complex *a, integer *lda, complex *t, integer
         return 0;
     }
     /* Quick return if possible */
-    if (min(*m,*n) == 0)
+    if (fla_min(*m,*n) == 0)
     {
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
@@ -390,7 +390,7 @@ int cgelq_(integer *m, integer *n, complex *a, integer *lda, complex *t, integer
     /* Computing MAX */
     i__2 = 1;
     i__3 = mb * *m; // , expr subst
-    i__1 = max(i__2,i__3);
+    i__1 = fla_max(i__2,i__3);
     work[1].r = (real) i__1;
     work[1].i = 0.f; // , expr subst
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);

@@ -133,7 +133,7 @@ ILO=1 and IHI=0, if N=0. */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -147,7 +147,7 @@ ILO=1 and IHI=0, if N=0. */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] Q */
@@ -315,7 +315,7 @@ int dgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, d
     nb = ilaenv_(&c__1, "DGGHD3", " ", n, ilo, ihi, &c_n1);
     /* Computing MAX */
     i__1 = *n * 6 * nb;
-    lwkopt = max(i__1,1);
+    lwkopt = fla_max(i__1,1);
     work[1] = (doublereal) lwkopt;
     initq = lsame_(compq, "I");
     wantq = initq || lsame_(compq, "V");
@@ -342,11 +342,11 @@ int dgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, d
     {
         *info = -5;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -7;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -9;
     }
@@ -406,7 +406,7 @@ int dgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, d
         /* Computing MAX */
         i__1 = nb;
         i__2 = ilaenv_(&c__3, "DGGHD3", " ", n, ilo, ihi, &c_n1); // , expr subst
-        nx = max(i__1,i__2);
+        nx = fla_max(i__1,i__2);
         if (nx < nh)
         {
             /* Determine if workspace is large enough for blocked code. */
@@ -418,7 +418,7 @@ int dgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, d
                 /* Computing MAX */
                 i__1 = 2;
                 i__2 = ilaenv_(&c__2, "DGGHD3", " ", n, ilo, ihi, & c_n1); // , expr subst
-                nbmin = max(i__1,i__2);
+                nbmin = fla_max(i__1,i__2);
                 if (*lwork >= *n * 6 * nbmin)
                 {
                     nb = *lwork / (*n * 6);
@@ -449,7 +449,7 @@ int dgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, d
             /* Computing MIN */
             i__3 = nb;
             i__4 = *ihi - jcol - 1; // , expr subst
-            nnb = min(i__3,i__4);
+            nnb = fla_min(i__3,i__4);
             /* Initialize small orthogonal factors that will hold the */
             /* accumulated Givens rotations in workspace. */
             /* N2NB denotes the number of 2*NNB-by-2*NNB factors */
@@ -563,7 +563,7 @@ int dgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, d
                     /* Computing MIN */
                     i__4 = jj + 1;
                     i__6 = j + 2;
-                    for (i__ = min(i__4,*ihi);
+                    for (i__ = fla_min(i__4,*ihi);
                             i__ >= i__6;
                             --i__)
                     {
@@ -772,7 +772,7 @@ int dgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, d
                     /* Computing MAX */
                     i__6 = 2;
                     i__3 = j - jcol + 1; // , expr subst
-                    topq = max(i__6,i__3);
+                    topq = fla_max(i__6,i__3);
                     nh = *ihi - topq + 1;
                 }
                 else
@@ -795,7 +795,7 @@ int dgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, d
                         /* Computing MAX */
                         i__5 = 2;
                         i__4 = j - jcol + 1; // , expr subst
-                        topq = max(i__5,i__4);
+                        topq = fla_max(i__5,i__4);
                         nh = *ihi - topq + 1;
                     }
                     if (blk22)
@@ -984,7 +984,7 @@ int dgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, d
                     /* Computing MAX */
                     i__3 = 2;
                     i__5 = j - jcol + 1; // , expr subst
-                    topq = max(i__3,i__5);
+                    topq = fla_max(i__3,i__5);
                     nh = *ihi - topq + 1;
                 }
                 else
@@ -1007,7 +1007,7 @@ int dgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, d
                         /* Computing MAX */
                         i__6 = 2;
                         i__4 = j - jcol + 1; // , expr subst
-                        topq = max(i__6,i__4);
+                        topq = fla_max(i__6,i__4);
                         nh = *ihi - topq + 1;
                     }
                     if (blk22)

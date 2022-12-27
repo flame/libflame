@@ -82,7 +82,7 @@ if UPLO */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] D */
@@ -247,7 +247,7 @@ int ssytrd_fla(char *uplo, integer *n, real *a, integer *lda, real *d__, real *e
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }
@@ -287,7 +287,7 @@ int ssytrd_fla(char *uplo, integer *n, real *a, integer *lda, real *d__, real *e
         /* Computing MAX */
         i__1 = nb;
         i__2 = ilaenv_(&c__3, "SSYTRD", uplo, n, &c_n1, &c_n1, & c_n1); // , expr subst
-        nx = max(i__1,i__2);
+        nx = fla_max(i__1,i__2);
         if (nx < *n)
         {
             /* Determine if workspace is large enough for blocked code. */
@@ -300,7 +300,7 @@ int ssytrd_fla(char *uplo, integer *n, real *a, integer *lda, real *d__, real *e
                 /* unblocked code by setting NX = N. */
                 /* Computing MAX */
                 i__1 = *lwork / ldwork;
-                nb = max(i__1,1);
+                nb = fla_max(i__1,1);
                 nbmin = ilaenv_(&c__2, "SSYTRD", uplo, n, &c_n1, &c_n1, &c_n1);
                 if (nb < nbmin)
                 {

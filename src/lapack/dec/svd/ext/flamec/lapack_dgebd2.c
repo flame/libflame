@@ -79,19 +79,19 @@
  /* > \param[in] LDA */
  /* > \verbatim */
  /* > LDA is INTEGER */
- /* > The leading dimension of the array A. LDA >= max(1,M). */
+ /* > The leading dimension of the array A. LDA >= fla_max(1,M). */
  /* > \endverbatim */
  /* > */
  /* > \param[out] D */
  /* > \verbatim */
- /* > D is DOUBLE PRECISION array, dimension (min(M,N)) */
+ /* > D is DOUBLE PRECISION array, dimension (fla_min(M,N)) */
  /* > The diagonal elements of the bidiagonal matrix B: */
  /* > D(i) = A(i,i). */
  /* > \endverbatim */
  /* > */
  /* > \param[out] E */
  /* > \verbatim */
- /* > E is DOUBLE PRECISION array, dimension (min(M,N)-1) */
+ /* > E is DOUBLE PRECISION array, dimension (fla_min(M,N)-1) */
  /* > The off-diagonal elements of the bidiagonal matrix B: */
  /* > if m >= n, E(i) = A(i,i+1) for i = 1,2,...,n-1;
  */
@@ -100,21 +100,21 @@
  /* > */
  /* > \param[out] TAUQ */
  /* > \verbatim */
- /* > TAUQ is DOUBLE PRECISION array, dimension (min(M,N)) */
+ /* > TAUQ is DOUBLE PRECISION array, dimension (fla_min(M,N)) */
  /* > The scalar factors of the elementary reflectors which */
  /* > represent the orthogonal matrix Q. See Further Details. */
  /* > \endverbatim */
  /* > */
  /* > \param[out] TAUP */
  /* > \verbatim */
- /* > TAUP is DOUBLE PRECISION array, dimension (min(M,N)) */
+ /* > TAUP is DOUBLE PRECISION array, dimension (fla_min(M,N)) */
  /* > The scalar factors of the elementary reflectors which */
  /* > represent the orthogonal matrix P. See Further Details. */
  /* > \endverbatim */
  /* > */
  /* > \param[out] WORK */
  /* > \verbatim */
- /* > WORK is DOUBLE PRECISION array, dimension (max(M,N)) */
+ /* > WORK is DOUBLE PRECISION array, dimension (fla_max(M,N)) */
  /* > \endverbatim */
  /* > */
  /* > \param[out] INFO */
@@ -230,7 +230,7 @@
  else if (*n < 0) {
  *info = -2;
  }
- else if (*lda < max(1,*m)) {
+ else if (*lda < fla_max(1,*m)) {
  *info = -4;
  }
  if (*info < 0) {
@@ -248,7 +248,7 @@
  i__2 = *m - i__ + 1;
  /* Computing MIN */
  i__3 = i__ + 1;
- dlarfg_(&i__2, &a[i__ + i__ * a_dim1], &a[min(i__3,*m) + i__ * a_dim1], &c__1, &tauq[i__]);
+ dlarfg_(&i__2, &a[i__ + i__ * a_dim1], &a[fla_min(i__3,*m) + i__ * a_dim1], &c__1, &tauq[i__]);
  d__[i__] = a[i__ + i__ * a_dim1];
  a[i__ + i__ * a_dim1] = 1.;
  /* Apply H(i) to A(i:m,i+1:n) from the left */
@@ -264,7 +264,7 @@
  i__2 = *n - i__;
  /* Computing MIN */
  i__3 = i__ + 2;
- dlarfg_(&i__2, &a[i__ + (i__ + 1) * a_dim1], &a[i__ + min( i__3,*n) * a_dim1], lda, &taup[i__]);
+ dlarfg_(&i__2, &a[i__ + (i__ + 1) * a_dim1], &a[i__ + fla_min( i__3,*n) * a_dim1], lda, &taup[i__]);
  e[i__] = a[i__ + (i__ + 1) * a_dim1];
  a[i__ + (i__ + 1) * a_dim1] = 1.;
  /* Apply G(i) to A(i+1:m,i+1:n) from the right */
@@ -289,7 +289,7 @@
  i__2 = *n - i__ + 1;
  /* Computing MIN */
  i__3 = i__ + 1;
- dlarfg_(&i__2, &a[i__ + i__ * a_dim1], &a[i__ + min(i__3,*n) * a_dim1], lda, &taup[i__]);
+ dlarfg_(&i__2, &a[i__ + i__ * a_dim1], &a[i__ + fla_min(i__3,*n) * a_dim1], lda, &taup[i__]);
  d__[i__] = a[i__ + i__ * a_dim1];
  a[i__ + i__ * a_dim1] = 1.;
  /* Apply G(i) to A(i+1:m,i:n) from the right */
@@ -305,7 +305,7 @@
  i__2 = *m - i__;
  /* Computing MIN */
  i__3 = i__ + 2;
- dlarfg_(&i__2, &a[i__ + 1 + i__ * a_dim1], &a[min(i__3,*m) + i__ * a_dim1], &c__1, &tauq[i__]);
+ dlarfg_(&i__2, &a[i__ + 1 + i__ * a_dim1], &a[fla_min(i__3,*m) + i__ * a_dim1], &c__1, &tauq[i__]);
  e[i__] = a[i__ + 1 + i__ * a_dim1];
  a[i__ + 1 + i__ * a_dim1] = 1.;
  /* Apply H(i) to A(i+1:m,i+1:n) from the left */

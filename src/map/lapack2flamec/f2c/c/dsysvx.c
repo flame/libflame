@@ -122,7 +122,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] AF */
@@ -142,7 +142,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDAF */
 /* > \verbatim */
 /* > LDAF is INTEGER */
-/* > The leading dimension of the array AF. LDAF >= max(1,N). */
+/* > The leading dimension of the array AF. LDAF >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] IPIV */
@@ -173,7 +173,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] X */
@@ -185,7 +185,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(1,N). */
+/* > The leading dimension of the array X. LDX >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RCOND */
@@ -228,8 +228,8 @@ static integer c_n1 = -1;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The length of WORK. LWORK >= max(1,3*N), and for best */
-/* > performance, when FACT = 'N', LWORK >= max(1,3*N,N*NB), where */
+/* > The length of WORK. LWORK >= fla_max(1,3*N), and for best */
+/* > performance, when FACT = 'N', LWORK >= fla_max(1,3*N,N*NB), where */
 /* > NB is the optimal blocksize for DSYTRF. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -353,19 +353,19 @@ int dsysvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublereal *a, i
     {
         *info = -4;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -6;
     }
-    else if (*ldaf < max(1,*n))
+    else if (*ldaf < fla_max(1,*n))
     {
         *info = -8;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -11;
     }
-    else if (*ldx < max(1,*n))
+    else if (*ldx < fla_max(1,*n))
     {
         *info = -13;
     }
@@ -374,7 +374,7 @@ int dsysvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublereal *a, i
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n * 3; // , expr subst
-        if (*lwork < max(i__1,i__2) && ! lquery)
+        if (*lwork < fla_max(i__1,i__2) && ! lquery)
         {
             *info = -18;
         }
@@ -384,14 +384,14 @@ int dsysvx_(char *fact, char *uplo, integer *n, integer * nrhs, doublereal *a, i
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n * 3; // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
         if (nofact)
         {
             nb = ilaenv_(&c__1, "DSYTRF", uplo, n, &c_n1, &c_n1, &c_n1);
             /* Computing MAX */
             i__1 = lwkopt;
             i__2 = *n * nb; // , expr subst
-            lwkopt = max(i__1,i__2);
+            lwkopt = fla_max(i__1,i__2);
         }
         work[1] = (doublereal) lwkopt;
     }

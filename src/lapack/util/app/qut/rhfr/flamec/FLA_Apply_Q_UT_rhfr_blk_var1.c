@@ -136,7 +136,7 @@ FLA_Error FLA_Apply_Q_UT_rhfr_blk_var1( FLA_Obj A, FLA_Obj T, FLA_Obj W, FLA_Obj
 
   while ( FLA_Obj_min_dim( ATL ) > 0 ){
 
-    b = min( b_alg, FLA_Obj_min_dim( ATL ) );
+    b = fla_min( b_alg, FLA_Obj_min_dim( ATL ) );
 
     // Since T was filled from left to right, and since we need to access them
     // in reverse order, we need to handle the case where the last block is

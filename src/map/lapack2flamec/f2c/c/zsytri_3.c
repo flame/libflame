@@ -91,7 +91,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] E */
@@ -214,7 +214,7 @@ int zsytri_3_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecomp
     /* Computing MAX */
     i__1 = 1;
     i__2 = ilaenv_(&c__1, "ZSYTRI_3", uplo, n, &c_n1, &c_n1, &c_n1); // , expr subst
-    nb = max(i__1,i__2);
+    nb = fla_max(i__1,i__2);
     lwkopt = (*n + nb + 1) * (nb + 3);
     if (! upper && ! lsame_(uplo, "L"))
     {
@@ -224,7 +224,7 @@ int zsytri_3_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecomp
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }

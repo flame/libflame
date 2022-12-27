@@ -220,11 +220,11 @@ int zunbdb6_(integer *m1, integer *m2, integer *n, doublecomplex *x1, integer *i
     {
         *info = -7;
     }
-    else if (*ldq1 < max(1,*m1))
+    else if (*ldq1 < fla_max(1,*m1))
     {
         *info = -9;
     }
-    else if (*ldq2 < max(1,*m2))
+    else if (*ldq2 < fla_max(1,*m2))
     {
         *info = -11;
     }

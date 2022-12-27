@@ -235,7 +235,7 @@ BENCHMARK_TEMPLATE_DEFINE_F(geevx_test, sgeevx, float,float )(benchmark::State &
            &data->Abnrm,data->Rconde,data->Rcondv,(float *)&work_query, &data->lwork,data->iwork,&data->info); 
 
     data->lwork = (int)work_query;
-    data->lwork = max(((2*data->n)+((data->n)^2)), data->lwork);
+    data->lwork = fla_max(((2*data->n)+((data->n)^2)), data->lwork);
     /* Allocate memory for work arrays */
     data->Work = (float *)malloc( sizeof(float) * (data->lwork));
     if (data->Work == NULL){
@@ -278,7 +278,7 @@ BENCHMARK_TEMPLATE_DEFINE_F(geevx_test, dgeevx, double,double )(benchmark::State
  
 
     data->lwork = (int)work_query;
-    data->lwork = max(((2*data->n)+((data->n)^2)), data->lwork);
+    data->lwork = fla_max(((2*data->n)+((data->n)^2)), data->lwork);
 
     /* Allocate memory for work arrays */
     data->Work = (double *)malloc( sizeof(double) * (data->lwork));
@@ -316,7 +316,7 @@ BENCHMARK_TEMPLATE_DEFINE_F(geevx_test, cgeevx,lapack_complex_float, float )(ben
  
 
     data->lwork = (int)work_query;
-    data->lwork = max(((2*data->n)+((data->n)^2)), data->lwork);
+    data->lwork = fla_max(((2*data->n)+((data->n)^2)), data->lwork);
     /* Allocate memory for work arrays */
     data->Work = (lapack_complex_float *)malloc( sizeof(lapack_complex_float) * (data->lwork));
     if (data->Work == NULL){
@@ -355,7 +355,7 @@ BENCHMARK_TEMPLATE_DEFINE_F(geevx_test, zgeevx,lapack_complex_double, double)(be
  
                                     
     data->lwork = (int)work_query;
-    data->lwork = max(((2*data->n)+((data->n)^2)), data->lwork);
+    data->lwork = fla_max(((2*data->n)+((data->n)^2)), data->lwork);
     /* Allocate memory for work arrays */
     data->Work = (lapack_complex_double *)malloc( sizeof(lapack_complex_double) * (data->lwork));
     if ((data->Work==NULL)){

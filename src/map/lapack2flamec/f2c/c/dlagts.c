@@ -118,7 +118,7 @@
 /* > perturbation to be made to very small diagonal elements of U. */
 /* > TOL should normally be chosen as about eps*norm(U), where eps */
 /* > is the relative machine precision, but if TOL is supplied as */
-/* > non-positive, then it is reset to eps*max( f2c_dabs( u(i,j) ) ). */
+/* > non-positive, then it is reset to eps*fla_max( f2c_dabs( u(i,j) ) ). */
 /* > If JOB .gt. 0 then TOL is not referenced. */
 /* > */
 /* > On exit, TOL is changed as described above, only if TOL is */
@@ -224,9 +224,9 @@ int dlagts_(integer *job, integer *n, doublereal *a, doublereal *b, doublereal *
             {
                 /* Computing MAX */
                 d__1 = *tol, d__2 = f2c_dabs(a[2]);
-                d__1 = max(d__1,d__2);
+                d__1 = fla_max(d__1,d__2);
                 d__2 = f2c_dabs(b[1]); // ; expr subst
-                *tol = max(d__1,d__2);
+                *tol = fla_max(d__1,d__2);
             }
             i__1 = *n;
             for (k = 3;
@@ -234,10 +234,10 @@ int dlagts_(integer *job, integer *n, doublereal *a, doublereal *b, doublereal *
                     ++k)
             {
                 /* Computing MAX */
-                d__4 = *tol, d__5 = (d__1 = a[k], f2c_dabs(d__1)), d__4 = max(d__4, d__5), d__5 = (d__2 = b[k - 1], f2c_dabs(d__2));
-                d__4 = max(d__4,d__5);
+                d__4 = *tol, d__5 = (d__1 = a[k], f2c_dabs(d__1)), d__4 = fla_max(d__4, d__5), d__5 = (d__2 = b[k - 1], f2c_dabs(d__2));
+                d__4 = fla_max(d__4,d__5);
                 d__5 = (d__3 = d__[k - 2], f2c_dabs(d__3)); // ; expr subst
-                *tol = max(d__4,d__5);
+                *tol = fla_max(d__4,d__5);
                 /* L10: */
             }
             *tol *= eps;

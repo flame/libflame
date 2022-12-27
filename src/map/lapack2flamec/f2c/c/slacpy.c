@@ -66,7 +66,7 @@ if UPLO = 'L', only the lower */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] B */
@@ -78,7 +78,7 @@ if UPLO = 'L', only the lower */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,M). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,M). */
 /* > \endverbatim */
 /* Authors: */
 /* ======== */
@@ -134,7 +134,7 @@ int slacpy_(char *uplo, integer *m, integer *n, real *a, integer *lda, real *b, 
                 j <= i__1;
                 ++j)
         {
-            i__2 = min(j,*m);
+            i__2 = fla_min(j,*m);
             for (i__ = 1;
                     i__ <= i__2;
                     ++i__)

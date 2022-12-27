@@ -61,7 +61,7 @@ int cgerc_(integer *m, integer *n, complex *alpha, complex * x, integer *incx, c
     /* LDA - INTEGER. */
     /* On entry, LDA specifies the first dimension of A as declared */
     /* in the calling (sub) program. LDA must be at least */
-    /* max( 1, m ). */
+    /* fla_max( 1, m ). */
     /* Unchanged on exit. */
     /* Level 2 Blas routine. */
     /* -- Written on 22-October-1986. */
@@ -100,7 +100,7 @@ int cgerc_(integer *m, integer *n, complex *alpha, complex * x, integer *incx, c
     {
         info = 7;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         info = 9;
     }

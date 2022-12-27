@@ -102,7 +102,7 @@ static integer c__3 = 3;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] B */
@@ -114,7 +114,7 @@ static integer c__3 = 3;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] VL */
@@ -201,8 +201,8 @@ for each selected eigenvalue */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,N). */
-/* > If JOB = 'V' or 'B', LWORK >= max(1,2*N*N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,N). */
+/* > If JOB = 'V' or 'B', LWORK >= fla_max(1,2*N*N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] IWORK */
@@ -418,11 +418,11 @@ int ztgsna_(char *job, char *howmny, logical *select, integer *n, doublecomplex 
     {
         *info = -4;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -6;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -8;
     }

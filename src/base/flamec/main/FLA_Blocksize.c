@@ -172,10 +172,10 @@ dim_t FLA_Query_blocksize( FLA_Datatype dt, FLA_Dimension dim )
 		long sgemm_min, dgemm_min, cgemm_min, zgemm_min;
 		
 		// Find the blocksizes associated with FLA_DIMENSION_MIN.
-		sgemm_min = min( sgemm_p, sgemm_q );
-		dgemm_min = min( dgemm_p, dgemm_q );
-		cgemm_min = min( cgemm_p, cgemm_q );
-		zgemm_min = min( zgemm_p, zgemm_q );
+		sgemm_min = fla_min( sgemm_p, sgemm_q );
+		dgemm_min = fla_min( dgemm_p, dgemm_q );
+		cgemm_min = fla_min( cgemm_p, cgemm_q );
+		zgemm_min = fla_min( zgemm_p, zgemm_q );
 
 		// Set the values for each datatype and dimension constant.
 		fla_goto_gemm_blocksize[FLA_S_INDEX][FLA_DIM_M_INDEX]   = sgemm_p;
@@ -220,8 +220,8 @@ dim_t FLA_Query_blocksize( FLA_Datatype dt, FLA_Dimension dim )
 		b_val = FLA_DEFAULT_N_BLOCKSIZE;
 	else if ( dim == FLA_DIMENSION_MIN )
     {
-		b_val = min( FLA_DEFAULT_M_BLOCKSIZE, FLA_DEFAULT_K_BLOCKSIZE );
-		b_val = min( b_val, FLA_DEFAULT_N_BLOCKSIZE );
+		b_val = fla_min( FLA_DEFAULT_M_BLOCKSIZE, FLA_DEFAULT_K_BLOCKSIZE );
+		b_val = fla_min( b_val, FLA_DEFAULT_N_BLOCKSIZE );
     }
 
 #endif
@@ -257,7 +257,7 @@ dim_t FLA_Determine_blocksize( FLA_Obj A_unproc, FLA_Quadrant to_dir, fla_blocks
 
 	// If the unprocessed partition is smaller than our blocksize allows,
 	// we have to use it's length/width instead.
-	b = min( A_unproc_size, typed_blocksize );
+	b = fla_min( A_unproc_size, typed_blocksize );
 	
 	// Return the computed blocksize.
 	return b;

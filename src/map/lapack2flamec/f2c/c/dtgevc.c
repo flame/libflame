@@ -118,7 +118,7 @@ static logical c_false = FALSE_;
 /* > \param[in] LDS */
 /* > \verbatim */
 /* > LDS is INTEGER */
-/* > The leading dimension of array S. LDS >= max(1,N). */
+/* > The leading dimension of array S. LDS >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] P */
@@ -133,7 +133,7 @@ static logical c_false = FALSE_;
 /* > \param[in] LDP */
 /* > \verbatim */
 /* > LDP is INTEGER */
-/* > The leading dimension of array P. LDP >= max(1,N). */
+/* > The leading dimension of array P. LDP >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] VL */
@@ -442,11 +442,11 @@ int dtgevc_(char *side, char *howmny, logical *select, integer *n, doublereal *s
     {
         *info = -4;
     }
-    else if (*lds < max(1,*n))
+    else if (*lds < fla_max(1,*n))
     {
         *info = -6;
     }
-    else if (*ldp < max(1,*n))
+    else if (*ldp < fla_max(1,*n))
     {
         *info = -8;
     }
@@ -607,7 +607,7 @@ L10:
         work[*n + j] = temp2;
         /* Computing MIN */
         i__3 = j + 1;
-        i__2 = min(i__3,*n);
+        i__2 = fla_min(i__3,*n);
         for (i__ = iend + 1;
                 i__ <= i__2;
                 ++i__)
@@ -616,12 +616,12 @@ L10:
             temp2 += (d__1 = p[i__ + j * p_dim1], f2c_dabs(d__1));
             /* L40: */
         }
-        anorm = max(anorm,temp);
-        bnorm = max(bnorm,temp2);
+        anorm = fla_max(anorm,temp);
+        bnorm = fla_max(bnorm,temp2);
         /* L50: */
     }
-    ascale = 1. / max(anorm,safmin);
-    bscale = 1. / max(bnorm,safmin);
+    ascale = 1. / fla_max(anorm,safmin);
+    bscale = 1. / fla_max(bnorm,safmin);
     /* Left eigenvectors */
     if (compl)
     {
@@ -706,8 +706,8 @@ L10:
                 /* Computing MAX */
                 d__3 = (d__1 = s[je + je * s_dim1], f2c_dabs(d__1)) * ascale;
                 d__4 = (d__2 = p[je + je * p_dim1], f2c_dabs(d__2)) * bscale;
-                d__3 = max(d__3,d__4); // ; expr subst
-                temp = 1. / max(d__3,safmin);
+                d__3 = fla_max(d__3,d__4); // ; expr subst
+                temp = 1. / fla_max(d__3,safmin);
                 salfar = temp * s[je + je * s_dim1] * ascale;
                 sbeta = temp * p[je + je * p_dim1] * bscale;
                 acoef = sbeta * ascale;
@@ -719,25 +719,25 @@ L10:
                 lsb = f2c_dabs(salfar) >= safmin && f2c_dabs(bcoefr) < small;
                 if (lsa)
                 {
-                    scale = small / f2c_dabs(sbeta) * min(anorm,big);
+                    scale = small / f2c_dabs(sbeta) * fla_min(anorm,big);
                 }
                 if (lsb)
                 {
                     /* Computing MAX */
                     d__1 = scale;
-                    d__2 = small / f2c_dabs(salfar) * min(bnorm,big); // , expr subst
-                    scale = max(d__1,d__2);
+                    d__2 = small / f2c_dabs(salfar) * fla_min(bnorm,big); // , expr subst
+                    scale = fla_max(d__1,d__2);
                 }
                 if (lsa || lsb)
                 {
                     /* Computing MIN */
                     /* Computing MAX */
                     d__3 = 1., d__4 = f2c_dabs(acoef);
-                    d__3 = max(d__3,d__4);
+                    d__3 = fla_max(d__3,d__4);
                     d__4 = f2c_dabs(bcoefr); // ; expr subst
                     d__1 = scale;
-                    d__2 = 1. / (safmin * max(d__3,d__4)); // , expr subst
-                    scale = min(d__1,d__2);
+                    d__2 = 1. / (safmin * fla_max(d__3,d__4)); // , expr subst
+                    scale = fla_min(d__1,d__2);
                     if (lsa)
                     {
                         acoef = ascale * (scale * sbeta);
@@ -786,7 +786,7 @@ L10:
                     /* Computing MAX */
                     d__1 = scale;
                     d__2 = safmin / ulp / bcoefa; // , expr subst
-                    scale = max(d__1,d__2);
+                    scale = fla_max(d__1,d__2);
                 }
                 if (safmin * acoefa > ascale)
                 {
@@ -797,7 +797,7 @@ L10:
                     /* Computing MIN */
                     d__1 = scale;
                     d__2 = bscale / (safmin * bcoefa); // , expr subst
-                    scale = min(d__1,d__2);
+                    scale = fla_min(d__1,d__2);
                 }
                 if (scale != 1.)
                 {
@@ -829,13 +829,13 @@ L10:
                 /* Computing MAX */
                 d__5 = (d__1 = work[(*n << 1) + je], f2c_dabs(d__1)) + (d__2 = work[*n * 3 + je], f2c_dabs(d__2));
                 d__6 = (d__3 = work[(* n << 1) + je + 1], f2c_dabs(d__3)) + (d__4 = work[*n * 3 + je + 1], f2c_dabs(d__4)); // , expr subst
-                xmax = max(d__5,d__6);
+                xmax = fla_max(d__5,d__6);
             }
             /* Computing MAX */
             d__1 = ulp * acoefa * anorm;
             d__2 = ulp * bcoefa * bnorm;
-            d__1 = max(d__1,d__2); // ; expr subst
-            dmin__ = max(d__1,safmin);
+            d__1 = fla_max(d__1,d__2); // ; expr subst
+            dmin__ = fla_max(d__1,safmin);
             /* T */
             /* Triangular solve of (a A - b B) y = 0 */
             /* T */
@@ -863,19 +863,19 @@ L10:
                     }
                 }
                 /* Check whether scaling is necessary for dot products */
-                xscale = 1. / max(1.,xmax);
+                xscale = 1. / fla_max(1.,xmax);
                 /* Computing MAX */
                 d__1 = work[j], d__2 = work[*n + j];
-                d__1 = max(d__1,d__2);
+                d__1 = fla_max(d__1,d__2);
                 d__2 = acoefa * work[j] + bcoefa * work[*n + j]; // ; expr subst
-                temp = max(d__1,d__2);
+                temp = fla_max(d__1,d__2);
                 if (il2by2)
                 {
                     /* Computing MAX */
-                    d__1 = temp, d__2 = work[j + 1], d__1 = max(d__1,d__2), d__2 = work[*n + j + 1];
-                    d__1 = max(d__1,d__2);
+                    d__1 = temp, d__2 = work[j + 1], d__1 = fla_max(d__1,d__2), d__2 = work[*n + j + 1];
+                    d__1 = fla_max(d__1,d__2);
                     d__2 = acoefa * work[j + 1] + bcoefa * work[*n + j + 1]; // ; expr subst
-                    temp = max(d__1,d__2);
+                    temp = fla_max(d__1,d__2);
                 }
                 if (temp > bignum * xscale)
                 {
@@ -970,7 +970,7 @@ L10:
                     }
                     xmax = scale * xmax;
                 }
-                xmax = max(xmax,temp);
+                xmax = fla_max(xmax,temp);
 L160:
                 ;
             }
@@ -1008,7 +1008,7 @@ L160:
                     /* Computing MAX */
                     d__3 = xmax;
                     d__4 = (d__1 = vl[j + ieig * vl_dim1], f2c_dabs( d__1)) + (d__2 = vl[j + (ieig + 1) * vl_dim1], f2c_dabs(d__2)); // , expr subst
-                    xmax = max(d__3,d__4);
+                    xmax = fla_max(d__3,d__4);
                     /* L180: */
                 }
             }
@@ -1022,7 +1022,7 @@ L160:
                     /* Computing MAX */
                     d__2 = xmax;
                     d__3 = (d__1 = vl[j + ieig * vl_dim1], f2c_dabs( d__1)); // , expr subst
-                    xmax = max(d__2,d__3);
+                    xmax = fla_max(d__2,d__3);
                     /* L190: */
                 }
             }
@@ -1142,8 +1142,8 @@ L220:
                 /* Computing MAX */
                 d__3 = (d__1 = s[je + je * s_dim1], f2c_dabs(d__1)) * ascale;
                 d__4 = (d__2 = p[je + je * p_dim1], f2c_dabs(d__2)) * bscale;
-                d__3 = max(d__3,d__4); // ; expr subst
-                temp = 1. / max(d__3,safmin);
+                d__3 = fla_max(d__3,d__4); // ; expr subst
+                temp = 1. / fla_max(d__3,safmin);
                 salfar = temp * s[je + je * s_dim1] * ascale;
                 sbeta = temp * p[je + je * p_dim1] * bscale;
                 acoef = sbeta * ascale;
@@ -1155,25 +1155,25 @@ L220:
                 lsb = f2c_dabs(salfar) >= safmin && f2c_dabs(bcoefr) < small;
                 if (lsa)
                 {
-                    scale = small / f2c_dabs(sbeta) * min(anorm,big);
+                    scale = small / f2c_dabs(sbeta) * fla_min(anorm,big);
                 }
                 if (lsb)
                 {
                     /* Computing MAX */
                     d__1 = scale;
-                    d__2 = small / f2c_dabs(salfar) * min(bnorm,big); // , expr subst
-                    scale = max(d__1,d__2);
+                    d__2 = small / f2c_dabs(salfar) * fla_min(bnorm,big); // , expr subst
+                    scale = fla_max(d__1,d__2);
                 }
                 if (lsa || lsb)
                 {
                     /* Computing MIN */
                     /* Computing MAX */
                     d__3 = 1., d__4 = f2c_dabs(acoef);
-                    d__3 = max(d__3,d__4);
+                    d__3 = fla_max(d__3,d__4);
                     d__4 = f2c_dabs(bcoefr); // ; expr subst
                     d__1 = scale;
-                    d__2 = 1. / (safmin * max(d__3,d__4)); // , expr subst
-                    scale = min(d__1,d__2);
+                    d__2 = 1. / (safmin * fla_max(d__3,d__4)); // , expr subst
+                    scale = fla_min(d__1,d__2);
                     if (lsa)
                     {
                         acoef = ascale * (scale * sbeta);
@@ -1231,7 +1231,7 @@ L220:
                     /* Computing MAX */
                     d__1 = scale;
                     d__2 = safmin / ulp / bcoefa; // , expr subst
-                    scale = max(d__1,d__2);
+                    scale = fla_max(d__1,d__2);
                 }
                 if (safmin * acoefa > ascale)
                 {
@@ -1242,7 +1242,7 @@ L220:
                     /* Computing MIN */
                     d__1 = scale;
                     d__2 = bscale / (safmin * bcoefa); // , expr subst
-                    scale = min(d__1,d__2);
+                    scale = fla_min(d__1,d__2);
                 }
                 if (scale != 1.)
                 {
@@ -1275,7 +1275,7 @@ L220:
                 /* Computing MAX */
                 d__5 = (d__1 = work[(*n << 1) + je], f2c_dabs(d__1)) + (d__2 = work[*n * 3 + je], f2c_dabs(d__2));
                 d__6 = (d__3 = work[(* n << 1) + je - 1], f2c_dabs(d__3)) + (d__4 = work[*n * 3 + je - 1], f2c_dabs(d__4)); // , expr subst
-                xmax = max(d__5,d__6);
+                xmax = fla_max(d__5,d__6);
                 /* Compute contribution from columns JE and JE-1 */
                 /* of A and B to the sums. */
                 creala = acoef * work[(*n << 1) + je - 1];
@@ -1299,8 +1299,8 @@ L220:
             /* Computing MAX */
             d__1 = ulp * acoefa * anorm;
             d__2 = ulp * bcoefa * bnorm;
-            d__1 = max(d__1,d__2); // ; expr subst
-            dmin__ = max(d__1,safmin);
+            d__1 = fla_max(d__1,d__2); // ; expr subst
+            dmin__ = fla_max(d__1,safmin);
             /* Columnwise triangular solve of (a A - b B) x = 0 */
             il2by2 = FALSE_;
             for (j = je - nw;
@@ -1349,7 +1349,7 @@ L220:
                 }
                 /* Computing MAX */
                 d__1 = scale * xmax;
-                xmax = max(d__1,temp);
+                xmax = fla_max(d__1,temp);
                 i__1 = nw;
                 for (jw = 1;
                         jw <= i__1;
@@ -1369,18 +1369,18 @@ L220:
                 if (j > 1)
                 {
                     /* Check whether scaling is necessary for sum. */
-                    xscale = 1. / max(1.,xmax);
+                    xscale = 1. / fla_max(1.,xmax);
                     temp = acoefa * work[j] + bcoefa * work[*n + j];
                     if (il2by2)
                     {
                         /* Computing MAX */
                         d__1 = temp;
                         d__2 = acoefa * work[j + 1] + bcoefa * work[*n + j + 1]; // , expr subst
-                        temp = max(d__1,d__2);
+                        temp = fla_max(d__1,d__2);
                     }
                     /* Computing MAX */
-                    d__1 = max(temp,acoefa);
-                    temp = max(d__1,bcoefa);
+                    d__1 = fla_max(temp,acoefa);
+                    temp = fla_max(d__1,bcoefa);
                     if (temp > bignum * xscale)
                     {
                         i__1 = nw - 1;
@@ -1529,7 +1529,7 @@ L370:
                     /* Computing MAX */
                     d__3 = xmax;
                     d__4 = (d__1 = vr[j + ieig * vr_dim1], f2c_dabs( d__1)) + (d__2 = vr[j + (ieig + 1) * vr_dim1], f2c_dabs(d__2)); // , expr subst
-                    xmax = max(d__3,d__4);
+                    xmax = fla_max(d__3,d__4);
                     /* L460: */
                 }
             }
@@ -1543,7 +1543,7 @@ L370:
                     /* Computing MAX */
                     d__2 = xmax;
                     d__3 = (d__1 = vr[j + ieig * vr_dim1], f2c_dabs( d__1)); // , expr subst
-                    xmax = max(d__2,d__3);
+                    xmax = fla_max(d__2,d__3);
                     /* L470: */
                 }
             }

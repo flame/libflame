@@ -53,7 +53,7 @@ void time_Svd_uv(
   }
 
 /*
-  if ( variant == 0 && max( m, n ) > 800 )
+  if ( variant == 0 && fla_max( m, n ) > 800 )
   {
     *gflops = 0.0;
     *dtime  = 0.0;
@@ -112,7 +112,7 @@ void time_Svd_uv(
     }
 
     *dtime = FLA_Clock() - *dtime;
-    dtime_old = min( *dtime, dtime_old );
+    dtime_old = fla_min( *dtime, dtime_old );
 
   }
   {
@@ -140,7 +140,7 @@ void time_Svd_uv(
     FLA_Norm_frob( eyeV, normV );
     FLA_Obj_extract_real_scalar( normU, &diffU );
     FLA_Obj_extract_real_scalar( normV, &diffV );
-    *diff2 = max( diffU, diffV );
+    *diff2 = fla_max( diffU, diffV );
     //*diff2 = diffU;
     //*diff2 = diffV;
 
@@ -150,9 +150,9 @@ void time_Svd_uv(
       FLA_Obj VT,
               VB;
 
-      FLA_Part_1x2( U,   &UL, &UR,   min( m, n ), FLA_LEFT );
+      FLA_Part_1x2( U,   &UL, &UR,   fla_min( m, n ), FLA_LEFT );
       FLA_Part_2x1( V,   &VT,
-                         &VB,        min( m, n ), FLA_TOP );
+                         &VB,        fla_min( m, n ), FLA_TOP );
 /*
 FLA_Obj_show( "A_orig", A_save, "%8.1e + %8.1e ", "" );
 FLA_Obj_show( "s", s, "%8.1e ", "" );
@@ -169,8 +169,8 @@ FLA_Obj_show( "V'", V, "%8.1e + %8.1e ", "" );
       FLA_Obj UL, UR;
       FLA_Obj VL, VR;
 
-      FLA_Part_1x2( U,   &UL, &UR,   min( m, n ), FLA_LEFT );
-      FLA_Part_1x2( V,   &VL, &VR,   min( m, n ), FLA_LEFT );
+      FLA_Part_1x2( U,   &UL, &UR,   fla_min( m, n ), FLA_LEFT );
+      FLA_Part_1x2( V,   &VL, &VR,   fla_min( m, n ), FLA_LEFT );
 
       FLA_Apply_diag_matrix( FLA_RIGHT, FLA_NO_CONJUGATE, s, UL );
       FLA_Gemm( FLA_NO_TRANSPOSE, FLA_CONJ_TRANSPOSE,

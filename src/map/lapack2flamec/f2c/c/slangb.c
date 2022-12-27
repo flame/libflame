@@ -39,7 +39,7 @@ static integer c__1 = 1;
 /* > \return SLANGB */
 /* > \verbatim */
 /* > */
-/* > SLANGB = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > SLANGB = ( fla_max(abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -50,7 +50,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that fla_max(abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -86,7 +86,7 @@ static integer c__1 = 1;
 /* > The band matrix A, stored in rows 1 to KL+KU+1. The j-th */
 /* > column of A is stored in the j-th column of the array AB as */
 /* > follows: */
-/* > AB(ku+1+i-j,j) = A(i,j) for max(1,j-ku)<=i<=min(n,j+kl). */
+/* > AB(ku+1+i-j,j) = A(i,j) for fla_max(1,j-ku)<=i<=fla_min(n,j+kl). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDAB */
@@ -157,7 +157,7 @@ real slangb_(char *norm, integer *n, integer *kl, integer *ku, real *ab, integer
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
+        /* Find fla_max(abs(A(i,j))). */
         value = 0.f;
         i__1 = *n;
         for (j = 1;
@@ -169,8 +169,8 @@ real slangb_(char *norm, integer *n, integer *kl, integer *ku, real *ab, integer
             /* Computing MIN */
             i__4 = *n + *ku + 1 - j;
             i__5 = *kl + *ku + 1; // , expr subst
-            i__3 = min(i__4,i__5);
-            for (i__ = max(i__2,1);
+            i__3 = fla_min(i__4,i__5);
+            for (i__ = fla_max(i__2,1);
                     i__ <= i__3;
                     ++i__)
             {
@@ -199,8 +199,8 @@ real slangb_(char *norm, integer *n, integer *kl, integer *ku, real *ab, integer
             /* Computing MIN */
             i__4 = *n + *ku + 1 - j;
             i__5 = *kl + *ku + 1; // , expr subst
-            i__2 = min(i__4,i__5);
-            for (i__ = max(i__3,1);
+            i__2 = fla_min(i__4,i__5);
+            for (i__ = fla_max(i__3,1);
                     i__ <= i__2;
                     ++i__)
             {
@@ -237,8 +237,8 @@ real slangb_(char *norm, integer *n, integer *kl, integer *ku, real *ab, integer
             /* Computing MIN */
             i__5 = *n;
             i__6 = j + *kl; // , expr subst
-            i__4 = min(i__5,i__6);
-            for (i__ = max(i__2,i__3);
+            i__4 = fla_min(i__5,i__6);
+            for (i__ = fla_max(i__2,i__3);
                     i__ <= i__4;
                     ++i__)
             {
@@ -274,12 +274,12 @@ real slangb_(char *norm, integer *n, integer *kl, integer *ku, real *ab, integer
             /* Computing MAX */
             i__4 = 1;
             i__2 = j - *ku; // , expr subst
-            l = max(i__4,i__2);
+            l = fla_max(i__4,i__2);
             k = *ku + 1 - j + l;
             /* Computing MIN */
             i__2 = *n;
             i__3 = j + *kl; // , expr subst
-            i__4 = min(i__2,i__3) - l + 1;
+            i__4 = fla_min(i__2,i__3) - l + 1;
             slassq_(&i__4, &ab[k + j * ab_dim1], &c__1, &scale, &sum);
             /* L90: */
         }

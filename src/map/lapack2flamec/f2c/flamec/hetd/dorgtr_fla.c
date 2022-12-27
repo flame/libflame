@@ -68,7 +68,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] TAU */
@@ -87,7 +87,7 @@ static integer c_n1 = -1;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,N-1). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,N-1). */
 /* > For optimum performance LWORK >= (N-1)*NB, where NB is */
 /* > the optimal blocksize. */
 /* > */
@@ -169,7 +169,7 @@ int dorgtr_fla(char *uplo, integer *n, doublereal *a, integer * lda, doublereal 
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }
@@ -178,7 +178,7 @@ int dorgtr_fla(char *uplo, integer *n, doublereal *a, integer * lda, doublereal 
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n - 1; // , expr subst
-        if (*lwork < max(i__1,i__2) && ! lquery)
+        if (*lwork < fla_max(i__1,i__2) && ! lquery)
         {
             *info = -7;
         }
@@ -202,7 +202,7 @@ int dorgtr_fla(char *uplo, integer *n, doublereal *a, integer * lda, doublereal 
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n - 1; // , expr subst
-        lwkopt = max(i__1,i__2) * nb;
+        lwkopt = fla_max(i__1,i__2) * nb;
         work[1] = (doublereal) lwkopt;
     }
     if (*info != 0)

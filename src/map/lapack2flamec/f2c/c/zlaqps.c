@@ -100,7 +100,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] JPVT */
@@ -143,7 +143,7 @@ static integer c__1 = 1;
 /* > \param[in] LDF */
 /* > \verbatim */
 /* > LDF is INTEGER */
-/* > The leading dimension of the array F. LDF >= max(1,N). */
+/* > The leading dimension of the array F. LDF >= fla_max(1,N). */
 /* > \endverbatim */
 /* Authors: */
 /* ======== */
@@ -234,7 +234,7 @@ int zlaqps_(integer *m, integer *n, integer *offset, integer *nb, integer *kb, d
     /* Computing MIN */
     i__1 = *m;
     i__2 = *n + *offset; // , expr subst
-    lastrk = min(i__1,i__2);
+    lastrk = fla_min(i__1,i__2);
     lsticc = 0;
     k = 0;
     tol3z = sqrt(dlamch_("Epsilon"));
@@ -364,7 +364,7 @@ L10:
                     /* Computing MAX */
                     d__1 = 0.;
                     d__2 = (temp + 1.) * (1. - temp); // , expr subst
-                    temp = max(d__1,d__2);
+                    temp = fla_max(d__1,d__2);
                     /* Computing 2nd power */
                     d__1 = vn1[j] / vn2[j];
                     temp2 = temp * (d__1 * d__1);
@@ -395,7 +395,7 @@ L10:
     /* Computing MIN */
     i__1 = *n;
     i__2 = *m - *offset; // , expr subst
-    if (*kb < min(i__1,i__2))
+    if (*kb < fla_min(i__1,i__2))
     {
         i__1 = *m - rk;
         i__2 = *n - *kb;

@@ -87,7 +87,7 @@ the elements below the k-th */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] TAU */
@@ -118,7 +118,7 @@ the elements below the k-th */
 /* > \param[in] LDY */
 /* > \verbatim */
 /* > LDY is INTEGER */
-/* > The leading dimension of the array Y. LDY >= max(1,N). */
+/* > The leading dimension of the array Y. LDY >= fla_max(1,N). */
 /* > \endverbatim */
 /* Authors: */
 /* ======== */
@@ -276,7 +276,7 @@ int zlahrd_(integer *n, integer *k, integer *nb, doublecomplex *a, integer *lda,
         i__2 = *n - *k - i__ + 1;
         /* Computing MIN */
         i__3 = *k + i__ + 1;
-        zlarfg_(&i__2, &ei, &a[min(i__3,*n) + i__ * a_dim1], &c__1, &tau[i__]) ;
+        zlarfg_(&i__2, &ei, &a[fla_min(i__3,*n) + i__ * a_dim1], &c__1, &tau[i__]) ;
         i__2 = *k + i__ + i__ * a_dim1;
         a[i__2].r = 1.;
         a[i__2].i = 0.; // , expr subst

@@ -33,7 +33,7 @@ void orgqr_test()
   int m = 64;//512;
   int n = 64;//256;
   int k = 64;//128;
- int min_m_n = min( m, n );
+ int min_m_n = fla_min( m, n );
  srand (time(NULL));
 
  FLA_Init( );

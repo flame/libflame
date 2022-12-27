@@ -77,8 +77,8 @@ FLA_Error FLA_Pythag2_ops( float*    chi,
 
 	xabs = fabsf( *chi );
 	yabs = fabsf( *psi );
-	w    = max( xabs, yabs );
-	z    = min( xabs, yabs );
+	w    = fla_max( xabs, yabs );
+	z    = fla_min( xabs, yabs );
 
 	if ( z == zero )
 	{
@@ -109,8 +109,8 @@ FLA_Error FLA_Pythag2_opd( double*   chi,
 
 	xabs = fabs( *chi );
 	yabs = fabs( *psi );
-	w    = max( xabs, yabs );
-	z    = min( xabs, yabs );
+	w    = fla_max( xabs, yabs );
+	z    = fla_min( xabs, yabs );
 
 	if ( z == zero )
 	{

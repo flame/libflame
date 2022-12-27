@@ -19,7 +19,7 @@ function [ C_out ] = FLA_Gemm_nt_blk_var3( alpha, A, B, C, nb_alg )
 
   while ( size( BT, 1 ) < size( B, 1 ) )
 
-    b = min( size( BB, 1 ), nb_alg );
+    b = fla_min( size( BB, 1 ), nb_alg );
 
     [ B0, ...
       B1, ...

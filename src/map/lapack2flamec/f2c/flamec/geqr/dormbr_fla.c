@@ -113,7 +113,7 @@
  /* > \param[in] A */
  /* > \verbatim */
  /* > A is DOUBLE PRECISION array, dimension */
- /* > (LDA,min(nq,K)) if VECT = 'Q' */
+ /* > (LDA,fla_min(nq,K)) if VECT = 'Q' */
  /* > (LDA,nq) if VECT = 'P' */
  /* > The vectors which define the elementary reflectors H(i) and */
  /* > G(i), whose products determine the matrices Q and P, as */
@@ -124,14 +124,14 @@
  /* > \verbatim */
  /* > LDA is INTEGER */
  /* > The leading dimension of the array A. */
- /* > If VECT = 'Q', LDA >= max(1,nq);
+ /* > If VECT = 'Q', LDA >= fla_max(1,nq);
  */
- /* > if VECT = 'P', LDA >= max(1,min(nq,K)). */
+ /* > if VECT = 'P', LDA >= fla_max(1,fla_min(nq,K)). */
  /* > \endverbatim */
  /* > */
  /* > \param[in] TAU */
  /* > \verbatim */
- /* > TAU is DOUBLE PRECISION array, dimension (min(nq,K)) */
+ /* > TAU is DOUBLE PRECISION array, dimension (fla_min(nq,K)) */
  /* > TAU(i) must contain the scalar factor of the elementary */
  /* > reflector H(i) or G(i) which determines Q or P, as returned */
  /* > by DGEBRD in the array argument TAUQ or TAUP. */
@@ -148,7 +148,7 @@
  /* > \param[in] LDC */
  /* > \verbatim */
  /* > LDC is INTEGER */
- /* > The leading dimension of the array C. LDC >= max(1,M). */
+ /* > The leading dimension of the array C. LDC >= fla_max(1,M). */
  /* > \endverbatim */
  /* > */
  /* > \param[out] WORK */
@@ -161,9 +161,9 @@
  /* > \verbatim */
  /* > LWORK is INTEGER */
  /* > The dimension of the array WORK. */
- /* > If SIDE = 'L', LWORK >= max(1,N);
+ /* > If SIDE = 'L', LWORK >= fla_max(1,N);
  */
- /* > if SIDE = 'R', LWORK >= max(1,M). */
+ /* > if SIDE = 'R', LWORK >= fla_max(1,M). */
  /* > For optimum performance LWORK >= N*NB if SIDE = 'L', and */
  /* > LWORK >= M*NB if SIDE = 'R', where NB is the optimal */
  /* > blocksize. */
@@ -250,11 +250,11 @@
  /* NQ is the order of Q or P and NW is the minimum dimension of WORK */
  if (left) {
  nq = *m;
- nw = max(1,*n);
+ nw = fla_max(1,*n);
  }
  else {
  nq = *n;
- nw = max(1,*m);
+ nw = fla_max(1,*m);
  }
  if (! applyq && ! lsame_(vect, "P")) {
  *info = -1;
@@ -277,11 +277,11 @@
  else /* if(complicated condition) */
  {
  /* Computing MAX */
- i__1 = 1; i__2 = min(nq,*k); // , expr subst  
- if (applyq && *lda < max(1,nq) || ! applyq && *lda < max(i__1,i__2)) {
+ i__1 = 1; i__2 = fla_min(nq,*k); // , expr subst  
+ if (applyq && *lda < fla_max(1,nq) || ! applyq && *lda < fla_max(i__1,i__2)) {
  *info = -8;
  }
- else if (*ldc < max(1,*m)) {
+ else if (*ldc < fla_max(1,*m)) {
  *info = -11;
  }
  else if (*lwork < nw && ! lquery) {

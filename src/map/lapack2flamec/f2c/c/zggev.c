@@ -102,7 +102,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of A. LDA >= max(1,N). */
+/* > The leading dimension of A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -115,7 +115,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of B. LDB >= max(1,N). */
+/* > The leading dimension of B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ALPHA */
@@ -182,7 +182,7 @@ static integer c_n1 = -1;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,2*N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,2*N). */
 /* > For good performance, LWORK must generally be larger. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -360,11 +360,11 @@ int zggev_(char *jobvl, char *jobvr, integer *n, doublecomplex *a, integer *lda,
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -7;
     }
@@ -388,21 +388,21 @@ int zggev_(char *jobvl, char *jobvr, integer *n, doublecomplex *a, integer *lda,
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n << 1; // , expr subst
-        lwkmin = max(i__1,i__2);
+        lwkmin = fla_max(i__1,i__2);
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n + *n * ilaenv_(&c__1, "ZGEQRF", " ", n, &c__1, n, &c__0); // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
         /* Computing MAX */
         i__1 = lwkopt;
         i__2 = *n + *n * ilaenv_(&c__1, "ZUNMQR", " ", n, & c__1, n, &c__0); // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
         if (ilvl)
         {
             /* Computing MAX */
             i__1 = lwkopt;
             i__2 = *n + *n * ilaenv_(&c__1, "ZUNGQR", " ", n, & c__1, n, &c_n1); // , expr subst
-            lwkopt = max(i__1,i__2);
+            lwkopt = fla_max(i__1,i__2);
         }
         work[1].r = (doublereal) lwkopt;
         work[1].i = 0.; // , expr subst
@@ -601,7 +601,7 @@ int zggev_(char *jobvl, char *jobvr, integer *n, doublecomplex *a, integer *lda,
                     i__3 = jr + jc * vl_dim1;
                     d__3 = temp;
                     d__4 = (d__1 = vl[i__3].r, f2c_dabs(d__1)) + ( d__2 = d_imag(&vl[jr + jc * vl_dim1]), f2c_dabs(d__2)); // , expr subst
-                    temp = max(d__3,d__4);
+                    temp = fla_max(d__3,d__4);
                     /* L10: */
                 }
                 if (temp < smlnum)
@@ -644,7 +644,7 @@ L30:
                     i__3 = jr + jc * vr_dim1;
                     d__3 = temp;
                     d__4 = (d__1 = vr[i__3].r, f2c_dabs(d__1)) + ( d__2 = d_imag(&vr[jr + jc * vr_dim1]), f2c_dabs(d__2)); // , expr subst
-                    temp = max(d__3,d__4);
+                    temp = fla_max(d__3,d__4);
                     /* L40: */
                 }
                 if (temp < smlnum)

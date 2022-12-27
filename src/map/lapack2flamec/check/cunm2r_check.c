@@ -53,11 +53,11 @@ int cunm2r_check(char *side, char *trans, integer *m, integer *n, integer *k, sc
     {
         *info = -5;
     }
-    else if (*lda < max(1,nq))
+    else if (*lda < fla_max(1,nq))
     {
         *info = -7;
     }
-    else if (*ldc < max(1,*m))
+    else if (*ldc < fla_max(1,*m))
     {
         *info = -10;
     }

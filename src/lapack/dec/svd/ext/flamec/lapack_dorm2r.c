@@ -101,9 +101,9 @@
  /* > \verbatim */
  /* > LDA is INTEGER */
  /* > The leading dimension of the array A. */
- /* > If SIDE = 'L', LDA >= max(1,M);
+ /* > If SIDE = 'L', LDA >= fla_max(1,M);
  */
- /* > if SIDE = 'R', LDA >= max(1,N). */
+ /* > if SIDE = 'R', LDA >= fla_max(1,N). */
  /* > \endverbatim */
  /* > */
  /* > \param[in] TAU */
@@ -123,7 +123,7 @@
  /* > \param[in] LDC */
  /* > \verbatim */
  /* > LDC is INTEGER */
- /* > The leading dimension of the array C. LDC >= max(1,M). */
+ /* > The leading dimension of the array C. LDC >= fla_max(1,M). */
  /* > \endverbatim */
  /* > */
  /* > \param[out] WORK */
@@ -216,10 +216,10 @@
  else if (*k < 0 || *k > nq) {
  *info = -5;
  }
- else if (*lda < max(1,nq)) {
+ else if (*lda < fla_max(1,nq)) {
  *info = -7;
  }
- else if (*ldc < max(1,*m)) {
+ else if (*ldc < fla_max(1,*m)) {
  *info = -10;
  }
  if (*info != 0) {

@@ -188,7 +188,7 @@ integer fla_test_check_run_only( FILE* input_stream, integer* op, char* buffer)
     integer run_only_flag = 1;
     while(fla_test_read_tests_for_op( input_stream, op, buffer))
     {
-        run_only_flag = max(run_only_flag, *op);
+        run_only_flag = fla_max(run_only_flag, *op);
     }
 
     fseek( input_stream, 0, SEEK_SET );

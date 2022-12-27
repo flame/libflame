@@ -81,7 +81,7 @@ int zher2_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *x, integ
     /* LDA - INTEGER. */
     /* On entry, LDA specifies the first dimension of A as declared */
     /* in the calling (sub) program. LDA must be at least */
-    /* max( 1, n ). */
+    /* fla_max( 1, n ). */
     /* Unchanged on exit. */
     /* Level 2 Blas routine. */
     /* -- Written on 22-October-1986. */
@@ -121,7 +121,7 @@ int zher2_(char *uplo, integer *n, doublecomplex *alpha, doublecomplex *x, integ
     {
         info = 7;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         info = 9;
     }

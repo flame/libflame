@@ -92,7 +92,7 @@ void time_Eig_gest(
     }
 
     *dtime = FLA_Clock() - *dtime;
-    dtime_save = min( *dtime, dtime_save );
+    dtime_save = fla_min( *dtime, dtime_save );
   }
 
   FLASH_Obj_create_flat_copy_of_hier( A, &A_flat );

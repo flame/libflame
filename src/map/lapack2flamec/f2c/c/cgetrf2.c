@@ -39,7 +39,7 @@ static integer c__1 = 1;
 /* > the matrix into four submatrices: */
 /* > */
 /* > [ A11 | A12 ] where A11 is n1 by n1 and A22 is n2 by n2 */
-/* > A = [ -----|----- ] with n1 = min(m,n)/2 */
+/* > A = [ -----|----- ] with n1 = fla_min(m,n)/2 */
 /* > [ A21 | A22 ] n2 = n-n1 */
 /* > */
 /* > [ A11 ] */
@@ -78,14 +78,14 @@ the unit diagonal elements of L are not stored. */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] IPIV */
 /* > \verbatim */
-/* > IPIV is INTEGER array, dimension (min(M,N)) */
+/* > IPIV is INTEGER array, dimension (fla_min(M,N)) */
 /* > The pivot indices;
-for 1 <= i <= min(M,N), row i of the */
+for 1 <= i <= fla_min(M,N), row i of the */
 /* > matrix was interchanged with row IPIV(i). */
 /* > \endverbatim */
 /* > */
@@ -179,7 +179,7 @@ int cgetrf2_(integer *m, integer *n, complex *a, integer * lda, integer *ipiv, i
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
@@ -262,7 +262,7 @@ int cgetrf2_(integer *m, integer *n, complex *a, integer * lda, integer *ipiv, i
     else
     {
         /* Use recursive code */
-        n1 = min(*m,*n) / 2;
+        n1 = fla_min(*m,*n) / 2;
         n2 = *n - n1;
         /* [ A11 ] */
         /* Factor [ --- ] */
@@ -276,7 +276,7 @@ int cgetrf2_(integer *m, integer *n, complex *a, integer * lda, integer *ipiv, i
                 if(aocl_fla_progress_ptr)
                 {
                         if(step_count == 0 || step_count==size ){
-                                        size=min(*m,*n);
+                                        size=fla_min(*m,*n);
                                         step_count =1;
                          }
 
@@ -318,7 +318,7 @@ int cgetrf2_(integer *m, integer *n, complex *a, integer * lda, integer *ipiv, i
         {
             *info = iinfo + n1;
         }
-        i__1 = min(*m,*n);
+        i__1 = fla_min(*m,*n);
         for (i__ = n1 + 1;
                 i__ <= i__1;
                 ++i__)
@@ -328,7 +328,7 @@ int cgetrf2_(integer *m, integer *n, complex *a, integer * lda, integer *ipiv, i
         }
         /* Apply interchanges to A21 */
         i__1 = n1 + 1;
-        i__2 = min(*m,*n);
+        i__2 = fla_min(*m,*n);
         claswp_(&n1, &a[a_dim1 + 1], lda, &i__1, &i__2, &ipiv[1], &c__1);
     }
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);

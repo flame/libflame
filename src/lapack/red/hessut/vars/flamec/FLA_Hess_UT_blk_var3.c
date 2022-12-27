@@ -53,7 +53,7 @@ FLA_Error FLA_Hess_UT_blk_var3( FLA_Obj A, FLA_Obj T )
 
   while ( FLA_Obj_length( ATL ) < FLA_Obj_length( A ) )
   {
-    b = min( FLA_Obj_length( ABR ), b_alg );
+    b = fla_min( FLA_Obj_length( ABR ), b_alg );
 
     FLA_Repart_2x2_to_3x3( ATL, /**/ ATR,       &A00, /**/ &A01, &A02,
                         /* ************* */   /* ******************** */
@@ -76,7 +76,7 @@ FLA_Error FLA_Hess_UT_blk_var3( FLA_Obj A, FLA_Obj T )
     FLA_Part_2x2( T1,     &T1_tl, &none,   
                           &none2, &none3,   b, b, FLA_TL ); 
 
-    bb = min( FLA_Obj_length( ABR ) - 1, b_alg );
+    bb = fla_min( FLA_Obj_length( ABR ) - 1, b_alg );
 
     FLA_Part_1x2( ABR,    &ABR_l, &none,    bb, FLA_LEFT ); 
     FLA_Part_1x2( UB,     &UB_l,  &none,    bb, FLA_LEFT ); 

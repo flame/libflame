@@ -77,7 +77,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] IPIV */
@@ -248,7 +248,7 @@ int dsytf2_(char *uplo, integer *n, doublereal *a, integer * lda, integer *ipiv,
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }
@@ -289,7 +289,7 @@ L10: /* If K < 1, exit from loop */
         {
             colmax = 0.;
         }
-        if (max(absakk,colmax) == 0. || disnan_(&absakk))
+        if (fla_max(absakk,colmax) == 0. || disnan_(&absakk))
         {
             /* Column K is zero or underflow, or contains a NaN: */
             /* set INFO and continue */
@@ -320,7 +320,7 @@ L10: /* If K < 1, exit from loop */
                     /* Computing MAX */
                     d__2 = rowmax;
                     d__3 = (d__1 = a[jmax + imax * a_dim1], f2c_dabs(d__1)); // , expr subst
-                    rowmax = max(d__2,d__3);
+                    rowmax = fla_max(d__2,d__3);
                 }
                 if (absakk >= alpha * colmax * (colmax / rowmax))
                 {
@@ -454,7 +454,7 @@ L40: /* If K > N, exit from loop */
         {
             colmax = 0.;
         }
-        if (max(absakk,colmax) == 0. || disnan_(&absakk))
+        if (fla_max(absakk,colmax) == 0. || disnan_(&absakk))
         {
             /* Column K is zero or underflow, or contains a NaN: */
             /* set INFO and continue */
@@ -485,7 +485,7 @@ L40: /* If K > N, exit from loop */
                     /* Computing MAX */
                     d__2 = rowmax;
                     d__3 = (d__1 = a[jmax + imax * a_dim1], f2c_dabs(d__1)); // , expr subst
-                    rowmax = max(d__2,d__3);
+                    rowmax = fla_max(d__2,d__3);
                 }
                 if (absakk >= alpha * colmax * (colmax / rowmax))
                 {

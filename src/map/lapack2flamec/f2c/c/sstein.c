@@ -111,7 +111,7 @@ IBLOCK(i)=1 if eigenvalue W(i) belongs to */
 /* > \param[in] LDZ */
 /* > \verbatim */
 /* > LDZ is INTEGER */
-/* > The leading dimension of the array Z. LDZ >= max(1,N). */
+/* > The leading dimension of the array Z. LDZ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -255,7 +255,7 @@ int sstein_(integer *n, real *d__, real *e, integer *m, real *w, integer *iblock
     {
         *info = -4;
     }
-    else if (*ldz < max(1,*n))
+    else if (*ldz < fla_max(1,*n))
     {
         *info = -9;
     }
@@ -344,7 +344,7 @@ L30:
         /* Computing MAX */
         r__3 = onenrm;
         r__4 = (r__1 = d__[bn], f2c_abs(r__1)) + (r__2 = e[bn - 1], f2c_abs(r__2)); // , expr subst
-        onenrm = max(r__3,r__4);
+        onenrm = fla_max(r__3,r__4);
         i__2 = bn - 1;
         for (i__ = b1 + 1;
                 i__ <= i__2;
@@ -353,7 +353,7 @@ L30:
             /* Computing MAX */
             r__4 = onenrm;
             r__5 = (r__1 = d__[i__], f2c_abs(r__1)) + (r__2 = e[ i__ - 1], f2c_abs(r__2)) + (r__3 = e[i__], f2c_abs(r__3)); // , expr subst
-            onenrm = max(r__4,r__5);
+            onenrm = fla_max(r__4,r__5);
             /* L50: */
         }
         ortol = onenrm * .001f;
@@ -416,7 +416,7 @@ L70:
             /* Computing MAX */
             r__3 = eps;
             r__4 = (r__1 = work[indrv4 + blksiz], f2c_abs(r__1)); // , expr subst
-            scl = blksiz * onenrm * max(r__3,r__4) / (r__2 = work[indrv1 + jmax], f2c_abs(r__2));
+            scl = blksiz * onenrm * fla_max(r__3,r__4) / (r__2 = work[indrv1 + jmax], f2c_abs(r__2));
             sscal_(&blksiz, &scl, &work[indrv1 + 1], &c__1);
             /* Solve the system LU = Pb. */
             slagts_(&c_n1, &blksiz, &work[indrv4 + 1], &work[indrv2 + 2], & work[indrv3 + 1], &work[indrv5 + 1], &iwork[1], &work[ indrv1 + 1], &tol, &iinfo);

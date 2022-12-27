@@ -78,9 +78,9 @@
 /* > \verbatim */
 /* > LDA is INTEGER */
 /* > The leading dimension of the array A. */
-/* > If SIDE = 'L', LDA >= max(1,M);
+/* > If SIDE = 'L', LDA >= fla_max(1,M);
 */
-/* > if SIDE = 'R', LDA >= max(1,N). */
+/* > if SIDE = 'R', LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] T */
@@ -105,7 +105,7 @@
 /* > \param[in] LDC */
 /* > \verbatim */
 /* > LDC is INTEGER */
-/* > The leading dimension of the array C. LDC >= max(1,M). */
+/* > The leading dimension of the array C. LDC >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -264,7 +264,7 @@ int sgemqr_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
     {
         *info = -5;
     }
-    else if (*lda < max(1,mn))
+    else if (*lda < fla_max(1,mn))
     {
         *info = -7;
     }
@@ -272,11 +272,11 @@ int sgemqr_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
     {
         *info = -9;
     }
-    else if (*ldc < max(1,*m))
+    else if (*ldc < fla_max(1,*m))
     {
         *info = -11;
     }
-    else if (*lwork < max(1,lw) && ! lquery)
+    else if (*lwork < fla_max(1,lw) && ! lquery)
     {
         *info = -13;
     }
@@ -296,14 +296,14 @@ int sgemqr_(char *side, char *trans, integer *m, integer *n, integer *k, real *a
     }
     /* Quick return if possible */
     /* Computing MIN */
-    i__1 = min(*m,*n);
-    if (min(i__1,*k) == 0)
+    i__1 = fla_min(*m,*n);
+    if (fla_min(i__1,*k) == 0)
     {
         return 0;
     }
     /* Computing MAX */
-    i__1 = max(*m,*n);
-    if (left && *m <= *k || right && *n <= *k || mb <= *k || mb >= max(i__1,* k))
+    i__1 = fla_max(*m,*n);
+    if (left && *m <= *k || right && *n <= *k || mb <= *k || mb >= fla_max(i__1,* k))
     {
         sgemqrt_(side, trans, m, n, k, &nb, &a[a_offset], lda, &t[6], &nb, & c__[c_offset], ldc, &work[1], info);
     }

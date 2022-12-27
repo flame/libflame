@@ -52,7 +52,7 @@
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* Authors: */
 /* ======== */
@@ -114,11 +114,11 @@ integer iladlr_(integer *m, integer *n, doublereal *a, integer *lda)
                 ++j)
         {
             i__ = *m;
-            while(a[max(i__,1) + j * a_dim1] == 0. && i__ >= 1)
+            while(a[fla_max(i__,1) + j * a_dim1] == 0. && i__ >= 1)
             {
                 --i__;
             }
-            ret_val = max(ret_val,i__);
+            ret_val = fla_max(ret_val,i__);
         }
     }
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);

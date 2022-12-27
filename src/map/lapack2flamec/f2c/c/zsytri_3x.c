@@ -96,7 +96,7 @@ static doublecomplex c_b2 =
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] E */
@@ -233,7 +233,7 @@ int zsytri_3x_(char *uplo, integer *n, doublecomplex *a, integer *lda, doublecom
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }

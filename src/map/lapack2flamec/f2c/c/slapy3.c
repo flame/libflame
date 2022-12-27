@@ -83,11 +83,11 @@ real slapy3_(real *x, real *y, real *z__)
     yabs = f2c_abs(*y);
     zabs = f2c_abs(*z__);
     /* Computing MAX */
-    r__1 = max(xabs,yabs);
-    w = max(r__1,zabs);
+    r__1 = fla_max(xabs,yabs);
+    w = fla_max(r__1,zabs);
     if (w == 0.f || w > hugeval)
     {
-        /* W can be zero for max(0,nan,0) */
+        /* W can be zero for fla_max(0,nan,0) */
         /* adding all three entries together will make sure */
         /* NaN will not disappear. */
         ret_val = xabs + yabs + zabs;

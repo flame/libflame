@@ -21,7 +21,7 @@ integer FLA_LU_piv_small_d_var0( integer *m, integer *n,
     doublereal p_val, max_val, t_val;
     doublereal *acur, *apiv, *asrc;
     integer p_idx;
-    integer min_m_n = min(*m, *n);
+    integer min_m_n = fla_min(*m, *n);
 
     for( i = 0; i < min_m_n; i++ )
     {
@@ -114,7 +114,7 @@ integer FLA_LU_piv_small_d_var1( integer *m, integer *n,
 /*     Compute machine safe minimum */
     sfmin = dlamch_("S");
 
-    i__1 = min(*m,*n);
+    i__1 = fla_min(*m,*n);
     for ( j = 1; j <= i__1; ++j )
     {
 
@@ -160,7 +160,7 @@ integer FLA_LU_piv_small_d_var1( integer *m, integer *n,
             *info = j;
         }
         
-        if ( j < min( *m, *n ) )
+        if ( j < fla_min( *m, *n ) )
         {
 
 /*           Update trailing submatrix. */
@@ -209,13 +209,13 @@ integer FLA_LU_piv_small_d_var2( integer *m, integer *n,
     a -= a_offset;
     --ipiv;
     nb = FLA_SMALL_LU_BLOCKSIZE;
-	i__1 = min(*m,*n);
+	i__1 = fla_min(*m,*n);
 	i__2 = nb;
 	for (j = 1; i__2 < 0 ? j >= i__1 : j <= i__1; j += i__2)
     {
 /* Computing MIN */
-	    i__3 = min(*m,*n) - j + 1;
-	    jb = min(i__3,nb);
+	    i__3 = fla_min(*m,*n) - j + 1;
+	    jb = fla_min(i__3,nb);
 
 /*           Factor diagonal and subdiagonal blocks and test for exact
              singularity. */
@@ -231,7 +231,7 @@ integer FLA_LU_piv_small_d_var2( integer *m, integer *n,
 	    }
 /* Computing MIN */
 	    i__4 = *m, i__5 = j + jb - 1;
-	    i__3 = min(i__4,i__5);
+	    i__3 = fla_min(i__4,i__5);
 	    for (i__ = j; i__ <= i__3; ++i__)
         {
             ipiv[i__] = j - 1 + ipiv[i__];

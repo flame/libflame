@@ -102,7 +102,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of A. LDA >= max(1,N). */
+/* > The leading dimension of A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -115,7 +115,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of B. LDB >= max(1,N). */
+/* > The leading dimension of B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ALPHA */
@@ -182,7 +182,7 @@ static integer c_n1 = -1;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,2*N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,2*N). */
 /* > For good performance, LWORK must generally be larger. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -367,11 +367,11 @@ int cggev_(char *jobvl, char *jobvr, integer *n, complex *a, integer *lda, compl
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -7;
     }
@@ -395,21 +395,21 @@ int cggev_(char *jobvl, char *jobvr, integer *n, complex *a, integer *lda, compl
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n << 1; // , expr subst
-        lwkmin = max(i__1,i__2);
+        lwkmin = fla_max(i__1,i__2);
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n + *n * ilaenv_(&c__1, "CGEQRF", " ", n, &c__1, n, &c__0); // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
         /* Computing MAX */
         i__1 = lwkopt;
         i__2 = *n + *n * ilaenv_(&c__1, "CUNMQR", " ", n, & c__1, n, &c__0); // , expr subst
-        lwkopt = max(i__1,i__2);
+        lwkopt = fla_max(i__1,i__2);
         if (ilvl)
         {
             /* Computing MAX */
             i__1 = lwkopt;
             i__2 = *n + *n * ilaenv_(&c__1, "CUNGQR", " ", n, & c__1, n, &c_n1); // , expr subst
-            lwkopt = max(i__1,i__2);
+            lwkopt = fla_max(i__1,i__2);
         }
         work[1].r = (real) lwkopt;
         work[1].i = 0.f; // , expr subst
@@ -608,7 +608,7 @@ int cggev_(char *jobvl, char *jobvr, integer *n, complex *a, integer *lda, compl
                     i__3 = jr + jc * vl_dim1;
                     r__3 = temp;
                     r__4 = (r__1 = vl[i__3].r, f2c_abs(r__1)) + ( r__2 = r_imag(&vl[jr + jc * vl_dim1]), f2c_abs(r__2)); // , expr subst
-                    temp = max(r__3,r__4);
+                    temp = fla_max(r__3,r__4);
                     /* L10: */
                 }
                 if (temp < smlnum)
@@ -651,7 +651,7 @@ L30:
                     i__3 = jr + jc * vr_dim1;
                     r__3 = temp;
                     r__4 = (r__1 = vr[i__3].r, f2c_abs(r__1)) + ( r__2 = r_imag(&vr[jr + jc * vr_dim1]), f2c_abs(r__2)); // , expr subst
-                    temp = max(r__3,r__4);
+                    temp = fla_max(r__3,r__4);
                     /* L40: */
                 }
                 if (temp < smlnum)

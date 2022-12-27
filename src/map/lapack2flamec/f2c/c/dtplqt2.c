@@ -69,7 +69,7 @@ static doublereal c_b10 = 0.;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -83,7 +83,7 @@ static doublereal c_b10 = 0.;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,M). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] T */
@@ -96,7 +96,7 @@ static doublereal c_b10 = 0.;
 /* > \param[in] LDT */
 /* > \verbatim */
 /* > LDT is INTEGER */
-/* > The leading dimension of the array T. LDT >= max(1,M) */
+/* > The leading dimension of the array T. LDT >= fla_max(1,M) */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -220,19 +220,19 @@ int dtplqt2_(integer *m, integer *n, integer *l, doublereal * a, integer *lda, d
     {
         *info = -2;
     }
-    else if (*l < 0 || *l > min(*m,*n))
+    else if (*l < 0 || *l > fla_min(*m,*n))
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,*m))
+    else if (*ldb < fla_max(1,*m))
     {
         *info = -7;
     }
-    else if (*ldt < max(1,*m))
+    else if (*ldt < fla_max(1,*m))
     {
         *info = -9;
     }
@@ -255,7 +255,7 @@ int dtplqt2_(integer *m, integer *n, integer *l, doublereal * a, integer *lda, d
             ++i__)
     {
         /* Generate elementary reflector H(I) to annihilate B(I,:) */
-        p = *n - *l + min(*l,i__);
+        p = *n - *l + fla_min(*l,i__);
         i__2 = p + 1;
         dlarfg_(&i__2, &a[i__ + i__ * a_dim1], &b[i__ + b_dim1], ldb, &t[i__ * t_dim1 + 1]);
         if (i__ < *m)
@@ -299,13 +299,13 @@ int dtplqt2_(integer *m, integer *n, integer *l, doublereal * a, integer *lda, d
         }
         /* Computing MIN */
         i__2 = i__ - 1;
-        p = min(i__2,*l);
+        p = fla_min(i__2,*l);
         /* Computing MIN */
         i__2 = *n - *l + 1;
-        np = min(i__2,*n);
+        np = fla_min(i__2,*n);
         /* Computing MIN */
         i__2 = p + 1;
-        mp = min(i__2,*m);
+        mp = fla_min(i__2,*m);
         /* Triangular part of B2 */
         i__2 = p;
         for (j = 1;

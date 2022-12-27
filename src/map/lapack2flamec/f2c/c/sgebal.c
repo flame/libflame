@@ -75,7 +75,7 @@ and second, applying a diagonal similarity transformation */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ILO */
@@ -209,7 +209,7 @@ int sgebal_(char *job, integer *n, real *a, integer *lda, integer *ilo, integer 
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }
@@ -371,10 +371,10 @@ L140:
         f = 1.f;
         s = c__ + r__;
 L160: /* Computing MAX */
-        r__1 = max(f,c__);
+        r__1 = fla_max(f,c__);
         /* Computing MIN */
-        r__2 = min(r__,g);
-        if (c__ >= g || max(r__1,ca) >= sfmax2 || min(r__2,ra) <= sfmin2)
+        r__2 = fla_min(r__,g);
+        if (c__ >= g || fla_max(r__1,ca) >= sfmax2 || fla_min(r__2,ra) <= sfmin2)
         {
             goto L170;
         }
@@ -388,9 +388,9 @@ L160: /* Computing MAX */
 L170:
         g = c__ / 2.f;
 L180: /* Computing MIN */
-        r__1 = min(f,c__);
-        r__1 = min(r__1,g); // , expr subst
-        if (g < r__ || max(r__,ra) >= sfmax2 || min(r__1,ca) <= sfmin2)
+        r__1 = fla_min(f,c__);
+        r__1 = fla_min(r__1,g); // , expr subst
+        if (g < r__ || fla_max(r__,ra) >= sfmax2 || fla_min(r__1,ca) <= sfmin2)
         {
             goto L190;
         }

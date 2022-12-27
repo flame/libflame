@@ -26,7 +26,7 @@ FLA_Error FLA_Axpy_sync_pipeline( FLA_Obj alpha, FLA_Obj X, FLA_Obj B )
 
   while ( FLA_Obj_width( XL ) < FLA_Obj_width( X ) ){
 
-    b = min( FLA_Obj_width( XR ), nb_alg );
+    b = fla_min( FLA_Obj_width( XR ), nb_alg );
 
     FLA_Repart_1x2_to_1x3( XL,  /**/ XR,        &X0, /**/ &X1, &X2,
                            b, FLA_RIGHT );

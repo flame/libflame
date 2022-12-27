@@ -73,7 +73,7 @@ each 2-by-2 diagonal block */
 /* > \param[in] LDT */
 /* > \verbatim */
 /* > LDT is INTEGER */
-/* > The leading dimension of the array T. LDT >= max(1,N). */
+/* > The leading dimension of the array T. LDT >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] Q */
@@ -245,7 +245,7 @@ int slaexc_(logical *wantq, integer *n, real *t, integer * ldt, real *q, integer
         smlnum = slamch_("S") / eps;
         /* Computing MAX */
         r__1 = eps * 10.f * dnorm;
-        thresh = max(r__1,smlnum);
+        thresh = fla_max(r__1,smlnum);
         /* Solve T11*X - X*T22 = scale*T12 for X. */
         slasy2_(&c_false, &c_false, &c_n1, n1, n2, d__, &c__4, &d__[*n1 + 1 + (*n1 + 1 << 2) - 5], &c__4, &d__[(*n1 + 1 << 2) - 4], &c__4, & scale, x, &c__2, &xnorm, &ierr);
         /* Swap the adjacent diagonal blocks. */
@@ -273,9 +273,9 @@ L10: /* N1 = 1, N2 = 2: generate elementary reflector H so that: */
         /* Test whether to reject swap. */
         /* Computing MAX */
         r__2 = f2c_abs(d__[2]), r__3 = f2c_abs(d__[6]);
-        r__2 = max(r__2,r__3);
+        r__2 = fla_max(r__2,r__3);
         r__3 = (r__1 = d__[10] - t11, f2c_abs(r__1)); // ; expr subst
-        if (max(r__2,r__3) > thresh)
+        if (fla_max(r__2,r__3) > thresh)
         {
             goto L50;
         }
@@ -308,9 +308,9 @@ L20: /* N1 = 2, N2 = 1: generate elementary reflector H so that: */
         /* Test whether to reject swap. */
         /* Computing MAX */
         r__2 = f2c_abs(d__[1]), r__3 = f2c_abs(d__[2]);
-        r__2 = max(r__2,r__3);
+        r__2 = fla_max(r__2,r__3);
         r__3 = (r__1 = d__[0] - t33, f2c_abs(r__1)); // ; expr subst
-        if (max(r__2,r__3) > thresh)
+        if (fla_max(r__2,r__3) > thresh)
         {
             goto L50;
         }
@@ -351,10 +351,10 @@ L30: /* N1 = 2, N2 = 2: generate elementary reflectors H(1) and H(2) so */
         slarfx_("R", &c__4, &c__3, u2, &tau2, &d__[4], &c__4, &work[1]);
         /* Test whether to reject swap. */
         /* Computing MAX */
-        r__1 = f2c_abs(d__[2]), r__2 = f2c_abs(d__[6]), r__1 = max(r__1,r__2), r__2 = f2c_abs(d__[3]);
-        r__1 = max(r__1,r__2);
+        r__1 = f2c_abs(d__[2]), r__2 = f2c_abs(d__[6]), r__1 = fla_max(r__1,r__2), r__2 = f2c_abs(d__[3]);
+        r__1 = fla_max(r__1,r__2);
         r__2 = f2c_abs(d__[7]); // ; expr subst
-        if (max(r__1,r__2) > thresh)
+        if (fla_max(r__1,r__2) > thresh)
         {
             goto L50;
         }

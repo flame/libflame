@@ -122,7 +122,7 @@ static integer c__1 = 1;
 /* > The original band matrix A, stored in rows 1 to KL+KU+1. */
 /* > The j-th column of A is stored in the j-th column of the */
 /* > array AB as follows: */
-/* > AB(ku+1+i-j,j) = A(i,j) for max(1,j-ku)<=i<=min(n,j+kl). */
+/* > AB(ku+1+i-j,j) = A(i,j) for fla_max(1,j-ku)<=i<=fla_min(n,j+kl). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDAB */
@@ -204,7 +204,7 @@ if EQUED = 'N' or 'R', C */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] X */
@@ -217,7 +217,7 @@ if EQUED = 'N' or 'R', C */
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(1,N). */
+/* > The leading dimension of the array X. LDX >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RCOND */
@@ -613,11 +613,11 @@ int dgbrfsx_(char *trans, char *equed, integer *n, integer * kl, integer *ku, in
     {
         *info = -10;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -13;
     }
-    else if (*ldx < max(1,*n))
+    else if (*ldx < fla_max(1,*n))
     {
         *info = -15;
     }
@@ -709,7 +709,7 @@ int dgbrfsx_(char *trans, char *equed, integer *n, integer * kl, integer *ku, in
     /* Computing MAX */
     d__1 = 10.;
     d__2 = sqrt((doublereal) (*n)); // , expr subst
-    err_lbnd__ = max(d__1,d__2) * dlamch_("Epsilon");
+    err_lbnd__ = fla_max(d__1,d__2) * dlamch_("Epsilon");
     if (*n_err_bnds__ >= 1 && n_norms__ >= 1)
     {
         /* Compute scaled normwise condition number cond(A*C). */

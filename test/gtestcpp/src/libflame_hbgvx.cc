@@ -138,15 +138,15 @@ void hbgvx_test(int ip)
   
   /* LDQ is INTEGER
 	  The leading dimension of the array Q.  If JOBZ = 'N',
-	  LDQ >= 1. If JOBZ = 'V', LDQ >= max(1,N).*/
+	  LDQ >= 1. If JOBZ = 'V', LDQ >= fla_max(1,N).*/
   integer ldq = eig_paramslist[ip].ldq_hbgvx;
   if ((jobz == 'N') && (ldq < 1)) {
     PRINTF("If jobz= N and ldq is < 1, but should be LDQ >= 1. Please " \
            "correct the input data.\n");
   }
-  if ((jobz == 'V') && (ldq < max(1, n))) {
-    PRINTF("If jobz= N and ldq is < max(1, n), but should be " \
-           " LDQ >= max(1, n). Please correct the input data.\n");
+  if ((jobz == 'V') && (ldq < fla_max(1, n))) {
+    PRINTF("If jobz= N and ldq is < fla_max(1, n), but should be " \
+           " LDQ >= fla_max(1, n). Please correct the input data.\n");
   }
   
   T *qbuff = NULL, *qrefbuff = NULL;

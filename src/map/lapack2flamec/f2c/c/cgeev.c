@@ -82,7 +82,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] W */
@@ -136,7 +136,7 @@ if */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,2*N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,2*N). */
 /* > For good performance, LWORK must generally be larger. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -282,7 +282,7 @@ int cgeev_(char *jobvl, char *jobvr, integer *n, complex *a, integer *lda, compl
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
@@ -320,13 +320,13 @@ int cgeev_(char *jobvl, char *jobvr, integer *n, complex *a, integer *lda, compl
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + (*n - 1) * ilaenv_(&c__1, "CUNGHR", " ", n, &c__1, n, &c_n1); // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 ctrevc3_("L", "B", select, n, &a[a_offset], lda, &vl[ vl_offset], ldvl, &vr[vr_offset], ldvr, n, &nout, & work[1], &c_n1, &rwork[1], &c_n1, &ierr);
                 lwork_trevc__ = (integer) work[1].r;
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + lwork_trevc__; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 chseqr_("S", "V", n, &c__1, n, &a[a_offset], lda, &w[1], &vl[ vl_offset], ldvl, &work[1], &c_n1, info);
             }
             else if (wantvr)
@@ -334,13 +334,13 @@ int cgeev_(char *jobvl, char *jobvr, integer *n, complex *a, integer *lda, compl
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + (*n - 1) * ilaenv_(&c__1, "CUNGHR", " ", n, &c__1, n, &c_n1); // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 ctrevc3_("R", "B", select, n, &a[a_offset], lda, &vl[ vl_offset], ldvl, &vr[vr_offset], ldvr, n, &nout, & work[1], &c_n1, &rwork[1], &c_n1, &ierr);
                 lwork_trevc__ = (integer) work[1].r;
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + lwork_trevc__; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 chseqr_("S", "V", n, &c__1, n, &a[a_offset], lda, &w[1], &vr[ vr_offset], ldvr, &work[1], &c_n1, info);
             }
             else
@@ -349,8 +349,8 @@ int cgeev_(char *jobvl, char *jobvr, integer *n, complex *a, integer *lda, compl
             }
             hswork = (integer) work[1].r;
             /* Computing MAX */
-            i__1 = max(maxwrk,hswork);
-            maxwrk = max(i__1,minwrk);
+            i__1 = fla_max(maxwrk,hswork);
+            maxwrk = fla_max(i__1,minwrk);
         }
         work[1].r = (real) maxwrk;
         work[1].i = 0.f; // , expr subst
@@ -576,7 +576,7 @@ L50:
         i__1 = *n - *info;
         /* Computing MAX */
         i__3 = *n - *info;
-        i__2 = max(i__3,1);
+        i__2 = fla_max(i__3,1);
         clascl_("G", &c__0, &c__0, &cscale, &anrm, &i__1, &c__1, &w[*info + 1], &i__2, &ierr);
         if (*info > 0)
         {

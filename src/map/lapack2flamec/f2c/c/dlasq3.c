@@ -310,22 +310,22 @@ L50:
             /* Computing MIN */
             d__1 = *dmin2;
             d__2 = z__[(*n0 << 2) + *pp - 1]; // , expr subst
-            *dmin2 = min(d__1,d__2);
+            *dmin2 = fla_min(d__1,d__2);
             /* Computing MIN */
             d__1 = z__[(*n0 << 2) + *pp - 1], d__2 = z__[(*i0 << 2) + *pp - 1] ;
-            d__1 = min(d__1,d__2);
+            d__1 = fla_min(d__1,d__2);
             d__2 = z__[(*i0 << 2) + *pp + 3]; // ; expr subst
-            z__[(*n0 << 2) + *pp - 1] = min(d__1,d__2);
+            z__[(*n0 << 2) + *pp - 1] = fla_min(d__1,d__2);
             /* Computing MIN */
             d__1 = z__[(*n0 << 2) - *pp], d__2 = z__[(*i0 << 2) - *pp];
-            d__1 = min(d__1,d__2);
+            d__1 = fla_min(d__1,d__2);
             d__2 = z__[(*i0 << 2) - *pp + 4]; // ; expr subst
-            z__[(*n0 << 2) - *pp] = min(d__1,d__2);
+            z__[(*n0 << 2) - *pp] = fla_min(d__1,d__2);
             /* Computing MAX */
             d__1 = *qmax, d__2 = z__[(*i0 << 2) + *pp - 3];
-            d__1 = max(d__1, d__2);
+            d__1 = fla_max(d__1, d__2);
             d__2 = z__[(*i0 << 2) + *pp + 1]; // ; expr subst
-            *qmax = max(d__1,d__2);
+            *qmax = fla_max(d__1,d__2);
             *dmin__ = -0.;
         }
     }

@@ -71,7 +71,7 @@ FLA_Error FLA_Bidiag_UT_u_blf_var4( FLA_Obj A, FLA_Obj TU, FLA_Obj TV )
 
   while ( FLA_Obj_min_dim( ABR ) > 0 )
   {
-    b = min( FLA_Obj_min_dim( ABR ), b_alg );
+    b = fla_min( FLA_Obj_min_dim( ABR ), b_alg );
 
     FLA_Repart_2x2_to_3x3( ATL, /**/ ATR,       &A00, /**/ &A01, &A02,
                         /* ************* */   /* ******************** */

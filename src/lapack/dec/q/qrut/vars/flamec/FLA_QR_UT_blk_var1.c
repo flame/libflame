@@ -34,7 +34,7 @@ FLA_Error FLA_QR_UT_blk_var1( FLA_Obj A, FLA_Obj T, fla_qrut_t* cntl )
 
   while ( FLA_Obj_min_dim( ABR ) > 0 ){
 
-    b = min( b_alg, FLA_Obj_min_dim( ABR ) );
+    b = fla_min( b_alg, FLA_Obj_min_dim( ABR ) );
 
     FLA_Repart_2x2_to_3x3( ATL, /**/ ATR,       &A00, /**/ &A01, &A02,
                         /* ************* */   /* ******************** */

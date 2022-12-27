@@ -30,7 +30,7 @@ int strtri_check(char *uplo, char *diag, integer *n, float *a, integer *lda, int
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }

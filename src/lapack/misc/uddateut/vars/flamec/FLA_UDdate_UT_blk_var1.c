@@ -44,7 +44,7 @@ FLA_Error FLA_UDdate_UT_blk_var1( FLA_Obj R,
 
   while ( FLA_Obj_min_dim( RBR ) > 0 ){
 
-    b = min( b_alg, FLA_Obj_min_dim( RBR ) );
+    b = fla_min( b_alg, FLA_Obj_min_dim( RBR ) );
 
     FLA_Repart_2x2_to_3x3( RTL, /**/ RTR,       &R00, /**/ &R01, &R02,
                         /* ************* */   /* ******************** */

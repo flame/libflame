@@ -57,7 +57,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1, N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1, N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] RHS */

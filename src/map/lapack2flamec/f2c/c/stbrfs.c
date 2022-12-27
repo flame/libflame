@@ -95,9 +95,9 @@ static real c_b19 = -1.f;
 /* > The upper or lower triangular band matrix A, stored in the */
 /* > first kd+1 rows of the array. The j-th column of A is stored */
 /* > in the j-th column of the array AB as follows: */
-/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j;
+/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(n,j+kd). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(n,j+kd). */
 /* > If DIAG = 'U', the diagonal elements of A are not referenced */
 /* > and are assumed to be 1. */
 /* > \endverbatim */
@@ -117,7 +117,7 @@ static real c_b19 = -1.f;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] X */
@@ -129,7 +129,7 @@ static real c_b19 = -1.f;
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(1,N). */
+/* > The leading dimension of the array X. LDX >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] FERR */
@@ -280,11 +280,11 @@ int stbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
     {
         *info = -8;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -10;
     }
-    else if (*ldx < max(1,*n))
+    else if (*ldx < fla_max(1,*n))
     {
         *info = -12;
     }
@@ -336,7 +336,7 @@ int stbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
         stbmv_(uplo, trans, diag, n, kd, &ab[ab_offset], ldab, &work[*n + 1], &c__1);
         saxpy_(n, &c_b19, &b[j * b_dim1 + 1], &c__1, &work[*n + 1], &c__1);
         /* Compute componentwise relative backward error from formula */
-        /* max(i) ( f2c_abs(R(i)) / ( f2c_abs(op(A))*f2c_abs(X) + f2c_abs(B) )(i) ) */
+        /* fla_max(i) ( f2c_abs(R(i)) / ( f2c_abs(op(A))*f2c_abs(X) + f2c_abs(B) )(i) ) */
         /* where f2c_abs(Z) is the componentwise absolute value of the matrix */
         /* or vector Z. If the i-th component of the denominator is less */
         /* than SAFE2, then SAFE1 is added to the i-th components of the */
@@ -366,7 +366,7 @@ int stbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                         i__3 = 1;
                         i__4 = k - *kd; // , expr subst
                         i__5 = k;
-                        for (i__ = max(i__3,i__4);
+                        for (i__ = fla_max(i__3,i__4);
                                 i__ <= i__5;
                                 ++i__)
                         {
@@ -388,7 +388,7 @@ int stbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                         i__5 = 1;
                         i__3 = k - *kd; // , expr subst
                         i__4 = k - 1;
-                        for (i__ = max(i__5,i__3);
+                        for (i__ = fla_max(i__5,i__3);
                                 i__ <= i__4;
                                 ++i__)
                         {
@@ -413,7 +413,7 @@ int stbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                         /* Computing MIN */
                         i__5 = *n;
                         i__3 = k + *kd; // , expr subst
-                        i__4 = min(i__5,i__3);
+                        i__4 = fla_min(i__5,i__3);
                         for (i__ = k;
                                 i__ <= i__4;
                                 ++i__)
@@ -435,7 +435,7 @@ int stbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                         /* Computing MIN */
                         i__5 = *n;
                         i__3 = k + *kd; // , expr subst
-                        i__4 = min(i__5,i__3);
+                        i__4 = fla_min(i__5,i__3);
                         for (i__ = k + 1;
                                 i__ <= i__4;
                                 ++i__)
@@ -466,7 +466,7 @@ int stbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                         i__4 = 1;
                         i__5 = k - *kd; // , expr subst
                         i__3 = k;
-                        for (i__ = max(i__4,i__5);
+                        for (i__ = fla_max(i__4,i__5);
                                 i__ <= i__3;
                                 ++i__)
                         {
@@ -489,7 +489,7 @@ int stbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                         i__3 = 1;
                         i__4 = k - *kd; // , expr subst
                         i__5 = k - 1;
-                        for (i__ = max(i__3,i__4);
+                        for (i__ = fla_max(i__3,i__4);
                                 i__ <= i__5;
                                 ++i__)
                         {
@@ -514,7 +514,7 @@ int stbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                         /* Computing MIN */
                         i__3 = *n;
                         i__4 = k + *kd; // , expr subst
-                        i__5 = min(i__3,i__4);
+                        i__5 = fla_min(i__3,i__4);
                         for (i__ = k;
                                 i__ <= i__5;
                                 ++i__)
@@ -537,7 +537,7 @@ int stbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                         /* Computing MIN */
                         i__3 = *n;
                         i__4 = k + *kd; // , expr subst
-                        i__5 = min(i__3,i__4);
+                        i__5 = fla_min(i__3,i__4);
                         for (i__ = k + 1;
                                 i__ <= i__5;
                                 ++i__)
@@ -562,14 +562,14 @@ int stbrfs_(char *uplo, char *trans, char *diag, integer *n, integer *kd, intege
                 /* Computing MAX */
                 r__2 = s;
                 r__3 = (r__1 = work[*n + i__], f2c_abs(r__1)) / work[ i__]; // , expr subst
-                s = max(r__2,r__3);
+                s = fla_max(r__2,r__3);
             }
             else
             {
                 /* Computing MAX */
                 r__2 = s;
                 r__3 = ((r__1 = work[*n + i__], f2c_abs(r__1)) + safe1) / (work[i__] + safe1); // , expr subst
-                s = max(r__2,r__3);
+                s = fla_max(r__2,r__3);
             }
             /* L190: */
         }
@@ -649,7 +649,7 @@ L210:
             /* Computing MAX */
             r__2 = lstres;
             r__3 = (r__1 = x[i__ + j * x_dim1], f2c_abs(r__1)); // , expr subst
-            lstres = max(r__2,r__3);
+            lstres = fla_max(r__2,r__3);
             /* L240: */
         }
         if (lstres != 0.f)

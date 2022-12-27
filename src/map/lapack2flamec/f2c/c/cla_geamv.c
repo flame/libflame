@@ -99,7 +99,7 @@
 /* > LDA is INTEGER */
 /* > On entry, LDA specifies the first dimension of A as declared */
 /* > in the calling (sub) program. LDA must be at least */
-/* > max( 1, m ). */
+/* > fla_max( 1, m ). */
 /* > Unchanged on exit. */
 /* > \endverbatim */
 /* > */
@@ -233,7 +233,7 @@ int cla_geamv_(integer *trans, integer *m, integer *n, real *alpha, complex *a, 
     {
         info = 3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         info = 6;
     }

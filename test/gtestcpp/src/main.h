@@ -45,7 +45,7 @@ typedef struct EIG_paramlist_t {
                     The leading dimension of the array AB.  LDAB >= KD + 1.*/
   integer ldz;  /* LDZ is INTEGER
                     The leading dimension of the array Z.  LDZ >= 1, and if
-                    JOBZ = 'V', LDZ >= max(1,N).*/
+                    JOBZ = 'V', LDZ >= fla_max(1,N).*/
   // Added for hbev_2stage
   char jobz_2stage;  /* JOBZ is CHARACTER*1 ('V' is not supported)
                   = 'N':  Compute eigenvalues only;
@@ -163,7 +163,7 @@ typedef struct EIG_paramlist_t {
   // Added for hbgvx
   integer ldq_hbgvx; /* LDQ is INTEGER
                           The leading dimension of the array Q.  If JOBZ = 'N',
-                          LDQ >= 1. If JOBZ = 'V', LDQ >= max(1,N).*/
+                          LDQ >= 1. If JOBZ = 'V', LDQ >= fla_max(1,N).*/
   char vect; /* VECT is CHARACTER*1
                   = 'N':  do not form Q;
                   = 'V':  form Q;
@@ -173,17 +173,17 @@ typedef struct EIG_paramlist_t {
                         = 'V':  form X.*/
   integer ldx; /* LDX is INTEGER
                     The leading dimension of the array X.
-                    LDX >= max(1,N) if VECT = 'V'; LDX >= 1 otherwise.*/
+                    LDX >= fla_max(1,N) if VECT = 'V'; LDX >= 1 otherwise.*/
   integer lda; /* LDA is INTEGER
-                  The leading dimension of the array A.  LDA >= max(1,N).*/
+                  The leading dimension of the array A.  LDA >= fla_max(1,N).*/
   integer lwork_heev_2stage; /* LWORK is INTEGER
                                 The length of the array WORK. LWORK >= 1, when N <= 1;
                                 otherwise  
                                 If JOBZ = 'N' and N > 1, LWORK must be queried.
                                                          LWORK = MAX(1, dimension) where
-                                                         dimension = max(stage1,stage2) + (KD+1)*N + N
+                                                         dimension = fla_max(stage1,stage2) + (KD+1)*N + N
                                                                    = N*KD + N*max(KD+1,FACTOPTNB) 
-                                                                     + max(2*KD*KD, KD*NTHREADS) 
+                                                                     + fla_max(2*KD*KD, KD*NTHREADS) 
                                                                      + (KD+1)*N + N
                                                          where KD is the blocking size of the reduction,
                                                          FACTOPTNB is the blocking used by the QR or LQ
@@ -201,9 +201,9 @@ typedef struct EIG_paramlist_t {
                                   If N <= 1,               LWORK must be at least 1.
                                   If JOBZ = 'N' and N > 1, LWORK must be queried.
                                                            LWORK = MAX(1, dimension) where
-                                                           dimension = max(stage1,stage2) + (KD+1)*N + N+1
+                                                           dimension = fla_max(stage1,stage2) + (KD+1)*N + N+1
                                                                      = N*KD + N*max(KD+1,FACTOPTNB) 
-                                                                       + max(2*KD*KD, KD*NTHREADS) 
+                                                                       + fla_max(2*KD*KD, KD*NTHREADS) 
                                                                        + (KD+1)*N + N+1
                                                            where KD is the blocking size of the reduction,
                                                            FACTOPTNB is the blocking used by the QR or LQ
@@ -218,7 +218,7 @@ typedef struct EIG_paramlist_t {
                                   the WORK, RWORK and IWORK arrays, and no error message
                                   related to LWORK or LRWORK or LIWORK is issued by XERBLA.*/
   integer lwork_heevr; /* LWORK is INTEGER
-                          The length of the array WORK.  LWORK >= max(1,2*N).
+                          The length of the array WORK.  LWORK >= fla_max(1,2*N).
                           For optimal efficiency, LWORK >= (NB+1)*N,
                           where NB is the max of the blocksize for CHETRD and for
                           CUNMTR as returned by ILAENV.
@@ -229,7 +229,7 @@ typedef struct EIG_paramlist_t {
                           the WORK, RWORK and IWORK arrays, and no error message
                           related to LWORK or LRWORK or LIWORK is issued by XERBLA.*/
   integer lrwork_heevr;  /* LRWORK is INTEGER
-                            The length of the array RWORK.  LRWORK >= max(1,24*N).
+                            The length of the array RWORK.  LRWORK >= fla_max(1,24*N).
 
                             If LRWORK = -1, then a workspace query is assumed; the
                             routine only calculates the optimal sizes of the WORK, RWORK
@@ -238,7 +238,7 @@ typedef struct EIG_paramlist_t {
                             related to LWORK or LRWORK or LIWORK is issued by XERBLA.*/
   
   integer liwork_heevr;  /* LIWORK is INTEGER
-                            The dimension of the array IWORK.  LIWORK >= max(1,10*N).
+                            The dimension of the array IWORK.  LIWORK >= fla_max(1,10*N).
 
                             If LIWORK = -1, then a workspace query is assumed; the
                             routine only calculates the optimal sizes of the WORK, RWORK
@@ -250,9 +250,9 @@ typedef struct EIG_paramlist_t {
                     = 1: compute inv(U**H)*A*inv(U) or inv(L)*A*inv(L**H);
                     = 2 or 3: compute U*A*U**H or L**H*A*L.*/
   integer ldb; /* LDB is INTEGER
-                  The leading dimension of the array B.  LDB >= max(1,N).*/
+                  The leading dimension of the array B.  LDB >= fla_max(1,N).*/
   integer lwork_hegv;  /* LWORK is INTEGER
-                          The length of the array WORK.  LWORK >= max(1,2*N-1).
+                          The length of the array WORK.  LWORK >= fla_max(1,2*N-1).
                           For optimal efficiency, LWORK >= (NB+1)*N,
                           where NB is the blocksize for CHETRD returned by ILAENV.
 
@@ -283,7 +283,7 @@ typedef struct EIG_paramlist_t {
                       only calculates the optimal size of the HOUS2 array, returns
                       this value as the first entry of the HOUS2 array, and no error
                       message related to LHOUS2 is issued by XERBLA.
-                      If VECT='N', LHOUS2 = max(1, 4*n);
+                      If VECT='N', LHOUS2 = fla_max(1, 4*n);
                       if VECT='V', option not yet available.*/
   integer lwork_hetrd_2stage;  /* LWORK is INTEGER
                                   The dimension of the array WORK. LWORK = MAX(1, dimension)
@@ -293,9 +293,9 @@ typedef struct EIG_paramlist_t {
                                   this value as the first entry of the WORK array, and no error
                                   message related to LWORK is issued by XERBLA.
                                   LWORK = MAX(1, dimension) where
-                                  dimension   = max(stage1,stage2) + (KD+1)*N
+                                  dimension   = fla_max(stage1,stage2) + (KD+1)*N
                                               = N*KD + N*max(KD+1,FACTOPTNB) 
-                                                + max(2*KD*KD, KD*NTHREADS) 
+                                                + fla_max(2*KD*KD, KD*NTHREADS) 
                                                 + (KD+1)*N 
                                   where KD is the blocking size of the reduction,
                                   FACTOPTNB is the blocking used by the QR or LQ
@@ -305,7 +305,7 @@ typedef struct EIG_paramlist_t {
   char vect_hetrd_2stage;  /* VECT is CHARACTER*1
                               = 'N':  No need for the Housholder representation, 
                                       in particular for the second stage (Band to
-                                      tridiagonal) and thus LHOUS2 is of size max(1, 4*N);
+                                      tridiagonal) and thus LHOUS2 is of size fla_max(1, 4*N);
                               = 'V':  the Householder representation is needed to 
                                       either generate Q1 Q2 or to apply Q1 Q2, 
                                       then LHOUS2 is to be queried and computed.
@@ -363,7 +363,7 @@ typedef struct EIG_paramlist_t {
   char norm; /* NORM is CHARACTER*1
                 Specifies whether the 1-norm condition number or the
                 infinity-norm condition number is required:
-                CLANSY = ( max(abs(A(i,j))), NORM = 'M' or 'm'
+                CLANSY = ( fla_max(abs(A(i,j))), NORM = 'M' or 'm'
                    (
                    ( norm1(A),         NORM = '1', 'O' or 'o'
                    (
@@ -379,7 +379,7 @@ typedef struct EIG_paramlist_t {
   integer lwork_lange; /* LWORK >= M when NORM = 'I'; otherwise, WORK is not
                           referenced.*/
   integer lda_lange; /* LDA is INTEGER
-                        The leading dimension of the array A.  LDA >= max(M,1).*/
+                        The leading dimension of the array A.  LDA >= fla_max(M,1).*/
   // Added for geqp3()
   integer lwork_geqp3; /* LWORK is INTEGER
                           The dimension of the array WORK. LWORK >= 3*N+1.
@@ -392,7 +392,7 @@ typedef struct EIG_paramlist_t {
                           message related to LWORK is issued by XERBLA. */
   // Added for geqrf()
   integer lwork_geqrf; /* LWORK is INTEGER
-                          The dimension of the array WORK.  LWORK >= max(1,N).
+                          The dimension of the array WORK.  LWORK >= fla_max(1,N).
                           For optimum performance LWORK >= N*NB, where NB is
                           the optimal blocksize.
 
@@ -406,7 +406,7 @@ typedef struct EIG_paramlist_t {
                 matrix Q. N >= K >= 0.*/
   // Added for syev()
   integer lwork_syev;  /* LWORK is INTEGER
-                          The length of the array WORK.  LWORK >= max(1,3*N-1).
+                          The length of the array WORK.  LWORK >= fla_max(1,3*N-1).
                           For optimal efficiency, LWORK >= (NB+2)*N,
                           where NB is the blocksize for DSYTRD returned by ILAENV.
 
@@ -449,27 +449,27 @@ typedef struct Lin_solver_paramlist_t {
                   = 'U':  Upper triangular, form is A = U*D*U**H;
                   = 'L':  Lower triangular, form is A = L*D*L**H.*/
   integer n;         // The order of matrix A; N >= 0.
-  integer lda;       // The leading dimension of the array A. LDA >= max(1,N).
+  integer lda;       // The leading dimension of the array A. LDA >= fla_max(1,N).
   double anorm; // ANORM is DOUBLE PRECISION. The 1-norm of the original matrix A.
   // Added for hegs2()
   integer itype; /* ITYPE is INTEGER
                     = 1: compute inv(U**H)*A*inv(U) or inv(L)*A*inv(L**H);
                     = 2 or 3: compute U*A*U**H or L**H *A*L.*/
   integer ldb; /* LDB is INTEGER
-                  The leading dimension of the array B.  LDB >= max(1,N).*/
+                  The leading dimension of the array B.  LDB >= fla_max(1,N).*/
   // Added for herfs()
   integer nrhs;  /* NRHS is INTEGER
                     The number of right hand sides, i.e., the number of columns
                     of the matrices B and X.  NRHS >= 0.*/
   integer ldaf;  /* LDAF is INTEGER
-                    The leading dimension of the array AF.  LDAF >= max(1,N).*/
+                    The leading dimension of the array AF.  LDAF >= fla_max(1,N).*/
   integer ldx; /* LDX is INTEGER
-                  The leading dimension of the array X.  LDX >= max(1,N).*/
+                  The leading dimension of the array X.  LDX >= fla_max(1,N).*/
   // Added for getrf()
   integer m;   /* M is INTEGER
                   The number of rows of the matrix A.  M >= 0.*/
   integer lda_getrf; /* LDA is INTEGER
-                        The leading dimension of the array A.  LDA >= max(1,M).*/
+                        The leading dimension of the array A.  LDA >= fla_max(1,M).*/
   // Added for getrs()
   char trans;  /* TRANS is CHARACTER*1
                   Specifies the form of the system of equations:
@@ -484,7 +484,7 @@ typedef struct Lin_solver_paramlist_t {
                 = 'I':         Infinity-norm.*/
   // Added for getri()
   integer lwork; /* LWORK is INTEGER
-                    The dimension of the array WORK.  LWORK >= max(1,N).
+                    The dimension of the array WORK.  LWORK >= fla_max(1,N).
                     For optimal performance LWORK >= N*NB, where NB is
                     the optimal blocksize returned by ILAENV.
 
@@ -507,12 +507,12 @@ typedef struct Lin_driver_paramlist_t {
                     The number of right hand sides, i.e., the number of columns
                     of the matrix B.  NRHS >= 0.*/
   integer lda; /* LDA is INTEGER
-                  The leading dimension of the array A.  LDA >= max(1,N).*/
+                  The leading dimension of the array A.  LDA >= fla_max(1,N).*/
   integer ldb; /* LDB is INTEGER
-                  The leading dimension of the array B.  LDB >= max(1,N).*/
+                  The leading dimension of the array B.  LDB >= fla_max(1,N).*/
   integer lwork; /* LWORK is INTEGER
                     The length of WORK.  LWORK >= 1, and for best performance
-                    LWORK >= max(1,N*NB), where NB is the optimal blocksize for
+                    LWORK >= fla_max(1,N*NB), where NB is the optimal blocksize for
                     CHETRF.
                     for LWORK < N, TRS will be done with Level BLAS 2
                     for LWORK >= N, TRS will be done with Level BLAS 3
@@ -556,9 +556,9 @@ typedef struct Lin_driver_paramlist_t {
                           of A.  A, AF and IPIV will not be modified.
                   = 'N':  The matrix A will be copied to AF and factored.*/
   integer ldaf; /* LDAF is INTEGER
-                   The leading dimension of the array AF.  LDAF >= max(1,N).*/
+                   The leading dimension of the array AF.  LDAF >= fla_max(1,N).*/
   integer ldx; /* LDX is INTEGER
-                   The leading dimension of the array X.  LDX >= max(1,N).*/
+                   The leading dimension of the array X.  LDX >= fla_max(1,N).*/
   // Added for hesvxx()
   char fact_hesvxx; /* FACT is CHARACTER*1
                        Specifies whether or not the factored form of the matrix A is

@@ -387,7 +387,7 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
         /* JTOP = Index from which updates from the right start. */
         if (accum)
         {
-            jtop = max(*ktop,incol);
+            jtop = fla_max(*ktop,incol);
         }
         else if (*wantt)
         {
@@ -416,7 +416,7 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
         /* Computing MIN */
         i__4 = incol + (nbmps << 1) - 1;
         i__5 = *kbot - 2; // , expr subst
-        i__3 = min(i__4,i__5);
+        i__3 = fla_min(i__4,i__5);
         for (krcol = incol;
                 krcol <= i__3;
                 ++krcol)
@@ -433,11 +433,11 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
             
             i__4 = 1;
             i__5 = (*ktop - krcol) / 2 + 1; // , expr subst
-            mtop = max(i__4,i__5);
+            mtop = fla_max(i__4,i__5);
             /* Computing MIN */
             i__4 = nbmps;
             i__5 = (*kbot - krcol - 1) / 2; // , expr subst
-            mbot = min(i__4,i__5);
+            mbot = fla_min(i__4,i__5);
             m22 = mbot + 1;
             bmp22 = mbot < nbmps && krcol + (m22 - 1 << 1) == *kbot - 2;
             /* ==== Generate reflections to chase the chain right */
@@ -477,7 +477,7 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                 /* Computing MIN */
                 i__5 = *kbot;
                 i__6 = k + 3; // , expr subst
-                i__4 = min(i__5,i__6);
+                i__4 = fla_min(i__5,i__6);
                 v1r = v[m22 * v_dim1 + 1].r;
                 v1i = v[m22 * v_dim1 + 1].i;
                 v2r = v[m22 * v_dim1 + 2].r;
@@ -519,7 +519,7 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                 /* . computational window. ==== */
                 if (accum)
                 {
-                    jbot = min(ndcol,*kbot);
+                    jbot = fla_min(ndcol,*kbot);
                 }
                 else if (*wantt)
                 {
@@ -618,16 +618,16 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         /* Computing MAX */
                         r__3 = smlnum;
                         r__4 = ulp * tst1; // , expr subst
-                        if ((r__1 = u1r, f2c_abs(r__1)) + (r__2 = u1i, f2c_abs(r__2)) <= max( r__3,r__4))
+                        if ((r__1 = u1r, f2c_abs(r__1)) + (r__2 = u1i, f2c_abs(r__2)) <= fla_max( r__3,r__4))
                         {
                             /* Computing MAX */
                             r__5 = (r__1 = u1r, f2c_abs(r__1)) + (r__2 = u1i, f2c_abs( r__2));
                             r__6 = (r__3 = u2r, f2c_abs( r__3)) + (r__4 = u2i, f2c_abs(r__4)); // , expr subst
-                            h12 = max(r__5,r__6);
+                            h12 = fla_max(r__5,r__6);
                             /* Computing MIN */
                             r__5 = (r__1 = u1r, f2c_abs(r__1)) + (r__2 = u1i, f2c_abs( r__2));
                             r__6 = (r__3 = u2r, f2c_abs( r__3)) + (r__4 = u2i, f2c_abs(r__4)); // , expr subst
-                            h21 = min(r__5,r__6);
+                            h21 = fla_min(r__5,r__6);
                             q__2.r = u3r - u4r;
                             q__2.i = u3i - u4i; // , expr subst
                             q__1.r = q__2.r;
@@ -635,7 +635,7 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                             /* Computing MAX */
                             r__5 = (r__1 = u4r, f2c_abs(r__1)) + (r__2 = u4i, f2c_abs(r__2));
                             r__6 = (r__3 = q__1.r, f2c_abs( r__3)) + (r__4 = q__1.i, f2c_abs(r__4)) ; // , expr subst
-                            h11 = max(r__5,r__6);
+                            h11 = fla_max(r__5,r__6);
                             q__2.r = u3r - u4r;
                             q__2.i = u3i - u4i; // , expr subst
                             q__1.r = q__2.r;
@@ -643,13 +643,13 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                             /* Computing MIN */
                             r__5 = (r__1 = u4r, f2c_abs(r__1)) + (r__2 = u4i, f2c_abs(r__2));
                             r__6 = (r__3 = q__1.r, f2c_abs( r__3)) + (r__4 = q__1.i, f2c_abs(r__4)) ; // , expr subst
-                            h22 = min(r__5,r__6);
+                            h22 = fla_min(r__5,r__6);
                             scl = h11 + h12;
                             tst2 = h22 * (h11 / scl);
                             /* Computing MAX */
                             r__1 = smlnum;
                             r__2 = ulp * tst2; // , expr subst
-                            if (tst2 == 0.f || h21 * (h12 / scl) <= max(r__1, r__2))
+                            if (tst2 == 0.f || h21 * (h12 / scl) <= fla_max(r__1, r__2))
                             {
                                 i__4 = k + 1 + k * h_dim1;
                                 h__[i__4].r = 0.f;
@@ -673,7 +673,7 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                     v2i = v[m22 * v_dim1 + 2].i;
 
 
-                    for (j = max(i__4,i__5);
+                    for (j = fla_max(i__4,i__5);
                             j <= i__6;
                             ++j)
                     {
@@ -931,7 +931,7 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                 /* Computing MIN */
                 i__5 = *kbot;
                 i__7 = k + 3; // , expr subst
-                i__4 = min(i__5,i__7);
+                i__4 = fla_min(i__5,i__7);
                 v1r = v[m * v_dim1 + 1].r;
                 v1i = v[m * v_dim1 + 1].i;
                 v2r = v[m * v_dim1 + 2].r;
@@ -1088,16 +1088,16 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                     /* Computing MAX */
                     r__3 = smlnum;
                     r__4 = ulp * tst1; // , expr subst
-                    if ((r__1 = u1r, f2c_abs(r__1)) + (r__2 = u1i, f2c_abs(r__2)) <= max(r__3,r__4) )
+                    if ((r__1 = u1r, f2c_abs(r__1)) + (r__2 = u1i, f2c_abs(r__2)) <= fla_max(r__3,r__4) )
                     {
                         /* Computing MAX */
                         r__5 = (r__1 = u1r, f2c_abs(r__1)) + (r__2 = u1i, f2c_abs(r__2));
                         r__6 = (r__3 = u2r, f2c_abs(r__3)) + ( r__4 = u2i, abs(r__4)); // , expr subst
-                        h12 = max(r__5,r__6);
+                        h12 = fla_max(r__5,r__6);
                         /* Computing MIN */
                         r__5 = (r__1 = u1r, f2c_abs(r__1)) + (r__2 = u1i, f2c_abs(r__2));
                         r__6 = (r__3 = u2r, f2c_abs(r__3)) + ( r__4 = u2i, abs(r__4)); // , expr subst
-                        h21 = min(r__5,r__6);
+                        h21 = fla_min(r__5,r__6);
                         i__4 = k + k * h_dim1;
                         i__5 = k + 1 + (k + 1) * h_dim1;
                         u1r = h__[i__4].r;
@@ -1111,7 +1111,7 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         /* Computing MAX */
                         r__5 = (r__1 = u2r, f2c_abs(r__1)) + (r__2 = u2i, f2c_abs( r__2));
                         r__6 = (r__3 = q__1.r, f2c_abs(r__3)) + ( r__4 = q__1.i, f2c_abs(r__4)); // , expr subst
-                        h11 = max(r__5,r__6);
+                        h11 = fla_max(r__5,r__6);
                         q__2.r = u1r - u2r;
                         q__2.i = u1i - u2i; // , expr subst
                         q__1.r = q__2.r;
@@ -1119,13 +1119,13 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         /* Computing MIN */
                         r__5 = (r__1 = u2r, f2c_abs(r__1)) + (r__2 = u2i, f2c_abs( r__2));
                         r__6 = (r__3 = q__1.r, f2c_abs(r__3)) + ( r__4 = q__1.i, f2c_abs(r__4)); // , expr subst
-                        h22 = min(r__5,r__6);
+                        h22 = fla_min(r__5,r__6);
                         scl = h11 + h12;
                         tst2 = h22 * (h11 / scl);
                         /* Computing MAX */
                         r__1 = smlnum;
                         r__2 = ulp * tst2; // , expr subst
-                        if (tst2 == 0.f || h21 * (h12 / scl) <= max(r__1,r__2) )
+                        if (tst2 == 0.f || h21 * (h12 / scl) <= fla_max(r__1,r__2) )
                         {
                             i__4 = k + 1 + k * h_dim1;
                             h__[i__4].r = 0.f;
@@ -1138,7 +1138,7 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
             /* ==== Multiply H by reflections from the left ==== */
             if (accum)
             {
-                jbot = min(ndcol,*kbot);
+                jbot = fla_min(ndcol,*kbot);
             }
             else if (*wantt)
             {
@@ -1167,7 +1167,7 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                 v3i = v[m * v_dim1 + 3].i;
 
 
-                for (j = max(i__4,i__5);
+                for (j = fla_max(i__4,i__5);
                         j <= i__7;
                         ++j)
                 {                 
@@ -1228,15 +1228,15 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                     /* Computing MAX */
                     i__7 = 1;
                     i__4 = *ktop - incol; // , expr subst
-                    i2 = max(i__7,i__4);
+                    i2 = fla_max(i__7,i__4);
                     /* Computing MAX */
                     i__7 = i2;
                     i__4 = kms - (krcol - incol) + 1; // , expr subst
-                    i2 = max(i__7,i__4);
+                    i2 = fla_max(i__7,i__4);
                     /* Computing MIN */
                     i__7 = kdu;
                     i__4 = krcol + (mbot - 1 << 1) - incol + 5; // , expr subst
-                    i4 = min(i__7,i__4);
+                    i4 = fla_min(i__7,i__4);
                     i__7 = i4;
 
                     v1r = v[m * v_dim1 + 1].r;
@@ -1379,28 +1379,28 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
             /* Computing MAX */
             i__3 = 1;
             i__6 = *ktop - incol; // , expr subst
-            k1 = max(i__3,i__6);
+            k1 = fla_max(i__3,i__6);
             /* Computing MAX */
             i__3 = 0;
             i__6 = ndcol - *kbot; // , expr subst
-            nu = kdu - max(i__3,i__6) - k1 + 1;
+            nu = kdu - fla_max(i__3,i__6) - k1 + 1;
             /* ==== Horizontal Multiply ==== */
             i__3 = jbot;
             i__6 = *nh;
-            for (jcol = min(ndcol,*kbot) + 1;
+            for (jcol = fla_min(ndcol,*kbot) + 1;
                     i__6 < 0 ? jcol >= i__3 : jcol <= i__3;
                     jcol += i__6)
             {
                 /* Computing MIN */
                 i__7 = *nh;
                 i__4 = jbot - jcol + 1; // , expr subst
-                jlen = min(i__7,i__4);
+                jlen = fla_min(i__7,i__4);
                 cgemm_("C", "N", &nu, &jlen, &nu, &c_b2, &u[k1 + k1 * u_dim1], ldu, &h__[incol + k1 + jcol * h_dim1], ldh, &c_b1, & wh[wh_offset], ldwh);
                 clacpy_("ALL", &nu, &jlen, &wh[wh_offset], ldwh, &h__[incol + k1 + jcol * h_dim1], ldh);
                 /* L150: */
             }
             /* ==== Vertical multiply ==== */
-            i__6 = max(*ktop,incol) - 1;
+            i__6 = fla_max(*ktop,incol) - 1;
             i__3 = *nv;
             for (jrow = jtop;
                     i__3 < 0 ? jrow >= i__6 : jrow <= i__6;
@@ -1408,8 +1408,8 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
             {
                 /* Computing MIN */
                 i__7 = *nv;
-                i__4 = max(*ktop,incol) - jrow; // , expr subst
-                jlen = min(i__7,i__4);
+                i__4 = fla_max(*ktop,incol) - jrow; // , expr subst
+                jlen = fla_min(i__7,i__4);
                 cgemm_("N", "N", &jlen, &nu, &nu, &c_b2, &h__[jrow + (incol + k1) * h_dim1], ldh, &u[k1 + k1 * u_dim1], ldu, &c_b1, &wv[wv_offset], ldwv);
                 clacpy_("ALL", &jlen, &nu, &wv[wv_offset], ldwv, &h__[jrow + ( incol + k1) * h_dim1], ldh);
                 /* L160: */
@@ -1426,7 +1426,7 @@ int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                     /* Computing MIN */
                     i__7 = *nv;
                     i__4 = *ihiz - jrow + 1; // , expr subst
-                    jlen = min(i__7,i__4);
+                    jlen = fla_min(i__7,i__4);
                     cgemm_("N", "N", &jlen, &nu, &nu, &c_b2, &z__[jrow + ( incol + k1) * z_dim1], ldz, &u[k1 + k1 * u_dim1], ldu, &c_b1, &wv[wv_offset], ldwv);
                     clacpy_("ALL", &jlen, &nu, &wv[wv_offset], ldwv, &z__[ jrow + (incol + k1) * z_dim1], ldz);
                     /* L170: */

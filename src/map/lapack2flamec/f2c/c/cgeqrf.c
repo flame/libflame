@@ -65,23 +65,23 @@ static integer c__2 = 2;
 /* > A is COMPLEX array, dimension (LDA,N) */
 /* > On entry, the M-by-N matrix A. */
 /* > On exit, the elements on and above the diagonal of the array */
-/* > contain the min(M,N)-by-N upper trapezoidal matrix R (R is */
+/* > contain the fla_min(M,N)-by-N upper trapezoidal matrix R (R is */
 /* > upper triangular if m >= n);
 the elements below the diagonal, */
 /* > with the array TAU, represent the unitary matrix Q as a */
-/* > product of min(m,n) elementary reflectors (see Further */
+/* > product of fla_min(m,n) elementary reflectors (see Further */
 /* > Details). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] TAU */
 /* > \verbatim */
-/* > TAU is COMPLEX array, dimension (min(M,N)) */
+/* > TAU is COMPLEX array, dimension (fla_min(M,N)) */
 /* > The scalar factors of the elementary reflectors (see Further */
 /* > Details). */
 /* > \endverbatim */
@@ -127,7 +127,7 @@ the routine */
 /* > */
 /* > The matrix Q is represented as a product of elementary reflectors */
 /* > */
-/* > Q = H(1) H(2) . . . H(k), where k = min(m,n). */
+/* > Q = H(1) H(2) . . . H(k), where k = fla_min(m,n). */
 /* > */
 /* > Each H(i) has the form */
 /* > */
@@ -187,7 +187,7 @@ int cgeqrf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
     --tau;
     --work;
     /* Function Body */
-    k = min(*m,*n);
+    k = fla_min(*m,*n);
     *info = 0;
     nb = ilaenv_(&c__1, "CGEQRF", " ", m, n, &c_n1, &c_n1);
     lquery = *lwork == -1;
@@ -199,13 +199,13 @@ int cgeqrf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
     else if (! lquery)
     {
-        if (*lwork <= 0 || *m > 0 && *lwork < max(1,*n))
+        if (*lwork <= 0 || *m > 0 && *lwork < fla_max(1,*n))
         {
             *info = -7;
         }
@@ -249,7 +249,7 @@ int cgeqrf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
         /* Computing MAX */
         i__1 = 0;
         i__2 = ilaenv_(&c__3, "CGEQRF", " ", m, n, &c_n1, &c_n1); // , expr subst
-        nx = max(i__1,i__2);
+        nx = fla_max(i__1,i__2);
         if (nx < k)
         {
             /* Determine if workspace is large enough for blocked code. */
@@ -263,7 +263,7 @@ int cgeqrf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
                 /* Computing MAX */
                 i__1 = 2;
                 i__2 = ilaenv_(&c__2, "CGEQRF", " ", m, n, &c_n1, & c_n1); // , expr subst
-                nbmin = max(i__1,i__2);
+                nbmin = fla_max(i__1,i__2);
             }
         }
     }
@@ -278,7 +278,7 @@ int cgeqrf_(integer *m, integer *n, complex *a, integer *lda, complex *tau, comp
         {
             /* Computing MIN */
             i__3 = k - i__ + 1;
-            ib = min(i__3,nb);
+            ib = fla_min(i__3,nb);
             /* Compute the QR factorization of the current block */
             /* A(i:m,i:i+ib-1) */
             i__3 = *m - i__ + 1;

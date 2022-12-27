@@ -179,7 +179,7 @@ int claesy_(complex *a, complex *b, complex *c__, complex * rt1, complex *rt2, c
         /* Take the square root carefully to avoid over/under flow. */
         babs = c_abs(b);
         tabs = c_abs(&t);
-        z__ = max(babs,tabs);
+        z__ = fla_max(babs,tabs);
         if (z__ > 0.f)
         {
             q__5.r = t.r / z__;

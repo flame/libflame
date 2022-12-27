@@ -73,9 +73,9 @@ static integer c__1 = 1;
 /* > matrix A, stored in the first KD+1 rows of the array. The */
 /* > j-th column of A is stored in the j-th column of the array AB */
 /* > as follows: */
-/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j;
+/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(n,j+kd). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(n,j+kd). */
 /* > */
 /* > On exit, if INFO = 0, the triangular factor U or L from the */
 /* > Cholesky factorization A = U**H *U or A = L*L**H of the band */
@@ -212,7 +212,7 @@ int zpbtf2_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
     /* Computing MAX */
     i__1 = 1;
     i__2 = *ldab - 1; // , expr subst
-    kld = max(i__1,i__2);
+    kld = fla_max(i__1,i__2);
     if (upper)
     {
         /* Compute the Cholesky factorization A = U**H * U. */
@@ -240,7 +240,7 @@ int zpbtf2_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
             /* Computing MIN */
             i__2 = *kd;
             i__3 = *n - j; // , expr subst
-            kn = min(i__2,i__3);
+            kn = fla_min(i__2,i__3);
             if (kn > 0)
             {
                 d__1 = 1. / ajj;
@@ -279,7 +279,7 @@ int zpbtf2_(char *uplo, integer *n, integer *kd, doublecomplex *ab, integer *lda
             /* Computing MIN */
             i__2 = *kd;
             i__3 = *n - j; // , expr subst
-            kn = min(i__2,i__3);
+            kn = fla_min(i__2,i__3);
             if (kn > 0)
             {
                 d__1 = 1. / ajj;

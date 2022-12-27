@@ -181,8 +181,8 @@ typedef struct EIG_Non_symmetric_paramlist_t
     integer n_range_start;
     integer n_range_end;
     integer n_range_step_size;
-    integer lda; // The leading dimension of A. LDA >= max(1,N).
-    integer ldb; // The leading dimension of B.  LDB >= max(1,N).
+    integer lda; // The leading dimension of A. LDA >= fla_max(1,N).
+    integer ldb; // The leading dimension of B.  LDB >= fla_max(1,N).
     integer ldvl; // The leading dimension of the matrix VL. LDVL >= 1, and if JOBVL = 'V', LDVL >= N.
     integer ldvr; // The leading dimension of the matrix VR. LDVR >= 1, and if JOBVR = 'V', LDVR >= N.
     integer num_repeats;
@@ -245,7 +245,7 @@ typedef struct SVD_paramlist_t
     integer n_range_start;
     integer n_range_end;
     integer n_range_step_size;
-    integer lda; // Leading dimension of Array A. LDA >= max(1, n)
+    integer lda; // Leading dimension of Array A. LDA >= fla_max(1, n)
     integer ldu; // The leading dimension of the array U.  LDU >= 1; if JOBZ = 'S' or 'A' or JOBZ = 'O' and M < N, LDU >= M.
     integer ldvt; // The leading dimension of the array VT.  LDVT >= 1; if JOBZ = 'A' or JOBZ = 'O' and M >= N, LDVT >= N;if JOBZ = 'S', LDVT >= min(M,N).
     integer num_repeats;

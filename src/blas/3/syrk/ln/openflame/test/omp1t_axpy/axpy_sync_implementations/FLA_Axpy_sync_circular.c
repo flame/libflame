@@ -29,7 +29,7 @@ FLA_Error FLA_Axpy_sync_circular( FLA_Obj alpha, FLA_Obj X, FLA_Obj B )
   while ( n_done++ < n_stages ){
 
     // The last lockable partition may be smaller than the others.
-    b = min( FLA_Obj_width( XR ), stage_width );
+    b = fla_min( FLA_Obj_width( XR ), stage_width );
     
     FLA_Repart_1x2_to_1x3( XL,  /**/ XR,        &X0, /**/ &X1, &X2,
                            b, FLA_RIGHT );

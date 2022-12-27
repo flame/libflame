@@ -79,8 +79,8 @@ int dsymm_(char *side, char *uplo, integer *m, integer *n, doublereal *alpha, do
     /* LDA - INTEGER. */
     /* On entry, LDA specifies the first dimension of A as declared */
     /* in the calling (sub) program. When SIDE = 'L' or 'l' then */
-    /* LDA must be at least max( 1, m ), otherwise LDA must be at */
-    /* least max( 1, n ). */
+    /* LDA must be at least fla_max( 1, m ), otherwise LDA must be at */
+    /* least fla_max( 1, n ). */
     /* Unchanged on exit. */
     /* B - DOUBLE PRECISION array of DIMENSION ( LDB, n ). */
     /* Before entry, the leading m by n part of the array B must */
@@ -89,7 +89,7 @@ int dsymm_(char *side, char *uplo, integer *m, integer *n, doublereal *alpha, do
     /* LDB - INTEGER. */
     /* On entry, LDB specifies the first dimension of B as declared */
     /* in the calling (sub) program. LDB must be at least */
-    /* max( 1, m ). */
+    /* fla_max( 1, m ). */
     /* Unchanged on exit. */
     /* BETA - DOUBLE PRECISION. */
     /* On entry, BETA specifies the scalar beta. When BETA is */
@@ -104,7 +104,7 @@ int dsymm_(char *side, char *uplo, integer *m, integer *n, doublereal *alpha, do
     /* LDC - INTEGER. */
     /* On entry, LDC specifies the first dimension of C as declared */
     /* in the calling (sub) program. LDC must be at least */
-    /* max( 1, m ). */
+    /* fla_max( 1, m ). */
     /* Unchanged on exit. */
     /* Level 3 Blas routine. */
     /* -- Written on 8-February-1989. */
@@ -158,15 +158,15 @@ int dsymm_(char *side, char *uplo, integer *m, integer *n, doublereal *alpha, do
     {
         info = 4;
     }
-    else if (*lda < max(1,nrowa))
+    else if (*lda < fla_max(1,nrowa))
     {
         info = 7;
     }
-    else if (*ldb < max(1,*m))
+    else if (*ldb < fla_max(1,*m))
     {
         info = 9;
     }
-    else if (*ldc < max(1,*m))
+    else if (*ldc < fla_max(1,*m))
     {
         info = 12;
     }

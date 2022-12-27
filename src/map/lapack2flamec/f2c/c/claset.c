@@ -75,13 +75,13 @@
 /* > On entry, the m by n matrix A. */
 /* > On exit, A(i,j) = ALPHA, 1 <= i <= m, 1 <= j <= n, i.ne.j;
 */
-/* > A(i,i) = BETA , 1 <= i <= min(m,n) */
+/* > A(i,i) = BETA , 1 <= i <= fla_min(m,n) */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* Authors: */
 /* ======== */
@@ -142,7 +142,7 @@ int claset_(char *uplo, integer *m, integer *n, complex * alpha, complex *beta, 
         {
             /* Computing MIN */
             i__3 = j - 1;
-            i__2 = min(i__3,*m);
+            i__2 = fla_min(i__3,*m);
             for (i__ = 1;
                     i__ <= i__2;
                     ++i__)
@@ -154,7 +154,7 @@ int claset_(char *uplo, integer *m, integer *n, complex * alpha, complex *beta, 
             }
             /* L20: */
         }
-        i__1 = min(*n,*m);
+        i__1 = fla_min(*n,*m);
         for (i__ = 1;
                 i__ <= i__1;
                 ++i__)
@@ -169,7 +169,7 @@ int claset_(char *uplo, integer *m, integer *n, complex * alpha, complex *beta, 
     {
         /* Set the diagonal to BETA and the strictly lower triangular */
         /* part of the array to ALPHA. */
-        i__1 = min(*m,*n);
+        i__1 = fla_min(*m,*n);
         for (j = 1;
                 j <= i__1;
                 ++j)
@@ -186,7 +186,7 @@ int claset_(char *uplo, integer *m, integer *n, complex * alpha, complex *beta, 
             }
             /* L50: */
         }
-        i__1 = min(*n,*m);
+        i__1 = fla_min(*n,*m);
         for (i__ = 1;
                 i__ <= i__1;
                 ++i__)
@@ -218,7 +218,7 @@ int claset_(char *uplo, integer *m, integer *n, complex * alpha, complex *beta, 
             }
             /* L80: */
         }
-        i__1 = min(*m,*n);
+        i__1 = fla_min(*m,*n);
         for (i__ = 1;
                 i__ <= i__1;
                 ++i__)

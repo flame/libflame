@@ -180,7 +180,7 @@ void prepare_potrf_run(char* uplo, integer m,
         invoke_potrf(uplo, datatype, &m, A, &lda, &info);
         exe_time = fla_test_clock() - exe_time;
         /* Get the best execution time */
-        time_min = min(time_min, exe_time);
+        time_min = fla_min(time_min, exe_time);
     }
 
     *time_min_ = time_min;

@@ -45,7 +45,7 @@ void validate_syevd(char* jobz, integer n, void* A, void* A_test, integer lda, v
                    compute norm(I - Z'*Z) / (N * EPS)*/
                 resid2 = (float)check_orthogonality(datatype, Z, n, n, lda);
 
-                *residual = (double)max(resid1, resid2);
+                *residual = (double)fla_max(resid1, resid2);
                 break;
             }
 
@@ -66,7 +66,7 @@ void validate_syevd(char* jobz, integer n, void* A, void* A_test, integer lda, v
                    compute norm(I - Z'*Z) / (N * EPS)*/
                 resid2 = check_orthogonality(datatype, Z, n, n, lda);
 
-                *residual = (double)max(resid1, resid2);
+                *residual = (double)fla_max(resid1, resid2);
                 break;
             }
 
@@ -87,7 +87,7 @@ void validate_syevd(char* jobz, integer n, void* A, void* A_test, integer lda, v
                    compute norm(I - Z'*Z) / (N * EPS)*/
                 resid2 = (float)check_orthogonality(datatype, Z, n, n, lda);
 
-                *residual = (double)max(resid1, resid2);
+                *residual = (double)fla_max(resid1, resid2);
                 break;
             }
 
@@ -108,7 +108,7 @@ void validate_syevd(char* jobz, integer n, void* A, void* A_test, integer lda, v
                    compute norm(I - Z'*Z) / (N * EPS)*/
                 resid2 = check_orthogonality(datatype, Z, n, n, lda);
 
-                *residual = (double)max(resid1, resid2);
+                *residual = (double)fla_max(resid1, resid2);
                 break;
             }
         }

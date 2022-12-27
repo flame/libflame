@@ -161,7 +161,7 @@ integer dlaneg_(integer *n, doublereal *d__, doublereal *lld, doublereal * sigma
         /* Computing MIN */
         i__3 = bj + 127;
         i__4 = *r__ - 1; // , expr subst
-        i__2 = min(i__3,i__4);
+        i__2 = fla_min(i__3,i__4);
         for (j = bj;
                 j <= i__2;
                 ++j)
@@ -187,7 +187,7 @@ integer dlaneg_(integer *n, doublereal *d__, doublereal *lld, doublereal * sigma
             /* Computing MIN */
             i__3 = bj + 127;
             i__4 = *r__ - 1; // , expr subst
-            i__2 = min(i__3,i__4);
+            i__2 = fla_min(i__3,i__4);
             for (j = bj;
                     j <= i__2;
                     ++j)
@@ -220,7 +220,7 @@ integer dlaneg_(integer *n, doublereal *d__, doublereal *lld, doublereal * sigma
         bsav = p;
         /* Computing MAX */
         i__3 = bj - 127;
-        i__2 = max(i__3,*r__);
+        i__2 = fla_max(i__3,*r__);
         for (j = bj;
                 j >= i__2;
                 --j)
@@ -242,7 +242,7 @@ integer dlaneg_(integer *n, doublereal *d__, doublereal *lld, doublereal * sigma
             p = bsav;
             /* Computing MAX */
             i__3 = bj - 127;
-            i__2 = max(i__3,*r__);
+            i__2 = fla_max(i__3,*r__);
             for (j = bj;
                     j >= i__2;
                     --j)

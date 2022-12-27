@@ -109,9 +109,9 @@ FLA_Error FLA_Apply_G_rf_bls_var3( integer       k_G,
 	for ( i = 0; i < m_A; i += b )
 	{
 		float*    A1      = buff_A + (0  )*cs_A + (i  )*rs_A;
-		integer       m_ahead = max( 0, m_A - i );
+		integer       m_ahead = fla_max( 0, m_A - i );
 
-		b = min( b_alg, m_ahead );
+		b = fla_min( b_alg, m_ahead );
 
                 // ass_var3 does not support arbitrary strides: TODO 
 		FLA_Apply_G_rf_ops_var3( k_G,
@@ -138,9 +138,9 @@ FLA_Error FLA_Apply_G_rf_bld_var3( integer       k_G,
 	for ( i = 0; i < m_A; i += b )
 	{
 		double*   A1      = buff_A + (0  )*cs_A + (i  )*rs_A;
-		integer       m_ahead = max( 0, m_A - i );
+		integer       m_ahead = fla_max( 0, m_A - i );
 
-		b = min( b_alg, m_ahead );
+		b = fla_min( b_alg, m_ahead );
 
                 // ass_var3 does not support arbitrary strides: TODO 
 		FLA_Apply_G_rf_opd_var3( k_G,
@@ -167,9 +167,9 @@ FLA_Error FLA_Apply_G_rf_blc_var3( integer       k_G,
 	for ( i = 0; i < m_A; i += b )
 	{
 		scomplex* A1      = buff_A + (0  )*cs_A + (i  )*rs_A;
-		integer       m_ahead = max( 0, m_A - i );
+		integer       m_ahead = fla_max( 0, m_A - i );
 
-		b = min( b_alg, m_ahead );
+		b = fla_min( b_alg, m_ahead );
 
                 // ass_var3 does not support arbitrary strides: TODO 
 		FLA_Apply_G_rf_opc_var3( k_G,
@@ -196,9 +196,9 @@ FLA_Error FLA_Apply_G_rf_blz_var3( integer       k_G,
 	for ( i = 0; i < m_A; i += b )
 	{
 		dcomplex* A1      = buff_A + (0  )*cs_A + (i  )*rs_A;
-		integer       m_ahead = max( 0, m_A - i );
+		integer       m_ahead = fla_max( 0, m_A - i );
 
-		b = min( b_alg, m_ahead );
+		b = fla_min( b_alg, m_ahead );
 
                 // ass_var3 does not support arbitrary strides: TODO 
 		FLA_Apply_G_rf_opz_var3( k_G,

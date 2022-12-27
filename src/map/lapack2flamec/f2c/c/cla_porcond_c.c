@@ -62,7 +62,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] AF */
@@ -75,7 +75,7 @@ static integer c__1 = 1;
 /* > \param[in] LDAF */
 /* > \verbatim */
 /* > LDAF is INTEGER */
-/* > The leading dimension of the array AF. LDAF >= max(1,N). */
+/* > The leading dimension of the array AF. LDAF >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] C */
@@ -195,11 +195,11 @@ real cla_porcond_c_(char *uplo, integer *n, complex *a, integer *lda, complex *a
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }
-    else if (*ldaf < max(1,*n))
+    else if (*ldaf < fla_max(1,*n))
     {
         *info = -6;
     }
@@ -264,7 +264,7 @@ real cla_porcond_c_(char *uplo, integer *n, complex *a, integer *lda, complex *a
                 }
             }
             rwork[i__] = tmp;
-            anorm = max(anorm,tmp);
+            anorm = fla_max(anorm,tmp);
         }
     }
     else
@@ -314,7 +314,7 @@ real cla_porcond_c_(char *uplo, integer *n, complex *a, integer *lda, complex *a
                 }
             }
             rwork[i__] = tmp;
-            anorm = max(anorm,tmp);
+            anorm = fla_max(anorm,tmp);
         }
     }
     /* Quick return if possible. */

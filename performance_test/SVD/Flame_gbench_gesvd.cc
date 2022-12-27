@@ -99,7 +99,7 @@ class gesvd_parameters{
        rwork = (T2 *)malloc(5*(n*sizeof(T2))); // as per the API doc
        u = (T *)malloc(ldu*m*sizeof(T));
        vt = (T *)malloc(ldvt*n*sizeof(T));
-       superb = (T2 *)malloc(min(m,n)*sizeof(T2));
+       superb = (T2 *)malloc(fla_min(m,n)*sizeof(T2));
        lwork = -1;
        wkopt = 0.0;
 
@@ -117,7 +117,7 @@ class gesvd_parameters{
        Flame_gbench_buffer_memset<T>( u, m*m, 0.0);
        Flame_gbench_buffer_memset<T>( vt, n*n, 0.0);
        Flame_gbench_buffer_memset<T>( s, n, 0.0);
-       Flame_gbench_buffer_memset <T>( superb, min(m,n), 0.0); */
+       Flame_gbench_buffer_memset <T>( superb, fla_min(m,n), 0.0); */
 
     } /* end of Constructor  */
 };  /* end of getrf_parameters  class definition */

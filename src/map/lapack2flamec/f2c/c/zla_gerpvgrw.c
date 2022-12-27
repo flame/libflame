@@ -60,7 +60,7 @@
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] AF */
@@ -73,7 +73,7 @@
 /* > \param[in] LDAF */
 /* > \verbatim */
 /* > LDAF is INTEGER */
-/* > The leading dimension of the array AF. LDAF >= max(1,N). */
+/* > The leading dimension of the array AF. LDAF >= fla_max(1,N). */
 /* > \endverbatim */
 /* Authors: */
 /* ======== */
@@ -138,7 +138,7 @@ doublereal zla_gerpvgrw_(integer *n, integer *ncols, doublecomplex *a, integer *
             /* Computing MAX */
             i__3 = i__ + j * a_dim1;
             d__3 = (d__1 = a[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&a[i__ + j * a_dim1]), f2c_dabs(d__2));
-            amax = max(d__3,amax);
+            amax = fla_max(d__3,amax);
         }
         i__2 = j;
         for (i__ = 1;
@@ -148,13 +148,13 @@ doublereal zla_gerpvgrw_(integer *n, integer *ncols, doublecomplex *a, integer *
             /* Computing MAX */
             i__3 = i__ + j * af_dim1;
             d__3 = (d__1 = af[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&af[i__ + j * af_dim1]), f2c_dabs(d__2));
-            umax = max(d__3,umax);
+            umax = fla_max(d__3,umax);
         }
         if (umax != 0.)
         {
             /* Computing MIN */
             d__1 = amax / umax;
-            rpvgrw = min(d__1,rpvgrw);
+            rpvgrw = fla_min(d__1,rpvgrw);
         }
     }
     ret_val = rpvgrw;

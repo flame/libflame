@@ -36,7 +36,7 @@ FLA_Error FLA_QR_UT_recover_tau( FLA_Obj T, FLA_Obj t )
   while ( FLA_Obj_length( tB ) > 0 ) {
 
     // The blocksize should be determined that the T matrix is square.
-    b = min( FLA_Obj_length( tB ), b_alg );
+    b = fla_min( FLA_Obj_length( tB ), b_alg );
 
     FLA_Repart_1x2_to_1x3( TL,  /**/ TR,        &T0, /**/ &T1, &T2,
                            b, FLA_RIGHT );

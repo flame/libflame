@@ -27,11 +27,11 @@
   matrix A, optionally computing the left and/or right singular vectors.
   The SVD is written
   A = U * S * transpose(V)
-  where S is an M-by-N matrix which is zero except for its min(m,n)
+  where S is an M-by-N matrix which is zero except for its fla_min(m,n)
   diagonal elements, U is an M-by-M orthogonal matrix, and V is an N-by-N
   orthogonal matrix.  The diagonal elements of S are the singular values
   of A; they are real and non-negative, and are returned in descending order.
-  The first min(m,n) columns of U and V are the left and right singular
+  The first fla_min(m,n) columns of U and V are the left and right singular
   vectors of A.
 
   Note that the routine returns V**T, not V.
@@ -73,7 +73,7 @@
 #define LAPACK_gesvd_body(prefix)                                       \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);                \
   FLA_Datatype dtype_re = PREFIX2FLAME_REALTYPE(prefix);                \
-  dim_t        min_m_n  = min( *m, *n );                                \
+  dim_t        min_m_n  = fla_min( *m, *n );                                \
   FLA_Svd_type jobu_fla;                                                \
   FLA_Svd_type jobv_fla;                                                \
   FLA_Bool     create_U;                                                \

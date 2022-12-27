@@ -24,7 +24,7 @@ function [ C_out ] = FLA_Syr2k_ln_blk_var1( A, B, C, nb_alg )
 
   while ( size( AT, 1 ) < size( A, 1 ) )
 
-    b = min( size( AB, 1 ), nb_alg );
+    b = fla_min( size( AB, 1 ), nb_alg );
 
     [ A0, ...
       A1, ...

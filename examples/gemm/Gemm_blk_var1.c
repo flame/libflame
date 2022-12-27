@@ -27,7 +27,7 @@ int Gemm_blk_var1( FLA_Obj A, FLA_Obj B, FLA_Obj C, int nb_alg )
 
   while ( FLA_Obj_width( AL ) < FLA_Obj_width( A ) ){
 
-    b = min( FLA_Obj_width( AR ), nb_alg );
+    b = fla_min( FLA_Obj_width( AR ), nb_alg );
 
     FLA_Repart_1x2_to_1x3( AL,  /**/ AR,        &A0, /**/ &A1, &A2,
                            b, FLA_RIGHT );

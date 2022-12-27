@@ -52,11 +52,11 @@ static integer c_n1 = -1;
 /* > A = U * SIGMA * transpose(V) */
 /* > */
 /* > where SIGMA is an M-by-N matrix which is zero except for its */
-/* > min(m,n) diagonal elements, U is an M-by-M unitary matrix, and */
+/* > fla_min(m,n) diagonal elements, U is an M-by-M unitary matrix, and */
 /* > V is an N-by-N unitary matrix. The diagonal elements of SIGMA */
 /* > are the singular values of A;
 they are real and non-negative, and */
-/* > are returned in descending order. The first min(m,n) columns of */
+/* > are returned in descending order. The first fla_min(m,n) columns of */
 /* > U and V are the left and right singular vectors of A. */
 /* > */
 /* > ZGESVDX uses an eigenvalue problem for obtaining the SVD, which */
@@ -71,7 +71,7 @@ they are real and non-negative, and */
 /* > \verbatim */
 /* > JOBU is CHARACTER*1 */
 /* > Specifies options for computing all or part of the matrix U: */
-/* > = 'V': the first min(m,n) columns of U (the left singular */
+/* > = 'V': the first fla_min(m,n) columns of U (the left singular */
 /* > vectors) or as specified by RANGE are returned in */
 /* > the array U;
 */
@@ -84,7 +84,7 @@ they are real and non-negative, and */
 /* > JOBVT is CHARACTER*1 */
 /* > Specifies options for computing all or part of the matrix */
 /* > V**T: */
-/* > = 'V': the first min(m,n) rows of V**T (the right singular */
+/* > = 'V': the first fla_min(m,n) rows of V**T (the right singular */
 /* > vectors) or as specified by RANGE are returned in */
 /* > the array VT;
 */
@@ -123,7 +123,7 @@ they are real and non-negative, and */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] VL */
@@ -147,7 +147,7 @@ they are real and non-negative, and */
 /* > IL is INTEGER */
 /* > If RANGE='I', the index of the */
 /* > smallest singular value to be returned. */
-/* > 1 <= IL <= IU <= min(M,N), if min(M,N) > 0. */
+/* > 1 <= IL <= IU <= fla_min(M,N), if fla_min(M,N) > 0. */
 /* > Not referenced if RANGE = 'A' or 'V'. */
 /* > \endverbatim */
 /* > */
@@ -156,7 +156,7 @@ they are real and non-negative, and */
 /* > IU is INTEGER */
 /* > If RANGE='I', the index of the */
 /* > largest singular value to be returned. */
-/* > 1 <= IL <= IU <= min(M,N), if min(M,N) > 0. */
+/* > 1 <= IL <= IU <= fla_min(M,N), if fla_min(M,N) > 0. */
 /* > Not referenced if RANGE = 'A' or 'V'. */
 /* > \endverbatim */
 /* > */
@@ -164,14 +164,14 @@ they are real and non-negative, and */
 /* > \verbatim */
 /* > NS is INTEGER */
 /* > The total number of singular values found, */
-/* > 0 <= NS <= min(M,N). */
-/* > If RANGE = 'A', NS = min(M,N);
+/* > 0 <= NS <= fla_min(M,N). */
+/* > If RANGE = 'A', NS = fla_min(M,N);
 if RANGE = 'I', NS = IU-IL+1. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] S */
 /* > \verbatim */
-/* > S is DOUBLE PRECISION array, dimension (min(M,N)) */
+/* > S is DOUBLE PRECISION array, dimension (fla_min(M,N)) */
 /* > The singular values of A, sorted so that S(i) >= S(i+1). */
 /* > \endverbatim */
 /* > */
@@ -366,7 +366,7 @@ int zgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, doub
     *info = 0;
     abstol = dlamch_("S") * 2;
     lquery = *lwork == -1;
-    minmn = min(*m,*n);
+    minmn = fla_min(*m,*n);
     wantu = lsame_(jobu, "V");
     wantvt = lsame_(jobvt, "V");
     if (wantu || wantvt)
@@ -420,11 +420,11 @@ int zgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, doub
         }
         else if (inds)
         {
-            if (*il < 1 || *il > max(1,minmn))
+            if (*il < 1 || *il > fla_max(1,minmn))
             {
                 *info = -10;
             }
-            else if (*iu < min(minmn,*il) || *iu > minmn)
+            else if (*iu < fla_min(minmn,*il) || *iu > minmn)
             {
                 *info = -11;
             }
@@ -474,13 +474,13 @@ int zgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, doub
                     /* Computing MAX */
                     i__2 = maxwrk;
                     i__3 = *n * *n + (*n << 1) + (*n << 1) * ilaenv_(&c__1, "ZGEBRD", " ", n, n, &c_n1, &c_n1); // , expr subst
-                    maxwrk = max(i__2,i__3);
+                    maxwrk = fla_max(i__2,i__3);
                     if (wantu || wantvt)
                     {
                         /* Computing MAX */
                         i__2 = maxwrk;
                         i__3 = *n * *n + (*n << 1) + *n * ilaenv_(&c__1, "ZUNMQR", "LN", n, n, n, &c_n1); // , expr subst
-                        maxwrk = max(i__2,i__3);
+                        maxwrk = fla_max(i__2,i__3);
                     }
                 }
                 else
@@ -493,7 +493,7 @@ int zgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, doub
                         /* Computing MAX */
                         i__2 = maxwrk;
                         i__3 = (*n << 1) + *n * ilaenv_(&c__1, "ZUNMQR", "LN", n, n, n, &c_n1); // , expr subst
-                        maxwrk = max(i__2,i__3);
+                        maxwrk = fla_max(i__2,i__3);
                     }
                 }
             }
@@ -508,13 +508,13 @@ int zgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, doub
                     /* Computing MAX */
                     i__2 = maxwrk;
                     i__3 = *m * *m + (*m << 1) + (*m << 1) * ilaenv_(&c__1, "ZGEBRD", " ", m, m, &c_n1, &c_n1); // , expr subst
-                    maxwrk = max(i__2,i__3);
+                    maxwrk = fla_max(i__2,i__3);
                     if (wantu || wantvt)
                     {
                         /* Computing MAX */
                         i__2 = maxwrk;
                         i__3 = *m * *m + (*m << 1) + *m * ilaenv_(&c__1, "ZUNMQR", "LN", m, m, m, &c_n1); // , expr subst
-                        maxwrk = max(i__2,i__3);
+                        maxwrk = fla_max(i__2,i__3);
                     }
                 }
                 else
@@ -527,12 +527,12 @@ int zgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, doub
                         /* Computing MAX */
                         i__2 = maxwrk;
                         i__3 = (*m << 1) + *m * ilaenv_(&c__1, "ZUNMQR", "LN", m, m, m, &c_n1); // , expr subst
-                        maxwrk = max(i__2,i__3);
+                        maxwrk = fla_max(i__2,i__3);
                     }
                 }
             }
         }
-        maxwrk = max(maxwrk,minwrk);
+        maxwrk = fla_max(maxwrk,minwrk);
         d__1 = (doublereal) maxwrk;
         z__1.r = d__1;
         z__1.i = 0.; // , expr subst
@@ -566,7 +566,7 @@ int zgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, doub
     {
         *(unsigned char *)rngtgk = 'I';
         iltgk = 1;
-        iutgk = min(*m,*n);
+        iutgk = fla_min(*m,*n);
     }
     else if (inds)
     {

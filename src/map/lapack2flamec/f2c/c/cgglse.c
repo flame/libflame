@@ -80,13 +80,13 @@ static integer c_n1 = -1;
 /* > A is COMPLEX array, dimension (LDA,N) */
 /* > On entry, the M-by-N matrix A. */
 /* > On exit, the elements on and above the diagonal of the array */
-/* > contain the min(M,N)-by-N upper trapezoidal matrix T. */
+/* > contain the fla_min(M,N)-by-N upper trapezoidal matrix T. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -100,7 +100,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,P). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,P). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] C */
@@ -136,8 +136,8 @@ static integer c_n1 = -1;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,M+N+P). */
-/* > For optimum performance LWORK >= P+min(M,N)+max(M,N)*NB, */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,M+N+P). */
+/* > For optimum performance LWORK >= P+fla_min(M,N)+fla_max(M,N)*NB, */
 /* > where NB is an upper bound for the optimal blocksizes for */
 /* > CGEQRF, CGERQF, CUNMQR and CUNMRQ. */
 /* > */
@@ -237,7 +237,7 @@ int cgglse_(integer *m, integer *n, integer *p, complex *a, integer *lda, comple
     --work;
     /* Function Body */
     *info = 0;
-    mn = min(*m,*n);
+    mn = fla_min(*m,*n);
     lquery = *lwork == -1;
     if (*m < 0)
     {
@@ -251,11 +251,11 @@ int cgglse_(integer *m, integer *n, integer *p, complex *a, integer *lda, comple
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,*p))
+    else if (*ldb < fla_max(1,*p))
     {
         *info = -7;
     }
@@ -274,11 +274,11 @@ int cgglse_(integer *m, integer *n, integer *p, complex *a, integer *lda, comple
             nb3 = ilaenv_(&c__1, "CUNMQR", " ", m, n, p, &c_n1);
             nb4 = ilaenv_(&c__1, "CUNMRQ", " ", m, n, p, &c_n1);
             /* Computing MAX */
-            i__1 = max(nb1,nb2);
-            i__1 = max(i__1,nb3); // , expr subst
-            nb = max(i__1,nb4);
+            i__1 = fla_max(nb1,nb2);
+            i__1 = fla_max(i__1,nb3); // , expr subst
+            nb = fla_max(i__1,nb4);
             lwkmin = *m + *n + *p;
-            lwkopt = *p + mn + max(*m,*n) * nb;
+            lwkopt = *p + mn + fla_max(*m,*n) * nb;
         }
         work[1].r = (real) lwkopt;
         work[1].i = 0.f; // , expr subst
@@ -317,14 +317,14 @@ int cgglse_(integer *m, integer *n, integer *p, complex *a, integer *lda, comple
     lopt = work[i__1].r;
     /* Update c = Z**H *c = ( c1 ) N-P */
     /* ( c2 ) M+P-N */
-    i__1 = max(1,*m);
+    i__1 = fla_max(1,*m);
     i__2 = *lwork - *p - mn;
     cunmqr_("Left", "Conjugate Transpose", m, &c__1, &mn, &a[a_offset], lda, & work[*p + 1], &c__[1], &i__1, &work[*p + mn + 1], &i__2, info);
     /* Computing MAX */
     i__3 = *p + mn + 1;
     i__1 = lopt;
     i__2 = (integer) work[i__3].r; // , expr subst
-    lopt = max(i__1,i__2);
+    lopt = fla_max(i__1,i__2);
     /* Solve T12*x2 = d for x2 */
     if (*p > 0)
     {
@@ -389,7 +389,7 @@ int cgglse_(integer *m, integer *n, integer *p, complex *a, integer *lda, comple
     i__4 = *p + mn + 1;
     i__2 = lopt;
     i__3 = (integer) work[i__4].r; // , expr subst
-    i__1 = *p + mn + max(i__2,i__3);
+    i__1 = *p + mn + fla_max(i__2,i__3);
     work[1].r = (real) i__1;
     work[1].i = 0.f; // , expr subst
     AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);

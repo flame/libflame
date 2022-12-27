@@ -88,7 +88,7 @@ static real c_b30 = 1.f;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] PIV */
@@ -218,7 +218,7 @@ int cpstrf_(char *uplo, integer *n, complex *a, integer *lda, integer *piv, inte
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }
@@ -295,7 +295,7 @@ int cpstrf_(char *uplo, integer *n, complex *a, integer *lda, integer *piv, inte
                 /* Computing MIN */
                 i__3 = nb;
                 i__4 = *n - k + 1; // , expr subst
-                jb = min(i__3,i__4);
+                jb = fla_min(i__3,i__4);
                 /* Set relevant part of first half of WORK to zero, */
                 /* holds dot products */
                 i__3 = *n;
@@ -432,7 +432,7 @@ int cpstrf_(char *uplo, integer *n, complex *a, integer *lda, integer *piv, inte
                 /* Computing MIN */
                 i__3 = nb;
                 i__4 = *n - k + 1; // , expr subst
-                jb = min(i__3,i__4);
+                jb = fla_min(i__3,i__4);
                 /* Set relevant part of first half of WORK to zero, */
                 /* holds dot products */
                 i__3 = *n;

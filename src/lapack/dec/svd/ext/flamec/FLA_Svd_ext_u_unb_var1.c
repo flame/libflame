@@ -33,7 +33,7 @@ FLA_Error FLA_Svd_ext_u_unb_var1( FLA_Svd_type jobu, FLA_Svd_type jobv,
 
     m_A     = FLA_Obj_length( A );
     n_A     = FLA_Obj_width( A );
-    min_m_n = min( m_A, n_A );
+    min_m_n = fla_min( m_A, n_A );
     dt      = FLA_Obj_datatype( A );
     dt_real = FLA_Obj_datatype_proj_to_real( A );
     dt_comp = FLA_Obj_datatype_proj_to_complex( A );

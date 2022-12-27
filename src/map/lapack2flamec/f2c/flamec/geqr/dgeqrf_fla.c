@@ -64,23 +64,23 @@
  /* > A is DOUBLE PRECISION array, dimension (LDA,N) */
  /* > On entry, the M-by-N matrix A. */
  /* > On exit, the elements on and above the diagonal of the array */
- /* > contain the min(M,N)-by-N upper trapezoidal matrix R (R is */
+ /* > contain the fla_min(M,N)-by-N upper trapezoidal matrix R (R is */
  /* > upper triangular if m >= n);
  the elements below the diagonal, */
  /* > with the array TAU, represent the orthogonal matrix Q as a */
- /* > product of min(m,n) elementary reflectors (see Further */
+ /* > product of fla_min(m,n) elementary reflectors (see Further */
  /* > Details). */
  /* > \endverbatim */
  /* > */
  /* > \param[in] LDA */
  /* > \verbatim */
  /* > LDA is INTEGER */
- /* > The leading dimension of the array A. LDA >= max(1,M). */
+ /* > The leading dimension of the array A. LDA >= fla_max(1,M). */
  /* > \endverbatim */
  /* > */
  /* > \param[out] TAU */
  /* > \verbatim */
- /* > TAU is DOUBLE PRECISION array, dimension (min(M,N)) */
+ /* > TAU is DOUBLE PRECISION array, dimension (fla_min(M,N)) */
  /* > The scalar factors of the elementary reflectors (see Further */
  /* > Details). */
  /* > \endverbatim */
@@ -94,7 +94,7 @@
  /* > \param[in] LWORK */
  /* > \verbatim */
  /* > LWORK is INTEGER */
- /* > The dimension of the array WORK. LWORK >= max(1,N). */
+ /* > The dimension of the array WORK. LWORK >= fla_max(1,N). */
  /* > For optimum performance LWORK >= N*NB, where NB is */
  /* > the optimal blocksize. */
  /* > */
@@ -125,7 +125,7 @@
  /* > */
  /* > The matrix Q is represented as a product of elementary reflectors */
  /* > */
- /* > Q = H(1) H(2) . . . H(k), where k = min(m,n). */
+ /* > Q = H(1) H(2) . . . H(k), where k = fla_min(m,n). */
  /* > */
  /* > Each H(i) has the form */
  /* > */
@@ -196,10 +196,10 @@
  else if (*n < 0) {
  *info = -2;
  }
- else if (*lda < max(1,*m)) {
+ else if (*lda < fla_max(1,*m)) {
  *info = -4;
  }
- else if (*lwork < max(1,*n) && ! lquery) {
+ else if (*lwork < fla_max(1,*n) && ! lquery) {
  *info = -7;
  }
  if (*info != 0) {
@@ -211,7 +211,7 @@
  return 0;
  }
  /* Quick return if possible */
- k = min(*m,*n);
+ k = fla_min(*m,*n);
  if (k == 0) {
  work[1] = 1.;
  return 0;
@@ -231,7 +231,7 @@
  /* Determine when to cross over from blocked to unblocked code. */
  /* Computing MAX */
  i__1 = 0; i__2 = ilaenv_(&c__3, "DGEQRF", " ", m, n, &c_n1, &c_n1); // , expr subst  
- nx = max(i__1,i__2);
+ nx = fla_max(i__1,i__2);
  if (nx < k) {
  /* Determine if workspace is large enough for blocked code. */
  ldwork = *n;
@@ -242,7 +242,7 @@
  nb = *lwork / ldwork;
  /* Computing MAX */
  i__1 = 2; i__2 = ilaenv_(&c__2, "DGEQRF", " ", m, n, &c_n1, & c_n1); // , expr subst  
- nbmin = max(i__1,i__2);
+ nbmin = fla_max(i__1,i__2);
  }
  }
  }
@@ -255,7 +255,7 @@
  i__ += i__2) {
  /* Computing MIN */
  i__3 = k - i__ + 1;
- ib = min(i__3,nb);
+ ib = fla_min(i__3,nb);
  /* Compute the QR factorization of the current block */
  /* A(i:m,i:i+ib-1) */
  i__3 = *m - i__ + 1;

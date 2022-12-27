@@ -79,7 +79,7 @@ static integer c__0 = 0;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] T */
@@ -216,7 +216,7 @@ int zlatsqr_(integer *m, integer *n, integer *mb, integer * nb, doublecomplex *a
     {
         *info = -4;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -6;
     }
@@ -247,7 +247,7 @@ int zlatsqr_(integer *m, integer *n, integer *mb, integer * nb, doublecomplex *a
         return 0;
     }
     /* Quick return if possible */
-    if (min(*m,*n) == 0)
+    if (fla_min(*m,*n) == 0)
     {
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;

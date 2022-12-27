@@ -137,7 +137,7 @@ static doublereal c_b60 = 1.;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of A. LDA >= max(1,N). */
+/* > The leading dimension of A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -152,7 +152,7 @@ static doublereal c_b60 = 1.;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of B. LDB >= max(1,N). */
+/* > The leading dimension of B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ALPHAR */
@@ -314,10 +314,10 @@ this can only occur when the true */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,2*N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,2*N). */
 /* > If BALANC = 'S' or 'B', or JOBVL = 'V', or JOBVR = 'V', */
-/* > LWORK >= max(1,6*N). */
-/* > If SENSE = 'E' or 'B', LWORK >= max(1,10*N). */
+/* > LWORK >= fla_max(1,6*N). */
+/* > If SENSE = 'E' or 'B', LWORK >= fla_max(1,10*N). */
 /* > If SENSE = 'V' or 'B', LWORK >= 2*N*N+8*N+16. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -548,11 +548,11 @@ int dggevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, do
     {
         *info = -5;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -7;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -9;
     }
@@ -597,23 +597,23 @@ int dggevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, do
                 /* Computing MAX */
                 i__1 = minwrk;
                 i__2 = (*n << 1) * (*n + 4) + 16; // , expr subst
-                minwrk = max(i__1,i__2);
+                minwrk = fla_max(i__1,i__2);
             }
             maxwrk = minwrk;
             /* Computing MAX */
             i__1 = maxwrk;
             i__2 = *n + *n * ilaenv_(&c__1, "DGEQRF", " ", n, & c__1, n, &c__0); // , expr subst
-            maxwrk = max(i__1,i__2);
+            maxwrk = fla_max(i__1,i__2);
             /* Computing MAX */
             i__1 = maxwrk;
             i__2 = *n + *n * ilaenv_(&c__1, "DORMQR", " ", n, & c__1, n, &c__0); // , expr subst
-            maxwrk = max(i__1,i__2);
+            maxwrk = fla_max(i__1,i__2);
             if (ilvl)
             {
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + *n * ilaenv_(&c__1, "DORGQR", " ", n, &c__1, n, &c__0); // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
             }
         }
         work[1] = (doublereal) maxwrk;
@@ -896,7 +896,7 @@ L20:
                     /* Computing MAX */
                     d__2 = temp;
                     d__3 = (d__1 = vl[jr + jc * vl_dim1], f2c_abs( d__1)); // , expr subst
-                    temp = max(d__2,d__3);
+                    temp = fla_max(d__2,d__3);
                     /* L30: */
                 }
             }
@@ -910,7 +910,7 @@ L20:
                     /* Computing MAX */
                     d__3 = temp;
                     d__4 = (d__1 = vl[jr + jc * vl_dim1], f2c_abs( d__1)) + (d__2 = vl[jr + (jc + 1) * vl_dim1], f2c_abs( d__2)); // , expr subst
-                    temp = max(d__3,d__4);
+                    temp = fla_max(d__3,d__4);
                     /* L40: */
                 }
             }
@@ -969,7 +969,7 @@ L70:
                     /* Computing MAX */
                     d__2 = temp;
                     d__3 = (d__1 = vr[jr + jc * vr_dim1], f2c_abs( d__1)); // , expr subst
-                    temp = max(d__2,d__3);
+                    temp = fla_max(d__2,d__3);
                     /* L80: */
                 }
             }
@@ -983,7 +983,7 @@ L70:
                     /* Computing MAX */
                     d__3 = temp;
                     d__4 = (d__1 = vr[jr + jc * vr_dim1], f2c_abs( d__1)) + (d__2 = vr[jr + (jc + 1) * vr_dim1], f2c_abs( d__2)); // , expr subst
-                    temp = max(d__3,d__4);
+                    temp = fla_max(d__3,d__4);
                     /* L90: */
                 }
             }

@@ -71,7 +71,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] IPIV */
@@ -90,7 +90,7 @@ static integer c__1 = 1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -101,7 +101,7 @@ static integer c__1 = 1;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,3*N-2). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,3*N-2). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -182,11 +182,11 @@ int ssytrs_aa_(char *uplo, integer *n, integer *nrhs, real * a, integer *lda, in
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -8;
     }
@@ -195,7 +195,7 @@ int ssytrs_aa_(char *uplo, integer *n, integer *nrhs, real * a, integer *lda, in
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n * 3 - 2; // , expr subst
-        if (*lwork < max(i__1,i__2) && ! lquery)
+        if (*lwork < fla_max(i__1,i__2) && ! lquery)
         {
             *info = -10;
         }

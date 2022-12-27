@@ -40,7 +40,7 @@ static integer c__1 = 1;
 /* > \return CLANTB */
 /* > \verbatim */
 /* > */
-/* > CLANTB = ( max(abs(A(i,j))), NORM = 'M' or 'm' */
+/* > CLANTB = ( fla_max(abs(A(i,j))), NORM = 'M' or 'm' */
 /* > ( */
 /* > ( norm1(A), NORM = '1', 'O' or 'o' */
 /* > ( */
@@ -51,7 +51,7 @@ static integer c__1 = 1;
 /* > where norm1 denotes the one norm of a matrix (maximum column sum), */
 /* > normI denotes the infinity norm of a matrix (maximum row sum) and */
 /* > normF denotes the Frobenius norm of a matrix (square root of sum of */
-/* > squares). Note that max(abs(A(i,j))) is not a consistent matrix norm. */
+/* > squares). Note that fla_max(abs(A(i,j))) is not a consistent matrix norm. */
 /* > \endverbatim */
 /* Arguments: */
 /* ========== */
@@ -99,9 +99,9 @@ static integer c__1 = 1;
 /* > The upper or lower triangular band matrix A, stored in the */
 /* > first k+1 rows of AB. The j-th column of A is stored */
 /* > in the j-th column of the array AB as follows: */
-/* > if UPLO = 'U', AB(k+1+i-j,j) = A(i,j) for max(1,j-k)<=i<=j;
+/* > if UPLO = 'U', AB(k+1+i-j,j) = A(i,j) for fla_max(1,j-k)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(n,j+k). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(n,j+k). */
 /* > Note that when DIAG = 'U', the elements of the array AB */
 /* > corresponding to the diagonal elements of the matrix A are */
 /* > not referenced, but are assumed to be one. */
@@ -185,7 +185,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
     }
     else if (lsame_(norm, "M"))
     {
-        /* Find max(abs(A(i,j))). */
+        /* Find fla_max(abs(A(i,j))). */
         if (lsame_(diag, "U"))
         {
             value = 1.f;
@@ -199,7 +199,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                     /* Computing MAX */
                     i__2 = *k + 2 - j;
                     i__3 = *k;
-                    for (i__ = max(i__2,1);
+                    for (i__ = fla_max(i__2,1);
                             i__ <= i__3;
                             ++i__)
                     {
@@ -223,7 +223,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                     /* Computing MIN */
                     i__2 = *n + 1 - j;
                     i__4 = *k + 1; // , expr subst
-                    i__3 = min(i__2,i__4);
+                    i__3 = fla_min(i__2,i__4);
                     for (i__ = 2;
                             i__ <= i__3;
                             ++i__)
@@ -252,7 +252,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                     /* Computing MAX */
                     i__3 = *k + 2 - j;
                     i__2 = *k + 1;
-                    for (i__ = max(i__3,1);
+                    for (i__ = fla_max(i__3,1);
                             i__ <= i__2;
                             ++i__)
                     {
@@ -276,7 +276,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                     /* Computing MIN */
                     i__3 = *n + 1 - j;
                     i__4 = *k + 1; // , expr subst
-                    i__2 = min(i__3,i__4);
+                    i__2 = fla_min(i__3,i__4);
                     for (i__ = 1;
                             i__ <= i__2;
                             ++i__)
@@ -311,7 +311,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                     /* Computing MAX */
                     i__2 = *k + 2 - j;
                     i__3 = *k;
-                    for (i__ = max(i__2,1);
+                    for (i__ = fla_max(i__2,1);
                             i__ <= i__3;
                             ++i__)
                     {
@@ -325,7 +325,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                     /* Computing MAX */
                     i__3 = *k + 2 - j;
                     i__2 = *k + 1;
-                    for (i__ = max(i__3,1);
+                    for (i__ = fla_max(i__3,1);
                             i__ <= i__2;
                             ++i__)
                     {
@@ -353,7 +353,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                     /* Computing MIN */
                     i__3 = *n + 1 - j;
                     i__4 = *k + 1; // , expr subst
-                    i__2 = min(i__3,i__4);
+                    i__2 = fla_min(i__3,i__4);
                     for (i__ = 2;
                             i__ <= i__2;
                             ++i__)
@@ -368,7 +368,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                     /* Computing MIN */
                     i__3 = *n + 1 - j;
                     i__4 = *k + 1; // , expr subst
-                    i__2 = min(i__3,i__4);
+                    i__2 = fla_min(i__3,i__4);
                     for (i__ = 1;
                             i__ <= i__2;
                             ++i__)
@@ -411,7 +411,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                     i__2 = 1;
                     i__3 = j - *k; // , expr subst
                     i__4 = j - 1;
-                    for (i__ = max(i__2,i__3);
+                    for (i__ = fla_max(i__2,i__3);
                             i__ <= i__4;
                             ++i__)
                     {
@@ -441,7 +441,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                     i__4 = 1;
                     i__2 = j - *k; // , expr subst
                     i__3 = j;
-                    for (i__ = max(i__4,i__2);
+                    for (i__ = fla_max(i__4,i__2);
                             i__ <= i__3;
                             ++i__)
                     {
@@ -473,7 +473,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                     /* Computing MIN */
                     i__4 = *n;
                     i__2 = j + *k; // , expr subst
-                    i__3 = min(i__4,i__2);
+                    i__3 = fla_min(i__4,i__2);
                     for (i__ = j + 1;
                             i__ <= i__3;
                             ++i__)
@@ -503,7 +503,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                     /* Computing MIN */
                     i__4 = *n;
                     i__2 = j + *k; // , expr subst
-                    i__3 = min(i__4,i__2);
+                    i__3 = fla_min(i__4,i__2);
                     for (i__ = j;
                             i__ <= i__3;
                             ++i__)
@@ -546,10 +546,10 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                     {
                         /* Computing MIN */
                         i__4 = j - 1;
-                        i__3 = min(i__4,*k);
+                        i__3 = fla_min(i__4,*k);
                         /* Computing MAX */
                         i__2 = *k + 2 - j;
-                        classq_(&i__3, &ab[max(i__2,1) + j * ab_dim1], &c__1, &scale, &sum);
+                        classq_(&i__3, &ab[fla_max(i__2,1) + j * ab_dim1], &c__1, &scale, &sum);
                         /* L280: */
                     }
                 }
@@ -566,10 +566,10 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                     /* Computing MIN */
                     i__4 = j;
                     i__2 = *k + 1; // , expr subst
-                    i__3 = min(i__4,i__2);
+                    i__3 = fla_min(i__4,i__2);
                     /* Computing MAX */
                     i__5 = *k + 2 - j;
-                    classq_(&i__3, &ab[max(i__5,1) + j * ab_dim1], &c__1, & scale, &sum);
+                    classq_(&i__3, &ab[fla_max(i__5,1) + j * ab_dim1], &c__1, & scale, &sum);
                     /* L290: */
                 }
             }
@@ -589,7 +589,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                     {
                         /* Computing MIN */
                         i__4 = *n - j;
-                        i__3 = min(i__4,*k);
+                        i__3 = fla_min(i__4,*k);
                         classq_(&i__3, &ab[j * ab_dim1 + 2], &c__1, &scale, & sum);
                         /* L300: */
                     }
@@ -607,7 +607,7 @@ real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex
                     /* Computing MIN */
                     i__4 = *n - j + 1;
                     i__2 = *k + 1; // , expr subst
-                    i__3 = min(i__4,i__2);
+                    i__3 = fla_min(i__4,i__2);
                     classq_(&i__3, &ab[j * ab_dim1 + 1], &c__1, &scale, &sum);
                     /* L310: */
                 }

@@ -32,11 +32,11 @@ int dgeqrf_check(integer *m, integer *n, double *a, integer * lda, double *tau, 
     {
         *info = -2;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -4;
     }
-    else if (*lwork < max(1,*n) && ! lquery)
+    else if (*lwork < fla_max(1,*n) && ! lquery)
     {
         *info = -7;
     }
@@ -51,7 +51,7 @@ int dgeqrf_check(integer *m, integer *n, double *a, integer * lda, double *tau, 
         return LAPACK_QUERY_RETURN;
     }
     /* Quick return if possible */
-    k = min(*m,*n);
+    k = fla_min(*m,*n);
     if (k == 0)
     {
         work[1] = 1.;

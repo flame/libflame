@@ -66,7 +66,7 @@ static doublereal c_b12 = 1.;
 /*          factorization A = U'*U  or A = L*L'. */
 
 /*  LDA     (input) INTEGER */
-/*          The leading dimension of the array A.  LDA >= max(1,N). */
+/*          The leading dimension of the array A.  LDA >= fla_max(1,N). */
 
 /*  INFO    (output) INTEGER */
 /*          = 0: successful exit */
@@ -89,7 +89,7 @@ static doublereal c_b12 = 1.;
 	*info = -1;
     } else if (*n < 0) {
 	*info = -2;
-    } else if (*lda < max(1,*n)) {
+    } else if (*lda < fla_max(1,*n)) {
 	*info = -4;
     }
     if (*info != 0) {

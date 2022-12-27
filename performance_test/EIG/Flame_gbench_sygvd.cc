@@ -186,12 +186,12 @@ BENCHMARK_TEMPLATE_DEFINE_F(sygvd_test, ssygvd,float)(benchmark::State &state) {
     data->liwork = (int)iwork_query;
     if(data->jobz == 'N')
     {
-        data->liwork=max(1,data->liwork);
-        data->lwork=max((2*(data->n)+1),data->lwork);
+        data->liwork=fla_max(1,data->liwork);
+        data->lwork=fla_max((2*(data->n)+1),data->lwork);
     }
     else{
-        data->liwork=max(3+(5*(data->n)),data->liwork);
-        data->lwork=max((1+(6*(data->n))+(2*(data->n)^2)),data->lwork);
+        data->liwork=fla_max(3+(5*(data->n)),data->liwork);
+        data->lwork=fla_max((1+(6*(data->n))+(2*(data->n)^2)),data->lwork);
     }
     /* Allocate memory for work arrays */
     data->iwork = (int*)malloc( sizeof(int) * (data->liwork) );
@@ -230,12 +230,12 @@ BENCHMARK_TEMPLATE_DEFINE_F(sygvd_test, dsygvd,double)(benchmark::State &state) 
     data->liwork = (int)iwork_query;
     if(data->jobz == 'N')
     {
-        data->liwork=max(1,data->liwork);
-        data->lwork=max((2*(data->n)+1),data->lwork);
+        data->liwork=fla_max(1,data->liwork);
+        data->lwork=fla_max((2*(data->n)+1),data->lwork);
     }
     else{
-        data->liwork=max(3+(5*(data->n)),data->liwork);
-        data->lwork=max((1+(6*(data->n))+(2*(data->n)^2)),data->lwork);
+        data->liwork=fla_max(3+(5*(data->n)),data->liwork);
+        data->lwork=fla_max((1+(6*(data->n))+(2*(data->n)^2)),data->lwork);
     }
     /* Allocate memory for work arrays */
     data->iwork = (int*)malloc( sizeof(int) * (data->liwork) );

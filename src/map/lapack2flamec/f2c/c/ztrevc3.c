@@ -119,7 +119,7 @@ static integer c__2 = 2;
 /* > \param[in] LDT */
 /* > \verbatim */
 /* > LDT is INTEGER */
-/* > The leading dimension of the array T. LDT >= max(1,N). */
+/* > The leading dimension of the array T. LDT >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] VL */
@@ -195,7 +195,7 @@ static integer c__2 = 2;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of array WORK. LWORK >= max(1,2*N). */
+/* > The dimension of array WORK. LWORK >= fla_max(1,2*N). */
 /* > For optimum performance, LWORK >= N + 2*N*NB, where NB is */
 /* > the optimal blocksize. */
 /* > */
@@ -214,7 +214,7 @@ the routine */
 /* > \param[in] LRWORK */
 /* > \verbatim */
 /* > LRWORK is INTEGER */
-/* > The dimension of array RWORK. LRWORK >= max(1,N). */
+/* > The dimension of array RWORK. LRWORK >= fla_max(1,N). */
 /* > */
 /* > If LRWORK = -1, then a workspace query is assumed;
 the routine */
@@ -390,7 +390,7 @@ int ztrevc3_(char *side, char *howmny, logical *select, integer *n, doublecomple
     {
         *info = -4;
     }
-    else if (*ldt < max(1,*n))
+    else if (*ldt < fla_max(1,*n))
     {
         *info = -6;
     }
@@ -411,11 +411,11 @@ int ztrevc3_(char *side, char *howmny, logical *select, integer *n, doublecomple
         /* Computing MAX */
         i__1 = 1;
         i__3 = *n << 1; // , expr subst
-        if (*lwork < max(i__1,i__3) && ! lquery)
+        if (*lwork < fla_max(i__1,i__3) && ! lquery)
         {
             *info = -14;
         }
-        else if (*lrwork < max(1,*n) && ! lquery)
+        else if (*lrwork < fla_max(1,*n) && ! lquery)
         {
             *info = -16;
         }
@@ -443,7 +443,7 @@ int ztrevc3_(char *side, char *howmny, logical *select, integer *n, doublecomple
     if (over && *lwork >= *n + (*n << 4))
     {
         nb = (*lwork - *n) / (*n << 1);
-        nb = min(nb,128);
+        nb = fla_min(nb,128);
         i__1 = (nb << 1) + 1;
         zlaset_("F", n, &i__1, &c_b1, &c_b1, &work[1], n);
     }
@@ -506,7 +506,7 @@ int ztrevc3_(char *side, char *howmny, logical *select, integer *n, doublecomple
             /* Computing MAX */
             i__1 = ki + ki * t_dim1;
             d__3 = ulp * ((d__1 = t[i__1].r, f2c_dabs(d__1)) + (d__2 = d_imag(&t[ ki + ki * t_dim1]), f2c_dabs(d__2)));
-            smin = max(d__3,smlnum);
+            smin = fla_max(d__3,smlnum);
             /* -------------------------------------------------------- */
             /* Complex right eigenvector */
             i__1 = ki + iv * *n;
@@ -679,7 +679,7 @@ L80:
             /* Computing MAX */
             i__3 = ki + ki * t_dim1;
             d__3 = ulp * ((d__1 = t[i__3].r, f2c_dabs(d__1)) + (d__2 = d_imag(&t[ ki + ki * t_dim1]), f2c_dabs(d__2)));
-            smin = max(d__3,smlnum);
+            smin = fla_max(d__3,smlnum);
             /* -------------------------------------------------------- */
             /* Complex left eigenvector */
             i__3 = ki + iv * *n;

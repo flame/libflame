@@ -42,7 +42,7 @@ FLA_Error FLA_Svd_external( FLA_Svd_type jobu, FLA_Svd_type jobv, FLA_Obj A, FLA
 
   cs_V     = FLA_Obj_col_stride( V );
 
-  min_m_n  = min( m_A, n_A );
+  min_m_n  = fla_min( m_A, n_A );
 
   // Allocate the rwork array up front since its size is not dependent on
   // internal block sizes.

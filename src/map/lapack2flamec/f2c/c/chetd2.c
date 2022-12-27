@@ -83,7 +83,7 @@ if UPLO */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] D */
@@ -240,7 +240,7 @@ int chetd2_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }
@@ -346,7 +346,7 @@ int chetd2_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
             i__2 = *n - i__;
             /* Computing MIN */
             i__3 = i__ + 2;
-            clarfg_(&i__2, &alpha, &a[min(i__3,*n) + i__ * a_dim1], &c__1, & taui);
+            clarfg_(&i__2, &alpha, &a[fla_min(i__3,*n) + i__ * a_dim1], &c__1, & taui);
             i__2 = i__;
             e[i__2] = alpha.r;
             if (taui.r != 0.f || taui.i != 0.f)

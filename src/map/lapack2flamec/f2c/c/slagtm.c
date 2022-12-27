@@ -98,7 +98,7 @@ otherwise, */
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(N,1). */
+/* > The leading dimension of the array X. LDX >= fla_max(N,1). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] BETA */
@@ -120,7 +120,7 @@ otherwise, */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(N,1). */
+/* > The leading dimension of the array B. LDB >= fla_max(N,1). */
 /* > \endverbatim */
 /* Authors: */
 /* ======== */

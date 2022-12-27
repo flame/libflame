@@ -117,7 +117,7 @@ static integer c__4 = 4;
 /* > */
 /* > \param[in,out] E */
 /* > \verbatim */
-/* > E is REAL array, dimension (max(1,N-1)) */
+/* > E is REAL array, dimension (fla_max(1,N-1)) */
 /* > On entry, the (n-1) subdiagonal elements of the tridiagonal */
 /* > matrix A in elements 1 to N-1 of E. */
 /* > On exit, E may be multiplied by a constant factor chosen */
@@ -168,7 +168,7 @@ IL = 1 and IU = 0 if N = 0. */
 /* > when it is determined to lie in an interval [a,b] */
 /* > of width less than or equal to */
 /* > */
-/* > ABSTOL + EPS * max( |a|,|b| ) , */
+/* > ABSTOL + EPS * fla_max( |a|,|b| ) , */
 /* > */
 /* > where EPS is the machine precision. If ABSTOL is less than */
 /* > or equal to zero, then EPS*|T| will be used in its place, */
@@ -207,12 +207,12 @@ IL = 1 and IU = 0 if N = 0. */
 /* > */
 /* > \param[out] Z */
 /* > \verbatim */
-/* > Z is REAL array, dimension (LDZ, max(1,M) ) */
+/* > Z is REAL array, dimension (LDZ, fla_max(1,M) ) */
 /* > If JOBZ = 'V', then if INFO = 0, the first M columns of Z */
 /* > contain the orthonormal eigenvectors of the matrix A */
 /* > corresponding to the selected eigenvalues, with the i-th */
 /* > column of Z holding the eigenvector associated with W(i). */
-/* > Note: the user must ensure that at least max(1,M) columns are */
+/* > Note: the user must ensure that at least fla_max(1,M) columns are */
 /* > supplied in the array Z;
 if RANGE = 'V', the exact value of M */
 /* > is not known in advance and an upper bound must be used. */
@@ -222,12 +222,12 @@ if RANGE = 'V', the exact value of M */
 /* > \verbatim */
 /* > LDZ is INTEGER */
 /* > The leading dimension of the array Z. LDZ >= 1, and if */
-/* > JOBZ = 'V', LDZ >= max(1,N). */
+/* > JOBZ = 'V', LDZ >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ISUPPZ */
 /* > \verbatim */
-/* > ISUPPZ is INTEGER array, dimension ( 2*max(1,M) ) */
+/* > ISUPPZ is INTEGER array, dimension ( 2*fla_max(1,M) ) */
 /* > The support of the eigenvectors in Z, i.e., the indices */
 /* > indicating the nonzero elements in Z. The i-th eigenvector */
 /* > is nonzero only in elements ISUPPZ( 2*i-1 ) through */
@@ -391,11 +391,11 @@ int sstevr_(char *jobz, char *range, integer *n, real *d__, real *e, real *vl, r
     /* Computing MAX */
     i__1 = 1;
     i__2 = *n * 20; // , expr subst
-    lwmin = max(i__1,i__2);
+    lwmin = fla_max(i__1,i__2);
     /* Computing MAX */
     i__1 = 1;
     i__2 = *n * 10; // , expr subst
-    liwmin = max(i__1,i__2);
+    liwmin = fla_max(i__1,i__2);
     *info = 0;
     if (! (wantz || lsame_(jobz, "N")))
     {
@@ -420,11 +420,11 @@ int sstevr_(char *jobz, char *range, integer *n, real *d__, real *e, real *vl, r
         }
         else if (indeig)
         {
-            if (*il < 1 || *il > max(1,*n))
+            if (*il < 1 || *il > fla_max(1,*n))
             {
                 *info = -8;
             }
-            else if (*iu < min(*n,*il) || *iu > *n)
+            else if (*iu < fla_min(*n,*il) || *iu > *n)
             {
                 *info = -9;
             }
@@ -500,7 +500,7 @@ int sstevr_(char *jobz, char *range, integer *n, real *d__, real *e, real *vl, r
     /* Computing MIN */
     r__1 = sqrt(bignum);
     r__2 = 1.f / sqrt(sqrt(safmin)); // , expr subst
-    rmax = min(r__1,r__2);
+    rmax = fla_min(r__1,r__2);
     /* Scale matrix to allowable range, if necessary. */
     iscale = 0;
     if (valeig)

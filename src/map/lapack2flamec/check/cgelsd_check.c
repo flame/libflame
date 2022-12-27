@@ -34,8 +34,8 @@ int cgelsd_check(integer *m, integer *n, integer *nrhs, scomplex * a, integer *l
     --iwork;
     /* Function Body */
     *info = 0;
-    minmn = min(*m,*n);
-    maxmn = max(*m,*n);
+    minmn = fla_min(*m,*n);
+    maxmn = fla_max(*m,*n);
     lquery = *lwork == -1;
     if (*m < 0)
     {
@@ -49,11 +49,11 @@ int cgelsd_check(integer *m, integer *n, integer *nrhs, scomplex * a, integer *l
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,maxmn))
+    else if (*ldb < fla_max(1,maxmn))
     {
         *info = -7;
     }
@@ -75,7 +75,7 @@ int cgelsd_check(integer *m, integer *n, integer *nrhs, scomplex * a, integer *l
             mnthr = ilaenv_(&c__6, "CGELSD", " ", m, n, nrhs, &c_n1);
             /* Computing MAX */
             i__1 = (integer) (log((float) minmn / (float) (smlsiz + 1)) / log( 2.f)) + 1;
-            nlvl = max(i__1,0);
+            nlvl = fla_max(i__1,0);
             liwork = minmn * 3 * nlvl + minmn * 11;
             mm = *m;
             if (*m >= *n && *m >= mnthr)
@@ -86,11 +86,11 @@ int cgelsd_check(integer *m, integer *n, integer *nrhs, scomplex * a, integer *l
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n * ilaenv_(&c__1, "CGEQRF", " ", m, n, &c_n1, &c_n1); // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *nrhs * ilaenv_(&c__1, "CUNMQR", "LC", m, nrhs, n, &c_n1); // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
             }
             if (*m >= *n)
             {
@@ -100,27 +100,27 @@ int cgelsd_check(integer *m, integer *n, integer *nrhs, scomplex * a, integer *l
                 i__3 = smlsiz + 1;
                 i__1 = i__3 * i__3;
                 i__2 = *n * (*nrhs + 1) + (*nrhs << 1); // , expr subst
-                lrwork = *n * 10 + (*n << 1) * smlsiz + (*n << 3) * nlvl + smlsiz * 3 * *nrhs + max(i__1,i__2);
+                lrwork = *n * 10 + (*n << 1) * smlsiz + (*n << 3) * nlvl + smlsiz * 3 * *nrhs + fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = (*n << 1) + (mm + *n) * ilaenv_(&c__1, "CGEBRD", " ", &mm, n, &c_n1, &c_n1); // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = (*n << 1) + *nrhs * ilaenv_(&c__1, "CUNMBR", "QLC", &mm, nrhs, n, &c_n1); // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = (*n << 1) + (*n - 1) * ilaenv_(&c__1, "CUNMBR", "PLN", n, nrhs, n, &c_n1); // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = (*n << 1) + *n * *nrhs; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = (*n << 1) + mm;
                 i__2 = (*n << 1) + *n * *nrhs; // , expr subst
-                minwrk = max(i__1,i__2);
+                minwrk = fla_max(i__1,i__2);
             }
             if (*n > *m)
             {
@@ -129,7 +129,7 @@ int cgelsd_check(integer *m, integer *n, integer *nrhs, scomplex * a, integer *l
                 i__3 = smlsiz + 1;
                 i__1 = i__3 * i__3;
                 i__2 = *n * (*nrhs + 1) + (*nrhs << 1); // , expr subst
-                lrwork = *m * 10 + (*m << 1) * smlsiz + (*m << 3) * nlvl + smlsiz * 3 * *nrhs + max(i__1,i__2);
+                lrwork = *m * 10 + (*m << 1) * smlsiz + (*m << 3) * nlvl + smlsiz * 3 * *nrhs + fla_max(i__1,i__2);
                 if (*n >= mnthr)
                 {
                     /* Path 2a - underdetermined, with many more columns */
@@ -138,43 +138,43 @@ int cgelsd_check(integer *m, integer *n, integer *nrhs, scomplex * a, integer *l
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *m * *m + (*m << 2) + (*m << 1) * ilaenv_(&c__1, "CGEBRD", " ", m, m, &c_n1, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *m * *m + (*m << 2) + *nrhs * ilaenv_(&c__1, "CUNMBR", "QLC", m, nrhs, m, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *m * *m + (*m << 2) + (*m - 1) * ilaenv_(&c__1, "CUNMLQ", "LC", n, nrhs, m, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     if (*nrhs > 1)
                     {
                         /* Computing MAX */
                         i__1 = maxwrk;
                         i__2 = *m * *m + *m + *m * *nrhs; // , expr subst
-                        maxwrk = max(i__1,i__2);
+                        maxwrk = fla_max(i__1,i__2);
                     }
                     else
                     {
                         /* Computing MAX */
                         i__1 = maxwrk;
                         i__2 = *m * *m + (*m << 1); // , expr subst
-                        maxwrk = max(i__1,i__2);
+                        maxwrk = fla_max(i__1,i__2);
                     }
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = *m * *m + (*m << 2) + *m * *nrhs; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* XXX: Ensure the Path 2a case below is triggered. The workspace */
                     /* calculation should use queries for all routines eventually. */
                     /* Computing MAX */
                     /* Computing MAX */
-                    i__3 = *m, i__4 = (*m << 1) - 4, i__3 = max(i__3,i__4);
-                    i__3 = max(i__3,*nrhs);
+                    i__3 = *m, i__4 = (*m << 1) - 4, i__3 = fla_max(i__3,i__4);
+                    i__3 = fla_max(i__3,*nrhs);
                     i__4 = *n - *m * 3; // ; expr subst
                     i__1 = maxwrk;
-                    i__2 = (*m << 2) + *m * *m + max(i__3,i__4) ; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    i__2 = (*m << 2) + *m * *m + fla_max(i__3,i__4) ; // , expr subst
+                    maxwrk = fla_max(i__1,i__2);
                 }
                 else
                 {
@@ -183,23 +183,23 @@ int cgelsd_check(integer *m, integer *n, integer *nrhs, scomplex * a, integer *l
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*m << 1) + *nrhs * ilaenv_(&c__1, "CUNMBR", "QLC", m, nrhs, m, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*m << 1) + *m * ilaenv_(&c__1, "CUNMBR", "PLN", n, nrhs, m, &c_n1); // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                     /* Computing MAX */
                     i__1 = maxwrk;
                     i__2 = (*m << 1) + *m * *nrhs; // , expr subst
-                    maxwrk = max(i__1,i__2);
+                    maxwrk = fla_max(i__1,i__2);
                 }
                 /* Computing MAX */
                 i__1 = (*m << 1) + *n;
                 i__2 = (*m << 1) + *m * *nrhs; // , expr subst
-                minwrk = max(i__1,i__2);
+                minwrk = fla_max(i__1,i__2);
             }
         }
-        minwrk = min(minwrk,maxwrk);
+        minwrk = fla_min(minwrk,maxwrk);
         work[1].real = (float) maxwrk;
         work[1].imag = 0.f; // , expr subst
         iwork[1] = liwork;

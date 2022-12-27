@@ -94,7 +94,7 @@ if UPLO */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] AB */
@@ -104,9 +104,9 @@ if UPLO */
 /* > matrix A, stored in the first KD+1 rows of the array. The */
 /* > j-th column of A is stored in the j-th column of the array AB */
 /* > as follows: */
-/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for max(1,j-kd)<=i<=j;
+/* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(n,j+kd). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(n,j+kd). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDAB */
@@ -311,7 +311,7 @@ int dsytrd_sy2sb_(char *uplo, integer *n, integer *kd, doublereal *a, integer *l
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
@@ -320,7 +320,7 @@ int dsytrd_sy2sb_(char *uplo, integer *n, integer *kd, doublereal *a, integer *l
         /* Computing MAX */
         i__1 = 1;
         i__2 = *kd + 1; // , expr subst
-        if (*ldab < max(i__1,i__2))
+        if (*ldab < fla_max(i__1,i__2))
         {
             *info = -7;
         }
@@ -355,7 +355,7 @@ int dsytrd_sy2sb_(char *uplo, integer *n, integer *kd, doublereal *a, integer *l
             {
                 /* Computing MIN */
                 i__2 = *kd + 1;
-                lk = min(i__2,i__);
+                lk = fla_min(i__2,i__);
                 dcopy_(&lk, &a[i__ - lk + 1 + i__ * a_dim1], &c__1, &ab[*kd + 1 - lk + 1 + i__ * ab_dim1], &c__1);
                 /* L100: */
             }
@@ -370,7 +370,7 @@ int dsytrd_sy2sb_(char *uplo, integer *n, integer *kd, doublereal *a, integer *l
                 /* Computing MIN */
                 i__2 = *kd + 1;
                 i__3 = *n - i__ + 1; // , expr subst
-                lk = min(i__2,i__3);
+                lk = fla_min(i__2,i__3);
                 dcopy_(&lk, &a[i__ + i__ * a_dim1], &c__1, &ab[i__ * ab_dim1 + 1], &c__1);
                 /* L110: */
             }
@@ -415,7 +415,7 @@ int dsytrd_sy2sb_(char *uplo, integer *n, integer *kd, doublereal *a, integer *l
             pn = *n - i__ - *kd + 1;
             /* Computing MIN */
             i__3 = *n - i__ - *kd + 1;
-            pk = min(i__3,*kd);
+            pk = fla_min(i__3,*kd);
             /* Compute the LQ factorization of the current block */
             dgelqf_(kd, &pn, &a[i__ + (i__ + *kd) * a_dim1], lda, &tau[i__], & work[s2pos], &ls2, &iinfo);
             /* Copy the upper portion of A into AB */
@@ -427,7 +427,7 @@ int dsytrd_sy2sb_(char *uplo, integer *n, integer *kd, doublereal *a, integer *l
                 /* Computing MIN */
                 i__4 = *kd;
                 i__5 = *n - j; // , expr subst
-                lk = min(i__4,i__5) + 1;
+                lk = fla_min(i__4,i__5) + 1;
                 i__4 = *ldab - 1;
                 dcopy_(&lk, &a[j + j * a_dim1], lda, &ab[*kd + 1 + j * ab_dim1], &i__4);
                 /* L20: */
@@ -454,7 +454,7 @@ int dsytrd_sy2sb_(char *uplo, integer *n, integer *kd, doublereal *a, integer *l
             /* Computing MIN */
             i__1 = *kd;
             i__3 = *n - j; // , expr subst
-            lk = min(i__1,i__3) + 1;
+            lk = fla_min(i__1,i__3) + 1;
             i__1 = *ldab - 1;
             dcopy_(&lk, &a[j + j * a_dim1], lda, &ab[*kd + 1 + j * ab_dim1], & i__1);
             /* L30: */
@@ -472,7 +472,7 @@ int dsytrd_sy2sb_(char *uplo, integer *n, integer *kd, doublereal *a, integer *l
             pn = *n - i__ - *kd + 1;
             /* Computing MIN */
             i__3 = *n - i__ - *kd + 1;
-            pk = min(i__3,*kd);
+            pk = fla_min(i__3,*kd);
             /* Compute the QR factorization of the current block */
             dgeqrf_(&pn, kd, &a[i__ + *kd + i__ * a_dim1], lda, &tau[i__], & work[s2pos], &ls2, &iinfo);
             /* Copy the upper portion of A into AB */
@@ -484,7 +484,7 @@ int dsytrd_sy2sb_(char *uplo, integer *n, integer *kd, doublereal *a, integer *l
                 /* Computing MIN */
                 i__4 = *kd;
                 i__5 = *n - j; // , expr subst
-                lk = min(i__4,i__5) + 1;
+                lk = fla_min(i__4,i__5) + 1;
                 dcopy_(&lk, &a[j + j * a_dim1], &c__1, &ab[j * ab_dim1 + 1], & c__1);
                 /* L50: */
             }
@@ -517,7 +517,7 @@ int dsytrd_sy2sb_(char *uplo, integer *n, integer *kd, doublereal *a, integer *l
             /* Computing MIN */
             i__2 = *kd;
             i__3 = *n - j; // , expr subst
-            lk = min(i__2,i__3) + 1;
+            lk = fla_min(i__2,i__3) + 1;
             dcopy_(&lk, &a[j + j * a_dim1], &c__1, &ab[j * ab_dim1 + 1], & c__1);
             /* L60: */
         }

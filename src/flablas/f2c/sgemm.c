@@ -68,8 +68,8 @@ int sgemm_(char *transa, char *transb, integer *m, integer * n, integer *k, real
     /* LDA - INTEGER. */
     /* On entry, LDA specifies the first dimension of A as declared */
     /* in the calling (sub) program. When TRANSA = 'N' or 'n' then */
-    /* LDA must be at least max( 1, m ), otherwise LDA must be at */
-    /* least max( 1, k ). */
+    /* LDA must be at least fla_max( 1, m ), otherwise LDA must be at */
+    /* least fla_max( 1, k ). */
     /* Unchanged on exit. */
     /* B - REAL array of DIMENSION ( LDB, kb ), where kb is */
     /* n when TRANSB = 'N' or 'n', and is k otherwise. */
@@ -81,8 +81,8 @@ int sgemm_(char *transa, char *transb, integer *m, integer * n, integer *k, real
     /* LDB - INTEGER. */
     /* On entry, LDB specifies the first dimension of B as declared */
     /* in the calling (sub) program. When TRANSB = 'N' or 'n' then */
-    /* LDB must be at least max( 1, k ), otherwise LDB must be at */
-    /* least max( 1, n ). */
+    /* LDB must be at least fla_max( 1, k ), otherwise LDB must be at */
+    /* least fla_max( 1, n ). */
     /* Unchanged on exit. */
     /* BETA - REAL . */
     /* On entry, BETA specifies the scalar beta. When BETA is */
@@ -97,7 +97,7 @@ int sgemm_(char *transa, char *transb, integer *m, integer * n, integer *k, real
     /* LDC - INTEGER. */
     /* On entry, LDC specifies the first dimension of C as declared */
     /* in the calling (sub) program. LDC must be at least */
-    /* max( 1, m ). */
+    /* fla_max( 1, m ). */
     /* Unchanged on exit. */
     /* Level 3 Blas routine. */
     /* -- Written on 8-February-1989. */
@@ -168,15 +168,15 @@ int sgemm_(char *transa, char *transb, integer *m, integer * n, integer *k, real
     {
         info = 5;
     }
-    else if (*lda < max(1,nrowa))
+    else if (*lda < fla_max(1,nrowa))
     {
         info = 8;
     }
-    else if (*ldb < max(1,nrowb))
+    else if (*ldb < fla_max(1,nrowb))
     {
         info = 10;
     }
-    else if (*ldc < max(1,*m))
+    else if (*ldc < fla_max(1,*m))
     {
         info = 13;
     }

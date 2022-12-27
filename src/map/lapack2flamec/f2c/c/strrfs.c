@@ -98,7 +98,7 @@ static real c_b19 = -1.f;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] B */
@@ -110,7 +110,7 @@ static real c_b19 = -1.f;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] X */
@@ -122,7 +122,7 @@ static real c_b19 = -1.f;
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(1,N). */
+/* > The leading dimension of the array X. LDX >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] FERR */
@@ -265,15 +265,15 @@ int strrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, real
     {
         *info = -5;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -7;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -9;
     }
-    else if (*ldx < max(1,*n))
+    else if (*ldx < fla_max(1,*n))
     {
         *info = -11;
     }
@@ -325,7 +325,7 @@ int strrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, real
         strmv_(uplo, trans, diag, n, &a[a_offset], lda, &work[*n + 1], &c__1);
         saxpy_(n, &c_b19, &b[j * b_dim1 + 1], &c__1, &work[*n + 1], &c__1);
         /* Compute componentwise relative backward error from formula */
-        /* max(i) ( f2c_abs(R(i)) / ( f2c_abs(op(A))*f2c_abs(X) + f2c_abs(B) )(i) ) */
+        /* fla_max(i) ( f2c_abs(R(i)) / ( f2c_abs(op(A))*f2c_abs(X) + f2c_abs(B) )(i) ) */
         /* where f2c_abs(Z) is the componentwise absolute value of the matrix */
         /* or vector Z. If the i-th component of the denominator is less */
         /* than SAFE2, then SAFE1 is added to the i-th components of the */
@@ -527,14 +527,14 @@ int strrfs_(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, real
                 /* Computing MAX */
                 r__2 = s;
                 r__3 = (r__1 = work[*n + i__], f2c_abs(r__1)) / work[ i__]; // , expr subst
-                s = max(r__2,r__3);
+                s = fla_max(r__2,r__3);
             }
             else
             {
                 /* Computing MAX */
                 r__2 = s;
                 r__3 = ((r__1 = work[*n + i__], f2c_abs(r__1)) + safe1) / (work[i__] + safe1); // , expr subst
-                s = max(r__2,r__3);
+                s = fla_max(r__2,r__3);
             }
             /* L190: */
         }
@@ -614,7 +614,7 @@ L210:
             /* Computing MAX */
             r__2 = lstres;
             r__3 = (r__1 = x[i__ + j * x_dim1], f2c_abs(r__1)); // , expr subst
-            lstres = max(r__2,r__3);
+            lstres = fla_max(r__2,r__3);
             /* L240: */
         }
         if (lstres != 0.f)

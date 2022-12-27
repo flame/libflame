@@ -103,8 +103,8 @@ FLA_Error FLA_Sv_2x2_ops( float*    alpha11,
     ga = fabsf( g );
     ha = fabsf( h );
 
-    fhmin = min( fa, ha );
-    fhmax = max( fa, ha );
+    fhmin = fla_min( fa, ha );
+    fhmax = fla_max( fa, ha );
 
     if ( fhmin == zero )
     {
@@ -114,8 +114,8 @@ FLA_Error FLA_Sv_2x2_ops( float*    alpha11,
             ssmax = ga;
         else
         {
-            temp = min( fhmax, ga ) / max( fhmax, ga );
-            ssmax = max( fhmax, ga ) * sqrtf( one + temp * temp );
+            temp = fla_min( fhmax, ga ) / fla_max( fhmax, ga );
+            ssmax = fla_max( fhmax, ga ) * sqrtf( one + temp * temp );
         }
     }
     else
@@ -186,8 +186,8 @@ FLA_Error FLA_Sv_2x2_opd( double*   alpha11,
     ga = fabs( g );
     ha = fabs( h );
 
-    fhmin = min( fa, ha );
-    fhmax = max( fa, ha );
+    fhmin = fla_min( fa, ha );
+    fhmax = fla_max( fa, ha );
 
     if ( fhmin == zero )
     {
@@ -197,8 +197,8 @@ FLA_Error FLA_Sv_2x2_opd( double*   alpha11,
             ssmax = ga;
         else
         {
-            temp = min( fhmax, ga ) / max( fhmax, ga );
-            ssmax = max( fhmax, ga ) * sqrt( one + temp * temp );
+            temp = fla_min( fhmax, ga ) / fla_max( fhmax, ga );
+            ssmax = fla_max( fhmax, ga ) * sqrt( one + temp * temp );
         }
     }
     else

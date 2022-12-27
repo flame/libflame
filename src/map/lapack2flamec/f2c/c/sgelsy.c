@@ -107,7 +107,7 @@ they are stored as the columns of the */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -120,7 +120,7 @@ they are stored as the columns of the */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,M,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,M,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] JPVT */
@@ -161,7 +161,7 @@ they are stored as the columns of the */
 /* > The dimension of the array WORK. */
 /* > The unblocked strategy requires that: */
 /* > LWORK >= MAX( MN+3*N+1, 2*MN+NRHS ), */
-/* > where MN = min( M, N ). */
+/* > where MN = fla_min( M, N ). */
 /* > The block algorithm requires that: */
 /* > LWORK >= MAX( MN+2*N+NB*(N+1), 2*MN+NB*NRHS ), */
 /* > where NB is an upper bound on the blocksize returned */
@@ -257,7 +257,7 @@ int sgelsy_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     --jpvt;
     --work;
     /* Function Body */
-    mn = min(*m,*n);
+    mn = fla_min(*m,*n);
     ismin = mn + 1;
     ismax = (mn << 1) + 1;
     /* Test the input arguments. */
@@ -275,15 +275,15 @@ int sgelsy_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }
     else /* if(complicated condition) */
     {
         /* Computing MAX */
-        i__1 = max(1,*m);
-        if (*ldb < max(i__1,*n))
+        i__1 = fla_max(1,*m);
+        if (*ldb < fla_max(i__1,*n))
         {
             *info = -7;
         }
@@ -303,19 +303,19 @@ int sgelsy_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
             nb3 = ilaenv_(&c__1, "SORMQR", " ", m, n, nrhs, &c_n1);
             nb4 = ilaenv_(&c__1, "SORMRQ", " ", m, n, nrhs, &c_n1);
             /* Computing MAX */
-            i__1 = max(nb1,nb2);
-            i__1 = max(i__1,nb3); // , expr subst
-            nb = max(i__1,nb4);
+            i__1 = fla_max(nb1,nb2);
+            i__1 = fla_max(i__1,nb3); // , expr subst
+            nb = fla_max(i__1,nb4);
             /* Computing MAX */
             i__1 = mn << 1, i__2 = *n + 1;
-            i__1 = max(i__1,i__2);
+            i__1 = fla_max(i__1,i__2);
             i__2 = mn + *nrhs; // ; expr subst
-            lwkmin = mn + max(i__1,i__2);
+            lwkmin = mn + fla_max(i__1,i__2);
             /* Computing MAX */
             i__1 = lwkmin, i__2 = mn + (*n << 1) + nb * (*n + 1);
-            i__1 = max( i__1,i__2);
+            i__1 = fla_max( i__1,i__2);
             i__2 = (mn << 1) + nb * *nrhs; // ; expr subst
-            lwkopt = max(i__1,i__2);
+            lwkopt = fla_max(i__1,i__2);
         }
         work[1] = (real) lwkopt;
         if (*lwork < lwkmin && ! lquery)
@@ -361,7 +361,7 @@ int sgelsy_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     else if (anrm == 0.f)
     {
         /* Matrix all zero. Return zero solution. */
-        i__1 = max(*m,*n);
+        i__1 = fla_max(*m,*n);
         slaset_("F", &i__1, nrhs, &c_b31, &c_b31, &b[b_offset], ldb);
         *rank = 0;
         goto L70;
@@ -395,7 +395,7 @@ int sgelsy_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     if ((r__1 = a[a_dim1 + 1], f2c_abs(r__1)) == 0.f)
     {
         *rank = 0;
-        i__1 = max(*m,*n);
+        i__1 = fla_max(*m,*n);
         slaset_("F", &i__1, nrhs, &c_b31, &c_b31, &b[b_offset], ldb);
         goto L70;
     }
@@ -446,7 +446,7 @@ L10:
     /* Computing MAX */
     r__1 = wsize;
     r__2 = (mn << 1) + work[(mn << 1) + 1]; // , expr subst
-    wsize = max(r__1,r__2);
+    wsize = fla_max(r__1,r__2);
     /* workspace: 2*MN+NB*NRHS. */
     /* B(1:RANK,1:NRHS) := inv(T11) * B(1:RANK,1:NRHS) */
     strsm_("Left", "Upper", "No transpose", "Non-unit", rank, nrhs, &c_b54, & a[a_offset], lda, &b[b_offset], ldb);

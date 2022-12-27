@@ -190,7 +190,7 @@ int dlasq1_(integer *n, doublereal *d__, doublereal *e, doublereal *work, intege
         /* Computing MAX */
         d__2 = sigmx;
         d__3 = (d__1 = e[i__], f2c_abs(d__1)); // , expr subst
-        sigmx = max(d__2,d__3);
+        sigmx = fla_max(d__2,d__3);
         /* L10: */
     }
     d__[*n] = (d__1 = d__[*n], f2c_abs(d__1));
@@ -209,7 +209,7 @@ int dlasq1_(integer *n, doublereal *d__, doublereal *e, doublereal *work, intege
         /* Computing MAX */
         d__1 = sigmx;
         d__2 = d__[i__]; // , expr subst
-        sigmx = max(d__1,d__2);
+        sigmx = fla_max(d__1,d__2);
         /* L20: */
     }
     /* Copy D and E into WORK (in the Z format) and scale (squaring the */

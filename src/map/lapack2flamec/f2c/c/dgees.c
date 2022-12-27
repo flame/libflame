@@ -112,7 +112,7 @@ in this */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] SDIM */
@@ -166,7 +166,7 @@ if */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,3*N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,3*N). */
 /* > For good performance, LWORK must generally be larger. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -304,7 +304,7 @@ int dgees_(char *jobvs, char *sort, L_fp select, integer *n, doublereal *a, inte
     {
         *info = -4;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -6;
     }
@@ -339,18 +339,18 @@ int dgees_(char *jobvs, char *sort, L_fp select, integer *n, doublereal *a, inte
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + hswork; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
             }
             else
             {
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = (*n << 1) + (*n - 1) * ilaenv_(&c__1, "DORGHR", " ", n, &c__1, n, &c_n1); // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + hswork; // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
             }
         }
         work[1] = (doublereal) maxwrk;
@@ -480,7 +480,7 @@ int dgees_(char *jobvs, char *sort, L_fp select, integer *n, doublereal *a, inte
                 i__1 = ilo - 1;
                 /* Computing MAX */
                 i__3 = ilo - 1;
-                i__2 = max(i__3,1);
+                i__2 = fla_max(i__3,1);
                 dlascl_("G", &c__0, &c__0, &cscale, &anrm, &i__1, &c__1, &wi[ 1], &i__2, &ierr);
             }
             else if (wantst)
@@ -545,7 +545,7 @@ L20:
         i__1 = *n - ieval;
         /* Computing MAX */
         i__3 = *n - ieval;
-        i__2 = max(i__3,1);
+        i__2 = fla_max(i__3,1);
         dlascl_("G", &c__0, &c__0, &cscale, &anrm, &i__1, &c__1, &wi[ieval + 1], &i__2, &ierr);
     }
     if (wantst && *info == 0)

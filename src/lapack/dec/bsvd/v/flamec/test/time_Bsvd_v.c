@@ -99,7 +99,7 @@ void time_Bsvd_v(
     }
 
     *dtime = FLA_Clock() - *dtime;
-    dtime_old = min( *dtime, dtime_old );
+    dtime_old = fla_min( *dtime, dtime_old );
 
   }
   {
@@ -132,7 +132,7 @@ void time_Bsvd_v(
     FLA_Norm_frob( eyeV, normV );
     FLA_Obj_extract_real_scalar( normU, &diffU );
     FLA_Obj_extract_real_scalar( normV, &diffV );
-    *diff2 = max( diffU, diffV );
+    *diff2 = fla_max( diffU, diffV );
 
     if ( variant < 1 ) // LAPACK computes and stores V'
     {
@@ -140,9 +140,9 @@ void time_Bsvd_v(
       FLA_Obj VT,
               VB;
 
-      FLA_Part_1x2( U,   &UL, &UR,   min( m, n ), FLA_LEFT );
+      FLA_Part_1x2( U,   &UL, &UR,   fla_min( m, n ), FLA_LEFT );
       FLA_Part_2x1( V,   &VT,
-                         &VB,        min( m, n ), FLA_TOP );
+                         &VB,        fla_min( m, n ), FLA_TOP );
 
 //FLA_Obj_show( "V ref", V, "%8.1e + %8.1e ", "" );
 /*
@@ -162,8 +162,8 @@ FLA_Obj_free( &Vh );
       FLA_Obj UL, UR;
       FLA_Obj VL, VR;
 
-      FLA_Part_1x2( U,   &UL, &UR,   min( m, n ), FLA_LEFT );
-      FLA_Part_1x2( V,   &VL, &VR,   min( m, n ), FLA_LEFT );
+      FLA_Part_1x2( U,   &UL, &UR,   fla_min( m, n ), FLA_LEFT );
+      FLA_Part_1x2( V,   &VL, &VR,   fla_min( m, n ), FLA_LEFT );
 /*
 FLA_Obj_show( "A_orig", A_orig, "%8.1e + %8.1e ", "" );
 FLA_Obj_show( "s", s, "%8.1e ", "" );

@@ -91,7 +91,7 @@ extern void DTL_Trace(
 #define LAPACK_getrf_body_d(prefix)                                                    \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);                               \
   FLA_Obj      A, p;                                                                   \
-  integer      min_m_n    = min( *m, *n );                                             \
+  integer      min_m_n    = fla_min( *m, *n );                                             \
   FLA_Error    e_val = FLA_SUCCESS;                                                    \
   FLA_Error    init_result;                                                            \
   FLA_Bool skip = FALSE;                                                               \
@@ -120,7 +120,7 @@ extern void DTL_Trace(
 #define LAPACK_getrf_body(prefix)                               \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   FLA_Obj      A, p;                                            \
-  integer      min_m_n    = min( *m, *n );                      \
+  integer      min_m_n    = fla_min( *m, *n );                      \
   FLA_Error    e_val = FLA_SUCCESS;                             \
   FLA_Error    init_result;                                     \
   FLA_Bool skip = FALSE;                                        \
@@ -185,7 +185,7 @@ extern void DTL_Trace(
 #define LAPACK_getrf_body(prefix)                               \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   FLA_Obj      A, p, AH, ph;                                    \
-  integer      min_m_n    = min( *m, *n );                      \
+  integer      min_m_n    = fla_min( *m, *n );                      \
   dim_t        nth, b_flash;                                    \
   FLA_Error    e_val;                                           \
   FLA_Error    init_result;                                     \

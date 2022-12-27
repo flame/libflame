@@ -142,7 +142,7 @@ static integer c__0 = 0;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of A. LDA >= max(1,N). */
+/* > The leading dimension of A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -157,7 +157,7 @@ static integer c__0 = 0;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of B. LDB >= max(1,N). */
+/* > The leading dimension of B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ALPHA */
@@ -298,9 +298,9 @@ this can only occur */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,2*N). */
-/* > If SENSE = 'E', LWORK >= max(1,4*N). */
-/* > If SENSE = 'V' or 'B', LWORK >= max(1,2*N*N+2*N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,2*N). */
+/* > If SENSE = 'E', LWORK >= fla_max(1,4*N). */
+/* > If SENSE = 'V' or 'B', LWORK >= fla_max(1,2*N*N+2*N). */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
 the routine */
@@ -312,8 +312,8 @@ the routine */
 /* > \param[out] RWORK */
 /* > \verbatim */
 /* > RWORK is REAL array, dimension (lrwork) */
-/* > lrwork must be at least max(1,6*N) if BALANC = 'S' or 'B', */
-/* > and at least max(1,2*N) otherwise. */
+/* > lrwork must be at least fla_max(1,6*N) if BALANC = 'S' or 'B', */
+/* > and at least fla_max(1,2*N) otherwise. */
 /* > Real workspace. */
 /* > \endverbatim */
 /* > */
@@ -552,11 +552,11 @@ int cggevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, co
     {
         *info = -5;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -7;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -9;
     }
@@ -597,17 +597,17 @@ int cggevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, co
             /* Computing MAX */
             i__1 = maxwrk;
             i__2 = *n + *n * ilaenv_(&c__1, "CGEQRF", " ", n, & c__1, n, &c__0); // , expr subst
-            maxwrk = max(i__1,i__2);
+            maxwrk = fla_max(i__1,i__2);
             /* Computing MAX */
             i__1 = maxwrk;
             i__2 = *n + *n * ilaenv_(&c__1, "CUNMQR", " ", n, & c__1, n, &c__0); // , expr subst
-            maxwrk = max(i__1,i__2);
+            maxwrk = fla_max(i__1,i__2);
             if (ilvl)
             {
                 /* Computing MAX */
                 i__1 = maxwrk;
                 i__2 = *n + *n * ilaenv_(&c__1, "CUNGQR", " ", n, &c__1, n, &c__0); // , expr subst
-                maxwrk = max(i__1,i__2);
+                maxwrk = fla_max(i__1,i__2);
             }
         }
         work[1].r = (real) maxwrk;
@@ -865,7 +865,7 @@ int cggevx_(char *balanc, char *jobvl, char *jobvr, char * sense, integer *n, co
                 i__3 = jr + jc * vl_dim1;
                 r__3 = temp;
                 r__4 = (r__1 = vl[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&vl[jr + jc * vl_dim1]), f2c_abs(r__2)); // , expr subst
-                temp = max(r__3,r__4);
+                temp = fla_max(r__3,r__4);
                 /* L30: */
             }
             if (temp < smlnum)
@@ -908,7 +908,7 @@ L50:
                 i__3 = jr + jc * vr_dim1;
                 r__3 = temp;
                 r__4 = (r__1 = vr[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&vr[jr + jc * vr_dim1]), f2c_abs(r__2)); // , expr subst
-                temp = max(r__3,r__4);
+                temp = fla_max(r__3,r__4);
                 /* L60: */
             }
             if (temp < smlnum)

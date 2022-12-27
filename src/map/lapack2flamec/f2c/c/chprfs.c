@@ -104,7 +104,7 @@ static integer c__1 = 1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] X */
@@ -117,7 +117,7 @@ static integer c__1 = 1;
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(1,N). */
+/* > The leading dimension of the array X. LDX >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] FERR */
@@ -269,11 +269,11 @@ int chprfs_(char *uplo, integer *n, integer *nrhs, complex * ap, complex *afp, i
     {
         *info = -3;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -8;
     }
-    else if (*ldx < max(1,*n))
+    else if (*ldx < fla_max(1,*n))
     {
         *info = -10;
     }
@@ -320,7 +320,7 @@ L20: /* Loop until stopping criterion is satisfied. */
         q__1.i = -0.f; // , expr subst
         chpmv_(uplo, n, &q__1, &ap[1], &x[j * x_dim1 + 1], &c__1, &c_b1, & work[1], &c__1);
         /* Compute componentwise relative backward error from formula */
-        /* max(i) ( f2c_abs(R(i)) / ( f2c_abs(A)*f2c_abs(X) + f2c_abs(B) )(i) ) */
+        /* fla_max(i) ( f2c_abs(R(i)) / ( f2c_abs(A)*f2c_abs(X) + f2c_abs(B) )(i) ) */
         /* where f2c_abs(Z) is the componentwise absolute value of the matrix */
         /* or vector Z. If the i-th component of the denominator is less */
         /* than SAFE2, then SAFE1 is added to the i-th components of the */
@@ -409,7 +409,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 i__3 = i__;
                 r__3 = s;
                 r__4 = ((r__1 = work[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&work[i__]), f2c_abs(r__2))) / rwork[i__]; // , expr subst
-                s = max(r__3,r__4);
+                s = fla_max(r__3,r__4);
             }
             else
             {
@@ -417,7 +417,7 @@ L20: /* Loop until stopping criterion is satisfied. */
                 i__3 = i__;
                 r__3 = s;
                 r__4 = ((r__1 = work[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&work[i__]), f2c_abs(r__2)) + safe1) / (rwork[i__] + safe1); // , expr subst
-                s = max(r__3,r__4);
+                s = fla_max(r__3,r__4);
             }
             /* L80: */
         }
@@ -526,7 +526,7 @@ L100:
             i__3 = i__ + j * x_dim1;
             r__3 = lstres;
             r__4 = (r__1 = x[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&x[i__ + j * x_dim1]), f2c_abs(r__2)); // , expr subst
-            lstres = max(r__3,r__4);
+            lstres = fla_max(r__3,r__4);
             /* L130: */
         }
         if (lstres != 0.f)

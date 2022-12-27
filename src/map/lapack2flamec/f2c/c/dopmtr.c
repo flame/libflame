@@ -115,7 +115,7 @@ static integer c__1 = 1;
 /* > \param[in] LDC */
 /* > \verbatim */
 /* > LDC is INTEGER */
-/* > The leading dimension of the array C. LDC >= max(1,M). */
+/* > The leading dimension of the array C. LDC >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -220,7 +220,7 @@ int dopmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, doubler
     {
         *info = -5;
     }
-    else if (*ldc < max(1,*m))
+    else if (*ldc < fla_max(1,*m))
     {
         *info = -9;
     }

@@ -99,7 +99,7 @@ each */
 /* > \param[in] LDT */
 /* > \verbatim */
 /* > LDT is INTEGER */
-/* > The leading dimension of the array T. LDT >= max(1,N). */
+/* > The leading dimension of the array T. LDT >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] VL */
@@ -365,7 +365,7 @@ int dtrsna_(char *job, char *howmny, logical *select, integer *n, doublereal *t,
     {
         *info = -4;
     }
-    else if (*ldt < max(1,*n))
+    else if (*ldt < fla_max(1,*n))
     {
         *info = -6;
     }
@@ -666,7 +666,7 @@ L50:
                     goto L50;
                 }
             }
-            sep[ks] = scale / max(est,smlnum);
+            sep[ks] = scale / fla_max(est,smlnum);
             if (pair)
             {
                 sep[ks + 1] = sep[ks];

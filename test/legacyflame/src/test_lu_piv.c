@@ -171,7 +171,7 @@ void libfla_test_lu_piv_experiment( test_params_t params,
 
 	// Create the matrices for the current operation.
 	libfla_test_obj_create( datatype, FLA_NO_TRANSPOSE, sc_str[0], m, n, &A );
-	FLA_Obj_create( FLA_INT, min( m, n ), 1, 0, 0, &p );
+	FLA_Obj_create( FLA_INT, fla_min( m, n ), 1, 0, 0, &p );
 
 	// Initialize the test matrices.
 	FLA_Random_matrix( A );
@@ -230,7 +230,7 @@ void libfla_test_lu_piv_experiment( test_params_t params,
 			libfla_test_lu_piv_impl( impl, A_test, p_test );
 		
 			time = FLA_Clock() - time;
-			time_min = min( time_min, time );
+			time_min = fla_min( time_min, time );
 		}
 	}
 
@@ -415,7 +415,7 @@ void FLA_GETRF( integer m,
                            sgetrf_(&m, &n, buff_A, &lda, p, &info);
 
                            time = FLA_Clock() - time;
-                           time_min = min( time_min, time );
+                           time_min = fla_min( time_min, time );
                         }
                         break;
                 }
@@ -431,7 +431,7 @@ void FLA_GETRF( integer m,
                            dgetrf_(&m, &n, buff_A, &lda, p, &info);
 
                            time = FLA_Clock() - time;
-                           time_min = min( time_min, time );
+                           time_min = fla_min( time_min, time );
                         }
                         break;
                 }
@@ -447,7 +447,7 @@ void FLA_GETRF( integer m,
                            cgetrf_(&m, &n, buff_A, &lda, p, &info);
 
                            time = FLA_Clock() - time;
-                           time_min = min( time_min, time );
+                           time_min = fla_min( time_min, time );
                         }
                         break;
                 }
@@ -463,7 +463,7 @@ void FLA_GETRF( integer m,
                            zgetrf_(&m, &n, buff_A, &lda, p, &info);
 
                            time = FLA_Clock() - time;
-                           time_min = min( time_min, time );
+                           time_min = fla_min( time_min, time );
                         }
                         break;
                 }

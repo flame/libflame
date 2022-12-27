@@ -111,11 +111,11 @@ int dladiv_(doublereal *a, doublereal *b, doublereal *c__, doublereal *d__, doub
     /* Computing MAX */
     d__1 = f2c_abs(*a);
     d__2 = f2c_abs(*b); // , expr subst
-    ab = max(d__1,d__2);
+    ab = fla_max(d__1,d__2);
     /* Computing MAX */
     d__1 = f2c_abs(*c__);
     d__2 = f2c_abs(*d__); // , expr subst
-    cd = max(d__1,d__2);
+    cd = fla_max(d__1,d__2);
     s = 1.;
     ov = dlamch_("Overflow threshold");
     un = dlamch_("Safe minimum");

@@ -88,7 +88,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] IPIV */
@@ -109,7 +109,7 @@ static integer c_n1 = -1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -122,7 +122,7 @@ static integer c_n1 = -1;
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The length of WORK. LWORK >= MAX(1,2*N,3*N-2), and for best */
-/* > performance LWORK >= max(1,N*NB), where NB is the optimal */
+/* > performance LWORK >= fla_max(1,N*NB), where NB is the optimal */
 /* > blocksize for ZHETRF. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -209,11 +209,11 @@ int zhesv_aa_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -8;
     }
@@ -222,7 +222,7 @@ int zhesv_aa_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *
         /* Computing MAX */
         i__1 = *n << 1;
         i__2 = *n * 3 - 2; // , expr subst
-        if (*lwork < max(i__1,i__2) && ! lquery)
+        if (*lwork < fla_max(i__1,i__2) && ! lquery)
         {
             *info = -10;
         }
@@ -233,7 +233,7 @@ int zhesv_aa_(char *uplo, integer *n, integer *nrhs, doublecomplex *a, integer *
         lwkopt_hetrf__ = (integer) work[1].r;
         zhetrs_aa_(uplo, n, nrhs, &a[a_offset], lda, &ipiv[1], &b[b_offset], ldb, &work[1], &c_n1, info);
         lwkopt_hetrs__ = (integer) work[1].r;
-        lwkopt = max(lwkopt_hetrf__,lwkopt_hetrs__);
+        lwkopt = fla_max(lwkopt_hetrf__,lwkopt_hetrs__);
         work[1].r = (doublereal) lwkopt;
         work[1].i = 0.; // , expr subst
     }

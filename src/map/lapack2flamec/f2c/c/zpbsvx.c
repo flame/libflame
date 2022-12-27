@@ -138,9 +138,9 @@ static integer c__1 = 1;
 /* > if FACT = 'F' and EQUED = 'Y', then A must contain the */
 /* > equilibrated matrix diag(S)*A*diag(S). The j-th column of A */
 /* > is stored in the j-th column of the array AB as follows: */
-/* > if UPLO = 'U', AB(KD+1+i-j,j) = A(i,j) for max(1,j-KD)<=i<=j;
+/* > if UPLO = 'U', AB(KD+1+i-j,j) = A(i,j) for fla_max(1,j-KD)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(N,j+KD). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(N,j+KD). */
 /* > See below for further details. */
 /* > */
 /* > On exit, if FACT = 'E' and EQUED = 'Y', A is overwritten by */
@@ -214,7 +214,7 @@ if EQUED = 'Y', */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] X */
@@ -229,7 +229,7 @@ if EQUED = 'Y', */
 /* > \param[in] LDX */
 /* > \verbatim */
 /* > LDX is INTEGER */
-/* > The leading dimension of the array X. LDX >= max(1,N). */
+/* > The leading dimension of the array X. LDX >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RCOND */
@@ -465,11 +465,11 @@ int zpbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, doub
                 /* Computing MIN */
                 d__1 = smin;
                 d__2 = s[j]; // , expr subst
-                smin = min(d__1,d__2);
+                smin = fla_min(d__1,d__2);
                 /* Computing MAX */
                 d__1 = smax;
                 d__2 = s[j]; // , expr subst
-                smax = max(d__1,d__2);
+                smax = fla_max(d__1,d__2);
                 /* L10: */
             }
             if (smin <= 0.)
@@ -478,7 +478,7 @@ int zpbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, doub
             }
             else if (*n > 0)
             {
-                scond = max(smin,smlnum) / min(smax,bignum);
+                scond = fla_max(smin,smlnum) / fla_min(smax,bignum);
             }
             else
             {
@@ -487,11 +487,11 @@ int zpbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, doub
         }
         if (*info == 0)
         {
-            if (*ldb < max(1,*n))
+            if (*ldb < fla_max(1,*n))
             {
                 *info = -13;
             }
-            else if (*ldx < max(1,*n))
+            else if (*ldx < fla_max(1,*n))
             {
                 *info = -15;
             }
@@ -552,7 +552,7 @@ int zpbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, doub
             {
                 /* Computing MAX */
                 i__2 = j - *kd;
-                j1 = max(i__2,1);
+                j1 = fla_max(i__2,1);
                 i__2 = j - j1 + 1;
                 zcopy_(&i__2, &ab[*kd + 1 - j + j1 + j * ab_dim1], &c__1, & afb[*kd + 1 - j + j1 + j * afb_dim1], &c__1);
                 /* L40: */
@@ -567,7 +567,7 @@ int zpbsvx_(char *fact, char *uplo, integer *n, integer *kd, integer *nrhs, doub
             {
                 /* Computing MIN */
                 i__2 = j + *kd;
-                j2 = min(i__2,*n);
+                j2 = fla_min(i__2,*n);
                 i__2 = j2 - j + 1;
                 zcopy_(&i__2, &ab[j * ab_dim1 + 1], &c__1, &afb[j * afb_dim1 + 1], &c__1);
                 /* L50: */

@@ -347,7 +347,7 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
     {
         *info = -6;
     }
-    else if (*ldx11 < max(1,*p))
+    else if (*ldx11 < fla_max(1,*p))
     {
         *info = -8;
     }
@@ -356,11 +356,11 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
         /* Computing MAX */
         i__1 = 1;
         i__2 = *m - *p; // , expr subst
-        if (*ldx21 < max(i__1,i__2))
+        if (*ldx21 < fla_max(i__1,i__2))
         {
             *info = -10;
         }
-        else if (wantu1 && *ldu1 < max(1,*p))
+        else if (wantu1 && *ldu1 < fla_max(1,*p))
         {
             *info = -13;
         }
@@ -369,21 +369,21 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             /* Computing MAX */
             i__1 = 1;
             i__2 = *m - *p; // , expr subst
-            if (wantu2 && *ldu2 < max(i__1,i__2))
+            if (wantu2 && *ldu2 < fla_max(i__1,i__2))
             {
                 *info = -15;
             }
-            else if (wantv1t && *ldv1t < max(1,*q))
+            else if (wantv1t && *ldv1t < fla_max(1,*q))
             {
                 *info = -17;
             }
         }
     }
     /* Computing MIN */
-    i__1 = *p, i__2 = *m - *p, i__1 = min(i__1,i__2);
-    i__1 = min(i__1,*q);
+    i__1 = *p, i__2 = *m - *p, i__1 = fla_min(i__1,i__2);
+    i__1 = fla_min(i__1,*q);
     i__2 = *m - *q; // ; expr subst
-    r__ = min(i__1,i__2);
+    r__ = fla_min(i__1,i__2);
     /* Compute workspace */
     /* WORK layout: */
     /* |-----------------------------------------| */
@@ -421,36 +421,36 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
         /* Computing MAX */
         i__1 = 1;
         i__2 = r__ - 1; // , expr subst
-        ib11d = iphi + max(i__1,i__2);
-        ib11e = ib11d + max(1,r__);
+        ib11d = iphi + fla_max(i__1,i__2);
+        ib11e = ib11d + fla_max(1,r__);
         /* Computing MAX */
         i__1 = 1;
         i__2 = r__ - 1; // , expr subst
-        ib12d = ib11e + max(i__1,i__2);
-        ib12e = ib12d + max(1,r__);
+        ib12d = ib11e + fla_max(i__1,i__2);
+        ib12e = ib12d + fla_max(1,r__);
         /* Computing MAX */
         i__1 = 1;
         i__2 = r__ - 1; // , expr subst
-        ib21d = ib12e + max(i__1,i__2);
-        ib21e = ib21d + max(1,r__);
+        ib21d = ib12e + fla_max(i__1,i__2);
+        ib21e = ib21d + fla_max(1,r__);
         /* Computing MAX */
         i__1 = 1;
         i__2 = r__ - 1; // , expr subst
-        ib22d = ib21e + max(i__1,i__2);
-        ib22e = ib22d + max(1,r__);
+        ib22d = ib21e + fla_max(i__1,i__2);
+        ib22e = ib22d + fla_max(1,r__);
         /* Computing MAX */
         i__1 = 1;
         i__2 = r__ - 1; // , expr subst
-        ibbcsd = ib22e + max(i__1,i__2);
+        ibbcsd = ib22e + fla_max(i__1,i__2);
         itaup1 = 2;
-        itaup2 = itaup1 + max(1,*p);
+        itaup2 = itaup1 + fla_max(1,*p);
         /* Computing MAX */
         i__1 = 1;
         i__2 = *m - *p; // , expr subst
-        itauq1 = itaup2 + max(i__1,i__2);
-        iorbdb = itauq1 + max(1,*q);
-        iorgqr = itauq1 + max(1,*q);
-        iorglq = itauq1 + max(1,*q);
+        itauq1 = itaup2 + fla_max(i__1,i__2);
+        iorbdb = itauq1 + fla_max(1,*q);
+        iorgqr = itauq1 + fla_max(1,*q);
+        iorglq = itauq1 + fla_max(1,*q);
         lorgqrmin = 1;
         lorgqropt = 1;
         lorglqmin = 1;
@@ -462,11 +462,11 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             if (wantu1 && *p > 0)
             {
                 cungqr_(p, p, q, &u1[u1_offset], ldu1, cdum, &work[1], &c_n1, &childinfo);
-                lorgqrmin = max(lorgqrmin,*p);
+                lorgqrmin = fla_max(lorgqrmin,*p);
                 /* Computing MAX */
                 i__1 = lorgqropt;
                 i__2 = (integer) work[1].r; // , expr subst
-                lorgqropt = max(i__1,i__2);
+                lorgqropt = fla_max(i__1,i__2);
             }
             if (wantu2 && *m - *p > 0)
             {
@@ -476,11 +476,11 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
                 /* Computing MAX */
                 i__1 = lorgqrmin;
                 i__2 = *m - *p; // , expr subst
-                lorgqrmin = max(i__1,i__2);
+                lorgqrmin = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = lorgqropt;
                 i__2 = (integer) work[1].r; // , expr subst
-                lorgqropt = max(i__1,i__2);
+                lorgqropt = fla_max(i__1,i__2);
             }
             if (wantv1t && *q > 0)
             {
@@ -491,11 +491,11 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
                 /* Computing MAX */
                 i__1 = lorglqmin;
                 i__2 = *q - 1; // , expr subst
-                lorglqmin = max(i__1,i__2);
+                lorglqmin = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = lorglqopt;
                 i__2 = (integer) work[1].r; // , expr subst
-                lorglqopt = max(i__1,i__2);
+                lorglqopt = fla_max(i__1,i__2);
             }
             cbbcsd_(jobu1, jobu2, jobv1t, "N", "N", m, p, q, &theta[1], dum, & u1[u1_offset], ldu1, &u2[u2_offset], ldu2, &v1t[ v1t_offset], ldv1t, cdum, &c__1, dum, dum, dum, dum, dum, dum, dum, dum, &rwork[1], &c_n1, &childinfo);
             lbbcsd = (integer) rwork[1];
@@ -513,11 +513,11 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
                 /* Computing MAX */
                 i__1 = lorgqrmin;
                 i__2 = *p - 1; // , expr subst
-                lorgqrmin = max(i__1,i__2);
+                lorgqrmin = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = lorgqropt;
                 i__2 = (integer) work[1].r; // , expr subst
-                lorgqropt = max(i__1,i__2);
+                lorgqropt = fla_max(i__1,i__2);
             }
             if (wantu2 && *m - *p > 0)
             {
@@ -527,20 +527,20 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
                 /* Computing MAX */
                 i__1 = lorgqrmin;
                 i__2 = *m - *p; // , expr subst
-                lorgqrmin = max(i__1,i__2);
+                lorgqrmin = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = lorgqropt;
                 i__2 = (integer) work[1].r; // , expr subst
-                lorgqropt = max(i__1,i__2);
+                lorgqropt = fla_max(i__1,i__2);
             }
             if (wantv1t && *q > 0)
             {
                 cunglq_(q, q, &r__, &v1t[v1t_offset], ldv1t, cdum, &work[1], & c_n1, &childinfo);
-                lorglqmin = max(lorglqmin,*q);
+                lorglqmin = fla_max(lorglqmin,*q);
                 /* Computing MAX */
                 i__1 = lorglqopt;
                 i__2 = (integer) work[1].r; // , expr subst
-                lorglqopt = max(i__1,i__2);
+                lorglqopt = fla_max(i__1,i__2);
             }
             cbbcsd_(jobv1t, "N", jobu1, jobu2, "T", m, q, p, &theta[1], dum, & v1t[v1t_offset], ldv1t, cdum, &c__1, &u1[u1_offset], ldu1, &u2[u2_offset], ldu2, dum, dum, dum, dum, dum, dum, dum, dum, &rwork[1], &c_n1, &childinfo);
             lbbcsd = (integer) rwork[1];
@@ -552,11 +552,11 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             if (wantu1 && *p > 0)
             {
                 cungqr_(p, p, q, &u1[u1_offset], ldu1, cdum, &work[1], &c_n1, &childinfo);
-                lorgqrmin = max(lorgqrmin,*p);
+                lorgqrmin = fla_max(lorgqrmin,*p);
                 /* Computing MAX */
                 i__1 = lorgqropt;
                 i__2 = (integer) work[1].r; // , expr subst
-                lorgqropt = max(i__1,i__2);
+                lorgqropt = fla_max(i__1,i__2);
             }
             if (wantu2 && *m - *p > 0)
             {
@@ -567,20 +567,20 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
                 /* Computing MAX */
                 i__1 = lorgqrmin;
                 i__2 = *m - *p - 1; // , expr subst
-                lorgqrmin = max(i__1,i__2);
+                lorgqrmin = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = lorgqropt;
                 i__2 = (integer) work[1].r; // , expr subst
-                lorgqropt = max(i__1,i__2);
+                lorgqropt = fla_max(i__1,i__2);
             }
             if (wantv1t && *q > 0)
             {
                 cunglq_(q, q, &r__, &v1t[v1t_offset], ldv1t, cdum, &work[1], & c_n1, &childinfo);
-                lorglqmin = max(lorglqmin,*q);
+                lorglqmin = fla_max(lorglqmin,*q);
                 /* Computing MAX */
                 i__1 = lorglqopt;
                 i__2 = (integer) work[1].r; // , expr subst
-                lorglqopt = max(i__1,i__2);
+                lorglqopt = fla_max(i__1,i__2);
             }
             i__1 = *m - *q;
             i__2 = *m - *p;
@@ -595,11 +595,11 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             {
                 i__1 = *m - *q;
                 cungqr_(p, p, &i__1, &u1[u1_offset], ldu1, cdum, &work[1], & c_n1, &childinfo);
-                lorgqrmin = max(lorgqrmin,*p);
+                lorgqrmin = fla_max(lorgqrmin,*p);
                 /* Computing MAX */
                 i__1 = lorgqropt;
                 i__2 = (integer) work[1].r; // , expr subst
-                lorgqropt = max(i__1,i__2);
+                lorgqropt = fla_max(i__1,i__2);
             }
             if (wantu2 && *m - *p > 0)
             {
@@ -610,20 +610,20 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
                 /* Computing MAX */
                 i__1 = lorgqrmin;
                 i__2 = *m - *p; // , expr subst
-                lorgqrmin = max(i__1,i__2);
+                lorgqrmin = fla_max(i__1,i__2);
                 /* Computing MAX */
                 i__1 = lorgqropt;
                 i__2 = (integer) work[1].r; // , expr subst
-                lorgqropt = max(i__1,i__2);
+                lorgqropt = fla_max(i__1,i__2);
             }
             if (wantv1t && *q > 0)
             {
                 cunglq_(q, q, q, &v1t[v1t_offset], ldv1t, cdum, &work[1], & c_n1, &childinfo);
-                lorglqmin = max(lorglqmin,*q);
+                lorglqmin = fla_max(lorglqmin,*q);
                 /* Computing MAX */
                 i__1 = lorglqopt;
                 i__2 = (integer) work[1].r; // , expr subst
-                lorglqopt = max(i__1,i__2);
+                lorglqopt = fla_max(i__1,i__2);
             }
             i__1 = *m - *p;
             i__2 = *m - *q;
@@ -635,14 +635,14 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
         rwork[1] = (real) lrworkopt;
         /* Computing MAX */
         i__1 = iorbdb + lorbdb - 1, i__2 = iorgqr + lorgqrmin - 1;
-        i__1 = max( i__1,i__2);
+        i__1 = fla_max( i__1,i__2);
         i__2 = iorglq + lorglqmin - 1; // ; expr subst
-        lworkmin = max(i__1,i__2);
+        lworkmin = fla_max(i__1,i__2);
         /* Computing MAX */
         i__1 = iorbdb + lorbdb - 1, i__2 = iorgqr + lorgqropt - 1;
-        i__1 = max( i__1,i__2);
+        i__1 = fla_max( i__1,i__2);
         i__2 = iorglq + lorglqopt - 1; // ; expr subst
-        lworkopt = max(i__1,i__2);
+        lworkopt = fla_max(i__1,i__2);
         work[1].r = (real) lworkopt;
         work[1].i = 0.f; // , expr subst
         if (*lwork < lworkmin && ! lquery)

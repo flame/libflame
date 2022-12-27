@@ -89,9 +89,9 @@ static doublereal c_b20 = -1.;
 /* > matrix A, stored in the first ka+1 rows of the array. The */
 /* > j-th column of A is stored in the j-th column of the array AB */
 /* > as follows: */
-/* > if UPLO = 'U', AB(ka+1+i-j,j) = A(i,j) for max(1,j-ka)<=i<=j;
+/* > if UPLO = 'U', AB(ka+1+i-j,j) = A(i,j) for fla_max(1,j-ka)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(n,j+ka). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(n,j+ka). */
 /* > */
 /* > On exit, the transformed matrix X**T*A*X, stored in the same */
 /* > format as A. */
@@ -128,7 +128,7 @@ static doublereal c_b20 = -1.;
 /* > \verbatim */
 /* > LDX is INTEGER */
 /* > The leading dimension of the array X. */
-/* > LDX >= max(1,N) if VECT = 'V';
+/* > LDX >= fla_max(1,N) if VECT = 'V';
 LDX >= 1 otherwise. */
 /* > \endverbatim */
 /* > */
@@ -245,7 +245,7 @@ int dsbgst_(char *vect, char *uplo, integer *n, integer *ka, integer *kb, double
     {
         *info = -9;
     }
-    else if (*ldx < 1 || wantx && *ldx < max(1,*n))
+    else if (*ldx < 1 || wantx && *ldx < fla_max(1,*n))
     {
         *info = -11;
     }
@@ -330,12 +330,12 @@ L10:
         /* Computing MIN */
         i__1 = *kb;
         i__2 = i__ - 1; // , expr subst
-        kbt = min(i__1,i__2);
+        kbt = fla_min(i__1,i__2);
         i0 = i__ - 1;
         /* Computing MIN */
         i__1 = *n;
         i__2 = i__ + *ka; // , expr subst
-        i1 = min(i__1,i__2);
+        i1 = fla_min(i__1,i__2);
         i2 = i__ - kbt + ka1;
         if (i__ < m + 1)
         {
@@ -376,7 +376,7 @@ L10:
             i__1 = 1;
             i__2 = i__ - *ka; // , expr subst
             i__3 = i__;
-            for (j = max(i__1,i__2);
+            for (j = fla_max(i__1,i__2);
                     j <= i__3;
                     ++j)
             {
@@ -400,7 +400,7 @@ L10:
                 i__1 = 1;
                 i__2 = i__ - *ka; // , expr subst
                 i__4 = i__ - kbt - 1;
-                for (j = max(i__1,i__2);
+                for (j = fla_max(i__1,i__2);
                         j <= i__4;
                         ++j)
                 {
@@ -418,7 +418,7 @@ L10:
                 i__4 = j - *ka;
                 i__1 = i__ - kbt; // , expr subst
                 i__2 = i__ - 1;
-                for (k = max(i__4,i__1);
+                for (k = fla_max(i__4,i__1);
                         k <= i__2;
                         ++k)
                 {
@@ -469,7 +469,7 @@ L10:
             /* Computing MAX */
             i__2 = 1;
             i__4 = k - i0 + 2; // , expr subst
-            j2 = i__ - k - 1 + max(i__2,i__4) * ka1;
+            j2 = i__ - k - 1 + fla_max(i__2,i__4) * ka1;
             nr = (*n - j2 + *ka) / ka1;
             j1 = j2 + (nr - 1) * ka1;
             if (update)
@@ -477,7 +477,7 @@ L10:
                 /* Computing MAX */
                 i__2 = j2;
                 i__4 = i__ + (*ka << 1) - k + 1; // , expr subst
-                j2t = max(i__2,i__4);
+                j2t = fla_max(i__2,i__4);
             }
             else
             {
@@ -564,14 +564,14 @@ L10:
                 /* Computing MAX */
                 i__3 = 2;
                 i__2 = k - i0 + 1; // , expr subst
-                j2 = i__ - k - 1 + max(i__3,i__2) * ka1;
+                j2 = i__ - k - 1 + fla_max(i__3,i__2) * ka1;
             }
             else
             {
                 /* Computing MAX */
                 i__3 = 1;
                 i__2 = k - i0 + 1; // , expr subst
-                j2 = i__ - k - 1 + max(i__3,i__2) * ka1;
+                j2 = i__ - k - 1 + fla_max(i__3,i__2) * ka1;
             }
             /* finish applying rotations in 2nd set from the left */
             for (l = *kb - k;
@@ -625,7 +625,7 @@ L10:
             /* Computing MAX */
             i__3 = 1;
             i__2 = k - i0 + 1; // , expr subst
-            j2 = i__ - k - 1 + max(i__3,i__2) * ka1;
+            j2 = i__ - k - 1 + fla_max(i__3,i__2) * ka1;
             nr = (*n - j2 + *ka) / ka1;
             j1 = j2 + (nr - 1) * ka1;
             if (nr > 0)
@@ -683,7 +683,7 @@ L10:
             /* Computing MAX */
             i__3 = 1;
             i__4 = k - i0 + 2; // , expr subst
-            j2 = i__ - k - 1 + max(i__3,i__4) * ka1;
+            j2 = i__ - k - 1 + fla_max(i__3,i__4) * ka1;
             /* finish applying rotations in 1st set from the left */
             for (l = *kb - k;
                     l >= 1;
@@ -730,7 +730,7 @@ L10:
             i__2 = 1;
             i__3 = i__ - *ka; // , expr subst
             i__4 = i__;
-            for (j = max(i__2,i__3);
+            for (j = fla_max(i__2,i__3);
                     j <= i__4;
                     ++j)
             {
@@ -754,7 +754,7 @@ L10:
                 i__2 = 1;
                 i__3 = i__ - *ka; // , expr subst
                 i__1 = i__ - kbt - 1;
-                for (j = max(i__2,i__3);
+                for (j = fla_max(i__2,i__3);
                         j <= i__1;
                         ++j)
                 {
@@ -772,7 +772,7 @@ L10:
                 i__1 = j - *ka;
                 i__2 = i__ - kbt; // , expr subst
                 i__3 = i__ - 1;
-                for (k = max(i__1,i__2);
+                for (k = fla_max(i__1,i__2);
                         k <= i__3;
                         ++k)
                 {
@@ -824,7 +824,7 @@ L10:
             /* Computing MAX */
             i__3 = 1;
             i__1 = k - i0 + 2; // , expr subst
-            j2 = i__ - k - 1 + max(i__3,i__1) * ka1;
+            j2 = i__ - k - 1 + fla_max(i__3,i__1) * ka1;
             nr = (*n - j2 + *ka) / ka1;
             j1 = j2 + (nr - 1) * ka1;
             if (update)
@@ -832,7 +832,7 @@ L10:
                 /* Computing MAX */
                 i__3 = j2;
                 i__1 = i__ + (*ka << 1) - k + 1; // , expr subst
-                j2t = max(i__3,i__1);
+                j2t = fla_max(i__3,i__1);
             }
             else
             {
@@ -919,14 +919,14 @@ L10:
                 /* Computing MAX */
                 i__4 = 2;
                 i__3 = k - i0 + 1; // , expr subst
-                j2 = i__ - k - 1 + max(i__4,i__3) * ka1;
+                j2 = i__ - k - 1 + fla_max(i__4,i__3) * ka1;
             }
             else
             {
                 /* Computing MAX */
                 i__4 = 1;
                 i__3 = k - i0 + 1; // , expr subst
-                j2 = i__ - k - 1 + max(i__4,i__3) * ka1;
+                j2 = i__ - k - 1 + fla_max(i__4,i__3) * ka1;
             }
             /* finish applying rotations in 2nd set from the right */
             for (l = *kb - k;
@@ -980,7 +980,7 @@ L10:
             /* Computing MAX */
             i__4 = 1;
             i__3 = k - i0 + 1; // , expr subst
-            j2 = i__ - k - 1 + max(i__4,i__3) * ka1;
+            j2 = i__ - k - 1 + fla_max(i__4,i__3) * ka1;
             nr = (*n - j2 + *ka) / ka1;
             j1 = j2 + (nr - 1) * ka1;
             if (nr > 0)
@@ -1038,7 +1038,7 @@ L10:
             /* Computing MAX */
             i__4 = 1;
             i__1 = k - i0 + 2; // , expr subst
-            j2 = i__ - k - 1 + max(i__4,i__1) * ka1;
+            j2 = i__ - k - 1 + fla_max(i__4,i__1) * ka1;
             /* finish applying rotations in 1st set from the right */
             for (l = *kb - k;
                     l >= 1;
@@ -1088,12 +1088,12 @@ L490:
         /* Computing MIN */
         i__3 = *kb;
         i__4 = m - i__; // , expr subst
-        kbt = min(i__3,i__4);
+        kbt = fla_min(i__3,i__4);
         i0 = i__ + 1;
         /* Computing MAX */
         i__3 = 1;
         i__4 = i__ - *ka; // , expr subst
-        i1 = max(i__3,i__4);
+        i1 = fla_max(i__3,i__4);
         i2 = i__ + kbt - ka1;
         if (i__ > m)
         {
@@ -1143,7 +1143,7 @@ L490:
             /* Computing MIN */
             i__4 = *n;
             i__1 = i__ + *ka; // , expr subst
-            i__3 = min(i__4,i__1);
+            i__3 = fla_min(i__4,i__1);
             for (j = i__;
                     j <= i__3;
                     ++j)
@@ -1167,7 +1167,7 @@ L490:
                 /* Computing MIN */
                 i__1 = *n;
                 i__2 = i__ + *ka; // , expr subst
-                i__4 = min(i__1,i__2);
+                i__4 = fla_min(i__1,i__2);
                 for (j = i__ + kbt + 1;
                         j <= i__4;
                         ++j)
@@ -1185,7 +1185,7 @@ L490:
                 /* Computing MIN */
                 i__1 = j + *ka;
                 i__2 = i__ + kbt; // , expr subst
-                i__4 = min(i__1,i__2);
+                i__4 = fla_min(i__1,i__2);
                 for (k = i__ + 1;
                         k <= i__4;
                         ++k)
@@ -1235,7 +1235,7 @@ L490:
             /* Computing MAX */
             i__4 = 1;
             i__1 = k + i0 - m + 1; // , expr subst
-            j2 = i__ + k + 1 - max(i__4,i__1) * ka1;
+            j2 = i__ + k + 1 - fla_max(i__4,i__1) * ka1;
             nr = (j2 + *ka - 1) / ka1;
             j1 = j2 - (nr - 1) * ka1;
             if (update)
@@ -1243,7 +1243,7 @@ L490:
                 /* Computing MIN */
                 i__4 = j2;
                 i__1 = i__ - (*ka << 1) + k - 1; // , expr subst
-                j2t = min(i__4,i__1);
+                j2t = fla_min(i__4,i__1);
             }
             else
             {
@@ -1330,14 +1330,14 @@ L490:
                 /* Computing MAX */
                 i__3 = 2;
                 i__4 = k + i0 - m; // , expr subst
-                j2 = i__ + k + 1 - max(i__3,i__4) * ka1;
+                j2 = i__ + k + 1 - fla_max(i__3,i__4) * ka1;
             }
             else
             {
                 /* Computing MAX */
                 i__3 = 1;
                 i__4 = k + i0 - m; // , expr subst
-                j2 = i__ + k + 1 - max(i__3,i__4) * ka1;
+                j2 = i__ + k + 1 - fla_max(i__3,i__4) * ka1;
             }
             /* finish applying rotations in 2nd set from the right */
             for (l = *kb - k;
@@ -1392,7 +1392,7 @@ L490:
             /* Computing MAX */
             i__3 = 1;
             i__4 = k + i0 - m; // , expr subst
-            j2 = i__ + k + 1 - max(i__3,i__4) * ka1;
+            j2 = i__ + k + 1 - fla_max(i__3,i__4) * ka1;
             nr = (j2 + *ka - 1) / ka1;
             j1 = j2 - (nr - 1) * ka1;
             if (nr > 0)
@@ -1450,7 +1450,7 @@ L490:
             /* Computing MAX */
             i__3 = 1;
             i__1 = k + i0 - m + 1; // , expr subst
-            j2 = i__ + k + 1 - max(i__3,i__1) * ka1;
+            j2 = i__ + k + 1 - fla_max(i__3,i__1) * ka1;
             /* finish applying rotations in 1st set from the right */
             for (l = *kb - k;
                     l >= 1;
@@ -1470,7 +1470,7 @@ L490:
         {
             /* Computing MIN */
             i__3 = i__ + *kb;
-            i__4 = min(i__3,m) - (*ka << 1) - 1;
+            i__4 = fla_min(i__3,m) - (*ka << 1) - 1;
             for (j = 2;
                     j <= i__4;
                     ++j)
@@ -1499,7 +1499,7 @@ L490:
             /* Computing MIN */
             i__3 = *n;
             i__1 = i__ + *ka; // , expr subst
-            i__4 = min(i__3,i__1);
+            i__4 = fla_min(i__3,i__1);
             for (j = i__;
                     j <= i__4;
                     ++j)
@@ -1523,7 +1523,7 @@ L490:
                 /* Computing MIN */
                 i__1 = *n;
                 i__2 = i__ + *ka; // , expr subst
-                i__3 = min(i__1,i__2);
+                i__3 = fla_min(i__1,i__2);
                 for (j = i__ + kbt + 1;
                         j <= i__3;
                         ++j)
@@ -1541,7 +1541,7 @@ L490:
                 /* Computing MIN */
                 i__1 = j + *ka;
                 i__2 = i__ + kbt; // , expr subst
-                i__3 = min(i__1,i__2);
+                i__3 = fla_min(i__1,i__2);
                 for (k = i__ + 1;
                         k <= i__3;
                         ++k)
@@ -1590,7 +1590,7 @@ L490:
             /* Computing MAX */
             i__3 = 1;
             i__1 = k + i0 - m + 1; // , expr subst
-            j2 = i__ + k + 1 - max(i__3,i__1) * ka1;
+            j2 = i__ + k + 1 - fla_max(i__3,i__1) * ka1;
             nr = (j2 + *ka - 1) / ka1;
             j1 = j2 - (nr - 1) * ka1;
             if (update)
@@ -1598,7 +1598,7 @@ L490:
                 /* Computing MIN */
                 i__3 = j2;
                 i__1 = i__ - (*ka << 1) + k - 1; // , expr subst
-                j2t = min(i__3,i__1);
+                j2t = fla_min(i__3,i__1);
             }
             else
             {
@@ -1685,14 +1685,14 @@ L490:
                 /* Computing MAX */
                 i__4 = 2;
                 i__3 = k + i0 - m; // , expr subst
-                j2 = i__ + k + 1 - max(i__4,i__3) * ka1;
+                j2 = i__ + k + 1 - fla_max(i__4,i__3) * ka1;
             }
             else
             {
                 /* Computing MAX */
                 i__4 = 1;
                 i__3 = k + i0 - m; // , expr subst
-                j2 = i__ + k + 1 - max(i__4,i__3) * ka1;
+                j2 = i__ + k + 1 - fla_max(i__4,i__3) * ka1;
             }
             /* finish applying rotations in 2nd set from the left */
             for (l = *kb - k;
@@ -1747,7 +1747,7 @@ L490:
             /* Computing MAX */
             i__4 = 1;
             i__3 = k + i0 - m; // , expr subst
-            j2 = i__ + k + 1 - max(i__4,i__3) * ka1;
+            j2 = i__ + k + 1 - fla_max(i__4,i__3) * ka1;
             nr = (j2 + *ka - 1) / ka1;
             j1 = j2 - (nr - 1) * ka1;
             if (nr > 0)
@@ -1805,7 +1805,7 @@ L490:
             /* Computing MAX */
             i__4 = 1;
             i__1 = k + i0 - m + 1; // , expr subst
-            j2 = i__ + k + 1 - max(i__4,i__1) * ka1;
+            j2 = i__ + k + 1 - fla_max(i__4,i__1) * ka1;
             /* finish applying rotations in 1st set from the left */
             for (l = *kb - k;
                     l >= 1;
@@ -1825,7 +1825,7 @@ L490:
         {
             /* Computing MIN */
             i__4 = i__ + *kb;
-            i__3 = min(i__4,m) - (*ka << 1) - 1;
+            i__3 = fla_min(i__4,m) - (*ka << 1) - 1;
             for (j = 2;
                     j <= i__3;
                     ++j)

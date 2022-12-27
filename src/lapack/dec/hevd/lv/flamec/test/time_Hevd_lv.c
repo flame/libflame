@@ -106,7 +106,7 @@ void time_Hevd_lv(
     }
 
     *dtime = FLA_Clock() - *dtime;
-    dtime_old = min( *dtime, dtime_old );
+    dtime_old = fla_min( *dtime, dtime_old );
 
   }
   {

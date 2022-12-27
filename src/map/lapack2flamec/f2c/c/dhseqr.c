@@ -114,7 +114,7 @@ static integer c__49 = 49;
 /* > \param[in] LDH */
 /* > \verbatim */
 /* > LDH is INTEGER */
-/* > The leading dimension of the array H. LDH .GE. max(1,N). */
+/* > The leading dimension of the array H. LDH .GE. fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WR */
@@ -170,7 +170,7 @@ static integer c__49 = 49;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK .GE. max(1,N) */
+/* > The dimension of the array WORK. LWORK .GE. fla_max(1,N) */
 /* > is sufficient and delivers very good and sometimes */
 /* > optimal performance. However, LWORK as large as 11*N */
 /* > may be required for optimal performance. A workspace */
@@ -379,7 +379,7 @@ int dhseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, doub
     wantt = lsame_(job, "S");
     initz = lsame_(compz, "I");
     wantz = initz || lsame_(compz, "V");
-    work[1] = (doublereal) max(1,*n);
+    work[1] = (doublereal) fla_max(1,*n);
     lquery = *lwork == -1;
     *info = 0;
     if (! lsame_(job, "E") && ! wantt)
@@ -394,23 +394,23 @@ int dhseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, doub
     {
         *info = -3;
     }
-    else if (*ilo < 1 || *ilo > max(1,*n))
+    else if (*ilo < 1 || *ilo > fla_max(1,*n))
     {
         *info = -4;
     }
-    else if (*ihi < min(*ilo,*n) || *ihi > *n)
+    else if (*ihi < fla_min(*ilo,*n) || *ihi > *n)
     {
         *info = -5;
     }
-    else if (*ldh < max(1,*n))
+    else if (*ldh < fla_max(1,*n))
     {
         *info = -7;
     }
-    else if (*ldz < 1 || wantz && *ldz < max(1,*n))
+    else if (*ldz < 1 || wantz && *ldz < fla_max(1,*n))
     {
         *info = -11;
     }
-    else if (*lwork < max(1,*n) && ! lquery)
+    else if (*lwork < fla_max(1,*n) && ! lquery)
     {
         *info = -13;
     }
@@ -436,8 +436,8 @@ int dhseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, doub
         /* ==== Ensure reported workspace size is backward-compatible with */
         /* . previous LAPACK versions. ==== */
         /* Computing MAX */
-        d__1 = (doublereal) max(1,*n);
-        work[1] = max(d__1,work[1]);
+        d__1 = (doublereal) fla_max(1,*n);
+        work[1] = fla_max(d__1,work[1]);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
@@ -477,7 +477,7 @@ int dhseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, doub
         }
         /* ==== DLAHQR/DLAQR0 crossover point ==== */
         nmin = ilaenv_(&c__12, "DHSEQR", ch__1, n, ilo, ihi, lwork);
-        nmin = max(11,nmin);
+        nmin = fla_max(11,nmin);
         /* ==== DLAQR0 for big matrices;
         DLAHQR for small ones ==== */
         if (*n > nmin)
@@ -527,8 +527,8 @@ int dhseqr_(char *job, char *compz, integer *n, integer *ilo, integer *ihi, doub
         /* ==== Ensure reported workspace size is backward-compatible with */
         /* . previous LAPACK versions. ==== */
         /* Computing MAX */
-        d__1 = (doublereal) max(1,*n);
-        work[1] = max(d__1,work[1]);
+        d__1 = (doublereal) fla_max(1,*n);
+        work[1] = fla_max(d__1,work[1]);
     }
     /* ==== End of DHSEQR ==== */
     AOCL_DTL_TRACE_LOG_EXIT

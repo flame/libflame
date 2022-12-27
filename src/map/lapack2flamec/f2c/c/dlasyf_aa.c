@@ -97,7 +97,7 @@ static doublereal c_b22 = 0.;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] IPIV */
@@ -117,7 +117,7 @@ static doublereal c_b22 = 0.;
 /* > \param[in] LDH */
 /* > \verbatim */
 /* > LDH is INTEGER */
-/* > The leading dimension of the workspace H. LDH >= max(1,M). */
+/* > The leading dimension of the workspace H. LDH >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */
@@ -191,7 +191,7 @@ int dlasyf_aa_(char *uplo, integer *j1, integer *m, integer *nb, doublereal *a, 
         /* Factorize A as U**T*D*U using the upper triangle of A */
         /* ..................................................... */
 L10:
-        if (j > min(*m,*nb))
+        if (j > fla_min(*m,*nb))
         {
             goto L20;
         }
@@ -242,7 +242,7 @@ L10:
                 i__1 = *m - j;
                 daxpy_(&i__1, &alpha, &a[k - 1 + (j + 1) * a_dim1], lda, & work[2], &c__1);
             }
-            /* Find max(|WORK(2:M)|) */
+            /* Find fla_max(|WORK(2:M)|) */
             i__1 = *m - j;
             i2 = idamax_(&i__1, &work[2], &c__1) + 1;
             piv = work[i2];
@@ -322,7 +322,7 @@ L20:
         /* Factorize A as L*D*L**T using the lower triangle of A */
         /* ..................................................... */
 L30:
-        if (j > min(*m,*nb))
+        if (j > fla_min(*m,*nb))
         {
             goto L40;
         }
@@ -373,7 +373,7 @@ L30:
                 i__1 = *m - j;
                 daxpy_(&i__1, &alpha, &a[j + 1 + (k - 1) * a_dim1], &c__1, & work[2], &c__1);
             }
-            /* Find max(|WORK(2:M)|) */
+            /* Find fla_max(|WORK(2:M)|) */
             i__1 = *m - j;
             i2 = idamax_(&i__1, &work[2], &c__1) + 1;
             piv = work[i2];

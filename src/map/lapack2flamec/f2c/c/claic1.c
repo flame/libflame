@@ -189,7 +189,7 @@ int claic1_(integer *job, integer *j, complex *x, real *sest, complex *w, comple
         /* special cases */
         if (*sest == 0.f)
         {
-            s1 = max(absgam,absalp);
+            s1 = fla_max(absgam,absalp);
             if (s1 == 0.f)
             {
                 s->r = 0.f, s->i = 0.f;
@@ -229,7 +229,7 @@ int claic1_(integer *job, integer *j, complex *x, real *sest, complex *w, comple
         {
             s->r = 1.f, s->i = 0.f;
             c__->r = 0.f, c__->i = 0.f;
-            tmp = max(absest,absalp);
+            tmp = fla_max(absest,absalp);
             s1 = absest / tmp;
             s2 = absalp / tmp;
             *sestpr = tmp * sqrt(s1 * s1 + s2 * s2);
@@ -368,7 +368,7 @@ int claic1_(integer *job, integer *j, complex *x, real *sest, complex *w, comple
         if (*sest == 0.f)
         {
             *sestpr = 0.f;
-            if (max(absgam,absalp) == 0.f)
+            if (fla_max(absgam,absalp) == 0.f)
             {
                 sine.r = 1.f;
                 sine.i = 0.f; // , expr subst
@@ -389,7 +389,7 @@ int claic1_(integer *job, integer *j, complex *x, real *sest, complex *w, comple
             /* Computing MAX */
             r__1 = c_abs(&sine);
             r__2 = c_abs(&cosine); // , expr subst
-            s1 = max(r__1,r__2);
+            s1 = fla_max(r__1,r__2);
             q__1.r = sine.r / s1;
             q__1.i = sine.i / s1; // , expr subst
             s->r = q__1.r, s->i = q__1.i;
@@ -497,7 +497,7 @@ int claic1_(integer *job, integer *j, complex *x, real *sest, complex *w, comple
             /* Computing MAX */
             r__1 = zeta1 * zeta1 + 1.f + zeta1 * zeta2;
             r__2 = zeta1 * zeta2 + zeta2 * zeta2; // , expr subst
-            norma = max(r__1,r__2);
+            norma = fla_max(r__1,r__2);
             /* See if root is closer to zero or to ONE */
             test = (zeta1 - zeta2) * 2.f * (zeta1 + zeta2) + 1.f;
             if (test >= 0.f)

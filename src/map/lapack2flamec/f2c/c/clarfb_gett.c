@@ -114,7 +114,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,K). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,K). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -134,7 +134,7 @@ static integer c__1 = 1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,M). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WORK */

@@ -33,7 +33,7 @@ int chetrd_check(char *uplo, integer *n, scomplex *a, integer *lda, float *d__, 
     {
         *info = -2;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -4;
     }

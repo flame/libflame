@@ -157,7 +157,7 @@ if N = 0, ILO=1 and IHI=0. */
 /* > \param[in] LDH */
 /* > \verbatim */
 /* > LDH is INTEGER */
-/* > The leading dimension of the array H. LDH >= max( 1, N ). */
+/* > The leading dimension of the array H. LDH >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] T */
@@ -173,7 +173,7 @@ if N = 0, ILO=1 and IHI=0. */
 /* > \param[in] LDT */
 /* > \verbatim */
 /* > LDT is INTEGER */
-/* > The leading dimension of the array T. LDT >= max( 1, N ). */
+/* > The leading dimension of the array T. LDT >= fla_max( 1, N ). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ALPHA */
@@ -243,7 +243,7 @@ if N = 0, ILO=1 and IHI=0. */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,N). */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
 the routine */
@@ -448,7 +448,7 @@ int chgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     }
     /* Check Argument Values */
     *info = 0;
-    i__1 = max(1,*n);
+    i__1 = fla_max(1,*n);
     work[1].r = (real) i__1;
     work[1].i = 0.f; // , expr subst
     lquery = *lwork == -1;
@@ -492,7 +492,7 @@ int chgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     {
         *info = -16;
     }
-    else if (*lwork < max(1,*n) && ! lquery)
+    else if (*lwork < fla_max(1,*n) && ! lquery)
     {
         *info = -18;
     }
@@ -535,13 +535,13 @@ int chgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     /* Computing MAX */
     r__1 = safmin;
     r__2 = ulp * anorm; // , expr subst
-    atol = max(r__1,r__2);
+    atol = fla_max(r__1,r__2);
     /* Computing MAX */
     r__1 = safmin;
     r__2 = ulp * bnorm; // , expr subst
-    btol = max(r__1,r__2);
-    ascale = 1.f / max(safmin,anorm);
-    bscale = 1.f / max(safmin,bnorm);
+    btol = fla_max(r__1,r__2);
+    ascale = 1.f / fla_max(safmin,anorm);
+    bscale = 1.f / fla_max(safmin,bnorm);
     /* Set Eigenvalues IHI+1:N */
     i__1 = *n;
     for (j = *ihi + 1;
@@ -650,7 +650,7 @@ int chgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
             i__4 = ilast - 1 + (ilast - 1) * h_dim1;
             r__7 = safmin;
             r__8 = ulp * ((r__1 = h__[i__3].r, f2c_abs(r__1)) + ( r__2 = r_imag(&h__[ilast + ilast * h_dim1]), f2c_abs(r__2)) + ((r__3 = h__[i__4].r, f2c_abs(r__3)) + (r__4 = r_imag(&h__[ ilast - 1 + (ilast - 1) * h_dim1]), f2c_abs(r__4)))); // , expr subst
-            if ((r__5 = h__[i__2].r, f2c_abs(r__5)) + (r__6 = r_imag(&h__[ilast + (ilast - 1) * h_dim1]), f2c_abs(r__6)) <= max(r__7,r__8))
+            if ((r__5 = h__[i__2].r, f2c_abs(r__5)) + (r__6 = r_imag(&h__[ilast + (ilast - 1) * h_dim1]), f2c_abs(r__6)) <= fla_max(r__7,r__8))
             {
                 i__2 = ilast + (ilast - 1) * h_dim1;
                 h__[i__2].r = 0.f;
@@ -661,7 +661,7 @@ int chgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
         /* Computing MAX */
         r__1 = safmin;
         r__2 = ulp * (c_abs(&t[ilast - 1 + ilast * t_dim1]) + c_abs(&t[ilast - 1 + (ilast - 1) * t_dim1])); // , expr subst
-        if (c_abs(&t[ilast + ilast * t_dim1]) <= max(r__1,r__2))
+        if (c_abs(&t[ilast + ilast * t_dim1]) <= fla_max(r__1,r__2))
         {
             i__2 = ilast + ilast * t_dim1;
             t[i__2].r = 0.f;
@@ -687,7 +687,7 @@ int chgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                 i__5 = j - 1 + (j - 1) * h_dim1;
                 r__7 = safmin;
                 r__8 = ulp * ((r__1 = h__[i__4].r, f2c_abs(r__1)) + (r__2 = r_imag(&h__[j + j * h_dim1]), f2c_abs(r__2)) + ( (r__3 = h__[i__5].r, f2c_abs(r__3)) + (r__4 = r_imag(&h__[ j - 1 + (j - 1) * h_dim1]), f2c_abs(r__4)))); // , expr subst
-                if ((r__5 = h__[i__3].r, f2c_abs(r__5)) + (r__6 = r_imag(&h__[j + (j - 1) * h_dim1]), f2c_abs(r__6)) <= max(r__7,r__8))
+                if ((r__5 = h__[i__3].r, f2c_abs(r__5)) + (r__6 = r_imag(&h__[j + (j - 1) * h_dim1]), f2c_abs(r__6)) <= fla_max(r__7,r__8))
                 {
                     i__3 = j + (j - 1) * h_dim1;
                     h__[i__3].r = 0.f;
@@ -708,7 +708,7 @@ int chgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
             /* Computing MAX */
             r__1 = safmin;
             r__2 = ulp * temp; // , expr subst
-            if (c_abs(&t[j + j * t_dim1]) < max(r__1,r__2))
+            if (c_abs(&t[j + j * t_dim1]) < fla_max(r__1,r__2))
             {
                 i__3 = j + j * t_dim1;
                 t[i__3].r = 0.f;
@@ -1022,7 +1022,7 @@ L70:
                 /* Computing MAX */
                 r__3 = temp;
                 r__4 = (r__1 = x.r, f2c_abs(r__1)) + (r__2 = r_imag(& x), f2c_abs(r__2)); // , expr subst
-                temp = max(r__3,r__4);
+                temp = fla_max(r__3,r__4);
                 q__5.r = x.r / temp;
                 q__5.i = x.i / temp; // , expr subst
                 pow_ci(&q__4, &q__5, &c__2);
@@ -1118,7 +1118,7 @@ L70:
             temp = (r__1 = ctemp.r, f2c_abs(r__1)) + (r__2 = r_imag(&ctemp), f2c_abs( r__2));
             i__3 = j + 1 + j * h_dim1;
             temp2 = ascale * ((r__1 = h__[i__3].r, f2c_abs(r__1)) + (r__2 = r_imag(&h__[j + 1 + j * h_dim1]), f2c_abs(r__2)));
-            tempr = max(temp,temp2);
+            tempr = fla_max(temp,temp2);
             if (tempr < 1.f && tempr != 0.f)
             {
                 temp /= tempr;
@@ -1275,7 +1275,7 @@ L90: /* Do an implicit-shift QZ sweep. */
             t[i__3].i = 0.f; // , expr subst
             /* Computing MIN */
             i__4 = j + 2;
-            i__3 = min(i__4,ilast);
+            i__3 = fla_min(i__4,ilast);
             for (jr = ifrstm;
                     jr <= i__3;
                     ++jr)

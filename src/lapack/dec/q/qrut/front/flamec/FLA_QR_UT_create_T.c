@@ -26,7 +26,7 @@ FLA_Error FLA_QR_UT_create_T( FLA_Obj A, FLA_Obj* T )
   b_alg = ( dim_t )( ( ( double ) b_alg ) * FLA_QR_INNER_TO_OUTER_B_RATIO );
 
   // Adjust the blocksize with respect to the min-dim of A.
-  b_alg = min(b_alg, FLA_Obj_min_dim( A ));
+  b_alg = fla_min(b_alg, FLA_Obj_min_dim( A ));
 
   // Query the width of A.
   k = FLA_Obj_width( A );

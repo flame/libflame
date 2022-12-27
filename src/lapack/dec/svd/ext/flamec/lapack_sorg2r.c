@@ -70,7 +70,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The first dimension of the array A. LDA >= max(1,M). */
+/* > The first dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] TAU */
@@ -147,7 +147,7 @@ int lapack_sorg2r(integer *m, integer *n, integer *k, real *a, integer *lda, rea
     {
         *info = -3;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -5;
     }

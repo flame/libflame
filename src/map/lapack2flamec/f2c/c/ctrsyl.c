@@ -93,7 +93,7 @@ and scale is an output scale factor, set <= 1 to avoid */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,M). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] B */
@@ -105,7 +105,7 @@ and scale is an output scale factor, set <= 1 to avoid */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] C */
@@ -118,7 +118,7 @@ and scale is an output scale factor, set <= 1 to avoid */
 /* > \param[in] LDC */
 /* > \verbatim */
 /* > LDC is INTEGER */
-/* > The leading dimension of the array C. LDC >= max(1,M) */
+/* > The leading dimension of the array C. LDC >= fla_max(1,M) */
 /* > \endverbatim */
 /* > */
 /* > \param[out] SCALE */
@@ -249,15 +249,15 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
     {
         *info = -5;
     }
-    else if (*lda < max(1,*m))
+    else if (*lda < fla_max(1,*m))
     {
         *info = -7;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -9;
     }
-    else if (*ldc < max(1,*m))
+    else if (*ldc < fla_max(1,*m))
     {
         *info = -11;
     }
@@ -284,9 +284,9 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
     bignum = 1.f / smlnum;
     /* Computing MAX */
     r__1 = smlnum, r__2 = eps * clange_("M", m, m, &a[a_offset], lda, dum);
-    r__1 = max(r__1,r__2);
+    r__1 = fla_max(r__1,r__2);
     r__2 = eps * clange_("M", n, n, &b[b_offset], ldb, dum); // ; expr subst
-    smin = max(r__1,r__2);
+    smin = fla_max(r__1,r__2);
     sgn = (real) (*isgn);
     if (notrna && notrnb)
     {
@@ -312,7 +312,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                 i__3 = k + 1;
                 /* Computing MIN */
                 i__4 = k + 1;
-                cdotu_f2c_(&q__1, &i__2, &a[k + min(i__3,*m) * a_dim1], lda, &c__[ min(i__4,*m) + l * c_dim1], &c__1);
+                cdotu_f2c_(&q__1, &i__2, &a[k + fla_min(i__3,*m) * a_dim1], lda, &c__[ fla_min(i__4,*m) + l * c_dim1], &c__1);
                 suml.r = q__1.r;
                 suml.i = q__1.i; // , expr subst
                 i__2 = l - 1;
@@ -500,7 +500,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                 i__3 = l + 1;
                 /* Computing MIN */
                 i__4 = l + 1;
-                cdotc_f2c_(&q__1, &i__2, &c__[k + min(i__3,*n) * c_dim1], ldc, &b[ l + min(i__4,*n) * b_dim1], ldb);
+                cdotc_f2c_(&q__1, &i__2, &c__[k + fla_min(i__3,*n) * c_dim1], ldc, &b[ l + fla_min(i__4,*n) * b_dim1], ldb);
                 sumr.r = q__1.r;
                 sumr.i = q__1.i; // , expr subst
                 i__2 = k + l * c_dim1;
@@ -589,7 +589,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                 i__2 = k + 1;
                 /* Computing MIN */
                 i__3 = k + 1;
-                cdotu_f2c_(&q__1, &i__1, &a[k + min(i__2,*m) * a_dim1], lda, &c__[ min(i__3,*m) + l * c_dim1], &c__1);
+                cdotu_f2c_(&q__1, &i__1, &a[k + fla_min(i__2,*m) * a_dim1], lda, &c__[ fla_min(i__3,*m) + l * c_dim1], &c__1);
                 suml.r = q__1.r;
                 suml.i = q__1.i; // , expr subst
                 i__1 = *n - l;
@@ -597,7 +597,7 @@ int ctrsyl_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, com
                 i__2 = l + 1;
                 /* Computing MIN */
                 i__3 = l + 1;
-                cdotc_f2c_(&q__1, &i__1, &c__[k + min(i__2,*n) * c_dim1], ldc, &b[ l + min(i__3,*n) * b_dim1], ldb);
+                cdotc_f2c_(&q__1, &i__1, &c__[k + fla_min(i__2,*n) * c_dim1], ldc, &b[ l + fla_min(i__3,*n) * b_dim1], ldb);
                 sumr.r = q__1.r;
                 sumr.i = q__1.i; // , expr subst
                 i__1 = k + l * c_dim1;

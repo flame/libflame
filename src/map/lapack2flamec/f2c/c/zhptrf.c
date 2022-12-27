@@ -268,7 +268,7 @@ L10:
         {
             colmax = 0.;
         }
-        if (max(absakk,colmax) == 0.)
+        if (fla_max(absakk,colmax) == 0.)
         {
             /* Column K is zero: set INFO and continue */
             if (*info == 0)
@@ -320,7 +320,7 @@ L10:
                     i__1 = kpc + jmax - 1;
                     d__3 = rowmax;
                     d__4 = (d__1 = ap[i__1].r, f2c_dabs(d__1)) + ( d__2 = d_imag(&ap[kpc + jmax - 1]), f2c_dabs(d__2)); // , expr subst
-                    rowmax = max(d__3,d__4);
+                    rowmax = fla_max(d__3,d__4);
                 }
                 if (absakk >= alpha * colmax * (colmax / rowmax))
                 {
@@ -584,7 +584,7 @@ L60:
         {
             colmax = 0.;
         }
-        if (max(absakk,colmax) == 0.)
+        if (fla_max(absakk,colmax) == 0.)
         {
             /* Column K is zero: set INFO and continue */
             if (*info == 0)
@@ -635,7 +635,7 @@ L60:
                     i__1 = kpc + jmax - imax;
                     d__3 = rowmax;
                     d__4 = (d__1 = ap[i__1].r, f2c_dabs(d__1)) + ( d__2 = d_imag(&ap[kpc + jmax - imax]), f2c_dabs(d__2)); // , expr subst
-                    rowmax = max(d__3,d__4);
+                    rowmax = fla_max(d__3,d__4);
                 }
                 if (absakk >= alpha * colmax * (colmax / rowmax))
                 {

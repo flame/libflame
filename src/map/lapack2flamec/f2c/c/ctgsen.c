@@ -124,7 +124,7 @@ static integer c__1 = 1;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -138,7 +138,7 @@ static integer c__1 = 1;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ALPHA */
@@ -376,7 +376,7 @@ the problem is very ill-conditioned. */
 /* > coalesce with an eigenvalue of (A22, B22) under perturbation (E,F), */
 /* > (i.e. (A + E, B + F), is */
 /* > */
-/* > x = min(Difu,Difl)/((1/(PL*PL)+1/(PR*PR))**(1/2)+2*max(1/PL,1/PR)). */
+/* > x = fla_min(Difu,Difl)/((1/(PL*PL)+1/(PR*PR))**(1/2)+2*max(1/PL,1/PR)). */
 /* > */
 /* > An approximate bound on x can be computed from DIF(1:2), PL and PR. */
 /* > */
@@ -523,11 +523,11 @@ int ctgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, inte
     {
         *info = -5;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -7;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -9;
     }
@@ -591,23 +591,23 @@ int ctgsen_(integer *ijob, logical *wantq, logical *wantz, logical *select, inte
         /* Computing MAX */
         i__1 = 1;
         i__2 = (*m << 1) * (*n - *m); // , expr subst
-        lwmin = max(i__1,i__2);
+        lwmin = fla_max(i__1,i__2);
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n + 2; // , expr subst
-        liwmin = max(i__1,i__2);
+        liwmin = fla_max(i__1,i__2);
     }
     else if (*ijob == 3 || *ijob == 5)
     {
         /* Computing MAX */
         i__1 = 1;
         i__2 = (*m << 2) * (*n - *m); // , expr subst
-        lwmin = max(i__1,i__2);
+        lwmin = fla_max(i__1,i__2);
         /* Computing MAX */
         i__1 = 1, i__2 = (*m << 1) * (*n - *m);
-        i__1 = max(i__1,i__2);
+        i__1 = fla_max(i__1,i__2);
         i__2 = *n + 2; // ; expr subst
-        liwmin = max(i__1,i__2);
+        liwmin = fla_max(i__1,i__2);
     }
     else
     {

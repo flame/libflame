@@ -94,7 +94,7 @@ static real c_b37 = 1.f;
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of A. LDA >= max(1,N). */
+/* > The leading dimension of A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] B */
@@ -107,7 +107,7 @@ static real c_b37 = 1.f;
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of B. LDB >= max(1,N). */
+/* > The leading dimension of B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] ALPHAR */
@@ -189,7 +189,7 @@ if positive, then the j-th and */
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= max(1,8*N). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,8*N). */
 /* > For good performance, LWORK must generally be larger. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -354,11 +354,11 @@ int sggev_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b,
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -7;
     }
@@ -382,21 +382,21 @@ int sggev_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b,
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n << 3; // , expr subst
-        minwrk = max(i__1,i__2);
+        minwrk = fla_max(i__1,i__2);
         /* Computing MAX */
         i__1 = 1;
         i__2 = *n * (ilaenv_(&c__1, "SGEQRF", " ", n, &c__1, n, & c__0) + 7); // , expr subst
-        maxwrk = max(i__1,i__2);
+        maxwrk = fla_max(i__1,i__2);
         /* Computing MAX */
         i__1 = maxwrk;
         i__2 = *n * (ilaenv_(&c__1, "SORMQR", " ", n, &c__1, n, &c__0) + 7); // , expr subst
-        maxwrk = max(i__1,i__2);
+        maxwrk = fla_max(i__1,i__2);
         if (ilvl)
         {
             /* Computing MAX */
             i__1 = maxwrk;
             i__2 = *n * (ilaenv_(&c__1, "SORGQR", " ", n, & c__1, n, &c_n1) + 7); // , expr subst
-            maxwrk = max(i__1,i__2);
+            maxwrk = fla_max(i__1,i__2);
         }
         work[1] = (real) maxwrk;
         if (*lwork < minwrk && ! lquery)
@@ -595,7 +595,7 @@ int sggev_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b,
                         /* Computing MAX */
                         r__2 = temp;
                         r__3 = (r__1 = vl[jr + jc * vl_dim1], f2c_abs(r__1)); // , expr subst
-                        temp = max(r__2,r__3);
+                        temp = fla_max(r__2,r__3);
                         /* L10: */
                     }
                 }
@@ -609,7 +609,7 @@ int sggev_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b,
                         /* Computing MAX */
                         r__3 = temp;
                         r__4 = (r__1 = vl[jr + jc * vl_dim1], f2c_abs(r__1)) + (r__2 = vl[jr + (jc + 1) * vl_dim1], f2c_abs(r__2)); // , expr subst
-                        temp = max(r__3,r__4);
+                        temp = fla_max(r__3,r__4);
                         /* L20: */
                     }
                 }
@@ -668,7 +668,7 @@ L50:
                         /* Computing MAX */
                         r__2 = temp;
                         r__3 = (r__1 = vr[jr + jc * vr_dim1], f2c_abs(r__1)); // , expr subst
-                        temp = max(r__2,r__3);
+                        temp = fla_max(r__2,r__3);
                         /* L60: */
                     }
                 }
@@ -682,7 +682,7 @@ L50:
                         /* Computing MAX */
                         r__3 = temp;
                         r__4 = (r__1 = vr[jr + jc * vr_dim1], f2c_abs(r__1)) + (r__2 = vr[jr + (jc + 1) * vr_dim1], f2c_abs(r__2)); // , expr subst
-                        temp = max(r__3,r__4);
+                        temp = fla_max(r__3,r__4);
                         /* L70: */
                     }
                 }

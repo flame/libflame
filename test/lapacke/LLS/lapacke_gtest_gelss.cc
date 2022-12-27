@@ -56,7 +56,7 @@ gelss_float_parameters:: gelss_float_parameters (int matrix_layout_i, lapack_int
 	
 	if (matrix_layout == LAPACK_COL_MAJOR){
 		lda = m;
-		ldb = max(m,n);
+		ldb = fla_max(m,n);
 		bufsize = lda*n;
 		bufsize_b = ldb*nrhs;
 	}else if (matrix_layout == LAPACK_ROW_MAJOR) {
@@ -68,7 +68,7 @@ gelss_float_parameters:: gelss_float_parameters (int matrix_layout_i, lapack_int
 		EXPECT_TRUE(false) << "matrix_layout invalid";
 	}
 	
-	bufsize_s = min(m,n);
+	bufsize_s = fla_min(m,n);
 	/*Memory allocation */
 	lapacke_gtest_alloc_float_buffer_pair(&A, &Aref, bufsize);
 	lapacke_gtest_alloc_float_buffer_pair(&b, &bref, bufsize_b);
@@ -222,7 +222,7 @@ gelss_double_parameters:: gelss_double_parameters (int matrix_layout_i, lapack_i
 	
 	if (matrix_layout == LAPACK_COL_MAJOR){
 		lda = m;
-		ldb = max(m,n);
+		ldb = fla_max(m,n);
 		bufsize = lda*n;
 		bufsize_b = ldb*nrhs;
 	}else if (matrix_layout == LAPACK_ROW_MAJOR) {
@@ -234,7 +234,7 @@ gelss_double_parameters:: gelss_double_parameters (int matrix_layout_i, lapack_i
 		EXPECT_TRUE(false) << "matrix_layout invalid";
 	}
 	
-	bufsize_s = min(m,n);
+	bufsize_s = fla_min(m,n);
 	/*Memory allocation */
 	lapacke_gtest_alloc_double_buffer_pair(&A, &Aref, bufsize);
 	lapacke_gtest_alloc_double_buffer_pair(&b, &bref, bufsize_b);
@@ -390,7 +390,7 @@ gelss_scomplex_parameters:: gelss_scomplex_parameters (int matrix_layout_i, lapa
 	
 	if (matrix_layout == LAPACK_COL_MAJOR){
 		lda = m;
-		ldb = max(m,n);
+		ldb = fla_max(m,n);
 		bufsize = lda*n;
 		bufsize_b = ldb*nrhs;
 	}else if (matrix_layout == LAPACK_ROW_MAJOR) {
@@ -402,7 +402,7 @@ gelss_scomplex_parameters:: gelss_scomplex_parameters (int matrix_layout_i, lapa
 		EXPECT_TRUE(false) << "matrix_layout invalid";
 	}
 	
-	bufsize_s = min(m,n);
+	bufsize_s = fla_min(m,n);
 	/*Memory allocation */
 	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&A, &Aref, bufsize);
 	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&b, &bref, bufsize_b);
@@ -557,7 +557,7 @@ gelss_dcomplex_parameters:: gelss_dcomplex_parameters (int matrix_layout_i, lapa
 	
 	if (matrix_layout == LAPACK_COL_MAJOR){
 		lda = m;
-		ldb = max(m,n);
+		ldb = fla_max(m,n);
 		bufsize = lda*n;
 		bufsize_b = ldb*nrhs;
 	}else if (matrix_layout == LAPACK_ROW_MAJOR) {
@@ -569,7 +569,7 @@ gelss_dcomplex_parameters:: gelss_dcomplex_parameters (int matrix_layout_i, lapa
 		EXPECT_TRUE(false) << "matrix_layout invalid";
 	}
 	
-	bufsize_s = min(m,n);
+	bufsize_s = fla_min(m,n);
 	/*Memory allocation */
 	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&A, &Aref, bufsize);
 	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&b, &bref, bufsize_b);

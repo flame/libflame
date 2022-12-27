@@ -70,9 +70,9 @@ static integer c__1 = 1;
 /* > A = U**T*U or A = L*L**T of the band matrix A, stored in the */
 /* > first KD+1 rows of the array. The j-th column of U or L is */
 /* > stored in the j-th column of the array AB as follows: */
-/* > if UPLO ='U', AB(kd+1+i-j,j) = U(i,j) for max(1,j-kd)<=i<=j;
+/* > if UPLO ='U', AB(kd+1+i-j,j) = U(i,j) for fla_max(1,j-kd)<=i<=j;
 */
-/* > if UPLO ='L', AB(1+i-j,j) = L(i,j) for j<=i<=min(n,j+kd). */
+/* > if UPLO ='L', AB(1+i-j,j) = L(i,j) for j<=i<=fla_min(n,j+kd). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDAB */

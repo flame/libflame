@@ -96,7 +96,7 @@ FLA_Error FLA_Bsvd_compute_shift_ops( integer       m_A,
     d_last    = buff_d + (m_A-1)*inc_d;
 
     // If the shift would ruin relative accuracy, set it to zero.
-    if ( m_A * tol * ( sminl / smax ) <= max( eps, hndrth * tol ) )
+    if ( m_A * tol * ( sminl / smax ) <= fla_max( eps, hndrth * tol ) )
     {
         *shift = 0.0;
     }
@@ -151,7 +151,7 @@ FLA_Error FLA_Bsvd_compute_shift_opd( integer       m_A,
     d_last    = buff_d + (m_A-1)*inc_d;
 
     // If the shift would ruin relative accuracy, set it to zero.
-    if ( m_A * tol * ( sminl / smax ) <= max( eps, hndrth * tol ) )
+    if ( m_A * tol * ( sminl / smax ) <= fla_max( eps, hndrth * tol ) )
     {
 #ifdef PRINTF
         printf( "FLA_Bsvd_compute_shift_opd: shift would ruin accuracy; setting shift to 0.\n" );
@@ -160,7 +160,7 @@ FLA_Error FLA_Bsvd_compute_shift_opd( integer       m_A,
         printf( "                 sminl = %20.15e\n", sminl );
         printf( "                  smax = %20.15e\n", smax );
         printf( "                   LHS = %20.15e\n", m_A * tol * ( sminl / smax ) );
-        printf( "      max(eps,0.01*tol)= %20.15e\n", max( eps, hndrth * tol ) );
+        printf( "      fla_max(eps,0.01*tol)= %20.15e\n", fla_max( eps, hndrth * tol ) );
 #endif
         *shift = 0.0;
     }

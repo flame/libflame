@@ -356,7 +356,7 @@ int claqr3_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
     /* Computing MIN */
     i__1 = *nw;
     i__2 = *kbot - *ktop + 1; // , expr subst
-    jw = min(i__1,i__2);
+    jw = fla_min(i__1,i__2);
     if (jw <= 2)
     {
         lwkopt = 1;
@@ -376,8 +376,8 @@ int claqr3_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
         lwk3 = (integer) work[1].r;
         /* ==== Optimal workspace ==== */
         /* Computing MAX */
-        i__1 = jw + max(lwk1,lwk2);
-        lwkopt = max(i__1,lwk3);
+        i__1 = jw + fla_max(lwk1,lwk2);
+        lwkopt = fla_max(i__1,lwk3);
     }
     /* ==== Quick return in case of workspace query. ==== */
     if (*lwork == -1)
@@ -417,7 +417,7 @@ int claqr3_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
     /* Computing MIN */
     i__1 = *nw;
     i__2 = *kbot - *ktop + 1; // , expr subst
-    jw = min(i__1,i__2);
+    jw = fla_min(i__1,i__2);
     kwtop = *kbot - jw + 1;
     if (kwtop == *ktop)
     {
@@ -443,7 +443,7 @@ int claqr3_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
         i__1 = kwtop + kwtop * h_dim1;
         r__5 = smlnum;
         r__6 = ulp * ((r__1 = h__[i__1].r, f2c_abs(r__1)) + (r__2 =  h__[i__1].i, f2c_abs(r__2))); // , expr subst
-        if ((r__3 = s.r, f2c_abs(r__3)) + (r__4 = s.i, f2c_abs(r__4)) <= max( r__5,r__6))
+        if ((r__3 = s.r, f2c_abs(r__3)) + (r__4 = s.i, f2c_abs(r__4)) <= fla_max( r__5,r__6))
         {
             *ns = 0;
             *nd = 1;
@@ -498,7 +498,7 @@ int claqr3_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
         /* Computing MAX */
         r__5 = smlnum;
         r__6 = ulp * foo; // , expr subst
-        if (((r__1 = s.r, f2c_abs(r__1)) + (r__2 = s.i, f2c_abs(r__2))) * (( r__3 = v[i__2].r, f2c_abs(r__3)) + (r__4 = v[i__2].i, f2c_abs(r__4))) <= max(r__5,r__6))
+        if (((r__1 = s.r, f2c_abs(r__1)) + (r__2 = s.i, f2c_abs(r__2))) * (( r__3 = v[i__2].r, f2c_abs(r__3)) + (r__4 = v[i__2].i, f2c_abs(r__4))) <= fla_max(r__5,r__6))
         {
             /* ==== One more converged eigenvalue ==== */
             --(*ns);
@@ -638,7 +638,7 @@ int claqr3_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
             /* Computing MIN */
             i__3 = *nv;
             i__4 = kwtop - krow; // , expr subst
-            kln = min(i__3,i__4);
+            kln = fla_min(i__3,i__4);
             cgemm_("N", "N", &kln, &jw, &jw, &c_b2, &h__[krow + kwtop * h_dim1], ldh, &v[v_offset], ldv, &c_b1, &wv[wv_offset], ldwv);
             clacpy_("A", &kln, &jw, &wv[wv_offset], ldwv, &h__[krow + kwtop * h_dim1], ldh);
             /* L60: */
@@ -655,7 +655,7 @@ int claqr3_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
                 /* Computing MIN */
                 i__3 = *nh;
                 i__4 = *n - kcol + 1; // , expr subst
-                kln = min(i__3,i__4);
+                kln = fla_min(i__3,i__4);
                 cgemm_("C", "N", &jw, &kln, &jw, &c_b2, &v[v_offset], ldv, & h__[kwtop + kcol * h_dim1], ldh, &c_b1, &t[t_offset], ldt);
                 clacpy_("A", &jw, &kln, &t[t_offset], ldt, &h__[kwtop + kcol * h_dim1], ldh);
                 /* L70: */
@@ -673,7 +673,7 @@ int claqr3_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *
                 /* Computing MIN */
                 i__3 = *nv;
                 i__4 = *ihiz - krow + 1; // , expr subst
-                kln = min(i__3,i__4);
+                kln = fla_min(i__3,i__4);
                 cgemm_("N", "N", &kln, &jw, &jw, &c_b2, &z__[krow + kwtop * z_dim1], ldz, &v[v_offset], ldv, &c_b1, &wv[wv_offset], ldwv);
                 clacpy_("A", &kln, &jw, &wv[wv_offset], ldwv, &z__[krow + kwtop * z_dim1], ldz);
                 /* L80: */

@@ -109,7 +109,7 @@ for 1 <= i <= N, row i of the matrix was */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= max(1,N). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -205,7 +205,7 @@ int sgbtrs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, r
     {
         *info = -7;
     }
-    else if (*ldb < max(1,*n))
+    else if (*ldb < fla_max(1,*n))
     {
         *info = -10;
     }
@@ -242,7 +242,7 @@ int sgbtrs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, r
                 /* Computing MIN */
                 i__2 = *kl;
                 i__3 = *n - j; // , expr subst
-                lm = min(i__2,i__3);
+                lm = fla_min(i__2,i__3);
                 l = ipiv[j];
                 if (l != j)
                 {
@@ -286,7 +286,7 @@ int sgbtrs_(char *trans, integer *n, integer *kl, integer * ku, integer *nrhs, r
                 /* Computing MIN */
                 i__1 = *kl;
                 i__2 = *n - j; // , expr subst
-                lm = min(i__1,i__2);
+                lm = fla_min(i__1,i__2);
                 sgemv_("Transpose", &lm, nrhs, &c_b7, &b[j + 1 + b_dim1], ldb, &ab[kd + 1 + j * ab_dim1], &c__1, &c_b23, &b[j + b_dim1], ldb);
                 l = ipiv[j];
                 if (l != j)

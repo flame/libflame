@@ -54,7 +54,7 @@
 /* > perturbed enough to make the smallest singular value roughly SMIN. */
 /* > If both singular values are at least SMIN, (ca A - w D) will not be */
 /* > perturbed. In any case, the perturbation will be at most some small */
-/* > multiple of max( SMIN, ulp*norm(ca A - w D) ). The singular values */
+/* > multiple of fla_max( SMIN, ulp*norm(ca A - w D) ). The singular values */
 /* > are computed by infinity-norm approximations, and thus will only be */
 /* > correct to a factor of 2 or so. */
 /* > */
@@ -283,7 +283,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
     /* Compute BIGNUM */
     smlnum = 2. * dlamch_("Safe minimum");
     bignum = 1. / smlnum;
-    smini = max(*smin,smlnum);
+    smini = fla_max(*smin,smlnum);
     /* Don't check for input errors */
     *info = 0;
     /* Standard Initializations */
@@ -387,7 +387,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
                 /* Computing MAX */
                 d__3 = (d__1 = b[b_dim1 + 1], f2c_dabs(d__1));
                 d__4 = (d__2 = b[ b_dim1 + 2], f2c_dabs(d__2)); // , expr subst
-                bnorm = max(d__3,d__4);
+                bnorm = fla_max(d__3,d__4);
                 if (smini < 1. && bnorm > 1.)
                 {
                     if (bnorm > bignum * smini)
@@ -431,7 +431,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
             /* Computing MAX */
             d__2 = (d__1 = br1 * (ur22 * ur11r), f2c_dabs(d__1));
             d__3 = f2c_dabs(br2); // , expr subst
-            bbnd = max(d__2,d__3);
+            bbnd = fla_max(d__2,d__3);
             if (bbnd > 1. && f2c_dabs(ur22) < 1.)
             {
                 if (bbnd >= bignum * f2c_dabs(ur22))
@@ -454,7 +454,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
             /* Computing MAX */
             d__1 = f2c_dabs(xr1);
             d__2 = f2c_dabs(xr2); // , expr subst
-            *xnorm = max(d__1,d__2);
+            *xnorm = fla_max(d__1,d__2);
             /* Further scaling if norm(A) norm(X) > overflow */
             if (*xnorm > 1. && cmax > 1.)
             {
@@ -495,7 +495,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
                 /* Computing MAX */
                 d__5 = (d__1 = b[b_dim1 + 1], f2c_dabs(d__1)) + (d__2 = b[(b_dim1 << 1) + 1], f2c_dabs(d__2));
                 d__6 = (d__3 = b[b_dim1 + 2], f2c_dabs(d__3)) + (d__4 = b[(b_dim1 << 1) + 2], f2c_dabs(d__4)); // , expr subst
-                bnorm = max(d__5,d__6);
+                bnorm = fla_max(d__5,d__6);
                 if (smini < 1. && bnorm > 1.)
                 {
                     if (bnorm > bignum * smini)
@@ -587,7 +587,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
             /* Computing MAX */
             d__1 = (f2c_dabs(br1) + f2c_dabs(bi1)) * (u22abs * (f2c_dabs(ur11r) + f2c_dabs(ui11r)) );
             d__2 = f2c_dabs(br2) + f2c_dabs(bi2); // , expr subst
-            bbnd = max(d__1,d__2);
+            bbnd = fla_max(d__1,d__2);
             if (bbnd > 1. && u22abs < 1.)
             {
                 if (bbnd >= bignum * u22abs)
@@ -619,7 +619,7 @@ int dlaln2_(logical *ltrans, integer *na, integer *nw, doublereal *smin, doubler
             /* Computing MAX */
             d__1 = f2c_dabs(xr1) + f2c_dabs(xi1);
             d__2 = f2c_dabs(xr2) + f2c_dabs(xi2); // , expr subst
-            *xnorm = max(d__1,d__2);
+            *xnorm = fla_max(d__1,d__2);
             /* Further scaling if norm(A) norm(X) > overflow */
             if (*xnorm > 1. && cmax > 1.)
             {

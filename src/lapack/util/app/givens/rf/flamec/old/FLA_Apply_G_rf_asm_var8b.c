@@ -210,7 +210,7 @@ FLA_Error FLA_Apply_G_rf_asd_var8b( integer       k_G,
 			                       is_ident23 ||
 			                       is_ident34;
 
-			m_app = min( m_base + 3*j, m_A );
+			m_app = fla_min( m_base + 3*j, m_A );
 
 			if ( one_or_more_is_ident )
 			{
@@ -296,7 +296,7 @@ FLA_Error FLA_Apply_G_rf_asd_var8b( integer       k_G,
 			                       is_ident23 ||
 			                       is_ident34;
 
-			m_app = min( m_base + 3*j, m_A );
+			m_app = fla_min( m_base + 3*j, m_A );
 
 			if ( one_or_more_is_ident )
 			{

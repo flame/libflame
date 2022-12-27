@@ -50,7 +50,7 @@ static integer c__4 = 4;
 /* > VECT is CHARACTER*1 */
 /* > = 'N': No need for the Housholder representation, */
 /* > in particular for the second stage (Band to */
-/* > tridiagonal) and thus LHOUS2 is of size max(1, 4*N);
+/* > tridiagonal) and thus LHOUS2 is of size fla_max(1, 4*N);
 */
 /* > = 'V': the Householder representation is needed to */
 /* > either generate Q1 Q2 or to apply Q1 Q2, */
@@ -98,7 +98,7 @@ if UPLO */
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= max(1,N). */
+/* > The leading dimension of the array A. LDA >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] D */
@@ -137,7 +137,7 @@ the routine */
 /* > only calculates the optimal size of the HOUS2 array, returns */
 /* > this value as the first entry of the HOUS2 array, and no error */
 /* > message related to LHOUS2 is issued by XERBLA. */
-/* > If VECT='N', LHOUS2 = max(1, 4*n);
+/* > If VECT='N', LHOUS2 = fla_max(1, 4*n);
 */
 /* > if VECT='V', option not yet available. */
 /* > \endverbatim */
@@ -158,9 +158,9 @@ the routine */
 /* > this value as the first entry of the WORK array, and no error */
 /* > message related to LWORK is issued by XERBLA. */
 /* > LWORK = MAX(1, dimension) where */
-/* > dimension = max(stage1,stage2) + (KD+1)*N */
+/* > dimension = fla_max(stage1,stage2) + (KD+1)*N */
 /* > = N*KD + N*max(KD+1,FACTOPTNB) */
-/* > + max(2*KD*KD, KD*NTHREADS) */
+/* > + fla_max(2*KD*KD, KD*NTHREADS) */
 /* > + (KD+1)*N */
 /* > where KD is the blocking size of the reduction, */
 /* > FACTOPTNB is the blocking used by the QR or LQ */
@@ -299,7 +299,7 @@ int chetrd_2stage_(char *vect, char *uplo, integer *n, complex *a, integer *lda,
     {
         *info = -3;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         *info = -5;
     }

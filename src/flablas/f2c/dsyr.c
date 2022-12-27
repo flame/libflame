@@ -65,7 +65,7 @@ int dsyr_(char *uplo, integer *n, doublereal *alpha, doublereal *x, integer *inc
     /* LDA - INTEGER. */
     /* On entry, LDA specifies the first dimension of A as declared */
     /* in the calling (sub) program. LDA must be at least */
-    /* max( 1, n ). */
+    /* fla_max( 1, n ). */
     /* Unchanged on exit. */
     /* Level 2 Blas routine. */
     /* -- Written on 22-October-1986. */
@@ -100,7 +100,7 @@ int dsyr_(char *uplo, integer *n, doublereal *alpha, doublereal *x, integer *inc
     {
         info = 5;
     }
-    else if (*lda < max(1,*n))
+    else if (*lda < fla_max(1,*n))
     {
         info = 7;
     }

@@ -61,10 +61,10 @@
   /* A is assumed to m x k for 'Q' and k x n for 'Q'. */                \
   if        ( *vect == 'Q' ) {                                          \
     uplo = ( *m >= *k ? FLA_UPPER_TRIANGULAR : FLA_LOWER_TRIANGULAR );  \
-    m_t = min( *m, *k );                                                \
+    m_t = fla_min( *m, *k );                                                \
   } else {/*( *vect == 'P' ) */                                         \
     uplo = ( *k >= *n ? FLA_UPPER_TRIANGULAR : FLA_LOWER_TRIANGULAR );  \
-    m_t = min( *k, *n );                                                \
+    m_t = fla_min( *k, *n );                                                \
   }                                                                     \
                                                                         \
   FLA_Obj_create_without_buffer( datatype, m_A, n_A, &A );              \

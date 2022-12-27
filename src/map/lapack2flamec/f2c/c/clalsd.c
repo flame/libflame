@@ -113,7 +113,7 @@ in this case a minimum norm solution is returned. */
 /* > \verbatim */
 /* > LDB is INTEGER */
 /* > The leading dimension of B in the calling subprogram. */
-/* > LDB must be at least max(1,N). */
+/* > LDB must be at least fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] RCOND */
@@ -126,8 +126,8 @@ in this case a minimum norm solution is returned. */
 /* > For example, if diag(S)*X=B were the least squares problem, */
 /* > where diag(S) is a diagonal matrix of singular values, the */
 /* > solution would be X(i) = B(i) / S(i) if S(i) is greater than */
-/* > RCOND*max(S), and X(i) = 0 if S(i) is less than or equal to */
-/* > RCOND*max(S). */
+/* > RCOND*fla_max(S), and X(i) = 0 if S(i) is less than or equal to */
+/* > RCOND*fla_max(S). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RANK */

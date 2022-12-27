@@ -225,7 +225,7 @@ int slarrj_(integer *n, real *d__, real *e2, integer *ifirst, integer *ilast, re
         /* Computing MAX */
         r__1 = f2c_abs(left);
         r__2 = f2c_abs(right); // , expr subst
-        tmp = max(r__1,r__2);
+        tmp = fla_max(r__1,r__2);
         /* The following test prevents the test of converged intervals */
         if (width < *rtol * tmp)
         {
@@ -337,7 +337,7 @@ L80:
         /* Computing MAX */
         r__1 = f2c_abs(left);
         r__2 = f2c_abs(right); // , expr subst
-        tmp = max(r__1,r__2);
+        tmp = fla_max(r__1,r__2);
         if (width < *rtol * tmp || iter == maxitr)
         {
             /* reduce number of unconverged intervals */

@@ -197,8 +197,8 @@ FLA_Error FLA_Apply_G_rf_asd_var9b( integer       k_G,
 			is_ident12 = ( gamma12 == one && sigma12 == zero );
 			is_ident23 = ( gamma23 == one && sigma23 == zero );
 
-			m_app = min( i_k + 3 + j - iTL, m_A );
-			m_app = max( m_app, 0 );
+			m_app = fla_min( i_k + 3 + j - iTL, m_A );
+			m_app = fla_max( m_app, 0 );
 
 			if      ( !is_ident12 && is_ident23 )
 			{
@@ -246,8 +246,8 @@ FLA_Error FLA_Apply_G_rf_asd_var9b( integer       k_G,
 
 			is_ident23 = ( gamma23 == one && sigma23 == zero );
 
-			m_app = min( i_k + 3 + j - iTL, m_A );
-			m_app = max( m_app, 0 );
+			m_app = fla_min( i_k + 3 + j - iTL, m_A );
+			m_app = fla_max( m_app, 0 );
 
 			if ( !is_ident23 )
 				MAC_Apply_G_mx2_asd( m_app,
@@ -282,8 +282,8 @@ FLA_Error FLA_Apply_G_rf_asd_var9b( integer       k_G,
 			is_ident12 = ( gamma12 == one && sigma12 == zero );
 			is_ident23 = ( gamma23 == one && sigma23 == zero );
 
-			m_app = min( i_k + 3 + j - iTL, m_A );
-			m_app = max( m_app, 0 );
+			m_app = fla_min( i_k + 3 + j - iTL, m_A );
+			m_app = fla_max( m_app, 0 );
 
 			if      ( !is_ident12 && is_ident23 )
 			{
