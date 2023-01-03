@@ -1,10 +1,10 @@
 /*
-    Copyright (c) 2021-2022 Advanced Micro Devices, Inc.  All rights reserved.
+    Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
 */
 
 #include "FLAME.h"
 
-/* Subroutine */ integer lapack_zgetf2(integer *m, integer *n, doublecomplex *a,
+/* Subroutine */ integer lapack_zgetf2(integer *m, integer *n, dcomplex *a,
 	integer *lda, integer *ipiv, integer *info)
 {
 
@@ -59,12 +59,12 @@
 
        Parameter adjustments */
     /* Table of constant values */
-    static TLS_CLASS_SPEC doublecomplex c_b1 = {1.,0.};
+    static TLS_CLASS_SPEC dcomplex c_b1 = {1.,0.};
     static TLS_CLASS_SPEC integer c__1 = 1;
 
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
-    doublecomplex z__1;
+    dcomplex z__1;
     /* Builtin functions */
     void z_div(doublecomplex *, doublecomplex *, doublecomplex *);
     /* Local variables */
@@ -111,7 +111,7 @@
 	jp = j - 1 + izamax_(&i__2, &a_ref(j, j), &c__1);
 	ipiv[j] = jp;
 	i__2 = a_subscr(jp, j);
-	if (a[i__2].r != 0. || a[i__2].i != 0.) {
+	if (a[i__2].real != 0. || a[i__2].imag != 0.) {
 
 /*           Apply the interchange to columns 1:N. */
 
@@ -138,7 +138,7 @@
 
 	    i__2 = *m - j;
 	    i__3 = *n - j;
-	    z__1.r = -1., z__1.i = 0.;
+	    z__1.real = -1., z__1.imag = 0.;
 	    zgeru_(&i__2, &i__3, &z__1, &a_ref(j + 1, j), &c__1, &a_ref(j, j
 		    + 1), lda, &a_ref(j + 1, j + 1), lda);
 	}

@@ -1,5 +1,8 @@
 /* ../netlib/slabrd.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
+/*
+ *  Copyright (c) 2022-2023 Advanced Micro Devices, Inc.  All rights reserved.
+ */
 #include "FLA_f2c.h" /* Table of constant values */
 static real c_b4 = -1.f;
 static real c_b5 = 1.f;
@@ -209,6 +212,13 @@ tauq is stored in TAUQ(i) and taup in TAUP(i). */
 /* Subroutine */
 int slabrd_(integer *m, integer *n, integer *nb, real *a, integer *lda, real *d__, real *e, real *tauq, real *taup, real *x, integer *ldx, real *y, integer *ldy)
 {
+    extern int fla_slabrd(integer *m, integer *n, integer *nb, real *a, integer *lda, real *d__, real *e, real *tauq, real *taup, real *x, integer *ldx, real *y, integer *ldy);
+
+    return fla_slabrd(m, n, nb, a, lda, d__, e, tauq, taup, x, ldx, y, ldy);
+}
+
+int fla_slabrd(integer *m, integer *n, integer *nb, real *a, integer *lda, real *d__, real *e, real *tauq, real *taup, real *x, integer *ldx, real *y, integer *ldy)
+{
     /* System generated locals */
     integer a_dim1, a_offset, x_dim1, x_offset, y_dim1, y_offset, i__1, i__2, i__3, i__4, i__5;
     /* Local variables */
@@ -236,6 +246,10 @@ int slabrd_(integer *m, integer *n, integer *nb, real *a, integer *lda, real *d_
     /* .. Executable Statements .. */
     /* Quick return if possible */
     /* Parameter adjustments */
+
+    /* Initialize global context data */
+    aocl_fla_init();
+
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;
     a -= a_offset;

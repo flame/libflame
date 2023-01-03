@@ -1,5 +1,8 @@
 /* ../netlib/clabrd.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
+/*
+ *  Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
+ */
 #include "FLA_f2c.h" /* Table of constant values */
 
 static complex c_b1 =
@@ -219,6 +222,13 @@ tauq is stored in TAUQ(i) and taup in TAUP(i). */
 /* Subroutine */
 int clabrd_(integer *m, integer *n, integer *nb, complex *a, integer *lda, real *d__, real *e, complex *tauq, complex *taup, complex *x, integer *ldx, complex *y, integer *ldy)
 {
+    extern int fla_clabrd(integer *m, integer *n, integer *nb, complex *a, integer *lda, real *d__, real *e, complex *tauq, complex *taup, complex *x, integer *ldx, complex *y, integer *ldy);
+
+    return fla_clabrd(m, n, nb, a, lda, d__, e, tauq, taup, x, ldx, y, ldy);
+}
+
+int fla_clabrd(integer *m, integer *n, integer *nb, complex *a, integer *lda, real *d__, real *e, complex *tauq, complex *taup, complex *x, integer *ldx, complex *y, integer *ldy)
+{
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
 #if AOCL_DTL_LOG_ENABLE
     char buffer[256];
@@ -258,6 +268,10 @@ int clabrd_(integer *m, integer *n, integer *nb, complex *a, integer *lda, real 
     /* .. Executable Statements .. */
     /* Quick return if possible */
     /* Parameter adjustments */
+
+    /* Initialize global context data */
+    aocl_fla_init();
+
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;
     a -= a_offset;

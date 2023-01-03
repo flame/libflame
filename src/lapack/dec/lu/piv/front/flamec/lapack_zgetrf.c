@@ -1,10 +1,10 @@
 /*
-    Copyright (c) 2021-2022 Advanced Micro Devices, Inc.  All rights reserved.
+    Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
 */
 
 #include "FLAME.h"
 
-/* Subroutine */ integer lapack_zgetrf(integer *m, integer *n, doublecomplex *a,
+/* Subroutine */ integer lapack_zgetrf(integer *m, integer *n, dcomplex *a,
 	integer *lda, integer *ipiv, integer *info)
 {
 
@@ -60,13 +60,13 @@
 
        Parameter adjustments */
     /* Table of constant values */
-    static TLS_CLASS_SPEC doublecomplex c_b1 = {1.,0.};
+    static TLS_CLASS_SPEC dcomplex c_b1 = {1.,0.};
     static TLS_CLASS_SPEC integer c__1 = 1;
     static TLS_CLASS_SPEC integer c_n1 = -1;
 
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
-    doublecomplex z__1;
+    dcomplex z__1;
     /* Local variables */
     static TLS_CLASS_SPEC integer i__, j, iinfo;
     static TLS_CLASS_SPEC integer jb, nb;
@@ -199,7 +199,7 @@
 
 		    i__3 = *m - j - jb + 1;
 		    i__4 = *n - j - jb + 1;
-		    z__1.r = -1., z__1.i = 0.;
+		    z__1.real = -1., z__1.imag = 0.;
 		    zgemm_("No transpose", "No transpose", &i__3, &i__4, &jb,
 			    &z__1, &a_ref(j + jb, j), lda, &a_ref(j, j + jb),
 			    lda, &c_b1, &a_ref(j + jb, j + jb), lda);

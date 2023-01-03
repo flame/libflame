@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "FLAME.h"
@@ -58,9 +58,9 @@ void FLA_Thread_optimum( API_ID  family, int *actual_num_threads)
             break;
     }
 
-    *actual_num_threads = omp_get_max_threads();
+    *actual_num_threads = global_context.num_threads;
 
-    if(optimal_num_threads && *actual_num_threads > optimal_num_threads)
+    if(optimal_num_threads && (*actual_num_threads > optimal_num_threads))
         *actual_num_threads = optimal_num_threads;
 
     return;

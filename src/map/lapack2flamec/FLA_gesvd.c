@@ -9,14 +9,13 @@
 */
 
 /*
-    Copyright (c) 2021-2022 Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (c) 2021-2023 Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "FLAME.h"
 
 #ifdef FLA_ENABLE_LAPACK2FLAME 
 
-#define FLA_AMD_SVD2_OPT 0
 
 #include "FLA_lapack2flame_util_defs.h"
 #include "FLA_lapack2flame_return_defs.h"
@@ -62,13 +61,6 @@
                                PREFIX2LAPACK_REALDEF(prefix)* buff_r,   \
                                integer* info )
 
-
-#define LAPACK_gesvd_body_d(prefix)                                                                                \
-  if(FLA_AMD_SVD2_OPT && *m==2 && *n==2)  {                     \
-  dgesvd2x2( jobu, jobv, m, n, buff_A, ldim_A, buff_s, buff_U, ldim_U,buff_Vh , ldim_Vh, buff_w, lwork,info );} \
-  else {                                                                                \
-  lapack_dgesvd ( jobu, jobv, m, n, buff_A, ldim_A, buff_s, buff_U, ldim_U,buff_Vh , ldim_Vh, buff_w, lwork,info );}   \
-                                                                                                     
 
 #define LAPACK_gesvd_body(prefix)                                       \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);                \
@@ -179,9 +171,13 @@ LAPACK_gesvd_real(d)
   AOCL_DTL_SNPRINTF("dgesvd inputs: jobu %c, jobvt %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS "", *jobu, *jobv, *m, *n, *ldim_A, *ldim_U, *ldim_Vh);
 #if FLA_AMD_OPT
     {
-      LAPACK_gesvd_body_d(d)
-          /** fla_error set to *info on LAPACK_SUCCESS */
-          fla_error = *info;
+      /* Initialize global context data */
+      aocl_fla_init();
+
+      lapack_dgesvd ( jobu, jobv, m, n, buff_A, ldim_A, buff_s, buff_U, ldim_U,buff_Vh , ldim_Vh, buff_w, lwork,info );
+
+      /** fla_error set to *info on LAPACK_SUCCESS */
+      fla_error = *info;
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;

@@ -1,4 +1,7 @@
 /* ../netlib/dgesdd.f -- translated by f2c (version 20000121). You must link the resulting object file with the libraries: -lf2c -lm (in that order) */
+/*
+ *     Copyright (c) 2022-2023 Advanced Micro Devices, Inc.  All rights reserved.
+ */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c_n1 = -1;
 static integer c__0 = 0;
@@ -256,12 +259,14 @@ int lapack_dgesdd(char *jobz, integer *m, integer *n, doublereal * a, integer *l
     doublereal bignum;
     extern /* Subroutine */
     int lapack_dormbr(char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, integer *), dorglq_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dorgqr_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
+    extern int dgemm_(char *transa, char *transb, integer *m, integer * n, integer *k, void *alpha, void *a, integer *lda, void *b, integer * ldb, void *beta, void *c__, integer *ldc);
+    extern doublereal droundup_lwork_(integer *);
+
     integer ldwrkl, ldwrkr, minwrk, ldwrku, maxwrk, ldwkvt;
     doublereal smlnum;
     logical wntqas, lquery;
     integer blk;
     doublereal dum[1], eps;
-    extern doublereal droundup_lwork_(integer *);
     integer ivt, lwork_dgebrd_mm__, lwork_dgebrd_mn__, lwork_dgebrd_nn__, lwork_dgelqf_mn__, lwork_dgeqrf_mn__;
     /* -- LAPACK driver routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
