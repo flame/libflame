@@ -1,4 +1,7 @@
 /* ../netlib/sormlq.f -- translated by f2c (version 20000121). You must link the resulting object file with the libraries: -lf2c -lm (in that order) */
+/*
+ *  Copyright (c) 2022-2023 Advanced Micro Devices, Inc.  All rights reserved.
+ */
 #include "FLAME.h"
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -213,6 +216,10 @@ int lapack_sormlq(char *side, char *trans, integer *m, integer *n, integer *k, r
     /* .. Executable Statements .. */
     /* Test the input arguments */
     /* Parameter adjustments */
+
+    /* Initialize global context data */
+    aocl_fla_init();
+
     a_dim1 = *lda;
     a_offset = 1 + a_dim1 * 1;
     a -= a_offset;

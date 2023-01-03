@@ -1,5 +1,8 @@
 /* zhgeqz.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
+/*
+ *  Copyright (c) 2020-2023 Advanced Micro Devices, Inc.  All rights reserved.
+ */
 #include "FLA_f2c.h" /* Table of constant values */
 #ifdef FLA_OPENMP_MULTITHREADING
 #include "omp.h"
@@ -302,6 +305,13 @@ extern int zscal_(integer *, doublecomplex *, doublecomplex *, integer *);
 
 int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integer *ihi, doublecomplex *h__, integer *ldh, doublecomplex *t, integer *ldt, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * info)
 {
+    extern int fla_zhgeqz(char *job, char *compq, char *compz, integer *n, integer *ilo, integer *ihi, doublecomplex *h__, integer *ldh, doublecomplex *t, integer *ldt, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * info);
+
+    return fla_zhgeqz(job, compq, compz, n, ilo, ihi, h__, ldh, t, ldt, alpha, beta, q, ldq, z__, ldz, work, lwork, rwork, info);
+}
+
+int fla_zhgeqz(char *job, char *compq, char *compz, integer *n, integer *ilo, integer *ihi, doublecomplex *h__, integer *ldh, doublecomplex *t, integer *ldt, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * info)
+{
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("zhgeqz inputs: job %c, compq %c, compz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", ldh %" FLA_IS ", ldt %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS "", *job, *compq, *compz, *n, *ilo, *ihi, *ldh, *ldt, *ldq, *ldz);
     /* System generated locals */
@@ -365,6 +375,9 @@ int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     int zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *);
     integer istart;
     logical lquery;
+
+    /* Initialize global context data */
+    aocl_fla_init();
 
 #ifdef FLA_ENABLE_AMD_OPT
 #ifdef FLA_OPENMP_MULTITHREADING

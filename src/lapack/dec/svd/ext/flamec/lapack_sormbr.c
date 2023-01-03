@@ -1,4 +1,7 @@
 /* ../netlib/sormbr.f -- translated by f2c (version 20000121). You must link the resulting object file with the libraries: -lf2c -lm (in that order) */
+/*
+ *  Copyright (c) 2022-2023 Advanced Micro Devices, Inc.  All rights reserved.
+ */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
 static integer c_n1 = -1;
@@ -210,7 +213,7 @@ int lapack_sormbr(char *vect, char *side, char *trans, integer *m, integer *n, i
     logical notran, applyq;
     char transt[1];
     extern /* Subroutine */
-    int lapack_sormlq_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *);
+    int lapack_sormlq(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *);
     integer lwkopt;
     logical lquery;
     extern /* Subroutine */

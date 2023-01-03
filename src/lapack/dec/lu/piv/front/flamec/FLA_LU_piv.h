@@ -7,7 +7,9 @@
     directory, or at http://opensource.org/licenses/BSD-3-Clause
 
 */
-
+/*
+ *  Copyright (c) 2020-2023 Advanced Micro Devices, Inc.  All rights reserved.
+ */
 #include "FLA_LU_piv_vars.h"
 
 FLA_Error FLA_LU_piv_internal( FLA_Obj A, FLA_Obj p, fla_lu_t* cntl );
@@ -36,7 +38,7 @@ integer lapack_sgetf2(integer *m, integer *n, real *a, integer *lda,
 	integer *ipiv, integer *info);
 integer lapack_sgetrf(integer *m, integer *n, real *a, integer *lda,
 	integer *ipiv, integer *info);
-integer lapack_zgetf2(integer *m, integer *n, doublecomplex *a,
+integer lapack_zgetf2(integer *m, integer *n, dcomplex *a,
 	integer *lda, integer *ipiv, integer *info);
-integer lapack_zgetrf(integer *m, integer *n, doublecomplex *a,
+integer lapack_zgetrf(integer *m, integer *n, dcomplex *a,
 	integer *lda, integer *ipiv, integer *info);
