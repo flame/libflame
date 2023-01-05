@@ -312,7 +312,6 @@ void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
     char *str;
     char eol;
     integer num_tests, ndata_types;
-    integer mode;
     integer num_ranges;
 
     str = &line[0];
@@ -322,18 +321,12 @@ void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
     exit(-1);
     }
 
-    /* Read the mode */
-    fscanf(fp, "%s", &line[0]);
-    fscanf(fp, "%"FT_IS"", &mode);
-    fscanf(fp, "%*[^\n]\n");
-
     /* Read the number of Tests */
     fscanf(fp, "%s", &line[0]);
     fscanf(fp, "%"FT_IS"", &num_tests);
 
     num_ranges = num_tests;
     for (i=0; i<NUM_SUB_TESTS; i++){
-        params->lin_solver_paramslist[i].mode = mode;
         params->lin_solver_paramslist[i].num_tests = num_tests;
     }
 
@@ -440,18 +433,6 @@ void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%s", str);
         params->lin_solver_paramslist[i].Uplo = *str;
-        CHECK_LINE_SKIP ();
-    }
-
-    fscanf(fp, "%s", &line[0]);
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].m) );
-        CHECK_LINE_SKIP ();
-    }
-
-    fscanf(fp, "%s", &line[0]);
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].n) );
         CHECK_LINE_SKIP ();
     }
 
@@ -571,7 +552,6 @@ void fla_test_read_sym_eig_params( const char *file_name , test_params_t* params
     char line[20], eol;
     char *str, c[20];
     integer num_tests;
-    integer mode;
     integer num_ranges;
     integer ndata_types = NUM_SUB_TESTS;
 
@@ -581,10 +561,6 @@ void fla_test_read_sym_eig_params( const char *file_name , test_params_t* params
     printf("Error: Symmetric EIG params config file missing. Exiting.. \n");
     exit(-1);
     }
-    /* Read the mode */
-    fscanf(fp, "%s", &line[0]);
-    fscanf(fp, "%"FT_IS"", &mode);
-    fscanf(fp, "%*[^\n]\n");
 
     /* Read the number of Ranges */
     fscanf(fp, "%s", &line[0]);
@@ -698,24 +674,6 @@ void fla_test_read_sym_eig_params( const char *file_name , test_params_t* params
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%s", str);
         params->eig_sym_paramslist[i].vect = *str;
-        CHECK_LINE_SKIP ();
-    }
-
-    fscanf(fp, "%s", &line[0]);
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].m) );
-        CHECK_LINE_SKIP ();
-    }
-
-    fscanf(fp, "%s", &line[0]);
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].n) );
-        CHECK_LINE_SKIP ();
-    }
-
-    fscanf(fp, "%s", &line[0]);
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].p) );
         CHECK_LINE_SKIP ();
     }
 
@@ -873,7 +831,6 @@ void fla_test_read_non_sym_eig_params( const char *file_name , test_params_t* pa
     char line[20], eol;
     char *str = &line[0];
     integer num_tests;
-    integer mode;
     integer num_ranges;
     integer ndata_types = NUM_SUB_TESTS;
     fp = fopen( file_name, "r");
@@ -881,17 +838,12 @@ void fla_test_read_non_sym_eig_params( const char *file_name , test_params_t* pa
     printf("Error: EIG non symmetric API params config file missing. Exiting.. \n");
     exit(-1);
     }
-    /* Read the mode */
-    fscanf(fp, "%s", &line[0]);
-    fscanf(fp, "%"FT_IS"", &mode);
-    fscanf(fp, "%*[^\n]\n");
 
     /* Read the number of Tests */
     fscanf(fp, "%s", &line[0]);
     fscanf(fp, "%"FT_IS"", &num_tests);
     for (i=0; i<NUM_SUB_TESTS; i++){
         params->eig_non_sym_paramslist[i].num_tests = num_tests;
-        params->eig_non_sym_paramslist[i].mode=mode;
     }
 
     num_ranges = num_tests;
@@ -992,11 +944,6 @@ void fla_test_read_non_sym_eig_params( const char *file_name , test_params_t* pa
         CHECK_LINE_SKIP ();
     }
 
-    fscanf(fp, "%s", &line[0]);//n
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%"FT_IS"", &(params->eig_non_sym_paramslist[i].n) );
-        CHECK_LINE_SKIP ();
-    }
     fscanf(fp, "%s", &line[0]);
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%s", str);
@@ -1225,7 +1172,6 @@ void fla_test_read_svd_params ( const char *file_name, test_params_t* params )
     char eol;
     integer num_tests;
     integer ndata_types;
-    integer mode;
     integer num_ranges;
 
     str = &line[0];
@@ -1233,14 +1179,6 @@ void fla_test_read_svd_params ( const char *file_name, test_params_t* params )
     if (fp == NULL){
     printf("Error: SVD config file missing. Exiting.. \n");
     exit(-1);
-    }
-
-    /* Read the mode */
-    fscanf(fp, "%s", &line[0]);
-    fscanf(fp, "%"FT_IS"", &mode);
-    fscanf(fp, "%*[^\n]\n");
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        params->svd_paramslist[i].mode = mode;
     }
 
     fscanf(fp, "%s", &line[0]);
