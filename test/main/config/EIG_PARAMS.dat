@@ -1,4 +1,3 @@
-Mode 1  // Enter:- 0: discrete, 1: Combinational, 2: Range with step increments of Matrix sizes
 Num_Tests 4
 MRange_start 10 100 1000 2000
 MRange_end   20 300 1600 3000
@@ -14,9 +13,6 @@ Uplo U L U L
 Job N P S B
 Jobz N V N V
 Vect Q P Q P
-M 25 40 100 200
-N 10 30  60 100
-P 25 40 100 200
 nrhs 1 3 2 4
 lda 20 300 1600 3000
 ldb 10 30  60 100

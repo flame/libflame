@@ -54,7 +54,6 @@ below.
    'config' folder. The APIs to test are selected from the file 
    'input.general.operations'.
 
-
    ## Selecting APIs for testing
 
       ### `input.general.operations`
@@ -75,14 +74,13 @@ below.
       The `input.general.operations` file also contains the list of all sub-groups of APIs
       like all LIN,EIG etc. User can enable/disable the testing of a particular sub-group of
       API's by setting/resetting the corresponding group's flag.
-      Below is a representative example of the default contents of `input.general.operations`.
+      Below is the content in `input.general.operations` corresponding to subgroup testing.
 
          1   LIN     for testing all LIN API's                     (0 = disable; 1 = enable)
          1   EIG     for testing all Eigen API's                   (0 = disable; 1 = enable)
          1   SVD     for testing all SVD API's                     (0 = disable; 1 = enable)
 
-         Note: If any sub-group is enabled then individual API test will not execute.
-
+      Note: If any sub-group is enabled then individual API test will not execute.
 
    ## Running tests
 
@@ -93,7 +91,8 @@ below.
       $ ./test_lapack.x
 
    Input matrix sizes and other parameters can be configured by the user by changing the
-   config files.
+   config files. Config files support providing input parameters for four tests. For each
+   of the four tests, a range of input dimensions can be specified.
 
 
 2. Command line tests
@@ -127,6 +126,7 @@ below.
       $ FLA_TEST_NUM_THREADS = 4 ./test_lapack.x
       $ FLA_TEST_NUM_THREADS = 4 ./test_lapack.x GGEVX d P N N E 10 10 10 10 10 -1 100
    These runs create 4 threads and call APIs from all the threads.
+
 
 4. Tests from the DTL Logs
 

@@ -80,7 +80,6 @@ int test_progress(const char* const api,const integer lenapi,const integer* cons
 
 typedef struct Lin_solver_paramlist_t
 {
-    integer mode; // Any one of these:- 0: discrete, 1: Combinational, 2:Range with steps of increment of Matrix sizes
     integer num_ranges; // number of ranges to run
     integer m_range_start;
     integer m_range_end;
@@ -96,8 +95,6 @@ typedef struct Lin_solver_paramlist_t
     integer matrix_layout;
     char Uplo;
     char transr; // Must be 'N' or 'T' or 'C'.
-    integer m;
-    integer n;  // The order of A; the number of rows in B
     integer nrhs; // number of rhight hand sides
     integer lda; //  leading dimension of the array a
     integer ldb; //  leading dimension of the array b
@@ -124,7 +121,6 @@ typedef struct Lin_solver_paramlist_t
 /* struct to hold eigen parameters */
 typedef struct EIG_paramlist_t
 {
-    integer mode; // Any one of these:- 0: discrete, 1: Combinational, 2:Range with steps of increment of Matrix sizes
     integer num_ranges; // number of ranges to run
     integer m_range_start;
     integer m_range_end;
@@ -143,9 +139,6 @@ typedef struct EIG_paramlist_t
     char job; // Must be 'N', 'P', 'S' or 'B'
     char jobz; //Must be 'N' or 'V'
     char vect; // Vector must be 'Q' or  'P'
-    integer m;   //
-    integer n;  // The order of A; the number of rows in B
-    integer p; //
     integer nrhs; // number of rhight hand sides
     integer lda; //  leading dimension of the array a
     integer ldb; //  leading dimension of the array b
@@ -173,7 +166,6 @@ typedef struct EIG_paramlist_t
 /* struct to hold eigen parameters */
 typedef struct EIG_Non_symmetric_paramlist_t
 {
-    integer mode; // Any one of these:- 0: discrete, 1: Combinational, 2:Range with steps of increment of Matrix sizes
     integer num_ranges; // number of ranges to run
     integer m_range_start;
     integer m_range_end;
@@ -191,7 +183,6 @@ typedef struct EIG_Non_symmetric_paramlist_t
     integer data_types[MAX_NUM_DATATYPES];
     char data_types_char[MAX_NUM_DATATYPES];
     integer matrix_layout;
-    integer n;  // The order of A; the number of rows in B
     char howmny; // Must be 'A' or 'B' or 'S'.
     char initv; // Must be 'N' or 'U'.
     char job_seqr; // Must be 'E', 'S'
@@ -237,7 +228,6 @@ typedef struct EIG_Non_symmetric_paramlist_t
 /* struct to hold SVD parameters */
 typedef struct SVD_paramlist_t
 {
-    integer mode; // Any one of these:- 0: discrete, 1: Combinational, 2:Range with steps of increment of Matrix sizes
     integer num_ranges; // number of ranges to run
     integer m_range_start;
     integer m_range_end;
