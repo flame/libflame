@@ -329,7 +329,7 @@ void prepare_geevx_run(char *balanc, char *jobvl, char *jobvr, char * sense,
     }
     *time_min_ = time_min;
 
-    free(A_save);
+    free_matrix(A_save);
 }
 
 void invoke_geevx(integer datatype, char *balanc, char *jobvl, char *jobvr, char *sense,

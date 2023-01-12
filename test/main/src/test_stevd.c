@@ -274,9 +274,9 @@ void prepare_stevd_run(char *jobz,
 
     *time_min_ = time_min;
 
-    free(Z_save);
-    free(D_save);
-    free(E_save);
+    free_matrix(Z_save);
+    free_matrix(D_save);
+    free_matrix(E_save);
 }
 
 void invoke_stevd(integer datatype, char* jobz, integer* n, void* z, integer* ldz, void* d, void* e, void* work, integer* lwork, void* iwork, integer* liwork, integer* info)

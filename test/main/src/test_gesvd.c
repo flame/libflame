@@ -315,7 +315,7 @@ void prepare_gesvd_run(char *jobu, char *jobvt,
 
     *time_min_ = time_min;
 
-    free(A_save);
+    free_matrix(A_save);
 }
 
 

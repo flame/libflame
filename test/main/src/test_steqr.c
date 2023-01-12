@@ -262,9 +262,9 @@ void prepare_steqr_run(char *compz,
 
     *time_min_ = time_min;
 
-    free(Z_save);
-    free(D_save);
-    free(E_save);
+    free_matrix(Z_save);
+    free_matrix(D_save);
+    free_matrix(E_save);
 }
 
 void invoke_steqr(integer datatype, char* compz, integer* n, void* z, integer* ldz, void* d, void* e, void* work, integer* info)

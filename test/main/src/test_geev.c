@@ -292,7 +292,7 @@ void prepare_geev_run(char *jobvl, char *jobvr, integer m_A, void *A, integer ld
 
     *time_min_ = time_min;
 
-    free(A_save);
+    free_matrix(A_save);
 }
 
 

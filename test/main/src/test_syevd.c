@@ -282,7 +282,7 @@ void prepare_syevd_run(char *jobz,
 
     *time_min_ = time_min;
 
-    free(A_save);
+    free_matrix(A_save);
 }
 
 void invoke_syevd(integer datatype, char* jobz, char* uplo, integer* n, void* a, integer* lda, void* w, void* work, integer* lwork, void* rwork, integer* lrwork, void* iwork, integer* liwork, integer* info)

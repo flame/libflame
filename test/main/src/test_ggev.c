@@ -294,8 +294,8 @@ void prepare_ggev_run(char *jobvl, char *jobvr, integer n_A, void *A, integer ld
     copy_matrix(datatype, "full", n_A, n_A, A_save, lda, A, lda);
     copy_matrix(datatype, "full", n_A, n_A, B_save, ldb, B, ldb);
 
-    free(A_save);
-    free(B_save);
+    free_matrix(A_save);
+    free_matrix(B_save);
 
 
 }
