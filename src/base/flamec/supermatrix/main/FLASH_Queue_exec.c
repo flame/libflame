@@ -2279,7 +2279,7 @@ void FLASH_Queue_destroy_hip( int thread, void *arg )
       if ( hip_obj.obj.base != NULL && !hip_obj.clean )
          FLASH_Queue_read_async_hip( thread, hip_obj.obj, hip_obj.buffer_hip );
       // Free the memory on the HIP for all the blocks.
-      FLASH_Queue_free_hip( hip_obj.buffer_hip );
+      FLASH_Queue_free_async_hip( hip_obj.buffer_hip );
    }
 
    return;
