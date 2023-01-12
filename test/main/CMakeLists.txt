@@ -5,6 +5,7 @@ cmake_minimum_required(VERSION 3.0)
 project(test_libFLAME_main)
 
 option (ENABLE_ILP64 "Enable ILP64" OFF)
+option (ENABLE_MEM_UNALIGNED "Allocate unaligned memory" OFF)
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 set (CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
@@ -19,6 +20,9 @@ add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 
 if(ENABLE_ILP64)
 add_definitions(-DFLA_ENABLE_ILP64)
+endif()
+if(ENABLE_MEM_UNALIGNED)
+add_definitions(-DFLA_MEM_UNALIGNED)
 endif()
 
 link_directories("${TEST_BLIS_LIBRARY_PATH}" "${TEST_LIBFLAME_LIBRARY_PATH}")

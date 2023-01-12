@@ -304,7 +304,7 @@ void prepare_gesdd_run(char *jobz,
     
     *time_min_ = time_min;
 
-    free(A_save);
+    free_matrix(A_save);
 }
 
 void invoke_gesdd(integer datatype, char* jobz, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, void* rwork, integer* iwork, integer* info)

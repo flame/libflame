@@ -11,6 +11,29 @@ double d_zero = 0, d_one = 1, d_n_one = -1;
 scomplex c_zero = {0,0}, c_one = {1,0}, c_n_one = {-1,0};
 dcomplex z_zero = {0,0}, z_one = {1,0}, z_n_one = {-1,0};
 
+/* Allocate dynamic memory. If FLA_MEM_UNALIGNED is set, unaligned memory is allocated */
+char* fla_mem_alloc(integer size)
+{
+    char* buff = NULL;
+#ifdef FLA_MEM_UNALIGNED
+    buff = (char*)malloc(size + 1);
+    if (buff == NULL)
+    {
+        fprintf(stderr, "malloc() returned NULL pointer\n");
+        abort();
+    }
+    /* making aligned address to byte aligned */
+    buff = buff + 1;
+#else
+    buff = (char *)malloc(size);
+    if (buff == NULL)
+    {
+        fprintf(stderr, "malloc() returned NULL pointer\n");
+        abort();
+    }
+#endif
+    return buff;
+}
 /* create vector of given datatype*/
 void create_vector(integer datatype, void **A, integer M)
 {
@@ -20,39 +43,33 @@ void create_vector(integer datatype, void **A, integer M)
     {
         case INTEGER:
         {
-            *A = (integer *)malloc(M * sizeof(integer));
+            *A = (integer *)fla_mem_alloc(M * sizeof(integer));
             break;
         }
 
         case FLOAT:
         {
-            *A = (float *)malloc(M * sizeof(float));
+            *A = (float *)fla_mem_alloc(M * sizeof(float));
             break;
         }
 
         case DOUBLE:
         {
-            *A = (double *)malloc(M * sizeof(double));
+            *A = (double *)fla_mem_alloc(M * sizeof(double));
             break;
         }
 
         case COMPLEX:
         {
-            *A = (scomplex *)malloc(M * sizeof(scomplex));
+            *A = (scomplex *)fla_mem_alloc(M * sizeof(scomplex));
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            *A = (dcomplex *)malloc(M * sizeof(dcomplex));
+            *A = (dcomplex *)fla_mem_alloc(M * sizeof(dcomplex));
             break;
         }
-    }
-
-    if(*A == NULL)
-    {
-        fprintf( stderr, "malloc() returned NULL pointer\n");
-        abort();
     }
 
     return;
@@ -64,15 +81,9 @@ void create_realtype_vector(integer datatype, void **A, integer M)
     *A = NULL;
 
     if(datatype == FLOAT || datatype == COMPLEX)
-        *A = (float *)malloc(M * sizeof(float));
+        *A = (float *)fla_mem_alloc(M * sizeof(float));
     else
-        *A = (double *)malloc(M * sizeof(double));
-
-    if(*A == NULL)
-    {
-        fprintf( stderr, "malloc() returned NULL pointer\n");
-        abort();
-    }
+        *A = (double *)fla_mem_alloc(M * sizeof(double));
 
     return;
 }
@@ -82,7 +93,11 @@ void free_vector(void *A)
 {
     if(!A)
         return;
-
+#ifdef FLA_MEM_UNALIGNED
+    /* reset the incremented address to normal to proper freeing of memory */
+    char* temp = (char*)A;
+    A = (void*)(temp - 1);
+#endif
     free(A);
 }
 
@@ -247,39 +262,33 @@ void create_matrix(integer datatype, void **A, integer M, integer N)
     {
         case INTEGER:
         {
-            *A = (integer *)malloc(M * N * sizeof(integer));
+            *A = (integer *)fla_mem_alloc(M * N * sizeof(integer));
             break;
         }
 
         case FLOAT:
         {
-            *A = (float *)malloc(M * N * sizeof(float));
+            *A = (float *)fla_mem_alloc(M * N * sizeof(float));
             break;
         }
 
         case DOUBLE:
         {
-            *A = (double *)malloc(M * N * sizeof(double));
+            *A = (double *)fla_mem_alloc(M * N * sizeof(double));
             break;
         }
 
         case COMPLEX:
         {
-            *A = (scomplex *)malloc(M * N * sizeof(scomplex));
+            *A = (scomplex *)fla_mem_alloc(M * N * sizeof(scomplex));
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            *A = (dcomplex *)malloc(M * N * sizeof(dcomplex));
+            *A = (dcomplex *)fla_mem_alloc(M * N * sizeof(dcomplex));
             break;
         }
-    }
-
-    if(*A == NULL)
-    {
-        fprintf( stderr, "malloc() returned NULL pointer\n");
-        abort();
     }
 
     return;
@@ -291,15 +300,9 @@ void create_realtype_matrix(integer datatype, void **A, integer M, integer N)
     *A = NULL;
 
     if(datatype == FLOAT || datatype == COMPLEX)
-        *A = (float *)malloc(M * N * sizeof(float));
+        *A = (float *)fla_mem_alloc(M * N * sizeof(float));
     else
-        *A = (double *)malloc(M * N * sizeof(double));
-
-    if(*A == NULL)
-    {
-        fprintf( stderr, "malloc() returned NULL pointer\n");
-        abort();
-    }
+        *A = (double *)fla_mem_alloc(M * N * sizeof(double));
 
     return;
 }
@@ -342,7 +345,11 @@ void free_matrix(void *A)
 {
     if(!A)
         return;
-
+#ifdef FLA_MEM_UNALIGNED
+    /* reset the incremented address to normal to proper freeing of memory */
+    char* temp = (char*)A;
+    A = (void*)(temp - 1);
+#endif
     free(A);
 }
 
@@ -826,7 +833,7 @@ void set_transpose(integer datatype, char *uplo, char *trans_A, char *trans_B)
     }
     else
     {
-	*trans_A = 'C';
+	    *trans_A = 'C';
         *trans_B = 'N';
     }
 }
@@ -1044,7 +1051,7 @@ double check_orthogonality(integer datatype, void *A, integer m, integer n, inte
     else
     {
         create_matrix(datatype, &I, n, n);
-	k = n;
+	    k = n;
     }
     switch(datatype)
     {

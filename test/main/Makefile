@@ -43,7 +43,10 @@ LIBFLAME       := $(LIB_PATH)/libflame.a
 ifeq ($(ILP64),1)
 	CPPFLAGS   += -DFLA_ENABLE_ILP64=1
 endif
-
+# --- enable dynamic memory  unaligned  addres logic --------------------------
+ifeq ($(MEM_UNALN),1)
+	CPPFLAGS   += -DFLA_MEM_UNALIGNED=1
+endif
 #
 # --- General build definitions ------------------------------------------------
 #

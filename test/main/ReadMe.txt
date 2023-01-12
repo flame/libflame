@@ -152,3 +152,10 @@ below.
    For linux system you can set the environment variable along with the execution of the command
 
       $ OMP_NUM_THREADS=4 run_tests_from_dtl_logs.py --filename="logs.txt"
+
+
+5. Unaligned Memory test
+
+   To enable allocate dynamic memory unaligned we need to set below flags while building main testsuite 
+       Windows -- FLA_MEM_UNALIGNED is set, unaligned memory is allocated
+       Linux   -- MEM_UNALN=1 

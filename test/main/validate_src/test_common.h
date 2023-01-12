@@ -136,5 +136,7 @@ void get_min(integer datatype, void *arr, void *min_val, integer n);
 void init_matrix_from_file(integer datatype, void* A,integer m, integer n, integer lda, FILE* fptr);
 /* Reading vector input data from a file */
 void init_vector_from_file(integer datatype, void* A, integer m, integer inc, FILE* fptr);
+/* Allocate dynamic memory. If FLA_MEM_UNALIGNED is set, unaligned memory is allocated */
+char* fla_mem_alloc(integer size);
 
 #endif // TEST_COMMON_H
