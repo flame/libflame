@@ -130,7 +130,7 @@ static doublereal c_b4 = 1.;
 int dlasv2_(doublereal *f, doublereal *g, doublereal *h__, doublereal *ssmin, doublereal *ssmax, doublereal *snr, doublereal * csr, doublereal *snl, doublereal *csl)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dlasv2 inputs : f %lf, g %lf, h %lf", *f, *g, *h__);
+    AOCL_DTL_SNPRINTF("dlasv2 inputs: f %lf, g %lf, h %lf", *f, *g, *h__);
     /* System generated locals */
     doublereal d__1;
     /* Builtin functions */

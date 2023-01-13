@@ -86,7 +86,7 @@
 int dlartg_(doublereal *f, doublereal *g, doublereal *cs, doublereal *sn, doublereal *r__)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dlartg inputs : f %lf, g %lf", *f, *g);
+    AOCL_DTL_SNPRINTF("dlartg inputs: f %lf, g %lf", *f, *g);
     /* System generated locals */
     integer i__1;
     doublereal d__1, d__2;

@@ -63,6 +63,7 @@
 int dlabad_(doublereal *small, doublereal *large)
 {
     AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("dlabad inputs: small %lf, large %lf", *small, *large);
     /* -- LAPACK auxiliary routine (version 3.4.0) -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */

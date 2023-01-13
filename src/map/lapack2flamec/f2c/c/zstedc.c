@@ -209,7 +209,7 @@ the */
 int zstedc_(char *compz, integer *n, doublereal *d__, doublereal *e, doublecomplex *z__, integer *ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer *lrwork, integer *iwork, integer *liwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("zstedc inputs: compz %c, n %" FLA_IS ", ldz %" FLA_IS "",*compz, *n, *ldz);
+    AOCL_DTL_SNPRINTF("zstedc inputs: compz %c, n %" FLA_IS ", ldz %" FLA_IS ", lwork %" FLA_IS ", lrwork %" FLA_IS ", liwork %" FLA_IS "", *compz, *n, *ldz, *lwork, *lrwork, *liwork);
     /* System generated locals */
     integer z_dim1, z_offset, i__1, i__2, i__3, i__4;
     doublereal d__1, d__2;

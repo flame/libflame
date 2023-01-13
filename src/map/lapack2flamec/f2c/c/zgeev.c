@@ -176,7 +176,7 @@ the routine */
 int zgeev_(char *jobvl, char *jobvr, integer *n, doublecomplex *a, integer *lda, doublecomplex *w, doublecomplex *vl, integer *ldvl, doublecomplex *vr, integer *ldvr, doublecomplex *work, integer *lwork, doublereal *rwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("zgeev inputs: jobvl %c, jobvr %c, n %" FLA_IS ", lda %" FLA_IS ", ldvl %" FLA_IS ", ldvr %" FLA_IS "",*jobvl, *jobvr, *n, *lda, *ldvl, *ldvr);
+    AOCL_DTL_SNPRINTF("zgeev inputs: jobvl %c, jobvr %c, n %" FLA_IS ", lda %" FLA_IS ", ldvl %" FLA_IS ", ldvr %" FLA_IS ", lwork %" FLA_IS "", *jobvl, *jobvr, *n, *lda, *ldvl, *ldvr, *lwork);
     /* System generated locals */
     integer a_dim1, a_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__2, i__3;
     doublereal d__1, d__2;
