@@ -105,7 +105,8 @@ lapack_int LAPACKE_slarfb_work( int matrix_layout, char side, char trans,
                    LAPACKE_lsame( direct, 'b' ) ) {
             if( k > nrows_v ) {
                 LAPACKE_xerbla( "LAPACKE_slarfb_work", -8 );
-                return -8;
+                info = -8;
+                goto exit_level_3;
             }
             LAPACKE_str_trans( matrix_layout, 'u', 'u', k, &v[(nrows_v-k)*ldv],
                                ldv, &v_t[nrows_v-k], ldv_t );
@@ -120,7 +121,8 @@ lapack_int LAPACKE_slarfb_work( int matrix_layout, char side, char trans,
                    LAPACKE_lsame( direct, 'b' ) ) {
             if( k > ncols_v ) {
                 LAPACKE_xerbla( "LAPACKE_slarfb_work", -8 );
-                return -8;
+                info = -8;
+                goto exit_level_3;
             }
             LAPACKE_str_trans( matrix_layout, 'l', 'u', k, &v[ncols_v-k], ldv,
                                &v_t[(ncols_v-k)*ldv_t], ldv_t );
@@ -136,6 +138,7 @@ lapack_int LAPACKE_slarfb_work( int matrix_layout, char side, char trans,
         /* Transpose output matrices */
         LAPACKE_sge_trans( LAPACK_COL_MAJOR, m, n, c_t, ldc_t, c, ldc );
         /* Release memory and exit */
+exit_level_3:
         LAPACKE_free( c_t );
 exit_level_2:
         LAPACKE_free( t_t );

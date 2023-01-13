@@ -603,9 +603,9 @@ int c_le(cilist *a)
 	if(!f__init)
 		f_init();
 	f__fmtbuf="list io";
-	f__curunit = &f__units[a->ciunit];
 	if(a->ciunit>=MXUNIT || a->ciunit<0)
 		err(a->cierr,101,"stler");
+	f__curunit = &f__units[a->ciunit];
 	f__scale=f__recpos=0;
 	f__elist=a;
 	if(f__curunit->ufd==NULL && fk_open(SEQ,FMT,a->ciunit))
