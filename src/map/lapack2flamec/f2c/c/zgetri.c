@@ -115,7 +115,7 @@ the matrix is */
 int zgetri_(integer *n, doublecomplex *a, integer *lda, integer *ipiv, doublecomplex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("zgetri inputs: n %" FLA_IS ", lda %" FLA_IS "",*n, *lda);
+    AOCL_DTL_SNPRINTF("zgetri inputs: n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "", *n, *lda, *lwork);
 
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;

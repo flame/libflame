@@ -305,16 +305,17 @@ extern int zscal_(integer *, doublecomplex *, doublecomplex *, integer *);
 
 int zhgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integer *ihi, doublecomplex *h__, integer *ldh, doublecomplex *t, integer *ldt, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("zhgeqz inputs: job %c, compq %c, compz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", ldh %" FLA_IS ", ldt %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS "", *job, *compq, *compz, *n, *ilo, *ihi, *ldh, *ldt, *ldq, *ldz);
     extern int fla_zhgeqz(char *job, char *compq, char *compz, integer *n, integer *ilo, integer *ihi, doublecomplex *h__, integer *ldh, doublecomplex *t, integer *ldt, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * info);
-
-    return fla_zhgeqz(job, compq, compz, n, ilo, ihi, h__, ldh, t, ldt, alpha, beta, q, ldq, z__, ldz, work, lwork, rwork, info);
+    int ret_val = fla_zhgeqz(job, compq, compz, n, ilo, ihi, h__, ldh, t, ldt, alpha, beta, q, ldq, z__, ldz, work, lwork, rwork, info);
+    AOCL_DTL_TRACE_LOG_EXIT
+    return ret_val;
 }
 
 int fla_zhgeqz(char *job, char *compq, char *compz, integer *n, integer *ilo, integer *ihi, doublecomplex *h__, integer *ldh, doublecomplex *t, integer *ldt, doublecomplex *alpha, doublecomplex * beta, doublecomplex *q, integer *ldq, doublecomplex *z__, integer * ldz, doublecomplex *work, integer *lwork, doublereal *rwork, integer * info)
 {
-    AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("zhgeqz inputs: job %c, compq %c, compz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", ldh %" FLA_IS ", ldt %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS "", *job, *compq, *compz, *n, *ilo, *ihi, *ldh, *ldt, *ldq, *ldz);
-    /* System generated locals */
+   /* System generated locals */
     integer h_dim1, h_offset, q_dim1, q_offset, t_dim1, t_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5;
     doublereal d__1, d__2, d__3, d__4, d__5, d__6, d__7, d__8;
     doublecomplex z__1, z__2, z__3, z__4, z__5, z__6, z__7;
@@ -575,12 +576,10 @@ int fla_zhgeqz(char *job, char *compq, char *compz, integer *n, integer *ilo, in
     {
         i__1 = -(*info);
         xerbla_("ZHGEQZ", &i__1);
-        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -589,7 +588,6 @@ int fla_zhgeqz(char *job, char *compq, char *compz, integer *n, integer *ilo, in
     {
         work[1].r = 1.;
         work[1].i = 0.; // , expr subst
-        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize Q and Z */
@@ -1872,7 +1870,6 @@ L210:
     z__1.i = 0.; // , expr subst
     work[1].r = z__1.r;
     work[1].i = z__1.i; // , expr subst
-    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of ZHGEQZ */
 }

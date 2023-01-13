@@ -103,7 +103,7 @@ LAPACK_gesdd_real(s)
 {
   int fla_error = LAPACK_SUCCESS;
   AOCL_DTL_TRACE_LOG_INIT
-  AOCL_DTL_SNPRINTF("sgesdd inputs: jobz %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS "", *jobz, *m, *n, *ldim_A, *ldim_U, *ldim_Vh);
+  AOCL_DTL_SNPRINTF("sgesdd inputs: jobz %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS ", lwork %" FLA_IS "", *jobz, *m, *n, *ldim_A, *ldim_U, *ldim_Vh, *lwork);
   extern int sgesdd_fla_check(char *jobu, char *jobvt, integer *m, integer *n, float *a, integer *lda, float *s, float *u, integer *ldu, float *vt, integer *ldvt, float *work, integer *lwork, integer *info);
   extern int lapack_sgesdd(char *jobz, integer *m, integer *n, real *a, integer *lda, real *s, real *u, integer *ldu, real *vt, integer *ldvt, real *work, integer *lwork, integer *iwork, integer *info);
  
@@ -203,8 +203,8 @@ LAPACK_gesdd_real(d)
 {
   int fla_error = LAPACK_SUCCESS;
   AOCL_DTL_TRACE_LOG_INIT
-  AOCL_DTL_SNPRINTF("dgesdd inputs: jobz %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS "", *jobz, *m, *n, *ldim_A, *ldim_U, *ldim_Vh);
-  extern int lapack_dgesdd(char *jobz, integer *m, integer *n, doublereal * a, integer *lda, doublereal *s, doublereal *u, integer *ldu, doublereal *vt, integer *ldvt, doublereal *work, integer *lwork, integer *iwork, integer *info);
+  AOCL_DTL_SNPRINTF("dgesdd inputs: jobz %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS ", lwork %" FLA_IS "", *jobz, *m, *n, *ldim_A, *ldim_U, *ldim_Vh, *lwork);
+  extern int lapack_dgesdd(char *jobz, integer *m, integer *n, doublereal *a, integer *lda, doublereal *s, doublereal *u, integer *ldu, doublereal *vt, integer *ldvt, doublereal *work, integer *lwork, integer *iwork, integer *info);
 
 #if FLA_AMD_OPT
   {
@@ -275,7 +275,7 @@ LAPACK_gesdd_complex(c)
 {
   int fla_error = LAPACK_SUCCESS;
   AOCL_DTL_TRACE_LOG_INIT
-  AOCL_DTL_SNPRINTF("cgesdd inputs: jobz %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS "", *jobz, *m, *n, *ldim_A, *ldim_U, *ldim_Vh);
+  AOCL_DTL_SNPRINTF("cgesdd inputs: jobz %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS ", lwork %" FLA_IS "", *jobz, *m, *n, *ldim_A, *ldim_U, *ldim_Vh, *lwork);
   {
     LAPACK_RETURN_CHECK_VAR1(cgesdd_check(jobz,
                                           m, n,
@@ -302,7 +302,7 @@ LAPACK_gesdd_complex(z)
 {
   int fla_error = LAPACK_SUCCESS;
   AOCL_DTL_TRACE_LOG_INIT
-  AOCL_DTL_SNPRINTF("zgesdd inputs: jobz %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS "", *jobz, *m, *n, *ldim_A, *ldim_U, *ldim_Vh);
+  AOCL_DTL_SNPRINTF("zgesdd inputs: jobz %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldvt %" FLA_IS ", lwork %" FLA_IS "", *jobz, *m, *n, *ldim_A, *ldim_U, *ldim_Vh, *lwork);
   {
     LAPACK_RETURN_CHECK_VAR1(zgesdd_check(jobz,
                                           m, n,

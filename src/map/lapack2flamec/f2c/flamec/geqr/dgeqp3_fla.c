@@ -146,7 +146,6 @@ v(i+1:m) is stored on exit in */
 /* Subroutine */
 int dgeqp3_fla(integer *m, integer *n, doublereal *a, integer * lda, integer *jpvt, doublereal *tau, doublereal *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -188,11 +187,6 @@ int dgeqp3_fla(integer *m, integer *n, doublereal *a, integer * lda, integer *jp
     /* Test input arguments */
     /* ==================== */
     /* Parameter adjustments */
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    sprintf(buffer, "dgeqp3 inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "\n", *m, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
 
     a_dim1 = *lda;
     a_offset = 1 + a_dim1;
@@ -243,12 +237,10 @@ int dgeqp3_fla(integer *m, integer *n, doublereal *a, integer * lda, integer *jp
     {
         i__1 = -(*info);
         xerbla_("DGEQP3", &i__1);
-	AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     else if (lquery)
     {
-	AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Move initial columns up front. */
@@ -389,7 +381,6 @@ L30:
         }
     }
     work[1] = (doublereal) iws;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
     return 0;
     /* End of DGEQP3_FLA */
 }

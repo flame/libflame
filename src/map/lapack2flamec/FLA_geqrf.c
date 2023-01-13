@@ -84,7 +84,7 @@ extern void DTL_Trace(
 LAPACK_geqrf(s)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("sgeqrf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
+    AOCL_DTL_SNPRINTF("sgeqrf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "", *m, *n, *ldim_A, *lwork);
 #if !FLA_AMD_OPT
     int fla_error = LAPACK_SUCCESS;
     {
@@ -113,7 +113,7 @@ LAPACK_geqrf(s)
 LAPACK_geqrf(d)
 {
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("dgeqrf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
+    AOCL_DTL_SNPRINTF("dgeqrf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "", *m, *n, *ldim_A, *lwork);
 #if !FLA_AMD_OPT
     int fla_error = LAPACK_SUCCESS;
     {
@@ -145,7 +145,7 @@ LAPACK_geqrf(c)
 {
     int fla_error = LAPACK_SUCCESS;
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("cgeqrf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
+    AOCL_DTL_SNPRINTF("cgeqrf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "", *m, *n, *ldim_A, *lwork);
     {
         LAPACK_RETURN_CHECK_VAR1( cgeqrf_check( m, n,
                                            buff_A, ldim_A,
@@ -166,7 +166,7 @@ LAPACK_geqrf(z)
 {
     int fla_error = LAPACK_SUCCESS;
     AOCL_DTL_TRACE_LOG_INIT
-    AOCL_DTL_SNPRINTF("zgeqrf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
+    AOCL_DTL_SNPRINTF("zgeqrf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", lwork %" FLA_IS "", *m, *n, *ldim_A, *lwork);
     {
         LAPACK_RETURN_CHECK_VAR1(zgeqrf_check(m, n,
                                               buff_A, ldim_A,
