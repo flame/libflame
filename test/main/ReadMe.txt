@@ -123,17 +123,17 @@ below.
    by setting the environment variable FLA_TEST_NUM_THREADS to value greater than 1. Both
    the config based and command-line based tests can be used to run this test as given
    below:
-      $ FLA_TEST_NUM_THREADS = 4 ./test_lapack.x
-      $ FLA_TEST_NUM_THREADS = 4 ./test_lapack.x GGEVX d P N N E 10 10 10 10 10 -1 100
+      $ FLA_TEST_NUM_THREADS=4 ./test_lapack.x
    These runs create 4 threads and call APIs from all the threads.
 
 
 4. Tests from the DTL Logs
 
-   Execute run_tests_from_dtl_logs.py with following parameters as given below:
+   Execute run_tests_from_dtl_logs.py located under test/main/scripts folder with following 
+   parameters as given below:
 
       --filename  (required) // The filename or filepath of the DTL log files
-      --apiname   (optional) // To execute for Specific api with it's name
+      --apiname   (optional) // To execute for Specific API with it's name
       --nrepeats  (optional) // Set number of repeats for the execution of each API
 
       $ run_tests_from_dtl_logs.py --filename="logs.txt"

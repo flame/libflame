@@ -55,12 +55,13 @@ with codecs.open(args.filename, 'r', encoding='utf-8', errors='ignore') as file_
             api_name = api_name[1:]
             # Check if the apiName is passed in the arguments
             if args.apiname is not None:
-                if args.apiname in api_name:
+                if args.apiname == api_name:
                     getInputs(line,inputs)
             else:
                 getInputs(line,inputs)
 file_log.close()
 
 # Execute all the apis
+os.chdir('..')
 for command in commands:
     os.system(command)
