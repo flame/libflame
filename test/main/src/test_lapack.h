@@ -150,6 +150,7 @@ typedef struct EIG_paramlist_t
     integer k;
     integer isgn;
     char compz;
+    char compz_hseqr;
     integer kb;
     integer itype;
     char vect_rd;
@@ -162,6 +163,8 @@ typedef struct EIG_paramlist_t
     char storev;
     integer tsize;
     integer threshold_value; // threshold value for EIG
+    integer ilo;
+    integer ihi;
 }EIG_paramlist;
 
 

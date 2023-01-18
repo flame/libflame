@@ -18,10 +18,9 @@ void validate_stedc(char compz, integer n, void* D_test, void* Z_input, void* Z,
     void *work = NULL;
     *info = 0;
 
-    if (compz == 'N') {
-        *residual = 0.0;
+    if (compz == 'N')
         return;
-    }
+
     create_matrix(datatype, &lambda, n, n);
     create_matrix(datatype, &zlambda, n, n);
     reset_matrix(datatype, n, n, zlambda, n);

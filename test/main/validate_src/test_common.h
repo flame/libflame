@@ -138,6 +138,12 @@ void init_matrix_from_file(integer datatype, void* A,integer m, integer n, integ
 void init_vector_from_file(integer datatype, void* A, integer m, integer inc, FILE* fptr);
 /* Allocate dynamic memory. If FLA_MEM_UNALIGNED is set, unaligned memory is allocated */
 char* fla_mem_alloc(integer size);
+/* Convert matrix according to ILO and IHI values */
+void rand_hess_matrix(integer datatype, integer N, void *A, integer LDA, integer ilo, integer ihi);
+/* Generate Hessenberg matrix */
+void get_hessenberg_matrix(integer datatype, integer n, void* A, integer lda, void *Z, integer ldz, integer *ilo, integer *ihi, void* scale, integer *info);
+/* Convert matrix to upper hessenberg form */
+void convert_upper_hessenberg(integer datatype, integer n, void *A, integer lda);
 /* Pack a symmetric matrix in column first order */
 void pack_matrix_lt(integer datatype, void* A, void* B, integer N, integer lda);
 

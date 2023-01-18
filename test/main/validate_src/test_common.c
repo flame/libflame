@@ -1873,6 +1873,314 @@ void init_vector_from_file(integer datatype, void* A, integer m, integer inc, FI
         }
     }
 }
+
+/* Convert matrix according to ILO and IHI values */
+void rand_hess_matrix(integer datatype, integer N, void *A, integer LDA, integer ilo, integer ihi)
+{
+    /* Intialize matrix with random values */
+    rand_matrix(datatype, A, N, N, LDA);
+    integer i;
+
+    switch( datatype )
+    {
+        case FLOAT:
+        {
+            /* Making elements below diagonal for columns 0 to ilo-1 to Zero*/
+            for(i = 0; i < ilo-1; i++)
+            {
+                float *p = &((float *)A)[ (i+1) + i*LDA];
+                reset_vector(datatype, (void *)p, N-i-1, 1);
+            }
+            /* Making elements below diagonal for rows ihi+1 to N to Zero*/
+            for(i = ihi; i < N; i++)
+            {
+                float *p = &((float *)A)[i];
+                reset_vector(datatype, (void *)p, i, LDA);
+            }
+            break;
+        }
+        case DOUBLE:
+        {
+            /* Making elements below diagonal for columns 0 to ilo-1 to Zero*/
+            for(i = 0; i < ilo-1; i++)
+            {
+                double *p = &((double *)A)[ (i+1) + i*LDA];
+                reset_vector(datatype, (void *)p, N-i-1, 1);
+            }
+            /* Making elements below diagonal for rows ihi+1 to N to Zero*/
+            for(i = ihi; i < N; i++)
+            {
+                double *p = &((double *)A)[i];
+                reset_vector(datatype, (void *)p, i, LDA);
+            }
+            break;
+        }
+        case COMPLEX:
+        {
+            /* Making elements below diagonal for columns 0 to ilo-1 to Zero*/
+            for(i = 0; i < ilo-1; i++)
+            {
+                scomplex *p = &((scomplex *)A)[ (i+1) + i*LDA];
+                reset_vector(datatype, (void *)p, N-i-1, 1);
+            }
+            /* Making elements below diagonal for rows ihi+1 to N to Zero*/
+            for(i = ihi; i < N; i++)
+            {
+                scomplex *p = &((scomplex *)A)[i];
+                reset_vector(datatype, (void *)p, i, LDA);
+            }
+            break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+            /* Making elements below diagonal for columns 0 to ilo-1 to Zero*/
+            for(i = 0; i < ilo-1; i++)
+            {
+                dcomplex *p = &((dcomplex *)A)[ (i+1) + i*LDA];
+                reset_vector(datatype, (void *)p, N-i-1, 1);
+            }
+            /* Making elements below diagonal for rows ihi+1 to N to Zero*/
+            for(i = ihi; i < N; i++)
+            {
+                dcomplex *p = &((dcomplex *)A)[i];
+                reset_vector(datatype, (void *)p, i, LDA);
+            }
+            break;
+        }
+    }
+}
+
+/* Generate Hessenberg matrix */
+void get_hessenberg_matrix(integer datatype, integer n, void* A, integer lda, void *Z, integer ldz, integer *ilo, integer *ihi, void* scale, integer *info)
+{
+    static integer g_lwork;
+    void *A_save = NULL;
+    void *tau = NULL, *work = NULL;
+    integer lwork;
+    create_matrix(datatype, &A_save, lda, n);
+    create_vector(datatype, &tau, n-1);
+
+    /* Convert matrix according to ILO and IHI values */
+    rand_hess_matrix(datatype, n, A, lda, *ilo, *ihi);
+
+    switch(datatype)
+    {
+        case FLOAT:
+        {
+            /* Make a workspace query the first time through. This will provide us with
+                and ideal workspace size based on an internal block size.*/
+            if(g_lwork <=0)
+            {
+                create_vector(datatype, &work, 1);
+                lwork = -1;
+                fla_lapack_sgehrd(&n, ilo, ihi, NULL, &lda, NULL, work, &lwork, info);
+                if(*info == 0)
+                {
+                    lwork = get_work_value(datatype, work);
+                    free_vector(work);
+                }
+                else
+                {
+                    free_vector(work);
+                    break;
+                }
+            }
+            else
+            {
+                lwork = g_lwork;
+            }
+            create_vector(datatype, &work, lwork);
+
+            /* Call to SGEHRD API to generate hessenberg matrix*/
+            fla_lapack_sgehrd(&n, ilo, ihi, A, &lda, tau, work, &lwork, info);
+            reset_vector(datatype, work, lwork, 1);
+            copy_matrix(datatype, "full", n, n, A, lda, A_save, lda);
+
+            /* Call to SORGHR API to generate orthogonal matrix*/
+            fla_lapack_sorghr(&n, ilo, ihi, A_save, &lda, tau, work, &lwork, info);
+            copy_matrix(datatype, "full", n, n, A_save, lda, Z, ldz);
+
+            /* Convert matrix from SGEHRD to upper hessenberg matrix */
+            convert_upper_hessenberg(datatype, n, A, lda);
+
+            free_vector(work);
+            break;
+        }
+        case DOUBLE:
+        {
+            /* Make a workspace query the first time through. This will provide us with
+                and ideal workspace size based on an internal block size.*/
+            if(g_lwork <=0)
+            {
+                create_vector(datatype, &work, 1);
+                lwork = -1;
+                fla_lapack_dgehrd(&n, ilo, ihi, NULL, &lda, NULL, work, &lwork, info);
+                if(*info == 0)
+                {
+                    lwork = get_work_value(datatype, work);
+                    free_vector(work);
+                }
+                else
+                {
+                    free_vector(work);
+                    break;
+                }
+            }
+            else
+            {
+                lwork = g_lwork;
+            }
+
+            create_vector(datatype, &work, lwork);
+
+            /* Call to DGEHRD API to generate hessenberg matrix*/
+            fla_lapack_dgehrd(&n, ilo, ihi, A, &lda, tau, work, &lwork, info);
+            reset_vector(datatype, work, lwork, 1);
+            copy_matrix(datatype, "full", n, n, A, lda, A_save, lda);
+
+            /* Call to DORGHR API to generate orthogonal matrix*/
+            fla_lapack_dorghr(&n, ilo, ihi, A_save, &lda, tau, work, &lwork, info);
+            copy_matrix(datatype, "full", n, n, A_save, lda, Z, ldz);
+            
+            /* Convert matrix from DGEHRD to upper hessenberg matrix */
+            convert_upper_hessenberg(datatype, n, A, lda);
+
+            free_vector(work);
+            break;
+        }
+        case COMPLEX:
+        {
+            /* Make a workspace query the first time through. This will provide us with
+                and ideal workspace size based on an internal block size.*/
+            if(g_lwork <=0)
+            {
+                create_vector(datatype, &work, 1);
+                lwork = -1;
+                fla_lapack_cgehrd(&n, ilo, ihi, NULL, &lda, NULL, work, &lwork, info);
+                if(*info == 0)
+                {
+                    lwork = get_work_value(datatype, work);
+                    free_vector(work);
+                }
+                else
+                {
+                    free_vector(work);
+                    break;
+                }
+            }
+            else
+            {
+                lwork = g_lwork;
+            }
+            create_vector(datatype, &work, lwork);
+
+            /* Call to CGEHRD API to generate hessenberg matrix*/
+            fla_lapack_cgehrd(&n, ilo, ihi, A, &lda, tau, work, &lwork, info);
+            reset_vector(datatype, work, lwork, 1);
+            copy_matrix(datatype, "full", n, n, A, lda, A_save, lda);
+
+            /* Call to CUNGHR API to generate orthogonal matrix*/
+            fla_lapack_cunghr(&n, ilo, ihi, A_save, &lda, tau, work, &lwork, info);
+            copy_matrix(datatype, "full", n, n, A_save, lda, Z, ldz);
+
+            /* Convert matrix from CGEHRD to upper hessenberg matrix */
+            convert_upper_hessenberg(datatype, n, A, lda);
+
+            free_vector(work);
+            break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+            /* Make a workspace query the first time through. This will provide us with
+                and ideal workspace size based on an internal block size.*/
+            if(g_lwork <=0)
+            {
+                create_vector(datatype, &work, 1);
+                lwork = -1;
+                fla_lapack_zgehrd(&n, ilo, ihi, NULL, &lda, NULL, work, &lwork, info);
+                if(*info == 0)
+                {
+                    lwork = get_work_value(datatype, work);
+                    free_vector(work);
+                }
+                else
+                {
+                    free_vector(work);
+                    break;
+                }
+            }
+            else
+            {
+                lwork = g_lwork;
+            }
+
+            create_vector(datatype, &work, lwork);
+
+            /* Call to ZGEHRD API to generate hessenberg matrix*/
+            fla_lapack_zgehrd(&n, ilo, ihi, A, &lda, tau, work, &lwork, info);
+            reset_vector(datatype, work, lwork, 1);
+            copy_matrix(datatype, "full", n, n, A, lda, A_save, lda);
+
+            /* Call to ZUNGHR API to generate orthogonal matrix*/
+            fla_lapack_zunghr(&n, ilo, ihi, A_save, &lda, tau, work, &lwork, info);
+            copy_matrix(datatype, "full", n, n, A_save, lda, Z, ldz);
+
+            /* Convert matrix from ZGEHRD to upper hessenberg matrix */
+            convert_upper_hessenberg(datatype, n, A, lda);
+
+            free_vector(work);
+            break;
+        }
+    }
+    free_matrix(A_save);
+    free_vector(tau);
+}
+
+/* Convert matrix to upper hessenberg form */
+void convert_upper_hessenberg(integer datatype, integer n, void *A, integer lda)
+{
+    integer i;
+    switch( datatype )
+    {
+        case FLOAT:
+        {
+            for( i = 0; i < n; i++ )
+            {
+                float *p = &((float *)A)[ (i+2) + i*lda];
+                reset_vector(datatype, (void *)p, n-i-2, 1);
+            }
+            break;
+        }
+        case DOUBLE:
+        {
+            for( i = 0; i < n; i++ )
+            {
+                double *p = &((double *)A)[ (i+2) + i*lda];
+                reset_vector(datatype, (void *)p, n-i-2, 1);
+            }
+            break;
+        }
+        case COMPLEX:
+        {
+            for( i = 0; i < n; i++ )
+            {
+                scomplex *p = &((scomplex *)A)[ (i+2) + i*lda];
+                reset_vector(datatype, (void *)p, n-i-2, 1);
+            }
+            break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+            for( i = 0; i < n; i++ )
+            {
+                dcomplex *p = &((dcomplex *)A)[ (i+2) + i*lda];
+                reset_vector(datatype, (void *)p, n-i-2, 1);
+            }
+            break;
+        }
+    }
+}
+
 /* Pack a symmetric matrix in column first order */
 void pack_matrix_lt(integer datatype, void* A, void* B, integer N, integer lda)
 {

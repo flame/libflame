@@ -258,6 +258,19 @@ void validate_stedc(char compz,
     double* residual,
     integer *info);
 
+void validate_hseqr(char* job,
+    char* compz,
+    integer n,
+    void* H,
+    void* H_test,
+    integer ldh,
+    void *Z,
+    void* Z_test,
+    integer ldz,
+    integer datatype,
+    double* residual,
+    integer *info);
+
 void validate_spffrt2(integer n,
     integer ncolm,
     void* A,
