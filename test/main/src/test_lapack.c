@@ -688,6 +688,12 @@ void fla_test_read_sym_eig_params( const char *file_name , test_params_t* params
     fscanf(fp, "%s", &line[0]);
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%s", str);
+        params->eig_sym_paramslist[i].job_seqr = *str;
+        CHECK_LINE_SKIP ();
+    }
+    fscanf(fp, "%s", &line[0]);
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%s", str);
         params->eig_sym_paramslist[i].vect = *str;
         CHECK_LINE_SKIP ();
     }
@@ -749,6 +755,13 @@ void fla_test_read_sym_eig_params( const char *file_name , test_params_t* params
 
     fscanf(fp, "%s", &line[0]);
     for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%s", str);
+        params->eig_sym_paramslist[i].compz_hseqr = *str;
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]);
+    for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].kb) );
         CHECK_LINE_SKIP ();
     }
@@ -770,13 +783,6 @@ void fla_test_read_sym_eig_params( const char *file_name , test_params_t* params
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%s", str);
         params->eig_sym_paramslist[i].side = *str;
-        CHECK_LINE_SKIP ();
-    }
-
-    fscanf(fp, "%s", &line[0]);
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%s", str);
-        params->eig_sym_paramslist[i].job_seqr = *str;
         CHECK_LINE_SKIP ();
     }
 
@@ -823,10 +829,21 @@ void fla_test_read_sym_eig_params( const char *file_name , test_params_t* params
 
     fscanf(fp, "%s", &line[0]);
     for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].threshold_value) );
+        fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].ilo) );
         CHECK_LINE_SKIP ();
     }
 
+    fscanf(fp, "%s", &line[0]);
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].ihi) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]);
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].threshold_value) );
+        CHECK_LINE_SKIP ();
+    }
 
     fclose(fp);
 
