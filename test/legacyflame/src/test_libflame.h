@@ -7,6 +7,7 @@
     directory, or at http://opensource.org/licenses/BSD-3-Clause
 
 */
+#include "FLAME.h"
 
 #define PARAMETERS_FILENAME      "input.global.general"
 #define OPERATIONS_FILENAME      "input.global.operations"

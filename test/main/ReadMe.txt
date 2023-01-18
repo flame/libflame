@@ -39,8 +39,11 @@ execute `make`:
    $ make LIBFLAME=lapack.a LIB_PATH=/usr/local
 
 
-Similarly, user has to provide the path for BLAS library by setting the environment
-varaiable 'LIBBLAS'.
+Similarly, user has to provide the path for BLAS library and header by setting the 
+environment varaiable 'LIBBLAS' and 'BLAS_HEADER_PATH' respectively.
+
+   $ make BLAS_HEADER_PATH=<path to BLAS API prototypes header file> 
+          LIBBLAS=<full path to BLAS library including library file>
 
 When you are ready to compile, simply run `make` from the current directory.
 
@@ -177,6 +180,8 @@ NOTE:
    1) libflame binary(AOCL-LibFlame-Win-MT-dll or -lib)
    2) test_libFLAME_main.exe
    3) config (default path - test/main/config/)
+   4) Specify header file paths of libflame and BLIS to get the LAPACK and BLAS API prototypes respectively
+      example: $ cmake -DBLAS_HEADER_PATH="<path to BLIS header file blis.h>"
 
    To execute the test using libflame shared/dynamic binary, AOCL-LibBlis-Win-MT-dll
    should be in the same path along with the above files.

@@ -29925,20 +29925,6 @@ void SORGHR_( integer *n, integer *ilo, integer *ihi,float  *a, integer *lda, fl
 	sorghr_( n, ilo, ihi, a, lda, tau, work, lwork, info);
 }
 
-int XERBLA_ARRAY(char *srname_array__, integer *srname_len__, integer *info)
-{
-	return xerbla_array_( srname_array__, srname_len__, info);
-}
-
-int xerbla_array(char *srname_array__, integer *srname_len__, integer *info)
-{
-	return xerbla_array_( srname_array__, srname_len__, info);
-}
-
-int XERBLA_ARRAY_(char *srname_array__, integer *srname_len__, integer *info)
-{
-	return xerbla_array_( srname_array__, srname_len__, info);
-}
 void SORMHR( char   *side, char   *trans, integer *m, integer *n, integer *ilo, integer *ihi, float  *a, integer *lda, float  *tau,float  *c, integer *ldc,float  *work, integer *lwork,integer *info)
 {
 	sormhr_( side, trans, m, n, ilo, ihi, a, lda, tau, c, ldc, work, lwork, info);
@@ -30345,6 +30331,21 @@ int sorgtsqr_row(integer *m, integer *n, integer *mb, integer *nb, real *a, inte
 int SORGTSQR_ROW_(integer *m, integer *n, integer *mb, integer *nb, real *a, integer *lda, real *t, integer *ldt, real *work, integer *lwork, integer *info)
 {
 	return sorgtsqr_row_( m, n, mb, nb, a, lda, t, ldt, work, lwork, info);
+}
+
+int XERBLA_ARRAY(char *srname_array__, integer *srname_len__, integer *info)
+{
+		return xerbla_array_( srname_array__, srname_len__, info);
+}
+
+int xerbla_array(char *srname_array__, integer *srname_len__, integer *info)
+{
+	return xerbla_array_( srname_array__, srname_len__, info);
+}
+
+int XERBLA_ARRAY_(char *srname_array__, integer *srname_len__, integer *info)
+{
+	return xerbla_array_( srname_array__, srname_len__, info);
 }
 
 int ZGETSQRHRT(integer *m, integer *n, integer *mb1, integer *nb1, integer *nb2, doublecomplex *a, integer *lda, doublecomplex *t, integer *ldt, doublecomplex *work, integer *lwork, integer *info)

@@ -14,7 +14,7 @@
 void validate_stedc(char compz, integer n, void* D_test, void* Z_input, void* Z, integer ldz, integer datatype, double* residual, integer* info)
 {
     void *lambda = NULL, *zlambda = NULL;
-    void *I = NULL;
+    void *a_temp = NULL;
     void *work = NULL;
     *info = 0;
 
@@ -26,8 +26,8 @@ void validate_stedc(char compz, integer n, void* D_test, void* Z_input, void* Z,
     reset_matrix(datatype, n, n, zlambda, n);
     diagonalize_vector(datatype, D_test, lambda, n, n, n);
 
-    create_matrix(datatype, &I, n, n);
-    reset_matrix(datatype, n, n, I, n);
+    create_matrix(datatype, &a_temp, n, n);
+    reset_matrix(datatype, n, n, a_temp, n);
 
     switch(datatype)
     {
@@ -110,5 +110,5 @@ void validate_stedc(char compz, integer n, void* D_test, void* Z_input, void* Z,
     }
     free_matrix(lambda);
     free_matrix(zlambda);
-    free_matrix(I);
+    free_matrix(a_temp);
 }
