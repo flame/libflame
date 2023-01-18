@@ -115,7 +115,7 @@ endif()
 if(UNIX)
 	SET(COMPILER_DEBUG_FLAG "-g0")
 	set(GCC_WARNING_FLAGS "-Wall -Wno-comment")
-	set(COMPILER_LANGUAGE_FLAGS "-std=c99 -Wno-unused-function -Wno-parentheses -Wfatal-errors ")
+	set(COMPILER_LANGUAGE_FLAGS "-Wno-unused-function -Wno-parentheses -Wfatal-errors ")
 	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${COMPILER_DEBUG_FLAG} ${GCC_WARNING_FLAGS} ${COMPILER_LANGUAGE_FLAGS}")
 endif()
 # Adding missing Macros
@@ -379,6 +379,7 @@ if(BUILD_TEST)
 	endif()
 endif()
 
+add_definitions(-DBLIS1_FROM_LIBFLAME)
 add_definitions(-DLAPACK_COMPLEX_STRUCTURE)
 
 if(WIN32)
@@ -616,6 +617,9 @@ string (APPEND MK_HEADER_DIR_PATHS
 	" ${CMAKE_SOURCE_DIR}/src/lapack/dec/tevd/front/flamec/"
 	" ${CMAKE_SOURCE_DIR}/src/lapack/dec/tevd/n/flamec/"
 	" ${CMAKE_SOURCE_DIR}/src/lapack/dec/tevd/v/flamec/"
+	" ${CMAKE_SOURCE_DIR}/src/lapack/fblas/"
+	" ${CMAKE_SOURCE_DIR}/src/lapack/fblas/front"
+	" ${CMAKE_SOURCE_DIR}/src/lapack/fblas/src"
 	" ${CMAKE_SOURCE_DIR}/src/lapack/inv/spd/front/flamec/"
 	" ${CMAKE_SOURCE_DIR}/src/lapack/inv/tri/front/flamec/"
 	" ${CMAKE_SOURCE_DIR}/src/lapack/inv/tri/ln/flamec/"
@@ -697,7 +701,6 @@ string (APPEND MK_HEADER_DIR_PATHS
 	" ${CMAKE_SOURCE_DIR}/src/lapack/util/app/qutinc/lhfc/flamec/"
 	" ${CMAKE_SOURCE_DIR}/src/lapack/util/app/qutinc/lnfc/flamec/"
 	" ${CMAKE_SOURCE_DIR}/src/lapack/x86/"
-	" ${CMAKE_SOURCE_DIR}/src/lapack/fblas/"
 	" ${CMAKE_SOURCE_DIR}/src/lapack/x86/avx2"
 	" ${CMAKE_SOURCE_DIR}/src/lapack/x86/front"
 	" ${CMAKE_SOURCE_DIR}/src/lapacke/LAPACKE/example/"

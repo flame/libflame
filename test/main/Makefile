@@ -10,7 +10,7 @@ LINKER         := $(CC)
 RM_RF          := rm -rf
 OMP_LIB        := -fopenmp
 CPPFLAGS       := 
-CFLAGS         := -g -O2 -Wall -Wno-comment ${OMP_LIB}
+CFLAGS         := -O2 -Wall -Wno-comment ${OMP_LIB}
 LDFLAGS        := -lm -lpthread $(OMP_LIB)
 
 #
@@ -86,8 +86,10 @@ TEST_SRC_PATH  := src
 TEST_OBJ_PATH  := src/obj
 TEST_VALIDATE_SRC_PATH := validate_src
 TEST_VALIDATE_OBJ_PATH := validate_src/obj
+BLAS_HEADER_PATH :=  
+LAPACK_INC_PATH := ../../include/x86_64-unknown-linux-gnu/
 
-CFLAGS         += -I$(TEST_SRC_PATH) -I$(TEST_VALIDATE_SRC_PATH)
+CFLAGS         += -I$(BLAS_HEADER_PATH) -I$(LAPACK_INC_PATH) -I$(TEST_SRC_PATH) -I$(TEST_VALIDATE_SRC_PATH)
 
 FNAME          := lapack
 

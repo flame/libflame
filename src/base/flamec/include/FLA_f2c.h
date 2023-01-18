@@ -194,7 +194,6 @@ typedef unsigned long long ulongint;	/* system-dependent */
 #endif
 
 /* I/O stuff */
-
 #ifdef f2c_i2
 /* for -i2 */
 typedef short flag;
@@ -202,7 +201,11 @@ typedef short ftnlen;
 typedef short ftnint;
 #else
 typedef long int flag;
-typedef long int ftnlen;
+ #ifndef BLIS1_FROM_LIBFLAME
+   #define ftnlen integer
+ #else
+   typedef long int ftnlen;
+ #endif
 typedef long int ftnint;
 #endif
 
@@ -2081,7 +2084,7 @@ typedef doublereal E_f;	/* real function with -R not specified */
 #define strttp_                  STRTTP 
 #define stzrqf_                  STZRQF 
 #define stzrzf_                  STZRZF 
-#define xerbla_array_            XERBLA_ARRAY  
+#define xerbla_array_            XERBLA_ARRAY
 #define zbbcsd_                  ZBBCSD 
 #define zbdsqr_                  ZBDSQR 
 #define zcgesv_                  ZCGESV 
@@ -4270,7 +4273,7 @@ typedef doublereal E_f;	/* real function with -R not specified */
 #define strttp_                  strttp 
 #define stzrqf_                  stzrqf 
 #define stzrzf_                  stzrzf 
-#define xerbla_array_            xerbla_array  
+#define xerbla_array_            xerbla_array
 #define zbbcsd_                  zbbcsd 
 #define zbdsqr_                  zbdsqr 
 #define zcgesv_                  zcgesv 

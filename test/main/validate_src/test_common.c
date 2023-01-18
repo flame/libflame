@@ -842,7 +842,7 @@ void rand_spd_matrix(integer datatype, char *uplo, void **A, integer m,integer l
 {
     void *sample = NULL;
     void *buff_A = NULL, *buff_B = NULL;
-    void *I = NULL;
+    void *a_temp = NULL;
     char trans_A, trans_B;
 
     create_matrix(datatype, &sample, lda, m);
@@ -852,8 +852,8 @@ void rand_spd_matrix(integer datatype, char *uplo, void **A, integer m,integer l
     reset_matrix(datatype, m, m, buff_A, lda);
     reset_matrix(datatype, m, m, buff_B, lda);
 
-    create_matrix(datatype, &I, lda, m);
-    set_identity_matrix(datatype, m, m, I, lda);
+    create_matrix(datatype, &a_temp, lda, m);
+    set_identity_matrix(datatype, m, m, a_temp, lda);
 
     /* Generate random symmetric matrix */
     rand_sym_matrix(datatype, sample, m, m, lda);
@@ -869,35 +869,35 @@ void rand_spd_matrix(integer datatype, char *uplo, void **A, integer m,integer l
         case FLOAT:
         {
             float beta = m;
-            sgemm_(&trans_A, &trans_B, &m, &m, &m, &s_one, buff_A, &lda, buff_B, &lda, &beta, I, &lda);
+            sgemm_(&trans_A, &trans_B, &m, &m, &m, &s_one, buff_A, &lda, buff_B, &lda, &beta, a_temp, &lda);
             break;
         }
         case DOUBLE:
         {
             double beta = m;
-            dgemm_(&trans_A, &trans_B, &m, &m, &m, &d_one, buff_A, &lda, buff_B, &lda, &beta, I, &lda);
+            dgemm_(&trans_A, &trans_B, &m, &m, &m, &d_one, buff_A, &lda, buff_B, &lda, &beta, a_temp, &lda);
             break;
         }
         case COMPLEX:
         {
             scomplex beta = {m,0};
-            cgemm_(&trans_A, &trans_B, &m, &m, &m, &c_one, buff_A, &lda, buff_B, &lda, &beta, I, &lda);
+            cgemm_(&trans_A, &trans_B, &m, &m, &m, &c_one, buff_A, &lda, buff_B, &lda, &beta, a_temp, &lda);
             break;
         }
         case DOUBLE_COMPLEX:
         {
              dcomplex beta = {m,0};
-             zgemm_(&trans_A, &trans_B, &m, &m, &m, &z_one, buff_A, &lda, buff_B, &lda, &beta, I, &lda);
+             zgemm_(&trans_A, &trans_B, &m, &m, &m, &z_one, buff_A, &lda, buff_B, &lda, &beta, a_temp, &lda);
              break;
         }
     }
-    copy_matrix(datatype, "full", m, m, I, lda, *A, lda);
+    copy_matrix(datatype, "full", m, m, a_temp, lda, *A, lda);
 
     /* free buffers */
     free_matrix(sample);
     free_matrix(buff_A);
     free_matrix(buff_B);
-    free_matrix(I);
+    free_matrix(a_temp);
 
     return;
 }
@@ -1038,20 +1038,20 @@ void create_block_diagonal_matrix(integer datatype,void* wr, void* wi, void* lam
 
 double check_orthogonality(integer datatype, void *A, integer m, integer n, integer lda)
 {
-    void *I = NULL, *work = NULL;
+    void *a_temp = NULL, *work = NULL;
     double resid = 0.;
     integer k;
 
     /* Create Identity matrix to validate orthogonal property of matrix A*/
     if(m <= n)
     {
-        create_matrix(datatype, &I, m, m);
+        create_matrix(datatype, &a_temp, m, m);
         k = m;
     }
     else
     {
-        create_matrix(datatype, &I, n, n);
-        k = n;
+        create_matrix(datatype, &a_temp, n, n);
+	k = n;
     }
     switch(datatype)
     {
@@ -1060,9 +1060,9 @@ double check_orthogonality(integer datatype, void *A, integer m, integer n, inte
             float eps, norm;
             eps = fla_lapack_slamch("P");
 
-            fla_lapack_slaset("full", &k, &k, &s_zero, &s_one, I, &k);
-            sgemm_("T", "N", &k, &k, &m, &s_one, A, &lda, A, &lda, &s_n_one, I, &k);
-            norm = fla_lapack_slange("1", &k, &k, I, &k, work);
+            fla_lapack_slaset("full", &k, &k, &s_zero, &s_one, a_temp, &k);
+            sgemm_("T", "N", &k, &k, &m, &s_one, A, &lda, A, &lda, &s_n_one, a_temp, &k);
+            norm = fla_lapack_slange("1", &k, &k, a_temp, &k, work);
             resid = (double)(norm / (eps * (float)k));
             break;
         }
@@ -1071,9 +1071,9 @@ double check_orthogonality(integer datatype, void *A, integer m, integer n, inte
             double eps, norm;
             eps = fla_lapack_dlamch("P");
 
-            fla_lapack_dlaset("full", &k, &k, &d_zero, &d_one, I, &k);
-            dgemm_("T", "N", &k, &k, &m, &d_one, A, &lda, A, &lda, &d_n_one, I, &k);
-            norm = fla_lapack_dlange("1", &k, &k, I, &k, work);
+            fla_lapack_dlaset("full", &k, &k, &d_zero, &d_one, a_temp, &k);
+            dgemm_("T", "N", &k, &k, &m, &d_one, A, &lda, A, &lda, &d_n_one, a_temp, &k);
+            norm = fla_lapack_dlange("1", &k, &k, a_temp, &k, work);
             resid = (double)(norm / (eps * (float)k));
             break;
         }
@@ -1082,9 +1082,9 @@ double check_orthogonality(integer datatype, void *A, integer m, integer n, inte
             float eps, norm;
             eps = fla_lapack_slamch("P");
 
-            fla_lapack_claset("full", &k, &k, &c_zero, &c_one, I, &k);
-            cgemm_("C", "N", &k, &k, &m, &c_one, A, &lda, A, &lda, &c_n_one, I, &k);
-            norm = fla_lapack_clange("1", &k, &k, I, &k, work);
+            fla_lapack_claset("full", &k, &k, &c_zero, &c_one, a_temp, &k);
+            cgemm_("C", "N", &k, &k, &m, &c_one, A, &lda, A, &lda, &c_n_one, a_temp, &k);
+            norm = fla_lapack_clange("1", &k, &k, a_temp, &k, work);
             resid = (double)(norm / (eps * (float)k));
             break;
         }
@@ -1093,14 +1093,14 @@ double check_orthogonality(integer datatype, void *A, integer m, integer n, inte
             double eps, norm;
             eps = fla_lapack_dlamch("P");
 
-            fla_lapack_zlaset("full", &k, &k, &z_zero, &z_one, I, &k);
-            zgemm_("C", "N", &k, &k, &m, &z_one, A, &lda, A, &lda, &z_n_one, I, &k);
-            norm = fla_lapack_zlange("1", &k, &k, I, &k, work);
+            fla_lapack_zlaset("full", &k, &k, &z_zero, &z_one, a_temp, &k);
+            zgemm_("C", "N", &k, &k, &m, &z_one, A, &lda, A, &lda, &z_n_one, a_temp, &k);
+            norm = fla_lapack_zlange("1", &k, &k, a_temp, &k, work);
             resid = (double)(norm / (eps * (float)k));
             break;
         }
     }
-    free_matrix(I);
+    free_matrix(a_temp);
     return resid;
 }
 

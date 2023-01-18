@@ -25,7 +25,7 @@ if(WIN32)
     set(TEST_FLAGS "${OpenMP_libomp_LIBRARY}")
 elseif(UNIX)
     set(OpenMP_libomp_LIBRARY "-fopenmp" CACHE STRING "openmp library path")
-    set(Test_C_Flags "-g -O2 -Wall -Wno-comment" CACHE STRING "C Flags")
+    set(Test_C_Flags " -O2 -Wall -Wno-comment" CACHE STRING "C Flags")
     set(Test_LD_Flags "-lm -lpthread" CACHE STRING "LD FLags")
     set(TEST_FLAGS "${OpenMP_libomp_LIBRARY} ${Test_C_Flags} ${Test_LD_Flags}")
 message(STATUS "${TEST_FLAGS}")
@@ -33,7 +33,10 @@ else()
 message(STATUS "Openmp: OS NOT found")
 endif()
 
+set(BLAS_HEADER_PATH "" CACHE STRING "BLAS library header path")
+
 add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+remove_definitions(-DBLIS1_FROM_LIBFLAME)
 
 if(ENABLE_ILP64)
     add_definitions(-DFLA_ENABLE_ILP64)
@@ -78,6 +81,12 @@ message("${CMAKE_BUILD_TYPE}")
 
 target_link_libraries("${PROJECT_NAME}" debug "${TEST_FLAGS}" "${CMAKE_PROJECT_NAME}")
 target_link_libraries("${PROJECT_NAME}" optimized "${TEST_FLAGS}" "${CMAKE_PROJECT_NAME}")
+
+if(BLAS_HEADER_PATH)
+   target_include_directories("${PROJECT_NAME}" PRIVATE ${BLAS_HEADER_PATH})
+else(BLAS_HEADER_PATH)
+   message(STATUS "--> BLAS header file path not provided")
+endif()
 
 target_include_directories("${PROJECT_NAME}" PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 target_include_directories("${PROJECT_NAME}" PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/validate_src)

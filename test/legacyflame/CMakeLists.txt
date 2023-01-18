@@ -6,10 +6,11 @@ add_executable(test_libFLAME "")
 if(UNIX)
     set(Legacy_Flame_FLAGS "-lm")
 endif()
-
+add_definitions(-DBLIS1_FROM_LIBFLAME)
 target_link_libraries(test_libFLAME debug "${CMAKE_PROJECT_NAME}" "${Legacy_Flame_FLAGS}")
 
 target_link_libraries(test_libFLAME optimized "${Legacy_Flame_FLAGS}" "${CMAKE_PROJECT_NAME}")
+target_include_directories(test_libFLAME PRIVATE "${CMAKE_SOURCE_DIR}/${BASE_INC_PATH}")
 target_include_directories(test_libFLAME PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 # to move executable to the legacy flame folder LINUX
 if(UNIX)

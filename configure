@@ -8414,32 +8414,7 @@ $as_echo "no" >&6; }
 
 
 
-
-
-
 fla_blis_flags="-DBLIS1_FROM_LIBFLAME"
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 { $as_echo "$as_me:${as_lineno-$LINENO}: checking for error_at_line" >&5
 $as_echo_n "checking for error_at_line... " >&6; }

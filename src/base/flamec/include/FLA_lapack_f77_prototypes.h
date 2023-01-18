@@ -32,7 +32,6 @@
 #define F77_lzspr F77_FUNC( lzspr , LZSPR )
 #define F77_sladiv2 F77_FUNC( sladiv2 , SLADIV2 )
 #define F77_sladiv1 F77_FUNC( sladiv1 , SLADIV1 )
-#define F77_xerbla_array F77_FUNC( xerbla_array , XERBLA_ARRAY )
 #define F77_iparmq F77_FUNC( iparmq, IPARMQ )
 #define F77_ilaenv F77_FUNC( ilaenv , ILAENV )
 #define F77_ieeeck F77_FUNC( ieeeck , IEEECK )
@@ -2131,7 +2130,6 @@ int F77_dladiv1(doublereal* a, doublereal* b, doublereal* c__, doublereal* d__, 
 int F77_lzspr(char* uplo, integer* n, dcomplex* alpha, dcomplex* x, integer* incx, dcomplex* ap, dcomplex* work);
 double F77_sladiv2(float* b, float* c, float* d, float* r, float* t);
 void F77_sladiv1(float* a, float* b, float* c, float* d, float* p, float* q);
-int F77_xerbla_array(char* srname_array__, integer* srname_len__, integer* info);
 int F77_iparmq(integer* ispec, char* name, char* opts, integer* n, integer* ilo, integer* ihi, integer* lwork);
 integer F77_ilaenv(integer* ispec, char* name, char* opts, integer* n1, integer* n2, integer* n3, integer* n4);
 int F77_ieeeck(integer* ispec, float* zero, float* one);

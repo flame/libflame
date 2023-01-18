@@ -20,7 +20,7 @@ void validate_geqp3(integer m_A, integer n_A,
 {
     void *Q = NULL, *R = NULL, *work = NULL;
     integer min_A;
-    integer lwork = -1, TRUE = 1;
+    integer lwork = -1, FLA_TRUE = 1;
     *info = 0;
 
     min_A = fla_min(m_A, n_A);
@@ -52,7 +52,7 @@ void validate_geqp3(integer m_A, integer n_A,
             eps = fla_lapack_slamch("P");
 
             /* permute A using the permuted vector jpvt to get (A * P) */
-            fla_lapack_slapmt(&TRUE, &m_A, &n_A, A, &lda, jpvt);
+            fla_lapack_slapmt(&FLA_TRUE, &m_A, &n_A, A, &lda, jpvt);
             norm_A = fla_lapack_slange("1", &m_A, &n_A, A, &lda, work);
 
             /* sorgrq api generates the Q martrix using the elementary reflectors and scalar
@@ -87,7 +87,7 @@ void validate_geqp3(integer m_A, integer n_A,
 
             eps = fla_lapack_dlamch("P");
             /* permute A using the permuted vector jpvt to get (A * P) */
-            fla_lapack_dlapmt(&TRUE, &m_A, &n_A, A, &lda, jpvt);
+            fla_lapack_dlapmt(&FLA_TRUE, &m_A, &n_A, A, &lda, jpvt);
             norm_A = fla_lapack_dlange("1", &m_A, &n_A, A, &lda, work);
 
             /* dorgrq api generates the Q martrix using the elementary reflectors and scalar
@@ -123,7 +123,7 @@ void validate_geqp3(integer m_A, integer n_A,
 
             eps = fla_lapack_slamch("P");
             /* permute A using the permuted vector jpvt to get (A * P) */
-            fla_lapack_clapmt(&TRUE, &m_A, &n_A, A, &lda, jpvt);
+            fla_lapack_clapmt(&FLA_TRUE, &m_A, &n_A, A, &lda, jpvt);
             norm_A = fla_lapack_clange("1", &m_A, &n_A, A, &lda, work);
 
             /* corgrq api generates the Q martrix using the elementary reflectors and scalar
@@ -160,7 +160,7 @@ void validate_geqp3(integer m_A, integer n_A,
 
             eps = fla_lapack_dlamch("P");
             /* permute A using the permuted vector jpvt to get (A * P) */
-            fla_lapack_zlapmt(&TRUE, &m_A, &n_A, A, &lda, jpvt);
+            fla_lapack_zlapmt(&FLA_TRUE, &m_A, &n_A, A, &lda, jpvt);
             norm_A = fla_lapack_zlange("1", &m_A, &n_A, A, &lda, work);
 
             /* zorgrq api generates the Q martrix using the elementary reflectors and scalar

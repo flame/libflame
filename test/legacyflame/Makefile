@@ -78,7 +78,7 @@ FLA_INC_PATH   := $(INC_PATH)
 LIBFLAME       := $(FLA_LIB_PATH)/libflame.a
 #LIBFLAME       := $(FLA_LIB_PATH)/libflame.so
 
-CFLAGS         += -I$(FLA_INC_PATH) -I$(TEST_SRC_PATH)
+CFLAGS        = -DBLIS1_FROM_LIBFLAME=1 -I$(FLA_INC_PATH) -I$(TEST_SRC_PATH)
 
 FNAME          := libflame
 

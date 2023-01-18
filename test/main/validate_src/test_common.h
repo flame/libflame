@@ -13,31 +13,8 @@
 #include <stdlib.h>
 #include <stdint.h>
 
-#ifndef DATATYPES
-#define DATATYPES
-
-#if defined(FLA_ENABLE_ILP64)
-typedef int64_t integer;
-typedef uint64_t uinteger;
-#else
-typedef int integer;
-typedef unsigned int  uinteger;
-#endif
-
-typedef struct scomplex
-{
-    float real, imag;
-} scomplex;
-
-typedef struct dcomplex
-{
-    double real, imag;
-} dcomplex;
-
-#endif  // DATATYPES
-
+#include "blis.h"
 #include "test_prototype.h"
-#include "validate_common.h"
 
 // global variables
 extern integer i_zero , i_one , i_n_one;
@@ -49,20 +26,6 @@ extern dcomplex z_zero, z_one, z_n_one;
 #define DRAND()  ( ( double ) rand() / ( ( double ) RAND_MAX / 2.0F ) ) - 1.0F;
 #define SRAND()  ( float ) ( ( double ) rand() / ( ( double ) RAND_MAX / 2.0F ) ) - 1.0F;
 
-#define fla_min( x, y )    \
-({                         \
-   __typeof__(x) _x = (x); \
-   __typeof__(y) _y = (y); \
-   _x < _y ? _x : _y;      \
-})
-
-#define fla_max( x, y )    \
-({                         \
-   __typeof__(x) _x = (x); \
-   __typeof__(y) _y = (y); \
-   _x > _y ? _x : _y;      \
-})
-
 // Datatype
 #define CONSTANT          101
 #define INTEGER           102
@@ -71,8 +34,6 @@ extern dcomplex z_zero, z_one, z_n_one;
 #define COMPLEX           105
 #define DOUBLE_COMPLEX    106
 #define INVALID_TYPE     -106
-
-
 
 /* vector functions*/
 void create_vector(integer datatype, void **A, integer M);

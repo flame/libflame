@@ -22,47 +22,32 @@ extern "C" {
 #include <stdlib.h>
 #include <math.h>
 
+#include "FLA_config.h"
+#include "FLA_macro_defs.h"
+#include "FLA_type_defs.h"
+
 // Determine whether or not we are using BLIS from libflame.
-//#define BLIS1_FROM_LIBFLAME
 
-#ifdef BLIS1_FROM_LIBFLAME
 
-  // If using libflame, pull in its header files so that
-  // vector intrinsics-related macro constants are set properly.
-  //#include "FLAME.h"
-  #include "FLA_config.h"
-  #include "FLA_macro_defs.h"
-  #include "FLA_type_defs.h"
+// If using libflame, pull in its header files so that
+// vector intrinsics-related macro constants are set properly.
 
-  // --- Pass-through macros for BLIS ---
-  #ifdef FLA_ENABLE_CBLAS_INTERFACES
+// --- Pass-through macros for BLIS ---
+#ifdef FLA_ENABLE_CBLAS_INTERFACES
     #define BLIS1_ENABLE_CBLAS_INTERFACES
-  #endif
-  #ifdef FLA_ENABLE_WINDOWS_BUILD
-    #define BLIS1_ENABLE_WINDOWS_BUILD
-  #endif
-  #ifdef FLA_ENABLE_UPPERCASE_F77
-    #define BLIS1_ENABLE_UPPERCASE_F77
-  #endif
-  #ifdef FLA_ENABLE_VECTOR_INTRINSICS
-    #define BLIS1_ENABLE_VECTOR_INTRINSICS
-  #endif
-
-  #define BLIS1_VECTOR_INTRINSIC_TYPE FLA_VECTOR_INTRINSIC_TYPE
-
-#else
-
-  // --- BLIS configuration options ---
-
-  // #define BLIS1_ENABLE_USE_OF_FLA_MALLOC
-  // #define BLIS1_ENABLE_CBLAS_INTERFACES
-  // #define BLIS1_ENABLE_WINDOWS_BUILD
-  // #define BLIS1_ENABLE_UPPERCASE_F77
-  // #define BLIS1_ENABLE_VECTOR_INTRINSICS
-  //   #define BLIS1_VECTOR_INTRINSIC_TYPE BLIS1_NO_INTRINSICS
-  //   #define BLIS1_VECTOR_INTRINSIC_TYPE BLIS1_SSE_INTRINSICS
-
 #endif
+#ifdef FLA_ENABLE_WINDOWS_BUILD
+    #define BLIS1_ENABLE_WINDOWS_BUILD
+#endif
+#ifdef FLA_ENABLE_UPPERCASE_F77
+    #define BLIS1_ENABLE_UPPERCASE_F77
+#endif
+#ifdef FLA_ENABLE_VECTOR_INTRINSICS
+    #define BLIS1_ENABLE_VECTOR_INTRINSICS
+#endif
+
+#define BLIS1_VECTOR_INTRINSIC_TYPE FLA_VECTOR_INTRINSIC_TYPE
+
 
 #include "blis_macro_defs.h"
 #include "blis_type_defs.h"
@@ -71,6 +56,7 @@ extern "C" {
 #include "blis_prototypes_query.h"
 #include "blis_prototypes_misc.h"
 
+ 
 #include "blis_prototypes_level1.h"
 #include "blis_prototypes_level2.h"
 #include "blis_prototypes_level3.h"
@@ -80,7 +66,7 @@ extern "C" {
 #include "blis_f77_name_mangling.h"
 
 #ifdef BLIS1_ENABLE_CBLAS_INTERFACES
-  #include "blis_prototypes_cblas.h"
+   #include "blis_prototypes_cblas.h"
 #else
   #include "blis_prototypes_blas.h"
 #endif

@@ -10,6 +10,8 @@
 #ifndef VALIDATE_COMMON_H
 #define VALIDATE_COMMON_H
 
+#include "test_common.h"
+
 void validate_geqrf(integer m_A,
     integer n_A,
     void *A,

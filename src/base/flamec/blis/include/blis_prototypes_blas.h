@@ -115,7 +115,7 @@
 #define F77_ctrsm  F77_FUNC( ctrsm  , CTRSM  )
 #define F77_ztrsm  F77_FUNC( ztrsm  , ZTRSM  )
 
-
+#ifdef BLIS1_FROM_LIBFLAME
 // --- Prototypes --------------------------------------------------------------
 
 // --- Level-1 BLAS prototypes -------------------
@@ -250,3 +250,4 @@ void     F77_dtrsm  ( char* side, char* uplo, char* transa, char* diag, integer*
 void     F77_ctrsm  ( char* side, char* uplo, char* transa, char* diag, integer* m, integer* n, scomplex* alpha, scomplex* a, integer* lda, scomplex* b, integer* ldb );
 void     F77_ztrsm  ( char* side, char* uplo, char* transa, char* diag, integer* m, integer* n, dcomplex* alpha, dcomplex* a, integer* lda, dcomplex* b, integer* ldb );
 
+#endif

@@ -338,8 +338,6 @@ typedef struct
     void (*fp)(integer argc, char** argv, test_params_t *);
 }OPERATIONS;
 
-// external declaration
-extern integer ilaver_(integer *vers_major__, integer *vers_minor__, integer *vers_patch__);
 
 // Prototypes.
 char* fla_test_get_string_for_result( double residual, integer datatype, double thresh );

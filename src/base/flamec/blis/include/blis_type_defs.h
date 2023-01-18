@@ -150,23 +150,4 @@ typedef union
 #endif
 
 
-// --- Complex type definitions -----------------------------------------------
-
-// Only define complex types if they are not already provided by libflame.
-//#ifndef BLIS1_ENABLE_USE_OF_LIBFLAME_TYPES
-#ifndef BLIS1_FROM_LIBFLAME
-
-typedef struct scomplex
-{
-  float real, imag;
-} scomplex;
-
-typedef struct dcomplex
-{
-  double real, imag;
-} dcomplex;
-
-#endif
-
-
 #endif // BLIS1_TYPE_DEFS_H

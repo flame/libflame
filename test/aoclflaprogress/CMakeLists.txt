@@ -12,6 +12,12 @@ endif()
 target_link_libraries(test_libFLAME_aocl debug  "${LDFLAGS}" "${CMAKE_PROJECT_NAME}")
 target_link_libraries(test_libFLAME_aocl optimized "${LDFLAGS}" "${CMAKE_PROJECT_NAME}")
 
+if(BLAS_HEADER_PATH)
+    target_include_directories(test_libFLAME_aocl PRIVATE ${BLAS_HEADER_PATH})
+else(BLAS_HEADER_PATH)
+    message(STATUS "--> BLAS header file path not provided")
+endif()
+
 target_include_directories(test_libFLAME_aocl PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 add_subdirectory(src)

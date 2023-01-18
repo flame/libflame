@@ -45,10 +45,7 @@ extern "C" {
   // Include f2c definitions.
   #include "FLA_f2c.h"
 
-  // Include prototypes for BLAS-like interfaces.
-  #ifndef BLIS1_FROM_LIBFLAME
-    #define BLIS1_FROM_LIBFLAME
-  #endif
+  // Include prototypes for BLAS-like interfaces
   #include "blis1.h"
 
   // Include CPU architecture related declarations 

@@ -412,8 +412,12 @@
 #undef signof
 #define signof( a, b ) ( (b) >= 0 ? (a) : -(a) )
 
-#undef exchange
-#define exchange( a, b, temp ) { temp = a; a = b; b = temp; }
+#ifndef __cplusplus
+
+ #undef exchange
+ #define exchange( a, b, temp ) { temp = a; a = b; b = temp; }
+
+#endif
 
 // --- Other macro definitions -------------------------------------------------
 

@@ -551,7 +551,7 @@ dnl it is being used from within libflame.
 dnl AC_DEFINE(BLIS1_FROM_LIBFLAME,1,
 dnl           [Unconditionally use libflame types (such as complex types) in BLIS.])
 
-dnl Set a preprocessor constant so that the BLIS includes FLAME.h.
+dnl Set preprocessor constant so that the libflame includes internal BLAS prototypes 
 fla_blis_flags="-DBLIS1_FROM_LIBFLAME"
 AC_SUBST(fla_blis_flags)
 
