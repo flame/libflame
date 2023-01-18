@@ -26,7 +26,7 @@
   as returned by SGEQRF.
 */
 
-extern int dorgqr_fla(integer *m, integer *n, integer *k, doublereal * a, integer *lda, doublereal *tau, doublereal *work, integer *lwork, integer *info);
+extern int lapack_dorgqr(integer *m, integer *n, integer *k, doublereal * a, integer *lda, doublereal *tau, doublereal *work, integer *lwork, integer *info);
 extern int sorgqr_fla(integer *m, integer *n, integer *k, real * a, integer *lda, real *tau, real *work, integer *lwork, integer *info);
 
 #define LAPACK_orgqr(prefix, name)                                      \
@@ -133,11 +133,11 @@ LAPACK_orgqr(d, org)
     return fla_error;
 #else
     {
-        dorgqr_fla(m, n, k,
-                   buff_A, ldim_A,
-                   buff_t,
-                   buff_w, lwork,
-                   info);
+        lapack_dorgqr(m, n, k,
+                      buff_A, ldim_A,
+                      buff_t,
+                      buff_w, lwork,
+                      info);
         AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

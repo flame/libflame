@@ -186,7 +186,11 @@
  --work;
  /* Function Body */
  *info = 0;
+#ifdef FLA_ENABLE_AMD_OPT
+ nb = 32;
+#else
  nb = ilaenv_(&c__1, "DGEQRF", " ", m, n, &c_n1, &c_n1);
+#endif
  lwkopt = *n * nb;
  work[1] = (doublereal) lwkopt;
  lquery = *lwork == -1;
@@ -222,7 +226,7 @@
  #if AOCL_FLA_PROGRESS_H
         step_count =0;
      #ifndef FLA_ENABLE_WINDOWS_BUILD
-	if(!aocl_fla_progress_ptr)
+        if(!aocl_fla_progress_ptr)
               aocl_fla_progress_ptr=aocl_fla_progress;
      #endif
  #endif
@@ -306,4 +310,4 @@
  /* End of DGEQRF */
  }
  /* dgeqrf_ */
- 
+
