@@ -11,7 +11,6 @@ ${CMAKE_CURRENT_SOURCE_DIR}/dgeqr2p_fla.c
 ${CMAKE_CURRENT_SOURCE_DIR}/dgeqrf_fla.c
 ${CMAKE_CURRENT_SOURCE_DIR}/dgeqrfp_fla.c
 ${CMAKE_CURRENT_SOURCE_DIR}/dorg2r_fla.c
-${CMAKE_CURRENT_SOURCE_DIR}/dorgqr_fla.c
 ${CMAKE_CURRENT_SOURCE_DIR}/dorm2r_fla.c
 ${CMAKE_CURRENT_SOURCE_DIR}/dormbr_fla.c
 ${CMAKE_CURRENT_SOURCE_DIR}/dormqr_fla.c

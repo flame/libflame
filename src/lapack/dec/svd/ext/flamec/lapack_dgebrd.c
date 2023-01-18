@@ -252,7 +252,12 @@
  /* Function Body */
  *info = 0;
  /* Computing MAX */
- i__1 = 1; i__2 = ilaenv_(&c__1, "DGEBRD", " ", m, n, &c_n1, &c_n1); // , expr subst  
+ i__1 = 1;
+#ifdef FLA_ENABLE_AMD_OPT
+ i__2 = 32;
+#else
+ i__2 = ilaenv_(&c__1, "DGEBRD", " ", m, n, &c_n1, &c_n1); // , expr subst
+#endif
  nb = fla_max(i__1,i__2);
  lwkopt = (*m + *n) * nb;
  work[1] = (doublereal) lwkopt;
@@ -367,4 +372,3 @@
  /* End of DGEBRD */
  }
  /* lapack_dgebrd */
- 

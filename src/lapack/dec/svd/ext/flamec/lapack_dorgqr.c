@@ -158,9 +158,26 @@
  --work;
  /* Function Body */
  *info = 0;
- nb = ilaenv_(&c__1, "DORGQR", " ", m, n, k, &c_n1);
- lwkopt = fla_max(1,*n) * nb;
- work[1] = (doublereal) lwkopt;
+#ifdef FLA_ENABLE_AMD_OPT
+    /* precomputed workspace size */
+    if(*n == 1){
+        work[1] = 32;
+    }
+    else if(*n <= 6)
+    {
+        work[1] = 192;
+    }
+    else
+    {
+        nb = ilaenv_(&c__1, "DORGQR", " ", m, n, k, &c_n1);
+        lwkopt = fla_max(1,*n) * nb;
+        work[1] = (doublereal) lwkopt;
+    }
+#else
+    nb = ilaenv_(&c__1, "DORGQR", " ", m, n, k, &c_n1);
+    lwkopt = fla_max(1,*n) * nb;
+    work[1] = (doublereal) lwkopt;
+#endif
  lquery = *lwork == -1;
  if (*m < 0) {
  *info = -1;
@@ -288,4 +305,3 @@
  /* End of DORGQR */
  }
  /* lapack_dorgqr */
- 

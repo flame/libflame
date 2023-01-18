@@ -127,7 +127,7 @@ int dorgtr_fla(char *uplo, integer *n, doublereal *a, integer * lda, doublereal 
     int xerbla_(char *, integer *);
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
-    int dorgql_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), dorgqr_fla(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
+    int dorgql_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *), lapack_dorgqr(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
     integer lwkopt;
     logical lquery;
     /* -- LAPACK computational routine (version 3.4.0) -- */
@@ -294,7 +294,7 @@ int dorgtr_fla(char *uplo, integer *n, doublereal *a, integer * lda, doublereal 
             i__1 = *n - 1;
             i__2 = *n - 1;
             i__3 = *n - 1;
-            dorgqr_fla(&i__1, &i__2, &i__3, &a[(a_dim1 << 1) + 2], lda, &tau[1], &work[1], lwork, &iinfo);
+            lapack_dorgqr(&i__1, &i__2, &i__3, &a[(a_dim1 << 1) + 2], lda, &tau[1], &work[1], lwork, &iinfo);
         }
     }
     work[1] = (doublereal) lwkopt;

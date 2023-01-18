@@ -249,7 +249,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
     integer iorglq;
     extern int /* Subroutine */
       dorglq_fla(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *),
-      dorgqr_fla(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
+      lapack_dorgqr(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
     integer lorglq, iorgqr, lorgqr;
     extern /* Subroutine */
     int dorbdb1_(), dorbdb2_(), dorbdb3_(), dorbdb4_() ;
@@ -405,7 +405,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             lorbdb = (integer) work[1];
             if (*p >= *m - *p)
             {
-                dorgqr_fla(p, p, q, &u1[u1_offset], ldu1, (doublereal*)&c__0, &work[1], &c_n1, &childinfo);
+                lapack_dorgqr(p, p, q, &u1[u1_offset], ldu1, (doublereal*)&c__0, &work[1], &c_n1, &childinfo);
                 lorgqrmin = fla_max(1,*p);
                 lorgqropt = (integer) work[1];
             }
@@ -413,7 +413,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             {
                 i__1 = *m - *p;
                 i__2 = *m - *p;
-                dorgqr_fla(&i__1, &i__2, q, &u2[u2_offset], ldu2, (doublereal*)&c__0, &work[1] , &c_n1, &childinfo);
+                lapack_dorgqr(&i__1, &i__2, q, &u2[u2_offset], ldu2, (doublereal*)&c__0, &work[1] , &c_n1, &childinfo);
                 /* Computing MAX */
                 i__1 = 1;
                 i__2 = *m - *p; // , expr subst
@@ -450,7 +450,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
                 i__1 = *p - 1;
                 i__2 = *p - 1;
                 i__3 = *p - 1;
-                dorgqr_fla(&i__1, &i__2, &i__3, &u1[(u1_dim1 << 1) + 2], ldu1, (doublereal*)&c__0, &work[1], &c_n1, &childinfo);
+                lapack_dorgqr(&i__1, &i__2, &i__3, &u1[(u1_dim1 << 1) + 2], ldu1, (doublereal*)&c__0, &work[1], &c_n1, &childinfo);
                 /* Computing MAX */
                 i__1 = 1;
                 i__2 = *p - 1; // , expr subst
@@ -461,7 +461,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             {
                 i__1 = *m - *p;
                 i__2 = *m - *p;
-                dorgqr_fla(&i__1, &i__2, q, &u2[u2_offset], ldu2, (doublereal*)&c__0, &work[1] , &c_n1, &childinfo);
+                lapack_dorgqr(&i__1, &i__2, q, &u2[u2_offset], ldu2, (doublereal*)&c__0, &work[1] , &c_n1, &childinfo);
                 /* Computing MAX */
                 i__1 = 1;
                 i__2 = *m - *p; // , expr subst
@@ -480,7 +480,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             lorbdb = (integer) work[1];
             if (*p >= *m - *p - 1)
             {
-                dorgqr_fla(p, p, q, &u1[u1_offset], ldu1, (doublereal*)&c__0, &work[1], &c_n1, &childinfo);
+                lapack_dorgqr(p, p, q, &u1[u1_offset], ldu1, (doublereal*)&c__0, &work[1], &c_n1, &childinfo);
                 lorgqrmin = fla_max(1,*p);
                 lorgqropt = (integer) work[1];
             }
@@ -489,7 +489,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
                 i__1 = *m - *p - 1;
                 i__2 = *m - *p - 1;
                 i__3 = *m - *p - 1;
-                dorgqr_fla(&i__1, &i__2, &i__3, &u2[(u2_dim1 << 1) + 2], ldu2, (doublereal*)&c__0, &work[1], &c_n1, &childinfo);
+                lapack_dorgqr(&i__1, &i__2, &i__3, &u2[(u2_dim1 << 1) + 2], ldu2, (doublereal*)&c__0, &work[1], &c_n1, &childinfo);
                 /* Computing MAX */
                 i__1 = 1;
                 i__2 = *m - *p - 1; // , expr subst
@@ -511,7 +511,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             if (*p >= *m - *p)
             {
                 i__1 = *m - *q;
-                dorgqr_fla(p, p, &i__1, &u1[u1_offset], ldu1, (doublereal*)&c__0, &work[1], & c_n1, &childinfo);
+                lapack_dorgqr(p, p, &i__1, &u1[u1_offset], ldu1, (doublereal*)&c__0, &work[1], & c_n1, &childinfo);
                 lorgqrmin = fla_max(1,*p);
                 lorgqropt = (integer) work[1];
             }
@@ -520,7 +520,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
                 i__1 = *m - *p;
                 i__2 = *m - *p;
                 i__3 = *m - *q;
-                dorgqr_fla(&i__1, &i__2, &i__3, &u2[u2_offset], ldu2, (doublereal*)&c__0, & work[1], &c_n1, &childinfo);
+                lapack_dorgqr(&i__1, &i__2, &i__3, &u2[u2_offset], ldu2, (doublereal*)&c__0, & work[1], &c_n1, &childinfo);
                 /* Computing MAX */
                 i__1 = 1;
                 i__2 = *m - *p; // , expr subst
@@ -574,7 +574,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
         if (wantu1 && *p > 0)
         {
             dlacpy_("L", p, q, &x11[x11_offset], ldx11, &u1[u1_offset], ldu1);
-            dorgqr_fla(p, p, q, &u1[u1_offset], ldu1, &work[itaup1], &work[ iorgqr], &lorgqr, &childinfo);
+            lapack_dorgqr(p, p, q, &u1[u1_offset], ldu1, &work[itaup1], &work[ iorgqr], &lorgqr, &childinfo);
         }
         if (wantu2 && *m - *p > 0)
         {
@@ -582,7 +582,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             dlacpy_("L", &i__1, q, &x21[x21_offset], ldx21, &u2[u2_offset], ldu2);
             i__1 = *m - *p;
             i__2 = *m - *p;
-            dorgqr_fla(&i__1, &i__2, q, &u2[u2_offset], ldu2, &work[itaup2], & work[iorgqr], &lorgqr, &childinfo);
+            lapack_dorgqr(&i__1, &i__2, q, &u2[u2_offset], ldu2, &work[itaup2], & work[iorgqr], &lorgqr, &childinfo);
         }
         if (wantv1t && *q > 0)
         {
@@ -651,7 +651,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             i__1 = *p - 1;
             i__2 = *p - 1;
             i__3 = *p - 1;
-            dorgqr_fla(&i__1, &i__2, &i__3, &u1[(u1_dim1 << 1) + 2], ldu1, &work[ itaup1], &work[iorgqr], &lorgqr, &childinfo);
+            lapack_dorgqr(&i__1, &i__2, &i__3, &u1[(u1_dim1 << 1) + 2], ldu1, &work[ itaup1], &work[iorgqr], &lorgqr, &childinfo);
         }
         if (wantu2 && *m - *p > 0)
         {
@@ -659,7 +659,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             dlacpy_("L", &i__1, q, &x21[x21_offset], ldx21, &u2[u2_offset], ldu2);
             i__1 = *m - *p;
             i__2 = *m - *p;
-            dorgqr_fla(&i__1, &i__2, q, &u2[u2_offset], ldu2, &work[itaup2], & work[iorgqr], &lorgqr, &childinfo);
+            lapack_dorgqr(&i__1, &i__2, q, &u2[u2_offset], ldu2, &work[itaup2], & work[iorgqr], &lorgqr, &childinfo);
         }
         if (wantv1t && *q > 0)
         {
@@ -700,7 +700,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
         if (wantu1 && *p > 0)
         {
             dlacpy_("L", p, q, &x11[x11_offset], ldx11, &u1[u1_offset], ldu1);
-            dorgqr_fla(p, p, q, &u1[u1_offset], ldu1, &work[itaup1], &work[ iorgqr], &lorgqr, &childinfo);
+            lapack_dorgqr(p, p, q, &u1[u1_offset], ldu1, &work[itaup1], &work[ iorgqr], &lorgqr, &childinfo);
         }
         if (wantu2 && *m - *p > 0)
         {
@@ -719,7 +719,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             i__1 = *m - *p - 1;
             i__2 = *m - *p - 1;
             i__3 = *m - *p - 1;
-            dorgqr_fla(&i__1, &i__2, &i__3, &u2[(u2_dim1 << 1) + 2], ldu2, &work[ itaup2], &work[iorgqr], &lorgqr, &childinfo);
+            lapack_dorgqr(&i__1, &i__2, &i__3, &u2[(u2_dim1 << 1) + 2], ldu2, &work[ itaup2], &work[iorgqr], &lorgqr, &childinfo);
         }
         if (wantv1t && *q > 0)
         {
@@ -780,7 +780,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             i__2 = *m - *q - 1;
             dlacpy_("L", &i__1, &i__2, &x11[x11_dim1 + 2], ldx11, &u1[( u1_dim1 << 1) + 2], ldu1);
             i__1 = *m - *q;
-            dorgqr_fla(p, p, &i__1, &u1[u1_offset], ldu1, &work[itaup1], &work[ iorgqr], &lorgqr, &childinfo);
+            lapack_dorgqr(p, p, &i__1, &u1[u1_offset], ldu1, &work[itaup1], &work[ iorgqr], &lorgqr, &childinfo);
         }
         if (wantu2 && *m - *p > 0)
         {
@@ -799,7 +799,7 @@ int dorcsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             i__1 = *m - *p;
             i__2 = *m - *p;
             i__3 = *m - *q;
-            dorgqr_fla(&i__1, &i__2, &i__3, &u2[u2_offset], ldu2, &work[itaup2], &work[iorgqr], &lorgqr, &childinfo);
+            lapack_dorgqr(&i__1, &i__2, &i__3, &u2[u2_offset], ldu2, &work[itaup2], &work[iorgqr], &lorgqr, &childinfo);
         }
         if (wantv1t && *q > 0)
         {

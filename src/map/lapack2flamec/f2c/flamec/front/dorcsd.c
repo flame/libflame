@@ -315,7 +315,7 @@ int dorcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     int dorglq_fla(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
     integer lorgqrworkopt, iorglq;
     extern /* Subroutine */
-    int dorgqr_fla(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
+    int lapack_dorgqr(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, integer *);
     integer iorgqr;
     char signst[1], transt[1];
     logical lquery, wantv1t, wantv2t;
@@ -533,7 +533,7 @@ int dorcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
         i__5 = 1;
         i__6 = *m - *q; // , expr subst
         i__4 = fla_max(i__5,i__6);
-        dorgqr_fla(&i__1, &i__2, &i__3, &u1[u1_offset], &i__4, &u1[u1_offset], & work[1], &c_n1, &childinfo);
+        lapack_dorgqr(&i__1, &i__2, &i__3, &u1[u1_offset], &i__4, &u1[u1_offset], & work[1], &c_n1, &childinfo);
         lorgqrworkopt = (integer) work[1];
         /* Computing MAX */
         i__1 = 1;
@@ -632,7 +632,7 @@ int dorcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
         if (wantu1 && *p > 0)
         {
             dlacpy_("L", p, q, &x11[x11_offset], ldx11, &u1[u1_offset], ldu1);
-            dorgqr_fla(p, p, q, &u1[u1_offset], ldu1, &work[itaup1], &work[ iorgqr], &lorgqrwork, info);
+            lapack_dorgqr(p, p, q, &u1[u1_offset], ldu1, &work[itaup1], &work[ iorgqr], &lorgqrwork, info);
         }
         if (wantu2 && *m - *p > 0)
         {
@@ -640,7 +640,7 @@ int dorcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
             dlacpy_("L", &i__1, q, &x21[x21_offset], ldx21, &u2[u2_offset], ldu2);
             i__1 = *m - *p;
             i__2 = *m - *p;
-            dorgqr_fla(&i__1, &i__2, q, &u2[u2_offset], ldu2, &work[itaup2], & work[iorgqr], &lorgqrwork, info);
+            lapack_dorgqr(&i__1, &i__2, q, &u2[u2_offset], ldu2, &work[itaup2], & work[iorgqr], &lorgqrwork, info);
         }
         if (wantv1t && *q > 0)
         {
@@ -712,7 +712,7 @@ int dorcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
             i__1 = *q - 1;
             i__2 = *q - 1;
             i__3 = *q - 1;
-            dorgqr_fla(&i__1, &i__2, &i__3, &v1t[(v1t_dim1 << 1) + 2], ldv1t, & work[itauq1], &work[iorgqr], &lorgqrwork, info);
+            lapack_dorgqr(&i__1, &i__2, &i__3, &v1t[(v1t_dim1 << 1) + 2], ldv1t, & work[itauq1], &work[iorgqr], &lorgqrwork, info);
         }
         if (wantv2t && *m - *q > 0)
         {
@@ -724,7 +724,7 @@ int dorcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
             i__1 = *m - *q;
             i__2 = *m - *q;
             i__3 = *m - *q;
-            dorgqr_fla(&i__1, &i__2, &i__3, &v2t[v2t_offset], ldv2t, &work[ itauq2], &work[iorgqr], &lorgqrwork, info);
+            lapack_dorgqr(&i__1, &i__2, &i__3, &v2t[v2t_offset], ldv2t, &work[ itauq2], &work[iorgqr], &lorgqrwork, info);
         }
     }
     /* Compute the CSD of the matrix in bidiagonal-block form */
