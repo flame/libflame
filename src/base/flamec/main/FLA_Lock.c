@@ -85,5 +85,79 @@ void FLA_Lock_destroy( FLA_Lock* fla_lock_ptr )
 }
 
 
+void FLA_RWLock_init( FLA_RWLock* fla_lock_ptr )
+/*----------------------------------------------------------------------------
+
+   FLA_Lock_init
+
+----------------------------------------------------------------------------*/
+{
+#if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
+  omp_init_lock( &(fla_lock_ptr->lock) );
+#elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
+  pthread_rwlock_init( &(fla_lock_ptr->lock), NULL );
+#endif
+}
+
+
+void FLA_RWLock_write_acquire( FLA_RWLock* fla_lock_ptr )
+/*----------------------------------------------------------------------------
+
+   FLA_Lock_acquire
+
+----------------------------------------------------------------------------*/
+{
+#if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
+  omp_set_lock( &(fla_lock_ptr->lock) );
+#elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
+  pthread_rwlock_wrlock( &(fla_lock_ptr->lock) );
+#endif
+}
+
+
+void FLA_RWLock_read_acquire( FLA_RWLock* fla_lock_ptr )
+/*----------------------------------------------------------------------------
+
+   FLA_Lock_read_acquire
+
+----------------------------------------------------------------------------*/
+{
+#if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
+  omp_set_lock( &(fla_lock_ptr->lock) );
+#elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
+  pthread_rwlock_rdlock( &(fla_lock_ptr->lock) );
+#endif
+}
+
+
+void FLA_RWLock_release( FLA_RWLock* fla_lock_ptr )
+/*----------------------------------------------------------------------------
+
+   FLA_Lock_release
+
+----------------------------------------------------------------------------*/
+{
+#if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
+  omp_unset_lock( &(fla_lock_ptr->lock) );
+#elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
+  pthread_rwlock_unlock( &(fla_lock_ptr->lock) );
+#endif
+}
+
+
+void FLA_RWLock_destroy( FLA_RWLock* fla_lock_ptr )
+/*----------------------------------------------------------------------------
+
+   FLA_Lock_destroy
+
+----------------------------------------------------------------------------*/
+{
+#if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
+  omp_destroy_lock( &(fla_lock_ptr->lock) );
+#elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
+  pthread_rwlock_destroy( &(fla_lock_ptr->lock) );
+#endif
+}
+
 #endif // FLA_ENABLE_MULTITHREADING
 

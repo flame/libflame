@@ -141,6 +141,135 @@ may result in undefined behavior.
 \end{params}
 \end{flaspec}
 
+% --- FLA_RWLock_init() ----------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_RWLock_init( FLA_RWLock* lock_ptr );
+\end{verbatim}
+\purpose{
+Initialize the read/write lock structure pointed to by \flalockns.
+Upon successful return, the state of the lock becomes initialized and
+unlocked.
+}
+\notes{
+Attempting to initialize a lock that has already been initialized (and
+not yet released) may result in undefined behavior.
+}
+\begin{checks}
+\checkitem
+\lockptr may not be \fnullns.
+%\itemvsp
+%\checkitem
+%
+\end{checks}
+\begin{params}
+\parameter{\flalockp}{lock\_ptr}{A pointer to an \flalock structure.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_RWLock_write_acquire() -------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_RWLock_write_acquire( FLA_RWLock* lock_ptr );
+\end{verbatim}
+\purpose{
+Attempt to acquire the write lock pointed to by \lockptrns.
+If the lock is unavailable (if its state is already locked), the call
+blocks and returns only upon successful acquisition of the lock.
+}
+\begin{checks}
+\checkitem
+\lockptr may not be \fnullns.
+%\itemvsp
+%\checkitem
+%
+\end{checks}
+\begin{params}
+\parameter{\flalockp}{lock\_ptr}{A pointer to an \flalock structure.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_RWLock_read_acquire() -------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_RWLock_read_acquire( FLA_RWLock* lock_ptr );
+\end{verbatim}
+\purpose{
+Attempt to acquire the read lock pointed to by \lockptrns (if supported).
+If read-only functionality is not supported, will fall back to a regular/write
+lock acquire.
+If the lock is write locked by another thread, the call
+blocks and returns only upon successful acquisition of the read lock.
+If the lock is read locked by another thread, the call will suceed.
+}
+\begin{checks}
+\checkitem
+\lockptr may not be \fnullns.
+%\itemvsp
+%\checkitem
+%
+\end{checks}
+\begin{params}
+\parameter{\flalockp}{lock\_ptr}{A pointer to an \flalock structure.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_RWLock_release() -------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_RWLock_release( FLA_RWLock* lock_ptr )
+\end{verbatim}
+\purpose{
+Release the lock associated with the structure pointed to by \flalockns.
+}
+\notes{
+Attempting to release a lock that is uninitialized or that has not yet
+been acquired may result in undefined behavior.
+}
+\begin{checks}
+\checkitem
+\lockptr may not be \fnullns.
+%\itemvsp
+%\checkitem
+%
+\end{checks}
+\begin{params}
+\parameter{\flalockp}{lock\_ptr}{A pointer to an \flalock structure.}
+\end{params}
+\end{flaspec}
+
+% --- FLA_RWLock_destroy() -------------------------------------------------------
+
+\begin{flaspec}
+\begin{verbatim}
+void FLA_RWLock_destroy( FLA_RWLock* lock_ptr );
+\end{verbatim}
+\purpose{
+Destroy the the lock structure pointed to by \flalockns.
+This causes all system resources associated with the lock that had been
+previously allocated by {\tt FLA\_Lock\_init()} to be freed.
+Upon returning, the state of the lock becomes uninitialized.
+}
+\notes{
+Attempting to destroy a lock that is currently in the locked state
+may result in undefined behavior.
+}
+\begin{checks}
+\checkitem
+\lockptr may not be \fnullns.
+%\itemvsp
+%\checkitem
+%
+\end{checks}
+\begin{params}
+\parameter{\flalockp}{lock\_ptr}{A pointer to an \flalock structure.}
+\end{params}
+\end{flaspec}
+
 
 
 
