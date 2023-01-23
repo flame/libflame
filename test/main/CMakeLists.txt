@@ -1,10 +1,11 @@
 ###############################################################################
-# Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 ###############################################################################
 cmake_minimum_required(VERSION 3.0)
 project(test_libFLAME_main)
 
 option (ENABLE_ILP64 "Enable ILP64" OFF)
+
 option (ENABLE_MEM_UNALIGNED "Allocate unaligned memory" OFF)
 set (CMAKE_ARCHIVE_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
 set (CMAKE_LIBRARY_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/bin")
@@ -21,6 +22,37 @@ add_definitions(-D_CRT_SECURE_NO_WARNINGS)
 if(ENABLE_ILP64)
 add_definitions(-DFLA_ENABLE_ILP64)
 endif()
+
+#
+# --- Flag to enable uppercase/lowercase API calling conventions --------------
+#     Set API_CALL_CONVENTION = upper  for uppercase without underscore
+#                             = upper_ for uppercase with underscore
+#                             = lower  for lowercase without underscore
+#                             = default for default case (lower_)
+#     NOTE: LAPACK default is lowercase with underscore
+#
+set(API_CALL_CONVENTION "default" CACHE STRING "API calling convention")
+message(API_CALL_CONVENTION: ${API_CALL_CONVENTION})
+
+#
+# -- API_CALLING_CONVENTION set to "upper" enables uppercase w/o underscore ----
+#
+if (${API_CALL_CONVENTION} MATCHES "upper")
+   add_definitions(-DUPPER=1)
+endif()
+#
+# -- API_CALLING_CONVENTION set to "upper_" enables uppercase w/ underscore ----
+#
+if (${API_CALL_CONVENTION} MATCHES "upper_")
+   add_definitions(-DUPPER_=1)
+endif()
+#
+# -- API_CALLING_CONVENTION set to "lower" enables lowercase w/o underscore ----
+#
+if (${API_CALL_CONVENTION} MATCHES "lower")
+   add_definitions(-DLOWER=1)
+endif()
+
 if(ENABLE_MEM_UNALIGNED)
 add_definitions(-DFLA_MEM_UNALIGNED)
 endif()

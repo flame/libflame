@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "test_lapack.h"
@@ -241,25 +241,25 @@ void invoke_getrf(integer datatype, integer *m, integer *n, void *a, integer *ld
     {
         case FLOAT:
         {
-            sgetrf_(m, n, a, lda, ipiv, info);
+            fla_lapack_sgetrf(m, n, a, lda, ipiv, info);
             break;
         }
 
         case DOUBLE:
         {
-            dgetrf_(m, n, a, lda, ipiv, info);
+            fla_lapack_dgetrf(m, n, a, lda, ipiv, info);
             break;
         }
 
         case COMPLEX:
         {
-            cgetrf_(m, n, a, lda, ipiv, info);
+            fla_lapack_cgetrf(m, n, a, lda, ipiv, info);
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            zgetrf_(m, n, a, lda, ipiv, info);
+            fla_lapack_zgetrf(m, n, a, lda, ipiv, info);
             break;
         }
     }

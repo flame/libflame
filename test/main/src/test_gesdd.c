@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 
@@ -330,25 +330,25 @@ void invoke_gesdd(integer datatype, char* jobz, integer* m, integer* n, void* a,
     {
         case FLOAT:
         {
-            sgesdd_(jobz, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, iwork, info);
+            fla_lapack_sgesdd(jobz, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, iwork, info);
             break;
         }
 
         case DOUBLE:
         {
-            dgesdd_(jobz, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, iwork, info);
+            fla_lapack_dgesdd(jobz, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, iwork, info);
             break;
         }
 
         case COMPLEX:
         {
-            cgesdd_(jobz, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, rwork, iwork, info);
+            fla_lapack_cgesdd(jobz, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, rwork, iwork, info);
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            zgesdd_(jobz, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, rwork, iwork, info);
+            fla_lapack_zgesdd(jobz, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, rwork, iwork, info);
             break;
         }
     }

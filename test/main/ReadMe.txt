@@ -159,3 +159,25 @@ below.
    To enable allocate dynamic memory unaligned we need to set below flags while building main testsuite 
        Windows -- FLA_MEM_UNALIGNED is set, unaligned memory is allocated
        Linux   -- MEM_UNALN=1 
+
+
+## Enabling non-default API naming convention in testsuite:
+
+    LAPACK's default API naming convention is lowercase with underscore. (Ex: getrf_ )
+    For enabling UPPERCASE w/, w/o underscore and LOWERCASE w/o underscore API naming
+    convention, set API_CALLING_CONVENTION to "upper_","upper","lower" strings respectively
+    in test/main/Makefile.
+    Testsuite default calling convention is lower_  
+
+
+NOTE:
+
+   To execute test on windows, its recommended to keep the following in same path/folder:
+
+   1) libflame binary(AOCL-LibFlame-Win-MT-dll or -lib)
+   2) test_libFLAME_main.exe
+   3) config (default path - test/main/config/)
+
+   To execute the test using libflame shared/dynamic binary, AOCL-LibBlis-Win-MT-dll
+   should be in the same path along with the above files.
+

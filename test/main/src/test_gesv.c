@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "test_lapack.h"
@@ -248,25 +248,25 @@ void invoke_gesv(integer datatype, integer *n, integer *nrhs, void *a, integer *
     {
         case FLOAT:
         {
-            sgesv_(n, nrhs, a, lda, ipiv, b, ldb, info);
+            fla_lapack_sgesv(n, nrhs, a, lda, ipiv, b, ldb, info);
             break;
         }
         
         case DOUBLE:
         {
-            dgesv_(n, nrhs, a, lda, ipiv, b, ldb, info);
+            fla_lapack_dgesv(n, nrhs, a, lda, ipiv, b, ldb, info);
             break;
         }
 
         case COMPLEX:
         {
-            cgesv_(n, nrhs, a, lda, ipiv, b, ldb, info);
+            fla_lapack_cgesv(n, nrhs, a, lda, ipiv, b, ldb, info);
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            zgesv_(n, nrhs, a, lda, ipiv, b, ldb, info);
+            fla_lapack_zgesv(n, nrhs, a, lda, ipiv, b, ldb, info);
             break;
         }
     }

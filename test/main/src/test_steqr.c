@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "test_lapack.h"
@@ -295,22 +295,22 @@ void invoke_steqr(integer datatype, char* compz, integer* n, void* z, integer* l
     {
         case FLOAT:
         {
-            ssteqr_(compz, n, d, e, z, ldz, work, info);
+            fla_lapack_ssteqr(compz, n, d, e, z, ldz, work, info);
             break;
         }
         case DOUBLE:
         {
-            dsteqr_(compz, n, d, e, z, ldz, work, info);
+            fla_lapack_dsteqr(compz, n, d, e, z, ldz, work, info);
             break;
         }
         case COMPLEX:
         {
-            csteqr_(compz, n, d, e, z, ldz, work, info);
+            fla_lapack_csteqr(compz, n, d, e, z, ldz, work, info);
             break;
         }
         case DOUBLE_COMPLEX:
         {
-            zsteqr_(compz, n, d, e, z, ldz, work, info);
+            fla_lapack_zsteqr(compz, n, d, e, z, ldz, work, info);
             break;
         }
     }

@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "test_lapack.h"
@@ -251,22 +251,22 @@ void invoke_potrs(char* uplo, integer datatype,
     {
         case FLOAT:
         {
-            spotrs_(uplo, n, nrhs, A, lda, B, ldb, info);
+            fla_lapack_spotrs(uplo, n, nrhs, A, lda, B, ldb, info);
             break;
         }
         case DOUBLE:
         {
-            dpotrs_(uplo, n, nrhs, A, lda, B, ldb, info);
+            fla_lapack_dpotrs(uplo, n, nrhs, A, lda, B, ldb, info);
             break;
         }
         case COMPLEX:
         {
-            cpotrs_(uplo, n, nrhs, A, lda, B, ldb, info);
+            fla_lapack_cpotrs(uplo, n, nrhs, A, lda, B, ldb, info);
             break;
         }
         case DOUBLE_COMPLEX:
         {
-            zpotrs_(uplo, n, nrhs, A, lda, B, ldb, info);
+            fla_lapack_zpotrs(uplo, n, nrhs, A, lda, B, ldb, info);
             break;
         }
     }

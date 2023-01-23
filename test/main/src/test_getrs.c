@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "test_lapack.h"
@@ -272,25 +272,25 @@ void invoke_getrs(integer datatype, char* trans, integer *n, integer *nrhs, void
     {
         case FLOAT:
         {
-            sgetrs_(trans, n, nrhs, a, lda, ipiv, b, ldb, info);
+            fla_lapack_sgetrs(trans, n, nrhs, a, lda, ipiv, b, ldb, info);
             break;
         }
 
         case DOUBLE:
         {
-            dgetrs_(trans, n, nrhs, a, lda, ipiv, b, ldb, info);
+            fla_lapack_dgetrs(trans, n, nrhs, a, lda, ipiv, b, ldb, info);
             break;
         }
 
         case COMPLEX:
         {
-            cgetrs_(trans, n, nrhs, a, lda, ipiv, b, ldb, info);
+            fla_lapack_cgetrs(trans, n, nrhs, a, lda, ipiv, b, ldb, info);
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            zgetrs_(trans, n, nrhs, a, lda, ipiv, b, ldb, info);
+            fla_lapack_zgetrs(trans, n, nrhs, a, lda, ipiv, b, ldb, info);
             break;
         }
     }

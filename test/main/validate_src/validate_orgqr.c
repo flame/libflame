@@ -1,5 +1,5 @@
 /******************************************************************************
-* Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+* Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 *******************************************************************************/
 
 /*! @file validate_orgqr.c
@@ -32,14 +32,14 @@ void validate_orgqr(integer m,
         case FLOAT:
         {
             float norm, norm_A, eps, resid1, resid2;
-            eps = slamch_("P");
+            eps = fla_lapack_slamch("P");
 
             /* Test 1
                compute norm(R - Q'*A) / (N * norm(A) * EPS)*/
-            norm_A = slange_("1", &k, &k, R, &k, work);
+            norm_A = fla_lapack_slange("1", &k, &k, R, &k, work);
             sgemm_("T", "N", &k, &k, &m, &s_n_one, Q, &m, A, &lda, &s_one, R, &k);
 
-            norm = slange_("1", &k, &k, R, &k, work);
+            norm = fla_lapack_slange("1", &k, &k, R, &k, work);
             resid1 = norm/(eps * norm_A * (float)k);
 
             /* Test 2
@@ -52,14 +52,14 @@ void validate_orgqr(integer m,
         case DOUBLE:
         {
             double norm, norm_A, eps, resid1, resid2;
-            eps = dlamch_("P");
+            eps = fla_lapack_dlamch("P");
 
             /* Test 1
                compute norm(R - Q'*A) / (N * norm(A) * EPS)*/
-            norm_A = dlange_("1", &k, &k, R, &k, work);
+            norm_A = fla_lapack_dlange("1", &k, &k, R, &k, work);
             dgemm_("T", "N", &k, &k, &m, &d_n_one, Q, &m, A, &lda, &d_one, R, &k);
 
-            norm = dlange_("1", &k, &k, R, &k, work);
+            norm = fla_lapack_dlange("1", &k, &k, R, &k, work);
             resid1 = norm/(eps * norm_A * (double)k);
 
             /* Test 2
@@ -72,14 +72,14 @@ void validate_orgqr(integer m,
         case COMPLEX:
         {
             float norm, norm_A, eps, resid1, resid2;
-            eps = slamch_("P");
+            eps = fla_lapack_slamch("P");
 
             /* Test 1
                compute norm(R - Q'*A) / (N * norm(A) * EPS)*/
-            norm_A = clange_("1", &k, &k, R, &k, work);
+            norm_A = fla_lapack_clange("1", &k, &k, R, &k, work);
             cgemm_("C", "N", &k, &k, &m, &c_n_one, Q, &m, A, &lda, &c_one, R, &k);
 
-            norm = clange_("1", &k, &k, R, &k, work);
+            norm = fla_lapack_clange("1", &k, &k, R, &k, work);
             resid1 = norm/(eps * norm_A * (double)k);
 
             /* Test 2
@@ -92,14 +92,14 @@ void validate_orgqr(integer m,
         case DOUBLE_COMPLEX:
         {
             double norm, norm_A, eps, resid1, resid2;
-            eps = dlamch_("P");
+            eps = fla_lapack_dlamch("P");
 
             /* Test 1
                compute norm(R - Q'*A) / (N * norm(A) * EPS)*/
-            norm_A = zlange_("1", &k, &k, R, &k, work);
+            norm_A = fla_lapack_zlange("1", &k, &k, R, &k, work);
             zgemm_("C", "N", &k, &k, &m, &z_n_one, Q, &m, A, &lda, &z_one, R, &k);
 
-            norm = zlange_("1", &k, &k, R, &k, work);
+            norm = fla_lapack_zlange("1", &k, &k, R, &k, work);
             resid1 = norm/(eps * norm_A * (double)k);
 
             /* Test 2

@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "test_lapack.h"
@@ -373,22 +373,22 @@ void invoke_stedc(integer datatype, char* compz, integer* n, void* D, void* E, v
     {
         case FLOAT:
         {
-            sstedc_(compz, n, D, E, Z, ldz, work, lwork, iwork, liwork, info);
+            fla_lapack_sstedc(compz, n, D, E, Z, ldz, work, lwork, iwork, liwork, info);
             break;
         }
         case DOUBLE:
         {
-            dstedc_(compz, n, D, E, Z, ldz, work, lwork, iwork, liwork, info);
+            fla_lapack_dstedc(compz, n, D, E, Z, ldz, work, lwork, iwork, liwork, info);
             break;
         }
         case COMPLEX:
         {
-            cstedc_(compz, n, D, E, Z, ldz, work, lwork, rwork, lrwork, iwork, liwork, info);
+            fla_lapack_cstedc(compz, n, D, E, Z, ldz, work, lwork, rwork, lrwork, iwork, liwork, info);
             break;
         }
         case DOUBLE_COMPLEX:
         {
-            zstedc_(compz, n, D, E, Z, ldz, work, lwork, rwork, lrwork, iwork, liwork, info);
+            fla_lapack_zstedc(compz, n, D, E, Z, ldz, work, lwork, rwork, lrwork, iwork, liwork, info);
             break;
         }
     }

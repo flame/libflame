@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "test_lapack.h"
@@ -318,25 +318,25 @@ void invoke_orgqr(integer datatype, integer* m, integer* n, integer *min_A, void
     {
         case FLOAT:
         {
-            sorgqr_(m, n, n, a, lda, tau, work, lwork, info);
+            fla_lapack_sorgqr(m, n, n, a, lda, tau, work, lwork, info);
             break;
         }
 
         case DOUBLE:
         {
-            dorgqr_(m, n, n, a, lda, tau, work, lwork, info);
+            fla_lapack_dorgqr(m, n, n, a, lda, tau, work, lwork, info);
             break;
         }
 
         case COMPLEX:
         {
-            cungqr_(m, n, n, a, lda, tau, work, lwork, info);
+            fla_lapack_cungqr(m, n, n, a, lda, tau, work, lwork, info);
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            zungqr_(m, n, n, a, lda, tau, work, lwork, info);
+            fla_lapack_zungqr(m, n, n, a, lda, tau, work, lwork, info);
             break;
         }
     }

@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "test_lapack.h"
@@ -278,25 +278,25 @@ void invoke_getri(integer datatype, integer *n, void *a, integer *lda, integer *
     {
         case FLOAT:
         {
-            sgetri_(n, a, lda, ipiv, work, lwork, info);
+            fla_lapack_sgetri(n, a, lda, ipiv, work, lwork, info);
             break;
         }
         
         case DOUBLE:
         {
-            dgetri_(n, a, lda, ipiv, work, lwork, info);
+            fla_lapack_dgetri(n, a, lda, ipiv, work, lwork, info);
             break;
         }
 
         case COMPLEX:
         {
-            cgetri_(n, a, lda, ipiv, work, lwork, info);
+            fla_lapack_cgetri(n, a, lda, ipiv, work, lwork, info);
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            zgetri_(n, a, lda, ipiv, work, lwork, info);
+            fla_lapack_zgetri(n, a, lda, ipiv, work, lwork, info);
             break;
         }
     }
