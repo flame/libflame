@@ -1,4 +1,4 @@
-/* ../netlib/ctgsja.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* ctgsja.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static complex c_b1 =
@@ -369,7 +369,6 @@ LDQ >= 1 otherwise. */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date November 2011 */
 /* > \ingroup complexOTHERcomputational */
 /* > \par Further Details: */
 /* ===================== */
@@ -395,16 +394,8 @@ V1**H *B13*Q1 = S1*R1, */
 /* Subroutine */
 int ctgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer *n, integer *k, integer *l, complex *a, integer * lda, complex *b, integer *ldb, real *tola, real *tolb, real *alpha, real *beta, complex *u, integer *ldu, complex *v, integer *ldv, complex *q, integer *ldq, complex *work, integer *ncycle, integer * info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if LF_AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-#if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"ctgsja inputs: jobu %c, jobv %c, jobq %c, m %lld, p %lld, n %lld, k %lld, l %lld, lda %lld, ldb %lld, ldu %lld, ldv %lld, ldq %lld",*jobu, *jobv, *jobq, *m, *p, *n, *k, *l, *lda, *ldb, *ldu, *ldv, *ldq);
-#else
-    snprintf(buffer, 256,"ctgsja inputs: jobu %c, jobv %c, jobq %c, m %d, p %d, n %d, k %d, l %d, lda %d, ldb %d, ldu %d, ldv %d, ldq %d",*jobu, *jobv, *jobq, *m, *p, *n, *k, *l, *lda, *ldb, *ldu, *ldv, *ldq);
-#endif
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ctgsja inputs: jobu %c, jobv %c, jobq %c, m %" FLA_IS ", p %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", l %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldu %" FLA_IS ", ldv %" FLA_IS ", ldq %" FLA_IS ", ncycle %" FLA_IS "",*jobu, *jobv, *jobq, *m, *p, *n, *k, *l, *lda, *ldb, *ldu, *ldv, *ldq, *ncycle);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, u_dim1, u_offset, v_dim1, v_offset, i__1, i__2, i__3, i__4;
     real r__1;
@@ -433,10 +424,10 @@ int ctgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     integer kcycle;
     extern /* Subroutine */
     int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), xerbla_(char *, integer *), slartg_(real *, real *, real *, real *, real * );
-    /* -- LAPACK computational routine (version 3.4.0) -- */
+    real hugenum;
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* November 2011 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -474,6 +465,7 @@ int ctgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     q -= q_offset;
     --work;
     /* Function Body */
+    hugenum = 3.40282347e38f;
     initu = lsame_(jobu, "I");
     wantu = initu || lsame_(jobu, "U");
     initv = lsame_(jobv, "I");
@@ -529,7 +521,7 @@ int ctgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     {
         i__1 = -(*info);
         xerbla_("CTGSJA", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize U, V and Q, if necessary */
@@ -748,9 +740,9 @@ L50: /* If ERROR <= MIN(TOLA,TOLB), then the algorithm has converged. */
         a1 = a[i__2].r;
         i__2 = i__ + (*n - *l + i__) * b_dim1;
         b1 = b[i__2].r;
-        if (a1 != 0.f)
+        gamma = b1 / a1;
+        if (gamma <= hugenum && gamma >= -hugenum)
         {
-            gamma = b1 / a1;
             if (gamma < 0.f)
             {
                 i__2 = *l - i__ + 1;
@@ -810,7 +802,7 @@ L50: /* If ERROR <= MIN(TOLA,TOLB), then the algorithm has converged. */
     }
 L100:
     *ncycle = kcycle;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of CTGSJA */
 }

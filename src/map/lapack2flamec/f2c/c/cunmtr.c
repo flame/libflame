@@ -1,8 +1,9 @@
-/* ../netlib/cunmtr.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* cunmtr.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
 static integer c_n1 = -1;
+static integer c__2 = 2;
 /* > \brief \b CUNMTR */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -163,20 +164,14 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date November 2011 */
 /* > \ingroup complexOTHERcomputational */
 /* ===================================================================== */
 /* Subroutine */
 int cunmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, complex *a, integer *lda, complex *tau, complex *c__, integer *ldc, complex *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if LF_AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"cunmtr inputs: side %c, uplo %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS ", lwork %" FLA_IS "",*side, *uplo, *trans, *m, *n, *lda, *ldc, *lwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
-    /* System generated locals */
-    integer a_dim1, a_offset, c_dim1, c_offset, i__2, i__3;
+    AOCL_DTL_TRACE_LOG_INIT
+    address a__1[2];
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1[2], i__2, i__3;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -194,10 +189,9 @@ int cunmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, complex
     int cunmql_(char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, integer *, integer *), cunmqr_(char *, char *, integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, integer *, integer *);
     integer lwkopt;
     logical lquery;
-    /* -- LAPACK computational routine (version 3.4.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* November 2011 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -231,12 +225,12 @@ int cunmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, complex
     if (left)
     {
         nq = *m;
-        nw = *n;
+        nw = fla_max(1,*n);
     }
     else
     {
         nq = *n;
-        nw = *m;
+        nw = fla_max(1,*m);
     }
     if (! left && ! lsame_(side, "R"))
     {
@@ -266,7 +260,7 @@ int cunmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, complex
     {
         *info = -10;
     }
-    else if (*lwork < fla_max(1,nw) && ! lquery)
+    else if (*lwork < nw && ! lquery)
     {
         *info = -12;
     }
@@ -302,7 +296,7 @@ int cunmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, complex
                 nb = ilaenv_(&c__1, "CUNMQR", ch__1, m, &i__2, &i__3, &c_n1);
             }
         }
-        lwkopt = fla_max(1,nw) * nb;
+        lwkopt = nw * nb;
         work[1].r = (real) lwkopt;
         work[1].i = 0.f; // , expr subst
     }
@@ -310,12 +304,12 @@ int cunmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, complex
     {
         i__2 = -(*info);
         xerbla_("CUNMTR", &i__2);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -323,7 +317,7 @@ int cunmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, complex
     {
         work[1].r = 1.f;
         work[1].i = 0.f; // , expr subst
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (left)
@@ -360,7 +354,7 @@ int cunmtr_(char *side, char *uplo, char *trans, integer *m, integer *n, complex
     }
     work[1].r = (real) lwkopt;
     work[1].i = 0.f; // , expr subst
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of CUNMTR */
 }

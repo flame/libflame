@@ -1,4 +1,4 @@
-/* ../netlib/cuncsd2by1.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* cuncsd2by1.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c_n1 = -1;
@@ -190,9 +190,10 @@ static logical c_false = FALSE_;
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
 the routine */
-/* > only calculates the optimal size of the WORK array, returns */
-/* > this value as the first entry of the work array, and no error */
-/* > message related to LWORK is issued by XERBLA. */
+/* > only calculates the optimal size of the WORK and RWORK */
+/* > arrays, returns this value as the first entry of the WORK */
+/* > and RWORK array, respectively, and no error message related */
+/* > to LWORK or LRWORK is issued by XERBLA. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RWORK */
@@ -211,11 +212,12 @@ the routine */
 /* > LRWORK is INTEGER */
 /* > The dimension of the array RWORK. */
 /* > */
-/* > If LRWORK = -1, then a workspace query is assumed;
+/* > If LRWORK=-1, then a workspace query is assumed;
 the routine */
-/* > only calculates the optimal size of the RWORK array, returns */
-/* > this value as the first entry of the work array, and no error */
-/* > message related to LRWORK is issued by XERBLA. */
+/* > only calculates the optimal size of the WORK and RWORK */
+/* > arrays, returns this value as the first entry of the WORK */
+/* > and RWORK array, respectively, and no error message related */
+/* > to LWORK or LRWORK is issued by XERBLA. */
 /* > \endverbatim */
 /* > \param[out] IWORK */
 /* > \verbatim */
@@ -241,22 +243,13 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date June 2016 */
 /* > \ingroup complexOTHERcomputational */
 /* ===================================================================== */
 /* Subroutine */
 int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, integer *q, complex *x11, integer *ldx11, complex *x21, integer *ldx21, real *theta, complex *u1, integer *ldu1, complex *u2, integer *ldu2, complex *v1t, integer *ldv1t, complex * work, integer *lwork, real *rwork, integer *lrwork, integer *iwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if LF_AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-#if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cuncsd2by1 inputs: jobu1 %c, jobu2 %c, jobv1t %c, m %lld, p %lld, q %lld, ldx11 %lld, ldx21 %lld, ldu1 %lld, ldu2 %lld, ldv1t %lld, lwork %lld, lrwork %lld",*jobu1, *jobu2, *jobv1t, *m, *p, *q, *ldx11, *ldx21, *ldu1, *ldu2, *ldv1t, *lwork, *lrwork);
-#else
-    snprintf(buffer, 256,"cuncsd2by1 inputs: jobu1 %c, jobu2 %c, jobv1t %c, m %d, p %d, q %d, ldx11 %d, ldx21 %d, ldu1 %d, ldu2 %d, ldv1t %d, lwork %d, lrwork %d",*jobu1, *jobu2, *jobv1t, *m, *p, *q, *ldx11, *ldx21, *ldu1, *ldu2, *ldv1t, *lwork, *lrwork);
-#endif
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cuncsd2by1 inputs: jobu1 %c, jobu2 %c, jobv1t %c, m %" FLA_IS ", p %" FLA_IS ", q %" FLA_IS ", ldx11 %" FLA_IS ", ldx21 %" FLA_IS ", ldu1 %" FLA_IS ", ldu2 %" FLA_IS ", ldv1t %" FLA_IS "",*jobu1, *jobu2, *jobv1t, *m, *p, *q, *ldx11, *ldx21, *ldu1, *ldu2, *ldv1t);
     /* System generated locals */
     integer u1_dim1, u1_offset, u2_dim1, u2_offset, v1t_dim1, v1t_offset, x11_dim1, x11_offset, x21_dim1, x21_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -286,10 +279,9 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
     extern /* Subroutine */
     int cunbdb3_(integer *, integer *, integer *, complex *, integer *, complex *, integer *, real *, real *, complex *, complex *, complex *, complex *, integer *, integer *), cunbdb4_(integer *, integer *, integer *, complex *, integer *, complex *, integer *, real *, real *, complex *, complex *, complex *, complex *, complex *, integer *, integer *);
     logical wantv1t;
-    /* -- LAPACK computational routine (version 3.7.1) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* June 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -334,7 +326,7 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
     wantu1 = lsame_(jobu1, "Y");
     wantu2 = lsame_(jobu2, "Y");
     wantv1t = lsame_(jobv1t, "Y");
-    lquery = *lwork == -1;
+    lquery = *lwork == -1 || *lrwork == -1;
     if (*m < 0)
     {
         *info = -4;
@@ -649,17 +641,21 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
         {
             *info = -19;
         }
+        if (*lrwork < lrworkmin && ! lquery)
+        {
+            *info = -21;
+        }
     }
     if (*info != 0)
     {
         i__1 = -(*info);
         xerbla_("CUNCSD2BY1", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     lorgqr = *lwork - iorgqr + 1;
@@ -711,7 +707,8 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             cunglq_(&i__1, &i__2, &i__3, &v1t[(v1t_dim1 << 1) + 2], ldv1t, & work[itauq1], &work[iorglq], &lorglq, &childinfo);
         }
         /* Simultaneously diagonalize X11 and X21. */
-        cbbcsd_(jobu1, jobu2, jobv1t, "N", "N", m, p, q, &theta[1], &rwork[ iphi], &u1[u1_offset], ldu1, &u2[u2_offset], ldu2, &v1t[ v1t_offset], ldv1t, cdum, &c__1, &rwork[ib11d], &rwork[ib11e], &rwork[ib12d], &rwork[ib12e], &rwork[ib21d], &rwork[ib21e], & rwork[ib22d], &rwork[ib22e], &rwork[ibbcsd], &lbbcsd, & childinfo);
+        i__1 = *lrwork - ibbcsd + 1;
+        cbbcsd_(jobu1, jobu2, jobv1t, "N", "N", m, p, q, &theta[1], &rwork[ iphi], &u1[u1_offset], ldu1, &u2[u2_offset], ldu2, &v1t[ v1t_offset], ldv1t, cdum, &c__1, &rwork[ib11d], &rwork[ib11e], &rwork[ib12d], &rwork[ib12e], &rwork[ib21d], &rwork[ib21e], & rwork[ib22d], &rwork[ib22e], &rwork[ibbcsd], &i__1, & childinfo);
         /* Permute rows and columns to place zero submatrices in */
         /* preferred positions */
         if (*q > 0 && wantu2)
@@ -885,6 +882,11 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
         i__1 = lorbdb - *m;
         cunbdb4_(m, p, q, &x11[x11_offset], ldx11, &x21[x21_offset], ldx21, & theta[1], &rwork[iphi], &work[itaup1], &work[itaup2], &work[ itauq1], &work[iorbdb], &work[iorbdb + *m], &i__1, &childinfo) ;
         /* Accumulate Householder reflectors */
+        if (wantu2 && *m - *p > 0)
+        {
+            i__1 = *m - *p;
+            ccopy_(&i__1, &work[iorbdb + *p], &c__1, &u2[u2_offset], &c__1);
+        }
         if (wantu1 && *p > 0)
         {
             ccopy_(p, &work[iorbdb], &c__1, &u1[u1_offset], &c__1);
@@ -905,8 +907,6 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
         }
         if (wantu2 && *m - *p > 0)
         {
-            i__1 = *m - *p;
-            ccopy_(&i__1, &work[iorbdb + *p], &c__1, &u2[u2_offset], &c__1);
             i__1 = *m - *p;
             for (j = 2;
                     j <= i__1;
@@ -968,7 +968,7 @@ int cuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             }
         }
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of CUNCSD2BY1 */
 }

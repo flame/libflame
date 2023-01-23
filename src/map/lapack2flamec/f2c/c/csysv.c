@@ -1,4 +1,4 @@
-/* ../netlib/csysv.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* csysv.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c_n1 = -1;
@@ -156,22 +156,13 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date November 2011 */
 /* > \ingroup complexSYsolve */
 /* ===================================================================== */
 /* Subroutine */
 int csysv_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, integer *ipiv, complex *b, integer *ldb, complex *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if LF_AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-#if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"csysv inputs: uplo %c, n %lld, nrhs %lld, lda %lld, ldb %lld, lwork %lld",*uplo, *n, *nrhs, *lda, *ldb, *lwork);
-#else
-    snprintf(buffer, 256,"csysv inputs: uplo %c, n %d, nrhs %d, lda %d, ldb %d, lwork %d",*uplo, *n, *nrhs, *lda, *ldb, *lwork);
-#endif
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("csysv inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ldb);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */
@@ -182,10 +173,9 @@ int csysv_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, inte
     logical lquery;
     extern /* Subroutine */
     int csytrs_(char *, integer *, integer *, complex *, integer *, integer *, complex *, integer *, integer *), csytrs2_(char *, integer *, integer *, complex *, integer *, integer *, complex *, integer *, complex *, integer *);
-    /* -- LAPACK driver routine (version 3.4.0) -- */
+    /* -- LAPACK driver routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* November 2011 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -246,7 +236,7 @@ int csysv_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, inte
         else
         {
             csytrf_(uplo, n, &a[a_offset], lda, &ipiv[1], &work[1], &c_n1, info);
-            lwkopt = work[1].r;
+            lwkopt = (integer) work[1].r;
         }
         work[1].r = (real) lwkopt;
         work[1].i = 0.f; // , expr subst
@@ -255,12 +245,12 @@ int csysv_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, inte
     {
         i__1 = -(*info);
         xerbla_("CSYSV ", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Compute the factorization A = U*D*U**T or A = L*D*L**T. */
@@ -281,7 +271,7 @@ int csysv_(char *uplo, integer *n, integer *nrhs, complex *a, integer *lda, inte
     }
     work[1].r = (real) lwkopt;
     work[1].i = 0.f; // , expr subst
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of CSYSV */
 }

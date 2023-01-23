@@ -1,4 +1,4 @@
-/* ../netlib/cheevd.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* cheevd.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -187,7 +187,6 @@ i off-diagonal elements of an intermediate */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup complexHEeigen */
 /* > \par Further Details: */
 /* ===================== */
@@ -203,17 +202,8 @@ i off-diagonal elements of an intermediate */
 /* Subroutine */
 int cheevd_(char *jobz, char *uplo, integer *n, complex *a, integer *lda, real *w, complex *work, integer *lwork, real *rwork, integer *lrwork, integer *iwork, integer *liwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if LF_AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-#if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cheevd inputs: jobz %c, uplo %c, n %lld, lda %lld, lwork %lld, lrwork %lld, liwork %lld",*jobz, *uplo, *n, *lda, *lwork, *lrwork, *liwork);
-#else
-    snprintf(buffer, 256,"cheevd inputs: jobz %c, uplo %c, n %d, lda %d, lwork %d, lrwork %d, liwork %d",*jobz, *uplo, *n, *lda, *lwork, *lrwork, *liwork);
-#endif
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
-    /* System generated locals */
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cheevd inputs: jobz %c, uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*jobz, *uplo, *n, *lda);
     integer a_dim1, a_offset, i__1, i__2;
     real r__1;
     /* Builtin functions */
@@ -255,12 +245,11 @@ int cheevd_(char *jobz, char *uplo, integer *n, complex *a, integer *lda, real *
     int cunmtr_(char *, char *, char *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, complex *, integer *, integer *);
     integer llwork;
     real smlnum;
-    extern real sroundup_lwork(integer *);
     logical lquery;
-    /* -- LAPACK driver routine (version 3.7.0) -- */
+    extern real sroundup_lwork(integer *);
+    /* -- LAPACK driver routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -336,7 +325,7 @@ int cheevd_(char *jobz, char *uplo, integer *n, complex *a, integer *lda, real *
             }
             /* Computing MAX */
             i__1 = lwmin;
-            i__2 = *n + ilaenv_(&c__1, "CHETRD", uplo, n, &c_n1, &c_n1, &c_n1); // , expr subst
+            i__2 = *n + *n * ilaenv_(&c__1, "CHETRD", uplo, n, &c_n1, &c_n1, &c_n1); // , expr subst
             lopt = fla_max(i__1,i__2);
             lropt = lrwmin;
             liopt = liwmin;
@@ -362,18 +351,18 @@ int cheevd_(char *jobz, char *uplo, integer *n, complex *a, integer *lda, real *
     {
         i__1 = -(*info);
         xerbla_("CHEEVD", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -386,7 +375,7 @@ int cheevd_(char *jobz, char *uplo, integer *n, complex *a, integer *lda, real *
             a[i__1].r = 1.f;
             a[i__1].i = 0.f; // , expr subst
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants. */
@@ -456,7 +445,7 @@ int cheevd_(char *jobz, char *uplo, integer *n, complex *a, integer *lda, real *
     work[1].i = 0.f; // , expr subst
     rwork[1] = sroundup_lwork(&lropt);
     iwork[1] = liopt;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of CHEEVD */
 }

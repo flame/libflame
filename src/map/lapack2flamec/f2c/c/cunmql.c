@@ -1,4 +1,4 @@
-/* ../netlib/cunmql.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* cunmql.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -64,7 +64,7 @@ static integer c__65 = 65;
 /* > TRANS is CHARACTER*1 */
 /* > = 'N': No transpose, apply Q;
 */
-/* > = 'C': Transpose, apply Q**H. */
+/* > = 'C': Conjugate transpose, apply Q**H. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] M */
@@ -160,19 +160,13 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup complexOTHERcomputational */
 /* ===================================================================== */
 /* Subroutine */
 int cunmql_(char *side, char *trans, integer *m, integer *n, integer *k, complex *a, integer *lda, complex *tau, complex *c__, integer *ldc, complex *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if LF_AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"cunmql inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS ", lwork %" FLA_IS "",*side, *trans, *m, *n, *k, *lda, *ldc, *lwork);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
-    /* System generated locals */
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cunmql inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS "",*side, *trans, *m, *n, *k, *lda, *ldc);
     address a__1[2];
     integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3[2], i__4, i__5;
     char ch__1[2];
@@ -190,10 +184,9 @@ int cunmql_(char *side, char *trans, integer *m, integer *n, integer *k, complex
     logical notran;
     integer ldwork, lwkopt;
     logical lquery;
-    /* -- LAPACK computational routine (version 3.7.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -290,18 +283,18 @@ int cunmql_(char *side, char *trans, integer *m, integer *n, integer *k, complex
     {
         i__1 = -(*info);
         xerbla_("CUNMQL", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Determine the block size */
@@ -309,7 +302,7 @@ int cunmql_(char *side, char *trans, integer *m, integer *n, integer *k, complex
     ldwork = nw;
     if (nb > 1 && nb < *k)
     {
-        if (*lwork < nw * nb + 4160)
+        if (*lwork < lwkopt)
         {
             nb = (*lwork - 4160) / ldwork;
             /* Computing MAX */
@@ -377,8 +370,8 @@ int cunmql_(char *side, char *trans, integer *m, integer *n, integer *k, complex
         }
     }
     work[1].r = (real) lwkopt;
-    work[1].i = 0.f; // , expr subst
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    work[1].i = 0.f; // , expr subst    
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of CUNMQL */
 }

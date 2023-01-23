@@ -1,4 +1,4 @@
-/* claqz0.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* claqz0.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static complex c_b1 =
@@ -38,13 +38,13 @@ static integer c__1 = 1;
 /* $ INFO ) */
 /* IMPLICIT NONE */
 /* Arguments */
-/* CHARACTER, INTENT( IN ) :: WANTS, WANTQ, WANTZ */
-/* INTEGER, INTENT( IN ) :: N, ILO, IHI, LDA, LDB, LDQ, LDZ, LWORK, */
+/* CHARACTER WANTS, WANTQ, WANTZ */
+/* INTEGER N, ILO, IHI, LDA, LDB, LDQ, LDZ, LWORK, */
 /* $ REC */
-/* INTEGER, INTENT( OUT ) :: INFO */
-/* COMPLEX, INTENT( INOUT ) :: A( LDA, * ), B( LDB, * ), Q( LDQ, * ), */
+/* INTEGER INFO */
+/* COMPLEX, INTENT( INOUT ) A( LDA, * ), B( LDB, * ), Q( LDQ, * ), */
 /* $ Z( LDZ, * ), ALPHA( * ), BETA( * ), WORK( * ) */
-/* REAL, INTENT( OUT ) :: RWORK( * ) */
+/* REAL RWORK( * ) */
 /* .. */
 /* > \par Purpose: */
 /* ============= */
@@ -311,15 +311,17 @@ int claqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     integer norm_info__, ld, ns, n_deflated__, nw, sweep_info__, nbr;
     logical ilq, ilz;
     real ulp;
-    integer nsr, nwr, nmin;
+    integer nsr, nwr;
+    real btol;
+    integer nmin;
     complex temp;
     extern /* Subroutine */
     int crot_(integer *, complex *, integer *, complex *, integer *, real *, complex *);
     integer n_undeflated__;
     extern logical lsame_(char *, char *);
-    integer iiter, maxit;
-    real tempr;
-    integer rcost, istop;
+    integer iiter;
+    real bnorm;
+    integer maxit, rcost, istop;
     extern /* Subroutine */
     int claqz2_(logical *, logical *, logical *, integer *, integer *, integer *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *, integer *, complex *, complex *, complex *, integer *, complex *, integer *, complex *, integer *, real *, integer *, integer *), claqz3_(logical *, logical *, logical *, integer *, integer *, integer *, integer *, integer *, complex *, complex *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, complex *, integer *, integer *);
     integer itemp1, itemp2;
@@ -328,6 +330,7 @@ int claqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     integer nibble;
     extern real slamch_(char *);
     integer nblock;
+    extern real clanhs_(char *, integer *, complex *, integer *, real *);
     extern /* Subroutine */
     int claset_(char *, integer *, integer *, complex *, complex *, complex *, integer *), clartg_(complex *, complex *, real *, complex *, complex *);
     real safmin;
@@ -347,7 +350,6 @@ int claqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     logical ilschur;
     integer nshifts, istartm;
     /* Arguments */
-    /* const for wants,wantq, wantz, n, ilo, ihi, lda, ldb, ldq, ldz, lwork,rec */
     /* Parameters */
     /* Local scalars */
     /* External Functions */
@@ -556,6 +558,12 @@ int claqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     slabad_(&safmin, &safmax);
     ulp = slamch_("PRECISION");
     smlnum = safmin * ((real) (*n) / ulp);
+    i__1 = *ihi - *ilo + 1;
+    bnorm = clanhs_("F", &i__1, &b[*ilo + *ilo * b_dim1], ldb, &rwork[1]);
+    /* Computing MAX */
+    r__1 = safmin;
+    r__2 = ulp * bnorm; // , expr subst
+    btol = fla_max(r__1,r__2);
     istart = *ilo;
     istop = *ihi;
     maxit = (*ihi - *ilo + 1) * 30;
@@ -642,19 +650,7 @@ int claqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
         k = istop;
         while(k >= istart2)
         {
-            tempr = 0.f;
-            if (k < istop)
-            {
-                tempr += c_abs(&b[k + (k + 1) * b_dim1]);
-            }
-            if (k > istart2)
-            {
-                tempr += c_abs(&b[k - 1 + k * b_dim1]);
-            }
-            /* Computing MAX */
-            r__1 = smlnum;
-            r__2 = ulp * tempr; // , expr subst
-            if (c_abs(&b[k + k * b_dim1]) < fla_max(r__1,r__2))
+            if (c_abs(&b[k + k * b_dim1]) < btol)
             {
                 /* A diagonal element of B is negligable, move it */
                 /* to the top and deflate it */
@@ -827,4 +823,3 @@ L80:
     return 0;
 }
 /* claqz0_ */
-

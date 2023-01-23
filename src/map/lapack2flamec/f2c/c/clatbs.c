@@ -1,4 +1,4 @@
-/* ../netlib/clatbs.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* clatbs.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -104,7 +104,7 @@ static real c_b36 = .5f;
 /* > in the j-th column of the array AB as follows: */
 /* > if UPLO = 'U', AB(kd+1+i-j,j) = A(i,j) for fla_max(1,j-kd)<=i<=j;
 */
-/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=fla_min(n,j+kd). */
+/* > if UPLO = 'L', AB(1+i-j,j) = A(i,j) for j<=i<=min(n,j+kd). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDAB */
@@ -156,7 +156,6 @@ static real c_b36 = .5f;
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date September 2012 */
 /* > \ingroup complexOTHERauxiliary */
 /* > \par Further Details: */
 /* ===================== */
@@ -280,11 +279,9 @@ int clatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, inte
     extern /* Subroutine */
     int ctbsv_(char *, char *, char *, integer *, integer *, complex *, integer *, complex *, integer *), caxpy_(integer *, complex *, complex *, integer *, complex *, integer *);
     logical upper;
-    extern /* Subroutine */
-    int slabad_(real *, real *);
     extern integer icamax_(integer *, complex *, integer *);
     extern /* Complex */
-    VOID cladiv_(complex *, complex *, complex *);
+    VOID cladiv_f2c_(complex *, complex *, complex *);
     extern real slamch_(char *);
     extern /* Subroutine */
     int csscal_(integer *, real *, complex *, integer *), xerbla_(char *, integer *);
@@ -295,10 +292,9 @@ int clatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, inte
     integer jfirst;
     real smlnum;
     logical nounit;
-    /* -- LAPACK auxiliary routine (version 3.4.2) -- */
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* September 2012 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -367,18 +363,15 @@ int clatbs_(char *uplo, char *trans, char *diag, char * normin, integer *n, inte
         return 0;
     }
     /* Quick return if possible */
+    *scale = 1.f;
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Determine machine dependent parameters to control overflow. */
-    smlnum = slamch_("Safe minimum");
+    smlnum = slamch_("Safe minimum") / slamch_("Precision");
     bignum = 1.f / smlnum;
-    slabad_(&smlnum, &bignum);
-    smlnum /= slamch_("Precision");
-    bignum = 1.f / smlnum;
-    *scale = 1.f;
     if (lsame_(normin, "N"))
     {
         /* Compute the 1-norm of each column, not including the diagonal. */
@@ -729,7 +722,7 @@ L90:
                     /* 0 < f2c_abs(A(j,j)) <= SMLNUM: */
                     if (xj > tjj * bignum)
                     {
-                        /* Scale x by (1/f2c_abs(x(j)))*f2c_abs(A(j,j))*BIGNUM */
+                        /* Scale x by (1/abs(x(j)))*abs(A(j,j))*BIGNUM */
                         /* to avoid overflow when dividing by A(j,j). */
                         rec = tjj * bignum / xj;
                         if (cnorm[j] > 1.f)
@@ -777,7 +770,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                     rec = 1.f / xj;
                     if (cnorm[j] > (bignum - xmax) * rec)
                     {
-                        /* Scale x by 1/(2*f2c_abs(x(j))). */
+                        /* Scale x by 1/(2*abs(x(j))). */
                         rec *= .5f;
                         csscal_(n, &rec, &x[1], &c__1);
                         *scale *= rec;
@@ -794,8 +787,8 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                     if (j > 1)
                     {
                         /* Compute the update */
-                        /* x(fla_max(1,j-kd):j-1) := x(fla_max(1,j-kd):j-1) - */
-                        /* x(j)* A(fla_max(1,j-kd):j-1,j) */
+                        /* x (fla_max(1,j-kd):j-1) := x (fla_max(1,j-kd):j-1) - */
+                        /* x(j)* A (fla_max(1,j-kd):j-1,j) */
                         /* Computing MIN */
                         i__3 = *kd;
                         i__4 = j - 1; // , expr subst
@@ -815,8 +808,8 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                 else if (j < *n)
                 {
                     /* Compute the update */
-                    /* x(j+1:fla_min(j+kd,n)) := x(j+1:fla_min(j+kd,n)) - */
-                    /* x(j) * A(j+1:fla_min(j+kd,n),j) */
+                    /* x(j+1:min(j+kd,n)) := x(j+1:min(j+kd,n)) - */
+                    /* x(j) * A(j+1:min(j+kd,n),j) */
                     /* Computing MIN */
                     i__3 = *kd;
                     i__4 = *n - j; // , expr subst
@@ -1012,7 +1005,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                         {
                             if (xj > tjj * bignum)
                             {
-                                /* Scale X by 1/f2c_abs(x(j)). */
+                                /* Scale X by 1/abs(x(j)). */
                                 rec = 1.f / xj;
                                 csscal_(n, &rec, &x[1], &c__1);
                                 *scale *= rec;
@@ -1029,7 +1022,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                         /* 0 < f2c_abs(A(j,j)) <= SMLNUM: */
                         if (xj > tjj * bignum)
                         {
-                            /* Scale x by (1/f2c_abs(x(j)))*f2c_abs(A(j,j))*BIGNUM. */
+                            /* Scale x by (1/abs(x(j)))*abs(A(j,j))*BIGNUM. */
                             rec = tjj * bignum / xj;
                             csscal_(n, &rec, &x[1], &c__1);
                             *scale *= rec;
@@ -1256,7 +1249,7 @@ L145:
                         {
                             if (xj > tjj * bignum)
                             {
-                                /* Scale X by 1/f2c_abs(x(j)). */
+                                /* Scale X by 1/abs(x(j)). */
                                 rec = 1.f / xj;
                                 csscal_(n, &rec, &x[1], &c__1);
                                 *scale *= rec;
@@ -1273,7 +1266,7 @@ L145:
                         /* 0 < f2c_abs(A(j,j)) <= SMLNUM: */
                         if (xj > tjj * bignum)
                         {
-                            /* Scale x by (1/f2c_abs(x(j)))*f2c_abs(A(j,j))*BIGNUM. */
+                            /* Scale x by (1/abs(x(j)))*abs(A(j,j))*BIGNUM. */
                             rec = tjj * bignum / xj;
                             csscal_(n, &rec, &x[1], &c__1);
                             *scale *= rec;

@@ -1,4 +1,4 @@
-/* ../netlib/cggbal.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* cggbal.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -157,7 +157,6 @@ and second, applying a diagonal similarity */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date November 2011 */
 /* > \ingroup complexGBcomputational */
 /* > \par Further Details: */
 /* ===================== */
@@ -172,16 +171,8 @@ and second, applying a diagonal similarity */
 /* Subroutine */
 int cggbal_(char *job, integer *n, complex *a, integer *lda, complex *b, integer *ldb, integer *ilo, integer *ihi, real *lscale, real *rscale, real *work, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if LF_AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-#if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cggbal inputs: job %c, n %lld, lda %lld, ldb %lld",*job, *n, *lda, *ldb);
-#else
-    snprintf(buffer, 256,"cggbal inputs: job %c, n %d, lda %d, ldb %d",*job, *n, *lda, *ldb);
-#endif
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cggbal inputs: job %c, n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS "",*job, *n, *lda, *ldb, *ilo, *ihi);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
     real r__1, r__2, r__3;
@@ -218,10 +209,9 @@ int cggbal_(char *job, integer *n, complex *a, integer *lda, complex *b, integer
     extern /* Subroutine */
     int csscal_(integer *, real *, complex *, integer *), xerbla_(char *, integer *);
     integer lsfmin, lsfmax;
-    /* -- LAPACK computational routine (version 3.4.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* November 2011 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -275,7 +265,7 @@ int cggbal_(char *job, integer *n, complex *a, integer *lda, complex *b, integer
     {
         i__1 = -(*info);
         xerbla_("CGGBAL", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -283,7 +273,7 @@ int cggbal_(char *job, integer *n, complex *a, integer *lda, complex *b, integer
     {
         *ilo = 1;
         *ihi = *n;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -292,7 +282,7 @@ int cggbal_(char *job, integer *n, complex *a, integer *lda, complex *b, integer
         *ihi = *n;
         lscale[1] = 1.f;
         rscale[1] = 1.f;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (lsame_(job, "N"))
@@ -308,7 +298,7 @@ int cggbal_(char *job, integer *n, complex *a, integer *lda, complex *b, integer
             rscale[i__] = 1.f;
             /* L10: */
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     k = 1;
@@ -464,12 +454,12 @@ L190:
             rscale[i__] = 1.f;
             /* L195: */
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*ilo == *ihi)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Balance the submatrix in rows ILO to IHI. */
@@ -703,7 +693,7 @@ L350:
         rab = fla_max(r__1,r__2);
         r__1 = rab + sfmin;
         lrab = (integer) (r_lg10(&r__1) / basl + 1.f);
-        ir = lscale[i__] + r_sign(&c_b72, &lscale[i__]);
+        ir = (integer) (lscale[i__] + r_sign(&c_b72, &lscale[i__]));
         /* Computing MIN */
         i__2 = fla_max(ir,lsfmin);
         i__2 = fla_min(i__2,lsfmax);
@@ -719,7 +709,7 @@ L350:
         cab = fla_max(r__1,r__2);
         r__1 = cab + sfmin;
         lcab = (integer) (r_lg10(&r__1) / basl + 1.f);
-        jc = rscale[i__] + r_sign(&c_b72, &rscale[i__]);
+        jc = (integer) (rscale[i__] + r_sign(&c_b72, &rscale[i__]));
         /* Computing MIN */
         i__2 = fla_max(jc,lsfmin);
         i__2 = fla_min(i__2,lsfmax);
@@ -750,7 +740,7 @@ L350:
         csscal_(ihi, &rscale[j], &b[j * b_dim1 + 1], &c__1);
         /* L380: */
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of CGGBAL */
 }

@@ -1,4 +1,4 @@
-/* ../netlib/v3.9.0/cgghd3.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* cgghd3.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static complex c_b1 =
@@ -226,14 +226,13 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date January 2015 */
 /* > \ingroup complexOTHERcomputational */
 /* > \par Further Details: */
 /* ===================== */
 /* > */
 /* > \verbatim */
 /* > */
-/* > This routine reduces A to Hessenberg form and maintains B in */
+/* > This routine reduces A to Hessenberg form and maintains B in triangular form */
 /* > using a blocked variant of Moler and Stewart's original algorithm, */
 /* > as described by Kagstrom, Kressner, Quintana-Orti, and Quintana-Orti */
 /* > (BIT 2008). */
@@ -243,16 +242,8 @@ the routine */
 /* Subroutine */
 int cgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, complex *a, integer *lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, complex *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if LF_AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-#if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cgghd3 inputs: compq %c, compz %c, n %lld, ilo %lld, ihi %lld, lda %lld, ldb %lld, ldq %lld, ldz %lld, lwork %lld",*compq, *compz, *n, *ilo, *ihi, *lda, *ldb, *ldq, *ldz, *lwork);
-#else
-    snprintf(buffer, 256,"cgghd3 inputs: compq %c, compz %c, n %d, ilo %d, ihi %d, lda %d, ldb %d, ldq %d, ldz %d, lwork %d",*compq, *compz, *n, *ilo, *ihi, *lda, *ldb, *ldq, *ldz, *lwork);
-#endif
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cgghd3 inputs: compq %c, compz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS "",*compq, *compz, *n, *ilo, *ihi, *lda, *ldb, *ldq, *ldz);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7, i__8, i__9;
     complex q__1, q__2, q__3, q__4;
@@ -295,10 +286,9 @@ int cgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, c
     int xerbla_(char *, integer *);
     integer lwkopt;
     logical lquery;
-    /* -- LAPACK computational routine (version 3.8.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* January 2015 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -389,12 +379,12 @@ int cgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, c
     {
         i__1 = -(*info);
         xerbla_("CGGHD3", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize Q and Z if desired. */
@@ -419,7 +409,7 @@ int cgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, c
     {
         work[1].r = 1.f;
         work[1].i = 0.f; // , expr subst
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Determine the blocksize. */
@@ -823,7 +813,7 @@ int cgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, c
                             --i__)
                     {
                         i__5 = j + 1 + i__ + j * a_dim1;
-                        c__ = (doublereal) a[i__5].r;
+                        c__ = a[i__5].r;
                         i__5 = *ihi - top;
                         r_cnjg(&q__2, &b[j + 1 + i__ + j * b_dim1]);
                         q__1.r = -q__2.r;
@@ -1329,7 +1319,7 @@ int cgghd3_(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, c
     q__1.i = 0.f; // , expr subst
     work[1].r = q__1.r;
     work[1].i = q__1.i; // , expr subst
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of CGGHD3 */
 }
