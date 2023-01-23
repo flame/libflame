@@ -1,4 +1,4 @@
-/* ../netlib/cungbr.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* cungbr.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c_n1 = -1;
@@ -123,7 +123,7 @@ static integer c_n1 = -1;
 /* > \param[in] LWORK */
 /* > \verbatim */
 /* > LWORK is INTEGER */
-/* > The dimension of the array WORK. LWORK >= fla_max(1,fla_min(M,N)). */
+/* > The dimension of the array WORK. LWORK >= fla_max(1,min(M,N)). */
 /* > For optimum performance LWORK >= fla_min(M,N)*NB, where NB */
 /* > is the optimal blocksize. */
 /* > */
@@ -146,22 +146,13 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date April 2012 */
 /* > \ingroup complexGBcomputational */
 /* ===================================================================== */
 /* Subroutine */
 int cungbr_(char *vect, integer *m, integer *n, integer *k, complex *a, integer *lda, complex *tau, complex *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if LF_AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-#if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cungbr inputs: vect %c, m %lld, n %lld, k %lld, lda %lld, lwork %lld",*vect, *m, *n, *k, *lda, *lwork);
-#else
-    snprintf(buffer, 256,"cungbr inputs: vect %c, m %d, n %d, k %d, lda %d, lwork %d",*vect, *m, *n, *k, *lda, *lwork);
-#endif
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cungbr inputs: vect %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS "",*vect, *m, *n, *k, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     /* Local variables */
@@ -173,10 +164,9 @@ int cungbr_(char *vect, integer *m, integer *n, integer *k, complex *a, integer 
     int xerbla_(char *, integer *), cunglq_( integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *), cungqr_(integer *, integer *, integer *, complex *, integer *, complex *, complex *, integer *, integer *);
     integer lwkopt;
     logical lquery;
-    /* -- LAPACK computational routine (version 3.7.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* April 2012 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -246,7 +236,7 @@ int cungbr_(char *vect, integer *m, integer *n, integer *k, complex *a, integer 
                     i__1 = *m - 1;
                     i__2 = *m - 1;
                     i__3 = *m - 1;
-                    cungqr_(&i__1, &i__2, &i__3, &a[(a_dim1 << 1) + 2], lda, & tau[1], &work[1], &c_n1, &iinfo);
+                    cungqr_(&i__1, &i__2, &i__3, &a[a_offset], lda, &tau[1], & work[1], &c_n1, &iinfo);
                 }
             }
         }
@@ -263,25 +253,25 @@ int cungbr_(char *vect, integer *m, integer *n, integer *k, complex *a, integer 
                     i__1 = *n - 1;
                     i__2 = *n - 1;
                     i__3 = *n - 1;
-                    cunglq_(&i__1, &i__2, &i__3, &a[(a_dim1 << 1) + 2], lda, & tau[1], &work[1], &c_n1, &iinfo);
+                    cunglq_(&i__1, &i__2, &i__3, &a[a_offset], lda, &tau[1], & work[1], &c_n1, &iinfo);
                 }
             }
         }
-        lwkopt = work[1].r;
+        lwkopt = (integer) work[1].r;
         lwkopt = fla_max(lwkopt,mn);
     }
     if (*info != 0)
     {
         i__1 = -(*info);
         xerbla_("CUNGBR", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
         work[1].r = (real) lwkopt;
         work[1].i = 0.f; // , expr subst
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -289,7 +279,7 @@ int cungbr_(char *vect, integer *m, integer *n, integer *k, complex *a, integer 
     {
         work[1].r = 1.f;
         work[1].i = 0.f; // , expr subst
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (wantq)
@@ -410,7 +400,7 @@ int cungbr_(char *vect, integer *m, integer *n, integer *k, complex *a, integer 
     }
     work[1].r = (real) lwkopt;
     work[1].i = 0.f; // , expr subst
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of CUNGBR */
 }

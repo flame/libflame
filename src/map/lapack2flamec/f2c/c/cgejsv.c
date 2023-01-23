@@ -1,4 +1,4 @@
-/* ../netlib/v3.9.0/cgejsv.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* cgejsv.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static complex c_b1 =
@@ -288,7 +288,7 @@ should */
 /* > */
 /* > \param[out] CWORK */
 /* > \verbatim */
-/* > CWORK is COMPLEX array, dimension (MAX(2,LWORK)) */
+/* > CWORK is COMPLEX array, dimension (fla_max(2,LWORK)) */
 /* > If the call to CGEJSV is a workspace query (indicated by LWORK=-1 or */
 /* > LRWORK=-1), then on exit CWORK(1) contains the required length of */
 /* > CWORK for the job parameters used in the call. */
@@ -368,7 +368,7 @@ should */
 /* > */
 /* > \param[out] RWORK */
 /* > \verbatim */
-/* > RWORK is REAL array, dimension (MAX(7,LWORK)) */
+/* > RWORK is REAL array, dimension (fla_max(7,LWORK)) */
 /* > On exit, */
 /* > RWORK(1) = Determines the scaling factor SCALE = RWORK(2) / RWORK(1) */
 /* > such that SCALE*SVA(1:N) are the computed singular values */
@@ -377,7 +377,7 @@ should */
 /* > RWORK(3) = SCONDA is an estimate for the condition number of */
 /* > column equilibrated A. (If JOBA = 'E' or 'G') */
 /* > SCONDA is an estimate of SQRT(||(R^* * R)^(-1)||_1). */
-/* > It is computed using SPOCON. It holds */
+/* > It is computed using CPOCON. It holds */
 /* > N^(-1/4) * SCONDA <= ||R^(-1)||_2 <= N^(1/4) * SCONDA */
 /* > where R is the triangular factor from the QRF of A. */
 /* > However, if R is truncated and the numerical rank is */
@@ -386,7 +386,7 @@ should */
 /* > singular values might be lost. */
 /* > */
 /* > If full SVD is needed, the following two condition numbers are */
-/* > useful for the analysis of the algorithm. They are provied for */
+/* > useful for the analysis of the algorithm. They are provided for */
 /* > a developer/implementer who is familiar with the details of */
 /* > the method. */
 /* > */
@@ -505,7 +505,6 @@ otherwise the length of IWORK is 2*N. */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date June 2016 */
 /* > \ingroup complexGEsing */
 /* > \par Further Details: */
 /* ===================== */
@@ -583,16 +582,8 @@ otherwise the length of IWORK is 2*N. */
 /* Subroutine */
 int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jobp, integer *m, integer *n, complex *a, integer * lda, real *sva, complex *u, integer *ldu, complex *v, integer *ldv, complex *cwork, integer *lwork, real *rwork, integer *lrwork, integer *iwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if LF_AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-#if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cgejsv inputs: cgejsv inputs: joba %c, jobu %c, jobv %c, jobr %c, jobt %c, jobp %c, m %lld, n %lld, lda %lld, ldu %lld, ldv %lld",*joba, *jobu, *jobv, *jobr, *jobt, *jobp, *m, *n, *lda, *ldu, *ldv);
-#else
-    snprintf(buffer, 256,"cgejsv inputs: joba %c, jobu %c, jobv %c, jobr %c, jobt %c, jobp %c, m %d, n %d, lda %d, ldu %d, ldv %d",*joba, *jobu, *jobv, *jobr, *jobt, *jobp, *m, *n, *lda, *ldu, *ldv);
-#endif
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cgejsv inputs: joba %c, jobu %c, jobv %c, jobr %c, jobt %c, jobp %c, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldu %" FLA_IS ", ldv %" FLA_IS "",*joba, *jobu, *jobv, *jobr, *jobt, *jobp, *m, *n, *lda, *ldu, *ldv);
     /* System generated locals */
     integer a_dim1, a_offset, u_dim1, u_offset, v_dim1, v_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7, i__8, i__9, i__10, i__11;
     real r__1, r__2, r__3;
@@ -602,7 +593,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     void r_cnjg(complex *, complex *), c_div(complex *, complex *, complex *);
     integer fla_i_nint(real *);
     /* Local variables */
-    integer lwunmqrm, p, q, j1, n1, nr;
+    integer lwunmqrm, i__, p, q, n1, nr;
     real big;
     integer lwrk_cgeqp3__;
     real xsc, big1;
@@ -677,10 +668,9 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     integer optwrk;
     real cond_ok__;
     integer warning, numrank, miniwrk, minrwrk, lrwsvdj, lwunmlq, lwsvdjv, lwunmqr;
-    /* -- LAPACK computational routine (version 3.7.1) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* June 2017 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -795,10 +785,10 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
         lwcon = *n << 1;
         /* .. minimal workspace length for CGESVJ of an N x N matrix, */
         /* without and with explicit accumulation of Jacobi rotations */
-        /* Computing MAX */
+        /* Computing fla_max */
         i__1 = *n << 1;
         lwsvdj = fla_max(i__1,1);
-        /* Computing MAX */
+        /* Computing fla_max */
         i__1 = *n << 1;
         lwsvdjv = fla_max(i__1,1);
         /* .. minimal REAL workspace length for CGEQP3, CPOCON, CGESVJ */
@@ -808,11 +798,11 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
         if (lquery)
         {
             cgeqp3_(m, n, &a[a_offset], lda, &iwork[1], cdummy, cdummy, &c_n1, rdummy, &ierr);
-            lwrk_cgeqp3__ = cdummy[0].r;
+            lwrk_cgeqp3__ = (integer) cdummy[0].r;
             cgeqrf_(n, n, &a[a_offset], lda, cdummy, cdummy, &c_n1, &ierr);
-            lwrk_cgeqrf__ = cdummy[0].r;
+            lwrk_cgeqrf__ = (integer) cdummy[0].r;
             cgelqf_(n, n, &a[a_offset], lda, cdummy, cdummy, &c_n1, &ierr);
-            lwrk_cgelqf__ = cdummy[0].r;
+            lwrk_cgelqf__ = (integer) cdummy[0].r;
         }
         minwrk = 2;
         optwrk = 2;
@@ -823,7 +813,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             /* only the singular values are requested */
             if (errest)
             {
-                /* Computing MAX */
+                /* Computing fla_max */
                 /* Computing 2nd power */
                 i__3 = *n;
                 i__1 = *n + lwqp3, i__2 = i__3 * i__3 + lwcon, i__1 = fla_max( i__1,i__2);
@@ -833,7 +823,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             }
             else
             {
-                /* Computing MAX */
+                /* Computing fla_max */
                 i__1 = *n + lwqp3;
                 i__2 = *n + lwqrf;
                 i__1 = fla_max(i__1,i__2); // ; expr subst
@@ -842,10 +832,10 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             if (lquery)
             {
                 cgesvj_("L", "N", "N", n, n, &a[a_offset], lda, &sva[1], n, & v[v_offset], ldv, cdummy, &c_n1, rdummy, &c_n1, &ierr);
-                lwrk_cgesvj__ = cdummy[0].r;
+                lwrk_cgesvj__ = (integer) cdummy[0].r;
                 if (errest)
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     /* Computing 2nd power */
                     i__3 = *n;
                     i__1 = *n + lwrk_cgeqp3__, i__2 = i__3 * i__3 + lwcon, i__1 = fla_max(i__1,i__2);
@@ -855,7 +845,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
                 }
                 else
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     i__1 = *n + lwrk_cgeqp3__;
                     i__2 = *n + lwrk_cgeqrf__;
                     i__1 = fla_max(i__1,i__2); // ; expr subst
@@ -866,7 +856,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             {
                 if (errest)
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     i__1 = 7, i__2 = *m << 1, i__1 = fla_max(i__1,i__2);
                     i__1 = fla_max(i__1,lrwqp3);
                     i__1 = fla_max(i__1,lrwcon); // ; expr subst
@@ -874,7 +864,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
                 }
                 else
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     i__1 = 7, i__2 = *m << 1;
                     i__1 = fla_max(i__1,i__2);
                     i__1 = fla_max(i__1,lrwqp3); // ; expr subst
@@ -885,14 +875,14 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             {
                 if (errest)
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     i__1 = fla_max(7,lrwqp3);
                     i__1 = fla_max(i__1,lrwcon); // , expr subst
                     minrwrk = fla_max(i__1,lrwsvdj);
                 }
                 else
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     i__1 = fla_max(7,lrwqp3);
                     minrwrk = fla_max(i__1,lrwsvdj);
                 }
@@ -908,7 +898,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             /* singular values and the right singular vectors are requested */
             if (errest)
             {
-                /* Computing MAX */
+                /* Computing fla_max */
                 i__1 = *n + lwqp3, i__1 = fla_max(i__1,lwcon), i__1 = fla_max(i__1, lwsvdj), i__2 = *n + lwlqf, i__1 = fla_max(i__1,i__2), i__2 = (*n << 1) + lwqrf, i__1 = fla_max(i__1,i__2), i__2 = *n + lwsvdj;
                 i__1 = fla_max(i__1,i__2);
                 i__2 = *n + lwunmlq; // ; expr subst
@@ -916,7 +906,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             }
             else
             {
-                /* Computing MAX */
+                /* Computing fla_max */
                 i__1 = *n + lwqp3, i__1 = fla_max(i__1,lwsvdj), i__2 = *n + lwlqf, i__1 = fla_max(i__1,i__2), i__2 = (*n << 1) + lwqrf, i__1 = fla_max(i__1,i__2), i__2 = *n + lwsvdj;
                 i__1 = fla_max( i__1,i__2);
                 i__2 = *n + lwunmlq; // ; expr subst
@@ -925,12 +915,12 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             if (lquery)
             {
                 cgesvj_("L", "U", "N", n, n, &u[u_offset], ldu, &sva[1], n, & a[a_offset], lda, cdummy, &c_n1, rdummy, &c_n1, &ierr);
-                lwrk_cgesvj__ = cdummy[0].r;
+                lwrk_cgesvj__ = (integer) cdummy[0].r;
                 cunmlq_("L", "C", n, n, n, &a[a_offset], lda, cdummy, &v[ v_offset], ldv, cdummy, &c_n1, &ierr);
-                lwrk_cunmlq__ = cdummy[0].r;
+                lwrk_cunmlq__ = (integer) cdummy[0].r;
                 if (errest)
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     i__1 = *n + lwrk_cgeqp3__, i__1 = fla_max(i__1,lwcon), i__1 = fla_max(i__1,lwrk_cgesvj__), i__2 = *n + lwrk_cgelqf__, i__1 = fla_max(i__1,i__2), i__2 = (*n << 1) + lwrk_cgeqrf__, i__1 = fla_max(i__1,i__2), i__2 = *n + lwrk_cgesvj__;
                     i__1 = fla_max(i__1,i__2);
                     i__2 = *n + lwrk_cunmlq__; // ; expr subst
@@ -938,7 +928,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
                 }
                 else
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     i__1 = *n + lwrk_cgeqp3__, i__1 = fla_max(i__1,lwrk_cgesvj__), i__2 = *n + lwrk_cgelqf__, i__1 = fla_max(i__1,i__2), i__2 = (*n << 1) + lwrk_cgeqrf__, i__1 = fla_max( i__1,i__2), i__2 = *n + lwrk_cgesvj__;
                     i__1 = fla_max( i__1,i__2);
                     i__2 = *n + lwrk_cunmlq__; // ; expr subst
@@ -949,7 +939,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             {
                 if (errest)
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     i__1 = 7, i__2 = *m << 1, i__1 = fla_max(i__1,i__2);
                     i__1 = fla_max(i__1,lrwqp3);
                     i__1 = fla_max(i__1,lrwsvdj); // ; expr subst
@@ -957,7 +947,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
                 }
                 else
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     i__1 = 7, i__2 = *m << 1;
                     i__1 = fla_max(i__1,i__2);
                     i__1 = fla_max(i__1,lrwqp3); // ; expr subst
@@ -968,14 +958,14 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             {
                 if (errest)
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     i__1 = fla_max(7,lrwqp3);
                     i__1 = fla_max(i__1,lrwsvdj); // , expr subst
                     minrwrk = fla_max(i__1,lrwcon);
                 }
                 else
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     i__1 = fla_max(7,lrwqp3);
                     minrwrk = fla_max(i__1,lrwsvdj);
                 }
@@ -991,7 +981,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             /* singular values and the left singular vectors are requested */
             if (errest)
             {
-                /* Computing MAX */
+                /* Computing fla_max */
                 i__1 = fla_max(lwqp3,lwcon), i__2 = *n + lwqrf;
                 i__1 = fla_max(i__1, i__2);
                 i__1 = fla_max(i__1,lwsvdj); // ; expr subst
@@ -999,7 +989,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             }
             else
             {
-                /* Computing MAX */
+                /* Computing fla_max */
                 i__1 = lwqp3, i__2 = *n + lwqrf;
                 i__1 = fla_max(i__1,i__2);
                 i__1 = fla_max(i__1,lwsvdj); // ; expr subst
@@ -1008,12 +998,12 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             if (lquery)
             {
                 cgesvj_("L", "U", "N", n, n, &u[u_offset], ldu, &sva[1], n, & a[a_offset], lda, cdummy, &c_n1, rdummy, &c_n1, &ierr);
-                lwrk_cgesvj__ = cdummy[0].r;
+                lwrk_cgesvj__ = (integer) cdummy[0].r;
                 cunmqr_("L", "N", m, n, n, &a[a_offset], lda, cdummy, &u[ u_offset], ldu, cdummy, &c_n1, &ierr);
-                lwrk_cunmqrm__ = cdummy[0].r;
+                lwrk_cunmqrm__ = (integer) cdummy[0].r;
                 if (errest)
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     i__1 = fla_max(lwrk_cgeqp3__,lwcon), i__2 = *n + lwrk_cgeqrf__;
                     i__1 = fla_max(i__1,i__2);
                     i__1 = fla_max( i__1,lwrk_cgesvj__); // ; expr subst
@@ -1021,7 +1011,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
                 }
                 else
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     i__1 = lwrk_cgeqp3__, i__2 = *n + lwrk_cgeqrf__;
                     i__1 = fla_max(i__1,i__2);
                     i__1 = fla_max(i__1,lwrk_cgesvj__); // ; expr subst
@@ -1032,7 +1022,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             {
                 if (errest)
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     i__1 = 7, i__2 = *m << 1, i__1 = fla_max(i__1,i__2);
                     i__1 = fla_max(i__1,lrwqp3);
                     i__1 = fla_max(i__1,lrwsvdj); // ; expr subst
@@ -1040,7 +1030,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
                 }
                 else
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     i__1 = 7, i__2 = *m << 1;
                     i__1 = fla_max(i__1,i__2);
                     i__1 = fla_max(i__1,lrwqp3); // ; expr subst
@@ -1051,14 +1041,14 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             {
                 if (errest)
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     i__1 = fla_max(7,lrwqp3);
                     i__1 = fla_max(i__1,lrwsvdj); // , expr subst
                     minrwrk = fla_max(i__1,lrwcon);
                 }
                 else
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     i__1 = fla_max(7,lrwqp3);
                     minrwrk = fla_max(i__1,lrwsvdj);
                 }
@@ -1076,7 +1066,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             {
                 if (errest)
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     /* Computing 2nd power */
                     i__3 = *n;
                     /* Computing 2nd power */
@@ -1102,7 +1092,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
                 }
                 else
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     /* Computing 2nd power */
                     i__3 = *n;
                     /* Computing 2nd power */
@@ -1136,7 +1126,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             {
                 if (errest)
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     /* Computing 2nd power */
                     i__3 = *n;
                     /* Computing 2nd power */
@@ -1148,7 +1138,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
                 }
                 else
                 {
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     /* Computing 2nd power */
                     i__3 = *n;
                     /* Computing 2nd power */
@@ -1166,24 +1156,24 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             if (lquery)
             {
                 cunmqr_("L", "N", m, n, n, &a[a_offset], lda, cdummy, &u[ u_offset], ldu, cdummy, &c_n1, &ierr);
-                lwrk_cunmqrm__ = cdummy[0].r;
+                lwrk_cunmqrm__ = (integer) cdummy[0].r;
                 cunmqr_("L", "N", n, n, n, &a[a_offset], lda, cdummy, &u[ u_offset], ldu, cdummy, &c_n1, &ierr);
-                lwrk_cunmqr__ = cdummy[0].r;
+                lwrk_cunmqr__ = (integer) cdummy[0].r;
                 if (! jracc)
                 {
                     cgeqp3_(n, n, &a[a_offset], lda, &iwork[1], cdummy, cdummy, &c_n1, rdummy, &ierr);
-                    lwrk_cgeqp3n__ = cdummy[0].r;
+                    lwrk_cgeqp3n__ = (integer) cdummy[0].r;
                     cgesvj_("L", "U", "N", n, n, &u[u_offset], ldu, &sva[1], n, &v[v_offset], ldv, cdummy, &c_n1, rdummy, & c_n1, &ierr);
-                    lwrk_cgesvj__ = cdummy[0].r;
+                    lwrk_cgesvj__ = (integer) cdummy[0].r;
                     cgesvj_("U", "U", "N", n, n, &u[u_offset], ldu, &sva[1], n, &v[v_offset], ldv, cdummy, &c_n1, rdummy, & c_n1, &ierr);
-                    lwrk_cgesvju__ = cdummy[0].r;
+                    lwrk_cgesvju__ = (integer) cdummy[0].r;
                     cgesvj_("L", "U", "V", n, n, &u[u_offset], ldu, &sva[1], n, &v[v_offset], ldv, cdummy, &c_n1, rdummy, & c_n1, &ierr);
-                    lwrk_cgesvjv__ = cdummy[0].r;
+                    lwrk_cgesvjv__ = (integer) cdummy[0].r;
                     cunmlq_("L", "C", n, n, n, &a[a_offset], lda, cdummy, &v[ v_offset], ldv, cdummy, &c_n1, &ierr);
-                    lwrk_cunmlq__ = cdummy[0].r;
+                    lwrk_cunmlq__ = (integer) cdummy[0].r;
                     if (errest)
                     {
-                        /* Computing MAX */
+                        /* Computing fla_max */
                         /* Computing 2nd power */
                         i__3 = *n;
                         /* Computing 2nd power */
@@ -1209,7 +1199,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
                     }
                     else
                     {
-                        /* Computing MAX */
+                        /* Computing fla_max */
                         /* Computing 2nd power */
                         i__3 = *n;
                         /* Computing 2nd power */
@@ -1237,14 +1227,14 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
                 else
                 {
                     cgesvj_("L", "U", "V", n, n, &u[u_offset], ldu, &sva[1], n, &v[v_offset], ldv, cdummy, &c_n1, rdummy, & c_n1, &ierr);
-                    lwrk_cgesvjv__ = cdummy[0].r;
+                    lwrk_cgesvjv__ = (integer) cdummy[0].r;
                     cunmqr_("L", "N", n, n, n, cdummy, n, cdummy, &v[v_offset], ldv, cdummy, &c_n1, &ierr) ;
-                    lwrk_cunmqr__ = cdummy[0].r;
+                    lwrk_cunmqr__ = (integer) cdummy[0].r;
                     cunmqr_("L", "N", m, n, n, &a[a_offset], lda, cdummy, &u[ u_offset], ldu, cdummy, &c_n1, &ierr);
-                    lwrk_cunmqrm__ = cdummy[0].r;
+                    lwrk_cunmqrm__ = (integer) cdummy[0].r;
                     if (errest)
                     {
-                        /* Computing MAX */
+                        /* Computing fla_max */
                         /* Computing 2nd power */
                         i__3 = *n;
                         /* Computing 2nd power */
@@ -1258,7 +1248,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
                     }
                     else
                     {
-                        /* Computing MAX */
+                        /* Computing fla_max */
                         /* Computing 2nd power */
                         i__3 = *n;
                         /* Computing 2nd power */
@@ -1274,7 +1264,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             }
             if (l2tran || rowpiv)
             {
-                /* Computing MAX */
+                /* Computing fla_max */
                 i__1 = 7, i__2 = *m << 1, i__1 = fla_max(i__1,i__2);
                 i__1 = fla_max( i__1,lrwqp3);
                 i__1 = fla_max(i__1,lrwsvdj); // ; expr subst
@@ -1282,7 +1272,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             }
             else
             {
-                /* Computing MAX */
+                /* Computing fla_max */
                 i__1 = fla_max(7,lrwqp3);
                 i__1 = fla_max(i__1,lrwsvdj); // , expr subst
                 minrwrk = fla_max(i__1,lrwcon);
@@ -1304,7 +1294,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
         /* #:( */
         i__1 = -(*info);
         xerbla_("CGEJSV", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
@@ -1315,27 +1305,27 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
         cwork[2].i = 0.f; // , expr subst
         rwork[1] = (real) minrwrk;
         iwork[1] = fla_max(4,miniwrk);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return for void matrix (Y3K safe) */
     /* #:) */
     if (*m == 0 || *n == 0)
     {
-        /* IWORK(1:4) = 0 */
-        for (j1 = 1;
-                j1 <= 4;
-                ++j1)
+        for (i__ = 1;
+                i__ <= 4;
+                ++i__)
         {
-            iwork[j1] = 0;
+            iwork[i__] = 0;
         }
-        /* RWORK(1:7) = 0 */
-        for (j1 = 1;
-                j1 <= 7;
-                ++j1)
+        for (i__ = 1;
+                i__ <= 7;
+                ++i__)
         {
-            rwork[j1] = 0.f;
+            rwork[i__] = 0.f;
         }
+    AOCL_DTL_TRACE_LOG_EXIT
+        return 0;
     }
     /* Determine whether the matrix U should be M x N or M x M */
     if (lsvec)
@@ -1373,7 +1363,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             *info = -9;
             i__2 = -(*info);
             xerbla_("CGEJSV", &i__2);
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         aaqq = sqrt(aaqq);
@@ -1405,13 +1395,13 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             p <= i__1;
             ++p)
     {
-        /* Computing MAX */
+        /* Computing fla_max */
         r__1 = aapp;
         r__2 = sva[p]; // , expr subst
         aapp = fla_max(r__1,r__2);
         if (sva[p] != 0.f)
         {
-            /* Computing MIN */
+            /* Computing fla_min */
             r__1 = aaqq;
             r__2 = sva[p]; // , expr subst
             aaqq = fla_min(r__1,r__2);
@@ -1450,7 +1440,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
         iwork[2] = 0;
         iwork[3] = 0;
         iwork[4] = -1;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Issue warning if denormalized column norms detected. Override the */
@@ -1528,7 +1518,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
             rwork[6] = 0.f;
             rwork[7] = 0.f;
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     transp = FALSE_;
@@ -1554,13 +1544,13 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
                 /* in one pass through the vector */
                 rwork[*m + p] = xsc * scalem;
                 rwork[p] = xsc * (scalem * sqrt(temp1));
-                /* Computing MAX */
+                /* Computing fla_max */
                 r__1 = aatmax;
                 r__2 = rwork[p]; // , expr subst
                 aatmax = fla_max(r__1,r__2);
                 if (rwork[p] != 0.f)
                 {
-                    /* Computing MIN */
+                    /* Computing fla_min */
                     r__1 = aatmin;
                     r__2 = rwork[p]; // , expr subst
                     aatmin = fla_min(r__1,r__2);
@@ -1576,11 +1566,11 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
                     ++p)
             {
                 rwork[*m + p] = scalem * c_abs(&a[p + icamax_(n, &a[p + a_dim1], lda) * a_dim1]);
-                /* Computing MAX */
+                /* Computing fla_max */
                 r__1 = aatmax;
                 r__2 = rwork[*m + p]; // , expr subst
                 aatmax = fla_max(r__1,r__2);
-                /* Computing MIN */
+                /* Computing fla_min */
                 r__1 = aatmin;
                 r__2 = rwork[*m + p]; // , expr subst
                 aatmin = fla_min(r__1,r__2);
@@ -1822,7 +1812,7 @@ int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jo
     /* (eg speed by replacing global with restricted window pivoting, such */
     /* as in xGEQPX from TOMS # 782). Good results will be obtained using */
     /* xGEQPX with properly (!) chosen numerical parameters. */
-    /* Any improvement of CGEQP3 improves overal performance of CGEJSV. */
+    /* Any improvement of CGEQP3 improves overall performance of CGEJSV. */
     /* A * P1 = Q1 * [ R1^* 0]^*: */
     i__1 = *n;
     for (p = 1;
@@ -2026,7 +2016,7 @@ L3302:
     {
         /* Singular Values only */
         /* .. transpose A(1:NR,1:N) */
-        /* Computing MIN */
+        /* Computing fla_min */
         i__2 = *n - 1;
         i__1 = fla_min(i__2,nr);
         for (p = 1;
@@ -2084,7 +2074,7 @@ L3302:
                             a[i__3].r = ctemp.r;
                             a[i__3].i = ctemp.i; // , expr subst
                         }
-                        /* $ A(p,q) = TEMP1 * ( A(p,q) / ABS(A(p,q)) ) */
+                        /* $ A(p,q) = TEMP1 * ( A(p,q) / f2c_abs(A(p,q)) ) */
                         /* L4949: */
                     }
                     /* L4947: */
@@ -2140,7 +2130,7 @@ L3302:
                         a[i__3].r = ctemp.r;
                         a[i__3].i = ctemp.i; // , expr subst
                     }
-                    /* $ A(p,q) = TEMP1 * ( A(p,q) / ABS(A(p,q)) ) */
+                    /* $ A(p,q) = TEMP1 * ( A(p,q) / f2c_abs(A(p,q)) ) */
                     /* L1949: */
                 }
                 /* L1947: */
@@ -2382,7 +2372,7 @@ L3302:
                                 v[i__3].r = ctemp.r;
                                 v[i__3].i = ctemp.i; // , expr subst
                             }
-                            /* $ V(p,q) = TEMP1 * ( V(p,q) / ABS(V(p,q)) ) */
+                            /* $ V(p,q) = TEMP1 * ( V(p,q) / f2c_abs(V(p,q)) ) */
                             if (p < q)
                             {
                                 i__3 = p + q * v_dim1;
@@ -2448,7 +2438,7 @@ L3302:
                                     q <= i__2;
                                     ++q)
                             {
-                                /* Computing MIN */
+                                /* Computing fla_min */
                                 r__2 = c_abs(&v[p + p * v_dim1]);
                                 r__3 = c_abs(&v[q + q * v_dim1]); // , expr subst
                                 r__1 = xsc * fla_min(r__2,r__3);
@@ -2462,7 +2452,7 @@ L3302:
                                     v[i__3].r = ctemp.r;
                                     v[i__3].i = ctemp.i; // , expr subst
                                 }
-                                /* $ V(q,p) = TEMP1 * ( V(q,p) / ABS(V(q,p)) ) */
+                                /* $ V(q,p) = TEMP1 * ( V(q,p) / f2c_abs(V(q,p)) ) */
                                 /* L3958: */
                             }
                             /* L3959: */
@@ -2525,7 +2515,7 @@ L3302:
                                     q <= i__2;
                                     ++q)
                             {
-                                /* Computing MIN */
+                                /* Computing fla_min */
                                 r__2 = c_abs(&v[p + p * v_dim1]);
                                 r__3 = c_abs(&v[q + q * v_dim1]); // , expr subst
                                 r__1 = xsc * fla_min(r__2,r__3);
@@ -2539,7 +2529,7 @@ L3302:
                                     v[i__3].r = ctemp.r;
                                     v[i__3].i = ctemp.i; // , expr subst
                                 }
-                                /* $ V(q,p) = TEMP1 * ( V(q,p) / ABS(V(q,p)) ) */
+                                /* $ V(q,p) = TEMP1 * ( V(q,p) / f2c_abs(V(q,p)) ) */
                                 /* L3968: */
                             }
                             /* L3969: */
@@ -2559,7 +2549,7 @@ L3302:
                                     q <= i__2;
                                     ++q)
                             {
-                                /* Computing MIN */
+                                /* Computing fla_min */
                                 r__2 = c_abs(&v[p + p * v_dim1]);
                                 r__3 = c_abs(&v[q + q * v_dim1]); // , expr subst
                                 r__1 = xsc * fla_min(r__2,r__3);
@@ -2567,7 +2557,7 @@ L3302:
                                 q__1.i = 0.f; // , expr subst
                                 ctemp.r = q__1.r;
                                 ctemp.i = q__1.i; // , expr subst
-                                /* V(p,q) = - TEMP1*( V(q,p) / ABS(V(q,p)) ) */
+                                /* V(p,q) = - TEMP1*( V(q,p) / f2c_abs(V(q,p)) ) */
                                 i__3 = p + q * v_dim1;
                                 q__1.r = -ctemp.r;
                                 q__1.i = -ctemp.i; // , expr subst
@@ -2630,7 +2620,7 @@ L3302:
                                 p <= i__2;
                                 ++p)
                         {
-                            /* V(p,q) = - TEMP1*( V(p,q) / ABS(V(p,q)) ) */
+                            /* V(p,q) = - TEMP1*( V(p,q) / f2c_abs(V(p,q)) ) */
                             i__3 = p + q * v_dim1;
                             q__1.r = -ctemp.r;
                             q__1.i = -ctemp.i; // , expr subst
@@ -2924,7 +2914,7 @@ L3302:
                                 ++q)
                         {
                             /* CWORK(N+(q-1)*N+p)=-TEMP1 * ( CWORK(N+(p-1)*N+q) / */
-                            /* $ ABS(CWORK(N+(p-1)*N+q)) ) */
+                            /* $ f2c_abs(CWORK(N+(p-1)*N+q)) ) */
                             i__3 = *n + (q - 1) * *n + p;
                             q__1.r = -ctemp.r;
                             q__1.i = -ctemp.i; // , expr subst
@@ -3060,7 +3050,7 @@ L3302:
                             v[i__3].r = ctemp.r;
                             v[i__3].i = ctemp.i; // , expr subst
                         }
-                        /* $ V(p,q) = TEMP1 * ( V(p,q) / ABS(V(p,q)) ) */
+                        /* $ V(p,q) = TEMP1 * ( V(p,q) / f2c_abs(V(p,q)) ) */
                         if (p < q)
                         {
                             i__3 = p + q * v_dim1;
@@ -3108,7 +3098,7 @@ L3302:
                             p <= i__2;
                             ++p)
                     {
-                        /* Computing MIN */
+                        /* Computing fla_min */
                         r__2 = c_abs(&u[p + p * u_dim1]);
                         r__3 = c_abs(&u[q + q * u_dim1]); // , expr subst
                         r__1 = xsc * fla_min(r__2,r__3);
@@ -3116,7 +3106,7 @@ L3302:
                         q__1.i = 0.f; // , expr subst
                         ctemp.r = q__1.r;
                         ctemp.i = q__1.i; // , expr subst
-                        /* U(p,q) = - TEMP1 * ( U(q,p) / ABS(U(q,p)) ) */
+                        /* U(p,q) = - TEMP1 * ( U(q,p) / f2c_abs(U(q,p)) ) */
                         i__3 = p + q * u_dim1;
                         q__1.r = -ctemp.r;
                         q__1.i = -ctemp.i; // , expr subst
@@ -3269,7 +3259,7 @@ L3302:
     {
         iwork[4] = -1;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* .. */
     /* .. END OF CGEJSV */

@@ -1,8 +1,8 @@
-/* ../netlib/clatrs.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* clatrs.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
-static real c_b36 = .5f;
+static real c_b40 = .5f;
 /* > \brief \b CLATRS solves a triangular system of equations with the scale factor set to prevent overflow. */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -151,7 +151,6 @@ static real c_b36 = .5f;
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date September 2012 */
 /* > \ingroup complexOTHERauxiliary */
 /* > \par Further Details: */
 /* ===================== */
@@ -248,6 +247,9 @@ int clatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, comp
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
     real r__1, r__2, r__3, r__4;
     complex q__1, q__2, q__3, q__4;
+    /* Builtin functions */
+    double r_imag(complex *);
+    void r_cnjg(complex *, complex *);
     /* Local variables */
     integer i__, j;
     real xj, rec, tjj;
@@ -272,10 +274,10 @@ int clatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, comp
     int caxpy_(integer *, complex *, complex *, integer *, complex *, integer *);
     logical upper;
     extern /* Subroutine */
-    int ctrsv_(char *, char *, char *, integer *, complex *, integer *, complex *, integer *), slabad_(real *, real *);
+    int ctrsv_(char *, char *, char *, integer *, complex *, integer *, complex *, integer *);
     extern integer icamax_(integer *, complex *, integer *);
     extern /* Complex */
-    VOID cladiv_(complex *, complex *, complex *);
+    VOID cladiv_f2c_(complex *, complex *, complex *);
     extern real slamch_(char *);
     extern /* Subroutine */
     int csscal_(integer *, real *, complex *, integer *), xerbla_(char *, integer *);
@@ -286,10 +288,9 @@ int clatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, comp
     integer jfirst;
     real smlnum;
     logical nounit;
-    /* -- LAPACK auxiliary routine (version 3.4.2) -- */
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* September 2012 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -324,7 +325,7 @@ int clatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, comp
     /* Test the input parameters. */
     if (! upper && ! lsame_(uplo, "L"))
     {
-        *info = -1;
+    *info = -1;
     }
     else if (! notran && ! lsame_(trans, "T") && ! lsame_(trans, "C"))
     {
@@ -354,18 +355,15 @@ int clatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, comp
         return 0;
     }
     /* Quick return if possible */
+    *scale = 1.f;
     if (*n == 0)
     {
         AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
         return 0;
     }
     /* Determine machine dependent parameters to control overflow. */
-    smlnum = slamch_("Safe minimum");
+    smlnum = slamch_("Safe minimum") / slamch_("Precision");
     bignum = 1.f / smlnum;
-    slabad_(&smlnum, &bignum);
-    smlnum /= slamch_("Precision");
-    bignum = 1.f / smlnum;
-    *scale = 1.f;
     if (lsame_(normin, "N"))
     {
         /* Compute the 1-norm of each column, not including the diagonal. */
@@ -407,8 +405,119 @@ int clatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, comp
     }
     else
     {
-        tscal = .5f / (smlnum * tmax);
-        sscal_(n, &tscal, &cnorm[1], &c__1);
+        /* Avoid NaN generation if entries in CNORM exceed the */
+        /* overflow threshold */
+        if (tmax <= slamch_("Overflow"))
+        {
+            /* Case 1: All entries in CNORM are valid floating-point numbers */
+            tscal = .5f / (smlnum * tmax);
+            sscal_(n, &tscal, &cnorm[1], &c__1);
+        }
+        else
+        {
+            /* Case 2: At least one column norm of A cannot be */
+            /* represented as a floating-point number. Find the */
+            /* maximum offdiagonal absolute value */
+            /* fla_max( |Re(A(I,J))|, |Im(A(I,J)| ). If this entry is */
+            /* not +/- Infinity, use this value as TSCAL. */
+            tmax = 0.f;
+            if (upper)
+            {
+                /* A is upper triangular. */
+                i__1 = *n;
+                for (j = 2;
+                        j <= i__1;
+                        ++j)
+                {
+                    i__2 = j - 1;
+                    for (i__ = 1;
+                            i__ <= i__2;
+                            ++i__)
+                    {
+                        /* Computing MAX */
+                        i__3 = i__ + j * a_dim1;
+                        r__3 = tmax, r__4 = (r__1 = a[i__3].r, f2c_abs(r__1));
+                        r__3 = fla_max(r__3,r__4);
+                        r__4 = (r__2 = r_imag(& a[i__ + j * a_dim1]), f2c_abs(r__2)); // ; expr subst
+                        tmax = fla_max(r__3,r__4);
+                    }
+                }
+            }
+            else
+            {
+                /* A is lower triangular. */
+                i__1 = *n - 1;
+                for (j = 1;
+                        j <= i__1;
+                        ++j)
+                {
+                    i__2 = *n;
+                    for (i__ = j + 1;
+                            i__ <= i__2;
+                            ++i__)
+                    {
+                        /* Computing MAX */
+                        i__3 = i__ + j * a_dim1;
+                        r__3 = tmax, r__4 = (r__1 = a[i__3].r, f2c_abs(r__1));
+                        r__3 = fla_max(r__3,r__4);
+                        r__4 = (r__2 = r_imag(& a[i__ + j * a_dim1]), f2c_abs(r__2)); // ; expr subst
+                        tmax = fla_max(r__3,r__4);
+                    }
+                }
+            }
+            if (tmax <= slamch_("Overflow"))
+            {
+                tscal = 1.f / (smlnum * tmax);
+                i__1 = *n;
+                for (j = 1;
+                        j <= i__1;
+                        ++j)
+                {
+                    if (cnorm[j] <= slamch_("Overflow"))
+                    {
+                        cnorm[j] *= tscal;
+                    }
+                    else
+                    {
+                        /* Recompute the 1-norm of each column without */
+                        /* introducing Infinity in the summation. */
+                        tscal *= 2.f;
+                        cnorm[j] = 0.f;
+                        if (upper)
+                        {
+                            i__2 = j - 1;
+                            for (i__ = 1;
+                                    i__ <= i__2;
+                                    ++i__)
+                            {
+                                i__3 = i__ + j * a_dim1;
+                                cnorm[j] += tscal * ((r__1 = a[i__3].r / 2.f, f2c_abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]) / 2.f, f2c_abs(r__2)));
+                            }
+                        }
+                        else
+                        {
+                            i__2 = *n;
+                            for (i__ = j + 1;
+                                    i__ <= i__2;
+                                    ++i__)
+                            {
+                                i__3 = i__ + j * a_dim1;
+                                cnorm[j] += tscal * ((r__1 = a[i__3].r / 2.f, f2c_abs(r__1)) + (r__2 = r_imag(&a[i__ + j * a_dim1]) / 2.f, f2c_abs(r__2)));
+                            }
+                        }
+                        tscal *= .5f;
+                    }
+                }
+            }
+            else
+            {
+                /* At least one entry of A is not a valid floating-point */
+                /* entry. Rely on TRSV to propagate Inf and NaN. */
+                ctrsv_(uplo, trans, diag, n, &a[a_offset], lda, &x[1], &c__1);
+                AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+                return 0;
+            }
+        }
     }
     /* Compute a bound on the computed solution vector to see if the */
     /* Level 2 BLAS routine CTRSV can be used. */
@@ -757,7 +866,7 @@ L105: /* Scale x if necessary to avoid overflow when adding a */
                 else if (xj * cnorm[j] > bignum - xmax)
                 {
                     /* Scale x by 1/2. */
-                    csscal_(n, &c_b36, &x[1], &c__1);
+                    csscal_(n, &c_b40, &x[1], &c__1);
                     *scale *= .5f;
                 }
                 if (upper)

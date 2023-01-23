@@ -1,4 +1,4 @@
-/* ../netlib/chetrd.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* chetrd.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -137,7 +137,6 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date November 2011 */
 /* > \ingroup complexHEcomputational */
 /* > \par Further Details: */
 /* ===================== */
@@ -191,16 +190,8 @@ v(i+2:n) is stored on exit in A(i+2:n,i), */
 /* Subroutine */
 int chetrd_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e, complex *tau, complex *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if LF_AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-#if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"chetrd inputs: uplo %c, n %lld, lda %lld, lwork %lld",*uplo, *n, *lda, *lwork);
-#else
-    snprintf(buffer, 256,"chetrd inputs: uplo %c, n %d, lda %d, lwork %d",*uplo, *n, *lda, *lwork);
-#endif
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("chetrd inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*uplo, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
     complex q__1;
@@ -214,10 +205,9 @@ int chetrd_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     integer ldwork, lwkopt;
     logical lquery;
-    /* -- LAPACK computational routine (version 3.4.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* November 2011 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -275,12 +265,12 @@ int chetrd_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
     {
         i__1 = -(*info);
         xerbla_("CHETRD", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -288,7 +278,7 @@ int chetrd_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
     {
         work[1].r = 1.f;
         work[1].i = 0.f; // , expr subst
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     nx = *n;
@@ -363,9 +353,8 @@ int chetrd_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
                 i__5 = j - 1;
                 a[i__4].r = e[i__5];
                 a[i__4].i = 0.f; // , expr subst
-                i__4 = j;
-                i__5 = j + j * a_dim1;
-                d__[i__4] = a[i__5].r;
+                i__4 = j + j * a_dim1;
+                d__[j] = a[i__4].r;
                 /* L10: */
             }
             /* L20: */
@@ -404,9 +393,8 @@ int chetrd_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
                 i__5 = j;
                 a[i__4].r = e[i__5];
                 a[i__4].i = 0.f; // , expr subst
-                i__4 = j;
-                i__5 = j + j * a_dim1;
-                d__[i__4] = a[i__5].r;
+                i__4 = j + j * a_dim1;
+                d__[j] = a[i__4].r;
                 /* L30: */
             }
             /* L40: */
@@ -417,7 +405,7 @@ int chetrd_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
     }
     work[1].r = (real) lwkopt;
     work[1].i = 0.f; // , expr subst
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of CHETRD */
 }

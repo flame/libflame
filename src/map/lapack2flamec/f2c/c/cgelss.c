@@ -1,4 +1,4 @@
-/* ../netlib/cgelss.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* cgelss.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static complex c_b1 =
@@ -119,7 +119,7 @@ they are stored as the columns of the */
 /* > \verbatim */
 /* > S is REAL array, dimension (fla_min(M,N)) */
 /* > The singular values of A in decreasing order. */
-/* > The condition number of A in the 2-norm = S(1)/S(fla_min(m,n)). */
+/* > The condition number of A in the 2-norm = S(1)/S (fla_min(m,n)). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] RCOND */
@@ -147,7 +147,7 @@ they are stored as the columns of the */
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The dimension of the array WORK. LWORK >= 1, and also: */
-/* > LWORK >= 2*fla_min(M,N) + fla_max(M,N,NRHS) */
+/* > LWORK >= 2*min(M,N) + fla_max(M,N,NRHS) */
 /* > For good performance, LWORK should generally be larger. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -159,7 +159,7 @@ the routine */
 /* > */
 /* > \param[out] RWORK */
 /* > \verbatim */
-/* > RWORK is REAL array, dimension (5*fla_min(M,N)) */
+/* > RWORK is REAL array, dimension (5*min(M,N)) */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -178,22 +178,13 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date June 2016 */
 /* > \ingroup complexGEsolve */
 /* ===================================================================== */
 /* Subroutine */
 int cgelss_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, complex *b, integer *ldb, real *s, real *rcond, integer *rank, complex *work, integer *lwork, real *rwork, integer * info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if LF_AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-#if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cgelss inputs: m %lld, n %lld, nrhs %lld, lda %lld, ldb %lld, rank %lld, lwork %lld",*m, *n, *nrhs, *lda, *ldb, *lwork);
-#else
-    snprintf(buffer, 256,"cgelss inputs: m %d, n %d, nrhs %d, lda %d, ldb %d, rank %d, lwork %d",*m, *n, *nrhs, *lda, *ldb, *lwork);
-#endif
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cgelss inputs: m %" FLA_IS ", n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", rank %" FLA_IS "",*m, *n, *nrhs, *lda, *ldb, *rank);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3;
     real r__1;
@@ -231,10 +222,9 @@ int cgelss_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
     real smlnum;
     integer irwork;
     logical lquery;
-    /* -- LAPACK driver routine (version 3.7.0) -- */
+    /* -- LAPACK driver routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* June 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -310,10 +300,10 @@ int cgelss_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
                 /* columns */
                 /* Compute space needed for CGEQRF */
                 cgeqrf_(m, n, &a[a_offset], lda, dum, dum, &c_n1, info);
-                lwork_cgeqrf__ = dum[0].r;
+                lwork_cgeqrf__ = (integer) dum[0].r;
                 /* Compute space needed for CUNMQR */
                 cunmqr_("L", "C", m, nrhs, n, &a[a_offset], lda, dum, &b[ b_offset], ldb, dum, &c_n1, info);
-                lwork_cunmqr__ = dum[0].r;
+                lwork_cunmqr__ = (integer) dum[0].r;
                 mm = *n;
                 /* Computing MAX */
                 i__1 = maxwrk;
@@ -329,13 +319,13 @@ int cgelss_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
                 /* Path 1 - overdetermined or exactly determined */
                 /* Compute space needed for CGEBRD */
                 cgebrd_(&mm, n, &a[a_offset], lda, &s[1], &s[1], dum, dum, dum, &c_n1, info);
-                lwork_cgebrd__ = dum[0].r;
+                lwork_cgebrd__ = (integer) dum[0].r;
                 /* Compute space needed for CUNMBR */
                 cunmbr_("Q", "L", "C", &mm, nrhs, n, &a[a_offset], lda, dum, & b[b_offset], ldb, dum, &c_n1, info);
-                lwork_cunmbr__ = dum[0].r;
+                lwork_cunmbr__ = (integer) dum[0].r;
                 /* Compute space needed for CUNGBR */
                 cungbr_("P", n, n, n, &a[a_offset], lda, dum, dum, &c_n1, info);
-                lwork_cungbr__ = dum[0].r;
+                lwork_cungbr__ = (integer) dum[0].r;
                 /* Compute total workspace needed */
                 /* Computing MAX */
                 i__1 = maxwrk;
@@ -364,19 +354,19 @@ int cgelss_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
                     /* than rows */
                     /* Compute space needed for CGELQF */
                     cgelqf_(m, n, &a[a_offset], lda, dum, dum, &c_n1, info);
-                    lwork_cgelqf__ = dum[0].r;
+                    lwork_cgelqf__ = (integer) dum[0].r;
                     /* Compute space needed for CGEBRD */
                     cgebrd_(m, m, &a[a_offset], lda, &s[1], &s[1], dum, dum, dum, &c_n1, info);
-                    lwork_cgebrd__ = dum[0].r;
+                    lwork_cgebrd__ = (integer) dum[0].r;
                     /* Compute space needed for CUNMBR */
                     cunmbr_("Q", "L", "C", m, nrhs, n, &a[a_offset], lda, dum, &b[b_offset], ldb, dum, &c_n1, info);
-                    lwork_cunmbr__ = dum[0].r;
+                    lwork_cunmbr__ = (integer) dum[0].r;
                     /* Compute space needed for CUNGBR */
                     cungbr_("P", m, m, m, &a[a_offset], lda, dum, dum, &c_n1, info);
-                    lwork_cungbr__ = dum[0].r;
+                    lwork_cungbr__ = (integer) dum[0].r;
                     /* Compute space needed for CUNMLQ */
                     cunmlq_("L", "C", n, nrhs, m, &a[a_offset], lda, dum, &b[ b_offset], ldb, dum, &c_n1, info);
-                    lwork_cunmlq__ = dum[0].r;
+                    lwork_cunmlq__ = (integer) dum[0].r;
                     /* Compute total workspace needed */
                     maxwrk = *m + lwork_cgelqf__;
                     /* Computing MAX */
@@ -415,13 +405,13 @@ int cgelss_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
                     /* Path 2 - underdetermined */
                     /* Compute space needed for CGEBRD */
                     cgebrd_(m, n, &a[a_offset], lda, &s[1], &s[1], dum, dum, dum, &c_n1, info);
-                    lwork_cgebrd__ = dum[0].r;
+                    lwork_cgebrd__ = (integer) dum[0].r;
                     /* Compute space needed for CUNMBR */
                     cunmbr_("Q", "L", "C", m, nrhs, m, &a[a_offset], lda, dum, &b[b_offset], ldb, dum, &c_n1, info);
-                    lwork_cunmbr__ = dum[0].r;
+                    lwork_cunmbr__ = (integer) dum[0].r;
                     /* Compute space needed for CUNGBR */
                     cungbr_("P", m, n, m, &a[a_offset], lda, dum, dum, &c_n1, info);
-                    lwork_cungbr__ = dum[0].r;
+                    lwork_cungbr__ = (integer) dum[0].r;
                     maxwrk = (*m << 1) + lwork_cgebrd__;
                     /* Computing MAX */
                     i__1 = maxwrk;
@@ -450,19 +440,19 @@ int cgelss_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
     {
         i__1 = -(*info);
         xerbla_("CGELSS", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0)
     {
         *rank = 0;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine parameters */
@@ -870,7 +860,7 @@ int cgelss_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, co
 L70:
     work[1].r = (real) maxwrk;
     work[1].i = 0.f; // , expr subst
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of CGELSS */
 }

@@ -1,4 +1,4 @@
-/* ../netlib/cggglm.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* cggglm.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static complex c_b2 =
@@ -136,7 +136,7 @@ static integer c_n1 = -1;
 /* > */
 /* > \param[out] WORK */
 /* > \verbatim */
-/* > WORK is COMPLEX array, dimension (MAX(1,LWORK)) */
+/* > WORK is COMPLEX array, dimension (fla_max(1,LWORK)) */
 /* > On exit, if INFO = 0, WORK(1) returns the optimal LWORK. */
 /* > \endverbatim */
 /* > */
@@ -144,7 +144,7 @@ static integer c_n1 = -1;
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The dimension of the array WORK. LWORK >= fla_max(1,N+M+P). */
-/* > For optimum performance, LWORK >= M+fla_min(N,P)+fla_max(N,P)*NB, */
+/* > For optimum performance, LWORK >= M+min(N,P)+fla_max(N,P)*NB, */
 /* > where NB is an upper bound for the optimal blocksizes for */
 /* > CGEQRF, CGERQF, CUNMQR and CUNMRQ. */
 /* > */
@@ -178,22 +178,13 @@ the least squares solution could not */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup complexOTHEReigen */
 /* ===================================================================== */
 /* Subroutine */
 int cggglm_(integer *n, integer *m, integer *p, complex *a, integer *lda, complex *b, integer *ldb, complex *d__, complex *x, complex *y, complex *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if LF_AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-#if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"cggglm inputs: n %lld, m %lld, p %lld, lda %lld, ldb %lld, lwork %lld",*n, *m, *p, *lda, *ldb, *lwork);
-#else
-    snprintf(buffer, 256,"cggglm inputs: n %d, m %d, p %d, lda %d, ldb %d, lwork %d",*n, *m, *p, *lda, *ldb, *lwork);
-#endif
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("cggglm inputs: n %" FLA_IS ", m %" FLA_IS ", p %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*n, *m, *p, *lda, *ldb);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
     complex q__1;
@@ -209,10 +200,9 @@ int cggglm_(integer *n, integer *m, integer *p, complex *a, integer *lda, comple
     logical lquery;
     extern /* Subroutine */
     int ctrtrs_(char *, char *, char *, integer *, integer *, complex *, integer *, complex *, integer *, integer *);
-    /* -- LAPACK driver routine (version 3.7.0) -- */
+    /* -- LAPACK driver routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -279,7 +269,7 @@ int cggglm_(integer *n, integer *m, integer *p, complex *a, integer *lda, comple
             nb2 = ilaenv_(&c__1, "CGERQF", " ", n, m, &c_n1, &c_n1);
             nb3 = ilaenv_(&c__1, "CUNMQR", " ", n, m, p, &c_n1);
             nb4 = ilaenv_(&c__1, "CUNMRQ", " ", n, m, p, &c_n1);
-            /* Computing MAX */
+            /* Computing fla_max */
             i__1 = fla_max(nb1,nb2);
             i__1 = fla_max(i__1,nb3); // , expr subst
             nb = fla_max(i__1,nb4);
@@ -297,18 +287,36 @@ int cggglm_(integer *n, integer *m, integer *p, complex *a, integer *lda, comple
     {
         i__1 = -(*info);
         xerbla_("CGGGLM", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+        i__1 = *m;
+        for (i__ = 1;
+                i__ <= i__1;
+                ++i__)
+        {
+            i__2 = i__;
+            x[i__2].r = 0.f;
+            x[i__2].i = 0.f; // , expr subst
+        }
+        i__1 = *p;
+        for (i__ = 1;
+                i__ <= i__1;
+                ++i__)
+        {
+            i__2 = i__;
+            y[i__2].r = 0.f;
+            y[i__2].i = 0.f; // , expr subst
+        }
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Compute the GQR factorization of matrices A and B: */
@@ -320,13 +328,13 @@ int cggglm_(integer *n, integer *m, integer *p, complex *a, integer *lda, comple
     i__1 = *lwork - *m - np;
     cggqrf_(n, m, p, &a[a_offset], lda, &work[1], &b[b_offset], ldb, &work[*m + 1], &work[*m + np + 1], &i__1, info);
     i__1 = *m + np + 1;
-    lopt = work[i__1].r;
+    lopt = (integer) work[i__1].r;
     /* Update left-hand-side vector d = Q**H*d = ( d1 ) M */
     /* ( d2 ) N-M */
     i__1 = fla_max(1,*n);
     i__2 = *lwork - *m - np;
     cunmqr_("Left", "Conjugate transpose", n, &c__1, m, &a[a_offset], lda, & work[1], &d__[1], &i__1, &work[*m + np + 1], &i__2, info);
-    /* Computing MAX */
+    /* Computing fla_max */
     i__3 = *m + np + 1;
     i__1 = lopt;
     i__2 = (integer) work[i__3].r; // , expr subst
@@ -340,7 +348,7 @@ int cggglm_(integer *n, integer *m, integer *p, complex *a, integer *lda, comple
         if (*info > 0)
         {
             *info = 1;
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         i__1 = *n - *m;
@@ -369,27 +377,27 @@ int cggglm_(integer *n, integer *m, integer *p, complex *a, integer *lda, comple
         if (*info > 0)
         {
             *info = 2;
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         /* Copy D to X */
         ccopy_(m, &d__[1], &c__1, &x[1], &c__1);
     }
     /* Backward transformation y = Z**H *y */
-    /* Computing MAX */
+    /* Computing fla_max */
     i__1 = 1;
     i__2 = *n - *p + 1; // , expr subst
     i__3 = fla_max(1,*p);
     i__4 = *lwork - *m - np;
     cunmrq_("Left", "Conjugate transpose", p, &c__1, &np, &b[fla_max(i__1,i__2) + b_dim1], ldb, &work[*m + 1], &y[1], &i__3, &work[*m + np + 1], & i__4, info);
-    /* Computing MAX */
+    /* Computing fla_max */
     i__4 = *m + np + 1;
     i__2 = lopt;
     i__3 = (integer) work[i__4].r; // , expr subst
     i__1 = *m + np + fla_max(i__2,i__3);
     work[1].r = (real) i__1;
     work[1].i = 0.f; // , expr subst
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of CGGGLM */
 }

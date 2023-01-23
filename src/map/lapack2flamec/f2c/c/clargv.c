@@ -1,4 +1,4 @@
-/* ../netlib/clargv.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* clargv.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* > \brief \b CLARGV generates a vector of plane rotations with real cosines and complex sines. */
 /* =========== DOCUMENTATION =========== */
@@ -93,7 +93,6 @@
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date September 2012 */
 /* > \ingroup complexOTHERauxiliary */
 /* > \par Further Details: */
 /* ===================== */
@@ -110,16 +109,8 @@
 /* Subroutine */
 int clargv_(integer *n, complex *x, integer *incx, complex * y, integer *incy, real *c__, integer *incc)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if LF_AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-#if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"clargv inputs: n %lld, incx %lld, incy %lld, incc %lld",*n, *incx, *incy, *incc);
-#else
-    snprintf(buffer, 256,"clargv inputs: n %d, incx %d, incy %d, incc %d",*n, *incx, *incy, *incc);
-#endif
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("clargv inputs: n %" FLA_IS ", incx %" FLA_IS ", incy %" FLA_IS ", incc %" FLA_IS "",*n, *incx, *incy, *incc);
     /* System generated locals */
     integer i__1, i__2;
     real r__1, r__2, r__3, r__4, r__5, r__6, r__7, r__8, r__9, r__10;
@@ -145,10 +136,9 @@ int clargv_(integer *n, complex *x, integer *incx, complex * y, integer *incy, r
     real safmn2, safmx2;
     extern real slapy2_(real *, real *), slamch_(char *);
     real safmin;
-    /* -- LAPACK auxiliary routine (version 3.4.2) -- */
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* September 2012 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -231,7 +221,7 @@ L10:
             gs.r = q__1.r;
             gs.i = q__1.i; // , expr subst
             scale *= safmn2;
-            if (scale >= safmx2)
+            if (scale >= safmx2 && count < 20)
             {
                 goto L10;
             }
@@ -430,7 +420,7 @@ L50:
         ix += *incx;
         /* L60: */
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of CLARGV */
 }

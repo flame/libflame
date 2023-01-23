@@ -1,4 +1,4 @@
-/* claqz2.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* claqz2.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static complex c_b1 =
@@ -34,14 +34,14 @@ static logical c_true = TRUE_;
 /* $ WORK, LWORK, RWORK, REC, INFO ) */
 /* IMPLICIT NONE */
 /* Arguments */
-/* LOGICAL, INTENT( IN ) :: ILSCHUR, ILQ, ILZ */
-/* INTEGER, INTENT( IN ) :: N, ILO, IHI, NW, LDA, LDB, LDQ, LDZ, */
+/* LOGICAL ILSCHUR, ILQ, ILZ */
+/* INTEGER N, ILO, IHI, NW, LDA, LDB, LDQ, LDZ, */
 /* $ LDQC, LDZC, LWORK, REC */
-/* COMPLEX, INTENT( INOUT ) :: A( LDA, * ), B( LDB, * ), Q( LDQ, * ), */
+/* COMPLEX A( LDA, * ), B( LDB, * ), Q( LDQ, * ), */
 /* $ Z( LDZ, * ), ALPHA( * ), BETA( * ) */
-/* INTEGER, INTENT( OUT ) :: NS, ND, INFO */
-/* COMPLEX :: QC( LDQC, * ), ZC( LDZC, * ), WORK( * ) */
-/* REAL :: RWORK( * ) */
+/* INTEGER, INTENT( OUT ) NS, ND, INFO */
+/* COMPLEX QC( LDQC, * ), ZC( LDZC, * ), WORK( * ) */
+/* REAL RWORK( * ) */
 /* .. */
 /* > \par Purpose: */
 /* ============= */
@@ -240,12 +240,12 @@ int claqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     double c_abs(complex *);
     void r_cnjg(complex *, complex *);
     /* Local variables */
-    integer lworkreq, k;
+    integer lworkreq, i__, j, k;
     complex s;
     real c1;
     integer k2;
     complex s1;
-    integer jw, jki, jli;
+    integer jw;
     real ulp;
     integer ctgexc_info__, ifst;
     complex temp;
@@ -254,6 +254,7 @@ int claqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     integer ilst;
     extern /* Subroutine */
     int cgemm_(char *, char *, integer *, integer *, integer *, complex *, complex *, integer *, complex *, integer *, complex *, complex *, integer *);
+    complex atemp;
     integer kwbot;
     real tempr;
     integer kwtop;
@@ -472,24 +473,22 @@ int claqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
         /* Reflect spike back, this will create optimally packed bulges */
         /* A( KWTOP:KWBOT, KWTOP-1 ) = A( KWTOP, KWTOP-1 ) *CONJG( QC( 1, */
         /* $ 1:JW-ND ) ) */
+        i__1 = kwtop + (kwtop - 1) * a_dim1;
+        atemp.r = a[i__1].r;
+        atemp.i = a[i__1].i; // , expr subst
+        j = 1;
         i__1 = kwbot;
-        for (jki = kwtop;
-                jki <= i__1;
-                ++jki)
+        for (i__ = kwtop;
+                i__ <= i__1;
+                ++i__)
         {
-            i__2 = jw - *nd;
-            for (jli = 1;
-                    jli <= i__2;
-                    ++jli)
-            {
-                i__3 = jki + (kwtop - 1) * a_dim1;
-                i__4 = kwtop + (kwtop - 1) * a_dim1;
-                r_cnjg(&q__2, &qc[jli * qc_dim1 + 1]);
-                q__1.r = a[i__4].r * q__2.r - a[i__4].i * q__2.i;
-                q__1.i = a[ i__4].r * q__2.i + a[i__4].i * q__2.r; // , expr subst
-                a[i__3].r = q__1.r;
-                a[i__3].i = q__1.i; // , expr subst
-            }
+            i__2 = i__ + (kwtop - 1) * a_dim1;
+            r_cnjg(&q__2, &qc[j * qc_dim1 + 1]);
+            q__1.r = atemp.r * q__2.r - atemp.i * q__2.i;
+            q__1.i = atemp.r * q__2.i + atemp.i * q__2.r; // , expr subst
+            a[i__2].r = q__1.r;
+            a[i__2].i = q__1.i; // , expr subst
+            ++j;
         }
         i__1 = kwtop;
         for (k = kwbot - 1;

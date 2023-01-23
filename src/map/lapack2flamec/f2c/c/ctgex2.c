@@ -1,4 +1,4 @@
-/* ../netlib/ctgex2.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* ctgex2.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__2 = 2;
@@ -73,7 +73,7 @@ static integer c__1 = 1;
 /* > */
 /* > \param[in,out] A */
 /* > \verbatim */
-/* > A is COMPLEX arrays, dimensions (LDA,N) */
+/* > A is COMPLEX array, dimension (LDA,N) */
 /* > On entry, the matrix A in the pair (A, B). */
 /* > On exit, the updated matrix A. */
 /* > \endverbatim */
@@ -86,7 +86,7 @@ static integer c__1 = 1;
 /* > */
 /* > \param[in,out] B */
 /* > \verbatim */
-/* > B is COMPLEX arrays, dimensions (LDB,N) */
+/* > B is COMPLEX array, dimension (LDB,N) */
 /* > On entry, the matrix B in the pair (A, B). */
 /* > On exit, the updated matrix B. */
 /* > \endverbatim */
@@ -99,7 +99,7 @@ static integer c__1 = 1;
 /* > */
 /* > \param[in,out] Q */
 /* > \verbatim */
-/* > Q is COMPLEX array, dimension (LDZ,N) */
+/* > Q is COMPLEX array, dimension (LDQ,N) */
 /* > If WANTQ = .TRUE, on entry, the unitary matrix Q. On exit, */
 /* > the updated matrix Q. */
 /* > Not referenced if WANTQ = .FALSE.. */
@@ -150,7 +150,6 @@ the problem is ill- */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date September 2012 */
 /* > \ingroup complexGEauxiliary */
 /* > \par Further Details: */
 /* ===================== */
@@ -185,16 +184,8 @@ Computing Eigenspaces with Specified */
 /* Subroutine */
 int ctgex2_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda, complex *b, integer *ldb, complex *q, integer *ldq, complex *z__, integer *ldz, integer *j1, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if LF_AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-#if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"ctgex2 inputs: n %lld, lda %lld, ldb %lld, ldq %lld, ldz %lld, j1 %lld",*n, *lda, *ldb, *ldq, *ldz, *j1);
-#else
-    snprintf(buffer, 256,"ctgex2 inputs: n %d, lda %d, ldb %d, ldq %d, ldz %d, j1 %d",*n, *lda, *ldb, *ldq, *ldz, *j1);
-#endif
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ctgex2 inputs: n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", j1 %" FLA_IS "",*n, *lda, *ldb, *ldq, *ldz, *j1);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2, i__3;
     real r__1;
@@ -209,9 +200,7 @@ int ctgex2_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda
     , t[4] /* was [2][2] */
     ;
     real cq, sa, sb, cz;
-    complex sq;
-    real ss, ws;
-    complex sz;
+    complex sq, sz;
     real eps, sum;
     logical weak;
     complex cdum;
@@ -222,12 +211,12 @@ int ctgex2_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda
     extern real slamch_(char *);
     extern /* Subroutine */
     int clacpy_(char *, integer *, integer *, complex *, integer *, complex *, integer *), clartg_(complex *, complex *, real *, complex *, complex *), classq_(integer *, complex *, integer *, real *, real *);
-    real thresh, smlnum;
+    real smlnum;
     logical strong;
-    /* -- LAPACK auxiliary routine (version 3.4.2) -- */
+    real thresha, threshb;
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* September 2012 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -264,7 +253,7 @@ int ctgex2_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda
     /* Quick return if possible */
     if (*n <= 1)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     m = 2;
@@ -280,9 +269,14 @@ int ctgex2_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda
     sum = 1.f;
     clacpy_("Full", &m, &m, s, &c__2, work, &m);
     clacpy_("Full", &m, &m, t, &c__2, &work[m * m], &m);
-    i__1 = (m << 1) * m;
+    i__1 = m * m;
     classq_(&i__1, work, &c__1, &scale, &sum);
     sa = scale * sqrt(sum);
+    scale = 0.f;
+    sum = 1.f;
+    i__1 = m * m;
+    classq_(&i__1, &work[m * m], &c__1, &scale, &sum);
+    sb = scale * sqrt(sum);
     /* THRES has been changed from */
     /* THRESH = MAX( TEN*EPS*SA, SMLNUM ) */
     /* to */
@@ -292,7 +286,10 @@ int ctgex2_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda
     /* Jim Demmel and Guillaume Revy. See forum post 1783. */
     /* Computing MAX */
     r__1 = eps * 20.f * sa;
-    thresh = fla_max(r__1,smlnum);
+    thresha = fla_max(r__1,smlnum);
+    /* Computing MAX */
+    r__1 = eps * 20.f * sb;
+    threshb = fla_max(r__1,smlnum);
     /* Compute unitary QL and RQ that swap 1-by-1 and 1-by-1 blocks */
     /* using Givens rotations and perform the swap tentatively. */
     q__2.r = s[3].r * t[0].r - s[3].i * t[0].i;
@@ -311,8 +308,8 @@ int ctgex2_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda
     q__1.i = q__2.i - q__3.i; // , expr subst
     g.r = q__1.r;
     g.i = q__1.i; // , expr subst
-    sa = c_abs(&s[3]);
-    sb = c_abs(&t[3]);
+    sa = c_abs(&s[3]) * c_abs(t);
+    sb = c_abs(s) * c_abs(&t[3]);
     clartg_(&g, &f, &cz, &sz, &cdum);
     q__1.r = -sz.r;
     q__1.i = -sz.i; // , expr subst
@@ -332,9 +329,9 @@ int ctgex2_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda
     }
     crot_(&c__2, s, &c__2, &s[1], &c__2, &cq, &sq);
     crot_(&c__2, t, &c__2, &t[1], &c__2, &cq, &sq);
-    /* Weak stability test: |S21| + |T21| <= O(EPS F-norm((S, T))) */
-    ws = c_abs(&s[1]) + c_abs(&t[1]);
-    weak = ws <= thresh;
+    /* Weak stability test: |S21| <= O(EPS F-norm((A))) */
+    /* and |T21| <= O(EPS F-norm((B))) */
+    weak = c_abs(&s[1]) <= thresha && c_abs(&t[1]) <= threshb;
     if (! weak)
     {
         goto L20;
@@ -395,10 +392,15 @@ int ctgex2_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda
         }
         scale = 0.f;
         sum = 1.f;
-        i__1 = (m << 1) * m;
+        i__1 = m * m;
         classq_(&i__1, work, &c__1, &scale, &sum);
-        ss = scale * sqrt(sum);
-        strong = ss <= thresh;
+        sa = scale * sqrt(sum);
+        scale = 0.f;
+        sum = 1.f;
+        i__1 = m * m;
+        classq_(&i__1, &work[m * m], &c__1, &scale, &sum);
+        sb = scale * sqrt(sum);
+        strong = sa <= thresha && sb <= threshb;
         if (! strong)
         {
             goto L20;
@@ -435,12 +437,12 @@ int ctgex2_(logical *wantq, logical *wantz, integer *n, complex *a, integer *lda
         crot_(n, &q[*j1 * q_dim1 + 1], &c__1, &q[(*j1 + 1) * q_dim1 + 1], & c__1, &cq, &q__1);
     }
     /* Exit with INFO = 0 if swap was successfully performed. */
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* Exit with INFO = 1 if swap was rejected. */
 L20:
     *info = 1;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of CTGEX2 */
 }

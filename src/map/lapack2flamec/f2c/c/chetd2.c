@@ -1,4 +1,4 @@
-/* ../netlib/chetd2.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* chetd2.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static complex c_b2 =
@@ -119,7 +119,6 @@ if UPLO */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date September 2012 */
 /* > \ingroup complexHEcomputational */
 /* > \par Further Details: */
 /* ===================== */
@@ -173,16 +172,8 @@ v(i+2:n) is stored on exit in A(i+2:n,i), */
 /* Subroutine */
 int chetd2_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e, complex *tau, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if LF_AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-#if FLA_ENABLE_ILP64
-    snprintf(buffer, 256,"chetd2 inputs: uplo %c, n %lld, lda %lld",*uplo, *n, *lda);
-#else
-    snprintf(buffer, 256,"chetd2 inputs: uplo %c, n %d, lda %d",*uplo, *n, *lda);
-#endif
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("chetd2 inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*uplo, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3;
     real r__1;
@@ -201,10 +192,9 @@ int chetd2_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
     logical upper;
     extern /* Subroutine */
     int clarfg_(integer *, complex *, complex *, integer *, complex *), xerbla_(char *, integer *);
-    /* -- LAPACK computational routine (version 3.4.2) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* September 2012 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -248,13 +238,13 @@ int chetd2_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
     {
         i__1 = -(*info);
         xerbla_("CHETD2", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n <= 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (upper)
@@ -275,8 +265,7 @@ int chetd2_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
             alpha.r = a[i__1].r;
             alpha.i = a[i__1].i; // , expr subst
             clarfg_(&i__, &alpha, &a[(i__ + 1) * a_dim1 + 1], &c__1, &taui);
-            i__1 = i__;
-            e[i__1] = alpha.r;
+            e[i__] = alpha.r;
             if (taui.r != 0.f || taui.i != 0.f)
             {
                 /* Apply H(i) from both sides to A(1:i,1:i) */
@@ -314,9 +303,8 @@ int chetd2_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
             i__2 = i__;
             a[i__1].r = e[i__2];
             a[i__1].i = 0.f; // , expr subst
-            i__1 = i__ + 1;
-            i__2 = i__ + 1 + (i__ + 1) * a_dim1;
-            d__[i__1] = a[i__2].r;
+            i__1 = i__ + 1 + (i__ + 1) * a_dim1;
+            d__[i__ + 1] = a[i__1].r;
             i__1 = i__;
             tau[i__1].r = taui.r;
             tau[i__1].i = taui.i; // , expr subst
@@ -344,11 +332,10 @@ int chetd2_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
             alpha.r = a[i__2].r;
             alpha.i = a[i__2].i; // , expr subst
             i__2 = *n - i__;
-            /* Computing MIN */
+            /* Computing fla_min */
             i__3 = i__ + 2;
             clarfg_(&i__2, &alpha, &a[fla_min(i__3,*n) + i__ * a_dim1], &c__1, & taui);
-            i__2 = i__;
-            e[i__2] = alpha.r;
+            e[i__] = alpha.r;
             if (taui.r != 0.f || taui.i != 0.f)
             {
                 /* Apply H(i) from both sides to A(i+1:n,i+1:n) */
@@ -390,19 +377,17 @@ int chetd2_(char *uplo, integer *n, complex *a, integer *lda, real *d__, real *e
             i__3 = i__;
             a[i__2].r = e[i__3];
             a[i__2].i = 0.f; // , expr subst
-            i__2 = i__;
-            i__3 = i__ + i__ * a_dim1;
-            d__[i__2] = a[i__3].r;
+            i__2 = i__ + i__ * a_dim1;
+            d__[i__] = a[i__2].r;
             i__2 = i__;
             tau[i__2].r = taui.r;
             tau[i__2].i = taui.i; // , expr subst
             /* L20: */
         }
-        i__1 = *n;
-        i__2 = *n + *n * a_dim1;
-        d__[i__1] = a[i__2].r;
+        i__1 = *n + *n * a_dim1;
+        d__[*n] = a[i__1].r;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of CHETD2 */
 }
