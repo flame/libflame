@@ -1,5 +1,5 @@
 ###############################################################################
-# Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+# Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 ###############################################################################
 # 
 # Makefile for libflame test suite driver.
@@ -17,7 +17,7 @@ LDFLAGS        := -lm -lpthread $(OMP_LIB)
 # --- BLAS library -------------------------------------------------------------
 #
 # A BLAS library must be given in order to run the libflame test suite.
-LIBBLAS        :=
+LIBBLAS        := 
 
 #
 # --- LIBFLAME library ---------------------------------------------------------
@@ -43,6 +43,38 @@ LIBFLAME       := $(LIB_PATH)/libflame.a
 ifeq ($(ILP64),1)
 	CPPFLAGS   += -DFLA_ENABLE_ILP64=1
 endif
+
+#
+# --- Flag to enable uppercase/lowercase API calling conventions --------------
+#     Set API_CALLING_CONVENTION = upper  for uppercase without underscore
+#                                = upper_ for uppercase with underscore
+#                                = lower  for lowercase without underscore
+#                                = default for default case (lower_)
+#     NOTE: LAPACK default is lowercase with underscore
+#
+API_CALLING_CONVENTION := default
+
+#
+# -- API_CALLING_CONVENTION set to "upper" enables uppercase w/o underscore ----
+#
+ifeq ($(API_CALLING_CONVENTION),upper)
+    CPPFLAGS   += -DUPPER=1
+endif
+
+#
+# -- API_CALLING_CONVENTION set to "upper_" enables uppercase w/ underscore ----
+#
+ifeq ($(API_CALLING_CONVENTION),upper_)
+    CPPFLAGS   += -DUPPER_=1
+endif
+
+#
+# -- API_CALLING_CONVENTION set to "lower" enables lowercase w/o underscore ----
+#
+ifeq ($(API_CALLING_CONVENTION),lower)
+    CPPFLAGS   += -DLOWER=1
+endif
+
 # --- enable dynamic memory  unaligned  addres logic --------------------------
 ifeq ($(MEM_UNALN),1)
 	CPPFLAGS   += -DFLA_MEM_UNALIGNED=1

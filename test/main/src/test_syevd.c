@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "test_lapack.h"
@@ -309,22 +309,22 @@ void invoke_syevd(integer datatype, char* jobz, char* uplo, integer* n, void* a,
     {
         case FLOAT:
         {
-            ssyevd_(jobz, uplo, n, a, lda, w, work, lwork, iwork, liwork, info);
+            fla_lapack_ssyevd(jobz, uplo, n, a, lda, w, work, lwork, iwork, liwork, info);
             break;
         }
         case DOUBLE:
         {
-            dsyevd_(jobz, uplo, n, a, lda, w, work, lwork, iwork, liwork, info);
+            fla_lapack_dsyevd(jobz, uplo, n, a, lda, w, work, lwork, iwork, liwork, info);
             break;
         }
         case COMPLEX:
         {
-            cheevd_(jobz, uplo, n, a, lda, w, work, lwork, rwork, lrwork, iwork, liwork, info);
+            fla_lapack_cheevd(jobz, uplo, n, a, lda, w, work, lwork, rwork, lrwork, iwork, liwork, info);
             break;
         }
         case DOUBLE_COMPLEX:
         {
-            zheevd_(jobz, uplo, n, a, lda, w, work, lwork, rwork, lrwork, iwork, liwork, info);
+            fla_lapack_zheevd(jobz, uplo, n, a, lda, w, work, lwork, rwork, lrwork, iwork, liwork, info);
             break;
         }
     }

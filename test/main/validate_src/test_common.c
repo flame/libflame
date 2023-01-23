@@ -1,5 +1,5 @@
 /*
-    Copyright (c) 2022 Advanced Micro Devices, Inc.  All rights reserved.
+    Copyright (c) 2022-2023, Advanced Micro Devices, Inc.  All rights reserved.
 */
 
 #include "test_common.h"
@@ -497,22 +497,22 @@ void copy_matrix(integer datatype, char *uplo, integer M, integer N, void *A, in
         }
         case FLOAT:
         {
-            slacpy_(uplo, &M, &N, A, &LDA, B, &LDB);
+            fla_lapack_slacpy(uplo, &M, &N, A, &LDA, B, &LDB);
             break;
         }
         case DOUBLE:
         {
-            dlacpy_(uplo, &M, &N, A, &LDA, B, &LDB);
+            fla_lapack_dlacpy(uplo, &M, &N, A, &LDA, B, &LDB);
             break;
         }
         case COMPLEX:
         {
-            clacpy_(uplo, &M, &N, A, &LDA, B, &LDB);
+            fla_lapack_clacpy(uplo, &M, &N, A, &LDA, B, &LDB);
             break;
         }
         case DOUBLE_COMPLEX:
         {
-            zlacpy_(uplo, &M, &N, A, &LDA, B, &LDB);
+            fla_lapack_zlacpy(uplo, &M, &N, A, &LDA, B, &LDB);
             break;
         }
     }
@@ -524,9 +524,9 @@ void copy_matrix(integer datatype, char *uplo, integer M, integer N, void *A, in
 void copy_realtype_matrix(integer datatype, char *uplo, integer M, integer N, void *A, integer LDA, void *B, integer LDB)
 {
     if(datatype == FLOAT || datatype == COMPLEX)
-        slacpy_(uplo, &M, &N, A, &LDA, B, &LDB);
+        fla_lapack_slacpy(uplo, &M, &N, A, &LDA, B, &LDB);
     else
-        dlacpy_(uplo, &M, &N, A, &LDA, B, &LDB);
+        fla_lapack_dlacpy(uplo, &M, &N, A, &LDA, B, &LDB);
 
     return;
 }
@@ -554,25 +554,25 @@ void reset_matrix(integer datatype, integer M, integer N, void *A, integer LDA)
 
         case FLOAT:
         {
-            slaset_("A", &M, &N, &s_zero, &s_zero, A, &LDA);
+            fla_lapack_slaset("A", &M, &N, &s_zero, &s_zero, A, &LDA);
             break;
         }
 
         case DOUBLE:
         {
-            dlaset_("A", &M, &N, &d_zero, &d_zero, A, &LDA);
+            fla_lapack_dlaset("A", &M, &N, &d_zero, &d_zero, A, &LDA);
             break;
         }
 
         case COMPLEX:
         {
-            claset_("A", &M, &N, &c_zero, &c_zero, A, &LDA);
+            fla_lapack_dlaset("A", &M, &N, &c_zero, &c_zero, A, &LDA);
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            zlaset_("A", &M, &N, &z_zero, &z_zero, A, &LDA);
+            fla_lapack_zlaset("A", &M, &N, &z_zero, &z_zero, A, &LDA);
             break;
         }
     }
@@ -589,25 +589,25 @@ void set_identity_matrix(integer datatype, integer M, integer N, void *A, intege
     {
         case FLOAT:
         {
-            slaset_("A", &M, &N, &s_zero, &s_one, A, &LDA);
+            fla_lapack_slaset("A", &M, &N, &s_zero, &s_one, A, &LDA);
             break;
         }
 
         case DOUBLE:
         {
-            dlaset_("A", &M, &N, &d_zero, &d_one, A, &LDA);
+            fla_lapack_dlaset("A", &M, &N, &d_zero, &d_one, A, &LDA);
             break;
         }
 
         case COMPLEX:
         {
-            claset_("A", &M, &N, &c_zero, &c_one, A, &LDA);
+            fla_lapack_claset("A", &M, &N, &c_zero, &c_one, A, &LDA);
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            zlaset_("A", &M, &N, &z_zero, &z_one, A, &LDA);
+            fla_lapack_zlaset("A", &M, &N, &z_zero, &z_one, A, &LDA);
             break;
         }
     }
@@ -833,7 +833,7 @@ void set_transpose(integer datatype, char *uplo, char *trans_A, char *trans_B)
     }
     else
     {
-	    *trans_A = 'C';
+        *trans_A = 'C';
         *trans_B = 'N';
     }
 }
@@ -1051,51 +1051,51 @@ double check_orthogonality(integer datatype, void *A, integer m, integer n, inte
     else
     {
         create_matrix(datatype, &I, n, n);
-	    k = n;
+        k = n;
     }
     switch(datatype)
     {
         case FLOAT:
         {
             float eps, norm;
-            eps = slamch_("P");
+            eps = fla_lapack_slamch("P");
 
-            slaset_("full", &k, &k, &s_zero, &s_one, I, &k);
+            fla_lapack_slaset("full", &k, &k, &s_zero, &s_one, I, &k);
             sgemm_("T", "N", &k, &k, &m, &s_one, A, &lda, A, &lda, &s_n_one, I, &k);
-            norm = slange_("1", &k, &k, I, &k, work);
+            norm = fla_lapack_slange("1", &k, &k, I, &k, work);
             resid = (double)(norm / (eps * (float)k));
             break;
         }
         case DOUBLE:
         {
             double eps, norm;
-            eps = dlamch_("P");
+            eps = fla_lapack_dlamch("P");
 
-            dlaset_("full", &k, &k, &d_zero, &d_one, I, &k);
+            fla_lapack_dlaset("full", &k, &k, &d_zero, &d_one, I, &k);
             dgemm_("T", "N", &k, &k, &m, &d_one, A, &lda, A, &lda, &d_n_one, I, &k);
-            norm = dlange_("1", &k, &k, I, &k, work);
+            norm = fla_lapack_dlange("1", &k, &k, I, &k, work);
             resid = (double)(norm / (eps * (float)k));
             break;
         }
         case COMPLEX:
         {
             float eps, norm;
-            eps = slamch_("P");
+            eps = fla_lapack_slamch("P");
 
-            claset_("full", &k, &k, &c_zero, &c_one, I, &k);
+            fla_lapack_claset("full", &k, &k, &c_zero, &c_one, I, &k);
             cgemm_("C", "N", &k, &k, &m, &c_one, A, &lda, A, &lda, &c_n_one, I, &k);
-            norm = clange_("1", &k, &k, I, &k, work);
+            norm = fla_lapack_clange("1", &k, &k, I, &k, work);
             resid = (double)(norm / (eps * (float)k));
             break;
         }
         case DOUBLE_COMPLEX:
         {
             double eps, norm;
-            eps = dlamch_("P");
+            eps = fla_lapack_dlamch("P");
 
-            zlaset_("full", &k, &k, &z_zero, &z_one, I, &k);
+            fla_lapack_zlaset("full", &k, &k, &z_zero, &z_one, I, &k);
             zgemm_("C", "N", &k, &k, &m, &z_one, A, &lda, A, &lda, &z_n_one, I, &k);
-            norm = zlange_("1", &k, &k, I, &k, work);
+            norm = fla_lapack_zlange("1", &k, &k, I, &k, work);
             resid = (double)(norm / (eps * (float)k));
             break;
         }

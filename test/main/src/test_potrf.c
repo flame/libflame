@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "test_lapack.h"
@@ -206,22 +206,22 @@ void invoke_potrf(char* uplo, integer datatype, integer* m, void* a, integer* ld
     {
         case FLOAT:
         {
-            spotrf_(uplo, m, a, lda, info);
+            fla_lapack_spotrf(uplo, m, a, lda, info);
             break;
         }
         case DOUBLE:
         {
-            dpotrf_(uplo, m, a, lda, info);
+            fla_lapack_dpotrf(uplo, m, a, lda, info);
             break;
         }
         case COMPLEX:
         {
-            cpotrf_(uplo, m, a, lda, info);
+            fla_lapack_cpotrf(uplo, m, a, lda, info);
             break;
         }
         case DOUBLE_COMPLEX:
         {
-            zpotrf_(uplo, m, a, lda, info);
+            fla_lapack_zpotrf(uplo, m, a, lda, info);
             break;
         }
     }

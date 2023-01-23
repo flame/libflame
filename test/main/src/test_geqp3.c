@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "test_lapack.h"
@@ -303,25 +303,25 @@ void invoke_geqp3(integer datatype, integer* m, integer* n, void* a, integer* ld
     {
         case FLOAT:
         {
-            sgeqp3_(m, n, a, lda, jpvt, tau, work, lwork, info);
+            fla_lapack_sgeqp3(m, n, a, lda, jpvt, tau, work, lwork, info);
             break;
         }
 
         case DOUBLE:
         {
-            dgeqp3_(m, n, a, lda, jpvt, tau, work, lwork, info);
+            fla_lapack_dgeqp3(m, n, a, lda, jpvt, tau, work, lwork, info);
             break;
         }
 
         case COMPLEX:
         {
-            cgeqp3_(m, n, a, lda, jpvt, tau, work, lwork, rwork, info);
+            fla_lapack_cgeqp3(m, n, a, lda, jpvt, tau, work, lwork, rwork, info);
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            zgeqp3_(m, n, a, lda, jpvt, tau, work, lwork, rwork, info);
+            fla_lapack_zgeqp3(m, n, a, lda, jpvt, tau, work, lwork, rwork, info);
             break;
         }
     }

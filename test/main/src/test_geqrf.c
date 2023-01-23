@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "test_lapack.h"
@@ -279,25 +279,25 @@ void invoke_geqrf(integer datatype, integer* m, integer* n, void* a, integer* ld
     {
         case FLOAT:
         {
-            sgeqrf_(m, n, a, lda, tau, work, lwork, info);
+            fla_lapack_sgeqrf(m, n, a, lda, tau, work, lwork, info);
             break;
         }
 
         case DOUBLE:
         {
-            dgeqrf_(m, n, a, lda, tau, work, lwork, info);
+            fla_lapack_dgeqrf(m, n, a, lda, tau, work, lwork, info);
             break;
         }
 
         case COMPLEX:
         {
-            cgeqrf_(m, n, a, lda, tau, work, lwork, info);
+            fla_lapack_cgeqrf(m, n, a, lda, tau, work, lwork, info);
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            zgeqrf_(m, n, a, lda, tau, work, lwork, info);
+            fla_lapack_zgeqrf(m, n, a, lda, tau, work, lwork, info);
             break;
         }
     }

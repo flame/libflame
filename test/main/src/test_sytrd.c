@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "test_common.h"
@@ -18,7 +18,7 @@ void invoke_sytrd(integer datatype, char *uplo, char compz, integer n, void *A, 
         {
             create_vector(datatype, &work, 1);
             
-            ssytrd_(uplo, &n, NULL, &lda, NULL, NULL, tau, work, &lwork, info);
+            fla_lapack_ssytrd(uplo, &n, NULL, &lda, NULL, NULL, tau, work, &lwork, info);
 
             /* Get work size */
             lwork = get_work_value( datatype, work );
@@ -26,13 +26,13 @@ void invoke_sytrd(integer datatype, char *uplo, char compz, integer n, void *A, 
             create_vector(datatype, &work, lwork);
 
             /* ssytrd_ to form symmetric tridiagonal matrix */
-            ssytrd_(uplo, &n, A, &lda, D, E, tau, work, &lwork, info);
+            fla_lapack_ssytrd(uplo, &n, A, &lda, D, E, tau, work, &lwork, info);
 
             free_vector(work);
 
             lwork = -1;
             create_vector(datatype, &work, 1);
-            sorgtr_(uplo, &n, NULL, &lda, tau, work, &lwork, info);
+            fla_lapack_sorgtr(uplo, &n, NULL, &lda, tau, work, &lwork, info);
 
             /* Get work size */
             lwork = get_work_value( datatype, work );
@@ -40,7 +40,7 @@ void invoke_sytrd(integer datatype, char *uplo, char compz, integer n, void *A, 
             create_vector(datatype, &work, lwork);
 
             /* sorgtr_ to generate orthogonal matrix */
-            sorgtr_(uplo, &n, A, &lda, tau, work, &lwork, info);
+            fla_lapack_sorgtr(uplo, &n, A, &lda, tau, work, &lwork, info);
 
             free_vector(work);
             break;
@@ -49,7 +49,7 @@ void invoke_sytrd(integer datatype, char *uplo, char compz, integer n, void *A, 
         {
             create_vector(datatype, &work, 1);
 
-            dsytrd_(uplo, &n, NULL, &lda, NULL, NULL, tau, work, &lwork, info);
+            fla_lapack_dsytrd(uplo, &n, NULL, &lda, NULL, NULL, tau, work, &lwork, info);
 
             /* Get work size */
             lwork = get_work_value( datatype, work );
@@ -57,13 +57,13 @@ void invoke_sytrd(integer datatype, char *uplo, char compz, integer n, void *A, 
             create_vector(datatype, &work, lwork);
 
             /* dsytrd_ to form symmetric tridiagonal matrix */
-            dsytrd_(uplo, &n, A, &lda, D, E, tau, work, &lwork, info);
+            fla_lapack_dsytrd(uplo, &n, A, &lda, D, E, tau, work, &lwork, info);
 
             free_vector(work);
 
             lwork = -1;
             create_vector(datatype, &work, 1);
-            dorgtr_(uplo, &n, NULL, &lda, tau, work, &lwork, info);
+            fla_lapack_dorgtr(uplo, &n, NULL, &lda, tau, work, &lwork, info);
 
             /* Get work size */
             lwork = get_work_value( datatype, work );
@@ -71,7 +71,7 @@ void invoke_sytrd(integer datatype, char *uplo, char compz, integer n, void *A, 
             create_vector(datatype, &work, lwork);
 
             /* dorgtr_ to generate orthogonal matrix */
-            dorgtr_(uplo, &n, A, &lda, tau, work, &lwork, info);
+            fla_lapack_dorgtr(uplo, &n, A, &lda, tau, work, &lwork, info);
 
             free_vector(work);
             break;
@@ -80,7 +80,7 @@ void invoke_sytrd(integer datatype, char *uplo, char compz, integer n, void *A, 
         {
             create_vector(datatype, &work, 1);
 
-            chetrd_(uplo, &n, NULL, &lda, NULL, NULL, tau, work, &lwork, info);
+            fla_lapack_chetrd(uplo, &n, NULL, &lda, NULL, NULL, tau, work, &lwork, info);
 
             /* Get work size */
             lwork = get_work_value( datatype, work );
@@ -88,13 +88,13 @@ void invoke_sytrd(integer datatype, char *uplo, char compz, integer n, void *A, 
             create_vector(datatype, &work, lwork);
 
             /* chetrd_ to form symmetric tridiagonal matrix */
-            chetrd_(uplo, &n, A, &lda, D, E, tau, work, &lwork, info);
+            fla_lapack_chetrd(uplo, &n, A, &lda, D, E, tau, work, &lwork, info);
 
             free_vector(work);
 
             lwork = -1;
             create_vector(datatype, &work, 1);
-            cungtr_(uplo, &n, NULL, &lda, tau, work, &lwork, info);
+            fla_lapack_cungtr(uplo, &n, NULL, &lda, tau, work, &lwork, info);
 
             /* Get work size */
             lwork = get_work_value( datatype, work );
@@ -102,7 +102,7 @@ void invoke_sytrd(integer datatype, char *uplo, char compz, integer n, void *A, 
             create_vector(datatype, &work, lwork);
 
             /* cungtr_ to generate orthogonal matrix */
-            cungtr_(uplo, &n, A, &lda, tau, work, &lwork, info);
+            fla_lapack_cungtr(uplo, &n, A, &lda, tau, work, &lwork, info);
 
             free_vector(work);
             break;
@@ -111,7 +111,7 @@ void invoke_sytrd(integer datatype, char *uplo, char compz, integer n, void *A, 
         {
             create_vector(datatype, &work, 1);
 
-            zhetrd_(uplo, &n, NULL, &lda, NULL, NULL, tau, work, &lwork, info);
+            fla_lapack_zhetrd(uplo, &n, NULL, &lda, NULL, NULL, tau, work, &lwork, info);
 
             /* Get work size */
             lwork = get_work_value( datatype, work );
@@ -119,13 +119,13 @@ void invoke_sytrd(integer datatype, char *uplo, char compz, integer n, void *A, 
             create_vector(datatype, &work, lwork);
 
             /* zhetrd_ to form symmetric tridiagonal matrix */
-            zhetrd_(uplo, &n, A, &lda, D, E, tau, work, &lwork, info);
+            fla_lapack_zhetrd(uplo, &n, A, &lda, D, E, tau, work, &lwork, info);
 
             free_vector(work);
 
             lwork = -1;
             create_vector(datatype, &work, 1);
-            zungtr_(uplo, &n, NULL, &lda, tau, work, &lwork, info);
+            fla_lapack_zungtr(uplo, &n, NULL, &lda, tau, work, &lwork, info);
 
             /* Get work size */
             lwork = get_work_value( datatype, work );
@@ -133,7 +133,7 @@ void invoke_sytrd(integer datatype, char *uplo, char compz, integer n, void *A, 
             create_vector(datatype, &work, lwork);
 
             /* zungtr_ to generate orthogonal matrix */
-            zungtr_(uplo, &n, A, &lda, tau, work, &lwork, info);
+            fla_lapack_zungtr(uplo, &n, A, &lda, tau, work, &lwork, info);
 
             free_vector(work);
             break;

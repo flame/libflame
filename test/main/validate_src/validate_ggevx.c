@@ -1,5 +1,5 @@
 /******************************************************************************
-* Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+* Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 *******************************************************************************/
 
 /*! @file validate_ggevx.c
@@ -24,8 +24,8 @@ void validate_ggevx(char* balanc, char* jobvl, char* jobvr, char* sense, integer
 
             create_vector(datatype, &Y, n);
             create_vector(COMPLEX, &YC, n);
-            eps = slamch_("P");
-            norm_A = slange_("1", &n, &n, A, &lda, work);
+            eps = fla_lapack_slamch("P");
+            norm_A = fla_lapack_slange("1", &n, &n, A, &lda, work);
             /* Test 1 */
             /* Validation for 'V' 'V' combination */
             if (*jobvr == 'V')
@@ -165,8 +165,8 @@ void validate_ggevx(char* balanc, char* jobvl, char* jobvr, char* sense, integer
 
             create_vector(datatype, &Y, n);
             create_vector(DOUBLE_COMPLEX, &YC, n);
-            eps = dlamch_("P");
-            norm_A = dlange_("1", &n, &n, A, &lda, work);
+            eps = fla_lapack_dlamch("P");
+            norm_A = fla_lapack_dlange("1", &n, &n, A, &lda, work);
             /* Test 1 */
             /* Validation for 'V' 'V' combination */
             if (*jobvr == 'V')
@@ -305,8 +305,8 @@ void validate_ggevx(char* balanc, char* jobvl, char* jobvr, char* sense, integer
             void* VRTemp = NULL, * VLTemp = NULL;
             void *Y = NULL;
             scomplex alphar_t;
-            eps = slamch_("P");
-            norm_A = clange_("1", &n, &n, A, &lda, work);
+            eps = fla_lapack_slamch("P");
+            norm_A = fla_lapack_clange("1", &n, &n, A, &lda, work);
             /* Test 1 */
             /* Validation for 'V' 'V' combination */
             create_vector(datatype, &VRTemp, n);
@@ -366,8 +366,8 @@ void validate_ggevx(char* balanc, char* jobvl, char* jobvr, char* sense, integer
             void* VRTemp = NULL, * VLTemp = NULL;
             void *Y = NULL;
             dcomplex alphar_t;
-            eps = dlamch_("P");
-            norm_A = zlange_("1", &n, &n, A, &lda, work);
+            eps = fla_lapack_dlamch("P");
+            norm_A = fla_lapack_zlange("1", &n, &n, A, &lda, work);
             /* Test 1 */
             /* Validation for 'V' 'V' combination */
             create_vector(datatype, &VRTemp, n);

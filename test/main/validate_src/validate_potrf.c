@@ -1,5 +1,5 @@
 /******************************************************************************
-* Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+* Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 *******************************************************************************/
 
 /*! @file validate_potrf.c
@@ -56,13 +56,13 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, i
             float norm_A;
 
             /* Test 1 */
-            norm_A = slange_("1", &m, &m, A, &lda, work);
+            norm_A = fla_lapack_slange("1", &m, &m, A, &lda, work);
 
             /* Compute LL'-A */
             sgemm_(&trans_A, &trans_B, &m, &m, &m, &s_one, buff_A, &m, buff_B, &m, &s_n_one, A, &lda);
 
-            norm = slange_("1", &m, &m, A, &lda, work);
-            eps = slamch_("P");
+            norm = fla_lapack_slange("1", &m, &m, A, &lda, work);
+            eps = fla_lapack_slamch("P");
 
             resid1 = norm/(eps * norm_A * (float)m);
 
@@ -71,7 +71,7 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, i
             norm_b = snrm2_(&m, b, &incx);
 
             /* Find x to compute Ax-b */
-            spotrs_(uplo, &m, &nrhs, A_test, &lda, b_test, &m, info);
+            fla_lapack_spotrs(uplo, &m, &nrhs, A_test, &lda, b_test, &m, info);
             if(*info < 0)
                 break;
 
@@ -92,13 +92,13 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, i
             double norm_A;
 
             /* Test 1 */
-            norm_A = dlange_("1", &m, &m, A, &lda, work);
+            norm_A = fla_lapack_dlange("1", &m, &m, A, &lda, work);
 
             /* compute L*L'-A */
             dgemm_(&trans_A, &trans_B, &m, &m, &m, &d_one, buff_A, &m, buff_B, &m, &d_n_one, A, &lda);
 
-            norm = dlange_("1", &m, &m, A, &lda, work);
-            eps = dlamch_("P");
+            norm = fla_lapack_dlange("1", &m, &m, A, &lda, work);
+            eps = fla_lapack_dlamch("P");
 
             resid1 = norm/(eps * norm_A * (double)m);
 
@@ -107,7 +107,7 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, i
             norm_b = dnrm2_(&m, b, &incx);
 
             /*Compute Ax-b Linear equations and find x */
-            dpotrs_(uplo, &m, &nrhs, A_test, &lda, b_test, &m, info);
+            fla_lapack_dpotrs(uplo, &m, &nrhs, A_test, &lda, b_test, &m, info);
             if(*info < 0)
                 break;
 
@@ -128,13 +128,13 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, i
             float norm_A;
 
             /* Test 1 */
-            norm_A = clange_("1", &m, &m, A, &lda, work);
+            norm_A = fla_lapack_clange("1", &m, &m, A, &lda, work);
 
             /* compute L*L'-A */
             cgemm_(&trans_A, &trans_B, &m, &m, &m, &c_one, buff_A, &m, buff_B, &m, &c_n_one, A, &lda);
 
-            norm = clange_("1", &m, &m, A, &lda, work);
-            eps = slamch_("P");
+            norm = fla_lapack_clange("1", &m, &m, A, &lda, work);
+            eps = fla_lapack_slamch("P");
 
             resid1 = norm/(eps * norm_A * (float)m);
 
@@ -143,10 +143,10 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, i
             norm_b = scnrm2_(&m, b, &incx);
 
             /*Find x to compute Ax-b */
-            cpotrs_(uplo, &m, &nrhs, A_test, &lda, b_test, &m, info);
+            fla_lapack_cpotrs(uplo, &m, &nrhs, A_test, &lda, b_test, &m, info);
             if(*info < 0)
                 break;
-            
+
             copy_vector(datatype, m, b_test, 1, x,  1);
 
             /* Compute Ax-b */
@@ -164,13 +164,13 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, i
             double norm_A;
 
             /* Test 1 */
-            norm_A = zlange_("1", &m, &m, A, &lda, work);
+            norm_A = fla_lapack_zlange("1", &m, &m, A, &lda, work);
 
             /* compute L*L'-A */
             zgemm_(&trans_A, &trans_B, &m, &m, &m, &z_one, buff_A, &m, buff_B, &m, &z_n_one, A, &lda);
 
-            norm = zlange_("1", &m, &m, A, &lda, work);
-            eps = dlamch_("P");
+            norm = fla_lapack_zlange("1", &m, &m, A, &lda, work);
+            eps = fla_lapack_dlamch("P");
 
             resid1 = norm/(eps * norm_A * (double)m);
 
@@ -179,7 +179,7 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, i
             norm_b = dznrm2_(&m, b, &incx);
 
             /* Find x to compute Ax-b */
-            zpotrs_(uplo, &m, &nrhs, A_test, &lda, b_test, &m, info);
+            fla_lapack_zpotrs(uplo, &m, &nrhs, A_test, &lda, b_test, &m, info);
             if(*info < 0)
                 break;
 
@@ -189,7 +189,7 @@ void validate_potrf(char *uplo, integer m, void *A, void *A_test, integer lda, i
             zgemv_("N", &m, &m, &z_one, A, &lda, x, &incx, &z_n_one, b, &incy);
 
             norm = dznrm2_(&m, b, &incx);
-            eps = dlamch_("P");
+            eps = fla_lapack_dlamch("P");
 
             resid2 = norm/(eps * norm_b * (double)m);
 

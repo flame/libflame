@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "test_lapack.h"
@@ -305,12 +305,12 @@ void invoke_stevd(integer datatype, char* jobz, integer* n, void* z, integer* ld
     {
         case FLOAT:
         {
-            sstevd_(jobz, n, d, e, z, ldz, work, lwork, iwork, liwork, info);
+            fla_lapack_sstevd(jobz, n, d, e, z, ldz, work, lwork, iwork, liwork, info);
             break;
         }
         case DOUBLE:
         {
-            dstevd_(jobz, n, d, e, z, ldz, work, lwork, iwork, liwork, info);
+            fla_lapack_dstevd(jobz, n, d, e, z, ldz, work, lwork, iwork, liwork, info);
             break;
         }
     }

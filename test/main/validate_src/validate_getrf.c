@@ -1,5 +1,5 @@
 /******************************************************************************
-* Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+* Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 *******************************************************************************/
 
 /*! @file validate_getrf.c
@@ -64,13 +64,13 @@ void validate_getrf(integer m_A,
         case FLOAT:
         {
             float norm, norm_A, norm_B, eps, resid1, resid2;
-            eps = slamch_("Epsilon");
+            eps = fla_lapack_slamch("Epsilon");
             /* Test 1 */
             if (m_A == n_A)
             {
                 norm_B = snrm2_(&m_A, B, &i_one);
                 /* Compute X by passing A and B */
-                sgetrs_("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, info);
+                fla_lapack_sgetrs("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, info);
                 if(*info < 0)
                     break;
                 /* Compute AX-B */
@@ -85,16 +85,16 @@ void validate_getrf(integer m_A,
             
             /* Test 2 */
             /* Unity diagonal elements to Lower triangular matrix */
-            slaset_("U", &m_L, &n_L, &s_zero, &s_one, L, &m_L);
-            norm_A = slange_("1", &m_A, &n_A, A, &lda, work);
+            fla_lapack_slaset("U", &m_L, &n_L, &s_zero, &s_one, L, &m_L);
+            norm_A = fla_lapack_slange("1", &m_A, &n_A, A, &lda, work);
             /* T = L * U  */
             sgemm_("N", "N", &m_A, &n_A, &k, &s_one, L, &m_L, U, &m_U, &s_zero, T, &m_A);
             /*  Row interchanges based on IPIV values */
-            slaswp_(&n_A, T, &m_A, &i_one, &min_A, IPIV, &i_n_one);
+            fla_lapack_slaswp(&n_A, T, &m_A, &i_one, &min_A, IPIV, &i_n_one);
             /* T - A --> L*U - A */
             saxpy_(&m_n_vector, &s_n_one, A_save, &i_one, T, &i_one);
             /* Compute norm( L*U - A ) / ( N * norm(A) * EPS ) */
-            norm = slange_("1", &m_A, &n_A, T, &m_A, work);
+            norm = fla_lapack_slange("1", &m_A, &n_A, T, &m_A, work);
 
             resid2 = norm / (float)n_A / norm_A / eps;
             *residual = (float)fla_max(resid1, resid2);
@@ -105,13 +105,13 @@ void validate_getrf(integer m_A,
         {
             double norm, norm_A, norm_B, eps, resid1, resid2;
 
-            eps = slamch_("Epsilon");
+            eps = fla_lapack_slamch("Epsilon");
             /* Test 1 */
             if (m_A == n_A)
             {
                 norm_B = dnrm2_(&m_A, B, &i_one);
                 /* Compute X by passing A and B */
-                dgetrs_("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, info);
+                fla_lapack_dgetrs("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, info);
                 if(*info < 0)
                     break;
                 /* Compute AX-B */
@@ -126,16 +126,16 @@ void validate_getrf(integer m_A,
             
             /* Test 2 */
             /* Unity diagonal elements to Lower triangular matrix */
-            dlaset_("U",&m_L, &n_L, &d_zero, &d_one, L, &m_L);
-            norm_A = dlange_("1", &m_A, &n_A, A, &lda, work);
+            fla_lapack_dlaset("U",&m_L, &n_L, &d_zero, &d_one, L, &m_L);
+            norm_A = fla_lapack_dlange("1", &m_A, &n_A, A, &lda, work);
             /* T = L * U  */
             dgemm_("N", "N", &m_A, &n_A, &k, &d_one, L, &m_L, U, &m_U, &d_zero, T, &m_A);
             /*  Row interchanges based on IPIV values*/
-            dlaswp_(&n_A, T, &m_A, &i_one, &min_A, IPIV, &i_n_one);
+            fla_lapack_dlaswp(&n_A, T, &m_A, &i_one, &min_A, IPIV, &i_n_one);
             /* T - A --> L*U - A */
             daxpy_(&m_n_vector, &d_n_one, A_save, &i_one, T, &i_one);
             /* Compute norm( L*U - A ) / ( N * norm(A) * EPS ) */
-            norm = dlange_("1", &m_A, &n_A, T, &m_A, work);
+            norm = fla_lapack_dlange("1", &m_A, &n_A, T, &m_A, work);
 
             resid2 = norm / (double)n_A / norm_A / eps;
             *residual = (double)fla_max(resid1, resid2);
@@ -145,13 +145,13 @@ void validate_getrf(integer m_A,
         {
             float norm, norm_A, norm_B, eps, resid1, resid2;
 
-            eps = slamch_("Epsilon");
+            eps = fla_lapack_slamch("Epsilon");
             /* Test 1 */
             if (m_A == n_A)
             {
                 norm_B = snrm2_(&m_A, B, &i_one);
                 /* Compute X by passing A and B */
-                cgetrs_("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, info);
+                fla_lapack_cgetrs("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, info);
                 if(*info < 0)
                     break;
                 /* Compute AX-B */
@@ -166,17 +166,17 @@ void validate_getrf(integer m_A,
             
             /* Test 2 */
             /* Unity diagonal elements to Lower triangular matrix */
-            claset_("U", &m_L, &n_L, &c_zero, &c_one, L, &m_L);
+            fla_lapack_claset("U", &m_L, &n_L, &c_zero, &c_one, L, &m_L);
 
-            norm_A = clange_("1", &m_A, &n_A, A, &lda, work);
+            norm_A = fla_lapack_clange("1", &m_A, &n_A, A, &lda, work);
             /* T = L * U  */
             cgemm_("N", "N", &m_A, &n_A, &k, &c_one, L, &m_L, U, &m_U, &c_zero, T, &m_A);
             /*  Row interchanges based on IPIV values*/
-            claswp_(&n_A, T, &m_A, &i_one, &min_A, IPIV, &i_n_one);
+            fla_lapack_claswp(&n_A, T, &m_A, &i_one, &min_A, IPIV, &i_n_one);
             /* T - A --> L*U - A */
             caxpy_(&m_n_vector, &c_n_one, A_save, &i_one, T, &i_one);
             /* Compute norm( L*U - A ) / ( N * norm(A) * EPS ) */
-            norm = clange_("1", &m_A, &n_A, T, &m_A, work);
+            norm = fla_lapack_clange("1", &m_A, &n_A, T, &m_A, work);
 
             resid2 = norm / (float)n_A / norm_A / eps;
             *residual = (float)fla_max(resid1, resid2);
@@ -186,13 +186,13 @@ void validate_getrf(integer m_A,
         {
             double norm, norm_A, norm_B, eps, resid1, resid2;
 
-            eps = slamch_("Epsilon");
+            eps = fla_lapack_slamch("Epsilon");
             /* Test 1 */
             if (m_A == n_A)
             {
                 norm_B = dnrm2_(&m_A, B, &i_one);
                 /* Compute X by passing A and B */
-                zgetrs_("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, info);
+                fla_lapack_zgetrs("N", &m_A, &nrhs, A_test, &lda, IPIV, B_test, &m_A, info);
                 if(*info < 0)
                     break;
                 /* Compute AX-B */
@@ -207,17 +207,17 @@ void validate_getrf(integer m_A,
             
             /* Test 2 */
             /* Unity diagonal elements to Lower triangular matrix */
-            zlaset_("U", &m_L, &n_L, &z_zero, &z_one, L, &m_L);
+            fla_lapack_zlaset("U", &m_L, &n_L, &z_zero, &z_one, L, &m_L);
 
-            norm_A = zlange_("1", &m_A, &n_A, A, &lda, work);
+            norm_A = fla_lapack_zlange("1", &m_A, &n_A, A, &lda, work);
             /* T = L * U  */
             zgemm_("N", "N", &m_A, &n_A, &k, &z_one, L, &m_L, U, &m_U, &z_zero, T, &m_A);
             /*  Row interchanges based on IPIV values*/
-            zlaswp_(&n_A, T, &m_A, &i_one, &min_A, IPIV, &i_n_one);
+            fla_lapack_zlaswp(&n_A, T, &m_A, &i_one, &min_A, IPIV, &i_n_one);
             /* T - A --> L*U - A */
             zaxpy_(&m_n_vector, &z_n_one, A_save, &i_one, T, &i_one);
             /* Compute norm( L*U - A ) / ( N * norm(A) * EPS ) */
-            norm = zlange_("1", &m_A, &n_A, T, &m_A, work);
+            norm = fla_lapack_zlange("1", &m_A, &n_A, T, &m_A, work);
 
             resid2 = norm / (double)n_A / norm_A / eps;
             *residual = (double)fla_max(resid1, resid2);

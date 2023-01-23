@@ -1,5 +1,5 @@
 /*
-    Copyright (C) 2022, Advanced Micro Devices, Inc. All rights reserved.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc. All rights reserved.
 */
 
 #include "test_lapack.h"
@@ -240,25 +240,25 @@ void invoke_gerq2(integer datatype, integer *m, integer *n, void *a, integer *ld
     {
         case FLOAT:
         {
-            sgerq2_(m, n, a, lda, tau, work, info);
+            fla_lapack_sgerq2(m, n, a, lda, tau, work, info);
             break;
         }
 
         case DOUBLE:
         {
-            dgerq2_(m, n, a, lda, tau, work, info);
+            fla_lapack_dgerq2(m, n, a, lda, tau, work, info);
             break;
         }
 
         case COMPLEX:
         {
-            cgerq2_(m, n, a, lda, tau, work, info);
+            fla_lapack_cgerq2(m, n, a, lda, tau, work, info);
             break;
         }
 
         case DOUBLE_COMPLEX:
         {
-            zgerq2_(m, n, a, lda, tau, work, info);
+            fla_lapack_zgerq2(m, n, a, lda, tau, work, info);
             break;
         }
     }
