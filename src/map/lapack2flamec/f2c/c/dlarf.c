@@ -245,7 +245,7 @@ int dlarf_(char *side, integer *m, integer *n, doublereal *v, integer *incv, dou
                             }
                         }
                     }
-                }            
+                }
             }
             else
             {
@@ -256,7 +256,7 @@ int dlarf_(char *side, integer *m, integer *n, doublereal *v, integer *incv, dou
 #endif
         }
     }
-    else    
+    else
     {
         /* Form C * H */
         if (lastv > 0)

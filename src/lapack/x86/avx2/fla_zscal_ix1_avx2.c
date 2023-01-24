@@ -2,20 +2,21 @@
 * Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
 *******************************************************************************/
 
-/*! @file fla_zscal_avx2.c
- *  @brief ZSCAL scales a vector by a constant in AVX2.
+/*! @file fla_zscal_ix1_avx2.c
+ *  @brief ZSCAL scales a vector by a scalar constant using AVX2 intrinsics.
+ *         The vector elements are assumed to be contiguosly stored in memory.
  *  */
 
 #include "FLAME.h"
 
 #ifdef FLA_ENABLE_AMD_OPT
-int fla_zscal_avx2(integer *n, doublecomplex *alpha, doublecomplex *x, integer *incx)
+int fla_zscal_ix1_avx2(integer *n, doublecomplex *alpha, doublecomplex *x)
 {
     /* Local variables */
     integer i__1, i;
     --x;
     i__1 = *n;
-    if (i__1 <= 0 || *incx <= 0)
+    if (i__1 <= 0)
     {
         return 0;
     }
@@ -39,24 +40,24 @@ int fla_zscal_avx2(integer *n, doublecomplex *alpha, doublecomplex *x, integer *
     srim = _mm_shuffle_pd(sim, srm, 0x1);
 
     /* Code for increments equal to 1 only */
-    for (i = 1; i <= (i__1-3); i += 4)
+    for (i = 1; i <= (i__1 - 3); i += 4)
     {
         /* load complex inputs */
         xmm0   = _mm256_loadu_pd((double const *) &x[i]);
         xmm1   = _mm256_loadu_pd((double const *) &x[i + 2]);
-        
+
         /* shuffle the loaded inputs */
         xrmm0 = _mm256_movedup_pd(xmm0);
         ximm0 = _mm256_unpackhi_pd(xmm0, xmm0);
         xrmm1 = _mm256_movedup_pd(xmm1);
         ximm1 = _mm256_unpackhi_pd(xmm1, xmm1);
-        
+
         /* performs the scaling */
         oxm0 = _mm256_mul_pd(srimm, ximm0);
         oxm0 = _mm256_fmaddsub_pd(sirmm, xrmm0, oxm0);
         oxm1 = _mm256_mul_pd(srimm, ximm1);
         oxm1 = _mm256_fmaddsub_pd(sirmm, xrmm1, oxm1);
-        
+
         /* store the results */
         _mm256_storeu_pd((double *) &x[i], oxm0);
         _mm256_storeu_pd((double *) &x[i + 2], oxm1);

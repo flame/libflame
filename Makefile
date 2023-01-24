@@ -941,11 +941,14 @@ ifeq ($(IS_CONFIGURED),yes)
 ifeq ($(ENABLE_VERBOSE),yes)
 ifeq ($(OS_NAME),Darwin)
 	- $(RM_F) $(AR_OBJ_LIST_FILE)
-endif 
+endif
 	- $(RM_RF) $(CONFIG_DIR)
 	- $(RM_RF) $(OBJ_DIR)
 	- $(RM_RF) $(LIB_DIR)
 	- $(RM_RF) $(INC_DIR)
+	- $(RM_RF) $(INSTALL_LIBDIR)/$(LIBFLAME).*
+	- $(RM_RF) $(INSTALL_LIBDIR)/$(AOCLDTL_A)
+	- $(RM_RF) $(INSTALL_LIBDIR)/$(AOCLDTL_SO)
 	- $(RM_RF) config.log
 	- $(RM_RF) aclocal.m4
 	- $(RM_RF) autom4te.cache
@@ -956,13 +959,17 @@ else
 ifeq ($(OS_NAME),Darwin)
 	@echo "Removing $(AR_OBJ_LIST_FILE)"
 	@$(RM_F) $(AR_OBJ_LIST_FILE)
-endif 
+endif
 	@echo "Removing $(CONFIG_DIR)"
 	@$(RM_RF) $(CONFIG_DIR)
 	@echo "Removing $(OBJ_DIR)"
 	@$(RM_RF) $(OBJ_DIR)
 	@echo "Removing $(LIB_DIR)"
 	@$(RM_RF) $(LIB_DIR)
+	@echo "Removing libflame libraries from $(INSTALL_LIBDIR)"
+	@$(RM_RF) $(INSTALL_LIBDIR)/$(LIBFLAME).*
+	@$(RM_RF) $(INSTALL_LIBDIR)/$(AOCLDTL_A)
+	@$(RM_RF) $(INSTALL_LIBDIR)/$(AOCLDTL_SO)
 	@echo "Removing $(INC_DIR)"
 	@$(RM_RF) $(INC_DIR)
 	@echo "Removing intermediate configure files"

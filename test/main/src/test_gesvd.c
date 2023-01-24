@@ -10,7 +10,7 @@
 /* Local prototypes */
 void fla_test_gesvd_experiment(test_params_t *params, integer datatype, integer p_cur, integer  q_cur, integer pci, integer n_repeats, double* perf, double* t, double* residual);
 void prepare_gesvd_run(char *jobu, char *jobvt, integer m_A, integer n_A, void *A, integer lda, void *s, void *U, integer ldu, void *V, integer ldvt, integer datatype, integer n_repeats, double* time_min_, integer *info);
-void invoke_gesvd(integer datatype, char* jobu, char *jobvt, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, void* rwork, integer* iwork, integer* info);
+void invoke_gesvd(integer datatype, char* jobu, char *jobvt, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, void* rwork, integer* info);
 
 /* Flag to indicate lwork availability status
  * <= 0 - To be calculated
@@ -62,7 +62,6 @@ void fla_test_gesvd(integer argc, char ** argv, test_params_t *params)
         params->svd_paramslist[0].ldvt = strtoimax(argv[9], &endptr, CLI_DECIMAL_BASE);
 
         g_lwork = strtoimax(argv[10], &endptr, CLI_DECIMAL_BASE);
-        
         n_repeats = strtoimax(argv[11], &endptr, CLI_DECIMAL_BASE);
 
         if(n_repeats > 0)
@@ -123,35 +122,27 @@ void fla_test_gesvd(integer argc, char ** argv, test_params_t *params)
 
 
 void fla_test_gesvd_experiment(test_params_t *params,
-    integer  datatype,
-    integer  p_cur,
-    integer  q_cur,
-    integer pci,
-    integer n_repeats,
-    double* perf,
-    double *time_min,
-    double* residual)
+                               integer  datatype,
+                               integer  p_cur,
+                               integer  q_cur,
+                               integer pci,
+                               integer n_repeats,
+                               double* perf,
+                               double *time_min,
+                               double* residual)
 {
     integer m, n, lda, ldu, ldvt;
     integer info = 0, vinfo = 0;
     char jobu, jobvt;
     void *A = NULL, *U = NULL, *V = NULL, *s = NULL, *A_test = NULL;
-    *residual = params->svd_paramslist[pci].svd_threshold;
 
     /* Get input matrix dimensions. */
     jobu = params->svd_paramslist[pci].jobu_gesvd;
     jobvt = params->svd_paramslist[pci].jobvt_gesvd;
+    *residual = params->svd_paramslist[pci].svd_threshold;
 
-    if(jobu == 'S' || jobvt == 'S' || (jobu == 'O' && jobvt != 'O') || (jobu != 'O' && jobvt == 'O'))
-    {
-           m = p_cur;
-           n = p_cur;
-    }
-    else
-    {
-           m = p_cur;
-           n = q_cur;
-    }
+    m = p_cur;
+    n = q_cur;
 
     lda = params->svd_paramslist[pci].lda;
     ldu = params->svd_paramslist[pci].ldu;
@@ -192,25 +183,25 @@ void fla_test_gesvd_experiment(test_params_t *params,
      * Link : http://icl.cs.utk.edu/magma/forum/viewtopic.php?f=2&t=921 */
     if(jobu == 'N' || jobvt == 'N')
     {
-           if(m >= n)
-              *perf = (double)((4.0 * m * n * n) - (( 4.0 * n * n * n ) / 3.0 )) / *time_min / FLOPS_PER_UNIT_PERF;
-           else
-              *perf = (double)((4.0 * n * m * m) - ((4.0 * m * m * m ) / 3.0)) / *time_min / FLOPS_PER_UNIT_PERF;
+        if(m >= n)
+            *perf = (double)((4.0 * m * n * n) - (( 4.0 * n * n * n ) / 3.0 )) / *time_min / FLOPS_PER_UNIT_PERF;
+        else
+            *perf = (double)((4.0 * n * m * m) - ((4.0 * m * m * m ) / 3.0)) / *time_min / FLOPS_PER_UNIT_PERF;
     }
     else
     {
        if(m >= n)
-              *perf = (double)((14.0 * m * n * n) + ( 8.0  * n * n * n )) / *time_min / FLOPS_PER_UNIT_PERF;
-           else
-              *perf = (double)((14.0 * n * m * m) + (8.0 * m * m * m )) / *time_min / FLOPS_PER_UNIT_PERF;
+           *perf = (double)((14.0 * m * n * n) + ( 8.0  * n * n * n )) / *time_min / FLOPS_PER_UNIT_PERF;
+       else
+           *perf = (double)((14.0 * n * m * m) + (8.0 * m * m * m )) / *time_min / FLOPS_PER_UNIT_PERF;
     }
     if(datatype == COMPLEX || datatype == DOUBLE_COMPLEX)
-              *perf *= 4.0;
+        *perf *= 4.0;
 
     /* output validation */
     if((jobu == 'A' && jobvt == 'A') && info == 0)
            validate_gesvd(&jobu, &jobvt, m, n, A, A_test, lda, s, U, ldu, V, ldvt, datatype, residual, &vinfo); 
-    
+
     /* Assigning bigger value to residual as execution fails*/
     if(info < 0 || vinfo < 0)
         *residual = DBL_MAX;
@@ -222,8 +213,6 @@ void fla_test_gesvd_experiment(test_params_t *params,
     free_matrix(V);
     free_vector(s);
 }
-
-
 
 void prepare_gesvd_run(char *jobu, char *jobvt,
     integer m_A, integer n_A,
@@ -241,9 +230,9 @@ void prepare_gesvd_run(char *jobu, char *jobvt,
 {
     integer min_m_n, max_m_n;
     void *A_save, *s_test;
-    void *work, *iwork, *rwork;
+    void *work, *rwork;
     void *U_test, *V_test;
-    integer lwork, liwork, lrwork;
+    integer lwork, lrwork;
     integer i;
     double time_min = 1e9, exe_time;
 
@@ -255,9 +244,8 @@ void prepare_gesvd_run(char *jobu, char *jobvt,
     create_matrix(datatype, &A_save, lda, n_A);
     copy_matrix(datatype, "full", m_A, n_A, A, lda, A_save, lda);
 
-    /* Get rwork and iwork array size since it is not depedent on internal blocks*/
+    /* Get rwork array size since it is not depedent on internal blocks*/
     lrwork = fla_max( (5 * min_m_n * min_m_n + 5 * min_m_n) , ( 2 * max_m_n * min_m_n + 2 * min_m_n * min_m_n + min_m_n));
-    liwork = 8 * min_m_n;
 
     /* Make a workspace query the first time through. This will provide us with
        and ideal workspace size based on an internal block size. */
@@ -267,7 +255,7 @@ void prepare_gesvd_run(char *jobu, char *jobvt,
         create_vector(datatype, &work, 1);
 
         /* call gesvd API */
-        invoke_gesvd(datatype, jobu, jobvt, &m_A, &n_A, NULL, &lda, NULL, NULL, &ldu, NULL, &ldvt, work, &lwork, NULL, NULL, info);
+        invoke_gesvd(datatype, jobu, jobvt, &m_A, &n_A, NULL, &lda, NULL, NULL, &ldu, NULL, &ldvt, work, &lwork, NULL, info);
         if(*info < 0)
         {
             free_matrix(A_save);
@@ -277,9 +265,6 @@ void prepare_gesvd_run(char *jobu, char *jobvt,
 
         /* Get the work size */
         lwork = get_work_value( datatype, work );
-
-        /* Output buffers will be freshly allocated for each iterations, free up 
-        the current output buffers.*/ 
         free_vector(work);
     }
     else
@@ -292,14 +277,12 @@ void prepare_gesvd_run(char *jobu, char *jobvt,
         /* Restore input matrix A value and allocate memory to output buffers
            for each iteration*/
         copy_matrix(datatype, "full", m_A, n_A, A_save, lda, A, lda);
-
         create_matrix(datatype, &U_test, ldu, m_A);
         create_matrix(datatype, &V_test, ldvt, n_A);
         create_realtype_vector(datatype, &s_test, min_m_n);
         create_vector(datatype, &work, lwork);
-        create_vector(INTEGER, &iwork, liwork);
 
-        if ( datatype == COMPLEX || datatype == DOUBLE_COMPLEX)
+        if (datatype == COMPLEX || datatype == DOUBLE_COMPLEX)
             create_realtype_vector(datatype, &rwork, lrwork);
         else
             rwork = NULL;
@@ -308,7 +291,7 @@ void prepare_gesvd_run(char *jobu, char *jobvt,
         exe_time = fla_test_clock();
 
         /* call to API */
-        invoke_gesvd(datatype, jobu, jobvt, &m_A, &n_A, A, &lda, s_test, U_test, &ldu, V_test, &ldvt, work, &lwork, rwork, iwork, info);
+        invoke_gesvd(datatype, jobu, jobvt, &m_A, &n_A, A, &lda, s_test, U_test, &ldu, V_test, &ldvt, work, &lwork, rwork, info);
 
         exe_time = fla_test_clock() - exe_time;
 
@@ -322,8 +305,7 @@ void prepare_gesvd_run(char *jobu, char *jobvt,
 
         /* Free up the output buffers */
         free_vector(work);
-        free_vector(iwork);
-        if ( datatype == COMPLEX || datatype == DOUBLE_COMPLEX)
+        if (datatype == COMPLEX || datatype == DOUBLE_COMPLEX)
             free_vector(rwork);
         free_matrix(U_test);
         free_matrix(V_test);
@@ -336,7 +318,7 @@ void prepare_gesvd_run(char *jobu, char *jobvt,
 }
 
 
-void invoke_gesvd(integer datatype, char* jobu, char* jobvt, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, void* rwork, integer* iwork, integer* info)
+void invoke_gesvd(integer datatype, char* jobu, char* jobvt, integer* m, integer* n, void* a, integer* lda, void* s, void* u, integer* ldu, void* vt, integer* ldvt, void* work, integer* lwork, void *rwork, integer* info)
 {
     switch(datatype)
     {
@@ -345,7 +327,7 @@ void invoke_gesvd(integer datatype, char* jobu, char* jobvt, integer* m, integer
             fla_lapack_sgesvd(jobu, jobvt, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, info);
             break;
         }
-        
+
         case DOUBLE:
         {
             fla_lapack_dgesvd(jobu, jobvt, m, n, a, lda, s, u, ldu, vt, ldvt, work, lwork, info);

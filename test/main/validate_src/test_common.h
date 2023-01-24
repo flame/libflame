@@ -112,4 +112,6 @@ void extract_upper_hessenberg_matrix(integer datatype, integer n, void *A, integ
 void get_generic_triangular_matrix(integer datatype, integer N, void *A, integer LDA, integer ilo, integer ihi);
 /* Decompose matrix A in to QR and store orthogonal matrix in Q and R in A*/
 void get_orthogonal_matrix_from_QR(integer datatype, integer n, void *A, integer lda, void *Q, integer ldq, integer *info);
+/* Print matrix contents for visual inspection */
+void print_matrix(char* desc, integer datatype, integer M, integer N, void* A, integer lda);
 #endif // TEST_COMMON_H
