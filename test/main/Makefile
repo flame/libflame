@@ -9,7 +9,7 @@ CC             := gcc
 LINKER         := $(CC)
 RM_RF          := rm -rf
 OMP_LIB        := -fopenmp
-CPPFLAGS       := 
+CPPFLAGS       :=
 CFLAGS         := -O2 -Wall -Wno-comment ${OMP_LIB}
 LDFLAGS        := -lm -lpthread $(OMP_LIB)
 
@@ -17,14 +17,15 @@ LDFLAGS        := -lm -lpthread $(OMP_LIB)
 # --- BLAS library -------------------------------------------------------------
 #
 # A BLAS library must be given in order to run the libflame test suite.
-LIBBLAS        := 
+LIBBLAS        :=
+BLAS_HEADER_PATH  :=
 
 #
 # --- LIBFLAME library ---------------------------------------------------------
 #
-LIB_PATH       := ../../lib/x86_64-unknown-linux-gnu/
-LIBFLAME       := $(LIB_PATH)/libflame.a
-
+LIB_PATH          := ../../lib/x86_64-unknown-linux-gnu/
+LIBFLAME          := $(LIB_PATH)/libflame.a
+LAPACK_INC_PATH   := ../../include/x86_64-unknown-linux-gnu/
 #
 # --- Uncomment the four lines below and set MKLROOT & LDFLAGS -----------------
 #     appropriately to link to MKL libs
@@ -86,8 +87,6 @@ TEST_SRC_PATH  := src
 TEST_OBJ_PATH  := src/obj
 TEST_VALIDATE_SRC_PATH := validate_src
 TEST_VALIDATE_OBJ_PATH := validate_src/obj
-BLAS_HEADER_PATH :=  
-LAPACK_INC_PATH := ../../include/x86_64-unknown-linux-gnu/
 
 CFLAGS         += -I$(BLAS_HEADER_PATH) -I$(LAPACK_INC_PATH) -I$(TEST_SRC_PATH) -I$(TEST_VALIDATE_SRC_PATH)
 

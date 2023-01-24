@@ -237,9 +237,10 @@
 #define FLA_BIDIAG_INNER_TO_OUTER_B_RATIO  (0.25)
 #define FLA_CAQR_INNER_TO_OUTER_B_RATIO    (0.25)
 
-// Matrix size thresholds for choosing unbloked non-FLA variant of QR for 
+// Matrix size thresholds for choosing unbloked non-FLA variant of QR for
 // small matrices
-#define FLA_GEQRF__STHRESH (320)
+#define FLA_GEQRF_STHRESH (32)
+#define FLA_GEQRF_BLOCK_SIZE (32)
 
 //POTRF, threshold numbers to chose paths for performance
 #define FLA_POTRF_FLOAT_SMALL         (70)

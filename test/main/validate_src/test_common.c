@@ -2405,3 +2405,74 @@ void get_orthogonal_matrix_from_QR(integer datatype, integer n, void *A, integer
     free_vector(tau);
     free_vector(work);
 }
+
+/* Print matrix contents for visual inspection */
+void print_matrix(char* desc, integer datatype, integer M, integer N, void* A, integer lda)
+{
+    integer i, j;
+
+    printf( "\n %s:\n", desc );
+    switch( datatype )
+    {
+        case INTEGER:
+        {
+            for( i = 0; i < M; i++ )
+            {
+                for( j = 0; j < N; j++ )
+                {
+                    printf(" %d", ((integer *)A)[i + j * lda]);
+                }
+                printf( "\n" );
+            }
+            break;
+        }
+        case FLOAT:
+        {
+            for( i = 0; i < M; i++ )
+            {
+                for( j = 0; j < N; j++ )
+                {
+                    printf(" %f", ((float *)A)[i + j * lda]);
+                }
+                printf( "\n" );
+            }
+            break;
+        }
+        case DOUBLE:
+        {
+            for( i = 0; i < M; i++ )
+            {
+                for( j = 0; j < N; j++ )
+                {
+                    printf(" %f", ((double *)A)[i + j * lda]);
+                }
+                printf( "\n" );
+            }
+            break;
+        }
+        case COMPLEX:
+        {
+            for( i = 0; i < M; i++ )
+            {
+                for( j = 0; j < N; j++ )
+                {
+                    printf(" (%f + j %f)", ((scomplex *)A)[i + j * lda].real, ((scomplex *)A)[i + j * lda].imag);
+                }
+                printf( "\n" );
+            }
+            break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+            for( i = 0; i < M; i++ )
+            {
+                for( j = 0; j < N; j++ )
+                {
+                    printf(" (%f + j %f)", ((dcomplex *)A)[i + j * lda].real, ((scomplex *)A)[i + j * lda].imag);
+                }
+                printf( "\n" );
+            }
+            break;
+        }
+    }
+}

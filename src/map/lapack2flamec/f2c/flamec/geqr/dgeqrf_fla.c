@@ -1,9 +1,18 @@
 /* dgeqrf.f -- translated by f2c (version 20000121). You must link the resulting object file with the libraries: -lf2c -lm (in that order) */
- #include "FLA_f2c.h" /* Table of constant values */
+#include "FLA_f2c.h" /* Table of constant values */
+#ifdef FLA_ENABLE_AMD_OPT
+extern int fla_dgeqrf_small(integer *m, integer *n,
+                            doublereal *a, integer * lda,
+                            doublereal *tau, doublereal *work);
+#else
+ static doublereal c_d0 = 0.;
+ static doublereal c_d1 = 1.;
  static integer c__1 = 1;
+#endif
  static integer c_n1 = -1;
  static integer c__3 = 3;
  static integer c__2 = 2;
+
  /* > \brief \b DGEQRF */
  /* =========== DOCUMENTATION =========== */
  /* Online html documentation available at */
@@ -187,7 +196,7 @@
  /* Function Body */
  *info = 0;
 #ifdef FLA_ENABLE_AMD_OPT
- nb = 32;
+ nb = FLA_GEQRF_BLOCK_SIZE;
 #else
  nb = ilaenv_(&c__1, "DGEQRF", " ", m, n, &c_n1, &c_n1);
 #endif
@@ -231,6 +240,14 @@
      #endif
  #endif
 
+/* Path for small sizes */
+#ifdef FLA_ENABLE_AMD_OPT
+ if (*m <= FLA_GEQRF_STHRESH && *n <= FLA_GEQRF_STHRESH)
+ {
+     fla_dgeqrf_small(m, n, &a[a_offset], lda, &tau[1], &work[1]);
+     return 0;
+ }
+#endif
  if (nb > 1 && nb < k) {
  /* Determine when to cross over from blocked to unblocked code. */
  /* Computing MAX */
@@ -310,4 +327,3 @@
  /* End of DGEQRF */
  }
  /* dgeqrf_ */
-

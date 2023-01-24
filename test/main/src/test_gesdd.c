@@ -62,7 +62,7 @@ void fla_test_gesdd(integer argc, char ** argv, test_params_t *params)
         params->svd_paramslist[0].ldvt = strtoimax(argv[8], &endptr, CLI_DECIMAL_BASE);
 
         g_lwork = strtoimax(argv[9], &endptr, CLI_DECIMAL_BASE);
-        
+
         n_repeats = strtoimax(argv[10], &endptr, CLI_DECIMAL_BASE);
 
         if(n_repeats > 0)
@@ -103,7 +103,7 @@ void fla_test_gesdd(integer argc, char ** argv, test_params_t *params)
             }
         }
     }
-    
+
     /* Print error messages */
     if(tests_not_run)
     {
@@ -151,7 +151,6 @@ void fla_test_gesdd_experiment(test_params_t *params,
         n = q_cur;
     }
 
-    // cs_A = m;
     lda = params->svd_paramslist[pci].lda;
     ldu = params->svd_paramslist[pci].ldu;
     ldvt = params->svd_paramslist[pci].ldvt;
@@ -197,7 +196,7 @@ void fla_test_gesdd_experiment(test_params_t *params,
     /* output validation */
     if((jobz == 'A' || jobz == 'S' || jobz == 'O') && info == 0)
         validate_gesdd(&jobz, m, n, A, A_test, lda, s, U, ldu, V, ldvt, datatype, residual, &vinfo);
-    
+
     /* Assigning bigger value to residual as execution fails */
     if (info < 0 || vinfo < 0)
         *residual = DBL_MAX;
@@ -276,7 +275,6 @@ void prepare_gesdd_run(char *jobz,
     {
         /* Restore input matrix A value and allocate memory to output buffers
            for each iteration*/
-    
         copy_matrix(datatype, "full", m_A, n_A, A_save, lda, A, lda);
 
         create_matrix(datatype, &U_test, ldu, m_A);
@@ -294,7 +292,7 @@ void prepare_gesdd_run(char *jobz,
 
         /* call to API */
         invoke_gesdd(datatype, jobz, &m_A, &n_A, A, &lda, s_test, U_test, &ldu, V_test, &ldvt, work, &lwork, rwork, iwork, info);
-        
+
         exe_time = fla_test_clock() - exe_time;
 
         /* Get the best execution time */
@@ -318,7 +316,7 @@ void prepare_gesdd_run(char *jobz,
 
     if(*jobz == 'O')
         copy_matrix(datatype, "full", m_A, m_A, A, lda, U, ldu);
-    
+
     *time_min_ = time_min;
 
     free_matrix(A_save);

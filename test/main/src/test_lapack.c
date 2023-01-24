@@ -64,8 +64,6 @@ int  main( int argc, char** argv )
 
     ilaver_(&vers_major, &vers_minor, &vers_patch);
 
-    printf(" LAPACK version: %"FT_IS".%"FT_IS".%"FT_IS" \n", vers_major, vers_minor, vers_patch);
-
     /* Initialize some strings. */
     fla_test_init_strings();
 
@@ -88,6 +86,7 @@ int  main( int argc, char** argv )
     }
     else
     {
+        printf(" LAPACK version: %"FT_IS".%"FT_IS".%"FT_IS" \n", vers_major, vers_minor, vers_patch);
         /* Copy the binary name to a global string so we can use it later. */
         strncpy( fla_test_binary_name, argv[0], MAX_BINARY_NAME_LENGTH );
 
@@ -388,13 +387,13 @@ void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
         CHECK_LINE_SKIP ();
     }
 
-    fscanf(fp, "%s", &line[0]); // leading dimension for B
+    fscanf(fp, "%s", &line[0]); // leading dimension for Q
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].ldq) );
         CHECK_LINE_SKIP ();
     }
 
-    fscanf(fp, "%s", &line[0]); // leading dimension for B
+    fscanf(fp, "%s", &line[0]); // leading dimension for Z
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].ldz) );
         CHECK_LINE_SKIP ();
@@ -1298,6 +1297,24 @@ void fla_test_read_svd_params ( const char *file_name, test_params_t* params )
         params->svd_paramslist[i].num_ranges = num_ranges;
     }
 
+    fscanf(fp, "%s", &line[0]); // leading dimension of input
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->svd_paramslist[i].lda) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // leading dimension of u output
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->svd_paramslist[i].ldu) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // leading dimension of vt output
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->svd_paramslist[i].ldvt) );
+        CHECK_LINE_SKIP ();
+    }
+
     fscanf(fp, "%s", &line[0]); // number of repeats
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%"FT_IS"", &(params->svd_paramslist[i].num_repeats) );
@@ -1381,12 +1398,6 @@ void fla_test_read_svd_params ( const char *file_name, test_params_t* params )
     fscanf(fp, "%s", &line[0]);
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%f", &(params->svd_paramslist[i].tolb) );
-        CHECK_LINE_SKIP ();
-    }
-
-    fscanf(fp, "%s", &line[0]);
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%f", &(params->svd_paramslist[i].svd_threshold) );
         CHECK_LINE_SKIP ();
     }
 
@@ -1570,19 +1581,7 @@ void fla_test_read_svd_params ( const char *file_name, test_params_t* params )
 
     fscanf(fp, "%s", &line[0]);
     for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%"FT_IS"", &(params->svd_paramslist[i].lda) );
-        CHECK_LINE_SKIP ();
-    }
-
-    fscanf(fp, "%s", &line[0]);
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%"FT_IS"", &(params->svd_paramslist[i].ldu) );
-        CHECK_LINE_SKIP ();
-    }
-
-    fscanf(fp, "%s", &line[0]);
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%"FT_IS"", &(params->svd_paramslist[i].ldvt) );
+        fscanf(fp, "%f", &(params->svd_paramslist[i].svd_threshold) );
         CHECK_LINE_SKIP ();
     }
 
@@ -1718,8 +1717,6 @@ void fla_test_execute_cli_api( integer argc, char** argv, test_params_t *params 
     char s_name[MAX_FUNC_STRING_LENGTH];
 
     test_api_count = sizeof(API_test_functions) / sizeof(API_test_functions[0]);
-    fla_test_output_info( "%2sAPI%13s DATA_TYPE%6s SIZE%9s FLOPS%9s TIME%9s ERROR%9s STATUS\n", "", "", "", "", "", "", "" );
-    fla_test_output_info( "%1s=====%12s===========%4s========%7s=======%7s========%6s==========%6s========\n", "", "", "", "", "", "", "" );
 
     /* Check if the specified API is supported in test suite */
     strcpy(s_name, argv[1]);
