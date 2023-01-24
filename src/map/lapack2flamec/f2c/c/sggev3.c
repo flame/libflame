@@ -1,11 +1,11 @@
-/* ../netlib/v3.9.0/sggev3.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* sggev3.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c_n1 = -1;
 static integer c__1 = 1;
 static integer c__0 = 0;
-static real c_b34 = 0.f;
-static real c_b35 = 1.f;
+static real c_b36 = 0.f;
+static real c_b37 = 1.f;
 /* > \brief <b> SGGEV3 computes the eigenvalues and, optionally, the left and/or right eigenvectors for GE mat rices (blocked algorithm)</b> */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -149,7 +149,7 @@ if positive, then the j-th and */
 /* > (j+1)-th eigenvalues form a complex conjugate pair, then */
 /* > u(j) = VL(:,j)+i*VL(:,j+1) and u(j+1) = VL(:,j)-i*VL(:,j+1). */
 /* > Each eigenvector is scaled so the largest component has */
-/* > abs(real part)+abs(imag. part)=1. */
+/* > f2c_abs(real part)+f2c_abs(imag. part)=1. */
 /* > Not referenced if JOBVL = 'N'. */
 /* > \endverbatim */
 /* > */
@@ -170,7 +170,7 @@ if positive, then the j-th and */
 /* > (j+1)-th eigenvalues form a complex conjugate pair, then */
 /* > v(j) = VR(:,j)+i*VR(:,j+1) and v(j+1) = VR(:,j)-i*VR(:,j+1). */
 /* > Each eigenvector is scaled so the largest component has */
-/* > abs(real part)+abs(imag. part)=1. */
+/* > f2c_abs(real part)+f2c_abs(imag. part)=1. */
 /* > Not referenced if JOBVR = 'N'. */
 /* > \endverbatim */
 /* > */
@@ -207,7 +207,7 @@ the routine */
 /* > The QZ iteration failed. No eigenvectors have been */
 /* > calculated, but ALPHAR(j), ALPHAI(j), and BETA(j) */
 /* > should be correct for j=INFO+1,...,N. */
-/* > > N: =N+1: other than QZ iteration failed in SHGEQZ. */
+/* > > N: =N+1: other than QZ iteration failed in SLAQZ0. */
 /* > =N+2: error return from STGEVC. */
 /* > \endverbatim */
 /* Authors: */
@@ -216,12 +216,13 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date January 2015 */
 /* > \ingroup realGEeigen */
 /* ===================================================================== */
 /* Subroutine */
 int sggev3_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b, integer *ldb, real *alphar, real *alphai, real *beta, real *vl, integer *ldvl, real *vr, integer *ldvr, real *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("sggev3 inputs: jobvl %c, jobvr %c, n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldvl %" FLA_IS ", ldvr %" FLA_IS "",*jobvl, *jobvr, *n, *lda, *ldb, *ldvl, *ldvr);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, vl_dim1, vl_offset, vr_dim1, vr_offset, i__1, i__2;
     real r__1, r__2, r__3, r__4;
@@ -239,7 +240,7 @@ int sggev3_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b
     extern logical lsame_(char *, char *);
     integer ileft, icols, irows;
     extern /* Subroutine */
-    int sgghd3_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *), slabad_(real *, real *), sggbak_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, integer *), sggbal_(char *, integer *, real *, integer *, real *, integer *, integer *, integer *, real *, real *, real *, integer *);
+    int sgghd3_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *), slaqz0_(char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, real *, real *, real *, integer *, real *, integer *, real *, integer *, integer *, integer *), slabad_(real *, real *), sggbak_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, integer *), sggbal_(char *, integer *, real *, integer *, real *, integer *, integer *, integer *, real *, real *, real *, integer *);
     logical ilascl, ilbscl;
     extern real slamch_(char *), slange_(char *, integer *, integer *, real *, integer *, real *);
     extern /* Subroutine */
@@ -255,20 +256,16 @@ int sggev3_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b
     integer ijobvr;
     extern /* Subroutine */
     int slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *), stgevc_( char *, char *, logical *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *, integer *, real *, integer *);
-    real anrmto, bnrmto;
-    extern /* Subroutine */
-    int shgeqz_(char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, real *, real *, real *, integer *, real *, integer *, real *, integer *, integer *);
-    real smlnum;
+    real anrmto, bnrmto, smlnum;
     extern /* Subroutine */
     int sorgqr_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *, integer *);
     integer lwkopt;
     logical lquery;
     extern /* Subroutine */
     int sormqr_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *);
-    /* -- LAPACK driver routine (version 3.6.0) -- */
+    /* -- LAPACK driver routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* January 2015 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -404,7 +401,7 @@ int sggev3_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b
             i__1 = lwkopt;
             i__2 = *n * 3 + (integer) work[1]; // , expr subst
             lwkopt = fla_max(i__1,i__2);
-            shgeqz_("S", jobvl, jobvr, n, &c__1, n, &a[a_offset], lda, &b[ b_offset], ldb, &alphar[1], &alphai[1], &beta[1], &vl[ vl_offset], ldvl, &vr[vr_offset], ldvr, &work[1], &c_n1, & ierr);
+            slaqz0_("S", jobvl, jobvr, n, &c__1, n, &a[a_offset], lda, &b[ b_offset], ldb, &alphar[1], &alphai[1], &beta[1], &vl[ vl_offset], ldvl, &vr[vr_offset], ldvr, &work[1], &c_n1, & c__0, &ierr);
             /* Computing MAX */
             i__1 = lwkopt;
             i__2 = (*n << 1) + (integer) work[1]; // , expr subst
@@ -412,7 +409,7 @@ int sggev3_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b
         }
         else
         {
-            shgeqz_("E", jobvl, jobvr, n, &c__1, n, &a[a_offset], lda, &b[ b_offset], ldb, &alphar[1], &alphai[1], &beta[1], &vl[ vl_offset], ldvl, &vr[vr_offset], ldvr, &work[1], &c_n1, & ierr);
+            slaqz0_("E", jobvl, jobvr, n, &c__1, n, &a[a_offset], lda, &b[ b_offset], ldb, &alphar[1], &alphai[1], &beta[1], &vl[ vl_offset], ldvl, &vr[vr_offset], ldvr, &work[1], &c_n1, & c__0, &ierr);
             /* Computing MAX */
             i__1 = lwkopt;
             i__2 = (*n << 1) + (integer) work[1]; // , expr subst
@@ -424,15 +421,18 @@ int sggev3_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b
     {
         i__1 = -(*info);
         xerbla_("SGGEV3 ", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants */
@@ -501,7 +501,7 @@ int sggev3_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b
     /* Initialize VL */
     if (ilvl)
     {
-        slaset_("Full", n, n, &c_b34, &c_b35, &vl[vl_offset], ldvl) ;
+        slaset_("Full", n, n, &c_b36, &c_b37, &vl[vl_offset], ldvl) ;
         if (irows > 1)
         {
             i__1 = irows - 1;
@@ -514,7 +514,7 @@ int sggev3_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b
     /* Initialize VR */
     if (ilvr)
     {
-        slaset_("Full", n, n, &c_b34, &c_b35, &vr[vr_offset], ldvr) ;
+        slaset_("Full", n, n, &c_b36, &c_b37, &vr[vr_offset], ldvr) ;
     }
     /* Reduce to generalized Hessenberg form */
     if (ilv)
@@ -540,7 +540,7 @@ int sggev3_(char *jobvl, char *jobvr, integer *n, real *a, integer *lda, real *b
         *(unsigned char *)chtemp = 'E';
     }
     i__1 = *lwork + 1 - iwrk;
-    shgeqz_(chtemp, jobvl, jobvr, n, &ilo, &ihi, &a[a_offset], lda, &b[ b_offset], ldb, &alphar[1], &alphai[1], &beta[1], &vl[vl_offset], ldvl, &vr[vr_offset], ldvr, &work[iwrk], &i__1, &ierr);
+    slaqz0_(chtemp, jobvl, jobvr, n, &ilo, &ihi, &a[a_offset], lda, &b[ b_offset], ldb, &alphar[1], &alphai[1], &beta[1], &vl[vl_offset], ldvl, &vr[vr_offset], ldvr, &work[iwrk], &i__1, &c__0, &ierr);
     if (ierr != 0)
     {
         if (ierr > 0 && ierr <= *n)
@@ -742,8 +742,8 @@ L110:
         slascl_("G", &c__0, &c__0, &bnrmto, &bnrm, n, &c__1, &beta[1], n, & ierr);
     }
     work[1] = (real) lwkopt;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of SGGEV3 */
 }
 /* sggev3_ */
-

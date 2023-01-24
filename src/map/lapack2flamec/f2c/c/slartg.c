@@ -1,236 +1,69 @@
-/* ../netlib/slartg.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* slartg.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
-#include "FLA_f2c.h" /* > \brief \b SLARTG generates a plane rotation with real cosine and real sine. */
-/* =========== DOCUMENTATION =========== */
-/* Online html documentation available at  */
-/* http://www.netlib.org/lapack/explore-html/ */
-/* > \htmlonly */
-/* > Download SLARTG + dependencies */
-/* > <a href="http://www.netlib.org/cgi-bin/netlibfiles.tgz?format=tgz&filename=/lapack/lapack_routine/slartg. f"> */
-/* > [TGZ]</a> */
-/* > <a href="http://www.netlib.org/cgi-bin/netlibfiles.zip?format=zip&filename=/lapack/lapack_routine/slartg. f"> */
-/* > [ZIP]</a> */
-/* > <a href="http://www.netlib.org/cgi-bin/netlibfiles.txt?format=txt&filename=/lapack/lapack_routine/slartg. f"> */
-/* > [TXT]</a> */
-/* > \endhtmlonly */
-/* Definition: */
-/* =========== */
-/* SUBROUTINE SLARTG( F, G, CS, SN, R ) */
-/* .. Scalar Arguments .. */
-/* REAL CS, F, G, R, SN */
-/* .. */
-/* > \par Purpose: */
-/* ============= */
-/* > */
-/* > \verbatim */
-/* > */
-/* > SLARTG generate a plane rotation so that */
-/* > */
-/* > [ CS SN ] . [ F ] = [ R ] where CS**2 + SN**2 = 1. */
-/* > [ -SN CS ] [ G ] [ 0 ] */
-/* > */
-/* > This is a slower, more accurate version of the BLAS1 routine SROTG, */
-/* > with the following other differences: */
-/* > F and G are unchanged on return. */
-/* > If G=0, then CS=1 and SN=0. */
-/* > If F=0 and (G .ne. 0), then CS=0 and SN=1 without doing any */
-/* > floating point operations (saves work in SBDSQR when */
-/* > there are zeros on the diagonal). */
-/* > */
-/* > If F exceeds G in magnitude, CS will be positive. */
-/* > \endverbatim */
-/* Arguments: */
-/* ========== */
-/* > \param[in] F */
-/* > \verbatim */
-/* > F is REAL */
-/* > The first component of vector to be rotated. */
-/* > \endverbatim */
-/* > */
-/* > \param[in] G */
-/* > \verbatim */
-/* > G is REAL */
-/* > The second component of vector to be rotated. */
-/* > \endverbatim */
-/* > */
-/* > \param[out] CS */
-/* > \verbatim */
-/* > CS is REAL */
-/* > The cosine of the rotation. */
-/* > \endverbatim */
-/* > */
-/* > \param[out] SN */
-/* > \verbatim */
-/* > SN is REAL */
-/* > The sine of the rotation. */
-/* > \endverbatim */
-/* > */
-/* > \param[out] R */
-/* > \verbatim */
-/* > R is REAL */
-/* > The nonzero component of the rotated vector. */
-/* > */
-/* > This version has a few statements commented out for thread safety */
-/* > (machine parameters are computed on each entry). 10 feb 03, SJH. */
-/* > \endverbatim */
-/* Authors: */
-/* ======== */
-/* > \author Univ. of Tennessee */
-/* > \author Univ. of California Berkeley */
-/* > \author Univ. of Colorado Denver */
-/* > \author NAG Ltd. */
-/* > \date September 2012 */
-/* > \ingroup auxOTHERauxiliary */
-/* ===================================================================== */
+#include "FLA_f2c.h" /* Table of constant values */
+static real c_b2 = 1.f;
 /* Subroutine */
-int slartg_(real *f, real *g, real *cs, real *sn, real *r__)
+int slartg_(real *f, real *g, real *c__, real *s, real *r__)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-    /* System generated locals */
-    integer i__1;
-    real r__1, r__2;
+    AOCL_DTL_TRACE_LOG_INIT
     /* Builtin functions */
-    double log(doublereal), pow_ri(real *, integer *), sqrt(doublereal);
+    double sqrt(doublereal), r_sign(real *, real *);
+    /* System generated locals */
+    real r__1, r__2, r__3;
     /* Local variables */
-    integer i__;
-    real f1, g1, eps, scale;
-    integer count;
-    real safmn2, safmx2;
-    extern real slamch_(char *);
-    real safmin;
-    /* -- LAPACK auxiliary routine (version 3.4.2) -- */
-    /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
-    /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* September 2012 */
-    /* .. Scalar Arguments .. */
-    /* .. */
-    /* ===================================================================== */
-    /* .. Parameters .. */
+    real d__, u, f1, g1, fs, gs, rtmin, rtmax, safmin, safmax;
+    /* ...Translated by Pacific-Sierra Research vf90 Personal 3.4N3 05:33:20 1/24/23 */
+    /* ...Switches: */
     /* .. */
     /* .. Local Scalars .. */
-    /* LOGICAL FIRST */
-    /* .. */
-    /* .. External Functions .. */
     /* .. */
     /* .. Intrinsic Functions .. */
     /* .. */
-    /* .. Save statement .. */
-    /* SAVE FIRST, SAFMX2, SAFMIN, SAFMN2 */
-    /* .. */
-    /* .. Data statements .. */
-    /* DATA FIRST / .TRUE. / */
+    /* .. Constants .. */
+    safmin = 1.1754943508222875e-38f;
+    safmax = 8.5070591730234616e37f;
+    rtmin = sqrt(safmin);
+    rtmax = sqrt(safmax / 2);
     /* .. */
     /* .. Executable Statements .. */
-    /* IF( FIRST ) THEN */
-    safmin = slamch_("S");
-    eps = slamch_("E");
-    r__1 = slamch_("B");
-    i__1 = (integer) (log(safmin / eps) / log(slamch_("B")) / 2.f);
-    safmn2 = pow_ri(&r__1, &i__1);
-    safmx2 = 1.f / safmn2;
-    /* FIRST = .FALSE. */
-    /* END IF */
+    f1 = f2c_abs(*f);
+    g1 = f2c_abs(*g);
     if (*g == 0.f)
     {
-        *cs = 1.f;
-        *sn = 0.f;
+        *c__ = 1.f;
+        *s = 0.f;
         *r__ = *f;
     }
     else if (*f == 0.f)
     {
-        *cs = 0.f;
-        *sn = 1.f;
-        *r__ = *g;
+        *c__ = 0.f;
+        *s = r_sign(&c_b2, g);
+        *r__ = g1;
+    }
+    else if (f1 > rtmin && f1 < rtmax && g1 > rtmin && g1 < rtmax)
+    {
+        d__ = sqrt(*f * *f + *g * *g);
+        *c__ = f1 / d__;
+        *r__ = r_sign(&d__, f);
+        *s = *g / *r__;
     }
     else
     {
-        f1 = *f;
-        g1 = *g;
+        /* Computing MIN */
         /* Computing MAX */
-        r__1 = f2c_abs(f1);
-        r__2 = f2c_abs(g1); // , expr subst
-        scale = fla_max(r__1,r__2);
-        if (scale >= safmx2)
-        {
-            count = 0;
-L10:
-            ++count;
-            f1 *= safmn2;
-            g1 *= safmn2;
-            /* Computing MAX */
-            r__1 = f2c_abs(f1);
-            r__2 = f2c_abs(g1); // , expr subst
-            scale = fla_max(r__1,r__2);
-            if (scale >= safmx2)
-            {
-                goto L10;
-            }
-            /* Computing 2nd power */
-            r__1 = f1;
-            /* Computing 2nd power */
-            r__2 = g1;
-            *r__ = sqrt(r__1 * r__1 + r__2 * r__2);
-            *cs = f1 / *r__;
-            *sn = g1 / *r__;
-            i__1 = count;
-            for (i__ = 1;
-                    i__ <= i__1;
-                    ++i__)
-            {
-                *r__ *= safmx2;
-                /* L20: */
-            }
-        }
-        else if (scale <= safmn2)
-        {
-            count = 0;
-L30:
-            ++count;
-            f1 *= safmx2;
-            g1 *= safmx2;
-            /* Computing MAX */
-            r__1 = f2c_abs(f1);
-            r__2 = f2c_abs(g1); // , expr subst
-            scale = fla_max(r__1,r__2);
-            if (scale <= safmn2)
-            {
-                goto L30;
-            }
-            /* Computing 2nd power */
-            r__1 = f1;
-            /* Computing 2nd power */
-            r__2 = g1;
-            *r__ = sqrt(r__1 * r__1 + r__2 * r__2);
-            *cs = f1 / *r__;
-            *sn = g1 / *r__;
-            i__1 = count;
-            for (i__ = 1;
-                    i__ <= i__1;
-                    ++i__)
-            {
-                *r__ *= safmn2;
-                /* L40: */
-            }
-        }
-        else
-        {
-            /* Computing 2nd power */
-            r__1 = f1;
-            /* Computing 2nd power */
-            r__2 = g1;
-            *r__ = sqrt(r__1 * r__1 + r__2 * r__2);
-            *cs = f1 / *r__;
-            *sn = g1 / *r__;
-        }
-        if (f2c_abs(*f) > f2c_abs(*g) && *cs < 0.f)
-        {
-            *cs = -(*cs);
-            *sn = -(*sn);
-            *r__ = -(*r__);
-        }
+        r__3 = fla_max(safmin,f1);
+        r__1 = safmax;
+        r__2 = fla_max(r__3,g1); // , expr subst
+        u = fla_min(r__1,r__2);
+        fs = *f / u;
+        gs = *g / u;
+        d__ = sqrt(fs * fs + gs * gs);
+        *c__ = f2c_abs(fs) / d__;
+        *r__ = r_sign(&d__, f);
+        *s = gs / *r__;
+        *r__ *= u;
     }
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
-    /* End of SLARTG */
 }
 /* slartg_ */

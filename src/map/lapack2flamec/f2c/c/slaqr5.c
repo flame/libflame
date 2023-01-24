@@ -1,11 +1,11 @@
-/* ../netlib/slaqr5.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* slaqr5.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static real c_b7 = 0.f;
 static real c_b8 = 1.f;
-static integer c__3 = 3;
-static integer c__1 = 1;
 static integer c__2 = 2;
+static integer c__1 = 1;
+static integer c__3 = 3;
 /* > \brief \b SLAQR5 performs a single small-bulge multi-shift QR sweep. */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -46,21 +46,21 @@ static integer c__2 = 2;
 /* ========== */
 /* > \param[in] WANTT */
 /* > \verbatim */
-/* > WANTT is logical scalar */
+/* > WANTT is LOGICAL */
 /* > WANTT = .true. if the quasi-triangular Schur factor */
 /* > is being computed. WANTT is set to .false. otherwise. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] WANTZ */
 /* > \verbatim */
-/* > WANTZ is logical scalar */
+/* > WANTZ is LOGICAL */
 /* > WANTZ = .true. if the orthogonal Schur factor is being */
 /* > computed. WANTZ is set to .false. otherwise. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] KACC22 */
 /* > \verbatim */
-/* > KACC22 is integer with value 0, 1, or 2. */
+/* > KACC22 is INTEGER with value 0, 1, or 2. */
 /* > Specifies the computation mode of far-from-diagonal */
 /* > orthogonal updates. */
 /* > = 0: SLAQR5 does not accumulate reflections and does not */
@@ -68,27 +68,26 @@ static integer c__2 = 2;
 /* > matrix entries. */
 /* > = 1: SLAQR5 accumulates reflections and uses matrix-matrix */
 /* > multiply to update the far-from-diagonal matrix entries. */
-/* > = 2: SLAQR5 accumulates reflections, uses matrix-matrix */
-/* > multiply to update the far-from-diagonal matrix entries, */
-/* > and takes advantage of 2-by-2 block structure during */
-/* > matrix multiplies. */
+/* > = 2: Same as KACC22 = 1. This option used to enable exploiting */
+/* > the 2-by-2 structure during matrix multiplications, but */
+/* > this is no longer supported. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] N */
 /* > \verbatim */
-/* > N is integer scalar */
+/* > N is INTEGER */
 /* > N is the order of the Hessenberg matrix H upon which this */
 /* > subroutine operates. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] KTOP */
 /* > \verbatim */
-/* > KTOP is integer scalar */
+/* > KTOP is INTEGER */
 /* > \endverbatim */
 /* > */
 /* > \param[in] KBOT */
 /* > \verbatim */
-/* > KBOT is integer scalar */
+/* > KBOT is INTEGER */
 /* > These are the first and last rows and columns of an */
 /* > isolated diagonal block upon which the QR sweep is to be */
 /* > applied. It is assumed without a check that */
@@ -99,19 +98,19 @@ static integer c__2 = 2;
 /* > */
 /* > \param[in] NSHFTS */
 /* > \verbatim */
-/* > NSHFTS is integer scalar */
+/* > NSHFTS is INTEGER */
 /* > NSHFTS gives the number of simultaneous shifts. NSHFTS */
 /* > must be positive and even. */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] SR */
 /* > \verbatim */
-/* > SR is REAL array of size (NSHFTS) */
+/* > SR is REAL array, dimension (NSHFTS) */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] SI */
 /* > \verbatim */
-/* > SI is REAL array of size (NSHFTS) */
+/* > SI is REAL array, dimension (NSHFTS) */
 /* > SR contains the real parts and SI contains the imaginary */
 /* > parts of the NSHFTS shifts of origin that define the */
 /* > multi-shift QR sweep. On output SR and SI may be */
@@ -120,7 +119,7 @@ static integer c__2 = 2;
 /* > */
 /* > \param[in,out] H */
 /* > \verbatim */
-/* > H is REAL array of size (LDH,N) */
+/* > H is REAL array, dimension (LDH,N) */
 /* > On input H contains a Hessenberg matrix. On output a */
 /* > multi-shift QR sweep with shifts SR(J)+i*SI(J) is applied */
 /* > to the isolated diagonal block in rows and columns KTOP */
@@ -129,9 +128,9 @@ static integer c__2 = 2;
 /* > */
 /* > \param[in] LDH */
 /* > \verbatim */
-/* > LDH is integer scalar */
+/* > LDH is INTEGER */
 /* > LDH is the leading dimension of H just as declared in the */
-/* > calling procedure. LDH.GE.MAX(1,N). */
+/* > calling procedure. LDH >= fla_max(1,N). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] ILOZ */
@@ -143,101 +142,103 @@ static integer c__2 = 2;
 /* > \verbatim */
 /* > IHIZ is INTEGER */
 /* > Specify the rows of Z to which transformations must be */
-/* > applied if WANTZ is .TRUE.. 1 .LE. ILOZ .LE. IHIZ .LE. N */
+/* > applied if WANTZ is .TRUE.. 1 <= ILOZ <= IHIZ <= N */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] Z */
 /* > \verbatim */
-/* > Z is REAL array of size (LDZ,IHI) */
+/* > Z is REAL array, dimension (LDZ,IHIZ) */
 /* > If WANTZ = .TRUE., then the QR Sweep orthogonal */
 /* > similarity transformation is accumulated into */
-/* > Z(ILOZ:IHIZ,ILO:IHI) from the right. */
+/* > Z(ILOZ:IHIZ,ILOZ:IHIZ) from the right. */
 /* > If WANTZ = .FALSE., then Z is unreferenced. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDZ */
 /* > \verbatim */
-/* > LDZ is integer scalar */
+/* > LDZ is INTEGER */
 /* > LDA is the leading dimension of Z just as declared in */
-/* > the calling procedure. LDZ.GE.N. */
+/* > the calling procedure. LDZ >= N. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] V */
 /* > \verbatim */
-/* > V is REAL array of size (LDV,NSHFTS/2) */
+/* > V is REAL array, dimension (LDV,NSHFTS/2) */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDV */
 /* > \verbatim */
-/* > LDV is integer scalar */
+/* > LDV is INTEGER */
 /* > LDV is the leading dimension of V as declared in the */
-/* > calling procedure. LDV.GE.3. */
+/* > calling procedure. LDV >= 3. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] U */
 /* > \verbatim */
-/* > U is REAL array of size */
-/* > (LDU,3*NSHFTS-3) */
+/* > U is REAL array, dimension (LDU,2*NSHFTS) */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDU */
 /* > \verbatim */
-/* > LDU is integer scalar */
+/* > LDU is INTEGER */
 /* > LDU is the leading dimension of U just as declared in the */
-/* > in the calling subroutine. LDU.GE.3*NSHFTS-3. */
-/* > \endverbatim */
-/* > */
-/* > \param[in] NH */
-/* > \verbatim */
-/* > NH is integer scalar */
-/* > NH is the number of columns in array WH available for */
-/* > workspace. NH.GE.1. */
-/* > \endverbatim */
-/* > */
-/* > \param[out] WH */
-/* > \verbatim */
-/* > WH is REAL array of size (LDWH,NH) */
-/* > \endverbatim */
-/* > */
-/* > \param[in] LDWH */
-/* > \verbatim */
-/* > LDWH is integer scalar */
-/* > Leading dimension of WH just as declared in the */
-/* > calling procedure. LDWH.GE.3*NSHFTS-3. */
+/* > in the calling subroutine. LDU >= 2*NSHFTS. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] NV */
 /* > \verbatim */
-/* > NV is integer scalar */
+/* > NV is INTEGER */
 /* > NV is the number of rows in WV agailable for workspace. */
-/* > NV.GE.1. */
+/* > NV >= 1. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] WV */
 /* > \verbatim */
-/* > WV is REAL array of size */
-/* > (LDWV,3*NSHFTS-3) */
+/* > WV is REAL array, dimension (LDWV,2*NSHFTS) */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDWV */
 /* > \verbatim */
-/* > LDWV is integer scalar */
+/* > LDWV is INTEGER */
 /* > LDWV is the leading dimension of WV as declared in the */
-/* > in the calling subroutine. LDWV.GE.NV. */
+/* > in the calling subroutine. LDWV >= NV. */
 /* > \endverbatim */
+/* > \param[in] NH */
+/* > \verbatim */
+/* > NH is INTEGER */
+/* > NH is the number of columns in array WH available for */
+/* > workspace. NH >= 1. */
+/* > \endverbatim */
+/* > */
+/* > \param[out] WH */
+/* > \verbatim */
+/* > WH is REAL array, dimension (LDWH,NH) */
+/* > \endverbatim */
+/* > */
+/* > \param[in] LDWH */
+/* > \verbatim */
+/* > LDWH is INTEGER */
+/* > Leading dimension of WH just as declared in the */
+/* > calling procedure. LDWH >= 2*NSHFTS. */
+/* > \endverbatim */
+/* > */
 /* Authors: */
 /* ======== */
 /* > \author Univ. of Tennessee */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date September 2012 */
 /* > \ingroup realOTHERauxiliary */
 /* > \par Contributors: */
 /* ================== */
 /* > */
 /* > Karen Braman and Ralph Byers, Department of Mathematics, */
 /* > University of Kansas, USA */
+/* > */
+/* > Lars Karlsson, Daniel Kressner, and Bruno Lang */
+/* > */
+/* > Thijs Steel, Department of Computer science, */
+/* > KU Leuven, Belgium */
 /* > \par References: */
 /* ================ */
 /* > */
@@ -246,24 +247,30 @@ static integer c__2 = 2;
 /* > Performance, SIAM Journal of Matrix Analysis, volume 23, pages */
 /* > 929--947, 2002. */
 /* > */
+/* > Lars Karlsson, Daniel Kressner, and Bruno Lang, Optimally packed */
+/* > chains of bulges in multishift QR algorithms. */
+/* > ACM Trans. Math. Softw. 40, 2, Article 12 (February 2014). */
+/* > */
 /* ===================================================================== */
 /* Subroutine */
 int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer *ktop, integer *kbot, integer *nshfts, real *sr, real *si, real *h__, integer *ldh, integer *iloz, integer *ihiz, real *z__, integer *ldz, real *v, integer *ldv, real *u, integer *ldu, integer *nv, real *wv, integer *ldwv, integer *nh, real *wh, integer * ldwh)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("slaqr5 inputs: kacc22 %" FLA_IS ", n %" FLA_IS ", ktop %" FLA_IS ", kbot %" FLA_IS ", nshfts %" FLA_IS ", ldh %" FLA_IS ", iloz %" FLA_IS ", ihiz %" FLA_IS ", ldz %" FLA_IS ", ldv %" FLA_IS ", ldu %" FLA_IS ", nv %" FLA_IS ", ldwv %" FLA_IS ", nh %" FLA_IS ", ldwh %" FLA_IS "",*kacc22, *n, *ktop, *kbot, *nshfts, *ldh, *iloz, *ihiz, *ldz, *ldv, *ldu, *nv, *ldwv, *nh, *ldwh);
     /* System generated locals */
     integer h_dim1, h_offset, u_dim1, u_offset, v_dim1, v_offset, wh_dim1, wh_offset, wv_dim1, wv_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5, i__6, i__7;
     real r__1, r__2, r__3, r__4, r__5;
     /* Local variables */
-    integer i__, j, k, m, i2, j2, i4, j4, k1;
-    real h11, h12, h21, h22;
+    extern /* Subroutine */
+    int f90_cycle_(void);
+    integer i__, j, k, m, i2, k1, i4;
+    real t1, t2, t3, h11, h12, h21, h22;
     integer m22, ns, nu;
     real vt[3], scl;
     integer kdu, kms;
-    real ulp;
-    integer knz, kzs;
-    real tst1, tst2, beta;
-    logical blk22, bmp22;
-    integer mend, jcol, jlen, jbot, mbot;
+    real ulp, tst1, tst2, beta;
+    logical bmp22;
+    integer jcol, jlen, jbot, mbot;
     real swap;
     integer jtop, jrow, mtop;
     real alpha;
@@ -273,7 +280,7 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
     int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *);
     integer krcol, nbmps;
     extern /* Subroutine */
-    int strmm_(char *, char *, char *, char *, integer *, integer *, real *, real *, integer *, real *, integer * ), slaqr1_(integer *, real *, integer *, real *, real *, real *, real *, real *), slabad_(real *, real *);
+    int slaqr1_(integer *, real *, integer *, real *, real *, real *, real *, real *), slabad_(real *, real *);
     extern real slamch_(char *);
     real safmin;
     extern /* Subroutine */
@@ -281,13 +288,10 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
     real safmax;
     extern /* Subroutine */
     int slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *);
-    real refsum;
-    integer mstart;
-    real smlnum;
-    /* -- LAPACK auxiliary routine (version 3.4.2) -- */
+    real refsum, smlnum;
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* September 2012 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -331,12 +335,14 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
     /* Function Body */
     if (*nshfts < 2)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* ==== If the active block is empty or 1-by-1, then there */
     /* . is nothing to do. ==== */
     if (*ktop >= *kbot)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* ==== Shuffle shifts into pairs of real shifts and pairs */
@@ -375,8 +381,6 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
     /* ==== Use accumulated reflections to update far-from-diagonal */
     /* . entries ? ==== */
     accum = *kacc22 == 1 || *kacc22 == 2;
-    /* ==== If so, exploit the 2-by-2 block structure? ==== */
-    blk22 = ns > 2 && *kacc22 == 2;
     /* ==== clear trash ==== */
     if (*ktop + 2 <= *kbot)
     {
@@ -385,14 +389,27 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
     /* ==== NBMPS = number of 2-shift bulges in the chain ==== */
     nbmps = ns / 2;
     /* ==== KDU = width of slab ==== */
-    kdu = nbmps * 6 - 3;
+    kdu = nbmps << 2;
     /* ==== Create and chase chains of NBMPS bulges ==== */
     i__1 = *kbot - 2;
-    i__2 = nbmps * 3 - 2;
-    for (incol = (1 - nbmps) * 3 + *ktop - 1;
+    i__2 = nbmps << 1;
+    for (incol = *ktop - (nbmps << 1) + 1;
             i__2 < 0 ? incol >= i__1 : incol <= i__1;
             incol += i__2)
     {
+        /* JTOP = Index from which updates from the right start. */
+        if (accum)
+        {
+            jtop = fla_max(*ktop,incol);
+        }
+        else if (*wantt)
+        {
+            jtop = 1;
+        }
+        else
+        {
+            jtop = *ktop;
+        }
         ndcol = incol + kdu;
         if (accum)
         {
@@ -400,17 +417,17 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
         }
         /* ==== Near-the-diagonal bulge chase. The following loop */
         /* . performs the near-the-diagonal part of a small bulge */
-        /* . multi-shift QR sweep. Each 6*NBMPS-2 column diagonal */
+        /* . multi-shift QR sweep. Each 4*NBMPS column diagonal */
         /* . chunk extends from column INCOL to column NDCOL */
         /* . (including both column INCOL and column NDCOL). The */
-        /* . following loop chases a 3*NBMPS column long chain of */
-        /* . NBMPS bulges 3*NBMPS-2 columns to the right. (INCOL */
+        /* . following loop chases a 2*NBMPS+1 column long chain of */
+        /* . NBMPS bulges 2*NBMPS-1 columns to the right. (INCOL */
         /* . may be less than KTOP and and NDCOL may be greater than */
         /* . KBOT indicating phantom columns from which to chase */
         /* . bulges before they are actually introduced or to which */
         /* . to chase bulges beyond column KBOT.) ==== */
         /* Computing MIN */
-        i__4 = incol + nbmps * 3 - 3;
+        i__4 = incol + (nbmps << 1) - 1;
         i__5 = *kbot - 2; // , expr subst
         i__3 = fla_min(i__4,i__5);
         for (krcol = incol;
@@ -423,24 +440,196 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
             /* . (if any) must wait until the active bulges have moved */
             /* . down the diagonal to make room. The phantom matrix */
             /* . paradigm described above helps keep track. ==== */
-            /* Computing MAX */
+            /* Computing fla_max */
             i__4 = 1;
-            i__5 = (*ktop - 1 - krcol + 2) / 3 + 1; // , expr subst
+            i__5 = (*ktop - krcol) / 2 + 1; // , expr subst
             mtop = fla_max(i__4,i__5);
             /* Computing MIN */
             i__4 = nbmps;
-            i__5 = (*kbot - krcol) / 3; // , expr subst
+            i__5 = (*kbot - krcol - 1) / 2; // , expr subst
             mbot = fla_min(i__4,i__5);
             m22 = mbot + 1;
-            bmp22 = mbot < nbmps && krcol + (m22 - 1) * 3 == *kbot - 2;
+            bmp22 = mbot < nbmps && krcol + (m22 - 1 << 1) == *kbot - 2;
             /* ==== Generate reflections to chase the chain right */
             /* . one column. (The minimum value of K is KTOP-1.) ==== */
-            i__4 = mbot;
-            for (m = mtop;
-                    m <= i__4;
-                    ++m)
+            if (bmp22)
             {
-                k = krcol + (m - 1) * 3;
+                /* ==== Special case: 2-by-2 reflection at bottom treated */
+                /* . separately ==== */
+                k = krcol + (m22 - 1 << 1);
+                if (k == *ktop - 1)
+                {
+                    slaqr1_(&c__2, &h__[k + 1 + (k + 1) * h_dim1], ldh, &sr[( m22 << 1) - 1], &si[(m22 << 1) - 1], &sr[m22 * 2], &si[m22 * 2], &v[m22 * v_dim1 + 1]);
+                    beta = v[m22 * v_dim1 + 1];
+                    slarfg_(&c__2, &beta, &v[m22 * v_dim1 + 2], &c__1, &v[m22 * v_dim1 + 1]);
+                }
+                else
+                {
+                    beta = h__[k + 1 + k * h_dim1];
+                    v[m22 * v_dim1 + 2] = h__[k + 2 + k * h_dim1];
+                    slarfg_(&c__2, &beta, &v[m22 * v_dim1 + 2], &c__1, &v[m22 * v_dim1 + 1]);
+                    h__[k + 1 + k * h_dim1] = beta;
+                    h__[k + 2 + k * h_dim1] = 0.f;
+                }
+                /* ==== Perform update from right within */
+                /* . computational window. ==== */
+                t1 = v[m22 * v_dim1 + 1];
+                t2 = t1 * v[m22 * v_dim1 + 2];
+                /* Computing MIN */
+                i__5 = *kbot;
+                i__6 = k + 3; // , expr subst
+                i__4 = fla_min(i__5,i__6);
+                for (j = jtop;
+                        j <= i__4;
+                        ++j)
+                {
+                    refsum = h__[j + (k + 1) * h_dim1] + v[m22 * v_dim1 + 2] * h__[j + (k + 2) * h_dim1];
+                    h__[j + (k + 1) * h_dim1] -= refsum * t1;
+                    h__[j + (k + 2) * h_dim1] -= refsum * t2;
+                    /* L30: */
+                }
+                /* ==== Perform update from left within */
+                /* . computational window. ==== */
+                if (accum)
+                {
+                    jbot = fla_min(ndcol,*kbot);
+                }
+                else if (*wantt)
+                {
+                    jbot = *n;
+                }
+                else
+                {
+                    jbot = *kbot;
+                }
+                t1 = v[m22 * v_dim1 + 1];
+                t2 = t1 * v[m22 * v_dim1 + 2];
+                i__4 = jbot;
+                for (j = k + 1;
+                        j <= i__4;
+                        ++j)
+                {
+                    refsum = h__[k + 1 + j * h_dim1] + v[m22 * v_dim1 + 2] * h__[k + 2 + j * h_dim1];
+                    h__[k + 1 + j * h_dim1] -= refsum * t1;
+                    h__[k + 2 + j * h_dim1] -= refsum * t2;
+                    /* L40: */
+                }
+                /* ==== The following convergence test requires that */
+                /* . the tradition small-compared-to-nearby-diagonals */
+                /* . criterion and the Ahues & Tisseur (LAWN 122, 1997) */
+                /* . criteria both be satisfied. The latter improves */
+                /* . accuracy in some examples. Falling back on an */
+                /* . alternate convergence criterion when TST1 or TST2 */
+                /* . is zero (as done here) is traditional but probably */
+                /* . unnecessary. ==== */
+                if (k >= *ktop)
+                {
+                    if (h__[k + 1 + k * h_dim1] != 0.f)
+                    {
+                        tst1 = (r__1 = h__[k + k * h_dim1], f2c_abs(r__1)) + ( r__2 = h__[k + 1 + (k + 1) * h_dim1], f2c_abs( r__2));
+                        if (tst1 == 0.f)
+                        {
+                            if (k >= *ktop + 1)
+                            {
+                                tst1 += (r__1 = h__[k + (k - 1) * h_dim1], f2c_abs(r__1));
+                            }
+                            if (k >= *ktop + 2)
+                            {
+                                tst1 += (r__1 = h__[k + (k - 2) * h_dim1], f2c_abs(r__1));
+                            }
+                            if (k >= *ktop + 3)
+                            {
+                                tst1 += (r__1 = h__[k + (k - 3) * h_dim1], f2c_abs(r__1));
+                            }
+                            if (k <= *kbot - 2)
+                            {
+                                tst1 += (r__1 = h__[k + 2 + (k + 1) * h_dim1], f2c_abs(r__1));
+                            }
+                            if (k <= *kbot - 3)
+                            {
+                                tst1 += (r__1 = h__[k + 3 + (k + 1) * h_dim1], f2c_abs(r__1));
+                            }
+                            if (k <= *kbot - 4)
+                            {
+                                tst1 += (r__1 = h__[k + 4 + (k + 1) * h_dim1], f2c_abs(r__1));
+                            }
+                        }
+                        /* Computing fla_max */
+                        r__2 = smlnum;
+                        r__3 = ulp * tst1; // , expr subst
+                        if ((r__1 = h__[k + 1 + k * h_dim1], f2c_abs(r__1)) <= fla_max(r__2,r__3))
+                        {
+                            /* Computing fla_max */
+                            r__3 = (r__1 = h__[k + 1 + k * h_dim1], f2c_abs(r__1)) ;
+                            r__4 = (r__2 = h__[k + (k + 1) * h_dim1], f2c_abs(r__2));  // , expr subst
+                            h12 = fla_max(r__3,r__4);
+                            /* Computing MIN */
+                            r__3 = (r__1 = h__[k + 1 + k * h_dim1], f2c_abs(r__1)) ;
+                            r__4 = (r__2 = h__[k + (k + 1) * h_dim1], f2c_abs(r__2));  // , expr subst
+                            h21 = fla_min(r__3,r__4);
+                            /* Computing fla_max */
+                            r__3 = (r__1 = h__[k + 1 + (k + 1) * h_dim1], f2c_abs( r__1));
+                            r__4 = (r__2 = h__[k + k * h_dim1] - h__[k + 1 + (k + 1) * h_dim1], f2c_abs( r__2)); // , expr subst
+                            h11 = fla_max(r__3,r__4);
+                            /* Computing MIN */
+                            r__3 = (r__1 = h__[k + 1 + (k + 1) * h_dim1], f2c_abs( r__1));
+                            r__4 = (r__2 = h__[k + k * h_dim1] - h__[k + 1 + (k + 1) * h_dim1], f2c_abs( r__2)); // , expr subst
+                            h22 = fla_min(r__3,r__4);
+                            scl = h11 + h12;
+                            tst2 = h22 * (h11 / scl);
+                            /* Computing fla_max */
+                            r__1 = smlnum;
+                            r__2 = ulp * tst2; // , expr subst
+                            if (tst2 == 0.f || h21 * (h12 / scl) <= fla_max(r__1, r__2))
+                            {
+                                h__[k + 1 + k * h_dim1] = 0.f;
+                            }
+                        }
+                    }
+                }
+                /* ==== Accumulate orthogonal transformations. ==== */
+                if (accum)
+                {
+                    kms = k - incol;
+                    t1 = v[m22 * v_dim1 + 1];
+                    t2 = t1 * v[m22 * v_dim1 + 2];
+                    /* Computing fla_max */
+                    i__4 = 1;
+                    i__5 = *ktop - incol; // , expr subst
+                    i__6 = kdu;
+                    for (j = fla_max(i__4,i__5);
+                            j <= i__6;
+                            ++j)
+                    {
+                        refsum = u[j + (kms + 1) * u_dim1] + v[m22 * v_dim1 + 2] * u[j + (kms + 2) * u_dim1];
+                        u[j + (kms + 1) * u_dim1] -= refsum * t1;
+                        u[j + (kms + 2) * u_dim1] -= refsum * t2;
+                        /* L50: */
+                    }
+                }
+                else if (*wantz)
+                {
+                    t1 = v[m22 * v_dim1 + 1];
+                    t2 = t1 * v[m22 * v_dim1 + 2];
+                    i__6 = *ihiz;
+                    for (j = *iloz;
+                            j <= i__6;
+                            ++j)
+                    {
+                        refsum = z__[j + (k + 1) * z_dim1] + v[m22 * v_dim1 + 2] * z__[j + (k + 2) * z_dim1];
+                        z__[j + (k + 1) * z_dim1] -= refsum * t1;
+                        z__[j + (k + 2) * z_dim1] -= refsum * t2;
+                        /* L60: */
+                    }
+                }
+            }
+            /* ==== Normal case: Chain of 3-by-3 reflections ==== */
+            i__6 = mtop;
+            for (m = mbot;
+                    m >= i__6;
+                    --m)
+            {
+                k = krcol + (m - 1 << 1);
                 if (k == *ktop - 1)
                 {
                     slaqr1_(&c__3, &h__[*ktop + *ktop * h_dim1], ldh, &sr[(m << 1) - 1], &si[(m << 1) - 1], &sr[m * 2], &si[m * 2], &v[m * v_dim1 + 1]);
@@ -449,6 +638,15 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                 }
                 else
                 {
+                    /* ==== Perform delayed transformation of row below */
+                    /* . Mth bulge. Exploit fact that first two elements */
+                    /* . of row are actually zero. ==== */
+                    refsum = v[m * v_dim1 + 1] * v[m * v_dim1 + 3] * h__[k + 3 + (k + 2) * h_dim1];
+                    h__[k + 3 + k * h_dim1] = -refsum;
+                    h__[k + 3 + (k + 1) * h_dim1] = -refsum * v[m * v_dim1 + 2];
+                    h__[k + 3 + (k + 2) * h_dim1] -= refsum * v[m * v_dim1 + 3];
+                    /* ==== Calculate reflection to move */
+                    /* . Mth bulge one step. ==== */
                     beta = h__[k + 1 + k * h_dim1];
                     v[m * v_dim1 + 2] = h__[k + 2 + k * h_dim1];
                     v[m * v_dim1 + 3] = h__[k + 3 + k * h_dim1];
@@ -486,7 +684,7 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         }
                         else
                         {
-                            /* ==== Stating a new bulge here would */
+                            /* ==== Starting a new bulge here would */
                             /* . create only negligible fill. */
                             /* . Replace the old reflector with */
                             /* . the new one. ==== */
@@ -499,232 +697,34 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         }
                     }
                 }
-                /* L20: */
-            }
-            /* ==== Generate a 2-by-2 reflection, if needed. ==== */
-            k = krcol + (m22 - 1) * 3;
-            if (bmp22)
-            {
-                if (k == *ktop - 1)
-                {
-                    slaqr1_(&c__2, &h__[k + 1 + (k + 1) * h_dim1], ldh, &sr[( m22 << 1) - 1], &si[(m22 << 1) - 1], &sr[m22 * 2], &si[m22 * 2], &v[m22 * v_dim1 + 1]);
-                    beta = v[m22 * v_dim1 + 1];
-                    slarfg_(&c__2, &beta, &v[m22 * v_dim1 + 2], &c__1, &v[m22 * v_dim1 + 1]);
-                }
-                else
-                {
-                    beta = h__[k + 1 + k * h_dim1];
-                    v[m22 * v_dim1 + 2] = h__[k + 2 + k * h_dim1];
-                    slarfg_(&c__2, &beta, &v[m22 * v_dim1 + 2], &c__1, &v[m22 * v_dim1 + 1]);
-                    h__[k + 1 + k * h_dim1] = beta;
-                    h__[k + 2 + k * h_dim1] = 0.f;
-                }
-            }
-            /* ==== Multiply H by reflections from the left ==== */
-            if (accum)
-            {
-                jbot = fla_min(ndcol,*kbot);
-            }
-            else if (*wantt)
-            {
-                jbot = *n;
-            }
-            else
-            {
-                jbot = *kbot;
-            }
-            i__4 = jbot;
-            for (j = fla_max(*ktop,krcol);
-                    j <= i__4;
-                    ++j)
-            {
+                /* ==== Apply reflection from the right and */
+                /* . the first column of update from the left. */
+                /* . These updates are required for the vigilant */
+                /* . deflation check. We still delay most of the */
+                /* . updates from the left for efficiency. ==== */
+                t1 = v[m * v_dim1 + 1];
+                t2 = t1 * v[m * v_dim1 + 2];
+                t3 = t1 * v[m * v_dim1 + 3];
                 /* Computing MIN */
-                i__5 = mbot;
-                i__6 = (j - krcol + 2) / 3; // , expr subst
-                mend = fla_min(i__5,i__6);
-                i__5 = mend;
-                for (m = mtop;
-                        m <= i__5;
-                        ++m)
-                {
-                    k = krcol + (m - 1) * 3;
-                    refsum = v[m * v_dim1 + 1] * (h__[k + 1 + j * h_dim1] + v[ m * v_dim1 + 2] * h__[k + 2 + j * h_dim1] + v[m * v_dim1 + 3] * h__[k + 3 + j * h_dim1]);
-                    h__[k + 1 + j * h_dim1] -= refsum;
-                    h__[k + 2 + j * h_dim1] -= refsum * v[m * v_dim1 + 2];
-                    h__[k + 3 + j * h_dim1] -= refsum * v[m * v_dim1 + 3];
-                    /* L30: */
-                }
-                /* L40: */
-            }
-            if (bmp22)
-            {
-                k = krcol + (m22 - 1) * 3;
-                /* Computing MAX */
-                i__4 = k + 1;
-                i__5 = jbot;
-                for (j = fla_max(i__4,*ktop);
-                        j <= i__5;
+                i__5 = *kbot;
+                i__7 = k + 3; // , expr subst
+                i__4 = fla_min(i__5,i__7);
+                for (j = jtop;
+                        j <= i__4;
                         ++j)
                 {
-                    refsum = v[m22 * v_dim1 + 1] * (h__[k + 1 + j * h_dim1] + v[m22 * v_dim1 + 2] * h__[k + 2 + j * h_dim1]);
-                    h__[k + 1 + j * h_dim1] -= refsum;
-                    h__[k + 2 + j * h_dim1] -= refsum * v[m22 * v_dim1 + 2];
-                    /* L50: */
+                    refsum = h__[j + (k + 1) * h_dim1] + v[m * v_dim1 + 2] * h__[j + (k + 2) * h_dim1] + v[m * v_dim1 + 3] * h__[j + (k + 3) * h_dim1];
+                    h__[j + (k + 1) * h_dim1] -= refsum * t1;
+                    h__[j + (k + 2) * h_dim1] -= refsum * t2;
+                    h__[j + (k + 3) * h_dim1] -= refsum * t3;
+                    /* L70: */
                 }
-            }
-            /* ==== Multiply H by reflections from the right. */
-            /* . Delay filling in the last row until the */
-            /* . vigilant deflation check is complete. ==== */
-            if (accum)
-            {
-                jtop = fla_max(*ktop,incol);
-            }
-            else if (*wantt)
-            {
-                jtop = 1;
-            }
-            else
-            {
-                jtop = *ktop;
-            }
-            i__5 = mbot;
-            for (m = mtop;
-                    m <= i__5;
-                    ++m)
-            {
-                if (v[m * v_dim1 + 1] != 0.f)
-                {
-                    k = krcol + (m - 1) * 3;
-                    /* Computing MIN */
-                    i__6 = *kbot;
-                    i__7 = k + 3; // , expr subst
-                    i__4 = fla_min(i__6,i__7);
-                    for (j = jtop;
-                            j <= i__4;
-                            ++j)
-                    {
-                        refsum = v[m * v_dim1 + 1] * (h__[j + (k + 1) * h_dim1] + v[m * v_dim1 + 2] * h__[j + (k + 2) * h_dim1] + v[m * v_dim1 + 3] * h__[j + (k + 3) * h_dim1]);
-                        h__[j + (k + 1) * h_dim1] -= refsum;
-                        h__[j + (k + 2) * h_dim1] -= refsum * v[m * v_dim1 + 2];
-                        h__[j + (k + 3) * h_dim1] -= refsum * v[m * v_dim1 + 3];
-                        /* L60: */
-                    }
-                    if (accum)
-                    {
-                        /* ==== Accumulate U. (If necessary, update Z later */
-                        /* . with with an efficient matrix-matrix */
-                        /* . multiply.) ==== */
-                        kms = k - incol;
-                        /* Computing MAX */
-                        i__4 = 1;
-                        i__6 = *ktop - incol; // , expr subst
-                        i__7 = kdu;
-                        for (j = fla_max(i__4,i__6);
-                                j <= i__7;
-                                ++j)
-                        {
-                            refsum = v[m * v_dim1 + 1] * (u[j + (kms + 1) * u_dim1] + v[m * v_dim1 + 2] * u[j + (kms + 2) * u_dim1] + v[m * v_dim1 + 3] * u[j + (kms + 3) * u_dim1]);
-                            u[j + (kms + 1) * u_dim1] -= refsum;
-                            u[j + (kms + 2) * u_dim1] -= refsum * v[m * v_dim1 + 2];
-                            u[j + (kms + 3) * u_dim1] -= refsum * v[m * v_dim1 + 3];
-                            /* L70: */
-                        }
-                    }
-                    else if (*wantz)
-                    {
-                        /* ==== U is not accumulated, so update Z */
-                        /* . now by multiplying by reflections */
-                        /* . from the right. ==== */
-                        i__7 = *ihiz;
-                        for (j = *iloz;
-                                j <= i__7;
-                                ++j)
-                        {
-                            refsum = v[m * v_dim1 + 1] * (z__[j + (k + 1) * z_dim1] + v[m * v_dim1 + 2] * z__[j + (k + 2) * z_dim1] + v[m * v_dim1 + 3] * z__[ j + (k + 3) * z_dim1]);
-                            z__[j + (k + 1) * z_dim1] -= refsum;
-                            z__[j + (k + 2) * z_dim1] -= refsum * v[m * v_dim1 + 2];
-                            z__[j + (k + 3) * z_dim1] -= refsum * v[m * v_dim1 + 3];
-                            /* L80: */
-                        }
-                    }
-                }
-                /* L90: */
-            }
-            /* ==== Special case: 2-by-2 reflection (if needed) ==== */
-            k = krcol + (m22 - 1) * 3;
-            if (bmp22)
-            {
-                if (v[m22 * v_dim1 + 1] != 0.f)
-                {
-                    /* Computing MIN */
-                    i__7 = *kbot;
-                    i__4 = k + 3; // , expr subst
-                    i__5 = fla_min(i__7,i__4);
-                    for (j = jtop;
-                            j <= i__5;
-                            ++j)
-                    {
-                        refsum = v[m22 * v_dim1 + 1] * (h__[j + (k + 1) * h_dim1] + v[m22 * v_dim1 + 2] * h__[j + (k + 2) * h_dim1]);
-                        h__[j + (k + 1) * h_dim1] -= refsum;
-                        h__[j + (k + 2) * h_dim1] -= refsum * v[m22 * v_dim1 + 2];
-                        /* L100: */
-                    }
-                    if (accum)
-                    {
-                        kms = k - incol;
-                        /* Computing MAX */
-                        i__5 = 1;
-                        i__7 = *ktop - incol; // , expr subst
-                        i__4 = kdu;
-                        for (j = fla_max(i__5,i__7);
-                                j <= i__4;
-                                ++j)
-                        {
-                            refsum = v[m22 * v_dim1 + 1] * (u[j + (kms + 1) * u_dim1] + v[m22 * v_dim1 + 2] * u[j + ( kms + 2) * u_dim1]);
-                            u[j + (kms + 1) * u_dim1] -= refsum;
-                            u[j + (kms + 2) * u_dim1] -= refsum * v[m22 * v_dim1 + 2];
-                            /* L110: */
-                        }
-                    }
-                    else if (*wantz)
-                    {
-                        i__4 = *ihiz;
-                        for (j = *iloz;
-                                j <= i__4;
-                                ++j)
-                        {
-                            refsum = v[m22 * v_dim1 + 1] * (z__[j + (k + 1) * z_dim1] + v[m22 * v_dim1 + 2] * z__[j + ( k + 2) * z_dim1]);
-                            z__[j + (k + 1) * z_dim1] -= refsum;
-                            z__[j + (k + 2) * z_dim1] -= refsum * v[m22 * v_dim1 + 2];
-                            /* L120: */
-                        }
-                    }
-                }
-            }
-            /* ==== Vigilant deflation check ==== */
-            mstart = mtop;
-            if (krcol + (mstart - 1) * 3 < *ktop)
-            {
-                ++mstart;
-            }
-            mend = mbot;
-            if (bmp22)
-            {
-                ++mend;
-            }
-            if (krcol == *kbot - 2)
-            {
-                ++mend;
-            }
-            i__4 = mend;
-            for (m = mstart;
-                    m <= i__4;
-                    ++m)
-            {
-                /* Computing MIN */
-                i__5 = *kbot - 1;
-                i__7 = krcol + (m - 1) * 3; // , expr subst
-                k = fla_min(i__5,i__7);
+                /* ==== Perform update from left for subsequent */
+                /* . column. ==== */
+                refsum = h__[k + 1 + (k + 1) * h_dim1] + v[m * v_dim1 + 2] * h__[k + 2 + (k + 1) * h_dim1] + v[m * v_dim1 + 3] * h__[k + 3 + (k + 1) * h_dim1];
+                h__[k + 1 + (k + 1) * h_dim1] -= refsum * t1;
+                h__[k + 2 + (k + 1) * h_dim1] -= refsum * t2;
+                h__[k + 3 + (k + 1) * h_dim1] -= refsum * t3;
                 /* ==== The following convergence test requires that */
                 /* . the tradition small-compared-to-nearby-diagonals */
                 /* . criterion and the Ahues & Tisseur (LAWN 122, 1997) */
@@ -733,6 +733,10 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                 /* . alternate convergence criterion when TST1 or TST2 */
                 /* . is zero (as done here) is traditional but probably */
                 /* . unnecessary. ==== */
+                if (k < *ktop)
+                {
+                    continue;
+                }
                 if (h__[k + 1 + k * h_dim1] != 0.f)
                 {
                     tst1 = (r__1 = h__[k + k * h_dim1], f2c_abs(r__1)) + (r__2 = h__[k + 1 + (k + 1) * h_dim1], f2c_abs(r__2));
@@ -763,12 +767,12 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                             tst1 += (r__1 = h__[k + 4 + (k + 1) * h_dim1], f2c_abs(r__1));
                         }
                     }
-                    /* Computing MAX */
+                    /* Computing fla_max */
                     r__2 = smlnum;
                     r__3 = ulp * tst1; // , expr subst
                     if ((r__1 = h__[k + 1 + k * h_dim1], f2c_abs(r__1)) <= fla_max( r__2,r__3))
                     {
-                        /* Computing MAX */
+                        /* Computing fla_max */
                         r__3 = (r__1 = h__[k + 1 + k * h_dim1], f2c_abs(r__1));
                         r__4 = (r__2 = h__[k + (k + 1) * h_dim1], f2c_abs( r__2)); // , expr subst
                         h12 = fla_max(r__3,r__4);
@@ -776,7 +780,7 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         r__3 = (r__1 = h__[k + 1 + k * h_dim1], f2c_abs(r__1));
                         r__4 = (r__2 = h__[k + (k + 1) * h_dim1], f2c_abs( r__2)); // , expr subst
                         h21 = fla_min(r__3,r__4);
-                        /* Computing MAX */
+                        /* Computing fla_max */
                         r__3 = (r__1 = h__[k + 1 + (k + 1) * h_dim1], f2c_abs( r__1));
                         r__4 = (r__2 = h__[k + k * h_dim1] - h__[k + 1 + (k + 1) * h_dim1], f2c_abs(r__2)); // , expr subst
                         h11 = fla_max(r__3,r__4);
@@ -786,7 +790,7 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         h22 = fla_min(r__3,r__4);
                         scl = h11 + h12;
                         tst2 = h22 * (h11 / scl);
-                        /* Computing MAX */
+                        /* Computing fla_max */
                         r__1 = smlnum;
                         r__2 = ulp * tst2; // , expr subst
                         if (tst2 == 0.f || h21 * (h12 / scl) <= fla_max(r__1,r__2) )
@@ -795,27 +799,118 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                         }
                     }
                 }
-                /* L130: */
+                /* L80: */
             }
-            /* ==== Fill in the last row of each bulge. ==== */
-            /* Computing MIN */
-            i__4 = nbmps;
-            i__5 = (*kbot - krcol - 1) / 3; // , expr subst
-            mend = fla_min(i__4,i__5);
-            i__4 = mend;
-            for (m = mtop;
-                    m <= i__4;
-                    ++m)
+            /* ==== Multiply H by reflections from the left ==== */
+            if (accum)
             {
-                k = krcol + (m - 1) * 3;
-                refsum = v[m * v_dim1 + 1] * v[m * v_dim1 + 3] * h__[k + 4 + ( k + 3) * h_dim1];
-                h__[k + 4 + (k + 1) * h_dim1] = -refsum;
-                h__[k + 4 + (k + 2) * h_dim1] = -refsum * v[m * v_dim1 + 2];
-                h__[k + 4 + (k + 3) * h_dim1] -= refsum * v[m * v_dim1 + 3];
-                /* L140: */
+                jbot = fla_min(ndcol,*kbot);
+            }
+            else if (*wantt)
+            {
+                jbot = *n;
+            }
+            else
+            {
+                jbot = *kbot;
+            }
+            i__6 = mtop;
+            for (m = mbot;
+                    m >= i__6;
+                    --m)
+            {
+                k = krcol + (m - 1 << 1);
+                t1 = v[m * v_dim1 + 1];
+                t2 = t1 * v[m * v_dim1 + 2];
+                t3 = t1 * v[m * v_dim1 + 3];
+                /* Computing fla_max */
+                i__4 = *ktop;
+                i__5 = krcol + (m << 1); // , expr subst
+                i__7 = jbot;
+                for (j = fla_max(i__4,i__5);
+                        j <= i__7;
+                        ++j)
+                {
+                    refsum = h__[k + 1 + j * h_dim1] + v[m * v_dim1 + 2] * h__[k + 2 + j * h_dim1] + v[m * v_dim1 + 3] * h__[ k + 3 + j * h_dim1];
+                    h__[k + 1 + j * h_dim1] -= refsum * t1;
+                    h__[k + 2 + j * h_dim1] -= refsum * t2;
+                    h__[k + 3 + j * h_dim1] -= refsum * t3;
+                    /* L90: */
+                }
+                /* L100: */
+            }
+            /* ==== Accumulate orthogonal transformations. ==== */
+            if (accum)
+            {
+                /* ==== Accumulate U. (If needed, update Z later */
+                /* . with an efficient matrix-matrix */
+                /* . multiply.) ==== */
+                i__6 = mtop;
+                for (m = mbot;
+                        m >= i__6;
+                        --m)
+                {
+                    k = krcol + (m - 1 << 1);
+                    kms = k - incol;
+                    /* Computing fla_max */
+                    i__7 = 1;
+                    i__4 = *ktop - incol; // , expr subst
+                    i2 = fla_max(i__7,i__4);
+                    /* Computing fla_max */
+                    i__7 = i2;
+                    i__4 = kms - (krcol - incol) + 1; // , expr subst
+                    i2 = fla_max(i__7,i__4);
+                    /* Computing MIN */
+                    i__7 = kdu;
+                    i__4 = krcol + (mbot - 1 << 1) - incol + 5; // , expr subst
+                    i4 = fla_min(i__7,i__4);
+                    t1 = v[m * v_dim1 + 1];
+                    t2 = t1 * v[m * v_dim1 + 2];
+                    t3 = t1 * v[m * v_dim1 + 3];
+                    i__7 = i4;
+                    for (j = i2;
+                            j <= i__7;
+                            ++j)
+                    {
+                        refsum = u[j + (kms + 1) * u_dim1] + v[m * v_dim1 + 2] * u[j + (kms + 2) * u_dim1] + v[m * v_dim1 + 3] * u[j + (kms + 3) * u_dim1];
+                        u[j + (kms + 1) * u_dim1] -= refsum * t1;
+                        u[j + (kms + 2) * u_dim1] -= refsum * t2;
+                        u[j + (kms + 3) * u_dim1] -= refsum * t3;
+                        /* L110: */
+                    }
+                    /* L120: */
+                }
+            }
+            else if (*wantz)
+            {
+                /* ==== U is not accumulated, so update Z */
+                /* . now by multiplying by reflections */
+                /* . from the right. ==== */
+                i__6 = mtop;
+                for (m = mbot;
+                        m >= i__6;
+                        --m)
+                {
+                    k = krcol + (m - 1 << 1);
+                    t1 = v[m * v_dim1 + 1];
+                    t2 = t1 * v[m * v_dim1 + 2];
+                    t3 = t1 * v[m * v_dim1 + 3];
+                    i__7 = *ihiz;
+                    for (j = *iloz;
+                            j <= i__7;
+                            ++j)
+                    {
+                        refsum = z__[j + (k + 1) * z_dim1] + v[m * v_dim1 + 2] * z__[j + (k + 2) * z_dim1] + v[m * v_dim1 + 3] * z__[j + (k + 3) * z_dim1];
+                        z__[j + (k + 1) * z_dim1] -= refsum * t1;
+                        z__[j + (k + 2) * z_dim1] -= refsum * t2;
+                        z__[j + (k + 3) * z_dim1] -= refsum * t3;
+                        /* L130: */
+                    }
+                    /* L140: */
+                }
             }
             /* ==== End of near-the-diagonal bulge chase. ==== */
-            /* L150: */
+            /* L145: */
         }
         /* ==== Use U (if accumulated) to update far-from-diagonal */
         /* . entries in H. If required, use U to update Z as */
@@ -832,190 +927,67 @@ int slaqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer
                 jtop = *ktop;
                 jbot = *kbot;
             }
-            if (! blk22 || incol < *ktop || ndcol > *kbot || ns <= 2)
+            /* Computing fla_max */
+            i__3 = 1;
+            i__6 = *ktop - incol; // , expr subst
+            k1 = fla_max(i__3,i__6);
+            /* Computing fla_max */
+            i__3 = 0;
+            i__6 = ndcol - *kbot; // , expr subst
+            nu = kdu - fla_max(i__3,i__6) - k1 + 1;
+            /* ==== Horizontal Multiply ==== */
+            i__3 = jbot;
+            i__6 = *nh;
+            for (jcol = fla_min(ndcol,*kbot) + 1;
+                    i__6 < 0 ? jcol >= i__3 : jcol <= i__3;
+                    jcol += i__6)
             {
-                /* ==== Updates not exploiting the 2-by-2 block */
-                /* . structure of U. K1 and NU keep track of */
-                /* . the location and size of U in the special */
-                /* . cases of introducing bulges and chasing */
-                /* . bulges off the bottom. In these special */
-                /* . cases and in case the number of shifts */
-                /* . is NS = 2, there is no 2-by-2 block */
-                /* . structure to exploit. ==== */
-                /* Computing MAX */
-                i__3 = 1;
-                i__4 = *ktop - incol; // , expr subst
-                k1 = fla_max(i__3,i__4);
-                /* Computing MAX */
-                i__3 = 0;
-                i__4 = ndcol - *kbot; // , expr subst
-                nu = kdu - fla_max(i__3,i__4) - k1 + 1;
-                /* ==== Horizontal Multiply ==== */
-                i__3 = jbot;
-                i__4 = *nh;
-                for (jcol = fla_min(ndcol,*kbot) + 1;
-                        i__4 < 0 ? jcol >= i__3 : jcol <= i__3;
-                        jcol += i__4)
-                {
-                    /* Computing MIN */
-                    i__5 = *nh;
-                    i__7 = jbot - jcol + 1; // , expr subst
-                    jlen = fla_min(i__5,i__7);
-                    sgemm_("C", "N", &nu, &jlen, &nu, &c_b8, &u[k1 + k1 * u_dim1], ldu, &h__[incol + k1 + jcol * h_dim1], ldh, &c_b7, &wh[wh_offset], ldwh);
-                    slacpy_("ALL", &nu, &jlen, &wh[wh_offset], ldwh, &h__[ incol + k1 + jcol * h_dim1], ldh);
-                    /* L160: */
-                }
-                /* ==== Vertical multiply ==== */
-                i__4 = fla_max(*ktop,incol) - 1;
-                i__3 = *nv;
-                for (jrow = jtop;
-                        i__3 < 0 ? jrow >= i__4 : jrow <= i__4;
-                        jrow += i__3)
-                {
-                    /* Computing MIN */
-                    i__5 = *nv;
-                    i__7 = fla_max(*ktop,incol) - jrow; // , expr subst
-                    jlen = fla_min(i__5,i__7);
-                    sgemm_("N", "N", &jlen, &nu, &nu, &c_b8, &h__[jrow + ( incol + k1) * h_dim1], ldh, &u[k1 + k1 * u_dim1], ldu, &c_b7, &wv[wv_offset], ldwv);
-                    slacpy_("ALL", &jlen, &nu, &wv[wv_offset], ldwv, &h__[ jrow + (incol + k1) * h_dim1], ldh);
-                    /* L170: */
-                }
-                /* ==== Z multiply (also vertical) ==== */
-                if (*wantz)
-                {
-                    i__3 = *ihiz;
-                    i__4 = *nv;
-                    for (jrow = *iloz;
-                            i__4 < 0 ? jrow >= i__3 : jrow <= i__3;
-                            jrow += i__4)
-                    {
-                        /* Computing MIN */
-                        i__5 = *nv;
-                        i__7 = *ihiz - jrow + 1; // , expr subst
-                        jlen = fla_min(i__5,i__7);
-                        sgemm_("N", "N", &jlen, &nu, &nu, &c_b8, &z__[jrow + ( incol + k1) * z_dim1], ldz, &u[k1 + k1 * u_dim1], ldu, &c_b7, &wv[wv_offset], ldwv);
-                        slacpy_("ALL", &jlen, &nu, &wv[wv_offset], ldwv, &z__[ jrow + (incol + k1) * z_dim1], ldz) ;
-                        /* L180: */
-                    }
-                }
+                /* Computing MIN */
+                i__7 = *nh;
+                i__4 = jbot - jcol + 1; // , expr subst
+                jlen = fla_min(i__7,i__4);
+                sgemm_("C", "N", &nu, &jlen, &nu, &c_b8, &u[k1 + k1 * u_dim1], ldu, &h__[incol + k1 + jcol * h_dim1], ldh, &c_b7, & wh[wh_offset], ldwh);
+                slacpy_("ALL", &nu, &jlen, &wh[wh_offset], ldwh, &h__[incol + k1 + jcol * h_dim1], ldh);
+                /* L150: */
             }
-            else
+            /* ==== Vertical multiply ==== */
+            i__6 = fla_max(*ktop,incol) - 1;
+            i__3 = *nv;
+            for (jrow = jtop;
+                    i__3 < 0 ? jrow >= i__6 : jrow <= i__6;
+                    jrow += i__3)
             {
-                /* ==== Updates exploiting U's 2-by-2 block structure. */
-                /* . (I2, I4, J2, J4 are the last rows and columns */
-                /* . of the blocks.) ==== */
-                i2 = (kdu + 1) / 2;
-                i4 = kdu;
-                j2 = i4 - i2;
-                j4 = kdu;
-                /* ==== KZS and KNZ deal with the band of zeros */
-                /* . along the diagonal of one of the triangular */
-                /* . blocks. ==== */
-                kzs = j4 - j2 - (ns + 1);
-                knz = ns + 1;
-                /* ==== Horizontal multiply ==== */
-                i__4 = jbot;
-                i__3 = *nh;
-                for (jcol = fla_min(ndcol,*kbot) + 1;
-                        i__3 < 0 ? jcol >= i__4 : jcol <= i__4;
-                        jcol += i__3)
+                /* Computing MIN */
+                i__7 = *nv;
+                i__4 = fla_max(*ktop,incol) - jrow; // , expr subst
+                jlen = fla_min(i__7,i__4);
+                sgemm_("N", "N", &jlen, &nu, &nu, &c_b8, &h__[jrow + (incol + k1) * h_dim1], ldh, &u[k1 + k1 * u_dim1], ldu, &c_b7, &wv[wv_offset], ldwv);
+                slacpy_("ALL", &jlen, &nu, &wv[wv_offset], ldwv, &h__[jrow + ( incol + k1) * h_dim1], ldh);
+                /* L160: */
+            }
+            /* ==== Z multiply (also vertical) ==== */
+            if (*wantz)
+            {
+                i__3 = *ihiz;
+                i__6 = *nv;
+                for (jrow = *iloz;
+                        i__6 < 0 ? jrow >= i__3 : jrow <= i__3;
+                        jrow += i__6)
                 {
                     /* Computing MIN */
-                    i__5 = *nh;
-                    i__7 = jbot - jcol + 1; // , expr subst
-                    jlen = fla_min(i__5,i__7);
-                    /* ==== Copy bottom of H to top+KZS of scratch ==== */
-                    /* (The first KZS rows get multiplied by zero.) ==== */
-                    slacpy_("ALL", &knz, &jlen, &h__[incol + 1 + j2 + jcol * h_dim1], ldh, &wh[kzs + 1 + wh_dim1], ldwh);
-                    /* ==== Multiply by U21**T ==== */
-                    slaset_("ALL", &kzs, &jlen, &c_b7, &c_b7, &wh[wh_offset], ldwh);
-                    strmm_("L", "U", "C", "N", &knz, &jlen, &c_b8, &u[j2 + 1 + (kzs + 1) * u_dim1], ldu, &wh[kzs + 1 + wh_dim1], ldwh);
-                    /* ==== Multiply top of H by U11**T ==== */
-                    sgemm_("C", "N", &i2, &jlen, &j2, &c_b8, &u[u_offset], ldu, &h__[incol + 1 + jcol * h_dim1], ldh, &c_b8, &wh[wh_offset], ldwh);
-                    /* ==== Copy top of H to bottom of WH ==== */
-                    slacpy_("ALL", &j2, &jlen, &h__[incol + 1 + jcol * h_dim1], ldh, &wh[i2 + 1 + wh_dim1], ldwh);
-                    /* ==== Multiply by U21**T ==== */
-                    strmm_("L", "L", "C", "N", &j2, &jlen, &c_b8, &u[(i2 + 1) * u_dim1 + 1], ldu, &wh[i2 + 1 + wh_dim1], ldwh);
-                    /* ==== Multiply by U22 ==== */
-                    i__5 = i4 - i2;
-                    i__7 = j4 - j2;
-                    sgemm_("C", "N", &i__5, &jlen, &i__7, &c_b8, &u[j2 + 1 + ( i2 + 1) * u_dim1], ldu, &h__[incol + 1 + j2 + jcol * h_dim1], ldh, &c_b8, &wh[i2 + 1 + wh_dim1], ldwh);
-                    /* ==== Copy it back ==== */
-                    slacpy_("ALL", &kdu, &jlen, &wh[wh_offset], ldwh, &h__[ incol + 1 + jcol * h_dim1], ldh);
-                    /* L190: */
-                }
-                /* ==== Vertical multiply ==== */
-                i__3 = fla_max(incol,*ktop) - 1;
-                i__4 = *nv;
-                for (jrow = jtop;
-                        i__4 < 0 ? jrow >= i__3 : jrow <= i__3;
-                        jrow += i__4)
-                {
-                    /* Computing MIN */
-                    i__5 = *nv;
-                    i__7 = fla_max(incol,*ktop) - jrow; // , expr subst
-                    jlen = fla_min(i__5,i__7);
-                    /* ==== Copy right of H to scratch (the first KZS */
-                    /* . columns get multiplied by zero) ==== */
-                    slacpy_("ALL", &jlen, &knz, &h__[jrow + (incol + 1 + j2) * h_dim1], ldh, &wv[(kzs + 1) * wv_dim1 + 1], ldwv);
-                    /* ==== Multiply by U21 ==== */
-                    slaset_("ALL", &jlen, &kzs, &c_b7, &c_b7, &wv[wv_offset], ldwv);
-                    strmm_("R", "U", "N", "N", &jlen, &knz, &c_b8, &u[j2 + 1 + (kzs + 1) * u_dim1], ldu, &wv[(kzs + 1) * wv_dim1 + 1], ldwv);
-                    /* ==== Multiply by U11 ==== */
-                    sgemm_("N", "N", &jlen, &i2, &j2, &c_b8, &h__[jrow + ( incol + 1) * h_dim1], ldh, &u[u_offset], ldu, & c_b8, &wv[wv_offset], ldwv);
-                    /* ==== Copy left of H to right of scratch ==== */
-                    slacpy_("ALL", &jlen, &j2, &h__[jrow + (incol + 1) * h_dim1], ldh, &wv[(i2 + 1) * wv_dim1 + 1], ldwv);
-                    /* ==== Multiply by U21 ==== */
-                    i__5 = i4 - i2;
-                    strmm_("R", "L", "N", "N", &jlen, &i__5, &c_b8, &u[(i2 + 1) * u_dim1 + 1], ldu, &wv[(i2 + 1) * wv_dim1 + 1], ldwv);
-                    /* ==== Multiply by U22 ==== */
-                    i__5 = i4 - i2;
-                    i__7 = j4 - j2;
-                    sgemm_("N", "N", &jlen, &i__5, &i__7, &c_b8, &h__[jrow + ( incol + 1 + j2) * h_dim1], ldh, &u[j2 + 1 + (i2 + 1) * u_dim1], ldu, &c_b8, &wv[(i2 + 1) * wv_dim1 + 1], ldwv);
-                    /* ==== Copy it back ==== */
-                    slacpy_("ALL", &jlen, &kdu, &wv[wv_offset], ldwv, &h__[ jrow + (incol + 1) * h_dim1], ldh);
-                    /* L200: */
-                }
-                /* ==== Multiply Z (also vertical) ==== */
-                if (*wantz)
-                {
-                    i__4 = *ihiz;
-                    i__3 = *nv;
-                    for (jrow = *iloz;
-                            i__3 < 0 ? jrow >= i__4 : jrow <= i__4;
-                            jrow += i__3)
-                    {
-                        /* Computing MIN */
-                        i__5 = *nv;
-                        i__7 = *ihiz - jrow + 1; // , expr subst
-                        jlen = fla_min(i__5,i__7);
-                        /* ==== Copy right of Z to left of scratch (first */
-                        /* . KZS columns get multiplied by zero) ==== */
-                        slacpy_("ALL", &jlen, &knz, &z__[jrow + (incol + 1 + j2) * z_dim1], ldz, &wv[(kzs + 1) * wv_dim1 + 1], ldwv);
-                        /* ==== Multiply by U12 ==== */
-                        slaset_("ALL", &jlen, &kzs, &c_b7, &c_b7, &wv[ wv_offset], ldwv);
-                        strmm_("R", "U", "N", "N", &jlen, &knz, &c_b8, &u[j2 + 1 + (kzs + 1) * u_dim1], ldu, &wv[(kzs + 1) * wv_dim1 + 1], ldwv);
-                        /* ==== Multiply by U11 ==== */
-                        sgemm_("N", "N", &jlen, &i2, &j2, &c_b8, &z__[jrow + ( incol + 1) * z_dim1], ldz, &u[u_offset], ldu, &c_b8, &wv[wv_offset], ldwv);
-                        /* ==== Copy left of Z to right of scratch ==== */
-                        slacpy_("ALL", &jlen, &j2, &z__[jrow + (incol + 1) * z_dim1], ldz, &wv[(i2 + 1) * wv_dim1 + 1], ldwv);
-                        /* ==== Multiply by U21 ==== */
-                        i__5 = i4 - i2;
-                        strmm_("R", "L", "N", "N", &jlen, &i__5, &c_b8, &u[( i2 + 1) * u_dim1 + 1], ldu, &wv[(i2 + 1) * wv_dim1 + 1], ldwv);
-                        /* ==== Multiply by U22 ==== */
-                        i__5 = i4 - i2;
-                        i__7 = j4 - j2;
-                        sgemm_("N", "N", &jlen, &i__5, &i__7, &c_b8, &z__[ jrow + (incol + 1 + j2) * z_dim1], ldz, &u[j2 + 1 + (i2 + 1) * u_dim1], ldu, &c_b8, &wv[(i2 + 1) * wv_dim1 + 1], ldwv);
-                        /* ==== Copy the result back to Z ==== */
-                        slacpy_("ALL", &jlen, &kdu, &wv[wv_offset], ldwv, & z__[jrow + (incol + 1) * z_dim1], ldz);
-                        /* L210: */
-                    }
+                    i__7 = *nv;
+                    i__4 = *ihiz - jrow + 1; // , expr subst
+                    jlen = fla_min(i__7,i__4);
+                    sgemm_("N", "N", &jlen, &nu, &nu, &c_b8, &z__[jrow + ( incol + k1) * z_dim1], ldz, &u[k1 + k1 * u_dim1], ldu, &c_b7, &wv[wv_offset], ldwv);
+                    slacpy_("ALL", &jlen, &nu, &wv[wv_offset], ldwv, &z__[ jrow + (incol + k1) * z_dim1], ldz);
+                    /* L170: */
                 }
             }
         }
-        /* L220: */
+        /* L180: */
     }
     /* ==== End of SLAQR5 ==== */
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* slaqr5_ */

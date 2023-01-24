@@ -202,6 +202,8 @@ the routine */
 /* Subroutine */
 int slaqz4_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nshifts, integer * nblock_desired__, real *sr, real *si, real *ss, real *a, integer *lda, real *b, integer *ldb, real *q, integer *ldq, real *z__, integer * ldz, real *qc, integer *ldqc, real *zc, integer *ldzc, real *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("slaqz4 inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", nshifts %" FLA_IS ", nblock_desired__ %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", ldqc %" FLA_IS ", ldzc %" FLA_IS "",*n, *ilo, *ihi, *nshifts, *nblock_desired__, *lda, *ldb, *ldq, *ldz, *ldqc, *ldzc);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, qc_dim1, qc_offset, zc_dim1, zc_offset, i__1, i__2, i__3, i__4, i__5;
     /* Local variables */
@@ -256,6 +258,7 @@ int slaqz4_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     {
         /* workspace query, quick return */
         work[1] = (real) (*n * *nblock_desired__);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*lwork < *n * *nblock_desired__)
@@ -266,15 +269,18 @@ int slaqz4_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     {
         i__1 = -(*info);
         xerbla_("SLAQZ4", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Executable statements */
     if (*nshifts < 2)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*ilo >= *ihi)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*ilschur)
@@ -528,6 +534,7 @@ int slaqz4_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
         i__1 = ns + 1;
         slacpy_("ALL", n, &i__1, &work[1], n, &z__[(*ihi - ns) * z_dim1 + 1], ldz);
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* slaqz4_ */

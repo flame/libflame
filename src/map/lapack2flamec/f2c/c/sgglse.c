@@ -1,4 +1,4 @@
-/* ../netlib/sgglse.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* sgglse.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -134,7 +134,7 @@ static real c_b33 = 1.f;
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The dimension of the array WORK. LWORK >= fla_max(1,M+N+P). */
-/* > For optimum performance LWORK >= P+fla_min(M,N)+fla_max(M,N)*NB, */
+/* > For optimum performance LWORK >= P+min(M,N)+max(M,N)*NB, */
 /* > where NB is an upper bound for the optimal blocksizes for */
 /* > SGEQRF, SGERQF, SORMQR and SORMRQ. */
 /* > */
@@ -169,12 +169,13 @@ the least squares solution could not */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup realOTHERsolve */
 /* ===================================================================== */
 /* Subroutine */
 int sgglse_(integer *m, integer *n, integer *p, real *a, integer *lda, real *b, integer *ldb, real *c__, real *d__, real *x, real *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("sgglse inputs: m %" FLA_IS ", n %" FLA_IS ", p %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*m, *n, *p, *lda, *ldb);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2;
     /* Local variables */
@@ -188,10 +189,9 @@ int sgglse_(integer *m, integer *n, integer *p, real *a, integer *lda, real *b, 
     logical lquery;
     extern /* Subroutine */
     int sormqr_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *), sormrq_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *), strtrs_(char *, char *, char *, integer *, integer *, real *, integer *, real *, integer *, integer *);
-    /* -- LAPACK driver routine (version 3.7.0) -- */
+    /* -- LAPACK driver routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -275,15 +275,18 @@ int sgglse_(integer *m, integer *n, integer *p, real *a, integer *lda, real *b, 
     {
         i__1 = -(*info);
         xerbla_("SGGLSE", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Compute the GRQ factorization of matrices B and A: */
@@ -294,7 +297,7 @@ int sgglse_(integer *m, integer *n, integer *p, real *a, integer *lda, real *b, 
     /* orthogonal. */
     i__1 = *lwork - *p - mn;
     sggrqf_(p, m, n, &b[b_offset], ldb, &work[1], &a[a_offset], lda, &work[*p + 1], &work[*p + mn + 1], &i__1, info);
-    lopt = work[*p + mn + 1];
+    lopt = (integer) work[*p + mn + 1];
     /* Update c = Z**T *c = ( c1 ) N-P */
     /* ( c2 ) M+P-N */
     i__1 = fla_max(1,*m);
@@ -311,6 +314,7 @@ int sgglse_(integer *m, integer *n, integer *p, real *a, integer *lda, real *b, 
         if (*info > 0)
         {
             *info = 1;
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         /* Put the solution in X */
@@ -328,6 +332,7 @@ int sgglse_(integer *m, integer *n, integer *p, real *a, integer *lda, real *b, 
         if (*info > 0)
         {
             *info = 2;
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         /* Put the solutions in X */
@@ -360,6 +365,7 @@ int sgglse_(integer *m, integer *n, integer *p, real *a, integer *lda, real *b, 
     i__1 = lopt;
     i__2 = (integer) work[*p + mn + 1]; // , expr subst
     work[1] = (real) (*p + mn + fla_max(i__1,i__2));
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of SGGLSE */
 }

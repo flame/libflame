@@ -1,4 +1,4 @@
-/* ../netlib/slahqr.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* slahqr.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -180,7 +180,6 @@ elements i+1:ihi of WR and WI */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup realOTHERauxiliary */
 /* > \par Further Details: */
 /* ===================== */
@@ -202,6 +201,8 @@ elements i+1:ihi of WR and WI */
 /* Subroutine */
 int slahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *ihi, real *h__, integer *ldh, real *wr, real * wi, integer *iloz, integer *ihiz, real *z__, integer *ldz, integer * info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("slahqr inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", ldh %" FLA_IS ", iloz %" FLA_IS ", ihiz %" FLA_IS ", ldz %" FLA_IS "",*n, *ilo, *ihi, *ldh, *iloz, *ihiz, *ldz);
     /* System generated locals */
     integer h_dim1, h_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4;
     real r__1, r__2, r__3, r__4;
@@ -222,7 +223,7 @@ int slahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     real ulp, sum, tst, rt1i, rt2i, rt1r, rt2r;
     extern /* Subroutine */
     int srot_(integer *, real *, integer *, real *, integer *, real *, real *);
-    integer itmax;
+    integer kdefl, itmax;
     extern /* Subroutine */
     int scopy_(integer *, real *, integer *, real *, integer *), slanv2_(real *, real *, real *, real *, real *, real *, real *, real *, real *, real *), slabad_(real *, real *);
     extern real slamch_(char *);
@@ -230,10 +231,9 @@ int slahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     extern /* Subroutine */
     int slarfg_(integer *, real *, real *, integer *, real *);
     real safmax, rtdisc, smlnum;
-    /* -- LAPACK auxiliary routine (version 3.7.0) -- */
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -266,12 +266,14 @@ int slahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     /* Quick return if possible */
     if (*n == 0)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*ilo == *ihi)
     {
         wr[*ilo] = h__[*ilo + *ilo * h_dim1];
         wi[*ilo] = 0.f;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* ==== clear out the trash ==== */
@@ -306,6 +308,8 @@ int slahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     }
     /* ITMAX is the total number of QR iterations allowed. */
     itmax = fla_max(10,nh) * 30;
+    /* KDEFL counts the number of iterations since a deflation */
+    kdefl = 0;
     /* The main loop begins here. I is the loop index and decreases from */
     /* IHI to ILO in steps of 1 or 2. Each iteration of the loop works */
     /* with the active submatrix in rows and columns L to I. */
@@ -393,6 +397,7 @@ L40:
         {
             goto L150;
         }
+        ++kdefl;
         /* Now the active submatrix is in rows and columns L to I. If */
         /* eigenvalues only are being computed, only the active submatrix */
         /* need be transformed. */
@@ -401,20 +406,20 @@ L40:
             i1 = l;
             i2 = i__;
         }
-        if (its == 10)
-        {
-            /* Exceptional shift. */
-            s = (r__1 = h__[l + 1 + l * h_dim1], f2c_abs(r__1)) + (r__2 = h__[l + 2 + (l + 1) * h_dim1], f2c_abs(r__2));
-            h11 = s * .75f + h__[l + l * h_dim1];
-            h12 = s * -.4375f;
-            h21 = s;
-            h22 = h11;
-        }
-        else if (its == 20)
+        if (kdefl % 20 == 0)
         {
             /* Exceptional shift. */
             s = (r__1 = h__[i__ + (i__ - 1) * h_dim1], f2c_abs(r__1)) + (r__2 = h__[i__ - 1 + (i__ - 2) * h_dim1], f2c_abs(r__2));
             h11 = s * .75f + h__[i__ + i__ * h_dim1];
+            h12 = s * -.4375f;
+            h21 = s;
+            h22 = h11;
+        }
+        else if (kdefl % 10 == 0)
+        {
+            /* Exceptional shift. */
+            s = (r__1 = h__[l + 1 + l * h_dim1], f2c_abs(r__1)) + (r__2 = h__[l + 2 + (l + 1) * h_dim1], f2c_abs(r__2));
+            h11 = s * .75f + h__[l + l * h_dim1];
             h12 = s * -.4375f;
             h21 = s;
             h22 = h11;
@@ -638,6 +643,7 @@ L60: /* Double-shift QR step */
     }
     /* Failure to converge in remaining number of iterations */
     *info = i__;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 L150:
     if (l == i__)
@@ -669,10 +675,13 @@ L150:
             srot_(&nz, &z__[*iloz + (i__ - 1) * z_dim1], &c__1, &z__[*iloz + i__ * z_dim1], &c__1, &cs, &sn);
         }
     }
+    /* reset deflation counter */
+    kdefl = 0;
     /* return to start of the main loop with new value of I. */
     i__ = l - 1;
     goto L20;
 L160:
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of SLAHQR */
 }

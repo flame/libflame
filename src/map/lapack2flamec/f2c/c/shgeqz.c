@@ -1,4 +1,4 @@
-/* shgeqz.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* shgeqz.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static real c_b12 = 0.f;
@@ -303,6 +303,8 @@ the routine */
 /* Subroutine */
 int shgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integer *ihi, real *h__, integer *ldh, real *t, integer *ldt, real *alphar, real *alphai, real *beta, real *q, integer *ldq, real *z__, integer *ldz, real *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("shgeqz inputs: job %c, compq %c, compz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", ldh %" FLA_IS ", ldt %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS "",*job, *compq, *compz, *n, *ilo, *ihi, *ldh, *ldt, *ldq, *ldz);
     /* System generated locals */
     integer h_dim1, h_offset, q_dim1, q_offset, t_dim1, t_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4;
     real r__1, r__2, r__3, r__4, r__5;
@@ -501,16 +503,19 @@ int shgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
     {
         i__1 = -(*info);
         xerbla_("SHGEQZ", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n <= 0)
     {
         work[1] = 1.f;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize Q and Z */
@@ -637,10 +642,7 @@ int shgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                 goto L80;
             }
         }
-        /* Computing MAX */
-        r__4 = safmin;
-        r__5 = ulp * ((r__1 = t[ilast - 1 + ilast * t_dim1], f2c_abs(r__1)) + (r__2 = t[ilast - 1 + (ilast - 1) * t_dim1], f2c_abs( r__2))); // , expr subst
-        if ((r__3 = t[ilast + ilast * t_dim1], f2c_abs(r__3)) <= fla_max(r__4,r__5))
+        if ((r__1 = t[ilast + ilast * t_dim1], f2c_abs(r__1)) <= btol)
         {
             t[ilast + ilast * t_dim1] = 0.f;
             goto L70;
@@ -672,15 +674,7 @@ int shgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
                 }
             }
             /* Test 2: for T(j,j)=0 */
-            temp = (r__1 = t[j + (j + 1) * t_dim1], f2c_abs(r__1));
-            if (j > *ilo)
-            {
-                temp += (r__1 = t[j - 1 + j * t_dim1], f2c_abs(r__1));
-            }
-            /* Computing MAX */
-            r__2 = safmin;
-            r__3 = ulp * temp; // , expr subst
-            if ((r__1 = t[j + j * t_dim1], f2c_abs(r__1)) < fla_max(r__2,r__3))
+            if ((r__1 = t[j + j * t_dim1], f2c_abs(r__1)) < btol)
             {
                 t[j + j * t_dim1] = 0.f;
                 /* Test 1a: Check for 2 consecutive small subdiagonals in A */
@@ -1585,6 +1579,7 @@ L380: /* Set Eigenvalues 1:ILO-1 */
     /* Exit (other than argument error) -- return optimal workspace size */
 L420:
     work[1] = (real) (*n);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of SHGEQZ */
 }

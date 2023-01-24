@@ -1,4 +1,4 @@
-/* ../netlib/v3.9.0/ssysv_rk.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* ssysv_rk.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c_n1 = -1;
@@ -200,7 +200,6 @@ static integer c_n1 = -1;
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup singleSYsolve */
 /* > \par Contributors: */
 /* ================== */
@@ -220,12 +219,8 @@ static integer c_n1 = -1;
 /* Subroutine */
 int ssysv_rk_(char *uplo, integer *n, integer *nrhs, real * a, integer *lda, real *e, integer *ipiv, real *b, integer *ldb, real * work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"ssysv_rk inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ldb);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ssysv inputs: uplo %c, n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ipiv %" FLA_IS ", ldb %" FLA_IS "",*uplo, *n, *nrhs, *lda, *ipiv, *ldb);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1;
     /* Local variables */
@@ -236,10 +231,9 @@ int ssysv_rk_(char *uplo, integer *n, integer *nrhs, real * a, integer *lda, rea
     int xerbla_(char *, integer *);
     integer lwkopt;
     logical lquery;
-    /* -- LAPACK driver routine (version 3.7.0) -- */
+    /* -- LAPACK driver routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -301,7 +295,7 @@ int ssysv_rk_(char *uplo, integer *n, integer *nrhs, real * a, integer *lda, rea
         else
         {
             ssytrf_rk_(uplo, n, &a[a_offset], lda, &e[1], &ipiv[1], &work[1], &c_n1, info);
-            lwkopt = work[1];
+            lwkopt = (integer) work[1];
         }
         work[1] = (real) lwkopt;
     }
@@ -309,12 +303,12 @@ int ssysv_rk_(char *uplo, integer *n, integer *nrhs, real * a, integer *lda, rea
     {
         i__1 = -(*info);
         xerbla_("SSYSV_RK ", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Compute the factorization A = P*U*D*(U**T)*(P**T) or */
@@ -326,9 +320,8 @@ int ssysv_rk_(char *uplo, integer *n, integer *nrhs, real * a, integer *lda, rea
         ssytrs_3_(uplo, n, nrhs, &a[a_offset], lda, &e[1], &ipiv[1], &b[ b_offset], ldb, info);
     }
     work[1] = (real) lwkopt;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of SSYSV_RK */
 }
 /* ssysv_rk__ */
-

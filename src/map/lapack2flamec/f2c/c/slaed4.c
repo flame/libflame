@@ -1,6 +1,6 @@
-/* ../netlib/slaed4.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* slaed4.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
-#include "FLA_f2c.h" /* > \brief \b SLAED4 used by sstedc. Finds a single root of the secular equation. */
+#include "FLA_f2c.h" /* > \brief \b SLAED4 used by SSTEDC. Finds a single root of the secular equation. */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
 /* http://www.netlib.org/lapack/explore-html/ */
@@ -74,7 +74,7 @@
 /* > \param[out] DELTA */
 /* > \verbatim */
 /* > DELTA is REAL array, dimension (N) */
-/* > If N .GT. 2, DELTA contains (D(j) - lambda_I) in its j-th */
+/* > If N > 2, DELTA contains (D(j) - lambda_I) in its j-th */
 /* > component. If N = 1, then DELTA(1) = 1. If N = 2, see SLAED5 */
 /* > for detail. The vector DELTA contains the information necessary */
 /* > to construct the eigenvectors by SLAED3 and SLAED9. */
@@ -120,7 +120,6 @@
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date September 2012 */
 /* > \ingroup auxOTHERcomputational */
 /* > \par Contributors: */
 /* ================== */
@@ -132,6 +131,8 @@
 /* Subroutine */
 int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *rho, real *dlam, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("slaed4 inputs: n %" FLA_IS ", i__ %" FLA_IS "",*n, *i__);
     /* System generated locals */
     integer i__1;
     real r__1;
@@ -157,10 +158,9 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
     extern real slamch_(char *);
     logical orgati;
     real erretm, rhoinv;
-    /* -- LAPACK computational routine (version 3.4.2) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* September 2012 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -193,11 +193,13 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
         /* Presumably, I=1 upon entry */
         *dlam = d__[1] + *rho * z__[1] * z__[1];
         delta[1] = 1.f;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 2)
     {
         slaed5_(i__, &d__[1], &z__[1], &delta[1], rho, dlam);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Compute machine epsilon */
@@ -333,7 +335,9 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
         {
             /* ETA = B/A */
             /* ETA = RHO - TAU */
-            eta = dltub - tau;
+            /* ETA = DLTUB - TAU */
+            /* Update proposed by Li, Ren-Cang: */
+            eta = -w / (dpsi + dphi);
         }
         else if (a >= 0.f)
         {
@@ -1029,6 +1033,7 @@ int slaed4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *r
         }
     }
 L250:
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of SLAED4 */
 }

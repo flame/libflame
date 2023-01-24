@@ -1,4 +1,4 @@
-/* ../netlib/stgex2.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* stgex2.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__4 = 4;
@@ -181,7 +181,6 @@ the blocks are */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date June 2017 */
 /* > \ingroup realGEauxiliary */
 /* > \par Further Details: */
 /* ===================== */
@@ -219,12 +218,8 @@ Computing Eigenspaces with Specified */
 /* Subroutine */
 int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, real *b, integer *ldb, real *q, integer *ldq, real * z__, integer *ldz, integer *j1, integer *n1, integer *n2, real *work, integer *lwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"stgex2 inputs: n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", j1 %" FLA_IS ", n1 %" FLA_IS ", n2 %" FLA_IS "",*n, *lda, *ldb, *ldq, *ldz, *j1, *n1, *n2);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("stgex2 inputs: n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", j1 %" FLA_IS ", n1 %" FLA_IS ", n2 %" FLA_IS "",*n, *lda, *ldb, *ldq, *ldz, *j1, *n1, *n2);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2;
     real r__1;
@@ -237,7 +232,7 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
     , t[16] /* was [4][4] */
     , be[2], ai[2], ar[2], sa, sb, li[16] /* was [4][4] */
     , ir[16] /* was [4][4] */
-    , ss, ws, eps;
+    , eps;
     logical weak;
     real ddum;
     integer idum;
@@ -255,7 +250,7 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
     extern /* Subroutine */
     int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *);
     real ircop[16] /* was [4][4] */
-    , dnorm;
+    ;
     integer iwork[4];
     extern /* Subroutine */
     int slagv2_(real *, integer *, real *, integer *, real *, real *, real *, real *, real *, real *, real *), sgeqr2_( integer *, integer *, real *, integer *, real *, real *, integer * ), sgerq2_(integer *, integer *, real *, integer *, real *, real *, integer *), sorg2r_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *), sorgr2_(integer *, integer *, integer *, real *, integer *, real *, real *, integer *), sorm2r_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *), sormr2_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *);
@@ -263,17 +258,15 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
     extern /* Subroutine */
     int stgsy2_(char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, real *, real *, integer *, integer *, integer *);
     extern real slamch_(char *);
+    real dnorma, dnormb;
     extern /* Subroutine */
-    int slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), slartg_(real *, real *, real *, real *, real *);
-    real thresh;
-    extern /* Subroutine */
-    int slaset_(char *, integer *, integer *, real *, real *, real *, integer *), slassq_(integer *, real *, integer *, real *, real *);
+    int slacpy_(char *, integer *, integer *, real *, integer *, real *, integer *), slartg_(real *, real *, real *, real *, real *), slaset_(char *, integer *, integer *, real *, real *, real *, integer *), slassq_(integer *, real *, integer *, real *, real *);
     real smlnum;
     logical strong;
-    /* -- LAPACK auxiliary routine (version 3.7.1) -- */
+    real thresha, threshb;
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* June 2017 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -313,12 +306,12 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
     /* Quick return if possible */
     if (*n <= 1 || *n1 <= 0 || *n2 <= 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n1 > *n || *j1 + *n1 > *n)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     m = *n1 + *n2;
@@ -332,7 +325,7 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
         i__1 = *n * m;
         i__2 = m * m << 1; // , expr subst
         work[1] = (real) fla_max(i__1,i__2);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     weak = FALSE_;
@@ -350,10 +343,13 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
     slacpy_("Full", &m, &m, s, &c__4, &work[1], &m);
     i__1 = m * m;
     slassq_(&i__1, &work[1], &c__1, &dscale, &dsum);
+    dnorma = dscale * sqrt(dsum);
+    dscale = 0.f;
+    dsum = 1.f;
     slacpy_("Full", &m, &m, t, &c__4, &work[1], &m);
     i__1 = m * m;
     slassq_(&i__1, &work[1], &c__1, &dscale, &dsum);
-    dnorm = dscale * sqrt(dsum);
+    dnormb = dscale * sqrt(dsum);
     /* THRES has been changed from */
     /* THRESH = MAX( TEN*EPS*SA, SMLNUM ) */
     /* to */
@@ -362,8 +358,11 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
     /* "Bug" reported by Ondra Kamenik, confirmed by Julie Langou, fixed by */
     /* Jim Demmel and Guillaume Revy. See forum post 1783. */
     /* Computing MAX */
-    r__1 = eps * 20.f * dnorm;
-    thresh = fla_max(r__1,smlnum);
+    r__1 = eps * 20.f * dnorma;
+    thresha = fla_max(r__1,smlnum);
+    /* Computing MAX */
+    r__1 = eps * 20.f * dnormb;
+    threshb = fla_max(r__1,smlnum);
     if (m == 2)
     {
         /* CASE 1: Swap 1-by-1 and 1-by-1 blocks. */
@@ -371,8 +370,8 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
         /* using Givens rotations and perform the swap tentatively. */
         f = s[5] * t[0] - t[5] * s[0];
         g = s[5] * t[4] - t[5] * s[4];
-        sb = f2c_abs(t[5]);
-        sa = f2c_abs(s[5]);
+        sa = f2c_abs(s[5]) * f2c_abs(t[0]);
+        sb = f2c_abs(s[0]) * f2c_abs(t[5]);
         slartg_(&f, &g, &ir[4], ir, &ddum);
         ir[1] = -ir[4];
         ir[5] = ir[0];
@@ -390,10 +389,9 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
         srot_(&c__2, t, &c__4, &t[1], &c__4, li, &li[1]);
         li[5] = li[0];
         li[4] = -li[1];
-        /* Weak stability test: */
-        /* |S21| + |T21| <= O(EPS * F-norm((S, T))) */
-        ws = f2c_abs(s[1]) + f2c_abs(t[1]);
-        weak = ws <= thresh;
+        /* Weak stability test: |S21| <= O(EPS F-norm((A))) */
+        /* and |T21| <= O(EPS F-norm((B))) */
+        weak = f2c_abs(s[1]) <= thresha && f2c_abs(t[1]) <= threshb;
         if (! weak)
         {
             goto L70;
@@ -401,7 +399,9 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
         if (TRUE_)
         {
             /* Strong stability test: */
-            /* F-norm((A-QL**T*S*QR, B-QL**T*T*QR)) <= O(EPS*F-norm((A, B))) */
+            /* F-norm((A-QL**H*S*QR)) <= O(EPS*F-norm((A))) */
+            /* and */
+            /* F-norm((B-QL**H*T*QR)) <= O(EPS*F-norm((B))) */
             slacpy_("Full", &m, &m, &a[*j1 + *j1 * a_dim1], lda, &work[m * m + 1], &m);
             sgemm_("N", "N", &m, &m, &m, &c_b42, li, &c__4, s, &c__4, &c_b5, & work[1], &m);
             sgemm_("N", "T", &m, &m, &m, &c_b48, &work[1], &m, ir, &c__4, & c_b42, &work[m * m + 1], &m);
@@ -409,13 +409,16 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
             dsum = 1.f;
             i__1 = m * m;
             slassq_(&i__1, &work[m * m + 1], &c__1, &dscale, &dsum);
+            sa = dscale * sqrt(dsum);
             slacpy_("Full", &m, &m, &b[*j1 + *j1 * b_dim1], ldb, &work[m * m + 1], &m);
             sgemm_("N", "N", &m, &m, &m, &c_b42, li, &c__4, t, &c__4, &c_b5, & work[1], &m);
             sgemm_("N", "T", &m, &m, &m, &c_b48, &work[1], &m, ir, &c__4, & c_b42, &work[m * m + 1], &m);
+            dscale = 0.f;
+            dsum = 1.f;
             i__1 = m * m;
             slassq_(&i__1, &work[m * m + 1], &c__1, &dscale, &dsum);
-            ss = dscale * sqrt(dsum);
-            strong = ss <= thresh;
+            sb = dscale * sqrt(dsum);
+            strong = sa <= thresha && sb <= threshb;
             if (! strong)
             {
                 goto L70;
@@ -444,7 +447,7 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
             srot_(n, &q[*j1 * q_dim1 + 1], &c__1, &q[(*j1 + 1) * q_dim1 + 1], &c__1, li, &li[1]);
         }
         /* Exit with INFO = 0 if swap was successfully performed. */
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else
@@ -458,6 +461,10 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
         slacpy_("Full", n1, n2, &t[(*n1 + 1 << 2) - 4], &c__4, li, &c__4);
         slacpy_("Full", n1, n2, &s[(*n1 + 1 << 2) - 4], &c__4, &ir[*n2 + 1 + ( *n1 + 1 << 2) - 5], &c__4);
         stgsy2_("N", &c__0, n1, n2, s, &c__4, &s[*n1 + 1 + (*n1 + 1 << 2) - 5], &c__4, &ir[*n2 + 1 + (*n1 + 1 << 2) - 5], &c__4, t, &c__4, & t[*n1 + 1 + (*n1 + 1 << 2) - 5], &c__4, li, &c__4, &scale, & dsum, &dscale, iwork, &idum, &linfo);
+        if (linfo != 0)
+        {
+            goto L70;
+        }
         /* Compute orthogonal matrix QL: */
         /* QL**T * LI = [ TL ] */
         /* [ 0 ] */
@@ -569,15 +576,15 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
         bqra21 = dscale * sqrt(dsum);
         /* Decide which method to use. */
         /* Weak stability test: */
-        /* F-norm(S21) <= O(EPS * F-norm((S, T))) */
-        if (bqra21 <= brqa21 && bqra21 <= thresh)
+        /* F-norm(S21) <= O(EPS * F-norm((S))) */
+        if (bqra21 <= brqa21 && bqra21 <= thresha)
         {
             slacpy_("F", &m, &m, scpy, &c__4, s, &c__4);
             slacpy_("F", &m, &m, tcpy, &c__4, t, &c__4);
             slacpy_("F", &m, &m, ircop, &c__4, ir, &c__4);
             slacpy_("F", &m, &m, licop, &c__4, li, &c__4);
         }
-        else if (brqa21 >= thresh)
+        else if (brqa21 >= thresha)
         {
             goto L70;
         }
@@ -588,7 +595,9 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
         if (TRUE_)
         {
             /* Strong stability test: */
-            /* F-norm((A-QL*S*QR**T, B-QL*T*QR**T)) <= O(EPS*F-norm((A,B))) */
+            /* F-norm((A-QL**H*S*QR)) <= O(EPS*F-norm((A))) */
+            /* and */
+            /* F-norm((B-QL**H*T*QR)) <= O(EPS*F-norm((B))) */
             slacpy_("Full", &m, &m, &a[*j1 + *j1 * a_dim1], lda, &work[m * m + 1], &m);
             sgemm_("N", "N", &m, &m, &m, &c_b42, li, &c__4, s, &c__4, &c_b5, & work[1], &m);
             sgemm_("N", "N", &m, &m, &m, &c_b48, &work[1], &m, ir, &c__4, & c_b42, &work[m * m + 1], &m);
@@ -596,13 +605,16 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
             dsum = 1.f;
             i__1 = m * m;
             slassq_(&i__1, &work[m * m + 1], &c__1, &dscale, &dsum);
+            sa = dscale * sqrt(dsum);
             slacpy_("Full", &m, &m, &b[*j1 + *j1 * b_dim1], ldb, &work[m * m + 1], &m);
             sgemm_("N", "N", &m, &m, &m, &c_b42, li, &c__4, t, &c__4, &c_b5, & work[1], &m);
             sgemm_("N", "N", &m, &m, &m, &c_b48, &work[1], &m, ir, &c__4, & c_b42, &work[m * m + 1], &m);
+            dscale = 0.f;
+            dsum = 1.f;
             i__1 = m * m;
             slassq_(&i__1, &work[m * m + 1], &c__1, &dscale, &dsum);
-            ss = dscale * sqrt(dsum);
-            strong = ss <= thresh;
+            sb = dscale * sqrt(dsum);
+            strong = sa <= thresha && sb <= threshb;
             if (! strong)
             {
                 goto L70;
@@ -684,15 +696,14 @@ int stgex2_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, r
             slacpy_("Full", &i__, &m, &work[1], &i__, &b[*j1 * b_dim1 + 1], ldb);
         }
         /* Exit with INFO = 0 if swap was successfully performed. */
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Exit with INFO = 1 if swap was rejected. */
 L70:
     *info = 1;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of STGEX2 */
 }
 /* stgex2_ */
-
