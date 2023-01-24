@@ -1,4 +1,4 @@
-/* ../netlib/slasq2.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* slasq2.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -87,7 +87,6 @@ static integer c__2 = 2;
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup auxOTHERcomputational */
 /* > \par Further Details: */
 /* ===================== */
@@ -103,12 +102,8 @@ static integer c__2 = 2;
 /* Subroutine */
 int slasq2_(integer *n, real *z__, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"slasq2 inputs: n %d",*n);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("slasq2 inputs: n %" FLA_IS "",*n);
     /* System generated locals */
     integer i__1, i__2, i__3;
     real r__1, r__2;
@@ -144,10 +139,9 @@ int slasq2_(integer *n, real *z__, integer *info)
     real oldemn, safmin;
     extern /* Subroutine */
     int xerbla_(char *, integer *), slasrt_( char *, integer *, real *, integer *);
-    /* -- LAPACK computational routine (version 3.7.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -180,12 +174,12 @@ int slasq2_(integer *n, real *z__, integer *info)
     {
         *info = -1;
         xerbla_("SLASQ2", &c__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*n == 1)
@@ -196,17 +190,31 @@ int slasq2_(integer *n, real *z__, integer *info)
             *info = -201;
             xerbla_("SLASQ2", &c__2);
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*n == 2)
     {
         /* 2-by-2 case. */
-        if (z__[2] < 0.f || z__[3] < 0.f)
+        if (z__[1] < 0.f)
         {
-            *info = -2;
+            *info = -201;
             xerbla_("SLASQ2", &c__2);
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
+            return 0;
+        }
+        else if (z__[2] < 0.f)
+        {
+            *info = -202;
+            xerbla_("SLASQ2", &c__2);
+    AOCL_DTL_TRACE_LOG_EXIT
+            return 0;
+        }
+        else if (z__[3] < 0.f)
+        {
+            *info = -203;
+            xerbla_("SLASQ2", &c__2);
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         else if (z__[3] > z__[1])
@@ -234,7 +242,7 @@ int slasq2_(integer *n, real *z__, integer *info)
         }
         z__[2] = z__[3];
         z__[6] = z__[2] + z__[1];
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Check for negative data and compute sums of q's and e's. */
@@ -253,19 +261,19 @@ int slasq2_(integer *n, real *z__, integer *info)
         {
             *info = -(k + 200);
             xerbla_("SLASQ2", &c__2);
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         else if (z__[k + 1] < 0.f)
         {
             *info = -(k + 201);
             xerbla_("SLASQ2", &c__2);
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         d__ += z__[k];
         e += z__[k + 1];
-        /* Computing MAX */
+        /* Computing fla_max */
         r__1 = qmax;
         r__2 = z__[k]; // , expr subst
         qmax = fla_max(r__1,r__2);
@@ -273,7 +281,7 @@ int slasq2_(integer *n, real *z__, integer *info)
         r__1 = emin;
         r__2 = z__[k + 1]; // , expr subst
         emin = fla_min(r__1,r__2);
-        /* Computing MAX */
+        /* Computing fla_max */
         r__1 = fla_max(qmax,zmax);
         r__2 = z__[k + 1]; // , expr subst
         zmax = fla_max(r__1,r__2);
@@ -283,11 +291,11 @@ int slasq2_(integer *n, real *z__, integer *info)
     {
         *info = -((*n << 1) + 199);
         xerbla_("SLASQ2", &c__2);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     d__ += z__[(*n << 1) - 1];
-    /* Computing MAX */
+    /* Computing fla_max */
     r__1 = qmax;
     r__2 = z__[(*n << 1) - 1]; // , expr subst
     qmax = fla_max(r__1,r__2);
@@ -305,7 +313,7 @@ int slasq2_(integer *n, real *z__, integer *info)
         }
         slasrt_("D", n, &z__[1], &iinfo);
         z__[(*n << 1) - 1] = d__;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     trace = d__ + e;
@@ -313,12 +321,11 @@ int slasq2_(integer *n, real *z__, integer *info)
     if (trace == 0.f)
     {
         z__[(*n << 1) - 1] = 0.f;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Check whether the machine is IEEE conformable. */
-    /* IEEE = ILAENV( 10, 'SLASQ2', 'N', 1, 2, 3, 4 ).EQ.1 .AND. */
-    /* $ ILAENV( 11, 'SLASQ2', 'N', 1, 2, 3, 4 ).EQ.1 */
+    /* IEEE = ( ILAENV( 10, 'SLASQ2', 'N', 1, 2, 3, 4 ).EQ.1 ) */
     /* [11/15/2008] The case IEEE=.TRUE. has a problem in single precision with */
     /* some the test matrices of type 16. The double precision code is fine. */
     ieee = FALSE_;
@@ -417,7 +424,7 @@ int slasq2_(integer *n, real *z__, integer *info)
                 i4 <= i__1;
                 i4 += 4)
         {
-            /* Computing MAX */
+            /* Computing fla_max */
             r__1 = qmax;
             r__2 = z__[i4]; // , expr subst
             qmax = fla_max(r__1,r__2);
@@ -463,7 +470,7 @@ int slasq2_(integer *n, real *z__, integer *info)
         if (sigma < 0.f)
         {
             *info = 1;
-            AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         /* Find last unreduced submatrix's top index I0, find QMAX and */
@@ -493,12 +500,12 @@ int slasq2_(integer *n, real *z__, integer *info)
                 r__1 = qmin;
                 r__2 = z__[i4 - 3]; // , expr subst
                 qmin = fla_min(r__1,r__2);
-                /* Computing MAX */
+                /* Computing fla_max */
                 r__1 = emax;
                 r__2 = z__[i4 - 5]; // , expr subst
                 emax = fla_max(r__1,r__2);
             }
-            /* Computing MAX */
+            /* Computing fla_max */
             r__1 = qmax;
             r__2 = z__[i4 - 7] + z__[i4 - 5]; // , expr subst
             qmax = fla_max(r__1,r__2);
@@ -556,7 +563,7 @@ L100:
             }
         }
         /* Put -(initial shift) into DMIN. */
-        /* Computing MAX */
+        /* Computing fla_max */
         r__1 = 0.f;
         r__2 = qmin - sqrt(qmin) * 2.f * sqrt(emax); // , expr subst
         dmin__ = -fla_max(r__1,r__2);
@@ -602,7 +609,7 @@ L100:
                         }
                         else
                         {
-                            /* Computing MAX */
+                            /* Computing fla_max */
                             r__1 = qmax;
                             r__2 = z__[i4 + 1]; // , expr subst
                             qmax = fla_max(r__1,r__2);
@@ -675,14 +682,14 @@ L145:
                 z__[k * 2] = 0.f;
             }
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
         /* end IWHILB */
 L150: /* L160: */
         ;
     }
     *info = 3;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* end IWHILA */
 L170: /* Move q's to the front. */
@@ -712,9 +719,8 @@ L170: /* Move q's to the front. */
     i__1 = *n;
     z__[(*n << 1) + 4] = (real) ndiv / (real) (i__1 * i__1);
     z__[(*n << 1) + 5] = nfail * 100.f / (real) iter;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of SLASQ2 */
 }
 /* slasq2_ */
-

@@ -1,4 +1,4 @@
-/* ../netlib/sgelss.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* sgelss.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__6 = 6;
@@ -102,14 +102,14 @@ they are stored as the columns of the */
 /* > \param[in] LDB */
 /* > \verbatim */
 /* > LDB is INTEGER */
-/* > The leading dimension of the array B. LDB >= fla_max(1,fla_max(M,N)). */
+/* > The leading dimension of the array B. LDB >= fla_max(1,max(M,N)). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] S */
 /* > \verbatim */
 /* > S is REAL array, dimension (fla_min(M,N)) */
 /* > The singular values of A in decreasing order. */
-/* > The condition number of A in the 2-norm = S(1)/S(fla_min(m,n)). */
+/* > The condition number of A in the 2-norm = S(1)/S (fla_min(m,n)). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] RCOND */
@@ -137,7 +137,7 @@ they are stored as the columns of the */
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The dimension of the array WORK. LWORK >= 1, and also: */
-/* > LWORK >= 3*fla_min(M,N) + fla_max( 2*fla_min(M,N), fla_max(M,N), NRHS ) */
+/* > LWORK >= 3*min(M,N) + fla_max( 2*min(M,N), fla_max(M,N), NRHS ) */
 /* > For good performance, LWORK should generally be larger. */
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
@@ -163,12 +163,13 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup realGEsolve */
 /* ===================================================================== */
 /* Subroutine */
 int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *b, integer *ldb, real *s, real *rcond, integer * rank, real *work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("sgelss inputs: m %" FLA_IS ", n %" FLA_IS ", nrhs %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", rank %" FLA_IS "",*m, *n, *nrhs, *lda, *ldb, *rank);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2, i__3, i__4;
     real r__1;
@@ -208,10 +209,9 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     logical lquery;
     extern /* Subroutine */
     int sormqr_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *);
-    /* -- LAPACK driver routine (version 3.7.0) -- */
+    /* -- LAPACK driver routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -285,10 +285,10 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
                 /* columns */
                 /* Compute space needed for SGEQRF */
                 sgeqrf_(m, n, &a[a_offset], lda, dum, dum, &c_n1, info);
-                lwork_sgeqrf__ = dum[0];
+                lwork_sgeqrf__ = (integer) dum[0];
                 /* Compute space needed for SORMQR */
                 sormqr_("L", "T", m, nrhs, n, &a[a_offset], lda, dum, &b[ b_offset], ldb, dum, &c_n1, info);
-                lwork_sormqr__ = dum[0];
+                lwork_sormqr__ = (integer) dum[0];
                 mm = *n;
                 /* Computing MAX */
                 i__1 = maxwrk;
@@ -309,13 +309,13 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
                 bdspac = fla_max(i__1,i__2);
                 /* Compute space needed for SGEBRD */
                 sgebrd_(&mm, n, &a[a_offset], lda, &s[1], dum, dum, dum, dum, &c_n1, info);
-                lwork_sgebrd__ = dum[0];
+                lwork_sgebrd__ = (integer) dum[0];
                 /* Compute space needed for SORMBR */
                 sormbr_("Q", "L", "T", &mm, nrhs, n, &a[a_offset], lda, dum, & b[b_offset], ldb, dum, &c_n1, info);
-                lwork_sormbr__ = dum[0];
+                lwork_sormbr__ = (integer) dum[0];
                 /* Compute space needed for SORGBR */
                 sorgbr_("P", n, n, n, &a[a_offset], lda, dum, dum, &c_n1, info);
-                lwork_sorgbr__ = dum[0];
+                lwork_sorgbr__ = (integer) dum[0];
                 /* Compute total workspace needed */
                 /* Computing MAX */
                 i__1 = maxwrk;
@@ -359,16 +359,16 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
                     /* than rows */
                     /* Compute space needed for SGEBRD */
                     sgebrd_(m, m, &a[a_offset], lda, &s[1], dum, dum, dum, dum, &c_n1, info);
-                    lwork_sgebrd__ = dum[0];
+                    lwork_sgebrd__ = (integer) dum[0];
                     /* Compute space needed for SORMBR */
                     sormbr_("Q", "L", "T", m, nrhs, n, &a[a_offset], lda, dum, &b[b_offset], ldb, dum, &c_n1, info);
-                    lwork_sormbr__ = dum[0];
+                    lwork_sormbr__ = (integer) dum[0];
                     /* Compute space needed for SORGBR */
                     sorgbr_("P", m, m, m, &a[a_offset], lda, dum, dum, &c_n1, info);
-                    lwork_sorgbr__ = dum[0];
+                    lwork_sorgbr__ = (integer) dum[0];
                     /* Compute space needed for SORMLQ */
                     sormlq_("L", "T", n, nrhs, m, &a[a_offset], lda, dum, &b[ b_offset], ldb, dum, &c_n1, info);
-                    lwork_sormlq__ = dum[0];
+                    lwork_sormlq__ = (integer) dum[0];
                     /* Compute total workspace needed */
                     maxwrk = *m + *m * ilaenv_(&c__1, "SGELQF", " ", m, n, & c_n1, &c_n1);
                     /* Computing MAX */
@@ -411,13 +411,13 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
                     /* Path 2 - underdetermined */
                     /* Compute space needed for SGEBRD */
                     sgebrd_(m, n, &a[a_offset], lda, &s[1], dum, dum, dum, dum, &c_n1, info);
-                    lwork_sgebrd__ = dum[0];
+                    lwork_sgebrd__ = (integer) dum[0];
                     /* Compute space needed for SORMBR */
                     sormbr_("Q", "L", "T", m, nrhs, m, &a[a_offset], lda, dum, &b[b_offset], ldb, dum, &c_n1, info);
-                    lwork_sormbr__ = dum[0];
+                    lwork_sormbr__ = (integer) dum[0];
                     /* Compute space needed for SORGBR */
                     sorgbr_("P", m, n, m, &a[a_offset], lda, dum, dum, &c_n1, info);
-                    lwork_sorgbr__ = dum[0];
+                    lwork_sorgbr__ = (integer) dum[0];
                     maxwrk = *m * 3 + lwork_sgebrd__;
                     /* Computing MAX */
                     i__1 = maxwrk;
@@ -446,16 +446,19 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     {
         i__1 = -(*info);
         xerbla_("SGELSS", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*m == 0 || *n == 0)
     {
         *rank = 0;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine parameters */
@@ -847,6 +850,7 @@ int sgelss_(integer *m, integer *n, integer *nrhs, real *a, integer *lda, real *
     }
 L70:
     work[1] = (real) maxwrk;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of SGELSS */
 }

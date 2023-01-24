@@ -1,4 +1,4 @@
-/* ../netlib/sggqrf.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* sggqrf.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -144,7 +144,7 @@ the remaining */
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The dimension of the array WORK. LWORK >= fla_max(1,N,M,P). */
-/* > For optimum performance LWORK >= fla_max(N,M,P)*fla_max(NB1,NB2,NB3), */
+/* > For optimum performance LWORK >= fla_max(N,M,P)*max(NB1,NB2,NB3), */
 /* > where NB1 is the optimal blocksize for the QR factorization */
 /* > of an N-by-M matrix, NB2 is the optimal blocksize for the */
 /* > RQ factorization of an N-by-P matrix, and NB3 is the optimal */
@@ -169,7 +169,6 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup realOTHERcomputational */
 /* > \par Further Details: */
 /* ===================== */
@@ -211,6 +210,8 @@ v(1:p-k+i-1) is stored on exit in */
 /* Subroutine */
 int sggqrf_(integer *n, integer *m, integer *p, real *a, integer *lda, real *taua, real *b, integer *ldb, real *taub, real * work, integer *lwork, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("sggqrf inputs: n %" FLA_IS ", m %" FLA_IS ", p %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*n, *m, *p, *lda, *ldb);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, i__1, i__2;
     /* Local variables */
@@ -224,10 +225,9 @@ int sggqrf_(integer *n, integer *m, integer *p, real *a, integer *lda, real *tau
     logical lquery;
     extern /* Subroutine */
     int sormqr_(char *, char *, integer *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *);
-    /* -- LAPACK computational routine (version 3.7.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -300,15 +300,17 @@ int sggqrf_(integer *n, integer *m, integer *p, real *a, integer *lda, real *tau
     {
         i__1 = -(*info);
         xerbla_("SGGQRF", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* QR factorization of N-by-M matrix A: A = Q*R */
     sgeqrf_(n, m, &a[a_offset], lda, &taua[1], &work[1], lwork, info);
-    lopt = work[1];
+    lopt = (integer) work[1];
     /* Update B := Q**T*B. */
     i__1 = fla_min(*n,*m);
     sormqr_("Left", "Transpose", n, p, &i__1, &a[a_offset], lda, &taua[1], &b[ b_offset], ldb, &work[1], lwork, info);
@@ -322,6 +324,7 @@ int sggqrf_(integer *n, integer *m, integer *p, real *a, integer *lda, real *tau
     i__1 = lopt;
     i__2 = (integer) work[1]; // , expr subst
     work[1] = (real) fla_max(i__1,i__2);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of SGGQRF */
 }

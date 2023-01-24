@@ -1,7 +1,7 @@
-/* ../netlib/slanv2.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* slanv2.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
-static real c_b3 = 1.f;
+static real c_b6 = 1.f;
 /* > \brief \b SLANV2 computes the Schur factorization of a real 2-by-2 nonsymmetric matrix in standard form. */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -100,7 +100,6 @@ static real c_b3 = 1.f;
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup realOTHERauxiliary */
 /* > \par Further Details: */
 /* ===================== */
@@ -117,17 +116,19 @@ static real c_b3 = 1.f;
 /* Subroutine */
 int slanv2_(real *a, real *b, real *c__, real *d__, real * rt1r, real *rt1i, real *rt2r, real *rt2i, real *cs, real *sn)
 {
-    /* System generated locals */
+    AOCL_DTL_TRACE_LOG_INIT
     real r__1, r__2;
     /* Builtin functions */
-    double r_sign(real *, real *), sqrt(doublereal);
+    double log(doublereal), pow_ri(real *, integer *), r_sign(real *, real *), sqrt(doublereal);
     /* Local variables */
     real p, z__, aa, bb, cc, dd, cs1, sn1, sab, sac, eps, tau, temp, scale, bcmax, bcmis, sigma;
+    integer count, i__1;
+    real safmn2, safmx2;
     extern real slapy2_(real *, real *), slamch_(char *);
-    /* -- LAPACK auxiliary routine (version 3.7.0) -- */
+    real safmin;
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* ===================================================================== */
@@ -140,7 +141,12 @@ int slanv2_(real *a, real *b, real *c__, real *d__, real * rt1r, real *rt1i, rea
     /* .. Intrinsic Functions .. */
     /* .. */
     /* .. Executable Statements .. */
+    safmin = slamch_("S");
     eps = slamch_("P");
+    r__1 = slamch_("B");
+    i__1 = (integer) (log(safmin / eps) / log(slamch_("B")) / 2.f);
+    safmn2 = pow_ri(&r__1, &i__1);
+    safmx2 = 1.f / safmn2;
     if (*c__ == 0.f)
     {
         *cs = 1.f;
@@ -157,7 +163,7 @@ int slanv2_(real *a, real *b, real *c__, real *d__, real * rt1r, real *rt1i, rea
         *b = -(*c__);
         *c__ = 0.f;
     }
-    else if (*a - *d__ == 0.f && r_sign(&c_b3, b) != r_sign(&c_b3, c__))
+    else if (*a - *d__ == 0.f && r_sign(&c_b6, b) != r_sign(&c_b6, c__))
     {
         *cs = 1.f;
         *sn = 0.f;
@@ -173,7 +179,7 @@ int slanv2_(real *a, real *b, real *c__, real *d__, real * rt1r, real *rt1i, rea
         /* Computing MIN */
         r__1 = f2c_abs(*b);
         r__2 = f2c_abs(*c__); // , expr subst
-        bcmis = fla_min(r__1,r__2) * r_sign(&c_b3, b) * r_sign(&c_b3, c__);
+        bcmis = fla_min(r__1,r__2) * r_sign(&c_b6, b) * r_sign(&c_b6, c__);
         /* Computing MAX */
         r__1 = f2c_abs(p);
         scale = fla_max(r__1,bcmax);
@@ -198,10 +204,36 @@ int slanv2_(real *a, real *b, real *c__, real *d__, real * rt1r, real *rt1i, rea
         {
             /* Complex eigenvalues, or real (almost) equal eigenvalues. */
             /* Make diagonal elements equal. */
+            count = 0;
             sigma = *b + *c__;
+L10:
+            ++count;
+            /* Computing MAX */
+            r__1 = f2c_abs(temp);
+            r__2 = f2c_abs(sigma); // , expr subst
+            scale = fla_max(r__1,r__2);
+            if (scale >= safmx2)
+            {
+                sigma *= safmn2;
+                temp *= safmn2;
+                if (count <= 20)
+                {
+                    goto L10;
+                }
+            }
+            if (scale <= safmn2)
+            {
+                sigma *= safmx2;
+                temp *= safmx2;
+                if (count <= 20)
+                {
+                    goto L10;
+                }
+            }
+            p = temp * .5f;
             tau = slapy2_(&sigma, &temp);
             *cs = sqrt((f2c_abs(sigma) / tau + 1.f) * .5f);
-            *sn = -(p / (tau * *cs)) * r_sign(&c_b3, &sigma);
+            *sn = -(p / (tau * *cs)) * r_sign(&c_b6, &sigma);
             /* Compute [ AA BB ] = [ A B ] [ CS -SN ] */
             /* [ CC DD ] [ C D ] [ SN CS ] */
             aa = *a * *cs + *b * *sn;
@@ -221,7 +253,7 @@ int slanv2_(real *a, real *b, real *c__, real *d__, real * rt1r, real *rt1i, rea
             {
                 if (*b != 0.f)
                 {
-                    if (r_sign(&c_b3, b) == r_sign(&c_b3, c__))
+                    if (r_sign(&c_b6, b) == r_sign(&c_b6, c__))
                     {
                         /* Real eigenvalues: reduce to upper triangular form */
                         sab = sqrt((f2c_abs(*b)));
@@ -264,6 +296,7 @@ int slanv2_(real *a, real *b, real *c__, real *d__, real * rt1r, real *rt1i, rea
         *rt1i = sqrt((f2c_abs(*b))) * sqrt((f2c_abs(*c__)));
         *rt2i = -(*rt1i);
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of SLANV2 */
 }

@@ -1,4 +1,4 @@
-/* slaqz0.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* slaqz0.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__12 = 12;
@@ -305,6 +305,8 @@ the routine */
 /* Subroutine */
 int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, integer *ihi, real *a, integer *lda, real *b, integer *ldb, real *alphar, real *alphai, real *beta, real *q, integer *ldq, real *z__, integer *ldz, real *work, integer *lwork, integer *rec, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("slaqz0 inputs: wants %c, wantq %c, wantz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", rec %" FLA_IS "",*wants, *wantq, *wantz, *n, *ilo, *ihi, *lda, *ldb, *ldq, *ldz, *rec);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2, i__3, i__4, i__5;
     real r__1, r__2, r__3, r__4, r__5;
@@ -312,8 +314,6 @@ int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     double sqrt(doublereal);
     /* Local variables */
     integer aed_info__;
-    extern /* Subroutine */
-    int f90_cycle_(void);
     integer shiftpos, lworkreq, i__, k;
     real c1;
     integer k2;
@@ -321,13 +321,17 @@ int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     integer norm_info__, ld, ns, n_deflated__, nw, sweep_info__, nbr;
     logical ilq, ilz;
     real ulp;
-    integer nsr, nwr, nmin;
+    integer nsr, nwr;
+    real btol;
+    integer nmin;
     real temp, swap;
     integer n_undeflated__;
     extern /* Subroutine */
     int srot_(integer *, real *, integer *, real *, integer *, real *, real *);
     extern logical lsame_(char *, char *);
-    integer iiter, maxit, rcost, istop, itemp1, itemp2;
+    integer iiter;
+    real bnorm;
+    integer maxit, rcost, istop, itemp1, itemp2;
     extern /* Subroutine */
     int slaqz3_(logical *, logical *, logical *, integer *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *, integer *, real *, real *, real *, real *, integer *, real *, integer *, real *, integer *, integer *, integer *), slaqz4_( logical *, logical *, logical *, integer *, integer *, integer *, integer *, integer *, real *, real *, real *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, real *, integer *, integer *), slabad_(real *, real *);
     integer nibble, nblock;
@@ -339,6 +343,7 @@ int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     real eshift;
     char jbcmpz[3];
+    extern real slanhs_(char *, integer *, real *, integer *, real *);
     extern /* Subroutine */
     int slaset_(char *, integer *, integer *, real *, real *, real *, integer *), slartg_(real *, real *, real *, real *, real *), shgeqz_(char *, char *, char *, integer *, integer *, integer *, real *, integer *, real *, integer *, real *, real *, real *, real *, integer *, real *, integer *, real *, integer *, integer *);
     integer iwantq, iwants, istart;
@@ -349,7 +354,6 @@ int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     logical ilschur;
     integer nshifts, istartm;
     /* Arguments */
-    /* const */
     /* Parameters */
     /* Local scalars */
     /* External Functions */
@@ -470,12 +474,14 @@ int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     {
         i__1 = -(*info);
         xerbla_("SLAQZ0", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n <= 0)
     {
         work[1] = 1.f;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get the parameters */
@@ -508,6 +514,7 @@ int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     if (*n < nmin || *rec >= 2)
     {
         shgeqz_(wants, wantq, wantz, n, ilo, ihi, &a[a_offset], lda, &b[ b_offset], ldb, &alphar[1], &alphai[1], &beta[1], &q[q_offset], ldq, &z__[z_offset], ldz, &work[1], lwork, info);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Find out required workspace */
@@ -529,6 +536,7 @@ int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     if (*lwork == -1)
     {
         work[1] = (real) lworkreq;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*lwork < lworkreq)
@@ -538,6 +546,7 @@ int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     if (*info != 0)
     {
         xerbla_("SLAQZ0", info);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize Q and Z */
@@ -555,6 +564,12 @@ int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     slabad_(&safmin, &safmax);
     ulp = slamch_("PRECISION");
     smlnum = safmin * ((real) (*n) / ulp);
+    i__1 = *ihi - *ilo + 1;
+    bnorm = slanhs_("F", &i__1, &b[*ilo + *ilo * b_dim1], ldb, &work[1]);
+    /* Computing MAX */
+    r__1 = safmin;
+    r__2 = ulp * bnorm; // , expr subst
+    btol = fla_max(r__1,r__2);
     istart = *ilo;
     istop = *ihi;
     maxit = (*ihi - *ilo + 1) * 3;
@@ -659,19 +674,7 @@ int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
         k = istop;
         while(k >= istart2)
         {
-            temp = 0.f;
-            if (k < istop)
-            {
-                temp += (r__1 = b[k + (k + 1) * b_dim1], f2c_abs(r__1));
-            }
-            if (k > istart2)
-            {
-                temp += (r__1 = b[k - 1 + k * b_dim1], f2c_abs(r__1));
-            }
-            /* Computing MAX */
-            r__2 = smlnum;
-            r__3 = ulp * temp; // , expr subst
-            if ((r__1 = b[k + k * b_dim1], f2c_abs(r__1)) < fla_max(r__2,r__3))
+            if ((r__1 = b[k + k * b_dim1], f2c_abs(r__1)) < btol)
             {
                 /* A diagonal element of B is negligable, move it */
                 /* to the top and deflate it */
@@ -840,6 +843,7 @@ int slaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
 L80:
     shgeqz_(wants, wantq, wantz, n, ilo, ihi, &a[a_offset], lda, &b[b_offset], ldb, &alphar[1], &alphai[1], &beta[1], &q[q_offset], ldq, &z__[ z_offset], ldz, &work[1], lwork, &norm_info__);
     *info = norm_info__;
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* slaqz0_ */

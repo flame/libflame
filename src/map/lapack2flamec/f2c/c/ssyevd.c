@@ -1,4 +1,4 @@
-/* ../netlib/ssyevd.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* ssyevd.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -167,7 +167,6 @@ i off-diagonal elements of an intermediate */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup realSYeigen */
 /* > \par Contributors: */
 /* ================== */
@@ -181,12 +180,8 @@ i off-diagonal elements of an intermediate */
 /* Subroutine */
 int ssyevd_(char *jobz, char *uplo, integer *n, real *a, integer *lda, real *w, real *work, integer *lwork, integer *iwork, integer *liwork, integer *info)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"ssyevd inputs: jobz %c, uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*jobz, *uplo, *n, *lda);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("ssyevd inputs: jobz %c, uplo %c, n %" FLA_IS ", lda %" FLA_IS "",*jobz, *uplo, *n, *lda);
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2;
     real r__1;
@@ -223,13 +218,11 @@ int ssyevd_(char *jobz, char *uplo, integer *n, real *a, integer *lda, real *w, 
     integer llwork;
     real smlnum;
     logical lquery;
-    extern real sroundup_lwork(integer *);
     extern /* Subroutine */
     int sormtr_(char *, char *, char *, integer *, integer *, real *, integer *, real *, real *, integer *, real *, integer *, integer *), ssytrd_(char *, integer *, real *, integer *, real *, real *, real *, real *, integer *, integer *);
-    /* -- LAPACK driver routine (version 3.7.0) -- */
+    /* -- LAPACK driver routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -300,11 +293,11 @@ int ssyevd_(char *jobz, char *uplo, integer *n, real *a, integer *lda, real *w, 
             }
             /* Computing MAX */
             i__1 = lwmin;
-            i__2 = (*n << 1) + ilaenv_(&c__1, "SSYTRD", uplo, n, &c_n1, &c_n1, &c_n1); // , expr subst
+            i__2 = (*n << 1) + *n * ilaenv_(&c__1, "SSYTRD", uplo, n, &c_n1, &c_n1, &c_n1); // , expr subst
             lopt = fla_max(i__1,i__2);
             liopt = liwmin;
         }
-        work[1] = sroundup_lwork(&lopt);
+        work[1] =  sroundup_lwork(&lopt);
         iwork[1] = liopt;
         if (*lwork < lwmin && ! lquery)
         {
@@ -319,18 +312,18 @@ int ssyevd_(char *jobz, char *uplo, integer *n, real *a, integer *lda, real *w, 
     {
         i__1 = -(*info);
         xerbla_("SSYEVD", &i__1);
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*n == 1)
@@ -340,7 +333,7 @@ int ssyevd_(char *jobz, char *uplo, integer *n, real *a, integer *lda, real *w, 
         {
             a[a_dim1 + 1] = 1.f;
         }
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants. */
@@ -395,9 +388,9 @@ int ssyevd_(char *jobz, char *uplo, integer *n, real *a, integer *lda, real *w, 
         r__1 = 1.f / sigma;
         sscal_(n, &r__1, &w[1], &c__1);
     }
-    work[1] = sroundup_lwork(&lopt);
+    work[1] =  sroundup_lwork(&lopt);
     iwork[1] = liopt;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of SSYEVD */
 }

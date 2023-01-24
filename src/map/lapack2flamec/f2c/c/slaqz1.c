@@ -111,6 +111,8 @@
 /* Subroutine */
 int slaqz1_(real *a, integer *lda, real *b, integer *ldb, real *sr1, real *sr2, real *si, real *beta1, real *beta2, real *v)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("slaqz1 inputs: lda %" FLA_IS ", ldb %" FLA_IS "",*lda, *ldb);
     /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset;
     /* Builtin functions */
@@ -167,6 +169,7 @@ int slaqz1_(real *a, integer *lda, real *b, integer *ldb, real *sr1, real *sr2, 
         v[3] = 0.f;
     }
     /* End of SLAQZ1 */
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* slaqz1_ */

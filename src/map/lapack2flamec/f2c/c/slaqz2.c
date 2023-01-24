@@ -1,4 +1,4 @@
-/* slaqz2.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* slaqz2.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__2 = 2;
@@ -22,10 +22,10 @@ static integer c__1 = 1;
 /* $ LDB, NQ, QSTART, Q, LDQ, NZ, ZSTART, Z, LDZ ) */
 /* IMPLICIT NONE */
 /* Arguments */
-/* LOGICAL, INTENT( IN ) :: ILQ, ILZ */
-/* INTEGER, INTENT( IN ) :: K, LDA, LDB, LDQ, LDZ, ISTARTM, ISTOPM, */
-/* $ NQ, NZ, QSTART, ZSTART, IHI */
-/* REAL :: A( LDA, * ), B( LDB, * ), Q( LDQ, * ), Z( LDZ, * ) */
+/* LOGICAL ILQ, ILZ */
+/* INTEGER K, LDA, LDB, LDQ, LDZ, ISTARTM, ISTOPM, */
+/* $ NQ, NZ, QSTART, ZSTART, IHI, I, J */
+/* REAL A( LDA, * ), B( LDB, * ), Q( LDQ, * ), Z( LDZ, * ) */
 /* .. */
 /* > \par Purpose: */
 /* ============= */
@@ -158,13 +158,15 @@ static integer c__1 = 1;
 /* Subroutine */
 int slaqz2_(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *istopm, integer *ihi, real *a, integer *lda, real * b, integer *ldb, integer *nq, integer *qstart, real *q, integer *ldq, integer *nz, integer *zstart, real *z__, integer *ldz)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("slaqz2 inputs: k %" FLA_IS ", istartm %" FLA_IS ", istopm %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", nq %" FLA_IS ", qstart %" FLA_IS ", ldq %" FLA_IS ", nz %" FLA_IS ", zstart %" FLA_IS ", ldz %" FLA_IS "",*k, *istartm, *istopm, *ihi, *lda, *ldb, *nq, *qstart, *ldq, *nz, *zstart, *ldz);
     /* System generated locals */
-    integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1, i__2;
+    integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, i__1;
     /* Local variables */
     real h__[6] /* was [2][3] */
-    , c1, c2, s1, s2;
-    integer indi, indj;
-    real temp;
+    ;
+    integer i__, j;
+    real c1, c2, s1, s2, temp;
     extern /* Subroutine */
     int srot_(integer *, real *, integer *, real *, integer *, real *, real *), slartg_(real *, real *, real *, real *, real *);
     /* Arguments */
@@ -189,17 +191,15 @@ int slaqz2_(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *
     {
         /* Shift is located on the edge of the matrix, remove it */
         /* H = B( IHI-1:IHI, IHI-2:IHI ) */
-        i__1 = *ihi;
-        for (indi = *ihi - 1;
-                indi <= i__1;
-                ++indi)
+        for (i__ = 1;
+                i__ <= 2;
+                ++i__)
         {
-            i__2 = *ihi;
-            for (indj = *ihi - 2;
-                    indj <= i__2;
-                    ++indj)
+            for (j = 1;
+                    j <= 3;
+                    ++j)
             {
-                h__[indi + (indj << 1) - 3] = b[indi + indj * b_dim1];
+                h__[i__ + (j << 1) - 3] = b[*ihi - 1 + i__ - 1 + (*ihi - 2 + j - 1) * b_dim1];
             }
         }
         /* Make H upper triangular */
@@ -252,17 +252,15 @@ int slaqz2_(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *
     {
         /* Normal operation, move bulge down */
         /* H = B( K+1:K+2, K:K+2 ) */
-        i__1 = *k + 2;
-        for (indi = *k + 1;
-                indi <= i__1;
-                ++indi)
+        for (i__ = 1;
+                i__ <= 2;
+                ++i__)
         {
-            i__2 = *k + 2;
-            for (indj = *k;
-                    indj <= i__2;
-                    ++indj)
+            for (j = 1;
+                    j <= 3;
+                    ++j)
             {
-                h__[indi + (indj << 1) - 3] = b[indi + indj * b_dim1];
+                h__[i__ + (j << 1) - 3] = b[*k + 1 + i__ - 1 + (*k + j - 1) * b_dim1];
             }
         }
         /* Make H upper triangular */
@@ -313,6 +311,7 @@ int slaqz2_(logical *ilq, logical *ilz, integer *k, integer * istartm, integer *
         }
     }
     /* End of SLAQZ2 */
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* slaqz2_ */

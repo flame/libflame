@@ -1,4 +1,4 @@
-/* slaqz3.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* slaqz3.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static logical c_true = TRUE_;
@@ -229,19 +229,19 @@ the routine */
 /* Subroutine */
 int slaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *ilo, integer *ihi, integer *nw, real *a, integer *lda, real *b, integer *ldb, real *q, integer *ldq, real *z__, integer *ldz, integer *ns, integer *nd, real *alphar, real *alphai, real *beta, real *qc, integer *ldqc, real *zc, integer *ldzc, real * work, integer *lwork, integer *rec, integer *info)
 {
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("slaqz3 inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", nw %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", ns %" FLA_IS ", nd %" FLA_IS ", ldqc %" FLA_IS ", ldzc %" FLA_IS ", rec %" FLA_IS "",*n, *ilo, *ihi, *nw, *lda, *ldb, *ldq, *ldz, *ns, *nd, *ldqc, *ldzc, *rec);
     /* System generated locals */
-    integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, qc_dim1, qc_offset, zc_dim1, zc_offset, i__1, i__2, i__3, i__4, i__5;
+    integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, qc_dim1, qc_offset, zc_dim1, zc_offset, i__1, i__2, i__3, i__4;
     real r__1, r__2, r__3, r__4, r__5, r__6;
-    complex q__1, q__2, q__3;
     /* Builtin functions */
     double sqrt(doublereal);
-    void r_cnjg(complex *, complex *);
     /* Local variables */
-    integer lworkreq, k;
+    integer lworkreq, i__, j, k;
     real s, c1;
     integer k2;
     real s1;
-    integer jw, jki, jli;
+    integer jw;
     real ulp;
     integer stgexc_info__, ifst;
     real temp;
@@ -249,6 +249,7 @@ int slaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     extern /* Subroutine */
     int srot_(integer *, real *, integer *, real *, integer *, real *, real *), slag2_(real *, integer *, real *, integer *, real *, real *, real *, real *, real *, real *);
     logical bulge;
+    real atemp;
     extern /* Subroutine */
     int sgemm_(char *, char *, integer *, integer *, integer *, real *, real *, integer *, real *, integer *, real *, real *, integer *);
     integer kwbot, kwtop, qz_small_info__;
@@ -331,6 +332,7 @@ int slaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     {
         /* workspace query, quick return */
         work[1] = (real) lworkreq;
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*lwork < lworkreq)
@@ -341,6 +343,7 @@ int slaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     {
         i__1 = -(*info);
         xerbla_("SLAQZ3", &i__1);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants */
@@ -394,6 +397,7 @@ int slaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
         /* Computing 2nd power */
         i__1 = jw;
         slacpy_("ALL", &jw, &jw, &work[i__1 * i__1 + 1], &jw, &b[kwtop + kwtop * b_dim1], ldb);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Deflation detection loop */
@@ -504,26 +508,15 @@ int slaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
         /* Reflect spike back, this will create optimally packed bulges */
         /* A( KWTOP:KWBOT, KWTOP-1 ) = A( KWTOP, KWTOP-1 )*QC( 1, */
         /* $ 1:JW-ND ) */
+        atemp = a[kwtop + (kwtop - 1) * a_dim1];
+        j = 1;
         i__1 = kwbot;
-        for (jki = kwtop;
-                jki <= i__1;
-                ++jki)
+        for (i__ = kwtop;
+                i__ <= i__1;
+                ++i__)
         {
-            i__2 = jw - *nd;
-            for (jli = 1;
-                    jli <= i__2;
-                    ++jli)
-            {
-                i__3 = jli * qc_dim1 + 1;
-                q__1.r = qc[i__3];
-                q__1.i = 0.f; // , expr subst
-                i__4 = jki + (kwtop - 1) * a_dim1;
-                i__5 = kwtop + (kwtop - 1) * a_dim1;
-                r_cnjg(&q__3, &q__1);
-                q__2.r = a[i__5] * q__3.r;
-                q__2.i = a[i__5] * q__3.i; // , expr subst
-                a[i__4] = q__2.r;
-            }
+            a[i__ + (kwtop - 1) * a_dim1] = atemp * qc[j * qc_dim1 + 1];
+            ++j;
         }
         i__1 = kwtop;
         for (k = kwbot - 1;
@@ -648,6 +641,7 @@ int slaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
         sgemm_("N", "N", n, &jw, &jw, &c_b17, &z__[kwtop * z_dim1 + 1], ldz, & zc[zc_offset], ldzc, &c_b16, &work[1], n);
         slacpy_("ALL", n, &jw, &work[1], n, &z__[kwtop * z_dim1 + 1], ldz);
     }
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
 }
 /* slaqz3_ */

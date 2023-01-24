@@ -1,8 +1,7 @@
-/* ../netlib/slacn2.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* slacn2.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
-static real c_b11 = 1.f;
 /* > \brief \b SLACN2 estimates the 1-norm of a square matrix, using reverse communication for evaluating matr ix-vector products. */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -93,7 +92,6 @@ static real c_b11 = 1.f;
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date September 2012 */
 /* > \ingroup realOTHERauxiliary */
 /* > \par Further Details: */
 /* ===================== */
@@ -125,31 +123,25 @@ static real c_b11 = 1.f;
 /* Subroutine */
 int slacn2_(integer *n, real *v, real *x, integer *isgn, real *est, integer *kase, integer *isave)
 {
-    AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
-    char buffer[256];
-    snprintf(buffer, 256,"slacn2 inputs: n %d, isgn %d, kase %d, isave %d",*n, *isgn, *kase, *isave);
-    AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
-#endif
+    AOCL_DTL_TRACE_LOG_INIT
+    AOCL_DTL_SNPRINTF("slacn2 inputs: n %" FLA_IS ", isgn %" FLA_IS ", kase %" FLA_IS ", isave %" FLA_IS "",*n, *isgn, *kase, *isave);
     /* System generated locals */
     integer i__1;
     real r__1;
     /* Builtin functions */
-    double r_sign(real *, real *);
     integer i_nint(real *);
     /* Local variables */
     integer i__;
-    real temp;
+    real xs, temp;
     integer jlast;
     extern real sasum_(integer *, real *, integer *);
     extern /* Subroutine */
     int scopy_(integer *, real *, integer *, real *, integer *);
     extern integer isamax_(integer *, real *, integer *);
     real altsgn, estold;
-    /* -- LAPACK auxiliary routine (version 3.4.2) -- */
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* September 2012 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -184,7 +176,7 @@ int slacn2_(integer *n, real *v, real *x, integer *isgn, real *est, integer *kas
         }
         *kase = 1;
         isave[1] = 1;
-        AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     switch (isave[1])
@@ -216,13 +208,20 @@ L20:
             i__ <= i__1;
             ++i__)
     {
-        x[i__] = r_sign(&c_b11, &x[i__]);
+        if (x[i__] >= 0.f)
+        {
+            x[i__] = 1.f;
+        }
+        else
+        {
+            x[i__] = -1.f;
+        }
         isgn[i__] = i_nint(&x[i__]);
         /* L30: */
     }
     *kase = 2;
     isave[1] = 2;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* ................ ENTRY (ISAVE( 1 ) = 2) */
     /* FIRST ITERATION. X HAS BEEN OVERWRITTEN BY TRANSPOSE(A)*X. */
@@ -242,7 +241,7 @@ L50:
     x[isave[2]] = 1.f;
     *kase = 1;
     isave[1] = 3;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* ................ ENTRY (ISAVE( 1 ) = 3) */
     /* X HAS BEEN OVERWRITTEN BY A*X. */
@@ -255,8 +254,15 @@ L70:
             i__ <= i__1;
             ++i__)
     {
-        r__1 = r_sign(&c_b11, &x[i__]);
-        if (i_nint(&r__1) != isgn[i__])
+        if (x[i__] >= 0.f)
+        {
+            xs = 1.f;
+        }
+        else
+        {
+            xs = -1.f;
+        }
+        if (i_nint(&xs) != isgn[i__])
         {
             goto L90;
         }
@@ -274,13 +280,20 @@ L90: /* TEST FOR CYCLING. */
             i__ <= i__1;
             ++i__)
     {
-        x[i__] = r_sign(&c_b11, &x[i__]);
+        if (x[i__] >= 0.f)
+        {
+            x[i__] = 1.f;
+        }
+        else
+        {
+            x[i__] = -1.f;
+        }
         isgn[i__] = i_nint(&x[i__]);
         /* L100: */
     }
     *kase = 2;
     isave[1] = 4;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* ................ ENTRY (ISAVE( 1 ) = 4) */
     /* X HAS BEEN OVERWRITTEN BY TRANSPOSE(A)*X. */
@@ -306,7 +319,7 @@ L120:
     }
     *kase = 1;
     isave[1] = 5;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* ................ ENTRY (ISAVE( 1 ) = 5) */
     /* X HAS BEEN OVERWRITTEN BY A*X. */
@@ -319,7 +332,7 @@ L140:
     }
 L150:
     *kase = 0;
-    AOCL_DTL_TRACE_EXIT(AOCL_DTL_LEVEL_TRACE_5);
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of SLACN2 */
 }
