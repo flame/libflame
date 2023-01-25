@@ -24,6 +24,7 @@ void fla_test_ggevx(integer argc, char ** argv, test_params_t *params);
 void fla_test_gesv(integer argc, char ** argv, test_params_t* params);
 void fla_test_ggev(integer argc, char ** argv, test_params_t *params);
 void fla_test_stedc(integer argc, char ** argv, test_params_t *params);
+void fla_test_syev(integer argc, char ** argv, test_params_t *params);
 
 #define LIN_ID 0
 #define EIG_ID 1
@@ -52,7 +53,8 @@ OPERATIONS API_test_functions[] =
     {EIG_ID,    "ggev"                , fla_test_ggev},
     {EIG_ID,    "steqr"               , fla_test_steqr},
     {EIG_ID,    "stevd"               , fla_test_stevd},
-    {EIG_ID,    "stedc"               , fla_test_stedc}
+    {EIG_ID,    "stedc"               , fla_test_stedc},
+    {EIG_ID,    "syev"                , fla_test_syev}
 };
 
 /* Add test API's group entry below */

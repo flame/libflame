@@ -154,6 +154,11 @@
 #define fla_lapack_cstedc CSTEDC_
 #define fla_lapack_zstedc ZSTEDC_
 
+#define fla_lapack_sstedc SSYEV_
+#define fla_lapack_dstedc DSYEV_
+#define fla_lapack_cstedc CHEEV_
+#define fla_lapack_zstedc ZHEEV_
+
 #elif (UPPER)
 
 #define fla_lapack_slacpy SLACPY
@@ -301,6 +306,11 @@
 #define fla_lapack_dstedc DSTEDC
 #define fla_lapack_cstedc CSTEDC
 #define fla_lapack_zstedc ZSTEDC
+
+#define fla_lapack_sstedc SSYEV
+#define fla_lapack_dstedc DSYEV
+#define fla_lapack_cstedc CHEEV
+#define fla_lapack_zstedc ZHEEV
 
 #elif (LOWER)
 
@@ -450,6 +460,11 @@
 #define fla_lapack_cstedc cstedc
 #define fla_lapack_zstedc zstedc
 
+#define fla_lapack_sstedc ssyev
+#define fla_lapack_dstedc dsyev
+#define fla_lapack_cstedc cheev
+#define fla_lapack_zstedc zheev
+
 #else
 
 #define fla_lapack_slacpy slacpy_
@@ -597,6 +612,11 @@
 #define fla_lapack_dstedc dstedc_
 #define fla_lapack_cstedc cstedc_
 #define fla_lapack_zstedc zstedc_
+
+#define fla_lapack_ssyev ssyev_
+#define fla_lapack_dsyev dsyev_
+#define fla_lapack_cheev cheev_
+#define fla_lapack_zheev zheev_
 
 #endif /*if UPPER_*/
 
@@ -800,5 +820,11 @@ extern int fla_lapack_sstedc(char* compz, integer* n, void* d, void* e, void* z,
 extern int fla_lapack_dstedc(char* compz, integer* n, void* d, void* e, void* z, integer* ldz, void* work, integer* lwork, integer* iwork, integer* liwork, integer* info);
 extern int fla_lapack_cstedc(char* compz, integer* n, void* d, void* e, void* z, integer* ldz, void* work, integer* lwork, void* rwork, integer* lrwork, integer* iwork, integer* liwork, integer* info);
 extern int fla_lapack_zstedc(char* compz, integer* n, void* d, void* e, void* z, integer* ldz, void* work, integer* lwork, void* rwork, integer* lrwork, integer* iwork, integer* liwork, integer* info);
+
+/* Computation of Eigen Values and Eigen Vectors*/
+extern int fla_lapack_ssyev(char *jobz, char *uplo, integer *n, void *a, integer *lda, void *w, void *work, integer *lwork, integer *info);
+extern int fla_lapack_dsyev(char *jobz, char *uplo, integer *n, void *a, integer *lda, void *w, void *work, integer *lwork, integer *info);
+extern int fla_lapack_cheev(char *jobz, char *uplo, integer *n, void *a, integer *lda, void *w, void *work, integer *lwork, void *rwork, integer *info);
+extern int fla_lapack_zheev(char *jobz, char *uplo, integer *n, void *a, integer *lda, void *w, void *work, integer *lwork, void *rwork, integer *info);
 
 #endif  // TEST_PROTOTYPE_H
