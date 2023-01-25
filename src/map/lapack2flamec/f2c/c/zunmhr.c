@@ -1,8 +1,9 @@
-/* ../netlib/zunmhr.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* zunmhr.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
 static integer c_n1 = -1;
+static integer c__2 = 2;
 /* > \brief \b ZUNMHR */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -167,7 +168,6 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date November 2011 */
 /* > \ingroup complex16OTHERcomputational */
 /* ===================================================================== */
 /* Subroutine */
@@ -176,7 +176,8 @@ int zunmhr_(char *side, char *trans, integer *m, integer *n, integer *ilo, integ
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("zunmhr inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS ", lwork %" FLA_IS "", *side, *trans, *m, *n, *ilo, *ihi, *lda, *ldc, *lwork);
     /* System generated locals */
-    integer a_dim1, a_offset, c_dim1, c_offset, i__2;
+    address a__1[2];
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1[2], i__2;
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -193,10 +194,9 @@ int zunmhr_(char *side, char *trans, integer *m, integer *n, integer *ilo, integ
     logical lquery;
     extern /* Subroutine */
     int zunmqr_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, integer *);
-    /* -- LAPACK computational routine (version 3.4.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* November 2011 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -230,12 +230,12 @@ int zunmhr_(char *side, char *trans, integer *m, integer *n, integer *ilo, integ
     if (left)
     {
         nq = *m;
-        nw = *n;
+        nw = fla_max(1,*n);
     }
     else
     {
         nq = *n;
-        nw = *m;
+        nw = fla_max(1,*m);
     }
     if (! left && ! lsame_(side, "R"))
     {
@@ -269,7 +269,7 @@ int zunmhr_(char *side, char *trans, integer *m, integer *n, integer *ilo, integ
     {
         *info = -11;
     }
-    else if (*lwork < fla_max(1,nw) && ! lquery)
+    else if (*lwork < nw && ! lquery)
     {
         *info = -13;
     }
@@ -283,7 +283,7 @@ int zunmhr_(char *side, char *trans, integer *m, integer *n, integer *ilo, integ
         {
             nb = ilaenv_(&c__1, "ZUNMQR", ch__1, m, &nh, &nh, &c_n1);
         }
-        lwkopt = fla_max(1,nw) * nb;
+        lwkopt = nw * nb;
         work[1].r = (doublereal) lwkopt;
         work[1].i = 0.; // , expr subst
     }

@@ -1,4 +1,4 @@
-/* ../netlib/zuncsd2by1.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* zuncsd2by1.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c_n1 = -1;
@@ -189,9 +189,10 @@ static logical c_false = FALSE_;
 /* > */
 /* > If LWORK = -1, then a workspace query is assumed;
 the routine */
-/* > only calculates the optimal size of the WORK array, returns */
-/* > this value as the first entry of the work array, and no error */
-/* > message related to LWORK is issued by XERBLA. */
+/* > only calculates the optimal size of the WORK and RWORK */
+/* > arrays, returns this value as the first entry of the WORK */
+/* > and RWORK array, respectively, and no error message related */
+/* > to LWORK or LRWORK is issued by XERBLA. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RWORK */
@@ -210,11 +211,12 @@ the routine */
 /* > LRWORK is INTEGER */
 /* > The dimension of the array RWORK. */
 /* > */
-/* > If LRWORK = -1, then a workspace query is assumed;
+/* > If LRWORK=-1, then a workspace query is assumed;
 the routine */
-/* > only calculates the optimal size of the RWORK array, returns */
-/* > this value as the first entry of the work array, and no error */
-/* > message related to LRWORK is issued by XERBLA. */
+/* > only calculates the optimal size of the WORK and RWORK */
+/* > arrays, returns this value as the first entry of the WORK */
+/* > and RWORK array, respectively, and no error message related */
+/* > to LWORK or LRWORK is issued by XERBLA. */
 /* > \endverbatim */
 /* > \param[out] IWORK */
 /* > \verbatim */
@@ -240,7 +242,6 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date July 2012 */
 /* > \ingroup complex16OTHERcomputational */
 /* ===================================================================== */
 /* Subroutine */
@@ -278,10 +279,9 @@ int zuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
     extern /* Subroutine */
     int zunglq_(integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, integer *), zungqr_(integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, integer *), zunbdb1_(integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, integer *), zunbdb2_( integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, integer *), zunbdb3_(integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, integer *), zunbdb4_( integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublereal *, doublecomplex *, doublecomplex *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, integer *);
     logical wantv1t;
-    /* -- LAPACK computational routine (version 3.7.1) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* July 2012 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -326,7 +326,7 @@ int zuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
     wantu1 = lsame_(jobu1, "Y");
     wantu2 = lsame_(jobu2, "Y");
     wantv1t = lsame_(jobv1t, "Y");
-    lquery = *lwork == -1;
+    lquery = *lwork == -1 || *lrwork == -1;
     if (*m < 0)
     {
         *info = -4;
@@ -641,6 +641,10 @@ int zuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
         {
             *info = -19;
         }
+        if (*lrwork < lrworkmin && ! lquery)
+        {
+            *info = -21;
+        }
     }
     if (*info != 0)
     {
@@ -703,7 +707,8 @@ int zuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
             zunglq_(&i__1, &i__2, &i__3, &v1t[(v1t_dim1 << 1) + 2], ldv1t, & work[itauq1], &work[iorglq], &lorglq, &childinfo);
         }
         /* Simultaneously diagonalize X11 and X21. */
-        zbbcsd_(jobu1, jobu2, jobv1t, "N", "N", m, p, q, &theta[1], &rwork[ iphi], &u1[u1_offset], ldu1, &u2[u2_offset], ldu2, &v1t[ v1t_offset], ldv1t, cdum, &c__1, &rwork[ib11d], &rwork[ib11e], &rwork[ib12d], &rwork[ib12e], &rwork[ib21d], &rwork[ib21e], & rwork[ib22d], &rwork[ib22e], &rwork[ibbcsd], &lbbcsd, & childinfo);
+        i__1 = *lrwork - ibbcsd + 1;
+        zbbcsd_(jobu1, jobu2, jobv1t, "N", "N", m, p, q, &theta[1], &rwork[ iphi], &u1[u1_offset], ldu1, &u2[u2_offset], ldu2, &v1t[ v1t_offset], ldv1t, cdum, &c__1, &rwork[ib11d], &rwork[ib11e], &rwork[ib12d], &rwork[ib12e], &rwork[ib21d], &rwork[ib21e], & rwork[ib22d], &rwork[ib22e], &rwork[ibbcsd], &i__1, & childinfo);
         /* Permute rows and columns to place zero submatrices in */
         /* preferred positions */
         if (*q > 0 && wantu2)
@@ -877,6 +882,11 @@ int zuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
         i__1 = lorbdb - *m;
         zunbdb4_(m, p, q, &x11[x11_offset], ldx11, &x21[x21_offset], ldx21, & theta[1], &rwork[iphi], &work[itaup1], &work[itaup2], &work[ itauq1], &work[iorbdb], &work[iorbdb + *m], &i__1, &childinfo) ;
         /* Accumulate Householder reflectors */
+        if (wantu2 && *m - *p > 0)
+        {
+            i__1 = *m - *p;
+            zcopy_(&i__1, &work[iorbdb + *p], &c__1, &u2[u2_offset], &c__1);
+        }
         if (wantu1 && *p > 0)
         {
             zcopy_(p, &work[iorbdb], &c__1, &u1[u1_offset], &c__1);
@@ -897,8 +907,6 @@ int zuncsd2by1_(char *jobu1, char *jobu2, char *jobv1t, integer *m, integer *p, 
         }
         if (wantu2 && *m - *p > 0)
         {
-            i__1 = *m - *p;
-            zcopy_(&i__1, &work[iorbdb + *p], &c__1, &u2[u2_offset], &c__1);
             i__1 = *m - *p;
             for (j = 2;
                     j <= i__1;

@@ -1,4 +1,4 @@
-/* ../netlib/ztgsja.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* ztgsja.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static doublecomplex c_b1 =
@@ -369,7 +369,6 @@ LDQ >= 1 otherwise. */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date November 2011 */
 /* > \ingroup complex16OTHERcomputational */
 /* > \par Further Details: */
 /* ===================== */
@@ -397,7 +396,6 @@ int ztgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("ztgsja inputs: jobu %c, jobv %c, jobq %c, m %" FLA_IS ", p %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", l %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldu %" FLA_IS ", ldv %" FLA_IS ", ldq %" FLA_IS "",*jobu, *jobv, *jobq, *m, *p, *n, *k, *l, *lda, *ldb, *ldu, *ldv, *ldq);
-    /* System generated locals */
     integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, u_dim1, u_offset, v_dim1, v_offset, i__1, i__2, i__3, i__4;
     doublereal d__1;
     doublecomplex z__1;
@@ -423,10 +421,10 @@ int ztgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     integer kcycle;
     extern /* Subroutine */
     int dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *), xerbla_(char *, integer *), zdscal_(integer *, doublereal *, doublecomplex *, integer *), zlapll_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *), zlaset_( char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *);
-    /* -- LAPACK computational routine (version 3.4.0) -- */
+    doublereal hugenum;
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* November 2011 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -464,6 +462,7 @@ int ztgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     q -= q_offset;
     --work;
     /* Function Body */
+    hugenum = 1.7976931348623157e308;
     initu = lsame_(jobu, "I");
     wantu = initu || lsame_(jobu, "U");
     initv = lsame_(jobv, "I");
@@ -738,9 +737,9 @@ L50: /* If ERROR <= MIN(TOLA,TOLB), then the algorithm has converged. */
         a1 = a[i__2].r;
         i__2 = i__ + (*n - *l + i__) * b_dim1;
         b1 = b[i__2].r;
-        if (a1 != 0.)
+        gamma = b1 / a1;
+        if (gamma <= hugenum && gamma >= -hugenum)
         {
-            gamma = b1 / a1;
             if (gamma < 0.)
             {
                 i__2 = *l - i__ + 1;

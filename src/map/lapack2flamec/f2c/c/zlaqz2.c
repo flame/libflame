@@ -1,4 +1,4 @@
-/* zlaqz2.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* zlaqz2.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static doublecomplex c_b1 =
@@ -34,14 +34,14 @@ static logical c_true = TRUE_;
 /* $ WORK, LWORK, RWORK, REC, INFO ) */
 /* IMPLICIT NONE */
 /* Arguments */
-/* LOGICAL, INTENT( IN ) :: ILSCHUR, ILQ, ILZ */
-/* INTEGER, INTENT( IN ) :: N, ILO, IHI, NW, LDA, LDB, LDQ, LDZ, */
+/* LOGICAL ILSCHUR, ILQ, ILZ */
+/* INTEGER N, ILO, IHI, NW, LDA, LDB, LDQ, LDZ, */
 /* $ LDQC, LDZC, LWORK, REC */
-/* COMPLEX*16, INTENT( INOUT ) :: A( LDA, * ), B( LDB, * ), Q( LDQ, */
+/* COMPLEX*16 A( LDA, * ), B( LDB, * ), Q( LDQ, */
 /* $ * ), Z( LDZ, * ), ALPHA( * ), BETA( * ) */
-/* INTEGER, INTENT( OUT ) :: NS, ND, INFO */
-/* COMPLEX*16 :: QC( LDQC, * ), ZC( LDZC, * ), WORK( * ) */
-/* DOUBLE PRECISION :: RWORK( * ) */
+/* INTEGER NS, ND, INFO */
+/* COMPLEX*16 QC( LDQC, * ), ZC( LDZC, * ), WORK( * ) */
+/* DOUBLE PRECISION RWORK( * ) */
 /* .. */
 /* > \par Purpose: */
 /* ============= */
@@ -242,18 +242,21 @@ int zlaqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     double z_abs(doublecomplex *);
     void d_cnjg(doublecomplex *, doublecomplex *);
     /* Local variables */
-    integer lworkreq, k;
+    integer lworkreq, i__, j, k;
     doublecomplex s;
     doublereal c1;
     integer k2;
     doublecomplex s1;
-    integer jw, jki, jli;
+    integer jw;
     doublereal ulp;
     integer ztgexc_info__, ifst;
     doublecomplex temp;
     integer ilst;
     extern /* Subroutine */
-    int zrot_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublecomplex *), zgemm_(char *, char *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *);
+    int zrot_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublecomplex *);
+    doublecomplex atemp;
+    extern /* Subroutine */
+    int zgemm_(char *, char *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *);
     integer kwbot;
     doublereal tempr;
     integer kwtop, qz_small_info__;
@@ -335,7 +338,7 @@ int zlaqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
         /* workspace query, quick return */
         work[1].r = (doublereal) lworkreq;
         work[1].i = 0.; // , expr subst
-    AOCL_DTL_TRACE_LOG_EXIT
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*lwork < lworkreq)
@@ -346,7 +349,7 @@ int zlaqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     {
         i__1 = -(*info);
         xerbla_("ZLAQZ2", &i__1);
-    AOCL_DTL_TRACE_LOG_EXIT
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants */
@@ -407,7 +410,7 @@ int zlaqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
         /* Computing 2nd power */
         i__1 = jw;
         zlacpy_("ALL", &jw, &jw, &work[i__1 * i__1 + 1], &jw, &b[kwtop + kwtop * b_dim1], ldb);
-    AOCL_DTL_TRACE_LOG_EXIT
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Deflation detection loop */
@@ -470,25 +473,22 @@ int zlaqz2_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
         /* Reflect spike back, this will create optimally packed bulges */
         /* A( KWTOP:KWBOT, KWTOP-1 ) = A( KWTOP, KWTOP-1 ) *DCONJG( QC( 1, */
         /* $ 1:JW-ND ) ) */
-        /* INTEGER JKI, JLI */
+        i__1 = kwtop + (kwtop - 1) * a_dim1;
+        atemp.r = a[i__1].r;
+        atemp.i = a[i__1].i; // , expr subst
+        j = 1;
         i__1 = kwbot;
-        for (jki = kwtop;
-                jki <= i__1;
-                ++jki)
+        for (i__ = kwtop;
+                i__ <= i__1;
+                ++i__)
         {
-            i__2 = jw - *nd;
-            for (jli = 1;
-                    jli <= i__2;
-                    ++jli)
-            {
-                i__3 = jki + (kwtop - 1) * a_dim1;
-                i__4 = kwtop + (kwtop - 1) * a_dim1;
-                d_cnjg(&z__2, &qc[jli * qc_dim1 + 1]);
-                z__1.r = a[i__4].r * z__2.r - a[i__4].i * z__2.i;
-                z__1.i = a[ i__4].r * z__2.i + a[i__4].i * z__2.r; // , expr subst
-                a[i__3].r = z__1.r;
-                a[i__3].i = z__1.i; // , expr subst
-            }
+            i__2 = i__ + (kwtop - 1) * a_dim1;
+            d_cnjg(&z__2, &qc[j * qc_dim1 + 1]);
+            z__1.r = atemp.r * z__2.r - atemp.i * z__2.i;
+            z__1.i = atemp.r * z__2.i + atemp.i * z__2.r; // , expr subst
+            a[i__2].r = z__1.r;
+            a[i__2].i = z__1.i; // , expr subst
+            ++j;
         }
         i__1 = kwtop;
         for (k = kwbot - 1;
