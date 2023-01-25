@@ -1,4 +1,4 @@
-/* ../netlib/dsyswapr.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* dsyswapr.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -52,17 +52,15 @@ static integer c__1 = 1;
 /* > */
 /* > \param[in,out] A */
 /* > \verbatim */
-/* > A is DOUBLE PRECISION array, dimension (LDA,N) */
-/* > On entry, the NB diagonal matrix D and the multipliers */
-/* > used to obtain the factor U or L as computed by DSYTRF. */
-/* > */
-/* > On exit, if INFO = 0, the (symmetric) inverse of the original */
-/* > matrix. If UPLO = 'U', the upper triangular part of the */
-/* > inverse is formed and the part of A below the diagonal is not */
-/* > referenced;
-if UPLO = 'L' the lower triangular part of the */
-/* > inverse is formed and the part of A above the diagonal is */
-/* > not referenced. */
+/* > A is DOUBLE PRECISION array, dimension (LDA,*) */
+/* > On entry, the N-by-N matrix A. On exit, the permuted matrix */
+/* > where the rows I1 and I2 and columns I1 and I2 are interchanged. */
+/* > If UPLO = 'U', the interchanges are applied to the upper */
+/* > triangular part and the strictly lower triangular part of A is */
+/* > not referenced;
+if UPLO = 'L', the interchanges are applied to */
+/* > the lower triangular part and the part of A above the diagonal */
+/* > is not referenced. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDA */
@@ -88,7 +86,6 @@ if UPLO = 'L' the lower triangular part of the */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date September 2012 */
 /* > \ingroup doubleSYauxiliary */
 /* ===================================================================== */
 /* Subroutine */
@@ -99,16 +96,14 @@ int dsyswapr_(char *uplo, integer *n, doublereal *a, integer *lda, integer *i1, 
     /* System generated locals */
     integer a_dim1, a_offset, i__1;
     /* Local variables */
-    integer i__;
     doublereal tmp;
     extern logical lsame_(char *, char *);
     extern /* Subroutine */
     int dswap_(integer *, doublereal *, integer *, doublereal *, integer *);
     logical upper;
-    /* -- LAPACK auxiliary routine (version 3.4.2) -- */
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* September 2012 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -140,24 +135,13 @@ int dsyswapr_(char *uplo, integer *n, doublereal *a, integer *lda, integer *i1, 
         a[*i1 + *i1 * a_dim1] = a[*i2 + *i2 * a_dim1];
         a[*i2 + *i2 * a_dim1] = tmp;
         i__1 = *i2 - *i1 - 1;
-        for (i__ = 1;
-                i__ <= i__1;
-                ++i__)
-        {
-            tmp = a[*i1 + (*i1 + i__) * a_dim1];
-            a[*i1 + (*i1 + i__) * a_dim1] = a[*i1 + i__ + *i2 * a_dim1];
-            a[*i1 + i__ + *i2 * a_dim1] = tmp;
-        }
+        dswap_(&i__1, &a[*i1 + (*i1 + 1) * a_dim1], lda, &a[*i1 + 1 + *i2 * a_dim1], &c__1);
         /* third swap */
         /* - swap row I1 and I2 from I2+1 to N */
-        i__1 = *n;
-        for (i__ = *i2 + 1;
-                i__ <= i__1;
-                ++i__)
+        if (*i2 < *n)
         {
-            tmp = a[*i1 + i__ * a_dim1];
-            a[*i1 + i__ * a_dim1] = a[*i2 + i__ * a_dim1];
-            a[*i2 + i__ * a_dim1] = tmp;
+            i__1 = *n - *i2;
+            dswap_(&i__1, &a[*i1 + (*i2 + 1) * a_dim1], lda, &a[*i2 + (*i2 + 1) * a_dim1], lda);
         }
     }
     else
@@ -174,24 +158,13 @@ int dsyswapr_(char *uplo, integer *n, doublereal *a, integer *lda, integer *i1, 
         a[*i1 + *i1 * a_dim1] = a[*i2 + *i2 * a_dim1];
         a[*i2 + *i2 * a_dim1] = tmp;
         i__1 = *i2 - *i1 - 1;
-        for (i__ = 1;
-                i__ <= i__1;
-                ++i__)
-        {
-            tmp = a[*i1 + i__ + *i1 * a_dim1];
-            a[*i1 + i__ + *i1 * a_dim1] = a[*i2 + (*i1 + i__) * a_dim1];
-            a[*i2 + (*i1 + i__) * a_dim1] = tmp;
-        }
+        dswap_(&i__1, &a[*i1 + 1 + *i1 * a_dim1], &c__1, &a[*i2 + (*i1 + 1) * a_dim1], lda);
         /* third swap */
         /* - swap col I1 and I2 from I2+1 to N */
-        i__1 = *n;
-        for (i__ = *i2 + 1;
-                i__ <= i__1;
-                ++i__)
+        if (*i2 < *n)
         {
-            tmp = a[i__ + *i1 * a_dim1];
-            a[i__ + *i1 * a_dim1] = a[i__ + *i2 * a_dim1];
-            a[i__ + *i2 * a_dim1] = tmp;
+            i__1 = *n - *i2;
+            dswap_(&i__1, &a[*i2 + 1 + *i1 * a_dim1], &c__1, &a[*i2 + 1 + *i2 * a_dim1], &c__1);
         }
     }
     AOCL_DTL_TRACE_LOG_EXIT

@@ -1,4 +1,4 @@
-/* ../netlib/dlag2s.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* dlag2s.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* > \brief \b DLAG2S converts a double precision matrix to a single precision matrix. */
 /* =========== DOCUMENTATION =========== */
@@ -28,12 +28,12 @@
 /* > */
 /* > \verbatim */
 /* > */
-/* > DLAG2S converts a DOUBLE PRECISION matrix, SA, to a SINGLE */
-/* > PRECISION matrix, A. */
+/* > DLAG2S converts a DOUBLE PRECISION matrix, A, to a SINGLE */
+/* > PRECISION matrix, SA. */
 /* > */
 /* > RMAX is the overflow for the SINGLE PRECISION arithmetic */
 /* > DLAG2S checks that all the entries of A are between -RMAX and */
-/* > RMAX. If not the convertion is aborted and a flag is raised. */
+/* > RMAX. If not the conversion is aborted and a flag is raised. */
 /* > */
 /* > This is an auxiliary routine so there is no argument checking. */
 /* > \endverbatim */
@@ -91,7 +91,6 @@ if */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date September 2012 */
 /* > \ingroup doubleOTHERauxiliary */
 /* ===================================================================== */
 /* Subroutine */
@@ -105,10 +104,9 @@ int dlag2s_(integer *m, integer *n, doublereal *a, integer * lda, real *sa, inte
     integer i__, j;
     doublereal rmax;
     extern real slamch_(char *);
-    /* -- LAPACK auxiliary routine (version 3.4.2) -- */
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* September 2012 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -117,6 +115,8 @@ int dlag2s_(integer *m, integer *n, doublereal *a, integer * lda, real *sa, inte
     /* .. Local Scalars .. */
     /* .. */
     /* .. External Functions .. */
+    /* .. */
+    /* .. Intrinsic Functions .. */
     /* .. */
     /* .. Executable Statements .. */
     /* Parameter adjustments */
@@ -143,7 +143,7 @@ int dlag2s_(integer *m, integer *n, doublereal *a, integer * lda, real *sa, inte
                 *info = 1;
                 goto L30;
             }
-            sa[i__ + j * sa_dim1] = a[i__ + j * a_dim1];
+            sa[i__ + j * sa_dim1] = (real) a[i__ + j * a_dim1];
             /* L10: */
         }
         /* L20: */

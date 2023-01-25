@@ -1,4 +1,4 @@
-/* ../netlib/dlasq2.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* dlasq2.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -6,7 +6,6 @@ static integer c__2 = 2;
 static integer c__10 = 10;
 static integer c__3 = 3;
 static integer c__4 = 4;
-static integer c__11 = 11;
 /* > \brief \b DLASQ2 computes all the eigenvalues of the symmetric positive definite tridiagonal matrix assoc iated with the qd Array Z to high relative accuracy. Used by sbdsqr and sstegr. */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -91,7 +90,6 @@ static integer c__11 = 11;
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup auxOTHERcomputational */
 /* > \par Further Details: */
 /* ===================== */
@@ -147,10 +145,9 @@ int dlasq2_(integer *n, doublereal *z__, integer *info)
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     extern /* Subroutine */
     int dlasrt_(char *, integer *, doublereal *, integer *);
-    /* -- LAPACK computational routine (version 3.7.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -205,9 +202,23 @@ int dlasq2_(integer *n, doublereal *z__, integer *info)
     else if (*n == 2)
     {
         /* 2-by-2 case. */
-        if (z__[2] < 0. || z__[3] < 0.)
+        if (z__[1] < 0.)
         {
-            *info = -2;
+            *info = -201;
+            xerbla_("DLASQ2", &c__2);
+            AOCL_DTL_TRACE_LOG_EXIT
+            return 0;
+        }
+        else if (z__[2] < 0.)
+        {
+            *info = -202;
+            xerbla_("DLASQ2", &c__2);
+            AOCL_DTL_TRACE_LOG_EXIT
+            return 0;
+        }
+        else if (z__[3] < 0.)
+        {
+            *info = -203;
             xerbla_("DLASQ2", &c__2);
             AOCL_DTL_TRACE_LOG_EXIT
             return 0;
@@ -320,7 +331,7 @@ int dlasq2_(integer *n, doublereal *z__, integer *info)
         return 0;
     }
     /* Check whether the machine is IEEE conformable. */
-    ieee = ilaenv_(&c__10, "DLASQ2", "N", &c__1, &c__2, &c__3, &c__4) == 1 && ilaenv_(&c__11, "DLASQ2", "N", &c__1, &c__2, &c__3, &c__4) == 1;
+    ieee = ilaenv_(&c__10, "DLASQ2", "N", &c__1, &c__2, &c__3, &c__4) == 1;
     /* Rearrange data for locality: Z=(q1,qq1,e1,ee1,q2,qq2,e2,ee2,...). */
     for (k = *n << 1;
             k >= 2;
@@ -470,7 +481,7 @@ int dlasq2_(integer *n, doublereal *z__, integer *info)
         emax = 0.;
         if (n0 > i0)
         {
-            emin = (d__1 = z__[(n0 << 2) - 5], f2c_abs(d__1));
+            emin = (d__1 = z__[(n0 << 2) - 5], f2c_dabs(d__1));
         }
         else
         {

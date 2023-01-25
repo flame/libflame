@@ -1,4 +1,4 @@
-/* ../netlib/dlahqr.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* dlahqr.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -180,7 +180,6 @@ elements i+1:ihi of WR and WI */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup doubleOTHERauxiliary */
 /* > \par Further Details: */
 /* ===================== */
@@ -223,7 +222,10 @@ int dlahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     integer its;
     doublereal ulp, sum, tst, rt1i, rt2i, rt1r, rt2r;
     extern /* Subroutine */
-    int drot_(integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *), dcopy_( integer *, doublereal *, integer *, doublereal *, integer *);
+    int drot_(integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *);
+    integer kdefl;
+    extern /* Subroutine */
+    int dcopy_(integer *, doublereal *, integer *, doublereal *, integer *);
     integer itmax;
     extern /* Subroutine */
     int dlanv2_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *), dlabad_( doublereal *, doublereal *);
@@ -231,10 +233,9 @@ int dlahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     extern /* Subroutine */
     int dlarfg_(integer *, doublereal *, doublereal *, integer *, doublereal *);
     doublereal safmin, safmax, rtdisc, smlnum;
-    /* -- LAPACK auxiliary routine (version 3.7.0) -- */
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -267,14 +268,14 @@ int dlahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     /* Quick return if possible */
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_LOG_EXIT
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     if (*ilo == *ihi)
     {
         wr[*ilo] = h__[*ilo + *ilo * h_dim1];
         wi[*ilo] = 0.;
-        AOCL_DTL_TRACE_LOG_EXIT
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* ==== clear out the trash ==== */
@@ -309,6 +310,8 @@ int dlahqr_(logical *wantt, logical *wantz, integer *n, integer *ilo, integer *i
     }
     /* ITMAX is the total number of QR iterations allowed. */
     itmax = fla_max(10,nh) * 30;
+    /* KDEFL counts the number of iterations since a deflation */
+    kdefl = 0;
     /* The main loop begins here. I is the loop index and decreases from */
     /* IHI to ILO in steps of 1 or 2. Each iteration of the loop works */
     /* with the active submatrix in rows and columns L to I. */
@@ -335,43 +338,43 @@ L20:
                 k >= i__2;
                 --k)
         {
-            if ((d__1 = h__[k + (k - 1) * h_dim1], f2c_abs(d__1)) <= smlnum)
+            if ((d__1 = h__[k + (k - 1) * h_dim1], f2c_dabs(d__1)) <= smlnum)
             {
                 goto L40;
             }
-            tst = (d__1 = h__[k - 1 + (k - 1) * h_dim1], f2c_abs(d__1)) + (d__2 = h__[k + k * h_dim1], f2c_abs(d__2));
+            tst = (d__1 = h__[k - 1 + (k - 1) * h_dim1], f2c_dabs(d__1)) + (d__2 = h__[k + k * h_dim1], f2c_dabs(d__2));
             if (tst == 0.)
             {
                 if (k - 2 >= *ilo)
                 {
-                    tst += (d__1 = h__[k - 1 + (k - 2) * h_dim1], f2c_abs(d__1));
+                    tst += (d__1 = h__[k - 1 + (k - 2) * h_dim1], f2c_dabs(d__1));
                 }
                 if (k + 1 <= *ihi)
                 {
-                    tst += (d__1 = h__[k + 1 + k * h_dim1], f2c_abs(d__1));
+                    tst += (d__1 = h__[k + 1 + k * h_dim1], f2c_dabs(d__1));
                 }
             }
             /* ==== The following is a conservative small subdiagonal */
             /* . deflation criterion due to Ahues & Tisseur (LAWN 122, */
             /* . 1997). It has better mathematical foundation and */
             /* . improves accuracy in some cases. ==== */
-            if ((d__1 = h__[k + (k - 1) * h_dim1], f2c_abs(d__1)) <= ulp * tst)
+            if ((d__1 = h__[k + (k - 1) * h_dim1], f2c_dabs(d__1)) <= ulp * tst)
             {
                 /* Computing MAX */
-                d__3 = (d__1 = h__[k + (k - 1) * h_dim1], f2c_abs(d__1));
-                d__4 = ( d__2 = h__[k - 1 + k * h_dim1], f2c_abs(d__2)); // , expr subst
+                d__3 = (d__1 = h__[k + (k - 1) * h_dim1], f2c_dabs(d__1));
+                d__4 = ( d__2 = h__[k - 1 + k * h_dim1], f2c_dabs(d__2)); // , expr subst
                 ab = fla_max(d__3,d__4);
                 /* Computing MIN */
-                d__3 = (d__1 = h__[k + (k - 1) * h_dim1], f2c_abs(d__1));
-                d__4 = ( d__2 = h__[k - 1 + k * h_dim1], f2c_abs(d__2)); // , expr subst
+                d__3 = (d__1 = h__[k + (k - 1) * h_dim1], f2c_dabs(d__1));
+                d__4 = ( d__2 = h__[k - 1 + k * h_dim1], f2c_dabs(d__2)); // , expr subst
                 ba = fla_min(d__3,d__4);
                 /* Computing MAX */
-                d__3 = (d__1 = h__[k + k * h_dim1], f2c_abs(d__1));
-                d__4 = (d__2 = h__[k - 1 + (k - 1) * h_dim1] - h__[k + k * h_dim1], f2c_abs(d__2)); // , expr subst
+                d__3 = (d__1 = h__[k + k * h_dim1], f2c_dabs(d__1));
+                d__4 = (d__2 = h__[k - 1 + (k - 1) * h_dim1] - h__[k + k * h_dim1], f2c_dabs(d__2)); // , expr subst
                 aa = fla_max(d__3,d__4);
                 /* Computing MIN */
-                d__3 = (d__1 = h__[k + k * h_dim1], f2c_abs(d__1));
-                d__4 = (d__2 = h__[k - 1 + (k - 1) * h_dim1] - h__[k + k * h_dim1], f2c_abs(d__2)); // , expr subst
+                d__3 = (d__1 = h__[k + k * h_dim1], f2c_dabs(d__1));
+                d__4 = (d__2 = h__[k - 1 + (k - 1) * h_dim1] - h__[k + k * h_dim1], f2c_dabs(d__2)); // , expr subst
                 bb = fla_min(d__3,d__4);
                 s = aa + ab;
                 /* Computing MAX */
@@ -396,6 +399,7 @@ L40:
         {
             goto L150;
         }
+        ++kdefl;
         /* Now the active submatrix is in rows and columns L to I. If */
         /* eigenvalues only are being computed, only the active submatrix */
         /* need be transformed. */
@@ -404,20 +408,20 @@ L40:
             i1 = l;
             i2 = i__;
         }
-        if (its == 10)
+        if (kdefl % 20 == 0)
         {
             /* Exceptional shift. */
-            s = (d__1 = h__[l + 1 + l * h_dim1], f2c_abs(d__1)) + (d__2 = h__[l + 2 + (l + 1) * h_dim1], f2c_abs(d__2));
-            h11 = s * .75 + h__[l + l * h_dim1];
+            s = (d__1 = h__[i__ + (i__ - 1) * h_dim1], f2c_dabs(d__1)) + (d__2 = h__[i__ - 1 + (i__ - 2) * h_dim1], f2c_dabs(d__2));
+            h11 = s * .75 + h__[i__ + i__ * h_dim1];
             h12 = s * -.4375;
             h21 = s;
             h22 = h11;
         }
-        else if (its == 20)
+        else if (kdefl % 10 == 0)
         {
             /* Exceptional shift. */
-            s = (d__1 = h__[i__ + (i__ - 1) * h_dim1], f2c_abs(d__1)) + (d__2 = h__[i__ - 1 + (i__ - 2) * h_dim1], f2c_abs(d__2));
-            h11 = s * .75 + h__[i__ + i__ * h_dim1];
+            s = (d__1 = h__[l + 1 + l * h_dim1], f2c_dabs(d__1)) + (d__2 = h__[l + 2 + (l + 1) * h_dim1], f2c_dabs(d__2));
+            h11 = s * .75 + h__[l + l * h_dim1];
             h12 = s * -.4375;
             h21 = s;
             h22 = h11;
@@ -431,7 +435,7 @@ L40:
             h12 = h__[i__ - 1 + i__ * h_dim1];
             h22 = h__[i__ + i__ * h_dim1];
         }
-        s = f2c_abs(h11) + f2c_abs(h12) + f2c_abs(h21) + f2c_abs(h22);
+        s = f2c_dabs(h11) + f2c_dabs(h12) + f2c_dabs(h21) + f2c_dabs(h22);
         if (s == 0.)
         {
             rt1r = 0.;
@@ -447,7 +451,7 @@ L40:
             h22 /= s;
             tr = (h11 + h22) / 2.;
             det = (h11 - tr) * (h22 - tr) - h12 * h21;
-            rtdisc = sqrt((f2c_abs(det)));
+            rtdisc = sqrt((f2c_dabs(det)));
             if (det >= 0.)
             {
                 /* ==== complex conjugate shifts ==== */
@@ -461,7 +465,7 @@ L40:
                 /* ==== real shifts (use only one of them) ==== */
                 rt1r = tr + rtdisc;
                 rt2r = tr - rtdisc;
-                if ((d__1 = rt1r - h22, f2c_abs(d__1)) <= (d__2 = rt2r - h22, f2c_abs( d__2)))
+                if ((d__1 = rt1r - h22, f2c_dabs(d__1)) <= (d__2 = rt2r - h22, f2c_dabs( d__2)))
                 {
                     rt1r *= s;
                     rt2r = rt1r;
@@ -486,12 +490,12 @@ L40:
             /* negligible. (The following uses scaling to avoid */
             /* overflows and most underflows.) */
             h21s = h__[m + 1 + m * h_dim1];
-            s = (d__1 = h__[m + m * h_dim1] - rt2r, f2c_abs(d__1)) + f2c_abs(rt2i) + f2c_abs(h21s);
+            s = (d__1 = h__[m + m * h_dim1] - rt2r, f2c_dabs(d__1)) + f2c_dabs(rt2i) + f2c_dabs(h21s);
             h21s = h__[m + 1 + m * h_dim1] / s;
             v[0] = h21s * h__[m + (m + 1) * h_dim1] + (h__[m + m * h_dim1] - rt1r) * ((h__[m + m * h_dim1] - rt2r) / s) - rt1i * (rt2i / s);
             v[1] = h21s * (h__[m + m * h_dim1] + h__[m + 1 + (m + 1) * h_dim1] - rt1r - rt2r);
             v[2] = h21s * h__[m + 2 + (m + 1) * h_dim1];
-            s = f2c_abs(v[0]) + f2c_abs(v[1]) + f2c_abs(v[2]);
+            s = f2c_dabs(v[0]) + f2c_dabs(v[1]) + f2c_dabs(v[2]);
             v[0] /= s;
             v[1] /= s;
             v[2] /= s;
@@ -499,7 +503,7 @@ L40:
             {
                 goto L60;
             }
-            if ((d__1 = h__[m + (m - 1) * h_dim1], f2c_abs(d__1)) * (f2c_abs(v[1]) + f2c_abs(v[2])) <= ulp * f2c_abs(v[0]) * ((d__2 = h__[m - 1 + (m - 1) * h_dim1], f2c_abs(d__2)) + (d__3 = h__[m + m * h_dim1], f2c_abs(d__3)) + (d__4 = h__[m + 1 + (m + 1) * h_dim1], f2c_abs( d__4))))
+            if ((d__1 = h__[m + (m - 1) * h_dim1], f2c_dabs(d__1)) * (f2c_dabs(v[1]) + f2c_dabs(v[2])) <= ulp * f2c_dabs(v[0]) * ((d__2 = h__[m - 1 + (m - 1) * h_dim1], f2c_dabs(d__2)) + (d__3 = h__[m + m * h_dim1], f2c_dabs(d__3)) + (d__4 = h__[m + 1 + (m + 1) * h_dim1], f2c_dabs( d__4))))
             {
                 goto L60;
             }
@@ -673,11 +677,13 @@ L150:
             drot_(&nz, &z__[*iloz + (i__ - 1) * z_dim1], &c__1, &z__[*iloz + i__ * z_dim1], &c__1, &cs, &sn);
         }
     }
+    /* reset deflation counter */
+    kdefl = 0;
     /* return to start of the main loop with new value of I. */
     i__ = l - 1;
     goto L20;
-    AOCL_DTL_TRACE_LOG_EXIT
 L160:
+    AOCL_DTL_TRACE_LOG_EXIT
     return 0;
     /* End of DLAHQR */
 }

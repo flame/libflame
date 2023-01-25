@@ -1,4 +1,4 @@
-/* ../netlib/dtgsja.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* dtgsja.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static doublereal c_b13 = 0.;
@@ -360,7 +360,6 @@ LDQ >= 1 otherwise. */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date November 2011 */
 /* > \ingroup doubleOTHERcomputational */
 /* > \par Further Details: */
 /* ===================== */
@@ -410,10 +409,10 @@ int dtgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     integer kcycle;
     extern /* Subroutine */
     int dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), xerbla_(char *, integer *);
-    /* -- LAPACK computational routine (version 3.4.0) -- */
+    doublereal hugenum;
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* November 2011 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -451,6 +450,7 @@ int dtgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     q -= q_offset;
     --work;
     /* Function Body */
+    hugenum = 1.7976931348623157e308f;
     initu = lsame_(jobu, "I");
     wantu = initu || lsame_(jobu, "U");
     initv = lsame_(jobv, "I");
@@ -506,7 +506,7 @@ int dtgsja_(char *jobu, char *jobv, char *jobq, integer *m, integer *p, integer 
     {
         i__1 = -(*info);
         xerbla_("DTGSJA", &i__1);
-        AOCL_DTL_TRACE_LOG_EXIT
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize U, V and Q, if necessary */
@@ -673,9 +673,9 @@ L50: /* If ERROR <= MIN(TOLA,TOLB), then the algorithm has converged. */
     {
         a1 = a[*k + i__ + (*n - *l + i__) * a_dim1];
         b1 = b[i__ + (*n - *l + i__) * b_dim1];
-        if (a1 != 0.)
+        gamma = b1 / a1;
+        if (gamma <= hugenum && gamma >= -hugenum)
         {
-            gamma = b1 / a1;
             /* change sign if necessary */
             if (gamma < 0.)
             {
