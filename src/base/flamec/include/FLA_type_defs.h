@@ -96,6 +96,7 @@ typedef union
 // --- FLAME object definitions -----------------------------------------------
 
 typedef struct FLA_Lock_s     FLA_Lock;
+typedef struct FLA_RWLock_s   FLA_RWLock;
 
 //#ifdef FLA_ENABLE_MULTITHREADING
 struct FLA_Lock_s
@@ -105,6 +106,15 @@ struct FLA_Lock_s
   omp_lock_t       lock;
 #elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
   pthread_mutex_t  lock;
+#endif
+};
+struct FLA_RWLock_s
+{
+  // Implementation-specific lock object
+#if   FLA_MULTITHREADING_MODEL == FLA_OPENMP
+  omp_lock_t       lock;
+#elif FLA_MULTITHREADING_MODEL == FLA_PTHREADS
+  pthread_rwlock_t lock;
 #endif
 };
 //#endif
