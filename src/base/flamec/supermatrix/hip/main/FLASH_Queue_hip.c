@@ -1,7 +1,7 @@
 /*
 
     Copyright (C) 2014, The University of Texas at Austin
-    Copyright (C) 2022, Advanced Micro Devices, Inc.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc.
 
     This file is part of libflame and is available under the 3-Clause
     BSD license, which can be found in the LICENSE file at the top-level
@@ -288,15 +288,15 @@ FLA_Error FLASH_Queue_alloc_hip( dim_t size,
 }
 
 
-FLA_Error FLASH_Queue_free_hip( void* buffer_hip )
+FLA_Error FLASH_Queue_free_async_hip( void* buffer_hip )
 /*----------------------------------------------------------------------------
 
-   FLASH_Queue_free_hip
+   FLASH_Queue_free_async_hip
 
 ----------------------------------------------------------------------------*/
 {
    // Free memory for a block on HIP.
-   hipFree( buffer_hip );
+   hipFreeAsync( (hipStream_t) 0, buffer_hip );
 
    return FLA_SUCCESS;
 }

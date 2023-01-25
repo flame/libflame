@@ -1,7 +1,7 @@
 /*
 
     Copyright (C) 2014, The University of Texas at Austin
-    Copyright (C) 2022, Advanced Micro Devices, Inc.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc.
 
     This file is part of libflame and is available under the 3-Clause
     BSD license, which can be found in the LICENSE file at the top-level
@@ -34,8 +34,10 @@ FLA_Error FLA_Tridiag_unb_external_hip( rocblas_handle handle, FLA_Uplo uplo, FL
 
   void* buff_d;
   void* buff_e;
-  hipMalloc( &buff_d, FLA_Obj_datatype_size ( FLA_Obj_datatype_proj_to_real( A ) ) * n_A );
-  hipMalloc( &buff_e, FLA_Obj_datatype_size ( FLA_Obj_datatype_proj_to_real( A ) ) * ( n_A - 1 ) );
+  hipStream_t stream;
+  rocblas_get_stream( handle, &stream );
+  hipMallocAsync( &buff_d, FLA_Obj_datatype_size ( FLA_Obj_datatype_proj_to_real( A ) ) * n_A, stream );
+  hipMallocAsync( &buff_e, FLA_Obj_datatype_size ( FLA_Obj_datatype_proj_to_real( A ) ) * ( n_A - 1 ), stream );
 
   rocblas_fill blas_uplo = FLA_Param_map_flame_to_rocblas_uplo( uplo );
 
@@ -120,8 +122,8 @@ FLA_Error FLA_Tridiag_unb_external_hip( rocblas_handle handle, FLA_Uplo uplo, FL
 
   }
 
-  hipFree( buff_d );
-  hipFree( buff_e );
+  hipFreeAsync( stream, buff_d );
+  hipFreeAsync( stream, buff_e );
 
   return FLA_SUCCESS;
 }

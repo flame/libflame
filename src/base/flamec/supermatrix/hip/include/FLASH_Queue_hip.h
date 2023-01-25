@@ -1,7 +1,7 @@
 /*
 
     Copyright (C) 2014, The University of Texas at Austin
-    Copyright (C) 2022, Advanced Micro Devices, Inc.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc.
 
     This file is part of libflame and is available under the 3-Clause
     BSD license, which can be found in the LICENSE file at the top-level
@@ -36,7 +36,7 @@ dim_t          FLASH_Queue_get_hip_num_blocks( void );
 
 FLA_Error      FLASH_Queue_bind_hip( int thread );
 FLA_Error      FLASH_Queue_alloc_hip( dim_t size, FLA_Datatype datatype, void** buffer_hip );
-FLA_Error      FLASH_Queue_free_hip( void* buffer_hip );
+FLA_Error      FLASH_Queue_free_async_hip( void* buffer_hip );
 FLA_Error      FLASH_Queue_write_hip( FLA_Obj obj, void* buffer_hip );
 FLA_Error      FLASH_Queue_read_hip( int thread, FLA_Obj obj, void* buffer_hip );
 FLA_Error      FLASH_Queue_read_async_hip( int thread, FLA_Obj obj, void* buffer_hip );

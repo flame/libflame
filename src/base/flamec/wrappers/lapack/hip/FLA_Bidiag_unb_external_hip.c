@@ -1,7 +1,7 @@
 /*
 
     Copyright (C) 2014, The University of Texas at Austin
-    Copyright (C) 2022, Advanced Micro Devices, Inc.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc.
 
     This file is part of libflame and is available under the 3-Clause
     BSD license, which can be found in the LICENSE file at the top-level
@@ -38,8 +38,10 @@ FLA_Error FLA_Bidiag_unb_external_hip( rocblas_handle handle, FLA_Obj A, void* A
 
   void* buff_d;
   void* buff_e;
-  hipMalloc( &buff_d, FLA_Obj_datatype_size ( FLA_Obj_datatype_proj_to_real( A ) ) * min_m_n );
-  hipMalloc( &buff_e, FLA_Obj_datatype_size ( FLA_Obj_datatype_proj_to_real( A ) ) * min_m_n );
+  hipStream_t stream;
+  rocblas_get_stream( handle, &stream );
+  hipMallocAsync( &buff_d, FLA_Obj_datatype_size ( FLA_Obj_datatype_proj_to_real( A ) ) * min_m_n, stream );
+  hipMallocAsync( &buff_e, FLA_Obj_datatype_size ( FLA_Obj_datatype_proj_to_real( A ) ) * min_m_n, stream );
 
   void* A_mat = NULL;
   void* tu_scals = NULL;
@@ -134,8 +136,8 @@ FLA_Error FLA_Bidiag_unb_external_hip( rocblas_handle handle, FLA_Obj A, void* A
 
   }
 
-  hipFree( buff_d );
-  hipFree( buff_e );
+  hipFreeAsync( stream, buff_d );
+  hipFreeAsync( stream, buff_e );
 
   return info;
 }

@@ -1,7 +1,7 @@
 /*
 
     Copyright (C) 2014, The University of Texas at Austin
-    Copyright (C) 2022, Advanced Micro Devices, Inc.
+    Copyright (C) 2022-2023, Advanced Micro Devices, Inc.
 
     This file is part of libflame and is available under the 3-Clause
     BSD license, which can be found in the LICENSE file at the top-level
@@ -86,7 +86,9 @@ FLA_Error FLA_Gemm_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Tr
 
     dim_t elem_size = FLA_Obj_elem_size( A );
     size_t count = elem_size * ldim_A * n_A;
-    hipMalloc( &A_mat_corr, count );
+    hipStream_t stream;
+    rocblas_get_stream( handle, &stream );
+    hipMallocAsync( &A_mat_corr, count, stream );
     FLA_Copyconj_general_external_hip( handle, A, A_hip, A_mat_corr );
     A_mat = A_mat_corr;
   }
@@ -100,7 +102,9 @@ FLA_Error FLA_Gemm_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Tr
 
     dim_t elem_size = FLA_Obj_elem_size( B );
     size_t count = elem_size * ldim_B * n_B;
-    hipMalloc( &B_mat_corr, count );
+    hipStream_t stream;
+    rocblas_get_stream( handle, &stream );
+    hipMallocAsync( &B_mat_corr, count, stream );
     FLA_Copyconj_general_external_hip( handle, B, B_hip, B_mat_corr );
     B_mat = B_mat_corr;
   }
@@ -194,11 +198,15 @@ FLA_Error FLA_Gemm_external_hip( rocblas_handle handle, FLA_Trans transa, FLA_Tr
 
   if( conj_no_trans_a )
   {
-    hipFree( A_mat_corr );
+    hipStream_t stream;
+    rocblas_get_stream( handle, &stream );
+    hipFreeAsync( stream, A_mat_corr );
   }
   if( conj_no_trans_b )
   {
-    hipFree( B_mat_corr );
+    hipStream_t stream;
+    rocblas_get_stream( handle, &stream );
+    hipFreeAsync( stream, B_mat_corr );
   }
 
   return FLA_SUCCESS;
