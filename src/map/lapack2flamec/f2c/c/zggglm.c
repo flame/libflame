@@ -1,4 +1,4 @@
-/* ../netlib/zggglm.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* zggglm.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static doublecomplex c_b2 =
@@ -144,7 +144,7 @@ static integer c_n1 = -1;
 /* > \verbatim */
 /* > LWORK is INTEGER */
 /* > The dimension of the array WORK. LWORK >= fla_max(1,N+M+P). */
-/* > For optimum performance, LWORK >= M+fla_min(N,P)+fla_max(N,P)*NB, */
+/* > For optimum performance, LWORK >= M+min(N,P)+max(N,P)*NB, */
 /* > where NB is an upper bound for the optimal blocksizes for */
 /* > ZGEQRF, ZGERQF, ZUNMQR and ZUNMRQ. */
 /* > */
@@ -178,7 +178,6 @@ the least squares solution could not */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup complex16OTHEReigen */
 /* ===================================================================== */
 /* Subroutine */
@@ -200,10 +199,9 @@ int zggglm_(integer *n, integer *m, integer *p, doublecomplex *a, integer *lda, 
     logical lquery;
     extern /* Subroutine */
     int zunmqr_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, integer *), zunmrq_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, integer *), ztrtrs_(char *, char *, char *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *);
-    /* -- LAPACK driver routine (version 3.7.0) -- */
+    /* -- LAPACK driver routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -299,6 +297,24 @@ int zggglm_(integer *n, integer *m, integer *p, doublecomplex *a, integer *lda, 
     /* Quick return if possible */
     if (*n == 0)
     {
+        i__1 = *m;
+        for (i__ = 1;
+                i__ <= i__1;
+                ++i__)
+        {
+            i__2 = i__;
+            x[i__2].r = 0.;
+            x[i__2].i = 0.; // , expr subst
+        }
+        i__1 = *p;
+        for (i__ = 1;
+                i__ <= i__1;
+                ++i__)
+        {
+            i__2 = i__;
+            y[i__2].r = 0.;
+            y[i__2].i = 0.; // , expr subst
+        }
     AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }

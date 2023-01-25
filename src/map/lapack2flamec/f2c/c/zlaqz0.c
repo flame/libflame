@@ -1,4 +1,4 @@
-/* zlaqz0.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* zlaqz0.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static doublecomplex c_b1 =
@@ -38,13 +38,13 @@ static integer c__1 = 1;
 /* $ INFO ) */
 /* IMPLICIT NONE */
 /* Arguments */
-/* CHARACTER, INTENT( IN ) :: WANTS, WANTQ, WANTZ */
-/* INTEGER, INTENT( IN ) :: N, ILO, IHI, LDA, LDB, LDQ, LDZ, LWORK, */
+/* CHARACTER WANTS, WANTQ, WANTZ */
+/* INTEGER N, ILO, IHI, LDA, LDB, LDQ, LDZ, LWORK, */
 /* $ REC */
-/* INTEGER, INTENT( OUT ) :: INFO */
-/* COMPLEX*16, INTENT( INOUT ) :: A( LDA, * ), B( LDB, * ), Q( LDQ, */
+/* INTEGER INFO */
+/* COMPLEX*16 A( LDA, * ), B( LDB, * ), Q( LDQ, */
 /* $ * ), Z( LDZ, * ), ALPHA( * ), BETA( * ), WORK( * ) */
-/* DOUBLE PRECISION, INTENT( OUT ) :: RWORK( * ) */
+/* DOUBLE PRECISION RWORK( * ) */
 /* .. */
 /* > \par Purpose: */
 /* ============= */
@@ -314,15 +314,17 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     integer norm_info__, ld, ns, n_deflated__, nw, sweep_info__, nbr;
     logical ilq, ilz;
     doublereal ulp;
-    integer nsr, nwr, nmin;
+    integer nsr, nwr;
+    doublereal btol;
+    integer nmin;
     doublecomplex temp;
     integer n_undeflated__;
     extern /* Subroutine */
     int zrot_(integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, doublecomplex *);
     extern logical lsame_(char *, char *);
-    integer iiter, maxit;
-    doublereal tempr;
-    integer rcost, istop, itemp1, itemp2;
+    integer iiter;
+    doublereal bnorm;
+    integer maxit, rcost, istop, itemp1, itemp2;
     extern /* Subroutine */
     int dlabad_(doublereal *, doublereal *), zlaqz2_( logical *, logical *, logical *, integer *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublereal *, integer *, integer *), zlaqz3_(logical *, logical *, logical *, integer *, integer *, integer *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, doublecomplex *, integer *, integer *) ;
     extern doublereal dlamch_(char *);
@@ -334,6 +336,7 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     extern integer ilaenv_(integer *, char *, char *, integer *, integer *, integer *, integer *);
     doublecomplex eshift;
     char jbcmpz[3];
+    extern doublereal zlanhs_(char *, integer *, doublecomplex *, integer *, doublereal *);
     extern /* Subroutine */
     int zlaset_(char *, integer *, integer *, doublecomplex *, doublecomplex *, doublecomplex *, integer *);
     integer iwantq;
@@ -349,12 +352,9 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     logical ilschur;
     integer nshifts, istartm;
     /* Arguments */
-    /* const */
-    /* const */
     /* Parameters */
     /* Local scalars */
     /* External Functions */
-    /* extern dlamch */
     /* Decode wantS,wantQ,wantZ */
     /* Parameter adjustments */
     a_dim1 = *lda;
@@ -472,7 +472,7 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     {
         i__1 = -(*info);
         xerbla_("ZLAQZ0", &i__1);
-    AOCL_DTL_TRACE_LOG_EXIT
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
@@ -480,7 +480,7 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     {
         work[1].r = 1.;
         work[1].i = 0.; // , expr subst
-    AOCL_DTL_TRACE_LOG_EXIT
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get the parameters */
@@ -513,7 +513,7 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     if (*n < nmin || *rec >= 2)
     {
         zhgeqz_(wants, wantq, wantz, n, ilo, ihi, &a[a_offset], lda, &b[ b_offset], ldb, &alpha[1], &beta[1], &q[q_offset], ldq, &z__[ z_offset], ldz, &work[1], lwork, &rwork[1], info);
-    AOCL_DTL_TRACE_LOG_EXIT
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Find out required workspace */
@@ -537,7 +537,7 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
         d__1 = (doublereal) lworkreq;
         work[1].r = d__1;
         work[1].i = 0.; // , expr subst
-    AOCL_DTL_TRACE_LOG_EXIT
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (*lwork < lworkreq)
@@ -547,7 +547,7 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     if (*info != 0)
     {
         xerbla_("ZLAQZ0", info);
-    AOCL_DTL_TRACE_LOG_EXIT
+        AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Initialize Q and Z */
@@ -565,6 +565,12 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     dlabad_(&safmin, &safmax);
     ulp = dlamch_("PRECISION");
     smlnum = safmin * ((doublereal) (*n) / ulp);
+    i__1 = *ihi - *ilo + 1;
+    bnorm = zlanhs_("F", &i__1, &b[*ilo + *ilo * b_dim1], ldb, &rwork[1]);
+    /* Computing MAX */
+    d__1 = safmin;
+    d__2 = ulp * bnorm; // , expr subst
+    btol = fla_max(d__1,d__2);
     istart = *ilo;
     istop = *ihi;
     maxit = (*ihi - *ilo + 1) * 30;
@@ -651,19 +657,7 @@ int zlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
         k = istop;
         while(k >= istart2)
         {
-            tempr = 0.;
-            if (k < istop)
-            {
-                tempr += z_abs(&b[k + (k + 1) * b_dim1]);
-            }
-            if (k > istart2)
-            {
-                tempr += z_abs(&b[k - 1 + k * b_dim1]);
-            }
-            /* Computing MAX */
-            d__1 = smlnum;
-            d__2 = ulp * tempr; // , expr subst
-            if (z_abs(&b[k + k * b_dim1]) < fla_max(d__1,d__2))
+            if (z_abs(&b[k + k * b_dim1]) < btol)
             {
                 /* A diagonal element of B is negligable, move it */
                 /* to the top and deflate it */

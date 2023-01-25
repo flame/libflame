@@ -1,8 +1,9 @@
-/* ../netlib/zunmbr.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* zunmbr.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
 static integer c_n1 = -1;
+static integer c__2 = 2;
 /* > \brief \b ZUNMBR */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -113,7 +114,7 @@ static integer c_n1 = -1;
 /* > \param[in] A */
 /* > \verbatim */
 /* > A is COMPLEX*16 array, dimension */
-/* > (LDA,fla_min(nq,K)) if VECT = 'Q' */
+/* > (LDA,min(nq,K)) if VECT = 'Q' */
 /* > (LDA,nq) if VECT = 'P' */
 /* > The vectors which define the elementary reflectors H(i) and */
 /* > G(i), whose products determine the matrices Q and P, as */
@@ -126,7 +127,7 @@ static integer c_n1 = -1;
 /* > The leading dimension of the array A. */
 /* > If VECT = 'Q', LDA >= fla_max(1,nq);
 */
-/* > if VECT = 'P', LDA >= fla_max(1,fla_min(nq,K)). */
+/* > if VECT = 'P', LDA >= fla_max(1,min(nq,K)). */
 /* > \endverbatim */
 /* > */
 /* > \param[in] TAU */
@@ -189,7 +190,6 @@ the routine */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date November 2011 */
 /* > \ingroup complex16OTHERcomputational */
 /* ===================================================================== */
 /* Subroutine */
@@ -198,7 +198,8 @@ int zunmbr_(char *vect, char *side, char *trans, integer *m, integer *n, integer
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("zunmbr inputs: vect %c, side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS ", ldc %" FLA_IS ", lwork %" FLA_IS "", *vect, *side, *trans, *m, *n, *k, *lda, *ldc, *lwork);
     /* System generated locals */
-    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2;
+    address a__1[2];
+    integer a_dim1, a_offset, c_dim1, c_offset, i__1, i__2, i__3[2];
     char ch__1[2];
     /* Builtin functions */
     /* Subroutine */
@@ -217,10 +218,9 @@ int zunmbr_(char *vect, char *side, char *trans, integer *m, integer *n, integer
     logical lquery;
     extern /* Subroutine */
     int zunmlq_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, integer *), zunmqr_(char *, char *, integer *, integer *, integer *, doublecomplex *, integer *, doublecomplex *, doublecomplex *, integer *, doublecomplex *, integer *, integer *);
-    /* -- LAPACK computational routine (version 3.4.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* November 2011 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -255,16 +255,12 @@ int zunmbr_(char *vect, char *side, char *trans, integer *m, integer *n, integer
     if (left)
     {
         nq = *m;
-        nw = *n;
+        nw = fla_max(1,*n);
     }
     else
     {
         nq = *n;
-        nw = *m;
-    }
-    if (*m == 0 || *n == 0)
-    {
-        nw = 0;
+        nw = fla_max(1,*m);
     }
     if (! applyq && ! lsame_(vect, "P"))
     {
@@ -303,14 +299,14 @@ int zunmbr_(char *vect, char *side, char *trans, integer *m, integer *n, integer
         {
             *info = -11;
         }
-        else if (*lwork < fla_max(1,nw) && ! lquery)
+        else if (*lwork < nw && ! lquery)
         {
             *info = -13;
         }
     }
     if (*info == 0)
     {
-        if (nw > 0)
+        if (*m > 0 && *n > 0)
         {
             if (applyq)
             {
@@ -342,10 +338,7 @@ int zunmbr_(char *vect, char *side, char *trans, integer *m, integer *n, integer
                     nb = ilaenv_(&c__1, "ZUNMLQ", ch__1, m, &i__1, &i__2, & c_n1);
                 }
             }
-            /* Computing MAX */
-            i__1 = 1;
-            i__2 = nw * nb; // , expr subst
-            lwkopt = fla_max(i__1,i__2);
+            lwkopt = nw * nb;
         }
         else
         {

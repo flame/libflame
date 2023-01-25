@@ -1,4 +1,4 @@
-/* ../netlib/zlascl.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* zlascl.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* > \brief \b ZLASCL multiplies a general rectangular matrix by a real scalar defined as cto/cfrom. */
 /* =========== DOCUMENTATION =========== */
@@ -106,7 +106,14 @@
 /* > \param[in] LDA */
 /* > \verbatim */
 /* > LDA is INTEGER */
-/* > The leading dimension of the array A. LDA >= fla_max(1,M). */
+/* > The leading dimension of the array A. */
+/* > If TYPE = 'G', 'L', 'U', 'H', LDA >= fla_max(1,M);
+*/
+/* > TYPE = 'B', LDA >= KL+1;
+*/
+/* > TYPE = 'Q', LDA >= KU+1;
+*/
+/* > TYPE = 'Z', LDA >= 2*KL+KU+1. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] INFO */
@@ -121,7 +128,6 @@
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date September 2012 */
 /* > \ingroup complex16OTHERauxiliary */
 /* ===================================================================== */
 /* Subroutine */
@@ -129,7 +135,6 @@ int zlascl_(char *type__, integer *kl, integer *ku, doublereal *cfrom, doublerea
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("zlascl inputs: type__ %c, kl %" FLA_IS ", ku %" FLA_IS ", cfrom %lf, cto %lf, m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "",*type__, *kl, *ku, *cfrom, *cto, *m, *n, *lda);
-
     /* System generated locals */
     integer a_dim1, a_offset, i__1, i__2, i__3, i__4, i__5;
     doublecomplex z__1;
@@ -147,10 +152,9 @@ int zlascl_(char *type__, integer *kl, integer *ku, doublereal *cfrom, doublerea
     extern /* Subroutine */
     int xerbla_(char *, integer *);
     doublereal bignum, smlnum;
-    /* -- LAPACK auxiliary routine (version 3.4.2) -- */
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* September 2012 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -307,6 +311,11 @@ L10:
         {
             mul = ctoc / cfromc;
             done = TRUE_;
+            if (mul == 1.)
+            {
+                AOCL_DTL_TRACE_LOG_EXIT
+                return 0;
+            }
         }
     }
     if (itype == 0)

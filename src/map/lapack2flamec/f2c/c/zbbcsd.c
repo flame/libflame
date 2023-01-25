@@ -1,4 +1,4 @@
-/* ../netlib/zbbcsd.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* zbbcsd.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static doublecomplex c_b1 =
@@ -154,7 +154,7 @@ static integer c__1 = 1;
 /* > \param[in,out] U1 */
 /* > \verbatim */
 /* > U1 is COMPLEX*16 array, dimension (LDU1,P) */
-/* > On entry, an LDU1-by-P matrix. On exit, U1 is postmultiplied */
+/* > On entry, a P-by-P matrix. On exit, U1 is postmultiplied */
 /* > by the left singular vector matrix common to [ B11 ;
 0 ] and */
 /* > [ B12 0 0 ;
@@ -164,13 +164,13 @@ static integer c__1 = 1;
 /* > \param[in] LDU1 */
 /* > \verbatim */
 /* > LDU1 is INTEGER */
-/* > The leading dimension of the array U1. */
+/* > The leading dimension of the array U1, LDU1 >= MAX(1,P). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] U2 */
 /* > \verbatim */
 /* > U2 is COMPLEX*16 array, dimension (LDU2,M-P) */
-/* > On entry, an LDU2-by-(M-P) matrix. On exit, U2 is */
+/* > On entry, an (M-P)-by-(M-P) matrix. On exit, U2 is */
 /* > postmultiplied by the left singular vector matrix common to */
 /* > [ B21 ;
 0 ] and [ B22 0 0 ;
@@ -180,13 +180,13 @@ static integer c__1 = 1;
 /* > \param[in] LDU2 */
 /* > \verbatim */
 /* > LDU2 is INTEGER */
-/* > The leading dimension of the array U2. */
+/* > The leading dimension of the array U2, LDU2 >= MAX(1,M-P). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] V1T */
 /* > \verbatim */
 /* > V1T is COMPLEX*16 array, dimension (LDV1T,Q) */
-/* > On entry, a LDV1T-by-Q matrix. On exit, V1T is premultiplied */
+/* > On entry, a Q-by-Q matrix. On exit, V1T is premultiplied */
 /* > by the conjugate transpose of the right singular vector */
 /* > matrix common to [ B11 ;
 0 ] and [ B21 ;
@@ -196,13 +196,13 @@ static integer c__1 = 1;
 /* > \param[in] LDV1T */
 /* > \verbatim */
 /* > LDV1T is INTEGER */
-/* > The leading dimension of the array V1T. */
+/* > The leading dimension of the array V1T, LDV1T >= MAX(1,Q). */
 /* > \endverbatim */
 /* > */
 /* > \param[in,out] V2T */
 /* > \verbatim */
-/* > V2T is COMPLEX*16 array, dimenison (LDV2T,M-Q) */
-/* > On entry, a LDV2T-by-(M-Q) matrix. On exit, V2T is */
+/* > V2T is COMPLEX*16 array, dimension (LDV2T,M-Q) */
+/* > On entry, an (M-Q)-by-(M-Q) matrix. On exit, V2T is */
 /* > premultiplied by the conjugate transpose of the right */
 /* > singular vector matrix common to [ B12 0 0 ;
 0 -I 0 ] and */
@@ -213,7 +213,7 @@ static integer c__1 = 1;
 /* > \param[in] LDV2T */
 /* > \verbatim */
 /* > LDV2T is INTEGER */
-/* > The leading dimension of the array V2T. */
+/* > The leading dimension of the array V2T, LDV2T >= MAX(1,M-Q). */
 /* > \endverbatim */
 /* > */
 /* > \param[out] B11D */
@@ -253,8 +253,8 @@ static integer c__1 = 1;
 /* > \param[out] B21D */
 /* > \verbatim */
 /* > B21D is DOUBLE PRECISION array, dimension (Q) */
-/* > When CBBCSD converges, B21D contains the negative sines of */
-/* > THETA(1), ..., THETA(Q). If CBBCSD fails to converge, then */
+/* > When ZBBCSD converges, B21D contains the negative sines of */
+/* > THETA(1), ..., THETA(Q). If ZBBCSD fails to converge, then */
 /* > B21D contains the diagonal of the partially reduced bottom-left */
 /* > block. */
 /* > \endverbatim */
@@ -262,7 +262,7 @@ static integer c__1 = 1;
 /* > \param[out] B21E */
 /* > \verbatim */
 /* > B21E is DOUBLE PRECISION array, dimension (Q-1) */
-/* > When CBBCSD converges, B21E contains zeros. If CBBCSD fails */
+/* > When ZBBCSD converges, B21E contains zeros. If ZBBCSD fails */
 /* > to converge, then B21E contains the subdiagonal of the */
 /* > partially reduced bottom-left block. */
 /* > \endverbatim */
@@ -270,8 +270,8 @@ static integer c__1 = 1;
 /* > \param[out] B22D */
 /* > \verbatim */
 /* > B22D is DOUBLE PRECISION array, dimension (Q) */
-/* > When CBBCSD converges, B22D contains the negative sines of */
-/* > THETA(1), ..., THETA(Q). If CBBCSD fails to converge, then */
+/* > When ZBBCSD converges, B22D contains the negative sines of */
+/* > THETA(1), ..., THETA(Q). If ZBBCSD fails to converge, then */
 /* > B22D contains the diagonal of the partially reduced bottom-right */
 /* > block. */
 /* > \endverbatim */
@@ -279,15 +279,15 @@ static integer c__1 = 1;
 /* > \param[out] B22E */
 /* > \verbatim */
 /* > B22E is DOUBLE PRECISION array, dimension (Q-1) */
-/* > When CBBCSD converges, B22E contains zeros. If CBBCSD fails */
+/* > When ZBBCSD converges, B22E contains zeros. If ZBBCSD fails */
 /* > to converge, then B22E contains the subdiagonal of the */
 /* > partially reduced bottom-right block. */
 /* > \endverbatim */
 /* > */
 /* > \param[out] RWORK */
 /* > \verbatim */
-/* > RWORK is DOUBLE PRECISION array, dimension (MAX(1,LWORK)) */
-/* > On exit, if INFO = 0, WORK(1) returns the optimal LWORK. */
+/* > RWORK is DOUBLE PRECISION array, dimension (MAX(1,LRWORK)) */
+/* > On exit, if INFO = 0, RWORK(1) returns the optimal LRWORK. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LRWORK */
@@ -331,7 +331,6 @@ the */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date November 2013 */
 /* > \ingroup complex16OTHERcomputational */
 /* ===================================================================== */
 /* Subroutine */
@@ -378,10 +377,9 @@ int zbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     doublereal b21bulge, b22bulge;
     extern /* Subroutine */
     int dlartgp_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *), dlartgs_( doublereal *, doublereal *, doublereal *, doublereal *, doublereal *);
-    /* -- LAPACK computational routine (version 3.5.0) -- */
+    /* -- LAPACK computational routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* November 2013 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -466,7 +464,7 @@ int zbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     {
         lrworkmin = 1;
         rwork[1] = (doublereal) lrworkmin;
-        AOCL_DTL_TRACE_LOG_EXIT
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Compute workspace */
@@ -492,12 +490,12 @@ int zbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
     {
         i__1 = -(*info);
         xerbla_("ZBBCSD", &i__1);
-        AOCL_DTL_TRACE_LOG_EXIT
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     else if (lquery)
     {
-        AOCL_DTL_TRACE_LOG_EXIT
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Get machine constants */
@@ -525,9 +523,9 @@ int zbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
         {
             theta[i__] = 0.;
         }
-        else if (theta[i__] > 1.57079632679489662 - thresh)
+        else if (theta[i__] > 1.5707963267948966192313216916397514421 - thresh)
         {
-            theta[i__] = 1.57079632679489662;
+            theta[i__] = 1.5707963267948966192313216916397514421;
         }
     }
     i__1 = *q - 1;
@@ -539,9 +537,9 @@ int zbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
         {
             phi[i__] = 0.;
         }
-        else if (phi[i__] > 1.57079632679489662 - thresh)
+        else if (phi[i__] > 1.5707963267948966192313216916397514421 - thresh)
         {
-            phi[i__] = 1.57079632679489662;
+            phi[i__] = 1.5707963267948966192313216916397514421;
         }
     }
     /* Initial deflation */
@@ -606,7 +604,7 @@ int zbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
                     ++(*info);
                 }
             }
-            AOCL_DTL_TRACE_LOG_EXIT
+    AOCL_DTL_TRACE_LOG_EXIT
             return 0;
         }
         iter = iter + imax - imin;
@@ -627,7 +625,7 @@ int zbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
                 thetamin = theta[i__];
             }
         }
-        if (thetamax > 1.57079632679489662 - thresh)
+        if (thetamax > 1.5707963267948966192313216916397514421 - thresh)
         {
             /* Zero on diagonals of B11 and B22;
             induce deflation with a */
@@ -1189,9 +1187,9 @@ int zbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
             {
                 theta[i__] = 0.;
             }
-            else if (theta[i__] > 1.57079632679489662 - thresh)
+            else if (theta[i__] > 1.5707963267948966192313216916397514421 - thresh)
             {
-                theta[i__] = 1.57079632679489662;
+                theta[i__] = 1.5707963267948966192313216916397514421;
             }
         }
         i__1 = imax - 1;
@@ -1203,9 +1201,9 @@ int zbbcsd_(char *jobu1, char *jobu2, char *jobv1t, char * jobv2t, char *trans, 
             {
                 phi[i__] = 0.;
             }
-            else if (phi[i__] > 1.57079632679489662 - thresh)
+            else if (phi[i__] > 1.5707963267948966192313216916397514421 - thresh)
             {
-                phi[i__] = 1.57079632679489662;
+                phi[i__] = 1.5707963267948966192313216916397514421;
             }
         }
         /* Deflate */

@@ -1,4 +1,4 @@
-/* ../netlib/zsyswapr.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* zsyswapr.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
@@ -52,17 +52,15 @@ static integer c__1 = 1;
 /* > */
 /* > \param[in,out] A */
 /* > \verbatim */
-/* > A is COMPLEX*16 array, dimension (LDA,N) */
-/* > On entry, the NB diagonal matrix D and the multipliers */
-/* > used to obtain the factor U or L as computed by ZSYTRF. */
-/* > */
-/* > On exit, if INFO = 0, the (symmetric) inverse of the original */
-/* > matrix. If UPLO = 'U', the upper triangular part of the */
-/* > inverse is formed and the part of A below the diagonal is not */
-/* > referenced;
-if UPLO = 'L' the lower triangular part of the */
-/* > inverse is formed and the part of A above the diagonal is */
-/* > not referenced. */
+/* > A is COMPLEX*16 array, dimension (LDA,*) */
+/* > On entry, the N-by-N matrix A. On exit, the permuted matrix */
+/* > where the rows I1 and I2 and columns I1 and I2 are interchanged. */
+/* > If UPLO = 'U', the interchanges are applied to the upper */
+/* > triangular part and the strictly lower triangular part of A is */
+/* > not referenced;
+if UPLO = 'L', the interchanges are applied to */
+/* > the lower triangular part and the part of A above the diagonal */
+/* > is not referenced. */
 /* > \endverbatim */
 /* > */
 /* > \param[in] LDA */
@@ -88,7 +86,6 @@ if UPLO = 'L' the lower triangular part of the */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date November 2011 */
 /* > \ingroup complex16SYauxiliary */
 /* ===================================================================== */
 /* Subroutine */
@@ -96,20 +93,17 @@ int zsyswapr_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *i
 {
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("zsyswapr inputs: uplo %c, n %" FLA_IS ", lda %" FLA_IS ", i1 %" FLA_IS ", i2 %" FLA_IS "",*uplo, *n, *lda, *i1, *i2);
-
     /* System generated locals */
-    integer a_dim1, a_offset, i__1, i__2, i__3;
+    integer a_dim1, a_offset, i__1, i__2;
     /* Local variables */
-    integer i__;
     doublecomplex tmp;
     extern logical lsame_(char *, char *);
     logical upper;
     extern /* Subroutine */
     int zswap_(integer *, doublecomplex *, integer *, doublecomplex *, integer *);
-    /* -- LAPACK auxiliary routine (version 3.4.0) -- */
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* November 2011 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -148,38 +142,13 @@ int zsyswapr_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *i
         a[i__1].r = tmp.r;
         a[i__1].i = tmp.i; // , expr subst
         i__1 = *i2 - *i1 - 1;
-        for (i__ = 1;
-                i__ <= i__1;
-                ++i__)
-        {
-            i__2 = *i1 + (*i1 + i__) * a_dim1;
-            tmp.r = a[i__2].r;
-            tmp.i = a[i__2].i; // , expr subst
-            i__2 = *i1 + (*i1 + i__) * a_dim1;
-            i__3 = *i1 + i__ + *i2 * a_dim1;
-            a[i__2].r = a[i__3].r;
-            a[i__2].i = a[i__3].i; // , expr subst
-            i__2 = *i1 + i__ + *i2 * a_dim1;
-            a[i__2].r = tmp.r;
-            a[i__2].i = tmp.i; // , expr subst
-        }
+        zswap_(&i__1, &a[*i1 + (*i1 + 1) * a_dim1], lda, &a[*i1 + 1 + *i2 * a_dim1], &c__1);
         /* third swap */
         /* - swap row I1 and I2 from I2+1 to N */
-        i__1 = *n;
-        for (i__ = *i2 + 1;
-                i__ <= i__1;
-                ++i__)
+        if (*i2 < *n)
         {
-            i__2 = *i1 + i__ * a_dim1;
-            tmp.r = a[i__2].r;
-            tmp.i = a[i__2].i; // , expr subst
-            i__2 = *i1 + i__ * a_dim1;
-            i__3 = *i2 + i__ * a_dim1;
-            a[i__2].r = a[i__3].r;
-            a[i__2].i = a[i__3].i; // , expr subst
-            i__2 = *i2 + i__ * a_dim1;
-            a[i__2].r = tmp.r;
-            a[i__2].i = tmp.i; // , expr subst
+            i__1 = *n - *i2;
+            zswap_(&i__1, &a[*i1 + (*i2 + 1) * a_dim1], lda, &a[*i2 + (*i2 + 1) * a_dim1], lda);
         }
     }
     else
@@ -203,38 +172,13 @@ int zsyswapr_(char *uplo, integer *n, doublecomplex *a, integer *lda, integer *i
         a[i__1].r = tmp.r;
         a[i__1].i = tmp.i; // , expr subst
         i__1 = *i2 - *i1 - 1;
-        for (i__ = 1;
-                i__ <= i__1;
-                ++i__)
-        {
-            i__2 = *i1 + i__ + *i1 * a_dim1;
-            tmp.r = a[i__2].r;
-            tmp.i = a[i__2].i; // , expr subst
-            i__2 = *i1 + i__ + *i1 * a_dim1;
-            i__3 = *i2 + (*i1 + i__) * a_dim1;
-            a[i__2].r = a[i__3].r;
-            a[i__2].i = a[i__3].i; // , expr subst
-            i__2 = *i2 + (*i1 + i__) * a_dim1;
-            a[i__2].r = tmp.r;
-            a[i__2].i = tmp.i; // , expr subst
-        }
+        zswap_(&i__1, &a[*i1 + 1 + *i1 * a_dim1], &c__1, &a[*i2 + (*i1 + 1) * a_dim1], lda);
         /* third swap */
         /* - swap col I1 and I2 from I2+1 to N */
-        i__1 = *n;
-        for (i__ = *i2 + 1;
-                i__ <= i__1;
-                ++i__)
+        if (*i2 < *n)
         {
-            i__2 = i__ + *i1 * a_dim1;
-            tmp.r = a[i__2].r;
-            tmp.i = a[i__2].i; // , expr subst
-            i__2 = i__ + *i1 * a_dim1;
-            i__3 = i__ + *i2 * a_dim1;
-            a[i__2].r = a[i__3].r;
-            a[i__2].i = a[i__3].i; // , expr subst
-            i__2 = i__ + *i2 * a_dim1;
-            a[i__2].r = tmp.r;
-            a[i__2].i = tmp.i; // , expr subst
+            i__1 = *n - *i2;
+            zswap_(&i__1, &a[*i2 + 1 + *i1 * a_dim1], &c__1, &a[*i2 + 1 + *i2 * a_dim1], &c__1);
         }
     }
     AOCL_DTL_TRACE_LOG_EXIT
