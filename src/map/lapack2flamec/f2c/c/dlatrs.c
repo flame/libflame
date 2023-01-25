@@ -1,8 +1,8 @@
-/* ../netlib/dlatrs.f -- translated by f2c (version 20100827). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* dlatrs.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__1 = 1;
-static doublereal c_b36 = .5;
+static doublereal c_b46 = .5;
 /* > \brief \b DLATRS solves a triangular system of equations with the scale factor set to prevent overflow. */
 /* =========== DOCUMENTATION =========== */
 /* Online html documentation available at */
@@ -150,7 +150,6 @@ static doublereal c_b36 = .5;
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date September 2012 */
 /* > \ingroup doubleOTHERauxiliary */
 /* > \par Further Details: */
 /* ===================== */
@@ -257,7 +256,7 @@ int dlatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
     logical upper;
     extern /* Subroutine */
     int dtrsv_(char *, char *, char *, integer *, doublereal *, integer *, doublereal *, integer *);
-    extern doublereal dlamch_(char *);
+    extern doublereal dlamch_(char *), dlange_(char *, integer *, integer *, doublereal *, integer *, doublereal *);
     extern integer idamax_(integer *, doublereal *, integer *);
     extern /* Subroutine */
     int xerbla_(char *, integer *);
@@ -266,10 +265,9 @@ int dlatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
     integer jfirst;
     doublereal smlnum;
     logical nounit;
-    /* -- LAPACK auxiliary routine (version 3.4.2) -- */
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* September 2012 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -326,19 +324,19 @@ int dlatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
     {
         i__1 = -(*info);
         xerbla_("DLATRS", &i__1);
-        AOCL_DTL_TRACE_LOG_EXIT
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Quick return if possible */
+    *scale = 1.;
     if (*n == 0)
     {
-        AOCL_DTL_TRACE_LOG_EXIT
+    AOCL_DTL_TRACE_LOG_EXIT
         return 0;
     }
     /* Determine machine dependent parameters to control overflow. */
     smlnum = dlamch_("Safe minimum") / dlamch_("Precision");
     bignum = 1. / smlnum;
-    *scale = 1.;
     if (lsame_(normin, "N"))
     {
         /* Compute the 1-norm of each column, not including the diagonal. */
@@ -380,8 +378,98 @@ int dlatrs_(char *uplo, char *trans, char *diag, char * normin, integer *n, doub
     }
     else
     {
-        tscal = 1. / (smlnum * tmax);
-        dscal_(n, &tscal, &cnorm[1], &c__1);
+        /* Avoid NaN generation if entries in CNORM exceed the */
+        /* overflow threshold */
+        if (tmax <= dlamch_("Overflow"))
+        {
+            /* Case 1: All entries in CNORM are valid floating-point numbers */
+            tscal = 1. / (smlnum * tmax);
+            dscal_(n, &tscal, &cnorm[1], &c__1);
+        }
+        else
+        {
+            /* Case 2: At least one column norm of A cannot be represented */
+            /* as floating-point number. Find the offdiagonal entry A( I, J ) */
+            /* with the largest absolute value. If this entry is not +/- Infinity, */
+            /* use this value as TSCAL. */
+            tmax = 0.;
+            if (upper)
+            {
+                /* A is upper triangular. */
+                i__1 = *n;
+                for (j = 2;
+                        j <= i__1;
+                        ++j)
+                {
+                    /* Computing MAX */
+                    i__2 = j - 1;
+                    d__1 = dlange_("M", &i__2, &c__1, &a[j * a_dim1 + 1], & c__1, &sumj);
+                    tmax = fla_max(d__1,tmax);
+                }
+            }
+            else
+            {
+                /* A is lower triangular. */
+                i__1 = *n - 1;
+                for (j = 1;
+                        j <= i__1;
+                        ++j)
+                {
+                    /* Computing MAX */
+                    i__2 = *n - j;
+                    d__1 = dlange_("M", &i__2, &c__1, &a[j + 1 + j * a_dim1], &c__1, &sumj);
+                    tmax = fla_max(d__1,tmax);
+                }
+            }
+            if (tmax <= dlamch_("Overflow"))
+            {
+                tscal = 1. / (smlnum * tmax);
+                i__1 = *n;
+                for (j = 1;
+                        j <= i__1;
+                        ++j)
+                {
+                    if (cnorm[j] <= dlamch_("Overflow"))
+                    {
+                        cnorm[j] *= tscal;
+                    }
+                    else
+                    {
+                        /* Recompute the 1-norm without introducing Infinity */
+                        /* in the summation */
+                        cnorm[j] = 0.;
+                        if (upper)
+                        {
+                            i__2 = j - 1;
+                            for (i__ = 1;
+                                    i__ <= i__2;
+                                    ++i__)
+                            {
+                                cnorm[j] += tscal * (d__1 = a[i__ + j * a_dim1], f2c_dabs(d__1));
+                            }
+                        }
+                        else
+                        {
+                            i__2 = *n;
+                            for (i__ = j + 1;
+                                    i__ <= i__2;
+                                    ++i__)
+                            {
+                                cnorm[j] += tscal * (d__1 = a[i__ + j * a_dim1], f2c_dabs(d__1));
+                            }
+                        }
+                    }
+                }
+            }
+            else
+            {
+                /* At least one entry of A is not a valid floating-point entry. */
+                /* Rely on TRSV to propagate Inf and NaN. */
+                dtrsv_(uplo, trans, diag, n, &a[a_offset], lda, &x[1], &c__1);
+    AOCL_DTL_TRACE_LOG_EXIT
+                return 0;
+            }
+        }
     }
     /* Compute a bound on the computed solution vector to see if the */
     /* Level 2 BLAS routine DTRSV can be used. */
@@ -626,7 +714,7 @@ L80:
                     /* 0 < f2c_dabs(A(j,j)) <= SMLNUM: */
                     if (xj > tjj * bignum)
                     {
-                        /* Scale x by (1/f2c_dabs(x(j)))*f2c_dabs(A(j,j))*BIGNUM */
+                        /* Scale x by (1/abs(x(j)))*abs(A(j,j))*BIGNUM */
                         /* to avoid overflow when dividing by A(j,j). */
                         rec = tjj * bignum / xj;
                         if (cnorm[j] > 1.)
@@ -666,7 +754,7 @@ L100: /* Scale x if necessary to avoid overflow when adding a */
                     rec = 1. / xj;
                     if (cnorm[j] > (bignum - xmax) * rec)
                     {
-                        /* Scale x by 1/(2*f2c_dabs(x(j))). */
+                        /* Scale x by 1/(2*abs(x(j))). */
                         rec *= .5;
                         dscal_(n, &rec, &x[1], &c__1);
                         *scale *= rec;
@@ -675,7 +763,7 @@ L100: /* Scale x if necessary to avoid overflow when adding a */
                 else if (xj * cnorm[j] > bignum - xmax)
                 {
                     /* Scale x by 1/2. */
-                    dscal_(n, &c_b36, &x[1], &c__1);
+                    dscal_(n, &c_b46, &x[1], &c__1);
                     *scale *= .5;
                 }
                 if (upper)
@@ -821,7 +909,7 @@ L100: /* Scale x if necessary to avoid overflow when adding a */
                         {
                             if (xj > tjj * bignum)
                             {
-                                /* Scale X by 1/f2c_dabs(x(j)). */
+                                /* Scale X by 1/abs(x(j)). */
                                 rec = 1. / xj;
                                 dscal_(n, &rec, &x[1], &c__1);
                                 *scale *= rec;
@@ -835,7 +923,7 @@ L100: /* Scale x if necessary to avoid overflow when adding a */
                         /* 0 < f2c_dabs(A(j,j)) <= SMLNUM: */
                         if (xj > tjj * bignum)
                         {
-                            /* Scale x by (1/f2c_dabs(x(j)))*f2c_dabs(A(j,j))*BIGNUM. */
+                            /* Scale x by (1/abs(x(j)))*abs(A(j,j))*BIGNUM. */
                             rec = tjj * bignum / xj;
                             dscal_(n, &rec, &x[1], &c__1);
                             *scale *= rec;

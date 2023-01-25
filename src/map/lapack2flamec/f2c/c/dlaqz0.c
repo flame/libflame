@@ -1,4 +1,4 @@
-/* dlaqz0.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* dlaqz0.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__12 = 12;
@@ -325,14 +325,18 @@ int dlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     integer norm_info__, ld, ns, n_deflated__, nw, sweep_info__, nbr;
     logical ilq, ilz;
     doublereal ulp;
-    integer nsr, nwr, nmin;
+    integer nsr, nwr;
+    doublereal btol;
+    integer nmin;
     doublereal temp;
     extern /* Subroutine */
     int drot_(integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *);
     doublereal swap;
     integer n_undeflated__;
     extern logical lsame_(char *, char *);
-    integer iiter, maxit, rcost, istop;
+    integer iiter;
+    doublereal bnorm;
+    integer maxit, rcost, istop;
     extern /* Subroutine */
     int dlaqz3_(logical *, logical *, logical *, integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, integer *);
     integer itemp1, itemp2;
@@ -340,6 +344,7 @@ int dlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     int dlaqz4_(logical *, logical *, logical *, integer *, integer *, integer *, integer *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *), dlabad_(doublereal *, doublereal *);
     extern doublereal dlamch_(char *);
     integer nibble, nblock;
+    extern doublereal dlanhs_(char *, integer *, doublereal *, integer *, doublereal *);
     extern /* Subroutine */
     int dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *);
     doublereal safmin;
@@ -571,6 +576,12 @@ int dlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
     dlabad_(&safmin, &safmax);
     ulp = dlamch_("PRECISION");
     smlnum = safmin * ((doublereal) (*n) / ulp);
+    i__1 = *ihi - *ilo + 1;
+    bnorm = dlanhs_("F", &i__1, &b[*ilo + *ilo * b_dim1], ldb, &work[1]);
+    /* Computing MAX */
+    d__1 = safmin;
+    d__2 = ulp * bnorm; // , expr subst
+    btol = fla_max(d__1,d__2);
     istart = *ilo;
     istop = *ihi;
     maxit = (*ihi - *ilo + 1) * 3;
@@ -593,8 +604,8 @@ int dlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
         /* Check deflations at the end */
         /* Computing MAX */
         d__4 = smlnum;
-        d__5 = ulp * ((d__1 = a[istop - 1 + (istop - 1) * a_dim1], f2c_abs(d__1)) + (d__2 = a[istop - 2 + (istop - 2) * a_dim1], f2c_abs(d__2))); // , expr subst
-        if ((d__3 = a[istop - 1 + (istop - 2) * a_dim1], f2c_abs(d__3)) <= fla_max( d__4,d__5))
+        d__5 = ulp * ((d__1 = a[istop - 1 + (istop - 1) * a_dim1], f2c_dabs(d__1)) + (d__2 = a[istop - 2 + (istop - 2) * a_dim1], f2c_dabs(d__2))); // , expr subst
+        if ((d__3 = a[istop - 1 + (istop - 2) * a_dim1], f2c_dabs(d__3)) <= fla_max( d__4,d__5))
         {
             a[istop - 1 + (istop - 2) * a_dim1] = 0.;
             istop += -2;
@@ -605,8 +616,8 @@ int dlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
         {
             /* Computing MAX */
             d__4 = smlnum;
-            d__5 = ulp * ((d__1 = a[istop + istop * a_dim1], f2c_abs(d__1)) + (d__2 = a[istop - 1 + (istop - 1) * a_dim1], f2c_abs(d__2))); // , expr subst
-            if ((d__3 = a[istop + (istop - 1) * a_dim1], f2c_abs(d__3)) <= fla_max( d__4,d__5))
+            d__5 = ulp * ((d__1 = a[istop + istop * a_dim1], f2c_dabs(d__1)) + (d__2 = a[istop - 1 + (istop - 1) * a_dim1], f2c_dabs(d__2))); // , expr subst
+            if ((d__3 = a[istop + (istop - 1) * a_dim1], f2c_dabs(d__3)) <= fla_max( d__4,d__5))
             {
                 a[istop + (istop - 1) * a_dim1] = 0.;
                 --istop;
@@ -617,8 +628,8 @@ int dlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
         /* Check deflations at the start */
         /* Computing MAX */
         d__4 = smlnum;
-        d__5 = ulp * ((d__1 = a[istart + 1 + (istart + 1) * a_dim1], f2c_abs(d__1)) + (d__2 = a[istart + 2 + (istart + 2) * a_dim1], f2c_abs(d__2))); // , expr subst
-        if ((d__3 = a[istart + 2 + (istart + 1) * a_dim1], f2c_abs(d__3)) <= fla_max( d__4,d__5))
+        d__5 = ulp * ((d__1 = a[istart + 1 + (istart + 1) * a_dim1], f2c_dabs(d__1)) + (d__2 = a[istart + 2 + (istart + 2) * a_dim1], f2c_dabs(d__2))); // , expr subst
+        if ((d__3 = a[istart + 2 + (istart + 1) * a_dim1], f2c_dabs(d__3)) <= fla_max( d__4,d__5))
         {
             a[istart + 2 + (istart + 1) * a_dim1] = 0.;
             istart += 2;
@@ -629,8 +640,8 @@ int dlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
         {
             /* Computing MAX */
             d__4 = smlnum;
-            d__5 = ulp * ((d__1 = a[istart + istart * a_dim1], f2c_abs(d__1)) + (d__2 = a[istart + 1 + (istart + 1) * a_dim1], f2c_abs(d__2)));  // , expr subst
-            if ((d__3 = a[istart + 1 + istart * a_dim1], f2c_abs(d__3)) <= fla_max( d__4,d__5))
+            d__5 = ulp * ((d__1 = a[istart + istart * a_dim1], f2c_dabs(d__1)) + (d__2 = a[istart + 1 + (istart + 1) * a_dim1], f2c_dabs(d__2)));  // , expr subst
+            if ((d__3 = a[istart + 1 + istart * a_dim1], f2c_dabs(d__3)) <= fla_max( d__4,d__5))
             {
                 a[istart + 1 + istart * a_dim1] = 0.;
                 ++istart;
@@ -651,8 +662,8 @@ int dlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
         {
             /* Computing MAX */
             d__4 = smlnum;
-            d__5 = ulp * ((d__1 = a[k + k * a_dim1], f2c_abs(d__1)) + (d__2 = a[k - 1 + (k - 1) * a_dim1], f2c_abs(d__2))); // , expr subst
-            if ((d__3 = a[k + (k - 1) * a_dim1], f2c_abs(d__3)) <= fla_max(d__4,d__5))
+            d__5 = ulp * ((d__1 = a[k + k * a_dim1], f2c_dabs(d__1)) + (d__2 = a[k - 1 + (k - 1) * a_dim1], f2c_dabs(d__2))); // , expr subst
+            if ((d__3 = a[k + (k - 1) * a_dim1], f2c_dabs(d__3)) <= fla_max(d__4,d__5))
             {
                 a[k + (k - 1) * a_dim1] = 0.;
                 istart2 = k;
@@ -675,19 +686,7 @@ int dlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
         k = istop;
         while(k >= istart2)
         {
-            temp = 0.;
-            if (k < istop)
-            {
-                temp += (d__1 = b[k + (k + 1) * b_dim1], f2c_abs(d__1));
-            }
-            if (k > istart2)
-            {
-                temp += (d__1 = b[k - 1 + k * b_dim1], f2c_abs(d__1));
-            }
-            /* Computing MAX */
-            d__2 = smlnum;
-            d__3 = ulp * temp; // , expr subst
-            if ((d__1 = b[k + k * b_dim1], f2c_abs(d__1)) < fla_max(d__2,d__3))
+            if ((d__1 = b[k + k * b_dim1], f2c_dabs(d__1)) < btol)
             {
                 /* A diagonal element of B is negligable, move it */
                 /* to the top and deflate it */
@@ -823,7 +822,7 @@ int dlaqz0_(char *wants, char *wantq, char *wantz, integer * n, integer *ilo, in
         if (ld % 6 == 0)
         {
             /* Exceptional shift. Chosen for no particularly good reason. */
-            if ((doublereal) maxit * safmin * (d__1 = a[istop + (istop - 1) * a_dim1], f2c_abs(d__1)) < (d__2 = a[istop - 1 + (istop - 1) * a_dim1], f2c_abs(d__2)))
+            if ((doublereal) maxit * safmin * (d__1 = a[istop + (istop - 1) * a_dim1], f2c_dabs(d__1)) < (d__2 = a[istop - 1 + (istop - 1) * a_dim1], f2c_dabs(d__2)))
             {
                 eshift = a[istop + (istop - 1) * a_dim1] / b[istop - 1 + ( istop - 1) * b_dim1];
             }
@@ -860,4 +859,3 @@ L80:
     return 0;
 }
 /* dlaqz0_ */
-

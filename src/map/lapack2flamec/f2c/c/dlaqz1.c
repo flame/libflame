@@ -1,4 +1,4 @@
-/* dlaqz1.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* dlaqz1.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* > \brief \b DLAQZ1 */
 /* =========== DOCUMENTATION =========== */
@@ -140,7 +140,7 @@ int dlaqz1_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal
     /* Calculate first shifted vector */
     w[0] = *beta1 * a[a_dim1 + 1] - *sr1 * b[b_dim1 + 1];
     w[1] = *beta1 * a[a_dim1 + 2] - *sr1 * b[b_dim1 + 2];
-    scale1 = sqrt((f2c_abs(w[0]))) * sqrt((f2c_abs(w[1])));
+    scale1 = sqrt((f2c_dabs(w[0]))) * sqrt((f2c_dabs(w[1])));
     if (scale1 >= safmin && scale1 <= safmax)
     {
         w[0] /= scale1;
@@ -149,7 +149,7 @@ int dlaqz1_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal
     /* Solve linear system */
     w[1] /= b[(b_dim1 << 1) + 2];
     w[0] = (w[0] - b[(b_dim1 << 1) + 1] * w[1]) / b[b_dim1 + 1];
-    scale2 = sqrt((f2c_abs(w[0]))) * sqrt((f2c_abs(w[1])));
+    scale2 = sqrt((f2c_dabs(w[0]))) * sqrt((f2c_dabs(w[1])));
     if (scale2 >= safmin && scale2 <= safmax)
     {
         w[0] /= scale2;
@@ -162,7 +162,7 @@ int dlaqz1_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal
     /* Account for imaginary part */
     v[1] += *si * *si * b[b_dim1 + 1] / scale1 / scale2;
     /* Check for overflow */
-    if (f2c_abs(v[1]) > safmax || f2c_abs(v[2]) > safmax || f2c_abs(v[3]) > safmax || disnan_(&v[1]) || disnan_(&v[2]) || disnan_(&v[3]))
+    if (f2c_dabs(v[1]) > safmax || f2c_dabs(v[2]) > safmax || f2c_dabs(v[3]) > safmax || disnan_(&v[1]) || disnan_(&v[2]) || disnan_(&v[3]))
     {
         v[1] = 0.;
         v[2] = 0.;
@@ -173,4 +173,3 @@ int dlaqz1_(doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal
     return 0;
 }
 /* dlaqz1_ */
-

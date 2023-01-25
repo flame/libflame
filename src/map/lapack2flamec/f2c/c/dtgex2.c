@@ -1,4 +1,4 @@
-/* ../netlib/dtgex2.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* dtgex2.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static integer c__4 = 4;
@@ -181,7 +181,6 @@ the blocks are */
 /* > \author Univ. of California Berkeley */
 /* > \author Univ. of Colorado Denver */
 /* > \author NAG Ltd. */
-/* > \date December 2016 */
 /* > \ingroup doubleGEauxiliary */
 /* > \par Further Details: */
 /* ===================== */
@@ -233,7 +232,7 @@ int dtgex2_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
     , t[16] /* was [4][4] */
     , be[2], ai[2], ar[2], sa, sb, li[16]  /* was [4][4] */
     , ir[16] /* was [4][4] */
-    , ss, ws, eps;
+    , eps;
     logical weak;
     doublereal ddum;
     integer idum;
@@ -252,20 +251,23 @@ int dtgex2_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
     ;
     integer linfo;
     doublereal ircop[16] /* was [4][4] */
-    , dnorm;
+    ;
     integer iwork[4];
     extern /* Subroutine */
     int dlagv2_(doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *), dgeqr2_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dgerq2_(integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dorg2r_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dorgr2_(integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *), dorm2r_(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), dormr2_(char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *), dtgsy2_(char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, integer *, integer *, integer *);
     extern doublereal dlamch_(char *);
     doublereal dscale;
     extern /* Subroutine */
-    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *), dlassq_(integer *, doublereal *, integer *, doublereal *, doublereal *);
-    logical dtrong;
-    doublereal thresh, smlnum;
-    /* -- LAPACK auxiliary routine (version 3.7.0) -- */
+    int dlacpy_(char *, integer *, integer *, doublereal *, integer *, doublereal *, integer *), dlartg_(doublereal *, doublereal *, doublereal *, doublereal *, doublereal *), dlaset_(char *, integer *, integer *, doublereal *, doublereal *, doublereal *, integer *);
+    doublereal dnorma, dnormb;
+    extern /* Subroutine */
+    int dlassq_(integer *, doublereal *, integer *, doublereal *, doublereal *);
+    doublereal smlnum;
+    logical strong;
+    doublereal thresha, threshb;
+    /* -- LAPACK auxiliary routine -- */
     /* -- LAPACK is a software package provided by Univ. of Tennessee, -- */
     /* -- Univ. of California Berkeley, Univ. of Colorado Denver and NAG Ltd..-- */
-    /* December 2016 */
     /* .. Scalar Arguments .. */
     /* .. */
     /* .. Array Arguments .. */
@@ -330,7 +332,7 @@ int dtgex2_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
         return 0;
     }
     weak = FALSE_;
-    dtrong = FALSE_;
+    strong = FALSE_;
     /* Make a local copy of selected block */
     dlaset_("Full", &c__4, &c__4, &c_b5, &c_b5, li, &c__4);
     dlaset_("Full", &c__4, &c__4, &c_b5, &c_b5, ir, &c__4);
@@ -344,10 +346,13 @@ int dtgex2_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
     dlacpy_("Full", &m, &m, s, &c__4, &work[1], &m);
     i__1 = m * m;
     dlassq_(&i__1, &work[1], &c__1, &dscale, &dsum);
+    dnorma = dscale * sqrt(dsum);
+    dscale = 0.;
+    dsum = 1.;
     dlacpy_("Full", &m, &m, t, &c__4, &work[1], &m);
     i__1 = m * m;
     dlassq_(&i__1, &work[1], &c__1, &dscale, &dsum);
-    dnorm = dscale * sqrt(dsum);
+    dnormb = dscale * sqrt(dsum);
     /* THRES has been changed from */
     /* THRESH = MAX( TEN*EPS*SA, SMLNUM ) */
     /* to */
@@ -356,8 +361,11 @@ int dtgex2_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
     /* "Bug" reported by Ondra Kamenik, confirmed by Julie Langou, fixed by */
     /* Jim Demmel and Guillaume Revy. See forum post 1783. */
     /* Computing MAX */
-    d__1 = eps * 20. * dnorm;
-    thresh = fla_max(d__1,smlnum);
+    d__1 = eps * 20. * dnorma;
+    thresha = fla_max(d__1,smlnum);
+    /* Computing MAX */
+    d__1 = eps * 20. * dnormb;
+    threshb = fla_max(d__1,smlnum);
     if (m == 2)
     {
         /* CASE 1: Swap 1-by-1 and 1-by-1 blocks. */
@@ -365,8 +373,8 @@ int dtgex2_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
         /* using Givens rotations and perform the swap tentatively. */
         f = s[5] * t[0] - t[5] * s[0];
         g = s[5] * t[4] - t[5] * s[4];
-        sb = f2c_abs(t[5]);
-        sa = f2c_abs(s[5]);
+        sa = f2c_dabs(s[5]) * f2c_dabs(t[0]);
+        sb = f2c_dabs(s[0]) * f2c_dabs(t[5]);
         dlartg_(&f, &g, &ir[4], ir, &ddum);
         ir[1] = -ir[4];
         ir[5] = ir[0];
@@ -384,10 +392,9 @@ int dtgex2_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
         drot_(&c__2, t, &c__4, &t[1], &c__4, li, &li[1]);
         li[5] = li[0];
         li[4] = -li[1];
-        /* Weak stability test: */
-        /* |S21| + |T21| <= O(EPS * F-norm((S, T))) */
-        ws = f2c_abs(s[1]) + f2c_abs(t[1]);
-        weak = ws <= thresh;
+        /* Weak stability test: |S21| <= O(EPS F-norm((A))) */
+        /* and |T21| <= O(EPS F-norm((B))) */
+        weak = f2c_dabs(s[1]) <= thresha && f2c_dabs(t[1]) <= threshb;
         if (! weak)
         {
             goto L70;
@@ -395,7 +402,9 @@ int dtgex2_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
         if (TRUE_)
         {
             /* Strong stability test: */
-            /* F-norm((A-QL**T*S*QR, B-QL**T*T*QR)) <= O(EPS*F-norm((A,B))) */
+            /* F-norm((A-QL**H*S*QR)) <= O(EPS*F-norm((A))) */
+            /* and */
+            /* F-norm((B-QL**H*T*QR)) <= O(EPS*F-norm((B))) */
             dlacpy_("Full", &m, &m, &a[*j1 + *j1 * a_dim1], lda, &work[m * m + 1], &m);
             dgemm_("N", "N", &m, &m, &m, &c_b42, li, &c__4, s, &c__4, &c_b5, & work[1], &m);
             dgemm_("N", "T", &m, &m, &m, &c_b48, &work[1], &m, ir, &c__4, & c_b42, &work[m * m + 1], &m);
@@ -403,14 +412,17 @@ int dtgex2_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
             dsum = 1.;
             i__1 = m * m;
             dlassq_(&i__1, &work[m * m + 1], &c__1, &dscale, &dsum);
+            sa = dscale * sqrt(dsum);
             dlacpy_("Full", &m, &m, &b[*j1 + *j1 * b_dim1], ldb, &work[m * m + 1], &m);
             dgemm_("N", "N", &m, &m, &m, &c_b42, li, &c__4, t, &c__4, &c_b5, & work[1], &m);
             dgemm_("N", "T", &m, &m, &m, &c_b48, &work[1], &m, ir, &c__4, & c_b42, &work[m * m + 1], &m);
+            dscale = 0.;
+            dsum = 1.;
             i__1 = m * m;
             dlassq_(&i__1, &work[m * m + 1], &c__1, &dscale, &dsum);
-            ss = dscale * sqrt(dsum);
-            dtrong = ss <= thresh;
-            if (! dtrong)
+            sb = dscale * sqrt(dsum);
+            strong = sa <= thresha && sb <= threshb;
+            if (! strong)
             {
                 goto L70;
             }
@@ -452,6 +464,10 @@ int dtgex2_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
         dlacpy_("Full", n1, n2, &t[(*n1 + 1 << 2) - 4], &c__4, li, &c__4);
         dlacpy_("Full", n1, n2, &s[(*n1 + 1 << 2) - 4], &c__4, &ir[*n2 + 1 + ( *n1 + 1 << 2) - 5], &c__4);
         dtgsy2_("N", &c__0, n1, n2, s, &c__4, &s[*n1 + 1 + (*n1 + 1 << 2) - 5], &c__4, &ir[*n2 + 1 + (*n1 + 1 << 2) - 5], &c__4, t, &c__4, & t[*n1 + 1 + (*n1 + 1 << 2) - 5], &c__4, li, &c__4, &scale, & dsum, &dscale, iwork, &idum, &linfo);
+        if (linfo != 0)
+        {
+            goto L70;
+        }
         /* Compute orthogonal matrix QL: */
         /* QL**T * LI = [ TL ] */
         /* [ 0 ] */
@@ -563,15 +579,15 @@ int dtgex2_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
         bqra21 = dscale * sqrt(dsum);
         /* Decide which method to use. */
         /* Weak stability test: */
-        /* F-norm(S21) <= O(EPS * F-norm((S, T))) */
-        if (bqra21 <= brqa21 && bqra21 <= thresh)
+        /* F-norm(S21) <= O(EPS * F-norm((S))) */
+        if (bqra21 <= brqa21 && bqra21 <= thresha)
         {
             dlacpy_("F", &m, &m, scpy, &c__4, s, &c__4);
             dlacpy_("F", &m, &m, tcpy, &c__4, t, &c__4);
             dlacpy_("F", &m, &m, ircop, &c__4, ir, &c__4);
             dlacpy_("F", &m, &m, licop, &c__4, li, &c__4);
         }
-        else if (brqa21 >= thresh)
+        else if (brqa21 >= thresha)
         {
             goto L70;
         }
@@ -582,7 +598,9 @@ int dtgex2_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
         if (TRUE_)
         {
             /* Strong stability test: */
-            /* F-norm((A-QL*S*QR**T, B-QL*T*QR**T)) <= O(EPS*F-norm((A,B))) */
+            /* F-norm((A-QL**H*S*QR)) <= O(EPS*F-norm((A))) */
+            /* and */
+            /* F-norm((B-QL**H*T*QR)) <= O(EPS*F-norm((B))) */
             dlacpy_("Full", &m, &m, &a[*j1 + *j1 * a_dim1], lda, &work[m * m + 1], &m);
             dgemm_("N", "N", &m, &m, &m, &c_b42, li, &c__4, s, &c__4, &c_b5, & work[1], &m);
             dgemm_("N", "N", &m, &m, &m, &c_b48, &work[1], &m, ir, &c__4, & c_b42, &work[m * m + 1], &m);
@@ -590,14 +608,17 @@ int dtgex2_(logical *wantq, logical *wantz, integer *n, doublereal *a, integer *
             dsum = 1.;
             i__1 = m * m;
             dlassq_(&i__1, &work[m * m + 1], &c__1, &dscale, &dsum);
+            sa = dscale * sqrt(dsum);
             dlacpy_("Full", &m, &m, &b[*j1 + *j1 * b_dim1], ldb, &work[m * m + 1], &m);
             dgemm_("N", "N", &m, &m, &m, &c_b42, li, &c__4, t, &c__4, &c_b5, & work[1], &m);
             dgemm_("N", "N", &m, &m, &m, &c_b48, &work[1], &m, ir, &c__4, & c_b42, &work[m * m + 1], &m);
+            dscale = 0.;
+            dsum = 1.;
             i__1 = m * m;
             dlassq_(&i__1, &work[m * m + 1], &c__1, &dscale, &dsum);
-            ss = dscale * sqrt(dsum);
-            dtrong = ss <= thresh;
-            if (! dtrong)
+            sb = dscale * sqrt(dsum);
+            strong = sa <= thresha && sb <= threshb;
+            if (! strong)
             {
                 goto L70;
             }
@@ -689,4 +710,3 @@ L70:
     /* End of DTGEX2 */
 }
 /* dtgex2_ */
-

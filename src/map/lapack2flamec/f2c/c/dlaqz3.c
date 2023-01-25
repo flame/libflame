@@ -1,4 +1,4 @@
-/* dlaqz3.f -- translated by f2c (version 20160102). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
+/* dlaqz3.f -- translated by f2c (version 20190311). You must link the resulting object file with libf2c: on Microsoft Windows system, link with libf2c.lib;
  on Linux or Unix systems, link with .../path/to/libf2c.a -lm or, if you install libf2c.a in a standard place, with -lf2c -lm -- in that order, at the end of the command line, as in cc *.o -lf2c -lm Source for libf2c is in /netlib/f2c/libf2c.zip, e.g., http://www.netlib.org/f2c/libf2c.zip */
 #include "FLA_f2c.h" /* Table of constant values */
 static logical c_true = TRUE_;
@@ -233,19 +233,16 @@ int dlaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dlaqz3 inputs: n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", nw %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", ldqc %" FLA_IS ", ldzc %" FLA_IS ", lwork %" FLA_IS ", rec %" FLA_IS "",*n, *ilo, *ihi, *nw, *lda, *ldb, *ldq, *ldz, *ldqc, *ldzc, *lwork, *rec);
     /* System generated locals */
-    integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, qc_dim1, qc_offset, zc_dim1, zc_offset, i__1, i__2, i__3, i__4, i__5;
+    integer a_dim1, a_offset, b_dim1, b_offset, q_dim1, q_offset, z_dim1, z_offset, qc_dim1, qc_offset, zc_dim1, zc_offset, i__1, i__2, i__3, i__4;
     doublereal d__1, d__2, d__3, d__4, d__5, d__6;
-    complex q__1, q__2;
-    doublecomplex z__1;
     /* Builtin functions */
     double sqrt(doublereal);
-    void r_cnjg(complex *, complex *);
     /* Local variables */
-    integer lworkreq, k;
+    integer lworkreq, i__, j, k;
     doublereal s, c1;
     integer k2;
     doublereal s1;
-    integer jw, jki, jli;
+    integer jw;
     doublereal ulp;
     integer dtgexc_info__, ifst;
     doublereal temp;
@@ -255,6 +252,7 @@ int dlaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     extern /* Subroutine */
     int dlag2_(doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *, doublereal *), dgemm_(char *, char *, integer *, integer *, integer *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, integer *);
     logical bulge;
+    doublereal atemp;
     integer kwbot, kwtop, qz_small_info__;
     extern /* Subroutine */
     int dlaqz0_(char *, char *, char *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, doublereal *, doublereal *, doublereal *, doublereal *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, integer *), dlaqz2_(logical *, logical *, integer *, integer *, integer *, integer *, doublereal *, integer *, doublereal *, integer *, integer *, integer *, doublereal *, integer *, integer *, integer *, doublereal *, integer *), dlabad_(doublereal *, doublereal *);
@@ -368,7 +366,7 @@ int dlaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
         /* Computing MAX */
         d__2 = smlnum;
         d__3 = ulp * (d__1 = a[kwtop + kwtop * a_dim1], f2c_abs( d__1)); // , expr subst
-        if (f2c_abs(s) <= fla_max(d__2,d__3))
+        if (f2c_dabs(s) <= fla_max(d__2,d__3))
         {
             *ns = 0;
             *nd = 1;
@@ -513,26 +511,15 @@ int dlaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
         /* Reflect spike back, this will create optimally packed bulges */
         /* A( KWTOP:KWBOT, KWTOP-1 ) = A( KWTOP, KWTOP-1 )*QC( 1, */
         /* $ 1:JW-ND ) */
+        atemp = a[kwtop + (kwtop - 1) * a_dim1];
+        j = 1;
         i__1 = kwbot;
-        for (jki = kwtop;
-                jki <= i__1;
-                ++jki)
+        for (i__ = kwtop;
+                i__ <= i__1;
+                ++i__)
         {
-            i__2 = jw - *nd;
-            for (jli = 1;
-                    jli <= i__2;
-                    ++jli)
-            {
-                i__3 = jli * qc_dim1 + 1;
-                q__1.r = qc[i__3];
-                q__1.i = 0.f; // , expr subst
-                i__4 = jki + (kwtop - 1) * a_dim1;
-                i__5 = kwtop + (kwtop - 1) * a_dim1;
-                r_cnjg(&q__2, &q__1);
-                z__1.r = a[i__5] * q__2.r;
-                z__1.i = a[i__5] * q__2.i; // , expr subst
-                a[i__4] = z__1.r;
-            }
+            a[i__ + (kwtop - 1) * a_dim1] = atemp * qc[j * qc_dim1 + 1];
+            ++j;
         }
         i__1 = kwtop;
         for (k = kwbot - 1;
@@ -661,4 +648,3 @@ int dlaqz3_(logical *ilschur, logical *ilq, logical *ilz, integer *n, integer *i
     return 0;
 }
 /* dlaqz3_ */
-
