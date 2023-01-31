@@ -14,7 +14,7 @@
  * corresponding BLAS APIs to reduce function overheads.
  */
 integer FLA_LU_piv_small_z_var0( integer *m, integer *n,
-                                   doublecomplex *a, integer *lda,
+                                   dcomplex *a, integer *lda,
                                    integer *ipiv,
                                    integer *info)
 {

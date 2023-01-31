@@ -19,7 +19,7 @@ integer   FLA_LU_piv_small_d_var1( integer *m, integer *n, doublereal *a, intege
                                    integer *ipiv, integer *info );
 integer   FLA_LU_piv_small_d_var2( integer *m, integer *n, doublereal *a, integer *lda,
                                    integer *ipiv, integer *info );
-integer   FLA_LU_piv_small_z_var0( integer *m, integer *n, doublecomplex *a, integer *lda,
+integer   FLA_LU_piv_small_z_var0( integer *m, integer *n, dcomplex *a, integer *lda,
                                    integer *ipiv, integer *info);
 
 FLA_Error FLA_LU_piv_solve( FLA_Obj A, FLA_Obj p, FLA_Obj B, FLA_Obj X );
@@ -28,7 +28,7 @@ FLA_Error FLASH_LU_piv_solve( FLA_Obj A, FLA_Obj p, FLA_Obj B, FLA_Obj X );
 
 integer lapack_cgetf2(integer *m, integer *n, complex *a, integer *lda,
 	 integer *ipiv, integer *info);
-integer lapack_cgetrf(integer *m, integer *n, complex *a, integer *lda,
+integer lapack_cgetrf(integer *m, integer *n, scomplex *a, integer *lda,
 	 integer *ipiv, integer *info);
 integer lapack_dgetf2(integer *m, integer *n, doublereal *a, integer *
 	lda, integer *ipiv, integer *info);

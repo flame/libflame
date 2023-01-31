@@ -9,7 +9,7 @@
 */
 
 /*
-    Copyright (c) 2021-2022 Advanced Micro Devices, Inc.  All rights reserved.
+    Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
 */
 
 #include "FLAME.h"
@@ -83,10 +83,10 @@ extern void DTL_Trace(
 
 LAPACK_geqrf(s)
 {
-    int fla_error = LAPACK_SUCCESS;
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sgeqrf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
 #if !FLA_AMD_OPT
+    int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1( sgeqrf_check( m, n,
                                            buff_A, ldim_A,
@@ -112,10 +112,10 @@ LAPACK_geqrf(s)
 }
 LAPACK_geqrf(d)
 {
-    int fla_error = LAPACK_SUCCESS;
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dgeqrf inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
 #if !FLA_AMD_OPT
+    int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1(dgeqrf_check(m, n,
                                               buff_A, ldim_A,
@@ -293,10 +293,10 @@ LAPACK_geqr2(z)
                                integer* info )
 LAPACK_geqrfp(s)
 {
-    int fla_error = LAPACK_SUCCESS;
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sgeqrfp inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
 #if !FLA_AMD_OPT
+    int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1( sgeqrfp_check( m, n,
                                             buff_A, ldim_A,
@@ -326,10 +326,10 @@ LAPACK_geqrfp(s)
 }
 LAPACK_geqrfp(d)
 {
-    int fla_error = LAPACK_SUCCESS;
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dgeqrfp inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
 #if !FLA_AMD_OPT
+    int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1(dgeqrfp_check(m, n,
                                                buff_A, ldim_A,
@@ -413,10 +413,10 @@ LAPACK_geqrfp(z)
 
 LAPACK_geqr2p(s)
 {
-    int fla_error = LAPACK_SUCCESS;
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sgeqr2p inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
 #if !FLA_AMD_OPT
+    int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1( sgeqr2p_check( m, n,
                                             buff_A, ldim_A,
@@ -446,10 +446,10 @@ LAPACK_geqr2p(s)
 }
 LAPACK_geqr2p(d)
 {
-    int fla_error = LAPACK_SUCCESS;
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dgeqr2p inputs: m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS "", *m, *n, *ldim_A);
 #if !FLA_AMD_OPT
+    int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1(dgeqr2p_check(m, n,
                                                buff_A, ldim_A,
