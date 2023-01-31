@@ -9,7 +9,7 @@
 */
 
 /*
-    Copyright (c) 2021-2022 Advanced Micro Devices, Inc.  All rights reserved.
+    Copyright (c) 2021-2023 Advanced Micro Devices, Inc.  All rights reserved.
 */
 
 #include "FLAME.h"
@@ -72,7 +72,7 @@ extern void DTL_Trace(
 #define LAPACK_getrf_body_z(prefix)                                                    \
   if( *m <= FLA_ZGETRF_SMALL_THRESH0 && *n <= FLA_ZGETRF_SMALL_THRESH0 )               \
   {                                                                                    \
-    FLA_LU_piv_small_z_var0( m, n, buff_A, ldim_A, buff_p, info );                     \
+    FLA_LU_piv_small_z_var0( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info );                     \
   }                                                                                    \
   else if( *m < FLA_ZGETRF_SMALL_THRESH1 && *n < FLA_ZGETRF_SMALL_THRESH1 )            \
   {                                                                                    \
@@ -131,11 +131,11 @@ extern void DTL_Trace(
     switch(datatype)                                                                                                \
     {                                                                                                               \
        case FLA_FLOAT:                                                                                              \
-       { lapack_sgetrf( m, n, buff_A, ldim_A, buff_p, info); break; }                                               \
+       { lapack_sgetrf( m, n, (float *)buff_A, ldim_A, buff_p, info); break; }                                               \
        case FLA_COMPLEX:                                                                                            \
-       { lapack_cgetrf( m, n, buff_A, ldim_A, buff_p, info); break; }                                               \
+       { lapack_cgetrf( m, n, (scomplex *)buff_A, ldim_A, buff_p, info); break; }                                               \
        case FLA_DOUBLE_COMPLEX:                                                                                     \
-       { lapack_zgetrf( m, n, buff_A, ldim_A, buff_p, info); break; }                                               \
+       { lapack_zgetrf( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info); break; }                                               \
     }  if ( *info != 0 ) skip  = TRUE;                                                                              \
                                                                                                                     \
   }                                                                                                                 \
@@ -164,11 +164,11 @@ extern void DTL_Trace(
     switch(datatype)                                                                   \
     {                                                                                  \
        case FLA_FLOAT:                                                                 \
-       { sgetrf2_( m, n, buff_A, ldim_A, buff_p, info); break; }                       \
+       { sgetrf2_( m, n, (float *)buff_A, ldim_A, buff_p, info); break; }                       \
        case FLA_COMPLEX:                                                               \
-       { cgetrf2_( m, n, buff_A, ldim_A, buff_p, info); break; }                       \
+       { cgetrf2_( m, n, (scomplex *)buff_A, ldim_A, buff_p, info); break; }                       \
        case FLA_DOUBLE_COMPLEX:                                                        \
-       { zgetrf2_( m, n, buff_A, ldim_A, buff_p, info); break; }                       \
+       { zgetrf2_( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info); break; }                       \
     }  if ( *info != 0 ) skip  = TRUE;                                                 \
                                                                                        \
   }                                                                                    \

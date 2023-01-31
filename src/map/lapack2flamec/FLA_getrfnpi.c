@@ -62,9 +62,9 @@ extern void DTL_Trace(
   if ( (datatype == FLA_DOUBLE) && ((*m) * (*n) <=  FLA_MN_SIZE) && ((*nfact) <= (FLA_NFACT_PERCENT * (*m))) && ((*m) == (*n)) )                 \
   {                                                                                                                                              \
     if( (*n)*(*nfact)-(*nfact-1)/4 <= FLA_FULL_DGER_CONSTANT  )                                                                                  \
-    e_val = FLA_LU_nopiv_id_unblk_var2( *m, *n, buff_A, *nfact, 1, *ldim_A);                                                                     \
+    e_val = FLA_LU_nopiv_id_unblk_var2( *m, *n, (double *)buff_A, *nfact, 1, *ldim_A);                                                                     \
     else                                                                                                                                         \
-    e_val =  FLA_LU_nopiv_id_unblk_var1( *m, *n, buff_A,  *nfact, 1, *ldim_A);                                                                   \
+    e_val =  FLA_LU_nopiv_id_unblk_var1( *m, *n, (double *)buff_A,  *nfact, 1, *ldim_A);                                                                   \
   }                                                                                                                                              \
   else                                                                                                                                           \
   {                                                                                                                                              \
@@ -76,13 +76,13 @@ extern void DTL_Trace(
      switch( datatype )                                                                                                                          \
      {                                                                                                                                           \
         case FLA_FLOAT:                                                                                                                          \
-        { e_val = FLA_LU_nopiv_is_blk_var1( *m, *n, A, buff_A, *nfact, 1, *ldim_A); break; }                                                     \
+        { e_val = FLA_LU_nopiv_is_blk_var1( *m, *n, A, (float *)buff_A, *nfact, 1, *ldim_A); break; }                                                     \
         case FLA_DOUBLE:                                                                                                                         \
-        { e_val = FLA_LU_nopiv_id_blk_var1( *m, *n, A, buff_A, *nfact, 1, *ldim_A); break; }                                                     \
+        { e_val = FLA_LU_nopiv_id_blk_var1( *m, *n, A, (double *)buff_A, *nfact, 1, *ldim_A); break; }                                                     \
         case FLA_COMPLEX:                                                                                                                        \
-        { e_val = FLA_LU_nopiv_ic_blk_var1( *m, *n, A, buff_A, *nfact, 1, *ldim_A); break; }                                                     \
+        { e_val = FLA_LU_nopiv_ic_blk_var1( *m, *n, A, (scomplex *)buff_A, *nfact, 1, *ldim_A); break; }                                                     \
         case FLA_DOUBLE_COMPLEX:                                                                                                                 \
-        { e_val = FLA_LU_nopiv_iz_blk_var1( *m, *n, A, buff_A, *nfact, 1, *ldim_A); break; }                                                     \
+        { e_val = FLA_LU_nopiv_iz_blk_var1( *m, *n, A, (dcomplex *)buff_A, *nfact, 1, *ldim_A); break; }                                                     \
      }                                                                                                                                           \
      FLA_Obj_free_without_buffer( &A );                                                                                                          \
      FLA_Finalize_safe( init_result );                                                                                                           \

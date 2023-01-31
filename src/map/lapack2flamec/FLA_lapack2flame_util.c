@@ -46,6 +46,8 @@ void F77_fla_obj_show( char* prefix, integer* m, integer* n, void* buffer, integ
      FLA_Datatype datatype;
      FLA_Obj      A;
 
+     datatype = FLA_INT; 
+
      switch( *prefix ) {
      case 'i':
      case 'I': datatype = FLA_INT;            break;

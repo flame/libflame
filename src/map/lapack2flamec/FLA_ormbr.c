@@ -224,9 +224,11 @@ extern int dormbr_fla(char *vect, char *side, char *trans, integer *m, integer *
 
 LAPACK_ormbr(s, orm)
 {
-  int fla_error = LAPACK_SUCCESS;
   AOCL_DTL_TRACE_LOG_INIT
   AOCL_DTL_SNPRINTF("sormbr inputs: vect %c, side %c, trans %c, m " FLA_IS ", n " FLA_IS ", k " FLA_IS ", lda " FLA_IS ", ldc " FLA_IS "", *vect, *side, *trans, *m, *n, *k, *ldim_A, *ldim_C);
+  {
+#if !FLA_AMD_OPT
+  int fla_error = LAPACK_SUCCESS;
   {
       LAPACK_RETURN_CHECK_VAR1(sormbr_check(vect, side, trans,
                                        m, n, k,
@@ -236,8 +238,6 @@ LAPACK_ormbr(s, orm)
                                        buff_w, lwork,
                                        info),fla_error)
   }
-  {
-#if !FLA_AMD_OPT
       if(fla_error==LAPACK_SUCCESS)
       {
         LAPACK_ormbr_body(s)
@@ -263,9 +263,11 @@ LAPACK_ormbr(s, orm)
 }
 LAPACK_ormbr(d, orm)
 {
-  int fla_error = LAPACK_SUCCESS;
   AOCL_DTL_TRACE_LOG_INIT
   AOCL_DTL_SNPRINTF("dormbr inputs: vect %c, side %c, trans %c, m " FLA_IS ", n " FLA_IS ", k " FLA_IS ", lda " FLA_IS ", ldc " FLA_IS "", *vect, *side, *trans, *m, *n, *k, *ldim_A, *ldim_C);
+  {
+#if !FLA_AMD_OPT
+  int fla_error = LAPACK_SUCCESS;
   {
     LAPACK_RETURN_CHECK_VAR1(dormbr_check(vect, side, trans,
                                           m, n, k,
@@ -275,8 +277,6 @@ LAPACK_ormbr(d, orm)
                                           buff_w, lwork,
                                           info),fla_error)
   } 
-  {
-#if !FLA_AMD_OPT
       if (fla_error == LAPACK_SUCCESS)
       {
         LAPACK_ormbr_body(d)

@@ -79,12 +79,12 @@ extern int sorgqr_fla(integer *m, integer *n, integer *k, real * a, integer *lda
 
 LAPACK_orgqr(s, org)
 {
-    int fla_error = LAPACK_SUCCESS;
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sorgqr inputs: m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS "", *m, *n, *k, *ldim_A);
 #if !FLA_AMD_OPT
-        {
-            LAPACK_RETURN_CHECK_VAR1(sorgqr_check(m, n, k,
+    int fla_error = LAPACK_SUCCESS;
+    {
+        LAPACK_RETURN_CHECK_VAR1(sorgqr_check(m, n, k,
                                              buff_A, ldim_A,
                                              buff_t,
                                              buff_w, lwork,
@@ -112,10 +112,10 @@ LAPACK_orgqr(s, org)
 }
 LAPACK_orgqr(d, org)
 {
-    int fla_error = LAPACK_SUCCESS;
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("dorgqr inputs: m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS "", *m, *n, *k, *ldim_A);
 #if !FLA_AMD_OPT
+    int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1( dorgqr_check( m, n, k,
                                            buff_A, ldim_A,
@@ -201,10 +201,12 @@ LAPACK_orgqr(z, ung)
 
 LAPACK_org2r(s, org)
 {
-    int fla_error = LAPACK_SUCCESS;
     AOCL_DTL_TRACE_LOG_INIT
     AOCL_DTL_SNPRINTF("sorg2r inputs: m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS "", *m, *n, *k, *ldim_A);
+    extern int sorg2r_fla(integer *m, integer *n, integer *k, real *a, integer *lda, real *tau, real *work, integer *info);
+
 #if !FLA_AMD_OPT    
+    int fla_error = LAPACK_SUCCESS;
     {
         LAPACK_RETURN_CHECK_VAR1( sorg2r_check( m, n, k,
                                            buff_A, ldim_A,
