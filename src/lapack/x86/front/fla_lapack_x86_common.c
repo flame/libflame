@@ -28,7 +28,15 @@ int fla_drot(integer *n, doublereal *dx, integer *incx, doublereal *dy, integer 
 /* complex vector scaling when increment is 1 and threshold <= 128 */
 int fla_zscal(integer *n, doublecomplex *alpha, doublecomplex *x, integer *incx)
 {
-    fla_zscal_avx2(n, alpha, x, incx);
+    /* Take AVX path only for increment equal to 1 */
+    if(*incx == 1)
+    {
+        fla_zscal_avx2(n, alpha, x, incx);
+    }
+    else
+    {
+        zscal_(n, (dcomplex *) alpha,(dcomplex *)  x, incx);
+    }
     return 0;
 }
 #endif

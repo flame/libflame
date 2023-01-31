@@ -206,7 +206,7 @@ L10:
         alpha->r = z__1.r, alpha->i = z__1.i;
         i__1 = *n - 1;
 #ifdef FLA_ENABLE_AMD_OPT
-        if(*incx == 1 && i__1 <= FLA_ZSCAL_INLINE_SMALL)
+        if(i__1 <= FLA_ZSCAL_INLINE_SMALL)
         {
             /* use avx2 implementation of ZSCAL */
             fla_zscal(&i__1, alpha, &x[1], incx);
