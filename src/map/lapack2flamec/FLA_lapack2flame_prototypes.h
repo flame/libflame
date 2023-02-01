@@ -388,6 +388,7 @@ int ctrrfs_check(char *uplo, char *trans, char *diag, integer *n, integer *nrhs,
 int ctrsen_check(char *job, char *compq, logical *select, integer *n, scomplex *t, integer *ldt, scomplex *q, integer *ldq, scomplex *w, integer *m, float *s, float *sep, scomplex *work, integer *lwork, integer *info);
 int ctrsna_check(char *job, char *howmny, logical *select, integer *n, scomplex *t, integer *ldt, scomplex *vl, integer *ldvl, scomplex *vr, integer *ldvr, float *s, float *sep, integer *mm, integer * m, scomplex *work, integer *ldwork, float *rwork, integer *info);
 int ctrsyl_check(char *trana, char *tranb, integer *isgn, integer *m, integer *n, scomplex *a, integer *lda, scomplex *b, integer *ldb, scomplex *c__, integer *ldc, float *scale, integer *info);
+int ctrsyl3_check(char* trana, char* tranb, integer* isgn, integer* m, integer* n, complex* a, integer* lda, complex* b, integer* ldb, complex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info);
 int ctrti2_check(char *uplo, char *diag, integer *n, scomplex *a, integer *lda, integer *info);
 int ctrtri_check(char *uplo, char *diag, integer *n, scomplex *a, integer *lda, integer *info);
 int ctrtrs_check(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, scomplex *a, integer *lda, scomplex *b, integer *ldb, integer *info);
@@ -863,6 +864,7 @@ int dtrrfs_check(char *uplo, char *trans, char *diag, integer *n, integer *nrhs,
 int dtrsen_check(char *job, char *compq, logical *select, integer *n, double *t, integer *ldt, double *q, integer *ldq, double *wr, double *wi, integer *m, double *s, double *sep, double *work, integer *lwork, integer *iwork, integer * liwork, integer *info);
 int dtrsna_check(char *job, char *howmny, logical *select, integer *n, double *t, integer *ldt, double *vl, integer * ldvl, double *vr, integer *ldvr, double *s, double *sep, integer *mm, integer *m, double *work, integer *ldwork, integer * iwork, integer *info);
 int dtrsyl_check(char *trana, char *tranb, integer *isgn, integer *m, integer *n, double *a, integer *lda, double *b, integer * ldb, double *c__, integer *ldc, double *scale, integer *info);
+int dtrsyl3_check(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *c__, integer *ldc, doublereal *scale, integer *iwork, integer *liwork, doublereal *swork, integer *ldswork, integer *info);
 int dtrti2_check(char *uplo, char *diag, integer *n, double * a, integer *lda, integer *info);
 int dtrtri_check(char *uplo, char *diag, integer *n, double * a, integer *lda, integer *info);
 int dtrtrs_check(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, double *a, integer *lda, double *b, integer * ldb, integer *info);
@@ -1317,6 +1319,7 @@ int strrfs_check(char *uplo, char *trans, char *diag, integer *n, integer *nrhs,
 int strsen_check(char *job, char *compq, logical *select, integer *n, float *t, integer *ldt, float *q, integer *ldq, float *wr, float *wi, integer *m, float *s, float *sep, float *work, integer *lwork, integer * iwork, integer *liwork, integer *info);
 int strsna_check(char *job, char *howmny, logical *select, integer *n, float *t, integer *ldt, float *vl, integer *ldvl, float *vr, integer *ldvr, float *s, float *sep, integer *mm, integer *m, float * work, integer *ldwork, integer *iwork, integer *info);
 int strsyl_check(char *trana, char *tranb, integer *isgn, integer *m, integer *n, float *a, integer *lda, float *b, integer *ldb, float * c__, integer *ldc, float *scale, integer *info);
+int strsyl3_check(char *trana, char *tranb, integer *isgn, integer *m, integer *n, real *a, integer *lda, real *b, integer *ldb, real *c__, integer *ldc, real *scale, integer *iwork, integer *liwork, real *swork, integer *ldswork, integer *info);
 int strti2_check(char *uplo, char *diag, integer *n, float *a, integer *lda, integer *info);
 int strtri_check(char *uplo, char *diag, integer *n, float *a, integer *lda, integer *info);
 int strtrs_check(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, float *a, integer *lda, float *b, integer *ldb, integer * info);
@@ -1707,6 +1710,7 @@ int ztrrfs_check(char *uplo, char *trans, char *diag, integer *n, integer *nrhs,
 int ztrsen_check(char *job, char *compq, logical *select, integer *n, dcomplex *t, integer *ldt, dcomplex *q, integer *ldq, dcomplex *w, integer *m, double *s, double *sep, dcomplex *work, integer *lwork, integer *info);
 int ztrsna_check(char *job, char *howmny, logical *select, integer *n, dcomplex *t, integer *ldt, dcomplex *vl, integer *ldvl, dcomplex *vr, integer *ldvr, double *s, double *sep, integer *mm, integer *m, dcomplex *work, integer *ldwork, double *rwork, integer *info);
 int ztrsyl_check(char *trana, char *tranb, integer *isgn, integer *m, integer *n, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, dcomplex *c__, integer *ldc, double *scale, integer *info);
+int ztrsyl3_check(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info);
 int ztrti2_check(char *uplo, char *diag, integer *n, dcomplex *a, integer *lda, integer *info);
 int ztrtri_check(char *uplo, char *diag, integer *n, dcomplex *a, integer *lda, integer *info);
 int ztrtrs_check(char *uplo, char *trans, char *diag, integer *n, integer *nrhs, dcomplex *a, integer *lda, dcomplex *b, integer *ldb, integer *info);

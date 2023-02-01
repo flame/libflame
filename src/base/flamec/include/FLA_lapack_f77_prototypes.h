@@ -2110,20 +2110,20 @@
 #define F77_dormhr F77_FUNC( dormhr, DORMHR )
 
 // Function Prototypes declaration
-int cgelst_(char *trans, integer *m, integer *n, integer * nrhs, complex *a, integer *lda, complex *b, integer *ldb, complex * work, integer *lwork, integer *info);
-int clatrs3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, complex *a, integer *lda, complex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info);
-int ctrsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, complex *a, integer *lda, complex *b, integer *ldb, complex *c__, integer *ldc, real *scale, real *swork, integer * ldswork, integer *info);
-int dgelst_(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *work, integer *lwork, integer *info);
-doublereal dlarmm_(doublereal *anorm, doublereal *bnorm, doublereal *cnorm);
-int dlatrs3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublereal *a, integer *lda, doublereal *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info);
-int dtrsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *c__, integer *ldc, doublereal *scale, integer *iwork, integer *liwork, doublereal *swork, integer *ldswork, integer *info);
-int sgelst_(char *trans, integer *m, integer *n, integer * nrhs, real *a, integer *lda, real *b, integer *ldb, real *work, integer *lwork, integer *info);
-real slarmm_(real *anorm, real *bnorm, real *cnorm);
-int slatrs3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, real *a, integer *lda, real *x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info);
-int strsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, real *a, integer *lda, real *b, integer *ldb, real *c__, integer *ldc, real *scale, integer *iwork, integer *liwork, real *swork, integer *ldswork, integer *info);
-int zgelst_(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info);
-int zlatrs3_(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info);
-int ztrsyl3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info);
+int F77_cgelst(char *trans, integer *m, integer *n, integer * nrhs, complex *a, integer *lda, complex *b, integer *ldb, complex * work, integer *lwork, integer *info);
+int F77_clatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, complex *a, integer *lda, complex * x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info);
+int F77_ctrsyl3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, complex *a, integer *lda, complex *b, integer *ldb, complex *c__, integer *ldc, real *scale, real *swork, integer * ldswork, integer *info);
+int F77_dgelst(char *trans, integer *m, integer *n, integer * nrhs, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *work, integer *lwork, integer *info);
+doublereal F77_dlarmm(doublereal *anorm, doublereal *bnorm, doublereal *cnorm);
+int F77_dlatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublereal *a, integer *lda, doublereal *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info);
+int F77_dtrsyl3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *c__, integer *ldc, doublereal *scale, integer *iwork, integer *liwork, doublereal *swork, integer *ldswork, integer *info);
+int F77_sgelst(char *trans, integer *m, integer *n, integer * nrhs, real *a, integer *lda, real *b, integer *ldb, real *work, integer *lwork, integer *info);
+real F77_slarmm(real *anorm, real *bnorm, real *cnorm);
+int F77_slatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, real *a, integer *lda, real *x, integer *ldx, real *scale, real *cnorm, real *work, integer *lwork, integer *info);
+int F77_strsyl3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, real *a, integer *lda, real *b, integer *ldb, real *c__, integer *ldc, real *scale, integer *iwork, integer *liwork, real *swork, integer *ldswork, integer *info);
+int F77_zgelst(char *trans, integer *m, integer *n, integer * nrhs, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *work, integer *lwork, integer *info);
+int F77_zlatrs3(char *uplo, char *trans, char *diag, char * normin, integer *n, integer *nrhs, doublecomplex *a, integer *lda, doublecomplex *x, integer *ldx, doublereal *scale, doublereal *cnorm, doublereal *work, integer *lwork, integer *info);
+int F77_ztrsyl3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info);
 double F77_dlamch(char* cmach);
 double F77_dlamc3(double* a, double* b);
 doublereal F77_dladiv2(doublereal* a, doublereal* b, doublereal* c__, doublereal* d__, doublereal* r__, doublereal* t);
