@@ -1,4 +1,4 @@
-##Copyright (C) 2020, Advanced Micro Devices, Inc.##
+##Copyright (C) 2023, Advanced Micro Devices, Inc.##
 if(INCLUDE_LAPACKE)
 target_sources("${PROJECT_NAME}"
      PRIVATE
@@ -2384,6 +2384,22 @@ ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sgeqpf.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_sgeqpf_work.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zgeqpf.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zgeqpf_work.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_clangb.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_clangb_work.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_ctrsyl3.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_ctrsyl3_work.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dlangb.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dlangb_work.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dtrsyl3.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dtrsyl3_work.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_slangb.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_slangb_work.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_strsyl3.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_strsyl3_work.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zlangb.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_zlangb_work.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_ztrsyl3.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_ztrsyl3_work.c
 )
 
 else(NOT INCLUDE_LAPACKE)
@@ -2699,6 +2715,8 @@ lapacke_clacrm.c
 lapacke_clacrm_work.c
 lapacke_clag2z.c
 lapacke_clag2z_work.c
+lapacke_clangb.c
+lapacke_clangb_work.c
 lapacke_clange.c
 lapacke_clange_work.c
 lapacke_clanhe.c
@@ -2947,6 +2965,8 @@ lapacke_ctrsna.c
 lapacke_ctrsna_work.c
 lapacke_ctrsyl.c
 lapacke_ctrsyl_work.c
+lapacke_ctrsyl3.c
+lapacke_ctrsyl3_work.c
 lapacke_ctrtri.c
 lapacke_ctrtri_work.c
 lapacke_ctrtrs.c
@@ -3181,6 +3201,8 @@ lapacke_dlag2s.c
 lapacke_dlag2s_work.c
 lapacke_dlamch.c
 lapacke_dlamch_work.c
+lapacke_dlangb.c
+lapacke_dlangb_work.c
 lapacke_dlange.c
 lapacke_dlange_work.c
 lapacke_dlansy.c
@@ -3559,6 +3581,8 @@ lapacke_dtrsna.c
 lapacke_dtrsna_work.c
 lapacke_dtrsyl.c
 lapacke_dtrsyl_work.c
+lapacke_dtrsyl3.c
+lapacke_dtrsyl3_work.c
 lapacke_dtrtri.c
 lapacke_dtrtri_work.c
 lapacke_dtrtrs.c
@@ -3756,6 +3780,8 @@ lapacke_slag2d.c
 lapacke_slag2d_work.c
 lapacke_slamch.c
 lapacke_slamch_work.c
+lapacke_slangb.c
+lapacke_slangb_work.c
 lapacke_slange.c
 lapacke_slange_work.c
 lapacke_slansy.c
@@ -4130,6 +4156,8 @@ lapacke_strsna.c
 lapacke_strsna_work.c
 lapacke_strsyl.c
 lapacke_strsyl_work.c
+lapacke_strsyl3.c
+lapacke_strsyl3_work.c
 lapacke_strtri.c
 lapacke_strtri_work.c
 lapacke_strtrs.c
@@ -4456,6 +4484,8 @@ lapacke_zlacrm.c
 lapacke_zlacrm_work.c
 lapacke_zlag2c.c
 lapacke_zlag2c_work.c
+lapacke_zlangb.c
+lapacke_zlangb_work.c
 lapacke_zlange.c
 lapacke_zlange_work.c
 lapacke_zlanhe.c
@@ -4704,6 +4734,8 @@ lapacke_ztrsna.c
 lapacke_ztrsna_work.c
 lapacke_ztrsyl.c
 lapacke_ztrsyl_work.c
+lapacke_ztrsyl3.c
+lapacke_ztrsyl3_work.c
 lapacke_ztrtri.c
 lapacke_ztrtri_work.c
 lapacke_ztrtrs.c

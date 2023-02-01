@@ -41,6 +41,7 @@ extern "C" {
 #endif /* __cplusplus */
 
 #include <stdlib.h>
+#include <inttypes.h>
 
 #ifdef __cplusplus
     // For C++, include stdint.h.
@@ -69,6 +70,17 @@ extern "C" {
 #define lapack_int              int64_t
 #else
 #define lapack_int              int32_t
+#endif
+#endif
+
+/*
+ * Integer format string
+ */
+#ifndef LAPACK_IFMT
+#if defined(LAPACK_ILP64)
+#define LAPACK_IFMT       PRId64
+#else
+#define LAPACK_IFMT       PRId32
 #endif
 #endif
 

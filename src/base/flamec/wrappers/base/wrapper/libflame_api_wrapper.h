@@ -1669,6 +1669,10 @@ extern int CTRSYL(char* trana, char* tranb, integer* isgn, integer* m, integer* 
 extern int ctrsyl(char* trana, char* tranb, integer* isgn, integer* m, integer* n, scomplex* a, integer* lda, scomplex* b, integer* ldb, scomplex* c, integer* ldc, float* scale, integer* info);
 extern int CTRSYL_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, scomplex* a, integer* lda, scomplex* b, integer* ldb, scomplex* c, integer* ldc, float* scale, integer* info);
 
+extern int CTRSYL3_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, complex* a, integer* lda, complex* b, integer* ldb, complex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info);
+extern int ctrsyl3(char* trana, char* tranb, integer* isgn, integer* m, integer* n, complex* a, integer* lda, complex* b, integer* ldb, complex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info);
+extern int CTRSYL3_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, complex* a, integer* lda, complex* b, integer* ldb, complex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info);
+
 extern int CTRTI2(char* uplo, char* diag, integer* n, scomplex* a, integer* lda, integer* info);
 extern int ctrti2(char* uplo, char* diag, integer* n, scomplex* a, integer* lda, integer* info);
 extern int CTRTI2_(char* uplo, char* diag, integer* n, scomplex* a, integer* lda, integer* info);
@@ -3657,6 +3661,10 @@ extern int DTRSYL(char* trana, char* tranb, integer* isgn, integer* m, integer* 
 extern int dtrsyl(char* trana, char* tranb, integer* isgn, integer* m, integer* n, double* a, integer* lda, double* b, integer* ldb, double* c, integer* ldc, double* scale, integer* info);
 extern int DTRSYL_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, double* a, integer* lda, double* b, integer* ldb, double* c, integer* ldc, double* scale, integer* info);
 
+extern int DTRSYL3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *c__, integer *ldc, doublereal *scale, integer *iwork, integer *liwork, doublereal *swork, integer *ldswork, integer *info);
+extern int dtrsyl3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *c__, integer *ldc, doublereal *scale, integer *iwork, integer *liwork, doublereal *swork, integer *ldswork, integer *info);
+extern int DTRSYL3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *c__, integer *ldc, doublereal *scale, integer *iwork, integer *liwork, doublereal *swork, integer *ldswork, integer *info);
+
 extern int DTRTI2(char* uplo, char* diag, integer* n, double* a, integer* lda, integer* info);
 extern int dtrti2(char* uplo, char* diag, integer* n, double* a, integer* lda, integer* info);
 extern int DTRTI2_(char* uplo, char* diag, integer* n, double* a, integer* lda, integer* info);
@@ -5549,6 +5557,10 @@ extern int STRSYL(char* trana, char* tranb, integer* isgn, integer* m, integer* 
 extern int strsyl(char* trana, char* tranb, integer* isgn, integer* m, integer* n, float* a, integer* lda, float* b, integer* ldb, float* c, integer* ldc, float* scale, integer* info);
 extern int STRSYL_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, float* a, integer* lda, float* b, integer* ldb, float* c, integer* ldc, float* scale, integer* info);
 
+extern int STRSYL3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, real *a, integer *lda, real *b, integer *ldb, real *c__, integer *ldc, real *scale, integer *iwork, integer *liwork, real *swork, integer *ldswork, integer *info);
+extern int strsyl3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, real *a, integer *lda, real *b, integer *ldb, real *c__, integer *ldc, real *scale, integer *iwork, integer *liwork, real *swork, integer *ldswork, integer *info);
+extern int STRSYL3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, real *a, integer *lda, real *b, integer *ldb, real *c__, integer *ldc, real *scale, integer *iwork, integer *liwork, real *swork, integer *ldswork, integer *info);
+
 extern int STRTI2(char* uplo, char* diag, integer* n, float* a, integer* lda, integer* info);
 extern int strti2(char* uplo, char* diag, integer* n, float* a, integer* lda, integer* info);
 extern int STRTI2_(char* uplo, char* diag, integer* n, float* a, integer* lda, integer* info);
@@ -7220,6 +7232,10 @@ extern int ZTRSNA_(char* job, char* howmny, integer* select, integer* n, dcomple
 extern int ZTRSYL(char* trana, char* tranb, integer* isgn, integer* m, integer* n, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, dcomplex* c, integer* ldc, double* scale, integer* info);
 extern int ztrsyl(char* trana, char* tranb, integer* isgn, integer* m, integer* n, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, dcomplex* c, integer* ldc, double* scale, integer* info);
 extern int ZTRSYL_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, dcomplex* c, integer* ldc, double* scale, integer* info);
+
+extern int ZTRSYL3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info);
+extern int ztrsyl3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info);
+extern int ZTRSYL3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info);
 
 extern int ZTRTI2(char* uplo, char* diag, integer* n, dcomplex* a, integer* lda, integer* info);
 extern int ztrti2(char* uplo, char* diag, integer* n, dcomplex* a, integer* lda, integer* info);

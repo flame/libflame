@@ -6190,6 +6190,21 @@ int CTRSYL_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, sco
 	return ctrsyl_( trana, tranb, isgn, m, n, a, lda, b, ldb, c, ldc, scale, info);
 }
 
+int CTRSYL3(char* trana, char* tranb, integer* isgn, integer* m, integer* n, complex* a, integer* lda, complex* b, integer* ldb, complex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info)
+{
+	return ctrsyl3_(trana, tranb, isgn, m, n, a, lda, b, ldb, c__, ldc, scale, swork, ldswork, info);
+}
+
+int ctrsyl3(char* trana, char* tranb, integer* isgn, integer* m, integer* n, complex* a, integer* lda, complex* b, integer* ldb, complex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info)
+{
+	return ctrsyl3_(trana, tranb, isgn, m, n, a, lda, b, ldb, c__, ldc, scale, swork, ldswork, info);
+}
+
+int CTRSYL3_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, complex* a, integer* lda, complex* b, integer* ldb, complex* c__, integer* ldc, real* scale, real* swork, integer* ldswork, integer* info)
+{
+	return ctrsyl3_(trana, tranb, isgn, m, n, a, lda, b, ldb, c__, ldc, scale, swork, ldswork, info);
+}
+
 int CTRTI2(char* uplo, char* diag, integer* n, scomplex* a, integer* lda, integer* info)
 {
 	return ctrti2_( uplo, diag, n, a, lda, info);
@@ -13650,6 +13665,21 @@ int DTRSYL_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, dou
 	return dtrsyl_( trana, tranb, isgn, m, n, a, lda, b, ldb, c, ldc, scale, info);
 }
 
+int DTRSYL3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *c__, integer *ldc, doublereal *scale, integer *iwork, integer *liwork, doublereal *swork, integer *ldswork, integer *info)
+{
+	return dtrsyl3_( trana,  tranb, isgn, m, n, a, lda, b, ldb, c__, ldc, scale, iwork, liwork, swork, ldswork, info);
+}
+
+int dtrsyl3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *c__, integer *ldc, doublereal *scale, integer *iwork, integer *liwork, doublereal *swork, integer *ldswork, integer *info)
+{
+	return dtrsyl3_( trana,  tranb, isgn, m, n, a, lda, b, ldb, c__, ldc, scale, iwork, liwork, swork, ldswork, info);
+}
+
+int DTRSYL3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublereal *a, integer *lda, doublereal *b, integer *ldb, doublereal *c__, integer *ldc, doublereal *scale, integer *iwork, integer *liwork, doublereal *swork, integer *ldswork, integer *info)
+{
+	return dtrsyl3_( trana,  tranb, isgn, m, n, a, lda, b, ldb, c__, ldc, scale, iwork, liwork, swork, ldswork, info);
+}
+
 int DTRTI2(char* uplo, char* diag, integer* n, double* a, integer* lda, integer* info)
 {
 	return dtrti2_( uplo, diag, n, a, lda, info);
@@ -20752,6 +20782,21 @@ int STRSYL_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, flo
 	return strsyl_( trana, tranb, isgn, m, n, a, lda, b, ldb, c, ldc, scale, info);
 }
 
+int STRSYL3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, real *a, integer *lda, real *b, integer *ldb, real *c__, integer *ldc, real *scale, integer *iwork, integer *liwork, real *swork, integer *ldswork, integer *info)
+{
+	return strsyl3_( trana,  tranb, isgn, m, n, a, lda, b, ldb, c__,  ldc,  scale,  iwork,  liwork,  swork,  ldswork,  info);
+}
+
+int strsyl3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, real *a, integer *lda, real *b, integer *ldb, real *c__, integer *ldc, real *scale, integer *iwork, integer *liwork, real *swork, integer *ldswork, integer *info)
+{
+	return strsyl3_( trana,  tranb, isgn, m, n, a, lda, b, ldb, c__,  ldc,  scale,  iwork,  liwork,  swork,  ldswork,  info);
+}
+
+int STRSYL3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, real *a, integer *lda, real *b, integer *ldb, real *c__, integer *ldc, real *scale, integer *iwork, integer *liwork, real *swork, integer *ldswork, integer *info)
+{
+	return strsyl3_( trana,  tranb, isgn, m, n, a, lda, b, ldb, c__,  ldc,  scale,  iwork,  liwork,  swork,  ldswork,  info);
+}
+
 int STRTI2(char* uplo, char* diag, integer* n, float* a, integer* lda, integer* info)
 {
 	return strti2_( uplo, diag, n, a, lda, info);
@@ -27028,6 +27073,21 @@ int ztrsyl(char* trana, char* tranb, integer* isgn, integer* m, integer* n, dcom
 int ZTRSYL_(char* trana, char* tranb, integer* isgn, integer* m, integer* n, dcomplex* a, integer* lda, dcomplex* b, integer* ldb, dcomplex* c, integer* ldc, double* scale, integer* info)
 {
 	return ztrsyl_( trana, tranb, isgn, m, n, a, lda, b, ldb, c, ldc, scale, info);
+}
+
+int ZTRSYL3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info)
+{
+	return ztrsyl3_( trana,  tranb, isgn, m,  n, a,  lda, b,  ldb, c__,  ldc, scale, swork,  ldswork,  info);
+}
+
+int ztrsyl3(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info)
+{
+	return ztrsyl3_( trana,  tranb, isgn, m,  n, a,  lda, b,  ldb, c__,  ldc, scale, swork,  ldswork,  info);
+}
+
+int ZTRSYL3_(char *trana, char *tranb, integer *isgn, integer *m, integer *n, doublecomplex *a, integer *lda, doublecomplex *b, integer *ldb, doublecomplex *c__, integer *ldc, doublereal *scale, doublereal *swork, integer *ldswork, integer *info)
+{
+	return ztrsyl3_( trana,  tranb, isgn, m,  n, a,  lda, b,  ldb, c__,  ldc, scale, swork,  ldswork,  info);
 }
 
 int ZTRTI2(char* uplo, char* diag, integer* n, dcomplex* a, integer* lda, integer* info)

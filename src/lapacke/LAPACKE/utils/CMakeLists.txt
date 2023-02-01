@@ -150,6 +150,14 @@ ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_ztp_nancheck.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_ztp_trans.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_ztr_nancheck.c
 ${CMAKE_CURRENT_SOURCE_DIR}/lapacke_ztr_trans.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_ctz_nancheck.c 
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dtz_nancheck.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_stz_nancheck.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_ztz_nancheck.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_ctz_trans.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_dtz_trans.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_stz_trans.c
+${CMAKE_CURRENT_SOURCE_DIR}/lapacke_ztz_trans.c
 )
 else(NOT INCLUDE_LAPACKE)
 
@@ -191,5 +199,7 @@ lapacke_ctf_trans.c             lapacke_dtr_nancheck.c          lapacke_str_nanc
 lapacke_ctp_nancheck.c          lapacke_dtr_trans.c             lapacke_str_trans.c             lapacke_ztp_trans.c
 lapacke_ctp_trans.c             lapacke_lsame.c                 lapacke_xerbla.c                lapacke_ztr_nancheck.c
 lapacke_ctr_nancheck.c          lapacke_make_complex_double.c   lapacke_z_nancheck.c            lapacke_ztr_trans.c
+lapacke_ctz_nancheck.c          lapacke_dtz_nancheck.c          lapacke_stz_nancheck.c          lapacke_ztz_nancheck.c
+lapacke_ctz_trans.c             lapacke_dtz_trans.c             lapacke_stz_trans.c             lapacke_ztz_trans.c
 )
 endif()
