@@ -97,6 +97,7 @@ typedef struct Lin_solver_paramlist_t
     char Uplo;
     char transr; // Must be 'N' or 'T' or 'C'.
     integer nrhs; // number of rhight hand sides
+    integer ncolm; // number of columns to factor
     integer lda; //  leading dimension of the array a
     integer ldb; //  leading dimension of the array b
     integer ldab;  //  leading dimension of the array ab

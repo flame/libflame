@@ -7,6 +7,9 @@
 
 /* Rename API as per API_CALLING_CONVENTION */
 #if (UPPER_)
+    
+#define fla_lapack_sladiv SLADIV_
+#define fla_lapack_dladiv DLADIV_
 
 #define fla_lapack_slacpy SLACPY_
 #define fla_lapack_dlacpy DLACPY_
@@ -159,7 +162,20 @@
 #define fla_lapack_cstedc CHEEV_
 #define fla_lapack_zstedc ZHEEV_
 
+#define fla_lapack_sspffrt2 SSPFFRT2_
+#define fla_lapack_dspffrt2 DSPFFRT2_
+#define fla_lapack_cspffrt2 CSPFFRT2_
+#define fla_lapack_zspffrt2 ZSPFFRT2_
+
+#define fla_lapack_sspffrtx SSPFFRTX_
+#define fla_lapack_dspffrtx DSPFFRTX_
+#define fla_lapack_cspffrtx CSPFFRTX_
+#define fla_lapack_zspffrtx ZSPFFRTX_
+
 #elif (UPPER)
+
+#define fla_lapack_sladiv SLADIV
+#define fla_lapack_dladiv DLADIV
 
 #define fla_lapack_slacpy SLACPY
 #define fla_lapack_dlacpy DLACPY
@@ -312,7 +328,20 @@
 #define fla_lapack_cstedc CHEEV
 #define fla_lapack_zstedc ZHEEV
 
+#define fla_lapack_sspffrt2 SSPFFRT2
+#define fla_lapack_dspffrt2 DSPFFRT2
+#define fla_lapack_cspffrt2 CSPFFRT2
+#define fla_lapack_zspffrt2 ZSPFFRT2
+
+#define fla_lapack_sspffrtx SSPFFRTX
+#define fla_lapack_dspffrtx DSPFFRTX
+#define fla_lapack_cspffrtx CSPFFRTX
+#define fla_lapack_zspffrtx ZSPFFRTX
+
 #elif (LOWER)
+
+#define fla_lapack_sladiv sladiv
+#define fla_lapack_dladiv dladiv
 
 #define fla_lapack_slacpy slacpy
 #define fla_lapack_dlacpy dlacpy
@@ -465,7 +494,20 @@
 #define fla_lapack_cstedc cheev
 #define fla_lapack_zstedc zheev
 
+#define fla_lapack_sspffrt2 sspffrt2
+#define fla_lapack_dspffrt2 dspffrt2
+#define fla_lapack_cspffrt2 cspffrt2
+#define fla_lapack_zspffrt2 zspffrt2
+
+#define fla_lapack_sspffrtx sspffrtx
+#define fla_lapack_dspffrtx dspffrtx
+#define fla_lapack_cspffrtx cspffrtx
+#define fla_lapack_zspffrtx zspffrtx
+
 #else
+
+#define fla_lapack_sladiv sladiv_
+#define fla_lapack_dladiv dladiv_
 
 #define fla_lapack_slacpy slacpy_
 #define fla_lapack_dlacpy dlacpy_
@@ -618,6 +660,16 @@
 #define fla_lapack_cheev cheev_
 #define fla_lapack_zheev zheev_
 
+#define fla_lapack_sspffrt2 sspffrt2_
+#define fla_lapack_dspffrt2 dspffrt2_
+#define fla_lapack_cspffrt2 cspffrt2_
+#define fla_lapack_zspffrt2 zspffrt2_
+
+#define fla_lapack_sspffrtx sspffrtx_
+#define fla_lapack_dspffrtx dspffrtx_
+#define fla_lapack_cspffrtx cspffrtx_
+#define fla_lapack_zspffrtx zspffrtx_
+
 #endif /*if UPPER_*/
 
 /* These functions are API invoking functions used in other API test codes */
@@ -657,6 +709,10 @@ extern int zgemm_(char *transa, char *transb, integer *m, integer * n, integer *
 extern void dzgemm_(char* transa, char* transb, integer* m, integer* n, integer* k, void* alpha, void* a, integer* lda, void* b, integer* ldb, void* beta, void* c, integer* ldc);
 
 /* --------LAPACK APIs ---------*/
+
+/* performs complex division */
+extern int fla_lapack_sladiv(float *a, float *b, float *c__, float *d__, float *p, float *q);
+extern int fla_lapack_dladiv(double *a, double *b, double *c__, double *d__, double *p, double *q);
 
 extern float fla_lapack_slamch(char *);
 extern double fla_lapack_dlamch(char *);
@@ -826,5 +882,16 @@ extern int fla_lapack_ssyev(char *jobz, char *uplo, integer *n, void *a, integer
 extern int fla_lapack_dsyev(char *jobz, char *uplo, integer *n, void *a, integer *lda, void *w, void *work, integer *lwork, integer *info);
 extern int fla_lapack_cheev(char *jobz, char *uplo, integer *n, void *a, integer *lda, void *w, void *work, integer *lwork, void *rwork, integer *info);
 extern int fla_lapack_zheev(char *jobz, char *uplo, integer *n, void *a, integer *lda, void *w, void *work, integer *lwork, void *rwork, integer *info);
+
+/* Computes the partial LDLT factorization of a symmetric matrix using packed storage */
+extern int fla_lapack_sspffrt2(void  *ap, integer *n, integer *ncolm, void  *work, void  *work2);
+extern int fla_lapack_dspffrt2(void  *ap, integer *n, integer *ncolm, void  *work, void  *work2);
+extern int fla_lapack_cspffrt2(void  *ap, integer *n, integer *ncolm, void  *work, void  *work2);
+extern int fla_lapack_zspffrt2(void  *ap, integer *n, integer *ncolm, void  *work, void  *work2);
+
+extern int fla_lapack_sspffrtx(void  *ap, integer *n, integer *ncolm, void  *work, void  *work2);
+extern int fla_lapack_dspffrtx(void  *ap, integer *n, integer *ncolm, void  *work, void  *work2);
+extern int fla_lapack_cspffrtx(void  *ap, integer *n, integer *ncolm, void  *work, void  *work2);
+extern int fla_lapack_zspffrtx(void  *ap, integer *n, integer *ncolm, void  *work, void  *work2);
 
 #endif  // TEST_PROTOTYPE_H

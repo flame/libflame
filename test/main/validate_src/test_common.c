@@ -1873,3 +1873,70 @@ void init_vector_from_file(integer datatype, void* A, integer m, integer inc, FI
         }
     }
 }
+/* Pack a symmetric matrix in column first order */
+void pack_matrix_lt(integer datatype, void* A, void* B, integer N, integer lda)
+{
+    integer i, j;
+
+    switch (datatype)
+    {
+        case FLOAT:
+        {
+            float* bptr = (float*)B;
+    
+            for (i = 0; i < N; i++)
+            {
+                for (j = i; j < N; j++)
+                {
+                    *bptr++ = ((float*)A)[i * lda + j];
+                }
+            }
+            break;
+        }
+        case DOUBLE:
+        {
+            double* bptr = B;
+    
+            for (i = 0; i < N; i++)
+            {
+                for (j = i; j < N; j++)
+                {
+                    *bptr++ = ((double*)A)[i * lda + j];
+                }
+            }
+            break;
+        }
+        case COMPLEX:
+        {
+            scomplex* bptr = B;
+    
+            for (i = 0; i < N; i++)
+            {
+                for (j = i; j < N; j++)
+                {
+                    bptr->real = ((scomplex*)A)[i * lda + j].real;
+                    bptr->imag = ((scomplex*)A)[i * lda + j].imag;
+                    bptr++;
+                }
+            }
+            break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+            dcomplex* bptr = B;
+    
+            for (i = 0; i < N; i++)
+            {
+                for (j = i; j < N; j++)
+                {
+                    bptr->real = ((dcomplex*)A)[i * lda + j].real;
+                    bptr->imag = ((dcomplex*)A)[i * lda + j].imag;
+                    bptr++;
+                }
+            }
+            break;
+        }
+    }
+
+    return;
+}

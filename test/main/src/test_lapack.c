@@ -452,6 +452,12 @@ void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
     }
 
     fscanf(fp, "%s", &line[0]);
+    for (i = 0; i < NUM_SUB_TESTS; i++) {
+        fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].ncolm));
+        CHECK_LINE_SKIP();
+    }
+
+    fscanf(fp, "%s", &line[0]);
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].kl) );
         CHECK_LINE_SKIP ();

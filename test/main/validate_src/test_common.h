@@ -138,5 +138,7 @@ void init_matrix_from_file(integer datatype, void* A,integer m, integer n, integ
 void init_vector_from_file(integer datatype, void* A, integer m, integer inc, FILE* fptr);
 /* Allocate dynamic memory. If FLA_MEM_UNALIGNED is set, unaligned memory is allocated */
 char* fla_mem_alloc(integer size);
+/* Pack a symmetric matrix in column first order */
+void pack_matrix_lt(integer datatype, void* A, void* B, integer N, integer lda);
 
 #endif // TEST_COMMON_H

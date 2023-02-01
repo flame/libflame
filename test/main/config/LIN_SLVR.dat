@@ -14,6 +14,7 @@ Matrix_Layout 101 102 101 102
 trans N T N T
 uplo  L U U L
 nrhs  1  3  2  4
+ncolm 1  5  10  25
 kl    2  7  1  3
 ku    3  8  2  5
 kd    2  7  5  30
