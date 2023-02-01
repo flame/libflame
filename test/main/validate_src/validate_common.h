@@ -258,4 +258,18 @@ void validate_stedc(char compz,
     double* residual,
     integer *info);
 
+void validate_spffrt2(integer n,
+    integer ncolm,
+    void* A,
+    void* AP,
+    integer datatype,
+    double* residual);
+    
+void validate_spffrtx(integer n,
+    integer ncolm,
+    void* A,
+    void* AP,
+    integer datatype,
+    double* residual);
+	
 #endif // VALIDATE_COMMON_H

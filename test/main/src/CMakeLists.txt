@@ -27,6 +27,8 @@ ${CMAKE_CURRENT_SOURCE_DIR}/test_gesdd.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_potrf.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_stedc.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_syev.c
+${CMAKE_CURRENT_SOURCE_DIR}/test_spffrt2.c
+${CMAKE_CURRENT_SOURCE_DIR}/test_spffrtx.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_lapack.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_lapack.h
 ${CMAKE_CURRENT_SOURCE_DIR}/test_routines.h
