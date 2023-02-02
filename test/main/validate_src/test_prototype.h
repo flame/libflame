@@ -174,10 +174,10 @@
 #define fla_lapack_cunghr CUNGHR_
 #define fla_lapack_zunghr ZUNGHR_
 
-#define fla_lapack_sstedc SSYEV_
-#define fla_lapack_dstedc DSYEV_
-#define fla_lapack_cstedc CHEEV_
-#define fla_lapack_zstedc ZHEEV_
+#define fla_lapack_ssyev SSYEV_
+#define fla_lapack_dsyev DSYEV_
+#define fla_lapack_cheev CHEEV_
+#define fla_lapack_zheev ZHEEV_
 
 #define fla_lapack_sspffrt2 SSPFFRT2_
 #define fla_lapack_dspffrt2 DSPFFRT2_
@@ -188,6 +188,17 @@
 #define fla_lapack_dspffrtx DSPFFRTX_
 #define fla_lapack_cspffrtx CSPFFRTX_
 #define fla_lapack_zspffrtx ZSPFFRTX_
+
+#define fla_lapack_sgehrd SGEHRD_
+#define fla_lapack_dgehrd DGEHRD_
+#define fla_lapack_cgehrd CGEHRD_
+#define fla_lapack_zgehrd ZGEHRD_
+
+#define fla_lapack_sorghr SORGHR_
+#define fla_lapack_dorghr DORGHR_
+#define fla_lapack_cunghr CUNGHR_
+#define fla_lapack_zunghr ZUNGHR_
+
 
 #define fla_lapack_sgghrd SGGHRD_
 #define fla_lapack_dgghrd DGGHRD_
@@ -360,10 +371,10 @@
 #define fla_lapack_cunghr CUNGHR
 #define fla_lapack_zunghr ZUNGHR
 
-#define fla_lapack_sstedc SSYEV
-#define fla_lapack_dstedc DSYEV
-#define fla_lapack_cstedc CHEEV
-#define fla_lapack_zstedc ZHEEV
+#define fla_lapack_ssyev SSYEV
+#define fla_lapack_dsyev DSYEV
+#define fla_lapack_cheev CHEEV
+#define fla_lapack_zheev ZHEEV
 
 #define fla_lapack_sspffrt2 SSPFFRT2
 #define fla_lapack_dspffrt2 DSPFFRT2
@@ -374,6 +385,16 @@
 #define fla_lapack_dspffrtx DSPFFRTX
 #define fla_lapack_cspffrtx CSPFFRTX
 #define fla_lapack_zspffrtx ZSPFFRTX
+
+#define fla_lapack_sgehrd SGEHRD
+#define fla_lapack_dgehrd DGEHRD
+#define fla_lapack_cgehrd CGEHRD
+#define fla_lapack_zgehrd ZGEHRD
+
+#define fla_lapack_sorghr SORGHR
+#define fla_lapack_dorghr DORGHR
+#define fla_lapack_cunghr CUNGHR
+#define fla_lapack_zunghr ZUNGHR
 
 #define fla_lapack_sgghrd SGGHRD
 #define fla_lapack_dgghrd DGGHRD
@@ -546,10 +567,10 @@
 #define fla_lapack_cunghr cunghr
 #define fla_lapack_zunghr zunghr
 
-#define fla_lapack_sstedc ssyev
-#define fla_lapack_dstedc dsyev
-#define fla_lapack_cstedc cheev
-#define fla_lapack_zstedc zheev
+#define fla_lapack_ssyev ssyev
+#define fla_lapack_dsyev dsyev
+#define fla_lapack_cheev cheev
+#define fla_lapack_zheev zheev
 
 #define fla_lapack_sspffrt2 sspffrt2
 #define fla_lapack_dspffrt2 dspffrt2
@@ -560,6 +581,16 @@
 #define fla_lapack_dspffrtx dspffrtx
 #define fla_lapack_cspffrtx cspffrtx
 #define fla_lapack_zspffrtx zspffrtx
+
+#define fla_lapack_sgehrd sgehrd
+#define fla_lapack_dgehrd dgehrd
+#define fla_lapack_cgehrd cgehrd
+#define fla_lapack_zgehrd zgehrd
+
+#define fla_lapack_sorghr sorghr
+#define fla_lapack_dorghr dorghr
+#define fla_lapack_cunghr cunghr
+#define fla_lapack_zunghr zunghr
 
 #define fla_lapack_sgghrd sgghrd
 #define fla_lapack_dgghrd dgghrd
@@ -746,6 +777,16 @@
 #define fla_lapack_dspffrtx dspffrtx_
 #define fla_lapack_cspffrtx cspffrtx_
 #define fla_lapack_zspffrtx zspffrtx_
+
+#define fla_lapack_sgehrd sgehrd_
+#define fla_lapack_dgehrd dgehrd_
+#define fla_lapack_cgehrd cgehrd_
+#define fla_lapack_zgehrd zgehrd_
+
+#define fla_lapack_sorghr sorghr_
+#define fla_lapack_dorghr dorghr_
+#define fla_lapack_cunghr cunghr_
+#define fla_lapack_zunghr zunghr_
 
 #define fla_lapack_sgghrd sgghrd_
 #define fla_lapack_dgghrd dgghrd_

@@ -30,6 +30,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/test_hseqr.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_syev.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_spffrt2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_spffrtx.c
+${CMAKE_CURRENT_SOURCE_DIR}/test_gehrd.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_gghrd.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_lapack.c
 ${CMAKE_CURRENT_SOURCE_DIR}/test_lapack.h
