@@ -340,6 +340,12 @@ int lapack_sgebrd(integer *m, integer *n, real *a, integer *lda, real *d__, real
     }
     i__1 = minmn - nx;
     i__2 = nb;
+    i__ = 1;
+
+/* Current blocked algorithm has accuracy issue, so unblocked algorithm is enabled by default
+Todo: This is a temporary workaround until the issue in the blocked algorithm is fixed.
+*/
+#if !FLA_AMD_OPT
     for (i__ = 1;
             i__2 < 0 ? i__ >= i__1 : i__ <= i__1;
             i__ += i__2)
@@ -385,10 +391,12 @@ int lapack_sgebrd(integer *m, integer *n, real *a, integer *lda, real *d__, real
         }
         /* L30: */
     }
+#else
     /* Use unblocked code to reduce the remainder of the matrix */
     i__2 = *m - i__ + 1;
     i__1 = *n - i__ + 1;
     lapack_sgebd2(&i__2, &i__1, &a[i__ + i__ * a_dim1], lda, &d__[i__], &e[i__], & tauq[i__], &taup[i__], &work[1], &iinfo);
+#endif
     work[1] = (real) ws;
     return 0;
     /* End of SGEBRD */
