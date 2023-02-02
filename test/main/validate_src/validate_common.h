@@ -306,4 +306,15 @@ void validate_gghrd(char* compq,
     double* residual,
     integer *info);
 	
+void validate_gehrd(integer n,
+    integer ilo,
+    integer ihi,
+    void* A,
+    void* A_test,
+    integer lda,
+    void* tau,
+    integer datatype,
+    double* residual,
+    integer *info);
+
 #endif // VALIDATE_COMMON_H

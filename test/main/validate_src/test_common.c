@@ -2249,6 +2249,55 @@ void pack_matrix_lt(integer datatype, void* A, void* B, integer N, integer lda)
     return;
 }
 
+/* Convert matrix to upper hessenberg form */
+void extract_upper_hessenberg_matrix(integer datatype, integer n, void *A, integer lda)
+{
+    integer i;
+    switch( datatype )
+    {
+        case FLOAT:
+        {
+            /* Making elements below sub diagonal to Zero */
+            for( i = 0; i < n; i++ )
+            {
+                float *p = &((float *)A)[ (i+2) + i*lda];
+                reset_vector(datatype, (void *)p, n-i-2, 1);
+            }
+            break;
+        }
+        case DOUBLE:
+        {
+            /* Making elements below sub diagonal to Zero */
+            for( i = 0; i < n; i++ )
+            {
+                double *p = &((double *)A)[ (i+2) + i*lda];
+                reset_vector(datatype, (void *)p, n-i-2, 1);
+            }
+            break;
+        }
+        case COMPLEX:
+        {
+            /* Making elements below sub diagonal to Zero */
+            for( i = 0; i < n; i++ )
+            {
+                scomplex *p = &((scomplex *)A)[ (i+2) + i*lda];
+                reset_vector(datatype, (void *)p, n-i-2, 1);
+            }
+            break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+            /* Making elements below sub diagonal to Zero */
+            for( i = 0; i < n; i++ )
+            {
+                dcomplex *p = &((dcomplex *)A)[ (i+2) + i*lda];
+                reset_vector(datatype, (void *)p, n-i-2, 1);
+            }
+            break;
+        }
+    }
+}
+
 /* Decompose matrix A in to QR and store orthogonal matrix in Q and R in A*/
 void get_orthogonal_matrix_from_QR(integer datatype, integer n, void *A, integer lda, void *Q, integer ldq, integer *info)
 {
