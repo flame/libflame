@@ -441,6 +441,7 @@ int sspevx_(char *jobz, char *range, char *uplo, integer *n, real *ap, real *vl,
     /* If all eigenvalues are desired and ABSTOL is less than or equal */
     /* to zero, then call SSTERF or SOPGTR and SSTEQR. If this fails */
     /* for some eigenvalue, then try SSTEBZ. */
+    indibl = 1;
     test = FALSE_;
     if (indeig)
     {
@@ -493,7 +494,6 @@ int sspevx_(char *jobz, char *range, char *uplo, integer *n, real *ap, real *vl,
     {
         *(unsigned char *)order = 'E';
     }
-    indibl = 1;
     indisp = indibl + *n;
     indiwo = indisp + *n;
     sstebz_(range, order, n, &vll, &vuu, il, iu, &abstll, &work[indd], &work[ inde], m, &nsplit, &w[1], &iwork[indibl], &iwork[indisp], &work[ indwrk], &iwork[indiwo], info);

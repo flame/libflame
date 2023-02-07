@@ -451,6 +451,7 @@ int ssbgvx_(char *jobz, char *range, char *uplo, integer *n, integer *ka, intege
     /* Transform problem to standard eigenvalue problem. */
     ssbgst_(jobz, uplo, n, ka, kb, &ab[ab_offset], ldab, &bb[bb_offset], ldbb, &q[q_offset], ldq, &work[1], &iinfo);
     /* Reduce symmetric band matrix to tridiagonal form. */
+    indibl = 1;
     indd = 1;
     inde = indd + *n;
     indwrk = inde + *n;
@@ -517,7 +518,6 @@ int ssbgvx_(char *jobz, char *range, char *uplo, integer *n, integer *ka, intege
     {
         *(unsigned char *)order = 'E';
     }
-    indibl = 1;
     indisp = indibl + *n;
     indiwo = indisp + *n;
     sstebz_(range, order, n, vl, vu, il, iu, abstol, &work[indd], &work[inde], m, &nsplit, &w[1], &iwork[indibl], &iwork[indisp], &work[indwrk], &iwork[indiwo], info);
