@@ -169,6 +169,16 @@
 #define fla_lapack_cstedc CSTEDC_
 #define fla_lapack_zstedc ZSTEDC_
 
+#define fla_lapack_sgghrd SGGHRD_
+#define fla_lapack_dgghrd DGGHRD_
+#define fla_lapack_cgghrd CGGHRD_
+#define fla_lapack_zgghrd ZGGHRD_
+
+#define fla_lapack_shgeqz SHGEQZ_
+#define fla_lapack_dhgeqz DHGEQZ_
+#define fla_lapack_chgeqz CHGEQZ_
+#define fla_lapack_zhgeqz ZHGEQZ_
+
 #define fla_lapack_shseqr SHSEQR_
 #define fla_lapack_dhseqr DHSEQR_
 #define fla_lapack_chseqr CHSEQR_
@@ -376,6 +386,16 @@
 #define fla_lapack_cstedc CSTEDC
 #define fla_lapack_zstedc ZSTEDC
 
+#define fla_lapack_sgghrd SGGHRD
+#define fla_lapack_dgghrd DGGHRD
+#define fla_lapack_cgghrd CGGHRD
+#define fla_lapack_zgghrd ZGGHRD
+
+#define fla_lapack_shgeqz SHGEQZ
+#define fla_lapack_dhgeqz DHGEQZ
+#define fla_lapack_chgeqz CHGEQZ
+#define fla_lapack_zhgeqz ZHGEQZ
+
 #define fla_lapack_shseqr SHSEQR
 #define fla_lapack_dhseqr DHSEQR
 #define fla_lapack_chseqr CHSEQR
@@ -581,6 +601,16 @@
 #define fla_lapack_dstedc dstedc
 #define fla_lapack_cstedc cstedc
 #define fla_lapack_zstedc zstedc
+
+#define fla_lapack_sgghrd sgghrd
+#define fla_lapack_dgghrd dgghrd
+#define fla_lapack_cgghrd cgghrd
+#define fla_lapack_zgghrd zgghrd
+
+#define fla_lapack_shgeqz shgeqz
+#define fla_lapack_dhgeqz dhgeqz
+#define fla_lapack_chgeqz chgeqz
+#define fla_lapack_zhgeqz zhgeqz
 
 #define fla_lapack_shseqr shseqr
 #define fla_lapack_dhseqr dhseqr
@@ -788,6 +818,16 @@
 #define fla_lapack_cstedc cstedc_
 #define fla_lapack_zstedc zstedc_
 
+#define fla_lapack_sgghrd sgghrd_
+#define fla_lapack_dgghrd dgghrd_
+#define fla_lapack_cgghrd cgghrd_
+#define fla_lapack_zgghrd zgghrd_
+
+#define fla_lapack_shgeqz shgeqz_
+#define fla_lapack_dhgeqz dhgeqz_
+#define fla_lapack_chgeqz chgeqz_
+#define fla_lapack_zhgeqz zhgeqz_
+
 #define fla_lapack_shseqr shseqr_
 #define fla_lapack_dhseqr dhseqr_
 #define fla_lapack_chseqr chseqr_
@@ -841,6 +881,7 @@ extern void invoke_potrf(char* uplo, integer datatype, integer* m, void* a, inte
 extern void invoke_geqrf(integer datatype, integer* m, integer* n, void* a, integer* lda, void* tau, void* work, integer* lwork, integer* info);
 /* Generates Orthogonal matrix from ORGTR() after SYTRD() call. */
 extern void invoke_sytrd(integer datatype, char *uplo, char compz, integer n, void *A, integer lda, void *D, void *E, integer *info);
+extern void invoke_gghrd(integer datatype, char* compq, char* compz, integer* n, integer* ilo, integer* ihi, void* a, integer* lda, void* b, integer* ldb, void* q, integer* ldq, void* z, integer* ldz, integer* info);
 
 
 #endif  // TEST_PROTOTYPE_H

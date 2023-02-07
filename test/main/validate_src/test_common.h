@@ -98,8 +98,6 @@ void init_matrix_from_file(integer datatype, void* A,integer m, integer n, integ
 void init_vector_from_file(integer datatype, void* A, integer m, integer inc, FILE* fptr);
 /* Allocate dynamic memory. If FLA_MEM_UNALIGNED is set, unaligned memory is allocated */
 char* fla_mem_alloc(integer size);
-/* Convert matrix according to ILO and IHI values */
-void rand_hess_matrix(integer datatype, integer N, void *A, integer LDA, integer ilo, integer ihi);
 /* Generate Hessenberg matrix */
 void get_hessenberg_matrix(integer datatype, integer n, void* A, integer lda, void *Z, integer ldz, integer *ilo, integer *ihi, void* scale, integer *info);
 /* Convert matrix to upper hessenberg form */
@@ -114,4 +112,6 @@ void get_generic_triangular_matrix(integer datatype, integer N, void *A, integer
 void get_orthogonal_matrix_from_QR(integer datatype, integer n, void *A, integer lda, void *Q, integer ldq, integer *info);
 /* Print matrix contents for visual inspection */
 void print_matrix(char* desc, integer datatype, integer M, integer N, void* A, integer lda);
+/* Get upper triangular matrix or lower triangular matrix based on UPLO */
+void get_triangular_matrix(char *uplo, integer datatype, integer m, integer n, void *a, integer lda);
 #endif // TEST_COMMON_H
