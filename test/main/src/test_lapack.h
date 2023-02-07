@@ -150,10 +150,13 @@ typedef struct EIG_paramlist_t
     integer lda; //  leading dimension of the array a
     integer ldb; //  leading dimension of the array b
     integer ldz;
+    integer ldq;
     integer nb;  //  leading dimension of the array ab
     integer ldt; // number of subdiagonals
     integer k;
     integer isgn;
+    char compq_hgeqz;
+    char compz_hgeqz;
     char compz;
     char compz_hseqr;
     integer kb;
@@ -167,9 +170,9 @@ typedef struct EIG_paramlist_t
     char diag;
     char storev;
     integer tsize;
-    integer threshold_value; // threshold value for EIG
     integer ilo;
     integer ihi;
+    integer threshold_value; // threshold value for EIG
 }EIG_paramlist;
 
 
@@ -232,6 +235,8 @@ typedef struct EIG_Non_symmetric_paramlist_t
     integer  wantq; // Must be 1 or 0
     integer  tgsen_ijob; // Must be between 0 to 5
     char unmhr_trans; // Must be N or C
+    integer ilo;
+    integer ihi;
 }EIG_Non_symmetric_paramlist;
 
 

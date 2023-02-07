@@ -2480,3 +2480,95 @@ void print_matrix(char* desc, integer datatype, integer M, integer N, void* A, i
         }
     }
 }
+
+
+/* Get upper triangular matrix or lower triangular matrix based on UPLO */
+void get_triangular_matrix(char *uplo, integer datatype, integer m, integer n, void *A, integer lda)
+{
+    rand_matrix(datatype, A, m, n, lda);
+    integer i;
+
+    switch(datatype)
+    {
+        case FLOAT:
+        {
+            if(*uplo == 'U')
+            {
+                for( i = 0; i < n; i++ )
+                {
+                    float *p = &((float *)A)[ (i+1) + i*lda];
+                    reset_vector(datatype, (void *)p, m-i-1, 1);
+                }
+            }
+            if(*uplo == 'L')
+            {
+                for( i = 0; i < n; i++ )
+                {
+                    float *p = &((float *)A)[i*lda];
+                    reset_vector(datatype, (void *)p, i+1, 1);
+                }
+            }
+            break;
+        }
+        case DOUBLE:
+        {
+            if(*uplo == 'U')
+            {
+                for( i = 0; i < n; i++ )
+                {
+                    double *p = &((double *)A)[ (i+1) + i*lda];
+                    reset_vector(datatype, (void *)p, m-i-1, 1);
+                }
+            }
+            if(*uplo == 'L')
+            {
+                for( i = 0; i < n; i++ )
+                {
+                    double *p = &((double *)A)[i*lda];
+                    reset_vector(datatype, (void *)p, i+1, 1);
+                }
+            }
+            break;
+        }
+        case COMPLEX:
+        {
+            if(*uplo == 'U')
+            {
+                for( i = 0; i < n; i++ )
+                {
+                    scomplex *p = &((scomplex *)A)[ (i+1) + i*lda];
+                    reset_vector(datatype, (void *)p, m-i-1, 1);
+                }
+            }
+            if(*uplo == 'L')
+            {
+                for( i = 0; i < n; i++ )
+                {
+                    scomplex *p = &((scomplex *)A)[i*lda];
+                    reset_vector(datatype, (void *)p, i+1, 1);
+                }
+            }
+            break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+            if(*uplo == 'U')
+            {
+                for( i = 0; i < n; i++ )
+                {
+                    dcomplex *p = &((dcomplex *)A)[ (i+1) + i*lda];
+                    reset_vector(datatype, (void *)p, m-i-1, 1);
+                }
+            }
+            if(*uplo == 'L')
+            {
+                for( i = 0; i < n; i++ )
+                {
+                    dcomplex *p = &((dcomplex *)A)[i*lda];
+                    reset_vector(datatype, (void *)p, i+1, 1);
+                }
+            }
+            break;
+        }
+    }
+}

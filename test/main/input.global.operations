@@ -31,3 +31,4 @@
 1   spffrtx Partial LDLT factorization                    (0 = disable; 1 = enable; 2 = enable only this)
 1   gehrd   Hessenberg form by orthogonal transformation  (0 = disable; 1 = enable; 2 = enable only this)
 1   gghrd   Reduces pair of matrices to upper Hessenberg  (0 = disable; 1 = enable; 2 = enable only this)
+1   hgeqz   EigenValue of pairs(H,T) by QZ method         (0 = disable; 1 = enable; 2 = enable only this)

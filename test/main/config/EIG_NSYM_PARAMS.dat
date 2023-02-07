@@ -29,8 +29,6 @@ isgn 1 -1 -1 1
 gghrd_threshold 10.0 10.0 10.0 10.0
 ggbal_threshold 10.0 10.0 10.0 10.0
 GNSEP_threshold 5.0 10.0 20.0 30.0
-compq_hgeqz N I V I
-compz_hgeqz N I V I
 side_tgevc L R B B
 jobvsl N V V V
 jobvsr V N V V

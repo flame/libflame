@@ -759,6 +759,12 @@ void fla_test_read_sym_eig_params( const char *file_name , test_params_t* params
         CHECK_LINE_SKIP ();
     }
 
+    fscanf(fp, "%s", &line[0]); // Leading dimension of Q
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].ldq) );
+        CHECK_LINE_SKIP ();
+    }
+
     fscanf(fp, "%s", &line[0]);
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].nb) );
@@ -780,6 +786,20 @@ void fla_test_read_sym_eig_params( const char *file_name , test_params_t* params
     fscanf(fp, "%s", &line[0]);
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%"FT_IS"", &(params->eig_sym_paramslist[i].isgn) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // Must be 'N','I' or 'V
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%s", str);
+        params->eig_sym_paramslist[i].compq_hgeqz = *str;
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // Must be 'N','I' or 'V
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%s", str);
+        params->eig_sym_paramslist[i].compz_hgeqz = *str;
         CHECK_LINE_SKIP ();
     }
 
@@ -1126,20 +1146,6 @@ void fla_test_read_non_sym_eig_params( const char *file_name , test_params_t* pa
     fscanf(fp, "%s", &line[0]);
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%f", &(params->eig_non_sym_paramslist[i].GenNonSymEigProblem_threshold) );
-        CHECK_LINE_SKIP ();
-    }
-
-    fscanf(fp, "%s", &line[0]);
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%s", str);
-        params->eig_non_sym_paramslist[i].compq_hgeqz = *str;
-        CHECK_LINE_SKIP ();
-    }
-
-    fscanf(fp, "%s", &line[0]);
-    for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%s", str);
-        params->eig_non_sym_paramslist[i].compz_hgeqz = *str;
         CHECK_LINE_SKIP ();
     }
 

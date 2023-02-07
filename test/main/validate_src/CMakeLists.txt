@@ -29,6 +29,7 @@ ${CMAKE_CURRENT_SOURCE_DIR}/validate_hseqr.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_spffrt2.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_spffrtx.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_gehrd.c
+${CMAKE_CURRENT_SOURCE_DIR}/validate_hgeqz.c
 ${CMAKE_CURRENT_SOURCE_DIR}/validate_gghrd.c
 )
 

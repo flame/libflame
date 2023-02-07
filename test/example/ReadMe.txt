@@ -21,15 +21,15 @@ script can be used for both Linux and Windows platforms.
         -DEXT_BLAS_LIBNAME=libblis-mt.a -DEXT_LAPACK_LIBNAME=libflame.a
         ```
 
-2. Compile the sample applications
+3. Compile the sample application
         ```
         For Linux
                 cmake --build . or make
-        For Windows 
+        For Windows
                 cmake --build .
         ```
 
-3. Run the application
+4. Run the application
         ```
         For Linux
                 ./test_dgetrf.x
