@@ -58,30 +58,43 @@ extern void DTL_Trace(
 #define LAPACK_getrf_body_d(prefix)                                                    \
   if( *m <= FLA_DGETRF_SMALL_THRESH0 && *n <= FLA_DGETRF_SMALL_THRESH0 )               \
   {                                                                                    \
-    FLA_LU_piv_small_d_var0( m, n, buff_A, ldim_A, buff_p, info );                     \
+    FLA_LU_piv_small_d_var0( m, n, (double *)buff_A, ldim_A, buff_p, info );           \
   }                                                                                    \
   else if( *m < FLA_DGETRF_SMALL_THRESH1 && *n < FLA_DGETRF_SMALL_THRESH1 )            \
   {                                                                                    \
-    FLA_LU_piv_small_d_var1( m, n, buff_A, ldim_A, buff_p, info );                     \
+    FLA_LU_piv_small_d_var1( m, n, (double *)buff_A, ldim_A, buff_p, info );           \
   }                                                                                    \
   else                                                                                 \
   {                                                                                    \
-    dgetrf2_( m, n, buff_A, ldim_A, buff_p, info);                                     \
+    dgetrf2_( m, n, (double *)buff_A, ldim_A, buff_p, info);                           \
   }
 
-#define LAPACK_getrf_body_z(prefix)                                                    \
-  if( *m <= FLA_ZGETRF_SMALL_THRESH0 && *n <= FLA_ZGETRF_SMALL_THRESH0 )               \
-  {                                                                                    \
-    FLA_LU_piv_small_z_var0( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info );                     \
-  }                                                                                    \
-  else if( *m < FLA_ZGETRF_SMALL_THRESH1 && *n < FLA_ZGETRF_SMALL_THRESH1 )            \
-  {                                                                                    \
-    lapack_zgetrf( m, n, buff_A, ldim_A, buff_p, info);                                \
-  }                                                                                    \
-  else                                                                                 \
-  {                                                                                    \
-    zgetrf2_( m, n, buff_A, ldim_A, buff_p, info);                                     \
-  }
+#ifdef FLA_OPENMP_MULTITHREADING
+  #define LAPACK_getrf_body_z(prefix)                                                    \
+    if( *m <= FLA_ZGETRF_SMALL_THRESH0 && *n <= FLA_ZGETRF_SMALL_THRESH0 )               \
+    {                                                                                    \
+      FLA_LU_piv_small_z_avx2( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info );         \
+    }                                                                                    \
+    else                                                                                 \
+    {                                                                                    \
+      FLA_LU_piv_z_var1_parallel( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info);       \
+    }
+#else
+  #define LAPACK_getrf_body_z(prefix)                                                    \
+    if( *m <= FLA_ZGETRF_SMALL_THRESH0 && *n <= FLA_ZGETRF_SMALL_THRESH0 )               \
+    {                                                                                    \
+      FLA_LU_piv_small_z_avx2( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info );         \
+    }                                                                                    \
+    else if( *m <= FLA_ZGETRF_SMALL_THRESH1 && *n <= FLA_ZGETRF_SMALL_THRESH1 )          \
+    {                                                                                    \
+      FLA_LU_piv_z_var1( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info);                \
+    }                                                                                    \
+    else                                                                                 \
+    {                                                                                    \
+      zgetrf2_( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info);                         \
+    }
+#endif
+
 
 #else /* FLA_AMD_OPT */
 
@@ -91,7 +104,7 @@ extern void DTL_Trace(
 #define LAPACK_getrf_body_d(prefix)                                                    \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);                               \
   FLA_Obj      A, p;                                                                   \
-  integer      min_m_n    = fla_min( *m, *n );                                             \
+  integer      min_m_n    = fla_min( *m, *n );                                         \
   FLA_Error    e_val = FLA_SUCCESS;                                                    \
   FLA_Error    init_result;                                                            \
   FLA_Bool skip = FALSE;                                                               \
@@ -120,7 +133,7 @@ extern void DTL_Trace(
 #define LAPACK_getrf_body(prefix)                               \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   FLA_Obj      A, p;                                            \
-  integer      min_m_n    = fla_min( *m, *n );                      \
+  integer      min_m_n    = fla_min( *m, *n );                  \
   FLA_Error    e_val = FLA_SUCCESS;                             \
   FLA_Error    init_result;                                     \
   FLA_Bool skip = FALSE;                                        \
@@ -131,11 +144,11 @@ extern void DTL_Trace(
     switch(datatype)                                                                                                \
     {                                                                                                               \
        case FLA_FLOAT:                                                                                              \
-       { lapack_sgetrf( m, n, (float *)buff_A, ldim_A, buff_p, info); break; }                                               \
+       { lapack_sgetrf( m, n, (float *)buff_A, ldim_A, buff_p, info); break; }                                      \
        case FLA_COMPLEX:                                                                                            \
-       { lapack_cgetrf( m, n, (scomplex *)buff_A, ldim_A, buff_p, info); break; }                                               \
+       { lapack_cgetrf( m, n, (scomplex *)buff_A, ldim_A, buff_p, info); break; }                                   \
        case FLA_DOUBLE_COMPLEX:                                                                                     \
-       { lapack_zgetrf( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info); break; }                                               \
+       { lapack_zgetrf( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info); break; }                                   \
     }  if ( *info != 0 ) skip  = TRUE;                                                                              \
                                                                                                                     \
   }                                                                                                                 \
@@ -164,11 +177,11 @@ extern void DTL_Trace(
     switch(datatype)                                                                   \
     {                                                                                  \
        case FLA_FLOAT:                                                                 \
-       { sgetrf2_( m, n, (float *)buff_A, ldim_A, buff_p, info); break; }                       \
+       { sgetrf2_( m, n, (float *)buff_A, ldim_A, buff_p, info); break; }              \
        case FLA_COMPLEX:                                                               \
-       { cgetrf2_( m, n, (scomplex *)buff_A, ldim_A, buff_p, info); break; }                       \
+       { cgetrf2_( m, n, (scomplex *)buff_A, ldim_A, buff_p, info); break; }           \
        case FLA_DOUBLE_COMPLEX:                                                        \
-       { zgetrf2_( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info); break; }                       \
+       { zgetrf2_( m, n, (dcomplex *)buff_A, ldim_A, buff_p, info); break; }           \
     }  if ( *info != 0 ) skip  = TRUE;                                                 \
                                                                                        \
   }                                                                                    \
@@ -185,7 +198,7 @@ extern void DTL_Trace(
 #define LAPACK_getrf_body(prefix)                               \
   FLA_Datatype datatype = PREFIX2FLAME_DATATYPE(prefix);        \
   FLA_Obj      A, p, AH, ph;                                    \
-  integer      min_m_n    = fla_min( *m, *n );                      \
+  integer      min_m_n    = fla_min( *m, *n );                  \
   dim_t        nth, b_flash;                                    \
   FLA_Error    e_val;                                           \
   FLA_Error    init_result;                                     \
