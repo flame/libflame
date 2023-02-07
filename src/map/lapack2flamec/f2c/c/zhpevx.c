@@ -448,6 +448,7 @@ int zhpevx_(char *jobz, char *range, char *uplo, integer *n, doublecomplex *ap, 
     /* If all eigenvalues are desired and ABSTOL is less than or equal */
     /* to zero, then call DSTERF or ZUPGTR and ZSTEQR. If this fails */
     /* for some eigenvalue, then try DSTEBZ. */
+    indibl = 1;
     test = FALSE_;
     if (indeig)
     {
@@ -500,7 +501,6 @@ int zhpevx_(char *jobz, char *range, char *uplo, integer *n, doublecomplex *ap, 
     {
         *(unsigned char *)order = 'E';
     }
-    indibl = 1;
     indisp = indibl + *n;
     indiwk = indisp + *n;
     dstebz_(range, order, n, &vll, &vuu, il, iu, &abstll, &rwork[indd], & rwork[inde], m, &nsplit, &w[1], &iwork[indibl], &iwork[indisp], & rwork[indrwk], &iwork[indiwk], info);

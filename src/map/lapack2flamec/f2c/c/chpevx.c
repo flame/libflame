@@ -460,6 +460,7 @@ int chpevx_(char *jobz, char *range, char *uplo, integer *n, complex *ap, real *
     /* If all eigenvalues are desired and ABSTOL is less than or equal */
     /* to zero, then call SSTERF or CUPGTR and CSTEQR. If this fails */
     /* for some eigenvalue, then try SSTEBZ. */
+    indibl = 1;
     test = FALSE_;
     if (indeig)
     {
@@ -512,7 +513,6 @@ int chpevx_(char *jobz, char *range, char *uplo, integer *n, complex *ap, real *
     {
         *(unsigned char *)order = 'E';
     }
-    indibl = 1;
     indisp = indibl + *n;
     indiwk = indisp + *n;
     sstebz_(range, order, n, &vll, &vuu, il, iu, &abstll, &rwork[indd], & rwork[inde], m, &nsplit, &w[1], &iwork[indibl], &iwork[indisp], & rwork[indrwk], &iwork[indiwk], info);
