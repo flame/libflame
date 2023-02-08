@@ -1,3 +1,6 @@
+/******************************************************************************
+* Copyright (C) 2023, Advanced Micro Devices, Inc. All rights reserved.
+*******************************************************************************/
 /*
 
     Copyright (C) 2014, The University of Texas at Austin
@@ -95,7 +98,10 @@
   *info = 0;                                                            \
                                                                         \
 
-
+/* 
+    LAPACK path is enabled for both {S,D}GEQPF when FLA_AMD_OPT is set to to 
+    fix the incorrect results and NANs observed while testing xGEQPF.
+ */
 
 LAPACK_geqpf(s)
 {
@@ -105,6 +111,7 @@ LAPACK_geqpf(s)
     {
         for ( int i=0; i<*n; ++i) buff_p[i] = (i+1);
     }
+#if !FLA_AMD_OPT
     {
         LAPACK_RETURN_CHECK_VAR1( sgeqpf_check( m, n,
                                            buff_A, ldim_A,
@@ -120,7 +127,21 @@ LAPACK_geqpf(s)
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
+#else
+    {
+        sgeqpf_fla( m, n,
+            buff_A, ldim_A,
+            buff_p,
+            buff_t,
+            buff_w,
+            info );
+        fla_error = 0;
+    }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
+#endif
 }
+
 LAPACK_geqpf(d)
 {
     int fla_error = LAPACK_SUCCESS;
@@ -129,6 +150,7 @@ LAPACK_geqpf(d)
     {
         for ( int i=0; i<*n; ++i) buff_p[i] = (i+1);
     }
+#if !FLA_AMD_OPT
     {
         LAPACK_RETURN_CHECK_VAR1( dgeqpf_check( m, n,
                                            buff_A, ldim_A,
@@ -144,6 +166,19 @@ LAPACK_geqpf(d)
     }
     AOCL_DTL_TRACE_LOG_EXIT
     return fla_error;
+#else
+    {
+        dgeqpf_fla( m, n,
+            buff_A, ldim_A,
+            buff_p,
+            buff_t,
+            buff_w,
+            info );
+        fla_error = 0;
+    }
+    AOCL_DTL_TRACE_LOG_EXIT
+    return fla_error;
+#endif  
 }
 
 #define LAPACK_geqpf_complex(prefix)                                    \
