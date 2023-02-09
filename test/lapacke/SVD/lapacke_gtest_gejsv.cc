@@ -45,8 +45,8 @@ class gejsv_float_parameters{
     lapack_int n; // The number of columns of the matrix A 
     lapack_int lda; //  The leading dimension of a
 
-    lapack_int ldu; // leading dimension of the output array u . ldu≥ fla_max(1, m)
-    lapack_int ldv; // The leading dimension of the output array v . ldv≥ fla_max(1, p)
+    lapack_int ldu; // leading dimension of the output array u . ldu≥ max(1, m)
+    lapack_int ldv; // The leading dimension of the output array v . ldv≥ max(1, p)
 	
     /* Input / Output parameters */
     float* a, *aref; // contains m-by-n matrix A.
@@ -304,8 +304,8 @@ class gejsv_double_parameters{
     lapack_int n; // The number of columns of the matrix A 
     lapack_int lda; //  The leading dimension of a
 
-    lapack_int ldu; // leading dimension of the output array u . ldu≥ fla_max(1, m)
-    lapack_int ldv; // The leading dimension of the output array v . ldv≥ fla_max(1, p)
+    lapack_int ldu; // leading dimension of the output array u . ldu≥ max(1, m)
+    lapack_int ldv; // The leading dimension of the output array v . ldv≥ max(1, p)
 	
     /* Input / Output parameters */
     double* a, *aref; // contains m-by-n matrix A.
@@ -562,8 +562,8 @@ class gejsv_scomplex_parameters{
     lapack_int n; // The number of columns of the matrix A 
     lapack_int lda; //  The leading dimension of a
 
-    lapack_int ldu; // leading dimension of the output array u . ldu≥ fla_max(1, m)
-    lapack_int ldv; // The leading dimension of the output array v . ldv≥ fla_max(1, p)
+    lapack_int ldu; // leading dimension of the output array u . ldu≥ max(1, m)
+    lapack_int ldv; // The leading dimension of the output array v . ldv≥ max(1, p)
 	
     /* Input / Output parameters */
     lapack_complex_float* a, *aref; // contains m-by-n matrix A.
@@ -833,8 +833,8 @@ class gejsv_dcomplex_parameters{
     lapack_int n; // The number of columns of the matrix A 
     lapack_int lda; //  The leading dimension of a
 
-    lapack_int ldu; // leading dimension of the output array u . ldu≥ fla_max(1, m)
-    lapack_int ldv; // The leading dimension of the output array v . ldv≥ fla_max(1, p)
+    lapack_int ldu; // leading dimension of the output array u . ldu≥ max(1, m)
+    lapack_int ldv; // The leading dimension of the output array v . ldv≥ max(1, p)
 	
     /* Input / Output parameters */
     lapack_complex_double* a, *aref; // contains m-by-n matrix A.

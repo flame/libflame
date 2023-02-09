@@ -53,7 +53,7 @@ poequb_float_parameters:: poequb_float_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-    lda = n; // as per API spec, lda≥ fla_max(1, n).
+    lda = n; // as per API spec, lda≥ max(1, n).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n poequb float:  n: %d lda: %d \n", n, lda);
@@ -212,7 +212,7 @@ poequb_double_parameters:: poequb_double_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-    lda = n; // as per API spec, lda≥ fla_max(1, n).
+    lda = n; // as per API spec, lda≥ max(1, n).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n poequb double:  n: %d lda: %d \n", n, lda);
@@ -371,7 +371,7 @@ poequb_scomplex_parameters:: poequb_scomplex_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-    lda = n; // as per API spec, lda≥ fla_max(1, n).
+    lda = n; // as per API spec, lda≥ max(1, n).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n poequb scomplex:  n: %d lda: %d \n", n, lda);
@@ -533,7 +533,7 @@ poequb_dcomplex_parameters:: poequb_dcomplex_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-    lda = n; // as per API spec, lda≥ fla_max(1, n).
+    lda = n; // as per API spec, lda≥ max(1, n).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n poequb dcomplex:  n: %d lda: %d \n", n, lda);

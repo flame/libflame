@@ -98,12 +98,12 @@ unmbr_scomplex_parameters:: unmbr_scomplex_parameters (int matrix_layout_i, char
 			if (side == 'L')
 			{	
 				r = m;
-				lda  = fla_min(r, k);
+				lda  = min(r, k);
 				bufsize_a  = lda *m;
 			}else if (side == 'R')
 			{	
 				r = n;
-				lda  = fla_min(r, k);
+				lda  = min(r, k);
 				bufsize_a  = lda *n;
 			}
 			
@@ -136,12 +136,12 @@ unmbr_scomplex_parameters:: unmbr_scomplex_parameters (int matrix_layout_i, char
 	
 	/*Memory allocation */
 	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&A, &Aref, bufsize_a);
-	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&tau, &tauref, fla_min(r,k));
-	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&taup, &taupref, fla_min(m,n));
-	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&tauq, &tauqref, fla_min(m,n));
+	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&tau, &tauref, min(r,k));
+	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&taup, &taupref, min(m,n));
+	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&tauq, &tauqref, min(m,n));
 	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&c, &cref, bufsize_c);
-	lapacke_gtest_alloc_float_buffer_pair(&d, &dref, fla_min(m,n));
-	lapacke_gtest_alloc_float_buffer_pair(&e, &eref, (fla_min(m,n) -1));
+	lapacke_gtest_alloc_float_buffer_pair(&d, &dref, min(m,n));
+	lapacke_gtest_alloc_float_buffer_pair(&e, &eref, (min(m,n) -1));
 	if ((A==NULL) || (Aref==NULL) || \
 		(tau==NULL) || (tauref==NULL) ||
 		(taup==NULL) || (taupref==NULL) ||
@@ -349,12 +349,12 @@ unmbr_dcomplex_parameters:: unmbr_dcomplex_parameters (int matrix_layout_i, char
 			if (side == 'L')
 			{	
 				r = m;
-				lda  = fla_min(r, k);
+				lda  = min(r, k);
 				bufsize_a  = lda *m;
 			}else if (side == 'R')
 			{	
 				r = n;
-				lda  = fla_min(r, k);
+				lda  = min(r, k);
 				bufsize_a  = lda *n;
 			}
 			
@@ -387,12 +387,12 @@ unmbr_dcomplex_parameters:: unmbr_dcomplex_parameters (int matrix_layout_i, char
 	
 	/*Memory allocation */
 	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&A, &Aref, bufsize_a);
-	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&tau, &tauref, fla_min(r,k));
-	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&taup, &taupref, fla_min(m,n));
-	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&tauq, &tauqref, fla_min(m,n));
+	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&tau, &tauref, min(r,k));
+	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&taup, &taupref, min(m,n));
+	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&tauq, &tauqref, min(m,n));
 	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&c, &cref, bufsize_c);
-	lapacke_gtest_alloc_double_buffer_pair(&d, &dref, fla_min(m,n));
-	lapacke_gtest_alloc_double_buffer_pair(&e, &eref, (fla_min(m,n) -1));
+	lapacke_gtest_alloc_double_buffer_pair(&d, &dref, min(m,n));
+	lapacke_gtest_alloc_double_buffer_pair(&e, &eref, (min(m,n) -1));
 	if ((A==NULL) || (Aref==NULL) || \
 		(tau==NULL) || (tauref==NULL) ||
 		(taup==NULL) || (taupref==NULL) ||

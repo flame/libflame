@@ -59,7 +59,7 @@ geequb_float_parameters:: geequb_float_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-     lda = m; // as per API spec, lda≥ fla_max(1, m).
+     lda = m; // as per API spec, lda≥ max(1, m).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n geequb float:  m: %d, n: %d lda: %d \n", m, n, lda);
@@ -247,7 +247,7 @@ geequb_double_parameters:: geequb_double_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-     lda = m; // as per API spec, lda≥ fla_max(1, m).
+     lda = m; // as per API spec, lda≥ max(1, m).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n geequb double:  m: %d, n: %d lda: %d \n", m, n, lda);
@@ -435,7 +435,7 @@ geequb_scomplex_parameters:: geequb_scomplex_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-     lda = m; // as per API spec, lda≥ fla_max(1, m).
+     lda = m; // as per API spec, lda≥ max(1, m).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n geequb scomplex:  m: %d, n: %d lda: %d \n", m, n, lda);
@@ -624,7 +624,7 @@ geequb_dcomplex_parameters:: geequb_dcomplex_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-     lda = m; // as per API spec, lda≥ fla_max(1, m).
+     lda = m; // as per API spec, lda≥ max(1, m).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n geequb dcomplex:  m: %d, n: %d lda: %d \n", m, n, lda);

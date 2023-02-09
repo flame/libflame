@@ -14,7 +14,7 @@ class bbcsd_double_parameters{
    char  TRANS;
    int 	 M;  // 512
    int 	 P; //  0 <= P <= M.  250
-   int 	 Q; // 0 <= Q <= MIN(P,M-P,M-Q)       212  <= fla_min(250, 262, 300)
+   int 	 Q; // 0 <= Q <= MIN(P,M-P,M-Q)       212  <= min(250, 262, 300)
    int 	 LDU1; //  LDU1 >= MAX(1,P)  250
    int 	 LDU2; //  LDU2 >= MAX(1,M-P)  262
    int 	 LDV1T; //  LDV1T >= MAX(1,Q)  212
@@ -120,8 +120,8 @@ bbcsd_double_parameters::bbcsd_double_parameters (char jobu1, char jobu2, char j
    B22E    = (double *)malloc( (Q-1)*sizeof(double) );
    B22Eref = (double *)malloc( (Q-1)*sizeof(double) );
    
-   WORK    = (double *)malloc( fla_max(1,LWORK)*sizeof(double) );
-   WORKref = (double *)malloc( fla_max(1,LWORK)*sizeof(double) ); 
+   WORK    = (double *)malloc( max(1,LWORK)*sizeof(double) );
+   WORKref = (double *)malloc( max(1,LWORK)*sizeof(double) ); 
 
    if ((THETA==NULL) || (THETAref==NULL) || (PHI==NULL) || (PHIref==NULL) / 
        (U1==NULL) || (U1ref==NULL) || (U2==NULL)  || (U2ref==NULL) /      
@@ -203,7 +203,7 @@ bbcsd_double_parameters::bbcsd_double_parameters (char jobu1, char jobu2, char j
 	   B22E[j] = ((double) rand()) / ((double) RAND_MAX) - 0.5;
        B22Eref[j] = B22E[j];
     }
-    for( j = 0; j < fla_max(1,LWORK); j++ ) {
+    for( j = 0; j < max(1,LWORK); j++ ) {
        WORK[j] = ((double) rand()) / ((double) RAND_MAX) - 0.5;
        WORKref[j] = WORK[j];
     }
@@ -325,7 +325,7 @@ class bbcsd_float_parameters{
    char  TRANS;
    int 	 M;  // 512
    int 	 P; //  0 <= P <= M.  250
-   int 	 Q; // 0 <= Q <= MIN(P,M-P,M-Q)       212  <= fla_min(250, 262, 300)
+   int 	 Q; // 0 <= Q <= MIN(P,M-P,M-Q)       212  <= min(250, 262, 300)
    int 	 LDU1; //  LDU1 >= MAX(1,P)  250
    int 	 LDU2; //  LDU2 >= MAX(1,M-P)  262
    int 	 LDV1T; //  LDV1T >= MAX(1,Q)  212
@@ -422,8 +422,8 @@ bbcsd_float_parameters::bbcsd_float_parameters (char jobu1, char jobu2, char job
    B22E    = (float *)malloc( (Q-1)*sizeof(float) );
    B22Eref = (float *)malloc( (Q-1)*sizeof(float) );
    
-   WORK    = (float *)malloc( fla_max(1,LWORK)*sizeof(float) );
-   WORKref = (float *)malloc( fla_max(1,LWORK)*sizeof(float) ); 
+   WORK    = (float *)malloc( max(1,LWORK)*sizeof(float) );
+   WORKref = (float *)malloc( max(1,LWORK)*sizeof(float) ); 
 
    if ((THETA==NULL) || (THETAref==NULL) || (PHI==NULL) || (PHIref==NULL) / 
        (U1==NULL) || (U1ref==NULL) || (U2==NULL)  || (U2ref==NULL) /      
@@ -505,7 +505,7 @@ bbcsd_float_parameters::bbcsd_float_parameters (char jobu1, char jobu2, char job
 	   B22E[j] = ((float) rand()) / ((float) RAND_MAX) - 0.5;
        B22Eref[j] = B22E[j];
     }
-    for( j = 0; j < fla_max(1,LWORK); j++ ) {
+    for( j = 0; j < max(1,LWORK); j++ ) {
        WORK[j] = ((float) rand()) / ((float) RAND_MAX) - 0.5;
        WORKref[j] = WORK[j];
     }

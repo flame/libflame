@@ -59,7 +59,7 @@ geqr2_float_parameters:: geqr2_float_parameters (int matrix_layout_i, lapack_int
 	
 	/*Memory allocation */
 	lapacke_gtest_alloc_float_buffer_pair(&A, &Aref, bufsize);
-	lapacke_gtest_alloc_float_buffer_pair(&tau, &tauref, (fla_min(m,n)));	
+	lapacke_gtest_alloc_float_buffer_pair(&tau, &tauref, (min(m,n)));	
 	if ((A==NULL) || (Aref==NULL) || \
 		(tau==NULL) || (tauref==NULL)){
 		EXPECT_FALSE( true) << "geqr2_float_parameters object: malloc error.";
@@ -69,7 +69,7 @@ geqr2_float_parameters:: geqr2_float_parameters (int matrix_layout_i, lapack_int
 	/* Initialization of input matrices */
 	lapacke_gtest_init_float_buffer_pair_rand( A, Aref, bufsize);
 	/*initialize output matrix by 0 */
-	for(i=0;i<(fla_min(m,n));i++) {
+	for(i=0;i<(min(m,n));i++) {
 		tau[i] = 0;
 		tauref[i] = tau[i];
 	}
@@ -208,7 +208,7 @@ geqr2_double_parameters:: geqr2_double_parameters (int matrix_layout_i, lapack_i
 	
 	/*Memory allocation */
 	lapacke_gtest_alloc_double_buffer_pair(&A, &Aref, bufsize);
-	lapacke_gtest_alloc_double_buffer_pair(&tau, &tauref, (fla_min(m,n)));	
+	lapacke_gtest_alloc_double_buffer_pair(&tau, &tauref, (min(m,n)));	
 	if ((A==NULL) || (Aref==NULL) || \
 		(tau==NULL) || (tauref==NULL)){
 		EXPECT_FALSE( true) << "geqr2_double_parameters object: malloc error.";
@@ -218,7 +218,7 @@ geqr2_double_parameters:: geqr2_double_parameters (int matrix_layout_i, lapack_i
 	/* Initialization of input matrices */
 	lapacke_gtest_init_double_buffer_pair_rand( A, Aref, bufsize);
 	/*initialize output matrix by 0 */
-	for(i=0;i<(fla_min(m,n));i++) {
+	for(i=0;i<(min(m,n));i++) {
 		tau[i] = 0;
 		tauref[i] = tau[i];
 	}
@@ -354,7 +354,7 @@ geqr2_scomplex_parameters:: geqr2_scomplex_parameters (int matrix_layout_i, lapa
 	
 	/*Memory allocation */
 	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&A, &Aref, bufsize);
-	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&tau, &tauref, (fla_min(m,n)));	
+	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&tau, &tauref, (min(m,n)));	
 	if ((A==NULL) || (Aref==NULL) || \
 		(tau==NULL) || (tauref==NULL)){
 		EXPECT_FALSE( true) << "geqr2_float_parameters object: malloc error.";
@@ -364,7 +364,7 @@ geqr2_scomplex_parameters:: geqr2_scomplex_parameters (int matrix_layout_i, lapa
 	/* Initialization of input matrices */
 	lapacke_gtest_init_scomplex_buffer_pair_rand( A, Aref, bufsize);
 	/*initialize output matrix by 0 */
-	for(i=0;i<(fla_min(m,n));i++) {
+	for(i=0;i<(min(m,n));i++) {
 		tau[i] = 0;
 		tauref[i] = tau[i];
 	}
@@ -501,7 +501,7 @@ geqr2_dcomplex_parameters:: geqr2_dcomplex_parameters (int matrix_layout_i, lapa
 	
 	/*Memory allocation */
 	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&A, &Aref, bufsize);
-	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&tau, &tauref, (fla_min(m,n)));	
+	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&tau, &tauref, (min(m,n)));	
 	if ((A==NULL) || (Aref==NULL) || \
 		(tau==NULL) || (tauref==NULL)){
 		EXPECT_FALSE( true) << "geqr2_float_parameters object: malloc error.";
@@ -511,7 +511,7 @@ geqr2_dcomplex_parameters:: geqr2_dcomplex_parameters (int matrix_layout_i, lapa
 	/* Initialization of input matrices */
 	lapacke_gtest_init_dcomplex_buffer_pair_rand( A, Aref, bufsize);
 	/*initialize output matrix by 0 */
-	for(i=0;i<(fla_min(m,n));i++) {
+	for(i=0;i<(min(m,n));i++) {
 		tau[i] = 0;
 		tauref[i] = tau[i];
 	}
