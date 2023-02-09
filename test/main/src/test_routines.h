@@ -28,6 +28,7 @@ void fla_test_hseqr(integer argc, char ** argv, test_params_t *params);
 void fla_test_syev(integer argc, char ** argv, test_params_t *params);
 void fla_test_spffrt2(integer argc, char ** argv, test_params_t *params);
 void fla_test_spffrtx(integer argc, char ** argv, test_params_t* params);
+void fla_test_gghrd(integer argc, char ** argv, test_params_t* params);
 
 #define LIN_ID 0
 #define EIG_ID 1
@@ -60,7 +61,8 @@ OPERATIONS API_test_functions[] =
     {EIG_ID,    "hseqr"               , fla_test_hseqr},
     {EIG_ID,    "syev"                , fla_test_syev},
     {LIN_ID,    "spffrt2"             , fla_test_spffrt2},
-    {LIN_ID,    "spffrtx"             , fla_test_spffrtx}
+    {LIN_ID,    "spffrtx"             , fla_test_spffrtx},
+    {LIN_ID,    "gghrd"               , fla_test_gghrd}
 };
 
 /* Add test API's group entry below */

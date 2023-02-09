@@ -284,5 +284,24 @@ void validate_spffrtx(integer n,
     void* AP,
     integer datatype,
     double* residual);
+
+void validate_gghrd(char* compq,
+    char* compz,
+    integer n,
+    void* A,
+    void* A_test,
+    integer lda,
+    void* B,
+    void* B_test,
+    integer ldb,
+    void* Q,
+    void* Q_test,
+    integer ldq,
+    void* Z,
+    void* Z_test,
+    integer ldz,
+    integer datatype,
+    double* residual,
+    integer *info);
 	
 #endif // VALIDATE_COMMON_H
