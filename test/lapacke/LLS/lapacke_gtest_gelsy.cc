@@ -64,7 +64,7 @@ gelsy_float_parameters:: gelsy_float_parameters (int matrix_layout_i, lapack_int
 	
 	if (matrix_layout == LAPACK_COL_MAJOR){
 		lda = m;
-		ldb = fla_max(m,n);
+		ldb = max(m,n);
 		bufsize = lda*n;
 		bufsize_b = ldb*nrhs;
 	}else if (matrix_layout == LAPACK_ROW_MAJOR) {
@@ -241,7 +241,7 @@ gelsy_double_parameters:: gelsy_double_parameters (int matrix_layout_i, lapack_i
 	
 	if (matrix_layout == LAPACK_COL_MAJOR){
 		lda = m;
-		ldb = fla_max(m,n);
+		ldb = max(m,n);
 		bufsize = lda*n;
 		bufsize_b = ldb*nrhs;
 	}else if (matrix_layout == LAPACK_ROW_MAJOR) {
@@ -413,7 +413,7 @@ gelsy_scomplex_parameters:: gelsy_scomplex_parameters (int matrix_layout_i, lapa
 	
 	if (matrix_layout == LAPACK_COL_MAJOR){
 		lda = m;
-		ldb = fla_max(m,n);
+		ldb = max(m,n);
 		bufsize = lda*n;
 		bufsize_b = ldb*nrhs;
 	}else if (matrix_layout == LAPACK_ROW_MAJOR) {
@@ -584,7 +584,7 @@ gelsy_dcomplex_parameters:: gelsy_dcomplex_parameters (int matrix_layout_i, lapa
 	
 	if (matrix_layout == LAPACK_COL_MAJOR){
 		lda = m;
-		ldb = fla_max(m,n);
+		ldb = max(m,n);
 		bufsize = lda*n;
 		bufsize_b = ldb*nrhs;
 	}else if (matrix_layout == LAPACK_ROW_MAJOR) {

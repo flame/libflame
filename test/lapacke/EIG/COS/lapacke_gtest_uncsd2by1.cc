@@ -88,8 +88,8 @@ uncsd2by1_scomplex_parameters:: uncsd2by1_scomplex_parameters (int matrix_layout
 	bufsize_v1t = ldv1t*q;
 	
 	/*Bufsize for theta */
-	p < fla_min(m-p,m-q)? bufsize_theta = p: bufsize_theta = fla_min(m-p,m-q);
-	bufsize_theta = fla_min(bufsize_theta, q);	
+	p < min(m-p,m-q)? bufsize_theta = p: bufsize_theta = min(m-p,m-q);
+	bufsize_theta = min(bufsize_theta, q);	
 
 		
 	/*Memory allocation */
@@ -302,8 +302,8 @@ uncsd2by1_dcomplex_parameters:: uncsd2by1_dcomplex_parameters (int matrix_layout
 	bufsize_v1t = ldv1t*q;
 	
 	/*Bufsize for theta */
-	p < fla_min(m-p,m-q)? bufsize_theta = p: bufsize_theta = fla_min(m-p,m-q);
-	bufsize_theta = fla_min(bufsize_theta, q);	
+	p < min(m-p,m-q)? bufsize_theta = p: bufsize_theta = min(m-p,m-q);
+	bufsize_theta = min(bufsize_theta, q);	
 	
 		
 	/*Memory allocation */

@@ -53,7 +53,7 @@ tpqrt_float_parameters:: tpqrt_float_parameters (int matrix_layout_i, lapack_int
 	n = n_i;
 	m = m_i;
 	nb = nb_i;
-	l = fla_min(m,n);
+	l = min(m,n);
 	lda =n;
 	#if LAPACKE_TEST_VERBOSE
 	printf(" \n tpqrt float:  m: %d, n: %d  \n",  m, n);
@@ -227,7 +227,7 @@ tpqrt_double_parameters:: tpqrt_double_parameters (int matrix_layout_i, lapack_i
 	n = n_i;
 	m = m_i;
 	nb = nb_i;
-	l = fla_min(m,n);
+	l = min(m,n);
 	lda =n;
 	#if LAPACKE_TEST_VERBOSE
 	printf(" \n tpqrt double:  m: %d, n: %d  \n",  m, n);
@@ -400,7 +400,7 @@ tpqrt_scomplex_parameters:: tpqrt_scomplex_parameters (int matrix_layout_i, lapa
 	n = n_i;
 	m = m_i;
 	nb = nb_i;
-	l = fla_min(m,n);
+	l = min(m,n);
 	lda =n;
 	#if LAPACKE_TEST_VERBOSE
 	printf(" \n tpqrt scomplex:  m: %d, n: %d  \n",  m, n);
@@ -572,7 +572,7 @@ tpqrt_dcomplex_parameters:: tpqrt_dcomplex_parameters (int matrix_layout_i, lapa
 	n = n_i;
 	m = m_i;
 	nb = nb_i;
-	l = fla_min(m,n);
+	l = min(m,n);
 	lda =n;
 	#if LAPACKE_TEST_VERBOSE
 	printf(" \n tpqrt dcomplex:  m: %d, n: %d  \n",  m, n);

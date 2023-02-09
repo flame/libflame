@@ -80,7 +80,7 @@ unbdb_scomplex_parameters:: unbdb_scomplex_parameters (int matrix_layout_i, char
 	if (signs == 'L')
 		signs = 'O';
 	
-	p < fla_min(m-p,m-q)? q = p: q = fla_min(m-p,m-q);
+	p < min(m-p,m-q)? q = p: q = min(m-p,m-q);
 	
 	if (trans == 'C') // Trans is either 'N' or 'T'
 		trans = 'N';
@@ -372,7 +372,7 @@ unbdb_dcomplex_parameters:: unbdb_dcomplex_parameters (int matrix_layout_i, char
 	if (signs == 'L')
 		signs = 'O';
 	
-	p < fla_min(m-p,m-q)? q = p: q = fla_min(m-p,m-q);
+	p < min(m-p,m-q)? q = p: q = min(m-p,m-q);
 
 	if (trans == 'C') // Trans is either 'N' or 'T'
 		trans = 'N';

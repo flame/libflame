@@ -112,8 +112,8 @@ uncsd_scomplex_parameters:: uncsd_scomplex_parameters (int matrix_layout_i, char
 	bufsize_v2t = ldu2*(m-q);
 	
 	/*Bufsize for theta */
-	p < fla_min(m-p,m-q)? bufsize_theta = p: bufsize_theta = fla_min(m-p,m-q);
-	bufsize_theta = fla_min(bufsize_theta, q);	
+	p < min(m-p,m-q)? bufsize_theta = p: bufsize_theta = min(m-p,m-q);
+	bufsize_theta = min(bufsize_theta, q);	
 		
 	/*Memory allocation */
 	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&x11, &x11ref, bufsize_x11);
@@ -377,8 +377,8 @@ uncsd_dcomplex_parameters:: uncsd_dcomplex_parameters (int matrix_layout_i, char
 	bufsize_v2t = ldu2*(m-q);
 	
 	/*Bufsize for theta */
-	p < fla_min(m-p,m-q)? bufsize_theta = p: bufsize_theta = fla_min(m-p,m-q);
-	bufsize_theta = fla_min(bufsize_theta, q);	
+	p < min(m-p,m-q)? bufsize_theta = p: bufsize_theta = min(m-p,m-q);
+	bufsize_theta = min(bufsize_theta, q);	
 	
 		
 	/*Memory allocation */

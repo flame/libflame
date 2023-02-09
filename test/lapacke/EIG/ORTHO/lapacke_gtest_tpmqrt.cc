@@ -68,7 +68,7 @@ tpmqrt_float_parameters:: tpmqrt_float_parameters (int matrix_layout_i, char sid
 	side = side_i;
 	trans = trans_i;
 	nb = nb_i;
-	l  = fla_min(m,n);
+	l  = min(m,n);
 	
 	if (trans == 'C')
 		trans  = 'N' ;
@@ -360,7 +360,7 @@ tpmqrt_double_parameters:: tpmqrt_double_parameters (int matrix_layout_i, char s
 	side = side_i;
 	trans = trans_i;
 	nb = nb_i;
-	l  = fla_min(m,n);
+	l  = min(m,n);
 	k = m;
 	
 	if (trans == 'C')
@@ -649,7 +649,7 @@ tpmqrt_scomplex_parameters:: tpmqrt_scomplex_parameters (int matrix_layout_i, ch
 	side = side_i;
 	trans = trans_i;
 	nb = nb_i;
-	l  = fla_min(m,n);
+	l  = min(m,n);
 	k = m;
 	
 	if (trans == 'T')
@@ -938,7 +938,7 @@ tpmqrt_dcomplex_parameters:: tpmqrt_dcomplex_parameters (int matrix_layout_i, ch
 	side = side_i;
 	trans = trans_i;
 	nb = nb_i;
-	l  = fla_min(m,n);
+	l  = min(m,n);
 	k = m;
 	
 	if (trans == 'T')

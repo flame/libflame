@@ -72,8 +72,8 @@ ggqrf_float_parameters:: ggqrf_float_parameters (int matrix_layout_i, lapack_int
 	/*Memory allocation */
 	lapacke_gtest_alloc_float_buffer_pair(&A, &Aref, bufsize);
 	lapacke_gtest_alloc_float_buffer_pair(&b, &bref, bufsize_b);
-	lapacke_gtest_alloc_float_buffer_pair(&taua, &tauaref, fla_min(n,m));
-	lapacke_gtest_alloc_float_buffer_pair(&taub, &taubref, fla_min(n,p));
+	lapacke_gtest_alloc_float_buffer_pair(&taua, &tauaref, min(n,m));
+	lapacke_gtest_alloc_float_buffer_pair(&taub, &taubref, min(n,p));
 		if ((A==NULL) || (Aref==NULL) ||\
 		(b == NULL) || (bref == NULL) ||
 		(taua == NULL) || (tauaref == NULL) ||
@@ -235,8 +235,8 @@ ggqrf_double_parameters:: ggqrf_double_parameters (int matrix_layout_i, lapack_i
 	/*Memory allocation */
 	lapacke_gtest_alloc_double_buffer_pair(&A, &Aref, bufsize);
 	lapacke_gtest_alloc_double_buffer_pair(&b, &bref, bufsize_b);
-	lapacke_gtest_alloc_double_buffer_pair(&taua, &tauaref, fla_min(n,m));
-	lapacke_gtest_alloc_double_buffer_pair(&taub, &taubref, fla_min(n,p));
+	lapacke_gtest_alloc_double_buffer_pair(&taua, &tauaref, min(n,m));
+	lapacke_gtest_alloc_double_buffer_pair(&taub, &taubref, min(n,p));
 		if ((A==NULL) || (Aref==NULL) ||\
 		(b == NULL) || (bref == NULL) ||
 		(taua == NULL) || (tauaref == NULL) ||
@@ -398,8 +398,8 @@ ggqrf_scomplex_parameters:: ggqrf_scomplex_parameters (int matrix_layout_i, lapa
 	/*Memory allocation */
 	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&A, &Aref, bufsize);
 	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&b, &bref, bufsize_b);
-	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&taua, &tauaref, fla_min(n,m));
-	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&taub, &taubref, fla_min(n,p));
+	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&taua, &tauaref, min(n,m));
+	lapacke_gtest_alloc_lapack_scomplex_buffer_pair(&taub, &taubref, min(n,p));
 		if ((A==NULL) || (Aref==NULL) ||\
 		(b == NULL) || (bref == NULL) ||
 		(taua == NULL) || (tauaref == NULL) ||
@@ -560,8 +560,8 @@ ggqrf_dcomplex_parameters:: ggqrf_dcomplex_parameters (int matrix_layout_i, lapa
 	/*Memory allocation */
 	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&A, &Aref, bufsize);
 	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&b, &bref, bufsize_b);
-	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&taua, &tauaref, fla_min(n,m));
-	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&taub, &taubref, fla_min(n,p));
+	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&taua, &tauaref, min(n,m));
+	lapacke_gtest_alloc_lapack_dcomplex_buffer_pair(&taub, &taubref, min(n,p));
 		if ((A==NULL) || (Aref==NULL) ||\
 		(b == NULL) || (bref == NULL) ||
 		(taua == NULL) || (tauaref == NULL) ||

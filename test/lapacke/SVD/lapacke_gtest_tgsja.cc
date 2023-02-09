@@ -47,9 +47,9 @@ class tgsja_float_parameters{
     // thresholds to determine the effective numerical rank of matrix B and a subblock of A.
     float tola;
     float tolb;
-    lapack_int ldu; // leading dimension of the output array u . ldu≥ fla_max(1, m)
-    lapack_int ldv; // The leading dimension of the output array v . ldv≥ fla_max(1, p) 
-    lapack_int ldq; // The leading dimension of the output array q . ldq≥ fla_max(1, n)
+    lapack_int ldu; // leading dimension of the output array u . ldu≥ max(1, m)
+    lapack_int ldv; // The leading dimension of the output array v . ldv≥ max(1, p) 
+    lapack_int ldq; // The leading dimension of the output array q . ldq≥ max(1, n)
     /* Input / Output parameters */
     float* a, *aref; // contains m-by-n matrix A.
     float* b, *bref; // contains  p-by-n matrix B.
@@ -423,9 +423,9 @@ class tgsja_double_parameters{
     // thresholds to determine the effective numerical rank of matrix B and a subblock of A.
     double tola;
     double tolb;
-    lapack_int ldu; // leading dimension of the output array u . ldu≥ fla_max(1, m)
-    lapack_int ldv; // The leading dimension of the output array v . ldv≥ fla_max(1, p) 
-    lapack_int ldq; // The leading dimension of the output array q . ldq≥ fla_max(1, n)
+    lapack_int ldu; // leading dimension of the output array u . ldu≥ max(1, m)
+    lapack_int ldv; // The leading dimension of the output array v . ldv≥ max(1, p) 
+    lapack_int ldq; // The leading dimension of the output array q . ldq≥ max(1, n)
     /* Input / Output parameters */
     double* a, *aref; // contains m-by-n matrix A.
     double* b, *bref; // contains  p-by-n matrix B.
@@ -798,9 +798,9 @@ class tgsja_scomplex_parameters{
     // thresholds to determine the effective numerical rank of matrix B and a subblock of A.
     float tola;
     float tolb;
-    lapack_int ldu; // leading dimension of the output array u . ldu≥ fla_max(1, m)
-    lapack_int ldv; // The leading dimension of the output array v . ldv≥ fla_max(1, p) 
-    lapack_int ldq; // The leading dimension of the output array q . ldq≥ fla_max(1, n)
+    lapack_int ldu; // leading dimension of the output array u . ldu≥ max(1, m)
+    lapack_int ldv; // The leading dimension of the output array v . ldv≥ max(1, p) 
+    lapack_int ldq; // The leading dimension of the output array q . ldq≥ max(1, n)
     /* Input / Output parameters */
     lapack_complex_float* a, *aref; // contains m-by-n matrix A.
     lapack_complex_float* b, *bref; // contains  p-by-n matrix B.
@@ -1176,9 +1176,9 @@ class tgsja_dcomplex_parameters{
     // thresholds to determine the effective numerical rank of matrix B and a subblock of A.
     double tola;
     double tolb;
-    lapack_int ldu; // leading dimension of the output array u . ldu≥ fla_max(1, m)
-    lapack_int ldv; // The leading dimension of the output array v . ldv≥ fla_max(1, p) 
-    lapack_int ldq; // The leading dimension of the output array q . ldq≥ fla_max(1, n)
+    lapack_int ldu; // leading dimension of the output array u . ldu≥ max(1, m)
+    lapack_int ldv; // The leading dimension of the output array v . ldv≥ max(1, p) 
+    lapack_int ldq; // The leading dimension of the output array q . ldq≥ max(1, n)
     /* Input / Output parameters */
     lapack_complex_double* a, *aref; // contains m-by-n matrix A.
     lapack_complex_double* b, *bref; // contains  p-by-n matrix B.

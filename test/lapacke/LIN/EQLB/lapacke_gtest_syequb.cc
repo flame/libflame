@@ -54,7 +54,7 @@ syequb_float_parameters:: syequb_float_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-    lda = n; // as per API spec, lda≥ fla_max(1, n).
+    lda = n; // as per API spec, lda≥ max(1, n).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n syequb float:  n: %d lda: %d \n", n, lda);
@@ -219,7 +219,7 @@ syequb_double_parameters:: syequb_double_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-    lda = n; // as per API spec, lda≥ fla_max(1, n).
+    lda = n; // as per API spec, lda≥ max(1, n).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n syequb double:  n: %d lda: %d \n", n, lda);
@@ -382,7 +382,7 @@ syequb_scomplex_parameters:: syequb_scomplex_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-    lda = n; // as per API spec, lda≥ fla_max(1, n).
+    lda = n; // as per API spec, lda≥ max(1, n).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n syequb scomplex:  n: %d lda: %d \n", n, lda);
@@ -546,7 +546,7 @@ syequb_dcomplex_parameters:: syequb_dcomplex_parameters ( int matrix_layout_i,
     info = 0;
     inforef = 0;
 
-    lda = n; // as per API spec, lda≥ fla_max(1, n).
+    lda = n; // as per API spec, lda≥ max(1, n).
 
 #if LAPACKE_TEST_VERBOSE
    printf(" \n syequb dcomplex:  n: %d lda: %d \n", n, lda);
