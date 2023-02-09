@@ -96,16 +96,21 @@ typedef struct Lin_solver_paramlist_t
     integer matrix_layout;
     char Uplo;
     char transr; // Must be 'N' or 'T' or 'C'.
+    char compq_gghrd;
+    char compz_gghrd;
     integer nrhs; // number of rhight hand sides
     integer ncolm; // number of columns to factor
     integer lda; //  leading dimension of the array a
     integer ldb; //  leading dimension of the array b
+    integer ldq; //  leading dimension of the array q
+    integer ldz; //  leading dimension of the array z
     integer ldab;  //  leading dimension of the array ab
     integer kl; // number of subdiagonals
     integer ku; // number of superdiagonals
     integer kd; // number of super or sub diagonals
     char diag; // flag to indicate unit diagonal
-
+    integer ilo;
+    integer ihi;
     // below params are used only by Lin solver driver APIs.
     char fact;  // Must be 'F', 'N', or 'E'.
     char equed; // Must be 'N', 'R'. 'C', 'B'

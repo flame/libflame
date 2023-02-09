@@ -1875,7 +1875,7 @@ void init_vector_from_file(integer datatype, void* A, integer m, integer inc, FI
 }
 
 /* Convert matrix according to ILO and IHI values */
-void rand_hess_matrix(integer datatype, integer N, void *A, integer LDA, integer ilo, integer ihi)
+void get_generic_triangular_matrix(integer datatype, integer N, void *A, integer LDA, integer ilo, integer ihi)
 {
     /* Intialize matrix with random values */
     rand_matrix(datatype, A, N, N, LDA);
@@ -1961,7 +1961,7 @@ void get_hessenberg_matrix(integer datatype, integer n, void* A, integer lda, vo
     create_vector(datatype, &tau, n-1);
 
     /* Convert matrix according to ILO and IHI values */
-    rand_hess_matrix(datatype, n, A, lda, *ilo, *ihi);
+    get_generic_triangular_matrix(datatype, n, A, lda, *ilo, *ihi);
 
     switch(datatype)
     {
@@ -2247,4 +2247,113 @@ void pack_matrix_lt(integer datatype, void* A, void* B, integer N, integer lda)
     }
 
     return;
+}
+
+/* Decompose matrix A in to QR and store orthogonal matrix in Q and R in A*/
+void get_orthogonal_matrix_from_QR(integer datatype, integer n, void *A, integer lda, void *Q, integer ldq, integer *info)
+{
+    void *tau = NULL, *work = NULL;
+    integer lwork = -1;
+
+    /* Intializing matrix for the call to GGHRD */
+    create_vector(datatype, &work, 1);
+    create_vector(datatype, &tau, n);
+
+    switch(datatype)
+    {
+        case FLOAT:
+        {
+            /* Generating orthogonal matrix Q by QR reduction of A */
+            copy_matrix(datatype, "full", n, n, A, lda, Q, ldq);
+            fla_lapack_sgeqrf(&n, &n, NULL, &ldq, NULL, work, &lwork, info);
+            if(*info<0)
+                break;
+            else
+                lwork = get_work_value(datatype, work);
+            create_vector(datatype, &work, lwork);
+            /* Call to SGEQRF to decompose matrix to QR form */
+            fla_lapack_sgeqrf(&n, &n, Q, &ldq, tau, work, &lwork, info);
+            if(*info<0)
+                break;
+            reset_matrix(datatype, n, n, A, lda);
+            copy_matrix(datatype, "Upper", n, n, Q, ldq, A, lda);
+            reset_vector(datatype, work, lwork, 1);
+            /* Call to SORGQR to calculate matrix to Q */
+            fla_lapack_sorgqr(&n, &n, &n, Q, &ldq, tau, work, &lwork, info);
+            if(*info<0)
+                break;
+            break;
+        }
+        case DOUBLE:
+        {
+            /* Generating orthogonal matrix Q by QR reduction of A */
+            copy_matrix(datatype, "full", n, n, A, lda, Q, ldq);
+            fla_lapack_dgeqrf(&n, &n, NULL, &ldq, NULL, work, &lwork, info);
+            if(*info<0)
+                break;
+            else
+                lwork = get_work_value(datatype, work);
+            create_vector(datatype, &work, lwork);
+            /* Call to DGEQRF to decompose matrix to QR form */
+            fla_lapack_dgeqrf(&n, &n, Q, &ldq, tau, work, &lwork, info);
+            if(*info<0)
+                break;
+            reset_matrix(datatype, n, n, A, lda);
+            copy_matrix(datatype, "Upper", n, n, Q, ldq, A, lda);
+            reset_vector(datatype, work, lwork, 1);
+            /* Call to DORGQR to calculate matrix to Q */
+            fla_lapack_dorgqr(&n, &n, &n, Q, &ldq, tau, work, &lwork, info);
+            if(*info<0)
+                break;
+            break;
+        }
+        case COMPLEX:
+        {
+            /* Generating orthogonal matrix Q by QR reduction of A */
+            copy_matrix(datatype, "full", n, n, A, lda, Q, ldq);
+            fla_lapack_cgeqrf(&n, &n, NULL, &ldq, NULL, work, &lwork, info);
+            if(*info<0)
+                break;
+            else
+                lwork = get_work_value(datatype, work);
+            create_vector(datatype, &work, lwork);
+            /* Call to CGEQRF to decompose matrix to QR form */
+            fla_lapack_cgeqrf(&n, &n, Q, &ldq, tau, work, &lwork, info);
+            if(*info<0)
+                break;
+            reset_matrix(datatype, n, n, A, lda);
+            copy_matrix(datatype, "Upper", n, n, Q, ldq, A, lda);
+            reset_vector(datatype, work, lwork, 1);
+            /* Call to CUNGQR to calculate matrix to Q */
+            fla_lapack_cungqr(&n, &n, &n, Q, &ldq, tau, work, &lwork, info);
+            if(*info<0)
+                break;
+            break;
+        }
+        case DOUBLE_COMPLEX:
+        {
+            /* Generating orthogonal matrix Q by QR reduction of A */
+            copy_matrix(datatype, "full", n, n, A, lda, Q, ldq);
+            fla_lapack_zgeqrf(&n, &n, NULL, &ldq, NULL, work, &lwork, info);
+            if(*info<0)
+                break;
+            else
+                lwork = get_work_value(datatype, work);
+            create_vector(datatype, &work, lwork);
+            /* Call to ZGEQRF to decompose matrix to QR form */
+            fla_lapack_zgeqrf(&n, &n, Q, &ldq, tau, work, &lwork, info);
+            if(*info<0)
+                break;
+            reset_matrix(datatype, n, n, A, lda);
+            copy_matrix(datatype, "Upper", n, n, Q, ldq, A, lda);
+            reset_vector(datatype, work, lwork, 1);
+            /* Call to ZUNGQR to calculate matrix to Q */
+            fla_lapack_zungqr(&n, &n, &n, Q, &ldq, tau, work, &lwork, info);
+            if(*info<0)
+                break;
+            break;
+        }
+    }
+    free_vector(tau);
+    free_vector(work);
 }

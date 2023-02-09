@@ -187,6 +187,11 @@
 #define fla_lapack_cspffrtx CSPFFRTX_
 #define fla_lapack_zspffrtx ZSPFFRTX_
 
+#define fla_lapack_sgghrd SGGHRD_
+#define fla_lapack_dgghrd DGGHRD_
+#define fla_lapack_cgghrd CGGHRD_
+#define fla_lapack_zgghrd ZGGHRD_
+
 #elif (UPPER)
 
 #define fla_lapack_sladiv SLADIV
@@ -367,6 +372,11 @@
 #define fla_lapack_dspffrtx DSPFFRTX
 #define fla_lapack_cspffrtx CSPFFRTX
 #define fla_lapack_zspffrtx ZSPFFRTX
+
+#define fla_lapack_sgghrd SGGHRD
+#define fla_lapack_dgghrd DGGHRD
+#define fla_lapack_cgghrd CGGHRD
+#define fla_lapack_zgghrd ZGGHRD
 
 #elif (LOWER)
 
@@ -549,6 +559,11 @@
 #define fla_lapack_cspffrtx cspffrtx
 #define fla_lapack_zspffrtx zspffrtx
 
+#define fla_lapack_sgghrd sgghrd
+#define fla_lapack_dgghrd dgghrd
+#define fla_lapack_cgghrd cgghrd
+#define fla_lapack_zgghrd zgghrd
+
 #else
 
 #define fla_lapack_sladiv sladiv_
@@ -729,6 +744,11 @@
 #define fla_lapack_dspffrtx dspffrtx_
 #define fla_lapack_cspffrtx cspffrtx_
 #define fla_lapack_zspffrtx zspffrtx_
+
+#define fla_lapack_sgghrd sgghrd_
+#define fla_lapack_dgghrd dgghrd_
+#define fla_lapack_cgghrd cgghrd_
+#define fla_lapack_zgghrd zgghrd_
 
 #endif /*if UPPER_*/
 
@@ -970,4 +990,8 @@ extern int fla_lapack_dspffrtx(void  *ap, integer *n, integer *ncolm, void  *wor
 extern int fla_lapack_cspffrtx(void  *ap, integer *n, integer *ncolm, void  *work, void  *work2);
 extern int fla_lapack_zspffrtx(void  *ap, integer *n, integer *ncolm, void  *work, void  *work2);
 
+extern int fla_lapack_sgghrd(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, void *a, integer *lda, void *b, integer *ldb, void *q, integer *ldq, void *z__, integer *ldz, integer *info);
+extern int fla_lapack_dgghrd(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, void *a, integer *lda, void *b, integer *ldb, void *q, integer *ldq, void *z__, integer *ldz, integer *info);
+extern int fla_lapack_cgghrd(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, void *a, integer *lda, void *b, integer *ldb, void *q, integer *ldq, void *z__, integer *ldz, integer *info);
+extern int fla_lapack_zgghrd(char *compq, char *compz, integer *n, integer * ilo, integer *ihi, void *a, integer *lda, void *b, integer *ldb, void *q, integer *ldq, void *z__, integer *ldz, integer *info);
 #endif  // TEST_PROTOTYPE_H

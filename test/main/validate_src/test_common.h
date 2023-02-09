@@ -146,5 +146,8 @@ void get_hessenberg_matrix(integer datatype, integer n, void* A, integer lda, vo
 void convert_upper_hessenberg(integer datatype, integer n, void *A, integer lda);
 /* Pack a symmetric matrix in column first order */
 void pack_matrix_lt(integer datatype, void* A, void* B, integer N, integer lda);
-
+/* Convert matrix according to ILO and IHI values */
+void get_generic_triangular_matrix(integer datatype, integer N, void *A, integer LDA, integer ilo, integer ihi);
+/* Decompose matrix A in to QR and store orthogonal matrix in Q and R in A*/
+void get_orthogonal_matrix_from_QR(integer datatype, integer n, void *A, integer lda, void *Q, integer ldq, integer *info);
 #endif // TEST_COMMON_H

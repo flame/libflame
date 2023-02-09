@@ -388,6 +388,18 @@ void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
         CHECK_LINE_SKIP ();
     }
 
+    fscanf(fp, "%s", &line[0]); // leading dimension for B
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].ldq) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // leading dimension for B
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].ldz) );
+        CHECK_LINE_SKIP ();
+    }
+
     fscanf(fp, "%s", &line[0]); // leading dimension LDAB
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].ldab) );
@@ -442,6 +454,20 @@ void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%s", str);
         params->lin_solver_paramslist[i].Uplo = *str;
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // Must be 'V' or 'I'
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%s", str);
+        params->lin_solver_paramslist[i].compq_gghrd = *str;
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // Must be 'V' or 'I'
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%s", str);
+        params->lin_solver_paramslist[i].compz_gghrd = *str;
         CHECK_LINE_SKIP ();
     }
 
@@ -505,12 +531,6 @@ void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
 
     fscanf(fp, "%s", &line[0]);
     for (i=0; i<NUM_SUB_TESTS; i++){
-        fscanf(fp, "%f", &(params->lin_solver_paramslist[i].solver_threshold) );
-        CHECK_LINE_SKIP ();
-    }
-
-    fscanf(fp, "%s", &line[0]);
-    for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%s", str);
         params->lin_solver_paramslist[i].equed_porfsx = *str;
         CHECK_LINE_SKIP ();
@@ -550,6 +570,24 @@ void fla_test_read_linear_param ( const char *file_name, test_params_t* params )
     fscanf(fp, "%s", &line[0]);
     for (i=0; i<NUM_SUB_TESTS; i++){
         fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].ldab_gbcon) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // ilo >=1 && ilo<=ihi
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].ilo) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]); // ihi >=ilo && ihi<=N
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%"FT_IS"", &(params->lin_solver_paramslist[i].ihi) );
+        CHECK_LINE_SKIP ();
+    }
+
+    fscanf(fp, "%s", &line[0]);
+    for (i=0; i<NUM_SUB_TESTS; i++){
+        fscanf(fp, "%f", &(params->lin_solver_paramslist[i].solver_threshold) );
         CHECK_LINE_SKIP ();
     }
     fclose(fp);
