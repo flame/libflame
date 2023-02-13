@@ -697,6 +697,7 @@ fla_enable_blas3_front_end_cntl_trees
 fla_enable_supermatrix
 fla_enable_external_lapack_interfaces
 fla_enable_external_lapack_for_subproblems
+fla_enable_legacy_lapack
 fla_enable_lapack2flash
 fla_enable_lapack2flame
 fla_enable_builtin_blas
@@ -801,6 +802,7 @@ enable_non_critical_code
 enable_builtin_blas
 enable_lapack2flame
 enable_lapack2flash
+enable_legacy_lapack
 enable_external_lapack_for_subproblems
 enable_external_lapack_interfaces
 enable_supermatrix
@@ -1528,6 +1530,13 @@ Optional Features:
                           ENABLED while external-lapack-for-subproblems and
                           lapack2flame MUST be DISABLED. (Disabled by
                           default.)
+  --enable-legacy-lapack  Compile and build into libflame the legacy f2c files
+                          of LAPACK (Version 3.5.0). If this option is not
+                          selected, the latest integrated version of LAPACK
+                          using the fortran files will be built. This option
+                          only works if the --enable-lapack2flash or
+                          --enable-lapack2flame are given. Otherwise no LAPACK
+                          will be built. (Disabled by default.)
   --enable-external-lapack-for-subproblems
                           Enable code that causes most of the
                           computationally-intensive functions within libflame
@@ -6595,6 +6604,75 @@ printf "%s\n" "no" >&6; }
 	fi
 
 
+
+
+
+
+		{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether user requested the to use legacy lapack with lapack2flame or lapack2flash" >&5
+printf %s "checking whether user requested the to use legacy lapack with lapack2flame or lapack2flash... " >&6; }
+
+				# Check whether --enable-legacy_lapack was given.
+if test ${enable_legacy_lapack+y}
+then :
+  enableval=$enable_legacy_lapack;
+				if test "$enableval" = "no" ; then
+						fla_enable_legacy_lapack=no
+		elif test "$enableval" = "yes" ; then
+						fla_enable_legacy_lapack=yes
+		else
+												as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_LEGACY_LAPACK!" "$LINENO" 5
+		fi
+
+else $as_nop
+
+						fla_enable_legacy_lapack=no
+
+
+fi
+
+
+		if   test "$fla_enable_legacy_lapack" = "yes" ; then
+				{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: yes" >&5
+printf "%s\n" "yes" >&6; }
+
+
+printf "%s\n" "#define FLA_ENABLE_LEGACY_LAPACK 1" >>confdefs.h
+
+	elif test "$fla_enable_legacy_lapack" = "no" ; then
+				{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: result: no" >&5
+printf "%s\n" "no" >&6; }
+	else
+				as_fn_error $? "Reached unreachable branch in FLA_CHECK_ENABLE_LEGACY_LAPACK!" "$LINENO" 5
+	fi
+
+
+
+
+
+
+
+
+
+
+	{ printf "%s\n" "$as_me:${as_lineno-$LINENO}: checking whether the files from the reference lapack tar are needed" >&5
+printf %s "checking whether the files from the reference lapack tar are needed... " >&6; }
+
+	script_name=${0##*/}
+	path=${0%/${script_name}}
+
+			if test "$fla_enable_lapack2flame" = "yes" || test "$fla_enable_lapack2flash" = "yes" ; then
+		if test "$fla_enable_legacy_lapack" = "yes" ; then
+						echo "	Using legacy f2c lapack files, clearing out any fortran files"
+			${path}/src/map/common/lapacksrc/scripts/regen-files.sh cleanup
+		else
+						echo "	Using lapack fortran files, unpacking tar"
+			${path}/src/map/common/lapacksrc/scripts/regen-files.sh build
+
+		fi
+	else
+				echo "	Not using reference lapack, clearing out any fortran files"
+		${path}/src/map/common/lapacksrc/scripts/regen-files.sh cleanup
+	fi
 
 
 

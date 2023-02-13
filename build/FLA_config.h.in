@@ -70,6 +70,10 @@
    by FLA_MEMORY_ALIGNMENT_BOUNDARY. */
 #undef FLA_ENABLE_LDIM_ALIGNMENT
 
+/* Determines whether to use the legacy f2c files or the newer fortran version
+   of lapack with lapack2flame or lapack2flash. */
+#undef FLA_ENABLE_LEGACY_LAPACK
+
 /* Determines whether memory is aligned to user-requested boundaries. */
 #undef FLA_ENABLE_MEMORY_ALIGNMENT
 

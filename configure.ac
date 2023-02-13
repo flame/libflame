@@ -443,6 +443,13 @@ dnl Observe whether we're going to build and include the lapack2flash
 dnl FLASH compatibility layer.
 FLA_CHECK_ENABLE_LAPACK2FLASH
 
+dnl Observe whether we're going to build c (f2c) or fortran files for
+dnl lapack2flash or lapack2flame compatibility layers.
+FLA_CHECK_ENABLE_LEGACY_LAPACK
+
+dnl Observe whether we're going to untar the reference lapack tar
+FLA_REQUIRE_REFERENCE_LAPACK
+
 dnl Observe whether we're going to enable external LAPACK for computing
 dnl subproblems.
 FLA_CHECK_ENABLE_EXTERNAL_LAPACK_FOR_SUBPROBLEMS
