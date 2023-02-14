@@ -276,7 +276,7 @@ if RANGE = 'V', the exact value of M */
 int chpgvx_(integer *itype, char *jobz, char *range, char * uplo, integer *n, complex *ap, complex *bp, real *vl, real *vu, integer *il, integer *iu, real *abstol, integer *m, real *w, complex * z__, integer *ldz, complex *work, real *rwork, integer *iwork, integer *ifail, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chpgvx inputs: itype %lld, jobz %c, range %c, uplo %c, n %lld, il %lld, iu %lld, m %lld, ldz %lld",*itype, *jobz, *range, *uplo, *n, *il, *iu, *m, *ldz);

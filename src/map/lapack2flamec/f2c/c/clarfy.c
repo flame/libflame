@@ -110,7 +110,7 @@ static integer c__1 = 1;
 int clarfy_(char *uplo, integer *n, complex *v, integer * incv, complex *tau, complex *c__, integer *ldc, complex *work)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clarfy inputs: uplo %c, n %lld, incv %lld, ldc %lld",*uplo, *n, *incv, *ldc);

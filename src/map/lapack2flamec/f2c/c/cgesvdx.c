@@ -279,7 +279,7 @@ the routine */
 int cgesvdx_(char *jobu, char *jobvt, char *range, integer * m, integer *n, complex *a, integer *lda, real *vl, real *vu, integer * il, integer *iu, integer *ns, real *s, complex *u, integer *ldu, complex *vt, integer *ldvt, complex *work, integer *lwork, real * rwork, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgesvdx inputs: jobu %c, jobvt %c, range %c, m %lld, n %lld, lda %lld, il %lld, iu %lld, ldu %lld, ldvt %lld, lwork %lld",*jobu, *jobvt, *range, *m, *n, *lda, *il, *iu, *ldu, *ldvt, *lwork);

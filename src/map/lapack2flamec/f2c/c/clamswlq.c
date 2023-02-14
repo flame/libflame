@@ -194,7 +194,7 @@ the routine */
 int clamswlq_(char *side, char *trans, integer *m, integer * n, integer *k, integer *mb, integer *nb, complex *a, integer *lda, complex *t, integer *ldt, complex *c__, integer *ldc, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clamswlq inputs: side %c, trans %c, m %lld, n %lld, k %lld, mb %lld, nb %lld, lda %lld, ldt %lld, ldc %lld, lwork %lld",*side, *trans, *m, *n, *k, *mb, *nb, *lda, *ldt, *ldc, *lwork);

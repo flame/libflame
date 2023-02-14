@@ -256,7 +256,7 @@ static integer c__3 = 3;
 int claqr5_(logical *wantt, logical *wantz, integer *kacc22, integer *n, integer *ktop, integer *kbot, integer *nshfts, complex *s, complex *h__, integer *ldh, integer *iloz, integer *ihiz, complex * z__, integer *ldz, complex *v, integer *ldv, complex *u, integer *ldu, integer *nv, complex *wv, integer *ldwv, integer *nh, complex *wh, integer *ldwh)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"claqr5 inputs: kacc22 %lld, n %lld, ktop %lld, kbot %lld, nshfts %lld, ldh %lld, iloz %lld, ihiz %lld, ldz %lld, ldv %lld, ldu %lld, nv %lld, ldwv %lld, nh %lld, ldwh %lld",*kacc22, *n, *ktop, *kbot, *nshfts, *ldh, *iloz, *ihiz, *ldz, *ldv, *ldu, *nv, *ldwv, *nh, *ldwh);

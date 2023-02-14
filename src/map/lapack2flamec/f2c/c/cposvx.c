@@ -297,7 +297,7 @@ if EQUED = 'Y', */
 int cposvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *a, integer *lda, complex *af, integer *ldaf, char * equed, real *s, complex *b, integer *ldb, complex *x, integer *ldx, real *rcond, real *ferr, real *berr, complex *work, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cposvx inputs: fact %c, uplo %c, n %lld, nrhs %lld, lda %lld, ldaf %lld, equed %c, ldb %lld, ldx %lld",*fact, *uplo, *n, *nrhs, *lda, *ldaf, *equed, *ldb, *ldx);

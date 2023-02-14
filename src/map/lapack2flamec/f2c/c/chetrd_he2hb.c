@@ -250,7 +250,7 @@ v(i+kd+2:n) is stored on exit in */
 int chetrd_he2hb_(char *uplo, integer *n, integer *kd, complex *a, integer *lda, complex *ab, integer *ldab, complex *tau, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chetrd_he2hb inputs: uplo %c, n %lld, kd %lld, lda %lld, ldab %lld, lwork %lld",*uplo, *n, *kd, *lda, *ldab, *lwork);

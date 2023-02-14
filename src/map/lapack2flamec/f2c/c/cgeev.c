@@ -176,7 +176,7 @@ the routine */
 int cgeev_(char *jobvl, char *jobvr, integer *n, complex *a, integer *lda, complex *w, complex *vl, integer *ldvl, complex *vr, integer *ldvr, complex *work, integer *lwork, real *rwork, integer * info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgeev inputs: jobvl %c, jobvr %c, n %lld, lda %lld, ldvl %lld, ldvr %lld, lwork %lld",*jobvl, *jobvr, *n, *lda, *ldvl, *ldvr, *lwork);

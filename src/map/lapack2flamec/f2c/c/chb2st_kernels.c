@@ -161,7 +161,7 @@ static integer c__1 = 1;
 int chb2st_kernels_(char *uplo, logical *wantz, integer * ttype, integer *st, integer *ed, integer *sweep, integer *n, integer * nb, integer *ib, complex *a, integer *lda, complex *v, complex *tau, integer *ldvt, complex *work)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chb2st_kernels inputs: uplo %c, ttype %lld, st %lld, ed %lld, sweep %lld, n %lld, nb %lld, ib %lld, lda %lld, ldvt %lld",*uplo, *ttype, *st, *ed, *sweep, *n, *nb, *ib, *lda, *ldvt);

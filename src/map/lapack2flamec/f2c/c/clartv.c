@@ -96,7 +96,7 @@
 int clartv_(integer *n, complex *x, integer *incx, complex * y, integer *incy, real *c__, complex *s, integer *incc)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clartv inputs: n %lld, incx %lld, incy %lld, incc %lld",*n, *incx, *incy, *incc);

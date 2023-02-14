@@ -163,7 +163,7 @@ the unit diagonal elements of L are not stored. */
 int slaorhr_col_getrfnp2_(integer *m, integer *n, real *a, integer *lda, real *d__, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"slaorhr_col_getrfnp2 inputs: m %d, n %d, lda %d",*m, *n, *lda);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

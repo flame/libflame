@@ -153,7 +153,7 @@ the routine */
 int cungbr_(char *vect, integer *m, integer *n, integer *k, complex *a, integer *lda, complex *tau, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cungbr inputs: vect %c, m %lld, n %lld, k %lld, lda %lld, lwork %lld",*vect, *m, *n, *k, *lda, *lwork);

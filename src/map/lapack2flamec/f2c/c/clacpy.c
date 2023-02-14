@@ -93,7 +93,7 @@ if UPLO = 'L', only the lower trapezium is */
 int clacpy_(char *uplo, integer *m, integer *n, complex *a, integer *lda, complex *b, integer *ldb)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clacpy inputs: uplo %c, m %lld, n %lld, lda %lld, ldb %lld",*uplo, *m, *n, *lda, *ldb);

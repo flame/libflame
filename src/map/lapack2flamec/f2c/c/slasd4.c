@@ -141,7 +141,7 @@
 int slasd4_(integer *n, integer *i__, real *d__, real *z__, real *delta, real *rho, real *sigma, real *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"slasd4 inputs: n %d, i__ %d",*n, *i__);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

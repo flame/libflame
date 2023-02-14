@@ -218,7 +218,7 @@ is largest */
 int clar1v_(integer *n, integer *b1, integer *bn, real * lambda, real *d__, real *l, real *ld, real *lld, real *pivmin, real * gaptol, complex *z__, logical *wantnc, integer *negcnt, real *ztz, real *mingma, integer *r__, integer *isuppz, real *nrminv, real * resid, real *rqcorr, real *work)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clar1v inputs: n %lld, b1 %lld, bn %lld, r__ %lld",*n, *b1, *bn, *r__);

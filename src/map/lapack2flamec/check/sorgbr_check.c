@@ -18,7 +18,7 @@ int sorgbr_check(char *vect, integer *m, integer *n, integer *k, float *a, integ
     integer lwkopt;
     logical lquery;
 
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     sprintf(buffer, "sorgbr inputs: vect %c, m %d, n %d, k %d, lda %d\n", *vect, *m, *n, *k, *lda);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

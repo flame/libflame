@@ -266,7 +266,7 @@ INB-by-M}
 int cunhr_col_(integer *m, integer *n, integer *nb, complex *a, integer *lda, complex *t, integer *ldt, complex *d__, integer * info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"cunhr_col inputs: m %" FLA_IS ", n %" FLA_IS ", nb %" FLA_IS ", lda %" FLA_IS ", ldt %" FLA_IS "", *m, *n, *nb, *lda, *ldt);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

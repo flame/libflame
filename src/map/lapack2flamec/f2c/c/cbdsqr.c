@@ -221,7 +221,7 @@ if INFO = i, i */
 int cbdsqr_(char *uplo, integer *n, integer *ncvt, integer * nru, integer *ncc, real *d__, real *e, complex *vt, integer *ldvt, complex *u, integer *ldu, complex *c__, integer *ldc, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cbdsqr inputs: uplo %c, n %lld, ncvt %lld, nru %lld, ncc %lld, ldvt %lld, ldu %lld, ldc %lld",*uplo, *n, *ncvt, *nru, *ncc, *ldvt, *ldu, *ldc);

@@ -142,7 +142,7 @@ static integer c__33 = 33;
 int cpbtrf_(char *uplo, integer *n, integer *kd, complex *ab, integer *ldab, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cpbtrf inputs: uplo %c, n %lld, kd %lld, ldab %lld",*uplo, *n, *kd, *ldab);

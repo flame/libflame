@@ -138,7 +138,7 @@ static integer c__1 = 1;
 int cpstf2_(char *uplo, integer *n, complex *a, integer *lda, integer *piv, integer *rank, real *tol, real *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cpstf2 inputs: uplo %c, n %lld, lda %lld",*uplo, *n, *lda);

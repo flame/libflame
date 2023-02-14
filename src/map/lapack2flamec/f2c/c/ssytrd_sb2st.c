@@ -230,7 +230,7 @@ the routine */
 int ssytrd_sb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd, real *ab, integer *ldab, real *d__, real *e, real *hous, integer *lhous, real *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"ssytrd_sb2st inputs: stage1 %c, vect %c, uplo %c, n %" FLA_IS ", kd %" FLA_IS ", ldab %" FLA_IS ", lhous %" FLA_IS "",*stage1, *vect, *uplo, *n, *kd, *ldab, *lhous);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

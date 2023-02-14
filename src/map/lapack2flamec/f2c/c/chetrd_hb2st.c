@@ -234,7 +234,7 @@ the routine */
 int chetrd_hb2st_(char *stage1, char *vect, char *uplo, integer *n, integer *kd, complex *ab, integer *ldab, real *d__, real * e, complex *hous, integer *lhous, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chetrd_hb2st inputs: stage1 %c, vect %c, uplo %c, n %lld, kd %lld, ldab %lld, lhous %lld, lwork %lld",*stage1, *vect, *uplo, *n, *kd, *ldab, *lhous, *lwork);

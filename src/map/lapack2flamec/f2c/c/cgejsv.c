@@ -584,7 +584,7 @@ otherwise the length of IWORK is 2*N. */
 int cgejsv_(char *joba, char *jobu, char *jobv, char *jobr, char *jobt, char *jobp, integer *m, integer *n, complex *a, integer * lda, real *sva, complex *u, integer *ldu, complex *v, integer *ldv, complex *cwork, integer *lwork, real *rwork, integer *lrwork, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgejsv inputs: cgejsv inputs: joba %c, jobu %c, jobv %c, jobr %c, jobt %c, jobp %c, m %lld, n %lld, lda %lld, ldu %lld, ldv %lld",*joba, *jobu, *jobv, *jobr, *jobt, *jobp, *m, *n, *lda, *ldu, *ldv);

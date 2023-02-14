@@ -291,7 +291,7 @@ int chgeqz_(char *job, char *compq, char *compz, integer *n, integer *ilo, integ
 {
 
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"chgeqz inputs: job %c, compq %c, compz %c, n %" FLA_IS ", ilo %" FLA_IS ", ihi %" FLA_IS ", ldh %" FLA_IS ", ldt %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", lwork %" FLA_IS "",*job, *compq, *compz, *n, *ilo, *ihi, *ldh, *ldt, *ldq, *ldz, *lwork);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

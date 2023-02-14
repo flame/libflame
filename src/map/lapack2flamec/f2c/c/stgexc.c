@@ -216,7 +216,7 @@ A Direct Method for Reordering Eigenvalues in the */
 int stgexc_(logical *wantq, logical *wantz, integer *n, real *a, integer *lda, real *b, integer *ldb, real *q, integer *ldq, real * z__, integer *ldz, integer *ifst, integer *ilst, real *work, integer * lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"stgexc inputs: n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldq %" FLA_IS ", ldz %" FLA_IS ", ifst %" FLA_IS ", ilst %" FLA_IS "",*n, *lda, *ldb, *ldq, *ldz, *ifst, *ilst);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

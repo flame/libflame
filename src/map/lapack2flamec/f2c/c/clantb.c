@@ -131,7 +131,7 @@ otherwise, WORK is not */
 real clantb_(char *norm, char *uplo, char *diag, integer *n, integer *k, complex *ab, integer *ldab, real *work)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clantb inputs: norm %c, uplo %c, diag %c, n %lld, k %lld, ldab %lld",*norm, *uplo, *diag, *n, *k, *ldab);

@@ -113,7 +113,7 @@ for 1 <= j <= N, column j of the */
 int cgesc2_(integer *n, complex *a, integer *lda, complex * rhs, integer *ipiv, integer *jpiv, real *scale)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgesc2 inputs: n %lld, lda %lld",*n, *lda);

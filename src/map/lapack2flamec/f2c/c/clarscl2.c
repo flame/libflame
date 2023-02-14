@@ -80,7 +80,7 @@
 int clarscl2_(integer *m, integer *n, real *d__, complex *x, integer *ldx)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clarscl2 inputs: m %lld, n %lld, ldx %lld",*m, *n, *ldx);

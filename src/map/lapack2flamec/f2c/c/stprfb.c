@@ -249,7 +249,7 @@ if SIDE = 'R', A is of size M-by-K, */
 int stprfb_(char *side, char *trans, char *direct, char * storev, integer *m, integer *n, integer *k, integer *l, real *v, integer *ldv, real *t, integer *ldt, real *a, integer *lda, real *b, integer *ldb, real *work, integer *ldwork)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"stprfb inputs: side %c, trans %c, direct %c, storev %c, m %d, n %d, k %d, l %d, ldv %d, ldt %d, lda %d, ldb %d",*side, *trans, *direct, *storev, *m, *n, *k, *l, *ldv, *ldt, *lda, *ldb);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

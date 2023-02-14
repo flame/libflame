@@ -172,7 +172,7 @@ v(i+k+1:n) is stored on exit in */
 int clahrd_(integer *n, integer *k, integer *nb, complex *a, integer *lda, complex *tau, complex *t, integer *ldt, complex *y, integer *ldy)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clahrd inputs: n %lld, k %lld, nb %lld, lda %lld, ldt %lld, ldy %lld",*n, *k, *nb, *lda, *ldt, *ldy);

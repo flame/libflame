@@ -218,7 +218,7 @@ static integer c__1 = 1;
 int claed8_(integer *k, integer *n, integer *qsiz, complex * q, integer *ldq, real *d__, real *rho, integer *cutpnt, real *z__, real *dlamda, complex *q2, integer *ldq2, real *w, integer *indxp, integer *indx, integer *indxq, integer *perm, integer *givptr, integer *givcol, real *givnum, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"claed8 inputs: k %lld, n %lld, qsiz %lld, ldq %lld, cutpnt %lld, ldq2 %lld, indxp %lld, indx %lld, indxq %lld",*k, *n, *qsiz, *ldq, *cutpnt, *ldq2, *indxp, *indx, *indxq);

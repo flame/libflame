@@ -243,7 +243,7 @@ v(i+kd+2:n) is stored on exit in */
 int ssytrd_sy2sb_(char *uplo, integer *n, integer *kd, real *a, integer *lda, real *ab, integer *ldab, real *tau, real *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"ssytrd_sy2sb inputs: uplo %c, n %" FLA_IS ", kd %" FLA_IS ", lda %" FLA_IS ", ldab %" FLA_IS "",*uplo, *n, *kd, *lda, *ldab);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

@@ -168,7 +168,7 @@ static integer c__1 = 1;
 int sorgtsqr_(integer *m, integer *n, integer *mb, integer * nb, real *a, integer *lda, real *t, integer *ldt, real *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"sorgtsqr inputs: m %d, n %d, mb %d, nb %d, lda %d, ldt %d",*m, *n, *mb, *nb, *lda, *ldt);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

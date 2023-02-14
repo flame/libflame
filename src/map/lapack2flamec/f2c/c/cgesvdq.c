@@ -432,7 +432,7 @@ the routine */
 int cgesvdq_(char *joba, char *jobp, char *jobr, char *jobu, char *jobv, integer *m, integer *n, complex *a, integer *lda, real *s, complex *u, integer *ldu, complex *v, integer *ldv, integer *numrank, integer *iwork, integer *liwork, complex *cwork, integer *lcwork, real *rwork, integer *lrwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgesvdq inputs: joba %c, jobp %c, jobr %c, jobu %c, jobv %c, m %lld, n %lld, lda %lld, ldu %lld, ldv %lld, liwork %lld, lrwork %lld",*joba, *jobp, *jobr, *jobu, *jobv, *m, *n, *lda, *ldu, *ldv, *liwork, *lrwork);

@@ -271,7 +271,7 @@ CLAQR2 */
 int claqr2_(logical *wantt, logical *wantz, integer *n, integer *ktop, integer *kbot, integer *nw, complex *h__, integer *ldh, integer *iloz, integer *ihiz, complex *z__, integer *ldz, integer * ns, integer *nd, complex *sh, complex *v, integer *ldv, integer *nh, complex *t, integer *ldt, integer *nv, complex *wv, integer *ldwv, complex *work, integer *lwork)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"claqr2 inputs: n %lld, ktop %lld, kbot %lld, nw %lld, ldh %lld, iloz %lld, ihiz %lld, ldz %lld, ldv %lld, nh %lld, ldt %lld, nv %lld, ldwv %lld, lwork %lld",*n, *ktop, *kbot, *nw, *ldh, *iloz, *ihiz, *ldz, *ldv, *nh, *ldt, *nv, *ldwv, *lwork);

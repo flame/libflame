@@ -101,7 +101,7 @@ static complex c_b5 =
 int clarfg_(integer *n, complex *alpha, complex *x, integer * incx, complex *tau)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clarfg inputs: n %lld, incx %lld",*n, *incx);

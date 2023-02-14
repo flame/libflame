@@ -155,7 +155,7 @@
 int ssfrk_(char *transr, char *uplo, char *trans, integer *n, integer *k, real *alpha, real *a, integer *lda, real *beta, real * c__)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"ssfrk inputs: transr %c, uplo %c, trans %c, n %" FLA_IS ", k %" FLA_IS ", lda %" FLA_IS "",*transr, *uplo, *trans, *n, *k, *lda);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

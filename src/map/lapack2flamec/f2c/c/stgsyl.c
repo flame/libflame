@@ -294,7 +294,7 @@ the routine */
 int stgsyl_(char *trans, integer *ijob, integer *m, integer * n, real *a, integer *lda, real *b, integer *ldb, real *c__, integer * ldc, real *d__, integer *ldd, real *e, integer *lde, real *f, integer *ldf, real *scale, real *dif, real *work, integer *lwork, integer * iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"stgsyl inputs: trans %c, ijob %" FLA_IS ", m %" FLA_IS ", n %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS ", ldc %" FLA_IS ", ldd %" FLA_IS ", lde %" FLA_IS ", ldf %" FLA_IS "",*trans, *ijob, *m, *n, *lda, *ldb, *ldc, *ldd, *lde, *ldf);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

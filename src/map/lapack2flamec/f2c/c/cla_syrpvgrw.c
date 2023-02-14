@@ -111,7 +111,7 @@
 real cla_syrpvgrw_(char *uplo, integer *n, integer *info, complex *a, integer *lda, complex *af, integer *ldaf, integer *ipiv, real *work)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cla_syrpvgrw inputs: uplo %c, n %lld, info %lld, lda %lld, ldaf %lld",*uplo, *n, *info, *lda, *ldaf);

@@ -152,7 +152,7 @@ v(i+2:n) is stored on exit in AP, */
 int chptrd_(char *uplo, integer *n, complex *ap, real *d__, real *e, complex *tau, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chptrd inputs: uplo %c, n %lld",*uplo, *n);

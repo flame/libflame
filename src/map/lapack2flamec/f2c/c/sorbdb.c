@@ -285,7 +285,7 @@ the routine */
 int sorbdb_(char *trans, char *signs, integer *m, integer *p, integer *q, real *x11, integer *ldx11, real *x12, integer *ldx12, real *x21, integer *ldx21, real *x22, integer *ldx22, real *theta, real *phi, real *taup1, real *taup2, real *tauq1, real *tauq2, real * work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"sorbdb inputs: trans %c, signs %c, m %d, p %d, q %d, ldx11 %d, ldx12 %d, ldx21 %d, ldx22 %d",*trans, *signs, *m, *p, *q, *ldx11, *ldx12, *ldx21, *ldx22);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

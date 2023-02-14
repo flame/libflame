@@ -159,7 +159,7 @@ static integer c__1 = 1;
 int cunbdb6_(integer *m1, integer *m2, integer *n, complex * x1, integer *incx1, complex *x2, integer *incx2, complex *q1, integer *ldq1, complex *q2, integer *ldq2, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cunbdb6 inputs: m1 %lld, m2 %lld, n %lld, incx1 %lld, incx2 %lld, ldq1 %lld, ldq2 %lld, lwork %lld",*m1, *m2, *n, *incx1, *incx2, *ldq1, *ldq2, *lwork);

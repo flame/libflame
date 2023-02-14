@@ -350,7 +350,7 @@ the routine */
 int cggsvd3_(char *jobu, char *jobv, char *jobq, integer *m, integer *n, integer *p, integer *k, integer *l, complex *a, integer * lda, complex *b, integer *ldb, real *alpha, real *beta, complex *u, integer *ldu, complex *v, integer *ldv, complex *q, integer *ldq, complex *work, integer *lwork, real *rwork, integer *iwork, integer * info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cggsvd3 inputs: jobu %c, jobv %c, jobq %c, m %lld, n %lld, p %lld, lda %lld, ldb %lld, ldu %lld, ldv %lld, ldq %lld, lwork %lld",*jobu, *jobv, *jobq, *m, *n, *p, *lda, *ldb, *ldu, *ldv, *ldq, *lwork);

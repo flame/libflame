@@ -184,7 +184,7 @@ in this case a minimum norm solution is returned. */
 int clalsd_(char *uplo, integer *smlsiz, integer *n, integer *nrhs, real *d__, real *e, complex *b, integer *ldb, real *rcond, integer *rank, complex *work, real *rwork, integer *iwork, integer * info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"clalsd inputs: uplo %c, smlsiz %lld, n %lld, nrhs %lld, ldb %lld",*uplo, *smlsiz, *n, *nrhs, *ldb);

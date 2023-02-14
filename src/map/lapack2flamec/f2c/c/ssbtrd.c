@@ -165,7 +165,7 @@ if VECT = 'N' or 'V', then Q need not be set. */
 int ssbtrd_(char *vect, char *uplo, integer *n, integer *kd, real *ab, integer *ldab, real *d__, real *e, real *q, integer *ldq, real *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"ssbtrd inputs: vect %c, uplo %c, n %" FLA_IS ", kd %" FLA_IS ", ldab %" FLA_IS ", ldq %" FLA_IS "",*vect, *uplo, *n, *kd, *ldab, *ldq);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

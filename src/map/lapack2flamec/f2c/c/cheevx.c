@@ -248,7 +248,7 @@ the routine */
 int cheevx_(char *jobz, char *range, char *uplo, integer *n, complex *a, integer *lda, real *vl, real *vu, integer *il, integer * iu, real *abstol, integer *m, real *w, complex *z__, integer *ldz, complex *work, integer *lwork, real *rwork, integer *iwork, integer * ifail, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cheevx inputs: jobz %c, range %c, uplo %c, n %lld, lda %lld, il %lld, iu %lld, m %lld, ldz %lld, lwork %lld",*jobz, *range, *uplo, *n, *lda, *il, *iu, *m, *ldz, *lwork);

@@ -146,7 +146,7 @@
 int csymv_(char *uplo, integer *n, complex *alpha, complex * a, integer *lda, complex *x, integer *incx, complex *beta, complex *y, integer *incy)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"csymv inputs: uplo %c, n %lld, lda %lld, incx %lld, incy %lld",*uplo, *n, *lda, *incx, *incy);

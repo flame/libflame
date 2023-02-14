@@ -211,7 +211,7 @@ V2 is upper trapezoidal, consisting of the first L */
 int stpmqrt_(char *side, char *trans, integer *m, integer *n, integer *k, integer *l, integer *nb, real *v, integer *ldv, real *t, integer *ldt, real *a, integer *lda, real *b, integer *ldb, real * work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"stpmqrt inputs: side %c, trans %c, m %" FLA_IS ", n %" FLA_IS ", k %" FLA_IS ", l %" FLA_IS ", nb %" FLA_IS ", ldv %" FLA_IS ", ldt %" FLA_IS ", lda %" FLA_IS ", ldb %" FLA_IS "",*side, *trans, *m, *n, *k, *l, *nb, *ldv, *ldt, *lda, *ldb);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

@@ -185,7 +185,7 @@ static integer c__1 = 1;
 int cpbrfs_(char *uplo, integer *n, integer *kd, integer * nrhs, complex *ab, integer *ldab, complex *afb, integer *ldafb, complex *b, integer *ldb, complex *x, integer *ldx, real *ferr, real * berr, complex *work, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cpbrfs inputs: uplo %c, n %lld, kd %lld, nrhs %lld, ldab %lld, ldafb %lld, ldb %lld, ldx %lld",*uplo, *n, *kd, *nrhs, *ldab, *ldafb, *ldb, *ldx);

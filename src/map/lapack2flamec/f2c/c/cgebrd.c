@@ -216,7 +216,7 @@ tauq is stored in TAUQ(i) and taup in TAUP(i). */
 int cgebrd_(integer *m, integer *n, complex *a, integer *lda, real *d__, real *e, complex *tauq, complex *taup, complex *work, integer *lwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgebrd inputs: m %lld, n %lld, lda %lld, lwork %lld",*m, *n, *lda, *lwork);

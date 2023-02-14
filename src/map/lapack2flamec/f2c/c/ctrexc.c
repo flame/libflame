@@ -119,7 +119,7 @@ static integer c__1 = 1;
 int ctrexc_(char *compq, integer *n, complex *t, integer * ldt, complex *q, integer *ldq, integer *ifst, integer *ilst, integer * info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"ctrexc inputs: compq %c, n %lld, ldt %lld, ldq %lld, ifst %lld, ilst %lld",*compq, *n, *ldt, *ldq, *ifst, *ilst);

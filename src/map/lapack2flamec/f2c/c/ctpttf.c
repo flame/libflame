@@ -199,7 +199,7 @@
 int ctpttf_(char *transr, char *uplo, integer *n, complex * ap, complex *arf, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"ctpttf inputs: transr %c, uplo %c, n %lld",*transr, *uplo, *n);

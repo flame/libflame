@@ -226,7 +226,7 @@ static integer c__1 = 1;
 int ctgevc_(char *side, char *howmny, logical *select, integer *n, complex *s, integer *lds, complex *p, integer *ldp, complex *vl, integer *ldvl, complex *vr, integer *ldvr, integer *mm, integer *m, complex *work, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"ctgevc inputs: side %c, howmny %c, n %lld, lds %lld, ldp %lld, ldvl %lld, ldvr %lld, mm %lld",*side, *howmny, *n, *lds, *ldp, *ldvl, *ldvr, *mm);

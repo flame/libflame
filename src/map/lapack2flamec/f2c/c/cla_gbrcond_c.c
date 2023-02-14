@@ -150,7 +150,7 @@ row i of the matrix was interchanged */
 real cla_gbrcond_c_(char *trans, integer *n, integer *kl, integer *ku, complex *ab, integer *ldab, complex *afb, integer *ldafb, integer * ipiv, real *c__, logical *capply, integer *info, complex *work, real * rwork)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cla_gbrcond_c inputs: trans %c, n %lld, kl %lld, ku %lld, ldab %lld, ldafb %lld",*trans, *n, *kl, *ku, *ldab, *ldafb);

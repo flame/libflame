@@ -174,7 +174,7 @@ IBLOCK(i)=1 if eigenvalue W(i) belongs to */
 int cstein_(integer *n, real *d__, real *e, integer *m, real *w, integer *iblock, integer *isplit, complex *z__, integer *ldz, real *work, integer *iwork, integer *ifail, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cstein inputs: n %lld, m %lld, iblock %lld, isplit %lld, ldz %lld",*n, *m, *iblock, *isplit, *ldz);

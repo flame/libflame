@@ -201,7 +201,7 @@ static integer c__1 = 1;
 int slasdq_(char *uplo, integer *sqre, integer *n, integer * ncvt, integer *nru, integer *ncc, real *d__, real *e, real *vt, integer *ldvt, real *u, integer *ldu, real *c__, integer *ldc, real * work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"slasdq inputs: uplo %c, sqre %d, n %d, ncvt %d, nru %d, ncc %d, ldvt %d, ldu %d, ldc %d",*uplo, *sqre, *n, *ncvt, *nru, *ncc, *ldvt, *ldu, *ldc);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

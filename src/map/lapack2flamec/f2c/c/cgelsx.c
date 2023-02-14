@@ -188,7 +188,7 @@ only the remaining */
 int cgelsx_(integer *m, integer *n, integer *nrhs, complex * a, integer *lda, complex *b, integer *ldb, integer *jpvt, real *rcond, integer *rank, complex *work, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cgelsx inputs: m %lld, n %lld, nrhs %lld, lda %lld, ldb %lld",*m, *n, *nrhs, *lda, *ldb);

@@ -257,7 +257,7 @@ the */
 int chbgvd_(char *jobz, char *uplo, integer *n, integer *ka, integer *kb, complex *ab, integer *ldab, complex *bb, integer *ldbb, real *w, complex *z__, integer *ldz, complex *work, integer *lwork, real *rwork, integer *lrwork, integer *iwork, integer *liwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"chbgvd inputs: jobz %c, uplo %c, n %lld, ka %lld, kb %lld, ldab %lld, ldbb %lld, ldz %lld, lwork %lld, lrwork %lld, liwork %lld",*jobz, *uplo, *n, *ka, *kb, *ldab, *ldbb, *ldz, *lwork, *lrwork, *liwork);

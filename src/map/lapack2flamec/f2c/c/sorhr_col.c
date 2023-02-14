@@ -263,7 +263,7 @@ INB-by-M}
 int sorhr_col_(integer *m, integer *n, integer *nb, real *a, integer *lda, real *t, integer *ldt, real *d__, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"sorhr_col inputs: m %d, n %d, nb %d, lda %d, ldt %d",*m, *n, *nb, *lda, *ldt);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

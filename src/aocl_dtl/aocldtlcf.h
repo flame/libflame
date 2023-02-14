@@ -28,6 +28,22 @@
 /* By default it will log for all levels */
 #define AOCL_DTL_TRACE_LEVEL         AOCL_DTL_LEVEL_TRACE_5
 
+// A workaround for autotools and cmake to work together. To be removed on complete migration to cmake
+// and defauilt values of AOCL_DTL_LOG_ENABLE and AOCL_DTL_TRACE_ENABLE to be set to 1. In order to fully allow 
+// enabling and disbling of logs and trace from cmake commandline
+#if AOCL_DTL_LOG_ENABLE
+   #define LF_AOCL_DTL_LOG_ENABLE   1
+#else
+   #define LF_AOCL_DTL_LOG_ENABLE   0
+#endif
+
+#if AOCL_DTL_TRACE_ENABLE
+   #define LF_AOCL_DTL_TRACE_ENABLE 1
+#else
+   #define LF_AOCL_DTL_TRACE_ENABLE 0
+#endif
+
+
 /* user has to explicitly use the below macros to identify
    ciriticality of the logged message */
 #define AOCL_DTL_LEVEL_ALL          (14)

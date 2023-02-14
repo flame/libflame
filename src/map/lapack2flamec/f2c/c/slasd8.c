@@ -158,7 +158,7 @@ static real c_b8 = 1.f;
 int slasd8_(integer *icompq, integer *k, real *d__, real * z__, real *vf, real *vl, real *difl, real *difr, integer *lddifr, real *dsigma, real *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"slasd8 inputs: icompq %d, k %d, lddifr %d",*icompq, *k, *lddifr);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

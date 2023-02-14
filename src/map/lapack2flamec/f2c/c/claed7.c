@@ -239,7 +239,7 @@ static integer c_n1 = -1;
 int claed7_(integer *n, integer *cutpnt, integer *qsiz, integer *tlvls, integer *curlvl, integer *curpbm, real *d__, complex * q, integer *ldq, real *rho, integer *indxq, real *qstore, integer * qptr, integer *prmptr, integer *perm, integer *givptr, integer * givcol, real *givnum, complex *work, real *rwork, integer *iwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"claed7 inputs: n %lld, cutpnt %lld, qsiz %lld, tlvls %lld, curlvl %lld, curpbm %lld, ldq %lld, indxq %lld, qptr %lld, prmptr %lld",*n, *cutpnt, *qsiz, *tlvls, *curlvl, *curpbm, *ldq, *indxq, *qptr, *prmptr);

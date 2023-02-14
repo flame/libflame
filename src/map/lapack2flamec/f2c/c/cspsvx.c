@@ -268,7 +268,7 @@ static integer c__1 = 1;
 int cspsvx_(char *fact, char *uplo, integer *n, integer * nrhs, complex *ap, complex *afp, integer *ipiv, complex *b, integer * ldb, complex *x, integer *ldx, real *rcond, real *ferr, real *berr, complex *work, real *rwork, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
 #if FLA_ENABLE_ILP64
     snprintf(buffer, 256,"cspsvx inputs: fact %c, uplo %c, n %lld, nrhs %lld, ldb %lld, ldx %lld",*fact, *uplo, *n, *nrhs, *ldb, *ldx);

@@ -166,7 +166,7 @@ IBLOCK(i)=1 if eigenvalue W(i) belongs to */
 int sstein_(integer *n, real *d__, real *e, integer *m, real *w, integer *iblock, integer *isplit, real *z__, integer *ldz, real * work, integer *iwork, integer *ifail, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"sstein inputs: n %" FLA_IS ", m %" FLA_IS ", iblock %" FLA_IS ", isplit %" FLA_IS ", ldz %" FLA_IS "",*n, *m, *iblock, *isplit, *ldz);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);

@@ -144,7 +144,7 @@ T may have been partially */
 int strexc_(char *compq, integer *n, real *t, integer *ldt, real *q, integer *ldq, integer *ifst, integer *ilst, real *work, integer *info)
 {
     AOCL_DTL_TRACE_ENTRY(AOCL_DTL_LEVEL_TRACE_5);
-#if AOCL_DTL_LOG_ENABLE
+#if LF_AOCL_DTL_LOG_ENABLE
     char buffer[256];
     snprintf(buffer, 256,"strexc inputs: compq %c, n %d, ldt %d, ldq %d, ifst %d, ilst %d",*compq, *n, *ldt, *ldq, *ifst, *ilst);
     AOCL_DTL_LOG(AOCL_DTL_LEVEL_TRACE_5, buffer);
